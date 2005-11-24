@@ -1,70 +1,51 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
-# sysinfo.py version 0.1
-# (C) 2005 by D.C.Powell  achiestdragon@gmail.com
-# licensing :-
-# this program is licenced in accordance the the GNU GPL
-import os
-import sys
-import commands
-import time
-from subprocess import *
-True = 1
-False = 0
-global port;
-global server;
-global target;
+#!/bin/sh
+#
+# Licensed under GPL v2 or later at your option
+# Copyright 2004 by Michiel de Boer <infobash@rebelhomicide.demon.nl>
 
-def sendit(outmsg,port,server,target):
-    Popen(['dcop', port, 'Konversation', 'say', server, target, outmsg]).communicate()
+PORT=$1;
+SERVER=$2;
+TARGET=$3;
 
-if __name__ == "__main__":
-    port = sys.argv[1]
-    server = sys.argv[2]
-    target = sys.argv[3]
-    syst_info = os.uname()
-    hostname = syst_info[0]
-    osname = syst_info[1]
-    osversion = syst_info[2]
-    buildcputype = syst_info[4]
-    outmsg = "/me System Information for host [" + hostname + "]  is running '" + osname + "'  version : " + osversion + "  built for  " + buildcputype
-    sendit(outmsg,port,server,target)
-    message = commands.getoutput(" awk -F ':' '/model name/{printf("+'" %s , Running at ",$2)} /cpu MHz/{printf(" %s Mhz , and giving a performance of ",$2)} /bogomips/ {printf("%s %s",$2,"bogomips #" )}'+"' /proc/cpuinfo")
-    textAllMessage = "".join(message[0:])
-    SplitCpuData = textAllMessage.split("#")
-    z = ((len(SplitCpuData))-1)
-    if ( z >= 9 ):
-        outmsg = "/me a total of %s cpus detected only showing info for first 8 "  %(z)
-        sendit(outmsg,port,server,target)
-        z = 8
-    for n in range (z):
-        ident = "/me cpu %s is a " %n
-        outmsg = ident + SplitCpuData[n] 
-        sendit(outmsg,port,server,target)
-    totalmem = commands.getoutput(" free | awk '/Mem:/ {printf("+'"%s",$3/1024" Mb ")}'+"'" )
-    usedmem = commands.getoutput(" free | awk '/cache:/ {printf("+'"%s",$3/1024" Mb ")}'+"'" )
-    outmsg = "/me Total system memory = " + totalmem + " , used memory = "+usedmem
-    sendit(outmsg,port,server,target)
-    diskss=commands.getoutput ("df -B 1g -x tmpfs")
-    splitalldisk = diskss.split("\n")
-    for n in range (len(splitalldisk)):
-        tempmess=splitalldisk[n]
-        messbits=(tempmess.split(" "))
-        for words in range (len(messbits)):
-            messbits[words] = messbits[words] + " "
-        if (n != 0 ):
-            k=0
-            outstring = " "
-            for word in range (len(messbits)):
-                messtemp = messbits[word]
-                if  messtemp.startswith(" "):
-                    k=k
-                elif ( k==k ):
-                    outstring = outstring + messbits[word]
-            outstringb = outstring.split(" ")
-            outmsg = "/me " + outstringb[1] +" is :" + outstringb[2] + "Gb  , (" + outstringb[5] + " used ) : mounted as " + outstringb[6]
-            sendit(outmsg,port,server,target)
-    uptime = commands.getoutput(" uptime ")
-    outmsg = "/me Local time is " + uptime
-    sendit(outmsg,port,server,target)
-    # weeeee all done now exit
+sysinfo()
+{
+LC_ALL="C"
+export LC_ALL 
+HN="$(hostname)"
+OSKERN="$(uname -s) $(uname -r)"
+CPU="$(awk -F':' '/model name/{printf("%s",$2)} /cpu MHz/{printf("%s %s ",$2,"Mhz")}' /proc/cpuinfo )" 
+BOGO="$(awk -F':' '/bogomips/ {printf("%s %s\n",$2,"Bogomips") }' /proc/cpuinfo)"
+for I in /proc/ide/hd* 
+do 
+	[[ -e $I/media && $(< $I/media) = disk ]] && ((CAP+=$(< $I/capacity))) 
+done 
+HDD="$((CAP*512/1000**3))"
+USEDMEM="$(free | awk '/cache:/ {printf("%s",$3/1024"/")}')"
+TOTALMEM="$(free | awk '/Mem:/ {printf("%s\n",$2/1024"MB")}')"
+MEM="${USEDMEM}${TOTALMEM}"
+PROC="$(($(ps aux | wc -l)-1))"
+UPT="$(uptime | sed 's/^.*up *\([^,]*\).*$/\1/g')"
+
+HEADERCOLOR="\x037"
+TEXTCOLOR="\x038"
+
+printf "$HEADERCOLOR%-25s\x03%s${TEXTCOLOR} %s \x03%s\n" "System Information for" " [" "$HN" "]"
+printf "${HEADERCOLOR}%-25s${TEXTCOLOR}%s\n" "OS/Kernel" " $OSKERN"
+printf "${HEADERCOLOR}%-25s${TEXTCOLOR}%s ${HEADERCOLOR}%s\n" "CPU Info" "$CPU" "$BOGO"
+printf "${HEADERCOLOR}%-25s${TEXTCOLOR}%s\n" "HD Info" " ${HDD}GB total storage capacity"
+printf "${HEADERCOLOR}%-25s${TEXTCOLOR}%s\n" "Memory" " $MEM"
+printf "${HEADERCOLOR}%-25s${TEXTCOLOR}%s\n" "Processes" " $PROC"
+printf "${HEADERCOLOR}%-25s${TEXTCOLOR}%s\n" "Uptime" " $UPT"
+}
+if [[ -z "$3" ]] ; then 
+  echo "Scripts are not meant to be called from the command line."
+  echo "This script should be installed to  $KDEDIR/share/apps/konversation/scripts"
+  echo "Then executed with /script   from the konversation"
+  echo
+  echo The output is:
+  sysinfo
+  exit
+fi
+
+
+sysinfo | while read line; do dcop $PORT Konversation say $SERVER "$TARGET" "$line"; done
