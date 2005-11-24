@@ -63,7 +63,7 @@ void OSD_Config_Ext::slotApply()
             konvApp->osd->setTextColor(kcfg_OSDTextColor->color());
             konvApp->osd->setBackgroundColor(kcfg_OSDBackgroundColor->color());
         }
-        else
+    else
         {
             konvApp->osd->unsetColors();
         }
