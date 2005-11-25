@@ -717,7 +717,7 @@ void KonversationMainWindow::addView(ChatWindow* view, const QString& label, boo
         showView(view);
     }
 
-    updateTabMoveActions();
+    updateTabMoveActions(getViewContainer()->currentPageIndex());
     updateSwitchTabAction();
 
     // FIXME  connect(view,SIGNAL (online(ChatWindow*,bool)),viewContainer,SLOT (setTabOnline(ChatWindow*,bool)) );
@@ -775,7 +775,7 @@ void KonversationMainWindow::closeView(QWidget* viewToClose)
         }
     }
 
-    updateTabMoveActions();
+    updateTabMoveActions(getViewContainer()->currentPageIndex());
 }
 
 void KonversationMainWindow::openLogfile()
@@ -1299,7 +1299,7 @@ void KonversationMainWindow::changeView(QWidget* viewToChange)
     view->resetTabNotification();
     view->adjustFocus();
 
-    updateTabMoveActions();
+    updateTabMoveActions(getViewContainer()->currentPageIndex());
 
     if(view)
     {
@@ -2041,8 +2041,9 @@ void KonversationMainWindow::serverStateChanged(Server* server, Server::State st
 
 void KonversationMainWindow::showTabContextMenu(QWidget* tab, const QPoint& pos)
 {
-    QPopupMenu* menu = static_cast<QPopupMenu*>(factory()->container("tabContextMenu", this));
     m_popupTabIndex = getViewContainer()->indexOf(tab);
+    updateTabMoveActions(m_popupTabIndex);
+    QPopupMenu* menu = static_cast<QPopupMenu*>(factory()->container("tabContextMenu", this));
 
     if(!menu)
     {
@@ -2082,6 +2083,8 @@ void KonversationMainWindow::showTabContextMenu(QWidget* tab, const QPoint& pos)
             updateTabEncoding(view);
         }
     }
+
+    updateTabMoveActions(getViewContainer()->currentPageIndex());
 }
 
 void KonversationMainWindow::moveTabLeft()
@@ -2128,14 +2131,12 @@ void KonversationMainWindow::moveTabRight()
     m_popupTabIndex = -1;
 }
 
-void KonversationMainWindow::updateTabMoveActions()
+void KonversationMainWindow::updateTabMoveActions(int index)
 {
     KAction* action;
 
     if(getViewContainer()->count() > 0)
     {
-        int index = getViewContainer()->currentPageIndex();
-
         action = actionCollection()->action("move_tab_left");
 
         if(action)
