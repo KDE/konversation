@@ -7,7 +7,7 @@
 #include <qgroupbox.h>
 #include <qspinbox.h>
 #include <kcombobox.h>
-#include <kcolorcombo.h>
+#include <kcolorbutton.h>
 #include <qcheckbox.h>
 #include <kfontrequester.h>
 
@@ -38,8 +38,8 @@ OSD_Config_Ext::OSD_Config_Ext( QWidget* parent, const char* name, WFlags fl )
     //Connect config page entries to control the OSDPreview
     connect ( kcfg_UseOSD,  SIGNAL( toggled( bool ) ), this, SLOT( slotOSDEnabledChanged(bool) ) );
     connect ( kcfg_OSDUseCustomColors, SIGNAL(toggled(bool)), this, SLOT(slotCustomColorsChanged(bool)));
-    connect ( kcfg_OSDTextColor, SIGNAL(activated(const QColor&)), this, SLOT(slotTextColorChanged(const QColor&)));
-    connect ( kcfg_OSDBackgroundColor, SIGNAL(activated(const QColor&)), this, SLOT(slotBackgroundColorChanged(const QColor&)));
+    connect ( kcfg_OSDTextColor, SIGNAL(changed(const QColor&)), this, SLOT(slotTextColorChanged(const QColor&)));
+    connect ( kcfg_OSDBackgroundColor, SIGNAL(changed(const QColor&)), this, SLOT(slotBackgroundColorChanged(const QColor&)));
     connect ( kcfg_OSDScreen, SIGNAL(activated(int)), this, SLOT(slotScreenChanged(int)));
     connect ( kcfg_OSDDrawShadow, SIGNAL(toggled(bool)), this, SLOT(slotDrawShadowChanged(bool)));
 }

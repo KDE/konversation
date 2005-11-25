@@ -155,12 +155,12 @@
                         <cstring>kcfg_OSDBackgroundColor</cstring>
                     </property>
                 </widget>
-                <widget class="KColorCombo" row="2" column="1">
+                <widget class="KColorButton" row="2" column="1">
                     <property name="name">
                         <cstring>kcfg_OSDBackgroundColor</cstring>
                     </property>
                 </widget>
-                <widget class="KColorCombo" row="1" column="1">
+                <widget class="KColorButton" row="1" column="1">
                     <property name="name">
                         <cstring>kcfg_OSDTextColor</cstring>
                     </property>
