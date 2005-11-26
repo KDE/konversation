@@ -21,3 +21,15 @@ Id=0.18-lagtimeout
 File=konversationrc
 Group=General Options
 RemoveKey=MaximumLag
+
+# DCC defaults changed
+Id=0.19-dcc
+File=konversationrc
+Group=DCC Settings
+RemoveKey=ChatPortsFirst
+RemoveKey=ChatPortsLast
+RemoveKey=SendPortsFirst
+RemoveKey=SendPortsLast
+RemoveKey=SpecificSendPorts
+RemoveKey=SpecificChatPorts
+RemoveKey=AutoResume
