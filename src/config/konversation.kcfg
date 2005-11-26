@@ -570,7 +570,7 @@
       <whatsthis></whatsthis>
     </entry>
     <entry key="SendPortsLast" type="UInt" name="DccSendPortsLast">
-      <default>6000</default>
+      <default>7000</default>
       <label></label>
       <whatsthis></whatsthis>
     </entry>
@@ -585,7 +585,7 @@
       <whatsthis></whatsthis>
     </entry>
     <entry key="ChatPortsLast" type="UInt" name="DccChatPortsLast">
-      <default>6000</default>
+      <default>7000</default>
       <label></label>
       <whatsthis></whatsthis>
     </entry>
