@@ -5,9 +5,7 @@
   (at your option) any later version.
 */
 
-#include <qlayout.h>
 #include <qpushbutton.h>
-#include <qlabel.h>
 
 #include <klocale.h>
 #include <klistview.h>
