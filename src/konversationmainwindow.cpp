@@ -799,7 +799,6 @@ void KonversationMainWindow::openLogFile(const QString& caption, const QString& 
     {
         LogfileReader* logReader = new LogfileReader(getViewContainer(), file);
         addView(logReader, i18n("Logfile of %1").arg(caption));
-	logReader->updateView();
         logReader->setServer(0);
     }
 }
