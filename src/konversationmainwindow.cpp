@@ -49,7 +49,6 @@
 #endif
 
 #include "chatwindowappearance_preferences.h"
-#include "alias_preferences.h"
 #include "connectionbehavior_preferences.h"
 #include "highlight_preferences.h"
 #include "warnings_preferences.h"
@@ -66,6 +65,7 @@
 #include "ex_dcc_preferences.h"
 #include "ex_osd_preferences.h"
 #include "ex_theme_preferences.h"
+#include "ex_alias_preferences.h"
 
 #include "linkaddressbook/addressbook.h"
 #include "konversationmainwindow.h"
@@ -426,7 +426,7 @@ void KonversationMainWindow::openPrefsDialog()
   dialog->addPage ( confTabBarWdg, pagePath, "tab_new", i18n("Tab Bar") );
 
   //Behaviour/Command Aliases
-  Alias_Config* confAliasWdg = new Alias_Config( dialog, "Alias" );
+  Alias_Config_Ext* confAliasWdg = new Alias_Config_Ext( dialog, "Alias" );
   pagePath.clear();
   pagePath << i18n("Behavior") << i18n("Command Aliases");
   dialog->addPage ( confAliasWdg, pagePath, "editcopy", i18n(" Command Aliases") );
@@ -799,6 +799,7 @@ void KonversationMainWindow::openLogFile(const QString& caption, const QString& 
     {
         LogfileReader* logReader = new LogfileReader(getViewContainer(), file);
         addView(logReader, i18n("Logfile of %1").arg(caption));
+	logReader->updateView();
         logReader->setServer(0);
     }
 }
@@ -990,7 +991,7 @@ void KonversationMainWindow::deleteDccPanel()
 
 void KonversationMainWindow::addDccChat(const QString& myNick,const QString& nick,const QString& numericalIp,const QStringList& arguments,bool listen)
 {
-    if(!listen)                                   // Someone else initiated dcc chat
+    if(!listen) // Someone else initiated dcc chat
     {
         KonversationApplication* konv_app=static_cast<KonversationApplication*>(KApplication::kApplication());
         konv_app->notificationHandler()->dccChat(m_frontView,nick);
