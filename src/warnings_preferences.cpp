@@ -8,20 +8,32 @@
 Warnings_Config::Warnings_Config( QWidget* parent, const char* name, WFlags fl )
     : Warnings_ConfigUI( parent, name, fl )
 {
-  languageChange();
+  updateWidgets();
 }
 
 Warnings_Config::~Warnings_Config()
 {
+
 }
 
-/*
- *  Sets the strings of the subwidgets using the current
- *  language.
- */
-void Warnings_Config::languageChange()
+void Warnings_Config::updateSettings()
 {
 
+  KConfig* config = kapp->config();
+  config->setGroup("Notification Messages");
+  
+  QCheckListItem* item=static_cast<QCheckListItem*>(dialogListView->itemAtIndex(0));
+  int i=0;
+  while(item)
+  {
+    config->writeEntry(flagNames.section(",",i,i),item->isOn());
+    item=static_cast<QCheckListItem*>(item->itemBelow());
+    ++i;
+  }
+}
+
+void Warnings_Config::updateWidgets()
+{
   QStringList dialogDefinitions;
   flagNames = "Invitation,SaveLogfileNote,ClearLogfileQuestion,CloseQueryAfterIgnore,ResumeTransfer,QuitServerTab,ChannelListNoServerSelected,RemoveDCCReceivedFile,HideMenuBarWarning,ChannelListWarning,LargePaste";
   dialogDefinitions.append(i18n("Automatically join channel on invite"));
@@ -47,6 +59,15 @@ void Warnings_Config::languageChange()
     item->setText(1,dialogDefinitions[index]);
     item->setOn(config->readBoolEntry(flagNames.section(",",index,index), true));
   }
+}
+
+/*
+ *  Sets the strings of the subwidgets using the current
+ *  language.
+ */
+void Warnings_Config::languageChange()
+{
+  updateWidgets();
 }
 
 #include "warnings_preferences.moc"

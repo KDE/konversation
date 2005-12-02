@@ -471,6 +471,9 @@ void KonversationMainWindow::openPrefsDialog()
   pagePath.clear();
   pagePath << i18n("Warning Dialogs");
   dialog->addPage ( confWarningsWdg, i18n("Warning Dialogs"), "messagebox_warning", i18n("Warning Dialogs") );
+//FIXME - how to do this?
+  //  connect(dialog, SIGNAL(updateSettings()), confWarningsWdg, SLOT(updateSettings()));
+//  connect(dialog, SIGNAL(updateWidgets()), confWarningsWdg, SLOT(updateWidgets()));
 
   //User edited the configuration - update your local copies of the
   //configuration data
