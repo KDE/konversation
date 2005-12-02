@@ -1,8 +1,8 @@
 <!DOCTYPE UI><UI version="3.2" stdsetdef="1">
-<class>Warnings_Config</class>
+<class>Warnings_ConfigUI</class>
 <widget class="QWidget">
     <property name="name">
-        <cstring>Warnings_Config</cstring>
+        <cstring>Warnings_ConfigUI</cstring>
     </property>
     <property name="geometry">
         <rect>
