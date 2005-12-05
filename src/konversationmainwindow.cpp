@@ -2106,6 +2106,7 @@ void KonversationMainWindow::moveTabLeft()
     if(index)
     {
         getViewContainer()->moveTab(index, index - 1);
+        updateTabMoveActions(index - 1);
     }
 
     updateSwitchTabAction();
@@ -2128,6 +2129,7 @@ void KonversationMainWindow::moveTabRight()
     if(index < (getViewContainer()->count() - 1))
     {
         getViewContainer()->moveTab(index, index + 1);
+        updateTabMoveActions(index + 1);
     }
 
     updateSwitchTabAction();
