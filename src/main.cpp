@@ -85,6 +85,8 @@ int main(int argc, char* argv[])
     aboutData.addCredit("Thomas Nagy",I18N_NOOP("Cycle tabs with mouse scroll wheel"),"thomas.nagy@eleve.emn.fr");
     aboutData.addCredit("Tobias Olry",I18N_NOOP("Channel ownership mode patch"),"tobias.olry@web.de");
     aboutData.addCredit("Ruud Nabben",I18N_NOOP("Option to enable IRC color filtering"),"r.nabben@gawab.com");
+    aboutData.addCredit("Lothar Braun",I18N_NOOP("Bug fixes"),"mail@lobraun.de");
+    aboutData.addCredit("Ivor Hewitt",I18N_NOOP("Bug fixes, OSD work, clearing topics"),"ivor@ivor.org");
 
     KCmdLineArgs::init(argc,argv,&aboutData);
     KCmdLineArgs::addCmdLineOptions(options);

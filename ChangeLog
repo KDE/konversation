@@ -27,13 +27,13 @@ Changes from 0.18 to 0.19
 - Handle IDENTIFY-MSG correctly
 - Added DCC "Send file" action to query context menu (patch by Jean-Remy Falleri)
 - Fixes related to announcing channel mode changes (patch by Lothar Braun)
+- Avoid sending a 'clear' command to the server when clearing the buffer in a query tab using the /clear command (patch by Lothar Braun)
 - Added boolean SkipMOTD option to the [Flags] section of konversationrc to skip MOTDs
 - Allow for a channel topic to be cleared by setting an empty topic
 - Minor fix in parsing the /join command
 - Cosmetic improvements to the DCC file transfer UI and DCC event messages
 - 'media' script revamped, improved compatibility with common character sets
 - Major internal changes related to preferences storage
-- Avoid sending a 'clear' command to the server when clearing the buffer in a query tab using the /clear command
 
 Changes from 0.17 to 0.18
 - All nicks were blue when colored nicks are disabled with some setups
