@@ -1,13 +1,13 @@
 Changes from 0.18 to 0.19
-- Blowfish support added ( Mircryption & FiSH compatible )
 - Konversation now depends on KDE 3.3+
-- Added Firefox style searchbar, courtesy of Renchi Raju
-- Tab grouping added so that new tabs will be after the server tab they belong and not at the end. Courtesy of Michael Kreitzer
+- Blowfish support added (Mircryption & FiSH compatible)
+- Added Firefox style searchbar (courtesy of Renchi Raju)
+- Channel and query tabs now appear after the respective server (courtesy of Michael Kreitzer)
 - Fixed alpha blending of nick icons
 - Fixed handling of multiple URLs in one message
 - Added support for iso-2022-jp encoding
-- Nickname watcher was not working in some setups
-- Let keyboard search work in nicklist ( Qt 3.3.4 seems to broken with this < Qt 3.3.4 works fine )
+- Nickname watcher was not working under certain circumstances
+- Fixed keyboard search work in nicklist
 - Implemented sending commands as messages on Ctrl+Enter
 - Fixes related to iterating over a network's servers on connect
 - Display network in tabs where possible
@@ -16,11 +16,24 @@ Changes from 0.18 to 0.19
 - Implement /server <network>
 - Recognize server as being part of a network and use respective identity
 - Fix networks losing their channel history upon changes to their settings
-- Tab bar redesigned; uses label text color for notifications.
+- Tab bar redesigned; uses label text color for notifications
 - Wiki address for [[foo]] can now be customized via WikiUrl config option under [General Options] in konversationrc
 - [[Foo]] can now be automatically expanded to http://<wiki url>/foo using WikiExpandUrl=true in konversationrc
-- Pressing arrow down in the input line now preserves input by adding it to the history and subsequently clears the input line.
+- Pressing arrow down in the input line now preserves input by adding it to the history and clears the input line
 - Fix infinite loop when nickname is in use
+- Make /server syntax parsing more flexible by allowing both 'address:port' and 'address port'
+- Have the /list command open the channel list panel
+- Handle CABAB command correctly
+- Handle IDENTIFY-MSG correctly
+- Added DCC "Send file" action to query context menu (patch by Jean-Remy Falleri)
+- Fixes related to announcing channel mode changes (patch by Lothar Braun)
+- Added boolean SkipMOTD option to the [Flags] section of konversationrc to skip MOTDs
+- Allow for a channel topic to be cleared by setting an empty topic
+- Minor fix in parsing the /join command
+- Cosmetic improvements to the DCC file transfer UI and DCC event messages
+- 'media' script revamped, improved compatibility with common character sets
+- Major internal changes related to preferences storage
+- Avoid sending a 'clear' command to the server when clearing the buffer in a query tab using the /clear command
 
 Changes from 0.17 to 0.18
 - All nicks were blue when colored nicks are disabled with some setups
