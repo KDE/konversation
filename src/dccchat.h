@@ -71,15 +71,15 @@ class DccChat : public ChatWindow
         /** Called from ChatWindow adjustFocus */
         virtual void childAdjustFocus();
 
-        QString myNick;
-        QString nick;
+        QString m_myNick;
+        QString m_partnerNick;
         QString host;
 
-        QString ip;
-        int port;
+        //QString m_ip;
+        int m_port;
 
-        KLineEdit* sourceLine;
-        IRCInput* dccChatInput;
+        KLineEdit* m_sourceLine;
+        IRCInput* m_dccChatInput;
         KNetwork::KStreamSocket* m_dccSocket;
         KNetwork::KServerSocket* m_listenSocket;
 

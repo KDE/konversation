@@ -43,49 +43,49 @@ DccChat::DccChat(QWidget* parent,Server* newServer,const QString& myNickname,con
     kdDebug() << "DccChat::DccChat() [BEGIN]" << endl;
     m_dccSocket=0;
     m_listenSocket=0;
-    port=0;
+    m_port=0;
 
-    myNick=myNickname;
-    nick=nickname;
+    m_myNick=myNickname;
+    m_partnerNick=nickname;
 
     setType(ChatWindow::DccChat);
     setChannelEncodingSupported(true);
 
-    if(!listen)
+    if ( !listen )
     {
         host=parameters[1];
-        port=parameters[2].toInt();
+        m_port=parameters[2].toInt();
     }
 
     // this is the main box
-    QVBox* mainBox=new QVBox(this);
+    QVBox* mainBox = new QVBox( this );
     mainBox->setSpacing(spacing());
 
-    sourceLine=new KLineEdit(mainBox);
+    m_sourceLine = new KLineEdit( mainBox );
 
-    IRCViewBox* ircViewBox = new IRCViewBox(mainBox, 0);
-    setTextView(ircViewBox->ircView());
+    IRCViewBox* ircViewBox = new IRCViewBox( mainBox, 0 );
+    setTextView( ircViewBox->ircView() );
 
-    dccChatInput=new IRCInput(mainBox);
+    m_dccChatInput = new IRCInput( mainBox );
 
-    sourceLine->setReadOnly(true);
-    dccChatInput->setEnabled(false);
+    m_sourceLine->setReadOnly( true );
+    m_dccChatInput->setEnabled( false );
 
-    setServer(newServer);
-    ChatWindow::setName("-"+nickname+"-");
-    ChatWindow::setLogfileName("-"+nickname+"-");
+    setServer( newServer );
+    ChatWindow::setName( "-" + m_partnerNick + "-" );
+    ChatWindow::setLogfileName( "-" + m_partnerNick + "-" );
 
     // connect the signals and slots
-    connect(dccChatInput,SIGNAL (submit()),this,SLOT (dccChatTextEntered()) );
-    connect(dccChatInput,SIGNAL (textPasted(const QString&)),this,SLOT (textPasted(const QString&)) );
+    connect( m_dccChatInput, SIGNAL( submit() ), this, SLOT( dccChatTextEntered() ) );
+    connect( m_dccChatInput, SIGNAL( textPasted( const QString& ) ), this, SLOT( textPasted( const QString& ) ) );
 
-    connect(getTextView(), SIGNAL(textPasted()), dccChatInput, SLOT(paste()));
-    connect(getTextView(),SIGNAL (gotFocus()),dccChatInput,SLOT (setFocus()) );
-    connect(getTextView(), SIGNAL(updateTabNotification(Konversation::TabNotifyType)),
-        this, SLOT(activateTabNotification(Konversation::TabNotifyType)));
-    connect(getTextView(),SIGNAL (autoText(const QString&)),this,SLOT (sendDccChatText(const QString&)) );
+    connect( getTextView(), SIGNAL( textPasted() ), m_dccChatInput, SLOT( paste() ) );
+    connect( getTextView(), SIGNAL( gotFocus() ), m_dccChatInput, SLOT( setFocus() ) );
+    connect( getTextView(), SIGNAL( updateTabNotification(Konversation::TabNotifyType)),
+        this, SLOT( activateTabNotification( Konversation::TabNotifyType ) ) );
+    connect( getTextView(), SIGNAL( autoText(const QString&) ), this, SLOT( sendDccChatText( const QString& ) ) );
 
-    if(listen)
+    if ( listen )
         listenForPartner();
     else
         connectToPartner();
@@ -145,13 +145,13 @@ void DccChat::listenForPartner()
     connect( m_listenSocket, SIGNAL(readyAccept()), this, SLOT(heardPartner()) );
 
     // Get our own port number
-    const KNetwork::KSocketAddress ipAddr=m_listenSocket->localAddress();
-    const struct sockaddr_in* socketAddress=(sockaddr_in*)ipAddr.address();
-    port=ntohs(socketAddress->sin_port);
-    kdDebug() << "DccChat::listenForPartner(): using port " << port << endl;
+    const KNetwork::KSocketAddress ipAddr = m_listenSocket->localAddress();
+    const struct sockaddr_in* socketAddress = (sockaddr_in*)ipAddr.address();
+    m_port = ntohs( socketAddress->sin_port );
+    kdDebug() << "DccChat::listenForPartner(): using port " << m_port << endl;
 
-    getTextView()->append(i18n("Info"),i18n("Offering DCC Chat connection to %1 on port %2...").arg(nick).arg(port));
-    sourceLine->setText(i18n("DCC chat with %1 on port %2").arg(nick).arg(port));
+    getTextView()->append( i18n("Info"), i18n("Offering DCC Chat connection to %1 on port %2...").arg( m_partnerNick ).arg( m_port ) );
+    m_sourceLine->setText(i18n( "DCC chat with %1 on port %2" ).arg( m_partnerNick ).arg( m_port ) );
 
     kdDebug() << "DccChat::listenForPartner() [END]" << endl;
 }
@@ -163,10 +163,10 @@ void DccChat::connectToPartner()
     ip.setAddress(host.toUInt());
     host=ip.toString();
 
-    getTextView()->append(i18n("Info"),i18n("Establishing DCC Chat connection to %1 (%2:%3)...").arg(nick).arg(host).arg(port));
-    sourceLine->setText(i18n("DCC chat with %1 on %2:%3").arg(nick).arg(host).arg(port));
+    getTextView()->append( i18n( "Info" ), i18n( "Establishing DCC Chat connection to %1 (%2:%3)..." ).arg( m_partnerNick ).arg( host ).arg( m_port ) );
+    m_sourceLine->setText( i18n( "DCC chat with %1 on %2:%3" ).arg( m_partnerNick ).arg( host ).arg( m_port ) );
 
-    m_dccSocket = new KNetwork::KStreamSocket(host, QString::number(port), this);
+    m_dccSocket = new KNetwork::KStreamSocket( host, QString::number( m_port ), this );
 
     m_dccSocket->setBlocking(false);
     m_dccSocket->setFamily(KNetwork::KResolver::InetFamily);
@@ -195,7 +195,7 @@ void DccChat::dccChatConnectionSuccess()
     getTextView()->append(i18n("Info"),i18n("Connection established."));
 
     m_dccSocket->enableRead(true);
-    dccChatInput->setEnabled(true);
+    m_dccChatInput->setEnabled(true);
 }
 
 void DccChat::dccChatBroken(int error)
@@ -237,11 +237,11 @@ void DccChat::readData()
                 QString ctcpArgument=ctcp.section(" ",1);
 
                 if(ctcpCommand.lower()=="action")
-                    getTextView()->appendAction(nick,ctcpArgument);
+                    getTextView()->appendAction( m_partnerNick, ctcpArgument );
                 else
-                    getTextView()->append(i18n("CTCP"),i18n("Received unknown CTCP-%1 request from %2").arg(ctcp).arg(nick));
+                    getTextView()->append( i18n( "CTCP" ), i18n( "Received unknown CTCP-%1 request from %2" ).arg( ctcp ).arg( m_partnerNick ) );
             }
-            else getTextView()->append(nick,lines[index]);
+            else getTextView()->append( m_partnerNick, lines[ index ] );
         }                                         // endfor
     }
     kdDebug() << k_funcinfo << " END" << endl;
@@ -249,12 +249,15 @@ void DccChat::readData()
 
 void DccChat::dccChatTextEntered()
 {
-    QString line=dccChatInput->text();
-    dccChatInput->clear();
-    if(line.lower()=="/clear") textView->clear();
-    else
+    QString line = m_dccChatInput->text();
+    m_dccChatInput->clear();
+    if ( line.lower() == "/clear" )
     {
-        if(line.length()) sendDccChatText(line);
+        textView->clear();
+    }
+    else if ( !line.isEmpty() )
+    {
+        sendDccChatText(line);
     }
 }
 
@@ -285,10 +288,10 @@ void DccChat::sendDccChatText(const QString& sendLine)
             // convert /me actions
             if(line.lower().startsWith(cc+"me "))
             {
-                getTextView()->appendAction(myNick,line.section(" ",1));
+                getTextView()->appendAction( m_myNick, line.section( " ", 1 ) );
                 line=QString("\x01%1 %2\x01").arg("ACTION").arg(line.section(" ",1));
             }
-            else getTextView()->append(myNick,line);
+            else getTextView()->append( m_myNick, line );
 
             stream << line << endl;
         }                                         // endfor
@@ -318,7 +321,7 @@ void DccChat::heardPartner()
     m_listenSocket = 0;
 
     m_dccSocket->enableRead(true);
-    dccChatInput->setEnabled(true);
+    m_dccChatInput->setEnabled(true);
 
     getTextView()->append(i18n("Info"),i18n("Connection established."));
 }
@@ -326,7 +329,7 @@ void DccChat::heardPartner()
 void DccChat::socketClosed()
 {
     getTextView()->appendServerMessage(i18n("Info"),"Connection closed.");
-    dccChatInput->setEnabled(false);
+    m_dccChatInput->setEnabled(false);
     m_dccSocket = 0;
 }
 
@@ -337,32 +340,32 @@ void DccChat::textPasted(const QString& text)
 
 void DccChat::childAdjustFocus()
 {
-    dccChatInput->setFocus();
+    m_dccChatInput->setFocus();
 }
 
-bool DccChat::canBeFrontView()        
-{ 
-  return true; 
+bool DccChat::canBeFrontView()
+{
+    return true;
 }
 
-bool DccChat::searchView()       
-{ 
-  return true; 
+bool DccChat::searchView()
+{
+    return true;
 }
 
-int DccChat::getPort()           
-{ 
-  return port; 
+int DccChat::getPort()
+{
+    return m_port;
 }
 
 QString DccChat::getTextInLine() 
-{ 
-  return dccChatInput->text(); 
+{
+    return m_dccChatInput->text();
 }
 
-void DccChat::appendInputText(const QString& s)
+void DccChat::appendInputText( const QString& s )
 {
-    dccChatInput->setText(dccChatInput->text() + s);
+    m_dccChatInput->setText( m_dccChatInput->text() + s );
 }
 
 bool DccChat::closeYourself()
