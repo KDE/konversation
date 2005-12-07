@@ -7,6 +7,7 @@ Comment[xx]=xxKonversationxx
 
 [message]
 Name=New message
+Name[bg]=Ново съобщение
 Name[br]=Kemennad nevez
 Name[bs]=Nova poruka
 Name[ca]=Nou missatge
@@ -39,6 +40,7 @@ Name[uz]=Янги хабар
 Name[xx]=xxNew messagexx
 Name[zh_CN]=新消息
 Comment=New message arrived in a channel
+Comment[bg]=Пристигна ново съобщение в канала
 Comment[br]=Deuet eo ur postel nevez en ur c'hanol
 Comment[bs]=Nova poruka pristigla na kanal
 Comment[ca]=Ha arribat un nou missatge a un canal
@@ -72,6 +74,7 @@ default_presentation=0
 
 [nick]
 Name=Nick written
+Name[bg]=Написан псевдоним
 Name[bs]=Nick zapisan
 Name[ca]=Escriure sobrenom
 Name[cs]=Zapsána přezdívka
@@ -99,6 +102,7 @@ Name[uk]=Написане прізвисько
 Name[xx]=xxNick writtenxx
 Name[zh_CN]=昵称写入
 Comment=Someone wrote your nick in a message
+Comment[bg]=Псевдонимът Ви бе написан в съобщение
 Comment[bs]=Neko je spomenuo vaš nick u poruci
 Comment[ca]=Algú ha escrit el vostre sobrenom en un missatge
 Comment[cs]=Někdo ve zprávě napsal vaší přezdívku
@@ -129,6 +133,7 @@ default_presentation=0
 
 [nickchange]
 Name=Nick changed
+Name[bg]=Псевдонимът е променен
 Name[bs]=Nick promijenjen
 Name[ca]=Sobrenom canviat
 Name[cs]=Přezdívka změněna
@@ -158,6 +163,7 @@ Name[uk]=Змінене прізвисько
 Name[xx]=xxNick changedxx
 Name[zh_CN]=昵称改变
 Comment=Someone changed their nick
+Comment[bg]=Някой си смени псевдонима
 Comment[bs]=Neko je promijenio svoj nick
 Comment[ca]=Algú ha canviat el seu sobrenom
 Comment[cs]=Někdo změnil svou přezdívku
@@ -188,6 +194,7 @@ default_presentation=0
 
 [dcc_incoming]
 Name=Incoming file
+Name[bg]=Пристигащ файл
 Name[br]=Restr resev
 Name[bs]=Dolazeća datoteka
 Name[ca]=Fitxer entrant
@@ -218,6 +225,7 @@ Name[uk]=Вхідний файл
 Name[xx]=xxIncoming filexx
 Name[zh_CN]=收到的文件
 Comment=Someone wants to transmit a file to you over DCC
+Comment[bg]=Някой иска да ви изпрати файл чрез DCC
 Comment[bs]=Neko želi da vam pošalje datoteku koristeći DCC
 Comment[ca]=Algú desitja enviar-vos un fitxer sobre DCC
 Comment[cs]=Někdo vám chce přes DCC poslat soubor
@@ -248,6 +256,7 @@ default_prentation=0
 
 [join]
 Name=Nick joined channel
+Name[bg]=Псевдонимът се присъедини към канала
 Name[bs]=Nick se pridružio kanalu
 Name[ca]=El sobrenom ha accedit al canal
 Name[cs]=Přezdívka se objevila na kanálu
@@ -276,6 +285,7 @@ Name[uk]=Прізвисько приєдналось до каналу
 Name[xx]=xxNick joined channelxx
 Name[zh_CN]=昵称加入频道
 Comment=New nick joined a channel
+Comment[bg]=Нов псевдоним се присъедини към канала
 Comment[bs]=Novi nick se pridružio kanalu
 Comment[ca]=Un nou sobrenom ha accedit a un canal
 Comment[cs]=Na kanálu se objevila nová přezdívka
@@ -306,6 +316,7 @@ default_presentation=0
 
 [part]
 Name=Nick left channel
+Name[bg]=Псевдонимът напусна канала
 Name[bs]=Nick napustio kanal
 Name[ca]=El sobrenom ha abandonat el canal
 Name[cs]=Přezdívka opustila kanál
@@ -334,6 +345,7 @@ Name[uk]=Прізвисько покинуло канал
 Name[xx]=xxNick left channelxx
 Name[zh_CN]=昵称离开频道
 Comment=A nick left a channel
+Comment[bg]=Псевдонимът напусна канала
 Comment[bs]=Nick je napustio kanal
 Comment[ca]=Un sobrenom ha deixat un canal
 Comment[cs]=Přezdívka opustila kanál
@@ -363,6 +375,7 @@ default_presentation=0
 
 [mode]
 Name=Mode change
+Name[bg]=Смяна на режим
 Name[bs]=Promjena režima
 Name[ca]=Mode canviat
 Name[cs]=Změna režimu
@@ -392,6 +405,7 @@ Name[uk]=Зміна режиму
 Name[xx]=xxMode changexx
 Name[zh_CN]=模式改变
 Comment=A user or channel mode was changed
+Comment[bg]=Променен е потребителски режим или канал
 Comment[bs]=Mod korisnika ili kanala je promijenjen
 Comment[ca]=A mode d'usuari o de canal ha estat canviat
 Comment[cs]=Uživatel nebo kanál byl změněn
@@ -422,6 +436,7 @@ default_presentation=0
 
 [notify]
 Name=Notify
+Name[bg]=Известяване
 Name[bs]=Obavijesti
 Name[ca]=Notificació
 Name[da]=Bekendtgør
@@ -449,6 +464,7 @@ Name[uk]=Сповіщати
 Name[xx]=xxNotifyxx
 Name[zh_CN]=通告
 Comment=A user on your watched nicks list has come online
+Comment[bg]=Потребител от Вашия списък за наблюдение на псевдоними влезе в канала
 Comment[cs]=Uživatel z vašeho seznamu je online
 Comment[da]=En bruger på din liaste af aliasser gik online
 Comment[el]=Ένας χρήστης από τη λίστα ψευδώνυμων παρακολούθησης συνδέθηκε στο δίκτυο
@@ -476,6 +492,7 @@ default_presentation=0
 
 [query]
 Name=Query
+Name[bg]=Запитване
 Name[br]=Goulenn
 Name[cs]=Dotaz
 Name[cy]=Ymholiad
@@ -501,6 +518,7 @@ Name[tr]=Sorgu
 Name[uk]=Запит
 Name[xx]=xxQueryxx
 Comment=Someone started a conversation (query) with you
+Comment[bg]=Някой е започнал разговор (запитване) с Вас
 Comment[cs]=Někdo s vámi zahájil rozhovor (dotaz)
 Comment[da]=Nogen startede en konversation (query) med dig
 Comment[el]=Κάποιος ξεκίνησε μια συζήτηση (ερώτηση) μαζί σας
@@ -526,6 +544,7 @@ default_presentation=0
 
 [kick]
 Name=Kick
+Name[bg]=Изритване
 Name[cs]=Vykopnutí
 Name[cy]=Lluchio
 Name[el]=Απομάκρυνση
@@ -542,6 +561,7 @@ Name[tr]=Kanaldan at
 Name[uk]=Виштовхнуто
 Name[xx]=xxKickxx
 Comment=Someone kicked you out of a channel
+Comment[bg]=Някой Ви изрита от канала
 Comment[cs]=Někdo vás vykopnul z kanálu
 Comment[da]=Nogen sparkede dig ud af kanalen
 Comment[el]=Κάποιος σας απομάκρυνε από ένα κανάλι
@@ -566,6 +586,7 @@ default_presentation=0
 
 [dccChat]
 Name=Dcc Chat
+Name[bg]=Dcc чат
 Name[br]=Flapañ Dcc
 Name[cs]=Dcc pokec
 Name[da]=Dcc-chat
@@ -590,6 +611,7 @@ Name[tr]=Dcc sohbet
 Name[uk]=Балачка Dcc
 Name[xx]=xxDcc Chatxx
 Comment=Someone started a dcc chat with you
+Comment[bg]=Някой е започнал разговор с Вас в dcc
 Comment[cs]=Někdo si s vámi chce pokecat přes dcc
 Comment[da]=Nogen startede en dcc-chat med dig
 Comment[el]=Κάποιος ξεκίνησε μια συζήτηση dcc μαζί σας

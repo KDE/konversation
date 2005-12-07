@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Theme
 Name=Christmas Theme
+Name[bg]=Коледна тема
 Name[br]=Giz Nedeleg
 Name[cs]=Vánoční téma
 Name[da]=Juletema
@@ -24,6 +25,7 @@ Name[tr]=Noel Teması
 Name[uk]=Різдвяна тема
 Name[xx]=xxChristmas Themexx
 Comment="Christmas Theme" by Kenichiro Takahashi
+Comment[bg]="Коледна тема" от Kenichiro Takahashi
 Comment[cs]=Vánoční téma od Kenichiro Takahashi
 Comment[da]="Juletema" af Kenichiro Takahashi
 Comment[el]="Χριστουγεννιάτικο θέμα" από Kenichiro Takahashi

@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Theme
 Name=Smiling Theme
+Name[bg]=Тема "Усмивка"
 Name[br]=Giz Mousc'hoarzh
 Name[cs]=Smajlíkové téma
 Name[da]=Smilende tema
@@ -25,6 +26,7 @@ Name[tr]=Gülümseyen Tema
 Name[uk]=Тема посмішок
 Name[xx]=xxSmiling Themexx
 Comment="Smiling" stolen from Kopete by John Tapsell
+Comment[bg]=Тема "Усмивка" е откраднато от Kopete от John Tapsell
 Comment[cs]=Smajlíkové téma od Johna Tapsella převzato z Kopete
 Comment[da]="Smilende" stjålet fra Kopete af John Tapsell
 Comment[el]="Χαμόγελο" κλεμμένο από το Kopete από John Tapsell
