@@ -306,9 +306,9 @@ void DccChat::heardPartner()
 {
     m_dccSocket = static_cast<KNetwork::KStreamSocket*>( m_listenSocket->accept() );
 
-    if(!m_dccSocket)
+    if( !m_dccSocket )
     {
-        deleteLater();
+        getTextView()->append( i18n( "Info" ),i18n( "Could not accept the client." ) );
         return;
     }
 
