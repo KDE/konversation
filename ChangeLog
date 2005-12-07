@@ -34,6 +34,7 @@ Changes from 0.18 to 0.19
 - Cosmetic improvements to the DCC file transfer UI and DCC event messages
 - 'media' script revamped, improved compatibility with common character sets
 - Major internal changes related to preferences storage
+- Improvements to socket handling in DCC chats
 
 Changes from 0.17 to 0.18
 - All nicks were blue when colored nicks are disabled with some setups
