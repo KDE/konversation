@@ -205,7 +205,7 @@ void DccChat::dccChatBroken(int error)
 
 void DccChat::readData()
 {
-    kdDebug() << k_funcinfo << " BEGIN" << endl;
+    kdDebug() << k_funcinfo << ( m_listenSocket == 0 ) << " BEGIN" << endl;
     int available=0;
     int actual=0;
     char* buffer=0;
@@ -317,6 +317,7 @@ void DccChat::heardPartner()
     connect( m_dccSocket, SIGNAL( gotError( int ) ), this, SLOT( dccChatBroken( int ) ) );
 
     // the listen socket isn't needed anymore
+    disconnect( m_listenSocket, 0, 0, 0 );
     m_listenSocket->close();
     m_listenSocket = 0;
 
