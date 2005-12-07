@@ -220,10 +220,7 @@ void DccChat::readData()
         buffer[ actual ] = 0;
         line.append( codec->toUnicode( buffer ) );
         delete[] buffer;
-    }
 
-    if(!line.isEmpty())
-    {
         QStringList lines=QStringList::split('\n',line);
 
         for(unsigned int index=0;index<lines.count();index++)
