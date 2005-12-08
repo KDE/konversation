@@ -16,11 +16,10 @@ public:
     ~Warnings_Config();
     QString flagNames;
 
-protected slots:
+public slots:
     virtual void languageChange();
-    virtual void slotApply();
+    virtual void saveSettings();
     virtual void updateWidgets();
-	    
 
 };
 

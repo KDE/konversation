@@ -181,14 +181,10 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   addPage ( confOSDWdg, pagePath, "tv", i18n("On Screen Display") );
 
   //Warning Dialogs
-  Warnings_Config* confWarningsWdg = new Warnings_Config( this, "Warnings" );
+  m_confWarningsWdg = new Warnings_Config( this, "Warnings" );
   pagePath.clear();
   pagePath << i18n("Warning Dialogs");
-  addPage ( confWarningsWdg, i18n("Warning Dialogs"), "messagebox_warning", i18n("Warning Dialogs") );
-//FIXME - how to do this?
-  //  connect(dialog, SIGNAL(updateSettings()), confWarningsWdg, SLOT(updateSettings()));
-//  connect(dialog, SIGNAL(updateWidgets()), confWarningsWdg, SLOT(updateWidgets()));
-
+  addPage ( m_confWarningsWdg, i18n("Warning Dialogs"), "messagebox_warning", i18n("Warning Dialogs") );
 
   unfoldTreeList();
 }
@@ -198,10 +194,12 @@ KonviSettingsDialog::~KonviSettingsDialog()
 }
 void KonviSettingsDialog::updateSettings()
 {
+  m_confWarningsWdg->saveSettings();
 }
 
 void KonviSettingsDialog::updateWidgets()
 {
+  m_confWarningsWdg->updateWidgets();
 }
 
 void KonviSettingsDialog::updateWidgetsDefault()

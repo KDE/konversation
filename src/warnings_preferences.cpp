@@ -5,15 +5,11 @@
 #include <kapplication.h>
 #include <kconfig.h>
 #include "konviconfigdialog.h"
+#include <kdebug.h>
 
 Warnings_Config::Warnings_Config( QWidget* parent, const char* name, WFlags fl )
     : Warnings_ConfigUI( parent, name, fl )
 {
-    KonviConfigDialog *conf = static_cast<KonviConfigDialog *>( parent );
-    connect( conf, SIGNAL( applyClicked() ), this, SLOT( slotApply() ) );
-    connect( conf, SIGNAL( okClicked() ), this, SLOT( slotApply() ) );
-    connect( conf, SIGNAL( sigUpdateWidgets() ), this, SLOT( updateWidgets() ) );
-
     updateWidgets();
 }
 
@@ -22,9 +18,8 @@ Warnings_Config::~Warnings_Config()
 
 }
 
-void Warnings_Config::slotApply()
+void Warnings_Config::saveSettings()
 {
-
   KConfig* config = kapp->config();
   config->setGroup("Notification Messages");
   

@@ -36,10 +36,14 @@
 #include <qasciidict.h>
 
 #include "konviconfigdialog.h"
+class Warnings_Config;
 
 class KDEUI_EXPORT KonviSettingsDialog : public KonviConfigDialog
 {
     Q_OBJECT
+
+    protected:
+	Warnings_Config* m_confWarningsWdg;
 
     public:
         KonviSettingsDialog( QWidget *parent);
