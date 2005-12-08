@@ -49,6 +49,7 @@ class Ignore;
 class NicksOnline;
 class QuickButtonsDialog;
 class UrlCatcher;
+class KonviSettingsDialog;
 
 namespace Konversation
 {
@@ -255,5 +256,6 @@ class KonversationMainWindow : public KMainWindow
 
         KPopupMenu* m_bookmarks;
         KonviBookmarkHandler* m_bookmarkHandler;
+	KonviSettingsDialog *m_settingsDialog;
 };
 #endif

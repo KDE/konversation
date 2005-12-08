@@ -18,7 +18,7 @@
 #include <qsignalmapper.h>
 #include <qpoint.h>
 
-#include <konviconfigdialog.h>
+#include <konvisettingsdialog.h>
 #include <kaccel.h>
 #include <kstdaction.h>
 #include <kaction.h>
@@ -48,24 +48,6 @@
 #include <knotifydialog.h>
 #endif
 
-#include "chatwindowappearance_preferences.h"
-#include "connectionbehavior_preferences.h"
-#include "highlight_preferences.h"
-#include "warnings_preferences.h"
-#include "chatwindowappearance_preferences.h"
-#include "log_preferences.h"
-#include "quickbuttons_preferences.h"
-#include "watchednicknames_preferences.h"
-#include "chatwindowbehaviour_preferences.h"
-#include "fontappearance_preferences.h"
-#include "nicklistbehavior_preferences.h"
-#include "tabbar_preferences.h"
-#include "colorsappearance_preferences.h"
-#include "generalbehavior_preferences.h"
-#include "ex_dcc_preferences.h"
-#include "ex_osd_preferences.h"
-#include "ex_theme_preferences.h"
-#include "ex_alias_preferences.h"
 
 #include "linkaddressbook/addressbook.h"
 #include "konversationmainwindow.h"
@@ -110,6 +92,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
     m_insertCharDialog = 0;
     m_serverListDialog = 0;
     m_popupTabIndex = -1;
+    m_settingsDialog = NULL;
 
     dccTransferHandler=new DccTransferHandler(this);
 
@@ -345,143 +328,15 @@ void KonversationMainWindow::openPrefsDialog()
   //An instance of your dialog could be already created and could be cached,
   //in which case you want to display the cached dialog instead of creating
   //another one
-  if ( KonviConfigDialog::showDialog( "settings" ) )
-    return;
+  if(!m_settingsDialog) {
+    m_settingsDialog = new KonviSettingsDialog(this);
+    //User edited the configuration - update your local copies of the
+    //configuration data
+    connect(m_settingsDialog, SIGNAL(settingsChanged()), this, SLOT(appearanceChanged()));
 
-  //KConfigDialog didn't find an instance of this dialog, so lets create it :
-  KonviConfigDialog* dialog = new KonviConfigDialog( this, "settings", Preferences::self(), KDialogBase::TreeList );
-  dialog->setShowIconsInTreeList(true); 
-
-  QStringList iconPath;
-
-  iconPath << i18n("Appearance");
-  dialog->setFolderIcon( iconPath, SmallIcon("looknfeel") );
-
-  iconPath.clear();
-  iconPath << i18n("Behavior");
-  dialog->setFolderIcon( iconPath, SmallIcon("configure") );
-
-  iconPath.clear();
-  iconPath<< i18n("Behavior");
-  dialog->setFolderIcon( iconPath, SmallIcon("configure") );
-
-  iconPath.clear();
-  iconPath<< i18n("Notifications");
-  dialog->setFolderIcon( iconPath, SmallIcon("playsound") );
-
-  QStringList pagePath;
-
-  //Appearance/Chat Window
-  ChatWindowAppearance_Config* confChatWindowAppearanceWdg = new ChatWindowAppearance_Config( 0, "ChatWindowAppearance" );
-  pagePath.clear();
-  pagePath << i18n("Appearance") << i18n("Chat Window");
-  dialog->addPage ( confChatWindowAppearanceWdg, pagePath, "view_text", i18n("Chat Window") );
-
-  //Appearance/Fonts
-  FontAppearance_Config* confFontAppearanceWdg = new FontAppearance_Config( dialog, "FontAppearance" );
-  pagePath.clear();
-  pagePath << i18n("Appearance") << i18n("Fonts");
-  dialog->addPage ( confFontAppearanceWdg, pagePath, "fonts", i18n("Fonts") );
-
-  //Appearance/Themes
-  Theme_Config_Ext* confThemeWdg = new Theme_Config_Ext( dialog, "Theme" );
-  pagePath.clear();
-  pagePath << i18n("Appearance") << i18n("Themes");
-  dialog->addPage ( confThemeWdg, pagePath, "iconthemes", i18n("Themes") );
-
-  //Appearance/Colors
-  ColorsAppearance_Config* confColorsAppearanceWdg = new ColorsAppearance_Config( dialog, "ColorsAppearance" );
-  pagePath.clear();
-  pagePath << i18n("Appearance") << i18n("Colors");
-  dialog->addPage ( confColorsAppearanceWdg, pagePath, "colorize", i18n("Colors") );
-
-  //Behavior/General
-  GeneralBehavior_Config* confGeneralBehaviorWdg = new GeneralBehavior_Config( dialog, "GeneralBehavior" );
-  pagePath.clear();
-  pagePath << i18n("Behavior") << i18n("General");
-  dialog->addPage ( confGeneralBehaviorWdg, pagePath, "exec", i18n("General") );
-
-  //Behavior/Connection
-  ConnectionBehavior_Config* confConnectionBehaviorWdg = new ConnectionBehavior_Config( dialog, "ConnectionBehavior" );
-  pagePath.clear();
-  pagePath << i18n("Behavior") << i18n("Connection");
-  dialog->addPage ( confConnectionBehaviorWdg, pagePath, "connect_creating", i18n("Connection") );
-
-  //Behaviour/Chat Window
-  ChatwindowBehaviour_Config* confChatwindowBehaviourWdg = new ChatwindowBehaviour_Config( dialog, "ChatwindowBehaviour" );
-  pagePath.clear();
-  pagePath << i18n("Behavior") << i18n("Chat Window");
-  dialog->addPage ( confChatwindowBehaviourWdg, pagePath, "view_text", i18n("Chat Window") );
-
-  //Behaviour/Nickname List
-  NicklistBehavior_Config* confNicklistBehaviorWdg = new NicklistBehavior_Config( dialog, "NicklistBehavior" );
-  pagePath.clear();
-  pagePath << i18n("Behavior") << i18n("Nickname List");
-  dialog->addPage ( confNicklistBehaviorWdg, pagePath, "player_playlist", i18n("Nickname List") );
-
-  //Behaviour/Tab Bar
-  TabBar_Config* confTabBarWdg = new TabBar_Config( dialog, "TabBar" );
-  pagePath.clear();
-  pagePath << i18n("Behavior") << i18n("Tab Bar");
-  dialog->addPage ( confTabBarWdg, pagePath, "tab_new", i18n("Tab Bar") );
-
-  //Behaviour/Command Aliases
-  Alias_Config_Ext* confAliasWdg = new Alias_Config_Ext( dialog, "Alias" );
-  pagePath.clear();
-  pagePath << i18n("Behavior") << i18n("Command Aliases");
-  dialog->addPage ( confAliasWdg, pagePath, "editcopy", i18n(" Command Aliases") );
-
-  //Behaviour/Quick Buttons
-  QuickButtons_Config* confQuickButtonsWdg = new QuickButtons_Config( dialog, "QuickButtons" );
-  pagePath.clear();
-  pagePath << i18n("Behavior") << i18n("Quick Buttons");
-  dialog->addPage ( confQuickButtonsWdg, pagePath, "keyboard", i18n("Quick Buttons") );
-
-  //Behaviour/Logging
-  Log_Config* confLogWdg = new Log_Config( dialog, "Log" );
-  pagePath.clear();
-  pagePath << i18n("Behavior") << i18n("Logging");
-  dialog->addPage ( confLogWdg, pagePath, "log", i18n("Logging") );
-
-  DCC_Config_Ext* confDCCWdg = new DCC_Config_Ext( dialog, "DCC" );
-  pagePath.clear();
-  pagePath << i18n("Behavior") << i18n("DCC");
-  dialog->addPage ( confDCCWdg, pagePath, "2rightarrow", i18n("DCC") );
-
-  //Notification/Watched Nicknames
-  WatchedNicknames_Config* confWatchedNicknamesWdg = new WatchedNicknames_Config( dialog, "WatchedNicknames" );
-  pagePath.clear();
-  pagePath << i18n("Notifications") << i18n("Watched Nicknames");
-  dialog->addPage ( confWatchedNicknamesWdg, pagePath, "kfind", i18n("Watched Nicknames") );
-
-  //Notification/Highlighting
-  Highlight_Config* confHighlightWdg = new Highlight_Config( dialog, "Highlight" );
-  pagePath.clear();
-  pagePath << i18n("Notifications") << i18n("Highlight");
-  dialog->addPage ( confHighlightWdg, pagePath, "paintbrush", i18n("Highlight") );
-
-  //Notification/On Screen Display
-  OSD_Config_Ext* confOSDWdg = new OSD_Config_Ext( dialog, "OSD" );
-  pagePath.clear();
-  pagePath << i18n("Notifications") << i18n("On Screen Display");
-  dialog->addPage ( confOSDWdg, pagePath, "tv", i18n("On Screen Display") );
-
-  //Warning Dialogs
-  Warnings_Config* confWarningsWdg = new Warnings_Config( dialog, "Warnings" );
-  pagePath.clear();
-  pagePath << i18n("Warning Dialogs");
-  dialog->addPage ( confWarningsWdg, i18n("Warning Dialogs"), "messagebox_warning", i18n("Warning Dialogs") );
-//FIXME - how to do this?
-  //  connect(dialog, SIGNAL(updateSettings()), confWarningsWdg, SLOT(updateSettings()));
-//  connect(dialog, SIGNAL(updateWidgets()), confWarningsWdg, SLOT(updateWidgets()));
-
-  //User edited the configuration - update your local copies of the
-  //configuration data
-  connect(dialog, SIGNAL(settingsChanged()), this, SLOT(appearanceChanged()));
-
-  dialog->unfoldTreeList();
-
-  dialog->show();
+  }
+  m_settingsDialog->show();
+  
 }
 
 void KonversationMainWindow::openPrefsDialog(Preferences::Pages /*page*/)

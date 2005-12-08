@@ -272,3 +272,4 @@ void KonviConfigDialog::updateWidgets()
 void KonviConfigDialog::updateWidgetsDefault()
 {
 }
+

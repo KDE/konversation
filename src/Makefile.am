@@ -5,7 +5,7 @@ METASOURCES = AUTO
 bin_PROGRAMS = konversation
 bin_SCRIPTS = konversationircprotocolhandler
 
-konversation_SOURCES = konviface.skel konviconfigdialog.cpp\
+konversation_SOURCES = konviface.skel konviconfigdialog.cpp konvisettingsdialog.cpp\
 	 konversationmainwindow.cpp valuelistviewitem.cpp urlcatcher.cpp searchdialog.cpp \
 	 scriptlauncher.cpp rawlog.cpp \
 	 konvdcop.cpp channellistpanel.cpp konsolepanel.cpp \

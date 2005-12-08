@@ -18,7 +18,7 @@ public:
 
 protected slots:
     virtual void languageChange();
-    virtual void updateSettings();
+    virtual void slotApply();
     virtual void updateWidgets();
 	    
 

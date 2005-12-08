@@ -54,6 +54,8 @@ class KDEUI_EXPORT KonviConfigDialog : public KDialogBase
 
     void settingsChanged(const char *dialogName);
 
+    void sigUpdateWidgets();
+
     public:
         KonviConfigDialog( QWidget *parent, const char *name,
                            KConfigSkeleton *config,
