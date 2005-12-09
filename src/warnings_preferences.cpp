@@ -60,6 +60,7 @@ void Warnings_Config::updateWidgets()
     item->setText(1,dialogDefinitions[index]);
     item->setOn(config->readBoolEntry(flagNames.section(",",index,index), true));
   }
+  connect(dialogListView, SIGNAL(clicked(QListViewItem *)), this, SIGNAL(modified()));
 }
 
 /*

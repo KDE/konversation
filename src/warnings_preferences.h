@@ -20,7 +20,8 @@ public slots:
     virtual void languageChange();
     virtual void saveSettings();
     virtual void updateWidgets();
-
+signals:
+    void modified();
 };
 
 #endif // WARNINGS_CONFIG_H

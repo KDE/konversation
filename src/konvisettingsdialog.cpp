@@ -64,6 +64,7 @@
 KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
 	           KonviConfigDialog( parent, "settings", Preferences::self(), KDialogBase::TreeList)
 {
+  m_modified = false;
   setShowIconsInTreeList(true); 
 
   QStringList iconPath;
@@ -185,16 +186,22 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   pagePath.clear();
   pagePath << i18n("Warning Dialogs");
   addPage ( m_confWarningsWdg, i18n("Warning Dialogs"), "messagebox_warning", i18n("Warning Dialogs") );
-
+  connect(m_confWarningsWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
   unfoldTreeList();
 }
 
+void KonviSettingsDialog::modifiedSlot()
+{
+  m_modified = true;
+  updateButtons();
+}
 KonviSettingsDialog::~KonviSettingsDialog()
 {
 }
 void KonviSettingsDialog::updateSettings()
 {
   m_confWarningsWdg->saveSettings();
+  m_modified = false;
 }
 
 void KonviSettingsDialog::updateWidgets()

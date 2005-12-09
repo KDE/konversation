@@ -44,6 +44,7 @@ class KDEUI_EXPORT KonviSettingsDialog : public KonviConfigDialog
 
     protected:
 	Warnings_Config* m_confWarningsWdg;
+	bool m_modified;
 
     public:
         KonviSettingsDialog( QWidget *parent);
@@ -56,9 +57,9 @@ class KDEUI_EXPORT KonviSettingsDialog : public KonviConfigDialog
         virtual void updateWidgets();
 
         virtual void updateWidgetsDefault();
-
+ 	void modifiedSlot();
     protected:
-        virtual bool hasChanged() { return false; }
+        virtual bool hasChanged() { return m_modified; }
 
         virtual bool isDefault() { return true; }
 
