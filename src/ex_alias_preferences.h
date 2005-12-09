@@ -21,6 +21,7 @@ class Alias_Config_Ext : public Alias_Config
  protected slots:
   void newAlias();
   void removeAlias();
+ public slots:
   void saveAliases();
   
  protected:

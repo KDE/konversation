@@ -33,7 +33,6 @@ Alias_Config_Ext::Alias_Config_Ext(QWidget* parent, const char* name)
 
   connect(newButton,SIGNAL (clicked()),this,SLOT (newAlias()) );
   connect(removeButton,SIGNAL (clicked()),this,SLOT (removeAlias()) );
-  connect(parent, SIGNAL(okClicked()), this, SLOT(saveAliases()));
     
 }
 

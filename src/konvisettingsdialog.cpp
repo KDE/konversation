@@ -87,99 +87,99 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   QStringList pagePath;
 
   //Appearance/Chat Window
-  ChatWindowAppearance_Config* confChatWindowAppearanceWdg = new ChatWindowAppearance_Config( 0, "ChatWindowAppearance" );
+  m_confChatWindowAppearanceWdg = new ChatWindowAppearance_Config( 0, "ChatWindowAppearance" );
   pagePath.clear();
   pagePath << i18n("Appearance") << i18n("Chat Window");
-  addPage ( confChatWindowAppearanceWdg, pagePath, "view_text", i18n("Chat Window") );
+  addPage ( m_confChatWindowAppearanceWdg, pagePath, "view_text", i18n("Chat Window") );
 
   //Appearance/Fonts
-  FontAppearance_Config* confFontAppearanceWdg = new FontAppearance_Config( this, "FontAppearance" );
+  m_confFontAppearanceWdg = new FontAppearance_Config( this, "FontAppearance" );
   pagePath.clear();
   pagePath << i18n("Appearance") << i18n("Fonts");
-  addPage ( confFontAppearanceWdg, pagePath, "fonts", i18n("Fonts") );
+  addPage ( m_confFontAppearanceWdg, pagePath, "fonts", i18n("Fonts") );
 
   //Appearance/Themes
-  Theme_Config_Ext* confThemeWdg = new Theme_Config_Ext( this, "Theme" );
+  m_confThemeWdg = new Theme_Config_Ext( this, "Theme" );
   pagePath.clear();
   pagePath << i18n("Appearance") << i18n("Themes");
-  addPage ( confThemeWdg, pagePath, "iconthemes", i18n("Themes") );
+  addPage ( m_confThemeWdg, pagePath, "iconthemes", i18n("Themes") );
 
   //Appearance/Colors
-  ColorsAppearance_Config* confColorsAppearanceWdg = new ColorsAppearance_Config( this, "ColorsAppearance" );
+  m_confColorsAppearanceWdg = new ColorsAppearance_Config( this, "ColorsAppearance" );
   pagePath.clear();
   pagePath << i18n("Appearance") << i18n("Colors");
-  addPage ( confColorsAppearanceWdg, pagePath, "colorize", i18n("Colors") );
+  addPage ( m_confColorsAppearanceWdg, pagePath, "colorize", i18n("Colors") );
 
   //Behavior/General
-  GeneralBehavior_Config* confGeneralBehaviorWdg = new GeneralBehavior_Config( this, "GeneralBehavior" );
+  m_confGeneralBehaviorWdg = new GeneralBehavior_Config( this, "GeneralBehavior" );
   pagePath.clear();
   pagePath << i18n("Behavior") << i18n("General");
-  addPage ( confGeneralBehaviorWdg, pagePath, "exec", i18n("General") );
+  addPage ( m_confGeneralBehaviorWdg, pagePath, "exec", i18n("General") );
 
   //Behavior/Connection
-  ConnectionBehavior_Config* confConnectionBehaviorWdg = new ConnectionBehavior_Config( this, "ConnectionBehavior" );
+  m_confConnectionBehaviorWdg = new ConnectionBehavior_Config( this, "ConnectionBehavior" );
   pagePath.clear();
   pagePath << i18n("Behavior") << i18n("Connection");
-  addPage ( confConnectionBehaviorWdg, pagePath, "connect_creating", i18n("Connection") );
+  addPage ( m_confConnectionBehaviorWdg, pagePath, "connect_creating", i18n("Connection") );
 
   //Behaviour/Chat Window
-  ChatwindowBehaviour_Config* confChatwindowBehaviourWdg = new ChatwindowBehaviour_Config( this, "ChatwindowBehaviour" );
+  m_confChatwindowBehaviourWdg = new ChatwindowBehaviour_Config( this, "ChatwindowBehaviour" );
   pagePath.clear();
   pagePath << i18n("Behavior") << i18n("Chat Window");
-  addPage ( confChatwindowBehaviourWdg, pagePath, "view_text", i18n("Chat Window") );
+  addPage ( m_confChatwindowBehaviourWdg, pagePath, "view_text", i18n("Chat Window") );
 
   //Behaviour/Nickname List
-  NicklistBehavior_Config* confNicklistBehaviorWdg = new NicklistBehavior_Config( this, "NicklistBehavior" );
+  m_confNicklistBehaviorWdg = new NicklistBehavior_Config( this, "NicklistBehavior" );
   pagePath.clear();
   pagePath << i18n("Behavior") << i18n("Nickname List");
-  addPage ( confNicklistBehaviorWdg, pagePath, "player_playlist", i18n("Nickname List") );
+  addPage ( m_confNicklistBehaviorWdg, pagePath, "player_playlist", i18n("Nickname List") );
 
   //Behaviour/Tab Bar
-  TabBar_Config* confTabBarWdg = new TabBar_Config( this, "TabBar" );
+  m_confTabBarWdg = new TabBar_Config( this, "TabBar" );
   pagePath.clear();
   pagePath << i18n("Behavior") << i18n("Tab Bar");
-  addPage ( confTabBarWdg, pagePath, "tab_new", i18n("Tab Bar") );
+  addPage ( m_confTabBarWdg, pagePath, "tab_new", i18n("Tab Bar") );
 
   //Behaviour/Command Aliases
-  Alias_Config_Ext* confAliasWdg = new Alias_Config_Ext( this, "Alias" );
+  m_confAliasWdg = new Alias_Config_Ext( this, "Alias" );
   pagePath.clear();
   pagePath << i18n("Behavior") << i18n("Command Aliases");
-  addPage ( confAliasWdg, pagePath, "editcopy", i18n(" Command Aliases") );
+  addPage ( m_confAliasWdg, pagePath, "editcopy", i18n(" Command Aliases") );
 
   //Behaviour/Quick Buttons
-  QuickButtons_Config* confQuickButtonsWdg = new QuickButtons_Config( this, "QuickButtons" );
+  m_confQuickButtonsWdg = new QuickButtons_Config( this, "QuickButtons" );
   pagePath.clear();
   pagePath << i18n("Behavior") << i18n("Quick Buttons");
-  addPage ( confQuickButtonsWdg, pagePath, "keyboard", i18n("Quick Buttons") );
+  addPage ( m_confQuickButtonsWdg, pagePath, "keyboard", i18n("Quick Buttons") );
 
   //Behaviour/Logging
-  Log_Config* confLogWdg = new Log_Config( this, "Log" );
+  m_confLogWdg = new Log_Config( this, "Log" );
   pagePath.clear();
   pagePath << i18n("Behavior") << i18n("Logging");
-  addPage ( confLogWdg, pagePath, "log", i18n("Logging") );
+  addPage ( m_confLogWdg, pagePath, "log", i18n("Logging") );
 
-  DCC_Config_Ext* confDCCWdg = new DCC_Config_Ext( this, "DCC" );
+  m_confDCCWdg = new DCC_Config_Ext( this, "DCC" );
   pagePath.clear();
   pagePath << i18n("Behavior") << i18n("DCC");
-  addPage ( confDCCWdg, pagePath, "2rightarrow", i18n("DCC") );
+  addPage ( m_confDCCWdg, pagePath, "2rightarrow", i18n("DCC") );
 
   //Notification/Watched Nicknames
-  WatchedNicknames_Config* confWatchedNicknamesWdg = new WatchedNicknames_Config( this, "WatchedNicknames" );
+  m_confWatchedNicknamesWdg = new WatchedNicknames_Config( this, "WatchedNicknames" );
   pagePath.clear();
   pagePath << i18n("Notifications") << i18n("Watched Nicknames");
-  addPage ( confWatchedNicknamesWdg, pagePath, "kfind", i18n("Watched Nicknames") );
+  addPage ( m_confWatchedNicknamesWdg, pagePath, "kfind", i18n("Watched Nicknames") );
 
   //Notification/Highlighting
-  Highlight_Config* confHighlightWdg = new Highlight_Config( this, "Highlight" );
+  m_confHighlightWdg = new Highlight_Config( this, "Highlight" );
   pagePath.clear();
   pagePath << i18n("Notifications") << i18n("Highlight");
-  addPage ( confHighlightWdg, pagePath, "paintbrush", i18n("Highlight") );
+  addPage ( m_confHighlightWdg, pagePath, "paintbrush", i18n("Highlight") );
 
   //Notification/On Screen Display
-  OSD_Config_Ext* confOSDWdg = new OSD_Config_Ext( this, "OSD" );
+  m_confOSDWdg = new OSD_Config_Ext( this, "OSD" );
   pagePath.clear();
   pagePath << i18n("Notifications") << i18n("On Screen Display");
-  addPage ( confOSDWdg, pagePath, "tv", i18n("On Screen Display") );
+  addPage ( m_confOSDWdg, pagePath, "tv", i18n("On Screen Display") );
 
   //Warning Dialogs
   m_confWarningsWdg = new Warnings_Config( this, "Warnings" );
@@ -201,6 +201,7 @@ KonviSettingsDialog::~KonviSettingsDialog()
 void KonviSettingsDialog::updateSettings()
 {
   m_confWarningsWdg->saveSettings();
+  m_confAliasWdg->saveAliases();
   m_modified = false;
 }
 
