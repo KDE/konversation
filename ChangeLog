@@ -1,5 +1,5 @@
 Changes from 0.18 to 0.19
-- Konversation now depends on KDE 3.3+
+- Konversation now depends on KDE 3.4+
 - Blowfish support added (Mircryption & FiSH compatible)
 - Added Firefox style searchbar (courtesy of Renchi Raju)
 - Channel and query tabs now appear after the respective server (courtesy of Michael Kreitzer)
