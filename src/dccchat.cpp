@@ -221,24 +221,24 @@ void DccChat::readData()
         line.append( codec->toUnicode( buffer ) );
         delete[] buffer;
 
-        QStringList lines=QStringList::split('\n',line);
+        QStringList lines = QStringList::split( '\n', line );
 
-        for(unsigned int index=0;index<lines.count();index++)
+        for( QStringList::iterator itLine = lines.begin() ; itLine != lines.end() ; itLine++ )
         {
-            if(line.startsWith("\x01"))
+            if( (*itLine).startsWith( "\x01" ) )
             {
                 // cut out the CTCP command
-                QString ctcp=line.mid(1,line.find(1,1)-1);
+                QString ctcp = (*itLine).mid( 1, (*itLine).find( 1, 1 ) - 1 );
 
-                QString ctcpCommand=ctcp.section(" ",0,0);
-                QString ctcpArgument=ctcp.section(" ",1);
+                QString ctcpCommand = ctcp.section( " ", 0, 0 );
+                QString ctcpArgument = ctcp.section( " ", 1 );
 
-                if(ctcpCommand.lower()=="action")
+                if( ctcpCommand.lower() == "action" )
                     getTextView()->appendAction( m_partnerNick, ctcpArgument );
                 else
                     getTextView()->append( i18n( "CTCP" ), i18n( "Received unknown CTCP-%1 request from %2" ).arg( ctcp ).arg( m_partnerNick ) );
             }
-            else getTextView()->append( m_partnerNick, lines[ index ] );
+            else getTextView()->append( m_partnerNick, *itLine );
         }                                         // endfor
     }
     kdDebug() << k_funcinfo << " END" << endl;
@@ -267,15 +267,15 @@ void DccChat::sendDccChatText(const QString& sendLine)
 
     if(!output.isEmpty())
     {
-        QStringList lines=QStringList::split('\n',output);
+        QStringList lines = QStringList::split('\n',output);
         // wrap socket into a stream
         QTextStream stream(m_dccSocket);
         // init stream props
         stream.setCodec(Konversation::IRCCharsets::self()->codecForName(m_encoding.isEmpty() ? Konversation::IRCCharsets::self()->encodingForLocale() : m_encoding));
 
-        for(unsigned int index=0;index<lines.count();index++)
+        for( QStringList::iterator itLine = lines.begin() ; itLine != lines.end() ; itLine++ )
         {
-            QString line(lines[index]);
+            QString line( *itLine );
 
             // replace aliases and wildcards
             //  if(filter.replaceAliases(line)) line=server->parseWildcards(line,nick,getName(),QString::null,QString::null,QString::null);
