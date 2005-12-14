@@ -14,14 +14,12 @@ global server;
 global target;
 
 def check_running(application):
-    running = Popen(["dcop", application], stdout=PIPE).communicate()[0]
-    
-    if running:
-        return 1
-    else:
-        return 0
+    running = Popen(["dcop", application+'*'], stdout=PIPE).communicate()[0]
+    if type(running) is list:
+        return running[0].strip()
+    return running.strip()
 
-def pretty_print(title, artist, album):
+def pretty_print(title, artist='', album=''):
     if title.decode('utf-8'):
         title = title.decode('utf-8')
     if artist.decode('utf-8'):
@@ -35,30 +33,24 @@ def pretty_print(title, artist, album):
     if (artist and album ) and (artist != album):
         return "/me is listening to \"%s\" by %s on %s"%(title,artist,album)
     elif artist:
-	return "/me is listening to \"%s\" by %s"%(title,artist)
+        return "/me is listening to \"%s\" by %s"%(title,artist)
     elif album:
-	return "/me is listening to \"%s\" on %s"%(title,album)
+        return "/me is listening to \"%s\" on %s"%(title,album)
     else:
-	return "/me is listening to \"%s\" "%(title)
+        return "/me is listening to \"%s\" "%(title)
 
 
 if __name__ == "__main__":
-
     port = sys.argv[1]
     server = sys.argv[2]
     target = sys.argv[3]
-    
     bad_apps = None;
 
     amarok = check_running('amarok')
-    juk = check_running('juk')
-    kaffeine = check_running('kaffeine')
-    noatun = check_running('noatun')
-
     if amarok:
-        title = os.popen('dcop amarok player title').readline().rstrip('\n')
-        artist = os.popen('dcop amarok player artist').readline().rstrip('\n')
-        album = os.popen('dcop amarok player album').readline().rstrip('\n')
+        title = os.popen('dcop '+amarok+' player title').readline().rstrip('\n')
+        artist = os.popen('dcop '+amarok+' player artist').readline().rstrip('\n')
+        album = os.popen('dcop '+amarok+' player album').readline().rstrip('\n')
 
         if title:
             string = pretty_print(title,artist,album)+' [amaroK]'
@@ -67,10 +59,11 @@ if __name__ == "__main__":
         else:
             bad_apps = ['amaroK']
 
+    juk = check_running('juk')
     if juk:
-        title = os.popen('dcop juk Player trackProperty Title').readline().rstrip('\n')
-        artist = os.popen('dcop juk Player trackProperty Artist').readline().rstrip('\n')
-        album = os.popen('dcop juk Player trackProperty Album').readline().rstrip('\n')
+        title = os.popen('dcop '+juk+' Player trackProperty Title').readline().rstrip('\n')
+        artist = os.popen('dcop '+juk+' Player trackProperty Artist').readline().rstrip('\n')
+        album = os.popen('dcop '+juk+' Player trackProperty Album').readline().rstrip('\n')
 
         if title:
             string = pretty_print(title,artist,album)+' [JuK]';
@@ -82,12 +75,13 @@ if __name__ == "__main__":
             else:
                 bad.apps = ['JuK']
 
+    kaffeine = check_running('kaffeine')
     if kaffeine:
-        string = os.popen('dcop kaffeine KaffeineIface title').readline().rstrip('\n')
-    
+        string = os.popen('dcop '+kaffeine+' KaffeineIface title').readline().rstrip('\n')
+
         if string:
-            string.decode('utf-8')
-            Popen(['dcop', port, 'Konversation', 'say', server, target, '"/me is playing', string,' [Kaffeine]\"']).communicate()
+            string=pretty_print(string)+' [Kaffeine]'
+            Popen(['dcop', port, 'Konversation', 'say', server, target, string]).communicate()
             sys.exit(0)
         else:
             if error:
@@ -95,12 +89,13 @@ if __name__ == "__main__":
             else:
                 bad_apps = ['Kaffeine']
 
+    noatun = check_running('noatun')
     if noatun:
-        string = popen('dcop noatun Noatun title').readline().rstrip('\n');
+        string = os.popen('dcop '+noatun+' Noatun title').readline().rstrip('\n');
 
         if string:
-            string.decode('utf-8')
-            Popen(['dcop', port, 'Konversation', 'say', server, target, '"/me is playing', string, ' [Noatun]"']).communicate();
+            string=pretty_print(string)+' [Noatun]'
+            Popen(['dcop', port, 'Konversation', 'say', server, target, string]).communicate();
             sys.exit(0)
         else:
             if error:
@@ -110,11 +105,11 @@ if __name__ == "__main__":
 
 
     if not amarok and not juk and not kaffeine and not noatun:
-	os.popen("dcop %s Konversation error \"No supported media player is running\""%(port))
+        os.popen("dcop %s Konversation error \"No supported media player is running\""%(port))
 
     if bad_apps != None:
         error = ','.join(bad_apps)
         print "Error is %s"%(error)
-	os.popen("dcop %s Konversation error \"Nothing is playing in %s\""%(port,error))
+        os.popen("dcop %s Konversation error \"Nothing is playing in %s\""%(port,error))
         sys.exit(1)
 
