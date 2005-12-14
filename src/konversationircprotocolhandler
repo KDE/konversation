@@ -15,5 +15,10 @@ if test -z "$port";then port=6667;fi;
 
 if test ! ${channel:0:1} == '#' && test ! -z $channel ;then channel="#"$channel;fi 
 
-dcop konversation Konversation connectToServer $server $port "$channel" "$password"
+if [ `pidof konversation` ]; then
+    dcop konversation Konversation connectToServer $server $port "$channel" "$password"
+else
+    konversation --server $server --port $port --channel "$channel" --password "$password"
+fi
+
 
