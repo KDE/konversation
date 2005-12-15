@@ -52,7 +52,8 @@ class Log_Config;
 class DCC_Config_Ext;
 class WatchedNicknames_Config;
 class Highlight_Config;
-class OSD_Config_Ext;															
+class OSD_Config_Ext;
+class Ignore_Config;
 
 class KDEUI_EXPORT KonviSettingsDialog : public KonviConfigDialog
 {
@@ -76,6 +77,7 @@ class KDEUI_EXPORT KonviSettingsDialog : public KonviConfigDialog
 	WatchedNicknames_Config* m_confWatchedNicknamesWdg;
 	Highlight_Config* m_confHighlightWdg;
 	OSD_Config_Ext* m_confOSDWdg;
+	Ignore_Config* m_confIgnoreWdg;
 	bool m_modified;
 
     public:

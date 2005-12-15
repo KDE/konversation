@@ -60,6 +60,7 @@
 #include "ex_osd_preferences.h"
 #include "ex_theme_preferences.h"
 #include "ex_alias_preferences.h"
+#include "ignore_preferences.h"
 
 KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
 	           KonviConfigDialog( parent, "settings", Preferences::self(), KDialogBase::TreeList)
@@ -151,6 +152,12 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   pagePath.clear();
   pagePath << i18n("Behavior") << i18n("Quick Buttons");
   addPage ( m_confQuickButtonsWdg, pagePath, "keyboard", i18n("Quick Buttons") );
+
+  //Behaviour/Ignore
+  m_confIgnoreWdg = new Ignore_Config(this, "Ignore");
+  pagePath.clear();
+  pagePath << i18n("Behavior") << i18n("Ignore");
+  addPage ( m_confIgnoreWdg, pagePath, "ignore", i18n("Ignore") );
 
   //Behaviour/Logging
   m_confLogWdg = new Log_Config( this, "Log" );
