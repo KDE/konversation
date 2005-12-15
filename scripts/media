@@ -57,6 +57,7 @@ if __name__ == "__main__":
             Popen(['dcop', port, 'Konversation', 'say', server, target, string]).communicate()
             sys.exit(0)
         else:
+            error = True
             bad_apps = ['amaroK']
 
     juk = check_running('juk')
@@ -73,7 +74,8 @@ if __name__ == "__main__":
             if error:
                 bad_apps.append('JuK')
             else:
-                bad.apps = ['JuK']
+                error = True
+                bad_apps = ['JuK']
 
     kaffeine = check_running('kaffeine')
     if kaffeine:
@@ -87,6 +89,7 @@ if __name__ == "__main__":
             if error:
                 bad_apps.append('Kaffeine')
             else:
+                error = True
                 bad_apps = ['Kaffeine']
 
     noatun = check_running('noatun')
@@ -101,15 +104,32 @@ if __name__ == "__main__":
             if error:
                 bad_apps.append('Noatun')
             else:
+                error = True
                 bad_apps = ['Noatun']
 
+    yammi = check_running('yammi')
+    if yammi:
+        title = os.popen('dcop '+yammi+' YammiPlayer songTitle').readline().rstrip('\n')
+        artist = os.popen('dcop '+yammi+' YammiPlayer songArtist').readline().rstrip('\n')
+        album = os.popen('dcop '+yammi+' YammiPlayer songAlbum').readline().rstrip('\n')
 
-    if not amarok and not juk and not kaffeine and not noatun:
+        if title:
+            string = pretty_print(title,artist,album)+' [Yammi]';
+            Popen(['dcop', port, 'Konversation', 'say', server, target, string]).communicate()
+            sys.exit(0)
+        else:
+            if error:
+                bad_apps.append('Yammi')
+            else:
+                error = True
+                bad_apps = ['Yammi']
+                                                                                            
+        
+    if not amarok and not juk and not kaffeine and not noatun and not yammi:
         os.popen("dcop %s Konversation error \"No supported media player is running\""%(port))
 
     if bad_apps != None:
         error = ','.join(bad_apps)
-        print "Error is %s"%(error)
         os.popen("dcop %s Konversation error \"Nothing is playing in %s\""%(port,error))
         sys.exit(1)
 
