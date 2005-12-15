@@ -16,6 +16,7 @@ public:
     QString flagNames;
 private:
     QPtrList<Ignore> getIgnoreList();
+    void updateEnabledness();
 	    
 public slots:
     virtual void languageChange();
@@ -26,6 +27,7 @@ protected slots:
     void removeIgnore();
     void flagCheckboxChanged();
     void select(QListViewItem* item);
+    void removeAllIgnore();
 signals:
     void modified();
 };

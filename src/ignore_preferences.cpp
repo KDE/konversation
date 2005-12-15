@@ -20,7 +20,7 @@ Ignore_Config::Ignore_Config( QWidget* parent, const char* name, WFlags fl )
     connect(removeButton,SIGNAL(clicked()),
         this,SLOT(removeIgnore()));
     connect(removeAllButton,SIGNAL(clicked()),
-        ignoreListView,SLOT(clear()));
+	this,SLOT(removeAllIgnore()));
     connect(ignoreListView,SIGNAL(selectionChanged(QListViewItem*)),
         this,SLOT(select(QListViewItem*)));
     connect(chkChannel, SIGNAL(clicked()), this, SLOT(flagCheckboxChanged()));
@@ -47,11 +47,18 @@ void Ignore_Config::newIgnore()
         Ignore::Notice |
         Ignore::CTCP |
         Ignore::DCC);
+    updateEnabledness();
  
+}
+void Ignore_Config::removeAllIgnore()
+{
+    ignoreListView->clear();
+    updateEnabledness();
 }
 void Ignore_Config::removeIgnore()
 {
     delete ignoreListView->selectedItem();
+    updateEnabledness();
 }
 
 QPtrList<Ignore> Ignore_Config::getIgnoreList()
@@ -85,14 +92,12 @@ void Ignore_Config::updateWidgets()
         item=ignoreList.prev();
     }
 
-    select(NULL);
+    updateEnabledness();
 }
 
-
-void Ignore_Config::select(QListViewItem* item)
+void Ignore_Config::updateEnabledness()
 {
-    // FIXME: Cast to IgnoreListViewItem, maybe derive from KListView some day
-    IgnoreListViewItem* selectedItem=static_cast<IgnoreListViewItem*>(item);
+    IgnoreListViewItem* selectedItem=static_cast<IgnoreListViewItem*>(ignoreListView->selectedItem());
 
     chkChannel->setEnabled(selectedItem != NULL);
     chkQuery->setEnabled(selectedItem != NULL);
@@ -101,6 +106,16 @@ void Ignore_Config::select(QListViewItem* item)
     chkDCC->setEnabled(selectedItem != NULL);
 //	chkExceptions->setEnabled(selectedItem != NULL);
     txtPattern->setEnabled(selectedItem != NULL);
+    removeButton->setEnabled(selectedItem != NULL);
+    removeAllButton->setEnabled(ignoreListView->childCount() > 0);
+
+}
+
+void Ignore_Config::select(QListViewItem* item)
+{
+    updateEnabledness();
+    // FIXME: Cast to IgnoreListViewItem, maybe derive from KListView some day
+    IgnoreListViewItem* selectedItem=static_cast<IgnoreListViewItem*>(item);
 
     if(selectedItem)
     {
