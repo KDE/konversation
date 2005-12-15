@@ -158,6 +158,7 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   pagePath.clear();
   pagePath << i18n("Behavior") << i18n("Ignore");
   addPage ( m_confIgnoreWdg, pagePath, "ignore", i18n("Ignore") );
+  connect(m_confIgnoreWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
 
   //Behaviour/Logging
   m_confLogWdg = new Log_Config( this, "Log" );
@@ -209,12 +210,14 @@ void KonviSettingsDialog::updateSettings()
 {
   m_confWarningsWdg->saveSettings();
   m_confAliasWdg->saveAliases();
+  m_confIgnoreWdg->saveSettings();
   m_modified = false;
 }
 
 void KonviSettingsDialog::updateWidgets()
 {
   m_confWarningsWdg->updateWidgets();
+  m_confIgnoreWdg->updateWidgets();
 }
 
 void KonviSettingsDialog::updateWidgetsDefault()

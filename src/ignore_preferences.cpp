@@ -125,7 +125,9 @@ void Ignore_Config::select(QListViewItem* item)
         chkNotice->setChecked(flags & Ignore::Notice);
         chkCTCP->setChecked(flags & Ignore::CTCP);
         chkDCC->setChecked(flags & Ignore::DCC);
+	txtPattern->blockSignals(true);
 	txtPattern->setText(selectedItem->getName());
+	txtPattern->blockSignals(false);
 
 //        chkExceptions->setChecked(flags & Ignore::Exception) ;
     }
@@ -146,6 +148,7 @@ void Ignore_Config::flagCheckboxChanged()
         selectedItem->setFlags(flags);
 	selectedItem->setName(txtPattern->text());
     }
+    emit modified();
 }
 
 /*
