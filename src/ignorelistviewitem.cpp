@@ -20,9 +20,6 @@
 IgnoreListViewItem::IgnoreListViewItem(QListView* parent,QString name,int newFlags):
 KListViewItem(parent,name)
 {
-    yes=i18n("yes");
-    no=i18n("no");
-
     setFlags(newFlags);
 }
 
@@ -32,27 +29,23 @@ IgnoreListViewItem::~IgnoreListViewItem()
 
 void IgnoreListViewItem::setFlag(int flag,bool active)
 {
-    int column=1;
-    for(int i=1;i<64;i+=i)
-    {
-        if(flag==i) setText(column,(active) ? yes : no);
-        column++;
-    }
-
-    if(active) flags+=flag;
-    else flags-=flag;
+    if(active) m_flags|=flag;
+    else m_flags &= ~flag; //any bits that are set in flag will cause those bits in flags to be set to 0
+    setFlags(m_flags);
 }
 
 void IgnoreListViewItem::setFlags(int newFlags)
 {
-    flags=newFlags;
+    m_flags=newFlags;
 
-    setText(1,(flags & Ignore::Channel) ? yes : no);
-    setText(2,(flags & Ignore::Query) ? yes : no);
-    setText(3,(flags & Ignore::Notice) ? yes : no);
-    setText(4,(flags & Ignore::CTCP) ? yes : no);
-    setText(5,(flags & Ignore::DCC) ? yes : no);
-    setText(6,(flags & Ignore::Exception) ? yes : no);
+    QString flagsStr;
+    if(m_flags & Ignore::Channel) flagsStr += i18n("Channel") + " ";
+    if(m_flags & Ignore::Query) flagsStr += i18n("Query") + " ";
+    if(m_flags & Ignore::Notice) flagsStr += i18n("Notice") + " ";
+    if(m_flags & Ignore::CTCP) flagsStr += i18n("CTCP") + " ";
+    if(m_flags & Ignore::DCC) flagsStr += i18n("DCC") + " ";
+    if(m_flags & Ignore::Exception) flagsStr += i18n("Exception") + " ";
+    setText(1,flagsStr);
 }
 
 IgnoreListViewItem* IgnoreListViewItem::itemBelow()

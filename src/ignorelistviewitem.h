@@ -29,15 +29,14 @@ class IgnoreListViewItem : public KListViewItem
         ~IgnoreListViewItem();
 
         void setFlag(int flag,bool active);
-        bool getFlag(int flag) { return flags & flag; };
-        int getFlags() { return flags; };
+        bool getFlag(int flag) { return m_flags & flag; };
+	QString getName() { return text(0); };
+	void setName(QString name) { setText(0, name); };
+        int getFlags() { return m_flags; };
         IgnoreListViewItem* itemBelow();
 
-    protected:
         void setFlags(int flags);
-        QString yes;
-        QString no;
-
-        int flags;
+    protected:
+        int m_flags;
 };
 #endif
