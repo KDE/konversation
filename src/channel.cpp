@@ -975,7 +975,7 @@ void Channel::addNickname(ChannelNickPtr channelnick)
     {
         fastAddNickname(channelnick);
 
-        if(channelnick->isAdmin() || channelnick->isOwner() || channelnick->isOp() || channelnick->isHalfOp())
+        if(channelnick->isAnyTypeOfOp())
         {
             adjustOps(1);
         }
@@ -1066,7 +1066,7 @@ void Channel::removeNick(ChannelNickPtr channelNick, const QString &reason, bool
             appendCommandMessage(i18n("Part"),i18n("%1 has left this channel. (%2)").arg(channelNick->getNickname()).arg(reason),false);
         }
 
-        if(channelNick->isOp() || channelNick->isOwner() || channelNick->isAdmin() || channelNick->isHalfOp())
+        if(channelNick->isAnyTypeOfOp())
         {
             adjustOps(-1);
         }
@@ -1112,7 +1112,7 @@ void Channel::kickNick(ChannelNickPtr channelNick, const ChannelNick &kicker, co
         else
             appendCommandMessage(i18n("Kick"),i18n("%1 has been kicked from the channel by %2. (%3)").arg(channelNick->getNickname()).arg(kicker.getNickname()).arg(reason));
 
-	if(channelNick->isOp() || channelNick->isOwner() || channelNick->isAdmin() || channelNick->isHalfOp()) adjustOps(-1);
+	if(channelNick->isAnyTypeOfOp()) adjustOps(-1);
         adjustNicks(-1);
 
         Nick* nick=getNickByName(channelNick->getNickname());
@@ -1238,10 +1238,15 @@ void Channel::updateMode(QString sourceNick, char mode, bool plus, const QString
     //mode is updated by the server.
 
     QString message(QString::null);
-    ChannelNickPtr parameterChannelNick;
+    ChannelNickPtr parameterChannelNick=m_server->getChannelNick(getName(), parameter);
 
     bool fromMe=false;
     bool toMe=false;
+
+    // remember if this nick had any type of op.
+    bool wasAnyOp=false;
+    if(parameterChannelNick)
+        wasAnyOp=parameterChannelNick->isAnyTypeOfOp();
 
     if(sourceNick.lower()==m_server->loweredNickname())
         fromMe=true;
@@ -1285,11 +1290,8 @@ void Channel::updateMode(QString sourceNick, char mode, bool plus, const QString
                         message=i18n("%1 takes channel owner privileges from %2.").arg(sourceNick).arg(parameter);
                 }
             }
-            parameterChannelNick=m_server->getChannelNick(getName(), parameter);
             if(parameterChannelNick)
             {
-                if(plus && !parameterChannelNick->isOwner() && !parameterChannelNick->isOp()) adjustOps(1);
-                else if(!plus && parameterChannelNick->isOwner() && !parameterChannelNick->isOp()) adjustOps(-1);
                 parameterChannelNick->setOwner(plus);
                 emitUpdateInfo();
                 nicknameListView->sort();
@@ -1331,11 +1333,8 @@ void Channel::updateMode(QString sourceNick, char mode, bool plus, const QString
                         message=i18n("%1 takes channel admin privileges from %2.").arg(sourceNick).arg(parameter);
                 }
             }
-            parameterChannelNick=m_server->getChannelNick(getName(), parameter);
             if(parameterChannelNick)
             {
-                if(plus && !parameterChannelNick->isOwner() && !parameterChannelNick->isOp()) adjustOps(1);
-                else if(!plus && parameterChannelNick->isOwner() && !parameterChannelNick->isOp()) adjustOps(-1);
                 parameterChannelNick->setOwner(plus);
                 emitUpdateInfo();
                 nicknameListView->sort();
@@ -1377,13 +1376,9 @@ void Channel::updateMode(QString sourceNick, char mode, bool plus, const QString
                         message=i18n("%1 takes channel operator privileges from %2.").arg(sourceNick).arg(parameter);
                 }
             }
-            parameterChannelNick=m_server->getChannelNick(getName(), parameter);
             if(parameterChannelNick)
             {
-                if(plus && !parameterChannelNick->isOp()) adjustOps(1);
-                else if(!plus && parameterChannelNick->isOp()) adjustOps(-1);
                 parameterChannelNick->setOp(plus);
-
                 emitUpdateInfo();
                 nicknameListView->sort();
             }
@@ -1424,11 +1419,8 @@ void Channel::updateMode(QString sourceNick, char mode, bool plus, const QString
                         message=i18n("%1 takes channel halfop privileges from %2.").arg(sourceNick).arg(parameter);
                 }
             }
-            parameterChannelNick=m_server->getChannelNick(getName(), parameter);
             if(parameterChannelNick)
             {
-                if(plus && !parameterChannelNick->isHalfOp()) adjustOps(1);
-                else if(!plus && parameterChannelNick->isHalfOp()) adjustOps(-1);
                 parameterChannelNick->setHalfOp(plus);
                 emitUpdateInfo();
                 nicknameListView->sort();
@@ -1464,7 +1456,6 @@ void Channel::updateMode(QString sourceNick, char mode, bool plus, const QString
                     else     message=i18n("%1 takes the permission to talk from %2.").arg(sourceNick).arg(parameter);
                 }
             }
-            parameterChannelNick=m_server->getChannelNick(getName(), parameter);
             if(parameterChannelNick)
             {
                 parameterChannelNick->setVoice(plus);
@@ -1641,6 +1632,15 @@ void Channel::updateMode(QString sourceNick, char mode, bool plus, const QString
 	        if (fromMe) message=i18n("You set channel mode -%1").arg(mode);
 		else message= i18n("%1 sets channel mode -%2").arg(sourceNick).arg(mode);
 	    }
+    }
+
+    // check if this nick's anyOp-status has changed and adjust ops accordingly
+    if(parameterChannelNick)
+    {
+        if(wasAnyOp && (!parameterChannelNick->isAnyTypeOfOp()))
+            adjustOps(-1);
+        else if((!wasAnyOp) && parameterChannelNick->isAnyTypeOfOp())
+            adjustOps(1);
     }
 
     if(!message.isEmpty() && !Preferences::useLiteralModes())
