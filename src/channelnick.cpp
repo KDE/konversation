@@ -38,39 +38,39 @@ ChannelNick::~ChannelNick()
 {
 }
 
-bool ChannelNick::isOp() const 
-{ 
-  return isop; 
-}
-
-bool ChannelNick::isAdmin() const 
+bool ChannelNick::isOp() const
 {
-  return isadmin; 
+  return isop;
 }
 
-bool ChannelNick::isOwner() const 
+bool ChannelNick::isAdmin() const
 {
-  return isowner; 
+  return isadmin;
 }
 
-bool ChannelNick::isHalfOp() const 
+bool ChannelNick::isOwner() const
 {
-  return ishalfop; 
+  return isowner;
 }
 
-bool ChannelNick::hasVoice() const 
+bool ChannelNick::isHalfOp() const
 {
-  return hasvoice; 
+  return ishalfop;
 }
 
-bool ChannelNick::isAnyTypeOfOp() const 
-{ 
-  return isop || isadmin || isowner || ishalfop; 
+bool ChannelNick::hasVoice() const
+{
+  return hasvoice;
 }
 
-NickInfoPtr ChannelNick::getNickInfo() const 
-{ 
-  return nickInfo; 
+bool ChannelNick::isAnyTypeOfOp() const
+{
+  return isop || isadmin || isowner || ishalfop;
+}
+
+NickInfoPtr ChannelNick::getNickInfo() const
+{
+  return nickInfo;
 }
 
 /** @param mode 'v' to set voice, 'a' to set admin, 'h' to set halfop, 'o' to set op.
@@ -80,14 +80,16 @@ bool ChannelNick::setMode(char mode, bool state)
 {
     switch (mode)
     {
-        case 'v':
-            return setVoice(state);
+        case 'q':
+            return setOwner(state);
         case 'a':
             return setAdmin(state);
-        case 'h':
-            return setHalfOp(state);
         case 'o':
             return setOp(state);
+        case 'h':
+            return setHalfOp(state);
+        case 'v':
+            return setVoice(state);
         default:
             kdDebug() << "Mode '" << mode << "' not recognised in setModeForChannelNick";
             return false;
