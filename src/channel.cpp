@@ -67,7 +67,7 @@
 #include "linkaddressbook/linkaddressbookui.h"
 #include "linkaddressbook/addressbook.h"
 
-Channel::Channel(QWidget* parent) 
+Channel::Channel(QWidget* parent)
   : ChatWindow(parent), key(" ")
 {
     // init variables
@@ -175,12 +175,12 @@ Channel::Channel(QWidget* parent)
     // (this) The main Box, holding the channel view/topic and the input line
     m_horizSplitter = new QSplitter(m_vertSplitter);
     m_horizSplitter->setOpaqueResize( KGlobalSettings::opaqueResize() );
-    
+
     // Server will be set later in setServer()
     IRCViewBox* ircViewBox = new IRCViewBox(m_horizSplitter, NULL);
     setTextView(ircViewBox->ircView());
     connect(textView,SIGNAL(popupCommand(int)),this,SLOT(popupChannelCommand(int)));
-    
+
     // The box that holds the Nick List and the quick action buttons
     nickListButtons = new QVBox(m_horizSplitter);
     m_horizSplitter->setResizeMode(nickListButtons,QSplitter::KeepSize);
@@ -1250,7 +1250,7 @@ void Channel::updateMode(QString sourceNick, char mode, bool plus, const QString
 
     switch(mode)
     {
-        case 'a':
+        case 'q':
             if(plus)
             {
                 if(fromMe)
@@ -1283,6 +1283,52 @@ void Channel::updateMode(QString sourceNick, char mode, bool plus, const QString
                         message=i18n("%1 takes channel owner privileges from you.").arg(sourceNick);
                     else
                         message=i18n("%1 takes channel owner privileges from %2.").arg(sourceNick).arg(parameter);
+                }
+            }
+            parameterChannelNick=m_server->getChannelNick(getName(), parameter);
+            if(parameterChannelNick)
+            {
+                if(plus && !parameterChannelNick->isOwner() && !parameterChannelNick->isOp()) adjustOps(1);
+                else if(!plus && parameterChannelNick->isOwner() && !parameterChannelNick->isOp()) adjustOps(-1);
+                parameterChannelNick->setOwner(plus);
+                emitUpdateInfo();
+                nicknameListView->sort();
+            }
+            break;
+
+        case 'a':
+            if(plus)
+            {
+                if(fromMe)
+                {
+                    if(toMe)
+                        message=i18n("You give channel admin privileges to yourself.");
+                    else
+                        message=i18n("You give channel admin privileges to %1.").arg(parameter);
+                }
+                else
+                {
+                    if(toMe)
+                        message=i18n("%1 gives channel admin privileges to you.").arg(sourceNick);
+                    else
+                        message=i18n("%1 gives channel admin privileges to %2.").arg(sourceNick).arg(parameter);
+                }
+            }
+            else
+            {
+                if(fromMe)
+                {
+                    if(toMe)
+                        message=i18n("You take channel admin privileges from yourself.");
+                    else
+                        message=i18n("You take channel admin privileges from %1.").arg(parameter);
+                }
+                else
+                {
+                    if(toMe)
+                        message=i18n("%1 takes channel admin privileges from you.").arg(sourceNick);
+                    else
+                        message=i18n("%1 takes channel admin privileges from %2.").arg(sourceNick).arg(parameter);
                 }
             }
             parameterChannelNick=m_server->getChannelNick(getName(), parameter);
@@ -1480,20 +1526,6 @@ void Channel::updateMode(QString sourceNick, char mode, bool plus, const QString
                 else message=i18n("%1 sets the channel mode to 'allow messages from outside'.").arg(sourceNick);
             }
             modeN->setDown(plus);
-            break;
-
-        case 'q':
-            if(plus)
-            {
-                if(fromMe) message=i18n("You set the channel mode to 'quiet' on %1.").arg(parameter);
-                else message=i18n("%1 sets the channel mode to 'quiet' on %2.").arg(sourceNick).arg(parameter);
-            }
-            else
-            {
-                if(fromMe) message=i18n("You remove the 'quiet' channel mode from %1.").arg(parameter);
-                else message=i18n("%1 removes the 'quiet' channel mode from %2.").arg(sourceNick).arg(parameter);
-            }
-
             break;
 
         case 'p':
@@ -2043,19 +2075,19 @@ void Channel::autoWho()
     m_server->requestWho(getName());
 }
 
-QString Channel::getTextInLine() 
-{ 
-  return channelInput->text(); 
-}
-
-bool Channel::canBeFrontView()        
+QString Channel::getTextInLine()
 {
-  return true; 
+  return channelInput->text();
 }
 
-bool Channel::searchView()       
-{ 
-  return true; 
+bool Channel::canBeFrontView()
+{
+  return true;
+}
+
+bool Channel::searchView()
+{
+  return true;
 }
 
 void Channel::appendInputText(const QString& s)

@@ -553,7 +553,19 @@ bool& isOp,bool& isHalfop,bool& hasVoice)
                     recognisedMode = true;
                     break;
                 }
+                case '&':                         // admin (unrealircd)
+                {
+                    isAdmin = true;
+                    recognisedMode = true;
+                    break;
+                }
                 case '!':                         // channel owner (RFC2811)
+                {
+                    isOwner = true;
+                    recognisedMode = true;
+                    break;
+                }
+                case '~':                         // channel owner (unrealircd)
                 {
                     isOwner = true;
                     recognisedMode = true;
