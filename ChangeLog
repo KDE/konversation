@@ -36,6 +36,7 @@ Changes from 0.18 to 0.19
 - Major internal changes related to preferences storage
 - Improvements to socket handling in DCC chats
 - Fixed chat window focus bug that prevented copying to clipboard using the keyboard shortcut in some cases
+- Fixed OSD preview
 
 Changes from 0.17 to 0.18
 - All nicks were blue when colored nicks are disabled with some setups
