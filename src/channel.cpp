@@ -1185,7 +1185,9 @@ void Channel::setTopic(const QString &newTopic)
 {
     appendCommandMessage(i18n("Topic"), i18n("The channel topic is \"%1\".").arg(newTopic));
 
-    if(m_topicHistory.first() != newTopic)
+    // cut off <nickname> portion of the topic before comparing, otherwise the history list
+    // will fill up with the same entries while the user only requests the topic to be seen.
+    if(m_topicHistory.first().section(' ',1) != newTopic)
     {
         m_topicHistory.prepend(i18n("<unknown> %1").arg(newTopic));
         QString topic = Konversation::removeIrcMarkup(newTopic);
