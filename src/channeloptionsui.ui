@@ -1,4 +1,4 @@
-<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>Konversation::ChannelOptionsUI</class>
 <comment>This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -14,18 +14,21 @@ the Free Software Foundation; either version 2 of the License, or
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>538</width>
-            <height>474</height>
+            <width>462</width>
+            <height>488</height>
         </rect>
     </property>
-    <vbox>
+    <property name="caption">
+        <string>Konversation::ChannelOptionsUI</string>
+    </property>
+    <grid>
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
         <property name="margin">
             <number>0</number>
         </property>
-        <widget class="QTabWidget">
+        <widget class="QTabWidget" row="0" column="0">
             <property name="name">
                 <cstring>channelTabWidget</cstring>
             </property>
@@ -42,7 +45,7 @@ the Free Software Foundation; either version 2 of the License, or
                     </property>
                     <widget class="QSplitter">
                         <property name="name">
-                            <cstring>splitter1</cstring>
+                            <cstring>splitter4</cstring>
                         </property>
                         <property name="orientation">
                             <enum>Vertical</enum>
@@ -61,7 +64,7 @@ the Free Software Foundation; either version 2 of the License, or
                             </column>
                             <column>
                                 <property name="text">
-                                    <string>Topic</string>
+                                    <string>Date</string>
                                 </property>
                                 <property name="clickable">
                                     <bool>true</bool>
@@ -87,6 +90,9 @@ the Free Software Foundation; either version 2 of the License, or
                             <property name="allColumnsShowFocus">
                                 <bool>true</bool>
                             </property>
+                            <property name="showSortIndicator">
+                                <bool>true</bool>
+                            </property>
                             <property name="showToolTips">
                                 <bool>false</bool>
                             </property>
@@ -102,20 +108,34 @@ the Free Software Foundation; either version 2 of the License, or
                         </widget>
                         <widget class="KTextEdit">
                             <property name="name">
-                                <cstring>topicEdit</cstring>
+                                <cstring>topicPreview</cstring>
                             </property>
-                            <property name="sizePolicy">
-                                <sizepolicy>
-                                    <hsizetype>7</hsizetype>
-                                    <vsizetype>7</vsizetype>
-                                    <horstretch>0</horstretch>
-                                    <verstretch>2</verstretch>
-                                </sizepolicy>
+                            <property name="enabled">
+                                <bool>true</bool>
                             </property>
-                            <property name="textFormat">
-                                <enum>PlainText</enum>
+                            <property name="backgroundOrigin">
+                                <enum>WidgetOrigin</enum>
+                            </property>
+                            <property name="readOnly">
+                                <bool>true</bool>
                             </property>
                         </widget>
+                    </widget>
+                    <widget class="KTextEdit">
+                        <property name="name">
+                            <cstring>topicEdit</cstring>
+                        </property>
+                        <property name="sizePolicy">
+                            <sizepolicy>
+                                <hsizetype>7</hsizetype>
+                                <vsizetype>7</vsizetype>
+                                <horstretch>0</horstretch>
+                                <verstretch>2</verstretch>
+                            </sizepolicy>
+                        </property>
+                        <property name="textFormat">
+                            <enum>PlainText</enum>
+                        </property>
                     </widget>
                 </vbox>
             </widget>
@@ -136,6 +156,9 @@ the Free Software Foundation; either version 2 of the License, or
                         </property>
                         <property name="text">
                             <string>&amp;Topic can only be changed by channel operators</string>
+                        </property>
+                        <property name="accel">
+                            <string>Alt+T</string>
                         </property>
                         <property name="whatsThis" stdset="0">
                             <string>&lt;qt&gt;These control the &lt;em&gt;mode&lt;/em&gt; of the channel.  Only an operator can change these.&lt;p&gt;The &lt;b&gt;T&lt;/b&gt;opic mode means that only the channel operator can change the topic for the channel.&lt;/qt&gt;</string>
@@ -347,7 +370,7 @@ the Free Software Foundation; either version 2 of the License, or
                     </widget>
                     <spacer>
                         <property name="name">
-                            <cstring>spacer3_2</cstring>
+                            <cstring>spacer4</cstring>
                         </property>
                         <property name="orientation">
                             <enum>Vertical</enum>
@@ -358,14 +381,14 @@ the Free Software Foundation; either version 2 of the License, or
                         <property name="sizeHint">
                             <size>
                                 <width>20</width>
-                                <height>51</height>
+                                <height>16</height>
                             </size>
                         </property>
                     </spacer>
                 </vbox>
             </widget>
         </widget>
-    </vbox>
+    </grid>
 </widget>
 <connections>
     <connection>
@@ -385,6 +408,7 @@ the Free Software Foundation; either version 2 of the License, or
 <layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
 <includehints>
     <includehint>klistview.h</includehint>
+    <includehint>ktextedit.h</includehint>
     <includehint>ktextedit.h</includehint>
     <includehint>knuminput.h</includehint>
     <includehint>knuminput.h</includehint>

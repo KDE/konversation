@@ -19,6 +19,7 @@
 #include <knuminput.h>
 #include <qpushbutton.h>
 #include <qregexp.h>
+#include <qheader.h>
 
 #include "channeloptionsdialog.h"
 #include "konversationapplication.h"
@@ -39,12 +40,20 @@ namespace Konversation
         m_widget->otherModesList->setRenameable(1, true);
         m_widget->otherModesList->hide();
 
+        // don't allow sorting. most recent topic is always first
         m_widget->topicHistoryList->setSortColumn(-1);
+        // hide column where the complete topic will be put in for convenience
+        m_widget->topicHistoryList->hideColumn(2);
+        // do not allow the user to resize the hidden column back into view
+        m_widget->topicHistoryList->header()->setResizeEnabled(false,2);
 
         m_channel = channel;
+        m_editingTopic = false;
 
         connect(m_widget->topicHistoryList, SIGNAL(clicked(QListViewItem*)), this, SLOT(topicHistoryItemClicked(QListViewItem*)));
         connect(m_widget->toggleAdvancedModes, SIGNAL(clicked()), this, SLOT(toggleAdvancedModes()));
+        connect(m_widget->topicEdit, SIGNAL(modificationChanged(bool)), this, SLOT(topicBeingEdited(bool)));
+
         connect(m_channel, SIGNAL(topicHistoryChanged()), this, SLOT(refreshTopicHistory()));
 
         connect(m_channel, SIGNAL(modesChanged()), this, SLOT(refreshModes()));
@@ -71,7 +80,7 @@ namespace Konversation
     {
         QString newTopic = topic();
 
-        if(newTopic != m_channel->getTopicHistory().first().section(' ', 1))
+        if(newTopic != m_channel->getTopicHistory().first().section(' ', 2))
         {
             // Pass a \n to avoid whitespace stripping so we can determine if we want to clear the channel topic.
             if (newTopic.isEmpty())
@@ -121,6 +130,11 @@ namespace Konversation
         }
     }
 
+    void ChannelOptionsDialog::topicBeingEdited(bool state)
+    {
+        m_editingTopic = state;
+    }
+
     QString ChannelOptionsDialog::topic()
     {
         return m_widget->topicEdit->text().replace("\n"," ");
@@ -131,12 +145,14 @@ namespace Konversation
         QStringList history = m_channel->getTopicHistory();
         m_widget->topicHistoryList->clear();
 
-        for(QStringList::const_iterator it = history.begin(); it != history.end(); ++it)
+        for(QStringList::const_iterator it = history.fromLast(); it != history.end(); --it)
         {
-            new KListViewItem(m_widget->topicHistoryList, (*it).section(' ', 0, 0), (*it).section(' ', 1));
+            QDateTime date;
+            date.setTime_t((*it).section(' ', 0 ,0).toUInt());
+            new KListViewItem(m_widget->topicHistoryList, (*it).section(' ', 1, 1), date.toString(Qt::LocalDate), (*it).section(' ', 2));
         }
 
-        m_widget->topicEdit->setText(history.first().section(' ', 1));
+        m_widget->topicEdit->setText(history.first().section(' ', 2));
     }
 
     void ChannelOptionsDialog::topicHistoryItemClicked(QListViewItem* item)
@@ -145,7 +161,11 @@ namespace Konversation
         if(m_channel->getOwnChannelNick()->isAnyTypeOfOp() || !m_widget->topicModeChBox->isChecked())
         {
             if(item)
-                m_widget->topicEdit->setText(item->text(1));
+            {
+                m_widget->topicPreview->setText(item->text(2));
+                if(!m_editingTopic)
+                    m_widget->topicEdit->setText(item->text(2));
+            }
         }
     }
 

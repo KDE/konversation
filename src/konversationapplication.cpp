@@ -494,14 +494,14 @@ void KonversationApplication::readOptions()
     }
 
     osd->setEnabled(Preferences::useOSD());
-    
+
     //How to load the font from the text?
     osd->setFont(Preferences::oSDFont());
 
     osd->setDuration(Preferences::oSDDuration());
     osd->setScreen(Preferences::oSDScreen());
     osd->setShadow(Preferences::oSDDrawShadow());
-    
+
     osd->setOffset(Preferences::oSDOffsetX(), Preferences::oSDOffsetY());
     osd->setAlignment((OSDWidget::Alignment)Preferences::oSDAlignment());
 
@@ -936,7 +936,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
     config->sync();
     emit prefsChanged();
 
-    if(updateGUI) 
+    if(updateGUI)
       mainWindow->appearanceChanged();
 }
 

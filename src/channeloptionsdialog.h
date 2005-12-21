@@ -44,6 +44,10 @@ namespace Konversation
 
         protected slots:
             void topicHistoryItemClicked(QListViewItem* item);
+            void topicBeingEdited(bool state);
+
+        protected:
+            bool m_editingTopic;
 
         private:
             ChannelOptionsUI* m_widget;
