@@ -1185,11 +1185,11 @@ void Channel::setTopic(const QString &newTopic)
 {
     appendCommandMessage(i18n("Topic"), i18n("The channel topic is \"%1\".").arg(newTopic));
 
-    // cut off <nickname> portion of the topic before comparing, otherwise the history list
-    // will fill up with the same entries while the user only requests the topic to be seen.
-    if(m_topicHistory.first().section(' ',1) != newTopic)
+    // cut off "nickname" and "time_t" portion of the topic before comparing, otherwise the history
+    // list will fill up with the same entries while the user only requests the topic to be seen.
+    if(m_topicHistory.first().section(' ', 2) != newTopic)
     {
-        m_topicHistory.prepend(i18n("<unknown> %1").arg(newTopic));
+        m_topicHistory.prepend(i18n("%1 unknown %2").arg(QDateTime::currentDateTime().toTime_t()).arg(newTopic));
         QString topic = Konversation::removeIrcMarkup(newTopic);
         topicLine->setText(topic);
 
@@ -1208,7 +1208,7 @@ void Channel::setTopic(const QString &nickname, const QString &newTopic) // Over
         appendCommandMessage(i18n("Topic"), i18n("%1 sets the channel topic to \"%2\".").arg(nickname).arg(newTopic));
     }
 
-    m_topicHistory.prepend("<" + nickname + "> " + newTopic);
+    m_topicHistory.prepend(QString("%1 %2 %3").arg(QDateTime::currentDateTime().toTime_t()).arg(nickname).arg(newTopic));
     QString topic = Konversation::removeIrcMarkup(newTopic);
     topicLine->setText(topic);
 
@@ -1229,7 +1229,7 @@ void Channel::setTopicAuthor(const QString& newAuthor)
 {
     if(topicAuthorUnknown)
     {
-        m_topicHistory[0] = "<" + newAuthor + "> " + m_topicHistory[0].section(' ', 1);
+        m_topicHistory[0] = m_topicHistory[0].section(' ', 0, 0) + " " + newAuthor + " " + m_topicHistory[0].section(' ', 2);
         topicAuthorUnknown = false;
     }
 }
