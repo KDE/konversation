@@ -26,6 +26,7 @@
 #include <kdebug.h>
 #include <kmessagebox.h>
 #include <kiconloader.h>
+#include <kstringhandler.h>
 
 #include "channel.h"
 #include "query.h"
@@ -337,7 +338,7 @@ void Query::nickInfoChanged()
             text += " - ";
         text += m_nickInfo->getHostmask();
         if(m_nickInfo->isAway() )
-            text += " (" + m_nickInfo->getAwayMessage() + ") ";
+            text += " (" + KStringHandler::rsqueeze(m_nickInfo->getAwayMessage(),100) + ") ";
         queryHostmask->setText(Konversation::removeIrcMarkup(text));
 
         KABC::Picture pic = m_nickInfo->getAddressee().photo();
