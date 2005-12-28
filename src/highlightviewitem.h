@@ -25,11 +25,12 @@
  */
 
 class KURL;
+class KListVIew;
 
 class HighlightViewItem : public QCheckListItem
 {
     public:
-        HighlightViewItem(QListView* parent, Highlight* passed_Highlight);
+        HighlightViewItem(KListView* parent, Highlight* passed_Highlight);
         ~HighlightViewItem();
 
         QString getPattern();

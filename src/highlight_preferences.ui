@@ -1,4 +1,4 @@
-<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>Highlight_Config</class>
 <widget class="QWidget">
     <property name="name">
@@ -12,6 +12,9 @@
             <height>529</height>
         </rect>
     </property>
+    <property name="caption">
+        <string>Highlight_Config</string>
+    </property>
     <grid>
         <property name="name">
             <cstring>unnamed</cstring>
@@ -21,10 +24,13 @@
         </property>
         <widget class="QCheckBox" row="1" column="0" rowspan="1" colspan="4">
             <property name="name">
-                <cstring>HighlightSoundsEnabled</cstring>
+                <cstring>kcfg_HighlightSoundsEnabled</cstring>
             </property>
             <property name="text">
                 <string>Ena&amp;ble sound for highlighted list items</string>
+            </property>
+            <property name="accel">
+                <string>Alt+B</string>
             </property>
         </widget>
         <widget class="QCheckBox" row="2" column="0" rowspan="1" colspan="2">
@@ -34,6 +40,9 @@
             <property name="text">
                 <string>Alwa&amp;ys highlight own current nick:</string>
             </property>
+            <property name="accel">
+                <string>Alt+Y</string>
+            </property>
         </widget>
         <widget class="QCheckBox" row="3" column="0">
             <property name="name">
@@ -41,6 +50,9 @@
             </property>
             <property name="text">
                 <string>Always highlight own &amp;lines:</string>
+            </property>
+            <property name="accel">
+                <string>Alt+L</string>
             </property>
         </widget>
         <widget class="QGroupBox" row="0" column="0" rowspan="1" colspan="4">
@@ -349,7 +361,7 @@
     <tabstop>soundPlayBtn</tabstop>
     <tabstop>soundURL</tabstop>
     <tabstop>autoTextInput</tabstop>
-    <tabstop>HighlightSoundsEnabled</tabstop>
+    <tabstop>kcfg_HighlightSoundsEnabled</tabstop>
     <tabstop>kcfg_HighlightNick</tabstop>
     <tabstop>kcfg_HighlightOwnLines</tabstop>
 </tabstops>

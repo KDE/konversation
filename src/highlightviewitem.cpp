@@ -13,11 +13,12 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <kurl.h>
+#include <klistview.h>
+
 #include "highlightviewitem.h"
 
-#include <kurl.h>
-
-HighlightViewItem::HighlightViewItem(QListView* parent, Highlight* passed_Highlight)
+HighlightViewItem::HighlightViewItem(KListView* parent, Highlight* passed_Highlight)
 : QCheckListItem(parent, QString::null,QCheckListItem::CheckBox)
 {
     setText(1,passed_Highlight->getPattern());

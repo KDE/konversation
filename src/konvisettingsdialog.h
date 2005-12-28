@@ -36,6 +36,7 @@
 #include <qasciidict.h>
 
 #include "konviconfigdialog.h"
+
 class Warnings_Config;
 class ChatWindowAppearance_Config;
 class FontAppearance_Config;
@@ -54,6 +55,7 @@ class WatchedNicknames_Config;
 class Highlight_Config;
 class OSD_Config_Ext;
 class Ignore_Config;
+class HighlightConfigController;
 
 class KDEUI_EXPORT KonviSettingsDialog : public KonviConfigDialog
 {
@@ -79,23 +81,22 @@ class KDEUI_EXPORT KonviSettingsDialog : public KonviConfigDialog
 	OSD_Config_Ext* m_confOSDWdg;
 	Ignore_Config* m_confIgnoreWdg;
 	bool m_modified;
+        HighlightConfigController* m_highlightController;
 
     public:
         KonviSettingsDialog( QWidget *parent);
-
         ~KonviSettingsDialog();
 
     protected slots:
         virtual void updateSettings();
-
         virtual void updateWidgets();
-
         virtual void updateWidgetsDefault();
  	void modifiedSlot();
-    protected:
+    
+  protected:
         virtual bool hasChanged() { return m_modified; }
-
         virtual bool isDefault() { return true; }
 
 };
+
 #endif //KONVISETTINGSDIALOG_H
