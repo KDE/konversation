@@ -1,4 +1,4 @@
-<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
 <class>Konversation::ChannelOptionsUI</class>
 <comment>This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -17,9 +17,6 @@ the Free Software Foundation; either version 2 of the License, or
             <width>462</width>
             <height>488</height>
         </rect>
-    </property>
-    <property name="caption">
-        <string>Konversation::ChannelOptionsUI</string>
     </property>
     <grid>
         <property name="name">
@@ -167,9 +164,6 @@ the Free Software Foundation; either version 2 of the License, or
                         </property>
                         <property name="text">
                             <string>&amp;Topic can only be changed by channel operators</string>
-                        </property>
-                        <property name="accel">
-                            <string>Alt+T</string>
                         </property>
                         <property name="whatsThis" stdset="0">
                             <string>&lt;qt&gt;These control the &lt;em&gt;mode&lt;/em&gt; of the channel.  Only an operator can change these.&lt;p&gt;The &lt;b&gt;T&lt;/b&gt;opic mode means that only the channel operator can change the topic for the channel.&lt;/qt&gt;</string>
