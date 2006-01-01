@@ -884,11 +884,11 @@ void KonversationApplication::saveOptions(bool updateGUI)
         QStringList buttonList(Preferences::buttonList());
         config->writeEntry(QString("Button%1").arg(index),buttonList[index]);
     }
-
+    /*
+    Should be done in HighlightConfigController now ... remove this part as soon as we are certain it works
     // Write all highlight entries
     QPtrList<Highlight> hiList=Preferences::highlightList();
     int i = 0;
-
     for(Highlight* hl = hiList.first(); hl; hl = hiList.next())
     {
         config->setGroup(QString("Highlight%1").arg(i));
@@ -906,7 +906,8 @@ void KonversationApplication::saveOptions(bool updateGUI)
         config->deleteGroup(QString("Highlight%1").arg(i));
         i++;
     }
-
+    */
+    
     // Ignore List
     config->deleteGroup("Ignore List");
     config->setGroup("Ignore List");

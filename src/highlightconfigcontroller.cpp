@@ -21,12 +21,16 @@
 #include <klineedit.h>
 #include <kcolorcombo.h>
 #include <klocale.h>
+#include <kparts/componentfactory.h>
+#include <kregexpeditorinterface.h>
 
 #include "config/preferences.h"
 
 #include "highlight_preferences.h"
 #include "highlightconfigcontroller.h"
 #include "highlightviewitem.h"
+#include "konversationapplication.h"
+#include "konversationsound.h"
 
 HighlightConfigController::HighlightConfigController(Highlight_Config* highlightPage,QObject* parent, const char* name)
  : QObject(parent,name)
@@ -60,6 +64,7 @@ HighlightConfigController::HighlightConfigController(Highlight_Config* highlight
   connect(m_highlightPage->highlightListView,SIGNAL (clicked(QListViewItem*)),this,SLOT (highlightSelected(QListViewItem*)) );
   
   connect(m_highlightPage->patternInput,SIGNAL (textChanged(const QString&)),this,SLOT (highlightTextChanged(const QString&)) );
+  connect(m_highlightPage->patternButton,SIGNAL (clicked()),this,SLOT(highlightTextEditButtonClicked()));
   connect(m_highlightPage->patternColor,SIGNAL (activated(const QColor&)),this,SLOT (highlightColorChanged(const QColor&)) );
   
   connect(m_highlightPage->soundURL, SIGNAL(textChanged(const QString&)), this, SLOT(soundURLChanged(const QString&)));
@@ -103,6 +108,9 @@ void HighlightConfigController::highlightSelected(QListViewItem* item)
     m_highlightPage->soundPlayBtn->setEnabled(true);
     m_highlightPage->autoTextLabel->setEnabled(true);
     m_highlightPage->autoTextInput->setEnabled(true);
+    
+    // Determine if kdeutils Regular Expression Editor is installed.  If so, enable edit button.
+    m_highlightPage->patternButton->setEnabled(!KTrader::self()->query("KRegExpEditor/KRegExpEditor").isEmpty());
 
     // tell all now emitted signals that we just clicked on a new item, so they should
     // not emit the modified() signal.
@@ -118,7 +126,7 @@ void HighlightConfigController::highlightSelected(QListViewItem* item)
   {
     m_highlightPage->patternLabel->setEnabled(false);
     m_highlightPage->patternInput->setEnabled(false);
-    m_highlightPage->patternButton->setEnabled(true);
+    m_highlightPage->patternButton->setEnabled(false);
     m_highlightPage->patternColor->setEnabled(false);
     m_highlightPage->soundURL->setEnabled(false);
     m_highlightPage->soundLabel->setEnabled(false);
@@ -136,6 +144,29 @@ void HighlightConfigController::highlightTextChanged(const QString& newPattern)
   {
     item->setPattern(newPattern);
     emit modified();
+  }
+}
+
+void HighlightConfigController::highlightTextEditButtonClicked()
+{
+  QDialog *editorDialog =
+      KParts::ComponentFactory::createInstanceFromQuery<QDialog>( "KRegExpEditor/KRegExpEditor" );
+  if (editorDialog)
+  {
+        // kdeutils was installed, so the dialog was found.  Fetch the editor interface.
+    KRegExpEditorInterface *reEditor =
+        static_cast<KRegExpEditorInterface *>(editorDialog->qt_cast( "KRegExpEditorInterface" ) );
+    Q_ASSERT( reEditor ); // This should not fail!// now use the editor.
+    reEditor->setRegExp(m_highlightPage->patternInput->text());
+    int dlgResult = editorDialog->exec();
+    if ( dlgResult == QDialog::Accepted )
+    {
+      QString re = reEditor->regExp();
+      m_highlightPage->patternInput->setText(re);
+      HighlightViewItem* item=static_cast<HighlightViewItem*>(m_highlightPage->highlightListView->selectedItem());
+      if(item) item->setPattern(re);
+    }
+    delete editorDialog;
   }
 }
 
@@ -199,6 +230,7 @@ void HighlightConfigController::removeHighlight()
       m_highlightPage->patternLabel->setEnabled(false);
       m_highlightPage->patternInput->setEnabled(false);
       m_highlightPage->patternColor->setEnabled(false);
+      m_highlightPage->patternButton->setEnabled(false);
       m_highlightPage->soundURL->setEnabled(false);
       m_highlightPage->soundLabel->setEnabled(false);
       m_highlightPage->soundPlayBtn->setEnabled(false);
@@ -206,7 +238,7 @@ void HighlightConfigController::removeHighlight()
     emit modified();
   }
 }
-/*
+
 QPtrList<Highlight> HighlightConfigController::getHighlightList()
 {
   QPtrList<Highlight> newList;
@@ -214,12 +246,43 @@ QPtrList<Highlight> HighlightConfigController::getHighlightList()
   HighlightViewItem* item=static_cast<HighlightViewItem*>(m_highlightPage->highlightListView->firstChild());
   while(item)
   {
-    newList.append(new Highlight(item->getPattern(),item->getRegExp(),item->getColor(),item->getSoundURL()));
+    newList.append(new Highlight(item->getPattern(),item->getRegExp(),item->getColor(),item->getSoundURL(),""));
     item=item->itemBelow();
   }
 
   return newList;
 }
-*/
+
+void HighlightConfigController::playSound()
+{
+  KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
+  konvApp->sound()->play(KURL(m_highlightPage->soundURL->url()));
+}
+
+void HighlightConfigController::saveSettings()
+{
+  KConfig* config = kapp->config();
+
+  // Write all highlight entries
+  QPtrList<Highlight> hiList=getHighlightList();
+  int i = 0;
+  for(Highlight* hl = hiList.first(); hl; hl = hiList.next())
+  {
+    config->setGroup(QString("Highlight%1").arg(i));
+    config->writeEntry("Pattern", hl->getPattern());
+    config->writeEntry("RegExp", hl->getRegExp());
+    config->writeEntry("Color", hl->getColor());
+    config->writePathEntry("Sound", hl->getSoundURL().prettyURL());
+    config->writeEntry("AutoText", hl->getAutoText());
+    i++;
+  }
+
+  // Remove unused entries...
+  while(config->hasGroup(QString("Highlight%1").arg(i)))
+  {
+    config->deleteGroup(QString("Highlight%1").arg(i));
+    i++;
+  }
+}
 
 #include "highlightconfigcontroller.moc"

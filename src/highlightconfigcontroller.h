@@ -30,6 +30,7 @@ class HighlightConfigController : public QObject
 
   public:
     void populateHighlightList();
+    void saveSettings();
 
   signals:
     void modified();
@@ -37,12 +38,14 @@ class HighlightConfigController : public QObject
   protected slots:
     void highlightSelected(QListViewItem* item);
     void highlightTextChanged(const QString& newPattern);
+    void highlightTextEditButtonClicked();
     void highlightColorChanged(const QColor& newColor);
     void soundURLChanged(const QString& newURL);
     void autoTextChanged(const QString& newText);
     void addHighlight();
     void removeHighlight();
-//    void getHighlightList();
+    void playSound();
+    QPtrList<Highlight> getHighlightList();
   
   protected:
     bool newItemSelected;

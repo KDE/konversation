@@ -219,6 +219,7 @@ void KonviSettingsDialog::updateSettings()
   m_confWarningsWdg->saveSettings();
   m_confAliasWdg->saveAliases();
   m_confIgnoreWdg->saveSettings();
+  m_highlightController->saveSettings();
   m_modified = false;
 }
 
