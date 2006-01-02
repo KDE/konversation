@@ -56,6 +56,7 @@ class Highlight_Config;
 class OSD_Config_Ext;
 class Ignore_Config;
 class HighlightConfigController;
+class WatchedNicknamesConfigController;
 
 class KDEUI_EXPORT KonviSettingsDialog : public KonviConfigDialog
 {
@@ -82,6 +83,7 @@ class KDEUI_EXPORT KonviSettingsDialog : public KonviConfigDialog
 	Ignore_Config* m_confIgnoreWdg;
 	bool m_modified;
         HighlightConfigController* m_highlightController;
+        WatchedNicknamesConfigController* m_watchedNicknamesController;
 
     public:
         KonviSettingsDialog( QWidget *parent);

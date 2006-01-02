@@ -38,7 +38,7 @@
                 <string>Command e&amp;xecuted when nickname is double clicked:</string>
             </property>
             <property name="buddy" stdset="0">
-                <cstring>m_notifyActionInput</cstring>
+                <cstring>kcfg_NotifyDoubleClickAction</cstring>
             </property>
             <property name="whatsThis" stdset="0">
                 <string>&lt;qt&gt;
@@ -65,7 +65,7 @@ command is placed in the &lt;b&gt;Input Line&lt;/b&gt; on the server window.&lt;
                 </property>
             </column>
             <property name="name">
-                <cstring>m_notifyListView</cstring>
+                <cstring>notifyListView</cstring>
             </property>
             <property name="enabled">
                 <bool>false</bool>
@@ -110,7 +110,7 @@ When the nickname watcher is turned on, you will be notified when the nicknames 
         </spacer>
         <widget class="KPushButton" row="5" column="3">
             <property name="name">
-                <cstring>m_removeButton</cstring>
+                <cstring>removeButton</cstring>
             </property>
             <property name="enabled">
                 <bool>false</bool>
@@ -132,7 +132,7 @@ When the nickname watcher is turned on, you will be notified when the nicknames 
         </widget>
         <widget class="KPushButton" row="4" column="3">
             <property name="name">
-                <cstring>m_newButton</cstring>
+                <cstring>newButton</cstring>
             </property>
             <property name="enabled">
                 <bool>false</bool>
@@ -154,7 +154,7 @@ When the nickname watcher is turned on, you will be notified when the nicknames 
         </widget>
         <widget class="QLabel" row="3" column="0">
             <property name="name">
-                <cstring>m_notifyDelayLabel</cstring>
+                <cstring>notifyDelayLabel</cstring>
             </property>
             <property name="enabled">
                 <bool>false</bool>
@@ -163,7 +163,7 @@ When the nickname watcher is turned on, you will be notified when the nicknames 
                 <string>Update &amp;interval:</string>
             </property>
             <property name="buddy" stdset="0">
-                <cstring>m_notifyDelaySpin</cstring>
+                <cstring>kcfg_NotifyDelay</cstring>
             </property>
             <property name="whatsThis" stdset="0">
                 <string>Konversation will check the status of the nicknames listed below at this interval.</string>
@@ -171,7 +171,7 @@ When the nickname watcher is turned on, you will be notified when the nicknames 
         </widget>
         <widget class="QCheckBox" row="1" column="0" rowspan="1" colspan="4">
             <property name="name">
-                <cstring>m_showWatchedNicksAtStartup</cstring>
+                <cstring>kcfg_OpenWatchedNicksAtStartup</cstring>
             </property>
             <property name="enabled">
                 <bool>false</bool>
@@ -185,7 +185,7 @@ When the nickname watcher is turned on, you will be notified when the nicknames 
         </widget>
         <widget class="QCheckBox" row="0" column="0" rowspan="1" colspan="4">
             <property name="name">
-                <cstring>m_useNotifyCheck</cstring>
+                <cstring>kcfg_UseNotify</cstring>
             </property>
             <property name="text">
                 <string>&amp;Enable nickname watcher</string>
@@ -200,7 +200,7 @@ When the nickname watcher is turned on, you will be notified when the nicknames 
         </widget>
         <widget class="KLineEdit" row="2" column="1" rowspan="1" colspan="3">
             <property name="name">
-                <cstring>m_notifyActionInput</cstring>
+                <cstring>kcfg_NotifyDoubleClickAction</cstring>
             </property>
             <property name="enabled">
                 <bool>false</bool>
@@ -244,7 +244,7 @@ When the nickname watcher is turned on, you will be notified when the nicknames 
         </spacer>
         <widget class="QSpinBox" row="3" column="1">
             <property name="name">
-                <cstring>m_notifyDelaySpin</cstring>
+                <cstring>kcfg_NotifyDelay</cstring>
             </property>
             <property name="enabled">
                 <bool>false</bool>
@@ -266,45 +266,45 @@ When the nickname watcher is turned on, you will be notified when the nicknames 
 </widget>
 <connections>
     <connection>
-        <sender>m_useNotifyCheck</sender>
+        <sender>kcfg_UseNotify</sender>
         <signal>toggled(bool)</signal>
-        <receiver>m_newButton</receiver>
+        <receiver>newButton</receiver>
         <slot>setEnabled(bool)</slot>
     </connection>
     <connection>
-        <sender>m_useNotifyCheck</sender>
+        <sender>kcfg_UseNotify</sender>
         <signal>toggled(bool)</signal>
-        <receiver>m_showWatchedNicksAtStartup</receiver>
+        <receiver>kcfg_OpenWatchedNicksAtStartup</receiver>
         <slot>setEnabled(bool)</slot>
     </connection>
     <connection>
-        <sender>m_useNotifyCheck</sender>
+        <sender>kcfg_UseNotify</sender>
         <signal>toggled(bool)</signal>
-        <receiver>m_notifyDelaySpin</receiver>
+        <receiver>kcfg_NotifyDelay</receiver>
         <slot>setEnabled(bool)</slot>
     </connection>
     <connection>
-        <sender>m_useNotifyCheck</sender>
+        <sender>kcfg_UseNotify</sender>
         <signal>toggled(bool)</signal>
-        <receiver>m_notifyListView</receiver>
+        <receiver>notifyListView</receiver>
         <slot>setEnabled(bool)</slot>
     </connection>
     <connection>
-        <sender>m_useNotifyCheck</sender>
+        <sender>kcfg_UseNotify</sender>
         <signal>toggled(bool)</signal>
-        <receiver>m_notifyDelayLabel</receiver>
+        <receiver>notifyDelayLabel</receiver>
         <slot>setEnabled(bool)</slot>
     </connection>
     <connection>
-        <sender>m_useNotifyCheck</sender>
+        <sender>kcfg_UseNotify</sender>
         <signal>toggled(bool)</signal>
         <receiver>notifyActionLabel</receiver>
         <slot>setEnabled(bool)</slot>
     </connection>
     <connection>
-        <sender>m_useNotifyCheck</sender>
+        <sender>kcfg_UseNotify</sender>
         <signal>toggled(bool)</signal>
-        <receiver>m_notifyActionInput</receiver>
+        <receiver>kcfg_NotifyDoubleClickAction</receiver>
         <slot>setEnabled(bool)</slot>
     </connection>
 </connections>

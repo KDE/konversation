@@ -63,6 +63,7 @@
 #include "ignore_preferences.h"
 
 #include "highlightconfigcontroller.h"
+#include "watchednicknamesconfigcontroller.h"
 
 KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
 	           KonviConfigDialog( parent, "settings", Preferences::self(), KDialogBase::TreeList)
@@ -178,6 +179,9 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   pagePath.clear();
   pagePath << i18n("Notifications") << i18n("Watched Nicknames");
   addPage ( m_confWatchedNicknamesWdg, pagePath, "kfind", i18n("Watched Nicknames") );
+  // interaction with the user
+  m_watchedNicknamesController=new WatchedNicknamesConfigController(m_confWatchedNicknamesWdg);
+  connect(m_watchedNicknamesController, SIGNAL(modified()), this, SLOT(modifiedSlot()));
 
   //Notification/Highlighting
   m_confHighlightWdg = new Highlight_Config( this, "Highlight" );
@@ -219,6 +223,7 @@ void KonviSettingsDialog::updateSettings()
   m_confWarningsWdg->saveSettings();
   m_confAliasWdg->saveAliases();
   m_confIgnoreWdg->saveSettings();
+  m_watchedNicknamesController->saveSettings();
   m_highlightController->saveSettings();
   m_modified = false;
 }
