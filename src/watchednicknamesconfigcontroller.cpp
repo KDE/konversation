@@ -111,6 +111,22 @@ void WatchedNicknamesConfigController::newNotify()
 
 void WatchedNicknamesConfigController::removeNotify()
 {
+  KListView* listView=m_watchedNicknamesPage->notifyListView;
+  QListViewItem* item=listView->selectedItem();
+
+  if(item)
+  {
+    QListViewItem* itemAfter=item->itemBelow();
+    if(!itemAfter) itemAfter=item->itemAbove();
+    delete(item);
+
+    if(itemAfter)
+    {
+      itemAfter->setSelected(true);
+      listView->setCurrentItem(itemAfter);
+      entrySelected(itemAfter);
+    }
+  }
 }
 
 void WatchedNicknamesConfigController::entrySelected(QListViewItem* notifyEntry)
