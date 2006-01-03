@@ -32,8 +32,12 @@ WatchedNicknamesConfigController::WatchedNicknamesConfigController(WatchedNickna
   populateWatchedNicksList();
 
   connect(m_watchedNicknamesPage->newButton,SIGNAL (clicked()),this,SLOT (newNotify()) );
+  connect(m_watchedNicknamesPage->removeButton,SIGNAL (clicked()),this,SLOT (removeNotify()) );
   connect(m_watchedNicknamesPage->notifyListView,SIGNAL (selectionChanged(QListViewItem*)),this,SLOT (entrySelected(QListViewItem*)) );
   connect(m_watchedNicknamesPage->notifyListView,SIGNAL (clicked(QListViewItem*)),this,SLOT (entrySelected(QListViewItem*)) );
+
+  connect(m_watchedNicknamesPage->networkDropdown,SIGNAL (activated(const QString&)),this,SLOT (networkChanged(const QString&)) );
+  connect(m_watchedNicknamesPage->nicknameInput,SIGNAL (textChanged(const QString&)),this,SLOT (nicknameChanged(const QString&)) );
 }
 
 WatchedNicknamesConfigController::~WatchedNicknamesConfigController()
@@ -90,11 +94,13 @@ void WatchedNicknamesConfigController::newNotify()
 {
 }
 
+void WatchedNicknamesConfigController::removeNotify()
+{
+}
+
 void WatchedNicknamesConfigController::entrySelected(QListViewItem* notifyEntry)
 {
   bool enabled=false;
-
-  KListView* listView=m_watchedNicknamesPage->notifyListView;
 
   if(notifyEntry)
   {
@@ -107,10 +113,44 @@ void WatchedNicknamesConfigController::entrySelected(QListViewItem* notifyEntry)
     }
   }
 
+  m_watchedNicknamesPage->removeButton->setEnabled(enabled);
   m_watchedNicknamesPage->networkLabel->setEnabled(enabled);
   m_watchedNicknamesPage->networkDropdown->setEnabled(enabled);
   m_watchedNicknamesPage->nicknameLabel->setEnabled(enabled);
   m_watchedNicknamesPage->nicknameInput->setEnabled(enabled);
+}
+
+void WatchedNicknamesConfigController::networkChanged(const QString& newNetwork)
+{
+  KListView* listView=m_watchedNicknamesPage->notifyListView;
+  QListViewItem* item=listView->selectedItem();
+
+  if(item)
+  {
+    QListViewItem* group=item->parent();
+    if(group && group->text(0)!=newNetwork)
+    {
+      QListViewItem* lookGroup=listView->firstChild();
+      while(lookGroup && (lookGroup->text(0)!=newNetwork)) lookGroup=lookGroup->nextSibling();
+      if(lookGroup)
+      {
+        item->setSelected(false);
+        group->takeItem(item);
+        lookGroup->insertItem(item);
+        item->setSelected(true);
+        listView->setCurrentItem(item);
+      }
+    }
+  }
+}
+
+void WatchedNicknamesConfigController::nicknameChanged(const QString& newNickname)
+{
+  kdDebug() << newNickname << endl;
+  KListView* listView=m_watchedNicknamesPage->notifyListView;
+  QListViewItem* item=listView->selectedItem();
+
+  if(item) item->setText(0,newNickname);
 }
 
 #include "watchednicknamesconfigcontroller.moc"

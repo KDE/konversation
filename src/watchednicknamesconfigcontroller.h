@@ -36,8 +36,11 @@ class WatchedNicknamesConfigController : public QObject
 
   protected slots:
     void newNotify();
+    void removeNotify();
     void entrySelected(QListViewItem* notifyEntry);
-  
+    void networkChanged(const QString& newNetwork);
+    void nicknameChanged(const QString& newNickname);
+
   protected:
     void populateWatchedNicksList();
     WatchedNicknames_Config* m_watchedNicknamesPage;
