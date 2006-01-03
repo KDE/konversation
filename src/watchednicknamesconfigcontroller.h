@@ -15,6 +15,7 @@
 #include <qobject.h>
 
 class WatchedNicknames_Config;
+class QListViewItem;
 
 /**
   @author Dario Abatianni
@@ -34,6 +35,8 @@ class WatchedNicknamesConfigController : public QObject
     void modified();
 
   protected slots:
+    void newNotify();
+    void entrySelected(QListViewItem* notifyEntry);
   
   protected:
     void populateWatchedNicksList();

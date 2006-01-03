@@ -13,6 +13,7 @@
 #include <kapplication.h>
 #include <kconfig.h>
 #include <klistview.h>
+#include <kpushbutton.h>
 #include <kdebug.h>
 
 #include "config/preferences.h"
@@ -25,11 +26,16 @@ WatchedNicknamesConfigController::WatchedNicknamesConfigController(WatchedNickna
 {
   m_watchedNicknamesPage=watchedNicknamesPage;
   populateWatchedNicksList();
+
+  connect(m_watchedNicknamesPage->newButton,SIGNAL (clicked()),this,SLOT (newNotify()) );
+
+  connect(m_watchedNicknamesPage->notifyListView,SIGNAL (selectionChanged(QListViewItem*)),this,SLOT (entrySelected(QListViewItem*)) );
+  connect(m_watchedNicknamesPage->notifyListView,SIGNAL (clicked(QListViewItem*)),this,SLOT (entrySelected(QListViewItem*)) );
+
 }
 
 WatchedNicknamesConfigController::~WatchedNicknamesConfigController()
 {
-  KConfig* config=kapp->config();
 }
 
 void WatchedNicknamesConfigController::populateWatchedNicksList()
@@ -75,6 +81,16 @@ void WatchedNicknamesConfigController::saveSettings()
     config->writeEntry(group->text(0),nicks.stripWhiteSpace());
     group=group->nextSibling();
   } // while
+}
+
+// slots
+
+void WatchedNicknamesConfigController::newNotify()
+{
+}
+
+void WatchedNicknamesConfigController::entrySelected(QListViewItem* /* notifyEntry */)
+{
 }
 
 #include "watchednicknamesconfigcontroller.moc"
