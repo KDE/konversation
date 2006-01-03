@@ -714,6 +714,17 @@ void KonversationApplication::readOptions()
         if(re.search(channelEncodingsEntryKeys[i]) > -1)
             Preferences::setChannelEncoding(re.cap(1),re.cap(2),channelEncodingsEntry[channelEncodingsEntryKeys[i]]);
 
+    // read server group dependant notify lists
+    QMap<QString,QString> notifyGroups=config->entryMap("Notify Group Lists");
+    QMap<QString,QStringList> notifyList;
+    QValueList<QString> keys=notifyGroups.keys();
+
+    for(unsigned int i=0;i<keys.count();i++)
+    {
+      notifyList.insert(keys[i],QStringList::split(' ',notifyGroups[keys[i]]));
+    }
+
+    Preferences::setNotifyList(notifyList);
 }
 
 void KonversationApplication::saveOptions(bool updateGUI)
@@ -757,7 +768,11 @@ void KonversationApplication::saveOptions(bool updateGUI)
         index++;
     }                                             // endfor
 
+    // FIXME: check if this group is still needed
     config->setGroup("Notify List");
+
+    /*
+    Should be done in WatchedNicknameConfigController now ... remove this part as soon as we are certain it works
 
     config->deleteGroup("Notify Group Lists");
     config->setGroup("Notify Group Lists");
@@ -769,6 +784,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
     {
         config->writeEntry(groupIt.key(), groupIt.data().join(" "));
     }
+    */
 
     // Remove the old servergroups from the config
     QStringList groups = config->groupList().grep(QRegExp("ServerGroup [0-9]+"));

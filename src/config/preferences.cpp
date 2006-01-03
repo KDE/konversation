@@ -238,6 +238,7 @@ const QMap<QString, QStringList> Preferences::notifyList() { return self()->mNot
 
 const QStringList Preferences::notifyListByGroup(const QString& groupName)
 {
+  kdDebug() << "6666 " << groupName << endl;
     if (self()->mNotifyList.find(groupName) != self()->mNotifyList.end())
         return self()->mNotifyList[groupName];
     else
