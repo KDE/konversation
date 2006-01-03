@@ -154,7 +154,7 @@ void NickInfo::emitNickInfoChanged()
 
 void NickInfo::startNickInfoChangedTimer()
 {
-    if(!m_changedTimer->isActive());
+    if(!m_changedTimer->isActive())
     m_changedTimer->start(3000, true /*single shot*/);
 }
 
