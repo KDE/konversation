@@ -10,10 +10,14 @@
 //
 //
 
+#include <qlabel.h>
+#include <qcombobox.h>
+
 #include <kapplication.h>
 #include <kconfig.h>
 #include <klistview.h>
 #include <kpushbutton.h>
+#include <klineedit.h>
 #include <kdebug.h>
 
 #include "config/preferences.h"
@@ -28,10 +32,8 @@ WatchedNicknamesConfigController::WatchedNicknamesConfigController(WatchedNickna
   populateWatchedNicksList();
 
   connect(m_watchedNicknamesPage->newButton,SIGNAL (clicked()),this,SLOT (newNotify()) );
-
   connect(m_watchedNicknamesPage->notifyListView,SIGNAL (selectionChanged(QListViewItem*)),this,SLOT (entrySelected(QListViewItem*)) );
   connect(m_watchedNicknamesPage->notifyListView,SIGNAL (clicked(QListViewItem*)),this,SLOT (entrySelected(QListViewItem*)) );
-
 }
 
 WatchedNicknamesConfigController::~WatchedNicknamesConfigController()
@@ -48,6 +50,7 @@ void WatchedNicknamesConfigController::populateWatchedNicksList()
   {
     QStringList nicks=groupIt.data();
     KListViewItem* groupItem=new KListViewItem(m_watchedNicknamesPage->notifyListView,groupIt.key());
+    m_watchedNicknamesPage->networkDropdown->insertItem(groupIt.key(),-1);
     for(unsigned int index=0;index<nicks.count();index++)
     {
       new KListViewItem(groupItem,nicks[index]);
@@ -71,10 +74,8 @@ void WatchedNicknamesConfigController::saveSettings()
   {
     QString nicks;
     QListViewItem* nick=group->firstChild();
-    kdDebug() << group->text(0) << endl;
     while(nick)
     {
-      kdDebug() << "  "+nick->text(0) << endl;
       nicks+=nick->text(0)+" ";
       nick=nick->nextSibling();
     }
@@ -89,8 +90,27 @@ void WatchedNicknamesConfigController::newNotify()
 {
 }
 
-void WatchedNicknamesConfigController::entrySelected(QListViewItem* /* notifyEntry */)
+void WatchedNicknamesConfigController::entrySelected(QListViewItem* notifyEntry)
 {
+  bool enabled=false;
+
+  KListView* listView=m_watchedNicknamesPage->notifyListView;
+
+  if(notifyEntry)
+  {
+    QListViewItem* group=notifyEntry->parent();
+    if(group)
+    {
+      enabled=true;
+      m_watchedNicknamesPage->nicknameInput->setText(notifyEntry->text(0));
+      m_watchedNicknamesPage->networkDropdown->setCurrentText(group->text(0));
+    }
+  }
+
+  m_watchedNicknamesPage->networkLabel->setEnabled(enabled);
+  m_watchedNicknamesPage->networkDropdown->setEnabled(enabled);
+  m_watchedNicknamesPage->nicknameLabel->setEnabled(enabled);
+  m_watchedNicknamesPage->nicknameInput->setEnabled(enabled);
 }
 
 #include "watchednicknamesconfigcontroller.moc"
