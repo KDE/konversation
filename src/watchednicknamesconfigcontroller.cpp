@@ -18,6 +18,7 @@
 #include <klistview.h>
 #include <kpushbutton.h>
 #include <klineedit.h>
+#include <klocale.h>
 #include <kdebug.h>
 
 #include "config/preferences.h"
@@ -92,6 +93,20 @@ void WatchedNicknamesConfigController::saveSettings()
 
 void WatchedNicknamesConfigController::newNotify()
 {
+  KListView* listView=m_watchedNicknamesPage->notifyListView;
+  QListViewItem* item=listView->selectedItem();
+
+  if(item)
+  {
+    if(item->parent()) item=item->parent();
+  }
+  else
+    item=listView->firstChild();
+
+  item=new QListViewItem(item,i18n("New"));
+  item->setSelected(true);
+  listView->setCurrentItem(item);
+  entrySelected(item);
 }
 
 void WatchedNicknamesConfigController::removeNotify()
@@ -146,7 +161,6 @@ void WatchedNicknamesConfigController::networkChanged(const QString& newNetwork)
 
 void WatchedNicknamesConfigController::nicknameChanged(const QString& newNickname)
 {
-  kdDebug() << newNickname << endl;
   KListView* listView=m_watchedNicknamesPage->notifyListView;
   QListViewItem* item=listView->selectedItem();
 
