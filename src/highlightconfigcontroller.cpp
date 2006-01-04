@@ -98,20 +98,15 @@ void HighlightConfigController::populateHighlightList()
 
 void HighlightConfigController::highlightSelected(QListViewItem* item)
 {
+  // play it safe, assume disabling all widgets first
+  bool enabled=false;
+
+  // check if there was a widget selected at all
   if(item)
   {
+    // make a highlight item out of the generic qlistviewitem
     HighlightViewItem* highlightItem=static_cast<HighlightViewItem*>(item);
 
-    m_highlightPage->patternLabel->setEnabled(true);
-    m_highlightPage->patternInput->setEnabled(true);
-    m_highlightPage->patternButton->setEnabled(true);
-    m_highlightPage->patternColor->setEnabled(true);
-    m_highlightPage->soundURL->setEnabled(true);
-    m_highlightPage->soundLabel->setEnabled(true);
-    m_highlightPage->soundPlayBtn->setEnabled(true);
-    m_highlightPage->autoTextLabel->setEnabled(true);
-    m_highlightPage->autoTextInput->setEnabled(true);
-    
     // Determine if kdeutils Regular Expression Editor is installed.  If so, enable edit button.
     m_highlightPage->patternButton->setEnabled(!KTrader::self()->query("KRegExpEditor/KRegExpEditor").isEmpty());
 
@@ -124,19 +119,20 @@ void HighlightConfigController::highlightSelected(QListViewItem* item)
     m_highlightPage->autoTextInput->setText(highlightItem->getAutoText());
     // all signals will now emit the modified() signal again
     newItemSelected=false;
+    // remember to enable all edit widgets
+    enabled=true;
   }
-  else
-  {
-    m_highlightPage->patternLabel->setEnabled(false);
-    m_highlightPage->patternInput->setEnabled(false);
-    m_highlightPage->patternButton->setEnabled(false);
-    m_highlightPage->patternColor->setEnabled(false);
-    m_highlightPage->soundURL->setEnabled(false);
-    m_highlightPage->soundLabel->setEnabled(false);
-    m_highlightPage->soundPlayBtn->setEnabled(false);
-    m_highlightPage->autoTextLabel->setEnabled(false);
-    m_highlightPage->autoTextInput->setEnabled(false);
-  }
+
+  // enable or disable edit widgets
+  m_highlightPage->patternLabel->setEnabled(enabled);
+  m_highlightPage->patternInput->setEnabled(enabled);
+  m_highlightPage->patternButton->setEnabled(enabled);
+  m_highlightPage->patternColor->setEnabled(enabled);
+  m_highlightPage->soundURL->setEnabled(enabled);
+  m_highlightPage->soundLabel->setEnabled(enabled);
+  m_highlightPage->soundPlayBtn->setEnabled(enabled);
+  m_highlightPage->autoTextLabel->setEnabled(enabled);
+  m_highlightPage->autoTextInput->setEnabled(enabled);
 }
 
 void HighlightConfigController::highlightTextChanged(const QString& newPattern)
