@@ -355,12 +355,6 @@ When the nickname watcher is turned on, you will be notified when the nicknames 
     <connection>
         <sender>kcfg_UseNotify</sender>
         <signal>toggled(bool)</signal>
-        <receiver>newButton</receiver>
-        <slot>setEnabled(bool)</slot>
-    </connection>
-    <connection>
-        <sender>kcfg_UseNotify</sender>
-        <signal>toggled(bool)</signal>
         <receiver>kcfg_OpenWatchedNicksAtStartup</receiver>
         <slot>setEnabled(bool)</slot>
     </connection>
@@ -405,7 +399,6 @@ When the nickname watcher is turned on, you will be notified when the nicknames 
 <layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
 <includehints>
     <includehint>klineedit.h</includehint>
-    <includehint>qcombobox.h</includehint>
     <includehint>klineedit.h</includehint>
     <includehint>klistview.h</includehint>
     <includehint>kpushbutton.h</includehint>

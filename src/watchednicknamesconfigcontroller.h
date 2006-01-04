@@ -35,6 +35,7 @@ class WatchedNicknamesConfigController : public QObject
     void modified();
 
   protected slots:
+    void checkIfEmptyListview(bool state);
     void newNotify();
     void removeNotify();
     void entrySelected(QListViewItem* notifyEntry);
