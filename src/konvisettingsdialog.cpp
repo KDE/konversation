@@ -230,6 +230,8 @@ void KonviSettingsDialog::updateSettings()
   m_highlightController->saveSettings();
   m_quickButtonsController->saveSettings();
   m_modified = false;
+  // this is for the non KConfigXT parts to update the UI (like quick buttons)
+  emit settingsChanged();
 }
 
 void KonviSettingsDialog::updateWidgets()
