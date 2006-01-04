@@ -55,8 +55,10 @@ class WatchedNicknames_Config;
 class Highlight_Config;
 class OSD_Config_Ext;
 class Ignore_Config;
+
 class HighlightConfigController;
 class WatchedNicknamesConfigController;
+class QuickButtonsConfigController;
 
 class KDEUI_EXPORT KonviSettingsDialog : public KonviConfigDialog
 {
@@ -84,6 +86,7 @@ class KDEUI_EXPORT KonviSettingsDialog : public KonviConfigDialog
 	bool m_modified;
         HighlightConfigController* m_highlightController;
         WatchedNicknamesConfigController* m_watchedNicknamesController;
+        QuickButtonsConfigController* m_quickButtonsController;
 
     public:
         KonviSettingsDialog( QWidget *parent);
@@ -94,7 +97,7 @@ class KDEUI_EXPORT KonviSettingsDialog : public KonviConfigDialog
         virtual void updateWidgets();
         virtual void updateWidgetsDefault();
  	void modifiedSlot();
-    
+
   protected:
         virtual bool hasChanged() { return m_modified; }
         virtual bool isDefault() { return true; }

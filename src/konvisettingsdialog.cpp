@@ -64,12 +64,13 @@
 
 #include "highlightconfigcontroller.h"
 #include "watchednicknamesconfigcontroller.h"
+#include "quickbuttonsconfigcontroller.h"
 
 KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
 	           KonviConfigDialog( parent, "settings", Preferences::self(), KDialogBase::TreeList)
 {
   m_modified = false;
-  setShowIconsInTreeList(true); 
+  setShowIconsInTreeList(true);
 
   QStringList iconPath;
 
@@ -155,6 +156,8 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   pagePath.clear();
   pagePath << i18n("Behavior") << i18n("Quick Buttons");
   addPage ( m_confQuickButtonsWdg, pagePath, "keyboard", i18n("Quick Buttons") );
+  m_quickButtonsController=new QuickButtonsConfigController(m_confQuickButtonsWdg);
+  connect(m_quickButtonsController, SIGNAL(modified()), this, SLOT(modifiedSlot()));
 
   //Behaviour/Ignore
   m_confIgnoreWdg = new Ignore_Config(this, "Ignore");

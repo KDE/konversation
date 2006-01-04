@@ -1,7 +1,7 @@
 //
 // C++ Interface: watchednicknamesconfigcontroller
 //
-// Description: 
+// Description:
 //
 //
 // Author: Dario Abatianni <eisfuchs@tigress.com>, (C) 2006
