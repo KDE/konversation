@@ -277,6 +277,8 @@ void HighlightConfigController::saveSettings()
     i++;
   }
 
+  Preferences::setHighlightList(hiList);
+
   // Remove unused entries...
   while(config->hasGroup(QString("Highlight%1").arg(i)))
   {

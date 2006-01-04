@@ -202,7 +202,6 @@ void Preferences::removeServerGroup(int id)
 const QPtrList<Highlight> Preferences::highlightList()
 {
     return self()->mHighlightList;
-	
 }
 
 void Preferences::setHighlightList(QPtrList<Highlight> newList)
