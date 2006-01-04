@@ -329,6 +329,17 @@ namespace Konversation
         }
     }
 
+    void NotificationHandler::connectionFailure(ChatWindow* chatWin, const QString& server)
+    {
+        if(!chatWin || !chatWin->notificationsEnabled())
+        {
+            return;
+        }
+
+        KNotifyClient::event(winId(), "connectionFailure",
+            i18n("Failed to connect to %1").arg(server));
+    }
+
     QString NotificationHandler::addLineBreaks(const QString& string)
     {
         QString cutup = string;

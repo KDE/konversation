@@ -680,6 +680,8 @@ void Server::broken(int state)
     // TODO: Close all queries and channels! Or at least make sure that all gets reconnected properly
     if(!getDeliberateQuit())
     {
+        static_cast<KonversationApplication*>(kapp)->notificationHandler()->connectionFailure(statusView, m_serverGroup->serverByIndex(m_currentServerIndex).server());
+
         ++reconnectCounter;
 
         if (autoReconnect && reconnectCounter <= Preferences::reconnectCount())

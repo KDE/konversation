@@ -584,6 +584,12 @@ Comment[uk]=Хтось виштовхнув вас із каналу
 Comment[xx]=xxSomeone kicked you out of a channelxx
 default_presentation=0
 
+[connectionFailure]
+Name=Connection failure
+Comment=Failed to connect to server
+Comment[xx]=xxFailed to connect to serverxx
+default_presentation=64
+
 [dccChat]
 Name=Dcc Chat
 Name[bg]=Dcc чат
