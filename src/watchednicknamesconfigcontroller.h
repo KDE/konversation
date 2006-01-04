@@ -45,6 +45,7 @@ class WatchedNicknamesConfigController : public QObject
   protected:
     void populateWatchedNicksList();
     WatchedNicknames_Config* m_watchedNicknamesPage;
+    bool newItemSelected;
 };
 
 #endif

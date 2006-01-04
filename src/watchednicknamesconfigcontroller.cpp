@@ -30,6 +30,9 @@
 WatchedNicknamesConfigController::WatchedNicknamesConfigController(WatchedNicknames_Config* watchedNicknamesPage,QObject *parent, const char *name)
  : QObject(parent, name)
 {
+  // reset flag to defined state (used to block signals when just selecting a new item)
+  newItemSelected=false;
+
   m_watchedNicknamesPage=watchedNicknamesPage;
   populateWatchedNicksList();
 
@@ -169,6 +172,8 @@ void WatchedNicknamesConfigController::newNotify()
   entrySelected(item);
   // unfold group branch in case it was empty before
   listView->setOpen(item->parent(),true);
+  // tell the config system that something has changed
+  emit modified();
 }
 
 // remove a notify entry from the listview
@@ -194,6 +199,8 @@ void WatchedNicknamesConfigController::removeNotify()
       // update input widgets
       entrySelected(itemAfter);
     }
+    // tell the config system that something has changed
+    emit modified();
   }
 }
 
@@ -212,9 +219,14 @@ void WatchedNicknamesConfigController::entrySelected(QListViewItem* notifyEntry)
     {
       // all edit widgets may be enabled
       enabled=true;
+      // tell all now emitted signals that we just clicked on a new item, so they should
+      // not emit the modified() signal.
+      newItemSelected=true;
       // copy network name and nickname to edit widgets
       m_watchedNicknamesPage->nicknameInput->setText(notifyEntry->text(0));
       m_watchedNicknamesPage->networkDropdown->setCurrentText(group->text(0));
+      // all signals will now emit the modified() signal again
+      newItemSelected=false;
     }
   }
 
@@ -226,7 +238,7 @@ void WatchedNicknamesConfigController::entrySelected(QListViewItem* notifyEntry)
   m_watchedNicknamesPage->nicknameInput->setEnabled(enabled);
 }
 
-// user changed the network this niockname is on
+// user changed the network this nickname is on
 void WatchedNicknamesConfigController::networkChanged(const QString& newNetwork)
 {
   // get listview pointer and selected entry
@@ -256,6 +268,8 @@ void WatchedNicknamesConfigController::networkChanged(const QString& newNetwork)
         listView->setCurrentItem(item);
         // unfold group branch in case it was empty before
         listView->setOpen(lookGroup,true);
+        // tell the config system that something has changed
+        if(!newItemSelected) emit modified();
       }
     }
   }
@@ -268,8 +282,14 @@ void WatchedNicknamesConfigController::nicknameChanged(const QString& newNicknam
   KListView* listView=m_watchedNicknamesPage->notifyListView;
   QListViewItem* item=listView->selectedItem();
 
-  // sanity check, rename item
-  if(item) item->setText(0,newNickname);
+  // sanity check
+  if(item)
+  {
+    // rename item
+    item->setText(0,newNickname);
+    // tell the config system that something has changed
+    if(!newItemSelected) emit modified();
+  }
 }
 
 #include "watchednicknamesconfigcontroller.moc"

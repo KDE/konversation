@@ -35,6 +35,9 @@
 HighlightConfigController::HighlightConfigController(Highlight_Config* highlightPage,QObject* parent, const char* name)
  : QObject(parent,name)
 {
+  // reset flag to defined state (used to block signals when just selecting a new item)
+  newItemSelected=false;
+
   m_highlightPage=highlightPage;
   populateHighlightList();
 
