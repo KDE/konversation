@@ -99,6 +99,9 @@ void WatchedNicknamesConfigController::saveSettings()
   // add new notify section
   config->setGroup("Notify Group Lists");
 
+  // create new in-memory notify structure
+  QMap<QString,QStringList> notifyList;
+
   // get first notify group
   KListView* listView=m_watchedNicknamesPage->notifyListView;
   QListViewItem* group=listView->firstChild();
@@ -120,9 +123,14 @@ void WatchedNicknamesConfigController::saveSettings()
     }
     // write nick list to config, strip all unnecessary blanks
     config->writeEntry(group->text(0),nicks.stripWhiteSpace());
+    // write nick list to in-memory notify list
+    notifyList.insert(group->text(0),nicks.stripWhiteSpace());
     // get next group
     group=group->nextSibling();
   } // while
+
+  // update in-memory notify list
+  Preferences::setNotifyList(notifyList);
 }
 
 // slots
