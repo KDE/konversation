@@ -950,17 +950,14 @@ void Server::notifyTimeout()
 {
     bool sent = false;
 
-    kdDebug() << "00000" << endl;
     // Notify delay time is over, send ISON request if desired
     if(Preferences::useNotify())
     {
-        kdDebug() << "111111" << endl;
         // But only if there actually are nicks in the notify list
         QString list = getISONListString();
 
         if(!list.isEmpty())
         {
-            kdDebug() << "22222" << endl;
             queue("ISON "+list);
             // remember that we already sent out ISON
             sent = true;
@@ -2455,7 +2452,7 @@ void Server::removeChannelNick(const QString& channelName, const QString& nickna
 
 QStringList Server::getWatchList()
 {
-    kdDebug() << "444 " << getServerGroup() << endl;
+    // no nickinfo ISON for the time being
     return Preferences::notifyListByGroup(getServerGroup());
     if (m_serverISON)
         return m_serverISON->getWatchList();
@@ -2467,7 +2464,7 @@ QString Server::getWatchListString() { return getWatchList().join(" "); }
 
 QStringList Server::getISONList()
 {
-    kdDebug() << "333 " << getServerGroup() << endl;
+    // no nickinfo ISON for the time being
     return Preferences::notifyListByGroup(getServerGroup());
     if (m_serverISON)
         return m_serverISON->getISONList();
