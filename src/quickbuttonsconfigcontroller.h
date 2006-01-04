@@ -36,6 +36,8 @@ class QuickButtonsConfigController : public QObject
 
   protected slots:
     void entrySelected(QListViewItem* quickButtonEntry);
+    void nameChanged(const QString& newName);
+    void actionChanged(const QString& newAction);
 
   protected:
     void populateQuickButtonsList();

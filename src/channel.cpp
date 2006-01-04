@@ -225,7 +225,7 @@ Channel::Channel(QWidget* parent)
         connect(newQuickButton, SIGNAL(clicked(const QString &)), this, SLOT(quickButtonClicked(const QString &)));
     }
 
-    updateQuickButtons(Preferences::buttonList());
+    updateQuickButtons(Preferences::quickButtonList());
 
     // The box holding the Nickname button and Channel input
     commandLineBox = new QHBox(this);

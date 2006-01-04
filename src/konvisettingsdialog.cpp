@@ -228,6 +228,7 @@ void KonviSettingsDialog::updateSettings()
   m_confIgnoreWdg->saveSettings();
   m_watchedNicknamesController->saveSettings();
   m_highlightController->saveSettings();
+  m_quickButtonsController->saveSettings();
   m_modified = false;
 }
 

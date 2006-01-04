@@ -646,14 +646,14 @@ void KonversationApplication::readOptions()
     // Quick Buttons List
     config->setGroup("Button List");
     // Read all buttons and overwrite default entries
-    QStringList buttonList(Preferences::buttonList());
+    QStringList buttonList(Preferences::quickButtonList());
     for(int index=0;index<8;index++)
     {
         QString buttonKey(QString("Button%1").arg(index));
         if(config->hasKey(buttonKey)) buttonList[index]=config->readEntry(buttonKey);
     }
     // Put back the changed button list
-    Preferences::setButtonList(buttonList);
+    Preferences::setQuickButtonList(buttonList);
 
     // Highlight List
     if(config->hasKey("Highlight"))               // Stay compatible with versions < 0.14
@@ -892,6 +892,9 @@ void KonversationApplication::saveOptions(bool updateGUI)
     }
 
     config->deleteGroup("Server List");
+/*
+    Should be done in QuickButtonConfigController now ...
+    remove this part as soon as we are certain it works
 
     config->setGroup("Button List");
 
@@ -900,8 +903,11 @@ void KonversationApplication::saveOptions(bool updateGUI)
         QStringList buttonList(Preferences::buttonList());
         config->writeEntry(QString("Button%1").arg(index),buttonList[index]);
     }
-    /*
-    Should be done in HighlightConfigController now ... remove this part as soon as we are certain it works
+*/
+/*
+    Should be done in HighlightConfigController now ...
+    remove this part as soon as we are certain it works
+
     // Write all highlight entries
     QPtrList<Highlight> hiList=Preferences::highlightList();
     int i = 0;
@@ -922,8 +928,8 @@ void KonversationApplication::saveOptions(bool updateGUI)
         config->deleteGroup(QString("Highlight%1").arg(i));
         i++;
     }
-    */
-    
+*/
+
     // Ignore List
     config->deleteGroup("Ignore List");
     config->setGroup("Ignore List");

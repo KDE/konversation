@@ -2062,7 +2062,7 @@ void Server::updateChannelQuickButtons()
     Channel* channel=channelList.first();
     while(channel)
     {
-        channel->updateQuickButtons(Preferences::buttonList());
+        channel->updateQuickButtons(Preferences::quickButtonList());
         channel=channelList.next();
     }
 }

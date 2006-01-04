@@ -53,7 +53,7 @@ class Preferences : public QObject, public PreferencesBase
     protected:
         Preferences();
         static Preferences *mSelf;
-	    
+
     public:
 
         static Preferences *self();
@@ -89,6 +89,8 @@ class Preferences : public QObject, public PreferencesBase
         static void clearIgnoreList();
         static const QPtrList<Ignore> ignoreList();
         static void setIgnoreList(QPtrList<Ignore> newList);
+        static const QStringList quickButtonList();
+        static void setQuickButtonList(const QStringList newList);
         static void addIdentity(IdentityPtr identity);
         static void removeIdentity(IdentityPtr identity);
         static void clearIdentityList();
@@ -163,8 +165,9 @@ class Preferences : public QObject, public PreferencesBase
         QPtrList<Ignore> mIgnoreList;
         QValueList<IdentityPtr> mIdentityList;
         QPtrList<Highlight> mHighlightList;
-	QMap<QString, QStringList> mNotifyList;
+        QMap<QString, QStringList> mNotifyList;
         QMap< QString,QMap<QString,QString> > mChannelEncodingsMap;
+        QStringList mQuickButtonList;
 /*
         // IRC colors
         QStringList mIrcColorList;

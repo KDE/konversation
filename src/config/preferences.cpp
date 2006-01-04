@@ -81,7 +81,15 @@ Preferences::Preferences()
     channel.setName("#kde");
     serverGroup->addChannel(channel);
     mServerGroupList.append(serverGroup);
-
+    QStringList quickButtons=QStringList() << "Op,/OP %u%n"
+                                           << "DeOp,/DEOP %u%n"
+                                           << "WhoIs,/WHOIS %s,%%u%n"
+                                           << "Version,/CTCP %s,%%u VERSION%n"
+                                           << "Kick,/KICK %u%n"
+                                           << "Ban,/BAN %u%n"
+                                           << "Part,/PART %c Leaving...%n"
+                                           << "Quit,/QUIT Leaving...%n";
+    setQuickButtonList(quickButtons);
 }
 
 Preferences::~Preferences()
@@ -94,6 +102,16 @@ Preferences::~Preferences()
 const Konversation::ServerGroupList Preferences::serverGroupList()
 {
     return self()->mServerGroupList;
+}
+
+const QStringList Preferences::quickButtonList()
+{
+  return self()->mQuickButtonList;
+}
+
+void Preferences::setQuickButtonList(const QStringList newList)
+{
+  self()->mQuickButtonList=newList;
 }
 
 void Preferences::setServerGroupList(const Konversation::ServerGroupList& list)

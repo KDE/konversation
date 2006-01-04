@@ -45,9 +45,10 @@
       <label></label>
       <whatsthis></whatsthis>
     </entry>
+<!-- quick buttons are handled outside of KConfigXT for now (Eisfuchs)
     <entry key="QuickButtons" type="StringList" name="ButtonList">
       <default code="true">(QStringList() &lt;&lt; "Op,/OP %u%n"&lt;&lt;"DeOp,/DEOP %u%n"&lt;&lt;"WhoIs,/WHOIS %s,%%u%n"&lt;&lt;"Version,/CTCP %s,%%u VERSION%n"&lt;&lt;"Kick,/KICK %u%n"&lt;&lt;"Kick,/KICK %u%n"&lt;&lt;"Ban,/BAN %u%n"&lt;&lt;"Part,/PART %c Leaving...%n"&lt;&lt;"Quit,/QUIT Leaving...%n")</default>
-    </entry>
+    </entry>  -->
     <entry key="ShowModeButtons" type="Bool">
       <default>false</default>
       <label></label>
