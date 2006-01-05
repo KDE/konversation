@@ -61,10 +61,9 @@ class StatusPanel : public ChatWindow
 
     public slots:
         void setNickname(const QString& newNickname);
-        void updateFonts();
         virtual void indicateAway(bool show);
         void setShowNicknameBox(bool show);
-
+        void updateAppearance();
         virtual void appendInputText(const QString&);
 
     protected slots:

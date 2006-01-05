@@ -151,7 +151,6 @@ class Server : public QObject
         void setChannelTopic(const QString& nickname, const QString& channel, const QString& topic);
         void updateChannelMode(const QString& nick, const QString& channel, char mode, bool plus, const QString& parameter);
         void updateChannelModeWidgets(const QString& channel, char mode, const QString& parameter);
-        void updateFonts();
         void setShowQuickButtons(bool state);
         void setShowModeButtons(bool state);
         void setShowTopic(bool state);

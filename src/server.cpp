@@ -2069,29 +2069,6 @@ void Server::updateChannelQuickButtons()
 }
 
 // TODO: Maybe use a Signal / Slot mechanism for these things?
-void Server::updateFonts()
-{
-    Channel* channel=channelList.first();
-    while(channel)
-    {
-        channel->updateFonts();
-        channel->updateStyleSheet();
-        channel=channelList.next();
-    }
-
-    class Query* query=queryList.first();
-    while(query)
-    {
-        query->updateFonts();
-        query=queryList.next();
-    }
-
-    statusView->updateFonts();
-
-    if(rawLog) rawLog->updateFonts();
-}
-
-// TODO: Maybe use a Signal / Slot mechanism for these things?
 void Server::setShowQuickButtons(bool state)
 {
     Channel* channel=channelList.first();

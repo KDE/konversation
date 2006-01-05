@@ -28,6 +28,8 @@ RawLog::RawLog(QWidget* parent) : ChatWindow(parent)
     setType(ChatWindow::RawLog);
     IRCViewBox* ircBox = new IRCViewBox(this, 0);
     setTextView(ircBox->ircView());               // Server will be set later in setServer()
+
+    connect(KonversationApplication::instance(), SIGNAL (appearanceChanged()),this,SLOT (updateAppearance()) );
 }
 
 RawLog::~RawLog()
@@ -38,7 +40,7 @@ void RawLog::childAdjustFocus()
 {
 }
 
-void RawLog::updateFonts()
+void RawLog::updateAppearance()
 {
     getTextView()->setFont(Preferences::textFont());
 

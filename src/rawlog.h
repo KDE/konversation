@@ -33,7 +33,7 @@ class RawLog : public ChatWindow
         virtual bool searchView();
 
     public slots:
-        void updateFonts();
+        void updateAppearance();
 
     protected:
         /** Called from ChatWindow adjustFocus */

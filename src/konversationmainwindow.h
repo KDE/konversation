@@ -109,7 +109,7 @@ class KonversationMainWindow : public KMainWindow
         void channelSplittersMoved(Channel*);
 
     public slots:
-	void appearanceChanged();
+        void updateAppearance();
         void addDccPanel(); // connected in server class
         void addKonsolePanel(); // connected in server class
         void addUrlCatcher();

@@ -81,7 +81,9 @@ StatusPanel::StatusPanel(QWidget* parent) : ChatWindow(parent)
     if(nicknameCombobox->lineEdit())
         connect(nicknameCombobox->lineEdit(), SIGNAL (lostFocus()),this,SLOT(nicknameComboboxChanged()));
 
-    updateFonts();
+    connect(KonversationApplication::instance(), SIGNAL (appearanceChanged()),this,SLOT (updateAppearance()) );
+
+    updateAppearance();
 }
 
 StatusPanel::~StatusPanel()
@@ -147,7 +149,7 @@ void StatusPanel::textPasted(const QString& text)
     }
 }
 
-void StatusPanel::updateFonts()
+void StatusPanel::updateAppearance()
 {
     QColor fg;
     QColor bg;

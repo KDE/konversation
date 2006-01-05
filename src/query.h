@@ -50,7 +50,6 @@ class Query : public ChatWindow
          *  This should be fixed maybe?  I don't know.
          */
         NickInfoPtr getNickInfo();
-        void updateFonts();
         virtual QString getTextInLine();
         virtual bool closeYourself();
         virtual bool canBeFrontView();
@@ -70,6 +69,7 @@ class Query : public ChatWindow
         void sendQueryText(const QString& text);
         void appendInputText(const QString& s);
         virtual void indicateAway(bool show);
+        void updateAppearance();
 
     protected slots:
         void queryTextEntered();

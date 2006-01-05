@@ -126,12 +126,14 @@ int KonversationApplication::newInstance()
         mainWindow = new KonversationMainWindow();
         setMainWidget(mainWindow);
 
-	connect(mainWindow,SIGNAL (showQuickConnectDialog()), this, SLOT (openQuickConnectDialog()) );
+        connect(mainWindow,SIGNAL (showQuickConnectDialog()), this, SLOT (openQuickConnectDialog()) );
         connect(Preferences::self(), SIGNAL (updateTrayIcon()),mainWindow,SLOT (updateTrayIcon()) );
         connect(this, SIGNAL (prefsChanged()), mainWindow, SLOT (slotPrefsChanged()) );
+        // take care of user style changes, setting back colors and stuff
+        connect(KApplication::kApplication(),SIGNAL (appearanceChanged()),mainWindow,SLOT (updateAppearance()) );
 
         // apply GUI settings
-        mainWindow->appearanceChanged();
+        mainWindow->updateAppearance();
         mainWindow->show();
 
         if(Preferences::showServerList())
@@ -177,9 +179,6 @@ int KonversationApplication::newInstance()
             connect(dcopObject,SIGNAL(dcopConnectToServer(const QString&, int,const QString&, const QString&)),
                 this,SLOT(dcopConnectToServer(const QString&, int,const QString&, const QString&)));
         }
-
-        // take care of user style changes, setting back colors and stuff
-        connect(KApplication::kApplication(),SIGNAL (appearanceChanged()),mainWindow,SLOT (appearanceChanged()) );
 
         m_notificationHandler = new Konversation::NotificationHandler(this);
     }
@@ -960,7 +959,10 @@ void KonversationApplication::saveOptions(bool updateGUI)
     emit prefsChanged();
 
     if(updateGUI)
-      mainWindow->appearanceChanged();
+    {
+        mainWindow->updateAppearance();
+        emit appearanceChanged();
+    }
 }
 
 void KonversationApplication::updateNickIcons()

@@ -107,7 +107,9 @@ Query::Query(QWidget* parent) : ChatWindow(parent)
     connect(textView,SIGNAL (extendedPopup(int)),this,SLOT (popup(int)) );
     connect(textView,SIGNAL (autoText(const QString&)),this,SLOT (sendQueryText(const QString&)) );
 
-    updateFonts();
+    connect(KonversationApplication::instance(), SIGNAL (appearanceChanged()),this,SLOT (updateAppearance()) );
+
+    updateAppearance();
 
     setLog(Preferences::log());
 }
@@ -200,7 +202,7 @@ void Query::sendQueryText(const QString& sendLine)
     m_server->queue(result.toServer);
 }
 
-void Query::updateFonts()
+void Query::updateAppearance()
 {
     QColor fg;
     QColor bg;

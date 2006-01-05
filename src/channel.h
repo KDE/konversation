@@ -131,7 +131,6 @@ class Channel : public ChatWindow
         void updateMode(QString sourceNick, char mode, bool plus, const QString &parameter);
         void updateModeWidgets(char mode, bool plus, const QString &parameter);
         void updateQuickButtons(const QStringList &newButtonList);
-        void updateFonts();
         void updateStyleSheet();
 
         virtual QString getTextInLine();
@@ -178,6 +177,7 @@ class Channel : public ChatWindow
         void setAllowNotifications(bool allow) { m_allowNotifications = allow; }
 
         void updateSplitters(Channel* channel);
+        void updateAppearance();
 
     protected slots:
         void purgeNicks();

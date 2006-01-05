@@ -332,7 +332,8 @@ void KonversationMainWindow::openPrefsDialog()
     m_settingsDialog = new KonviSettingsDialog(this);
     //User edited the configuration - update your local copies of the
     //configuration data
-    connect(m_settingsDialog, SIGNAL(settingsChanged()), this, SLOT(appearanceChanged()));
+    connect(m_settingsDialog, SIGNAL(settingsChanged()), this, SLOT(updateAppearance()));
+    connect(m_settingsDialog, SIGNAL(settingsChanged()), KonversationApplication::instance(), SIGNAL(appearanceChanged()));
 
   }
   m_settingsDialog->show();
@@ -773,26 +774,8 @@ void KonversationMainWindow::closeUrlCatcher()
     }
 }
 
-void KonversationMainWindow::appearanceChanged()
+void KonversationMainWindow::updateAppearance()
 {
-  KonversationApplication* konv_app=static_cast<KonversationApplication*>(KApplication::kApplication());
-  QPtrList<Server> serverList = konv_app->getServerList();
-  Server* lookServer = serverList.first();
-
-  while(lookServer)
-    {
-      // TODO: updateFonts() also updates the background color and more stuff! We must finally
-      // find a way to do all this with signals / slots!
-      lookServer->updateFonts();
-      lookServer->updateChannelQuickButtons();
-      lookServer->setShowQuickButtons(Preferences::showQuickButtons());
-      lookServer->setShowModeButtons(Preferences::showModeButtons());
-      lookServer->setShowTopic(Preferences::showTopic());
-      lookServer->setShowNicknameBox(Preferences::showNicknameBox());
-
-      lookServer=serverList.next();
-    }
-
   updateTabPlacement();
   setShowTabBarCloseButton(Preferences::showTabBarCloseButton());
 }

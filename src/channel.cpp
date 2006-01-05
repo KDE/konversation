@@ -300,7 +300,7 @@ Channel::Channel(QWidget* parent)
 
     nicknameList.setAutoDelete(true);
 
-    updateFonts();
+    updateAppearance();
     setLog(Preferences::log());
 
     connect(&userhostTimer,SIGNAL (timeout()),this,SLOT (autoUserhost()));
@@ -316,6 +316,8 @@ Channel::Channel(QWidget* parent)
     connect(Preferences::self(), SIGNAL (autoContinuousWhoChanged()),this,SLOT (scheduleAutoWho()));
 
     m_allowNotifications = true;
+
+    connect(KonversationApplication::instance(), SIGNAL (appearanceChanged()),this,SLOT (updateAppearance()) );
 
     //FIXME JOHNFLUX
     //  connect( Konversation::Addressbook::self()->getAddressBook(), SIGNAL( addressBookChanged( AddressBook * ) ), this, SLOT( slotLoadAddressees() ) );
@@ -1830,7 +1832,7 @@ void Channel::initializeSplitters()
     m_vertSplitter->setSizes(vertSizes);
 }
 
-void Channel::updateFonts()
+void Channel::updateAppearance()
 {
     nicknameCombobox->setFont(Preferences::textFont());
 
