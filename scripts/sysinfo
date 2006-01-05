@@ -16,7 +16,7 @@ export LC_ALL="C"
 
 HN="$(hostname)"
 OSKERN="$(uname -s) $(uname -r)"
-KDE="$(kde-config --version | sed -n '2p' | sed 's/://')"
+KDE="$(kde-config --version | sed -n '2p' | sed 's/://;s/ *$//')"
 
 CPU=$(awk -F':' '/model name/{name=$2}
  /cpu MHz/{mhz=int($2)}
@@ -24,6 +24,7 @@ CPU=$(awk -F':' '/model name/{name=$2}
 }
 END{
  gsub (/ *\(tm\) */, " ", name);
+ gsub (/ *\(TM\) */, " ", name);
  gsub (/ *Processor */, " ", name);
  gsub (/ *$/, "", name);
  gsub (/^ */, "", name);
@@ -39,13 +40,34 @@ HDD=$(df -l| awk '($1~/dev/){
 
 MEM=$(awk '($1=="MemTotal:"){tot=int($2/1e3)}
  ($1=="MemFree:"){free=int($2/1e3)}
- END{print "RAM: " free "/" tot "MB"}
+ END{
+use=tot-free
+print "RAM:" use "/" tot "MB"}
 ' /proc/meminfo)
 
 PROC="$(($(ps aux | wc -l)-1))"
-UPT="$(uptime | sed 's/^.*up *\([^,]*\).*$/\1/g')"
 
-out="Sysinfo for '$HN': $OSKERN running $KDE, $CPU, $HDD, $MEM, $PROC proc's, ${UPT}h up" 
+UPT=$(awk '{u="s";
+n=$1;
+if (n>60){
+ n2=n%60;
+ n/=60;
+ u="min";
+ if (n>60){
+  n2=n%60;
+  n/=60;
+  u="h";
+  if (n>24){
+   n2=n%24;
+   n/=24;
+   u="d"; 
+   }
+  }
+ }
+printf ("%d.%d%s up",n, n2, u);
+}' /proc/uptime )
+
+out="Sysinfo for '$HN': $OSKERN running $KDE, $CPU, $HDD, $MEM, $PROC proc's, ${UPT}" 
 
 if [ "x$PORT" == "x" ] ; then
     echo "$out"
