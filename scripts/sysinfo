@@ -2,50 +2,29 @@
 #
 # Licensed under GPL v2 or later at your option
 # Copyright 2004 by Michiel de Boer <infobash@rebelhomicide.demon.nl>
+# Copyright 2006 by Emil Obermayr <nobs@tigress.com>
+#
+# $Id: sysinfo,v 1.4 2006/01/03 20:22:23 nobs Exp $
+#
 
 PORT=$1;
 SERVER=$2;
 TARGET=$3;
 
-sysinfo()
-{
-LC_ALL="C"
-export LC_ALL 
+export LC_ALL="C"
+
 HN="$(hostname)"
 OSKERN="$(uname -s) $(uname -r)"
-CPU="$(awk -F':' '/model name/{printf("%s",$2)} /cpu MHz/{printf("%s %s ",$2,"Mhz")}' /proc/cpuinfo )" 
-BOGO="$(awk -F':' '/bogomips/ {printf("%s %s\n",$2,"Bogomips") }' /proc/cpuinfo)"
-for I in /proc/ide/hd* 
-do 
-	[[ -e $I/media && $(< $I/media) = disk ]] && ((CAP+=$(< $I/capacity))) 
-done 
-HDD="$((CAP*512/1000**3))"
-USEDMEM="$(free | awk '/cache:/ {printf("%s",$3/1024"/")}')"
-TOTALMEM="$(free | awk '/Mem:/ {printf("%s\n",$2/1024"MB")}')"
-MEM="${USEDMEM}${TOTALMEM}"
+CPU=$(awk -F':' '/model name/{printf("%s",$2)} /cpu MHz/{printf(" %d MHz ",$2)}/bogomips/ {printf("%d Bogomips",$2) }' /proc/cpuinfo )
+HDD=$(df -l| awk '($1~/dev/){use+=$3/1e6;tot+=$2/1e6}END{print "HD:" int(use) "/" int(tot) "GB"}')
+MEM=$(awk '($1=="MemTotal:"){tot=int($2/1e3)}($1=="MemFree:"){free=int($2/1e3)}END{print "RAM:" free "/" tot "MB"}' /proc/meminfo)
 PROC="$(($(ps aux | wc -l)-1))"
 UPT="$(uptime | sed 's/^.*up *\([^,]*\).*$/\1/g')"
 
-HEADERCOLOR="\x037"
-TEXTCOLOR="\x038"
+out="sysinfo for $HN: $OSKERN, $CPU, $HDD, $MEM, $PROC proc's, $UPT h up" 
 
-printf "$HEADERCOLOR%-25s\x03%s${TEXTCOLOR} %s \x03%s\n" "System Information for" " [" "$HN" "]"
-printf "${HEADERCOLOR}%-25s${TEXTCOLOR}%s\n" "OS/Kernel" " $OSKERN"
-printf "${HEADERCOLOR}%-25s${TEXTCOLOR}%s ${HEADERCOLOR}%s\n" "CPU Info" "$CPU" "$BOGO"
-printf "${HEADERCOLOR}%-25s${TEXTCOLOR}%s\n" "HD Info" " ${HDD}GB total storage capacity"
-printf "${HEADERCOLOR}%-25s${TEXTCOLOR}%s\n" "Memory" " $MEM"
-printf "${HEADERCOLOR}%-25s${TEXTCOLOR}%s\n" "Processes" " $PROC"
-printf "${HEADERCOLOR}%-25s${TEXTCOLOR}%s\n" "Uptime" " $UPT"
-}
-if [[ -z "$3" ]] ; then 
-  echo "Scripts are not meant to be called from the command line."
-  echo "This script should be installed to  $KDEDIR/share/apps/konversation/scripts"
-  echo "Then executed with /script   from the konversation"
-  echo
-  echo The output is:
-  sysinfo
-  exit
+if [ "x$TARGET" == "x" ] ; then         
+    dcop $PORT Konversation error "$out"
+else
+    dcop $PORT Konversation say $SERVER "$TARGET" "$out"
 fi
-
-
-sysinfo | while read line; do dcop $PORT Konversation say $SERVER "$TARGET" "$line"; done
