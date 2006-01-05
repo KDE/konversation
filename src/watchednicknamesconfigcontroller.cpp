@@ -127,7 +127,7 @@ void WatchedNicknamesConfigController::saveSettings()
     // write nick list to config, strip all unnecessary blanks
     config->writeEntry(group->text(0),nicks.stripWhiteSpace());
     // write nick list to in-memory notify list
-    notifyList.insert(group->text(0),nicks.stripWhiteSpace());
+    notifyList.insert(group->text(0),QStringList::split(' ',nicks.stripWhiteSpace()));
     // get next group
     group=group->nextSibling();
   } // while
