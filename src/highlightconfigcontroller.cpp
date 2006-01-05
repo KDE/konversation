@@ -245,7 +245,7 @@ QPtrList<Highlight> HighlightConfigController::getHighlightList()
   HighlightViewItem* item=static_cast<HighlightViewItem*>(m_highlightPage->highlightListView->firstChild());
   while(item)
   {
-    newList.append(new Highlight(item->getPattern(),item->getRegExp(),item->getColor(),item->getSoundURL(),""));
+    newList.append(new Highlight(item->getPattern(),item->getRegExp(),item->getColor(),item->getSoundURL(),item->getAutoText()));
     item=item->itemBelow();
   }
 
