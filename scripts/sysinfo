@@ -42,7 +42,7 @@ MEM=$(awk '($1=="MemTotal:"){tot=int($2/1e3)}
  ($1=="MemFree:"){free=int($2/1e3)}
  END{
 use=tot-free
-print "RAM:" use "/" tot "MB"}
+print "RAM: " use "/" tot "MB"}
 ' /proc/meminfo)
 
 PROC="$(($(ps aux | wc -l)-1))"
