@@ -280,6 +280,30 @@ void DccPanel::clearDcc()
             lst.append( it.current() );
         ++it;
     }
+
+    // Figure out the first 'gap' in the selection and select that item, 
+    // or, if there are no gaps, select first item below the selection
+    QPtrListIterator<QListViewItem> selected( lst );
+    bool itemSelected = false;
+    while( selected.current() )
+    {
+        if (selected.current()->itemBelow() && !lst.containsRef(selected.current()->itemBelow()))
+        {
+            m_listView->setSelected(selected.current()->itemBelow(),true);
+            m_listView->setCurrentItem(selected.current()->itemBelow());
+            itemSelected = true;
+            break; 
+        }
+        ++selected;
+    }
+
+    // When there are neither gaps in nor items below the selection, select the first item
+    if (!itemSelected)
+    {
+        m_listView->setSelected(m_listView->firstChild(),true);
+        m_listView->setCurrentItem(m_listView->firstChild());
+    }
+
     lst.setAutoDelete( true );
     while( lst.remove() );
     updateButton();
