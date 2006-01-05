@@ -77,7 +77,7 @@ int main(int argc, char* argv[])
     aboutData.addCredit("Sebastian Sariego",I18N_NOOP("Artwork"),"segfault@kde.cl");
     aboutData.addCredit("Olivier Bédard",I18N_NOOP("www.konversation.org hosting"));
     aboutData.addCredit("Renchi Raju",I18N_NOOP("Firefox style searchbar"));
-    aboutData.addCredit("Michael Kreitzer",I18N_NOOP("Raw modes,Tab grouping per server"),"mrgrim@gr1m.org");
+    aboutData.addCredit("Michael Kreitzer",I18N_NOOP("Raw modes, Tab grouping per server"),"mrgrim@gr1m.org");
     aboutData.addCredit("Frauke Oster",I18N_NOOP("System tray patch"),"frauke@frsv.de");
     aboutData.addCredit("Lucijan Busch",I18N_NOOP("Bug fixes"),"lucijan@kde.org");
     aboutData.addCredit("Sascha Cunz",I18N_NOOP("Extended user modes patch"),"mail@sacu.de");
@@ -87,6 +87,7 @@ int main(int argc, char* argv[])
     aboutData.addCredit("Ruud Nabben",I18N_NOOP("Option to enable IRC color filtering"),"r.nabben@gawab.com");
     aboutData.addCredit("Lothar Braun",I18N_NOOP("Bug fixes"),"mail@lobraun.de");
     aboutData.addCredit("Ivor Hewitt",I18N_NOOP("Bug fixes, OSD work, clearing topics"),"ivor@ivor.org");
+    aboutData.addCredit("Emil Obermayr",I18N_NOOP("Sysinfo script"),"nobs@tigress.com");
 
     KCmdLineArgs::init(argc,argv,&aboutData);
     KCmdLineArgs::addCmdLineOptions(options);

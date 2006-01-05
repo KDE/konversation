@@ -45,6 +45,8 @@ use=tot-free
 print "RAM: " use "/" tot "MB"}
 ' /proc/meminfo)
 
+MEM=$(free -m | gawk '/Mem:/ {printf("%s%s\n",$3"/",$2"MB")}')
+
 PROC="$(($(ps aux | wc -l)-1))"
 
 UPT=$(awk '{u="s";
