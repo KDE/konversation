@@ -2172,6 +2172,11 @@ ChannelNickPtr Server::addNickToJoinedChannelsList(const QString& channelName, c
         m_allNicks.insert(lcNickname, nickInfo);
         doWatchedNickChangedSignal = isWatchedNick(nickname);
     }
+    // if nickinfo already exists update nickname, in case we created the nickinfo based
+    // on e.g. an incorrectly capitalized ISON request
+    else
+        nickInfo->setNickname(nickname);
+
     // Move the channel from unjoined list (if present) to joined list.
     QString lcChannelName = channelName.lower();
     ChannelNickMap *channel;
