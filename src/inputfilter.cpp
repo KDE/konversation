@@ -774,9 +774,6 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     QStringList nickList = QStringList::split(" ", trailing);
                     // send list to channel
                     server->addPendingNickList(parameterList[2], nickList);
-                    // This code path was taken for the automatic NAMES input on JOIN, upcoming
-                    // NAMES input for this channel will be manual invocations of /names
-                    setAutomaticRequest("NAMES",parameterList[2],false);
                 }
 
                 break;
@@ -793,7 +790,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     server->noMorePendingNicks(parameterList[1]);
                     // This code path was taken for the automatic NAMES input on JOIN, upcoming
                     // NAMES input for this channel will be manual invocations of /names
-                    setAutomaticRequest("NAMES",parameterList[2],false);
+                    setAutomaticRequest("NAMES",parameterList[1],false);
                 }
 
                 break;
