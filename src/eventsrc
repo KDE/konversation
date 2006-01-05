@@ -587,7 +587,6 @@ default_presentation=0
 [connectionFailure]
 Name=Connection failure
 Comment=Failed to connect to server
-Comment[xx]=xxFailed to connect to serverxx
 default_presentation=64
 
 [dccChat]
