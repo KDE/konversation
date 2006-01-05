@@ -4,8 +4,9 @@
 # Copyright 2004 by Michiel de Boer <infobash@rebelhomicide.demon.nl>
 # Copyright 2006 by Emil Obermayr <nobs@tigress.com>
 #
-# $Id: sysinfo,v 1.4 2006/01/03 20:22:23 nobs Exp $
+# this version is stripped down to no-color
 #
+# get full original version at http://rebelhomicide.demon.nl/scripts/
 
 PORT=$1;
 SERVER=$2;
@@ -15,16 +16,42 @@ export LC_ALL="C"
 
 HN="$(hostname)"
 OSKERN="$(uname -s) $(uname -r)"
-CPU=$(awk -F':' '/model name/{printf("%s",$2)} /cpu MHz/{printf(" %d MHz ",$2)}/bogomips/ {printf("%d Bogomips",$2) }' /proc/cpuinfo )
-HDD=$(df -l| awk '($1~/dev/){use+=$3/1e6;tot+=$2/1e6}END{print "HD:" int(use) "/" int(tot) "GB"}')
-MEM=$(awk '($1=="MemTotal:"){tot=int($2/1e3)}($1=="MemFree:"){free=int($2/1e3)}END{print "RAM:" free "/" tot "MB"}' /proc/meminfo)
+
+CPU=$(awk -F':' '/model name/{name=$2}
+ /cpu MHz/{mhz=int($2)}
+ /bogomips/ {bogo=int($2) 
+}
+END{
+ gsub (/ *\(tm\) */, " ", name);
+ gsub (/ *Processor */, " ", name);
+ gsub (/ *$/, "", name);
+ gsub (/^ */, "", name);
+ printf "%s at %d MHz (%d bogomips)", name, mhz, bogo;
+}
+' /proc/cpuinfo )
+
+HDD=$(df -l| awk '($1~/dev/){
+  use+=$3/1e6;
+  tot+=$2/1e6
+ }
+ END{print "HD:" int(use) "/" int(tot) "GB"}')
+
+MEM=$(awk '($1=="MemTotal:"){tot=int($2/1e3)}
+ ($1=="MemFree:"){free=int($2/1e3)}
+ END{print "RAM:" free "/" tot "MB"}
+' /proc/meminfo)
+
 PROC="$(($(ps aux | wc -l)-1))"
 UPT="$(uptime | sed 's/^.*up *\([^,]*\).*$/\1/g')"
 
-out="sysinfo for $HN: $OSKERN, $CPU, $HDD, $MEM, $PROC proc's, $UPT h up" 
+out="sysinfo for $HN: $OSKERN, $CPU, $HDD, $MEM, $PROC proc's, ${UPT}h up" 
 
-if [ "x$TARGET" == "x" ] ; then         
-    dcop $PORT Konversation error "$out"
+if [ "x$PORT" == "x" ] ; then
+    echo "$out"
 else
-    dcop $PORT Konversation say $SERVER "$TARGET" "$out"
+    if [ "x$TARGET" == "x" ] ; then
+	dcop $PORT Konversation error "$out"
+    else
+	dcop $PORT Konversation say $SERVER "$TARGET" "$out"
+    fi
 fi
