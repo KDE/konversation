@@ -216,6 +216,7 @@ void Query::updateFonts()
         bg=colorGroup().base();
     }
 
+    queryInput->unsetPalette();
     queryInput->setPaletteForegroundColor(fg);
     queryInput->setPaletteBackgroundColor(bg);
     queryInput->setFont(Preferences::textFont());
@@ -224,6 +225,7 @@ void Query::updateFonts()
     //  queryHostmask->setPaletteBackgroundColor(bg);
     //  queryHostmask->setFont(Preferences::textFont());
 
+    getTextView()->unsetPalette();
     getTextView()->setFont(Preferences::textFont());
 
     if(Preferences::showBackgroundImage())

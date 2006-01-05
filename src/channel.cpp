@@ -1850,10 +1850,12 @@ void Channel::updateFonts()
         abg=abgCache;
     }
 
+    channelInput->unsetPalette();
     channelInput->setPaletteForegroundColor(fg);
     channelInput->setPaletteBackgroundColor(bg);
     channelInput->setFont(Preferences::textFont());
 
+    limit->unsetPalette();
     limit->setPaletteForegroundColor(fg);
     limit->setPaletteBackgroundColor(bg);
     limit->setFont(Preferences::textFont());
@@ -1862,6 +1864,7 @@ void Channel::updateFonts()
     //topicLine->lineEdit()->setPaletteBackgroundColor(bg);
     topicLine->setFont(Preferences::textFont());
 
+    getTextView()->unsetPalette();
     getTextView()->setFont(Preferences::textFont());
 
     if(Preferences::showBackgroundImage())
@@ -1877,6 +1880,7 @@ void Channel::updateFonts()
 
     nicknameListView->resort();
 
+    nicknameListView->unsetPalette();
     nicknameListView->setPaletteForegroundColor(fg);
     nicknameListView->setPaletteBackgroundColor(bg);
     nicknameListView->setAlternateBackground(abg);

@@ -162,11 +162,12 @@ void StatusPanel::updateFonts()
         bg=colorGroup().base();
     }
 
-
+    statusInput->unsetPalette();
     statusInput->setPaletteForegroundColor(fg);
     statusInput->setPaletteBackgroundColor(bg);
     statusInput->setFont(Preferences::textFont());
 
+    getTextView()->unsetPalette();
     getTextView()->setFont(Preferences::textFont());
 
     if(Preferences::showBackgroundImage())
