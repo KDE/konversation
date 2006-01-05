@@ -838,7 +838,6 @@ void Server::quitServer()
 {
     QString command(Preferences::commandChar()+"QUIT");
     Konversation::OutputFilterResult result = outputFilter->parse(getNickname(),command, QString::null);
-    kdDebug() << "in quitServer()" << endl;
     queue(result.toServer);
 }
 

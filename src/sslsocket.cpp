@@ -63,20 +63,17 @@ SSLSocket::~SSLSocket()
 
 Q_LONG SSLSocket::writeBlock(const char *data, Q_ULONG len)
 {
-    kdDebug() << "SSLSocket::writeBlock : " << data << endl;
     return d->kssl->write( data,len );
 }
 
 Q_LONG SSLSocket::readBlock(char *data, Q_ULONG maxlen)
 {
     int err = d->kssl->read( data, maxlen );
-    kdDebug() << "SSLSocket::readBlock : " << QCString(data) << endl;
     return err;
 }
 
 void SSLSocket::stateChanging(KClientSocketBase::SocketState newState)
 {
-    kdDebug() << "SSLSocket::stateChanging" << endl;
     if(newState == KClientSocketBase::Connected)
     {
         KClientSocketBase::stateChanging(KClientSocketBase::Connected);
@@ -103,7 +100,6 @@ void SSLSocket::connected()
 
     if( KSSL::doesSSLWork() )
     {
-        kdDebug() << "Trying SSL connection..." << endl;
         if( !d->kssl )
         {
             d->kssl = new KSSL();
@@ -111,7 +107,6 @@ void SSLSocket::connected()
             {
                 if( verifyCertificate() != 1 )
                 {
-                    kdDebug() << "Closing socket!" << endl;
                     close();
                 }
                 else
@@ -338,7 +333,7 @@ int SSLSocket::verifyCertificate()
 
     if (rc == -1)
         return rc;
-
+    /*
     kdDebug() << "SSL connection information follows:" << endl
         << "+-----------------------------------------------" << endl
         << "| Cipher: " << d->kssl->connectionInfo().getCipher() << endl
@@ -353,7 +348,7 @@ int SSLSocket::verifyCertificate()
         << "| Validation: " << (int) validation << endl
         << "+-----------------------------------------------"
         << endl;
-
+    */
     return rc;
 }
 
