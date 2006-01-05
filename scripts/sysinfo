@@ -31,21 +31,19 @@ END{
  printf "CPU: %s at %d MHz (%d bogomips)", name, mhz, bogo;
 }
 ' /proc/cpuinfo )
-
+  
 HDD=$(df -l| awk '($1~/dev/){
-  use+=$3/1e6;
-  tot+=$2/1e6
+  use+=$3/1024**2;
+  tot+=$2/1024**2;
  }
  END{print "HD: " int(use) "/" int(tot) "GB"}')
 
-MEM=$(awk '($1=="MemTotal:"){tot=int($2/1e3)}
- ($1=="MemFree:"){free=int($2/1e3)}
+MEM=$(awk '($1=="MemTotal:"){tot=int($2/1024)}
+ ($1=="MemFree:"){free=int($2/1024)}
  END{
 use=tot-free
 print "RAM: " use "/" tot "MB"}
 ' /proc/meminfo)
-
-MEM=$(free -m | gawk '/Mem:/ {printf("%s%s\n",$3"/",$2"MB")}')
 
 PROC="$(($(ps aux | wc -l)-1))"
 
