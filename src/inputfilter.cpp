@@ -24,6 +24,7 @@
 #include <kstringhandler.h>
 
 #include <config.h>
+#include <kdebug.h>
 
 #include "inputfilter.h"
 #include "server.h"
@@ -465,6 +466,10 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
             server->joinChannel(channelName, sourceHostmask);
             // Request modes for the channel
             server->queue("MODE "+channelName);
+
+            // Upon JOIN we're going to receive some NAMES input from the server which 
+            // we need to be able to tell apart from manual invocations of /names
+            setAutomaticRequest("NAMES",channelName,true);
         }
         else
         {
@@ -759,16 +764,38 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             }
             case RPL_NAMREPLY:
             {
-                QStringList nickList = QStringList::split(" ", trailing);
-                // send list to channel
-                server->addPendingNickList(parameterList[2], nickList);
+                // Display message only if this was not an automatic request.
+                if(getAutomaticRequest("NAMES",parameterList[2])==0)
+                {
+                    server->appendMessageToFrontmost(i18n("Names"),trailing);
+                }
+                else
+                {
+                    QStringList nickList = QStringList::split(" ", trailing);
+                    // send list to channel
+                    server->addPendingNickList(parameterList[2], nickList);
+                    // This code path was taken for the automatic NAMES input on JOIN, upcoming
+                    // NAMES input for this channel will be manual invocations of /names
+                    setAutomaticRequest("NAMES",parameterList[2],false);
+                }
+
                 break;
             }
             case RPL_ENDOFNAMES:
             {
-                server->appendCommandMessageToChannel(parameterList[1],i18n("Names"),i18n("End of NAMES list."));
-                // tell the channel that the list of nicks is complete
-                server->noMorePendingNicks(parameterList[1]);
+                if(getAutomaticRequest("NAMES",parameterList[1])==0)
+                {
+                    server->appendMessageToFrontmost(i18n("Names"),i18n("End of NAMES list."));
+                }
+                else
+                {
+                    // tell the channel that the list of nicks is complete
+                    server->noMorePendingNicks(parameterList[1]);
+                    // This code path was taken for the automatic NAMES input on JOIN, upcoming
+                    // NAMES input for this channel will be manual invocations of /names
+                    setAutomaticRequest("NAMES",parameterList[2],false);
+                }
+
                 break;
             }
             // Topic set messages
