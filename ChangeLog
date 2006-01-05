@@ -41,6 +41,7 @@ Changes from 0.18 to 0.19
 - Redesigned the topic dialog, now allows browsing the topic history while editing the current topic
 - Re-modeled useless connection attempt taskbar notification into a configurable notification event that only triggers on connection failure
 - Improved item selection logic upon clearing a selection in the 'DCC Status' tab
+- Fixed some widgets not picking up KDE color scheme changes
 
 Changes from 0.17 to 0.18
 - All nicks were blue when colored nicks are disabled with some setups
