@@ -37,6 +37,10 @@ Changes from 0.18 to 0.19
 - Improvements to socket handling in DCC chats
 - Fixed chat window focus bug that prevented copying to clipboard using the keyboard shortcut in some cases
 - Fixed OSD preview
+- Fix wrong operator count in status bar
+- Redesigned the topic dialog, now allows browsing the topic history while editing the current topic
+- Re-modeled useless connection attempt taskbar notification into a configurable notification event that only triggers on connection failure
+- Improved item selection logic upon clearing a selection in the 'DCC Status' tab
 
 Changes from 0.17 to 0.18
 - All nicks were blue when colored nicks are disabled with some setups
