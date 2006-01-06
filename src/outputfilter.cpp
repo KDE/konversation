@@ -29,6 +29,10 @@
 #include <kdeversion.h>
 #include <kshell.h>
 
+#include <ksocketaddress.h>
+#include <kresolver.h>
+#include <kreverseresolver.h>
+
 #include "outputfilter.h"
 #include "konversationapplication.h"
 #include "konversationmainwindow.h"
@@ -1492,11 +1496,55 @@ namespace Konversation
         else
         {
             QStringList splitted = QStringList::split(" ", parameter);
-            QString nickname = splitted[0];
+            QString target = splitted[0];
 
-            m_server->resolveUserhost(nickname);
+            KIpAddress address(target);
+
+            // Parameter is an IP address
+            if (address.isIPv4Addr() || address.isIPv6Addr())
+            {
+                KInetSocketAddress socketAddress(address,0);
+                QString resolvedTarget;
+                QString serv; // We don't need this, but KReverseResolver::resolve does
+
+                if (KNetwork::KReverseResolver::resolve(socketAddress,resolvedTarget,serv))
+                {
+                    result.typeString = i18n("DNS");
+                    result.output = i18n("Resolved %1 to: %2").arg(target).arg(resolvedTarget);
+                    result.type = Program;
+                }
+                else
+                {
+                    result = error(i18n("Unable to resolve %1").arg(target));
+                }
+            }
+            // Parameter is presumed to be a host due to containing a dot. Yeah, it's dumb.
+            // FIXME: The reason we detect the host by occurence of a dot is the large penalty
+            // we would incur by using inputfilter to find out if there's a user==target on the
+            // server - once we have a better API for this, switch to it.
+            else if (target.contains('.'))
+            {
+                KNetwork::KResolverResults resolved = KNetwork::KResolver::resolve(target,"");
+                if(resolved.error() == KResolver::NoError && resolved.size() > 0)
+                {
+                    QString resolvedTarget = resolved.first().address().nodeName();
+                    result.typeString = i18n("DNS");
+                    result.output = i18n("Resolved %1 to: %2").arg(target).arg(resolvedTarget);
+                    result.type = Program;
+                }
+                else
+                {
+                    result = error(i18n("Unable to resolve %1").arg(target));
+                }
+            }
+            // Parameter is either host nor IP, so request a lookup from server, which in
+            // turn lets inputfilter do the job.
+            else
+            {
+                m_server->resolveUserhost(target);
+            }
         }
-        
+
         return result;
     }
 }

@@ -988,7 +988,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                         {
                             QString ip = resolved.first().address().nodeName();
                             server->appendMessageToFrontmost(i18n("DNS"),
-                                i18n("Resolved %1 (%2) to IP address: %3")
+                                i18n("Resolved %1 (%2) to address: %3")
                                 .arg(parameterList[1])
                                 .arg(parameterList[3])
                                 .arg(ip)
@@ -997,7 +997,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                         else
                         {
                             server->appendMessageToFrontmost(i18n("Error"),
-                                i18n("Unable to resolve IP address for %1 (%2)")
+                                i18n("Unable to resolve address for %1 (%2)")
                                 .arg(parameterList[1])
                                 .arg(parameterList[3])
                                 );
@@ -1023,7 +1023,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     // Prints "psn is an identified user"
                     //server->appendStatusMessage(i18n("Whois"),parameterList.join(" ").section(' ',1)+" "+trailing);
                     // The above line works fine, but can't be i18n'ised. So use the below instead.. I hope this is okay.
-                    server->appendMessageToFrontmost(i18n("Whois"), i18n("%1 is an identified user").arg(parameterList[1]));
+                    server->appendMessageToFrontmost(i18n("Whois"), i18n("%1 is an identified user.").arg(parameterList[1]));
                 }
                 break;
             }
