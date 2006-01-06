@@ -27,6 +27,8 @@
  *    addPageInternal, thus calling the respective KDialogBase methods which
  *    allow specifying a path from which the TreeList hierarchy is constructed.
  *  - Use 16x16 icons in the TreeList.
+ *  - Fill a new int m_lastAddedIndex with the pageIndex() of a new page added
+ *    with addPageInternal, and offer a public interface int lastAddedIndex().
  *  See the KConfigDialog reference for detailed documentation.
  *
  *  begin:     Nov 22 2005
