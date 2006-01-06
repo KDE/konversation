@@ -202,8 +202,10 @@ namespace Konversation
 
             else if(command == "charset") parseCharset(parameter);
 
-            else if(command == "setkey")     result = parseSetKey(parameter);
-            else if(command == "delkey")     result = parseDelKey(parameter);
+            else if(command == "setkey")  result = parseSetKey(parameter);
+            else if(command == "delkey")  result = parseDelKey(parameter);
+
+            else if(command == "dns")     result = parseDNS(parameter);
 
             // Forward unknown commands to server
             else
@@ -1476,6 +1478,25 @@ namespace Konversation
 
         m_server->getMainWindow()->openChannelList(parameter, true);
 
+        return result;
+    }
+
+    OutputFilterResult OutputFilter::parseDNS(const QString& parameter)
+    {
+        OutputFilterResult result;
+
+        if(parameter.isEmpty())
+        {
+            result = usage(i18n("Usage: %1DNS <nick>").arg(commandChar));
+        }
+        else
+        {
+            QStringList splitted = QStringList::split(" ", parameter);
+            QString nickname = splitted[0];
+
+            m_server->resolveUserhost(nickname);
+        }
+        
         return result;
     }
 }

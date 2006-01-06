@@ -38,6 +38,8 @@
 #include "common.h"
 #include "notificationhandler.h"
 
+#include <kresolver.h>
+
 InputFilter::InputFilter()
 {
 }
@@ -818,7 +820,18 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             }
             case ERR_NOSUCHNICK:
             {
-                server->appendMessageToFrontmost(i18n("Error"),i18n("%1: No such nick/channel.").arg(parameterList[1]));
+                // Display slightly different error message in case we performed a WHOIS for
+                // IP resolve purposes, and clear it from the automaticRequest list
+                if(getAutomaticRequest("DNS",parameterList[1])==0)
+                {
+                    server->appendMessageToFrontmost(i18n("Error"),i18n("%1: No such nick/channel.").arg(parameterList[1]));
+                }
+                else
+                {
+                    server->appendMessageToFrontmost(i18n("Error"),i18n("No such nick: %1.").arg(parameterList[1]));
+                    setAutomaticRequest("DNS", parameterList[1], false);
+                }
+
                 break;
             }
             // Nick already on the server, so try another one
@@ -959,6 +972,35 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                         .arg(parameterList[2])    // to avoid parsing as email
                         .arg(parameterList[3])
                         .arg(trailing));
+                }
+                else
+                {
+                    // This WHOIS was requested by Server for DNS resolve purposes; try to resolve the host
+                    if(getAutomaticRequest("DNS",parameterList[1])==1)
+                    {
+                        KNetwork::KResolverResults resolved = KNetwork::KResolver::resolve(parameterList[3],"");
+                        if(resolved.error() == KResolver::NoError && resolved.size() > 0)
+                        {
+                            QString ip = resolved.first().address().nodeName();
+                            server->appendMessageToFrontmost(i18n("DNS"),
+                                i18n("Resolved %1 (%2) to IP address: %3")
+                                .arg(parameterList[1])
+                                .arg(parameterList[3])
+                                .arg(ip)
+                                );
+                        }
+                        else
+                        {
+                            server->appendMessageToFrontmost(i18n("Error"),
+                                i18n("Unable to resolve IP address for %1 (%2)")
+                                .arg(parameterList[1])
+                                .arg(parameterList[3])
+                                );
+                        }
+
+                        // Clear this from the automaticRequest list so it works repeatedly
+                        setAutomaticRequest("DNS", parameterList[1], false);
+                    }
                 }
                 break;
             }

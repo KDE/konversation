@@ -133,6 +133,7 @@ namespace Konversation
             void parseCycle();
             OutputFilterResult parseSetKey(const QString& parameter);
             OutputFilterResult parseDelKey(const QString& parameter);
+            OutputFilterResult parseDNS(const QString& parameter);
 
             OutputFilterResult changeMode(const QString& parameter,char mode,char giveTake);
             bool isAChannel(const QString& check);

@@ -1660,6 +1660,13 @@ void Server::requestUserhost(const QString& nicks)
     queue("USERHOST "+nicks);
 }
 
+void Server::resolveUserhost(const QString& nickname)
+{
+    inputFilter.setAutomaticRequest("WHOIS", nickname, true);
+    inputFilter.setAutomaticRequest("DNS", nickname, true);
+    queue("WHOIS "+nickname);
+}
+
 void Server::requestBan(const QStringList& users,const QString& channel,const QString& a_option)
 {
     QString hostmask;
