@@ -1511,9 +1511,13 @@ namespace Konversation
             // Parameter is an IP address
             if (address.isIPv4Addr() || address.isIPv6Addr())
             {
-                KNetwork::KInetSocketAddress socketAddress(address,0);
+            // Disable the reverse resolve codepath on older KDE versions due to many
+            // distributions shipping visibility-enabled KDE 3.4 and KNetwork not 
+            // coping with it.
+#if KDE_IS_VERSION(3,5,0)
+                KNetwork:: KInetSocketAddress socketAddress(address,0);
                 QString resolvedTarget;
-                QString serv; // We don't need this, but KReverseResolver::resolve does
+                QString serv; // We don't need this, but KReverseResolver::resolve does.
 
                 if (KNetwork::KReverseResolver::resolve(socketAddress,resolvedTarget,serv))
                 {
@@ -1525,6 +1529,9 @@ namespace Konversation
                 {
                     result = error(i18n("Unable to resolve %1").arg(target));
                 }
+#else
+                result = error(i18n("Reverse-resolving requires KDE version 3.5 or higher."));
+#endif
             }
             // Parameter is presumed to be a host due to containing a dot. Yeah, it's dumb.
             // FIXME: The reason we detect the host by occurence of a dot is the large penalty
