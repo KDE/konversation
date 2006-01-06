@@ -352,7 +352,9 @@ namespace Konversation
     {
         m_upNicknameBtn->setEnabled( m_nicknameLBox->count()>1 && m_nicknameLBox->currentItem()>0 );
 
-        m_downNicknameBtn->setEnabled( m_nicknameLBox->count()>1 && m_nicknameLBox->currentItem()<m_nicknameLBox->count()-1 );
+        // FIXME: find another way than casting to overcome signedness warning
+        m_downNicknameBtn->setEnabled( m_nicknameLBox->count()>1 &&
+            m_nicknameLBox->currentItem()< static_cast<int>(m_nicknameLBox->count()-1) );
 
     }
 

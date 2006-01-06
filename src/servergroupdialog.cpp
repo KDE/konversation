@@ -273,7 +273,9 @@ namespace Konversation
     {
         m_upServerBtn->setEnabled( m_serverLBox->count()>1 && m_serverLBox->currentItem()>0 );
 
-        m_downServerBtn->setEnabled( m_serverLBox->count()>1 && m_serverLBox->currentItem()<m_serverLBox->count()-1 );
+        // FIXME: find another way than casting to overcome signedness warning
+        m_downServerBtn->setEnabled( m_serverLBox->count()>1 &&
+            m_serverLBox->currentItem()< static_cast<int>(m_serverLBox->count()-1) );
     }
 
     void ServerGroupDialog::moveServerUp()
@@ -359,7 +361,9 @@ namespace Konversation
     {
         m_upChannelBtn->setEnabled( m_channelLBox->count()>1 && m_channelLBox->currentItem()>0 );
 
-        m_downChannelBtn->setEnabled( m_channelLBox->count()>1 && m_channelLBox->currentItem()<m_channelLBox->count()-1 );
+        // FIXME: find another way than casting to overcome signedness warning
+        m_downChannelBtn->setEnabled( m_channelLBox->count()>1 &&
+            m_channelLBox->currentItem()< static_cast<int>(m_channelLBox->count()-1) );
     }
 
     void ServerGroupDialog::moveChannelUp()
