@@ -1898,10 +1898,13 @@ void Channel::nicknameComboboxChanged()
 {
     QString newNick=nicknameCombobox->currentText();
     oldNick=m_server->getNickname();
-    if(oldNick == newNick) return;                //nothing changed
-
-    nicknameCombobox->setCurrentText(oldNick);
-    m_server->queue("NICK "+newNick);
+    if(oldNick!=newNick)
+    {
+      nicknameCombobox->setCurrentText(oldNick);
+      m_server->queue("NICK "+newNick);
+    }
+    // return focus to input line
+    channelInput->setFocus();
 }
 
 void Channel::changeNickname(const QString& newNickname)

@@ -250,9 +250,13 @@ void StatusPanel::nicknameComboboxChanged()
 {
     QString newNick=nicknameCombobox->currentText();
     oldNick=m_server->getNickname();
-    if(oldNick == newNick) return;
-    nicknameCombobox->setCurrentText(oldNick);
-    m_server->queue("NICK "+newNick);
+    if(oldNick!=newNick)
+    {
+      nicknameCombobox->setCurrentText(oldNick);
+      m_server->queue("NICK "+newNick);
+    }
+    // return focus to input line
+    statusInput->setFocus();
 }
 
 void StatusPanel::changeNickname(const QString& newNickname)
