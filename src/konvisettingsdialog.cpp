@@ -62,9 +62,11 @@
 #include "ex_alias_preferences.h"
 #include "ignore_preferences.h"
 
+// helper classes for Non-KConfigXT options
 #include "highlightconfigcontroller.h"
 #include "watchednicknamesconfigcontroller.h"
 #include "quickbuttonsconfigcontroller.h"
+#include "nicklistbehaviorconfigcontroller.h"
 
 KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
 	           KonviConfigDialog( parent, "settings", Preferences::self(), KDialogBase::TreeList)
@@ -150,6 +152,9 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   pagePath << i18n("Behavior") << i18n("Nickname List");
   addPage ( m_confNicklistBehaviorWdg, pagePath, "player_playlist", i18n("Nickname List") );
   pageIndex++;
+  // interaction with the user
+  m_nicklistBehaviorController=new NicklistBehaviorConfigController(m_confNicklistBehaviorWdg);
+  connect(m_nicklistBehaviorController, SIGNAL(modified()), this, SLOT(modifiedSlot()));
 
   //Behaviour/Tab Bar
   m_confTabBarWdg = new TabBar_Config( this, "TabBar" );
@@ -253,6 +258,7 @@ void KonviSettingsDialog::updateSettings()
   m_watchedNicknamesController->saveSettings();
   m_highlightController->saveSettings();
   m_quickButtonsController->saveSettings();
+  m_nicklistBehaviorController->saveSettings();
   m_modified = false;
   // this is for the non KConfigXT parts to update the UI (like quick buttons)
   emit settingsChanged();

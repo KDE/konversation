@@ -59,6 +59,7 @@ class Ignore_Config;
 class HighlightConfigController;
 class WatchedNicknamesConfigController;
 class QuickButtonsConfigController;
+class NicklistBehaviorConfigController;
 
 class KDEUI_EXPORT KonviSettingsDialog : public KonviConfigDialog
 {
@@ -87,6 +88,7 @@ class KDEUI_EXPORT KonviSettingsDialog : public KonviConfigDialog
         HighlightConfigController* m_highlightController;
         WatchedNicknamesConfigController* m_watchedNicknamesController;
         QuickButtonsConfigController* m_quickButtonsController;
+        NicklistBehaviorConfigController* m_nicklistBehaviorController;
 
     public:
         KonviSettingsDialog( QWidget *parent);

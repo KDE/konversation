@@ -116,6 +116,8 @@ class Preferences : public QObject, public PreferencesBase
         static const QStringList nicknameList();
         static void setNickname(int index,const QString &newName);
         static void setNicknameList(const QStringList &newList);
+        static const QString nicknameSortingOrder();
+        static void setNicknameSortingOrder(const QString sortingOrder);
 
         static const bool dialogFlag(const QString& flagName);
         static void setDialogFlag(const QString& flagName,bool state);
@@ -125,7 +127,7 @@ class Preferences : public QObject, public PreferencesBase
         static const QStringList channelEncodingsServerList();
         static const QStringList channelEncodingsChannelList(const QString& server);
 
-	static void setShowTrayIcon(bool state);
+        static void setShowTrayIcon(bool state);
 	static void setSystrayOnly(bool state);
 	static void setTrayNotify(bool state);
 	static void setAutoUserhost(bool state);
@@ -168,6 +170,7 @@ class Preferences : public QObject, public PreferencesBase
         QMap<QString, QStringList> mNotifyList;
         QMap< QString,QMap<QString,QString> > mChannelEncodingsMap;
         QStringList mQuickButtonList;
+        QString mSortingOrder;
 /*
         // IRC colors
         QStringList mIrcColorList;

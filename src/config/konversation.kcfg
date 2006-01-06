@@ -332,6 +332,7 @@
     </entry>
   </group>
   <group name="Sort Nicknames">
+<!-- done outside of KConfigXT (Eisfuchs)
     <entry key="AdminValue" type="Int">
       <default>1</default>
       <label></label>
@@ -363,10 +364,11 @@
       <whatsthis></whatsthis>
     </entry>
     <entry key="NoRightsValue" type="Int">
-      <default>32</default>
+      <default>64</default>
       <label></label>
       <whatsthis></whatsthis>
     </entry>
+-->
     <entry key="SortByStatus" type="Bool">
       <default>false</default>
       <label></label>

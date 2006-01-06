@@ -36,7 +36,9 @@ class NickListViewItem : public QObject, public KListViewItem
             Nick *n);
         ~NickListViewItem();
 
-        int getFlags() const;
+        // returns a number thar represents the sorting order for the nicknames
+        int getSortingValue() const;
+        // get the Nick object
         Nick *getNick();
 
         virtual void paintCell(QPainter * p, const QColorGroup & cg, int column, int width, int align);

@@ -432,6 +432,10 @@ void KonversationApplication::readOptions()
     // get standard config file
     KConfig* config=kapp->config();
 
+    // read nickname sorting order for channel nick lists
+    config->setGroup("Sort Nicknames");
+    Preferences::setNicknameSortingOrder(config->readEntry("SortOrder"));
+
     // Identity list
     QStringList identityList=config->groupList().grep(QRegExp("Identity [0-9]+"));
     if(identityList.count())
@@ -730,7 +734,8 @@ void KonversationApplication::saveOptions(bool updateGUI)
 {
     KConfig* config=kapp->config();
 
-    config->setGroup("Sort Nicknames");
+//    Should be handled in NicklistBehaviorConfigController now
+//    config->setGroup("Sort Nicknames");
 
     // Clean up identity list
     QStringList identities=config->groupList().grep(QRegExp("Identity [0-9]+"));

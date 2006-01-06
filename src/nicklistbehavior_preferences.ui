@@ -1,4 +1,4 @@
-<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>NicklistBehavior_Config</class>
 <comment>This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -14,9 +14,12 @@ the Free Software Foundation; either version 2 of the License, or
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>501</width>
+            <width>692</width>
             <height>480</height>
         </rect>
+    </property>
+    <property name="caption">
+        <string>NicklistBehavior_Config</string>
     </property>
     <grid>
         <property name="name">
@@ -36,89 +39,51 @@ the Free Software Foundation; either version 2 of the License, or
                 <cstring>kcfg_ChannelDoubleClickAction</cstring>
             </property>
         </widget>
-        <widget class="QCheckBox" row="1" column="0" rowspan="1" colspan="2">
+        <widget class="QCheckBox" row="1" column="0" rowspan="1" colspan="3">
             <property name="name">
                 <cstring>kcfg_SortCaseInsensitive</cstring>
             </property>
             <property name="text">
                 <string>Sort case &amp;insensitive</string>
             </property>
-        </widget>
-        <widget class="KLineEdit" row="0" column="2" rowspan="1" colspan="2">
-            <property name="name">
-                <cstring>kcfg_ChannelDoubleClickAction</cstring>
+            <property name="accel">
+                <string>Alt+I</string>
             </property>
         </widget>
-        <widget class="QCheckBox" row="2" column="0" rowspan="1" colspan="2">
+        <widget class="QCheckBox" row="2" column="0">
             <property name="name">
                 <cstring>kcfg_SortByStatus</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>4</hsizetype>
+                    <vsizetype>0</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
             </property>
             <property name="text">
                 <string>Sort b&amp;y user status</string>
             </property>
-        </widget>
-        <widget class="QToolButton" row="4" column="3">
-            <property name="name">
-                <cstring>downButton</cstring>
-            </property>
-            <property name="enabled">
-                <bool>false</bool>
-            </property>
-            <property name="sizePolicy">
-                <sizepolicy>
-                    <hsizetype>0</hsizetype>
-                    <vsizetype>0</vsizetype>
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                </sizepolicy>
-            </property>
-            <property name="text">
-                <string>...</string>
+            <property name="accel">
+                <string>Alt+Y</string>
             </property>
         </widget>
-        <widget class="QToolButton" row="3" column="3">
-            <property name="name">
-                <cstring>upButton</cstring>
-            </property>
-            <property name="enabled">
-                <bool>false</bool>
-            </property>
-            <property name="sizePolicy">
-                <sizepolicy>
-                    <hsizetype>0</hsizetype>
-                    <vsizetype>0</vsizetype>
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                </sizepolicy>
-            </property>
-            <property name="text">
-                <string>...</string>
-            </property>
-            <property name="autoRepeat">
-                <bool>true</bool>
-            </property>
-        </widget>
-        <spacer row="5" column="3">
-            <property name="name">
-                <cstring>spacer4</cstring>
-            </property>
-            <property name="orientation">
-                <enum>Vertical</enum>
-            </property>
-            <property name="sizeType">
-                <enum>Expanding</enum>
-            </property>
-            <property name="sizeHint">
-                <size>
-                    <width>20</width>
-                    <height>360</height>
-                </size>
-            </property>
-        </spacer>
-        <widget class="KListView" row="3" column="1" rowspan="3" colspan="2">
+        <widget class="KListView" row="3" column="0" rowspan="1" colspan="3">
             <column>
                 <property name="text">
-                    <string>User Status</string>
+                    <string>Mode</string>
+                </property>
+                <property name="clickable">
+                    <bool>true</bool>
+                </property>
+                <property name="resizable">
+                    <bool>true</bool>
+                </property>
+            </column>
+            <column>
+                <property name="text">
+                    <string>Explanation</string>
                 </property>
                 <property name="clickable">
                     <bool>true</bool>
@@ -136,30 +101,35 @@ the Free Software Foundation; either version 2 of the License, or
             <property name="acceptDrops">
                 <bool>true</bool>
             </property>
+            <property name="allColumnsShowFocus">
+                <bool>true</bool>
+            </property>
             <property name="fullWidth">
                 <bool>true</bool>
             </property>
             <property name="dragEnabled">
                 <bool>true</bool>
             </property>
+            <property name="shadeSortColumn">
+                <bool>false</bool>
+            </property>
         </widget>
-        <spacer row="5" column="0">
+        <widget class="KLineEdit" row="0" column="2">
             <property name="name">
-                <cstring>spacer136</cstring>
+                <cstring>kcfg_ChannelDoubleClickAction</cstring>
             </property>
-            <property name="orientation">
-                <enum>Horizontal</enum>
+        </widget>
+        <widget class="QLabel" row="2" column="1" rowspan="1" colspan="2">
+            <property name="name">
+                <cstring>orderHintLabel</cstring>
             </property>
-            <property name="sizeType">
-                <enum>Fixed</enum>
+            <property name="enabled">
+                <bool>false</bool>
             </property>
-            <property name="sizeHint">
-                <size>
-                    <width>30</width>
-                    <height>20</height>
-                </size>
+            <property name="text">
+                <string>(Reorder nick sorting order by drag and drop)</string>
             </property>
-        </spacer>
+        </widget>
     </grid>
 </widget>
 <connections>
@@ -172,20 +142,14 @@ the Free Software Foundation; either version 2 of the License, or
     <connection>
         <sender>kcfg_SortByStatus</sender>
         <signal>toggled(bool)</signal>
-        <receiver>upButton</receiver>
-        <slot>setEnabled(bool)</slot>
-    </connection>
-    <connection>
-        <sender>kcfg_SortByStatus</sender>
-        <signal>toggled(bool)</signal>
-        <receiver>downButton</receiver>
+        <receiver>orderHintLabel</receiver>
         <slot>setEnabled(bool)</slot>
     </connection>
 </connections>
 <layoutdefaults spacing="6" margin="11"/>
 <layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
 <includehints>
-    <includehint>klineedit.h</includehint>
     <includehint>klistview.h</includehint>
+    <includehint>klineedit.h</includehint>
 </includehints>
 </UI>

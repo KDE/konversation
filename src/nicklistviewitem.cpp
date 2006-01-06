@@ -150,8 +150,8 @@ int NickListViewItem::compare(QListViewItem* item,int col,bool ascending) const
 
     if(Preferences::sortByStatus())
     {
-        int thisFlags = getFlags();
-        int otherFlags = otherItem->getFlags();
+        int thisFlags = getSortingValue();
+        int otherFlags = otherItem->getSortingValue();
 
         if(thisFlags > otherFlags)
         {
@@ -209,34 +209,17 @@ void NickListViewItem::paintCell(QPainter * p, const QColorGroup & cg, int colum
     KListViewItem::paintCell(p,cg2,column,width,align);
 }
 
-int NickListViewItem::getFlags() const
+int NickListViewItem::getSortingValue() const
 {
     int flags;
+    QString sortingOrder=Preferences::nicknameSortingOrder();
 
-    if(nick->isAdmin())
-    {
-        flags = Preferences::adminValue();
-    }
-    else if(nick->isOwner())
-    {
-        flags = Preferences::ownerValue();
-    }
-    else if(nick->isOp())
-    {
-        flags = Preferences::opValue();
-    }
-    else if(nick->isHalfop())
-    {
-        flags = Preferences::halfopValue();
-    }
-    else if(nick->hasVoice())
-    {
-        flags = Preferences::voiceValue();
-    }
-    else
-    {
-        flags = Preferences::noRightsValue();
-    }
+    if(nick->isOwner())       flags=sortingOrder.find('q');
+    else if(nick->isAdmin())  flags=sortingOrder.find('p');
+    else if(nick->isOp() )    flags=sortingOrder.find('o');
+    else if(nick->isHalfop()) flags=sortingOrder.find('h');
+    else if(nick->hasVoice()) flags=sortingOrder.find('v');
+    else                      flags=sortingOrder.find('-');
 
     return flags;
 }

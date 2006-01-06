@@ -90,6 +90,17 @@ Preferences::Preferences()
                                            << "Part,/PART %c Leaving...%n"
                                            << "Quit,/QUIT Leaving...%n";
     setQuickButtonList(quickButtons);
+
+    // nicklist sorting order defaults
+    setNicknameSortingOrder("qpohv-");
+    /*
+    setOwnerValue(32);
+    setAdminValue(16);
+    setOpValue(8);
+    setHalfopValue(4);
+    setVoiceValue(2);
+    setNoRightsValue(1);
+    */
 }
 
 Preferences::~Preferences()
@@ -459,6 +470,16 @@ const QStringList Preferences::channelEncodingsServerList()
 const QStringList Preferences::channelEncodingsChannelList(const QString& server)
 {
     return self()->mChannelEncodingsMap[server].keys();
+}
+
+const QString Preferences::nicknameSortingOrder()
+{
+  return self()->mSortingOrder;
+}
+
+void Preferences::setNicknameSortingOrder(const QString newSortingOrder)
+{
+  self()->mSortingOrder=newSortingOrder;
 }
 
 #include "preferences.moc"
