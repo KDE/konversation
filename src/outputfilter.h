@@ -80,6 +80,7 @@ namespace Konversation
             void unbanUsers(const QString& mask,const QString& channel);
             void multiServerCommand(const QString& command, const QString& parameter);
             void reconnectServer();
+            void disconnectServer();
             void connectToServerGroup(const QString& serverGroup);
             void connectToServer(const QString& server, const QString& port, const QString& password);
 
@@ -112,6 +113,7 @@ namespace Konversation
             OutputFilterResult parsePing(const QString& parameter);
             OutputFilterResult parseVersion(const QString& parameter);
             void parseServer(const QString& parameter);
+            void parseReconnect();
             OutputFilterResult parseConnect(const QString& parameter);
             OutputFilterResult parseInvite(const QString& parameter);
             OutputFilterResult parseExec(const QString& parameter);

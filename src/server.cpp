@@ -295,6 +295,7 @@ void Server::connectSignals()
     connect(outputFilter, SIGNAL(multiServerCommand(const QString&, const QString&)),
         this, SLOT(sendMultiServerCommand(const QString&, const QString&)));
     connect(outputFilter, SIGNAL(reconnectServer()), this, SLOT(reconnect()));
+    connect(outputFilter, SIGNAL(disconnectServer()), this, SLOT(disconnect()));
     connect(outputFilter, SIGNAL(openDccPanel()), this, SLOT(requestDccPanel()));
     connect(outputFilter, SIGNAL(closeDccPanel()), this, SLOT(requestCloseDccPanel()));
     connect(outputFilter, SIGNAL(openDccSend(const QString &, KURL)), this, SLOT(addDccSend(const QString &, KURL)));
@@ -3177,6 +3178,12 @@ void Server::reconnect()
     {
         getStatusView()->appendServerMessage("Error", i18n("Server already connected."));
     }
+}
+
+void Server::disconnect()
+{
+    if (m_socket->disconnect())
+        statusView->appendServerMessage(i18n("Info"),i18n("Disconnected from server."));
 }
 
 void Server::connectToServerGroup(const QString& serverGroup)

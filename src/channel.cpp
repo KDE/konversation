@@ -1026,7 +1026,7 @@ void Channel::joinNickname(ChannelNickPtr channelNick)
 {
     if(channelNick->getNickname() == m_server->getNickname())
     {
-        appendCommandMessage(i18n("Join"),i18n("You have joined channel %1. (%2)").arg(getName()).arg(channelNick->getHostmask()),false, false, true);
+        appendCommandMessage(i18n("Join"),i18n("You have joined channel %1 (%2).").arg(getName()).arg(channelNick->getHostmask()),false, false, true);
         m_ownChannelNick = channelNick;
         connect(m_ownChannelNick, SIGNAL(channelNickChanged()), SLOT(refreshModeButtons()));
         refreshModeButtons();

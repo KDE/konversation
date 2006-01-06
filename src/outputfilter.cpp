@@ -200,7 +200,9 @@ namespace Konversation
             else if(command == "omsg")    result = parseOmsg(parameter);
             else if(command == "onotice") result = parseOnotice(parameter);
 
-            else if(command == "server")  parseServer(parameter);
+            else if(command == "server")     parseServer(parameter);
+            else if(command == "reconnect")  parseReconnect();
+            else if(command == "disconnect") emit disconnectServer();
 
             else if(command == "prefs")   result = parsePrefs(parameter);
 
@@ -1297,6 +1299,12 @@ namespace Konversation
                 emit connectToServer(address, port, password);
             }
         }
+    }
+
+    void OutputFilter::parseReconnect()
+    {
+        m_server->disconnect();
+        m_server->reconnect();
     }
 
     OutputFilterResult OutputFilter::parsePrefs(const QString& parameter)
