@@ -1527,7 +1527,7 @@ namespace Konversation
                     result = error(i18n("Unable to resolve %1").arg(target));
                 }
 #else
-                result = error(i18n("Resolvin IP addresses only works with KDE version 3.5 or higher."));
+                result = error(i18n("Resolving IP addresses only works with KDE version 3.5 or higher."));
 #endif
             }
             // Parameter is presumed to be a host due to containing a dot. Yeah, it's dumb.
