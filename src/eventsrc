@@ -586,7 +586,16 @@ default_presentation=0
 
 [connectionFailure]
 Name=Connection failure
+Name[br]=Sac'het eo ar gevreadenn
+Name[da]=Forbindelse mislykket
+Name[el]=Αποτυχία σύνδεσης
+Name[pt]=Erro na ligação
+Name[pt_BR]=Erro na ligação
 Comment=Failed to connect to server
+Comment[da]=Mislykkedes at forbinde til server
+Comment[el]=Η σύνδεση με τον εξυπηρετητή απέτυχε
+Comment[pt]=Não foi possível ligar ao servidor
+Comment[pt_BR]=Não foi possível ligar ao servidor
 default_presentation=64
 
 [dccChat]
