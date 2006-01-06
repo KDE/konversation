@@ -44,6 +44,7 @@ Changes from 0.18 to 0.19
 - Fixed some widgets not picking up KDE color scheme changes
 - 'sysinfo' script revamped, improved storage handling and shortened output
 - Support '/names <channel>'
+- After changing the nickname using the combo box, focus is properly returned to the input line
 
 Changes from 0.17 to 0.18
 - All nicks were blue when colored nicks are disabled with some setups
