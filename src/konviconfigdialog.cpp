@@ -142,6 +142,7 @@ void KonviConfigDialog::addPageInternal(QWidget *page,
             frame->setSpacing( 0 );
             frame->setMargin( 0 );
             page->reparent(((QWidget*)frame), 0, QPoint());
+            m_lastAddedIndex = pageIndex(frame);
         }
         break;
 
@@ -259,6 +260,11 @@ void KonviConfigDialog::show()
     enableButton(Default, !is_default);
     d->shown = true;
     KDialogBase::show();
+}
+
+int KonviConfigDialog::lastAddedIndex()
+{
+    return m_lastAddedIndex;
 }
 
 void KonviConfigDialog::updateSettings()

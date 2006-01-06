@@ -93,65 +93,53 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
 
   QStringList pagePath;
 
-  // initialize index to count pages, so we know all numbers to open each page on request.
-  // we don't save all page numbers yet.
-  unsigned int pageIndex=0;
-
   //Appearance/Chat Window
   m_confChatWindowAppearanceWdg = new ChatWindowAppearance_Config( 0, "ChatWindowAppearance" );
   pagePath.clear();
   pagePath << i18n("Appearance") << i18n("Chat Window");
   addPage ( m_confChatWindowAppearanceWdg, pagePath, "view_text", i18n("Chat Window") );
-  pageIndex++;
 
   //Appearance/Fonts
   m_confFontAppearanceWdg = new FontAppearance_Config( this, "FontAppearance" );
   pagePath.clear();
   pagePath << i18n("Appearance") << i18n("Fonts");
   addPage ( m_confFontAppearanceWdg, pagePath, "fonts", i18n("Fonts") );
-  pageIndex++;
 
   //Appearance/Themes
   m_confThemeWdg = new Theme_Config_Ext( this, "Theme" );
   pagePath.clear();
   pagePath << i18n("Appearance") << i18n("Themes");
   addPage ( m_confThemeWdg, pagePath, "iconthemes", i18n("Themes") );
-  pageIndex++;
 
   //Appearance/Colors
   m_confColorsAppearanceWdg = new ColorsAppearance_Config( this, "ColorsAppearance" );
   pagePath.clear();
   pagePath << i18n("Appearance") << i18n("Colors");
   addPage ( m_confColorsAppearanceWdg, pagePath, "colorize", i18n("Colors") );
-  pageIndex++;
 
   //Behavior/General
   m_confGeneralBehaviorWdg = new GeneralBehavior_Config( this, "GeneralBehavior" );
   pagePath.clear();
   pagePath << i18n("Behavior") << i18n("General");
   addPage ( m_confGeneralBehaviorWdg, pagePath, "exec", i18n("General") );
-  pageIndex++;
 
   //Behavior/Connection
   m_confConnectionBehaviorWdg = new ConnectionBehavior_Config( this, "ConnectionBehavior" );
   pagePath.clear();
   pagePath << i18n("Behavior") << i18n("Connection");
   addPage ( m_confConnectionBehaviorWdg, pagePath, "connect_creating", i18n("Connection") );
-  pageIndex++;
 
   //Behaviour/Chat Window
   m_confChatwindowBehaviourWdg = new ChatwindowBehaviour_Config( this, "ChatwindowBehaviour" );
   pagePath.clear();
   pagePath << i18n("Behavior") << i18n("Chat Window");
   addPage ( m_confChatwindowBehaviourWdg, pagePath, "view_text", i18n("Chat Window") );
-  pageIndex++;
 
   //Behaviour/Nickname List
   m_confNicklistBehaviorWdg = new NicklistBehavior_Config( this, "NicklistBehavior" );
   pagePath.clear();
   pagePath << i18n("Behavior") << i18n("Nickname List");
   addPage ( m_confNicklistBehaviorWdg, pagePath, "player_playlist", i18n("Nickname List") );
-  pageIndex++;
   // interaction with the user
   m_nicklistBehaviorController=new NicklistBehaviorConfigController(m_confNicklistBehaviorWdg);
   connect(m_nicklistBehaviorController, SIGNAL(modified()), this, SLOT(modifiedSlot()));
@@ -161,21 +149,18 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   pagePath.clear();
   pagePath << i18n("Behavior") << i18n("Tab Bar");
   addPage ( m_confTabBarWdg, pagePath, "tab_new", i18n("Tab Bar") );
-  pageIndex++;
 
   //Behaviour/Command Aliases
   m_confAliasWdg = new Alias_Config_Ext( this, "Alias" );
   pagePath.clear();
   pagePath << i18n("Behavior") << i18n("Command Aliases");
   addPage ( m_confAliasWdg, pagePath, "editcopy", i18n(" Command Aliases") );
-  pageIndex++;
 
   //Behaviour/Quick Buttons
   m_confQuickButtonsWdg = new QuickButtons_Config( this, "QuickButtons" );
   pagePath.clear();
   pagePath << i18n("Behavior") << i18n("Quick Buttons");
   addPage ( m_confQuickButtonsWdg, pagePath, "keyboard", i18n("Quick Buttons") );
-  pageIndex++;
   m_quickButtonsController=new QuickButtonsConfigController(m_confQuickButtonsWdg);
   connect(m_quickButtonsController, SIGNAL(modified()), this, SLOT(modifiedSlot()));
 
@@ -184,7 +169,6 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   pagePath.clear();
   pagePath << i18n("Behavior") << i18n("Ignore");
   addPage ( m_confIgnoreWdg, pagePath, "ignore", i18n("Ignore") );
-  pageIndex++;
   connect(m_confIgnoreWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
 
   //Behaviour/Logging
@@ -192,13 +176,11 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   pagePath.clear();
   pagePath << i18n("Behavior") << i18n("Logging");
   addPage ( m_confLogWdg, pagePath, "log", i18n("Logging") );
-  pageIndex++;
 
   m_confDCCWdg = new DCC_Config_Ext( this, "DCC" );
   pagePath.clear();
   pagePath << i18n("Behavior") << i18n("DCC");
   addPage ( m_confDCCWdg, pagePath, "2rightarrow", i18n("DCC") );
-  pageIndex++;
 
   //Notification/Watched Nicknames
   m_confWatchedNicknamesWdg = new WatchedNicknames_Config( this, "WatchedNicknames" );
@@ -206,8 +188,7 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   pagePath << i18n("Notifications") << i18n("Watched Nicknames");
   addPage ( m_confWatchedNicknamesWdg, pagePath, "kfind", i18n("Watched Nicknames") );
   // remember index so we can open this page later from outside
-  m_watchedNicknamesIndex=pageIndex;
-  pageIndex++;
+  m_watchedNicknamesIndex=lastAddedIndex();
   // interaction with the user
   m_watchedNicknamesController=new WatchedNicknamesConfigController(m_confWatchedNicknamesWdg);
   connect(m_watchedNicknamesController, SIGNAL(modified()), this, SLOT(modifiedSlot()));
@@ -217,7 +198,6 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   pagePath.clear();
   pagePath << i18n("Notifications") << i18n("Highlight");
   addPage ( m_confHighlightWdg, pagePath, "paintbrush", i18n("Highlight") );
-  pageIndex++;
   // interaction with the user
   m_highlightController=new HighlightConfigController(m_confHighlightWdg);
   connect(m_highlightController, SIGNAL(modified()), this, SLOT(modifiedSlot()));
@@ -227,15 +207,14 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   pagePath.clear();
   pagePath << i18n("Notifications") << i18n("On Screen Display");
   addPage ( m_confOSDWdg, pagePath, "tv", i18n("On Screen Display") );
-  pageIndex++;
 
   //Warning Dialogs
   m_confWarningsWdg = new Warnings_Config( this, "Warnings" );
   pagePath.clear();
   pagePath << i18n("Warning Dialogs");
   addPage ( m_confWarningsWdg, i18n("Warning Dialogs"), "messagebox_warning", i18n("Warning Dialogs") );
-  pageIndex++;
   connect(m_confWarningsWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
+
   unfoldTreeList();
 }
 

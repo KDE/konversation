@@ -82,6 +82,8 @@ class KDEUI_EXPORT KonviConfigDialog : public KDialogBase
 
         virtual void show();
 
+        int lastAddedIndex();
+
     protected slots:
         virtual void updateSettings();
 
@@ -111,5 +113,7 @@ class KDEUI_EXPORT KonviConfigDialog : public KDialogBase
         class KConfigDialogPrivate;
 
         KConfigDialogPrivate *d;
+
+        int m_lastAddedIndex;
 };
 #endif //KONVICONFIGDIALOG_H
