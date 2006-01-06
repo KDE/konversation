@@ -343,7 +343,8 @@ void KonversationMainWindow::openPrefsDialog()
 void KonversationMainWindow::openPrefsDialog(Preferences::Pages /*page*/)
 {
   openPrefsDialog();
-  //FIXME - open the right page
+  //FIXME - find out a better way to acquire the correct page index at runtime
+  if(m_settingsDialog) m_settingsDialog->showPage(14);
 }
 
 void KonversationMainWindow::openKeyBindings()
