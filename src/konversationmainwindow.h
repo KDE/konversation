@@ -139,7 +139,6 @@ class KonversationMainWindow : public KMainWindow
 
     protected slots:
 	void openPrefsDialog();
-        void openPrefsDialog(Preferences::Pages page);
         void openKeyBindings();
         void openQuickConnectDialog();
         void openNotify();

@@ -92,6 +92,8 @@ class KDEUI_EXPORT KonviSettingsDialog : public KonviConfigDialog
         KonviSettingsDialog( QWidget *parent);
         ~KonviSettingsDialog();
 
+        void openWatchedNicknamesPage();
+
     protected slots:
         virtual void updateSettings();
         virtual void updateWidgets();
@@ -102,6 +104,8 @@ class KDEUI_EXPORT KonviSettingsDialog : public KonviConfigDialog
         virtual bool hasChanged() { return m_modified; }
         virtual bool isDefault() { return true; }
 
+        // remember page index
+        unsigned int m_watchedNicknamesIndex;
 };
 
 #endif //KONVISETTINGSDIALOG_H

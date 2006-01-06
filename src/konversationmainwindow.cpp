@@ -340,13 +340,6 @@ void KonversationMainWindow::openPrefsDialog()
   
 }
 
-void KonversationMainWindow::openPrefsDialog(Preferences::Pages /*page*/)
-{
-  openPrefsDialog();
-  //FIXME - find out a better way to acquire the correct page index at runtime
-  if(m_settingsDialog) m_settingsDialog->showPage(14);
-}
-
 void KonversationMainWindow::openKeyBindings()
 {
     KKeyDialog::configure(actionCollection());
@@ -1285,9 +1278,11 @@ void KonversationMainWindow::openQuickConnectDialog()
     emit showQuickConnectDialog();
 }
 
+// open the preferences dialog and show the watched nicknames page
 void KonversationMainWindow::openNotify()
 {
-    emit openPrefsDialog(Preferences::NotifyPage);
+  openPrefsDialog();
+  if(m_settingsDialog) m_settingsDialog->openWatchedNicknamesPage();
 }
 
 // TODO: Let an own class handle notify things
