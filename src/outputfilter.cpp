@@ -1515,6 +1515,7 @@ namespace Konversation
                 QString resolvedTarget;
                 QString serv; // We don't need this, but KReverseResolver::resolve does
 
+#if KDE_IS_VERSION(3,5,0)
                 if (KNetwork::KReverseResolver::resolve(socketAddress,resolvedTarget,serv))
                 {
                     result.typeString = i18n("DNS");
@@ -1525,6 +1526,9 @@ namespace Konversation
                 {
                     result = error(i18n("Unable to resolve %1").arg(target));
                 }
+#else
+                result = error(i18n("Resolvin IP addresses only works with KDE version 3.5 or higher."));
+#endif
             }
             // Parameter is presumed to be a host due to containing a dot. Yeah, it's dumb.
             // FIXME: The reason we detect the host by occurence of a dot is the large penalty
