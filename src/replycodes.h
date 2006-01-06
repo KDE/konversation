@@ -64,6 +64,7 @@
 #define RPL_UNAWAY             305
 #define RPL_NOWAWAY            306
 #define RPL_WHOISIDENTIFY      307                // DALNet NickServ
+#define RPL_WHOISHELPER        310
 #define RPL_WHOISUSER          311
 #define RPL_WHOISSERVER        312
 #define RPL_WHOISOPERATOR      313

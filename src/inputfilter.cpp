@@ -933,9 +933,14 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                         break;
                     nickInfo->setAwayMessage(trailing);
                 }
-                server->appendMessageToFrontmost(i18n("Away"),i18n("%1 is away: %2")
-                    .arg(parameterList[1]).arg(trailing)
-                    );
+
+                if(getAutomaticRequest("WHOIS",parameterList[1])==0)
+                {
+                    server->appendMessageToFrontmost(i18n("Away"),i18n("%1 is away: %2")
+                        .arg(parameterList[1]).arg(trailing)
+                        );
+                }
+
                 break;
             }
             case RPL_INVITING:
@@ -1223,6 +1228,30 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 {
                     server->appendMessageToFrontmost(i18n("Whois"),
                         i18n("%1 has identified for this nick.")
+                        .arg(parameterList[1])
+                        );
+                }
+                break;
+            }
+            case RPL_WHOISHELPER:
+            {
+                // Display message only if this was not an automatic request.
+                if(getAutomaticRequest("WHOIS",parameterList[1])==0)
+                {
+                    server->appendMessageToFrontmost(i18n("Whois"),
+                        i18n("%1 is available for help.")
+                        .arg(parameterList[1])
+                        );
+                }
+                break;
+            }
+            case RPL_WHOISOPERATOR:
+            {
+                // Display message only if this was not an automatic request.
+                if(getAutomaticRequest("WHOIS",parameterList[1])==0)
+                {
+                    server->appendMessageToFrontmost(i18n("Whois"),
+                        i18n("%1 is a network admin.")
                         .arg(parameterList[1])
                         );
                 }
