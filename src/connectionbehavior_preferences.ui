@@ -1,4 +1,4 @@
-<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>ConnectionBehavior_Config</class>
 <comment>This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -17,6 +17,9 @@ the Free Software Foundation; either version 2 of the License, or
             <width>533</width>
             <height>480</height>
         </rect>
+    </property>
+    <property name="caption">
+        <string>ConnectionBehavior_Config</string>
     </property>
     <grid>
         <property name="name">
@@ -44,7 +47,7 @@ the Free Software Foundation; either version 2 of the License, or
         </spacer>
         <widget class="QGroupBox" row="0" column="0">
             <property name="name">
-                <cstring>reconnectGBox</cstring>
+                <cstring>kcfg_AutoReconnect</cstring>
             </property>
             <property name="title">
                 <string>Enable Automatic Reconnect</string>
@@ -52,106 +55,160 @@ the Free Software Foundation; either version 2 of the License, or
             <property name="checkable">
                 <bool>true</bool>
             </property>
-            <grid>
+            <widget class="QLabel">
                 <property name="name">
-                    <cstring>unnamed</cstring>
+                    <cstring>reconnectTimeoutLabel</cstring>
                 </property>
-                <widget class="QLabel" row="0" column="0">
-                    <property name="name">
-                        <cstring>reconnectTimeoutLabel</cstring>
-                    </property>
-                    <property name="text">
-                        <string>&amp;Reconnect timeout:</string>
-                    </property>
-                    <property name="buddy" stdset="0">
-                        <cstring>reconnectTimeoutSpin</cstring>
-                    </property>
-                </widget>
-                <widget class="KIntNumInput" row="0" column="1">
-                    <property name="name">
-                        <cstring>reconnectTimeoutSpin</cstring>
-                    </property>
-                    <property name="label">
-                        <string></string>
-                    </property>
-                    <property name="value">
-                        <number>120</number>
-                    </property>
-                    <property name="minValue">
-                        <number>1</number>
-                    </property>
-                    <property name="maxValue">
-                        <number>9999</number>
-                    </property>
-                    <property name="suffix">
-                        <string> s</string>
-                    </property>
-                </widget>
-                <widget class="QCheckBox" row="2" column="0" rowspan="1" colspan="3">
-                    <property name="name">
-                        <cstring>autoRejoinCheck</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Automaticaly re&amp;join channels on reconnect</string>
-                    </property>
-                </widget>
-                <widget class="QLabel" row="1" column="0">
-                    <property name="name">
-                        <cstring>textLabel1</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Reconnection attempts:</string>
-                    </property>
-                </widget>
-                <widget class="QSpinBox" row="1" column="1">
-                    <property name="name">
-                        <cstring>reconnectCountSpin</cstring>
-                    </property>
-                    <property name="maxValue">
-                        <number>9999</number>
-                    </property>
-                    <property name="minValue">
-                        <number>1</number>
-                    </property>
-                    <property name="value">
-                        <number>100</number>
-                    </property>
-                </widget>
-                <spacer row="0" column="2">
-                    <property name="name">
-                        <cstring>spacer53</cstring>
-                    </property>
-                    <property name="orientation">
-                        <enum>Horizontal</enum>
-                    </property>
-                    <property name="sizeType">
-                        <enum>Expanding</enum>
-                    </property>
-                    <property name="sizeHint">
-                        <size>
-                            <width>241</width>
-                            <height>20</height>
-                        </size>
-                    </property>
-                </spacer>
-                <spacer row="1" column="2">
-                    <property name="name">
-                        <cstring>spacer53_3</cstring>
-                    </property>
-                    <property name="orientation">
-                        <enum>Horizontal</enum>
-                    </property>
-                    <property name="sizeType">
-                        <enum>Expanding</enum>
-                    </property>
-                    <property name="sizeHint">
-                        <size>
-                            <width>241</width>
-                            <height>20</height>
-                        </size>
-                    </property>
-                </spacer>
-            </grid>
+                <property name="geometry">
+                    <rect>
+                        <x>11</x>
+                        <y>27</y>
+                        <width>129</width>
+                        <height>23</height>
+                    </rect>
+                </property>
+                <property name="text">
+                    <string>&amp;Reconnect timeout:</string>
+                </property>
+                <property name="buddy" stdset="0">
+                    <cstring>reconnectTimeoutSpin</cstring>
+                </property>
+            </widget>
+            <spacer>
+                <property name="name">
+                    <cstring>spacer53</cstring>
+                </property>
+                <property name="orientation">
+                    <enum>Horizontal</enum>
+                </property>
+                <property name="sizeType">
+                    <enum>Expanding</enum>
+                </property>
+                <property name="sizeHint">
+                    <size>
+                        <width>241</width>
+                        <height>20</height>
+                    </size>
+                </property>
+                <property name="geometry">
+                    <rect>
+                        <x>242</x>
+                        <y>28</y>
+                        <width>278</width>
+                        <height>20</height>
+                    </rect>
+                </property>
+            </spacer>
+            <spacer>
+                <property name="name">
+                    <cstring>spacer53_3</cstring>
+                </property>
+                <property name="orientation">
+                    <enum>Horizontal</enum>
+                </property>
+                <property name="sizeType">
+                    <enum>Expanding</enum>
+                </property>
+                <property name="sizeHint">
+                    <size>
+                        <width>241</width>
+                        <height>20</height>
+                    </size>
+                </property>
+                <property name="geometry">
+                    <rect>
+                        <x>242</x>
+                        <y>56</y>
+                        <width>278</width>
+                        <height>20</height>
+                    </rect>
+                </property>
+            </spacer>
+            <widget class="QLabel">
+                <property name="name">
+                    <cstring>textLabel1</cstring>
+                </property>
+                <property name="geometry">
+                    <rect>
+                        <x>11</x>
+                        <y>56</y>
+                        <width>129</width>
+                        <height>21</height>
+                    </rect>
+                </property>
+                <property name="text">
+                    <string>Reconnection attempts:</string>
+                </property>
+            </widget>
+            <widget class="KIntNumInput">
+                <property name="name">
+                    <cstring>kcfg_ReconnectTimeout</cstring>
+                </property>
+                <property name="geometry">
+                    <rect>
+                        <x>146</x>
+                        <y>27</y>
+                        <width>90</width>
+                        <height>23</height>
+                    </rect>
+                </property>
+                <property name="label">
+                    <string></string>
+                </property>
+                <property name="value">
+                    <number>120</number>
+                </property>
+                <property name="minValue">
+                    <number>1</number>
+                </property>
+                <property name="maxValue">
+                    <number>9999</number>
+                </property>
+                <property name="suffix">
+                    <string> s</string>
+                </property>
+            </widget>
+            <widget class="QCheckBox">
+                <property name="name">
+                    <cstring>kcfg_AutoRejoin</cstring>
+                </property>
+                <property name="geometry">
+                    <rect>
+                        <x>11</x>
+                        <y>83</y>
+                        <width>509</width>
+                        <height>19</height>
+                    </rect>
+                </property>
+                <property name="text">
+                    <string>Automatically re&amp;join channels on reconnect</string>
+                </property>
+                <property name="accel">
+                    <string>Alt+J</string>
+                </property>
+            </widget>
+            <widget class="QSpinBox">
+                <property name="name">
+                    <cstring>kcfg_ReconnectCount</cstring>
+                </property>
+                <property name="geometry">
+                    <rect>
+                        <x>146</x>
+                        <y>56</y>
+                        <width>90</width>
+                        <height>21</height>
+                    </rect>
+                </property>
+                <property name="maxValue">
+                    <number>9999</number>
+                </property>
+                <property name="minValue">
+                    <number>1</number>
+                </property>
+                <property name="value">
+                    <number>100</number>
+                </property>
+            </widget>
         </widget>
         <widget class="QGroupBox" row="1" column="0">
             <property name="name">
@@ -166,10 +223,13 @@ the Free Software Foundation; either version 2 of the License, or
                 </property>
                 <widget class="QCheckBox" row="0" column="0">
                     <property name="name">
-                        <cstring>rawLogCheck</cstring>
+                        <cstring>kcfg_RawLog</cstring>
                     </property>
                     <property name="text">
                         <string>Show raw &amp;log window when connecting</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+L</string>
                     </property>
                 </widget>
             </grid>
