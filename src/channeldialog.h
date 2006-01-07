@@ -24,12 +24,16 @@ namespace Konversation
     class ChannelDialog : public KDialogBase
     {
         Q_OBJECT
-            public:
+
+        public:
             ChannelDialog(const QString& title, QWidget *parent = 0, const char *name = 0);
             ~ChannelDialog();
 
             void setChannelSettings(const ChannelSettings& channel);
             ChannelSettings channelSettings();
+
+        protected slots:
+            void slotOk();
 
         private:
             QLineEdit* m_channelEdit;

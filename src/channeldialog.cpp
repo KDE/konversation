@@ -14,6 +14,7 @@
 #include <qlineedit.h>
 
 #include <klocale.h>
+#include <kmessagebox.h>
 
 #include "channeldialog.h"
 #include "servergroupsettings.h"
@@ -64,6 +65,17 @@ namespace Konversation
         return channel;
     }
 
+    void ChannelDialog::slotOk()
+    {
+        if (m_channelEdit->text().isEmpty())
+        {
+            KMessageBox::error(this, i18n("The channel name is required."));
+        }
+        else
+        {
+            accept();
+        }
+    }
 }
 
 #include "channeldialog.moc"

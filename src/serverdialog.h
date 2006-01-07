@@ -26,12 +26,16 @@ namespace Konversation
     class ServerDialog : public KDialogBase
     {
         Q_OBJECT
-            public:
+
+        public:
             ServerDialog(const QString& title, QWidget *parent = 0, const char *name = 0);
             ~ServerDialog();
 
             void setServerSettings(const ServerSettings& server);
             ServerSettings serverSettings();
+
+        protected slots:
+            void slotOk();
 
         private:
             QLineEdit* m_serverEdit;

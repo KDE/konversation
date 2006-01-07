@@ -20,6 +20,7 @@
 #include <qwhatsthis.h>
 
 #include <klocale.h>
+#include <kmessagebox.h>
 
 #include "serversettings.h"
 
@@ -86,6 +87,17 @@ namespace Konversation
         return server;
     }
 
+    void ServerDialog::slotOk()
+    {
+        if (m_serverEdit->text().isEmpty())
+        {
+            KMessageBox::error(this, i18n("The server address is required."));
+        }
+        else
+        {
+            accept();
+        }
+    }
 }
 
 #include "serverdialog.moc"
