@@ -48,6 +48,7 @@ Changes from 0.18 to 0.19
 - Implemented '/dns <nick|host|address>' for performing DNS lookups, including reverse resolve
 - Implemented '/disconnect' to disconnect from the respective server
 - Implemented '/reconnect' to disconnect from and then reconnect to the respective server
+- Support IPv6 hosts in bookmarks
 
 Changes from 0.17 to 0.18
 - All nicks were blue when colored nicks are disabled with some setups
