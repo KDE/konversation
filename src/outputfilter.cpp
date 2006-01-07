@@ -40,6 +40,7 @@
 #include "server.h"
 #include "irccharsets.h"
 #include "linkaddressbook/addressbook.h"
+#include "konviiphelper.h"
 
 #include "query.h"
 
@@ -1239,64 +1240,56 @@ namespace Konversation
         else
         {
             QStringList splitted = QStringList::split(" ", parameter);
-            QString address = splitted[0];
+            QString host = splitted[0];
             QString port = "6667";
             QString password;
 
-            if (splitted.count()==3) // 'hostname port password'
+            // 'hostname port password'
+            if (splitted.count()==3) 
             {
+                KonviIpHelper hostParser(host);
+                host = hostParser.host();
+
                 port = splitted[1];
                 password = splitted[2];
             }
-            else if (splitted.count()==2) // 'hostname:port password' or 'hostname port'
-            { 
-                // IPv6 '[ip]:port password' according to RFC 2732
-                if (address.contains(':')>1 && address.section(':',0,-2).startsWith("[") && address.section(':',0,-2).endsWith("]"))
-                {                                       
-                    port = address.section(':',-1);
-                    address = address.section(':',0,-2).remove("[").remove("]");                                                
-                    password = splitted[1]; 
-                } 
-                // IPv6 'ip port' password according to RFC 2732
-                if (address.contains(':')>1 && !address.section(':',0,-2).startsWith("[") && !address.section(':',0,-2).endsWith("]"))
-                {                                                                                      
-                    port = splitted[1]; 
-                } 
-                else if (address.contains(':')==1) // 'hostname:port password'
+            // 'hostname:port password' or 'hostname port'
+            else if (splitted.count()==2) 
+            {
+                KonviIpHelper hostParser(host);
+                host = hostParser.host();
+
+                if (!hostParser.port().isEmpty())
                 {
-                    port = address.section(':',-1);
-                    address = address.section(':',0,-2);
-                    password = splitted[1];                                                                
+                    port = hostParser.port();
+                    password = splitted[1];
                 }
-                else // 'hostname port'
+                else
                 {
                     port = splitted[1];
-                }             
+                }
             }
-            else // 'hostname:port' or 'hostname'
+            // 'hostname:port' or 'hostname'
+            else
             {
-                // IPv6 '[ip]:port' according to RFC 2732
-                if (parameter.contains(':')>1 && parameter.section(':',0,-2).startsWith("[") && parameter.section(':',0,-2).endsWith("]"))
-                {                                       
-                    address = parameter.section(':',0,-2).remove("[").remove("]");
-                    port = parameter.section(':',-1);       
-                }                 
-                else if (parameter.contains(':')==1)  // 'hostname:port'
-                {                                       
-                    address = parameter.section(':',0,-2);                
-                    port = parameter.section(':',-1);       
-                }         
+                KonviIpHelper hostParser(host);
+                host = hostParser.host();
+
+                if (!hostParser.port().isEmpty())
+                {
+                    port = hostParser.port();
+                }
             }
 
-            kdDebug() << "Server : " << address << " Port : " << port << " Password : " << password << endl;
+            kdDebug() << "Server: " << host << " Port: " << port << " Password: " << password << endl;
 
-            if (Preferences::isServerGroup(address))
+            if (Preferences::isServerGroup(host))
             {
-                emit connectToServerGroup(address);
+                emit connectToServerGroup(host);
             }
             else
             {
-                emit connectToServer(address, port, password);
+                emit connectToServer(host, port, password);
             }
         }
     }
