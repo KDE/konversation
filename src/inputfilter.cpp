@@ -800,9 +800,22 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             // Topic set messages
             case RPL_TOPIC:
             {
-                // Update channel window
                 QString topic = Konversation::removeIrcMarkup(trailing);
-                server->setChannelTopic(parameterList[1],topic);
+
+                // FIXME: This is an abuse of the automaticRequest system: We're
+                // using it in an inverted manner, i.e. the automaticRequest is 
+                // set to true by a manual invocation of /topic. Bad bad bad -
+                // needs rethinking of automaticRequest.
+                if(getAutomaticRequest("TOPIC",parameterList[1])==0)
+                {
+                    // Update channel window
+                    server->setChannelTopic(parameterList[1],topic);
+                }
+                else
+                {
+                    server->appendMessageToFrontmost(i18n("Topic"),i18n("The channel topic for %1 is: \"%2\"").arg(parameterList[1]).arg(topic));
+                }
+
                 break;
             }
             case RPL_TOPICSETBY:
@@ -810,12 +823,27 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 // Inform user who set the topic and when
                 QDateTime when;
                 when.setTime_t(parameterList[3].toUInt());
-                server->appendCommandMessageToChannel(parameterList[1],i18n("Topic"),
-                    i18n("Topic was set by %1 on %2.")
-                    .arg(parameterList[2]).arg(when.toString(Qt::LocalDate))
-                    );
 
-                emit topicAuthor(parameterList[1],parameterList[2]);
+                // See FIXME in RPL_TOPIC
+                if(getAutomaticRequest("TOPIC",parameterList[1])==0)
+                {
+                    server->appendCommandMessageToChannel(parameterList[1],i18n("Topic"),
+                        i18n("The topic was set by %1 on %2.")
+                        .arg(parameterList[2]).arg(when.toString(Qt::LocalDate))
+                        );
+
+                    emit topicAuthor(parameterList[1],parameterList[2]);
+                }
+                else
+                {
+                    server->appendMessageToFrontmost(i18n("Topic"),i18n("The topic for %1 was set by %2 on %3.")
+                        .arg(parameterList[1])
+                        .arg(parameterList[2])
+                        .arg(when.toString(Qt::LocalDate))
+                        );
+                    setAutomaticRequest("TOPIC",parameterList[1],false);
+                }
+
                 break;
             }
             case ERR_NOSUCHNICK:

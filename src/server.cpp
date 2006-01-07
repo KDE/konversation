@@ -1670,6 +1670,12 @@ void Server::requestUserhost(const QString& nicks)
     queue("USERHOST "+nicks);
 }
 
+void Server::requestTopic(const QString& channel)
+{
+    inputFilter.setAutomaticRequest("TOPIC", channel, true);
+    queue("TOPIC "+channel);
+}
+
 void Server::resolveUserhost(const QString& nickname)
 {
     inputFilter.setAutomaticRequest("WHOIS", nickname, true);

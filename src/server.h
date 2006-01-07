@@ -415,6 +415,7 @@ class Server : public QObject
         void requestWhois(const QString& nickname);
         void requestWho(const QString& channel);
         void requestUserhost(const QString& nicks);
+        void requestTopic(const QString& channel);
         void resolveUserhost(const QString& nickname);
         void addRawLog(bool show);
         void closeRawLog();

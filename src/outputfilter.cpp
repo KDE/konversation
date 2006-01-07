@@ -405,7 +405,7 @@ namespace Konversation
                 // if no topic given, retrieve topic
                 if(topic.isEmpty())
                 {
-                    result.toServer = "TOPIC " + channel;
+                    m_server->requestTopic(channel);
                 }
                 // otherwise set topic there
                 else
