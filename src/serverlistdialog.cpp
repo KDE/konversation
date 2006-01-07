@@ -211,6 +211,8 @@ namespace Konversation
         resize(newSize);
 
         m_serverList->setSelected(m_serverList->firstChild(), true);
+
+        m_editedItem = false;
     }
 
     ServerListDialog::~ServerListDialog()
@@ -333,6 +335,7 @@ namespace Konversation
                     *serverGroup = *(dlg.serverGroupSettings());
 
                     m_lastEditedItemId = serverGroup->id();
+                    m_editedItem = true;
 
                     updateServerGroupList();
                 }
@@ -417,7 +420,7 @@ namespace Konversation
 
         for(it = serverGroups.begin(); it != serverGroups.end(); ++it)
         {
-            if (m_lastEditedItemId && (*it)->id()==m_lastEditedItemId)
+            if (m_editedItem && (*it)->id()==m_lastEditedItemId)
             {
                 m_lastEditedItemPtr = addListItem((*it));
             }
@@ -427,10 +430,11 @@ namespace Konversation
             }
         }
 
-        if (m_lastEditedItemPtr)
+        if (m_editedItem && m_lastEditedItemPtr)
         {
             m_serverList->setSelected(m_lastEditedItemPtr,true);
             m_serverList->setCurrentItem(m_lastEditedItemPtr);
+            m_editedItem = false;
         }
     }
 
