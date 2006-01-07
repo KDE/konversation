@@ -22,6 +22,7 @@ Changes from 0.18 to 0.19
 - Pressing arrow down in the input line now preserves input by adding it to the history and clears the input line
 - Fix infinite loop when nickname is in use
 - Make /server syntax parsing more flexible by allowing both 'address:port' and 'address port'
+- Vastly improve /server IPv6 handling
 - Have the /list command open the channel list panel
 - Handle CABAB command correctly
 - Handle IDENTIFY-MSG correctly
@@ -53,6 +54,7 @@ Changes from 0.18 to 0.19
 - Prevent addition of nameless channels and hostless servers in Edit Network
 - Implemented '/topic <channel>' for retrieving the topic of arbitrary channels, provided the IRC server allows us to
 - Show local file name in DCC GET status tab and DCC messages
+- Properly select relevant entry in Server List dialog after adding or editing a network
 
 Changes from 0.17 to 0.18
 - All nicks were blue when colored nicks are disabled with some setups

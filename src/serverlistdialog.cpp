@@ -332,6 +332,8 @@ namespace Konversation
                                                   // TODO [SERVER] Make this work!
                     *serverGroup = *(dlg.serverGroupSettings());
 
+                    m_lastEditedItemId = serverGroup->id();
+
                     updateServerGroupList();
                 }
             }
@@ -384,7 +386,8 @@ namespace Konversation
         Preferences::addServerGroup(serverGroup);
         QListViewItem* item = addListItem(serverGroup);
         m_serverList->clearSelection();
-        m_serverList->setSelected(item, true);
+        m_serverList->setSelected(item,true);
+        m_serverList->setCurrentItem(item);
         m_serverList->ensureItemVisible(item);
     }
 
@@ -414,7 +417,20 @@ namespace Konversation
 
         for(it = serverGroups.begin(); it != serverGroups.end(); ++it)
         {
-            addListItem((*it));
+            if (m_lastEditedItemId && (*it)->id()==m_lastEditedItemId)
+            {
+                m_lastEditedItemPtr = addListItem((*it));
+            }
+            else
+            {
+               addListItem((*it));
+            }
+        }
+
+        if (m_lastEditedItemPtr)
+        {
+            m_serverList->setSelected(m_lastEditedItemPtr,true);
+            m_serverList->setCurrentItem(m_lastEditedItemPtr);
         }
     }
 

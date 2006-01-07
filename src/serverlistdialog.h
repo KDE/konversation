@@ -83,6 +83,9 @@ namespace Konversation
             QPushButton* m_addButton;
             QPushButton* m_editButton;
             QPushButton* m_delButton;
+
+            int m_lastEditedItemId;
+            QListViewItem* m_lastEditedItemPtr;
     };
 }
 #endif

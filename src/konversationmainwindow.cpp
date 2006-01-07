@@ -1758,7 +1758,7 @@ void KonversationMainWindow::reconnectCurrentServer()
     }
 }
 
-void KonversationMainWindow::openURL(const QString& url, const QString& title)
+void KonversationMainWindow::openURL(const QString& url, const QString& /*title*/)
 {
     QString urlN = url;
     urlN.remove("irc://");
