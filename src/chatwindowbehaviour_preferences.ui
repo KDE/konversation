@@ -12,9 +12,6 @@
             <height>474</height>
         </rect>
     </property>
-    <property name="whatsThis" stdset="0">
-        <string>Keep channel mode string as a combination of characters instead of translating them into human readable words. E.g. '*** Channel modes: no messages from outside' will become '*** Channel modes: n'</string>
-    </property>
     <grid>
         <property name="name">
             <cstring>unnamed</cstring>
@@ -130,6 +127,9 @@
                     </property>
                     <property name="text">
                         <string>&amp;Use raw modes for mode changes</string>
+                    </property>
+                    <property name="whatsThis" stdset="0">
+                        <string>Keep channel mode string as a combination of characters instead of translating them into human readable words. E.g. '*** Channel modes: no messages from outside' will become '*** Channel modes: n'</string>
                     </property>
                 </widget>
             </grid>
