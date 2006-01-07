@@ -298,7 +298,7 @@ void DccTransferRecv::slotLocalCanResume( KIO::Job* job, KIO::filesize_t size )
         if ( Preferences::dccAutoResume() )
             prepareLocalKio( false, true, size );
         else
-            askAndPrepareLocalKio( i18n( "<b>A partial file is existing.</b><br>"
+            askAndPrepareLocalKio( i18n( "<b>A partial file exists.</b><br>"
                 "%1<br>"
                 "Size of the partial file: %2 bytes<br>" )
                 .arg( m_fileURL.prettyURL() )
@@ -325,7 +325,7 @@ void DccTransferRecv::slotLocalGotResult( KIO::Job* job )
                 << "DccTransferRecv::slotLocalGotResult(): Why was I called in spite of no error?" << endl;
             break;
         case KIO::ERR_FILE_ALREADY_EXIST:
-            askAndPrepareLocalKio( i18n( "<b>The file is already existing.</b><br>"
+            askAndPrepareLocalKio( i18n( "<b>The file already exists.</b><br>"
                 "%1<br>" )
                 .arg( m_fileURL.prettyURL() ),
                 DccResumeDialog::RA_Overwrite | DccResumeDialog::RA_Rename | DccResumeDialog::RA_Cancel,
@@ -489,7 +489,7 @@ void DccTransferRecv::slotLocalWriteDone()        // <-WriteCacheHandler::done()
     setStatus( Done );
     updateView();
     cleanUp();
-    emit done( m_fileName );
+    emit done( m_fileURL.fileName() );
 }
 
                                                   // <- WriteCacheHandler::gotError()

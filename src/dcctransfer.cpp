@@ -100,7 +100,7 @@ void DccTransfer::updateView()
 
     setText( DccPanel::Column::OfferDate,     m_timeOffer.toString( "hh:mm:ss" ) );
     setText( DccPanel::Column::Status,        getStatusText() );
-    setText( DccPanel::Column::FileName,      m_fileName );
+    setText( DccPanel::Column::FileName,      m_fileURL.fileName() );
     setText( DccPanel::Column::PartnerNick,   m_partnerNick );
     setText( DccPanel::Column::Position,      getPositionPrettyText() );
     setText( DccPanel::Column::TimeRemaining, getTimeRemainingPrettyText() );
