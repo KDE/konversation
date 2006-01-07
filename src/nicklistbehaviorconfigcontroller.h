@@ -1,7 +1,7 @@
 //
 // C++ Interface: nicklistbehaviorconfigcontroller
 //
-// Description: 
+// Description:
 //
 //
 // Author: Dario Abatianni <eisfuchs@tigress.com>, (C) 2006
@@ -33,15 +33,9 @@ class NicklistBehaviorConfigController : public QObject
   signals:
     void modified();
 
-  protected slots:
-//    void entrySelected(QListViewItem* quickButtonEntry);
-//    void nameChanged(const QString& newName);
-//    void actionChanged(const QString& newAction);
-
   protected:
-    void populateQuickButtonsList();
+    void populateSortingList();
     NicklistBehavior_Config* m_nicklistBehaviorPage;
-//    bool newItemSelected;
 };
 
 #endif

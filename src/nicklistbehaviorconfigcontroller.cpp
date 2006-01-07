@@ -1,7 +1,7 @@
 //
 // C++ Implementation: nicklistbehaviorconfigcontroller
 //
-// Description: 
+// Description:
 //
 //
 // Author: Dario Abatianni <eisfuchs@tigress.com>, (C) 2006
@@ -25,7 +25,7 @@ NicklistBehaviorConfigController::NicklistBehaviorConfigController(NicklistBehav
 {
   // get page widget and populate listview
   m_nicklistBehaviorPage=nicklistBehaviorPage;
-  populateQuickButtonsList();
+  populateSortingList();
 
   // make items react to drag & drop
   m_nicklistBehaviorPage->sortOrder->setSorting(-1,false);
@@ -37,7 +37,7 @@ NicklistBehaviorConfigController::~NicklistBehaviorConfigController()
 {
 }
 
-void NicklistBehaviorConfigController::populateQuickButtonsList()
+void NicklistBehaviorConfigController::populateSortingList()
 {
   // get pointer to sorting order listview
   KListView* sortOrderListview=m_nicklistBehaviorPage->sortOrder;

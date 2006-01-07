@@ -93,6 +93,7 @@ Preferences::Preferences()
 
     // nicklist sorting order defaults
     setNicknameSortingOrder("qpohv-");
+
     /*
     setOwnerValue(32);
     setAdminValue(16);
