@@ -79,9 +79,11 @@
 #define RPL_LISTEND            323
 #define RPL_CHANNELMODEIS      324
 #define RPL_CHANNELCREATED     329
+#define RPL_WHOISACCOUNT       330
 #define RPL_NOTOPIC            331
 #define RPL_TOPIC              332
 #define RPL_TOPICSETBY         333                // Extended ircd
+#define RPL_WHOISACTUALLY      338
 #define RPL_INVITING           341
 #define RPL_SUMMONING          342
 #define RPL_VERSION            351

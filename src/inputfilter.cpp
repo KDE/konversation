@@ -764,6 +764,12 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     );
                 break;
             }
+            case RPL_WHOISACCOUNT:
+            {
+                server->appendMessageToFrontmost(i18n("Whois"),i18n("%1 is logged in as %2.").arg(parameterList[1]).arg(parameterList[2]));
+
+                break;
+            }
             case RPL_NAMREPLY:
             {
                 // Display message only if this was not an automatic request.
@@ -843,6 +849,12 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                         );
                     setAutomaticRequest("TOPIC",parameterList[1],false);
                 }
+
+                break;
+            }
+            case RPL_WHOISACTUALLY:
+            {
+                server->appendMessageToFrontmost(i18n("Whois"),i18n("%1 is actually using the host %2.").arg(parameterList[1]).arg(parameterList[2]));
 
                 break;
             }
