@@ -193,6 +193,8 @@ namespace Konversation
         layout->addWidget(m_delButton, 2, 1);
         layout->setRowStretch(3, 10);
 
+        m_editedItem = false;
+
         // Load server list
         updateServerGroupList();
 
@@ -211,8 +213,6 @@ namespace Konversation
         resize(newSize);
 
         m_serverList->setSelected(m_serverList->firstChild(), true);
-
-        m_editedItem = false;
     }
 
     ServerListDialog::~ServerListDialog()
@@ -337,6 +337,8 @@ namespace Konversation
                     m_lastEditedItemId = serverGroup->id();
                     m_editedItem = true;
 
+                    kdDebug() << "set m_editedItem " << m_editedItem  << " set m_lastEditedItemId " << m_lastEditedItemId << endl;
+
                     updateServerGroupList();
                 }
             }
@@ -426,7 +428,7 @@ namespace Konversation
             }
             else
             {
-               addListItem((*it));
+                addListItem((*it));
             }
         }
 
