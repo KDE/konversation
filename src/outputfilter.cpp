@@ -457,7 +457,7 @@ namespace Konversation
         result.toServer = "NAMES ";
         if (parameter.isNull())
         {
-            return error(i18n("NAMES with no target may disconnect you from the server. Specify '*' if you really want this."));
+            return error(i18n("%1NAMES with no target may disconnect you from the server. Specify '*' if you really want this.").arg(commandChar));
         }
         else if (parameter != QChar('*'))
         {
@@ -510,7 +510,7 @@ namespace Konversation
 
         if(recipient.isEmpty())
         {
-            result = error("Error: You need to specify a recipient");
+            result = error("Error: You need to specify a recipient.");
             return result;
         }
 
@@ -603,12 +603,12 @@ namespace Konversation
         {
             unsigned int time_t = QDateTime::currentDateTime().toTime_t();
             result.toServer = QString("PRIVMSG %1 :\x01PING %2\x01").arg(recipient).arg(time_t);
-            result.output = i18n("Sending CTCP-%1 request to %2").arg("PING").arg(recipient);
+            result.output = i18n("Sending CTCP-%1 request to %2.").arg("PING").arg(recipient);
         }
         else
         {
             result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + message + '\x01';
-            result.output = i18n("Sending CTCP-%1 request to %2").arg(message).arg(recipient);
+            result.output = i18n("Sending CTCP-%1 request to %2.").arg(message).arg(recipient);
         }
 
         result.typeString = i18n("CTCP");
@@ -712,7 +712,7 @@ namespace Konversation
                     }
                     else
                     {
-                        result = error(i18n("Error: File \"%1\" does not exist.").arg(parameterList[2]));
+                        result = error(i18n("File \"%1\" does not exist.").arg(parameterList[2]));
                     }
                 }
                 else                              // Don't know how this should happen, but ...
@@ -734,7 +734,7 @@ namespace Konversation
             }
             else
             {
-                result = error(i18n("Error: Unrecognized command DCC %1. Possible commands are SEND, CHAT, CLOSE.").arg(parameterList[0]));
+                result = error(i18n("Unrecognized command %1DCC %2. Possible commands are SEND, CHAT, CLOSE.").arg(commandChar).arg(parameterList[0]));
             }
         }
 
@@ -789,7 +789,7 @@ namespace Konversation
 
         if(parameter.isEmpty())
         {
-            result = usage(i18n("Usage: INVITE <nick> [channel]"));
+            result = usage(i18n("Usage: %1INVITE <nick> [channel]").arg(commandChar));
         }
         else
         {
@@ -804,7 +804,7 @@ namespace Konversation
                 }
                 else
                 {
-                    result = error(i18n("Error: INVITE without channel name works only from within channels."));
+                    result = error(i18n("%1INVITE without channel name works only from within channels.").arg(commandChar));
                 }
             }
 
@@ -816,7 +816,7 @@ namespace Konversation
                 }
                 else
                 {
-                    result = error(i18n("Error: %1 is not a channel.").arg(channel));
+                    result = error(i18n("%1 is not a channel.").arg(channel));
                 }
             }
         }
@@ -830,7 +830,7 @@ namespace Konversation
 
         if(parameter.isEmpty())
         {
-            result = usage(i18n("Usage: EXEC <script> [parameter list]"));
+            result = usage(i18n("Usage: %1EXEC <script> [parameter list]").arg(commandChar));
         }
         else
         {
@@ -842,7 +842,7 @@ namespace Konversation
             }
             else
             {
-                result = error(i18n("Error: Script name may not contain \"../\"!"));
+                result = error(i18n("Script name may not contain \"../\"!"));
             }
         }
 
@@ -863,7 +863,7 @@ namespace Konversation
         }
         else
         {
-            result = usage(i18n("Usage: RAW [OPEN | CLOSE]"));
+            result = usage(i18n("Usage: %1RAW [OPEN | CLOSE]").arg(commandChar));
         }
 
         return result;
@@ -979,7 +979,7 @@ namespace Konversation
                 else
                 {
                     // destination is no channel => error
-                    result = error(i18n("BAN without channel name works only from inside a channel."));
+                    result = error(i18n("%1BAN without channel name works only from inside a channel.").arg(commandChar));
                     // no usage information after error
                     showUsage = false;
                 }
@@ -995,7 +995,7 @@ namespace Konversation
 
         if(showUsage)
         {
-            result = usage(i18n("Usage: BAN [-HOST | -DOMAIN] [channel] <user|mask>"));
+            result = usage(i18n("Usage: %1BAN [-HOST | -DOMAIN] [channel] <user|mask>").arg(commandChar));
         }
 
         return result;
@@ -1035,7 +1035,7 @@ namespace Konversation
             else
             {
                 // destination is no channel => error
-                result = error(i18n("UNBAN without channel name works only from inside a channel."));
+                result = error(i18n("%1UNBAN without channel name works only from inside a channel.").arg(commandChar));
                 // no usage information after error
                 showUsage = false;
             }
@@ -1050,7 +1050,7 @@ namespace Konversation
 
         if(showUsage)
         {
-            result = usage(i18n("Usage: UNBAN [channel] pattern"));
+            result = usage(i18n("Usage: %1UNBAN [channel] pattern").arg(commandChar));
         }
 
         return result;
@@ -1195,7 +1195,7 @@ namespace Konversation
 
         if(parameter.isEmpty())
         {
-            result = usage(i18n("Usage: QUOTE command list"));
+            result = usage(i18n("Usage: %1QUOTE command list").arg(commandChar));
         }
         else
         {
@@ -1211,7 +1211,7 @@ namespace Konversation
 
         if(parameter.isEmpty())
         {
-            result = usage(i18n("Usage: SAY text"));
+            result = usage(i18n("Usage: %1SAY text").arg(commandChar));
         }
         else
         {
@@ -1388,7 +1388,7 @@ namespace Konversation
                 if (group.lower() == "list")
                 {
                     // List available groups.
-                    result = usage(i18n("Available Preference Groups: ") + groupList.join("|"));
+                    result = usage(i18n("Available preferences groups: ") + groupList.join("|"));
                 }
                 else
                 {
@@ -1413,7 +1413,7 @@ namespace Konversation
                         if (option.lower() == "list")
                         {
                             // List available options in group.
-                            QString output = i18n("Available Options in Group %1:").arg( group );
+                            QString output = i18n("Available options in group %1:").arg( group );
 
                             for (i = 0; i < optionList.count(); ++i)
                             {
@@ -1472,7 +1472,7 @@ namespace Konversation
 
         if (showUsage)
         {
-            result = usage(i18n("Usage: %1PREFS group option value or %2PREFS LIST to list groups or %3PREFS group LIST to list options in group.  Quote parameters if they contain spaces.").arg(commandChar, commandChar, commandChar));
+            result = usage(i18n("Usage: %1PREFS <group> <option> <value> or %2PREFS LIST to list groups or %3PREFS group LIST to list options in group.  Quote parameters if they contain spaces.").arg(commandChar, commandChar, commandChar));
         }
 
         return result;
@@ -1483,9 +1483,13 @@ namespace Konversation
         OutputFilterResult result;
 
         if(!parameter.isEmpty())
+        {
             result.toServer = "PRIVMSG @"+destination+" :"+parameter;
+        }
         else
-            result = error(i18n("%1omsg needs a message parameter").arg(commandChar));
+        {
+            result = usage(i18n("Usage: %1OMSG text").arg(commandChar));
+        }
 
         return result;
     }
@@ -1495,9 +1499,13 @@ namespace Konversation
         OutputFilterResult result;
 
         if(!parameter.isEmpty())
+        {
             result.toServer = "NOTICE @"+destination+" "+parameter;
+        }
         else
-            result = error(i18n("%1onotice needs a message parameter").arg(commandChar));
+        {
+            result = usage(i18n("Usage: %1ONOTICE text").arg(commandChar));
+        }
 
         return result;
     }
