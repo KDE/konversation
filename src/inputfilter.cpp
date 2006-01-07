@@ -945,7 +945,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             }
             case RPL_YOUREOPER:
             {
-                server->appendMessageToFrontmost(i18n("Notice"),i18n("You are now an IRC operator on this server.").arg(parameterList[1]));
+                server->appendMessageToFrontmost(i18n("Notice"),i18n("You are now an IRC operator on this server."));
 
                 break;
             }

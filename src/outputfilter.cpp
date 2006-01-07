@@ -157,62 +157,55 @@ namespace Konversation
             if (command !="topic")
                 parameter = parameter.stripWhiteSpace();
 
-            if     (command == "join")    result = parseJoin(parameter);
-            else if(command == "part")    result = parsePart(parameter);
-            else if(command == "leave")   result = parsePart(parameter);
-            else if(command == "quit")    result = parseQuit(parameter);
-            else if(command == "notice")  result = parseNotice(parameter);
-            else if(command == "j")       result = parseJoin(parameter);
-            else if(command == "msg")     result = parseMsg(myNick,parameter, false);
-            else if(command == "m")       result = parseMsg(myNick,parameter, false);
-            else if(command == "smsg")    result = parseSMsg(parameter);
-            else if(command == "query")   result = parseMsg(myNick,parameter, true);
-            else if(command == "op")      result = parseOp(parameter);
-            else if(command == "deop")    result = parseDeop(parameter);
-            else if(command == "voice")   result = parseVoice(parameter);
-            else if(command == "unvoice") result = parseUnvoice(parameter);
-            else if(command == "ctcp")    result = parseCtcp(parameter);
-            else if(command == "ping")    result = parseCtcp(parameter.section(' ', 0, 0) + " ping");
-            else if(command == "kick")    result = parseKick(parameter);
-            else if(command == "topic")   result = parseTopic(parameter);
-            else if(command == "away")    result = parseAway(parameter);
-            else if(command == "back")    result = parseAway(QString::null);
-            else if(command == "invite")  result = parseInvite(parameter);
-            else if(command == "exec")    result = parseExec(parameter);
-            else if(command == "notify")  result = parseNotify(parameter);
-            else if(command == "oper")    result = parseOper(myNick,parameter);
-            else if(command == "ban")     result = parseBan(parameter);
-            else if(command == "unban")   result = parseUnban(parameter);
-            else if(command == "ignore")  result = parseIgnore(parameter);
-            else if(command == "quote")   result = parseQuote(parameter);
-            else if(command == "say")     result = parseSay(parameter);
-            else if(command == "list")    result = parseList(parameter);
-
-            else if(command == "names")   result = parseNames(parameter);
-            else if(command == "raw")     result = parseRaw(parameter);
-            else if(command == "dcc")     result = parseDcc(parameter);
-            else if(command == "konsole") parseKonsole();
-
-            else if(command == "aaway")   parseAaway(parameter);
-            else if(command == "aback")   parseAaway(QString::null);
-            else if(command == "ame")     result = parseAme(parameter);
-            else if(command == "amsg")    result = parseAmsg(parameter);
-
-            else if(command == "omsg")    result = parseOmsg(parameter);
-            else if(command == "onotice") result = parseOnotice(parameter);
-
+            if     (command == "join")     result = parseJoin(parameter);
+            else if(command == "part")     result = parsePart(parameter);
+            else if(command == "leave")    result = parsePart(parameter);
+            else if(command == "quit")     result = parseQuit(parameter);
+            else if(command == "notice")   result = parseNotice(parameter);
+            else if(command == "j")        result = parseJoin(parameter);
+            else if(command == "msg")      result = parseMsg(myNick,parameter, false);
+            else if(command == "m")        result = parseMsg(myNick,parameter, false);
+            else if(command == "smsg")     result = parseSMsg(parameter);
+            else if(command == "query")    result = parseMsg(myNick,parameter, true);
+            else if(command == "op")       result = parseOp(parameter);
+            else if(command == "deop")     result = parseDeop(parameter);
+            else if(command == "voice")    result = parseVoice(parameter);
+            else if(command == "unvoice")  result = parseUnvoice(parameter);
+            else if(command == "ctcp")     result = parseCtcp(parameter);
+            else if(command == "ping")     result = parseCtcp(parameter.section(' ', 0, 0) + " ping");
+            else if(command == "kick")     result = parseKick(parameter);
+            else if(command == "topic")    result = parseTopic(parameter);
+            else if(command == "away")     result = parseAway(parameter);
+            else if(command == "back")     result = parseAway(QString::null);
+            else if(command == "invite")   result = parseInvite(parameter);
+            else if(command == "exec")     result = parseExec(parameter);
+            else if(command == "notify")   result = parseNotify(parameter);
+            else if(command == "oper")     result = parseOper(myNick,parameter);
+            else if(command == "ban")      result = parseBan(parameter);
+            else if(command == "unban")    result = parseUnban(parameter);
+            else if(command == "ignore")   result = parseIgnore(parameter);
+            else if(command == "unignore") result = parseUnignore(parameter);
+            else if(command == "quote")    result = parseQuote(parameter);
+            else if(command == "say")      result = parseSay(parameter);
+            else if(command == "list")     result = parseList(parameter);
+            else if(command == "names")    result = parseNames(parameter);
+            else if(command == "raw")      result = parseRaw(parameter);
+            else if(command == "dcc")      result = parseDcc(parameter);
+            else if(command == "konsole")  parseKonsole();
+            else if(command == "aaway")    parseAaway(parameter);
+            else if(command == "aback")    parseAaway(QString::null);
+            else if(command == "ame")      result = parseAme(parameter);
+            else if(command == "amsg")     result = parseAmsg(parameter);
+            else if(command == "omsg")     result = parseOmsg(parameter);
+            else if(command == "onotice")  result = parseOnotice(parameter);
             else if(command == "server")     parseServer(parameter);
             else if(command == "reconnect")  parseReconnect();
             else if(command == "disconnect") emit disconnectServer();
-
-            else if(command == "prefs")   result = parsePrefs(parameter);
-
-            else if(command == "charset") parseCharset(parameter);
-
-            else if(command == "setkey")  result = parseSetKey(parameter);
-            else if(command == "delkey")  result = parseDelKey(parameter);
-
-            else if(command == "dns")     result = parseDNS(parameter);
+            else if(command == "prefs")    result = parsePrefs(parameter);
+            else if(command == "charset")  parseCharset(parameter);
+            else if(command == "setkey")   result = parseSetKey(parameter);
+            else if(command == "delkey")   result = parseDelKey(parameter);
+            else if(command == "dns")      result = parseDNS(parameter);
 
             // Forward unknown commands to server
             else
@@ -1116,7 +1109,81 @@ namespace Konversation
 
         if(showUsage)
         {
-            result = usage(i18n("Usage: IGNORE [ -ALL ] user list"));
+            result = usage(i18n("Usage: %1IGNORE [ -ALL ] <user 1> <user 2> ... <user n>").arg(commandChar));
+        }
+
+        return result;
+    }
+
+    OutputFilterResult OutputFilter::parseUnignore(const QString& parameter)
+    {
+        OutputFilterResult result;
+
+        if(parameter.isEmpty())
+        {
+            result = usage(i18n("Usage: %1UNIGNORE <user 1> <user 2> ... <user n>").arg(commandChar));
+        }
+        else
+        {
+            QString unignore = parameter.simplifyWhiteSpace();
+
+            QStringList unignoreList = QStringList::split(' ',unignore);
+
+            // Only one potential unignore
+            if (unignoreList.count()==1)
+            {
+                // Unignore succeeded, i.e. parameter was on the ignore list
+                if (Preferences::removeIgnore(unignore))
+                {
+                    result.output = i18n("Removed %1 from your ignore list.").arg(unignore);
+                    result.typeString = i18n("Ignore");
+                    result.type = Program;
+                }
+                // Unignore failed
+                else
+                {
+                    result = error(i18n("No such ignore: %1").arg(unignore));
+                }
+            }
+            // Multiple potential unignores
+            else
+            {
+                QStringList succeeded;
+                QStringList failed;
+
+                // Iterate over potential unignores
+                for (QStringList::Iterator it = unignoreList.begin(); it != unignoreList.end(); ++it) 
+                {
+                    // Unignore succeeded: add to success list
+                    if (Preferences::removeIgnore((*it)))
+                    {
+                        succeeded.append((*it));
+                    }
+                    // Unignore failed: add to failure list
+                    else
+                    {
+                        failed.append((*it));
+                    }
+                }
+
+                // Print all successful unignores, in case there were any
+                if (succeeded.count()>=1)
+                {
+                    m_server->appendMessageToFrontmost(i18n("Ignore"),i18n("Removed %1 from your ignore list.").arg(succeeded.join(", ")));
+                }
+
+                // One failed unignore
+                if (failed.count()==1)
+                {
+                    m_server->appendMessageToFrontmost(i18n("Error"),i18n("No such ignore: %1").arg(failed.join(", ")));
+                }
+
+                // Multiple failed unignores
+                if (failed.count()>1)
+                {
+                    m_server->appendMessageToFrontmost(i18n("Error"),i18n("No such ignores: %1").arg(failed.join(", ")));
+                }
+            }
         }
 
         return result;

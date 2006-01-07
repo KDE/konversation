@@ -257,9 +257,27 @@ void Preferences::setIgnoreList(QPtrList<Ignore> newList)
 
 void Preferences::addIgnore(const QString &newIgnore)
 {
-    QStringList ignore=QStringList::split(',',newIgnore);
+    QStringList ignore = QStringList::split(',',newIgnore);
+    removeIgnore(ignore[0]);
     self()->mIgnoreList.append(new Ignore(ignore[0],ignore[1].toInt()));
 }
+
+bool Preferences::removeIgnore(const QString &oldIgnore)
+{
+    QPtrListIterator<Ignore> ignoreList( self()->mIgnoreList );
+    while (ignoreList.current())
+    {
+        if (ignoreList.current()->getName()==oldIgnore)
+        {
+            self()->mIgnoreList.remove(ignoreList.current());
+            return true;
+        }
+        ++ignoreList;
+    }
+
+    return false;
+}
+
 void Preferences::setNotifyList(const QMap<QString, QStringList> &newList)
 { self()->mNotifyList=newList; }
 

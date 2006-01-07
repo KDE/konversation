@@ -122,6 +122,7 @@ namespace Konversation
             OutputFilterResult parseDcc(const QString& parameter);
             OutputFilterResult parseRaw(const QString& parameter);
             OutputFilterResult parseIgnore(const QString& parameter);
+            OutputFilterResult parseUnignore(const QString& parameter);
             OutputFilterResult parseQuote(const QString& parameter);
             OutputFilterResult parseSay(const QString& parameter);
             void parseKonsole();
