@@ -49,6 +49,10 @@ Changes from 0.18 to 0.19
 - Implemented '/disconnect' to disconnect from the respective server
 - Implemented '/reconnect' to disconnect from and then reconnect to the respective server
 - Support IPv6 hosts in bookmarks
+- Cosmetic improvements to various status messages and command output
+- Prevent addition of nameless channels and hostless servers in Edit Network
+- Implemented '/topic <channel>' for retrieving the topic of arbitrary channels, provided the IRC server allows us to
+- Show local file name in DCC GET status tab and DCC messages
 
 Changes from 0.17 to 0.18
 - All nicks were blue when colored nicks are disabled with some setups
