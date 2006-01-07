@@ -77,6 +77,7 @@
 #include "notificationhandler.h"
 #include "common.h"
 #include "irccharsets.h"
+#include "konviiphelper.h"
 
 KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", WStyle_ContextHelp | WType_TopLevel | WDestructiveClose)
 {
@@ -1757,39 +1758,38 @@ void KonversationMainWindow::reconnectCurrentServer()
     }
 }
 
-void KonversationMainWindow::openURL(const QString&url, const QString&/* title*/)
+void KonversationMainWindow::openURL(const QString& url, const QString& title)
 {
-    QString nUrl = url;
+    QString urlN = url;
+    urlN.remove("irc://");
 
-    QString serverAndPort = nUrl.remove("irc://").section('/',0,0);
-    QString channelAndPassword = nUrl.section('/',1,1);
+    QString host = urlN.section('/',0,0);
+    KonviIpHelper hostParser(host);
+    host = hostParser.host();
 
-    QString server = serverAndPort.section(':',0,0);
-    QString port = serverAndPort.section(':',1,1);
+    QString port = (hostParser.port().isEmpty() ? QString("6667") : hostParser.port());
 
-    QString channel = channelAndPassword.section('?',0,0);
-    QString password = channelAndPassword.section('?',1,1);
+    QString channel = urlN.section('/',1,1);
+    QString password;
 
-    if(port.isEmpty())
+    if (Preferences::isServerGroup(host))
     {
-        port = "6667";
-    }
+        Server* newServer = KonversationApplication::instance()->connectToServerGroup(host);
 
-    if (Preferences::isServerGroup(server))
-    {
-        Server* newServer = KonversationApplication::instance()->connectToServerGroup(server);
-
-        if(!newServer->isConnected()) {
+        if (!newServer->isConnected()) 
+        {
             newServer->setAutoJoin(true);
             newServer->setAutoJoinChannel(channel);
             newServer->setAutoJoinChannelKey(password);
-        } else if(!channel.isEmpty()) {
+        }
+        else if(!channel.isEmpty()) 
+        {
             newServer->queue("JOIN " + channel + " " + password);
         }
     }
     else
     {
-        KonversationApplication::instance()->dcopConnectToServer(server,port.toInt(),channel,password);
+        KonversationApplication::instance()->quickConnectToServer(host,port,channel,"",password);
     }
 }
 
