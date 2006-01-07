@@ -224,20 +224,29 @@ void Server::init(KonversationMainWindow* mainWindow, const QString& nick, const
     if(!tmpList.isEmpty())
     {
         setAutoJoin(true);
-        Konversation::ChannelList::iterator it;
+
         QString channels;
         QString keys;
 
-        for(it = tmpList.begin(); it != tmpList.end(); ++it)
+        if (tmpList.count()>1)
         {
-            if(it != tmpList.begin())
+            Konversation::ChannelList::iterator it;
+            for(it = tmpList.begin(); it != tmpList.end(); ++it)
             {
-                channels += ',';
-                keys += ',';
-            }
+                if(it != tmpList.begin())
+                {
+                    channels += ',';
+                    keys += ',';
+                }
 
-            channels += (*it).name();
-            keys += ((*it).password().isEmpty() ? QString("''") : (*it).password());
+                channels += (*it).name();
+                keys += ((*it).password().isEmpty() ? QString(".") : (*it).password());
+            }
+        }
+        else
+        {
+            channels = tmpList.first().name();
+            keys = (tmpList.first().password().isEmpty() ? QString("") : tmpList.first().password());
         }
 
         setAutoJoinChannel(channels);
