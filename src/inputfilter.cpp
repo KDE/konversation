@@ -834,6 +834,12 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
 
                 break;
             }
+            case ERR_NOSUCHCHANNEL:
+            {
+                server->appendMessageToFrontmost(i18n("Error"),i18n("%1: No such channel.").arg(parameterList[1]));
+
+                break;
+            }
             // Nick already on the server, so try another one
             case ERR_NICKNAMEINUSE:
             {
@@ -872,6 +878,12 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 }
                 break;
             }
+            case ERR_NOTONCHANNEL:
+            {
+                server->appendMessageToFrontmost(i18n("Error"),i18n("You are not on %1.").arg(parameterList[1]));
+
+                break;
+            }
             case RPL_MOTDSTART:
             {
                 if(!Preferences::skipMOTD())
@@ -901,6 +913,12 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 {
                     server->queue(server->getAutoJoinCommand());
                 }
+                break;
+            }
+            case RPL_YOUREOPER:
+            {
+                server->appendMessageToFrontmost(i18n("Notice"),i18n("You are now an IRC operator on this server.").arg(parameterList[1]));
+
                 break;
             }
             case RPL_GLOBALUSERS:                 // Current global users: 589 Max: 845
