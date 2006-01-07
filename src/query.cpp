@@ -438,8 +438,20 @@ QString Query::getChannelEncodingDefaultDesc()    // virtual
 
 bool Query::closeYourself()
 {
-    m_server->removeQuery(this);
-    return true;
+    int result=KMessageBox::warningContinueCancel(
+        this,
+        i18n("Do you want close your query with %1?").arg(getName()),
+        i18n("Close Query"),
+        i18n("Close"),
+        "QuitQueryTab");
+
+    if(result==KMessageBox::Continue)
+    {
+        m_server->removeQuery(this);
+        return true;
+    }
+
+    return false;
 }
 
 void Query::filesDropped(const QStrList& files)
