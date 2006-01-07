@@ -3195,7 +3195,7 @@ void Server::connectToServerGroup(const QString& serverGroup)
 void Server::connectToNewServer(const QString& server, const QString& port, const QString& password)
 {
     KonversationApplication *konvApp = static_cast<KonversationApplication*>(KApplication::kApplication());
-    konvApp->quickConnectToServer(server, port,"", password);
+    konvApp->quickConnectToServer(server, port,"", "", password);
 }
 
 bool Server::isAway() const
