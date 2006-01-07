@@ -2115,10 +2115,21 @@ void Channel::appendInputText(const QString& s)
 
 bool Channel::closeYourself()
 {
-    m_server->closeChannel(getName());
-    m_server->removeChannel(this);
-    delete this;
-    return true;
+    int result=KMessageBox::warningContinueCancel(
+        this,
+        i18n("Do you want to leave %1?").arg(getName()),
+        i18n("Leave Channel"),
+        i18n("Leave"),
+        "QuitChannelTab");
+
+    if(result==KMessageBox::Continue)
+    {
+        m_server->closeChannel(getName());
+        m_server->removeChannel(this);
+        delete this;
+        return true;
+    }
+    return false;
 }
 
 //Used to disable functions when not connected

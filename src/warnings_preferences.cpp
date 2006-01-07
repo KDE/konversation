@@ -36,13 +36,14 @@ void Warnings_Config::saveSettings()
 void Warnings_Config::updateWidgets()
 {
   QStringList dialogDefinitions;
-  flagNames = "Invitation,SaveLogfileNote,ClearLogfileQuestion,CloseQueryAfterIgnore,ResumeTransfer,QuitServerTab,ChannelListNoServerSelected,RemoveDCCReceivedFile,HideMenuBarWarning,ChannelListWarning,LargePaste";
+  flagNames = "Invitation,SaveLogfileNote,ClearLogfileQuestion,CloseQueryAfterIgnore,ResumeTransfer,QuitServerTab,QuitChannelTab,ChannelListNoServerSelected,RemoveDCCReceivedFile,HideMenuBarWarning,ChannelListWarning,LargePaste";
   dialogDefinitions.append(i18n("Automatically join channel on invite"));
   dialogDefinitions.append(i18n("Notice that saving logfiles will save whole file"));
   dialogDefinitions.append(i18n("Question before deleting logfile contents"));
   dialogDefinitions.append(i18n("Question on closing queries after ignoring the nickname"));
   dialogDefinitions.append(i18n("Question on what to do on DCC resume"));
-  dialogDefinitions.append(i18n("Quit server when you hit the tab's close button"));
+  dialogDefinitions.append(i18n("Close server tab"));
+  dialogDefinitions.append(i18n("Close channel tab"));
   dialogDefinitions.append(i18n("The channel list can only be opened from server-aware tabs"));
   dialogDefinitions.append(i18n("Warning on deleting file received on DCC"));
   dialogDefinitions.append(i18n("Warning on hiding the main window menu"));

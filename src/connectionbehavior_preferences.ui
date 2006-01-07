@@ -62,13 +62,13 @@ the Free Software Foundation; either version 2 of the License, or
                 <property name="geometry">
                     <rect>
                         <x>11</x>
-                        <y>27</y>
+                        <y>28</y>
                         <width>129</width>
-                        <height>23</height>
+                        <height>24</height>
                     </rect>
                 </property>
                 <property name="text">
-                    <string>&amp;Reconnect timeout:</string>
+                    <string>Reconnect timeout:</string>
                 </property>
                 <property name="buddy" stdset="0">
                     <cstring>reconnectTimeoutSpin</cstring>

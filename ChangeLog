@@ -56,6 +56,7 @@ Changes from 0.18 to 0.19
 - Show local file name in DCC GET status tab and DCC messages
 - Properly select relevant entry in Server List dialog after adding or editing a network
 - Implement '/unignore <user 1> <user 2> ... <user n>'
+- Add warning dialog for closing of channel tabs
 
 Changes from 0.17 to 0.18
 - All nicks were blue when colored nicks are disabled with some setups
