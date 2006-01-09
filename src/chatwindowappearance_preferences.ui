@@ -1,4 +1,4 @@
-<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>ChatWindowAppearance_Config</class>
 <comment>This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -15,6 +15,9 @@ the Free Software Foundation; either version 2 of the License, or
             <width>525</width>
             <height>526</height>
         </rect>
+    </property>
+    <property name="caption">
+        <string>ChatWindowAppearance_Config</string>
     </property>
     <grid>
         <property name="name">
@@ -93,6 +96,23 @@ the Free Software Foundation; either version 2 of the License, or
                 </spacer>
             </grid>
         </widget>
+        <spacer row="3" column="0">
+            <property name="name">
+                <cstring>spacer90</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Vertical</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>20</width>
+                    <height>120</height>
+                </size>
+            </property>
+        </spacer>
         <widget class="QGroupBox" row="2" column="0">
             <property name="name">
                 <cstring>kcfg_ShowBackgroundImage</cstring>
@@ -143,6 +163,9 @@ the Free Software Foundation; either version 2 of the License, or
                     <property name="text">
                         <string>&amp;Show channel topic</string>
                     </property>
+                    <property name="accel">
+                        <string>Alt+S</string>
+                    </property>
                 </widget>
                 <widget class="QCheckBox" row="1" column="0">
                     <property name="name">
@@ -151,52 +174,78 @@ the Free Software Foundation; either version 2 of the License, or
                     <property name="text">
                         <string>Show channel &amp;mode buttons</string>
                     </property>
-                </widget>
-                <widget class="QCheckBox" row="2" column="0">
-                    <property name="name">
-                        <cstring>kcfg_ShowQuickButtons</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Show &amp;quick buttons</string>
+                    <property name="accel">
+                        <string>Alt+M</string>
                     </property>
                 </widget>
-                <widget class="QCheckBox" row="4" column="0">
+                <widget class="QCheckBox" row="5" column="0">
                     <property name="name">
                         <cstring>kcfg_ShowNicknameBox</cstring>
                     </property>
                     <property name="text">
                         <string>Show bo&amp;x to change own nickname</string>
                     </property>
+                    <property name="accel">
+                        <string>Alt+X</string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox" row="2" column="0">
+                    <property name="name">
+                        <cstring>kcfg_ShowNickList</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Show &amp;channel nick list and quick buttons</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+C</string>
+                    </property>
                 </widget>
                 <widget class="QCheckBox" row="3" column="0">
                     <property name="name">
                         <cstring>kcfg_AutoUserhost</cstring>
                     </property>
+                    <property name="enabled">
+                        <bool>false</bool>
+                    </property>
                     <property name="text">
                         <string>Show hostmasks &amp;in nickname list</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+I</string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox" row="4" column="0">
+                    <property name="name">
+                        <cstring>kcfg_ShowQuickButtons</cstring>
+                    </property>
+                    <property name="enabled">
+                        <bool>false</bool>
+                    </property>
+                    <property name="text">
+                        <string>Show &amp;quick buttons</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+Q</string>
                     </property>
                 </widget>
             </grid>
         </widget>
-        <spacer row="3" column="0">
-            <property name="name">
-                <cstring>spacer90</cstring>
-            </property>
-            <property name="orientation">
-                <enum>Vertical</enum>
-            </property>
-            <property name="sizeType">
-                <enum>Expanding</enum>
-            </property>
-            <property name="sizeHint">
-                <size>
-                    <width>20</width>
-                    <height>61</height>
-                </size>
-            </property>
-        </spacer>
     </grid>
 </widget>
+<connections>
+    <connection>
+        <sender>kcfg_ShowNickList</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>kcfg_AutoUserhost</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>kcfg_ShowNickList</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>kcfg_ShowQuickButtons</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+</connections>
 <tabstops>
     <tabstop>kcfg_ShowDate</tabstop>
     <tabstop>kcfg_TimestampFormat</tabstop>

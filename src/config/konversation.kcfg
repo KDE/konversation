@@ -40,6 +40,11 @@
       <label></label>
       <whatsthis></whatsthis>
     </entry>
+    <entry key="ShowNickList" type="Bool">
+      <default>true</default>
+      <label></label>
+      <whatsthis></whatsthis>
+    </entry>
     <entry key="ShowQuickButtons" type="Bool">
       <default>false</default>
       <label></label>

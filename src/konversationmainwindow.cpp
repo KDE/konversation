@@ -123,11 +123,11 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
 
     setStandardToolBarMenuEnabled(true);
     createStandardStatusBarAction();
-    
+
     // options_show_menubar
     showMenuBarAction=KStdAction::showMenubar(this,SLOT(showMenubar()),actionCollection());
     KStdAction::configureToolbars(this, SLOT(openToolbars()), actionCollection());
-    
+
 #ifdef USE_KNOTIFY // options_configure_notifications
     KAction *configureNotificationsAction = KStdAction::configureNotifications(this,SLOT(openNotifications()), actionCollection());
 #endif
@@ -238,6 +238,9 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
 
     new KAction(i18n("Close &All Open Queries"), 0, KShortcut("F11"), this, SLOT(closeQueries()), actionCollection(), "close_queries");
     hideNicklistAction = new KToggleAction(i18n("Hide Nicklist"), 0, KShortcut("Ctrl+H"), this, SLOT(hideNicknameList()), actionCollection(), "hide_nicknamelist");
+    if(!Preferences::showNickList())
+        hideNicklistAction->setChecked(true);
+
 
     // Initialize KMainWindow->statusBar()
     statusBar();
@@ -338,7 +341,7 @@ void KonversationMainWindow::openPrefsDialog()
 
   }
   m_settingsDialog->show();
-  
+
 }
 
 void KonversationMainWindow::openKeyBindings()
@@ -1617,12 +1620,16 @@ void KonversationMainWindow::hideNicknameList()
         {
             channel->showNicknameList(false);
             hideNicklistAction->setChecked(true);
+            Preferences::setShowNickList(false);
         }
         else
         {
             channel->showNicknameList(true);
             hideNicklistAction->setChecked(false);
+            Preferences::setShowNickList(true);
         }
+        // save nick list state
+        Preferences::writeConfig();
     }
 }
 
@@ -1815,8 +1822,8 @@ QString KonversationMainWindow::currentURL(bool passNetwork)
         }
         else
         {
-            server = frontServer->getServerName();            
-            
+            server = frontServer->getServerName();
+
             port = ":"+QString::number(frontServer->getPort());
         }
 

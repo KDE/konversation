@@ -226,6 +226,7 @@ Channel::Channel(QWidget* parent)
     }
 
     updateQuickButtons(Preferences::quickButtonList());
+    showNicknameList(Preferences::showNickList());
 
     // The box holding the Nickname button and Channel input
     commandLineBox = new QHBox(this);
@@ -2249,10 +2250,25 @@ void Channel::showNicknameList(bool show)
 {
     if (show)
     {
+        // show nick list
         nickListButtons->show();
+        // give Qt time to recalculate the splitter size
+        kapp->processEvents();
+        // check if the splitter is to small, happens when konversation was started with
+        // hidden nick list and then showing it again
+        if(m_horizSplitter->sizes()[0]/m_horizSplitter->sizes()[1]>6)
+        {
+          // build a somewhat sane size hintfor the splitter
+          QValueList<int> newSizes;
+          newSizes.append(this->width()*4/5);
+          newSizes.append(this->width()/5);
+          // resize splitter
+          m_horizSplitter->setSizes(newSizes);
+       }
     }
     else
     {
+        // hide nick list
         nickListButtons->hide();
     }
 }
