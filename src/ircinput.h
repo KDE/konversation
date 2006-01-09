@@ -57,6 +57,7 @@ class IRCInput : public KTextEdit
         void showCompletionList(const QStringList& nicks);
         void setText(const QString& text);
         void setLastCompletion(const QString& completion);
+virtual void setOverwriteMode(bool) { }
 
     protected slots:
         void getHistory(bool up);
