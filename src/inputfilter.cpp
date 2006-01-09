@@ -240,7 +240,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                     else
                     {
                         // Do not internationalize the below version string
-                        reply = QString("Konversation %1 Build %2 (C) 2002-2005 by the Konversation team")
+                        reply = QString("Konversation %1 Build %2 (C) 2002-2006 by the Konversation team")
                             .arg(QString(KONVI_VERSION))
                             .arg(QString::number(COMMIT));
                     }
@@ -469,7 +469,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
             // Request modes for the channel
             server->queue("MODE "+channelName);
 
-            // Upon JOIN we're going to receive some NAMES input from the server which 
+            // Upon JOIN we're going to receive some NAMES input from the server which
             // we need to be able to tell apart from manual invocations of /names
             setAutomaticRequest("NAMES",channelName,true);
         }
@@ -809,7 +809,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 QString topic = Konversation::removeIrcMarkup(trailing);
 
                 // FIXME: This is an abuse of the automaticRequest system: We're
-                // using it in an inverted manner, i.e. the automaticRequest is 
+                // using it in an inverted manner, i.e. the automaticRequest is
                 // set to true by a manual invocation of /topic. Bad bad bad -
                 // needs rethinking of automaticRequest.
                 if(getAutomaticRequest("TOPIC",parameterList[1])==0)
