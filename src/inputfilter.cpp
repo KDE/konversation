@@ -773,32 +773,32 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             case RPL_NAMREPLY:
             {
                 // Display message only if this was not an automatic request.
-                if(getAutomaticRequest("NAMES",parameterList[2])==0)
-                {
-                    server->appendMessageToFrontmost(i18n("Names"),trailing);
-                }
-                else
+                if(getAutomaticRequest("NAMES",parameterList[2])==1)
                 {
                     QStringList nickList = QStringList::split(" ", trailing);
                     // send list to channel
                     server->addPendingNickList(parameterList[2], nickList);
+                }
+                else
+                {
+                    server->appendMessageToFrontmost(i18n("Names"),trailing);
                 }
 
                 break;
             }
             case RPL_ENDOFNAMES:
             {
-                if(getAutomaticRequest("NAMES",parameterList[1])==0)
-                {
-                    server->appendMessageToFrontmost(i18n("Names"),i18n("End of NAMES list."));
-                }
-                else
+                if(getAutomaticRequest("NAMES",parameterList[1])==1)
                 {
                     // tell the channel that the list of nicks is complete
                     server->noMorePendingNicks(parameterList[1]);
                     // This code path was taken for the automatic NAMES input on JOIN, upcoming
                     // NAMES input for this channel will be manual invocations of /names
                     setAutomaticRequest("NAMES",parameterList[1],false);
+                }
+                else
+                {
+                    server->appendMessageToFrontmost(i18n("Names"),i18n("End of NAMES list."));
                 }
 
                 break;
