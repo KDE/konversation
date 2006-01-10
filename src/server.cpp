@@ -1021,23 +1021,20 @@ QString Server::getNextNickname()
 
 void Server::processIncomingData()
 {
-static bool alreadyProcessing=false;
+    incomingTimer.stop();
 
-    if (alreadyProcessing) return;
-    alreadyProcessing=true;
     if(!inputBuffer.isEmpty())
     {
         QString front(inputBuffer.front());
         inputBuffer.pop_front();
         if(rawLog) rawLog->appendRaw("&gt;&gt; " + front.replace("&","&amp;").replace("<","&lt;").replace(">","&gt;"));
         inputFilter.parseLine(front);
-    }
 
-    if(inputBuffer.isEmpty())
-    {
-        incomingTimer.stop();
+        if(!inputBuffer.isEmpty())
+        {
+            incomingTimer.start(0);
+        }
     }
-    alreadyProcessing=false;
 }
 
 void Server::unlockSending()
