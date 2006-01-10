@@ -169,6 +169,7 @@ Server::~Server()
 
 void Server::init(KonversationMainWindow* mainWindow, const QString& nick, const QString& channel)
 {
+    m_processingIncoming = false;
     m_identifyMsg = false;
     m_currentServerIndex = 0;
     m_tryReconnect = true;
@@ -1023,12 +1024,14 @@ void Server::processIncomingData()
 {
     incomingTimer.stop();
 
-    if(!inputBuffer.isEmpty())
+    if(!inputBuffer.isEmpty() && !m_processingIncoming)
     {
+        m_processingIncoming = true;
         QString front(inputBuffer.front());
         inputBuffer.pop_front();
         if(rawLog) rawLog->appendRaw("&gt;&gt; " + front.replace("&","&amp;").replace("<","&lt;").replace(">","&gt;"));
         inputFilter.parseLine(front);
+        m_processingIncoming = false;
 
         if(!inputBuffer.isEmpty())
         {
@@ -1189,7 +1192,7 @@ void Server::incoming()
     if( !sendUnlocked )
         unlockSending();
 
-    if( !incomingTimer.isActive() )
+    if( !incomingTimer.isActive() && !m_processingIncoming )
         incomingTimer.start(0);
 }
 

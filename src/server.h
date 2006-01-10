@@ -665,5 +665,8 @@ class Server : public QObject
         QMap<QString,QCString> keyMap;
 
         bool m_identifyMsg;
+
+        /// Used to lock incomingTimer while processing message.
+        bool m_processingIncoming;
 };
 #endif
