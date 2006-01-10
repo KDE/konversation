@@ -52,11 +52,9 @@ void InputFilter::setServer(Server* newServer)
 {
     server=newServer;
 }
-#define SHOW kdDebug() << __FILE__ << ' ' << __LINE__ << ' ' << endl
 
 void InputFilter::parseLine(const QString& a_newLine)
 {
-    SHOW;
     QString trailing;
     QString newLine(a_newLine);
 
@@ -119,7 +117,6 @@ void InputFilter::parseLine(const QString& a_newLine)
 
 void InputFilter::parseClientCommand(const QString &prefix, const QString &command, const QStringList &parameterList, const QString &_trailing)
 {
-    SHOW;
     KonversationApplication* konv_app = static_cast<KonversationApplication *>(KApplication::kApplication());
     Q_ASSERT(konv_app);
     Q_ASSERT(server);
@@ -447,8 +444,6 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
     }
     else if(command=="join")
     {
-            SHOW;
-
         QString channelName(trailing);
         // Sometimes JOIN comes without ":" in front of the channel name
         if(channelName.isEmpty())
@@ -471,16 +466,12 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                 }
             */
             // Join the channel
-            SHOW;
             server->joinChannel(channelName, sourceHostmask);
-            SHOW;
             // Request modes for the channel
             server->queue("MODE "+channelName);
-            SHOW;
             // Upon JOIN we're going to receive some NAMES input from the server which
             // we need to be able to tell apart from manual invocations of /names
             setAutomaticRequest("NAMES",channelName,true);
-            SHOW;
         }
         else
         {
@@ -781,11 +772,9 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             }
             case RPL_NAMREPLY:
             {
-                    SHOW;
                 // Display message only if this was not an automatic request.
                 if(getAutomaticRequest("NAMES",parameterList[2])==1)
                 {
-                    SHOW;
                     QStringList nickList = QStringList::split(" ", trailing);
                     // send list to channel
                     server->addPendingNickList(parameterList[2], nickList);
@@ -794,12 +783,10 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 {
                     server->appendMessageToFrontmost(i18n("Names"),trailing);
                 }
-                SHOW;
                 break;
             }
             case RPL_ENDOFNAMES:
             {
-                SHOW;
                 if(getAutomaticRequest("NAMES",parameterList[1])==1)
                 {
                     // tell the channel that the list of nicks is complete
@@ -807,19 +794,16 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     // This code path was taken for the automatic NAMES input on JOIN, upcoming
                     // NAMES input for this channel will be manual invocations of /names
                     setAutomaticRequest("NAMES",parameterList[1],false);
-                    SHOW;
                 }
                 else
                 {
                     server->appendMessageToFrontmost(i18n("Names"),i18n("End of NAMES list."));
                 }
-                SHOW;
                 break;
             }
             // Topic set messages
             case RPL_TOPIC:
             {
-                SHOW;
                 QString topic = Konversation::removeIrcMarkup(trailing);
 
                 // FIXME: This is an abuse of the automaticRequest system: We're
@@ -829,7 +813,6 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 if(getAutomaticRequest("TOPIC",parameterList[1])==0)
                 {
                     // Update channel window
-                    SHOW;
                     server->setChannelTopic(parameterList[1],topic);
                 }
                 else
