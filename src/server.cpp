@@ -1021,6 +1021,10 @@ QString Server::getNextNickname()
 
 void Server::processIncomingData()
 {
+static bool alreadyProcessing=false;
+
+    if (alreadyProcessing) return;
+    alreadyProcessing=true;
     if(!inputBuffer.isEmpty())
     {
         QString front(inputBuffer.front());
@@ -1033,6 +1037,7 @@ void Server::processIncomingData()
     {
         incomingTimer.stop();
     }
+    alreadyProcessing=false;
 }
 
 void Server::unlockSending()
