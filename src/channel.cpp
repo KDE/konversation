@@ -481,6 +481,14 @@ void Channel::popupCommand(int id)
             pattern="MODE %c -o %u";
             raw=true;
             break;
+        case Konversation::GiveHalfOp:
+            pattern="MODE %c +h %u";
+            raw=true;
+            break;
+        case Konversation::TakeHalfOp:
+            pattern="MODE %c -h %u";
+            raw=true;
+            break;
         case Konversation::GiveVoice:
             pattern="MODE %c +v %u";
             raw=true;

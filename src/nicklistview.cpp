@@ -47,6 +47,8 @@ KListView(parent)
         {
             modes->insertItem(i18n("Give Op"),Konversation::GiveOp);
             modes->insertItem(i18n("Take Op"),Konversation::TakeOp);
+            modes->insertItem(i18n("Give HalfOp"),Konversation::GiveHalfOp);
+            modes->insertItem(i18n("Take HalfOp"),Konversation::TakeHalfOp);
             modes->insertItem(i18n("Give Voice"),Konversation::GiveVoice);
             modes->insertItem(i18n("Take Voice"),Konversation::TakeVoice);
             popup->insertItem(i18n("Modes"),modes,Konversation::ModesSub);

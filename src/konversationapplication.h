@@ -40,7 +40,7 @@ namespace Konversation
     // Shared between NickListView and IRCView
     enum PopupIDs
     {
-        ModesSub,GiveOp,TakeOp,GiveVoice,TakeVoice,
+        ModesSub,GiveOp,TakeOp,GiveHalfOp,TakeHalfOp,GiveVoice,TakeVoice,
         KickBanSub,IgnoreNick,
         Kick,KickBan,BanNick,BanHost,BanDomain,BanUserHost,BanUserDomain,
         KickBanHost,KickBanDomain,KickBanUserHost,KickBanUserDomain,
