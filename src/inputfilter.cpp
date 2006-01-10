@@ -52,9 +52,11 @@ void InputFilter::setServer(Server* newServer)
 {
     server=newServer;
 }
+#define SHOW kdDebug() << __FILE__ << ' ' << __LINE__ << ' ' << endl
 
 void InputFilter::parseLine(const QString& a_newLine)
 {
+    SHOW;
     QString trailing;
     QString newLine(a_newLine);
 
@@ -106,6 +108,7 @@ void InputFilter::parseLine(const QString& a_newLine)
     // Server command, if no "!" was found in prefix
     if((prefix.find('!') == -1) && (prefix != server->getNickname()))
     {
+
         parseServerCommand(prefix, command, parameterList, trailing);
     }
     else
@@ -113,8 +116,6 @@ void InputFilter::parseLine(const QString& a_newLine)
         parseClientCommand(prefix, command, parameterList, trailing);
     }
 }
-
-#define SHOW kdDebug() << __FILE__ << ' ' << __LINE__ << ' ' << endl
 
 void InputFilter::parseClientCommand(const QString &prefix, const QString &command, const QStringList &parameterList, const QString &_trailing)
 {
