@@ -10,7 +10,7 @@ Changes from 0.18 to 0.19
 - Fixed keyboard search work in nicklist
 - Implemented sending commands as messages on Ctrl+Enter
 - Fixes related to iterating over a network's servers on connect
-- Display network in tabs where possible
+- Display network name in tabs and the title bar where available
 - Default bookmark title set to channel (formerly server)
 - Bookmark network instead of server where available
 - Implement /server <network>

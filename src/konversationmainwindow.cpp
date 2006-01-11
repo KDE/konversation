@@ -599,8 +599,6 @@ void KonversationMainWindow::closeView(QWidget* viewToClose)
 
         ChatWindow::WindowType viewType=view->getType();
 
-        QString viewName=view->getName();
-
         // the views should know by themselves how to close
 
         bool confirmClose = true;
@@ -852,7 +850,6 @@ StatusPanel* KonversationMainWindow::addStatusView(Server* server)
     // first set up internal data ...
     statusView->setServer(server);
     statusView->setIdentity(server->getIdentity());
-    statusView->setName(server->getServerName());
 
     // Get group name for tab if available
     QString label = server->getServerGroup();
@@ -860,6 +857,8 @@ StatusPanel* KonversationMainWindow::addStatusView(Server* server)
     {
         label = server->getServerName();
     }
+
+    statusView->setName(label);
 
     // SSL icon stuff
     QObject::connect(server,SIGNAL(sslInitFailure()),this,SLOT(removeSSLIcon()));
@@ -949,13 +948,6 @@ void KonversationMainWindow::newText(QWidget* widget, const QString& highlightCo
     {
         getViewContainer()->setTabColor(view, QColor(highlightColor));
     }
-}
-
-void KonversationMainWindow::changeTabLabel(QWidget* widget, const QString& newLabel)
-{
-    ChatWindow* view = static_cast<ChatWindow*>(widget);
-
-    getViewContainer()->changeTab(view,newLabel);
 }
 
 void KonversationMainWindow::updateFrontView()
