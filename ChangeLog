@@ -13,7 +13,7 @@ Changes from 0.18 to 0.19
 - Display network name in tabs and the title bar where available
 - Default bookmark title set to channel (formerly server)
 - Bookmark network instead of server where available
-- Implement /server <network>
+- Implement '/server <network>'
 - Recognize server as being part of a network and use respective identity
 - Fix networks losing their channel history upon changes to their settings
 - Tab bar redesigned; uses label text color for notifications
@@ -22,16 +22,16 @@ Changes from 0.18 to 0.19
 - Pressing arrow down in the input line now preserves input by adding it to the history and clears the input line
 - Fix infinite loop when nickname is in use
 - Make /server syntax parsing more flexible by allowing both 'address:port' and 'address port'
-- Vastly improve /server IPv6 handling
-- Have the /list command open the channel list panel
+- Vastly improve '/server' IPv6 handling
+- Have the '/list' command open the channel list panel
 - Handle CABAB command correctly
 - Handle IDENTIFY-MSG correctly
 - Added DCC "Send file" action to query context menu (patch by Jean-Remy Falleri)
 - Fixes related to announcing channel mode changes (patch by Lothar Braun)
-- Avoid sending a 'clear' command to the server when clearing the buffer in a query tab using the /clear command (patch by Lothar Braun)
+- Avoid sending a 'clear' command to the server when clearing the buffer in a query tab using the '/clear' command (patch by Lothar Braun)
 - Added boolean SkipMOTD option to the [Flags] section of konversationrc to skip MOTDs
 - Allow for a channel topic to be cleared by setting an empty topic
-- Minor fix in parsing the /join command
+- Minor fix in parsing the '/join' command
 - Cosmetic improvements to the DCC file transfer UI and DCC event messages
 - 'media' script revamped, improved compatibility with common character sets
 - Major internal changes related to preferences storage
@@ -65,6 +65,8 @@ Changes from 0.18 to 0.19
 - Improved error messages on deletion in the Server List dialog
 - Fixed Server List dialog sorting to match actual order of addition and thus auto-connect sequence
 - Add new networks behind the last network in the Server List dialog, resulting in the user interface finally matching the application behavior
+- Minor cosmetic improvement to the status bar: all segments now have the same height
+- Status bar segments correctly react to font size changes
 
 Changes from 0.17 to 0.18
 - All nicks were blue when colored nicks are disabled with some setups

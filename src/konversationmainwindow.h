@@ -247,6 +247,7 @@ class KonversationMainWindow : public KMainWindow
 
         SSLLabel* m_sslLabel;
         QLabel* m_channelInfoLabel;
+        QLabel* m_lagInfoLabel;
         KSqueezedTextLabel* m_generalInfoLabel;
 
         Konversation::InsertCharDialog* m_insertCharDialog;
@@ -254,6 +255,6 @@ class KonversationMainWindow : public KMainWindow
 
         KPopupMenu* m_bookmarks;
         KonviBookmarkHandler* m_bookmarkHandler;
-	KonviSettingsDialog *m_settingsDialog;
+        KonviSettingsDialog *m_settingsDialog;
 };
 #endif

@@ -249,19 +249,25 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
     m_sslLabel->hide();
     QWhatsThis::add(m_sslLabel, i18n("All communication with the server is encrypted.  This makes it harder for someone to listen in on your communications."));
 
+    int statH = fontMetrics().height()+2;
+
+    m_generalInfoLabel = new KSqueezedTextLabel(i18n("Ready."), statusBar());
+    m_generalInfoLabel->setSizePolicy(QSizePolicy( QSizePolicy::Ignored, QSizePolicy::Fixed ));
+    m_generalInfoLabel->setMinimumWidth( 0 );
+    m_generalInfoLabel->setFixedHeight( statH );
+
     m_channelInfoLabel = new QLabel(statusBar(), "channelInfoLabel");
     QWhatsThis::add(m_channelInfoLabel, i18n("<qt>This shows the number of users in the channel, and the number of those that are operators (ops).<p>A channel operator is a user that has special privileges, such as the ability to kick and ban users, change the channel modes, make other users operators</qt>"));
 
-    m_generalInfoLabel = new KSqueezedTextLabel(i18n("Ready."), statusBar());
+    m_lagInfoLabel = new QLabel(i18n("Lag: Unknown"), statusBar(), "lagInfoLabel");
 
     statusBar()->addWidget(m_generalInfoLabel, 1, true);
     statusBar()->addWidget(m_channelInfoLabel, 0, true);
-    statusBar()->insertItem("lagometer", LagOMeter, 0, true);
-    statusBar()->addWidget(m_sslLabel, 0, true);
-    QWhatsThis::add(statusBar(), i18n("<qt>The status bar shows various messages, including any problems connecting to the server.  On the far right the current delay to the server is shown.  The delay is the time it takes for messages from you to reach the server, and from the server back to you.</qt>"));
+    statusBar()->addWidget(m_lagInfoLabel, 0, true);
 
-    // Show "Lag unknown"
-    resetLag();
+    statusBar()->addWidget(m_sslLabel, 0, true);
+
+    QWhatsThis::add(statusBar(), i18n("<qt>The status bar shows various messages, including any problems connecting to the server.  On the far right the current delay to the server is shown.  The delay is the time it takes for messages from you to reach the server, and from the server back to you.</qt>"));
 
     actionCollection()->setHighlightingEnabled(true);
     connect(actionCollection(), SIGNAL( actionStatusText( const QString & ) ),
@@ -271,7 +277,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
 
     connect( viewContainer,SIGNAL (currentChanged(QWidget*)),this,SLOT (changeView(QWidget*)) );
     connect( viewContainer, SIGNAL(closeRequest(QWidget*)), this, SLOT(closeView(QWidget*)));
-    connect(viewContainer, SIGNAL(contextMenu(QWidget*, const QPoint&)), this, SLOT(showTabContextMenu(QWidget*, const QPoint&)));
+    connect( viewContainer, SIGNAL(contextMenu(QWidget*, const QPoint&)), this, SLOT(showTabContextMenu(QWidget*, const QPoint&)));
 
     // set up system tray
     tray = new Konversation::TrayIcon(this);
@@ -774,6 +780,9 @@ void KonversationMainWindow::updateAppearance()
 {
   updateTabPlacement();
   setShowTabBarCloseButton(Preferences::showTabBarCloseButton());
+
+  int statH = fontMetrics().height()+2;
+  m_generalInfoLabel->setFixedHeight( statH );
 }
 
 void KonversationMainWindow::addDccPanel()
@@ -1367,8 +1376,8 @@ void KonversationMainWindow::updateLag(Server* lagServer,int msec)
         {
             lagString += i18n("Lag: %1 s").arg(msec / 1000);
         }
-
-        statusBar()->changeItem(lagString, LagOMeter);
+        
+        m_lagInfoLabel->setText(lagString);
     }
 }
 
@@ -1435,14 +1444,14 @@ void KonversationMainWindow::tooLongLag(Server* lagServer,int msec)
     {
         //show lag only of actual server
         QString lagString(i18n("Lag: %1 s").arg(msec/1000));
-        statusBar()->changeItem(lagString,LagOMeter);
+        m_lagInfoLabel->setText(lagString);
     }
 }
 
 // TODO: Make this server dependant
 void KonversationMainWindow::resetLag()
 {
-    statusBar()->changeItem(i18n("Lag: not known"),LagOMeter);
+    m_lagInfoLabel->setText(i18n("Lag: Unknown"));
 }
 
 void KonversationMainWindow::closeTab()

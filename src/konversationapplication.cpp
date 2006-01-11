@@ -126,11 +126,11 @@ int KonversationApplication::newInstance()
         mainWindow = new KonversationMainWindow();
         setMainWidget(mainWindow);
 
-        connect(mainWindow,SIGNAL (showQuickConnectDialog()), this, SLOT (openQuickConnectDialog()) );
-        connect(Preferences::self(), SIGNAL (updateTrayIcon()),mainWindow,SLOT (updateTrayIcon()) );
-        connect(this, SIGNAL (prefsChanged()), mainWindow, SLOT (slotPrefsChanged()) );
+        connect(mainWindow, SIGNAL(showQuickConnectDialog()), this, SLOT(openQuickConnectDialog()) );
+        connect(Preferences::self(), SIGNAL(updateTrayIcon()), mainWindow, SLOT(updateTrayIcon()) );
+        connect(this, SIGNAL(prefsChanged()), mainWindow, SLOT(slotPrefsChanged()) );
         // take care of user style changes, setting back colors and stuff
-        connect(KApplication::kApplication(),SIGNAL (appearanceChanged()),mainWindow,SLOT (updateAppearance()) );
+        connect(KApplication::kApplication(), SIGNAL(appearanceChanged()), mainWindow, SLOT(updateAppearance()));
 
         // apply GUI settings
         mainWindow->updateAppearance();
