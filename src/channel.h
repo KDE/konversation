@@ -118,6 +118,7 @@ class Channel : public ChatWindow
         void setTopic(const QString& nickname,const QString& topic);
         void setTopicAuthor(const QString& author);
 
+        void clearModeList();
         /** get the list of modes that this channel has - e.g. {+l,+s,-m}
          *  @return All the modes that this channel has
          */

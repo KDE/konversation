@@ -1671,6 +1671,36 @@ void Channel::updateMode(QString sourceNick, char mode, bool plus, const QString
     updateModeWidgets(mode,plus,parameter);
 }
 
+void Channel::clearModeList()
+{
+    m_modeList.clear();
+    modeT->setOn(0);
+    modeT->setDown(0);
+
+    modeN->setOn(0);
+    modeN->setDown(0);
+
+    modeS->setOn(0);
+    modeS->setDown(0);
+
+    modeI->setOn(0);
+    modeI->setDown(0);
+
+    modeP->setOn(0);
+    modeP->setDown(0);
+
+    modeM->setOn(0);
+    modeM->setDown(0);
+
+    modeK->setOn(0);
+    modeK->setDown(0);
+
+    modeL->setOn(0);
+    modeL->setDown(0);
+    limit->clear();
+    emit modesChanged();
+}
+
 void Channel::updateModeWidgets(char mode, bool plus, const QString &parameter)
 {
     ModeButton* widget=0;

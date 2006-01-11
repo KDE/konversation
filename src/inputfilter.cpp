@@ -467,6 +467,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
             */
             // Join the channel
             server->joinChannel(channelName, sourceHostmask);
+            server->getChannelByName(channelName)->clearModeList();
             // Request modes for the channel
             server->queue("MODE "+channelName);
             // Upon JOIN we're going to receive some NAMES input from the server which
@@ -694,6 +695,8 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 // This is the string the user will see
                 QString modesAre(QString::null);
                 QString message = i18n("Channel modes: ") + modeString;
+                kdDebug() << "channel: " << parameterList[1] << endl;
+                //server->getChannelByName(parameterList[1])->clearModeList();
 
                 for(unsigned int index=0;index<modeString.length();index++)
                 {
