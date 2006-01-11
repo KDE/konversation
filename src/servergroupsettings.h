@@ -69,6 +69,7 @@ namespace Konversation
 
             void setServerList(const ServerList& list);
             void addServer(const ServerSettings& settings) { m_serverList.append(settings); }
+            void removeServer(const ServerSettings settings);
             ServerList serverList(bool hideQuickServer=false) const;
             ServerSettings serverByIndex(unsigned int index) const;
 
@@ -91,9 +92,6 @@ namespace Konversation
             void setAutoConnectEnabled(bool enabled) { m_autoConnect = enabled; }
             bool autoConnectEnabled() const { return m_autoConnect; }
 
-            void setGroup(const QString& group) { m_group = group; }
-            QString group() const { return m_group; }
-
             int id() const { return m_id; }
 
             void setChannelHistory(const ChannelList& list) { m_channelHistory = list; }
@@ -104,7 +102,11 @@ namespace Konversation
             void setNotificationsEnabled(bool enable) { m_enableNotifications = enable; }
             bool enableNotifications() const { return m_enableNotifications; }
 
+            void setExpanded(bool enable) { m_expanded = enable; }
+            bool expanded() const { return m_expanded; }
+
         private:
+            static int s_availableId;
             QString m_name;
             ServerList m_serverList;
             ServerList m_quickServerList;
@@ -115,9 +117,8 @@ namespace Konversation
             bool m_autoConnect;
             QString m_group;
             int m_id;
-            static int s_availableId;
-
             bool m_enableNotifications;
+            bool m_expanded;
     };
 
 }

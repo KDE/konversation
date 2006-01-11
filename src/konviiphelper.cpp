@@ -32,7 +32,6 @@ KonviIpHelper::KonviIpHelper(const QString target)
 
 KonviIpHelper::~KonviIpHelper()
 {
-
 }
 
 void KonviIpHelper::parseTarget(const QString& target)

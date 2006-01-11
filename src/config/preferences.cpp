@@ -80,6 +80,7 @@ Preferences::Preferences()
     Konversation::ChannelSettings channel;
     channel.setName("#kde");
     serverGroup->addChannel(channel);
+    serverGroup->setExpanded(false);
     mServerGroupList.append(serverGroup);
     QStringList quickButtons=QStringList() << "Op,/OP %u%n"
                                            << "DeOp,/DEOP %u%n"

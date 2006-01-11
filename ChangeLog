@@ -58,6 +58,13 @@ Changes from 0.18 to 0.19
 - Implement '/unignore <user 1> <user 2> ... <user n>'
 - Add warning dialogs for closing of channel and query tabs
 - Disable overwrite mode for irc input box
+- Cleaned out legacy preferences parsing code
+- Prevent addition of nameless networks
+- Redesigned the Server List dialog: now displays servers as children of networks; networks retain expanded/collapsed state
+- Improved behavior of button actions in the Server List dialog
+- Improved error messages on deletion in the Server List dialog
+- Fixed Server List dialog sorting to match actual order of addition and thus auto-connect sequence
+- Add new networks behind the last network in the Server List dialog, resulting in the user interface finally matching the application behavior
 
 Changes from 0.17 to 0.18
 - All nicks were blue when colored nicks are disabled with some setups

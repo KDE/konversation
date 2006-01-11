@@ -43,6 +43,7 @@ namespace Konversation
     {
         m_id = -1;
         m_identitiesNeedsUpdate = false;
+        m_editedServer = false;
 
         QFrame* mainWidget = plainPage();
         QGridLayout* mainLayout = new QGridLayout(mainWidget, 1, 2, 0, spacingHint());
@@ -52,11 +53,6 @@ namespace Konversation
         m_nameEdit = new QLineEdit(mainWidget);
         QWhatsThis::add(m_nameEdit, i18n("Enter the name of the Network here. You may create as many entries in the Server List screen with the same Network as you like."));
         nameLbl->setBuddy(m_nameEdit);
-
-        QLabel* groupLbl = new QLabel(i18n("&Group:"), mainWidget);
-        m_groupCBox = new QComboBox(true, mainWidget);
-        QWhatsThis::add(m_groupCBox, i18n("Optional. If you enter something here, all the Networks with the same Group will be listed together in the Server List screen."));
-        groupLbl->setBuddy(m_groupCBox);
 
         QLabel* identityLbl = new QLabel(i18n("&Identity:"), mainWidget);
         m_identityCBox = new QComboBox(mainWidget);
@@ -153,8 +149,6 @@ namespace Konversation
 
         mainLayout->addWidget(nameLbl, 0, 0);
         mainLayout->addMultiCellWidget(m_nameEdit, 0, 0, 1, 2);
-        mainLayout->addWidget(groupLbl, 1, 0);
-        mainLayout->addMultiCellWidget(m_groupCBox, 1, 1, 1, 2);
         mainLayout->addWidget(identityLbl, 2, 0);
         mainLayout->addWidget(m_identityCBox, 2, 1);
         mainLayout->addWidget(editIdentityBtn, 2, 2);
@@ -179,8 +173,8 @@ namespace Konversation
     void ServerGroupDialog::setServerGroupSettings(ServerGroupSettingsPtr settings)
     {
         m_id = settings->id();
+        m_expanded = settings->expanded();
         m_nameEdit->setText(settings->name());
-        m_groupCBox->setCurrentText(settings->group());
         m_identityCBox->setCurrentText(settings->identity()->getName());
         m_commandEdit->setText(settings->connectCommands());
         m_autoConnectCBox->setChecked(settings->autoConnectEnabled());
@@ -207,7 +201,6 @@ namespace Konversation
     {
         ServerGroupSettingsPtr settings = new ServerGroupSettings(m_id);
         settings->setName(m_nameEdit->text());
-        settings->setGroup(m_groupCBox->currentText());
         QValueList<IdentityPtr> identities = Preferences::identityList();
         settings->setIdentityId(identities[m_identityCBox->currentItem()]->id());
         settings->setConnectCommands(m_commandEdit->text());
@@ -215,14 +208,26 @@ namespace Konversation
         settings->setServerList(m_serverList);
         settings->setChannelList(m_channelList);
         settings->setChannelHistory(m_channelHistory);
+        settings->setExpanded(m_expanded);
 
         return settings;
     }
 
-    void ServerGroupDialog::setAvailableGroups(const QStringList& groups)
+    ServerSettings ServerGroupDialog::editedServer()
     {
-        m_groupCBox->clear();
-        m_groupCBox->insertStringList(groups, 1);
+        if (m_editedServer && m_editedServerIndex < m_serverList.count())
+        {
+            return m_serverList[m_editedServerIndex];
+        }
+
+        return ServerSettings("");
+    }
+
+    int ServerGroupDialog::execAndEditServer(ServerSettings server)
+    {
+        show();
+        editServer(server);
+        return exec();
     }
 
     void ServerGroupDialog::addServer()
@@ -256,14 +261,29 @@ namespace Konversation
         }
     }
 
+    void ServerGroupDialog::editServer(ServerSettings server)
+    {
+        // Track the server the Server List dialog told us to edit
+        // and find out which server to select in the listbox
+        m_editedServer = true;
+        m_editedServerIndex = m_serverList.findIndex(server);
+        m_serverLBox->setCurrentItem(m_editedServerIndex);
+
+        editServer();
+    }
+
     void ServerGroupDialog::deleteServer()
     {
         uint current = m_serverLBox->currentItem();
 
-        if(current < m_serverList.count())
+        if (current < m_serverList.count())
         {
             m_serverList.remove(m_serverList.at(current));
             m_serverLBox->removeItem(current);
+
+            // Track the server the Server List dialog told us to edit
+            if (m_editedServer && m_editedServerIndex==current)
+                m_editedServer = false;
         }
 
         updateServerArrows();
@@ -282,7 +302,7 @@ namespace Konversation
     {
         uint current = m_serverLBox->currentItem();
 
-        if(current > 0)
+        if (current > 0)
         {
             ServerSettings server = m_serverList[current];
             m_serverLBox->removeItem(current);
@@ -291,6 +311,10 @@ namespace Konversation
             ServerList::iterator it = m_serverList.remove(m_serverList.at(current));
             --it;
             m_serverList.insert(it, server);
+
+            // Track the server the Server List dialog told us to edit
+            if (m_editedServer && m_editedServerIndex==current)
+                m_editedServerIndex = current - 1;
         }
 
         updateServerArrows();
@@ -300,7 +324,7 @@ namespace Konversation
     {
         uint current = m_serverLBox->currentItem();
 
-        if(current < (m_serverList.count() - 1))
+        if (current < (m_serverList.count() - 1))
         {
             ServerSettings server = m_serverList[current];
             m_serverLBox->removeItem(current);
@@ -309,6 +333,10 @@ namespace Konversation
             ServerList::iterator it = m_serverList.remove(m_serverList.at(current));
             ++it;
             m_serverList.insert(it, server);
+
+            // Track the server the Server List dialog told us to edit
+            if (m_editedServer && m_editedServerIndex==current)
+                m_editedServerIndex = current + 1;
         }
 
         updateServerArrows();
@@ -426,7 +454,11 @@ namespace Konversation
 
     void ServerGroupDialog::slotOk()
     {
-        if(m_serverList.count() == 0)
+        if (m_nameEdit->text().isEmpty())
+        {
+            KMessageBox::error(this, i18n("The network name is required."));
+        }
+        else if (m_serverList.count() == 0)
         {
             KMessageBox::error(this, i18n("You need to add at least one server to the network."));
         }

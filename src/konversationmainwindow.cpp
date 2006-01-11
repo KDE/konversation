@@ -1272,6 +1272,7 @@ void KonversationMainWindow::openServerList()
         m_serverListDialog = new Konversation::ServerListDialog(this);
         KonversationApplication *konvApp = static_cast<KonversationApplication *>(KApplication::kApplication());
         connect(m_serverListDialog, SIGNAL(connectToServer(int)), konvApp, SLOT(connectToServer(int)));
+        connect(m_serverListDialog, SIGNAL(connectToServer(int, Konversation::ServerSettings)), konvApp, SLOT(connectToServer(int, Konversation::ServerSettings)));
     }
 
     m_serverListDialog->show();
@@ -1732,7 +1733,7 @@ void KonversationMainWindow::openIdentitiesDialog()
 
     if((dlg.exec() == KDialog::Accepted) && m_serverListDialog)
     {
-        m_serverListDialog->updateServerGroupList();
+        m_serverListDialog->updateServerList();
     }
 }
 

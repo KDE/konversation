@@ -50,7 +50,6 @@ namespace Konversation
         : KShared()
     {
         setName(settings.name());
-        setGroup(settings.group());
         setServerList(settings.serverList());
         setIdentityId(settings.identityId());
         setChannelList(settings.channelList());
@@ -91,6 +90,21 @@ namespace Konversation
     {
         m_serverList.clear();
         m_serverList = list;
+    }
+
+    void ServerGroupSettings::removeServer(const ServerSettings settings)
+    {
+        Konversation::ServerList::iterator it;
+
+        for (it = m_serverList.begin(); it != m_serverList.end(); ++it)
+        {
+            if ((*it)==settings)
+            {
+                m_serverList.remove((*it));
+
+                return;
+            }
+        }
     }
 
     ServerSettings ServerGroupSettings::serverByIndex(unsigned int index) const

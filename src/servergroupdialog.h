@@ -35,7 +35,9 @@ namespace Konversation
             void setServerGroupSettings(ServerGroupSettingsPtr settings);
             ServerGroupSettingsPtr serverGroupSettings();
 
-            void setAvailableGroups(const QStringList& groups);
+            ServerSettings editedServer();
+
+            int execAndEditServer(ServerSettings server);
 
             bool identitiesNeedsUpdate() const { return m_identitiesNeedsUpdate; }
 
@@ -44,6 +46,7 @@ namespace Konversation
 
             void addServer();
             void editServer();
+            void editServer(ServerSettings server);
             void deleteServer();
             void updateServerArrows();
             void moveServerUp();
@@ -60,7 +63,6 @@ namespace Konversation
 
         private:
             QLineEdit* m_nameEdit;
-            QComboBox* m_groupCBox;
             QComboBox* m_identityCBox;
             QLineEdit* m_commandEdit;
             QListBox* m_serverLBox;
@@ -73,10 +75,14 @@ namespace Konversation
             QToolButton* m_downServerBtn;
             QToolButton* m_upChannelBtn;
             QToolButton* m_downChannelBtn;
+            bool m_expanded;
 
             int m_id;
 
             bool m_identitiesNeedsUpdate;
+
+            bool m_editedServer;
+            uint m_editedServerIndex;
     };
 
 }

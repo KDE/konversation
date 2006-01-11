@@ -138,7 +138,7 @@ class KonversationApplication : public KUniqueApplication
 
     public slots:
         Server* connectToServerGroup(const QString& serverGroup);
-        Server* connectToServer(int number);
+        Server* connectToServer(int serverGroupId, Konversation::ServerSettings quickServer = "");
         void quickConnectToServer(const QString& hostName,
             const QString& port = "6667",
             const QString& channel="",

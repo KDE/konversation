@@ -44,6 +44,7 @@ namespace Konversation
             int m_port;
             QString m_password;
             bool m_SSLEnabled;
+
     };
 
 }

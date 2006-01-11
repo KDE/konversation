@@ -27,24 +27,20 @@ namespace Konversation
     class ServerListItem : public KListViewItem
     {
         public:
-            ServerListItem(QListViewItem* parent, int serverId, const QString& serverGroup,
-                const QString& identity, const QString& channels, bool autoConnect);
-            ServerListItem(QListView* parent, int serverId, const QString& serverGroup,
-                const QString& identity, const QString& channels, bool autoConnect);
+            ServerListItem(KListView* parent, QListViewItem* after, int serverGroupId, const QString& serverGroup,
+                const QString& identity, const QString& channels);
+            ServerListItem(QListViewItem* parent, QListViewItem* after, int serverGroupId, const QString& name, const ServerSettings& server);
 
-            int serverId() const { return m_serverId; }
-            bool autoConnect() const { return m_autoConnect; }
-            void setAutoConnect(bool ac);
-            //      virtual void paintCell(QPainter* p, const QColorGroup& cg, int column, int width, int align);
-
-            virtual int rtti() const { return 10001; }
-
-        protected:
-            virtual void activate();
+            int serverGroupId() const { return m_serverGroupId; }
+            ServerSettings server() const { return m_server; }
+            QString name() const { return m_name; }
+            bool isServer() const { return m_isServer; }
 
         private:
-            int m_serverId;
-            bool m_autoConnect;
+            int m_serverGroupId;
+            QString m_name;
+            ServerSettings m_server;
+            bool m_isServer;
     };
 
     class ServerListDialog : public KDialogBase
@@ -55,27 +51,26 @@ namespace Konversation
             ~ServerListDialog();
 
         public slots:
-            void updateServerGroupList();
+            void updateServerList();
 
             signals:
             void connectToServer(int serverId);
+            void connectToServer(int serverId, Konversation::ServerSettings quickServer);
 
         protected slots:
             virtual void slotOk();
-            virtual void slotApply();
 
             void slotAdd();
             void slotEdit();
             void slotDelete();
 
+            void slotSetGroupExpanded(QListViewItem* item);
+            void slotSetGroupCollapsed(QListViewItem* item);
+
             void updateButtons();
 
         protected:
-            QListViewItem* findBranch(QString name, bool generate = true);
-            QStringList createGroupList();
-                                                  /// Adds a list item to the list view
-            QListViewItem* addListItem(ServerGroupSettingsPtr serverGroup);
-
+            QListViewItem* insertServerGroup(ServerGroupSettingsPtr serverGroup, QListViewItem* networkItem);
             void addServerGroup(ServerGroupSettingsPtr serverGroup);
 
         private:
@@ -85,8 +80,9 @@ namespace Konversation
             QPushButton* m_delButton;
 
             bool m_editedItem;
-            int m_lastEditedItemId;
-            QListViewItem* m_lastEditedItemPtr;
+            int m_editedServerGroupId;
+            ServerSettings m_editedServer;
+            QListViewItem* m_editedItemPtr;
     };
 }
 #endif

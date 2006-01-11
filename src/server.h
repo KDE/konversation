@@ -62,7 +62,7 @@ class Server : public QObject
         /** Constructor used for connecting to a known server.
          *  Read in the prefrences to get all the details about the server.
          */
-        Server(KonversationMainWindow* mainWindow, int number);
+        Server(KonversationMainWindow* mainWindow, int serverGroupId, bool clearQuickServerList = true);
 
         /** Constructor used for a 'fast connect' to a server.
          *  The details are passed in.  Used for example when the user does "/server irc.somewhere.net"

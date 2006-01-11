@@ -55,14 +55,17 @@
 
 #include <config.h>
 
-Server::Server(KonversationMainWindow* mainWindow, int id)
+Server::Server(KonversationMainWindow* mainWindow, int serverGroupId, bool clearQuickServerList)
 {
-    m_serverGroup = Preferences::serverGroupById(id);
-    m_serverGroup->clearQuickServerList();        // In case we already did a quick connect to this network
+    m_serverGroup = Preferences::serverGroupById(serverGroupId);
+
+    if (clearQuickServerList)
+        m_serverGroup->clearQuickServerList(); // In case we already did a quick connect to this network
+
     bot = getIdentity()->getBot();
     botPassword = getIdentity()->getPassword();
 
-    init(mainWindow, getIdentity()->getNickname(0),"");
+    init (mainWindow, getIdentity()->getNickname(0),"");
 }
 
 Server::Server(KonversationMainWindow* mainWindow,const QString& hostName,const QString& port,
@@ -82,7 +85,9 @@ const QString& channel,const QString& _nick, QString password,const bool& useSSL
     {
         m_serverGroup = serverGroupOfServer;
         m_serverGroup->clearQuickServerList();
-	m_serverGroup->setQuickServerList(m_quickServer);
+        m_serverGroup->setQuickServerList(m_quickServer);
+
+        kdDebug() << "Identity: " << serverGroupOfServer->name() << endl;
     }
     else
     {
