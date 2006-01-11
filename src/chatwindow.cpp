@@ -446,19 +446,19 @@ void ChatWindow::activateTabNotification(Konversation::TabNotifyType type)
     switch(type)
     {
         case Konversation::tnfNick:
-            colorString = "#FF0000";
+            colorString = Preferences::highlightNickColor().name();
             break;
 
         case Konversation::tnfHighlight:
-            colorString = "#FF0000";
+            colorString = "#55c8c0";
             break;
 
         case Konversation::tnfNormal:
-            colorString = "#008000";
+            colorString = "#0000ff";
             break;
 
         case Konversation::tnfControl:
-            colorString = "#000000";
+            colorString = "#4eb959";
             break;
 
         default:
