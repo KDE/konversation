@@ -340,6 +340,21 @@ namespace Konversation
             i18n("Failed to connect to %1").arg(server));
     }
 
+    void NotificationHandler::channelJoin(ChatWindow* chatWin, const QString& channel)
+    {
+        if(!chatWin || !chatWin->notificationsEnabled())
+        {
+            return;
+        }
+
+        if(Preferences::disableNotifyWhileAway() && chatWin->getServer()->isAway())
+        {
+            return;
+        }
+
+        KNotifyClient::event(winId(), "channelJoin", i18n("You have joined %1.").arg(channel));
+    }
+
     QString NotificationHandler::addLineBreaks(const QString& string)
     {
         QString cutup = string;

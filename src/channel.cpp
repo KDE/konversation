@@ -1039,8 +1039,8 @@ void Channel::joinNickname(ChannelNickPtr channelNick)
         m_ownChannelNick = channelNick;
         connect(m_ownChannelNick, SIGNAL(channelNickChanged()), SLOT(refreshModeButtons()));
         refreshModeButtons();
-        KWin::demandAttention(KonversationApplication::instance()->getMainWindow()->winId());
-
+        KonversationApplication* konv_app = static_cast<KonversationApplication*>(KApplication::kApplication());
+        konv_app->notificationHandler()->channelJoin(this,getName());
     }
     else
     {

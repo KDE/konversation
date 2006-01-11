@@ -44,6 +44,7 @@ namespace Konversation
             void dccChat(ChatWindow* chatWin, const QString& nick);
             void highlight(ChatWindow* chatWin, const QString& fromNick, const QString& message);
             void connectionFailure(ChatWindow* chatWin, const QString& server);
+            void channelJoin(ChatWindow* chatWin, const QString& channel);
 
         protected:
             void startTrayNotification(ChatWindow* chatWin);

@@ -67,6 +67,7 @@ Changes from 0.18 to 0.19
 - Add new networks behind the last network in the Server List dialog, resulting in the user interface finally matching the application behavior
 - Minor cosmetic improvement to the status bar: all segments now have the same height
 - Status bar segments correctly react to font size changes
+- Changed hard-coded channel join taskbar notification into a configurable notification event
 
 Changes from 0.17 to 0.18
 - All nicks were blue when colored nicks are disabled with some setups

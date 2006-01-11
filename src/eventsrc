@@ -601,6 +601,11 @@ Comment[pt]=Não foi possível ligar ao servidor
 Comment[pt_BR]=Não foi possível ligar ao servidor
 default_presentation=64
 
+[channelJoin]
+Name=You joined a channel
+Comment=You joined a channel
+default_presentation=64
+
 [dccChat]
 Name=Dcc Chat
 Name[bg]=Dcc чат
