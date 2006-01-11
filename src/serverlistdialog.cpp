@@ -84,6 +84,7 @@ namespace Konversation
         layout->setRowStretch(3, 10);
 
         m_editedItem = false;
+        m_editedServer = ServerSettings("");
 
         // Load server list
         updateServerList();
@@ -186,6 +187,7 @@ namespace Konversation
 
                     m_editedItem = true;
                     m_editedServerGroupId = serverGroup->id();
+                    m_editedServer = ServerSettings("");
 
                     *serverGroup = *(dlg.serverGroupSettings());
                     updateServerList();

@@ -816,6 +816,12 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 break;
             }
             // Topic set messages
+            case RPL_NOTOPIC:
+            {
+                server->appendMessageToFrontmost(i18n("TOPIC"),i18n("The channel %1 has no topic set.").arg(parameterList[1]).arg(parameterList[2]));
+
+                break;
+            }
             case RPL_TOPIC:
             {
                 QString topic = Konversation::removeIrcMarkup(trailing);
@@ -1569,6 +1575,12 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 {
                     emit notifyResponse("###");
                 }
+                break;
+            }
+            case ERR_UNAVAILRESOURCE:
+            {
+                server->appendMessageToFrontmost(i18n("Error"),i18n("%1 is currently unavailable.").arg(parameterList[1]));
+
                 break;
             }
             case RPL_HIGHCONNECTCOUNT:
