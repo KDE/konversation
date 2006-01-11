@@ -695,8 +695,6 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 // This is the string the user will see
                 QString modesAre(QString::null);
                 QString message = i18n("Channel modes: ") + modeString;
-                kdDebug() << "channel: " << parameterList[1] << endl;
-                //server->getChannelByName(parameterList[1])->clearModeList();
 
                 for(unsigned int index=0;index<modeString.length();index++)
                 {
