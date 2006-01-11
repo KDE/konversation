@@ -376,10 +376,16 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
     {
         if(!isIgnore(prefix,Ignore::Notice))
         {
+            // This was once added to handle CABAB IDENTIFY-MSG, but seems to
+            // be unnecessary as CTCP NOTICE is not prefixed with -/+ - and
+            // the conditional breaks PING replies on Freenode due to removing
+            // the 0x01 ...
+            /*
             if(server->identifyMsg())
             {
                 trailing = trailing.mid(1);
             }
+            */
 
             // Channel notice?
             if(isAChannel(parameterList[0]))
@@ -405,10 +411,17 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                     {
                         int dateArrived=QDateTime::currentDateTime().toTime_t();
                         int dateSent=reply.toInt();
+                        int time = dateArrived-dateSent;
+                        QString unit = "seconds";
+
+                        if (time==1)
+                            unit = "second";
 
                         server->appendMessageToFrontmost(i18n("CTCP"),
-                            i18n("Received CTCP-PING reply from %1: %2 seconds")
-                            .arg(sourceNick).arg(dateArrived-dateSent)
+                            i18n("Received CTCP-PING reply from %1: %2 %3.")
+                            .arg(sourceNick)
+                            .arg(time)
+                            .arg(unit)
                             );
                     }
                     // all other ctcp replies get a general message
