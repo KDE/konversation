@@ -1563,11 +1563,6 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 }
                 break;
             }
-            case ERR_UNKNOWNCOMMAND:
-            {
-                server->appendMessageToFrontmost(command,parameterList.join(" ").section(' ',1) + " " + trailing);
-                break;
-            }
             case ERR_NOSUCHSERVER:
             {                                     //Some servers don't know their name, so they return an error instead of the PING data
                 if (getLagMeasuring() && trailing.startsWith(prefix))
@@ -1592,6 +1587,24 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 {
                     server->enableIndentifyMsg(true);
                 }
+                break;
+            }
+            case ERR_UNKNOWNCOMMAND:
+            {
+                server->appendMessageToFrontmost(i18n("Error"),i18n("%1: Unknown command.").arg(parameterList[1]));
+
+                break;
+            }
+            case ERR_NOTREGISTERED:
+            {
+                server->appendMessageToFrontmost(i18n("Error"),i18n("Not registered."));
+
+                break;
+            }
+            case ERR_NEEDMOREPARAMS:
+            {
+                server->appendMessageToFrontmost(i18n("Error"),i18n("%1: This command requires more parameters.").arg(parameterList[1]));
+
                 break;
             }
             // FALLTHROUGH to default to let the error display otherwise
