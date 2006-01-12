@@ -525,12 +525,10 @@ void IRCView::append(const QString& nick,const QString& message)
     m_tabNotification = Konversation::tnfNormal;
 
     if(nick != m_server->getNickname())
-    {
-        bool linkNicks = Preferences::useClickableNicks();
-        if(linkNicks)
-            nickLine = "<a href=\"#" + nick + "\">%2</a>";
         KonversationApplication::instance()->increaseKarma(nick,1);
-    }
+
+    if(Preferences::useClickableNicks())
+        nickLine = "<a href=\"#" + nick + "\">%2</a>";
 
     if(Preferences::useBoldNicks())
         nickLine = "<b>"+nickLine+"</b>";
@@ -603,12 +601,10 @@ void IRCView::appendQuery(const QString& nick,const QString& message)
     m_tabNotification = Konversation::tnfNormal;
 
     if(nick != m_server->getNickname())
-    {
-        bool linkNicks = Preferences::useClickableNicks();
-        if(linkNicks)
-            nickLine = "<a href=\"#" + nick + "\">%2</a>";
         KonversationApplication::instance()->increaseKarma(nick,2);
-    }
+
+    if(Preferences::useClickableNicks())
+        nickLine = "<a href=\"#" + nick + "\">%2</a>";
 
     if(Preferences::useBoldNicks())
         nickLine = "<b>"+nickLine+"</b>";
@@ -663,12 +659,10 @@ void IRCView::appendAction(const QString& nick,const QString& message)
     m_tabNotification = Konversation::tnfNormal;
 
     if(nick != m_server->getNickname())
-    {
-        bool linkNicks = Preferences::useClickableNicks();
-        if(linkNicks)
-            nickLine = "<a href=\"#" + nick + "\">%2</a>";
         KonversationApplication::instance()->increaseKarma(nick,1);
-    }
+
+    if(Preferences::useClickableNicks())
+        nickLine = "<a href=\"#" + nick + "\">%2</a>";
 
     if(Preferences::useBoldNicks())
         nickLine = "<b>"+nickLine+"</b>";
