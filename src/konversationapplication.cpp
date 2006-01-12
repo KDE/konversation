@@ -467,8 +467,6 @@ void KonversationApplication::readOptions()
 
             config->setGroup(identityList[index]);
 
-            QString n=config->readEntry("Name");
-
             newIdentity->setName(config->readEntry("Name"));
 
             newIdentity->setIdent(config->readEntry("Ident"));
