@@ -1,7 +1,7 @@
 //
 // C++ Implementation: highlightconfigcontroller
 //
-// Description: 
+// Description:
 //
 //
 // Author: Dario Abatianni <eisfuchs@tigress.com>, (C) 2003, 2005
@@ -41,6 +41,9 @@ HighlightConfigController::HighlightConfigController(Highlight_Config* highlight
   m_highlightPage=highlightPage;
   populateHighlightList();
 
+  // make list accept drag & drop
+  m_highlightPage->highlightListView->setSorting(-1);
+
   // This code was copied from KNotifyWidget::openSoundDialog() (knotifydialog.cpp) [it's under LGPL v2]
   // find the first "sound"-resource that contains files
   QStringList soundDirs = KGlobal::dirs()->findDirs("data", "konversation/sounds");
@@ -65,11 +68,12 @@ HighlightConfigController::HighlightConfigController(Highlight_Config* highlight
 
   connect(m_highlightPage->highlightListView,SIGNAL (selectionChanged(QListViewItem*)),this,SLOT (highlightSelected(QListViewItem*)) );
   connect(m_highlightPage->highlightListView,SIGNAL (clicked(QListViewItem*)),this,SLOT (highlightSelected(QListViewItem*)) );
-  
+  connect(m_highlightPage->highlightListView,SIGNAL (moved()),this,SIGNAL (modified()) );
+
   connect(m_highlightPage->patternInput,SIGNAL (textChanged(const QString&)),this,SLOT (highlightTextChanged(const QString&)) );
   connect(m_highlightPage->patternButton,SIGNAL (clicked()),this,SLOT(highlightTextEditButtonClicked()));
   connect(m_highlightPage->patternColor,SIGNAL (activated(const QColor&)),this,SLOT (highlightColorChanged(const QColor&)) );
-  
+
   connect(m_highlightPage->soundURL, SIGNAL(textChanged(const QString&)), this, SLOT(soundURLChanged(const QString&)));
   connect(m_highlightPage->soundPlayBtn, SIGNAL(clicked()), this, SLOT(playSound()));
 
