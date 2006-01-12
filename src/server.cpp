@@ -1034,7 +1034,7 @@ void Server::processIncomingData()
         m_processingIncoming = true;
         QString front(inputBuffer.front());
         inputBuffer.pop_front();
-        if(rawLog) 
+        if(rawLog)
         {
             QString toRaw = front;
             rawLog->appendRaw("&gt;&gt; " + toRaw.replace("&","&amp;").replace("<","&lt;").replace(">","&gt;"));
@@ -2676,6 +2676,12 @@ void Server::removeNickFromServer(const QString &nickname,const QString &reason)
         if( channel->getNickByName( nickname ) )
             removeNickFromChannel(channel->getName(),nickname,reason,true);
         channel=nextchannel;
+    }
+
+    Query* query=getQueryByName(nickname);
+    if(query)
+    {
+      query->quitNick(reason);
     }
 
     // Delete the nick from all channels and then delete the nickinfo,

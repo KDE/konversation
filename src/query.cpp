@@ -484,4 +484,17 @@ void Query::emitUpdateInfo()
     emit updateInfo(info);
 }
 
+// show quit message of nick if we see it
+void Query::quitNick(const QString& reason)
+{
+  QString displayReason;
+
+  if(!reason.isEmpty())
+  {
+    displayReason=" ("+reason+")";
+  }
+
+  appendCommandMessage(i18n("Quit"),i18n("%1 has left this server%2.").arg(getName()).arg(displayReason),false);
+}
+
 #include "query.moc"
