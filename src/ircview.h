@@ -127,6 +127,7 @@ class IRCView : public KTextBrowser
         bool contextMenu(QContextMenuEvent* ce);
 
         void setupNickPopupMenu();
+        void setupQueryPopupMenu();
 
         QChar::Direction basicDirection(const QString &string);
 

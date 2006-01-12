@@ -14,7 +14,6 @@
 #include <qhbox.h>
 #include <qcheckbox.h>
 #include <qlabel.h>
-#include <qpopupmenu.h>
 #include <qlineedit.h>
 #include <qtextcodec.h>
 #include <qtooltip.h>
@@ -27,6 +26,7 @@
 #include <kmessagebox.h>
 #include <kiconloader.h>
 #include <kstringhandler.h>
+#include <kpopupmenu.h>
 
 #include "channel.h"
 #include "query.h"
@@ -36,11 +36,6 @@
 #include "ircview.h"
 #include "ircviewbox.h"
 #include "common.h"
-
-const int POPUP_SEND=0xfd;
-const int POPUP_WHOIS =0xfe;
-const int POPUP_IGNORE=0xff;
-
 
 Query::Query(QWidget* parent) : ChatWindow(parent)
 {
@@ -72,16 +67,20 @@ Query::Query(QWidget* parent) : ChatWindow(parent)
     setTextView(ircBox->ircView());               // Server will be set later in setServer();
     textView->setAcceptDrops(true);
     connect(textView,SIGNAL(filesDropped(const QStrList&)),this,SLOT(filesDropped(const QStrList&)));
+    connect(textView,SIGNAL(popupCommand(int)),this,SLOT(popup(int)));
 
-    // link "Whois" and "Ignore" menu items into ircview popup
+    // link "Whois", "Ignore" ... menu items into ircview popup
     QPopupMenu* popup=textView->getPopup();
-    popup->insertItem(i18n("Whois"),POPUP_WHOIS); // TODO: let the ircview give the id back rather than specifying it ourselves?
-    popup->insertItem(i18n("Ignore"),POPUP_IGNORE);
+    popup->insertItem(i18n("Whois"),Konversation::Whois);
+    popup->insertItem(i18n("Version"),Konversation::Version);
+    popup->insertItem(i18n("Ping"),Konversation::Ping);
+    popup->insertSeparator();
     if (kapp->authorize("allow_downloading"))
     {
-        popup->insertItem(SmallIcon("2rightarrow"),i18n("Send &File..."),POPUP_SEND);
+        popup->insertItem(SmallIcon("2rightarrow"),i18n("Send &File..."),Konversation::DccSend);
     }
-
+    popup->insertSeparator();
+    popup->insertItem(i18n("Ignore"),Konversation::IgnoreNick);
 
     // This box holds the input line
     QHBox* inputBox=new QHBox(this, "input_log_box");
@@ -288,11 +287,17 @@ void Query::showEvent(QShowEvent*)
 
 void Query::popup(int id)
 {
-    if(id == POPUP_WHOIS)
-        sendQueryText(Preferences::commandChar()+"WHOIS "+getName());
-    else if(id == POPUP_IGNORE)
+    // get the nickname to the context menu popup
+    QString name=textView->getContextNick();
+    // if there was none (right click into the text view) assume query partner
+    if(name.isEmpty()) name=getName();
+
+    // act accordingly
+    if(id == Konversation::Whois)
+        sendQueryText(Preferences::commandChar()+"WHOIS "+name+" "+name);
+    else if(id == Konversation::IgnoreNick)
     {
-        sendQueryText(Preferences::commandChar()+"IGNORE -ALL "+getName()+"!*");
+        sendQueryText(Preferences::commandChar()+"IGNORE -ALL "+name+"!*");
         int rc=KMessageBox::questionYesNo(this,
             i18n("Do you want to close this query after ignoring this nickname?"),
             i18n("Close This Query"),
@@ -302,12 +307,19 @@ void Query::popup(int id)
 
         if(rc==KMessageBox::Yes) closeYourself();
     }
-    else if(id == POPUP_SEND)
+    else if(id == Konversation::DccSend)
     {
-         sendQueryText(Preferences::commandChar()+"DCC SEND "+getName());
+         sendQueryText(Preferences::commandChar()+"DCC SEND "+name);
     }
+    else if(id == Konversation::Version)
+        sendQueryText(Preferences::commandChar()+"CTCP "+name+" VERSION");
+    else if(id == Konversation::Ping)
+        sendQueryText(Preferences::commandChar()+"CTCP "+name+" PING");
     else
         kdDebug() << "Query::popup(): Popup id " << id << " does not belong to me!" << endl;
+
+    // delete context menu nickname
+    textView->clearContextNick();
 }
 
 void Query::sendFileMenu()

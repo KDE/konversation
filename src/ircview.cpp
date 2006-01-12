@@ -107,8 +107,6 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent)
         action->plug(m_popup);
     }
 
-    setupNickPopupMenu();
-
     connect(this, SIGNAL(highlighted(const QString&)), this, SLOT(highlightedSlot(const QString&)));
     connect(this, SIGNAL(linkClicked(const QString&)), this, SLOT(urlClickSlot(const QString&)));
 }
@@ -1092,6 +1090,24 @@ void IRCView::setupNickPopupMenu()
     connect(m_kickban, SIGNAL(activated(int)), this, SIGNAL(popupCommand(int)));
 }
 
+void IRCView::setupQueryPopupMenu()
+{
+    m_nickPopup = new KPopupMenu(this,"query_context_menu");
+    m_popupId= m_nickPopup->insertTitle(m_currentNick);
+    m_nickPopup->insertItem(i18n("Whois"),Konversation::Whois);
+    m_nickPopup->insertItem(i18n("Version"),Konversation::Version);
+    m_nickPopup->insertItem(i18n("Ping"),Konversation::Ping);
+    m_nickPopup->insertSeparator();
+    if (kapp->authorize("allow_downloading"))
+    {
+        m_nickPopup->insertItem(SmallIcon("2rightarrow"),i18n("Send &File..."),Konversation::DccSend);
+    }
+    m_nickPopup->insertSeparator();
+    m_nickPopup->insertItem(i18n("Ignore"),Konversation::IgnoreNick);
+
+    connect(m_nickPopup, SIGNAL(activated(int)), this, SIGNAL(popupCommand(int)));
+}
+
 void IRCView::search()
 {
     /*    m_caseSensitive = false;
@@ -1298,6 +1314,11 @@ QString IRCView::timeStamp()
 void IRCView::setChatWin(ChatWindow* chatWin)
 {
     m_chatWin = chatWin;
+
+    if(m_chatWin->getType()==ChatWindow::Channel)
+      setupNickPopupMenu();   // for channels
+    else
+      setupQueryPopupMenu();  // for queries
 }
 
 void IRCView::keyPressEvent(QKeyEvent* e)
