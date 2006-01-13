@@ -68,6 +68,8 @@ HighlightConfigController::HighlightConfigController(Highlight_Config* highlight
 
   connect(m_highlightPage->highlightListView,SIGNAL (selectionChanged(QListViewItem*)),this,SLOT (highlightSelected(QListViewItem*)) );
   connect(m_highlightPage->highlightListView,SIGNAL (clicked(QListViewItem*)),this,SLOT (highlightSelected(QListViewItem*)) );
+  connect(m_highlightPage->highlightListView,SIGNAL (spacePressed(QListViewItem*)),this,SLOT (highlightSelected(QListViewItem*)) );
+
   connect(m_highlightPage->highlightListView,SIGNAL (moved()),this,SIGNAL (modified()) );
 
   connect(m_highlightPage->patternInput,SIGNAL (textChanged(const QString&)),this,SLOT (highlightTextChanged(const QString&)) );
@@ -104,12 +106,19 @@ void HighlightConfigController::highlightSelected(QListViewItem* item)
 {
   // play it safe, assume disabling all widgets first
   bool enabled=false;
-
   // check if there was a widget selected at all
   if(item)
   {
     // make a highlight item out of the generic qlistviewitem
     HighlightViewItem* highlightItem=static_cast<HighlightViewItem*>(item);
+
+    // check if the checkbox on the item has changed
+    if(highlightItem->hasChanged())
+    {
+      // tell the prefs system it was changed and acknowledge the change to the listview item
+      emit modified();
+      highlightItem->changeAcknowledged();
+    }
 
     // Determine if kdeutils Regular Expression Editor is installed.  If so, enable edit button.
     m_highlightPage->patternButton->setEnabled(!KTrader::self()->query("KRegExpEditor/KRegExpEditor").isEmpty());

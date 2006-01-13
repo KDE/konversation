@@ -27,6 +27,7 @@ HighlightViewItem::HighlightViewItem(KListView* parent, Highlight* passed_Highli
     setSoundURL(passed_Highlight->getSoundURL());
     setAutoText(passed_Highlight->getAutoText());
     setOn(passed_Highlight->getRegExp());
+    m_changed=false;
 }
 
 HighlightViewItem::~HighlightViewItem()
@@ -69,4 +70,23 @@ bool HighlightViewItem::getRegExp()
 QString HighlightViewItem::getAutoText()
 {
     return autoText;
+}
+
+// override default method to store the change
+void HighlightViewItem::stateChange(bool /* newState */)
+{
+  // remember that the check box has been changed
+  m_changed=true;
+}
+
+// returns true, if the checkbox has been changed
+bool HighlightViewItem::hasChanged()
+{
+  return m_changed;
+}
+
+// tells us that the program has seen us changing
+void HighlightViewItem::changeAcknowledged()
+{
+  m_changed=false;
 }

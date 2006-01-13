@@ -46,6 +46,18 @@ class HighlightViewItem : public QCheckListItem
         void setID(int passed_itemID) { itemID = passed_itemID; }
         void setSoundURL(const KURL& url);
 
+        /** checks if the checkbox has been changed by the user
+         *  stored internally by m_changed
+         *
+         * @return true when the checkbox has been changed
+         */
+        bool hasChanged();
+
+        /** reset the change state of the listview item
+         * call this when you have seen the change and acted upon it properly
+         */
+        void changeAcknowledged();
+
         HighlightViewItem* itemBelow();
 
     protected:
@@ -55,6 +67,9 @@ class HighlightViewItem : public QCheckListItem
         KURL soundURL;
         QString autoText;
 
+        bool m_changed;  // true if the checkbox has been changed
+
+        void stateChange(bool newState);  // reimplemented to store changed value
         void paintCell(QPainter* p, const QColorGroup &cg, int column, int width, int alignment);
 };
 #endif
