@@ -48,17 +48,19 @@ void Ignore_Config::newIgnore()
         Ignore::CTCP |
         Ignore::DCC);
     updateEnabledness();
- 
+    emit modified();
 }
 void Ignore_Config::removeAllIgnore()
 {
     ignoreListView->clear();
     updateEnabledness();
+    emit modified();
 }
 void Ignore_Config::removeIgnore()
 {
     delete ignoreListView->selectedItem();
     updateEnabledness();
+    emit modified();
 }
 
 QPtrList<Ignore> Ignore_Config::getIgnoreList()
@@ -81,6 +83,7 @@ void Ignore_Config::restorePageToDefaults()
     if(ignoreListView->childCount() != 0) {
       ignoreListView->clear();
       updateEnabledness();
+      emit modified();
     }
 }
 void Ignore_Config::saveSettings()
