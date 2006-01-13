@@ -1,4 +1,4 @@
-<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
 <class>WatchedNicknames_Config</class>
 <widget class="QWidget">
     <property name="name">
@@ -11,9 +11,6 @@
             <width>529</width>
             <height>418</height>
         </rect>
-    </property>
-    <property name="caption">
-        <string>WatchedNicknames_Config</string>
     </property>
     <grid>
         <property name="name">
@@ -146,9 +143,6 @@ command is placed in the &lt;b&gt;Input Line&lt;/b&gt; on the server window.&lt;
             <property name="text">
                 <string>&amp;Show watched nicks online tab on application startup</string>
             </property>
-            <property name="accel">
-                <string>Alt+S</string>
-            </property>
             <property name="whatsThis" stdset="0">
                 <string>&lt;qt&gt;When checked, the &lt;b&gt;Nicks Online&lt;/b&gt; window will be automatically opened when starting Konversation.&lt;/qt&gt;</string>
             </property>
@@ -159,9 +153,6 @@ command is placed in the &lt;b&gt;Input Line&lt;/b&gt; on the server window.&lt;
             </property>
             <property name="text">
                 <string>&amp;Enable nickname watcher</string>
-            </property>
-            <property name="accel">
-                <string>Alt+E</string>
             </property>
             <property name="whatsThis" stdset="0">
                 <string>&lt;qt&gt;
@@ -296,9 +287,6 @@ When the nickname watcher is turned on, you will be notified when the nicknames 
                             <property name="text">
                                 <string>&amp;New...</string>
                             </property>
-                            <property name="accel">
-                                <string>Alt+N</string>
-                            </property>
                             <property name="whatsThis" stdset="0">
                                 <string>Click to add a nickname to the list.</string>
                             </property>
@@ -320,9 +308,6 @@ When the nickname watcher is turned on, you will be notified when the nicknames 
                             </property>
                             <property name="text">
                                 <string>&amp;Remove</string>
-                            </property>
-                            <property name="accel">
-                                <string>Alt+R</string>
                             </property>
                             <property name="whatsThis" stdset="0">
                                 <string>Click to remove the selected nickname from the list.</string>
