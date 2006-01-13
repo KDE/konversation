@@ -6,6 +6,7 @@
 */
 
 #include <qcombobox.h>
+#include <qlineedit.h>
 #include <klocale.h>
 
 #include "ex_dcc_preferences.h"
@@ -13,11 +14,26 @@
 DCC_Config_Ext::DCC_Config_Ext(QWidget *parent, const char* name) :
   DCC_Settings(parent,name)
 {
+    languageChange();
+    connect(kcfg_DccMethodToGetOwnIp, SIGNAL(activated(int)), this, SLOT(dccMethodChanged(int)));          dccMethodChanged(kcfg_DccMethodToGetOwnIp->currentItem()); 
+}
+
+void DCC_Config_Ext::dccMethodChanged(int index)
+{
+    kcfg_DccSpecificOwnIp->setEnabled( index == 2 ); 
+}
+
+void DCC_Config_Ext::languageChange()
+{
+    kcfg_DccMethodToGetOwnIp->clear();
     kcfg_DccMethodToGetOwnIp->insertItem(i18n("Network Interface"));
     kcfg_DccMethodToGetOwnIp->insertItem(i18n("Reply From IRC Server"));
     kcfg_DccMethodToGetOwnIp->insertItem(i18n("Specify Manually"));
+
 }
 
 DCC_Config_Ext::~DCC_Config_Ext()
 {
 }
+#include "ex_dcc_preferences.moc"
+
