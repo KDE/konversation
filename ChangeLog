@@ -68,6 +68,7 @@ Changes from 0.18 to 0.19
 - Minor cosmetic improvement to the status bar: all segments now have the same height
 - Status bar segments correctly react to font size changes
 - Changed hard-coded channel join taskbar notification into a configurable notification event
+- Yammi media player is now supported by media script
 
 Changes from 0.17 to 0.18
 - All nicks were blue when colored nicks are disabled with some setups
