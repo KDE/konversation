@@ -44,7 +44,8 @@ if __name__ == "__main__":
     port = sys.argv[1]
     server = sys.argv[2]
     target = sys.argv[3]
-    bad_apps = None;
+    bad_apps = None
+    error = None
 
     amarok = check_running('amarok')
     if amarok:
