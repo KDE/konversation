@@ -1,5 +1,5 @@
 /*
-  Copyright (c) 2005 by İsmail Dönmez <ismail@kde.org.tr>
+  Copyright (c) 2005 by İsmail Dönmez <ismail@kde.org>
 
   *************************************************************************
   *                                                                       *

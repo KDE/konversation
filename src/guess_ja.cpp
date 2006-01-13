@@ -31,7 +31,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
-/* Edited by İsmail Dönmez <ismail@kde.org.tr> (C) 2005 for Konversation */
+/* Edited by İsmail Dönmez <ismail@kde.org> (C) 2005 for Konversation */
 /*
  * original code is here.
  * http://cvs.sourceforge.net/viewcvs.py/gauche/Gauche/ext/charconv/guess.c?view=markup
