@@ -134,8 +134,8 @@
       <default param="14">#a0a0a0</default>
       <default param="15">#c0c0c0</default>
     </entry>
-    <entry key="FilterColorCodes" type="Bool" name="FilterColors">
-      <default>false</default>
+    <entry key="AllowColorCodes" type="Bool">
+      <default>true</default>
       <label></label>
       <whatsthis></whatsthis>
     </entry>
@@ -151,7 +151,7 @@
       <default param="7">#3176B3</default>
       <default param="8">#000001</default>
     </entry>
-   <entry key="UseColoredNicks" type="Bool">
+    <entry key="UseColoredNicks" type="Bool">
       <default>true</default>
       <label></label>
       <whatsthis></whatsthis>
