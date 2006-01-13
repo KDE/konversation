@@ -58,7 +58,7 @@ void IRCColorChooser::updatePreview()
 
     if(m_view->m_bgColorCBox->currentItem() > 0)
     {
-        bgc = Preferences::color(m_view->m_bgColorCBox->currentItem() - 1);
+        bgc = Preferences::ircColorCode(m_view->m_bgColorCBox->currentItem() - 1);
     }
     else
     {
@@ -66,7 +66,7 @@ void IRCColorChooser::updatePreview()
     }
 
     m_view->m_previewLbl->setBackgroundColor(bgc);
-    m_view->m_previewLbl->setPaletteForegroundColor(Preferences::color(m_view->m_fgColorCBox->currentItem()));
+    m_view->m_previewLbl->setPaletteForegroundColor(Preferences::ircColorCode(m_view->m_fgColorCBox->currentItem()));
 }
 
 void IRCColorChooser::initColors(KComboBox* combo)
@@ -75,7 +75,7 @@ void IRCColorChooser::initColors(KComboBox* combo)
 
     for (int i =0; i < 11; i++)
     {
-        pix.fill(Preferences::color(i));
+        pix.fill(Preferences::ircColorCode(i));
         combo->insertItem(pix, i);
     }
 }

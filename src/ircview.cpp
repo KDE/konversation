@@ -388,7 +388,7 @@ bool doHighlight, bool parseURL, bool self)
             else
             {
                 int foregroundColor = colorRegExp.cap(2).toInt();
-                colorString += "<font color=\"" + Preferences::color(foregroundColor).name() + "\">";
+                colorString += "<font color=\"" + Preferences::ircColorCode(foregroundColor).name() + "\">";
             }
 
             firstColor = false;
