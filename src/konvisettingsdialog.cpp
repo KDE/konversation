@@ -214,6 +214,7 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   pagePath << i18n("Warning Dialogs");
   addPage ( m_confWarningsWdg, i18n("Warning Dialogs"), "messagebox_warning", i18n("Warning Dialogs") );
   connect(m_confWarningsWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
+  m_indexToPageMapping.insert(lastAddedIndex(), m_confWarningsWdg);
 
   unfoldTreeList();
 }
@@ -251,7 +252,13 @@ void KonviSettingsDialog::updateWidgets()
 
 void KonviSettingsDialog::updateWidgetsDefault()
 {
-
+  KonviSettingsPage *page = m_indexToPageMapping.find(activePageIndex());
+  if(page) {
+    kdDebug() << "Setting defaults";
+    page->restorePageToDefaults();
+  } else {
+    kdDebug() << "THIS PAGE HAS NO FUNCTION TO SET THE DEFAULTS";
+  }
 }
 
 void KonviSettingsDialog::openWatchedNicknamesPage()

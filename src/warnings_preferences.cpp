@@ -20,8 +20,18 @@ Warnings_Config::~Warnings_Config()
 
 void Warnings_Config::restorePageToDefaults()
 {
-  if(dialogListView->childCount() != 0) {
-    dialogListView->clear();
+  
+  QCheckListItem* item=static_cast<QCheckListItem*>(dialogListView->itemAtIndex(0));
+  bool changed=false;
+  while(item)
+  {
+    if(!item->isOn()) {
+      item->setOn(true);
+      changed=true;
+    }
+    item=static_cast<QCheckListItem*>(item->itemBelow());
+  }
+  if(changed) {
     emit modified();
   }
 }

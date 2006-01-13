@@ -34,8 +34,10 @@
 
 #include <kdialogbase.h>
 #include <qasciidict.h>
+#include <qintdict.h>
 
 #include "konviconfigdialog.h"
+#include "konvisettingspage.h"
 
 class Warnings_Config;
 class ChatWindowAppearance_Config;
@@ -109,6 +111,7 @@ class KDEUI_EXPORT KonviSettingsDialog : public KonviConfigDialog
 
         // remember page index
         unsigned int m_watchedNicknamesIndex;
+	QIntDict<KonviSettingsPage> m_indexToPageMapping;
 };
 
 #endif //KONVISETTINGSDIALOG_H
