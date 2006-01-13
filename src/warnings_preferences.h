@@ -3,11 +3,12 @@
 #define WARNINGS_CONFIG_H
 
 #include "warnings_preferencesui.h"
+#include "konvisettingspage.h"
 
 class KListView;
 class QListViewItem;
 
-class Warnings_Config : public Warnings_ConfigUI
+class Warnings_Config : public Warnings_ConfigUI, public KonviSettingsPage
 {
     Q_OBJECT
 
@@ -16,10 +17,12 @@ public:
     ~Warnings_Config();
     QString flagNames;
 
+    virtual void restorePageToDefaults();
+    virtual void saveSettings();
+    virtual void loadSettings();
+
 public slots:
     virtual void languageChange();
-    virtual void saveSettings();
-    virtual void updateWidgets();
 signals:
     void modified();
 };

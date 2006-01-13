@@ -230,7 +230,7 @@ KonviSettingsDialog::~KonviSettingsDialog()
 }
 
 void KonviSettingsDialog::updateSettings()
-{
+{	
   m_confWarningsWdg->saveSettings();
   m_confAliasWdg->saveAliases();
   m_confIgnoreWdg->saveSettings();
@@ -245,12 +245,13 @@ void KonviSettingsDialog::updateSettings()
 
 void KonviSettingsDialog::updateWidgets()
 {
-  m_confWarningsWdg->updateWidgets();
-  m_confIgnoreWdg->updateWidgets();
+  m_confWarningsWdg->loadSettings();
+  m_confIgnoreWdg->loadSettings();
 }
 
 void KonviSettingsDialog::updateWidgetsDefault()
 {
+
 }
 
 void KonviSettingsDialog::openWatchedNicknamesPage()

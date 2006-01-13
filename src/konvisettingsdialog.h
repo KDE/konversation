@@ -84,11 +84,12 @@ class KDEUI_EXPORT KonviSettingsDialog : public KonviConfigDialog
 	Highlight_Config* m_confHighlightWdg;
 	OSD_Config_Ext* m_confOSDWdg;
 	Ignore_Config* m_confIgnoreWdg;
-	bool m_modified;
         HighlightConfigController* m_highlightController;
         WatchedNicknamesConfigController* m_watchedNicknamesController;
         QuickButtonsConfigController* m_quickButtonsController;
         NicklistBehaviorConfigController* m_nicklistBehaviorController;
+
+	bool m_modified;
 
     public:
         KonviSettingsDialog( QWidget *parent);

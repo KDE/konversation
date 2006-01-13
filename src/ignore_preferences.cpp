@@ -30,7 +30,7 @@ Ignore_Config::Ignore_Config( QWidget* parent, const char* name, WFlags fl )
     connect(chkDCC, SIGNAL(clicked()), this, SLOT(flagCheckboxChanged()));
     connect(txtPattern, SIGNAL(textChanged(const QString &)), this, SLOT(flagCheckboxChanged()));
 //    connect(chkException, SIGNAL(clicked()), this, SLOT(flagCheckboxChanged()));
-    updateWidgets();
+    loadSettings();
 }
 
 Ignore_Config::~Ignore_Config()
@@ -75,12 +75,20 @@ QPtrList<Ignore> Ignore_Config::getIgnoreList()
 
     return newList;
 }
+
+void Ignore_Config::restorePageToDefaults()
+{
+    if(ignoreListView->childCount() != 0) {
+      ignoreListView->clear();
+      updateEnabledness();
+    }
+}
 void Ignore_Config::saveSettings()
 {
     Preferences::setIgnoreList(getIgnoreList());
 }
 
-void Ignore_Config::updateWidgets()
+void Ignore_Config::loadSettings()
 {
     QPtrList<Ignore> ignoreList=Preferences::ignoreList();
     // Insert Ignore items backwards to get them sorted properly
@@ -157,7 +165,7 @@ void Ignore_Config::flagCheckboxChanged()
  */
 void Ignore_Config::languageChange()
 {
-  updateWidgets();
+  loadSettings();
 }
 
 #include "ignore_preferences.moc"

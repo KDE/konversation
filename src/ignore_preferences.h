@@ -3,10 +3,12 @@
 #define IGNORE_CONFIG_H
 
 #include "ignore_preferencesui.h"
+#include "konvisettingspage.h"
 #include <qptrlist.h>
 
+
 class Ignore;
-class Ignore_Config : public Ignore_ConfigUI
+class Ignore_Config : public Ignore_ConfigUI, public KonviSettingsPage
 {
     Q_OBJECT
 
@@ -14,14 +16,19 @@ public:
     Ignore_Config( QWidget* parent = 0, const char* name = 0, WFlags fl = 0 );
     ~Ignore_Config();
     QString flagNames;
+    
+    virtual void restorePageToDefaults();
+    virtual void saveSettings();
+    virtual void loadSettings();
+		
+    
 private:
     QPtrList<Ignore> getIgnoreList();
     void updateEnabledness();
 	    
 public slots:
     virtual void languageChange();
-    virtual void saveSettings();
-    virtual void updateWidgets();
+
 protected slots:
     void newIgnore();
     void removeIgnore();

@@ -10,12 +10,20 @@
 Warnings_Config::Warnings_Config( QWidget* parent, const char* name, WFlags fl )
     : Warnings_ConfigUI( parent, name, fl )
 {
-    updateWidgets();
+    loadSettings();
 }
 
 Warnings_Config::~Warnings_Config()
 {
 
+}
+
+void Warnings_Config::restorePageToDefaults()
+{
+  if(dialogListView->childCount() != 0) {
+    dialogListView->clear();
+    emit modified();
+  }
 }
 
 void Warnings_Config::saveSettings()
@@ -33,7 +41,7 @@ void Warnings_Config::saveSettings()
   }
 }
 
-void Warnings_Config::updateWidgets()
+void Warnings_Config::loadSettings()
 {
   QStringList dialogDefinitions;
   flagNames = "Invitation,SaveLogfileNote,ClearLogfileQuestion,CloseQueryAfterIgnore,ResumeTransfer,QuitServerTab,QuitChannelTab,QuitQueryTab,ChannelListNoServerSelected,RemoveDCCReceivedFile,HideMenuBarWarning,ChannelListWarning,LargePaste";
@@ -71,7 +79,7 @@ void Warnings_Config::updateWidgets()
  */
 void Warnings_Config::languageChange()
 {
-  updateWidgets();
+  loadSettings();
 }
 
 #include "warnings_preferences.moc"
