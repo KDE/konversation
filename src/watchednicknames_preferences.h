@@ -9,27 +9,29 @@
 // Copyright: See COPYING file that comes with this distribution
 //
 //
-#ifndef WATCHEDNICKNAMESCONFIGCONTROLLER_H
-#define WATCHEDNICKNAMESCONFIGCONTROLLER_H
+#ifndef WATCHEDNICKNAMES_CONFIG_H
+#define WATCHEDNICKNAMES_CONFIG_H
 
-#include <qobject.h>
+#include "konvisettingspage.h"
+#include "watchednicknames_preferencesui.h"
 
-class WatchedNicknames_Config;
 class QListViewItem;
 
 /**
   @author Dario Abatianni
 */
 
-class WatchedNicknamesConfigController : public QObject
+class WatchedNicknames_Config : public WatchedNicknames_ConfigUI, public KonviSettingsPage
 {
   Q_OBJECT
 
   public:
-    WatchedNicknamesConfigController(WatchedNicknames_Config* watchedNicknamesPage,QObject *parent = 0, const char *name = 0);
-    ~WatchedNicknamesConfigController();
+    WatchedNicknames_Config(QWidget *parent = 0, const char *name = 0);
+    ~WatchedNicknames_Config();
 
-    void saveSettings();
+    virtual void saveSettings();
+    virtual void loadSettings();
+    virtual void restorePageToDefaults();
 
   signals:
     void modified();
@@ -43,8 +45,6 @@ class WatchedNicknamesConfigController : public QObject
     void nicknameChanged(const QString& newNickname);
 
   protected:
-    void populateWatchedNicksList();
-    WatchedNicknames_Config* m_watchedNicknamesPage;
     bool newItemSelected;
 };
 

@@ -19,10 +19,6 @@ OSD_Config_Ext::OSD_Config_Ext( QWidget* parent, const char* name, WFlags fl )
     m_pOSDPreview = new OSDPreviewWidget("Konversation");
     connect(m_pOSDPreview, SIGNAL(positionChanged()), this, SLOT(slotPositionChanged()));
 
-    //Is there a better way to know if the settings are applied?
-    KConfigDialog *conf = static_cast<KConfigDialog *>( parent );
-    connect( conf, SIGNAL( applyClicked() ), this, SLOT( slotApply() ) );
-    connect( conf, SIGNAL( okClicked() ), this, SLOT( slotApply() ) );
     connect( kcfg_OSDFont, SIGNAL(fontSelected(const QFont&)), this, SLOT(slotUpdateFont(const QFont&))); 
 
     slotOSDEnabledChanged(kcfg_UseOSD->isChecked());
@@ -49,7 +45,15 @@ OSD_Config_Ext::~OSD_Config_Ext()
     delete m_pOSDPreview;
 }
 
-void OSD_Config_Ext::slotApply()
+void OSD_Config_Ext::loadSettings()
+{
+}
+
+void OSD_Config_Ext::restorePageToDefaults()
+{
+}
+
+void OSD_Config_Ext::saveSettings()
 {
     //Update the current OSD.
     KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());

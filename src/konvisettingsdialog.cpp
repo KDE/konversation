@@ -49,7 +49,6 @@
 #include "chatwindowappearance_preferences.h"
 #include "log_preferences.h"
 #include "quickbuttons_preferences.h"
-#include "watchednicknames_preferences.h"
 #include "chatwindowbehaviour_preferences.h"
 #include "fontappearance_preferences.h"
 #include "nicklistbehavior_preferences.h"
@@ -61,10 +60,10 @@
 #include "ex_theme_preferences.h"
 #include "ex_alias_preferences.h"
 #include "ignore_preferences.h"
+#include "watchednicknames_preferences.h"
 
 // helper classes for Non-KConfigXT options
 #include "highlightconfigcontroller.h"
-#include "watchednicknamesconfigcontroller.h"
 #include "quickbuttonsconfigcontroller.h"
 #include "nicklistbehaviorconfigcontroller.h"
 
@@ -193,9 +192,9 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   addPage ( m_confWatchedNicknamesWdg, pagePath, "kfind", i18n("Watched Nicknames") );
   // remember index so we can open this page later from outside
   m_watchedNicknamesIndex=lastAddedIndex();
-  // interaction with the user
-  m_watchedNicknamesController=new WatchedNicknamesConfigController(m_confWatchedNicknamesWdg);
-  connect(m_watchedNicknamesController, SIGNAL(modified()), this, SLOT(modifiedSlot()));
+  connect(m_confWatchedNicknamesWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
+  m_indexToPageMapping.insert(lastAddedIndex(), m_confWatchedNicknamesWdg);
+    
 
   //Notification/Highlighting
   m_confHighlightWdg = new Highlight_Config( this, "Highlight" );
@@ -211,6 +210,9 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   pagePath.clear();
   pagePath << i18n("Notifications") << i18n("On Screen Display");
   addPage ( m_confOSDWdg, pagePath, "tv", i18n("On Screen Display") );
+  //no modified connection needed - it's all kcfg widgets
+  m_indexToPageMapping.insert(lastAddedIndex(), m_confOSDWdg);
+    
 
   //Warning Dialogs
   m_confWarningsWdg = new Warnings_Config( this, "Warnings" );
@@ -242,7 +244,6 @@ void KonviSettingsDialog::updateSettings()
     (*it).saveSettings();
   }
   //FIXME   as the below because KonviSettingsPage's, remove from below
-  m_watchedNicknamesController->saveSettings();
   m_highlightController->saveSettings();
   m_quickButtonsController->saveSettings();
   m_nicklistBehaviorController->saveSettings();

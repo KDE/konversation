@@ -2,16 +2,21 @@
 #define EXOSDPREFERENCES_H
 
 #include "osd_preferences.h"
+#include "konvisettingspage.h"
 
 class OSDPreviewWidget;
 
-class OSD_Config_Ext : public OSD_Config
+class OSD_Config_Ext : public OSD_Config, public KonviSettingsPage
 {
     Q_OBJECT
 
 public:
     OSD_Config_Ext( QWidget* parent = 0, const char* name = 0, WFlags fl = 0 );
     ~OSD_Config_Ext();
+
+    virtual void restorePageToDefaults();
+    virtual void saveSettings();
+    virtual void loadSettings();
 
 protected slots:
     void slotOSDEnabledChanged(bool on);
@@ -22,7 +27,6 @@ protected slots:
     void slotDrawShadowChanged(bool on);
     void slotUpdateFont(const QFont& font);
     void slotPositionChanged();
-    void slotApply();
 
 protected:
     void showEvent(QShowEvent* event);

@@ -27,11 +27,11 @@ konversation_SOURCES = konviface.skel konviconfigdialog.cpp \
 				joinchanneldialog.cpp emoticon.cpp chatwindowbehaviour_preferences.ui alias_preferences.ui \
 				osd_preferences.ui theme_preferences.ui highlight_preferences.ui \
 				warnings_preferencesui.ui warnings_preferences.cpp quickbuttons_preferences.ui 	 \
-				watchednicknames_preferences.ui generalbehavior_preferences.ui connectionbehavior_preferences.ui 	 \
+				watchednicknames_preferencesui.ui generalbehavior_preferences.ui connectionbehavior_preferences.ui 	 \
 				fontappearance_preferences.ui nicklistbehavior_preferences.ui konvibookmarkhandler.cpp \
 				konvibookmarkmenu.cpp popup.cpp ircviewbox.cpp searchbar.cpp ex_osd_preferences.cpp \
 				ex_theme_preferences.cpp ex_dcc_preferences.cpp ex_alias_preferences.cpp \
-				highlightconfigcontroller.cpp watchednicknamesconfigcontroller.cpp quickbuttonsconfigcontroller.cpp \
+				highlightconfigcontroller.cpp watchednicknames_preferences.cpp quickbuttonsconfigcontroller.cpp \
 				nicklistbehaviorconfigcontroller.cpp konviiphelper.cpp
 
 konversation_COMPILE_FIRST = config/preferences_base.h
@@ -65,7 +65,7 @@ noinst_HEADERS = serverlistdialog.h dcctransfersend.h dcctransferrecv.h \
 		 dccdetaildialog.h insertchardialog.h editnotifydialog.h serverison.h \
 		 servergroupsettings.h serversettings.h	servergroupdialog.h serverdialog.h channeldialog.h \
 		 identitydialog.h topiclabel.h channeloptionsdialog.h joinchanneldialog.h popup.h \
-		 highlightconfigcontroller.h watchednicknamesconfigcontroller.h quickbuttonsconfigcontroller.h \
+		 highlightconfigcontroller.h watchednicknames_preferences.h quickbuttonsconfigcontroller.h \
 		 nicklistbehaviorconfigcontroller.h konvisettingspage.h
 
 # User might still have these in src/ instead of src/config, so remove these in that case

@@ -1,8 +1,8 @@
 <!DOCTYPE UI><UI version="3.2" stdsetdef="1">
-<class>WatchedNicknames_Config</class>
+<class>WatchedNicknames_ConfigUI</class>
 <widget class="QWidget">
     <property name="name">
-        <cstring>WatchedNicknames_Config</cstring>
+        <cstring>WatchedNicknames_ConfigUI</cstring>
     </property>
     <property name="geometry">
         <rect>

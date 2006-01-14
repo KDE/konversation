@@ -1,5 +1,5 @@
 //
-// C++ Implementation: watchednicknamesconfigcontroller
+// C++ Implementation: WatchedNicknames_Config
 //
 // Description: 
 //
@@ -25,33 +25,36 @@
 #include "config/preferences.h"
 
 #include "watchednicknames_preferences.h"
-#include "watchednicknamesconfigcontroller.h"
+#include "watchednicknames_preferencesui.h"
 
-WatchedNicknamesConfigController::WatchedNicknamesConfigController(WatchedNicknames_Config* watchedNicknamesPage,QObject *parent, const char *name)
- : QObject(parent, name)
+WatchedNicknames_Config::WatchedNicknames_Config(QWidget *parent, const char *name)
+ : WatchedNicknames_ConfigUI(parent, name)
 {
   // reset flag to defined state (used to block signals when just selecting a new item)
   newItemSelected=false;
 
-  m_watchedNicknamesPage=watchedNicknamesPage;
-  populateWatchedNicksList();
+  loadSettings();
 
-  connect(m_watchedNicknamesPage->kcfg_UseNotify,SIGNAL (toggled(bool)),this,SLOT (checkIfEmptyListview(bool)) );
-  connect(m_watchedNicknamesPage->newButton,SIGNAL (clicked()),this,SLOT (newNotify()) );
-  connect(m_watchedNicknamesPage->removeButton,SIGNAL (clicked()),this,SLOT (removeNotify()) );
-  connect(m_watchedNicknamesPage->notifyListView,SIGNAL (selectionChanged(QListViewItem*)),this,SLOT (entrySelected(QListViewItem*)) );
-  connect(m_watchedNicknamesPage->notifyListView,SIGNAL (clicked(QListViewItem*)),this,SLOT (entrySelected(QListViewItem*)) );
+  connect(kcfg_UseNotify,SIGNAL (toggled(bool)),this,SLOT (checkIfEmptyListview(bool)) );
+  connect(newButton,SIGNAL (clicked()),this,SLOT (newNotify()) );
+  connect(removeButton,SIGNAL (clicked()),this,SLOT (removeNotify()) );
+  connect(notifyListView,SIGNAL (selectionChanged(QListViewItem*)),this,SLOT (entrySelected(QListViewItem*)) );
+  connect(notifyListView,SIGNAL (clicked(QListViewItem*)),this,SLOT (entrySelected(QListViewItem*)) );
 
-  connect(m_watchedNicknamesPage->networkDropdown,SIGNAL (activated(const QString&)),this,SLOT (networkChanged(const QString&)) );
-  connect(m_watchedNicknamesPage->nicknameInput,SIGNAL (textChanged(const QString&)),this,SLOT (nicknameChanged(const QString&)) );
+  connect(networkDropdown,SIGNAL (activated(const QString&)),this,SLOT (networkChanged(const QString&)) );
+  connect(nicknameInput,SIGNAL (textChanged(const QString&)),this,SLOT (nicknameChanged(const QString&)) );
 }
 
-WatchedNicknamesConfigController::~WatchedNicknamesConfigController()
+WatchedNicknames_Config::~WatchedNicknames_Config()
+{
+}
+
+void WatchedNicknames_Config::restorePageToDefaults()
 {
 }
 
 // fill in the notify listview with groups and nicknames
-void WatchedNicknamesConfigController::populateWatchedNicksList()
+void WatchedNicknames_Config::loadSettings()
 {
   // get the current notify list and an iterator
   QMap<QString, QStringList> notifyList = Preferences::notifyList();
@@ -61,6 +64,7 @@ void WatchedNicknamesConfigController::populateWatchedNicksList()
   Konversation::ServerGroupList serverGroupList = Preferences::serverGroupList();
   Konversation::ServerGroupList::iterator it;
 
+  notifyListView->clear();
   // check if there is a network that is not in the notify group list
   for(it=serverGroupList.begin();it!=serverGroupList.end();++it)
   {
@@ -68,7 +72,7 @@ void WatchedNicknamesConfigController::populateWatchedNicksList()
     {
       // add server network to the notify listview so we can add notify items
       // to networks we haven't used yet
-      new KListViewItem(m_watchedNicknamesPage->notifyListView,(*it)->name());
+      new KListViewItem(notifyListView,(*it)->name());
     }
   }
 
@@ -79,21 +83,21 @@ void WatchedNicknamesConfigController::populateWatchedNicksList()
     // get list of nicks for the current group
     QStringList nicks=groupIt.data();
     // create group branch
-    KListViewItem* groupItem=new KListViewItem(m_watchedNicknamesPage->notifyListView,groupIt.key());
+    KListViewItem* groupItem=new KListViewItem(notifyListView,groupIt.key());
     // add group to dropdown list
-    m_watchedNicknamesPage->networkDropdown->insertItem(groupIt.key(),-1);
+    networkDropdown->insertItem(groupIt.key(),-1);
     // add nicknames to group branch
     for(unsigned int index=0;index<nicks.count();index++)
     {
       new KListViewItem(groupItem,nicks[index]);
     } // for
     // unfold group branch
-    m_watchedNicknamesPage->notifyListView->setOpen(groupItem,true);
+    notifyListView->setOpen(groupItem,true);
   } // for
 }
 
 // save list of notifies permanently, taken from the listview
-void WatchedNicknamesConfigController::saveSettings()
+void WatchedNicknames_Config::saveSettings()
 {
   // get configuration object
   KConfig* config=kapp->config();
@@ -106,7 +110,7 @@ void WatchedNicknamesConfigController::saveSettings()
   QMap<QString,QStringList> notifyList;
 
   // get first notify group
-  KListView* listView=m_watchedNicknamesPage->notifyListView;
+  KListView* listView=notifyListView;
   QListViewItem* group=listView->firstChild();
 
   // loop as long as there are more groups in the listview
@@ -139,18 +143,18 @@ void WatchedNicknamesConfigController::saveSettings()
 // slots
 
 // helper function to disable "New" button on empty listview
-void WatchedNicknamesConfigController::checkIfEmptyListview(bool state)
+void WatchedNicknames_Config::checkIfEmptyListview(bool state)
 {
   // only enable "New" button if there is at least one group in the list
-  if(!m_watchedNicknamesPage->notifyListView->childCount()) state=false;
-  m_watchedNicknamesPage->newButton->setEnabled(state);
+  if(!notifyListView->childCount()) state=false;
+  newButton->setEnabled(state);
 }
 
 // add new notify entry
-void WatchedNicknamesConfigController::newNotify()
+void WatchedNicknames_Config::newNotify()
 {
   // get listview object and possible first selected item
-  KListView* listView=m_watchedNicknamesPage->notifyListView;
+  KListView* listView=notifyListView;
   QListViewItem* item=listView->selectedItem();
 
   // if there was an item selected, try to find the group it belongs to,
@@ -177,10 +181,10 @@ void WatchedNicknamesConfigController::newNotify()
 }
 
 // remove a notify entry from the listview
-void WatchedNicknamesConfigController::removeNotify()
+void WatchedNicknames_Config::removeNotify()
 {
   // get listview pointer and the selected item
-  KListView* listView=m_watchedNicknamesPage->notifyListView;
+  KListView* listView=notifyListView;
   QListViewItem* item=listView->selectedItem();
 
   // sanity check
@@ -205,7 +209,7 @@ void WatchedNicknamesConfigController::removeNotify()
 }
 
 // what to do when the user selects an entry
-void WatchedNicknamesConfigController::entrySelected(QListViewItem* notifyEntry)
+void WatchedNicknames_Config::entrySelected(QListViewItem* notifyEntry)
 {
   // play it safe, assume disabling all widgets first
   bool enabled=false;
@@ -223,26 +227,26 @@ void WatchedNicknamesConfigController::entrySelected(QListViewItem* notifyEntry)
       // not emit the modified() signal.
       newItemSelected=true;
       // copy network name and nickname to edit widgets
-      m_watchedNicknamesPage->nicknameInput->setText(notifyEntry->text(0));
-      m_watchedNicknamesPage->networkDropdown->setCurrentText(group->text(0));
+      nicknameInput->setText(notifyEntry->text(0));
+      networkDropdown->setCurrentText(group->text(0));
       // all signals will now emit the modified() signal again
       newItemSelected=false;
     }
   }
 
   // enable/disable edit widgets
-  m_watchedNicknamesPage->removeButton->setEnabled(enabled);
-  m_watchedNicknamesPage->networkLabel->setEnabled(enabled);
-  m_watchedNicknamesPage->networkDropdown->setEnabled(enabled);
-  m_watchedNicknamesPage->nicknameLabel->setEnabled(enabled);
-  m_watchedNicknamesPage->nicknameInput->setEnabled(enabled);
+  removeButton->setEnabled(enabled);
+  networkLabel->setEnabled(enabled);
+  networkDropdown->setEnabled(enabled);
+  nicknameLabel->setEnabled(enabled);
+  nicknameInput->setEnabled(enabled);
 }
 
 // user changed the network this nickname is on
-void WatchedNicknamesConfigController::networkChanged(const QString& newNetwork)
+void WatchedNicknames_Config::networkChanged(const QString& newNetwork)
 {
   // get listview pointer and selected entry
-  KListView* listView=m_watchedNicknamesPage->notifyListView;
+  KListView* listView=notifyListView;
   QListViewItem* item=listView->selectedItem();
 
   // sanity check
@@ -276,10 +280,10 @@ void WatchedNicknamesConfigController::networkChanged(const QString& newNetwork)
 }
 
 // the user edited the nickname
-void WatchedNicknamesConfigController::nicknameChanged(const QString& newNickname)
+void WatchedNicknames_Config::nicknameChanged(const QString& newNickname)
 {
   // get listview pointer and selected item
-  KListView* listView=m_watchedNicknamesPage->notifyListView;
+  KListView* listView=notifyListView;
   QListViewItem* item=listView->selectedItem();
 
   // sanity check
@@ -292,4 +296,4 @@ void WatchedNicknamesConfigController::nicknameChanged(const QString& newNicknam
   }
 }
 
-#include "watchednicknamesconfigcontroller.moc"
+#include "watchednicknames_preferences.moc"
