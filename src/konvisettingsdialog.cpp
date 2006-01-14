@@ -238,10 +238,10 @@ void KonviSettingsDialog::updateSettings()
   QIntDictIterator<KonviSettingsPage> it( m_indexToPageMapping );
   for ( ; it.current(); ++it )
   {
+    // this is for the non KConfigXT parts to update the UI (like quick buttons)
     (*it).saveSettings();
   }
   m_modified = false;
-  // this is for the non KConfigXT parts to update the UI (like quick buttons)
   emit settingsChanged();
 }
 
@@ -252,6 +252,7 @@ void KonviSettingsDialog::updateWidgets()
   {
     (*it).loadSettings();
   }
+  m_modified = false;
 }
 
 void KonviSettingsDialog::updateWidgetsDefault()
