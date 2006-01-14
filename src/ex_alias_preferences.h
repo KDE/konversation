@@ -22,13 +22,10 @@ class Alias_Config_Ext : public Alias_Config, public KonviSettingsPage
   virtual void restorePageToDefaults();
   virtual void saveSettings();
   virtual void loadSettings();
-  
+
  protected slots:
   void newAlias();
   void removeAlias();
-  
- protected:
-  QWidget* parentFrame;
 
 signals:
     void modified();
