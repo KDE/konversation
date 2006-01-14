@@ -1042,8 +1042,11 @@ void KonversationMainWindow::unsetTabNotification(ChatWindow* view)
                 getViewContainer()->setTabIconSet(view, images->getMsgsLed(false));
                 break;
 
-            default:
+            case ChatWindow::Status:
                 getViewContainer()->setTabIconSet(view, images->getServerLed(false));
+                break;
+
+            default:
                 break;
         }
     }
