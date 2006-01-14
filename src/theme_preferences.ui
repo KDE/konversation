@@ -1,4 +1,4 @@
-<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>Theme_Config</class>
 <widget class="QWidget">
     <property name="name">
@@ -11,6 +11,9 @@
             <width>541</width>
             <height>556</height>
         </rect>
+    </property>
+    <property name="caption">
+        <string>Theme_Config</string>
     </property>
     <grid>
         <property name="name">
@@ -104,7 +107,7 @@
                         <set>AlignCenter</set>
                     </property>
                     <property name="toolTip" stdset="0">
-                        <string>Icon for normal users"</string>
+                        <string>Icon for normal users</string>
                     </property>
                 </widget>
                 <widget class="QLabel" row="0" column="1">
@@ -174,7 +177,7 @@
                         <set>AlignCenter</set>
                     </property>
                     <property name="toolTip" stdset="0">
-                        <string>Icon for users with owner privileges</string>
+                        <string>Icon for users with admin privileges</string>
                     </property>
                 </widget>
                 <widget class="QLabel" row="0" column="6">
@@ -188,7 +191,7 @@
                         <set>AlignCenter</set>
                     </property>
                     <property name="toolTip" stdset="0">
-                        <string>Icon for users with admin privileges</string>
+                        <string>Icon for users with owner privileges</string>
                     </property>
                 </widget>
             </grid>

@@ -195,8 +195,8 @@ void Theme_Config_Ext::updatePreview(int id)
     previewLabel3->setPixmap(overlayPixmaps(normal,QPixmap(dir+"/irc_voice.png")));
     previewLabel4->setPixmap(overlayPixmaps(normal,QPixmap(dir+"/irc_halfop.png")));
     previewLabel5->setPixmap(overlayPixmaps(normal,QPixmap(dir+"/irc_op.png")));
-    previewLabel6->setPixmap(overlayPixmaps(normal,QPixmap(dir+"/irc_owner.png")));
-    previewLabel7->setPixmap(overlayPixmaps(normal,QPixmap(dir+"/irc_admin.png")));
+    previewLabel6->setPixmap(overlayPixmaps(normal,QPixmap(dir+"/irc_admin.png")));
+    previewLabel7->setPixmap(overlayPixmaps(normal,QPixmap(dir+"/irc_owner.png")));
 }
 
 void Theme_Config_Ext::updateList()
