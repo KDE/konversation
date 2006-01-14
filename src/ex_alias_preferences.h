@@ -9,23 +9,28 @@
 #define EXALIASPREFERENCES_H
 
 #include "alias_preferences.h"
+#include "konvisettingspage.h"
 
-class Alias_Config_Ext : public Alias_Config
+class Alias_Config_Ext : public Alias_Config, public KonviSettingsPage
 {
   Q_OBJECT
 
  public:
   Alias_Config_Ext(QWidget* parent, const char* name = 0);
   ~Alias_Config_Ext();
+
+  virtual void restorePageToDefaults();
+  virtual void saveSettings();
+  virtual void loadSettings();
   
  protected slots:
   void newAlias();
   void removeAlias();
- public slots:
-  void saveAliases();
   
  protected:
   QWidget* parentFrame;
 
+signals:
+    void modified();
 };
 #endif

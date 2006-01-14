@@ -155,6 +155,9 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   pagePath.clear();
   pagePath << i18n("Behavior") << i18n("Command Aliases");
   addPage ( m_confAliasWdg, pagePath, "editcopy", i18n(" Command Aliases") );
+  m_indexToPageMapping.insert(lastAddedIndex(), m_confAliasWdg);
+  connect(m_confAliasWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
+    
 
   //Behaviour/Quick Buttons
   m_confQuickButtonsWdg = new QuickButtons_Config( this, "QuickButtons" );
@@ -232,10 +235,13 @@ KonviSettingsDialog::~KonviSettingsDialog()
 }
 
 void KonviSettingsDialog::updateSettings()
-{	
-  m_confWarningsWdg->saveSettings();
-  m_confAliasWdg->saveAliases();
-  m_confIgnoreWdg->saveSettings();
+{
+  QIntDictIterator<KonviSettingsPage> it( m_indexToPageMapping );
+  for ( ; it.current(); ++it )
+  {
+    (*it).saveSettings();
+  }
+  //FIXME   as the below because KonviSettingsPage's, remove from below
   m_watchedNicknamesController->saveSettings();
   m_highlightController->saveSettings();
   m_quickButtonsController->saveSettings();
@@ -247,18 +253,21 @@ void KonviSettingsDialog::updateSettings()
 
 void KonviSettingsDialog::updateWidgets()
 {
-  m_confWarningsWdg->loadSettings();
-  m_confIgnoreWdg->loadSettings();
+  QIntDictIterator<KonviSettingsPage> it( m_indexToPageMapping );
+  for ( ; it.current(); ++it )
+  {
+    (*it).loadSettings();
+  }
 }
 
 void KonviSettingsDialog::updateWidgetsDefault()
 {
   KonviSettingsPage *page = m_indexToPageMapping.find(activePageIndex());
   if(page) {
-    kdDebug() << "Setting defaults";
+    kdDebug() << "Setting defaults" << endl;
     page->restorePageToDefaults();
   } else {
-    kdDebug() << "THIS PAGE HAS NO FUNCTION TO SET THE DEFAULTS";
+    kdDebug() << "THIS PAGE HAS NO FUNCTION TO SET THE DEFAULTS" << endl;
   }
 }
 
