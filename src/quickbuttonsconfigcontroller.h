@@ -12,24 +12,24 @@
 #ifndef QUICKBUTTONSCONFIGCONTROLLER_H
 #define QUICKBUTTONSCONFIGCONTROLLER_H
 
-#include <qobject.h>
-
-class QuickButtons_Config;
-class QListViewItem;
+#include "quickbuttons_preferences.h"
+#include "konvisettingspage.h"
 
 /**
   @author Dario Abatianni <eisfuchs@tigress.com>
 */
 
-class QuickButtonsConfigController : public QObject
+class QuickButtonsConfigController : public QuickButtons_Config, public KonviSettingsPage
 {
   Q_OBJECT
 
   public:
-    QuickButtonsConfigController(QuickButtons_Config* quickButtonsPage,QObject *parent = 0, const char *name = 0);
+    QuickButtonsConfigController(QWidget* parent, const char* name=NULL);
     ~QuickButtonsConfigController();
 
-    void saveSettings();
+    virtual void saveSettings();
+    virtual void loadSettings();
+    virtual void restorePageToDefaults();
 
   signals:
     void modified();
@@ -40,8 +40,6 @@ class QuickButtonsConfigController : public QObject
     void actionChanged(const QString& newAction);
 
   protected:
-    void populateQuickButtonsList();
-    QuickButtons_Config* m_quickButtonsPage;
     bool newItemSelected;
 };
 

@@ -140,7 +140,7 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   addPage ( m_confNicklistBehaviorWdg, pagePath, "player_playlist", i18n("Nickname List") );
   connect(m_confNicklistBehaviorWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
   m_indexToPageMapping.insert(lastAddedIndex(), m_confNicklistBehaviorWdg);
-    
+
 
   //Behaviour/Tab Bar
   m_confTabBarWdg = new TabBar_Config( this, "TabBar" );
@@ -157,12 +157,12 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   connect(m_confAliasWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
 
   //Behaviour/Quick Buttons
-  m_confQuickButtonsWdg = new QuickButtons_Config( this, "QuickButtons" );
+  m_confQuickButtonsWdg = new QuickButtonsConfigController( this, "QuickButtons" );
   pagePath.clear();
   pagePath << i18n("Behavior") << i18n("Quick Buttons");
   addPage ( m_confQuickButtonsWdg, pagePath, "keyboard", i18n("Quick Buttons") );
-  m_quickButtonsController=new QuickButtonsConfigController(m_confQuickButtonsWdg);
-  connect(m_quickButtonsController, SIGNAL(modified()), this, SLOT(modifiedSlot()));
+  m_indexToPageMapping.insert(lastAddedIndex(), m_confQuickButtonsWdg);
+  connect(m_confQuickButtonsWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
 
   //Behaviour/Ignore
   m_confIgnoreWdg = new Ignore_Config(this, "Ignore");
@@ -192,7 +192,7 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   m_watchedNicknamesIndex=lastAddedIndex();
   connect(m_confWatchedNicknamesWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
   m_indexToPageMapping.insert(lastAddedIndex(), m_confWatchedNicknamesWdg);
-    
+
 
   //Notification/Highlighting
   m_confHighlightWdg = new Highlight_Config( this, "Highlight" );
@@ -201,7 +201,7 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   addPage ( m_confHighlightWdg, pagePath, "paintbrush", i18n("Highlight") );
   connect(m_confHighlightWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
   m_indexToPageMapping.insert(lastAddedIndex(), m_confHighlightWdg);
-    
+
 
   //Notification/On Screen Display
   m_confOSDWdg = new OSD_Config_Ext( this, "OSD" );
@@ -210,7 +210,7 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   addPage ( m_confOSDWdg, pagePath, "tv", i18n("On Screen Display") );
   //no modified connection needed - it's all kcfg widgets
   m_indexToPageMapping.insert(lastAddedIndex(), m_confOSDWdg);
-    
+
 
   //Warning Dialogs
   m_confWarningsWdg = new Warnings_Config( this, "Warnings" );

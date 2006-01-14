@@ -22,29 +22,45 @@
 #include "quickbuttons_preferences.h"
 #include "quickbuttonsconfigcontroller.h"
 
-QuickButtonsConfigController::QuickButtonsConfigController(QuickButtons_Config* quickButtonsPage,QObject *parent, const char *name)
- : QObject(parent, name)
+QuickButtonsConfigController::QuickButtonsConfigController(QWidget* parent, const char* name)
+ : QuickButtons_Config(parent, name)
 {
   // reset flag to defined state (used to block signals when just selecting a new item)
   newItemSelected=false;
 
-  // get page widget and populate listview
-  m_quickButtonsPage=quickButtonsPage;
-  populateQuickButtonsList();
+  // populate listview
+  loadSettings();
 
   // make items react to drag & drop
-  m_quickButtonsPage->buttonListView->setSorting(-1,false);
+  buttonListView->setSorting(-1,false);
 
-  connect(m_quickButtonsPage->buttonListView,SIGNAL (selectionChanged(QListViewItem*)),this,SLOT (entrySelected(QListViewItem*)) );
-  connect(m_quickButtonsPage->buttonListView,SIGNAL (clicked(QListViewItem*)),this,SLOT (entrySelected(QListViewItem*)) );
-  connect(m_quickButtonsPage->buttonListView,SIGNAL (moved()),this,SIGNAL (modified()) );
+  connect(buttonListView,SIGNAL (selectionChanged(QListViewItem*)),this,SLOT (entrySelected(QListViewItem*)) );
+  connect(buttonListView,SIGNAL (clicked(QListViewItem*)),this,SLOT (entrySelected(QListViewItem*)) );
+  connect(buttonListView,SIGNAL (moved()),this,SIGNAL (modified()) );
 
-  connect(m_quickButtonsPage->nameInput,SIGNAL (textChanged(const QString&)),this,SLOT (nameChanged(const QString&)) );
-  connect(m_quickButtonsPage->actionInput,SIGNAL (textChanged(const QString&)),this,SLOT (actionChanged(const QString&)) );
+  connect(nameInput,SIGNAL (textChanged(const QString&)),this,SLOT (nameChanged(const QString&)) );
+  connect(actionInput,SIGNAL (textChanged(const QString&)),this,SLOT (actionChanged(const QString&)) );
 }
 
 QuickButtonsConfigController::~QuickButtonsConfigController()
 {
+}
+
+// fill listview with button definitions
+void QuickButtonsConfigController::loadSettings()
+{
+  // clear listView
+  buttonListView->clear();
+  // get list of quick buttons from preferences
+  QStringList buttonList(Preferences::quickButtonList());
+  // go through the list
+  for(unsigned int index=buttonList.count();index!=0;index--)
+  {
+    // get button definition
+    QString definition=buttonList[index-1];
+    // cut definition apart in name and action, and create a new listview item
+    new KListViewItem(buttonListView,definition.section(',',0,0),definition.section(',',1));
+  } // for
 }
 
 // save quick buttons to configuration
@@ -56,7 +72,7 @@ void QuickButtonsConfigController::saveSettings()
   config->setGroup("Button List");
 
   // get first item of the button listview
-  QListViewItem* item=m_quickButtonsPage->buttonListView->firstChild();
+  QListViewItem* item=buttonListView->firstChild();
   // create empty list
   QStringList newList;
 
@@ -78,19 +94,9 @@ void QuickButtonsConfigController::saveSettings()
   Preferences::setQuickButtonList(newList);
 }
 
-// fill listview with button definitions
-void QuickButtonsConfigController::populateQuickButtonsList()
+void QuickButtonsConfigController::restorePageToDefaults()
 {
-  // get list of quick buttons from preferences
-  QStringList buttonList(Preferences::quickButtonList());
-  // go through the list
-  for(unsigned int index=buttonList.count();index!=0;index--)
-  {
-    // get button definition
-    QString definition=buttonList[index-1];
-    // cut definition apart in name and action, and create a new listview item
-    new KListViewItem(m_quickButtonsPage->buttonListView,definition.section(',',0,0),definition.section(',',1));
-  } // for
+  // FIXME:
 }
 
 // slots
@@ -110,24 +116,23 @@ void QuickButtonsConfigController::entrySelected(QListViewItem* quickButtonEntry
     // tell the editing widgets not to emit modified() on singals now
     newItemSelected=true;
     // update editing widget contents
-    m_quickButtonsPage->nameInput->setText(quickButtonEntry->text(0));
-    m_quickButtonsPage->actionInput->setText(quickButtonEntry->text(1));
+    nameInput->setText(quickButtonEntry->text(0));
+    actionInput->setText(quickButtonEntry->text(1));
     // re-enable modified() signal on text changes in edit widgets
     newItemSelected=false;
   }
   // enable or disable editing widgets
-  m_quickButtonsPage->nameLabel->setEnabled(enabled);
-  m_quickButtonsPage->nameInput->setEnabled(enabled);
-  m_quickButtonsPage->actionLabel->setEnabled(enabled);
-  m_quickButtonsPage->actionInput->setEnabled(enabled);
+  nameLabel->setEnabled(enabled);
+  nameInput->setEnabled(enabled);
+  actionLabel->setEnabled(enabled);
+  actionInput->setEnabled(enabled);
 }
 
 // what to do when the user change the name of a quick button
 void QuickButtonsConfigController::nameChanged(const QString& newName)
 {
-  // get listview object and possible first selected item
-  KListView* listView=m_quickButtonsPage->buttonListView;
-  QListViewItem* item=listView->selectedItem();
+  // get possible first selected item
+  QListViewItem* item=buttonListView->selectedItem();
 
   // sanity check
   if(item)
@@ -142,9 +147,8 @@ void QuickButtonsConfigController::nameChanged(const QString& newName)
 // what to do when the user change the action definition of a quick button
 void QuickButtonsConfigController::actionChanged(const QString& newAction)
 {
-  // get listview object and possible first selected item
-  KListView* listView=m_quickButtonsPage->buttonListView;
-  QListViewItem* item=listView->selectedItem();
+  // get possible first selected item
+  QListViewItem* item=buttonListView->selectedItem();
 
   // sanity check
   if(item)
