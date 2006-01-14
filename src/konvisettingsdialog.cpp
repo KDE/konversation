@@ -110,6 +110,7 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   pagePath.clear();
   pagePath << i18n("Appearance") << i18n("Themes");
   addPage ( m_confThemeWdg, pagePath, "iconthemes", i18n("Themes") );
+  m_indexToPageMapping.insert(lastAddedIndex(), m_confThemeWdg);
 
   //Appearance/Colors
   m_confColorsAppearanceWdg = new ColorsAppearance_Config( this, "ColorsAppearance" );
@@ -157,7 +158,6 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   addPage ( m_confAliasWdg, pagePath, "editcopy", i18n(" Command Aliases") );
   m_indexToPageMapping.insert(lastAddedIndex(), m_confAliasWdg);
   connect(m_confAliasWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
-    
 
   //Behaviour/Quick Buttons
   m_confQuickButtonsWdg = new QuickButtons_Config( this, "QuickButtons" );

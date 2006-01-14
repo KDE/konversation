@@ -46,9 +46,7 @@ using namespace Konversation;
 Theme_Config_Ext::Theme_Config_Ext(QWidget* parent, const char* name)
   : Theme_Config( parent, name)
 {
-
-    updateList();
-    updateButtons();
+    loadSettings();
 
     m_oldTheme = Preferences::iconThemeName();
 
@@ -56,17 +54,43 @@ Theme_Config_Ext::Theme_Config_Ext(QWidget* parent, const char* name)
     connect(kcfg_IconThemeIndex,SIGNAL(currentChanged(QListBoxItem*)),this,SLOT(updateButtons()));
     connect(installButton,SIGNAL(clicked()),this,SLOT(installTheme()));
     connect(removeButton,SIGNAL(clicked()),this,SLOT(removeTheme()));
-
-    KConfigDialog *conf = static_cast<KConfigDialog *>(parent);
-    connect( conf, SIGNAL(applyClicked()), this, SLOT(applyPreferences()));
-    connect( conf, SIGNAL(okClicked()), this, SLOT(applyPreferences()));
 }
 
 Theme_Config_Ext::~Theme_Config_Ext()
 {
 }
 
-void Theme_Config_Ext::applyPreferences()
+void Theme_Config_Ext::loadSettings()
+{
+    QString themeName, themeComment;
+    QString currentTheme = Preferences::iconThemeName();
+    int index = Preferences::iconThemeIndex();
+
+    m_dirs = KGlobal::dirs()->findAllResources("data","konversation/themes/*/index.desktop");
+
+    if(m_dirs.count() > 0)
+    {
+        kcfg_IconThemeIndex->clear();
+
+        for(QStringList::ConstIterator it = m_dirs.begin(); it != m_dirs.end(); ++it)
+        {
+            KDesktopFile themeRC(*it);
+            themeName = themeRC.readName();
+            themeComment = themeRC.readComment();
+
+            if(!themeComment.isEmpty())
+                themeName = themeName+" ( "+themeComment+" )";
+
+            kcfg_IconThemeIndex->insertItem(themeName);
+        }
+
+        kcfg_IconThemeIndex->setSelected(index, true);
+        updatePreview(index);
+    }
+    updateButtons();
+}
+
+void Theme_Config_Ext::saveSettings()
 {
     if(kcfg_IconThemeIndex->count())
     {
@@ -75,7 +99,6 @@ void Theme_Config_Ext::applyPreferences()
         theme = theme.section('/',-2,-2);
         if(m_oldTheme != theme)
         {
-            kdDebug() << "New Theme :" << theme << endl;
 	    KConfig* config = kapp->config();
 	    config->setGroup("Themes");
 	    config->writeEntry("IconThemeName",theme);
@@ -85,6 +108,11 @@ void Theme_Config_Ext::applyPreferences()
             m_oldTheme = theme;
         }
     }
+}
+
+void Theme_Config_Ext::restorePageToDefaults()
+{
+    // FIXME!
 }
 
 void Theme_Config_Ext::installTheme()
@@ -154,8 +182,7 @@ void Theme_Config_Ext::installTheme()
         themeArchive.close();
     }
 
-    updateList();
-    updateButtons();
+    loadSettings();
     KIO::NetAccess::removeTempFile(tmpThemeFile);
 
 }
@@ -178,8 +205,7 @@ void Theme_Config_Ext::removeTheme()
     {
         unlink(QFile::encodeName(dir));
         KIO::del(KURL(dir.remove("index.desktop")));
-        updateList();
-        updateButtons();
+        loadSettings();
     }
 }
 
@@ -197,35 +223,6 @@ void Theme_Config_Ext::updatePreview(int id)
     previewLabel5->setPixmap(overlayPixmaps(normal,QPixmap(dir+"/irc_op.png")));
     previewLabel6->setPixmap(overlayPixmaps(normal,QPixmap(dir+"/irc_admin.png")));
     previewLabel7->setPixmap(overlayPixmaps(normal,QPixmap(dir+"/irc_owner.png")));
-}
-
-void Theme_Config_Ext::updateList()
-{
-    QString themeName, themeComment;
-    QString currentTheme = Preferences::iconThemeName();
-    int index = Preferences::iconThemeIndex();
-
-    m_dirs = KGlobal::dirs()->findAllResources("data","konversation/themes/*/index.desktop");
-
-    if(m_dirs.count() > 0)
-    {
-        kcfg_IconThemeIndex->clear();
-
-        for(QStringList::ConstIterator it = m_dirs.begin(); it != m_dirs.end(); ++it)
-        {
-            KDesktopFile themeRC(*it);
-            themeName = themeRC.readName();
-            themeComment = themeRC.readComment();
-
-            if(!themeComment.isEmpty())
-                themeName = themeName+" ( "+themeComment+" )";
-
-            kcfg_IconThemeIndex->insertItem(themeName);
-        }
-
-        kcfg_IconThemeIndex->setSelected(index, true);
-        updatePreview(index);
-    }
 }
 
 void Theme_Config_Ext::updateButtons()

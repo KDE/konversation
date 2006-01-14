@@ -13,18 +13,23 @@
 #define PREFSPAGETHEMES_H
 
 #include "theme_preferences.h"
+#include "konvisettingspage.h"
 
 class QStringList;
 
-class Theme_Config_Ext : public Theme_Config
+class Theme_Config_Ext : public Theme_Config, public KonviSettingsPage
 {
-  Q_OBJECT
+    Q_OBJECT
+
     public:
-  Theme_Config_Ext(QWidget* parent, const char* name=NULL);
-	~Theme_Config_Ext();
+        Theme_Config_Ext(QWidget* parent, const char* name=NULL);
+        ~Theme_Config_Ext();
+
+        virtual void restorePageToDefaults();
+        virtual void saveSettings();
+        virtual void loadSettings();
 
     protected slots:
-	void applyPreferences();
         void updatePreview(int id);
         void updateButtons();
         void installTheme();
@@ -33,7 +38,5 @@ class Theme_Config_Ext : public Theme_Config
     private:
         QStringList m_dirs;
         QString m_oldTheme;
-
-        void updateList();
 };
 #endif
