@@ -179,26 +179,33 @@ void Query::queryPassthroughCommand()
 void Query::sendQueryText(const QString& sendLine)
 {
     // create a work copy
-    QString output(sendLine);
+    QString outputAll(sendLine);
     // replace aliases and wildcards
-    if(m_server->getOutputFilter()->replaceAliases(output))
+    if(m_server->getOutputFilter()->replaceAliases(outputAll))
     {
-        output = m_server->parseWildcards(output, m_server->getNickname(), getName(), QString::null, QString::null, QString::null);
+        outputAll = m_server->parseWildcards(outputAll, m_server->getNickname(), getName(), QString::null, QString::null, QString::null);
     }
 
-    // encoding stuff is done in Server()
-    Konversation::OutputFilterResult result = m_server->getOutputFilter()->parse(m_server->getNickname(), output, getName());
-
-    if(!result.output.isEmpty())
+    // Send all strings, one after another
+    QStringList outList=QStringList::split('\n',outputAll);
+    for(unsigned int index=0;index<outList.count();index++)
     {
-        if(result.type == Konversation::Action) appendAction(m_server->getNickname(), result.output);
-        else if(result.type == Konversation::Command) appendCommandMessage(result.typeString, result.output);
-        else if(result.type == Konversation::Program) appendServerMessage(result.typeString, result.output);
-        else if(!result.typeString.isEmpty()) appendQuery(result.typeString, result.output);
-        else appendQuery(m_server->getNickname(), result.output);
-    }
+        QString output(outList[index]);
 
-    m_server->queue(result.toServer);
+        // encoding stuff is done in Server()
+        Konversation::OutputFilterResult result = m_server->getOutputFilter()->parse(m_server->getNickname(), output, getName());
+
+        if(!result.output.isEmpty())
+        {
+            if(result.type == Konversation::Action) appendAction(m_server->getNickname(), result.output);
+            else if(result.type == Konversation::Command) appendCommandMessage(result.typeString, result.output);
+            else if(result.type == Konversation::Program) appendServerMessage(result.typeString, result.output);
+            else if(!result.typeString.isEmpty()) appendQuery(result.typeString, result.output);
+            else appendQuery(m_server->getNickname(), result.output);
+        }
+
+        m_server->queue(result.toServer);
+    } // for
 }
 
 void Query::updateAppearance()

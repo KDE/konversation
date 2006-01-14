@@ -103,22 +103,28 @@ void StatusPanel::childAdjustFocus()
 void StatusPanel::sendStatusText(const QString& sendLine)
 {
     // create a work copy
-    QString output(sendLine);
+    QString outputAll(sendLine);
     // replace aliases and wildcards
-    if(m_server->getOutputFilter()->replaceAliases(output))
+    if(m_server->getOutputFilter()->replaceAliases(outputAll))
     {
-        output = m_server->parseWildcards(output, m_server->getNickname(), QString::null, QString::null, QString::null, QString::null);
+        outputAll = m_server->parseWildcards(outputAll, m_server->getNickname(), QString::null, QString::null, QString::null, QString::null);
     }
 
-    // encoding stuff is done in Server()
-    Konversation::OutputFilterResult result = m_server->getOutputFilter()->parse(m_server->getNickname(), output, QString::null);
-
-    if(!result.output.isEmpty())
+    // Send all strings, one after another
+    QStringList outList=QStringList::split('\n',outputAll);
+    for(unsigned int index=0;index<outList.count();index++)
     {
-        appendServerMessage(result.typeString, result.output);
-    }
+        QString output(outList[index]);
 
-    m_server->queue(result.toServer);
+        // encoding stuff is done in Server()
+        Konversation::OutputFilterResult result = m_server->getOutputFilter()->parse(m_server->getNickname(), output, QString::null);
+
+        if(!result.output.isEmpty())
+        {
+            appendServerMessage(result.typeString, result.output);
+        }
+        m_server->queue(result.toServer);
+    } // for
 }
 
 void StatusPanel::statusTextEntered()
