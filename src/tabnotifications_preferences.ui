@@ -1,0 +1,300 @@
+<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
+<class>TabNotifications_Config</class>
+<widget class="QWidget">
+    <property name="name">
+        <cstring>TabNotifications_Config</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>457</width>
+            <height>381</height>
+        </rect>
+    </property>
+    <grid>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <property name="margin">
+            <number>0</number>
+        </property>
+        <widget class="QGroupBox" row="1" column="0">
+            <property name="name">
+                <cstring>groupBox5</cstring>
+            </property>
+            <property name="title">
+                <string>Notifications</string>
+            </property>
+            <grid>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QCheckBox" row="3" column="0">
+                    <property name="name">
+                        <cstring>kcfg_TabNotificationsHighlights</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Highlight</string>
+                    </property>
+                    <property name="checked">
+                        <bool>true</bool>
+                    </property>
+                </widget>
+                <spacer row="3" column="1" rowspan="1" colspan="3">
+                    <property name="name">
+                        <cstring>spacer45</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Expanding</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>235</width>
+                            <height>21</height>
+                        </size>
+                    </property>
+                </spacer>
+                <widget class="KColorButton" row="3" column="4">
+                    <property name="name">
+                        <cstring>kcfg_TabNotificationsHighlightsColor</cstring>
+                    </property>
+                    <property name="text">
+                        <string></string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox" row="2" column="0" rowspan="1" colspan="3">
+                    <property name="name">
+                        <cstring>kcfg_TabNotificationsNick</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Current nick used</string>
+                    </property>
+                    <property name="checked">
+                        <bool>true</bool>
+                    </property>
+                </widget>
+                <spacer row="2" column="3">
+                    <property name="name">
+                        <cstring>spacer44</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Expanding</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>197</width>
+                            <height>20</height>
+                        </size>
+                    </property>
+                </spacer>
+                <widget class="KColorButton" row="2" column="4">
+                    <property name="name">
+                        <cstring>kcfg_TabNotificationsNickColor</cstring>
+                    </property>
+                    <property name="text">
+                        <string></string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox" row="1" column="0" rowspan="1" colspan="2">
+                    <property name="name">
+                        <cstring>kcfg_TabNotificationsEvents</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Channel event</string>
+                    </property>
+                    <property name="checked">
+                        <bool>false</bool>
+                    </property>
+                    <property name="whatsThis" stdset="0">
+                        <string>Channel events are mode changes or users joining/leaving a channel.</string>
+                    </property>
+                </widget>
+                <spacer row="1" column="2" rowspan="1" colspan="2">
+                    <property name="name">
+                        <cstring>spacer43</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Expanding</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>206</width>
+                            <height>20</height>
+                        </size>
+                    </property>
+                </spacer>
+                <widget class="KColorButton" row="1" column="4">
+                    <property name="name">
+                        <cstring>kcfg_TabNotificationsEventsColor</cstring>
+                    </property>
+                    <property name="enabled">
+                        <bool>false</bool>
+                    </property>
+                    <property name="text">
+                        <string></string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox" row="0" column="0">
+                    <property name="name">
+                        <cstring>kcfg_TabNotificationsMsgs</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Message</string>
+                    </property>
+                    <property name="checked">
+                        <bool>true</bool>
+                    </property>
+                </widget>
+                <spacer row="0" column="1" rowspan="1" colspan="3">
+                    <property name="name">
+                        <cstring>spacer42</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Expanding</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>234</width>
+                            <height>21</height>
+                        </size>
+                    </property>
+                </spacer>
+                <widget class="KColorButton" row="0" column="4">
+                    <property name="name">
+                        <cstring>kcfg_TabNotificationsMsgsColor</cstring>
+                    </property>
+                    <property name="text">
+                        <string></string>
+                    </property>
+                    <property name="defaultColor">
+                        <color>
+                            <red>0</red>
+                            <green>0</green>
+                            <blue>0</blue>
+                        </color>
+                    </property>
+                </widget>
+            </grid>
+        </widget>
+        <widget class="QGroupBox" row="0" column="0">
+            <property name="name">
+                <cstring>groupBox4</cstring>
+            </property>
+            <property name="title">
+                <string>Look</string>
+            </property>
+            <grid>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QCheckBox" row="0" column="0">
+                    <property name="name">
+                        <cstring>kcfg_TabNotificationsText</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Use colored text</string>
+                    </property>
+                    <property name="checked">
+                        <bool>true</bool>
+                    </property>
+                </widget>
+                <widget class="QCheckBox" row="1" column="0">
+                    <property name="name">
+                        <cstring>kcfg_TabNotificationsLeds</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Use colored LEDs</string>
+                    </property>
+                </widget>
+            </grid>
+        </widget>
+        <widget class="QGroupBox" row="2" column="0">
+            <property name="name">
+                <cstring>groupBox10</cstring>
+            </property>
+            <property name="title">
+                <string>Options</string>
+            </property>
+            <grid>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QCheckBox" row="0" column="0">
+                    <property name="name">
+                        <cstring>kcfg_TabNotificationsOverride</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Give precedence to chat window highlight colors</string>
+                    </property>
+                    <property name="whatsThis" stdset="0">
+                        <string>If you select this, the colors you chose in the Highlights preferences page will override the colors for "Current nick used" and "Highlight".</string>
+                    </property>
+                </widget>
+            </grid>
+        </widget>
+        <spacer row="3" column="0">
+            <property name="name">
+                <cstring>spacer47</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Vertical</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>21</width>
+                    <height>91</height>
+                </size>
+            </property>
+        </spacer>
+    </grid>
+</widget>
+<connections>
+    <connection>
+        <sender>kcfg_TabNotificationsMsgs</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>kcfg_TabNotificationsMsgsColor</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>kcfg_TabNotificationsEvents</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>kcfg_TabNotificationsEventsColor</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>kcfg_TabNotificationsNick</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>kcfg_TabNotificationsNickColor</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>kcfg_TabNotificationsHighlights</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>kcfg_TabNotificationsHighlightsColor</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+</connections>
+<layoutdefaults spacing="6" margin="11"/>
+<includehints>
+    <includehint>kcolorbutton.h</includehint>
+    <includehint>kcolorbutton.h</includehint>
+    <includehint>kcolorbutton.h</includehint>
+    <includehint>kcolorbutton.h</includehint>
+</includehints>
+</UI>
