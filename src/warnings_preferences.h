@@ -15,7 +15,6 @@ class Warnings_Config : public Warnings_ConfigUI, public KonviSettingsPage
 public:
     Warnings_Config( QWidget* parent = 0, const char* name = 0, WFlags fl = 0 );
     ~Warnings_Config();
-    QString flagNames;
 
     virtual void restorePageToDefaults();
     virtual void saveSettings();

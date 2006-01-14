@@ -10,7 +10,9 @@
 Warnings_Config::Warnings_Config( QWidget* parent, const char* name, WFlags fl )
     : Warnings_ConfigUI( parent, name, fl )
 {
-    loadSettings();
+  dialogListView->setSorting(1);
+  loadSettings();
+  connect(dialogListView, SIGNAL(clicked(QListViewItem *)), this, SIGNAL(modified()));
 }
 
 Warnings_Config::~Warnings_Config()
@@ -45,7 +47,8 @@ void Warnings_Config::saveSettings()
   int i=0;
   while(item)
   {
-    config->writeEntry(flagNames.section(",",i,i),item->isOn());
+    config->writeEntry(item->text(2),item->isOn());
+    kdDebug() << "saving: " << item->text(2) << " as " <<  item->text(1) << endl;
     item=static_cast<QCheckListItem*>(item->itemBelow());
     ++i;
   }
@@ -54,7 +57,7 @@ void Warnings_Config::saveSettings()
 void Warnings_Config::loadSettings()
 {
   QStringList dialogDefinitions;
-  flagNames = "Invitation,SaveLogfileNote,ClearLogfileQuestion,CloseQueryAfterIgnore,ResumeTransfer,QuitServerTab,QuitChannelTab,QuitQueryTab,ChannelListNoServerSelected,RemoveDCCReceivedFile,HideMenuBarWarning,ChannelListWarning,LargePaste";
+  QString flagNames = "Invitation,SaveLogfileNote,ClearLogfileQuestion,CloseQueryAfterIgnore,ResumeTransfer,QuitServerTab,QuitChannelTab,QuitQueryTab,ChannelListNoServerSelected,RemoveDCCReceivedFile,HideMenuBarWarning,ChannelListWarning,LargePaste";
   dialogDefinitions.append(i18n("Automatically join channel on invite"));
   dialogDefinitions.append(i18n("Notice that saving logfiles will save whole file"));
   dialogDefinitions.append(i18n("Question before deleting logfile contents"));
@@ -73,14 +76,16 @@ void Warnings_Config::loadSettings()
 
   KConfig* config = kapp->config();
   config->setGroup("Notification Messages");
-
-  for(unsigned int index=0; index<dialogDefinitions.count() ;index++)
+  QString flagName; 
+  for(unsigned int i=0; i<dialogDefinitions.count() ;i++)
   {
-    item=new QCheckListItem(dialogListView,dialogDefinitions[index],QCheckListItem::CheckBox);
-    item->setText(1,dialogDefinitions[index]);
-    item->setOn(config->readBoolEntry(flagNames.section(",",index,index), true));
+    item=new QCheckListItem(dialogListView,dialogDefinitions[i],QCheckListItem::CheckBox);
+    item->setText(1,dialogDefinitions[i]);
+    flagName = flagNames.section(",",i,i);
+    item->setText(2,flagName);
+    item->setOn(config->readBoolEntry(flagName,true));
+    //kdDebug() << "loading: " << item->text(2) << " as " <<  item->text(1) << endl;
   }
-  connect(dialogListView, SIGNAL(clicked(QListViewItem *)), this, SIGNAL(modified()));
 }
 
 /*
