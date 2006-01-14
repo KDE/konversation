@@ -1,5 +1,5 @@
 
-#include "ex_osd_preferences.h"
+#include "osd_preferences.h"
 #include "config/preferences.h"
 #include "osd.h"
 #include "konversationapplication.h"
@@ -13,8 +13,8 @@
 
 #include <kconfigdialog.h>
 
-OSD_Config_Ext::OSD_Config_Ext( QWidget* parent, const char* name, WFlags fl )
-    : OSD_Config( parent, name, fl )
+OSD_Config::OSD_Config( QWidget* parent, const char* name, WFlags fl )
+    : OSD_ConfigUI( parent, name, fl )
 {
     m_pOSDPreview = new OSDPreviewWidget("Konversation");
     connect(m_pOSDPreview, SIGNAL(positionChanged()), this, SLOT(slotPositionChanged()));
@@ -40,20 +40,20 @@ OSD_Config_Ext::OSD_Config_Ext( QWidget* parent, const char* name, WFlags fl )
     connect ( kcfg_OSDDrawShadow, SIGNAL(toggled(bool)), this, SLOT(slotDrawShadowChanged(bool)));
 }
 
-OSD_Config_Ext::~OSD_Config_Ext()
+OSD_Config::~OSD_Config()
 {
     delete m_pOSDPreview;
 }
 
-void OSD_Config_Ext::loadSettings()
+void OSD_Config::loadSettings()
 {
 }
 
-void OSD_Config_Ext::restorePageToDefaults()
+void OSD_Config::restorePageToDefaults()
 {
 }
 
-void OSD_Config_Ext::saveSettings()
+void OSD_Config::saveSettings()
 {
     //Update the current OSD.
     KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
@@ -83,7 +83,7 @@ void OSD_Config_Ext::saveSettings()
 
 }
 
-void OSD_Config_Ext::showEvent(QShowEvent*)
+void OSD_Config::showEvent(QShowEvent*)
 {
     //Update the preview
     m_pOSDPreview->setAlignment((OSDWidget::Alignment)( kcfg_OSDAlignment->value() ) );
@@ -92,19 +92,19 @@ void OSD_Config_Ext::showEvent(QShowEvent*)
     m_pOSDPreview->setShown(true);
 }
 
-void OSD_Config_Ext::hideEvent(QHideEvent*)
+void OSD_Config::hideEvent(QHideEvent*)
 {
     m_pOSDPreview->setShown(false);
 }
 
 
-void OSD_Config_Ext::slotOSDEnabledChanged(bool on)
+void OSD_Config::slotOSDEnabledChanged(bool on)
 {
     if ( isVisible() )
         m_pOSDPreview->setShown(on);
 }
 
-void OSD_Config_Ext::slotPositionChanged()
+void OSD_Config::slotPositionChanged()
 {
     kcfg_OSDScreen->setCurrentItem(m_pOSDPreview->screen());
 
@@ -114,7 +114,7 @@ void OSD_Config_Ext::slotPositionChanged()
 }
 
 
-void OSD_Config_Ext::slotCustomColorsChanged(bool on)
+void OSD_Config::slotCustomColorsChanged(bool on)
 {
     if(on)
     {
@@ -124,29 +124,31 @@ void OSD_Config_Ext::slotCustomColorsChanged(bool on)
     else
         m_pOSDPreview->unsetColors();
 }
-void OSD_Config_Ext::slotTextColorChanged(const QColor& color)
+void OSD_Config::slotTextColorChanged(const QColor& color)
 {
     if(kcfg_OSDUseCustomColors->isChecked())
         m_pOSDPreview->setTextColor(color);
 }
 
-void OSD_Config_Ext::slotBackgroundColorChanged(const QColor& color)
+void OSD_Config::slotBackgroundColorChanged(const QColor& color)
 {
     if(kcfg_OSDUseCustomColors->isChecked())
         m_pOSDPreview->setBackgroundColor(color);
 }
 
-void OSD_Config_Ext::slotScreenChanged(int index)
+void OSD_Config::slotScreenChanged(int index)
 {
     m_pOSDPreview->setScreen(index);
 }
 
-void OSD_Config_Ext::slotDrawShadowChanged(bool on)
+void OSD_Config::slotDrawShadowChanged(bool on)
 {
     m_pOSDPreview->setShadow(on);
 }
 
-void OSD_Config_Ext::slotUpdateFont(const QFont& font)
+void OSD_Config::slotUpdateFont(const QFont& font)
 {
     m_pOSDPreview->setFont(font);
 }
+
+#include "osd_preferences.moc"

@@ -8,17 +8,17 @@
 #ifndef EXDCCPREFERENCES_H
 #define EXDCCPREFERENCES_H
 
-#include "dcc_preferences.h"
+#include "dcc_preferencesui.h"
 
 class QComboBox;
 
-class DCC_Config_Ext : public DCC_Settings
+class DCC_Config : public DCC_ConfigUI
 {
  Q_OBJECT
 
  public:
-  DCC_Config_Ext(QWidget* parent, const char* name);
-  ~DCC_Config_Ext();
+  DCC_Config(QWidget* parent, const char* name);
+  ~DCC_Config();
 
 protected slots:
   virtual void languageChange();

@@ -35,7 +35,7 @@
 
 #include <unistd.h> // unlink()
 
-#include "ex_theme_preferences.h"
+#include "theme_preferences.h"
 #include "preferences_base.h"
 #include "images.h"
 #include "common.h"
@@ -43,8 +43,8 @@
 
 using namespace Konversation;
 
-Theme_Config_Ext::Theme_Config_Ext(QWidget* parent, const char* name)
-  : Theme_Config( parent, name)
+Theme_Config::Theme_Config(QWidget* parent, const char* name)
+  : Theme_ConfigUI( parent, name)
 {
     loadSettings();
 
@@ -56,11 +56,11 @@ Theme_Config_Ext::Theme_Config_Ext(QWidget* parent, const char* name)
     connect(removeButton,SIGNAL(clicked()),this,SLOT(removeTheme()));
 }
 
-Theme_Config_Ext::~Theme_Config_Ext()
+Theme_Config::~Theme_Config()
 {
 }
 
-void Theme_Config_Ext::loadSettings()
+void Theme_Config::loadSettings()
 {
     QString themeName, themeComment;
     QString currentTheme = Preferences::iconThemeName();
@@ -90,7 +90,7 @@ void Theme_Config_Ext::loadSettings()
     updateButtons();
 }
 
-void Theme_Config_Ext::saveSettings()
+void Theme_Config::saveSettings()
 {
     if(kcfg_IconThemeIndex->count())
     {
@@ -110,12 +110,12 @@ void Theme_Config_Ext::saveSettings()
     }
 }
 
-void Theme_Config_Ext::restorePageToDefaults()
+void Theme_Config::restorePageToDefaults()
 {
     // FIXME!
 }
 
-void Theme_Config_Ext::installTheme()
+void Theme_Config::installTheme()
 {
     KURL themeURL = KFileDialog::getOpenURL(QString::null,
         i18n("*.tar.gz *.tar.bz2 *.tar *.zip|Konversation Themes"),
@@ -187,7 +187,7 @@ void Theme_Config_Ext::installTheme()
 
 }
 
-void Theme_Config_Ext::removeTheme()
+void Theme_Config::removeTheme()
 {
     QString dir;
     QString themeName = kcfg_IconThemeIndex->currentText();
@@ -209,7 +209,7 @@ void Theme_Config_Ext::removeTheme()
     }
 }
 
-void Theme_Config_Ext::updatePreview(int id)
+void Theme_Config::updatePreview(int id)
 {
     QString dir;
     dir = m_dirs[id];
@@ -225,7 +225,7 @@ void Theme_Config_Ext::updatePreview(int id)
     previewLabel7->setPixmap(overlayPixmaps(normal,QPixmap(dir+"/irc_owner.png")));
 }
 
-void Theme_Config_Ext::updateButtons()
+void Theme_Config::updateButtons()
 {
     if(kcfg_IconThemeIndex->count() < 2)
     {
@@ -244,4 +244,4 @@ void Theme_Config_Ext::updateButtons()
     themeRC.close();
 }
 
-#include "ex_theme_preferences.moc"
+#include "theme_preferences.moc"

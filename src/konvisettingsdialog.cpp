@@ -55,10 +55,10 @@
 #include "tabbar_preferences.h"
 #include "colorsappearance_preferences.h"
 #include "generalbehavior_preferences.h"
-#include "ex_dcc_preferences.h"
-#include "ex_osd_preferences.h"
-#include "ex_theme_preferences.h"
-#include "ex_alias_preferences.h"
+#include "dcc_preferences.h"
+#include "osd_preferences.h"
+#include "theme_preferences.h"
+#include "alias_preferences.h"
 #include "ignore_preferences.h"
 #include "watchednicknames_preferences.h"
 
@@ -100,7 +100,7 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   addPage ( m_confFontAppearanceWdg, pagePath, "fonts", i18n("Fonts") );
 
   //Appearance/Themes
-  m_confThemeWdg = new Theme_Config_Ext( this, "Theme" );
+  m_confThemeWdg = new Theme_Config( this, "Theme" );
   pagePath.clear();
   pagePath << i18n("Appearance") << i18n("Themes");
   addPage ( m_confThemeWdg, pagePath, "iconthemes", i18n("Themes") );
@@ -146,7 +146,7 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   addPage ( m_confTabBarWdg, pagePath, "tab_new", i18n("Tab Bar") );
 
   //Behaviour/Command Aliases
-  m_confAliasWdg = new Alias_Config_Ext( this, "Alias" );
+  m_confAliasWdg = new Alias_Config( this, "Alias" );
   pagePath.clear();
   pagePath << i18n("Behavior") << i18n("Command Aliases");
   addPage ( m_confAliasWdg, pagePath, "editcopy", i18n(" Command Aliases") );
@@ -175,7 +175,7 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   pagePath << i18n("Behavior") << i18n("Logging");
   addPage ( m_confLogWdg, pagePath, "log", i18n("Logging") );
 
-  m_confDCCWdg = new DCC_Config_Ext( this, "DCC" );
+  m_confDCCWdg = new DCC_Config( this, "DCC" );
   pagePath.clear();
   pagePath << i18n("Behavior") << i18n("DCC");
   addPage ( m_confDCCWdg, pagePath, "2rightarrow", i18n("DCC") );
@@ -201,7 +201,7 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
 
 
   //Notification/On Screen Display
-  m_confOSDWdg = new OSD_Config_Ext( this, "OSD" );
+  m_confOSDWdg = new OSD_Config( this, "OSD" );
   pagePath.clear();
   pagePath << i18n("Notifications") << i18n("On Screen Display");
   addPage ( m_confOSDWdg, pagePath, "tv", i18n("On Screen Display") );

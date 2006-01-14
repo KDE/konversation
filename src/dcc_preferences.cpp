@@ -9,21 +9,21 @@
 #include <qlineedit.h>
 #include <klocale.h>
 
-#include "ex_dcc_preferences.h"
+#include "dcc_preferences.h"
 
-DCC_Config_Ext::DCC_Config_Ext(QWidget *parent, const char* name) :
-  DCC_Settings(parent,name)
+DCC_Config::DCC_Config(QWidget *parent, const char* name) :
+  DCC_ConfigUI(parent,name)
 {
     languageChange();
     connect(kcfg_DccMethodToGetOwnIp, SIGNAL(activated(int)), this, SLOT(dccMethodChanged(int)));          dccMethodChanged(kcfg_DccMethodToGetOwnIp->currentItem()); 
 }
 
-void DCC_Config_Ext::dccMethodChanged(int index)
+void DCC_Config::dccMethodChanged(int index)
 {
     kcfg_DccSpecificOwnIp->setEnabled( index == 2 ); 
 }
 
-void DCC_Config_Ext::languageChange()
+void DCC_Config::languageChange()
 {
     kcfg_DccMethodToGetOwnIp->clear();
     kcfg_DccMethodToGetOwnIp->insertItem(i18n("Network Interface"));
@@ -32,8 +32,8 @@ void DCC_Config_Ext::languageChange()
 
 }
 
-DCC_Config_Ext::~DCC_Config_Ext()
+DCC_Config::~DCC_Config()
 {
 }
-#include "ex_dcc_preferences.moc"
+#include "dcc_preferences.moc"
 

@@ -12,18 +12,18 @@
 #ifndef PREFSPAGETHEMES_H
 #define PREFSPAGETHEMES_H
 
-#include "theme_preferences.h"
+#include "theme_preferencesui.h"
 #include "konvisettingspage.h"
 
 class QStringList;
 
-class Theme_Config_Ext : public Theme_Config, public KonviSettingsPage
+class Theme_Config : public Theme_ConfigUI, public KonviSettingsPage
 {
     Q_OBJECT
 
     public:
-        Theme_Config_Ext(QWidget* parent, const char* name=NULL);
-        ~Theme_Config_Ext();
+        Theme_Config(QWidget* parent, const char* name=NULL);
+        ~Theme_Config();
 
         virtual void restorePageToDefaults();
         virtual void saveSettings();

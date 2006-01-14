@@ -1,8 +1,8 @@
 <!DOCTYPE UI><UI version="3.2" stdsetdef="1">
-<class>OSD_Config</class>
+<class>OSD_ConfigUI</class>
 <widget class="QWidget">
     <property name="name">
-        <cstring>OSD_Config</cstring>
+        <cstring>OSD_ConfigUI</cstring>
     </property>
     <property name="geometry">
         <rect>

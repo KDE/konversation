@@ -1,18 +1,18 @@
 #ifndef EXOSDPREFERENCES_H
 #define EXOSDPREFERENCES_H
 
-#include "osd_preferences.h"
+#include "osd_preferencesui.h"
 #include "konvisettingspage.h"
 
 class OSDPreviewWidget;
 
-class OSD_Config_Ext : public OSD_Config, public KonviSettingsPage
+class OSD_Config : public OSD_ConfigUI, public KonviSettingsPage
 {
     Q_OBJECT
 
 public:
-    OSD_Config_Ext( QWidget* parent = 0, const char* name = 0, WFlags fl = 0 );
-    ~OSD_Config_Ext();
+    OSD_Config( QWidget* parent = 0, const char* name = 0, WFlags fl = 0 );
+    ~OSD_Config();
 
     virtual void restorePageToDefaults();
     virtual void saveSettings();

@@ -13,10 +13,10 @@
 #include <kdebug.h>
 
 #include "preferences.h"
-#include "ex_alias_preferences.h"
+#include "alias_preferences.h"
 
-Alias_Config_Ext::Alias_Config_Ext(QWidget* parent, const char* name)
-  : Alias_Config(parent, name)
+Alias_Config::Alias_Config(QWidget* parent, const char* name)
+  : Alias_ConfigUI(parent, name)
 {
   aliasesListView->setRenameable(0,true);
   aliasesListView->setRenameable(1,true);
@@ -27,11 +27,11 @@ Alias_Config_Ext::Alias_Config_Ext(QWidget* parent, const char* name)
   connect(removeButton,SIGNAL (clicked()),this,SLOT (removeAlias()) );
 }
 
-Alias_Config_Ext::~Alias_Config_Ext()
+Alias_Config::~Alias_Config()
 {
 }
 
-void Alias_Config_Ext::newAlias()
+void Alias_Config::newAlias()
 {
   bool ok=false;
 
@@ -44,7 +44,7 @@ void Alias_Config_Ext::newAlias()
   emit modified();
 }
 
-void Alias_Config_Ext::removeAlias()
+void Alias_Config::removeAlias()
 {
   QListViewItem* selected=aliasesListView->selectedItem();
   if(selected)
@@ -57,13 +57,13 @@ void Alias_Config_Ext::removeAlias()
   emit modified();
 }
 
-void Alias_Config_Ext::restorePageToDefaults()
+void Alias_Config::restorePageToDefaults()
 {
 	//FIXME
 }
-void Alias_Config_Ext::saveSettings()
+void Alias_Config::saveSettings()
 {
-  kdDebug() << "Alias_Config_Ext::saveSettings" << endl;
+  kdDebug() << "Alias_Config::saveSettings" << endl;
   QStringList newList;
 
   QListViewItem* item=aliasesListView->itemAtIndex(0);
@@ -76,7 +76,7 @@ void Alias_Config_Ext::saveSettings()
   Preferences::setAliasList(newList);
 
 }
-void Alias_Config_Ext::loadSettings()
+void Alias_Config::loadSettings()
 {
   QStringList aliasList(Preferences::aliasList());
   aliasesListView->clear();
@@ -88,4 +88,4 @@ void Alias_Config_Ext::loadSettings()
     }
 }
 
-#include "ex_alias_preferences.moc"
+#include "alias_preferences.moc"

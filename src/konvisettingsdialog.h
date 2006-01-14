@@ -42,20 +42,20 @@
 class Warnings_Config;
 class ChatWindowAppearance_Config;
 class FontAppearance_Config;
-class Theme_Config_Ext;
+class Theme_Config;
 class ColorsAppearance_Config;
 class GeneralBehavior_Config;
 class ConnectionBehavior_Config;
 class ChatwindowBehaviour_Config;
 class NicklistBehavior_Config;
 class TabBar_Config;
-class Alias_Config_Ext;
+class Alias_Config;
 class QuickButtons_Config;
 class Log_Config;
-class DCC_Config_Ext;
+class DCC_Config;
 class WatchedNicknames_Config;
 class Highlight_Config;
-class OSD_Config_Ext;
+class OSD_Config;
 class Ignore_Config;
 
 class KDEUI_EXPORT KonviSettingsDialog : public KonviConfigDialog
@@ -66,20 +66,20 @@ class KDEUI_EXPORT KonviSettingsDialog : public KonviConfigDialog
 	Warnings_Config* m_confWarningsWdg;
 	ChatWindowAppearance_Config* m_confChatWindowAppearanceWdg;
 	FontAppearance_Config* m_confFontAppearanceWdg;
-	Theme_Config_Ext* m_confThemeWdg;
+	Theme_Config* m_confThemeWdg;
 	ColorsAppearance_Config* m_confColorsAppearanceWdg;
 	GeneralBehavior_Config* m_confGeneralBehaviorWdg;
 	ConnectionBehavior_Config* m_confConnectionBehaviorWdg;
 	ChatwindowBehaviour_Config* m_confChatwindowBehaviourWdg;
 	NicklistBehavior_Config* m_confNicklistBehaviorWdg;
 	TabBar_Config* m_confTabBarWdg;
-	Alias_Config_Ext* m_confAliasWdg;
+	Alias_Config* m_confAliasWdg;
 	QuickButtons_Config* m_confQuickButtonsWdg;
 	Log_Config* m_confLogWdg;
-	DCC_Config_Ext* m_confDCCWdg;
+	DCC_Config* m_confDCCWdg;
 	WatchedNicknames_Config* m_confWatchedNicknamesWdg;
 	Highlight_Config* m_confHighlightWdg;
-	OSD_Config_Ext* m_confOSDWdg;
+	OSD_Config* m_confOSDWdg;
 	Ignore_Config* m_confIgnoreWdg;
 
 	bool m_modified;

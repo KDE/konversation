@@ -1,8 +1,8 @@
 <!DOCTYPE UI><UI version="3.3" stdsetdef="1">
-<class>Theme_Config</class>
+<class>Theme_ConfigUI</class>
 <widget class="QWidget">
     <property name="name">
-        <cstring>Theme_Config</cstring>
+        <cstring>Theme_ConfigUI</cstring>
     </property>
     <property name="geometry">
         <rect>

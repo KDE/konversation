@@ -14,7 +14,7 @@ konversation_SOURCES = konviface.skel konviconfigdialog.cpp \
 				ignore_preferencesui.ui ignore_preferences.cpp ignore.cpp nicklistview.cpp ircinput.cpp \
 				ignorelistviewitem.cpp images.cpp quickbutton.cpp chatwindow.cpp outputfilter.cpp \
 				query.cpp konversationapplication.cpp nick.cpp inputfilter.cpp channel.cpp \
-				ircview.cpp server.cpp main.cpp dcc_preferences.ui log_preferences.ui \
+				ircview.cpp server.cpp main.cpp dcc_preferencesui.ui log_preferences.ui \
 				tabbar_preferences.ui chatwindowappearance_preferences.ui irccolorchooserui.ui \
 				colorsappearance_preferences.ui irccolorchooser.cpp channellistviewitem.cpp osd.cpp ircevent.cpp \
 				trayicon.cpp dccchat.cpp logfilereader.cpp multilineedit.cpp nickinfo.cpp \
@@ -24,13 +24,13 @@ konversation_SOURCES = konviface.skel konviconfigdialog.cpp \
 				sslsocket.cpp servergroupsettings.cpp serversettings.cpp servergroupdialog.cpp 	 \
 				ssllabel.cpp serverdialog.cpp channeldialog.cpp identitydialog.cpp topiclabel.cpp 	 \
 				channeloptionsui.ui channeloptionsdialog.cpp notificationhandler.cpp 	 joinchannelui.ui \
-				joinchanneldialog.cpp emoticon.cpp chatwindowbehaviour_preferences.ui alias_preferences.ui \
-				osd_preferences.ui theme_preferences.ui highlight_preferencesui.ui \
+				joinchanneldialog.cpp emoticon.cpp chatwindowbehaviour_preferences.ui alias_preferencesui.ui \
+				osd_preferencesui.ui theme_preferencesui.ui highlight_preferencesui.ui \
 				warnings_preferencesui.ui warnings_preferences.cpp quickbuttons_preferencesui.ui 	 \
 				watchednicknames_preferencesui.ui generalbehavior_preferences.ui connectionbehavior_preferences.ui 	 \
 				fontappearance_preferences.ui nicklistbehavior_preferencesui.ui konvibookmarkhandler.cpp \
-				konvibookmarkmenu.cpp popup.cpp ircviewbox.cpp searchbar.cpp ex_osd_preferences.cpp \
-				ex_theme_preferences.cpp ex_dcc_preferences.cpp ex_alias_preferences.cpp \
+				konvibookmarkmenu.cpp popup.cpp ircviewbox.cpp searchbar.cpp osd_preferences.cpp \
+				theme_preferences.cpp dcc_preferences.cpp alias_preferences.cpp \
 				highlight_preferences.cpp watchednicknames_preferences.cpp quickbuttons_preferences.cpp \
 				nicklistbehavior_preferences.cpp konviiphelper.cpp
 
