@@ -63,7 +63,6 @@
 #include "watchednicknames_preferences.h"
 
 // helper classes for Non-KConfigXT options
-#include "highlightconfigcontroller.h"
 #include "quickbuttonsconfigcontroller.h"
 #include "nicklistbehaviorconfigcontroller.h"
 
@@ -201,9 +200,9 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   pagePath.clear();
   pagePath << i18n("Notifications") << i18n("Highlight");
   addPage ( m_confHighlightWdg, pagePath, "paintbrush", i18n("Highlight") );
-  // interaction with the user
-  m_highlightController=new HighlightConfigController(m_confHighlightWdg);
-  connect(m_highlightController, SIGNAL(modified()), this, SLOT(modifiedSlot()));
+  connect(m_confHighlightWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
+  m_indexToPageMapping.insert(lastAddedIndex(), m_confHighlightWdg);
+    
 
   //Notification/On Screen Display
   m_confOSDWdg = new OSD_Config_Ext( this, "OSD" );
@@ -233,7 +232,6 @@ void KonviSettingsDialog::modifiedSlot()
 
 KonviSettingsDialog::~KonviSettingsDialog()
 {
-  delete m_highlightController;
 }
 
 void KonviSettingsDialog::updateSettings()
@@ -244,7 +242,6 @@ void KonviSettingsDialog::updateSettings()
     (*it).saveSettings();
   }
   //FIXME   as the below because KonviSettingsPage's, remove from below
-  m_highlightController->saveSettings();
   m_quickButtonsController->saveSettings();
   m_nicklistBehaviorController->saveSettings();
   m_modified = false;

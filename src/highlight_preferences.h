@@ -1,5 +1,5 @@
 //
-// C++ Interface: highlightconfigcontroller
+// C++ Interface: highlight_Config
 //
 // Description: 
 //
@@ -9,10 +9,12 @@
 // Copyright: See COPYING file that comes with this distribution
 //
 //
-#ifndef KONVERSATIONHIGHLIGHTCONFIGCONTROLLER_H
-#define KONVERSATIONHIGHLIGHTCONFIGCONTROLLER_H
+#ifndef KONVERSATIONHIGHLIGHT_CONFIG_H
+#define KONVERSATIONHIGHLIGHT_CONFIG_H
 
 #include <qobject.h>
+#include "highlight_preferencesui.h"
+#include "konvisettingspage.h"
 
 class Highlight_Config;
 
@@ -20,17 +22,18 @@ class Highlight_Config;
   @author Dario Abatianni
 */
 
-class HighlightConfigController : public QObject
+class Highlight_Config : public Highlight_ConfigUI, public KonviSettingsPage
 {
   Q_OBJECT
   
   public:
-    HighlightConfigController(Highlight_Config* highlightPage,QObject *parent = 0, const char *name = 0);
-    ~HighlightConfigController();
+    Highlight_Config(QWidget *parent = 0, const char *name = 0);
+    ~Highlight_Config();
 
   public:
-    void populateHighlightList();
-    void saveSettings();
+    virtual void saveSettings();
+    virtual void loadSettings();
+    virtual void restorePageToDefaults();
 
   signals:
     void modified();
@@ -49,7 +52,7 @@ class HighlightConfigController : public QObject
   
   protected:
     bool newItemSelected;
-    Highlight_Config* m_highlightPage;
 };
 
 #endif
+
