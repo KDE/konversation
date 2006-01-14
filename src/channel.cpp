@@ -225,9 +225,6 @@ Channel::Channel(QWidget* parent)
         connect(newQuickButton, SIGNAL(clicked(const QString &)), this, SLOT(quickButtonClicked(const QString &)));
     }
 
-    updateQuickButtons(Preferences::quickButtonList());
-    showNicknameList(Preferences::showNickList());
-
     // The box holding the Nickname button and Channel input
     commandLineBox = new QHBox(this);
     commandLineBox->setSpacing(spacing());
@@ -237,8 +234,6 @@ Channel::Channel(QWidget* parent)
     nicknameCombobox->insertStringList(Preferences::nicknameList());
     QWhatsThis::add(nicknameCombobox, i18n("<qt>This shows your current nick, and any alternatives you have set up.  If you select or type in a different nickname, then a request will be sent to the IRC server to change your nick.  If the server allows it, the new nickname will be selected.  If you type in a new nickname, you need to press 'Enter' at the end.<p>You can add change the alternative nicknames from the <em>Identities</em> option in the <em>File</em> menu.</qt>"));
     oldNick = nicknameCombobox->currentText();
-
-    setShowNicknameBox(Preferences::showNicknameBox());
 
     awayLabel = new QLabel(i18n("(away)"), commandLineBox);
     awayLabel->hide();
@@ -1935,6 +1930,14 @@ void Channel::updateAppearance()
     nicknameListView->setPaletteBackgroundColor(bg);
     nicknameListView->setAlternateBackground(abg);
     nicknameListView->setFont(Preferences::listFont());
+
+    showModeButtons(Preferences::showModeButtons());
+    showQuickButtons(Preferences::showQuickButtons());
+    showNicknameList(Preferences::showNickList());
+    showNicknameBox(Preferences::showNicknameBox());
+    showTopic(Preferences::showTopic());
+
+    updateQuickButtons(Preferences::quickButtonList());
 }
 
 void Channel::updateStyleSheet()
@@ -2274,7 +2277,7 @@ QString Channel::getChannelEncodingDefaultDesc()  // virtual
     return i18n("Identity Default ( %1 )").arg(getServer()->getIdentity()->getCodecName());
 }
 
-void Channel::setShowNicknameBox(bool show)
+void Channel::showNicknameBox(bool show)
 {
     if(show)
     {

@@ -53,8 +53,6 @@ StatusPanel::StatusPanel(QWidget* parent) : ChatWindow(parent)
     nicknameCombobox->insertStringList(Preferences::nicknameList());
     oldNick=nicknameCombobox->currentText();
 
-    setShowNicknameBox(Preferences::showNicknameBox());
-
     awayLabel=new QLabel(i18n("(away)"),commandLineBox);
     awayLabel->hide();
     statusInput=new IRCInput(commandLineBox);
@@ -190,6 +188,7 @@ void StatusPanel::updateAppearance()
     }
 
     nicknameCombobox->setFont(Preferences::textFont());
+    showNicknameBox(Preferences::showNicknameBox());
 }
 
 void StatusPanel::sendFileMenu()
@@ -305,7 +304,7 @@ void StatusPanel::serverOnline(bool online)
     nicknameCombobox->setEnabled(online);
 }
 
-void StatusPanel::setShowNicknameBox(bool show)
+void StatusPanel::showNicknameBox(bool show)
 {
     if(show)
     {

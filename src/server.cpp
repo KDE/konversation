@@ -2105,52 +2105,6 @@ void Server::updateChannelQuickButtons()
     }
 }
 
-// TODO: Maybe use a Signal / Slot mechanism for these things?
-void Server::setShowQuickButtons(bool state)
-{
-    Channel* channel=channelList.first();
-    while(channel)
-    {
-        channel->showQuickButtons(state);
-        channel=channelList.next();
-    }
-}
-
-// TODO: Maybe use a Signal / Slot mechanism for these things?
-void Server::setShowModeButtons(bool state)
-{
-    Channel* channel=channelList.first();
-    while(channel)
-    {
-        channel->showModeButtons(state);
-        channel=channelList.next();
-    }
-}
-
-void Server::setShowTopic(bool state)
-{
-    Channel* channel = channelList.first();
-
-    while(channel)
-    {
-        channel->showTopic(state);
-        channel = channelList.next();
-    }
-}
-
-void Server::setShowNicknameBox(bool state)
-{
-    Channel* channel = channelList.first();
-
-    while(channel)
-    {
-        channel->setShowNicknameBox(state);
-        channel = channelList.next();
-    }
-
-    getStatusView()->setShowNicknameBox(state);
-}
-
 Channel* Server::getChannelByName(const QString& name)
 {
     // Convert wanted channel name to lowercase

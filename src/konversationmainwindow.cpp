@@ -342,7 +342,7 @@ void KonversationMainWindow::openPrefsDialog()
     //An instance of your dialog could be already created and could be cached,
     //in which case you want to display the cached dialog instead of creating
     //another one
-    if(!m_settingsDialog) 
+    if(!m_settingsDialog)
     {
         m_settingsDialog = new KonviSettingsDialog(this);
         //User edited the configuration - update your local copies of the
@@ -789,6 +789,8 @@ void KonversationMainWindow::updateAppearance()
 
   int statH = fontMetrics().height()+2;
   m_generalInfoLabel->setFixedHeight( statH );
+
+  hideNicklistAction->setChecked(!Preferences::showNickList());
 }
 
 void KonversationMainWindow::addDccPanel()
@@ -1893,13 +1895,13 @@ void KonversationMainWindow::openURL(const QString& url, const QString& /*title*
     {
         Server* newServer = KonversationApplication::instance()->connectToServerGroup(host);
 
-        if (!newServer->isConnected()) 
+        if (!newServer->isConnected())
         {
             newServer->setAutoJoin(true);
             newServer->setAutoJoinChannel(channel);
             newServer->setAutoJoinChannelKey(password);
         }
-        else if(!channel.isEmpty()) 
+        else if(!channel.isEmpty())
         {
             newServer->queue("JOIN " + channel + " " + password);
         }

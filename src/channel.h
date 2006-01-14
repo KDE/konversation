@@ -172,7 +172,7 @@ class Channel : public ChatWindow
         virtual void indicateAway(bool show);
         void showTopic(bool show);
         void scheduleAutoWho();
-        void setShowNicknameBox(bool show);
+        void showNicknameBox(bool show);
         void showNicknameList(bool show);
 
         void setAllowNotifications(bool allow) { m_allowNotifications = allow; }
