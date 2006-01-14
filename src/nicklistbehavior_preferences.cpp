@@ -1,5 +1,5 @@
 //
-// C++ Implementation: nicklistbehaviorconfigcontroller
+// C++ Implementation: nicklistbehavior_Config
 //
 // Description:
 //
@@ -18,33 +18,33 @@
 #include "config/preferences.h"
 
 #include "nicklistbehavior_preferences.h"
-#include "nicklistbehaviorconfigcontroller.h"
 
-NicklistBehaviorConfigController::NicklistBehaviorConfigController(NicklistBehavior_Config* nicklistBehaviorPage,QObject *parent, const char *name)
- : QObject(parent, name)
+NicklistBehavior_Config::NicklistBehavior_Config(QWidget *parent, const char *name)
+ : NicklistBehavior_ConfigUI(parent, name)
 {
   // get page widget and populate listview
-  m_nicklistBehaviorPage=nicklistBehaviorPage;
-  populateSortingList();
+  loadSettings();
 
   // make items react to drag & drop
-  m_nicklistBehaviorPage->sortOrder->setSorting(-1,false);
+  sortOrder->setSorting(-1,false);
 
-  connect(m_nicklistBehaviorPage->sortOrder,SIGNAL (moved()),this,SIGNAL (modified()) );
+  connect(sortOrder,SIGNAL (moved()),this,SIGNAL (modified()) );
 }
 
-NicklistBehaviorConfigController::~NicklistBehaviorConfigController()
+NicklistBehavior_Config::~NicklistBehavior_Config()
 {
 }
 
-void NicklistBehaviorConfigController::populateSortingList()
+void NicklistBehavior_Config::restorePageToDefaults()
 {
-  // get pointer to sorting order listview
-  KListView* sortOrderListview=m_nicklistBehaviorPage->sortOrder;
+	//FIXME
+}
 
+void NicklistBehavior_Config::loadSettings()
+{
   // get sorting order string from preferences
   QString sortingOrder=Preferences::nicknameSortingOrder();
-
+  sortOrder->clear();
   // loop through the sorting order string, insert the matching descriptions in reverse order
   // to keep the correct sorting
   for(unsigned int index=sortingOrder.length();index!=0;index--)
@@ -52,20 +52,20 @@ void NicklistBehaviorConfigController::populateSortingList()
     // get next mode char
     QChar mode=sortingOrder[index-1];
     // find appropriate description
-    if(mode=='-') new KListViewItem(sortOrderListview,mode,i18n("Normal Users"));
-    if(mode=='v') new KListViewItem(sortOrderListview,mode,i18n("Voice (+v)"));
-    if(mode=='h') new KListViewItem(sortOrderListview,mode,i18n("Halfops (+h)"));
-    if(mode=='o') new KListViewItem(sortOrderListview,mode,i18n("Operators (+o)"));
-    if(mode=='p') new KListViewItem(sortOrderListview,mode,i18n("Channel Admins (+p)"));
-    if(mode=='q') new KListViewItem(sortOrderListview,mode,i18n("Channel Owners (+q)"));
+    if(mode=='-') new KListViewItem(sortOrder,mode,i18n("Normal Users"));
+    if(mode=='v') new KListViewItem(sortOrder,mode,i18n("Voice (+v)"));
+    if(mode=='h') new KListViewItem(sortOrder,mode,i18n("Halfops (+h)"));
+    if(mode=='o') new KListViewItem(sortOrder,mode,i18n("Operators (+o)"));
+    if(mode=='p') new KListViewItem(sortOrder,mode,i18n("Channel Admins (+p)"));
+    if(mode=='q') new KListViewItem(sortOrder,mode,i18n("Channel Owners (+q)"));
   }
 }
 
 // save settings permanently
-void NicklistBehaviorConfigController::saveSettings()
+void NicklistBehavior_Config::saveSettings()
 {
   // get the uppermost entry of the sorting list
-  QListViewItem* item=m_nicklistBehaviorPage->sortOrder->firstChild();
+  QListViewItem* item=sortOrder->firstChild();
 
   // prepare the new sorting order string
   QString newSortingOrder;
@@ -88,4 +88,4 @@ void NicklistBehaviorConfigController::saveSettings()
   Preferences::setNicknameSortingOrder(newSortingOrder);
 }
 
-#include "nicklistbehaviorconfigcontroller.moc"
+#include "nicklistbehavior_preferences.moc"

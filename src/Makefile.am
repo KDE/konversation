@@ -28,11 +28,11 @@ konversation_SOURCES = konviface.skel konviconfigdialog.cpp \
 				osd_preferences.ui theme_preferences.ui highlight_preferencesui.ui \
 				warnings_preferencesui.ui warnings_preferences.cpp quickbuttons_preferences.ui 	 \
 				watchednicknames_preferencesui.ui generalbehavior_preferences.ui connectionbehavior_preferences.ui 	 \
-				fontappearance_preferences.ui nicklistbehavior_preferences.ui konvibookmarkhandler.cpp \
+				fontappearance_preferences.ui nicklistbehavior_preferencesui.ui konvibookmarkhandler.cpp \
 				konvibookmarkmenu.cpp popup.cpp ircviewbox.cpp searchbar.cpp ex_osd_preferences.cpp \
 				ex_theme_preferences.cpp ex_dcc_preferences.cpp ex_alias_preferences.cpp \
 				highlight_preferences.cpp watchednicknames_preferences.cpp quickbuttonsconfigcontroller.cpp \
-				nicklistbehaviorconfigcontroller.cpp konviiphelper.cpp
+				nicklistbehavior_preferences.cpp konviiphelper.cpp
 
 konversation_COMPILE_FIRST = config/preferences_base.h
 konversation_LDADD = $(LIB_KIO) $(LIB_KABC) $(LIB_KIMIFACE) linkaddressbook/liblinkaddressbookui.la blowfish/libblowfish.la config/libkonversationconfig.la
@@ -66,7 +66,7 @@ noinst_HEADERS = serverlistdialog.h dcctransfersend.h dcctransferrecv.h \
 		 servergroupsettings.h serversettings.h	servergroupdialog.h serverdialog.h channeldialog.h \
 		 identitydialog.h topiclabel.h channeloptionsdialog.h joinchanneldialog.h popup.h \
 		 highlight_preferences.h watchednicknames_preferences.h quickbuttonsconfigcontroller.h \
-		 nicklistbehaviorconfigcontroller.h konvisettingspage.h
+		 nicklistbehavior_preferences.h konvisettingspage.h
 
 # User might still have these in src/ instead of src/config, so remove these in that case
 CLEANFILES = preferences_base.h preferences_base.cpp watchednicknamesconfigcontroller.*
