@@ -152,3 +152,4 @@ void OSD_Config::slotUpdateFont(const QFont& font)
 }
 
 #include "osd_preferences.moc"
+
