@@ -10,6 +10,8 @@
   begin:     Fri Feb 22 2002
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com
+  copyright: (C) 2005 by Eike Hein
+  email:     sho@eikehein.com
 */
 
 #ifndef IMAGES_H
@@ -44,12 +46,15 @@ class Images
         Images();
         virtual ~Images();
 
-        QIconSet getLed(int color,bool on) const;
+        QIconSet getCloseIcon() { return m_closeIcon; }
 
-        QIconSet getRedLed(bool on) const;
-        QIconSet getGreenLed(bool on) const;
-        QIconSet getBlueLed(bool on) const;
-        QIconSet getYellowLed(bool on) const;
+        QIconSet getLed(QColor col,bool state = true);
+
+        QIconSet getServerLed(bool state);
+        QIconSet getMsgsLed(bool state);
+        QIconSet getEventsLed();
+        QIconSet getNickLed();
+        QIconSet getHighlightsLed();
 
         QIconSet getKimproxyAway() const;
         QIconSet getKimproxyOnline() const;
@@ -62,14 +67,21 @@ class Images
         void initializeLeds();
         void initializeKimifaceIcons();
 
-        QIconSet redLedOn;
-        QIconSet redLedOff;
-        QIconSet greenLedOn;
-        QIconSet greenLedOff;
-        QIconSet blueLedOn;
-        QIconSet blueLedOff;
-        QIconSet yellowLedOn;
-        QIconSet yellowLedOff;
+        QIconSet m_closeIcon;
+
+        QIconSet m_serverLedOn;
+        QIconSet m_serverLedOff;
+        QIconSet m_msgsLedOn;
+        QIconSet m_msgsLedOff;
+        QIconSet m_eventsLedOn;
+        QIconSet m_nickLedOn;
+        QIconSet m_highlightsLedOn;
+
+        QColor m_serverColor;
+        QColor m_msgsColor;
+        QColor m_eventsColor;
+        QColor m_nickColor;
+        QColor m_highlightsColor;
 
         QIconSet kimproxyAway;
         QIconSet kimproxyOnline;

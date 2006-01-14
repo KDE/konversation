@@ -50,6 +50,7 @@ class NicksOnline;
 class QuickButtonsDialog;
 class UrlCatcher;
 class KonviSettingsDialog;
+class Images;
 
 namespace Konversation
 {
@@ -130,7 +131,6 @@ class KonversationMainWindow : public KMainWindow
         void openLogFile(const QString& caption, const QString& file);
 
         void removeSSLIcon();
-        void slotPrefsChanged();
 
         void openServerList();
         void openIdentitiesDialog();
@@ -138,7 +138,7 @@ class KonversationMainWindow : public KMainWindow
         void serverStateChanged(Server* server, Server::State state);
 
     protected slots:
-	void openPrefsDialog();
+        void openPrefsDialog();
         void openKeyBindings();
         void openQuickConnectDialog();
         void openNotify();
@@ -161,7 +161,10 @@ class KonversationMainWindow : public KMainWindow
 
         void closeKonsolePanel(ChatWindow* konsolePanel);
 
-        void newText(QWidget* view, const QString& highlightColor);
+        void setTabNotification(ChatWindow* widget, const Konversation::TabNotifyType& type);
+        void unsetTabNotification(ChatWindow* view);
+        void updateTabNotifications();
+
         void quitProgram();
 
         void notifyAction(const QString& serverName,const QString& nick);
@@ -256,5 +259,7 @@ class KonversationMainWindow : public KMainWindow
         KPopupMenu* m_bookmarks;
         KonviBookmarkHandler* m_bookmarkHandler;
         KonviSettingsDialog *m_settingsDialog;
+
+        Images* images;
 };
 #endif

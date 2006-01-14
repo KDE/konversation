@@ -128,7 +128,7 @@ int KonversationApplication::newInstance()
 
         connect(mainWindow, SIGNAL(showQuickConnectDialog()), this, SLOT(openQuickConnectDialog()) );
         connect(Preferences::self(), SIGNAL(updateTrayIcon()), mainWindow, SLOT(updateTrayIcon()) );
-        connect(this, SIGNAL(prefsChanged()), mainWindow, SLOT(slotPrefsChanged()) );
+        connect(this, SIGNAL(prefsChanged()), mainWindow, SIGNAL(prefsChanged()) );
         // take care of user style changes, setting back colors and stuff
         connect(KApplication::kApplication(), SIGNAL(appearanceChanged()), mainWindow, SLOT(updateAppearance()));
 

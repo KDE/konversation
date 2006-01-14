@@ -432,40 +432,22 @@ void ChatWindow::emitUpdateInfo()
     emit updateInfo(info);
 }
 
+QColor ChatWindow::highlightColor()
+{
+    return getTextView()->highlightColor();
+}
+
 void ChatWindow::activateTabNotification(Konversation::TabNotifyType type)
 {
-    if(type >= m_currentTabNotify)
-    {
+    if (!notificationsEnabled())
         return;
-    }
+
+    if(type > m_currentTabNotify)
+        return;
 
     m_currentTabNotify = type;
 
-    QString colorString;
-
-    switch(type)
-    {
-        case Konversation::tnfNick:
-            colorString = Preferences::highlightNickColor().name();
-            break;
-
-        case Konversation::tnfHighlight:
-            colorString = "#55c8c0";
-            break;
-
-        case Konversation::tnfNormal:
-            colorString = "#0000ff";
-            break;
-
-        case Konversation::tnfControl:
-            colorString = "#4eb959";
-            break;
-
-        default:
-            break;
-    }
-
-    emit updateTabNotification(this, colorString);
+    emit updateTabNotification(this,type);
 }
 
 void ChatWindow::resetTabNotification()

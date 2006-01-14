@@ -136,6 +136,9 @@ class ChatWindow : public QVBox
          */
         virtual bool areIRCColorsSupported() {return false; }
 
+        Konversation::TabNotifyType currentTabNotification() { return m_currentTabNotify; }
+        QColor highlightColor();
+
         signals:
         void nameChanged(ChatWindow* view,const QString& newName);
         void online(ChatWindow* myself,bool state);
@@ -143,7 +146,7 @@ class ChatWindow : public QVBox
          *  It is ignored if this tab isn't focused.
          */
         void updateInfo(const QString &info);
-        void updateTabNotification(QWidget* chatWin, const QString& highlightColor);
+        void updateTabNotification(ChatWindow* chatWin, const Konversation::TabNotifyType& type);
 
     public slots:
         void logText(const QString& text);

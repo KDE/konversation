@@ -36,6 +36,9 @@ the Free Software Foundation; either version 2 of the License, or
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
+        <property name="margin">
+            <number>0</number>
+        </property>
         <widget class="KListView" row="0" column="0">
             <column>
                 <property name="text">
@@ -205,8 +208,6 @@ the Free Software Foundation; either version 2 of the License, or
         </widget>
     </grid>
 </widget>
-<customwidgets>
-</customwidgets>
 <layoutdefaults spacing="6" margin="11"/>
 <layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
 <includehints>

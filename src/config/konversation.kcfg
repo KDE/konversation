@@ -59,12 +59,7 @@
       <label></label>
       <whatsthis></whatsthis>
     </entry>
-    <entry key="CloseButtonsOnTabs" type="Bool">
-      <default>false</default>
-      <label></label>
-      <whatsthis></whatsthis>
-    </entry>
-    <entry key="CloseButtonsAlignRight" type="Bool">
+    <entry key="CloseButtons" type="Bool">
       <default>false</default>
       <label></label>
       <whatsthis></whatsthis>
@@ -497,7 +492,7 @@
       <whatsthis></whatsthis>
     </entry>
     <entry key="HighlightNickColor" type="Color">
-      <default>#ff0000</default>
+      <default>#FFFF00</default>
       <label></label>
       <whatsthis></whatsthis>
     </entry>
@@ -674,11 +669,6 @@
       </choices>
       <default>Bottom</default>
     </entry>
-    <entry key="BlinkingTabs" type="Bool">
-      <default>false</default>
-      <label></label>
-      <whatsthis></whatsthis>
-    </entry>
     <entry key="UseClickableNicks" type="Bool">
       <default>true</default>
     </entry>
@@ -822,6 +812,63 @@
       <default param="TextViewBackground">#ffffff</default>
       <default param="AlternateBackground">#ffffff</default>
       <default param="Hyperlink">#0000ff</default>
+    </entry>
+  </group>
+  <group name="Tab Notifications">
+    <entry key="TabNotificationsText" type="Bool">
+      <default>true</default>
+      <label></label>
+      <whatsthis></whatsthis>
+    </entry>
+    <entry key="TabNotificationsLeds" type="Bool">
+      <default>false</default>
+      <label></label>
+      <whatsthis></whatsthis>
+    </entry>
+    <entry key="TabNotificationsMsgs" type="Bool">
+      <default>true</default>
+      <label></label>
+      <whatsthis></whatsthis>
+    </entry>
+    <entry key="TabNotificationsMsgsColor" type="Color">
+      <default>#008000</default>
+      <label></label>
+      <whatsthis></whatsthis>
+    </entry>
+    <entry key="TabNotificationsEvents" type="Bool">
+      <default>false</default>
+      <label></label>
+      <whatsthis></whatsthis>
+    </entry>
+    <entry key="TabNotificationsEventsColor" type="Color">
+      <default>#008000</default>
+      <label></label>
+      <whatsthis></whatsthis>
+    </entry>
+    <entry key="TabNotificationsNick" type="Bool">
+      <default>true</default>
+      <label></label>
+      <whatsthis></whatsthis>
+    </entry>
+    <entry key="TabNotificationsNickColor" type="Color">
+      <default>#FF0000</default>
+      <label></label>
+      <whatsthis></whatsthis>
+    </entry>
+    <entry key="TabNotificationsHighlights" type="Bool">
+      <default>true</default>
+      <label></label>
+      <whatsthis></whatsthis>
+    </entry>
+    <entry key="TabNotificationsHighlightsColor" type="Color">
+      <default>#FF0000</default>
+      <label></label>
+      <whatsthis></whatsthis>
+    </entry>
+    <entry key="TabNotificationsOverride" type="Bool">
+      <default>false</default>
+      <label></label>
+      <whatsthis></whatsthis>
     </entry>
   </group>
 </kcfg>

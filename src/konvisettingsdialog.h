@@ -57,6 +57,7 @@ class WatchedNicknames_Config;
 class Highlight_Config;
 class OSD_Config;
 class Ignore_Config;
+class TabNotifications_Config;
 
 class KDEUI_EXPORT KonviSettingsDialog : public KonviConfigDialog
 {
@@ -81,6 +82,7 @@ class KDEUI_EXPORT KonviSettingsDialog : public KonviConfigDialog
 	Highlight_Config* m_confHighlightWdg;
 	OSD_Config* m_confOSDWdg;
 	Ignore_Config* m_confIgnoreWdg;
+    TabNotifications_Config* m_confTabNotificationsWdg;
 
 	bool m_modified;
 

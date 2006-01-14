@@ -235,10 +235,6 @@ bool& needWhois)
  */
 void NicksOnline::updateServerOnlineList(Server* servr)
 {
-    // Get a green LED for flagging of joined channels.
-    Images* leds = KonversationApplication::instance()->images();
-    QIconSet currentLeds = leds->getGreenLed(false);
-    QPixmap joinedLed = currentLeds.pixmap(QIconSet::Automatic, QIconSet::Active, QIconSet::On);
     bool newNetworkRoot = false;
     QString serverName = servr->getServerName();
     // TODO: The method name "getServerGroup" is a misnomer.  Actually returns the

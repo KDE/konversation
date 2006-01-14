@@ -66,6 +66,8 @@ class IRCView : public KTextBrowser
             bool wholeWords, bool forward, bool fromCursor);
         bool searchNext();
 
+        QColor highlightColor() { return m_highlightColor; }
+
         signals:
         // Notify container of new text and highlight state
         void updateTabNotification(Konversation::TabNotifyType type);
@@ -167,6 +169,7 @@ class IRCView : public KTextBrowser
         bool m_forward;
         bool m_fromCursor;
         QString m_pattern;
+        QColor m_highlightColor;
 
         uint m_offset;
         QStringList m_colorList;

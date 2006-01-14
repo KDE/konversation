@@ -61,6 +61,7 @@
 #include "alias_preferences.h"
 #include "ignore_preferences.h"
 #include "watchednicknames_preferences.h"
+#include "tabnotifications_preferences.h"
 
 KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
 	           KonviConfigDialog( parent, "settings", Preferences::self(), KDialogBase::TreeList)
@@ -130,6 +131,12 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   pagePath << i18n("Behavior") << i18n("Chat Window");
   addPage ( m_confChatwindowBehaviourWdg, pagePath, "view_text", i18n("Chat Window") );
 
+  //Behaviour/Tab Bar
+  m_confTabBarWdg = new TabBar_Config( this, "TabBar" );
+  pagePath.clear();
+  pagePath << i18n("Behavior") << i18n("Tab Bar");
+  addPage ( m_confTabBarWdg, pagePath, "tab_new", i18n("Tab Bar") );
+
   //Behaviour/Nickname List
   m_confNicklistBehaviorWdg = new NicklistBehavior_Config( this, "NicklistBehavior" );
   pagePath.clear();
@@ -137,13 +144,6 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   addPage ( m_confNicklistBehaviorWdg, pagePath, "player_playlist", i18n("Nickname List") );
   connect(m_confNicklistBehaviorWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
   m_indexToPageMapping.insert(lastAddedIndex(), m_confNicklistBehaviorWdg);
-
-
-  //Behaviour/Tab Bar
-  m_confTabBarWdg = new TabBar_Config( this, "TabBar" );
-  pagePath.clear();
-  pagePath << i18n("Behavior") << i18n("Tab Bar");
-  addPage ( m_confTabBarWdg, pagePath, "tab_new", i18n("Tab Bar") );
 
   //Behaviour/Command Aliases
   m_confAliasWdg = new Alias_Config( this, "Alias" );
@@ -180,6 +180,20 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   pagePath << i18n("Behavior") << i18n("DCC");
   addPage ( m_confDCCWdg, pagePath, "2rightarrow", i18n("DCC") );
 
+  //Notifications/Tab Bar
+  m_confTabNotificationsWdg = new TabNotifications_Config( this, "TabBar" );
+  pagePath.clear();
+  pagePath << i18n("Notifications") << i18n("Tab Bar");
+  addPage ( m_confTabNotificationsWdg, pagePath, "tab_new", i18n("Tab Bar") );
+
+  //Notification/Highlighting
+  m_confHighlightWdg = new Highlight_Config( this, "Highlight" );
+  pagePath.clear();
+  pagePath << i18n("Notifications") << i18n("Highlight");
+  addPage ( m_confHighlightWdg, pagePath, "paintbrush", i18n("Highlight") );
+  connect(m_confHighlightWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
+  m_indexToPageMapping.insert(lastAddedIndex(), m_confHighlightWdg);
+
   //Notification/Watched Nicknames
   m_confWatchedNicknamesWdg = new WatchedNicknames_Config( this, "WatchedNicknames" );
   pagePath.clear();
@@ -190,16 +204,6 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   connect(m_confWatchedNicknamesWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
   m_indexToPageMapping.insert(lastAddedIndex(), m_confWatchedNicknamesWdg);
 
-
-  //Notification/Highlighting
-  m_confHighlightWdg = new Highlight_Config( this, "Highlight" );
-  pagePath.clear();
-  pagePath << i18n("Notifications") << i18n("Highlight");
-  addPage ( m_confHighlightWdg, pagePath, "paintbrush", i18n("Highlight") );
-  connect(m_confHighlightWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
-  m_indexToPageMapping.insert(lastAddedIndex(), m_confHighlightWdg);
-
-
   //Notification/On Screen Display
   m_confOSDWdg = new OSD_Config( this, "OSD" );
   pagePath.clear();
@@ -207,7 +211,6 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   addPage ( m_confOSDWdg, pagePath, "tv", i18n("On Screen Display") );
   //no modified connection needed - it's all kcfg widgets
   m_indexToPageMapping.insert(lastAddedIndex(), m_confOSDWdg);
-
 
   //Warning Dialogs
   m_confWarningsWdg = new Warnings_Config( this, "Warnings" );

@@ -16,7 +16,6 @@ Changes from 0.18 to 0.19
 - Implement '/server <network>'
 - Recognize server as being part of a network and use respective identity
 - Fix networks losing their channel history upon changes to their settings
-- Tab bar redesigned; uses label text color for notifications
 - Wiki address for [[foo]] can now be customized via WikiUrl config option under [General Options] in konversationrc
 - [[Foo]] can now be automatically expanded to http://<wiki url>/foo using WikiExpandUrl=true in konversationrc
 - Pressing arrow down in the input line now preserves input by adding it to the history and clears the input line
@@ -69,6 +68,10 @@ Changes from 0.18 to 0.19
 - Status bar segments correctly react to font size changes
 - Changed hard-coded channel join taskbar notification into a configurable notification event
 - Yammi media player is now supported by media script
+- QUIT events for users are now shown in any queries you have open with them
+- Fixed nickname context menu actions not working in queries
+- Redesigned tab notifications allowing for colored LEDs or text labels, the color being configurable per event class
+- Chat window highlight colors can be set to override generic tab notification colors
 
 Changes from 0.17 to 0.18
 - All nicks were blue when colored nicks are disabled with some setups

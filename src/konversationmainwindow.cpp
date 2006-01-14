@@ -78,6 +78,7 @@
 #include "common.h"
 #include "irccharsets.h"
 #include "konviiphelper.h"
+#include "images.h"
 
 KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", WStyle_ContextHelp | WType_TopLevel | WDestructiveClose)
 {
@@ -95,6 +96,8 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
     m_popupTabIndex = -1;
     m_settingsDialog = NULL;
 
+    images = KonversationApplication::instance()->images();
+
     dccTransferHandler=new DccTransferHandler(this);
 
     nicksOnlinePanel=0;
@@ -108,7 +111,9 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
     //  viewContainer->setHoverCloseButtonDelayed(false);
     setCentralWidget(viewContainer);
     updateTabPlacement();
-    viewContainer->setHoverCloseButton(Preferences::closeButtonsOnTabs());
+
+    viewContainer->setHoverCloseButton(Preferences::closeButtons());
+
     viewContainer->hide();
     KPushButton* closeBtn = new KPushButton(viewContainer);
     closeBtn->setPixmap(KGlobal::iconLoader()->loadIcon("tab_remove", KIcon::Small));
@@ -330,24 +335,23 @@ void KonversationMainWindow::updateTabPlacement()
 {
     viewContainer->setTabPosition((Preferences::tabPlacement()==Preferences::Top) ?
         QTabWidget::Top : QTabWidget::Bottom);
-    //  getViewContainer()->setHoverCloseButton(Preferences::closeButtonsOnTabs());
 }
 
 void KonversationMainWindow::openPrefsDialog()
 {
-  //An instance of your dialog could be already created and could be cached,
-  //in which case you want to display the cached dialog instead of creating
-  //another one
-  if(!m_settingsDialog) {
-    m_settingsDialog = new KonviSettingsDialog(this);
-    //User edited the configuration - update your local copies of the
-    //configuration data
-    connect(m_settingsDialog, SIGNAL(settingsChanged()), this, SLOT(updateAppearance()));
-    connect(m_settingsDialog, SIGNAL(settingsChanged()), KonversationApplication::instance(), SIGNAL(appearanceChanged()));
-
-  }
-  m_settingsDialog->show();
-
+    //An instance of your dialog could be already created and could be cached,
+    //in which case you want to display the cached dialog instead of creating
+    //another one
+    if(!m_settingsDialog) 
+    {
+        m_settingsDialog = new KonviSettingsDialog(this);
+        //User edited the configuration - update your local copies of the
+        //configuration data
+        connect(m_settingsDialog, SIGNAL(settingsChanged()), this, SLOT(updateAppearance()));
+        connect(m_settingsDialog, SIGNAL(settingsChanged()), this, SLOT(updateTabNotifications()));
+        connect(m_settingsDialog, SIGNAL(settingsChanged()), KonversationApplication::instance(), SIGNAL(appearanceChanged()));
+    }
+    m_settingsDialog->show();
 }
 
 void KonversationMainWindow::openKeyBindings()
@@ -442,10 +446,10 @@ void KonversationMainWindow::addView(ChatWindow* view, const QString& label, boo
     switch (view->getType())
     {
         case ChatWindow::Channel:
-            if(Preferences::closeButtonsOnTabs())
-            {
-                iconSet = UserIconSet("led_green_on");
-            }
+            if (Preferences::tabNotificationsLeds())
+                iconSet = images->getMsgsLed(false);
+            else if (Preferences::closeButtons())
+                iconSet = images->getCloseIcon();
 
             for (int sindex = 0; sindex < viewContainer->count(); sindex++)
             {
@@ -472,10 +476,8 @@ void KonversationMainWindow::addView(ChatWindow* view, const QString& label, boo
             break;
 
         case ChatWindow::RawLog:
-            if(Preferences::closeButtonsOnTabs())
-            {
-                iconSet = UserIconSet("led_blue_on");
-            }
+            if (Preferences::closeButtons())
+                iconSet = images->getCloseIcon();
 
             for (int sindex = 0; sindex < viewContainer->count(); sindex++)
             {
@@ -491,10 +493,10 @@ void KonversationMainWindow::addView(ChatWindow* view, const QString& label, boo
             break;
 
         case ChatWindow::Query:
-            if(Preferences::closeButtonsOnTabs())
-            {
-                iconSet = UserIconSet("led_red_on");
-            }
+            if(Preferences::tabNotificationsLeds())
+                iconSet = images->getMsgsLed(false);
+            else if (Preferences::closeButtons())
+                iconSet = images->getCloseIcon();
 
             for (int sindex = 0; sindex < viewContainer->count(); sindex++)
             {
@@ -521,10 +523,10 @@ void KonversationMainWindow::addView(ChatWindow* view, const QString& label, boo
             break;
 
         case ChatWindow::DccChat:
-            if(Preferences::closeButtonsOnTabs())
-            {
-                iconSet = UserIconSet("led_blue_on");
-            }
+            if(Preferences::tabNotificationsLeds())
+                iconSet = images->getMsgsLed(false);
+            else if (Preferences::closeButtons())
+                iconSet = images->getCloseIcon();
 
             for (int sindex = 0; sindex < viewContainer->count(); sindex++)
             {
@@ -548,12 +550,16 @@ void KonversationMainWindow::addView(ChatWindow* view, const QString& label, boo
                     break;
                 }
             }
+        case ChatWindow::Status:
+            if(Preferences::tabNotificationsLeds())
+                iconSet = images->getServerLed(false);
+            else if (Preferences::closeButtons())
+                iconSet = images->getCloseIcon();
+            break;
 
         default:
-            if(Preferences::closeButtonsOnTabs())
-            {
-                iconSet = UserIconSet("led_blue_on");
-            }
+            if (Preferences::closeButtons())
+                iconSet = images->getCloseIcon();
             break;
     }
 
@@ -846,7 +852,7 @@ void KonversationMainWindow::addDccChat(const QString& myNick,const QString& nic
     {
         DccChat* dccChatPanel=new DccChat(getViewContainer(),frontServer,myNick,nick,arguments,listen);
         addView(dccChatPanel, dccChatPanel->getName());
-        connect(dccChatPanel, SIGNAL(updateTabNotification(QWidget*, const QString&)), this, SLOT(newText(QWidget*, const QString&)));
+        connect(dccChatPanel, SIGNAL(updateTabNotification(ChatWindow*,const Konversation::TabNotifyType&)), this, SLOT(setTabNotification(ChatWindow*,const Konversation::TabNotifyType&)));
         if(listen)
             frontServer->queue(QString("PRIVMSG %1 :\x01%2 CHAT chat %3 %4\x01").arg(nick).arg("DCC").arg(numericalIp).arg(dccChatPanel->getPort()));
     }
@@ -876,7 +882,7 @@ StatusPanel* KonversationMainWindow::addStatusView(Server* server)
     // ... then put it into the tab widget, otherwise we'd have a race with server member
     addView(statusView,label);
 
-    connect(statusView, SIGNAL(updateTabNotification(QWidget*, const QString&)), this, SLOT(newText(QWidget*,const QString&)));
+    connect(statusView, SIGNAL(updateTabNotification(ChatWindow*,const Konversation::TabNotifyType&)), this, SLOT(setTabNotification(ChatWindow*,const Konversation::TabNotifyType&)));
     connect(statusView,SIGNAL (sendFile()),server,SLOT (requestDccSend()) );
     // TODO: Why was this here?  Delete channelPrefsChanged method as it does not
     // appear to do anything since statusView never emits signal prefsChanged.
@@ -904,7 +910,7 @@ Channel* KonversationMainWindow::addChannel(Server* server, const QString& name)
     channel->setName(name);
     addView(channel, newname);
 
-    connect(channel, SIGNAL(updateTabNotification(QWidget*, const QString&)), this, SLOT(newText(QWidget*, const QString&)));
+    connect(channel, SIGNAL(updateTabNotification(ChatWindow*,const Konversation::TabNotifyType&)), this, SLOT(setTabNotification(ChatWindow*,const Konversation::TabNotifyType&)));
     // TODO: Why is this here?  Delete channelPrefsChanged as it does not appear to
     // do anything since channel never emits prefsChanged.
     // connect(channel,SIGNAL (prefsChanged()),this,SLOT (channelPrefsChanged()) );
@@ -924,7 +930,7 @@ Query* KonversationMainWindow::addQuery(Server* server, const NickInfoPtr& nickI
     query->setNickInfo(nickInfo);
     addView(query, name, weinitiated);
 
-    connect(query, SIGNAL(updateTabNotification(QWidget*, const QString&)), this, SLOT(newText(QWidget*,const QString&)));
+    connect(query, SIGNAL(updateTabNotification(ChatWindow*,const Konversation::TabNotifyType&)), this, SLOT(setTabNotification(ChatWindow*,const Konversation::TabNotifyType&)));
     connect(server,SIGNAL (awayState(bool)),query,SLOT (indicateAway(bool)) );
 
     return query;
@@ -949,13 +955,148 @@ ChannelListPanel* KonversationMainWindow::addChannelListPanel(Server* server)
     return channelListPanel;
 }
 
-void KonversationMainWindow::newText(QWidget* widget, const QString& highlightColor)
+void KonversationMainWindow::setTabNotification(ChatWindow* view, const Konversation::TabNotifyType& type)
 {
-    ChatWindow* view = static_cast<ChatWindow*>(widget);
+    if (!Preferences::tabNotificationsText() && !Preferences::tabNotificationsText())
+        return;
 
     if(view != getViewContainer()->currentPage())
     {
-        getViewContainer()->setTabColor(view, QColor(highlightColor));
+        switch(type)
+        {
+            case Konversation::tnfNormal:
+                if (Preferences::tabNotificationsMsgs())
+                {
+                    if (Preferences::tabNotificationsLeds())
+                        getViewContainer()->setTabIconSet(view, images->getMsgsLed(true));
+                    if (Preferences::tabNotificationsText())
+                        getViewContainer()->setTabColor(view, Preferences::tabNotificationsMsgsColor());
+                }
+                break;
+
+            case Konversation::tnfControl:
+                if (Preferences::tabNotificationsEvents())
+                {
+                    if (Preferences::tabNotificationsLeds())
+                        getViewContainer()->setTabIconSet(view, images->getEventsLed());
+                    if (Preferences::tabNotificationsText())
+                        getViewContainer()->setTabColor(view, Preferences::tabNotificationsEventsColor());
+                }
+                break;
+
+            case Konversation::tnfNick:
+                if (Preferences::tabNotificationsNick())
+                {
+                    if (Preferences::tabNotificationsOverride() && Preferences::highlightNick())
+                    {
+                        if (Preferences::tabNotificationsLeds())
+                            getViewContainer()->setTabIconSet(view, images->getLed(Preferences::highlightNickColor(),true));
+                        if (Preferences::tabNotificationsText())
+                            getViewContainer()->setTabColor(view, Preferences::highlightNickColor());
+                    }
+                    else
+                    {
+                        if (Preferences::tabNotificationsLeds())
+                            getViewContainer()->setTabIconSet(view, images->getNickLed());
+                        if (Preferences::tabNotificationsText())
+                            getViewContainer()->setTabColor(view, Preferences::tabNotificationsNickColor());
+                    }
+                }
+                break;
+
+            case Konversation::tnfHighlight:
+                if (Preferences::tabNotificationsHighlights())
+                {
+                    if (Preferences::tabNotificationsOverride() && view->highlightColor().isValid())
+                    {
+                        if (Preferences::tabNotificationsLeds())
+                            getViewContainer()->setTabIconSet(view, images->getLed(view->highlightColor(),true));
+                        if (Preferences::tabNotificationsText())
+                            getViewContainer()->setTabColor(view, view->highlightColor());
+                    }
+                    else
+                    {
+                        if (Preferences::tabNotificationsLeds())
+                            getViewContainer()->setTabIconSet(view, images->getHighlightsLed());
+                        if (Preferences::tabNotificationsText())
+                            getViewContainer()->setTabColor(view, Preferences::tabNotificationsHighlightsColor());
+                    }
+                }
+                break;
+
+            default:
+                break;
+        }
+    }
+}
+
+void KonversationMainWindow::unsetTabNotification(ChatWindow* view)
+{
+    if (Preferences::tabNotificationsLeds())
+    {
+        switch (view->getType())
+        {
+            case ChatWindow::Channel:
+            case ChatWindow::Query:
+            case ChatWindow::DccChat:
+                getViewContainer()->setTabIconSet(view, images->getMsgsLed(false));
+                break;
+
+            default:
+                getViewContainer()->setTabIconSet(view, images->getServerLed(false));
+                break;
+        }
+    }
+
+    getViewContainer()->setTabColor(view, QColor());
+    view->resetTabNotification();
+}
+
+void KonversationMainWindow::updateTabNotifications()
+{
+    if (Preferences::closeButtons() && !viewContainer->hoverCloseButton())
+        viewContainer->setHoverCloseButton(true);
+
+    if (!Preferences::closeButtons() && viewContainer->hoverCloseButton())
+        viewContainer->setHoverCloseButton(false);
+
+    if (!Preferences::tabNotificationsLeds() && !Preferences::closeButtons())
+    {
+        for(int i = 0; i < viewContainer->count(); ++i)
+        {
+            ChatWindow* view = static_cast<ChatWindow*>(viewContainer->page(i));
+            getViewContainer()->setTabIconSet(view, QIconSet());
+        }
+    }
+
+    if (Preferences::closeButtons() && !Preferences::tabNotificationsLeds())
+    {
+        for(int i = 0; i < viewContainer->count(); ++i)
+        {
+            ChatWindow* view = static_cast<ChatWindow*>(viewContainer->page(i));
+            getViewContainer()->setTabIconSet(view, images->getCloseIcon());
+        }
+    }
+
+    if(Preferences::tabNotificationsLeds())
+    {
+        for(int i = 0; i < viewContainer->count(); ++i)
+        {
+            ChatWindow* view = static_cast<ChatWindow*>(viewContainer->page(i));
+
+            if (view->currentTabNotification()==Konversation::tnfNone)
+                unsetTabNotification(view);
+            else if (view->currentTabNotification()==Konversation::tnfNormal && !Preferences::tabNotificationsMsgs())
+                unsetTabNotification(view);
+            else if (view->currentTabNotification()==Konversation::tnfControl && !Preferences::tabNotificationsEvents())
+                unsetTabNotification(view);
+            else if (view->currentTabNotification()==Konversation::tnfNick && !Preferences::tabNotificationsNick())
+                unsetTabNotification(view);
+            else if (view->currentTabNotification()==Konversation::tnfHighlight && !Preferences::tabNotificationsHighlights())
+                unsetTabNotification(view);
+            else
+                setTabNotification(view,view->currentTabNotification());
+        }
     }
 }
 
@@ -1135,8 +1276,7 @@ void KonversationMainWindow::changeView(QWidget* viewToChange)
 
     updateFrontView();
 
-    viewContainer->setTabColor(view, QColor());
-    view->resetTabNotification();
+    unsetTabNotification(view);
     view->adjustFocus();
 
     updateTabMoveActions(getViewContainer()->currentPageIndex());
@@ -1305,41 +1445,6 @@ void KonversationMainWindow::notifyAction(const QString& serverName,const QStrin
     server->notifyAction(nick);
 }
 
-void KonversationMainWindow::slotPrefsChanged()
-{
-    kdDebug() << "KonversationMainWindow::slotPrefsChanged()" << endl;
-
-    for(int i = 0; i < viewContainer->count(); ++i)
-    {
-        ChatWindow* view = static_cast<ChatWindow*>(viewContainer->page(i));
-        QIconSet iconSet;
-
-        if(Preferences::closeButtonsOnTabs())
-        {
-            switch (view->getType())
-            {
-                case ChatWindow::Channel:
-                    iconSet = UserIconSet("led_green_on");
-                    break;
-
-                case ChatWindow::Query:
-                    iconSet = UserIconSet("led_red_on");
-                    break;
-
-                default:
-                    iconSet = UserIconSet("led_blue_on");
-                    break;
-            }
-        }
-
-        viewContainer->setTabIconSet(view, iconSet);
-    }
-
-    viewContainer->setHoverCloseButton(Preferences::closeButtonsOnTabs());
-
-    emit prefsChanged();
-}
-
 void KonversationMainWindow::removeSSLIcon()
 {
     disconnect(m_sslLabel,0,0,0);
@@ -1376,7 +1481,7 @@ void KonversationMainWindow::updateLag(Server* lagServer,int msec)
         {
             lagString += i18n("Lag: %1 s").arg(msec / 1000);
         }
-        
+
         m_lagInfoLabel->setText(lagString);
     }
 }

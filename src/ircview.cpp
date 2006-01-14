@@ -480,6 +480,7 @@ bool doHighlight, bool parseURL, bool self)
             if(patternFound)
             {
                 highlightColor = highlight->getColor().name();
+                m_highlightColor = highlightColor;
                 m_tabNotification = Konversation::tnfHighlight;
 
                 if(Preferences::highlightSoundsEnabled())

@@ -1,4 +1,4 @@
-<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
 <class>ConnectionBehavior_Config</class>
 <comment>This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -14,12 +14,9 @@ the Free Software Foundation; either version 2 of the License, or
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>533</width>
+            <width>421</width>
             <height>240</height>
         </rect>
-    </property>
-    <property name="caption">
-        <string>ConnectionBehavior_Config</string>
     </property>
     <grid>
         <property name="name">
@@ -28,64 +25,6 @@ the Free Software Foundation; either version 2 of the License, or
         <property name="margin">
             <number>0</number>
         </property>
-        <spacer row="0" column="0">
-            <property name="name">
-                <cstring>spacer53_2</cstring>
-            </property>
-            <property name="orientation">
-                <enum>Horizontal</enum>
-            </property>
-            <property name="sizeType">
-                <enum>Expanding</enum>
-            </property>
-            <property name="sizeHint">
-                <size>
-                    <width>241</width>
-                    <height>20</height>
-                </size>
-            </property>
-        </spacer>
-        <spacer row="2" column="0">
-            <property name="name">
-                <cstring>spacer54</cstring>
-            </property>
-            <property name="orientation">
-                <enum>Vertical</enum>
-            </property>
-            <property name="sizeType">
-                <enum>Expanding</enum>
-            </property>
-            <property name="sizeHint">
-                <size>
-                    <width>21</width>
-                    <height>200</height>
-                </size>
-            </property>
-        </spacer>
-        <widget class="QGroupBox" row="1" column="0">
-            <property name="name">
-                <cstring>debugGBox</cstring>
-            </property>
-            <property name="title">
-                <string>Debug</string>
-            </property>
-            <grid>
-                <property name="name">
-                    <cstring>unnamed</cstring>
-                </property>
-                <widget class="QCheckBox" row="0" column="0">
-                    <property name="name">
-                        <cstring>kcfg_RawLog</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Show raw &amp;log window when connecting</string>
-                    </property>
-                    <property name="accel">
-                        <string>Alt+L</string>
-                    </property>
-                </widget>
-            </grid>
-        </widget>
         <widget class="QGroupBox" row="0" column="0">
             <property name="name">
                 <cstring>kcfg_AutoReconnect</cstring>
@@ -188,8 +127,43 @@ the Free Software Foundation; either version 2 of the License, or
                     <property name="text">
                         <string>Automatically re&amp;join channels on reconnect</string>
                     </property>
-                    <property name="accel">
-                        <string>Alt+J</string>
+                </widget>
+            </grid>
+        </widget>
+        <spacer row="2" column="0">
+            <property name="name">
+                <cstring>spacer54</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Vertical</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>21</width>
+                    <height>60</height>
+                </size>
+            </property>
+        </spacer>
+        <widget class="QGroupBox" row="1" column="0">
+            <property name="name">
+                <cstring>debugGBox</cstring>
+            </property>
+            <property name="title">
+                <string>Debug</string>
+            </property>
+            <grid>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QCheckBox" row="0" column="0">
+                    <property name="name">
+                        <cstring>kcfg_RawLog</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Show raw &amp;log window when connecting</string>
                     </property>
                 </widget>
             </grid>
