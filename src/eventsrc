@@ -586,6 +586,7 @@ default_presentation=0
 
 [connectionFailure]
 Name=Connection failure
+Name[bg]=Неуспешно свързване
 Name[br]=Sac'het eo ar gevreadenn
 Name[da]=Forbindelse mislykket
 Name[el]=Αποτυχία σύνδεσης
@@ -595,6 +596,7 @@ Name[it]=Errore di connessione
 Name[pt]=Erro na ligação
 Name[pt_BR]=Erro na ligação
 Comment=Failed to connect to server
+Comment[bg]=Неуспех при свързване към сървър
 Comment[da]=Mislykkedes at forbinde til server
 Comment[el]=Η σύνδεση με τον εξυπηρετητή απέτυχε
 Comment[et]=Ühendumine serveriga ebaõnnestus
@@ -605,12 +607,16 @@ default_presentation=64
 
 [channelJoin]
 Name=You joined a channel
+Name[bg]=Вие се присъединихте към канал
 Name[br]=Emellet out bet ur c'hanol
+Name[el]=Συνδεθήκατε σε ένα κανάλι
 Name[et]=Sa ühinesid kanaliga
 Name[pt]=Você juntou-se a um canal
 Name[pt_BR]=Você juntou-se a um canal
 Comment=You joined a channel
+Comment[bg]=Вие се присъединихте към канал
 Comment[br]=Emellet out bet ur c'hanol
+Comment[el]=Συνδεθήκατε σε ένα κανάλι
 Comment[et]=Sa ühinesid kanaliga
 Comment[pt]=Você juntou-se a um canal
 Comment[pt_BR]=Você juntou-se a um canal
