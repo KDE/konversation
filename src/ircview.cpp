@@ -218,6 +218,11 @@ void IRCView::urlClickSlot(const QString &url)
 
 void IRCView::urlClickSlot(const QString &url, bool newTab)
 {
+    // QTextBrowser bug: a link extends to the lower end of the text view if there's no more
+    // content below it. So we check if the click was below the content and ignore it, if
+    // it was. -- Eisfuchs
+    if(m_pressPosition.y()>=contentsHeight()) return;
+
     if (!url.isEmpty() && !url.startsWith("#"))
     {
         // Always use KDE default mailer.
