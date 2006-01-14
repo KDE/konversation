@@ -62,9 +62,6 @@
 #include "ignore_preferences.h"
 #include "watchednicknames_preferences.h"
 
-// helper classes for Non-KConfigXT options
-#include "quickbuttonsconfigcontroller.h"
-
 KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
 	           KonviConfigDialog( parent, "settings", Preferences::self(), KDialogBase::TreeList)
 {
@@ -157,7 +154,7 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   connect(m_confAliasWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
 
   //Behaviour/Quick Buttons
-  m_confQuickButtonsWdg = new QuickButtonsConfigController( this, "QuickButtons" );
+  m_confQuickButtonsWdg = new QuickButtons_Config( this, "QuickButtons" );
   pagePath.clear();
   pagePath << i18n("Behavior") << i18n("Quick Buttons");
   addPage ( m_confQuickButtonsWdg, pagePath, "keyboard", i18n("Quick Buttons") );

@@ -1,5 +1,5 @@
 //
-// C++ Implementation: quickbuttonsconfigcontroller
+// C++ Implementation: QuickButtons_Config
 //
 // Description:
 //
@@ -20,10 +20,9 @@
 #include "config/preferences.h"
 
 #include "quickbuttons_preferences.h"
-#include "quickbuttonsconfigcontroller.h"
 
-QuickButtonsConfigController::QuickButtonsConfigController(QWidget* parent, const char* name)
- : QuickButtons_Config(parent, name)
+QuickButtons_Config::QuickButtons_Config(QWidget* parent, const char* name)
+ : QuickButtons_ConfigUI(parent, name)
 {
   // reset flag to defined state (used to block signals when just selecting a new item)
   newItemSelected=false;
@@ -42,12 +41,12 @@ QuickButtonsConfigController::QuickButtonsConfigController(QWidget* parent, cons
   connect(actionInput,SIGNAL (textChanged(const QString&)),this,SLOT (actionChanged(const QString&)) );
 }
 
-QuickButtonsConfigController::~QuickButtonsConfigController()
+QuickButtons_Config::~QuickButtons_Config()
 {
 }
 
 // fill listview with button definitions
-void QuickButtonsConfigController::loadSettings()
+void QuickButtons_Config::loadSettings()
 {
   // clear listView
   buttonListView->clear();
@@ -64,7 +63,7 @@ void QuickButtonsConfigController::loadSettings()
 }
 
 // save quick buttons to configuration
-void QuickButtonsConfigController::saveSettings()
+void QuickButtons_Config::saveSettings()
 {
   // get configuration object
   KConfig* config=kapp->config();
@@ -94,7 +93,7 @@ void QuickButtonsConfigController::saveSettings()
   Preferences::setQuickButtonList(newList);
 }
 
-void QuickButtonsConfigController::restorePageToDefaults()
+void QuickButtons_Config::restorePageToDefaults()
 {
   // FIXME:
 }
@@ -102,7 +101,7 @@ void QuickButtonsConfigController::restorePageToDefaults()
 // slots
 
 // what to do when the user selects an item
-void QuickButtonsConfigController::entrySelected(QListViewItem* quickButtonEntry)
+void QuickButtons_Config::entrySelected(QListViewItem* quickButtonEntry)
 {
   // play it safe, assume disabling all widgets first
   bool enabled=false;
@@ -129,7 +128,7 @@ void QuickButtonsConfigController::entrySelected(QListViewItem* quickButtonEntry
 }
 
 // what to do when the user change the name of a quick button
-void QuickButtonsConfigController::nameChanged(const QString& newName)
+void QuickButtons_Config::nameChanged(const QString& newName)
 {
   // get possible first selected item
   QListViewItem* item=buttonListView->selectedItem();
@@ -145,7 +144,7 @@ void QuickButtonsConfigController::nameChanged(const QString& newName)
 }
 
 // what to do when the user change the action definition of a quick button
-void QuickButtonsConfigController::actionChanged(const QString& newAction)
+void QuickButtons_Config::actionChanged(const QString& newAction)
 {
   // get possible first selected item
   QListViewItem* item=buttonListView->selectedItem();
@@ -160,4 +159,4 @@ void QuickButtonsConfigController::actionChanged(const QString& newAction)
   }
 }
 
-#include "quickbuttonsconfigcontroller.moc"
+#include "quickbuttons_preferences.moc"

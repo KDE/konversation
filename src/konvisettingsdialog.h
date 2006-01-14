@@ -58,11 +58,6 @@ class Highlight_Config;
 class OSD_Config_Ext;
 class Ignore_Config;
 
-class HighlightConfigController;
-class WatchedNicknamesConfigController;
-class QuickButtonsConfigController;
-class NicklistBehaviorConfigController;
-
 class KDEUI_EXPORT KonviSettingsDialog : public KonviConfigDialog
 {
     Q_OBJECT
@@ -79,15 +74,13 @@ class KDEUI_EXPORT KonviSettingsDialog : public KonviConfigDialog
 	NicklistBehavior_Config* m_confNicklistBehaviorWdg;
 	TabBar_Config* m_confTabBarWdg;
 	Alias_Config_Ext* m_confAliasWdg;
-	QuickButtonsConfigController* m_confQuickButtonsWdg;
+	QuickButtons_Config* m_confQuickButtonsWdg;
 	Log_Config* m_confLogWdg;
 	DCC_Config_Ext* m_confDCCWdg;
 	WatchedNicknames_Config* m_confWatchedNicknamesWdg;
 	Highlight_Config* m_confHighlightWdg;
 	OSD_Config_Ext* m_confOSDWdg;
 	Ignore_Config* m_confIgnoreWdg;
-        HighlightConfigController* m_highlightController;
-        NicklistBehaviorConfigController* m_nicklistBehaviorController;
 
 	bool m_modified;
 

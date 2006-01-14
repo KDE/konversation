@@ -9,23 +9,23 @@
 // Copyright: See COPYING file that comes with this distribution
 //
 //
-#ifndef QUICKBUTTONSCONFIGCONTROLLER_H
-#define QUICKBUTTONSCONFIGCONTROLLER_H
+#ifndef QUICKBUTTONSCONFIG_H
+#define QUICKBUTTONSCONFIG_H
 
-#include "quickbuttons_preferences.h"
+#include "quickbuttons_preferencesui.h"
 #include "konvisettingspage.h"
 
 /**
   @author Dario Abatianni <eisfuchs@tigress.com>
 */
 
-class QuickButtonsConfigController : public QuickButtons_Config, public KonviSettingsPage
+class QuickButtons_Config : public QuickButtons_ConfigUI, public KonviSettingsPage
 {
   Q_OBJECT
 
   public:
-    QuickButtonsConfigController(QWidget* parent, const char* name=NULL);
-    ~QuickButtonsConfigController();
+    QuickButtons_Config(QWidget* parent, const char* name=NULL);
+    ~QuickButtons_Config();
 
     virtual void saveSettings();
     virtual void loadSettings();
