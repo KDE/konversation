@@ -194,12 +194,6 @@ Channel::Channel(QWidget* parent)
     nicknameListView->addColumn(QString::null);
     nicknameListView->setColumnWidthMode(1,KListView::Maximum);
 
-    if (Preferences::autoUserhost())
-    {
-        nicknameListView->addColumn(QString::null);
-        nicknameListView->setColumnWidthMode(2,KListView::Maximum);
-    }
-
     nicknameListView->header()->hide();
 
     // setResizeMode must be called after all the columns are added
@@ -300,10 +294,8 @@ Channel::Channel(QWidget* parent)
     setLog(Preferences::log());
 
     connect(&userhostTimer,SIGNAL (timeout()),this,SLOT (autoUserhost()));
-    connect(Preferences::self(), SIGNAL (autoUserhostChanged(bool)),this,SLOT (autoUserhostChanged(bool)));
 
     // every few seconds try to get more userhosts
-    autoUserhostChanged(Preferences::autoUserhost());
     userhostTimer.start(10000);
 
     m_firstAutoWhoDone = false;
@@ -1936,6 +1928,7 @@ void Channel::updateAppearance()
     showNicknameList(Preferences::showNickList());
     showNicknameBox(Preferences::showNicknameBox());
     showTopic(Preferences::showTopic());
+    setAutoUserhost(Preferences::autoUserhost());
 
     updateQuickButtons(Preferences::quickButtonList());
 }
@@ -2075,7 +2068,7 @@ void Channel::autoUserhost()
     }
 }
 
-void Channel::autoUserhostChanged(bool state)
+void Channel::setAutoUserhost(bool state)
 {
     if(state)
     {

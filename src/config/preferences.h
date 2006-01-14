@@ -137,7 +137,6 @@ class Preferences : public QObject, public PreferencesBase
     signals:
         void requestServerConnection(int number);
         void requestSaveOptions();
-        void autoUserhostChanged(bool state);
         void autoContinuousWhoChanged();
         void updateTrayIcon();
 

@@ -174,6 +174,7 @@ class Channel : public ChatWindow
         void scheduleAutoWho();
         void showNicknameBox(bool show);
         void showNicknameList(bool show);
+        void setAutoUserhost(bool state);
 
         void setAllowNotifications(bool allow) { m_allowNotifications = allow; }
 
@@ -200,7 +201,6 @@ class Channel : public ChatWindow
         // connected to IRCInput::sendFile()
         void sendFileMenu();
         void autoUserhost();
-        void autoUserhostChanged(bool state);
         void autoWho();
         void nicknameComboboxChanged();
 

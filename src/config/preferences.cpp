@@ -428,7 +428,6 @@ void Preferences::setTrayNotify(bool state)
 void Preferences::setAutoUserhost(bool state)
 {
     PreferencesBase::setAutoUserhost(state);
-    emit self()->autoUserhostChanged(state);
 }
 
 const bool Preferences::dialogFlag(const QString& flagName)
