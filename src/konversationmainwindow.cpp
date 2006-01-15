@@ -151,6 +151,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
 
     action = new KAction(i18n("&Reconnect"), "connect_creating", 0, this, SLOT(reconnectCurrentServer()), actionCollection(), "reconnect_server");
     action->setEnabled(false);
+    action->setToolTip("Reconnect to the current server.");
 
     (new KAction(i18n("&Identities..."), "identity", KShortcut("F8"), this, SLOT(openIdentitiesDialog()),
         actionCollection(), "identities_dialog"))->setToolTip(i18n("Set your nick, away message, etc..."));
@@ -158,12 +159,17 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
     new KToggleAction(i18n("&Watched Nicks Online"), 0, KShortcut("F4"), this, SLOT(openNicksOnlinePanel()), actionCollection(), "open_nicksonline_window");
     action = new KAction(i18n("&Open Logfile"), "history", KShortcut("Ctrl+O"), this, SLOT(openLogfile()), actionCollection(), "open_logfile");
     action->setEnabled(false);
+    action->setToolTip(i18n("Opens the known history for this channel in a new tab."));
 
     action = new KAction(i18n("&Channel List"), 0, KShortcut("F5"), this, SLOT(openChannelList()), actionCollection(), "open_channel_list");
     action->setEnabled(false);
-    new KToggleAction(i18n("&URL Catcher"), 0, KShortcut("F6"), this, SLOT(addUrlCatcher()), actionCollection(), "open_url_catcher");
+    action->setToolTip(i18n("Show a list of all the known channels on this server"));
+    action = new KToggleAction(i18n("&URL Catcher"), 0, KShortcut("F6"), this, SLOT(addUrlCatcher()), actionCollection(), "open_url_catcher");
+    action->setToolTip(i18n("Show a history of all the urls that have been mentioned in any channel"));
 
-    new KAction(i18n("New &Konsole"), "openterm", 0, this, SLOT(addKonsolePanel()), actionCollection(), "open_konsole");
+    action = new KAction(i18n("New &Konsole"), "openterm", 0, this, SLOT(addKonsolePanel()), actionCollection(), "open_konsole");
+    action->setToolTip(i18n("Open a terminal in a new tab"));
+    
 
     // Actions to navigate through the different pages
     KShortcut nextShortcut = KStdAccel::tabNext();
@@ -184,12 +190,15 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
     action = new KAction(i18n("Move Tab Left"), "1leftarrow", KShortcut("Alt+Shift+Left"),
         this, SLOT(moveTabLeft()), actionCollection(), "move_tab_left");
     action->setEnabled(false);
+    action->setToolTip("Move the current tab");
     action = new KAction(i18n("Move Tab Right"), "1rightarrow", KShortcut("Alt+Shift+Right"),
         this, SLOT(moveTabRight()), actionCollection(), "move_tab_right");
     action->setEnabled(false);
+    action->setToolTip("Move the current tab");
 
     action = new KToggleAction(i18n("Enable Notifications"), 0, 0, this, SLOT(toggleTabNotifications()), actionCollection(), "tab_notifications");
     action->setEnabled(false);
+
 
     KSelectAction* selectAction = new KSelectAction(i18n("Set Encoding"), "charset", 0, actionCollection(), "tab_encoding");
     selectAction->setEditable(false);
