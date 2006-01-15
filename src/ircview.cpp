@@ -75,6 +75,7 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent)
     m_chatWin = 0;
     m_findParagraph=0;
     m_findIndex=0;
+    m_hasSetStatusText = false;
 
     setAutoFormatting(QTextEdit::AutoNone);
     setUndoRedoEnabled(0);
@@ -190,8 +191,12 @@ void IRCView::highlightedSlot(const QString& link)
     {
         m_isOnNick = false;
         if(link.isEmpty()) {
-            emit clearStatusText();
+            if(m_hasSetStatusText) {
+              emit clearStatusText();
+              m_hasSetStatusText = false;
+            }
         } else {
+            m_hasSetStatusText = true;
             emit actionStatusText(link);
         }
         if(link.isEmpty() && m_copyUrlMenu)
