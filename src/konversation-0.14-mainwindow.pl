@@ -1,5 +1,8 @@
 #!/usr/bin/perl -w
 
+# This script is a conversion script.  It converts some of the settings in the old konversation 0.14 settings format to the current settings form.
+# It is automatically called from the konversation.upd conversion file.
+
 use strict;
 
 my $currentGroup = "";
