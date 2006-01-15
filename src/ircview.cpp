@@ -90,10 +90,6 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent)
     new QStyleSheetItem(sheet,"p");
     setStyleSheet(sheet);
 
-    setServer(newServer);
-    setFont(Preferences::textFont());
-    setViewBackground(Preferences::color(Preferences::TextViewBackground),QString::null);
-
     m_popup = new QPopupMenu(this,"ircview_context_menu");
     m_popup->insertItem(SmallIconSet("editcopy"),i18n("&Copy"),Copy);
     m_popup->insertItem(i18n("Select All"),SelectAll);
@@ -101,11 +97,9 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent)
     m_popup->insertItem(SmallIcon("find"),i18n("Find Text..."),Search);
     m_popup->insertSeparator();
 
-    if(newServer)                                 // ## This is not working --cartman
-    {
-        KAction *action = newServer->getMainWindow()->actionCollection()->action("open_logfile");
-        action->plug(m_popup);
-    }
+    setServer(newServer);
+    setFont(Preferences::textFont());
+    setViewBackground(Preferences::color(Preferences::TextViewBackground),QString::null);
 
     connect(this, SIGNAL(highlighted(const QString&)), this, SLOT(highlightedSlot(const QString&)));
     connect(this, SIGNAL(linkClicked(const QString&)), this, SLOT(urlClickSlot(const QString&)));
@@ -165,6 +159,14 @@ void IRCView::setViewBackground(const QColor& backgroundColor, const QString& pi
 void IRCView::setServer(Server* newServer)
 {
     m_server = newServer;
+    if(newServer) {
+      KAction *action = newServer->getMainWindow()->actionCollection()->action("open_logfile");
+      kdDebug() << "TRYING TO INSERT OPEN_LOGFILE IN CONTEXT MENU" << endl;
+      Q_ASSERT(action);
+      if(!action) return;
+      action->plug(m_popup);
+    }
+
 }
 
 const QString& IRCView::getContextNick() const
