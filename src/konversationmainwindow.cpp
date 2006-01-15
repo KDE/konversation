@@ -1112,6 +1112,8 @@ void KonversationMainWindow::updateTabNotifications()
                 unsetTabNotification(view);
             else if (view->currentTabNotification()==Konversation::tnfHighlight && !Preferences::tabNotificationsHighlights())
                 unsetTabNotification(view);
+            else if (view==getViewContainer()->currentPage())
+                unsetTabNotification(view);
             else
                 setTabNotification(view,view->currentTabNotification());
         }
