@@ -1069,39 +1069,21 @@ void KonversationMainWindow::updateTabNotifications()
     if (!Preferences::closeButtons() && viewContainer->hoverCloseButton())
         viewContainer->setHoverCloseButton(false);
 
-    if (!Preferences::tabNotificationsLeds() && !Preferences::closeButtons())
+    for (int i = 0; i < viewContainer->count(); ++i)
     {
-        for(int i = 0; i < viewContainer->count(); ++i)
-        {
-            ChatWindow* view = static_cast<ChatWindow*>(viewContainer->page(i));
+        ChatWindow* view = static_cast<ChatWindow*>(viewContainer->page(i));
+
+        if (!Preferences::tabNotificationsLeds() && !Preferences::closeButtons())
             getViewContainer()->setTabIconSet(view, QIconSet());
-        }
-    }
 
-    if (Preferences::closeButtons() && !Preferences::tabNotificationsLeds())
-    {
-        for(int i = 0; i < viewContainer->count(); ++i)
-        {
-            ChatWindow* view = static_cast<ChatWindow*>(viewContainer->page(i));
+        if (Preferences::closeButtons() && !Preferences::tabNotificationsLeds())
             getViewContainer()->setTabIconSet(view, images->getCloseIcon());
-        }
-    }
 
-    if (!Preferences::tabNotificationsText())
-    {
-        for(int i = 0; i < viewContainer->count(); ++i)
-        {
-            ChatWindow* view = static_cast<ChatWindow*>(viewContainer->page(i));
+        if (!Preferences::tabNotificationsText())
             getViewContainer()->setTabColor(view, colorGroup().foreground());
-        }
-    }
 
-    if (Preferences::tabNotificationsLeds() || Preferences::tabNotificationsText())
-    {
-        for(int i = 0; i < viewContainer->count(); ++i)
+        if (Preferences::tabNotificationsLeds() || Preferences::tabNotificationsText())
         {
-            ChatWindow* view = static_cast<ChatWindow*>(viewContainer->page(i));
-
             if (view->currentTabNotification()==Konversation::tnfNone)
                 unsetTabNotification(view);
             else if (view->currentTabNotification()==Konversation::tnfNormal && !Preferences::tabNotificationsMsgs())
