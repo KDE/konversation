@@ -66,12 +66,14 @@ Changes from 0.18 to 0.19
 - Add new networks behind the last network in the Server List dialog, resulting in the user interface finally matching the application behavior
 - Minor cosmetic improvement to the status bar: all segments now have the same height
 - Status bar segments correctly react to font size changes
+- Status bar now showing context-relevant information such as link URLs
 - Changed hard-coded channel join taskbar notification into a configurable notification event
 - Yammi media player is now supported by media script
 - QUIT events for users are now shown in any queries you have open with them
 - Fixed nickname context menu actions not working in queries
 - Redesigned tab notifications allowing for colored LEDs or text labels, the color being configurable per event class
 - Chat window highlight colors can be set to override generic tab notification colors
+- Fixed wrong links being opened from chat window
 
 Changes from 0.17 to 0.18
 - All nicks were blue when colored nicks are disabled with some setups

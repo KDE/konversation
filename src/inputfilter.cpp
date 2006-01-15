@@ -376,20 +376,14 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
     {
         if(!isIgnore(prefix,Ignore::Notice))
         {
-            // This was once added to handle CABAB IDENTIFY-MSG, but seems to
-            // be unnecessary as CTCP NOTICE is not prefixed with -/+ - and
-            // the conditional breaks PING replies on Freenode due to removing
-            // the 0x01 ...
-            /*
-            if(server->identifyMsg())
-            {
-                trailing = trailing.mid(1);
-            }
-            */
-
             // Channel notice?
             if(isAChannel(parameterList[0]))
             {
+                if(server->identifyMsg())
+                {
+                    trailing = trailing.mid(1);
+                }
+
                 server->appendServerMessageToChannel(parameterList[0], i18n("Notice"),
                     i18n("-%1 to %2- %3")
                     .arg(sourceNick).arg(parameterList[0]).arg(trailing)
@@ -436,8 +430,12 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                 // No, so it was a normal notice
                 else
                 {
+                    if(server->identifyMsg())
+                    {
+                        trailing = trailing.mid(1);
+                    }
 
-                                                  // Nickserv
+                    // Nickserv
                     if(trailing.startsWith("If this is your nick"))
                     {
                         // Identify command if specified
