@@ -428,7 +428,7 @@ class Server : public QObject
         void sendToAllChannels(const QString& text);
         void notifyTimeout();
 
-        void enableIndentifyMsg(bool enabled);
+        void enableIdentifyMsg(bool enabled);
 
     protected slots:
 

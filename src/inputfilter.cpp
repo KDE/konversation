@@ -1594,7 +1594,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             {
                 if(trailing.contains("IDENTIFY-MSG"))
                 {
-                    server->enableIndentifyMsg(true);
+                    server->enableIdentifyMsg(true);
                 }
                 break;
             }

@@ -3249,7 +3249,7 @@ KABC::Addressee Server::getOfflineNickAddressee(QString& nickname)
         return KABC::Addressee();
 }
 
-void Server::enableIndentifyMsg(bool enabled)
+void Server::enableIdentifyMsg(bool enabled)
 {
     m_identifyMsg = enabled;
 }
