@@ -45,7 +45,7 @@ namespace Konversation
             QCString tmp = cipher.mid(index+1);
             char* tmp2;
 
-            if(server->identifyMsgEnabled())
+            if(server->identifyMsgEnabled()) // Workaround braindead Freenode prefixing messages with +
                 tmp = tmp.mid(1);
 
             if( !(tmp.mid(0,4) == "+OK ") && !(tmp.mid(0,5) == "mcps ") )
