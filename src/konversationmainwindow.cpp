@@ -657,6 +657,7 @@ void KonversationMainWindow::closeView(QWidget* viewToClose)
     }
 
     updateTabMoveActions(getViewContainer()->currentPageIndex());
+    updateSwitchTabAction();
 }
 
 void KonversationMainWindow::openLogfile()
