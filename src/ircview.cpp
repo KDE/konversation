@@ -190,6 +190,10 @@ void IRCView::highlightedSlot(const QString& link)
         //we just saw this a second ago.  no need to reemit.
         return;
     }
+
+    // remember current URL to overcome link clicking problems in QTextBrowser
+    m_highlightedURL=link;
+
     if(link.isEmpty()) {
         if(!m_lastStatusText.isEmpty()) {
           emit clearStatusText();
@@ -202,7 +206,7 @@ void IRCView::highlightedSlot(const QString& link)
     if(!link.startsWith("#"))
     {
         m_isOnNick = false;
-        
+
         if(!link.isEmpty()) {
             //link therefore != m_lastStatusText  so emit with this new text
             emit actionStatusText(link);
@@ -238,12 +242,13 @@ void IRCView::urlClickSlot(const QString &url)
     urlClickSlot(url,false);
 }
 
-void IRCView::urlClickSlot(const QString &url, bool newTab)
+void IRCView::urlClickSlot(const QString& /* _url */, bool newTab)
 {
-    // QTextBrowser bug: a link extends to the lower end of the text view if there's no more
-    // content below it. So we check if the click was below the content and ignore it, if
-    // it was. -- Eisfuchs
-    if(m_pressPosition.y()>=contentsHeight()) return;
+    // QTextBrowser bug: a link may be screwed up by other links in the same view, so we
+    // ignore the URL given by highlighted() signal and take our previously remembered
+    // hover URL, which is correct, curiously. -- Eisfuchs (idea by Sho_)
+
+    QString url=m_highlightedURL;
 
     if (!url.isEmpty() && !url.startsWith("#"))
     {

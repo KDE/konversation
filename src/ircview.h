@@ -184,6 +184,7 @@ class IRCView : public KTextBrowser
         QStringList m_colorList;
         QMap<QString,QString> m_colorMap;
 
+        QString m_highlightedURL;   // the URL we're currently hovering on with the mouse
         QString m_currentNick;
         bool m_isOnNick;
         bool m_mousePressed;
