@@ -194,7 +194,7 @@ void IRCView::highlightedSlot(const QString& link)
     {
         m_isOnNick = false;
         if(link.isEmpty()) {
-            if(m_lastStatusText.isEmpty()) {
+            if(!m_lastStatusText.isEmpty()) {
               emit clearStatusText();
               m_lastStatusText = QString::null;
             }
