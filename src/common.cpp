@@ -16,6 +16,7 @@
 #include <qpixmap.h>
 #include <qbitmap.h>
 #include <qpainter.h>
+#include <klocale.h>
 
 #include "common.h"
 #include "konversationapplication.h"
@@ -113,7 +114,10 @@ namespace Konversation
         }
 
         // Make [[foo]] a link to $wikiurl
-        QString wikiUrl = Preferences::wikiURL();
+	
+	
+        QString wikiUrl = Preferences::translatedWikiURL(); //this allows translators to make a different wikipedia url for each different language
+	
         bool expandWikiUrl = Preferences::expandWikiUrl();
 
         QRegExp wikipedia("\\[\\[([^\\]]+)\\]\\]");

@@ -231,6 +231,7 @@ void Preferences::removeServerGroup(int id)
     }
 }
 
+
 const QPtrList<Highlight> Preferences::highlightList()
 {
     return self()->mHighlightList;
@@ -526,6 +527,13 @@ const QString Preferences::nicknameSortingOrder()
 void Preferences::setNicknameSortingOrder(const QString newSortingOrder)
 {
   self()->mSortingOrder=newSortingOrder;
+}
+
+QString Preferences::translatedWikiURL() {
+  QString wikiUrl = wikiURL();
+  if(wikiUrl.isEmpty() /*indicates to use localised version*/ || wikiUrl == "http://en.wikipedia.org/wiki/" /* pre 0.19 default.*/) 
+    return i18n("Translate to localised wikipedia url.  Search term is appended on the end", "http://en.wikipedia.org/wiki/Special:Search?go=Go&search=");
+  return wikiUrl;
 }
 
 #include "preferences.moc"

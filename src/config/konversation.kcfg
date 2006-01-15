@@ -105,7 +105,8 @@
       <whatsthis></whatsthis>
     </entry>
     <entry key="WikiURL" type="String">
-      <default>http://en.wikipedia.org/wiki/</default>
+      <!-- The default for this is actually in in common.cpp and is set to the default if an empty string is returned -->
+      <default></default>
     </entry>
     <entry key="ExpandWikiUrl" type="Bool">
       <default>false</default>

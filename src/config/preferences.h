@@ -136,6 +136,8 @@ class Preferences : public QObject, public PreferencesBase
 	static void setSystrayOnly(bool state);
 	static void setTrayNotify(bool state);
 	static void setAutoUserhost(bool state);
+	/* Calls wikiURL() and if it's empty, provide a translatable (by the localisation team) url */
+	static QString translatedWikiURL();
 
 
     signals:
