@@ -442,6 +442,17 @@ void KonversationMainWindow::appendToFrontmost(const QString& type,const QString
         m_frontView->appendServerMessage(type,message);
 }
 
+void KonversationMainWindow::updateAppearance()
+{
+    updateTabPlacement();
+    setShowTabBarCloseButton(Preferences::showTabBarCloseButton());
+
+    int statH = fontMetrics().height()+2;
+    m_generalInfoLabel->setFixedHeight( statH );
+
+    hideNicklistAction->setChecked(!Preferences::showNickList());
+}
+
 void KonversationMainWindow::addView(ChatWindow* view, const QString& label, bool weinitiated)
 {
     // TODO: Make sure to add DCC status tab at the end of the list and all others
@@ -571,6 +582,13 @@ void KonversationMainWindow::addView(ChatWindow* view, const QString& label, boo
                 iconSet = images->getCloseIcon();
             break;
 
+        case ChatWindow::Konsole:
+            if(Preferences::tabNotificationsLeds())
+                iconSet = images->getMsgsLed(false);
+            else if (Preferences::closeButtons())
+                iconSet = images->getCloseIcon();
+            break;
+
         default:
             if (Preferences::closeButtons())
                 iconSet = images->getCloseIcon();
@@ -689,6 +707,7 @@ void KonversationMainWindow::addKonsolePanel()
 {
     KonsolePanel* panel=new KonsolePanel(getViewContainer());
     addView(panel, i18n("Konsole"));
+    connect(panel, SIGNAL(updateTabNotification(ChatWindow*,const Konversation::TabNotifyType&)), this, SLOT(setTabNotification(ChatWindow*,const Konversation::TabNotifyType&)));
     connect(panel,SIGNAL (deleted(ChatWindow*)),this,SLOT (closeKonsolePanel(ChatWindow*)) );
     panel->setMainWindow(this);
 }
@@ -795,17 +814,6 @@ void KonversationMainWindow::closeUrlCatcher()
         urlCatcherPanel=0;
         (dynamic_cast<KToggleAction*>(actionCollection()->action("open_url_catcher")))->setChecked(false);
     }
-}
-
-void KonversationMainWindow::updateAppearance()
-{
-  updateTabPlacement();
-  setShowTabBarCloseButton(Preferences::showTabBarCloseButton());
-
-  int statH = fontMetrics().height()+2;
-  m_generalInfoLabel->setFixedHeight( statH );
-
-  hideNicklistAction->setChecked(!Preferences::showNickList());
 }
 
 void KonversationMainWindow::addDccPanel()
@@ -974,76 +982,76 @@ ChannelListPanel* KonversationMainWindow::addChannelListPanel(Server* server)
 
 void KonversationMainWindow::setTabNotification(ChatWindow* view, const Konversation::TabNotifyType& type)
 {
+    if(view==getViewContainer()->currentPage())
+        return;
+
     if (!Preferences::tabNotificationsLeds() && !Preferences::tabNotificationsText())
         return;
 
-    if(view != getViewContainer()->currentPage())
+    switch(type)
     {
-        switch(type)
-        {
-            case Konversation::tnfNormal:
-                if (Preferences::tabNotificationsMsgs())
+        case Konversation::tnfNormal:
+            if (Preferences::tabNotificationsMsgs())
+            {
+                if (Preferences::tabNotificationsLeds())
+                    getViewContainer()->setTabIconSet(view, images->getMsgsLed(true));
+                if (Preferences::tabNotificationsText())
+                    getViewContainer()->setTabColor(view, Preferences::tabNotificationsMsgsColor());
+            }
+            break;
+
+        case Konversation::tnfControl:
+            if (Preferences::tabNotificationsEvents())
+            {
+                if (Preferences::tabNotificationsLeds())
+                    getViewContainer()->setTabIconSet(view, images->getEventsLed());
+                if (Preferences::tabNotificationsText())
+                    getViewContainer()->setTabColor(view, Preferences::tabNotificationsEventsColor());
+            }
+            break;
+
+        case Konversation::tnfNick:
+            if (Preferences::tabNotificationsNick())
+            {
+                if (Preferences::tabNotificationsOverride() && Preferences::highlightNick())
                 {
                     if (Preferences::tabNotificationsLeds())
-                        getViewContainer()->setTabIconSet(view, images->getMsgsLed(true));
+                        getViewContainer()->setTabIconSet(view, images->getLed(Preferences::highlightNickColor(),true));
                     if (Preferences::tabNotificationsText())
-                        getViewContainer()->setTabColor(view, Preferences::tabNotificationsMsgsColor());
+                        getViewContainer()->setTabColor(view, Preferences::highlightNickColor());
                 }
-                break;
-
-            case Konversation::tnfControl:
-                if (Preferences::tabNotificationsEvents())
+                else
                 {
                     if (Preferences::tabNotificationsLeds())
-                        getViewContainer()->setTabIconSet(view, images->getEventsLed());
+                        getViewContainer()->setTabIconSet(view, images->getNickLed());
                     if (Preferences::tabNotificationsText())
-                        getViewContainer()->setTabColor(view, Preferences::tabNotificationsEventsColor());
+                        getViewContainer()->setTabColor(view, Preferences::tabNotificationsNickColor());
                 }
-                break;
+            }
+            break;
 
-            case Konversation::tnfNick:
-                if (Preferences::tabNotificationsNick())
+        case Konversation::tnfHighlight:
+            if (Preferences::tabNotificationsHighlights())
+            {
+                if (Preferences::tabNotificationsOverride() && view->highlightColor().isValid())
                 {
-                    if (Preferences::tabNotificationsOverride() && Preferences::highlightNick())
-                    {
-                        if (Preferences::tabNotificationsLeds())
-                            getViewContainer()->setTabIconSet(view, images->getLed(Preferences::highlightNickColor(),true));
-                        if (Preferences::tabNotificationsText())
-                            getViewContainer()->setTabColor(view, Preferences::highlightNickColor());
-                    }
-                    else
-                    {
-                        if (Preferences::tabNotificationsLeds())
-                            getViewContainer()->setTabIconSet(view, images->getNickLed());
-                        if (Preferences::tabNotificationsText())
-                            getViewContainer()->setTabColor(view, Preferences::tabNotificationsNickColor());
-                    }
+                    if (Preferences::tabNotificationsLeds())
+                        getViewContainer()->setTabIconSet(view, images->getLed(view->highlightColor(),true));
+                    if (Preferences::tabNotificationsText())
+                        getViewContainer()->setTabColor(view, view->highlightColor());
                 }
-                break;
-
-            case Konversation::tnfHighlight:
-                if (Preferences::tabNotificationsHighlights())
+                else
                 {
-                    if (Preferences::tabNotificationsOverride() && view->highlightColor().isValid())
-                    {
-                        if (Preferences::tabNotificationsLeds())
-                            getViewContainer()->setTabIconSet(view, images->getLed(view->highlightColor(),true));
-                        if (Preferences::tabNotificationsText())
-                            getViewContainer()->setTabColor(view, view->highlightColor());
-                    }
-                    else
-                    {
-                        if (Preferences::tabNotificationsLeds())
-                            getViewContainer()->setTabIconSet(view, images->getHighlightsLed());
-                        if (Preferences::tabNotificationsText())
-                            getViewContainer()->setTabColor(view, Preferences::tabNotificationsHighlightsColor());
-                    }
+                    if (Preferences::tabNotificationsLeds())
+                        getViewContainer()->setTabIconSet(view, images->getHighlightsLed());
+                    if (Preferences::tabNotificationsText())
+                        getViewContainer()->setTabColor(view, Preferences::tabNotificationsHighlightsColor());
                 }
-                break;
+            }
+            break;
 
-            default:
-                break;
-        }
+        default:
+            break;
     }
 }
 
@@ -1056,6 +1064,7 @@ void KonversationMainWindow::unsetTabNotification(ChatWindow* view)
             case ChatWindow::Channel:
             case ChatWindow::Query:
             case ChatWindow::DccChat:
+            case ChatWindow::Konsole:
                 getViewContainer()->setTabIconSet(view, images->getMsgsLed(false));
                 break;
 
