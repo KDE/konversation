@@ -12,9 +12,6 @@
             <height>418</height>
         </rect>
     </property>
-    <property name="caption">
-        <string>WatchedNicknames_ConfigUI</string>
-    </property>
     <grid>
         <property name="name">
             <cstring>unnamed</cstring>
@@ -146,9 +143,6 @@ command is placed in the &lt;b&gt;Input Line&lt;/b&gt; on the server window.&lt;
             <property name="text">
                 <string>&amp;Show watched nicks online tab on application startup</string>
             </property>
-            <property name="accel">
-                <string>Alt+S</string>
-            </property>
             <property name="whatsThis" stdset="0">
                 <string>&lt;qt&gt;When checked, the &lt;b&gt;Nicks Online&lt;/b&gt; window will be automatically opened when starting Konversation.&lt;/qt&gt;</string>
             </property>
@@ -159,9 +153,6 @@ command is placed in the &lt;b&gt;Input Line&lt;/b&gt; on the server window.&lt;
             </property>
             <property name="text">
                 <string>&amp;Enable nickname watcher</string>
-            </property>
-            <property name="accel">
-                <string>Alt+E</string>
             </property>
             <property name="whatsThis" stdset="0">
                 <string>&lt;qt&gt;
