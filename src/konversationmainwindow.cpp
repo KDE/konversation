@@ -445,6 +445,12 @@ void KonversationMainWindow::addView(ChatWindow* view, const QString& label, boo
     ChatWindow::WindowType wtype;
     QIconSet iconSet;
 
+    connect(view, SIGNAL( actionStatusText( const QString & ) ),
+        statusBar(), SLOT( message( const QString & ) ) );
+//    connect(view, SIGNAL( clearStatusText() ),
+//        statusBar(), SLOT( clear() ) );
+	
+    
     switch (view->getType())
     {
         case ChatWindow::Channel:

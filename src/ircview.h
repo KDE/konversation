@@ -80,6 +80,7 @@ class IRCView : public KTextBrowser
         void popupCommand(int);
         void filesDropped(const QStrList&);
         void doSearch();
+	void actionStatusText( const QString & );
 
     public slots:
         void append(const QString& nick, const QString& message);

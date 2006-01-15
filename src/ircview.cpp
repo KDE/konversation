@@ -202,13 +202,17 @@ void IRCView::highlightedSlot(const QString& link)
             m_copyUrlMenu = true;
             m_urlToCopy = link;
         }
+        emit actionStatusText(link);
     }
     else if(link.startsWith("#") && !link.startsWith("##"))
     {
-        m_currentNick = link;
-        m_currentNick.remove("#");
+        m_currentNick = link.mid(1);
         m_nickPopup->changeTitle(m_popupId,m_currentNick);
         m_isOnNick = true;
+        emit actionStatusText( i18n("Open a query with %1").arg(m_currentNick));
+    } else {
+        //    link.startsWith("##")
+        emit actionStatusText( i18n("Join the channel %1").arg(link.mid(1)));
     }
 }
 
