@@ -262,8 +262,6 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
     m_generalInfoLabel->setFixedHeight( statH );
 
     m_channelInfoLabel = new QLabel(statusBar(), "channelInfoLabel");
-    m_channelInfoLabel->setSizePolicy(QSizePolicy( QSizePolicy::Minimum, QSizePolicy::Fixed ));
-    m_channelInfoLabel->setFixedHeight( statH );
     QWhatsThis::add(m_channelInfoLabel, i18n("<qt>This shows the number of users in the channel, and the number of those that are operators (ops).<p>A channel operator is a user that has special privileges, such as the ability to kick and ban users, change the channel modes, make other users operators</qt>"));
 
     m_lagInfoLabel = new QLabel(i18n("Lag: Unknown"), statusBar(), "lagInfoLabel");
@@ -446,11 +444,10 @@ void KonversationMainWindow::addView(ChatWindow* view, const QString& label, boo
     QIconSet iconSet;
 
     connect(view, SIGNAL( actionStatusText( const QString & ) ),
-        statusBar(), SLOT( message( const QString & ) ) );
-//    connect(view, SIGNAL( clearStatusText() ),
-//        statusBar(), SLOT( clear() ) );
-	
-    
+            m_generalInfoLabel, SLOT( setText( const QString & ) ) );
+//  connect(view, SIGNAL( clearStatusText() ),
+//          statusBar(), SLOT( clear() ) );
+
     switch (view->getType())
     {
         case ChatWindow::Channel:
