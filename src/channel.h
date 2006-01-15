@@ -159,7 +159,6 @@ class Channel : public ChatWindow
         void sendFile();
         void topicHistoryChanged();
         void modesChanged();
-        void splitterMoved(Channel*);
 
     public slots:
         void setNickname(const QString& newNickname);
@@ -178,7 +177,6 @@ class Channel : public ChatWindow
 
         void setAllowNotifications(bool allow) { m_allowNotifications = allow; }
 
-        void updateSplitters(Channel* channel);
         void updateAppearance();
 
     protected slots:

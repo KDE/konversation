@@ -106,8 +106,7 @@ class KonversationMainWindow : public KMainWindow
         void nicksNowOnline(Server*);
         void closeTab(int id);
         void endNotification();
-
-        void channelSplittersMoved(Channel*);
+        void updateChannelAppearance();
 
     public slots:
         void updateAppearance();

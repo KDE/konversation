@@ -85,7 +85,6 @@ Channel::Channel(QWidget* parent)
     quickButtonsChanged = false;
     quickButtonsState = false;
 
-    splitterChanged = true;
     modeButtonsChanged = false;
     modeButtonsState = false;
 
@@ -290,7 +289,6 @@ Channel::Channel(QWidget* parent)
 
     nicknameList.setAutoDelete(true);
 
-    updateAppearance();
     setLog(Preferences::log());
 
     connect(&userhostTimer,SIGNAL (timeout()),this,SLOT (autoUserhost()));
@@ -306,6 +304,9 @@ Channel::Channel(QWidget* parent)
     m_allowNotifications = true;
 
     connect(KonversationApplication::instance(), SIGNAL (appearanceChanged()),this,SLOT (updateAppearance()) );
+
+    initializeSplitters();
+    updateAppearance();
 
     //FIXME JOHNFLUX
     //  connect( Konversation::Addressbook::self()->getAddressBook(), SIGNAL( addressBookChanged( AddressBook * ) ), this, SLOT( slotLoadAddressees() ) );
@@ -1830,11 +1831,6 @@ void Channel::showEvent(QShowEvent*)
         showModeButtons(modeButtonsState);
     }
 
-    if(splitterChanged)
-    {
-        initializeSplitters();
-    }
-
     if(awayChanged)
     {
         awayChanged=false;
@@ -1851,7 +1847,7 @@ void Channel::initializeSplitters()
     horizSizes = Preferences::channelSplitterSizes();
     vertSizes = Preferences::topicSplitterSizes();
 
-    if (horizSizes.isEmpty())
+    if (horizSizes.isEmpty() || horizSizes[1]==1)
     {
         int listWidth = nicknameListView->columnWidth(0) + nicknameListView->columnWidth(1);
         horizSizes << (width() - listWidth) << listWidth;
@@ -2284,30 +2280,13 @@ void Channel::showNicknameBox(bool show)
 
 void Channel::showNicknameList(bool show)
 {
-    // don't do anything if there was no change for this channel
-    if(Preferences::showNickList()==nickListButtons->isShown()) return;
-
-    if(show)
+    if (show)
     {
-        // show nick list
         nickListButtons->show();
-        // give Qt time to recalculate the splitter size
-        kapp->processEvents();
-        // check if the splitter is to small, happens when konversation was started with
-        // hidden nick list and then showing it again
-        if(m_horizSplitter->sizes()[0]/m_horizSplitter->sizes()[1]>6)
-        {
-          // build a somewhat sane size hint for the splitter
-          QValueList<int> newSizes;
-          newSizes.append(this->width()*4/5);
-          newSizes.append(this->width()/5);
-          // resize splitter
-          m_horizSplitter->setSizes(newSizes);
-       }
     }
     else
     {
-        // hide nick list
+        splitterChanged = true;
         nickListButtons->hide();
     }
 }
@@ -2431,23 +2410,10 @@ bool Channel::eventFilter(QObject* watched, QEvent* e)
     {
         Preferences::setChannelSplitterSizes(m_horizSplitter->sizes());
         Preferences::setTopicSplitterSizes(m_vertSplitter->sizes());
-        Preferences::self()->writeConfig();
-
-        emit splitterMoved(this);
+        Preferences::writeConfig();
     }
 
     return ChatWindow::eventFilter(watched, e);
-}
-
-void Channel::updateSplitters(Channel* channel)
-{
-    if(channel == this)
-    {
-        return;
-    }
-
-    m_horizSplitter->setSizes(Preferences::channelSplitterSizes());
-    m_vertSplitter->setSizes(Preferences::topicSplitterSizes());
 }
 
 #include "channel.moc"

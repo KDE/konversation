@@ -935,14 +935,9 @@ Channel* KonversationMainWindow::addChannel(Server* server, const QString& name)
     channel->setName(name);
     addView(channel, newname);
 
+    connect(this, SIGNAL(updateChannelAppearance()), channel, SLOT(updateAppearance()));
     connect(channel, SIGNAL(updateTabNotification(ChatWindow*,const Konversation::TabNotifyType&)), this, SLOT(setTabNotification(ChatWindow*,const Konversation::TabNotifyType&)));
-    // TODO: Why is this here?  Delete channelPrefsChanged as it does not appear to
-    // do anything since channel never emits prefsChanged.
-    // connect(channel,SIGNAL (prefsChanged()),this,SLOT (channelPrefsChanged()) );
-    connect(server,SIGNAL (awayState(bool)),channel,SLOT (indicateAway(bool)) );
-
-    connect(channel, SIGNAL(splitterMoved(Channel*)), this, SIGNAL(channelSplittersMoved(Channel*)));
-    connect(this, SIGNAL(channelSplittersMoved(Channel*)), channel, SLOT(updateSplitters(Channel*)));
+    connect(server, SIGNAL(awayState(bool)),channel, SLOT(indicateAway(bool)) );
 
     return channel;
 }
@@ -956,7 +951,7 @@ Query* KonversationMainWindow::addQuery(Server* server, const NickInfoPtr& nickI
     addView(query, name, weinitiated);
 
     connect(query, SIGNAL(updateTabNotification(ChatWindow*,const Konversation::TabNotifyType&)), this, SLOT(setTabNotification(ChatWindow*,const Konversation::TabNotifyType&)));
-    connect(server,SIGNAL (awayState(bool)),query,SLOT (indicateAway(bool)) );
+    connect(server, SIGNAL(awayState(bool)), query, SLOT(indicateAway(bool)));
 
     return query;
 }
@@ -1743,24 +1738,20 @@ void KonversationMainWindow::closeQueries()
 
 void KonversationMainWindow::hideNicknameList()
 {
-    if (m_frontView && m_frontView->getType() == ChatWindow::Channel)
+    if (hideNicklistAction->isChecked())
     {
-        Channel* channel = static_cast<Channel*>((ChatWindow*) m_frontView);
-        if (hideNicklistAction->isChecked())
-        {
-            channel->showNicknameList(false);
-            hideNicklistAction->setChecked(true);
-            Preferences::setShowNickList(false);
-        }
-        else
-        {
-            channel->showNicknameList(true);
-            hideNicklistAction->setChecked(false);
-            Preferences::setShowNickList(true);
-        }
-        // save nick list state
+        Preferences::setShowNickList(false);
         Preferences::writeConfig();
+        hideNicklistAction->setChecked(true);
     }
+    else
+    {
+        Preferences::setShowNickList(true);
+        Preferences::writeConfig();
+        hideNicklistAction->setChecked(false);
+    }
+
+    emit updateChannelAppearance();
 }
 
 void KonversationMainWindow::clearTabs()
