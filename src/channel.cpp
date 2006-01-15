@@ -2284,7 +2284,10 @@ void Channel::showNicknameBox(bool show)
 
 void Channel::showNicknameList(bool show)
 {
-    if (show)
+    // don't do anything if there was no change for this channel
+    if(Preferences::showNickList()==nickListButtons->isShown()) return;
+
+    if(show)
     {
         // show nick list
         nickListButtons->show();
@@ -2294,7 +2297,7 @@ void Channel::showNicknameList(bool show)
         // hidden nick list and then showing it again
         if(m_horizSplitter->sizes()[0]/m_horizSplitter->sizes()[1]>6)
         {
-          // build a somewhat sane size hintfor the splitter
+          // build a somewhat sane size hint for the splitter
           QValueList<int> newSizes;
           newSizes.append(this->width()*4/5);
           newSizes.append(this->width()/5);
