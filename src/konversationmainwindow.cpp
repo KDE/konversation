@@ -276,9 +276,9 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
 
     actionCollection()->setHighlightingEnabled(true);
     connect(actionCollection(), SIGNAL( actionStatusText( const QString & ) ),
-        statusBar(), SLOT( message( const QString & ) ) );
+        m_generalInfoLabel, SLOT( setText( const QString & ) ) );
     connect(actionCollection(), SIGNAL( clearStatusText() ),
-        statusBar(), SLOT( clear() ) );
+        m_generalInfoLabel, SLOT( clear() ) );
 
     connect( viewContainer,SIGNAL (currentChanged(QWidget*)),this,SLOT (changeView(QWidget*)) );
     connect( viewContainer, SIGNAL(closeRequest(QWidget*)), this, SLOT(closeView(QWidget*)));
