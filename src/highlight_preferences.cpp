@@ -23,6 +23,7 @@
 #include <klocale.h>
 #include <kparts/componentfactory.h>
 #include <kregexpeditorinterface.h>
+#include <kiconloader.h>
 
 #include "config/preferences.h"
 
@@ -41,6 +42,9 @@ Highlight_Config::Highlight_Config(QWidget* parent, const char* name)
 
   // make list accept drag & drop
   highlightListView->setSorting(-1);
+
+  soundPlayBtn->setIconSet(SmallIconSet( "player_play" ));
+  soundURL->setCaption(i18n("Select Sound File"));
 
   // This code was copied from KNotifyWidget::openSoundDialog() (knotifydialog.cpp) [it's under LGPL v2]
   // find the first "sound"-resource that contains files
@@ -111,8 +115,6 @@ void Highlight_Config::loadSettings()
 
 void Highlight_Config::highlightSelected(QListViewItem* item)
 {
-  // play it safe, assume disabling all widgets first
-  bool enabled=false;
   // check if there was a widget selected at all
   if(item)
   {
@@ -140,9 +142,14 @@ void Highlight_Config::highlightSelected(QListViewItem* item)
     // all signals will now emit the modified() signal again
     newItemSelected=false;
     // remember to enable all edit widgets
-    enabled=true;
   }
+  updateButtons();
 
+ }
+
+void Highlight_Config::updateButtons()
+{
+  bool enabled = highlightListView->selectedItem() != NULL;
   // enable or disable edit widgets
   patternLabel->setEnabled(enabled);
   patternInput->setEnabled(enabled);
@@ -153,6 +160,7 @@ void Highlight_Config::highlightSelected(QListViewItem* item)
   soundPlayBtn->setEnabled(enabled);
   autoTextLabel->setEnabled(enabled);
   autoTextInput->setEnabled(enabled);
+
 }
 
 void Highlight_Config::highlightTextChanged(const QString& newPattern)
@@ -246,18 +254,10 @@ void Highlight_Config::removeHighlight()
 
     if(item)
       highlightListView->setSelected(item,true);
-    else
-    {
-      patternLabel->setEnabled(false);
-      patternInput->setEnabled(false);
-      patternColor->setEnabled(false);
-      patternButton->setEnabled(false);
-      soundURL->setEnabled(false);
-      soundLabel->setEnabled(false);
-      soundPlayBtn->setEnabled(false);
-    }
+
     emit modified();
   }
+  updateButtons();
 }
 
 QPtrList<Highlight> Highlight_Config::getHighlightList()

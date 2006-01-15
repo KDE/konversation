@@ -49,6 +49,8 @@ class Highlight_Config : public Highlight_ConfigUI, public KonviSettingsPage
     void removeHighlight();
     void playSound();
     QPtrList<Highlight> getHighlightList();
+  protected:
+    void updateButtons();
   
   protected:
     bool newItemSelected;
