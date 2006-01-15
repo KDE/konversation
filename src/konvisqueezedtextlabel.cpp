@@ -6,15 +6,16 @@
 */
 
 /*
-  Helper class to parse and disassemble IP+port combinations.
-  WARNING: Does not attempt to validate IP addresses.
-  begin:     Fri Jan 6 2006
+  Thin wrapper around KSqueezedTextLabel capable of showing a temporary
+  label text all the while storing any text set via the regular setText()
+  and reverting to it when the clearTempText() slot is called. Use case:
+  menu item and link hover updating the status bar across the app.
+  begin:     Fri Jan 15 2006
   copyright: (C) 2006 by Eike Hein
   email:     sho@eikehein.com
 */
 
 #include "konvisqueezedtextlabel.h"
-#include "kdebug.h"
 
 /*
   @author Eike Hein
@@ -44,7 +45,7 @@ void KonviSqueezedTextLabel::setText(const QString& text)
 
 void KonviSqueezedTextLabel::setTempText(const QString& text)
 {
-    if (!text.isEmpty())
+   if (!text.isEmpty())
     {
         m_tempText = text;
         KSqueezedTextLabel::setText(text);
