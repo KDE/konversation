@@ -48,7 +48,6 @@ void Warnings_Config::saveSettings()
   while(item)
   {
     config->writeEntry(item->text(2),item->isOn());
-    kdDebug() << "saving: " << item->text(2) << " as " <<  item->text(1) << endl;
     item=static_cast<QCheckListItem*>(item->itemBelow());
     ++i;
   }
@@ -84,7 +83,6 @@ void Warnings_Config::loadSettings()
     flagName = flagNames.section(",",i,i);
     item->setText(2,flagName);
     item->setOn(config->readBoolEntry(flagName,true));
-    //kdDebug() << "loading: " << item->text(2) << " as " <<  item->text(1) << endl;
   }
 }
 
