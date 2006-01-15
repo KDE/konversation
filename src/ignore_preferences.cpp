@@ -40,13 +40,16 @@ Ignore_Config::~Ignore_Config()
 
 void Ignore_Config::newIgnore()
 {
-     new IgnoreListViewItem(ignoreListView,
+     ignoreListView->setSelected(new IgnoreListViewItem(ignoreListView,
         "new!new@new.new",
         Ignore::Channel |
         Ignore::Query |
         Ignore::Notice |
         Ignore::CTCP |
-        Ignore::DCC);
+        Ignore::DCC), true);
+    txtPattern->setFocus();
+    txtPattern->selectAll();
+     
     updateEnabledness();
     emit modified();
 }

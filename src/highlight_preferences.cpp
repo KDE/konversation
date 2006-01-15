@@ -229,6 +229,8 @@ void Highlight_Config::addHighlight()
 
   HighlightViewItem* item=new HighlightViewItem(highlightListView,newHighlight);
   highlightListView->setSelected(item,true);
+  patternInput->setFocus();
+  patternInput->selectAll();
   emit modified();
 }
 
