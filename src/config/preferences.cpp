@@ -94,7 +94,7 @@ Preferences::Preferences()
     setQuickButtonList(quickButtons);
 
     // nicklist sorting order defaults
-    setNicknameSortingOrder("qpohv-");
+    setNicknameSortingOrder(defaultNicknameSortingOrder());
 
     /*
     setOwnerValue(32);
@@ -511,6 +511,11 @@ const QStringList Preferences::channelEncodingsServerList()
 const QStringList Preferences::channelEncodingsChannelList(const QString& server)
 {
     return self()->mChannelEncodingsMap[server].keys();
+}
+
+const QString Preferences::defaultNicknameSortingOrder()
+{
+  return "qpohv-";
 }
 
 const QString Preferences::nicknameSortingOrder()

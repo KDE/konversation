@@ -81,7 +81,7 @@ void Alias_Config::loadSettings()
   setAliases(Preferences::aliasList());
 }
 
-void Alias_Config::setAliases(QStringList aliasList)
+void Alias_Config::setAliases(const QStringList &aliasList)
 {
   aliasesListView->clear();
   // Insert alias items backwards to get them sorted properly

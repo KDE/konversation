@@ -27,7 +27,7 @@ class Alias_Config : public Alias_ConfigUI, public KonviSettingsPage
   void newAlias();
   void removeAlias();
  protected:
-  void setAliases(QStringList aliasList);
+  void setAliases(const QStringList &aliasList);
 
  private:
   QStringList m_defaultAliasList;

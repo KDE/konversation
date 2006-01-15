@@ -31,7 +31,8 @@ class NicklistBehavior_Config : public NicklistBehavior_ConfigUI, public KonviSe
     virtual void saveSettings();
     virtual void loadSettings();
     virtual void restorePageToDefaults();
-
+  private:
+    void setNickList(const QString &sortingOrder);
   signals:
     void modified();
 

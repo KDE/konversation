@@ -116,6 +116,7 @@ class Preferences : public QObject, public PreferencesBase
         static void setAwayMessage(const QString &newMessage);
         static const QString unAwayMessage();
         static void setUnAwayMessage(const QString &newMessage);
+	static const QString defaultNicknameSortingOrder();
         static const QString nickname(int index);
         static const QStringList nicknameList();
         static void setNickname(int index,const QString &newName);
