@@ -129,6 +129,7 @@ void ChatWindow::setTextView(IRCView* newView)
     textView->setChatWin(this);
     connect(textView,SIGNAL (textToLog(const QString&)),this,SLOT (logText(const QString&)) );
     connect(textView,SIGNAL (actionStatusText( const QString & ) ),this, SIGNAL (actionStatusText( const QString & ) ));
+    connect(textView,SIGNAL (clearStatusText()), this, SIGNAL (clearStatusText()));
 }
 
 void ChatWindow::insertRememberLine()

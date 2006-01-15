@@ -147,8 +147,13 @@ class ChatWindow : public QVBox
          */
         void updateInfo(const QString &info);
         void updateTabNotification(ChatWindow* chatWin, const Konversation::TabNotifyType& type);
-	///emit this signal for anything you want to temporarily appear on the status bar
+	/** Emit this signal for anything you want to temporarily appear on the status bar
+	 */
 	void actionStatusText( const QString & );
+	/** Emit this when you want to clear the temporary message set above.
+	 *  Equivalent to emitting actionStatusText with a blank string.
+	 */
+	void clearStatusText();
 
 
     public slots:

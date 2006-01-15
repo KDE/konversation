@@ -80,7 +80,13 @@ class IRCView : public KTextBrowser
         void popupCommand(int);
         void filesDropped(const QStrList&);
         void doSearch();
+	/** Emit this signal for anything you want to temporarily appear on the status bar
+	 */
 	void actionStatusText( const QString & );
+	/** Emit this when you want to clear the temporary message set above.
+	 *  Equivalent to emitting actionStatusText with a blank string.
+	 */
+	void clearStatusText();
 
     public slots:
         void append(const QString& nick, const QString& message);

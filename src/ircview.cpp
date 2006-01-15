@@ -189,6 +189,11 @@ void IRCView::highlightedSlot(const QString& link)
     if(!link.startsWith("#"))
     {
         m_isOnNick = false;
+        if(link.isEmpty()) {
+            emit clearStatusText();
+        } else {
+            emit actionStatusText(link);
+        }
         if(link.isEmpty() && m_copyUrlMenu)
         {
             m_popup->removeItem(CopyUrl);
@@ -202,7 +207,6 @@ void IRCView::highlightedSlot(const QString& link)
             m_copyUrlMenu = true;
             m_urlToCopy = link;
         }
-        emit actionStatusText(link);
     }
     else if(link.startsWith("#") && !link.startsWith("##"))
     {
