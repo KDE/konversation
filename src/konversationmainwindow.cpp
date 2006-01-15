@@ -257,16 +257,18 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
     int statH = fontMetrics().height()+2;
 
     m_generalInfoLabel = new KSqueezedTextLabel(i18n("Ready."), statusBar());
-    m_generalInfoLabel->setSizePolicy(QSizePolicy( QSizePolicy::Ignored, QSizePolicy::Fixed ));
+    m_generalInfoLabel->setSizePolicy(QSizePolicy( QSizePolicy::Preferred, QSizePolicy::Fixed ));
     m_generalInfoLabel->setMinimumWidth( 0 );
     m_generalInfoLabel->setFixedHeight( statH );
 
     m_channelInfoLabel = new QLabel(statusBar(), "channelInfoLabel");
+    m_channelInfoLabel->setSizePolicy(QSizePolicy( QSizePolicy::Minimum, QSizePolicy::Fixed ));
+    m_channelInfoLabel->setFixedHeight( statH );
     QWhatsThis::add(m_channelInfoLabel, i18n("<qt>This shows the number of users in the channel, and the number of those that are operators (ops).<p>A channel operator is a user that has special privileges, such as the ability to kick and ban users, change the channel modes, make other users operators</qt>"));
 
     m_lagInfoLabel = new QLabel(i18n("Lag: Unknown"), statusBar(), "lagInfoLabel");
 
-    statusBar()->addWidget(m_generalInfoLabel, 1, true);
+    statusBar()->addWidget(m_generalInfoLabel, 1, false);
     statusBar()->addWidget(m_channelInfoLabel, 0, true);
     statusBar()->addWidget(m_lagInfoLabel, 0, true);
 
