@@ -566,7 +566,6 @@ void IRCView::append(const QString& nick,const QString& message)
 
     if(Preferences::useColoredNicks())
     {
-
         if(nick != m_server->getNickname())
             scolor = m_server->obtainNickInfo(nick)->getNickColor();
         else
@@ -577,10 +576,11 @@ void IRCView::append(const QString& nick,const QString& message)
             scolor = "#000001";                    // HACK Working around QTextBrowser's auto link coloring
         }
 
-        nickLine = "<font color=\"" + scolor + "\">"+nickLine+"</font>";
+        nickLine = "<font color=\"" + scolor + "\">&lt;"+nickLine+"&gt;</font>";
     }
     else
     {
+        nickLine = "&lt;"+nickLine+"&gt;";
         if(channelColor  == "#000000")
         {
             channelColor = "#000001";              // HACK Working around QTextBrowser's auto link coloring
@@ -591,11 +591,11 @@ void IRCView::append(const QString& nick,const QString& message)
     {
         line = RLO;
         line += LRE;
-        line += "<p><font color=\"" + channelColor + "\"><b>&lt;</b>" + nickLine + "<b>&gt;</b> %1" + PDF + " %3</font></p>\n";
+        line += "<p><font color=\"" + channelColor + "\">" + nickLine + " %1" + PDF + " %3</font></p>\n";
     }
     else
     {
-        line = "<p><font color=\"" + channelColor + "\">%1 <b>&lt;</b>" + nickLine + "<b>&gt;</b> %3</font></p>\n";
+        line = "<p><font color=\"" + channelColor + "\">%1" + nickLine + " %3</font></p>\n";
     }
 
     line = line.arg(timeStamp(), nick, filter(message, channelColor, nick, true));
