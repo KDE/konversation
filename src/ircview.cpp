@@ -196,15 +196,17 @@ void IRCView::highlightedSlot(const QString& link)
           m_lastStatusText = QString::null;
         }
     } else {
-        //link therefore != m_lastStatusText  so emit with this new text
         m_lastStatusText = link;
-        emit actionStatusText(link);
     }
 
     if(!link.startsWith("#"))
     {
         m_isOnNick = false;
         
+        if(!link.isEmpty()) {
+            //link therefore != m_lastStatusText  so emit with this new text
+            emit actionStatusText(link);
+        }
         if(link.isEmpty() && m_copyUrlMenu)
         {
             m_popup->removeItem(CopyUrl);
