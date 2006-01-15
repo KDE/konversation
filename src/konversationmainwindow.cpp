@@ -356,8 +356,6 @@ void KonversationMainWindow::openPrefsDialog()
         m_settingsDialog = new KonviSettingsDialog(this);
         //User edited the configuration - update your local copies of the
         //configuration data
-        connect(m_settingsDialog, SIGNAL(settingsChanged()), this, SLOT(updateAppearance()));
-        connect(m_settingsDialog, SIGNAL(settingsChanged()), this, SLOT(updateTabNotifications()));
         connect(m_settingsDialog, SIGNAL(settingsChanged()), KonversationApplication::instance(), SIGNAL(appearanceChanged()));
     }
     m_settingsDialog->show();
