@@ -595,6 +595,7 @@ Name[ga]=Theip ar nascadh
 Name[it]=Errore di connessione
 Name[pt]=Erro na ligação
 Name[pt_BR]=Erro na ligação
+Name[sv]=Uppkopplingsfel
 Comment=Failed to connect to server
 Comment[bg]=Неуспех при свързване към сървър
 Comment[da]=Mislykkedes at forbinde til server
@@ -603,6 +604,7 @@ Comment[et]=Ühendumine serveriga ebaõnnestus
 Comment[it]=Connessione al server non riuscita
 Comment[pt]=Não foi possível ligar ao servidor
 Comment[pt_BR]=Não foi possível ligar ao servidor
+Comment[sv]=Misslyckades koppla upp till server
 default_presentation=64
 
 [channelJoin]
@@ -611,15 +613,19 @@ Name[bg]=Вие се присъединихте към канал
 Name[br]=Emellet out bet ur c'hanol
 Name[el]=Συνδεθήκατε σε ένα κανάλι
 Name[et]=Sa ühinesid kanaliga
+Name[it]=Sei entrato in un canale
 Name[pt]=Você juntou-se a um canal
 Name[pt_BR]=Você juntou-se a um canal
+Name[sv]=Du gick med i en kanal
 Comment=You joined a channel
 Comment[bg]=Вие се присъединихте към канал
 Comment[br]=Emellet out bet ur c'hanol
 Comment[el]=Συνδεθήκατε σε ένα κανάλι
 Comment[et]=Sa ühinesid kanaliga
+Comment[it]=Sei entrato in un canale
 Comment[pt]=Você juntou-se a um canal
 Comment[pt_BR]=Você juntou-se a um canal
+Comment[sv]=Du gick med i en kanal
 default_presentation=64
 
 [dccChat]
