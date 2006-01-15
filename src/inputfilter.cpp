@@ -1341,7 +1341,6 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 long hours  =minutes/60;
                 long days   =hours/24;
 
-                // TODO: replace QString()s with i18n()s after i18n-freeze!
                 // if idle time is longer than a day
                 // Display message only if this was not an automatic request.
                 if(getAutomaticRequest("WHOIS",parameterList[1])==0)
