@@ -147,8 +147,8 @@ class IRCView : public KTextBrowser
         int m_findParagraph;
         int m_findIndex;
 
-	// This is set to true if we have sent status text to the statusbar and not yet cleared it
-	bool m_hasSetStatusText;
+	// This is set to what we last sent status text to the statusbar.  Empty if we have sent a clearStatusText() string
+	QString m_lastStatusText;
         // decide if we should place the scrollbar at the bottom on show()
         bool m_resetScrollbar;
 
