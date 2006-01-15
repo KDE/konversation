@@ -186,15 +186,20 @@ void IRCView::clear()
 
 void IRCView::highlightedSlot(const QString& link)
 {
+    if(link == m_lastStatusText && !link.isEmpty()) {
+        //we just saw this a second ago.  no need to reemit.
+        return;
+    }
     if(!link.startsWith("#"))
     {
         m_isOnNick = false;
         if(link.isEmpty()) {
             if(m_lastStatusText.isEmpty()) {
               emit clearStatusText();
-              m_lastStatusText.clear;
+              m_lastStatusText = QString::null;
             }
-        } else if(link != m_lastStatusText) {
+        } else {
+            //link therefore != m_lastStatusText  so emit with this new text
             m_lastStatusText = link;
             emit actionStatusText(link);
         }
