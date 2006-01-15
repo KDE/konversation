@@ -79,8 +79,6 @@ namespace Konversation
             QCString tmp = cipher.mid(index+1);
             char* tmp2;
 
-            kdDebug() << "Got " << tmp.data() << endl;
-
             if(tmp.mid(0,4) == "+OK ")            // FiSH style topic
                 cipher = tmp.mid(4);
             else if(tmp.left(5) == "«m«")
