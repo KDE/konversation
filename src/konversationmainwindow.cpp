@@ -1058,7 +1058,7 @@ void KonversationMainWindow::unsetTabNotification(ChatWindow* view)
         }
     }
 
-    getViewContainer()->setTabColor(view, colorGroup().text());
+    getViewContainer()->setTabColor(view, colorGroup().foreground());
 }
 
 void KonversationMainWindow::updateTabNotifications()
@@ -1092,7 +1092,7 @@ void KonversationMainWindow::updateTabNotifications()
         for(int i = 0; i < viewContainer->count(); ++i)
         {
             ChatWindow* view = static_cast<ChatWindow*>(viewContainer->page(i));
-            getViewContainer()->setTabColor(view, colorGroup().text());
+            getViewContainer()->setTabColor(view, colorGroup().foreground());
         }
     }
 
