@@ -39,7 +39,6 @@
 #include <scriptmanager.h>
 #include <ktabwidget.h>
 #include <kpushbutton.h>
-#include <ksqueezedtextlabel.h>
 #include <kabc/addressbook.h>
 #include <kabc/errorhandler.h>
 
@@ -79,6 +78,7 @@
 #include "irccharsets.h"
 #include "konviiphelper.h"
 #include "images.h"
+#include "konvisqueezedtextlabel.h"
 
 KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", WStyle_ContextHelp | WType_TopLevel | WDestructiveClose)
 {
@@ -256,7 +256,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
 
     int statH = fontMetrics().height()+2;
 
-    m_generalInfoLabel = new KSqueezedTextLabel(i18n("Ready."), statusBar());
+    m_generalInfoLabel = new KonviSqueezedTextLabel(i18n("Ready."), statusBar());
     m_generalInfoLabel->setSizePolicy(QSizePolicy( QSizePolicy::Preferred, QSizePolicy::Fixed ));
     m_generalInfoLabel->setMinimumWidth( 0 );
     m_generalInfoLabel->setFixedHeight( statH );
@@ -276,9 +276,9 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
 
     actionCollection()->setHighlightingEnabled(true);
     connect(actionCollection(), SIGNAL( actionStatusText( const QString & ) ),
-        m_generalInfoLabel, SLOT( setText( const QString & ) ) );
+        m_generalInfoLabel, SLOT( setTempText( const QString & ) ) );
     connect(actionCollection(), SIGNAL( clearStatusText() ),
-        m_generalInfoLabel, SLOT( clear() ) );
+        m_generalInfoLabel, SLOT( clearTempText() ) );
 
     connect( viewContainer,SIGNAL (currentChanged(QWidget*)),this,SLOT (changeView(QWidget*)) );
     connect( viewContainer, SIGNAL(closeRequest(QWidget*)), this, SLOT(closeView(QWidget*)));
@@ -444,9 +444,9 @@ void KonversationMainWindow::addView(ChatWindow* view, const QString& label, boo
     QIconSet iconSet;
 
     connect(view, SIGNAL( actionStatusText( const QString & ) ),
-            m_generalInfoLabel, SLOT( setText( const QString & ) ) );
-//  connect(view, SIGNAL( clearStatusText() ),
-//          statusBar(), SLOT( clear() ) );
+            m_generalInfoLabel, SLOT( setTempText( const QString & ) ) );
+    connect(view, SIGNAL( clearStatusText() ),
+            m_generalInfoLabel, SLOT( clearTempText() ) );
 
     switch (view->getType())
     {

@@ -32,7 +32,8 @@ konversation_SOURCES = konviface.skel konviconfigdialog.cpp \
 				konvibookmarkmenu.cpp popup.cpp ircviewbox.cpp searchbar.cpp osd_preferences.cpp \
 				theme_preferences.cpp dcc_preferences.cpp alias_preferences.cpp \
 				highlight_preferences.cpp watchednicknames_preferences.cpp quickbuttons_preferences.cpp \
-				nicklistbehavior_preferences.cpp konviiphelper.cpp tabnotifications_preferences.ui
+				nicklistbehavior_preferences.cpp konviiphelper.cpp tabnotifications_preferences.ui \
+				konvisqueezedtextlabel.cpp
 
 konversation_COMPILE_FIRST = config/preferences_base.h
 konversation_LDADD = $(LIB_KIO) $(LIB_KABC) $(LIB_KIMIFACE) linkaddressbook/liblinkaddressbookui.la blowfish/libblowfish.la config/libkonversationconfig.la

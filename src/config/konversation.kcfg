@@ -492,7 +492,7 @@
       <whatsthis></whatsthis>
     </entry>
     <entry key="HighlightNickColor" type="Color">
-      <default>#FFFF00</default>
+      <default>#FF0000</default>
       <label></label>
       <whatsthis></whatsthis>
     </entry>

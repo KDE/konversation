@@ -34,7 +34,7 @@ class KActionMenu;
 class KScriptManager;
 class KTabWidget;
 class QPoint;
-class KSqueezedTextLabel;
+class KonviSqueezedTextLabel;
 
 class KonviBookmarkHandler;
 class StatusPanel;
@@ -251,7 +251,7 @@ class KonversationMainWindow : public KMainWindow
         SSLLabel* m_sslLabel;
         QLabel* m_channelInfoLabel;
         QLabel* m_lagInfoLabel;
-        KSqueezedTextLabel* m_generalInfoLabel;
+        KonviSqueezedTextLabel* m_generalInfoLabel;
 
         Konversation::InsertCharDialog* m_insertCharDialog;
         Konversation::ServerListDialog* m_serverListDialog;
