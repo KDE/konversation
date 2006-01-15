@@ -161,7 +161,6 @@ void IRCView::setServer(Server* newServer)
     m_server = newServer;
     if(newServer) {
       KAction *action = newServer->getMainWindow()->actionCollection()->action("open_logfile");
-      kdDebug() << "TRYING TO INSERT OPEN_LOGFILE IN CONTEXT MENU" << endl;
       Q_ASSERT(action);
       if(!action) return;
       action->plug(m_popup);
