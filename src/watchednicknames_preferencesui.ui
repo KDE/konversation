@@ -1,4 +1,4 @@
-<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>WatchedNicknames_ConfigUI</class>
 <widget class="QWidget">
     <property name="name">
@@ -8,9 +8,12 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>529</width>
+            <width>623</width>
             <height>418</height>
         </rect>
+    </property>
+    <property name="caption">
+        <string>WatchedNicknames_ConfigUI</string>
     </property>
     <grid>
         <property name="name">
@@ -143,6 +146,9 @@ command is placed in the &lt;b&gt;Input Line&lt;/b&gt; on the server window.&lt;
             <property name="text">
                 <string>&amp;Show watched nicks online tab on application startup</string>
             </property>
+            <property name="accel">
+                <string>Alt+S</string>
+            </property>
             <property name="whatsThis" stdset="0">
                 <string>&lt;qt&gt;When checked, the &lt;b&gt;Nicks Online&lt;/b&gt; window will be automatically opened when starting Konversation.&lt;/qt&gt;</string>
             </property>
@@ -153,6 +159,9 @@ command is placed in the &lt;b&gt;Input Line&lt;/b&gt; on the server window.&lt;
             </property>
             <property name="text">
                 <string>&amp;Enable nickname watcher</string>
+            </property>
+            <property name="accel">
+                <string>Alt+E</string>
             </property>
             <property name="whatsThis" stdset="0">
                 <string>&lt;qt&gt;
@@ -186,6 +195,9 @@ When the nickname watcher is turned on, you will be notified when the nicknames 
                     <property name="text">
                         <string>Network:</string>
                     </property>
+                    <property name="whatsThis" stdset="0">
+                        <string>The irc server network (such as 'freenode') that the selected user to watch is on.</string>
+                    </property>
                 </widget>
                 <widget class="QComboBox" row="1" column="1">
                     <property name="name">
@@ -193,6 +205,9 @@ When the nickname watcher is turned on, you will be notified when the nicknames 
                     </property>
                     <property name="enabled">
                         <bool>false</bool>
+                    </property>
+                    <property name="whatsThis" stdset="0">
+                        <string>The irc server network (such as 'freenode') that the selected user to watch is on.</string>
                     </property>
                 </widget>
                 <widget class="QLabel" row="1" column="2">
@@ -205,6 +220,9 @@ When the nickname watcher is turned on, you will be notified when the nicknames 
                     <property name="text">
                         <string>Nickname:</string>
                     </property>
+                    <property name="whatsThis" stdset="0">
+                        <string>The nick (username) of the selected person to watch</string>
+                    </property>
                 </widget>
                 <widget class="KLineEdit" row="1" column="3">
                     <property name="name">
@@ -212,6 +230,9 @@ When the nickname watcher is turned on, you will be notified when the nicknames 
                     </property>
                     <property name="enabled">
                         <bool>false</bool>
+                    </property>
+                    <property name="whatsThis" stdset="0">
+                        <string>The nick (username) of the selected person to watch</string>
                     </property>
                 </widget>
                 <widget class="KListView" row="0" column="0" rowspan="1" colspan="4">
