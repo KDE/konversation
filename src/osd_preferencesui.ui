@@ -364,7 +364,7 @@
 <includehints>
     <includehint>kcombobox.h</includehint>
     <includehint>kcolorcombo.h</includehint>
-    <includehint>kcolorcombo.h</includehint>
+    <includehint>kcolorbutton.h</includehint>
     <includehint>kfontrequester.h</includehint>
 </includehints>
 </UI>
