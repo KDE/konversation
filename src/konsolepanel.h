@@ -24,6 +24,9 @@ class KonsolePanel : public ChatWindow
         /** Called from ChatWindow adjustFocus */
         virtual void childAdjustFocus();
 
+    protected slots:
+        void konsoleChanged(const QString& data);
+
     private:
         KParts::ReadOnlyPart *k_part;
 };
