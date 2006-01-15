@@ -21,7 +21,7 @@ Alias_Config::Alias_Config(QWidget* parent, const char* name)
   aliasesListView->setRenameable(0,true);
   aliasesListView->setRenameable(1,true);
   aliasesListView->setSorting(-1,false);
-
+  m_defaultAliasList = Preferences::defaultAliasList();
   loadSettings();
   connect(newButton,SIGNAL (clicked()),this,SLOT (newAlias()) );
   connect(removeButton,SIGNAL (clicked()),this,SLOT (removeAlias()) );
@@ -59,7 +59,7 @@ void Alias_Config::removeAlias()
 
 void Alias_Config::restorePageToDefaults()
 {
-	//FIXME
+  setAliases(m_defaultAliasList);
 }
 void Alias_Config::saveSettings()
 {
@@ -78,7 +78,11 @@ void Alias_Config::saveSettings()
 }
 void Alias_Config::loadSettings()
 {
-  QStringList aliasList(Preferences::aliasList());
+  setAliases(Preferences::aliasList());
+}
+
+void Alias_Config::setAliases(QStringList aliasList)
+{
   aliasesListView->clear();
   // Insert alias items backwards to get them sorted properly
   for(int index=aliasList.count();index!=0;index--)
@@ -89,3 +93,4 @@ void Alias_Config::loadSettings()
 }
 
 #include "alias_preferences.moc"
+

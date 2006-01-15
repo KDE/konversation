@@ -72,6 +72,9 @@ class Preferences : public QObject, public PreferencesBase
         static bool isServerGroup(const QString& server);
         static void removeServerGroup(int id);
 
+	/** Returns a list of alias set up by default.  This is a set of aliases for the scripts found. */
+	static QStringList defaultAliasList();
+
 	//notifylist is in kconfigxt - FIXME
         static const QMap<QString, QStringList> notifyList();
         static const QStringList notifyListByGroup(const QString& groupName);

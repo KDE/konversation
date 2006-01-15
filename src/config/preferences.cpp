@@ -24,6 +24,7 @@
 
 #include <qpalette.h>
 #include <qregexp.h>
+#include <qfileinfo.h>
 
 #include "config/preferences.h"
 #include "identity.h"
@@ -375,6 +376,27 @@ const IdentityPtr Preferences::identityById(int id)
 
     return identList.first();
 }
+
+QStringList Preferences::defaultAliasList()
+{
+        // Auto-alias scripts
+        QStringList scripts = KGlobal::dirs()->findAllResources("data","konversation/scripts/*");
+        QFileInfo* fileInfo = new QFileInfo();
+        QStringList aliasList;
+	QString newAlias;
+
+        for ( QStringList::ConstIterator it = scripts.begin(); it != scripts.end(); ++it )
+        {
+            fileInfo->setFile( *it );
+            if ( fileInfo->isExecutable() )
+            {
+                newAlias = (*it).section('/',-1)+" "+"/exec "+(*it).section('/', -1 );
+                aliasList.append(newAlias);
+            }
+        }
+	return aliasList;
+}
+
 
 const QString Preferences::realName() { return self()->mIdentityList[0]->getRealName(); }
 void Preferences::setRealName(const QString &name) { self()->mIdentityList[0]->setRealName(name); }

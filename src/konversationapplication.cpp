@@ -98,25 +98,19 @@ int KonversationApplication::newInstance()
         // Images object providing LEDs, NickIcons
         m_images = new Images();
 
-        // Auto-alias scripts
-        QStringList scripts = KGlobal::dirs()->findAllResources("data","konversation/scripts/*");
-        QFileInfo* fileInfo = new QFileInfo();
+        // Auto-alias scripts.  This adds any missing aliases
         QStringList aliasList(Preferences::aliasList());
-        QString newAlias;
-
+        QStringList scripts(Preferences::defaultAliasList());
+        bool changed = false;
         for ( QStringList::ConstIterator it = scripts.begin(); it != scripts.end(); ++it )
         {
-            fileInfo->setFile( *it );
-            if ( fileInfo->isExecutable() )
-            {
-                newAlias = (*it).section('/',-1)+" "+"/exec "+(*it).section('/', -1 );
-
-                if(!aliasList.contains(newAlias))
-                    aliasList.append(newAlias);
+            if(!aliasList.contains(*it)) {
+                changed = true;
+                aliasList.append(*it);
             }
         }
-
-        Preferences::setAliasList(aliasList);
+        if(changed)
+            Preferences::setAliasList(aliasList);
 
         // Setup system codec
         // TODO: check if this works now as intended

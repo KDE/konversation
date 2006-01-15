@@ -26,6 +26,13 @@ class Alias_Config : public Alias_ConfigUI, public KonviSettingsPage
  protected slots:
   void newAlias();
   void removeAlias();
+ protected:
+  void setAliases(QStringList aliasList);
+
+ private:
+  QStringList m_defaultAliasList;
+
+	  
 
 signals:
     void modified();
