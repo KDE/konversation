@@ -3254,6 +3254,11 @@ void Server::enableIdentifyMsg(bool enabled)
     m_identifyMsg = enabled;
 }
 
+bool Server::identifyMsgEnabled()
+{
+    return m_identifyMsg;
+}
+
 #include "server.moc"
 
 // kate: space-indent on; tab-width 4; indent-width 4; mixed-indent off; replace-tabs on;

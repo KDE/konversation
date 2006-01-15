@@ -429,6 +429,7 @@ class Server : public QObject
         void notifyTimeout();
 
         void enableIdentifyMsg(bool enabled);
+	bool identifyMsgEnabled();
 
     protected slots:
 
