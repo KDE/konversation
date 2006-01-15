@@ -1854,7 +1854,7 @@ void Channel::initializeSplitters()
         Preferences::setChannelSplitterSizes(horizSizes);
     }
 
-    if (vertSizes.isEmpty() || vertSizes[0]==1)
+    if (vertSizes.isEmpty() || vertSizes[0]==1 || vertSizes[0]==0)
     {
         vertSizes << m_topicButton->height() << (m_vertSplitter->height() - m_topicButton->height());
     }
@@ -2175,6 +2175,7 @@ void Channel::showTopic(bool show)
 {
     if(show)
     {
+        splitterChanged = false;
         topicLine->show();
         m_topicButton->show();
         topicLine->parentWidget()->show();
