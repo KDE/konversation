@@ -964,7 +964,7 @@ ChannelListPanel* KonversationMainWindow::addChannelListPanel(Server* server)
 
 void KonversationMainWindow::setTabNotification(ChatWindow* view, const Konversation::TabNotifyType& type)
 {
-    if (!Preferences::tabNotificationsText() && !Preferences::tabNotificationsText())
+    if (!Preferences::tabNotificationsLeds() && !Preferences::tabNotificationsText())
         return;
 
     if(view != getViewContainer()->currentPage())
@@ -1059,7 +1059,6 @@ void KonversationMainWindow::unsetTabNotification(ChatWindow* view)
     }
 
     getViewContainer()->setTabColor(view, QColor());
-    view->resetTabNotification();
 }
 
 void KonversationMainWindow::updateTabNotifications()
@@ -1088,7 +1087,16 @@ void KonversationMainWindow::updateTabNotifications()
         }
     }
 
-    if(Preferences::tabNotificationsLeds())
+    if (!Preferences::tabNotificationsText())
+    {
+        for(int i = 0; i < viewContainer->count(); ++i)
+        {
+            ChatWindow* view = static_cast<ChatWindow*>(viewContainer->page(i));
+            getViewContainer()->setTabColor(view, QColor());
+        }
+    }
+
+    if (Preferences::tabNotificationsLeds() || Preferences::tabNotificationsText())
     {
         for(int i = 0; i < viewContainer->count(); ++i)
         {
@@ -1287,6 +1295,8 @@ void KonversationMainWindow::changeView(QWidget* viewToChange)
     updateFrontView();
 
     unsetTabNotification(view);
+    view->resetTabNotification();
+
     view->adjustFocus();
 
     updateTabMoveActions(getViewContainer()->currentPageIndex());
