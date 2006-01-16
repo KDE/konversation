@@ -1453,6 +1453,9 @@ void KonversationMainWindow::openServerList()
     {
         m_serverListDialog = new Konversation::ServerListDialog(this);
         KonversationApplication *konvApp = static_cast<KonversationApplication *>(KApplication::kApplication());
+        connect(m_serverListDialog, SIGNAL(serverGroupsChanged()), konvApp, SLOT(saveOptions()));
+        connect(m_serverListDialog, SIGNAL(serverGroupsChanged()), this, SIGNAL(prefsChanged()));
+        connect(m_serverListDialog, SIGNAL(serverGroupsChanged()), this, SLOT(updateTabs()));
         connect(m_serverListDialog, SIGNAL(connectToServer(int)), konvApp, SLOT(connectToServer(int)));
         connect(m_serverListDialog, SIGNAL(connectToServer(int, Konversation::ServerSettings)), konvApp, SLOT(connectToServer(int, Konversation::ServerSettings)));
     }

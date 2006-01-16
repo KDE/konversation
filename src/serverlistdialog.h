@@ -55,9 +55,10 @@ namespace Konversation
         public slots:
             void updateServerList();
 
-            signals:
+        signals:
             void connectToServer(int serverId);
             void connectToServer(int serverId, Konversation::ServerSettings quickServer);
+            void serverGroupsChanged();
 
         protected slots:
             virtual void slotOk();

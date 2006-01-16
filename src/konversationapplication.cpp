@@ -908,7 +908,6 @@ void KonversationApplication::saveOptions(bool updateGUI)
     }
 
     config->sync();
-    emit prefsChanged();
 
     if(updateGUI)
         emit appearanceChanged();
