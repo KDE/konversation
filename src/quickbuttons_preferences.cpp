@@ -25,7 +25,7 @@ QuickButtons_Config::QuickButtons_Config(QWidget* parent, const char* name)
  : QuickButtons_ConfigUI(parent, name)
 {
   // reset flag to defined state (used to block signals when just selecting a new item)
-  newItemSelected=false;
+  m_newItemSelected=false;
 
   // populate listview
   loadSettings();
@@ -53,6 +53,7 @@ void QuickButtons_Config::loadSettings()
   // get list of quick buttons from preferences
   QStringList buttonList(Preferences::quickButtonList());
   // go through the list
+  KListViewItem *item;
   for(unsigned int index=buttonList.count();index!=0;index--)
   {
     // get button definition
@@ -60,6 +61,7 @@ void QuickButtons_Config::loadSettings()
     // cut definition apart in name and action, and create a new listview item
     new KListViewItem(buttonListView,definition.section(',',0,0),definition.section(',',1));
   } // for
+  buttonListView->setSelected(buttonListView->firstChild(), true);
 }
 
 // save quick buttons to configuration
@@ -112,13 +114,13 @@ void QuickButtons_Config::entrySelected(QListViewItem* quickButtonEntry)
     // remember to enable the editing widgets
     enabled=true;
 
-    // tell the editing widgets not to emit modified() on singals now
-    newItemSelected=true;
+    // tell the editing widgets not to emit modified() on signals now
+    m_newItemSelected=true;
     // update editing widget contents
     nameInput->setText(quickButtonEntry->text(0));
     actionInput->setText(quickButtonEntry->text(1));
     // re-enable modified() signal on text changes in edit widgets
-    newItemSelected=false;
+    m_newItemSelected=false;
   }
   // enable or disable editing widgets
   nameLabel->setEnabled(enabled);
@@ -139,7 +141,7 @@ void QuickButtons_Config::nameChanged(const QString& newName)
     // rename item
     item->setText(0,newName);
     // tell the config system that something has changed
-    if(!newItemSelected) emit modified();
+    if(!m_newItemSelected) emit modified();
   }
 }
 
@@ -155,7 +157,7 @@ void QuickButtons_Config::actionChanged(const QString& newAction)
     // rename item
     item->setText(1,newAction);
     // tell the config system that something has changed
-    if(!newItemSelected) emit modified();
+    if(!m_newItemSelected) emit modified();
   }
 }
 

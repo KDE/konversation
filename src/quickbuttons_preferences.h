@@ -40,7 +40,7 @@ class QuickButtons_Config : public QuickButtons_ConfigUI, public KonviSettingsPa
     void actionChanged(const QString& newAction);
 
   protected:
-    bool newItemSelected;
+    bool m_newItemSelected;
 };
 
 #endif

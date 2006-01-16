@@ -82,7 +82,7 @@ class KDEUI_EXPORT KonviSettingsDialog : public KonviConfigDialog
 	Highlight_Config* m_confHighlightWdg;
 	OSD_Config* m_confOSDWdg;
 	Ignore_Config* m_confIgnoreWdg;
-    TabNotifications_Config* m_confTabNotificationsWdg;
+	TabNotifications_Config* m_confTabNotificationsWdg;
 
 	bool m_modified;
 
@@ -98,7 +98,7 @@ class KDEUI_EXPORT KonviSettingsDialog : public KonviConfigDialog
         virtual void updateWidgetsDefault();
  	void modifiedSlot();
 
-  protected:
+    protected:
         virtual bool hasChanged() { return m_modified; }
         virtual bool isDefault() { return true; }
 
