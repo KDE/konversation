@@ -561,9 +561,6 @@ void IRCView::append(const QString& nick,const QString& message)
     if(Preferences::useClickableNicks())
         nickLine = "<a href=\"#" + nick + "\">%2</a>";
 
-    if(Preferences::useBoldNicks())
-        nickLine = "<b>"+nickLine+"</b>";
-
     if(Preferences::useColoredNicks())
     {
         if(nick != m_server->getNickname())
@@ -586,6 +583,9 @@ void IRCView::append(const QString& nick,const QString& message)
             channelColor = "#000001";              // HACK Working around QTextBrowser's auto link coloring
         }
     }
+
+    if(Preferences::useBoldNicks())
+        nickLine = "<b>"+nickLine+"</b>";
 
     if(basicDirection(message) == QChar::DirR)
     {
@@ -637,12 +637,8 @@ void IRCView::appendQuery(const QString& nick,const QString& message)
     if(Preferences::useClickableNicks())
         nickLine = "<a href=\"#" + nick + "\">%2</a>";
 
-    if(Preferences::useBoldNicks())
-        nickLine = "<b>"+nickLine+"</b>";
-
     if(Preferences::useColoredNicks())
     {
-
         if(nick != m_server->getNickname())
             color = m_server->obtainNickInfo(nick)->getNickColor();
         else
@@ -653,25 +649,28 @@ void IRCView::appendQuery(const QString& nick,const QString& message)
             color = "#000001";                    // HACK Working around QTextBrowser's auto link coloring
         }
 
-        nickLine = "<font color=\"" + color + "\">"+nickLine+"</font>";
+        nickLine = "<font color=\"" + color + "\">&lt;"+nickLine+"&gt;</font>";
     }
     else
     {
+        nickLine = "&lt;"+nickLine+"&gt;";
         if(queryColor  == "#000000")
         {
             queryColor = "#000001";                // HACK Working around QTextBrowser's auto link coloring
         }
     }
+    if(Preferences::useBoldNicks())
+        nickLine = "<b>"+nickLine+"</b>";
 
     if(basicDirection(message) == QChar::DirR)
     {
         line = RLO;
         line += LRE;
-        line += "<p><font color=\"" + queryColor + "\"><b>&lt;</b>" + nickLine + "<b>&gt;</b> %1" + PDF + " %3</font></p>\n";
+        line += "<p><font color=\"" + queryColor + "\">" + nickLine + " %1" + PDF + " %3</font></p>\n";
     }
     else
     {
-        line = "<p><font color=\"" + queryColor + "\">%1 <b>&lt;</b>" + nickLine + "<b>&gt;</b> %3</font></p>\n";
+        line = "<p><font color=\"" + queryColor + "\">%1 " + nickLine + " %3</font></p>\n";
     }
 
     line = line.arg(timeStamp(), nick, filter(message, queryColor, nick, true));
@@ -695,12 +694,8 @@ void IRCView::appendAction(const QString& nick,const QString& message)
     if(Preferences::useClickableNicks())
         nickLine = "<a href=\"#" + nick + "\">%2</a>";
 
-    if(Preferences::useBoldNicks())
-        nickLine = "<b>"+nickLine+"</b>";
-
     if(Preferences::useColoredNicks())
     {
-
         if(nick != m_server->getNickname())
             color = m_server->obtainNickInfo(nick)->getNickColor();
         else
@@ -720,6 +715,9 @@ void IRCView::appendAction(const QString& nick,const QString& message)
             actionColor = "#000001";               // HACK Working around QTextBrowser's auto link coloring
         }
     }
+    if(Preferences::useBoldNicks())
+        nickLine = "<b>"+nickLine+"</b>";
+
 
     if(basicDirection(message) == QChar::DirR)
     {
