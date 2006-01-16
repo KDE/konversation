@@ -74,6 +74,7 @@ Changes from 0.18 to 0.19
 - Redesigned tab notifications allowing for colored LEDs or text labels, the color being configurable per event class
 - Chat window highlight colors can be set to override generic tab notification colors
 - Fixed wrong links being opened from chat window
+- Improved channel name recognition (patch by Stanislav Nikolov)
 
 Changes from 0.17 to 0.18
 - All nicks were blue when colored nicks are disabled with some setups

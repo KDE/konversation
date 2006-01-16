@@ -36,6 +36,8 @@ namespace Konversation
             QString name() const { return m_name; }
             bool isServer() const { return m_isServer; }
 
+            int compare(QListViewItem *i, int col, bool ascending) const;
+
         private:
             int m_serverGroupId;
             QString m_name;

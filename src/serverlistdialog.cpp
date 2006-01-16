@@ -52,6 +52,31 @@ namespace Konversation
         m_isServer = true;
     }
 
+    int ServerListItem::compare(QListViewItem *i, int col, bool ascending) const
+    {
+        ServerListItem* item = static_cast<ServerListItem*>(i);
+
+        if (col==0)
+        {
+            if (!item->server().server().isEmpty())
+            {
+                if (ascending) return 1;
+                else return -1;
+            }
+
+            if (serverGroupId() == item->serverGroupId())
+                return 0;
+            else if (serverGroupId() < item->serverGroupId())
+                return -1;
+            else if (serverGroupId() > item->serverGroupId())
+                return 1;
+        }
+        else
+        {
+            return key( col, ascending ).localeAwareCompare( i->key( col, ascending ) );
+        }
+    }
+
     ServerListDialog::ServerListDialog(QWidget *parent, const char *name)
         : KDialogBase(Plain, i18n("Server List"), Ok|Close, Ok, parent, name, false)
     {
@@ -68,7 +93,8 @@ namespace Konversation
         m_serverList->addColumn(i18n("Identity"));
         m_serverList->addColumn(i18n("Channels"));
         m_serverList->setSelectionModeExt(KListView::Extended);
-        m_serverList->setSorting(-1);
+        m_serverList->setShowSortIndicator(true);
+        m_serverList->setSortColumn(0);
 
         m_addButton = new QPushButton(i18n("&New..."), mainWidget);
         QWhatsThis::add(m_addButton, i18n("Click here to define a new Network, including the server to connect to, and the Channels to automatically join once connected."));
