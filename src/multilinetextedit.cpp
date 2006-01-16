@@ -11,6 +11,7 @@
 //
 
 #include <qpainter.h>
+#include <qregexp.h>
 
 #include <kdebug.h>
 
@@ -42,7 +43,8 @@ void MultilineTextEdit::drawWhitespaces()
   pa.setBrush(redBrush);
 
   QPointArray cr(4);
-
+  QPointArray tab(7);
+  QRegExp regex("\\s");
   QString line;
 
   int x,y,pos,paragraph;
@@ -50,20 +52,31 @@ void MultilineTextEdit::drawWhitespaces()
   {
     line=text(paragraph);
     pos=0;
-    while((pos=line.find(" ",pos))!=-1)
+    while((pos=line.find(regex,pos))!=-1)
     {
       space=mapToView(paragraph,pos);
       x=space.width()/2-1+space.x();
       y=space.height()/2-1+space.y();
-      pa.drawRect(x,y,2,2);
+      if(pos<((int)line.length()-1))
+      {
+        if(regex.cap(0)==" ")
+        {
+          pa.drawRect(x-1,y,2,2);
+        }
+        else if(regex.cap(0)=="\t")
+        {
+          tab.putPoints(0,7, x-5,y-1, x,y-1, x,y-3, x+3,y, x,y+3, x,y+1, x-5,y+1);
+          pa.drawPolygon(tab);
+        }
+      }
       pos++;
-    }
+    } // while
     space=mapToView(paragraph,line.length()-1);
     x=space.width()/2-1+space.x();
     y=space.height()/2-1+space.y();
     cr.putPoints(0,4, x,y, x,y+1, x+4, y+5, x+4, y-4);
     pa.drawPolygon(cr);
-  }
+  } // for
 }
 
 void MultilineTextEdit::cursorChanged(int /* p */ ,int /* i */)
@@ -71,7 +84,7 @@ void MultilineTextEdit::cursorChanged(int /* p */ ,int /* i */)
   drawWhitespaces();
 }
 
-// code below from kbabel. Thanks, Guys!
+// code below from kbabel and adapted by me (Eisfuchs). Thanks, Guys!
 
 QRect MultilineTextEdit::mapToView(int para,int index)
 {
@@ -106,64 +119,8 @@ QRect MultilineTextEdit::mapToView(int para,int index)
     }
     Q_ASSERT( linestart >= 0 );
 
-    int linewidth;
-
-    // if the tag is not valid, easy
-    if( (_tagStartPara == _tagEndPara) && (_tagStartIndex == _tagEndIndex) ) {
-        linewidth = fm.width( paratext.mid( linestart, index-linestart ));
-    } else {
-        int tso = pos2Offset( _tagStartPara, _tagStartIndex );
-        int teo = pos2Offset( _tagEndPara, _tagEndIndex );
-        int off = pos2Offset( para, index );
-
-        if( off < tso ) {
-            // it is surely before the tag
-            linewidth = fm.width( paratext.mid( linestart, index-linestart ));
-        } else if( off >= teo ) {
-            // it is surely after the tag
-
-            // is it on the same line as the end of the tag?
-            if( _tagEndPara < para || lineOfChar( _tagEndPara, _tagEndIndex ) < indexline ) {
-                // no tag on the line, no bold
-                linewidth = fm.width( paratext.mid( linestart, index-linestart ));
-            } else {
-                QFont f( font() );
-                f.setBold( true );
-                QFontMetrics bfm( f );
-                // is tag single displayed line?
-                if( _tagStartPara == _tagEndPara
-                    && lineOfChar( _tagStartPara, _tagStartIndex ) == lineOfChar( _tagEndPara, _tagEndIndex ) )
-                {
-                    // yes, count the non-bold before the tag start
-                    linewidth = fm.width( paratext.mid( linestart, _tagStartIndex-linestart ) )
-                        + bfm.width( paratext.mid( _tagStartIndex, _tagEndIndex-_tagStartIndex ) );
-                }
-                else
-                {
-                    // count the part of the tag itself
-                    linewidth = bfm.width( paratext.mid( linestart, _tagEndIndex-linestart ) );
-                }
-
-                // add the rest from tag to the index
-                linewidth += fm.width( paratext.mid( _tagEndIndex, index-_tagEndIndex ) );
-            }
-        }
-        else {
-            // in tag
-            QFont f( font() );
-            f.setBold( true );
-            QFontMetrics bfm( f );
-            // is it the first line of the tag?
-            if( para == _tagStartPara && indexline == lineOfChar( _tagStartPara, _tagStartIndex ) ) {
-                // start of the line is normal
-                linewidth = fm.width( paratext.mid( linestart, _tagStartIndex-linestart ) )
-                    + bfm.width( paratext.mid( _tagStartIndex, index-_tagStartIndex ) );
-            } else {
-                // whole is bold
-                linewidth = bfm.width( paratext.mid( linestart, index-linestart ) );
-            }
-        }
-    }
+    int linewidth = fm.size(ExpandTabs, paratext.mid( linestart, index-linestart )).width();
+    int linewidth2 = fm.size(ExpandTabs, paratext.mid( linestart, index-linestart+1 )).width();
 
     // FIXME as soon as it's possible to ask real margins from QTextEdit:
     const int left_margin = 4;
@@ -171,45 +128,15 @@ QRect MultilineTextEdit::mapToView(int para,int index)
 
     QPainter painter( viewport());
     const QRect& linerect = paragraphRect(para);
+
     return QRect(
         contentsToViewport( QPoint(
             left_margin + linerect.left() + linewidth ,
             /*top_margin + */linerect.top() + indexline * fm.lineSpacing() + fm.leading())),
         QSize(
-            fm.charWidth( paratext, index ),
+            linewidth2-linewidth,
             fm.lineSpacing()
         ));
-}
-
-int MultilineTextEdit::pos2Offset(uint paragraph, uint index)
-{
-    paragraph = QMAX( QMIN( (int)paragraph, paragraphs() - 1), 0 ); // Sanity check
-    index  = QMAX( QMIN( (int)index,  paragraphLength( paragraph )), 0 ); // Sanity check
-
-    {
-        uint lastI;
-        lastI  = paragraphLength( paragraph );
-        uint i = 0;
-        uint tmp = 0;
-
-        if( paragraph>=_lastParagraph )
-        {
-            tmp = _lastParagraphOffset;
-            i  = _lastParagraph;
-        }
-
-        for( ;i < paragraph ; i++ )
-        {
-            tmp += paragraphLength( i ) + 1;
-        }
-
-        _lastParagraphOffset=tmp;
-        _lastParagraph=paragraph;
-
-        tmp += QMIN( lastI, index );
-
-        return tmp;
-    }
 }
 
 #include "multilinetextedit.moc"

@@ -37,17 +37,8 @@ class MultilineTextEdit : public QTextEdit
   protected:
     virtual void drawContents(QPainter* p,int clipx,int clipy,int clipw,int cliph);
 
-    // all the stuff below is copied from kbabel. Thanks, guys!
-
-    /* This is a cache. _lastPragraphOffset always correctly corresponds to _lastParagraphOffset
-     */
-    uint _lastParagraph;
-    uint _lastParagraphOffset;
-    // next tag highlighting
-    int _tagStartPara, _tagStartIndex, _tagEndPara, _tagEndIndex;
-
+    // the stuff below is copied from kbabel. Thanks, guys!
     QRect mapToView(int paragraph,int index);
-    int pos2Offset(uint paragraph, uint index);
 };
 
 #endif
