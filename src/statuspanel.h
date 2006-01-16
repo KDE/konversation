@@ -64,6 +64,7 @@ class StatusPanel : public ChatWindow
         void showNicknameBox(bool show);
         void updateAppearance();
         virtual void appendInputText(const QString&);
+        void updateName();
 
     protected slots:
         void sendFileMenu();

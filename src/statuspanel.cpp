@@ -191,6 +191,11 @@ void StatusPanel::updateAppearance()
     showNicknameBox(Preferences::showNicknameBox());
 }
 
+void StatusPanel::updateName()
+{
+    setName(getServer()->serverGroupSettings()->name());
+}
+
 void StatusPanel::sendFileMenu()
 {
     emit sendFile();

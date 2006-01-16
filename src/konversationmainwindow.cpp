@@ -906,6 +906,7 @@ StatusPanel* KonversationMainWindow::addStatusView(Server* server)
     // ... then put it into the tab widget, otherwise we'd have a race with server member
     addView(statusView,label);
 
+    connect(this, SIGNAL(prefsChanged()), statusView, SLOT(updateName()));
     connect(statusView, SIGNAL(updateTabNotification(ChatWindow*,const Konversation::TabNotifyType&)), this, SLOT(setTabNotification(ChatWindow*,const Konversation::TabNotifyType&)));
     connect(statusView,SIGNAL (sendFile()),server,SLOT (requestDccSend()) );
     connect(server,SIGNAL (awayState(bool)),statusView,SLOT (indicateAway(bool)) );
@@ -1084,7 +1085,15 @@ void KonversationMainWindow::updateTabs()
         ChatWindow* view = static_cast<ChatWindow*>(viewContainer->page(i));
 
         if (view->getType()==ChatWindow::Status)
-            getViewContainer()->setTabLabel(view,view->getServer()->serverGroupSettings()->name());
+        {
+            QString label = view->getServer()->serverGroupSettings()->name();
+            getViewContainer()->setTabLabel(view,label);
+            if (view==m_frontView)
+            {
+                m_channelInfoLabel->setText(label);
+                setCaption(label);
+            }
+        }
 
         if (!Preferences::tabNotificationsLeds() && !Preferences::closeButtons())
             getViewContainer()->setTabIconSet(view, QIconSet());
