@@ -1582,7 +1582,7 @@ namespace Konversation
             // Disable the reverse resolve codepath on older KDE versions due to many
             // distributions shipping visibility-enabled KDE 3.4 and KNetwork not 
             // coping with it.
-#if KDE_IS_VERSION(3,5,0)
+#if KDE_IS_VERSION(3,5,1)
                 KNetwork:: KInetSocketAddress socketAddress(address,0);
                 QString resolvedTarget;
                 QString serv; // We don't need this, but KReverseResolver::resolve does.
@@ -1598,7 +1598,7 @@ namespace Konversation
                     result = error(i18n("Unable to resolve %1").arg(target));
                 }
 #else
-                result = error(i18n("Reverse-resolving requires KDE version 3.5 or higher."));
+                result = error(i18n("Reverse-resolving requires KDE version 3.5.1 or higher."));
 #endif
             }
             // Parameter is presumed to be a host due to containing a dot. Yeah, it's dumb.
