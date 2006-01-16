@@ -44,14 +44,16 @@ QuickButtons_Config::QuickButtons_Config(QWidget* parent, const char* name)
 QuickButtons_Config::~QuickButtons_Config()
 {
 }
+void QuickButtons_Config::loadSettings()
+{
+  setButtonsListView(Preferences::quickButtonList());
+}
 
 // fill listview with button definitions
-void QuickButtons_Config::loadSettings()
+void QuickButtons_Config::setButtonsListView(const QStringList &buttonList)
 {
   // clear listView
   buttonListView->clear();
-  // get list of quick buttons from preferences
-  QStringList buttonList(Preferences::quickButtonList());
   // go through the list
   KListViewItem *item;
   for(unsigned int index=buttonList.count();index!=0;index--)
@@ -97,7 +99,7 @@ void QuickButtons_Config::saveSettings()
 
 void QuickButtons_Config::restorePageToDefaults()
 {
-  // FIXME:
+  setButtonsListView(Preferences::defaultQuickButtonList());
 }
 
 // slots

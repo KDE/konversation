@@ -83,15 +83,7 @@ Preferences::Preferences()
     serverGroup->addChannel(channel);
     serverGroup->setExpanded(false);
     mServerGroupList.append(serverGroup);
-    QStringList quickButtons=QStringList() << "Op,/OP %u%n"
-                                           << "DeOp,/DEOP %u%n"
-                                           << "WhoIs,/WHOIS %s,%%u%n"
-                                           << "Version,/CTCP %s,%%u VERSION%n"
-                                           << "Kick,/KICK %u%n"
-                                           << "Ban,/BAN %u%n"
-                                           << "Part,/PART %c Leaving...%n"
-                                           << "Quit,/QUIT Leaving...%n";
-    setQuickButtonList(quickButtons);
+    setQuickButtonList(defaultQuickButtonList());
 
     // nicklist sorting order defaults
     setNicknameSortingOrder(defaultNicknameSortingOrder());
@@ -116,6 +108,18 @@ Preferences::~Preferences()
 const Konversation::ServerGroupList Preferences::serverGroupList()
 {
     return self()->mServerGroupList;
+}
+
+const QStringList Preferences::defaultQuickButtonList()
+{
+    return QStringList() << "Op,/OP %u%n"
+                         << "DeOp,/DEOP %u%n"
+                         << "WhoIs,/WHOIS %s,%%u%n"
+                         << "Version,/CTCP %s,%%u VERSION%n"
+                         << "Kick,/KICK %u%n"
+                         << "Ban,/BAN %u%n"
+                         << "Part,/PART %c Leaving...%n"
+                         << "Quit,/QUIT Leaving...%n";
 }
 
 const QStringList Preferences::quickButtonList()

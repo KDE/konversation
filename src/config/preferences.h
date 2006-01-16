@@ -94,6 +94,7 @@ class Preferences : public QObject, public PreferencesBase
         static const QPtrList<Ignore> ignoreList();
         static void setIgnoreList(QPtrList<Ignore> newList);
         static const QStringList quickButtonList();
+        static const QStringList defaultQuickButtonList();
         static void setQuickButtonList(const QStringList newList);
         static void addIdentity(IdentityPtr identity);
         static void removeIdentity(IdentityPtr identity);

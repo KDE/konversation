@@ -39,6 +39,9 @@ class QuickButtons_Config : public QuickButtons_ConfigUI, public KonviSettingsPa
     void nameChanged(const QString& newName);
     void actionChanged(const QString& newAction);
 
+  private:
+    void setButtonsListView(const QStringList &buttonList);
+
   protected:
     bool m_newItemSelected;
 };
