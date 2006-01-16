@@ -12,10 +12,10 @@
 
 #include <qlayout.h>
 
-#include <qtextedit.h>
 #include <klocale.h>
 
 #include "multilineedit.h"
+#include "multilinetextedit.h"
 #include "konversationapplication.h"
 
 QString MultilineEdit::returnText;                // static
@@ -32,7 +32,7 @@ KGuiItem(i18n("Add &Quotation Indicators")))
     QVBoxLayout* dialogLayout=new QVBoxLayout(page);
     dialogLayout->setSpacing(spacingHint());
     // add the text editor
-    textEditor=new QTextEdit(page,"multiline_text_editor");
+    textEditor=new MultilineTextEdit(page,"multiline_text_editor");
     textEditor->setTextFormat(PlainText);
     textEditor->setText(text);
     returnText=text;
