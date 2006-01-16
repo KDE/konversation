@@ -3,12 +3,14 @@
 
 #include <kdebug.h>
 #include <klibloader.h>
+#include <klocale.h>
 
 #include "konsolepanel.h"
 #include "common.h"
 
 KonsolePanel::KonsolePanel(QWidget *p) : ChatWindow( p )
 {
+    setName(i18n("Konsole"));
     setType(ChatWindow::Konsole);
     KLibFactory *fact = KLibLoader::self()->factory("libkonsolepart");
     if (!fact) return;

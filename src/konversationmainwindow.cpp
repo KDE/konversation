@@ -705,6 +705,7 @@ void KonversationMainWindow::openLogFile(const QString& caption, const QString& 
 void KonversationMainWindow::addKonsolePanel()
 {
     KonsolePanel* panel=new KonsolePanel(getViewContainer());
+    panel->setName(i18n("Konsole"));
     addView(panel, i18n("Konsole"));
     connect(panel, SIGNAL(updateTabNotification(ChatWindow*,const Konversation::TabNotifyType&)), this, SLOT(setTabNotification(ChatWindow*,const Konversation::TabNotifyType&)));
     connect(panel,SIGNAL (deleted(ChatWindow*)),this,SLOT (closeKonsolePanel(ChatWindow*)) );
@@ -1154,13 +1155,23 @@ void KonversationMainWindow::updateFrontView()
             QString tabName = Konversation::removeIrcMarkup(view->getName());
 
             if( tabName != "ChatWindowObject" )
-            {
                 m_channelInfoLabel->setText(tabName);
-            }
             else
-            {
                 m_channelInfoLabel->setText(QString::null);
-            }
+        }
+
+        switch (view->getType())
+        {
+            case ChatWindow::Channel:
+            case ChatWindow::Query:
+            case ChatWindow::DccChat:
+            case ChatWindow::Status:
+                m_lagInfoLabel->show();
+                break;
+
+            default:
+                m_lagInfoLabel->hide();
+                break;
         }
 
         // Make sure that only text views get to be the searchView

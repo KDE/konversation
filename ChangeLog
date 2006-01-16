@@ -66,7 +66,7 @@ Changes from 0.18 to 0.19
 - Add new networks behind the last network in the Server List dialog, resulting in the user interface finally matching the application behavior
 - Minor cosmetic improvement to the status bar: all segments now have the same height
 - Status bar segments correctly react to font size changes
-- Status bar now showing context-relevant information such as link URLs
+- Status bar now showing context-relevant information (link URLs, menu item descriptions)
 - Changed hard-coded channel join taskbar notification into a configurable notification event
 - Yammi media player is now supported by media script
 - QUIT events for users are now shown in any queries you have open with them
