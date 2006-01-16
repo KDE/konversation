@@ -140,10 +140,10 @@ Server::~Server()
     // clear nicks online
     emit nicksNowOnline(this,QStringList(),true);
     // Make sure no signals get sent to a soon to be dying Server Window
-    m_socket->blockSignals(true);
-
-    // Don't delete socket now
-    m_socket->deleteLater();
+    if (m_socket) {
+        m_socket->blockSignals(true);
+        m_socket->deleteLater();
+    }
 
     closeRawLog();
     closeChannelListPanel();
