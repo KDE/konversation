@@ -1122,8 +1122,6 @@ void KonversationMainWindow::updateTabs()
                 setTabNotification(view,view->currentTabNotification());
         }
     }
-
-    KAcceleratorManager::manage(getViewContainer());
 }
 
 void KonversationMainWindow::updateFrontView()
