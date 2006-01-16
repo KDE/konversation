@@ -121,7 +121,6 @@ class KonversationMainWindow : public KMainWindow
         void updateLag(Server* lagServer,int msec);
         void updateSSLInfo(Server* server);
         void tooLongLag(Server* lagServer,int msec);
-        void channelPrefsChanged();
         void setOnlineList(Server* notifyServer,const QStringList& list, bool changed);
         void updateTrayIcon();
         void serverQuit(Server* server);
@@ -162,7 +161,7 @@ class KonversationMainWindow : public KMainWindow
 
         void setTabNotification(ChatWindow* widget, const Konversation::TabNotifyType& type);
         void unsetTabNotification(ChatWindow* view);
-        void updateTabNotifications();
+        void updateTabs();
 
         void quitProgram();
 

@@ -191,6 +191,8 @@ namespace Konversation
 
                     *serverGroup = *(dlg.serverGroupSettings());
                     updateServerList();
+
+                    static_cast<KonversationApplication*>(kapp)->saveOptions(true);
                 }
             }
         }

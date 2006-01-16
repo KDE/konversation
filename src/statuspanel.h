@@ -57,7 +57,6 @@ class StatusPanel : public ChatWindow
 
         signals:
         void sendFile();
-        // void prefsChanged();
 
     public slots:
         void setNickname(const QString& newNickname);

@@ -125,7 +125,7 @@ int KonversationApplication::newInstance()
         connect(this, SIGNAL(prefsChanged()), mainWindow, SIGNAL(prefsChanged()) );
         // take care of user style changes, setting back colors and stuff
         connect(KApplication::kApplication(), SIGNAL(appearanceChanged()), mainWindow, SLOT(updateAppearance()));
-        connect(KApplication::kApplication(), SIGNAL(appearanceChanged()), mainWindow, SLOT(updateTabNotifications()));
+        connect(KApplication::kApplication(), SIGNAL(appearanceChanged()), mainWindow, SLOT(updateTabs()));
 
         // apply GUI settings
         mainWindow->updateAppearance();

@@ -41,6 +41,7 @@
 #include <kpushbutton.h>
 #include <kabc/addressbook.h>
 #include <kabc/errorhandler.h>
+#include <kaccelmanager.h>
 
 #include <config.h>
 #ifdef  USE_KNOTIFY
@@ -907,9 +908,6 @@ StatusPanel* KonversationMainWindow::addStatusView(Server* server)
 
     connect(statusView, SIGNAL(updateTabNotification(ChatWindow*,const Konversation::TabNotifyType&)), this, SLOT(setTabNotification(ChatWindow*,const Konversation::TabNotifyType&)));
     connect(statusView,SIGNAL (sendFile()),server,SLOT (requestDccSend()) );
-    // TODO: Why was this here?  Delete channelPrefsChanged method as it does not
-    // appear to do anything since statusView never emits signal prefsChanged.
-    // connect(statusView,SIGNAL (prefsChanged()),this,SLOT (channelPrefsChanged()) );
     connect(server,SIGNAL (awayState(bool)),statusView,SLOT (indicateAway(bool)) );
 
     // make sure that frontServer gets set on adding the first status panel, too,
@@ -1073,7 +1071,7 @@ void KonversationMainWindow::unsetTabNotification(ChatWindow* view)
     getViewContainer()->setTabColor(view, colorGroup().foreground());
 }
 
-void KonversationMainWindow::updateTabNotifications()
+void KonversationMainWindow::updateTabs()
 {
     if (Preferences::closeButtons() && !viewContainer->hoverCloseButton())
         viewContainer->setHoverCloseButton(true);
@@ -1084,6 +1082,9 @@ void KonversationMainWindow::updateTabNotifications()
     for (int i = 0; i < viewContainer->count(); ++i)
     {
         ChatWindow* view = static_cast<ChatWindow*>(viewContainer->page(i));
+
+        if (view->getType()==ChatWindow::Status)
+            getViewContainer()->setTabLabel(view,view->getServer()->serverGroupSettings()->name());
 
         if (!Preferences::tabNotificationsLeds() && !Preferences::closeButtons())
             getViewContainer()->setTabIconSet(view, QIconSet());
@@ -1112,6 +1113,8 @@ void KonversationMainWindow::updateTabNotifications()
                 setTabNotification(view,view->currentTabNotification());
         }
     }
+
+    KAcceleratorManager::manage(getViewContainer());
 }
 
 void KonversationMainWindow::updateFrontView()
@@ -1465,11 +1468,6 @@ void KonversationMainWindow::removeSSLIcon()
 {
     disconnect(m_sslLabel,0,0,0);
     m_sslLabel->hide();
-}
-
-void KonversationMainWindow::channelPrefsChanged()
-{
-    emit prefsChanged();
 }
 
 KTabWidget* KonversationMainWindow::getViewContainer()

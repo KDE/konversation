@@ -464,7 +464,6 @@ namespace Konversation
         }
         else
         {
-            static_cast<KonversationApplication*>(kapp)->saveOptions(true);
             accept();
         }
     }
