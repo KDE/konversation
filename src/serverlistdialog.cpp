@@ -68,13 +68,10 @@ namespace Konversation
                 return 0;
             else if (serverGroupId() < item->serverGroupId())
                 return -1;
-            else if (serverGroupId() > item->serverGroupId())
+            else /*if (serverGroupId() > item->serverGroupId())*/
                 return 1;
         }
-        else
-        {
-            return key( col, ascending ).localeAwareCompare( i->key( col, ascending ) );
-        }
+        return key( col, ascending ).localeAwareCompare( i->key( col, ascending ) );
     }
 
     ServerListDialog::ServerListDialog(QWidget *parent, const char *name)
