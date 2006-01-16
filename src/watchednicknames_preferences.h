@@ -43,8 +43,10 @@ class WatchedNicknames_Config : public WatchedNicknames_ConfigUI, public KonviSe
     void entrySelected(QListViewItem* notifyEntry);
     void networkChanged(const QString& newNetwork);
     void nicknameChanged(const QString& newNickname);
+    void updateNetworkNames(); // connected to KonversationApplication::prefsChanged()
 
   protected:
+    void enableEditWidgets(bool enabled);
     bool newItemSelected;
 };
 

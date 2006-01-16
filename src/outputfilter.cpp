@@ -893,7 +893,7 @@ namespace Konversation
         }
 
         // show (new) notify list to user
-        QString list = Preferences::notifyStringByGroup(groupName) + " " + Konversation::Addressbook::self()->allContactsNicksForServer(m_server->getServerName(), m_server->getServerGroup()).join(" ");
+        QString list = Preferences::notifyStringByGroupName(groupName) + " " + Konversation::Addressbook::self()->allContactsNicksForServer(m_server->getServerName(), m_server->getServerGroup()).join(" ");
 
         result.typeString = i18n("Notify");
 

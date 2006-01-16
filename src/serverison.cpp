@@ -170,7 +170,7 @@ void ServerISON::recalculateAddressees()
         // TODO: Don't add nick on user watch list if nick is known to be online
         // under a different nickname?
         QStringList prefsWatchList =
-            Preferences::notifyListByGroup(m_server->getServerGroup());
+            Preferences::notifyListByGroupName(m_server->getServerGroup());
         QStringList::iterator itEnd = prefsWatchList.end();
 
         for(QStringList::iterator it = prefsWatchList.begin(); it != itEnd; ++it)

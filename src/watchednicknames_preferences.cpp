@@ -16,13 +16,15 @@
 
 #include <kapplication.h>
 #include <kconfig.h>
-#include <klistview.h>
 #include <kpushbutton.h>
 #include <klineedit.h>
 #include <klocale.h>
 #include <kdebug.h>
 
 #include "config/preferences.h"
+#include "konversationapplication.h"
+#include "konversationmainwindow.h"
+#include "valuelistviewitem.h"
 
 #include "watchednicknames_preferences.h"
 #include "watchednicknames_preferencesui.h"
@@ -43,6 +45,8 @@ WatchedNicknames_Config::WatchedNicknames_Config(QWidget *parent, const char *na
 
   connect(networkDropdown,SIGNAL (activated(const QString&)),this,SLOT (networkChanged(const QString&)) );
   connect(nicknameInput,SIGNAL (textChanged(const QString&)),this,SLOT (nicknameChanged(const QString&)) );
+
+  connect(KonversationApplication::instance()->getMainWindow(), SIGNAL (prefsChanged()),this,SLOT (updateNetworkNames()) );
 }
 
 WatchedNicknames_Config::~WatchedNicknames_Config()
@@ -57,35 +61,32 @@ void WatchedNicknames_Config::restorePageToDefaults()
 void WatchedNicknames_Config::loadSettings()
 {
   // get the current notify list and an iterator
-  QMap<QString, QStringList> notifyList = Preferences::notifyList();
-  QMapConstIterator<QString, QStringList> groupItEnd = notifyList.constEnd();
+  QMap<int, QStringList> notifyList = Preferences::notifyList();
+  QMapConstIterator<int, QStringList> groupItEnd = notifyList.constEnd();
 
   // get list of server networks
   Konversation::ServerGroupList serverGroupList = Preferences::serverGroupList();
   Konversation::ServerGroupList::iterator it;
 
+  // cleanup, so we won't add duplicate items
   notifyListView->clear();
+  networkDropdown->clear();
+  // make sure all widgets are disabled
+  notifyListView->clearSelection();
+  enableEditWidgets(false);
+
   // check if there is a network that is not in the notify group list
   for(it=serverGroupList.begin();it!=serverGroupList.end();++it)
   {
-    if(!notifyList.contains((*it)->name()))
-    {
-      // add server network to the notify listview so we can add notify items
-      // to networks we haven't used yet
-      new KListViewItem(notifyListView,(*it)->name());
-    }
-  }
+    // add server group branch to the notify listview so we can add notify items
+    ValueListViewItem* groupItem= new ValueListViewItem((*it)->id(),notifyListView,(*it)->name());
+    // get the group iterator to find all servers in the group
+    QMapConstIterator<int, QStringList> groupIt=notifyList.find((*it)->id());
 
-  // iterate over all items
-  for (QMapConstIterator<QString, QStringList> groupIt = notifyList.constBegin();
-      groupIt != groupItEnd; ++groupIt)
-  {
     // get list of nicks for the current group
     QStringList nicks=groupIt.data();
-    // create group branch
-    KListViewItem* groupItem=new KListViewItem(notifyListView,groupIt.key());
     // add group to dropdown list
-    networkDropdown->insertItem(groupIt.key(),-1);
+    networkDropdown->insertItem((*it)->name(),-1);
     // add nicknames to group branch
     for(unsigned int index=0;index<nicks.count();index++)
     {
@@ -93,21 +94,14 @@ void WatchedNicknames_Config::loadSettings()
     } // for
     // unfold group branch
     notifyListView->setOpen(groupItem,true);
-  } // for
+  }
 }
 
 // save list of notifies permanently, taken from the listview
 void WatchedNicknames_Config::saveSettings()
 {
-  // get configuration object
-  KConfig* config=kapp->config();
-  // remove all old notify entries
-  config->deleteGroup("Notify Groups List");
-  // add new notify section
-  config->setGroup("Notify Group Lists");
-
   // create new in-memory notify structure
-  QMap<QString,QStringList> notifyList;
+  QMap<int,QStringList> notifyList;
 
   // get first notify group
   KListView* listView=notifyListView;
@@ -116,6 +110,8 @@ void WatchedNicknames_Config::saveSettings()
   // loop as long as there are more groups in the listview
   while(group)
   {
+    int groupId=static_cast<ValueListViewItem*>(group)->getValue();
+
     // later contains all nicks separated by blanks
     QString nicks;
     // get first nick in the group
@@ -127,20 +123,52 @@ void WatchedNicknames_Config::saveSettings()
       nicks+=nick->text(0)+" ";
       // get next nick in the group
       nick=nick->nextSibling();
-    }
-    // write nick list to config, strip all unnecessary blanks
-    config->writeEntry(group->text(0),nicks.stripWhiteSpace());
+    } // while
+
     // write nick list to in-memory notify qstringlist
-    notifyList.insert(group->text(0),QStringList::split(' ',nicks.stripWhiteSpace()));
+    notifyList.insert(groupId,QStringList::split(' ',nicks.stripWhiteSpace()));
     // get next group
     group=group->nextSibling();
   } // while
 
   // update in-memory notify list
   Preferences::setNotifyList(notifyList);
+  static_cast<KonversationApplication*>(kapp)->saveOptions(false);
 }
 
 // slots
+
+void WatchedNicknames_Config::updateNetworkNames()
+{
+  // get first notify group
+  KListView* listView=notifyListView;
+  QListViewItem* group=listView->firstChild();
+
+  // make sure all widgets are disabled
+  listView->clearSelection();
+  enableEditWidgets(false);
+
+  // kill dropdown list, the networks might have been renamed
+  networkDropdown->clear();
+
+  // loop as long as there are more groups in the listview
+  while(group)
+  {
+    // get the group id from the listview item
+    int groupId=static_cast<ValueListViewItem*>(group)->getValue();
+    // get the name of the group by having a look at the serverGroupSettings
+    Konversation::ServerGroupSettingsPtr serverGroup=Preferences::serverGroupById(groupId);
+    QString serverGroupName=(*serverGroup).name();
+
+    // update the name of the group in the listview
+    group->setText(0,serverGroupName);
+
+    // re-add group to dropdown list
+    networkDropdown->insertItem(serverGroupName,-1);
+    // get next group
+    group=group->nextSibling();
+  } // while
+}
 
 // helper function to disable "New" button on empty listview
 void WatchedNicknames_Config::checkIfEmptyListview(bool state)
@@ -233,8 +261,12 @@ void WatchedNicknames_Config::entrySelected(QListViewItem* notifyEntry)
       newItemSelected=false;
     }
   }
+  enableEditWidgets(enabled);
+}
 
-  // enable/disable edit widgets
+// enable/disable edit widgets
+void WatchedNicknames_Config::enableEditWidgets(bool enabled)
+{
   removeButton->setEnabled(enabled);
   networkLabel->setEnabled(enabled);
   networkDropdown->setEnabled(enabled);

@@ -2425,7 +2425,7 @@ void Server::removeChannelNick(const QString& channelName, const QString& nickna
 QStringList Server::getWatchList()
 {
     // no nickinfo ISON for the time being
-    return Preferences::notifyListByGroup(getServerGroup());
+    return Preferences::notifyListByGroupName(getServerGroup());
     if (m_serverISON)
         return m_serverISON->getWatchList();
     else
@@ -2437,7 +2437,7 @@ QString Server::getWatchListString() { return getWatchList().join(" "); }
 QStringList Server::getISONList()
 {
     // no nickinfo ISON for the time being
-    return Preferences::notifyListByGroup(getServerGroup());
+    return Preferences::notifyListByGroupName(getServerGroup());
     if (m_serverISON)
         return m_serverISON->getISONList();
     else

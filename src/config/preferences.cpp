@@ -281,33 +281,38 @@ bool Preferences::removeIgnore(const QString &oldIgnore)
     return false;
 }
 
-void Preferences::setNotifyList(const QMap<QString, QStringList> &newList)
+void Preferences::setNotifyList(const QMap<int, QStringList> &newList)
 { self()->mNotifyList=newList; }
 
-const QMap<QString, QStringList> Preferences::notifyList() { return self()->mNotifyList; }
+const QMap<int, QStringList> Preferences::notifyList() { return self()->mNotifyList; }
 
-const QStringList Preferences::notifyListByGroup(const QString& groupName)
+const QStringList Preferences::notifyListByGroupName(const QString& groupName)
 {
-    if (self()->mNotifyList.find(groupName) != self()->mNotifyList.end())
-        return self()->mNotifyList[groupName];
+  int id=serverGroupIdByName(groupName);
+  if (id && self()->mNotifyList.find(id) != self()->mNotifyList.end())
+        return self()->mNotifyList[id];
     else
         return QStringList();
 }
 
-const QString Preferences::notifyStringByGroup(const QString& groupName)
+const QString Preferences::notifyStringByGroupName(const QString& groupName)
 {
-    return notifyListByGroup(groupName).join(" ");
+    return notifyListByGroupName(groupName).join(" ");
 }
 
 const bool Preferences::addNotify(const QString& groupName, const QString& newPattern)
 {
     // don't add duplicates
     if (groupName.isEmpty() || newPattern.isEmpty()) return false;
-    if (!self()->mNotifyList[groupName].contains(newPattern))
+
+    int id=serverGroupIdByName(groupName);
+    if(!id) return false;
+
+    if (!self()->mNotifyList[id].contains(newPattern))
     {
-        QStringList nicknameList = self()->mNotifyList[groupName];
+        QStringList nicknameList = self()->mNotifyList[id];
         nicknameList.append(newPattern);
-        self()->mNotifyList[groupName] = nicknameList;
+        self()->mNotifyList[id] = nicknameList;
         return true;
     }
     return false;
@@ -315,14 +320,17 @@ const bool Preferences::addNotify(const QString& groupName, const QString& newPa
 
 const bool Preferences::removeNotify(const QString& groupName, const QString& pattern)
 {
-    if (self()->mNotifyList.find(groupName) != self()->mNotifyList.end())
+  int id=serverGroupIdByName(groupName);
+  if(!id) return false;
+
+  if (self()->mNotifyList.find(id) != self()->mNotifyList.end())
     {
-        QStringList nicknameList = self()->mNotifyList[groupName];
+        QStringList nicknameList = self()->mNotifyList[id];
         nicknameList.remove(pattern);
         if (nicknameList.isEmpty())
-            self()->mNotifyList.remove(groupName);
+            self()->mNotifyList.remove(id);
         else
-            self()->mNotifyList[groupName] = nicknameList;
+            self()->mNotifyList[id] = nicknameList;
         return true;
     }
     return false;

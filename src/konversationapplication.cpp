@@ -515,6 +515,7 @@ void KonversationApplication::readOptions()
 
     // Read the new server settings
     QStringList groups = config->groupList().grep(QRegExp("ServerGroup [0-9]+"));
+    QMap<int,QStringList> notifyList;
 
     if(!groups.isEmpty())
     {
@@ -536,8 +537,10 @@ void KonversationApplication::readOptions()
             serverGroup->setAutoConnectEnabled(config->readBoolEntry("AutoConnect"));
             serverGroup->setNotificationsEnabled(config->readBoolEntry("EnableNotifications", true));
             serverGroup->setExpanded(config->readBoolEntry("Expanded", false));
-            tmp1 = config->readListEntry("ServerList");
 
+            notifyList.insert((*serverGroup).id(),QStringList::split(' ',config->readEntry("NotifyList")));
+
+            tmp1 = config->readListEntry("ServerList");
             for(it2 = tmp1.begin(); it2 != tmp1.end(); ++it2)
             {
                 config->setGroup((*it2));
@@ -589,9 +592,9 @@ void KonversationApplication::readOptions()
     }
 
     // Notify Settings and lists.  Must follow Server List.
+    Preferences::setNotifyList(notifyList);
     Preferences::setNotifyDelay(Preferences::notifyDelay());
     Preferences::setUseNotify(Preferences::useNotify());
-    Preferences::setNotifyList(Preferences::notifyList());
 
     // Quick Buttons List
     config->setGroup("Button List");
@@ -663,18 +666,6 @@ void KonversationApplication::readOptions()
     for(unsigned int i=0; i<channelEncodingsEntry.count(); ++i)
         if(re.search(channelEncodingsEntryKeys[i]) > -1)
             Preferences::setChannelEncoding(re.cap(1),re.cap(2),channelEncodingsEntry[channelEncodingsEntryKeys[i]]);
-
-    // read server group dependant notify lists
-    QMap<QString,QString> notifyGroups=config->entryMap("Notify Group Lists");
-    QMap<QString,QStringList> notifyList;
-    QValueList<QString> keys=notifyGroups.keys();
-
-    for(unsigned int i=0;i<keys.count();i++)
-    {
-      notifyList.insert(keys[i],QStringList::split(' ',notifyGroups[keys[i]]));
-    }
-
-    Preferences::setNotifyList(notifyList);
 }
 
 void KonversationApplication::saveOptions(bool updateGUI)
@@ -721,21 +712,6 @@ void KonversationApplication::saveOptions(bool updateGUI)
 
     // FIXME: check if this group is still needed
     config->setGroup("Notify List");
-
-    /*
-    Should be done in WatchedNicknameConfigController now ... remove this part as soon as we are certain it works
-
-    config->deleteGroup("Notify Group Lists");
-    config->setGroup("Notify Group Lists");
-    QMap<QString, QStringList> notifyList = Preferences::notifyList();
-    QMapConstIterator<QString, QStringList> groupItEnd = notifyList.constEnd();
-
-    for (QMapConstIterator<QString, QStringList> groupIt = notifyList.constBegin();
-        groupIt != groupItEnd; ++groupIt)
-    {
-        config->writeEntry(groupIt.key(), groupIt.data().join(" "));
-    }
-    */
 
     // Remove the old servergroups from the config
     QStringList groups = config->groupList().grep(QRegExp("ServerGroup [0-9]+"));
@@ -839,6 +815,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
         config->writeEntry("ChannelHistory", channelHistory);
         config->writeEntry("EnableNotifications", (*it)->enableNotifications());
         config->writeEntry("Expanded", (*it)->expanded());
+        config->writeEntry("NotifyList",Preferences::notifyStringByGroupName((*it)->name()));
         index++;
     }
 

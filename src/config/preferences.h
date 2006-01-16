@@ -76,10 +76,10 @@ class Preferences : public QObject, public PreferencesBase
 	static QStringList defaultAliasList();
 
 	//notifylist is in kconfigxt - FIXME
-        static const QMap<QString, QStringList> notifyList();
-        static const QStringList notifyListByGroup(const QString& groupName);
-        static const QString notifyStringByGroup(const QString& groupName);
-        static void setNotifyList(const QMap<QString, QStringList>& newList);
+        static const QMap<int, QStringList> notifyList();
+        static const QStringList notifyListByGroupName(const QString& groupName);
+        static const QString notifyStringByGroupName(const QString& groupName);
+        static void setNotifyList(const QMap<int, QStringList>& newList);
         static const bool addNotify(const QString& groupName, const QString& newPattern);
         static const bool removeNotify(const QString& groupName, const QString& pattern);
 
@@ -173,7 +173,7 @@ class Preferences : public QObject, public PreferencesBase
         QPtrList<Ignore> mIgnoreList;
         QValueList<IdentityPtr> mIdentityList;
         QPtrList<Highlight> mHighlightList;
-        QMap<QString, QStringList> mNotifyList;
+        QMap<int, QStringList> mNotifyList;  // network id, list of nicks
         QMap< QString,QMap<QString,QString> > mChannelEncodingsMap;
         QStringList mQuickButtonList;
         QString mSortingOrder;
