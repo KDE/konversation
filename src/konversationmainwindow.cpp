@@ -1087,11 +1087,15 @@ void KonversationMainWindow::updateTabs()
         if (view->getType()==ChatWindow::Status)
         {
             QString label = view->getServer()->serverGroupSettings()->name();
-            getViewContainer()->setTabLabel(view,label);
-            if (view==m_frontView)
+
+            if (getViewContainer()->tabLabel(view) != label)
             {
-                m_channelInfoLabel->setText(label);
-                setCaption(label);
+                getViewContainer()->setTabLabel(view,label);
+                if (view==m_frontView)
+                {
+                    m_channelInfoLabel->setText(label);
+                    setCaption(label);
+                }
             }
         }
 
