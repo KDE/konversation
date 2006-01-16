@@ -19,6 +19,7 @@
 
 MultilineTextEdit::MultilineTextEdit(QWidget* parent,const char* name) : QTextEdit(parent,name)
 {
+  // make sure, our whitespace highlighting gets called whenever needed
   connect(this,SIGNAL(textChanged()),this,SLOT(drawWhitespaces()));
   connect(this,SIGNAL(cursorPositionChanged(int,int)),this,SLOT(cursorChanged(int,int)));
 }
@@ -29,51 +30,82 @@ MultilineTextEdit::~MultilineTextEdit()
 
 void MultilineTextEdit::drawContents(QPainter* p,int clipx,int clipy,int clipw,int cliph)
 {
+  // redraw text
   QTextEdit::drawContents(p,clipx,clipy,clipw,cliph);
+  // overlay whitespace markup
   drawWhitespaces();
 }
 
 void MultilineTextEdit::drawWhitespaces()
 {
-  QColor red("#ff0000");
-  QBrush redBrush(red);
+  // prepare a rectangle to store the width of the whitespace found
   QRect space;
+  // get the painter for the text area
   QPainter pa(viewport());
+
+  // get a sane color
+  QColor col=colorGroup().link();
+  // and a brush of the same color
+  QBrush redBrush(col);
+  // use it for line drawing
   pa.setPen(red);
+  // and for filling
   pa.setBrush(redBrush);
 
+  // prepare the carriage return coordinates array
   QPointArray cr(4);
+  // and the tabulator arrow coordinate array
   QPointArray tab(7);
+
+  // whitespace expression
   QRegExp regex("\\s");
+
+  // line buffer
   QString line;
 
   int x,y,pos,paragraph;
+  // start looking in every paragraph
   for(paragraph=0;paragraph<paragraphs();paragraph++)
   {
+    // get paragraph text
     line=text(paragraph);
+    // start looking for whitespaces from the beginning
     pos=0;
     while((pos=line.find(regex,pos))!=-1)
     {
-      space=mapToView(paragraph,pos);
-      x=space.width()/2-1+space.x();
-      y=space.height()/2-1+space.y();
+      // whitespace found is not the carriage return at the end of the line?
       if(pos<((int)line.length()-1))
       {
+        // get whitespace rectangle
+        space=mapToView(paragraph,pos);
+        // extract x/y coordinates
+        x=space.width()/2-1+space.x();
+        y=space.height()/2-1+space.y();
+
+        // if it was a regular blank ...
         if(regex.cap(0)==" ")
         {
+          // dras a simple small square
           pa.drawRect(x-1,y,2,2);
         }
+        // if it was a tabulator
         else if(regex.cap(0)=="\t")
         {
+          // calculate arrow points and draw them filled
           tab.putPoints(0,7, x-5,y-1, x,y-1, x,y-3, x+3,y, x,y+3, x,y+1, x-5,y+1);
           pa.drawPolygon(tab);
         }
       }
+      // go to next position and resume looking for more whitespaces
       pos++;
     } // while
+
+    // end of line, get carriage return position
     space=mapToView(paragraph,line.length()-1);
+    // extract x/y positions
     x=space.width()/2-1+space.x();
     y=space.height()/2-1+space.y();
+    // calculate carriage return triangle coordinates and draw them filled
     cr.putPoints(0,4, x,y, x,y+1, x+4, y+5, x+4, y-4);
     pa.drawPolygon(cr);
   } // for
@@ -81,6 +113,7 @@ void MultilineTextEdit::drawWhitespaces()
 
 void MultilineTextEdit::cursorChanged(int /* p */ ,int /* i */)
 {
+  // update markup, since cursor destroys it
   drawWhitespaces();
 }
 

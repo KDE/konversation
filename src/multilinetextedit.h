@@ -35,6 +35,7 @@ class MultilineTextEdit : public QTextEdit
     void cursorChanged(int,int);
 
   protected:
+    // reimplemented
     virtual void drawContents(QPainter* p,int clipx,int clipy,int clipw,int cliph);
 
     // the stuff below is copied from kbabel. Thanks, guys!
