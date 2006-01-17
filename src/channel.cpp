@@ -237,6 +237,7 @@ Channel::Channel(QWidget* parent)
 
     getTextView()->installEventFilter(channelInput);
     channelInput->installEventFilter(this);
+    channelInput->setCheckSpellingEnabled(Preferences::spellChecking());
 
     // Set the widgets size policies
     m_topicButton->setSizePolicy(QSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed));
@@ -2002,9 +2003,16 @@ QPtrList<Nick> Channel::getNickList()
     return nicknameList;
 }
 
+
+void Channel::lostFocus()
+{
+    Preferences::setSpellChecking(channelInput->checkSpellingEnabled());
+}
+
 void Channel::childAdjustFocus()
 {
     channelInput->setFocus();
+    channelInput->setCheckSpellingEnabled(Preferences::spellChecking());
     refreshModeButtons(); //not really needed i think
 }
 
@@ -2171,6 +2179,7 @@ bool Channel::closeYourself()
     {
         m_server->closeChannel(getName());
         m_server->removeChannel(this);
+	Preferences::setSpellChecking(channelInput->checkSpellingEnabled());
         delete this;
         return true;
     }

@@ -67,7 +67,7 @@ class Channel : public ChatWindow
 {
     Q_OBJECT
 
-        public:
+    public:
         Channel(QWidget* parent);
         ~Channel();
 
@@ -155,7 +155,7 @@ class Channel : public ChatWindow
 
         virtual bool eventFilter(QObject* watched, QEvent* e);
 
-        signals:
+    signals:
         void sendFile();
         void topicHistoryChanged();
         void modesChanged();
@@ -178,6 +178,7 @@ class Channel : public ChatWindow
         void setAllowNotifications(bool allow) { m_allowNotifications = allow; }
 
         void updateAppearance();
+        virtual void lostFocus();
 
     protected slots:
         void purgeNicks();
@@ -224,7 +225,7 @@ class Channel : public ChatWindow
         void fastAddNickname(ChannelNickPtr channelnick);
         /** Called from ChatWindow adjustFocus */
         virtual void childAdjustFocus();
-
+	/** Close the channel then come back in */
         void cycleChannel();
 
         int nicks;

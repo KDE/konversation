@@ -98,10 +98,6 @@ class ChatWindow : public QVBox
         virtual QString getTextInLine();
         /** Clean up and close this tab.  Return false if you want to cancel the close. */
         virtual bool closeYourself();
-        /** Are we focused?
-         *  @return true if we are currently focused
-         */
-
         /** Reimplement this to return true in all classes that /can/ become front view.
          */
         virtual bool canBeFrontView();
@@ -166,6 +162,10 @@ class ChatWindow : public QVBox
          * You can call this manually to focus this tab.
          */
         void adjustFocus();
+	/**
+	 * This is called when a chat window is about to lose focus.
+	 */
+        virtual void lostFocus() {}
 
         virtual void appendInputText(const QString&);
         virtual void indicateAway(bool away);

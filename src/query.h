@@ -37,7 +37,7 @@ class Query : public ChatWindow
 {
     Q_OBJECT
 
-        public:
+    public:
         Query(QWidget* parent);
         ~Query();
 
@@ -68,7 +68,7 @@ class Query : public ChatWindow
          */
         void quitNick(const QString& reason);
 
-        signals:
+    signals:
         void sendFile(const QString& recipient);
 
     public slots:
@@ -76,6 +76,7 @@ class Query : public ChatWindow
         void appendInputText(const QString& s);
         virtual void indicateAway(bool show);
         void updateAppearance();
+        virtual void lostFocus();
 
     protected slots:
         void queryTextEntered();

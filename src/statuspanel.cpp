@@ -59,6 +59,8 @@ StatusPanel::StatusPanel(QWidget* parent) : ChatWindow(parent)
 
     getTextView()->installEventFilter(statusInput);
     statusInput->installEventFilter(this);
+    statusInput->setCheckSpellingEnabled(Preferences::spellChecking());
+    kdDebug() << "SPELL CHECKING IS " << Preferences::spellChecking() << endl;
 
     setLog(Preferences::log());
     setLogfileName("konversation");
@@ -81,6 +83,7 @@ StatusPanel::StatusPanel(QWidget* parent) : ChatWindow(parent)
 
     connect(KonversationApplication::instance(), SIGNAL (appearanceChanged()),this,SLOT (updateAppearance()) );
 
+
     updateAppearance();
 }
 
@@ -93,8 +96,14 @@ void StatusPanel::setNickname(const QString& newNickname)
     nicknameCombobox->setCurrentText(newNickname);
 }
 
+void StatusPanel::lostFocus()
+{
+    Preferences::setSpellChecking(statusInput->checkSpellingEnabled());
+}
+
 void StatusPanel::childAdjustFocus()
 {
+    statusInput->setCheckSpellingEnabled(Preferences::spellChecking());
     statusInput->setFocus();
 }
 

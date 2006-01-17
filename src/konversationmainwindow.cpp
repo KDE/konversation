@@ -342,6 +342,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
 
 KonversationMainWindow::~KonversationMainWindow()
 {
+    Preferences::writeConfig();
     deleteDccPanel();
     delete dccTransferHandler;
 }
@@ -1323,7 +1324,8 @@ void KonversationMainWindow::changeView(QWidget* viewToChange)
 
     if(m_frontView)
     {
-        m_frontView->resetTabNotification();
+	m_frontView->resetTabNotification();
+	m_frontView->lostFocus();
         previousFrontView = m_frontView;
         disconnect(m_frontView, SIGNAL(updateInfo(const QString &)), this, SLOT(updateChannelInfo(const QString &)));
     }

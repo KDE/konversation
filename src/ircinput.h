@@ -30,7 +30,7 @@ class IRCInput : public KTextEdit
 {
     Q_OBJECT
 
-        public:
+    public:
         IRCInput(QWidget* parent);
         ~IRCInput();
 
@@ -43,7 +43,7 @@ class IRCInput : public KTextEdit
         virtual QSize sizeHint() const;
         QString text() const;
 
-        signals:
+    signals:
         void nickCompletion();
         void endCompletion();                     // tell channel that completion phase is over
         void history(bool up);
@@ -57,7 +57,7 @@ class IRCInput : public KTextEdit
         void showCompletionList(const QStringList& nicks);
         void setText(const QString& text);
         void setLastCompletion(const QString& completion);
-virtual void setOverwriteMode(bool) { }
+        virtual void setOverwriteMode(bool) { }
 
     protected slots:
         void getHistory(bool up);

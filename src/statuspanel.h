@@ -35,7 +35,7 @@ class StatusPanel : public ChatWindow
 {
     Q_OBJECT
 
-        public:
+    public:
         StatusPanel(QWidget* parent);
         ~StatusPanel();
 
@@ -55,7 +55,7 @@ class StatusPanel : public ChatWindow
         virtual bool areIRCColorsSupported() {return true; }
         virtual bool isInsertCharacterSupported() { return true; }
 
-        signals:
+    signals:
         void sendFile();
 
     public slots:
@@ -65,7 +65,8 @@ class StatusPanel : public ChatWindow
         void updateAppearance();
         virtual void appendInputText(const QString&);
         void updateName();
-
+        virtual void lostFocus();
+ 
     protected slots:
         void sendFileMenu();
         void statusTextEntered();
