@@ -1726,7 +1726,6 @@ void KonversationMainWindow::addIRCColor()
 
 void KonversationMainWindow::insertRememberLine()
 {
-    kdDebug() << "insertRememberLine in konversationMainWindow" << endl;
     if(Preferences::showRememberLineInAllWindows())
     {
         int total = getViewContainer()->count()-1;

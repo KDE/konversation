@@ -208,8 +208,6 @@ void KonversationApplication::setAutoAway()
 
 void KonversationApplication::toggleAway()
 {
-    kdDebug() << "toggleAway()" << endl;
-
     bool anyservers = false;
     bool alreadyaway = false;
 

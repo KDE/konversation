@@ -1348,8 +1348,6 @@ namespace Konversation
                 }
             }
 
-            kdDebug() << "Server: " << host << " Port: " << port << " Password: " << password << endl;
-
             if (Preferences::isServerGroup(host))
             {
                 emit connectToServerGroup(host);
