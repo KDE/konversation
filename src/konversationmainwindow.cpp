@@ -128,7 +128,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
 
     //used for event compression. See header file for resetHasDirtySettings()
     connect(KonversationApplication::instance(), SIGNAL(appearanceChanged()), this, SLOT(resetHasDirtySettings()));
-
+    connect(KonversationApplication::instance(), SIGNAL(appearanceChanged()), this, SLOT(updateTrayIcon()));
                                                   // file_quit
     KStdAction::quit(this,SLOT(quitProgram()),actionCollection());
 
@@ -373,24 +373,22 @@ void KonversationMainWindow::openPrefsDialog()
 
 void KonversationMainWindow::settingsChangedSlot()
 {
-    if(!m_hasDirtySettings) {
-        //This is for compressing the events. m_hasDirtySettings is set to true
-        //when the settings have changed, then set to false when the app reacts to it
-	//via the appearanceChanged signal.  This prevents a series of settingsChanged signals
-	//causing the app expensively rereading its settings many times.
-	//The appearanceChanged signal is connected to resetHasDirtySettings to reset this bool
+    // This is for compressing the events. m_hasDirtySettings is set to true
+    // when the settings have changed, then set to false when the app reacts to it
+    // via the appearanceChanged signal.  This prevents a series of settingsChanged signals
+    // causing the app expensively rereading its settings many times.
+    // The appearanceChanged signal is connected to resetHasDirtySettings to reset this bool
+    if(!m_hasDirtySettings) 
+    {
         QTimer::singleShot(0, KonversationApplication::instance(), SIGNAL(appearanceChanged()));
-	m_hasDirtySettings = true;
-	kdDebug() << "Seen settingsChanged signal" << endl;
-	
-    } else {
-	kdDebug() << "IGNORING settingsChanged signal" << endl;
+        m_hasDirtySettings = true;
     }
 }
-void KonversationMainWindow::resetHasDirtySettings() {
+
+void KonversationMainWindow::resetHasDirtySettings() 
+{
     m_hasDirtySettings = false;
 }
-
 
 void KonversationMainWindow::openKeyBindings()
 {
@@ -1703,24 +1701,17 @@ void KonversationMainWindow::openNotifications()
 
 void KonversationMainWindow::updateTrayIcon()
 {
+    tray->setNotificationEnabled(Preferences::trayNotify());
+
     if(Preferences::showTrayIcon())
-    {
         tray->show();
-    }
     else
         tray->hide();
 
-    tray->setNotificationEnabled(Preferences::trayNotify());
-
-    if(Preferences::showTrayIcon() &&
-        Preferences::systrayOnly())
-    {
+    if(Preferences::showTrayIcon() && Preferences::systrayOnly())
         KWin::setState(winId(), NET::SkipTaskbar);
-    }
     else
-    {
         KWin::clearState(winId(), NET::SkipTaskbar);
-    }
 }
 
 void KonversationMainWindow::addIRCColor()

@@ -39,8 +39,7 @@ namespace Konversation
         m_blinkTimer = new QTimer(this);
         connect(m_blinkTimer, SIGNAL(timeout()), SLOT(blinkTimeout()));
 
-        if(Preferences::showTrayIcon() &&
-            Preferences::systrayOnly())
+        if(Preferences::showTrayIcon() && Preferences::systrayOnly())
             KWin::setState(parent->winId(), NET::SkipTaskbar);
 
         QToolTip::add(this,i18n("Konversation - IRC Client"));
