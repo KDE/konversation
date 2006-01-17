@@ -513,7 +513,7 @@ void KonversationMainWindow::addView(ChatWindow* view, const QString& label, boo
                         tmp_ChatWindow = static_cast<ChatWindow *>(viewContainer->page(index));
                         wtype = tmp_ChatWindow->getType();
 
-                        if (wtype != ChatWindow::Channel && wtype != ChatWindow::RawLog)
+                        if (wtype != ChatWindow::Channel)
                         {
                             placement = index;
                             break;
