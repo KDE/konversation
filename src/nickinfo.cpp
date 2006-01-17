@@ -391,12 +391,12 @@ void NickInfo::tooltipTableData(QTextStream &tooltip) const
     }
     if(!getHostmask().isEmpty())
     {
-        tooltip << "<tr><td><b>" << i18n("Hostmask") << ": </b></td><td>" << getHostmask() << "</td></tr>";
+        tooltip << "<tr><td><b>" << i18n("Hostmask:") << " </b></td><td>" << getHostmask() << "</td></tr>";
         dirty=true;
     }
     if(isAway())
     {
-        tooltip << "<tr><td><b>" << i18n("Away Message") << ": </b></td><td>";
+        tooltip << "<tr><td><b>" << i18n("Away Message:") << " </b></td><td>";
         if(!getAwayMessage().isEmpty())
             tooltip << getAwayMessage();
         else
@@ -406,7 +406,7 @@ void NickInfo::tooltipTableData(QTextStream &tooltip) const
     }
     if(!getOnlineSince().toString().isEmpty())
     {
-        tooltip << "<tr><td><b>" << i18n("Online Since") << ": </b></td><td>" << getPrettyOnlineSince() << "</td></tr>";
+        tooltip << "<tr><td><b>" << i18n("Online Since:") << " </b></td><td>" << getPrettyOnlineSince() << "</td></tr>";
         dirty=true;
     }
 
