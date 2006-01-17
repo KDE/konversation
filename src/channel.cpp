@@ -126,7 +126,7 @@ Channel::Channel(QWidget* parent)
     topicLine = new Konversation::TopicLabel(topicWidget);
     QWhatsThis::add(topicLine, i18n("<qt>Every channel on IRC has a topic associated with it.  This is simply a message that everybody can see.<p>If you are an operator, or the channel mode <em>'T'</em> has not been set, then you can change the topic by clicking the Edit Channel Properties button to the left of the topic.  You can also view the history of topics there.</qt>"));
     connect(topicLine, SIGNAL(actionStatusText( const QString & )), this, SIGNAL(actionStatusText( const QString & )));
-    connect(topicLine, SIGNAL(actionStatusText( const QString & )), this, SIGNAL(clearStatusText()));
+    connect(topicLine, SIGNAL(clearStatusText()), this, SIGNAL(clearStatusText()));
 
     topicLayout->addWidget(m_topicButton, 0, 0);
     topicLayout->addMultiCellWidget(topicLine, 0, 1, 1, 1);
