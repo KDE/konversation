@@ -94,7 +94,7 @@
       <label></label>
       <whatsthis></whatsthis>
     </entry>
-    <entry key="ChannelSplitter" type="IntList" name="channelSplitterSizes">
+    <entry key="ChannelSplitterSizes" type="IntList">
       <default></default>
       <label></label>
       <whatsthis></whatsthis>
