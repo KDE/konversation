@@ -325,7 +325,13 @@ namespace Konversation
             (!m_mainWindow->isActiveWindow() || (chatWin != m_mainWindow->frontView())))
         {
             KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
-            konvApp->osd->showOSD(i18n("[HighLight] (%1) <%2> %3").arg(chatWin->getName()).arg(fromNick).arg(message));
+            // if there was no nick associated, this must be a command message, so don't try displaying
+            // an empty nick in <>
+            if(fromNick.isEmpty())
+                konvApp->osd->showOSD(i18n("[HighLight] (%1) *** %2").arg(chatWin->getName()).arg(message));
+            // normal highlight message
+            else
+                konvApp->osd->showOSD(i18n("[HighLight] (%1) <%2> %3").arg(chatWin->getName()).arg(fromNick).arg(message));
         }
     }
 
