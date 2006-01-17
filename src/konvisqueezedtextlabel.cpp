@@ -15,6 +15,8 @@
   email:     sho@eikehein.com
 */
 
+#include <kdebug.h>
+
 #include "konvisqueezedtextlabel.h"
 
 /*
@@ -48,7 +50,7 @@ void KonviSqueezedTextLabel::setTempText(const QString& text)
    if (!text.isEmpty())
     {
         m_tempText = text;
-        KSqueezedTextLabel::setText(text);
+        KSqueezedTextLabel::setText(m_tempText);
     }
 }
 

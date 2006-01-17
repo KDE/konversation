@@ -299,31 +299,47 @@ void Query::popup(int id)
     // if there was none (right click into the text view) assume query partner
     if(name.isEmpty()) name=getName();
 
-    // act accordingly
-    if(id == Konversation::Whois)
-        sendQueryText(Preferences::commandChar()+"WHOIS "+name+" "+name);
-    else if(id == Konversation::IgnoreNick)
+    switch(id)
     {
-        sendQueryText(Preferences::commandChar()+"IGNORE -ALL "+name+"!*");
-        int rc=KMessageBox::questionYesNo(this,
-            i18n("Do you want to close this query after ignoring this nickname?"),
-            i18n("Close This Query"),
-            i18n("Close"),
-            i18n("Keep Open"),
-            "CloseQueryAfterIgnore");
+        case Konversation::Whois:
+            sendQueryText(Preferences::commandChar()+"WHOIS "+name+" "+name);
 
-        if(rc==KMessageBox::Yes) closeYourself();
+        case Konversation::IgnoreNick:
+            sendQueryText(Preferences::commandChar()+"IGNORE -ALL "+name+"!*");
+            int rc=KMessageBox::questionYesNo(this,
+                i18n("Do you want to close this query after ignoring this nickname?"),
+                i18n("Close This Query"),
+                i18n("Close"),
+                i18n("Keep Open"),
+                "CloseQueryAfterIgnore");
+            if(rc==KMessageBox::Yes) closeYourself();
+
+        case Konversation::DccSend:
+            sendQueryText(Preferences::commandChar()+"DCC SEND "+name);
+            break;
+
+        case Konversation::Version:
+            sendQueryText(Preferences::commandChar()+"CTCP "+name+" VERSION");
+            break;
+
+        case Konversation::Ping:
+            sendQueryText(Preferences::commandChar()+"CTCP "+name+" PING");
+            break;
+
+        case Konversation::Topic:
+            m_server->requestTopic(getTextView()->currentChannel());
+            break;
+        case Konversation::Names:
+            m_server->queue("NAMES " + getTextView()->currentChannel());
+            break;
+        case Konversation::Join:
+            m_server->queue("JOIN " + getTextView()->currentChannel());
+            break;
+
+        default:
+            kdDebug() << "Query::popup(): Popup id " << id << " does not belong to me!" << endl;
+            break;
     }
-    else if(id == Konversation::DccSend)
-    {
-         sendQueryText(Preferences::commandChar()+"DCC SEND "+name);
-    }
-    else if(id == Konversation::Version)
-        sendQueryText(Preferences::commandChar()+"CTCP "+name+" VERSION");
-    else if(id == Konversation::Ping)
-        sendQueryText(Preferences::commandChar()+"CTCP "+name+" PING");
-    else
-        kdDebug() << "Query::popup(): Popup id " << id << " does not belong to me!" << endl;
 
     // delete context menu nickname
     textView->clearContextNick();

@@ -72,6 +72,7 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent)
     m_mousePressed = false;
     m_currentNick = QString::null;
     m_isOnNick = false;
+    m_isOnChannel = false;
     m_chatWin = 0;
     m_findParagraph=0;
     m_findIndex=0;
@@ -206,6 +207,7 @@ void IRCView::highlightedSlot(const QString& link)
     if(!link.startsWith("#"))
     {
         m_isOnNick = false;
+        m_isOnChannel = false;
 
         if(!link.isEmpty()) {
             //link therefore != m_lastStatusText  so emit with this new text
@@ -228,12 +230,24 @@ void IRCView::highlightedSlot(const QString& link)
     else if(link.startsWith("#") && !link.startsWith("##"))
     {
         m_currentNick = link.mid(1);
-        m_nickPopup->changeTitle(m_popupId,m_currentNick);
+        m_nickPopup->changeTitle(m_nickPopupId,m_currentNick);
         m_isOnNick = true;
         emit actionStatusText( i18n("Open a query with %1").arg(m_currentNick));
     } else {
         //    link.startsWith("##")
-        emit actionStatusText( i18n("Join the channel %1").arg(link.mid(1)));
+        m_currentChannel = link.mid(1);
+
+        QString prettyId = m_currentChannel;
+
+        if (prettyId.length()>15) 
+        {
+            prettyId.truncate(15);
+            prettyId.append("...");
+        }
+
+        m_channelPopup->changeTitle(m_channelPopupId,prettyId);
+        m_isOnChannel = true;
+        emit actionStatusText( i18n("Join the channel %1").arg(m_currentChannel));
     }
 }
 
@@ -1032,6 +1046,12 @@ bool IRCView::contextMenu(QContextMenuEvent* ce)
     if(m_isOnNick)
     {
         m_nickPopup->exec(ce->globalPos());
+        m_isOnNick = false;
+    }
+    else if(m_isOnChannel)
+    {
+        m_channelPopup->exec(ce->globalPos());
+        m_isOnChannel = false;
     }
     else
     {
@@ -1084,7 +1104,7 @@ void IRCView::setupNickPopupMenu()
     m_nickPopup = new KPopupMenu(this,"nicklist_context_menu");
     m_modes = new KPopupMenu(this,"nicklist_modes_context_submenu");
     m_kickban = new KPopupMenu(this,"nicklist_kick_ban_context_submenu");
-    m_popupId= m_nickPopup->insertTitle(m_currentNick);
+    m_nickPopupId= m_nickPopup->insertTitle(m_currentNick);
     m_modes->insertItem(i18n("Give Op"),Konversation::GiveOp);
     m_modes->insertItem(i18n("Take Op"),Konversation::TakeOp);
     m_modes->insertItem(i18n("Give Voice"),Konversation::GiveVoice);
@@ -1125,7 +1145,7 @@ void IRCView::setupNickPopupMenu()
 void IRCView::setupQueryPopupMenu()
 {
     m_nickPopup = new KPopupMenu(this,"query_context_menu");
-    m_popupId= m_nickPopup->insertTitle(m_currentNick);
+    m_nickPopupId= m_nickPopup->insertTitle(m_currentNick);
     m_nickPopup->insertItem(i18n("Whois"),Konversation::Whois);
     m_nickPopup->insertItem(i18n("Version"),Konversation::Version);
     m_nickPopup->insertItem(i18n("Ping"),Konversation::Ping);
@@ -1138,6 +1158,17 @@ void IRCView::setupQueryPopupMenu()
     m_nickPopup->insertItem(i18n("Ignore"),Konversation::IgnoreNick);
 
     connect(m_nickPopup, SIGNAL(activated(int)), this, SIGNAL(popupCommand(int)));
+}
+
+void IRCView::setupChannelPopupMenu()
+{
+    m_channelPopup = new KPopupMenu(this,"channel_context_menu");
+    m_channelPopupId = m_channelPopup->insertTitle(m_currentChannel);
+    m_channelPopup->insertItem(i18n("&Join"),Konversation::Join);
+    m_channelPopup->insertItem(i18n("Get &user list"),Konversation::Names);
+    m_channelPopup->insertItem(i18n("Get &topic"),Konversation::Topic);
+
+    connect(m_channelPopup, SIGNAL(activated(int)), this, SIGNAL(popupCommand(int)));
 }
 
 void IRCView::search()
@@ -1351,6 +1382,8 @@ void IRCView::setChatWin(ChatWindow* chatWin)
       setupNickPopupMenu();   // for channels
     else
       setupQueryPopupMenu();  // for queries
+
+    setupChannelPopupMenu();
 }
 
 void IRCView::keyPressEvent(QKeyEvent* e)

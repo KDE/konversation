@@ -36,6 +36,9 @@ namespace Konversation
     {
         setWrapPolicy(QTextEdit::AtWordOrDocumentBoundary);
         mousePressed=false;
+        setFocusPolicy(QWidget::ClickFocus);
+
+        connect(this, SIGNAL(highlighted(const QString&)), this, SLOT(highlightedSlot(const QString&)));
     }
 
     TopicLabel::~TopicLabel()
@@ -205,6 +208,40 @@ namespace Konversation
         richText.setWidth(fm.width(text));
 
         return richText.widthUsed();
+    }
+
+    void TopicLabel::highlightedSlot(const QString& link)
+    {
+        if(link == m_lastStatusText && !link.isEmpty()) {
+        //we just saw this a second ago.  no need to reemit.
+            return;
+        }
+
+        // remember current URL to overcome link clicking problems in QTextBrowser
+        m_highlightedURL=link;
+
+        if(link.isEmpty()) {
+            if(!m_lastStatusText.isEmpty()) {
+                emit clearStatusText();
+                m_lastStatusText = QString::null;
+            }
+        } else {
+            m_lastStatusText = link;
+        }
+
+        if (!link.isEmpty())
+        {
+            if(link.startsWith("#"))              // channel link
+            {
+                QString channel(link);
+                channel.replace("##","#");
+                emit actionStatusText( i18n("Join the channel %1").arg(channel));
+            }
+            else
+            {
+                emit actionStatusText(link);
+            }
+        }
     }
 
 }

@@ -12,6 +12,7 @@
 #define KONVERSATIONTOPICLABEL_H
 
 #include <kactivelabel.h>
+#include <klocale.h>
 
 class QFontMetrics;
 class Server;
@@ -34,6 +35,10 @@ namespace Konversation
             virtual void openLink(const QString& link);
             void setText(const QString& text);
 
+        signals:
+            void actionStatusText( const QString & );
+            void clearStatusText();
+
         protected:
             void updateSqueezedText();
             QString rPixelSqueeze(const QString& text, uint maxPixels);
@@ -44,12 +49,17 @@ namespace Konversation
 
             void resizeEvent(QResizeEvent*);
 
+        protected slots:
+            void highlightedSlot(const QString&);
+
         private:
             QString m_fullText;
             Server* m_server;
             bool mousePressed;
             QString urlToDrag;
             QPoint pressPosition;
+            QString m_lastStatusText;
+            QString m_highlightedURL;
     };
 
 }

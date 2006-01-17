@@ -122,8 +122,11 @@ Channel::Channel(QWidget* parent)
     m_topicButton->setIconSet(SmallIconSet("edit", 16));
     QToolTip::add(m_topicButton, i18n("Edit Channel Properties"));
     connect(m_topicButton, SIGNAL(clicked()), this, SLOT(showOptionsDialog()));
+
     topicLine = new Konversation::TopicLabel(topicWidget);
     QWhatsThis::add(topicLine, i18n("<qt>Every channel on IRC has a topic associated with it.  This is simply a message that everybody can see.<p>If you are an operator, or the channel mode <em>'T'</em> has not been set, then you can change the topic by clicking the Edit Channel Properties button to the left of the topic.  You can also view the history of topics there.</qt>"));
+    connect(topicLine, SIGNAL(actionStatusText( const QString & )), this, SIGNAL(actionStatusText( const QString & )));
+    connect(topicLine, SIGNAL(actionStatusText( const QString & )), this, SIGNAL(clearStatusText()));
 
     topicLayout->addWidget(m_topicButton, 0, 0);
     topicLayout->addMultiCellWidget(topicLine, 0, 1, 1, 1);
@@ -492,6 +495,15 @@ void Channel::popupCommand(int id)
         case Konversation::Whois:
             pattern="WHOIS %u %u";
             raw=true;
+            break;
+        case Konversation::Topic:
+            m_server->requestTopic(getTextView()->currentChannel());
+            break;
+        case Konversation::Names:
+            m_server->queue("NAMES " + getTextView()->currentChannel());
+            break;
+        case Konversation::Join:
+            m_server->queue("JOIN " + getTextView()->currentChannel());
             break;
         case Konversation::Ping:
         {

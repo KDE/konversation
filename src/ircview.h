@@ -67,6 +67,7 @@ class IRCView : public KTextBrowser
         bool searchNext();
 
         QColor highlightColor() { return m_highlightColor; }
+        QString currentChannel() { return m_currentChannel; }
 
         signals:
         // Notify container of new text and highlight state
@@ -107,7 +108,7 @@ class IRCView : public KTextBrowser
         // Clears context nick
         void clearContextNick();
 
-        /// Updates the scrollbar position
+        // Updates the scrollbar position
         void updateScrollBarPos();
 
     protected slots:
@@ -137,6 +138,7 @@ class IRCView : public KTextBrowser
 
         void setupNickPopupMenu();
         void setupQueryPopupMenu();
+        void setupChannelPopupMenu();
 
         QChar::Direction basicDirection(const QString &string);
 
@@ -162,6 +164,7 @@ class IRCView : public KTextBrowser
         QPopupMenu* m_popup;
 
         KPopupMenu* m_nickPopup;
+        KPopupMenu* m_channelPopup;
         KPopupMenu* m_modes;
         KPopupMenu* m_kickban;
 
@@ -186,11 +189,14 @@ class IRCView : public KTextBrowser
 
         QString m_highlightedURL;   // the URL we're currently hovering on with the mouse
         QString m_currentNick;
+        QString m_currentChannel;
         bool m_isOnNick;
+        bool m_isOnChannel;
         bool m_mousePressed;
         QString m_urlToDrag;
         QPoint m_pressPosition;
-        int m_popupId;
+        int m_nickPopupId;
+        int m_channelPopupId;
 
         ChatWindow* m_chatWin;
 };
