@@ -1,1 +1,1 @@
-SUBDIRS = ledicons icons nickicons
+SUBDIRS = icons nickicons
