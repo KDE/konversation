@@ -306,15 +306,17 @@ void Query::popup(int id)
             break;
 
         case Konversation::IgnoreNick:
-            sendQueryText(Preferences::commandChar()+"IGNORE -ALL "+name+"!*");
-            int rc=KMessageBox::questionYesNo(this,
+	    {
+              sendQueryText(Preferences::commandChar()+"IGNORE -ALL "+name+"!*");
+              int rc=KMessageBox::questionYesNo(this,
                 i18n("Do you want to close this query after ignoring this nickname?"),
                 i18n("Close This Query"),
                 i18n("Close"),
                 i18n("Keep Open"),
                 "CloseQueryAfterIgnore");
-            if(rc==KMessageBox::Yes) closeYourself();
-            break;
+              if(rc==KMessageBox::Yes) closeYourself();
+              break;
+	    }
 
         case Konversation::DccSend:
             sendQueryText(Preferences::commandChar()+"DCC SEND "+name);
