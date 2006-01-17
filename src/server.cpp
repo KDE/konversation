@@ -2948,7 +2948,7 @@ void Server::away()
     }
 
     if(getIdentity()->getInsertRememberLineOnAway())
-        emit awayInsertRememberLine();
+        emit awayInsertRememberLine(this);
 
     // TODO: call renameNickInfo ?
 

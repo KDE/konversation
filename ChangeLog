@@ -77,6 +77,7 @@ Changes from 0.18 to 0.19
 - Improved channel name recognition  in the chat window (patch by Stanislav Nikolov)
 - Added context menu to channels in the chat window
 - Whitespace highlighting in the multi-line paste editor dialog
+- Correctly insert away remember line in all channel and query tabs of the affected server(s), rather than putting them all in the front view
 
 Changes from 0.17 to 0.18
 - All nicks were blue when colored nicks are disabled with some setups

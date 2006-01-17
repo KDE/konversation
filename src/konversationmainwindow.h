@@ -115,6 +115,7 @@ class KonversationMainWindow : public KMainWindow
         void addUrlCatcher();
         void addDccChat(const QString& myNick,const QString& nick,const QString& numericalIp,const QStringList& arguments,bool listen);
         void insertRememberLine();
+        void insertRememberLine(Server* server);
         void openChannelList(const QString& filter = QString::null, bool getList = false);
 
         void resetLag();

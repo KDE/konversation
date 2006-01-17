@@ -168,7 +168,7 @@ int KonversationApplication::newInstance()
             connect(dcopObject,SIGNAL (dcopInfo(const QString&)),
                 this,SLOT (dcopInfo(const QString&)) );
             connect(dcopObject,SIGNAL (dcopInsertRememberLine()),
-                this,SLOT (insertRememberLine()));
+                mainWindow,SLOT (insertRememberLine()));
             connect(dcopObject,SIGNAL (dcopSetAutoAway()),
                 this,SLOT (setAutoAway()));
             connect(dcopObject,SIGNAL(dcopConnectToServer(const QString&, int,const QString&, const QString&)),
@@ -291,12 +291,6 @@ void KonversationApplication::dcopInfo(const QString& string)
     mainWindow->appendToFrontmost(i18n("DCOP"), string, 0);
 }
 
-void KonversationApplication::insertRememberLine()
-{
-    kdDebug() << "insert remember line in konversationApplication()" << endl;
-    mainWindow->insertRememberLine();
-}
-
 Server* KonversationApplication::connectToServerGroup(const QString& serverGroup)
 {
     int serverGroupId = Preferences::serverGroupIdByName(serverGroup);
@@ -381,7 +375,7 @@ Server* KonversationApplication::connectToServer (int serverGroupId, Konversatio
 
     connect(newServer, SIGNAL(multiServerCommand(const QString&, const QString&)),
         this, SLOT(sendMultiServerCommand(const QString&, const QString&)));
-    connect(newServer, SIGNAL(awayInsertRememberLine()), this, SLOT(insertRememberLine()));
+    connect(newServer, SIGNAL(awayInsertRememberLine(Server*)), mainWindow, SLOT(insertRememberLine(Server*)));
 
     serverList.append(newServer);
 
@@ -403,7 +397,7 @@ void KonversationApplication::quickConnectToServer(const QString& hostName, cons
 
     connect(newServer, SIGNAL(multiServerCommand(const QString&, const QString&)),
         this, SLOT(sendMultiServerCommand(const QString&, const QString&)));
-    connect(newServer, SIGNAL(awayInsertRememberLine()), this, SLOT(insertRememberLine()));
+    connect(newServer, SIGNAL(awayInsertRememberLine(Server*)), mainWindow, SLOT(insertRememberLine(Server*)));
 
     serverList.append(newServer);
 }

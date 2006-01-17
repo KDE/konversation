@@ -374,7 +374,7 @@ class Server : public QObject
         /// Fires when a nick on the watch list goes online or offline.
         void watchedNickChanged(Server* server, const QString& nickname, bool online);
         ///Fires when the user switches his state to away and has enabled "Insert Remember Line on away" in his identity.
-        void awayInsertRememberLine();
+        void awayInsertRememberLine(Server* server);
         void sslInitFailure();
         void sslConnected(Server* server);
 

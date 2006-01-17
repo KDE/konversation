@@ -1762,6 +1762,20 @@ void KonversationMainWindow::insertRememberLine()
     }
 }
 
+void KonversationMainWindow::insertRememberLine(Server* server)
+{
+    for (int i = 0; i < viewContainer->count(); ++i)
+    {
+        ChatWindow* view = static_cast<ChatWindow*>(viewContainer->page(i));
+
+        if (view->getServer()==server && 
+            (view->getType()==ChatWindow::Channel || view->getType()==ChatWindow::Query))
+        {
+            view->insertRememberLine();
+        }
+    }
+}
+
 void KonversationMainWindow::closeQueries()
 {
     int total=getViewContainer()->count()-1;
