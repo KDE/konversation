@@ -151,31 +151,31 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
     KAction* action;
 
     (new KAction(i18n("&Server List..."), "server", KShortcut("F2"), this, SLOT(openServerList()),
-        actionCollection(), "open_server_list"))->setToolTip(i18n("Connect to a new server..."));
+        actionCollection(), "open_server_list"))->setToolTip(i18n("Manage networks and servers"));
     (new KAction(i18n("Quick &Connect..."), "connect_creating", KShortcut("F7"), this, SLOT(openQuickConnectDialog()),
-        actionCollection(), "quick_connect_dialog"))->setToolTip(i18n("Type in the address of a new IRC server to connect to..."));
+        actionCollection(), "quick_connect_dialog"))->setToolTip(i18n("Type in the address of a new IRC server to connect to"));
 
     action = new KAction(i18n("&Reconnect"), "connect_creating", 0, this, SLOT(reconnectCurrentServer()), actionCollection(), "reconnect_server");
     action->setEnabled(false);
     action->setToolTip("Reconnect to the current server.");
 
     (new KAction(i18n("&Identities..."), "identity", KShortcut("F8"), this, SLOT(openIdentitiesDialog()),
-        actionCollection(), "identities_dialog"))->setToolTip(i18n("Set your nick, away message, etc..."));
+        actionCollection(), "identities_dialog"))->setToolTip(i18n("Manage your nick, away and other identity settings"));
 
     new KToggleAction(i18n("&Watched Nicks Online"), 0, KShortcut("F4"), this, SLOT(openNicksOnlinePanel()), actionCollection(), "open_nicksonline_window");
     action = new KAction(i18n("&Open Logfile"), "history", KShortcut("Ctrl+O"), this, SLOT(openLogfile()), actionCollection(), "open_logfile");
     action->setEnabled(false);
-    action->setToolTip(i18n("Opens the known history for this channel in a new tab."));
+    action->setToolTip(i18n("Open the known history for this channel in a new tab"));
 
     action = new KAction(i18n("&Channel List"), 0, KShortcut("F5"), this, SLOT(openChannelList()), actionCollection(), "open_channel_list");
     action->setEnabled(false);
     action->setToolTip(i18n("Show a list of all the known channels on this server"));
     action = new KToggleAction(i18n("&URL Catcher"), 0, KShortcut("F6"), this, SLOT(addUrlCatcher()), actionCollection(), "open_url_catcher");
-    action->setToolTip(i18n("Show a history of all the urls that have been mentioned in any channel"));
+    action->setToolTip(i18n("List all URLs that have been mentioned recently in a new tab"));
 
     action = new KAction(i18n("New &Konsole"), "openterm", 0, this, SLOT(addKonsolePanel()), actionCollection(), "open_konsole");
     action->setToolTip(i18n("Open a terminal in a new tab"));
-    
+
 
     // Actions to navigate through the different pages
     KShortcut nextShortcut = KStdAccel::tabNext();
@@ -229,17 +229,20 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
     }
 
     action = new KAction(i18n("&Clear Window"),0,KShortcut("Ctrl+L"),this,SLOT(clearWindow()),actionCollection(),"clear_window");
-    action->setToolTip(i18n("Clear content of current window"));
+    action->setToolTip(i18n("Clear the contents of the current tab"));
     action->setEnabled(false);
     action = new KAction(i18n("Clear &All Windows"),0,KShortcut("CTRL+SHIFT+L"),this,SLOT(clearTabs()),actionCollection(),"clear_tabs");
-    action->setToolTip(i18n("Clear contents of all windows"));
+    action->setToolTip(i18n("Clear the contents of all open tabs"));
     action->setEnabled(false);
 
-    KAction* awayAction = new KAction(i18n("Set &Away Globally")/*, "konversationaway"*/, KShortcut("Ctrl+Alt+A"),
-				      static_cast<KonversationApplication *>(kapp), SLOT(toggleAway()), actionCollection(),"toggle_away");
+    KAction* awayAction = new KAction(i18n("Set &Away globally")/*, "konversationaway"*/, KShortcut("Ctrl+Alt+A"),
+        static_cast<KonversationApplication *>(kapp), SLOT(toggleAway()), actionCollection(),"toggle_away");
     awayAction->setEnabled(false);
+    awayAction->setToolTip("Switch to Away mode in all open connections");
+
     action = new KAction(i18n("&Join Channel..."), 0, KShortcut("Ctrl+J"), this, SLOT(showJoinChannelDialog()), actionCollection(), "join_channel");
     action->setEnabled(false);
+    action->setToolTip("Join a new channel on this server");
 
     action = KStdAction::find(this, SLOT(findText()), actionCollection());
     action->setEnabled(false);
@@ -247,13 +250,13 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
     action->setEnabled(false);
 
     action = new KAction(i18n("&IRC Color..."), "colorize", CTRL+Key_K, this, SLOT(addIRCColor()), actionCollection(), "irc_colors");
-    action->setToolTip(i18n("Set the color of your current IRC message."));
+    action->setToolTip(i18n("Set the color of your current IRC message"));
     action->setEnabled(false);
     action = new KAction(i18n("&Remember Line"), 0,  KShortcut("Ctrl+R") , this, SLOT(insertRememberLine()), actionCollection(), "insert_remember_line");
-    action->setToolTip(i18n("Add a horizontal line that only you can see."));
+    action->setToolTip(i18n("Insert a horizontal line into the current tab that only you can see"));
     action->setEnabled(false);
     action = new KAction(i18n("Special &Character..."), "char", KShortcut("Alt+Shift+C"), this, SLOT(insertCharacter()), actionCollection(), "insert_character");
-    action->setToolTip(i18n("Insert any character into your current IRC message. "));
+    action->setToolTip(i18n("Insert any character into your current IRC message"));
     action->setEnabled(false);
 
     new KAction(i18n("Close &All Open Queries"), 0, KShortcut("F11"), this, SLOT(closeQueries()), actionCollection(), "close_queries");
@@ -1224,6 +1227,7 @@ void KonversationMainWindow::updateFrontView()
         {
             action->setText(i18n("Find Text..."));
             action->setEnabled(view->searchView());
+            action->setToolTip("Search for text in the current tab");
         }
 
         action = actionCollection()->action("edit_find_next");
@@ -1538,7 +1542,7 @@ void KonversationMainWindow::updateLag(Server* lagServer,int msec)
 
         if (msec == -1)
         {
-            lagString += i18n("Lag: not known");
+            lagString += i18n("Lag: Unknown");
         }
         else if(msec < 1000)
         {

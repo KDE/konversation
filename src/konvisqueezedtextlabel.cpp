@@ -39,19 +39,14 @@ void KonviSqueezedTextLabel::setText(const QString& text)
 
     // Don't overwrite the temp text if there is any
     if (m_tempText.isEmpty())
-    {
         KSqueezedTextLabel::setText(text);
-    }
 }
 
 
 void KonviSqueezedTextLabel::setTempText(const QString& text)
 {
-   if (!text.isEmpty())
-    {
-        m_tempText = text;
-        KSqueezedTextLabel::setText(m_tempText);
-    }
+    m_tempText = text;
+    KSqueezedTextLabel::setText(text);
 }
 
 void KonviSqueezedTextLabel::clearTempText()

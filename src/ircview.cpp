@@ -943,7 +943,7 @@ void IRCView::doAppend(const QString& newLine, bool important, bool self)
         // send signal only now
         emit autoText(sendText);
     }
-    emit clearStatusText();
+    if (!m_lastStatusText.isEmpty()) emit clearStatusText();
 }
 
 // remember if scrollbar was positioned at the end of the text or not
