@@ -84,6 +84,7 @@
 KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", WStyle_ContextHelp | WType_TopLevel | WDestructiveClose)
 {
     // Init variables before anything else can happen
+    m_hasDirtySettings = false;
     m_frontView=0;
     previousFrontView=0;
     searchView=0;
@@ -123,6 +124,10 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
     viewContainer->setCornerWidget(closeBtn);
     closeBtn->hide();
     connect(closeBtn, SIGNAL(clicked()), this, SLOT(closeTab()));
+
+
+    //used for event compression. See header file for resetHasDirtySettings()
+    connect(KonversationApplication::instance(), SIGNAL(appearanceChanged()), this, SLOT(resetHasDirtySettings()));
 
                                                   // file_quit
     KStdAction::quit(this,SLOT(quitProgram()),actionCollection());
@@ -357,10 +362,31 @@ void KonversationMainWindow::openPrefsDialog()
         m_settingsDialog = new KonviSettingsDialog(this);
         //User edited the configuration - update your local copies of the
         //configuration data
-        connect(m_settingsDialog, SIGNAL(settingsChanged()), KonversationApplication::instance(), SIGNAL(appearanceChanged()));
+        connect(m_settingsDialog, SIGNAL(settingsChanged()), this, SLOT(settingsChangedSlot()));
     }
     m_settingsDialog->show();
 }
+
+void KonversationMainWindow::settingsChangedSlot()
+{
+    if(!m_hasDirtySettings) {
+        //This is for compressing the events. m_hasDirtySettings is set to true
+        //when the settings have changed, then set to false when the app reacts to it
+	//via the appearanceChanged signal.  This prevents a series of settingsChanged signals
+	//causing the app expensively rereading its settings many times.
+	//The appearanceChanged signal is connected to resetHasDirtySettings to reset this bool
+        QTimer::singleShot(0, KonversationApplication::instance(), SIGNAL(appearanceChanged()));
+	m_hasDirtySettings = true;
+	kdDebug() << "Seen settingsChanged signal" << endl;
+	
+    } else {
+	kdDebug() << "IGNORING settingsChanged signal" << endl;
+    }
+}
+void KonversationMainWindow::resetHasDirtySettings() {
+    m_hasDirtySettings = false;
+}
+
 
 void KonversationMainWindow::openKeyBindings()
 {

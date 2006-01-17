@@ -136,6 +136,20 @@ class KonversationMainWindow : public KMainWindow
         void serverStateChanged(Server* server, Server::State state);
 
     protected slots:
+	/** This is connected to the preferences settingsChanged signal and acts to compress
+	 *  multiple successively settingsChanged() signals into a single output
+	 *  appearanceChanged() signal.
+	 *
+	 *  Do not connect to the settingsChanged signal elsewhere.  If you want to know when
+	 *  the settings have changed, connect to:
+	 *  KonversationApplication::instance(), SIGNAL(appearanceChanged())
+	 */
+        void settingsChangedSlot();
+
+        /** This is connected to the appearanceChanged signal.
+	 *  @see settingsChangedSlot()
+	 */
+        void resetHasDirtySettings();
         void openPrefsDialog();
         void openKeyBindings();
         void openQuickConnectDialog();
@@ -224,6 +238,8 @@ class KonversationMainWindow : public KMainWindow
         KTabWidget* viewContainer;
         int m_popupTabIndex;
 
+	/** @see settingsChangedSlot() */
+	bool m_hasDirtySettings;
         Server* frontServer;
         QGuardedPtr<ChatWindow> m_frontView;
         QGuardedPtr<ChatWindow> previousFrontView;
