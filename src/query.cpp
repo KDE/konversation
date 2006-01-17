@@ -303,6 +303,7 @@ void Query::popup(int id)
     {
         case Konversation::Whois:
             sendQueryText(Preferences::commandChar()+"WHOIS "+name+" "+name);
+            break;
 
         case Konversation::IgnoreNick:
             sendQueryText(Preferences::commandChar()+"IGNORE -ALL "+name+"!*");
@@ -313,6 +314,7 @@ void Query::popup(int id)
                 i18n("Keep Open"),
                 "CloseQueryAfterIgnore");
             if(rc==KMessageBox::Yes) closeYourself();
+            break;
 
         case Konversation::DccSend:
             sendQueryText(Preferences::commandChar()+"DCC SEND "+name);
