@@ -46,11 +46,11 @@ void MultilineTextEdit::drawWhitespaces()
   // get a sane color
   QColor col=colorGroup().link();
   // and a brush of the same color
-  QBrush redBrush(col);
+  QBrush fillBrush(col);
   // use it for line drawing
-  pa.setPen(red);
+  pa.setPen(col);
   // and for filling
-  pa.setBrush(redBrush);
+  pa.setBrush(fillBrush);
 
   // prepare the carriage return coordinates array
   QPointArray cr(4);
