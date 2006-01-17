@@ -1456,11 +1456,6 @@ void KonversationMainWindow::openNicksOnlinePanel()
         connect(this,SIGNAL (nicksNowOnline(Server*)),nicksOnlinePanel,SLOT (updateServerOnlineList(Server*)) );
         (dynamic_cast<KToggleAction*>(actionCollection()->action("open_nicksonline_window")))->setChecked(true);
     }
-    else if((ChatWindow *)m_frontView != (ChatWindow *)nicksOnlinePanel)
-    {
-        showView(nicksOnlinePanel);
-        (dynamic_cast<KToggleAction*>(actionCollection()->action("open_nicksonline_window")))->setChecked(true);
-    }
     else
     {
         closeNicksOnlinePanel();
