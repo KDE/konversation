@@ -268,49 +268,63 @@ void IRCInput::paste()
     QClipboard *cb = KApplication::kApplication()->clipboard();
 
     // Copy text from the clipboard (paste)
-    QString text;
+    QString pasteText;
     if(m_useSelection)
     {
-        text = cb->text( QClipboard::Selection);
+        pasteText = cb->text( QClipboard::Selection);
     }
     else
     {
-        text = cb->text( QClipboard::Clipboard);
+        pasteText = cb->text( QClipboard::Clipboard);
     }
 
     // is there any text in the clipboard?
-    if(!text.isEmpty())
+    if(!pasteText.isEmpty())
     {
         bool signal=false;
         // replace \r with \n to make xterm pastes happy
-        text.replace("\r","\n");
+        pasteText.replace("\r","\n");
 
         //  remove all trailing newlines
-        text.replace(QRegExp("\n+$"),"");
+        pasteText.replace(QRegExp("\n+$"),"");
 
         // does the text contain at least one newline character?
-        if(text.find('\n')!=-1)
+        if(pasteText.find('\n')!=-1)
         {
             // make comparisons easier (avoid signed / unsigned warnings)
-            unsigned int pos=text.find('\n');
-            unsigned int rpos=text.findRev('\n');
+            unsigned int pos=pasteText.find('\n');
+            unsigned int rpos=pasteText.findRev('\n');
 
             // emit the signal if there's a line break in the middle of the text
-            if(pos>0 && pos!=(text.length()-1)) signal=true;
+            if(pos>0 && pos!=(pasteText.length()-1)) signal=true;
             // emit the signal if there's more than one line break in the text
             if(pos!=rpos) signal=true;
         }
         else
         {
-            insert(text);
+            insert(pasteText);
             return;
         }
 
         // should we signal the application due to newlines in the paste?
         if(signal)
         {
+            // if there is text in the input line
+            if(!text().isEmpty())
+            {
+              // prepend text to the paste
+              pasteText=text()+"\n"+pasteText;
+            }
             // ask the user on long pastes
-            if(checkPaste(text)) emit textPasted(text);
+            if(checkPaste(pasteText))
+            {
+              // signal pasted text
+              emit textPasted(pasteText);
+              // remember old line, in case the user does not paste eventually
+              addHistory(text());
+              // delete input text
+              clear();
+            }
         }
         // otherwise let the KLineEdit handle the pasting
         else KTextEdit::paste();
