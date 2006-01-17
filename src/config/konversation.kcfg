@@ -876,4 +876,10 @@
       <whatsthis></whatsthis>
     </entry>
   </group>
+  <group name="Sort Nicknames">
+    <entry key="SortOrder" type="String">
+      <default>qpohv-</default>
+      <label></label>
+    </entry>
+  </group>
 </kcfg>

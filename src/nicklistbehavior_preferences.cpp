@@ -43,7 +43,7 @@ void NicklistBehavior_Config::restorePageToDefaults()
 void NicklistBehavior_Config::loadSettings()
 {
   // get sorting order string from preferences
-  setNickList(Preferences::nicknameSortingOrder());
+  setNickList(Preferences::sortOrder());
 }
 
 void NicklistBehavior_Config::setNickList(const QString &sortingOrder)
@@ -82,17 +82,8 @@ void NicklistBehavior_Config::saveSettings()
     item=item->itemBelow();
   } // while
 
-  // get configuration object and group, write back the new sorting order
-  KConfig* config=kapp->config();
-
-  config->setGroup("Sort Nicknames");
-  if(newSortingOrder != Preferences::defaultNicknameSortingOrder())
-    config->writeEntry("SortOrder",newSortingOrder);
-  else
-    config->deleteEntry("SortOrder");
-
   // update sorting order on in-memory preferences
-  Preferences::setNicknameSortingOrder(newSortingOrder);
+  Preferences::setSortOrder(newSortingOrder);
 }
 
 #include "nicklistbehavior_preferences.moc"

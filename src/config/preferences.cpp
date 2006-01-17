@@ -84,18 +84,6 @@ Preferences::Preferences()
     serverGroup->setExpanded(false);
     mServerGroupList.append(serverGroup);
     setQuickButtonList(defaultQuickButtonList());
-
-    // nicklist sorting order defaults
-    setNicknameSortingOrder(defaultNicknameSortingOrder());
-
-    /*
-    setOwnerValue(32);
-    setAdminValue(16);
-    setOpValue(8);
-    setHalfopValue(4);
-    setVoiceValue(2);
-    setNoRightsValue(1);
-    */
 }
 
 Preferences::~Preferences()
@@ -529,16 +517,6 @@ const QStringList Preferences::channelEncodingsChannelList(const QString& server
 const QString Preferences::defaultNicknameSortingOrder()
 {
   return "qpohv-";
-}
-
-const QString Preferences::nicknameSortingOrder()
-{
-  return self()->mSortingOrder;
-}
-
-void Preferences::setNicknameSortingOrder(const QString newSortingOrder)
-{
-  self()->mSortingOrder=newSortingOrder;
 }
 
 QString Preferences::translatedWikiURL() {

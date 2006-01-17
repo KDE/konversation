@@ -122,8 +122,6 @@ class Preferences : public QObject, public PreferencesBase
         static const QStringList nicknameList();
         static void setNickname(int index,const QString &newName);
         static void setNicknameList(const QStringList &newList);
-        static const QString nicknameSortingOrder();
-        static void setNicknameSortingOrder(const QString sortingOrder);
 
         static const bool dialogFlag(const QString& flagName);
         static void setDialogFlag(const QString& flagName,bool state);

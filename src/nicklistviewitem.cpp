@@ -212,7 +212,7 @@ void NickListViewItem::paintCell(QPainter * p, const QColorGroup & cg, int colum
 int NickListViewItem::getSortingValue() const
 {
     int flags;
-    QString sortingOrder=Preferences::nicknameSortingOrder();
+    QString sortingOrder=Preferences::sortOrder();
 
     if(nick->isOwner())       flags=sortingOrder.find('q');
     else if(nick->isAdmin())  flags=sortingOrder.find('p');
