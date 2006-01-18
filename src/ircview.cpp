@@ -492,27 +492,25 @@ bool doHighlight, bool parseURL, bool self)
             bool patternFound = false;
             int index = 0;
 
-QRegExp needleReg;
-QString needle;
-int numOfCaptures=0;
+            QStringList captures;
             while(highlight)
             {
-needle=QString::null;
-needleReg=QString::null;
                 if(highlight->getRegExp())
                 {
-                    needleReg=highlight->getPattern().lower();
+                    QRegExp needleReg=highlight->getPattern();
+                    needleReg.setCaseSensitive(false);
                                                   // highlight regexp in text
-                    patternFound = ((filteredLine.lower().find(needleReg) != -1) ||
+                    patternFound = ((filteredLine.find(needleReg) != -1) ||
                                                   // highlight regexp in nickname
-                        (whoSent.lower().find(needleReg) != -1));
+                        (whoSent.find(needleReg) != -1));
 
-numOfCaptures=needleReg.numCaptures();
+                    // remember captured patterns for later
+                    captures=needleReg.capturedTexts();
 
                 }
                 else
                 {
-                    needle=highlight->getPattern().lower();
+                    QString needle=highlight->getPattern().lower();
                                                   // highlight patterns in text
                     patternFound = ((filteredLine.lower().find(needle) != -1) ||
                                                   // highlight patterns in nickname
@@ -545,21 +543,12 @@ numOfCaptures=needleReg.numCaptures();
                 konvApp->notificationHandler()->highlight(m_chatWin, whoSent, line);
                 m_autoTextToSend = highlight->getAutoText();
 
-/*
-
-kdDebug() << filteredLine << endl;
-kdDebug() << m_autoTextToSend << endl;
-for(int capture=0;capture<numOfCaptures;capture++)
-{
-  m_autoTextToSend.replace(QString("%%1").arg(capture+1),needleReg.cap(capture+1));
-kdDebug() << QString("%%1").arg(capture+1) << " => " << needleReg.cap(capture+1) << endl;
-}
-m_autoTextToSend.replace(QRegExp("%[0-9]"),QString::null);
-kdDebug() << m_autoTextToSend << endl;
-
-*/
-
-
+                // replace %0 - %9 in regex groups
+                for(unsigned int capture=0;capture<captures.count();capture++)
+                {
+                  m_autoTextToSend.replace(QString("%%1").arg(capture),captures[capture]);
+                }
+                m_autoTextToSend.replace(QRegExp("%[0-9]"),QString::null);
             }
         }
 
