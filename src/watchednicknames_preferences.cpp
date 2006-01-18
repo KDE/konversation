@@ -32,6 +32,7 @@
 WatchedNicknames_Config::WatchedNicknames_Config(QWidget *parent, const char *name)
  : WatchedNicknames_ConfigUI(parent, name)
 {
+  notifyListView->setRenameable(0,false);
   // reset flag to defined state (used to block signals when just selecting a new item)
   newItemSelected=false;
 
@@ -95,6 +96,8 @@ void WatchedNicknames_Config::loadSettings()
     // unfold group branch
     notifyListView->setOpen(groupItem,true);
   }
+  // remember current list for hasChanged()
+  m_oldNotifyList=currentNotifyList();
 }
 
 // save list of notifies permanently, taken from the listview
@@ -134,6 +137,34 @@ void WatchedNicknames_Config::saveSettings()
   // update in-memory notify list
   Preferences::setNotifyList(notifyList);
   static_cast<KonversationApplication*>(kapp)->saveOptions(false);
+
+  // remember current list for hasChanged()
+  m_oldNotifyList=currentNotifyList();
+}
+
+QStringList WatchedNicknames_Config::currentNotifyList()
+{
+  // prepare list
+  QStringList newList;
+
+  // get first item
+  KListView* listView=notifyListView;
+  QListViewItem* item=listView->firstChild();
+
+  // loop as long as there are more groups in the listview
+  while(item)
+  {
+    newList.append(item->text(0));
+    item=item->itemBelow();
+  } // while
+
+  // return list
+  return newList;
+}
+
+bool WatchedNicknames_Config::hasChanged()
+{
+  return(m_oldNotifyList!=currentNotifyList());
 }
 
 // slots

@@ -33,7 +33,7 @@ class WatchedNicknames_Config : public WatchedNicknames_ConfigUI, public KonviSe
     virtual void loadSettings();
     virtual void restorePageToDefaults();
 
-    virtual bool hasChanged() { return false; }; // FIXME
+    virtual bool hasChanged();
 
   signals:
     void modified();
@@ -49,7 +49,10 @@ class WatchedNicknames_Config : public WatchedNicknames_ConfigUI, public KonviSe
 
   protected:
     void enableEditWidgets(bool enabled);
+    QStringList currentNotifyList();       // for hasChanged()
+
     bool newItemSelected;
+    QStringList m_oldNotifyList;
 };
 
 #endif
