@@ -97,6 +97,11 @@ void OSD_Config::hideEvent(QHideEvent*)
     m_pOSDPreview->setShown(false);
 }
 
+bool OSD_Config::hasChanged()
+{
+  // follow the interface, no Non-KConfigXT settings here, so none have changed
+  return false;
+}
 
 void OSD_Config::slotOSDEnabledChanged(bool on)
 {

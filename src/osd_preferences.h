@@ -18,7 +18,7 @@ public:
     virtual void saveSettings();
     virtual void loadSettings();
 
-    virtual bool hasChanged() { return false; }; // FIXME
+    virtual bool hasChanged();  // implement the interface, will not be used here, though
 
 protected slots:
     void slotOSDEnabledChanged(bool on);

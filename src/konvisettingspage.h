@@ -34,11 +34,11 @@
 class KonviSettingsPage
 {
   public:
-    virtual void restorePageToDefaults() = 0;
-    virtual void saveSettings() = 0;
-    virtual void loadSettings() = 0;
+    virtual void restorePageToDefaults() = 0;  // function called when the user klicks "Default"
+    virtual void saveSettings() = 0;           // function called when the user klicks "Ok" or "Apply"
+    virtual void loadSettings() = 0;           // function called when the user opens the page
 
-    virtual bool hasChanged() = 0;
+    virtual bool hasChanged() = 0;             // is to return if any non-KConfigXT settings have changed
 };
 
 #endif
