@@ -46,9 +46,9 @@ using namespace Konversation;
 Theme_Config::Theme_Config(QWidget* parent, const char* name)
   : Theme_ConfigUI( parent, name)
 {
-    loadSettings();
-
     m_oldTheme = Preferences::iconThemeName();
+
+    loadSettings();
 
     connect(kcfg_IconThemeIndex,SIGNAL(highlighted(int)),this,SLOT(updatePreview(int)));
     connect(kcfg_IconThemeIndex,SIGNAL(currentChanged(QListBoxItem*)),this,SLOT(updateButtons()));
@@ -90,22 +90,25 @@ void Theme_Config::loadSettings()
     updateButtons();
 }
 
+bool Theme_Config::hasChanged()
+{
+kdDebug() << "Theme_Config::hasChanged()" << endl;
+  return ( m_oldTheme != m_currentTheme );
+}
+
 void Theme_Config::saveSettings()
 {
     if(kcfg_IconThemeIndex->count())
     {
-        QString theme;
-        theme = m_dirs[kcfg_IconThemeIndex->currentItem()];
-        theme = theme.section('/',-2,-2);
-        if(m_oldTheme != theme)
+        if(hasChanged())
         {
 	    KConfig* config = kapp->config();
 	    config->setGroup("Themes");
-	    config->writeEntry("IconThemeName",theme);
-	    Preferences::setIconThemeName(theme);
+	    config->writeEntry("IconThemeName",m_currentTheme);
+	    Preferences::setIconThemeName(m_currentTheme);
             KonversationApplication::instance()->images()->initializeNickIcons();
             KonversationApplication::instance()->updateNickIcons();
-            m_oldTheme = theme;
+            m_oldTheme = m_currentTheme;
         }
     }
 }
@@ -235,6 +238,7 @@ void Theme_Config::updateButtons()
 
     QString dir = m_dirs[kcfg_IconThemeIndex->currentItem()];
     QFile themeRC(dir);
+    m_currentTheme = dir.section('/',-2,-2);
 
     if(!themeRC.open(IO_ReadOnly | IO_WriteOnly))
         removeButton->setEnabled(false);

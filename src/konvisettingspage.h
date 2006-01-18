@@ -37,6 +37,8 @@ class KonviSettingsPage
     virtual void restorePageToDefaults() = 0;
     virtual void saveSettings() = 0;
     virtual void loadSettings() = 0;
+
+    virtual bool hasChanged() = 0;
 };
 
 #endif

@@ -19,7 +19,7 @@ OSD_Config::OSD_Config( QWidget* parent, const char* name, WFlags fl )
     m_pOSDPreview = new OSDPreviewWidget("Konversation");
     connect(m_pOSDPreview, SIGNAL(positionChanged()), this, SLOT(slotPositionChanged()));
 
-    connect( kcfg_OSDFont, SIGNAL(fontSelected(const QFont&)), this, SLOT(slotUpdateFont(const QFont&))); 
+    connect( kcfg_OSDFont, SIGNAL(fontSelected(const QFont&)), this, SLOT(slotUpdateFont(const QFont&)));
 
     slotOSDEnabledChanged(kcfg_UseOSD->isChecked());
     slotCustomColorsChanged(kcfg_OSDUseCustomColors->isChecked());

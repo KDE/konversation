@@ -225,7 +225,20 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
 
 void KonviSettingsDialog::modifiedSlot()
 {
-  m_modified = true;
+  // this is for the non KConfigXT parts to tell us, if the user actually changed
+  // something or went back to the old settings
+// kdDebug() << "KonviSettingsDialog::modifiedSlot()" << endl;
+  m_modified = false;
+  QIntDictIterator<KonviSettingsPage> it( m_indexToPageMapping );
+  for ( ; it.current(); ++it )
+  {
+    if ( (*it).hasChanged() )
+    {
+      m_modified = true;
+//      kdDebug() << "KonviSettingsDialog::modifiedSlot(): modified!" << endl;
+      break;
+    }
+  }
   updateButtons();
 }
 
@@ -270,6 +283,18 @@ void KonviSettingsDialog::openWatchedNicknamesPage()
 {
   // page index has been calculated in the constructor
   showPage(m_watchedNicknamesIndex);
+}
+
+// accessor method - will be used by KonviConfigDialog::updateButtons()
+bool KonviSettingsDialog::hasChanged()
+{
+  return m_modified;
+}
+
+// accessor method - will be used by KonviConfigDialog::updateButtons()
+bool KonviSettingsDialog::isDefault()
+{
+  return true;
 }
 
 #include "konvisettingsdialog.moc"

@@ -23,6 +23,8 @@ class Alias_Config : public Alias_ConfigUI, public KonviSettingsPage
   virtual void saveSettings();
   virtual void loadSettings();
 
+  virtual bool hasChanged() { return false; }; // FIXME
+
  protected slots:
   void newAlias();
   void removeAlias();
@@ -32,7 +34,7 @@ class Alias_Config : public Alias_ConfigUI, public KonviSettingsPage
  private:
   QStringList m_defaultAliasList;
 
-	  
+
 
 signals:
     void modified();

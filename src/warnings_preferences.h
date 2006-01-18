@@ -20,6 +20,8 @@ public:
     virtual void saveSettings();
     virtual void loadSettings();
 
+    virtual bool hasChanged() { return false; }; // FIXME
+
 public slots:
     virtual void languageChange();
 signals:

@@ -33,6 +33,8 @@ class WatchedNicknames_Config : public WatchedNicknames_ConfigUI, public KonviSe
     virtual void loadSettings();
     virtual void restorePageToDefaults();
 
+    virtual bool hasChanged() { return false; }; // FIXME
+
   signals:
     void modified();
 

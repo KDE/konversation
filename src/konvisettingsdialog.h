@@ -96,15 +96,15 @@ class KDEUI_EXPORT KonviSettingsDialog : public KonviConfigDialog
         virtual void updateSettings();
         virtual void updateWidgets();
         virtual void updateWidgetsDefault();
- 	void modifiedSlot();
+        void modifiedSlot();
 
     protected:
-        virtual bool hasChanged() { return m_modified; }
-        virtual bool isDefault() { return true; }
+        virtual bool hasChanged();
+        virtual bool isDefault();
 
         // remember page index
         unsigned int m_watchedNicknamesIndex;
-	QIntDict<KonviSettingsPage> m_indexToPageMapping;
+        QIntDict<KonviSettingsPage> m_indexToPageMapping;
 };
 
 #endif //KONVISETTINGSDIALOG_H

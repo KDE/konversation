@@ -44,10 +44,11 @@ void NicklistBehavior_Config::loadSettings()
 {
   // get sorting order string from preferences
   setNickList(Preferences::sortOrder());
+  m_oldSortingOrder=currentSortingOrder();
 }
 
 void NicklistBehavior_Config::setNickList(const QString &sortingOrder)
-{	
+{
   sortOrder->clear();
   // loop through the sorting order string, insert the matching descriptions in reverse order
   // to keep the correct sorting
@@ -65,25 +66,40 @@ void NicklistBehavior_Config::setNickList(const QString &sortingOrder)
   }
 }
 
-// save settings permanently
-void NicklistBehavior_Config::saveSettings()
+QString NicklistBehavior_Config::currentSortingOrder()
 {
   // get the uppermost entry of the sorting list
   QListViewItem* item=sortOrder->firstChild();
-
   // prepare the new sorting order string
-  QString newSortingOrder;
+  QString currentSortingOrder;
   // iterate through all items of the listview
   while(item)
   {
     // add mode char to the sorting order string
-    newSortingOrder+=item->text(0);
+    currentSortingOrder+=item->text(0);
     // go to next item in the listview
     item=item->itemBelow();
   } // while
 
+  return currentSortingOrder;
+}
+
+// save settings permanently
+void NicklistBehavior_Config::saveSettings()
+{
+  // get the current sorting order
+  QString newSortingOrder=currentSortingOrder();
+
   // update sorting order on in-memory preferences
   Preferences::setSortOrder(newSortingOrder);
+
+  // save current sorting order as a reference to hasChanged()
+  m_oldSortingOrder=currentSortingOrder();
+}
+
+bool NicklistBehavior_Config::hasChanged()
+{
+  return(m_oldSortingOrder!=currentSortingOrder());
 }
 
 #include "nicklistbehavior_preferences.moc"

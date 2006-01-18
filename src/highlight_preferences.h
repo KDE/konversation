@@ -1,7 +1,7 @@
 //
 // C++ Interface: highlight_Config
 //
-// Description: 
+// Description:
 //
 //
 // Author: Dario Abatianni <eisfuchs@tigress.com>, (C) 2003, 2005
@@ -25,7 +25,7 @@ class Highlight_Config;
 class Highlight_Config : public Highlight_ConfigUI, public KonviSettingsPage
 {
   Q_OBJECT
-  
+
   public:
     Highlight_Config(QWidget *parent = 0, const char *name = 0);
     ~Highlight_Config();
@@ -35,9 +35,11 @@ class Highlight_Config : public Highlight_ConfigUI, public KonviSettingsPage
     virtual void loadSettings();
     virtual void restorePageToDefaults();
 
+    virtual bool hasChanged() { return false; }; // FIXME
+
   signals:
     void modified();
-  
+
   protected slots:
     void highlightSelected(QListViewItem* item);
     void highlightTextChanged(const QString& newPattern);
@@ -51,7 +53,7 @@ class Highlight_Config : public Highlight_ConfigUI, public KonviSettingsPage
     QPtrList<Highlight> getHighlightList();
   protected:
     void updateButtons();
-  
+
   protected:
     bool newItemSelected;
 };

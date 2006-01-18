@@ -18,6 +18,8 @@ public:
     virtual void saveSettings();
     virtual void loadSettings();
 
+    virtual bool hasChanged() { return false; }; // FIXME
+
 protected slots:
     void slotOSDEnabledChanged(bool on);
     void slotCustomColorsChanged(bool on);

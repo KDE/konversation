@@ -29,6 +29,8 @@ class Theme_Config : public Theme_ConfigUI, public KonviSettingsPage
         virtual void saveSettings();
         virtual void loadSettings();
 
+        virtual bool hasChanged();
+
     protected slots:
         void updatePreview(int id);
         void updateButtons();
@@ -38,5 +40,6 @@ class Theme_Config : public Theme_ConfigUI, public KonviSettingsPage
     private:
         QStringList m_dirs;
         QString m_oldTheme;
+        QString m_currentTheme;
 };
 #endif

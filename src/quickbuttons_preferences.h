@@ -31,6 +31,8 @@ class QuickButtons_Config : public QuickButtons_ConfigUI, public KonviSettingsPa
     virtual void loadSettings();
     virtual void restorePageToDefaults();
 
+    virtual bool hasChanged() { return false; }; // FIXME
+
   signals:
     void modified();
 
