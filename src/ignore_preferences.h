@@ -21,10 +21,13 @@ public:
     virtual void saveSettings();
     virtual void loadSettings();
 
-    virtual bool hasChanged() { return false; }; // FIXME
+    virtual bool hasChanged();
 
 private:
-    QPtrList<Ignore> getIgnoreList();
+    QStringList m_oldIgnoreList;
+
+    QStringList currentIgnoreList();  // in hasChanged() format
+    QPtrList<Ignore> getIgnoreList(); // in prefs format
     void updateEnabledness();
 
 public slots:

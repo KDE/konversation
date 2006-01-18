@@ -81,6 +81,27 @@ QPtrList<Ignore> Ignore_Config::getIgnoreList()
     return newList;
 }
 
+// returns the currently visible ignore list as QStringList to make comparing easy
+QStringList Ignore_Config::currentIgnoreList()
+{
+    QStringList newList;
+
+    IgnoreListViewItem* item=static_cast<IgnoreListViewItem*>(ignoreListView->firstChild());
+    while(item)
+    {
+        newList.append(item->text(0)+" "+item->getFlags());
+        item=item->itemBelow();
+    }
+
+    return newList;
+}
+
+// checks if the currently visible ignore list differs from the currently saved one
+bool Ignore_Config::hasChanged()
+{
+  return(m_oldIgnoreList!=currentIgnoreList());
+}
+
 void Ignore_Config::restorePageToDefaults()
 {
     if(ignoreListView->childCount() != 0) {
@@ -92,6 +113,8 @@ void Ignore_Config::restorePageToDefaults()
 void Ignore_Config::saveSettings()
 {
     Preferences::setIgnoreList(getIgnoreList());
+    // remember the list for hasChanged()
+    m_oldIgnoreList=currentIgnoreList();
 }
 
 void Ignore_Config::loadSettings()
@@ -105,7 +128,8 @@ void Ignore_Config::loadSettings()
         new IgnoreListViewItem(ignoreListView,item->getName(),item->getFlags());
         item=ignoreList.prev();
     }
-
+    // remember the list for hasChanged()
+    m_oldIgnoreList=currentIgnoreList();
     updateEnabledness();
 }
 
