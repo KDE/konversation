@@ -47,6 +47,9 @@ QuickButtons_Config::~QuickButtons_Config()
 void QuickButtons_Config::loadSettings()
 {
   setButtonsListView(Preferences::quickButtonList());
+
+  // remember button list for hasChanged()
+  m_oldButtonList=Preferences::quickButtonList();
 }
 
 // fill listview with button definitions
@@ -55,7 +58,6 @@ void QuickButtons_Config::setButtonsListView(const QStringList &buttonList)
   // clear listView
   buttonListView->clear();
   // go through the list
-  KListViewItem *item;
   for(unsigned int index=buttonList.count();index!=0;index--)
   {
     // get button definition
@@ -74,32 +76,53 @@ void QuickButtons_Config::saveSettings()
 
   config->setGroup("Button List");
 
+  // create empty list
+  QStringList newList=currentButtonList();
+
+  // go through all buttons and save them into the configuration
+  for(unsigned int index=0;index<newList.count();index++)
+  {
+    // write the current button's name and definition
+    config->writeEntry(QString("Button%1").arg(index),newList[index]);
+    // increment number of button
+    index++;
+  } // while
+
+  // set internal button list
+  Preferences::setQuickButtonList(newList);
+
+  // remember button list for hasChanged()
+  m_oldButtonList=newList;
+}
+
+void QuickButtons_Config::restorePageToDefaults()
+{
+  setButtonsListView(Preferences::defaultQuickButtonList());
+}
+
+QStringList QuickButtons_Config::currentButtonList()
+{
   // get first item of the button listview
   QListViewItem* item=buttonListView->firstChild();
   // create empty list
   QStringList newList;
 
   // go through all items and save them into the configuration
-  unsigned int index=0;
   while(item)
   {
-    // write the current button's name and definition
-    config->writeEntry(QString("Button%1").arg(index),item->text(0)+","+item->text(1));
     // remember button in internal list
     newList.append(item->text(0)+","+item->text(1));
-    // increment number of button
-    index++;
     // get next item in the listview
     item=item->itemBelow();
   } // while
 
-  // set internal button list
-  Preferences::setQuickButtonList(newList);
+  // return list
+  return newList;
 }
 
-void QuickButtons_Config::restorePageToDefaults()
+bool QuickButtons_Config::hasChanged()
 {
-  setButtonsListView(Preferences::defaultQuickButtonList());
+  return(m_oldButtonList!=currentButtonList());
 }
 
 // slots

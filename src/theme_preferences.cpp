@@ -92,7 +92,6 @@ void Theme_Config::loadSettings()
 
 bool Theme_Config::hasChanged()
 {
-kdDebug() << "Theme_Config::hasChanged()" << endl;
   return ( m_oldTheme != m_currentTheme );
 }
 

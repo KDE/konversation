@@ -31,7 +31,7 @@ class QuickButtons_Config : public QuickButtons_ConfigUI, public KonviSettingsPa
     virtual void loadSettings();
     virtual void restorePageToDefaults();
 
-    virtual bool hasChanged() { return false; }; // FIXME
+    virtual bool hasChanged();
 
   signals:
     void modified();
@@ -46,6 +46,9 @@ class QuickButtons_Config : public QuickButtons_ConfigUI, public KonviSettingsPa
 
   protected:
     bool m_newItemSelected;
+    QStringList m_oldButtonList;
+
+    QStringList currentButtonList();
 };
 
 #endif
