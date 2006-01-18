@@ -2007,6 +2007,8 @@ QPtrList<Nick> Channel::getNickList()
 void Channel::lostFocus()
 {
     Preferences::setSpellChecking(channelInput->checkSpellingEnabled());
+    //Turn off spell checking when not focused to save some memory.
+    channelInput->setCheckSpellingEnabled(false);
 }
 
 void Channel::childAdjustFocus()

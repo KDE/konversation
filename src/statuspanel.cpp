@@ -60,7 +60,6 @@ StatusPanel::StatusPanel(QWidget* parent) : ChatWindow(parent)
     getTextView()->installEventFilter(statusInput);
     statusInput->installEventFilter(this);
     statusInput->setCheckSpellingEnabled(Preferences::spellChecking());
-    kdDebug() << "SPELL CHECKING IS " << Preferences::spellChecking() << endl;
 
     setLog(Preferences::log());
     setLogfileName("konversation");
@@ -99,6 +98,8 @@ void StatusPanel::setNickname(const QString& newNickname)
 void StatusPanel::lostFocus()
 {
     Preferences::setSpellChecking(statusInput->checkSpellingEnabled());
+    //Turn off spell checking when not focused to save some memory.
+    statusInput->setCheckSpellingEnabled(false);
 }
 
 void StatusPanel::childAdjustFocus()

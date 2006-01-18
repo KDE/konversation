@@ -358,6 +358,8 @@ void Query::sendFileMenu()
 void Query::lostFocus()
 {
     Preferences::setSpellChecking(queryInput->checkSpellingEnabled());
+    //Turn off spell checking when not focused to save some memory.
+    queryInput->setCheckSpellingEnabled(false);
 }
 
 void Query::childAdjustFocus()
