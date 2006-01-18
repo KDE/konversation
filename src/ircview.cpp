@@ -591,7 +591,7 @@ void IRCView::append(const QString& nick,const QString& message)
     if(Preferences::useColoredNicks())
     {
         if(nick != m_server->getNickname())
-            scolor = m_server->obtainNickInfo(nick)->getNickColor();
+            scolor = Preferences::nickColor(m_server->obtainNickInfo(nick)->getNickColor()).name();
         else
             scolor =  Preferences::nickColor(8).name();
 
@@ -667,7 +667,7 @@ void IRCView::appendQuery(const QString& nick,const QString& message)
     if(Preferences::useColoredNicks())
     {
         if(nick != m_server->getNickname())
-            color = m_server->obtainNickInfo(nick)->getNickColor();
+            color = Preferences::nickColor(m_server->obtainNickInfo(nick)->getNickColor()).name();
         else
             color = Preferences::nickColor(8).name();
 
@@ -724,7 +724,7 @@ void IRCView::appendAction(const QString& nick,const QString& message)
     if(Preferences::useColoredNicks())
     {
         if(nick != m_server->getNickname())
-            color = m_server->obtainNickInfo(nick)->getNickColor();
+            color =Preferences::nickColor( m_server->obtainNickInfo(nick)->getNickColor()).name();
         else
             color = Preferences::nickColor(8).name();
 

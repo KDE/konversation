@@ -350,7 +350,7 @@ Server* KonversationApplication::connectToServer (int serverGroupId, Konversatio
     bool clearQuickServerList = true;
 
     // Have we been called with a quickServer? If so, append to list & prevent
-    // simple Server constructor from cleaing its quickServer list like it 
+    // simple Server constructor from cleaing its quickServer list like it
     // would do normally.
     if (!quickServer.server().isEmpty())
     {
@@ -1001,14 +1001,10 @@ Images* KonversationApplication::images()
 // Returns list of pointers to Servers.
 const QPtrList<Server> KonversationApplication::getServerList() { return serverList; }
 
+// keeps track of the cyclic assigned nickname colors
 uint& KonversationApplication::getColorOffset()
 {
     return colorOffSet;
-}
-
-QMap<QString,QString>& KonversationApplication::getColorMap()
-{
-    return colorMap;
 }
 
 uint KonversationApplication::getKarma(const QString& nick) const

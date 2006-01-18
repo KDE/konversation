@@ -115,7 +115,6 @@ class KonversationApplication : public KUniqueApplication
 
         // Nick color stuff
         uint& getColorOffset();
-        QMap<QString,QString>& getColorMap();
 
         // Intelligent nick completion stuff aka A.W.E.S.O.M.E-O 4000 --cartman
         uint getKarma(const QString& nick) const;
@@ -185,7 +184,6 @@ class KonversationApplication : public KUniqueApplication
 
         uint colorOffSet;
         QStringList colorList;
-        QMap<QString,QString> colorMap;
 
         bool m_demoteInProgress;
         QTimer* demoteTimer;

@@ -52,6 +52,9 @@ NickInfo::NickInfo(const QString& nick, Server* server): KShared()
 
     m_changedTimer = new QTimer( this);
     connect(m_changedTimer, SIGNAL( timeout()), SLOT(emitNickInfoChanged()));
+
+    // reset nick color
+    m_nickColor = 0;
 }
 
 NickInfo::~NickInfo()
@@ -75,28 +78,31 @@ QString NickInfo::getNetServer() const { return m_netServer; }
 QString NickInfo::getNetServerInfo() const { return m_netServerInfo; }
 QDateTime NickInfo::getOnlineSince() const { return m_onlineSince; }
 
-QString NickInfo::getNickColor() const
+uint NickInfo::getNickColor()
 {
-    uint& offset = KonversationApplication::instance()->getColorOffset();
-    QMap<QString,QString>& colorMap = KonversationApplication::instance()->getColorMap();
-
-    if(!colorMap.contains(m_nickname))
+    // do we already have a color?
+    if(!m_nickColor)
     {
+        // get next color offset in line
+        uint& offset = KonversationApplication::instance()->getColorOffset();
+
+        // wrap to first color if we reached the maximum index
         if(offset >= 8)
             offset=0;
 
+        // make sure we don't have the same color as the background
         QString backgroundColor=Preferences::color(Preferences::TextViewBackground).name();
-        QString color = Preferences::nickColor(offset).name();
-
-        if(backgroundColor == color) {
+        if(backgroundColor == Preferences::nickColor(offset).name() ) {
             offset = (offset+1)%8;
-            color = Preferences::nickColor(offset).name();
         }
 
-        colorMap[m_nickname] = color;
+        // store color (+1 so we can check for 0 as "unassigned"
+        m_nickColor = offset + 1;
+        // move on color offset
         ++offset;
     }
-    return colorMap[m_nickname];
+    // return color offset -1 (since we store it +1 for 0 checking)
+    return m_nickColor-1;
 }
 
 bool NickInfo::isIdentified() const { return m_identified; }
