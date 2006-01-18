@@ -25,6 +25,8 @@ Alias_Config::Alias_Config(QWidget* parent, const char* name)
   loadSettings();
   connect(newButton,SIGNAL (clicked()),this,SLOT (newAlias()) );
   connect(removeButton,SIGNAL (clicked()),this,SLOT (removeAlias()) );
+  connect(aliasesListView,SIGNAL (moved()),this,SIGNAL (modified()) );
+  connect(aliasesListView,SIGNAL (itemRenamed(QListViewItem*)),this,SLOT (itemRenamed(QListViewItem*)));
 }
 
 Alias_Config::~Alias_Config()
@@ -61,21 +63,16 @@ void Alias_Config::restorePageToDefaults()
 {
   setAliases(m_defaultAliasList);
 }
+
 void Alias_Config::saveSettings()
 {
-  kdDebug() << "Alias_Config::saveSettings" << endl;
-  QStringList newList;
-
-  QListViewItem* item=aliasesListView->itemAtIndex(0);
-  while(item)
-    {
-      newList.append(item->text(0)+" "+item->text(1));
-      item=item->itemBelow();
-    }
-
+  QStringList newList=currentList();
   Preferences::setAliasList(newList);
 
+  // saved list is now old list, to check for changes
+  m_oldAliasList=newList;
 }
+
 void Alias_Config::loadSettings()
 {
   setAliases(Preferences::aliasList());
@@ -90,6 +87,32 @@ void Alias_Config::setAliases(const QStringList &aliasList)
       QString item=aliasList[index-1];
       new KListViewItem(aliasesListView,item.section(' ',0,0),item.section(' ',1));
     }
+  // remember alias list
+  m_oldAliasList=aliasList;
+}
+
+QStringList Alias_Config::currentList()
+{
+  QStringList newList;
+
+  QListViewItem* item=aliasesListView->itemAtIndex(0);
+  while(item)
+    {
+      newList.append(item->text(0)+" "+item->text(1));
+      item=item->itemBelow();
+    }
+  return newList;
+}
+
+void Alias_Config::itemRenamed(QListViewItem* /* item */)
+{
+  // this is all we care about here
+  emit modified();
+}
+
+bool Alias_Config::hasChanged()
+{
+  return(currentList()!=m_oldAliasList);
 }
 
 #include "alias_preferences.moc"

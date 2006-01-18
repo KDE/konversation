@@ -23,18 +23,20 @@ class Alias_Config : public Alias_ConfigUI, public KonviSettingsPage
   virtual void saveSettings();
   virtual void loadSettings();
 
-  virtual bool hasChanged() { return false; }; // FIXME
+  virtual bool hasChanged();
 
  protected slots:
   void newAlias();
   void removeAlias();
+  void itemRenamed(QListViewItem* item);
+
  protected:
   void setAliases(const QStringList &aliasList);
+  QStringList currentList();
 
  private:
-  QStringList m_defaultAliasList;
-
-
+  QStringList m_defaultAliasList;  // default aliases
+  QStringList m_oldAliasList;      // alias list before last Apply
 
 signals:
     void modified();
