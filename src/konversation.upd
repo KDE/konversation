@@ -1,8 +1,15 @@
+# Convert color storage format
+Id=0.19-colors
+File=konversationrc
+Group=Message Text Colors
+Script=konversation-0.19-colors.pl,perl
+
 # Rename ChannelSplitter
 Id=0.19-channelsplitter
 File=konversationrc
 Group=Appearance
 Key=ChannelSplitter,ChannelSplitterSizes
+RemoveKey=ChannelSplitter
 
 # Update mainwindow settings
 Id=0.14-mainwindow
@@ -21,15 +28,3 @@ Id=0.18-lagtimeout
 File=konversationrc
 Group=General Options
 RemoveKey=MaximumLag
-
-# DCC defaults changed
-Id=0.19-dcc
-File=konversationrc
-Group=DCC Settings
-RemoveKey=ChatPortsFirst
-RemoveKey=ChatPortsLast
-RemoveKey=SendPortsFirst
-RemoveKey=SendPortsLast
-RemoveKey=SpecificSendPorts
-RemoveKey=SpecificChatPorts
-RemoveKey=AutoResume
