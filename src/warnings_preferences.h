@@ -20,10 +20,16 @@ public:
     virtual void saveSettings();
     virtual void loadSettings();
 
-    virtual bool hasChanged() { return false; }; // FIXME
+    virtual bool hasChanged();
 
 public slots:
     virtual void languageChange();
+
+protected:
+    QString currentWarningsChecked(); // for hasChanged()
+
+    QString m_oldWarningsChecked;     // for hasChanged()
+
 signals:
     void modified();
 };

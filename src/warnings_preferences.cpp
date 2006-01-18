@@ -17,7 +17,6 @@ Warnings_Config::Warnings_Config( QWidget* parent, const char* name, WFlags fl )
 
 Warnings_Config::~Warnings_Config()
 {
-
 }
 
 void Warnings_Config::restorePageToDefaults()
@@ -42,15 +41,22 @@ void Warnings_Config::saveSettings()
 {
   KConfig* config = kapp->config();
   config->setGroup("Notification Messages");
-  
+
+  // prepare list
+  QString warningsChecked;
+
   QCheckListItem* item=static_cast<QCheckListItem*>(dialogListView->itemAtIndex(0));
   int i=0;
   while(item)
   {
+    // save state of this item in hasChanged() list
+    warningsChecked+=item->isOn();
     config->writeEntry(item->text(2),item->isOn());
     item=static_cast<QCheckListItem*>(item->itemBelow());
     ++i;
   }
+  // remember checkbox state for hasChanged()
+  m_oldWarningsChecked=warningsChecked;
 }
 
 void Warnings_Config::loadSettings()
@@ -76,6 +82,7 @@ void Warnings_Config::loadSettings()
   KConfig* config = kapp->config();
   config->setGroup("Notification Messages");
   QString flagName; 
+  QString warningsChecked;
   for(unsigned int i=0; i<dialogDefinitions.count() ;i++)
   {
     item=new QCheckListItem(dialogListView,dialogDefinitions[i],QCheckListItem::CheckBox);
@@ -83,7 +90,33 @@ void Warnings_Config::loadSettings()
     flagName = flagNames.section(",",i,i);
     item->setText(2,flagName);
     item->setOn(config->readBoolEntry(flagName,true));
+    warningsChecked+=item->isOn();
   }
+  // remember checkbox state for hasChanged()
+  m_oldWarningsChecked=warningsChecked;
+}
+
+// get a list of checked/unchecked items for hasChanged()
+QString Warnings_Config::currentWarningsChecked()
+{
+  // prepare list
+  QString newList;
+
+  // get first checklist item
+  QListViewItem* item=dialogListView->firstChild();
+  while(item)
+  {
+    // save state of this item in hasChanged() list
+    newList+=static_cast<QCheckListItem*>(item)->isOn();
+    item=item->itemBelow();
+  }
+  // return list
+  return newList;
+}
+
+bool Warnings_Config::hasChanged()
+{
+  return(m_oldWarningsChecked!=currentWarningsChecked());
 }
 
 /*
