@@ -59,7 +59,7 @@ while (<>)
 
 print "SortOrder=";
 
-foreach $out (sort { $a <=> $b } keys %list)
+foreach $out (reverse sort { $a <=> $b } keys %list)
 {
     print $list{$out};
 }
