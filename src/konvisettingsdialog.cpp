@@ -270,13 +270,12 @@ void KonviSettingsDialog::updateWidgets()
 
 void KonviSettingsDialog::updateWidgetsDefault()
 {
-  KonviSettingsPage *page = m_indexToPageMapping.find(activePageIndex());
-  if(page) {
-    kdDebug() << "Setting defaults" << endl;
-    page->restorePageToDefaults();
-  } else {
-    kdDebug() << "THIS PAGE HAS NO FUNCTION TO SET THE DEFAULTS" << endl;
+  QIntDictIterator<KonviSettingsPage> it( m_indexToPageMapping );
+  for ( ; it.current(); ++it )
+  {
+    (*it).restorePageToDefaults();
   }
+  m_modified = true;
 }
 
 void KonviSettingsDialog::openWatchedNicknamesPage()
