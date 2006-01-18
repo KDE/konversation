@@ -35,7 +35,7 @@ class Highlight_Config : public Highlight_ConfigUI, public KonviSettingsPage
     virtual void loadSettings();
     virtual void restorePageToDefaults();
 
-    virtual bool hasChanged() { return false; }; // FIXME
+    virtual bool hasChanged();
 
   signals:
     void modified();
@@ -50,12 +50,13 @@ class Highlight_Config : public Highlight_ConfigUI, public KonviSettingsPage
     void addHighlight();
     void removeHighlight();
     void playSound();
-    QPtrList<Highlight> getHighlightList();
+    QPtrList<Highlight> getHighlightList(); // prefs format
+    QStringList currentHighlightList();     // hasChanged() format
   protected:
     void updateButtons();
 
-  protected:
     bool newItemSelected;
+    QStringList m_oldHighlightList;
 };
 
 #endif

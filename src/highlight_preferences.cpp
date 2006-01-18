@@ -109,6 +109,13 @@ void Highlight_Config::loadSettings()
     Highlight* currentHighlight=highlightList.at(i-1);
     new HighlightViewItem(highlightListView,currentHighlight);
   }
+  // remember current list for hasChanged()
+  m_oldHighlightList=currentHighlightList();
+}
+
+bool Highlight_Config::hasChanged()
+{
+  return(m_oldHighlightList!=currentHighlightList());
 }
 
 // Slots:
@@ -274,6 +281,20 @@ QPtrList<Highlight> Highlight_Config::getHighlightList()
   return newList;
 }
 
+QStringList Highlight_Config::currentHighlightList()
+{
+  QStringList newList;
+
+  HighlightViewItem* item=static_cast<HighlightViewItem*>(highlightListView->firstChild());
+  while(item)
+  {
+    newList.append(item->getPattern()+item->getRegExp()+item->getColor().name()+item->getSoundURL().url()+item->getAutoText());
+    item=item->itemBelow();
+  }
+
+  return newList;
+}
+
 void Highlight_Config::playSound()
 {
   KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
@@ -306,6 +327,9 @@ void Highlight_Config::saveSettings()
     config->deleteGroup(QString("Highlight%1").arg(i));
     i++;
   }
+
+  // remember current list for hasChanged()
+  m_oldHighlightList=currentHighlightList();
 }
 
 #include "highlight_preferences.moc"
