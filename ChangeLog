@@ -78,6 +78,8 @@ Changes from 0.18 to 0.19
 - Added context menu to channels in the chat window
 - Whitespace highlighting in the multi-line paste editor dialog
 - Correctly insert away remember line in all channel and query tabs of the affected server(s), rather than putting them all in the front view
+- Highlight now uses regular expression groups for auto text replacement
+- Nick colors now follow nick changes and immediately react on color prefs change without restarting konvi
 
 Changes from 0.17 to 0.18
 - All nicks were blue when colored nicks are disabled with some setups
@@ -104,7 +106,7 @@ Changes from 0.16 to 0.17
 - Per identity pre-shell command support with a GUI
 - Bookmarking support
 - Detect Japanese encoding correctly while trying to auto-detect Unicode
-	
+
 Changes from 0.15 to 0.16
 - Dropping URLs onto nick on nicklist or onto query initiates DCC send
 - You can now do SSL connections from Quick Connect Dialog
@@ -116,11 +118,11 @@ Changes from 0.15 to 0.16
 - Calculate DCC CPS more accurately
 - Colored nicks support
 - Added dcop functions to set away and added alt+a shortcut to toggle away
-- Clicking nicks in channel text will now open a query and similarly, 
+- Clicking nicks in channel text will now open a query and similarly,
   clicking #foo will now join channel #foo
 - Nicks in channel view now have a context menu as in nicklistview
 - Tab at begining of line inserts last completed nick
-- A media script added to replace amarok,juk,noatun,kaffeine scripts. 
+- A media script added to replace amarok,juk,noatun,kaffeine scripts.
   Use /media instead of using /amarok,/juk etc.
 - Links can now be dragged & dropped from channels
 - Midde clicking urls now opens them in new tab in konqueror ( if konqueror is used for links )
