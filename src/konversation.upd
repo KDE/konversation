@@ -1,7 +1,7 @@
 # Convert nick list sort order storage format
 Id=0.19-sortorder
 File=konversationrc
-Group=Message Text Colors
+Group=Sort Nicknames
 Script=konversation-0.19-sortorder.pl,perl
 
 # Convert color storage format
