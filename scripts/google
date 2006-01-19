@@ -59,14 +59,14 @@ eval { require SOAP::Lite; };
 
 if($@)
 {
-    exec 'dcop', $port, 'Konversation', 'error', "You need SOAP::Lite package installed. Try apt-get install libsoap-lite-perl.";
+    exec 'dcop', $port, 'Konversation', 'error', "You need the perl SOAP::Lite module installed.";
 }
 
 eval { require HTML::Entities; };
 
 if($@)
 {
-    exec 'dcop', $port, 'Konversation', 'error', "You need HTML::Entities package installed.";
+    exec 'dcop', $port, 'Konversation', 'error', "You need the perl HTML::Entities module installed.";
 }
 
 use CGI qw(:standard);
