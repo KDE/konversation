@@ -61,9 +61,7 @@ Preferences::Preferences()
 
     QStringList nickList;
     nickList.append(user.loginName());
-    nickList.append("_" + user.loginName());
     nickList.append(user.loginName() + "_");
-    nickList.append("_" + user.loginName() + "_");
     mIdentity->setNicknameList(nickList);
 
     setPartReason("Konversation terminated!");
