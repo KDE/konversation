@@ -451,12 +451,12 @@
       <label></label>
       <whatsthis></whatsthis>
     </entry>
-    <entry key="OSDTextColor" type="String">
+    <entry key="OSDTextColor" type="Color">
       <default>#ffffff</default>
       <label></label>
       <whatsthis></whatsthis>
     </entry>
-    <entry key="OSDBackgroundColor" type="String">
+    <entry key="OSDBackgroundColor" type="Color">
       <default></default>
       <label></label>
       <whatsthis></whatsthis>
