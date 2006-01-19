@@ -51,10 +51,11 @@ void Warnings_Config::saveSettings()
   {
     // save state of this item in hasChanged() list
     warningsChecked+=item->isOn();
-    config->writeEntry(item->text(2),item->isOn());
+    config->writeEntry(item->text(2),item->isOn() ? "1" : "0");
     item=static_cast<QCheckListItem*>(item->itemBelow());
     ++i;
   }
+
   // remember checkbox state for hasChanged()
   m_oldWarningsChecked=warningsChecked;
 }
@@ -82,7 +83,6 @@ void Warnings_Config::loadSettings()
   KConfig* config = kapp->config();
   config->setGroup("Notification Messages");
   QString flagName; 
-  QString warningsChecked;
   for(unsigned int i=0; i<dialogDefinitions.count() ;i++)
   {
     item=new QCheckListItem(dialogListView,dialogDefinitions[i],QCheckListItem::CheckBox);
@@ -90,10 +90,9 @@ void Warnings_Config::loadSettings()
     flagName = flagNames.section(",",i,i);
     item->setText(2,flagName);
     item->setOn(config->readBoolEntry(flagName,true));
-    warningsChecked+=item->isOn();
   }
   // remember checkbox state for hasChanged()
-  m_oldWarningsChecked=warningsChecked;
+  m_oldWarningsChecked=currentWarningsChecked();
 }
 
 // get a list of checked/unchecked items for hasChanged()
@@ -107,7 +106,7 @@ QString Warnings_Config::currentWarningsChecked()
   while(item)
   {
     // save state of this item in hasChanged() list
-    newList+=static_cast<QCheckListItem*>(item)->isOn();
+    newList+=(static_cast<QCheckListItem*>(item)->isOn()) ? "1" : "0";
     item=item->itemBelow();
   }
   // return list

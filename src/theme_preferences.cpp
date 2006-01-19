@@ -46,8 +46,7 @@ using namespace Konversation;
 Theme_Config::Theme_Config(QWidget* parent, const char* name)
   : Theme_ConfigUI( parent, name)
 {
-    m_oldTheme = Preferences::iconTheme();
-
+    // load the current settings
     loadSettings();
 
     connect(iconThemeIndex,SIGNAL(highlighted(int)),this,SLOT(updatePreview(int)));
@@ -63,58 +62,88 @@ Theme_Config::~Theme_Config()
 
 void Theme_Config::loadSettings()
 {
-    QString themeName, themeComment;
+    QString themeName, themeComment, themeDir;
     QString currentTheme = Preferences::iconTheme();
     int currentThemeIndex = 0;
 
+    // get list of theme dirs
     m_dirs = KGlobal::dirs()->findAllResources("data","konversation/themes/*/index.desktop");
 
+    // if we have any themes
     if(m_dirs.count() > 0)
     {
+        // clear listview
         iconThemeIndex->clear();
+        // initialize index counter
         int i = 0;
-
+        // iterate through all found theme directories
         for(QStringList::ConstIterator it = m_dirs.begin(); it != m_dirs.end(); ++it)
         {
             KDesktopFile themeRC(*it);
+            // get the name and comment from the theme
             themeName = themeRC.readName();
             themeComment = themeRC.readComment();
 
-            if ((*it).section('/',-2,-2)==currentTheme)
+            // extract folder name
+            themeDir=(*it).section('/',-2,-2);
+            // is this our currently used theme?
+            if (themeDir==currentTheme)
+            {
+                // remember for hasChanged()
+                m_oldTheme=themeDir;
+                // remember for updatePreview()
                 currentThemeIndex = i;
+            }
 
+            // if there was a comment to the theme, add it to the listview entry string
             if(!themeComment.isEmpty())
                 themeName = themeName+" ("+themeComment+")";
 
+            // insert entry into the listview
             iconThemeIndex->insertItem(themeName);
 
+            // increment index counter
             ++i;
         }
-
+        // highlight currently active theme and update preview box
         iconThemeIndex->setSelected(currentThemeIndex, true);
         updatePreview(currentThemeIndex);
     }
 
+    // if there was no currently used theme found, use the default theme
+    // If anyone knows how to get the default value from this, please change this!
+    if(m_oldTheme.isEmpty())
+        m_oldTheme = "default";
+
+    // update enabled/disabled state of buttons
     updateButtons();
 }
 
 bool Theme_Config::hasChanged()
 {
+  // return true if the theme selected is different from the saved theme
   return ( m_oldTheme != m_currentTheme );
 }
 
 void Theme_Config::saveSettings()
 {
+    // if there are any themes in the listview ...
     if(iconThemeIndex->count())
     {
+        // and if anything has changed ...
         if(hasChanged())
         {
+            // save icon theme name
             KConfig* config = kapp->config();
             config->setGroup("Themes");
             config->writeEntry("IconTheme",m_currentTheme);
+            // set in-memory theme to the saved theme
             Preferences::setIconTheme(m_currentTheme);
+            // update theme on runtime
             KonversationApplication::instance()->images()->initializeNickIcons();
             KonversationApplication::instance()->updateNickIcons();
+
+            // remember current theme for hasChanged()
             m_oldTheme = m_currentTheme;
         }
     }
@@ -237,16 +266,20 @@ void Theme_Config::updatePreview(int id)
 
 void Theme_Config::updateButtons()
 {
+    // don't allow clicking "remove" if there is only one or even no theme installed
     if(iconThemeIndex->count() < 2)
     {
         removeButton->setEnabled(false);
         return;
     }
 
+    // get directory of current theme
     QString dir = m_dirs[iconThemeIndex->currentItem()];
     QFile themeRC(dir);
+    // get name for directory
     m_currentTheme = dir.section('/',-2,-2);
 
+    // allow delete action only for themes that have been installed by the user
     if(!themeRC.open(IO_ReadOnly | IO_WriteOnly))
         removeButton->setEnabled(false);
     else
