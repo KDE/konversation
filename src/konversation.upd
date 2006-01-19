@@ -5,6 +5,7 @@ Key=CloseButtonsOnTabs,CloseButtons
 RemoveKey=CloseButtonsOnTabs
 RemoveKey=QuickButtons
 RemoveKey=Codec
+RemoveKey=AllowColorCodes
 Script=konversation-0.19-appearance.pl,perl
 
 Id=0.19-flags
