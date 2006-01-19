@@ -33,6 +33,7 @@ WatchedNicknames_Config::WatchedNicknames_Config(QWidget *parent, const char *na
  : WatchedNicknames_ConfigUI(parent, name)
 {
   notifyListView->setRenameable(0,false);
+  notifyListView->setSorting(-1);
   // reset flag to defined state (used to block signals when just selecting a new item)
   newItemSelected=false;
 
@@ -67,7 +68,6 @@ void WatchedNicknames_Config::loadSettings()
 
   // get list of server networks
   Konversation::ServerGroupList serverGroupList = Preferences::serverGroupList();
-  Konversation::ServerGroupList::iterator it;
 
   // cleanup, so we won't add duplicate items
   notifyListView->clear();
@@ -76,22 +76,23 @@ void WatchedNicknames_Config::loadSettings()
   notifyListView->clearSelection();
   enableEditWidgets(false);
 
-  // check if there is a network that is not in the notify group list
-  for(it=serverGroupList.begin();it!=serverGroupList.end();++it)
+  // iterate through all networks in the server group list in reverse order,
+  // to get them sorted correctly
+  for(unsigned int gIndex=serverGroupList.count();gIndex;gIndex--)
   {
     // add server group branch to the notify listview so we can add notify items
-    ValueListViewItem* groupItem= new ValueListViewItem((*it)->id(),notifyListView,(*it)->name());
+    ValueListViewItem* groupItem= new ValueListViewItem(serverGroupList[gIndex-1]->id(),notifyListView,serverGroupList[gIndex-1]->name());
     // get the group iterator to find all servers in the group
-    QMapConstIterator<int, QStringList> groupIt=notifyList.find((*it)->id());
+    QMapConstIterator<int, QStringList> groupIt=notifyList.find(serverGroupList[gIndex-1]->id());
 
     // get list of nicks for the current group
     QStringList nicks=groupIt.data();
     // add group to dropdown list
-    networkDropdown->insertItem((*it)->name(),-1);
-    // add nicknames to group branch
-    for(unsigned int index=0;index<nicks.count();index++)
+    networkDropdown->insertItem(serverGroupList[gIndex-1]->name(),0);
+    // add nicknames to group branch (reverse order again)
+    for(unsigned int index=nicks.count();index;index--)
     {
-      new KListViewItem(groupItem,nicks[index]);
+      new KListViewItem(groupItem,nicks[index-1]);
     } // for
     // unfold group branch
     notifyListView->setOpen(groupItem,true);
