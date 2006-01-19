@@ -1326,8 +1326,8 @@ void KonversationMainWindow::changeView(QWidget* viewToChange)
 
     if(m_frontView)
     {
-	m_frontView->resetTabNotification();
-	m_frontView->lostFocus();
+    m_frontView->resetTabNotification();
+    m_frontView->lostFocus();
         previousFrontView = m_frontView;
         disconnect(m_frontView, SIGNAL(updateInfo(const QString &)), this, SLOT(updateChannelInfo(const QString &)));
     }
@@ -1342,6 +1342,8 @@ void KonversationMainWindow::changeView(QWidget* viewToChange)
         updateSSLInfo(frontServer);
         updateLag(frontServer,frontServer->getLag());
     }
+
+    m_generalInfoLabel->clearTempText();
 
     updateFrontView();
 
