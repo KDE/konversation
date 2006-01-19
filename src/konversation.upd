@@ -1,3 +1,9 @@
+# Convert OSD color storage format
+Id=0.19-osdcolors
+File=konversationrc
+Group=OSD
+Script=konversation-0.19-colors.pl,perl
+
 # Convert nick list sort order storage format
 Id=0.19-sortorder
 File=konversationrc
