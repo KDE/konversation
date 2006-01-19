@@ -130,8 +130,8 @@
       <default param="14">#a0a0a0</default>
       <default param="15">#c0c0c0</default>
     </entry>
-    <entry key="FilterColorCodes" type="Bool">
-      <default>false</default>
+    <entry key="AllowColorCodes" type="Bool">
+      <default>true</default>
       <label></label>
       <whatsthis></whatsthis>
     </entry>

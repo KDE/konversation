@@ -1,38 +1,38 @@
-Id=0.19-appearance
+Id=0.50-appearance
 File=konversationrc
 Group=Appearance
 Key=CloseButtonsOnTabs,CloseButtons
 RemoveKey=CloseButtonsOnTabs
 RemoveKey=QuickButtons
 RemoveKey=Codec
-RemoveKey=AllowColorCodes
+RemoveKey=FilterColorCodes
 Script=konversation-0.19-appearance.pl,perl
 
-Id=0.19-flags
+Id=0.50-flags
 File=konversationrc
 Group=Flags
 RemoveKey=BlinkingTabs
 Script=konversation-0.19-tabplacement.pl,perl
 
 # Convert OSD color storage format
-Id=0.19-osdcolors
+Id=0.50-osdcolors
 File=konversationrc
 Group=OSD
 Script=konversation-0.19-colors.pl,perl
 
 # Convert nick list sort order storage format
-Id=0.19-sortorder
+Id=0.50-sortorder
 File=konversationrc
 Group=Sort Nicknames
 Script=konversation-0.19-sortorder.pl,perl
 
 # Convert color storage format
-Id=0.19-colors
+Id=0.50-colors
 File=konversationrc
 Group=Message Text Colors
 Script=konversation-0.19-colors.pl,perl
 
-Id=0.19-generaloptions
+Id=0.50-generaloptions
 File=konversationrc
 Group=General Options
 Key=RedirectServerAndAppMsgToStatusPane,AndAppMsgToStatusPane
@@ -54,50 +54,50 @@ RemoveKey=ServerWindowToolBarPos
 RemoveKey=ServerWindowToolBarStatus
 RemoveKey=ToolBarPos
 
-Id=0.19-cleanup-themes
+Id=0.50-cleanup-themes
 File=konversationrc
 Group=Themes
 RemoveKey=IconThemeIndex
 RemoveKey=IconThemeName
 
-Id=0.19-cleanup-notifylist
+Id=0.50-cleanup-notifylist
 File=konversationrc
 Group=Notify List
 RemoveKey=NotifyList
 
-Id=0.19-cleanup-dcc
+Id=0.50-cleanup-dcc
 File=konversationrc
 Group=DCC Settings
 RemoveKey=GetIpFromServer
 RemoveKey=Rollback
 
-Id=0.19-cleanup-colors
+Id=0.50-cleanup-colors
 File=konversationrc
 Group=Colors
 RemoveGroup=Colors
 
-Id=0.19-cleanup-hilightlist
+Id=0.50-cleanup-hilightlist
 File=konversationrc
 Group=Hilight List
 RemoveGroup=Hilight List
 
-Id=0.19-cleanup-notificationmessages
+Id=0.50-cleanup-notificationmessages
 File=konversationrc
 Group=Notification Messages
 RemoveGroup=Notification Messages
 
-Id=0.19-cleanup-ledcolors
+Id=0.50-cleanup-ledcolors
 File=konversationrc
 Group=Led Colors
 RemoveGroup=Led Colors
 
-Id=0.19-cleanup-kmditaskbar
+Id=0.50-cleanup-kmditaskbar
 File=konversationrc
 Group=MainWindow Toolbar KMdiTaskBar
 RemoveGroup=MainWindow Toolbar KMdiTaskBar
 
 # Rename ChannelSplitter
-Id=0.19-channelsplitter
+Id=0.50-channelsplitter
 File=konversationrc
 Group=Appearance
 Key=ChannelSplitter,ChannelSplitterSizes
