@@ -91,6 +91,9 @@ Channel::Channel(QWidget* parent)
     awayChanged = false;
     awayState = false;
 
+    splitterChanged = false;
+    splitterHidden = false;
+
     // no nicks pending from /names reply
     setPendingNicks(false);
 
@@ -309,7 +312,6 @@ Channel::Channel(QWidget* parent)
 
     connect(KonversationApplication::instance(), SIGNAL (appearanceChanged()),this,SLOT (updateAppearance()) );
 
-    initializeSplitters();
     updateAppearance();
 
     //FIXME JOHNFLUX
@@ -1796,6 +1798,7 @@ void Channel::showModeButtons(bool show)
     {
         if(show)
         {
+            splitterHidden = false;
             modeBox->show();
             modeBox->parentWidget()->show();
         }
@@ -1805,6 +1808,7 @@ void Channel::showModeButtons(bool show)
 
             if(topicLine->isHidden())
             {
+                splitterHidden = true;
                 modeBox->parentWidget()->hide();
             }
         }
@@ -1849,31 +1853,46 @@ void Channel::showEvent(QShowEvent*)
         awayChanged=false;
         indicateAway(awayState);
     }
+
+    if (!splitterChanged)
+        initializeSplitters();
 }
 
 void Channel::initializeSplitters()
 {
-    splitterChanged = false;
+    QValueList<int> vertSizes, horizSizes;
 
-    QValueList<int> horizSizes, vertSizes;
-
-    horizSizes = Preferences::channelSplitterSizes();
     vertSizes = Preferences::topicSplitterSizes();
+    horizSizes = Preferences::channelSplitterSizes();
 
-    if (horizSizes.isEmpty() || horizSizes[1]==1)
+    if (vertSizes.isEmpty())
     {
+        kdDebug() << "Fired vert" << endl;
+        kdDebug() << "Topic button height: " << m_topicButton->height() << endl;
+        kdDebug() << "Total height: " << height() << endl;
+        kdDebug() << "Vert splitter height: " << m_vertSplitter->height() << endl;
+        kdDebug() << "Computed height: " << (m_vertSplitter->height() - m_topicButton->height()) << endl;
+        vertSizes << m_topicButton->height() << (height() - m_topicButton->height());
+        Preferences::setTopicSplitterSizes(vertSizes);
+    }
+
+    if (horizSizes.isEmpty())
+    {
+        kdDebug() << "Fired horiz" << endl;
         int listWidth = nicknameListView->columnWidth(0) + nicknameListView->columnWidth(1);
         horizSizes << (width() - listWidth) << listWidth;
+
+        kdDebug() << "List width: " << listWidth << endl;
+        kdDebug() << "Total width: " << width() << endl;
+        kdDebug() << "Computed width: " << (width() - listWidth) << endl;
+
         Preferences::setChannelSplitterSizes(horizSizes);
     }
 
-    if (vertSizes.isEmpty() || vertSizes[0]==1 || vertSizes[0]==0)
-    {
-        vertSizes << m_topicButton->height() << (m_vertSplitter->height() - m_topicButton->height());
-    }
-
-    m_horizSplitter->setSizes(horizSizes);
     m_vertSplitter->setSizes(vertSizes);
+    m_horizSplitter->setSizes(horizSizes);
+
+    splitterChanged = true;
 }
 
 void Channel::updateAppearance()
@@ -2198,20 +2217,19 @@ void Channel::showTopic(bool show)
 {
     if(show)
     {
-        splitterChanged = false;
+        splitterHidden = false;
         topicLine->show();
         m_topicButton->show();
         topicLine->parentWidget()->show();
     }
     else
     {
-        splitterChanged = true;
-
         topicLine->hide();
         m_topicButton->hide();
 
         if(modeBox->isHidden())
         {
+            splitterHidden = true;
             topicLine->parentWidget()->hide();
         }
     }
@@ -2308,11 +2326,12 @@ void Channel::showNicknameList(bool show)
 {
     if (show)
     {
+        splitterHidden = false;
         nickListButtons->show();
     }
     else
     {
-        splitterChanged = true;
+        splitterHidden = true;
         nickListButtons->hide();
     }
 }
@@ -2432,7 +2451,7 @@ void Channel::setIdentity(const Identity *newIdentity)
 
 bool Channel::eventFilter(QObject* watched, QEvent* e)
 {
-    if((watched == nicknameListView) && (e->type() == QEvent::Resize) && !splitterChanged && isShown())
+    if((watched == nicknameListView) && (e->type() == QEvent::Resize) && splitterChanged && !splitterHidden && isShown())
     {
         Preferences::setChannelSplitterSizes(m_horizSplitter->sizes());
         Preferences::setTopicSplitterSizes(m_vertSplitter->sizes());
