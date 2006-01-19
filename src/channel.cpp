@@ -1858,6 +1858,11 @@ void Channel::showEvent(QShowEvent*)
         initializeSplitters();
 }
 
+void Channel::hideEvent(QHideEvent*)
+{
+    splitterChanged = false;
+}
+
 void Channel::initializeSplitters()
 {
     QValueList<int> vertSizes, horizSizes;

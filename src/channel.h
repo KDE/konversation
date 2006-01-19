@@ -220,6 +220,7 @@ class Channel : public ChatWindow
 
     protected:
         void showEvent(QShowEvent* event);
+        void hideEvent(QHideEvent* event);
         void initializeSplitters();
         // use with caution! does not check for duplicates
         void fastAddNickname(ChannelNickPtr channelnick);
