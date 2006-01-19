@@ -197,8 +197,8 @@
   </group>
   <group name="General Options">
     <entry key="SpellChecking" type="Bool">
-      <default>true</default>
-      <whatsthis>Enable if you want all the irc input lines to check your spelling as you type</whatsthis>
+      <default>false</default>
+      <whatsthis>Enable if you want all the IRC input lines to check your spelling as you type</whatsthis>
     </entry>
     <entry key="CustomVersionReplyEnabled" type="Bool">
       <default>false</default>
