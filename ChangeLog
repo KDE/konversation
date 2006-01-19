@@ -70,6 +70,7 @@ Changes from 0.18 to 0.19
 - Status bar now showing context-relevant information (link URLs, menu item descriptions)
 - Changed hard-coded channel join taskbar notification into a configurable notification event
 - Yammi media player is now supported by media script
+- Improved Kaffeine support in the media script
 - QUIT events for users are now shown in any queries you have open with them
 - Fixed nickname context menu actions not working in queries
 - Redesigned tab notifications allowing for colored LEDs or text labels, the color being configurable per event class
