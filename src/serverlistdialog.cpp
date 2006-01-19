@@ -8,6 +8,8 @@
 /*
   copyright: (C) 2004 by Peter Simonsson
   email:     psn@linux.se
+  copyright: (C) 2006 by Eike Hein
+  email:     sho@eikehein.com
 */
 
 #include "serverlistdialog.h"
@@ -33,20 +35,22 @@ namespace Konversation
     // ServerListItem
     //
 
-    ServerListItem::ServerListItem(KListView* parent, QListViewItem* after, int serverGroupId, const QString& serverGroup,
-        const QString& identity, const QString& channels)
+    ServerListItem::ServerListItem(KListView* parent, QListViewItem* after, int serverGroupId, int sortIndex,
+        const QString& serverGroup, const QString& identity, const QString& channels)
         : KListViewItem(parent, after, serverGroup, identity, channels)
     {
         m_serverGroupId = serverGroupId;
+        m_sortIndex = sortIndex;
         m_name = serverGroup;
         m_isServer = false;
     }
 
-    ServerListItem::ServerListItem(QListViewItem* parent, QListViewItem* after, int serverGroupId, const QString& name, 
-        const ServerSettings& server)
+    ServerListItem::ServerListItem(QListViewItem* parent, QListViewItem* after, int serverGroupId, int sortIndex,
+        const QString& name, const ServerSettings& server)
         : KListViewItem(parent, after, name)
     {
         m_serverGroupId = serverGroupId;
+        m_sortIndex = sortIndex;
         m_name = name;
         m_server = server;
         m_isServer = true;
@@ -64,13 +68,14 @@ namespace Konversation
                 else return -1;
             }
 
-            if (serverGroupId() == item->serverGroupId())
+            if (sortIndex() == item->sortIndex())
                 return 0;
-            else if (serverGroupId() < item->serverGroupId())
+            else if (sortIndex() < item->sortIndex())
                 return -1;
-            else /*if (serverGroupId() > item->serverGroupId())*/
+            else /*if (serverGroupId() > item->sortIndex())*/
                 return 1;
         }
+
         return key( col, ascending ).localeAwareCompare( i->key( col, ascending ) );
     }
 
@@ -81,7 +86,7 @@ namespace Konversation
 
         QFrame* mainWidget = plainPage();
 
-        m_serverList = new KListView(mainWidget);
+        m_serverList = new ServerListView(mainWidget);
         QWhatsThis::add(m_serverList, i18n("The list of configured IRC Networks are listed here. An IRC network is a collection of cooperating servers. You need only connect to one of the servers in the network to be connected to the entire IRC network. Once connected, Konversation will automatically join the Channels shown. When Konversation is started for the first time, the Freenode network and <i>#kde</i> channel are already entered for you. Click on a network to select it."));
         m_serverList->setAllColumnsShowFocus(true);
         m_serverList->setRootIsDecorated(true);
@@ -92,6 +97,9 @@ namespace Konversation
         m_serverList->setSelectionModeExt(KListView::Extended);
         m_serverList->setShowSortIndicator(true);
         m_serverList->setSortColumn(0);
+        m_serverList->setDragEnabled(true);
+        m_serverList->setAcceptDrops(true);
+        m_serverList->setDropVisualizer(true);
 
         m_addButton = new QPushButton(i18n("&New..."), mainWidget);
         QWhatsThis::add(m_addButton, i18n("Click here to define a new Network, including the server to connect to, and the Channels to automatically join once connected."));
@@ -112,6 +120,8 @@ namespace Konversation
         // Load server list
         updateServerList();
 
+        connect(m_serverList, SIGNAL(aboutToMove()), this, SLOT(slotAboutToMove()));
+        connect(m_serverList, SIGNAL(moved()), this, SLOT(slotMoved()));
         connect(m_serverList, SIGNAL(doubleClicked(QListViewItem *, const QPoint&, int)), this, SLOT(slotOk()));
         connect(m_serverList, SIGNAL(selectionChanged()), this, SLOT(updateButtons()));
         connect(m_serverList, SIGNAL(expanded(QListViewItem*)), this, SLOT(slotSetGroupExpanded(QListViewItem*)));
@@ -294,6 +304,41 @@ namespace Konversation
         serverGroup->setExpanded(false);
     }
 
+    void ServerListDialog::slotAboutToMove()
+    {
+        m_lastSortColumn = m_serverList->sortColumn();
+        m_lastSortOrder = m_serverList->sortOrder();
+        m_serverList->setSortColumn(-1);
+    }
+
+    void ServerListDialog::slotMoved()
+    {
+        Konversation::ServerGroupList newServerGroupList;
+
+        ServerListItem* item = static_cast<ServerListItem*>(m_serverList->firstChild());
+        int newSortIndex = 0;
+
+        while (item)
+        {
+            Konversation::ServerGroupSettingsPtr serverGroup = Preferences::serverGroupById(item->serverGroupId());
+            serverGroup->setSortIndex(newSortIndex);
+
+            newServerGroupList.append(serverGroup);
+
+            item->setSortIndex(newSortIndex);
+
+            ++newSortIndex;
+            item = static_cast<ServerListItem*>(item->nextSibling());
+        }
+
+        Preferences::setServerGroupList(newServerGroupList);
+
+        m_serverList->setSortColumn(m_lastSortColumn);
+        m_serverList->setSortOrder(m_lastSortOrder);
+
+        emit serverGroupsChanged();
+    }
+
     void ServerListDialog::updateButtons()
     {
         int count = m_serverList->selectedItems().count();
@@ -367,6 +412,7 @@ namespace Konversation
         networkItem = new ServerListItem(m_serverList,
                                   networkItem,
                                   serverGroup->id(),
+                                  serverGroup->sortIndex(),
                                   serverGroup->name(),
                                   serverGroup->identity()->getName(),
                                   channels);
@@ -393,7 +439,15 @@ namespace Konversation
                 name += + " (SSL)";
 
             // Insert the server into the list, as child of the server group list item
-            serverItem = new ServerListItem(networkItem, serverItem, serverGroup->id(), name, (*serverIt));
+            serverItem = new ServerListItem(networkItem,
+                                            serverItem,
+                                            serverGroup->id(),
+                                            serverGroup->sortIndex(),
+                                            name,
+                                            (*serverIt));
+
+            // The listview shouldn't allow this to be dragged
+            serverItem->setDragEnabled(false);
 
             // Initialize a pointer to the new location of the last edited server
             if (m_editedItem && m_editedServer==(*serverIt))

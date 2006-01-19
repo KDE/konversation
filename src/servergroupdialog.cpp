@@ -173,6 +173,7 @@ namespace Konversation
     void ServerGroupDialog::setServerGroupSettings(ServerGroupSettingsPtr settings)
     {
         m_id = settings->id();
+        m_sortIndex = settings->sortIndex();
         m_expanded = settings->expanded();
         m_nameEdit->setText(settings->name());
         m_identityCBox->setCurrentText(settings->identity()->getName());
@@ -200,6 +201,7 @@ namespace Konversation
     ServerGroupSettingsPtr ServerGroupDialog::serverGroupSettings()
     {
         ServerGroupSettingsPtr settings = new ServerGroupSettings(m_id);
+        settings->setSortIndex(m_sortIndex);
         settings->setName(m_nameEdit->text());
         QValueList<IdentityPtr> identities = Preferences::identityList();
         settings->setIdentityId(identities[m_identityCBox->currentItem()]->id());

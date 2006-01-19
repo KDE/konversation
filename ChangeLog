@@ -64,6 +64,7 @@ Changes from 0.18 to 0.19
 - Improved error messages on deletion in the Server List dialog
 - Fixed Server List dialog sorting to match actual order of addition and thus auto-connect sequence
 - Add new networks behind the last network in the Server List dialog, resulting in the user interface finally matching the application behavior
+- Drag'n'drop reordering of networks in the Server List dialog
 - Minor cosmetic improvement to the status bar: all segments now have the same height
 - Status bar segments correctly react to font size changes
 - Status bar now showing context-relevant information (link URLs, menu item descriptions)
@@ -78,7 +79,7 @@ Changes from 0.18 to 0.19
 - Added context menu to channels in the chat window
 - Whitespace highlighting in the multi-line paste editor dialog
 - Correctly insert away remember line in all channel and query tabs of the affected server(s), rather than putting them all in the front view
-- Highlight now uses regular expression groups for auto text replacement
+- The automated reply to a highlight event can now reference groups of the matching pattern by identifiers %1-%9
 - Nick colors now follow nick changes and immediately react on color prefs change without restarting konvi
 
 Changes from 0.17 to 0.18

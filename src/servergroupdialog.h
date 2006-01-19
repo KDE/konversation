@@ -78,6 +78,7 @@ namespace Konversation
             bool m_expanded;
 
             int m_id;
+            int m_sortIndex;
 
             bool m_identitiesNeedsUpdate;
 

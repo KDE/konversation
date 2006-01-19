@@ -94,6 +94,9 @@ namespace Konversation
 
             int id() const { return m_id; }
 
+            void setSortIndex(int sortIndex) { m_sortIndex = sortIndex; }
+            int sortIndex() const { return m_sortIndex; }
+
             void setChannelHistory(const ChannelList& list) { m_channelHistory = list; }
             void appendChannelHistory(const ChannelSettings& channel);
             ChannelList channelHistory() const { return m_channelHistory; }
@@ -107,6 +110,7 @@ namespace Konversation
 
         private:
             static int s_availableId;
+            int m_sortIndex;
             QString m_name;
             ServerList m_serverList;
             ServerList m_quickServerList;
