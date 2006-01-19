@@ -51,7 +51,8 @@ Theme_Config::Theme_Config(QWidget* parent, const char* name)
     loadSettings();
 
     connect(iconThemeIndex,SIGNAL(highlighted(int)),this,SLOT(updatePreview(int)));
-    connect(iconThemeIndex,SIGNAL(currentChanged(QListBoxItem*)),this,SLOT(updateButtons()));
+    connect(iconThemeIndex,SIGNAL(selectionChanged()),this,SLOT(updateButtons()));
+    connect(iconThemeIndex,SIGNAL(selectionChanged()),this,SIGNAL(modified()));
     connect(installButton,SIGNAL(clicked()),this,SLOT(installTheme()));
     connect(removeButton,SIGNAL(clicked()),this,SLOT(removeTheme()));
 }

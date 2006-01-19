@@ -106,6 +106,7 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   pagePath << i18n("Appearance") << i18n("Themes");
   addPage ( m_confThemeWdg, pagePath, "iconthemes", i18n("Themes") );
   m_indexToPageMapping.insert(lastAddedIndex(), m_confThemeWdg);
+  connect(m_confThemeWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
 
   //Appearance/Colors
   m_confColorsAppearanceWdg = new ColorsAppearance_Config( this, "ColorsAppearance" );

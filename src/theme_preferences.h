@@ -31,6 +31,9 @@ class Theme_Config : public Theme_ConfigUI, public KonviSettingsPage
 
         virtual bool hasChanged();
 
+    signals:
+        void modified();
+
     protected slots:
         void updatePreview(int id);
         void updateButtons();
