@@ -51,10 +51,6 @@ while (<>)
         ($name,$value) = split("=",$_);
         print("# DELETE $currentGroup$name\n");
     }
-    else
-    {
-        print "$_\n";
-    }
 }
 
 print "SortOrder=";

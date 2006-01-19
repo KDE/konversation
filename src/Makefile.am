@@ -54,7 +54,8 @@ kdelnkdir = $(kde_servicesdir)
 
 updatedir = $(kde_datadir)/kconf_update
 update_DATA = konversation.upd
-update_SCRIPTS = konversation-0.14-mainwindow.pl konversation-0.19-colors.pl konversation-0.19-sortorder.pl
+update_SCRIPTS = konversation-0.14-mainwindow.pl konversation-0.19-colors.pl konversation-0.19-sortorder.pl \
+				 konversation-0.19-appearance.pl  konversation-0.19-tabplacement.pl
 
 messages: rc.cpp
 	LIST=`find . -name \*.h -o -name \*.hh -o -name \*.H -o -name \*.hxx -o -name \*.hpp -o -name \*.cpp -o -name \*.cc -o -name \*.cxx -o -name \*.ecpp -o -name \*.C`; \

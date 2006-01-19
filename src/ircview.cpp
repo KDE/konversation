@@ -414,13 +414,13 @@ bool doHighlight, bool parseURL, bool self)
     QRegExp colorRegExp("(\003([0-9]|0[0-9]|1[0-5])(,([0-9]|0[0-9]|1[0-5])|)|\017)");
 
     int pos;
-    bool allowColors = Preferences::allowColorCodes();
+    bool filterColors = Preferences::filterColorCodes();
     bool firstColor = true;
     QString colorString;
 
     while((pos=colorRegExp.search(filteredLine))!=-1)
     {
-        if(!allowColors)
+        if(filterColors)
         {
             colorString = QString::null;
         }

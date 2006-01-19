@@ -1,3 +1,18 @@
+Id=0.19-appearance
+File=konversationrc
+Group=Appearance
+Key=CloseButtonsOnTabs,CloseButtons
+RemoveKey=CloseButtonsOnTabs
+RemoveKey=QuickButtons
+RemoveKey=Codec
+Script=konversation-0.19-appearance.pl,perl
+
+Id=0.19-flags
+File=konversationrc
+Group=Flags
+RemoveKey=BlinkingTabs
+Script=konversation-0.19-tabplacement.pl,perl
+
 # Convert OSD color storage format
 Id=0.19-osdcolors
 File=konversationrc
@@ -15,6 +30,70 @@ Id=0.19-colors
 File=konversationrc
 Group=Message Text Colors
 Script=konversation-0.19-colors.pl,perl
+
+Id=0.19-generaloptions
+File=konversationrc
+Group=General Options
+Key=RedirectServerAndAppMsgToStatusPane,AndAppMsgToStatusPane
+Key=ClickableNicks,UseClickableNicks
+RemoveKey=RedirectServerAndAppMsgToStatusPane
+RemoveKey=ClickableNicks
+RemoveKey=ColorConfigurationGeometry
+RemoveKey=ButtonGeometry
+RemoveKey=Geometry
+RemoveKey=HilightGeometry
+RemoveKey=IgnoreGeometry
+RemoveKey=KickReason
+RemoveKey=LogfileGeometry
+RemoveKey=PartReason
+RemoveKey=ServerWindowStatusBarStatus
+RemoveKey=ServerWindowToolBarIconSize
+RemoveKey=ServerWindowToolBarIconText
+RemoveKey=ServerWindowToolBarPos
+RemoveKey=ServerWindowToolBarStatus
+RemoveKey=ToolBarPos
+
+Id=0.19-cleanup-themes
+File=konversationrc
+Group=Themes
+RemoveKey=IconThemeIndex
+RemoveKey=IconThemeName
+
+Id=0.19-cleanup-notifylist
+File=konversationrc
+Group=Notify List
+RemoveKey=NotifyList
+
+Id=0.19-cleanup-dcc
+File=konversationrc
+Group=DCC Settings
+RemoveKey=GetIpFromServer
+RemoveKey=Rollback
+
+Id=0.19-cleanup-colors
+File=konversationrc
+Group=Colors
+RemoveGroup=Colors
+
+Id=0.19-cleanup-hilightlist
+File=konversationrc
+Group=Hilight List
+RemoveGroup=Hilight List
+
+Id=0.19-cleanup-notificationmessages
+File=konversationrc
+Group=Notification Messages
+RemoveGroup=Notification Messages
+
+Id=0.19-cleanup-ledcolors
+File=konversationrc
+Group=Led Colors
+RemoveGroup=Led Colors
+
+Id=0.19-cleanup-kmditaskbar
+File=konversationrc
+Group=MainWindow Toolbar KMdiTaskBar
+RemoveGroup=MainWindow Toolbar KMdiTaskBar
 
 # Rename ChannelSplitter
 Id=0.19-channelsplitter
