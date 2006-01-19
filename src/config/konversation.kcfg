@@ -751,12 +751,7 @@
     </entry>
   </group>
   <group name="Themes">
-    <entry key="IconThemeIndex" type="Int">
-      <default>3</default>
-      <label></label>
-      <whatsthis></whatsthis>
-    </entry>
-    <entry key="IconThemeName" type="String">
+    <entry key="IconTheme" type="String">
       <default>default</default>
       <label></label>
       <whatsthis></whatsthis>

@@ -46,12 +46,12 @@ using namespace Konversation;
 Theme_Config::Theme_Config(QWidget* parent, const char* name)
   : Theme_ConfigUI( parent, name)
 {
-    m_oldTheme = Preferences::iconThemeName();
+    m_oldTheme = Preferences::iconTheme();
 
     loadSettings();
 
-    connect(kcfg_IconThemeIndex,SIGNAL(highlighted(int)),this,SLOT(updatePreview(int)));
-    connect(kcfg_IconThemeIndex,SIGNAL(currentChanged(QListBoxItem*)),this,SLOT(updateButtons()));
+    connect(iconThemeIndex,SIGNAL(highlighted(int)),this,SLOT(updatePreview(int)));
+    connect(iconThemeIndex,SIGNAL(currentChanged(QListBoxItem*)),this,SLOT(updateButtons()));
     connect(installButton,SIGNAL(clicked()),this,SLOT(installTheme()));
     connect(removeButton,SIGNAL(clicked()),this,SLOT(removeTheme()));
 }
@@ -63,14 +63,15 @@ Theme_Config::~Theme_Config()
 void Theme_Config::loadSettings()
 {
     QString themeName, themeComment;
-    QString currentTheme = Preferences::iconThemeName();
-    int index = Preferences::iconThemeIndex();
+    QString currentTheme = Preferences::iconTheme();
+    int currentThemeIndex = 0;
 
     m_dirs = KGlobal::dirs()->findAllResources("data","konversation/themes/*/index.desktop");
 
     if(m_dirs.count() > 0)
     {
-        kcfg_IconThemeIndex->clear();
+        iconThemeIndex->clear();
+        int i = 0;
 
         for(QStringList::ConstIterator it = m_dirs.begin(); it != m_dirs.end(); ++it)
         {
@@ -78,15 +79,21 @@ void Theme_Config::loadSettings()
             themeName = themeRC.readName();
             themeComment = themeRC.readComment();
 
-            if(!themeComment.isEmpty())
-                themeName = themeName+" ( "+themeComment+" )";
+            if ((*it).section('/',-2,-2)==currentTheme)
+                currentThemeIndex = i;
 
-            kcfg_IconThemeIndex->insertItem(themeName);
+            if(!themeComment.isEmpty())
+                themeName = themeName+" ("+themeComment+")";
+
+            iconThemeIndex->insertItem(themeName);
+
+            ++i;
         }
 
-        kcfg_IconThemeIndex->setSelected(index, true);
-        updatePreview(index);
+        iconThemeIndex->setSelected(currentThemeIndex, true);
+        updatePreview(currentThemeIndex);
     }
+
     updateButtons();
 }
 
@@ -97,14 +104,14 @@ bool Theme_Config::hasChanged()
 
 void Theme_Config::saveSettings()
 {
-    if(kcfg_IconThemeIndex->count())
+    if(iconThemeIndex->count())
     {
         if(hasChanged())
         {
-	    KConfig* config = kapp->config();
-	    config->setGroup("Themes");
-	    config->writeEntry("IconThemeName",m_currentTheme);
-	    Preferences::setIconThemeName(m_currentTheme);
+            KConfig* config = kapp->config();
+            config->setGroup("Themes");
+            config->writeEntry("IconTheme",m_currentTheme);
+            Preferences::setIconTheme(m_currentTheme);
             KonversationApplication::instance()->images()->initializeNickIcons();
             KonversationApplication::instance()->updateNickIcons();
             m_oldTheme = m_currentTheme;
@@ -192,9 +199,9 @@ void Theme_Config::installTheme()
 void Theme_Config::removeTheme()
 {
     QString dir;
-    QString themeName = kcfg_IconThemeIndex->currentText();
+    QString themeName = iconThemeIndex->currentText();
 
-    dir = m_dirs[kcfg_IconThemeIndex->currentItem()];
+    dir = m_dirs[iconThemeIndex->currentItem()];
 
     int remove = KMessageBox::warningContinueCancel(0L,
         i18n("Do you want to remove %1 ?").arg(themeName),
@@ -229,13 +236,13 @@ void Theme_Config::updatePreview(int id)
 
 void Theme_Config::updateButtons()
 {
-    if(kcfg_IconThemeIndex->count() < 2)
+    if(iconThemeIndex->count() < 2)
     {
         removeButton->setEnabled(false);
         return;
     }
 
-    QString dir = m_dirs[kcfg_IconThemeIndex->currentItem()];
+    QString dir = m_dirs[iconThemeIndex->currentItem()];
     QFile themeRC(dir);
     m_currentTheme = dir.section('/',-2,-2);
 

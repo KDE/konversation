@@ -79,7 +79,7 @@ void Images::initializeKimifaceIcons()
 void Images::initializeNickIcons()
 {
 
-    QString iconTheme = Preferences::iconThemeName();
+    QString iconTheme = Preferences::iconTheme();
     QStringList icons = KGlobal::dirs()->findAllResources("data","konversation/themes/"+iconTheme+"/*.png");
 
     if( icons.count() < 7 ) // Sanity
@@ -249,35 +249,23 @@ QIconSet Images::getMsgsLed(bool state)
 QIconSet Images::getEventsLed()
 {
     if (Preferences::tabNotificationsEventsColor()!=m_eventsColor)
-    {
         return getLed(Preferences::tabNotificationsEventsColor(),true);
-    }
     else
-    {
         return m_eventsLedOn;
-    }
 }
 
 QIconSet Images::getNickLed()
 {
     if (Preferences::tabNotificationsNickColor()!=m_nickColor)
-    {
         return getLed(Preferences::tabNotificationsNickColor(),true);
-    }
     else
-    {
         return m_nickLedOn;
-    }
 }
 
 QIconSet Images::getHighlightsLed()
 {
     if (Preferences::tabNotificationsHighlightsColor()!=m_highlightsColor)
-    {
         return getLed(Preferences::tabNotificationsHighlightsColor(),true);
-    }
     else
-    {
         return m_highlightsLedOn;
-    }
 }
