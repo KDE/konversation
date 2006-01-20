@@ -1,6 +1,10 @@
 #!/usr/bin/perl
 
+use strict;
+
 my $currentGroup = "";
+my $key;
+my $value;
 
 while (<>)
 {

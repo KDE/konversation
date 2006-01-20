@@ -1,6 +1,12 @@
 #!/usr/bin/perl
 
+use strict;
+
 my $currentGroup = "";
+my $name;
+my $value;
+my $out;
+my %list;
 
 while (<>)
 {

@@ -1,6 +1,14 @@
 #!/usr/bin/perl
 
+use strict;
+
 my $currentGroup = "";
+my $key;
+my $value;
+my $i;
+my $out;
+my @irccolors;
+my @nickcolors;
 
 while (<>)
 {
