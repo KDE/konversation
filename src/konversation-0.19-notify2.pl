@@ -4,10 +4,10 @@ while (<>){
 
     chomp;
 
-    if (/^\w*$/){
+    if (/^\s*$/){
 # empty line
 	next;
-    } elsif (/^\w*#/){
+    } elsif (/^\s*#/){
 # comment
 	next;
     } elsif (/\[(.*)\]/){
@@ -26,7 +26,6 @@ while (<>){
     if ($group =~ /ServerGroup/){
 	if ($key eq "Name"){
 	    $servername{$group}=$value;
-	    $serverid{$value}=$group;
 	}
 	if ($key eq "NotifyList"){
 	    $servernewnicks{$group}=$value;
