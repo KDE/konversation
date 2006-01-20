@@ -134,6 +134,7 @@ class KonversationApplication : public KUniqueApplication
         signals:
         void catchUrl(const QString& who,const QString& url);
         void prefsChanged();
+        void closeServerList();
 
     public slots:
         Server* connectToServerGroup(const QString& serverGroup);

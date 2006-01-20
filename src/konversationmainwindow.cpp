@@ -1485,6 +1485,7 @@ void KonversationMainWindow::openServerList()
         connect(m_serverListDialog, SIGNAL(serverGroupsChanged()), this, SLOT(updateTabs()));
         connect(m_serverListDialog, SIGNAL(connectToServer(int)), konvApp, SLOT(connectToServer(int)));
         connect(m_serverListDialog, SIGNAL(connectToServer(int, Konversation::ServerSettings)), konvApp, SLOT(connectToServer(int, Konversation::ServerSettings)));
+        connect(konvApp, SIGNAL(closeServerList()), m_serverListDialog, SLOT(slotClose()));
     }
 
     m_serverListDialog->show();

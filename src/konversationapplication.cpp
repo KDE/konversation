@@ -347,6 +347,8 @@ Server* KonversationApplication::connectToServer (int serverGroupId, Konversatio
 
     // identity ok, carry on
 
+    emit closeServerList();
+
     bool clearQuickServerList = true;
 
     // Have we been called with a quickServer? If so, append to list & prevent

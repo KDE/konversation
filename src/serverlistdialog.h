@@ -71,7 +71,7 @@ namespace Konversation
 
         protected slots:
             virtual void slotOk();
-
+            void slotClose();
             void slotAdd();
             void slotEdit();
             void slotDelete();

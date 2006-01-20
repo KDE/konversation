@@ -152,6 +152,12 @@ namespace Konversation
         config->writeEntry("Size", size());
     }
 
+    void ServerListDialog::slotClose()
+    {
+        slotApply();
+        accept();
+    }
+
     void ServerListDialog::slotOk()
     {
         QPtrList<QListViewItem> selected = m_serverList->selectedItems();
@@ -170,9 +176,6 @@ namespace Konversation
 
             item = static_cast<ServerListItem*>(selected.next());
         }
-
-        slotApply();
-        accept();
     }
 
     void ServerListDialog::slotAdd()
