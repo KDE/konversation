@@ -727,6 +727,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
     index = 0;
     int index2 = 0;
     int index3 = 0;
+    int width = QString::number(serverGroupList.count()).length();
     QString groupName;
     QStringList servers;
     Konversation::ServerList::iterator it2;
@@ -780,7 +781,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
             index3++;
         }
 
-        config->setGroup(QString("ServerGroup %1").arg(index));
+        config->setGroup(QString("ServerGroup %1").arg(QString::number(index).rightJustify(width,'0')));
         config->writeEntry("Name", (*it)->name());
         config->writeEntry("Identity", (*it)->identity()->getName());
         config->writeEntry("ServerList", servers);
