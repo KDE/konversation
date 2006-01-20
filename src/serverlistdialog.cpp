@@ -64,15 +64,19 @@ namespace Konversation
         {
             if (!item->server().server().isEmpty())
             {
-                if (ascending) return 1;
-                else return -1;
+                if (sortIndex() == item->sortIndex())
+                    return 0;
+                else if (sortIndex() < item->sortIndex())
+                    return ascending ? -1 : 1;
+                else
+                    return ascending ? 1 : -1;
             }
 
             if (sortIndex() == item->sortIndex())
                 return 0;
             else if (sortIndex() < item->sortIndex())
                 return -1;
-            else /*if (serverGroupId() > item->sortIndex())*/
+            else
                 return 1;
         }
 
@@ -458,6 +462,7 @@ namespace Konversation
         Konversation::ServerList::iterator serverIt;
 
         QListViewItem* serverItem = 0;
+        int i = 0;
 
         for (serverIt = serverList.begin(); serverIt != serverList.end(); ++serverIt)
         {
@@ -473,7 +478,7 @@ namespace Konversation
             // Insert the server into the list, as child of the server group list item
             serverItem = new ServerListItem(networkItem,
                                             serverGroup->id(),
-                                            serverGroup->sortIndex(),
+                                            i,
                                             name,
                                             (*serverIt));
 
@@ -483,6 +488,8 @@ namespace Konversation
             // Initialize a pointer to the new location of the last edited server
             if (m_editedItem && m_editedServer==(*serverIt))
                 m_editedItemPtr = serverItem;
+
+            ++i;
         }
 
         return networkItem;
