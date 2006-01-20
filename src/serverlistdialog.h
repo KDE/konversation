@@ -30,9 +30,9 @@ namespace Konversation
     class ServerListItem : public KListViewItem
     {
         public:
-            ServerListItem(KListView* parent, QListViewItem* after, int serverGroupId, int sortIndex,
+            ServerListItem(KListView* parent, int serverGroupId, int sortIndex,
                 const QString& serverGroup, const QString& identity, const QString& channels);
-            ServerListItem(QListViewItem* parent, QListViewItem* after, int serverGroupId, int sortIndex, 
+            ServerListItem(QListViewItem* parent, int serverGroupId, int sortIndex, 
                 const QString& name, const ServerSettings& server);
 
             int serverGroupId() const { return m_serverGroupId; }

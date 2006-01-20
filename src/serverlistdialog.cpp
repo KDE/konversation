@@ -35,9 +35,9 @@ namespace Konversation
     // ServerListItem
     //
 
-    ServerListItem::ServerListItem(KListView* parent, QListViewItem* after, int serverGroupId, int sortIndex,
+    ServerListItem::ServerListItem(KListView* parent, int serverGroupId, int sortIndex,
         const QString& serverGroup, const QString& identity, const QString& channels)
-        : KListViewItem(parent, after, serverGroup, identity, channels)
+        : KListViewItem(parent, serverGroup, identity, channels)
     {
         m_serverGroupId = serverGroupId;
         m_sortIndex = sortIndex;
@@ -45,9 +45,9 @@ namespace Konversation
         m_isServer = false;
     }
 
-    ServerListItem::ServerListItem(QListViewItem* parent, QListViewItem* after, int serverGroupId, int sortIndex,
+    ServerListItem::ServerListItem(QListViewItem* parent, int serverGroupId, int sortIndex,
         const QString& name, const ServerSettings& server)
-        : KListViewItem(parent, after, name)
+        : KListViewItem(parent, name)
     {
         m_serverGroupId = serverGroupId;
         m_sortIndex = sortIndex;
@@ -279,7 +279,7 @@ namespace Konversation
         while (item)
         {
             QListViewItem* itemToSelect;
-            QListViewItem* itemBelow = item->itemBelow();
+            QListViewItem* itemBelow = item->nextSibling();
             QListViewItem* itemAbove = item->itemAbove();
 
             if (itemBelow)
@@ -380,8 +380,14 @@ namespace Konversation
 
     void ServerListDialog::addServerGroup(ServerGroupSettingsPtr serverGroup)
     {
+        if (m_serverList->lastItem())
+        {
+            ServerListItem* lastItem = static_cast<ServerListItem*>(m_serverList->lastItem());
+            serverGroup->setSortIndex(lastItem->sortIndex() + 1);
+        }
+
         Preferences::addServerGroup(serverGroup);
-        QListViewItem* item = insertServerGroup(serverGroup, m_serverList->lastChild());
+        QListViewItem* item = insertServerGroup(serverGroup, m_serverList->lastItem());
         m_serverList->clearSelection();
         m_serverList->setSelected(item,true);
         m_serverList->setCurrentItem(item);
@@ -437,7 +443,6 @@ namespace Konversation
 
         // Insert the server group into the list
         networkItem = new ServerListItem(m_serverList,
-                                  networkItem,
                                   serverGroup->id(),
                                   serverGroup->sortIndex(),
                                   serverGroup->name(),
@@ -467,7 +472,6 @@ namespace Konversation
 
             // Insert the server into the list, as child of the server group list item
             serverItem = new ServerListItem(networkItem,
-                                            serverItem,
                                             serverGroup->id(),
                                             serverGroup->sortIndex(),
                                             name,
