@@ -7,6 +7,7 @@ RemoveKey=QuickButtons
 RemoveKey=Codec
 RemoveKey=FilterColorCodes
 Script=konversation-0.19-appearance.pl,perl
+Script=konversation-0.19-colorcodes.pl,perl
 
 Id=0.19-browser
 File=konversationrc
