@@ -40,6 +40,7 @@ while (<>){
 
 foreach $key (keys %servername) {
     $value = $servername{$key}; 
+
 # servername: $key
 # serverID $value
 
@@ -57,8 +58,8 @@ foreach $key (keys %servername) {
 	$nicks .= "$key2 ";
     }    
 
-    print "# DELETE [$key]Notify Group Lists\n";
-    print "[$value]NotifyList=$nicks\n";
+    print "# DELETE [Notify Group Lists]$value\n\n";
+    print "[$key]NotifyList=$nicks\n\n";
 
     print "\n";
 }
