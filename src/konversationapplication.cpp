@@ -634,11 +634,6 @@ void KonversationApplication::readOptions()
     QStringList newList=config->readListEntry("AliasList");
     if(!newList.isEmpty()) Preferences::setAliasList(newList);
 
-    // Web Browser
-    config->setGroup("Web Browser Settings");
-    Preferences::setWebBrowserUseKdeDefault(config->readBoolEntry("UseKdeDefault",Preferences::webBrowserUseKdeDefault()));
-    Preferences::setWebBrowserCmd(config->readEntry("WebBrowserCmd",Preferences::webBrowserCmd()));
-
     // Channel Encodings
     QMap<QString,QString> channelEncodingsEntry=config->entryMap("Channel Encodings");
     QRegExp re("^(.+) ([^\\s]+)$");

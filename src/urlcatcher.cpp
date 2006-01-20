@@ -140,7 +140,7 @@ void UrlCatcher::addUrl(const QString& who,const QString& url)
 void UrlCatcher::openUrl(QListViewItem* item)
 {
     QString url = item->text(1);
-    if (Preferences::webBrowserUseKdeDefault() || url.lower().startsWith("mailto:") )
+    if (!Preferences::useCustomBrowser() || url.lower().startsWith("mailto:") )
     {
         new KRun(KURL(url));
     }

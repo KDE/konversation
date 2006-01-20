@@ -739,8 +739,8 @@
     </entry>
   </group>
   <group name="Web Browser Settings">
-    <entry key="UseKdeDefault" type="Bool" name="WebBrowserUseKdeDefault">
-      <default>true</default>
+    <entry key="UseCustomBrowser" type="Bool">
+      <default>false</default>
       <label></label>
       <whatsthis></whatsthis>
     </entry>

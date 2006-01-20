@@ -146,27 +146,6 @@ class Preferences : public QObject, public PreferencesBase
         void updateTrayIcon();
 
     protected:
-/*
-        bool mCustomVersionReplyEnabled;
-        QString mCustomVersionReply;
-        // Geometries
-        QSize mMainWindowSize;
-        QSize mNicksOnlineSize;
-        QSize mNicknameSize;
-        QSize mColorConfigurationSize;
-        QSize mMultilineEditSize;
-
-
-
-        // sorting stuff
-
-        // more sorting stuff
-        int mOpValue;
-
-        // flag for hostmasks next to nicknames
-        bool mClickableNicks;
-
-*/
         IdentityPtr mIdentity;
         Konversation::ServerGroupList mServerGroupList;
         QPtrList<Ignore> mIgnoreList;
@@ -176,30 +155,5 @@ class Preferences : public QObject, public PreferencesBase
         QMap< QString,QMap<QString,QString> > mChannelEncodingsMap;
         QStringList mQuickButtonList;
         QString mSortingOrder;
-/*
-        // IRC colors
-        QStringList mIrcColorList;
-        bool mFilterColors;
-
-        // aliases
-
-        //Nick completion
-        int mNickCompletionMode;
-        bool mNickCompletionCaseSensitive;
-
-        //User interface
-        bool mShowMenuBar;
-
-        // Web Browser
-        bool mWebBrowserUseKdeDefault;
-
-        bool mOpenWatchedNicksAtStartup;
-
-        // Themes
-        bool mEmotIconsEnabled;
-        QString mEmotIconsTheme;
-
-        QString mWikiUrl;
-        bool mExpandWikiUrl;*/
 };
 #endif
