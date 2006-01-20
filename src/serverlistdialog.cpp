@@ -409,7 +409,7 @@ namespace Konversation
 
         for(it = serverGroups.begin(); it != serverGroups.end(); ++it)
         {
-            networkItem = insertServerGroup((*it), networkItem);
+            networkItem = insertServerGroup((*it));
 
             // The method was called by slotEdit() ... initialize a pointer to the new
             // location of the edited server group
@@ -428,7 +428,7 @@ namespace Konversation
         }
     }
 
-    QListViewItem* ServerListDialog::insertServerGroup(ServerGroupSettingsPtr serverGroup, QListViewItem* networkItem)
+    QListViewItem* ServerListDialog::insertServerGroup(ServerGroupSettingsPtr serverGroup)
     {
         // Produce a list of this server group's channels
         QString channels;
@@ -444,6 +444,8 @@ namespace Konversation
 
             channels += (*channelIt).name();
         }
+
+        QListViewItem* networkItem = 0;
 
         // Insert the server group into the list
         networkItem = new ServerListItem(m_serverList,
