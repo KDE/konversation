@@ -222,7 +222,9 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   m_indexToPageMapping.insert(lastAddedIndex(), m_confWarningsWdg);
 
   unfoldTreeList();
-  resize(size());
+
+  QSize newSize(size().width() + ((sizeHint().width() - size().width()) / 2), size().height());
+  resize(newSize);
 }
 
 void KonviSettingsDialog::modifiedSlot()
