@@ -138,6 +138,7 @@ class Preferences : public QObject, public PreferencesBase
 	/* Calls wikiURL() and if it's empty, provide a translatable (by the localisation team) url */
 	static QString translatedWikiURL();
 
+        static QString webBrowserCmd();
 
     signals:
         void requestServerConnection(int number);

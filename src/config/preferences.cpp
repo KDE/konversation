@@ -517,6 +517,15 @@ const QString Preferences::defaultNicknameSortingOrder()
   return "qpohv-";
 }
 
+// override to add %u if needed
+QString Preferences::webBrowserCmd()
+{
+  // add %u to command if it's not in there
+  QString cmd=self()->mWebBrowserCmd;
+  if(cmd.find("%u")==-1) cmd+=" %u";
+  return cmd;
+}
+
 QString Preferences::translatedWikiURL() {
   QString wikiUrl = wikiURL();
   if(wikiUrl.isEmpty() /*indicates to use localised version*/ || wikiUrl == "http://en.wikipedia.org/wiki/" /* pre 0.19 default.*/) 
