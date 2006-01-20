@@ -58,8 +58,8 @@ foreach $key (keys %servername) {
 	$nicks .= "$key2 ";
     }    
 
-    print "# DELETE [Notify Group Lists]$value\n\n";
-    print "[$key]NotifyList=$nicks\n\n";
-
-    print "\n";
+    print "
+# DELETE [Notify Group Lists]$value
+[$key]
+NotifyList=$nicks\n";
 }
