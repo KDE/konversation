@@ -85,7 +85,7 @@ namespace Konversation
             void updateButtons();
 
         protected:
-            QListViewItem* insertServerGroup(ServerGroupSettingsPtr serverGroup, QListViewItem* networkItem);
+            QListViewItem* insertServerGroup(ServerGroupSettingsPtr serverGroup, QListViewItem* networkItem = 0);
             void addServerGroup(ServerGroupSettingsPtr serverGroup);
 
         private:

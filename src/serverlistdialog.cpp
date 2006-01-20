@@ -384,14 +384,14 @@ namespace Konversation
 
     void ServerListDialog::addServerGroup(ServerGroupSettingsPtr serverGroup)
     {
-        if (m_serverList->lastItem())
+        if (m_serverList->lastChild())
         {
-            ServerListItem* lastItem = static_cast<ServerListItem*>(m_serverList->lastItem());
-            serverGroup->setSortIndex(lastItem->sortIndex() + 1);
+            ServerListItem* lastChild = static_cast<ServerListItem*>(m_serverList->lastChild());
+            serverGroup->setSortIndex(lastChild->sortIndex() + 1);
         }
 
         Preferences::addServerGroup(serverGroup);
-        QListViewItem* item = insertServerGroup(serverGroup, m_serverList->lastItem());
+        QListViewItem* item = insertServerGroup(serverGroup);
         m_serverList->clearSelection();
         m_serverList->setSelected(item,true);
         m_serverList->setCurrentItem(item);
