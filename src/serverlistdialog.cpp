@@ -235,7 +235,11 @@ namespace Konversation
 
     void ServerListDialog::slotDelete()
     {
-        QPtrList<QListViewItem> selectedItems = m_serverList->selectedItems(); 
+        QPtrList<QListViewItem> selectedItems = m_serverList->selectedItems();
+
+        if (selectedItems.isEmpty())
+            return;
+
         ServerListItem* item = static_cast<ServerListItem*>(selectedItems.first());
 
         // Make sure we're not deleting a network's only servers
@@ -274,16 +278,39 @@ namespace Konversation
         // Have fun deleting
         while (item)
         {
+            QListViewItem* itemToSelect;
+            QListViewItem* itemBelow = item->itemBelow();
+            QListViewItem* itemAbove = item->itemAbove();
+
+            if (itemBelow)
+                itemToSelect = itemBelow;
+            else if (itemAbove)
+                itemToSelect = itemAbove;
+            else
+                itemToSelect = m_serverList->firstChild();
+
             if (item->isServer())
             {
                 Konversation::ServerGroupSettingsPtr serverGroup = Preferences::serverGroupById(item->serverGroupId());
                 serverGroup->removeServer(item->server());
                 delete item;
+
+                if (itemToSelect)
+                {
+                    m_serverList->setSelected(itemToSelect,true);
+                    m_serverList->setCurrentItem(itemToSelect);
+                }
             }
             else
             {
                 Preferences::removeServerGroup(item->serverGroupId());
                 delete item;
+
+                if (itemToSelect)
+                {
+                    m_serverList->setSelected(itemToSelect,true);
+                    m_serverList->setCurrentItem(itemToSelect);
+                }
             }
 
             item = static_cast<ServerListItem*>(selectedItems.next());
