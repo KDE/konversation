@@ -1,17 +1,13 @@
-#!/usr/bin/perl
+#! /usr/bin/perl
 
 use strict;
 
 my($out);
 my($out2);
 my($group);
-my($server);
-my($list);
-my($si);
+my($gotgroup);
+my(%group2groupno);
 my(@split);
-my(@servers);
-my(%si2group);
-my(%lists);
 my(%saw);
 my (@lines) = (<>);
 
@@ -20,51 +16,26 @@ foreach $out (@lines)
     if ($out =~ /^\[ServerGroup ([0-9]+)\]/)
     { 
         $group = $1;
+        $gotgroup = 1;
     }
-    if ($out =~ /^ServerList=(.+)/)
+    if ($out =~ /^Name=(.+)/ && $gotgroup)
     {  
-        @split = split(",",$1);
-        foreach $out2 (@split)
-        {
-            $out2 =~ /^Server ([0-9]+)/;
-            $si2group{$1} = $group;
-        }
+        $group2groupno{$group} = $1;
+        $gotgroup = 0;
     }
 }
 
-foreach $out (@lines)
+foreach $out (keys %group2groupno)
 {
-    if ($out =~ /^\[Server ([0-9]+)\]/)
-    { 
-        $si = $1;
-    }
-    if ($out =~ /^Server=(.+)/)
-    {  
-        $group = $si2group{$si};
-        push @servers,"$group=$1";
-    }
-}
-
-foreach $out (@servers)
-{
-    ($group,$server) = split("=",$out);
-
     foreach $out2 (@lines)
     {
-        if ($out2 =~ /^$server=(.+)/)
+        if ($out2 =~ /^$group2groupno{$out}=(.+)/)
         {
-            $lists{$group} .= "$1 ";
+            @split = split(" ",$1);
+            undef %saw;
+            @saw{@split} = ();
+            @split = keys %saw;
+            print "[ServerGroup $out]\nNotifyList=@split\n"; 
         }
     }
-
-}
-
-while (my($key,$val) = each(%lists)) 
-{
-    $val =~ s/\s+$//;
-    @split = split(" ",$val);
-    undef %saw;
-    @saw{@split} = ();
-    @split = keys %saw;
-    print "[ServerGroup $key]\nNotifyList=@split\n"; 
 }
