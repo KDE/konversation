@@ -1,7 +1,7 @@
-Id=0.19-notifylists
-File=konversationrc
-Script=konversation-0.19-notifylists.pl,perl
-RemoveGroup=Notify Group Lists
+#Id=0.19-notifylists
+#File=konversationrc
+#Script=konversation-0.19-notifylists.pl,perl
+#RemoveGroup=Notify Group Lists
 
 Id=0.19-appearance
 File=konversationrc
