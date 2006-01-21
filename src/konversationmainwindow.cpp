@@ -1103,6 +1103,8 @@ void KonversationMainWindow::unsetTabNotification(ChatWindow* view)
 
 void KonversationMainWindow::updateTabs()
 {
+    QString label;
+
     if (Preferences::closeButtons() && !viewContainer->hoverCloseButton())
         viewContainer->setHoverCloseButton(true);
 
@@ -1115,9 +1117,10 @@ void KonversationMainWindow::updateTabs()
 
         if (view->getType()==ChatWindow::Status)
         {
-            QString label = view->getServer()->serverGroupSettings()->name();
+            if (view->getServer()->serverGroupSettings())
+                label = view->getServer()->serverGroupSettings()->name();
 
-            if (getViewContainer()->tabLabel(view) != label)
+            if (!label.isEmpty() && getViewContainer()->tabLabel(view) != label)
             {
                 getViewContainer()->setTabLabel(view,label);
                 if (view==m_frontView)
