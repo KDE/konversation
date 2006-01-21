@@ -19,7 +19,7 @@ while (<>)
     elsif ($_ =~ /AdminValue/)
     {
         ($name,$value) = split("=",$_);  
-        $list{"$value"} = "a";
+        $list{"$value"} = "p";
         print("# DELETE $currentGroup$name\n");
     }
     elsif ($_ =~ /HalfopValue/)
