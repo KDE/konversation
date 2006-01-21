@@ -3,39 +3,41 @@
 use strict;
 
 my($out);
-my($out2);
 my($group);
 my($gotgroup);
 my(%group2groupno);
+my(%key2value);
 my(@split);
 my(%saw);
-my (@lines) = (<>);
 
-foreach $out (@lines)
+while (<>)
 {
-    if ($out =~ /^\[ServerGroup ([0-9]+)\]/)
+    if ($_ =~ /^\[ServerGroup ([0-9]+)\]/)
     { 
         $group = $1;
         $gotgroup = 1;
     }
-    if ($out =~ /^Name=(.+)/ && $gotgroup)
+    elsif ($_ =~ /^Name=(.+)/ && $gotgroup)
     {  
         $group2groupno{$group} = $1;
         $gotgroup = 0;
+    }
+    elsif ($_ =~ /^(.+)=(.+)/)
+    {  
+        $key2value{$1} = $2;
     }
 }
 
 foreach $out (keys %group2groupno)
 {
-    foreach $out2 (@lines)
+    @split = split(" ",$key2value{$group2groupno{$out}});
+
+    if (@split)
     {
-        if ($out2 =~ /^$group2groupno{$out}=(.+)/)
-        {
-            @split = split(" ",$1);
-            undef %saw;
-            @saw{@split} = ();
-            @split = keys %saw;
-            print "[ServerGroup $out]\nNotifyList=@split\n"; 
-        }
+        undef %saw;
+        @saw{@split} = ();
+        @split = keys %saw;
+
+        print "[ServerGroup $out]\nNotifyList=@split\n"; 
     }
 }
