@@ -58,7 +58,7 @@ while (<>){
 	}
     } elsif ($group =~ /Notify Group Lists/){
 # we are in notify group of old syntax
-# key is the server group name, value are the nick
+# key is the server group name, value is the nicks
 	$serveroldnicks{$key}=$value;
     }
 }
@@ -94,7 +94,11 @@ foreach $key (keys %servername) {
 # output stuff in KDE-UPD-syntax
 
     print "
-# DELETE [Notify Group Lists]$value
 [$key]
-NotifyList=$nicks\n";
+NotifyList=$nicks
+";
 }
+
+
+# later # DELETEGROUP [Notify Group Lists] might be added
+# after beta testing and stuff
