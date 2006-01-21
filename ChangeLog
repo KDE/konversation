@@ -17,6 +17,7 @@ Changes from 0.18 to 0.19
 - Recognize server as being part of a network and use respective identity
 - Fix networks losing their channel history upon changes to their settings
 - Wiki address for [[foo]] can now be customized via WikiUrl config option under [General Options] in konversationrc
+- The default wiki address is now localized so that the translators can add their local wikipedia url
 - [[Foo]] can now be automatically expanded to http://<wiki url>/foo using WikiExpandUrl=true in konversationrc
 - Pressing arrow down in the input line now preserves input by adding it to the history and clears the input line
 - Fix infinite loop when nickname is in use
@@ -68,6 +69,7 @@ Changes from 0.18 to 0.19
 - Minor cosmetic improvement to the status bar: all segments now have the same height
 - Status bar segments correctly react to font size changes
 - Status bar now showing context-relevant information (link URLs, menu item descriptions)
+- Enabling/Disabling spell checking on the input line now sets it for all channels and across sessions
 - Changed hard-coded channel join taskbar notification into a configurable notification event
 - Yammi media player is now supported by media script
 - Improved Kaffeine support in the media script
@@ -93,7 +95,7 @@ Changes from 0.17 to 0.18
 - An option to disable clickable nicks . Add ClickableNicks=false to konversationrc to disable it.
 - Fixed a big memory leak in message processing
 - Nicklist slider now correctly resizes in all channels when its resized and correctly restores on startup
-- [[foo]] is now a link to http://en.wikipedia.org/wiki/foo . We will expand this to local wikipedia's in a later release
+- [[foo]] is now a link to http://en.wikipedia.org/wiki/foo . We will expand this to local wikipedia's in a later release [Update: Now fixed in 0.19]
 
 
 Changes from 0.16 to 0.17
