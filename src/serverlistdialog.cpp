@@ -262,26 +262,27 @@ namespace Konversation
 
     void ServerListDialog::slotDelete()
     {
-        QPtrList<QListViewItem> selectedItems = m_serverList->selectedItems();
+        QPtrList<QListViewItem> selectedItems = m_serverList->selectedServerListItems();
 
         if (selectedItems.isEmpty())
             return;
 
         ServerListItem* item = static_cast<ServerListItem*>(selectedItems.first());
+        ServerListItem* parent = 0;
 
         // Make sure we're not deleting a network's only servers
         while (item)
         {
             if (item->isServer())
             {
-                ServerListItem* parent = static_cast<ServerListItem*>(item->parent());
+                parent = static_cast<ServerListItem*>(item->parent());
 
-                if (parent->childCount() == 1)
+                if (parent && parent->childCount() == 1)
                 {
                     KMessageBox::error(this, i18n("You cannot delete %1.\n\nThe network %2 needs to have at least one server.").arg(item->name()).arg(parent->name()));
                     return;
                 }
-                else if (parent->childCount() == parent->selectedChildrenCount())
+                else if (parent && parent->childCount() == parent->selectedChildrenCount())
                 {
                     KMessageBox::error(this, i18n("You cannot delete the selected servers.\n\nThe network %1 needs to have at least one server.").arg(parent->name()));
                     return;

@@ -32,6 +32,8 @@ class ServerListView : public KListView
         ServerListView(QWidget *parent);
         ~ServerListView();
 
+        QPtrList<QListViewItem> selectedServerListItems();
+
         protected:
         void findDrop(const QPoint &pos, QListViewItem *&parent, QListViewItem *&after);
         QDragObject* dragObject();

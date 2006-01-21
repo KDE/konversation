@@ -31,6 +31,32 @@ ServerListView::~ServerListView()
 {
 }
 
+QPtrList<QListViewItem> ServerListView::selectedServerListItems()
+{
+
+    QPtrList<QListViewItem> selectedItems = KListView::selectedItems();
+    QPtrList<QListViewItem> selectedServerListItems;
+
+    QListViewItem* item = selectedItems.first();
+
+    while (item)
+    {
+        if (item->parent())
+        {
+            if (!item->parent()->isSelected())
+                selectedServerListItems.append(item);
+        }
+        else
+        {
+            selectedServerListItems.append(item);
+        }
+
+        item = selectedItems.next();
+    }
+
+    return selectedServerListItems;
+}
+
 void ServerListView::findDrop(const QPoint &pos, QListViewItem *&parent, QListViewItem *&after)
 {
     QPoint p (contentsToViewport(pos));
