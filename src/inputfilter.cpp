@@ -1289,7 +1289,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 if(getAutomaticRequest("WHOIS",parameterList[1])==0)
                 {
                     server->appendMessageToFrontmost(i18n("Whois"),
-                        i18n("%1 is online via %2 (%3)").arg(parameterList[1])
+                        i18n("%1 is online via %2 (%3).").arg(parameterList[1])
                         .arg(parameterList[2]).arg(trailing)
                         );
                 }
@@ -1456,7 +1456,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     if(getAutomaticRequest("USERHOST",nick)==0)
                     {
                         server->appendMessageToFrontmost(i18n("Userhost"),
-                            i18n("%1%2 is %3%4")
+                            i18n("%1%2 is %3%4.")
                             .arg(nick)
                             .arg((ircOp) ? i18n(" (IRC Operator)") : QString::null)
                             .arg(mask)

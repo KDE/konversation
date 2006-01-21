@@ -1,89 +1,144 @@
 Changes from 0.18 to 0.19
-- Konversation now depends on KDE 3.4+
-- Blowfish support added (Mircryption & FiSH compatible)
-- Added Firefox style searchbar (courtesy of Renchi Raju)
-- Channel and query tabs now appear after the respective server (courtesy of Michael Kreitzer)
-- Fixed alpha blending of nick icons
-- Fixed handling of multiple URLs in one message
-- Added support for iso-2022-jp encoding
-- Nickname watcher was not working under certain circumstances
-- Fixed keyboard search work in nicklist
-- Implemented sending commands as messages on Ctrl+Enter
-- Fixes related to iterating over a network's servers on connect
-- Display network name in tabs and the title bar where available
-- Default bookmark title set to channel (formerly server)
-- Bookmark network instead of server where available
-- Implement '/server <network>'
-- Recognize server as being part of a network and use respective identity
-- Fix networks losing their channel history upon changes to their settings
-- Wiki address for [[foo]] can now be customized via WikiUrl config option under [General Options] in konversationrc
-- The default wiki address is now localized so that the translators can add their local wikipedia url
-- [[Foo]] can now be automatically expanded to http://<wiki url>/foo using WikiExpandUrl=true in konversationrc
-- Pressing arrow down in the input line now preserves input by adding it to the history and clears the input line
-- Fix infinite loop when nickname is in use
-- Make /server syntax parsing more flexible by allowing both 'address:port' and 'address port'
-- Vastly improve '/server' IPv6 handling
-- Have the '/list' command open the channel list panel
-- Handle CABAB command correctly
-- Handle IDENTIFY-MSG correctly
-- Added DCC "Send file" action to query context menu (patch by Jean-Remy Falleri)
-- Fixes related to announcing channel mode changes (patch by Lothar Braun)
-- Avoid sending a 'clear' command to the server when clearing the buffer in a query tab using the '/clear' command (patch by Lothar Braun)
-- Added boolean SkipMOTD option to the [Flags] section of konversationrc to skip MOTDs
-- Allow for a channel topic to be cleared by setting an empty topic
-- Minor fix in parsing the '/join' command
-- Cosmetic improvements to the DCC file transfer UI and DCC event messages
-- 'media' script revamped, improved compatibility with common character sets
-- Major internal changes related to preferences storage
-- Improvements to socket handling in DCC chats
-- Fixed chat window focus bug that prevented copying to clipboard using the keyboard shortcut in some cases
-- Fixed OSD preview
-- Fix wrong operator count in status bar
-- Redesigned the topic dialog, now allows browsing the topic history while editing the current topic
-- Re-modeled useless connection attempt taskbar notification into a configurable notification event that only triggers on connection failure
-- Improved item selection logic upon clearing a selection in the 'DCC Status' tab
-- Fixed some widgets not picking up KDE color scheme changes
-- 'sysinfo' script revamped, improved storage handling and shortened output
-- After changing the nickname using the combo box, focus is properly returned to the input line
-- Implemented '/names <channel>'
-- Implemented '/dns <nick|host|address>' for performing DNS lookups, including reverse resolve
-- Implemented '/disconnect' to disconnect from the respective server
-- Implemented '/reconnect' to disconnect from and then reconnect to the respective server
-- Support IPv6 hosts in bookmarks
-- Cosmetic improvements to various status messages, command output and usage information
-- Prevent addition of nameless channels and hostless servers in Edit Network
-- Implemented '/topic <channel>' for retrieving the topic of arbitrary channels, provided the IRC server allows us to
-- Show local file name in DCC GET status tab and DCC messages
-- Properly select relevant entry in Server List dialog after adding or editing a network
-- Implement '/unignore <user 1> <user 2> ... <user n>'
-- Add warning dialogs for closing of channel and query tabs
-- Disable overwrite mode for irc input box
-- Cleaned out legacy preferences parsing code
-- Prevent addition of nameless networks
-- Redesigned the Server List dialog: now displays servers as children of networks; networks retain expanded/collapsed state
-- Improved behavior of button actions in the Server List dialog
-- Improved error messages on deletion in the Server List dialog
-- Fixed Server List dialog sorting to match actual order of addition and thus auto-connect sequence
-- Add new networks behind the last network in the Server List dialog, resulting in the user interface finally matching the application behavior
-- Drag'n'drop reordering of networks in the Server List dialog
-- Minor cosmetic improvement to the status bar: all segments now have the same height
-- Status bar segments correctly react to font size changes
-- Status bar now showing context-relevant information (link URLs, menu item descriptions)
-- Enabling/Disabling spell checking on the input line now sets it for all channels and across sessions
-- Changed hard-coded channel join taskbar notification into a configurable notification event
-- Yammi media player is now supported by media script
-- Improved Kaffeine support in the media script
-- QUIT events for users are now shown in any queries you have open with them
-- Fixed nickname context menu actions not working in queries
-- Redesigned tab notifications allowing for colored LEDs or text labels, the color being configurable per event class
-- Chat window highlight colors can be set to override generic tab notification colors
-- Fixed wrong links being opened from chat window
-- Improved channel name recognition  in the chat window (patch by Stanislav Nikolov)
-- Added context menu to channels in the chat window
-- Whitespace highlighting in the multi-line paste editor dialog
-- Correctly insert away remember line in all channel and query tabs of the affected server(s), rather than putting them all in the front view
-- The automated reply to a highlight event can now reference groups of the matching pattern by identifiers %1-%9
-- Nick colors now follow nick changes and immediately react on color prefs change without restarting konvi
+We are extremely pleased to announce the immediate release of Konversation 0.19. The focus 
+of this release is on extending and improving upon established functionality. Most notable 
+in this regard are significantly improved management of IRC networks and servers all across 
+the application, a redesigned tab bar and better support for common IRC commands. A long 
+list of further additions and improvements has us confident of this being the best version 
+of Konversation yet. Enjoy!
+
+
+User Interface
+* The Server List dialog has been rewritten to allow direct manipulation of a network's
+  servers and features more intelligent sorting behavior. Reordering networks via drag
+  and drop is now possible. A behavioral audit of all actions in the dialog resulted in
+  numerous improvements.
+* A redesigned tab bar sports highly configurable text- and LED icon-based notifications
+  as well as more intelligent scaling behavior under space-critical conditions.
+* Tabs are now intelligently grouped around their respective connection status tab.
+* Status tab labels now display the user-configured network name where appropriate.
+* The Find Text dialog has been replaced by a search bar that now longer interrupts your
+  workflow.
+* Channel links in the chat area now feature a context menu for quick access to common
+  actions.
+* Usage of the status bar has been extended to show context-relevant information as the
+  cursor passes over various interface elements. The lag information segment is now
+  only shown where appropriate.
+* A channel's topic can now be cleared by setting an empty text in the Channel Options
+  dialog.
+* The Channel Options dialog has been redesigned to allow editing the current topic
+  while browsing a channel's topic history.
+* The Watched Nicknames interface has been fully integrated with network management.
+* Pressing the Arrow Down key in the input line now preserves any input entered by
+  adding it to the history.
+* Commands may now be sent as regular messages by typing Ctrl+Enter.
+* The multi-line paste editor window how highlights whitespace characters and prepends
+  the existing content of the input line.
+* The Colored Nicknames feature has been improved to better handle nickname changes and
+  immediately apply any changes to the color palette.
+* Some previously not configurable notification events have been made configurable.
+* Users leaving a server will now be announced in any query you have open with them.
+* The DCC file transfer dialogs have seen a number of cosmetic improvements. Among other
+  things, in the event of a file being renamed on save, the local file name is now shown
+  across the application.
+* Various status and error messages have been rewritten for improved consistency and
+  clarity.
+* It is now possible to skip displaying the server's MOTD on connect.
+* The state of the automatic spell checking functionality is now remembered across
+  sessions and set for all tabs.
+* Networks no longer lose their channel history when their settings are changed.
+* The Server List dialog will no longer close when a connection attempt fails due to
+  the identity not being set up correctly.
+* After changing your nickname using the optional drop-down menu to the left of the
+  input line, focus will now be returned to the input line.
+* The configuration dialog has been rewritten to correctly update the button state of
+  its primary actions and improve consistency with the KDE style guide.
+* The vertical and horizontal splitters in channel tabs now behave better when the
+  application window is resized and correctly retain their positions across sessions.
+* The OSD preview in the OSD settings page is now always shown correctly.
+* The OSD will no longer be shown when the desktop is locked.
+* A bug that prevented copying text from the chat area under certain circumstances has
+  been fixed.
+* Keyboard search in the channel nickname list has been fixed.
+* A number of issues affecting nickname context menus in the chat area have been fixed.
+* A bug leading to a wrong operator count in the status bar has been fixed.
+* It is no longer possible to add nameless networks or hostless servers in the respon-
+  sible management dialogs.
+* Bugs that led to parts of the interface not reacting to KDE color scheme changes have
+  been fixed.
+* The status bar now correctly reacts to KDE font size changes.
+* A bug that led to the application window resizing on overly long status bar contents
+  has been fixed.
+* A bug that led to multiple remember lines being inserted into the frontmost tab when
+  away mode was activated has been fixed.
+* A bug that led to wrong link addresses being opened from the chat area has been fixed.
+* Channel names are now better recognized as such by the chat area.
+
+
+Bookmarking
+* Bookmark titles now default to the channel name.
+* Bookmarks now store the network name rather than the server address where available.
+* Bookmarks now support IPv6 addresses.
+
+
+Commands
+* The '/server' command now recognizes a greater variety of address notations including
+  network names.
+* The '/names' command now always succeeds in returning the user list of a channel.
+* The '/topic' command now always succeeds in returning the topic of a channel.
+* A '/dns' command has been added that facilitates resolving the host name of a user on
+  the server as well as generic host names. Reverse resolve is supported on KDE 3.5.1+.
+* An '/unignore' command has been added.
+* A '/disconnect' command has been added.
+* A '/reconnect' command has been added that disconnects and then reconnects the respec-
+  tive server.
+* The '/list' command now correctly opens the Channel List tab.
+* A bug in parsing the arguments of the '/join' command has been fixed.
+* Usage information and error reporting for various commands has been rewritten for
+  improved consistency and clarity.
+* A bug that led to a 'clear' command being sent to the server when using the '/clear'
+  command to clear the contents of a query tab has been fixed.
+
+
+Miscellaneous
+* The 'media' script has been rewritten and now features improved compatibility with
+  common character sets, greatly enhanced support for the Kaffeine media player and
+  newly added support for the Yammi media player.
+* The 'sysinfo' script has been rewritten to produce more concise output and better
+  handle a variety of storage scenarios.
+* The convenience feature expanding [[term]] into a Wikipedia link is now localizable
+  and generates a link that performs an intelligent lookup for the term in the Wiki-
+  pedia rather than assume a correct direct link.
+
+
+Technology
+* Konversation now depends on KDE 3.4+.
+* The preferences storage system has been rewritten to facilitate easier maintenance
+  and faster development in future release cycles.
+* Localized support for a long list of IRC protocol primitives has been added.
+* The application will now correctly iterate over a network's servers on successive
+  failed connection attempts.
+* When the '/server' command or the Quick Connect dialog is used to connect to a
+  server that has previously been added to a network in the Server List dialog, it
+  will be recognized as being part of the network and the respective identity
+  settings will be applied.
+* The automated reply to a highlight event can now reference groups of the matched
+  pattern by identifiers %1-%9.
+* The CABAP IDENTIFY-MSG technology is now supported.
+* Compatibility with the Unreal IRC server has been improved.
+* Experimental support for Blowfish encryption (compatible with mIRCryption and FiSH)
+  has been added.
+* The Watched Nicknames reporting has been made more reliable.
+* Socket handling in the DCC file transfer feature has been improved.
+* Alpha-blending of icons in the channel nickname list has been fixed.
+* Support for the iso-2022-jp encoding has been enhanced.
+* The custom web browser feature will now automatically append the URL as a parameter
+  to the specified command when the %u identifier is missing.
+* Channel modes are now correctly cleared and updated in the internal representation
+  on rejoin.
+* A bug that led to an infinite loop during a connection attempt when all nicknames
+  configured in the identity were in use has been fixed.
+* A bug that could lead to a crash when opening the log file for a closed connection has
+  been fixed.
 
 Changes from 0.17 to 0.18
 - All nicks were blue when colored nicks are disabled with some setups
