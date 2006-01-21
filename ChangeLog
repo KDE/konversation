@@ -121,8 +121,8 @@ Technology
   server that has previously been added to a network in the Server List dialog, it
   will be recognized as being part of the network and the respective identity
   settings will be applied.
-* The automated reply to a highlight event can now reference groups of the matched
-  pattern by identifiers %1-%9.
+* The automated reply to a highlight event can now reference the groups of the matched
+  pattern by the identifiers %1-%9 and the entire match by the identifier %0.
 * The CABAP IDENTIFY-MSG technology is now supported.
 * Compatibility with the Unreal IRC server has been improved.
 * Experimental support for Blowfish encryption (compatible with mIRCryption and FiSH)
