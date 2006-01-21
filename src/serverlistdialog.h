@@ -44,6 +44,8 @@ namespace Konversation
             QString name() const { return m_name; }
             bool isServer() const { return m_isServer; }
 
+            int selectedChildrenCount();
+
             int compare(QListViewItem *i, int col, bool ascending) const;
 
         private:

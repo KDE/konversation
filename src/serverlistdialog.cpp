@@ -56,6 +56,23 @@ namespace Konversation
         m_isServer = true;
     }
 
+    int ServerListItem::selectedChildrenCount()
+    {
+        int count = 0;
+
+        QListViewItem* item = firstChild();
+
+        while (item)
+        {
+            if (item->isSelected())
+                ++count;
+
+            item = item->nextSibling();
+        }
+
+        return count;
+    }
+
     int ServerListItem::compare(QListViewItem *i, int col, bool ascending) const
     {
         ServerListItem* item = static_cast<ServerListItem*>(i);
@@ -197,44 +214,47 @@ namespace Konversation
     {
         ServerListItem* item = static_cast<ServerListItem*>(m_serverList->selectedItems().first());
 
-        Konversation::ServerGroupSettingsPtr serverGroup = Preferences::serverGroupById(item->serverGroupId());
-
-        if (serverGroup)
+        if (item)
         {
-            ServerGroupDialog dlg(i18n("Edit Network"), this);
+            Konversation::ServerGroupSettingsPtr serverGroup = Preferences::serverGroupById(item->serverGroupId());
 
-            dlg.setServerGroupSettings(serverGroup);
-
-            if (item->isServer())
+            if (serverGroup)
             {
-                if(dlg.execAndEditServer(item->server()) == KDialog::Accepted)
+                ServerGroupDialog dlg(i18n("Edit Network"), this);
+
+                dlg.setServerGroupSettings(serverGroup);
+
+                if (item->isServer())
                 {
-                    delete item;
+                    if(dlg.execAndEditServer(item->server()) == KDialog::Accepted)
+                    {
+                        delete item;
 
-                    m_editedItem = true;
-                    m_editedServerGroupId = serverGroup->id();
-                    m_editedServer = dlg.editedServer();
+                        m_editedItem = true;
+                        m_editedServerGroupId = serverGroup->id();
+                        m_editedServer = dlg.editedServer();
 
-                    *serverGroup = *(dlg.serverGroupSettings());
-                    updateServerList();
+                        *serverGroup = *(dlg.serverGroupSettings());
+                        updateServerList();
 
-                    emit serverGroupsChanged();
+                        emit serverGroupsChanged();
+                    }
                 }
-            }
-            else
-            {
-                if(dlg.exec() == KDialog::Accepted)
+                else
                 {
-                    delete item;
+                    if(dlg.exec() == KDialog::Accepted)
+                    {
+                        delete item;
 
-                    m_editedItem = true;
-                    m_editedServerGroupId = serverGroup->id();
-                    m_editedServer = ServerSettings("");
+                        m_editedItem = true;
+                        m_editedServerGroupId = serverGroup->id();
+                        m_editedServer = ServerSettings("");
 
-                    *serverGroup = *(dlg.serverGroupSettings());
-                    updateServerList();
+                        *serverGroup = *(dlg.serverGroupSettings());
+                        updateServerList();
 
-                    emit serverGroupsChanged();
+                        emit serverGroupsChanged();
+                    }
                 }
             }
         }
@@ -254,11 +274,16 @@ namespace Konversation
         {
             if (item->isServer())
             {
-                Konversation::ServerGroupSettingsPtr serverGroup = Preferences::serverGroupById(item->serverGroupId());
+                ServerListItem* parent = static_cast<ServerListItem*>(item->parent());
 
-                if (serverGroup->serverList(true).count()==1)
+                if (parent->childCount() == 1)
                 {
-                    KMessageBox::error(this, i18n("You cannot delete %1.\n\nThe %2 network needs to have at least one server.").arg(item->name()).arg(serverGroup->name()));
+                    KMessageBox::error(this, i18n("You cannot delete %1.\n\nThe network %2 needs to have at least one server.").arg(item->name()).arg(parent->name()));
+                    return;
+                }
+                else if (parent->childCount() == parent->selectedChildrenCount())
+                {
+                    KMessageBox::error(this, i18n("You cannot delete the selected servers.\n\nThe network %1 needs to have at least one server.").arg(parent->name()));
                     return;
                 }
             }
@@ -282,45 +307,47 @@ namespace Konversation
             return;
         }
 
+        QListViewItem* itemBelow = 0;
+        QListViewItem* itemAbove = 0;
+
         // Have fun deleting
         while (item)
         {
-            QListViewItem* itemToSelect;
-            QListViewItem* itemBelow = item->nextSibling();
-            QListViewItem* itemAbove = item->itemAbove();
-
-            if (itemBelow)
-                itemToSelect = itemBelow;
-            else if (itemAbove)
-                itemToSelect = itemAbove;
-            else
-                itemToSelect = m_serverList->firstChild();
+            itemBelow = item->nextSibling();
+            itemAbove = item->itemAbove();
 
             if (item->isServer())
             {
                 Konversation::ServerGroupSettingsPtr serverGroup = Preferences::serverGroupById(item->serverGroupId());
                 serverGroup->removeServer(item->server());
                 delete item;
-
-                if (itemToSelect)
-                {
-                    m_serverList->setSelected(itemToSelect,true);
-                    m_serverList->setCurrentItem(itemToSelect);
-                }
             }
             else
             {
                 Preferences::removeServerGroup(item->serverGroupId());
                 delete item;
-
-                if (itemToSelect)
-                {
-                    m_serverList->setSelected(itemToSelect,true);
-                    m_serverList->setCurrentItem(itemToSelect);
-                }
             }
 
             item = static_cast<ServerListItem*>(selectedItems.next());
+        }
+
+        if (itemBelow)
+        {
+            m_serverList->setSelected(itemBelow,true);
+            m_serverList->setCurrentItem(itemBelow);
+        }
+        else if (itemAbove)
+        {
+            m_serverList->setSelected(itemAbove,true);
+            m_serverList->setCurrentItem(itemAbove);
+        }
+        else
+        {
+            if (m_serverList->firstChild())
+            {
+                m_serverList->setSelected(m_serverList->firstChild(),true);
+                m_serverList->setCurrentItem(m_serverList->firstChild());
+            }
         }
    }
 
