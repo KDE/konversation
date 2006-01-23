@@ -450,6 +450,8 @@ void Query::nickInfoChanged()
         addresseeimage->hide();
         addresseelogoimage->hide();
     }
+
+    emit updateQueryChrome(this,getName());
     emitUpdateInfo();
 }
 

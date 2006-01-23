@@ -972,6 +972,7 @@ Query* KonversationMainWindow::addQuery(Server* server, const NickInfoPtr& nickI
     addView(query, name, weinitiated);
 
     connect(query, SIGNAL(updateTabNotification(ChatWindow*,const Konversation::TabNotifyType&)), this, SLOT(setTabNotification(ChatWindow*,const Konversation::TabNotifyType&)));
+    connect(query, SIGNAL(updateQueryChrome(ChatWindow*, const QString &)), this, SLOT(updateQueryChrome(ChatWindow*, const QString &)));
     connect(server, SIGNAL(awayState(bool)), query, SLOT(indicateAway(bool)));
 
     return query;
@@ -1328,6 +1329,27 @@ void KonversationMainWindow::updateFrontView()
         action = actionCollection()->action("reconnect_server");
         if(action) action->setEnabled(false);
     }
+}
+
+void KonversationMainWindow::updateChannelInfo(const QString &info)
+{
+    QString tabInfo = Konversation::removeIrcMarkup(info);
+    m_channelInfoLabel->setText(tabInfo);
+}
+
+void KonversationMainWindow::updateQueryChrome(ChatWindow* view, const QString& name)
+{
+    //FIXME: updateQueryChrome is a last minute fix for 0.19 because
+    // the updateInfo mess is indecipherable. Replace with a sane and
+    // encompassing system.
+
+    QString newName = Konversation::removeIrcMarkup(name);
+
+    if (!newName.isEmpty() && getViewContainer()->tabLabel(view) != newName)
+        getViewContainer()->setTabLabel(view,newName);
+
+    if (!newName.isEmpty() && view==m_frontView)
+        setCaption(newName);
 }
 
 void KonversationMainWindow::changeView(QWidget* viewToChange)
@@ -1920,12 +1942,6 @@ void KonversationMainWindow::openIdentitiesDialog()
     {
         m_serverListDialog->updateServerList();
     }
-}
-
-void KonversationMainWindow::updateChannelInfo(const QString &info)
-{
-    QString tabInfo = Konversation::removeIrcMarkup(info);
-    m_channelInfoLabel->setText(tabInfo);
 }
 
 void KonversationMainWindow::showJoinChannelDialog()

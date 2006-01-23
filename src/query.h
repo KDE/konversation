@@ -70,6 +70,7 @@ class Query : public ChatWindow
 
     signals:
         void sendFile(const QString& recipient);
+        void updateQueryChrome(ChatWindow*, const QString&);
 
     public slots:
         void sendQueryText(const QString& text);

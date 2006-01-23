@@ -202,6 +202,7 @@ class KonversationMainWindow : public KMainWindow
         void insertChar(const QChar& chr);
 
         void updateChannelInfo(const QString& info);
+        void updateQueryChrome(ChatWindow* view, const QString& name);
 
         void showJoinChannelDialog();
 
