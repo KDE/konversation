@@ -256,6 +256,8 @@ namespace Konversation
             return;
         }
 
+        startTrayNotification(chatWin);
+
         KNotifyClient::event(winId(), "query",
             i18n("%1 has started a conversation (query) with you.").arg(fromNick));
     }
@@ -320,6 +322,13 @@ namespace Konversation
         {
             return;
         }
+
+        if(Preferences::disableNotifyWhileAway() && chatWin->getServer()->isAway())
+        {
+            return;
+        }
+
+        startTrayNotification(chatWin);
 
         if(Preferences::oSDShowOwnNick() &&
             (!m_mainWindow->isActiveWindow() || (chatWin != m_mainWindow->frontView())))
