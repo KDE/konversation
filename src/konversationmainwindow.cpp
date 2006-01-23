@@ -609,15 +609,10 @@ void KonversationMainWindow::addView(ChatWindow* view, const QString& label, boo
                 iconSet = images->getCloseIcon();
             break;
 
-        case ChatWindow::Konsole:
-            if(Preferences::tabNotificationsLeds())
-                iconSet = images->getMsgsLed(false);
-            else if (Preferences::closeButtons())
-                iconSet = images->getCloseIcon();
-            break;
-
         default:
-            if (Preferences::closeButtons())
+            if(Preferences::tabNotificationsLeds())
+                iconSet = images->getSystemLed(false);
+            else if (Preferences::closeButtons())
                 iconSet = images->getCloseIcon();
             break;
     }
@@ -1021,6 +1016,16 @@ void KonversationMainWindow::setTabNotification(ChatWindow* view, const Konversa
             }
             break;
 
+        case Konversation::tnfSystem:
+            if (Preferences::tabNotificationsMsgs())
+            {
+                if (Preferences::tabNotificationsLeds())
+                    getViewContainer()->setTabIconSet(view, images->getSystemLed(true));
+                if (Preferences::tabNotificationsText())
+                    getViewContainer()->setTabColor(view, Preferences::tabNotificationsSystemColor());
+            }
+            break;
+
         case Konversation::tnfControl:
             if (Preferences::tabNotificationsEvents())
             {
@@ -1085,7 +1090,6 @@ void KonversationMainWindow::unsetTabNotification(ChatWindow* view)
             case ChatWindow::Channel:
             case ChatWindow::Query:
             case ChatWindow::DccChat:
-            case ChatWindow::Konsole:
                 getViewContainer()->setTabIconSet(view, images->getMsgsLed(false));
                 break;
 
@@ -1094,6 +1098,7 @@ void KonversationMainWindow::unsetTabNotification(ChatWindow* view)
                 break;
 
             default:
+                getViewContainer()->setTabIconSet(view, images->getSystemLed(false));
                 break;
         }
     }
@@ -1145,6 +1150,8 @@ void KonversationMainWindow::updateTabs()
             if (view->currentTabNotification()==Konversation::tnfNone)
                 unsetTabNotification(view);
             else if (view->currentTabNotification()==Konversation::tnfNormal && !Preferences::tabNotificationsMsgs())
+                unsetTabNotification(view);
+            else if (view->currentTabNotification()==Konversation::tnfSystem && !Preferences::tabNotificationsSystem())
                 unsetTabNotification(view);
             else if (view->currentTabNotification()==Konversation::tnfControl && !Preferences::tabNotificationsEvents())
                 unsetTabNotification(view);

@@ -53,13 +53,16 @@ QPixmap Images::getNickIcon(NickPrivilege privilege,bool isAway) const
 void Images::initializeLeds()
 {
     m_serverColor = "steelblue";
+    m_systemColor = Preferences::tabNotificationsSystemColor();
     m_msgsColor = Preferences::tabNotificationsMsgsColor();
     m_eventsColor = Preferences::tabNotificationsEventsColor();
     m_nickColor = Preferences::tabNotificationsNickColor();
     m_highlightsColor = Preferences::tabNotificationsHighlightsColor();
 
-    m_serverLedOn = getLed(m_serverColor,true);
+    // m_serverLedOn = getLed(m_serverColor,true);
     m_serverLedOff= getLed(m_serverColor,false);
+    m_systemLedOn = getLed(m_systemColor,true);
+    m_systemLedOff= getLed(m_systemColor,false);
     m_msgsLedOn= getLed(m_msgsColor,true);
     m_msgsLedOff= getLed(m_msgsColor,false);
     m_eventsLedOn = getLed(m_eventsColor,true);
@@ -226,6 +229,24 @@ QIconSet Images::getServerLed(bool state)
         return m_serverLedOn;
     else
         return m_serverLedOff;
+}
+
+QIconSet Images::getSystemLed(bool state)
+{
+    if (Preferences::tabNotificationsSystemColor()!=m_systemColor)
+    {
+        if (state)
+            return getLed(Preferences::tabNotificationsSystemColor(),true);
+        else
+            return getLed(Preferences::tabNotificationsSystemColor(),false);
+    }
+    else
+    {
+        if (state)
+            return m_systemLedOn;
+        else
+            return m_systemLedOff;
+    }
 }
 
 QIconSet Images::getMsgsLed(bool state)

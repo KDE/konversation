@@ -51,6 +51,7 @@ class Images
         QIconSet getLed(QColor col,bool state = true);
 
         QIconSet getServerLed(bool state);
+        QIconSet getSystemLed(bool state);
         QIconSet getMsgsLed(bool state);
         QIconSet getEventsLed();
         QIconSet getNickLed();
@@ -71,6 +72,8 @@ class Images
 
         QIconSet m_serverLedOn;
         QIconSet m_serverLedOff;
+        QIconSet m_systemLedOn;
+        QIconSet m_systemLedOff;
         QIconSet m_msgsLedOn;
         QIconSet m_msgsLedOff;
         QIconSet m_eventsLedOn;
@@ -78,6 +81,7 @@ class Images
         QIconSet m_highlightsLedOn;
 
         QColor m_serverColor;
+        QColor m_systemColor;
         QColor m_msgsColor;
         QColor m_eventsColor;
         QColor m_nickColor;

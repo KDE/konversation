@@ -825,6 +825,16 @@
       <label></label>
       <whatsthis></whatsthis>
     </entry>
+    <entry key="TabNotificationsSystem" type="Bool">
+      <default>true</default>
+      <label></label>
+      <whatsthis></whatsthis>
+    </entry>
+    <entry key="TabNotificationsSystemColor" type="Color">
+      <default>#C3C300</default>
+      <label></label>
+      <whatsthis></whatsthis>
+    </entry>
     <entry key="TabNotificationsMsgs" type="Bool">
       <default>true</default>
       <label></label>

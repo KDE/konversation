@@ -31,6 +31,7 @@ namespace Konversation
         tnfNick,
         tnfHighlight,
         tnfNormal,
+        tnfSystem,
         tnfControl,
         tnfNone
     };

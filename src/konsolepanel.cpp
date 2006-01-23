@@ -50,7 +50,7 @@ void KonsolePanel::partDestroyed()
 
 void KonsolePanel::konsoleChanged(const QString& /* data */)
 {
-  activateTabNotification(Konversation::tnfNormal);
+  activateTabNotification(Konversation::tnfSystem);
 }
 
 #include "konsolepanel.moc"

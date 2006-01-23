@@ -203,7 +203,8 @@ void StatusPanel::updateAppearance()
 
 void StatusPanel::updateName()
 {
-    setName(getServer()->serverGroupSettings()->name());
+    if (getServer()->serverGroupSettings())
+        setName(getServer()->serverGroupSettings()->name());
 }
 
 void StatusPanel::sendFileMenu()
