@@ -37,6 +37,8 @@ User Interface
   immediately apply any changes to the color palette.
 * Some previously not configurable notification events have been made configurable.
 * Users leaving a server will now be announced in any query you have open with them.
+* Query tab labels will now update when a name change by a user you have a query open
+  with is detected.
 * The DCC file transfer dialogs have seen a number of cosmetic improvements. Among other
   things, in the event of a file being renamed on save, the local file name is now shown
   across the application.
@@ -91,6 +93,8 @@ Commands
 * A '/disconnect' command has been added.
 * A '/reconnect' command has been added that disconnects and then reconnects the respec-
   tive server.
+* A '/setkey' command has been added to set the Blowfish encryption/decryption key for
+  the respective context.
 * The '/list' command now correctly opens the Channel List tab.
 * A bug in parsing the arguments of the '/join' command has been fixed.
 * Usage information and error reporting for various commands has been rewritten for
@@ -125,8 +129,8 @@ Technology
   pattern by the identifiers %1-%9 and the entire match by the identifier %0.
 * The CABAP IDENTIFY-MSG technology is now supported.
 * Compatibility with the Unreal IRC server has been improved.
-* Experimental support for Blowfish encryption (compatible with mIRCryption and FiSH)
-  has been added.
+* Initial support for Blowfish encryption (compatible with mIRCryption and FiSH) has
+  been added. Note that Diffie-Hellman key exchange (DHX) is not yet supported.
 * The Watched Nicknames reporting has been made more reliable.
 * Socket handling in the DCC file transfer feature has been improved.
 * Alpha-blending of icons in the channel nickname list has been fixed.
