@@ -21,3 +21,4 @@ while (<>)
         printf("$key=%d,%d,%d\n",hex($1),hex($2),hex($3));
     }
 }
+$currentGroup$key

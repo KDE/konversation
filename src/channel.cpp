@@ -1212,7 +1212,7 @@ void Channel::setTopic(const QString &newTopic)
     // list will fill up with the same entries while the user only requests the topic to be seen.
     if(m_topicHistory.first().section(' ', 2) != newTopic)
     {
-        m_topicHistory.prepend(i18n("%1 unknown %2").arg(QDateTime::currentDateTime().toTime_t()).arg(newTopic));
+        m_topicHistory.prepend(QString("%1 "+i18n("unknown")+" %2").arg(QDateTime::currentDateTime().toTime_t()).arg(newTopic));
         QString topic = Konversation::removeIrcMarkup(newTopic);
         topicLine->setText(topic);
 
