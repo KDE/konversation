@@ -266,6 +266,7 @@ void IRCInput::paste()
 
     kdDebug() << "paste()" << endl;
     QClipboard *cb = KApplication::kApplication()->clipboard();
+    setFocus();
 
     // Copy text from the clipboard (paste)
     QString pasteText;
