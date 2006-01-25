@@ -51,6 +51,7 @@ namespace Konversation
         m_editingTopic = false;
 
         connect(m_widget->topicHistoryList, SIGNAL(clicked(QListViewItem*)), this, SLOT(topicHistoryItemClicked(QListViewItem*)));
+        connect(m_widget->topicHistoryList, SIGNAL(selectionChanged(QListViewItem*)), this, SLOT(topicHistoryItemClicked(QListViewItem*)));
         connect(m_widget->toggleAdvancedModes, SIGNAL(clicked()), this, SLOT(toggleAdvancedModes()));
         connect(m_widget->topicEdit, SIGNAL(modificationChanged(bool)), this, SLOT(topicBeingEdited(bool)));
 
@@ -153,7 +154,7 @@ namespace Konversation
         }
 
         // update topic preview
-        m_widget->topicPreview->setText(history.first().section(' ', 2));
+        topicHistoryItemClicked(m_widget->topicHistoryList->selectedItem());
         // don't destroy the user's edit box if they started editing
         if(!m_editingTopic)
             m_widget->topicEdit->setText(history.first().section(' ', 2));
