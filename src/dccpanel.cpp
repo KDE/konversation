@@ -148,6 +148,7 @@ DccPanel::~DccPanel()
 void DccPanel::dccStatusChanged(const DccTransfer* /* item */)
 {
     updateButton();
+    activateTabNotification(Konversation::tnfSystem);
 }
 
 void DccPanel::updateButton()

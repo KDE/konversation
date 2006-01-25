@@ -845,6 +845,7 @@ void KonversationMainWindow::addDccPanel()
     {
         dccPanel=new DccPanel(getViewContainer());
         addView(dccPanel, i18n("DCC Status"));
+        connect(dccPanel, SIGNAL(updateTabNotification(ChatWindow*,const Konversation::TabNotifyType&)), this, SLOT(setTabNotification(ChatWindow*,const Konversation::TabNotifyType&)));
         dccPanel->setMainWindow(this);
         dccPanelOpen=true;
     }
@@ -1392,7 +1393,8 @@ void KonversationMainWindow::changeView(QWidget* viewToChange)
         {
             ChatWindow::WindowType viewType = view->getType();
             notifyAction->setEnabled(viewType == ChatWindow::Channel || viewType == ChatWindow::Query ||
-                                     viewType == ChatWindow::Status || viewType == ChatWindow::Konsole);
+                                     viewType == ChatWindow::Status || viewType == ChatWindow::Konsole ||
+                                     viewType == ChatWindow::DccPanel);
             notifyAction->setChecked(view->notificationsEnabled());
         }
 
@@ -2105,7 +2107,8 @@ void KonversationMainWindow::showTabContextMenu(QWidget* tab, const QPoint& pos)
         {
             ChatWindow::WindowType viewType = view->getType();
             notifyAction->setEnabled(viewType == ChatWindow::Channel || viewType == ChatWindow::Query ||
-                                     viewType == ChatWindow::Status || viewType == ChatWindow::Konsole);
+                                     viewType == ChatWindow::Status || viewType == ChatWindow::Konsole ||
+                                     viewType == ChatWindow::DccPanel);
             notifyAction->setChecked(view->notificationsEnabled());
         }
 
@@ -2124,7 +2127,8 @@ void KonversationMainWindow::showTabContextMenu(QWidget* tab, const QPoint& pos)
             {
                 ChatWindow::WindowType viewType = view->getType();
                 notifyAction->setEnabled(viewType == ChatWindow::Channel || viewType == ChatWindow::Query ||
-                                         viewType == ChatWindow::Status || viewType == ChatWindow::Konsole);
+                                         viewType == ChatWindow::Status || viewType == ChatWindow::Konsole ||
+                                         viewType == ChatWindow::DccPanel);
                 notifyAction->setChecked(view->notificationsEnabled());
             }
 
