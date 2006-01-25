@@ -1018,7 +1018,7 @@ void KonversationMainWindow::setTabNotification(ChatWindow* view, const Konversa
             break;
 
         case Konversation::tnfSystem:
-            if (Preferences::tabNotificationsMsgs())
+            if (Preferences::tabNotificationsSystem())
             {
                 if (Preferences::tabNotificationsLeds())
                     getViewContainer()->setTabIconSet(view, images->getSystemLed(true));
@@ -1055,6 +1055,10 @@ void KonversationMainWindow::setTabNotification(ChatWindow* view, const Konversa
                         getViewContainer()->setTabColor(view, Preferences::tabNotificationsNickColor());
                 }
             }
+            else
+            {
+                setTabNotification(view,Konversation::tnfNormal);
+            }
             break;
 
         case Konversation::tnfHighlight:
@@ -1074,6 +1078,10 @@ void KonversationMainWindow::setTabNotification(ChatWindow* view, const Konversa
                     if (Preferences::tabNotificationsText())
                         getViewContainer()->setTabColor(view, Preferences::tabNotificationsHighlightsColor());
                 }
+            }
+            else
+            {
+                setTabNotification(view,Konversation::tnfNormal);
             }
             break;
 
