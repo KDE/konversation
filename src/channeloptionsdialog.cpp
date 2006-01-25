@@ -163,13 +163,8 @@ namespace Konversation
     {
         // if they didn't click on anything, item is null
         if(item)
-        {
             // update topic preview
             m_widget->topicPreview->setText(item->text(2));
-            // don't destroy the user's edit box if they started editing
-            if(!m_editingTopic)
-                m_widget->topicEdit->setText(item->text(2));
-        }
         else
             // clear topic preview
             m_widget->topicPreview->clear();
