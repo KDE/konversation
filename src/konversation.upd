@@ -25,6 +25,11 @@ Group=Flags
 RemoveKey=BlinkingTabs
 Script=konversation-0.19-tabplacement.pl,perl
 
+Id=0.19-highlightcolors
+File=konversationrc
+Group=Highlight List
+Script=konversation-0.19-colors.pl,perl
+
 # Convert OSD color storage format
 Id=0.19-osdcolors
 File=konversationrc
