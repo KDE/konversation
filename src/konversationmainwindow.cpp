@@ -621,24 +621,23 @@ void KonversationMainWindow::addView(ChatWindow* view, const QString& label, boo
     viewContainer->show();
 
     // Check, if user was typing in old input line
-    bool doBringToFront=true;
+    bool doBringToFront=false;
+
+    if(Preferences::focusNewQueries() && view->getType()==ChatWindow::Query && !weinitiated)
+        doBringToFront = true;
+
+    if(Preferences::bringToFront() && view->getType()!=ChatWindow::RawLog)
+        doBringToFront = true;
 
     // make sure that bring to front only works when the user wasn't typing something
-    if(m_frontView && view->getType() != ChatWindow::UrlCatcher &&
-        view->getType() != ChatWindow::Konsole)
+    if(m_frontView && view->getType() != ChatWindow::UrlCatcher && view->getType() != ChatWindow::Konsole)
     {
-        if(!m_frontView->getTextInLine().isEmpty()) doBringToFront=false;
+        if(!m_frontView->getTextInLine().isEmpty())
+            doBringToFront=false;
     }
 
-    if(!Preferences::focusNewQueries() && view->getType()==ChatWindow::Query && !weinitiated)
-        doBringToFront = false;
-
-    // bring view to front unless it's a raw log window or the user was typing
-    if(Preferences::bringToFront() && doBringToFront &&
-        view->getType()!=ChatWindow::RawLog)
-    {
+    if(doBringToFront)
         showView(view);
-    }
 
     updateTabMoveActions(getViewContainer()->currentPageIndex());
     updateSwitchTabAction();
