@@ -110,6 +110,7 @@ class KonversationMainWindow : public KMainWindow
 
     public slots:
         void updateAppearance();
+        void toggleDccPanel();
         void addDccPanel(); // connected in server class
         void addKonsolePanel(); // connected in server class
         void addUrlCatcher();

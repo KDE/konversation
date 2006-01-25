@@ -163,6 +163,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
         actionCollection(), "identities_dialog"))->setToolTip(i18n("Manage your nick, away and other identity settings"));
 
     new KToggleAction(i18n("&Watched Nicks Online"), 0, KShortcut("F4"), this, SLOT(openNicksOnlinePanel()), actionCollection(), "open_nicksonline_window");
+    new KToggleAction(i18n("&DCC Status"), 0, KShortcut("F9"), this, SLOT(toggleDccPanel()), actionCollection(), "open_dccstatus_window");
     action = new KAction(i18n("&Open Logfile"), "history", KShortcut("Ctrl+O"), this, SLOT(openLogfile()), actionCollection(), "open_logfile");
     action->setEnabled(false);
     action->setToolTip(i18n("Open the known history for this channel in a new tab"));
@@ -838,6 +839,14 @@ void KonversationMainWindow::closeUrlCatcher()
     }
 }
 
+void KonversationMainWindow::toggleDccPanel()
+{
+    if (dccPanel==0 || !dccPanelOpen)
+        addDccPanel();
+    else
+        closeDccPanel();
+}
+
 void KonversationMainWindow::addDccPanel()
 {
     // if the panel wasn't open yet
@@ -848,6 +857,7 @@ void KonversationMainWindow::addDccPanel()
         connect(dccPanel, SIGNAL(updateTabNotification(ChatWindow*,const Konversation::TabNotifyType&)), this, SLOT(setTabNotification(ChatWindow*,const Konversation::TabNotifyType&)));
         dccPanel->setMainWindow(this);
         dccPanelOpen=true;
+        (dynamic_cast<KToggleAction*>(actionCollection()->action("open_dccstatus_window")))->setChecked(true);
     }
     // show already opened panel
     else
@@ -856,6 +866,7 @@ void KonversationMainWindow::addDccPanel()
         {
             addView(dccPanel, i18n("DCC Status"));
             dccPanelOpen=true;
+            (dynamic_cast<KToggleAction*>(actionCollection()->action("open_dccstatus_window")))->setChecked(true);
         }
         // no highlight color for DCC panels
         // FIXME newText(dccPanel,QString::null,true);
@@ -875,6 +886,7 @@ void KonversationMainWindow::closeDccPanel()
         // hide it from view, does not delete it
         getViewContainer()->removePage(dccPanel);
         dccPanelOpen=false;
+        (dynamic_cast<KToggleAction*>(actionCollection()->action("open_dccstatus_window")))->setChecked(false);
     }
 }
 

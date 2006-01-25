@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="konversation" version="34">
+<kpartgui name="konversation" version="35">
 
   <MenuBar>
     <Menu name="file">
@@ -42,6 +42,7 @@
       <Action name="open_nicksonline_window" />
       <Action name="open_channel_list" />
       <Action name="open_url_catcher" />
+      <Action name="open_dccstatus_window" />
       <Separator />
       <Action name="open_konsole" />
       <Action name="open_logfile" />
