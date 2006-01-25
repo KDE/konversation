@@ -152,21 +152,27 @@ namespace Konversation
             new KListViewItem(m_widget->topicHistoryList, (*it).section(' ', 1, 1), date.toString(Qt::LocalDate), (*it).section(' ', 2));
         }
 
-        m_widget->topicEdit->setText(history.first().section(' ', 2));
+        // update topic preview
+        m_widget->topicPreview->setText(history.first().section(' ', 2));
+        // don't destroy the user's edit box if they started editing
+        if(!m_editingTopic)
+            m_widget->topicEdit->setText(history.first().section(' ', 2));
     }
 
     void ChannelOptionsDialog::topicHistoryItemClicked(QListViewItem* item)
     {
-        //if they didn't click on anything, item is null
-        if(m_channel->getOwnChannelNick()->isAnyTypeOfOp() || !m_widget->topicModeChBox->isChecked())
+        // if they didn't click on anything, item is null
+        if(item)
         {
-            if(item)
-            {
-                m_widget->topicPreview->setText(item->text(2));
-                if(!m_editingTopic)
-                    m_widget->topicEdit->setText(item->text(2));
-            }
+            // update topic preview
+            m_widget->topicPreview->setText(item->text(2));
+            // don't destroy the user's edit box if they started editing
+            if(!m_editingTopic)
+                m_widget->topicEdit->setText(item->text(2));
         }
+        else
+            // clear topic preview
+            m_widget->topicPreview->clear();
     }
 
     void ChannelOptionsDialog::refreshEnableModes()
