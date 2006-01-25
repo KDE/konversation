@@ -1392,7 +1392,8 @@ void KonversationMainWindow::changeView(QWidget* viewToChange)
         if(notifyAction)
         {
             ChatWindow::WindowType viewType = view->getType();
-            notifyAction->setEnabled(viewType == ChatWindow::Channel || viewType == ChatWindow::Query || viewType == ChatWindow::Status);
+            notifyAction->setEnabled(viewType == ChatWindow::Channel || viewType == ChatWindow::Query ||
+                                     viewType == ChatWindow::Status || viewType == ChatWindow::Konsole);
             notifyAction->setChecked(view->notificationsEnabled());
         }
 
@@ -2104,7 +2105,8 @@ void KonversationMainWindow::showTabContextMenu(QWidget* tab, const QPoint& pos)
         if(notifyAction)
         {
             ChatWindow::WindowType viewType = view->getType();
-            notifyAction->setEnabled(viewType == ChatWindow::Channel || viewType == ChatWindow::Query || viewType == ChatWindow::Status);
+            notifyAction->setEnabled(viewType == ChatWindow::Channel || viewType == ChatWindow::Query ||
+                                     viewType == ChatWindow::Status || viewType == ChatWindow::Konsole);
             notifyAction->setChecked(view->notificationsEnabled());
         }
 
@@ -2122,7 +2124,8 @@ void KonversationMainWindow::showTabContextMenu(QWidget* tab, const QPoint& pos)
             if(notifyAction)
             {
                 ChatWindow::WindowType viewType = view->getType();
-                notifyAction->setEnabled(viewType == ChatWindow::Channel || viewType == ChatWindow::Query || viewType == ChatWindow::Status);
+                notifyAction->setEnabled(viewType == ChatWindow::Channel || viewType == ChatWindow::Query ||
+                                         viewType == ChatWindow::Status || viewType == ChatWindow::Konsole);
                 notifyAction->setChecked(view->notificationsEnabled());
             }
 
