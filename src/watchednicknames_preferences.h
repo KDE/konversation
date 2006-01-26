@@ -13,8 +13,10 @@
 #define WATCHEDNICKNAMES_CONFIG_H
 
 #include "konvisettingspage.h"
+#include "servergroupsettings.h"
 #include "watchednicknames_preferencesui.h"
 
+class QListView;
 class QListViewItem;
 
 /**
@@ -50,6 +52,8 @@ class WatchedNicknames_Config : public WatchedNicknames_ConfigUI, public KonviSe
   protected:
     void enableEditWidgets(bool enabled);
     QStringList currentNotifyList();       // for hasChanged()
+    void addNetworkBranch(Konversation::ServerGroupSettingsPtr group);
+    QListViewItem* getItemById(QListView* listView,int id);
 
     bool newItemSelected;
     QStringList m_oldNotifyList;

@@ -202,6 +202,7 @@ namespace Konversation
         if(dlg.exec() == KDialog::Accepted)
         {
             addServerGroup(dlg.serverGroupSettings());
+            emit serverGroupsChanged();
 
             if(dlg.identitiesNeedsUpdate())
             {
@@ -350,6 +351,7 @@ namespace Konversation
                 m_serverList->setCurrentItem(m_serverList->firstChild());
             }
         }
+        emit serverGroupsChanged();
    }
 
     void ServerListDialog::slotSetGroupExpanded(QListViewItem* item)
@@ -499,7 +501,7 @@ namespace Konversation
 
         for (serverIt = serverList.begin(); serverIt != serverList.end(); ++serverIt)
         {
-            // Produce a string representation of the server object 
+            // Produce a string representation of the server object
             QString name = (*serverIt).server();
 
             if ((*serverIt).port() != 6667)

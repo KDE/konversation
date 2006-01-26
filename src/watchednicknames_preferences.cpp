@@ -1,7 +1,7 @@
 //
 // C++ Implementation: WatchedNicknames_Config
 //
-// Description: 
+// Description:
 //
 //
 // Author: Dario Abatianni <eisfuchs@tigress.com>, (C) 2006
@@ -62,13 +62,6 @@ void WatchedNicknames_Config::restorePageToDefaults()
 // fill in the notify listview with groups and nicknames
 void WatchedNicknames_Config::loadSettings()
 {
-  // get the current notify list and an iterator
-  QMap<int, QStringList> notifyList = Preferences::notifyList();
-  QMapConstIterator<int, QStringList> groupItEnd = notifyList.constEnd();
-
-  // get list of server networks
-  Konversation::ServerGroupList serverGroupList = Preferences::serverGroupList();
-
   // cleanup, so we won't add duplicate items
   notifyListView->clear();
   networkDropdown->clear();
@@ -76,29 +69,41 @@ void WatchedNicknames_Config::loadSettings()
   notifyListView->clearSelection();
   enableEditWidgets(false);
 
+  // get list of server networks
+  Konversation::ServerGroupList serverGroupList = Preferences::serverGroupList();
+
   // iterate through all networks in the server group list in reverse order,
   // to get them sorted correctly
   for(unsigned int gIndex=serverGroupList.count();gIndex;gIndex--)
   {
     // add server group branch to the notify listview so we can add notify items
-    ValueListViewItem* groupItem= new ValueListViewItem(serverGroupList[gIndex-1]->id(),notifyListView,serverGroupList[gIndex-1]->name());
-    // get the group iterator to find all servers in the group
-    QMapConstIterator<int, QStringList> groupIt=notifyList.find(serverGroupList[gIndex-1]->id());
-
-    // get list of nicks for the current group
-    QStringList nicks=groupIt.data();
-    // add group to dropdown list
-    networkDropdown->insertItem(serverGroupList[gIndex-1]->name(),0);
-    // add nicknames to group branch (reverse order again)
-    for(unsigned int index=nicks.count();index;index--)
-    {
-      new KListViewItem(groupItem,nicks[index-1]);
-    } // for
-    // unfold group branch
-    notifyListView->setOpen(groupItem,true);
+    addNetworkBranch(serverGroupList[gIndex-1]);
   }
   // remember current list for hasChanged()
   m_oldNotifyList=currentNotifyList();
+}
+
+// adds a new network branch to the listview
+void WatchedNicknames_Config::addNetworkBranch(Konversation::ServerGroupSettingsPtr serverGroupList)
+{
+  // get the current notify list and an iterator
+  QMap<int, QStringList> notifyList = Preferences::notifyList();
+
+  ValueListViewItem* groupItem= new ValueListViewItem(serverGroupList->id(),notifyListView,serverGroupList->name());
+  // get the group iterator to find all servers in the group
+  QMapConstIterator<int, QStringList> groupIt=notifyList.find(serverGroupList->id());
+
+  // get list of nicks for the current group
+  QStringList nicks=groupIt.data();
+  // add group to dropdown list
+  networkDropdown->insertItem(serverGroupList->name(),0);
+  // add nicknames to group branch (reverse order again)
+  for(unsigned int index=nicks.count();index;index--)
+  {
+    new KListViewItem(groupItem,nicks[index-1]);
+  } // for
+  // unfold group branch
+  notifyListView->setOpen(groupItem,true);
 }
 
 // save list of notifies permanently, taken from the listview
@@ -143,6 +148,7 @@ void WatchedNicknames_Config::saveSettings()
   m_oldNotifyList=currentNotifyList();
 }
 
+// returns the currently edited notify list
 QStringList WatchedNicknames_Config::currentNotifyList()
 {
   // prepare list
@@ -165,6 +171,7 @@ QStringList WatchedNicknames_Config::currentNotifyList()
 
 bool WatchedNicknames_Config::hasChanged()
 {
+  // return true if something has changed
   return(m_oldNotifyList!=currentNotifyList());
 }
 
@@ -191,7 +198,10 @@ void WatchedNicknames_Config::updateNetworkNames()
     // get the name of the group by having a look at the serverGroupSettings
     Konversation::ServerGroupSettingsPtr serverGroup=Preferences::serverGroupById(groupId);
 
-    if(serverGroup) {
+    // check if the server group still exists
+    if(serverGroup)
+    {
+      // get the new name of the server group
       QString serverGroupName=serverGroup->name();
 
       // update the name of the group in the listview
@@ -201,13 +211,51 @@ void WatchedNicknames_Config::updateNetworkNames()
       networkDropdown->insertItem(serverGroupName,-1);
       // get next group
       group=group->nextSibling();
-    } else {
-      QListViewItem* tmp = group->nextSibling();
-      delete group;
-      group = tmp;
     }
-
+    else
+    {
+      // get the next group from the listview
+      QListViewItem* tmp=group->nextSibling();
+      // remove the group
+      delete group;
+      // set the current group
+      group=tmp;
+    }
   } // while
+
+  // get list of server networks
+  Konversation::ServerGroupList serverGroupList = Preferences::serverGroupList();
+
+  // iterate through all networks in the server group list in reverse order
+  // to find if any new networks have been added
+  for(unsigned int gIndex=serverGroupList.count();gIndex;gIndex--)
+  {
+    // try to find the network id in the listview
+    if(!getItemById(listView,serverGroupList[gIndex-1]->id()))
+      // add new server group branch to the notify listview
+      addNetworkBranch(serverGroupList[gIndex-1]);
+  }
+  // remember current list for hasChanged()
+  m_oldNotifyList=currentNotifyList();
+
+}
+
+// check if an item with the given id exists in the listview
+QListViewItem* WatchedNicknames_Config::getItemById(QListView* listView,int id)
+{
+  // get the first item in the listview
+  QListViewItem* lookItem=listView->firstChild();
+  // look for an item with the given id
+  while(lookItem)
+  {
+    // return item if it matches
+    if(static_cast<ValueListViewItem*>(lookItem)->getValue()==id) return lookItem;
+    // otherwise jump to the next group
+    lookItem=lookItem->nextSibling();
+  } // while
+
+  // not found, return 0
+  return 0;
 }
 
 // helper function to disable "New" button on empty listview
