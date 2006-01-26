@@ -72,12 +72,11 @@ void WatchedNicknames_Config::loadSettings()
   // get list of server networks
   Konversation::ServerGroupList serverGroupList = Preferences::serverGroupList();
 
-  // iterate through all networks in the server group list in reverse order,
-  // to get them sorted correctly
-  for(unsigned int gIndex=serverGroupList.count();gIndex;gIndex--)
+  // iterate through all networks in the server group list
+  for(unsigned int gIndex=0;gIndex<serverGroupList.count();gIndex++)
   {
     // add server group branch to the notify listview so we can add notify items
-    addNetworkBranch(serverGroupList[gIndex-1]);
+    addNetworkBranch(serverGroupList[gIndex]);
   }
   // remember current list for hasChanged()
   m_oldNotifyList=currentNotifyList();
@@ -89,7 +88,7 @@ void WatchedNicknames_Config::addNetworkBranch(Konversation::ServerGroupSettings
   // get the current notify list and an iterator
   QMap<int, QStringList> notifyList = Preferences::notifyList();
 
-  ValueListViewItem* groupItem= new ValueListViewItem(serverGroupList->id(),notifyListView,serverGroupList->name());
+  ValueListViewItem* groupItem=new ValueListViewItem(serverGroupList->id(),notifyListView,notifyListView->lastChild(),serverGroupList->name());
   // get the group iterator to find all servers in the group
   QMapConstIterator<int, QStringList> groupIt=notifyList.find(serverGroupList->id());
 

@@ -18,7 +18,13 @@
 ValueListViewItem::ValueListViewItem(int newValue,KListView* parent,QString label)
 : KListViewItem(parent,label)
 {
-    value=newValue;
+    m_value=newValue;
+}
+
+ValueListViewItem::ValueListViewItem(int newValue,KListView* parent,QListViewItem* after,QString label)
+: KListViewItem(parent,after,label)
+{
+    m_value=newValue;
 }
 
 ValueListViewItem::~ValueListViewItem()
@@ -27,5 +33,5 @@ ValueListViewItem::~ValueListViewItem()
 
 const int ValueListViewItem::getValue() const
 {
-    return value;
+    return m_value;
 }

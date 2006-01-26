@@ -25,11 +25,12 @@ class ValueListViewItem : public KListViewItem
 {
     public:
         ValueListViewItem(int newValue,KListView* parent,QString label);
+        ValueListViewItem(int newValue,KListView* parent,QListViewItem* after,QString label);
         ~ValueListViewItem();
 
         const int getValue() const;
 
     protected:
-        int value;
+        int m_value;
 };
 #endif
