@@ -1,9 +1,9 @@
 Changes from 0.18 to 0.19
-We are extremely pleased to announce the immediate release of Konversation 0.19. The focus 
-of this release is on extending and improving upon established functionality. Most notable 
-in this regard are significantly improved management of IRC networks and servers all across 
-the application, a redesigned tab bar and better support for common IRC commands. A long 
-list of further additions and improvements has us confident of this being the best version 
+We are extremely pleased to announce the immediate release of Konversation 0.19. The focus
+of this release is on extending and improving upon established functionality. Most notable
+in this regard are significantly improved management of IRC networks and servers all across
+the application, a redesigned tab bar and better support for common IRC commands. A long
+list of further additions and improvements has us confident of this being the best version
 of Konversation yet. Enjoy!
 
 
@@ -44,7 +44,11 @@ User Interface
   across the application.
 * Various status and error messages have been rewritten for improved consistency and
   clarity.
-* It is now possible to skip displaying the server's MOTD on connect.
+* The KDE standard text font will now be correctly set as initial default chat font.
+* It is now possible to skip displaying a server's MOTD on connect.
+* If the application is set to display a server's MOTD in a fixed-width font and the
+  previously configured default chat font is already a fixed-width font, the chat font
+  will now be used rather than the global KDE default fixed-width font.
 * The state of the automatic spell checking functionality is now remembered across
   sessions and set for all tabs.
 * Networks no longer lose their channel history when their settings are changed.
