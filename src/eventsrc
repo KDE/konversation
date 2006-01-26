@@ -252,7 +252,7 @@ Comment[tr]=Birisi size DCC üzerinden dosya göndermek istiyor
 Comment[uk]=Хтось хоче надіслати вам файл через DCC
 Comment[xx]=xxSomeone wants to transmit a file to you over DCCxx
 Comment[zh_CN]=有人希望通过 DCC 向你传输文件
-default_prentation=0
+default_presentation=0
 
 [join]
 Name=Nick joined channel
