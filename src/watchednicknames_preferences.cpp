@@ -190,15 +190,23 @@ void WatchedNicknames_Config::updateNetworkNames()
     int groupId=static_cast<ValueListViewItem*>(group)->getValue();
     // get the name of the group by having a look at the serverGroupSettings
     Konversation::ServerGroupSettingsPtr serverGroup=Preferences::serverGroupById(groupId);
-    QString serverGroupName=(*serverGroup).name();
 
-    // update the name of the group in the listview
-    group->setText(0,serverGroupName);
+    if(serverGroup) {
+      QString serverGroupName=serverGroup->name();
 
-    // re-add group to dropdown list
-    networkDropdown->insertItem(serverGroupName,-1);
-    // get next group
-    group=group->nextSibling();
+      // update the name of the group in the listview
+      group->setText(0,serverGroupName);
+
+      // re-add group to dropdown list
+      networkDropdown->insertItem(serverGroupName,-1);
+      // get next group
+      group=group->nextSibling();
+    } else {
+      QListViewItem* tmp = group->nextSibling();
+      delete group;
+      group = tmp;
+    }
+
   } // while
 }
 
