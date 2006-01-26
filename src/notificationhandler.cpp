@@ -11,6 +11,8 @@
 */
 #include "notificationhandler.h"
 
+#include <qstylesheet.h>
+
 #include <knotifyclient.h>
 #include <kstringhandler.h>
 #include <klocale.h>
@@ -48,7 +50,7 @@ namespace Konversation
             return;
         }
 
-        QString cleanedMessage = Konversation::removeIrcMarkup(message);
+        QString cleanedMessage = QStyleSheet::escape(Konversation::removeIrcMarkup(message));
         QString cutup = addLineBreaks(cleanedMessage);
 
         KNotifyClient::event(winId(), "message", QString("<qt>&lt;%1&gt; %2</qt>").arg(fromNick).arg(cutup));
@@ -80,7 +82,7 @@ namespace Konversation
             return;
         }
 
-        QString cleanedMessage = Konversation::removeIrcMarkup(message);
+        QString cleanedMessage = QStyleSheet::escape(Konversation::removeIrcMarkup(message));
         QString cutup = addLineBreaks(cleanedMessage);
 
         KNotifyClient::event(winId(), "nick", QString("<qt>&lt;%1&gt; %2</qt>").arg(fromNick).arg(cutup));
