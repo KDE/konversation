@@ -17,11 +17,13 @@ OSD_Config::OSD_Config( QWidget* parent, const char* name, WFlags fl )
     : OSD_ConfigUI( parent, name, fl )
 {
     bool enableScreenChooser = false;
+    QRect screenRect;
 
     for(int i = 0; i < QApplication::desktop()->numScreens(); ++i) {
         kcfg_OSDScreen->insertItem(QString::number(i));
-        QRect screenRect = QApplication::desktop()->screenGeometry(i);
+        screenRect = QApplication::desktop()->screenGeometry(i);
 
+        //Check if we're using xinerama or not
         if(screenRect.left() != 0 || screenRect.top() != 0) {
             enableScreenChooser = true;
         }
