@@ -16,6 +16,7 @@
 */
 
 #include <qmap.h>
+#include <qfontdatabase.h>
 
 #include <ktextbrowser.h>
 
@@ -196,6 +197,8 @@ class IRCView : public KTextBrowser
         QPoint m_pressPosition;
         int m_nickPopupId;
         int m_channelPopupId;
+
+        QFontDatabase m_fontDataBase;
 
         ChatWindow* m_chatWin;
 };

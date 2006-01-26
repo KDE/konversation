@@ -28,7 +28,6 @@
 #include <qwhatsthis.h>
 #include <qmap.h>
 #include <qcolor.h>
-#include <qfont.h>
 #include <qscrollbar.h>
 
 #include <dcopref.h>
@@ -771,7 +770,7 @@ void IRCView::appendServerMessage(const QString& type, const QString& message)
 
     // Fixed width font option for MOTD
     QString fixed;
-    if(Preferences::fixedMOTD())
+    if(Preferences::fixedMOTD() && !m_fontDataBase.isFixedPitch(font().family()))
     {
         if(type == "MOTD")
             fixed=" face=\"" + KGlobalSettings::fixedFont().family() + "\"";
