@@ -255,13 +255,13 @@ void IRCView::urlClickSlot(const QString &url)
     urlClickSlot(url,false);
 }
 
-void IRCView::urlClickSlot(const QString& /* _url */, bool newTab)
+void IRCView::urlClickSlot(const QString& _url, bool newTab)
 {
     // QTextBrowser bug: a link may be screwed up by other links in the same view, so we
     // ignore the URL given by highlighted() signal and take our previously remembered
     // hover URL, which is correct, curiously. -- Eisfuchs (idea by Sho_)
 
-    QString url=m_highlightedURL;
+    QString url=_url;
 
     if (!url.isEmpty() && !url.startsWith("#"))
     {
@@ -1009,7 +1009,10 @@ void IRCView::contentsMousePressEvent(QMouseEvent* ev)
 {
     if (ev->button() == QMouseEvent::LeftButton)
     {
-        m_urlToDrag = anchorAt(viewportToContents(ev->pos()));
+        // QTextBrowser bug: a link may be screwed up by other links in the same view, so we
+        // ignore the URL given by highlighted() signal and take our previously remembered
+        // hover URL, which is correct, curiously. -- Eisfuchs (idea by Sho_)
+        m_urlToDrag = m_highlightedURL; //anchorAt(viewportToContents(ev->pos()));
 
         if (!m_urlToDrag.isNull())
         {
