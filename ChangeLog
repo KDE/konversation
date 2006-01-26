@@ -16,7 +16,7 @@ User Interface
   as well as more intelligent scaling behavior under space-critical conditions.
 * Tabs are now intelligently grouped around their respective connection status tab.
 * Status tab labels now display the user-configured network name where appropriate.
-* The Find Text dialog has been replaced by a search bar that now longer interrupts your
+* The Find Text dialog has been replaced by a search bar that no longer interrupts your
   workflow.
 * Channel links in the chat area now feature a context menu for quick access to common
   actions.
@@ -31,14 +31,14 @@ User Interface
 * Pressing the Arrow Down key in the input line now preserves any input entered by
   adding it to the history.
 * Commands may now be sent as regular messages by typing Ctrl+Enter.
-* The multi-line paste editor window how highlights whitespace characters and prepends
+* The multi-line paste editor window now highlights whitespace characters and prepends
   the existing content of the input line.
 * The Colored Nicknames feature has been improved to better handle nickname changes and
   immediately apply any changes to the color palette.
 * Some previously not configurable notification events have been made configurable.
 * Users leaving a server will now be announced in any query you have open with them.
-* Query tab labels will now update when a name change by a user you have a query open
-  with is detected.
+* Query tab labels will now update when a user you have a query open with changes
+  his/her name.
 * The DCC file transfer dialogs have seen a number of cosmetic improvements. Among other
   things, in the event of a file being renamed on save, the local file name is now shown
   across the application.
