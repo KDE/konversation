@@ -7,6 +7,7 @@
   <include>qsize.h</include>
   <include>kdialog.h</include>
   <include>kuser.h</include>
+  <include>kglobalsettings.h</include>
   <kcfgfile name="konversationrc" />
 
   <group name="Appearance">
@@ -16,12 +17,12 @@
       <whatsthis></whatsthis>
     </entry>
     <entry key="TextFont" type="Font">
-      <default code="true">QFont()</default>
+      <default code="true">KGlobalSettings::generalFont()</default>
       <label></label>
       <whatsthis></whatsthis>
     </entry>
     <entry key="ListFont" type="Font">
-      <default code="true">QFont()</default>
+      <default code="true">KGlobalSettings::generalFont()</default>
       <label></label>
       <whatsthis></whatsthis>
     </entry>
@@ -412,7 +413,7 @@
       <whatsthis></whatsthis>
     </entry>
     <entry key="OSDFont" type="Font">
-      <default code="true">QFont()</default>
+      <default code="true">KGlobalSettings::generalFont()</default>
       <label></label>
       <whatsthis></whatsthis>
     </entry>
@@ -473,12 +474,6 @@
       <label></label>
       <whatsthis></whatsthis>
     </entry>
-<!--      I've taken the below out until it can be fixed... right??
-<entry key="NotifyList" type="String" name="NotifyString">
-      <default></default>
-      <label></label>
-      <whatsthis></whatsthis> -->
-    <!-- </entry> -->
     <entry key="OnStartup" type="Bool" name="OpenWatchedNicksAtStartup">
       <default>false</default>
       <label>Open Watched Nicks tab at application startup</label>
