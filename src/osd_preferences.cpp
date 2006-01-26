@@ -93,7 +93,7 @@ void OSD_Config::showEvent(QShowEvent*)
     m_pOSDPreview->setAlignment((OSDWidget::Alignment)( kcfg_OSDAlignment->value() ) );
     m_pOSDPreview->setOffset(kcfg_OSDOffsetX->value(),kcfg_OSDOffsetY->value());
 
-    m_pOSDPreview->setShown(true);
+    m_pOSDPreview->setShown(kcfg_UseOSD->isChecked());
 }
 
 void OSD_Config::hideEvent(QHideEvent*)
