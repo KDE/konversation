@@ -16,9 +16,18 @@
 OSD_Config::OSD_Config( QWidget* parent, const char* name, WFlags fl )
     : OSD_ConfigUI( parent, name, fl )
 {
+    bool enableScreenChooser = false;
+
     for(int i = 0; i < QApplication::desktop()->numScreens(); ++i) {
         kcfg_OSDScreen->insertItem(QString::number(i));
+        QRect screenRect = QApplication::desktop()->screenGeometry(i);
+
+        if(screenRect.left() != 0 || screenRect.top() != 0) {
+            enableScreenChooser = true;
+        }
     }
+
+    kcfg_OSDScreen->setEnabled(enableScreenChooser);
 
     m_pOSDPreview = new OSDPreviewWidget("Konversation");
     connect(m_pOSDPreview, SIGNAL(positionChanged()), this, SLOT(slotPositionChanged()));
