@@ -680,7 +680,8 @@ namespace Konversation
         }
         else
         {
-            QStringList parameterList = QStringList::split(' ', parameter);
+            QString tmpParameter = parameter;
+            QStringList parameterList = QStringList::split(' ', tmpParameter.replace("\\ ", "%20"));
 
             QString dccType = parameterList[0].lower();
 
