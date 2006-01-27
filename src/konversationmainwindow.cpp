@@ -1256,7 +1256,7 @@ void KonversationMainWindow::updateFrontView()
         {
             action->setText(i18n("Find Text..."));
             action->setEnabled(view->searchView());
-            action->setToolTip("Search for text in the current tab");
+            action->setToolTip(i18n("Search for text in the current tab"));
         }
 
         action = actionCollection()->action("edit_find_next");
