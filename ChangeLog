@@ -77,6 +77,8 @@ User Interface
 * A bug that led to multiple remember lines being inserted into the frontmost tab when
   away mode was activated has been fixed.
 * A bug that led to wrong link addresses being opened from the chat area has been fixed.
+* Bugs that led to wrong URLs being produced by dragging a link from the chat area to
+  the input line have been fixed.
 * Channel names are now better recognized as such by the chat area.
 
 

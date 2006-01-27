@@ -1872,25 +1872,14 @@ void Channel::initializeSplitters()
 
     if (vertSizes.isEmpty())
     {
-        kdDebug() << "Fired vert" << endl;
-        kdDebug() << "Topic button height: " << m_topicButton->height() << endl;
-        kdDebug() << "Total height: " << height() << endl;
-        kdDebug() << "Vert splitter height: " << m_vertSplitter->height() << endl;
-        kdDebug() << "Computed height: " << (m_vertSplitter->height() - m_topicButton->height()) << endl;
         vertSizes << m_topicButton->height() << (height() - m_topicButton->height());
         Preferences::setTopicSplitterSizes(vertSizes);
     }
 
     if (horizSizes.isEmpty())
     {
-        kdDebug() << "Fired horiz" << endl;
         int listWidth = nicknameListView->columnWidth(0) + nicknameListView->columnWidth(1);
         horizSizes << (width() - listWidth) << listWidth;
-
-        kdDebug() << "List width: " << listWidth << endl;
-        kdDebug() << "Total width: " << width() << endl;
-        kdDebug() << "Computed width: " << (width() - listWidth) << endl;
-
         Preferences::setChannelSplitterSizes(horizSizes);
     }
 
