@@ -643,5 +643,12 @@ default_presentation=64
 
 [dccChat]
 Name=DCC Chat
+Name[ga]=Comhrá DCC
+Name[pt]=Conversa DCC
+Name[pt_BR]=Conversa DCC
+Name[sv]=DCC-chatt
 Comment=Someone started a DCC chat with you
+Comment[pt]=Alguém iniciou uma conversa DCC consigo
+Comment[pt_BR]=Alguém iniciou uma conversa DCC consigo
+Comment[sv]=Någon startade en DCC-chatt med dig
 default_presentation=0
