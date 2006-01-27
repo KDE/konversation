@@ -1037,6 +1037,10 @@ void IRCView::contentsMouseMoveEvent(QMouseEvent* ev)
         {
             ux = QString("irc://%1:%2/%3").arg(m_server->getServerName()).arg(m_server->getPort()).arg(m_urlToDrag.mid(2));
         }
+        else if (m_urlToDrag.startsWith("#"))
+        {
+            ux = m_urlToDrag.mid(1);
+        }
 
         KURLDrag* u = new KURLDrag(ux, viewport());
         u->drag();
