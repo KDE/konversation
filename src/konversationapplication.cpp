@@ -432,6 +432,18 @@ void KonversationApplication::readOptions()
     // get standard config file
     KConfig* config=kapp->config();
 
+    // read nickname sorting order for channel nick lists
+    config->setGroup("Sort Nicknames");
+    QString sortOrder=config->readEntry("SortOrder");
+    QStringList sortOrderList=QStringList::split("",sortOrder);
+    sortOrderList.sort();
+    if(sortOrderList.join("")!="-hopqv")
+    {
+      kdDebug() << "KonversationApplication::readOptions: Broken nick list sort order found, resetting to defaults." << endl;
+      sortOrder=Preferences::defaultNicknameSortingOrder();
+    }
+    Preferences::setSortOrder(sortOrder);
+
     // Identity list
     QStringList identityList=config->groupList().grep(QRegExp("Identity [0-9]+"));
     if(!identityList.isEmpty())
