@@ -54,6 +54,7 @@ class SearchBar : public QHBox
     protected:
 
         void focusInEvent(QFocusEvent* e);
+        virtual void showEvent(QShowEvent* e);
 
     public slots:
 

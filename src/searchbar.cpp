@@ -89,10 +89,17 @@ void SearchBar::focusInEvent(QFocusEvent* e)
     m_lineEdit->setFocus();
 }
 
+void SearchBar::showEvent(QShowEvent *e)
+{
+    QHBox::showEvent(e);
+    m_lineEdit->selectAll();
+}
+
 void SearchBar::hide()
 {
     m_timer->stop();
     QHBox::hide();
+    m_lineEdit->clearFocus();
 }
 
 void SearchBar::slotTextChanged()
