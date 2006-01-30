@@ -55,7 +55,7 @@ class SearchBar : public QHBox
 
         void focusInEvent(QFocusEvent* e);
         virtual void showEvent(QShowEvent* e);
-        bool SearchBar::focusedChild();
+        bool focusedChild();
     public slots:
 
         virtual void hide();
