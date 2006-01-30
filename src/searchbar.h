@@ -66,11 +66,12 @@ class SearchBar : public QHBox
         void slotFind();
         void slotFindNext();
 
-        signals:
+    signals:
 
         void signalSearchChanged(const QString& pattern);
         void signalSearchNext();
         void signalPropertiesChanged();
+        void hidden();
 
     private:
 

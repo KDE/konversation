@@ -100,6 +100,7 @@ void SearchBar::hide()
     m_timer->stop();
     QHBox::hide();
     m_lineEdit->clearFocus();
+    emit hidden();
 }
 
 void SearchBar::slotTextChanged()

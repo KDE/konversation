@@ -47,6 +47,7 @@ IRCViewBox::IRCViewBox(QWidget* parent, Server* newServer)
         this, SLOT(slotSearchNext()));
     connect(m_ircView, SIGNAL(doSearch()),
         SLOT(slotSearch()));
+    connect(m_searchBar, SIGNAL(hidden()), m_ircView, SIGNAL(gotFocus()));
 }
 
 IRCViewBox::~IRCViewBox()
@@ -63,10 +64,10 @@ IRCView* IRCViewBox::ircView() const
 void IRCViewBox::slotSearch()
 {
     if (m_searchBar->isVisible())
-      {
-	m_searchBar->hide();
-	return;
-      }
+    {
+        m_searchBar->hide();
+        return;
+    }
     
     m_searchBar->show();
     m_searchBar->setFocus();
