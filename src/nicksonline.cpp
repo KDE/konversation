@@ -39,6 +39,7 @@
 #include "server.h"
 #include "konversationapplication.h"
 #include "images.h"
+#include "query.h"
 #include "linkaddressbook/linkaddressbookui.h"
 #include "linkaddressbook/addressbook.h"
 #include "linkaddressbook/nicksonlinetooltip.h"
@@ -698,6 +699,11 @@ void NicksOnline::doCommand(int id)
         case ciWhois:
             server->queue("WHOIS "+nickname);
             return;
+        case ciOpenQuery:
+            NickInfoPtr nickInfo = server->obtainNickInfo(nickname);
+            class Query* query = server->addQuery(nickInfo, true /*we initiated*/);
+            server->getMainWindow()->showView(query);
+            return;
     }
 
     refreshItem(item);
@@ -827,6 +833,7 @@ void NicksOnline::slotNickListView_RightButtonClicked(QListViewItem* item, const
             m_popupMenu->insertItem(i18n("Create New C&ontact..."), ciAddressbookNew);
             m_popupMenu->insertSeparator();
             m_popupMenu->insertItem(i18n("&Whois"), ciWhois);
+            m_popupMenu->insertItem(i18n("Open &Query"), ciOpenQuery);
             if (item->text(nlvcServerName).isEmpty())
                 m_popupMenu->insertItem(i18n("&Join Channel"), ciJoinChannel);
             break;
@@ -841,6 +848,7 @@ void NicksOnline::slotNickListView_RightButtonClicked(QListViewItem* item, const
             m_popupMenu->insertItem(SmallIconSet("editdelete"), i18n("&Delete Association"), ciAddressbookDelete);
             m_popupMenu->insertSeparator();
             m_popupMenu->insertItem(i18n("&Whois"), ciWhois);
+            m_popupMenu->insertItem(i18n("Open &Query"), ciOpenQuery);
             if (item->text(nlvcServerName).isEmpty())
                 m_popupMenu->insertItem(i18n("&Join Channel"), ciJoinChannel);
             break;
