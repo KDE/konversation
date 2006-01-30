@@ -26,7 +26,9 @@
 #include <qaccel.h>
 #include <qlabel.h>
 #include <qpixmap.h>
+#include <qobjectlist.h>
 
+#include <kdebug.h>
 #include <kapplication.h>
 #include <kiconloader.h>
 
@@ -95,12 +97,32 @@ void SearchBar::showEvent(QShowEvent *e)
     m_lineEdit->selectAll();
 }
 
+bool SearchBar::focusedChild()
+{
+    QObjectList *l = queryList("QWidget", 0,0, true);
+    QObjectListIt it( *l ); 
+    QObject *obj;
+    bool has=false;
+
+    while ((obj = it.current()) != 0)
+    {
+        ++it;
+        if (((QWidget*)obj)->hasFocus())
+        {
+            has=true;
+            break;
+        }
+    }
+    delete l;
+    return has;
+}
+
 void SearchBar::hide()
 {
     m_timer->stop();
     QHBox::hide();
-    m_lineEdit->clearFocus();
-    emit hidden();
+    if (focusedChild())
+        emit hidden();
 }
 
 void SearchBar::slotTextChanged()
