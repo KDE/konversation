@@ -39,6 +39,13 @@ namespace Konversation
             void refreshEnableModes();
             void toggleAdvancedModes();
 
+            void refreshBanList();
+            void addBan(const QString& newban);
+            void addBanClicked();
+            void removeBan(const QString& ban);
+            void removeBanClicked();
+            void banEdited(QListViewItem *edited);
+
             void closeOptionsDialog();
             void changeOptions();
 
@@ -48,10 +55,31 @@ namespace Konversation
 
         protected:
             bool m_editingTopic;
+            QListViewItem *m_NewBan;
 
         private:
             ChannelOptionsUI* m_widget;
             Channel *m_channel;
+    };
+
+    // This is needed to overcome two deficiencies in KListViewItem
+    // First there is no signal emited when a rename is canceled
+    // Second there is no way to get the old value of an item after a rename
+    class BanListViewItem : public KListViewItem
+    {
+        public:
+            BanListViewItem( QListView *parent );
+            BanListViewItem( QListView *parent, bool isNew );
+            BanListViewItem ( QListView *parent, QString label1, QString label2 = QString::null, QString label3 = QString::null, QString label4 = QString::null, QString label5 = QString::null, QString label6 = QString::null, QString label7 = QString::null, QString label8 = QString::null );
+            BanListViewItem ( QListView *parent, bool isNew, QString label1, QString label2 = QString::null, QString label3 = QString::null, QString label4 = QString::null, QString label5 = QString::null, QString label6 = QString::null, QString label7 = QString::null, QString label8 = QString::null );
+            virtual void startRename( int col );
+            virtual QString getOldValue() { return m_oldValue; }
+
+        protected:
+            virtual void cancelRename ( int col );
+
+            QString m_oldValue;
+            bool m_isNewBan;
     };
 
 }

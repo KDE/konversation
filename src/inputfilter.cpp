@@ -484,6 +484,11 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
             // Upon JOIN we're going to receive some NAMES input from the server which
             // we need to be able to tell apart from manual invocations of /names
             setAutomaticRequest("NAMES",channelName,true);
+
+            // Initiate channel ban list
+            server->getChannelByName(channelName)->clearBanList();
+            setAutomaticRequest("BANLIST",channelName,true);
+            server->queue("MODE "+channelName+" +b");
         }
         else
         {
@@ -1551,6 +1556,29 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     server->appendMessageToFrontmost(i18n("Away"),i18n("You are not marked as being away."));
                 }
 
+                break;
+            }
+            case RPL_BANLIST:
+            {
+                if (getAutomaticRequest("BANLIST", parameterList[1]))
+                {
+                    server->addBan(parameterList[1], parameterList.join(" ").section(' ', 2, 4));
+                } else {
+                    QDateTime when;
+                    when.setTime_t(parameterList[4].toUInt());
+
+                    server->appendMessageToFrontmost(i18n("BanList:%1").arg(parameterList[1]), i18n("BanList message: e.g. *!*@aol.com set by MrGrim on <date>", "%1 set by %2 on %3").arg(parameterList[2]).arg(parameterList[3].section('!', 0, 0)).arg(when.toString(Qt::LocalDate)));
+                }
+                break;
+            }
+            case RPL_ENDOFBANLIST:
+            {
+                if (getAutomaticRequest("BANLIST", parameterList[1]))
+                {
+                    setAutomaticRequest("BANLIST", parameterList[1], false);
+                } else {
+                    server->appendMessageToFrontmost(i18n("BanList:%1").arg(parameterList[1]), i18n("End of Ban List."));
+                }
                 break;
             }
             case ERR_NOCHANMODES:

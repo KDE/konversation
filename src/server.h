@@ -429,7 +429,9 @@ class Server : public QObject
         void notifyTimeout();
 
         void enableIdentifyMsg(bool enabled);
-	bool identifyMsgEnabled();
+        bool identifyMsgEnabled();
+        void addBan(const QString &channel, const QString &ban);
+        void removeBan(const QString &channel, const QString &ban);
 
     protected slots:
 

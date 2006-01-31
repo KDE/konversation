@@ -2455,4 +2455,42 @@ bool Channel::eventFilter(QObject* watched, QEvent* e)
     return ChatWindow::eventFilter(watched, e);
 }
 
+void Channel::addBan(const QString& ban)
+{
+	for ( QStringList::Iterator it = m_BanList.begin(); it != m_BanList.end(); ++it )
+	{
+		if ((*it).section(' ', 0, 0) == ban.section(' ', 0, 0))
+		{
+			// Ban is already in list.
+			it = m_BanList.remove(it);
+
+			emit banRemoved(ban.section(' ', 0, 0));
+		}
+	}
+
+	m_BanList.prepend(ban);
+
+	emit banAdded(ban);
+}
+
+void Channel::removeBan(const QString& ban)
+{
+	for ( QStringList::Iterator it = m_BanList.begin(); it != m_BanList.end(); ++it )
+	{
+		if ((*it).section(' ', 0, 0) == ban)
+		{
+			it = m_BanList.remove(it);
+
+			emit banRemoved(ban);
+		}
+	}
+}
+
+void Channel::clearBanList()
+{
+	m_BanList.clear();
+
+	emit banListCleared();
+}
+
 #include "channel.moc"

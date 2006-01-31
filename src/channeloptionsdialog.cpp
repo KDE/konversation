@@ -42,6 +42,7 @@ namespace Konversation
 
         // don't allow sorting. most recent topic is always first
         m_widget->topicHistoryList->setSortColumn(-1);
+        m_widget->banList->setDefaultRenameAction(QListView::Accept);
         // hide column where the complete topic will be put in for convenience
         m_widget->topicHistoryList->hideColumn(2);
         // do not allow the user to resize the hidden column back into view
@@ -63,7 +64,17 @@ namespace Konversation
         connect(this, SIGNAL(cancelClicked()), this, SLOT(closeOptionsDialog()));
         connect(this, SIGNAL(okClicked()), this, SLOT(changeOptions()));
 
+        connect(m_channel, SIGNAL(banAdded(const QString&)), this, SLOT(addBan(const QString&)));
+        connect(m_channel, SIGNAL(banRemoved(const QString&)), this, SLOT(removeBan(const QString&)));
+        connect(m_channel, SIGNAL(banListCleared()), m_widget->banList, SLOT(clear()));
+
+        connect(m_widget->addBan, SIGNAL(clicked()), this, SLOT(addBanClicked()));
+        connect(m_widget->removeBan, SIGNAL(clicked()), this, SLOT(removeBanClicked()));
+        connect(m_widget->banList, SIGNAL(itemRenamed (QListViewItem*)), this, SLOT(banEdited(QListViewItem*)));
+        connect(m_widget->banList, SIGNAL(itemRenamed (QListViewItem*, int, const QString&)), this, SLOT(banEdited(QListViewItem*)));
+
         refreshTopicHistory();
+        refreshBanList();
         refreshAllowedChannelModes();
         refreshModes();
     }
@@ -186,7 +197,12 @@ namespace Konversation
         m_widget->secretModeChBox->setEnabled(enable);
         m_widget->keyModeChBox->setEnabled(enable);
         m_widget->keyModeEdit->setEnabled(enable);
+
+        m_widget->banList->setItemsRenameable(enable);
+        m_widget->addBan->setEnabled(enable);
+        m_widget->removeBan->setEnabled(enable);
     }
+
     void ChannelOptionsDialog::refreshAllowedChannelModes()
     {
         QString modeString = m_channel->getServer()->allowedChannelModes();
@@ -333,6 +349,126 @@ namespace Konversation
         return modes;
     }
 
+    // Ban List tab related functions
+
+    void ChannelOptionsDialog::refreshBanList()
+    {
+        QStringList banlist = m_channel->getBanList();
+        m_widget->banList->clear();
+
+        for(QStringList::const_iterator it = banlist.fromLast(); it != banlist.end(); --it)
+        {
+            QDateTime date;
+            date.setTime_t((*it).section(' ', 2 ,2).toUInt());
+
+            new BanListViewItem(m_widget->banList, (*it).section(' ', 0, 0), (*it).section(' ', 1, 1).section('!', 0, 0), date.toString(Qt::LocalDate));
+        }
+    }
+
+    void ChannelOptionsDialog::addBan(const QString& newban)
+    {
+        QDateTime date;
+        date.setTime_t(newban.section(' ', 2 ,2).toUInt());
+
+        new BanListViewItem(m_widget->banList, newban.section(' ', 0, 0), newban.section(' ', 1, 1).section('!', 0, 0), date.toString(Qt::LocalDate));
+    }
+
+    void ChannelOptionsDialog::removeBan(const QString& ban)
+    {
+        delete m_widget->banList->findItem(ban, 0);
+    }
+
+    void ChannelOptionsDialog::banEdited(QListViewItem *edited)
+    {
+        if (edited == m_NewBan)
+        {
+            if (!m_NewBan->text(0).isEmpty())
+            {
+                m_channel->getServer()->requestBan(QStringList(m_NewBan->text(0)), m_channel->getName(), QString::null);
+            }
+
+            // We will delete the item and let the addBan slot handle
+            // readding the item because for some odd reason using
+            // startRename causes further attempts to rename the item
+            // using 2 mouse clicks to fail in odd ways.
+            delete edited;
+
+            return;
+        }
+
+        BanListViewItem *new_edited = dynamic_cast <BanListViewItem*> (edited);
+        if (new_edited == NULL) return; // Should not happen.
+
+        if (new_edited->getOldValue() != new_edited->text(0))
+        {
+            m_channel->getServer()->requestUnban(new_edited->getOldValue(), m_channel->getName());
+
+            if (!new_edited->text(0).isEmpty())
+            {
+                m_channel->getServer()->requestBan(QStringList(new_edited->text(0)), m_channel->getName(), QString::null);
+            }
+
+            // We delete the existing item because it's possible the server may
+            // Modify the ban causing us not to catch it. If that happens we'll be
+            // stuck with a stale item and a new item with the modified hostmask.
+            delete new_edited;
+        }
+    }
+
+    void ChannelOptionsDialog::addBanClicked()
+    {
+        m_NewBan = new BanListViewItem(m_widget->banList, true);
+
+        m_NewBan->setRenameEnabled(0,true);
+        m_NewBan->startRename(0);
+    }
+
+    void ChannelOptionsDialog::removeBanClicked()
+    {
+        if (m_widget->banList->currentItem())
+        {
+            m_channel->getServer()->requestUnban(m_widget->banList->currentItem()->text(0), m_channel->getName());
+        }
+    }
+
+    // This is our implementation of BanListViewItem
+
+    BanListViewItem::BanListViewItem(QListView *parent)
+      : KListViewItem(parent)
+    {
+        m_isNewBan = 0;
+    }
+
+    BanListViewItem::BanListViewItem(QListView *parent, bool isNew)
+      : KListViewItem(parent)
+    {
+        m_isNewBan = isNew;
+    }
+
+    BanListViewItem::BanListViewItem ( QListView *parent, QString label1, QString label2, QString label3, QString label4, QString label5, QString label6, QString label7, QString label8 ) : KListViewItem(parent, label1, label2, label3, label4, label5, label6, label7, label8)
+    {
+        m_isNewBan = 0;
+    }
+
+    BanListViewItem::BanListViewItem ( QListView *parent, bool isNew, QString label1, QString label2, QString label3, QString label4, QString label5, QString label6, QString label7, QString label8 ) : KListViewItem(parent, label1, label2, label3, label4, label5, label6, label7, label8)
+    {
+        m_isNewBan = isNew;
+    }
+
+    void BanListViewItem::startRename( int col )
+    {
+        m_oldValue = text(col);
+
+        KListViewItem::startRename(col);
+    }
+
+    void BanListViewItem::cancelRename( int col )
+    {
+        if (text(col).isEmpty() && m_isNewBan)
+            delete this;
+        else
+            KListViewItem::cancelRename(col);
+    }
 }
 
 #include "channeloptionsdialog.moc"

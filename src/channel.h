@@ -155,7 +155,16 @@ class Channel : public ChatWindow
 
         virtual bool eventFilter(QObject* watched, QEvent* e);
 
+        void addBan(const QString& ban);
+        void removeBan(const QString& ban);
+
+        void clearBanList();
+        QStringList getBanList() const { return m_BanList; }
+
     signals:
+        void banAdded(const QString& newban);
+        void banRemoved(const QString& newban);
+        void banListCleared();
         void sendFile();
         void topicHistoryChanged();
         void modesChanged();
@@ -258,6 +267,7 @@ class Channel : public ChatWindow
         QToolButton* m_topicButton;
         Konversation::TopicLabel* topicLine;
         QStringList m_topicHistory;
+	QStringList m_BanList;
         QHBox* modeBox;
 
         QString key;

@@ -2087,6 +2087,17 @@ void Server::updateChannelMode(const QString &updater, const QString &channelNam
         addNickToJoinedChannelsList(channelName, parameter);
     }
 
+    // Update channel ban list.
+    if (mode == 'b')
+    {
+        if (plus)
+        {
+            QDateTime when;
+            addBan(channelName, QString("%1 %2 %3").arg(parameter).arg(updater).arg(QDateTime::currentDateTime().toTime_t()));
+        } else {
+            removeBan(channelName, parameter);
+        }
+    }
 }
 
 void Server::updateChannelModeWidgets(const QString &channelName, char mode, const QString &parameter)
@@ -3257,6 +3268,24 @@ void Server::enableIdentifyMsg(bool enabled)
 bool Server::identifyMsgEnabled()
 {
     return m_identifyMsg;
+}
+
+void Server::addBan(const QString &channel, const QString &ban)
+{
+    Channel* outChannel = getChannelByName(channel);
+    if(outChannel)
+    {
+        outChannel->addBan(ban);
+    }
+}
+
+void Server::removeBan(const QString &channel, const QString &ban)
+{
+    Channel* outChannel = getChannelByName(channel);
+    if(outChannel)
+    {
+        outChannel->removeBan(ban);
+    }
 }
 
 #include "server.moc"
