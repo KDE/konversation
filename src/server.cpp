@@ -2625,10 +2625,13 @@ void Server::nickWasKickedFromChannel(const QString &channelName, const QString 
     {
         ChannelNickPtr channelNick = getChannelNick(channelName, nickname);
         ChannelNickPtr kickerNick = getChannelNick(channelName, kicker);
-        if(channelNick) outChannel->kickNick(channelNick, *kickerNick, reason);
+        if(channelNick)
+        {
+          outChannel->kickNick(channelNick, *kickerNick, reason);
+          // Tell Nickinfo
+          removeChannelNick(channelName,nickname);
+        }
     }
-
-    // TODO: Need to update NickInfo, or does that happen in method above?
 }
 
 void Server::removeNickFromServer(const QString &nickname,const QString &reason)
