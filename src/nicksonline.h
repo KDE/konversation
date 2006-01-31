@@ -142,6 +142,12 @@ class NicksOnline : public ChatWindow
          */
         QListViewItem* findItemChild(const QListViewItem* parent, const QString& name);
         /**
+         * Returns a pointer to the network QListViewItem with the given name.
+         * @param name              The name of the network, assumed to be in column 0 of the item.
+         * @return                  Pointer to the QListViewItem or 0 if not found.
+         */
+        QListViewItem* findNetworkRoot(const QString& name);
+        /**
          * Refresh the nicklistview for all servers.
          */
         void refreshAllServerOnlineLists();

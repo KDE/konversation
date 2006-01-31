@@ -184,6 +184,21 @@ QListViewItem* NicksOnline::findItemChild(const QListViewItem* parent, const QSt
 }
 
 /**
+ * Returns a pointer to the network QListViewItem with the given name.
+ * @param name              The name of the network, assumed to be in column 0 of the item.
+ * @return                  Pointer to the QListViewItem or 0 if not found.
+ */
+QListViewItem* NicksOnline::findNetworkRoot(const QString& name)
+{
+    QListViewItem* child;
+    for (child = getNickListView()->firstChild(); (child) ; child = child->nextSibling())
+    {
+        if (child->text(0) == name) return child;
+    }
+    return 0;
+}
+
+/**
  * Return a string containing formatted additional information about a nick.
  * @param nickInfo          A pointer to NickInfo structure for the nick.  May be Null.
  * @param addressee         Addressbook entry for the nick.  May be empty.
@@ -241,7 +256,7 @@ void NicksOnline::updateServerOnlineList(Server* servr)
     // TODO: The method name "getServerGroup" is a misnomer.  Actually returns the
     // network for a server.
     QString networkName = servr->getServerGroup();
-    QListViewItem* networkRoot = m_nickListView->findItem(networkName, nlvcNetwork);
+    QListViewItem* networkRoot = findNetworkRoot(networkName);
     // If network is not in our list, add it.
     if (!networkRoot)
     {
