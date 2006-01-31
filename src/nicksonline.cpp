@@ -50,8 +50,9 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
     setName(i18n("Watched Nicks Online"));
     setType(ChatWindow::NicksOnline);
 
-    // Convenience constant for the internationalized string "Offline".
-    c_i18nOffline = i18n("Offline");
+    // Convenience constant for marking a listview item as "Offline" item.
+    // FIXME: Redesign! not a good idea to treat offline branch item the same as nicks
+    c_offline = ".Off.";
 
     m_nickListView=new KListView(this);
 
@@ -168,17 +169,24 @@ KListView* NicksOnline::getNickListView()
 /**
  * Returns the named child of parent item in a KListView.
  * @param parent            Pointer to a QListViewItem.
- * @param name              The name in the desired child QListViewItem.  Name
- *                          is assumed to be in column 0 of the item.
+ * @param name              The name in the desired child QListViewItem.
+ * @param column            The column where to look in, defaults to 0
  * @return                  Pointer to the child QListViewItem or 0 if not found.
  */
-QListViewItem* NicksOnline::findItemChild(const QListViewItem* parent, const QString& name)
+QListViewItem* NicksOnline::findItemChild(const QListViewItem* parent, const QString& name, int column)
 {
     if (!parent) return 0;
     QListViewItem* child;
     for (child = parent->firstChild(); (child) ; child = child->nextSibling())
     {
-        if (child->text(0) == name) return child;
+        // check if we are looking for the offline column or a regular name ...
+        // FIXME: it works but it badly needs a redesign. the offline item should
+        // not be treated equally to a regular item, or we find users with the same
+        // name as the offline column
+        if(!column==0 || child->text(nlvcOffline).isEmpty())
+        {
+            if (child->text(column) == name) return child;
+        }
     }
     return 0;
 }
@@ -273,9 +281,13 @@ void NicksOnline::updateServerOnlineList(Server* servr)
     if (!serverList.contains(serverName)) serverList.append(serverName);
     networkRoot->setText(nlvcAdditionalInfo, serverList.join(","));
     // Get item in nicklistview for the Offline branch.
-    QListViewItem* offlineRoot = findItemChild(networkRoot, c_i18nOffline);
-    if (!offlineRoot) offlineRoot = new KListViewItem(networkRoot, c_i18nOffline);
-    offlineRoot->setText(nlvcServerName, serverName);
+    QListViewItem* offlineRoot = findItemChild(networkRoot, c_offline, nlvcOffline);
+    if (!offlineRoot)
+    {
+        offlineRoot = new KListViewItem(networkRoot, i18n("Offline"));
+        offlineRoot->setText(nlvcServerName, serverName);
+        offlineRoot->setText(nlvcOffline, c_offline);
+    }
 
     // Get watch list.
     QStringList watchList = servr->getWatchList();
@@ -400,9 +412,9 @@ void NicksOnline::updateServerOnlineList(Server* servr)
     while (item)
     {
         QListViewItem* nextItem = item->nextSibling();
-        QString nickname = item->text(nlvcNick);
-        if (nickname != c_i18nOffline)
+        if (item->text(nlvcOffline) != c_offline)
         {
+            QString nickname = item->text(nlvcNick);
             if ((watchList.find(nickname) == watchList.end()) &&
                 (serverName == item->text(nlvcServerName))) delete item;
         }
@@ -563,7 +575,8 @@ bool NicksOnline::getItemServerAndNick(const QListViewItem* item, QString& serve
         serverName = item->text(nlvcServerName);
     }
     nickname = item->text(nlvcNick);
-    if (nickname == c_i18nOffline) return false;
+    // offline columns are not nick names
+    if (item->text(nlvcOffline) == c_offline) return false;
     return true;
 }
 

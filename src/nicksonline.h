@@ -47,7 +47,8 @@ class NicksOnline : public ChatWindow
             nlvcChannel = 0,
             nlvcKabc = 1,
             nlvcAdditionalInfo = 1,
-            nlvcServerName = 2                    // hidden
+            nlvcServerName = 2,                    // hidden
+            nlvcOffline = 3                        // hidden
         };
         // Ids associated with menu/button commands.
         enum CommandIDs
@@ -136,11 +137,11 @@ class NicksOnline : public ChatWindow
         /**
          * Returns the named child of parent item in a KListView.
          * @param parent            Pointer to a QListViewItem.
-         * @param name              The name in the desired child QListViewItem.  Name
-         *                          is assumed to be in column 0 of the item.
+         * @param name              The name in the desired child QListViewItem.
+         * @param name              The column where to look in, defaults to 0.
          * @return                  Pointer to the child QListViewItem or 0 if not found.
          */
-        QListViewItem* findItemChild(const QListViewItem* parent, const QString& name);
+        QListViewItem* findItemChild(const QListViewItem* parent, const QString& name, int column=0);
         /**
          * Returns a pointer to the network QListViewItem with the given name.
          * @param name              The name of the network, assumed to be in column 0 of the item.
@@ -241,8 +242,8 @@ class NicksOnline : public ChatWindow
         QPopupMenu* m_popupMenu;
         // Helper to display tooltip information for nicks.
         Konversation::KonversationNicksOnlineToolTip *m_tooltip;
-        // A string containing internationalized "Offline".
-        QString c_i18nOffline;
+        // A string containing the identifier for the "Offline" listview item
+        QString c_offline;
         // Timer for refreshing display and generating WHOISes.
         QTimer* m_timer;
         // Addressbook icon.
