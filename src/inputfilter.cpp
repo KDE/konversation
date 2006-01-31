@@ -1191,13 +1191,13 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 for(unsigned int index=0; index < channelList.count(); index++)
                 {
                     QString lookChannel=channelList[index];
-                    if(lookChannel.startsWith("*"))
+                    if(lookChannel.startsWith("*") || lookChannel.startsWith("&"))
                     {
                         adminChannels.append(lookChannel.mid(1));
                         server->setChannelNick(lookChannel.mid(1), parameterList[1], 16);
                     }
                                                   // See bug #97354 part 2
-                    else if(lookChannel.startsWith("!") && server->isAChannel(lookChannel.mid(1)))
+                    else if((lookChannel.startsWith("!") || lookChannel.startsWith("~")) && server->isAChannel(lookChannel.mid(1)))
                     {
                         ownerChannels.append(lookChannel.mid(1));
                         server->setChannelNick(lookChannel.mid(1), parameterList[1], 8);
