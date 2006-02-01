@@ -1967,7 +1967,7 @@ void Channel::nicknameComboboxChanged()
     if(oldNick!=newNick)
     {
       nicknameCombobox->setCurrentText(oldNick);
-      m_server->queue("NICK "+newNick);
+      changeNickname(newNick);
     }
     // return focus to input line
     channelInput->setFocus();
@@ -1975,7 +1975,8 @@ void Channel::nicknameComboboxChanged()
 
 void Channel::changeNickname(const QString& newNickname)
 {
-    m_server->queue("NICK "+newNickname);
+    if (!newNickname.isEmpty())
+        m_server->queue("NICK "+newNickname);
 }
 
 void Channel::addPendingNickList(const QStringList& pendingChannelNickList)
