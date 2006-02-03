@@ -1,4 +1,4 @@
-<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>TabBar_Config</class>
 <comment>This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -15,6 +15,9 @@ the Free Software Foundation; either version 2 of the License, or
             <width>409</width>
             <height>336</height>
         </rect>
+    </property>
+    <property name="caption">
+        <string>TabBar_Config</string>
     </property>
     <grid>
         <property name="name">
@@ -50,7 +53,7 @@ the Free Software Foundation; either version 2 of the License, or
                         <cstring>kcfg_BringToFront</cstring>
                     </property>
                     <property name="text">
-                        <string>Bring new tabs to &amp;front</string>
+                        <string>&amp;Bring new tabs to front</string>
                     </property>
                 </widget>
                 <widget class="QCheckBox">
@@ -59,6 +62,20 @@ the Free Software Foundation; either version 2 of the License, or
                     </property>
                     <property name="text">
                         <string>When someone queries you, focus new &amp;query</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+Q</string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox">
+                    <property name="name">
+                        <cstring>kcfg_UseMaxSizedTabs</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Limit the si&amp;ze of the tab labels to fit all on screen</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+Z</string>
                     </property>
                 </widget>
             </vbox>
@@ -87,10 +104,10 @@ the Free Software Foundation; either version 2 of the License, or
                         <cstring>kcfg_ShowTabBarCloseButton</cstring>
                     </property>
                     <property name="text">
-                        <string>Show a close button on the right side of the tab bar</string>
+                        <string>Show a close button on the right si&amp;de of the tab bar</string>
                     </property>
                     <property name="accel">
-                        <string></string>
+                        <string>Alt+D</string>
                     </property>
                 </widget>
             </vbox>

@@ -11,6 +11,10 @@
   <kcfgfile name="konversationrc" />
 
   <group name="Appearance">
+    <entry key="UseMaxSizedTabs" type="Bool">
+    <default>true</default>
+    <label>Limit the size of the tab labels to fit all on screen</label>
+    </entry>
     <entry key="TopicSplitterSizes" type="IntList">
       <default></default>
       <label></label>

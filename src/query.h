@@ -29,7 +29,6 @@
 class QLineEdit;
 class QCheckBox;
 class QLabel;
-class QStrList;
 
 class IRCInput;
 

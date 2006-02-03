@@ -108,7 +108,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
     viewContainer->setTabReorderingEnabled(true);
     viewContainer->setTabCloseActivatePrevious(true);
     #if KDE_IS_VERSION(3,4,0)
-    viewContainer->setAutomaticResizeTabs(true);
+    viewContainer->setAutomaticResizeTabs(Preferences::useMaxSizedTabs());
     #endif
     //  viewContainer->setHoverCloseButtonDelayed(false);
     setCentralWidget(viewContainer);
@@ -474,7 +474,9 @@ void KonversationMainWindow::updateAppearance()
 {
     updateTabPlacement();
     setShowTabBarCloseButton(Preferences::showTabBarCloseButton());
-
+    #if KDE_IS_VERSION(3,4,0)
+    viewContainer->setAutomaticResizeTabs(Preferences::useMaxSizedTabs());
+    #endif
     int statH = fontMetrics().height()+2;
     m_generalInfoLabel->setFixedHeight( statH );
 
