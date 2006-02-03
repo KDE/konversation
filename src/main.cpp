@@ -62,7 +62,6 @@ int main(int argc, char* argv[])
     aboutData.addAuthor("Peter Simonsson",I18N_NOOP("Maintainer"),"psn@linux.se");
     aboutData.addAuthor("Eike Hein",I18N_NOOP("Co-Maintainer, User interaction, Network semantics, Protocol handling"),"sho@eikehein.com");
     aboutData.addAuthor("John Tapsell",I18N_NOOP("Refactoring, KAddressBook/Kontact integration"), "john@geola.co.uk");
-    aboutData.addAuthor("İsmail Dönmez",I18N_NOOP("Blowfish Support, SSL Support, Ported to KNetwork, Colored Nicknames, Icon Theme Support"),"ismail@kde.org");
     aboutData.addAuthor("Shintaro Matsuoka",I18N_NOOP("DCC rewrite, Encodings improvements, OSD positioning"),"shin@shoegazed.org");
     aboutData.addAuthor("Christian Muehlhaeuser",I18N_NOOP("Multiple modes extension, Close widget placement, OSD functionality"),"chris@chris.de");
     aboutData.addAuthor("Gary Cramblitt",I18N_NOOP("Documentation, Watched nicks online improvements, Custom web browser extension"),"garycramblitt@comcast.net");
@@ -71,6 +70,7 @@ int main(int argc, char* argv[])
     aboutData.addAuthor("Stanislav Karchebny",I18N_NOOP("Non-Latin1-Encodings"),"berkus@users.sourceforge.net");
     aboutData.addAuthor("Mickael Marchand",I18N_NOOP("Konsole part view"),"marchand@kde.org");
 
+    aboutData.addCredit("İsmail Dönmez",I18N_NOOP("Blowfish Support, SSL Support, Ported to KNetwork, Colored Nicknames, Icon Theme Support"),"ismail@kde.org");
     aboutData.addCredit("Michael Goettsche",I18N_NOOP("Quick connect, Ported new OSD, other features and bugfixes"),"michael.goettsche@kdemail.net");
     aboutData.addCredit("Benjamin Meyer",I18N_NOOP("A Handful of fixes and code cleanup"),"ben+konversation@meyerhome.net");
     aboutData.addCredit("Jakub Stachowski",I18N_NOOP("Drag&Drop improvements"),"qbast@go2.pl");
