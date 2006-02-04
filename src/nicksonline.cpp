@@ -724,9 +724,8 @@ void NicksOnline::doCommand(int id)
         }
         case ciJoinChannel:
         {
-            // Channels have no nlvcServerName entry.
-            // We test if it is empty to see if we really have a channel name.
-            if (m_nickListView->selectedItem()->text(nlvcServerName).isEmpty())
+            // only join real channels
+            if (static_cast<NicksOnlineItem*>(m_nickListView->selectedItem())->type() == NicksOnlineItem::ChannelItem)
             {
                 QString contactChannel = m_nickListView->selectedItem()->text(nlvcChannel);
                 server->queue( "JOIN "+contactChannel );
