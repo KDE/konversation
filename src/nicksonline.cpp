@@ -51,14 +51,7 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
     setName(i18n("Watched Nicks Online"));
     setType(ChatWindow::NicksOnline);
 
-    // Convenience constant for marking a listview item as "Offline" item.
-    // FIXME: Redesign! not a good idea to treat offline branch item the same as nicks
-    c_offline = ".Off.";
-
     m_nickListView=new KListView(this);
-
-    // TODO: Need to derive from KListView and override sort() method in order to sort in
-    // locale-aware order.
 
     // Set to false every 8 seconds to permit a whois on watched nicks lacking information.
     // Remove when server or addressbook does this automatically.
