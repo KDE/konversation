@@ -44,6 +44,7 @@
 #include "linkaddressbook/addressbook.h"
 #include "linkaddressbook/nicksonlinetooltip.h"
 #include "konversationmainwindow.h"
+#include "nicksonlineitem.h"
 
 NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
 {
@@ -69,6 +70,9 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
     m_nickListView->setFullWidth(false);
     m_nickListView->setRootIsDecorated(true);
     m_nickListView->setShowToolTips(false);
+    m_nickListView->setShadeSortColumn(true);
+    m_nickListView->setShowSortIndicator(true);
+
     QString nickListViewWT = i18n(
         "<p>These are all the nicknames on your Nickname Watch list, listed under the "
         "server network they are connected to.  The list also includes the nicknames "
@@ -268,7 +272,7 @@ void NicksOnline::updateServerOnlineList(Server* servr)
     // If network is not in our list, add it.
     if (!networkRoot)
     {
-        networkRoot = new KListViewItem(m_nickListView,networkName);
+        networkRoot = new NicksOnlineItem(NicksOnlineItem::NetworkRootItem,m_nickListView,networkName);
         newNetworkRoot = true;
     }
     // Store server name in hidden column.
@@ -284,7 +288,7 @@ void NicksOnline::updateServerOnlineList(Server* servr)
     QListViewItem* offlineRoot = findItemChild(networkRoot, c_offline, nlvcOffline);
     if (!offlineRoot)
     {
-        offlineRoot = new KListViewItem(networkRoot, i18n("Offline"));
+        offlineRoot = new NicksOnlineItem(NicksOnlineItem::OfflineItem,networkRoot, i18n("Offline"));
         offlineRoot->setText(nlvcServerName, serverName);
         offlineRoot->setText(nlvcOffline, c_offline);
     }
@@ -314,7 +318,7 @@ void NicksOnline::updateServerOnlineList(Server* servr)
             if (item) delete item;
             // Add to network if not already added.
             QListViewItem* nickRoot = findItemChild(networkRoot, nickname);
-            if (!nickRoot) nickRoot = new KListViewItem(networkRoot, nickname, nickAdditionalInfo);
+            if (!nickRoot) nickRoot = new NicksOnlineItem(NicksOnlineItem::NicknameItem,networkRoot, nickname, nickAdditionalInfo);
             nickRoot->setText(nlvcAdditionalInfo, nickAdditionalInfo);
             nickRoot->setText(nlvcServerName, serverName);
             // If no additional info available, request a WHOIS on the nick.
@@ -354,7 +358,7 @@ void NicksOnline::updateServerOnlineList(Server* servr)
                 if (channelNick->isOwner()) nickMode = nickMode + i18n(" Owner");
                 if (channelNick->isAdmin()) nickMode = nickMode + i18n(" Admin");
                 QListViewItem* channelItem = findItemChild(nickRoot, channelName);
-                if (!channelItem) channelItem = new KListViewItem(nickRoot,
+                if (!channelItem) channelItem = new NicksOnlineItem(NicksOnlineItem::ChannelItem,nickRoot,
                         channelName, nickMode);
                 channelItem->setText(nlvcAdditionalInfo, nickMode);
 
@@ -390,7 +394,7 @@ void NicksOnline::updateServerOnlineList(Server* servr)
             if (item) delete item;
             // Add to offline list if not already listed.
             QListViewItem* nickRoot = findItemChild(offlineRoot, nickname);
-            if (!nickRoot) nickRoot = new KListViewItem(offlineRoot, nickname);
+            if (!nickRoot) nickRoot = new NicksOnlineItem(NicksOnlineItem::NicknameItem,offlineRoot, nickname);
             nickRoot->setText(nlvcServerName, serverName);
             // Get addressbook entry for the nick.
             KABC::Addressee addressee = servr->getOfflineNickAddressee(nickname);

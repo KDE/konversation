@@ -19,12 +19,14 @@ ValueListViewItem::ValueListViewItem(int newValue,KListView* parent,QString labe
 : KListViewItem(parent,label)
 {
     m_value=newValue;
+    enforceSortOrder();
 }
 
 ValueListViewItem::ValueListViewItem(int newValue,KListView* parent,QListViewItem* after,QString label)
 : KListViewItem(parent,after,label)
 {
     m_value=newValue;
+    enforceSortOrder();
 }
 
 ValueListViewItem::~ValueListViewItem()

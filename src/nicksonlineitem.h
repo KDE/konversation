@@ -1,0 +1,74 @@
+//
+// C++ Interface: nicksonlineitem
+//
+// Description:
+//
+//
+// Author: Dario Abatianni <eisfuchs@tigress.com>, (C) 2006
+//
+// Copyright: See COPYING file that comes with this distribution
+//
+//
+
+#ifndef NICKSONLINEITEM_H
+#define NICKSONLINEITEM_H
+
+#include <klistview.h>
+
+/**
+  @author Dario Abatianni <eisfuchs@tigress.com>
+*/
+
+class NicksOnlineItem : public KListViewItem
+{
+    public:
+        enum NickListViewColumn
+        {
+            NetworkRootItem=0,  // TODO: not used yet
+            NicknameItem=1,     // TODO: not used yet
+            ChannelItem=2,      // TODO: not used yet
+            OfflineItem=3       // this item is the "Offline" item
+        };
+
+        NicksOnlineItem(int type,
+                        QListView* parent,
+                        QString name,
+                        QString=QString::null,
+                        QString=QString::null,
+                        QString=QString::null,
+                        QString=QString::null,
+                        QString=QString::null,
+                        QString=QString::null,
+                        QString=QString::null);
+
+        NicksOnlineItem(int type,
+                        QListViewItem* parent,
+                        QString name,
+                        QString=QString::null,
+                        QString=QString::null,
+                        QString=QString::null,
+                        QString=QString::null,
+                        QString=QString::null,
+                        QString=QString::null,
+                        QString=QString::null);
+
+        /**
+        * Reimplemented to make sure, "Offline" items always get sorted to the bottom of the list
+        * @param i                 Pointer to the QListViewItem to compare with.
+        * @param col               The column to compare
+        * @param ascending         Specify sorting direction
+        * @return                  -1 if this item's value is smaller than i, 0 if they are equal, 1 if it's greater
+        */
+        virtual int compare(QListViewItem* i,int col,bool ascending) const;
+
+        /**
+        * Returns the type of the item.
+        * @return                  One of the enum NickListViewColumn
+        */
+        int type();
+
+    protected:
+        int m_type;
+};
+
+#endif
