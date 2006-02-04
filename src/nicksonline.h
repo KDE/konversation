@@ -22,6 +22,7 @@
 
 // Konversation includes.
 #include "nickinfo.h"
+#include "nicksonlineitem.h"
 #include "chatwindow.h"
 #include "linkaddressbook/nicksonlinetooltip.h"
 /**
@@ -47,8 +48,7 @@ class NicksOnline : public ChatWindow
             nlvcChannel = 0,
             nlvcKabc = 1,
             nlvcAdditionalInfo = 1,
-            nlvcServerName = 2,                    // hidden
-            nlvcOffline = 3                        // hidden
+            nlvcServerName = 2                     // hidden
         };
         // Ids associated with menu/button commands.
         enum CommandIDs
@@ -135,13 +135,20 @@ class NicksOnline : public ChatWindow
 
     private:
         /**
-         * Returns the named child of parent item in a KListView.
-         * @param parent            Pointer to a QListViewItem.
-         * @param name              The name in the desired child QListViewItem.
-         * @param name              The column where to look in, defaults to 0.
-         * @return                  Pointer to the child QListViewItem or 0 if not found.
-         */
-        QListViewItem* findItemChild(const QListViewItem* parent, const QString& name, int column=0);
+        * Returns the named child of parent item in a NicksOnlineItem
+        * @param parent            Pointer to a NicksOnlineItem.
+        * @param name              The name in the desired child QListViewItem, must be in column 0.
+        * @param type              The type of entry to be found
+        * @return                  Pointer to the child QListViewItem or 0 if not found.
+        */
+        QListViewItem* findItemChild(const QListViewItem* parent, const QString& name, NicksOnlineItem::NickListViewColumn type);
+        /**
+        * Returns the first occurence of a child item of a given type in a NicksOnlineItem
+        * @param parent            Pointer to a NicksOnlineItem.
+        * @param type              The type of entry to be found
+        * @return                  Pointer to the child QListViewItem or 0 if not found.
+        */
+        QListViewItem* findItemType(const QListViewItem* parent, NicksOnlineItem::NickListViewColumn type);
         /**
          * Returns a pointer to the network QListViewItem with the given name.
          * @param name              The name of the network, assumed to be in column 0 of the item.

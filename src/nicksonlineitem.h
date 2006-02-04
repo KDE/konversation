@@ -65,7 +65,7 @@ class NicksOnlineItem : public KListViewItem
         * Returns the type of the item.
         * @return                  One of the enum NickListViewColumn
         */
-        int type();
+        int type() const;
 
     protected:
         int m_type;

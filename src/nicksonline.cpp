@@ -171,26 +171,36 @@ KListView* NicksOnline::getNickListView()
 }
 
 /**
- * Returns the named child of parent item in a KListView.
- * @param parent            Pointer to a QListViewItem.
- * @param name              The name in the desired child QListViewItem.
- * @param column            The column where to look in, defaults to 0
+ * Returns the named child of parent item in a NicksOnlineItem
+ * @param parent            Pointer to a NicksOnlineItem.
+ * @param name              The name in the desired child QListViewItem, must be in column 0.
+ * @param type              The type of entry to be found
  * @return                  Pointer to the child QListViewItem or 0 if not found.
  */
-QListViewItem* NicksOnline::findItemChild(const QListViewItem* parent, const QString& name, int column)
+QListViewItem* NicksOnline::findItemChild(const QListViewItem* parent, const QString& name, NicksOnlineItem::NickListViewColumn type)
 {
     if (!parent) return 0;
     QListViewItem* child;
     for (child = parent->firstChild(); (child) ; child = child->nextSibling())
     {
-        // check if we are looking for the offline column or a regular name ...
-        // FIXME: it works but it badly needs a redesign. the offline item should
-        // not be treated equally to a regular item, or we find users with the same
-        // name as the offline column
-        if(!column==0 || child->text(nlvcOffline).isEmpty())
-        {
-            if (child->text(column) == name) return child;
-        }
+        if(static_cast<NicksOnlineItem*>(child)->type() == type && child->text(0) == name) return child;
+    }
+    return 0;
+}
+
+/**
+ * Returns the first occurence of a child item of a given type in a NicksOnlineItem
+ * @param parent            Pointer to a NicksOnlineItem.
+ * @param type              The type of entry to be found
+ * @return                  Pointer to the child QListViewItem or 0 if not found.
+ */
+QListViewItem* NicksOnline::findItemType(const QListViewItem* parent, NicksOnlineItem::NickListViewColumn type)
+{
+    if (!parent) return 0;
+    QListViewItem* child;
+    for (child = parent->firstChild(); (child) ; child = child->nextSibling())
+    {
+        if(static_cast<NicksOnlineItem*>(child)->type() == type) return child;
     }
     return 0;
 }
@@ -285,12 +295,11 @@ void NicksOnline::updateServerOnlineList(Server* servr)
     if (!serverList.contains(serverName)) serverList.append(serverName);
     networkRoot->setText(nlvcAdditionalInfo, serverList.join(","));
     // Get item in nicklistview for the Offline branch.
-    QListViewItem* offlineRoot = findItemChild(networkRoot, c_offline, nlvcOffline);
+    QListViewItem* offlineRoot = findItemType(networkRoot, NicksOnlineItem::OfflineItem);
     if (!offlineRoot)
     {
-        offlineRoot = new NicksOnlineItem(NicksOnlineItem::OfflineItem,networkRoot, i18n("Offline"));
+        offlineRoot = new NicksOnlineItem(NicksOnlineItem::OfflineItem,networkRoot,i18n("Offline"));
         offlineRoot->setText(nlvcServerName, serverName);
-        offlineRoot->setText(nlvcOffline, c_offline);
     }
 
     // Get watch list.
@@ -314,10 +323,10 @@ void NicksOnline::updateServerOnlineList(Server* servr)
             bool needWhois = false;
             QString nickAdditionalInfo = getNickAdditionalInfo(nickInfo, addressee, needWhois);
             // Remove from offline branch if present.
-            QListViewItem* item = findItemChild(offlineRoot, nickname);
+            QListViewItem* item = findItemChild(offlineRoot, nickname, NicksOnlineItem::NicknameItem);
             if (item) delete item;
             // Add to network if not already added.
-            QListViewItem* nickRoot = findItemChild(networkRoot, nickname);
+            QListViewItem* nickRoot = findItemChild(networkRoot, nickname, NicksOnlineItem::NicknameItem);
             if (!nickRoot) nickRoot = new NicksOnlineItem(NicksOnlineItem::NicknameItem,networkRoot, nickname, nickAdditionalInfo);
             nickRoot->setText(nlvcAdditionalInfo, nickAdditionalInfo);
             nickRoot->setText(nlvcServerName, serverName);
@@ -357,7 +366,7 @@ void NicksOnline::updateServerOnlineList(Server* servr)
                 if (channelNick->isOp()) nickMode = nickMode + i18n(" Operator");
                 if (channelNick->isOwner()) nickMode = nickMode + i18n(" Owner");
                 if (channelNick->isAdmin()) nickMode = nickMode + i18n(" Admin");
-                QListViewItem* channelItem = findItemChild(nickRoot, channelName);
+                QListViewItem* channelItem = findItemChild(nickRoot, channelName, NicksOnlineItem::ChannelItem);
                 if (!channelItem) channelItem = new NicksOnlineItem(NicksOnlineItem::ChannelItem,nickRoot,
                         channelName, nickMode);
                 channelItem->setText(nlvcAdditionalInfo, nickMode);
@@ -390,10 +399,10 @@ void NicksOnline::updateServerOnlineList(Server* servr)
         {
             // Nick is offline.
             // Remove from online nicks, if present.
-            QListViewItem* item = findItemChild(networkRoot, nickname);
+            QListViewItem* item = findItemChild(networkRoot, nickname, NicksOnlineItem::NicknameItem);
             if (item) delete item;
             // Add to offline list if not already listed.
-            QListViewItem* nickRoot = findItemChild(offlineRoot, nickname);
+            QListViewItem* nickRoot = findItemChild(offlineRoot, nickname, NicksOnlineItem::NicknameItem);
             if (!nickRoot) nickRoot = new NicksOnlineItem(NicksOnlineItem::NicknameItem,offlineRoot, nickname);
             nickRoot->setText(nlvcServerName, serverName);
             // Get addressbook entry for the nick.
@@ -416,7 +425,7 @@ void NicksOnline::updateServerOnlineList(Server* servr)
     while (item)
     {
         QListViewItem* nextItem = item->nextSibling();
-        if (item->text(nlvcOffline) != c_offline)
+        if (static_cast<NicksOnlineItem*>(item)->type() != NicksOnlineItem::OfflineItem)
         {
             QString nickname = item->text(nlvcNick);
             if ((watchList.find(nickname) == watchList.end()) &&
@@ -569,18 +578,21 @@ void NicksOnline::processDoubleClick(QListViewItem* item)
 bool NicksOnline::getItemServerAndNick(const QListViewItem* item, QString& serverName, QString& nickname)
 {
     if (!item) return false;
+    // convert into NicksOnlineItem
+    const NicksOnlineItem* nlItem=static_cast<const NicksOnlineItem*>(item);
     // If on a network, return false;
-    if (!item->parent()) return false;
+    if (nlItem->type() == NicksOnlineItem::NetworkRootItem) return false;
+    // get server name
     serverName = item->text(nlvcServerName);
     // If on a channel, move up to the nickname.
-    if (serverName.isEmpty())
+    if (nlItem->type() == NicksOnlineItem::ChannelItem)
     {
         item = item->parent();
         serverName = item->text(nlvcServerName);
     }
     nickname = item->text(nlvcNick);
     // offline columns are not nick names
-    if (item->text(nlvcOffline) == c_offline) return false;
+    if (nlItem->type() == NicksOnlineItem::OfflineItem) return false;
     return true;
 }
 
@@ -611,7 +623,7 @@ const QString& nickname)
     QString networkName = server->getServerGroup();
     QListViewItem* networkRoot = m_nickListView->findItem(networkName, nlvcNetwork);
     if (!networkRoot) return 0;
-    QListViewItem* nickRoot = findItemChild(networkRoot, nickname);
+    QListViewItem* nickRoot = findItemChild(networkRoot, nickname, NicksOnlineItem::NicknameItem);
     return nickRoot;
 }
 

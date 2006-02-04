@@ -50,7 +50,7 @@ int NicksOnlineItem::compare(QListViewItem* i,int col,bool ascending) const
  * Returns the type of the item.
  * @return                  One of the enum NickListViewColumn
  */
-int NicksOnlineItem::type()
+int NicksOnlineItem::type() const
 {
   return m_type;
 }
