@@ -170,8 +170,8 @@ class DccTransfer : public QObject, public KListViewItem
         void stopAutoUpdateView();
 
         // called from updateView()
-        QString         getTypeText()                                  const;
-        QPixmap         getTypeIcon()                                  const;
+        virtual QString getTypeText()                                  const = 0;
+        virtual QPixmap getTypeIcon()                                  const = 0;
         QPixmap         getStatusIcon()                                const;
         QString         getStatusText()                                const;
         QString         getFileSizePrettyText()                        const;
@@ -200,7 +200,6 @@ class DccTransfer : public QObject, public KListViewItem
         KProgress* m_progressBar;
         DccDetailDialog* m_detailDialog;
 
-        static QString s_dccTypeText[ DccTypeCount ];
         static QString s_dccStatusText[ DccStatusCount ];
 
 };

@@ -123,6 +123,10 @@ class DccTransferRecv : public DccTransfer
         bool m_partialFileExists;
         QTimer* m_connectionTimer;
         KNetwork::KStreamSocket* m_recvSocket;
+
+    private:
+        virtual QString getTypeText() const;
+        virtual QPixmap getTypeIcon() const;
 };
 
 class DccTransferRecvWriteCacheHandler : public QObject

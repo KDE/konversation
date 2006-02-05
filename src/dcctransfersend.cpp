@@ -26,6 +26,7 @@
 #include <qtimer.h>
 
 #include <kdebug.h>
+#include <kiconloader.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kserversocket.h>
@@ -137,6 +138,16 @@ DccTransferSend::DccTransferSend( DccPanel* panel, const QString& partnerNick, c
 DccTransferSend::~DccTransferSend()
 {
     cleanUp();
+}
+
+QString DccTransferSend::getTypeText() const
+{
+    return i18n( "Send" );
+}
+
+QPixmap DccTransferSend::getTypeIcon() const
+{
+    return KGlobal::iconLoader()->loadIcon( "up", KIcon::Small );
 }
 
 void DccTransferSend::cleanUp()

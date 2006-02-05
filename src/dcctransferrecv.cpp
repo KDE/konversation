@@ -18,6 +18,7 @@
 
 #include <kdebug.h>
 #include <kfileitem.h>
+#include <kiconloader.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kstandarddirs.h>
@@ -137,6 +138,16 @@ DccTransferRecv::DccTransferRecv( DccPanel* panel, const QString& partnerNick, c
 DccTransferRecv::~DccTransferRecv()
 {
     cleanUp();
+}
+
+QString DccTransferRecv::getTypeText() const
+{
+    return i18n( "Receive" );
+}
+
+QPixmap DccTransferRecv::getTypeIcon() const
+{
+    return KGlobal::iconLoader()->loadIcon( "down", KIcon::Small );
 }
 
 void DccTransferRecv::cleanUp()

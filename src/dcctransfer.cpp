@@ -67,10 +67,6 @@ DccTransfer::DccTransfer( DccPanel* panel, DccType dccType, const QString& partn
 
     m_detailDialog = 0;
 
-    // FIXME: we shouldn't do these init in the instance constructer
-    s_dccTypeText[ Send ]    = i18n("Send");
-    s_dccTypeText[ Receive ] = i18n("Receive");
-
     s_dccStatusText[ Queued ]        = i18n("Queued");
     s_dccStatusText[ Preparing ]     = i18n("Preparing");
     s_dccStatusText[ WaitingRemote ] = i18n("Offering");
@@ -206,7 +202,6 @@ void DccTransfer::slotLogTransfer()
     m_transferLogPosition.append( m_transferringPosition );
 }
 
-                                    
 void DccTransfer::paintCell( QPainter* painter, const QColorGroup& colorgroup, int column, int width, int alignment ) // virtual public
 {
     KListViewItem::paintCell( painter, colorgroup, column, width, alignment );
@@ -394,21 +389,6 @@ void DccTransfer::updateTransferMeters()
         m_cps = 0;
         m_timeRemaining = TIME_REMAINING_NOT_AVAILABLE;
     }
-}
-
-QString DccTransfer::getTypeText() const
-{
-    return s_dccTypeText[ m_dccType ];
-}
-
-QPixmap DccTransfer::getTypeIcon() const
-{
-    QString icon;
-    if ( m_dccType == Send )
-        icon = "up";
-    else if ( m_dccType == Receive )
-        icon = "down";
-    return KGlobal::iconLoader()->loadIcon( icon, KIcon::Small );
 }
 
 QPixmap DccTransfer::getStatusIcon() const
@@ -610,7 +590,6 @@ int DccTransfer::getTimeRemaining() const
   return m_timeRemaining; 
 }
 
-QString DccTransfer::s_dccTypeText[ DccTransfer::DccTypeCount ];
 QString DccTransfer::s_dccStatusText[ DccTransfer::DccStatusCount ];
 
 #include "dcctransfer.moc"

@@ -75,5 +75,9 @@ class DccTransferSend : public DccTransfer
         bool m_fastSend;
 
         QTimer* m_connectionTimer;
+
+    private:
+        virtual QString getTypeText() const;
+        virtual QPixmap getTypeIcon() const;
 };
 #endif                                            // DCCTRANSFERSEND_H
