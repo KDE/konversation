@@ -1955,7 +1955,7 @@ void Server::resumeDccSendTransfer(const QString &recipient, const QStringList &
     }
 }
 
-void Server::dccGetDone(const QString &fileName, DccTransfer::DccStatus status, const QString &errorMessage)
+void Server::dccGetDone(const QString &fileName, int status, const QString &errorMessage)
 {
     if(status==DccTransfer::Done)
         appendMessageToFrontmost(i18n("DCC"),i18n("DCC download of file \"%1\" finished.").arg(fileName));
@@ -1963,7 +1963,7 @@ void Server::dccGetDone(const QString &fileName, DccTransfer::DccStatus status, 
         appendMessageToFrontmost(i18n("DCC"),i18n("DCC download of file \"%1\" failed. reason: %2").arg(fileName).arg(errorMessage));
 }
 
-void Server::dccSendDone(const QString &fileName, DccTransfer::DccStatus status, const QString &errorMessage)
+void Server::dccSendDone(const QString &fileName, int status, const QString &errorMessage)
 {
     if(status==DccTransfer::Done)
         appendMessageToFrontmost(i18n("DCC"),i18n("DCC upload of file \"%1\" finished.").arg(fileName));

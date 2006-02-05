@@ -29,13 +29,13 @@
 #include "channelnick.h"
 #include "inputfilter.h"
 #include "outputfilter.h"
-#include "dcctransfer.h"
 #include "nickinfo.h"
 #include "sslsocket.h"
 #include "serversettings.h"
 #include "servergroupsettings.h"
 
 class Channel;
+class DccTransfer;
 class Query;
 class StatusPanel;
 class Identity;
@@ -465,8 +465,8 @@ class Server : public QObject
         void resumeDccSendTransfer(const QString& sourceNick,const QStringList& dccArguments);
         void dccSendRequest(const QString& recipient,const QString& fileName,const QString& address,const QString& port,unsigned long size);
         void dccResumeGetRequest(const QString& sender,const QString& fileName,const QString& port,KIO::filesize_t startAt);
-        void dccGetDone(const QString& fileName, DccTransfer::DccStatus status, const QString &errorMessage);
-        void dccSendDone(const QString& fileName, DccTransfer::DccStatus status, const QString &errorMessage);
+        void dccGetDone(const QString& fileName, int status, const QString &errorMessage);
+        void dccSendDone(const QString& fileName, int status, const QString &errorMessage);
         void dccStatusChanged(const DccTransfer* item);
         void away();
         void unAway();
