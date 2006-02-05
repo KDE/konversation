@@ -203,11 +203,7 @@ DccDetailDialog::~DccDetailDialog()
 void DccDetailDialog::updateView() // public
 {
     // caption
-
-    if ( m_item->m_dccType == DccTransfer::Send )
-        setCaption( i18n("DCC Send : %1").arg( m_item->m_fileName ) );
-    else
-        setCaption( i18n("DCC Receive : %1").arg( m_item->m_fileName ) );
+    setCaption( i18n( "DCC %1 : %2" ).arg( m_item->getTypeText() ).arg( m_item->m_fileName ) );
 
     // information
 
