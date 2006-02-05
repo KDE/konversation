@@ -452,6 +452,8 @@ void Server::connectToIRCServer()
     deliberateQuit = false;
     connecting = true;
 
+    ownIpByUserhost = QString();
+
     outputBuffer.clear();
 
     if(m_socket)
@@ -787,10 +789,7 @@ void Server::sslError(QString reason)
 // Will be called from InputFilter as soon as the Welcome message was received
 void Server::connectionEstablished(const QString& ownHost)
 {
-    if(!ownHost.isEmpty())
-    {
-        KNetwork::KResolver::resolveAsync(this,SLOT(gotOwnResolvedHostByWelcome(KResolverResults)),ownHost,"0");
-    }
+    KNetwork::KResolver::resolveAsync(this,SLOT(gotOwnResolvedHostByWelcome(KResolverResults)),ownHost,"0");
 
     emit serverOnline(true);
     emit connectionChangedState(this, SSConnected);
@@ -2702,7 +2701,7 @@ void Server::userhost(const QString& nick,const QString& hostmask,bool away,bool
     addHostmaskToNick(nick,hostmask);
     // remember my IP for DCC things
                                                   // myself
-    if(ownIpByUserhost.isEmpty() && nick==nickname)
+    if( ownIpByUserhost.isEmpty() && nick==nickname )
     {
         QString myhost = hostmask.section('@', 1);
         // Use async lookup else you will be blocking GUI badly
