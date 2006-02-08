@@ -31,6 +31,11 @@ namespace KNetwork
     class KStreamSocket;
 }
 
+namespace Konversation
+{
+    class TopicLabel;
+}
+
 class DccChat : public ChatWindow
 {
     Q_OBJECT
@@ -68,6 +73,8 @@ class DccChat : public ChatWindow
         void listenForPartner();
         void connectToPartner();
 
+        virtual void showEvent(QShowEvent* event);
+
         /** Called from ChatWindow adjustFocus */
         virtual void childAdjustFocus();
 
@@ -78,11 +85,14 @@ class DccChat : public ChatWindow
         //QString m_ip;
         int m_port;
 
-        KLineEdit* m_sourceLine;
+        QSplitter* m_headerSplitter;
+        Konversation::TopicLabel* m_sourceLine;
         IRCInput* m_dccChatInput;
         KNetwork::KStreamSocket* m_dccSocket;
         KNetwork::KServerSocket* m_listenSocket;
 
         QString m_encoding;
+
+        bool m_initialShow;
 };
 #endif

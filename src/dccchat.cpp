@@ -19,6 +19,7 @@
 #include <qvbox.h>
 #include <qhostaddress.h>
 #include <qtextcodec.h>
+#include <qsplitter.h>
 
 #include <klineedit.h>
 #include <klocale.h>
@@ -34,6 +35,7 @@
 #include "ircviewbox.h"
 #include "ircinput.h"
 #include "dccchat.h"
+#include "topiclabel.h"
 
 #define DCCCHAT_BUFFER_SIZE 1024
 
@@ -44,6 +46,7 @@ DccChat::DccChat(QWidget* parent,Server* newServer,const QString& myNickname,con
     m_dccSocket=0;
     m_listenSocket=0;
     m_port=0;
+    m_initialShow = true;
 
     m_myNick=myNickname;
     m_partnerNick=nickname;
@@ -57,18 +60,15 @@ DccChat::DccChat(QWidget* parent,Server* newServer,const QString& myNickname,con
         m_port=parameters[2].toInt();
     }
 
-    // this is the main box
-    QVBox* mainBox = new QVBox( this );
-    mainBox->setSpacing(spacing());
+    m_headerSplitter = new QSplitter(Qt::Vertical, this);
 
-    m_sourceLine = new KLineEdit( mainBox );
+    m_sourceLine = new Konversation::TopicLabel( m_headerSplitter );
 
-    IRCViewBox* ircViewBox = new IRCViewBox( mainBox, 0 );
+    IRCViewBox* ircViewBox = new IRCViewBox( m_headerSplitter, 0 );
     setTextView( ircViewBox->ircView() );
 
-    m_dccChatInput = new IRCInput( mainBox );
+    m_dccChatInput = new IRCInput( this );
 
-    m_sourceLine->setReadOnly( true );
     m_dccChatInput->setEnabled( false );
 
     setServer( newServer );
@@ -385,6 +385,16 @@ QString DccChat::getChannelEncoding() // virtual
 QString DccChat::getChannelEncodingDefaultDesc()  // virtual
 {
     return i18n("Default ( %1 )").arg(Konversation::IRCCharsets::self()->encodingForLocale());
+}
+
+void DccChat::showEvent(QShowEvent* event)
+{
+    if(m_initialShow) {
+        m_initialShow = false;
+        QValueList<int> sizes;
+        sizes << m_sourceLine->sizeHint().height() << (height() - m_sourceLine->sizeHint().height());
+        m_headerSplitter->setSizes(sizes);
+    }
 }
 
 #include "dccchat.moc"
