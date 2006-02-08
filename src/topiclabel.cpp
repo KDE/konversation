@@ -47,12 +47,14 @@ namespace Konversation
 
     QSize TopicLabel::minimumSizeHint() const
     {
-        return QSize(0, 0);
+        int minHeight = fontMetrics().lineSpacing() + fontMetrics().descent();
+        return QSize(0, minHeight);
     }
 
     QSize TopicLabel::sizeHint() const
     {
-        return QSize(0, 0);
+        int minHeight = fontMetrics().lineSpacing() + fontMetrics().descent();
+        return QSize(0, minHeight);
     }
 
     void TopicLabel::setServer(Server* server)

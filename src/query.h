@@ -29,8 +29,13 @@
 class QLineEdit;
 class QCheckBox;
 class QLabel;
+class QSplitter;
 
 class IRCInput;
+
+namespace Konversation {
+  class TopicLabel;
+}
 
 class Query : public ChatWindow
 {
@@ -100,11 +105,14 @@ class Query : public ChatWindow
         QString queryName;
         QString buffer;
 
-        QLabel* queryHostmask;
+        QSplitter* m_headerSplitter;
+        Konversation::TopicLabel* queryHostmask;
         QLabel* addresseeimage;
         QLabel* addresseelogoimage;
         QLabel* awayLabel;
         IRCInput* queryInput;
         NickInfoPtr m_nickInfo;
+
+        bool m_initialShow;
 };
 #endif

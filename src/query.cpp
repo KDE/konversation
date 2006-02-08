@@ -19,6 +19,7 @@
 #include <qtooltip.h>
 #include <qtextstream.h>
 #include <qwhatsthis.h>
+#include <qsplitter.h>
 
 #include <klocale.h>
 #include <kstandarddirs.h>
@@ -36,6 +37,7 @@
 #include "ircview.h"
 #include "ircviewbox.h"
 #include "common.h"
+#include "topiclabel.h"
 
 Query::Query(QWidget* parent) : ChatWindow(parent)
 {
@@ -45,9 +47,12 @@ Query::Query(QWidget* parent) : ChatWindow(parent)
 
     setChannelEncodingSupported(true);
 
+    m_headerSplitter = new QSplitter(Qt::Vertical, this);
+
+    m_initialShow = true;
     awayChanged=false;
     awayState=false;
-    QHBox *box = new QHBox(this);
+    QHBox *box = new QHBox(m_headerSplitter);
     addresseeimage = new QLabel(box, "query_image");
     addresseeimage->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     addresseeimage->hide();
@@ -55,15 +60,14 @@ Query::Query(QWidget* parent) : ChatWindow(parent)
     addresseelogoimage->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     addresseelogoimage->hide();
 
-    queryHostmask=new QLabel(box, "query_hostmask");
-    queryHostmask->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+    queryHostmask=new Konversation::TopicLabel(box, "query_hostmask");
 
     QString whatsthis = i18n("<qt>Some details of the person you are talking to in this query is shown in this bar.  The full name and hostmask is shown, along with any image or logo this person has associated with them in the KDE Addressbook.<p>See the <i>Konversation Handbook</i> for information on associating a nick with a contact in the Addressbook, and for an explanation of what the hostmask is.</qt>");
     QWhatsThis::add(addresseeimage, whatsthis);
     QWhatsThis::add(addresseelogoimage, whatsthis);
     QWhatsThis::add(queryHostmask, whatsthis);
 
-    IRCViewBox* ircBox = new IRCViewBox(this,0);
+    IRCViewBox* ircBox = new IRCViewBox(m_headerSplitter,0);
     setTextView(ircBox->ircView());               // Server will be set later in setServer();
     textView->setAcceptDrops(true);
     connect(textView,SIGNAL(filesDropped(const QStrList&)),this,SLOT(filesDropped(const QStrList&)));
@@ -290,6 +294,13 @@ void Query::showEvent(QShowEvent*)
     {
         awayChanged=false;
         indicateAway(awayState);
+    }
+
+    if(m_initialShow) {
+        m_initialShow = false;
+        QValueList<int> sizes;
+        sizes << queryHostmask->sizeHint().height() << (height() - queryHostmask->sizeHint().height());
+        m_headerSplitter->setSizes(sizes);
     }
 }
 
