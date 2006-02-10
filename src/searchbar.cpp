@@ -41,12 +41,16 @@
 
 #define SEARCH_FORWARD_MENU 1
 #define MATCH_CASE_MENU 2
+#define WHOLE_WORDS_ONLY_MENU 3
+#define FROM_CURSOR_MENU 4
 
 SearchBar::SearchBar(QWidget* parent)
 : SearchBarBase(parent)
 {
     m_searchFoward = false;
     m_matchCase = false;
+    m_wholeWords = false;
+    m_fromCursor = false;
 
     setFocusProxy(m_searchEdit);
     KIconLoader* iconLoader = kapp->iconLoader();
@@ -67,8 +71,10 @@ SearchBar::SearchBar(QWidget* parent)
 
     m_optionsMenu = new QPopupMenu(m_optionsButton, "options_menu");
     m_optionsMenu->setCheckable(true);
-    m_optionsMenu->insertItem(i18n("Search Forward"), this, SLOT(toggleSearchFoward()), 0, SEARCH_FORWARD_MENU);
-    m_optionsMenu->insertItem(i18n("Match Case"), this, SLOT(toggleMatchCase()), 0, MATCH_CASE_MENU);
+    m_optionsMenu->insertItem(i18n("Find Forward"), this, SLOT(toggleSearchFoward()), 0, SEARCH_FORWARD_MENU);
+    m_optionsMenu->insertItem(i18n("Case Sensitive"), this, SLOT(toggleMatchCase()), 0, MATCH_CASE_MENU);
+    m_optionsMenu->insertItem(i18n("Whole Words Only"), this, SLOT(toggleWholeWords()), 0, WHOLE_WORDS_ONLY_MENU);
+    m_optionsMenu->insertItem(i18n("From Cursor"), this, SLOT(toggleFromCursor()), 0, FROM_CURSOR_MENU);
 
     m_optionsButton->setPopup(m_optionsMenu);
 }
@@ -178,6 +184,16 @@ bool SearchBar::caseSensitive() const
     return m_matchCase;
 }
 
+bool SearchBar::wholeWords() const
+{
+    return m_wholeWords;
+}
+
+bool SearchBar::fromCursor() const
+{
+    return m_fromCursor;
+}
+
 void SearchBar::toggleSearchFoward()
 {
     m_searchFoward = !m_searchFoward;
@@ -189,6 +205,20 @@ void SearchBar::toggleMatchCase()
 {
     m_matchCase = !m_matchCase;
     m_optionsMenu->setItemChecked(MATCH_CASE_MENU, m_matchCase);
+    slotTextChanged();
+}
+
+void SearchBar::toggleWholeWords()
+{
+    m_wholeWords = !m_wholeWords;
+    m_optionsMenu->setItemChecked(WHOLE_WORDS_ONLY_MENU, m_wholeWords);
+    slotTextChanged();
+}
+
+void SearchBar::toggleFromCursor()
+{
+    m_fromCursor = !m_fromCursor;
+    m_optionsMenu->setItemChecked(FROM_CURSOR_MENU, m_fromCursor);
     slotTextChanged();
 }
 

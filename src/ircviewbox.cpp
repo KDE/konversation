@@ -116,9 +116,9 @@ void IRCViewBox::slotSearchChanged(const QString& pattern)
 {
     bool match = m_ircView->search(pattern,
         m_searchBar->caseSensitive(),
-        false,
+        m_searchBar->wholeWords(),
         m_searchBar->searchForward(),
-        false);
+        m_searchBar->fromCursor());
 
     if (match)
     {

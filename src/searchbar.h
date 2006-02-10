@@ -45,6 +45,8 @@ class SearchBar : public SearchBarBase
 
         bool searchForward() const;
         bool caseSensitive() const;
+        bool wholeWords() const;
+        bool fromCursor() const;
 
     protected:
         virtual void showEvent(QShowEvent* e);
@@ -60,6 +62,8 @@ class SearchBar : public SearchBarBase
 
         void toggleSearchFoward();
         void toggleMatchCase();
+        void toggleWholeWords();
+        void toggleFromCursor();
 
         void showOptionsMenu();
 
@@ -76,6 +80,8 @@ class SearchBar : public SearchBarBase
 
         bool m_searchFoward;
         bool m_matchCase;
+        bool m_wholeWords;
+        bool m_fromCursor;
 };
 
 #endif                                            /* SEARCHBAR_H */
