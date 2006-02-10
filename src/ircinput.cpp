@@ -112,7 +112,7 @@ bool IRCInput::eventFilter(QObject *object,QEvent *event)
         {
             QKeyEvent* ke = static_cast<QKeyEvent*>(event);
 
-            if (QChar(ke->ascii()).isPrint())
+            if (!ke->text().isEmpty())
             {
                 setFocus();
                 KonversationApplication::sendEvent(this,event);
@@ -190,7 +190,7 @@ void IRCInput::keyPressEvent(QKeyEvent* e)
                 clear();
     }
 
-    QTextEdit::keyPressEvent(e);
+    KTextEdit::keyPressEvent(e);
 }
 
 void IRCInput::addHistory(const QString& line)
