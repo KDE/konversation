@@ -56,6 +56,8 @@ SearchBar::SearchBar(QWidget* parent)
     KIconLoader* iconLoader = kapp->iconLoader();
     m_closeButton->setIconSet(iconLoader->loadIconSet("fileclose", KIcon::Toolbar, 16));
     m_findNextButton->setIconSet(iconLoader->loadIconSet("next", KIcon::Toolbar, 16));
+    m_statusPixLabel->hide();
+    m_statusTextLabel->hide();
 
     m_timer = new QTimer(this);
 
@@ -160,9 +162,11 @@ void SearchBar::setHasMatch(bool value)
 void SearchBar::setStatus(const QPixmap& pix, const QString& text)
 {
     if(!text.isEmpty()) {
-        m_statusStack->raiseWidget(1);
+        m_statusPixLabel->show();
+        m_statusTextLabel->show();
     } else {
-        m_statusStack->raiseWidget(0);
+        m_statusPixLabel->hide();
+        m_statusTextLabel->hide();
     }
 
     m_statusPixLabel->setPixmap(pix);
