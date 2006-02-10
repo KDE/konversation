@@ -1,3 +1,20 @@
+Changes from 0.19 to 0.20
+- Fix compilation with GCC 4.1
+- Added an "Open Query" context menu item in the notify list
+- Added a ban list to the Channel Options dialog, courtesy of Michael Kreitzer
+- Update user modes when a user is kicked from a channel
+- Support for UnrealIRCD mode chars
+- Improved sorting and crash fixes in the notify list; "Offline" will now always appear at the bottom
+- Avoid unnecessary nick changes on connect
+- Added option to disable auto-resizing of tabs
+- Update IP used in DCC transfers on reconnect to the server/network
+- Changed the DCC buffer size back to the pre-0.19 default of 8192kb
+- Made query and DCC chat tabs more consistent with channel tabs by reusing the topic widget
+- Avoid resizing the application window on overly long user masks in the 'topic' of query tabs
+- Made the text detection in the input line work with non-ASCII characters
+- Fix paste behavior in the input line
+
+
 Changes from 0.18 to 0.19
 We are extremely pleased to announce the immediate release of Konversation 0.19. The focus
 of this release is on extending and improving upon established functionality. Most notable
