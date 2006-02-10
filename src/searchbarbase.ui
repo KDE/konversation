@@ -37,6 +37,9 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
             <property name="textPosition">
                 <enum>BesideIcon</enum>
             </property>
+            <property name="toolTip" stdset="0">
+                <string>Close</string>
+            </property>
         </widget>
         <widget class="KLineEdit">
             <property name="name">
