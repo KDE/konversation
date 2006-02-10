@@ -35,6 +35,8 @@
 
 IRCInput::IRCInput(QWidget* parent) : KTextEdit(parent)
 {
+    m_useSelection = false;
+
     // connect history signal
     connect(this,SIGNAL (history(bool)) ,this,SLOT (getHistory(bool)) );
     // add one empty line to the history (will be overwritten with newest entry)
