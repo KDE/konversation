@@ -2,6 +2,7 @@
  * Author: Renchi Raju <renchi@pooh.tam.uiuc.edu>
  * Date  : 2005-06-02
  * Copyright 2005 by Renchi Raju
+ * Copyright (C) 2006 Peter Simonsson <psn@linux.se>
  *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
@@ -18,7 +19,7 @@
 #ifndef SEARCHBAR_H
 #define SEARCHBAR_H
 
-#include <qhbox.h>
+#include "searchbarbase.h"
 
 /* TODO:
    - Changing case-sensitivity and search-forward restarts search from beginning.
@@ -27,19 +28,13 @@
      the konvi gods
  */
 
-class QLineEdit;
-class QCheckBox;
-class QPushButton;
-class QTimer;
-class QLabel;
-class QPixmap;
+class QPopupMenu;
 
-class SearchBar : public QHBox
+class SearchBar : public SearchBarBase
 {
     Q_OBJECT
 
-        public:
-
+    public:
         SearchBar(QWidget* parent);
         ~SearchBar();
 
@@ -52,37 +47,35 @@ class SearchBar : public QHBox
         bool caseSensitive() const;
 
     protected:
-
-        void focusInEvent(QFocusEvent* e);
         virtual void showEvent(QShowEvent* e);
         bool focusedChild();
-    public slots:
 
+    public slots:
         virtual void hide();
 
     private slots:
-
         void slotTextChanged();
         void slotFind();
         void slotFindNext();
 
-    signals:
+        void toggleSearchFoward();
+        void toggleMatchCase();
 
+        void showOptionsMenu();
+
+    signals:
         void signalSearchChanged(const QString& pattern);
         void signalSearchNext();
         void signalPropertiesChanged();
         void hidden();
 
     private:
+        QTimer* m_timer;
 
-        QLineEdit*    m_lineEdit;
-        QPushButton*  m_nextBtn;
-        QCheckBox*  m_fwdBox;
-        QCheckBox*  m_caseSenBox;
-        QPushButton*  m_hideBtn;
-        QLabel*       m_statusPixLabel;
-        QLabel*       m_statusTextLabel;
+        QPopupMenu* m_optionsMenu;
 
-        QTimer*       m_timer;
+        bool m_searchFoward;
+        bool m_matchCase;
 };
+
 #endif                                            /* SEARCHBAR_H */

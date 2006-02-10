@@ -4,7 +4,8 @@
  * Description :
  *
  * Copyright 2005 by Renchi Raju
-
+ * Copyright (C) 2006 Peter Simonsson <psn@linux.se>
+ *
  * This program is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General
  * Public License as published by the Free Software Foundation;
@@ -18,54 +19,39 @@
  *
  * ============================================================ */
 
-#include <qlineedit.h>
+#include "searchbar.h"
+
 #include <qcheckbox.h>
-#include <qpushbutton.h>
 #include <qtimer.h>
 #include <qpalette.h>
 #include <qaccel.h>
 #include <qlabel.h>
 #include <qpixmap.h>
 #include <qobjectlist.h>
+#include <qtoolbutton.h>
+#include <qpopupmenu.h>
+#include <qwidgetstack.h>
 
 #include <kdebug.h>
 #include <kapplication.h>
 #include <kiconloader.h>
+#include <klineedit.h>
+#include <kpushbutton.h>
+#include <klocale.h>
 
-#include "searchbar.h"
+#define SEARCH_FORWARD_MENU 1
+#define MATCH_CASE_MENU 2
 
 SearchBar::SearchBar(QWidget* parent)
-: QHBox(parent)
+: SearchBarBase(parent)
 {
-    setMargin(4);
-    setSpacing(4);
+    m_searchFoward = false;
+    m_matchCase = false;
 
-    m_hideBtn    = new QPushButton(this);
-    m_lineEdit   = new QLineEdit(this);
-    m_nextBtn    = new QPushButton(this);
-    m_fwdBox    = new QCheckBox(this);
-    m_caseSenBox = new QCheckBox(this);
-    m_statusPixLabel  = new QLabel(this);
-    m_statusTextLabel = new QLabel(this);
-
-    setStretchFactor(m_hideBtn,  1);
-    setStretchFactor(m_lineEdit, 4);
-    setStretchFactor(m_nextBtn, 1);
-    setStretchFactor(m_fwdBox, 1);
-    setStretchFactor(m_caseSenBox, 1);
-    setStretchFactor(m_statusPixLabel, 0);
-    setStretchFactor(m_statusTextLabel, 3);
-
+    setFocusProxy(m_searchEdit);
     KIconLoader* iconLoader = kapp->iconLoader();
-    m_hideBtn->setIconSet(iconLoader->loadIconSet("stop", KIcon::Toolbar, 16));
-    m_nextBtn->setIconSet(iconLoader->loadIconSet("next", KIcon::Toolbar, 16));
-
-    m_hideBtn->setText("Close");
-    m_nextBtn->setText("Find Next");
-    m_fwdBox->setText("Search Forward");
-    m_caseSenBox->setText("Match Case");
-
-    m_nextBtn->setEnabled(false);
+    m_closeButton->setIconSet(iconLoader->loadIconSet("fileclose", KIcon::Toolbar, 16));
+    m_findNextButton->setIconSet(iconLoader->loadIconSet("next", KIcon::Toolbar, 16));
 
     m_timer = new QTimer(this);
 
@@ -73,28 +59,28 @@ SearchBar::SearchBar(QWidget* parent)
     accel->connectItem( accel->insertItem(Qt::Key_Escape), this, SLOT(hide()));
 
     connect(m_timer, SIGNAL(timeout()), SLOT(slotFind()));
-    connect(m_lineEdit, SIGNAL(textChanged(const QString&)), SLOT(slotTextChanged()));
-    connect(m_lineEdit, SIGNAL(returnPressed()), SLOT(slotFindNext()));
-    connect(m_nextBtn, SIGNAL(clicked()), SLOT(slotFindNext()));
-    connect(m_hideBtn, SIGNAL(clicked()), SLOT(hide()));
-    connect(m_fwdBox, SIGNAL(clicked()), SLOT(slotTextChanged()));
-    connect(m_caseSenBox, SIGNAL(clicked()), SLOT(slotTextChanged()));
+    connect(m_searchEdit, SIGNAL(textChanged(const QString&)), SLOT(slotTextChanged()));
+    connect(m_searchEdit, SIGNAL(returnPressed()), SLOT(slotFindNext()));
+    connect(m_findNextButton, SIGNAL(clicked()), SLOT(slotFindNext()));
+    connect(m_closeButton, SIGNAL(clicked()), SLOT(hide()));
+    connect(m_optionsButton, SIGNAL(clicked()), this, SLOT(showOptionsMenu()));
+
+    m_optionsMenu = new QPopupMenu(m_optionsButton, "options_menu");
+    m_optionsMenu->setCheckable(true);
+    m_optionsMenu->insertItem(i18n("Search Forward"), this, SLOT(toggleSearchFoward()), 0, SEARCH_FORWARD_MENU);
+    m_optionsMenu->insertItem(i18n("Match Case"), this, SLOT(toggleMatchCase()), 0, MATCH_CASE_MENU);
+
+    m_optionsButton->setPopup(m_optionsMenu);
 }
 
 SearchBar::~SearchBar()
 {
 }
 
-void SearchBar::focusInEvent(QFocusEvent* e)
-{
-    QHBox::focusInEvent(e);
-    m_lineEdit->setFocus();
-}
-
 void SearchBar::showEvent(QShowEvent *e)
 {
-    QHBox::showEvent(e);
-    m_lineEdit->selectAll();
+    SearchBarBase::showEvent(e);
+    m_searchEdit->selectAll();
 }
 
 bool SearchBar::focusedChild()
@@ -120,7 +106,8 @@ bool SearchBar::focusedChild()
 void SearchBar::hide()
 {
     m_timer->stop();
-    QHBox::hide();
+    SearchBarBase::hide();
+
     if (focusedChild())
         emit hidden();
 }
@@ -132,57 +119,82 @@ void SearchBar::slotTextChanged()
 
 void SearchBar::slotFind()
 {
-    if (m_lineEdit->text().isEmpty())
+    if (m_searchEdit->text().isEmpty())
     {
-        unsetPalette();
-        m_nextBtn->setEnabled(false);
+        m_searchEdit->unsetPalette();
+        m_findNextButton->setEnabled(false);
         setStatus(QPixmap(), "");
         return;
     }
 
-    m_nextBtn->setEnabled(true);
-    emit signalSearchChanged(m_lineEdit->text());
+    emit signalSearchChanged(m_searchEdit->text());
 }
 
 void SearchBar::slotFindNext()
 {
-    if (m_lineEdit->text().isEmpty())
+    if (m_searchEdit->text().isEmpty())
     {
-        unsetPalette();
-        m_nextBtn->setEnabled(false);
+        m_searchEdit->unsetPalette();
+        m_findNextButton->setEnabled(false);
+        setStatus(QPixmap(), "");
         return;
     }
 
-    m_nextBtn->setEnabled(true);
     emit signalSearchNext();
 }
 
 void SearchBar::setHasMatch(bool value)
 {
-    QPalette pal = m_lineEdit->palette();
+    QPalette pal = m_searchEdit->palette();
     pal.setColor(QPalette::Active, QColorGroup::Base, value ? Qt::green : Qt::red);
-    m_lineEdit->setPalette(pal);
+    m_searchEdit->setPalette(pal);
+    m_findNextButton->setEnabled(value);
 }
 
 void SearchBar::setStatus(const QPixmap& pix, const QString& text)
 {
+    if(!text.isEmpty()) {
+        m_statusStack->raiseWidget(1);
+    } else {
+        m_statusStack->raiseWidget(0);
+    }
+
     m_statusPixLabel->setPixmap(pix);
     m_statusTextLabel->setText(text);
 }
 
 QString SearchBar::pattern() const
 {
-    return m_lineEdit->text();
+    return m_searchEdit->text();
 }
 
 bool SearchBar::searchForward() const
 {
-    return m_fwdBox->isOn();
+    return m_searchFoward;
 }
 
 bool SearchBar::caseSensitive() const
 {
-    return m_caseSenBox->isOn();
+    return m_matchCase;
+}
+
+void SearchBar::toggleSearchFoward()
+{
+    m_searchFoward = !m_searchFoward;
+    m_optionsMenu->setItemChecked(SEARCH_FORWARD_MENU, m_searchFoward);
+    slotTextChanged();
+}
+
+void SearchBar::toggleMatchCase()
+{
+    m_matchCase = !m_matchCase;
+    m_optionsMenu->setItemChecked(MATCH_CASE_MENU, m_matchCase);
+    slotTextChanged();
+}
+
+void SearchBar::showOptionsMenu()
+{
+  m_optionsButton->openPopup();
 }
 
 #include "searchbar.moc"
