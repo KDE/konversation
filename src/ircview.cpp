@@ -1280,14 +1280,15 @@ bool wholeWords, bool forward, bool fromCursor)
     return searchNext();
 }
 
-bool IRCView::searchNext()
+bool IRCView::searchNext(bool reversed)
 {
     if (m_pattern.isEmpty())
         return true;
 
+    bool fwd = (reversed ? !m_forward : m_forward);
     // next search must begin one index before / after the last search
     // depending on the search direction.
-    if (m_forward)
+    if (fwd)
     {
         ++m_findIndex;
         if(m_findIndex == paragraphLength(m_findParagraph))
@@ -1309,7 +1310,7 @@ bool IRCView::searchNext()
         }
     }
 
-    return find(m_pattern, m_caseSensitive, m_wholeWords, m_forward,
+    return find(m_pattern, m_caseSensitive, m_wholeWords, fwd,
         &m_findParagraph, &m_findIndex);
 }
 

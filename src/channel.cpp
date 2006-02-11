@@ -847,7 +847,7 @@ void Channel::sendChannelText(const QString& sendLine)
             if(result.type == Konversation::Action) appendAction(m_server->getNickname(), result.output);
             else if(result.type == Konversation::Command) appendCommandMessage(result.typeString, result.output);
             else if(result.type == Konversation::Program) appendServerMessage(result.typeString, result.output);
-            else if(result.type == Konversation::Query) appendQuery(result.typeString, result.output);
+            else if(result.type == Konversation::PrivateMessage) appendQuery(result.typeString, result.output);
             else append(m_server->getNickname(), result.output);
         }
         // Send anything else to the server

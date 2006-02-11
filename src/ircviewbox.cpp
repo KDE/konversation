@@ -45,6 +45,8 @@ IRCViewBox::IRCViewBox(QWidget* parent, Server* newServer)
         this, SLOT(slotSearchChanged(const QString&)));
     connect(m_searchBar, SIGNAL(signalSearchNext()),
         this, SLOT(slotSearchNext()));
+    connect(m_searchBar, SIGNAL(signalSearchPrevious()),
+            this, SLOT(slotSearchPrevious()));
     connect(m_ircView, SIGNAL(doSearch()),
         SLOT(slotSearch()));
     connect(m_searchBar, SIGNAL(hidden()), m_ircView, SIGNAL(gotFocus()));
@@ -75,7 +77,17 @@ void IRCViewBox::slotSearch()
 
 void IRCViewBox::slotSearchNext()
 {
-    bool match = m_ircView->searchNext();
+  searchNext(false);
+}
+
+void IRCViewBox::slotSearchPrevious()
+{
+  searchNext(true);
+}
+
+void IRCViewBox::searchNext(bool reversed)
+{
+    bool match = m_ircView->searchNext(reversed);
 
     if (match)
     {
@@ -88,28 +100,27 @@ void IRCViewBox::slotSearchNext()
     {
         m_searchBar->setHasMatch(false);
         m_searchBar->setStatus(getIcon("messagebox_warning"),
-            i18n("Phrase not found"));
+                              i18n("Phrase not found"));
         return;
     }
 
     match = m_ircView->search(m_searchBar->pattern(),
-        m_searchBar->caseSensitive(),
-        false,
-        m_searchBar->searchForward(),
-        false);
+                              m_searchBar->caseSensitive(),
+                              m_searchBar->wholeWords(),
+                              m_searchBar->searchForward(),
+                              false);
 
     if (!match)
     {
         m_searchBar->setHasMatch(false);
         m_searchBar->setStatus(getIcon("messagebox_warning"),
-            i18n("Phrase not found"));
+                              i18n("Phrase not found"));
         return;
     }
 
     m_searchBar->setHasMatch(true);
     m_searchBar->setStatus(getIcon("messagebox_info"),
-        i18n("Wrapped search"));
-
+                          i18n("Wrapped search"));
 }
 
 void IRCViewBox::slotSearchChanged(const QString& pattern)

@@ -567,7 +567,7 @@ namespace Konversation
         //FIXME - don't do below line if query is focussed
         result.output = output;
         result.typeString= "-> " + recipient;
-        result.type = Query;
+        result.type = PrivateMessage;
         return result;
     }
 

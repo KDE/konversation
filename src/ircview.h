@@ -65,7 +65,7 @@ class IRCView : public KTextBrowser
 
         bool search(const QString& pattern, bool caseSensitive,
             bool wholeWords, bool forward, bool fromCursor);
-        bool searchNext();
+        bool searchNext(bool reversed = false);
 
         QColor highlightColor() { return m_highlightColor; }
         QString currentChannel() { return m_currentChannel; }

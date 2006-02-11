@@ -55,7 +55,8 @@ SearchBar::SearchBar(QWidget* parent)
     setFocusProxy(m_searchEdit);
     KIconLoader* iconLoader = kapp->iconLoader();
     m_closeButton->setIconSet(iconLoader->loadIconSet("fileclose", KIcon::Toolbar, 16));
-    m_findNextButton->setIconSet(iconLoader->loadIconSet("next", KIcon::Toolbar, 16));
+    m_findNextButton->setIconSet(iconLoader->loadIconSet("up", KIcon::Toolbar, 16));
+    m_findPreviousButton->setIconSet(iconLoader->loadIconSet("down", KIcon::Toolbar, 16));
     m_statusPixLabel->hide();
     m_statusTextLabel->hide();
 
@@ -68,6 +69,7 @@ SearchBar::SearchBar(QWidget* parent)
     connect(m_searchEdit, SIGNAL(textChanged(const QString&)), SLOT(slotTextChanged()));
     connect(m_searchEdit, SIGNAL(returnPressed()), SLOT(slotFindNext()));
     connect(m_findNextButton, SIGNAL(clicked()), SLOT(slotFindNext()));
+    connect(m_findPreviousButton, SIGNAL(clicked()), SLOT(slotFindPrevious()));
     connect(m_closeButton, SIGNAL(clicked()), SLOT(hide()));
     connect(m_optionsButton, SIGNAL(clicked()), this, SLOT(showOptionsMenu()));
 
@@ -131,6 +133,7 @@ void SearchBar::slotFind()
     {
         m_searchEdit->unsetPalette();
         m_findNextButton->setEnabled(false);
+        m_findPreviousButton->setEnabled(false);
         setStatus(QPixmap(), "");
         return;
     }
@@ -144,11 +147,26 @@ void SearchBar::slotFindNext()
     {
         m_searchEdit->unsetPalette();
         m_findNextButton->setEnabled(false);
+        m_findPreviousButton->setEnabled(false);
         setStatus(QPixmap(), "");
         return;
     }
 
     emit signalSearchNext();
+}
+
+void SearchBar::slotFindPrevious()
+{
+    if (m_searchEdit->text().isEmpty())
+    {
+        m_searchEdit->unsetPalette();
+        m_findNextButton->setEnabled(false);
+        m_findPreviousButton->setEnabled(false);
+        setStatus(QPixmap(), "");
+        return;
+    }
+
+    emit signalSearchPrevious();
 }
 
 void SearchBar::setHasMatch(bool value)
@@ -157,6 +175,7 @@ void SearchBar::setHasMatch(bool value)
     pal.setColor(QPalette::Active, QColorGroup::Base, value ? Qt::green : Qt::red);
     m_searchEdit->setPalette(pal);
     m_findNextButton->setEnabled(value);
+    m_findPreviousButton->setEnabled(value);
 }
 
 void SearchBar::setStatus(const QPixmap& pix, const QString& text)

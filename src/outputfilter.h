@@ -36,7 +36,7 @@ namespace Konversation
         Action,
         Command,
         Program,
-        Query
+        PrivateMessage
     };
 
     struct OutputFilterResult

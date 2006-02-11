@@ -59,6 +59,7 @@ class SearchBar : public SearchBarBase
         void slotTextChanged();
         void slotFind();
         void slotFindNext();
+        void slotFindPrevious();
 
         void toggleSearchFoward();
         void toggleMatchCase();
@@ -70,6 +71,7 @@ class SearchBar : public SearchBarBase
     signals:
         void signalSearchChanged(const QString& pattern);
         void signalSearchNext();
+        void signalSearchPrevious();
         void signalPropertiesChanged();
         void hidden();
 

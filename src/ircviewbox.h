@@ -39,7 +39,11 @@ class IRCViewBox : public QVBox
 
         void slotSearch();
         void slotSearchNext();
+        void slotSearchPrevious();
         void slotSearchChanged(const QString& pattern);
+
+    protected:
+        void searchNext(bool reversed = false);
 
     private:
 
