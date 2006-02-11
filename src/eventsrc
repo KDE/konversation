@@ -665,9 +665,11 @@ default_presentation=64
 
 [dccChat]
 Name=DCC Chat
+Name[bg]=DCC разговор
 Name[br]=Flapañ DCC
 Name[da]=Dcc-chat
 Name[de]=DCC-Chat
+Name[el]=Συζήτηση DCC
 Name[et]=DCC vestlus
 Name[fi]=DCC-keskustelu
 Name[ga]=Comhrá DCC
@@ -676,8 +678,10 @@ Name[pt]=Conversa DCC
 Name[pt_BR]=Conversa DCC
 Name[sv]=DCC-chatt
 Comment=Someone started a DCC chat with you
+Comment[bg]=Някой е започнал разговор с Вас в DCC
 Comment[da]=Nogen startede en dcc-chat med dig
 Comment[de]=Jemand hat einen DCC-chat mit Dir begonnen.
+Comment[el]=Κάποιος ξεκίνησε μια συζήτηση DCC μαζί σας
 Comment[et]=Keegi alustas sinuga DCC vestlust
 Comment[fi]=Joku aloitti DCC-keskustelun kanssasi
 Comment[it]=Qualcuno ha avviato una conversazione DCC con te
