@@ -45,6 +45,16 @@
       <label></label>
       <whatsthis></whatsthis>
     </entry>
+    <entry key="ShowBacklog" type="Bool">
+      <default>true</default>
+      <label></label>
+      <whatsthis></whatsthis>
+    </entry>
+    <entry key="BacklogLines" type="Int">
+      <default>10</default>
+      <label></label>
+      <whatsthis></whatsthis>
+    </entry>
     <entry key="ShowNickList" type="Bool">
       <default>true</default>
       <label></label>

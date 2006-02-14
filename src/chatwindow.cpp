@@ -216,52 +216,101 @@ void ChatWindow::setLogfileName(const QString& name)
             logName = QString(m_server->getServerGroup().lower()).append('_').append(name).append(".log").replace('/','_');
         }
 
-        // "cd" into log path or create path, if it's not there
-        cdIntoLogPath();
-        // Show last log lines. This idea was stole ... um ... inspired by PMP :)
-        // Don't do this for the server status windows, though
-        if((getType() != Status) && logfile.open(IO_ReadOnly))
+        // load backlog to show
+        if(Preferences::showBacklog())
         {
-            unsigned long filePosition;
-
-            QString backlogLine;
-            QTextStream backlog(&logfile);
-            backlog.setEncoding(QTextStream::UnicodeUTF8);
-            // Check if the log is actually big enough
-            if(backlog.device()->size() > 1024)
+            // "cd" into log path or create path, if it's not there
+            cdIntoLogPath();
+            // Show last log lines. This idea was stole ... um ... inspired by PMP :)
+            // Don't do this for the server status windows, though
+            if((getType() != Status) && logfile.open(IO_ReadOnly))
             {
-                // Set file pointer to 1 kB from the end
-                backlog.device()->at(backlog.device()->size() - 1024);
-                // Skip first line, since it may be incomplete
-                backlog.readLine();
-            }
+                unsigned long filePosition;
 
-            // Loop until end of file reached
-            while(!backlog.atEnd())
-            {
-                // remember actual file position to check for deadlocks
-                filePosition = backlog.device()->at();
-                backlogLine = backlog.readLine();
+                QString backlogLine;
+                QTextStream backlog(&logfile);
+                backlog.setEncoding(QTextStream::UnicodeUTF8);
 
-                // check for deadlocks
-                if(backlog.device()->at() == filePosition) backlog.device()->at(filePosition + 1);
-
-                // if a tab character is present in the line
-                if(backlogLine.find('\t') != -1)
+                QStringList firstColumns;
+                QStringList messages;
+                int offset = 0;
+                unsigned int lastPacketHeadPosition = backlog.device()->size();
+                const unsigned int packetSize = 30;
+                while(messages.count() < (unsigned int)Preferences::backlogLines() && backlog.device()->size() > packetSize * offset)
                 {
-                    // extract first column from log
-                    QString backlogFirst = backlogLine.left(backlogLine.find('\t'));
-                    // cut first column from line
-                    backlogLine = backlogLine.mid(backlogLine.find('\t') + 1);
-                    // Logfile is in utf8 so we don't need to do encoding stuff here
-                    // append backlog with time and first column to text view
-                    appendBacklogMessage(backlogFirst, backlogLine);
-                }
-            } // while
+                    QStringList firstColumnsInPacket;
+                    QStringList messagesInPacket;
 
-            backlog.unsetDevice();
-            logfile.close();
-        }
+                    // packetSize * offset < size <= packetSize * ( offset + 1 )
+
+                    // Check if the log is bigger than packetSize * ( offset + 1 )
+                    if(backlog.device()->size() > packetSize * ( offset + 1 ))
+                    {
+                        // Set file pointer to the packet size above the offset
+                        backlog.device()->at(backlog.device()->size() - packetSize * ( offset + 1 ));
+                        // Skip first line, since it may be incomplete
+                        backlog.readLine();
+                    }
+                    else
+                    {
+                        // Set file pointer to the head
+                        backlog.device()->reset();
+                    }
+
+                    unsigned int currentPacketHeadPosition = backlog.device()->at();
+
+                    // Loop until end of file reached
+                    while(!backlog.atEnd() && backlog.device()->at() < lastPacketHeadPosition)
+                    {
+                        // remember actual file position to check for deadlocks
+                        filePosition = backlog.device()->at();
+                        backlogLine = backlog.readLine();
+
+                        // check for deadlocks
+                        if(backlog.device()->at() == filePosition) backlog.device()->at(filePosition + 1);
+
+                        // if a tab character is present in the line
+                        if(backlogLine.find('\t') != -1)
+                        {
+                            // extract first column from log
+                            QString backlogFirst = backlogLine.left(backlogLine.find('\t'));
+                            // cut first column from line
+                            backlogLine = backlogLine.mid(backlogLine.find('\t') + 1);
+                            // Logfile is in utf8 so we don't need to do encoding stuff here
+                            // append backlog with time and first column to text view
+                            firstColumnsInPacket << backlogFirst;
+                            messagesInPacket << backlogLine;
+                        }
+                    } // while
+
+                    // remember the position not to read the same lines again
+                    lastPacketHeadPosition = currentPacketHeadPosition;
+                    ++offset;
+
+                    firstColumns = firstColumnsInPacket + firstColumns;
+                    messages = messagesInPacket + messages;
+                }
+                backlog.unsetDevice();
+                logfile.close();
+
+                // trim
+                int surplus = messages.count() - Preferences::backlogLines();
+                // "surplus" can be a minus value. (when the backlog is too short)
+                if(surplus > 0)
+                {
+                    for(int i = 0 ; i < surplus ; ++i)
+                    {
+                        firstColumns.pop_front();
+                        messages.pop_front();
+                    }
+                }
+
+                QStringList::Iterator itFirstColumn = firstColumns.begin();
+                QStringList::Iterator itMessage = messages.begin();
+                for( ; itFirstColumn != firstColumns.end() ; ++itFirstColumn, ++itMessage )
+                    appendBacklogMessage(*itFirstColumn, *itMessage);
+            }
+        } // if(Preferences::showBacklog())
     }
 }
 

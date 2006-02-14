@@ -1,4 +1,4 @@
-<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>ChatWindowAppearance_Config</class>
 <comment>This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -16,14 +16,17 @@ the Free Software Foundation; either version 2 of the License, or
             <height>526</height>
         </rect>
     </property>
-    <grid>
+    <property name="caption">
+        <string>ChatWindowAppearance_Config</string>
+    </property>
+    <vbox>
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
         <property name="margin">
             <number>0</number>
         </property>
-        <widget class="QGroupBox" row="0" column="0">
+        <widget class="QGroupBox">
             <property name="name">
                 <cstring>kcfg_Timestamping</cstring>
             </property>
@@ -93,29 +96,12 @@ the Free Software Foundation; either version 2 of the License, or
                 </spacer>
             </grid>
         </widget>
-        <spacer row="3" column="0">
+        <widget class="QGroupBox">
             <property name="name">
-                <cstring>spacer90</cstring>
-            </property>
-            <property name="orientation">
-                <enum>Vertical</enum>
-            </property>
-            <property name="sizeType">
-                <enum>Expanding</enum>
-            </property>
-            <property name="sizeHint">
-                <size>
-                    <width>20</width>
-                    <height>120</height>
-                </size>
-            </property>
-        </spacer>
-        <widget class="QGroupBox" row="2" column="0">
-            <property name="name">
-                <cstring>kcfg_ShowBackgroundImage</cstring>
+                <cstring>kcfg_ShowBacklog</cstring>
             </property>
             <property name="title">
-                <string>Enable Back&amp;ground Image</string>
+                <string>Show backlog</string>
             </property>
             <property name="checkable">
                 <bool>true</bool>
@@ -126,23 +112,46 @@ the Free Software Foundation; either version 2 of the License, or
                 </property>
                 <widget class="QLabel">
                     <property name="name">
-                        <cstring>textLabel4</cstring>
+                        <cstring>textLabel1_2</cstring>
                     </property>
                     <property name="text">
-                        <string>&amp;Path:</string>
+                        <string>Lines: </string>
                     </property>
                     <property name="buddy" stdset="0">
-                        <cstring>kcfg_BackgroundImage</cstring>
+                        <cstring>kcfg_ShowBacklogLines</cstring>
                     </property>
                 </widget>
-                <widget class="KURLRequester">
+                <widget class="KIntSpinBox">
                     <property name="name">
-                        <cstring>kcfg_BackgroundImage</cstring>
+                        <cstring>kcfg_BacklogLines</cstring>
+                    </property>
+                    <property name="maxValue">
+                        <number>5000</number>
+                    </property>
+                    <property name="value">
+                        <number>10</number>
                     </property>
                 </widget>
+                <spacer>
+                    <property name="name">
+                        <cstring>spacer3</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Expanding</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>251</width>
+                            <height>20</height>
+                        </size>
+                    </property>
+                </spacer>
             </hbox>
         </widget>
-        <widget class="QGroupBox" row="1" column="0">
+        <widget class="QGroupBox">
             <property name="name">
                 <cstring>groupBox2</cstring>
             </property>
@@ -176,13 +185,16 @@ the Free Software Foundation; either version 2 of the License, or
                     <property name="text">
                         <string>Show bo&amp;x to change own nickname</string>
                     </property>
+                    <property name="accel">
+                        <string>Alt+X</string>
+                    </property>
                 </widget>
                 <widget class="QCheckBox" row="2" column="0">
                     <property name="name">
                         <cstring>kcfg_ShowNickList</cstring>
                     </property>
                     <property name="text">
-                        <string>Show &amp;channel nick list and quick buttons</string>
+                        <string>Show channel &amp;nick list and quick buttons</string>
                     </property>
                 </widget>
                 <widget class="QCheckBox" row="3" column="0">
@@ -193,7 +205,7 @@ the Free Software Foundation; either version 2 of the License, or
                         <bool>false</bool>
                     </property>
                     <property name="text">
-                        <string>Show hostmasks &amp;in nickname list</string>
+                        <string>Show hostmas&amp;ks in nickname list</string>
                     </property>
                 </widget>
                 <widget class="QCheckBox" row="4" column="0">
@@ -206,10 +218,62 @@ the Free Software Foundation; either version 2 of the License, or
                     <property name="text">
                         <string>Show &amp;quick buttons</string>
                     </property>
+                    <property name="accel">
+                        <string>Alt+Q</string>
+                    </property>
                 </widget>
             </grid>
         </widget>
-    </grid>
+        <widget class="QGroupBox">
+            <property name="name">
+                <cstring>kcfg_ShowBackgroundImage</cstring>
+            </property>
+            <property name="title">
+                <string>Enable Back&amp;ground Image</string>
+            </property>
+            <property name="checkable">
+                <bool>true</bool>
+            </property>
+            <hbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QLabel">
+                    <property name="name">
+                        <cstring>textLabel4</cstring>
+                    </property>
+                    <property name="text">
+                        <string>P&amp;ath:</string>
+                    </property>
+                    <property name="buddy" stdset="0">
+                        <cstring>kcfg_BackgroundImage</cstring>
+                    </property>
+                </widget>
+                <widget class="KURLRequester">
+                    <property name="name">
+                        <cstring>kcfg_BackgroundImage</cstring>
+                    </property>
+                </widget>
+            </hbox>
+        </widget>
+        <spacer>
+            <property name="name">
+                <cstring>spacer90</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Vertical</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>20</width>
+                    <height>60</height>
+                </size>
+            </property>
+        </spacer>
+    </vbox>
 </widget>
 <connections>
     <connection>
@@ -237,6 +301,7 @@ the Free Software Foundation; either version 2 of the License, or
 </tabstops>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
+    <includehint>knuminput.h</includehint>
     <includehint>kurlrequester.h</includehint>
     <includehint>klineedit.h</includehint>
     <includehint>kpushbutton.h</includehint>
