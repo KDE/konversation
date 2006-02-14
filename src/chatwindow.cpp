@@ -235,7 +235,7 @@ void ChatWindow::setLogfileName(const QString& name)
                 QStringList messages;
                 int offset = 0;
                 unsigned int lastPacketHeadPosition = backlog.device()->size();
-                const unsigned int packetSize = 30;
+                const unsigned int packetSize = 4096;
                 while(messages.count() < (unsigned int)Preferences::backlogLines() && backlog.device()->size() > packetSize * offset)
                 {
                     QStringList firstColumnsInPacket;
