@@ -115,10 +115,10 @@ the Free Software Foundation; either version 2 of the License, or
                         <cstring>textLabel1_2</cstring>
                     </property>
                     <property name="text">
-                        <string>Lines: </string>
+                        <string>&amp;Lines: </string>
                     </property>
                     <property name="buddy" stdset="0">
-                        <cstring>kcfg_ShowBacklogLines</cstring>
+                        <cstring>kcfg_BacklogLines</cstring>
                     </property>
                 </widget>
                 <widget class="KIntSpinBox">
