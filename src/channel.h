@@ -70,13 +70,53 @@ class Channel : public ChatWindow
     public:
         Channel(QWidget* parent);
         ~Channel();
+//META
+        virtual bool canBeFrontView();
+        virtual bool searchView();
 
+    protected slots:
+        //FIXME: i doubt these ought to be slots
+        virtual bool areIRCColorsSupported() { return true; }
+        virtual bool isInsertCharacterSupported() { return true; }
+
+//General administrative stuff
+    public:
         void setName(const QString& newName);
         void setKey(const QString& newKey);
         QString getKey();
 
+        virtual void setServer(Server* newServer);
+        virtual void setIdentity(const Identity *newIdentity);
+
+//Unsure of future placement and/or continued existence of these members
+        int numberOfNicks() const { return nicks; }
+        int numberOfOps() const { return ops; }
+        virtual void setChannelEncoding(const QString& encoding);
+        virtual QString getChannelEncoding();
+        virtual QString getChannelEncodingDefaultDesc();
+
+    protected:
+        // use with caution! does not check for duplicates
+        void fastAddNickname(ChannelNickPtr channelnick);
+
+
+    public slots:
+        void setNickname(const QString& newNickname);
+        void scheduleAutoWho();
+        void setAutoUserhost(bool state);
+
+
+    protected slots:
+        void autoUserhost();
+        void autoWho();
+        virtual void serverOnline(bool online);
+
+
+//Nicklist
+    public:
         ChannelNickPtr getOwnChannelNick();
         ChannelNickPtr getChannelNick(const QString &ircnick);
+
         void joinNickname(ChannelNickPtr channelNick);
         void removeNick(ChannelNickPtr channelNick, const QString &reason, bool quit);
         void kickNick(ChannelNickPtr channelNick, const ChannelNick &kicker, const QString &reason);
@@ -92,19 +132,13 @@ class Channel : public ChatWindow
         void adjustNicks(int value);
         void adjustOps(int value);
         virtual void emitUpdateInfo();
+    protected slots:
+        void purgeNicks();
+        void processPendingNicks();
 
-        virtual void setServer(Server* newServer);
-        virtual void setIdentity(const Identity *newIdentity);
-
-        /** get the channel topic history, including the current topic at the top,
-         * and descending by age.
-         * Each topic may or may not have the author that set it at the start of the string,
-         * like:  "<author> topic"
-         *
-         * @return a list of topics this channel used to have, current at the top.
-         */
-        QStringList getTopicHistory();
-        /** get the current channel topic
+//Topic
+    public:
+        /** Get the current channel topic.
          *
          * The topic may or may not have the author that set it at the start of the string,
          * like:  "<author> topic"
@@ -113,16 +147,33 @@ class Channel : public ChatWindow
          *
          * */
         QString getTopic();
+        /** Get the channel topic history sorted in reverse chronological order.
+         *
+         * Each topic may or may not have the author that set it at the start of the string,
+         * like:  "<author> topic"
+         *
+         * @return a list of topics this channel used to have, current at the top.
+         */
+        QStringList getTopicHistory();
+
         void setTopic(const QString& topic);
-                                                  // Overloaded
-        void setTopic(const QString& nickname,const QString& topic);
+        void setTopic(const QString& nickname, const QString& topic);
         void setTopicAuthor(const QString& author);
 
+    signals:
+        void topicHistoryChanged();
+
+
+//Modes
+//TODO: the only representation of the channel limit is held in the GUI
+
+    public:
+        /// Internal - Empty the modelist
         void clearModeList();
-        /** get the list of modes that this channel has - e.g. {+l,+s,-m}
-         *  @return All the modes that this channel has
-         */
+        /// Get the list of modes that this channel has - e.g. {+l,+s,-m}
+        //TODO: does this method return a list of all modes, all modes that have been changed, or all modes that are +?
         QStringList getModeList() const { return m_modeList; }
+
         /** Outputs a message on the channel, and modifies the mode for a ChannelNick.
          *  @param sourceNick The server or the nick of the person that made the mode change.
          *  @param mode The mode that is changing one of v,h,o,a for voice halfop op admin
@@ -130,30 +181,12 @@ class Channel : public ChatWindow
          *  @param parameter This depends on what the mode change is.  In most cases it is the nickname of the person that is being given voice/op/admin etc.  See the code.
          */
         void updateMode(QString sourceNick, char mode, bool plus, const QString &parameter);
-        void updateModeWidgets(char mode, bool plus, const QString &parameter);
-        void updateQuickButtons(const QStringList &newButtonList);
-        void updateStyleSheet();
 
-        virtual QString getTextInLine();
-        virtual bool closeYourself();
-        virtual bool canBeFrontView();
-        virtual bool searchView();
+    signals:
+        void modesChanged();
 
-        bool allowNotifications() { return m_allowNotifications; }
-
-        ChannelNickList getSelectedChannelNicks();
-        QStringList getSelectedNickList();
-
-        virtual void setChannelEncoding(const QString& encoding);
-        virtual QString getChannelEncoding();
-        virtual QString getChannelEncodingDefaultDesc();
-
-        NickListView* getNickListView() const { return nicknameListView; }
-
-        int numberOfNicks() const { return nicks; }
-        int numberOfOps() const { return ops; }
-
-        virtual bool eventFilter(QObject* watched, QEvent* e);
+//Bans
+    public:
 
         void addBan(const QString& ban);
         void removeBan(const QString& ban);
@@ -165,24 +198,49 @@ class Channel : public ChatWindow
         void banAdded(const QString& newban);
         void banRemoved(const QString& newban);
         void banListCleared();
+
+//Generic GUI
+    public:
+        virtual bool eventFilter(QObject* watched, QEvent* e);
+
+//Specific GUI
+    public:
+        void updateModeWidgets(char mode, bool plus, const QString &parameter);
+        void updateQuickButtons(const QStringList &newButtonList);
+
+        /// Thunks to ircview->updateStyleSheet
+        void updateStyleSheet();
+
+        /// Get the contents of the input line.
+        virtual QString getTextInLine();
+        /// Sounds suspiciously like a destructor..
+        virtual bool closeYourself();
+
+        ///TODO: kill this, it has been reimplemented at the ChatWindow level
+        bool allowNotifications() { return m_allowNotifications; }
+
+        ChannelNickList getSelectedChannelNicks();
+        ///TODO: this looks like a half-arsed overload.
+        QStringList getSelectedNickList();
+
+        NickListView* getNickListView() const { return nicknameListView; }
+
+    signals:
         void sendFile();
-        void topicHistoryChanged();
-        void modesChanged();
 
     public slots:
-        void setNickname(const QString& newNickname);
         void channelTextEntered();
         void channelPassthroughCommand();
         void sendChannelText(const QString& line);
+
         void showQuickButtons(bool show);
         void showModeButtons(bool show);
+
         void appendInputText(const QString& s);
         virtual void indicateAway(bool show);
         void showTopic(bool show);
-        void scheduleAutoWho();
         void showNicknameBox(bool show);
         void showNicknameList(bool show);
-        void setAutoUserhost(bool state);
 
         void setAllowNotifications(bool allow) { m_allowNotifications = allow; }
 
@@ -190,74 +248,53 @@ class Channel : public ChatWindow
         virtual void lostFocus();
 
     protected slots:
-        void purgeNicks();
-        void completeNick();
-        void filesDropped(QDropEvent* e);
+        void completeNick(); ///< I guess this is a GUI function, might be nice to have at DCOP level though --argonel
         void endCompleteNick();
+        void filesDropped(QDropEvent* e);
         void quickButtonClicked(const QString& definition);
         void modeButtonClicked(int id,bool on);
         void channelLimitChanged();
 
-        void popupChannelCommand(int id);         // Will be connected to IRCView::popupCommand()
-        void popupCommand(int id);                // Will be connected to NickListView::popupCommand()
-        void doubleClickCommand(QListViewItem*);  // Will be connected to NickListView::doubleClicked()
+        void popupChannelCommand(int id);         ///< Connected to IRCView::popupCommand()
+        void popupCommand(int id);                ///< Connected to NickListView::popupCommand()
+        void doubleClickCommand(QListViewItem*);  ///< Connected to NickListView::doubleClicked()
         // Dialogs
         void changeNickname(const QString& newNickname);
         void showOptionsDialog();
-        // connected to IRCInput::textPasted() - used to handle large/multiline pastings
-        void textPasted(const QString& text);
-        // connected to IRCInput::sendFile()
-        void sendFileMenu();
-        void autoUserhost();
-        void autoWho();
-        void nicknameComboboxChanged();
 
-        void processPendingNicks();
-        virtual void serverOnline(bool online);
-        /** Enable/disable the mode buttons depending on whether you are op or not.
-         */
+        void textPasted(const QString& text); ///< connected to IRCInput::textPasted() - used to handle large/multiline pastings
+
+        void sendFileMenu(); ///< connected to IRCInput::sendFile()
+        void nicknameComboboxChanged();
+        /// Enable/disable the mode buttons depending on whether you are op or not.
         void refreshModeButtons();
 
+//only the GUI cares about sorted nicklists
         ///Request a delayed nicklist sorting
         void requestNickListSort();
-
         ///Sort the nicklist
         void sortNickList();
-
-        virtual bool areIRCColorsSupported() {return true; }
-        virtual bool isInsertCharacterSupported() { return true; }
 
     protected:
         void showEvent(QShowEvent* event);
         void hideEvent(QHideEvent* event);
         void initializeSplitters();
-        // use with caution! does not check for duplicates
-        void fastAddNickname(ChannelNickPtr channelnick);
-        /** Called from ChatWindow adjustFocus */
+        /// Called from ChatWindow adjustFocus
         virtual void childAdjustFocus();
-	/** Close the channel then come back in */
-        void cycleChannel();
+        /// Close the channel then come back in
+        void cycleChannel(); ///< TODO this is definately implemented and hooked incorrectly.
 
-        int nicks;
-        int ops;
-
-        // True if nick context menu is executed from IRCView
-        bool channelCommand;
-
-        // are there still nicks to be added by /names reply?
-        bool pendingNicks;
+        bool channelCommand;///< True if nick context menu is executed from IRCView
 
         // to take care of redraw problem if hidden
         bool quickButtonsChanged;
         bool quickButtonsState;
         bool modeButtonsChanged;
         bool modeButtonsState;
-        bool splitterChanged;
         bool awayChanged;
         bool awayState;
+        bool splitterChanged;
         bool splitterHidden;
-
-        bool topicAuthorUnknown;
 
         unsigned int completionPosition;
 
@@ -266,12 +303,9 @@ class Channel : public ChatWindow
         QWidget* topicWidget;
         QToolButton* m_topicButton;
         Konversation::TopicLabel* topicLine;
-        QStringList m_topicHistory;
-	QStringList m_BanList;
+
+        //TODO: abstract these
         QHBox* modeBox;
-
-        QString key;
-
         ModeButton* modeT;
         ModeButton* modeN;
         ModeButton* modeS;
@@ -281,27 +315,33 @@ class Channel : public ChatWindow
         ModeButton* modeK;
         ModeButton* modeL;
 
-        KLineEdit* limit;
+        KLineEdit* limit; //TODO: this GUI element is the only storage for the mode
 
         NickListView* nicknameListView;
-        QColor abgCache;                         // caches the alternate background color
+        QColor abgCache; ///< Caches the alternate background color for the nicklist
         QHBox* commandLineBox;
         QVBox* nickListButtons;
-        QComboBox* nicknameCombobox;
-        QString oldNick;
-        QLabel* awayLabel;
         QGrid* buttonsGrid;
+        QComboBox* nicknameCombobox;
+        QString oldNick; ///< GUI
+        QLabel* awayLabel;
         IRCInput* channelInput;
 
         NickChangeDialog* nickChangeDialog;
-        NickList nicknameList;
         QPtrList<QuickButton> buttonList;
+
+//Members from here to end are not GUI
+        NickList nicknameList;
         QTimer userhostTimer;
 
-        bool m_firstAutoWhoDone;
-        QTimer m_whoTimer;                        // for continuous auto /WHO
+        QStringList m_topicHistory;
+        QStringList m_BanList;
+        bool topicAuthorUnknown; ///< Stores whether the "<author>" bit is there or not.
 
-        bool m_allowNotifications;
+        QString key;
+
+        bool m_firstAutoWhoDone;
+        QTimer m_whoTimer; ///< For continuous auto /WHO
 
         QValueList<QStringList> m_pendingChannelNickLists;
         int m_opsToAdd;
@@ -312,5 +352,11 @@ class Channel : public ChatWindow
 
         QStringList m_modeList;
         ChannelNickPtr m_ownChannelNick;
+
+        bool pendingNicks; ///< are there still nicks to be added by /names reply?
+        int nicks; ///< How many nicks on the channel
+        int ops; ///< How many ops on the channel
+
+        bool m_allowNotifications; ///<TODO: remove this, its been implemented on the chatwindow object
 };
 #endif
