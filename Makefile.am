@@ -15,3 +15,5 @@ messages: rc.cpp
 	rm -f rc.cpp
 
 
+include $(top_srcdir)/admin/Doxyfile.am
+
