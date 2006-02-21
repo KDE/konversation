@@ -603,16 +603,24 @@ void KonversationApplication::readOptions()
     {
       buttonList.append(config->readEntry(QString("Button%1").arg(index++)));
     } // while
-
-/*
-    for(int index=0;index<8;index++)
-    {
-        QString buttonKey(QString("Button%1").arg(index));
-        if(config->hasKey(buttonKey)) buttonList[index]=config->readEntry(buttonKey);
-    }
-*/
     // Put back the changed button list
     Preferences::setQuickButtonList(buttonList);
+
+    // Autoreplace List
+
+    // if there are autoreplace definitions in the config file, remove default entries
+    if(config->hasGroup("Autoreplace List")) Preferences::clearAutoreplaceList();
+    config->setGroup("Autoreplace List");
+    // Read all default entries
+    QStringList autoreplaceList(Preferences::autoreplaceList());
+    // Read all entries
+    index=0;
+    while(config->hasKey(QString("Autoreplace%1").arg(index)))
+    {
+      autoreplaceList.append(config->readEntry(QString("Autoreplace%1").arg(index++)));
+    } // while
+    // Put back the changed autoreplace list
+    Preferences::setAutoreplaceList(autoreplaceList);
 
     // Highlight List
     if(config->hasKey("Highlight"))               // Stay compatible with versions < 0.14

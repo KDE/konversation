@@ -93,10 +93,17 @@ class Preferences : public QObject, public PreferencesBase
         static void clearIgnoreList();
         static const QPtrList<Ignore> ignoreList();
         static void setIgnoreList(QPtrList<Ignore> newList);
+
         static const QStringList quickButtonList();
         static const QStringList defaultQuickButtonList();
         static void setQuickButtonList(const QStringList newList);
         static void clearQuickButtonList();
+
+        static const QStringList autoreplaceList();
+        static const QStringList defaultAutoreplaceList();
+        static void setAutoreplaceList(const QStringList newList);
+        static void clearAutoreplaceList();
+
         static void addIdentity(IdentityPtr identity);
         static void removeIdentity(IdentityPtr identity);
         static void clearIdentityList();
@@ -156,6 +163,7 @@ class Preferences : public QObject, public PreferencesBase
         QMap<int, QStringList> mNotifyList;  // network id, list of nicks
         QMap< QString,QMap<QString,QString> > mChannelEncodingsMap;
         QStringList mQuickButtonList;
+        QStringList mAutoreplaceList;
         QString mSortingOrder;
 };
 #endif

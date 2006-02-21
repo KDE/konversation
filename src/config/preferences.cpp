@@ -82,6 +82,7 @@ Preferences::Preferences()
     serverGroup->setExpanded(false);
     mServerGroupList.append(serverGroup);
     setQuickButtonList(defaultQuickButtonList());
+    setAutoreplaceList(defaultAutoreplaceList());
 }
 
 Preferences::~Preferences()
@@ -122,6 +123,31 @@ void Preferences::clearQuickButtonList()
 {
   self()->mQuickButtonList.clear();
 }
+
+// --------------------------- AutoReplace ---------------------------
+
+const QStringList Preferences::defaultAutoreplaceList()
+{
+    return QStringList() << "teh,the"
+                         << "nciht,nicht";
+}
+
+const QStringList Preferences::autoreplaceList()
+{
+  return self()->mAutoreplaceList;
+}
+
+void Preferences::setAutoreplaceList(const QStringList newList)
+{
+  self()->mAutoreplaceList=newList;
+}
+
+void Preferences::clearAutoreplaceList()
+{
+  self()->mAutoreplaceList.clear();
+}
+
+// --------------------------- AutoReplace ---------------------------
 
 void Preferences::setServerGroupList(const Konversation::ServerGroupList& list)
 {
