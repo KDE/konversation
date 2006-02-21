@@ -140,6 +140,17 @@
                 <widget class="KListView" row="0" column="0" rowspan="3" colspan="4">
                     <column>
                         <property name="text">
+                            <string>RE</string>
+                        </property>
+                        <property name="clickable">
+                            <bool>true</bool>
+                        </property>
+                        <property name="resizable">
+                            <bool>true</bool>
+                        </property>
+                    </column>
+                    <column>
+                        <property name="text">
                             <string>Pattern</string>
                         </property>
                         <property name="clickable">

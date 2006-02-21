@@ -204,9 +204,33 @@ QString IRCInput::doAutoreplace(const QString& text)
   for(unsigned int index=0;index<autoreplaceList.count();index++)
   {
     QString definition=autoreplaceList[index];
-    QString pattern=definition.section(',',0,0);
-    QString replacement=definition.section(',',1);
-    line.replace(pattern,replacement);
+    QString pattern=definition.section(',',1,1);
+    QString replacement=definition.section(',',2);
+
+    if(definition.section(',',0,0)=="1")
+    {
+      QRegExp needleReg=pattern;
+      needleReg.setCaseSensitive(true);
+      if(line.find(needleReg)!=-1)
+      {
+        QStringList captures;
+        // remember captured patterns
+        captures=needleReg.capturedTexts();
+
+        // replace %0 - %9 in regex groups
+        for(unsigned int capture=0;capture<captures.count();capture++)
+        {
+          replacement.replace(QString("%%1").arg(capture),captures[capture]);
+        } // for
+        replacement.replace(QRegExp("%[0-9]"),QString::null);
+
+        line.replace(needleReg,replacement);
+      }
+    }
+    else
+    {
+      line.replace(pattern,replacement);
+    }
   } // for
 
   return line;

@@ -37,8 +37,8 @@ Autoreplace_Config::Autoreplace_Config(QWidget* parent, const char* name)
   patternListView->setSorting(-1,false);
 
   connect(patternListView,SIGNAL (selectionChanged(QListViewItem*)),this,SLOT (entrySelected(QListViewItem*)) );
-  connect(patternListView,SIGNAL (clicked(QListViewItem*)),this,SLOT (entrySelected(QListViewItem*)) );
-  connect(patternListView,SIGNAL (moved()),this,SIGNAL (modified()) );
+  connect(patternListView,SIGNAL (clicked(QListViewItem*)),SIGNAL (modified()));
+  connect(patternListView,SIGNAL (moved()),SIGNAL (modified()) );
 
   connect(patternInput,SIGNAL (textChanged(const QString&)),this,SLOT (patternChanged(const QString&)) );
   connect(replacementInput,SIGNAL (textChanged(const QString&)),this,SLOT (replacementChanged(const QString&)) );
@@ -70,7 +70,10 @@ void Autoreplace_Config::setAutoreplaceListView(const QStringList &autoreplaceLi
     // get autoreplace definition
     QString definition=autoreplaceList[index-1];
     // cut definition apart in name and action, and create a new listview item
-    new KListViewItem(patternListView,definition.section(',',0,0),definition.section(',',1));
+    QCheckListItem* newItem=new QCheckListItem(patternListView,QString::null,QCheckListItem::CheckBox);
+    if(definition.section(',',0,0)=="1") newItem->setOn(true);
+    newItem->setText(1,definition.section(',',1,1));
+    newItem->setText(2,definition.section(',',2));
   } // for
   patternListView->setSelected(patternListView->firstChild(), true);
 }
@@ -126,8 +129,11 @@ QStringList Autoreplace_Config::currentAutoreplaceList()
   // go through all items and save them into the configuration
   while(item)
   {
+    QString checked="0";
+    if(static_cast<QCheckListItem*>(item)->isOn()) checked="1";
+
     // remember entry in internal list
-    newList.append(item->text(0)+","+item->text(1));
+    newList.append(checked+","+item->text(1)+","+item->text(2));
     // get next item in the listview
     item=item->itemBelow();
   } // while
@@ -158,8 +164,8 @@ void Autoreplace_Config::entrySelected(QListViewItem* autoreplaceEntry)
     // tell the editing widgets not to emit modified() on signals now
     m_newItemSelected=true;
     // update editing widget contents
-    patternInput->setText(autoreplaceEntry->text(0));
-    replacementInput->setText(autoreplaceEntry->text(1));
+    patternInput->setText(autoreplaceEntry->text(1));
+    replacementInput->setText(autoreplaceEntry->text(2));
     // re-enable modified() signal on text changes in edit widgets
     m_newItemSelected=false;
   }
@@ -181,7 +187,7 @@ void Autoreplace_Config::patternChanged(const QString& newPattern)
   if(item)
   {
     // rename pattern
-    item->setText(0,newPattern);
+    item->setText(1,newPattern);
     // tell the config system that something has changed
     if(!m_newItemSelected) emit modified();
   }
@@ -197,7 +203,7 @@ void Autoreplace_Config::replacementChanged(const QString& newReplacement)
   if(item)
   {
     // rename item
-    item->setText(1,newReplacement);
+    item->setText(2,newReplacement);
     // tell the config system that something has changed
     if(!m_newItemSelected) emit modified();
   }
@@ -243,7 +249,7 @@ void Autoreplace_Config::removeEntry()
     // check if we found the next item
     if(nextItem)
     {
-      // select the item and make it the current ite,
+      // select the item and make it the current item
       patternListView->setSelected(nextItem,true);
       patternListView->setCurrentItem(nextItem);
     }
