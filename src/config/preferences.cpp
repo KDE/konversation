@@ -128,8 +128,8 @@ void Preferences::clearQuickButtonList()
 
 const QStringList Preferences::defaultAutoreplaceList()
 {
-    return QStringList() << "teh,the"
-                         << "nciht,nicht";
+    return QStringList() << "0,teh,the"
+                         << "1,\\[\\[([^\s]+)\\]\\],http://en.wikipedia.org/wiki/Special:Search?go=Go&search=%1";
 }
 
 const QStringList Preferences::autoreplaceList()
@@ -559,7 +559,7 @@ QString Preferences::webBrowserCmd()
 
 QString Preferences::translatedWikiURL() {
   QString wikiUrl = wikiURL();
-  if(wikiUrl.isEmpty() /*indicates to use localised version*/ || wikiUrl == "http://en.wikipedia.org/wiki/" /* pre 0.19 default.*/) 
+  if(wikiUrl.isEmpty() /*indicates to use localised version*/ || wikiUrl == "http://en.wikipedia.org/wiki/" /* pre 0.19 default.*/)
     return i18n("Translate to localised wikipedia url.  Search term is appended on the end", "http://en.wikipedia.org/wiki/Special:Search?go=Go&search=");
   return wikiUrl;
 }
