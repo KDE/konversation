@@ -210,19 +210,8 @@ Channel::Channel(QWidget* parent)
 
     nicknameListView->installEventFilter(this);
 
-    // the grid that holds the quick action buttons
-    buttonsGrid = new QGrid(2, nickListButtons);
-    // set hide() or show() on grid
-    showQuickButtons(Preferences::showQuickButtons());
-
-    for(int index = 0; index < 8; index++)
-    {
-        // generate empty buttons first, text will be added by updateQuickButtons() later
-        QuickButton* newQuickButton = new QuickButton(QString::null, QString::null, buttonsGrid);
-        buttonList.append(newQuickButton);
-
-        connect(newQuickButton, SIGNAL(clicked(const QString &)), this, SLOT(quickButtonClicked(const QString &)));
-    }
+    // initialize buttons grid, will be set up in updateQuickButtons
+    buttonsGrid=0;
 
     // The box holding the Nickname button and Channel input
     commandLineBox = new QHBox(this);
@@ -1744,8 +1733,30 @@ void Channel::updateModeWidgets(char mode, bool plus, const QString &parameter)
 
 void Channel::updateQuickButtons(const QStringList &newButtonList)
 {
-    for(int index=0;index<8;index++)
+    // remove quick buttons from memory and GUI
+    while(buttonList.count())
     {
+      QuickButton* button=buttonList.at(0);
+      // remove tool tips as well
+      QToolTip::remove(button);
+      buttonList.remove(button);
+      delete button;
+    }
+
+    if(buttonsGrid)delete buttonsGrid;
+
+    // the grid that holds the quick action buttons
+    buttonsGrid = new QGrid(2, nickListButtons);
+
+    // add new quick buttons
+    for(unsigned int index=0;index<newButtonList.count();index++)
+    {
+        // generate empty buttons first, text will be added later
+        QuickButton* quickButton = new QuickButton(QString::null, QString::null, buttonsGrid);
+        buttonList.append(quickButton);
+
+        connect(quickButton, SIGNAL(clicked(const QString &)), this, SLOT(quickButtonClicked(const QString &)));
+
         // Get the button definition
         QString buttonText=newButtonList[index];
         // Extract button label
@@ -1753,18 +1764,21 @@ void Channel::updateQuickButtons(const QStringList &newButtonList)
         // Extract button definition
         buttonText=buttonText.section(',',1);
 
-        QuickButton* quickButton=buttonList.at(index);
         quickButton->setText(buttonLabel);
         quickButton->setDefinition(buttonText);
 
-        // Update tool tips
-        QToolTip::remove(quickButton);
+        // Add tool tips
         QString toolTip=buttonText.replace("&","&amp;").
             replace("<","&lt;").
             replace(">","&gt;");
 
         QToolTip::add(quickButton,toolTip);
-    }
+
+        quickButton->show();
+    } // for
+
+    // set hide() or show() on grid
+    showQuickButtons(Preferences::showQuickButtons());
 }
 
 void Channel::showQuickButtons(bool show)

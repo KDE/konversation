@@ -591,14 +591,26 @@ void KonversationApplication::readOptions()
     Preferences::setUseNotify(Preferences::useNotify());
 
     // Quick Buttons List
+
+    // if there are button definitions in the config file, remove default buttons
+    if(config->hasGroup("Button List")) Preferences::clearQuickButtonList();
     config->setGroup("Button List");
-    // Read all buttons and overwrite default entries
+    // Read all default buttons
     QStringList buttonList(Preferences::quickButtonList());
+    // Read all quick buttons
+    int index=0;
+    while(config->hasKey(QString("Button%1").arg(index)))
+    {
+      buttonList.append(config->readEntry(QString("Button%1").arg(index++)));
+    } // while
+
+/*
     for(int index=0;index<8;index++)
     {
         QString buttonKey(QString("Button%1").arg(index));
         if(config->hasKey(buttonKey)) buttonList[index]=config->readEntry(buttonKey);
     }
+*/
     // Put back the changed button list
     Preferences::setQuickButtonList(buttonList);
 
@@ -637,7 +649,7 @@ void KonversationApplication::readOptions()
     // Remove all default entries if there is at least one Ignore in the Preferences::file
     if(config->hasKey("Ignore0")) Preferences::clearIgnoreList();
     // Read all ignores
-    int index=0;
+    index=0;
     while(config->hasKey(QString("Ignore%1").arg(index)))
     {
         Preferences::addIgnore(config->readEntry(QString("Ignore%1").arg(index++)));
@@ -810,18 +822,6 @@ void KonversationApplication::saveOptions(bool updateGUI)
     }
 
     config->deleteGroup("Server List");
-/*
-    Should be done in QuickButtonConfigController now ...
-    remove this part as soon as we are certain it works
-
-    config->setGroup("Button List");
-
-    for(index=0;index<8;index++)
-    {
-        QStringList buttonList(Preferences::buttonList());
-        config->writeEntry(QString("Button%1").arg(index),buttonList[index]);
-    }
-*/
 /*
     Should be done in HighlightConfigController now ...
     remove this part as soon as we are certain it works

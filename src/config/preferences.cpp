@@ -118,6 +118,11 @@ void Preferences::setQuickButtonList(const QStringList newList)
   self()->mQuickButtonList=newList;
 }
 
+void Preferences::clearQuickButtonList()
+{
+  self()->mQuickButtonList.clear();
+}
+
 void Preferences::setServerGroupList(const Konversation::ServerGroupList& list)
 {
     self()->mServerGroupList.clear();

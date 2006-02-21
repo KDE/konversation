@@ -40,14 +40,15 @@ class QuickButtons_Config : public QuickButtons_ConfigUI, public KonviSettingsPa
     void entrySelected(QListViewItem* quickButtonEntry);
     void nameChanged(const QString& newName);
     void actionChanged(const QString& newAction);
-
-  private:
-    void setButtonsListView(const QStringList &buttonList);
+    void addEntry();
+    void removeEntry();
 
   protected:
-    bool m_newItemSelected;
-    QStringList m_oldButtonList;
+    void setButtonsListView(const QStringList &buttonList);
 
+    bool m_newItemSelected;
+
+    QStringList m_oldButtonList;
     QStringList currentButtonList();
 };
 
