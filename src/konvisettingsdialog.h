@@ -51,6 +51,7 @@ class NicklistBehavior_Config;
 class TabBar_Config;
 class Alias_Config;
 class QuickButtons_Config;
+class Autoreplace_Config;
 class Log_Config;
 class DCC_Config;
 class WatchedNicknames_Config;
@@ -76,6 +77,7 @@ class KDEUI_EXPORT KonviSettingsDialog : public KonviConfigDialog
 	TabBar_Config* m_confTabBarWdg;
 	Alias_Config* m_confAliasWdg;
 	QuickButtons_Config* m_confQuickButtonsWdg;
+	Autoreplace_Config* m_confAutoreplaceWdg;
 	Log_Config* m_confLogWdg;
 	DCC_Config* m_confDCCWdg;
 	WatchedNicknames_Config* m_confWatchedNicknamesWdg;

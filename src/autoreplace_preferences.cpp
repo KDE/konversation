@@ -40,8 +40,8 @@ Autoreplace_Config::Autoreplace_Config(QWidget* parent, const char* name)
   connect(patternListView,SIGNAL (clicked(QListViewItem*)),this,SLOT (entrySelected(QListViewItem*)) );
   connect(patternListView,SIGNAL (moved()),this,SIGNAL (modified()) );
 
-  connect(patternInput,SIGNAL (textChanged(const QString&)),this,SLOT (nameChanged(const QString&)) );
-  connect(replacementInput,SIGNAL (textChanged(const QString&)),this,SLOT (actionChanged(const QString&)) );
+  connect(patternInput,SIGNAL (textChanged(const QString&)),this,SLOT (patternChanged(const QString&)) );
+  connect(replacementInput,SIGNAL (textChanged(const QString&)),this,SLOT (replacementChanged(const QString&)) );
 
   connect(newButton,SIGNAL (clicked()),this,SLOT (addEntry()));
   connect(removeButton,SIGNAL (clicked()),this,SLOT (removeEntry()));

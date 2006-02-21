@@ -49,6 +49,7 @@
 #include "chatwindowappearance_preferences.h"
 #include "log_preferences.h"
 #include "quickbuttons_preferences.h"
+#include "autoreplace_preferences.h"
 #include "chatwindowbehaviour_preferences.h"
 #include "fontappearance_preferences.h"
 #include "nicklistbehavior_preferences.h"
@@ -153,6 +154,14 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   addPage ( m_confAliasWdg, pagePath, "editcopy", i18n(" Command Aliases") );
   m_indexToPageMapping.insert(lastAddedIndex(), m_confAliasWdg);
   connect(m_confAliasWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
+
+  //Behaviour/Auto Replace
+  m_confAutoreplaceWdg = new Autoreplace_Config( this, "Autoreplace" );
+  pagePath.clear();
+  pagePath << i18n("Behavior") << i18n("Auto Replace");
+  addPage ( m_confAutoreplaceWdg, pagePath, "kview", i18n("Auto Replace") );
+  m_indexToPageMapping.insert(lastAddedIndex(), m_confAutoreplaceWdg);
+  connect(m_confAutoreplaceWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
 
   //Behaviour/Quick Buttons
   m_confQuickButtonsWdg = new QuickButtons_Config( this, "QuickButtons" );
