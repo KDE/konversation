@@ -68,6 +68,8 @@ class IRCInput : public KTextEdit
         void addHistory(const QString& text);
         bool checkPaste(QString& text);
         void contentsMouseReleaseEvent(QMouseEvent *);
+        QString doAutoreplace(const QString& text);
+
         virtual void keyPressEvent(QKeyEvent* e);
 
         QStringList historyList;

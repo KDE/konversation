@@ -159,6 +159,7 @@ void IRCInput::keyPressEvent(QKeyEvent* e)
                 }
                 else
                 {
+                    setText(doAutoreplace(text()));
                     emit submit();
                 }
             }
@@ -193,6 +194,22 @@ void IRCInput::keyPressEvent(QKeyEvent* e)
     }
 
     KTextEdit::keyPressEvent(e);
+}
+
+QString IRCInput::doAutoreplace(const QString& text)
+{
+  QStringList autoreplaceList=Preferences::autoreplaceList();
+  QString line=text;
+
+  for(unsigned int index=0;index<autoreplaceList.count();index++)
+  {
+    QString definition=autoreplaceList[index];
+    QString pattern=definition.section(',',0,0);
+    QString replacement=definition.section(',',1);
+    line.replace(pattern,replacement);
+  } // for
+
+  return line;
 }
 
 void IRCInput::addHistory(const QString& line)
