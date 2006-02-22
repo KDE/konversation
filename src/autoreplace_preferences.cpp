@@ -213,10 +213,12 @@ void Autoreplace_Config::replacementChanged(const QString& newReplacement)
 void Autoreplace_Config::addEntry()
 {
   // add new item at the bottom of list view
-  KListViewItem* newItem=new KListViewItem(patternListView,patternListView->lastChild(),i18n("New"),QString::null);
+  QCheckListItem* newItem=new QCheckListItem(patternListView,QString::null,QCheckListItem::CheckBox);
   // if successful ...
   if(newItem)
   {
+    // set default pattern name
+    newItem->setText(1,i18n("New"));
     // select new item and make it the current one
     patternListView->setSelected(newItem,true);
     patternListView->setCurrentItem(newItem);
