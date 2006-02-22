@@ -159,7 +159,7 @@ void IRCInput::keyPressEvent(QKeyEvent* e)
                 }
                 else
                 {
-                    setText(doAutoreplace(text()));
+                    setText(static_cast<KonversationApplication*>(kapp)->doAutoreplace(text(),true));
                     emit submit();
                 }
             }
@@ -194,63 +194,6 @@ void IRCInput::keyPressEvent(QKeyEvent* e)
     }
 
     KTextEdit::keyPressEvent(e);
-}
-
-QString IRCInput::doAutoreplace(const QString& text)
-{
-  // get autoreplace list
-  QStringList autoreplaceList=Preferences::autoreplaceList();
-  // working copy
-  QString line=text;
-
-  // loop through the list of replacement patterns
-  for(unsigned int index=0;index<autoreplaceList.count();index++)
-  {
-    // get autoreplace definition
-    QString definition=autoreplaceList[index];
-    // split definition in parts
-    QString regex=definition.section(',',0,0);
-    QString direction=definition.section(',',1,1);
-    QString pattern=definition.section(',',2,2);
-    QString replacement=definition.section(',',3);
-
-    // only replace if this pattern is for output or both directions
-    if(direction=="o" || direction=="io")
-    {
-      // regular expression pattern?
-      if(regex=="1")
-      {
-        // create regex from pattern
-        QRegExp needleReg=pattern;
-        // set pattern case insensitive
-        needleReg.setCaseSensitive(false);
-        // find matches
-        if(line.find(needleReg)!=-1)
-        {
-          // prepare list of captured ( ) groups
-          QStringList captures;
-          // remember captured patterns
-          captures=needleReg.capturedTexts();
-
-          // replace %0 - %9 in regex groups
-          for(unsigned int capture=0;capture<captures.count();capture++)
-          {
-            replacement.replace(QString("%%1").arg(capture),captures[capture]);
-          } // for
-          replacement.replace(QRegExp("%[0-9]"),QString::null);
-          // replace input with replacement
-          line.replace(needleReg,replacement);
-        }
-      }
-      else
-      {
-        // simply replace
-        line.replace(pattern,replacement);
-      }
-    }
-  } // for
-
-  return line;
 }
 
 void IRCInput::addHistory(const QString& line)

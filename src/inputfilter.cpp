@@ -143,6 +143,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
 
             QString ctcpCommand=ctcp.left(ctcp.find(" ")).lower();
             QString ctcpArgument=ctcp.mid(ctcp.find(" ")+1);
+            ctcpArgument=static_cast<KonversationApplication*>(kapp)->doAutoreplace(ctcpArgument,false);
 
             // If it was a ctcp action, build an action string
             if(ctcpCommand=="action" && isChan)
@@ -327,6 +328,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
         // No CTCP, so it's an ordinary channel or query message
         else
         {
+            trailing=static_cast<KonversationApplication*>(kapp)->doAutoreplace(trailing,false);
             if (isChan)
             {
                 if(!isIgnore(prefix,Ignore::Channel))

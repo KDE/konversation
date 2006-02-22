@@ -116,6 +116,9 @@ class KonversationApplication : public KUniqueApplication
         // Nick color stuff
         uint& getColorOffset();
 
+        // auto replacement for input or output lines
+        QString doAutoreplace(const QString& text,bool output);
+
         // Intelligent nick completion stuff aka A.W.E.S.O.M.E-O 4000 --cartman
         uint getKarma(const QString& nick) const;
         void increaseKarma(const QString& nick, uint increase);
