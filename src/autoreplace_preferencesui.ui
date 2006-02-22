@@ -9,8 +9,8 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>440</width>
-            <height>258</height>
+            <width>410</width>
+            <height>279</height>
         </rect>
     </property>
     <property name="caption">
@@ -28,7 +28,7 @@
                 <cstring>replaceGroup</cstring>
             </property>
             <property name="title">
-                <string>Autoreplace Patterns</string>
+                <string>Outgoing Autoreplace Patterns</string>
             </property>
             <grid>
                 <property name="name">
@@ -174,6 +174,191 @@
                     <property name="name">
                         <cstring>patternListView</cstring>
                     </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>3</hsizetype>
+                            <vsizetype>7</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                    <property name="acceptDrops">
+                        <bool>true</bool>
+                    </property>
+                    <property name="allColumnsShowFocus">
+                        <bool>true</bool>
+                    </property>
+                    <property name="fullWidth">
+                        <bool>true</bool>
+                    </property>
+                    <property name="itemsRenameable">
+                        <bool>false</bool>
+                    </property>
+                    <property name="dragEnabled">
+                        <bool>true</bool>
+                    </property>
+                </widget>
+            </grid>
+        </widget>
+        <widget class="QGroupBox" row="1" column="0">
+            <property name="name">
+                <cstring>inputReplaceGroup</cstring>
+            </property>
+            <property name="title">
+                <string>Incoming Autoreplace Patterns</string>
+            </property>
+            <grid>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QLabel" row="3" column="0">
+                    <property name="name">
+                        <cstring>inputPatternLabel</cstring>
+                    </property>
+                    <property name="enabled">
+                        <bool>false</bool>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>0</hsizetype>
+                            <vsizetype>5</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                    <property name="text">
+                        <string>Pattern:</string>
+                    </property>
+                </widget>
+                <widget class="KLineEdit" row="3" column="1">
+                    <property name="name">
+                        <cstring>inputPatternInput</cstring>
+                    </property>
+                    <property name="enabled">
+                        <bool>false</bool>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>5</hsizetype>
+                            <vsizetype>0</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                </widget>
+                <widget class="QPushButton" row="1" column="4">
+                    <property name="name">
+                        <cstring>inputRemoveButton</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Remove</string>
+                    </property>
+                </widget>
+                <spacer row="2" column="4">
+                    <property name="name">
+                        <cstring>spacer2</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Vertical</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Expanding</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>20</width>
+                            <height>73</height>
+                        </size>
+                    </property>
+                </spacer>
+                <widget class="KLineEdit" row="3" column="3" rowspan="1" colspan="2">
+                    <property name="name">
+                        <cstring>inputReplacementInput</cstring>
+                    </property>
+                    <property name="enabled">
+                        <bool>false</bool>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>3</hsizetype>
+                            <vsizetype>0</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                </widget>
+                <widget class="QLabel" row="3" column="2">
+                    <property name="name">
+                        <cstring>inputReplacementLabel</cstring>
+                    </property>
+                    <property name="enabled">
+                        <bool>false</bool>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>0</hsizetype>
+                            <vsizetype>5</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                    <property name="text">
+                        <string>Replacement:</string>
+                    </property>
+                </widget>
+                <widget class="QPushButton" row="0" column="4">
+                    <property name="name">
+                        <cstring>inputNewButton</cstring>
+                    </property>
+                    <property name="text">
+                        <string>New</string>
+                    </property>
+                </widget>
+                <widget class="KListView" row="0" column="0" rowspan="3" colspan="4">
+                    <column>
+                        <property name="text">
+                            <string>RE</string>
+                        </property>
+                        <property name="clickable">
+                            <bool>true</bool>
+                        </property>
+                        <property name="resizable">
+                            <bool>true</bool>
+                        </property>
+                    </column>
+                    <column>
+                        <property name="text">
+                            <string>Pattern</string>
+                        </property>
+                        <property name="clickable">
+                            <bool>true</bool>
+                        </property>
+                        <property name="resizable">
+                            <bool>true</bool>
+                        </property>
+                    </column>
+                    <column>
+                        <property name="text">
+                            <string>Replacement</string>
+                        </property>
+                        <property name="clickable">
+                            <bool>true</bool>
+                        </property>
+                        <property name="resizable">
+                            <bool>true</bool>
+                        </property>
+                    </column>
+                    <property name="name">
+                        <cstring>inputPatternListView</cstring>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>3</hsizetype>
+                            <vsizetype>7</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
                     <property name="acceptDrops">
                         <bool>true</bool>
                     </property>
@@ -196,6 +381,9 @@
 </widget>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
+    <includehint>klineedit.h</includehint>
+    <includehint>klineedit.h</includehint>
+    <includehint>klistview.h</includehint>
     <includehint>klineedit.h</includehint>
     <includehint>klineedit.h</includehint>
     <includehint>klistview.h</includehint>

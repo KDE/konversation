@@ -37,7 +37,7 @@ Autoreplace_Config::Autoreplace_Config(QWidget* parent, const char* name)
   patternListView->setSorting(-1,false);
 
   connect(patternListView,SIGNAL (selectionChanged(QListViewItem*)),this,SLOT (entrySelected(QListViewItem*)) );
-  connect(patternListView,SIGNAL (clicked(QListViewItem*)),SIGNAL (modified()));
+  connect(patternListView,SIGNAL (clicked(QListViewItem*)),this,SLOT (entrySelected(QListViewItem*)) );
   connect(patternListView,SIGNAL (moved()),SIGNAL (modified()) );
 
   connect(patternInput,SIGNAL (textChanged(const QString&)),this,SLOT (patternChanged(const QString&)) );
@@ -175,6 +175,8 @@ void Autoreplace_Config::entrySelected(QListViewItem* autoreplaceEntry)
   patternInput->setEnabled(enabled);
   replacementLabel->setEnabled(enabled);
   replacementInput->setEnabled(enabled);
+
+  emit modified();
 }
 
 // what to do when the user change the pattern of an entry
