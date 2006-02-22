@@ -12,6 +12,7 @@
 
 #include <qlabel.h>
 #include <qpushbutton.h>
+#include <qcombobox.h>
 
 #include <kapplication.h>
 #include <kdebug.h>
@@ -24,11 +25,20 @@
 
 #include "autoreplace_preferences.h"
 
+#define DIRECTION_OUTPUT 0
+#define DIRECTION_INPUT  1
+#define DIRECTION_BOTH   2
+
 Autoreplace_Config::Autoreplace_Config(QWidget* parent, const char* name)
  : Autoreplace_ConfigUI(parent, name)
 {
   // reset flag to defined state (used to block signals when just selecting a new item)
   m_newItemSelected=false;
+
+  // populate combobox
+  directionCombo->insertItem(i18n("Output"),DIRECTION_OUTPUT);
+  directionCombo->insertItem(i18n("Input"),DIRECTION_INPUT);
+  directionCombo->insertItem(i18n("Input/Output"),DIRECTION_BOTH);
 
   // populate listview
   loadSettings();
@@ -39,6 +49,8 @@ Autoreplace_Config::Autoreplace_Config(QWidget* parent, const char* name)
   connect(patternListView,SIGNAL (selectionChanged(QListViewItem*)),this,SLOT (entrySelected(QListViewItem*)) );
   connect(patternListView,SIGNAL (clicked(QListViewItem*)),this,SLOT (entrySelected(QListViewItem*)) );
   connect(patternListView,SIGNAL (moved()),SIGNAL (modified()) );
+
+  connect(directionCombo,SIGNAL (activated(int)),this,SLOT (directionChanged(int)) );
 
   connect(patternInput,SIGNAL (textChanged(const QString&)),this,SLOT (patternChanged(const QString&)) );
   connect(replacementInput,SIGNAL (textChanged(const QString&)),this,SLOT (replacementChanged(const QString&)) );
@@ -71,9 +83,18 @@ void Autoreplace_Config::setAutoreplaceListView(const QStringList &autoreplaceLi
     QString definition=autoreplaceList[index-1];
     // cut definition apart in name and action, and create a new listview item
     QCheckListItem* newItem=new QCheckListItem(patternListView,QString::null,QCheckListItem::CheckBox);
+    // Regular expression?
     if(definition.section(',',0,0)=="1") newItem->setOn(true);
-    newItem->setText(1,definition.section(',',1,1));
-    newItem->setText(2,definition.section(',',2));
+    // direction input/output/both
+    if(definition.section(',',1,1)=="i") newItem->setText(1,directionCombo->text(DIRECTION_INPUT));
+    else if(definition.section(',',1,1)=="o") newItem->setText(1,directionCombo->text(DIRECTION_OUTPUT));
+    else if(definition.section(',',1,1)=="io") newItem->setText(1,directionCombo->text(DIRECTION_BOTH));
+    // pattern
+    newItem->setText(2,definition.section(',',2,2));
+    // replacement
+    newItem->setText(3,definition.section(',',3));
+    // hidden column, so we are independant of the i18n()ed display string
+    newItem->setText(4,definition.section(',',1,1));
   } // for
   patternListView->setSelected(patternListView->firstChild(), true);
 }
@@ -132,8 +153,8 @@ QStringList Autoreplace_Config::currentAutoreplaceList()
     QString checked="0";
     if(static_cast<QCheckListItem*>(item)->isOn()) checked="1";
 
-    // remember entry in internal list
-    newList.append(checked+","+item->text(1)+","+item->text(2));
+    // remember entry in internal list (col 4 is hidden for input/output)
+    newList.append(checked+","+item->text(4)+","+item->text(2)+","+item->text(3));
     // get next item in the listview
     item=item->itemBelow();
   } // while
@@ -164,48 +185,81 @@ void Autoreplace_Config::entrySelected(QListViewItem* autoreplaceEntry)
     // tell the editing widgets not to emit modified() on signals now
     m_newItemSelected=true;
     // update editing widget contents
-    patternInput->setText(autoreplaceEntry->text(1));
-    replacementInput->setText(autoreplaceEntry->text(2));
+    patternInput->setText(autoreplaceEntry->text(2));
+    replacementInput->setText(autoreplaceEntry->text(3));
+
+    // set combobox to selected item
+    int itemIndex=0;
+    QString direction=autoreplaceEntry->text(4);
+    if(direction=="i") itemIndex=DIRECTION_INPUT;
+    else if(direction=="o") itemIndex=DIRECTION_OUTPUT;
+    else if(direction=="io") itemIndex=DIRECTION_BOTH;
+    directionCombo->setCurrentItem(itemIndex);
     // re-enable modified() signal on text changes in edit widgets
     m_newItemSelected=false;
   }
   // enable or disable editing widgets
   removeButton->setEnabled(enabled);
+  directionLabel->setEnabled(enabled);
+  directionCombo->setEnabled(enabled);
   patternLabel->setEnabled(enabled);
   patternInput->setEnabled(enabled);
   replacementLabel->setEnabled(enabled);
   replacementInput->setEnabled(enabled);
-
+  // make checkboxes work
   emit modified();
 }
 
-// what to do when the user change the pattern of an entry
+// what to do when the user changes the direction of an entry
+void Autoreplace_Config::directionChanged(int newDirection)
+{
+  // get possible selected item
+  QListViewItem* item=patternListView->selectedItem();
+
+  // sanity check
+  if(item)
+  {
+    // prepare hidden identifier string
+    QString id;
+    // find the direction strings to set up in the item
+    if(newDirection==DIRECTION_INPUT)       id="i";
+    else if(newDirection==DIRECTION_OUTPUT) id="o";
+    else if(newDirection==DIRECTION_BOTH)   id="io";
+    // rename direction
+    item->setText(1,directionCombo->text(newDirection));
+    item->setText(4,id);
+    // tell the config system that something has changed
+    if(!m_newItemSelected) emit modified();
+  }
+}
+
+// what to do when the user changes the pattern of an entry
 void Autoreplace_Config::patternChanged(const QString& newPattern)
 {
-  // get possible first selected item
+  // get possible selected item
   QListViewItem* item=patternListView->selectedItem();
 
   // sanity check
   if(item)
   {
     // rename pattern
-    item->setText(1,newPattern);
+    item->setText(2,newPattern);
     // tell the config system that something has changed
     if(!m_newItemSelected) emit modified();
   }
 }
 
-// what to do when the user change the replacement of an entry
+// what to do when the user changes the replacement of an entry
 void Autoreplace_Config::replacementChanged(const QString& newReplacement)
 {
-  // get possible first selected item
+  // get possible selected item
   QListViewItem* item=patternListView->selectedItem();
 
   // sanity check
   if(item)
   {
     // rename item
-    item->setText(2,newReplacement);
+    item->setText(3,newReplacement);
     // tell the config system that something has changed
     if(!m_newItemSelected) emit modified();
   }
@@ -219,8 +273,10 @@ void Autoreplace_Config::addEntry()
   // if successful ...
   if(newItem)
   {
+    // set default direction
+    newItem->setText(1,directionCombo->text(DIRECTION_INPUT));
     // set default pattern name
-    newItem->setText(1,i18n("New"));
+    newItem->setText(2,i18n("New"));
     // select new item and make it the current one
     patternListView->setSelected(newItem,true);
     patternListView->setCurrentItem(newItem);
