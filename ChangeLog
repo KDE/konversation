@@ -13,6 +13,8 @@ Changes from 0.19 to 0.20
 - Avoid resizing the application window on overly long user masks in the 'topic' of query tabs
 - Made the text detection in the input line work with non-ASCII characters
 - Fix paste behavior in the input line
+- Add Autoreplace on input
+- Number of Quick buttons is now configurable
 
 
 Changes from 0.18 to 0.19
