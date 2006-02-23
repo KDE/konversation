@@ -5,14 +5,25 @@
 #
 # One media command to rule them all, inspired from Kopete's now listening plugin
 
+global pyxmmsInstalled;
+
 import os
 import sys
+
+try:
+    import xmms.common
+except ImportError:
+    pyxmmsInstalled = False;
+else:
+    pyxmmsInstalled = True;
+
 from subprocess import *
 
 global port;
 global server;
 global target;
 
+# checks for running dcop-aware media players
 def check_running(application):
     running = Popen(["dcop", application+'*'], stdout=PIPE).communicate()[0]
     if type(running) is list:
@@ -47,6 +58,36 @@ if __name__ == "__main__":
     bad_apps = None
     error = None
 
+    # define variables to avoid errors
+    title = '';
+    artist = '';
+    album = '';
+
+    # only try to acquire title if xmms support in python is present
+    if pyxmmsInstalled:
+        # check if xmms is running
+        xmmsRunning = xmms.control.is_running()
+
+        if xmmsRunning:
+            # check if xmms is playing something
+            if xmms.control.is_playing():
+                # get the position in the playlist for current playing track
+                pos = xmms.control.get_playlist_pos();
+                # get the title of the currently playing track
+                title = xmms.control.get_playlist_title(pos)
+
+            # if there really is something playing
+            if title:
+                # format title and tell konversation about it
+                string = pretty_print(title)+' [xmms]'
+                Popen(['dcop', port, 'Konversation', 'say', server, target, string]).communicate()
+                sys.exit(0)
+            # xmms running but nothing's playing
+            else:
+                # remember to tell the user later in the script
+                error = True
+                bad_apps = ['xmms']
+
     amarok = check_running('amarok')
     if amarok:
         title = os.popen('dcop '+amarok+' player title').readline().rstrip('\n')
@@ -79,13 +120,13 @@ if __name__ == "__main__":
                 bad_apps = ['JuK']
 
     kaffeine = check_running('kaffeine')
-    if kaffeine:        
+    if kaffeine:
         title = os.popen('dcop '+kaffeine+' KaffeineIface title').readline().rstrip('\n')
         artist = os.popen('dcop '+kaffeine+' KaffeineIface artist').readline().rstrip('\n')
-        album = os.popen('dcop '+kaffeine+' KaffeineIface album').readline().rstrip('\n') 
-       
+        album = os.popen('dcop '+kaffeine+' KaffeineIface album').readline().rstrip('\n')
+
         if title:
-            string=pretty_print(title,artist,album)+' [Kaffeine]' 
+            string=pretty_print(title,artist,album)+' [Kaffeine]'
             Popen(['dcop', port, 'Konversation', 'say', server, target, string]).communicate()
             sys.exit(0)
         else:
@@ -126,9 +167,9 @@ if __name__ == "__main__":
             else:
                 error = True
                 bad_apps = ['Yammi']
-                                                                                            
-        
-    if not amarok and not juk and not kaffeine and not noatun and not yammi:
+
+
+    if not amarok and not juk and not kaffeine and not noatun and not yammi and not xmmsRunning:
         os.popen("dcop %s Konversation error \"No supported media player is running\""%(port))
 
     if bad_apps != None:
