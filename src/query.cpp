@@ -536,11 +536,13 @@ void Query::emitUpdateInfo()
 // show quit message of nick if we see it
 void Query::quitNick(const QString& reason)
 {
-  QString displayReason;
+  QString displayReason=reason;
 
-  if(!reason.isEmpty())
+  if(!displayReason.isEmpty())
   {
-    displayReason=" ("+reason+")";
+    // if the reason contains text markup characters, play it safe and reset all
+    if(displayReason.find(QRegExp("[\\0000-\\0037]"))!=-1) displayReason+="\017";
+    displayReason=" ("+displayReason+")";
   }
 
   appendCommandMessage(i18n("Quit"),i18n("%1 has left this server%2.").arg(getName()).arg(displayReason),false);

@@ -1047,11 +1047,13 @@ void Channel::joinNickname(ChannelNickPtr channelNick)
 
 void Channel::removeNick(ChannelNickPtr channelNick, const QString &reason, bool quit)
 {
-    QString displayReason;
+    QString displayReason=reason;
 
-    if (!reason.isEmpty())
+    if(!displayReason.isEmpty())
     {
-        displayReason = " ("+reason+")";
+        // if the reason contains text markup characters, play it safe and reset all
+        if(displayReason.find(QRegExp("[\\0000-\\0037]"))!=-1) displayReason+="\017";
+        displayReason=" ("+displayReason+")";
     }
 
     if(channelNick->getNickname() == m_server->getNickname())
@@ -1099,19 +1101,28 @@ void Channel::removeNick(ChannelNickPtr channelNick, const QString &reason, bool
 
 void Channel::kickNick(ChannelNickPtr channelNick, const ChannelNick &kicker, const QString &reason)
 {
+    QString displayReason=reason;
+
+    if(!displayReason.isEmpty())
+    {
+        // if the reason contains text markup characters, play it safe and reset all
+        if(displayReason.find(QRegExp("[\\0000-\\0037]"))!=-1) displayReason+="\017";
+        displayReason=" ("+displayReason+")";
+    }
+
     if(channelNick->getNickname()==m_server->getNickname())
     {
         if(kicker.getNickname()==m_server->getNickname())
         {
-            appendCommandMessage(i18n("Kick"),i18n("You have kicked yourself from the channel (%1).").arg(reason));
+            appendCommandMessage(i18n("Kick"),i18n("You have kicked yourself from the channel (%1).").arg(displayReason));
             /* This message lets the user see what he has done after the channel window went away */
-            m_server->appendStatusMessage(i18n("Kick"),i18n("You have kicked yourself from channel %1 (%2).").arg(getName()).arg(reason));
+            m_server->appendStatusMessage(i18n("Kick"),i18n("You have kicked yourself from channel %1 (%2).").arg(getName()).arg(displayReason));
         }
         else
         {
-            appendCommandMessage(i18n("Kick"),i18n("You have been kicked from the channel by %1 (%2).").arg(kicker.getNickname()).arg(reason));
+            appendCommandMessage(i18n("Kick"),i18n("You have been kicked from the channel by %1 (%2).").arg(kicker.getNickname()).arg(displayReason));
             /* This message lets the user see what had happened after the channel window went away */
-            m_server->appendStatusMessage(i18n("Kick"),i18n("You have been kicked from channel %1 by %2 (%3).").arg(getName()).arg(kicker.getNickname()).arg(reason));
+            m_server->appendStatusMessage(i18n("Kick"),i18n("You have been kicked from channel %1 by %2 (%3).").arg(getName()).arg(kicker.getNickname()).arg(displayReason));
             KonversationApplication* konv_app = static_cast<KonversationApplication*>(KApplication::kApplication());
             konv_app->notificationHandler()->kick(this,getName(),kicker.getNickname());
         }
@@ -1120,9 +1131,9 @@ void Channel::kickNick(ChannelNickPtr channelNick, const ChannelNick &kicker, co
     else
     {
         if(kicker.getNickname()==m_server->getNickname())
-            appendCommandMessage(i18n("Kick"),i18n("You have kicked %1 from the channel (%2).").arg(channelNick->getNickname()).arg(reason));
+            appendCommandMessage(i18n("Kick"),i18n("You have kicked %1 from the channel (%2).").arg(channelNick->getNickname()).arg(displayReason));
         else
-            appendCommandMessage(i18n("Kick"),i18n("%1 has been kicked from the channel by %2 (%3).").arg(channelNick->getNickname()).arg(kicker.getNickname()).arg(reason));
+            appendCommandMessage(i18n("Kick"),i18n("%1 has been kicked from the channel by %2 (%3).").arg(channelNick->getNickname()).arg(kicker.getNickname()).arg(displayReason));
 
 	if(channelNick->isAnyTypeOfOp()) adjustOps(-1);
         adjustNicks(-1);
