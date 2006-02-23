@@ -620,6 +620,7 @@ Name[it]=Errore di connessione
 Name[pt]=Erro na ligação
 Name[pt_BR]=Erro na ligação
 Name[sv]=Uppkopplingsfel
+Name[xx]=xxConnection failurexx
 Comment=Failed to connect to server
 Comment[bg]=Неуспех при свързване към сървър
 Comment[cs]=Chyba při připojení k serveru
@@ -632,6 +633,7 @@ Comment[it]=Connessione al server non riuscita
 Comment[pt]=Não foi possível ligar ao servidor
 Comment[pt_BR]=Não foi possível ligar ao servidor
 Comment[sv]=Misslyckades koppla upp till server
+Comment[xx]=xxFailed to connect to serverxx
 default_presentation=64
 
 [channelJoin]
@@ -648,6 +650,7 @@ Name[it]=Sei entrato in un canale
 Name[pt]=Você juntou-se a um canal
 Name[pt_BR]=Você juntou-se a um canal
 Name[sv]=Du gick med i en kanal
+Name[xx]=xxYou joined a channelxx
 Comment=You joined a channel
 Comment[bg]=Вие се присъединихте към канал
 Comment[br]=Emellet out bet ur c'hanol
@@ -661,6 +664,7 @@ Comment[it]=Sei entrato in un canale
 Comment[pt]=Você juntou-se a um canal
 Comment[pt_BR]=Você juntou-se a um canal
 Comment[sv]=Du gick med i en kanal
+Comment[xx]=xxYou joined a channelxx
 default_presentation=64
 
 [dccChat]
@@ -678,6 +682,7 @@ Name[it]=Chat DCC
 Name[pt]=Conversa DCC
 Name[pt_BR]=Conversa DCC
 Name[sv]=DCC-chatt
+Name[xx]=xxDCC Chatxx
 Comment=Someone started a DCC chat with you
 Comment[bg]=Някой е започнал разговор с Вас в DCC
 Comment[cs]=Někdo si s vámi chce pokecat přes DCC
@@ -690,4 +695,5 @@ Comment[it]=Qualcuno ha avviato una conversazione DCC con te
 Comment[pt]=Alguém iniciou uma conversa DCC consigo
 Comment[pt_BR]=Alguém iniciou uma conversa DCC consigo
 Comment[sv]=Någon startade en DCC-chatt med dig
+Comment[xx]=xxSomeone started a DCC chat with youxx
 default_presentation=0

@@ -15,6 +15,7 @@ GenericName[it]=Client IRC
 GenericName[pt]=Cliente de IRC
 GenericName[pt_BR]=Cliente de IRC
 GenericName[sv]=IRC-klient
+GenericName[xx]=xxIRC Clientxx
 Terminal=false
 Name=Konversation
 Name[hi]=कनवर्सेसन
