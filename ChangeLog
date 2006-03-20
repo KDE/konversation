@@ -15,6 +15,9 @@ Changes from 0.19 to 0.20
 - Fix paste behavior in the input line
 - Add Autoreplace on input
 - Number of Quick buttons is now configurable
+- XMMS support in the media script
+- Redesigned search bar
+- Fixed splitter sync when neither topic nor chan buttons were enabled
 
 
 Changes from 0.18 to 0.19

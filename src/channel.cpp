@@ -92,7 +92,8 @@ Channel::Channel(QWidget* parent)
     awayState = false;
 
     splitterChanged = false;
-    splitterHidden = false;
+    topicSplitterHidden = false;
+    channelSplitterHidden = false;
 
     // no nicks pending from /names reply
     setPendingNicks(false);
@@ -1823,7 +1824,7 @@ void Channel::showModeButtons(bool show)
     {
         if(show)
         {
-            splitterHidden = false;
+            topicSplitterHidden = false;
             modeBox->show();
             modeBox->parentWidget()->show();
         }
@@ -1833,7 +1834,7 @@ void Channel::showModeButtons(bool show)
 
             if(topicLine->isHidden())
             {
-                splitterHidden = true;
+                topicSplitterHidden = true;
                 modeBox->parentWidget()->hide();
             }
         }
@@ -2237,7 +2238,7 @@ void Channel::showTopic(bool show)
 {
     if(show)
     {
-        splitterHidden = false;
+        topicSplitterHidden = false;
         topicLine->show();
         m_topicButton->show();
         topicLine->parentWidget()->show();
@@ -2249,7 +2250,7 @@ void Channel::showTopic(bool show)
 
         if(modeBox->isHidden())
         {
-            splitterHidden = true;
+            topicSplitterHidden = true;
             topicLine->parentWidget()->hide();
         }
     }
@@ -2346,12 +2347,12 @@ void Channel::showNicknameList(bool show)
 {
     if (show)
     {
-        splitterHidden = false;
+        channelSplitterHidden = false;
         nickListButtons->show();
     }
     else
     {
-        splitterHidden = true;
+        channelSplitterHidden = true;
         nickListButtons->hide();
     }
 }
@@ -2471,11 +2472,27 @@ void Channel::setIdentity(const Identity *newIdentity)
 
 bool Channel::eventFilter(QObject* watched, QEvent* e)
 {
-    if((watched == nicknameListView) && (e->type() == QEvent::Resize) && splitterChanged && !splitterHidden && isShown())
+    if((watched == nicknameListView) && (e->type() == QEvent::Resize) && splitterChanged && isShown())
     {
-        Preferences::setChannelSplitterSizes(m_horizSplitter->sizes());
-        Preferences::setTopicSplitterSizes(m_vertSplitter->sizes());
-        Preferences::writeConfig();
+        if (!topicSplitterHidden && !channelSplitterHidden)
+        {
+            Preferences::setChannelSplitterSizes(m_horizSplitter->sizes());
+            Preferences::setTopicSplitterSizes(m_vertSplitter->sizes());
+            Preferences::writeConfig();
+
+        }
+        if (!topicSplitterHidden && channelSplitterHidden)
+        {
+            Preferences::setTopicSplitterSizes(m_vertSplitter->sizes());
+            Preferences::writeConfig();
+
+        }
+        if (!channelSplitterHidden && topicSplitterHidden)
+        {
+            Preferences::setChannelSplitterSizes(m_horizSplitter->sizes());
+            Preferences::writeConfig();
+
+        }
     }
 
     return ChatWindow::eventFilter(watched, e);

@@ -294,7 +294,8 @@ class Channel : public ChatWindow
         bool awayChanged;
         bool awayState;
         bool splitterChanged;
-        bool splitterHidden;
+        bool topicSplitterHidden;
+        bool channelSplitterHidden;
 
         unsigned int completionPosition;
 
