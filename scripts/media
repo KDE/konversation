@@ -178,8 +178,25 @@ if __name__ == "__main__":
                 error = True
                 bad_apps = ['Yammi']
 
+    kscd = check_running('kscd')
+    if kscd:
+        title = os.popen('dcop '+kscd+' CDPlayer currentTrackTitle').readline().rstrip('\n')
+        artist = os.popen('dcop '+kscd+' CDPlayer currentArtist').readline().rstrip('\n')
+        album = os.popen('dcop '+kscd+' CDPlayer currentAlbum').readline().rstrip('\n')
+        kscdplaying = os.popen('dcop '+kscd+' CDPlayer currentAlbum').readline().rstrip('\n')
 
-    if not amarok and not juk and not kaffeine and not noatun and not yammi and not xmmsRunning:
+        if title and kscdplaying:
+            string = pretty_print(title,artist,album)+' [kscd]';
+            Popen(['dcop', port, 'Konversation', 'say', server, target, string]).communicate()
+            sys.exit(0)
+        else:
+            if error:
+                bad_apps.append('kscd')
+            else:
+                error = True
+                bad_apps = ['kscd']
+
+    if not amarok and not juk and not kaffeine and not noatun and not yammi and not xmmsRunning and not kscd:
         os.popen("dcop %s Konversation error \"No supported media player is running\""%(port))
 
     if bad_apps != None:
