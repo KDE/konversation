@@ -1620,14 +1620,6 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 server->appendStatusMessage(i18n("Users"), parameterList.join(" ").section(' ',1) + " "+trailing);
                 break;
             }
-            case RPL_CAPAB: // Special freenode reply afaik
-            {
-                if(trailing.contains("IDENTIFY-MSG"))
-                {
-                    server->enableIdentifyMsg(true);
-                }
-                break;
-            }
             case ERR_UNKNOWNCOMMAND:
             {
                 server->appendMessageToFrontmost(i18n("Error"),i18n("%1: Unknown command.").arg(parameterList[1]));
@@ -1645,6 +1637,14 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 server->appendMessageToFrontmost(i18n("Error"),i18n("%1: This command requires more parameters.").arg(parameterList[1]));
 
                 break;
+            }
+            case RPL_CAPAB: // Special freenode reply afaik
+            {
+                if(trailing.contains("IDENTIFY-MSG"))
+                {
+                    server->enableIdentifyMsg(true);
+                }
+            /* don't break; - this is also used as RPL_DATASTR on ircu and some others */
             }
             // FALLTHROUGH to default to let the error display otherwise
             default:
