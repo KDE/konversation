@@ -179,6 +179,7 @@ class KonversationMainWindow : public KMainWindow
         void unsetTabNotification(ChatWindow* view);
         void updateTabs();
 
+        void hideEvent(QHideEvent * e);
         void quitProgram();
 
         void notifyAction(const QString& serverName,const QString& nick);

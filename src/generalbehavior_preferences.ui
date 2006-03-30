@@ -1,4 +1,4 @@
-<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>GeneralBehavior_Config</class>
 <comment>This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -14,18 +14,21 @@ the Free Software Foundation; either version 2 of the License, or
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>522</width>
-            <height>463</height>
+            <width>509</width>
+            <height>549</height>
         </rect>
     </property>
-    <grid>
+    <property name="caption">
+        <string>GeneralBehavior_Config</string>
+    </property>
+    <vbox>
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
         <property name="margin">
             <number>0</number>
         </property>
-        <widget class="QGroupBox" row="0" column="0">
+        <widget class="QGroupBox">
             <property name="name">
                 <cstring>kcfg_ShowTrayIcon</cstring>
             </property>
@@ -94,7 +97,7 @@ the Free Software Foundation; either version 2 of the License, or
                 </widget>
             </grid>
         </widget>
-        <widget class="QGroupBox" row="1" column="0">
+        <widget class="QGroupBox">
             <property name="name">
                 <cstring>middleLabel</cstring>
             </property>
@@ -181,24 +184,7 @@ the Free Software Foundation; either version 2 of the License, or
                 </widget>
             </grid>
         </widget>
-        <spacer row="4" column="0">
-            <property name="name">
-                <cstring>spacer52</cstring>
-            </property>
-            <property name="orientation">
-                <enum>Vertical</enum>
-            </property>
-            <property name="sizeType">
-                <enum>Expanding</enum>
-            </property>
-            <property name="sizeHint">
-                <size>
-                    <width>20</width>
-                    <height>20</height>
-                </size>
-            </property>
-        </spacer>
-        <widget class="QGroupBox" row="2" column="0">
+        <widget class="QGroupBox">
             <property name="name">
                 <cstring>appStartGBox</cstring>
             </property>
@@ -219,7 +205,7 @@ the Free Software Foundation; either version 2 of the License, or
                 </widget>
             </grid>
         </widget>
-        <widget class="QGroupBox" row="3" column="0">
+        <widget class="QGroupBox">
             <property name="name">
                 <cstring>miscGBox</cstring>
             </property>
@@ -230,7 +216,51 @@ the Free Software Foundation; either version 2 of the License, or
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="KLineEdit" row="3" column="1">
+                <widget class="QCheckBox" row="0" column="0" rowspan="1" colspan="2">
+                    <property name="name">
+                        <cstring>kcfg_DisableNotifyWhileAway</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Disable notifications while &amp;away</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+A</string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox" row="1" column="0" rowspan="1" colspan="2">
+                    <property name="name">
+                        <cstring>kcfg_AutoInsertRememberLineAfterMinimizing</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Automatically insert &amp;remember line after minimizing main window</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+R</string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox" row="5" column="0">
+                    <property name="name">
+                        <cstring>kcfg_CustomVersionReplyEnabled</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Use custom &amp;version reply:</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+V</string>
+                    </property>
+                </widget>
+                <widget class="KLineEdit" row="5" column="1">
+                    <property name="name">
+                        <cstring>kcfg_CustomVersionReply</cstring>
+                    </property>
+                    <property name="enabled">
+                        <bool>false</bool>
+                    </property>
+                    <property name="whatsThis" stdset="0">
+                        <string>&lt;qt&gt;Here you can set a custom reply for &lt;b&gt;CTCP &lt;i&gt;VERSION&lt;/i&gt;&lt;/b&gt; requests.&lt;/qt&gt;</string>
+                    </property>
+                </widget>
+                <widget class="KLineEdit" row="4" column="1">
                     <property name="name">
                         <cstring>kcfg_CommandChar</cstring>
                     </property>
@@ -246,26 +276,7 @@ the Free Software Foundation; either version 2 of the License, or
                         <number>1</number>
                     </property>
                 </widget>
-                <widget class="QCheckBox" row="0" column="0" rowspan="1" colspan="2">
-                    <property name="name">
-                        <cstring>kcfg_DisableNotifyWhileAway</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Disable notifications while &amp;away</string>
-                    </property>
-                </widget>
-                <widget class="KLineEdit" row="4" column="1">
-                    <property name="name">
-                        <cstring>kcfg_CustomVersionReply</cstring>
-                    </property>
-                    <property name="enabled">
-                        <bool>false</bool>
-                    </property>
-                    <property name="whatsThis" stdset="0">
-                        <string>&lt;qt&gt;Here you can set a custom reply for &lt;b&gt;CTCP &lt;i&gt;VERSION&lt;/i&gt;&lt;/b&gt; requests.&lt;/qt&gt;</string>
-                    </property>
-                </widget>
-                <widget class="KLineEdit" row="2" column="1">
+                <widget class="KLineEdit" row="3" column="1">
                     <property name="name">
                         <cstring>kcfg_WebBrowserCmd</cstring>
                     </property>
@@ -273,15 +284,7 @@ the Free Software Foundation; either version 2 of the License, or
                         <bool>false</bool>
                     </property>
                 </widget>
-                <widget class="QCheckBox" row="1" column="0" rowspan="1" colspan="2">
-                    <property name="name">
-                        <cstring>kcfg_AutojoinOnInvite</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Automatically &amp;join channel on invite</string>
-                    </property>
-                </widget>
-                <widget class="QLabel" row="3" column="0">
+                <widget class="QLabel" row="4" column="0">
                     <property name="name">
                         <cstring>commandCharLabel</cstring>
                     </property>
@@ -292,25 +295,48 @@ the Free Software Foundation; either version 2 of the License, or
                         <cstring>kcfg_CommandChar</cstring>
                     </property>
                 </widget>
-                <widget class="QCheckBox" row="2" column="0">
+                <widget class="QCheckBox" row="3" column="0">
                     <property name="name">
                         <cstring>kcfg_UseCustomBrowser</cstring>
                     </property>
                     <property name="text">
                         <string>Use custom Web &amp;browser:</string>
                     </property>
+                    <property name="accel">
+                        <string>Alt+B</string>
+                    </property>
                 </widget>
-                <widget class="QCheckBox" row="4" column="0">
+                <widget class="QCheckBox" row="2" column="0" rowspan="1" colspan="2">
                     <property name="name">
-                        <cstring>kcfg_CustomVersionReplyEnabled</cstring>
+                        <cstring>kcfg_AutojoinOnInvite</cstring>
                     </property>
                     <property name="text">
-                        <string>Use custom &amp;version reply:</string>
+                        <string>Automatically &amp;join channel on invite</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+J</string>
                     </property>
                 </widget>
             </grid>
         </widget>
-    </grid>
+        <spacer>
+            <property name="name">
+                <cstring>spacer52</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Vertical</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>20</width>
+                    <height>50</height>
+                </size>
+            </property>
+        </spacer>
+    </vbox>
 </widget>
 <connections>
     <connection>

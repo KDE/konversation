@@ -1491,6 +1491,14 @@ bool KonversationMainWindow::queryClose()
     return true;
 }
 
+void KonversationMainWindow::hideEvent(QHideEvent *e)
+{
+    if(Preferences::autoInsertRememberLineAfterMinimizing())
+    {
+        insertRememberLine();
+    }
+}
+
 void KonversationMainWindow::quitProgram()
 {
     // will call queryClose()

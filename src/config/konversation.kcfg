@@ -350,6 +350,11 @@
       <label></label>
       <whatsthis></whatsthis>
     </entry>
+    <entry key="AutoInsertRememberLineAfterMinimizing" type="Bool">
+      <default>false</default>
+      <label></label>
+      <whatsthis></whatsthis>
+    </entry>
   </group>
   <group name="Sort Nicknames">
 <!-- done outside of KConfigXT (Eisfuchs)
