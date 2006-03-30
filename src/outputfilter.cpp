@@ -168,9 +168,12 @@ namespace Konversation
             else if(command == "smsg")     result = parseSMsg(parameter);
             else if(command == "query")    result = parseMsg(myNick,parameter, true);
             else if(command == "op")       result = parseOp(parameter);
-            else if(command == "deop")     result = parseDeop(parameter);
+            else if(command == "deop")     result = parseDeop(myNick,parameter);
+            else if(command == "hop")      result = parseHop(parameter);
+            else if(command == "dehop")    result = parseDehop(myNick,parameter);
             else if(command == "voice")    result = parseVoice(parameter);
-            else if(command == "unvoice")  result = parseUnvoice(parameter);
+            else if(command == "unvoice")  result = parseUnvoice(myNick,parameter);
+            else if(command == "devoice")  result = parseUnvoice(myNick,parameter);
             else if(command == "ctcp")     result = parseCtcp(parameter);
             else if(command == "ping")     result = parseCtcp(parameter.section(' ', 0, 0) + " ping");
             else if(command == "kick")     result = parseKick(parameter);
@@ -244,9 +247,19 @@ namespace Konversation
         return changeMode(parameter,'o','+');
     }
 
-    OutputFilterResult OutputFilter::parseDeop(const QString &parameter)
+    OutputFilterResult OutputFilter::parseDeop(const QString &ownNick, const QString &parameter)
     {
-        return changeMode(parameter,'o','-');
+        return changeMode(addNickToEmptyNickList(ownNick,parameter),'o','-');
+    }
+
+    OutputFilterResult OutputFilter::parseHop(const QString &parameter)
+    {
+        return changeMode(parameter, 'h', '+');
+    }
+
+    OutputFilterResult OutputFilter::parseDehop(const QString &ownNick, const QString &parameter)
+    {
+        return changeMode(addNickToEmptyNickList(ownNick,parameter), 'h', '-');
     }
 
     OutputFilterResult OutputFilter::parseVoice(const QString &parameter)
@@ -254,9 +267,9 @@ namespace Konversation
         return changeMode(parameter,'v','+');
     }
 
-    OutputFilterResult OutputFilter::parseUnvoice(const QString &parameter)
+    OutputFilterResult OutputFilter::parseUnvoice(const QString &ownNick, const QString &parameter)
     {
-        return changeMode(parameter,'v','-');
+        return changeMode(addNickToEmptyNickList(ownNick,parameter),'v','-');
     }
 
     OutputFilterResult OutputFilter::parseJoin(QString channelName)
@@ -1629,8 +1642,32 @@ namespace Konversation
 
         return result;
     }
-}
 
+
+    QString OutputFilter::addNickToEmptyNickList(const QString& nick, const QString& parameter)
+    {
+        QStringList nickList = QStringList::split(' ', parameter);
+        QString newNickList;
+
+        if (nickList.count() == 0)
+        {
+            newNickList = nick;
+        }
+        // check if list contains only target channel
+        else if (nickList.count() == 1 && isAChannel(nickList[0]))
+        {
+            newNickList = nickList[0] + " " + nick;
+        }
+        // list contains at least one nick
+        else
+        {
+            newNickList = parameter;
+        }
+        
+        return newNickList;
+    }
+
+}
 #include "outputfilter.moc"
 
 // kate: space-indent on; tab-width 4; indent-width 4; mixed-indent off; replace-tabs on;

@@ -104,9 +104,11 @@ namespace Konversation
             OutputFilterResult parseNames(const QString& parameter);
             OutputFilterResult parseList(const QString& parameter);
             OutputFilterResult parseOp(const QString& parameter);
-            OutputFilterResult parseDeop(const QString& parameter);
+            OutputFilterResult parseDeop(const QString& ownNick, const QString& parameter);
+            OutputFilterResult parseHop(const QString& parameter);
+            OutputFilterResult parseDehop(const QString& ownNick, const QString& parameter);
             OutputFilterResult parseVoice(const QString& parameter);
-            OutputFilterResult parseUnvoice(const QString& parameter);
+            OutputFilterResult parseUnvoice(const QString& ownNick, const QString& parameter);
             OutputFilterResult parseTopic(const QString& parameter);
             OutputFilterResult parseAway(const QString& parameter);
             OutputFilterResult parseCtcp(const QString& parameter);
@@ -143,6 +145,8 @@ namespace Konversation
             OutputFilterResult usage(const QString& check);
             OutputFilterResult info(const QString& check);
             OutputFilterResult error(const QString& check);
+
+	    QString addNickToEmptyNickList(const QString& nick, const QString& parameter);
 
         private:
             QString destination;
