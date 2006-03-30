@@ -62,6 +62,9 @@ LogfileReader::LogfileReader(QWidget* parent, QString log) : ChatWindow(parent)
 
     updateView();
     resize(Preferences::logfileReaderSize());
+    ircBox->ircView()->setFocusPolicy(QWidget::StrongFocus);
+    setFocusPolicy(QWidget::StrongFocus);
+    setFocusProxy(ircBox->ircView());
 }
 
 LogfileReader::~LogfileReader()
@@ -152,6 +155,7 @@ void LogfileReader::closeLog()
 
 void LogfileReader::childAdjustFocus()
 {
+  getTextView()->setFocus();
 }
 
 int LogfileReader::margin() { return KDialog::marginHint(); }
