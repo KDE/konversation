@@ -1643,6 +1643,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 if(trailing.contains("IDENTIFY-MSG"))
                 {
                     server->enableIdentifyMsg(true);
+                    break;
                 }
             /* don't break; - this is also used as RPL_DATASTR on ircu and some others */
             }
