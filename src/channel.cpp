@@ -606,9 +606,6 @@ void Channel::completeNick()
     channelInput->getCursorPosition(&oldPos,&pos);// oldPos is a dummy here, taking the paragraph parameter
     oldPos=channelInput->getOldCursorPosition();
 
-    // FIXME: dirty workaround to avoid a crash, but won't work as expected anyway
-    if ( oldPos > pos ) return;
-
     QString line=channelInput->text();
     QString newLine;
     // Check if completion position is out of range
@@ -618,6 +615,9 @@ void Channel::completeNick()
 
     if(mode == 'c')
     {
+        // FIXME: dirty workaround to avoid a crash, but won't work as expected anyway
+        if ( oldPos > pos ) return;
+
         line.remove(oldPos,pos-oldPos);
         pos = oldPos;
     }
