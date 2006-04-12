@@ -105,6 +105,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
     nicksOnlinePanel=0;
 
     viewContainer = new KTabWidget(this, "main_window_tab_widget");
+    viewContainer->setFont(Preferences::tabFont());
     viewContainer->setTabReorderingEnabled(true);
     viewContainer->setTabCloseActivatePrevious(true);
     #if KDE_IS_VERSION(3,4,0)
@@ -477,6 +478,7 @@ void KonversationMainWindow::updateAppearance()
     #if KDE_IS_VERSION(3,4,0)
     viewContainer->setAutomaticResizeTabs(Preferences::useMaxSizedTabs());
     #endif
+    viewContainer->setFont(Preferences::tabFont());
     int statH = fontMetrics().height()+2;
     m_generalInfoLabel->setFixedHeight( statH );
 

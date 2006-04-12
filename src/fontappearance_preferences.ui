@@ -1,4 +1,4 @@
-<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>FontAppearance_Config</class>
 <comment>This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -15,8 +15,11 @@ the Free Software Foundation; either version 2 of the License, or
             <x>0</x>
             <y>0</y>
             <width>414</width>
-            <height>148</height>
+            <height>207</height>
         </rect>
+    </property>
+    <property name="caption">
+        <string>FontAppearance_Config</string>
     </property>
     <grid>
         <property name="name">
@@ -31,14 +34,6 @@ the Free Software Foundation; either version 2 of the License, or
             </property>
             <property name="text">
                 <string>Nickname list:</string>
-            </property>
-        </widget>
-        <widget class="QCheckBox" row="3" column="0" rowspan="1" colspan="2">
-            <property name="name">
-                <cstring>kcfg_UseBoldNicks</cstring>
-            </property>
-            <property name="text">
-                <string>Make sender nicknames &amp;bold in the chat view</string>
             </property>
         </widget>
         <widget class="QLabel" row="0" column="0">
@@ -59,18 +54,45 @@ the Free Software Foundation; either version 2 of the License, or
                 <cstring>kcfg_TextFont</cstring>
             </property>
         </widget>
-        <widget class="QCheckBox" row="2" column="0" rowspan="1" colspan="2">
+        <widget class="QCheckBox" row="3" column="0" rowspan="1" colspan="2">
             <property name="name">
                 <cstring>kcfg_FixedMOTD</cstring>
             </property>
             <property name="text">
                 <string>Enable fi&amp;xed font for MOTD messages</string>
             </property>
+            <property name="accel">
+                <string>Alt+X</string>
+            </property>
             <property name="whatsThis" stdset="0">
                 <string>Show MOTD (Message Of The Day) message in fixed font</string>
             </property>
         </widget>
-        <spacer row="4" column="1">
+        <widget class="KFontRequester" row="2" column="1">
+            <property name="name">
+                <cstring>kcfg_TabFont</cstring>
+            </property>
+        </widget>
+        <widget class="QLabel" row="2" column="0">
+            <property name="name">
+                <cstring>textLabel3_2</cstring>
+            </property>
+            <property name="text">
+                <string>Tab bar:</string>
+            </property>
+        </widget>
+        <widget class="QCheckBox" row="4" column="0" rowspan="1" colspan="2">
+            <property name="name">
+                <cstring>kcfg_UseBoldNicks</cstring>
+            </property>
+            <property name="text">
+                <string>Make sender nicknames &amp;bold in the chat view</string>
+            </property>
+            <property name="accel">
+                <string>Alt+B</string>
+            </property>
+        </widget>
+        <spacer row="5" column="1">
             <property name="name">
                 <cstring>spacer89</cstring>
             </property>
@@ -89,9 +111,12 @@ the Free Software Foundation; either version 2 of the License, or
         </spacer>
     </grid>
 </widget>
+<customwidgets>
+</customwidgets>
 <layoutdefaults spacing="6" margin="11"/>
 <layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
 <includehints>
+    <includehint>kfontrequester.h</includehint>
     <includehint>kfontrequester.h</includehint>
     <includehint>kfontrequester.h</includehint>
 </includehints>

@@ -30,6 +30,11 @@
       <label></label>
       <whatsthis></whatsthis>
     </entry>
+    <entry key="TabFont" type="Font">
+      <default code="true">KGlobalSettings::generalFont()</default>
+      <label></label>
+      <whatsthis></whatsthis>
+    </entry>
     <entry key="Timestamping" type="Bool">
       <default>true</default>
       <label></label>
