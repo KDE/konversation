@@ -18,6 +18,15 @@ Changes from 0.19 to 0.20
 - XMMS support in the media script
 - Redesigned search bar
 - Fixed splitter sync when neither topic nor chan buttons were enabled
+- Fix PART on ircu
+- Fix RPL_DATASTR in ircu
+- Make Konsole feature KIOSK-aware
+- Tab font size configurable
+- Fix crash in nick completion
+- Added /hop, /dehop and /devoice (thanks to Lothar Braun)
+- Use own nick when no argument is given for above and similar commands
+- kscd support in the media script
+- Improved encoding handling in the media script
 
 
 Changes from 0.18 to 0.19

@@ -175,8 +175,11 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
     action = new KToggleAction(i18n("&URL Catcher"), 0, KShortcut("F6"), this, SLOT(addUrlCatcher()), actionCollection(), "open_url_catcher");
     action->setToolTip(i18n("List all URLs that have been mentioned recently in a new tab"));
 
-    action = new KAction(i18n("New &Konsole"), "openterm", 0, this, SLOT(addKonsolePanel()), actionCollection(), "open_konsole");
-    action->setToolTip(i18n("Open a terminal in a new tab"));
+    if (kapp->authorize("shell_access"))
+    {
+        action = new KAction(i18n("New &Konsole"), "openterm", 0, this, SLOT(addKonsolePanel()), actionCollection(), "open_konsole");
+        action->setToolTip(i18n("Open a terminal in a new tab"));
+    }
 
 
     // Actions to navigate through the different pages

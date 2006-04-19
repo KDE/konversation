@@ -504,10 +504,30 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
     }
     else if(command=="part")
     {
-        Channel* channel = server->removeNickFromChannel(parameterList[0],sourceNick,trailing);
+        /* FIXME: Ugly workaround for a version of the PART line encountered on ircu:
+         *   :Nick!user@host PART :#channel
+         * Quote: "The final colon is specified as a "last argument" designator, and
+         * is always valid before the final argument."
+         */
+
+        QString channel;
+        QString reason;
+
+        if (parameterList[0].isEmpty())
+        {
+            channel = trailing;
+        }
+        else
+        {
+            channel = parameterList[0];
+            reason = trailing;
+        }
+
+        Channel* channelPtr = server->removeNickFromChannel(channel,sourceNick,reason);
+
         if(sourceNick != server->getNickname())
         {
-            konv_app->notificationHandler()->part(channel, sourceNick);
+            konv_app->notificationHandler()->part(channelPtr, sourceNick);
         }
     }
     else if(command=="quit")
