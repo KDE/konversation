@@ -27,6 +27,7 @@ Changes from 0.19 to 0.20
 - Use own nick when no argument is given for above and similar commands
 - kscd support in the media script
 - Improved encoding handling in the media script
+- Fixed AutoReplace: blanks in the end of replacement are preserved, new patterns correctly show "Output"
 
 
 Changes from 0.18 to 0.19
