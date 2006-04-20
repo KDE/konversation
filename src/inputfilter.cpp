@@ -984,23 +984,14 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 if(!Preferences::skipMOTD())
                   server->appendStatusMessage(i18n("MOTD"),i18n("End of message of the day"));
 
-                server->runConnectCommands();
+                server->autoCommandsAndChannels();
 
-                // Autojoin (for now this must be enough)
-                if(server->getAutoJoin())
-                {
-                    server->queue(server->getAutoJoinCommand());
-                }
                 break;
             }
             case ERR_NOMOTD:
             {
-                server->runConnectCommands();
+                server->autoCommandsAndChannels();
 
-                if(server->getAutoJoin())
-                {
-                    server->queue(server->getAutoJoinCommand());
-                }
                 break;
             }
             case RPL_YOUREOPER:

@@ -28,6 +28,7 @@ Changes from 0.19 to 0.20
 - kscd support in the media script
 - Improved encoding handling in the media script
 - Fixed AutoReplace: blanks in the end of replacement are preserved, new patterns correctly show "Output"
+- Fix "Commands" in the network settings
 
 
 Changes from 0.18 to 0.19

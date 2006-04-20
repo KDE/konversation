@@ -159,7 +159,7 @@ class Server : public QObject
 
         QString getAutoJoinCommand() const;
 
-        void runConnectCommands();
+        void autoCommandsAndChannels();
 
         void sendURIs(const QStrList& uris, const QString& nick);
 

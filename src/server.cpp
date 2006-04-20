@@ -459,15 +459,7 @@ void Server::connectToIRCServer()
     // prevent sending queue until server has sent something or the timeout is through
     lockSending();
 
-    // Are we (still) connected (yet)?
-    if(isConnected())
-    {
-        // just join our autojoin-channel if desired
-        if (getAutoJoin() && !rejoinChannels)
-            queue(getAutoJoinCommand());
-        // TODO: move autojoin here and use signals / slots
-    }
-    else
+    if (!isConnected())
     {
         // This is needed to support server groups with mixed SSL and nonSSL servers
         delete m_socket;
@@ -992,23 +984,24 @@ void Server::notifyCheckTimeout()
     }
 }
 
-void Server::runConnectCommands()
+void Server::autoCommandsAndChannels()
 {
-    QStringList connectCommands;
-
     if (!m_serverGroup->connectCommands().isEmpty())
-        connectCommands = QStringList::split(";", m_serverGroup->connectCommands());
-    else
-        return;
-
-    QStringList::iterator iter;
-
-    for(iter = connectCommands.begin(); iter != connectCommands.end(); ++iter)
     {
-        QString output(*iter);
-        Konversation::OutputFilterResult result = outputFilter->parse(getNickname(),output,QString::null);
-        queue(result.toServer);
+        QStringList connectCommands = QStringList::split(";", m_serverGroup->connectCommands());
+
+        QStringList::iterator iter;
+
+        for(iter = connectCommands.begin(); iter != connectCommands.end(); ++iter)
+        {
+            QString output(*iter);
+            Konversation::OutputFilterResult result = outputFilter->parse(getNickname(),output,QString::null);
+            queue(result.toServer);
+        }
     }
+
+    if (getAutoJoin() && !rejoinChannels)
+        queue(getAutoJoinCommand());
 }
 
 QString Server::getAutoJoinCommand() const
