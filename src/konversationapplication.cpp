@@ -617,7 +617,16 @@ void KonversationApplication::readOptions()
     index=0;
     while(config->hasKey(QString("Autoreplace%1").arg(index)))
     {
-      autoreplaceList.append(config->readEntry(QString("Autoreplace%1").arg(index++)));
+      // read entry and get length of the string
+      QString entry=config->readEntry(QString("Autoreplace%1").arg(index++));
+      unsigned int length=entry.length()-1;
+      kdDebug() << entry << endl;
+      // if there's a "#" in the end, strip it (used to preserve blanks at the end of the replacement text)
+      // there should always be one, but older versions did not do it, so we check first
+      if(entry.at(length)=='#') entry=entry.left(length);
+      // add entry to internal list
+      autoreplaceList.append(entry);
+      kdDebug() << entry << endl;
     } // while
     // Put back the changed autoreplace list
     Preferences::setAutoreplaceList(autoreplaceList);

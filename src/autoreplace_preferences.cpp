@@ -119,8 +119,8 @@ void Autoreplace_Config::saveSettings()
     // go through all patterns and save them into the configuration
     for(unsigned int index=0;index<newList.count();index++)
     {
-      // write the current entry's pattern and replacement
-      config->writeEntry(QString("Autoreplace%1").arg(index),newList[index]);
+      // write the current entry's pattern and replacement (adds a "#" to preserve blanks at the end of the line)
+      config->writeEntry(QString("Autoreplace%1").arg(index),newList[index]+"#");
     } // for
   }
   // if there were no entries at all, write a dummy entry to prevent KConfigXT from "optimizing"
