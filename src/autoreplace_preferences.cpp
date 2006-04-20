@@ -274,9 +274,11 @@ void Autoreplace_Config::addEntry()
   if(newItem)
   {
     // set default direction
-    newItem->setText(1,directionCombo->text(DIRECTION_INPUT));
+    newItem->setText(1,directionCombo->text(DIRECTION_OUTPUT));
     // set default pattern name
     newItem->setText(2,i18n("New"));
+    // set default direction
+    newItem->setText(4,"o");
     // select new item and make it the current one
     patternListView->setSelected(newItem,true);
     patternListView->setCurrentItem(newItem);
