@@ -263,9 +263,6 @@ void Server::init(KonversationMainWindow* mainWindow, const QString& nick, const
         setAutoJoin(false);
     }
 
-    if(!m_serverGroup->connectCommands().isEmpty())
-        connectCommands = QStringList::split(";", m_serverGroup->connectCommands());
-
     if(!getIdentity()->getShellCommand().isEmpty())
     {
         doPreShellCommand();
@@ -656,14 +653,6 @@ void Server::ircServerConnectionSuccess()
     queueAt(1,"NICK "+getNickname());
     queueAt(2,connectString);
 
-    QStringList::iterator iter;
-    for(iter = connectCommands.begin(); iter != connectCommands.end(); ++iter)
-    {
-        QString output(*iter);
-        Konversation::OutputFilterResult result = outputFilter->parse(getNickname(),output,QString::null);
-        queue(result.toServer);
-    }
-
     emit nicknameChanged(getNickname());
 
     m_socket->enableRead(true);
@@ -1000,6 +989,25 @@ void Server::notifyCheckTimeout()
         {
             m_socket->close();
         }
+    }
+}
+
+void Server::runConnectCommands()
+{
+    QStringList connectCommands;
+
+    if (!m_serverGroup->connectCommands().isEmpty())
+        connectCommands = QStringList::split(";", m_serverGroup->connectCommands());
+    else
+        return;
+
+    QStringList::iterator iter;
+
+    for(iter = connectCommands.begin(); iter != connectCommands.end(); ++iter)
+    {
+        QString output(*iter);
+        Konversation::OutputFilterResult result = outputFilter->parse(getNickname(),output,QString::null);
+        queue(result.toServer);
     }
 }
 

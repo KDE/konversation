@@ -983,6 +983,9 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             {
                 if(!Preferences::skipMOTD())
                   server->appendStatusMessage(i18n("MOTD"),i18n("End of message of the day"));
+
+                server->runConnectCommands();
+
                 // Autojoin (for now this must be enough)
                 if(server->getAutoJoin())
                 {
@@ -992,6 +995,8 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             }
             case ERR_NOMOTD:
             {
+                server->runConnectCommands();
+
                 if(server->getAutoJoin())
                 {
                     server->queue(server->getAutoJoinCommand());

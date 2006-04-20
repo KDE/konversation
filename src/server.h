@@ -159,6 +159,8 @@ class Server : public QObject
 
         QString getAutoJoinCommand() const;
 
+        void runConnectCommands();
+
         void sendURIs(const QStrList& uris, const QString& nick);
 
         void notifyAction(const QString& nick);
@@ -573,8 +575,6 @@ class Server : public QObject
         bool autoRejoin;
         bool autoReconnect;
         bool deliberateQuit;
-
-        QStringList connectCommands;
 
         QString autoJoinChannel;
         QString autoJoinChannelKey;
