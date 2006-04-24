@@ -770,7 +770,10 @@ void Server::sslError(QString reason)
 // Will be called from InputFilter as soon as the Welcome message was received
 void Server::connectionEstablished(const QString& ownHost)
 {
-    KNetwork::KResolver::resolveAsync(this,SLOT(gotOwnResolvedHostByWelcome(KResolverResults)),ownHost,"0");
+    // Some servers don't include the userhost in RPL_WELCOME, so we
+    // need to use RPL_USERHOST to get ahold of our IP later on
+    if (!ownHost.isEmpty())
+        KNetwork::KResolver::resolveAsync(this,SLOT(gotOwnResolvedHostByWelcome(KResolverResults)),ownHost,"0");
 
     emit serverOnline(true);
     emit connectionChangedState(this, SSConnected);
@@ -821,13 +824,9 @@ void Server::setKeyForRecepient(const QString& recepient, const QCString& key)
 void Server::gotOwnResolvedHostByWelcome(KResolverResults res)
 {
     if ( res.error() == KResolver::NoError && !res.isEmpty() )
-    {
         ownIpByWelcome = res.first().address().nodeName();
-    }
     else
-    {
         kdDebug() << "Server::gotOwnResolvedHostByWelcome(): Got error: " << ( int )res.error() << endl;
-    }
 }
 
 void Server::quitServer()

@@ -29,7 +29,8 @@ Changes from 0.19 to 0.20
 - Improved encoding handling in the media script
 - Fixed AutoReplace: blanks in the end of replacement are preserved, new patterns correctly show "Output"
 - Fix "Commands" in the network settings
-
+- Fix DCC IP retrieval by server reply on Freenode (broken RPL_WELCOME
+handling)
 
 Changes from 0.18 to 0.19
 We are extremely pleased to announce the immediate release of Konversation 0.19. The focus
