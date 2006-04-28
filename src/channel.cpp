@@ -1800,7 +1800,7 @@ void Channel::showQuickButtons(bool show)
 {
     // Qt does not redraw the buttons properly when they are not on screen
     // while getting hidden, so we remember the "soon to be" state here.
-    if(isHidden())
+    if(isHidden() || !buttonsGrid)
     {
         quickButtonsChanged=true;
         quickButtonsState=show;
