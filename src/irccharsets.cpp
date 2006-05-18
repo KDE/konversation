@@ -1,5 +1,5 @@
 // A wrapper for KCharsets
-// Copyright (C) 2004 Shintaro Matsuoka <shin@shoegazed.org>
+// Copyright (C) 2004, 2006 Shintaro Matsuoka <shin@shoegazed.org>
 
 /*
   This program is free software; you can redistribute it and/or modify
@@ -147,9 +147,15 @@ namespace Konversation
         while ( it != m_descriptiveNames.end() )
         {
             QString encodingName = KGlobal::charsets()->encodingForName( *it );
-            // exclude utf16 and ucs2
-            if ( encodingName == "utf16" || encodingName == "iso-10646-ucs-2" )
+            kdDebug() << encodingName << endl;
+            // exclude encodings which are not supported on IRC
+            if ( encodingName == "iso-10646-ucs-2" ||
+                 encodingName == "ucs2" ||
+                 encodingName == "utf16" ||
+                 encodingName == "utf7" )
+            {
                 it = m_descriptiveNames.remove( it );
+            }
             else
             {
                 m_shortNames.append( encodingName );
