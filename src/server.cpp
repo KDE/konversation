@@ -1791,16 +1791,17 @@ void Server::requestDccSend(const QString &a_recipient)
     // do we have a recipient *now*?
     if(!recipient.isEmpty())
     {
-        KURL fileURL=KFileDialog::getOpenURL(
+        KURL::List fileURLs=KFileDialog::getOpenURLs(
             lastDccDir,
             QString::null,
             getMainWindow(),
-            i18n("Select File to Send to %1").arg(recipient)
-            );
-        if(!fileURL.isEmpty())
+            i18n("Select File(s) to Send to %1").arg(recipient)
+        );
+        KURL::List::iterator it;
+        for ( it = fileURLs.begin() ; it != fileURLs.end() ; ++it )
         {
-            lastDccDir=fileURL.directory();
-            addDccSend(recipient,fileURL);
+            lastDccDir = (*it).directory();
+            addDccSend( recipient, *it );
         }
     }
 }
