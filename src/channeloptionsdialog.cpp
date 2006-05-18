@@ -321,7 +321,7 @@ namespace Konversation
         mode += "n";
         modes.append(mode);
         mode = (m_widget->userLimitChBox->isChecked() ? "+" : "-");
-        mode += "l" + m_widget->userLimitEdit->value();
+        mode += "l" + QString::number( m_widget->userLimitEdit->value() );
         modes.append(mode);
         mode = (m_widget->inviteModeChBox->isChecked() ? "+" : "-");
         mode += "i";
