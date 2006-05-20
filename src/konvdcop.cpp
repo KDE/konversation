@@ -180,9 +180,15 @@ void KonvDCOP::unregisterEventHook(int hookId)
     kdDebug() << "KonvDCOP::unregisterEventHook(): hook id " << hookId << " not found!" << endl;
 }
 
-QString KonvDCOP::getNickname (const QString &server)
+QString KonvDCOP::getNickname (const QString &serverName)
 {
-    return static_cast<KonversationApplication *>(kapp)->getServerByName(server)->getNickname();
+    Server* server = static_cast<KonversationApplication *>(kapp)->getServerByName(serverName);
+    if ( !server )
+    {
+        error( i18n( "getNickname: Server %1 is not found." ).arg( serverName ) );
+        return QString();
+    }
+    return server->getNickname();
 }
 
 QString KonvDCOP::getAnyNickname ()
