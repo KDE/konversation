@@ -461,14 +461,6 @@ void Preferences::setShowTrayIcon(bool state)
     emit self()->updateTrayIcon();
 }
 
-
-void Preferences::setSystrayOnly(bool state)
-{
-    PreferencesBase::setSystrayOnly(state);
-    emit self()->updateTrayIcon();
-}
-
-
 void Preferences::setTrayNotify(bool state)
 {
     PreferencesBase::setTrayNotify(state);

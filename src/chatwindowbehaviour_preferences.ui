@@ -9,7 +9,7 @@
             <x>0</x>
             <y>0</y>
             <width>507</width>
-            <height>474</height>
+            <height>492</height>
         </rect>
     </property>
     <grid>
@@ -26,22 +26,11 @@
             <property name="title">
                 <string>General</string>
             </property>
-            <grid>
+            <vbox>
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QCheckBox" row="2" column="0" rowspan="1" colspan="3">
-                    <property name="name">
-                        <cstring>kcfg_DisableExpansion</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Disable variable (e.g. %C, %B, %G...) e&amp;xpansion</string>
-                    </property>
-                    <property name="whatsThis" stdset="0">
-                        <string>Do not expand variables when sending text to the server. A variable starts with '%'; for example, %B will expand to the characters needed to make a text bold.</string>
-                    </property>
-                </widget>
-                <widget class="QCheckBox" row="0" column="0" rowspan="1" colspan="3">
+                <widget class="QCheckBox">
                     <property name="name">
                         <cstring>kcfg_Beep</cstring>
                     </property>
@@ -52,15 +41,7 @@
                         <string>Sounds the system bell when you receive an ASCII BEL (0x07) control character</string>
                     </property>
                 </widget>
-                <widget class="QCheckBox" row="4" column="0" rowspan="1" colspan="3">
-                    <property name="name">
-                        <cstring>kcfg_RedirectServerAndAppMsgToStatusPane</cstring>
-                    </property>
-                    <property name="text">
-                        <string>&amp;Redirect all status messages to the server status window</string>
-                    </property>
-                </widget>
-                <widget class="QCheckBox" row="1" column="0" rowspan="1" colspan="3">
+                <widget class="QCheckBox">
                     <property name="name">
                         <cstring>kcfg_HideUnimportantEvents</cstring>
                     </property>
@@ -68,7 +49,18 @@
                         <string>Hide &amp;Join/Part/Nick events</string>
                     </property>
                 </widget>
-                <widget class="QCheckBox" row="3" column="0" rowspan="1" colspan="3">
+                <widget class="QCheckBox">
+                    <property name="name">
+                        <cstring>kcfg_DisableExpansion</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Disable variable (e.g. %C, %B, %G...) e&amp;xpansion</string>
+                    </property>
+                    <property name="whatsThis" stdset="0">
+                        <string>Do not expand variables when sending text to the server. A variable starts with '%'; for example, %B will expand to the characters needed to make a text bold.</string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox">
                     <property name="name">
                         <cstring>kcfg_ShowRememberLineInAllWindows</cstring>
                     </property>
@@ -76,7 +68,34 @@
                         <string>Show remember line in all channels and &amp;queries</string>
                     </property>
                 </widget>
-                <spacer row="6" column="2">
+                <widget class="QCheckBox">
+                    <property name="name">
+                        <cstring>kcfg_AutoInsertRememberLineAfterMinimizing</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Automatically insert &amp;remember line after minimizing main window</string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox">
+                    <property name="name">
+                        <cstring>kcfg_RedirectServerAndAppMsgToStatusPane</cstring>
+                    </property>
+                    <property name="text">
+                        <string>&amp;Redirect all status messages to the server status window</string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox">
+                    <property name="name">
+                        <cstring>kcfg_UseLiteralModes</cstring>
+                    </property>
+                    <property name="text">
+                        <string>&amp;Use raw modes for mode changes</string>
+                    </property>
+                    <property name="whatsThis" stdset="0">
+                        <string>Keep channel mode string as a combination of characters instead of translating them into human readable words. E.g. '*** Channel modes: no messages from outside' will become '*** Channel modes: n'</string>
+                    </property>
+                </widget>
+                <spacer>
                     <property name="name">
                         <cstring>spacer1</cstring>
                     </property>
@@ -93,7 +112,7 @@
                         </size>
                     </property>
                 </spacer>
-                <widget class="QLabel" row="6" column="0">
+                <widget class="QLabel">
                     <property name="name">
                         <cstring>textLabel1</cstring>
                     </property>
@@ -107,7 +126,7 @@
                         <string>How many lines to keep in buffers, 0 = unlimited</string>
                     </property>
                 </widget>
-                <widget class="QSpinBox" row="6" column="1">
+                <widget class="QSpinBox">
                     <property name="name">
                         <cstring>kcfg_ScrollbackMax</cstring>
                     </property>
@@ -124,18 +143,7 @@
                         <string>How many lines to keep in buffers, 0 = unlimited</string>
                     </property>
                 </widget>
-                <widget class="QCheckBox" row="5" column="0" rowspan="1" colspan="3">
-                    <property name="name">
-                        <cstring>kcfg_UseLiteralModes</cstring>
-                    </property>
-                    <property name="text">
-                        <string>&amp;Use raw modes for mode changes</string>
-                    </property>
-                    <property name="whatsThis" stdset="0">
-                        <string>Keep channel mode string as a combination of characters instead of translating them into human readable words. E.g. '*** Channel modes: no messages from outside' will become '*** Channel modes: n'</string>
-                    </property>
-                </widget>
-            </grid>
+            </vbox>
         </widget>
         <spacer row="2" column="0">
             <property name="name">

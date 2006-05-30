@@ -1779,11 +1779,6 @@ void KonversationMainWindow::updateTrayIcon()
         tray->show();
     else
         tray->hide();
-
-    if(Preferences::showTrayIcon() && Preferences::systrayOnly())
-        KWin::setState(winId(), NET::SkipTaskbar);
-    else
-        KWin::clearState(winId(), NET::SkipTaskbar);
 }
 
 void KonversationMainWindow::addIRCColor()

@@ -24,6 +24,7 @@ Changes from 0.19 to 0.20
 - Tab font size configurable
 - Fix crash in nick completion
 - Added /hop, /dehop and /devoice (thanks to Lothar Braun)
+- Option to automatically insert remember line on minimize (thanks to Piotr Budny)
 - Use own nick when no argument is given for above and similar commands
 - kscd support in the media script
 - Improved encoding handling in the media script
@@ -40,6 +41,8 @@ handling)
 - Improve URL regex to cope with parenthesis and exclude trailing dots
 - Improve channel regex not to fail on leading mode chars and surrounding quotation marks
 - Only allow one instance of the channel options dialog to be opened
+- Adopt standard KDE system tray mechanic (remove option to skip taskbar entirely as it's
+  incompatible with Minimize, Alt+Tab and Toggle Show Desktop)
 
 Changes from 0.18 to 0.19
 We are extremely pleased to announce the immediate release of Konversation 0.19. The focus

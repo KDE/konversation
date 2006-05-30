@@ -140,7 +140,6 @@ class Preferences : public QObject, public PreferencesBase
         static const QStringList channelEncodingsChannelList(const QString& server);
 
         static void setShowTrayIcon(bool state);
-        static void setSystrayOnly(bool state);
         static void setTrayNotify(bool state);
         static void setAutoUserhost(bool state);
 

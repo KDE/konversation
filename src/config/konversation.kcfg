@@ -233,11 +233,6 @@
       <label></label>
       <whatsthis></whatsthis>
     </entry>
-    <entry key="SystrayOnly" type="Bool">
-      <default>false</default>
-      <label></label>
-      <whatsthis></whatsthis>
-    </entry>
     <entry key="TrayNotify" type="Bool">
       <default>false</default>
       <label></label>

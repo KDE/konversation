@@ -43,9 +43,6 @@ namespace Konversation
         protected slots:
             void blinkTimeout();
 
-        protected:
-            void mousePressEvent(QMouseEvent *e);
-
         private:
             QTimer* m_blinkTimer;
             bool m_blinkOn;
