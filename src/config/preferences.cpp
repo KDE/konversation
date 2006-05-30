@@ -128,7 +128,7 @@ void Preferences::clearQuickButtonList()
 
 const QStringList Preferences::defaultAutoreplaceList()
 {
-    return QStringList() << "1,o,\\[\\[([^\\s]+)\\]\\],http://en.wikipedia.org/wiki/Special:Search?go=Go&search=%1#";
+    return QStringList() << "1,o,\\[\\[([^\\s]+)\\]\\],http://en.wikipedia.org/wiki/Special:Search?go=Go&search=%1";
 }
 
 const QStringList Preferences::autoreplaceList()
