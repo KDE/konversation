@@ -422,11 +422,6 @@ void KonversationApplication::removeServer(Server* server)
         kdDebug() << "Could not remove " << server->getServerName() << endl;
 }
 
-void KonversationApplication::quitKonversation()
-{
-    qApp->quit();
-}
-
 void KonversationApplication::readOptions()
 {
     // get standard config file

@@ -2558,12 +2558,6 @@ void Server::renameNickInfo(NickInfoPtr nickInfo, const QString& newname)
     }
 }
 
-void Server::noMorePendingNicks(const QString& channelName)
-{
-    Channel* outChannel=getChannelByName(channelName);
-    if(outChannel) outChannel->setPendingNicks(false);
-}
-
 Channel* Server::nickJoinsChannel(const QString &channelName, const QString &nickname, const QString &hostmask)
 {
     Channel* outChannel=getChannelByName(channelName);

@@ -115,7 +115,6 @@ class Server : public QObject
         Channel* removeNickFromChannel(const QString &channelName, const QString &nickname, const QString &reason, bool quit=false);
         void nickWasKickedFromChannel(const QString &channelName, const QString &nickname, const QString &kicker, const QString &reason);
         void removeNickFromServer(const QString &nickname, const QString &reason);
-        void noMorePendingNicks(const QString& channel);
 
         void setChannelTypes(const QString &types);
         QString getChannelTypes() const;

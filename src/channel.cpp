@@ -95,9 +95,6 @@ Channel::Channel(QWidget* parent)
     topicSplitterHidden = false;
     channelSplitterHidden = false;
 
-    // no nicks pending from /names reply
-    setPendingNicks(false);
-
     // flag for first seen topic
     topicAuthorUnknown = true;
 
@@ -2010,35 +2007,21 @@ void Channel::changeNickname(const QString& newNickname)
 
 void Channel::addPendingNickList(const QStringList& pendingChannelNickList)
 {
-    if(!getPendingNicks())
-    {
-        purgeNicks();
-        setPendingNicks(true);
+    //purgeNicks();
 
-        if(!m_processingTimer)
-        {
-            m_processingTimer = new QTimer(this);
-            connect(m_processingTimer, SIGNAL(timeout()), this, SLOT(processPendingNicks()));
-        }
+    if (!m_processingTimer)
+    {
+        m_processingTimer = new QTimer(this);
+        connect(m_processingTimer, SIGNAL(timeout()), this, SLOT(processPendingNicks()));
     }
 
     m_pendingChannelNickLists.append(pendingChannelNickList);
 
-    if(!m_processingTimer->isActive())
+    if (!m_processingTimer->isActive())
     {
         nicknameListView->setUpdatesEnabled(false);
         m_processingTimer->start(0);
     }
-}
-
-void Channel::setPendingNicks(bool state)
-{
-    pendingNicks=state;
-}
-
-bool Channel::getPendingNicks()
-{
-    return pendingNicks;
 }
 
 QPtrList<Nick> Channel::getNickList()
@@ -2261,15 +2244,24 @@ void Channel::showTopic(bool show)
 
 void Channel::processPendingNicks()
 {
+    QString nickname = m_pendingChannelNickLists.first()[m_currentIndex];
+
     bool admin = false;
     bool owner = false;
     bool op = false;
     bool halfop = false;
     bool voice = false;
-    QString nickname = m_pendingChannelNickLists.first()[m_currentIndex];
 
-    // remove possible mode characters from nickname and store the resulting mode
+    // Remove possible mode characters from nickname and store the resulting mode
     m_server->mangleNicknameWithModes(nickname,admin,owner,op,halfop,voice);
+
+    // Check if nick is already in the nicklist
+    if (getNickByName(nickname))
+    {
+        nicknameListView->setUpdatesEnabled(true);
+
+        return;
+    }
 
     // TODO: make these an enumeration in KApplication or somewhere, we can use them as well
     unsigned int mode=(admin  ? 16 : 0)+
@@ -2284,15 +2276,12 @@ void Channel::processPendingNicks()
 
     fastAddNickname(nick);
 
-    if(nick->isAdmin() || nick->isOwner() ||
-        nick->isOp() || nick->isHalfOp())
-    {
+    if (nick->isAdmin() || nick->isOwner() || nick->isOp() || nick->isHalfOp())
         m_opsToAdd++;
-    }
 
     m_currentIndex++;
 
-    if(m_pendingChannelNickLists.first().count() == m_currentIndex)
+    if (m_pendingChannelNickLists.first().count() == m_currentIndex)
     {
         adjustNicks(m_pendingChannelNickLists.first().count());
         adjustOps(m_opsToAdd);
@@ -2301,14 +2290,14 @@ void Channel::processPendingNicks()
         m_opsToAdd = 0;
     }
 
-    if(m_pendingChannelNickLists.isEmpty())
+    if (m_pendingChannelNickLists.isEmpty())
     {
         m_processingTimer->stop();
         nicknameListView->sort();
         sortNickList();
         nicknameListView->setUpdatesEnabled(true);
         nicknameListView->triggerUpdate();
-        if(!m_firstAutoWhoDone)
+        if (!m_firstAutoWhoDone)
         {
             if(Preferences::autoWhoContinuousEnabled())
             {

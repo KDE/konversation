@@ -126,12 +126,10 @@ class Channel : public ChatWindow
         Nick *getNickByName(const QString& lookname);
         QPtrList<Nick> getNickList();
 
-        void setPendingNicks(bool state);
-        bool getPendingNicks();
-
         void adjustNicks(int value);
         void adjustOps(int value);
         virtual void emitUpdateInfo();
+
     protected slots:
         void purgeNicks();
         void processPendingNicks();

@@ -151,7 +151,6 @@ class KonversationApplication : public KUniqueApplication
             );
         void readOptions();
         void saveOptions(bool updateGUI=true);
-        void quitKonversation();
 
         void deleteUrl(const QString& who,const QString& url);
         void clearUrlList();
