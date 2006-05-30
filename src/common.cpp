@@ -64,7 +64,7 @@ namespace Konversation
 
         if(filteredLine.contains("#"))
         {
-            QRegExp chanExp("(^|\\s|,|\\(|\\:|\\/|\\))(#[^,\\s;\\)\\:\\/\\(]*[^.,\\s;\\)\\:\\/\\(\\\"])");
+            QRegExp chanExp("(^|\\s|,|\\(|\\:|\\/|\\)|!|@|%|\\+|\")(#[^,\\s;\\)\\:\\/\\(]*[^.,\\s;\\)\\:\\/\\(\\\"])");
             filteredLine.replace(chanExp, link);
         }
 
@@ -114,6 +114,7 @@ namespace Konversation
         }
 
         // kdDebug() << "Took (msecs) : " << timer.elapsed() << " for " << filteredLine << endl;
+
         return filteredLine;
     }
 
