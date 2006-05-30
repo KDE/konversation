@@ -46,7 +46,6 @@ namespace Konversation
             void removeBanClicked();
             void banEdited(QListViewItem *edited);
 
-            void closeOptionsDialog();
             void changeOptions();
 
         protected slots:

@@ -357,5 +357,7 @@ class Channel : public ChatWindow
         int ops; ///< How many ops on the channel
 
         bool m_allowNotifications; ///<TODO: remove this, its been implemented on the chatwindow object
+
+        Konversation::ChannelOptionsDialog *m_optionsDialog;
 };
 #endif

@@ -39,6 +39,7 @@ handling)
 - Static Wiki link feature has been removed in favor of new auto-replace functionality
 - Improve URL regex to cope with parenthesis and exclude trailing dots
 - Improve channel regex not to fail on leading mode chars and surrounding quotation marks
+- Only allow one instance of the channel options dialog to be opened
 
 Changes from 0.18 to 0.19
 We are extremely pleased to announce the immediate release of Konversation 0.19. The focus

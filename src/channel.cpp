@@ -73,6 +73,7 @@ Channel::Channel(QWidget* parent)
     // init variables
     m_processingTimer = 0;
     m_delayedSortTimer = 0;
+    m_optionsDialog = NULL;
     m_pendingChannelNickLists.clear();
     m_currentIndex = 0;
     m_opsToAdd = 0;
@@ -348,7 +349,10 @@ void Channel::purgeNicks()
 
 void Channel::showOptionsDialog()
 {
-    (new Konversation::ChannelOptionsDialog(this))->show();
+    if(!m_optionsDialog)
+        m_optionsDialog = new Konversation::ChannelOptionsDialog(this);
+
+    m_optionsDialog->show();
 }
 
 void Channel::filesDropped(QDropEvent* e)
