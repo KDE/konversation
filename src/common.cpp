@@ -113,21 +113,6 @@ namespace Konversation
             KonversationApplication::instance()->storeUrl(fromNick, href);
         }
 
-        // Make [[foo]] a link to $wikiurl
-	
-	
-        QString wikiUrl = Preferences::translatedWikiURL(); //this allows translators to make a different wikipedia url for each different language
-	
-        bool expandWikiUrl = Preferences::expandWikiUrl();
-
-        QRegExp wikipedia("\\[\\[([^\\]]+)\\]\\]");
-        wikipedia.setMinimal(true);
-
-        if(expandWikiUrl)
-            filteredLine.replace(wikipedia,"<font color=\"" + linkColor + "\"><a href=\""+wikiUrl+"\\1\"><u>"+wikiUrl+"\\1</u></a></font>");
-        else
-            filteredLine.replace(wikipedia,"<font color=\"" + linkColor + "\"><a href=\""+wikiUrl+"\\1\">[[<u>\\1</u>]]</a></font>");
-
         // kdDebug() << "Took (msecs) : " << timer.elapsed() << " for " << filteredLine << endl;
         return filteredLine;
     }
