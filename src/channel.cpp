@@ -2011,8 +2011,6 @@ void Channel::changeNickname(const QString& newNickname)
 
 void Channel::addPendingNickList(const QStringList& pendingChannelNickList)
 {
-    //purgeNicks();
-
     if (!m_processingTimer)
     {
         m_processingTimer = new QTimer(this);
@@ -2024,6 +2022,7 @@ void Channel::addPendingNickList(const QStringList& pendingChannelNickList)
     if (!m_processingTimer->isActive())
     {
         nicknameListView->setUpdatesEnabled(false);
+        if (m_server->getInputFilter()->getAutomaticRequest("NAMES",getName())==1) purgeNicks();
         m_processingTimer->start(0);
     }
 }
@@ -2259,14 +2258,6 @@ void Channel::processPendingNicks()
     // Remove possible mode characters from nickname and store the resulting mode
     m_server->mangleNicknameWithModes(nickname,admin,owner,op,halfop,voice);
 
-    // Check if nick is already in the nicklist
-    if (getNickByName(nickname))
-    {
-        nicknameListView->setUpdatesEnabled(true);
-
-        return;
-    }
-
     // TODO: make these an enumeration in KApplication or somewhere, we can use them as well
     unsigned int mode=(admin  ? 16 : 0)+
         (owner  ?  8 : 0)+
@@ -2274,14 +2265,18 @@ void Channel::processPendingNicks()
         (halfop ?  2 : 0)+
         (voice  ?  1 : 0);
 
-    ChannelNickPtr nick = m_server->addNickToJoinedChannelsList(getName(), nickname);
-    Q_ASSERT(nick);
-    nick->setMode(mode);
+    // Check if nick is already in the nicklist
+    if (!getNickByName(nickname))
+    {
+        ChannelNickPtr nick = m_server->addNickToJoinedChannelsList(getName(), nickname);
+        Q_ASSERT(nick);
+        nick->setMode(mode);
 
-    fastAddNickname(nick);
+        fastAddNickname(nick);
 
-    if (nick->isAdmin() || nick->isOwner() || nick->isOp() || nick->isHalfOp())
-        m_opsToAdd++;
+        if (nick->isAdmin() || nick->isOwner() || nick->isOp() || nick->isHalfOp())
+            m_opsToAdd++;
+    }
 
     m_currentIndex++;
 
