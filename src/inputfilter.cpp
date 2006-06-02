@@ -812,7 +812,10 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             case RPL_NAMREPLY:
             {
                 QStringList nickList = QStringList::split(" ", trailing);
-                    // send list to channel
+                // send list to channel
+
+                kdDebug() << parameterList[2] << " - " << "About to add: " << nickList << endl;
+
                 server->addPendingNickList(parameterList[2], nickList);
 
                 // Display message only if this was not an automatic request.
