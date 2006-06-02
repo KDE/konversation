@@ -2276,9 +2276,9 @@ void Channel::processPendingNicks()
 
         if (nick->isAdmin() || nick->isOwner() || nick->isOp() || nick->isHalfOp())
             m_opsToAdd++;
-    }
 
-    m_currentIndex++;
+        m_currentIndex++;
+    }
 
     if (m_pendingChannelNickLists.first().count() == m_currentIndex)
     {
