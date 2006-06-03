@@ -339,6 +339,8 @@ ChannelNickPtr Channel::getChannelNick(const QString &ircnick)
 
 void Channel::purgeNicks()
 {
+    kdDebug() << getName() << " - " << "Purging ..." << endl;
+
     // Purge nickname list
     nicknameList.clear();
 
@@ -2009,6 +2011,12 @@ void Channel::changeNickname(const QString& newNickname)
         m_server->queue("NICK "+newNickname);
 }
 
+void Channel::resetNickList()
+{
+    nicknameListView->setUpdatesEnabled(false);
+    purgeNicks();
+}
+
 void Channel::addPendingNickList(const QStringList& pendingChannelNickList)
 {
     if (!m_processingTimer)
@@ -2017,14 +2025,12 @@ void Channel::addPendingNickList(const QStringList& pendingChannelNickList)
         connect(m_processingTimer, SIGNAL(timeout()), this, SLOT(processPendingNicks()));
     }
 
+    kdDebug() << getName() << " - " << "Adding..." << endl;
+
     m_pendingChannelNickLists.append(pendingChannelNickList);
 
     if (!m_processingTimer->isActive())
-    {
-        nicknameListView->setUpdatesEnabled(false);
-        if (m_server->getInputFilter()->getAutomaticRequest("NAMES",getName())==1) purgeNicks();
         m_processingTimer->start(0);
-    }
 }
 
 QPtrList<Nick> Channel::getNickList()

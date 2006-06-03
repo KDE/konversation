@@ -478,14 +478,20 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                     channelName=channelName.section(' ',0,0);
                 }
             */
+
             // Join the channel
             server->joinChannel(channelName, sourceHostmask);
-            server->getChannelByName(channelName)->clearModeList();
-            // Request modes for the channel
-            server->queue("MODE "+channelName);
+
+            server->resetNickList(channelName);
+
             // Upon JOIN we're going to receive some NAMES input from the server which
             // we need to be able to tell apart from manual invocations of /names
             setAutomaticRequest("NAMES",channelName,true);
+
+            server->getChannelByName(channelName)->clearModeList();
+
+            // Request modes for the channel
+            server->queue("MODE "+channelName);
 
             // Initiate channel ban list
             server->getChannelByName(channelName)->clearBanList();

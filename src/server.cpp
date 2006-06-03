@@ -2150,6 +2150,14 @@ class Query* Server::getQueryByName(const QString& name)
     return 0;
 }
 
+void Server::resetNickList(const QString& channelName)
+{
+    kdDebug() << channelName << " - " << "Resetting nicklist" << endl;
+
+    Channel* outChannel=getChannelByName(channelName);
+    if(outChannel) outChannel->resetNickList();
+}
+
 void Server::addPendingNickList(const QString& channelName,const QStringList& nickList)
 {
     Channel* outChannel=getChannelByName(channelName);

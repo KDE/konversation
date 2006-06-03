@@ -108,6 +108,7 @@ class Server : public QObject
         void setIrcName(const QString &newIrcName);
         QString getIrcName() const;
 
+        void resetNickList(const QString& channelName);
         void addPendingNickList(const QString& channelName,const QStringList& nickList);
         void addHostmaskToNick(const QString &sourceNick, const QString &sourceHostmask);
         Channel* nickJoinsChannel(const QString &channelName, const QString &nickname, const QString &hostmask);
