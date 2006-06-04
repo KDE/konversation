@@ -339,7 +339,7 @@ ChannelNickPtr Channel::getChannelNick(const QString &ircnick)
 
 void Channel::purgeNicks()
 {
-    kdDebug() << getName() << " - " << "Purging ..." << endl;
+    kdDebug() << getName() << " - " << "Purging..." << endl;
 
     // Purge nickname list
     nicknameList.clear();
