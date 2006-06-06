@@ -43,6 +43,7 @@ handling)
 - Only allow one instance of the channel options dialog to be opened
 - Adopt standard KDE system tray mechanic (remove option to skip taskbar entirely as it's
   incompatible with Minimize, Alt+Tab and Toggle Show Desktop)
+- Fix taskbar flash of KNotify events not working with enabled system tray icon
 
 Changes from 0.18 to 0.19
 We are extremely pleased to announce the immediate release of Konversation 0.19. The focus
