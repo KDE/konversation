@@ -2152,8 +2152,6 @@ class Query* Server::getQueryByName(const QString& name)
 
 void Server::resetNickList(const QString& channelName)
 {
-    kdDebug() << channelName << " - " << "Resetting nicklist" << endl;
-
     Channel* outChannel=getChannelByName(channelName);
     if(outChannel) outChannel->resetNickList();
 }

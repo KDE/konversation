@@ -339,8 +339,6 @@ ChannelNickPtr Channel::getChannelNick(const QString &ircnick)
 
 void Channel::purgeNicks()
 {
-    kdDebug() << getName() << " - " << "Purging..." << endl;
-
     // Purge nickname list
     nicknameList.clear();
 
@@ -2025,8 +2023,6 @@ void Channel::addPendingNickList(const QStringList& pendingChannelNickList)
         connect(m_processingTimer, SIGNAL(timeout()), this, SLOT(processPendingNicks()));
     }
 
-    kdDebug() << getName() << " - " << "Adding..." << endl;
-
     m_pendingChannelNickLists.append(pendingChannelNickList);
 
     if (!m_processingTimer->isActive())
@@ -2255,8 +2251,6 @@ void Channel::processPendingNicks()
 {
     QString nickname = m_pendingChannelNickLists.first()[m_currentIndex];
 
-    kdDebug() << getName() << " - " << "Now processing: " << nickname << " (Index is: " << m_currentIndex << ")" << endl;
-
     bool admin = false;
     bool owner = false;
     bool op = false;
@@ -2276,8 +2270,6 @@ void Channel::processPendingNicks()
     // Check if nick is already in the nicklist
     if (!getNickByName(nickname))
     {
-        kdDebug() << getName() << " - " << "Assuming non-duplicate status for: " << nickname << " (Index is: " << m_currentIndex << ")" << endl;
-
         ChannelNickPtr nick = m_server->addNickToJoinedChannelsList(getName(), nickname);
         Q_ASSERT(nick);
         nick->setMode(mode);
@@ -2288,21 +2280,14 @@ void Channel::processPendingNicks()
             m_opsToAdd++;
 
         m_currentIndex++;
-
-        kdDebug() << getName() << " - " << "Added: " << nickname << " (Index is now: " << m_currentIndex << ")" << endl;
     }
     else
     {
-        kdDebug() << getName() << " - " << "Assuming DUPLICATE status for: " << nickname << " (Index is: " << m_currentIndex << ")" << endl;
         m_pendingChannelNickLists.first().pop_front();
     }
 
-    kdDebug() << getName() << " - " << "Count: " << m_pendingChannelNickLists.first().count() << " / Index: " << m_currentIndex << endl;
-
     if (m_pendingChannelNickLists.first().count() == m_currentIndex)
     {
-        kdDebug() << getName() << " - " << "Hit 1" << endl;
-
         adjustNicks(m_pendingChannelNickLists.first().count());
         adjustOps(m_opsToAdd);
         m_pendingChannelNickLists.pop_front();
@@ -2312,8 +2297,6 @@ void Channel::processPendingNicks()
 
     if (m_pendingChannelNickLists.isEmpty())
     {
-        kdDebug() << getName() << " - " << "Hit 2" << endl;
-
         m_processingTimer->stop();
         nicknameListView->sort();
         sortNickList();
@@ -2328,8 +2311,6 @@ void Channel::processPendingNicks()
             m_firstAutoWhoDone = true;
         }
     }
-
-    kdDebug() << getName() << " - " << "Index at the end: " << m_currentIndex << endl;
 }
 
 void Channel::setChannelEncoding(const QString& encoding) // virtual
