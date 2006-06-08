@@ -105,12 +105,12 @@ if __name__ == "__main__":
         album = os.popen('dcop '+amarok+' player album').readline().rstrip('\n')
 
         if title:
-            string = pretty_print(title,artist,album)+' [amaroK]'
+            string = pretty_print(title,artist,album)+' [Amarok]'
             Popen(['dcop', port, 'Konversation', 'say', server, target, string]).communicate()
             sys.exit(0)
         else:
             error = True
-            bad_apps = ['amaroK']
+            bad_apps = ['Amarok']
 
     juk = check_running('juk')
     if juk:
