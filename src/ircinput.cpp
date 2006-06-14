@@ -114,7 +114,7 @@ bool IRCInput::eventFilter(QObject *object,QEvent *event)
         {
             QKeyEvent* ke = static_cast<QKeyEvent*>(event);
 
-            if (!ke->text().isEmpty())
+            if (!ke->text().isEmpty() && (ke->state() == Qt::ShiftButton || ke->state() == 0))
             {
                 setFocus();
                 KonversationApplication::sendEvent(this,event);
