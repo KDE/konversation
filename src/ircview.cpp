@@ -772,7 +772,7 @@ void IRCView::appendServerMessage(const QString& type, const QString& message)
     QString fixed;
     if(Preferences::fixedMOTD() && !m_fontDataBase.isFixedPitch(font().family()))
     {
-        if(type == "MOTD")
+        if(type == i18n("MOTD"))
             fixed=" face=\"" + KGlobalSettings::fixedFont().family() + "\"";
     }
 
@@ -789,7 +789,7 @@ void IRCView::appendServerMessage(const QString& type, const QString& message)
         line = "<p><font color=\"" + serverColor + "\"" + fixed + ">%1 <b>[</b>%2<b>]</b> %3</font></p>\n";
     }
 
-    if(type != "Notify")
+    if(type != i18n("Notify"))
         line = line.arg(timeStamp(), type, filter(message,serverColor));
     else
         line = "<font color=\"" + serverColor + "\">"+line.arg(timeStamp(), type, message)+"</font>";

@@ -109,7 +109,7 @@ void Server::doPreShellCommand()
 {
 
     QString command = getIdentity()->getShellCommand();
-    statusView->appendServerMessage("Info","Running preconfigured command...");
+    statusView->appendServerMessage(i18n("Info"),"Running preconfigured command...");
 
     connect( &preShellCommand,SIGNAL(processExited(KProcess*)),this,SLOT(preShellCommandExited(KProcess*)));
 
@@ -436,9 +436,9 @@ void Server::preShellCommandExited(KProcess* proc)
 {
 
     if (proc && proc->normalExit())
-        statusView->appendServerMessage("Info","Process executed successfully!");
+        statusView->appendServerMessage(i18n("Info"),"Process executed successfully!");
     else
-        statusView->appendServerMessage("Warning","There was a problem while executing the command!");
+        statusView->appendServerMessage(i18n("Warning"),"There was a problem while executing the command!");
 
     connectToIRCServer();
     connectSignals();
@@ -3179,7 +3179,7 @@ void Server::reconnect()
     }
     else
     {
-        getStatusView()->appendServerMessage("Error", i18n("Server already connected."));
+        getStatusView()->appendServerMessage(i18n("Error"), i18n("Server already connected."));
     }
 }
 
