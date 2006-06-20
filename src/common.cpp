@@ -70,6 +70,7 @@ namespace Konversation
 
         int pos = 0;
         int urlLen = 0;
+        QString append;
         QString href;
         QString insertText;
 
@@ -91,6 +92,12 @@ namespace Konversation
             urlLen = urlPattern.matchedLength();
             href = filteredLine.mid( pos, urlLen );
 
+            if (filteredLine.mid(pos-1,1) == "(" && href.right(1) == ")")
+            {
+                href.truncate(href.length()-1);
+                append = ")";
+            }
+
             // Qt doesn't support (?<=pattern) so we do it here
             if((pos > 0) && filteredLine[pos-1].isLetterOrNumber())
             {
@@ -98,16 +105,12 @@ namespace Konversation
                 continue;
             }
 
-            if(urlPattern.cap(1).startsWith("www.", false))
-            {
+            if (urlPattern.cap(1).startsWith("www.", false))
                 protocol = "http://";
-            }
-            else if(urlPattern.cap(1).isEmpty())
-            {
+            else if (urlPattern.cap(1).isEmpty())
                 protocol = "mailto:";
-            }
 
-            insertText = link.arg(protocol, href, href);
+            insertText = link.arg(protocol, href, href, append) + append;
             filteredLine.replace(pos, urlLen, insertText);
             pos += insertText.length();
             KonversationApplication::instance()->storeUrl(fromNick, href);
