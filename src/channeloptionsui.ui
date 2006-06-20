@@ -177,7 +177,7 @@ the Free Software Foundation; either version 2 of the License, or
                             <string>&amp;No messages from outside the channel</string>
                         </property>
                         <property name="whatsThis" stdset="0">
-                            <string>&lt;qt&gt;These control the &lt;em&gt;mode&lt;/em&gt; of the channel.  Only an operator can change these.&lt;p&gt;&lt;b&gt;N&lt;/b&gt;o messages from outside means that users that are not in the channel cannot sends messages that everybody in the channel can see.  Almost all channels have this set to prevent nuisance messages.&lt;/qt&gt;</string>
+                            <string>&lt;qt&gt;These control the &lt;em&gt;mode&lt;/em&gt; of the channel.  Only an operator can change these.&lt;p&gt;&lt;b&gt;N&lt;/b&gt;o messages from outside means that users that are not in the channel cannot send messages that everybody in the channel can see.  Almost all channels have this set to prevent nuisance messages.&lt;/qt&gt;</string>
                         </property>
                     </widget>
                     <widget class="QCheckBox">
