@@ -573,45 +573,56 @@ bool doHighlight, bool parseURL, bool self)
     return filteredLine;
 }
 
+QString IRCView::createNickLine(const QString& nick, bool encapsulateNick)
+{
+    QString nickLine = "%2";
+
+    if(Preferences::useClickableNicks())
+        nickLine = "<a href=\"#" + nick + "\">%2</a>";
+
+    if(encapsulateNick)
+        nickLine = "&lt;" + nickLine + "&gt;";
+
+    if(Preferences::useColoredNicks())
+    {
+        QString nickColor;
+
+        if(nick != m_server->getNickname())
+            nickColor = Preferences::nickColor(m_server->obtainNickInfo(nick)->getNickColor()).name();
+        else
+            nickColor =  Preferences::nickColor(8).name();
+
+        if(nickColor == "#000000")
+        {
+            nickColor = "#000001";                    // HACK Working around QTextBrowser's auto link coloring
+        }
+
+        nickLine = "<font color=\"" + nickColor + "\">"+nickLine+"</font>";
+    }
+
+    if(Preferences::useBoldNicks())
+        nickLine = "<b>" + nickLine + "</b>";
+
+    return nickLine;
+}
+
 void IRCView::append(const QString& nick,const QString& message)
 {
     QString channelColor = Preferences::color(Preferences::ChannelMessage).name();
+
+    if(channelColor  == "#000000")
+    {
+        channelColor = "#000001";              // HACK Working around QTextBrowser's auto link coloring
+    }
+
     QString line;
-    QString nickLine = "%2";
-    QString scolor;
     m_tabNotification = Konversation::tnfNormal;
 
     if(nick != m_server->getNickname())
         KonversationApplication::instance()->increaseKarma(nick,1);
 
-    if(Preferences::useClickableNicks())
-        nickLine = "<a href=\"#" + nick + "\">%2</a>";
 
-    if(Preferences::useColoredNicks())
-    {
-        if(nick != m_server->getNickname())
-            scolor = Preferences::nickColor(m_server->obtainNickInfo(nick)->getNickColor()).name();
-        else
-            scolor =  Preferences::nickColor(8).name();
-
-        if(scolor == "#000000")
-        {
-            scolor = "#000001";                    // HACK Working around QTextBrowser's auto link coloring
-        }
-
-        nickLine = "<font color=\"" + scolor + "\">&lt;"+nickLine+"&gt;</font>";
-    }
-    else
-    {
-        nickLine = "&lt;"+nickLine+"&gt;";
-        if(channelColor  == "#000000")
-        {
-            channelColor = "#000001";              // HACK Working around QTextBrowser's auto link coloring
-        }
-    }
-
-    if(Preferences::useBoldNicks())
-        nickLine = "<b>"+nickLine+"</b>";
+    QString nickLine = createNickLine(nick);
 
     if(basicDirection(message) == QChar::DirR)
     {
@@ -652,41 +663,19 @@ void IRCView::appendRaw(const QString& message, bool suppressTimestamps, bool se
 void IRCView::appendQuery(const QString& nick,const QString& message)
 {
     QString queryColor=Preferences::color(Preferences::QueryMessage).name();
+
+    if(queryColor  == "#000000")
+    {
+        queryColor = "#000001";                // HACK Working around QTextBrowser's auto link coloring
+    }
+
     QString line;
-    QString nickLine = "%2";
-    QString color;
     m_tabNotification = Konversation::tnfNormal;
 
     if(nick != m_server->getNickname())
         KonversationApplication::instance()->increaseKarma(nick,2);
 
-    if(Preferences::useClickableNicks())
-        nickLine = "<a href=\"#" + nick + "\">%2</a>";
-
-    if(Preferences::useColoredNicks())
-    {
-        if(nick != m_server->getNickname())
-            color = Preferences::nickColor(m_server->obtainNickInfo(nick)->getNickColor()).name();
-        else
-            color = Preferences::nickColor(8).name();
-
-        if(color == "#000000")
-        {
-            color = "#000001";                    // HACK Working around QTextBrowser's auto link coloring
-        }
-
-        nickLine = "<font color=\"" + color + "\">&lt;"+nickLine+"&gt;</font>";
-    }
-    else
-    {
-        nickLine = "&lt;"+nickLine+"&gt;";
-        if(queryColor  == "#000000")
-        {
-            queryColor = "#000001";                // HACK Working around QTextBrowser's auto link coloring
-        }
-    }
-    if(Preferences::useBoldNicks())
-        nickLine = "<b>"+nickLine+"</b>";
+    QString nickLine = createNickLine(nick);
 
     if(basicDirection(message) == QChar::DirR)
     {
@@ -709,41 +698,19 @@ void IRCView::appendQuery(const QString& nick,const QString& message)
 void IRCView::appendAction(const QString& nick,const QString& message)
 {
     QString actionColor=Preferences::color(Preferences::ActionMessage).name();
+
+    if(actionColor  == "#000000")
+    {
+        actionColor = "#000001";               // HACK Working around QTextBrowser's auto link coloring
+    }
+
     QString line;
-    QString nickLine = "%2";
-    QString color;
     m_tabNotification = Konversation::tnfNormal;
 
     if(nick != m_server->getNickname())
         KonversationApplication::instance()->increaseKarma(nick,1);
 
-    if(Preferences::useClickableNicks())
-        nickLine = "<a href=\"#" + nick + "\">%2</a>";
-
-    if(Preferences::useColoredNicks())
-    {
-        if(nick != m_server->getNickname())
-            color =Preferences::nickColor( m_server->obtainNickInfo(nick)->getNickColor()).name();
-        else
-            color = Preferences::nickColor(8).name();
-
-        if(color == "#000000")
-        {
-            color = "#000001";                    // HACK Working around QTextBrowser's auto link coloring
-        }
-
-        nickLine = "<font color=\"" + color + "\">"+nickLine+"</font>";
-    }
-    else
-    {
-        if(actionColor  == "#000000")
-        {
-            actionColor = "#000001";               // HACK Working around QTextBrowser's auto link coloring
-        }
-    }
-    if(Preferences::useBoldNicks())
-        nickLine = "<b>"+nickLine+"</b>";
-
+    QString nickLine = createNickLine(nick, false);
 
     if(basicDirection(message) == QChar::DirR)
     {

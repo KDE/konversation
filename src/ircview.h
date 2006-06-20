@@ -146,6 +146,9 @@ class IRCView : public KTextBrowser
         /// Returns a formated timestamp if timestamps are enabled else it returns QString::null
         QString timeStamp();
 
+        /// Returns a formated nick string
+        QString createNickLine(const QString& nick, bool encapsulateNick = true);
+
         // used by search function
         int m_findParagraph;
         int m_findIndex;
