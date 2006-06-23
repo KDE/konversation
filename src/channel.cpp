@@ -663,7 +663,8 @@ void Channel::completeNick()
                 foundNick = nicknameList.completeNick(pattern, complete, found,
                     (Preferences::nickCompletionMode() == 2),
                     Preferences::nickCompletionCaseSensitive(),
-                    getOwnChannelNick()->getNickname());
+                    getOwnChannelNick()->getNickname(),
+                    channelInput->lastCompletion());
 
                 if(!complete && !found.isEmpty())
                 {
@@ -2379,6 +2380,84 @@ void Channel::sortNickList()
     }
 }
 
+void Channel::setIdentity(const Identity *newIdentity)
+{
+  if(!newIdentity)
+  {
+    return;
+  }
+
+  ChatWindow::setIdentity(newIdentity);
+  nicknameCombobox->clear();
+  nicknameCombobox->insertStringList(newIdentity->getNicknameList());
+}
+
+bool Channel::eventFilter(QObject* watched, QEvent* e)
+{
+  if((watched == nicknameListView) && (e->type() == QEvent::Resize) && splitterChanged && isShown())
+  {
+    if (!topicSplitterHidden && !channelSplitterHidden)
+    {
+      Preferences::setChannelSplitterSizes(m_horizSplitter->sizes());
+      Preferences::setTopicSplitterSizes(m_vertSplitter->sizes());
+      Preferences::writeConfig();
+
+    }
+    if (!topicSplitterHidden && channelSplitterHidden)
+    {
+      Preferences::setTopicSplitterSizes(m_vertSplitter->sizes());
+      Preferences::writeConfig();
+
+    }
+    if (!channelSplitterHidden && topicSplitterHidden)
+    {
+      Preferences::setChannelSplitterSizes(m_horizSplitter->sizes());
+      Preferences::writeConfig();
+
+    }
+  }
+
+  return ChatWindow::eventFilter(watched, e);
+}
+
+void Channel::addBan(const QString& ban)
+{
+  for ( QStringList::Iterator it = m_BanList.begin(); it != m_BanList.end(); ++it )
+  {
+    if ((*it).section(' ', 0, 0) == ban.section(' ', 0, 0))
+    {
+			// Ban is already in list.
+      it = m_BanList.remove(it);
+
+      emit banRemoved(ban.section(' ', 0, 0));
+    }
+  }
+
+  m_BanList.prepend(ban);
+
+  emit banAdded(ban);
+}
+
+void Channel::removeBan(const QString& ban)
+{
+  for ( QStringList::Iterator it = m_BanList.begin(); it != m_BanList.end(); ++it )
+  {
+    if ((*it).section(' ', 0, 0) == ban)
+    {
+      it = m_BanList.remove(it);
+
+      emit banRemoved(ban);
+    }
+  }
+}
+
+void Channel::clearBanList()
+{
+  m_BanList.clear();
+
+  emit banListCleared();
+}
+
 //
 // NickList
 //
@@ -2390,7 +2469,7 @@ int NickList::compareItems(QPtrCollection::Item item1, QPtrCollection::Item item
 }
 
 QString NickList::completeNick(const QString& pattern, bool& complete, QStringList& found,
-			       bool skipNonAlfaNum, bool caseSensitive, const QString& ownNick)
+			       bool skipNonAlfaNum, bool caseSensitive, const QString& ownNick, const QString& lastCompleted)
 {
     found.clear();
     QString prefix = "^";
@@ -2443,6 +2522,15 @@ QString NickList::completeNick(const QString& pattern, bool& complete, QStringLi
             }
         }
 
+        if(!lastCompleted.isEmpty()) {
+            QStringList::iterator it = found.find(lastCompleted);
+
+            if(it != found.end()) {
+              found.remove(it);
+              found.prepend(lastCompleted);
+            }
+        }
+
         complete = false;
         return firstNick.left(patternLength);
     }
@@ -2453,84 +2541,6 @@ QString NickList::completeNick(const QString& pattern, bool& complete, QStringLi
     }
 
     return QString::null;
-}
-
-void Channel::setIdentity(const Identity *newIdentity)
-{
-    if(!newIdentity)
-    {
-        return;
-    }
-
-    ChatWindow::setIdentity(newIdentity);
-    nicknameCombobox->clear();
-    nicknameCombobox->insertStringList(newIdentity->getNicknameList());
-}
-
-bool Channel::eventFilter(QObject* watched, QEvent* e)
-{
-    if((watched == nicknameListView) && (e->type() == QEvent::Resize) && splitterChanged && isShown())
-    {
-        if (!topicSplitterHidden && !channelSplitterHidden)
-        {
-            Preferences::setChannelSplitterSizes(m_horizSplitter->sizes());
-            Preferences::setTopicSplitterSizes(m_vertSplitter->sizes());
-            Preferences::writeConfig();
-
-        }
-        if (!topicSplitterHidden && channelSplitterHidden)
-        {
-            Preferences::setTopicSplitterSizes(m_vertSplitter->sizes());
-            Preferences::writeConfig();
-
-        }
-        if (!channelSplitterHidden && topicSplitterHidden)
-        {
-            Preferences::setChannelSplitterSizes(m_horizSplitter->sizes());
-            Preferences::writeConfig();
-
-        }
-    }
-
-    return ChatWindow::eventFilter(watched, e);
-}
-
-void Channel::addBan(const QString& ban)
-{
-	for ( QStringList::Iterator it = m_BanList.begin(); it != m_BanList.end(); ++it )
-	{
-		if ((*it).section(' ', 0, 0) == ban.section(' ', 0, 0))
-		{
-			// Ban is already in list.
-			it = m_BanList.remove(it);
-
-			emit banRemoved(ban.section(' ', 0, 0));
-		}
-	}
-
-	m_BanList.prepend(ban);
-
-	emit banAdded(ban);
-}
-
-void Channel::removeBan(const QString& ban)
-{
-	for ( QStringList::Iterator it = m_BanList.begin(); it != m_BanList.end(); ++it )
-	{
-		if ((*it).section(' ', 0, 0) == ban)
-		{
-			it = m_BanList.remove(it);
-
-			emit banRemoved(ban);
-		}
-	}
-}
-
-void Channel::clearBanList()
-{
-	m_BanList.clear();
-
-	emit banListCleared();
 }
 
 #include "channel.moc"

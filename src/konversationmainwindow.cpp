@@ -1721,6 +1721,9 @@ void KonversationMainWindow::previousTab()
 
 void KonversationMainWindow::goToTab(int page)
 {
+    if(page == getViewContainer()->currentPageIndex())
+      return;
+
     if(page >= getViewContainer()->count())
         page = 0;
     else if(page < 0)

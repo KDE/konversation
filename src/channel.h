@@ -58,7 +58,8 @@ class NickList : public QPtrList<Nick>
 {
     public:
         QString completeNick(const QString& pattern, bool& complete, QStringList& found,
-            bool skipNonAlfaNum, bool caseSensitive, const QString& ownNick);
+                             bool skipNonAlfaNum, bool caseSensitive, const QString& ownNick,
+                             const QString& lastCompleted);
     protected:
         virtual int compareItems(QPtrCollection::Item item1, QPtrCollection::Item item2);
 };
