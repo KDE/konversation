@@ -752,7 +752,7 @@
       <whatsthis></whatsthis>
     </entry>
     <entry key="WebBrowserCmd" type="String">
-      <default>firefox \'%u\'</default>
+      <default>firefox '%u'</default>
       <label></label>
       <whatsthis></whatsthis>
     </entry>
