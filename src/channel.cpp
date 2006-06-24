@@ -2518,15 +2518,15 @@ int NickList::compareItems(QPtrCollection::Item item1, QPtrCollection::Item item
         int returnValue = static_cast<Nick*>(item2)->getChannelNick()->timeStamp() - static_cast<Nick*>(item1)->getChannelNick()->timeStamp();
 
         if(returnValue == 0) {
-            returnValue = QString::compare(static_cast<Nick*>(item1)->getNickname(),
-                                           static_cast<Nick*>(item2)->getNickname());
+            returnValue = QString::compare(static_cast<Nick*>(item1)->loweredNickname(),
+                                           static_cast<Nick*>(item2)->loweredNickname());
         }
 
         return returnValue;
     }
 
-    return QString::compare(static_cast<Nick*>(item1)->getNickname(),
-                            static_cast<Nick*>(item2)->getNickname());
+    return QString::compare(static_cast<Nick*>(item1)->loweredNickname(),
+                            static_cast<Nick*>(item2)->loweredNickname());
 }
 
 QString NickList::completeNick(const QString& pattern, bool& complete, QStringList& found,
