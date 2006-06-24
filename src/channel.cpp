@@ -641,8 +641,6 @@ void Channel::completeNick()
         channelInput->setOldCursorPosition(pos);
         // remember old cursor position locally
         oldPos=pos;
-        // remember old nick completion position
-        unsigned int oldCompletionPosition=completionPosition;
         // step back to last space or start of line
         while(pos && line[pos-1]!=' ') pos--;
         // copy search pattern (lowercase)
@@ -680,6 +678,25 @@ void Channel::completeNick()
             } // Cycle completion
             else if(Preferences::nickCompletionMode() == 0)
             {
+                if(mode == '\0') {
+                    QPtrListIterator<Nick> it(nicknameList);
+                    uint timeStamp = 0;
+                    int listPosition = 0;
+
+                    while(it.current() != 0)
+                    {
+                      if(it.current()->getChannelNick()->timeStamp() > timeStamp) {
+                          timeStamp = it.current()->getChannelNick()->timeStamp();
+                          completionPosition = listPosition;
+                      }
+
+                      ++listPosition;
+                      ++it;
+                    }
+                }
+
+                // remember old nick completion position
+                unsigned int oldCompletionPosition=completionPosition;
                 complete = true;
                 QString prefixCharacter = Preferences::prefixCharacter();
                 do
@@ -2498,7 +2515,14 @@ void NickList::setCompareMethod(CompareMethod method)
 int NickList::compareItems(QPtrCollection::Item item1, QPtrCollection::Item item2)
 {
     if(m_compareMethod == NickList::TimeStamp) {
-        return -(static_cast<Nick*>(item1)->getChannelNick()->timeStamp() - static_cast<Nick*>(item2)->getChannelNick()->timeStamp());
+        int returnValue = static_cast<Nick*>(item2)->getChannelNick()->timeStamp() - static_cast<Nick*>(item1)->getChannelNick()->timeStamp();
+
+        if(returnValue == 0) {
+            returnValue = QString::compare(static_cast<Nick*>(item1)->getNickname(),
+                                           static_cast<Nick*>(item2)->getNickname());
+        }
+
+        return returnValue;
     }
 
     return QString::compare(static_cast<Nick*>(item1)->getNickname(),

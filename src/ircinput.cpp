@@ -152,6 +152,9 @@ void IRCInput::keyPressEvent(QKeyEvent* e)
             if(text().length()) addHistory(text());
             if(completionBox->isHidden())
             {
+                // Reset completion mode
+                setCompletionMode('\0');
+
                 // Ctrl+Enter is a special case in which commands should be send as normal messages
                 if ( e->state() & ControlButton )
                 {

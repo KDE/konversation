@@ -46,7 +46,6 @@ KonversationApplication::KonversationApplication()
     mainWindow = 0;
     quickConnectDialog = 0;
     colorOffSet = 0;
-    m_demoteInProgress = false;
     m_connectDelayed=false;
 }
 

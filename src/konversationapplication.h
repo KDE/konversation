@@ -181,10 +181,6 @@ class KonversationApplication : public KUniqueApplication
         uint colorOffSet;
         QStringList colorList;
 
-        bool m_demoteInProgress;
-        QTimer* demoteTimer;
-        QMap<QString,uint> karmaMap;
-
         // For command line arguments
         QString m_hostName;
         QString m_port;
