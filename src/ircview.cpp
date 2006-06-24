@@ -618,10 +618,6 @@ void IRCView::append(const QString& nick,const QString& message)
     QString line;
     m_tabNotification = Konversation::tnfNormal;
 
-    if(nick != m_server->getNickname())
-        KonversationApplication::instance()->increaseKarma(nick,1);
-
-
     QString nickLine = createNickLine(nick);
 
     if(basicDirection(message) == QChar::DirR)
@@ -672,9 +668,6 @@ void IRCView::appendQuery(const QString& nick,const QString& message)
     QString line;
     m_tabNotification = Konversation::tnfNormal;
 
-    if(nick != m_server->getNickname())
-        KonversationApplication::instance()->increaseKarma(nick,2);
-
     QString nickLine = createNickLine(nick);
 
     if(basicDirection(message) == QChar::DirR)
@@ -706,9 +699,6 @@ void IRCView::appendAction(const QString& nick,const QString& message)
 
     QString line;
     m_tabNotification = Konversation::tnfNormal;
-
-    if(nick != m_server->getNickname())
-        KonversationApplication::instance()->increaseKarma(nick,1);
 
     QString nickLine = createNickLine(nick, false);
 

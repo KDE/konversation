@@ -663,8 +663,7 @@ void Channel::completeNick()
                 foundNick = nicknameList.completeNick(pattern, complete, found,
                     (Preferences::nickCompletionMode() == 2),
                     Preferences::nickCompletionCaseSensitive(),
-                    getOwnChannelNick()->getNickname(),
-                    channelInput->lastCompletion());
+                    getOwnChannelNick()->getNickname());
 
                 if(!complete && !found.isEmpty())
                 {
@@ -1155,15 +1154,17 @@ void Channel::kickNick(ChannelNickPtr channelNick, const ChannelNick &kicker, co
 
 Nick* Channel::getNickByName(const QString &lookname)
 {
-    //FIXME I don't think this works
     QString lcLookname = lookname.lower();
-    Nick* nick=nicknameList.first();
-    while(nick)
+    QPtrListIterator<Nick> it(nicknameList);
+
+    while(it.current() != 0)
     {
-        if(nick->loweredNickname() == lcLookname)
-            return nick;
-        nick=nicknameList.next();
+        if(it.current()->loweredNickname() == lcLookname)
+            return it.current();
+
+        ++it;
     }
+
     return 0;
 }
 
@@ -2458,23 +2459,61 @@ void Channel::clearBanList()
   emit banListCleared();
 }
 
+void Channel::append(const QString& nickname,const QString& message)
+{
+    Nick* nick = getNickByName(nickname);
+
+    if(nick) {
+        nick->getChannelNick()->setTimeStamp(QDateTime::currentDateTime().toTime_t());
+    }
+
+    ChatWindow::append(nickname, message);
+}
+
+void Channel::appendAction(const QString& nickname,const QString& message, bool usenotifications)
+{
+    Nick* nick = getNickByName(nickname);
+
+    if(nick) {
+        nick->getChannelNick()->setTimeStamp(QDateTime::currentDateTime().toTime_t());
+    }
+
+    ChatWindow::appendAction(nickname, message, usenotifications);
+}
+
 //
 // NickList
 //
 
+NickList::NickList() : QPtrList<Nick>()
+{
+    m_compareMethod = NickList::AlphaNumeric;
+}
+
+void NickList::setCompareMethod(CompareMethod method)
+{
+    m_compareMethod = method;
+}
+
 int NickList::compareItems(QPtrCollection::Item item1, QPtrCollection::Item item2)
 {
+    if(m_compareMethod == NickList::TimeStamp) {
+        return -(static_cast<Nick*>(item1)->getChannelNick()->timeStamp() - static_cast<Nick*>(item2)->getChannelNick()->timeStamp());
+    }
+
     return QString::compare(static_cast<Nick*>(item1)->getNickname(),
-        static_cast<Nick*>(item2)->getNickname());
+                            static_cast<Nick*>(item2)->getNickname());
 }
 
 QString NickList::completeNick(const QString& pattern, bool& complete, QStringList& found,
-			       bool skipNonAlfaNum, bool caseSensitive, const QString& ownNick, const QString& lastCompleted)
+			       bool skipNonAlfaNum, bool caseSensitive, const QString& ownNick)
 {
     found.clear();
     QString prefix = "^";
     QString newNick;
     QString prefixCharacter = Preferences::prefixCharacter();
+    NickList foundNicks;
+    foundNicks.setCompareMethod(NickList::TimeStamp);
 
     if((pattern.find(QRegExp("^(\\d|\\w)")) != -1) && skipNonAlfaNum)
     {
@@ -2496,10 +2535,20 @@ QString NickList::completeNick(const QString& pattern, bool& complete, QStringLi
 
         if((newNick.find(regexp) != -1) && (newNick != ownNick))
         {
-            found.append(newNick);
+            foundNicks.append(it.current());
         }
 
         ++it;
+    }
+
+    foundNicks.sort();
+
+    QPtrListIterator<Nick> it2(foundNicks);
+
+    while(it2.current() != 0)
+    {
+        found.append(it2.current()->getNickname());
+        ++it2;
     }
 
     if(found.count() > 1)
@@ -2519,15 +2568,6 @@ QString NickList::completeNick(const QString& pattern, bool& complete, QStringLi
             {
                 ok = false;
                 --patternLength;
-            }
-        }
-
-        if(!lastCompleted.isEmpty()) {
-            QStringList::iterator it = found.find(lastCompleted);
-
-            if(it != found.end()) {
-              found.remove(it);
-              found.prepend(lastCompleted);
             }
         }
 

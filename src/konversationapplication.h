@@ -119,11 +119,6 @@ class KonversationApplication : public KUniqueApplication
         // auto replacement for input or output lines
         QString doAutoreplace(const QString& text,bool output);
 
-        // Intelligent nick completion stuff aka A.W.E.S.O.M.E-O 4000 --cartman
-        uint getKarma(const QString& nick) const;
-        void increaseKarma(const QString& nick, uint increase);
-        void decreaseKarma(const QString& nick);  // A decrease is always -1 and its auto
-
         int newInstance();
 
         void delayedConnectToServer(const QString& hostName,
@@ -170,8 +165,6 @@ class KonversationApplication : public KUniqueApplication
         void dcopInfo(const QString& string);
         void setAutoAway();
         void sendMultiServerCommand(const QString& command, const QString& parameter);
-
-        void autoDemoteAllNicks(); // Auto decrease karmas for all nicks, this is a QTimer based operation
 
     private:
         QPtrList<Server> serverList;

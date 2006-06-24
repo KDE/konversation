@@ -32,6 +32,7 @@ ChannelNick::ChannelNick(const NickInfoPtr& nickInfo, const bool& isop, const bo
     this->isowner = isowner;
     this->ishalfop = ishalfop;
     this->hasvoice = hasvoice;
+    m_timeStamp = 0;
 }
 
 ChannelNick::~ChannelNick()
@@ -226,6 +227,16 @@ QString ChannelNick::tooltip()
 QString ChannelNick::loweredNickname() const
 {
     return nickInfo->loweredNickname();
+}
+
+uint ChannelNick::timeStamp() const
+{
+  return m_timeStamp;
+}
+
+void ChannelNick::setTimeStamp(uint stamp)
+{
+  m_timeStamp = stamp;
 }
 
 #include "channelnick.moc"

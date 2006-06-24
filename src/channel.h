@@ -57,11 +57,20 @@ namespace Konversation
 class NickList : public QPtrList<Nick>
 {
     public:
+        NickList();
+
+        typedef enum CompareMethod { AlphaNumeric, TimeStamp };
+
         QString completeNick(const QString& pattern, bool& complete, QStringList& found,
-                             bool skipNonAlfaNum, bool caseSensitive, const QString& ownNick,
-                             const QString& lastCompleted);
+                             bool skipNonAlfaNum, bool caseSensitive, const QString& ownNick);
+
+        void setCompareMethod(CompareMethod method);
+
     protected:
         virtual int compareItems(QPtrCollection::Item item1, QPtrCollection::Item item2);
+
+    private:
+        CompareMethod m_compareMethod;
 };
 
 class Channel : public ChatWindow
@@ -74,6 +83,9 @@ class Channel : public ChatWindow
 //META
         virtual bool canBeFrontView();
         virtual bool searchView();
+
+        virtual void append(const QString& nickname,const QString& message);
+        virtual void appendAction(const QString& nickname,const QString& message, bool usenotifications = false);
 
     protected slots:
         //FIXME: i doubt these ought to be slots

@@ -83,15 +83,15 @@ class ChatWindow : public QVBox
         void setType(WindowType newType);
         WindowType getType();
 
-        void insertRememberLine();
+        virtual void insertRememberLine();
         virtual void append(const QString& nickname,const QString& message);
-        void appendRaw(const QString& message, bool suppressTimestamps=false);
-        void appendQuery(const QString& nickname,const QString& message, bool usenotifications = false);
+        virtual void appendRaw(const QString& message, bool suppressTimestamps=false);
+        virtual void appendQuery(const QString& nickname,const QString& message, bool usenotifications = false);
         virtual void appendAction(const QString& nickname,const QString& message, bool usenotifications = false);
-        void appendServerMessage(const QString& type,const QString& message);
-        void appendCommandMessage(const QString& command, const QString& message, bool important = true,
+        virtual void appendServerMessage(const QString& type,const QString& message);
+        virtual void appendCommandMessage(const QString& command, const QString& message, bool important = true,
             bool parseURL = true, bool self = false);
-        void appendBacklogMessage(const QString& firstColumn,const QString& message);
+        virtual void appendBacklogMessage(const QString& firstColumn,const QString& message);
 
         QWidget* parentWidget;
 

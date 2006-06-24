@@ -37,6 +37,7 @@ class ChannelNick :  public QObject, public KShared
          */
         bool isAnyTypeOfOp() const;
         bool hasVoice() const;
+        uint timeStamp() const;
 
         bool setVoice(bool state);
         bool setOp(bool state);
@@ -46,6 +47,7 @@ class ChannelNick :  public QObject, public KShared
         bool setMode(char mode, bool plus);
         bool setMode(int mode);
         bool setMode(bool admin,bool owner,bool op,bool halfop,bool voice);
+        void setTimeStamp(uint stamp);
 
         NickInfoPtr getNickInfo() const;
         //Purely provided for convience because they are used so often.
@@ -61,7 +63,9 @@ class ChannelNick :  public QObject, public KShared
         bool isowner;
         bool ishalfop;
         bool hasvoice;
-        signals:
+        uint m_timeStamp;
+
+    signals:
         void channelNickChanged();
 };
 
