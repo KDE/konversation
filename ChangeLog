@@ -44,6 +44,11 @@ handling)
 - Adopt standard KDE system tray mechanic (remove option to skip taskbar entirely as it's
   incompatible with Minimize, Alt+Tab and Toggle Show Desktop)
 - Fix taskbar flash of KNotify events not working with enabled system tray icon
+- Changed the tab completion algorithm to promote the most recently active chatter for a 
+  given completion prefix to the beginning of the list
+- Significantly cleaned up tab completion code
+- Fix default custom browser setting
+- Fix display of some watched nicks online info messages in the ircview
 
 Changes from 0.18 to 0.19
 We are extremely pleased to announce the immediate release of Konversation 0.19. The focus
