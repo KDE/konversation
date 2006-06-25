@@ -682,16 +682,21 @@ void Channel::completeNick()
                     QPtrListIterator<Nick> it(nicknameList);
                     uint timeStamp = 0;
                     int listPosition = 0;
+                    Nick* nick = 0;
 
                     while(it.current() != 0)
                     {
-                      if(it.current()->getChannelNick()->timeStamp() > timeStamp) {
-                          timeStamp = it.current()->getChannelNick()->timeStamp();
-                          completionPosition = listPosition;
-                      }
+                        nick = it.current();
 
-                      ++listPosition;
-                      ++it;
+                        if(nick->getNickname().startsWith(pattern, Preferences::nickCompletionCaseSensitive()) &&
+                          (nick->getChannelNick()->timeStamp() > timeStamp))
+                        {
+                            timeStamp = nick->getChannelNick()->timeStamp();
+                            completionPosition = listPosition;
+                        }
+
+                        ++listPosition;
+                        ++it;
                     }
                 }
 
