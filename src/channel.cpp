@@ -2483,10 +2483,12 @@ void Channel::clearBanList()
 
 void Channel::append(const QString& nickname,const QString& message)
 {
-    Nick* nick = getNickByName(nickname);
+    if(nickname != getServer()->getNickname()) {
+        Nick* nick = getNickByName(nickname);
 
-    if(nick) {
-        nick->getChannelNick()->setTimeStamp(QDateTime::currentDateTime().toTime_t());
+        if(nick) {
+            nick->getChannelNick()->setTimeStamp(QDateTime::currentDateTime().toTime_t());
+        }
     }
 
     ChatWindow::append(nickname, message);
@@ -2494,10 +2496,12 @@ void Channel::append(const QString& nickname,const QString& message)
 
 void Channel::appendAction(const QString& nickname,const QString& message, bool usenotifications)
 {
-    Nick* nick = getNickByName(nickname);
+    if(nickname != getServer()->getNickname()) {
+        Nick* nick = getNickByName(nickname);
 
-    if(nick) {
-        nick->getChannelNick()->setTimeStamp(QDateTime::currentDateTime().toTime_t());
+        if(nick) {
+            nick->getChannelNick()->setTimeStamp(QDateTime::currentDateTime().toTime_t());
+        }
     }
 
     ChatWindow::appendAction(nickname, message, usenotifications);
