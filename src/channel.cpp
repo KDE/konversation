@@ -611,14 +611,18 @@ void Channel::completeNick()
     QString newLine;
     // Check if completion position is out of range
     if(completionPosition>=nicknameList.count()) completionPosition=0;
+
+    // If we're behind the old pos reset the completion mode
+    if(oldPos > pos)
+    {
+        channelInput->setCompletionMode('\0');
+    }
+
     // Check, which completion mode is active
-    char mode=channelInput->getCompletionMode();
+    char mode = channelInput->getCompletionMode();
 
     if(mode == 'c')
     {
-        // FIXME: dirty workaround to avoid a crash, but won't work as expected anyway
-        if ( oldPos > pos ) return;
-
         line.remove(oldPos,pos-oldPos);
         pos = oldPos;
     }
