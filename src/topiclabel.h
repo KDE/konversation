@@ -46,7 +46,7 @@ namespace Konversation
             virtual void contentsMousePressEvent(QMouseEvent *e);
             virtual void contentsMouseReleaseEvent(QMouseEvent *e);
             virtual void contentsMouseMoveEvent(QMouseEvent *e);
-
+            virtual void leaveEvent (QEvent*);
             void resizeEvent(QResizeEvent*);
 
         protected slots:

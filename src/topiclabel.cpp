@@ -102,6 +102,12 @@ namespace Konversation
         KActiveLabel::contentsMouseMoveEvent(e);
     }
 
+    void TopicLabel::leaveEvent(QEvent*)
+    {
+       emit clearStatusText();
+       m_lastStatusText = QString::null;
+    }
+
     void TopicLabel::openLink(const QString& link)
     {
         if (!link.isEmpty())
