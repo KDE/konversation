@@ -605,25 +605,19 @@ void Channel::completeNick()
     int pos, oldPos;
 
     channelInput->getCursorPosition(&oldPos,&pos);// oldPos is a dummy here, taking the paragraph parameter
-    oldPos=channelInput->getOldCursorPosition();
+    oldPos = channelInput->getOldCursorPosition();
 
     QString line=channelInput->text();
     QString newLine;
     // Check if completion position is out of range
-    if(completionPosition>=nicknameList.count()) completionPosition=0;
-
-    // If we're behind the old pos reset the completion mode
-    if(oldPos > pos)
-    {
-        channelInput->setCompletionMode('\0');
-    }
+    if(completionPosition >= nicknameList.count()) completionPosition = 0;
 
     // Check, which completion mode is active
     char mode = channelInput->getCompletionMode();
 
     if(mode == 'c')
     {
-        line.remove(oldPos,pos-oldPos);
+        line.remove(oldPos, pos - oldPos);
         pos = oldPos;
     }
 
@@ -644,13 +638,14 @@ void Channel::completeNick()
         // remember old cursor position in input field
         channelInput->setOldCursorPosition(pos);
         // remember old cursor position locally
-        oldPos=pos;
+        oldPos = pos;
         // step back to last space or start of line
-        while(pos && line[pos-1]!=' ') pos--;
+        while(pos && line[pos-1] != ' ') pos--;
         // copy search pattern (lowercase)
-        QString pattern=line.mid(pos,oldPos-pos);
+        QString pattern = line.mid(pos, oldPos - pos);
         // copy line to newLine-buffer
-        newLine=line;
+        newLine = line;
+
         // did we find any pattern?
         if(!pattern.isEmpty())
         {
@@ -663,16 +658,16 @@ void Channel::completeNick()
             { // Shell like completion
                 QStringList found;
                 foundNick = nicknameList.completeNick(pattern, complete, found,
-                    (Preferences::nickCompletionMode() == 2),
-                    Preferences::nickCompletionCaseSensitive(),
-                    getOwnChannelNick()->getNickname());
+                                                      (Preferences::nickCompletionMode() == 2),
+                                                      Preferences::nickCompletionCaseSensitive(),
+                                                      getOwnChannelNick()->getNickname());
 
                 if(!complete && !found.isEmpty())
                 {
                     if(Preferences::nickCompletionMode() == 1)
                     {
                         QString nicksFound = found.join(" ");
-                        appendServerMessage(i18n("Completion"),i18n("Possible completions: %1.").arg(nicksFound));
+                        appendServerMessage(i18n("Completion"), i18n("Possible completions: %1.").arg(nicksFound));
                     }
                     else
                     {
@@ -705,73 +700,75 @@ void Channel::completeNick()
                 }
 
                 // remember old nick completion position
-                unsigned int oldCompletionPosition=completionPosition;
+                unsigned int oldCompletionPosition = completionPosition;
                 complete = true;
                 QString prefixCharacter = Preferences::prefixCharacter();
+
                 do
                 {
-                    QString lookNick=nicknameList.at(completionPosition)->getNickname();
+                    QString lookNick = nicknameList.at(completionPosition)->getNickname();
 
-                    if ( !prefixCharacter.isEmpty() && lookNick.contains(prefixCharacter) )
+                    if(!prefixCharacter.isEmpty() && lookNick.contains(prefixCharacter))
                     {
                         lookNick = lookNick.section( prefixCharacter,1 );
                     }
 
                     if(lookNick.startsWith(pattern, Preferences::nickCompletionCaseSensitive()))
                     {
-                        foundNick=lookNick;
+                        foundNick = lookNick;
                     }
 
                     // increment search position
                     completionPosition++;
 
                     // wrap around
-                    if(completionPosition==nicknameList.count())
+                    if(completionPosition == nicknameList.count())
                     {
-                        completionPosition=0;
+                        completionPosition = 0;
                     }
 
                     // the search ends when we either find a suitable nick or we end up at the
                     // first search position
-                } while(completionPosition!=oldCompletionPosition && foundNick.isEmpty());
+                } while((completionPosition != oldCompletionPosition) && foundNick.isEmpty());
             }
 
             // did we find a suitable nick?
             if(!foundNick.isEmpty())
             {
                 // remove pattern from line
-                newLine.remove(pos,pattern.length());
+                newLine.remove(pos, pattern.length());
 
                 // did we find the nick in the middle of the line?
                 if(pos && complete)
                 {
                     channelInput->setLastCompletion(foundNick);
-                    QString addMiddle(Preferences::nickCompleteSuffixMiddle());
-                    newLine.insert(pos,foundNick+addMiddle);
-                    pos=pos+foundNick.length()+addMiddle.length();
+                    QString addMiddle = Preferences::nickCompleteSuffixMiddle();
+                    newLine.insert(pos, foundNick + addMiddle);
+                    pos = pos + foundNick.length() + addMiddle.length();
                 }
                 // no, it was at the beginning
                 else if(complete)
                 {
                     channelInput->setLastCompletion(foundNick);
-                    QString addStart(Preferences::nickCompleteSuffixStart());
-                    newLine.insert(pos,foundNick+addStart);
-                    pos=pos+foundNick.length()+addStart.length();
+                    QString addStart = Preferences::nickCompleteSuffixStart();
+                    newLine.insert(pos, foundNick + addStart);
+                    pos = pos + foundNick.length() + addStart.length();
                 }
                 // the nick wasn't complete
                 else
                 {
-                    newLine.insert(pos,foundNick);
-                    pos=pos+foundNick.length();
+                    newLine.insert(pos, foundNick);
+                    pos = pos + foundNick.length();
                 }
             }
             // no pattern found, so restore old cursor position
-            else pos=oldPos;
+            else pos = oldPos;
         }
     }
+
     // Set new text and cursor position
     channelInput->setText(newLine);
-    channelInput->setCursorPosition(0,pos);
+    channelInput->setCursorPosition(0, pos);
 }
 
 // make sure to step back one position when completion ends so the user starts

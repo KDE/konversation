@@ -1274,8 +1274,10 @@ void KonversationMainWindow::updateFrontView()
         {
             if(view->getServer())
             {
+                QString name = view->getServer()->getServerGroup();
+                name = name.replace('&', "&&");
                 action->setEnabled(true);
-                action->setText(i18n("&Channel List for %1").arg(view->getServer()->getServerGroup()));
+                action->setText(i18n("&Channel List for %1").arg(name));
             }
             else
             {
@@ -1294,7 +1296,11 @@ void KonversationMainWindow::updateFrontView()
             if(view->logFileName().isEmpty())
                 action->setText(i18n("&Open Logfile"));
             else
-                action->setText(i18n("&Open Logfile for %1").arg(view->getName()));
+            {
+                QString name = view->getName();
+                name = name.replace('&', "&&");
+                action->setText(i18n("&Open Logfile for %1").arg(name));
+            }
         }
 
         action = actionCollection()->action("clear_tabs");
