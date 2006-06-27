@@ -633,8 +633,6 @@ void Channel::completeNick()
     }
     else
     {
-        // set channel nicks completion mode
-        channelInput->setCompletionMode('c');
         // remember old cursor position in input field
         channelInput->setOldCursorPosition(pos);
         // remember old cursor position locally
@@ -735,6 +733,9 @@ void Channel::completeNick()
             // did we find a suitable nick?
             if(!foundNick.isEmpty())
             {
+                // set channel nicks completion mode
+                channelInput->setCompletionMode('c');
+
                 // remove pattern from line
                 newLine.remove(pos, pattern.length());
 

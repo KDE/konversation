@@ -178,13 +178,14 @@ void IRCInput::keyPressEvent(QKeyEvent* e)
 
         default:
             // Check if the keystroke actually produced text. If not it was just a qualifier.
-            if(!e->text().isEmpty())
+            if(!e->text().isEmpty() || ((e->key() >= Qt::Key_Home) && (e->key() <= Qt::Key_Down)))
             {
                 if(getCompletionMode()!='\0')
                 {
                     setCompletionMode('\0');
                     emit endCompletion();
                 }
+
                 completionBox->hide();
             }
 
@@ -256,6 +257,11 @@ void IRCInput::contentsMouseReleaseEvent( QMouseEvent *ev)
     {
         m_useSelection=true;
     }
+
+    // Reset completion
+    setCompletionMode('\0');
+    emit endCompletion();
+
     KTextEdit::contentsMouseReleaseEvent(ev);
     m_useSelection=false;
 }
@@ -288,6 +294,10 @@ void IRCInput::paste()
     // is there any text in the clipboard?
     if(!pasteText.isEmpty())
     {
+        //End completion on paste
+        setCompletionMode('\0');
+        emit endCompletion();
+
         bool signal=false;
         // replace \r with \n to make xterm pastes happy
         pasteText.replace("\r","\n");
