@@ -110,7 +110,7 @@ namespace Konversation
             else if (urlPattern.cap(1).isEmpty())
                 protocol = "mailto:";
 
-            insertText = link.arg(protocol, href, href, append) + append;
+            insertText = link.arg(protocol, QString(href).replace('%',"%25"), href/*, append*/) + append;
             filteredLine.replace(pos, urlLen, insertText);
             pos += insertText.length();
             KonversationApplication::instance()->storeUrl(fromNick, href);
