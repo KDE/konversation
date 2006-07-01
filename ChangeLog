@@ -38,8 +38,6 @@ handling)
 - Fix "User Limit" handling in channel dialog
 - Make KonvDCOP::getNickname() check if the given server name is valid
 - Static Wiki link feature has been removed in favor of new auto-replace functionality
-- Improve URL regex to cope with parenthesis and exclude trailing dots
-- Improve channel regex not to fail on leading mode chars and surrounding quotation marks
 - Only allow one instance of the channel options dialog to be opened
 - Adopt standard KDE system tray mechanic (remove option to skip taskbar entirely as it's
   incompatible with Minimize, Alt+Tab and Toggle Show Desktop)
@@ -52,6 +50,18 @@ handling)
 - Fix status bar link info not being cleared when the mouse cursor leaves the topic widget
 - Fix ampersands in server names being shown as underscores in the menu under certain
   circumstances
+- Improve URL regex to cope with parenthesis and exclude trailing dots and commas
+- Improve channel regex not to fail on leading mode chars and surrounding interpunctation
+- Fix crash on Alt+n when there are no tabs
+- Don't accept drops of ircview user and channel links in nicklist items, as the resulting
+  DCC transfer cannot succeed
+- Have "Find Next" open the search bar when there is no active search, matching Konqueror
+  search dialog behavior
+- Make the context menus for links in the topic label and the ircview consistent where
+  applicable
+- Fix double-clicking the nicklist with multiple nicks selected sending selected nicks
+  as messages
+
 
 Changes from 0.18 to 0.19
 We are extremely pleased to announce the immediate release of Konversation 0.19. The focus
