@@ -595,6 +595,8 @@ void Channel::doubleClickCommand(QListViewItem* item)
 {
     if(item)
     {
+        nicknameListView->clearSelection();
+        nicknameListView->setSelected(item, true);
         // TODO: put the quick button code in another function to make reusal more legitimate
         quickButtonClicked(Preferences::channelDoubleClickAction());
     }
