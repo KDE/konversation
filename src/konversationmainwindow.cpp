@@ -1723,12 +1723,15 @@ void KonversationMainWindow::goToTab(int page)
     if(page == getViewContainer()->currentPageIndex())
       return;
 
-    if(page >= getViewContainer()->count())
+    if(page > getViewContainer()->count())
+        return;
+
+    if (page >= getViewContainer()->count())
         page = 0;
-    else if(page < 0)
+    else if (page < 0)
         page = getViewContainer()->count() - 1;
 
-    if(page >= 0)
+    if (page >= 0)
     {
         getViewContainer()->setCurrentPage(page);
         ChatWindow* newPage=static_cast<ChatWindow*>(getViewContainer()->page(page));
