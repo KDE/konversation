@@ -12,6 +12,7 @@
 
 #include <qsimplerichtext.h>
 #include <qtooltip.h>
+#include <qclipboard.h>
 
 #include <krun.h>
 #include <kprocess.h>
@@ -20,6 +21,9 @@
 #include <kstringhandler.h>
 #include <kglobal.h>
 #include <kdebug.h>
+#include <kpopupmenu.h>
+#include <kiconloader.h>
+#include <kbookmarkmanager.h>
 
 #include "konversationapplication.h"
 #include "server.h"
@@ -35,8 +39,19 @@ namespace Konversation
         : KActiveLabel(parent, name)
     {
         setWrapPolicy(QTextEdit::AtWordOrDocumentBoundary);
-        mousePressed=false;
         setFocusPolicy(QWidget::ClickFocus);
+
+        m_isOnChannel = false;
+        m_copyUrlMenu = false;
+        mousePressed=false;
+
+        m_popup = new QPopupMenu(this,"topiclabel_context_menu");
+        m_popup->insertItem(SmallIconSet("editcopy"),i18n("&Copy"),Copy);
+        m_popup->insertItem(i18n("Select All"),SelectAll);
+
+        m_currentChannel = QString::null;
+
+        setupChannelPopupMenu();
 
         connect(this, SIGNAL(highlighted(const QString&)), this, SLOT(highlightedSlot(const QString&)));
     }
@@ -140,6 +155,74 @@ namespace Konversation
         }
     }
 
+    void TopicLabel::contentsContextMenuEvent(QContextMenuEvent* ev)
+    {
+        bool block = contextMenu(ev);
+
+        if(!block)
+        {
+            KActiveLabel::contentsContextMenuEvent(ev);
+        }
+    }
+
+    bool TopicLabel::contextMenu(QContextMenuEvent* ce)
+    {
+        if (m_isOnChannel)
+        {
+            m_channelPopup->exec(ce->globalPos());
+            m_isOnChannel = false;
+        }
+        else
+        {
+            m_popup->setItemEnabled(Copy,(hasSelectedText()));
+
+            int r = m_popup->exec(ce->globalPos());
+
+            switch(r)
+            {
+                case -1:
+                    // dummy. -1 means, no entry selected. we don't want -1to go in default, so
+                    // we catch it here
+                    break;
+                case Copy:
+                    copy();
+                    break;
+                case CopyUrl:
+                {
+                    QClipboard *cb = KApplication::kApplication()->clipboard();
+                    cb->setText(m_urlToCopy,QClipboard::Selection);
+                    cb->setText(m_urlToCopy,QClipboard::Clipboard);
+                    break;
+                }
+                case SelectAll:
+                    selectAll();
+                    break;
+                case Bookmark:
+                {
+                    KBookmarkManager* bm = KBookmarkManager::userBookmarksManager();
+                    KBookmarkGroup bg = bm->addBookmarkDialog(m_urlToCopy, QString::null);
+                    bm->save();
+                    bm->emitChanged(bg);
+                    break;
+                }
+                default:
+                    break;
+            }
+        }
+        return true;
+    }
+
+    void TopicLabel::setupChannelPopupMenu()
+    {
+        m_channelPopup = new KPopupMenu(this,"channel_context_menu");
+        m_channelPopupId = m_channelPopup->insertTitle(m_currentChannel);
+        m_channelPopup->insertItem(i18n("&Join"),Konversation::Join);
+        m_channelPopup->insertItem(i18n("Get &user list"),Konversation::Names);
+        m_channelPopup->insertItem(i18n("Get &topic"),Konversation::Topic);
+
+        connect(m_channelPopup, SIGNAL(activated(int)), this, SIGNAL(popupCommand(int)));
+    }
+
     void TopicLabel::setText(const QString& text)
     {
         m_fullText = text;
@@ -220,16 +303,17 @@ namespace Konversation
 
     void TopicLabel::highlightedSlot(const QString& link)
     {
-        if(link == m_lastStatusText && !link.isEmpty()) {
         //we just saw this a second ago.  no need to reemit.
+        if (link == m_lastStatusText && !link.isEmpty())
             return;
-        }
 
         // remember current URL to overcome link clicking problems in QTextBrowser
         m_highlightedURL=link;
 
-        if(link.isEmpty()) {
-            if(!m_lastStatusText.isEmpty()) {
+        if (link.isEmpty())
+        {
+            if (!m_lastStatusText.isEmpty())
+            {
                 emit clearStatusText();
                 m_lastStatusText = QString::null;
             }
@@ -237,21 +321,47 @@ namespace Konversation
             m_lastStatusText = link;
         }
 
-        if (!link.isEmpty())
+        if (!link.startsWith("#"))
         {
-            if(link.startsWith("#"))              // channel link
-            {
-                QString channel(link);
-                channel.replace("##","#");
-                emit actionStatusText( i18n("Join the channel %1").arg(channel));
-            }
-            else
-            {
+            m_isOnChannel = false;
+
+            if (!link.isEmpty()) {
+                //link therefore != m_lastStatusText  so emit with this new text
                 emit actionStatusText(link);
             }
+            if (link.isEmpty() && m_copyUrlMenu)
+            {
+                m_popup->removeItem(CopyUrl);
+                m_popup->removeItem(Bookmark);
+                m_copyUrlMenu = false;
+            }
+            else if(!link.isEmpty() && !m_copyUrlMenu)
+            {
+                m_popup->insertItem(i18n("Copy URL to Clipboard"),CopyUrl,1);
+                m_popup->insertItem(i18n("Add to Bookmarks"),Bookmark,2);
+                m_copyUrlMenu = true;
+                m_urlToCopy = link;
+            }
+        }
+        else if (link.startsWith("##"))
+        {
+            m_currentChannel = link.mid(1);
+
+            emit currentChannelChanged(m_currentChannel);
+
+            QString prettyId = m_currentChannel;
+
+            if (prettyId.length()>15)
+            {
+                prettyId.truncate(15);
+                prettyId.append("...");
+            }
+
+            m_channelPopup->changeTitle(m_channelPopupId,prettyId);
+            m_isOnChannel = true;
+            emit actionStatusText( i18n("Join the channel %1").arg(m_currentChannel));
         }
     }
-
 }
 
 #include "topiclabel.moc"

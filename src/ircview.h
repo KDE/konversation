@@ -102,6 +102,8 @@ class IRCView : public KTextBrowser
         void search();
         void searchAgain();
 
+        void setCurrentChannel(const QString& channel) { m_currentChannel = channel; }
+
         virtual void removeSelectedText(int selNum=0);
 
         virtual void scrollToBottom();            // Overwritten for internal reasons

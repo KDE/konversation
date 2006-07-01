@@ -129,6 +129,7 @@ Channel::Channel(QWidget* parent)
     QWhatsThis::add(topicLine, i18n("<qt>Every channel on IRC has a topic associated with it.  This is simply a message that everybody can see.<p>If you are an operator, or the channel mode <em>'T'</em> has not been set, then you can change the topic by clicking the Edit Channel Properties button to the left of the topic.  You can also view the history of topics there.</qt>"));
     connect(topicLine, SIGNAL(actionStatusText( const QString & )), this, SIGNAL(actionStatusText( const QString & )));
     connect(topicLine, SIGNAL(clearStatusText()), this, SIGNAL(clearStatusText()));
+    connect(topicLine,SIGNAL(popupCommand(int)),this,SLOT(popupChannelCommand(int)));
 
     topicLayout->addWidget(m_topicButton, 0, 0);
     topicLayout->addMultiCellWidget(topicLine, 0, 1, 1, 1);
@@ -184,6 +185,7 @@ Channel::Channel(QWidget* parent)
     IRCViewBox* ircViewBox = new IRCViewBox(m_horizSplitter, NULL);
     setTextView(ircViewBox->ircView());
     connect(textView,SIGNAL(popupCommand(int)),this,SLOT(popupChannelCommand(int)));
+    connect(topicLine, SIGNAL(currentChannelChanged(const QString&)),textView,SLOT(setCurrentChannel(const QString&)));
 
     // The box that holds the Nick List and the quick action buttons
     nickListButtons = new QVBox(m_horizSplitter);

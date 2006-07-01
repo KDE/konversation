@@ -70,6 +70,7 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent)
     m_offset = 0;
     m_mousePressed = false;
     m_currentNick = QString::null;
+    m_currentChannel = QString::null;
     m_isOnNick = false;
     m_isOnChannel = false;
     m_chatWin = 0;
@@ -186,20 +187,22 @@ void IRCView::clear()
 
 void IRCView::highlightedSlot(const QString& link)
 {
-    if(link == m_lastStatusText && !link.isEmpty()) {
-        //we just saw this a second ago.  no need to reemit.
+    //we just saw this a second ago.  no need to reemit.
+    if (link == m_lastStatusText && !link.isEmpty())
         return;
-    }
 
     // remember current URL to overcome link clicking problems in QTextBrowser
     m_highlightedURL=link;
 
-    if(link.isEmpty()) {
-        if(!m_lastStatusText.isEmpty()) {
-          emit clearStatusText();
-          m_lastStatusText = QString::null;
+    if (link.isEmpty())
+    {
+        if (!m_lastStatusText.isEmpty()) 
+        {
+            emit clearStatusText();
+            m_lastStatusText = QString::null;
         }
-    } else {
+    } else
+    {
         m_lastStatusText = link;
     }
 
@@ -208,17 +211,17 @@ void IRCView::highlightedSlot(const QString& link)
         m_isOnNick = false;
         m_isOnChannel = false;
 
-        if(!link.isEmpty()) {
+        if (!link.isEmpty()) {
             //link therefore != m_lastStatusText  so emit with this new text
             emit actionStatusText(link);
         }
-        if(link.isEmpty() && m_copyUrlMenu)
+        if (link.isEmpty() && m_copyUrlMenu)
         {
             m_popup->removeItem(CopyUrl);
             m_popup->removeItem(Bookmark);
             m_copyUrlMenu = false;
         }
-        else if(!link.isEmpty() && !m_copyUrlMenu)
+        else if (!link.isEmpty() && !m_copyUrlMenu)
         {
             m_popup->insertItem(i18n("Copy URL to Clipboard"),CopyUrl,1);
             m_popup->insertItem(i18n("Add to Bookmarks"),Bookmark,2);
@@ -226,14 +229,14 @@ void IRCView::highlightedSlot(const QString& link)
             m_urlToCopy = link;
         }
     }
-    else if(link.startsWith("#") && !link.startsWith("##"))
+    else if (link.startsWith("#") && !link.startsWith("##"))
     {
         m_currentNick = link.mid(1);
         m_nickPopup->changeTitle(m_nickPopupId,m_currentNick);
         m_isOnNick = true;
         emit actionStatusText( i18n("Open a query with %1").arg(m_currentNick));
     } else {
-        //    link.startsWith("##")
+        // link.startsWith("##")
         m_currentChannel = link.mid(1);
 
         QString prettyId = m_currentChannel;

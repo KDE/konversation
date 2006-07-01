@@ -16,6 +16,7 @@
 
 class QFontMetrics;
 class Server;
+class KPopupMenu;
 
 namespace Konversation
 {
@@ -31,13 +32,17 @@ namespace Konversation
             QSize sizeHint() const;
             void setServer(Server* server);
 
+            enum PopupIDs { Copy,CopyUrl,SelectAll,Bookmark };
+
         public slots:
             virtual void openLink(const QString& link);
             void setText(const QString& text);
 
         signals:
-            void actionStatusText( const QString & );
+            void actionStatusText(const QString&);
             void clearStatusText();
+            void popupCommand(int);
+            void currentChannelChanged(const QString&);
 
         protected:
             void updateSqueezedText();
@@ -47,19 +52,34 @@ namespace Konversation
             virtual void contentsMouseReleaseEvent(QMouseEvent *e);
             virtual void contentsMouseMoveEvent(QMouseEvent *e);
             virtual void leaveEvent (QEvent*);
+            virtual void contentsContextMenuEvent(QContextMenuEvent* ev);
             void resizeEvent(QResizeEvent*);
+            bool contextMenu(QContextMenuEvent* ce);
+
+            void setupChannelPopupMenu();
 
         protected slots:
             void highlightedSlot(const QString&);
 
         private:
-            QString m_fullText;
             Server* m_server;
+
+            QPopupMenu* m_popup;
+            KPopupMenu* m_channelPopup;
+
+            QString m_fullText;
             bool mousePressed;
             QString urlToDrag;
             QPoint pressPosition;
             QString m_lastStatusText;
             QString m_highlightedURL;
+            QString m_currentChannel;
+            bool m_isOnChannel;
+            int m_nickPopupId;
+            int m_channelPopupId;
+            bool m_copyUrlMenu;
+            QString m_urlToCopy;
+
     };
 
 }
