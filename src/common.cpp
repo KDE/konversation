@@ -31,6 +31,7 @@ namespace Konversation
     static QRegExp colorRegExp("((\003([0-9]|0[0-9]|1[0-5])(,([0-9]|0[0-9]|1[0-5])|)|\017)|\x02|\x09|\x13|\x16|\x1f)");
     static QRegExp urlPattern("((www\\.(?!\\.)|(fish|(f|ht)tp(|s))://)(\\.?[\\d\\w/,\\':~\\?=;#@\\-\\+\\%\\*\\{\\}\\!\\(\\)]|&amp;)+)|"
         "([-.\\d\\w]+@[-.\\d\\w]{2,}\\.[\\w]{2,})");
+    static QRegExp tdlPattern("(.*)\\.(\\w+),$");
 
     QString removeIrcMarkup(const QString& text)
     {
@@ -64,7 +65,7 @@ namespace Konversation
 
         if(filteredLine.contains("#"))
         {
-            QRegExp chanExp("(^|\\s|,|\\(|\\:|!|@|%|\\+)(#[^,\\s;\\)\\:\\/\\(]*[^.,\\s;\\)\\:\\/\\(\\\"])");
+            QRegExp chanExp("(^|\"|'|\\s|,|\\(|\\:|!|@|%|\\+)(#[^,\\s;\\)\\:\\/\\(]*[^.,\\s;\\)\\:\\/\\(\"\''])");
             filteredLine.replace(chanExp, link);
         }
 
@@ -92,10 +93,21 @@ namespace Konversation
             urlLen = urlPattern.matchedLength();
             href = filteredLine.mid( pos, urlLen );
 
-            if (filteredLine.mid(pos-1,1) == "(" && href.right(1) == ")")
+            // Don't consider trailing closing parenthesis part of link when
+            // there's an opening parenthesis preceding the beginning of the
+            // URL or there is no opening parenthesis in the URL at all.
+            if (href.right(1) == ")" && (filteredLine.mid(pos-1,1) == "(" || !href.contains("(")))
             {
                 href.truncate(href.length()-1);
                 append = ")";
+            }
+            // Don't consider trailing comma part of link when it follows a
+            // slash or a top-level domain.
+
+            if (href.right(2) == "/,"|| tdlPattern.exactMatch(href))
+            {
+                href.truncate(href.length()-1);
+                append.prepend(",");
             }
 
             // Qt doesn't support (?<=pattern) so we do it here
