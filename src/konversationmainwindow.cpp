@@ -963,17 +963,10 @@ StatusPanel* KonversationMainWindow::addStatusView(Server* server)
 
 Channel* KonversationMainWindow::addChannel(Server* server, const QString& name)
 {
-    // Some IRC channels begin with ampersands (server local channels)
-    // Accelerators don't belong in channel names, filter ampersands
-
-    // Copy the name first
-    QString newname = name;
-    newname.replace('&', "&&");
-
     Channel* channel=new Channel(getViewContainer());
     channel->setServer(server);
     channel->setName(name);
-    addView(channel, newname);
+    addView(channel, name);
 
     connect(this, SIGNAL(updateChannelAppearance()), channel, SLOT(updateAppearance()));
     connect(channel, SIGNAL(updateTabNotification(ChatWindow*,const Konversation::TabNotifyType&)), this, SLOT(setTabNotification(ChatWindow*,const Konversation::TabNotifyType&)));
