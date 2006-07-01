@@ -724,7 +724,10 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     }
                     else if (property == "CAPAB")
                     {
+                        // Disable as we don't use this for anything yet
+#if 0
                         server->queue("CAPAB IDENTIFY-MSG");
+#endif
                     }
                     else
                     {
@@ -1659,11 +1662,14 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             }
             case RPL_CAPAB: // Special freenode reply afaik
             {
+                // Disable as we don't use this for anything yet
+#if 0
                 if(trailing.contains("IDENTIFY-MSG"))
                 {
                     server->enableIdentifyMsg(true);
                     break;
                 }
+#endif
             /* don't break; - this is also used as RPL_DATASTR on ircu and some others */
             }
             // FALLTHROUGH to default to let the error display otherwise
