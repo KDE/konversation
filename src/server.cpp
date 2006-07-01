@@ -1134,6 +1134,18 @@ void Server::incoming()
                     channelKey = lineSplit[2];
                 if( command == "372" )            // RPL_MOTD
                     channelKey = ":server";
+                if( command == "303")
+                {
+                    notifyResponse(lineSplit[2]);
+                    qcsBufferLines.pop_front();
+                    continue;
+                }
+                if( command == "pong")
+                {
+                    notifyResponse( "###" );
+                    qcsBufferLines.pop_front();
+                    continue;
+                }
             }
         }
         else                                      // NOT a global message

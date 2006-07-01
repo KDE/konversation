@@ -619,7 +619,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             // the LAG cookie back in PONG
             if(trailing=="LAG" || getLagMeasuring())
             {
-                emit notifyResponse("###");
+                //emit notifyResponse("###");
             }
         }
         else if(command=="mode")
@@ -1023,7 +1023,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             case RPL_ISON:
             {
                 // Tell server to start the next notify timer round
-                emit notifyResponse(trailing);
+                //emit notifyResponse(trailing);
                 break;
             }
             case RPL_AWAY:
