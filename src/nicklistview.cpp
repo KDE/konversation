@@ -22,7 +22,6 @@
 #include <qdragobject.h>
 
 #include "images.h"
-#include "nick.h"
 
 #include "konversationapplication.h"
 #include "nicklistview.h"

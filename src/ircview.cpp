@@ -1173,8 +1173,11 @@ void IRCView::search()
 
 void IRCView::searchAgain()
 {
-
-    if(!m_pattern.isEmpty())
+    if (m_pattern.isEmpty())
+    {
+        emit doSearch();
+    }
+    else
     {
         // next search must begin one index before / after the last search
         // depending on the search direction.
