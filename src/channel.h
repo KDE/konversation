@@ -21,6 +21,7 @@
 #include "server.h"
 #include "chatwindow.h"
 #include "channelnick.h"
+#include "nick.h"
 
 /*
   @author Dario Abatianni
@@ -41,7 +42,6 @@ class QToolButton;
 
 class KLineEdit;
 
-class Nick;
 class NickListView;
 class QuickButton;
 class ModeButton;
@@ -65,6 +65,8 @@ class NickList : public QPtrList<Nick>
                              bool skipNonAlfaNum, bool caseSensitive, const QString& ownNick);
 
         void setCompareMethod(CompareMethod method);
+
+        bool containsNick(const QString& nickname);
 
     protected:
         virtual int compareItems(QPtrCollection::Item item1, QPtrCollection::Item item2);
@@ -138,7 +140,7 @@ class Channel : public ChatWindow
         void resetNickList();
         void addPendingNickList(const QStringList& pendingChannelNickList);
         Nick *getNickByName(const QString& lookname);
-        QPtrList<Nick> getNickList();
+        NickList getNickList() { return nicknameList; }
 
         void adjustNicks(int value);
         void adjustOps(int value);

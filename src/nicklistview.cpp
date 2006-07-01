@@ -19,8 +19,10 @@
 #include <qtimer.h>
 #include <kiconloader.h>
 #include <qwhatsthis.h>
+#include <qdragobject.h>
 
 #include "images.h"
+#include "nick.h"
 
 #include "konversationapplication.h"
 #include "nicklistview.h"
@@ -262,7 +264,27 @@ void NickListView::setSorting(int column, bool ascending)
 
 bool NickListView::acceptDrag (QDropEvent* event) const
 {
-    return (event->provides("text/uri-list"));
+    if (event->provides("text/uri-list"))
+    {
+        if (event->source())
+        {
+            QStrList uris;
+
+            if (QUriDrag::decode(event,uris))
+            {
+                QString first = uris.first();
+
+                if (first.startsWith("irc://") || channel->getNickList().containsNick(first))
+                    return false;
+            }
+            else
+                return false;
+        }
+
+        return true;
+    }
+    else
+        return false;
 }
 
 #include "nicklistview.moc"

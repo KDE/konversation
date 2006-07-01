@@ -2055,12 +2055,6 @@ void Channel::addPendingNickList(const QStringList& pendingChannelNickList)
         m_processingTimer->start(0);
 }
 
-QPtrList<Nick> Channel::getNickList()
-{
-    return nicknameList;
-}
-
-
 void Channel::lostFocus()
 {
     Preferences::setSpellChecking(channelInput->checkSpellingEnabled());
@@ -2616,6 +2610,21 @@ QString NickList::completeNick(const QString& pattern, bool& complete, QStringLi
     }
 
     return QString::null;
+}
+
+bool NickList::containsNick(const QString& nickname)
+{
+    QPtrListIterator<Nick> it(*this);
+
+    while (it.current() != 0)
+    {
+        if (it.current()->getNickname()==nickname)
+            return true;
+
+        ++it;
+    }
+
+    return false;
 }
 
 #include "channel.moc"
