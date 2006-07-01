@@ -65,7 +65,7 @@ namespace Konversation
 
         if(filteredLine.contains("#"))
         {
-            QRegExp chanExp("(^|\"|'|\\s|,|\\(|\\:|!|@|%|\\+)(#[^,\\s;\\)\\:\\/\\(]*[^.,\\s;\\)\\:\\/\\(\"\''])");
+            QRegExp chanExp("(^|\\s|^\"|\\s\"|,|'|\\(|\\:|!|@|%|\\+)(#[^,\\s;\\)\\:\\/\\(]*[^.,\\s;\\)\\:\\/\\(\"\''])");
             filteredLine.replace(chanExp, link);
         }
 

@@ -315,7 +315,6 @@ void Channel::setServer(Server *server)
     topicLine->setServer(server);
     refreshModeButtons();
     setIdentity(server->getIdentity());
-
 }
 
 Channel::~Channel()
