@@ -7,6 +7,7 @@
 
 #include "konsolepanel.h"
 #include "common.h"
+#include "konversationmainwindow.h"
 
 KonsolePanel::KonsolePanel(QWidget *p) : ChatWindow( p )
 {
@@ -45,7 +46,11 @@ void KonsolePanel::partDestroyed()
 {
     k_part = 0;
     // tell the main window to delete us
-    emit deleted(this);
+    if(m_mainWindow) {
+        m_mainWindow->closeView(this);
+    } else {
+        emit deleted(this);
+    }
 }
 
 void KonsolePanel::konsoleChanged(const QString& /* data */)

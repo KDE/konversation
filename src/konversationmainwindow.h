@@ -137,6 +137,8 @@ class KonversationMainWindow : public KMainWindow
 
         void serverStateChanged(Server* server, Server::State state);
 
+        void closeView(QWidget* view);
+
     protected slots:
 	/** This is connected to the preferences settingsChanged signal and acts to compress
 	 *  multiple successively settingsChanged() signals into a single output
@@ -171,7 +173,6 @@ class KonversationMainWindow : public KMainWindow
          * @see showView
          */
         void changeView(QWidget* view);
-        void closeView(QWidget* view);
 
         void closeKonsolePanel(ChatWindow* konsolePanel);
 
