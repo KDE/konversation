@@ -559,6 +559,9 @@ class Server : public QObject
          *  This sets up the kprocess, runs it, and connects the signals to call preShellCommandExited when done. */
         void doPreShellCommand();
 
+        void restartConnectionAliveTimer();
+        void connectionAliveTimeout();
+
         unsigned int completeQueryPosition;
         unsigned int tryNickNumber;
         unsigned int reconnectCounter;
@@ -667,5 +670,8 @@ class Server : public QObject
 
         /// Used to lock incomingTimer while processing message.
         bool m_processingIncoming;
+
+        /// If this timer times out something has gone wrong with the connection
+        QTimer m_connectionAliveTimer;
 };
 #endif

@@ -300,6 +300,7 @@ void Server::connectSignals()
     connect(&unlockTimer, SIGNAL(timeout()), this, SLOT(unlockSending()));
     connect(&notifyTimer, SIGNAL(timeout()), this, SLOT(notifyTimeout()));
     connect(&notifyCheckTimer, SIGNAL(timeout()), this, SLOT(notifyCheckTimeout()));
+    connect(&m_connectionAliveTimer, SIGNAL(timeout()), this, SLOT(connectionAliveTimeout()));
 
     // OutputFilter
     connect(outputFilter, SIGNAL(requestDccSend()), this,SLOT(requestDccSend()));
@@ -793,6 +794,8 @@ void Server::connectionEstablished(const QString& ownHost)
         // get own ip by userhost
         requestUserhost(nickname);
 
+        restartConnectionAliveTimer();
+
         if(rejoinChannels)
         {
             rejoinChannels = false;
@@ -975,11 +978,6 @@ void Server::notifyCheckTimeout()
     {
         currentLag = checkTime;
         emit tooLongLag(this,checkTime);
-        if(Preferences::autoReconnect() &&
-            (checkTime/1000) == Preferences::maximumLagTime())
-        {
-            m_socket->close();
-        }
     }
 }
 
@@ -1085,6 +1083,9 @@ void Server::incoming()
         broken(m_socket->error());
         return;
     }
+
+    if(m_connectionAliveTimer.isActive())
+        restartConnectionAliveTimer();
 
     buffer[len] = 0;
 
@@ -3300,6 +3301,20 @@ void Server::removeBan(const QString &channel, const QString &ban)
     if(outChannel)
     {
         outChannel->removeBan(ban);
+    }
+}
+
+void Server::restartConnectionAliveTimer()
+{
+    m_connectionAliveTimer.stop();
+    m_connectionAliveTimer.start(Preferences::maximumLagTime() * 1000, true);
+}
+
+void Server::connectionAliveTimeout()
+{
+    if(Preferences::autoReconnect())
+    {
+        m_socket->close();
     }
 }
 
