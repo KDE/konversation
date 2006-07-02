@@ -180,7 +180,6 @@ void Server::init(KonversationMainWindow* mainWindow, const QString& nick, const
     m_tryReconnect = true;
     autoJoin = false;
     tryNickNumber = 0;
-    checkTime = 0;
     reconnectCounter = 0;
     currentLag = 0;
     rawLog = 0;
@@ -299,8 +298,7 @@ void Server::connectSignals()
     connect(&outgoingTimer, SIGNAL(timeout()), this, SLOT(send()));
     connect(&unlockTimer, SIGNAL(timeout()), this, SLOT(unlockSending()));
     connect(&notifyTimer, SIGNAL(timeout()), this, SLOT(notifyTimeout()));
-    connect(&notifyCheckTimer, SIGNAL(timeout()), this, SLOT(notifyCheckTimeout()));
-    connect(&m_connectionAliveTimer, SIGNAL(timeout()), this, SLOT(connectionAliveTimeout()));
+    connect(&m_pingResponseTimer, SIGNAL(timeout()), this, SLOT(updateLongPongLag()));
 
     // OutputFilter
     connect(outputFilter, SIGNAL(requestDccSend()), this,SLOT(requestDccSend()));
@@ -667,7 +665,6 @@ void Server::broken(int state)
     outputBuffer.clear();
 
     notifyTimer.stop();
-    notifyCheckTimer.stop();
     inputFilter.setLagMeasuring(false);           // XXX paranoia?
     currentLag = -1;                              // XXX will this make it server independent now?
     emit resetLag();
@@ -794,7 +791,8 @@ void Server::connectionEstablished(const QString& ownHost)
         // get own ip by userhost
         requestUserhost(nickname);
 
-        restartConnectionAliveTimer();
+        // Start the PINGPONG match
+        QTimer::singleShot(1000 /*1 sec*/, this, SLOT(sendPing()));
 
         if(rejoinChannels)
         {
@@ -860,62 +858,47 @@ void Server::notifyAction(const QString& nick)
 
 void Server::notifyResponse(const QString& nicksOnline)
 {
-    // We received a 303 or "PONG :LAG" notify message, so calculate server lag
-    int lag = notifySent.elapsed();
-    currentLag = lag;
-    // inform main window
-    emit serverLag(this,lag);
-    // Stop check timer
-    notifyCheckTimer.stop();
-    // Switch off lag measuring mode
-    inputFilter.setLagMeasuring(false);
+    bool nicksOnlineChanged = false;
+    // Create a case correct nick list from the notification reply
+    QStringList nickList = QStringList::split(' ',nicksOnline);
 
-    // only update Nicks Online list if we got a 303 response, not a PONG
-    if(nicksOnline != "###")
+    QStringList::iterator it;
+    QStringList::iterator itEnd = nickList.end();
+
+    // Any new watched nicks online?
+    for(it = nickList.begin(); it != itEnd; ++it)
     {
+        QString nickname = (*it);
 
-        bool nicksOnlineChanged = false;
-        // Create a case correct nick list from the notification reply
-        QStringList nickList = QStringList::split(' ',nicksOnline);
+        if (!isNickOnline(nickname))
+        {
+            setWatchedNickOnline(nickname);
+            nicksOnlineChanged = true;
+        }
+    }
 
-        QStringList::iterator it;
-        QStringList::iterator itEnd = nickList.end();
+    // Create a lower case nick list from the notification reply
+    QStringList nickLowerList = QStringList::split(' ',nicksOnline.lower());
+    // Get ISON list from preferences and addressbook.
+    QString watchlist = getISONListString();
+    // Create a case correct nick list from the watch list.
+    QStringList watchList = QStringList::split(' ',watchlist);
+    itEnd = watchList.end();
 
-        // Any new watched nicks online?
-        for(it = nickList.begin(); it != itEnd; ++it)
+    // Any watched nicks now offline?
+    for(it = watchList.begin(); it != itEnd; ++it)
+    {
+        QString lcNickName = (*it).lower();
+        if (nickLowerList.find(lcNickName) == nickLowerList.end())
         {
             QString nickname = (*it);
-
-            if (!isNickOnline(nickname))
-            {
-                setWatchedNickOnline(nickname);
+            if (setNickOffline(nickname))
                 nicksOnlineChanged = true;
-            }
         }
-
-        // Create a lower case nick list from the notification reply
-        QStringList nickLowerList = QStringList::split(' ',nicksOnline.lower());
-        // Get ISON list from preferences and addressbook.
-        QString watchlist = getISONListString();
-        // Create a case correct nick list from the watch list.
-        QStringList watchList = QStringList::split(' ',watchlist);
-        itEnd = watchList.end();
-
-        // Any watched nicks now offline?
-        for(it = watchList.begin(); it != itEnd; ++it)
-        {
-            QString lcNickName = (*it).lower();
-            if (nickLowerList.find(lcNickName) == nickLowerList.end())
-            {
-                QString nickname = (*it);
-                if (setNickOffline(nickname))
-                    nicksOnlineChanged = true;
-            }
-        }
-
-        // Note: The list emitted in this signal does not include nicks in joined channels.
-        emit nicksNowOnline(this, nickList, nicksOnlineChanged);
     }
+
+    // Note: The list emitted in this signal does not include nicks in joined channels.
+    emit nicksNowOnline(this, nickList, nicksOnlineChanged);
 
     // Next round
     startNotifyTimer();
@@ -927,26 +910,14 @@ void Server::startNotifyTimer(int msec)
     notifyTimer.stop();
 
     if(msec == 0)
-                                                  // msec!
         msec = Preferences::notifyDelay()*1000;
 
     // start the timer in one shot mode
-    notifyTimer.start(msec,true);
-    notifyCheckTimer.stop();
-    // reset check time
-    checkTime = 0;
-}
-
-void Server::startNotifyCheckTimer()
-{
-    // start the timer in interval mode
-    notifyCheckTimer.start(500);
+    notifyTimer.start(msec, true);
 }
 
 void Server::notifyTimeout()
 {
-    bool sent = false;
-
     // Notify delay time is over, send ISON request if desired
     if(Preferences::useNotify())
     {
@@ -956,28 +927,7 @@ void Server::notifyTimeout()
         if(!list.isEmpty())
         {
             queue("ISON "+list);
-            // remember that we already sent out ISON
-            sent = true;
         }
-    }
-
-    // if no ISON was sent, fall back to PING for lag measuring
-    if(!sent)
-        queue("PING LAG :"+getIrcName());
-    // start check timer waiting for 303 or PONG response
-    startNotifyCheckTimer();
-    // start lag measuring mode
-    inputFilter.setLagMeasuring(true);
-}
-
-// waiting too long for 303 response
-void Server::notifyCheckTimeout()
-{
-    checkTime += 500;
-    if(isConnected())
-    {
-        currentLag = checkTime;
-        emit tooLongLag(this,checkTime);
     }
 }
 
@@ -1084,9 +1034,6 @@ void Server::incoming()
         return;
     }
 
-    if(m_connectionAliveTimer.isActive())
-        restartConnectionAliveTimer();
-
     buffer[len] = 0;
 
     QCString qcsBuffer = inputBufferIncomplete + QCString(buffer);
@@ -1135,18 +1082,6 @@ void Server::incoming()
                     channelKey = lineSplit[2];
                 if( command == "372" )            // RPL_MOTD
                     channelKey = ":server";
-                if( command == "303")
-                {
-                    notifyResponse(lineSplit[2]);
-                    qcsBufferLines.pop_front();
-                    continue;
-                }
-                if( command == "pong")
-                {
-                    notifyResponse( "###" );
-                    qcsBufferLines.pop_front();
-                    continue;
-                }
             }
         }
         else                                      // NOT a global message
@@ -1272,12 +1207,8 @@ void Server::send()
         QStringList outputLineSplit=QStringList::split(" ",outputBuffer[0]);
         outputBuffer.pop_front();
 
-        // To make lag calculation more precise, we reset the timer here
-        if(outputLine.startsWith("ISON") ||
-            outputLine.startsWith("PING LAG")) notifySent.start();
-
         // remember the first arg of /WHO to identify responses
-        else if(!outputLineSplit.isEmpty() && outputLineSplit[0].upper()=="WHO")
+        if(!outputLineSplit.isEmpty() && outputLineSplit[0].upper()=="WHO")
         {
             if(2<=outputLineSplit.count())
                 inputFilter.addWhoRequest(outputLineSplit[1]);
@@ -3304,17 +3235,37 @@ void Server::removeBan(const QString &channel, const QString &ban)
     }
 }
 
-void Server::restartConnectionAliveTimer()
+void Server::sendPing()
 {
-    m_connectionAliveTimer.stop();
-    m_connectionAliveTimer.start(Preferences::maximumLagTime() * 1000, true);
+    queueAt(0, "PING LAG" + QTime::currentTime().toString("hhmmss"));
+    m_lagTime.start();
+    inputFilter.setLagMeasuring(true);
+    m_pingResponseTimer.start(1000 /*1 sec*/);
 }
 
-void Server::connectionAliveTimeout()
+void Server::pongRecieved()
 {
-    if(Preferences::autoReconnect())
+    currentLag = m_lagTime.elapsed();
+    inputFilter.setLagMeasuring(false);
+    m_pingResponseTimer.stop();
+
+    emit serverLag(this, currentLag);
+
+    // Send another PING in 60 seconds
+    QTimer::singleShot(60000 /*60 sec*/, this, SLOT(sendPing()));
+}
+
+void Server::updateLongPongLag()
+{
+    if(connected())
     {
-        m_socket->close();
+        currentLag = m_lagTime.elapsed();
+        emit tooLongLag(this, currentLag);
+
+        if(Preferences::autoReconnect() && (currentLag > (Preferences::maximumLagTime() * 1000)))
+        {
+            m_socket->close();
+        }
     }
 }
 

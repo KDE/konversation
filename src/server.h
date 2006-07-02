@@ -435,6 +435,9 @@ class Server : public QObject
         void addBan(const QString &channel, const QString &ban);
         void removeBan(const QString &channel, const QString &ban);
 
+        /// Called when we recieve a PONG from the server
+        void pongRecieved();
+
     protected slots:
 
         void preShellCommandExited(KProcess*);
@@ -454,7 +457,6 @@ class Server : public QObject
          * @param reason The reason why this failed.  This is already translated, ready to show the user.
          */
         void sslError(QString reason);
-        void notifyCheckTimeout();
         void connectionEstablished(const QString& ownHost);
         void notifyResponse(const QString& nicksOnline);
         void addDccGet(const QString& sourceNick,const QStringList& dccArguments);
@@ -482,6 +484,11 @@ class Server : public QObject
         void gotOwnResolvedHostByWelcome(KResolverResults res);
         void gotOwnResolvedHostByUserhost(KResolverResults res);
 
+        /// Send a PING to the server so we can meassure the lag
+        void sendPing();
+        /// Updates GUI when the lag gets high
+        void updateLongPongLag();
+
     protected:
         // constants
         static const int BUFFER_LEN=513;
@@ -496,8 +503,6 @@ class Server : public QObject
         void connectSignals();
 
         void setMainWindow(KonversationMainWindow* newMainWindow);
-
-        void startNotifyCheckTimer();
 
         void autoRejoinChannels();
 
@@ -559,9 +564,6 @@ class Server : public QObject
          *  This sets up the kprocess, runs it, and connects the signals to call preShellCommandExited when done. */
         void doPreShellCommand();
 
-        void restartConnectionAliveTimer();
-        void connectionAliveTimeout();
-
         unsigned int completeQueryPosition;
         unsigned int tryNickNumber;
         unsigned int reconnectCounter;
@@ -595,8 +597,6 @@ class Server : public QObject
         int timerInterval;                        // flood protection
 
         QTimer notifyTimer;
-        QTimer notifyCheckTimer;                  // Checks if the ISON reply needs too long
-        QTime notifySent;
         QStringList notifyCache;                  // List of users found with ISON
         int checkTime;                            // Time elapsed while waiting for server 303 response
         int currentLag;
@@ -671,7 +671,9 @@ class Server : public QObject
         /// Used to lock incomingTimer while processing message.
         bool m_processingIncoming;
 
-        /// If this timer times out something has gone wrong with the connection
-        QTimer m_connectionAliveTimer;
+        /// Meassures the lag between PING and PONG
+        QTime m_lagTime;
+        /// Updates the gui when the lag gets too high
+        QTimer m_pingResponseTimer;
 };
 #endif

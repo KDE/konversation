@@ -613,15 +613,11 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
         }
         else if(command=="pong")
         {
-            // Since we use PONG replys to measure lag, too, we check, if this PONG was
-            // due to Lag measures and tell the notify system about it. We use "###" as
-            // response, because this couldn't be a 303 reply, so it must be a PONG reply
-
             // double check if we are in lag measuring mode since some servers fail to send
             // the LAG cookie back in PONG
-            if(trailing=="LAG" || getLagMeasuring())
+            if(trailing.startsWith("LAG") || getLagMeasuring())
             {
-                //emit notifyResponse("###");
+                server->pongRecieved();
             }
         }
         else if(command=="mode")
@@ -1030,7 +1026,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             case RPL_ISON:
             {
                 // Tell server to start the next notify timer round
-                //emit notifyResponse(trailing);
+                emit notifyResponse(trailing);
                 break;
             }
             case RPL_AWAY:
@@ -1626,10 +1622,11 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 break;
             }
             case ERR_NOSUCHSERVER:
-            {                                     //Some servers don't know their name, so they return an error instead of the PING data
+            {
+                //Some servers don't know their name, so they return an error instead of the PING data
                 if (getLagMeasuring() && trailing.startsWith(prefix))
                 {
-                    emit notifyResponse("###");
+                    server->pongRecieved();
                 }
                 break;
             }
