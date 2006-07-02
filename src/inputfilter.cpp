@@ -42,6 +42,7 @@
 
 InputFilter::InputFilter()
 {
+    m_connecting = false;
 }
 
 InputFilter::~InputFilter()
@@ -583,7 +584,6 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
 {
     bool isNumeric;
     int numeric = command.toInt(&isNumeric);
-    static bool connecting;
 
     Q_ASSERT(server); if(!server) return;
 
@@ -658,7 +658,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
 
                     // Send the welcome signal, so the server class knows we are connected properly
                     emit welcome(host);
-                    connecting = true;
+                    m_connecting = true;
                 }
                 server->appendStatusMessage(i18n("Welcome"),trailing);
                 break;
@@ -974,33 +974,33 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             }
             case RPL_MOTDSTART:
             {
-                if(!connecting || !Preferences::skipMOTD())
+                if(!m_connecting || !Preferences::skipMOTD())
                   server->appendStatusMessage(i18n("MOTD"),i18n("Message of the day:"));
                 break;
             }
             case RPL_MOTD:
             {
-                if(!connecting || !Preferences::skipMOTD())
+                if(!m_connecting || !Preferences::skipMOTD())
                     server->appendStatusMessage(i18n("MOTD"),trailing);
                 break;
             }
             case RPL_ENDOFMOTD:
             {
-                if(!connecting || !Preferences::skipMOTD())
+                if(!m_connecting || !Preferences::skipMOTD())
                     server->appendStatusMessage(i18n("MOTD"),i18n("End of message of the day"));
 
-                if(connecting)
+                if(m_connecting)
                     server->autoCommandsAndChannels();
 
-                connecting = false;
+                m_connecting = false;
                 break;
             }
             case ERR_NOMOTD:
             {
-                if(connecting)
+                if(m_connecting)
                     server->autoCommandsAndChannels();
 
-                connecting = false;
+                m_connecting = false;
                 break;
             }
             case RPL_YOUREOPER:

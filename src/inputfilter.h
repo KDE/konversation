@@ -89,5 +89,8 @@ class InputFilter : public QObject
 
         QStringList newNickList;
         int m_debugCount;
+
+        /// Used when handling MOTD
+        bool m_connecting;
 };
 #endif
