@@ -1776,7 +1776,7 @@ void Server::addDccSend(const QString &recipient,KURL fileURL, const QString &al
 
     connect(newDcc,SIGNAL (sendReady(const QString&,const QString&,const QString&,const QString&,unsigned long)),
         this,SLOT (dccSendRequest(const QString&,const QString&,const QString&,const QString&,unsigned long)) );
-    connect(newDcc,SIGNAL (done(const QString&,DccTransfer::DccStatus,const QString&)),this,SLOT (dccSendDone(const QString&,DccTransfer::DccStatus,const QString&)) );
+    connect(newDcc,SIGNAL (done(const QString&,DccTransfer::DccStatus,const QString&)),this,SLOT (dccSendDone(const QString&,int,const QString&)) );
     connect(newDcc,SIGNAL (statusChanged(const DccTransfer* )), this,
         SLOT(dccStatusChanged(const DccTransfer*)) );
     newDcc->start();
