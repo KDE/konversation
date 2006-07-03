@@ -532,23 +532,27 @@ bool& isOp,bool& isHalfop,bool& hasVoice)
 
     int modeIndex;
 
-    kdDebug() << "Nick: " << nickname << " ServerNickPrefixes: " << serverNickPrefixes << endl;
+    kdDebug() << "Nick: " << nickname << endl;
 
-    if(nickname.isEmpty() || serverNickPrefixes.isEmpty())
+    if(nickname.isEmpty())
     {
         return;
     }
 
     while((modeIndex = serverNickPrefixes.find(nickname[0])) != -1)
     {
-        if(nickname.length() < 2)
+        if(nickname.isEmpty())
             return;
+        kdDebug() << "===== DEBUG 1 =====" << endl;
         nickname = nickname.mid(1);
+        kdDebug() << "===== DEBUG 2 =====" << endl;
         // cut off the prefix
         bool recognisedMode = false;
         // determine, whether status is like op or like voice
+        kdDebug() << "===== DEBUG 3 =====" << endl;
         while((modeIndex)<int(serverNickPrefixes.length()) && !recognisedMode)
         {
+            kdDebug() << "===== DEBUG 4 =====" << endl;
 
             switch(serverNickPrefixes[modeIndex].latin1())
             {
