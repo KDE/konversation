@@ -1964,8 +1964,24 @@ void KonversationMainWindow::openIdentitiesDialog()
     Konversation::IdentityDialog dlg(this);
 
     if((dlg.exec() == KDialog::Accepted) && m_serverListDialog)
+        m_serverListDialog->updateServerList();
+}
+
+IdentityPtr KonversationMainWindow::editIdentity(IdentityPtr identity)
+{
+    IdentityPtr newIdentity;
+
+    Konversation::IdentityDialog dlg(this);
+    newIdentity = dlg.setCurrentIdentity(identity);
+
+    if ((dlg.exec() == KDialog::Accepted) && m_serverListDialog)
     {
         m_serverListDialog->updateServerList();
+        return newIdentity;
+    }
+    else
+    {
+        return 0;
     }
 }
 

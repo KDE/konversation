@@ -86,8 +86,6 @@ const QString& channel,const QString& _nick, QString password,const bool& useSSL
         m_serverGroup = serverGroupOfServer;
         m_serverGroup->clearQuickServerList();
         m_serverGroup->setQuickServerList(m_quickServer);
-
-        kdDebug() << "Identity: " << serverGroupOfServer->name() << endl;
     }
     else
     {
@@ -97,10 +95,9 @@ const QString& channel,const QString& _nick, QString password,const bool& useSSL
         m_serverGroup->addServer(m_quickServer);
     }
 
-    if(nick.isEmpty())                            // Happens when we are invoked from an irc:/ url
-    {
+    // Happens when we are invoked from an irc:/ url
+    if (nick.isEmpty())
         nick = getIdentity()->getNickname(0);
-    }
 
     init(mainWindow, nick, channel);
 }

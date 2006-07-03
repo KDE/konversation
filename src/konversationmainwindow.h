@@ -135,6 +135,8 @@ class KonversationMainWindow : public KMainWindow
         void openServerList();
         void openIdentitiesDialog();
 
+        IdentityPtr editIdentity(IdentityPtr identity);
+
         void serverStateChanged(Server* server, Server::State state);
 
         void closeView(QWidget* view);

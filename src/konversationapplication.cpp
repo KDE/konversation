@@ -283,6 +283,50 @@ void KonversationApplication::dcopInfo(const QString& string)
     mainWindow->appendToFrontmost(i18n("DCOP"), string, 0);
 }
 
+bool KonversationApplication::validateIdentity(IdentityPtr identity, bool interactive)
+{
+    QString errors;
+
+    if (identity->getIdent().isEmpty())
+        errors+=i18n("Please fill in your <b>Ident</b>.<br>");
+
+    if (identity->getRealName().isEmpty())
+        errors+=i18n("Please fill in your <b>Real name</b>.<br>");
+
+    if (identity->getNickname(0).isEmpty())
+        errors+=i18n("Please provide at least one <b>Nickname</b>.<br>");
+
+    if (!errors.isEmpty())
+    {
+        if (interactive)
+        {
+            int result = KMessageBox::warningContinueCancel(0,
+                            i18n("<qt>Your identity \"%1\" is not set up correctly:<br>%2</qt>")
+                                .arg(identity->getName()).arg(errors),
+                            i18n("Identity Settings"),
+                            i18n("Edit Identity..."));
+
+            if (result==KMessageBox::Continue)
+            {
+                identity = mainWindow->editIdentity(identity);
+
+                if (identity && validateIdentity(identity,false))
+                    return true;
+                else
+                    return false;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        return false;
+    }
+
+    return true;
+}
+
 Server* KonversationApplication::connectToServerGroup(const QString& serverGroup)
 {
     int serverGroupId = Preferences::serverGroupIdByName(serverGroup);
@@ -290,7 +334,7 @@ Server* KonversationApplication::connectToServerGroup(const QString& serverGroup
     return connectToServer(serverGroupId);
 }
 
-Server* KonversationApplication::connectToServer (int serverGroupId, Konversation::ServerSettings quickServer)
+Server* KonversationApplication::connectToServer(int serverGroupId, Konversation::ServerSettings quickServer)
 {
     // Check if a server window with same name and port is already open
     Server* lookServer = serverList.first();
@@ -306,40 +350,8 @@ Server* KonversationApplication::connectToServer (int serverGroupId, Konversatio
     Konversation::ServerGroupSettingsPtr serverGroup = Preferences::serverGroupById(serverGroupId);
     IdentityPtr identity = serverGroup->identity();
 
-    if(!identity)
-    {
+    if (!identity || !validateIdentity(identity))
         return 0;
-    }
-
-    // sanity check for identity
-    QString check;
-
-    if(identity->getIdent().isEmpty())
-    {
-        check+=i18n("Please fill in your <b>ident</b>.<br>");
-    }
-    if(identity->getRealName().isEmpty())
-    {
-        check+=i18n("Please fill in your <b>Real name</b>.<br>");
-    }
-    if(identity->getNickname(0).isEmpty())
-    {
-        check+=i18n("Please provide at least one <b>Nickname</b>.<br>");
-    }
-    if(!check.isEmpty())
-    {
-        KMessageBox::information(0,
-            i18n("<qt>Your identity \"%1\" is not set up correctly:<br>%2</qt>")
-            .arg(identity->getName()).arg(check),
-            i18n("Check Identity Settings")
-            );
-
-        mainWindow->openIdentitiesDialog();
-
-        return 0;
-    }
-
-    // identity ok, carry on
 
     emit closeServerList();
 
@@ -379,6 +391,18 @@ Server* KonversationApplication::connectToServer (int serverGroupId, Konversatio
 void KonversationApplication::quickConnectToServer(const QString& hostName, const QString& port, const QString& channel, const QString& nick, const QString& password, const bool& useSSL)
 {
     //used for the quick connect dialog and /server command
+
+    IdentityPtr identity;
+    Konversation::ServerGroupSettingsPtr serverGroupOfServer;
+
+    // If server is in an existing group, use that group (first group if server is in multiple groups)
+    if (serverGroupOfServer = Preferences::serverGroupByServer(hostName))
+        identity = serverGroupOfServer->identity();
+    else
+        identity = Preferences::identityByName("Default");
+
+    if (!identity || !validateIdentity(identity))
+        return;
 
     Server* newServer = new Server(mainWindow, hostName, port, channel, nick, password, useSSL);
 

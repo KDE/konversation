@@ -548,15 +548,20 @@ namespace Konversation
 
     void IdentityDialog::setCurrentIdentity(int index)
     {
-        if(index >= m_identityCBox->count())
-        {
+        if (index >= m_identityCBox->count())
             index = 0;
-        }
 
         m_identityCBox->setCurrentItem(index);
         updateIdentity(index);
     }
 
+    IdentityPtr IdentityDialog::setCurrentIdentity(IdentityPtr identity)
+    {
+        int index = Preferences::identityList().findIndex(identity);
+        setCurrentIdentity(index);
+
+        return m_currentIdentity;
+    }
 }
 
 #include "identitydialog.moc"

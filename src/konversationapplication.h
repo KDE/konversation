@@ -99,6 +99,8 @@ class KonversationApplication : public KUniqueApplication
          */
         NickInfoPtr getNickInfo(const QString &ircnick, const QString &serverOrGroup);
 
+        bool validateIdentity(IdentityPtr identity, bool interactive=true);
+
         OSDWidget* osd;
 
         Konversation::Sound* sound();
