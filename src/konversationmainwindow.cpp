@@ -1446,39 +1446,9 @@ bool KonversationMainWindow::queryClose()
 
     if(Preferences::showTrayIcon() && !m_closeApp)
     {
-
-        // Compute size and position of the pixmap to be grabbed:
-        QPoint g = tray->mapToGlobal( tray->pos() );
-        int desktopWidth  = kapp->desktop()->width();
-        int desktopHeight = kapp->desktop()->height();
-        int tw = tray->width();
-        int th = tray->height();
-        int w = desktopWidth / 4;
-        int h = desktopHeight / 9;
-        int x = g.x() + tw/2 - w/2;               // Center the rectange in the systray icon
-        int y = g.y() + th/2 - h/2;
-        if ( x < 0 )                 x = 0;       // Move the rectangle to stay in the desktop limits
-        if ( y < 0 )                 y = 0;
-        if ( x + w > desktopWidth )  x = desktopWidth - w;
-        if ( y + h > desktopHeight ) y = desktopHeight - h;
-
-        // Grab the desktop and draw a circle arround the icon:
-        QPixmap shot = QPixmap::grabWindow( qt_xrootwin(),  x,  y,  w,  h );
-        QPainter painter( &shot );
-        const int MARGINS = 6;
-        const int WIDTH   = 3;
-        int ax = g.x() - x - MARGINS -1;
-        int ay = g.y() - y - MARGINS -1;
-        painter.setPen(  QPen( Qt::red,  WIDTH ) );
-        painter.drawArc( ax,  ay,  tw + 2*MARGINS,  th + 2*MARGINS,  0,  16*360 );
-        painter.end();
-
-        // Associate source to image and show the dialog:
-        QMimeSourceFactory::defaultFactory()->setPixmap( "systray_shot",  shot );
         KMessageBox::information( this,
-            i18n( "<p>Closing the main window will keep Konversation running in the system tray. "
-            "Use <b>Quit</b> from the <b>Konversation</b> menu to quit the application.</p>"
-            "<p><center><img source=\"systray_shot\"></center></p>" ),
+            i18n("<p>Closing the main window will keep Konversation running in the system tray. "
+            "Use <b>Quit</b> from the <b>Konversation</b> menu to quit the application.</p>"),
             i18n( "Docking in System Tray" ),  "HideOnCloseInfo" );
         hide();
 
