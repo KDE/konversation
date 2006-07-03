@@ -218,46 +218,7 @@ void Server::init(KonversationMainWindow* mainWindow, const QString& nick, const
     // For /msg query completion
     completeQueryPosition = 0;
 
-    Konversation::ChannelList tmpList = m_serverGroup->channelList();
-
-    if(!channel.isEmpty())
-        tmpList.push_front(channel);
-
-    if(!tmpList.isEmpty())
-    {
-        setAutoJoin(true);
-
-        QString channels;
-        QString keys;
-
-        if (tmpList.count()>1)
-        {
-            Konversation::ChannelList::iterator it;
-            for(it = tmpList.begin(); it != tmpList.end(); ++it)
-            {
-                if(it != tmpList.begin())
-                {
-                    channels += ',';
-                    keys += ',';
-                }
-
-                channels += (*it).name();
-                keys += ((*it).password().isEmpty() ? QString(".") : (*it).password());
-            }
-        }
-        else
-        {
-            channels = tmpList.first().name();
-            keys = (tmpList.first().password().isEmpty() ? QString("") : tmpList.first().password());
-        }
-
-        setAutoJoinChannel(channels);
-        setAutoJoinChannelKey(keys);
-    }
-    else
-    {
-        setAutoJoin(false);
-    }
+    updateAutoJoin(channel);
 
     if(!getIdentity()->getShellCommand().isEmpty())
     {
@@ -688,6 +649,8 @@ void Server::broken(int state)
 
         if (autoReconnect && reconnectCounter <= Preferences::reconnectCount())
         {
+            updateAutoJoin();
+
             QString error = i18n("Connection to Server %1 lost: %2. Trying to reconnect.")
                 .arg(m_serverGroup->serverByIndex(m_currentServerIndex).server())
                 .arg(KNetwork::KSocketBase::errorString((KNetwork::KSocketBase::SocketError)state));
@@ -700,6 +663,8 @@ void Server::broken(int state)
         }
         else if ((!autoReconnect || reconnectCounter >= Preferences::reconnectCount()))
         {
+            updateAutoJoin();
+
             QString error = i18n("Connection to Server %1 failed: %2.")
                 .arg(m_serverGroup->serverByIndex(m_currentServerIndex).server())
                 .arg(KNetwork::KSocketBase::errorString((KNetwork::KSocketBase::SocketError)state));
@@ -3024,6 +2989,50 @@ void Server::closeChannelListPanel()
     {
         delete channelListPanel;
         channelListPanel = 0;
+    }
+}
+
+void Server::updateAutoJoin(const QString& channel)
+{
+    Konversation::ChannelList tmpList = m_serverGroup->channelList();
+
+    if(!channel.isEmpty())
+        tmpList.push_front(channel);
+
+    if(!tmpList.isEmpty())
+    {
+        setAutoJoin(true);
+
+        QString channels;
+        QString keys;
+
+        if (tmpList.count()>1)
+        {
+            Konversation::ChannelList::iterator it;
+            for(it = tmpList.begin(); it != tmpList.end(); ++it)
+            {
+                if(it != tmpList.begin())
+                {
+                    channels += ',';
+                    keys += ',';
+                }
+
+                channels += (*it).name();
+                keys += ((*it).password().isEmpty() ? QString(".") : (*it).password());
+            }
+        }
+        else
+        {
+            channels = tmpList.first().name();
+            keys = (tmpList.first().password().isEmpty() ? QString("") : tmpList.first().password());
+        }
+
+        setAutoJoinChannel(channels);
+        setAutoJoinChannelKey(keys);
+    }
+    else
+    {
+        setAutoJoin(false);
     }
 }
 

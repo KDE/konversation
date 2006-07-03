@@ -505,6 +505,7 @@ class Server : public QObject
         void setMainWindow(KonversationMainWindow* newMainWindow);
 
         void autoRejoinChannels();
+        void updateAutoJoin(const QString& channel=QString::null);
 
         /** Adds a nickname to the unjoinedChannels list.
          *  Creates new NickInfo if necessary.
