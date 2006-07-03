@@ -541,7 +541,7 @@ bool& isOp,bool& isHalfop,bool& hasVoice)
 
     while((modeIndex = serverNickPrefixes.find(nickname[0])) != -1)
     {
-        if(nickname.isEmpty())
+        if(nickname.length() < 2)
             return;
         nickname = nickname.mid(1);
         // cut off the prefix
