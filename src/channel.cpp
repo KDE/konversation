@@ -1060,7 +1060,8 @@ void Channel::joinNickname(ChannelNickPtr channelNick)
 {
     if(channelNick->getNickname() == m_server->getNickname())
     {
-        appendCommandMessage(i18n("Join"),i18n("You have joined the channel %1 (%2).").arg(getName()).arg(channelNick->getHostmask()),false, false, true);
+        appendCommandMessage(i18n("Join"),i18n("%1 is the channel and %2 is our hostmask",
+                             "You have joined the channel %1 (%2).").arg(getName()).arg(channelNick->getHostmask()),false, false, true);
         m_ownChannelNick = channelNick;
         connect(m_ownChannelNick, SIGNAL(channelNickChanged()), SLOT(refreshModeButtons()));
         refreshModeButtons();
@@ -1071,20 +1072,21 @@ void Channel::joinNickname(ChannelNickPtr channelNick)
     {
         QString nick = channelNick->getNickname();
         QString hostname = channelNick->getHostmask();
-        appendCommandMessage(i18n("Join"),i18n("%1 has joined this channel (%2).").arg(nick).arg(hostname),false, false);
+        appendCommandMessage(i18n("Join"), i18n("%1 is the nick joining and %2 the hostmask of that nick",
+                             "%1 has joined this channel (%2).").arg(nick).arg(hostname),false, false);
         addNickname(channelNick);
     }
 }
 
 void Channel::removeNick(ChannelNickPtr channelNick, const QString &reason, bool quit)
 {
-    QString displayReason=reason;
+    QString displayReason = reason;
 
     if(!displayReason.isEmpty())
     {
         // if the reason contains text markup characters, play it safe and reset all
-        if(displayReason.find(QRegExp("[\\0000-\\0037]"))!=-1) displayReason+="\017";
-        displayReason=" ("+displayReason+")";
+        if(displayReason.find(QRegExp("[\\0000-\\0037]")) != -1)
+            displayReason += "\017";
     }
 
     if(channelNick->getNickname() == m_server->getNickname())
@@ -1092,23 +1094,27 @@ void Channel::removeNick(ChannelNickPtr channelNick, const QString &reason, bool
         //If in the future we can leave a channel, but not close the window, refreshModeButtons() has to be called.
         if(quit)
         {
-            appendCommandMessage(i18n("Quit"),i18n("You have left this server%1.").arg(displayReason),false);
+            appendCommandMessage(i18n("Quit"), i18n("%1 adds the reason", "You have left this server (%1).").arg(displayReason), false);
         }
         else
         {
-            appendCommandMessage(i18n("Part"),i18n("You have left channel %1%2.").arg(getName()).arg(displayReason),false);
+            appendCommandMessage(i18n("Part"), i18n("%1 adds the channel and %2 the reason",
+                                 "You have left channel %1 (%2).").arg(getName()).arg(displayReason), false);
         }
+
         delete this;
     }
     else
     {
         if(quit)
         {
-            appendCommandMessage(i18n("Quit"),i18n("%1 has left this server%2.").arg(channelNick->getNickname()).arg(displayReason),false);
+            appendCommandMessage(i18n("Quit"), i18n("%1 adds the nick and %2 the reason",
+                                 "%1 has left this server (%2).").arg(channelNick->getNickname()).arg(displayReason), false);
         }
         else
         {
-            appendCommandMessage(i18n("Part"),i18n("%1 has left this channel%2.").arg(channelNick->getNickname()).arg(displayReason),false);
+            appendCommandMessage(i18n("Part"), i18n("%1 adds the nick and %2 the reason",
+                                 "%1 has left this channel (%2).").arg(channelNick->getNickname()).arg(displayReason), false);
         }
 
         if(channelNick->isAnyTypeOfOp())
@@ -1132,45 +1138,57 @@ void Channel::removeNick(ChannelNickPtr channelNick, const QString &reason, bool
 
 void Channel::kickNick(ChannelNickPtr channelNick, const ChannelNick &kicker, const QString &reason)
 {
-    QString displayReason=reason;
+    QString displayReason = reason;
 
     if(!displayReason.isEmpty())
     {
         // if the reason contains text markup characters, play it safe and reset all
-        if(displayReason.find(QRegExp("[\\0000-\\0037]"))!=-1) displayReason+="\017";
-        displayReason=" ("+displayReason+")";
+        if(displayReason.find(QRegExp("[\\0000-\\0037]")) != -1)
+            displayReason += "\017";
     }
 
-    if(channelNick->getNickname()==m_server->getNickname())
+    if(channelNick->getNickname() == m_server->getNickname())
     {
-        if(kicker.getNickname()==m_server->getNickname())
+        if(kicker.getNickname() == m_server->getNickname())
         {
-            appendCommandMessage(i18n("Kick"),i18n("You have kicked yourself from the channel (%1).").arg(displayReason));
-            /* This message lets the user see what he has done after the channel window went away */
-            m_server->appendStatusMessage(i18n("Kick"),i18n("You have kicked yourself from channel %1 (%2).").arg(getName()).arg(displayReason));
+            m_server->appendStatusMessage(i18n("Kick"), i18n("%1 adds the channel and %2 the reason",
+                                          "You have kicked yourself from channel %1 (%2).").arg(getName()).arg(displayReason));
         }
         else
         {
-            appendCommandMessage(i18n("Kick"),i18n("You have been kicked from the channel by %1 (%2).").arg(kicker.getNickname()).arg(displayReason));
-            /* This message lets the user see what had happened after the channel window went away */
-            m_server->appendStatusMessage(i18n("Kick"),i18n("You have been kicked from channel %1 by %2 (%3).").arg(getName()).arg(kicker.getNickname()).arg(displayReason));
+            m_server->appendStatusMessage(i18n("Kick"), i18n("%1 adds the channel, %2 the kicker and %3 the reason",
+                                          "You have been kicked from channel %1 by %2 (%3).")
+                                          .arg(getName()).arg(kicker.getNickname()).arg(displayReason));
             KonversationApplication* konv_app = static_cast<KonversationApplication*>(KApplication::kApplication());
-            konv_app->notificationHandler()->kick(this,getName(),kicker.getNickname());
+            konv_app->notificationHandler()->kick(this,getName(), kicker.getNickname());
         }
+
         delete this;
     }
     else
     {
-        if(kicker.getNickname()==m_server->getNickname())
-            appendCommandMessage(i18n("Kick"),i18n("You have kicked %1 from the channel (%2).").arg(channelNick->getNickname()).arg(displayReason));
+        if(kicker.getNickname() == m_server->getNickname())
+        {
+            appendCommandMessage(i18n("Kick"), i18n("%1 adds the kicked nick and %2 the reason",
+                                 "You have kicked %1 from the channel (%2).").arg(channelNick->getNickname()).arg(displayReason));
+        }
         else
-            appendCommandMessage(i18n("Kick"),i18n("%1 has been kicked from the channel by %2 (%3).").arg(channelNick->getNickname()).arg(kicker.getNickname()).arg(displayReason));
+        {
+            appendCommandMessage(i18n("Kick"), i18n("%1 adds the kicked nick, %2 the kicker and %3 the reason",
+                                 "%1 has been kicked from the channel by %2 (%3).")
+                                 .arg(channelNick->getNickname()).arg(kicker.getNickname()).arg(displayReason));
+        }
 
-	if(channelNick->isAnyTypeOfOp()) adjustOps(-1);
+        if(channelNick->isAnyTypeOfOp())
+            adjustOps(-1);
+
         adjustNicks(-1);
+        Nick* nick = getNickByName(channelNick->getNickname());
 
-        Nick* nick=getNickByName(channelNick->getNickname());
-        if(nick==0) kdWarning() << "Channel::kickNick(): Nickname " << channelNick->getNickname() << " not found!"<< endl;
+        if(nick == 0)
+        {
+            kdWarning() << "Channel::kickNick(): Nickname " << channelNick->getNickname() << " not found!"<< endl;
+        }
         else
         {
             nicknameList.removeRef(nick);
