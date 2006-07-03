@@ -62,7 +62,7 @@ class NickList : public QPtrList<Nick>
         typedef enum CompareMethod { AlphaNumeric, TimeStamp };
 
         QString completeNick(const QString& pattern, bool& complete, QStringList& found,
-                             bool skipNonAlfaNum, bool caseSensitive, const QString& ownNick);
+                             bool skipNonAlfaNum, bool caseSensitive);
 
         void setCompareMethod(CompareMethod method);
 

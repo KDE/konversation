@@ -660,8 +660,7 @@ void Channel::completeNick()
                 QStringList found;
                 foundNick = nicknameList.completeNick(pattern, complete, found,
                                                       (Preferences::nickCompletionMode() == 2),
-                                                      Preferences::nickCompletionCaseSensitive(),
-                                                      getOwnChannelNick()->getNickname());
+                                                      Preferences::nickCompletionCaseSensitive());
 
                 if(!complete && !found.isEmpty())
                 {
@@ -2538,7 +2537,7 @@ int NickList::compareItems(QPtrCollection::Item item1, QPtrCollection::Item item
 }
 
 QString NickList::completeNick(const QString& pattern, bool& complete, QStringList& found,
-			       bool skipNonAlfaNum, bool caseSensitive, const QString& ownNick)
+			       bool skipNonAlfaNum, bool caseSensitive)
 {
     found.clear();
     QString prefix = "^";
@@ -2565,7 +2564,7 @@ QString NickList::completeNick(const QString& pattern, bool& complete, QStringLi
             newNick = newNick.section( prefixCharacter,1 );
         }
 
-        if((newNick.find(regexp) != -1) && (newNick != ownNick))
+        if(newNick.find(regexp) != -1)
         {
             foundNicks.append(it.current());
         }
