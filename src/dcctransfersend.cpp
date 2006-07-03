@@ -104,6 +104,7 @@ DccTransferSend::DccTransferSend( DccPanel* panel, const QString& partnerNick, c
     if ( !KIO::NetAccess::download( m_fileURL, m_tmpFile, listView() ) )
     {
         failed( i18n( "Could not retrieve \"%1\"" ).arg( m_fileURL.prettyURL() ) );
+        kdDebug() << "DccTransferSend::DccTransferSend(): KIO::NetAccess::download() failed. reason: " << KIO::NetAccess::lastErrorString() << endl;
         return;
     }
 
