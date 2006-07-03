@@ -2004,7 +2004,6 @@ void Channel::updateAppearance()
     nicknameListView->setFont(Preferences::listFont());
 
     showModeButtons(Preferences::showModeButtons());
-    showQuickButtons(Preferences::showQuickButtons());
     showNicknameList(Preferences::showNickList());
     showNicknameBox(Preferences::showNicknameBox());
     showTopic(Preferences::showTopic());
