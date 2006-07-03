@@ -1237,7 +1237,7 @@ void Server::send()
         }
         else
         {
-            time = 0;
+            time = 1;
         }
 
         outgoingTimer.changeInterval(time);
