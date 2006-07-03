@@ -535,10 +535,13 @@ bool& isOp,bool& isHalfop,bool& hasVoice)
 
     int modeIndex;
 
-    if(nickname.isEmpty())
+    if(nickname.isEmpty() || serverNickPrefixes.isEmpty())
+    {
+        kdDebug() << "Nick: " << nickname << " ServerNickPrefixes: " << serverNickPrefixes << endl;
         return;
+    }
 
-    while( (modeIndex=serverNickPrefixes.find(nickname[0])) != -1)
+    while((modeIndex = serverNickPrefixes.find(nickname[0])) != -1)
     {
         if(nickname.isEmpty())
             return;
