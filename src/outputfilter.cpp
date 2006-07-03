@@ -507,7 +507,7 @@ namespace Konversation
         {
             result.typeString = i18n("Notice");
             result.toServer = "NOTICE " + recipient + " :" + message;
-            result.output=i18n("Sending notice \"%1\" to %2.").arg(message).arg(recipient);
+            result.output=i18n("%1 is the message, %2 the recipient nickname","Sending notice \"%2\" to %1.").arg(recipient).arg(message);
             result.type = Program;
         }
 
