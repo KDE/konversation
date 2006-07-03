@@ -194,8 +194,8 @@ void Server::init(KonversationMainWindow* mainWindow, const QString& nick, const
     m_socket = 0;
 
     // TODO fold these into a QMAP, and these need to be reset to RFC values if this server object is reused.
-    serverNickPrefixModes = "ov";
-    serverNickPrefixes = "@+";
+    serverNickPrefixModes = "ovh";
+    serverNickPrefixes = "@+%";
     channelPrefixes = "#&";
 
     timerInterval = 1;                            // flood protection
@@ -488,7 +488,7 @@ void Server::connectToIRCServer()
             QString::number(m_serverGroup->serverByIndex(m_currentServerIndex).port()));
 
         // set up the connection details
-        setPrefixes("ov","@+");
+        setPrefixes(serverNickPrefixModes, serverNickPrefixes);
         statusView->appendServerMessage(i18n("Info"),i18n("Looking for server %1:%2...")
             .arg(m_serverGroup->serverByIndex(m_currentServerIndex).server())
             .arg(m_serverGroup->serverByIndex(m_currentServerIndex).port()));
