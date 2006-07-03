@@ -535,9 +535,10 @@ bool& isOp,bool& isHalfop,bool& hasVoice)
 
     int modeIndex;
 
+    kdDebug() << "Nick: " << nickname << " ServerNickPrefixes: " << serverNickPrefixes << endl;
+
     if(nickname.isEmpty() || serverNickPrefixes.isEmpty())
     {
-        kdDebug() << "Nick: " << nickname << " ServerNickPrefixes: " << serverNickPrefixes << endl;
         return;
     }
 
