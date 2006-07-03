@@ -103,7 +103,6 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent)
     setViewBackground(Preferences::color(Preferences::TextViewBackground),QString::null);
 
     connect(this, SIGNAL(highlighted(const QString&)), this, SLOT(highlightedSlot(const QString&)));
-    connect(this, SIGNAL(linkClicked(const QString&)), this, SLOT(urlClickSlot(const QString&)));
 }
 
 IRCView::~IRCView()
@@ -253,19 +252,8 @@ void IRCView::highlightedSlot(const QString& link)
     }
 }
 
-void IRCView::urlClickSlot(const QString &url)
+void IRCView::openLink(const QString& url, bool newTab)
 {
-    urlClickSlot(url,false);
-}
-
-void IRCView::urlClickSlot(const QString& _url, bool newTab)
-{
-    // QTextBrowser bug: a link may be screwed up by other links in the same view, so we
-    // ignore the URL given by highlighted() signal and take our previously remembered
-    // hover URL, which is correct, curiously. -- Eisfuchs (idea by Sho_)
-
-    QString url=_url;
-
     if (!url.isEmpty() && !url.startsWith("#"))
     {
         // Always use KDE default mailer.
@@ -936,7 +924,7 @@ void IRCView::contentsMouseReleaseEvent(QMouseEvent *ev)
     {
         if(m_copyUrlMenu)
         {
-            urlClickSlot(m_urlToCopy,true);
+            openLink(m_urlToCopy,true);
             return;
         }
         else
@@ -950,7 +938,7 @@ void IRCView::contentsMouseReleaseEvent(QMouseEvent *ev)
     {
         if (m_mousePressed)
         {
-            urlClickSlot(m_urlToDrag);
+            openLink(m_urlToDrag);
             m_mousePressed = false;
             return;
         }
