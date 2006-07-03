@@ -461,9 +461,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
         QString channelName(trailing);
         // Sometimes JOIN comes without ":" in front of the channel name
         if(channelName.isEmpty())
-        {
             channelName=parameterList[parameterList.count()-1];
-        }
 
         // Did we join the channel, or was it someone else?
         if(server->isNickname(sourceNick))
@@ -547,10 +545,17 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
     }
     else if(command=="nick")
     {
-        server->renameNick(sourceNick,trailing);
-        if(sourceNick != server->getNickname())
+        QString newNick(trailing);
+
+        // Message may not include ":" in front of the new nickname
+        if (newNick.isEmpty())
+            newNick=parameterList[parameterList.count()-1];
+
+        server->renameNick(sourceNick,newNick);
+
+        if (sourceNick != server->getNickname())
         {
-            konv_app->notificationHandler()->nickChange(server->getStatusView(), sourceNick, trailing);
+            konv_app->notificationHandler()->nickChange(server->getStatusView(), sourceNick, newNick);
         }
     }
     else if(command=="topic")
