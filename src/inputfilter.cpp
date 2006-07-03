@@ -824,7 +824,22 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             }
             case RPL_NAMREPLY:
             {
-                QStringList nickList = QStringList::split(" ", trailing);
+                QStringList nickList;
+
+                if(!trailing.isEmpty())
+                {
+                    nickList = QStringList::split(" ", trailing);
+                }
+                else if(parameterList.count() > 2)
+                {
+                    for(int i = 3; i < parameterList.count(); i++) {
+                        nickList.append(parameterList[i]);
+                    }
+                }
+                else
+                {
+                    kdDebug() << "Hmm seems something is broken... can't get to the names!" << endl;
+                }
 
                 // send list to channel
                 server->addPendingNickList(parameterList[2], nickList);

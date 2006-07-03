@@ -2297,14 +2297,14 @@ void Channel::processPendingNicks()
     bool voice = false;
 
     // Remove possible mode characters from nickname and store the resulting mode
-    m_server->mangleNicknameWithModes(nickname,admin,owner,op,halfop,voice);
+    m_server->mangleNicknameWithModes(nickname, admin, owner, op, halfop, voice);
 
     // TODO: make these an enumeration in KApplication or somewhere, we can use them as well
-    unsigned int mode=(admin  ? 16 : 0)+
-        (owner  ?  8 : 0)+
-        (op     ?  4 : 0)+
-        (halfop ?  2 : 0)+
-        (voice  ?  1 : 0);
+    unsigned int mode = (admin  ? 16 : 0) +
+                        (owner  ?  8 : 0) +
+                        (op     ?  4 : 0) +
+                        (halfop ?  2 : 0) +
+                        (voice  ?  1 : 0);
 
     // Check if nick is already in the nicklist
     if (!getNickByName(nickname))
@@ -2325,7 +2325,7 @@ void Channel::processPendingNicks()
         m_pendingChannelNickLists.first().pop_front();
     }
 
-    if (m_pendingChannelNickLists.first().count() == m_currentIndex)
+    if (m_pendingChannelNickLists.first().count() <= m_currentIndex)
     {
         adjustNicks(m_pendingChannelNickLists.first().count());
         adjustOps(m_opsToAdd);
