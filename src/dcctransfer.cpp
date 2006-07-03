@@ -106,7 +106,10 @@ void DccTransfer::updateView()
     if ( m_fileSize )
         m_progressBar->setProgress( getProgress() );
     else // filesize is unknown
+    {
+        m_progressBar->hide();
         setText( DccPanel::Column::Progress, i18n( "unknown" ) );
+    }
 
     if ( m_detailDialog )
         m_detailDialog->updateView();
