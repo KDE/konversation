@@ -138,7 +138,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
 
     // options_show_menubar
     showMenuBarAction=KStdAction::showMenubar(this,SLOT(showMenubar()),actionCollection());
-    KStdAction::configureToolbars(this, SLOT(openToolbars()), actionCollection());
+    KStdAction::configureToolbars(this, SLOT(configureToolbars()), actionCollection());
 
 #ifdef USE_KNOTIFY // options_configure_notifications
     KAction *configureNotificationsAction = KStdAction::configureNotifications(this,SLOT(openNotifications()), actionCollection());
@@ -398,10 +398,6 @@ void KonversationMainWindow::resetHasDirtySettings()
 void KonversationMainWindow::openKeyBindings()
 {
     KKeyDialog::configure(actionCollection());
-}
-
-void KonversationMainWindow::showToolbar()
-{
 }
 
 void KonversationMainWindow::focusAndShowErrorMessage(const QString &errorMsg)
@@ -1916,14 +1912,6 @@ void KonversationMainWindow::serverQuit(Server* server)
 
     delete server->getStatusView();
     delete server;
-}
-
-void KonversationMainWindow::openToolbars()
-{
-    KEditToolbar dlg(actionCollection());
-
-    if(dlg.exec())
-        createGUI();
 }
 
 void KonversationMainWindow::setShowTabBarCloseButton(bool s)
