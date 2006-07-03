@@ -61,6 +61,27 @@ handling)
   applicable
 - Fix double-clicking the nicklist with multiple nicks selected sending selected nicks
   as messages
+- Re-enabled completion of own nickname
+- Rewrote lag calculation and timeout handling code for improved reliability and processing
+  of events
+- Various improvements to parsing incoming server messages (NICK, NAMES) leading to improved 
+  compatibility with the Bip IRC proxy and potentially others
+- Properly close Konsole tab when Konsole part is closed from its own facilities, avoids crashes
+  in tab actions
+- Fix crash during connection/join when the window is hidden
+- Fix the toolbar disappearing after being edited
+- Properly recognize half-op status
+- Improved display of certain channel messages
+- Fix progress bar being drawn at the wrong position in the DCC panel on transfers with
+  unknown filesize
+- Fix Quick Connect codepath not validating identity settings
+- Improve appearance and wording of identity settings warning dialog
+- Have the identity settings warning dialog open the identity dialog at the offending identity
+- Continue connection attempt after successfully editing a previously insufficiently set up
+  identity
+- Fix modifications to the auto-join channel list for an active connection not being applied
+  for reconnects
+- Removed buggy tray icon snapshot code from the quit-to-systray warning dialog
 
 
 Changes from 0.18 to 0.19
