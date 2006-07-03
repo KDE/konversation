@@ -1263,13 +1263,19 @@ void Server::send()
     }
 
     // Flood-Protection
-    if(timerInterval>1)
+    if(timerInterval > 1)
     {
         int time;
-        timerInterval/=2;
+        timerInterval /= 2;
 
-        if(timerInterval>40) time=4000;
-        else time=timerInterval*10+100;
+        if(timerInterval > 40)
+        {
+            time = 4000;
+        }
+        else
+        {
+            time = 0;
+        }
 
         outgoingTimer.changeInterval(time);
     }
