@@ -332,7 +332,6 @@ bool doHighlight, bool parseURL, bool self)
     KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
 
     // TODO: Use QStyleSheet::escape() here
-    filteredLine.replace("&","&amp;");
     // Replace all < with &lt;
     filteredLine.replace("<","&lt;");
     // Replace all > with &gt;
@@ -399,9 +398,6 @@ bool doHighlight, bool parseURL, bool self)
     {
         filteredLine.replace(QRegExp("\003([^0-9]|$)"),"\0031,0\\1");
     }
-
-    // Hack to allow for whois info hostmask info to not be parsed as email
-    filteredLine.replace("&amp;#64;","&#64;");
 
     if(filteredLine.find("\x07") != -1)
     {
