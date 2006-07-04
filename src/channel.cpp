@@ -2101,6 +2101,9 @@ void Channel::resetNickList()
 
 void Channel::addPendingNickList(const QStringList& pendingChannelNickList)
 {
+    if(pendingChannelNickList.isEmpty())
+      return;
+
     if (!m_processingTimer)
     {
         m_processingTimer = new QTimer(this);

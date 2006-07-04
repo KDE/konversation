@@ -830,7 +830,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 {
                     nickList = QStringList::split(" ", trailing);
                 }
-                else if(parameterList.count() > 2)
+                else if(parameterList.count() > 3)
                 {
                     for(int i = 3; i < parameterList.count(); i++) {
                         nickList.append(parameterList[i]);

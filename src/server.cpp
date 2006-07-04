@@ -241,11 +241,8 @@ void Server::init(KonversationMainWindow* mainWindow, const QString& nick, const
 void Server::initTimers()
 {
     notifyTimer.setName("notify_timer");
-
     incomingTimer.setName("incoming_timer");
-
     outgoingTimer.setName("outgoing_timer");
-    outgoingTimer.start(timerInterval);
 }
 
 void Server::connectSignals()
@@ -1118,18 +1115,25 @@ void Server::incoming()
 void Server::queue(const QString& buffer)
 {
     // Only queue lines if we are connected
-    if(buffer.length())
+    if(!buffer.isEmpty())
     {
         outputBuffer.append(buffer);
 
         timerInterval*=2;
+
+        if(!outgoingTimer.isActive())
+        {
+            outgoingTimer.start(1);
+        }
     }
 }
 
 void Server::queueAt(uint pos,const QString& buffer)
 {
-    // Only queue lines if we are connected
-    if(buffer.length() && pos < outputBuffer.count())
+    if(buffer.isEmpty())
+        return;
+
+    if(pos < outputBuffer.count())
     {
         outputBuffer.insert(outputBuffer.at(pos),buffer);
 
@@ -1139,18 +1143,28 @@ void Server::queueAt(uint pos,const QString& buffer)
     {
         queue(buffer);
     }
+
+    if(!outgoingTimer.isActive())
+    {
+        outgoingTimer.start(1);
+    }
 }
 
 void Server::queueList(const QStringList& buffer)
 {
     // Only queue lines if we are connected
-    if(buffer.count())
+    if(!buffer.isEmpty())
     {
         for(unsigned int i=0;i<buffer.count();i++)
         {
             outputBuffer.append(*buffer.at(i));
             timerInterval*=2;
         }                                         // for
+
+        if(!outgoingTimer.isActive())
+        {
+            outgoingTimer.start(1);
+        }
     }
 }
 
@@ -1223,6 +1237,11 @@ void Server::send()
 
         // detach server stream
         serverStream.unsetDevice();
+    }
+
+    if(outputBuffer.isEmpty()) {
+        outgoingTimer.stop();
+        timerInterval = 1;
     }
 
     // Flood-Protection
