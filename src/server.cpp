@@ -3289,7 +3289,7 @@ void Server::pongRecieved()
 
 void Server::updateLongPongLag()
 {
-    if(connected())
+    if(isConnected())
     {
         currentLag = m_lagTime.elapsed();
         emit tooLongLag(this, currentLag);
