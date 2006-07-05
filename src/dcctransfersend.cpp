@@ -100,6 +100,7 @@ DccTransferSend::DccTransferSend( DccPanel* panel, const QString& partnerNick, c
         return;
     }
 
+    //FIXME: KIO::NetAccess::download() is a synchronous function. we should use KIO::get() instead.
     //Download the file.  Does nothing if it's local (file:/)
     if ( !KIO::NetAccess::download( m_fileURL, m_tmpFile, listView() ) )
     {
