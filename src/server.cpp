@@ -621,6 +621,7 @@ void Server::broken(int state)
     outputBuffer.clear();
 
     notifyTimer.stop();
+    m_pingResponseTimer.stop();
     inputFilter.setLagMeasuring(false);           // XXX paranoia?
     currentLag = -1;                              // XXX will this make it server independent now?
     emit resetLag();
@@ -3293,6 +3294,7 @@ void Server::updateLongPongLag()
     {
         currentLag = m_lagTime.elapsed();
         emit tooLongLag(this, currentLag);
+        kdDebug() << "Current lag: " << currentLag << endl;
 
         if(Preferences::autoReconnect() && (currentLag > (Preferences::maximumLagTime() * 1000)))
         {
