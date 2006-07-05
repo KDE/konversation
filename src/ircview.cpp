@@ -995,6 +995,10 @@ void IRCView::contentsContextMenuEvent(QContextMenuEvent* ev)
     bool block = contextMenu(ev);
     m_highlightedURL = anchorAt(viewportToContents(mapFromGlobal(QCursor::pos())));
 
+    if(m_highlightedURL.isEmpty()) {
+        viewport()->setCursor(Qt::ArrowCursor);
+    }
+
     if(!block)
     {
         KTextBrowser::contentsContextMenuEvent(ev);
