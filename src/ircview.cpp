@@ -29,6 +29,7 @@
 #include <qmap.h>
 #include <qcolor.h>
 #include <qscrollbar.h>
+#include <qcursor.h>
 
 #include <dcopref.h>
 #include <dcopclient.h>
@@ -103,7 +104,6 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent)
     setViewBackground(Preferences::color(Preferences::TextViewBackground),QString::null);
 
     connect(this, SIGNAL(highlighted(const QString&)), this, SLOT(highlightedSlot(const QString&)));
-    connect(this, SIGNAL(linkClicked(const QString&)), this, SLOT(urlClickedSlot(const QString&)));
 }
 
 IRCView::~IRCView()
@@ -251,14 +251,6 @@ void IRCView::highlightedSlot(const QString& link)
         m_isOnChannel = true;
         emit actionStatusText( i18n("Join the channel %1").arg(m_currentChannel));
     }
-}
-
-void IRCView::urlClickedSlot(const QString& /*url*/)
-{
-    // QTextBrowser bug: a link may be screwed up by other links in the same view, so we
-    // ignore the URL given by highlighted() signal and take our previously remembered
-    // hover URL, which is correct, curiously. -- Eisfuchs (idea by Sho_)
-    openLink(m_highlightedURL);
 }
 
 void IRCView::openLink(const QString& url, bool newTab)
@@ -947,12 +939,10 @@ void IRCView::contentsMouseReleaseEvent(QMouseEvent *ev)
     {
         if (m_mousePressed)
         {
-            openLink(m_urlToDrag);
+            openLink(m_highlightedURL);
             m_mousePressed = false;
             return;
         }
-
-        m_mousePressed = false;
     }
 
     KTextBrowser::contentsMouseReleaseEvent(ev);
@@ -962,7 +952,7 @@ void IRCView::contentsMousePressEvent(QMouseEvent* ev)
 {
     if (ev->button() == QMouseEvent::LeftButton)
     {
-        m_urlToDrag = anchorAt(viewportToContents(ev->pos()));
+        m_urlToDrag = m_highlightedURL;
 
         if (!m_urlToDrag.isNull())
         {
@@ -1003,6 +993,7 @@ void IRCView::contentsMouseMoveEvent(QMouseEvent* ev)
 void IRCView::contentsContextMenuEvent(QContextMenuEvent* ev)
 {
     bool block = contextMenu(ev);
+    m_highlightedURL = anchorAt(viewportToContents(mapFromGlobal(QCursor::pos())));
 
     if(!block)
     {

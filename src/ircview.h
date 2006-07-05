@@ -116,7 +116,6 @@ class IRCView : public KTextBrowser
 
     protected slots:
         void highlightedSlot(const QString& link);
-        void urlClickedSlot(const QString& url);
 
     protected:
         void openLink(const QString &url, bool newTab=false);
