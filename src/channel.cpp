@@ -9,7 +9,7 @@
     The class that controls a channel
     begin:     Wed Jan 23 2002
     copyright: (C) 2002 by Dario Abatianni <eisfuchs@tigress.com>
-               (C) 2004-2005 by Peter Simonsson <psn@linux.se>
+               (C) 2004-2006 by Peter Simonsson <psn@linux.se>
                (C) 2005 by Ian Monroe <ian@monroe.nu>
 */
 
@@ -1980,22 +1980,22 @@ void Channel::hideEvent(QHideEvent*)
 
 void Channel::initializeSplitters()
 {
-    QValueList<int> vertSizes, horizSizes;
+    KonversationApplication* konviApp = static_cast<KonversationApplication*>(kapp);
 
-    vertSizes = Preferences::topicSplitterSizes();
-    horizSizes = Preferences::channelSplitterSizes();
+    QValueList<int> vertSizes = konviApp->topicSplitterSizes();
+    QValueList<int> horizSizes = konviApp->nickListSplitterSizes();
 
     if (vertSizes.isEmpty())
     {
         vertSizes << m_topicButton->height() << (height() - m_topicButton->height());
-        Preferences::setTopicSplitterSizes(vertSizes);
+        konviApp->setTopicSplitterSizes(vertSizes);
     }
 
     if (horizSizes.isEmpty())
     {
         int listWidth = nicknameListView->columnWidth(0) + nicknameListView->columnWidth(1);
         horizSizes << (width() - listWidth) << listWidth;
-        Preferences::setChannelSplitterSizes(horizSizes);
+        konviApp->setNickListSplitterSizes(horizSizes);
     }
 
     m_vertSplitter->setSizes(vertSizes);
@@ -2476,25 +2476,21 @@ bool Channel::eventFilter(QObject* watched, QEvent* e)
 {
   if((watched == nicknameListView) && (e->type() == QEvent::Resize) && splitterChanged && isShown())
   {
-    if (!topicSplitterHidden && !channelSplitterHidden)
-    {
-      Preferences::setChannelSplitterSizes(m_horizSplitter->sizes());
-      Preferences::setTopicSplitterSizes(m_vertSplitter->sizes());
-      Preferences::writeConfig();
+      KonversationApplication* konviApp = static_cast<KonversationApplication*>(kapp);
 
-    }
-    if (!topicSplitterHidden && channelSplitterHidden)
-    {
-      Preferences::setTopicSplitterSizes(m_vertSplitter->sizes());
-      Preferences::writeConfig();
-
-    }
-    if (!channelSplitterHidden && topicSplitterHidden)
-    {
-      Preferences::setChannelSplitterSizes(m_horizSplitter->sizes());
-      Preferences::writeConfig();
-
-    }
+        if (!topicSplitterHidden && !channelSplitterHidden)
+        {
+            konviApp->setNickListSplitterSizes(m_horizSplitter->sizes());
+            konviApp->setTopicSplitterSizes(m_vertSplitter->sizes());
+        }
+        if (!topicSplitterHidden && channelSplitterHidden)
+        {
+            konviApp->setTopicSplitterSizes(m_vertSplitter->sizes());
+        }
+        if (!channelSplitterHidden && topicSplitterHidden)
+        {
+            konviApp->setNickListSplitterSizes(m_horizSplitter->sizes());
+        }
   }
 
   return ChatWindow::eventFilter(watched, e);
@@ -2689,3 +2685,6 @@ bool NickList::containsNick(const QString& nickname)
 }
 
 #include "channel.moc"
+
+// kate: space-indent on; tab-width 4; indent-width 4; mixed-indent off; replace-tabs on;
+// vim: set et sw=4 ts=4 cino=l1,cs,U1:

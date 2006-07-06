@@ -178,7 +178,7 @@ void Server::init(KonversationMainWindow* mainWindow, const QString& nick, const
     autoJoin = false;
     tryNickNumber = 0;
     reconnectCounter = 0;
-    currentLag = 0;
+    currentLag = -1;
     rawLog = 0;
     channelListPanel = 0;
     alreadyConnected = false;

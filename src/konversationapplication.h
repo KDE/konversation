@@ -55,7 +55,7 @@ class KonversationApplication : public KUniqueApplication
 {
     Q_OBJECT
 
-        public:
+    public:
         /** This function in general shouldn't be called, because in the future there
          *  may be multiple windows.
          *  However, in some situations we have messageboxes that aren't targeted for
@@ -131,7 +131,10 @@ class KonversationApplication : public KUniqueApplication
             const bool& useSSL=FALSE
             );
 
-        signals:
+        QValueList<int> topicSplitterSizes() const;
+        QValueList<int> nickListSplitterSizes() const;
+
+    signals:
         void catchUrl(const QString& who,const QString& url);
         void prefsChanged();
         void closeServerList();
@@ -156,6 +159,9 @@ class KonversationApplication : public KUniqueApplication
         bool emitDCOPSig(const QString& appId, const QString& objId, const QString& signal, QByteArray& data);
 
         void dcopConnectToServer(const QString& url, int port, const QString& channel, const QString& password);
+
+        void setTopicSplitterSizes(const QValueList<int>& sizes);
+        void setNickListSplitterSizes(const QValueList<int>& sizes);
 
     protected slots:
         void openQuickConnectDialog();
@@ -191,5 +197,12 @@ class KonversationApplication : public KUniqueApplication
         QString m_password;
         bool m_useSSL;
         bool m_connectDelayed;
+
+        QValueList<int> m_topicSplitterSizes;
+        QValueList<int> m_nickListSplitterSizes;
 };
+
 #endif
+
+// kate: space-indent on; tab-width 4; indent-width 4; mixed-indent off; replace-tabs on;
+// vim: set et sw=4 ts=4 cino=l1,cs,U1:
