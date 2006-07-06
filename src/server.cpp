@@ -3151,6 +3151,9 @@ void Server::reconnect()
 {
     if(!isConnected())
     {
+        QObject::disconnect(m_socket,SIGNAL (gotError(int)),this,SLOT (broken(int)));
+        QObject::disconnect(m_socket,SIGNAL (closed()),this,SLOT(closed()));
+
         reconnectCounter = 0;
         connectToIRCServer();
     }
