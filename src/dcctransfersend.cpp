@@ -122,7 +122,6 @@ DccTransferSend::DccTransferSend( DccPanel* panel, const QString& partnerNick, c
         }
     }
 
-    m_fileName = m_fileName.lower();
     m_fileName.replace( " ", "_" );
 
     m_file.setName( m_tmpFile );
