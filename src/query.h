@@ -64,8 +64,7 @@ class Query : public ChatWindow
         virtual QString getChannelEncodingDefaultDesc();
         virtual void emitUpdateInfo();
 
-        virtual bool areIRCColorsSupported() {return true; }
-        virtual bool isInsertCharacterSupported() { return true; }
+        virtual bool isInsertSupported() { return true; }
 
         /** call this when you see a nick quit from the server.
          *  @param reason The quit reason given by that user.

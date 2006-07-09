@@ -1235,14 +1235,16 @@ void KonversationMainWindow::updateFrontView()
             searchView = view;
         }
 
+        bool insertSupported = view->isInsertSupported();
+
         action = actionCollection()->action("insert_remember_line");
-        if(action) action->setEnabled(view->getTextView() != 0);
+        if(action)  action->setEnabled(insertSupported);
 
         action = actionCollection()->action("insert_character");
-        if(action) action->setEnabled(view->isInsertCharacterSupported());
+        if(action) action->setEnabled(insertSupported);
 
         action = actionCollection()->action("irc_colors");
-        if(action) action->setEnabled(view->areIRCColorsSupported());
+        if(action) action->setEnabled(insertSupported);
 
         action = actionCollection()->action("clear_window");
         if(action) action->setEnabled(view->getTextView() != 0);
@@ -1882,6 +1884,8 @@ void KonversationMainWindow::serverQuit(Server* server)
 
     delete server->getStatusView();
     delete server;
+
+    updateFrontView();
 }
 
 void KonversationMainWindow::setShowTabBarCloseButton(bool s)

@@ -55,6 +55,8 @@ class DccChat : public ChatWindow
         virtual QString getChannelEncoding();
         virtual QString getChannelEncodingDefaultDesc();
 
+        virtual bool isInsertSupported() { return true; }
+
     public slots:
         void appendInputText(const QString& s);
 

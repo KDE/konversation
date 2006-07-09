@@ -52,8 +52,7 @@ class StatusPanel : public ChatWindow
 
         virtual void setIdentity(const Identity *newIdentity);
 
-        virtual bool areIRCColorsSupported() {return true; }
-        virtual bool isInsertCharacterSupported() { return true; }
+        virtual bool isInsertSupported() { return true; }
 
     signals:
         void sendFile();

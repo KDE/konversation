@@ -125,7 +125,7 @@ class ChatWindow : public QVBox
         /** child classes have to override this and return true if they want the
          *  "insert character" item on the menu to be enabled.
          */
-        virtual bool isInsertCharacterSupported() { return false; }
+        virtual bool isInsertSupported() { return false; }
 
         /** child classes have to override this and return true if they want the
          *  "irc color" item on the menu to be enabled.

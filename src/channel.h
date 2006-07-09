@@ -89,11 +89,6 @@ class Channel : public ChatWindow
         virtual void append(const QString& nickname,const QString& message);
         virtual void appendAction(const QString& nickname,const QString& message, bool usenotifications = false);
 
-    protected slots:
-        //FIXME: i doubt these ought to be slots
-        virtual bool areIRCColorsSupported() { return true; }
-        virtual bool isInsertCharacterSupported() { return true; }
-
 //General administrative stuff
     public:
         void setName(const QString& newName);
@@ -109,6 +104,7 @@ class Channel : public ChatWindow
         virtual void setChannelEncoding(const QString& encoding);
         virtual QString getChannelEncoding();
         virtual QString getChannelEncodingDefaultDesc();
+        virtual bool isInsertSupported() { return true; }
 
     protected:
         // use with caution! does not check for duplicates
