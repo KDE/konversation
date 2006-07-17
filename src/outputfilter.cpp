@@ -758,13 +758,19 @@ namespace Konversation
     OutputFilterResult OutputFilter::sendRequest(const QString &recipient,const QString &fileName,const QString &address,const QString &port,unsigned long size)
     {
         OutputFilterResult result;
-        QFile file(fileName);
-        QFileInfo info(file);
+        QString niftyFileName(fileName);
+        /*QFile file(fileName);
+        QFileInfo info(file);*/
 
         result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + "DCC SEND "
-            + info.fileName().replace(" ","_")
+            + fileName
             + " " + address + " " + port + " " + QString::number(size) + '\x01';
-        result.output = i18n("Offering \"%1\" to %2 for upload...").arg(fileName).arg(recipient);
+
+        // Dirty hack to avoid printing ""name with spaces.ext"" instead of "name with spaces.ext"
+        if ((fileName.startsWith("\"")) && (fileName.endsWith("\"")))
+            niftyFileName = fileName.mid(1, fileName.length()-2);
+
+        result.output = i18n("Offering \"%1\" to %2 for upload...").arg(niftyFileName).arg(recipient);
         result.typeString = i18n("DCC");
         result.type = Program;
 
@@ -774,10 +780,17 @@ namespace Konversation
     // Accepting Resume Request
     OutputFilterResult OutputFilter::acceptRequest(const QString &recipient,const QString &fileName,const QString &port,int startAt)
     {
+        QString niftyFileName(fileName);
+
         OutputFilterResult result;
         result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + "DCC ACCEPT " + fileName + " " + port
             + " " + QString::number(startAt) + '\x01';
-        result.output = i18n("Accepting DCC Resume request from \"%1\" for file \"%2\".").arg(recipient).arg(fileName);
+
+        // Dirty hack to avoid printing ""name with spaces.ext"" instead of "name with spaces.ext"
+        if ((fileName.startsWith("\"")) && (fileName.endsWith("\"")))
+            niftyFileName = fileName.mid(1, fileName.length()-2);
+
+        result.output = i18n("Accepting DCC Resume request from \"%1\" for file \"%2\".").arg(recipient).arg(niftyFileName);
         result.typeString = i18n("DCC");
         result.type = Program;
 
@@ -786,12 +799,19 @@ namespace Konversation
 
     OutputFilterResult OutputFilter::resumeRequest(const QString &sender,const QString &fileName,const QString &port,KIO::filesize_t startAt)
     {
+        QString niftyFileName(fileName);
+
         OutputFilterResult result;
-        QString newFileName(fileName);
-        newFileName.replace(" ", "_");
-        result.toServer = "PRIVMSG " + sender + " :" + '\x01' + "DCC RESUME " + newFileName + " " + port + " "
+        /*QString newFileName(fileName);
+        newFileName.replace(" ", "_");*/
+        result.toServer = "PRIVMSG " + sender + " :" + '\x01' + "DCC RESUME " + fileName + " " + port + " "
             + QString::number(startAt) + '\x01';
-        result.output = i18n("Sending DCC Resume request to \"%1\" for file \"%2\".").arg(sender).arg(fileName);
+
+        // Dirty hack to avoid printing ""name with spaces.ext"" instead of "name with spaces.ext"
+        if ((fileName.startsWith("\"")) && (fileName.endsWith("\"")))
+            niftyFileName = fileName.mid(1, fileName.length()-2);
+
+        result.output = i18n("Sending DCC Resume request to \"%1\" for file \"%2\".").arg(sender).arg(niftyFileName);
         result.typeString = i18n("DCC");
         result.type = Program;
         return result;

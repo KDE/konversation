@@ -1828,7 +1828,13 @@ void Server::dccSendRequest(const QString &partner, const QString &fileName, con
 
 void Server::dccResumeGetRequest(const QString &sender, const QString &fileName, const QString &port, KIO::filesize_t startAt)
 {
-    Konversation::OutputFilterResult result = outputFilter->resumeRequest(sender,fileName,port,startAt);
+    Konversation::OutputFilterResult result;
+
+    if (fileName.contains(" ") > 0)
+        result = outputFilter->resumeRequest(sender,"\""+fileName+"\"",port,startAt);
+    else
+        result = outputFilter->resumeRequest(sender,fileName,port,startAt);
+
     queue(result.toServer);
     appendMessageToFrontmost(result.typeString, result.output);
 }

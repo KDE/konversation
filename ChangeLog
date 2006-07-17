@@ -82,7 +82,15 @@ handling)
 - Fix modifications to the auto-join channel list for an active connection not being applied
   for reconnects
 - Removed buggy tray icon snapshot code from the quit-to-systray warning dialog
-
+- Konversation no longer activates IDENTIFY-MSG mode, but is still capable of parsing
+  prefixed messages upon receiving an RPL_CABAB.
+- Fix clicking anywhere in the irc view to dismiss the context menu of a link opening the
+  URL.
+- Fix heavy disk seeking when resizing the nick list.
+- Don't needlessly lowercase file names on DCC send or receive.
+- Add support for spaces in file names to DCC send, receive and resume, compatible with
+  mIRC and X-Chat. Make replacing spaces with underscores on send optional. Patch by 
+  Raphael Kubo da Costa.
 
 Changes from 0.18 to 0.19
 We are extremely pleased to announce the immediate release of Konversation 0.19. The focus

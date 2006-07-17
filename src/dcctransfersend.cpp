@@ -122,7 +122,12 @@ DccTransferSend::DccTransferSend( DccPanel* panel, const QString& partnerNick, c
         }
     }
 
-    m_fileName.replace( " ", "_" );
+    if (Preferences::dccSpaceToUnderscore())
+        m_fileName.replace( " ", "_" );
+    else {
+        if (m_fileName.contains(" ") > 0)
+            m_fileName = "\"" + m_fileName + "\"";
+    }
 
     m_file.setName( m_tmpFile );
 

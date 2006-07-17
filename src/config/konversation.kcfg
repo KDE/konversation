@@ -614,6 +614,11 @@
       <label></label>
       <whatsthis></whatsthis>
     </entry>
+    <entry key="SpaceToUnderscore" type="Bool" name="DccSpaceToUnderscore">
+      <default>true</default>
+      <label></label>
+      <whatis></whatis>
+    </entry>
     <entry key="AutoGet" type="Bool" name="DccAutoGet">
       <default>false</default>
       <label></label>

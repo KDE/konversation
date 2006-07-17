@@ -257,28 +257,42 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                 {
                     // Extract DCC type and argument list
                     QString dccType=ctcpArgument.lower().section(' ',0,0);
-                    QStringList dccArgument=QStringList::split(' ',ctcpArgument.mid(ctcpArgument.find(" ")+1).lower());
+
+                    // Support file names with spaces
+                    QString dccArguments = ctcpArgument.mid(ctcpArgument.find(" ")+1);
+                    QStringList dccArgumentList;
+
+                    if ((dccArguments.contains('\"') >= 2) && (dccArguments.startsWith("\""))) {
+                        int lastQuotePos = dccArguments.findRev("\"");
+                        if (dccArguments[lastQuotePos+1] == ' ') {
+                            QString fileName = dccArguments.mid(1, lastQuotePos-1);
+                            dccArguments = dccArguments.mid(lastQuotePos+2);
+
+                            dccArgumentList.append(fileName);
+                        }
+                    }
+                    dccArgumentList += QStringList::split(' ', dccArguments);
 
                     // Incoming file?
                     if(dccType=="send")
                     {
                         konv_app->notificationHandler()->dccIncoming(server->getStatusView(), sourceNick);
-                        emit addDccGet(sourceNick,dccArgument);
+                        emit addDccGet(sourceNick,dccArgumentList);
                     }
                     // Incoming file that shall be resumed?
                     else if(dccType=="accept")
                     {
-                        emit resumeDccGetTransfer(sourceNick,dccArgument);
+                        emit resumeDccGetTransfer(sourceNick,dccArgumentList);
                     }
                     // Remote client wants our sent file resumed
                     else if(dccType=="resume")
                     {
-                        emit resumeDccSendTransfer(sourceNick,dccArgument);
+                        emit resumeDccSendTransfer(sourceNick,dccArgumentList);
                     }
                     else if(dccType=="chat")
                     {
                         // will be connected via Server to KonversationMainWindow::addDccChat()
-                        emit addDccChat(server->getNickname(),sourceNick,server->getNumericalIp(),dccArgument,false);
+                        emit addDccChat(server->getNickname(),sourceNick,server->getNumericalIp(),dccArgumentList,false);
                     }
                     else
                     {
