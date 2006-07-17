@@ -91,6 +91,10 @@ DccChat::DccChat(QWidget* parent,Server* newServer,const QString& myNickname,con
         connectToPartner();
 
     kdDebug() << "DccChat::DccChat() [END]" << endl;
+
+    connect(KonversationApplication::instance(), SIGNAL (appearanceChanged()),this,SLOT (updateAppearance()) );
+
+    updateAppearance();
 }
 
 DccChat::~DccChat()
@@ -394,6 +398,42 @@ void DccChat::showEvent(QShowEvent* event)
         QValueList<int> sizes;
         sizes << m_sourceLine->sizeHint().height() << (height() - m_sourceLine->sizeHint().height());
         m_headerSplitter->setSizes(sizes);
+    }
+}
+
+void DccChat::updateAppearance()
+{
+    QColor fg;
+    QColor bg;
+
+    if(Preferences::inputFieldsBackgroundColor())
+    {
+        fg=Preferences::color(Preferences::ChannelMessage);
+        bg=Preferences::color(Preferences::TextViewBackground);
+    }
+    else
+    {
+        fg=colorGroup().foreground();
+        bg=colorGroup().base();
+    }
+
+    m_dccChatInput->unsetPalette();
+    m_dccChatInput->setPaletteForegroundColor(fg);
+    m_dccChatInput->setPaletteBackgroundColor(bg);
+    m_dccChatInput->setFont(Preferences::textFont());
+
+    getTextView()->unsetPalette();
+    getTextView()->setFont(Preferences::textFont());
+
+    if(Preferences::showBackgroundImage())
+    {
+        getTextView()->setViewBackground(Preferences::color(Preferences::TextViewBackground),
+        Preferences::backgroundImage());
+    }
+    else
+    {
+        getTextView()->setViewBackground(Preferences::color(Preferences::TextViewBackground),
+        QString::null);
     }
 }
 

@@ -59,6 +59,7 @@ class DccChat : public ChatWindow
 
     public slots:
         void appendInputText(const QString& s);
+        void updateAppearance();
 
     protected slots:
         void lookupFinished();

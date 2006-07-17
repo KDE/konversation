@@ -234,10 +234,6 @@ void Query::updateAppearance()
     queryInput->setPaletteBackgroundColor(bg);
     queryInput->setFont(Preferences::textFont());
 
-    //  queryHostmask->setPaletteForegroundColor(fg);
-    //  queryHostmask->setPaletteBackgroundColor(bg);
-    //  queryHostmask->setFont(Preferences::textFont());
-
     getTextView()->unsetPalette();
     getTextView()->setFont(Preferences::textFont());
 

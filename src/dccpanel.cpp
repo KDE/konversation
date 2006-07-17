@@ -47,10 +47,6 @@ DccPanel::DccPanel(QWidget* parent)
     m_listView->setSorting(-1,false);
     m_listView->setAllColumnsShowFocus(true);
 
-    // Since the parent is the viewContainer TabWidget, it might have an inapropriately
-    // small font. Use the default font
-    m_listView->setFont(KGlobalSettings::generalFont());
-
     for(unsigned int i=0 ; i < Column::COUNT ; ++i)
         m_listView->addColumn("");
 

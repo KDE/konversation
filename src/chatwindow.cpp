@@ -46,6 +46,10 @@ ChatWindow::ChatWindow(QWidget* parent) : QVBox(parent)
 
     setMargin(margin());
     setSpacing(spacing());
+
+    // The font size of the KTabWidget container may be inappropriately
+    // small due to the "Tab bar" font size setting.
+    setFont(KGlobalSettings::generalFont());
 }
 
 ChatWindow::~ChatWindow()
