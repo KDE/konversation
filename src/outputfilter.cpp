@@ -1555,7 +1555,7 @@ namespace Konversation
 
         if(parameter.isEmpty())
         {
-            result = usage(i18n("Show help here"));
+            result = usage(i18n("Usage: %1setkey <nick> or <channel> <key> Sets the encryption key for nick or channel").arg(commandChar) );
         }
         else
         {
@@ -1573,7 +1573,7 @@ namespace Konversation
 
         if(parameter.isEmpty())
         {
-            result = usage(i18n("Show help here"));
+            result = usage(i18n("Usage: %1delkey <nick> or <channel> Deletes the encryption key for nick or channel").arg(commandChar));
         }
         else
         {
