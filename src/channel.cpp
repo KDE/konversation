@@ -2060,6 +2060,8 @@ void Channel::updateAppearance()
     nicknameListView->setAlternateBackground(abg);
     nicknameListView->setFont(Preferences::listFont());
 
+    nicknameListView->refresh();
+
     showModeButtons(Preferences::showModeButtons());
     showNicknameList(Preferences::showNickList());
     showNicknameBox(Preferences::showNicknameBox());
