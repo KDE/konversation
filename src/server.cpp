@@ -1932,7 +1932,7 @@ void Server::removeQuery(class Query* query)
         // else select next query
         else lookQuery=queryList.next();
     }
-    delete query;
+    query->deleteLater();
 }
 
 void Server::sendJoinCommand(const QString& name, const QString& password)
