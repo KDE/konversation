@@ -8,9 +8,10 @@
 */
 
 /*
-  begin:     Sun Jan 20 2002
-  copyright: (C) 2002 by Dario Abatianni
-  email:     eisfuchs@tigress.com
+  Copyright (C) 2002 Dario Abatianni <eisfuchs@tigress.com>
+  Copyright (C) 2005 Ismail Donmez <ismail@kde.org>
+  Copyright (C) 2005 Peter Simonsson <psn@linux.se>
+  Copyright (C) 2005 Eike Hein <sho@eikehein.com>
 */
 
 #include <qregexp.h>
@@ -65,7 +66,7 @@ Server::Server(KonversationMainWindow* mainWindow, int serverGroupId, bool clear
     bot = getIdentity()->getBot();
     botPassword = getIdentity()->getPassword();
 
-    init (mainWindow, getIdentity()->getNickname(0),"");
+    init(mainWindow, getIdentity()->getNickname(0),"");
 }
 
 Server::Server(KonversationMainWindow* mainWindow,const QString& hostName,const QString& port,
@@ -185,7 +186,6 @@ void Server::init(KonversationMainWindow* mainWindow, const QString& nick, const
     rejoinChannels = false;
     connecting = false;
     m_serverISON = 0;
-    lastDccDir = QString::null;
     m_isAway = false;
     m_isAutoAway = false;
     m_socket = 0;
@@ -773,14 +773,14 @@ void Server::registerWithServices()
         queue("PRIVMSG "+bot+" :identify "+botPassword);
 }
 
-QCString Server::getKeyForRecepient(const QString& recepient) const
+QCString Server::getKeyForRecipient(const QString& recipient) const
 {
-    return keyMap[recepient];
+    return keyMap[recipient];
 }
 
-void Server::setKeyForRecepient(const QString& recepient, const QCString& key)
+void Server::setKeyForRecipient(const QString& recipient, const QCString& key)
 {
-    keyMap[recepient] = key;
+    keyMap[recipient] = key;
 }
 
 void Server::gotOwnResolvedHostByWelcome(KResolverResults res)
@@ -918,7 +918,7 @@ QString Server::getAutoJoinCommand() const
     QStringList channels = QStringList::split(' ',autoJoinChannel);
     QStringList keys = QStringList::split(' ',autoJoinChannelKey);
 
-    QString autoString("JOIN "+channels.join(",")+" "+keys.join(","));
+    QString autoString("JOIN "+channels.join(",")+' '+keys.join(","));
 
     return autoString;
 }
@@ -928,7 +928,7 @@ QString Server::getNextNickname()
     QString newNick = getIdentity()->getNickname(++tryNickNumber);
 
     if(newNick.isEmpty())
-       newNick = getNickname()+"_";
+       newNick = getNickname()+'_';
 
     return newNick;
 }
@@ -1181,7 +1181,7 @@ void Server::send()
     {
         // NOTE: It's important to add the linefeed here, so the encoding process does not trash it
         //       for some servers.
-        QString outputLine=outputBuffer[0]+"\n";
+        QString outputLine=outputBuffer[0]+'\n';
         QStringList outputLineSplit=QStringList::split(" ",outputBuffer[0]);
         outputBuffer.pop_front();
 
@@ -1652,7 +1652,7 @@ void Server::requestBan(const QStringList& users,const QString& channel,const QS
                 // if we found the hostmask, add it to the ban mask
                 if(!hostmask.isEmpty())
                 {
-                    mask=targetNick->getNickname()+"!"+hostmask;
+                    mask=targetNick->getNickname()+'!'+hostmask;
 
                     // adapt ban mask to the option given
                     if(option=="host")
@@ -1662,7 +1662,7 @@ void Server::requestBan(const QStringList& users,const QString& channel,const QS
                     else if(option=="userhost")
                         mask="*!"+hostmask.section('@',0,0)+"@*."+hostmask.section('.',1);
                     else if(option=="userdomain")
-                        mask="*!"+hostmask.section('@',0,0)+"@"+hostmask.section('@',1);
+                        mask="*!"+hostmask.section('@',0,0)+'@'+hostmask.section('@',1);
                 }
             }
         }
@@ -1938,7 +1938,7 @@ void Server::removeQuery(class Query* query)
 void Server::sendJoinCommand(const QString& name, const QString& password)
 {
     Konversation::OutputFilterResult result = outputFilter->parse(getNickname(),
-        Preferences::commandChar() + "JOIN " + name + " " + password, QString::null);
+        Preferences::commandChar() + "JOIN " + name + ' ' + password, QString::null);
     queue(result.toServer);
 }
 
@@ -2923,7 +2923,7 @@ void Server::setAutoAway()
     m_isAutoAway = true;
     //note that we now need to tell the server we are away.
     //m_isAway is set when we get a reply from the server saying we are now away.
-                                                  //fix this to use a prefered auto-away string.
+    //fix this to use a preferred auto-away string.
     executeMultiServerCommand("away", i18n("Gone away for now."));
 }
 
@@ -3070,7 +3070,7 @@ void Server::autoRejoinChannels()
         keys.append(ch->getKey());
     }
 
-    QString joinString("JOIN "+channels.join(",")+" "+keys.join(","));
+    QString joinString("JOIN "+channels.join(",")+' '+keys.join(","));
     queue(joinString);
 }
 
@@ -3117,7 +3117,7 @@ void Server::executeMultiServerCommand(const QString& command, const QString& pa
 
                                                   //you cant have a message with 'back'
         if(!parameter.isEmpty() && command == "away")
-            str += " " + parameter;
+            str += ' ' + parameter;
 
         Konversation::OutputFilterResult result = outputFilter->parse(getNickname(), str, QString::null);
         queue(result.toServer);
@@ -3128,7 +3128,7 @@ void Server::executeMultiServerCommand(const QString& command, const QString& pa
     }
     else
     {
-        sendToAllChannelsAndQueries(Preferences::commandChar() + command + " " + parameter);
+        sendToAllChannelsAndQueries(Preferences::commandChar() + command + ' ' + parameter);
     }
 }
 
@@ -3203,27 +3203,27 @@ QString Server::awayTime() const
 
         if(num < 10)
         {
-            retVal = "0" + QString::number(num) + ":";
+            retVal = '0' + QString::number(num) + ':';
         }
         else
         {
-            retVal = QString::number(num) + ":";
+            retVal = QString::number(num) + ':';
         }
 
         num = (diff % 3600) / 60;
 
         if(num < 10)
         {
-            retVal += "0";
+            retVal += '0';
         }
 
-        retVal += QString::number(num) + ":";
+        retVal += QString::number(num) + ':';
 
         num = (diff % 3600) % 60;
 
         if(num < 10)
         {
-            retVal += "0";
+            retVal += '0';
         }
 
         retVal += QString::number(num);
@@ -3285,7 +3285,7 @@ void Server::sendPing()
     m_pingResponseTimer.start(1000 /*1 sec*/);
 }
 
-void Server::pongRecieved()
+void Server::pongReceived()
 {
     currentLag = m_lagTime.elapsed();
     inputFilter.setLagMeasuring(false);

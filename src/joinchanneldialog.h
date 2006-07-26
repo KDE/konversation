@@ -6,8 +6,9 @@
 */
 
 /*
-  copyright: (C) 2004 by Peter Simonsson <psn@linux.se>
+  Copyright (C) 2004 Peter Simonsson <psn@linux.se>
 */
+
 #ifndef KONVERSATIONJOINCHANNELDIALOG_H
 #define KONVERSATIONJOINCHANNELDIALOG_H
 

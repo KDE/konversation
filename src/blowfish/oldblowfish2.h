@@ -1,3 +1,7 @@
+/*
+  Copyright (C) 2005 Ismail Donmez <ismail@kde.org>
+*/
+
 // blowfish.h2  header file containing random number tables
 //---------------------------------------------------------------------------
 

@@ -6,10 +6,11 @@
 */
 
 /*
-  Converts input to RFC1459 output
-  begin:     Fri Feb 1 2002
-  copyright: (C) 2002 by Dario Abatianni
-  email:     eisfuchs@tigress.com
+  Copyright (C) 2002 Dario Abatianni <eisfuchs@tigress.com>
+  Copyright (C) 2005 Ismail Donmez <ismail@kde.org>
+  Copyright (C) 2005 Peter Simonsson <psn@linux.se>
+  Copyright (C) 2005 John Tapsell <johnflux@gmail.com>
+  Copyright (C) 2005 Eike Hein <sho@eikehein.com>
 */
 
 #ifndef OUTPUTFILTER_H

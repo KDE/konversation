@@ -5,6 +5,12 @@
   (at your option) any later version.
 */
 
+/*
+  Copyright (C) 2005 Ismail Donmez <ismail@kde.org>
+  Copyright (C) 2006 Dario Abatianni <eisfuchs@tigress.com>
+  Copyright (C) 2006 John Tapsell <johnflux@gmail.com>
+*/
+
 #ifndef EXALIASPREFERENCES_H
 #define EXALIASPREFERENCES_H
 

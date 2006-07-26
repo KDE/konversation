@@ -6,8 +6,10 @@
 */
 
 /*
-  copyright: (C) 2004 Peter Simonsson <psn@linux.se>
+  Copyright (C) 2004 Peter Simonsson <psn@linux.se>
+  Copyright (C) 2006 Eike Hein <sho@eikehein.com>
 */
+
 #include "topiclabel.h"
 
 #include <qsimplerichtext.h>
@@ -48,8 +50,6 @@ namespace Konversation
         m_popup = new QPopupMenu(this,"topiclabel_context_menu");
         m_popup->insertItem(SmallIconSet("editcopy"),i18n("&Copy"),Copy);
         m_popup->insertItem(i18n("Select All"),SelectAll);
-
-        m_currentChannel = QString::null;
 
         setupChannelPopupMenu();
 

@@ -6,9 +6,8 @@
 */
 
 /*
-  begin:     Mon Jan 28 2002
-  copyright: (C) 2002 by Dario Abatianni
-  email:     eisfuchs@tigress.com
+  Copyright (C) 2002 Dario Abatianni <eisfuchs@tigress.com>
+  Copyright (C) 2005 Eike Hein <sho@eikehein.com>
 */
 
 #ifndef QUERY_H

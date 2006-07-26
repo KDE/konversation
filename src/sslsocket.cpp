@@ -157,7 +157,7 @@ int SSLSocket::verifyCertificate()
     KSSLCertificate::KSSLValidation validation;
 
     d->remoteHost = peerAddress().nodeName();
-    d->url = "irc://"+d->remoteHost+":"+peerAddress().serviceName();
+    d->url = "irc://"+d->remoteHost+':'+peerAddress().serviceName();
 
     KSSLCertificate& peerCertificate = d->kssl->peerInfo().getPeerCertificate();
 
@@ -184,7 +184,7 @@ int SSLSocket::verifyCertificate()
     for(KSSLCertificate::KSSLValidationList::ConstIterator it = validationList.begin();
         it != validationList.end(); ++it)
     {
-        d->m_sslCertErrors += QString::number(*it)+":";
+        d->m_sslCertErrors += QString::number(*it)+':';
     }
 
     if (peerCertificate.chain().isValid() && peerCertificate.chain().depth() > 1)
@@ -194,7 +194,7 @@ int SSLSocket::verifyCertificate()
         for (KSSLCertificate *c = chain.first(); c; c = chain.next())
         {
             theChain += c->toString();
-            theChain += "\n";
+            theChain += '\n';
         }
     }
 

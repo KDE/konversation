@@ -72,8 +72,8 @@ DccChat::DccChat(QWidget* parent,Server* newServer,const QString& myNickname,con
     m_dccChatInput->setEnabled( false );
 
     setServer( newServer );
-    ChatWindow::setName( "-" + m_partnerNick + "-" );
-    ChatWindow::setLogfileName( "-" + m_partnerNick + "-" );
+    ChatWindow::setName( '-' + m_partnerNick + '-' );
+    ChatWindow::setLogfileName( '-' + m_partnerNick + '-' );
 
     // connect the signals and slots
     connect( m_dccChatInput, SIGNAL( submit() ), this, SLOT( dccChatTextEntered() ) );
@@ -118,7 +118,7 @@ void DccChat::listenForPartner()
     if(Preferences::dccSpecificChatPorts())
     {
         // set port
-        bool found = false;                       // wheter succeeded to set port
+        bool found = false;                       // wether succeeded to set port
         unsigned long port = Preferences::dccChatPortsFirst();
         for( ; port <= Preferences::dccChatPortsLast() ; ++port )
         {

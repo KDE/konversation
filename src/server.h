@@ -1,6 +1,3 @@
-#ifndef SERVER_H
-#define SERVER_H
-
 /*
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -9,11 +6,14 @@
 */
 
 /*
-  server.h  -  Server Class to handle connection to the IRC server
-  begin:     Sun Jan 20 2002
-  copyright: (C) 2002,2003,2004 by Dario Abatianni
-  email:     eisfuchs@tigress.com
+  Copyright (C) 2002 Dario Abatianni <eisfuchs@tigress.com>
+  Copyright (C) 2005 Ismail Donmez <ismail@kde.org>
+  Copyright (C) 2005 Peter Simonsson <psn@linux.se>
+  Copyright (C) 2005 Eike Hein <sho@eikehein.com>
 */
+
+#ifndef SERVER_H
+#define SERVER_H
 
 #include <qtimer.h>
 #include <qdict.h>
@@ -68,7 +68,7 @@ class Server : public QObject
          *  The details are passed in.  Used for example when the user does "/server irc.somewhere.net"
          */
         Server(KonversationMainWindow* mainWindow,const QString& hostName,const QString& port,
-            const QString& channel,const QString& nick, QString password, const bool& useSSL=FALSE);
+            const QString& channel,const QString& nick, QString password, const bool& useSSL=false);
         ~Server();
 
         QString getServerName() const;
@@ -335,8 +335,8 @@ class Server : public QObject
         void registerWithServices();
 
         // Blowfish stuff
-        QCString getKeyForRecepient(const QString& recepient) const;
-        void setKeyForRecepient(const QString& recepient, const QCString& key);
+        QCString getKeyForRecipient(const QString& recipient) const;
+        void setKeyForRecipient(const QString& recipient, const QCString& key);
 
         bool identifyMsg() const { return m_identifyMsg; }
 
@@ -435,8 +435,8 @@ class Server : public QObject
         void addBan(const QString &channel, const QString &ban);
         void removeBan(const QString &channel, const QString &ban);
 
-        /// Called when we recieve a PONG from the server
-        void pongRecieved();
+        /// Called when we received a PONG from the server
+        void pongReceived();
 
     protected slots:
 

@@ -143,7 +143,7 @@ class NicksOnline : public ChatWindow
         */
         QListViewItem* findItemChild(const QListViewItem* parent, const QString& name, NicksOnlineItem::NickListViewColumn type);
         /**
-        * Returns the first occurence of a child item of a given type in a NicksOnlineItem
+        * Returns the first occurrence of a child item of a given type in a NicksOnlineItem
         * @param parent            Pointer to a NicksOnlineItem.
         * @param type              The type of entry to be found
         * @return                  Pointer to the child QListViewItem or 0 if not found.

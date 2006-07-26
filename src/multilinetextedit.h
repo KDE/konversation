@@ -1,14 +1,13 @@
-//
-// C++ Interface: multilinetextedit
-//
-// Description:
-//
-//
-// Author: Dario Abatianni <eisfuchs@tigress.com> and kbabel Team, (C) 2006
-//
-// Copyright: See COPYING file that comes with this distribution
-//
-//
+/*
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; either version 2 of the License, or
+  (at your option) any later version.
+*/
+
+/*
+  Copyright (C) 2006 Dario Abatianni <eisfuchs@tigress.com>
+*/
 
 #ifndef MULTILINETEXTEDIT_H
 #define MULTILINETEXTEDIT_H

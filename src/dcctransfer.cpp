@@ -49,10 +49,6 @@ DccTransfer::DccTransfer( DccPanel* panel, DccType dccType, const QString& partn
     m_resumed = false;
     m_transferringPosition = 0;
     m_transferStartPosition = 0;
-    m_partnerIp = QString::null;
-    m_partnerPort = QString::null;
-    m_ownIp = QString::null;
-    m_ownPort = QString::null;
     m_timeOffer = QDateTime::currentDateTime();
 
     m_bufferSize = Preferences::dccBufferSize();
@@ -286,7 +282,7 @@ void DccTransfer::openFileInfoDialog()
                         if(item.isValid())
                         {
                             // append item information to list
-                            infoList.append("- "+item.translatedKey()+" "+item.string());
+                            infoList.append("- "+item.translatedKey()+' '+item.string());
                         }
                     } // endfor
                 }

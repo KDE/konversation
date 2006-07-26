@@ -63,7 +63,7 @@ class DccTransferRecv : public DccTransfer
          */
         virtual void start();
         /** The user has chosen to abort.
-         *  Either by chosen to abort directly, or by chosing cancel when
+         *  Either by chosen to abort directly, or by choosing cancel when
          *  prompted for information on where to save etc.
          *  Not called when it fails due to another problem.
          */

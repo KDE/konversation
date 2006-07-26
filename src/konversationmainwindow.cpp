@@ -6,10 +6,11 @@
 */
 
 /*
-  The main window where all other views go
-  begin:     Don Apr 17 2003
-  copyright: (C) 2003 by Dario Abatianni, Peter Simonsson
-  email:     eisfuchs@tigress.com, psn@linux.se
+  Copyright (C) 2002 Dario Abatianni <eisfuchs@tigress.com>
+  Copyright (C) 2005 Ismail Donmez <ismail@kde.org>
+  Copyright (C) 2005 Peter Simonsson <psn@linux.se>
+  Copyright (C) 2005 John Tapsell <johnflux@gmail.com>
+  Copyright (C) 2005 Eike Hein <sho@eikehein.com>
 */
 
 #include <qpainter.h>
@@ -2008,7 +2009,7 @@ void KonversationMainWindow::openURL(const QString& url, const QString& /*title*
         }
         else if(!channel.isEmpty())
         {
-            newServer->queue("JOIN " + channel + " " + password);
+            newServer->queue("JOIN " + channel + ' ' + password);
         }
     }
     else
@@ -2019,10 +2020,10 @@ void KonversationMainWindow::openURL(const QString& url, const QString& /*title*
 
 QString KonversationMainWindow::currentURL(bool passNetwork)
 {
-    QString url = QString::null;
-    QString channel = QString::null;
-    QString port = QString::null;
-    QString server = QString::null;
+    QString url;
+    QString channel;
+    QString port;
+    QString server;
 
     if(frontServer && m_frontView)
     {
@@ -2041,15 +2042,15 @@ QString KonversationMainWindow::currentURL(bool passNetwork)
         {
             server = frontServer->getServerName();
 
-            port = ":"+QString::number(frontServer->getPort());
+            port = ':'+QString::number(frontServer->getPort());
         }
 
         if (server.contains(':')) // IPv6
         {
-            server = "["+server+"]";
+            server = '['+server+']';
         }
 
-        url = "irc://"+server+port+"/"+channel;
+        url = "irc://"+server+port+'/'+channel;
     }
 
     return url;

@@ -46,7 +46,7 @@ QString IRCColorChooser::color()
 
     if(m_view->m_bgColorCBox->currentItem() > 0)
     {
-        s += "," + QString::number(m_view->m_bgColorCBox->currentItem() - 1);
+        s += ',' + QString::number(m_view->m_bgColorCBox->currentItem() - 1);
     }
 
     return s;

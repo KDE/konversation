@@ -1342,7 +1342,7 @@ void Channel::setTopicAuthor(const QString& newAuthor)
 {
     if(topicAuthorUnknown)
     {
-        m_topicHistory[0] = m_topicHistory[0].section(' ', 0, 0) + " " + newAuthor + " " + m_topicHistory[0].section(' ', 2);
+        m_topicHistory[0] = m_topicHistory[0].section(' ', 0, 0) + ' ' + newAuthor + ' ' + m_topicHistory[0].section(' ', 2);
         topicAuthorUnknown = false;
     }
 }
@@ -2189,7 +2189,7 @@ void Channel::autoUserhost()
         {
             if(nick->getHostmask().isEmpty())
             {
-                if(limit--) nickString = nickString + nick->getNickname() + " ";
+                if(limit--) nickString = nickString + nick->getNickname() + ' ';
                 else break;
             }
 

@@ -6,10 +6,11 @@
 */
 
 /*
-  The main application
-  begin:     Mon Jan 28 2002
-  copyright: (C) 2002 by Dario Abatianni
-  email:     eisfuchs@tigress.com
+  Copyright (C) 2002 Dario Abatianni <eisfuchs@tigress.com>
+  Copyright (C) 2005 Ismail Donmez <ismail@kde.org>
+  Copyright (C) 2005 Peter Simonsson <psn@linux.se>
+  Copyright (C) 2005 John Tapsell <johnflux@gmail.com>
+  Copyright (C) 2005 Eike Hein <sho@eikehein.com>
 */
 
 #include <qtextcodec.h>
@@ -273,7 +274,7 @@ void KonversationApplication::dcopSay(const QString& server,const QString& targe
             lookServer->dcopSay(target,command);
             //      break; // leave while loop
             //FIXME:   <muesli> there's a reason for not breaking this loop, here (which would spent only some
-            //                  cpu cycles, anyways): i'm connected to two bouncers at the same time, which are
+            //                  cpu cycles, anyways): I am connected to two bouncers at the same time, which are
             //                  also named the same (same ip, no dns). if a dcopSay gets emerged, it will always
             //                  get the _same_ server name as its parameter (both are named the same). although
             //                  the channel it gets sent to, is on the second server, it will always try to send
@@ -657,7 +658,7 @@ void KonversationApplication::readOptions()
         unsigned int hiIndex;
         for(hiIndex=0;hiIndex<hiList.count();hiIndex+=2)
         {
-            Preferences::addHighlight(hiList[hiIndex],false,"#"+hiList[hiIndex+1],QString::null,QString::null);
+            Preferences::addHighlight(hiList[hiIndex],false,'#'+hiList[hiIndex+1],QString::null,QString::null);
         }
 
         config->deleteEntry("Highlight");
@@ -905,7 +906,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
         channelEncodingsChannelList.sort();
         for(unsigned int j=0; j<channelEncodingsChannelList.count(); ++j)
             if(!Preferences::channelEncoding(channelEncodingsServerList[i],channelEncodingsChannelList[j]).isEmpty())
-                config->writeEntry(channelEncodingsServerList[i]+" "+channelEncodingsChannelList[j],Preferences::channelEncoding(channelEncodingsServerList[i],channelEncodingsChannelList[j]));
+                config->writeEntry(channelEncodingsServerList[i]+' '+channelEncodingsChannelList[j],Preferences::channelEncoding(channelEncodingsServerList[i],channelEncodingsChannelList[j]));
     }
 
     config->sync();
@@ -943,7 +944,7 @@ void KonversationApplication::storeUrl(const QString& who,const QString& newUrl)
 
     // check that we don't add the same URL twice
     deleteUrl(who,url);
-    urlList.append(who+" "+url);
+    urlList.append(who+' '+url);
     emit catchUrl(who,url);
 }
 
@@ -954,7 +955,7 @@ const QStringList& KonversationApplication::getUrlList()
 
 void KonversationApplication::deleteUrl(const QString& who,const QString& url)
 {
-    urlList.remove(who+" "+url);
+    urlList.remove(who+' '+url);
 }
 
 void KonversationApplication::clearUrlList()
@@ -1053,7 +1054,7 @@ uint& KonversationApplication::getColorOffset()
 
 void KonversationApplication::splitNick_Server(QString nick_server, QString &ircnick, QString &serverOrGroup)
 {
-    //kaddresbook uses the utf seperator 0xE120, so treat that as a seperator as well
+    //kaddresbook uses the utf separator 0xE120, so treat that as a separator as well
     nick_server = nick_server.replace(QChar(0xE120), "@");
     ircnick = nick_server.section("@",0,0);
     serverOrGroup = nick_server.section("@",1);

@@ -1,15 +1,14 @@
-//
-// C++ Implementation: dccresumedialog
-//
-// Description: Lets the user decide if they want to overwrite, rename or cancel the resume
-//
-//
-// Authors: Dario Abatianni <eisfuchs@tigress.com>, (C) 2004
-//          Shintaro Matsuoka <shin@shoegazed.org>, (C) 2004
-//
-// Copyright: See COPYING file that comes with this distribution
-//
-//
+/*
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; either version 2 of the License, or
+  (at your option) any later version.
+*/
+
+/*
+  Copyright (C) 2004 Dario Abatianni <eisfuchs@tigress.com>
+  Copyright (C) 2004 Shintaro Matsuoka <shin@shoegazed.org>
+*/
 
 #include <qlabel.h>
 #include <qlayout.h>
@@ -155,7 +154,7 @@ void DccResumeDialog::suggestNewName() // slot
         int number = tmp.toInt( &ok );
         if ( !ok ) // ok there is no number
         {
-            suggestedName = basename + "1" + dotSuffix;
+            suggestedName = basename + '1' + dotSuffix;
         }
         else
         {

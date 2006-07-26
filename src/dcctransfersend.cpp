@@ -208,7 +208,7 @@ void DccTransferSend::start()                     // public slot
     m_serverSocket = new KNetwork::KServerSocket( this );
     m_serverSocket->setFamily( KNetwork::KResolver::InetFamily );
 
-                                                  // user is specifing ports
+                                                  // user is specifying ports
     if ( Preferences::dccSpecificSendPorts() )
     {
         // set port
@@ -229,7 +229,7 @@ void DccTransferSend::start()                     // public slot
             return;
         }
     }
-    else                                          // user isn't specifing ports
+    else                                          // user isn't specifying ports
     {
         // Let the operating system choose a port
         m_serverSocket->setAddress( "0" );

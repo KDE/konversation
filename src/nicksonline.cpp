@@ -182,7 +182,7 @@ QListViewItem* NicksOnline::findItemChild(const QListViewItem* parent, const QSt
 }
 
 /**
- * Returns the first occurence of a child item of a given type in a NicksOnlineItem
+ * Returns the first occurrence of a child item of a given type in a NicksOnlineItem
  * @param parent            Pointer to a NicksOnlineItem.
  * @param type              The type of entry to be found
  * @return                  Pointer to the child QListViewItem or 0 if not found.
@@ -240,23 +240,23 @@ bool& needWhois)
         {
             niInfo += i18n("Away");
             if (!nickInfo->getAwayMessage().isEmpty())
-                niInfo += "(" + nickInfo->getAwayMessage() + ")";
+                niInfo += '(' + nickInfo->getAwayMessage() + ')';
         }
         if (!nickInfo->getHostmask().isEmpty())
-            niInfo += " " + nickInfo->getHostmask();
+            niInfo += ' ' + nickInfo->getHostmask();
         if (!nickInfo->getRealName().isEmpty())
-            niInfo += " (" + nickInfo->getRealName() + ")";
+            niInfo += " (" + nickInfo->getRealName() + ')';
         if (!nickInfo->getNetServer().isEmpty())
         {
             niInfo += i18n( " online via %1" ).arg( nickInfo->getNetServer() );
             if (!nickInfo->getNetServerInfo().isEmpty())
-                niInfo += " (" + nickInfo->getNetServerInfo() + ")";
+                niInfo += " (" + nickInfo->getNetServerInfo() + ')';
         }
         if (!nickInfo->getOnlineSince().isNull())
             niInfo += i18n( " since %1" ).arg( nickInfo->getPrettyOnlineSince() );
     }
     needWhois = niInfo.isEmpty();
-    if (!info.isEmpty() && !needWhois) info += " ";
+    if (!info.isEmpty() && !needWhois) info += ' ';
     return info + niInfo;
 }
 

@@ -6,9 +6,8 @@
 */
 
 /*
-  begin:     Mon Jan 28 2002
-  copyright: (C) 2002 by Dario Abatianni
-  email:     eisfuchs@tigress.com
+  Copyright (C) 2002 Dario Abatianni <eisfuchs@tigress.com>
+  Copyright (C) 2005 Eike Hein <sho@eikehein.com>
 */
 
 #include <qhbox.h>
@@ -310,7 +309,7 @@ void Query::popup(int id)
     switch(id)
     {
         case Konversation::Whois:
-            sendQueryText(Preferences::commandChar()+"WHOIS "+name+" "+name);
+            sendQueryText(Preferences::commandChar()+"WHOIS "+name+' '+name);
             break;
 
         case Konversation::IgnoreNick:
@@ -538,7 +537,7 @@ void Query::quitNick(const QString& reason)
   {
     // if the reason contains text markup characters, play it safe and reset all
     if(displayReason.find(QRegExp("[\\0000-\\0037]"))!=-1) displayReason+="\017";
-    displayReason=" ("+displayReason+")";
+    displayReason=" ("+displayReason+')';
   }
 
   appendCommandMessage(i18n("Quit"),i18n("%1 has left this server%2.").arg(getName()).arg(displayReason),false);

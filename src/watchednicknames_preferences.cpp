@@ -1,14 +1,13 @@
-//
-// C++ Implementation: WatchedNicknames_Config
-//
-// Description:
-//
-//
-// Author: Dario Abatianni <eisfuchs@tigress.com>, (C) 2006
-//
-// Copyright: See COPYING file that comes with this distribution
-//
-//
+/*
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; either version 2 of the License, or
+  (at your option) any later version.
+*/
+
+/*
+  Copyright (C) 2006 Dario Abatianni <eisfuchs@tigress.com>
+*/
 
 #include <qlabel.h>
 #include <qcombobox.h>
@@ -128,7 +127,7 @@ void WatchedNicknames_Config::saveSettings()
     while(nick)
     {
       // add nick to string container and add a blank
-      nicks+=nick->text(0)+" ";
+      nicks+=nick->text(0)+' ';
       // get next nick in the group
       nick=nick->nextSibling();
     } // while

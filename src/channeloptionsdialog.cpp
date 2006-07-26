@@ -93,7 +93,7 @@ namespace Konversation
             if (newTopic.isEmpty())
                 m_channel->sendChannelText(Preferences::commandChar() + "TOPIC " + m_channel->getName() + " \n");
             else
-                m_channel->sendChannelText(Preferences::commandChar() + "TOPIC " + m_channel->getName() + " " + newTopic);
+                m_channel->sendChannelText(Preferences::commandChar() + "TOPIC " + m_channel->getName() + ' ' + newTopic);
         }
 
         QStringList newModeList = modes();
@@ -109,7 +109,7 @@ namespace Konversation
         {
             modeString = (*it).mid(1);
             plus = ((*it)[0] == '+');
-            tmp = currentModeList.grep(QRegExp("^" + modeString));
+            tmp = currentModeList.grep(QRegExp('^' + modeString));
 
             if(tmp.isEmpty() && plus)
             {
@@ -310,25 +310,25 @@ namespace Konversation
         QString mode;
 
         mode = (m_widget->topicModeChBox->isChecked() ? "+" : "-");
-        mode += "t";
+        mode += 't';
         modes.append(mode);
         mode = (m_widget->messageModeChBox->isChecked() ? "+" : "-");
-        mode += "n";
+        mode += 'n';
         modes.append(mode);
         mode = (m_widget->userLimitChBox->isChecked() ? "+" : "-");
-        mode += "l" + QString::number( m_widget->userLimitEdit->value() );
+        mode += 'l' + QString::number( m_widget->userLimitEdit->value() );
         modes.append(mode);
         mode = (m_widget->inviteModeChBox->isChecked() ? "+" : "-");
-        mode += "i";
+        mode += 'i';
         modes.append(mode);
         mode = (m_widget->moderatedModeChBox->isChecked() ? "+" : "-");
-        mode += "m";
+        mode += 'm';
         modes.append(mode);
         mode = (m_widget->secretModeChBox->isChecked() ? "+" : "-");
-        mode += "s";
+        mode += 's';
         modes.append(mode);
         mode = (m_widget->keyModeChBox->isChecked() ? "+" : "-");
-        mode += "k" + m_widget->keyModeEdit->text();
+        mode += 'k' + m_widget->keyModeEdit->text();
         modes.append(mode);
 
         QListViewItem* item = m_widget->otherModesList->firstChild();

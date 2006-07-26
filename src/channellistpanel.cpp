@@ -237,7 +237,7 @@ void ChannelListPanel::saveList()
                 QString nicksNum(nicksPad+item->text(1));
                 nicksNum=nicksNum.right(maxNicksWidth);
 
-                QString line(channelName+" "+nicksNum+" "+item->text(2)+"\n");
+                QString line(channelName+' '+nicksNum+' '+item->text(2)+'\n');
 
                 // send final line to stream
                 stream << line;
@@ -261,7 +261,7 @@ void ChannelListPanel::joinChannelClicked()
 
 void ChannelListPanel::addToChannelList(const QString& channel,int users,const QString& topic)
 {
-    pendingChannels.append(channel+" "+QString::number(users)+" "+topic);
+    pendingChannels.append(channel+' '+QString::number(users)+' '+topic);
 
     // set internal numbers of channels and users, display will be updated by a timer
     setNumChannels(getNumChannels()+1);

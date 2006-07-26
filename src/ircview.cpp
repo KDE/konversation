@@ -56,11 +56,8 @@
 #include "ircview.h"
 #include "highlight.h"
 #include "server.h"
-#include "searchdialog.h"
 #include "konversationsound.h"
-#include "chatwindow.h"
 #include "common.h"
-#include "images.h"
 #include "emoticon.h"
 #include "notificationhandler.h"
 
@@ -70,8 +67,6 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent)
     m_resetScrollbar = true;
     m_offset = 0;
     m_mousePressed = false;
-    m_currentNick = QString::null;
-    m_currentChannel = QString::null;
     m_isOnNick = false;
     m_isOnChannel = false;
     m_chatWin = 0;
@@ -295,9 +290,9 @@ void IRCView::openLink(const QString& url, bool newTab)
         m_server->sendJoinCommand(channel);
     } else if(url.startsWith("#"))                // Nick
     {
-        QString recepient(url);
-        recepient.remove("#");
-        NickInfoPtr nickInfo = m_server->obtainNickInfo(recepient);
+        QString recipient(url);
+        recipient.remove("#");
+        NickInfoPtr nickInfo = m_server->obtainNickInfo(recipient);
         m_server->addQuery(nickInfo, true /*we initiated*/);
     }
 }
@@ -794,7 +789,7 @@ void IRCView::appendBacklogMessage(const QString& firstColumn,const QString& raw
 
     if(!nick.isEmpty() && !nick.startsWith("<") && !nick.startsWith("*"))
     {
-        nick = "|" + nick + "|";
+        nick = '|' + nick + '|';
     }
 
     // Nicks are in "<nick>" format so replace the "<>"
@@ -1137,25 +1132,6 @@ void IRCView::setupChannelPopupMenu()
 
 void IRCView::search()
 {
-    /*    m_caseSensitive = false;
-        m_wholeWords = false;
-        m_forward = false;
-        m_fromCursor = false;
-
-        m_pattern = SearchDialog::search(this, &m_caseSensitive, &m_wholeWords, &m_forward, &m_fromCursor);
-
-        if(!m_fromCursor) {
-            if(m_forward) {
-                m_findParagraph = 1;
-                m_findIndex = 1;
-    } else {
-    m_findParagraph = paragraphs();
-    m_findIndex = paragraphLength(paragraphs());
-    }
-    }
-
-    searchAgain(); */
-
     emit doSearch();
 }
 

@@ -7,7 +7,7 @@ bin_SCRIPTS = konversationircprotocolhandler
 
 konversation_SOURCES = konviface.skel konviconfigdialog.cpp \
 		konvisettingsdialog.cpp konversationmainwindow.cpp valuelistviewitem.cpp urlcatcher.cpp \
-		searchdialog.cpp scriptlauncher.cpp rawlog.cpp konvdcop.cpp channellistpanel.cpp \
+		scriptlauncher.cpp rawlog.cpp konvdcop.cpp channellistpanel.cpp \
 		konsolepanel.cpp dcctransferhandler.cpp identity.cpp statuspanel.cpp \
 		dccrecipientdialog.cpp topiccombobox.cpp nicksonline.cpp dccpanel.cpp dcctransfer.cpp \
 		nicklistviewitem.cpp highlight.cpp highlightviewitem.cpp modebutton.cpp \

@@ -6,9 +6,9 @@
 */
 
 /*
-  begin:     Fri Jan 25 2002
-  copyright: (C) 2002 by Dario Abatianni
-  email:     eisfuchs@tigress.com
+  Copyright (C) 2002 Dario Abatianni <eisfuchs@tigress.com>
+  Copyright (C) 2004 Peter Simonsson <psn@linux.se>
+  Copyright (C) 2006 Eike Hein <sho@eikehein.com>
 */
 
 #ifndef INPUTFILTER_H

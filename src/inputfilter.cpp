@@ -1,5 +1,3 @@
-// -*- mode: c++; c-file-style: "bsd"; c-basic-offset: 4; tabs-width: 4; indent-tabs-mode: nil -*-
-
 /*
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -8,10 +6,9 @@
 */
 
 /*
-    begin:      Fri Jan 25 2002
-    copyright:  (C) 2002 by Dario Abatianni
-                (C) 2004 by Peter Simonsson
-    email:      eisfuchs@tigress.com
+  Copyright (C) 2002 Dario Abatianni <eisfuchs@tigress.com>
+  Copyright (C) 2004 Peter Simonsson <psn@linux.se>
+  Copyright (C) 2006 Eike Hein <sho@eikehein.com>
 */
 
 #include <qdatastream.h>
@@ -595,7 +592,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
     }
     else
     {
-        server->appendMessageToFrontmost(command,parameterList.join(" ")+" "+trailing);
+        server->appendMessageToFrontmost(command,parameterList.join(" ")+' '+trailing);
     }
 }
 
@@ -636,7 +633,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             // the LAG cookie back in PONG
             if(trailing.startsWith("LAG") || getLagMeasuring())
             {
-                server->pongRecieved();
+                server->pongReceived();
             }
         }
         else if(command=="mode")
@@ -650,7 +647,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
         // All yet unknown messages go into the frontmost window unaltered
         else
         {
-            server->appendMessageToFrontmost(command,parameterList.join(" ")+" "+trailing);
+            server->appendMessageToFrontmost(command,parameterList.join(" ")+' '+trailing);
         }
     }
     else
@@ -785,7 +782,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                         else if(mode=='k')
                         {
                             parameter=parameterList[parameterCount++];
-                            message += " " + parameter;
+                            message += ' ' + parameter;
                             modesAre+=i18n("password protected");
                         }
                         else if(mode=='a')
@@ -797,7 +794,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                         else if(mode=='l')
                         {
                             parameter=parameterList[parameterCount++];
-                            message += " " + parameter;
+                            message += ' ' + parameter;
                             modesAre+=i18n("limited to %n user", "limited to %n users", parameter.toInt());
                         }
                         else
@@ -1161,7 +1158,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 if(getAutomaticRequest("WHOIS",parameterList[1])==0)
                 {
                     // Prints "psn is an identified user"
-                    //server->appendStatusMessage(i18n("Whois"),parameterList.join(" ").section(' ',1)+" "+trailing);
+                    //server->appendStatusMessage(i18n("Whois"),parameterList.join(" ").section(' ',1)+' '+trailing);
                     // The above line works fine, but can't be i18n'ised. So use the below instead.. I hope this is okay.
                     server->appendMessageToFrontmost(i18n("Whois"), i18n("%1 is an identified user.").arg(parameterList[1]));
                 }
@@ -1660,7 +1657,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 //Some servers don't know their name, so they return an error instead of the PING data
                 if (getLagMeasuring() && trailing.startsWith(prefix))
                 {
-                    server->pongRecieved();
+                    server->pongReceived();
                 }
                 break;
             }
@@ -1677,7 +1674,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             case RPL_LUSERCHANNELS:
             case RPL_LUSERME:
             {
-                server->appendStatusMessage(i18n("Users"), parameterList.join(" ").section(' ',1) + " "+trailing);
+                server->appendStatusMessage(i18n("Users"), parameterList.join(" ").section(' ',1) + ' '+trailing);
                 break;
             }
             case ERR_UNKNOWNCOMMAND:
@@ -1714,7 +1711,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             {
                 // All yet unknown messages go into the frontmost window without the
                 // preceding nickname
-                server->appendMessageToFrontmost(command, parameterList.join(" ").section(' ',1) + " "+trailing);
+                server->appendMessageToFrontmost(command, parameterList.join(" ").section(' ',1) + ' '+trailing);
             }
         }                                         // end of numeric switch
     }
@@ -1752,7 +1749,7 @@ void InputFilter::parseModes(const QString &sourceNick, const QStringList &param
                 {
                     // Remember the mode parameter
                     parameter=parameterList[2+parameterIndex];
-                    message += " " + parameter;
+                    message += ' ' + parameter;
                     // Switch to next parameter
                     ++parameterIndex;
                 }

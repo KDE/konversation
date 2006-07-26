@@ -219,7 +219,7 @@ namespace Konversation
         if(!nickInfo)
         {
             QString user = addressee.fullEmail();
-            if(!user.isEmpty()) user = " (" + user + ")";
+            if(!user.isEmpty()) user = " (" + user + ')';
             focusAndShowErrorMessage(i18n("Another KDE application tried to use Konversation for instant messaging, but the requested user%1 is not online.").arg(user));
             return;
         }
@@ -279,7 +279,7 @@ void Addressbook::sendFile(const QString &uid, const KURL &sourceURL, const QStr
     if(!nickInfo)
     {
         QString user = addressee.fullEmail();
-        if(!user.isEmpty()) user = " (" + user + ")";
+        if(!user.isEmpty()) user = " (" + user + ')';
         focusAndShowErrorMessage(i18n("Another KDE application tried to use Konversation to send a file to a contact, but the requested user%1 is not currently online.").arg(user));
         return;
     }

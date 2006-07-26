@@ -5,6 +5,12 @@
   (at your option) any later version.
 */
 
+/*
+  Copyright (C) 2005 Ismail Donmez <ismail@kde.org>
+  Copyright (C) 2006 Dario Abatianni <eisfuchs@tigress.com>
+  Copyright (C) 2006 John Tapsell <johnflux@gmail.com>
+*/
+
 #include <qpushbutton.h>
 
 #include <klocale.h>
@@ -98,7 +104,7 @@ QStringList Alias_Config::currentList()
   QListViewItem* item=aliasesListView->itemAtIndex(0);
   while(item)
     {
-      newList.append(item->text(0)+" "+item->text(1));
+      newList.append(item->text(0)+' '+item->text(1));
       item=item->itemBelow();
     }
   return newList;

@@ -6,7 +6,9 @@
 */
 
 /*
-  (C) 2004,2005 by İsmail Dönmez
+  Copyright (C) 2005 Ismail Donmez <ismail@kde.org>
+  Copyright (C) 2006 Dario Abatianni <eisfuchs@tigress.com>
+  Copyright (C) 2006 John Tapsell <johnflux@gmail.com>
 */
 
 #ifndef PREFSPAGETHEMES_H

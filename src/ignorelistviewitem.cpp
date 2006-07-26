@@ -39,12 +39,12 @@ void IgnoreListViewItem::setFlags(int newFlags)
     m_flags=newFlags;
 
     QString flagsStr;
-    if(m_flags & Ignore::Channel) flagsStr += i18n("Channel") + " ";
-    if(m_flags & Ignore::Query) flagsStr += i18n("Query") + " ";
-    if(m_flags & Ignore::Notice) flagsStr += i18n("Notice") + " ";
-    if(m_flags & Ignore::CTCP) flagsStr += i18n("CTCP") + " ";
-    if(m_flags & Ignore::DCC) flagsStr += i18n("DCC") + " ";
-    if(m_flags & Ignore::Exception) flagsStr += i18n("Exception") + " ";
+    if(m_flags & Ignore::Channel) flagsStr += i18n("Channel") + ' ';
+    if(m_flags & Ignore::Query) flagsStr += i18n("Query") + ' ';
+    if(m_flags & Ignore::Notice) flagsStr += i18n("Notice") + ' ';
+    if(m_flags & Ignore::CTCP) flagsStr += i18n("CTCP") + ' ';
+    if(m_flags & Ignore::DCC) flagsStr += i18n("DCC") + ' ';
+    if(m_flags & Ignore::Exception) flagsStr += i18n("Exception") + ' ';
     setText(1,flagsStr);
 }
 

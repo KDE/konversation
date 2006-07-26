@@ -258,7 +258,7 @@ bool StatusPanel::closeYourself()
     {
         m_server->serverGroupSettings()->setNotificationsEnabled(notificationsEnabled());
         m_server->quitServer();
-        //Why are these seperate?  why would deleting the server not quit it? FIXME
+        //Why are these separate?  why would deleting the server not quit it? FIXME
         delete m_server;
         m_server=0;
         deleteLater();                            //NO NO!  Deleting the server should delete this! FIXME

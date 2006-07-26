@@ -45,7 +45,7 @@ char *decrypt_string_oldecb(char *key, char *str);
 // NEW 7/10/03 trying to be smarter about endian
 // first try to be smart about it, and user can define LITTLE_ENDIAN or BIG_ENDIAN from makefile
 #ifdef LITTLE_ENDIAN
- #define ORDER_DCBA	// chosing Intel in this case
+ #define ORDER_DCBA // choosing Intel in this case
 #else
  #ifdef BIG_ENDIAN
   #define ORDER_ABCD

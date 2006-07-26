@@ -8,10 +8,11 @@
 */
 
 /*
-  Converts input to RFC1459 output
-  begin:     Fri Feb 1 2002
-  copyright: (C) 2002 by Dario Abatianni
-  email:     eisfuchs@tigress.com
+  Copyright (C) 2002 Dario Abatianni <eisfuchs@tigress.com>
+  Copyright (C) 2005 Ismail Donmez <ismail@kde.org>
+  Copyright (C) 2005 Peter Simonsson <psn@linux.se>
+  Copyright (C) 2005 John Tapsell <johnflux@gmail.com>
+  Copyright (C) 2005 Eike Hein <sho@eikehein.com>
 */
 
 #include <qstringlist.h>
@@ -69,7 +70,7 @@ namespace Konversation
 
             // pattern found?
             // TODO: cc may be a regexp character here ... we should escape it then
-            if(line.find(QRegExp("^"+cc+aliasPattern+"\\b"))!=-1)
+            if(line.find(QRegExp('^'+cc+aliasPattern+"\\b"))!=-1)
             {
                 QString aliasReplace;
 
@@ -77,7 +78,7 @@ namespace Konversation
                 if ( aliasList[index].contains("%p") )
                     aliasReplace = aliasList[index].section(' ',1);
                 else
-                    aliasReplace = aliasList[index].section(' ',1 )+" "+line.section(' ',1 );
+                    aliasReplace = aliasList[index].section(' ',1 )+' '+line.section(' ',1 );
 
                 // protect "%%"
                 aliasReplace.replace("%%","%\x01");
@@ -319,7 +320,7 @@ namespace Konversation
                     reason = m_server->getIdentity()->getKickReason();
                 }
 
-                result.toServer = "KICK " + destination + " " + victim + " :" + reason;
+                result.toServer = "KICK " + destination + ' ' + victim + " :" + reason;
             }
         }
         else
@@ -577,7 +578,7 @@ namespace Konversation
         }
 
         if(output.isEmpty()) return result;       //result should be completely empty;
-        //FIXME - don't do below line if query is focussed
+        //FIXME - don't do below line if query is focused
         result.output = output;
         result.typeString= "-> " + recipient;
         result.type = PrivateMessage;
@@ -669,7 +670,7 @@ namespace Konversation
                         result.toServerList.append(token);
                         token = tmpToken;
                     }
-                    token += " " + nickList[index];
+                    token += ' ' + nickList[index];
                 }
 
                 if(token != tmpToken)
@@ -764,7 +765,7 @@ namespace Konversation
 
         result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + "DCC SEND "
             + fileName
-            + " " + address + " " + port + " " + QString::number(size) + '\x01';
+            + ' ' + address + ' ' + port + ' ' + QString::number(size) + '\x01';
 
         // Dirty hack to avoid printing ""name with spaces.ext"" instead of "name with spaces.ext"
         if ((fileName.startsWith("\"")) && (fileName.endsWith("\"")))
@@ -783,8 +784,8 @@ namespace Konversation
         QString niftyFileName(fileName);
 
         OutputFilterResult result;
-        result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + "DCC ACCEPT " + fileName + " " + port
-            + " " + QString::number(startAt) + '\x01';
+        result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + "DCC ACCEPT " + fileName + ' ' + port
+            + ' ' + QString::number(startAt) + '\x01';
 
         // Dirty hack to avoid printing ""name with spaces.ext"" instead of "name with spaces.ext"
         if ((fileName.startsWith("\"")) && (fileName.endsWith("\"")))
@@ -804,7 +805,7 @@ namespace Konversation
         OutputFilterResult result;
         /*QString newFileName(fileName);
         newFileName.replace(" ", "_");*/
-        result.toServer = "PRIVMSG " + sender + " :" + '\x01' + "DCC RESUME " + fileName + " " + port + " "
+        result.toServer = "PRIVMSG " + sender + " :" + '\x01' + "DCC RESUME " + fileName + ' ' + port + ' '
             + QString::number(startAt) + '\x01';
 
         // Dirty hack to avoid printing ""name with spaces.ext"" instead of "name with spaces.ext"
@@ -846,7 +847,7 @@ namespace Konversation
             {
                 if(isAChannel(channel))
                 {
-                    result.toServer = "INVITE " + nick + " " + channel;
+                    result.toServer = "INVITE " + nick + ' ' + channel;
                 }
                 else
                 {
@@ -927,7 +928,7 @@ namespace Konversation
         }
 
         // show (new) notify list to user
-        QString list = Preferences::notifyStringByGroupName(groupName) + " " + Konversation::Addressbook::self()->allContactsNicksForServer(m_server->getServerName(), m_server->getServerGroup()).join(" ");
+        QString list = Preferences::notifyStringByGroupName(groupName) + ' ' + Konversation::Addressbook::self()->allContactsNicksForServer(m_server->getServerName(), m_server->getServerGroup()).join(" ");
 
         result.typeString = i18n("Notify");
 
@@ -963,7 +964,7 @@ namespace Konversation
 
             if(ret == KIO::PasswordDialog::Accepted)
             {
-                result.toServer = "OPER " + nick + " " + password;
+                result.toServer = "OPER " + nick + ' ' + password;
             }
         }
         else
@@ -983,8 +984,8 @@ namespace Konversation
         if(!parameter.isEmpty())
         {
             QStringList parameterList=QStringList::split(' ',parameter);
-            QString channel=QString::null;
-            QString option=QString::null;
+            QString channel;
+            QString option;
             // check for option
             bool host = (parameterList[0].lower() == "-host");
             bool domain = (parameterList[0].lower() == "-domain");
@@ -1129,7 +1130,7 @@ namespace Konversation
                         parameterList[index] += "!*";
                     }
 
-                    Preferences::addIgnore(parameterList[index] + "," + QString::number(value));
+                    Preferences::addIgnore(parameterList[index] + ',' + QString::number(value));
                 }
 
                 result.output = i18n("Added %1 to your ignore list.").arg(parameterList.join(", "));
@@ -1449,7 +1450,7 @@ namespace Konversation
 
                             for (i = 0; i < optionList.count(); ++i)
                             {
-                                output += optionList[i] + "(" + optionValueList[i] + ")|";
+                                output += optionList[i] + '(' + optionValueList[i] + ")|";
                             }
 
                             result = usage(output);
@@ -1481,7 +1482,7 @@ namespace Konversation
                                 // If no value given, just display current value.
                                 else
                                 {
-                                    result = usage(group + "/" + option + " = " + options[option]);
+                                    result = usage(group + '/' + option + " = " + options[option]);
                                 }
                             }
                             else
@@ -1532,7 +1533,7 @@ namespace Konversation
 
         if(!parameter.isEmpty())
         {
-            result.toServer = "NOTICE @"+destination+" "+parameter;
+            result.toServer = "NOTICE @"+destination+' '+parameter;
         }
         else
         {
@@ -1560,7 +1561,7 @@ namespace Konversation
         else
         {
             QStringList tmp = QStringList::split(" ",parameter);
-            m_server->setKeyForRecepient(tmp[0], tmp[1].local8Bit());
+            m_server->setKeyForRecipient(tmp[0], tmp[1].local8Bit());
             result = info(i18n("The key for %1 is successfully set.").arg(tmp[0]));
         }
 
@@ -1577,7 +1578,7 @@ namespace Konversation
         }
         else
         {
-            m_server->setKeyForRecepient(parameter, "");
+            m_server->setKeyForRecipient(parameter, "");
             result = info(i18n("The key for %1 is now deleted.").arg(parameter));
         }
 
@@ -1634,7 +1635,7 @@ namespace Konversation
 #endif
             }
             // Parameter is presumed to be a host due to containing a dot. Yeah, it's dumb.
-            // FIXME: The reason we detect the host by occurence of a dot is the large penalty
+            // FIXME: The reason we detect the host by occurrence of a dot is the large penalty
             // we would incur by using inputfilter to find out if there's a user==target on the
             // server - once we have a better API for this, switch to it.
             else if (target.contains('.'))
@@ -1676,7 +1677,7 @@ namespace Konversation
         // check if list contains only target channel
         else if (nickList.count() == 1 && isAChannel(nickList[0]))
         {
-            newNickList = nickList[0] + " " + nick;
+            newNickList = nickList[0] + ' ' + nick;
         }
         // list contains at least one nick
         else

@@ -6,8 +6,9 @@
 */
 
 /*
-  copyright: (C) 2005 by Peter Simonsson <psn@linux.se>
+  Copyright (C) 2005 Peter Simonsson <psn@linux.se>
 */
+
 #ifndef KONVERSATIONEMOTICON_H
 #define KONVERSATIONEMOTICON_H
 

@@ -1,14 +1,13 @@
-//
-// C++ Implementation: Autoreplace_Config
-//
-// Description:
-//
-//
-// Author: Dario Abatianni <eisfuchs@tigress.com>, (C) 2006
-//
-// Copyright: See COPYING file that comes with this distribution
-//
-//
+/*
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; either version 2 of the License, or
+  (at your option) any later version.
+*/
+
+/*
+  Copyright (C) 2006 Dario Abatianni <eisfuchs@tigress.com>
+*/
 
 #include <qlabel.h>
 #include <qpushbutton.h>
@@ -93,7 +92,7 @@ void Autoreplace_Config::setAutoreplaceListView(const QStringList &autoreplaceLi
     newItem->setText(2,definition.section(',',2,2));
     // replacement
     newItem->setText(3,definition.section(',',3));
-    // hidden column, so we are independant of the i18n()ed display string
+    // hidden column, so we are independent of the i18n()ed display string
     newItem->setText(4,definition.section(',',1,1));
   } // for
   patternListView->setSelected(patternListView->firstChild(), true);
@@ -120,7 +119,7 @@ void Autoreplace_Config::saveSettings()
     for(unsigned int index=0;index<newList.count();index++)
     {
       // write the current entry's pattern and replacement (adds a "#" to preserve blanks at the end of the line)
-      config->writeEntry(QString("Autoreplace%1").arg(index),newList[index]+"#");
+      config->writeEntry(QString("Autoreplace%1").arg(index),newList[index]+'#');
     } // for
   }
   // if there were no entries at all, write a dummy entry to prevent KConfigXT from "optimizing"
@@ -154,7 +153,7 @@ QStringList Autoreplace_Config::currentAutoreplaceList()
     if(static_cast<QCheckListItem*>(item)->isOn()) checked="1";
 
     // remember entry in internal list (col 4 is hidden for input/output)
-    newList.append(checked+","+item->text(4)+","+item->text(2)+","+item->text(3));
+    newList.append(checked+','+item->text(4)+','+item->text(2)+','+item->text(3));
     // get next item in the listview
     item=item->itemBelow();
   } // while

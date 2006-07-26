@@ -330,7 +330,7 @@ void IRCInput::paste()
             if(!text().isEmpty())
             {
               // prepend text to the paste
-              pasteText=text()+"\n"+pasteText;
+              pasteText=text()+'\n'+pasteText;
             }
             // ask the user on long pastes
             if(checkPaste(pasteText))

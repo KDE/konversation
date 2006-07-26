@@ -64,7 +64,7 @@ namespace Konversation
             (!m_mainWindow->isActiveWindow() || (chatWin != m_mainWindow->frontView())))
         {
             KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
-            konvApp->osd->showOSD("(" + chatWin->getName() + ") <" + fromNick + "> " + cleanedMessage);
+            konvApp->osd->showOSD('(' + chatWin->getName() + ") <" + fromNick + "> " + cleanedMessage);
         }
     }
 

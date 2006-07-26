@@ -6,7 +6,9 @@
 */
 
 /*
-  (C) 2004,2005 by İsmail Dönmez ( Resistence is Futile. Turn god damn unicode on! )
+  Copyright (C) 2005 Ismail Donmez <ismail@kde.org>
+  Copyright (C) 2006 Dario Abatianni <eisfuchs@tigress.com>
+  Copyright (C) 2006 John Tapsell <johnflux@gmail.com>
 */
 
 #include <qlabel.h>
@@ -97,7 +99,7 @@ void Theme_Config::loadSettings()
 
             // if there was a comment to the theme, add it to the listview entry string
             if(!themeComment.isEmpty())
-                themeName = themeName+" ("+themeComment+")";
+                themeName = themeName+" ("+themeComment+')';
 
             // insert entry into the listview
             iconThemeIndex->insertItem(themeName);

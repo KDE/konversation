@@ -6,10 +6,11 @@
 */
 
 /*
-  Class for application wide preferences
-  begin:     Tue Feb 5 2002
-  copyright: (C) 2002 by Dario Abatianni
-  email:     eisfuchs@tigress.com
+  Copyright (C) 2002 Dario Abatianni <eisfuchs@tigress.com>
+  Copyright (C) 2005 Ismail Donmez <ismail@kde.org>
+  Copyright (C) 2005 Peter Simonsson <psn@linux.se>
+  Copyright (C) 2005 John Tapsell <johnflux@gmail.com>
+  Copyright (C) 2005 Eike Hein <sho@eikehein.com>
 */
 
 #include <ktoolbar.h>
@@ -61,7 +62,7 @@ Preferences::Preferences()
 
     QStringList nickList;
     nickList.append(user.loginName());
-    nickList.append(user.loginName() + "_");
+    nickList.append(user.loginName() + '_');
     mIdentity->setNicknameList(nickList);
 
     setPartReason("Konversation terminated!");
@@ -420,7 +421,7 @@ QStringList Preferences::defaultAliasList()
             fileInfo->setFile( *it );
             if ( fileInfo->isExecutable() )
             {
-                newAlias = (*it).section('/',-1)+" "+"/exec "+(*it).section('/', -1 );
+                newAlias = (*it).section('/',-1)+' '+"/exec "+(*it).section('/', -1 );
                 aliasList.append(newAlias);
             }
         }

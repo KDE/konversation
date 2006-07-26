@@ -6,8 +6,9 @@
 */
 
 /*
-  copyright: (C) 2004 by Peter Simonsson <psn@linux.se>
+  Copyright (C) 2004 by Peter Simonsson <psn@linux.se>
 */
+
 #include "joinchanneldialog.h"
 
 #include <qlabel.h>

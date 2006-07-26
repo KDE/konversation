@@ -6,10 +6,11 @@
 */
 
 /*
-  The main application
-  begin:     Mon Jan 28 2002
-  copyright: (C) 2002 by Dario Abatianni
-  email:     eisfuchs@tigress.com
+  Copyright (C) 2002 Dario Abatianni <eisfuchs@tigress.com>
+  Copyright (C) 2005 Ismail Donmez <ismail@kde.org>
+  Copyright (C) 2005 Peter Simonsson <psn@linux.se>
+  Copyright (C) 2005 John Tapsell <johnflux@gmail.com>
+  Copyright (C) 2005 Eike Hein <sho@eikehein.com>
 */
 
 #ifndef KONVERSATIONAPPLICATION_H
@@ -80,7 +81,7 @@ class KonversationApplication : public KUniqueApplication
         Server* getServerByName(const QString& name);
 
         /** For dcop and addressbook, a user can be specified as user@irc.server.net
-         *  or user@servergroup or using the unicode seperator symbol 0xE120 instead
+         *  or user@servergroup or using the unicode separator symbol 0xE120 instead
          *  of the "@".  This function takes a string like the above examples, and
          *  modifies ircnick and serverOrGroup to contain the split up string.  If
          *  the string doesn't have an @ or 0xE120, ircnick is set to the
@@ -128,7 +129,7 @@ class KonversationApplication : public KUniqueApplication
             const QString& channel="",
             const QString& nick = Preferences::nickname(0),
             const QString& password="",
-            const bool& useSSL=FALSE
+            const bool& useSSL=false
             );
 
         QValueList<int> topicSplitterSizes() const;
@@ -147,7 +148,7 @@ class KonversationApplication : public KUniqueApplication
             const QString& channel="",
             const QString& nick = Preferences::nickname(0),
             const QString& password="",
-            const bool& useSSL=FALSE
+            const bool& useSSL=false
             );
         void readOptions();
         void saveOptions(bool updateGUI=true);

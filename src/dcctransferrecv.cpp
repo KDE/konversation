@@ -86,7 +86,7 @@ DccTransferRecv::DccTransferRecv( DccPanel* panel, const QString& partnerNick, c
     m_fileURL.adjustPath( 1 );
     // Append folder with partner's name if wanted
     if ( Preferences::dccCreateFolder() )
-        m_fileURL.addPath( m_partnerNick + "/" );
+        m_fileURL.addPath( m_partnerNick + '/' );
 
     if (!kapp->authorize("allow_downloading"))
     {
@@ -108,7 +108,7 @@ DccTransferRecv::DccTransferRecv( DccPanel* panel, const QString& partnerNick, c
 
     // Append partner's name to file name if wanted
     if ( Preferences::dccAddPartner() )
-        m_fileURL.addPath( m_partnerNick + "." + fileNameTmp );
+        m_fileURL.addPath( m_partnerNick + '.' + fileNameTmp );
     else
         m_fileURL.addPath( fileNameTmp );
 
@@ -627,7 +627,7 @@ void DccTransferRecvWriteCacheHandler::slotKIODataReq( KIO::Job*, QByteArray& da
         m_writeReady = true;
     else
     {
-        // No more data left to read from incomming dcctransfer
+        // No more data left to read from incoming dcctransfer
         if ( !m_cacheList.isEmpty() )
         {
             // once we write everything in cache, the file is complete.

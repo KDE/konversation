@@ -505,7 +505,7 @@ namespace Konversation
             QString name = (*serverIt).server();
 
             if ((*serverIt).port() != 6667)
-                name += ":" + QString::number((*serverIt).port());
+                name += ':' + QString::number((*serverIt).port());
 
             if ((*serverIt).SSLEnabled())
                 name += + " (SSL)";

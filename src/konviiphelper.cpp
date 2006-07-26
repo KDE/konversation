@@ -52,7 +52,7 @@ void KonviIpHelper::parseTarget(const QString& target)
     else if (target.contains(':')>=4)
     {
         // Last segment does not end with ], but the next to last does;
-        // Assume not-full-length IPv6 adddress with port
+        // Assume not-full-length IPv6 address with port
         // Example: [2001:0DB8::1428:57ab]:6666
         if (target.section(':',0,-2).endsWith("]") && !target.section(':',-1).endsWith("]"))
         {

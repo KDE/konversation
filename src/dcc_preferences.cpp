@@ -5,6 +5,11 @@
   (at your option) any later version.
 */
 
+/*
+  Copyright (C) 2005 Ismail Donmez <ismail@kde.org>
+  Copyright (C) 2006 John Tapsell <johnflux@gmail.com>
+*/
+
 #include <qcombobox.h>
 #include <qlineedit.h>
 #include <klocale.h>

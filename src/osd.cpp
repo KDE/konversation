@@ -8,8 +8,8 @@ the Free Software Foundation; either version 2 of the License, or
 /*
   Provides an interface to a plain QWidget, which is independent of KDE (bypassed to X11)
   begin:     Fre Sep 26 2003
-  copyright: (C) 2003 by Christian Muehlhaeuser
-  copyright: (C) 2004 by Michael Goettsche
+  Copyright (C) 2003 Christian Muehlhaeuser <chris@chris.de>
+  Copyright (C) 2004 Michael Goettsche <michael.goettsche@kdemail.net>
 */
 
 #include "osd.h"

@@ -195,7 +195,7 @@ namespace Konversation
 
         //We should now have lnick = ircnick, and versions with servername and servergroup -
         // like johnflux, johnflux@freenode, or johnflux@irc.kde.org    except with the unicode
-        // seperator char 0xe120 instead of the @
+        // separator char 0xe120 instead of the @
 
         kdDebug() << "nick" << ircnick<< endl;
         bool changed = false;

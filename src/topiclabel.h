@@ -6,8 +6,10 @@
 */
 
 /*
-  copyright: (C) 2004 Peter Simonsson <psn@linux.se>
+  Copyright (C) 2004 Peter Simonsson <psn@linux.se>
+  Copyright (C) 2006 Eike Hein <sho@eikehein.com>
 */
+
 #ifndef KONVERSATIONTOPICLABEL_H
 #define KONVERSATIONTOPICLABEL_H
 

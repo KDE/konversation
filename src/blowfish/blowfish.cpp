@@ -1,8 +1,12 @@
-// -*- mode: c++; c-file-style: "stroustrup"; c-basic-offset: 4; tabs-width: 4; indent-tabs-mode: nil -*-
 /*
-  Copyright (c) 2005 by İsmail Dönmez <ismail.donmez@boun.edu.tr>
-  Licensed under GNU GPLv2 or later at your option
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; either version 2 of the License, or
+  (at your option) any later version.
+*/
 
+/*
+  Copyright (C) 2005 İsmail Dönmez <ismail@kde.org>
 */
 
 #include <qcstring.h>
@@ -15,15 +19,15 @@
 
 namespace Konversation
 {
-    // Find n'th occurrence of seperator in input and return the index
-    int findOccurrence(const QCString& input, const QCString& seperator, int nth)
+    // Find n'th occurrence of separator in input and return the index
+    int findOccurrence(const QCString& input, const QCString& separator, int nth)
     {
         int j=1;
         uint i;
 
         for(i=0; i < input.length(); ++i)
         {
-            if((input.mid(i,1) == seperator))
+            if((input.mid(i,1) == separator))
             {
                 if (j == nth)
                     return i;
@@ -34,9 +38,9 @@ namespace Konversation
         return i;
     }
 
-    void decrypt(const QString& recepient, QCString& cipher, Server* server)
+    void decrypt(const QString& recipient, QCString& cipher, Server* server)
     {
-        QCString key = server->getKeyForRecepient(recepient);
+        QCString key = server->getKeyForRecipient(recipient);
 
         if(!key.isEmpty())
         {
@@ -63,14 +67,14 @@ namespace Konversation
             qstrncpy(result.data(), cipher.data(), cipher.length());
             qstrncpy(ckey.data(), key.data(), key.length()+1);
             tmp2 = decrypt_string(ckey.data(),result.data());
-            cipher = backup+"(e) "+tmp2+" "+"\n";
+            cipher = backup+"(e) "+tmp2+' '+'\n';
             free(tmp2);
         }
     }
 
-    void decryptTopic(const QString& recepient, QCString& cipher, Server* server)
+    void decryptTopic(const QString& recipient, QCString& cipher, Server* server)
     {
-        QCString key = server->getKeyForRecepient(recepient);
+        QCString key = server->getKeyForRecipient(recipient);
 
         if(!key.isEmpty())
         {
@@ -100,9 +104,9 @@ namespace Konversation
         }
     }
 
-    void encrypt(const QString& recepient, QString& cipher, Server* server)
+    void encrypt(const QString& recipient, QString& cipher, Server* server)
     {
-        QString key = server->getKeyForRecepient(recepient);
+        QString key = server->getKeyForRecipient(recipient);
 
         if(!key.isEmpty())
         {
@@ -112,7 +116,7 @@ namespace Konversation
                 return;
             }
 
-            QString backup = cipher.section(":",0,0)+":";
+            QString backup = cipher.section(":",0,0)+':';
             cipher = cipher.section(":",1).remove("\n");
 
             char* tmp;
@@ -123,7 +127,7 @@ namespace Konversation
             strcpy(ckey.data(),key.local8Bit());
             strcpy(encrypted.data(),cipher.utf8());
             tmp = encrypt_string(ckey.data(),encrypted.data());
-            cipher = backup +"+OK " + tmp +"\n";
+            cipher = backup +"+OK " + tmp +'\n';
             free(tmp);
         }
     }

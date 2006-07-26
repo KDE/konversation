@@ -1,3 +1,7 @@
+/*
+  Copyright (C) 2005 Ismail Donmez <ismail@kde.org>
+*/
+
 // mc_blowfishnew.cpp
 //---------------------------------------------------------------------------
 
@@ -182,7 +186,7 @@ char *decrypt_string_new(char *key, char *str)
 	// 0 terminate in case it is exactly mod 8 real characters
 	dest[len]='\0';
 
-	// now the first block (8bytes) is just the IV so we dont want to return that
+	// now the first block (8bytes) is just the IV so we don't want to return that
 	strncpy(iv,dest,8);
 	iv[8]='\0';
 	strcpy(dest,&dest[8]);

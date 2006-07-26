@@ -6,10 +6,11 @@
 */
 
 /*
-  The main window where all other views go
-  begin:     Don Apr 17 2003
-  copyright: (C) 2003 by Dario Abatianni
-  email:     eisfuchs@tigress.com
+  Copyright (C) 2002 Dario Abatianni <eisfuchs@tigress.com>
+  Copyright (C) 2005 Ismail Donmez <ismail@kde.org>
+  Copyright (C) 2005 Peter Simonsson <psn@linux.se>
+  Copyright (C) 2005 John Tapsell <johnflux@gmail.com>
+  Copyright (C) 2005 Eike Hein <sho@eikehein.com>
 */
 
 #ifndef _KONVERSATIONMAINWINDOW_H_
@@ -80,7 +81,7 @@ class KonversationMainWindow : public KMainWindow
         void showView(ChatWindow* view);
 
         /** Some errors need to be shown, even when konversation is minimized.
-         *  For example, when a kimiface call is recieved to query a person,
+         *  For example, when a kimiface call is received to query a person,
          *  (e.g. the user choses "Chat with X" in kmail) but that person isn't
          *  recognised, we need to give immediate feedback to the user.
          */

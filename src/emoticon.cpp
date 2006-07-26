@@ -6,8 +6,9 @@
 */
 
 /*
-  copyright: (C) 2005 by Peter Simonsson <psn@linux.se>
+  Copyright (C) 2005 Peter Simonsson <psn@linux.se>
 */
+
 #include "emoticon.h"
 
 #include <qregexp.h>
@@ -75,7 +76,7 @@ namespace Konversation
             app = "kopete";
             filename = KGlobal::dirs()->findResource("data", app + "/pics/emoticons/" + themeName + "/emoticons.xml");
         }
-        self()->m_themeName = app + "/" + themeName;
+        self()->m_themeName = app + '/' + themeName;
         #endif
 
         if(filename.isEmpty())
@@ -126,7 +127,7 @@ namespace Konversation
                         }
                         else
                         {
-                            regExpStr += "|";
+                            regExpStr += '|';
                         }
 
                         regExpStr += QRegExp::escape(stringElement.text());
@@ -137,7 +138,7 @@ namespace Konversation
 
                 if(!regExpStr.isEmpty() && !fileAttrib.isEmpty())
                 {
-                    regExpStr += ")";
+                    regExpStr += ')';
                     self()->m_emotIconMap[fileAttrib] = regExpStr;
                 }
             }
@@ -176,12 +177,12 @@ namespace Konversation
         QString pic;
 
         #if KDE_IS_VERSION(3,3,91)
-        QString file = self()->m_themeName + "/" + filename;
+        QString file = self()->m_themeName + '/' + filename;
         const char* resource = "emoticons";
         #else
         QString app = self()->m_themeName.section('/', 0, 0);
         QString dir = self()->m_themeName.section('/', 1);
-        QString file = app + "/pics/emoticons/" + dir + "/" + filename;
+        QString file = app + "/pics/emoticons/" + dir + '/' + filename;
         const char* resource = "data";
         #endif
 
