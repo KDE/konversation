@@ -716,7 +716,6 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     else
                     {
                         property = *it;
-                        // value = "";
                     }
                     if (property=="PREFIX")
                     {
@@ -724,7 +723,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                         if(pos==-1)
                         {
                             server->setPrefixes (QString::null, value);
-                                                  // XXX if ) isn't in the string, NOTHING should be there. anyone got a server
+                            // XXX if ) isn't in the string, NOTHING should be there. anyone got a server
                             if (value.length() || property.length())
                                 server->appendStatusMessage("","XXX Server sent bad PREFIX in RPL_ISUPPORT, please report.");
                         }
@@ -740,9 +739,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     else if (property == "CAPAB")
                     {
                         // Disable as we don't use this for anything yet
-#if 0
-                        server->queue("CAPAB IDENTIFY-MSG");
-#endif
+                        //server->queue("CAPAB IDENTIFY-MSG");
                     }
                     else
                     {
@@ -969,15 +966,24 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 }
                 else                              // not connected yet, so try to find a nick that's not in use
                 {
-                    // Get the next nick from the list
-                    QString newNick=server->getNextNickname();
-                    // Update Server window
-                    server->obtainNickInfo(server->getNickname()) ;
-                    server->renameNick(server->getNickname(), newNick);
-                    // Show message
-                    server->appendMessageToFrontmost(i18n("Nick"),i18n("Nickname already in use. Trying %1.").arg(newNick));
-                    // Send nickchange request to the server
-                    server->queue("NICK "+newNick);
+                    // Get the next nick from the list or ask for a new one
+                    QString newNick = server->getNextNickname();
+
+                    // The user chose to disconnect
+                    if (newNick.isNull())
+                    {
+                        server->disconnect();
+                    }
+                    else
+                    {
+                        // Update Server window
+                        server->obtainNickInfo(server->getNickname()) ;
+                        server->renameNick(server->getNickname(), newNick);
+                        // Show message
+                        server->appendMessageToFrontmost(i18n("Nick"), i18n("Nickname already in use. Trying %1.").arg(newNick));
+                        // Send nickchange request to the server
+                        server->queue("NICK "+newNick);
+                    }
                 }
                 break;
             }
@@ -990,10 +996,19 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 else                              // Find a new nick as in ERR_NICKNAMEINUSE
                 {
                     QString newNick = server->getNextNickname();
-                    server->obtainNickInfo(server->getNickname()) ;
-                    server->renameNick(server->getNickname(), newNick);
-                    server->appendMessageToFrontmost(i18n("Nick"), i18n("Erroneus nickname. Changing nick to %1." ).arg(newNick)) ;
-                    server->queue("NICK "+newNick);
+
+                    // The user chose to disconnect
+                    if (newNick.isNull())
+                    {
+                        server->disconnect();
+                    }
+                    else
+                    {
+                        server->obtainNickInfo(server->getNickname()) ;
+                        server->renameNick(server->getNickname(), newNick);
+                        server->appendMessageToFrontmost(i18n("Nick"), i18n("Erroneus nickname. Changing nick to %1." ).arg(newNick)) ;
+                        server->queue("NICK "+newNick);
+                    }
                 }
                 break;
             }

@@ -23,6 +23,7 @@
 #include <klocale.h>
 #include <kdebug.h>
 #include <kfiledialog.h>
+#include <kinputdialog.h>
 #include <kmessagebox.h>
 #include <kresolver.h>
 #include <ksocketdevice.h>
@@ -926,9 +927,12 @@ QString Server::getAutoJoinCommand() const
 QString Server::getNextNickname()
 {
     QString newNick = getIdentity()->getNickname(++tryNickNumber);
-
-    if(newNick.isEmpty())
-       newNick = getNickname()+'_';
+    
+    if (newNick.isNull())
+    {
+        QString inputText = i18n("No nicknames from the \"%1\" identity were accepted by the connection \"%2\".\nPlease enter a new one or press Cancel to disconnect:").arg(getIdentity()->getName()).arg(getServerGroup());
+        newNick = KInputDialog::getText(i18n("Nickname error"), inputText, QString::null);
+    }
 
     return newNick;
 }
