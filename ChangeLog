@@ -91,6 +91,11 @@ handling)
 - Add support for spaces in file names to DCC send, receive and resume, compatible with
   mIRC and X-Chat. Make replacing spaces with underscores on send optional. Patch by 
   Raphael Kubo da Costa.
+- Fix crash when accepting to close the tab after ignoring someone in a query.
+- Fix showing/hiding of realnames in the nickname list not being applied immediately.
+- Ask user for a new nickname after unsuccessfully looping over the identity's list
+  of nicks instead of appending _ and eventually running into the NICKLEN wall.
+
 
 Changes from 0.18 to 0.19
 We are extremely pleased to announce the immediate release of Konversation 0.19. The focus
