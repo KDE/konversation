@@ -42,6 +42,7 @@ Name[uk]=Нове повідомлення
 Name[uz]=Янги хабар
 Name[xx]=xxNew messagexx
 Name[zh_CN]=新消息
+Name[zh_TW]=新的訊息
 Comment=New message arrived in a channel
 Comment[bg]=Пристигна ново съобщение в канала
 Comment[br]=Deuet eo ur postel nevez en ur c'hanol
@@ -76,6 +77,7 @@ Comment[tr]=Kanala yeni ileti geldi
 Comment[uk]=В канал надійшло нове повідомлення
 Comment[xx]=xxNew message arrived in a channelxx
 Comment[zh_CN]=频道中有新消息
+Comment[zh_TW]=新訊息已送達頻道
 default_presentation=0
 
 [nick]
@@ -110,6 +112,7 @@ Name[tr]=Rumuz yazıldı
 Name[uk]=Написане прізвисько
 Name[xx]=xxNick writtenxx
 Name[zh_CN]=昵称写入
+Name[zh_TW]=有人提到您的暱稱
 Comment=Someone wrote your nick in a message
 Comment[bg]=Псевдонимът Ви бе написан в съобщение
 Comment[bs]=Neko je spomenuo vaš nick u poruci
@@ -141,6 +144,7 @@ Comment[ta]=உங்கள் வடுத் தகவலில் ஒரு �
 Comment[tr]=Birisi iletisinde sizin rumuzunuzu yazdı
 Comment[uk]=Хтось в повідомленні написав ваше прізвисько
 Comment[xx]=xxSomeone wrote your nick in a messagexx
+Comment[zh_TW]=有人在訊息中提到您的暱稱
 default_presentation=0
 
 [nickchange]
@@ -176,6 +180,7 @@ Name[tr]=Rumuz değiştildi
 Name[uk]=Змінене прізвисько
 Name[xx]=xxNick changedxx
 Name[zh_CN]=昵称改变
+Name[zh_TW]=變更暱稱
 Comment=Someone changed their nick
 Comment[bg]=Някой си смени псевдонима
 Comment[bs]=Neko je promijenio svoj nick
@@ -207,6 +212,7 @@ Comment[tr]=Biri rumuzunu değiştirdi
 Comment[uk]=Хтось змінив своє прізвисько
 Comment[xx]=xxSomeone changed their nickxx
 Comment[zh_CN]=有人改变了昵称
+Comment[zh_TW]=有人變更了暱稱
 default_presentation=0
 
 [dcc_incoming]
@@ -244,6 +250,7 @@ Name[tr]=Gelen dosya
 Name[uk]=Вхідний файл
 Name[xx]=xxIncoming filexx
 Name[zh_CN]=收到的文件
+Name[zh_TW]=送來檔案
 Comment=Someone wants to transmit a file to you over DCC
 Comment[bg]=Някой иска да ви изпрати файл чрез DCC
 Comment[bs]=Neko želi da vam pošalje datoteku koristeći DCC
@@ -275,6 +282,7 @@ Comment[tr]=Birisi size DCC üzerinden dosya göndermek istiyor
 Comment[uk]=Хтось хоче надіслати вам файл через DCC
 Comment[xx]=xxSomeone wants to transmit a file to you over DCCxx
 Comment[zh_CN]=有人希望通过 DCC 向你传输文件
+Comment[zh_TW]=有人要透過 DCC 傳送檔案給您
 default_presentation=0
 
 [join]
@@ -310,6 +318,7 @@ Name[tr]=Rumuz kanala girdi
 Name[uk]=Прізвисько приєдналось до каналу
 Name[xx]=xxNick joined channelxx
 Name[zh_CN]=昵称加入频道
+Name[zh_TW]=加入頻道
 Comment=New nick joined a channel
 Comment[bg]=Нов псевдоним се присъедини към канала
 Comment[bs]=Novi nick se pridružio kanalu
@@ -341,6 +350,7 @@ Comment[tr]=Kanala yeni bir kişi girdi
 Comment[uk]=Нове прізвисько приєдналось до каналу
 Comment[xx]=xxNew nick joined a channelxx
 Comment[zh_CN]=新昵称加入了频道
+Comment[zh_TW]=有人加入了頻道
 default_presentation=0
 
 [part]
@@ -376,6 +386,7 @@ Name[tr]=Rumuz kanaldan ayrıldı
 Name[uk]=Прізвисько покинуло канал
 Name[xx]=xxNick left channelxx
 Name[zh_CN]=昵称离开频道
+Name[zh_TW]=離開頻道
 Comment=A nick left a channel
 Comment[bg]=Псевдонимът напусна канала
 Comment[bs]=Nick je napustio kanal
@@ -407,6 +418,7 @@ Comment[tr]=Bir rumuz kanaldan ayrıldı
 Comment[uk]=Прізвисько покинуло канал
 Comment[xx]=xxA nick left a channelxx
 Comment[zh_CN]=一个昵称离开了频道
+Comment[zh_TW]=有人離開了頻道
 default_presentation=0
 
 [mode]
@@ -443,6 +455,7 @@ Name[tr]=Kip değiştir
 Name[uk]=Зміна режиму
 Name[xx]=xxMode changexx
 Name[zh_CN]=模式改变
+Name[zh_TW]=模式變更
 Comment=A user or channel mode was changed
 Comment[bg]=Променен е потребителски режим или канал
 Comment[bs]=Mod korisnika ili kanala je promijenjen
@@ -474,6 +487,7 @@ Comment[tr]=Bir kullanıcı veya kanal kipi değiştirildi
 Comment[uk]=Змінено користувацький або канальний режим
 Comment[xx]=xxA user or channel mode was changedxx
 Comment[zh_CN]=一个用户或频道模式改变了
+Comment[zh_TW]=某位使用者或某個頻道的模式已被變更
 default_presentation=0
 
 [notify]
@@ -509,6 +523,7 @@ Name[tr]=Bildirim
 Name[uk]=Сповіщати
 Name[xx]=xxNotifyxx
 Name[zh_CN]=通告
+Name[zh_TW]=通知
 Comment=A user on your watched nicks list has come online
 Comment[bg]=Потребител от Вашия списък за наблюдение на псевдоними влезе в канала
 Comment[cs]=Uživatel z vašeho seznamu je online
@@ -538,6 +553,7 @@ Comment[tr]=İzlenen takma adlar listenizdeki bir kullanıcı bağlandı
 Comment[uk]=Вийшов у мережу користувач із вашого списку прізвиськ
 Comment[xx]=xxA user on your watched nicks list has come onlinexx
 Comment[zh_CN]=一名在您的监视昵称列表上的用户已经上线
+Comment[zh_TW]=您監看的暱稱清單中有某人上線了
 default_presentation=0
 
 [query]
@@ -570,6 +586,7 @@ Name[ta]=கேள்வி
 Name[tr]=Sorgu
 Name[uk]=Запит
 Name[xx]=xxQueryxx
+Name[zh_TW]=查詢
 Comment=Someone started a conversation (query) with you
 Comment[bg]=Някой е започнал разговор (запитване) с Вас
 Comment[cs]=Někdo s vámi zahájil rozhovor (dotaz)
@@ -597,6 +614,7 @@ Comment[ta]=ஒருவர் உங்களுடன் உரையாடல
 Comment[tr]=Birisi sizinle sohbet başlattı
 Comment[uk]=Хтось почав з вами розмову (запит)
 Comment[xx]=xxSomeone started a conversation (query) with youxx
+Comment[zh_TW]=有人開啟了與您的私密對話
 default_presentation=0
 
 [kick]
@@ -620,6 +638,7 @@ Name[sr@Latn]=Izbačeni
 Name[tr]=Kanaldan at
 Name[uk]=Виштовхнуто
 Name[xx]=xxKickxx
+Name[zh_TW]=踢出
 Comment=Someone kicked you out of a channel
 Comment[bg]=Някой Ви изрита от канала
 Comment[cs]=Někdo vás vykopnul z kanálu
@@ -646,6 +665,7 @@ Comment[ta]=யாரோ உங்களை வழிமுறையில் �
 Comment[tr]=Birisi sizi kanaldan attı
 Comment[uk]=Хтось виштовхнув вас із каналу
 Comment[xx]=xxSomeone kicked you out of a channelxx
+Comment[zh_TW]=有人將您踢出頻道
 default_presentation=0
 
 [connectionFailure]
@@ -669,6 +689,7 @@ Name[pt]=Erro na ligação
 Name[pt_BR]=Erro na conexão
 Name[sv]=Uppkopplingsfel
 Name[xx]=xxConnection failurexx
+Name[zh_TW]=連線失敗
 Comment=Failed to connect to server
 Comment[bg]=Неуспех при свързване към сървър
 Comment[cs]=Chyba při připojení k serveru
@@ -686,6 +707,7 @@ Comment[pt]=Não foi possível ligar ao servidor
 Comment[pt_BR]=Falha ao conectar-se ao servidor
 Comment[sv]=Misslyckades koppla upp till server
 Comment[xx]=xxFailed to connect to serverxx
+Comment[zh_TW]=連線到伺服器失敗
 default_presentation=64
 
 [channelJoin]
@@ -708,6 +730,7 @@ Name[pt]=Você juntou-se a um canal
 Name[pt_BR]=Você entrou no canal
 Name[sv]=Du gick med i en kanal
 Name[xx]=xxYou joined a channelxx
+Name[zh_TW]=您加入了一個頻道
 Comment=You joined a channel
 Comment[bg]=Вие се присъединихте към канал
 Comment[br]=Emellet out bet ur c'hanol
@@ -727,6 +750,7 @@ Comment[pt]=Você juntou-se a um canal
 Comment[pt_BR]=Você entrou em um canal
 Comment[sv]=Du gick med i en kanal
 Comment[xx]=xxYou joined a channelxx
+Comment[zh_TW]=您加入了一個頻道
 default_presentation=64
 
 [dccChat]
@@ -751,6 +775,7 @@ Name[pt]=Conversa DCC
 Name[pt_BR]= Conversa privada (DCC)
 Name[sv]=DCC-chatt
 Name[xx]=xxDCC Chatxx
+Name[zh_TW]=DCC 聊天
 Comment=Someone started a DCC chat with you
 Comment[bg]=Някой е започнал разговор с Вас в DCC
 Comment[cs]=Někdo si s vámi chce pokecat přes DCC
@@ -768,4 +793,5 @@ Comment[pt]=Alguém iniciou uma conversa DCC consigo
 Comment[pt_BR]=Alguém começou uma conversa privada (DCC) com você
 Comment[sv]=Någon startade en DCC-chatt med dig
 Comment[xx]=xxSomeone started a DCC chat with youxx
+Comment[zh_TW]=有人開啟了與您的 DCC 聊天
 default_presentation=0
