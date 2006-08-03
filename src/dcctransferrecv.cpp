@@ -306,9 +306,20 @@ void DccTransferRecv::slotLocalCanResume( KIO::Job* job, KIO::filesize_t size )
         disconnect( transferJob, 0, 0, 0 );
         transferJob->kill();
 
-        if ( Preferences::dccAutoResume() )
+        if ( m_panel->isLocalFileInWritingProcess( m_fileURL ) )
+        {
+            askAndPrepareLocalKio( i18n( "<b>The file is used by another transfer.</b><br>"
+                "%1<br>" )
+                .arg( m_fileURL.prettyURL() ),
+                DccResumeDialog::RA_Rename | DccResumeDialog::RA_Cancel,
+                DccResumeDialog::RA_Rename );
+        }
+        else if ( Preferences::dccAutoResume() )
+        {
             prepareLocalKio( false, true, size );
+        }
         else
+        {
             askAndPrepareLocalKio( i18n( "<b>A partial file exists.</b><br>"
                 "%1<br>"
                 "Size of the partial file: %2 bytes<br>" )
@@ -317,6 +328,7 @@ void DccTransferRecv::slotLocalCanResume( KIO::Job* job, KIO::filesize_t size )
                 DccResumeDialog::RA_Resume | DccResumeDialog::RA_Overwrite | DccResumeDialog::RA_Rename | DccResumeDialog::RA_Cancel,
                 DccResumeDialog::RA_Resume,
                 size );
+        }
     }
 
     kdDebug() << "DccTransferRecv::slotLocalCanResume() [END]" << endl;

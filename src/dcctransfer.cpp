@@ -63,6 +63,8 @@ DccTransfer::DccTransfer( DccPanel* panel, DccType dccType, const QString& partn
 
     m_detailDialog = 0;
 
+    m_panel = panel;
+
     s_dccStatusText[ Queued ]        = i18n("Queued");
     s_dccStatusText[ Preparing ]     = i18n("Preparing");
     s_dccStatusText[ WaitingRemote ] = i18n("Offering");

@@ -484,6 +484,29 @@ DccTransfer* DccPanel::getTransferByName(const QString& name,DccTransfer::DccTyp
     return 0;
 }
 
+bool DccPanel::isLocalFileInWritingProcess( const KURL& url )
+{
+    int index=0;
+    DccTransfer* item;
+    do
+    {
+        // TODO: Get rid of this cast
+        item=static_cast<DccTransfer*>(getListView()->itemAtIndex(index++));
+        if(item)
+        {
+            if( item->getType() == DccTransfer::Receive &&
+                ( item->getStatus() == DccTransfer::Connecting ||
+                  item->getStatus() == DccTransfer::Receiving ) &&
+                item->getFileURL() == url )
+            {
+                return true;
+            }
+        }
+    } while(item);
+
+    return false;
+}
+
 // virtual
 void DccPanel::childAdjustFocus()
 {

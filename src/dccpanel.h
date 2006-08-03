@@ -74,6 +74,8 @@ class DccPanel : public ChatWindow
         DccTransfer* getTransferByPort(const QString& port,DccTransfer::DccType type,bool resumed=false);
         DccTransfer* getTransferByName(const QString& name,DccTransfer::DccType type,bool resumed=false);
 
+        bool isLocalFileInWritingProcess( const KURL& localUrl );
+
         void selectMe(DccTransfer* item);
 
     public slots:

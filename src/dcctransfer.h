@@ -156,6 +156,8 @@ class DccTransfer : public QObject, public KListViewItem
          */
         KURL m_fileURL;
 
+        DccPanel* m_panel;
+
     private slots:
         void slotRemoveFileDone( KIO::Job* job );
 
