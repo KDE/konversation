@@ -457,12 +457,12 @@ void KonversationApplication::readOptions()
     QString sortOrder=config->readEntry("SortOrder");
     QStringList sortOrderList=QStringList::split("",sortOrder);
     sortOrderList.sort();
-    if(sortOrderList.join("")!="-hopqv")
+    if (!sortOrder.isEmpty() && sortOrderList.join("")!="-hopqv")
     {
       kdDebug() << "KonversationApplication::readOptions: Broken nick list sort order found, resetting to defaults." << endl;
       sortOrder=Preferences::defaultNicknameSortingOrder();
+      Preferences::setSortOrder(sortOrder);
     }
-    Preferences::setSortOrder(sortOrder);
 
     // Identity list
     QStringList identityList=config->groupList().grep(QRegExp("Identity [0-9]+"));
