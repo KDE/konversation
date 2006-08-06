@@ -1028,18 +1028,20 @@ namespace Konversation
                 {
                     if (kick)
                     {
-                        QString reason;
+                        QString victim = parameterList[0];
+                        parameterList.pop_front();
 
-                        if (parameterList.count()>1)
-                        {
-                            reason = parameterList.last();
-                            parameterList.remove(parameterList.last());
-                        }
+                        QString reason = parameterList.join(" ");
 
-                        result.toServer = "KICK " + channel + ' ' + parameterList[0] + " :" + reason;
+                        result.toServer = "KICK " + channel + ' ' + victim + " :" + reason;
+
+                        emit banUsers(QStringList(victim),channel,option);
+                    }
+                    else
+                    {
+                        emit banUsers(parameterList,channel,option);
                     }
 
-                    emit banUsers(parameterList,channel,option);
                     // syntax was correct, so reset flag
                     showUsage = false;
                 }
