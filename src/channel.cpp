@@ -396,10 +396,11 @@ void Channel::popupChannelCommand(int id)
 void Channel::popupCommand(int id)
 {
     QString pattern;
-    QString cc=Preferences::commandChar();
-    bool raw=false;
-
+    QString cc = Preferences::commandChar();
     QString args;
+    QString question;
+    bool raw=false;
+    ChannelNickList nickList = getSelectedChannelNicks();
 
     switch(id)
     {
@@ -556,38 +557,72 @@ void Channel::popupCommand(int id)
             pattern=cc+"DCC SEND %u";
             break;
         case Konversation::IgnoreNick:
-            QString question;
-            ChannelNickList nickList=getSelectedChannelNicks();
-            if( nickList.size() == 1)
+            if (nickList.size() == 1)
                 question=i18n("Do you want to ignore %1?").arg(nickList.first()->getNickname());
             else
                 question = i18n("Do you want to ignore the selected users?");
-            if(KMessageBox::questionYesNo(0, question, i18n("Ignore"), i18n("Ignore"), KStdGuiItem::cancel(), QString("ignoreNick")) ==
+            if (KMessageBox::questionYesNo(0, question, i18n("Ignore"), i18n("Ignore"), KStdGuiItem::cancel(), QString("ignoreNick")) ==
                 KMessageBox::Yes)
-                pattern=cc+"IGNORE -ALL %u!*";
+                pattern = cc+"IGNORE -ALL %l";
+            break;
+        case Konversation::UnignoreNick:
+
+            QStringList selectedIgnoredNicks;
+
+            for (ChannelNickList::ConstIterator it=nickList.begin(); it!=nickList.end(); ++it)
+            {
+                if (Preferences::isIgnored((*it)->getNickname()))
+                    selectedIgnoredNicks.append((*it)->getNickname());
+            }
+
+            if (selectedIgnoredNicks.count() == 1)
+                question=i18n("Do you want to stop ignoring %1?").arg(selectedIgnoredNicks.first());
+            else
+                question = i18n("Do you want to stop ignoring the selected users?");
+            if (KMessageBox::questionYesNo(0, question, i18n("Unignore"), i18n("Unignore"), KStdGuiItem::cancel(), QString("unignoreNick")) ==
+                KMessageBox::Yes)
+            {
+                sendChannelText(cc+"UNIGNORE "+selectedIgnoredNicks.join(" "));
+            }
             break;
     } // switch
 
-    if(!pattern.isEmpty())
+    if (!pattern.isEmpty())
     {
         pattern.replace("%c",getName());
 
-        ChannelNickList nickList=getSelectedChannelNicks();
-
         QString command;
-        for(ChannelNickList::ConstIterator it=nickList.begin();it!=nickList.end();++it)
+
+        if (pattern.contains("%l"))
         {
-            QStringList patternList=QStringList::split('\n',pattern);
+            QStringList list;
 
-            for(unsigned int index=0;index<patternList.count();index++)
+            for (ChannelNickList::ConstIterator it=nickList.begin(); it!=nickList.end(); ++it)
+                list.append((*it)->getNickname());
+
+            command = pattern.replace("%l", list.join(" "));
+
+            if (raw)
+                m_server->queue(command);
+            else
+                sendChannelText(command);
+        }
+        else
+        {
+            QStringList patternList = QStringList::split('\n',pattern);
+
+            for (ChannelNickList::ConstIterator it=nickList.begin(); it!=nickList.end(); ++it)
             {
-                command=patternList[index];
-                command.replace("%u",(*it)->getNickname());
+                for (unsigned int index = 0; index<patternList.count(); index++)
+                {
+                    command = patternList[index];
+                    command.replace("%u", (*it)->getNickname());
 
-                if(raw)
-                    m_server->queue(command);
-                else
-                    sendChannelText(command);
+                    if (raw)
+                        m_server->queue(command);
+                    else
+                        sendChannelText(command);
+                }
             }
         }
     }

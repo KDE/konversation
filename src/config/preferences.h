@@ -91,6 +91,7 @@ class Preferences : public QObject, public PreferencesBase
 	/* All of the below work on the first (default) identity in your identity list*/
         static void addIgnore(const QString &newIgnore);
         static bool removeIgnore(const QString &oldIgnore);
+        static bool isIgnored(const QString &nickname);
         static void clearIgnoreList();
         static const QPtrList<Ignore> ignoreList();
         static void setIgnoreList(QPtrList<Ignore> newList);

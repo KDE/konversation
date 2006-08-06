@@ -42,7 +42,7 @@ namespace Konversation
     enum PopupIDs
     {
         ModesSub,GiveOp,TakeOp,GiveHalfOp,TakeHalfOp,GiveVoice,TakeVoice,
-        KickBanSub,IgnoreNick,
+        KickBanSub,IgnoreNick,UnignoreNick,
         Kick,KickBan,BanNick,BanHost,BanDomain,BanUserHost,BanUserDomain,
         KickBanHost,KickBanDomain,KickBanUserHost,KickBanUserDomain,
         Whois,Version,Ping,OpenQuery,DccSend,Join,Names,Topic,

@@ -42,6 +42,9 @@ KListView(parent)
     setDropHighlighter(true);
     setDropVisualizer(false);
 
+    m_ignorePopupItemId = -1;
+    m_unignorePopupItemId = -1;
+
     if(popup)
     {
         if(modes)
@@ -98,7 +101,12 @@ KListView(parent)
             kickban->insertItem(i18n("Kickban *!user@domain"),Konversation::KickBanUserDomain);
             popup->insertItem(i18n("Kick / Ban"),kickban,Konversation::KickBanSub);
         }
-        popup->insertItem(i18n("Ignore"),Konversation::IgnoreNick);
+
+        m_ignorePopupItemId = popup->insertItem(i18n("Ignore"), Konversation::IgnoreNick);
+        m_unignorePopupItemId = popup->insertItem(i18n("Unignore"), Konversation::UnignoreNick);
+
+        popup->setItemVisible(m_ignorePopupItemId, false);
+        popup->setItemVisible(m_unignorePopupItemId, false);
 
         connect (popup, SIGNAL(activated(int)), this, SIGNAL(popupCommand(int)));
         connect (modes, SIGNAL(activated(int)), this, SIGNAL(popupCommand(int)));
@@ -195,11 +203,38 @@ void NickListView::contextMenuEvent(QContextMenuEvent* ce)
 {
     ce->accept();
 
-    if(selectedItems().count())
+    popup->setItemVisible(m_ignorePopupItemId, false);
+    popup->setItemVisible(m_unignorePopupItemId, false);
+
+    if (selectedItems().count())
     {
         insertAssociationSubMenu();
+        updateIgnoreActions();
         popup->popup(ce->globalPos());
     }
+}
+
+void NickListView::updateIgnoreActions()
+{
+    int ignoreCounter = 0;
+    int unignoreCounter = 0;
+
+    ChannelNickList nickList=channel->getSelectedChannelNicks();
+    ChannelNickList::ConstIterator it;
+
+    for (it = nickList.begin(); it != nickList.end(); ++it)
+    {
+        if (Preferences::isIgnored((*it)->getNickname()))
+            ++unignoreCounter;
+        else
+            ++ignoreCounter;
+    }
+
+    if (ignoreCounter)
+        popup->setItemVisible(m_ignorePopupItemId, true);
+
+    if (unignoreCounter)
+        popup->setItemVisible(m_unignorePopupItemId, true);
 }
 
 void NickListView::insertAssociationSubMenu()

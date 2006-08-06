@@ -99,6 +99,9 @@ handling)
 - Prevent topic widget from eating text
 - Fix Konversation trying to identify with services twice on some servers
 - Fix /unignore not accepting mere nicknames
+- Add Unignore nicklist context menu item
+- Show Ignore/Unignore nicklist context menu items only if applicable
+- Concat multiple ignores/unignores from the nicklist context menu into one operation
 
 
 Changes from 0.18 to 0.19

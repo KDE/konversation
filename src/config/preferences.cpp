@@ -290,11 +290,28 @@ void Preferences::addIgnore(const QString &newIgnore)
 bool Preferences::removeIgnore(const QString &oldIgnore)
 {
     QPtrListIterator<Ignore> ignoreList( self()->mIgnoreList );
+
     while (ignoreList.current())
     {
         if (ignoreList.current()->getName().lower()==oldIgnore.lower())
         {
             self()->mIgnoreList.remove(ignoreList.current());
+            return true;
+        }
+        ++ignoreList;
+    }
+
+    return false;
+}
+
+bool Preferences::isIgnored(const QString &nickname)
+{
+    QPtrListIterator<Ignore> ignoreList( self()->mIgnoreList );
+
+    while (ignoreList.current())
+    {
+        if (ignoreList.current()->getName().section('!',0,0).lower()==nickname.lower())
+        {
             return true;
         }
         ++ignoreList;

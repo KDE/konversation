@@ -64,6 +64,7 @@ class NickListView : public KListView
         void contextMenuEvent(QContextMenuEvent* ce);
         virtual bool acceptDrag (QDropEvent* event) const;
         void insertAssociationSubMenu();
+        void updateIgnoreActions();
         Konversation::KonversationNickListViewToolTip *m_tooltip;
         QPopupMenu* popup;
         QPopupMenu* modes;
@@ -71,6 +72,9 @@ class NickListView : public KListView
         QPopupMenu* addressbook;
         Channel *channel;
         QTimer *m_resortTimer;
+
+        int m_ignorePopupItemId;
+        int m_unignorePopupItemId;
 
         int m_column;
         bool m_ascending;
