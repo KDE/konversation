@@ -308,7 +308,7 @@
       <whatsthis></whatsthis>
     </entry>
     <entry key="NotifyDoubleClickAction" type="String">
-      <default>/WHOIS %u%n</default>
+      <default>/QUERY %u%n</default>
       <label></label>
       <whatsthis></whatsthis>
     </entry>
