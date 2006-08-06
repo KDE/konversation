@@ -47,7 +47,7 @@ namespace Konversation
         KickBanHost,KickBanDomain,KickBanUserHost,KickBanUserDomain,
         Whois,Version,Ping,OpenQuery,DccSend,Join,Names,Topic,
         CustomID, AddressbookSub, AddressbookChange, AddressbookNew, AddressbookDelete,
-        AddressbookEdit, SendEmail, StartDccChat
+        AddressbookEdit, SendEmail, StartDccChat, AddNotify
     };
 
 }

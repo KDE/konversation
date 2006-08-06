@@ -99,10 +99,11 @@ handling)
 - Prevent topic widget from eating text
 - Fix Konversation trying to identify with services twice on some servers
 - Fix /unignore not accepting mere nicknames
-- Add Unignore nicklist context menu item
-- Show Ignore/Unignore nicklist context menu items only if applicable
-- Concat multiple ignores/unignores from the nicklist context menu into one operation
-
+- Add Unignore nick context menu item
+- Show Ignore/Unignore nick context menu items only if applicable
+- Concat multiple ignores/unignores from the nick context menu into one operation
+- Add /kickban command with the same parameters as /ban + [reason]
+- Add "Add to Watched Nicks" nick context menu item
 
 Changes from 0.18 to 0.19
 We are extremely pleased to announce the immediate release of Konversation 0.19. The focus

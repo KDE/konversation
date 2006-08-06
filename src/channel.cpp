@@ -566,7 +566,7 @@ void Channel::popupCommand(int id)
                 pattern = cc+"IGNORE -ALL %l";
             break;
         case Konversation::UnignoreNick:
-
+        {
             QStringList selectedIgnoredNicks;
 
             for (ChannelNickList::ConstIterator it=nickList.begin(); it!=nickList.end(); ++it)
@@ -583,6 +583,14 @@ void Channel::popupCommand(int id)
                 KMessageBox::Yes)
             {
                 sendChannelText(cc+"UNIGNORE "+selectedIgnoredNicks.join(" "));
+            }
+            break;
+        }
+        case Konversation::AddNotify:
+            for (ChannelNickList::ConstIterator it=nickList.begin(); it!=nickList.end(); ++it)
+            {
+                if (!Preferences::isNotify(m_server->getServerGroup(),(*it)->getNickname()))
+                    Preferences::addNotify(m_server->getServerGroup(),(*it)->getNickname());
             }
             break;
     } // switch

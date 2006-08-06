@@ -202,9 +202,6 @@ class IRCView : public KTextBrowser
         int m_nickPopupId;
         int m_channelPopupId;
 
-        int m_ignorePopupItemId;
-        int m_unignorePopupItemId;
-
         QFontDatabase m_fontDataBase;
 
         ChatWindow* m_chatWin;

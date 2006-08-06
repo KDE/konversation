@@ -73,9 +73,6 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent)
     m_findParagraph=0;
     m_findIndex=0;
 
-    m_ignorePopupItemId = -1;
-    m_unignorePopupItemId = -1;
-
     setAutoFormatting(QTextEdit::AutoNone);
     setUndoRedoEnabled(0);
     setLinkUnderline(false);
@@ -1009,14 +1006,19 @@ bool IRCView::contextMenu(QContextMenuEvent* ce)
     {
         if (Preferences::isIgnored(getContextNick()))
         {
-            m_nickPopup->setItemVisible(m_unignorePopupItemId, true);
-            m_nickPopup->setItemVisible(m_ignorePopupItemId, false);
+            m_nickPopup->setItemVisible(Konversation::UnignoreNick, true);
+            m_nickPopup->setItemVisible(Konversation::IgnoreNick, false);
         }
         else
         {
-            m_nickPopup->setItemVisible(m_ignorePopupItemId, true);
-            m_nickPopup->setItemVisible(m_unignorePopupItemId, false);
+            m_nickPopup->setItemVisible(Konversation::IgnoreNick, true);
+            m_nickPopup->setItemVisible(Konversation::UnignoreNick, false);
         }
+
+        if (Preferences::isNotify(m_server->getServerGroup(),getContextNick()))
+            m_nickPopup->setItemEnabled(Konversation::AddNotify, false);
+        else
+            m_nickPopup->setItemEnabled(Konversation::AddNotify, true);
 
         m_nickPopup->exec(ce->globalPos());
         m_isOnNick = false;
@@ -1083,16 +1085,7 @@ void IRCView::setupNickPopupMenu()
     m_modes->insertItem(i18n("Give Voice"),Konversation::GiveVoice);
     m_modes->insertItem(i18n("Take Voice"),Konversation::TakeVoice);
     m_nickPopup->insertItem(i18n("Modes"),m_modes,Konversation::ModesSub);
-    m_nickPopup->insertSeparator();
-    m_nickPopup->insertItem(i18n("&Whois"),Konversation::Whois);
-    m_nickPopup->insertItem(i18n("&Version"),Konversation::Version);
-    m_nickPopup->insertItem(i18n("&Ping"),Konversation::Ping);
-    m_nickPopup->insertSeparator();
-    m_nickPopup->insertItem(i18n("Open Query"),Konversation::OpenQuery);
-    if (kapp->authorize("allow_downloading"))
-    {
-        m_nickPopup->insertItem(SmallIcon("2rightarrow"),i18n("Send &File..."),Konversation::DccSend);
-    }
+
     m_nickPopup->insertSeparator();
     m_kickban->insertItem(i18n("Kick"),Konversation::Kick);
     m_kickban->insertItem(i18n("Kickban"),Konversation::KickBan);
@@ -1109,11 +1102,24 @@ void IRCView::setupNickPopupMenu()
     m_kickban->insertItem(i18n("Kickban *!user@domain"),Konversation::KickBanUserDomain);
     m_nickPopup->insertItem(i18n("Kick / Ban"),m_kickban,Konversation::KickBanSub);
 
-    m_ignorePopupItemId = m_nickPopup->insertItem(i18n("Ignore"), Konversation::IgnoreNick);
-    m_unignorePopupItemId = m_nickPopup->insertItem(i18n("Unignore"), Konversation::UnignoreNick);
+    m_nickPopup->insertItem(i18n("Ignore"), Konversation::IgnoreNick);
+    m_nickPopup->insertItem(i18n("Unignore"), Konversation::UnignoreNick);
+    m_nickPopup->setItemVisible(Konversation::IgnoreNick, false);
+    m_nickPopup->setItemVisible(Konversation::UnignoreNick, false);
 
-    m_nickPopup->setItemVisible(m_ignorePopupItemId, false);
-    m_nickPopup->setItemVisible(m_unignorePopupItemId, false);
+    m_nickPopup->insertSeparator();
+    m_nickPopup->insertItem(i18n("&Whois"),Konversation::Whois);
+    m_nickPopup->insertItem(i18n("&Version"),Konversation::Version);
+    m_nickPopup->insertItem(i18n("&Ping"),Konversation::Ping);
+    m_nickPopup->insertSeparator();
+    m_nickPopup->insertItem(i18n("Open Query"),Konversation::OpenQuery);
+    if (kapp->authorize("allow_downloading"))
+    {
+        m_nickPopup->insertItem(SmallIcon("2rightarrow"),i18n("Send &File..."),Konversation::DccSend);
+    }
+
+    m_nickPopup->insertSeparator();
+    m_nickPopup->insertItem(i18n("Add to Watched Nicks"), Konversation::AddNotify);
 
     connect(m_nickPopup, SIGNAL(activated(int)), this, SIGNAL(popupCommand(int)));
     connect(m_modes, SIGNAL(activated(int)), this, SIGNAL(popupCommand(int)));

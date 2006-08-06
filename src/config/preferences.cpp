@@ -375,6 +375,20 @@ const bool Preferences::removeNotify(const QString& groupName, const QString& pa
     return false;
 }
 
+const bool Preferences::isNotify(const QString& groupName, const QString& pattern)
+{
+    int id = serverGroupIdByName(groupName);
+    if (!id) return false;
+
+    if (self()->mNotifyList.find(id) != self()->mNotifyList.end())
+    {
+        QStringList nicknameList = self()->mNotifyList[id];
+
+        if (nicknameList.contains(pattern)) return true;
+    }
+    return false;
+}
+
 // Default identity functions
 void Preferences::addIdentity(IdentityPtr identity) { self()->mIdentityList.append(identity); }
 void Preferences::removeIdentity(IdentityPtr identity) { self()->mIdentityList.remove(identity); }

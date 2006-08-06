@@ -42,12 +42,9 @@ KListView(parent)
     setDropHighlighter(true);
     setDropVisualizer(false);
 
-    m_ignorePopupItemId = -1;
-    m_unignorePopupItemId = -1;
-
-    if(popup)
+    if (popup)
     {
-        if(modes)
+        if (modes)
         {
             modes->insertItem(i18n("Give Op"),Konversation::GiveOp);
             modes->insertItem(i18n("Take Op"),Konversation::TakeOp);
@@ -57,10 +54,29 @@ KListView(parent)
             modes->insertItem(i18n("Take Voice"),Konversation::TakeVoice);
             popup->insertItem(i18n("Modes"),modes,Konversation::ModesSub);
         }
-        else
+
+        if (kickban)
         {
-            kdWarning() << "NickListView::NickListView(): Could not create modes popup!" << endl;
+
+            kickban->insertItem(i18n("Kick"),Konversation::Kick);
+            kickban->insertItem(i18n("Kickban"),Konversation::KickBan);
+            kickban->insertItem(i18n("Ban Nickname"),Konversation::BanNick);
+            kickban->insertSeparator();
+            kickban->insertItem(i18n("Ban *!*@*.host"),Konversation::BanHost);
+            kickban->insertItem(i18n("Ban *!*@domain"),Konversation::BanDomain);
+            kickban->insertItem(i18n("Ban *!user@*.host"),Konversation::BanUserHost);
+            kickban->insertItem(i18n("Ban *!user@domain"),Konversation::BanUserDomain);
+            kickban->insertSeparator();
+            kickban->insertItem(i18n("Kickban *!*@*.host"),Konversation::KickBanHost);
+            kickban->insertItem(i18n("Kickban *!*@domain"),Konversation::KickBanDomain);
+            kickban->insertItem(i18n("Kickban *!user@*.host"),Konversation::KickBanUserHost);
+            kickban->insertItem(i18n("Kickban *!user@domain"),Konversation::KickBanUserDomain);
+            popup->insertItem(i18n("Kick / Ban"),kickban,Konversation::KickBanSub);
         }
+
+        popup->insertItem(i18n("Ignore"), Konversation::IgnoreNick);
+        popup->insertItem(i18n("Unignore"), Konversation::UnignoreNick);
+
         popup->insertSeparator();
         popup->insertItem(i18n("&Whois"),Konversation::Whois);
         popup->insertItem(i18n("&Version"),Konversation::Version);
@@ -78,35 +94,13 @@ KListView(parent)
             popup->setWhatsThis(newitem, "<qt>Send a file to this person.  If you are having problem sending files, or they are sending slowly, see the Konversation Handbook and DCC preferences page.</qt>");
         }
         popup->insertItem(SmallIconSet("mail_generic"),i18n("&Send Email..."), Konversation::SendEmail);
-        if(addressbook)
-        {
-            popup->insertSeparator();
-            popup->insertItem(i18n("Addressbook Associations"), addressbook, Konversation::AddressbookSub);
-        }
+
         popup->insertSeparator();
-        if(kickban)
-        {
-            kickban->insertItem(i18n("Kick"),Konversation::Kick);
-            kickban->insertItem(i18n("Kickban"),Konversation::KickBan);
-            kickban->insertItem(i18n("Ban Nickname"),Konversation::BanNick);
-            kickban->insertSeparator();
-            kickban->insertItem(i18n("Ban *!*@*.host"),Konversation::BanHost);
-            kickban->insertItem(i18n("Ban *!*@domain"),Konversation::BanDomain);
-            kickban->insertItem(i18n("Ban *!user@*.host"),Konversation::BanUserHost);
-            kickban->insertItem(i18n("Ban *!user@domain"),Konversation::BanUserDomain);
-            kickban->insertSeparator();
-            kickban->insertItem(i18n("Kickban *!*@*.host"),Konversation::KickBanHost);
-            kickban->insertItem(i18n("Kickban *!*@domain"),Konversation::KickBanDomain);
-            kickban->insertItem(i18n("Kickban *!user@*.host"),Konversation::KickBanUserHost);
-            kickban->insertItem(i18n("Kickban *!user@domain"),Konversation::KickBanUserDomain);
-            popup->insertItem(i18n("Kick / Ban"),kickban,Konversation::KickBanSub);
-        }
 
-        m_ignorePopupItemId = popup->insertItem(i18n("Ignore"), Konversation::IgnoreNick);
-        m_unignorePopupItemId = popup->insertItem(i18n("Unignore"), Konversation::UnignoreNick);
+        if (addressbook)
+            popup->insertItem(i18n("Addressbook Associations"), addressbook, Konversation::AddressbookSub);
 
-        popup->setItemVisible(m_ignorePopupItemId, false);
-        popup->setItemVisible(m_unignorePopupItemId, false);
+        popup->insertItem(i18n("Add to Watched Nicks"), Konversation::AddNotify);
 
         connect (popup, SIGNAL(activated(int)), this, SIGNAL(popupCommand(int)));
         connect (modes, SIGNAL(activated(int)), this, SIGNAL(popupCommand(int)));
@@ -203,21 +197,21 @@ void NickListView::contextMenuEvent(QContextMenuEvent* ce)
 {
     ce->accept();
 
-    popup->setItemVisible(m_ignorePopupItemId, false);
-    popup->setItemVisible(m_unignorePopupItemId, false);
-
     if (selectedItems().count())
     {
         insertAssociationSubMenu();
-        updateIgnoreActions();
+        updateActions();
         popup->popup(ce->globalPos());
     }
 }
 
-void NickListView::updateIgnoreActions()
+void NickListView::updateActions()
 {
     int ignoreCounter = 0;
     int unignoreCounter = 0;
+    int notifyCounter = 0;
+
+    QString serverGroup = channel->getServer()->getServerGroup();
 
     ChannelNickList nickList=channel->getSelectedChannelNicks();
     ChannelNickList::ConstIterator it;
@@ -228,13 +222,25 @@ void NickListView::updateIgnoreActions()
             ++unignoreCounter;
         else
             ++ignoreCounter;
+
+        if (Preferences::isNotify(serverGroup,(*it)->getNickname()))
+            ++notifyCounter;
     }
 
     if (ignoreCounter)
-        popup->setItemVisible(m_ignorePopupItemId, true);
+        popup->setItemVisible(Konversation::IgnoreNick, true);
+    else
+        popup->setItemVisible(Konversation::IgnoreNick, false);
 
     if (unignoreCounter)
-        popup->setItemVisible(m_unignorePopupItemId, true);
+        popup->setItemVisible(Konversation::UnignoreNick, true);
+    else
+        popup->setItemVisible(Konversation::UnignoreNick, false);
+
+    if (notifyCounter)
+        popup->setItemEnabled(Konversation::AddNotify, false);
+    else
+        popup->setItemEnabled(Konversation::AddNotify, true);
 }
 
 void NickListView::insertAssociationSubMenu()
