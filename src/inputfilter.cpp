@@ -449,13 +449,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                         trailing = trailing.mid(1);
                     }
 
-                    // Nickserv
-                    if(trailing.startsWith("If this is your nick"))
-                    {
-                        // Identify command if specified
-                        server->registerWithServices();
-                    }
-                    else if(trailing.lower() == "password accepted - you are now recognized"
+                    if(trailing.lower() == "password accepted - you are now recognized"
                         || trailing.lower() == "you have already identified")
                     {
                         NickInfoPtr nickInfo = server->getNickInfo(server->getNickname());
