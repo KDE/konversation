@@ -1125,7 +1125,7 @@ namespace Konversation
             {
                 for(unsigned int index=0;index<parameterList.count();index++)
                 {
-                    if(parameterList[index].contains('!') == 0)
+                    if(!parameterList[index].contains('!'))
                     {
                         parameterList[index] += "!*";
                     }
@@ -1161,63 +1161,64 @@ namespace Konversation
         else
         {
             QString unignore = parameter.simplifyWhiteSpace();
-
             QStringList unignoreList = QStringList::split(' ',unignore);
 
-            // Only one potential unignore
-            if (unignoreList.count()==1)
-            {
-                // Unignore succeeded, i.e. parameter was on the ignore list
-                if (Preferences::removeIgnore(unignore))
-                {
-                    result.output = i18n("Removed %1 from your ignore list.").arg(unignore);
-                    result.typeString = i18n("Ignore");
-                    result.type = Program;
-                }
-                // Unignore failed
-                else
-                {
-                    result = error(i18n("No such ignore: %1").arg(unignore));
-                }
-            }
-            // Multiple potential unignores
-            else
-            {
-                QStringList succeeded;
-                QStringList failed;
+            QStringList succeeded;
+            QStringList failed;
 
-                // Iterate over potential unignores
-                for (QStringList::Iterator it = unignoreList.begin(); it != unignoreList.end(); ++it) 
+            // Iterate over potential unignores
+            for (QStringList::Iterator it = unignoreList.begin(); it != unignoreList.end(); ++it) 
+            {
+                // If pattern looks incomplete, try to complete it
+                if (!(*it).contains('!'))
                 {
-                    // Unignore succeeded: add to success list
+                    QString fixedPattern = (*it);
+                    fixedPattern += "!*";
+
+                    bool success = false;
+
+                    // Try to remove completed pattern
+                    if (Preferences::removeIgnore(fixedPattern))
+                    {
+                        succeeded.append(fixedPattern);
+                        success = true;
+                    }
+
+                    // Try to remove the incomplete version too, in case it was added via the GUI ...
+                    // FIXME: Validate patterns in GUI?
                     if (Preferences::removeIgnore((*it)))
                     {
                         succeeded.append((*it));
+                        success = true;
                     }
-                    // Unignore failed: add to failure list
-                    else
-                    {
-                        failed.append((*it));
-                    }
-                }
 
-                // Print all successful unignores, in case there were any
-                if (succeeded.count()>=1)
-                {
-                    m_server->appendMessageToFrontmost(i18n("Ignore"),i18n("Removed %1 from your ignore list.").arg(succeeded.join(", ")));
+                    if (!success)
+                        failed.append((*it) + "[!*]");
                 }
+                // Try to remove seemingly complete pattern
+                else if (Preferences::removeIgnore((*it)))
+                    succeeded.append((*it));
+                // Failed to remove given complete pattern
+                else
+                    failed.append((*it));
+            }
 
-                // One failed unignore
-                if (failed.count()==1)
-                {
-                    m_server->appendMessageToFrontmost(i18n("Error"),i18n("No such ignore: %1").arg(failed.join(", ")));
-                }
+            // Print all successful unignores, in case there were any
+            if (succeeded.count()>=1)
+            {
+                m_server->appendMessageToFrontmost(i18n("Ignore"),i18n("Removed %1 from your ignore list.").arg(succeeded.join(", ")));
+            }
 
-                // Multiple failed unignores
-                if (failed.count()>1)
-                {
-                    m_server->appendMessageToFrontmost(i18n("Error"),i18n("No such ignores: %1").arg(failed.join(", ")));
-                }
+            // One failed unignore
+            if (failed.count()==1)
+            {
+                m_server->appendMessageToFrontmost(i18n("Error"),i18n("No such ignore: %1").arg(failed.join(", ")));
+            }
+
+            // Multiple failed unignores
+            if (failed.count()>1)
+            {
+                m_server->appendMessageToFrontmost(i18n("Error"),i18n("No such ignores: %1").arg(failed.join(", ")));
             }
         }
 

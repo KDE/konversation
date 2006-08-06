@@ -770,6 +770,9 @@ void Server::connectionEstablished(const QString& ownHost)
 
 void Server::registerWithServices()
 {
+
+    kdDebug() << "Server: " << m_serverGroup->name() << "/" << m_serverGroup->serverByIndex(m_currentServerIndex).server() << " - Identifying" << endl;
+
     if(!botPassword.isEmpty() && !bot.isEmpty())
         queue("PRIVMSG "+bot+" :identify "+botPassword);
 }

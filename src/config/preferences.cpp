@@ -292,7 +292,7 @@ bool Preferences::removeIgnore(const QString &oldIgnore)
     QPtrListIterator<Ignore> ignoreList( self()->mIgnoreList );
     while (ignoreList.current())
     {
-        if (ignoreList.current()->getName()==oldIgnore)
+        if (ignoreList.current()->getName().lower()==oldIgnore.lower())
         {
             self()->mIgnoreList.remove(ignoreList.current());
             return true;
