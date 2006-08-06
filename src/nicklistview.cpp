@@ -44,6 +44,12 @@ KListView(parent)
 
     if (popup)
     {
+        popup->insertItem(i18n("&Whois"),Konversation::Whois);
+        popup->insertItem(i18n("&Version"),Konversation::Version);
+        popup->insertItem(i18n("&Ping"),Konversation::Ping);
+
+        popup->insertSeparator();
+
         if (modes)
         {
             modes->insertItem(i18n("Give Op"),Konversation::GiveOp);
@@ -78,10 +84,7 @@ KListView(parent)
         popup->insertItem(i18n("Unignore"), Konversation::UnignoreNick);
 
         popup->insertSeparator();
-        popup->insertItem(i18n("&Whois"),Konversation::Whois);
-        popup->insertItem(i18n("&Version"),Konversation::Version);
-        popup->insertItem(i18n("&Ping"),Konversation::Ping);
-        popup->insertSeparator();
+
         int newitem;
         newitem = popup->insertItem(i18n("Open &Query"),Konversation::OpenQuery);
         popup->setWhatsThis(newitem, "<qt>Start a private chat between you and this person.<p/><em>Technical note:</em><br>The conversation between you and this person will be sent via the server.  This means that the conversation will be affected by server lag, server stability, and will be terminated when you disconnect from the server.</qt>");

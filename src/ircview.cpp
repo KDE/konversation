@@ -1080,13 +1080,19 @@ void IRCView::setupNickPopupMenu()
     m_modes = new KPopupMenu(this,"nicklist_modes_context_submenu");
     m_kickban = new KPopupMenu(this,"nicklist_kick_ban_context_submenu");
     m_nickPopupId= m_nickPopup->insertTitle(m_currentNick);
+
+    m_nickPopup->insertItem(i18n("&Whois"),Konversation::Whois);
+    m_nickPopup->insertItem(i18n("&Version"),Konversation::Version);
+    m_nickPopup->insertItem(i18n("&Ping"),Konversation::Ping);
+
+    m_nickPopup->insertSeparator();
+
     m_modes->insertItem(i18n("Give Op"),Konversation::GiveOp);
     m_modes->insertItem(i18n("Take Op"),Konversation::TakeOp);
     m_modes->insertItem(i18n("Give Voice"),Konversation::GiveVoice);
     m_modes->insertItem(i18n("Take Voice"),Konversation::TakeVoice);
     m_nickPopup->insertItem(i18n("Modes"),m_modes,Konversation::ModesSub);
 
-    m_nickPopup->insertSeparator();
     m_kickban->insertItem(i18n("Kick"),Konversation::Kick);
     m_kickban->insertItem(i18n("Kickban"),Konversation::KickBan);
     m_kickban->insertItem(i18n("Ban Nickname"),Konversation::BanNick);
@@ -1108,10 +1114,7 @@ void IRCView::setupNickPopupMenu()
     m_nickPopup->setItemVisible(Konversation::UnignoreNick, false);
 
     m_nickPopup->insertSeparator();
-    m_nickPopup->insertItem(i18n("&Whois"),Konversation::Whois);
-    m_nickPopup->insertItem(i18n("&Version"),Konversation::Version);
-    m_nickPopup->insertItem(i18n("&Ping"),Konversation::Ping);
-    m_nickPopup->insertSeparator();
+
     m_nickPopup->insertItem(i18n("Open Query"),Konversation::OpenQuery);
     if (kapp->authorize("allow_downloading"))
     {
