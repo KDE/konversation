@@ -444,10 +444,14 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                 // No, so it was a normal notice
                 else
                 {
-                    if(server->identifyMsg())
+                    // Nickserv
+                    if (trailing.startsWith("If this is your nick"))
                     {
-                        trailing = trailing.mid(1);
+                        // Identify command if specified
+                        server->registerWithServices();
                     }
+                    if (server->identifyMsg())
+                        trailing = trailing.mid(1);
 
                     if(trailing.lower() == "password accepted - you are now recognized"
                         || trailing.lower() == "you have already identified")

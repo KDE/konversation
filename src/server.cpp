@@ -190,6 +190,7 @@ void Server::init(KonversationMainWindow* mainWindow, const QString& nick, const
     m_isAway = false;
     m_isAutoAway = false;
     m_socket = 0;
+    m_autoIdentifyLock = false;
 
     // TODO fold these into a QMAP, and these need to be reset to RFC values if this server object is reused.
     serverNickPrefixModes = "ovh";
@@ -770,11 +771,14 @@ void Server::connectionEstablished(const QString& ownHost)
 
 void Server::registerWithServices()
 {
-
-    kdDebug() << "Server: " << m_serverGroup->name() << "/" << m_serverGroup->serverByIndex(m_currentServerIndex).server() << " - Identifying" << endl;
-
-    if(!botPassword.isEmpty() && !bot.isEmpty())
+    if(!botPassword.isEmpty() && !bot.isEmpty() && !m_autoIdentifyLock)
+    {
         queue("PRIVMSG "+bot+" :identify "+botPassword);
+
+        // Set lock to prevent a second auto-identify attempt
+        // Lock is unset if we nickchange
+        m_autoIdentifyLock = true;
+    }
 }
 
 QCString Server::getKeyForRecipient(const QString& recipient) const
@@ -2615,6 +2619,9 @@ void Server::renameNick(const QString &nickname, const QString &newNick)
     if(nickname == getNickname())
     {
         setNickname(newNick);
+
+        // We may get a request from nickserv, so remove the auto-identify lock
+        m_autoIdentifyLock = false;
     }
 
     //Actually do the rename.

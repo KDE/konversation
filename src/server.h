@@ -676,5 +676,7 @@ class Server : public QObject
         QTime m_lagTime;
         /// Updates the gui when the lag gets too high
         QTimer m_pingResponseTimer;
+
+        bool m_autoIdentifyLock;
 };
 #endif

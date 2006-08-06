@@ -73,6 +73,9 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent)
     m_findParagraph=0;
     m_findIndex=0;
 
+    m_ignorePopupItemId = -1;
+    m_unignorePopupItemId = -1;
+
     setAutoFormatting(QTextEdit::AutoNone);
     setUndoRedoEnabled(0);
     setLinkUnderline(false);
@@ -1004,6 +1007,17 @@ bool IRCView::contextMenu(QContextMenuEvent* ce)
 {
     if(m_isOnNick)
     {
+        if (Preferences::isIgnored(getContextNick()))
+        {
+            m_nickPopup->setItemVisible(m_unignorePopupItemId, true);
+            m_nickPopup->setItemVisible(m_ignorePopupItemId, false);
+        }
+        else
+        {
+            m_nickPopup->setItemVisible(m_ignorePopupItemId, true);
+            m_nickPopup->setItemVisible(m_unignorePopupItemId, false);
+        }
+
         m_nickPopup->exec(ce->globalPos());
         m_isOnNick = false;
     }
@@ -1094,7 +1108,12 @@ void IRCView::setupNickPopupMenu()
     m_kickban->insertItem(i18n("Kickban *!user@*.host"),Konversation::KickBanUserHost);
     m_kickban->insertItem(i18n("Kickban *!user@domain"),Konversation::KickBanUserDomain);
     m_nickPopup->insertItem(i18n("Kick / Ban"),m_kickban,Konversation::KickBanSub);
-    m_nickPopup->insertItem(i18n("Ignore"),Konversation::IgnoreNick);
+
+    m_ignorePopupItemId = m_nickPopup->insertItem(i18n("Ignore"), Konversation::IgnoreNick);
+    m_unignorePopupItemId = m_nickPopup->insertItem(i18n("Unignore"), Konversation::UnignoreNick);
+
+    m_nickPopup->setItemVisible(m_ignorePopupItemId, false);
+    m_nickPopup->setItemVisible(m_unignorePopupItemId, false);
 
     connect(m_nickPopup, SIGNAL(activated(int)), this, SIGNAL(popupCommand(int)));
     connect(m_modes, SIGNAL(activated(int)), this, SIGNAL(popupCommand(int)));
