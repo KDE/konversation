@@ -229,7 +229,9 @@ Channel::Channel(QWidget* parent)
     channelInput = new IRCInput(commandLineBox);
 
     getTextView()->installEventFilter(channelInput);
+    topicLine->installEventFilter(channelInput);
     channelInput->installEventFilter(this);
+
     channelInput->setCheckSpellingEnabled(Preferences::spellChecking());
 
     // Set the widgets size policies

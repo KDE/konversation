@@ -143,7 +143,7 @@ void IRCInput::setText(const QString& text)
 //take text events from IRCView and TopicLabel
 bool IRCInput::eventFilter(QObject *object,QEvent *event)
 {
-    if (object->isA("IRCView") || object->isA("TopicLabel"))
+    if (object->isA("IRCView") || object->isA("Konversation::TopicLabel"))
     {
         if (event->type() == QEvent::KeyPress)
         {
