@@ -100,7 +100,7 @@ namespace Konversation
             OutputFilterResult parseQuit(const QString& parameter);
             OutputFilterResult parseKick(const QString& parameter);
             OutputFilterResult parseKickBan(const QString& parameter);
-            OutputFilterResult parseBan(const QString& parameter);
+            OutputFilterResult parseBan(const QString& parameter, bool kick = false);
             OutputFilterResult parseUnban(const QString& parameter);
             OutputFilterResult parseNames(const QString& parameter);
             OutputFilterResult parseList(const QString& parameter);

@@ -450,7 +450,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                         // Identify command if specified
                         server->registerWithServices();
                     }
-                    if (server->identifyMsg())
+                    else if (server->identifyMsg())
                         trailing = trailing.mid(1);
 
                     if(trailing.lower() == "password accepted - you are now recognized"

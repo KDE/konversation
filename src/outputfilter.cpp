@@ -187,6 +187,7 @@ namespace Konversation
             else if(command == "oper")     result = parseOper(myNick,parameter);
             else if(command == "ban")      result = parseBan(parameter);
             else if(command == "unban")    result = parseUnban(parameter);
+            else if(command == "kickban")      result = parseBan(parameter,true);
             else if(command == "ignore")   result = parseIgnore(parameter);
             else if(command == "unignore") result = parseUnignore(parameter);
             else if(command == "quote")    result = parseQuote(parameter);
@@ -975,7 +976,7 @@ namespace Konversation
         return result;
     }
 
-    OutputFilterResult OutputFilter::parseBan(const QString& parameter)
+    OutputFilterResult OutputFilter::parseBan(const QString& parameter, bool kick)
     {
         OutputFilterResult result;
         // assume incorrect syntax first
@@ -993,34 +994,51 @@ namespace Konversation
             bool udomain = (parameterList[0].lower() == "-userdomain");
 
             // remove possible option
-            if(host || domain || uhost || udomain)
+            if (host || domain || uhost || udomain)
             {
                 option = parameterList[0].mid(1);
                 parameterList.pop_front();
             }
 
             // look for channel / ban mask
-            if(parameterList.count())
+            if (parameterList.count())
             {
                 // user specified channel
-                if(isAChannel(parameterList[0]))
+                if (isAChannel(parameterList[0]))
                 {
                     channel = parameterList[0];
                     parameterList.pop_front();
                 }
                 // no channel, so assume current destination as channel
-                else if(isAChannel(destination))
+                else if (isAChannel(destination))
                     channel = destination;
                 else
                 {
                     // destination is no channel => error
-                    result = error(i18n("%1BAN without channel name works only from inside a channel.").arg(commandChar));
+                    if (!kick)
+                        result = error(i18n("%1BAN without channel name works only from inside a channel.").arg(commandChar));
+                    else
+                        result = error(i18n("%1KICKBAN without channel name works only from inside a channel.").arg(commandChar));
+
                     // no usage information after error
                     showUsage = false;
                 }
                 // signal server to ban this user if all went fine
-                if(!channel.isEmpty())
+                if (!channel.isEmpty())
                 {
+                    if (kick)
+                    {
+                        QString reason;
+
+                        if (parameterList.count()>1)
+                        {
+                            reason = parameterList.last();
+                            parameterList.remove(parameterList.last());
+                        }
+
+                        result.toServer = "KICK " + channel + ' ' + parameterList[0] + " :" + reason;
+                    }
+
                     emit banUsers(parameterList,channel,option);
                     // syntax was correct, so reset flag
                     showUsage = false;
@@ -1028,9 +1046,12 @@ namespace Konversation
             }
         }
 
-        if(showUsage)
+        if (showUsage)
         {
-            result = usage(i18n("Usage: %1BAN [-HOST | -DOMAIN] [channel] <user|mask>").arg(commandChar));
+            if (!kick)
+                result = usage(i18n("Usage: %1BAN [-HOST | -DOMAIN] [channel] <user|mask>").arg(commandChar));
+            else
+                result = usage(i18n("Usage: %1KICKBAN [-HOST | -DOMAIN] [channel] <user|mask> [reason]").arg(commandChar));
         }
 
         return result;
