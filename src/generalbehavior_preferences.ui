@@ -242,6 +242,14 @@ the Free Software Foundation; either version 2 of the License, or
                         <number>1</number>
                     </property>
                 </widget>
+                <widget class="QCheckBox" row="6" column="0" colspan="2">
+                    <property name="name">
+                        <cstring>kcfg_UseMultiRowInputBox</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Input box expands with text</string>
+                    </property>
+                </widget>
                 <widget class="KLineEdit" row="3" column="1">
                     <property name="name">
                         <cstring>kcfg_WebBrowserCmd</cstring>

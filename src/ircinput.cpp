@@ -17,6 +17,8 @@
 #include <klocale.h>
 #include <kcompletionbox.h>
 
+#include <private/qrichtext_p.h>
+
 #include <qclipboard.h>
 #include <qregexp.h>
 #include <qdom.h>
@@ -35,6 +37,15 @@
 
 IRCInput::IRCInput(QWidget* parent) : KTextEdit(parent)
 {
+    m_lastHeight=document()->height();
+
+    //i'm not terribly interested in finding out where this value comes from
+    //nor in compensating for it if my guess is incorrect. so, cache it.
+    m_qtBoxPadding=m_lastHeight-fontMetrics().lineSpacing();
+
+    connect(KApplication::kApplication(), SIGNAL(appearanceChanged()), this, SLOT(updateAppearance()));
+    m_multiRow = Preferences::useMultiRowInputBox();
+
     m_useSelection = false;
 
     // connect history signal
@@ -48,9 +59,12 @@ IRCInput::IRCInput(QWidget* parent) : KTextEdit(parent)
     completionBox = new KCompletionBox(this);
     connect(completionBox, SIGNAL(activated(const QString&)), this, SLOT(insertCompletion(const QString&)));
 
-    // widget may not resize vertically
+    // widget may not be resized vertically
     setSizePolicy(QSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::Fixed));
-    setWordWrap(NoWrap);
+
+    //NoWrap coupled with the size policy constrains the line edit to be one row high
+    setWordWrap(m_multiRow ? WidgetWidth : NoWrap);
+
     setHScrollBarMode(AlwaysOff);
     setVScrollBarMode(AlwaysOff);
     #if RICHTEXT == 1
@@ -61,21 +75,40 @@ IRCInput::IRCInput(QWidget* parent) : KTextEdit(parent)
     #endif
 
     QWhatsThis::add(this, i18n("<qt>The input line is where you type messages to be sent the channel, query, or server.  A message sent to a channel is seen by everyone on the channel, whereas a message in a query is sent only to the person in the query with you.<p>You can also send special commands:<br><table><tr><th>/me <i>action</i></th><td>shows up as an action in the channel or query.  For example:  <em>/me sings a song</em> will show up in the channel as 'Nick sings a song'.</td></tr><tr><th>/whois <i>nickname</i></th><td>shows information about this person, including what channels they are in.</td></tr></table><p>For more commands, see the Konversation Handbook.<p>A message can be a maximum of 512 letters long, and cannot contain multiple lines.</qt>"));
+
 }
 
 IRCInput::~IRCInput()
 {
 }
 
-// widget must be only one line high
+void IRCInput::updateAppearance()
+{
+    m_multiRow = Preferences::useMultiRowInputBox();
+    setWordWrap(m_multiRow ? WidgetWidth : NoWrap);
+    m_lastHeight=heightForWidth(sizeHint().width());
+    ensureCursorVisible(); //appears to trigger updateGeometry
+}
+
+void IRCInput::resizeContents( int w, int h )
+{
+    if (document()->height() != m_lastHeight) {
+        m_lastHeight=document()->height();
+        updateGeometry();
+    }
+    KTextEdit::resizeContents(w,h);
+}
+
+// widget must be only one line high - luckily QT will enforce this via wrappping policy
 QSize IRCInput::sizeHint() const
 {
     constPolish();
 
+    int ObscurePadding = 4;
     int f=2*frameWidth();
-    int h=QMAX(fontMetrics().lineSpacing(),14)+f+4;
-
-    return QSize(12*h,h);
+    int w=12 * (QMAX(fontMetrics().lineSpacing(),14) + f + ObscurePadding);
+    int h=m_lastHeight - m_qtBoxPadding + f + ObscurePadding;
+    return QSize(w,h);
 }
 
 QString IRCInput::text() const
@@ -106,9 +139,11 @@ void IRCInput::setText(const QString& text)
     setCursorPosition(0,text.length()+1);
 }
 
+// FIXME - find a better way to do this. eventfilters introduce nebulous behaviour
+//take text events from IRCView and TopicLabel
 bool IRCInput::eventFilter(QObject *object,QEvent *event)
 {
-    if (object->isA("IRCView"))
+    if (object->isA("IRCView") || object->isA("TopicLabel"))
     {
         if (event->type() == QEvent::KeyPress)
         {
@@ -162,7 +197,7 @@ void IRCInput::keyPressEvent(QKeyEvent* e)
                 }
                 else
                 {
-                    setText(static_cast<KonversationApplication*>(kapp)->doAutoreplace(text(),true));
+                    //setText(static_cast<KonversationApplication*>(kapp)->doAutoreplace(text(),true));
                     emit submit();
                 }
             }

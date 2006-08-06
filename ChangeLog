@@ -95,6 +95,8 @@ handling)
 - Fix showing/hiding of realnames in the nickname list not being applied immediately.
 - Ask user for a new nickname after unsuccessfully looping over the identity's list
   of nicks instead of appending _ and eventually running into the NICKLEN wall.
+- Add optional multline-like mode for input box, will grow vertically instead of scrolling
+- Prevent topic widget from eating text
 
 
 Changes from 0.18 to 0.19

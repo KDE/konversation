@@ -58,6 +58,8 @@ class IRCInput : public KTextEdit
         void setText(const QString& text);
         void setLastCompletion(const QString& completion);
         virtual void setOverwriteMode(bool) { }
+        virtual void resizeContents( int w, int h );
+        virtual void updateAppearance();
 
     protected slots:
         void getHistory(bool up);
@@ -78,5 +80,8 @@ class IRCInput : public KTextEdit
         KCompletionBox* completionBox;
         QString m_lastCompletion;
         bool m_useSelection;
+        bool m_multiRow;
+        int m_lastHeight; //essentially corresponds to qtextbrowser::doc->height()
+        int m_qtBoxPadding; //see comment in constructor
 };
 #endif

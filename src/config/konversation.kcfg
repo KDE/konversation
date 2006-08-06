@@ -218,6 +218,10 @@
     </entry>
     <entry key="CustomVersionReply" type="String">
     </entry>
+    <entry key="UseMultiRowInputBox" type="Bool">
+      <default>false</default>
+      <whatsthis>Enabling this will cause the input box to grow vertically when it fills up.</whatsthis>
+    </entry>
     <entry key="CommandChar" type="String">
       <default>/</default>
       <label></label>
