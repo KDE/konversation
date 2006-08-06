@@ -430,11 +430,7 @@ bool ChatWindow::eventFilter(QObject* watched, QEvent* e)
     {
         QKeyEvent* ke = static_cast<QKeyEvent*>(e);
 
-        bool scrollMod = false;
-        if (Preferences::useMultiRowInputBox())
-            scrollMod = (ke->state() == (Qt::ShiftButton|Qt::ControlButton));
-        else //ignore the control key to allow the ircview to scroll if you're used to multiline mode
-            scrollMod = ((ke->state()&~Qt::ControlButton) == Qt::ShiftButton);
+        bool scrollMod = (Preferences::useMultiRowInputBox() ? false : (ke->state() == Qt::ShiftButton));
 
         if(ke->key() == Qt::Key_Up && scrollMod)
         {

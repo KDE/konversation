@@ -172,13 +172,15 @@ void IRCInput::keyPressEvent(QKeyEvent* e)
             break;
 
         case Key_Up:
-            if (e->state()) break;
+            if (m_multiRow && (e->state() != (Qt::ShiftButton|Qt::ControlButton)))
+                break;
             emit history(true);
             return;
             break;
 
         case Key_Down:
-            if (e->state()) break;
+            if (m_multiRow && (e->state() != (Qt::ShiftButton|Qt::ControlButton)))
+                break;
             emit history(false);
             return;
             break;
