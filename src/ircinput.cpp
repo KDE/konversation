@@ -25,6 +25,7 @@
 #include <qevent.h>
 #include <qobject.h>
 #include <qwhatsthis.h>
+#include <qpopupmenu.h>
 
 #include "ircinput.h"
 #include "konversationapplication.h"
@@ -109,6 +110,14 @@ QSize IRCInput::sizeHint() const
     int w=12 * (QMAX(fontMetrics().lineSpacing(),14) + f + ObscurePadding);
     int h=m_lastHeight - m_qtBoxPadding + f + ObscurePadding;
     return QSize(w,h);
+}
+
+QPopupMenu *IRCInput::createPopupMenu( const QPoint &pos )
+{
+    QPopupMenu *menu=KTextEdit::createPopupMenu(pos);
+    menu->removeItemAt(menu->count()-1);
+    menu->removeItemAt(menu->count()-1);
+    return menu;
 }
 
 QString IRCInput::text() const
