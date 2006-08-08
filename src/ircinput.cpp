@@ -157,7 +157,8 @@ bool IRCInput::eventFilter(QObject *object,QEvent *event)
         if (event->type() == QEvent::KeyPress)
         {
             QKeyEvent* ke = static_cast<QKeyEvent*>(event);
-
+            if (ke->key() == Key_Tab && (ke->state() == 0 || ke->state() == Qt::ShiftButton))
+                return false;
             if (!ke->text().isEmpty() && (ke->state() == Qt::ShiftButton || ke->state() == 0))
             {
                 setFocus();
