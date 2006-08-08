@@ -194,7 +194,7 @@ the Free Software Foundation; either version 2 of the License, or
                 <cstring>groupBox2</cstring>
             </property>
             <property name="title">
-                <string>Port</string>
+                <string>Ports</string>
             </property>
             <grid>
                 <property name="name">
