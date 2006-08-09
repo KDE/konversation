@@ -57,7 +57,7 @@ DccPanel::DccPanel(QWidget* parent)
     m_listView->setColumnText(Column::PartnerNick,   i18n("Partner"));
     m_listView->setColumnText(Column::Progress,      i18n("Progress"));
     m_listView->setColumnText(Column::Position,      i18n("Position"));
-    m_listView->setColumnText(Column::TimeRemaining, i18n("Remain"));
+    m_listView->setColumnText(Column::TimeRemaining, i18n("Remaining"));
     m_listView->setColumnText(Column::CPS,           i18n("Speed"));
     m_listView->setColumnText(Column::SenderAddress, i18n("Sender Address"));
 
@@ -97,14 +97,14 @@ DccPanel::DccPanel(QWidget* parent)
     m_buttonClear  = new QPushButton(icon("editdelete"),  i18n("&Clear"),  buttonsBox, "clear_dcc");
     m_buttonOpen   = new QPushButton(icon("exec"),        i18n("&Open File"),   buttonsBox, "open_dcc_file");
     m_buttonRemove = new QPushButton(icon("edittrash"),   i18n("&Remove File"), buttonsBox, "remove_dcc_file");
-    m_buttonDetail = new QPushButton(icon("view_text"),   i18n("DCC &Detail"), buttonsBox, "detail_dcc");
+    m_buttonDetail = new QPushButton(icon("view_text"),   i18n("DCC Transfer &Details"), buttonsBox, "detail_dcc");
 
     QToolTip::add( m_buttonAccept, i18n( "Start receiving" ) );
     QToolTip::add( m_buttonAbort,  i18n( "Abort the transfer(s)" ) );
     QToolTip::add( m_buttonClear,  i18n( "Remove from this panel" ) );
     QToolTip::add( m_buttonOpen,   i18n( "Run the file" ) );
     QToolTip::add( m_buttonRemove, i18n( "Remove the received file(s)" ) );
-    QToolTip::add( m_buttonDetail, i18n( "View DCC detail information" ) );
+    QToolTip::add( m_buttonDetail, i18n( "View DCC transfer details" ) );
 
     connect( m_buttonAccept, SIGNAL(clicked()), this, SLOT(acceptDcc()) );
     connect( m_buttonAbort,  SIGNAL(clicked()), this, SLOT(abortDcc()) );
@@ -128,7 +128,7 @@ DccPanel::DccPanel(QWidget* parent)
     m_popup->insertItem(icon("edittrash"),       i18n("&Remove File"),                Popup::Remove);
     m_popup->insertItem(icon("messagebox_info"), i18n("File &Information"),           Popup::Info);
     m_popup->insertSeparator();                   // -----
-    m_popup->insertItem(icon("view_text"),       i18n("DCC &Detail Information"),     Popup::Detail);
+    m_popup->insertItem(icon("view_text"),       i18n("DCC Transfer &Details"),     Popup::Detail);
 
     #undef icon
 
