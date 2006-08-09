@@ -105,11 +105,19 @@ namespace Konversation
 
         QString inputLine(originalLine);
 
-        if(inputLine.stripWhiteSpace().startsWith("/nickserv"))
-            inputLine = inputLine.stripWhiteSpace();
-
         if(inputLine.isEmpty() || inputLine == "\n")
             return result;
+
+        //Protect against nickserv auth being sent as a message on the off chance
+        // someone didn't notice leading spaces
+        {
+            QString testNickServ( inputLine.stripWhiteSpace() );
+            if(testNickServ.startsWith(commandChar+"nickserv", false)
+              || testNickServ.startsWith(commandChar+"ns", false))
+            {
+                    inputLine = testNickServ;
+            }
+        }
 
         if(!Preferences::disableExpansion())
         {
