@@ -98,7 +98,7 @@ class DccTransfer : public QObject, public KListViewItem
         void closeDetailDialog();
 
         signals:
-        void done( const QString& filename, DccTransfer::DccStatus status = DccTransfer::Done, const QString& errorMessage = QString::null );
+        void done( const QString& filename, int status = DccTransfer::Done, const QString& errorMessage = QString::null );
         void statusChanged( const DccTransfer* item );
 
     public slots:
