@@ -335,10 +335,11 @@ void DccTransfer::closeDetailDialog()
 void DccTransfer::setStatus( DccStatus status, const QString& statusDetail )
 {
     bool changed = ( status != m_dccStatus );
+    DccStatus oldStatus = m_dccStatus;
     m_dccStatus = status;
     m_dccStatusDetail = statusDetail;
     if ( changed )
-        emit statusChanged( this );
+        emit statusChanged( this, m_dccStatus, oldStatus );
 }
 
 void DccTransfer::updateTransferMeters()

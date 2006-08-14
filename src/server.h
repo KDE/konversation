@@ -471,7 +471,7 @@ class Server : public QObject
         void dccResumeGetRequest(const QString& sender,const QString& fileName,const QString& port,KIO::filesize_t startAt);
         void dccGetDone(const QString& fileName, int status, const QString &errorMessage);
         void dccSendDone(const QString& fileName, int status, const QString &errorMessage);
-        void dccStatusChanged(const DccTransfer* item);
+        void dccStatusChanged(const DccTransfer* item, int newStatus, int oldStatus);
         void away();
         void unAway();
         void scriptNotFound(const QString& name);

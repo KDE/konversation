@@ -1767,8 +1767,8 @@ void Server::addDccSend(const QString &recipient,KURL fileURL, const QString &al
     connect(newDcc,SIGNAL (sendReady(const QString&,const QString&,const QString&,const QString&,unsigned long)),
         this,SLOT (dccSendRequest(const QString&,const QString&,const QString&,const QString&,unsigned long)) );
     connect(newDcc,SIGNAL (done(const QString&,int,const QString&)),this,SLOT (dccSendDone(const QString&,int,const QString&)) );
-    connect(newDcc,SIGNAL (statusChanged(const DccTransfer* )), this,
-        SLOT(dccStatusChanged(const DccTransfer*)) );
+    connect(newDcc,SIGNAL (statusChanged(const DccTransfer*,int,int)), this,
+        SLOT(dccStatusChanged(const DccTransfer*,int,int)) );
     newDcc->start();
 }
 
@@ -1803,8 +1803,8 @@ void Server::addDccGet(const QString &sourceNick, const QStringList &dccArgument
         SLOT (dccResumeGetRequest(const QString&,const QString&,const QString&,KIO::filesize_t)) );
     connect(newDcc,SIGNAL (done(const QString&,int,const QString&)),
         this,SLOT (dccGetDone(const QString&,int,const QString&)) );
-    connect(newDcc,SIGNAL (statusChanged(const DccTransfer* )), this,
-        SLOT(dccStatusChanged(const DccTransfer*)) );
+    connect(newDcc,SIGNAL (statusChanged(const DccTransfer*,int,int)), this,
+        SLOT(dccStatusChanged(const DccTransfer*,int,int)) );
 
     if(Preferences::dccAutoGet()) newDcc->start();
 }
@@ -1921,9 +1921,18 @@ void Server::dccSendDone(const QString &fileName, int status, const QString &err
         appendMessageToFrontmost(i18n("DCC"),i18n("DCC upload of file \"%1\" failed. reason: %2").arg(fileName).arg(errorMessage));
 }
 
-void Server::dccStatusChanged(const DccTransfer *item)
+void Server::dccStatusChanged(const DccTransfer *item, int newStatus, int oldStatus)
 {
     getMainWindow()->getDccPanel()->dccStatusChanged(item);
+
+    if ( item->getType() == DccTransfer::Send )
+    {
+        if ( newStatus == DccTransfer::Sending && oldStatus == DccTransfer::WaitingRemote )
+            appendMessageToFrontmost( i18n( "DCC" ), i18n( "DCC upload of file \"%1\" were accepted by %2." ).arg( item->getFileName(), item->getPartnerNick() ) );
+    }
+    else
+    {
+    }
 }
 
 void Server::removeQuery(class Query* query)

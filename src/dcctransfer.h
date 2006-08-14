@@ -99,7 +99,7 @@ class DccTransfer : public QObject, public KListViewItem
 
         signals:
         void done( const QString& filename, int status = DccTransfer::Done, const QString& errorMessage = QString::null );
-        void statusChanged( const DccTransfer* item );
+        void statusChanged( const DccTransfer* item, int newStatus, int oldStatus );
 
     public slots:
         virtual void start() = 0;
