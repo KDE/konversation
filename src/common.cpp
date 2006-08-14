@@ -89,6 +89,13 @@ namespace Konversation
 
         while((pos = urlPattern.search(filteredLine, pos)) >= 0)
         {
+            // check if the matched text is already replaced as a channel
+            if ( filteredLine.left( pos ).findRev( "<a" ) > filteredLine.left( pos ).findRev( "</a>" ) )
+            {
+                ++pos;
+                continue;
+            }
+
             protocol="";
             urlLen = urlPattern.matchedLength();
             href = filteredLine.mid( pos, urlLen );
