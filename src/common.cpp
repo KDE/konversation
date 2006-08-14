@@ -90,7 +90,7 @@ namespace Konversation
         while((pos = urlPattern.search(filteredLine, pos)) >= 0)
         {
             // check if the matched text is already replaced as a channel
-            if ( filteredLine.left( pos ).findRev( "<a" ) > filteredLine.left( pos ).findRev( "</a>" ) )
+            if ( filteredLine.findRev( "<a", pos ) > filteredLine.findRev( "</a>", pos ) )
             {
                 ++pos;
                 continue;
