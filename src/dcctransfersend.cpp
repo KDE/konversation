@@ -183,7 +183,7 @@ void DccTransferSend::failed( const QString& errorMessage )
     setStatus( Failed, errorMessage );
     updateView();
     cleanUp();
-    emit done( m_fileURL.path(), Failed, errorMessage );
+    emit done( this );
     openDetailDialog();
 }
 
@@ -194,7 +194,7 @@ void DccTransferSend::abort()                     // public slot
     setStatus( Aborted );
     updateView();
     cleanUp();
-    emit done( m_fileURL.path(), Aborted );
+    emit done( this );
 }
 
 void DccTransferSend::start()                     // public slot
@@ -365,7 +365,7 @@ void DccTransferSend::getAck()                    // slot
             setStatus( Done );
             updateView();
             cleanUp();
-            emit done( m_fileURL.path() );
+            emit done( this );
             break;                                // for safe
         }
     }

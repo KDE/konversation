@@ -76,6 +76,7 @@ class DccTransfer : public QObject, public KListViewItem
 
         DccType            getType()                  const;
         DccStatus          getStatus()                const;
+        const QString&     getStatusDetail()          const;
         QDateTime          getTimeOffer()             const;
         QString            getOwnIp()                 const;
         QString            getOwnPort()               const;
@@ -98,7 +99,7 @@ class DccTransfer : public QObject, public KListViewItem
         void closeDetailDialog();
 
         signals:
-        void done( const QString& filename, int status = DccTransfer::Done, const QString& errorMessage = QString::null );
+        void done( const DccTransfer* item );
         void statusChanged( const DccTransfer* item, int newStatus, int oldStatus );
 
     public slots:

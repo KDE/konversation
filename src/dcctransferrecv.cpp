@@ -178,7 +178,7 @@ void DccTransferRecv::failed( const QString& errorMessage )
     setStatus( Failed, errorMessage );
     updateView();
     cleanUp();
-    emit done( m_fileURL.path(), Failed, errorMessage );
+    emit done( this );
 
     if ( bNeedToOpenDetail )
         openDetailDialog();
@@ -196,7 +196,7 @@ void DccTransferRecv::abort()                     // public slot
     setStatus( Aborted );
     updateView();
     cleanUp();
-    emit done( m_fileURL.path(), Aborted );
+    emit done( this );
 }
 
 void DccTransferRecv::start()                     // public slot
@@ -512,7 +512,7 @@ void DccTransferRecv::slotLocalWriteDone()        // <-WriteCacheHandler::done()
     setStatus( Done );
     updateView();
     cleanUp();
-    emit done( m_fileURL.fileName() );
+    emit done( this );
 }
 
                                                   // <- WriteCacheHandler::gotError()

@@ -1766,7 +1766,7 @@ void Server::addDccSend(const QString &recipient,KURL fileURL, const QString &al
 
     connect(newDcc,SIGNAL (sendReady(const QString&,const QString&,const QString&,const QString&,unsigned long)),
         this,SLOT (dccSendRequest(const QString&,const QString&,const QString&,const QString&,unsigned long)) );
-    connect(newDcc,SIGNAL (done(const QString&,int,const QString&)),this,SLOT (dccSendDone(const QString&,int,const QString&)) );
+    connect(newDcc,SIGNAL (done(const DccTransfer*)),this,SLOT (dccSendDone(const DccTransfer*)) );
     connect(newDcc,SIGNAL (statusChanged(const DccTransfer*,int,int)), this,
         SLOT(dccStatusChanged(const DccTransfer*,int,int)) );
     newDcc->start();
@@ -1801,8 +1801,8 @@ void Server::addDccGet(const QString &sourceNick, const QStringList &dccArgument
 
     connect(newDcc,SIGNAL (resumeRequest(const QString&,const QString&,const QString&,KIO::filesize_t)),this,
         SLOT (dccResumeGetRequest(const QString&,const QString&,const QString&,KIO::filesize_t)) );
-    connect(newDcc,SIGNAL (done(const QString&,int,const QString&)),
-        this,SLOT (dccGetDone(const QString&,int,const QString&)) );
+    connect(newDcc,SIGNAL (done(const DccTransfer*)),
+        this,SLOT (dccGetDone(const DccTransfer*)) );
     connect(newDcc,SIGNAL (statusChanged(const DccTransfer*,int,int)), this,
         SLOT(dccStatusChanged(const DccTransfer*,int,int)) );
 
@@ -1905,20 +1905,20 @@ void Server::resumeDccSendTransfer(const QString &recipient, const QStringList &
     }
 }
 
-void Server::dccGetDone(const QString &fileName, int status, const QString &errorMessage)
+void Server::dccGetDone(const DccTransfer* item)
 {
-    if(status==DccTransfer::Done)
-        appendMessageToFrontmost(i18n("DCC"),i18n("Download of file \"%1\" finished.").arg(fileName));
-    else if(status==DccTransfer::Failed)
-        appendMessageToFrontmost(i18n("DCC"),i18n("Download of file \"%1\" failed. reason: %2").arg(fileName).arg(errorMessage));
+    if(item->getStatus()==DccTransfer::Done)
+        appendMessageToFrontmost(i18n("DCC"),i18n("Download of file \"%1\" finished.").arg(item->getFileName()));
+    else if(item->getStatus()==DccTransfer::Failed)
+        appendMessageToFrontmost(i18n("DCC"),i18n("Download of file \"%1\" failed. reason: %2").arg(item->getFileName(),item->getStatusDetail()));
 }
 
-void Server::dccSendDone(const QString &fileName, int status, const QString &errorMessage)
+void Server::dccSendDone(const DccTransfer* item)
 {
-    if(status==DccTransfer::Done)
-        appendMessageToFrontmost(i18n("DCC"),i18n("Upload of file \"%1\" finished.").arg(fileName));
-    else if(status==DccTransfer::Failed)
-        appendMessageToFrontmost(i18n("DCC"),i18n("Upload of file \"%1\" failed. reason: %2").arg(fileName).arg(errorMessage));
+    if(item->getStatus()==DccTransfer::Done)
+        appendMessageToFrontmost(i18n("DCC"),i18n("Upload of file \"%1\" finished.").arg(item->getFileName()));
+    else if(item->getStatus()==DccTransfer::Failed)
+        appendMessageToFrontmost(i18n("DCC"),i18n("Upload of file \"%1\" failed. reason: %2").arg(item->getFileName(),item->getStatusDetail()));
 }
 
 void Server::dccStatusChanged(const DccTransfer *item, int newStatus, int oldStatus)

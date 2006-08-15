@@ -527,6 +527,11 @@ DccTransfer::DccStatus DccTransfer::getStatus() const
   return m_dccStatus; 
 }
 
+const QString& DccTransfer::getStatusDetail() const
+{
+    return m_dccStatusDetail;
+}
+
 QDateTime DccTransfer::getTimeOffer() const 
 {
   return m_timeOffer; 
