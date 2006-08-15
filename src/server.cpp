@@ -1908,17 +1908,17 @@ void Server::resumeDccSendTransfer(const QString &recipient, const QStringList &
 void Server::dccGetDone(const QString &fileName, int status, const QString &errorMessage)
 {
     if(status==DccTransfer::Done)
-        appendMessageToFrontmost(i18n("DCC"),i18n("DCC download of file \"%1\" finished.").arg(fileName));
+        appendMessageToFrontmost(i18n("DCC"),i18n("Download of file \"%1\" finished.").arg(fileName));
     else if(status==DccTransfer::Failed)
-        appendMessageToFrontmost(i18n("DCC"),i18n("DCC download of file \"%1\" failed. reason: %2").arg(fileName).arg(errorMessage));
+        appendMessageToFrontmost(i18n("DCC"),i18n("Download of file \"%1\" failed. reason: %2").arg(fileName).arg(errorMessage));
 }
 
 void Server::dccSendDone(const QString &fileName, int status, const QString &errorMessage)
 {
     if(status==DccTransfer::Done)
-        appendMessageToFrontmost(i18n("DCC"),i18n("DCC upload of file \"%1\" finished.").arg(fileName));
+        appendMessageToFrontmost(i18n("DCC"),i18n("Upload of file \"%1\" finished.").arg(fileName));
     else if(status==DccTransfer::Failed)
-        appendMessageToFrontmost(i18n("DCC"),i18n("DCC upload of file \"%1\" failed. reason: %2").arg(fileName).arg(errorMessage));
+        appendMessageToFrontmost(i18n("DCC"),i18n("Upload of file \"%1\" failed. reason: %2").arg(fileName).arg(errorMessage));
 }
 
 void Server::dccStatusChanged(const DccTransfer *item, int newStatus, int oldStatus)
@@ -1928,7 +1928,7 @@ void Server::dccStatusChanged(const DccTransfer *item, int newStatus, int oldSta
     if ( item->getType() == DccTransfer::Send )
     {
         if ( newStatus == DccTransfer::Sending && oldStatus == DccTransfer::WaitingRemote )
-            appendMessageToFrontmost( i18n( "DCC" ), i18n( "DCC upload of file \"%1\" were accepted by %2." ).arg( item->getFileName(), item->getPartnerNick() ) );
+            appendMessageToFrontmost( i18n( "DCC" ), i18n( "Upload of file \"%1\" was accepted by %2." ).arg( item->getFileName(), item->getPartnerNick() ) );
     }
     else
     {
