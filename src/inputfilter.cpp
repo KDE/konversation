@@ -838,7 +838,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 }
                 else if(parameterList.count() > 3)
                 {
-                    for(int i = 3; i < parameterList.count(); i++) {
+                    for(uint i = 3; i < parameterList.count(); i++) {
                         nickList.append(parameterList[i]);
                     }
                 }
@@ -874,7 +874,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             // Topic set messages
             case RPL_NOTOPIC:
             {
-                server->appendMessageToFrontmost(i18n("TOPIC"),i18n("The channel %1 has no topic set.").arg(parameterList[1]).arg(parameterList[2]));
+                server->appendMessageToFrontmost(i18n("TOPIC"),i18n("The channel %1 has no topic set.").arg(parameterList[1]) /*.arg(parameterList[2])*/); //FIXME ok, whats the second parameter supposed to be?
 
                 break;
             }
