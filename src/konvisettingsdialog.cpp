@@ -175,7 +175,7 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   m_confIgnoreWdg = new Ignore_Config(this, "Ignore");
   pagePath.clear();
   pagePath << i18n("Behavior") << i18n("Ignore");
-  addPage ( m_confIgnoreWdg, pagePath, "ignore", i18n("Ignore") );
+  addPage ( m_confIgnoreWdg, pagePath, "stop", i18n("Ignore") );
   connect(m_confIgnoreWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
   m_indexToPageMapping.insert(lastAddedIndex(), m_confIgnoreWdg);
 
