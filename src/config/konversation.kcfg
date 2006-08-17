@@ -832,7 +832,7 @@
       <default param="Time">#709070</default>
       <default param="Action">#0000ff</default>
       <default param="TextViewBackground">#ffffff</default>
-      <default param="AlternateBackground">#EEEEEE</default>
+      <default param="AlternateBackground" code="true">KGlobalSettings::alternateBackgroundColor()</default>
       <default param="Hyperlink">#0000ff</default>
     </entry>
   </group>
