@@ -95,6 +95,14 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   pagePath << i18n("Interface") << i18n("Chat Window");
   addPage ( m_confChatWindowAppearanceWdg, pagePath, "view_text", i18n("Chat Window") );
 
+  //Interface/Themes
+  m_confThemeWdg = new Theme_Config( this, "Theme" );
+  pagePath.clear();
+  pagePath << i18n("Interface") << i18n("Nicklist Themes");
+  addPage ( m_confThemeWdg, pagePath, "iconthemes", i18n("Nicklist Themes") );
+  m_indexToPageMapping.insert(lastAddedIndex(), m_confThemeWdg);
+  connect(m_confThemeWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
+
   //Interface/Colors
   m_confColorsAppearanceWdg = new ColorsAppearance_Config( this, "ColorsAppearance" );
   pagePath.clear();
@@ -120,14 +128,6 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   pagePath.clear();
   pagePath << i18n("Interface") << i18n("Tabs");
   addPage ( m_confTabBarWdg, pagePath, "tab_new", i18n("Tabs") );
-
-  //Interface/Themes
-  m_confThemeWdg = new Theme_Config( this, "Theme" );
-  pagePath.clear();
-  pagePath << i18n("Interface") << i18n("Themes");
-  addPage ( m_confThemeWdg, pagePath, "iconthemes", i18n("Themes") );
-  m_indexToPageMapping.insert(lastAddedIndex(), m_confThemeWdg);
-  connect(m_confThemeWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
 
   //Behavior/General
   m_confGeneralBehaviorWdg = new GeneralBehavior_Config( this, "GeneralBehavior" );
