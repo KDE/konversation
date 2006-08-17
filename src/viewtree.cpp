@@ -595,6 +595,12 @@ void ViewTree::contentsWheelEvent(QWheelEvent* e)
         selectUpper(true);
     else
         selectLower(true);
+
+    if (selectedItem())
+    {
+        ChatWindow* view = static_cast<ViewTreeItem*>(selectedItem())->getView();
+        if (view) view->adjustFocus();
+    }
 }
 
 void ViewTree::keyPressEvent(QKeyEvent* e)
