@@ -129,14 +129,6 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   m_indexToPageMapping.insert(lastAddedIndex(), m_confThemeWdg);
   connect(m_confThemeWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
 
-  //Interface/Warning Dialogs
-  m_confWarningsWdg = new Warnings_Config( this, "Warnings" );
-  pagePath.clear();
-  pagePath << i18n("Interface") << i18n("Warning Dialogs");
-  addPage ( m_confWarningsWdg, pagePath, "messagebox_warning", i18n("Warning Dialogs") );
-  m_indexToPageMapping.insert(lastAddedIndex(), m_confWarningsWdg);
-  connect(m_confWarningsWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
-
   //Behavior/General
   m_confGeneralBehaviorWdg = new GeneralBehavior_Config( this, "GeneralBehavior" );
   pagePath.clear();
@@ -229,6 +221,14 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   addPage ( m_confOSDWdg, pagePath, "tv", i18n("On Screen Display") );
   //no modified connection needed - it's all kcfg widgets
   m_indexToPageMapping.insert(lastAddedIndex(), m_confOSDWdg);
+
+  //Notification/Warning Dialogs
+  m_confWarningsWdg = new Warnings_Config( this, "Warnings" );
+  pagePath.clear();
+  pagePath << i18n("Notifications") << i18n("Warning Dialogs");
+  addPage ( m_confWarningsWdg, pagePath, "messagebox_warning", i18n("Warning Dialogs") );
+  m_indexToPageMapping.insert(lastAddedIndex(), m_confWarningsWdg);
+  connect(m_confWarningsWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
 
   unfoldTreeList();
 
