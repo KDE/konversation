@@ -543,10 +543,7 @@ void ViewTree::contentsMouseMoveEvent(QMouseEvent* e)
     else if ((e->state() & LeftButton) == LeftButton)
     {
         if (item && (item != selectedItem()) && !item->isSeparator())
-        {
-            selectedItem()->setSelected(false);
             setSelected(item, true);
-        }
     }
 
     if (Preferences::closeButtons())
@@ -626,16 +623,11 @@ void ViewTree::selectUpper(bool wrap)
         if (itemAbove->isSeparator())
             itemAbove = static_cast<ViewTreeItem*>(m_separator->itemAbove());
 
-        selectedItem()->setSelected(false);
         setSelected(itemAbove, true);
     }
     else
     {
-        if (wrap)
-        {
-            selectedItem()->setSelected(false);
-            setSelected(lastItem(), true);
-        }
+        if (wrap) setSelected(lastItem(), true);
     }
 
     ensureItemVisible(selectedItem());
@@ -650,16 +642,11 @@ void ViewTree::selectLower(bool wrap)
         if (itemBelow->isSeparator())
             itemBelow = static_cast<ViewTreeItem*>(m_separator->itemBelow());
 
-        selectedItem()->setSelected(false);
         setSelected(itemBelow, true);
     }
     else
     {
-        if (wrap)
-        {
-            selectedItem()->setSelected(false);
-            setSelected(firstChild(), true);
-        }
+        if (wrap) setSelected(firstChild(), true);
     }
 
     ensureItemVisible(selectedItem());
