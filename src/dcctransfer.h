@@ -90,6 +90,7 @@ class DccTransfer : public QObject, public KListViewItem
         bool               isResumed()                const;
         unsigned long      getCPS()                   const;
         int                getTimeRemaining()         const;
+        int                getProgress()              const;
 
         void runFile();
         void removeFile();
@@ -178,7 +179,6 @@ class DccTransfer : public QObject, public KListViewItem
         QPixmap         getStatusIcon()                                const;
         QString         getStatusText()                                const;
         QString         getFileSizePrettyText()                        const;
-        int             getProgress()                                  const;
         QString         getPositionPrettyText( bool detailed = false ) const;
         QString         getTimeRemainingPrettyText()                   const;
         QString         getCPSPrettyText()                             const;
