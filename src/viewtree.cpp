@@ -892,29 +892,25 @@ void ViewTree::paintEmptyArea(QPainter* p, const QRect& rect)
         QColor selColor = KGlobalSettings::highlightColor();
         QColor midColor = last->mixColor(bgColor, selColor);
 
-        // Don't draw with invalid coordinates.
-        if ((rect.height() - y) > 0 && rect.width() > 0)
-        {
-            // Bufferize painting operations to avoid flicker.
-            QPixmap theBuffer(rect.width(), rect.height()-y);
-            QPainter thePainter(&theBuffer);
+        // Bufferize painting operations to avoid flicker.
+        QPixmap theBuffer(rect.width(), 3);
+        QPainter thePainter(&theBuffer);
 
-            // Fill in the background.
-            thePainter.fillRect(0, 0, theBuffer.width(), theBuffer.height(), bgColor);
+        // Fill in the background.
+        thePainter.fillRect(0, 0, theBuffer.width(), theBuffer.height(), bgColor);
 
-            thePainter.setPen(selColor);
-            thePainter.drawPoint(visibleWidth() - 1, 0);
-            thePainter.drawPoint(visibleWidth() - 2, 0);
-            thePainter.drawPoint(visibleWidth() - 1, 1);
-            thePainter.setPen(midColor);
-            thePainter.drawPoint(visibleWidth() - 3, 0);
-            thePainter.drawPoint(visibleWidth() - 1, 2);
+        thePainter.setPen(selColor);
+        thePainter.drawPoint(visibleWidth() - 1, 0);
+        thePainter.drawPoint(visibleWidth() - 2, 0);
+        thePainter.drawPoint(visibleWidth() - 1, 1);
+        thePainter.setPen(midColor);
+        thePainter.drawPoint(visibleWidth() - 3, 0);
+        thePainter.drawPoint(visibleWidth() - 1, 2);
 
-            thePainter.end();
+        thePainter.end();
 
-            // Apply the buffer.
-            p->drawPixmap(0, y, theBuffer);
-        }
+        // Apply the buffer.
+        p->drawPixmap(0, y, theBuffer);
     }
 }
 
