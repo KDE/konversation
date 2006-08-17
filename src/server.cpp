@@ -1879,7 +1879,7 @@ void Server::resumeDccSendTransfer(const QString &recipient, const QStringList &
             Konversation::OutputFilterResult result = outputFilter->acceptRequest(recipient,
                 fileName, dccArguments[1], dccArguments[2].toUInt());
             queue(result.toServer);
-            appendMessageToFrontmost(result.typeString, result.output);
+            //appendMessageToFrontmost(result.typeString, result.output);
         }
         else
         {
