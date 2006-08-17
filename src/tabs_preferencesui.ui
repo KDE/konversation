@@ -1,0 +1,171 @@
+<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
+<class>Tabs_PreferencesUI</class>
+<comment>This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.</comment>
+<widget class="QWidget">
+    <property name="name">
+        <cstring>Tabs_PreferencesUI</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>337</width>
+            <height>495</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>TabBar_Config</string>
+    </property>
+    <vbox>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <property name="margin">
+            <number>0</number>
+        </property>
+        <widget class="QGroupBox">
+            <property name="name">
+                <cstring>lookGBox</cstring>
+            </property>
+            <property name="title">
+                <string>Look</string>
+            </property>
+            <vbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QLayoutWidget">
+                    <property name="name">
+                        <cstring>layout2</cstring>
+                    </property>
+                    <hbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>placementLabel</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Placement:</string>
+                            </property>
+                        </widget>
+                        <widget class="QComboBox">
+                            <item>
+                                <property name="text">
+                                    <string>Top</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>Bottom</string>
+                                </property>
+                            </item>
+                            <item>
+                                <property name="text">
+                                    <string>Left</string>
+                                </property>
+                            </item>
+                            <property name="name">
+                                <cstring>kcfg_TabPlacement</cstring>
+                            </property>
+                        </widget>
+                        <spacer>
+                            <property name="name">
+                                <cstring>spacer4</cstring>
+                            </property>
+                            <property name="orientation">
+                                <enum>Horizontal</enum>
+                            </property>
+                            <property name="sizeType">
+                                <enum>Expanding</enum>
+                            </property>
+                            <property name="sizeHint">
+                                <size>
+                                    <width>111</width>
+                                    <height>20</height>
+                                </size>
+                            </property>
+                        </spacer>
+                    </hbox>
+                </widget>
+                <widget class="QCheckBox">
+                    <property name="name">
+                        <cstring>kcfg_CloseButtons</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Show &amp;close button on tabs</string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox">
+                    <property name="name">
+                        <cstring>kcfg_ShowTabBarCloseButton</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Show a close button on the &amp;right side of the tab bar</string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox">
+                    <property name="name">
+                        <cstring>kcfg_UseMaxSizedTabs</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Limit the &amp;size of the tab labels to fit all on screen</string>
+                    </property>
+                </widget>
+            </vbox>
+        </widget>
+        <widget class="QGroupBox">
+            <property name="name">
+                <cstring>focusGBox</cstring>
+            </property>
+            <property name="title">
+                <string>Focus</string>
+            </property>
+            <vbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QCheckBox">
+                    <property name="name">
+                        <cstring>kcfg_BringToFront</cstring>
+                    </property>
+                    <property name="text">
+                        <string>&amp;Focus new tabs</string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox">
+                    <property name="name">
+                        <cstring>kcfg_FocusNewQueries</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Focus new &amp;queries</string>
+                    </property>
+                </widget>
+            </vbox>
+        </widget>
+        <spacer>
+            <property name="name">
+                <cstring>spacer1</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Vertical</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>20</width>
+                    <height>100</height>
+                </size>
+            </property>
+        </spacer>
+    </vbox>
+</widget>
+<layoutdefaults spacing="6" margin="11"/>
+<layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
+</UI>

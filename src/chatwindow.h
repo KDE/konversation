@@ -28,6 +28,7 @@
 class IRCView;
 class Server;
 class KonversationMainWindow;
+class ViewContainer;
 
 class ChatWindow : public QVBox
 {
@@ -56,19 +57,14 @@ class ChatWindow : public QVBox
 
         /** This should be called and set with a non-null server as soon
          *  as possibly after ChatWindow is created.
-         *  Some chatWindows don't have a server - like konsolepanel.
-         *  In these cases, you should call setMainWindow.
          *  @param newServer The server to set it to.
-         *  @see setMainWindow(KonversationMainWindow *mainWindow)
          */
         virtual void setServer(Server* newServer);
         /** This should be called if setServer is not called - e.g.
          *  in the case of konsolepanel.  This should be set as soon
          *  as possible after creation.
          */
-        virtual void setMainWindow(KonversationMainWindow *mainWindow);
 
-        KonversationMainWindow *getMainWindow(void);
         /** Get the server this is linked to.
          *  @return The server it is associated with, or null if none.
          */
@@ -136,23 +132,22 @@ class ChatWindow : public QVBox
         QColor highlightColor();
 
         signals:
-        void nameChanged(ChatWindow* view,const QString& newName);
-        void online(ChatWindow* myself,bool state);
+        void nameChanged(ChatWindow* view, const QString& newName);
+        void online(ChatWindow* myself, bool state);
         /** Emit this signal when you want to change the status bar text for this tab.
          *  It is ignored if this tab isn't focused.
          */
         void updateInfo(const QString &info);
         void updateTabNotification(ChatWindow* chatWin, const Konversation::TabNotifyType& type);
-	/** Emit this signal for anything you want to temporarily appear on the status bar
-	 */
-	void actionStatusText( const QString & );
-	/** Emit this when you want to clear the temporary message set above.
-	 *  Equivalent to emitting actionStatusText with a blank string.
-	 */
-	void clearStatusText();
 
+        void setStatusBarTempText(const QString&);
+        void clearStatusBarTempText();
+
+        void closing(ChatWindow* myself);
 
     public slots:
+        void updateAppearance();
+
         void logText(const QString& text);
 
         /**
@@ -171,7 +166,6 @@ class ChatWindow : public QVBox
         virtual void indicateAway(bool away);
 
         virtual void setNotificationsEnabled(bool enable) { m_notificationsEnabled = enable; }
-
         void resetTabNotification();
 
     protected slots:
@@ -219,12 +213,6 @@ class ChatWindow : public QVBox
         bool m_notificationsEnabled;
 
         bool m_channelEncodingSupported;
-        /** This should always be non-null.  Used to enable/disable mainWindow
-         *  kactions.  This shouldn't be modified directly
-         *  by anything by setMainWindow.
-         *  @see setMainWindow
-         */
-        KonversationMainWindow *m_mainWindow;
 
         Konversation::TabNotifyType m_currentTabNotify;
 };

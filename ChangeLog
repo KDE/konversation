@@ -104,6 +104,51 @@ handling)
 - Concat multiple ignores/unignores from the nick context menu into one operation
 - Add /kickban command with the same parameters as /ban + [reason]
 - Add "Add to Watched Nicks" nick context menu item
+- Implement a tree list as a vertical alternative to the tab bar.
+- Fix status bar not being reset correctly when the last view is closed.
+- Fix the status bar temp text not being cleared when the window loses focus or
+  the cursor leaves the window after a link is launched.
+- Don't set allow empty temp texts to be set in the status bar.
+- Fix the "No answer from server for ..." lag text interfering with the status
+  bar temp text mechanic by using the proper API to set it.
+- Improve consistency of status bar lag label updating to avoid the UI jumping
+  around too much.
+- Hide the info and lag status bar labels until text is set for the first time.
+- Fix the "DCC Status" and "Channel List" panels leaving the status bar info
+  label empty.
+- Reset the status bar properly when the last view is closed.
+- Tweak the grouping behavior for "Channel List" and "Raw Log" tabs.
+- Fix change of the general UI font not being propagated down to the various
+  types of tabs.
+- Fix changes of the iconset not being applied to tab bar close icons.
+- Fix the name of the "Watched Nicks Online" tab changing under certain circum-
+  stances.
+- Fix Reconnect action not being updated on /disconnect.
+- Fix Reconnect action not always working.
+- Fix "Hide Nicklist" action not being disabled when the current view doesn't
+  actually have a nick list.
+- Fix the menu bar shown/hidden state not being saved across sessions.
+- Show the "Show Menubar" action as the first item in the IRCView context
+  menu when the menu bar is hidden, as is established good practice among
+  KDE applications.
+- Distribute actions in the menus a little better.
+- Make the ban list and other channel settings easier to find by adding
+  an action to open the Channel Settings dialog to the "Window" menu as
+  well as the IRCView context menu of channel tabs.
+- Fix switching off notifications for a tab not unsetting active notification.
+- Fix server tabs not preserving their on/off notification state across sessions.
+- Change the names of various actions temporarily when the (modal) shortcuts
+  dialog is opened. Toggle actions are prefixed with "Toggle", since the list
+  lacks the context in which they're understood as toggle actions. The insert
+  actions are prefixed with "Insert". And the context-adaptive actions ("Open
+  Logfile for ...") are stripped of their context.
+- Disable the "Close All Open Queries" action when there are no open queries.
+- Fix the "Close All Open Queries" action not actually closing all open queries.
+- Don't focus Url Catcher when the "Open URL Catcher" action is triggered
+  the second time. A toggle action isn't tri-state.
+- Don't add bookmarks to the action collection (i.e. to the list of short-
+  cuts) when the bookmark menu is opened.
+
 
 Changes from 0.18 to 0.19
 We are extremely pleased to announce the immediate release of Konversation 0.19. The focus

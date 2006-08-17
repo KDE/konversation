@@ -21,7 +21,7 @@
 #include "chatwindow.h"
 #include "konversationapplication.h"
 #include "konversationmainwindow.h"
-#include "popup.h"
+#include "viewcontainer.h"
 #include "trayicon.h"
 #include "server.h"
 
@@ -61,7 +61,7 @@ namespace Konversation
         }
 
         if(Preferences::oSDShowChannel() &&
-            (!m_mainWindow->isActiveWindow() || (chatWin != m_mainWindow->frontView())))
+            (!m_mainWindow->isActiveWindow() || (chatWin != m_mainWindow->getViewContainer()->getFrontView())))
         {
             KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
             konvApp->osd->showOSD('(' + chatWin->getName() + ") <" + fromNick + "> " + cleanedMessage);
@@ -93,7 +93,7 @@ namespace Konversation
         {
             if((Preferences::oSDShowChannel() ||
                 Preferences::oSDShowOwnNick()) &&
-                (!m_mainWindow->isActiveWindow() || (chatWin != m_mainWindow->frontView())))
+                (!m_mainWindow->isActiveWindow() || (chatWin != m_mainWindow->getViewContainer()->getFrontView())))
             {
                 konvApp->osd->showOSD(i18n("[HighLight] (%1) <%2> %3").arg(chatWin->getName()).arg(fromNick).arg(cleanedMessage));
             }
@@ -101,7 +101,7 @@ namespace Konversation
         else if(chatWin->getType() == ChatWindow::Query)
         {
             if(Preferences::oSDShowQuery() &&
-                (!m_mainWindow->isActiveWindow() || (chatWin != m_mainWindow->frontView())))
+                (!m_mainWindow->isActiveWindow() || (chatWin != m_mainWindow->getViewContainer()->getFrontView())))
             {
                 konvApp->osd->showOSD(i18n("(Query) <%1> %2").arg(fromNick).arg(cleanedMessage));
             }
@@ -142,7 +142,7 @@ namespace Konversation
 
         // OnScreen Message
         if(Preferences::oSDShowChannelEvent() &&
-            (!m_mainWindow->isActiveWindow() || (chatWin != m_mainWindow->frontView())))
+            (!m_mainWindow->isActiveWindow() || (chatWin != m_mainWindow->getViewContainer()->getFrontView())))
         {
             KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
             konvApp->osd->showOSD(i18n("%1 joined %2").arg(nick, chatWin->getName()));
@@ -165,7 +165,7 @@ namespace Konversation
 
         // OnScreen Message
         if(Preferences::oSDShowChannelEvent() &&
-            (!m_mainWindow->isActiveWindow() || (chatWin != m_mainWindow->frontView())))
+            (!m_mainWindow->isActiveWindow() || (chatWin != m_mainWindow->getViewContainer()->getFrontView())))
         {
             KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
             konvApp->osd->showOSD(i18n("%1 parted %2").arg(nick, chatWin->getName()));
@@ -319,7 +319,7 @@ namespace Konversation
         startTrayNotification(chatWin);
 
         if(Preferences::oSDShowOwnNick() &&
-            (!m_mainWindow->isActiveWindow() || (chatWin != m_mainWindow->frontView())))
+            (!m_mainWindow->isActiveWindow() || (chatWin != m_mainWindow->getViewContainer()->getFrontView())))
         {
             KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
             // if there was no nick associated, this must be a command message, so don't try displaying

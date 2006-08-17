@@ -25,8 +25,8 @@ class KonsolePanel : public ChatWindow
 
         virtual void setName(const QString& newName) { ChatWindow::setName(newName); }
 
-        signals:
-        void deleted(ChatWindow* myself);
+    signals:
+        void closeView(ChatWindow* view);
 
     public slots:
         void partDestroyed();

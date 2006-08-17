@@ -48,7 +48,7 @@ class GeneralBehavior_Config;
 class ConnectionBehavior_Config;
 class ChatwindowBehaviour_Config;
 class NicklistBehavior_Config;
-class TabBar_Config;
+class Tabs_Config;
 class Alias_Config;
 class QuickButtons_Config;
 class Autoreplace_Config;
@@ -74,7 +74,7 @@ class KDEUI_EXPORT KonviSettingsDialog : public KonviConfigDialog
 	ConnectionBehavior_Config* m_confConnectionBehaviorWdg;
 	ChatwindowBehaviour_Config* m_confChatwindowBehaviourWdg;
 	NicklistBehavior_Config* m_confNicklistBehaviorWdg;
-	TabBar_Config* m_confTabBarWdg;
+	Tabs_Config* m_confTabBarWdg;
 	Alias_Config* m_confAliasWdg;
 	QuickButtons_Config* m_confQuickButtonsWdg;
 	Autoreplace_Config* m_confAutoreplaceWdg;

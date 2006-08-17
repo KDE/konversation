@@ -33,7 +33,7 @@
 #include "channel.h"
 #include "server.h"
 #include "konversationapplication.h"
-#include "konversationmainwindow.h"
+#include "viewcontainer.h"
 
 UrlCatcher::UrlCatcher(QWidget* parent) : ChatWindow(parent)
 {
@@ -92,25 +92,9 @@ UrlCatcher::UrlCatcher(QWidget* parent) : ChatWindow(parent)
     urlSelected();
 }
 
-void UrlCatcher::setMainWindow(KonversationMainWindow *mainWindow)
-{
-    ChatWindow::setMainWindow(mainWindow);
-    if(mainWindow)
-        (dynamic_cast<KToggleAction*>(mainWindow->actionCollection()->action("open_url_catcher")))->setChecked(true);
-}
 
 UrlCatcher::~UrlCatcher()
 {
-    if(m_mainWindow && m_mainWindow->actionCollection())
-    {
-        KToggleAction* action = dynamic_cast<KToggleAction*>(
-            m_mainWindow->actionCollection()->action("open_url_catcher"));
-
-        if(action)
-        {
-            action->setChecked(false);
-        }
-    }
 }
 
 void UrlCatcher::urlSelected()

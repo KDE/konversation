@@ -80,9 +80,6 @@ StatusPanel::StatusPanel(QWidget* parent) : ChatWindow(parent)
     if(nicknameCombobox->lineEdit())
         connect(nicknameCombobox->lineEdit(), SIGNAL (lostFocus()),this,SLOT(nicknameComboboxChanged()));
 
-    connect(KonversationApplication::instance(), SIGNAL (appearanceChanged()),this,SLOT (updateAppearance()) );
-
-
     updateAppearance();
 }
 
@@ -199,6 +196,8 @@ void StatusPanel::updateAppearance()
 
     nicknameCombobox->setFont(Preferences::textFont());
     showNicknameBox(Preferences::showNicknameBox());
+
+    ChatWindow::updateAppearance();
 }
 
 void StatusPanel::updateName()
@@ -244,6 +243,12 @@ QString StatusPanel::getTextInLine() { return statusInput->text(); }
 
 bool StatusPanel::canBeFrontView()        { return true; }
 bool StatusPanel::searchView()       { return true; }
+
+void StatusPanel::setNotificationsEnabled(bool enable)
+{
+    m_server->serverGroupSettings()->setNotificationsEnabled(enable);
+    m_notificationsEnabled = enable;
+}
 
 bool StatusPanel::closeYourself()
 {

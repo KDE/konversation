@@ -39,12 +39,13 @@ class DccTransfer;
 class Query;
 class StatusPanel;
 class Identity;
-class KonversationMainWindow;
 class RawLog;
 class ChannelListPanel;
 class ScriptLauncher;
 class ServerISON;
 class QStrList;
+class ChatWindow;
+class ViewContainer;
 
 using namespace KNetwork;
 
@@ -62,12 +63,12 @@ class Server : public QObject
         /** Constructor used for connecting to a known server.
          *  Read in the prefrences to get all the details about the server.
          */
-        Server(KonversationMainWindow* mainWindow, int serverGroupId, bool clearQuickServerList = true);
+        Server(ViewContainer* viewContainer, int serverGroupId, bool clearQuickServerList = true);
 
         /** Constructor used for a 'fast connect' to a server.
          *  The details are passed in.  Used for example when the user does "/server irc.somewhere.net"
          */
-        Server(KonversationMainWindow* mainWindow,const QString& hostName,const QString& port,
+        Server(ViewContainer* viewContainer, const QString& hostName,const QString& port,
             const QString& channel,const QString& nick, QString password, const bool& useSSL=false);
         ~Server();
 
@@ -316,7 +317,7 @@ class Server : public QObject
         QStringList getISONList();
         QString getISONListString();
 
-        KonversationMainWindow* getMainWindow() const;
+        ViewContainer* getViewContainer() const;
 
         /** Adds a nickname to the joinedChannels list.
          *  Creates new NickInfo if necessary.
@@ -349,9 +350,6 @@ class Server : public QObject
         void resetLag();
                                                   /// Will be emitted when new 303 came in
         void nicksNowOnline(Server* server,const QStringList& list,bool changed);
-        void addDccPanel();                       /// will be connected to MainWindow::addDccPanel()
-        void addKonsolePanel();                   /// will be connected to MainWindow::addKonsolePanel()
-        void closeDccPanel();                     /// will be connected to MainWindow::closeDccPanel()
         void deleted(Server* myself);             /// will be connected to KonversationApplication::removeServer()
         void awayState(bool away);                /// will be connected to any user input panel;
         void multiServerCommand(const QString& command, const QString& parameter);
@@ -382,6 +380,10 @@ class Server : public QObject
 
         void connectionChangedState(Server* server, Server::State state);
 
+        void showView(ChatWindow* view);
+        void addDccPanel();
+        void addDccChat(const QString& myNick,const QString& nick,const QString& numericalIp,const QStringList& arguments,bool listen);
+
     public slots:
         void lookupFinished();
         void connectToIRCServer();
@@ -398,10 +400,7 @@ class Server : public QObject
         void closeQuery(const QString &name);
         void closeChannel(const QString &name);
         void quitServer();
-        void requestKonsolePanel();
-        void requestDccPanel();
         void requestDccChat(const QString& nickname);
-        void requestCloseDccPanel();
         void requestBan(const QStringList& users,const QString& channel,const QString& option);
         void requestUnban(const QString& mask,const QString& channel);
 
@@ -494,7 +493,7 @@ class Server : public QObject
         static const int BUFFER_LEN=513;
 
         /// Initialize the class
-        void init(KonversationMainWindow* mainWindow, const QString& nick, const QString& channel);
+        void init(ViewContainer* viewContainer, const QString& nick, const QString& channel);
 
         /// Initialize the timers
         void initTimers();
@@ -502,7 +501,7 @@ class Server : public QObject
         /// Connect to the signals used in this class.
         void connectSignals();
 
-        void setMainWindow(KonversationMainWindow* newMainWindow);
+        void setViewContainer(ViewContainer* newViewContainer);
 
         void autoRejoinChannels();
         void updateAutoJoin(const QString& channel=QString::null);
@@ -585,7 +584,7 @@ class Server : public QObject
         QString autoJoinChannel;
         QString autoJoinChannelKey;
 
-        KonversationMainWindow* mainWindow;
+        ViewContainer* m_viewContainerPtr;
 
         KNetwork::KStreamSocket* m_socket;
         bool         m_tryReconnect;

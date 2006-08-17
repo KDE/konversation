@@ -54,6 +54,8 @@ class StatusPanel : public ChatWindow
 
         virtual bool isInsertSupported() { return true; }
 
+        virtual void setNotificationsEnabled(bool enable);
+
     signals:
         void sendFile();
 

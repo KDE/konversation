@@ -110,8 +110,6 @@ Query::Query(QWidget* parent) : ChatWindow(parent)
     connect(textView,SIGNAL (extendedPopup(int)),this,SLOT (popup(int)) );
     connect(textView,SIGNAL (autoText(const QString&)),this,SLOT (sendQueryText(const QString&)) );
 
-    connect(KonversationApplication::instance(), SIGNAL (appearanceChanged()),this,SLOT (updateAppearance()) );
-
     updateAppearance();
 
     setLog(Preferences::log());
@@ -246,6 +244,8 @@ void Query::updateAppearance()
         getTextView()->setViewBackground(Preferences::color(Preferences::TextViewBackground),
             QString::null);
     }
+
+    ChatWindow::updateAppearance();
 }
 
 void Query::textPasted(const QString& text)

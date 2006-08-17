@@ -35,6 +35,7 @@ Images::Images()
     initializeKimifaceIcons();
 
     m_closeIcon = KGlobal::iconLoader()->loadIcon("fileclose",KIcon::Small);
+    m_disabledCloseIcon = KGlobal::iconLoader()->loadIconSet("fileclose",KIcon::Small).pixmap(QIconSet::Small, false);
 }
 
 Images::~Images()
@@ -132,6 +133,12 @@ void Images::initializeNickIcons()
     nickIcons[Op][1] = nickIcons[Op][0];
     bitBlt( &nickIcons[Op][1], 0, 0, &elementAway, 0, 0, -1, -1, Qt::CopyROP );
     */
+}
+
+void Images::updateIcons()
+{
+    m_closeIcon = KGlobal::iconLoader()->loadIcon("fileclose",KIcon::Small);
+    m_disabledCloseIcon = KGlobal::iconLoader()->loadIconSet("fileclose",KIcon::Small).pixmap(QIconSet::Small, false);
 }
 
 QIconSet Images::getLed(QColor col,bool state)
@@ -290,3 +297,5 @@ QIconSet Images::getHighlightsLed()
     else
         return m_highlightsLedOn;
 }
+
+#include "images.moc"

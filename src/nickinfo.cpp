@@ -22,6 +22,7 @@
 #include "linkaddressbook/addressbook.h"
 #include "linkaddressbook/linkaddressbookui.h"
 #include "konversationmainwindow.h"
+#include "viewcontainer.h"
 
 /*
   @author Gary Cramblitt
@@ -420,7 +421,7 @@ void NickInfo::tooltipTableData(QTextStream &tooltip) const
 
 void NickInfo::showLinkAddressbookUI()
 {
-    LinkAddressbookUI *linkaddressbookui = new LinkAddressbookUI(m_owningServer->getMainWindow(), NULL, m_nickname, m_owningServer->getServerName(), m_owningServer->getServerGroup(), m_realName);
+    LinkAddressbookUI *linkaddressbookui = new LinkAddressbookUI(m_owningServer->getViewContainer()->getWindow(), NULL, m_nickname, m_owningServer->getServerName(), m_owningServer->getServerGroup(), m_realName);
     linkaddressbookui->show();
 
 }

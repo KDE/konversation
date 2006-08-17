@@ -5,16 +5,16 @@ METASOURCES = AUTO
 bin_PROGRAMS = konversation
 bin_SCRIPTS = konversationircprotocolhandler
 
-konversation_SOURCES = konviface.skel konviconfigdialog.cpp \
+konversation_SOURCES = konviface.skel konviconfigdialog.cpp konversationstatusbar.cpp \
 		konvisettingsdialog.cpp konversationmainwindow.cpp valuelistviewitem.cpp urlcatcher.cpp \
 		scriptlauncher.cpp rawlog.cpp konvdcop.cpp channellistpanel.cpp \
-		konsolepanel.cpp dcctransferhandler.cpp identity.cpp statuspanel.cpp \
+		konsolepanel.cpp identity.cpp statuspanel.cpp \
 		dccrecipientdialog.cpp topiccombobox.cpp nicksonline.cpp dccpanel.cpp dcctransfer.cpp \
 		nicklistviewitem.cpp highlight.cpp highlightviewitem.cpp modebutton.cpp \
 		ignore_preferencesui.ui ignore_preferences.cpp ignore.cpp nicklistview.cpp ircinput.cpp \
 		ignorelistviewitem.cpp images.cpp quickbutton.cpp chatwindow.cpp outputfilter.cpp 	query.cpp \
 	konversationapplication.cpp nick.cpp inputfilter.cpp channel.cpp 	ircview.cpp server.cpp main.cpp \
-	dcc_preferencesui.ui log_preferences.ui 	tabbar_preferences.ui \
+	dcc_preferencesui.ui log_preferences.ui tabs_preferencesui.ui tabs_preferences.cpp \
 	chatwindowappearance_preferences.ui irccolorchooserui.ui 	colorsappearance_preferences.ui \
 	irccolorchooser.cpp channellistviewitem.cpp osd.cpp ircevent.cpp 	trayicon.cpp dccchat.cpp \
 	logfilereader.cpp multilineedit.cpp nickinfo.cpp 	dccresumedialog.cpp \
@@ -29,12 +29,13 @@ konversation_SOURCES = konviface.skel konviconfigdialog.cpp \
 		warnings_preferencesui.ui warnings_preferences.cpp quickbuttons_preferencesui.ui \
 		watchednicknames_preferencesui.ui generalbehavior_preferences.ui connectionbehavior_preferences.ui \
 		fontappearance_preferences.ui nicklistbehavior_preferencesui.ui konvibookmarkhandler.cpp \
-		konvibookmarkmenu.cpp popup.cpp ircviewbox.cpp searchbar.cpp osd_preferences.cpp \
+		konvibookmarkmenu.cpp ircviewbox.cpp searchbar.cpp osd_preferences.cpp \
 		theme_preferences.cpp dcc_preferences.cpp alias_preferences.cpp highlight_preferences.cpp \
 		watchednicknames_preferences.cpp quickbuttons_preferences.cpp nicklistbehavior_preferences.cpp \
-		konviiphelper.cpp tabnotifications_preferences.ui konvisqueezedtextlabel.cpp \
+		konviiphelper.cpp tabnotifications_preferences.ui \
 		multilinetextedit.cpp serverlistview.cpp nicksonlineitem.cpp searchbarbase.ui \
-	autoreplace_preferencesui.ui autoreplace_preferences.cpp
+	autoreplace_preferencesui.ui autoreplace_preferences.cpp viewcontainer.cpp viewtree.cpp \
+	viewtreeitem.cpp
 
 konversation_COMPILE_FIRST = config/preferences_base.h
 konversation_LDADD = $(LIB_KIO) $(LIB_KABC) $(LIB_KIMIFACE) linkaddressbook/liblinkaddressbookui.la blowfish/libblowfish.la config/libkonversationconfig.la
@@ -68,7 +69,7 @@ messages: rc.cpp
 noinst_HEADERS = serverlistdialog.h dcctransfersend.h dcctransferrecv.h 		 \
 	dccdetaildialog.h insertchardialog.h editnotifydialog.h serverison.h 		 \
 	servergroupsettings.h serversettings.h	servergroupdialog.h serverdialog.h channeldialog.h 		 \
-	identitydialog.h topiclabel.h channeloptionsdialog.h joinchanneldialog.h popup.h 		 \
+	identitydialog.h topiclabel.h channeloptionsdialog.h joinchanneldialog.h  		 \
 	highlight_preferences.h watchednicknames_preferences.h quickbuttons_preferences.h 		 \
 	nicklistbehavior_preferences.h konvisettingspage.h nicksonlineitem.h
 

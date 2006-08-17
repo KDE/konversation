@@ -11,9 +11,19 @@
   <kcfgfile name="konversationrc" />
 
   <group name="Appearance">
+    <entry key="ShowMenuBar" type="Bool">
+      <default>true</default>
+      <label></label>
+      <whatsthis></whatsthis>
+    </entry>
     <entry key="UseMaxSizedTabs" type="Bool">
     <default>true</default>
     <label>Limit the size of the tab labels to fit all on screen</label>
+    </entry>
+    <entry key="TreeSplitterSizes" type="IntList">
+      <default></default>
+      <label></label>
+      <whatsthis></whatsthis>
     </entry>
     <entry key="TopicSplitterSizes" type="IntList">
       <default></default>
@@ -334,11 +344,6 @@
     </entry>
     <entry key="RedirectServerAndAppMsgToStatusPane" type="Bool">
       <default>false</default>
-      <label></label>
-      <whatsthis></whatsthis>
-    </entry>
-    <entry key="ServerWindowMenuBarStatus" type="Bool" name="ShowMenuBar">
-      <default>true</default>
       <label></label>
       <whatsthis></whatsthis>
     </entry>
@@ -685,8 +690,9 @@
       <label></label>
       <whatsthis></whatsthis>
       <choices>
-        <choice name="Bottom"/>
-        <choice name="Top"/>
+        <choice name="Top" />
+        <choice name="Bottom" />
+        <choice name="Left" />
       </choices>
       <default>Bottom</default>
     </entry>
@@ -826,7 +832,7 @@
       <default param="Time">#709070</default>
       <default param="Action">#0000ff</default>
       <default param="TextViewBackground">#ffffff</default>
-      <default param="AlternateBackground">#ffffff</default>
+      <default param="AlternateBackground">#EEEEEE</default>
       <default param="Hyperlink">#0000ff</default>
     </entry>
   </group>

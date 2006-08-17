@@ -34,6 +34,8 @@ class KListView;
 class QPushButton;
 class QPopupMenu;
 
+class ChatWindow;
+
 class NicksOnline : public ChatWindow
 {
     Q_OBJECT
@@ -81,6 +83,8 @@ class NicksOnline : public ChatWindow
          * Emitted whenever user double-clicks a nick in the Nicks Online tab.
          */
         void doubleClicked(const QString& server,const QString& nick);
+
+        void showView(ChatWindow* view);
 
     public slots:
 

@@ -119,7 +119,7 @@ namespace Konversation
 
     void TopicLabel::leaveEvent(QEvent*)
     {
-       emit clearStatusText();
+       emit clearStatusBarTempText();
        m_lastStatusText = QString::null;
     }
 
@@ -314,7 +314,7 @@ namespace Konversation
         {
             if (!m_lastStatusText.isEmpty())
             {
-                emit clearStatusText();
+                emit clearStatusBarTempText();
                 m_lastStatusText = QString::null;
             }
         } else {
@@ -327,7 +327,7 @@ namespace Konversation
 
             if (!link.isEmpty()) {
                 //link therefore != m_lastStatusText  so emit with this new text
-                emit actionStatusText(link);
+                emit setStatusBarTempText(link);
             }
             if (link.isEmpty() && m_copyUrlMenu)
             {
@@ -359,7 +359,7 @@ namespace Konversation
 
             m_channelPopup->changeTitle(m_channelPopupId,prettyId);
             m_isOnChannel = true;
-            emit actionStatusText( i18n("Join the channel %1").arg(m_currentChannel));
+            emit setStatusBarTempText(i18n("Join the channel %1").arg(m_currentChannel));
         }
     }
 }

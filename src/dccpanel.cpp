@@ -38,6 +38,7 @@ DccPanel::DccPanel(QWidget* parent)
 : ChatWindow(parent)
 {
     setType(ChatWindow::DccPanel);
+    setName(i18n("DCC Status"));
 
     m_listView = new KListView(this,"dcc_control_panel");
 

@@ -19,6 +19,7 @@
 #include <qstringlist.h>
 
 #include <kmainwindow.h>
+#include <kaction.h>
 
 #include "channel.h"
 #include "preferences.h"
@@ -26,36 +27,19 @@
 #include "nickinfo.h"
 #include "server.h"
 
-/*
- Dario Abatianni
-*/
-
 class KToggleAction;
-class KActionMenu;
 class KScriptManager;
-class KTabWidget;
-class QPoint;
-class KonviSqueezedTextLabel;
 
 class KonviBookmarkHandler;
-class StatusPanel;
-class ChatWindow;
-class Channel;
-class Query;
-class RawLog;
-class ChannelListPanel;
-class DccPanel;
-class DccTransferHandler;
 class Ignore;
 class NicksOnline;
 class QuickButtonsDialog;
-class UrlCatcher;
 class KonviSettingsDialog;
-class Images;
+class ViewContainer;
+class KonversationStatusBar;
 
 namespace Konversation
 {
-    class InsertCharDialog;
     class ServerListDialog;
     class TrayIcon;
 }
@@ -64,21 +48,12 @@ class KonversationMainWindow : public KMainWindow
 {
     Q_OBJECT
 
-        public:
+    public:
         KonversationMainWindow();
         ~KonversationMainWindow();
 
-        StatusPanel* addStatusView(Server* server);
-        RawLog* addRawLog(Server* server);
-        ChannelListPanel* addChannelListPanel(Server* server);
-        Channel* addChannel(Server* server,const QString& name);
-        Query* addQuery(Server* server,const NickInfoPtr & name, bool weinitiated=true);
-
-        DccPanel* getDccPanel();
-        /**
-         * Bring this view to the front.
-         */
-        void showView(ChatWindow* view);
+        ViewContainer* getViewContainer() { return m_viewContainer; }
+        Konversation::TrayIcon* systemTrayIcon() const { return m_trayIcon; }
 
         /** Some errors need to be shown, even when konversation is minimized.
          *  For example, when a kimiface call is received to query a person,
@@ -86,200 +61,85 @@ class KonversationMainWindow : public KMainWindow
          *  recognised, we need to give immediate feedback to the user.
          */
         void focusAndShowErrorMessage(const QString &errorMsg);
-        void appendToFrontmost(const QString& type,const QString& message,ChatWindow* serverView);
-        void appendToFrontmostIfDifferent(const QString& type,const QString& message,ChatWindow* serverView);
 
-        void updateTabPlacement();
-
-        Konversation::TrayIcon* systemTrayIcon() const { return tray; }
-
-        ChatWindow* frontView() { return m_frontView; }
-
-        // Bookmark related functions
         QString currentURL(bool passNetwork);
         QString currentTitle();
 
-        signals:
+    signals:
         void prefsChanged();
         void startNotifyTimer(int msec);
         void showQuickConnectDialog();
-        void quitServer();
         void nicksNowOnline(Server*);
-        void closeTab(int id);
         void endNotification();
-        void updateChannelAppearance();
-
-    public slots:
-        void updateAppearance();
-        void toggleDccPanel();
-        void addDccPanel(); // connected in server class
-        void addKonsolePanel(); // connected in server class
-        void addUrlCatcher();
-        void addDccChat(const QString& myNick,const QString& nick,const QString& numericalIp,const QStringList& arguments,bool listen);
+        void quitServer();
+        void serverStateChanged(Server* server, Server::State state);
         void insertRememberLine();
         void insertRememberLine(Server* server);
-        void openChannelList(const QString& filter = QString::null, bool getList = false);
 
-        void resetLag();
-        void updateLag(Server* lagServer,int msec);
-        void updateSSLInfo(Server* server);
-        void tooLongLag(Server* lagServer,int msec);
-        void setOnlineList(Server* notifyServer,const QStringList& list, bool changed);
+    public slots:
         void updateTrayIcon();
-        void serverQuit(Server* server);
-        void setShowTabBarCloseButton(bool s);
-
-        void openLogFile(const QString& caption, const QString& file);
-
-        void removeSSLIcon();
 
         void openServerList();
-        void openIdentitiesDialog();
 
+        void openIdentitiesDialog();
         IdentityPtr editIdentity(IdentityPtr identity);
 
-        void serverStateChanged(Server* server, Server::State state);
-
-        void closeView(QWidget* view);
+        void setOnlineList(Server* notifyServer,const QStringList& list, bool changed);
 
     protected slots:
-	/** This is connected to the preferences settingsChanged signal and acts to compress
-	 *  multiple successively settingsChanged() signals into a single output
-	 *  appearanceChanged() signal.
-	 *
-	 *  Do not connect to the settingsChanged signal elsewhere.  If you want to know when
-	 *  the settings have changed, connect to:
-	 *  KonversationApplication::instance(), SIGNAL(appearanceChanged())
-	 */
+        /** This is connected to the preferences settingsChanged signal and acts to compress
+        *  multiple successively settingsChanged() signals into a single output
+        *  appearanceChanged() signal.
+        *
+        *  Do not connect to the settingsChanged signal elsewhere.  If you want to know when
+        *  the settings have changed, connect to:
+        *  KonversationApplication::instance(), SIGNAL(appearanceChanged())
+        */
         void settingsChangedSlot();
 
         /** This is connected to the appearanceChanged signal.
-	 *  @see settingsChangedSlot()
-	 */
+        *  @see settingsChangedSlot()
+        */
         void resetHasDirtySettings();
+
+        void toggleMenubar(bool dontShowWarning = false);
+
         void openPrefsDialog();
         void openKeyBindings();
+        void showJoinChannelDialog();
         void openQuickConnectDialog();
+
         void openNotify();
-        void openLogfile();
-        void openNicksOnlinePanel();
-        void closeNicksOnlinePanel();
         // it seems that moc does not honor #ifs in compile so we create an
         // empty slot in our .cpp file rather than #if this slot out
         void openNotifications();
-
-        void showStatusbar();
-        void showMenubar(bool dontShowWarning = false);
-        /**
-         * @see showView
-         */
-        void changeView(QWidget* view);
-
-        void closeKonsolePanel(ChatWindow* konsolePanel);
-
-        void setTabNotification(ChatWindow* widget, const Konversation::TabNotifyType& type);
-        void unsetTabNotification(ChatWindow* view);
-        void updateTabs();
-
-        void hideEvent(QHideEvent * e);
-        void quitProgram();
-
         void notifyAction(const QString& serverName,const QString& nick);
 
-        void nextTab();
-        void previousTab();
-        void closeTab();
-        void moveTabLeft();
-        void moveTabRight();
-
-        void goToTab(int page);
-
-        void findText();
-        void findNextText();
-        void addIRCColor();
-        void clearWindow();
-        void closeQueries();
-        void hideNicknameList();
-        void clearTabs();
-
-        void insertCharacter();
-        void insertChar(const QChar& chr);
-
-        void updateChannelInfo(const QString& info);
-        void updateQueryChrome(ChatWindow* view, const QString& name);
-
-        void showJoinChannelDialog();
-
-        void reconnectCurrentServer();
+        void quitProgram();
+        void hideEvent(QHideEvent* e);
+        void focusOutEvent(QFocusEvent* e);
+        void leaveEvent(QEvent* e);
 
         void openURL(const QString& url, const QString& title);
 
-        void showTabContextMenu(QWidget* tab, const QPoint& pos);
-
-        void toggleTabNotifications();
-        void changeTabCharset(int index);
-        void updateSwitchTabAction();
-
     protected:
-        enum StatusID
-        {
-            StatusText,LagOMeter
-        };
-
         bool queryClose();
-
-        void addView(ChatWindow* view, const QString& label, bool weinitiated=true);
-        void updateFrontView();
-
-        void closeUrlCatcher();
-        void closeDccPanel();
-        void deleteDccPanel();
-
-        void updateTabMoveActions(int index);
-        void updateTabEncoding(ChatWindow* view);
-
         virtual bool event(QEvent* e);
 
-        KTabWidget* getViewContainer();
-        KTabWidget* viewContainer;
-        int m_popupTabIndex;
+        ViewContainer* m_viewContainer;
+        KonversationStatusBar* m_statusBar;
+        Konversation::TrayIcon* m_trayIcon;
 
-	/** @see settingsChangedSlot() */
-	bool m_hasDirtySettings;
-        Server* frontServer;
-        QGuardedPtr<ChatWindow> m_frontView;
-        QGuardedPtr<ChatWindow> previousFrontView;
-        ChatWindow* searchView;
-
-        UrlCatcher* urlCatcherPanel;
-        DccPanel* dccPanel;
-        bool dccPanelOpen;
-
-        KToggleAction* showToolBarAction;
-        KToggleAction* showStatusBarAction;
-        KToggleAction* showMenuBarAction;
-        KToggleAction* hideNicklistAction;
-
-        NicksOnline* nicksOnlinePanel;
-
-        DccTransferHandler* dccTransferHandler;
-
-        Konversation::TrayIcon* tray;
-
-        bool m_closeApp;
-
-        SSLLabel* m_sslLabel;
-        QLabel* m_channelInfoLabel;
-        QLabel* m_lagInfoLabel;
-        KonviSqueezedTextLabel* m_generalInfoLabel;
-
-        Konversation::InsertCharDialog* m_insertCharDialog;
-        Konversation::ServerListDialog* m_serverListDialog;
+        KToggleAction* hideMenuBarAction;
 
         KPopupMenu* m_bookmarks;
         KonviBookmarkHandler* m_bookmarkHandler;
         KonviSettingsDialog *m_settingsDialog;
+        Konversation::ServerListDialog* m_serverListDialog;
 
-        Images* images;
+        /** @see settingsChangedSlot() */
+        bool m_hasDirtySettings;
+        bool m_closeApp;
 };
+
 #endif

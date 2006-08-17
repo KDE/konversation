@@ -7,7 +7,7 @@
 
 /*
   RawLog.cpp  -  provides a view to the raw protocol
-  begin:     Die Mär 18 2003
+  begin:     Die Mï¿½ 18 2003
   copyright: (C) 2003 by Dario Abatianni
   email:     eisfuchs@tigress.com
 */
@@ -28,8 +28,6 @@ RawLog::RawLog(QWidget* parent) : ChatWindow(parent)
     setType(ChatWindow::RawLog);
     IRCViewBox* ircBox = new IRCViewBox(this, 0);
     setTextView(ircBox->ircView());               // Server will be set later in setServer()
-
-    connect(KonversationApplication::instance(), SIGNAL (appearanceChanged()),this,SLOT (updateAppearance()) );
 }
 
 RawLog::~RawLog()
@@ -54,6 +52,8 @@ void RawLog::updateAppearance()
         getTextView()->setViewBackground(Preferences::color(Preferences::TextViewBackground),
             QString::null);
     }
+
+    ChatWindow::updateAppearance();
 }
 
 bool RawLog::closeYourself()

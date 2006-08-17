@@ -82,13 +82,9 @@ class IRCView : public KTextBrowser
         void popupCommand(int);
         void filesDropped(const QStrList&);
         void doSearch();
-	/** Emit this signal for anything you want to temporarily appear on the status bar
-	 */
-	void actionStatusText( const QString & );
-	/** Emit this when you want to clear the temporary message set above.
-	 *  Equivalent to emitting actionStatusText with a blank string.
-	 */
-	void clearStatusText();
+
+        void setStatusBarTempText(const QString&);
+        void clearStatusBarTempText();
 
     public slots:
         void append(const QString& nick, const QString& message);
@@ -154,8 +150,8 @@ class IRCView : public KTextBrowser
         int m_findParagraph;
         int m_findIndex;
 
-	// This is set to what we last sent status text to the statusbar.  Empty if we have sent a clearStatusText() string
-	QString m_lastStatusText;
+        // This is set to what we last sent status text to the statusbar.  Empty if we have sent clearStatusBarTempText() string
+        QString m_lastStatusText;
         // decide if we should place the scrollbar at the bottom on show()
         bool m_resetScrollbar;
 
@@ -167,7 +163,7 @@ class IRCView : public KTextBrowser
         QString m_buffer;
         Server* m_server;
         QPopupMenu* m_popup;
-
+        int toggleMenuBarSeparator;
         KPopupMenu* m_nickPopup;
         KPopupMenu* m_channelPopup;
         KPopupMenu* m_modes;

@@ -49,10 +49,12 @@
 #include <kaction.h>
 #include <kglobalsettings.h>
 #include <kdebug.h>
+#include <kmenubar.h>
 
 #include "channel.h"
 #include "konversationapplication.h"
 #include "konversationmainwindow.h"
+#include "viewcontainer.h"
 #include "ircview.h"
 #include "highlight.h"
 #include "server.h"
@@ -88,6 +90,8 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent)
     setStyleSheet(sheet);
 
     m_popup = new QPopupMenu(this,"ircview_context_menu");
+    toggleMenuBarSeparator = m_popup->insertSeparator();
+    m_popup->setItemVisible(toggleMenuBarSeparator, false);
     m_popup->insertItem(SmallIconSet("editcopy"),i18n("&Copy"),Copy);
     m_popup->insertItem(i18n("Select All"),SelectAll);
     m_popup->insertSeparator();
@@ -156,7 +160,7 @@ void IRCView::setServer(Server* newServer)
 {
     m_server = newServer;
     if(newServer) {
-      KAction *action = newServer->getMainWindow()->actionCollection()->action("open_logfile");
+      KAction *action = newServer->getViewContainer()->actionCollection()->action("open_logfile");
       Q_ASSERT(action);
       if(!action) return;
       action->plug(m_popup);
@@ -193,7 +197,7 @@ void IRCView::highlightedSlot(const QString& link)
     {
         if (!m_lastStatusText.isEmpty()) 
         {
-            emit clearStatusText();
+            emit clearStatusBarTempText();
             m_lastStatusText = QString::null;
         }
     } else
@@ -208,7 +212,7 @@ void IRCView::highlightedSlot(const QString& link)
 
         if (!link.isEmpty()) {
             //link therefore != m_lastStatusText  so emit with this new text
-            emit actionStatusText(link);
+            emit setStatusBarTempText(link);
         }
         if (link.isEmpty() && m_copyUrlMenu)
         {
@@ -229,7 +233,7 @@ void IRCView::highlightedSlot(const QString& link)
         m_currentNick = link.mid(1);
         m_nickPopup->changeTitle(m_nickPopupId,m_currentNick);
         m_isOnNick = true;
-        emit actionStatusText( i18n("Open a query with %1").arg(m_currentNick));
+        emit setStatusBarTempText(i18n("Open a query with %1").arg(m_currentNick));
     } else {
         // link.startsWith("##")
         m_currentChannel = link.mid(1);
@@ -244,7 +248,7 @@ void IRCView::highlightedSlot(const QString& link)
 
         m_channelPopup->changeTitle(m_channelPopupId,prettyId);
         m_isOnChannel = true;
-        emit actionStatusText( i18n("Join the channel %1").arg(m_currentChannel));
+        emit setStatusBarTempText(i18n("Join the channel %1").arg(m_currentChannel));
     }
 }
 
@@ -895,7 +899,7 @@ void IRCView::doAppend(const QString& newLine, bool important, bool self)
         // send signal only now
         emit autoText(sendText);
     }
-    if (!m_lastStatusText.isEmpty()) emit clearStatusText();
+    if (!m_lastStatusText.isEmpty()) emit clearStatusBarTempText();
 }
 
 // remember if scrollbar was positioned at the end of the text or not
@@ -1030,11 +1034,28 @@ bool IRCView::contextMenu(QContextMenuEvent* ce)
     }
     else
     {
+        KActionCollection* actionCollection = KonversationApplication::instance()->getMainWindow()->actionCollection();
+        KToggleAction* toggleMenuBarAction = static_cast<KToggleAction*>(actionCollection->action("options_show_menubar"));
+
+        if (toggleMenuBarAction && !toggleMenuBarAction->isChecked())
+        {
+            toggleMenuBarAction->plug(m_popup, 0);
+            m_popup->setItemVisible(toggleMenuBarSeparator, true);
+        }
+
         m_popup->setItemEnabled(Copy,(hasSelectedText()));
+
+        KAction* channelSettingsAction = 0;
+
+        if (m_chatWin->getType() == ChatWindow::Channel)
+        {
+            channelSettingsAction = KonversationApplication::instance()->getMainWindow()->actionCollection()->action("channel_settings");
+            if (channelSettingsAction) channelSettingsAction->plug(m_popup);
+        }
 
         int r = m_popup->exec(ce->globalPos());
 
-        switch(r)
+        switch (r)
         {
             case -1:
                 // dummy. -1 means, no entry selected. we don't want -1to go in default, so
@@ -1070,6 +1091,14 @@ bool IRCView::contextMenu(QContextMenuEvent* ce)
             default:
                 emit extendedPopup(r);
         }
+
+        if (toggleMenuBarAction)
+        {
+            toggleMenuBarAction->unplug(m_popup);
+            m_popup->setItemVisible(toggleMenuBarSeparator, false);
+        }
+
+        if (channelSettingsAction) channelSettingsAction->unplug(m_popup);
     }
     return true;
 }
@@ -1141,8 +1170,7 @@ void IRCView::setupQueryPopupMenu()
     {
         m_nickPopup->insertItem(SmallIcon("2rightarrow"),i18n("Send &File..."),Konversation::DccSend);
     }
-    m_nickPopup->insertSeparator();
-    m_nickPopup->insertItem(i18n("Ignore"),Konversation::IgnoreNick);
+    m_nickPopup->insertItem(i18n("Ignore"), Konversation::IgnoreNick);
 
     connect(m_nickPopup, SIGNAL(activated(int)), this, SIGNAL(popupCommand(int)));
 }
@@ -1351,9 +1379,11 @@ void IRCView::setChatWin(ChatWindow* chatWin)
     m_chatWin = chatWin;
 
     if(m_chatWin->getType()==ChatWindow::Channel)
-      setupNickPopupMenu();   // for channels
+    {
+        setupNickPopupMenu();
+    }
     else
-      setupQueryPopupMenu();  // for queries
+      setupQueryPopupMenu();
 
     setupChannelPopupMenu();
 }

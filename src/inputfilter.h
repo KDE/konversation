@@ -31,7 +31,7 @@ class InputFilter : public QObject
 {
     Q_OBJECT
 
-        public:
+    public:
         InputFilter();
         ~InputFilter();
 
@@ -49,7 +49,7 @@ class InputFilter : public QObject
         void setLagMeasuring(bool yes);
         bool getLagMeasuring();
 
-        signals:
+    signals:
         void welcome(const QString& ownHost);
         void notifyResponse(const QString &nicksOnline);
                                                   // will be connected to Server::addDccGet()
@@ -68,7 +68,7 @@ class InputFilter : public QObject
         void invitation(const QString& nick,const QString& channel);
         void away();
         void unAway();
-        // will be connected via Server to KonversationMainWindow::addDccChat()
+
         void addDccChat(const QString& myNick,const QString& nick,const QString& numericalIp,const QStringList& arguments,bool listen);
 
     protected:

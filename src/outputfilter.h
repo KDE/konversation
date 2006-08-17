@@ -28,6 +28,7 @@
 */
 
 class Server;
+class ChatWindow;
 
 namespace Konversation
 {
@@ -53,7 +54,7 @@ namespace Konversation
     {
         Q_OBJECT
 
-            public:
+        public:
             OutputFilter(Server* server);
             ~OutputFilter();
 
@@ -64,17 +65,18 @@ namespace Konversation
             OutputFilterResult acceptRequest(const QString &recipient,const QString &fileName,const QString &port,int startAt);
             bool replaceAliases(QString& line);
 
-            signals:
+        signals:
             void openDccSend(const QString &recipient, KURL kurl);
             void requestDccSend();                // Choose Recipient and File from requester
                                                   // Choose File from requester
             void requestDccSend(const QString& recipient);
             void requestDccChat(const QString& nick);
-            void openDccPanel();
+            void addDccPanel();
             void closeDccPanel();
             void openRawLog(bool show);
             void closeRawLog();
             void openKonsolePanel();
+            void openChannelList(const QString& parameter, bool getList);
             void sendToAllChannels(const QString& text);
             void launchScript(const QString& target, const QString& parameter);
             void banUsers(const QStringList& userList,const QString& channel,const QString& option);
@@ -84,6 +86,9 @@ namespace Konversation
             void disconnectServer();
             void connectToServerGroup(const QString& serverGroup);
             void connectToServer(const QString& server, const QString& port, const QString& password);
+
+            void showView(ChatWindow* view);
+
 
         public slots:
             void setCommandChar();

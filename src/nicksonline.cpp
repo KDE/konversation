@@ -44,6 +44,7 @@
 #include "linkaddressbook/addressbook.h"
 #include "linkaddressbook/nicksonlinetooltip.h"
 #include "konversationmainwindow.h"
+#include "viewcontainer.h"
 #include "nicksonlineitem.h"
 
 NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
@@ -685,7 +686,7 @@ void NicksOnline::doCommand(int id)
             }
             else
             {
-                LinkAddressbookUI *linkaddressbookui = new LinkAddressbookUI(server->getMainWindow(), NULL, nickname, server->getServerName(), server->getServerGroup(), addressee.realName());
+                LinkAddressbookUI *linkaddressbookui = new LinkAddressbookUI(server->getViewContainer()->getWindow(), NULL, nickname, server->getServerName(), server->getServerGroup(), addressee.realName());
                 linkaddressbookui->show();
             }
             break;
@@ -738,7 +739,7 @@ void NicksOnline::doCommand(int id)
         case ciOpenQuery:
             NickInfoPtr nickInfo = server->obtainNickInfo(nickname);
             class Query* query = server->addQuery(nickInfo, true /*we initiated*/);
-            server->getMainWindow()->showView(query);
+            emit showView(query);
             return;
     }
 

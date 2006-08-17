@@ -28,7 +28,7 @@
 #include "addressbook.h"
 #include "konversationapplication.h"
 #include "nickinfo.h"
-#include "konversationmainwindow.h"
+#include "viewcontainer.h"
 
 ServerISON::ServerISON(Server* server) : m_server(server)
 {
@@ -49,7 +49,7 @@ ServerISON::ServerISON(Server* server) : m_server(server)
         SIGNAL(channelJoinedOrUnjoined(Server*, const QString&, bool )),
         this,
         SLOT(slotChannelJoinedOrUnjoined(Server*, const QString&, bool )));
-    connect(m_server->getMainWindow(), SIGNAL(prefsChanged()),
+    connect(m_server->getViewContainer()->getWindow(), SIGNAL(prefsChanged()),
         this, SLOT(slotPrefsChanged()));
 }
 

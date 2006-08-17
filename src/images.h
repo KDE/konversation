@@ -19,6 +19,7 @@
 
 #include <qiconset.h>
 #include <qpixmap.h>
+#include <qobject.h>
 
 /*
   @author Dario Abatianni
@@ -29,8 +30,10 @@
  * use KonversationApplication::instance()->images().
  */
 
-class Images
+class Images : public QObject
 {
+    Q_OBJECT
+
     public:
         enum NickPrivilege
         {
@@ -46,7 +49,8 @@ class Images
         Images();
         virtual ~Images();
 
-        QIconSet getCloseIcon() { return m_closeIcon; }
+        QPixmap getCloseIcon() { return m_closeIcon; }
+        QPixmap getDisabledCloseIcon() { return m_disabledCloseIcon; }
 
         QIconSet getLed(QColor col,bool state = true);
 
@@ -64,11 +68,15 @@ class Images
         QPixmap getNickIcon(NickPrivilege privilege,bool isAway=false) const;
         void initializeNickIcons();
 
+    public slots:
+        void updateIcons();
+
     protected:
         void initializeLeds();
         void initializeKimifaceIcons();
 
-        QIconSet m_closeIcon;
+        QPixmap m_closeIcon;
+        QPixmap m_disabledCloseIcon;
 
         QIconSet m_serverLedOn;
         QIconSet m_serverLedOff;

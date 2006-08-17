@@ -79,7 +79,7 @@ DccChat::DccChat(QWidget* parent,Server* newServer,const QString& myNickname,con
     connect( m_dccChatInput, SIGNAL( submit() ), this, SLOT( dccChatTextEntered() ) );
     connect( m_dccChatInput, SIGNAL( textPasted( const QString& ) ), this, SLOT( textPasted( const QString& ) ) );
 
-    connect( getTextView(), SIGNAL( textPasted() ), m_dccChatInput, SLOT( paste() ) );
+    connect( getTextView(), SIGNAL( textPasted(bool) ), m_dccChatInput, SLOT( paste(bool) ) );
     connect( getTextView(), SIGNAL( gotFocus() ), m_dccChatInput, SLOT( setFocus() ) );
     connect( getTextView(), SIGNAL( updateTabNotification(Konversation::TabNotifyType)),
         this, SLOT( activateTabNotification( Konversation::TabNotifyType ) ) );
@@ -91,8 +91,6 @@ DccChat::DccChat(QWidget* parent,Server* newServer,const QString& myNickname,con
         connectToPartner();
 
     kdDebug() << "DccChat::DccChat() [END]" << endl;
-
-    connect(KonversationApplication::instance(), SIGNAL (appearanceChanged()),this,SLOT (updateAppearance()) );
 
     updateAppearance();
 }
@@ -391,7 +389,7 @@ QString DccChat::getChannelEncodingDefaultDesc()  // virtual
     return i18n("Default ( %1 )").arg(Konversation::IRCCharsets::self()->encodingForLocale());
 }
 
-void DccChat::showEvent(QShowEvent* event)
+void DccChat::showEvent(QShowEvent* /* event */)
 {
     if(m_initialShow) {
         m_initialShow = false;
@@ -435,6 +433,8 @@ void DccChat::updateAppearance()
         getTextView()->setViewBackground(Preferences::color(Preferences::TextViewBackground),
         QString::null);
     }
+
+    ChatWindow::updateAppearance();
 }
 
 #include "dccchat.moc"

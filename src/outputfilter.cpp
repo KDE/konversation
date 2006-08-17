@@ -564,11 +564,8 @@ namespace Konversation
             //or "/msg nick".  Not "/msg nick message".
             NickInfoPtr nickInfo = m_server->obtainNickInfo(recipient);
             query = m_server->addQuery(nickInfo, true /*we initiated*/);
-            if(output.isEmpty())                  //force focus if the user did not specify any message
-            {
-                KonversationApplication* konv_app = static_cast<KonversationApplication*>(KApplication::kApplication());
-                konv_app->getMainWindow()->showView(query);
-            }
+            //force focus if the user did not specify any message
+            if (output.isEmpty()) emit showView(query);
         }
         else
         {
@@ -699,7 +696,7 @@ namespace Konversation
         // No parameter, just open DCC panel
         if(parameter.isEmpty())
         {
-            emit openDccPanel();
+            emit addDccPanel();
         }
         else
         {
@@ -1621,7 +1618,7 @@ namespace Konversation
     {
         OutputFilterResult result;
 
-        m_server->getMainWindow()->openChannelList(parameter, true);
+        emit openChannelList(parameter, true);
 
         return result;
     }

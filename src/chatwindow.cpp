@@ -30,7 +30,6 @@
 #include "ircview.h"
 #include "server.h"
 #include "konversationapplication.h"
-#include "konversationmainwindow.h"
 #include "logfilereader.h"
 
 ChatWindow::ChatWindow(QWidget* parent) : QVBox(parent)
@@ -41,7 +40,6 @@ ChatWindow::ChatWindow(QWidget* parent) : QVBox(parent)
     m_server=0;
     m_notificationsEnabled = true;
     m_channelEncodingSupported = false;
-    m_mainWindow=NULL;
     m_currentTabNotify = Konversation::tnfNone;
 
     setMargin(margin());
@@ -54,6 +52,14 @@ ChatWindow::ChatWindow(QWidget* parent) : QVBox(parent)
 
 ChatWindow::~ChatWindow()
 {
+    emit closing(this);
+}
+
+void ChatWindow::updateAppearance()
+{
+    // The font size of the KTabWidget container may be inappropriately
+    // small due to the "Tab bar" font size setting.
+    setFont(KGlobalSettings::generalFont());
 }
 
 void ChatWindow::setName(const QString& newName)
@@ -79,14 +85,13 @@ ChatWindow::WindowType ChatWindow::getType()
 
 void ChatWindow::setServer(Server* newServer)
 {
-    if(!newServer)
-      { 
-	kdDebug("ChatWindow::setServer(0)!") << endl;
-      }
+    if (!newServer)
+    {
+        kdDebug("ChatWindow::setServer(0)!") << endl;
+    }
     else
     {
         m_server=newServer;
-        setMainWindow(m_server->getMainWindow());
         connect(m_server,SIGNAL (serverOnline(bool)),this,SLOT (serverOnline(bool)) );
 
         // check if we need to set up the signals
@@ -98,11 +103,6 @@ void ChatWindow::setServer(Server* newServer)
 
         emit serverOnline(m_server->isConnected());
     }
-}
-
-void ChatWindow::setMainWindow(KonversationMainWindow *mainWindow)
-{
-    m_mainWindow = mainWindow;
 }
 
 Server* ChatWindow::getServer()
@@ -131,9 +131,9 @@ void ChatWindow::setTextView(IRCView* newView)
     }
 
     textView->setChatWin(this);
-    connect(textView,SIGNAL (textToLog(const QString&)),this,SLOT (logText(const QString&)) );
-    connect(textView,SIGNAL (actionStatusText( const QString & ) ),this, SIGNAL (actionStatusText( const QString & ) ));
-    connect(textView,SIGNAL (clearStatusText()), this, SIGNAL (clearStatusText()));
+    connect(textView,SIGNAL(textToLog(const QString&)), this,SLOT(logText(const QString&)));
+    connect(textView,SIGNAL(setStatusBarTempText(const QString&)), this, SIGNAL(setStatusBarTempText(const QString&)));
+    connect(textView,SIGNAL(clearStatusBarTempText()), this, SIGNAL(clearStatusBarTempText()));
 }
 
 void ChatWindow::insertRememberLine()

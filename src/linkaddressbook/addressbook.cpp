@@ -14,6 +14,7 @@
 
 #include "addressbook.h"
 #include <qstringlist.h>
+#include "../viewcontainer.h"
 #include "../konversationmainwindow.h"
 #include "qwidget.h"
 #include <klocale.h>
@@ -284,7 +285,7 @@ void Addressbook::sendFile(const QString &uid, const KURL &sourceURL, const QStr
         return;
     }
     nickInfo->getServer()->addDccSend(nickInfo->getNickname(), sourceURL, altFileName, fileSize);
-    QWidget *widget = nickInfo->getServer()->getMainWindow();
+    QWidget *widget = nickInfo->getServer()->getViewContainer()->getWindow();
     KWin::demandAttention(widget->winId());       //If activeWindow request is denied, at least demand attention!
     KWin::activateWindow(widget->winId());        //May or may not work, depending on focus stealing prevention.
 

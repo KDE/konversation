@@ -46,7 +46,6 @@
 #include <kwin.h>
 
 #include "konversationapplication.h"
-#include "konversationmainwindow.h"
 #include "channel.h"
 #include "server.h"
 #include "nick.h"
@@ -127,8 +126,8 @@ Channel::Channel(QWidget* parent)
 
     topicLine = new Konversation::TopicLabel(topicWidget);
     QWhatsThis::add(topicLine, i18n("<qt>Every channel on IRC has a topic associated with it.  This is simply a message that everybody can see.<p>If you are an operator, or the channel mode <em>'T'</em> has not been set, then you can change the topic by clicking the Edit Channel Properties button to the left of the topic.  You can also view the history of topics there.</qt>"));
-    connect(topicLine, SIGNAL(actionStatusText( const QString & )), this, SIGNAL(actionStatusText( const QString & )));
-    connect(topicLine, SIGNAL(clearStatusText()), this, SIGNAL(clearStatusText()));
+    connect(topicLine, SIGNAL(setStatusBarTempText(const QString&)), this, SIGNAL(setStatusBarTempText(const QString&)));
+    connect(topicLine, SIGNAL(clearStatusBarTempText()), this, SIGNAL(clearStatusBarTempText()));
     connect(topicLine,SIGNAL(popupCommand(int)),this,SLOT(popupChannelCommand(int)));
 
     topicLayout->addWidget(m_topicButton, 0, 0);
@@ -301,8 +300,6 @@ Channel::Channel(QWidget* parent)
     connect(Preferences::self(), SIGNAL (autoContinuousWhoChanged()),this,SLOT (scheduleAutoWho()));
 
     m_allowNotifications = true;
-
-    connect(KonversationApplication::instance(), SIGNAL (appearanceChanged()),this,SLOT (updateAppearance()) );
 
     updateAppearance();
 
@@ -2114,6 +2111,8 @@ void Channel::updateAppearance()
     setAutoUserhost(Preferences::autoUserhost());
 
     updateQuickButtons(Preferences::quickButtonList());
+
+    ChatWindow::updateAppearance();
 }
 
 void Channel::updateStyleSheet()

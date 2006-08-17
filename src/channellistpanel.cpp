@@ -42,6 +42,7 @@
 ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
 {
     setType(ChatWindow::ChannelList);
+    setName(i18n("Channel List"));
 
     setNumChannels(0);
     setNumUsers(0);

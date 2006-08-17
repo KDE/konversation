@@ -26,7 +26,8 @@ namespace Konversation
     class TopicLabel : public KActiveLabel
     {
         Q_OBJECT
-            public:
+
+        public:
             TopicLabel(QWidget *parent = 0, const char *name = 0);
             ~TopicLabel();
 
@@ -41,8 +42,8 @@ namespace Konversation
             void setText(const QString& text);
 
         signals:
-            void actionStatusText(const QString&);
-            void clearStatusText();
+            void setStatusBarTempText(const QString&);
+            void clearStatusBarTempText();
             void popupCommand(int);
             void currentChannelChanged(const QString&);
 

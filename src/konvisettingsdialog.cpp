@@ -53,7 +53,7 @@
 #include "chatwindowbehaviour_preferences.h"
 #include "fontappearance_preferences.h"
 #include "nicklistbehavior_preferences.h"
-#include "tabbar_preferences.h"
+#include "tabs_preferences.h"
 #include "colorsappearance_preferences.h"
 #include "generalbehavior_preferences.h"
 #include "dcc_preferences.h"
@@ -72,7 +72,7 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
 
   QStringList iconPath;
 
-  iconPath << i18n("Appearance");
+  iconPath << i18n("Interface");
   setFolderIcon( iconPath, SmallIcon("looknfeel") );
 
   iconPath.clear();
@@ -89,31 +89,53 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
 
   QStringList pagePath;
 
-  //Appearance/Chat Window
+  //Interface/Chat Window
   m_confChatWindowAppearanceWdg = new ChatWindowAppearance_Config( 0, "ChatWindowAppearance" );
   pagePath.clear();
-  pagePath << i18n("Appearance") << i18n("Chat Window");
+  pagePath << i18n("Interface") << i18n("Chat Window");
   addPage ( m_confChatWindowAppearanceWdg, pagePath, "view_text", i18n("Chat Window") );
 
-  //Appearance/Fonts
+  //Interface/Colors
+  m_confColorsAppearanceWdg = new ColorsAppearance_Config( this, "ColorsAppearance" );
+  pagePath.clear();
+  pagePath << i18n("Interface") << i18n("Colors");
+  addPage ( m_confColorsAppearanceWdg, pagePath, "colorize", i18n("Colors") );
+
+  //Interface/Fonts
   m_confFontAppearanceWdg = new FontAppearance_Config( this, "FontAppearance" );
   pagePath.clear();
-  pagePath << i18n("Appearance") << i18n("Fonts");
+  pagePath << i18n("Interface") << i18n("Fonts");
   addPage ( m_confFontAppearanceWdg, pagePath, "fonts", i18n("Fonts") );
 
-  //Appearance/Themes
+  //Interface/Quick Buttons
+  m_confQuickButtonsWdg = new QuickButtons_Config( this, "QuickButtons" );
+  pagePath.clear();
+  pagePath << i18n("Interface") << i18n("Quick Buttons");
+  addPage ( m_confQuickButtonsWdg, pagePath, "keyboard", i18n("Quick Buttons") );
+  m_indexToPageMapping.insert(lastAddedIndex(), m_confQuickButtonsWdg);
+  connect(m_confQuickButtonsWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
+
+  //Interface/Tabs
+  m_confTabBarWdg = new Tabs_Config( this, "TabBar" );
+  pagePath.clear();
+  pagePath << i18n("Interface") << i18n("Tabs");
+  addPage ( m_confTabBarWdg, pagePath, "tab_new", i18n("Tabs") );
+
+  //Interface/Themes
   m_confThemeWdg = new Theme_Config( this, "Theme" );
   pagePath.clear();
-  pagePath << i18n("Appearance") << i18n("Themes");
+  pagePath << i18n("Interface") << i18n("Themes");
   addPage ( m_confThemeWdg, pagePath, "iconthemes", i18n("Themes") );
   m_indexToPageMapping.insert(lastAddedIndex(), m_confThemeWdg);
   connect(m_confThemeWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
 
-  //Appearance/Colors
-  m_confColorsAppearanceWdg = new ColorsAppearance_Config( this, "ColorsAppearance" );
+  //Interface/Warning Dialogs
+  m_confWarningsWdg = new Warnings_Config( this, "Warnings" );
   pagePath.clear();
-  pagePath << i18n("Appearance") << i18n("Colors");
-  addPage ( m_confColorsAppearanceWdg, pagePath, "colorize", i18n("Colors") );
+  pagePath << i18n("Interface") << i18n("Warning Dialogs");
+  addPage ( m_confWarningsWdg, pagePath, "messagebox_warning", i18n("Warning Dialogs") );
+  m_indexToPageMapping.insert(lastAddedIndex(), m_confWarningsWdg);
+  connect(m_confWarningsWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
 
   //Behavior/General
   m_confGeneralBehaviorWdg = new GeneralBehavior_Config( this, "GeneralBehavior" );
@@ -132,12 +154,6 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   pagePath.clear();
   pagePath << i18n("Behavior") << i18n("Chat Window");
   addPage ( m_confChatwindowBehaviourWdg, pagePath, "view_text", i18n("Chat Window") );
-
-  //Behaviour/Tab Bar
-  m_confTabBarWdg = new TabBar_Config( this, "TabBar" );
-  pagePath.clear();
-  pagePath << i18n("Behavior") << i18n("Tab Bar");
-  addPage ( m_confTabBarWdg, pagePath, "tab_new", i18n("Tab Bar") );
 
   //Behaviour/Nickname List
   m_confNicklistBehaviorWdg = new NicklistBehavior_Config( this, "NicklistBehavior" );
@@ -163,14 +179,6 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   m_indexToPageMapping.insert(lastAddedIndex(), m_confAutoreplaceWdg);
   connect(m_confAutoreplaceWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
 
-  //Behaviour/Quick Buttons
-  m_confQuickButtonsWdg = new QuickButtons_Config( this, "QuickButtons" );
-  pagePath.clear();
-  pagePath << i18n("Behavior") << i18n("Quick Buttons");
-  addPage ( m_confQuickButtonsWdg, pagePath, "keyboard", i18n("Quick Buttons") );
-  m_indexToPageMapping.insert(lastAddedIndex(), m_confQuickButtonsWdg);
-  connect(m_confQuickButtonsWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
-
   //Behaviour/Ignore
   m_confIgnoreWdg = new Ignore_Config(this, "Ignore");
   pagePath.clear();
@@ -193,8 +201,8 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   //Notifications/Tab Bar
   m_confTabNotificationsWdg = new TabNotifications_Config( this, "TabBar" );
   pagePath.clear();
-  pagePath << i18n("Notifications") << i18n("Tab Bar");
-  addPage ( m_confTabNotificationsWdg, pagePath, "tab_new", i18n("Tab Bar") );
+  pagePath << i18n("Notifications") << i18n("Tabs");
+  addPage ( m_confTabNotificationsWdg, pagePath, "tab_new", i18n("Tabs") );
 
   //Notification/Highlighting
   m_confHighlightWdg = new Highlight_Config( this, "Highlight" );
@@ -221,14 +229,6 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   addPage ( m_confOSDWdg, pagePath, "tv", i18n("On Screen Display") );
   //no modified connection needed - it's all kcfg widgets
   m_indexToPageMapping.insert(lastAddedIndex(), m_confOSDWdg);
-
-  //Warning Dialogs
-  m_confWarningsWdg = new Warnings_Config( this, "Warnings" );
-  pagePath.clear();
-  pagePath << i18n("Warning Dialogs");
-  addPage ( m_confWarningsWdg, i18n("Warning Dialogs"), "messagebox_warning", i18n("Warning Dialogs") );
-  connect(m_confWarningsWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
-  m_indexToPageMapping.insert(lastAddedIndex(), m_confWarningsWdg);
 
   unfoldTreeList();
 

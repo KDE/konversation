@@ -51,7 +51,7 @@ m_mainWindow(mainWindow)
 
     connect( manager, SIGNAL(changed(const QString &,const QString &)), SLOT(slotBookmarksChanged(const QString &,const QString &)));
 
-    m_bookmarkMenu = new KonviBookmarkMenu( manager, this, m_menu,  mainWindow->actionCollection(), true );
+    m_bookmarkMenu = new KonviBookmarkMenu( manager, this, m_menu, NULL, true );
 }
 
 KonviBookmarkHandler::~KonviBookmarkHandler()

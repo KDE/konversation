@@ -28,6 +28,7 @@
 
 #include "konversationapplication.h"
 #include "konversationmainwindow.h"
+#include "viewcontainer.h"
 #include "highlight.h"
 #include "server.h"
 #include "konversationsound.h"
@@ -98,6 +99,7 @@ int KonversationApplication::newInstance()
 
         // Images object providing LEDs, NickIcons
         m_images = new Images();
+        connect(this, SIGNAL(iconChanged(int)), m_images, SLOT(updateIcons()));
 
         // Auto-alias scripts.  This adds any missing aliases
         QStringList aliasList(Preferences::aliasList());
@@ -125,29 +127,21 @@ int KonversationApplication::newInstance()
         connect(Preferences::self(), SIGNAL(updateTrayIcon()), mainWindow, SLOT(updateTrayIcon()) );
         connect(this, SIGNAL(prefsChanged()), mainWindow, SIGNAL(prefsChanged()) );
         // take care of user style changes, setting back colors and stuff
-        connect(KApplication::kApplication(), SIGNAL(appearanceChanged()), mainWindow, SLOT(updateAppearance()));
-        connect(KApplication::kApplication(), SIGNAL(appearanceChanged()), mainWindow, SLOT(updateTabs()));
 
         // apply GUI settings
-        mainWindow->updateAppearance();
+        emit appearanceChanged();
         mainWindow->show();
 
-        if(Preferences::showServerList())
-        {
-            mainWindow->openServerList();
-        }
+        if (Preferences::showServerList()) mainWindow->openServerList();
 
         // handle autoconnect on startup
         Konversation::ServerGroupList serverGroups = Preferences::serverGroupList();
 
-        if(!m_connectDelayed)
+        if (!m_connectDelayed)
         {
-            for(Konversation::ServerGroupList::iterator it = serverGroups.begin(); it != serverGroups.end(); ++it)
+            for (Konversation::ServerGroupList::iterator it = serverGroups.begin(); it != serverGroups.end(); ++it)
             {
-                if((*it)->autoConnectEnabled())
-                {
-                    connectToServer((*it)->id());
-                }
+                if ((*it)->autoConnectEnabled()) connectToServer((*it)->id());
             }
         }
         else
@@ -169,7 +163,7 @@ int KonversationApplication::newInstance()
             connect(dcopObject,SIGNAL (dcopInfo(const QString&)),
                 this,SLOT (dcopInfo(const QString&)) );
             connect(dcopObject,SIGNAL (dcopInsertRememberLine()),
-                mainWindow,SLOT (insertRememberLine()));
+                mainWindow,SIGNAL(insertRememberLine()));
             connect(dcopObject,SIGNAL (dcopSetAutoAway()),
                 this,SLOT (setAutoAway()));
             connect(dcopObject,SIGNAL(dcopConnectToServer(const QString&, int,const QString&, const QString&)),
@@ -287,7 +281,7 @@ void KonversationApplication::dcopSay(const QString& server,const QString& targe
 
 void KonversationApplication::dcopInfo(const QString& string)
 {
-    mainWindow->appendToFrontmost(i18n("DCOP"), string, 0);
+    mainWindow->getViewContainer()->appendToFrontmost(i18n("DCOP"), string, 0);
 }
 
 bool KonversationApplication::validateIdentity(IdentityPtr identity, bool interactive)
@@ -375,12 +369,12 @@ Server* KonversationApplication::connectToServer(int serverGroupId, Konversation
 
     mainWindow->show();
 
-    Server* newServer = new Server(mainWindow, serverGroupId, clearQuickServerList);
+    Server* newServer = new Server(mainWindow->getViewContainer(), serverGroupId, clearQuickServerList);
 
     connect(mainWindow,SIGNAL (startNotifyTimer(int)),newServer,SLOT (startNotifyTimer(int)) );
     connect(mainWindow,SIGNAL (quitServer()),newServer,SLOT (quitServer()) );
     connect(newServer, SIGNAL(connectionChangedState(Server*, Server::State)),
-        mainWindow, SLOT(serverStateChanged(Server*, Server::State)));
+        mainWindow, SIGNAL(serverStateChanged(Server*, Server::State)));
 
     connect(newServer,SIGNAL (nicksNowOnline(Server*,const QStringList&,bool)),mainWindow,SLOT (setOnlineList(Server*,const QStringList&,bool)) );
 
@@ -388,7 +382,7 @@ Server* KonversationApplication::connectToServer(int serverGroupId, Konversation
 
     connect(newServer, SIGNAL(multiServerCommand(const QString&, const QString&)),
         this, SLOT(sendMultiServerCommand(const QString&, const QString&)));
-    connect(newServer, SIGNAL(awayInsertRememberLine(Server*)), mainWindow, SLOT(insertRememberLine(Server*)));
+    connect(newServer, SIGNAL(awayInsertRememberLine(Server*)), mainWindow, SIGNAL(insertRememberLine(Server*)));
 
     serverList.append(newServer);
 
@@ -411,10 +405,12 @@ void KonversationApplication::quickConnectToServer(const QString& hostName, cons
     if (!identity || !validateIdentity(identity))
         return;
 
-    Server* newServer = new Server(mainWindow, hostName, port, channel, nick, password, useSSL);
+    Server* newServer = new Server(mainWindow->getViewContainer(), hostName, port, channel, nick, password, useSSL);
 
     connect(mainWindow,SIGNAL (startNotifyTimer(int)),newServer,SLOT (startNotifyTimer(int)) );
     connect(mainWindow,SIGNAL (quitServer()),newServer,SLOT (quitServer()) );
+    connect(newServer, SIGNAL(connectionChangedState(Server*, Server::State)),
+        mainWindow, SIGNAL(serverStateChanged(Server*, Server::State)));
 
     connect(newServer,SIGNAL (nicksNowOnline(Server*,const QStringList&,bool)),mainWindow,SLOT (setOnlineList(Server*,const QStringList&,bool)) );
 
@@ -422,7 +418,7 @@ void KonversationApplication::quickConnectToServer(const QString& hostName, cons
 
     connect(newServer, SIGNAL(multiServerCommand(const QString&, const QString&)),
         this, SLOT(sendMultiServerCommand(const QString&, const QString&)));
-    connect(newServer, SIGNAL(awayInsertRememberLine(Server*)), mainWindow, SLOT(insertRememberLine(Server*)));
+    connect(newServer, SIGNAL(awayInsertRememberLine(Server*)), mainWindow, SIGNAL(insertRememberLine(Server*)));
 
     serverList.append(newServer);
 }

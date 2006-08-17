@@ -24,6 +24,7 @@
 class KListView;
 class QListViewItem;
 class QPushButton;
+class ViewContainer;
 
 class UrlCatcher : public ChatWindow
 {
@@ -32,8 +33,6 @@ class UrlCatcher : public ChatWindow
         public:
         UrlCatcher(QWidget* parent);
         ~UrlCatcher();
-
-        virtual void setMainWindow(KonversationMainWindow *mainWindow);
 
         virtual bool canBeFrontView()   { return true; }
 
@@ -53,6 +52,7 @@ class UrlCatcher : public ChatWindow
         void deleteUrlClicked();
         void saveListClicked();
         void clearListClicked();
+
     protected:
         KListView* urlListView;
 

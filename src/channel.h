@@ -242,7 +242,7 @@ class Channel : public ChatWindow
         void channelTextEntered();
         void channelPassthroughCommand();
         void sendChannelText(const QString& line);
-
+        void showOptionsDialog();
         void showQuickButtons(bool show);
         void showModeButtons(bool show);
 
@@ -270,7 +270,6 @@ class Channel : public ChatWindow
         void doubleClickCommand(QListViewItem*);  ///< Connected to NickListView::doubleClicked()
         // Dialogs
         void changeNickname(const QString& newNickname);
-        void showOptionsDialog();
 
         void textPasted(const QString& text); ///< connected to IRCInput::textPasted() - used to handle large/multiline pastings
 
