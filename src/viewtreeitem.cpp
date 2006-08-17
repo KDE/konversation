@@ -356,8 +356,6 @@ void ViewTreeItem::paintCell(QPainter* painter, const QColorGroup& /* cg */, int
     QColor selColor = m_isHighlighted ? background : KGlobalSettings::highlightColor();
     QColor midColor = mixColor(bgColor, selColor);
 
-    if (pixmap(0)) kdDebug() << "pixmap(0)->width()" << endl;
-
     int iconWidth = pixmap(0) ? pixmap(0)->width() : 0;
     int textWidth = width - MARGIN - iconWidth - MARGIN - MARGIN;
 
