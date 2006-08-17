@@ -874,30 +874,22 @@ void ViewTree::paintEmptyArea(QPainter* p, const QRect& rect)
     if (last && last->isSelected())
     {
         int y = last->itemPos() + last->height();
+        int x = visibleWidth();
+
+        if (!rect.contains(x-1, y+2))
+            return;
 
         QColor bgColor  = paletteBackgroundColor();
         QColor selColor = KGlobalSettings::highlightColor();
         QColor midColor = last->mixColor(bgColor, selColor);
 
-        // Bufferize painting operations to avoid flicker.
-        QPixmap theBuffer(rect.width(), 3);
-        QPainter thePainter(&theBuffer);
-
-        // Fill in the background.
-        thePainter.fillRect(0, 0, theBuffer.width(), theBuffer.height(), bgColor);
-
-        thePainter.setPen(selColor);
-        thePainter.drawPoint(visibleWidth() - 1, 0);
-        thePainter.drawPoint(visibleWidth() - 2, 0);
-        thePainter.drawPoint(visibleWidth() - 1, 1);
-        thePainter.setPen(midColor);
-        thePainter.drawPoint(visibleWidth() - 3, 0);
-        thePainter.drawPoint(visibleWidth() - 1, 2);
-
-        thePainter.end();
-
-        // Apply the buffer.
-        p->drawPixmap(0, y, theBuffer);
+        p->setPen(selColor);
+        p->drawPoint(x - 1, y);
+        p->drawPoint(x - 2, y);
+        p->drawPoint(x - 1, y + 1);
+        p->setPen(midColor);
+        p->drawPoint(x - 3, y);
+        p->drawPoint(x - 1, y + 2);
     }
 }
 

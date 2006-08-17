@@ -297,7 +297,6 @@ int ViewTreeItem::compare(QListViewItem *i, int /* col */, bool /* ascending */)
 
 void ViewTreeItem::setup()
 {
-
     widthChanged();
 
     if (!m_isSeparator)
@@ -310,9 +309,7 @@ void ViewTreeItem::setup()
         setHeight(height);
     }
     else
-    {
         setHeight(11);
-    }
 }
 
 QColor ViewTreeItem::mixColor(const QColor &color1, const QColor &color2)
