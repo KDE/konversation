@@ -198,8 +198,11 @@ void ViewTreeItem::setIcon(const QPixmap& pm)
 
 void ViewTreeItem::setHighlighted(bool highlight)
 {
-    m_isHighlighted = highlight;
-    repaint();
+    if (m_isHighlighted != highlight)
+    {
+        m_isHighlighted = highlight;
+        repaint();
+    }
 }
 
 void ViewTreeItem::setCloseButtonShown(bool show)

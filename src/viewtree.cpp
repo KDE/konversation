@@ -585,7 +585,6 @@ void ViewTree::contentsContextMenuEvent(QContextMenuEvent* e)
 
     if (atpos && !atpos->isSeparator())
     {
-        unHighlight();
         if (!atpos->isSelected()) atpos->setHighlighted(true);
         emit showViewContextMenu(atpos->getView(),e->globalPos());
     }
