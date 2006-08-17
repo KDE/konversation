@@ -85,13 +85,16 @@ namespace Konversation
 
     void ChannelOptionsDialog::changeOptions()
     {
-        QString newTopic = topic();
+        QString newTopic = topic(), oldTopic=m_channel->getTopicHistory().first().section(' ', 2);
 
-        if(newTopic != m_channel->getTopicHistory().first().section(' ', 2))
+        if(newTopic != oldTopic)
         {
-            // Pass a \n to avoid whitespace stripping so we can determine if we want to clear the channel topic.
+            // Pass a ^A so we can determine if we want to clear the channel topic.
             if (newTopic.isEmpty())
-                m_channel->sendChannelText(Preferences::commandChar() + "TOPIC " + m_channel->getName() + " \n");
+            {
+                if (!oldTopic.isEmpty())
+                    m_channel->sendChannelText(Preferences::commandChar() + "TOPIC " + m_channel->getName() + " \x01");
+            }
             else
                 m_channel->sendChannelText(Preferences::commandChar() + "TOPIC " + m_channel->getName() + ' ' + newTopic);
         }
@@ -117,7 +120,7 @@ namespace Konversation
             }
             else if(!tmp.isEmpty() && !plus)
             {
-                m_channel->getServer()->queue(command.arg(m_channel->getName()).arg("-").arg(modeString[0]).arg(modeString.mid(1)));
+                m_channel->getServer()->queue(command.arg(m_channel->getName()).arg("-").arg(modeString[0]).arg(""));
             }
         }
         hide();

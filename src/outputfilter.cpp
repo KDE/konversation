@@ -426,12 +426,16 @@ namespace Konversation
                 // otherwise set topic there
                 else
                 {
-                    //If we get passed a \n as a topic its a sign we should use a single space
-                    //to clear the topic.
-                    if (topic=="\n")
-                        result.toServer = "TOPIC " + channel + " : ";
-                    else
-                        result.toServer = "TOPIC " + channel + " :" + topic;
+                    result.toServer = "TOPIC " + channel + " :";
+                    //If we get passed a ^A as a topic its a sign we should clear the topic.
+                    //Used to be a \n, but those get smashed by QStringList::split and readded later
+                    //Now is not the time to fight with that. FIXME
+                    //If anyone out there *can* actually set the topic to a single ^A, now they have to
+                    //specify it twice to get one.
+                    if (topic =="\x01\x01")
+                        result.toServer += '\x01';
+                    else if (topic!="\x01")
+                        result.toServer += topic;
 
                 }
             }
