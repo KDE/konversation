@@ -1883,7 +1883,7 @@ void Server::resumeDccSendTransfer(const QString &recipient, const QStringList &
         }
         else
         {
-            appendMessageToFrontmost(i18n("Error"),i18n("Received invalid resume request for \"%1\" from %3.").arg(fileName, dccArguments[2], recipient));
+            appendMessageToFrontmost(i18n("Error"),i18n("Received invalid resume request for \"%1\" from %2.").arg(fileName, recipient));
         }
     }
     else
@@ -1897,7 +1897,7 @@ void Server::dccGetDone(const DccTransfer* item)
     if(item->getStatus()==DccTransfer::Done)
         appendMessageToFrontmost(i18n("DCC"),i18n("Download of \"%1\" finished.").arg(item->getFileName()));
     else if(item->getStatus()==DccTransfer::Failed)
-        appendMessageToFrontmost(i18n("DCC"),i18n("Download of \"%1\" failed. Reason: %2").arg(item->getFileName(),item->getStatusDetail()));
+        appendMessageToFrontmost(i18n("DCC"),i18n("Download of \"%1\" failed. Reason: %2").arg(item->getFileName(), item->getStatusDetail()));
 }
 
 void Server::dccSendDone(const DccTransfer* item)
@@ -1905,7 +1905,7 @@ void Server::dccSendDone(const DccTransfer* item)
     if(item->getStatus()==DccTransfer::Done)
         appendMessageToFrontmost(i18n("DCC"),i18n("Upload of \"%1\" finished.").arg(item->getFileName()));
     else if(item->getStatus()==DccTransfer::Failed)
-        appendMessageToFrontmost(i18n("DCC"),i18n("Upload of \"%1\" failed. Reason: %2").arg(item->getFileName(),item->getStatusDetail()));
+        appendMessageToFrontmost(i18n("DCC"),i18n("Upload of \"%1\" failed. Reason: %2").arg(item->getFileName(), item->getStatusDetail()));
 }
 
 void Server::dccStatusChanged(const DccTransfer *item, int newStatus, int oldStatus)
