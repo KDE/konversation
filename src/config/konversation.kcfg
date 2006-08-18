@@ -755,7 +755,7 @@
       <whatsthis></whatsthis>
     </entry>
     <entry key="InputFieldsBackgroundColor" type="Bool" >
-      <default>true</default>
+      <default>false</default>
       <label></label>
       <whatsthis></whatsthis>
     </entry>
@@ -832,7 +832,7 @@
       <default param="Time">#709070</default>
       <default param="Action">#0000ff</default>
       <default param="TextViewBackground">#ffffff</default>
-      <default param="AlternateBackground" code="true">KGlobalSettings::alternateBackgroundColor()</default>
+      <default param="AlternateBackground">#EDF4F9</default>
       <default param="Hyperlink">#0000ff</default>
     </entry>
   </group>
