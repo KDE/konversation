@@ -1851,7 +1851,7 @@ void Server::resumeDccGetTransfer(const QString &sourceNick, const QStringList &
     {
         // overcome mIRCs brain-dead "file.ext" substitution
         QString fileName=dccTransfer->getFileName();
-        appendMessageToFrontmost(i18n("DCC"),i18n("Resuming transfer of \"%1\" to %2 starting at %3%.").arg(fileName).arg(sourceNick).arg(dccTransfer->getProgress()));
+        appendMessageToFrontmost(i18n("DCC"),i18n("Resuming transfer of \"%1\" to %2 starting at %3%.").arg(fileName, sourceNick, QString::number(dccTransfer->getProgress())));
         dccTransfer->startResume(dccArguments[2].toULong());
     }
     else
@@ -1875,7 +1875,7 @@ void Server::resumeDccSendTransfer(const QString &recipient, const QStringList &
         QString fileName=dccTransfer->getFileName();
         if(dccTransfer->setResume(dccArguments[2].toULong()))
         {
-            appendMessageToFrontmost(i18n("DCC"),i18n("Resuming transfer of \"%1\" to %2 starting at %3%.").arg(fileName).arg(recipient).arg(dccTransfer->getProgress()));
+            appendMessageToFrontmost(i18n("DCC"),i18n("Resuming transfer of \"%1\" to %2 starting at %3%.").arg(fileName, recipient, QString::number(dccTransfer->getProgress())));
             Konversation::OutputFilterResult result = outputFilter->acceptRequest(recipient,
                 fileName, dccArguments[1], dccArguments[2].toUInt());
             queue(result.toServer);
@@ -1883,7 +1883,7 @@ void Server::resumeDccSendTransfer(const QString &recipient, const QStringList &
         }
         else
         {
-            appendMessageToFrontmost(i18n("Error"),i18n("Received invalid resume request for \"%1\" from %3.").arg(fileName).arg(dccArguments[2]).arg(recipient));
+            appendMessageToFrontmost(i18n("Error"),i18n("Received invalid resume request for \"%1\" from %3.").arg(fileName, dccArguments[2], recipient));
         }
     }
     else
