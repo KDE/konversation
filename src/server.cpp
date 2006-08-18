@@ -1895,17 +1895,17 @@ void Server::resumeDccSendTransfer(const QString &recipient, const QStringList &
 void Server::dccGetDone(const DccTransfer* item)
 {
     if(item->getStatus()==DccTransfer::Done)
-        appendMessageToFrontmost(i18n("DCC"),i18n("Download of file \"%1\" finished.").arg(item->getFileName()));
+        appendMessageToFrontmost(i18n("DCC"),i18n("Download of \"%1\" finished.").arg(item->getFileName()));
     else if(item->getStatus()==DccTransfer::Failed)
-        appendMessageToFrontmost(i18n("DCC"),i18n("Download of file \"%1\" failed. reason: %2").arg(item->getFileName(),item->getStatusDetail()));
+        appendMessageToFrontmost(i18n("DCC"),i18n("Download of \"%1\" failed. Reason: %2").arg(item->getFileName(),item->getStatusDetail()));
 }
 
 void Server::dccSendDone(const DccTransfer* item)
 {
     if(item->getStatus()==DccTransfer::Done)
-        appendMessageToFrontmost(i18n("DCC"),i18n("Upload of file \"%1\" finished.").arg(item->getFileName()));
+        appendMessageToFrontmost(i18n("DCC"),i18n("Upload of \"%1\" finished.").arg(item->getFileName()));
     else if(item->getStatus()==DccTransfer::Failed)
-        appendMessageToFrontmost(i18n("DCC"),i18n("Upload of file \"%1\" failed. reason: %2").arg(item->getFileName(),item->getStatusDetail()));
+        appendMessageToFrontmost(i18n("DCC"),i18n("Upload of \"%1\" failed. Reason: %2").arg(item->getFileName(),item->getStatusDetail()));
 }
 
 void Server::dccStatusChanged(const DccTransfer *item, int newStatus, int oldStatus)
@@ -1915,7 +1915,7 @@ void Server::dccStatusChanged(const DccTransfer *item, int newStatus, int oldSta
     if ( item->getType() == DccTransfer::Send )
     {
         if ( newStatus == DccTransfer::Sending && oldStatus == DccTransfer::WaitingRemote )
-            appendMessageToFrontmost( i18n( "DCC" ), i18n( "Upload of file \"%1\" was accepted by %2." ).arg( item->getFileName(), item->getPartnerNick() ) );
+            appendMessageToFrontmost( i18n( "DCC" ), i18n( "Upload of \"%1\" was accepted by %2." ).arg( item->getFileName(), item->getPartnerNick() ) );
     }
     else
     {
