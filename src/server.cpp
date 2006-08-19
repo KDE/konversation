@@ -1937,7 +1937,7 @@ void Server::dccStatusChanged(const DccTransfer *item, int newStatus, int oldSta
             if ( Preferences::dccAutoGet() )
             {
                 appendMessageToFrontmost( i18n( "DCC" ),
-                                          i18n( "Started downloading \"%1\" (%2) from %2 automatically.")
+                                          i18n( "Started downloading \"%1\" (%2) from %3 automatically.")
                                           .arg( item->getFileName(),
                                                 item->getPartnerNick(),
                                                 ( item->getFileSize() == 0 ) ? i18n( "unknown size" ) : KIO::convertSize( item->getFileSize() ) ) );
@@ -1945,7 +1945,7 @@ void Server::dccStatusChanged(const DccTransfer *item, int newStatus, int oldSta
             else
             {
                 appendMessageToFrontmost( i18n( "DCC" ),
-                                          i18n( "Downloading \"%1\" (%2) from %2.")
+                                          i18n( "Downloading \"%1\" (%2) from %3.")
                                           .arg( item->getFileName(),
                                                 item->getPartnerNick(),
                                                 ( item->getFileSize() == 0 ) ? i18n( "unknown size" ) : KIO::convertSize( item->getFileSize() ) ) );
