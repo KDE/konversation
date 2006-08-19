@@ -183,6 +183,7 @@ void DccChat::connectToPartner()
     m_dccSocket->enableRead(false);
     m_dccSocket->enableWrite(false);
     m_dccSocket->setTimeout(10000);
+    m_dccSocket->blockSignals(false);
 
     connect( m_dccSocket, SIGNAL( hostFound() ),                        this, SLOT( lookupFinished() )           );
     connect( m_dccSocket, SIGNAL( connected( const KResolverEntry& ) ), this, SLOT( dccChatConnectionSuccess() ) );
@@ -222,6 +223,9 @@ void DccChat::dccChatConnectionSuccess()
 void DccChat::dccChatBroken(int error)
 {
     getTextView()->appendServerMessage(i18n("Error"),i18n("Connection broken, error code %1.").arg(error));
+    m_dccSocket->enableRead(false);
+    m_dccSocket->blockSignals(true);
+    m_dccSocket->close();
 }
 
 void DccChat::readData()
@@ -261,7 +265,10 @@ void DccChat::readData()
             }
             else getTextView()->append( m_partnerNick, *itLine );
         }                                         // endfor
+    } else {
+        dccChatBroken(m_dccSocket->error());
     }
+
     kdDebug() << k_funcinfo << " END" << endl;
 }
 
