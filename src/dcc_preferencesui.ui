@@ -113,7 +113,7 @@ the Free Software Foundation; either version 2 of the License, or
                 <cstring>kcfg_DccIPv4Fallback</cstring>
             </property>
             <property name="text">
-                <string>Fallback to an IPv&amp;4 interface for dcc send:</string>
+                <string>Fallback to an IPv&amp;4 interface for DCC send:</string>
             </property>
             <property name="accel">
                 <string>Alt+4</string>
