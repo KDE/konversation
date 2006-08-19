@@ -1759,18 +1759,20 @@ void Server::addDccSend(const QString &recipient,KURL fileURL, const QString &al
     QString ownIp = getIp(true);
 
     // We already checked that the file exists in output filter / requestDccSend() resp.
-    DccTransferSend* newDcc=new DccTransferSend(getViewContainer()->getDccPanel(),
-        recipient,
-        fileURL,                                  // url to the sending file
-        ownIp,                                    // ip
-        altFileName,
-        fileSize);
+    DccTransferSend* newDcc = new DccTransferSend( getViewContainer()->getDccPanel(),
+                                                   recipient,
+                                                   fileURL,  // url of the sending file
+                                                   ownIp,
+                                                   altFileName,
+                                                   fileSize );
 
     connect(newDcc,SIGNAL (sendReady(const QString&,const QString&,const QString&,const QString&,unsigned long)),
         this,SLOT (dccSendRequest(const QString&,const QString&,const QString&,const QString&,unsigned long)) );
     connect(newDcc,SIGNAL (done(const DccTransfer*)),this,SLOT (dccSendDone(const DccTransfer*)) );
     connect(newDcc,SIGNAL (statusChanged(const DccTransfer*,int,int)), this,
         SLOT(dccStatusChanged(const DccTransfer*,int,int)) );
+
+    appendMessageToFrontmost( "DCC_DEBUG", "Server::addDccSend(): about to call start()" );
 
     newDcc->start();
 
@@ -1824,7 +1826,6 @@ void Server::dccSendRequest(const QString &partner, const QString &fileName, con
     kdDebug() << "dccSendRequest sent" << endl;
     Konversation::OutputFilterResult result = outputFilter->sendRequest(partner,fileName,address,port,size);
     queue(result.toServer);
-    appendMessageToFrontmost(result.typeString, result.output);
 }
 
 void Server::dccResumeGetRequest(const QString &sender, const QString &fileName, const QString &port, KIO::filesize_t startAt)
@@ -1837,7 +1838,6 @@ void Server::dccResumeGetRequest(const QString &sender, const QString &fileName,
         result = outputFilter->resumeRequest(sender,fileName,port,startAt);
 
     queue(result.toServer);
-    appendMessageToFrontmost(result.typeString, result.output);
 }
 
 void Server::resumeDccGetTransfer(const QString &sourceNick, const QStringList &dccArguments)
