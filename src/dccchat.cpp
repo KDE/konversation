@@ -129,7 +129,7 @@ void DccChat::listenForPartner()
         }
         if(!found)
         {
-            KMessageBox::sorry(this, i18n("There is no vacant port for DCC chat."));
+            KMessageBox::sorry(this, i18n("There is no vacant port for DCC Chat."));
             return;
         }
     }
@@ -327,6 +327,7 @@ void DccChat::heardPartner()
     connect( m_dccSocket, SIGNAL( readyRead() ),     this, SLOT( readData() )           );
     connect( m_dccSocket, SIGNAL( closed() ),        this, SLOT( socketClosed() )       );
     connect( m_dccSocket, SIGNAL( gotError( int ) ), this, SLOT( dccChatBroken( int ) ) );
+    connect( m_dccSocket, SIGNAL( connected( const KResolverEntry& ) ), this, SLOT( dccChatConnectionSuccess() ) );
 
     // the listen socket isn't needed anymore
     disconnect( m_listenSocket, 0, 0, 0 );
