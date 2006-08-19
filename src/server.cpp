@@ -1806,7 +1806,7 @@ void Server::addDccGet(const QString &sourceNick, const QStringList &dccArgument
         SLOT(dccStatusChanged(const DccTransfer*,int,int)) );
 
     appendMessageToFrontmost( i18n( "DCC" ),
-                              i18n( "%1 requests download of \"%2\" (%3)." )
+                              i18n( "%1 offers to send you \"%2\" (%3)..." )
                               .arg( newDcc->getPartnerNick(),
                                     newDcc->getFileName(),
                                     ( newDcc->getFileSize() == 0 ) ? i18n( "unknown size" ) : KIO::convertSize( newDcc->getFileSize() ) ) );
