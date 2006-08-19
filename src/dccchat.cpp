@@ -152,12 +152,8 @@ void DccChat::listenForPartner()
     m_port = ntohs( socketAddress->sin_port );
     kdDebug() << "DccChat::listenForPartner(): using port " << m_port << endl;
 
-    QHostAddress ip;
-    ip.setAddress(host.toUInt());
-    host=ip.toString();
-
     getTextView()->appendServerMessage( i18n("Info"), i18n("Offering DCC Chat connection to %1 on port %2...").arg( m_partnerNick ).arg( m_port ) );
-    m_sourceLine->setText(i18n( "DCC chat with %1 on %2:%3." ).arg( m_partnerNick ).arg( host ).arg( m_port ) );
+    m_sourceLine->setText(i18n( "DCC chat with %1 on port %2." ).arg( m_partnerNick ).arg( m_port ) );
     kdDebug() << "DccChat::listenForPartner() [END]" << endl;
 }
 
