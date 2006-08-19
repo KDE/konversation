@@ -154,6 +154,12 @@ handling)
 - Morph option to insert remember line on window minimization into option to insert
   remember line when the chat window is hidden (i.e. when focus is switched, too).
 - Support inserting remember lines in status tabs and DCC Chats, too.
+- Fix quick connect auto-joining the channels of the network the server was
+  recognized as being part of.
+- Fix bug that caused high CPU usage when the remote side closed a DCC Chat.
+- Fix iteration over the server list on connection failure when original connection
+  attempt was made to a specific server rather than generically to the group.
+- Fix connecting to a specific server reliably from the server list dialog.
 
 Changes from 0.18 to 0.19
 We are extremely pleased to announce the immediate release of Konversation 0.19. The focus
