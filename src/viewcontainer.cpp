@@ -757,6 +757,9 @@ void ViewContainer::updateViewIcons()
 
 void ViewContainer::setViewNotification(ChatWindow* view, const Konversation::TabNotifyType& type)
 {
+    if (!view)
+        return;
+
     if(view==m_tabWidget->currentPage())
         return;
 
