@@ -84,23 +84,14 @@ uint NickInfo::getNickColor()
     // do we already have a color?
     if(!m_nickColor)
     {
-        // get next color offset in line
-        uint& offset = KonversationApplication::instance()->getColorOffset();
+        int nickvalue = 0;
 
-        // wrap to first color if we reached the maximum index
-        if(offset >= 8)
-            offset=0;
-
-        // make sure we don't have the same color as the background
-        QString backgroundColor=Preferences::color(Preferences::TextViewBackground).name();
-        if(backgroundColor == Preferences::nickColor(offset).name() ) {
-            offset = (offset+1)%8;
+        for (int index = 0; index < m_nickname.length(); index++)
+        {
+            nickvalue += m_nickname[index].unicode();
         }
 
-        // store color (+1 so we can check for 0 as "unassigned"
-        m_nickColor = offset + 1;
-        // move on color offset
-        ++offset;
+        m_nickColor = (nickvalue % 8) + 1;
     }
     // return color offset -1 (since we store it +1 for 0 checking)
     return m_nickColor-1;

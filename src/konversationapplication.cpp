@@ -47,7 +47,6 @@ KonversationApplication::KonversationApplication()
 {
     mainWindow = 0;
     quickConnectDialog = 0;
-    colorOffSet = 0;
     m_connectDelayed=false;
 
     m_topicSplitterSizes = Preferences::topicSplitterSizes();
@@ -86,7 +85,6 @@ int KonversationApplication::newInstance()
     {
         // make sure all vars are initialized properly
         quickConnectDialog = 0;
-        colorOffSet = 0;
 
         // Sound object used to play sound...
         m_sound = new Konversation::Sound(this);
@@ -1040,12 +1038,6 @@ Images* KonversationApplication::images()
 
 // Returns list of pointers to Servers.
 const QPtrList<Server> KonversationApplication::getServerList() { return serverList; }
-
-// keeps track of the cyclic assigned nickname colors
-uint& KonversationApplication::getColorOffset()
-{
-    return colorOffSet;
-}
 
 void KonversationApplication::splitNick_Server(QString nick_server, QString &ircnick, QString &serverOrGroup)
 {

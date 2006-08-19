@@ -116,9 +116,6 @@ class KonversationApplication : public KUniqueApplication
 
         Konversation::NotificationHandler* notificationHandler() const { return m_notificationHandler; }
 
-        // Nick color stuff
-        uint& getColorOffset();
-
         // auto replacement for input or output lines
         QString doAutoreplace(const QString& text,bool output);
 
@@ -187,7 +184,6 @@ class KonversationApplication : public KUniqueApplication
 
         Konversation::NotificationHandler* m_notificationHandler;
 
-        uint colorOffSet;
         QStringList colorList;
 
         // For command line arguments
