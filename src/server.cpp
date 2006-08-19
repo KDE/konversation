@@ -1772,8 +1772,6 @@ void Server::addDccSend(const QString &recipient,KURL fileURL, const QString &al
     connect(newDcc,SIGNAL (statusChanged(const DccTransfer*,int,int)), this,
         SLOT(dccStatusChanged(const DccTransfer*,int,int)) );
 
-    appendMessageToFrontmost( "DCC_DEBUG", "Server::addDccSend(): about to call start()" );
-
     newDcc->start();
 
     appendMessageToFrontmost( i18n( "DCC" ),
