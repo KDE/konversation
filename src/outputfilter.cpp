@@ -781,10 +781,6 @@ namespace Konversation
         if ((fileName.startsWith("\"")) && (fileName.endsWith("\"")))
             niftyFileName = fileName.mid(1, fileName.length()-2);
 
-        result.output = i18n("Offering \"%1\" to %2 for upload...").arg(niftyFileName).arg(recipient);
-        result.typeString = i18n("DCC");
-        result.type = Program;
-
         return result;
     }
 
@@ -800,10 +796,6 @@ namespace Konversation
         // Dirty hack to avoid printing ""name with spaces.ext"" instead of "name with spaces.ext"
         if ((fileName.startsWith("\"")) && (fileName.endsWith("\"")))
             niftyFileName = fileName.mid(1, fileName.length()-2);
-
-//        result.output = i18n("Accepting DCC Resume request from \"%1\" for file \"%2\".").arg(recipient).arg(niftyFileName);
-//        result.typeString = i18n("DCC");
-//        result.type = Program;
 
         return result;
     }
@@ -822,9 +814,6 @@ namespace Konversation
         if ((fileName.startsWith("\"")) && (fileName.endsWith("\"")))
             niftyFileName = fileName.mid(1, fileName.length()-2);
 
-//        result.output = i18n("Sending DCC Resume request to \"%1\" for file \"%2\".").arg(sender).arg(niftyFileName);
-//        result.typeString = i18n("DCC");
-//        result.type = Program;
         return result;
     }
 

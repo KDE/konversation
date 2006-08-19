@@ -1771,7 +1771,14 @@ void Server::addDccSend(const QString &recipient,KURL fileURL, const QString &al
     connect(newDcc,SIGNAL (done(const DccTransfer*)),this,SLOT (dccSendDone(const DccTransfer*)) );
     connect(newDcc,SIGNAL (statusChanged(const DccTransfer*,int,int)), this,
         SLOT(dccStatusChanged(const DccTransfer*,int,int)) );
+
     newDcc->start();
+
+    appendMessageToFrontmost( i18n( "DCC" ),
+                              i18n( "Asking %1 to accept upload of \"%2\" (%3)." )
+                              .arg( newDcc->getPartnerNick(),
+                                    newDcc->getFileName(),
+                                    ( newDcc->getFileSize() == 0 ) ? i18n( "unknown size" ) : KIO::convertSize( newDcc->getFileSize() ) ) );
 }
 
 void Server::addDccGet(const QString &sourceNick, const QStringList &dccArguments)
@@ -1791,22 +1798,18 @@ void Server::addDccGet(const QString &sourceNick, const QStringList &dccArgument
         ip.toString(),                            // ip
         dccArguments[2] );                        // port
 
-    appendMessageToFrontmost( i18n("DCC"),
-        i18n("%1 (%2:%3) offers the file \"%4\" (%5) for download.")
-        .arg( newDcc->getPartnerNick() )          // name
-        .arg( newDcc->getPartnerIp() )            // ip
-        .arg( newDcc->getPartnerPort() )          // port
-        .arg( newDcc->getFileName() )             // file
-                                                  // size
-        .arg( ( newDcc->getFileSize() == 0 ) ? i18n( "unknown size" ) : KIO::convertSize( newDcc->getFileSize() ) )
-        );
-
     connect(newDcc,SIGNAL (resumeRequest(const QString&,const QString&,const QString&,KIO::filesize_t)),this,
         SLOT (dccResumeGetRequest(const QString&,const QString&,const QString&,KIO::filesize_t)) );
     connect(newDcc,SIGNAL (done(const DccTransfer*)),
         this,SLOT (dccGetDone(const DccTransfer*)) );
     connect(newDcc,SIGNAL (statusChanged(const DccTransfer*,int,int)), this,
         SLOT(dccStatusChanged(const DccTransfer*,int,int)) );
+
+    appendMessageToFrontmost( i18n( "DCC" ),
+                              i18n( "%1 requests download of \"%2\" (%3)." )
+                              .arg( newDcc->getPartnerNick(),
+                                    newDcc->getFileName(),
+                                    ( newDcc->getFileSize() == 0 ) ? i18n( "unknown size" ) : KIO::convertSize( newDcc->getFileSize() ) ) );
 
     if(Preferences::dccAutoGet()) newDcc->start();
 }
@@ -1850,8 +1853,12 @@ void Server::resumeDccGetTransfer(const QString &sourceNick, const QStringList &
     if(dccTransfer)
     {
         // overcome mIRCs brain-dead "file.ext" substitution
-        QString fileName=dccTransfer->getFileName();
-        appendMessageToFrontmost(i18n("DCC"),i18n("Resuming transfer of \"%1\" to %2 starting at %3%.").arg(fileName, sourceNick, QString::number(dccTransfer->getProgress())));
+        appendMessageToFrontmost( i18n( "DCC" ),
+                                  i18n( "Resuming download of \"%1\" to %2 starting at %3% of %4." )
+                                  .arg( dccTransfer->getFileName(),
+                                        sourceNick,
+                                        QString::number( dccTransfer->getProgress() ),
+                                        ( dccTransfer->getFileSize() == 0 ) ? i18n( "unknown size" ) : KIO::convertSize( dccTransfer->getFileSize() ) ) );
         dccTransfer->startResume(dccArguments[2].toULong());
     }
     else
@@ -1875,7 +1882,12 @@ void Server::resumeDccSendTransfer(const QString &recipient, const QStringList &
         QString fileName=dccTransfer->getFileName();
         if(dccTransfer->setResume(dccArguments[2].toULong()))
         {
-            appendMessageToFrontmost(i18n("DCC"),i18n("Resuming transfer of \"%1\" to %2 starting at %3%.").arg(fileName, recipient, QString::number(dccTransfer->getProgress())));
+            appendMessageToFrontmost( i18n( "DCC" ),
+                                      i18n( "Resuming upload of \"%1\" to %2 starting at %3% of %4.")
+                                      .arg( fileName,
+                                            recipient,
+                                            QString::number(dccTransfer->getProgress()),
+                                            ( dccTransfer->getFileSize() == 0 ) ? i18n( "unknown size" ) : KIO::convertSize( dccTransfer->getFileSize() ) ) );
             Konversation::OutputFilterResult result = outputFilter->acceptRequest(recipient,
                 fileName, dccArguments[1], dccArguments[2].toUInt());
             queue(result.toServer);
@@ -1912,12 +1924,34 @@ void Server::dccStatusChanged(const DccTransfer *item, int newStatus, int oldSta
 {
     getViewContainer()->getDccPanel()->dccStatusChanged(item);
 
-    if (item->getType()==DccTransfer::Send)
+    if ( item->getType() == DccTransfer::Send )
     {
-        if (newStatus==DccTransfer::Sending&&oldStatus==DccTransfer::WaitingRemote)
-            appendMessageToFrontmost(i18n("DCC"),i18n("Upload of \"%1\" was accepted by %2.").arg(item->getFileName(), item->getPartnerNick()));
+        // when resuming, a message about the receiver's acceptance has been shown already, so suppress this message
+        if ( newStatus == DccTransfer::Sending && oldStatus == DccTransfer::WaitingRemote && !item->isResumed() )
+            appendMessageToFrontmost( i18n( "DCC" ), i18n( "Sending \"%1\" to %2.").arg( item->getFileName(), item->getPartnerNick() ) );
     }
-    else;
+    else
+    {
+        if ( newStatus == DccTransfer::Receiving && !item->isResumed() )
+        {
+            if ( Preferences::dccAutoGet() )
+            {
+                appendMessageToFrontmost( i18n( "DCC" ),
+                                          i18n( "Started downloading \"%1\" (%2) from %2 automatically.")
+                                          .arg( item->getFileName(),
+                                                item->getPartnerNick(),
+                                                ( item->getFileSize() == 0 ) ? i18n( "unknown size" ) : KIO::convertSize( item->getFileSize() ) ) );
+            }
+            else
+            {
+                appendMessageToFrontmost( i18n( "DCC" ),
+                                          i18n( "Downloading \"%1\" (%2) from %2.")
+                                          .arg( item->getFileName(),
+                                                item->getPartnerNick(),
+                                                ( item->getFileSize() == 0 ) ? i18n( "unknown size" ) : KIO::convertSize( item->getFileSize() ) ) );
+            }
+        }
+    }
 }
 
 void Server::removeQuery(class Query* query)
