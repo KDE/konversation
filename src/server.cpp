@@ -59,6 +59,8 @@
 
 Server::Server(ViewContainer* viewContainer, int serverGroupId, bool clearQuickServerList)
 {
+    quickConnect = false;
+
     m_serverGroup = Preferences::serverGroupById(serverGroupId);
 
     if (clearQuickServerList)
@@ -67,12 +69,14 @@ Server::Server(ViewContainer* viewContainer, int serverGroupId, bool clearQuickS
     bot = getIdentity()->getBot();
     botPassword = getIdentity()->getPassword();
 
-    init(viewContainer, getIdentity()->getNickname(0),"");
+    init(viewContainer, getIdentity()->getNickname(0), "");
 }
 
 Server::Server(ViewContainer* viewContainer,const QString& hostName,const QString& port,
 const QString& channel,const QString& _nick, QString password,const bool& useSSL)
 {
+    quickConnect = true;
+
     QString nick( _nick );
 
     m_quickServer.setServer(hostName);
@@ -101,7 +105,7 @@ const QString& channel,const QString& _nick, QString password,const bool& useSSL
     if (nick.isEmpty())
         nick = getIdentity()->getNickname(0);
 
-    init(viewContainer, nick, channel);
+    init (viewContainer, nick, channel);
 }
 
 void Server::doPreShellCommand()
@@ -3055,6 +3059,12 @@ void Server::closeChannelListPanel()
 void Server::updateAutoJoin(const QString& channel)
 {
     Konversation::ChannelList tmpList = m_serverGroup->channelList();
+
+    if (quickConnect && channel.isEmpty())
+    {
+        setAutoJoin(false);
+        return;
+    }
 
     if(!channel.isEmpty())
         tmpList.push_front(channel);

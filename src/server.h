@@ -581,6 +581,8 @@ class Server : public QObject
         bool autoReconnect;
         bool deliberateQuit;
 
+        bool quickConnect;
+
         QString autoJoinChannel;
         QString autoJoinChannelKey;
 
