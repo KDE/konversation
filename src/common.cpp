@@ -100,21 +100,20 @@ namespace Konversation
             urlLen = urlPattern.matchedLength();
             href = filteredLine.mid( pos, urlLen );
 
+            // Don't consider trailing comma part of link.
+            if (href.right(1) == ",")
+            {
+                href.truncate(href.length()-1);
+                append = ',';
+            }
+
             // Don't consider trailing closing parenthesis part of link when
             // there's an opening parenthesis preceding the beginning of the
             // URL or there is no opening parenthesis in the URL at all.
             if (href.right(1) == ")" && (filteredLine.mid(pos-1,1) == "(" || !href.contains("(")))
             {
                 href.truncate(href.length()-1);
-                append = ")";
-            }
-            // Don't consider trailing comma part of link when it follows a
-            // slash or a top-level domain.
-
-            if (href.right(2) == "/,"|| tdlPattern.exactMatch(href))
-            {
-                href.truncate(href.length()-1);
-                append.prepend(",");
+                append.prepend(")");
             }
 
             // Qt doesn't support (?<=pattern) so we do it here

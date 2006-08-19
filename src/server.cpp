@@ -1779,7 +1779,7 @@ void Server::addDccSend(const QString &recipient,KURL fileURL, const QString &al
     newDcc->start();
 
     appendMessageToFrontmost( i18n( "DCC" ),
-                              i18n( "Asking %1 to accept upload of \"%2\" (%3)." )
+                              i18n( "Asking %1 to accept upload of \"%2\" (%3)..." )
                               .arg( newDcc->getPartnerNick(),
                                     newDcc->getFileName(),
                                     ( newDcc->getFileSize() == 0 ) ? i18n( "unknown size" ) : KIO::convertSize( newDcc->getFileSize() ) ) );
@@ -1930,28 +1930,17 @@ void Server::dccStatusChanged(const DccTransfer *item, int newStatus, int oldSta
     {
         // when resuming, a message about the receiver's acceptance has been shown already, so suppress this message
         if ( newStatus == DccTransfer::Sending && oldStatus == DccTransfer::WaitingRemote && !item->isResumed() )
-            appendMessageToFrontmost( i18n( "DCC" ), i18n( "Sending \"%1\" to %2.").arg( item->getFileName(), item->getPartnerNick() ) );
+            appendMessageToFrontmost( i18n( "DCC" ), i18n( "Sending \"%1\" to %2...").arg( item->getFileName(), item->getPartnerNick() ) );
     }
     else
     {
         if ( newStatus == DccTransfer::Receiving && !item->isResumed() )
         {
-            if ( Preferences::dccAutoGet() )
-            {
-                appendMessageToFrontmost( i18n( "DCC" ),
-                                          i18n( "Started downloading \"%1\" (%2) from %3 automatically.")
-                                          .arg( item->getFileName(),
-                                                ( item->getFileSize() == 0 ) ? i18n( "unknown size" ) : KIO::convertSize( item->getFileSize() ),
-                                                item->getPartnerNick() ) );
-            }
-            else
-            {
-                appendMessageToFrontmost( i18n( "DCC" ),
-                                          i18n( "Downloading \"%1\" (%2) from %3.")
-                                          .arg( item->getFileName(),
-                                                ( item->getFileSize() == 0 ) ? i18n( "unknown size" ) : KIO::convertSize( item->getFileSize() ),
-                                                item->getPartnerNick() ) );
-            }
+            appendMessageToFrontmost( i18n( "DCC" ),
+                                        i18n( "Downloading \"%1\" (%2) from %3...")
+                                        .arg( item->getFileName(),
+                                            ( item->getFileSize() == 0 ) ? i18n( "unknown size" ) : KIO::convertSize( item->getFileSize() ),
+                                            item->getPartnerNick() ) );
         }
     }
 }
