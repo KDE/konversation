@@ -151,7 +151,7 @@ namespace Konversation
         tabWidget->addTab(awayWidget, i18n("Tab name", "Away"));
         QGridLayout* awayLayout = new QGridLayout(awayWidget, 1, 2, marginHint(), spacingHint());
 
-        m_insertRememberLineOnAwayChBox = new QCheckBox(i18n("Insert remember &line when switching state to away"), awayWidget);
+        m_insertRememberLineOnAwayChBox = new QCheckBox(i18n("Insert remember &line when going away"), awayWidget);
         QWhatsThis::add(m_insertRememberLineOnAwayChBox, i18n("If you check this box, whenever you perform an <b>/away</b> command, a horizontal line will appear in the channel, marking the point where you went away. Other IRC users do not see this horizontal line."));
 
         QLabel* awayNickLabel = new QLabel(i18n("Away nickname:"), awayWidget);

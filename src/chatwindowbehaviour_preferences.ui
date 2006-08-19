@@ -62,18 +62,21 @@
                 </widget>
                 <widget class="QCheckBox">
                     <property name="name">
-                        <cstring>kcfg_ShowRememberLineInAllWindows</cstring>
+                        <cstring>kcfg_AutoInsertRememberLineAfterMinimizing</cstring>
                     </property>
                     <property name="text">
-                        <string>Show remember line in all channels and &amp;queries</string>
+                        <string>Insert a &amp;remember line when chat window is hidden</string>
+                    </property>
+                    <property name="whatsThis" stdset="0">
+                        <string>Inserts a remember line into the chat window when you switch to another chat window or minimize the application.</string>
                     </property>
                 </widget>
                 <widget class="QCheckBox">
                     <property name="name">
-                        <cstring>kcfg_AutoInsertRememberLineAfterMinimizing</cstring>
+                        <cstring>kcfg_ShowRememberLineInAllWindows</cstring>
                     </property>
                     <property name="text">
-                        <string>Automatically insert &amp;remember line after minimizing main window</string>
+                        <string>Show remember lines in all chat windows</string>
                     </property>
                 </widget>
                 <widget class="QCheckBox">

@@ -139,8 +139,7 @@ void ChatWindow::setTextView(IRCView* newView)
 void ChatWindow::insertRememberLine()
 {
     if(!textView) return;
-    kdDebug() << "Inserting remember line" << endl;
-    textView->appendRaw("<br><hr color=\""+Preferences::color(Preferences::CommandMessage).name()+"\" noshade>", true, true);
+    textView->appendLine();
 }
 
 void ChatWindow::appendRaw(const QString& message, bool suppressTimestamps)

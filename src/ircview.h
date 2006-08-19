@@ -88,6 +88,7 @@ class IRCView : public KTextBrowser
 
     public slots:
         void append(const QString& nick, const QString& message);
+        void appendLine();
         void appendRaw(const QString& message, bool suppressTimestamps=false, bool self = false);
         void appendQuery(const QString& nick, const QString& message);
         void appendAction(const QString& nick, const QString& message);
@@ -149,6 +150,8 @@ class IRCView : public KTextBrowser
         // used by search function
         int m_findParagraph;
         int m_findIndex;
+
+        bool m_lastInsertionWasLine;
 
         // This is set to what we last sent status text to the statusbar.  Empty if we have sent clearStatusBarTempText() string
         QString m_lastStatusText;

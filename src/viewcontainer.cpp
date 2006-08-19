@@ -1245,6 +1245,9 @@ void ViewContainer::switchView(QWidget* newView)
         m_previousFrontView = m_frontView;
 
         disconnect(m_frontView, SIGNAL(updateInfo(const QString &)), this, SIGNAL(setStatusBarInfoLabel(const QString &)));
+
+        if (Preferences::autoInsertRememberLineAfterMinimizing() && m_previousFrontView->isInsertSupported())
+            m_previousFrontView->insertRememberLine();
     }
 
     m_frontView = 0;
@@ -1734,20 +1737,14 @@ void ViewContainer::insertRememberLine()
         for(int i = 0; i <= total; ++i)
         {
             nextPage = static_cast<ChatWindow*>(m_tabWidget->page(i));
-            if(nextPage->getType() == ChatWindow::Channel ||
-                nextPage->getType() == ChatWindow::Query)
-            {
+            if (nextPage->isInsertSupported())
                 nextPage->insertRememberLine();
-            }
         }
     }
     else
     {
-        if (m_frontView->getType() == ChatWindow::Channel ||
-            m_frontView->getType() == ChatWindow::Query)
-        {
+        if (m_frontView->isInsertSupported())
             m_frontView->insertRememberLine();
-        }
     }
 }
 
@@ -1757,11 +1754,8 @@ void ViewContainer::insertRememberLine(Server* server)
     {
         ChatWindow* view = static_cast<ChatWindow*>(m_tabWidget->page(i));
 
-        if (view->getServer()==server &&
-            (view->getType()==ChatWindow::Channel || view->getType()==ChatWindow::Query))
-        {
+        if (view->getServer()==server && view->isInsertSupported())
             view->insertRememberLine();
-        }
     }
 }
 

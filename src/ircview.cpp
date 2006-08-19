@@ -74,6 +74,7 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent)
     m_chatWin = 0;
     m_findParagraph=0;
     m_findIndex=0;
+    m_lastInsertionWasLine = false;
 
     setAutoFormatting(QTextEdit::AutoNone);
     setUndoRedoEnabled(0);
@@ -622,7 +623,22 @@ void IRCView::append(const QString& nick,const QString& message)
 
     emit textToLog(QString("<%1>\t%2").arg(nick).arg(message));
 
+    m_lastInsertionWasLine = false;
+
     doAppend(line);
+}
+
+void IRCView::appendLine()
+{
+    QColor channelColor=Preferences::color(Preferences::ChannelMessage);
+    m_tabNotification = Konversation::tnfNone;
+
+    QString line = "<p><font color=\"" + channelColor.name() + "\"><br><hr color=\""+Preferences::color(Preferences::CommandMessage).name()+"\" noshade></font></p>\n";
+    if (!m_lastInsertionWasLine)
+    {
+        doAppend(line);
+        m_lastInsertionWasLine = true;
+    }
 }
 
 void IRCView::appendRaw(const QString& message, bool suppressTimestamps, bool self)
@@ -639,6 +655,8 @@ void IRCView::appendRaw(const QString& message, bool suppressTimestamps, bool se
     {
         line = QString("<p>" + timeStamp() + " <font color=\"" + channelColor.name() + "\">" + message + "</font></p>\n");
     }
+
+    m_lastInsertionWasLine = false;
 
     doAppend(line, true, self);
 }
@@ -672,6 +690,8 @@ void IRCView::appendQuery(const QString& nick,const QString& message)
 
     emit textToLog(QString("<%1>\t%2").arg(nick).arg(message));
 
+    m_lastInsertionWasLine = false;
+
     doAppend(line);
 }
 
@@ -703,6 +723,8 @@ void IRCView::appendAction(const QString& nick,const QString& message)
     line = line.arg(timeStamp(), nick, filter(message, actionColor, nick, true));
 
     emit textToLog(QString("\t * %1 %2").arg(nick).arg(message));
+
+    m_lastInsertionWasLine = false;
 
     doAppend(line);
 }
@@ -739,6 +761,8 @@ void IRCView::appendServerMessage(const QString& type, const QString& message)
         line = "<font color=\"" + serverColor + "\">"+line.arg(timeStamp(), type, message)+"</font>";
 
     emit textToLog(QString("%1\t%2").arg(type).arg(message));
+
+    m_lastInsertionWasLine = false;
 
     doAppend(line);
 }
@@ -777,6 +801,8 @@ void IRCView::appendCommandMessage(const QString& type,const QString& message, b
 
     emit textToLog(QString("%1\t%2").arg(type).arg(message));
 
+    m_lastInsertionWasLine = false;
+
     doAppend(line, important, self);
 }
 
@@ -812,6 +838,8 @@ void IRCView::appendBacklogMessage(const QString& firstColumn,const QString& raw
     }
 
     line = line.arg(time, nick, filter(message, backlogColor, NULL, false));
+
+    m_lastInsertionWasLine = false;
 
     doAppend(line);
 }

@@ -150,7 +150,10 @@ handling)
   cuts) when the bookmark menu is opened.
 - Significantly clean up and overhaul DCC messages by Niek Beernink.
 - Make sure the same nick always gets the same color assigned algorithmically.
-
+- Don't insert multiple consecutive remember lines.
+- Morph option to insert remember line on window minimization into option to insert
+  remember line when the chat window is hidden (i.e. when focus is switched, too).
+- Support inserting remember lines in status tabs and DCC Chats, too.
 
 Changes from 0.18 to 0.19
 We are extremely pleased to announce the immediate release of Konversation 0.19. The focus
