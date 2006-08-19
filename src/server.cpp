@@ -59,6 +59,8 @@
 
 Server::Server(ViewContainer* viewContainer, int serverGroupId, bool clearQuickServerList)
 {
+    kdDebug() << "Constructor 1" << endl;
+
     quickConnect = false;
 
     m_serverGroup = Preferences::serverGroupById(serverGroupId);
@@ -75,6 +77,8 @@ Server::Server(ViewContainer* viewContainer, int serverGroupId, bool clearQuickS
 Server::Server(ViewContainer* viewContainer,const QString& hostName,const QString& port,
 const QString& channel,const QString& _nick, QString password,const bool& useSSL)
 {
+    kdDebug() << "Constructor 2" << endl;
+
     quickConnect = true;
 
     QString nick( _nick );
@@ -660,7 +664,7 @@ void Server::broken(int state)
             QTimer::singleShot(5000,this,SLOT(connectToIRCServer()));
             rejoinChannels = true;
         }
-        else if ((!autoReconnect || reconnectCounter >= Preferences::reconnectCount()))
+        else if ((!autoReconnect || reconnectCounter > Preferences::reconnectCount()))
         {
             updateAutoJoin();
 
@@ -675,6 +679,7 @@ void Server::broken(int state)
             // Broke on a temp. server, so remove it from serverList; otherwise increment the index
             if (!m_serverGroup->quickServerList().isEmpty())
             {
+                m_quickServer =  m_serverGroup->quickServerList().first();
                 m_serverGroup->clearQuickServerList();
             }
             else
@@ -688,7 +693,7 @@ void Server::broken(int state)
                 m_currentServerIndex++;
             }
 
-            if(m_currentServerIndex <= (m_serverGroup->serverList().count() - 1))
+            if(m_currentServerIndex < m_serverGroup->serverList().count())
             {
                 error = i18n("Trying server %1 instead.")
                     .arg(m_serverGroup->serverByIndex(m_currentServerIndex).server());
@@ -716,6 +721,7 @@ void Server::broken(int state)
     }                                             // If we quit the connection with the server
     else
     {
+        m_serverGroup->clearQuickServerList();
         getViewContainer()->serverQuit(this);
     }
 
@@ -1856,7 +1862,7 @@ void Server::resumeDccGetTransfer(const QString &sourceNick, const QStringList &
     {
         // overcome mIRCs brain-dead "file.ext" substitution
         appendMessageToFrontmost( i18n( "DCC" ),
-                                  i18n( "Resuming download of \"%1\" to %2 starting at %3% of %4." )
+                                  i18n( "Resuming download of \"%1\" to %2 starting at %3% of %4..." )
                                   .arg( dccTransfer->getFileName(),
                                         sourceNick,
                                         QString::number( dccTransfer->getProgress() ),
@@ -1885,7 +1891,7 @@ void Server::resumeDccSendTransfer(const QString &recipient, const QStringList &
         if(dccTransfer->setResume(dccArguments[2].toULong()))
         {
             appendMessageToFrontmost( i18n( "DCC" ),
-                                      i18n( "Resuming upload of \"%1\" to %2 starting at %3% of %4.")
+                                      i18n( "Resuming upload of \"%1\" to %2 starting at %3% of %4...")
                                       .arg( fileName,
                                             recipient,
                                             QString::number(dccTransfer->getProgress()),
