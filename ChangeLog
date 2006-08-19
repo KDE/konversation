@@ -148,6 +148,8 @@ handling)
   the second time. A toggle action isn't tri-state.
 - Don't add bookmarks to the action collection (i.e. to the list of short-
   cuts) when the bookmark menu is opened.
+- Significantly clean up and overhaul DCC messages by Niek Beernink.
+- Make sure the same nick always gets the same color assigned algorithmically.
 
 
 Changes from 0.18 to 0.19
