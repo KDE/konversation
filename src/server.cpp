@@ -59,8 +59,6 @@
 
 Server::Server(ViewContainer* viewContainer, int serverGroupId, bool clearQuickServerList)
 {
-    kdDebug() << "Constructor 1" << endl;
-
     quickConnect = false;
 
     m_serverGroup = Preferences::serverGroupById(serverGroupId);
@@ -77,8 +75,6 @@ Server::Server(ViewContainer* viewContainer, int serverGroupId, bool clearQuickS
 Server::Server(ViewContainer* viewContainer,const QString& hostName,const QString& port,
 const QString& channel,const QString& _nick, QString password,const bool& useSSL)
 {
-    kdDebug() << "Constructor 2" << endl;
-
     quickConnect = true;
 
     QString nick( _nick );

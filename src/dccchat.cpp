@@ -152,7 +152,7 @@ void DccChat::listenForPartner()
     m_port = ntohs( socketAddress->sin_port );
     kdDebug() << "DccChat::listenForPartner(): using port " << m_port << endl;
 
-    getTextView()->appendServerMessage( i18n("Info"), i18n("Offering DCC Chat connection to %1 on port %2...").arg( m_partnerNick ).arg( m_port ) );
+    getTextView()->appendServerMessage( i18n("DCC"), i18n("Offering DCC Chat connection to %1 on port %2...").arg( m_partnerNick ).arg( m_port ) );
     m_sourceLine->setText(i18n( "DCC chat with %1 on port %2." ).arg( m_partnerNick ).arg( m_port ) );
     kdDebug() << "DccChat::listenForPartner() [END]" << endl;
 }
@@ -327,7 +327,6 @@ void DccChat::heardPartner()
     connect( m_dccSocket, SIGNAL( readyRead() ),     this, SLOT( readData() )           );
     connect( m_dccSocket, SIGNAL( closed() ),        this, SLOT( socketClosed() )       );
     connect( m_dccSocket, SIGNAL( gotError( int ) ), this, SLOT( dccChatBroken( int ) ) );
-    connect( m_dccSocket, SIGNAL( connected( const KResolverEntry& ) ), this, SLOT( dccChatConnectionSuccess() ) );
 
     // the listen socket isn't needed anymore
     disconnect( m_listenSocket, 0, 0, 0 );
@@ -336,10 +335,8 @@ void DccChat::heardPartner()
 
     m_dccSocket->enableRead(true);
     m_dccChatInput->setEnabled(true);
-#if 0
-    //getTextView()->appendServerMessage(i18n("DCC"),i18n("Connection established."));
-#endif
 
+    getTextView()->appendServerMessage( i18n( "DCC" ), i18n( "Established DCC Chat connection to %1." ).arg( m_partnerNick ) );
 }
 
 void DccChat::socketClosed()
