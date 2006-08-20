@@ -106,7 +106,6 @@ class KonversationMainWindow : public KMainWindow
 
         void openPrefsDialog();
         void openKeyBindings();
-        void showJoinChannelDialog();
         void openQuickConnectDialog();
 
         void openNotify();

@@ -126,6 +126,7 @@ class ViewContainer : public QObject
         RawLog* addRawLog(Server* server);
         void disconnectFrontServer();
         void reconnectFrontServer();
+        void showJoinChannelDialog();
         void serverStateChanged(Server* server, Server::State state);
 
         Channel* addChannel(Server* server, const QString& name);
@@ -184,6 +185,7 @@ class ViewContainer : public QObject
         Images* images;
 
         Server* m_frontServer;
+        Server* m_contextServer;
         QGuardedPtr<ChatWindow> m_frontView;
         QGuardedPtr<ChatWindow> m_previousFrontView;
         ChatWindow* m_searchView;

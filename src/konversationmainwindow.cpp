@@ -53,7 +53,6 @@
 #include "trayicon.h"
 #include "serverlistdialog.h"
 #include "identitydialog.h"
-#include "joinchanneldialog.h"
 #include "notificationhandler.h"
 #include "irccharsets.h"
 #include "konviiphelper.h"
@@ -236,7 +235,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
     awayAction->setEnabled(false);
     awayAction->setToolTip(i18n("Switch to Away mode in all open connections"));
 
-    action = new KAction(i18n("&Join Channel..."), 0, KShortcut("Ctrl+J"), this, SLOT(showJoinChannelDialog()), actionCollection(), "join_channel");
+    action = new KAction(i18n("&Join Channel..."), 0, KShortcut("Ctrl+J"), m_viewContainer, SLOT(showJoinChannelDialog()), actionCollection(), "join_channel");
     action->setEnabled(false);
     action->setToolTip("Join a new channel on this server");
 
@@ -511,16 +510,6 @@ void KonversationMainWindow::openServerList()
     }
 
     m_serverListDialog->show();
-}
-
-void KonversationMainWindow::showJoinChannelDialog()
-{
-    if (!m_viewContainer->getFrontServer()) return;
-
-    Konversation::JoinChannelDialog dlg(m_viewContainer->getFrontServer(), this);
-
-    if (dlg.exec() == QDialog::Accepted)
-        m_viewContainer->getFrontServer()->sendJoinCommand(dlg.channel(), dlg.password());
 }
 
 void KonversationMainWindow::openQuickConnectDialog()

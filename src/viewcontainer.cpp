@@ -44,6 +44,7 @@
 #include "nicksonline.h"
 #include "insertchardialog.h"
 #include "irccolorchooser.h"
+#include "joinchanneldialog.h"
 
 ViewContainer::ViewContainer(KonversationMainWindow* window)
 {
@@ -55,6 +56,7 @@ ViewContainer::ViewContainer(KonversationMainWindow* window)
     m_viewTree = 0;
 
     m_frontServer = 0;
+    m_contextServer = 0;
     m_frontView = 0;
     m_previousFrontView = 0;
     m_searchView = 0;
@@ -385,6 +387,39 @@ void ViewContainer::updateViewActions(int index)
 
         action = actionCollection()->action("close_tab");
         if (action) action->setEnabled(true);
+
+        action = actionCollection()->action("reconnect_server");
+        if (action)
+        {
+            Server* server = view->getServer();
+
+            if (server && !server->isConnected())
+                action->setEnabled(true);
+            else
+                action->setEnabled(false);
+        }
+
+        action = actionCollection()->action("disconnect_server");
+        if (action)
+        {
+            Server* server = view->getServer();
+
+            if (server && server->isConnected())
+                action->setEnabled(true);
+            else
+                action->setEnabled(false);
+        }
+
+        action = actionCollection()->action("join_channel");
+        if (action)
+        {
+            Server* server = view->getServer();
+
+            if (server && !server->isConnected())
+                action->setEnabled(false);
+            else
+                action->setEnabled(true);
+        }
     }
     else
     {
@@ -601,6 +636,17 @@ void ViewContainer::updateFrontView()
                 action->setEnabled(false);
         }
 
+        action = actionCollection()->action("join_channel");
+        if (action)
+        {
+            Server* server = view->getServer();
+
+            if (server && !server->isConnected())
+                action->setEnabled(false);
+            else
+                action->setEnabled(true);
+        }
+
         if (view->getType() == ChatWindow::Channel)
         {
             action = actionCollection()->action("hide_nicknamelist");
@@ -662,6 +708,9 @@ void ViewContainer::updateFrontView()
         if (action) action->setEnabled(false);
 
         action = actionCollection()->action("reconnect_server");
+        if (action) action->setEnabled(false);
+
+        action = actionCollection()->action("disconnect_server");
         if (action) action->setEnabled(false);
 
         action = actionCollection()->action("hide_nicknamelist");
@@ -1567,8 +1616,6 @@ void ViewContainer::showViewContextMenu(QWidget* tab, const QPoint& pos)
 
         updateViewEncoding(view);
 
-
-
         if (view->getType() == ChatWindow::Status)
         {
             QPtrList<KAction> serverActions;
@@ -1580,9 +1627,13 @@ void ViewContainer::showViewContextMenu(QWidget* tab, const QPoint& pos)
             if (action) serverActions.append(action);
             menu->setItemVisible(menu->idAt(8), true);
             m_window->plugActionList("server_actions", serverActions);
+            m_contextServer = view->getServer();
         }
         else
+        {
             menu->setItemVisible(menu->idAt(8), false);
+            m_contextServer = 0;
+        }
     }
 
     if (menu->exec(pos) == -1)
@@ -2022,36 +2073,85 @@ void ViewContainer::serverQuit(Server* server)
 
 void ViewContainer::reconnectFrontServer()
 {
-    if (m_frontServer && !m_frontServer->isConnected() && !m_frontServer->isConnecting())
-        m_frontServer->reconnect();
+    Server* server = 0;
+
+    if (m_contextServer)
+        server = m_contextServer;
+    else
+        server = m_frontServer;
+
+    if (server && !server->isConnected() && !server->isConnecting())
+        server->reconnect();
 }
 
 void ViewContainer::disconnectFrontServer()
 {
-    if (m_frontServer && m_frontServer->connected())
-        m_frontServer->disconnect();
+    Server* server = 0;
+
+    if (m_contextServer)
+        server = m_contextServer;
+    else
+        server = m_frontServer;
+
+    if (server && server->isConnected())
+        server->disconnect();
+}
+
+void ViewContainer::showJoinChannelDialog()
+{
+    Server* server = 0;
+
+    if (m_contextServer)
+        server = m_contextServer;
+    else
+        server = m_frontServer;
+
+    if (!server)
+        return;
+
+    Konversation::JoinChannelDialog dlg(server, m_window);
+
+    if (dlg.exec() == QDialog::Accepted)
+        server->sendJoinCommand(dlg.channel(), dlg.password());
 }
 
 void ViewContainer::serverStateChanged(Server* server, Server::State state)
 {
-    KAction* action = actionCollection()->action("disconnect_server");
+    Server* updateServer = 0;
 
-    if (action && (m_frontServer == server))
+    if (m_contextServer)
+        updateServer = m_contextServer;
+    else
+        updateServer = m_frontServer;
+
+    if (updateServer && updateServer == server)
     {
-        if (state != Server::SSDisconnected)
-            action->setEnabled(true);
-        else
-            action->setEnabled(false);
-    }
+        KAction* action = actionCollection()->action("disconnect_server");
+        if (action)
+        {
+            if (state == Server::SSConnected)
+                action->setEnabled(true);
+            else
+                action->setEnabled(false);
+        }
 
-    action = actionCollection()->action("reconnect_server");
+        action = actionCollection()->action("reconnect_server");
+        if (action)
+        {
+            if (state != Server::SSDisconnected)
+                action->setEnabled(false);
+            else
+                action->setEnabled(true);
+        }
 
-    if (action && (m_frontServer == server))
-    {
-        if (state != Server::SSDisconnected)
-            action->setEnabled(false);
-        else
-            action->setEnabled(true);
+        action = actionCollection()->action("join_channel");
+        if (action)
+        {
+            if (state != Server::SSConnected)
+                action->setEnabled(false);
+            else
+                action->setEnabled(true);
+        }
     }
 }
 

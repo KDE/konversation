@@ -86,7 +86,7 @@ uint NickInfo::getNickColor()
     {
         int nickvalue = 0;
 
-        for (int index = 0; index < m_nickname.length(); index++)
+        for (uint index = 0; index < m_nickname.length(); index++)
         {
             nickvalue += m_nickname[index].unicode();
         }
