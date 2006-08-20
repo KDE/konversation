@@ -43,23 +43,26 @@ def reencodeString(input):
                 pass
     return input.encode('utf-8')
 
-def pretty_print(title, artist='', album=''):
+def pretty_print(title, artist='', album='', raw=''):
     if title:
         title = reencodeString(title)
     if artist:
         artist = reencodeString(artist)
     if album:
         album = reencodeString(album)
+    if raw:
+        raw = reencodeString(raw)
 
-    if (artist and album) and (artist != album):
+    if (artist and album and title) and (artist != album):
         return "/me is listening to \"%s\" by %s on %s"%(title,artist,album)
-    elif artist:
+    elif artist and title:
         return "/me is listening to \"%s\" by %s"%(title,artist)
-    elif album:
+    elif album and title:
         return "/me is listening to \"%s\" on %s"%(title,album)
-    else:
+    elif title:
         return "/me is listening to \"%s\" "%(title)
-
+    elif raw:
+        return "/me is listening to \"%s\" "%(raw)
 
 if __name__ == "__main__":
     port = sys.argv[1]
@@ -103,8 +106,9 @@ if __name__ == "__main__":
         title = os.popen('dcop '+amarok+' player title').readline().rstrip('\n')
         artist = os.popen('dcop '+amarok+' player artist').readline().rstrip('\n')
         album = os.popen('dcop '+amarok+' player album').readline().rstrip('\n')
+        raw = os.popen('dcop '+amarok+' player nowPlaying').readline().rstrip('\n')
 
-        if title:
+        if title or raw:
             string = pretty_print(title,artist,album)+' [Amarok]'
             Popen(['dcop', port, 'Konversation', 'say', server, target, string]).communicate()
             sys.exit(0)
