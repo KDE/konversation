@@ -365,6 +365,12 @@ void IRCInput::paste()
             if(pos>0 && pos!=(pasteText.length()-1)) signal=true;
             // emit the signal if there's more than one line break in the text
             if(pos!=rpos) signal=true;
+
+            // Remove the \n from end of the line if there's only one \n
+            if(!signal)
+            {
+                pasteText.remove('\n');
+            }
         }
         else
         {
