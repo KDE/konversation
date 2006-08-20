@@ -23,6 +23,9 @@ class Tabs_Config : public Tabs_PreferencesUI
         Tabs_Config(QWidget *parent = 0, const char *name = 0);
         ~Tabs_Config();
 
+    public slots:
+        virtual void show();
+
     protected slots:
         void toggleCheckBoxes(int activated);
 };
