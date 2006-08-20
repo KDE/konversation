@@ -173,7 +173,7 @@
                                 <bool>false</bool>
                             </property>
                             <property name="text">
-                                <string>Button Action:</string>
+                                <string>Button action:</string>
                             </property>
                         </widget>
                         <widget class="QLabel" row="0" column="0">

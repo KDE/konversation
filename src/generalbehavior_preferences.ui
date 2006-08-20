@@ -274,7 +274,7 @@ the Free Software Foundation; either version 2 of the License, or
                         <cstring>kcfg_UseCustomBrowser</cstring>
                     </property>
                     <property name="text">
-                        <string>Use custom Web &amp;browser:</string>
+                        <string>Use custom web &amp;browser:</string>
                     </property>
                 </widget>
                 <widget class="QCheckBox" row="2" column="0" rowspan="1" colspan="2">
