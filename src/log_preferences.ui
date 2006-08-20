@@ -56,14 +56,6 @@ the Free Software Foundation; either version 2 of the License, or
                         <cstring>kcfg_LogfilePath</cstring>
                     </property>
                 </widget>
-                <widget class="QCheckBox" row="2" column="0" rowspan="1" colspan="2">
-                    <property name="name">
-                        <cstring>kcfg_LogFollowsNick</cstring>
-                    </property>
-                    <property name="text">
-                        <string>&amp;Follow nick changes</string>
-                    </property>
-                </widget>
                 <widget class="QCheckBox" row="0" column="0" rowspan="1" colspan="2">
                     <property name="name">
                         <cstring>kcfg_LowerLog</cstring>

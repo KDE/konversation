@@ -128,7 +128,7 @@ void Query::setName(const QString& newName)
     // This will prevent Nick-Changers to create more than one log file,
     // unless we want this by turning the option Log Follows Nick off.
 
-    if((logName.isEmpty()) || !(Preferences::logFollowsNick()))
+    if (logName.isEmpty())
     {
         QString logName =  (Preferences::lowerLog()) ? getName().lower() : getName() ;
 
