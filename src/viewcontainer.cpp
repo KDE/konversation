@@ -435,6 +435,9 @@ void ViewContainer::updateViewActions(int index)
         action = actionCollection()->action("join_channel");
         if (action) action->setEnabled(false);
 
+        action = actionCollection()->action("disconnect_server");
+        if (action) action->setEnabled(false);
+
         action = actionCollection()->action("reconnect_server");
         if (action) action->setEnabled(false);
     }
