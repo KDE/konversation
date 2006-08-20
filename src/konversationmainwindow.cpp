@@ -131,7 +131,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
     action->setEnabled(false);
     action->setToolTip(i18n("Reconnect to the current server."));
 
-    action = new KAction(i18n("&Disconnect"), "disconnect", 0, m_viewContainer, SLOT(disconnectFrontServer()), actionCollection(), "disconnect_server");
+    action = new KAction(i18n("&Disconnect"), "connect_no", 0, m_viewContainer, SLOT(disconnectFrontServer()), actionCollection(), "disconnect_server");
     action->setEnabled(false);
     action->setToolTip(i18n("Disconnect from the current server."));
 
@@ -277,7 +277,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
     // decide whether to show the tray icon or not
     updateTrayIcon();
 
-    createGUI();
+    createGUI(NULL, false);
 
     resize(700, 500);                             // Give the app a sane default size
     setAutoSaveSettings();

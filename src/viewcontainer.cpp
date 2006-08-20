@@ -1560,6 +1560,23 @@ void ViewContainer::showViewContextMenu(QWidget* tab, const QPoint& pos)
         }
 
         updateViewEncoding(view);
+
+
+
+        if (view->getType() == ChatWindow::Status)
+        {
+            QPtrList<KAction> serverActions;
+            KAction* action = actionCollection()->action("disconnect_server");
+            if (action) serverActions.append(action);
+            action = actionCollection()->action("reconnect_server");
+            if (action) serverActions.append(action);
+            action = actionCollection()->action("join_channel");
+            if (action) serverActions.append(action);
+            menu->setItemVisible(menu->idAt(8), true);
+            m_window->plugActionList("server_actions", serverActions);
+        }
+        else
+            menu->setItemVisible(menu->idAt(8), false);
     }
 
     if (menu->exec(pos) == -1)
@@ -1583,6 +1600,8 @@ void ViewContainer::showViewContextMenu(QWidget* tab, const QPoint& pos)
             updateViewEncoding(view);
         }
     }
+
+    m_window->unplugActionList("server_actions");
 
     emit contextMenuClosed();
 
