@@ -76,8 +76,8 @@ DccResumeDialog::DccResumeDialog(DccTransferRecv* item, const QString& caption, 
         QFrame* filePathToolsFrame = new QFrame(page);
         QHBoxLayout* filePathToolsLayout = new QHBoxLayout(filePathToolsFrame);
         filePathToolsLayout->setSpacing(spacingHint());
-        QPushButton* btnDefaultName = new QPushButton(i18n("&Default"), filePathToolsFrame);
-        QPushButton* btnSuggestNewName = new QPushButton(i18n("Suggest &New Name"), filePathToolsFrame);
+        QPushButton* btnDefaultName = new QPushButton(i18n("O&riginal Filename"), filePathToolsFrame);
+        QPushButton* btnSuggestNewName = new QPushButton(i18n("Suggest &New Filename"), filePathToolsFrame);
         filePathToolsLayout->addItem(new QSpacerItem(0, 0, QSizePolicy::Expanding));
         filePathToolsLayout->addWidget(btnDefaultName);
         filePathToolsLayout->addWidget(btnSuggestNewName);

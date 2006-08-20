@@ -10,6 +10,7 @@
 #include <qframe.h>
 #include <qlabel.h>
 #include <qlayout.h>
+#include <qtooltip.h>
 
 #include <kglobal.h>
 #include <kiconloader.h>
@@ -63,7 +64,11 @@ DccDetailDialog::DccDetailDialog( DccTransfer* item )
     m_buttonRemoveFile = new KPushButton( KGlobal::iconLoader()->loadIconSet( "edittrash", KIcon::Small ), QString::null, localFileURLBox );
     m_buttonRemoveFile->setFixedSize( m_localFileURL->button()->size() );
     connect( m_buttonRemoveFile, SIGNAL( clicked() ), this, SLOT( slotRemoveFile() ) );
-
+    
+    //QToolTip::add( m_localFileURL, i18n( "Change the download destination" ) );
+    QToolTip::add( m_buttonOpenFile,  i18n( "Open this file" ) );
+    QToolTip::add( m_buttonRemoveFile,  i18n( "Delete this file" ) );
+    
     // Partner
     QLabel* partnerHeader = new QLabel( infoFrame );
     partnerHeader->setAlignment( AlignHCenter | AlignVCenter );
@@ -128,12 +133,14 @@ DccDetailDialog::DccDetailDialog( DccTransfer* item )
         m_buttonAccept = new KPushButton( KGlobal::iconLoader()->loadIconSet( "player_play", KIcon::Small ), i18n("&Accept"), buttonFrame );
         m_buttonAccept->setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ) );
         connect( m_buttonAccept, SIGNAL( clicked() ), this, SLOT( slotAccept() ) );
+        QToolTip::add( m_buttonAccept, i18n( "Accept this transfer" ) );
     }
 
     // Abort
     m_buttonAbort = new KPushButton( KGlobal::iconLoader()->loadIconSet( "stop", KIcon::Small ), i18n("A&bort"), buttonFrame );
     m_buttonAbort->setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ) );
     connect( m_buttonAbort, SIGNAL( clicked() ), this, SLOT( slotAbort() ) );
+    QToolTip::add( m_buttonAbort, i18n( "Abort this transfer" ) );
 
     // Close
     KPushButton* buttonClose = new KPushButton( KGlobal::iconLoader()->loadIconSet( "button_ok", KIcon::Small ), i18n("&Close"), buttonFrame );

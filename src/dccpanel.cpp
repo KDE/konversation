@@ -52,7 +52,7 @@ DccPanel::DccPanel(QWidget* parent)
         m_listView->addColumn("");
 
     //m_listView->setColumnText(Column::TypeIcon,      "");
-    m_listView->setColumnText(Column::OfferDate,     i18n("Date"));
+    m_listView->setColumnText(Column::OfferDate,     i18n("Started at"));
     m_listView->setColumnText(Column::Status,        i18n("Status"));
     m_listView->setColumnText(Column::FileName,      i18n("File"));
     m_listView->setColumnText(Column::PartnerNick,   i18n("Partner"));
@@ -63,7 +63,7 @@ DccPanel::DccPanel(QWidget* parent)
     m_listView->setColumnText(Column::SenderAddress, i18n("Sender Address"));
 
     m_listView->setColumnWidth(Column::TypeIcon,       16);
-    m_listView->setColumnWidth(Column::OfferDate,      70);
+    m_listView->setColumnWidth(Column::OfferDate,      90);
     m_listView->setColumnWidth(Column::Status,         80);
     m_listView->setColumnWidth(Column::FileName,      150);
     m_listView->setColumnWidth(Column::PartnerNick,    70);
@@ -78,8 +78,8 @@ DccPanel::DccPanel(QWidget* parent)
     m_listView->setColumnAlignment(Column::OfferDate,     AlignHCenter);
     m_listView->setColumnAlignment(Column::Progress,      AlignHCenter);
     m_listView->setColumnAlignment(Column::Position,      AlignHCenter);
-    m_listView->setColumnAlignment(Column::TimeRemaining, AlignRight);
-    m_listView->setColumnAlignment(Column::CPS,           AlignRight);
+    m_listView->setColumnAlignment(Column::TimeRemaining, AlignHCenter);
+    m_listView->setColumnAlignment(Column::CPS,           AlignHCenter);
 
     m_listView->setSorting(Column::OfferDate, false);
 
