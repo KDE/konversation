@@ -160,6 +160,10 @@ handling)
 - Fix iteration over the server list on connection failure when original connection
   attempt was made to a specific server rather than generically to the group.
 - Fix connecting to a specific server reliably from the server list dialog.
+- Reconnect an existing disconnected network connection when the user tries to
+  connect to a network from the server list dialog instead of failing.
+- Ask what to do when trying to connect to a different server in a network than
+  the current server of an active network connection from the server list dialog.
 
 Changes from 0.18 to 0.19
 We are extremely pleased to announce the immediate release of Konversation 0.19. The focus

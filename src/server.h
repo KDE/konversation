@@ -75,6 +75,8 @@ class Server : public QObject
         QString getServerName() const;
         QString getServerGroup() const;
 
+        void resetCurrentServerIndex() { m_currentServerIndex = 0; }
+
         Konversation::ServerGroupSettingsPtr serverGroupSettings() const { return m_serverGroup; }
 
         IdentityPtr getIdentity() const;

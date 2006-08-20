@@ -337,13 +337,86 @@ Server* KonversationApplication::connectToServer(int serverGroupId, Konversation
 {
     // Check if a server window with same name and port is already open
     Server* lookServer = serverList.first();
+    Server* existingServer = 0;
 
     while (lookServer)
     {
       if (lookServer->serverGroupSettings()->id() == serverGroupId)
-          return lookServer;
+      {
+          existingServer = lookServer;
+          break;
+      }
 
       lookServer = serverList.next();
+    }
+
+    // There's already a connection to this network.
+    if (existingServer)
+    {
+        // The connection is active, and the server list dialog requested
+        // to connect to a specific server.
+        if (existingServer->connected() && !quickServer.server().isEmpty())
+        {
+            // This server differs from the server we're presently connected to.
+            if (quickServer.server() != existingServer->getServerName())
+            {
+                int result = KMessageBox::warningContinueCancel(
+                mainWindow,
+                i18n("You are already connected to %1. Do you want to disconnect from '%1' and connect to '%2' instead?")
+                    .arg(existingServer->getServerGroup())
+                    .arg(existingServer->getServerName())
+                    .arg(quickServer.server()),
+                i18n("Already connected to %1").arg(existingServer->getServerGroup()),
+                i18n("Disconnect"),
+                "ReconnectDifferentServer");
+
+                // The user has chosen to connect to this different server
+                // instead of the current one.
+                if (result == KMessageBox::Continue)
+                {
+                    existingServer->disconnect();
+                    existingServer->serverGroupSettings()->clearQuickServerList();
+                    existingServer->serverGroupSettings()->setQuickServerList(quickServer);
+                    existingServer->resetCurrentServerIndex();
+                    existingServer->reconnect();
+                    return existingServer;
+                }
+                // The user wants to keep the current connection alive, so
+                // return the existing connection.
+                else
+                    return existingServer;
+            }
+            // We've gotten a request to connect to the same server we're
+            // already connected to, so return the existing connection.
+            else
+                return existingServer;
+        }
+        // We haven't been told to connect to a specific server and already have
+        // a connection to this network, so return it.
+        else if (existingServer->connected() && quickServer.server().isEmpty())
+        {
+            return existingServer;
+        }
+        // The connection is inactive.
+        else if (!existingServer->connected())
+        {
+            // We've been told to connect to a specific server. Do so.
+            if (!quickServer.server().isEmpty())
+            {
+                existingServer->serverGroupSettings()->clearQuickServerList();
+                existingServer->serverGroupSettings()->setQuickServerList(quickServer);
+                existingServer->resetCurrentServerIndex();
+                existingServer->reconnect();
+                return existingServer;
+            }
+            // No specific server was part of the request, so reconnect
+            // the old one.
+            else
+            {
+                existingServer->reconnect();
+                return existingServer;
+            }
+        }
     }
 
     Konversation::ServerGroupSettingsPtr serverGroup = Preferences::serverGroupById(serverGroupId);
