@@ -40,7 +40,7 @@ the Free Software Foundation; either version 2 of the License, or
                         <cstring>kcfg_InputFieldsBackgroundColor</cstring>
                     </property>
                     <property name="text">
-                        <string>&amp;Use custom colors for input box, nick list and tab list</string>
+                        <string>&amp;Use custom colors for input box, nickname list and tab list</string>
                     </property>
                 </widget>
                 <widget class="KColorButton" row="3" column="4">
