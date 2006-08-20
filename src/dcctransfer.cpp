@@ -444,7 +444,8 @@ int DccTransfer::getProgress() const
 QString DccTransfer::getPositionPrettyText( bool detailed ) const
 {
     if ( detailed )
-        return getPrettyNumberText( QString::number( m_transferringPosition ) ) + " / " + getPrettyNumberText( QString::number( m_fileSize ) );
+        return KGlobal::locale()->formatNumber( m_transferringPosition, 0 )  + " / " +
+            KGlobal::locale()->formatNumber( m_fileSize, 0 );
     else
         return KIO::convertSize( m_transferringPosition ) + " / " + KIO::convertSize( m_fileSize );
 }
@@ -508,16 +509,7 @@ unsigned long DccTransfer::intel( unsigned long value )
     return value;
 }
 
-QString DccTransfer::getPrettyNumberText( const QString& numberText )
-{
-    QString prettyNumberText = numberText;
-    int commas = (int)( ( numberText.length() - 1 ) / 3 );
-    for ( int i=0 ; i < commas ; ++i )
-        prettyNumberText.insert( numberText.length() - ( ( i + 1 ) * 3 ), "," );
-    return prettyNumberText;
-}
-
-DccTransfer::DccType DccTransfer::getType() const 
+DccTransfer::DccType DccTransfer::getType() const
 { 
   return m_dccType; 
 }

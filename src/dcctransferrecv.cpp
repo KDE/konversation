@@ -324,7 +324,7 @@ void DccTransferRecv::slotLocalCanResume( KIO::Job* job, KIO::filesize_t size )
                 "%1<br>"
                 "Size of the partial file: %2 bytes<br>" )
                 .arg( m_fileURL.prettyURL() )
-                .arg( DccTransfer::getPrettyNumberText( QString::number( size ) ) ),
+                .arg( KGlobal::locale()->formatNumber( size, 0 ) ),
                 DccResumeDialog::RA_Resume | DccResumeDialog::RA_Overwrite | DccResumeDialog::RA_Rename | DccResumeDialog::RA_Cancel,
                 DccResumeDialog::RA_Resume,
                 size );
