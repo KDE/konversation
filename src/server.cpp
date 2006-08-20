@@ -1858,7 +1858,8 @@ void Server::resumeDccGetTransfer(const QString &sourceNick, const QStringList &
     {
         // overcome mIRCs brain-dead "file.ext" substitution
         appendMessageToFrontmost( i18n( "DCC" ),
-                                  i18n( "Resuming download of \"%1\" from %2 starting at %3% of %4..." )
+                                  i18n( "%1 = file name, %2 = nickname of sender, %3 = percentage of file size, %4 = file size",
+                                        "Resuming download of \"%1\" from %2 starting at %3% of %4..." )
                                   .arg( dccTransfer->getFileName(),
                                         sourceNick,
                                         QString::number( dccTransfer->getProgress() ),
@@ -1887,7 +1888,8 @@ void Server::resumeDccSendTransfer(const QString &recipient, const QStringList &
         if(dccTransfer->setResume(dccArguments[2].toULong()))
         {
             appendMessageToFrontmost( i18n( "DCC" ),
-                                      i18n( "Resuming upload of \"%1\" to %2 starting at %3% of %4...")
+                                      i18n( "%1 = file name, %2 = nickname of recipient, %3 = percentage of file size, %4 = file size",
+                                            "Resuming upload of \"%1\" to %2 starting at %3% of %4...")
                                       .arg( fileName,
                                             recipient,
                                             QString::number(dccTransfer->getProgress()),
@@ -1899,7 +1901,8 @@ void Server::resumeDccSendTransfer(const QString &recipient, const QStringList &
         }
         else
         {
-            appendMessageToFrontmost(i18n("Error"),i18n("Received invalid resume request for \"%1\" from %2.").arg(fileName, recipient));
+            appendMessageToFrontmost(i18n("Error"),i18n("%1 = file name, %2 = nickname",
+                "Received invalid resume request for \"%1\" from %2.").arg(fileName, recipient));
         }
     }
     else
@@ -1911,17 +1914,21 @@ void Server::resumeDccSendTransfer(const QString &recipient, const QStringList &
 void Server::dccGetDone(const DccTransfer* item)
 {
     if(item->getStatus()==DccTransfer::Done)
-        appendMessageToFrontmost(i18n("DCC"),i18n("Download of \"%1\" from %2 finished.").arg(item->getFileName(), item->getPartnerNick()));
+        appendMessageToFrontmost(i18n("DCC"),i18n("%1 = file name, %2 = nickname of sender",
+            "Download of \"%1\" from %2 finished.").arg(item->getFileName(), item->getPartnerNick()));
     else if(item->getStatus()==DccTransfer::Failed)
-        appendMessageToFrontmost(i18n("DCC"),i18n("Download of \"%1\" from %2 failed. Reason: %3.").arg(item->getFileName(), item->getPartnerNick(), item->getStatusDetail()));
+        appendMessageToFrontmost(i18n("DCC"),i18n("%1 = file name, %2 = nickname of sender",
+            "Download of \"%1\" from %2 failed. Reason: %3.").arg(item->getFileName(), item->getPartnerNick(), item->getStatusDetail()));
 }
 
 void Server::dccSendDone(const DccTransfer* item)
 {
     if(item->getStatus()==DccTransfer::Done)
-        appendMessageToFrontmost(i18n("DCC"),i18n("Upload of \"%1\" to %2 finished.").arg(item->getFileName(), item->getPartnerNick()));
+        appendMessageToFrontmost(i18n("DCC"),i18n("%1 = file name, %2 = nickname of recipient",
+            "Upload of \"%1\" to %2 finished.").arg(item->getFileName(), item->getPartnerNick()));
     else if(item->getStatus()==DccTransfer::Failed)
-        appendMessageToFrontmost(i18n("DCC"),i18n("Upload of \"%1\" to %2 failed. Reason: %3.").arg(item->getFileName(), item->getPartnerNick(), item->getStatusDetail()));
+        appendMessageToFrontmost(i18n("DCC"),i18n("%1 = file name, %2 = nickname of recipient",
+            "Upload of \"%1\" to %2 failed. Reason: %3.").arg(item->getFileName(), item->getPartnerNick(), item->getStatusDetail()));
 }
 
 void Server::dccStatusChanged(const DccTransfer *item, int newStatus, int oldStatus)
@@ -1932,14 +1939,15 @@ void Server::dccStatusChanged(const DccTransfer *item, int newStatus, int oldSta
     {
         // when resuming, a message about the receiver's acceptance has been shown already, so suppress this message
         if ( newStatus == DccTransfer::Sending && oldStatus == DccTransfer::WaitingRemote && !item->isResumed() )
-            appendMessageToFrontmost( i18n( "DCC" ), i18n( "Sending \"%1\" to %2...").arg( item->getFileName(), item->getPartnerNick() ) );
+            appendMessageToFrontmost( i18n( "DCC" ), i18n( "%1 = file name, %2 nickname of recipient",
+                "Sending \"%1\" to %2...").arg( item->getFileName(), item->getPartnerNick() ) );
     }
     else
     {
         if ( newStatus == DccTransfer::Receiving && !item->isResumed() )
         {
             appendMessageToFrontmost( i18n( "DCC" ),
-                                        i18n( "Downloading \"%1\" (%2) from %3...")
+                                        i18n( "%1 = file name, %2 = file size, %3 = nickname of sender", "Downloading \"%1\" (%2) from %3...")
                                         .arg( item->getFileName(),
                                             ( item->getFileSize() == 0 ) ? i18n( "unknown size" ) : KIO::convertSize( item->getFileSize() ),
                                             item->getPartnerNick() ) );

@@ -164,9 +164,10 @@ void DccChat::connectToPartner()
     ip.setAddress(host.toUInt());
     host=ip.toString();
 
-    getTextView()->appendServerMessage( i18n( "DCC" ), i18n( "Establishing DCC Chat connection to %1 (%2:%3)..." ).arg( m_partnerNick ).arg( host ).arg( m_port ) );
+    getTextView()->appendServerMessage( i18n( "DCC" ), i18n( "%1 = nickname, %2 = IP, %3 = port",
+        "Establishing DCC Chat connection to %1 (%2:%3)..." ).arg( m_partnerNick ).arg( host ).arg( m_port ) );
 
-    m_sourceLine->setText( i18n( "DCC chat with %1 on %2:%3." ).arg( m_partnerNick ).arg( host ).arg( m_port ) );
+    m_sourceLine->setText( i18n( "%1 = nickname, %2 = IP, %3 = port", "DCC chat with %1 on %2:%3." ).arg( m_partnerNick ).arg( host ).arg( m_port ) );
 
     m_dccSocket = new KNetwork::KStreamSocket( host, QString::number( m_port ), this );
 
