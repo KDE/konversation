@@ -98,7 +98,7 @@ the Free Software Foundation; either version 2 of the License, or
                 <cstring>kcfg_ShowBacklog</cstring>
             </property>
             <property name="title">
-                <string>Show backlog</string>
+                <string>Show Backlog</string>
             </property>
             <property name="checkable">
                 <bool>true</bool>
