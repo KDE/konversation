@@ -71,7 +71,7 @@ ViewContainer::ViewContainer(KonversationMainWindow* window)
 
     m_viewTreeSplitter = new QSplitter(m_window, "view_tree_splitter");
     m_viewTreeSplitter->setOpaqueResize(KGlobalSettings::opaqueResize());
-    m_saveSplitterSizesLock = false;
+    m_saveSplitterSizesLock = true;
 
     // The tree needs to be initialized before the tab widget so that it
     // may assume a leading role in view selection management.
@@ -89,13 +89,16 @@ ViewContainer::~ViewContainer()
 
 void ViewContainer::initializeSplitterSizes()
 {
-    QValueList<int> sizes = Preferences::treeSplitterSizes();
+    if (!m_viewTree->isHidden())
+    {
+        QValueList<int> sizes = Preferences::treeSplitterSizes();
 
-    if (sizes.isEmpty())
-        sizes << 145 << (m_window->width()-145);
-    m_viewTreeSplitter->setSizes(sizes);
+        if (sizes.isEmpty())
+            sizes << 145 << (m_window->width()-145);
+        m_viewTreeSplitter->setSizes(sizes);
 
-    m_saveSplitterSizesLock = false;
+        m_saveSplitterSizesLock = false;
+    }
 }
 
 void ViewContainer::saveSplitterSizes()
@@ -134,6 +137,7 @@ void ViewContainer::setupViewTree()
 {
     m_viewTree = new ViewTree(m_viewTreeSplitter);
     m_viewTreeSplitter->setResizeMode(m_viewTree, QSplitter::KeepSize);
+    m_viewTree->hide();
 
     connect(KonversationApplication::instance(), SIGNAL(appearanceChanged()), m_viewTree, SLOT(updateAppearance()));
     connect(this, SIGNAL(viewChanged(ChatWindow*)), m_viewTree, SLOT(selectView(ChatWindow*)));
