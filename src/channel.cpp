@@ -2220,7 +2220,7 @@ void Channel::cycleChannel()
 
 void Channel::autoUserhost()
 {
-    if(Preferences::autoUserhost())
+    if(Preferences::autoUserhost() && !Preferences::autoWhoContinuousEnabled())
     {
         int limit = 5;
 
