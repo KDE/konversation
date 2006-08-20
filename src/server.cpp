@@ -626,6 +626,7 @@ void Server::broken(int state)
 
     alreadyConnected = false;
     connecting = false;
+    m_autoIdentifyLock = false;
     outputBuffer.clear();
 
     notifyTimer.stop();
