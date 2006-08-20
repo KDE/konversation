@@ -204,16 +204,13 @@ void IRCInput::keyPressEvent(QKeyEvent* e)
                 // Reset completion mode
                 setCompletionMode('\0');
 
+                setText(static_cast<KonversationApplication*>(kapp)->doAutoreplace(text(),true));
+
                 // Ctrl+Enter is a special case in which commands should be send as normal messages
                 if ( e->state() & ControlButton )
-                {
                     emit envelopeCommand();
-                }
                 else
-                {
-                    //setText(static_cast<KonversationApplication*>(kapp)->doAutoreplace(text(),true));
                     emit submit();
-                }
             }
             else
             {
