@@ -80,7 +80,7 @@ the Free Software Foundation; either version 2 of the License, or
                 <cstring>kcfg_UseBoldNicks</cstring>
             </property>
             <property name="text">
-                <string>Make sender nicknames &amp;bold in the chat view</string>
+                <string>Show sender nicknames &amp;bold in the chat view</string>
             </property>
         </widget>
         <spacer row="5" column="1">

@@ -98,7 +98,7 @@ DccPanel::DccPanel(QWidget* parent)
     m_buttonClear  = new QPushButton(icon("editdelete"),  i18n("Clear"),  buttonsBox, "clear_dcc");
     m_buttonOpen   = new QPushButton(icon("exec"),        i18n("Open File"),   buttonsBox, "open_dcc_file");
     m_buttonRemove = new QPushButton(icon("edittrash"),   i18n("Remove File"), buttonsBox, "remove_dcc_file");
-    m_buttonDetail = new QPushButton(icon("view_text"),   i18n("DCC Transfer Details"), buttonsBox, "detail_dcc");
+    m_buttonDetail = new QPushButton(icon("view_text"),   i18n("Transfer Details"), buttonsBox, "detail_dcc");
 
     QToolTip::add( m_buttonAccept, i18n( "Start receiving" ) );
     QToolTip::add( m_buttonAbort,  i18n( "Abort the transfer(s)" ) );

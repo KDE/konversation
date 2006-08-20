@@ -84,7 +84,7 @@
                         <cstring>kcfg_RedirectServerAndAppMsgToStatusPane</cstring>
                     </property>
                     <property name="text">
-                        <string>&amp;Redirect all status messages to the server status window</string>
+                        <string>&amp;Redirect status messages to the server status window</string>
                     </property>
                 </widget>
                 <widget class="QCheckBox">

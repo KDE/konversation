@@ -14,8 +14,8 @@ the Free Software Foundation; either version 2 of the License, or
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>544</width>
-            <height>427</height>
+            <width>377</width>
+            <height>463</height>
         </rect>
     </property>
     <property name="sizePolicy">
@@ -69,93 +69,7 @@ the Free Software Foundation; either version 2 of the License, or
                 <bool>true</bool>
             </property>
         </widget>
-        <widget class="QLayoutWidget" row="1" column="0">
-            <property name="name">
-                <cstring>layout9</cstring>
-            </property>
-            <hbox>
-                <property name="name">
-                    <cstring>unnamed</cstring>
-                </property>
-                <widget class="QLabel">
-                    <property name="name">
-                        <cstring>textLabel2</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Pattern:</string>
-                    </property>
-                </widget>
-                <widget class="QLineEdit">
-                    <property name="name">
-                        <cstring>txtPattern</cstring>
-                    </property>
-                </widget>
-            </hbox>
-        </widget>
-        <widget class="QLayoutWidget" row="2" column="0">
-            <property name="name">
-                <cstring>layout29</cstring>
-            </property>
-            <hbox>
-                <property name="name">
-                    <cstring>unnamed</cstring>
-                </property>
-                <widget class="QGroupBox">
-                    <property name="name">
-                        <cstring>grpMessageTypes</cstring>
-                    </property>
-                    <property name="title">
-                        <string>Message Types</string>
-                    </property>
-                    <grid>
-                        <property name="name">
-                            <cstring>unnamed</cstring>
-                        </property>
-                        <widget class="QCheckBox" row="0" column="1">
-                            <property name="name">
-                                <cstring>chkCTCP</cstring>
-                            </property>
-                            <property name="text">
-                                <string>CTCP</string>
-                            </property>
-                        </widget>
-                        <widget class="QCheckBox" row="0" column="0">
-                            <property name="name">
-                                <cstring>chkChannel</cstring>
-                            </property>
-                            <property name="text">
-                                <string>Channel</string>
-                            </property>
-                        </widget>
-                        <widget class="QCheckBox" row="1" column="1">
-                            <property name="name">
-                                <cstring>chkDCC</cstring>
-                            </property>
-                            <property name="text">
-                                <string>DCC</string>
-                            </property>
-                        </widget>
-                        <widget class="QCheckBox" row="2" column="0">
-                            <property name="name">
-                                <cstring>chkNotice</cstring>
-                            </property>
-                            <property name="text">
-                                <string>Notice</string>
-                            </property>
-                        </widget>
-                        <widget class="QCheckBox" row="1" column="0">
-                            <property name="name">
-                                <cstring>chkQuery</cstring>
-                            </property>
-                            <property name="text">
-                                <string>Query</string>
-                            </property>
-                        </widget>
-                    </grid>
-                </widget>
-            </hbox>
-        </widget>
-        <widget class="QLayoutWidget" row="0" column="1" rowspan="3" colspan="1">
+        <widget class="QLayoutWidget" row="0" column="1">
             <property name="name">
                 <cstring>layout20</cstring>
             </property>
@@ -205,6 +119,90 @@ the Free Software Foundation; either version 2 of the License, or
                     </property>
                 </spacer>
             </vbox>
+        </widget>
+        <widget class="QGroupBox" row="2" column="0" rowspan="1" colspan="2">
+            <property name="name">
+                <cstring>grpMessageTypes</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>7</hsizetype>
+                    <vsizetype>5</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+            <property name="title">
+                <string>Message Types</string>
+            </property>
+            <grid>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QCheckBox" row="0" column="1">
+                    <property name="name">
+                        <cstring>chkCTCP</cstring>
+                    </property>
+                    <property name="text">
+                        <string>CTCP</string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox" row="0" column="0">
+                    <property name="name">
+                        <cstring>chkChannel</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Channel</string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox" row="1" column="1">
+                    <property name="name">
+                        <cstring>chkDCC</cstring>
+                    </property>
+                    <property name="text">
+                        <string>DCC</string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox" row="2" column="0">
+                    <property name="name">
+                        <cstring>chkNotice</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Notice</string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox" row="1" column="0">
+                    <property name="name">
+                        <cstring>chkQuery</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Query</string>
+                    </property>
+                </widget>
+            </grid>
+        </widget>
+        <widget class="QLayoutWidget" row="1" column="0" rowspan="1" colspan="2">
+            <property name="name">
+                <cstring>layout19</cstring>
+            </property>
+            <hbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QLabel">
+                    <property name="name">
+                        <cstring>textLabel2</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Pattern:</string>
+                    </property>
+                </widget>
+                <widget class="QLineEdit">
+                    <property name="name">
+                        <cstring>txtPattern</cstring>
+                    </property>
+                </widget>
+            </hbox>
         </widget>
     </grid>
 </widget>

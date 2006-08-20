@@ -175,7 +175,7 @@ the Free Software Foundation; either version 2 of the License, or
                 <cstring>kcfg_DccAutoGet</cstring>
             </property>
             <property name="text">
-                <string>Automaticall&amp;y accept download request</string>
+                <string>Automaticall&amp;y accept download offer</string>
             </property>
         </widget>
         <widget class="QLabel" row="8" column="0" rowspan="1" colspan="2">
