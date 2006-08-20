@@ -165,6 +165,7 @@ handling)
 - Ask what to do when trying to connect to a different server in a network than
   the current server of an active network connection from the server list dialog.
 - Cleaned up layout of several prefs pages.
+- Fix nicklist column resize mess.
 
 Changes from 0.18 to 0.19
 We are extremely pleased to announce the immediate release of Konversation 0.19. The focus

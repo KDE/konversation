@@ -2250,9 +2250,6 @@ void Channel::setAutoUserhost(bool state)
     {
         // we can't have automatic resizing with three columns; the hostname column is too wide
         nicknameListView->setResizeMode(QListView::NoColumn);
-        // shrink the first column and let it re-expand, otherwise it stays
-        // maximum width, leaving the hostmask column off the screen
-        nicknameListView->setColumnWidth(1,32);
         nicknameListView->setColumnWidthMode(1,KListView::Maximum);
 
         // restart userhost timer
@@ -2262,6 +2259,7 @@ void Channel::setAutoUserhost(bool state)
         {
             // re-add the hostmask column
             nicknameListView->addColumn(QString::null);
+            nicknameListView->setColumnWidthMode(2,KListView::Maximum);
 
             // re-add already known hostmasks
             QListViewItem* item=nicknameListView->itemAtIndex(0);
@@ -2270,7 +2268,7 @@ void Channel::setAutoUserhost(bool state)
                 Nick* lookNick=getNickByName(item->text(1));
                 if(lookNick) item->setText(2,lookNick->getHostmask());
                 item=item->itemBelow();
-            } // while
+            }
         }
     }
     else
