@@ -355,7 +355,7 @@ Server* KonversationApplication::connectToServer(int serverGroupId, Konversation
     {
         // The connection is active, and the server list dialog requested
         // to connect to a specific server.
-        if (existingServer->connected() && !quickServer.server().isEmpty())
+        if (existingServer->isConnected() && !quickServer.server().isEmpty())
         {
             // This server differs from the server we're presently connected to.
             if (quickServer.server() != existingServer->getServerName())
@@ -393,12 +393,12 @@ Server* KonversationApplication::connectToServer(int serverGroupId, Konversation
         }
         // We haven't been told to connect to a specific server and already have
         // a connection to this network, so return it.
-        else if (existingServer->connected() && quickServer.server().isEmpty())
+        else if (existingServer->isConnected() && quickServer.server().isEmpty())
         {
             return existingServer;
         }
         // The connection is inactive.
-        else if (!existingServer->connected())
+        else if (!existingServer->isConnected())
         {
             // We've been told to connect to a specific server. Do so.
             if (!quickServer.server().isEmpty())
