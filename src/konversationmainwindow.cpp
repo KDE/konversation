@@ -129,7 +129,11 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
 
     action = new KAction(i18n("&Reconnect"), "connect_creating", 0, m_viewContainer, SLOT(reconnectFrontServer()), actionCollection(), "reconnect_server");
     action->setEnabled(false);
-    action->setToolTip("Reconnect to the current server.");
+    action->setToolTip(i18n("Reconnect to the current server."));
+
+    action = new KAction(i18n("&Disconnect"), "disconnect", 0, m_viewContainer, SLOT(disconnectFrontServer()), actionCollection(), "disconnect_server");
+    action->setEnabled(false);
+    action->setToolTip(i18n("Disconnect from the current server."));
 
     (new KAction(i18n("&Identities..."), "identity", KShortcut("F8"), this, SLOT(openIdentitiesDialog()),
         actionCollection(), "identities_dialog"))->setToolTip(i18n("Manage your nick, away and other identity settings"));

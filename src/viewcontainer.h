@@ -124,6 +124,7 @@ class ViewContainer : public QObject
 
         StatusPanel* addStatusView(Server* server);
         RawLog* addRawLog(Server* server);
+        void disconnectFrontServer();
         void reconnectFrontServer();
         void serverStateChanged(Server* server, Server::State state);
 

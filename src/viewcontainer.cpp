@@ -583,6 +583,17 @@ void ViewContainer::updateFrontView()
                 action->setEnabled(false);
         }
 
+        action = actionCollection()->action("disconnect_server");
+        if (action)
+        {
+            Server* server = view->getServer();
+
+            if (server && server->isConnected())
+                action->setEnabled(true);
+            else
+                action->setEnabled(false);
+        }
+
         if (view->getType() == ChatWindow::Channel)
         {
             action = actionCollection()->action("hide_nicknamelist");
@@ -1984,9 +1995,25 @@ void ViewContainer::reconnectFrontServer()
         m_frontServer->reconnect();
 }
 
+void ViewContainer::disconnectFrontServer()
+{
+    if (m_frontServer && m_frontServer->connected())
+        m_frontServer->disconnect();
+}
+
 void ViewContainer::serverStateChanged(Server* server, Server::State state)
 {
-    KAction* action = actionCollection()->action("reconnect_server");
+    KAction* action = actionCollection()->action("disconnect_server");
+
+    if (action && (m_frontServer == server))
+    {
+        if (state != Server::SSDisconnected)
+            action->setEnabled(true);
+        else
+            action->setEnabled(false);
+    }
+
+    action = actionCollection()->action("reconnect_server");
 
     if (action && (m_frontServer == server))
     {
