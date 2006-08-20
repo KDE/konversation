@@ -8,190 +8,167 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>628</width>
+            <width>700</width>
             <height>708</height>
         </rect>
     </property>
-    <vbox>
+    <grid>
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
         <property name="margin">
             <number>0</number>
         </property>
-        <widget class="QGroupBox">
+        <widget class="KListView" row="0" column="0">
+            <column>
+                <property name="text">
+                    <string>Button Name</string>
+                </property>
+                <property name="clickable">
+                    <bool>true</bool>
+                </property>
+                <property name="resizable">
+                    <bool>true</bool>
+                </property>
+            </column>
+            <column>
+                <property name="text">
+                    <string>Button Action</string>
+                </property>
+                <property name="clickable">
+                    <bool>true</bool>
+                </property>
+                <property name="resizable">
+                    <bool>true</bool>
+                </property>
+            </column>
             <property name="name">
-                <cstring>buttonsGroup</cstring>
+                <cstring>buttonListView</cstring>
             </property>
-            <property name="title">
-                <string>Quick Buttons</string>
+            <property name="acceptDrops">
+                <bool>true</bool>
+            </property>
+            <property name="allColumnsShowFocus">
+                <bool>true</bool>
+            </property>
+            <property name="fullWidth">
+                <bool>true</bool>
+            </property>
+            <property name="itemsRenameable">
+                <bool>false</bool>
+            </property>
+            <property name="dragEnabled">
+                <bool>true</bool>
+            </property>
+        </widget>
+        <widget class="QLayoutWidget" row="0" column="1">
+            <property name="name">
+                <cstring>layout1</cstring>
             </property>
             <vbox>
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QLayoutWidget">
+                <widget class="QPushButton">
                     <property name="name">
-                        <cstring>layout2</cstring>
+                        <cstring>newButton</cstring>
                     </property>
-                    <hbox>
-                        <property name="name">
-                            <cstring>unnamed</cstring>
-                        </property>
-                        <widget class="KListView">
-                            <column>
-                                <property name="text">
-                                    <string>Button Name</string>
-                                </property>
-                                <property name="clickable">
-                                    <bool>true</bool>
-                                </property>
-                                <property name="resizable">
-                                    <bool>true</bool>
-                                </property>
-                            </column>
-                            <column>
-                                <property name="text">
-                                    <string>Button Action</string>
-                                </property>
-                                <property name="clickable">
-                                    <bool>true</bool>
-                                </property>
-                                <property name="resizable">
-                                    <bool>true</bool>
-                                </property>
-                            </column>
-                            <property name="name">
-                                <cstring>buttonListView</cstring>
-                            </property>
-                            <property name="acceptDrops">
-                                <bool>true</bool>
-                            </property>
-                            <property name="allColumnsShowFocus">
-                                <bool>true</bool>
-                            </property>
-                            <property name="fullWidth">
-                                <bool>true</bool>
-                            </property>
-                            <property name="itemsRenameable">
-                                <bool>false</bool>
-                            </property>
-                            <property name="dragEnabled">
-                                <bool>true</bool>
-                            </property>
-                        </widget>
-                        <widget class="QLayoutWidget">
-                            <property name="name">
-                                <cstring>layout1</cstring>
-                            </property>
-                            <vbox>
-                                <property name="name">
-                                    <cstring>unnamed</cstring>
-                                </property>
-                                <widget class="QPushButton">
-                                    <property name="name">
-                                        <cstring>newButton</cstring>
-                                    </property>
-                                    <property name="text">
-                                        <string>New</string>
-                                    </property>
-                                </widget>
-                                <widget class="QPushButton">
-                                    <property name="name">
-                                        <cstring>removeButton</cstring>
-                                    </property>
-                                    <property name="text">
-                                        <string>Remove</string>
-                                    </property>
-                                </widget>
-                                <spacer>
-                                    <property name="name">
-                                        <cstring>spacer1</cstring>
-                                    </property>
-                                    <property name="orientation">
-                                        <enum>Vertical</enum>
-                                    </property>
-                                    <property name="sizeType">
-                                        <enum>Expanding</enum>
-                                    </property>
-                                    <property name="sizeHint">
-                                        <size>
-                                            <width>20</width>
-                                            <height>230</height>
-                                        </size>
-                                    </property>
-                                </spacer>
-                            </vbox>
-                        </widget>
-                    </hbox>
+                    <property name="text">
+                        <string>New</string>
+                    </property>
                 </widget>
-                <widget class="QLayoutWidget">
+                <widget class="QPushButton">
                     <property name="name">
-                        <cstring>layout3</cstring>
+                        <cstring>removeButton</cstring>
                     </property>
-                    <grid>
-                        <property name="name">
-                            <cstring>unnamed</cstring>
-                        </property>
-                        <widget class="KLineEdit" row="1" column="1">
-                            <property name="name">
-                                <cstring>actionInput</cstring>
-                            </property>
-                            <property name="enabled">
-                                <bool>false</bool>
-                            </property>
-                            <property name="sizePolicy">
-                                <sizepolicy>
-                                    <hsizetype>7</hsizetype>
-                                    <vsizetype>0</vsizetype>
-                                    <horstretch>0</horstretch>
-                                    <verstretch>0</verstretch>
-                                </sizepolicy>
-                            </property>
-                        </widget>
-                        <widget class="KLineEdit" row="0" column="1">
-                            <property name="name">
-                                <cstring>nameInput</cstring>
-                            </property>
-                            <property name="enabled">
-                                <bool>false</bool>
-                            </property>
-                            <property name="sizePolicy">
-                                <sizepolicy>
-                                    <hsizetype>7</hsizetype>
-                                    <vsizetype>0</vsizetype>
-                                    <horstretch>0</horstretch>
-                                    <verstretch>0</verstretch>
-                                </sizepolicy>
-                            </property>
-                        </widget>
-                        <widget class="QLabel" row="1" column="0">
-                            <property name="name">
-                                <cstring>actionLabel</cstring>
-                            </property>
-                            <property name="enabled">
-                                <bool>false</bool>
-                            </property>
-                            <property name="text">
-                                <string>Button action:</string>
-                            </property>
-                        </widget>
-                        <widget class="QLabel" row="0" column="0">
-                            <property name="name">
-                                <cstring>nameLabel</cstring>
-                            </property>
-                            <property name="enabled">
-                                <bool>false</bool>
-                            </property>
-                            <property name="text">
-                                <string>Button name:</string>
-                            </property>
-                        </widget>
-                    </grid>
+                    <property name="text">
+                        <string>Remove</string>
+                    </property>
                 </widget>
+                <spacer>
+                    <property name="name">
+                        <cstring>spacer1</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Vertical</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Expanding</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>20</width>
+                            <height>230</height>
+                        </size>
+                    </property>
+                </spacer>
             </vbox>
         </widget>
-        <widget class="QGroupBox">
+        <widget class="QLayoutWidget" row="1" column="0" rowspan="1" colspan="2">
+            <property name="name">
+                <cstring>layout3</cstring>
+            </property>
+            <grid>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="KLineEdit" row="1" column="1">
+                    <property name="name">
+                        <cstring>actionInput</cstring>
+                    </property>
+                    <property name="enabled">
+                        <bool>false</bool>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>7</hsizetype>
+                            <vsizetype>0</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                </widget>
+                <widget class="KLineEdit" row="0" column="1">
+                    <property name="name">
+                        <cstring>nameInput</cstring>
+                    </property>
+                    <property name="enabled">
+                        <bool>false</bool>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>7</hsizetype>
+                            <vsizetype>0</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                </widget>
+                <widget class="QLabel" row="1" column="0">
+                    <property name="name">
+                        <cstring>actionLabel</cstring>
+                    </property>
+                    <property name="enabled">
+                        <bool>false</bool>
+                    </property>
+                    <property name="text">
+                        <string>Button action:</string>
+                    </property>
+                </widget>
+                <widget class="QLabel" row="0" column="0">
+                    <property name="name">
+                        <cstring>nameLabel</cstring>
+                    </property>
+                    <property name="enabled">
+                        <bool>false</bool>
+                    </property>
+                    <property name="text">
+                        <string>Button name:</string>
+                    </property>
+                </widget>
+            </grid>
+        </widget>
+        <widget class="QGroupBox" row="2" column="0" rowspan="1" colspan="2">
             <property name="name">
                 <cstring>groupBox3</cstring>
             </property>
@@ -206,6 +183,14 @@
                     <property name="name">
                         <cstring>placeholderHelpLabel</cstring>
                     </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>7</hsizetype>
+                            <vsizetype>5</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
                     <property name="text">
                         <string>%c: Current channel
 %k: Channel password (not functional yet)
@@ -217,7 +202,7 @@
                 </widget>
             </hbox>
         </widget>
-    </vbox>
+    </grid>
 </widget>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
