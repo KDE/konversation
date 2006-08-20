@@ -35,9 +35,9 @@ Autoreplace_Config::Autoreplace_Config(QWidget* parent, const char* name)
   m_newItemSelected=false;
 
   // populate combobox
-  directionCombo->insertItem(i18n("Output"),DIRECTION_OUTPUT);
-  directionCombo->insertItem(i18n("Input"),DIRECTION_INPUT);
-  directionCombo->insertItem(i18n("Input/Output"),DIRECTION_BOTH);
+  directionCombo->insertItem(i18n("Outgoing"),DIRECTION_OUTPUT);
+  directionCombo->insertItem(i18n("Incoming"),DIRECTION_INPUT);
+  directionCombo->insertItem(i18n("Both"),DIRECTION_BOTH);
 
   // populate listview
   loadSettings();
