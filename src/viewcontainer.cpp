@@ -1091,7 +1091,9 @@ void ViewContainer::addView(ChatWindow* view, const QString& label, bool weiniti
             break;
 
         case ChatWindow::RawLog:
-            if (Preferences::closeButtons())
+            if (Preferences::tabNotificationsLeds())
+                iconSet = images->getSystemLed(false);
+            else if (Preferences::closeButtons())
                 iconSet = images->getCloseIcon();
 
             for (int sindex = 0; sindex < m_tabWidget->count(); sindex++)
@@ -1303,7 +1305,7 @@ void ViewContainer::switchView(QWidget* newView)
             ChatWindow::WindowType viewType = view->getType();
             notifyAction->setEnabled(viewType == ChatWindow::Channel || viewType == ChatWindow::Query ||
                                      viewType == ChatWindow::Status || viewType == ChatWindow::Konsole ||
-                                     viewType == ChatWindow::DccPanel);
+                                     viewType == ChatWindow::DccPanel || viewType == ChatWindow::RawLog);
             notifyAction->setChecked(view->notificationsEnabled());
         }
 
@@ -1555,7 +1557,7 @@ void ViewContainer::showViewContextMenu(QWidget* tab, const QPoint& pos)
             ChatWindow::WindowType viewType = view->getType();
             notifyAction->setEnabled(viewType == ChatWindow::Channel || viewType == ChatWindow::Query ||
                                      viewType == ChatWindow::Status || viewType == ChatWindow::Konsole ||
-                                     viewType == ChatWindow::DccPanel);
+                                     viewType == ChatWindow::DccPanel || viewType == ChatWindow::RawLog);
             notifyAction->setChecked(view->notificationsEnabled());
         }
 
@@ -1593,7 +1595,7 @@ void ViewContainer::showViewContextMenu(QWidget* tab, const QPoint& pos)
                 ChatWindow::WindowType viewType = view->getType();
                 notifyAction->setEnabled(viewType == ChatWindow::Channel || viewType == ChatWindow::Query ||
                                          viewType == ChatWindow::Status || viewType == ChatWindow::Konsole ||
-                                         viewType == ChatWindow::DccPanel);
+                                         viewType == ChatWindow::DccPanel || ChatWindow::RawLog);
                 notifyAction->setChecked(view->notificationsEnabled());
             }
 
@@ -1992,7 +1994,10 @@ RawLog* ViewContainer::addRawLog(Server* server)
     RawLog* rawLog=new RawLog(m_tabWidget);
     rawLog->setServer(server);
     rawLog->setLog(false);
+    rawLog->setNotificationsEnabled(server->serverGroupSettings()->enableNotifications());
     addView(rawLog, i18n("Raw Log"));
+
+    connect(rawLog, SIGNAL(updateTabNotification(ChatWindow*,const Konversation::TabNotifyType&)), this, SLOT(setViewNotification(ChatWindow*,const Konversation::TabNotifyType&)));
 
     return rawLog;
 }

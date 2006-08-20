@@ -7,7 +7,7 @@
 
 /*
   RawLog.cpp  -  provides a view to the raw protocol
-  begin:     Die M� 18 2003
+  begin:     Tue Mar 18 2003
   copyright: (C) 2003 by Dario Abatianni
   email:     eisfuchs@tigress.com
 */
@@ -28,6 +28,9 @@ RawLog::RawLog(QWidget* parent) : ChatWindow(parent)
     setType(ChatWindow::RawLog);
     IRCViewBox* ircBox = new IRCViewBox(this, 0);
     setTextView(ircBox->ircView());               // Server will be set later in setServer()
+
+    connect(getTextView(), SIGNAL(updateTabNotification(Konversation::TabNotifyType)),
+        this, SLOT(morphNotification()));
 }
 
 RawLog::~RawLog()
@@ -54,6 +57,11 @@ void RawLog::updateAppearance()
     }
 
     ChatWindow::updateAppearance();
+}
+
+void RawLog::morphNotification()
+{
+    activateTabNotification(Konversation::tnfSystem);
 }
 
 bool RawLog::closeYourself()

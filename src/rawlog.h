@@ -7,7 +7,7 @@
 
 /*
   RawLog.h  -  provides a view to the raw protocol
-  begin:     Die Mär 18 2003
+  begin:     Die Mï¿½ 18 2003
   copyright: (C) 2003 by Dario Abatianni
   email:     eisfuchs@tigress.com
 */
@@ -34,6 +34,7 @@ class RawLog : public ChatWindow
 
     public slots:
         void updateAppearance();
+        void morphNotification();
 
     protected:
         /** Called from ChatWindow adjustFocus */
