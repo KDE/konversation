@@ -327,6 +327,8 @@ bool KonversationMainWindow::queryClose()
         return false;
     }
 
+    m_viewContainer->silenceViews();
+
     // send quit to all servers
     emit quitServer();
 

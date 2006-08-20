@@ -299,6 +299,12 @@ void ViewContainer::syncTabBarToTree()
     updateSwitchViewAction();
 }
 
+void ViewContainer::silenceViews()
+{
+    for (int i = 0; i < m_tabWidget->count(); ++i)
+        m_tabWidget->page(i)->blockSignals(true);
+}
+
 void ViewContainer::updateAppearance()
 {
     if (Preferences::tabPlacement()==Preferences::Left && m_viewTree == 0)
@@ -757,7 +763,7 @@ void ViewContainer::updateViewIcons()
 
 void ViewContainer::setViewNotification(ChatWindow* view, const Konversation::TabNotifyType& type)
 {
-    if(!view || view == m_tabWidget->currentPage())
+    if (!view || m_tabWidget->count() && view == m_tabWidget->currentPage())
         return;
 
     if (!Preferences::tabNotificationsLeds() && !Preferences::tabNotificationsText())
