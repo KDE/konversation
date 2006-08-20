@@ -58,7 +58,7 @@ def pretty_print(title, artist='', album=''):
     elif album:
         return "/me is listening to \"%s\" on %s"%(title,album)
     else:
-        return "/me is listening to \"%s\" "%(title)
+        return "/me is listening to \"%s\""%(title)
 
 if __name__ == "__main__":
     port = sys.argv[1]
