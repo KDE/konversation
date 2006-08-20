@@ -777,7 +777,7 @@ void ViewContainer::updateViewIcons()
 
 void ViewContainer::setViewNotification(ChatWindow* view, const Konversation::TabNotifyType& type)
 {
-    if (!view || m_tabWidget->count() && view == m_tabWidget->currentPage())
+    if (!view || view == m_tabWidget->currentPage())
         return;
 
     if (!Preferences::tabNotificationsLeds() && !Preferences::tabNotificationsText())
