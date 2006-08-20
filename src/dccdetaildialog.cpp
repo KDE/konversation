@@ -52,7 +52,7 @@ DccDetailDialog::DccDetailDialog( DccTransfer* item )
     if ( m_item->m_dccType == DccTransfer::Send )
         localFileURLHeader->setText( i18n("Local Path:") );
     else
-        localFileURLHeader->setText( i18n("Save to:") );
+        localFileURLHeader->setText( i18n("Saved to:") );
     QHBox* localFileURLBox = new QHBox( infoFrame );
     localFileURLBox->setSpacing( spacingHint() );
     m_localFileURL = new KURLRequester( m_item->getFileURL().prettyURL(), localFileURLBox );
@@ -82,7 +82,7 @@ DccDetailDialog::DccDetailDialog( DccTransfer* item )
     m_self = 0;
     if ( m_item->m_dccType == DccTransfer::Send )
     {
-        selfHeader = new QLabel( i18n("Self"), infoFrame );
+        selfHeader = new QLabel( i18n("Self:"), infoFrame );
         selfHeader->setAlignment( AlignHCenter | AlignVCenter );
         m_self = new KLineEdit( infoFrame );
         m_self->setFocusPolicy( ClickFocus );
@@ -203,7 +203,7 @@ DccDetailDialog::~DccDetailDialog()
 void DccDetailDialog::updateView() // public
 {
     // caption
-    setCaption( i18n( "DCC %1 : %2" ).arg( m_item->getTypeText() ).arg( m_item->m_fileName ) );
+    setCaption( i18n( "DCC %1: %2" ).arg( m_item->getTypeText() ).arg( m_item->m_fileName ) );
 
     // information
 
