@@ -1858,7 +1858,7 @@ void Server::resumeDccGetTransfer(const QString &sourceNick, const QStringList &
     {
         // overcome mIRCs brain-dead "file.ext" substitution
         appendMessageToFrontmost( i18n( "DCC" ),
-                                  i18n( "Resuming download of \"%1\" to %2 starting at %3% of %4..." )
+                                  i18n( "Resuming download of \"%1\" from %2 starting at %3% of %4..." )
                                   .arg( dccTransfer->getFileName(),
                                         sourceNick,
                                         QString::number( dccTransfer->getProgress() ),
