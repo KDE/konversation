@@ -19,14 +19,19 @@ class QComboBox;
 
 class DCC_Config : public DCC_ConfigUI
 {
- Q_OBJECT
+    Q_OBJECT
 
- public:
-  DCC_Config(QWidget* parent, const char* name);
-  ~DCC_Config();
+    public:
+        DCC_Config(QWidget* parent, const char* name);
+        ~DCC_Config();
 
-protected slots:
-  virtual void languageChange();
-  void dccMethodChanged(int index);
+    public slots:
+        virtual void show();
+
+
+    protected slots:
+        virtual void languageChange();
+        void dccMethodChanged(int index);
 };
+
 #endif

@@ -21,6 +21,15 @@ DCC_Config::DCC_Config(QWidget *parent, const char* name) :
 {
     languageChange();
     connect(kcfg_DccMethodToGetOwnIp, SIGNAL(activated(int)), this, SLOT(dccMethodChanged(int)));          dccMethodChanged(kcfg_DccMethodToGetOwnIp->currentItem()); 
+
+
+}
+
+void DCC_Config::show()
+{
+    QWidget::show();
+
+    kcfg_DccSpecificOwnIp->setEnabled(kcfg_DccMethodToGetOwnIp->currentItem() == 2);
 }
 
 void DCC_Config::dccMethodChanged(int index)
