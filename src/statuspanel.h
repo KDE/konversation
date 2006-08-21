@@ -39,6 +39,8 @@ class StatusPanel : public ChatWindow
         StatusPanel(QWidget* parent);
         ~StatusPanel();
 
+        virtual void setName(const QString& newName);
+
         virtual QString getTextInLine();
         virtual bool closeYourself();
         virtual bool canBeFrontView();
@@ -47,7 +49,6 @@ class StatusPanel : public ChatWindow
         virtual void setChannelEncoding(const QString& encoding);
         virtual QString getChannelEncoding();
         virtual QString getChannelEncodingDefaultDesc();
-        virtual void setName(const QString& newName) { ChatWindow::setName(newName); }
         virtual void emitUpdateInfo();
 
         virtual void setIdentity(const Identity *newIdentity);

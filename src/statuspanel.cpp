@@ -61,7 +61,6 @@ StatusPanel::StatusPanel(QWidget* parent) : ChatWindow(parent)
     statusInput->installEventFilter(this);
 
     setLog(Preferences::log());
-    setLogfileName("konversation");
 
     connect(getTextView(),SIGNAL (gotFocus()),statusInput,SLOT (setFocus()) );
 
@@ -191,10 +190,20 @@ void StatusPanel::updateAppearance()
     ChatWindow::updateAppearance();
 }
 
+void StatusPanel::setName(const QString& newName)
+{
+    ChatWindow::setName(newName);
+    setLogfileName(newName.lower());
+}
+
 void StatusPanel::updateName()
 {
     if (getServer()->serverGroupSettings())
-        setName(getServer()->serverGroupSettings()->name());
+    {
+        QString newName = getServer()->serverGroupSettings()->name();
+        setName(newName);
+        setLogfileName(newName.lower());
+    }
 }
 
 void StatusPanel::sendFileMenu()
