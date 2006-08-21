@@ -14,8 +14,8 @@ the Free Software Foundation; either version 2 of the License, or
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>377</width>
-            <height>463</height>
+            <width>374</width>
+            <height>310</height>
         </rect>
     </property>
     <property name="sizePolicy">
@@ -39,7 +39,7 @@ the Free Software Foundation; either version 2 of the License, or
         <property name="margin">
             <number>0</number>
         </property>
-        <widget class="KListView" row="0" column="0">
+        <widget class="KListView" row="0" column="0" rowspan="1" colspan="2">
             <column>
                 <property name="text">
                     <string>Pattern</string>
@@ -69,56 +69,18 @@ the Free Software Foundation; either version 2 of the License, or
                 <bool>true</bool>
             </property>
         </widget>
-        <widget class="QLayoutWidget" row="0" column="1">
+        <widget class="QLabel" row="1" column="0">
             <property name="name">
-                <cstring>layout20</cstring>
+                <cstring>textLabel2</cstring>
             </property>
-            <vbox>
-                <property name="name">
-                    <cstring>unnamed</cstring>
-                </property>
-                <widget class="KPushButton">
-                    <property name="name">
-                        <cstring>newButton</cstring>
-                    </property>
-                    <property name="text">
-                        <string>&amp;New</string>
-                    </property>
-                </widget>
-                <widget class="KPushButton">
-                    <property name="name">
-                        <cstring>removeButton</cstring>
-                    </property>
-                    <property name="text">
-                        <string>&amp;Remove</string>
-                    </property>
-                </widget>
-                <widget class="KPushButton">
-                    <property name="name">
-                        <cstring>removeAllButton</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Remove &amp;All</string>
-                    </property>
-                </widget>
-                <spacer>
-                    <property name="name">
-                        <cstring>spacer9</cstring>
-                    </property>
-                    <property name="orientation">
-                        <enum>Vertical</enum>
-                    </property>
-                    <property name="sizeType">
-                        <enum>Expanding</enum>
-                    </property>
-                    <property name="sizeHint">
-                        <size>
-                            <width>20</width>
-                            <height>40</height>
-                        </size>
-                    </property>
-                </spacer>
-            </vbox>
+            <property name="text">
+                <string>Pattern:</string>
+            </property>
+        </widget>
+        <widget class="QLineEdit" row="1" column="1">
+            <property name="name">
+                <cstring>txtPattern</cstring>
+            </property>
         </widget>
         <widget class="QGroupBox" row="2" column="0" rowspan="1" colspan="2">
             <property name="name">
@@ -181,28 +143,56 @@ the Free Software Foundation; either version 2 of the License, or
                 </widget>
             </grid>
         </widget>
-        <widget class="QLayoutWidget" row="1" column="0" rowspan="1" colspan="2">
+        <widget class="QLayoutWidget" row="0" column="2" rowspan="3" colspan="1">
             <property name="name">
-                <cstring>layout19</cstring>
+                <cstring>layout20</cstring>
             </property>
-            <hbox>
+            <vbox>
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QLabel">
+                <widget class="KPushButton">
                     <property name="name">
-                        <cstring>textLabel2</cstring>
+                        <cstring>newButton</cstring>
                     </property>
                     <property name="text">
-                        <string>Pattern:</string>
+                        <string>&amp;New</string>
                     </property>
                 </widget>
-                <widget class="QLineEdit">
+                <widget class="KPushButton">
                     <property name="name">
-                        <cstring>txtPattern</cstring>
+                        <cstring>removeButton</cstring>
+                    </property>
+                    <property name="text">
+                        <string>&amp;Remove</string>
                     </property>
                 </widget>
-            </hbox>
+                <widget class="KPushButton">
+                    <property name="name">
+                        <cstring>removeAllButton</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Remove &amp;All</string>
+                    </property>
+                </widget>
+                <spacer>
+                    <property name="name">
+                        <cstring>spacer9</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Vertical</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Expanding</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>20</width>
+                            <height>40</height>
+                        </size>
+                    </property>
+                </spacer>
+            </vbox>
         </widget>
     </grid>
 </widget>

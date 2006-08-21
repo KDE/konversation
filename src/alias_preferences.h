@@ -6,7 +6,6 @@
 */
 
 /*
-  Copyright (C) 2005 Ismail Donmez <ismail@kde.org>
   Copyright (C) 2006 Dario Abatianni <eisfuchs@tigress.com>
   Copyright (C) 2006 John Tapsell <johnflux@gmail.com>
 */
@@ -19,32 +18,34 @@
 
 class Alias_Config : public Alias_ConfigUI, public KonviSettingsPage
 {
-  Q_OBJECT
+    Q_OBJECT
 
- public:
-  Alias_Config(QWidget* parent, const char* name = 0);
-  ~Alias_Config();
+    public:
+        Alias_Config(QWidget* parent, const char* name = 0);
+        ~Alias_Config();
 
-  virtual void restorePageToDefaults();
-  virtual void saveSettings();
-  virtual void loadSettings();
+        virtual void saveSettings();
+        virtual void loadSettings();
+        virtual void restorePageToDefaults();
+        virtual bool hasChanged();
 
-  virtual bool hasChanged();
+    signals:
+        void modified();
 
- protected slots:
-  void newAlias();
-  void removeAlias();
-  void itemRenamed(QListViewItem* item);
+    protected slots:
+        void entrySelected(QListViewItem* aliasEntry);
+        void nameChanged(const QString& newName);
+        void actionChanged(const QString& newAction);
+        void addEntry();
+        void removeEntry();
 
- protected:
-  void setAliases(const QStringList &aliasList);
-  QStringList currentList();
+    protected:
+        void setAliasListView(const QStringList& aliasList);
 
- private:
-  QStringList m_defaultAliasList;  // default aliases
-  QStringList m_oldAliasList;      // alias list before last Apply
+        bool m_newItemSelected;
 
-signals:
-    void modified();
+        QStringList m_oldAliasList;
+        QStringList currentAliasList();
 };
+
 #endif

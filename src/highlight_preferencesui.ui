@@ -8,8 +8,8 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>511</width>
-            <height>547</height>
+            <width>367</width>
+            <height>356</height>
         </rect>
     </property>
     <grid>
@@ -19,30 +19,6 @@
         <property name="margin">
             <number>0</number>
         </property>
-        <widget class="QCheckBox" row="1" column="0" rowspan="1" colspan="4">
-            <property name="name">
-                <cstring>kcfg_HighlightSoundsEnabled</cstring>
-            </property>
-            <property name="text">
-                <string>Ena&amp;ble sound for highlighted list items</string>
-            </property>
-        </widget>
-        <widget class="QCheckBox" row="2" column="0" rowspan="1" colspan="2">
-            <property name="name">
-                <cstring>kcfg_HighlightNick</cstring>
-            </property>
-            <property name="text">
-                <string>Alwa&amp;ys highlight own current nick:</string>
-            </property>
-        </widget>
-        <widget class="QCheckBox" row="3" column="0">
-            <property name="name">
-                <cstring>kcfg_HighlightOwnLines</cstring>
-            </property>
-            <property name="text">
-                <string>Always highlight own &amp;lines:</string>
-            </property>
-        </widget>
         <spacer row="2" column="2">
             <property name="name">
                 <cstring>spacer1</cstring>
@@ -77,12 +53,28 @@
                 </size>
             </property>
         </spacer>
-        <widget class="KColorButton" row="2" column="3">
+        <widget class="QCheckBox" row="1" column="0" rowspan="1" colspan="4">
             <property name="name">
-                <cstring>kcfg_HighlightNickColor</cstring>
+                <cstring>kcfg_HighlightSoundsEnabled</cstring>
             </property>
             <property name="text">
-                <string></string>
+                <string>Ena&amp;ble sound for highlighted list items</string>
+            </property>
+        </widget>
+        <widget class="QCheckBox" row="2" column="0" rowspan="1" colspan="2">
+            <property name="name">
+                <cstring>kcfg_HighlightNick</cstring>
+            </property>
+            <property name="text">
+                <string>Alwa&amp;ys highlight own current nick:</string>
+            </property>
+        </widget>
+        <widget class="QCheckBox" row="3" column="0">
+            <property name="name">
+                <cstring>kcfg_HighlightOwnLines</cstring>
+            </property>
+            <property name="text">
+                <string>Always highlight own &amp;lines:</string>
             </property>
         </widget>
         <widget class="KColorButton" row="3" column="3">
@@ -165,66 +157,7 @@
                         <bool>true</bool>
                     </property>
                 </widget>
-                <widget class="QLayoutWidget" row="0" column="1">
-                    <property name="name">
-                        <cstring>layout13</cstring>
-                    </property>
-                    <vbox>
-                        <property name="name">
-                            <cstring>unnamed</cstring>
-                        </property>
-                        <widget class="KPushButton">
-                            <property name="name">
-                                <cstring>newButton</cstring>
-                            </property>
-                            <property name="sizePolicy">
-                                <sizepolicy>
-                                    <hsizetype>1</hsizetype>
-                                    <vsizetype>0</vsizetype>
-                                    <horstretch>0</horstretch>
-                                    <verstretch>0</verstretch>
-                                </sizepolicy>
-                            </property>
-                            <property name="text">
-                                <string>&amp;New</string>
-                            </property>
-                        </widget>
-                        <widget class="KPushButton">
-                            <property name="name">
-                                <cstring>removeButton</cstring>
-                            </property>
-                            <property name="sizePolicy">
-                                <sizepolicy>
-                                    <hsizetype>1</hsizetype>
-                                    <vsizetype>0</vsizetype>
-                                    <horstretch>0</horstretch>
-                                    <verstretch>0</verstretch>
-                                </sizepolicy>
-                            </property>
-                            <property name="text">
-                                <string>&amp;Remove</string>
-                            </property>
-                        </widget>
-                        <spacer>
-                            <property name="name">
-                                <cstring>spacer27</cstring>
-                            </property>
-                            <property name="orientation">
-                                <enum>Vertical</enum>
-                            </property>
-                            <property name="sizeType">
-                                <enum>Expanding</enum>
-                            </property>
-                            <property name="sizeHint">
-                                <size>
-                                    <width>20</width>
-                                    <height>250</height>
-                                </size>
-                            </property>
-                        </spacer>
-                    </vbox>
-                </widget>
-                <widget class="QLayoutWidget" row="1" column="0" rowspan="1" colspan="2">
+                <widget class="QLayoutWidget" row="1" column="0">
                     <property name="name">
                         <cstring>layout15</cstring>
                     </property>
@@ -383,7 +316,74 @@
                         </widget>
                     </grid>
                 </widget>
+                <widget class="QLayoutWidget" row="0" column="1" rowspan="2" colspan="1">
+                    <property name="name">
+                        <cstring>layout13</cstring>
+                    </property>
+                    <vbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="KPushButton">
+                            <property name="name">
+                                <cstring>newButton</cstring>
+                            </property>
+                            <property name="sizePolicy">
+                                <sizepolicy>
+                                    <hsizetype>1</hsizetype>
+                                    <vsizetype>0</vsizetype>
+                                    <horstretch>0</horstretch>
+                                    <verstretch>0</verstretch>
+                                </sizepolicy>
+                            </property>
+                            <property name="text">
+                                <string>&amp;New</string>
+                            </property>
+                        </widget>
+                        <widget class="KPushButton">
+                            <property name="name">
+                                <cstring>removeButton</cstring>
+                            </property>
+                            <property name="sizePolicy">
+                                <sizepolicy>
+                                    <hsizetype>1</hsizetype>
+                                    <vsizetype>0</vsizetype>
+                                    <horstretch>0</horstretch>
+                                    <verstretch>0</verstretch>
+                                </sizepolicy>
+                            </property>
+                            <property name="text">
+                                <string>&amp;Remove</string>
+                            </property>
+                        </widget>
+                        <spacer>
+                            <property name="name">
+                                <cstring>spacer27</cstring>
+                            </property>
+                            <property name="orientation">
+                                <enum>Vertical</enum>
+                            </property>
+                            <property name="sizeType">
+                                <enum>Expanding</enum>
+                            </property>
+                            <property name="sizeHint">
+                                <size>
+                                    <width>20</width>
+                                    <height>250</height>
+                                </size>
+                            </property>
+                        </spacer>
+                    </vbox>
+                </widget>
             </grid>
+        </widget>
+        <widget class="KColorButton" row="2" column="3">
+            <property name="name">
+                <cstring>kcfg_HighlightNickColor</cstring>
+            </property>
+            <property name="text">
+                <string></string>
+            </property>
         </widget>
     </grid>
 </widget>
@@ -404,10 +404,7 @@
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
     <includehint>kcolorbutton.h</includehint>
-    <includehint>kcolorbutton.h</includehint>
     <includehint>klistview.h</includehint>
-    <includehint>kpushbutton.h</includehint>
-    <includehint>kpushbutton.h</includehint>
     <includehint>klineedit.h</includehint>
     <includehint>kpushbutton.h</includehint>
     <includehint>kcolorcombo.h</includehint>
@@ -415,5 +412,8 @@
     <includehint>klineedit.h</includehint>
     <includehint>kpushbutton.h</includehint>
     <includehint>klineedit.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kpushbutton.h</includehint>
+    <includehint>kcolorbutton.h</includehint>
 </includehints>
 </UI>
