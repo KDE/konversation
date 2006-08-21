@@ -1188,8 +1188,26 @@ QString KonversationApplication::doAutoreplace(const QString& text,bool output)
       }
       else
       {
-        // simply replace
-        line.replace(pattern,replacement);
+        QRegExp needleReg = "\\b" + pattern + "\\b";
+        // set pattern case insensitive
+        needleReg.setCaseSensitive(false);
+        // find matches
+        if(line.find(needleReg)!=-1)
+        {
+          // prepare list of captured ( ) groups
+          QStringList captures;
+          // remember captured patterns
+          captures=needleReg.capturedTexts();
+
+          // replace %0 - %9 in regex groups
+          for(unsigned int capture=0;capture<captures.count();capture++)
+          {
+            replacement.replace(QString("%%1").arg(capture),captures[capture]);
+          } // for
+          replacement.replace(QRegExp("%[0-9]"),QString::null);
+          // replace input with replacement
+          line.replace(needleReg,replacement);
+        }
       }
     }
   } // for
