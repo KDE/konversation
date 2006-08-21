@@ -64,6 +64,7 @@ class IRCInput : public KTextEdit
     protected slots:
         void getHistory(bool up);
         void insertCompletion(const QString& nick);
+        void disableSpellChecking();
 
     protected:
         bool eventFilter(QObject *object,QEvent *event);
@@ -73,8 +74,8 @@ class IRCInput : public KTextEdit
 
         virtual void keyPressEvent(QKeyEvent* e);
         virtual QPopupMenu *createPopupMenu( const QPoint& pos );
-        virtual void showEvent(QShowEvent* event);
-        virtual void hideEvent(QHideEvent* event);
+        virtual void showEvent(QShowEvent* e);
+        virtual void hideEvent(QHideEvent* e);
 
         QStringList historyList;
         unsigned int lineNum;
@@ -86,5 +87,7 @@ class IRCInput : public KTextEdit
         bool m_multiRow;
         int m_lastHeight; //essentially corresponds to qtextbrowser::doc->height()
         int m_qtBoxPadding; //see comment in constructor
+
+        QTimer* m_disableSpellCheckTimer;
 };
 #endif

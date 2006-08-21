@@ -77,20 +77,39 @@ IRCInput::IRCInput(QWidget* parent) : KTextEdit(parent)
 
     QWhatsThis::add(this, i18n("<qt>The input line is where you type messages to be sent the channel, query, or server.  A message sent to a channel is seen by everyone on the channel, whereas a message in a query is sent only to the person in the query with you.<p>You can also send special commands:<br><table><tr><th>/me <i>action</i></th><td>shows up as an action in the channel or query.  For example:  <em>/me sings a song</em> will show up in the channel as 'Nick sings a song'.</td></tr><tr><th>/whois <i>nickname</i></th><td>shows information about this person, including what channels they are in.</td></tr></table><p>For more commands, see the Konversation Handbook.<p>A message can be a maximum of 512 letters long, and cannot contain multiple lines.</qt>"));
 
+    m_disableSpellCheckTimer = new QTimer(this);
+    connect(m_disableSpellCheckTimer, SIGNAL(timeout()), this, SLOT(disableSpellChecking()));
 }
 
 IRCInput::~IRCInput()
 {
 }
 
-void IRCInput::showEvent(QShowEvent* event)
+void IRCInput::showEvent(QShowEvent* /* e */)
 {
+    m_disableSpellCheckTimer->stop();
     setCheckSpellingEnabled(Preferences::spellChecking());
 }
 
-void IRCInput::hideEvent(QHideEvent* event)
+void IRCInput::hideEvent(QHideEvent* /* event */)
 {
     Preferences::setSpellChecking(checkSpellingEnabled());
+
+    // If we disable spell-checking here immediately, tab switching will
+    // be very slow. If we delay it by four seconds, a user would have to
+    // need more than four seconds to switch between all his tabs before
+    // the slowdown starts to occur (show event stops the timer, i.e. wrap-
+    // around is not an issue). Unless he has unlikely amounts of channels,
+    // needing more than five seconds indicates very slow switching speed,
+    // which makes the delay a non-issue to begin with. Hence this fixes
+    // the problem on the surface. In the KDE 4 version, we want to look
+    // into having only one spell-checker instance instead of starting and
+    // stopping at all.
+    m_disableSpellCheckTimer->start(4000, true);
+}
+
+void IRCInput::disableSpellChecking()
+{
     setCheckSpellingEnabled(false);
 }
 
