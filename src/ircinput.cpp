@@ -96,8 +96,8 @@ void IRCInput::hideEvent(QHideEvent* /* event */)
     Preferences::setSpellChecking(checkSpellingEnabled());
 
     // If we disable spell-checking here immediately, tab switching will
-    // be very slow. If we delay it by four seconds, a user would have to
-    // need more than four seconds to switch between all his tabs before
+    // be very slow. If we delay it by five seconds, a user would have to
+    // need more than five seconds to switch between all his tabs before
     // the slowdown starts to occur (show event stops the timer, i.e. wrap-
     // around is not an issue). Unless he has unlikely amounts of channels,
     // needing more than five seconds indicates very slow switching speed,
@@ -105,7 +105,7 @@ void IRCInput::hideEvent(QHideEvent* /* event */)
     // the problem on the surface. In the KDE 4 version, we want to look
     // into having only one spell-checker instance instead of starting and
     // stopping at all.
-    m_disableSpellCheckTimer->start(4000, true);
+    m_disableSpellCheckTimer->start(5000, true);
 }
 
 void IRCInput::disableSpellChecking()
