@@ -91,7 +91,7 @@ ViewContainer::~ViewContainer()
 
 void ViewContainer::initializeSplitterSizes()
 {
-    if (!m_viewTree->isHidden())
+    if (m_viewTree && !m_viewTree->isHidden())
     {
         QValueList<int> sizes = Preferences::treeSplitterSizes();
 
