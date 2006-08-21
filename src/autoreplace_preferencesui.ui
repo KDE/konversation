@@ -181,7 +181,7 @@
         <widget class="KListView" row="0" column="0">
             <column>
                 <property name="text">
-                    <string>RE</string>
+                    <string>RegEx</string>
                 </property>
                 <property name="clickable">
                     <bool>true</bool>
