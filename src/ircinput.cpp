@@ -83,6 +83,19 @@ IRCInput::~IRCInput()
 {
 }
 
+void IRCInput::showEvent(QShowEvent* event)
+{
+    kdDebug() << "shown" << endl;
+    setCheckSpellingEnabled(Preferences::spellChecking());
+}
+
+void IRCInput::hideEvent(QHideEvent* event)
+{
+    kdDebug() << "hidden" << endl;
+    Preferences::setSpellChecking(checkSpellingEnabled());
+    setCheckSpellingEnabled(false);
+}
+
 void IRCInput::updateAppearance()
 {
     m_multiRow = Preferences::useMultiRowInputBox();

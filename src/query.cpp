@@ -95,7 +95,6 @@ Query::Query(QWidget* parent) : ChatWindow(parent)
 
     getTextView()->installEventFilter(queryInput);
     queryInput->installEventFilter(this);
-    queryInput->setCheckSpellingEnabled(Preferences::spellChecking());
 
     // connect the signals and slots
     connect(queryInput,SIGNAL (submit()),this,SLOT (queryTextEntered()) );
@@ -361,16 +360,8 @@ void Query::sendFileMenu()
     emit sendFile(getName());
 }
 
-void Query::lostFocus()
-{
-    Preferences::setSpellChecking(queryInput->checkSpellingEnabled());
-    //Turn off spell checking when not focused to save some memory.
-    queryInput->setCheckSpellingEnabled(false);
-}
-
 void Query::childAdjustFocus()
 {
-    queryInput->setCheckSpellingEnabled(Preferences::spellChecking());
     queryInput->setFocus();
 }
 

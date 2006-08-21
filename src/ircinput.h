@@ -73,6 +73,8 @@ class IRCInput : public KTextEdit
 
         virtual void keyPressEvent(QKeyEvent* e);
         virtual QPopupMenu *createPopupMenu( const QPoint& pos );
+        virtual void showEvent(QShowEvent* event);
+        virtual void hideEvent(QHideEvent* event);
 
         QStringList historyList;
         unsigned int lineNum;

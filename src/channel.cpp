@@ -231,8 +231,6 @@ Channel::Channel(QWidget* parent)
     topicLine->installEventFilter(channelInput);
     channelInput->installEventFilter(this);
 
-    channelInput->setCheckSpellingEnabled(Preferences::spellChecking());
-
     // Set the widgets size policies
     m_topicButton->setSizePolicy(QSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed));
     topicLine->setSizePolicy(QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum));
@@ -2162,18 +2160,10 @@ void Channel::addPendingNickList(const QStringList& pendingChannelNickList)
         m_processingTimer->start(0);
 }
 
-void Channel::lostFocus()
-{
-    Preferences::setSpellChecking(channelInput->checkSpellingEnabled());
-    //Turn off spell checking when not focused to save some memory.
-    channelInput->setCheckSpellingEnabled(false);
-}
-
 void Channel::childAdjustFocus()
 {
     channelInput->setFocus();
-    channelInput->setCheckSpellingEnabled(Preferences::spellChecking());
-    refreshModeButtons(); //not really needed i think
+    refreshModeButtons();
 }
 
 void Channel::refreshModeButtons()

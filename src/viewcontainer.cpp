@@ -1316,7 +1316,6 @@ void ViewContainer::switchView(QWidget* newView)
     if (m_frontView)
     {
         m_frontView->resetTabNotification();
-        m_frontView->lostFocus();
         m_previousFrontView = m_frontView;
 
         disconnect(m_frontView, SIGNAL(updateInfo(const QString &)), this, SIGNAL(setStatusBarInfoLabel(const QString &)));

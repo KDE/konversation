@@ -157,10 +157,6 @@ class ChatWindow : public QVBox
          * You can call this manually to focus this tab.
          */
         void adjustFocus();
-	/**
-	 * This is called when a chat window is about to lose focus.
-	 */
-        virtual void lostFocus() {}
 
         virtual void appendInputText(const QString&);
         virtual void indicateAway(bool away);

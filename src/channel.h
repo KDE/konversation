@@ -239,6 +239,7 @@ class Channel : public ChatWindow
         void sendFile();
 
     public slots:
+        void updateAppearance();
         void channelTextEntered();
         void channelPassthroughCommand();
         void sendChannelText(const QString& line);
@@ -253,9 +254,6 @@ class Channel : public ChatWindow
         void showNicknameList(bool show);
 
         void setAllowNotifications(bool allow) { m_allowNotifications = allow; }
-
-        void updateAppearance();
-        virtual void lostFocus();
 
     protected slots:
         void completeNick(); ///< I guess this is a GUI function, might be nice to have at DCOP level though --argonel
