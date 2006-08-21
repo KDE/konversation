@@ -1140,77 +1140,60 @@ NickInfoPtr KonversationApplication::getNickInfo(const QString &ircnick, const Q
 // auto replace on input/output
 QString KonversationApplication::doAutoreplace(const QString& text,bool output)
 {
-  // get autoreplace list
-  QStringList autoreplaceList=Preferences::autoreplaceList();
-  // working copy
-  QString line=text;
+    // get autoreplace list
+    QStringList autoreplaceList=Preferences::autoreplaceList();
+    // working copy
+    QString line=text;
 
-  // loop through the list of replacement patterns
-  for(unsigned int index=0;index<autoreplaceList.count();index++)
-  {
-    // get autoreplace definition
-    QString definition=autoreplaceList[index];
-    // split definition in parts
-    QString regex=definition.section(',',0,0);
-    QString direction=definition.section(',',1,1);
-    QString pattern=definition.section(',',2,2);
-    QString replacement=definition.section(',',3);
-
-    QString isDirection=output ? "o" : "i";
-
-    // only replace if this pattern is for the specific direction or both directions
-    if(direction==isDirection || direction=="io")
+    // loop through the list of replacement patterns
+    for(unsigned int index=0;index<autoreplaceList.count();index++)
     {
-      // regular expression pattern?
-      if(regex=="1")
-      {
-        // create regex from pattern
-        QRegExp needleReg=pattern;
-        // set pattern case insensitive
-        needleReg.setCaseSensitive(false);
-        // find matches
-        if(line.find(needleReg)!=-1)
-        {
-          // prepare list of captured ( ) groups
-          QStringList captures;
-          // remember captured patterns
-          captures=needleReg.capturedTexts();
+        // get autoreplace definition
+        QString definition=autoreplaceList[index];
+        // split definition in parts
+        QString regex=definition.section(',',0,0);
+        QString direction=definition.section(',',1,1);
+        QString pattern=definition.section(',',2,2);
+        QString replacement=definition.section(',',3);
 
-          // replace %0 - %9 in regex groups
-          for(unsigned int capture=0;capture<captures.count();capture++)
-          {
-            replacement.replace(QString("%%1").arg(capture),captures[capture]);
-          } // for
-          replacement.replace(QRegExp("%[0-9]"),QString::null);
-          // replace input with replacement
-          line.replace(needleReg,replacement);
-        }
-      }
-      else
-      {
-        QRegExp needleReg = "\\b" + pattern + "\\b";
-        // set pattern case insensitive
-        needleReg.setCaseSensitive(false);
-        // find matches
-        if(line.find(needleReg)!=-1)
-        {
-          // prepare list of captured ( ) groups
-          QStringList captures;
-          // remember captured patterns
-          captures=needleReg.capturedTexts();
+        QString isDirection=output ? "o" : "i";
 
-          // replace %0 - %9 in regex groups
-          for(unsigned int capture=0;capture<captures.count();capture++)
-          {
-            replacement.replace(QString("%%1").arg(capture),captures[capture]);
-          } // for
-          replacement.replace(QRegExp("%[0-9]"),QString::null);
-          // replace input with replacement
-          line.replace(needleReg,replacement);
+        // only replace if this pattern is for the specific direction or both directions
+        if(direction==isDirection || direction=="io")
+        {
+            // regular expression pattern?
+            if(regex=="1")
+            {
+                // create regex from pattern
+                QRegExp needleReg=pattern;
+                // set pattern case insensitive
+                needleReg.setCaseSensitive(false);
+                // find matches
+                if(line.find(needleReg)!=-1)
+                {
+                    // prepare list of captured ( ) groups
+                    QStringList captures;
+                    // remember captured patterns
+                    captures=needleReg.capturedTexts();
+
+                    // replace %0 - %9 in regex groups
+                    for(unsigned int capture=0;capture<captures.count();capture++)
+                    {
+                        replacement.replace(QString("%%1").arg(capture),captures[capture]);
+                    }
+                    replacement.replace(QRegExp("%[0-9]"),QString::null);
+                    // replace input with replacement
+                    line.replace(needleReg,replacement);
+                }
+            }
+            else
+            {
+                QRegExp needleReg("\\b" + QRegExp::escape(pattern) + "\\b");
+                needleReg.setCaseSensitive(false);
+                line.replace(needleReg,replacement);
+            }
         }
-      }
     }
-  } // for
 
   return line;
 }
