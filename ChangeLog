@@ -170,6 +170,7 @@ handling)
   is first shown.
 - Fix perceivable delay during tab switching when in-line spellchecking is
   enabled.
+- Rewrote "Command Aliases" prefs page.
 
 Changes from 0.18 to 0.19
 We are extremely pleased to announce the immediate release of Konversation 0.19. The focus
