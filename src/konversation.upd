@@ -1,3 +1,8 @@
+Id=0.20-quickbuttons
+File=konversationrc
+Group=Button List
+Script=konversation-0.20-quickbuttons.pl,perl
+
 Id=0.19-notifylists
 File=konversationrc
 Script=konversation-0.19-notifylists.pl,perl
