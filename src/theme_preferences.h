@@ -46,5 +46,6 @@ class Theme_Config : public Theme_ConfigUI, public KonviSettingsPage
         QStringList m_dirs;
         QString m_oldTheme;
         QString m_currentTheme;
+        int m_defaultThemeIndex;
 };
 #endif

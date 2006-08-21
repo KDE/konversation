@@ -48,6 +48,8 @@ using namespace Konversation;
 Theme_Config::Theme_Config(QWidget* parent, const char* name)
   : Theme_ConfigUI( parent, name)
 {
+    m_defaultThemeIndex = -1;
+
     // load the current settings
     loadSettings();
 
@@ -96,6 +98,9 @@ void Theme_Config::loadSettings()
                 // remember for updatePreview()
                 currentThemeIndex = i;
             }
+
+            if (themeDir=="default")
+                m_defaultThemeIndex= i;
 
             // if there was a comment to the theme, add it to the listview entry string
             if(!themeComment.isEmpty())
@@ -153,7 +158,8 @@ void Theme_Config::saveSettings()
 
 void Theme_Config::restorePageToDefaults()
 {
-    // FIXME!
+    if (m_defaultThemeIndex != -1)
+        iconThemeIndex->setSelected(m_defaultThemeIndex, true);
 }
 
 void Theme_Config::installTheme()
