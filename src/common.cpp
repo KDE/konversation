@@ -128,11 +128,16 @@ namespace Konversation
             else if (urlPattern.cap(1).isEmpty())
                 protocol = "mailto:";
 
-            insertText = link.arg(protocol, QString(href).replace('%',"%25"), href/*, append*/) + append;
+            // Use \003 as a placeholder for & so we can readd them after changing all & in the normal text to &amp;
+            insertText = link.arg(protocol, QString(href).replace('&', "\003").replace('%', "\%"), href) + append;
             filteredLine.replace(pos, urlLen, insertText);
             pos += insertText.length();
             KonversationApplication::instance()->storeUrl(fromNick, href);
         }
+
+        // Change & to &amp; to prevent html entities to do strange things to the text
+        filteredLine.replace('&', "&amp;");
+        filteredLine.replace("\003", "&");
 
         // kdDebug() << "Took (msecs) : " << timer.elapsed() << " for " << filteredLine << endl;
 

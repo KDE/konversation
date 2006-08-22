@@ -185,14 +185,16 @@ void IRCView::clear()
     KTextBrowser::clear();
 }
 
-void IRCView::highlightedSlot(const QString& link)
+void IRCView::highlightedSlot(const QString& _link)
 {
+    //Hack to handle the fact that we get a decoded url
+    QString link = KURL::fromPathOrURL(_link).url();
     //we just saw this a second ago.  no need to reemit.
     if (link == m_lastStatusText && !link.isEmpty())
         return;
 
     // remember current URL to overcome link clicking problems in QTextBrowser
-    m_highlightedURL=link;
+    m_highlightedURL = link;
 
     if (link.isEmpty())
     {
@@ -272,7 +274,7 @@ void IRCView::openLink(const QString& url, bool newTab)
                     ref.call("newTab", url);
                 }
             } else
-            new KRun(KURL(url));
+                new KRun(KURL::fromPathOrURL(url));
         }
         else
         {
@@ -932,18 +934,18 @@ void IRCView::doAppend(const QString& newLine, bool important, bool self)
 
 // remember if scrollbar was positioned at the end of the text or not
 void IRCView::hideEvent(QHideEvent* /* event */) {
-m_resetScrollbar = ((contentsHeight()-visibleHeight()) == contentsY());
+    m_resetScrollbar = ((contentsHeight()-visibleHeight()) == contentsY());
 }
 
 // Workaround to scroll to the end of the TextView when it's shown
-void IRCView::showEvent(QShowEvent* /* event */) {
-// did the user scroll the view to the end of the text before hiding?
-if(m_resetScrollbar)
-{
-    moveCursor(MoveEnd,false);
-    ensureVisible(0,contentsHeight());
-}
-
+void IRCView::showEvent(QShowEvent* event) {
+    Q_UNUSED(event);
+    // did the user scroll the view to the end of the text before hiding?
+    if(m_resetScrollbar)
+    {
+        moveCursor(MoveEnd,false);
+        ensureVisible(0,contentsHeight());
+    }
 }
 
 void IRCView::contentsMouseReleaseEvent(QMouseEvent *ev)
@@ -998,7 +1000,7 @@ void IRCView::contentsMouseMoveEvent(QMouseEvent* ev)
     {
         m_mousePressed = false;
         removeSelection();
-        KURL ux(m_urlToDrag);
+        KURL ux = KURL::fromPathOrURL(m_urlToDrag);
 
         if (m_urlToDrag.startsWith("##"))
         {
@@ -1020,7 +1022,8 @@ void IRCView::contentsMouseMoveEvent(QMouseEvent* ev)
 void IRCView::contentsContextMenuEvent(QContextMenuEvent* ev)
 {
     bool block = contextMenu(ev);
-    m_highlightedURL = anchorAt(viewportToContents(mapFromGlobal(QCursor::pos())));
+    // Hack to counter the fact that we're given an decoded url
+    m_highlightedURL = KURL::fromPathOrURL(anchorAt(viewportToContents(mapFromGlobal(QCursor::pos())))).url();
 
     if(m_highlightedURL.isEmpty()) {
         viewport()->setCursor(Qt::ArrowCursor);

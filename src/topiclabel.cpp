@@ -82,7 +82,8 @@ namespace Konversation
         if (e->button()==QMouseEvent::LeftButton)
         {
             pressPosition=e->pos();
-            urlToDrag = anchorAt(pressPosition);
+            // Hack to counter the fact that we're given an decoded url
+            urlToDrag = KURL::fromPathOrURL(anchorAt(pressPosition)).url();
             if (!urlToDrag.isNull())
             {
                 mousePressed=true;
@@ -108,7 +109,7 @@ namespace Konversation
         {
             mousePressed=false;
             removeSelection();
-            KURL ux(urlToDrag);
+            KURL ux = KURL::fromPathOrURL(urlToDrag);
             if (urlToDrag.startsWith("##")) ux=QString("irc://%1:%2/%3").arg(m_server->getServerName()).
                     arg(m_server->getPort()).arg(urlToDrag.mid(2));
             KURLDrag* u=new KURLDrag(ux,viewport());
@@ -136,12 +137,12 @@ namespace Konversation
             // Always use KDE default mailer.
             else if (!Preferences::useCustomBrowser() || link.lower().startsWith("mailto:"))
             {
-                new KRun(KURL(link));
+                new KRun(KURL::fromPathOrURL(link));
             }
             else
             {
                 QString cmd = Preferences::webBrowserCmd();
-                cmd.replace("%u",link);
+                cmd.replace("%u",KURL::fromPathOrURL(link).url());
                 KProcess *proc = new KProcess;
                 QStringList cmdAndArgs = KShell::splitArgs(cmd);
                 *proc << cmdAndArgs;
@@ -301,14 +302,15 @@ namespace Konversation
         return richText.widthUsed();
     }
 
-    void TopicLabel::highlightedSlot(const QString& link)
+    void TopicLabel::highlightedSlot(const QString& _link)
     {
+        QString link = KURL::fromPathOrURL(_link).url();
         //we just saw this a second ago.  no need to reemit.
         if (link == m_lastStatusText && !link.isEmpty())
             return;
 
         // remember current URL to overcome link clicking problems in QTextBrowser
-        m_highlightedURL=link;
+        m_highlightedURL = link;
 
         if (link.isEmpty())
         {
