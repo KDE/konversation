@@ -162,8 +162,6 @@ int KonversationApplication::newInstance()
                 this,SLOT (dcopInfo(const QString&)) );
             connect(dcopObject,SIGNAL (dcopInsertRememberLine()),
                 mainWindow,SIGNAL(insertRememberLine()));
-            connect(dcopObject,SIGNAL (dcopSetAutoAway()),
-                this,SLOT (setAutoAway()));
             connect(dcopObject,SIGNAL(dcopConnectToServer(const QString&, int,const QString&, const QString&)),
                 this,SLOT(dcopConnectToServer(const QString&, int,const QString&, const QString&)));
         }
@@ -183,20 +181,6 @@ KonversationApplication* KonversationApplication::instance()
 KonversationMainWindow *KonversationApplication::getMainWindow()
 {
     return mainWindow;
-}
-
-void KonversationApplication::setAutoAway()
-{
-    Server* lookServer=serverList.first();
-    while(lookServer)
-    {
-        if(!lookServer->isAway())
-        {
-            lookServer->setAutoAway();
-        }
-        lookServer=serverList.next();
-    }
-
 }
 
 void KonversationApplication::toggleAway()

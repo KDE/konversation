@@ -165,7 +165,6 @@ class KonversationApplication : public KUniqueApplication
         void dcopRaw(const QString& server, const QString &command);
         void dcopSay(const QString& server,const QString& target,const QString& command);
         void dcopInfo(const QString& string);
-        void setAutoAway();
         void sendMultiServerCommand(const QString& command, const QString& parameter);
 
     private:

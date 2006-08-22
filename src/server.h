@@ -295,10 +295,6 @@ class Server : public QObject
          *  return false.
          */
         bool isAway() const;
-        /** Put the server in autoaway.  This means that when there is mouse activity, we will set to available again
-         *  @see isAway
-         */
-        void setAutoAway();
 
         void emitChannelNickChanged(const ChannelNickPtr channelNick);
         void emitNickInfoChanged(const NickInfoPtr nickInfo);
@@ -626,7 +622,6 @@ class Server : public QObject
         ChannelListPanel* channelListPanel;
 
         bool m_isAway;
-        bool m_isAutoAway;                        ///Note that this may be true, but m_isAway is false, if we go auto-away when disconnected.
         bool alreadyConnected;
         bool rejoinChannels;
         bool sendUnlocked;

@@ -192,7 +192,6 @@ void Server::init(ViewContainer* viewContainer, const QString& nick, const QStri
     connecting = false;
     m_serverISON = 0;
     m_isAway = false;
-    m_isAutoAway = false;
     m_socket = 0;
     m_autoIdentifyLock = false;
 
@@ -747,8 +746,6 @@ void Server::connectionEstablished(const QString& ownHost)
 
     emit serverOnline(true);
     emit connectionChangedState(this, SSConnected);
-    if(m_isAutoAway)                              //we are in autoaway, so tell the server
-        setAutoAway();
 
     if(!alreadyConnected)
     {
@@ -2963,20 +2960,9 @@ void Server::away()
 
 }
 
-void Server::setAutoAway()
-{
-    kdDebug() << "going autoaway!" << endl;
-    m_isAutoAway = true;
-    //note that we now need to tell the server we are away.
-    //m_isAway is set when we get a reply from the server saying we are now away.
-    //fix this to use a preferred auto-away string.
-    executeMultiServerCommand("away", i18n("Gone away for now."));
-}
-
 void Server::unAway()
 {
     m_isAway = false;
-    m_isAutoAway = false;
     emit awayState(false);
 
     if(!getIdentity()->getAwayNick().isEmpty() && !nonAwayNick.isEmpty())

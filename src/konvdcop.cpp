@@ -29,22 +29,6 @@ KonvDCOP::KonvDCOP()
 : DCOPObject("Konversation"),
 QObject(0,"Konversation")
 {
-    // reset hook counter
-
-    KConfig *config = KGlobal::config();
-    config->setGroup("AutoAway");                 //TODO - add this to preferences somewhere
-
-    if (config->readBoolEntry("UseAutoAway", true))
-    {
-        //disable for now until auto-available is working, and we prevent the user from changing nick _and_ setting away message
-        //    connectDCOPSignal("kdesktop", "KScreensaverIface",
-        //                      "KDE_start_screensaver()", "setAutoAway()", false);
-    }
-    else
-    {
-        disconnectDCOPSignal("kdesktop", "KScreensaverIface",
-            "KDE_start_screensaver()", "setAutoAway()");
-    }
 }
 
 void KonvDCOP::raw(const QString& server,const QString& command)
@@ -78,16 +62,9 @@ QStringList KonvDCOP::listConnectedServers()
 void KonvDCOP::setAway(const QString &awaymessage)
 {
     if(awaymessage.isEmpty())
-                                                  //away messages can't be empty.
         emit dcopMultiServerRaw("away " + i18n("Gone away for now."));
     else
         emit dcopMultiServerRaw("away " + awaymessage);
-}
-
-void KonvDCOP::setAutoAway()
-{
-    kdDebug() << "set auto away" << endl;
-    emit dcopSetAutoAway();
 }
 
 void KonvDCOP::setBack()
