@@ -442,35 +442,6 @@ void KonversationMainWindow::openPrefsDialog()
 
 void KonversationMainWindow::openKeyBindings()
 {
-
-
-    const QObjectList* muh = toolBar()->children();
-
-    QObjectListIterator it(*muh);
-    QObject *obj;
-
-    while ( (obj = it.current()) != 0 ) {
-        kdDebug() << obj->name() << endl;
-        if (obj->name()!="unnamed")
-        {
-            const QObjectList* muh2 = obj->children();
-            if (muh2)
-            {
-                QObjectListIterator it2(*muh2);
-                QObject *obj2;
-                while ( (obj2 = it2.current()) != 0 ) {
-                    kdDebug() << "    " << obj2->name() << endl;
-                    ++it2;
-                }
-                delete it2;
-                delete obj2;
-            }
-            delete muh2;
-        }
-        ++it;
-    }
-    delete muh; // delete the list, not the objects
-
     // Change a number of action names to make them friendlier for the shortcut list.
     actionCollection()->action("tab_notifications")->setText(i18n("Toggle Notifications"));
     actionCollection()->action("toggle_away")->setText(i18n("Toggle Away Globally"));
