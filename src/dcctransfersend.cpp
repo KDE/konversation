@@ -423,16 +423,16 @@ QString DccTransferSend::getQFileErrorString( int code )
             errorString=i18n("The operation was successful. Should never happen in an error dialog.");
             break;
         case IO_ReadError:
-            errorString=i18n("Could not read from file \"%1\".");
+            errorString=i18n("Could not read from file \"%1\".").arg( m_fileName );
             break;
         case IO_WriteError:
-            errorString=i18n("Could not write to file \"%1\".");
+            errorString=i18n("Could not write to file \"%1\".").arg( m_fileName );
             break;
         case IO_FatalError:
             errorString=i18n("A fatal unrecoverable error occurred.");
             break;
         case IO_OpenError:
-            errorString=i18n("Could not open file \"%1\".");
+            errorString=i18n("Could not open file \"%1\".").arg( m_fileName );
             break;
 
             // Same case value? Damn!

@@ -61,7 +61,7 @@ class DccTransferSend : public DccTransfer
         void startConnectionTimer( int sec );
         void stopConnectionTimer();
 
-        static QString getQFileErrorString( int code );
+        QString getQFileErrorString( int code );
 
         QFile m_file;
 
