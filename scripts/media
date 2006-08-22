@@ -89,7 +89,7 @@ if __name__ == "__main__":
             if title:
                 # format title and tell konversation about it
                 string = pretty_print(title)+' [xmms]'
-                Popen(['dcop', port, 'Konversation', 'say', server, target, string]).communicate()
+                Popen(['dcop', port, 'default', 'say', server, target, string]).communicate()
                 sys.exit(0)
             # xmms running but nothing's playing
             else:
@@ -108,7 +108,7 @@ if __name__ == "__main__":
 
         if title:
             string = pretty_print(title,artist,album)+' [Amarok]'
-            Popen(['dcop', port, 'Konversation', 'say', server, target, string]).communicate()
+            Popen(['dcop', port, 'default', 'say', server, target, string]).communicate()
             sys.exit(0)
         else:
             error = True
@@ -122,7 +122,7 @@ if __name__ == "__main__":
 
         if title:
             string = pretty_print(title,artist,album)+' [JuK]';
-            Popen(['dcop', port, 'Konversation', 'say', server, target, string]).communicate()
+            Popen(['dcop', port, 'default', 'say', server, target, string]).communicate()
             sys.exit(0)
         else:
             if error:
@@ -139,7 +139,7 @@ if __name__ == "__main__":
 
         if title:
             string=pretty_print(title,artist,album)+' [Kaffeine]'
-            Popen(['dcop', port, 'Konversation', 'say', server, target, string]).communicate()
+            Popen(['dcop', port, 'default', 'say', server, target, string]).communicate()
             sys.exit(0)
         else:
             if error:
@@ -154,7 +154,7 @@ if __name__ == "__main__":
 
         if string:
             string=pretty_print(string)+' [Noatun]'
-            Popen(['dcop', port, 'Konversation', 'say', server, target, string]).communicate();
+            Popen(['dcop', port, 'default', 'say', server, target, string]).communicate();
             sys.exit(0)
         else:
             if error:
@@ -171,7 +171,7 @@ if __name__ == "__main__":
 
         if title:
             string = pretty_print(title,artist,album)+' [Yammi]';
-            Popen(['dcop', port, 'Konversation', 'say', server, target, string]).communicate()
+            Popen(['dcop', port, 'default', 'say', server, target, string]).communicate()
             sys.exit(0)
         else:
             if error:
@@ -189,7 +189,7 @@ if __name__ == "__main__":
 
         if title and kscdplaying:
             string = pretty_print(title,artist,album)+' [kscd]';
-            Popen(['dcop', port, 'Konversation', 'say', server, target, string]).communicate()
+            Popen(['dcop', port, 'default', 'say', server, target, string]).communicate()
             sys.exit(0)
         else:
             if error:
@@ -199,10 +199,10 @@ if __name__ == "__main__":
                 bad_apps = ['kscd']
 
     if not amarok and not juk and not kaffeine and not noatun and not yammi and not xmmsRunning and not kscd:
-        os.popen("dcop %s Konversation error \"No supported media player is running\""%(port))
+        os.popen("dcop %s default error \"No supported media player is running\""%(port))
 
     if bad_apps != None:
         error = ','.join(bad_apps)
-        os.popen("dcop %s Konversation error \"Nothing is playing in %s\""%(port,error))
+        os.popen("dcop %s default error \"Nothing is playing in %s\""%(port,error))
         sys.exit(1)
 

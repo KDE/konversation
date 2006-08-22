@@ -6,4 +6,4 @@ PORT=$1;
 SERVER=$2;
 TARGET=$3;
 
-kde-config --version | while read line; do dcop $PORT Konversation say $SERVER "$TARGET" "$line"; done 
+kde-config --version | while read line; do dcop $PORT default say $SERVER "$TARGET" "$line"; done

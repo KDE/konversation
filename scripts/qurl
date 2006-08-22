@@ -11,11 +11,11 @@ $target = ARGV[2]
 url = ARGV[3]
 
 def dcoperr msg
-    `dcop #{$port} Konversation error #{msg}`
+    `dcop #{$port} default error #{msg}`
 end
 
 def dcopsay msg
-    `dcop #{$port} Konversation say #{$server} #{$target} #{msg}`
+    `dcop #{$port} default say #{$server} #{$target} #{msg}`
 end
 
 

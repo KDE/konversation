@@ -34,10 +34,10 @@ GetOptions('search=s' => \$search,
 
 if(!$browser && !$search && !$spellcheck && !@ARGV)
 {
-    system 'dcop', $port, 'Konversation', 'info', "\x02Google Search Script Usage:\x02";
-    system 'dcop', $port, 'Konversation', 'info', '/google (--max <number>) (--search) <keyword> : Search for keyword at Google';
-    system 'dcop', $port, 'Konversation', 'info', '/google --spell <word> : Spellcheck word using Google';
-    exec   'dcop', $port, 'Konversation', 'info', '/google -b <keyword> : Show results in konqueror';
+    system 'dcop', $port, 'default', 'info', "\x02Google Search Script Usage:\x02";
+    system 'dcop', $port, 'default', 'info', '/google (--max <number>) (--search) <keyword> : Search for keyword at Google';
+    system 'dcop', $port, 'default', 'info', '/google --spell <word> : Spellcheck word using Google';
+    exec   'dcop', $port, 'default', 'info', '/google -b <keyword> : Show results in konqueror';
 }
 elsif($browser)
 {
@@ -59,22 +59,22 @@ eval { require SOAP::Lite; };
 
 if($@)
 {
-    exec 'dcop', $port, 'Konversation', 'error', "You need the perl SOAP::Lite module installed.";
+    exec 'dcop', $port, 'default', 'error', "You need the perl SOAP::Lite module installed.";
 }
 
 eval { require HTML::Entities; };
 
 if($@)
 {
-    exec 'dcop', $port, 'Konversation', 'error', "You need the perl HTML::Entities module installed.";
+    exec 'dcop', $port, 'default', 'error', "You need the perl HTML::Entities module installed.";
 }
 
 use CGI qw(:standard);
 
 if(!open(KEY, "$ENV{'HOME'}/.googlekey"))
 {
-    system 'dcop', $port, 'Konversation', 'error', "~/.googlekey doesn't exist!";
-    system 'dcop', $port, 'Konversation', 'error', "Get a key from http://api.google.com/createkey and put the key in ~/.googlekey";
+    system 'dcop', $port, 'default', 'error', "~/.googlekey doesn't exist!";
+    system 'dcop', $port, 'default', 'error', "Get a key from http://api.google.com/createkey and put the key in ~/.googlekey";
 }
 else
 {
@@ -89,13 +89,13 @@ else
     if($search || !$spellcheck)
     {
 	$search = join(" ",$search,@ARGV);
-	system 'dcop', $port, 'Konversation', 'info',  "Searching Google for \x02$search\x02 ...";
+	system 'dcop', $port, 'default', 'info',  "Searching Google for \x02$search\x02 ...";
 
 	$googleSearch = SOAP::Lite->service("http://api.google.com/GoogleSearch.wsdl")->
 	    on_fault(sub {
 		my $res = $_[0]; 
 		$error = $res->call->faultstring;
-		exec 'dcop', $port, 'Konversation', 'error', "$error";
+		exec 'dcop', $port, 'default', 'error', "$error";
 	    });
        
 	if(utf8::valid($search))
@@ -111,11 +111,11 @@ else
 	
 	if($result->{estimatedTotalResultsCount} > 0)
 	{
-	    system 'dcop', $port, 'Konversation', 'info', "Results \x021-$limit\x02 of about \x02$result->{estimatedTotalResultsCount}\x02 for \x02$search\x02 (\x02$result->{searchTime}\x02 seconds)";
+	    system 'dcop', $port, 'default', 'info', "Results \x021-$limit\x02 of about \x02$result->{estimatedTotalResultsCount}\x02 for \x02$search\x02 (\x02$result->{searchTime}\x02 seconds)";
 	}
 	else
 	{
-	    exec 'dcop', $port, 'Konversation', 'error', 'Google search returned zero results';
+	    exec 'dcop', $port, 'default', 'error', 'Google search returned zero results';
 	}
 	
 	foreach $result (@{$result->{resultElements}})
@@ -124,14 +124,14 @@ else
 	    $print =~ s/\<b\>/\x02/g;
 	    $print =~ s/\<\/b\>/\x02/g;
 	    HTML::Entities::decode_entities($print);
-	    system 'dcop', $port, 'Konversation', 'info', $print;
+	    system 'dcop', $port, 'default', 'info', $print;
 	}
     }
     elsif($spellcheck)
     {
 	$spellcheck = join(" ",$spellcheck,@ARGV);
 
-	system 'dcop', $port, 'Konversation', 'info', "Spellchecking \x02$spellcheck\x02 ...";
+	system 'dcop', $port, 'default', 'info', "Spellchecking \x02$spellcheck\x02 ...";
 	$googleSearch = SOAP::Lite->service("http://api.google.com/GoogleSearch.wsdl"); 
 	$spell = $googleSearch->doSpellingSuggestion($key, $spellcheck);
 
@@ -141,9 +141,9 @@ else
 	}
 	else
 	{
-	    exec 'dcop', $port, 'Konversation', 'error','No alternative spelling found';
+	    exec 'dcop', $port, 'default', 'error','No alternative spelling found';
 	}
 	
-	system 'dcop', $port, 'Konversation', 'info', $spell;
+	system 'dcop', $port, 'default', 'info', $spell;
     }
 }

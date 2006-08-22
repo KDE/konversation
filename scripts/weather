@@ -22,7 +22,7 @@ if __name__ == "__main__":
     stations = os.popen('dcop KWeatherService WeatherService listStations').readlines()
 
     if not stations:
-        os.popen('dcop %s Konversation error KWeather is not installed or not running!'%(port))
+        os.popen('dcop %s default error KWeather is not installed or not running!'%(port))
 
     try:
         if option and stations[option-1]:
@@ -55,4 +55,4 @@ if __name__ == "__main__":
         else:
             message = 'Current weather for %s : Temperature: %%B%s%%B, Pressure: %%B%s%%B, Wind: %%B%s%%B'%(city,temperature,pressure,wind)
 
-        Popen(['dcop', port, 'Konversation', 'say', server, target, message]).communicate()
+        Popen(['dcop', port, 'default', 'say', server, target, message]).communicate()

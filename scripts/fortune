@@ -50,4 +50,4 @@ while (<FORTUNES>) {
     }
 }
 close(FORTUNES);
-exec 'dcop', $PORT, 'Konversation', 'say', $SERVER, $TARGET, $MESSAGE;
+exec 'dcop', $PORT, 'default', 'say', $SERVER, $TARGET, $MESSAGE;

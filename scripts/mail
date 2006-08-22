@@ -20,7 +20,7 @@ getmails()
 {
 
   dcop kmail > /dev/null || {
-    dcop $PORT Konversation info "Sorry kmail is not running"
+    dcop $PORT default info "Sorry kmail is not running"
     exit
   }
   
@@ -41,7 +41,7 @@ getmails()
 
   if [[ -z "$FOUNDEMAIL" ]] ; then
     if [[ -z "$FOUNDFOLDER" ]] ; then
-      dcop $PORT Konversation info "No email folders were found that had a name containing '$FOLDER'"
+      dcop $PORT default info "No email folders were found that had a name containing '$FOLDER'"
       exit
     else
       echo "No new emails in any folders matching '$FOLDER'"
@@ -62,9 +62,9 @@ fi
 
 #LINECOUNT=$(getmails | wc -l)
 #if [[ "$LINECOUNT" -gt 5 ]] ; then
-#  dcop $PORT Konversation info "There are more than 5 matches.  Cancelling to avoid flooding the server"
+#  dcop $PORT default info "There are more than 5 matches.  Cancelling to avoid flooding the server"
 #  exit
 #fi
 
-getmails | head -n 3 | while read line; do dcop $PORT Konversation say $SERVER "$TARGET" "$line"; done
+getmails | head -n 3 | while read line; do dcop $PORT default say $SERVER "$TARGET" "$line"; done
 

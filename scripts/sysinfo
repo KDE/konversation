@@ -73,8 +73,8 @@ if [ "x$PORT" == "x" ] ; then
     echo "$out"
 else
     if [ "x$TARGET" == "x" ] ; then
-	dcop $PORT Konversation error "$out"
+	dcop $PORT default error "$out"
     else
-	dcop $PORT Konversation say $SERVER "$TARGET" "$out"
+	dcop $PORT default say $SERVER "$TARGET" "$out"
     fi
 fi

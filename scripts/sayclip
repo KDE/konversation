@@ -16,4 +16,4 @@ then
   PAUSETIME="$4"
 fi
 
-dcop klipper klipper getClipboardContents | while read line; do dcop $PORT Konversation say $SERVER "$TARGET" " $line"; sleep $PAUSETIME; done 
+dcop klipper klipper getClipboardContents | while read line; do dcop $PORT default say $SERVER "$TARGET" " $line"; sleep $PAUSETIME; done

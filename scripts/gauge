@@ -12,23 +12,23 @@ PERCENTAGE=$1
 
 if [ ! $TARGET ]
 then
-  dcop $PORT Konversation error "Can't write into status view."
+  dcop $PORT default error "Can't write into status view."
 else
   if [ ! $PERCENTAGE ]
   then
-    dcop $PORT Konversation error "USAGE: $0 <percentage>"
+    dcop $PORT default error "USAGE: $0 <percentage>"
   else
     PERCENTAGE=`echo $PERCENTAGE | sed 's/^0\+//'`
     LEFT=$(($PERCENTAGE/5))
     RIGHT=$((20-$LEFT))
 
     if [[ $PERCENTAGE -lt 0 ]]; then
-      dcop $PORT Konversation error "Percentage has to be bigger than 0"
+      dcop $PORT default error "Percentage has to be bigger than 0"
       exit
     fi
     
     if [[ $PERCENTAGE -gt 100 ]]; then
-      dcop $PORT Konversation error "Percentage has to be smaller than 100"
+      dcop $PORT default error "Percentage has to be smaller than 100"
       exit
     fi
 
@@ -66,6 +66,6 @@ else
 	OUTPUT="$OUTPUT *ding*"
     fi
 
-    dcop $PORT Konversation say $SERVER "$TARGET" "Beer load $OUTPUT"
+    dcop $PORT default say $SERVER "$TARGET" "Beer load $OUTPUT"
   fi
 fi

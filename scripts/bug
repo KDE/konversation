@@ -7,11 +7,11 @@ BUG=$4
 
 if [ ! $TARGET ]
 then
-  dcop $PORT Konversation error "Can't write into status view."
+  dcop $PORT default error "Can't write into status view."
 else
   if [ -z $BUG ]
   then
-    dcop $PORT Konversation error "You forgot the bug number!"
+    dcop $PORT default error "You forgot the bug number!"
   else
     kfmclient openURL http://bugs.kde.org/show_bug.cgi?id=$4
   fi
