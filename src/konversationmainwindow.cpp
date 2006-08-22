@@ -175,7 +175,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
     action = new KAction(i18n("Close &Tab"),"tab_remove",KShortcut("Ctrl+w"), m_viewContainer, SLOT(closeCurrentView()),actionCollection(),"close_tab");
     action->setEnabled(false);
 
-    if (Preferences::showBacklog())
+    if (Preferences::tabPlacement()==Preferences::Left)
     {
         action = new KAction(i18n("Move Tab Up"), "1uparrow", KShortcut("Alt+Shift+Left"),
             m_viewContainer, SLOT(moveViewLeft()), actionCollection(), "move_tab_left");
