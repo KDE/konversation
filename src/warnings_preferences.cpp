@@ -76,7 +76,7 @@ void Warnings_Config::loadSettings()
 {
   QStringList dialogDefinitions;
   //QString flagNames = "Invitation,SaveLogfileNote,ClearLogfileQuestion,CloseQueryAfterIgnore,ResumeTransfer,ReconnectDifferentServer,QuitServerTab,QuitChannelTab,QuitQueryTab,ChannelListNoServerSelected,RemoveDCCReceivedFile,HideMenuBarWarning,ChannelListWarning,LargePaste";
-  QString flagNames = "Invitation,SaveLogfileNote,ClearLogfileQuestion,CloseQueryAfterIgnore,ReconnectDifferentServer,QuitServerTab,QuitChannelTab,QuitQueryTab,ChannelListNoServerSelected,RemoveDCCReceivedFile,HideMenuBarWarning,ChannelListWarning,LargePaste";
+  QString flagNames = "Invitation,SaveLogfileNote,ClearLogfileQuestion,CloseQueryAfterIgnore,ReconnectDifferentServer,QuitServerTab,QuitChannelTab,QuitQueryTab,ChannelListNoServerSelected,RemoveDCCReceivedFile,HideMenuBarWarning,ChannelListWarning,LargePaste,IgnoreNick,UnignoreNick";
   dialogDefinitions.append(i18n("Automatically join channel on invite"));
   dialogDefinitions.append(i18n("Notice that saving logfiles will save whole file"));
   dialogDefinitions.append(i18n("Ask before deleting logfile contents"));
@@ -93,6 +93,8 @@ void Warnings_Config::loadSettings()
   dialogDefinitions.append(i18n("Warning on hiding the main window menu"));
   dialogDefinitions.append(i18n("Warning on high traffic with channel list"));
   dialogDefinitions.append(i18n("Warning on pasting large portions of text"));
+  dialogDefinitions.append(i18n("Ignore"));
+  dialogDefinitions.append(i18n("Unignore"));
   QCheckListItem *item;
   dialogListView->clear();
 

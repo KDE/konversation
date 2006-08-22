@@ -556,8 +556,8 @@ void Channel::popupCommand(int id)
                 question=i18n("Do you want to ignore %1?").arg(nickList.first()->getNickname());
             else
                 question = i18n("Do you want to ignore the selected users?");
-            if (KMessageBox::questionYesNo(0, question, i18n("Ignore"), i18n("Ignore"), KStdGuiItem::cancel(), QString("ignoreNick")) ==
-                KMessageBox::Yes)
+            if (KMessageBox::warningContinueCancel(this, question, i18n("Ignore"), i18n("Ignore"), "IgnoreNick") ==
+                KMessageBox::Continue)
                 pattern = cc+"IGNORE -ALL %l";
             break;
         case Konversation::UnignoreNick:
@@ -574,8 +574,8 @@ void Channel::popupCommand(int id)
                 question=i18n("Do you want to stop ignoring %1?").arg(selectedIgnoredNicks.first());
             else
                 question = i18n("Do you want to stop ignoring the selected users?");
-            if (KMessageBox::questionYesNo(0, question, i18n("Unignore"), i18n("Unignore"), KStdGuiItem::cancel(), QString("unignoreNick")) ==
-                KMessageBox::Yes)
+            if (KMessageBox::warningContinueCancel(this, question, i18n("Unignore"), i18n("Unignore"), "UnignoreNick") ==
+                KMessageBox::Continue)
             {
                 sendChannelText(cc+"UNIGNORE "+selectedIgnoredNicks.join(" "));
             }
