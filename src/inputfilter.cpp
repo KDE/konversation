@@ -1122,11 +1122,11 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 if(getAutomaticRequest("WHOIS",parameterList[1])==0)
                 {
                     server->appendMessageToFrontmost(i18n("Whois"),
-                        i18n("%1 is %2&#64;%3 (%4)")
-                        .arg(parameterList[1])    // Use &#64; instead of @
-                        .arg(parameterList[2])    // to avoid parsing as email
+                        i18n("%1 is %2@%3 (%4)")
+                        .arg(parameterList[1])
+                        .arg(parameterList[2])
                         .arg(parameterList[3])
-                        .arg(trailing));
+                        .arg(trailing), false);   // Don't parse any urls
                 }
                 else
                 {
@@ -1203,13 +1203,12 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     if(getAutomaticRequest("WHO",whoRequestList.front())==0)
                     {
                         server->appendMessageToFrontmost(i18n("Who"),
-                                                  // Use &#64; instead of @
-                            i18n("%1 is %2&#64;%3 (%4)%5").arg(parameterList[5])
+                            i18n("%1 is %2@%3 (%4)%5").arg(parameterList[5])
                             .arg(parameterList[2])
                             .arg(parameterList[3])
                             .arg(trailing.section(" ", 1))
                             .arg(bAway?i18n(" (Away)"):QString::null)
-                            );
+                            , false); // Don't parse as url
                     }
                 }
                 break;

@@ -1760,7 +1760,7 @@ void ViewContainer::findNextText()
     if (m_searchView) m_searchView->getTextView()->searchAgain();
 }
 
-void ViewContainer::appendToFrontmost(const QString& type,const QString& message,ChatWindow* serverView)
+void ViewContainer::appendToFrontmost(const QString& type,const QString& message,ChatWindow* serverView, bool parseURL)
 {
     if (!serverView) serverView = m_frontView->getServer()->getStatusView();
 
@@ -1778,14 +1778,14 @@ void ViewContainer::appendToFrontmost(const QString& type,const QString& message
         Preferences::redirectServerAndAppMsgToStatusPane())
     {
         // if not, take server specified fallback view instead
-        serverView->appendServerMessage(type,  message);
+        serverView->appendServerMessage(type,  message, parseURL);
         // FIXME: this signal should be sent from the status panel instead, so it
         //        can be using the correct highlight color, would be more consistent
         //        anyway!
         // FIXME newText(serverView,QString::null,true);
     }
     else
-        m_frontView->appendServerMessage(type, message);
+        m_frontView->appendServerMessage(type, message, parseURL);
 }
 
 void ViewContainer::insertCharacter()

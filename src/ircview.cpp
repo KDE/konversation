@@ -324,9 +324,9 @@ bool doHighlight, bool parseURL, bool self)
 
     // TODO: Use QStyleSheet::escape() here
     // Replace all < with &lt;
-    filteredLine.replace("<","&lt;");
+    filteredLine.replace("<","\x0blt;");
     // Replace all > with &gt;
-    filteredLine.replace(">","&gt;");
+    filteredLine.replace(">", "\x0bgt;");
 
     #if 0
     if(!Preferences::disableExpansion())
@@ -731,7 +731,7 @@ void IRCView::appendAction(const QString& nick,const QString& message)
     doAppend(line);
 }
 
-void IRCView::appendServerMessage(const QString& type, const QString& message)
+void IRCView::appendServerMessage(const QString& type, const QString& message, bool parseURL)
 {
     QString serverColor = Preferences::color(Preferences::ServerMessage).name();
     m_tabNotification = Konversation::tnfControl;
@@ -758,7 +758,7 @@ void IRCView::appendServerMessage(const QString& type, const QString& message)
     }
 
     if(type != i18n("Notify"))
-        line = line.arg(timeStamp(), type, filter(message,serverColor));
+        line = line.arg(timeStamp(), type, filter(message, serverColor, 0 , true, parseURL));
     else
         line = "<font color=\"" + serverColor + "\">"+line.arg(timeStamp(), type, message)+"</font>";
 

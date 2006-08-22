@@ -2729,9 +2729,9 @@ void Server::appendStatusMessage(const QString& type,const QString& message)
     statusView->appendServerMessage(type,message);
 }
 
-void Server::appendMessageToFrontmost(const QString& type,const QString& message)
+void Server::appendMessageToFrontmost(const QString& type,const QString& message, bool parseURL)
 {
-    getViewContainer()->appendToFrontmost(type,message, statusView);
+    getViewContainer()->appendToFrontmost(type,message, statusView, parseURL);
 }
 
 void Server::setNickname(const QString &newNickname)

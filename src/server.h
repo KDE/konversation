@@ -142,7 +142,7 @@ class Server : public QObject
         void appendServerMessageToChannel(const QString& channel, const QString& type, const QString& message);
         void appendCommandMessageToChannel(const QString& channel, const QString& command, const QString& message);
         void appendStatusMessage(const QString& type,const QString& message);
-        void appendMessageToFrontmost(const QString& type,const QString& message);
+        void appendMessageToFrontmost(const QString& type,const QString& message, bool parseURL = true);
 
         void dcopRaw(const QString& command);
         void dcopSay(const QString& target,const QString& command);

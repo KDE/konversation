@@ -166,10 +166,10 @@ void ChatWindow::appendAction(const QString& nickname,const QString& message, bo
     textView->appendAction(nickname,message);
 }
 
-void ChatWindow::appendServerMessage(const QString& type,const QString& message)
+void ChatWindow::appendServerMessage(const QString& type,const QString& message, bool parseURL)
 {
     if(!textView) return ;
-    textView->appendServerMessage(type,message);
+    textView->appendServerMessage(type,message, parseURL);
 }
 
 void ChatWindow::appendCommandMessage(const QString& command,const QString& message, bool important, bool parseURL, bool self)

@@ -234,9 +234,9 @@ namespace Konversation
     {
         QFontMetrics fm(currentFont());
         QString text = m_fullText;
-        text.replace("&", "&amp;").
-            replace("<", "&lt;").
-            replace(">", "&gt;");
+        // text.replace("&", "&amp;"). Not needed as we do it in tagURLs
+        text.replace("<", "\x0blt;"). // tagUrls will replace \x0b with &
+            replace(">", "\x0bgt;");
         text = tagURLs(text, "", false);
 
         QToolTip::remove(this);

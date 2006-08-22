@@ -61,7 +61,8 @@ class ViewContainer : public QObject
         QString currentViewTitle();
         QString currentViewURL(bool passNetwork);
 
-        void appendToFrontmost(const QString& type,const QString& message,ChatWindow* serverView);
+        void appendToFrontmost(const QString& type,const QString& message,ChatWindow* serverView,
+                               bool parseURL = true);
 
     public slots:
         void updateAppearance();
