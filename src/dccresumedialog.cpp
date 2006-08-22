@@ -10,6 +10,7 @@
   Copyright (C) 2004 Shintaro Matsuoka <shin@shoegazed.org>
 */
 
+#include <qhbox.h>
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qvbox.h>
@@ -62,7 +63,9 @@ DccResumeDialog::DccResumeDialog(DccTransferRecv* item, const QString& caption, 
     if(enabledButtonCodes & KDialogBase::User1)
         setButtonText(KDialogBase::User1, i18n("&Resume"));
 
-    QVBox* page = new QVBox(this);
+    QFrame* page = new QFrame(this);
+    QVBoxLayout* pageLayout = new QVBoxLayout(page);
+    pageLayout->setSpacing(spacingHint());
     setMainWidget(page);
 
     QLabel* labelMessage = new QLabel(page);
@@ -71,18 +74,25 @@ DccResumeDialog::DccResumeDialog(DccTransferRecv* item, const QString& caption, 
     m_urlreqFileURL = new KURLRequester(m_item->getFileURL().prettyURL(), page);
     connect(m_urlreqFileURL, SIGNAL(textChanged(const QString&)), this, SLOT(updateDialogButtons()));
 
+    pageLayout->addWidget(labelMessage);
+    pageLayout->addWidget(m_urlreqFileURL);
+
     if(m_enabledActions & RA_Rename)
     {
         QFrame* filePathToolsFrame = new QFrame(page);
         QHBoxLayout* filePathToolsLayout = new QHBoxLayout(filePathToolsFrame);
         filePathToolsLayout->setSpacing(spacingHint());
-        QPushButton* btnDefaultName = new QPushButton(i18n("O&riginal Filename"), filePathToolsFrame);
-        QPushButton* btnSuggestNewName = new QPushButton(i18n("Suggest &New Filename"), filePathToolsFrame);
+
+        QPushButton* btnDefaultName = new QPushButton(i18n("O&riginal Filename"),filePathToolsFrame);
+        QPushButton* btnSuggestNewName = new QPushButton(i18n("Suggest &New Filename"),filePathToolsFrame);
         filePathToolsLayout->addItem(new QSpacerItem(0, 0, QSizePolicy::Expanding));
         filePathToolsLayout->addWidget(btnDefaultName);
         filePathToolsLayout->addWidget(btnSuggestNewName);
         connect(btnSuggestNewName, SIGNAL(clicked()), this, SLOT(suggestNewName()));
         connect(btnDefaultName, SIGNAL(clicked()), this, SLOT(setDefaultName()));
+
+        pageLayout->addWidget(filePathToolsFrame);
+
     }
 
     updateDialogButtons();
