@@ -27,7 +27,6 @@ class KonvDCOP : public QObject, virtual public KonvIface
 
         public:
         KonvDCOP();
-        QPtrList<IRCEvent> registered_events;
 
         QString getNickname (const QString &server);
         QString getAnyNickname ();
@@ -43,9 +42,6 @@ class KonvDCOP : public QObject, virtual public KonvIface
         void dcopSetAutoAway();
 
     public slots:
-        int registerEventHook(const QString& type,const QString& criteria,const QString& app,const QString& object,const QString& signal);
-        void unregisterEventHook (int id);
-
         void setAway(const QString &awaymessage);
         void setAutoAway();
         void setBack();
@@ -60,8 +56,6 @@ class KonvDCOP : public QObject, virtual public KonvIface
         void connectToServer(const QString& url, int port, const QString& channel, const QString& password);
         QStringList listServers();
         QStringList listConnectedServers();
-    protected:
-        int hookId;
 };
 
 class KonvIdentDCOP : public QObject, virtual public KonvIdentityIface

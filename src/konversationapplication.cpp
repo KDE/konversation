@@ -1065,21 +1065,6 @@ bool KonversationApplication::emitDCOPSig(const QString &appId, const QString &o
     }
 }
 
-QPtrList<IRCEvent> KonversationApplication::retrieveHooks (EVENT_TYPE a_type)
-{
-    QPtrList<IRCEvent> ret_value;
-    IRCEvent *e;
-
-    for (e = dcopObject->registered_events.first(); e; e = dcopObject->registered_events.next())
-    {
-        if (e->type == a_type)
-        {
-            ret_value.append(e);
-        }
-    }
-    return ret_value;
-}
-
 void KonversationApplication::sendMultiServerCommand(const QString& command, const QString& parameter)
 {
     for(Server* server = serverList.first(); server; server = serverList.next())

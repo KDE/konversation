@@ -19,7 +19,6 @@
 #include <kuniqueapplication.h>
 
 #include "preferences.h"
-#include "ircevent.h"
 #include "osd.h"
 #include "konvdcop.h"
 #include "identity.h"
@@ -69,9 +68,6 @@ class KonversationApplication : public KUniqueApplication
         // URL-Catcher
         void storeUrl(const QString& who,const QString& url);
         const QStringList& getUrlList();
-
-        // DCOP: Returns a list of signals we should emit
-        QPtrList<IRCEvent> retrieveHooks(EVENT_TYPE type);
 
         KonversationApplication();
         ~KonversationApplication();

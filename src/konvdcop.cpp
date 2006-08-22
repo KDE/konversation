@@ -23,7 +23,6 @@
 #include "channel.h"
 #include "konvdcop.h"
 #include "identity.h"
-#include "ircevent.h"
 #include "server.h"
 
 KonvDCOP::KonvDCOP()
@@ -31,7 +30,6 @@ KonvDCOP::KonvDCOP()
 QObject(0,"Konversation")
 {
     // reset hook counter
-    hookId=0;
 
     KConfig *config = KGlobal::config();
     config->setGroup("AutoAway");                 //TODO - add this to preferences somewhere
@@ -140,44 +138,6 @@ void KonvDCOP::insertRememberLine()
 void KonvDCOP::connectToServer(const QString& url, int port, const QString& channel, const QString& password)
 {
     emit dcopConnectToServer(url, port, channel, password);
-}
-
-/*
- app is the dcop app name, object is that dcop app's object name, and signal is the name of the
- function for that dcop app's object. I didn't implement any matching code yet, so I think it
- just passes all events through at this point. We could register more than one hook for an event
- type when matching code is done.
-*/
-
-int KonvDCOP::registerEventHook(const QString& type,
-const QString& criteria,
-const QString& app,
-const QString& object,
-const QString& signal)
-{
-    hookId++;                                     // FIXME: remember that this could wrap around sometimes! Find a better way!
-
-    // add new event to registered list of event hooks. the id is needed to help unregistering
-    registered_events.append(new IRCEvent(type,criteria,app,object,signal,hookId));
-
-    return hookId;
-}
-
-void KonvDCOP::unregisterEventHook(int hookId)
-{
-    // go through the list of registered events
-    for(unsigned int index=0;index<registered_events.count();index++)
-    {
-        // if we found the id we were looking for ...
-        if(registered_events.at(index)->hookId()==hookId)
-        {
-            // ... remove it and return
-            registered_events.remove(index);
-            kdDebug() << "KonvDCOP::unregisterEventHook(): hook id " << hookId << " removed. Remaining hooks: " << registered_events.count() << endl;
-            return;
-        }
-    }                                             // endfor
-    kdDebug() << "KonvDCOP::unregisterEventHook(): hook id " << hookId << " not found!" << endl;
 }
 
 QString KonvDCOP::getNickname (const QString &serverName)

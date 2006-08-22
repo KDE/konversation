@@ -16,7 +16,7 @@ konversation_SOURCES = konviface.skel konviconfigdialog.cpp konversationstatusba
 	konversationapplication.cpp nick.cpp inputfilter.cpp channel.cpp 	ircview.cpp server.cpp main.cpp \
 	dcc_preferencesui.ui log_preferences.ui tabs_preferencesui.ui tabs_preferences.cpp \
 	chatwindowappearance_preferences.ui irccolorchooserui.ui 	colorsappearance_preferences.ui \
-	irccolorchooser.cpp channellistviewitem.cpp osd.cpp ircevent.cpp 	trayicon.cpp dccchat.cpp \
+	irccolorchooser.cpp channellistviewitem.cpp osd.cpp trayicon.cpp dccchat.cpp \
 	logfilereader.cpp multilineedit.cpp nickinfo.cpp 	dccresumedialog.cpp \
 	konversationsound.cpp quickconnectdialog.cpp serverlistdialog.cpp 	dcctransfersend.cpp \
 	dcctransferrecv.cpp channelnick.cpp dccdetaildialog.cpp 	insertchardialog.cpp \
