@@ -74,6 +74,8 @@ RemoveKey=ServerWindowToolBarIconText
 RemoveKey=ServerWindowToolBarPos
 RemoveKey=ServerWindowToolBarStatus
 RemoveKey=ToolBarPos
+RemoveKey=VersionReply
+RemoveKey=MaximumLag
 
 Id=0.19-cleanup-themes
 File=konversationrc
@@ -123,3 +125,14 @@ File=konversationrc
 Group=Appearance
 Key=ChannelSplitter,ChannelSplitterSizes
 RemoveKey=ChannelSplitter
+
+# Update mainwindow settings
+Id=0.14-mainwindow
+File=konversationrc
+Group=General Settings
+Script=konversation-0.14-mainwindow.pl,perl
+
+# Reset version reply
+Id=0.17-versionreply
+File=konversationrc
+Group=General Options
