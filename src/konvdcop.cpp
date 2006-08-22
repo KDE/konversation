@@ -26,8 +26,8 @@
 #include "server.h"
 
 KonvDCOP::KonvDCOP()
-: DCOPObject("Konversation"),
-QObject(0,"Konversation")
+: DCOPObject("konversation"),
+QObject(0,"konversation")
 {
 }
 
