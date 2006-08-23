@@ -786,6 +786,17 @@ void Server::connectionEstablished(const QString& ownHost)
             rejoinChannels = false;
             autoRejoinChannels();
         }
+
+        // Recreate away state if we were set away prior to a reconnect.
+        if (isAway())
+        {
+            // Correct server's beliefs about its away state.
+            m_isAway = false;
+            QString awayReason = m_awayReason.isEmpty() ? i18n("Gone away for now.") : m_awayReason;
+            QString command(Preferences::commandChar() + "AWAY " + awayReason);
+            Konversation::OutputFilterResult result = outputFilter->parse(getNickname(),command, QString::null);
+            queue(result.toServer);
+        }
     }
     else
     {
@@ -2974,6 +2985,7 @@ void Server::away()
 void Server::unAway()
 {
     m_isAway = false;
+    m_awayReason = QString::null;
     emit awayState(false);
 
     if(!getIdentity()->getAwayNick().isEmpty() && !nonAwayNick.isEmpty())
@@ -2992,6 +3004,11 @@ void Server::unAway()
         }
     }
 
+}
+
+void Server::setAwayReason(const QString& reason)
+{
+    m_awayReason = reason;
 }
 
 bool Server::isAChannel(const QString &channel) const

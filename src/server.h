@@ -292,6 +292,7 @@ class Server : public QObject
          *  return false.
          */
         bool isAway() const;
+        void setAwayReason(const QString& reason);
 
         void emitChannelNickChanged(const ChannelNickPtr channelNick);
         void emitNickInfoChanged(const NickInfoPtr nickInfo);
@@ -620,6 +621,8 @@ class Server : public QObject
         ChannelListPanel* channelListPanel;
 
         bool m_isAway;
+        QString m_awayReason;
+
         bool alreadyConnected;
         bool rejoinChannels;
         bool sendUnlocked;

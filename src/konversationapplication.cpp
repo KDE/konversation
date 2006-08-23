@@ -212,10 +212,8 @@ void KonversationApplication::toggleAway()
     }
     else
     {
-        QString awaymessage ;                     //get default awaymessage
-        if(awaymessage.isEmpty()) awaymessage = "Away at the moment";
-
-        sendMultiServerCommand("away", awaymessage);
+        QString awayReason = i18n("Gone away for now.");
+        sendMultiServerCommand("away", awayReason);
     }
 }
 

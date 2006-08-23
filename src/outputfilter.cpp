@@ -472,6 +472,7 @@ namespace Konversation
                 emit sendToAllChannels(message.replace(QRegExp("%s",false),reason));
             }
 
+            m_server->setAwayReason(reason);
             result.toServer = "AWAY :" + reason;
         }
 

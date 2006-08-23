@@ -176,6 +176,7 @@ handling)
 - Allow inserting characters from the "Special Character" dialog
   via double-clicking in the char table.
 - Properly quit on /disconnect and /reconnect instead of yanking the socket.
+- Recreate previous away state on reconnect.
 
 Changes from 0.18 to 0.19
 We are extremely pleased to announce the immediate release of Konversation 0.19. The focus
