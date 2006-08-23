@@ -552,9 +552,10 @@ void ViewTree::contentsMouseMoveEvent(QMouseEvent* e)
         {
             if (item)
             {
+                hideCloseButtons(item);
+
                 if (isAboveIcon(vp, item))
                 {
-                    hideCloseButtons(item);
                     item->setCloseButtonShown(true);
                     m_closeButtonItem = item;
                     if (!m_enableCloseButtonTimer->isActive())
