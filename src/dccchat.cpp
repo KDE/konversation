@@ -62,13 +62,13 @@ DccChat::DccChat(QWidget* parent,Server* newServer,const QString& myNickname,con
 
     m_headerSplitter = new QSplitter(Qt::Vertical, this);
 
-    m_sourceLine = new Konversation::TopicLabel( m_headerSplitter );
+    m_sourceLine = new Konversation::TopicLabel(m_headerSplitter);
 
-    IRCViewBox* ircViewBox = new IRCViewBox( m_headerSplitter, 0 );
-    setTextView( ircViewBox->ircView() );
+    IRCViewBox* ircViewBox = new IRCViewBox(m_headerSplitter, NULL);
+    setTextView(ircViewBox->ircView());
 
-    m_dccChatInput = new IRCInput( this );
-
+    m_dccChatInput = new IRCInput(this);
+    getTextView()->installEventFilter(m_dccChatInput);
     m_dccChatInput->setEnabled( false );
 
     setServer( newServer );
