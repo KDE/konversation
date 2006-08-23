@@ -28,6 +28,8 @@ namespace Konversation
         m_charTable = new KCharSelect(this, "charTable", font);
         m_charTable->enableFontCombo(false);
         setMainWidget(m_charTable);
+
+        connect(m_charTable, SIGNAL(doubleClicked()), this, SLOT(slotOk()));
     }
 
     InsertCharDialog::~InsertCharDialog()
