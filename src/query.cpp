@@ -74,16 +74,24 @@ Query::Query(QWidget* parent) : ChatWindow(parent)
 
     // link "Whois", "Ignore" ... menu items into ircview popup
     QPopupMenu* popup=textView->getPopup();
-    popup->insertItem(i18n("Whois"),Konversation::Whois);
-    popup->insertItem(i18n("Version"),Konversation::Version);
-    popup->insertItem(i18n("Ping"),Konversation::Ping);
+    popup->insertItem(i18n("&Whois"),Konversation::Whois);
+    popup->insertItem(i18n("&Version"),Konversation::Version);
+    popup->insertItem(i18n("&Ping"),Konversation::Ping);
     popup->insertSeparator();
+
+    popup->insertItem(i18n("Ignore"), Konversation::IgnoreNick);
+    popup->insertItem(i18n("Unignore"), Konversation::UnignoreNick);
+    popup->setItemVisible(Konversation::IgnoreNick, false);
+    popup->setItemVisible(Konversation::UnignoreNick, false);
+    popup->insertSeparator();
+
     if (kapp->authorize("allow_downloading"))
     {
         popup->insertItem(SmallIcon("2rightarrow"),i18n("Send &File..."),Konversation::DccSend);
+        popup->insertSeparator();
     }
-    popup->insertSeparator();
-    popup->insertItem(i18n("Ignore"),Konversation::IgnoreNick);
+
+    popup->insertItem(i18n("Add to Watched Nicks"), Konversation::AddNotify);
 
     // This box holds the input line
     QHBox* inputBox=new QHBox(this, "input_log_box");
@@ -322,8 +330,22 @@ void Query::popup(int id)
                 "CloseQueryAfterIgnore");
               if(rc==KMessageBox::Yes) closeYourself();
               break;
-	    }
+        }
+        case Konversation::UnignoreNick:
+        {
+            QString question = i18n("Do you want to stop ignoring %1?").arg(name);
 
+            if (KMessageBox::warningContinueCancel(this, question, i18n("Unignore"), i18n("Unignore"), "UnignoreNick") ==
+                KMessageBox::Continue)
+            {
+                sendQueryText(Preferences::commandChar()+"UNIGNORE "+name);
+            }
+            break;
+        }
+        case Konversation::AddNotify:
+            if (!Preferences::isNotify(m_server->getServerGroup(),name))
+                Preferences::addNotify(m_server->getServerGroup(),name);
+            break;
         case Konversation::DccSend:
             sendQueryText(Preferences::commandChar()+"DCC SEND "+name);
             break;

@@ -1025,35 +1025,18 @@ void IRCView::contentsContextMenuEvent(QContextMenuEvent* ev)
     // Hack to counter the fact that we're given an decoded url
     m_highlightedURL = KURL::fromPathOrURL(anchorAt(viewportToContents(mapFromGlobal(QCursor::pos())))).url();
 
-    if(m_highlightedURL.isEmpty()) {
+    if (m_highlightedURL.isEmpty())
         viewport()->setCursor(Qt::ArrowCursor);
-    }
 
-    if(!block)
-    {
+    if (!block)
         KTextBrowser::contentsContextMenuEvent(ev);
-    }
 }
 
 bool IRCView::contextMenu(QContextMenuEvent* ce)
 {
-    if(m_isOnNick)
+    if (m_isOnNick)
     {
-        if (Preferences::isIgnored(getContextNick()))
-        {
-            m_nickPopup->setItemVisible(Konversation::UnignoreNick, true);
-            m_nickPopup->setItemVisible(Konversation::IgnoreNick, false);
-        }
-        else
-        {
-            m_nickPopup->setItemVisible(Konversation::IgnoreNick, true);
-            m_nickPopup->setItemVisible(Konversation::UnignoreNick, false);
-        }
-
-        if (Preferences::isNotify(m_server->getServerGroup(),getContextNick()))
-            m_nickPopup->setItemEnabled(Konversation::AddNotify, false);
-        else
-            m_nickPopup->setItemEnabled(Konversation::AddNotify, true);
+        updateNickMenuEntries(m_nickPopup, getContextNick());
 
         m_nickPopup->exec(ce->globalPos());
         m_isOnNick = false;
@@ -1083,6 +1066,9 @@ bool IRCView::contextMenu(QContextMenuEvent* ce)
             channelSettingsAction = KonversationApplication::instance()->getMainWindow()->actionCollection()->action("channel_settings");
             if (channelSettingsAction) channelSettingsAction->plug(m_popup);
         }
+
+        if (m_chatWin->getType() == ChatWindow::Query)
+            updateNickMenuEntries(m_popup, m_chatWin->getName());
 
         int r = m_popup->exec(ce->globalPos());
 
@@ -1180,8 +1166,8 @@ void IRCView::setupNickPopupMenu()
     {
         m_nickPopup->insertItem(SmallIcon("2rightarrow"),i18n("Send &File..."),Konversation::DccSend);
     }
-
     m_nickPopup->insertSeparator();
+
     m_nickPopup->insertItem(i18n("Add to Watched Nicks"), Konversation::AddNotify);
 
     connect(m_nickPopup, SIGNAL(activated(int)), this, SIGNAL(popupCommand(int)));
@@ -1189,19 +1175,50 @@ void IRCView::setupNickPopupMenu()
     connect(m_kickban, SIGNAL(activated(int)), this, SIGNAL(popupCommand(int)));
 }
 
+void IRCView::updateNickMenuEntries(QPopupMenu* popup, const QString& nickname)
+{
+    if (popup)
+    {
+        if (Preferences::isIgnored(nickname))
+        {
+            popup->setItemVisible(Konversation::UnignoreNick, true);
+            popup->setItemVisible(Konversation::IgnoreNick, false);
+        }
+        else
+        {
+            popup->setItemVisible(Konversation::IgnoreNick, true);
+            popup->setItemVisible(Konversation::UnignoreNick, false);
+        }
+
+        if (Preferences::isNotify(m_server->getServerGroup(), nickname))
+            popup->setItemEnabled(Konversation::AddNotify, false);
+        else
+            popup->setItemEnabled(Konversation::AddNotify, true);
+    }
+}
+
 void IRCView::setupQueryPopupMenu()
 {
     m_nickPopup = new KPopupMenu(this,"query_context_menu");
-    m_nickPopupId= m_nickPopup->insertTitle(m_currentNick);
-    m_nickPopup->insertItem(i18n("Whois"),Konversation::Whois);
-    m_nickPopup->insertItem(i18n("Version"),Konversation::Version);
-    m_nickPopup->insertItem(i18n("Ping"),Konversation::Ping);
+    m_nickPopupId = m_nickPopup->insertTitle(m_currentNick);
+    m_nickPopup->insertItem(i18n("&Whois"),Konversation::Whois);
+    m_nickPopup->insertItem(i18n("&Version"),Konversation::Version);
+    m_nickPopup->insertItem(i18n("&Ping"),Konversation::Ping);
     m_nickPopup->insertSeparator();
+
+    m_nickPopup->insertItem(i18n("Ignore"), Konversation::IgnoreNick);
+    m_nickPopup->insertItem(i18n("Unignore"), Konversation::UnignoreNick);
+    m_nickPopup->setItemVisible(Konversation::IgnoreNick, false);
+    m_nickPopup->setItemVisible(Konversation::UnignoreNick, false);
+    m_nickPopup->insertSeparator();
+
     if (kapp->authorize("allow_downloading"))
     {
         m_nickPopup->insertItem(SmallIcon("2rightarrow"),i18n("Send &File..."),Konversation::DccSend);
+        m_nickPopup->insertSeparator();
     }
-    m_nickPopup->insertItem(i18n("Ignore"), Konversation::IgnoreNick);
+
+    m_nickPopup->insertItem(i18n("Add to Watched Nicks"), Konversation::AddNotify);
 
     connect(m_nickPopup, SIGNAL(activated(int)), this, SIGNAL(popupCommand(int)));
 }
@@ -1410,11 +1427,9 @@ void IRCView::setChatWin(ChatWindow* chatWin)
     m_chatWin = chatWin;
 
     if(m_chatWin->getType()==ChatWindow::Channel)
-    {
         setupNickPopupMenu();
-    }
     else
-      setupQueryPopupMenu();
+        setupQueryPopupMenu();
 
     setupChannelPopupMenu();
 }

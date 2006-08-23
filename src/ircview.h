@@ -136,6 +136,7 @@ class IRCView : public KTextBrowser
         bool contextMenu(QContextMenuEvent* ce);
 
         void setupNickPopupMenu();
+        void updateNickMenuEntries(QPopupMenu* popup, const QString& nickname);
         void setupQueryPopupMenu();
         void setupChannelPopupMenu();
 
