@@ -3212,6 +3212,7 @@ void Server::disconnect()
     {
         connecting = false;
         alreadyConnected = false;
+        m_autoIdentifyLock = false;
 
         emit connectionChangedState(this, SSDisconnected);
 
