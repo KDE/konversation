@@ -376,14 +376,11 @@ const bool Preferences::removeNotify(const QString& groupName, const QString& pa
     return false;
 }
 
-const bool Preferences::isNotify(const QString& groupName, const QString& pattern)
+const bool Preferences::isNotify(int serverGroupId, const QString& pattern)
 {
-    int id = serverGroupIdByName(groupName);
-    if (!id) return false;
-
-    if (self()->mNotifyList.find(id) != self()->mNotifyList.end())
+    if (self()->mNotifyList.find(serverGroupId) != self()->mNotifyList.end())
     {
-        QStringList nicknameList = self()->mNotifyList[id];
+        QStringList nicknameList = self()->mNotifyList[serverGroupId];
 
         if (nicknameList.contains(pattern)) return true;
     }

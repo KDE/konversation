@@ -1190,7 +1190,7 @@ void IRCView::updateNickMenuEntries(QPopupMenu* popup, const QString& nickname)
             popup->setItemVisible(Konversation::UnignoreNick, false);
         }
 
-        if (Preferences::isNotify(m_server->getServerGroup(), nickname))
+        if (Preferences::isNotify(m_server->serverGroupSettings()->id(), nickname))
             popup->setItemEnabled(Konversation::AddNotify, false);
         else
             popup->setItemEnabled(Konversation::AddNotify, true);
