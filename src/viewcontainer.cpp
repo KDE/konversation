@@ -210,8 +210,6 @@ void ViewContainer::setupViewTree()
 
             syncTabBarToTree();
         }
-
-        m_viewTree->show();
     }
     else
     {
