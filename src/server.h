@@ -103,9 +103,6 @@ class Server : public QObject
         QString getAutoJoinChannelKey() const;
         void setAutoJoinChannelKey(const QString &key);
 
-        void setDeliberateQuit(bool on);
-        bool getDeliberateQuit() const;
-
         QString getNextNickname();
 
         void setIrcName(const QString &newIrcName);
@@ -577,9 +574,10 @@ class Server : public QObject
         bool autoJoin;
         bool autoRejoin;
         bool autoReconnect;
-        bool deliberateQuit;
-
         bool quickConnect;
+        bool deliberateQuit;
+        bool keepViewsOpenAfterQuit;
+        bool reconnectAfterQuit;
 
         QString autoJoinChannel;
         QString autoJoinChannelKey;

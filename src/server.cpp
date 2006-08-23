@@ -131,7 +131,6 @@ void Server::doPreShellCommand()
 
 Server::~Server()
 {
-
     //send queued messages
     kdDebug() << "Server::~Server(" << getServerName() << ")" << endl;
     // Send out the last messages (usually the /QUIT)
@@ -143,7 +142,8 @@ Server::~Server()
     // clear nicks online
     emit nicksNowOnline(this,QStringList(),true);
     // Make sure no signals get sent to a soon to be dying Server Window
-    if (m_socket) {
+    if (m_socket)
+    {
         m_socket->blockSignals(true);
         m_socket->deleteLater();
     }
@@ -194,6 +194,8 @@ void Server::init(ViewContainer* viewContainer, const QString& nick, const QStri
     m_isAway = false;
     m_socket = 0;
     m_autoIdentifyLock = false;
+    keepViewsOpenAfterQuit = false;
+    reconnectAfterQuit = false;
 
     // TODO fold these into a QMAP, and these need to be reset to RFC values if this server object is reused.
     serverNickPrefixModes = "ovh";
@@ -617,8 +619,6 @@ void Server::ircServerConnectionSuccess()
 
 void Server::broken(int state)
 {
-    //kdDebug() << kdBacktrace() << endl;
-
     m_socket->enableRead(false);
     m_socket->enableWrite(false);
     m_socket->blockSignals(true);
@@ -630,17 +630,19 @@ void Server::broken(int state)
 
     notifyTimer.stop();
     m_pingResponseTimer.stop();
-    inputFilter.setLagMeasuring(false);           // XXX paranoia?
-    currentLag = -1;                              // XXX will this make it server independent now?
+    inputFilter.setLagMeasuring(false);
+    currentLag = -1;
+
+    emit connectionChangedState(this, SSDisconnected);
+
     emit resetLag();
+    emit serverOnline(false);
+    emit nicksNowOnline(this,QStringList(),true);
 
     kdDebug() << "Connection broken (Socket fd " << m_socket->socketDevice()->socket() << ") " << state << "!" << endl;
 
-    // clear nicks online
-    emit nicksNowOnline(this,QStringList(),true);
 
-    // TODO: Close all queries and channels! Or at least make sure that all gets reconnected properly
-    if(!getDeliberateQuit())
+    if (!deliberateQuit)
     {
         static_cast<KonversationApplication*>(kapp)->notificationHandler()->connectionFailure(statusView, m_serverGroup->serverByIndex(m_currentServerIndex).server());
 
@@ -656,8 +658,7 @@ void Server::broken(int state)
 
             statusView->appendServerMessage(i18n("Error"), error);
 
-            // TODO: Make timeout configurable
-            QTimer::singleShot(5000,this,SLOT(connectToIRCServer()));
+            QTimer::singleShot(5000, this, SLOT(connectToIRCServer()));
             rejoinChannels = true;
         }
         else if ((!autoReconnect || reconnectCounter > Preferences::reconnectCount()))
@@ -704,7 +705,7 @@ void Server::broken(int state)
                     error = i18n("Waiting for 2 minutes before another reconnection attempt...");
                     statusView->appendServerMessage(i18n("Info"),error);
                     m_currentServerIndex = 0;
-                    QTimer::singleShot(2*60*1000,this,SLOT(connectToIRCServer()));
+                    QTimer::singleShot(2*60*1000, this, SLOT(connectToIRCServer()));
                 }
             }
         }
@@ -717,12 +718,29 @@ void Server::broken(int state)
     }                                             // If we quit the connection with the server
     else
     {
-        m_serverGroup->clearQuickServerList();
-        getViewContainer()->serverQuit(this);
-    }
+        if (keepViewsOpenAfterQuit)
+        {
+            keepViewsOpenAfterQuit = false;
 
-    emit serverOnline(false);
-    emit connectionChangedState(this, SSDisconnected);
+            statusView->appendServerMessage(i18n("Info"),i18n("Disconnected from server."));
+
+            if (reconnectAfterQuit)
+            {
+                reconnectAfterQuit = false;
+
+                updateAutoJoin();
+                rejoinChannels = true;
+                reconnectCounter = 0;
+                QTimer::singleShot(3000, this, SLOT(connectToIRCServer()));
+
+            }
+        }
+        else
+        {
+            m_serverGroup->clearQuickServerList();
+            getViewContainer()->serverQuit(this);
+        }
+    }
 }
 
 void Server::sslError(QString reason)
@@ -1210,9 +1228,12 @@ void Server::send()
             else                                  // no argument (servers recognize it as "*")
                 inputFilter.addWhoRequest("*");
         }
-
         // Don't reconnect if we WANT to quit
-        else if(outputLine.startsWith("QUIT")) setDeliberateQuit(true);
+        else if (outputLine.startsWith("QUIT"))
+        {
+            deliberateQuit = true;
+        }
+
 
         // wrap server socket into a stream
         QTextStream serverStream;
@@ -1334,16 +1355,6 @@ void Server::dcopInfo(const QString& string)
 void Server::ctcpReply(const QString &receiver,const QString &text)
 {
     queue("NOTICE "+receiver+" :"+'\x01'+text+'\x01');
-}
-
-bool Server::getDeliberateQuit() const
-{
-    return deliberateQuit;
-}
-
-void Server::setDeliberateQuit(bool on)
-{
-    deliberateQuit=on;
 }
 
 QString Server::getNumericalIp(bool followDccSetting)
@@ -3192,31 +3203,26 @@ void Server::sendToAllChannelsAndQueries(const QString& text)
 
 void Server::reconnect()
 {
-    if(!isConnected())
+    if (isConnected() && !connecting)
     {
-        QObject::disconnect(m_socket,SIGNAL (gotError(int)),this,SLOT (broken(int)));
-        QObject::disconnect(m_socket,SIGNAL (closed()),this,SLOT(closed()));
-
-        reconnectCounter = 0;
-        connectToIRCServer();
+        keepViewsOpenAfterQuit = true;
+        reconnectAfterQuit = true;
+        quitServer();
+        send();
     }
-    else
+    else if (!isConnected())
     {
-        getStatusView()->appendServerMessage(i18n("Error"), i18n("Server already connected."));
+        connectToIRCServer();
     }
 }
 
 void Server::disconnect()
 {
-    if (m_socket->disconnect())
+    if (isConnected())
     {
-        connecting = false;
-        alreadyConnected = false;
-        m_autoIdentifyLock = false;
-
-        emit connectionChangedState(this, SSDisconnected);
-
-        statusView->appendServerMessage(i18n("Info"),i18n("Disconnected from server."));
+        keepViewsOpenAfterQuit = true;
+        quitServer();
+        send();
     }
 }
 

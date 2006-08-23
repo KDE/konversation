@@ -195,7 +195,7 @@ namespace Konversation
             else if(command == "oper")     result = parseOper(myNick,parameter);
             else if(command == "ban")      result = parseBan(parameter);
             else if(command == "unban")    result = parseUnban(parameter);
-            else if(command == "kickban")      result = parseBan(parameter,true);
+            else if(command == "kickban")  result = parseBan(parameter,true);
             else if(command == "ignore")   result = parseIgnore(parameter);
             else if(command == "unignore") result = parseUnignore(parameter);
             else if(command == "quote")    result = parseQuote(parameter);
@@ -211,8 +211,8 @@ namespace Konversation
             else if(command == "amsg")     result = parseAmsg(parameter);
             else if(command == "omsg")     result = parseOmsg(parameter);
             else if(command == "onotice")  result = parseOnotice(parameter);
-            else if(command == "server")     parseServer(parameter);
-            else if(command == "reconnect")  parseReconnect();
+            else if(command == "server")   parseServer(parameter);
+            else if(command == "reconnect")  emit reconnectServer();
             else if(command == "disconnect") emit disconnectServer();
             else if(command == "prefs")    result = parsePrefs(parameter);
             else if(command == "charset")  parseCharset(parameter);
@@ -1414,12 +1414,6 @@ namespace Konversation
                 emit connectToServer(host, port, password);
             }
         }
-    }
-
-    void OutputFilter::parseReconnect()
-    {
-        m_server->disconnect();
-        m_server->reconnect();
     }
 
     OutputFilterResult OutputFilter::parsePrefs(const QString& parameter)
