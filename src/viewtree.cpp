@@ -91,8 +91,10 @@ void ViewTree::updateAppearance()
 void ViewTree::addView(const QString& name, ChatWindow* view, const QIconSet &iconset, bool select, ChatWindow* afterView)
 {
     ViewTreeItem* item = 0;
+    ViewTreeItem* parent = 0;
 
-    ViewTreeItem* parent = getParentItemForView(view);
+    if (view->getType() != ChatWindow::DccChat)
+        parent = getParentItemForView(view);
 
     if (parent)
     {

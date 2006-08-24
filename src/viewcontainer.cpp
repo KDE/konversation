@@ -1209,23 +1209,14 @@ void ViewContainer::addView(ChatWindow* view, const QString& label, bool weiniti
 
             for (int sindex = 0; sindex < m_tabWidget->count(); sindex++)
             {
-                tmp_ChatWindow = static_cast<ChatWindow *>(m_tabWidget->page(sindex));
+                tmp_ChatWindow = static_cast<ChatWindow*>(m_tabWidget->page(sindex));
+                wtype = tmp_ChatWindow->getType();
 
-                if (tmp_ChatWindow->getType() == ChatWindow::Status && tmp_ChatWindow->getServer() == view->getServer())
+                if (wtype != ChatWindow::Status && wtype != ChatWindow::Channel
+                    && wtype != ChatWindow::RawLog && wtype != ChatWindow::Query
+                    && wtype != ChatWindow::DccChat)
                 {
-                    for (int index = sindex + 1; index < m_tabWidget->count(); index++)
-                    {
-                        tmp_ChatWindow = static_cast<ChatWindow *>(m_tabWidget->page(index));
-                        wtype = tmp_ChatWindow->getType();
-
-                        if (wtype != ChatWindow::Channel && wtype != ChatWindow::RawLog &&
-                            wtype != ChatWindow::Query && wtype != ChatWindow::DccChat)
-                        {
-                            placement = index;
-                            break;
-                        }
-                    }
-
+                    placement = sindex;
                     break;
                 }
             }
