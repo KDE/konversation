@@ -10,7 +10,7 @@
 /*
   Copyright (C) 2002 Dario Abatianni <eisfuchs@tigress.com>
   Copyright (C) 2005 Ismail Donmez <ismail@kde.org>
-  Copyright (C) 2005 Peter Simonsson <psn@linux.se>
+  Copyright (C) 2005-2006 Peter Simonsson <psn@linux.se>
   Copyright (C) 2005 Eike Hein <sho@eikehein.com>
 */
 
@@ -633,6 +633,17 @@ void Server::broken(int state)
     inputFilter.setLagMeasuring(false);
     currentLag = -1;
 
+    // HACK Only show one nick change dialog at connection time
+    if(getStatusView())
+    {
+        KDialogBase* nickChangeDialog = dynamic_cast<KDialogBase*>(
+                getStatusView()->child("NickChangeDialog", "KInputDialog"));
+
+        if(nickChangeDialog) {
+            nickChangeDialog->cancel();
+        }
+    }
+
     emit connectionChangedState(this, SSDisconnected);
 
     emit resetLag();
@@ -969,11 +980,12 @@ QString Server::getAutoJoinCommand() const
 QString Server::getNextNickname()
 {
     QString newNick = getIdentity()->getNickname(++tryNickNumber);
-    
+
     if (newNick.isNull())
     {
         QString inputText = i18n("No nicknames from the \"%1\" identity were accepted by the connection \"%2\".\nPlease enter a new one or press Cancel to disconnect:").arg(getIdentity()->getName()).arg(getServerGroup());
-        newNick = KInputDialog::getText(i18n("Nickname error"), inputText, QString::null);
+        newNick = KInputDialog::getText(i18n("Nickname error"), inputText,
+                                        QString::null, 0, getStatusView(), "NickChangeDialog");
     }
 
     return newNick;
