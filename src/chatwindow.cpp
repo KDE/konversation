@@ -209,7 +209,7 @@ void ChatWindow::setLogfileName(const QString& name)
     if(firstLog)
     {
         // status panels get special treatment here, since they have no server at the beginning
-        if(getType() == Status)
+        if (getType() == Status || getType() == DccChat)
         {
             logName = name + ".log";
         }
