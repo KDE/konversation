@@ -538,7 +538,6 @@ void ViewContainer::updateFrontView()
         {
             case ChatWindow::Channel:
             case ChatWindow::Query:
-            case ChatWindow::DccChat:
             case ChatWindow::Status:
             case ChatWindow::ChannelList:
             case ChatWindow::RawLog:
