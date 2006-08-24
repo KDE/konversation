@@ -70,6 +70,8 @@ class IRCView : public KTextBrowser
         QColor highlightColor() { return m_highlightColor; }
         QString currentChannel() { return m_currentChannel; }
 
+        void setNickAndChannelContextMenusEnabled(bool enable);
+
         signals:
         // Notify container of new text and highlight state
         void updateTabNotification(Konversation::TabNotifyType type);

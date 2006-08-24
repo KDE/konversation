@@ -1049,14 +1049,14 @@ void IRCView::contentsContextMenuEvent(QContextMenuEvent* ev)
 
 bool IRCView::contextMenu(QContextMenuEvent* ce)
 {
-    if (m_isOnNick)
+    if (m_server && m_isOnNick && m_nickPopup->isEnabled())
     {
         updateNickMenuEntries(m_nickPopup, getContextNick());
 
         m_nickPopup->exec(ce->globalPos());
         m_isOnNick = false;
     }
-    else if(m_isOnChannel)
+    else if (m_server && m_isOnChannel && m_channelPopup->isEnabled())
     {
         m_channelPopup->exec(ce->globalPos());
         m_isOnChannel = false;
@@ -1207,6 +1207,8 @@ void IRCView::updateNickMenuEntries(QPopupMenu* popup, const QString& nickname)
 
         if (!m_server)
             popup->setItemEnabled(Konversation::AddNotify, false);
+        else if (!m_server->isConnected())
+            popup->setItemEnabled(Konversation::AddNotify, false);
         else if (Preferences::isNotify(m_server->serverGroupSettings()->id(), nickname))
             popup->setItemEnabled(Konversation::AddNotify, false);
         else
@@ -1249,6 +1251,12 @@ void IRCView::setupChannelPopupMenu()
     m_channelPopup->insertItem(i18n("Get &topic"),Konversation::Topic);
 
     connect(m_channelPopup, SIGNAL(activated(int)), this, SIGNAL(popupCommand(int)));
+}
+
+void IRCView::setNickAndChannelContextMenusEnabled(bool enable)
+{
+    if (m_nickPopup) m_nickPopup->setEnabled(enable);
+    if (m_channelPopup) m_channelPopup->setEnabled(enable);
 }
 
 void IRCView::search()

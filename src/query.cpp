@@ -546,6 +546,22 @@ void Query::filesDropped(const QStrList& files)
 void Query::serverOnline(bool online)
 {
     queryInput->setEnabled(online);
+    getTextView()->setNickAndChannelContextMenusEnabled(online);
+
+    QPopupMenu* popup = getTextView()->getPopup();
+
+    if (popup)
+    {
+        popup->setItemEnabled(Konversation::Whois, online);
+        popup->setItemEnabled(Konversation::Version, online);
+        popup->setItemEnabled(Konversation::Ping, online);
+        popup->setItemEnabled(Konversation::IgnoreNick, online);
+        popup->setItemEnabled(Konversation::UnignoreNick, online);
+        popup->setItemEnabled(Konversation::AddNotify, online);
+
+        if (kapp->authorize("allow_downloading"))
+            popup->setItemEnabled(Konversation::DccSend, online);
+    }
 }
 
 void Query::emitUpdateInfo()

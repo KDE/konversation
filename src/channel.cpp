@@ -2348,12 +2348,14 @@ void Channel::serverOnline(bool online)
     if (online)
     {
         channelInput->setEnabled(true);
+        getTextView()->setNickAndChannelContextMenusEnabled(true);
         nicknameCombobox->setEnabled(true);
     }
     else
     {
         purgeNicks();
         channelInput->setEnabled(false);
+        getTextView()->setNickAndChannelContextMenusEnabled(false);
         nicknameCombobox->setEnabled(false);
     }
 }
