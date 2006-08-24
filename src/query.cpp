@@ -212,8 +212,23 @@ void Query::sendQueryText(const QString& sendLine)
             else if(!result.typeString.isEmpty()) appendQuery(result.typeString, result.output);
             else appendQuery(m_server->getNickname(), result.output);
         }
+        else if (result.outputList.count())
+        {
+            Q_ASSERT(result.type==Konversation::Message);
+            for ( QStringList::Iterator it = result.outputList.begin(); it != result.outputList.end(); ++it )
+            {
+                append(m_server->getNickname(), *it);
+            }
+        }
 
-        m_server->queue(result.toServer);
+        if (result.toServerList.count())
+        {
+            m_server->queueList(result.toServerList);
+        }
+        else //per the original code, an empty string could be queued
+        {
+            m_server->queue(result.toServer);
+        }
     } // for
 }
 

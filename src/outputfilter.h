@@ -44,6 +44,7 @@ namespace Konversation
     struct OutputFilterResult
     {
         QString output;
+        QStringList outputList;
         QString toServer;
         QStringList toServerList;
         QString typeString;
@@ -58,6 +59,7 @@ namespace Konversation
             OutputFilter(Server* server);
             ~OutputFilter();
 
+            QStringList splitForEncoding(QString inputLine, int MAX);
             OutputFilterResult parse(const QString& myNick,const QString& line,const QString& name);
             OutputFilterResult sendRequest(const QString &recipient,const QString &fileName,const QString &address,
                 const QString &port,unsigned long size);

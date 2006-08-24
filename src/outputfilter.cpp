@@ -45,6 +45,8 @@
 
 #include "query.h"
 
+//#include "argnl.h"
+
 namespace Konversation
 {
     OutputFilter::OutputFilter(Server* server)
@@ -95,6 +97,141 @@ namespace Konversation
 
         return false;
     }
+
+//I've left these debugging macros in here so you can double-check my work.
+//I'll clean these out soon. These form a comma separated list.
+
+//Begins the debugging line. Change it to kdDebug() to enable it for this function.
+#define KV kndDebug() << __FILE__ << ':' << __LINE__ << ' '
+//Display the variable name and is value.
+#define _S(x) #x << ": " << (x) << ", "
+//Display the address of the item
+#define _P_(x) "&" << #x << ": " << QString::number(((ulong)((void*)(x))),16) << ", "
+
+    QStringList OutputFilter::splitForEncoding(QString inputLine, int MAX)
+    {
+        KV << k_funcinfo << endl;
+
+        QString channelCodecName=Preferences::channelEncoding(m_server->getServerGroup(), destination);
+
+        int sublen=0; //The encoded length since the last split
+        int charLength=0; //the length of this char
+
+        //MAX= 7; // for testing
+
+        //FIXME should we run this through the encoder first, checking with "canEncode"?
+        QString text=inputLine; // the text we'll send, currently in Unicode
+
+        QStringList finals; // The strings we're going to output
+
+        QChar   *c=(QChar*)text.unicode(),  // Pointer to the character we're looking at
+                *end=c+text.length();       // If it were a char*, it would be pointing at the \0;
+
+        QChar   *frag=c,                    // The beginning of this fragment
+                *lastSBC=c,                 // The last single byte char we saw in case we have to chop
+                *lastSpace=c;               // The last space we saw
+        bool sbcGood = 0;                   // We can't trust that a single byte char was ever seen
+
+        //Get the codec we're supposed to use. This must not fail. (not verified)
+        QTextCodec* codec;
+
+        // I copied this bit straight out of Server::send
+        if (channelCodecName.isEmpty())
+        {
+            codec = m_server->getIdentity()->getCodec();
+        }
+        else
+        {
+            // FIXME Doesn't this just return `getIdentity()->getCodec();` if no codec set?
+            codec = Konversation::IRCCharsets::self()->codecForName(channelCodecName);
+        }
+
+        Q_ASSERT(codec);
+
+        KV << _P_(QTextCodec::codecForCStrings()) << endl;
+
+        while (c<end)
+        {
+            KV << _P_(c) << _P_(frag) << _P_(lastSpace) << _P_(c-frag) << _S(*c) << endl;
+
+            // The most important bit - turn the current char into a QCString so we can measure it
+            QCString ch=codec->fromUnicode(*c);
+            charLength=ch.length();
+
+            KV << _S(charLength) << _S(sublen) << endl;
+
+            // If adding this char puts us over the limit:
+            if (charLength+sublen > MAX)
+            {
+                KV << endl;
+                // If lastSpace isn't pointing to a space, we have to chop
+                if ( !lastSpace->isSpace() ) //used in case we end up supporting unicode spaces
+                {
+                    KV << endl;
+                    // FIXME This is only theory, it might not work
+                    if (sbcGood) // Copy up to and including the last SBC.
+                    {
+                        KV << endl;
+
+                        QString curs(frag, (++lastSBC)-frag); // Since there is a continue below, safe to increment here
+                        finals+=curs;
+                        lastSpace=frag=c=lastSBC;
+                    }
+                    else //Split right here
+                    {
+                        KV << endl;
+
+                        QString curs(frag, c-frag); // Don't include c
+                        finals+=curs;
+                        lastSpace=frag=c; //we need to see this char again, to collect its stats, so no increment
+                    }
+                }
+                else // Most common case, we saw a space we can split at
+                {
+                    KV << endl;
+                    // Copy the current substring, but not the space (unlike the SBC case)
+                    QString curs(frag, lastSpace-frag);
+                    finals+=curs;
+
+                    // Rewind to the last good splitpoint, dropping the space character as
+                    //  it was technically replaced with a \n
+                    frag=c=++lastSpace; //pre-increment
+                }
+
+                KV << endl;
+
+                sbcGood=false;
+                // Since c always gets reset to the splitpoint, sublen gets recalculated
+                sublen=0;
+                continue; // SLAM!!!
+            }
+            else if (*c==' ') // If we want to support typographic spaces, change this to c->isSpace(), and rewrite above
+            {
+                lastSpace=c;
+            }
+            // Won't get here if the string was split
+            if (charLength==1)
+            {
+                sbcGood=1;
+                lastSBC=c;
+            }
+            sublen+=charLength;
+            ++c;
+        }//wend
+        //so when we hit this point, frag to end is all thats left
+        Q_ASSERT((frag!=c));
+        if (frag != c)
+        {
+            QString curs(frag, c-frag);
+            finals+=curs;
+        }
+        KV << _S(finals) << endl;
+        return finals;
+    }
+
+//Redefined so you can silence just the one function
+//#undef KV
+//#define KV kdDebug() << __FILE__ << ':' << __LINE__ << ' '
 
     OutputFilterResult OutputFilter::parse(const QString& myNick,const QString& originalLine,const QString& name)
     {
@@ -147,15 +284,8 @@ namespace Konversation
         // Convert double command chars at the beginning to single ones
         else if(line.startsWith(commandChar+commandChar) && !destination.isEmpty())
         {
-            result.toServer = "PRIVMSG " + name + " :" + inputLine.mid(1);
-
-            for(uint i = 508; i < result.toServer.length(); i += 509)
-            {
-                result.toServer.insert(i, "\nPRIVMSG " + destination + " :");
-            }
-
-            result.output = inputLine.mid(1);
-            result.type = Message;
+            inputLine=inputLine.mid(1);
+            goto BYPASS_COMMAND_PARSING;
         }
         // Server command?
         else if(line.startsWith(commandChar))
@@ -230,14 +360,28 @@ namespace Konversation
         // Ordinary message to channel/query?
         else if(!destination.isEmpty())
         {
-            result.toServer = "PRIVMSG " + destination + " :" + inputLine;
+            BYPASS_COMMAND_PARSING:
+            int prel = m_server->getPreLength("PRIVMSG", destination);
 
-            for(uint i = 508; i < result.toServer.length(); i += 509)
+            //FIXME leave this one in for those that really need to know where the line splits?
+            kdDebug() << "Message preamble for " << destination << " is " << prel << endl;
+
+            QStringList outputList=splitForEncoding(inputLine, prel);
+            if (outputList.count() > 1)
             {
-                result.toServer.insert(i, "\nPRIVMSG " + destination + " :");
+                result.output=QString::null;
+                result.outputList=outputList;
+                for ( QStringList::Iterator it = outputList.begin(); it != outputList.end(); ++it )
+                {
+                    result.toServerList += "PRIVMSG " + destination + " :" + *it;
+                }
+            }
+            else
+            {
+                result.output = inputLine;
+                result.toServer = "PRIVMSG " + destination + " :" + inputLine;
             }
 
-            result.output = inputLine;
             result.type = Message;
         }
         // Eveything else goes to the server unchanged

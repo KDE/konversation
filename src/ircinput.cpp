@@ -187,8 +187,12 @@ bool IRCInput::eventFilter(QObject *object,QEvent *event)
         if (event->type() == QEvent::KeyPress)
         {
             QKeyEvent* ke = static_cast<QKeyEvent*>(event);
+
+            // Allow tab to be handled naturally by the widget.
+            // Once it runs out of links it goes to the next control.
             if (ke->key() == Key_Tab && (ke->state() == 0 || ke->state() == Qt::ShiftButton))
                 return false;
+
             if (!ke->text().isEmpty() && (ke->state() == Qt::ShiftButton || ke->state() == 0))
             {
                 setFocus();

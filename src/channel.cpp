@@ -910,6 +910,14 @@ void Channel::sendChannelText(const QString& sendLine)
             else if(result.type == Konversation::PrivateMessage) appendQuery(result.typeString, result.output);
             else append(m_server->getNickname(), result.output);
         }
+        else if (result.outputList.count())
+        {
+            Q_ASSERT(result.type==Konversation::Message);
+            for ( QStringList::Iterator it = result.outputList.begin(); it != result.outputList.end(); ++it )
+            {
+                append(m_server->getNickname(), *it);
+            }
+        }
         // Send anything else to the server
         if(!result.toServer.isEmpty())
         {

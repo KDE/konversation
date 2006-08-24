@@ -141,6 +141,8 @@ class Server : public QObject
         void appendStatusMessage(const QString& type,const QString& message);
         void appendMessageToFrontmost(const QString& type,const QString& message, bool parseURL = true);
 
+        int getPreLength(QString command, QString dest);
+
         void dcopRaw(const QString& command);
         void dcopSay(const QString& target,const QString& command);
         void dcopInfo(const QString& string);

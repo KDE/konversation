@@ -1215,6 +1215,23 @@ void Server::queueList(const QStringList& buffer)
     }
 }
 
+/** Calculate how long this message premable will be.
+
+    This is necessary because the irc server will clip messages so that the
+    client receives a maximum of 512 bytes at once.
+*/
+int Server::getPreLength(QString command, QString dest)
+{
+    int hostMaskLength=getNickInfo(nickname)->getHostmask().length();
+
+    //:Sho_!i=ehs1@konversation/developer/hein PRIVMSG #konversation :and then back to it
+
+    //<colon>$nickname<!>$hostmask<space>$command<space>$destination<space><colon>$message<cr><lf>
+    int x= 512 - 8 - (nickname.length() + hostMaskLength + command.length() + dest.length());
+
+    return x;
+}
+
 void Server::send()
 {
     // Check if we are still online
@@ -1231,20 +1248,22 @@ void Server::send()
         QStringList outputLineSplit=QStringList::split(" ",outputBuffer[0]);
         outputBuffer.pop_front();
 
+        //Lets cache the uppercase command so we don't miss or reiterate too much
+        QString outboundCommand(outputLineSplit[0].upper());
+
         // remember the first arg of /WHO to identify responses
-        if(!outputLineSplit.isEmpty() && outputLineSplit[0].upper()=="WHO")
+        if(!outputLineSplit.isEmpty() && outboundCommand=="WHO")
         {
-            if(2<=outputLineSplit.count())
+            if(outputLineSplit.count()>=2)
                 inputFilter.addWhoRequest(outputLineSplit[1]);
-            else                                  // no argument (servers recognize it as "*")
+            else // no argument (servers recognize it as "*")
                 inputFilter.addWhoRequest("*");
         }
         // Don't reconnect if we WANT to quit
-        else if (outputLine.startsWith("QUIT"))
+        else if(outboundCommand=="QUIT")
         {
             deliberateQuit = true;
         }
-
 
         // wrap server socket into a stream
         QTextStream serverStream;
@@ -1253,13 +1272,19 @@ void Server::send()
 
         // set channel encoding if specified
         QString channelCodecName;
-        if(2<=outputLineSplit.count())            // for safe
-            if(outputLineSplit[0]=="PRIVMSG" ||
-            outputLineSplit[0]=="NOTICE" ||
-            outputLineSplit[0]=="KICK" ||
-            outputLineSplit[0]=="PART" ||
-            outputLineSplit[0]=="TOPIC")
+
+        if(outputLineSplit.count()>2) //"for safe" <-- so no encoding if no data
+        {
+        if(outboundCommand=="PRIVMSG"   //PRIVMSG target :message
+           || outboundCommand=="NOTICE" //NOTICE target :message
+           || outboundCommand=="KICK"   //KICK target :message
+           || outboundCommand=="PART"   //PART target :message
+           || outboundCommand=="TOPIC"  //TOPIC target :message
+            )
+            { //KV << outboundCommand << " queued" <<endl;
                 channelCodecName=Preferences::channelEncoding(getServerGroup(),outputLineSplit[1]);
+            }
+        }
 
         // init stream props
         serverStream.setEncoding(QTextStream::Locale);
@@ -1276,8 +1301,8 @@ void Server::send()
             serverStream.setCodec(codec);
         }
 
-                                                  // Blowfish
-        if(outputLineSplit[0]=="PRIVMSG" || outputLineSplit[0]=="TOPIC")
+        // Blowfish
+        if(outboundCommand=="PRIVMSG" || outboundCommand=="TOPIC")
         {
             Konversation::encrypt(outputLineSplit[1],outputLine,this);
         }
@@ -3347,6 +3372,14 @@ void Server::removeBan(const QString &channel, const QString &ban)
 
 void Server::sendPing()
 {
+    //WHO ourselves once a minute in case the irc server has changed our
+    //hostmask, such as what happens when a Freenode cloak is activated.
+    //It might be more intelligent to only do this when there is text
+    //in the inputbox. Kinda changes this into a "do minutely"
+    //queue :-) 
+    getInputFilter()->setAutomaticRequest("WHO", nickname, true);
+    queueAt(0, "WHO " + nickname);
+
     queueAt(0, "PING LAG" + QTime::currentTime().toString("hhmmss"));
     m_lagTime.start();
     inputFilter.setLagMeasuring(true);
