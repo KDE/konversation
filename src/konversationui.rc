@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="konversation" version="41">
+<kpartgui name="konversation" version="42">
 
   <MenuBar>
     <Menu name="file">
@@ -47,8 +47,8 @@
       <Action name="open_konsole" />
       <Separator />
       <Action name="open_channel_list" />
-      <Action name="channel_settings" />
       <Action name="open_logfile" />
+      <Action name="channel_settings" />
     </Menu>
   </MenuBar>
 
