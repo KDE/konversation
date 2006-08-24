@@ -39,7 +39,7 @@
 
 #define DCCCHAT_BUFFER_SIZE 1024
 
-DccChat::DccChat(QWidget* parent,Server* newServer,const QString& myNickname,const QString& nickname,const QStringList& parameters,bool listen)
+DccChat::DccChat(QWidget* parent, const QString& myNickname,const QString& nickname,const QStringList& parameters,bool listen)
 : ChatWindow(parent)
 {
     kdDebug() << "DccChat::DccChat() [BEGIN]" << endl;
@@ -71,7 +71,6 @@ DccChat::DccChat(QWidget* parent,Server* newServer,const QString& myNickname,con
     getTextView()->installEventFilter(m_dccChatInput);
     m_dccChatInput->setEnabled( false );
 
-    setServer( newServer );
     ChatWindow::setName( '-' + m_partnerNick + '-' );
     ChatWindow::setLogfileName( '-' + m_partnerNick + '-' );
 

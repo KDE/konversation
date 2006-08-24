@@ -41,7 +41,7 @@ class DccChat : public ChatWindow
     Q_OBJECT
 
         public:
-        DccChat(QWidget* parent,Server* newServer,const QString& myNickname,const QString& nickname,const QStringList& parameters,bool listen);
+        DccChat(QWidget* parent, const QString& myNickname,const QString& nickname,const QStringList& parameters,bool listen);
         ~DccChat();
 
         virtual QString getTextInLine();
@@ -56,6 +56,8 @@ class DccChat : public ChatWindow
         virtual QString getChannelEncodingDefaultDesc();
 
         virtual bool isInsertSupported() { return true; }
+
+        QString getMyNick() { return m_myNick; }
 
     public slots:
         void appendInputText(const QString& s);

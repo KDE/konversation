@@ -52,6 +52,7 @@
 #include <kmenubar.h>
 
 #include "channel.h"
+#include "dccchat.h"
 #include "konversationapplication.h"
 #include "konversationmainwindow.h"
 #include "viewcontainer.h"
@@ -454,16 +455,21 @@ bool doHighlight, bool parseURL, bool self)
     // Highlight
     QString ownNick;
 
-    if(m_server)
+    if (m_server)
     {
         ownNick = m_server->getNickname();
+        kdDebug() << "ownNick case 1 " << ownNick << endl;
+    }
+    else if (m_chatWin->getType() == ChatWindow::DccChat)
+    {
+        ownNick = static_cast<DccChat*>(m_chatWin)->getMyNick();
+        kdDebug() << "ownNick case 2 " << ownNick << endl;
     }
 
-    if(doHighlight && m_server && (whoSent != ownNick) && !self)
+    if(doHighlight && (whoSent != ownNick) && !self)
     {
         QString highlightColor;
 
-        // FIXME: We got to get rid of m_server dependance here
         if(Preferences::highlightNick() &&
             filteredLine.lower().find(QRegExp("(^|[^\\d\\w])" +
             QRegExp::escape(ownNick.lower()) +
