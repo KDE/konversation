@@ -291,12 +291,16 @@ void IRCView::openLink(const QString& url, bool newTab)
             proc->start(KProcess::DontCare);
             delete proc;
         }
-    } else if (m_server && url.startsWith("##"))               // Channel
+    }
+    //FIXME: Don't do channel links in DCC Chats to begin with since they don't have a server.
+    else if (m_server && url.startsWith("##"))               // Channel
     {
         QString channel(url);
         channel.replace("##", "#");
         m_server->sendJoinCommand(channel);
-    } else if (m_server &&  url.startsWith("#"))                // Nick
+    }
+    //FIXME: Don't do user links in DCC Chats to begin with since they don't have a server.
+    else if (m_server &&  url.startsWith("#"))                // Nick
     {
         QString recipient(url);
         recipient.remove("#");
@@ -923,6 +927,8 @@ void IRCView::doAppend(const QString& newLine, bool important, bool self)
         }
     }
 
+    //FIXME: Diable auto-text for DCC Chats since we don't have a server
+    // to parse wildcards.
     if (!m_autoTextToSend.isEmpty() && m_server)
     {
         // replace placeholders in autoText
@@ -1195,9 +1201,7 @@ void IRCView::updateNickMenuEntries(QPopupMenu* popup, const QString& nickname)
         }
 
         if (!m_server)
-        {
             popup->setItemEnabled(Konversation::AddNotify, false);
-        }
         else if (Preferences::isNotify(m_server->serverGroupSettings()->id(), nickname))
             popup->setItemEnabled(Konversation::AddNotify, false);
         else
