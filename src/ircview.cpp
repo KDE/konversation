@@ -923,14 +923,11 @@ void IRCView::doAppend(const QString& newLine, bool important, bool self)
         }
     }
 
-    if(!m_autoTextToSend.isEmpty())
+    if (!m_autoTextToSend.isEmpty() && m_server)
     {
         // replace placeholders in autoText
-        if (m_server)
-        {
-            QString sendText = m_server->parseWildcards(m_autoTextToSend,m_server->getNickname(),
-                QString::null, QString::null, QString::null, QString::null);
-        }
+        QString sendText = m_server->parseWildcards(m_autoTextToSend,m_server->getNickname(),
+            QString::null, QString::null, QString::null, QString::null);
         // avoid recursion due to signalling
         m_autoTextToSend = QString::null;
         // send signal only now
