@@ -939,6 +939,11 @@ void IRCView::doAppend(const QString& newLine, bool important, bool self)
         // send signal only now
         emit autoText(sendText);
     }
+    else
+    {
+        m_autoTextToSend = QString::null;
+    }
+
     if (!m_lastStatusText.isEmpty()) emit clearStatusBarTempText();
 }
 
