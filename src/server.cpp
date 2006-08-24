@@ -408,6 +408,10 @@ void Server::preShellCommandExited(KProcess* proc)
 void Server::connectToIRCServer()
 {
     deliberateQuit = false;
+    keepViewsOpenAfterQuit = false;
+    reconnectAfterQuit = false;
+    m_autoIdentifyLock = false;
+
     connecting = true;
 
     ownIpByUserhost = QString();

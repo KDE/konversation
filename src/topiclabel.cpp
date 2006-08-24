@@ -128,7 +128,7 @@ namespace Konversation
     {
         if (!link.isEmpty())
         {
-            if(link.startsWith("#"))              // channel link
+            if (link.startsWith("#") && m_server && m_server->isConnected())
             {
                 QString channel(link);
                 channel.replace("##","#");

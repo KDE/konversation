@@ -240,7 +240,9 @@ void IRCView::highlightedSlot(const QString& _link)
         m_nickPopup->changeTitle(m_nickPopupId,m_currentNick);
         m_isOnNick = true;
         emit setStatusBarTempText(i18n("Open a query with %1").arg(m_currentNick));
-    } else {
+    }
+    else
+    {
         // link.startsWith("##")
         m_currentChannel = link.mid(1);
 
@@ -295,14 +297,14 @@ void IRCView::openLink(const QString& url, bool newTab)
         }
     }
     //FIXME: Don't do channel links in DCC Chats to begin with since they don't have a server.
-    else if (m_server && url.startsWith("##"))               // Channel
+    else if (url.startsWith("##") && m_server && m_server->isConnected())
     {
         QString channel(url);
         channel.replace("##", "#");
         m_server->sendJoinCommand(channel);
     }
     //FIXME: Don't do user links in DCC Chats to begin with since they don't have a server.
-    else if (m_server &&  url.startsWith("#"))                // Nick
+    else if (url.startsWith("#") && m_server && m_server->isConnected()) 
     {
         QString recipient(url);
         recipient.remove("#");
