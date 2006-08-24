@@ -458,12 +458,10 @@ bool doHighlight, bool parseURL, bool self)
     if (m_server)
     {
         ownNick = m_server->getNickname();
-        kdDebug() << "ownNick case 1 " << ownNick << endl;
     }
     else if (m_chatWin->getType() == ChatWindow::DccChat)
     {
         ownNick = static_cast<DccChat*>(m_chatWin)->getMyNick();
-        kdDebug() << "ownNick case 2 " << ownNick << endl;
     }
 
     if(doHighlight && (whoSent != ownNick) && !self)
