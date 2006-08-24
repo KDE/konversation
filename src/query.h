@@ -89,6 +89,7 @@ class Query : public ChatWindow
         void textPasted(const QString& text);
         void popup(int id);
         void nickInfoChanged();
+        virtual void serverOnline(bool online);
 
     protected:
         void setName(const QString& newName);

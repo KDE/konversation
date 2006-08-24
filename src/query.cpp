@@ -543,6 +543,11 @@ void Query::filesDropped(const QStrList& files)
     m_server->sendURIs(files,getName());
 }
 
+void Query::serverOnline(bool online)
+{
+    queryInput->setEnabled(online);
+}
+
 void Query::emitUpdateInfo()
 {
     QString info;

@@ -2345,7 +2345,17 @@ bool Channel::closeYourself()
 //Used to disable functions when not connected
 void Channel::serverOnline(bool online)
 {
-    nicknameCombobox->setEnabled(online);
+    if (online)
+    {
+        channelInput->setEnabled(true);
+        nicknameCombobox->setEnabled(true);
+    }
+    else
+    {
+        purgeNicks();
+        channelInput->setEnabled(false);
+        nicknameCombobox->setEnabled(false);
+    }
 }
 
 void Channel::showTopic(bool show)

@@ -323,6 +323,7 @@ QString StatusPanel::getChannelEncodingDefaultDesc()
 void StatusPanel::serverOnline(bool online)
 {
     nicknameCombobox->setEnabled(online);
+    statusInput->setEnabled(online);
 }
 
 void StatusPanel::showNicknameBox(bool show)
