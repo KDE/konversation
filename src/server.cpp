@@ -202,9 +202,7 @@ void Server::init(ViewContainer* viewContainer, const QString& nick, const QStri
     serverNickPrefixes = "@+%";
     channelPrefixes = "#&";
 
-    timerInterval = 1;                            // flood protection
-    autoRejoin = Preferences::autoRejoin();
-    autoReconnect = Preferences::autoReconnect();
+    timerInterval = 1;
 
     setName(QString("server_" + m_serverGroup->name()).ascii());
     setViewContainer(viewContainer);
@@ -663,7 +661,7 @@ void Server::broken(int state)
 
         ++reconnectCounter;
 
-        if (autoReconnect && reconnectCounter <= Preferences::reconnectCount())
+        if (Preferences::autoReconnect() && reconnectCounter <= Preferences::reconnectCount())
         {
             updateAutoJoin();
 
@@ -676,7 +674,7 @@ void Server::broken(int state)
             QTimer::singleShot(5000, this, SLOT(connectToIRCServer()));
             rejoinChannels = true;
         }
-        else if ((!autoReconnect || reconnectCounter > Preferences::reconnectCount()))
+        else if (!Preferences::autoReconnect() || reconnectCounter > Preferences::reconnectCount())
         {
             updateAutoJoin();
 
@@ -686,7 +684,15 @@ void Server::broken(int state)
 
             statusView->appendServerMessage(i18n("Error"),error);
             reconnectCounter = 0;
-            rejoinChannels = false;
+
+            // If this iteration has occurred before we ever were connected,
+            // the channel list will be empty and we want to do autojoin.
+            // If the channel list is not empty, however, rejoin the old
+            // channels.
+            if (channelList.isEmpty())
+                rejoinChannels = false;
+            else
+                rejoinChannels = true;
 
             // Broke on a temp. server, so remove it from serverList; otherwise increment the index
             if (!m_serverGroup->quickServerList().isEmpty())
@@ -715,7 +721,7 @@ void Server::broken(int state)
             }
             else
             {
-                if (autoReconnect)
+                if (Preferences::autoReconnect())
                 {
                     error = i18n("Waiting for 2 minutes before another reconnection attempt...");
                     statusView->appendServerMessage(i18n("Info"),error);
@@ -738,6 +744,7 @@ void Server::broken(int state)
             keepViewsOpenAfterQuit = false;
 
             statusView->appendServerMessage(i18n("Info"),i18n("Disconnected from server."));
+            appendMessageToFrontmost(i18n("Info"),i18n("Disconnected from server."));
 
             if (reconnectAfterQuit)
             {
@@ -796,12 +803,6 @@ void Server::connectionEstablished(const QString& ownHost)
         // Start the PINGPONG match
         QTimer::singleShot(1000 /*1 sec*/, this, SLOT(sendPing()));
 
-        if(rejoinChannels)
-        {
-            rejoinChannels = false;
-            autoRejoinChannels();
-        }
-
         // Recreate away state if we were set away prior to a reconnect.
         if (isAway())
         {
@@ -811,6 +812,12 @@ void Server::connectionEstablished(const QString& ownHost)
             QString command(Preferences::commandChar() + "AWAY " + awayReason);
             Konversation::OutputFilterResult result = outputFilter->parse(getNickname(),command, QString::null);
             queue(result.toServer);
+        }
+
+        if (rejoinChannels)
+        {
+            rejoinChannels = false;
+            autoRejoinChannels();
         }
     }
     else
@@ -3164,13 +3171,12 @@ void Server::updateAutoJoin(const QString& channel)
 void Server::autoRejoinChannels()
 {
     if (channelList.isEmpty())
-    {
         return;
-    }
+
     QStringList channels;
     QStringList keys;
 
-    for(Channel* ch = channelList.first(); ch; ch = channelList.next())
+    for (Channel* ch = channelList.first(); ch; ch = channelList.next())
     {
         channels.append(ch->getName());
         keys.append(ch->getKey());
@@ -3422,7 +3428,7 @@ void Server::updateLongPongLag()
         emit tooLongLag(this, currentLag);
         // kdDebug() << "Current lag: " << currentLag << endl;
 
-        if(Preferences::autoReconnect() && (currentLag > (Preferences::maximumLagTime() * 1000)))
+        if (Preferences::autoReconnect() && (currentLag > (Preferences::maximumLagTime() * 1000)))
         {
             m_socket->close();
         }

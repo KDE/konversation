@@ -120,14 +120,6 @@ the Free Software Foundation; either version 2 of the License, or
                         </size>
                     </property>
                 </spacer>
-                <widget class="QCheckBox" row="2" column="0" rowspan="1" colspan="3">
-                    <property name="name">
-                        <cstring>kcfg_AutoRejoin</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Automatically re&amp;join channels on reconnect</string>
-                    </property>
-                </widget>
             </grid>
         </widget>
         <spacer row="2" column="0">

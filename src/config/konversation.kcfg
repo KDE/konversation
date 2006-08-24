@@ -717,11 +717,6 @@
       <label></label>
       <whatsthis></whatsthis>
     </entry>
-    <entry key="AutoRejoin" type="Bool">
-      <default>true</default>
-      <label></label>
-      <whatsthis></whatsthis>
-    </entry>
     <entry key="AutojoinOnInvite" type="Bool">
       <default>false</default>
       <label></label>

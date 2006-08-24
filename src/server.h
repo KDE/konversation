@@ -575,8 +575,6 @@ class Server : public QObject
         QString channelPrefixes;                  // prefixes that indicate channel names. defaults to RFC1459 "#&"
 
         bool autoJoin;
-        bool autoRejoin;
-        bool autoReconnect;
         bool quickConnect;
         bool deliberateQuit;
         bool keepViewsOpenAfterQuit;
