@@ -391,7 +391,9 @@ void ViewContainer::updateViewActions(int index)
         {
             Server* server = view->getServer();
 
-            if (server && !server->isConnected())
+            if (view->getType() == ChatWindow::DccChat)
+                action->setEnabled(false);
+            else if (server && !server->isConnected())
                 action->setEnabled(true);
             else
                 action->setEnabled(false);
@@ -402,7 +404,9 @@ void ViewContainer::updateViewActions(int index)
         {
             Server* server = view->getServer();
 
-            if (server && server->isConnected())
+            if (view->getType() == ChatWindow::DccChat)
+                action->setEnabled(false);
+            else if (server && server->isConnected())
                 action->setEnabled(true);
             else
                 action->setEnabled(false);
@@ -413,7 +417,9 @@ void ViewContainer::updateViewActions(int index)
         {
             Server* server = view->getServer();
 
-            if (server && !server->isConnected())
+            if (view->getType() == ChatWindow::DccChat)
+                action->setEnabled(false);
+            else if (server && !server->isConnected())
                 action->setEnabled(false);
             else
                 action->setEnabled(true);
@@ -617,7 +623,9 @@ void ViewContainer::updateFrontView()
         {
             Server* server = view->getServer();
 
-            if (server && !server->isConnected())
+            if (view->getType() == ChatWindow::DccChat)
+                action->setEnabled(false);
+            else if (server && !server->isConnected())
                 action->setEnabled(true);
             else
                 action->setEnabled(false);
@@ -628,7 +636,9 @@ void ViewContainer::updateFrontView()
         {
             Server* server = view->getServer();
 
-            if (server && server->isConnected())
+            if (view->getType() == ChatWindow::DccChat)
+                action->setEnabled(false);
+            else if (server && server->isConnected())
                 action->setEnabled(true);
             else
                 action->setEnabled(false);
@@ -639,7 +649,9 @@ void ViewContainer::updateFrontView()
         {
             Server* server = view->getServer();
 
-            if (server && !server->isConnected())
+            if (view->getType() == ChatWindow::DccChat)
+                action->setEnabled(false);
+            else if (server && !server->isConnected())
                 action->setEnabled(false);
             else
                 action->setEnabled(true);
@@ -1328,7 +1340,7 @@ void ViewContainer::switchView(QWidget* newView)
     m_frontServer = view->getServer();
 
     // display this server's lag time
-    if (m_frontServer)
+    if (m_frontServer && view->getType() != ChatWindow::DccChat)
     {
         updateStatusBarSSLLabel(m_frontServer);
         updateStatusBarLagLabel(m_frontServer, m_frontServer->getLag());
