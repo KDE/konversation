@@ -291,12 +291,12 @@ void IRCView::openLink(const QString& url, bool newTab)
             proc->start(KProcess::DontCare);
             delete proc;
         }
-    } else if(url.startsWith("##"))               // Channel
+    } else if (m_server && url.startsWith("##"))               // Channel
     {
         QString channel(url);
         channel.replace("##", "#");
         m_server->sendJoinCommand(channel);
-    } else if(url.startsWith("#"))                // Nick
+    } else if (m_server &&  url.startsWith("#"))                // Nick
     {
         QString recipient(url);
         recipient.remove("#");
@@ -577,11 +577,11 @@ QString IRCView::createNickLine(const QString& nick, bool encapsulateNick)
     if(encapsulateNick)
         nickLine = "&lt;" + nickLine + "&gt;";
 
-    if(Preferences::useColoredNicks())
+    if(Preferences::useColoredNicks() && m_server)
     {
         QString nickColor;
 
-        if(nick != m_server->getNickname())
+        if (nick != m_server->getNickname())
             nickColor = Preferences::nickColor(m_server->obtainNickInfo(nick)->getNickColor()).name();
         else
             nickColor =  Preferences::nickColor(8).name();
@@ -926,8 +926,11 @@ void IRCView::doAppend(const QString& newLine, bool important, bool self)
     if(!m_autoTextToSend.isEmpty())
     {
         // replace placeholders in autoText
-        QString sendText = m_server->parseWildcards(m_autoTextToSend,m_server->getNickname(),
-            QString::null, QString::null, QString::null, QString::null);
+        if (m_server)
+        {
+            QString sendText = m_server->parseWildcards(m_autoTextToSend,m_server->getNickname(),
+                QString::null, QString::null, QString::null, QString::null);
+        }
         // avoid recursion due to signalling
         m_autoTextToSend = QString::null;
         // send signal only now
@@ -1006,7 +1009,7 @@ void IRCView::contentsMouseMoveEvent(QMouseEvent* ev)
         removeSelection();
         KURL ux = KURL::fromPathOrURL(m_urlToDrag);
 
-        if (m_urlToDrag.startsWith("##"))
+        if (m_server && m_urlToDrag.startsWith("##"))
         {
             ux = QString("irc://%1:%2/%3").arg(m_server->getServerName()).arg(m_server->getPort()).arg(m_urlToDrag.mid(2));
         }
@@ -1194,7 +1197,11 @@ void IRCView::updateNickMenuEntries(QPopupMenu* popup, const QString& nickname)
             popup->setItemVisible(Konversation::UnignoreNick, false);
         }
 
-        if (Preferences::isNotify(m_server->serverGroupSettings()->id(), nickname))
+        if (!m_server)
+        {
+            popup->setItemEnabled(Konversation::AddNotify, false);
+        }
+        else if (Preferences::isNotify(m_server->serverGroupSettings()->id(), nickname))
             popup->setItemEnabled(Konversation::AddNotify, false);
         else
             popup->setItemEnabled(Konversation::AddNotify, true);
