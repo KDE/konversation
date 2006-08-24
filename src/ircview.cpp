@@ -98,7 +98,6 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent)
     m_popup->insertItem(i18n("Select All"),SelectAll);
     m_popup->insertSeparator();
     m_popup->insertItem(SmallIcon("find"),i18n("Find Text..."),Search);
-    m_popup->insertSeparator();
 
     setServer(newServer);
     setFont(Preferences::textFont());
@@ -161,11 +160,14 @@ void IRCView::setViewBackground(const QColor& backgroundColor, const QString& pi
 void IRCView::setServer(Server* newServer)
 {
     m_server = newServer;
-    if(newServer) {
-      KAction *action = newServer->getViewContainer()->actionCollection()->action("open_logfile");
-      Q_ASSERT(action);
-      if(!action) return;
-      action->plug(m_popup);
+
+    if (newServer)
+    {
+        KAction *action = newServer->getViewContainer()->actionCollection()->action("open_logfile");
+        Q_ASSERT(action);
+        if(!action) return;
+        m_popup->insertSeparator();
+        action->plug(m_popup);
     }
 
 }

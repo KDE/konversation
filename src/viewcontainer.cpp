@@ -1848,9 +1848,8 @@ void ViewContainer::openLogFile()
     {
         ChatWindow* view=static_cast<ChatWindow*>(m_frontView);
         ChatWindow::WindowType viewType=view->getType();
-        if(viewType==ChatWindow::Channel ||
-            viewType==ChatWindow::Query ||
-            viewType==ChatWindow::Status)
+        if (viewType==ChatWindow::Channel || viewType==ChatWindow::Query ||
+            viewType==ChatWindow::Status || viewType==ChatWindow::DccChat)
         {
             openLogFile(view->getName(), view->logFileName());
         }

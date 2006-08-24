@@ -20,6 +20,7 @@
 #include <qhostaddress.h>
 #include <qtextcodec.h>
 #include <qsplitter.h>
+#include <qpopupmenu.h>
 
 #include <klineedit.h>
 #include <klocale.h>
@@ -28,8 +29,10 @@
 #include <kserversocket.h>
 #include <ksocketaddress.h>
 #include <kstreamsocket.h>
+#include <kaction.h>
 
 #include "konversationapplication.h"
+#include "konversationmainwindow.h"
 #include "irccharsets.h"
 #include "ircview.h"
 #include "ircviewbox.h"
@@ -54,7 +57,7 @@ DccChat::DccChat(QWidget* parent, const QString& myNickname,const QString& nickn
     setType(ChatWindow::DccChat);
     setChannelEncodingSupported(true);
 
-    if ( !listen )
+    if (!listen)
     {
         host=parameters[1];
         m_port=parameters[2].toInt();
@@ -74,6 +77,19 @@ DccChat::DccChat(QWidget* parent, const QString& myNickname,const QString& nickn
     ChatWindow::setName( '-' + m_partnerNick + '-' );
     ChatWindow::setLogfileName( '-' + m_partnerNick + '-' );
 
+    QPopupMenu* popup = textView->getPopup();
+
+    if (popup)
+    {
+        KAction* action = KonversationApplication::instance()->getMainWindow()->actionCollection()->action("open_logfile");
+
+        if (action)
+        {
+            popup->insertSeparator();
+            action->plug(popup);
+        }
+    }
+
     // connect the signals and slots
     connect( m_dccChatInput, SIGNAL( submit() ), this, SLOT( dccChatTextEntered() ) );
     connect( m_dccChatInput, SIGNAL( textPasted( const QString& ) ), this, SLOT( textPasted( const QString& ) ) );
@@ -84,7 +100,7 @@ DccChat::DccChat(QWidget* parent, const QString& myNickname,const QString& nickn
         this, SLOT( activateTabNotification( Konversation::TabNotifyType ) ) );
     connect( getTextView(), SIGNAL( autoText(const QString&) ), this, SLOT( sendDccChatText( const QString& ) ) );
 
-    if ( listen )
+    if (listen)
         listenForPartner();
     else
         connectToPartner();

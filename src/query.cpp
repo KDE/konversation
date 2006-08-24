@@ -131,10 +131,9 @@ void Query::setName(const QString& newName)
     if(ChatWindow::getName() == newName) return;  // no change, so return
 
     ChatWindow::setName(newName);
+
     // don't change logfile name if query name changes
     // This will prevent Nick-Changers to create more than one log file,
-    // unless we want this by turning the option Log Follows Nick off.
-
     if (logName.isEmpty())
     {
         QString logName =  (Preferences::lowerLog()) ? getName().lower() : getName() ;
