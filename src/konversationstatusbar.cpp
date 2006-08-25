@@ -96,6 +96,8 @@ void KonversationStatusBar::setMainLabelTempText(const QString& text)
         m_tempMainLabelText = text;
         m_mainLabel->setText(text);
     }
+    else
+        clearMainLabelTempText();
 }
 
 void KonversationStatusBar::clearMainLabelTempText()

@@ -3275,6 +3275,7 @@ void Server::reconnect()
     }
     else if (!isConnected())
     {
+        reconnectCounter = 0;
         connectToIRCServer();
     }
 }
