@@ -527,20 +527,16 @@ void Channel::popupCommand(int id)
             pattern=cc+"BAN -USERDOMAIN %u";
             break;
         case Konversation::KickBanHost:
-            pattern=cc+"BAN -HOST %u\n"+
-                cc+"KICK %u";
+            pattern=cc+"KICKBAN -HOST %u";
             break;
         case Konversation::KickBanDomain:
-            pattern=cc+"BAN -DOMAIN %u\n"+
-                cc+"KICK %u";
+            pattern=cc+"KICKBAN -DOMAIN %u";
             break;
         case Konversation::KickBanUserHost:
-            pattern=cc+"BAN -USERHOST %u\n"+
-                cc+"KICK %u";
+            pattern=cc+"KICKBAN -USERHOST %u";
             break;
         case Konversation::KickBanUserDomain:
-            pattern=cc+"BAN -USERDOMAIN %u\n"+
-                cc+"KICK %u";
+            pattern=cc+"KICKBAN -USERDOMAIN %u";
             break;
         case Konversation::OpenQuery:
             pattern=cc+"QUERY %u";
