@@ -182,6 +182,8 @@ handling)
 - Disable input box and context menus in status, query and channel tabs on dis-
   connect, and purge nicklists in channels.
 - Make auto-reconnect pref apply at runtime.
+- Handle the tri-state "Large Paste" warning correctly in the "Warning Dialogs"
+  prefs page.
 
 Changes from 0.18 to 0.19
 We are extremely pleased to announce the immediate release of Konversation 0.19. The focus

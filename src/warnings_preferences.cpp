@@ -58,12 +58,33 @@ void Warnings_Config::saveSettings()
   QString warningsChecked;
 
   QCheckListItem* item=static_cast<QCheckListItem*>(dialogListView->itemAtIndex(0));
-  int i=0;
+  int i = 0;
   while(item)
   {
     // save state of this item in hasChanged() list
     warningsChecked+=item->isOn();
-    config->writeEntry(item->text(2),item->isOn() ? "1" : "0");
+
+    if (item->text(2) == "LargePaste")
+    {
+        if (item->isOn())
+        {
+            config->writeEntry(item->text(2), 1);
+        }
+        else
+        {
+            QString state = config->readEntry(item->text(2));
+
+            if (!state.isEmpty() && (state == "yes" || state == "no"))
+                config->writeEntry(item->text(2), state);
+            else
+                config->writeEntry(item->text(2), "yes");
+        }
+    }
+    else
+    {
+        config->writeEntry(item->text(2),item->isOn() ? "1" : "0");
+    }
+
     item=static_cast<QCheckListItem*>(item->itemBelow());
     ++i;
   }
@@ -75,15 +96,11 @@ void Warnings_Config::saveSettings()
 void Warnings_Config::loadSettings()
 {
   QStringList dialogDefinitions;
-  //QString flagNames = "Invitation,SaveLogfileNote,ClearLogfileQuestion,CloseQueryAfterIgnore,ResumeTransfer,ReconnectDifferentServer,QuitServerTab,QuitChannelTab,QuitQueryTab,ChannelListNoServerSelected,RemoveDCCReceivedFile,HideMenuBarWarning,ChannelListWarning,LargePaste";
   QString flagNames = "Invitation,SaveLogfileNote,ClearLogfileQuestion,CloseQueryAfterIgnore,ReconnectDifferentServer,QuitServerTab,QuitChannelTab,QuitQueryTab,ChannelListNoServerSelected,RemoveDCCReceivedFile,HideMenuBarWarning,ChannelListWarning,LargePaste,IgnoreNick,UnignoreNick";
   dialogDefinitions.append(i18n("Automatically join channel on invite"));
   dialogDefinitions.append(i18n("Notice that saving logfiles will save whole file"));
   dialogDefinitions.append(i18n("Ask before deleting logfile contents"));
   dialogDefinitions.append(i18n("Ask about closing queries after ignoring the nickname"));
-  #if 0
-  dialogDefinitions.append(i18n("Ask about what to do on DCC resume"));
-  #endif
   dialogDefinitions.append(i18n("Ask before connecting to a different server in the network"));
   dialogDefinitions.append(i18n("Close server tab"));
   dialogDefinitions.append(i18n("Close channel tab"));
@@ -107,7 +124,20 @@ void Warnings_Config::loadSettings()
     item->setText(1,dialogDefinitions[i]);
     flagName = flagNames.section(",",i,i);
     item->setText(2,flagName);
-    item->setOn(config->readBoolEntry(flagName,true));
+
+    if (flagName == "LargePaste")
+    {
+        QString state = config->readEntry(flagName);
+
+        if (state == "yes" || state == "no")
+            item->setOn(false);
+        else
+            item->setOn(true);
+    }
+    else
+    {
+        item->setOn(config->readBoolEntry(flagName,true));
+    }
   }
   // remember checkbox state for hasChanged()
   m_oldWarningsChecked=currentWarningsChecked();
