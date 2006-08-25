@@ -357,8 +357,8 @@ void Query::popup(int id)
             break;
         }
         case Konversation::AddNotify:
-            if (!Preferences::isNotify(m_server->serverGroupSettings()->id(),name))
-                Preferences::addNotify(m_server->getServerGroup(),name);
+            if (!Preferences::isNotify(m_server->serverGroupSettings()->id(), name))
+                Preferences::addNotify(m_server->serverGroupSettings()->id(),name);
             break;
         case Konversation::DccSend:
             sendQueryText(Preferences::commandChar()+"DCC SEND "+name);

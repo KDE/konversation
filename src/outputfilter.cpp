@@ -1053,7 +1053,9 @@ namespace Konversation
         OutputFilterResult result;
 
         QString groupName = m_server->getServerGroup();
-        if(!parameter.isEmpty())
+        int serverGroupId = m_server->serverGroupSettings()->id();
+
+        if (!parameter.isEmpty())
         {
             QStringList list = QStringList::split(' ', parameter);
 
@@ -1063,7 +1065,7 @@ namespace Konversation
                 if(!Preferences::removeNotify(groupName, list[index]))
                 {
                     // If remove failed, try to add it instead
-                    if(!Preferences::addNotify(groupName, list[index]))
+                    if(!Preferences::addNotify(serverGroupId, list[index]))
                     {
                         kdDebug() << "OutputFilter::parseNotify(): Adding failed!" << endl;
                     }

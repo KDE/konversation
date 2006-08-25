@@ -1202,7 +1202,7 @@ void ViewContainer::addView(ChatWindow* view, const QString& label, bool weiniti
 
                 if (wtype != ChatWindow::Status && wtype != ChatWindow::Channel
                     && wtype != ChatWindow::RawLog && wtype != ChatWindow::Query
-                    && wtype != ChatWindow::DccChat)
+                    && wtype != ChatWindow::DccChat && wtype != ChatWindow::ChannelList)
                 {
                     placement = sindex;
                     break;
@@ -1318,7 +1318,7 @@ void ViewContainer::switchView(QWidget* newView)
     m_frontServer = view->getServer();
 
     // display this server's lag time
-    if (m_frontServer && view->getType())
+    if (m_frontServer)
     {
         updateStatusBarSSLLabel(m_frontServer);
         updateStatusBarLagLabel(m_frontServer, m_frontServer->getLag());

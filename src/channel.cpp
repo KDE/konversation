@@ -584,8 +584,8 @@ void Channel::popupCommand(int id)
         case Konversation::AddNotify:
             for (ChannelNickList::ConstIterator it=nickList.begin(); it!=nickList.end(); ++it)
             {
-                if (!Preferences::isNotify(m_server->serverGroupSettings()->id(),(*it)->getNickname()))
-                    Preferences::addNotify(m_server->getServerGroup(),(*it)->getNickname());
+                if (!Preferences::isNotify(m_server->serverGroupSettings()->id(), (*it)->getNickname()))
+                    Preferences::addNotify(m_server->serverGroupSettings()->id(), (*it)->getNickname());
             }
             break;
     } // switch

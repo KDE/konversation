@@ -340,19 +340,13 @@ const QString Preferences::notifyStringByGroupName(const QString& groupName)
     return notifyListByGroupName(groupName).join(" ");
 }
 
-const bool Preferences::addNotify(const QString& groupName, const QString& newPattern)
+const bool Preferences::addNotify(int serverGroupId, const QString& newPattern)
 {
-    // don't add duplicates
-    if (groupName.isEmpty() || newPattern.isEmpty()) return false;
-
-    int id=serverGroupIdByName(groupName);
-    if(!id) return false;
-
-    if (!self()->mNotifyList[id].contains(newPattern))
+    if (!self()->mNotifyList[serverGroupId].contains(newPattern))
     {
-        QStringList nicknameList = self()->mNotifyList[id];
+        QStringList nicknameList = self()->mNotifyList[serverGroupId];
         nicknameList.append(newPattern);
-        self()->mNotifyList[id] = nicknameList;
+        self()->mNotifyList[serverGroupId] = nicknameList;
         return true;
     }
     return false;
