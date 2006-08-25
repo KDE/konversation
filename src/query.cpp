@@ -523,7 +523,7 @@ bool Query::closeYourself()
 {
     int result=KMessageBox::warningContinueCancel(
         this,
-        i18n("Do you want close your query with %1?").arg(getName()),
+        i18n("Do you want to close your query with %1?").arg(getName()),
         i18n("Close Query"),
         i18n("Close"),
         "QuitQueryTab");
