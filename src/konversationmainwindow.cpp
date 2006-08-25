@@ -233,7 +233,6 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
     KAction* awayAction = new KAction(i18n("Set &Away Globally")/*, "konversationaway"*/, KShortcut("Ctrl+Alt+A"),
         static_cast<KonversationApplication *>(kapp), SLOT(toggleAway()), actionCollection(),"toggle_away");
     awayAction->setEnabled(false);
-    awayAction->setToolTip(i18n("Switch to Away mode in all open connections"));
 
     action = new KAction(i18n("&Join Channel..."), 0, KShortcut("Ctrl+J"), m_viewContainer, SLOT(showJoinChannelDialog()), actionCollection(), "join_channel");
     action->setEnabled(false);
