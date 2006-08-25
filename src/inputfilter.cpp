@@ -1585,19 +1585,9 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             case RPL_NOWAWAY:
             {
                 NickInfo* nickInfo = server->getNickInfo(parameterList[0]);
-                if(nickInfo)
-                {
-                    nickInfo->setAway(true);
-                }
-                if(!server->isAway())
-                {
-                    server->appendMessageToFrontmost(i18n("Away"),i18n("You are now marked as being away."));
-                    emit away();
-                }
-                else
-                {
-                    server->appendMessageToFrontmost(i18n("Away"),i18n("You are marked as being away."));
-                }
+                if (nickInfo) nickInfo->setAway(true);
+                server->appendMessageToFrontmost(i18n("Away"),i18n("You are now marked as being away."));
+                if (!server->isAway()) emit away();
                 break;
             }
             case RPL_UNAWAY:

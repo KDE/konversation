@@ -205,16 +205,10 @@ void KonversationApplication::toggleAway()
     }
 
     //alreadyaway is true if _any_ servers are away
-    if(alreadyaway)
-    {
-                                                  //toggle as not away
-        sendMultiServerCommand("away", QString::null);
-    }
+    if (alreadyaway)
+        sendMultiServerCommand("back", QString::null);
     else
-    {
-        QString awayReason = i18n("Gone away for now.");
-        sendMultiServerCommand("away", awayReason);
-    }
+        sendMultiServerCommand("away", QString::null);
 }
 
 void KonversationApplication::dcopMultiServerRaw(const QString &command)

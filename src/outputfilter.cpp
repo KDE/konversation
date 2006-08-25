@@ -318,7 +318,8 @@ namespace Konversation
             else if(command == "kick")     result = parseKick(parameter);
             else if(command == "topic")    result = parseTopic(parameter);
             else if(command == "away")     result = parseAway(parameter);
-            else if(command == "back")     result = parseAway(QString::null);
+            else if(command == "unaway")     result = parseBack();
+            else if(command == "back")     result = parseBack();
             else if(command == "invite")   result = parseInvite(parameter);
             else if(command == "exec")     result = parseExec(parameter);
             else if(command == "notify")   result = parseNotify(parameter);
@@ -600,26 +601,29 @@ namespace Konversation
         return result;
     }
 
-    OutputFilterResult OutputFilter::parseAway(const QString &reason)
+    OutputFilterResult OutputFilter::parseAway(QString &reason)
     {
         OutputFilterResult result;
 
-        if(reason.isEmpty())
-        {
-            result.toServer = "AWAY";
-        }
-        else
-        {
-            if(m_server->getIdentity()->getShowAwayMessage())
-            {
-                QString message = m_server->getIdentity()->getAwayMessage();
-                emit sendToAllChannels(message.replace(QRegExp("%s",false),reason));
-            }
+        if (reason.isEmpty())
+            reason = i18n("Gone away for now.");
 
-            m_server->setAwayReason(reason);
-            result.toServer = "AWAY :" + reason;
+        if (m_server->getIdentity()->getShowAwayMessage())
+        {
+            QString message = m_server->getIdentity()->getAwayMessage();
+            emit sendToAllChannels(message.replace(QRegExp("%s",false),reason));
         }
 
+        m_server->setAwayReason(reason);
+        result.toServer = "AWAY :" + reason;
+
+        return result;
+    }
+
+    OutputFilterResult OutputFilter::parseBack()
+    {
+        OutputFilterResult result;
+        result.toServer = "AWAY";
         return result;
     }
 
