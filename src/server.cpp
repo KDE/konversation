@@ -861,6 +861,7 @@ void Server::quitServer()
     QString command(Preferences::commandChar()+"QUIT");
     Konversation::OutputFilterResult result = outputFilter->parse(getNickname(),command, QString::null);
     queue(result.toServer);
+    if (m_socket) m_socket->enableRead(false);
 }
 
 void Server::notifyAction(const QString& nick)
@@ -2367,7 +2368,7 @@ NickInfoPtr Server::setWatchedNickOnline(const QString& nickname)
         m_allNicks.insert(lcNickname, nickInfo);
         emit watchedNickChanged(this, nickname, true);
         Konversation::Addressbook::self()->emitContactPresenceChanged(nickInfo->getAddressee().uid());
-        getViewContainer()->appendToFrontmost(i18n("Notify"),"<a href=\"#"+nickname+"\">"+
+        appendMessageToFrontmost(i18n("Notify"),"<a href=\"#"+nickname+"\">"+
             i18n("%1 is online (%2).").arg(nickname).arg(getServerName())+"</a>",statusView);
 
         static_cast<KonversationApplication*>(kapp)->notificationHandler()->nickOnline(getStatusView(), nickname);
@@ -2409,8 +2410,7 @@ bool Server::setNickOffline(const QString& nickname)
                 Konversation::Addressbook::self()->emitContactPresenceChanged(addressee.uid(), 1);
             }
 
-            getViewContainer()->appendToFrontmost(i18n("Notify"),
-                i18n("%1 went offline (%2).").arg(nickname).arg(getServerName()),statusView);
+            appendMessageToFrontmost(i18n("Notify"), i18n("%1 went offline (%2).").arg(nickname).arg(getServerName()),statusView);
 
             static_cast<KonversationApplication*>(kapp)->notificationHandler()->nickOffline(getStatusView(), nickname);
         }
