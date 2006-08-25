@@ -71,6 +71,8 @@ ViewTree::~ViewTree()
 
 void ViewTree::updateAppearance()
 {
+    setFont(Preferences::tabFont());
+
     QColor fg, bg;
 
     if (Preferences::inputFieldsBackgroundColor())
