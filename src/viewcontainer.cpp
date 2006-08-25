@@ -1612,13 +1612,14 @@ void ViewContainer::showViewContextMenu(QWidget* tab, const QPoint& pos)
             if (action) serverActions.append(action);
             action = actionCollection()->action("join_channel");
             if (action) serverActions.append(action);
-            menu->setItemVisible(menu->idAt(8), true);
+            menu->setItemVisible(menu->idAt(menu->count()-1), true);
             m_window->plugActionList("server_actions", serverActions);
             m_contextServer = view->getServer();
         }
         else
         {
-            menu->setItemVisible(menu->idAt(8), false);
+            if (menu->text(menu->idAt(menu->count()-1)).isEmpty())
+                menu->setItemVisible(menu->idAt(menu->count()-1), false);
             m_contextServer = 0;
         }
     }
