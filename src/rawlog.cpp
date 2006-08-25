@@ -43,7 +43,7 @@ void RawLog::childAdjustFocus()
 
 void RawLog::updateAppearance()
 {
-    getTextView()->setFont(Preferences::textFont());
+    getTextView()->unsetPalette();
 
     if(Preferences::showBackgroundImage())
     {
@@ -55,6 +55,11 @@ void RawLog::updateAppearance()
         getTextView()->setViewBackground(Preferences::color(Preferences::TextViewBackground),
             QString::null);
     }
+
+    if (Preferences::customTextFont())
+        getTextView()->setFont(Preferences::textFont());
+    else
+        getTextView()->setFont(KGlobalSettings::generalFont());
 
     ChatWindow::updateAppearance();
 }

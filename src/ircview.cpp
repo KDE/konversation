@@ -100,8 +100,13 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent)
     m_popup->insertItem(SmallIcon("find"),i18n("Find Text..."),Search);
 
     setServer(newServer);
-    setFont(Preferences::textFont());
+
     setViewBackground(Preferences::color(Preferences::TextViewBackground),QString::null);
+
+    if (Preferences::customTextFont())
+        setFont(Preferences::textFont());
+    else
+        setFont(KGlobalSettings::generalFont());
 
     connect(this, SIGNAL(highlighted(const QString&)), this, SLOT(highlightedSlot(const QString&)));
 }

@@ -168,10 +168,8 @@ void StatusPanel::updateAppearance()
     statusInput->unsetPalette();
     statusInput->setPaletteForegroundColor(fg);
     statusInput->setPaletteBackgroundColor(bg);
-    statusInput->setFont(Preferences::textFont());
 
     getTextView()->unsetPalette();
-    getTextView()->setFont(Preferences::textFont());
 
     if(Preferences::showBackgroundImage())
     {
@@ -184,7 +182,19 @@ void StatusPanel::updateAppearance()
             QString::null);
     }
 
-    nicknameCombobox->setFont(Preferences::textFont());
+    if (Preferences::customTextFont())
+    {
+        getTextView()->setFont(Preferences::textFont());
+        statusInput->setFont(Preferences::textFont());
+        nicknameCombobox->setFont(Preferences::textFont());
+    }
+    else
+    {
+        getTextView()->setFont(KGlobalSettings::generalFont());
+        statusInput->setFont(KGlobalSettings::generalFont());
+        nicknameCombobox->setFont(KGlobalSettings::generalFont());
+    }
+
     showNicknameBox(Preferences::showNicknameBox());
 
     ChatWindow::updateAppearance();

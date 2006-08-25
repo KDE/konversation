@@ -45,6 +45,21 @@
       <label></label>
       <whatsthis></whatsthis>
     </entry>
+    <entry key="CustomTextFont" type="Bool">
+      <default>false</default>
+      <label></label>
+      <whatsthis></whatsthis>
+    </entry>
+    <entry key="CustomListFont" type="Bool">
+      <default>false</default>
+      <label></label>
+      <whatsthis></whatsthis>
+    </entry>
+    <entry key="CustomTabFont" type="Bool">
+      <default>false</default>
+      <label></label>
+      <whatsthis></whatsthis>
+    </entry>
     <entry key="Timestamping" type="Bool">
       <default>true</default>
       <label></label>

@@ -332,9 +332,12 @@ void ViewContainer::updateAppearance()
 
 void ViewContainer::updateTabWidgetAppearance()
 {
-    m_tabWidget->setFont(Preferences::tabFont());
     m_tabWidget->setTabBarHidden((Preferences::tabPlacement()==Preferences::Left));
-    m_tabWidget->setHoverCloseButton(Preferences::closeButtons());
+
+    if (Preferences::customTabFont())
+        m_tabWidget->setFont(Preferences::tabFont());
+    else
+        m_tabWidget->setFont(KGlobalSettings::generalFont());
 
     m_tabWidget->setTabPosition((Preferences::tabPlacement()==Preferences::Top) ?
         QTabWidget::Top : QTabWidget::Bottom);
@@ -343,6 +346,8 @@ void ViewContainer::updateTabWidgetAppearance()
         m_tabWidget->cornerWidget()->show();
     else
         m_tabWidget->cornerWidget()->hide();
+
+    m_tabWidget->setHoverCloseButton(Preferences::closeButtons());
 
     #if KDE_IS_VERSION(3,4,0)
     m_tabWidget->setAutomaticResizeTabs(Preferences::useMaxSizedTabs());

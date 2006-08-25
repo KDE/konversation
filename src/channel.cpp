@@ -2050,8 +2050,6 @@ void Channel::initializeSplitters()
 
 void Channel::updateAppearance()
 {
-    nicknameCombobox->setFont(Preferences::textFont());
-
     QColor fg,bg,abg;
 
     if(Preferences::inputFieldsBackgroundColor())
@@ -2071,19 +2069,12 @@ void Channel::updateAppearance()
     channelInput->unsetPalette();
     channelInput->setPaletteForegroundColor(fg);
     channelInput->setPaletteBackgroundColor(bg);
-    channelInput->setFont(Preferences::textFont());
 
     limit->unsetPalette();
     limit->setPaletteForegroundColor(fg);
     limit->setPaletteBackgroundColor(bg);
-    limit->setFont(Preferences::textFont());
-
-    //topicLine->lineEdit()->setPaletteForegroundColor(fg);
-    //topicLine->lineEdit()->setPaletteBackgroundColor(bg);
-    topicLine->setFont(Preferences::textFont());
 
     getTextView()->unsetPalette();
-    getTextView()->setFont(Preferences::textFont());
 
     if(Preferences::showBackgroundImage())
     {
@@ -2096,13 +2087,33 @@ void Channel::updateAppearance()
             QString::null);
     }
 
-    nicknameListView->resort();
+    if (Preferences::customTextFont())
+    {
+        getTextView()->setFont(Preferences::textFont());
+        topicLine->setFont(Preferences::textFont());
+        channelInput->setFont(Preferences::textFont());
+        nicknameCombobox->setFont(Preferences::textFont());
+        limit->setFont(Preferences::textFont());
+    }
+    else
+    {
+        getTextView()->setFont(KGlobalSettings::generalFont());
+        topicLine->setFont(KGlobalSettings::generalFont());
+        channelInput->setFont(KGlobalSettings::generalFont());
+        nicknameCombobox->setFont(KGlobalSettings::generalFont());
+        limit->setFont(KGlobalSettings::generalFont());
+    }
 
+    nicknameListView->resort();
     nicknameListView->unsetPalette();
     nicknameListView->setPaletteForegroundColor(fg);
     nicknameListView->setPaletteBackgroundColor(bg);
     nicknameListView->setAlternateBackground(abg);
-    nicknameListView->setFont(Preferences::listFont());
+
+    if (Preferences::customListFont())
+        nicknameListView->setFont(Preferences::listFont());
+    else
+        nicknameListView->setFont(KGlobalSettings::generalFont());
 
     nicknameListView->refresh();
 

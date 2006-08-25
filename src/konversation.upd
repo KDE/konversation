@@ -1,3 +1,8 @@
+Id=0.20-customfonts
+File=konversationrc
+Group=Appearance
+Script=konversation-0.20-customfonts.pl,perl
+
 Id=0.20-quickbuttons
 File=konversationrc
 Group=Button List

@@ -447,10 +447,8 @@ void DccChat::updateAppearance()
     m_dccChatInput->unsetPalette();
     m_dccChatInput->setPaletteForegroundColor(fg);
     m_dccChatInput->setPaletteBackgroundColor(bg);
-    m_dccChatInput->setFont(Preferences::textFont());
 
     getTextView()->unsetPalette();
-    getTextView()->setFont(Preferences::textFont());
 
     if(Preferences::showBackgroundImage())
     {
@@ -461,6 +459,17 @@ void DccChat::updateAppearance()
     {
         getTextView()->setViewBackground(Preferences::color(Preferences::TextViewBackground),
         QString::null);
+    }
+
+    if (Preferences::customTextFont())
+    {
+        getTextView()->setFont(Preferences::textFont());
+        m_dccChatInput->setFont(Preferences::textFont());
+    }
+    else
+    {
+        getTextView()->setFont(KGlobalSettings::generalFont());
+        m_dccChatInput->setFont(KGlobalSettings::generalFont());
     }
 
     ChatWindow::updateAppearance();

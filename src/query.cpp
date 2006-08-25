@@ -250,12 +250,10 @@ void Query::updateAppearance()
     queryInput->unsetPalette();
     queryInput->setPaletteForegroundColor(fg);
     queryInput->setPaletteBackgroundColor(bg);
-    queryInput->setFont(Preferences::textFont());
 
     getTextView()->unsetPalette();
-    getTextView()->setFont(Preferences::textFont());
 
-    if(Preferences::showBackgroundImage())
+    if (Preferences::showBackgroundImage())
     {
         getTextView()->setViewBackground(Preferences::color(Preferences::TextViewBackground),
             Preferences::backgroundImage());
@@ -264,6 +262,17 @@ void Query::updateAppearance()
     {
         getTextView()->setViewBackground(Preferences::color(Preferences::TextViewBackground),
             QString::null);
+    }
+
+    if (Preferences::customTextFont())
+    {
+        getTextView()->setFont(Preferences::textFont());
+        queryInput->setFont(Preferences::textFont());
+    }
+    else
+    {
+        getTextView()->setFont(KGlobalSettings::generalFont());
+        queryInput->setFont(KGlobalSettings::generalFont());
     }
 
     ChatWindow::updateAppearance();

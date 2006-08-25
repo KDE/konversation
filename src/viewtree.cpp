@@ -71,7 +71,10 @@ ViewTree::~ViewTree()
 
 void ViewTree::updateAppearance()
 {
-    setFont(Preferences::tabFont());
+    if (Preferences::customTabFont())
+        setFont(Preferences::tabFont());
+    else
+        setFont(KGlobalSettings::generalFont());
 
     QColor fg, bg;
 
