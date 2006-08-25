@@ -931,7 +931,7 @@ void IRCView::doAppend(const QString& newLine, bool important, bool self)
         }
     }
 
-    //FIXME: Diable auto-text for DCC Chats since we don't have a server
+    //FIXME: Disable auto-text for DCC Chats since we don't have a server
     // to parse wildcards.
     if (!m_autoTextToSend.isEmpty() && m_server)
     {
