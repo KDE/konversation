@@ -12,8 +12,8 @@ the Free Software Foundation; either version 2 of the License, or
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>525</width>
-            <height>526</height>
+            <width>399</width>
+            <height>476</height>
         </rect>
     </property>
     <vbox>
@@ -159,7 +159,7 @@ the Free Software Foundation; either version 2 of the License, or
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QCheckBox" row="0" column="0">
+                <widget class="QCheckBox" row="0" column="0" rowspan="1" colspan="2">
                     <property name="name">
                         <cstring>kcfg_ShowTopic</cstring>
                     </property>
@@ -167,7 +167,7 @@ the Free Software Foundation; either version 2 of the License, or
                         <string>&amp;Show channel topic</string>
                     </property>
                 </widget>
-                <widget class="QCheckBox" row="1" column="0">
+                <widget class="QCheckBox" row="1" column="0" rowspan="1" colspan="2">
                     <property name="name">
                         <cstring>kcfg_ShowModeButtons</cstring>
                     </property>
@@ -175,15 +175,7 @@ the Free Software Foundation; either version 2 of the License, or
                         <string>Show channel &amp;mode buttons</string>
                     </property>
                 </widget>
-                <widget class="QCheckBox" row="5" column="0">
-                    <property name="name">
-                        <cstring>kcfg_ShowNicknameBox</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Show bo&amp;x to change own nickname</string>
-                    </property>
-                </widget>
-                <widget class="QCheckBox" row="2" column="0">
+                <widget class="QCheckBox" row="2" column="0" rowspan="1" colspan="2">
                     <property name="name">
                         <cstring>kcfg_ShowNickList</cstring>
                     </property>
@@ -191,7 +183,49 @@ the Free Software Foundation; either version 2 of the License, or
                         <string>Show channel &amp;nick list and quick buttons</string>
                     </property>
                 </widget>
-                <widget class="QCheckBox" row="3" column="0">
+                <widget class="QCheckBox" row="5" column="0" rowspan="1" colspan="2">
+                    <property name="name">
+                        <cstring>kcfg_ShowNicknameBox</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Show bo&amp;x to change own nickname</string>
+                    </property>
+                </widget>
+                <spacer row="3" column="0">
+                    <property name="name">
+                        <cstring>spacer9</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Fixed</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>16</width>
+                            <height>20</height>
+                        </size>
+                    </property>
+                </spacer>
+                <spacer row="4" column="0">
+                    <property name="name">
+                        <cstring>spacer10</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Fixed</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>16</width>
+                            <height>20</height>
+                        </size>
+                    </property>
+                </spacer>
+                <widget class="QCheckBox" row="3" column="1">
                     <property name="name">
                         <cstring>kcfg_AutoUserhost</cstring>
                     </property>
@@ -202,7 +236,7 @@ the Free Software Foundation; either version 2 of the License, or
                         <string>Show hostmas&amp;ks in nickname list</string>
                     </property>
                 </widget>
-                <widget class="QCheckBox" row="4" column="0">
+                <widget class="QCheckBox" row="4" column="1">
                     <property name="name">
                         <cstring>kcfg_ShowQuickButtons</cstring>
                     </property>
