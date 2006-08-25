@@ -418,7 +418,7 @@ void ViewContainer::updateViewActions(int index)
         {
             Server* server = view->getServer();
 
-            if (server && !server->isConnected())
+            if (!server || (server && !server->isConnected()))
                 action->setEnabled(false);
             else
                 action->setEnabled(true);
@@ -593,9 +593,6 @@ void ViewContainer::updateFrontView()
             }
         }
 
-        action = actionCollection()->action("join_channel");
-        if (action) action->setEnabled(view->getServer() != 0);
-
         action = actionCollection()->action("open_logfile");
         if (action)
         {
@@ -643,7 +640,7 @@ void ViewContainer::updateFrontView()
         {
             Server* server = view->getServer();
 
-            if (server && !server->isConnected())
+            if (!server || (server && !server->isConnected()))
                 action->setEnabled(false);
             else
                 action->setEnabled(true);
