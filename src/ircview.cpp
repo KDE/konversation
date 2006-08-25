@@ -856,7 +856,7 @@ void IRCView::appendBacklogMessage(const QString& firstColumn,const QString& raw
         line = "<p><font color=\"" + backlogColor + "\">%1 %2 %3</font></p>\n";
     }
 
-    line = line.arg(time, nick, filter(message, backlogColor, NULL, false));
+    line = line.arg(time, nick, filter(message, backlogColor, NULL, false, false));
 
     m_lastInsertionWasLine = false;
 
