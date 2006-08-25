@@ -26,8 +26,8 @@
 #include "server.h"
 
 KonvDCOP::KonvDCOP()
-: DCOPObject("konversation"),
-QObject(0,"konversation")
+: DCOPObject("irc"),
+QObject(0,"irc")
 {
 }
 
@@ -142,8 +142,8 @@ QString KonvDCOP::getChannelEncoding(const QString& server, const QString& chann
 
 // Identity stuff
 KonvIdentDCOP::KonvIdentDCOP()
-: DCOPObject("KonvDCOPIdentity"),
-QObject(0, "KonvDCOPIdentity")
+: DCOPObject("identity"),
+QObject(0, "identity")
 {
 }
 
