@@ -2242,7 +2242,7 @@ void ViewContainer::closeQueries()
         if (nextPage && nextPage->getType()==ChatWindow::Query)
         {
             closeView(nextPage);
-            --i;
+            if (m_tabWidget->indexOf(nextPage) == -1) --i;
         }
         ++operations;
     }
