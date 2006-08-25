@@ -84,6 +84,7 @@ class Preferences : public QObject, public PreferencesBase
         static const bool addNotify(int serverGroupId, const QString& newPattern);
         static const bool removeNotify(const QString& groupName, const QString& pattern);
         static const bool isNotify(int serverGroupId, const QString& pattern);
+        static const bool hasNotifyList(int serverGroupId);
 
         static const QPtrList<Highlight> highlightList();
         static void setHighlightList(QPtrList<Highlight> newList);

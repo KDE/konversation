@@ -1213,6 +1213,8 @@ void IRCView::updateNickMenuEntries(QPopupMenu* popup, const QString& nickname)
             popup->setItemEnabled(Konversation::AddNotify, false);
         else if (!m_server->isConnected())
             popup->setItemEnabled(Konversation::AddNotify, false);
+        else if (!Preferences::hasNotifyList(m_server->serverGroupSettings()->id()))
+            popup->setItemEnabled(Konversation::AddNotify, false);
         else if (Preferences::isNotify(m_server->serverGroupSettings()->id(), nickname))
             popup->setItemEnabled(Konversation::AddNotify, false);
         else

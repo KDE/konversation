@@ -240,7 +240,7 @@ void NickListView::updateActions()
     else
         popup->setItemVisible(Konversation::UnignoreNick, false);
 
-    if (notifyCounter)
+    if (notifyCounter || !Preferences::hasNotifyList(serverGroupId))
         popup->setItemEnabled(Konversation::AddNotify, false);
     else
         popup->setItemEnabled(Konversation::AddNotify, true);
