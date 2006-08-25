@@ -744,7 +744,6 @@ void Server::broken(int state)
             keepViewsOpenAfterQuit = false;
 
             statusView->appendServerMessage(i18n("Info"),i18n("Disconnected from server."));
-            appendMessageToFrontmost(i18n("Info"),i18n("Disconnected from server."));
 
             if (reconnectAfterQuit)
             {
