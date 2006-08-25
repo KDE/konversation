@@ -137,8 +137,8 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
     (new KAction(i18n("&Identities..."), "identity", KShortcut("F8"), this, SLOT(openIdentitiesDialog()),
         actionCollection(), "identities_dialog"))->setToolTip(i18n("Manage your nick, away and other identity settings"));
 
-    new KToggleAction(i18n("&Watched Nicks Online"), 0, KShortcut("F4"), m_viewContainer, SLOT(openNicksOnlinePanel()), actionCollection(), "open_nicksonline_window");
-    new KToggleAction(i18n("&DCC Status"), 0, KShortcut("F9"), m_viewContainer, SLOT(toggleDccPanel()), actionCollection(), "open_dccstatus_window");
+    new KToggleAction(i18n("&Watched Nicks Online"), "kontact_contacts", KShortcut("F4"), m_viewContainer, SLOT(openNicksOnlinePanel()), actionCollection(), "open_nicksonline_window");
+    new KToggleAction(i18n("&DCC Status"), "2rightarrow", KShortcut("F9"), m_viewContainer, SLOT(toggleDccPanel()), actionCollection(), "open_dccstatus_window");
     action = new KAction(i18n("&Open Logfile"), "history", KShortcut("Ctrl+O"), m_viewContainer, SLOT(openLogFile()), actionCollection(), "open_logfile");
     action->setEnabled(false);
     action->setToolTip(i18n("Open the known history for this channel in a new tab"));
@@ -147,10 +147,10 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
     action->setEnabled(false);
     action->setToolTip(i18n("Open the channel settings dialog for this tab"));
 
-    action = new KAction(i18n("Channel &List"), 0, KShortcut("F5"), m_viewContainer, SLOT(openChannelList()), actionCollection(), "open_channel_list");
+    action = new KAction(i18n("Channel &List"), "view_text", KShortcut("F5"), m_viewContainer, SLOT(openChannelList()), actionCollection(), "open_channel_list");
     action->setEnabled(false);
     action->setToolTip(i18n("Show a list of all the known channels on this server"));
-    action = new KToggleAction(i18n("&URL Catcher"), 0, KShortcut("F6"), m_viewContainer, SLOT(addUrlCatcher()), actionCollection(), "open_url_catcher");
+    action = new KToggleAction(i18n("&URL Catcher"), "enhanced_browsing", KShortcut("F6"), m_viewContainer, SLOT(addUrlCatcher()), actionCollection(), "open_url_catcher");
     action->setToolTip(i18n("List all URLs that have been mentioned recently in a new tab"));
 
     if (kapp->authorize("shell_access"))
@@ -223,7 +223,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
         tabSelectionMapper->setMapping( tabSelectionAction, i-1);
     }
 
-    action = new KAction(i18n("&Clear Window"),0,KShortcut("Ctrl+L"), m_viewContainer, SLOT(clearView()),actionCollection(),"clear_window");
+    action = new KAction(i18n("&Clear Window"), 0, KShortcut("Ctrl+L"), m_viewContainer, SLOT(clearView()),actionCollection(),"clear_window");
     action->setToolTip(i18n("Clear the contents of the current tab"));
     action->setEnabled(false);
     action = new KAction(i18n("Clear &All Windows"),0,KShortcut("CTRL+SHIFT+L"), m_viewContainer, SLOT(clearAllViews()),actionCollection(),"clear_tabs");
@@ -234,7 +234,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
         static_cast<KonversationApplication *>(kapp), SLOT(toggleAway()), actionCollection(),"toggle_away");
     awayAction->setEnabled(false);
 
-    action = new KAction(i18n("&Join Channel..."), 0, KShortcut("Ctrl+J"), m_viewContainer, SLOT(showJoinChannelDialog()), actionCollection(), "join_channel");
+    action = new KAction(i18n("&Join Channel..."), "add", KShortcut("Ctrl+J"), m_viewContainer, SLOT(showJoinChannelDialog()), actionCollection(), "join_channel");
     action->setEnabled(false);
     action->setToolTip("Join a new channel on this server");
 
