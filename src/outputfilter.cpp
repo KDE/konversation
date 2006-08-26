@@ -45,8 +45,6 @@
 
 #include "query.h"
 
-//#include "argnl.h"
-
 namespace Konversation
 {
     OutputFilter::OutputFilter(Server* server)
@@ -98,20 +96,8 @@ namespace Konversation
         return false;
     }
 
-//I've left these debugging macros in here so you can double-check my work.
-//I'll clean these out soon. These form a comma separated list.
-
-//Begins the debugging line. Change it to kdDebug() to enable it for this function.
-#define KV kndDebug() << __FILE__ << ':' << __LINE__ << ' '
-//Display the variable name and is value.
-#define _S(x) #x << ": " << (x) << ", "
-//Display the address of the item
-#define _P_(x) "&" << #x << ": " << QString::number(((ulong)((void*)(x))),16) << ", "
-
     QStringList OutputFilter::splitForEncoding(QString inputLine, int MAX)
     {
-        KV << k_funcinfo << endl;
-
         QString channelCodecName=Preferences::channelEncoding(m_server->getServerGroup(), destination);
 
         int sublen=0; //The encoded length since the last split
@@ -148,39 +134,27 @@ namespace Konversation
 
         Q_ASSERT(codec);
 
-        KV << _P_(QTextCodec::codecForCStrings()) << endl;
-
         while (c<end)
         {
-            KV << _P_(c) << _P_(frag) << _P_(lastSpace) << _P_(c-frag) << _S(*c) << endl;
-
             // The most important bit - turn the current char into a QCString so we can measure it
             QCString ch=codec->fromUnicode(*c);
             charLength=ch.length();
 
-            KV << _S(charLength) << _S(sublen) << endl;
-
             // If adding this char puts us over the limit:
             if (charLength+sublen > MAX)
             {
-                KV << endl;
                 // If lastSpace isn't pointing to a space, we have to chop
                 if ( !lastSpace->isSpace() ) //used in case we end up supporting unicode spaces
                 {
-                    KV << endl;
                     // FIXME This is only theory, it might not work
                     if (sbcGood) // Copy up to and including the last SBC.
                     {
-                        KV << endl;
-
                         QString curs(frag, (++lastSBC)-frag); // Since there is a continue below, safe to increment here
                         finals+=curs;
                         lastSpace=frag=c=lastSBC;
                     }
                     else //Split right here
                     {
-                        KV << endl;
-
                         QString curs(frag, c-frag); // Don't include c
                         finals+=curs;
                         lastSpace=frag=c; //we need to see this char again, to collect its stats, so no increment
@@ -188,7 +162,6 @@ namespace Konversation
                 }
                 else // Most common case, we saw a space we can split at
                 {
-                    KV << endl;
                     // Copy the current substring, but not the space (unlike the SBC case)
                     QString curs(frag, lastSpace-frag);
                     finals+=curs;
@@ -197,8 +170,6 @@ namespace Konversation
                     //  it was technically replaced with a \n
                     frag=c=++lastSpace; //pre-increment
                 }
-
-                KV << endl;
 
                 sbcGood=false;
                 // Since c always gets reset to the splitpoint, sublen gets recalculated
@@ -225,13 +196,8 @@ namespace Konversation
             QString curs(frag, c-frag);
             finals+=curs;
         }
-        KV << _S(finals) << endl;
         return finals;
     }
-
-//Redefined so you can silence just the one function
-//#undef KV
-//#define KV kdDebug() << __FILE__ << ':' << __LINE__ << ' '
 
     OutputFilterResult OutputFilter::parse(const QString& myNick,const QString& originalLine,const QString& name)
     {
@@ -362,12 +328,8 @@ namespace Konversation
         else if(!destination.isEmpty())
         {
             BYPASS_COMMAND_PARSING:
-            int prel = m_server->getPreLength("PRIVMSG", destination);
 
-            //FIXME leave this one in for those that really need to know where the line splits?
-            kdDebug() << "Message preamble for " << destination << " is " << prel << endl;
-
-            QStringList outputList=splitForEncoding(inputLine, prel);
+            QStringList outputList=splitForEncoding(inputLine, m_server->getPreLength("PRIVMSG", destination));
             if (outputList.count() > 1)
             {
                 result.output=QString::null;
