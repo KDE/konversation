@@ -2141,9 +2141,9 @@ void Channel::nicknameComboboxChanged()
     {
       nicknameCombobox->setCurrentText(oldNick);
       changeNickname(newNick);
+      // return focus to input line
+      channelInput->setFocus();
     }
-    // return focus to input line
-    channelInput->setFocus();
 }
 
 void Channel::changeNickname(const QString& newNickname)
