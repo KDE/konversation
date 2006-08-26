@@ -61,7 +61,7 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
     m_nickListView->addColumn(i18n("Network/Nickname/Channel"));
     m_kabcIconSet = KGlobal::iconLoader()->loadIconSet("kaddressbook",KIcon::Small);
     m_nickListView->addColumn(i18n("Additional Information"));
-    m_nickListView->setFullWidth(false);
+    m_nickListView->setFullWidth(true);
     m_nickListView->setRootIsDecorated(true);
     m_nickListView->setShowToolTips(false);
     m_nickListView->setShadeSortColumn(true);
@@ -535,9 +535,6 @@ void NicksOnline::refreshAllServerOnlineLists()
     {
         updateServerOnlineList(server);
     }
-    // Adjust column widths.
-    m_nickListView->adjustColumn(nlvcNetworkNickChannel);
-    m_nickListView->adjustColumn(nlvcAdditionalInfo);
     // Refresh addressbook buttons.
     slotNickListView_SelectionChanged();
 }
