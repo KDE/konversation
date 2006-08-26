@@ -157,6 +157,7 @@ void UrlCatcher::copyUrlClicked()
     {
         QClipboard *cb=KApplication::kApplication()->clipboard();
         cb->setText(item->text(1),QClipboard::Selection);
+        cb->setText(item->text(1),QClipboard::Clipboard);
     }
 }
 

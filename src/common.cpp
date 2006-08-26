@@ -65,7 +65,7 @@ namespace Konversation
 
         if(filteredLine.contains("#"))
         {
-            QRegExp chanExp("(^|\\s|^\"|\\s\"|,|'|\\(|\\:|!|@|%|\\+)(#[^,\\s;\\)\\:\\/\\(]*[^.,\\s;\\)\\:\\/\\(\"\''])");
+          QRegExp chanExp("(^|\\s|^\"|\\s\"|,|'|\\(|\\:|!|@|%|\\+)(#[^,\\s;\\)\\:\\/\\(\\<\\>]*[^.,\\s;\\)\\:\\/\\(\"\''\\<\\>])");
             filteredLine.replace(chanExp, link);
         }
 
@@ -129,7 +129,7 @@ namespace Konversation
                 protocol = "mailto:";
 
             // Use \003 as a placeholder for & so we can readd them after changing all & in the normal text to &amp;
-            insertText = link.arg(protocol, QString(href).replace('&', "\x0b").replace('%', "\%"), href) + append;
+            insertText = link.arg(protocol, QString(href).replace('&', "\x0b"), href) + append;
             filteredLine.replace(pos, urlLen, insertText);
             pos += insertText.length();
             KonversationApplication::instance()->storeUrl(fromNick, href);
