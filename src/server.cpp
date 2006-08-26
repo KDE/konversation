@@ -3428,10 +3428,8 @@ void Server::updateLongPongLag()
         emit tooLongLag(this, currentLag);
         // kdDebug() << "Current lag: " << currentLag << endl;
 
-        if (Preferences::autoReconnect() && (currentLag > (Preferences::maximumLagTime() * 1000)))
-        {
+        if (currentLag > (Preferences::maximumLagTime() * 1000))
             m_socket->close();
-        }
     }
 }
 
