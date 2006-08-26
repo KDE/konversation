@@ -10,13 +10,17 @@ global pyxmmsInstalled;
 import os
 import sys
 
+port = sys.argv[1]
+server = sys.argv[2]
+target = sys.argv[3]
+
+
 try:
     import xmms.common
     pyxmmsInstalled = True;
 except ImportError:
     pyxmmsInstalled = False;
 
-from subprocess import *
 try:
     from subprocess import *
 except ImportError:
@@ -25,7 +29,7 @@ except ImportError:
         err="The media script requires python 2.4 (or the subprocess module from same)"
     else:
         err="The media script could not import subprocess module"
-    os.popen('dcop %s Konversation error "%s"'%(sys.argv[1]),err)
+    os.popen('dcop %s default error "%s"'%(port,err))
     raise
 
 global port;
@@ -70,9 +74,6 @@ def pretty_print(title, artist='', album=''):
         return "/me is listening to \"%s\""%(title)
 
 if __name__ == "__main__":
-    port = sys.argv[1]
-    server = sys.argv[2]
-    target = sys.argv[3]
     bad_apps = None
     error = None
 
