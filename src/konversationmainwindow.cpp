@@ -110,7 +110,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
     hideMenuBarAction = KStdAction::showMenubar(this, SLOT(toggleMenubar()), actionCollection());
 
     setStandardToolBarMenuEnabled(true);
-    KStdAction::configureToolbars(this, SLOT(configureToolbars()), actionCollection());
+    KStdAction::configureToolbars(this, SLOT(configureToolbar()), actionCollection());
 
     KStdAction::keyBindings(this, SLOT(openKeyBindings()), actionCollection());
     KAction *preferencesAction = KStdAction::preferences(this, SLOT(openPrefsDialog()), actionCollection());
@@ -415,6 +415,20 @@ void KonversationMainWindow::toggleMenubar(bool dontShowWarning)
     }
 
     Preferences::setShowMenuBar(hideMenuBarAction->isChecked());
+}
+
+int KonversationMainWindow::configureToolbar()
+{
+    saveMainWindowSettings(KGlobal::config());
+    KEditToolbar dlg(actionCollection(), xmlFile(), true, this);
+    connect(&dlg, SIGNAL(newToolbarConfig()), SLOT(saveToolbarConfig()));
+    return dlg.exec();
+}
+
+void KonversationMainWindow::saveToolbarConfig()
+{
+    createGUI(xmlFile(), false);
+    applyMainWindowSettings(KGlobal::config());
 }
 
 void KonversationMainWindow::focusAndShowErrorMessage(const QString &errorMsg)

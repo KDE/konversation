@@ -104,6 +104,9 @@ class KonversationMainWindow : public KMainWindow
 
         void toggleMenubar(bool dontShowWarning = false);
 
+        int configureToolbar();
+        void saveToolbarConfig();
+
         void openPrefsDialog();
         void openKeyBindings();
         void openQuickConnectDialog();
