@@ -57,6 +57,14 @@ the Free Software Foundation; either version 2 of the License, or
             <property name="name">
                 <cstring>kcfg_DccPath</cstring>
             </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>7</hsizetype>
+                    <vsizetype>5</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
             <property name="mode">
                 <number>2</number>
             </property>
@@ -217,7 +225,7 @@ the Free Software Foundation; either version 2 of the License, or
                     </property>
                     <property name="sizeHint">
                         <size>
-                            <width>228</width>
+                            <width>50</width>
                             <height>21</height>
                         </size>
                     </property>
@@ -284,7 +292,7 @@ the Free Software Foundation; either version 2 of the License, or
                     </property>
                     <property name="sizeHint">
                         <size>
-                            <width>226</width>
+                            <width>50</width>
                             <height>21</height>
                         </size>
                     </property>
@@ -346,7 +354,7 @@ the Free Software Foundation; either version 2 of the License, or
             <property name="sizeHint">
                 <size>
                     <width>20</width>
-                    <height>80</height>
+                    <height>10</height>
                 </size>
             </property>
         </spacer>
@@ -493,9 +501,9 @@ the Free Software Foundation; either version 2 of the License, or
 </tabstops>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
-    <includehint>klineedit.h</includehint>
     <includehint>kurlrequester.h</includehint>
     <includehint>klineedit.h</includehint>
     <includehint>kpushbutton.h</includehint>
+    <includehint>klineedit.h</includehint>
 </includehints>
 </UI>

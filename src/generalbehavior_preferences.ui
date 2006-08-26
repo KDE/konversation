@@ -242,7 +242,7 @@ the Free Software Foundation; either version 2 of the License, or
                         <number>1</number>
                     </property>
                 </widget>
-                <widget class="QCheckBox" row="6" column="0" colspan="2">
+                <widget class="QCheckBox" row="6" column="0" rowspan="1" colspan="2">
                     <property name="name">
                         <cstring>kcfg_UseMultiRowInputBox</cstring>
                     </property>
@@ -300,7 +300,7 @@ the Free Software Foundation; either version 2 of the License, or
             <property name="sizeHint">
                 <size>
                     <width>20</width>
-                    <height>50</height>
+                    <height>10</height>
                 </size>
             </property>
         </spacer>

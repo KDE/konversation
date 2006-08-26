@@ -231,9 +231,6 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   connect(m_confWarningsWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
 
   unfoldTreeList();
-
-  QSize newSize(size().width() + ((sizeHint().width() - size().width()) / 2), size().height());
-  resize(newSize);
 }
 
 void KonviSettingsDialog::modifiedSlot()

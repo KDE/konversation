@@ -8,8 +8,8 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>404</width>
-            <height>407</height>
+            <width>278</width>
+            <height>364</height>
         </rect>
     </property>
     <grid>
@@ -96,7 +96,7 @@
                     </property>
                     <property name="sizeHint">
                         <size>
-                            <width>197</width>
+                            <width>50</width>
                             <height>20</height>
                         </size>
                     </property>
@@ -135,7 +135,7 @@
                     </property>
                     <property name="sizeHint">
                         <size>
-                            <width>206</width>
+                            <width>50</width>
                             <height>20</height>
                         </size>
                     </property>
@@ -174,7 +174,7 @@
                     </property>
                     <property name="sizeHint">
                         <size>
-                            <width>234</width>
+                            <width>50</width>
                             <height>21</height>
                         </size>
                     </property>
@@ -206,7 +206,7 @@
                     </property>
                     <property name="sizeHint">
                         <size>
-                            <width>235</width>
+                            <width>50</width>
                             <height>21</height>
                         </size>
                     </property>
@@ -231,7 +231,7 @@
                     </property>
                     <property name="sizeHint">
                         <size>
-                            <width>740</width>
+                            <width>50</width>
                             <height>21</height>
                         </size>
                     </property>
@@ -297,7 +297,7 @@
             <property name="sizeHint">
                 <size>
                     <width>21</width>
-                    <height>90</height>
+                    <height>20</height>
                 </size>
             </property>
         </spacer>

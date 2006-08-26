@@ -41,6 +41,14 @@ the Free Software Foundation; either version 2 of the License, or
                     <property name="name">
                         <cstring>kcfg_LogfilePath</cstring>
                     </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>7</hsizetype>
+                            <vsizetype>5</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
                     <property name="mode">
                         <number>26</number>
                     </property>
@@ -87,7 +95,7 @@ the Free Software Foundation; either version 2 of the License, or
             <property name="sizeHint">
                 <size>
                     <width>21</width>
-                    <height>111</height>
+                    <height>10</height>
                 </size>
             </property>
         </spacer>
