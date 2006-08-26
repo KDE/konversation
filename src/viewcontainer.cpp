@@ -2255,6 +2255,10 @@ ChannelListPanel* ViewContainer::addChannelListPanel(Server* server)
     ChannelListPanel* channelListPanel=new ChannelListPanel(m_tabWidget);
     channelListPanel->setServer(server);
     addView(channelListPanel, i18n("Channel List"));
+
+    KToggleAction* action = static_cast<KToggleAction*>(actionCollection()->action("open_channel_list"));
+    if ((server == m_frontServer) && action) action->setChecked(true);
+
     return channelListPanel;
 }
 
@@ -2263,11 +2267,11 @@ void ViewContainer::openChannelList(const QString& filter, bool getList)
     if (m_frontServer)
     {
         ChannelListPanel* panel = m_frontServer->getChannelListPanel();
-        KToggleAction* action = static_cast<KToggleAction*>(actionCollection()->action("open_channel_list"));
 
         if (panel)
         {
             closeView(panel);
+            KToggleAction* action = static_cast<KToggleAction*>(actionCollection()->action("open_channel_list"));
             if (action) action->setChecked(false);
         }
         else
@@ -2286,8 +2290,6 @@ void ViewContainer::openChannelList(const QString& filter, bool getList)
             if (ret != KMessageBox::Continue) return;
 
             panel = m_frontServer->addChannelListPanel();
-
-            if (action) action->setChecked(true);
 
             panel->setFilter(filter);
 
