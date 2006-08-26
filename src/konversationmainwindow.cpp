@@ -147,9 +147,10 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
     action->setEnabled(false);
     action->setToolTip(i18n("Open the channel settings dialog for this tab"));
 
-    action = new KAction(i18n("Channel &List"), "view_text", KShortcut("F5"), m_viewContainer, SLOT(openChannelList()), actionCollection(), "open_channel_list");
-    action->setEnabled(false);
-    action->setToolTip(i18n("Show a list of all the known channels on this server"));
+    KToggleAction* channelListAction = new KToggleAction(i18n("Channel &List"), "view_text", KShortcut("F5"), m_viewContainer, SLOT(openChannelList()), actionCollection(), "open_channel_list");
+    channelListAction->setEnabled(false);
+    channelListAction->setToolTip(i18n("Show a list of all the known channels on this server"));
+
     action = new KToggleAction(i18n("&URL Catcher"), "enhanced_browsing", KShortcut("F6"), m_viewContainer, SLOT(addUrlCatcher()), actionCollection(), "open_url_catcher");
     action->setToolTip(i18n("List all URLs that have been mentioned recently in a new tab"));
 

@@ -121,7 +121,7 @@ Channel::Channel(QWidget* parent)
 
     m_topicButton = new QToolButton(topicWidget);
     m_topicButton->setIconSet(SmallIconSet("edit", 16));
-    QToolTip::add(m_topicButton, i18n("Edit Channel Properties"));
+    QToolTip::add(m_topicButton, i18n("Edit Channel Settings"));
     connect(m_topicButton, SIGNAL(clicked()), this, SLOT(showOptionsDialog()));
 
     topicLine = new Konversation::TopicLabel(topicWidget);

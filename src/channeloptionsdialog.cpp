@@ -30,7 +30,7 @@ namespace Konversation
 {
 
     ChannelOptionsDialog::ChannelOptionsDialog(Channel *channel)
-        : KDialogBase(channel, "channelOptions", false, i18n("Channel Options for %1").arg(channel->getName()), Ok|Cancel, Ok)
+        : KDialogBase(channel, "channelOptions", false, i18n("Channel Settings for %1").arg(channel->getName()), Ok|Cancel, Ok)
     {
         Q_ASSERT(channel);
         m_widget = new ChannelOptionsUI(this);

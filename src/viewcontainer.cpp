@@ -576,20 +576,22 @@ void ViewContainer::updateFrontView()
         action = actionCollection()->action("edit_find_next");
         if(action) action->setEnabled(view->searchView());
 
-        action = actionCollection()->action("open_channel_list");
-        if (action)
+        KToggleAction* channelListAction = static_cast<KToggleAction*>(actionCollection()->action("open_channel_list"));
+        if (channelListAction)
         {
             if (view->getServer())
             {
                 QString name = view->getServer()->getServerGroup();
                 name = name.replace('&', "&&");
-                action->setEnabled(true);
-                action->setText(i18n("Channel &List for %1").arg(name));
+                channelListAction->setEnabled(true);
+                channelListAction->setChecked(m_frontServer->getChannelListPanel());
+                channelListAction->setText(i18n("Channel &List for %1").arg(name));
             }
             else
             {
-                action->setEnabled(false);
-                action->setText(i18n("Channel &List"));
+                channelListAction->setEnabled(false);
+                channelListAction->setChecked(false);
+                channelListAction->setText(i18n("Channel &List"));
             }
         }
 
@@ -2261,16 +2263,18 @@ void ViewContainer::openChannelList(const QString& filter, bool getList)
     if (m_frontServer)
     {
         ChannelListPanel* panel = m_frontServer->getChannelListPanel();
+        KToggleAction* action = static_cast<KToggleAction*>(actionCollection()->action("open_channel_list"));
 
         if (panel)
         {
-            m_tabWidget->showPage(panel);
+            closeView(panel);
+            if (action) action->setChecked(false);
         }
         else
         {
             int ret = KMessageBox::Continue;
 
-            if(filter.isEmpty())
+            if (filter.isEmpty())
             {
                 ret = KMessageBox::warningContinueCancel(m_window,i18n("Using this function may result in a lot "
                       "of network traffic. If your connection is not fast "
@@ -2282,11 +2286,13 @@ void ViewContainer::openChannelList(const QString& filter, bool getList)
             if (ret != KMessageBox::Continue) return;
 
             panel = m_frontServer->addChannelListPanel();
+
+            if (action) action->setChecked(true);
+
+            panel->setFilter(filter);
+
+            if(getList) panel->applyFilterClicked();
         }
-
-        panel->setFilter(filter);
-
-        if(getList) panel->applyFilterClicked();
     }
     else
     {
