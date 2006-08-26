@@ -844,11 +844,11 @@ void Channel::channelTextEntered()
     QString line = channelInput->text();
     channelInput->clear();
 
-    if(line.lower().stripWhiteSpace() == "/clear")
+    if(line.lower().stripWhiteSpace() == Preferences::commandChar()+"clear")
     {
         textView->clear();
     }
-    else if(line.lower().stripWhiteSpace() == "/cycle")
+    else if(line.lower().stripWhiteSpace() == Preferences::commandChar()+"cycle")
     {
         cycleChannel();
     }

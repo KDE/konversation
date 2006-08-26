@@ -152,11 +152,11 @@ void Query::queryTextEntered()
 {
     QString line=queryInput->text();
     queryInput->clear();
-    if(line.lower()=="/clear")
+    if(line.lower()==Preferences::commandChar()+"clear")
     {
         textView->clear();
     }
-    else if(line.lower()=="/part")
+    else if(line.lower()==Preferences::commandChar()+"part")
     {
         m_server->closeQuery(getName());
     }

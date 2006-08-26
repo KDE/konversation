@@ -127,7 +127,7 @@ void StatusPanel::statusTextEntered()
     QString line=statusInput->text();
     statusInput->clear();
 
-    if(line.lower()=="/clear") textView->clear();
+    if(line.lower()==Preferences::commandChar()+"clear") textView->clear();
     else
     {
         if(line.length()) sendStatusText(line);

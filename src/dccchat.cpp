@@ -279,7 +279,7 @@ void DccChat::dccChatTextEntered()
 {
     QString line = m_dccChatInput->text();
     m_dccChatInput->clear();
-    if ( line.lower() == "/clear" )
+    if ( line.lower() == Preferences::commandChar()+"clear" )
     {
         textView->clear();
     }
