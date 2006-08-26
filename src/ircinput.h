@@ -65,6 +65,7 @@ class IRCInput : public KTextEdit
         void getHistory(bool up);
         void insertCompletion(const QString& nick);
         void disableSpellChecking();
+        virtual void slotSpellCheckDone(const QString& s);
 
     protected:
         bool eventFilter(QObject *object,QEvent *event);
