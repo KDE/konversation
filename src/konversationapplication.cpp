@@ -338,7 +338,7 @@ Server* KonversationApplication::connectToServer(int serverGroupId, Konversation
             {
                 int result = KMessageBox::warningContinueCancel(
                 mainWindow,
-                i18n("You are already connected to %1. Do you want to disconnect from '%1' and connect to '%2' instead?")
+                i18n("You are already connected to %1. Do you want to disconnect from '%2' and connect to '%3' instead?")
                     .arg(existingServer->getServerGroup())
                     .arg(existingServer->getServerName())
                     .arg(quickServer.server()),
