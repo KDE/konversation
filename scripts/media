@@ -33,7 +33,7 @@ def check_running(application):
 def reencodeString(input):
     if input:
         try:
-            _ = input.decode('utf-8')
+            input = input.decode('utf-8')
         except UnicodeError:
             try:
                 input = input.decode('latin-1')
