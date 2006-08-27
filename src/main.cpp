@@ -58,19 +58,20 @@ int main(int argc, char* argv[])
         "talk about your favorite subject."),
         "http://konversation.kde.org/");
 
-    aboutData.addAuthor("Dario Abatianni",I18N_NOOP("Original Author/Project Founder"),"eisfuchs@tigress.com");
+    aboutData.addAuthor("Dario Abatianni",I18N_NOOP("Original Author, Project Founder"),"eisfuchs@tigress.com");
     aboutData.addAuthor("Peter Simonsson",I18N_NOOP("Maintainer"),"psn@linux.se");
-    aboutData.addAuthor("Eike Hein",I18N_NOOP("Co-Maintainer, User interaction, Network semantics, Protocol handling"),"sho@eikehein.com");
+    aboutData.addAuthor("Eike Hein",I18N_NOOP("Maintainer, Release Manager, User interface, Protocol handling"),"sho@eikehein.com");
+    aboutData.addAuthor("Shintaro Matsuoka",I18N_NOOP("DCC, Encoding handling, OSD positioning"),"shin@shoegazed.org");
+    aboutData.addAuthor("Eli MacKenzie",I18N_NOOP("Protocol handling, Input line"),"argonel@gmail.com");
+    aboutData.addAuthor("İsmail Dönmez",I18N_NOOP("Blowfish, SSL support, KNetwork port, Colored nicks, Nicklist themes"),"ismail@kde.org");
     aboutData.addAuthor("John Tapsell",I18N_NOOP("Refactoring, KAddressBook/Kontact integration"), "john@geola.co.uk");
-    aboutData.addAuthor("Shintaro Matsuoka",I18N_NOOP("DCC rewrite, Encodings improvements, OSD positioning"),"shin@shoegazed.org");
-    aboutData.addAuthor("Christian Muehlhaeuser",I18N_NOOP("Multiple modes extension, Close widget placement, OSD functionality"),"chris@chris.de");
-    aboutData.addAuthor("Gary Cramblitt",I18N_NOOP("Documentation, Watched nicks online improvements, Custom web browser extension"),"garycramblitt@comcast.net");
-    aboutData.addAuthor("Matthias Gierlings",I18N_NOOP("Color configurator, Highlight dialog"),"gismore@users.sourceforge.net");
-    aboutData.addAuthor("Alex Zepeda",I18N_NOOP("DCOP interface"),"garbanzo@hooked.net");
-    aboutData.addAuthor("Stanislav Karchebny",I18N_NOOP("Non-Latin1-Encodings"),"berkus@users.sourceforge.net");
-    aboutData.addAuthor("Mickael Marchand",I18N_NOOP("Konsole part view"),"marchand@kde.org");
 
-    aboutData.addCredit("İsmail Dönmez",I18N_NOOP("Blowfish Support, SSL Support, Ported to KNetwork, Colored Nicknames, Icon Theme Support"),"ismail@kde.org");
+    aboutData.addCredit("Christian Muehlhaeuser",I18N_NOOP("Multiple modes extension, Close widget placement, OSD functionality"),"chris@chris.de");
+    aboutData.addCredit("Gary Cramblitt",I18N_NOOP("Documentation, Watched nicks online improvements, Custom web browser extension"),"garycramblitt@comcast.net");
+    aboutData.addCredit("Matthias Gierlings",I18N_NOOP("Color configurator, Highlight dialog"),"gismore@users.sourceforge.net");
+    aboutData.addCredit("Alex Zepeda",I18N_NOOP("DCOP interface"),"garbanzo@hooked.net");
+    aboutData.addCredit("Stanislav Karchebny",I18N_NOOP("Non-Latin1-Encodings"),"berkus@users.sourceforge.net");
+    aboutData.addCredit("Mickael Marchand",I18N_NOOP("Konsole part view"),"marchand@kde.org");
     aboutData.addCredit("Michael Goettsche",I18N_NOOP("Quick connect, Ported new OSD, other features and bugfixes"),"michael.goettsche@kdemail.net");
     aboutData.addCredit("Benjamin Meyer",I18N_NOOP("A Handful of fixes and code cleanup"),"ben+konversation@meyerhome.net");
     aboutData.addCredit("Jakub Stachowski",I18N_NOOP("Drag&Drop improvements"),"qbast@go2.pl");
@@ -88,7 +89,7 @@ int main(int argc, char* argv[])
     aboutData.addCredit("Lothar Braun",I18N_NOOP("Bug fixes"),"mail@lobraun.de");
     aboutData.addCredit("Ivor Hewitt",I18N_NOOP("Bug fixes, OSD work, clearing topics"),"ivor@ivor.org");
     aboutData.addCredit("Emil Obermayr",I18N_NOOP("Sysinfo script"),"nobs@tigress.com");
-    aboutData.addCredit("Stanislav Nikolov",I18N_NOOP("Various bug fixes"),"valsinats@gmail.com");
+    aboutData.addCredit("Stanislav Nikolov",I18N_NOOP("Bug fixes"),"valsinats@gmail.com");
 
     KCmdLineArgs::init(argc,argv,&aboutData);
     KCmdLineArgs::addCmdLineOptions(options);
