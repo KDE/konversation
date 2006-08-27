@@ -371,8 +371,6 @@ void IRCInput::paste(bool useSelection)
 
 void IRCInput::paste()
 {
-
-    kdDebug() << "paste()" << endl;
     QClipboard *cb = KApplication::kApplication()->clipboard();
     setFocus();
 
@@ -395,11 +393,20 @@ void IRCInput::paste()
         emit endCompletion();
 
         bool signal=false;
+
         // replace \r with \n to make xterm pastes happy
         pasteText.replace("\r","\n");
+        // remove blank lines
+        while(pasteText.contains("\n\n"))
+            pasteText.replace("\n\n","\n");
 
-        //  remove all trailing newlines
-        pasteText.replace(QRegExp("\n+$"),"");
+        QRegExp reTopSpace("^ *\n");
+        while(pasteText.contains(reTopSpace))
+            pasteText.remove(reTopSpace);
+
+        QRegExp reBottomSpace("\n *$");
+        while(pasteText.contains(reBottomSpace))
+            pasteText.remove(reBottomSpace);
 
         // does the text contain at least one newline character?
         if(pasteText.find('\n')!=-1)
@@ -409,15 +416,15 @@ void IRCInput::paste()
             unsigned int rpos=pasteText.findRev('\n');
 
             // emit the signal if there's a line break in the middle of the text
-            if(pos>0 && pos!=(pasteText.length()-1)) signal=true;
+            if(pos>0 && pos!=(pasteText.length()-1))
+                signal=true;
             // emit the signal if there's more than one line break in the text
-            if(pos!=rpos) signal=true;
+            if(pos!=rpos)
+                signal=true;
 
             // Remove the \n from end of the line if there's only one \n
             if(!signal)
-            {
                 pasteText.remove('\n');
-            }
         }
         else
         {
@@ -454,18 +461,7 @@ bool IRCInput::checkPaste(QString& text)
 {
     int doPaste=KMessageBox::Yes;
 
-    // Don't use QString::stripWhiteSpace() because it deletes spaces in the first line too.
-    // remove waste spaces (including LF)
-    QRegExp reTopSpace("^ *\n");
-    while(text.contains(reTopSpace))
-        text.remove(reTopSpace);
-    QRegExp reBottomSpace("\n *$");
-    while(text.contains(reBottomSpace))
-        text.remove(reBottomSpace);
-    // remove blank lines
-    while(text.contains("\n\n"))
-        text.replace("\n\n","\n");
-
+    //text is now preconditioned when you get here
     int lines=text.contains('\n');
 
     if(text.length()>256 || lines)
@@ -483,8 +479,11 @@ bool IRCInput::checkPaste(QString& text)
 
     if (doPaste==KMessageBox::No)
     {
-        text=MultilineEdit::edit(this,text);
-        return true;
+        QString ret(MultilineEdit::edit(this,text));
+        if (ret.isEmpty())
+            return false;
+        text=ret;
+        return false;
     }
 
     return (doPaste==KMessageBox::Yes);
