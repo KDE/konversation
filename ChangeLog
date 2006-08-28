@@ -200,6 +200,8 @@ DCC
 * It is now possible to select multiple files in the DCC Status tab.
 * The default size of the buffer used in DCC transfers has been increased to
   8192kb for improved DCC performance.
+* The DCC Status tab will no longer show a speed of '?' for completed, failed or
+  aborted transfers.
 * Bugs that could lead to the IP used for DCC transfers not being retrieved from
   the server correctly upon reconnect or in general on certain servers have been
   fixed.
