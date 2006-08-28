@@ -37,7 +37,8 @@
 #define TIME_REMAINING_NOT_AVAILABLE -1
 #define TIME_REMAINING_INFINITE      -2
 
-#define CPS_UNKNOWN -1
+#define CPS_CALCULATING -1
+#define CPS_NOT_IN_TRANSFER -2
 
 DccTransfer::DccTransfer( DccPanel* panel, DccType dccType, const QString& partnerNick )
 : KListViewItem( panel->getListView() )
@@ -369,7 +370,7 @@ void DccTransfer::updateTransferMeters()
         if ( m_transferLogTime.count() >= 2 )
             m_cps = (double)( m_transferLogPosition.last() - m_transferLogPosition.front() ) / (double)( m_transferLogTime.last() - m_transferLogTime.front() ) * 1000;
         else // avoid zero devision
-            m_cps = CPS_UNKNOWN;
+            m_cps = CPS_CALCULATING;
 
         // update the remaining time
         if ( m_cps <= 0 )
@@ -381,7 +382,7 @@ void DccTransfer::updateTransferMeters()
     {
         // avoid zero devision
         if ( m_timeTransferStarted.secsTo( m_timeTransferFinished ) <= 0 )
-            m_cps = CPS_UNKNOWN;
+            m_cps = CPS_NOT_IN_TRANSFER;
         else
             m_cps = (double)( m_transferringPosition - m_transferStartPosition ) / (double)m_timeTransferStarted.secsTo( m_timeTransferFinished );
         m_timeRemaining = TIME_REMAINING_NOT_AVAILABLE;
@@ -476,7 +477,9 @@ QString DccTransfer::getTimeRemainingPrettyText() const
 
 QString DccTransfer::getCPSPrettyText() const
 {
-    if ( m_cps == CPS_UNKNOWN )
+    if ( m_cps == CPS_CALCULATING )
+        return QString( "?" );
+    else if ( m_cps == CPS_NOT_IN_TRANSFER )
         return QString();
     else
         return i18n("%1/sec").arg( KIO::convertSize( (KIO::fileoffset_t)m_cps ) );
