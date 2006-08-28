@@ -54,7 +54,7 @@ User Interface
   text entered grows beyond the length of a single line has been added.
 * The behavior of the input box on pasting text including leading or trailing
   newline characters has been improved never to cause lines being sent without
-  user acknowlegement.
+  user acknowledgement.
 * The input box of connection status, channel and query tabs will now be disabled
   and the nickname list of channel tabs cleared when the respective server
   connection is closed.
@@ -69,7 +69,7 @@ User Interface
 * The recognition of URLs in the chat window has been improved to cope better
   with URLs containing or being surrounded by parenthesis and to exclude trailing
   dots and commas.
-* Channel links following mode characters or surrounded by interpunctation are
+* Channel links following mode characters or surrounded by interpunctuation are
   now properly recognized in the chat window.
 * The context menus for URLs and channel links in the topic area now match the
   context menus in the chat window.
@@ -100,7 +100,7 @@ User Interface
   cannot succeed.
 * The preference to show or hide the real names of users in the nickname list will
   now be applied immediately.
-* The columns of the nickname list will no longer resize irratically when the
+* The columns of the nickname list will no longer resize erratically when the
   preferences to show or hide real names and hostmasks are changed at runtime.
 * A bug that could lead to nicknames being sent as messages when double-clicking
   a selection of multiple nicknames in the nickname list has been fixed.
@@ -112,7 +112,7 @@ User Interface
   are no open queries.
 * A bug that could lead to the "Close All Open Queries" menu action failing to
   properly close all open queries has been fixed.
-* A bug that could lead to an application crash when closing the tab after chosing
+* A bug that could lead to an application crash when closing the tab after choosing
   to ignore someone in a query has been fixed.
 * The "Hide Nicklist" menu action will now be disabled properly when the tab shown
   does not have a nickname list has been fixed.
@@ -127,7 +127,7 @@ User Interface
 * Several errors in the chat window status messages produced by the Watched Nicks
   Online system have been corrected.
 * A bug that could lead the the columns in the "Watched Nicks Online" list resizing
-  irratically has been fixed.
+  erratically has been fixed.
 * A bug that could lead to the status bar not being cleared properly when the last
   tab was closed or the application window lost focus after a link was
   launched from the chat window has been fixed.
@@ -232,7 +232,7 @@ Technology
   reliability and performance.
 * Recognition of the half-op user status has been improved.
 * The detection of text being typed into the input box to prevent focussing new
-  tabs at incovenient times has been improved to work correctly with non-ASCII
+  tabs at inconvenient times has been improved to work correctly with non-ASCII
   characters.
 * The handling of channel user limits in the Channel Settings dialog is now more
   reliable.
@@ -243,7 +243,7 @@ Technology
 * A bug that could lead to iterating over a configured network's servers failing
   after a connection failure has been fixed.
 * A bug that could lead to Konversation connecting to the wrong server in a
-  network when chosing to connect to a specific server from the Server List dialog
+  network when choosing to connect to a specific server from the Server List dialog
   has been fixed.
 * A dialog will now ask the user for an additional nickname when all nicknames
   configured in the identity where tried unsuccessfully during a connection
