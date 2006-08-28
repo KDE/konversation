@@ -34,8 +34,6 @@
  *  email:     sho@eikehein.com
  */
 
-#include <qsplitter.h>
-
 #include "konvisettingsdialog.h"
 #include "konviconfigdialog.h"
 #include "config/preferences.h"
@@ -43,7 +41,6 @@
 #include <klocale.h>
 #include <kdebug.h>
 #include <kiconloader.h>
-#include <klistview.h>
 
 #include "chatwindowappearance_preferences.h"
 #include "connectionbehavior_preferences.h"
@@ -234,29 +231,6 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   connect(m_confWarningsWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
 
   unfoldTreeList();
-
-  KListView* listView = ((KListView*)child(0, "KListView", true));
-  QSplitter* splitter = ((QSplitter*)child(0, "QSplitter", true));
-
-  if (splitter && listView)
-  {
-    int content = listView->columnWidth(0);
-    int visible = listView->visibleWidth();
-
-    if (visible < content)
-    {
-      int shiftBy = content - visible;
-      QValueList<int> sizes = splitter->sizes();
-      QValueList<int> newSizes;
-      newSizes << sizes[0] + shiftBy << sizes[1] - shiftBy;
-
-      if (width() + shiftBy < 800)
-      {
-         resize(width() + shiftBy, height());
-         splitter->setSizes(newSizes);
-      }
-    }
-  }
 }
 
 void KonviSettingsDialog::modifiedSlot()
