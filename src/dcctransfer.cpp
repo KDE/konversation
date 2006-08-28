@@ -477,7 +477,7 @@ QString DccTransfer::getTimeRemainingPrettyText() const
 QString DccTransfer::getCPSPrettyText() const
 {
     if ( m_cps == CPS_UNKNOWN )
-        return QString( "?" );
+        return QString();
     else
         return i18n("%1/sec").arg( KIO::convertSize( (KIO::fileoffset_t)m_cps ) );
 }
