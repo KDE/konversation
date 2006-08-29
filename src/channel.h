@@ -284,8 +284,7 @@ class Channel : public ChatWindow
 
     protected:
         void showEvent(QShowEvent* event);
-        void hideEvent(QHideEvent* event);
-        void initializeSplitters();
+        void syncSplitters();
         /// Called from ChatWindow adjustFocus
         virtual void childAdjustFocus();
         /// Close the channel then come back in
@@ -300,7 +299,7 @@ class Channel : public ChatWindow
         bool modeButtonsState;
         bool awayChanged;
         bool awayState;
-        bool splitterChanged;
+        bool splittersInitialized;
         bool topicSplitterHidden;
         bool channelSplitterHidden;
 

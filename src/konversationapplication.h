@@ -125,9 +125,6 @@ class KonversationApplication : public KUniqueApplication
             const bool& useSSL=false
             );
 
-        QValueList<int> topicSplitterSizes() const;
-        QValueList<int> nickListSplitterSizes() const;
-
     signals:
         void catchUrl(const QString& who,const QString& url);
         void prefsChanged();
@@ -153,9 +150,6 @@ class KonversationApplication : public KUniqueApplication
         bool emitDCOPSig(const QString& appId, const QString& objId, const QString& signal, QByteArray& data);
 
         void dcopConnectToServer(const QString& url, int port, const QString& channel, const QString& password);
-
-        void setTopicSplitterSizes(const QValueList<int>& sizes);
-        void setNickListSplitterSizes(const QValueList<int>& sizes);
 
     protected slots:
         void openQuickConnectDialog();
@@ -189,9 +183,6 @@ class KonversationApplication : public KUniqueApplication
         QString m_password;
         bool m_useSSL;
         bool m_connectDelayed;
-
-        QValueList<int> m_topicSplitterSizes;
-        QValueList<int> m_nickListSplitterSizes;
 };
 
 #endif

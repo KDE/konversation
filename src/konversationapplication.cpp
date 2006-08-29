@@ -48,15 +48,10 @@ KonversationApplication::KonversationApplication()
     mainWindow = 0;
     quickConnectDialog = 0;
     m_connectDelayed=false;
-
-    m_topicSplitterSizes = Preferences::topicSplitterSizes();
-    m_nickListSplitterSizes = Preferences::channelSplitterSizes();
 }
 
 KonversationApplication::~KonversationApplication()
 {
-    Preferences::setTopicSplitterSizes(m_topicSplitterSizes);
-    Preferences::setChannelSplitterSizes(m_nickListSplitterSizes);
     Preferences::writeConfig();
     saveOptions(false);
 
@@ -1157,26 +1152,6 @@ QString KonversationApplication::doAutoreplace(const QString& text,bool output)
     }
 
   return line;
-}
-
-QValueList<int> KonversationApplication::topicSplitterSizes() const
-{
-    return m_topicSplitterSizes;
-}
-
-QValueList<int> KonversationApplication::nickListSplitterSizes() const
-{
-    return m_nickListSplitterSizes;
-}
-
-void KonversationApplication::setTopicSplitterSizes(const QValueList<int>& sizes)
-{
-    m_topicSplitterSizes = sizes;
-}
-
-void KonversationApplication::setNickListSplitterSizes(const QValueList<int>& sizes)
-{
-    m_nickListSplitterSizes = sizes;
 }
 
 #include "konversationapplication.moc"

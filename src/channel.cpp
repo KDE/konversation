@@ -91,7 +91,7 @@ Channel::Channel(QWidget* parent)
     awayChanged = false;
     awayState = false;
 
-    splitterChanged = false;
+    splittersInitialized = false;
     topicSplitterHidden = false;
     channelSplitterHidden = false;
 
@@ -2012,39 +2012,31 @@ void Channel::showEvent(QShowEvent*)
         indicateAway(awayState);
     }
 
-    if (!splitterChanged)
-        initializeSplitters();
+    syncSplitters();
 }
 
-void Channel::hideEvent(QHideEvent*)
+void Channel::syncSplitters()
 {
-    splitterChanged = false;
-}
-
-void Channel::initializeSplitters()
-{
-    KonversationApplication* konviApp = static_cast<KonversationApplication*>(kapp);
-
-    QValueList<int> vertSizes = konviApp->topicSplitterSizes();
-    QValueList<int> horizSizes = konviApp->nickListSplitterSizes();
+    QValueList<int> vertSizes = Preferences::topicSplitterSizes();
+    QValueList<int> horizSizes = Preferences::channelSplitterSizes();
 
     if (vertSizes.isEmpty())
     {
         vertSizes << m_topicButton->height() << (height() - m_topicButton->height());
-        konviApp->setTopicSplitterSizes(vertSizes);
+        Preferences::setTopicSplitterSizes(vertSizes);
     }
 
     if (horizSizes.isEmpty())
     {
         int listWidth = nicknameListView->columnWidth(0) + nicknameListView->columnWidth(1);
         horizSizes << (width() - listWidth) << listWidth;
-        konviApp->setNickListSplitterSizes(horizSizes);
+        Preferences::setChannelSplitterSizes(horizSizes);
     }
 
     m_vertSplitter->setSizes(vertSizes);
     m_horizSplitter->setSizes(horizSizes);
 
-    splitterChanged = true;
+    splittersInitialized = true;
 }
 
 void Channel::updateAppearance()
@@ -2360,7 +2352,7 @@ void Channel::serverOnline(bool online)
     else
     {
         purgeNicks();
-        channelInput->setEnabled(false);
+        //channelInput->setEnabled(false);
         getTextView()->setNickAndChannelContextMenusEnabled(false);
         nicknameCombobox->setEnabled(false);
     }
@@ -2534,26 +2526,24 @@ void Channel::setIdentity(const Identity *newIdentity)
 
 bool Channel::eventFilter(QObject* watched, QEvent* e)
 {
-  if((watched == nicknameListView) && (e->type() == QEvent::Resize) && splitterChanged && isShown())
-  {
-      KonversationApplication* konviApp = static_cast<KonversationApplication*>(kapp);
-
+    if((watched == nicknameListView) && (e->type() == QEvent::Resize) && splittersInitialized && isShown())
+    {
         if (!topicSplitterHidden && !channelSplitterHidden)
         {
-            konviApp->setNickListSplitterSizes(m_horizSplitter->sizes());
-            konviApp->setTopicSplitterSizes(m_vertSplitter->sizes());
+            Preferences::setChannelSplitterSizes(m_horizSplitter->sizes());
+            Preferences::setTopicSplitterSizes(m_vertSplitter->sizes());
         }
         if (!topicSplitterHidden && channelSplitterHidden)
         {
-            konviApp->setTopicSplitterSizes(m_vertSplitter->sizes());
+            Preferences::setTopicSplitterSizes(m_vertSplitter->sizes());
         }
         if (!channelSplitterHidden && topicSplitterHidden)
         {
-            konviApp->setNickListSplitterSizes(m_horizSplitter->sizes());
+            Preferences::setChannelSplitterSizes(m_horizSplitter->sizes());
         }
-  }
+    }
 
-  return ChatWindow::eventFilter(watched, e);
+    return ChatWindow::eventFilter(watched, e);
 }
 
 void Channel::addBan(const QString& ban)
