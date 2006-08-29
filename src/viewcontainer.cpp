@@ -739,6 +739,7 @@ void ViewContainer::updateViews()
 
                 if (!label.isEmpty() && m_tabWidget->tabLabel(view) != label)
                 {
+                    m_tabWidget->setTabLabel(view, label);
                     m_viewTree->setViewName(view, label);
 
                     if (view==m_frontView)
@@ -768,10 +769,7 @@ void ViewContainer::updateViews()
 
                 if (!label.isEmpty() && m_tabWidget->tabLabel(view) != label)
                 {
-                    if (m_viewTree)
-                        m_viewTree->setViewName(view, label);
-                    else
-                        m_tabWidget->setTabLabel(view, label);
+                    m_tabWidget->setTabLabel(view, label);
 
                     if (view==m_frontView)
                     {
