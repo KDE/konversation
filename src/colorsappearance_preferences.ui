@@ -13,7 +13,7 @@ the Free Software Foundation; either version 2 of the License, or
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>426</width>
+            <width>457</width>
             <height>512</height>
         </rect>
     </property>
@@ -724,40 +724,6 @@ the Free Software Foundation; either version 2 of the License, or
                         <string>6:</string>
                     </property>
                 </widget>
-                <spacer row="1" column="11">
-                    <property name="name">
-                        <cstring>spacer197_4</cstring>
-                    </property>
-                    <property name="orientation">
-                        <enum>Horizontal</enum>
-                    </property>
-                    <property name="sizeType">
-                        <enum>Maximum</enum>
-                    </property>
-                    <property name="sizeHint">
-                        <size>
-                            <width>40</width>
-                            <height>20</height>
-                        </size>
-                    </property>
-                </spacer>
-                <spacer row="0" column="11">
-                    <property name="name">
-                        <cstring>spacer196_4</cstring>
-                    </property>
-                    <property name="orientation">
-                        <enum>Horizontal</enum>
-                    </property>
-                    <property name="sizeType">
-                        <enum>Maximum</enum>
-                    </property>
-                    <property name="sizeHint">
-                        <size>
-                            <width>40</width>
-                            <height>20</height>
-                        </size>
-                    </property>
-                </spacer>
                 <widget class="QLayoutWidget" row="2" column="0" rowspan="1" colspan="12">
                     <property name="name">
                         <cstring>layout18</cstring>
@@ -1318,74 +1284,6 @@ the Free Software Foundation; either version 2 of the License, or
                         <string>13:</string>
                     </property>
                 </widget>
-                <spacer row="1" column="11">
-                    <property name="name">
-                        <cstring>spacer211_2_4</cstring>
-                    </property>
-                    <property name="orientation">
-                        <enum>Horizontal</enum>
-                    </property>
-                    <property name="sizeType">
-                        <enum>Maximum</enum>
-                    </property>
-                    <property name="sizeHint">
-                        <size>
-                            <width>50</width>
-                            <height>20</height>
-                        </size>
-                    </property>
-                </spacer>
-                <spacer row="0" column="11">
-                    <property name="name">
-                        <cstring>spacer211_7</cstring>
-                    </property>
-                    <property name="orientation">
-                        <enum>Horizontal</enum>
-                    </property>
-                    <property name="sizeType">
-                        <enum>Maximum</enum>
-                    </property>
-                    <property name="sizeHint">
-                        <size>
-                            <width>50</width>
-                            <height>20</height>
-                        </size>
-                    </property>
-                </spacer>
-                <spacer row="2" column="11">
-                    <property name="name">
-                        <cstring>spacer211_3_4</cstring>
-                    </property>
-                    <property name="orientation">
-                        <enum>Horizontal</enum>
-                    </property>
-                    <property name="sizeType">
-                        <enum>Maximum</enum>
-                    </property>
-                    <property name="sizeHint">
-                        <size>
-                            <width>50</width>
-                            <height>20</height>
-                        </size>
-                    </property>
-                </spacer>
-                <spacer row="3" column="11">
-                    <property name="name">
-                        <cstring>spacer211_4_4</cstring>
-                    </property>
-                    <property name="orientation">
-                        <enum>Horizontal</enum>
-                    </property>
-                    <property name="sizeType">
-                        <enum>Maximum</enum>
-                    </property>
-                    <property name="sizeHint">
-                        <size>
-                            <width>50</width>
-                            <height>20</height>
-                        </size>
-                    </property>
-                </spacer>
             </grid>
         </widget>
         <spacer row="3" column="0">

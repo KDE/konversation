@@ -34,6 +34,8 @@
  *  email:     sho@eikehein.com
  */
 
+#include <qsplitter.h>
+
 #include "konvisettingsdialog.h"
 #include "konviconfigdialog.h"
 #include "config/preferences.h"
@@ -41,6 +43,7 @@
 #include <klocale.h>
 #include <kdebug.h>
 #include <kiconloader.h>
+#include <klistview.h>
 
 #include "chatwindowappearance_preferences.h"
 #include "connectionbehavior_preferences.h"
@@ -67,6 +70,8 @@
 KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
 	           KonviConfigDialog( parent, "settings", Preferences::self(), KDialogBase::TreeList)
 {
+  shiftSplitterBy = -1;
+
   m_modified = false;
   setShowIconsInTreeList(true);
 
@@ -231,6 +236,39 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   connect(m_confWarningsWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
 
   unfoldTreeList();
+
+  KListView* listView = ((KListView*)child(0, "KListView", true));
+
+  if (listView)
+  {
+    int visible = listView->visibleWidth();
+    int content = listView->contentsWidth();
+
+    if (visible < content)
+    {
+      shiftSplitterBy = content - visible;
+      resize(width()+shiftSplitterBy, height());
+    }
+  }
+}
+
+void KonviSettingsDialog::showEvent(QShowEvent* e)
+{
+  KonviConfigDialog::showEvent(e);
+
+  QSplitter* splitter = ((QSplitter*)child(0, "QSplitter", true));
+  KListView* listView = ((KListView*)child(0, "KListView", true));
+
+  if (splitter && listView && shiftSplitterBy != -1)
+  {
+    int visible = listView->visibleWidth();
+    int content = listView->contentsWidth();
+    shiftSplitterBy = content - visible;
+    QValueList<int> oldSizes = splitter->sizes();
+    QValueList<int> newSizes;
+    newSizes << oldSizes[0] + shiftSplitterBy << oldSizes[1] - shiftSplitterBy;
+    splitter->setSizes(newSizes);
+  }
 }
 
 void KonviSettingsDialog::modifiedSlot()

@@ -103,10 +103,13 @@ class KDEUI_EXPORT KonviSettingsDialog : public KonviConfigDialog
     protected:
         virtual bool hasChanged();
         virtual bool isDefault();
+        virtual void showEvent(QShowEvent* e);
 
         // remember page index
         unsigned int m_watchedNicknamesIndex;
         QIntDict<KonviSettingsPage> m_indexToPageMapping;
+
+        int shiftSplitterBy;
 };
 
 #endif //KONVISETTINGSDIALOG_H
