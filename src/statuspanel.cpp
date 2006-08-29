@@ -332,7 +332,7 @@ QString StatusPanel::getChannelEncodingDefaultDesc()
 //Used to disable functions when not connected
 void StatusPanel::serverOnline(bool online)
 {
-    statusInput->setEnabled(online);
+    //statusInput->setEnabled(online);
     getTextView()->setNickAndChannelContextMenusEnabled(online);
     nicknameCombobox->setEnabled(online);
 }

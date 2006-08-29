@@ -553,7 +553,7 @@ void Query::filesDropped(const QStrList& files)
 
 void Query::serverOnline(bool online)
 {
-    queryInput->setEnabled(online);
+    //queryInput->setEnabled(online);
     getTextView()->setNickAndChannelContextMenusEnabled(online);
 
     QPopupMenu* popup = getTextView()->getPopup();

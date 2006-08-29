@@ -2353,7 +2353,7 @@ void Channel::serverOnline(bool online)
 {
     if (online)
     {
-        channelInput->setEnabled(true);
+        //channelInput->setEnabled(true);
         getTextView()->setNickAndChannelContextMenusEnabled(true);
         nicknameCombobox->setEnabled(true);
     }
