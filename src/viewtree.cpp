@@ -34,6 +34,7 @@ ViewTree::ViewTree(QWidget *parent)
     : KListView(parent)
 {
     header()->hide();
+    setHScrollBarMode(QScrollView::AlwaysOff);
 
     addColumn(i18n("Tabs"));
     setSortColumn(0);

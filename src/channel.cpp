@@ -192,6 +192,7 @@ Channel::Channel(QWidget* parent)
     nickListButtons->setSpacing(spacing());
 
     nicknameListView=new NickListView(nickListButtons, this);
+    nicknameListView->setHScrollBarMode(QScrollView::AlwaysOff);
     nicknameListView->setSelectionModeExt(KListView::Extended);
     nicknameListView->setAllColumnsShowFocus(true);
     nicknameListView->setSorting(1,true);
@@ -2245,8 +2246,7 @@ void Channel::setAutoUserhost(bool state)
     if(state)
     {
         // we can't have automatic resizing with three columns; the hostname column is too wide
-        nicknameListView->setResizeMode(QListView::NoColumn);
-        nicknameListView->setColumnWidthMode(1,KListView::Maximum);
+        nicknameListView->setHScrollBarMode(QScrollView::Auto);
 
         // restart userhost timer
         userhostTimer.start(10000);
@@ -2256,6 +2256,7 @@ void Channel::setAutoUserhost(bool state)
             // re-add the hostmask column
             nicknameListView->addColumn(QString::null);
             nicknameListView->setColumnWidthMode(2,KListView::Maximum);
+            nicknameListView->setResizeMode(QListView::NoColumn);
 
             // re-add already known hostmasks
             QListViewItem* item=nicknameListView->itemAtIndex(0);
@@ -2271,7 +2272,7 @@ void Channel::setAutoUserhost(bool state)
     {
         userhostTimer.stop();
         if(nicknameListView->columns()==3) nicknameListView->removeColumn(2);
-
+        nicknameListView->setHScrollBarMode(QScrollView::AlwaysOff);
         // make the nick column resize itself automatically to prevent horizontal scrollbar
         nicknameListView->setResizeMode(QListView::LastColumn);
     }
