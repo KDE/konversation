@@ -108,8 +108,6 @@ class KDEUI_EXPORT KonviSettingsDialog : public KonviConfigDialog
         // remember page index
         unsigned int m_watchedNicknamesIndex;
         QIntDict<KonviSettingsPage> m_indexToPageMapping;
-
-        int shiftSplitterBy;
 };
 
 #endif //KONVISETTINGSDIALOG_H
