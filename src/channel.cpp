@@ -482,8 +482,7 @@ void Channel::popupCommand(int id)
             raw=true;
             break;
         case Konversation::Version:
-            pattern="PRIVMSG %u :\x01VERSION\x01";
-            raw=true;
+            pattern=cc+"CTCP %u VERSION";
             break;
         case Konversation::Whois:
             pattern="WHOIS %u %u";
@@ -501,7 +500,7 @@ void Channel::popupCommand(int id)
         case Konversation::Ping:
         {
             unsigned int time_t = QDateTime::currentDateTime().toTime_t();
-            pattern=QString(Preferences::commandChar()+"CTCP %u PING %1").arg(time_t);
+            pattern=QString(cc+"CTCP %u PING %1").arg(time_t);
         }
         break;
         case Konversation::Kick:
