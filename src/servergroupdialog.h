@@ -76,7 +76,7 @@ namespace Konversation
             QToolButton* m_upChannelBtn;
             QToolButton* m_downChannelBtn;
             bool m_expanded;
-
+            bool m_enableNotifications;
             int m_id;
             int m_sortIndex;
 

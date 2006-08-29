@@ -175,6 +175,7 @@ namespace Konversation
         m_id = settings->id();
         m_sortIndex = settings->sortIndex();
         m_expanded = settings->expanded();
+        m_enableNotifications = settings->enableNotifications();
         m_nameEdit->setText(settings->name());
         m_identityCBox->setCurrentText(settings->identity()->getName());
         m_commandEdit->setText(settings->connectCommands());
@@ -210,6 +211,7 @@ namespace Konversation
         settings->setServerList(m_serverList);
         settings->setChannelList(m_channelList);
         settings->setChannelHistory(m_channelHistory);
+        settings->setNotificationsEnabled(m_enableNotifications);
         settings->setExpanded(m_expanded);
 
         return settings;
