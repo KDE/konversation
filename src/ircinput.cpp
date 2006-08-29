@@ -483,7 +483,7 @@ bool IRCInput::checkPaste(QString& text)
         if (ret.isEmpty())
             return false;
         text=ret;
-        return false;
+        return true;
     }
 
     return (doPaste==KMessageBox::Yes);
