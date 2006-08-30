@@ -206,7 +206,7 @@ bool IRCInput::eventFilter(QObject *object,QEvent *event)
             if (ke->key() == Key_Tab && (ke->state() == 0 || ke->state() == Qt::ShiftButton))
                 return false;
 
-            if (!ke->text().isEmpty() && (ke->state() == Qt::ShiftButton || ke->state() == 0))
+            if (!ke->text().isEmpty() && ((ke->state() & (Qt::ShiftButton|Qt::Keypad)) || ke->state() == 0))
             {
                 setFocus();
                 KonversationApplication::sendEvent(this,event);
