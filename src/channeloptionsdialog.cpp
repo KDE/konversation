@@ -120,7 +120,12 @@ namespace Konversation
             }
             else if(!tmp.isEmpty() && !plus)
             {
-                m_channel->getServer()->queue(command.arg(m_channel->getName()).arg("-").arg(modeString[0]).arg(""));
+                //FIXME: Bahamuth requires the key parameter for -k, but ircd breaks on -l with limit number.
+                //Hence two versions of this.
+                if (modeString[0] == 'k')
+                    m_channel->getServer()->queue(command.arg(m_channel->getName()).arg("-").arg(modeString[0]).arg(modeString.mid(1)));
+                else
+                    m_channel->getServer()->queue(command.arg(m_channel->getName()).arg("-").arg(modeString[0]).arg(""));
             }
         }
         hide();
