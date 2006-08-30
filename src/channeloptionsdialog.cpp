@@ -335,9 +335,19 @@ namespace Konversation
         mode = (m_widget->secretModeChBox->isChecked() ? "+" : "-");
         mode += 's';
         modes.append(mode);
-        mode = (m_widget->keyModeChBox->isChecked() ? "+" : "-");
-        mode += 'k' + m_widget->keyModeEdit->text();
-        modes.append(mode);
+
+        if (m_widget->keyModeChBox->isChecked() && !m_widget->keyModeEdit->text().isEmpty())
+        {
+            mode = '+';
+            mode += 'k' + m_widget->keyModeEdit->text();
+            modes.append(mode);
+        }
+        else if (!m_widget->keyModeChBox->isChecked())
+        {
+            mode = '-';
+            mode += 'k' + m_widget->keyModeEdit->text();
+            modes.append(mode);
+        }
 
         QListViewItem* item = m_widget->otherModesList->firstChild();
 
