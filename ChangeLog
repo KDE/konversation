@@ -35,6 +35,8 @@ User Interface
   adding and removing bans in a channel. The dialog can now be opened from the
   menu bar and chat window context menu in addition to the button in the topic
   area.
+* Mode and topic handling in the Channel Settings dialog and the channel mode
+  buttons have been overhauled to make them more robust and reliable.
 * The number of Quick Buttons to show below the nickname list in channel tabs is
   now configurable. Additional buttons may be added or existing buttons removed.
 * Konversation now supports auto-replacing words in incoming and outgoing

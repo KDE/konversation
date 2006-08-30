@@ -992,7 +992,10 @@ void Channel::modeButtonClicked(int id,bool on)
 
     if(mode[id]=='k')
     {
-        if(getKey().isEmpty())
+        //FIXME: Apparently we initialize the key as a space so so the
+        // channel join code has something to work with when producing
+        // things like "JOIN #chan1,#chan2,#chan§ key1, ,key3".
+        if(getKey().isEmpty() || getKey() == " ")
         {
             QCString key;
 
