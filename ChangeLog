@@ -78,6 +78,8 @@ User Interface
 * The nickname context menus in the chat window, topic are and the nickname list
   will now show "Ignore", "Unignore" and "Add to Watched Nicknames" entries as
   applicable.
+* A bug that could lead to the chat window nickname context menu actions ceasing
+  to function after the targeted user left the channel has been fixed.
 * The Server List dialog now allows connecting to a specific server in a network
   even when a connection to that network has been previously established. If that
   connection is active, a dialog box will verify whether to disconnect from the
