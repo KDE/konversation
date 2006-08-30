@@ -185,6 +185,8 @@ Commands
 * If given no parameter, the "/away" command will now set the away state with
   the default away message. The "/back" and "/unaway" commands can be used to
   unset the away state.
+* You may now use "%nick" as a placeholder for your own nickname in the auto-
+  connect commands for a network.
 * A bug that could lead to the auto-connect commands for a network not being
   executed correctly has been fixed.
 

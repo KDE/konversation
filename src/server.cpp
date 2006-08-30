@@ -961,13 +961,18 @@ void Server::autoCommandsAndChannels()
 {
     if (!m_serverGroup->connectCommands().isEmpty())
     {
-        QStringList connectCommands = QStringList::split(";", m_serverGroup->connectCommands());
+        QString connectCommands = m_serverGroup->connectCommands();
 
+        if (!getNickname().isEmpty())
+            connectCommands.replace("%nick", getNickname());
+
+        QStringList connectCommandsList = QStringList::split(";", connectCommands);
         QStringList::iterator iter;
 
-        for(iter = connectCommands.begin(); iter != connectCommands.end(); ++iter)
+        for(iter = connectCommandsList.begin(); iter != connectCommandsList.end(); ++iter)
         {
             QString output(*iter);
+            output = output.simplifyWhiteSpace();
             Konversation::OutputFilterResult result = outputFilter->parse(getNickname(),output,QString::null);
             queue(result.toServer);
         }
