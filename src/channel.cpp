@@ -396,7 +396,7 @@ void Channel::popupCommand(int id)
     QString args;
     QString question;
     bool raw=false;
-    ChannelNickList nickList = getSelectedChannelNicks();
+    QStringList nickList = getSelectedNickList();
 
     switch(id)
     {
@@ -549,7 +549,7 @@ void Channel::popupCommand(int id)
             break;
         case Konversation::IgnoreNick:
             if (nickList.size() == 1)
-                question=i18n("Do you want to ignore %1?").arg(nickList.first()->getNickname());
+                question=i18n("Do you want to ignore %1?").arg(nickList.first());
             else
                 question = i18n("Do you want to ignore the selected users?");
             if (KMessageBox::warningContinueCancel(this, question, i18n("Ignore"), i18n("Ignore"), "IgnoreNick") ==
@@ -560,10 +560,10 @@ void Channel::popupCommand(int id)
         {
             QStringList selectedIgnoredNicks;
 
-            for (ChannelNickList::ConstIterator it=nickList.begin(); it!=nickList.end(); ++it)
+            for (QStringList::Iterator it=nickList.begin(); it!=nickList.end(); ++it)
             {
-                if (Preferences::isIgnored((*it)->getNickname()))
-                    selectedIgnoredNicks.append((*it)->getNickname());
+                if (Preferences::isIgnored((*it)))
+                    selectedIgnoredNicks.append((*it));
             }
 
             if (selectedIgnoredNicks.count() == 1)
@@ -578,10 +578,10 @@ void Channel::popupCommand(int id)
             break;
         }
         case Konversation::AddNotify:
-            for (ChannelNickList::ConstIterator it=nickList.begin(); it!=nickList.end(); ++it)
+            for (QStringList::Iterator it=nickList.begin(); it!=nickList.end(); ++it)
             {
-                if (!Preferences::isNotify(m_server->serverGroupSettings()->id(), (*it)->getNickname()))
-                    Preferences::addNotify(m_server->serverGroupSettings()->id(), (*it)->getNickname());
+                if (!Preferences::isNotify(m_server->serverGroupSettings()->id(), (*it)))
+                    Preferences::addNotify(m_server->serverGroupSettings()->id(), (*it));
             }
             break;
     } // switch
@@ -596,8 +596,8 @@ void Channel::popupCommand(int id)
         {
             QStringList list;
 
-            for (ChannelNickList::ConstIterator it=nickList.begin(); it!=nickList.end(); ++it)
-                list.append((*it)->getNickname());
+            for (QStringList::Iterator it=nickList.begin(); it!=nickList.end(); ++it)
+                list.append((*it));
 
             command = pattern.replace("%l", list.join(" "));
 
@@ -610,12 +610,12 @@ void Channel::popupCommand(int id)
         {
             QStringList patternList = QStringList::split('\n',pattern);
 
-            for (ChannelNickList::ConstIterator it=nickList.begin(); it!=nickList.end(); ++it)
+            for (QStringList::Iterator it=nickList.begin(); it!=nickList.end(); ++it)
             {
                 for (unsigned int index = 0; index<patternList.count(); index++)
                 {
                     command = patternList[index];
-                    command.replace("%u", (*it)->getNickname());
+                    command.replace("%u", (*it));
 
                     if (raw)
                         m_server->queue(command);
@@ -934,16 +934,21 @@ void Channel::setNickname(const QString& newNickname)
 QStringList Channel::getSelectedNickList()
 {
     QStringList result;
-    Nick* nick=nicknameList.first();
 
-    while(nick)
+    if (channelCommand)
+        result.append(textView->getContextNick());
+    else
     {
-        if(nick->isSelected()) result.append(nick->getNickname());
-        nick=nicknameList.next();
+        Nick* nick=nicknameList.first();
+
+        while(nick)
+        {
+            if(nick->isSelected()) result.append(nick->getNickname());
+            nick=nicknameList.next();
+        }
     }
 
     return result;
-
 }
 
 ChannelNickList Channel::getSelectedChannelNicks()
