@@ -284,7 +284,7 @@ namespace Konversation
             else if(command == "kick")     result = parseKick(parameter);
             else if(command == "topic")    result = parseTopic(parameter);
             else if(command == "away")     result = parseAway(parameter);
-            else if(command == "unaway")     result = parseBack();
+            else if(command == "unaway")   result = parseBack();
             else if(command == "back")     result = parseBack();
             else if(command == "invite")   result = parseInvite(parameter);
             else if(command == "exec")     result = parseExec(parameter);

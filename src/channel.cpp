@@ -929,6 +929,7 @@ void Channel::sendChannelText(const QString& sendLine)
 
 void Channel::setNickname(const QString& newNickname)
 {
+    kdDebug() << "foo " << newNickname << endl;
     nicknameCombobox->setCurrentText(newNickname);
 }
 

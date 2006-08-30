@@ -2075,6 +2075,7 @@ void Server::joinChannel(const QString& name, const QString& hostmask)
 
         connect(channel,SIGNAL (sendFile()),this,SLOT (requestDccSend()) );
         connect(this,SIGNAL (serverOnline(bool)),channel,SLOT (serverOnline(bool)) );
+        connect(this, SIGNAL(nicknameChanged(const QString&)), channel, SLOT(setNickname(const QString&)));
     }
     // Move channel from unjoined (if present) to joined list and add our own nickname to the joined list.
     ChannelNickPtr channelNick = addNickToJoinedChannelsList(name, getNickname());
@@ -2812,7 +2813,7 @@ void Server::setNickname(const QString &newNickname)
 {
     nickname = newNickname;
     m_loweredNickname = newNickname.lower();
-    statusView->setNickname(newNickname);
+    emit nicknameChanged(newNickname);
 }
 
 void Server::setChannelTopic(const QString &channel, const QString &newTopic)
