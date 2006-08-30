@@ -109,6 +109,9 @@ void Highlight_Config::loadSettings()
     Highlight* currentHighlight=highlightList.at(i-1);
     new HighlightViewItem(highlightListView,currentHighlight);
   }
+
+  highlightListView->setSelected(highlightListView->firstChild(), true);
+
   // remember current list for hasChanged()
   m_oldHighlightList=currentHighlightList();
 }
