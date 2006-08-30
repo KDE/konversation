@@ -303,7 +303,7 @@ namespace Konversation
             else if(command == "dcc")      result = parseDcc(parameter);
             else if(command == "konsole")  parseKonsole();
             else if(command == "aaway")    parseAaway(parameter);
-            else if(command == "aback")    parseAaway(QString::null);
+            else if(command == "aback")    emit multiServerCommand("back", QString::null);
             else if(command == "ame")      result = parseAme(parameter);
             else if(command == "amsg")     result = parseAmsg(parameter);
             else if(command == "omsg")     result = parseOmsg(parameter);
