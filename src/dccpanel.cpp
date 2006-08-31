@@ -127,7 +127,8 @@ DccPanel::DccPanel(QWidget* parent)
     m_popup->insertSeparator();                   // -----
     m_popup->insertItem(icon("exec"),            i18n("&Open File"),                  Popup::Open);
     m_popup->insertItem(icon("edittrash"),       i18n("&Remove File"),                Popup::Remove);
-    m_popup->insertItem(icon("messagebox_info"), i18n("File &Information"),           Popup::Info);
+//FIXME: Disabled for 1.0 release, as it doesn't appear to work at all.
+//    m_popup->insertItem(icon("messagebox_info"), i18n("File &Information"),           Popup::Info);
     m_popup->insertSeparator();                   // -----
     m_popup->insertItem(icon("view_text"),       i18n("DCC Transfer &Details"),     Popup::Detail);
 
