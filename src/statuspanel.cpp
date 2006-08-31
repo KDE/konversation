@@ -262,12 +262,24 @@ void StatusPanel::setNotificationsEnabled(bool enable)
 
 bool StatusPanel::closeYourself()
 {
-    int result=KMessageBox::warningContinueCancel(
-        this,
-        i18n("Do you want to disconnect from '%1'?").arg(m_server->getServerName()),
-        i18n("Disconnect From Server"),
-        i18n("Disconnect"),
-        "QuitServerTab");
+    int result;
+
+    //FIXME: Show "Do you really want to close ..." warnings in
+    // disconnected state instead of closing directly. Can't do
+    // that due to string freeze at the moment.
+    if (!m_server->isConnected())
+    {
+        result = KMessageBox::Continue;
+    }
+    else
+    {
+        result = KMessageBox::warningContinueCancel(
+            this,
+            i18n("Do you want to disconnect from '%1'?").arg(m_server->getServerName()),
+            i18n("Disconnect From Server"),
+            i18n("Disconnect"),
+            "QuitServerTab");
+    }
 
     if(result==KMessageBox::Continue)
     {
