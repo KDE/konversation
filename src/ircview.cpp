@@ -623,7 +623,7 @@ QString IRCView::createNickLine(const QString& nick, bool encapsulateNick)
                 nickvalue += nick[index].unicode();
             }
 
-            nickColor = (nickvalue % 8);
+            nickColor = Preferences::nickColor((nickvalue % 8)).name();
         }
         else
             nickColor =  Preferences::nickColor(8).name();
