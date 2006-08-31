@@ -1338,6 +1338,7 @@ void ViewContainer::switchView(QWidget* newView)
         view->adjustFocus();
 
     updateViewActions(m_tabWidget->currentPageIndex());
+    updateSwitchViewAction();
 
     if (view)
     {
