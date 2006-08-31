@@ -1599,7 +1599,8 @@ void ViewContainer::showViewContextMenu(QWidget* tab, const QPoint& pos)
             ChatWindow::WindowType viewType = view->getType();
             notifyAction->setEnabled(viewType == ChatWindow::Channel || viewType == ChatWindow::Query ||
                                      viewType == ChatWindow::Status || viewType == ChatWindow::Konsole ||
-                                     viewType == ChatWindow::DccPanel || viewType == ChatWindow::RawLog);
+                                     viewType == ChatWindow::DccPanel || viewType == ChatWindow::RawLog ||
+                                     viewType == ChatWindow::DccChat);
             notifyAction->setChecked(view->notificationsEnabled());
         }
 
@@ -1640,7 +1641,8 @@ void ViewContainer::showViewContextMenu(QWidget* tab, const QPoint& pos)
                 ChatWindow::WindowType viewType = view->getType();
                 notifyAction->setEnabled(viewType == ChatWindow::Channel || viewType == ChatWindow::Query ||
                                          viewType == ChatWindow::Status || viewType == ChatWindow::Konsole ||
-                                         viewType == ChatWindow::DccPanel || ChatWindow::RawLog);
+                                         viewType == ChatWindow::DccPanel || ChatWindow::RawLog ||
+                                         viewType == ChatWindow::DccChat);
                 notifyAction->setChecked(view->notificationsEnabled());
             }
 
