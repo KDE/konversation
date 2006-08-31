@@ -1,3 +1,8 @@
+Changes since 1.0:
+- Properly update "Switch to" tab context sub-menu on tab switch.
+
+-------------------------------------------------------------------------------
+
 Changes from 0.19 to 1.0
 We are extremely pleased to announce the immediate availability of Konversation
 1.0, a significant milestone in the lifetime of the Konversation project. This
