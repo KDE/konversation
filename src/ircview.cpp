@@ -1452,6 +1452,31 @@ QChar::Direction IRCView::basicDirection(const QString &string)
 
     return QChar::DirL;
 #else
+
+/*
+this is an experimental patch which aims at testing a new algorythm for
+detecting the direction of the string:
+istead of checking the first strong character, this tests for the whole
+sentence and counts the appearence of LTR and RTL chars. this also
+counts for neutral chars and if the sentence has no real direction, the
+next stage will be to keep the direction of the last line.
+
+this brings up a bug in konversation, and lines wich start with a nick (for example)
+but are RTL, will look wierd.
+
+for example, user writes:
+    other_user, BLA BLA BLA BLA
+
+and that gets rendered like:
+                            BLA BLA BLA :<user> other_user
+the correct way should be
+                            BLA BLA BLA :other_user <user>
+
+the bug has nothing to do with this function, and is somewhere in append().
+ 
+this is on my TODO list. in case this code is not fixed by 1.0.1,
+please change the #if in to "1" to revert to the old working code. 
+*/
     unsigned int pos = 0;
     unsigned int rtl_chars = 0;
     unsigned int ltr_chars = 0;
