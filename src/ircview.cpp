@@ -658,7 +658,7 @@ void IRCView::append(const QString& nick,const QString& message)
 
     if(basicDirection(message) == QChar::DirR)
     {
-        line = RLO;
+        line = RLE;
         line += LRE;
         line += "<p><font color=\"" + channelColor + "\">" + nickLine + " %1" + PDF + " %3</font></p>\n";
     }
@@ -725,7 +725,7 @@ void IRCView::appendQuery(const QString& nick,const QString& message)
 
     if(basicDirection(message) == QChar::DirR)
     {
-        line = RLO;
+        line = RLE;
         line += LRE;
         line += "<p><font color=\"" + queryColor + "\">" + nickLine + " %1" + PDF + " %3</font></p>\n";
     }
@@ -759,7 +759,7 @@ void IRCView::appendAction(const QString& nick,const QString& message)
 
     if(basicDirection(message) == QChar::DirR)
     {
-        line = RLO;
+        line = RLE;
         line += LRE;
         line += "<p><font color=\"" + actionColor + "\">" + nickLine + " * %1" + PDF + " %3</font></p>\n";
     }
@@ -794,7 +794,7 @@ void IRCView::appendServerMessage(const QString& type, const QString& message, b
 
     if(basicDirection(message) == QChar::DirR)
     {
-        line = RLO;
+        line = RLE;
         line += LRE;
         line += "<p><font color=\"" + serverColor + "\"" + fixed + "><b>[</b>%2<b>]</b> %1" + PDF + " %3</font></p>\n";
     }
@@ -836,7 +836,7 @@ void IRCView::appendCommandMessage(const QString& type,const QString& message, b
 
     if(basicDirection(message) == QChar::DirR)
     {
-        line = RLO;
+        line = RLE;
         line += LRE;
         line += "<p><font color=\"" + commandColor + "\">%2 %1" + PDF + " %3</font></p>\n";
     }
@@ -1413,13 +1413,16 @@ QPopupMenu* IRCView::getPopup() const
     return m_popup;
 }
 
-QChar IRCView::LRM = (ushort)0x200e;
-QChar IRCView::RLM = (ushort)0x200f;
-QChar IRCView::LRE = (ushort)0x202a;
-QChar IRCView::RLE = (ushort)0x202b;
-QChar IRCView::RLO = (ushort)0x202e;
-QChar IRCView::LRO = (ushort)0x202d;
-QChar IRCView::PDF = (ushort)0x202c;
+// for more information about these RTFM
+//    http://www.unicode.org/reports/tr9/
+//    http://www.w3.org/TR/unicode-xml/
+QChar IRCView::LRM = (ushort)0x200e; // Right-to-Left Mark
+QChar IRCView::RLM = (ushort)0x200f; // Left-to-Right Mark
+QChar IRCView::LRE = (ushort)0x202a; // Left-to-Right Embedding
+QChar IRCView::RLE = (ushort)0x202b; // Right-to-Left Embedding
+QChar IRCView::RLO = (ushort)0x202e; // Right-to-Left Override
+QChar IRCView::LRO = (ushort)0x202d; // Left-to-Right Override
+QChar IRCView::PDF = (ushort)0x202c; // Previously Defined Format
 
 QChar::Direction IRCView::basicDirection(const QString &string)
 {
