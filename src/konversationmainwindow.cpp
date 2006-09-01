@@ -189,14 +189,26 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
     }
     else
     {
-        action = new KAction(i18n("Move Tab Left"), "1leftarrow", KShortcut("Alt+Shift+Left"),
-            m_viewContainer, SLOT(moveViewLeft()), actionCollection(), "move_tab_left");
+        KAction* action2;
+        if (QApplication::reverseLayout())
+        {
+                action2 = new KAction(i18n("Move Tab Right"), "1rightarrow", KShortcut("Alt+Shift+Right"),
+                                      m_viewContainer, SLOT(moveViewLeft()), actionCollection(), "move_tab_left");
+                action  = new KAction(i18n("Move Tab Left"), "1leftarrow", KShortcut("Alt+Shift+Left"),
+                                     m_viewContainer, SLOT(moveViewRight()), actionCollection(), "move_tab_right");
+        }
+        else
+        {
+                action  = new KAction(i18n("Move Tab Left"), "1leftarrow", KShortcut("Alt+Shift+Left"),
+                                      m_viewContainer, SLOT(moveViewLeft()), actionCollection(), "move_tab_left");
+                action2 = new KAction(i18n("Move Tab Right"), "1rightarrow", KShortcut("Alt+Shift+Right"),
+                                      m_viewContainer, SLOT(moveViewRight()), actionCollection(), "move_tab_right");
+        }
+        
         action->setEnabled(false);
         action->setToolTip("Move this tab");
-        action = new KAction(i18n("Move Tab Right"), "1rightarrow", KShortcut("Alt+Shift+Right"),
-            m_viewContainer, SLOT(moveViewRight()), actionCollection(), "move_tab_right");
-        action->setEnabled(false);
-        action->setToolTip("Move this tab");
+        action2->setEnabled(false);
+        action2->setToolTip("Move this tab");
     }
 
     action = new KToggleAction(i18n("Enable Notifications"), 0, 0, m_viewContainer, SLOT(toggleViewNotifications()), actionCollection(), "tab_notifications");
