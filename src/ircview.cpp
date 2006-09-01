@@ -1426,9 +1426,11 @@ QChar IRCView::PDF = (ushort)0x202c; // Previously Defined Format
 
 QChar::Direction IRCView::basicDirection(const QString &string)
 {
+#if 0    
     // find base direction
     unsigned int pos = 0;
-    while ((pos < string.length()) &&
+    unsigned int str_len = string.length();
+    while ((pos < str_len) &&
         (string.at(pos) != RLE) &&
         (string.at(pos) != LRE) &&
         (string.at(pos) != RLO) &&
@@ -1449,6 +1451,50 @@ QChar::Direction IRCView::basicDirection(const QString &string)
     }
 
     return QChar::DirL;
+#else
+    unsigned int pos = 0;
+    unsigned int rtl_chars = 0;
+    unsigned int ltr_chars = 0;
+    unsigned int other_chars = 0;
+    unsigned int str_len = string.length();
+    
+    for( pos=0; pos<str_len; pos ++ )
+    {
+        if (string[pos].isNumber() || string[pos].isSymbol() || 
+            string[pos].isSpace()  || string[pos].isPunct()  || string[pos].isMark() )
+        {
+            other_chars++;
+        }
+        else
+        {
+            switch( string[pos].direction() )
+            {
+                case QChar::DirL:
+                case QChar::DirLRO:
+                case QChar::DirLRE:
+                    ltr_chars++;
+                    break;
+                case QChar::DirR:
+                case QChar::DirAL:
+                case QChar::DirRLO:
+                case QChar::DirRLE:
+                    rtl_chars++;
+                    break;
+                default:
+                    break;
+            }
+        } 
+    }
+    
+    if (rtl_chars > ltr_chars)
+        return QChar::DirR;
+    else
+        if (other_chars == str_len)
+            // todo, remember last state
+            return QChar::DirL; 
+        else
+            return QChar::DirL;
+#endif
 }
 
 void IRCView::contentsDragMoveEvent(QDragMoveEvent *e)
