@@ -39,11 +39,11 @@ Autoreplace_Config::Autoreplace_Config(QWidget* parent, const char* name)
   directionCombo->insertItem(i18n("Incoming"),DIRECTION_INPUT);
   directionCombo->insertItem(i18n("Both"),DIRECTION_BOTH);
 
-  // populate listview
-  loadSettings();
-
   // make items react to drag & drop
   patternListView->setSorting(-1,false);
+
+  // populate listview
+  loadSettings();
 
   connect(patternListView,SIGNAL (selectionChanged(QListViewItem*)),this,SLOT (entrySelected(QListViewItem*)) );
   connect(patternListView,SIGNAL (clicked(QListViewItem*)),this,SLOT (entrySelected(QListViewItem*)) );
