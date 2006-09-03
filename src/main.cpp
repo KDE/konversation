@@ -76,7 +76,7 @@ int main(int argc, char* argv[])
     aboutData.addCredit("Benjamin Meyer",I18N_NOOP("A Handful of fixes and code cleanup"),"ben+konversation@meyerhome.net");
     aboutData.addCredit("Jakub Stachowski",I18N_NOOP("Drag&Drop improvements"),"qbast@go2.pl");
     aboutData.addCredit("Sebastian Sariego",I18N_NOOP("Artwork"),"segfault@kde.cl");
-    aboutData.addCredit("Olivier Bédard",I18N_NOOP("www.konversation.org hosting"));
+    aboutData.addCredit("Olivier Bédard",I18N_NOOP("http://konversation.kde.org hosting"));
     aboutData.addCredit("Renchi Raju",I18N_NOOP("Firefox style searchbar"));
     aboutData.addCredit("Michael Kreitzer",I18N_NOOP("Raw modes, Tab grouping per server, Ban list"),"mrgrim@gr1m.org");
     aboutData.addCredit("Frauke Oster",I18N_NOOP("System tray patch"),"frauke@frsv.de");
