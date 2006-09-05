@@ -468,7 +468,7 @@ void ViewTreeItem::paintCell(QPainter* painter, const QColorGroup& /* cg */, int
 
             thePainter.setPen(textColor);
             thePainter.setFont(listView()->font());
-            thePainter.drawText(xText, 0, textWidth, height(), Qt::AlignAuto | Qt::AlignVCenter | Qt::ShowPrefix, theText);
+            thePainter.drawText(xText, 0, textWidth, height(), Qt::AlignAuto | Qt::AlignVCenter, theText);
         }
     }
     else
