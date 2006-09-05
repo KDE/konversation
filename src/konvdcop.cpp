@@ -69,7 +69,7 @@ void KonvDCOP::setAway(const QString &awaymessage)
 
 void KonvDCOP::setBack()
 {
-    emit dcopMultiServerRaw("away");
+    emit dcopMultiServerRaw("back");
 }
 
 void KonvDCOP::sayToAll(const QString &message)
