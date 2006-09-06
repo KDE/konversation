@@ -262,7 +262,7 @@ void DccTransfer::openFileInfoDialog()
         KFileMetaInfo fileInfo(path,QString::null,KFileMetaInfo::Everything);
 
         // is there any info for this file?
-        if(fileInfo.isEmpty())
+        if(!fileInfo.isEmpty())
         {
             // get list of meta information groups
             QStringList groupList=fileInfo.groups();
