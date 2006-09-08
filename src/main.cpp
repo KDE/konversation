@@ -66,6 +66,8 @@ int main(int argc, char* argv[])
     aboutData.addAuthor("İsmail Dönmez",I18N_NOOP("Blowfish, SSL support, KNetwork port, Colored nicks, Nicklist themes"),"ismail@kde.org");
     aboutData.addAuthor("John Tapsell",I18N_NOOP("Refactoring, KAddressBook/Kontact integration"), "john@geola.co.uk");
 
+    aboutData.addCredit("Olivier Bédard",I18N_NOOP("Website hosting"));
+    aboutData.addCredit("Jędrzej Lisowski",I18N_NOOP("Website maintenance"),"yesoos@gmail.com");
     aboutData.addCredit("Christian Muehlhaeuser",I18N_NOOP("Multiple modes extension, Close widget placement, OSD functionality"),"chris@chris.de");
     aboutData.addCredit("Gary Cramblitt",I18N_NOOP("Documentation, Watched nicks online improvements, Custom web browser extension"),"garycramblitt@comcast.net");
     aboutData.addCredit("Matthias Gierlings",I18N_NOOP("Color configurator, Highlight dialog"),"gismore@users.sourceforge.net");
@@ -76,7 +78,6 @@ int main(int argc, char* argv[])
     aboutData.addCredit("Benjamin Meyer",I18N_NOOP("A Handful of fixes and code cleanup"),"ben+konversation@meyerhome.net");
     aboutData.addCredit("Jakub Stachowski",I18N_NOOP("Drag&Drop improvements"),"qbast@go2.pl");
     aboutData.addCredit("Sebastian Sariego",I18N_NOOP("Artwork"),"segfault@kde.cl");
-    aboutData.addCredit("Olivier Bédard",I18N_NOOP("http://konversation.kde.org hosting"));
     aboutData.addCredit("Renchi Raju",I18N_NOOP("Firefox style searchbar"));
     aboutData.addCredit("Michael Kreitzer",I18N_NOOP("Raw modes, Tab grouping per server, Ban list"),"mrgrim@gr1m.org");
     aboutData.addCredit("Frauke Oster",I18N_NOOP("System tray patch"),"frauke@frsv.de");

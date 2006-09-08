@@ -150,7 +150,6 @@
                     </property>
                     <property name="text">
                         <string>%c: Current channel
-%k: Channel password (not functional yet)
 %K: Server password
 %u: List of selected nicknames
 %s&lt;term&gt;%: term used to separate nicknames in %u
