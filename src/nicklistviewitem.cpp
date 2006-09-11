@@ -59,15 +59,15 @@ void NickListViewItem::refresh()
     Images* images = KonversationApplication::instance()->images();
     QPixmap icon;
 
-    if ( nick->isAdmin() )
-    {
-        flags += 128;
-        icon = images->getNickIcon( Images::Admin, away );
-    }
-    else if ( nick->isOwner() )
+    if ( nick->isOwner() )
     {
         flags += 64;
         icon = images->getNickIcon( Images::Owner, away );
+    }
+    else if ( nick->isAdmin() )
+    {
+        flags += 128;
+        icon = images->getNickIcon( Images::Admin, away );
     }
     else if ( nick->isOp() )
     {
