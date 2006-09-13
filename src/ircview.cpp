@@ -1426,7 +1426,7 @@ QChar IRCView::PDF = (ushort)0x202c; // Previously Defined Format
 
 QChar::Direction IRCView::basicDirection(const QString &string)
 {
-#if 0    
+#if 1
     // find base direction
     unsigned int pos = 0;
     unsigned int str_len = string.length();
