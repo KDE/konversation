@@ -2,6 +2,7 @@ Changes since 1.0:
 - Properly update "Switch to" tab context sub-menu on tab switch.
 - Fix dcop irc::setBack.
 - Don't treat & in tab names as accels in treelist items.
+- Fix ignoring nicknames with [ or ] in them.
 
 -------------------------------------------------------------------------------
 

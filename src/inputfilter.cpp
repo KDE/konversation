@@ -1785,22 +1785,18 @@ bool InputFilter::isAChannel(const QString &check)
 
 bool InputFilter::isIgnore(const QString &sender, Ignore::Type type)
 {
-    bool doIgnore=false;
+    bool doIgnore = false;
 
-    QPtrList<Ignore> list=Preferences::ignoreList();
+    QPtrList<Ignore> list = Preferences::ignoreList();
 
-    for(unsigned int index=0;index<list.count();index++)
+    for(unsigned int index =0; index<list.count(); index++)
     {
-        Ignore* item=list.at(index);
-        QRegExp ignoreItem(item->getName(),false,true);
-        if(ignoreItem.exactMatch(sender) && (item->getFlags() & type))
-        {
-            doIgnore=true;
-        }
-        if(ignoreItem.exactMatch(sender) && (item->getFlags() & Ignore::Exception))
-        {
+        Ignore* item = list.at(index);
+        QRegExp ignoreItem(QRegExp::escape(item->getName()).replace("\\*", "(.*)"),false);
+        if (ignoreItem.exactMatch(sender) && (item->getFlags() & type))
+            doIgnore = true;
+        if (ignoreItem.exactMatch(sender) && (item->getFlags() & Ignore::Exception))
             return false;
-        }
     }
 
     return doIgnore;
