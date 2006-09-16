@@ -346,7 +346,9 @@ void NickInfo::tooltipTableData(QTextStream &tooltip) const
     }
     else if(!getRealName().isEmpty() && getRealName().lower() != loweredNickname())
     {
-        tooltip << getRealName();
+        QString escapedRealName( getRealName() );
+        escapedRealName.replace("<","&lt;").replace(">","&gt;");
+        tooltip << escapedRealName;
         dirty = true;
     }
     else

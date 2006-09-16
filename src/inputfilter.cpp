@@ -1121,12 +1121,15 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 // Display message only if this was not an automatic request.
                 if(getAutomaticRequest("WHOIS",parameterList[1])==0)
                 {
+                    // escape html tags
+                    QString escapedRealName(trailing);
+                    escapedRealName.replace("<","&lt;").replace(">","&gt;");
                     server->appendMessageToFrontmost(i18n("Whois"),
                         i18n("%1 is %2@%3 (%4)")
                         .arg(parameterList[1])
                         .arg(parameterList[2])
                         .arg(parameterList[3])
-                        .arg(trailing), false);   // Don't parse any urls
+                        .arg(escapedRealName), false);   // Don't parse any urls
                 }
                 else
                 {
