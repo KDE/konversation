@@ -1456,13 +1456,13 @@ QChar::Direction IRCView::basicDirection(const QString &string)
 /*
 this is an experimental patch which aims at testing a new algorythm for
 detecting the direction of the string:
-istead of checking the first strong character, this tests for the whole
-sentence and counts the appearence of LTR and RTL chars. this also
+instead of checking the first strong character, this tests for the whole
+sentence and counts the appearance of LTR and RTL chars. this also
 counts for neutral chars and if the sentence has no real direction, the
 next stage will be to keep the direction of the last line.
 
-this brings up a bug in konversation, and lines wich start with a nick (for example)
-but are RTL, will look wierd.
+this brings up a bug in konversation, and lines which start with a nick (for example)
+but are RTL, will look weird.
 
 for example, user writes:
     other_user, BLA BLA BLA BLA

@@ -40,7 +40,7 @@ IRCInput::IRCInput(QWidget* parent) : KTextEdit(parent)
 {
     m_lastHeight=document()->height();
 
-    //i'm not terribly interested in finding out where this value comes from
+    //I am not terribly interested in finding out where this value comes from
     //nor in compensating for it if my guess is incorrect. so, cache it.
     m_qtBoxPadding=m_lastHeight-fontMetrics().lineSpacing();
 

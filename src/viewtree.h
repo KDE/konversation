@@ -96,8 +96,8 @@ class ViewTree : public KListView
         // to the tree.
         bool m_selectFirstView;
 
-        // Used in mouse handling to determine wether both the press
-        // and the release event occured over a close button.
+        // Used in mouse handling to determine whether both the press
+        // and the release event occurred over a close button.
         bool m_pressedAboveCloseButton;
         ViewTreeItem* m_closeButtonItem;
         QTimer* m_enableCloseButtonTimer;
