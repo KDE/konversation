@@ -26,7 +26,7 @@ namespace Konversation
     {
         Q_OBJECT
             public:
-            ChannelOptionsDialog(Channel *channel);
+            explicit ChannelOptionsDialog(Channel *channel);
             ~ChannelOptionsDialog();
 
             QString topic();

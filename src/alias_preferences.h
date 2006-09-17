@@ -21,7 +21,7 @@ class Alias_Config : public Alias_ConfigUI, public KonviSettingsPage
     Q_OBJECT
 
     public:
-        Alias_Config(QWidget* parent, const char* name = 0);
+        explicit Alias_Config(QWidget* parent, const char* name = 0);
         ~Alias_Config();
 
         virtual void saveSettings();

@@ -34,7 +34,7 @@ class ChannelListPanel : public ChatWindow
     Q_OBJECT
 
     public:
-        ChannelListPanel(QWidget* parent);
+        explicit ChannelListPanel(QWidget* parent);
         ~ChannelListPanel();
 
         virtual bool closeYourself();

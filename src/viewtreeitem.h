@@ -30,7 +30,7 @@ class ViewTreeItem : public QListViewItem
         ViewTreeItem(QListViewItem* parent, const QString& name, ChatWindow* view, int sortIndex = -1);
         ViewTreeItem(QListViewItem* parent, QListViewItem* afterItem, const QString& name, ChatWindow* view);
         // Minimal constructor for separator items.
-        ViewTreeItem(QListView* parent);
+        explicit ViewTreeItem(QListView* parent);
         ~ViewTreeItem();
 
         void setSortIndex(int newSortIndex);

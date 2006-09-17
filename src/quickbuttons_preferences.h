@@ -25,7 +25,7 @@ class QuickButtons_Config : public QuickButtons_ConfigUI, public KonviSettingsPa
   Q_OBJECT
 
   public:
-    QuickButtons_Config(QWidget* parent, const char* name=NULL);
+    explicit QuickButtons_Config(QWidget* parent, const char* name=NULL);
     ~QuickButtons_Config();
 
     virtual void saveSettings();

@@ -25,8 +25,8 @@ class ScriptLauncher : public QObject
 {
     Q_OBJECT
 
-        public:
-        ScriptLauncher(Server* server);
+    public:
+        explicit ScriptLauncher(Server* server);
         ~ScriptLauncher();
 
         signals:

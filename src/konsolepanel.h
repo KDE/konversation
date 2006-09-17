@@ -20,7 +20,7 @@ class KonsolePanel : public ChatWindow
     Q_OBJECT
 
     public:
-        KonsolePanel(QWidget *p);
+        explicit KonsolePanel(QWidget *p);
         ~KonsolePanel();
 
         virtual void setName(const QString& newName) { ChatWindow::setName(newName); }

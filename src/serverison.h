@@ -31,8 +31,8 @@ class ServerISON : public QObject
 {
     Q_OBJECT
 
-        public:
-        ServerISON(Server* server);
+    public:
+        explicit ServerISON(Server* server);
         /**
          * Returns a list of nicks that we want to know whether they are online
          * of offline.

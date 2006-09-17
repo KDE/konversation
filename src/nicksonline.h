@@ -40,7 +40,7 @@ class NicksOnline : public ChatWindow
 {
     Q_OBJECT
 
-        public:
+    public:
         // Columns of the NickListView.
         enum NickListViewColumn
         {
@@ -65,7 +65,7 @@ class NicksOnline : public ChatWindow
             nsHasAddress = 2                      // Nick has an associated addressbook entry.
         };
 
-        NicksOnline(QWidget* parent);
+        explicit NicksOnline(QWidget* parent);
         ~NicksOnline();
 
         // These are here for the benefit of NicksOnlineTooltip.

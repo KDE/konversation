@@ -3134,7 +3134,7 @@ void Server::updateAutoJoin(const QString& channel)
     }
 
     if(!channel.isEmpty())
-        tmpList.push_front(channel);
+        tmpList.push_front(Konversation::ChannelSettings(channel));
 
     if(!tmpList.isEmpty())
     {

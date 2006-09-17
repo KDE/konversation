@@ -89,7 +89,7 @@ class KDEUI_EXPORT KonviSettingsDialog : public KonviConfigDialog
 	bool m_modified;
 
     public:
-        KonviSettingsDialog( QWidget *parent);
+        explicit KonviSettingsDialog(QWidget *parent);
         ~KonviSettingsDialog();
 
         void openWatchedNicknamesPage();

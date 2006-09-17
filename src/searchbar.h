@@ -29,7 +29,7 @@ class SearchBar : public SearchBarBase
     Q_OBJECT
 
     public:
-        SearchBar(QWidget* parent);
+        explicit SearchBar(QWidget* parent);
         ~SearchBar();
 
         void setHasMatch(bool value);

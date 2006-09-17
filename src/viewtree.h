@@ -23,7 +23,7 @@ class ViewTree : public KListView
     Q_OBJECT
 
     public:
-        ViewTree(QWidget *parent);
+        explicit ViewTree(QWidget *parent);
         ~ViewTree();
 
         void selectFirstView(bool select);

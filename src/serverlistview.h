@@ -28,13 +28,13 @@ class ServerListView : public KListView
 {
     Q_OBJECT
 
-        public:
-        ServerListView(QWidget *parent);
+    public:
+        explicit ServerListView(QWidget *parent);
         ~ServerListView();
 
         QPtrList<QListViewItem> selectedServerListItems();
 
-        protected:
+    protected:
         void findDrop(const QPoint &pos, QListViewItem *&parent, QListViewItem *&after);
         QDragObject* dragObject();
 };

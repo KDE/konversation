@@ -31,7 +31,7 @@ class IRCInput : public KTextEdit
     Q_OBJECT
 
     public:
-        IRCInput(QWidget* parent);
+        explicit IRCInput(QWidget* parent);
         ~IRCInput();
 
         void setCompletionMode(char mode);

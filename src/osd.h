@@ -31,7 +31,7 @@ class OSDWidget : public QWidget
         public:
         enum Alignment { Left, Middle, Center, Right };
 
-        OSDWidget(const QString &appName, QWidget *parent = 0, const char *name = "osd");
+        explicit OSDWidget(const QString &appName, QWidget *parent = 0, const char *name = "osd");
         void setDuration(int ms);
         void setFont(QFont newfont);
         void setShadow(bool shadow);

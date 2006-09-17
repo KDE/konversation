@@ -36,7 +36,7 @@ class StatusPanel : public ChatWindow
     Q_OBJECT
 
     public:
-        StatusPanel(QWidget* parent);
+        explicit StatusPanel(QWidget* parent);
         ~StatusPanel();
 
         virtual void setName(const QString& newName);

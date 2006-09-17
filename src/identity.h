@@ -30,7 +30,7 @@ class Identity : public KShared
         /// Create an Identity with a new id.
         Identity();
         /// Create a new Identity with a set id.
-        Identity(int id);
+        explicit Identity(int id);
         /// Copy all of @param original including the id.
         Identity(const Identity& original);
         ~Identity();

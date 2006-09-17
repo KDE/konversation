@@ -44,7 +44,7 @@ class ViewContainer : public QObject
     Q_OBJECT
 
     public:
-        ViewContainer(KonversationMainWindow* window);
+        explicit ViewContainer(KonversationMainWindow* window);
         ~ViewContainer();
 
         QSplitter* getWidget() { return m_viewTreeSplitter; }

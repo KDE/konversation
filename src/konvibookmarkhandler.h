@@ -30,7 +30,7 @@ class KonviBookmarkHandler : public QObject, public KBookmarkOwner
     Q_OBJECT
 
         public:
-        KonviBookmarkHandler(KonversationMainWindow *mainWindow);
+        explicit KonviBookmarkHandler(KonversationMainWindow *mainWindow);
         ~KonviBookmarkHandler();
 
         KPopupMenu* popupMenu();

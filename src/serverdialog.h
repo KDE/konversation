@@ -28,7 +28,7 @@ namespace Konversation
         Q_OBJECT
 
         public:
-            ServerDialog(const QString& title, QWidget *parent = 0, const char *name = 0);
+            explicit ServerDialog(const QString& title, QWidget *parent = 0, const char *name = 0);
             ~ServerDialog();
 
             void setServerSettings(const ServerSettings& server);

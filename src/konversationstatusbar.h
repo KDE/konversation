@@ -27,7 +27,7 @@ class KonversationStatusBar : public QObject
     Q_OBJECT
 
     public:
-        KonversationStatusBar(KonversationMainWindow* parent);
+        explicit KonversationStatusBar(KonversationMainWindow* parent);
         ~KonversationStatusBar();
 
     public slots:

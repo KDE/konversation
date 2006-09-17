@@ -34,8 +34,8 @@ class ChatWindow : public QVBox
 {
     Q_OBJECT
 
-        public:
-        ChatWindow(QWidget* parent);
+    public:
+        explicit ChatWindow(QWidget* parent);
         ~ChatWindow();
 
         enum WindowType

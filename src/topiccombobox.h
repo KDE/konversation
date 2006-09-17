@@ -24,8 +24,8 @@ class TopicComboBox : public KComboBox
 {
     Q_OBJECT
 
-        public:
-        TopicComboBox(QWidget* parent);
+    public:
+        explicit TopicComboBox(QWidget* parent);
         ~TopicComboBox();
         void insertStringList(const QStringList& list);
 

@@ -25,7 +25,7 @@ namespace Konversation
     {
         Q_OBJECT
             public:
-            JoinChannelDialog(Server* server, QWidget *parent = 0, const char *name = 0);
+            explicit JoinChannelDialog(Server* server, QWidget *parent = 0, const char *name = 0);
             ~JoinChannelDialog();
 
             QString channel() const;

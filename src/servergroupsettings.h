@@ -28,7 +28,7 @@ namespace Konversation
         public:
             ChannelSettings();
             ChannelSettings(const ChannelSettings& settings);
-            ChannelSettings(const QString& name);
+            explicit ChannelSettings(const QString& name);
             ChannelSettings(const QString& name, const QString& password);
             ChannelSettings(const QString& name, const QString& password, bool enableNotifications);
             ~ChannelSettings();

@@ -26,7 +26,7 @@ class RawLog : public ChatWindow
     Q_OBJECT
 
         public:
-        RawLog(QWidget* parent);
+        explicit RawLog(QWidget* parent);
         ~RawLog();
 
         virtual bool closeYourself();

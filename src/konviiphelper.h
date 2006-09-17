@@ -27,14 +27,14 @@ class KonviIpHelper : QObject
 {
     Q_OBJECT
 
-        public:
-        KonviIpHelper(const QString target);
+    public:
+        explicit KonviIpHelper(const QString target);
         ~KonviIpHelper();
 
         QString host();
         QString port();
 
-        private:
+    private:
         void parseTarget(const QString& target);
 
         QString m_host;

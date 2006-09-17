@@ -41,7 +41,7 @@ class Query : public ChatWindow
     Q_OBJECT
 
     public:
-        Query(QWidget* parent);
+        explicit Query(QWidget* parent);
         ~Query();
 
         /** This will always be called soon after this object is created.

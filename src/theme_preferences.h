@@ -24,7 +24,7 @@ class Theme_Config : public Theme_ConfigUI, public KonviSettingsPage
     Q_OBJECT
 
     public:
-        Theme_Config(QWidget* parent, const char* name=NULL);
+        explicit Theme_Config(QWidget* parent, const char* name=NULL);
         ~Theme_Config();
 
         virtual void restorePageToDefaults();

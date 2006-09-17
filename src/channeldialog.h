@@ -26,7 +26,7 @@ namespace Konversation
         Q_OBJECT
 
         public:
-            ChannelDialog(const QString& title, QWidget *parent = 0, const char *name = 0);
+            explicit ChannelDialog(const QString& title, QWidget *parent = 0, const char *name = 0);
             ~ChannelDialog();
 
             void setChannelSettings(const ChannelSettings& channel);

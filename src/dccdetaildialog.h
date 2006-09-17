@@ -23,7 +23,7 @@ class DccDetailDialog : public KDialog
     Q_OBJECT
 
         public:
-        DccDetailDialog( DccTransfer* item );
+        explicit DccDetailDialog( DccTransfer* item );
         virtual ~DccDetailDialog();
 
         void updateView();

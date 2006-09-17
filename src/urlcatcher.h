@@ -31,7 +31,7 @@ class UrlCatcher : public ChatWindow
     Q_OBJECT
 
         public:
-        UrlCatcher(QWidget* parent);
+        explicit UrlCatcher(QWidget* parent);
         ~UrlCatcher();
 
         virtual bool canBeFrontView()   { return true; }

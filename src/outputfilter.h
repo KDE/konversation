@@ -56,7 +56,7 @@ namespace Konversation
         Q_OBJECT
 
         public:
-            OutputFilter(Server* server);
+            explicit OutputFilter(Server* server);
             ~OutputFilter();
 
             QStringList splitForEncoding(QString inputLine, int MAX);
