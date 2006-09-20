@@ -1426,73 +1426,25 @@ QChar IRCView::PDF = (ushort)0x202c; // Previously Defined Format
 
 QChar::Direction IRCView::basicDirection(const QString &string)
 {
-#if 0
-    // find base direction
-    unsigned int pos = 0;
-    unsigned int str_len = string.length();
-    while ((pos < str_len) &&
-        (string.at(pos) != RLE) &&
-        (string.at(pos) != LRE) &&
-        (string.at(pos) != RLO) &&
-        (string.at(pos) != LRO) &&
-        (string.at(pos).direction() > 1) &&
-                                                  // not R and not L
-        (string.at(pos).direction() != QChar::DirAL))
-    {
-        ++pos;
-    }
+    // The following code decides between LTR or RTL direction for
+    // a line based on the amount of each type of characters pre-
+    // sent. It does so by counting, but stops when one of the two
+    // counters becomes higher than half of the string length to
+    // avoid unnecessary work.
 
-    if((string.at(pos).direction() == QChar::DirR) ||
-        (string.at(pos).direction() == QChar::DirAL) ||
-        (string.at(pos) == RLE) ||
-        (string.at(pos) == RLO))
-    {
-        return QChar::DirR;
-    }
-
-    return QChar::DirL;
-#else
-
-/*
-this is an experimental patch which aims at testing a new algorythm for
-detecting the direction of the string:
-instead of checking the first strong character, this tests for the whole
-sentence and counts the appearance of LTR and RTL chars. this also
-counts for neutral chars and if the sentence has no real direction, the
-next stage will be to keep the direction of the last line.
-
-this brings up a bug in konversation, and lines which start with a nick (for example)
-but are RTL, will look weird.
-
-for example, user writes:
-    other_user, BLA BLA BLA BLA
-
-and that gets rendered like:
-                            BLA BLA BLA :<user> other_user
-the correct way should be
-                            BLA BLA BLA :other_user <user>
-
-the bug has nothing to do with this function, and is somewhere in append().
- 
-this is on my TODO list. in case this code is not fixed by 1.0.1,
-please change the #if in to "1" to revert to the old working code. 
-*/
     unsigned int pos = 0;
     unsigned int rtl_chars = 0;
     unsigned int ltr_chars = 0;
-    unsigned int other_chars = 0;
     unsigned int str_len = string.length();
-    
-    for( pos=0; pos<str_len; pos ++ )
+    unsigned int str_half_len = str_len/2;
+
+    for(pos=0; pos < str_len; pos++)
     {
-        if (string[pos].isNumber() || string[pos].isSymbol() || 
-            string[pos].isSpace()  || string[pos].isPunct()  || string[pos].isMark() )
+        if (!(string[pos].isNumber() || string[pos].isSymbol() ||
+            string[pos].isSpace()  || string[pos].isPunct()  ||
+            string[pos].isMark()))
         {
-            other_chars++;
-        }
-        else
-        {
-            switch( string[pos].direction() )
+            switch(string[pos].direction())
             {
                 case QChar::DirL:
                 case QChar::DirLRO:
@@ -1508,18 +1460,18 @@ please change the #if in to "1" to revert to the old working code.
                 default:
                     break;
             }
-        } 
+        }
+
+        if (ltr_chars > str_half_len)
+            return QChar::DirL;
+        else if (rtl_chars > str_half_len)
+            return QChar::DirR;
     }
-    
+
     if (rtl_chars > ltr_chars)
         return QChar::DirR;
     else
-        if (other_chars == str_len)
-            // todo, remember last state
-            return QChar::DirL; 
-        else
-            return QChar::DirL;
-#endif
+        return QChar::DirL;
 }
 
 void IRCView::contentsDragMoveEvent(QDragMoveEvent *e)
