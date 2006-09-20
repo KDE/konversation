@@ -660,7 +660,7 @@ void IRCView::append(const QString& nick,const QString& message)
     {
         line = RLE;
         line += LRE;
-        line += "<p><font color=\"" + channelColor + "\">" + nickLine + " %1" + PDF + " %3</font></p>\n";
+        line += "<p><font color=\"" + channelColor + "\">" + nickLine + " %1" + PDF + RLM + " %3</font></p>\n";
     }
     else
     {
@@ -1426,7 +1426,7 @@ QChar IRCView::PDF = (ushort)0x202c; // Previously Defined Format
 
 QChar::Direction IRCView::basicDirection(const QString &string)
 {
-#if 1
+#if 0
     // find base direction
     unsigned int pos = 0;
     unsigned int str_len = string.length();
