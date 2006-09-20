@@ -60,7 +60,7 @@ int main(int argc, char* argv[])
 
     aboutData.addAuthor("Dario Abatianni",I18N_NOOP("Original Author, Project Founder"),"eisfuchs@tigress.com");
     aboutData.addAuthor("Peter Simonsson",I18N_NOOP("Maintainer"),"psn@linux.se");
-    aboutData.addAuthor("Eike Hein",I18N_NOOP("Maintainer, Release Manager, User interface, Protocol handling"),"sho@eikehein.com");
+    aboutData.addAuthor("Eike Hein",I18N_NOOP("Maintainer, Release Manager, User interface, Protocol handling"),"hein@kde.org");
     aboutData.addAuthor("Shintaro Matsuoka",I18N_NOOP("DCC, Encoding handling, OSD positioning"),"shin@shoegazed.org");
     aboutData.addAuthor("Eli MacKenzie",I18N_NOOP("Protocol handling, Input line"),"argonel@gmail.com");
     aboutData.addAuthor("İsmail Dönmez",I18N_NOOP("Blowfish, SSL support, KNetwork port, Colored nicks, Nicklist themes"),"ismail@kde.org");
