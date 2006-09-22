@@ -162,7 +162,7 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   m_confAliasWdg = new Alias_Config( this, "Alias" );
   pagePath.clear();
   pagePath << i18n("Behavior") << i18n("Command Aliases");
-  addPage ( m_confAliasWdg, pagePath, "editcopy", i18n(" Command Aliases") );
+  addPage ( m_confAliasWdg, pagePath, "editcopy", i18n("Command Aliases") );
   m_indexToPageMapping.insert(lastAddedIndex(), m_confAliasWdg);
   connect(m_confAliasWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
 
