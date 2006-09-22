@@ -597,7 +597,7 @@ void Query::quitNick(const QString& reason)
     displayReason=" ("+displayReason+')';
   }
 
-  appendCommandMessage(i18n("Quit"),i18n("%1 has left this server%2.").arg(getName()).arg(displayReason),false);
+  appendCommandMessage(i18n("Quit"),i18n("%1 has left this server %2.").arg(getName()).arg(displayReason),false);
 }
 
 #include "query.moc"
