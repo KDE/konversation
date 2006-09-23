@@ -1,3 +1,10 @@
+/*
+  Public Domain. Without any warranty.
+
+  Copyright (C) George Anescu <unknown@unknown>
+  Copyright (C) mouser <fvarick@users.sourceforge.net>
+*/
+
 //---------------------------------------------------------------------------
 //The implementation of blowfish for CBC mode is from http://www.thecodeproject.com/cpp/blowfish.asp by George Anescu
 //  I removed exception handling, so it is callers responsibility to insure

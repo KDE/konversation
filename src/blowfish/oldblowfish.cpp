@@ -10,9 +10,9 @@
   Bruce Schneier, 1996, Applied Cryptography, 2nd ed., John Wiley & Sons
   Blowfish Eggdrop algorythms:  Robey Pointer
 
-  Copyright (C) 1994 Bruce Schneier
-  Copyright (C) 1996 Jim Conger
-  Copyright (C) Robey Pointer
+  Copyright (C) 1994 Bruce Schneier <schneier@counterpane.com>
+  Copyright (C) 1996 Jim Conger <jconger@cox.net>
+  Copyright (C) Robey Pointer <robey@lag.net>
 */
 
 //---------------------------------------------------------------------------

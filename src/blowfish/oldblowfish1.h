@@ -3,8 +3,10 @@
   _THE BLOWFISH ENCRYPTION ALGORITHM_
   by Bruce Schneier, 1996, Applied Cryptography, 2nd ed., John Wiley & Sons
 
-  Copyright (C) 1994 Bruce Schneier
-  Copyright (C) 1996 Jim Conger
+  Public Domain.
+
+  Copyright (C) 1994 Bruce Schneier <schneier@counterpane.com>
+  Copyright (C) 1996 Jim Conger <jconger@cox.net>
 */
 
 //---------------------------------------------------------------------------
