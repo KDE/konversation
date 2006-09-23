@@ -13,7 +13,7 @@
 
 #include "modebutton.h"
 
-ModeButton::ModeButton(QString label,QWidget* parent,int newId) :
+ModeButton::ModeButton(const QString& label,QWidget* parent,int newId) :
 QPushButton::QPushButton(label,parent)
 {
     id=newId;

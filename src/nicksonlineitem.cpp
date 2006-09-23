@@ -13,16 +13,14 @@
 
 #include "nicksonlineitem.h"
 
-NicksOnlineItem::NicksOnlineItem(int type,QListView* parent,QString name,QString col2,QString col3,
-                                 QString col4,QString col5,QString col6,QString col7,QString col8) :
-                 KListViewItem(parent,name,col2,col3,col4,col5,col6,col7,col8)
+NicksOnlineItem::NicksOnlineItem(int type, QListView* parent, const QString& name, const QString& col2) :
+                 KListViewItem(parent, name, col2)
 {
   m_type=type;
 }
 
-NicksOnlineItem::NicksOnlineItem(int type,QListViewItem* parent,QString name,QString col2,QString col3,
-                                 QString col4,QString col5,QString col6,QString col7,QString col8) :
-                 KListViewItem(parent,name,col2,col3,col4,col5,col6,col7,col8)
+NicksOnlineItem::NicksOnlineItem(int type, QListViewItem* parent, const QString& name, const QString& col2) :
+                 KListViewItem(parent, name, col2)
 {
   m_type=type;
 }

@@ -190,7 +190,7 @@ class Channel : public ChatWindow
          *  @param plus True if the mode is being granted, false if it's being taken away.
          *  @param parameter This depends on what the mode change is.  In most cases it is the nickname of the person that is being given voice/op/admin etc.  See the code.
          */
-        void updateMode(QString sourceNick, char mode, bool plus, const QString &parameter);
+        void updateMode(const QString& sourceNick, char mode, bool plus, const QString &parameter);
 
     signals:
         void modesChanged();

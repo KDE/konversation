@@ -59,7 +59,7 @@ namespace Konversation
             explicit OutputFilter(Server* server);
             ~OutputFilter();
 
-            QStringList splitForEncoding(QString inputLine, int MAX);
+            QStringList splitForEncoding(const QString& inputLine, int MAX);
             OutputFilterResult parse(const QString& myNick,const QString& line,const QString& name);
             OutputFilterResult sendRequest(const QString &recipient,const QString &fileName,const QString &address,
                 const QString &port,unsigned long size);

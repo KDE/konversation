@@ -17,7 +17,7 @@
 #include "ignorelistviewitem.h"
 #include "ignore.h"
 
-IgnoreListViewItem::IgnoreListViewItem(QListView* parent,QString name,int newFlags):
+IgnoreListViewItem::IgnoreListViewItem(QListView* parent,const QString& name,int newFlags):
 KListViewItem(parent,name)
 {
     setFlags(newFlags);

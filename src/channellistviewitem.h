@@ -22,7 +22,7 @@
 class ChannelListViewItem : public KListViewItem
 {
     public:
-        ChannelListViewItem(KListView* parent,QString channel,QString users,QString topic);
+        ChannelListViewItem(KListView* parent, const QString& channel, const QString& users, const QString& topic);
         ~ChannelListViewItem();
 
         int compare(QListViewItem* item, int col, bool ascending) const;

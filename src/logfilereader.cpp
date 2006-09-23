@@ -37,7 +37,7 @@
 #include "ircview.h"
 #include "ircviewbox.h"
 
-LogfileReader::LogfileReader(QWidget* parent, QString log) : ChatWindow(parent)
+LogfileReader::LogfileReader(QWidget* parent, const QString& log) : ChatWindow(parent)
 {
     setType(ChatWindow::LogFileReader);
 

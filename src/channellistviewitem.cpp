@@ -16,7 +16,7 @@
 
 #include "channellistviewitem.h"
 
-ChannelListViewItem::ChannelListViewItem(KListView* parent,QString channel,QString users,QString topic)
+ChannelListViewItem::ChannelListViewItem(KListView* parent, const QString& channel, const QString& users, const QString& topic)
 : KListViewItem(parent,channel,users,topic)
 {
 }

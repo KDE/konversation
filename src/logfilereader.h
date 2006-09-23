@@ -31,7 +31,7 @@ class LogfileReader : public ChatWindow
     Q_OBJECT
 
         public:
-        LogfileReader(QWidget* parent, QString log);
+        LogfileReader(QWidget* parent, const QString& log);
         ~LogfileReader();
 
         virtual bool closeYourself() { closeLog(); return true; }

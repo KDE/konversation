@@ -28,8 +28,8 @@
 #include "servergroupsettings.h"
 
 EditNotifyDialog::EditNotifyDialog(QWidget* parent,
-QString network,
-QString nickname):
+const QString& network,
+const QString& nickname):
 
 KDialogBase(parent,"editnotify",true,i18n("Edit Watched Nickname"),
 KDialogBase::Ok | KDialogBase::Cancel,

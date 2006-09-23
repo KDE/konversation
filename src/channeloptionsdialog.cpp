@@ -458,12 +458,14 @@ namespace Konversation
         m_isNewBan = isNew;
     }
 
-    BanListViewItem::BanListViewItem ( QListView *parent, QString label1, QString label2, QString label3, QString label4, QString label5, QString label6, QString label7, QString label8 ) : KListViewItem(parent, label1, label2, label3, label4, label5, label6, label7, label8)
+    BanListViewItem::BanListViewItem (QListView *parent, const QString& label1, const QString& label2,
+        const QString& label3) : KListViewItem(parent, label1, label2, label3)
     {
         m_isNewBan = 0;
     }
 
-    BanListViewItem::BanListViewItem ( QListView *parent, bool isNew, QString label1, QString label2, QString label3, QString label4, QString label5, QString label6, QString label7, QString label8 ) : KListViewItem(parent, label1, label2, label3, label4, label5, label6, label7, label8)
+    BanListViewItem::BanListViewItem (QListView *parent, bool isNew, const QString& label1, const QString& label2,
+        const QString& label3) : KListViewItem(parent, label1, label2, label3)
     {
         m_isNewBan = isNew;
     }

@@ -73,7 +73,7 @@ Server::Server(ViewContainer* viewContainer, int serverGroupId, bool clearQuickS
 }
 
 Server::Server(ViewContainer* viewContainer,const QString& hostName,const QString& port,
-const QString& channel,const QString& _nick, QString password,const bool& useSSL)
+const QString& channel,const QString& _nick, const QString& password,const bool& useSSL)
 {
     quickConnect = true;
 
@@ -764,7 +764,7 @@ void Server::broken(int state)
     }
 }
 
-void Server::sslError(QString reason)
+void Server::sslError(const QString& reason)
 {
     QString error = i18n("Could not connect to %1:%2 using SSL encryption.Maybe the server does not support SSL, or perhaps you have the wrong port? %3")
         .arg(m_serverGroup->serverByIndex(m_currentServerIndex).server())
@@ -1248,7 +1248,7 @@ void Server::queueList(const QStringList& buffer)
     This is necessary because the irc server will clip messages so that the
     client receives a maximum of 512 bytes at once.
 */
-int Server::getPreLength(QString command, QString dest)
+int Server::getPreLength(const QString& command, const QString& dest)
 {
     int hostMaskLength=getNickInfo(nickname)->getHostmask().length();
 

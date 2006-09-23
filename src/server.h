@@ -69,7 +69,7 @@ class Server : public QObject
          *  The details are passed in.  Used for example when the user does "/server irc.somewhere.net"
          */
         Server(ViewContainer* viewContainer, const QString& hostName,const QString& port,
-            const QString& channel,const QString& nick, QString password, const bool& useSSL=false);
+            const QString& channel,const QString& nick, const QString& password, const bool& useSSL=false);
         ~Server();
 
         QString getServerName() const;
@@ -141,7 +141,7 @@ class Server : public QObject
         void appendStatusMessage(const QString& type,const QString& message);
         void appendMessageToFrontmost(const QString& type,const QString& message, bool parseURL = true);
 
-        int getPreLength(QString command, QString dest);
+        int getPreLength(const QString& command, const QString& dest);
 
         void dcopRaw(const QString& command);
         void dcopSay(const QString& target,const QString& command);
@@ -453,7 +453,7 @@ class Server : public QObject
         /** This is connected to the SSLSocket failed.
          * @param reason The reason why this failed.  This is already translated, ready to show the user.
          */
-        void sslError(QString reason);
+        void sslError(const QString& reason);
         void connectionEstablished(const QString& ownHost);
         void notifyResponse(const QString& nicksOnline);
         void addDccGet(const QString& sourceNick,const QStringList& dccArguments);

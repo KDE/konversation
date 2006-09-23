@@ -96,7 +96,7 @@ namespace Konversation
         return false;
     }
 
-    QStringList OutputFilter::splitForEncoding(QString inputLine, int MAX)
+    QStringList OutputFilter::splitForEncoding(const QString& inputLine, int MAX)
     {
         QString channelCodecName=Preferences::channelEncoding(m_server->getServerGroup(), destination);
 

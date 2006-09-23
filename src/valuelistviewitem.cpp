@@ -15,14 +15,14 @@
 
 #include "valuelistviewitem.h"
 
-ValueListViewItem::ValueListViewItem(int newValue,KListView* parent,QString label)
+ValueListViewItem::ValueListViewItem(int newValue, KListView* parent, const QString& label)
 : KListViewItem(parent,label)
 {
     m_value=newValue;
     enforceSortOrder();
 }
 
-ValueListViewItem::ValueListViewItem(int newValue,KListView* parent,QListViewItem* after,QString label)
+ValueListViewItem::ValueListViewItem(int newValue, KListView* parent, QListViewItem* after, const QString& label)
 : KListViewItem(parent,after,label)
 {
     m_value=newValue;

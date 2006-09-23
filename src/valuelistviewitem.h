@@ -24,8 +24,8 @@
 class ValueListViewItem : public KListViewItem
 {
     public:
-        ValueListViewItem(int newValue,KListView* parent,QString label);
-        ValueListViewItem(int newValue,KListView* parent,QListViewItem* after,QString label);
+        ValueListViewItem(int newValue, KListView* parent, const QString& label);
+        ValueListViewItem(int newValue, KListView* parent, QListViewItem* after, const QString& label);
         ~ValueListViewItem();
 
         const int getValue() const;

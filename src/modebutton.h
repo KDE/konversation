@@ -25,7 +25,7 @@ class ModeButton : public QPushButton
     Q_OBJECT
 
         public:
-        ModeButton(QString label,QWidget* parent,int id);
+        ModeButton(const QString& label,QWidget* parent,int id);
         ~ModeButton();
 
         void setOn(bool state);
