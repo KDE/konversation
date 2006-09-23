@@ -19,7 +19,7 @@
 
 QString MultilineEdit::returnText;                // static
 
-MultilineEdit::MultilineEdit(QWidget* parent,QString text) :
+MultilineEdit::MultilineEdit(QWidget* parent, const QString& text) :
 KDialogBase(parent,"multiline_edit_dialog",true,i18n("Edit Multiline Paste"),
 KDialogBase::User1 | KDialogBase::Ok | KDialogBase::Cancel,KDialogBase::Ok,true,
 KGuiItem(i18n("Add &Quotation Indicators")))
@@ -49,7 +49,7 @@ MultilineEdit::~MultilineEdit()
 
 void MultilineEdit::slotCancel()
 {
-    returnText=QString::null;
+    returnText=QString();
     KDialogBase::slotCancel();
 }
 
@@ -67,7 +67,7 @@ void MultilineEdit::slotUser1()
     textEditor->setText(lines.join("\n"));
 }
 
-QString MultilineEdit::edit(QWidget* parent,QString text)
+QString MultilineEdit::edit(QWidget* parent, const QString& text)
 {
     MultilineEdit dlg(parent,text);
     dlg.exec();

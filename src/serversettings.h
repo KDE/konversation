@@ -22,7 +22,7 @@ namespace Konversation
         public:
             ServerSettings();
             ServerSettings(const ServerSettings& settings);
-            ServerSettings(const QString& server);
+            explicit ServerSettings(const QString& server);
             ~ServerSettings();
 
             void setServer(const QString& server) { m_server = server; }

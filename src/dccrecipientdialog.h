@@ -31,7 +31,7 @@ class DccRecipientDialog : public KDialogBase
         DccRecipientDialog(QWidget* parent, const QStringList &list, const QSize &size);
         ~DccRecipientDialog();
 
-        static QString getNickname(QWidget* parent,QStringList list);
+        static QString getNickname(QWidget* parent, const QStringList& list);
 
     protected slots:
         void newNicknameSelected(QListBoxItem* item);

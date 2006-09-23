@@ -184,12 +184,12 @@ const QString& IRCView::getContextNick() const
 
 void IRCView::clearContextNick()
 {
-    m_currentNick = QString::null;
+    m_currentNick = QString();
 }
 
 void IRCView::clear()
 {
-    m_buffer = QString::null;
+    m_buffer = QString();
     KTextBrowser::clear();
 }
 
@@ -209,7 +209,7 @@ void IRCView::highlightedSlot(const QString& _link)
         if (!m_lastStatusText.isEmpty()) 
         {
             emit clearStatusBarTempText();
-            m_lastStatusText = QString::null;
+            m_lastStatusText = QString();
         }
     } else
     {
@@ -425,7 +425,7 @@ bool doHighlight, bool parseURL, bool self)
     {
         if(!allowColors)
         {
-            colorString = QString::null;
+            colorString = QString();
         }
         else
         {
@@ -973,13 +973,13 @@ void IRCView::doAppend(const QString& newLine, bool important, bool self)
         QString sendText = m_server->parseWildcards(m_autoTextToSend,m_server->getNickname(),
             QString::null, QString::null, QString::null, QString::null);
         // avoid recursion due to signalling
-        m_autoTextToSend = QString::null;
+        m_autoTextToSend = QString();
         // send signal only now
         emit autoText(sendText);
     }
     else
     {
-        m_autoTextToSend = QString::null;
+        m_autoTextToSend = QString();
     }
 
     if (!m_lastStatusText.isEmpty()) emit clearStatusBarTempText();

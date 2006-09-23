@@ -26,10 +26,10 @@ class MultilineEdit : public KDialogBase
     Q_OBJECT
 
         public:
-        MultilineEdit(QWidget* parent,QString text);
+        MultilineEdit(QWidget* parent, const QString& text);
         ~MultilineEdit();
 
-        static QString edit(QWidget* parent,QString text);
+        static QString edit(QWidget* parent, const QString& text);
 
     protected slots:
         void slotOk();

@@ -163,7 +163,7 @@ void DccTransferSend::cleanUp()
     finishTransferMeter();
     if ( !m_tmpFile.isEmpty() )
         KIO::NetAccess::removeTempFile( m_tmpFile );
-    m_tmpFile = QString::null;
+    m_tmpFile = QString();
     m_file.close();
     if ( m_sendSocket )
     {

@@ -332,7 +332,7 @@ namespace Konversation
             QStringList outputList=splitForEncoding(inputLine, m_server->getPreLength("PRIVMSG", destination));
             if (outputList.count() > 1)
             {
-                result.output=QString::null;
+                result.output=QString();
                 result.outputList=outputList;
                 for ( QStringList::Iterator it = outputList.begin(); it != outputList.end(); ++it )
                 {
@@ -389,15 +389,15 @@ namespace Konversation
         return changeMode(addNickToEmptyNickList(ownNick,parameter),'v','-');
     }
 
-    OutputFilterResult OutputFilter::parseJoin(QString channelName)
+    OutputFilterResult OutputFilter::parseJoin(QString& channelName)
     {
         OutputFilterResult result;
 
         if(channelName.contains(",")) // Protect against #foo,0 tricks
             channelName = channelName.remove(",0");
         //else if(channelName == "0") // FIXME IRC RFC 2812 section 3.2.1
-                        
-        if(channelName.isEmpty())
+
+        if (channelName.isEmpty())
         {
             result = usage(i18n("Usage: %1JOIN <channel> [password]").arg(commandChar));
         }

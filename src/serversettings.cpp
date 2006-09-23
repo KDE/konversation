@@ -31,6 +31,7 @@ namespace Konversation
     ServerSettings::ServerSettings(const QString& server)
     {
         setServer(server);
+        setPort(6667);
         setSSLEnabled(false);
     }
 

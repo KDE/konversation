@@ -77,7 +77,7 @@ void DccRecipientDialog::newNicknameSelectedQuit(QListBoxItem* item)
 
 void DccRecipientDialog::slotCancel()
 {
-    selectedNickname=QString::null;
+    selectedNickname=QString();
     KDialogBase::slotCancel();
 }
 
@@ -87,7 +87,7 @@ void DccRecipientDialog::slotOk()
     KDialogBase::slotOk();
 }
 
-QString DccRecipientDialog::getNickname(QWidget* parent,QStringList list)
+QString DccRecipientDialog::getNickname(QWidget* parent, const QStringList& list)
 {
     QSize size;                                   // TODO: get it from Preferences
     DccRecipientDialog dlg(parent,list,size);

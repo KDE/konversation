@@ -121,7 +121,7 @@ namespace Konversation
     void TopicLabel::leaveEvent(QEvent*)
     {
        emit clearStatusBarTempText();
-       m_lastStatusText = QString::null;
+       m_lastStatusText = QString();
     }
 
     void TopicLabel::openLink(const QString& link)
@@ -317,7 +317,7 @@ namespace Konversation
             if (!m_lastStatusText.isEmpty())
             {
                 emit clearStatusBarTempText();
-                m_lastStatusText = QString::null;
+                m_lastStatusText = QString();
             }
         } else {
             m_lastStatusText = link;

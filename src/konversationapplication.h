@@ -87,7 +87,7 @@ class KonversationApplication : public KUniqueApplication
          *  @param ircnick This is modified to contain the ircnick
          *  @param serverOrGroup This is modified to contain the servername, servergroup or an empty string.
          */
-        static void splitNick_Server(QString nick_server, QString &ircnick, QString &serverOrGroup);
+        static void splitNick_Server(const QString& nick_server, QString &ircnick, QString &serverOrGroup);
 
         /** Tries to find a nickinfo for a given ircnick on a given ircserver.
          *  @param ircnick The case-insensitive ircnick of the person you want to find.  e.g. "johnflux"
@@ -132,7 +132,7 @@ class KonversationApplication : public KUniqueApplication
 
     public slots:
         Server* connectToServerGroup(const QString& serverGroup);
-        Server* connectToServer(int serverGroupId, Konversation::ServerSettings quickServer = QString::null);
+        Server* connectToServer(int serverGroupId, Konversation::ServerSettings quickServer = Konversation::ServerSettings());
         void quickConnectToServer(const QString& hostName,
             const QString& port = "6667",
             const QString& channel="",

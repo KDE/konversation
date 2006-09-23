@@ -3038,7 +3038,7 @@ void Server::away()
 void Server::unAway()
 {
     m_isAway = false;
-    m_awayReason = QString::null;
+    m_awayReason = QString();
     emit awayState(false);
 
     if(!getIdentity()->getAwayNick().isEmpty() && !nonAwayNick.isEmpty())

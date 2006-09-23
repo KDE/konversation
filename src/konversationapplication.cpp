@@ -1068,12 +1068,13 @@ Images* KonversationApplication::images()
 // Returns list of pointers to Servers.
 const QPtrList<Server> KonversationApplication::getServerList() { return serverList; }
 
-void KonversationApplication::splitNick_Server(QString nick_server, QString &ircnick, QString &serverOrGroup)
+void KonversationApplication::splitNick_Server(const QString& nick_server, QString &ircnick, QString &serverOrGroup)
 {
     //kaddresbook uses the utf separator 0xE120, so treat that as a separator as well
-    nick_server = nick_server.replace(QChar(0xE120), "@");
-    ircnick = nick_server.section("@",0,0);
-    serverOrGroup = nick_server.section("@",1);
+    QString nickServer = nick_server;
+    nickServer.replace(QChar(0xE120), "@");
+    ircnick = nickServer.section("@",0,0);
+    serverOrGroup = nickServer.section("@",1);
 }
 
 NickInfoPtr KonversationApplication::getNickInfo(const QString &ircnick, const QString &serverOrGroup)
