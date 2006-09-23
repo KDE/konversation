@@ -542,7 +542,7 @@ const QString Preferences::channelEncoding(const QString& server,const QString& 
     if(self()->mChannelEncodingsMap.contains(server))
         if(self()->mChannelEncodingsMap[server].contains(channel.lower()))
             return self()->mChannelEncodingsMap[server][channel.lower()];
-    return QString::null;
+    return QString();
 }
 
 void Preferences::setChannelEncoding(const QString& server,const QString& channel,const QString& encoding)

@@ -148,7 +148,7 @@ namespace Konversation
         if(!addresses.empty())
             return addresses.first();
         //No irc nicks- nothing left to try - return null
-        return QString::null;
+        return QString();
     }
 
     NickInfoPtr AddressbookBase::getNickInfo(const KABC::Addressee &addressee)

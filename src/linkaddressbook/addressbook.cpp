@@ -141,10 +141,10 @@ namespace Konversation
         if(contactId.isEmpty())
         {
             kdDebug() << "Addressbook::locate called with empty contactId" << endl;
-            return QString::null;
+            return QString();
         }
         if(protocol != "messaging/irc")
-            return QString::null;
+            return QString();
 
         return getKABCAddresseeFromNick(contactId).uid();
     }
@@ -183,7 +183,7 @@ namespace Konversation
         if(uid.isEmpty())
         {
             kdDebug() << "Addressbook::contact called with empty uid" << endl;
-            return QString::null;
+            return QString();
         }
         QString context;
         return context;
