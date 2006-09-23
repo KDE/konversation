@@ -177,7 +177,7 @@ QString IRCInput::text() const
         QDomElement node=nodes.item(0).toElement();
         return node.text();
     }
-    return QString::null;
+    return QString();
 
     #else
     return KTextEdit::text();

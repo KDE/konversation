@@ -185,7 +185,7 @@ QString KonvIdentDCOP::getrealName(const QString &id_name)
         }
     }
 
-    return QString::null;
+    return QString();
 }
 
 void KonvIdentDCOP::setIdent(const QString &/*identity*/, const QString& /*ident*/)

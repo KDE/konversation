@@ -394,7 +394,7 @@ void ChatWindow::setLog(bool activate)
 // reimplement this in all panels that have user input
 QString ChatWindow::getTextInLine()    
 { 
-  return QString::null; 
+  return QString(); 
 }
 
 bool ChatWindow::canBeFrontView()           

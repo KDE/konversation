@@ -1510,7 +1510,7 @@ QString IRCView::timeStamp()
         return timeString;
     }
 
-    return QString::null;
+    return QString();
 }
 
 void IRCView::setChatWin(ChatWindow* chatWin)

@@ -83,7 +83,7 @@ namespace Konversation
             return m_shortNameAliases[ simplifiedAmbiguousName ];
 
         // failed
-        return QString::null;
+        return QString();
     }
 
     int IRCCharsets::shortNameToIndex( const QString& shortName )

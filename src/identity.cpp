@@ -87,7 +87,7 @@ QString Identity::getNickname(uint index) const
   if(index < nicknameList.count())
     return nicknameList[index];
   else
-    return QString::null;
+    return QString();
 }
 
 void Identity::setBot(const QString& newBot)            { bot=newBot; }

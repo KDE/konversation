@@ -109,8 +109,8 @@ class ChatWindow : public QVBox
         QString logFileName() { return logfile.name(); }
 
         virtual void setChannelEncoding(const QString& /* encoding */) {}
-        virtual QString getChannelEncoding() { return QString::null; }
-        virtual QString getChannelEncodingDefaultDesc() { return QString::null; }
+        virtual QString getChannelEncoding() { return QString(); }
+        virtual QString getChannelEncodingDefaultDesc() { return QString(); }
         bool isChannelEncodingSupported() const;
 
         /** Force updateInfo(info) to be emitted.

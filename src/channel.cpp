@@ -2726,7 +2726,7 @@ QString NickList::completeNick(const QString& pattern, bool& complete, QStringLi
         return found[0];
     }
 
-    return QString::null;
+    return QString();
 }
 
 bool NickList::containsNick(const QString& nickname)

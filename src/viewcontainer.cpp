@@ -1681,7 +1681,7 @@ QString ViewContainer::currentViewTitle()
     }
     else
     {
-        return QString::null;
+        return QString();
     }
 }
 

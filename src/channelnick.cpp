@@ -182,7 +182,7 @@ QString ChannelNick::getNickname() const
     if ( this )
         return nickInfo->getNickname();
     else
-        return QString::null;
+        return QString();
 }
 
 QString ChannelNick::getHostmask() const
@@ -190,12 +190,12 @@ QString ChannelNick::getHostmask() const
     if ( this )
         return nickInfo->getHostmask();
     else
-        return QString::null;
+        return QString();
 }
 
 QString ChannelNick::tooltip()
 {
-    //  if(addressee.isEmpty()) return QString::null;
+    //  if(addressee.isEmpty()) return QString();
     KABC::Addressee addressee = nickInfo->getAddressee();
     QString strTooltip;
     QTextStream tooltip( &strTooltip, IO_WriteOnly );
@@ -220,7 +220,7 @@ QString ChannelNick::tooltip()
     }
     tooltip << "</table></qt>";
     //kdDebug() << strTooltip << endl;
-    //if(!dirty) return QString::null;
+    //if(!dirty) return QString();
     return strTooltip;
 }
 
