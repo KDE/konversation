@@ -74,7 +74,7 @@ class KIMIface : virtual public DCOPObject
     /**
      * Obtain the IM app's idea of the contact's display name
      * Useful if KABC lookups may be too slow
-     * @param KABC uid.
+     * @param uid KABC uid.
      * @return The corresponding display name.
      */
     virtual QString displayName( const QString & uid ) = 0;
@@ -154,7 +154,7 @@ class KIMIface : virtual public DCOPObject
     /**
      * Send the file to the contact
      * @param uid the KABC uid you are sending to.
-     * @param sourceURL a @ref KURL to send.
+     * @param sourceURL a KURL to send.
      * @param altFileName an alternate filename describing the file
      * @param fileSize file size in bytes
      */

@@ -101,7 +101,7 @@ class DccTransferRecv : public DccTransfer
          * a directory.
          * Note: If the directory already exists, returns true.
          *
-         * @param A url for the directory to create.
+         * @param dirURL A url for the directory to create.
          * @return True if the directory now exists.  False if there was a problem and the directory doesn't exist.
          */
         bool createDirs(const KURL &dirURL) const;

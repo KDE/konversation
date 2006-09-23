@@ -77,7 +77,7 @@ class KonversationApplication : public KUniqueApplication
         Server* getServerByName(const QString& name);
 
         /** For dcop and addressbook, a user can be specified as user@irc.server.net
-         *  or user@servergroup or using the unicode separator symbol 0xE120 instead
+         *  or user\@servergroup or using the unicode separator symbol 0xE120 instead
          *  of the "@".  This function takes a string like the above examples, and
          *  modifies ircnick and serverOrGroup to contain the split up string.  If
          *  the string doesn't have an @ or 0xE120, ircnick is set to the

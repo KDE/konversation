@@ -351,7 +351,7 @@ namespace Konversation
      * If we are connected to any of the servers that they are on, and we don't find them, return 1 (offline)
      * If we find them, but they are set to away then return 3 (away)
      * If we are connected to none of the servers that they are on, return 0 (unknown)
-     * @param Addressbook contact you want to know of the presence of
+     * @param addressee Addressbook contact you want to know of the presence of
      * @return 0 (unknown), 1 (offline), 3 (away), 4 (online)
      */
     int AddressbookBase::presenceStatusByAddressee(const KABC::Addressee &addressee)

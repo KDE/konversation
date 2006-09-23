@@ -259,7 +259,7 @@ void Addressbook::chatWithContact( const QString &uid )
 /**
  * Send the file to the contact
  * @param uid the KABC uid you are sending to.
- * @param sourceURL a @ref KURL to send.
+ * @param sourceURL a KURL to send.
  * @param altFileName an alternate filename describing the file
  * @param fileSize file size in bytes
  */
@@ -296,10 +296,10 @@ void Addressbook::sendFile(const QString &uid, const KURL &sourceURL, const QStr
 /**
  * Add a contact to the contact list
  * @param contactId the protocol specific identifier for the contact, eg UIN for ICQ, screenname for AIM, nick for IRC.
- * @param protocol the protocol, eg one of "AIMProtocol", "MSNProtocol", "ICQProtocol", ...
+ * @param protocolId the protocol, eg one of "AIMProtocol", "MSNProtocol", "ICQProtocol", ...
  * @return whether the add succeeded.  False may signal already present, protocol not supported, or add operation not supported.
  */
-bool Addressbook::addContact( const QString &/*contactId*/, const QString &/*protocol*/ ) {
+bool Addressbook::addContact( const QString &/*contactId*/, const QString &/*protocolId*/ ) {
 focusAndShowErrorMessage(i18n("Another KDE application tried to use Konversation to add a contact.  Konversation does support this."));
 return false;
 //Nicks are auto added if they are put in the addressbook - I don' think there is anything useful I can do.
