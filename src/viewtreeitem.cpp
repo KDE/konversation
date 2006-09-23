@@ -305,7 +305,7 @@ void ViewTreeItem::setup()
         int MARGIN = 2;
 
         QRect textRect = listView()->fontMetrics().boundingRect(0, 0, /*width=*/1, 500000, Qt::AlignAuto | Qt::AlignTop | Qt::ShowPrefix, text(/*column=*/0));
-        int height = MARGIN + QMAX(LED_ICON_SIZE, textRect.height()) + MARGIN;
+        int height = MARGIN + kMax(LED_ICON_SIZE, textRect.height()) + MARGIN;
         setHeight(height);
     }
     else
@@ -363,7 +363,7 @@ void ViewTreeItem::paintCell(QPainter* painter, const QColorGroup& /* cg */, int
         int xRound = MARGIN;
         int yRound = MARGIN;
         int hRound = height() - 2 * MARGIN;
-        int wRound = QMIN(LED_ICON_SIZE + MARGIN + textRect.width() + hRound/2,  width - MARGIN - MARGIN);
+        int wRound = kMin(LED_ICON_SIZE + MARGIN + textRect.width() + hRound/2,  width - MARGIN - MARGIN);
 
         if (wRound > 0)
         {

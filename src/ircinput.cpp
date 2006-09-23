@@ -150,7 +150,7 @@ QSize IRCInput::sizeHint() const
 
     int ObscurePadding = 4;
     int f=2*frameWidth();
-    int w=12 * (QMAX(fontMetrics().lineSpacing(),14) + f + ObscurePadding);
+    int w=12 * (kMax(fontMetrics().lineSpacing(),14) + f + ObscurePadding);
     int h=m_lastHeight - m_qtBoxPadding + f + ObscurePadding;
     return QSize(w,h);
 }
