@@ -70,7 +70,7 @@ namespace Konversation
 
             // pattern found?
             // TODO: cc may be a regexp character here ... we should escape it then
-            if(line.find(QRegExp('^'+cc+aliasPattern+"\\b"))!=-1)
+            if (line.startsWith(cc+aliasPattern))
             {
                 QString aliasReplace;
 

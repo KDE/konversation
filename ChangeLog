@@ -5,6 +5,12 @@ Changes since 1.0:
 - Fix ignoring nicknames with [ or ] in them.
 - Make protocol handler work with the changed DCOP interface,
   don't hand bashism to sh.
+- Fix command aliases replacement tripping over regexp special chars
+  and breaking all internal commands.
+- Fix a bug where LTR text embedded in lines determined to be RTL would
+  be reversed.
+- Significantly improve line direction guessing based on plurality, i.e.
+  direction is now determined by how many LTR or RTL chars are preseent.
 
 -------------------------------------------------------------------------------
 
