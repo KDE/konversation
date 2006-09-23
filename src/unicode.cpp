@@ -1,22 +1,17 @@
 /*
- *************************************************************************
- *                                                                       *
- * This program is free software; you can redistribute it and/or modify  *
- * it under the terms of the GNU General Public License as published by  *
- * the Free Software Foundation; either version 2 of the License, or     *
- * (at your option) any later version.                                   *
- *                                                                       *
- *************************************************************************
- * The Original Code is mozilla.org code.
- *
- * The Initial Developer of the Original Code is
- * Netscape Communications Corporation.
- * Portions created by the Initial Developer are Copyright (C) 1998
- * the Initial Developer. All Rights Reserved.
- */
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; either version 2 of the License, or
+  (at your option) any later version.
+*/
 
-/* See http://lxr.mozilla.org/mozilla/source/modules/rdf/src/utils.c#540 */
-/* Modified by İsmail Dönmez <ismail@kde.org> (C) 2005 for Konversation */
+/*
+  The Original Code is mozilla.org code.
+  See http://lxr.mozilla.org/mozilla/source/modules/rdf/src/utils.c#540
+
+  Copyright (C) 1998 Netscape Communications Corporation
+  Copyright (C) 2005 Ismail Donmez <ismail@kde.org>
+*/
 
 #define kLeft1BitMask  0x80
 #define kLeft2BitsMask 0xC0

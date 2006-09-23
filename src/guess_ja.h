@@ -1,7 +1,7 @@
 /*
  * This file is part of the KDE libraries
  *
- * Copyright (c) 2000-2003 Shiro Kawai, All rights reserved.
+ * Copyright (c) 2000-2003 Shiro Kawai <shirok@users.sourceforge.net>
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions

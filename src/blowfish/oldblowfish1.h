@@ -1,10 +1,11 @@
-// blowfish1.h     interface file for mc_blowfish.cpp
-// _THE BLOWFISH ENCRYPTION ALGORITHM_
-// by Bruce Schneier, 1996, Applied Cryptography, 2nd ed., John Wiley & Sons
-// Revised code--3/20/94
-// Converted to C++ class 5/96, Jim Conger
-//---------------------------------------------------------------------------
+/*
+  blowfish1.h     interface file for mc_blowfish.cpp
+  _THE BLOWFISH ENCRYPTION ALGORITHM_
+  by Bruce Schneier, 1996, Applied Cryptography, 2nd ed., John Wiley & Sons
 
+  Copyright (C) 1994 Bruce Schneier
+  Copyright (C) 1996 Jim Conger
+*/
 
 //---------------------------------------------------------------------------
 // To prevent multiple includes
