@@ -362,8 +362,8 @@ bool KonversationMainWindow::queryClose()
         return false;
     }
 
-    if (!Preferences::showTrayIcon() &&
-        confirmQuit() == KMessageBox::Cancel) return false;
+    if (!Preferences::showTrayIcon() && confirmQuit() == KMessageBox::Cancel)
+        return false;
 
     m_viewContainer->silenceViews();
 

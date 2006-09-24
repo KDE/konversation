@@ -125,6 +125,7 @@ class KonversationMainWindow : public KMainWindow
         void openURL(const QString& url, const QString& title);
 
     protected:
+        int confirmQuit();
         bool queryClose();
         virtual bool event(QEvent* e);
 
@@ -138,8 +139,6 @@ class KonversationMainWindow : public KMainWindow
         KonviBookmarkHandler* m_bookmarkHandler;
         KonviSettingsDialog *m_settingsDialog;
         Konversation::ServerListDialog* m_serverListDialog;
-
-        int confirmQuit();
 
         /** @see settingsChangedSlot() */
         bool m_hasDirtySettings;
