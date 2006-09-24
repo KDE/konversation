@@ -139,6 +139,8 @@ class KonversationMainWindow : public KMainWindow
         KonviSettingsDialog *m_settingsDialog;
         Konversation::ServerListDialog* m_serverListDialog;
 
+        int confirmQuit();
+
         /** @see settingsChangedSlot() */
         bool m_hasDirtySettings;
         bool m_closeApp;

@@ -241,7 +241,7 @@ the Free Software Foundation; either version 2 of the License, or
                         <number>65535</number>
                     </property>
                     <property name="minValue">
-                        <number>1025</number>
+                        <number>1026</number>
                     </property>
                 </widget>
                 <widget class="QLabel" row="1" column="3">
@@ -269,7 +269,7 @@ the Free Software Foundation; either version 2 of the License, or
                         <number>65535</number>
                     </property>
                     <property name="minValue">
-                        <number>1026</number>
+                        <number>1027</number>
                     </property>
                 </widget>
                 <widget class="QCheckBox" row="0" column="0">
@@ -308,7 +308,7 @@ the Free Software Foundation; either version 2 of the License, or
                         <number>65535</number>
                     </property>
                     <property name="minValue">
-                        <number>1025</number>
+                        <number>1026</number>
                     </property>
                 </widget>
                 <widget class="QLabel" row="0" column="3">
@@ -336,7 +336,7 @@ the Free Software Foundation; either version 2 of the License, or
                         <number>65535</number>
                     </property>
                     <property name="minValue">
-                        <number>1026</number>
+                        <number>1027</number>
                     </property>
                 </widget>
             </grid>

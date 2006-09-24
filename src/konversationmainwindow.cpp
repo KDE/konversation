@@ -317,8 +317,28 @@ KonversationMainWindow::~KonversationMainWindow()
     Preferences::writeConfig();
 }
 
+int KonversationMainWindow::confirmQuit()
+{
+    KonversationApplication *konvApp=static_cast<KonversationApplication *>(kapp);
+
+    QPtrList<Server> serverList = konvApp->getServerList();
+    if (serverList.isEmpty()) return KMessageBox::Continue;
+
+    int result=KMessageBox::warningContinueCancel(
+        this,
+        i18n("Are you sure you want to quit Konversation?"),
+        i18n("Quit Konversation"),
+        i18n("Quit"),
+        "systemtrayquitKonversation");
+    return result;
+}
+
 void KonversationMainWindow::quitProgram()
 {
+    if (Preferences::showTrayIcon() &&
+        sender() != m_trayIcon &&
+        confirmQuit() == KMessageBox::Cancel) return;
+
     // will call queryClose()
     m_closeApp = true;
     close();
@@ -341,6 +361,9 @@ bool KonversationMainWindow::queryClose()
 
         return false;
     }
+
+    if (!Preferences::showTrayIcon() &&
+        confirmQuit() == KMessageBox::Cancel) return false;
 
     m_viewContainer->silenceViews();
 

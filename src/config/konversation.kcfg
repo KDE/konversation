@@ -597,7 +597,7 @@
       <whatsthis></whatsthis>
     </entry>
     <entry key="SendPortsFirst" type="Int"  name="DccSendPortsFirst">
-      <default>1025</default>
+      <default>1026</default>
       <label></label>
       <whatsthis></whatsthis>
     </entry>
@@ -612,7 +612,7 @@
       <whatsthis></whatsthis>
     </entry>
     <entry key="ChatPortsFirst" type="Int" name="DccChatPortsFirst">
-      <default>1025</default>
+      <default>1026</default>
       <label></label>
       <whatsthis></whatsthis>
     </entry>
