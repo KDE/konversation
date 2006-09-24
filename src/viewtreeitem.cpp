@@ -327,7 +327,7 @@ void ViewTreeItem::paintFocus(QPainter* /* p */, const QColorGroup& /* cg */, co
     return;
 }
 
-void ViewTreeItem::paintCell(QPainter* painter, const QColorGroup& /* cg */, int /* column */, int width, int /* align */)
+void ViewTreeItem::paintCell(QPainter* p, const QColorGroup& /* cg */, int /* column */, int width, int /* align */)
 {
     // Workaround a Qt bug:
     // When the splitter is moved to hide the tree view and then the application is restarted,
@@ -338,8 +338,8 @@ void ViewTreeItem::paintCell(QPainter* painter, const QColorGroup& /* cg */, int
     int MARGIN = 2;
 
     // Bufferize the drawing of items.
-    QPixmap theBuffer(width, height());
-    QPainter thePainter(&theBuffer);
+    QPixmap buffer(width, height());
+    QPainter painter(&buffer);
 
     QColor textColor = isSelected() ? KGlobalSettings::highlightedTextColor() : getColor();
     QColor background = isSelected() ? KGlobalSettings::highlightColor() : listView()->paletteBackgroundColor();
@@ -347,7 +347,7 @@ void ViewTreeItem::paintCell(QPainter* painter, const QColorGroup& /* cg */, int
         ? Preferences::color(Preferences::AlternateBackground) : KGlobalSettings::alternateBackgroundColor();
 
     // Fill in background.
-    thePainter.fillRect(0, 0, width, height(), background);
+    painter.fillRect(0, 0, width, height(), background);
 
     QColor bgColor  = listView()->paletteBackgroundColor();
     QColor selColor = m_isHighlighted ? background : KGlobalSettings::highlightColor();
@@ -388,24 +388,24 @@ void ViewTreeItem::paintCell(QPainter* painter, const QColorGroup& /* cg */, int
             QImage imageToScale = buffer.convertToImage();
             QPixmap pmScaled;
             pmScaled.convertFromImage(imageToScale.smoothScale(wRound, hRound));
-            thePainter.drawPixmap(xRound, yRound, pmScaled);
+            painter.drawPixmap(xRound, yRound, pmScaled);
             textWidth -= hRound/2;
         }
 
         if (isSelected() || m_isHighlighted)
         {
-            thePainter.setPen(bgColor);
-            thePainter.drawPoint(0, 0);
-            thePainter.drawPoint(1, 0);
-            thePainter.drawPoint(0, 1);
-            thePainter.drawPoint(0, height() - 1);
-            thePainter.drawPoint(1, height() - 1);
-            thePainter.drawPoint(0, height() - 2);
-            thePainter.setPen(midColor);
-            thePainter.drawPoint(2, 0);
-            thePainter.drawPoint(0, 2);
-            thePainter.drawPoint(2, height() - 1);
-            thePainter.drawPoint(0, height() - 3);
+            painter.setPen(bgColor);
+            painter.drawPoint(0, 0);
+            painter.drawPoint(1, 0);
+            painter.drawPoint(0, 1);
+            painter.drawPoint(0, height() - 1);
+            painter.drawPoint(1, height() - 1);
+            painter.drawPoint(0, height() - 2);
+            painter.setPen(midColor);
+            painter.drawPoint(2, 0);
+            painter.drawPoint(0, 2);
+            painter.drawPoint(2, height() - 1);
+            painter.drawPoint(0, height() - 3);
         }
     }
 
@@ -417,24 +417,24 @@ void ViewTreeItem::paintCell(QPainter* painter, const QColorGroup& /* cg */, int
 
     if (itemBelow() && itemBelow()->isSelected())
     {
-        thePainter.setPen(selColor);
-        thePainter.drawPoint(width - 1, height() - 1);
-        thePainter.drawPoint(width - 2, height() - 1);
-        thePainter.drawPoint(width - 1, height() - 2);
-        thePainter.setPen(midColor);
-        thePainter.drawPoint(width - 3, height() - 1);
-        thePainter.drawPoint(width - 1, height() - 3);
+        painter.setPen(selColor);
+        painter.drawPoint(width - 1, height() - 1);
+        painter.drawPoint(width - 2, height() - 1);
+        painter.drawPoint(width - 1, height() - 2);
+        painter.setPen(midColor);
+        painter.drawPoint(width - 3, height() - 1);
+        painter.drawPoint(width - 1, height() - 3);
     }
 
     if (itemAbove() && itemAbove()->isSelected())
     {
-        thePainter.setPen(selColor);
-        thePainter.drawPoint(width - 1, 0);
-        thePainter.drawPoint(width - 2, 0);
-        thePainter.drawPoint(width - 1, 1);
-        thePainter.setPen(midColor);
-        thePainter.drawPoint(width - 3, 0);
-        thePainter.drawPoint(width - 1, 2);
+        painter.setPen(selColor);
+        painter.drawPoint(width - 1, 0);
+        painter.drawPoint(width - 2, 0);
+        painter.drawPoint(width - 1, 1);
+        painter.setPen(midColor);
+        painter.drawPoint(width - 3, 0);
+        painter.drawPoint(width - 1, 2);
     }
 
     if (!m_isSeparator)
@@ -449,7 +449,7 @@ void ViewTreeItem::paintCell(QPainter* painter, const QColorGroup& /* cg */, int
             if (pixmap(0)->width() < LED_ICON_SIZE)
                 xPixmap  = MARGIN + ((LED_ICON_SIZE - pixmap(0)->width()) / 2);
 
-            thePainter.drawPixmap(xPixmap, yPixmap, *pixmap(0));
+            painter.drawPixmap(xPixmap, yPixmap, *pixmap(0));
         }
 
         // Enough space left to draw icon+text?
@@ -463,24 +463,24 @@ void ViewTreeItem::paintCell(QPainter* painter, const QColorGroup& /* cg */, int
 
             QString theText = getName();
 
-            if (painter->fontMetrics().width(theText) > textWidth)
-                theText = KStringHandler::rPixelSqueeze(theText, painter->fontMetrics(), textWidth);
+            if (p->fontMetrics().width(theText) > textWidth)
+                theText = KStringHandler::rPixelSqueeze(theText, p->fontMetrics(), textWidth);
 
-            thePainter.setPen(textColor);
-            thePainter.setFont(listView()->font());
-            thePainter.drawText(xText, 0, textWidth, height(), Qt::AlignAuto | Qt::AlignVCenter, theText);
+            painter.setPen(textColor);
+            painter.setFont(listView()->font());
+            painter.drawText(xText, 0, textWidth, height(), Qt::AlignAuto | Qt::AlignVCenter, theText);
         }
     }
     else
     {
         QColor lineColor = Preferences::inputFieldsBackgroundColor()
             ? Preferences::color(Preferences::AlternateBackground) : KGlobalSettings::alternateBackgroundColor();
-        thePainter.setPen(lineColor);
-        thePainter.drawLine(0, 5, width, 5);
+        painter.setPen(lineColor);
+        painter.drawLine(0, 5, width, 5);
     }
 
-    thePainter.end();
+    painter.end();
 
     // Apply the buffer.
-    painter->drawPixmap(0, 0, theBuffer);
+    p->drawPixmap(0, 0, buffer);
 }

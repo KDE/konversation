@@ -61,7 +61,7 @@ class ViewTreeItem : public QListViewItem
 
         void setup();
         void paintFocus(QPainter* p, const QColorGroup& cg, const QRect& r);
-        void paintCell(QPainter* painter, const QColorGroup& cg, int column, int width, int align);
+        void paintCell(QPainter* p, const QColorGroup& cg, int column, int width, int align);
 
         QColor mixColor(const QColor &color1, const QColor &color2);
 
