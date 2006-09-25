@@ -87,7 +87,9 @@ namespace Konversation
         QWhatsThis::add(m_serverLBox, i18n("This is a list of IRC Servers in the network. When connecting to the network, Konversation will attempt to connect to the top server first. If this fails, it will attempt the second server. If this fails, it will attempt the third, and so on. At least one server must be specified. Click a server to highlight it."));
         QPushButton* addServerBtn = new QPushButton(i18n("Add..."), serverGBox);
         QPushButton* changeServerBtn = new QPushButton(i18n("Edit..."), serverGBox);
-        QPushButton* removeServerBtn = new QPushButton(i18n("Delete"), serverGBox);
+        QToolButton* removeServerBtn = new QToolButton(/*i18n("Delete"),*/ serverGBox);
+        removeServerBtn->setIconSet(SmallIconSet("editdelete"));
+        removeServerBtn->setTextLabel(i18n("Delete"));
         m_upServerBtn = new QToolButton(serverGBox);
         m_upServerBtn->setIconSet(SmallIconSet("up"));
         m_upServerBtn->setAutoRepeat(true);
@@ -105,13 +107,13 @@ namespace Konversation
         connect(m_downServerBtn, SIGNAL(clicked()), this, SLOT(moveServerDown()));
 
         serverLayout->setColStretch(0, 10);
-        serverLayout->setRowStretch(4, 10);
-        serverLayout->addMultiCellWidget(m_serverLBox, 0, 4, 0, 0);
-        serverLayout->addMultiCellWidget(addServerBtn, 0, 0, 1, 4);
-        serverLayout->addMultiCellWidget(changeServerBtn, 1, 1, 1, 4);
-        serverLayout->addMultiCellWidget(removeServerBtn, 2, 2, 1, 4);
-        serverLayout->addWidget(m_upServerBtn, 3, 2);
-        serverLayout->addWidget(m_downServerBtn, 3, 3);
+        serverLayout->setRowStretch(0, 10);
+        serverLayout->addMultiCellWidget(m_serverLBox, 0, 0, 0, 4);
+        serverLayout->addWidget(addServerBtn, 1, 0);
+        serverLayout->addWidget(changeServerBtn, 1, 1);
+        serverLayout->addWidget(removeServerBtn, 1, 2);
+        serverLayout->addWidget(m_upServerBtn, 1, 3);
+        serverLayout->addWidget(m_downServerBtn, 1, 4);
 
         QGroupBox* channelGBox = new QGroupBox(0, Qt::Horizontal, i18n("Auto Join Channels"), groupWidget);
         channelGBox->setMargin(marginHint());
@@ -121,7 +123,9 @@ namespace Konversation
         QWhatsThis::add(m_channelLBox, i18n("Optional. This is a list of the channels that will be automatically joined once Konversation has connected to a server. You may leave this blank if you wish to not automatically join any channels."));
         QPushButton* addChannelBtn = new QPushButton(i18n("Add..."), channelGBox);
         QPushButton* changeChannelBtn = new QPushButton(i18n("Edit..."), channelGBox);
-        QPushButton* removeChannelBtn = new QPushButton(i18n("Delete"), channelGBox);
+        QToolButton* removeChannelBtn = new QToolButton(/*i18n("Delete"),*/ channelGBox);
+        removeChannelBtn->setIconSet(SmallIconSet("editdelete"));
+        removeChannelBtn->setTextLabel(i18n("Delete"));
         m_upChannelBtn = new QToolButton(channelGBox);
         m_upChannelBtn->setIconSet(SmallIconSet("up"));
         m_upChannelBtn->setAutoRepeat(true);
@@ -139,13 +143,13 @@ namespace Konversation
         connect(m_downChannelBtn, SIGNAL(clicked()), this, SLOT(moveChannelDown()));
 
         channelLayout->setColStretch(0, 10);
-        channelLayout->setRowStretch(4, 10);
-        channelLayout->addMultiCellWidget(m_channelLBox, 0, 4, 0, 0);
-        channelLayout->addMultiCellWidget(addChannelBtn, 0, 0, 1, 4);
-        channelLayout->addMultiCellWidget(changeChannelBtn, 1, 1, 1, 4);
-        channelLayout->addMultiCellWidget(removeChannelBtn, 2, 2, 1, 4);
-        channelLayout->addWidget(m_upChannelBtn, 3, 2);
-        channelLayout->addWidget(m_downChannelBtn, 3, 3);
+        channelLayout->setRowStretch(0, 10);
+        channelLayout->addMultiCellWidget(m_channelLBox, 0, 0, 0, 4);
+        channelLayout->addWidget(addChannelBtn, 1, 0);
+        channelLayout->addWidget(changeChannelBtn, 1, 1);
+        channelLayout->addWidget(removeChannelBtn, 1, 2);
+        channelLayout->addWidget(m_upChannelBtn, 1, 3);
+        channelLayout->addWidget(m_downChannelBtn, 1, 4);
 
         mainLayout->addWidget(nameLbl, 0, 0);
         mainLayout->addMultiCellWidget(m_nameEdit, 0, 0, 1, 2);
