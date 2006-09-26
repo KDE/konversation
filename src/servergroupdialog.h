@@ -21,6 +21,7 @@ class QComboBox;
 class QListBox;
 class QCheckBox;
 class QToolButton;
+class ServerGroupDialogUI;
 
 namespace Konversation
 {
@@ -28,7 +29,7 @@ namespace Konversation
     class ServerGroupDialog : public KDialogBase
     {
         Q_OBJECT
-            public:
+        public:
             explicit ServerGroupDialog(const QString& title, QWidget* parent = 0, const char* name = 0);
             ~ServerGroupDialog();
 
@@ -62,19 +63,7 @@ namespace Konversation
             void editIdentity();
 
         private:
-            QLineEdit* m_nameEdit;
-            QComboBox* m_identityCBox;
-            QLineEdit* m_commandEdit;
-            QListBox* m_serverLBox;
-            QListBox* m_channelLBox;
-            QCheckBox* m_autoConnectCBox;
-            ServerList m_serverList;
-            ChannelList m_channelList;
-            ChannelList m_channelHistory;
-            QToolButton* m_upServerBtn;
-            QToolButton* m_downServerBtn;
-            QToolButton* m_upChannelBtn;
-            QToolButton* m_downChannelBtn;
+            ServerGroupDialogUI* m_mainWidget;
             bool m_expanded;
             bool m_enableNotifications;
             int m_id;
@@ -84,6 +73,9 @@ namespace Konversation
 
             bool m_editedServer;
             uint m_editedServerIndex;
+            ServerList m_serverList;
+            ChannelList m_channelList;
+            ChannelList m_channelHistory;
     };
 
 }
