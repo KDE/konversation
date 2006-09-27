@@ -16,6 +16,11 @@ Changes since 1.0:
   page's control (one unified list entry for both quit warnings).
 - Change the lower boundary for the default DCC port range to 1026
   to avoid clashes with the often-blocked Microsoft RPC port 1025.
+- The "Edit Network" dialog has been redesigned to be cleaner and easier
+  to use.
+- Add a new preference [OSD]OSDCheckDesktopLock to be set in the config
+  file allowing to disable the DCOP-based screensaver check that pre-
+  vents the OSD from being shown in non-KDE environments.
 
 -------------------------------------------------------------------------------
 

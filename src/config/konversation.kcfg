@@ -491,6 +491,11 @@
       <label></label>
       <whatsthis></whatsthis>
     </entry>
+    <entry key="OSDCheckDesktopLock" type="Bool">
+      <default>true</default>
+      <label></label>
+      <whatsthis></whatsthis>
+    </entry>
   </group>
   <group name="Notify List">
     <entry key="NotifyDelay" type="Int">

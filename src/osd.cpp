@@ -12,7 +12,9 @@ the Free Software Foundation; either version 2 of the License, or
   Copyright (C) 2004 Michael Goettsche <michael.goettsche@kdemail.net>
 */
 
+#include "konversationapplication.h"
 #include "osd.h"
+#include "common.h"
 
 #include <qapplication.h>
 #include <qbitmap.h>
@@ -25,8 +27,6 @@ the Free Software Foundation; either version 2 of the License, or
 #include <kglobalsettings.h>                      //unsetColors()
 
 #include <X11/Xlib.h>                             //reposition()
-
-#include "common.h"
 
 OSDWidget::OSDWidget( const QString &appName, QWidget *parent, const char *name )
 : QWidget( parent, name, WNoAutoErase | WStyle_Customize | WX11BypassWM | WStyle_StaysOnTop | WStyle_Tool )
@@ -402,6 +402,9 @@ void OSDPreviewWidget::mouseMoveEvent( QMouseEvent *e )
                                                   // static
 OSDWidget::KDesktopLockStatus OSDWidget::isKDesktopLockRunning()
 {
+    if (!Preferences::oSDCheckDesktopLock())
+	return NotLocked;
+
     DCOPClient *dcopptr = KApplication::kApplication()->dcopClient();
 
     // Can't tell, very weird, err on the side of safety.
