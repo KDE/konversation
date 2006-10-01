@@ -234,6 +234,7 @@ bool OSDWidget::event( QEvent *e )
 void OSDWidget::mousePressEvent( QMouseEvent* )
 {
     hide();
+    emit hidden();
 }
 
 void OSDWidget::show()

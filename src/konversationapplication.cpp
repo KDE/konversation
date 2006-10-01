@@ -119,6 +119,7 @@ int KonversationApplication::newInstance()
         connect(mainWindow, SIGNAL(showQuickConnectDialog()), this, SLOT(openQuickConnectDialog()) );
         connect(Preferences::self(), SIGNAL(updateTrayIcon()), mainWindow, SLOT(updateTrayIcon()) );
         connect(this, SIGNAL(prefsChanged()), mainWindow, SIGNAL(prefsChanged()) );
+        connect(osd, SIGNAL(hidden()), mainWindow, SIGNAL(endNotification()));
         // take care of user style changes, setting back colors and stuff
 
         // apply GUI settings

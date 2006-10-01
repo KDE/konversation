@@ -21,6 +21,8 @@ Changes since 1.0:
 - Add a new preference [OSD]OSDCheckDesktopLock to be set in the config
   file allowing to disable the DCOP-based screensaver check that pre-
   vents the OSD from being shown in non-KDE environments.
+- Stop systray flashing when cancelling a notification by clicking the
+  OSD.
 
 -------------------------------------------------------------------------------
 

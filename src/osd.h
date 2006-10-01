@@ -28,7 +28,8 @@ class MetaBundle;
 class OSDWidget : public QWidget
 {
     Q_OBJECT
-        public:
+
+    public:
         enum Alignment { Left, Middle, Center, Right };
 
         explicit OSDWidget(const QString &appName, QWidget *parent = 0, const char *name = "osd");
@@ -47,6 +48,9 @@ class OSDWidget : public QWidget
         int screen()    { return m_screen; }
         int alignment() { return m_alignment; }
         int y()         { return m_y; }
+
+    signals:
+        void hidden();
 
     public slots:
         //TODO rename show, scrap removeOSD, just use hide() <- easier to learn
