@@ -1534,7 +1534,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     if(getAutomaticRequest("USERHOST",nick)==0)
                     {
                         server->appendMessageToFrontmost(i18n("Userhost"),
-                            i18n("%1%2 is %3%4.")
+                            i18n("%1 = nick, %2 = shows if nick is op, %3 = hostmask, %4 = shows away", "%1%2 is %3%4.")
                             .arg(nick)
                             .arg((ircOp) ? i18n(" (IRC Operator)") : QString::null)
                             .arg(mask)
