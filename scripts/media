@@ -7,7 +7,7 @@
 #(at your option) any later version.
 
 # Copyright 2006 Eli J. MacKenzie
-# Inspired by `media` (Copyright 2005 İsmail Dönmez (Resistence is futile, turn on unicode!))
+# Inspired by `media` (Copyright 2005 İsmail Dönmez)
 
 
 # If you wish to customize the formatting strings, do so in this table.
@@ -40,7 +40,7 @@ formatStrings = {
 formatVariables={'intro': 'is listening to'}
 
 
- ###############################
+###############################
 ## The Real work is done below
 
 import os
