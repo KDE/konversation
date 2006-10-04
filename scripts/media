@@ -16,12 +16,12 @@
 # See Player.format() for how these are used.
 
 
-#Don't change the next three.
+#Changing these 3 values will likely cause the script to fail
 Title =4
 Artist=2
 Album =1
 
-#If you don't like self titled, subtract 8
+#To disable self-titled (eponymous) checking, subtract 8
 SelfTitled=11
 
 outputFormat="/me $intro $info [$player]"
@@ -37,11 +37,32 @@ formatStrings = {
     Album              : "$album", #1,9
 }
 
-formatVariables={'intro': 'is listening to'}
+#Intro defaults to "audio" when a specific type was not demanded
+formatVariables={'audio': 'is listening to', 'video': 'is watching'}
+
+## Static player ranking list
+## If you add a new player, you must add it here or it won't get checked when in audio-only or video-only modes.
+playerRankings= {
+    'video' :['kaffeine','noatun'],
+    'audio' :['Amarok', 'JuK', 'Noatun', 'Kaffeine', 'kscd', 'XMMS', 'Yammi']
+}
+
+## Title, album and artist fields to be quoted depending on contents
+# List the possible trigger characters here.
+# If you want a '-', it must be first. if you want a '^', it must be last.
+SIMPLE_FIXUP = '' #I use ' '
+
+# If you want to use a regex for the above, specify it here in which case it will be used
+REGEX_FIXUP = ''
+
+# Quote chars to use:
+QUOTE_BEFORE = '"'
+QUOTE_AFTER  = '"'
 
 
-###############################
-## The Real work is done below
+  ###############################
+ ## The Real work is done below
+#############################
 
 import os
 import sys
@@ -110,7 +131,14 @@ class Player(object):
 
         Uses formatStrings from above."""
         #Update args last to prevent non-sensical override in formatVariables
-        self._format.update({'title':title, 'artist':artist, 'album':album})
+        x={'title':title, 'artist':artist, 'album':album}
+        print x
+
+        if FIXUP:
+            for i,j in x.items():
+                if re.search(FIXUP,j):
+                    x[i]='%s%s%s'%(QUOTE_BEFORE,j,QUOTE_AFTER)
+        self._format.update(x)
         n=0
         if title:
             n|=4 #Still binary to make you read the code ;p
@@ -252,7 +280,7 @@ def handleErrors(playerList, kind):
         kind= ' '
     x=any([i.running for i in playerList])
     if x:
-        l=[i.displayName for i in playerList if i.running]
+        l=[i.displayName for i in playerList if i.isRunning()]
         err= "Nothing is playing in %s"%(', '.join(l))
     else:
         err= "No%splayers are running"%(kind,)
@@ -264,7 +292,13 @@ def run(kind):
         play=PLAYERS
     else:
         if kind in ['audio', 'video']:
-            play=[i for i in PLAYERS if kind in i.type]
+            unsorted=dict([(i.displayName.lower(),i) for i in PLAYERS if kind in i.type])
+            play=[unsorted.pop(i.lower(),Player("ImproperlySupported")) for i in playerRankings[kind]]
+            if len(unsorted):
+                play.extend(unsorted.values)
+            global outputFormat
+            outputFormat=string.Template(outputFormat).safe_substitute({'intro':'$'+kind})
+            print outputFormat
         else:
             play=[i for i in PLAYERS if i.displayName.lower() == kind]
             try:
@@ -284,17 +318,27 @@ def run(kind):
 
 DCOP_ITEMS=subprocess.Popen(['dcop'], stdout=subprocess.PIPE).communicate()[0]  #re.findall("^amarok(?:-\\d*)?$",l,re.M)
 
+# Fudge.
+formatVariables['intro']=formatVariables['audio']
+
 # Add your new players here. No more faulty logic due to copy+paste.
-# (yeah, ok, so all the players are all here. *sigh*)
+
 PLAYERS = [
 AmarokPlayer(),
 DCOPPlayer("JuK","juk","Player trackProperty Title","Player trackProperty Artist","Player trackProperty Album"),
 DCOPPlayer("Kaffeine","kaffeine","KaffeineIface title","KaffeineIface artist","KaffeineIface album",playerType='video'),
-DCOPPlayer("Noatun",'noatun',"Noatun title",playerType='video'),
-DCOPPlayer("kscd","kscd","CDPlayer currentTrackTitle","CDPlayer currentArtist","CDPlayer currentAlbum"),
+DCOPPlayer("Noatun",'noatun',"Noatun title",playerType='video, audio'),
+DCOPPlayer("KsCD","kscd","CDPlayer currentTrackTitle","CDPlayer currentArtist","CDPlayer currentAlbum"),
 XmmsPlayer('XMMS'),
 DCOPPlayer("Yammi","yammi","YammiPlayer songTitle","YammiPlayer songArtist","YammiPlayer songAlbum"),
 ]
+
+if REGEX_FIXUP:
+    FIXUP=REGEX_FIXUP
+elif SIMPLE_FIXUP:
+    FIXUP="[%s]"%(SIMPLE_FIXUP)
+else:
+    FIXUP=''
 
 # It all comes together right here
 if __name__=="__main__":
@@ -307,7 +351,7 @@ Usage:
         "\00312/media\017 { \00312Player\017 }" - report what is playing in \00312Player\017 if it is supported
 
         Available players are, in the order they will be checked:
-                """ + ', '.join([("%s (%s)"%(i.displayName,i.type[0])) for i in PLAYERS])
+                """ + ', '.join([("%s (%s)"%(i.displayName,i.type)) for i in PLAYERS])
 
         for i in s.splitlines():
             tell(i)
