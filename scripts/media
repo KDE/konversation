@@ -1,218 +1,324 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# Copyright 2005 İsmail Dönmez (Resistance is futile, turn on unicode!)
-# Licensed under GPLv2 or later at your option
 #
-# One media command to rule them all, inspired from Kopete's now listening plugin
+#This program is free software; you can redistribute it and/or modify
+#it under the terms of the GNU General Public License as published by
+#the Free Software Foundation; either version 2 of the License, or
+#(at your option) any later version.
 
-global pyxmmsInstalled;
+# Copyright 2006 Eli J. MacKenzie
+# Inspired by `media` (Copyright 2005 İsmail Dönmez (Resistence is futile, turn on unicode!))
+
+
+# If you wish to customize the formatting strings, do so in this table.
+# Do not change the numbers unless you're changing the logic.
+# Title, artist, and album will be set once the player is queried.
+# See Player.format() for how these are used.
+
+
+#Don't change the next three.
+Title =4
+Artist=2
+Album =1
+
+#If you don't like self titled, subtract 8
+SelfTitled=11
+
+outputFormat="/me $intro $info [$player]"
+formatStrings = {
+    Title+SelfTitled   : "$title by $artist (eponymous)",
+    SelfTitled         : "${artist}'s self-titled album",
+    Title+Artist+Album : "$title by $artist on $album", #7,15
+    Title+Artist       : "$title by $artist", #6,14
+    Title+Album        : "$title from $album", #5,13
+    Album+Artist       : "$album by $artist", #3,11
+    Title              : "$title", #4,12
+    Artist             : "$artist", #2,10
+    Album              : "$album", #1,9
+}
+
+formatVariables={'intro': 'is listening to'}
+
+
+ ###############################
+## The Real work is done below
 
 import os
 import sys
+import re
+import string
 
-port = sys.argv[1]
-server = sys.argv[2]
-target = sys.argv[3]
+try:
+    APP_ID = sys.argv[1]
+    IRC_SERVER = sys.argv[2]
+    TARGET = sys.argv[3]
+except IndexError:
+    print >>sys.stderr, "This script is intended to be run from within Konversation"
+    sys.exit(0)
 
+if (sys.hexversion >> 16) < 0x0204:
+    err="The media script requires Python 2.4"
+    os.popen('dcop %s default error "%s"' %(APP_ID,err))
+    sys.exit(err)
+
+import subprocess
+
+# Python 2.5 has this ...
+try:
+    any(())
+except NameError:
+    def any(data):
+        """Return true of any of the items in the sequence 'data' are true.
+
+        (ie non-zero or not empty)"""
+        try:
+            return reduce(lambda x,y: bool(x) or bool(y), data)
+        except TypeError:
+            return False
+
+def tell(data, feedback='info'):
+    """Report back to the user"""
+    l=['dcop', APP_ID, 'default', feedback]
+    if type(data) is type(''):
+        l.append(data)
+    else:
+        l.extend(data)
+    subprocess.Popen(l).communicate()
+
+class Player(object):
+    def __init__(self, display_name, playerType=None):
+        if playerType is None:
+            self.type = "audio"
+        else:
+            self.type=playerType
+        self.displayName=display_name
+        self.running = False
+        d={}
+        d.update(formatVariables)
+        d['player']=self.displayName
+        self._format = d
+
+    def get(self):
+        data=self.getData()
+        if any(data):
+            self._format['info']=self.format(*data)
+            return string.Template(outputFormat).safe_substitute(self._format)
+        return ''
+
+    def format(self, title='', artist='', album=''):
+        """Return a 'pretty-printed' info string for the track.
+
+        Uses formatStrings from above."""
+        #Update args last to prevent non-sensical override in formatVariables
+        self._format.update({'title':title, 'artist':artist, 'album':album})
+        n=0
+        if title:
+            n|=4 #Still binary to make you read the code ;p
+        if artist:
+            if artist == album:
+                n|=SelfTitled
+            else:
+                n|=2
+        if album:
+            n|=1
+        if n:
+            return string.Template(formatStrings[n]).safe_substitute(self._format)
+        return ''
+
+    def getData(self):
+        """Implement this to do the work"""
+        return ''
+
+    def reEncodeString(self, input):
+        if input:
+            try:
+                input = input.decode('utf-8')
+            except UnicodeError:
+                try:
+                    input = input.decode('latin-1')
+                except UnicodeError:
+                    input = input.decode('ascii', 'replace')
+            except NameError:
+                    pass
+        return input.encode('utf-8')
+
+    def test_format(self, title='', artist='', album=''):
+        s=[]
+        l=["to","by","on"]
+        if title:
+            s.append(title)
+        else:
+            album,artist=artist,album
+            l.pop()
+        if artist:
+            s.append(artist)
+        else:
+            del l[1]
+        if album:
+            s.append(album)
+        else:
+            l.pop()
+        t=["is listening"]
+        while l:
+            t.append(l.pop(0))
+            t.append(s.pop(0))
+        return ' '.join(t)
+
+    def isRunning(self):
+        return self.running
+
+class DCOPPlayer(Player):
+    def __init__(self, display_name, service_name, getTitle='', getArtist='', getAlbum='',playerType=None):
+        Player.__init__(self, display_name, playerType)
+        self.serviceName=service_name
+        self._title=getTitle
+        self._artist=getArtist
+        self._album=getAlbum
+        self.DCOP=""
+
+    def getData(self):
+        self.getService()
+        return (self.grab(self._title), self.grab(self._artist), self.grab(self._album))
+
+    def getService(self):
+        if self.DCOP:
+            return self.DCOP
+        running = re.findall('^' + self.serviceName + "(?:-\\d*)?$", DCOP_ITEMS, re.M)
+        if type(running) is list:
+            try:
+                running=running[0]
+            except IndexError:
+                running=''
+        self.DCOP=running.strip()
+        self.running=bool(self.DCOP)
+        return self.DCOP
+
+    def grab(self, item):
+        if item and self.isRunning():
+            return self.reEncodeString(os.popen("dcop %s %s"%(self.DCOP, item)).readline().rstrip('\n'))
+        return ''
+
+    def isRunning(self):
+        self.getService()
+        return self.running
+
+class AmarokPlayer(DCOPPlayer):
+    def __init__(self):
+        DCOPPlayer.__init__(self,'Amarok','amarok','player title','player artist','player album')
+
+    def getData(self):
+        data=DCOPPlayer.getData(self)
+        if not any(data):
+            data=(self.grab('player nowPlaying'),'','')
+            if not data[0]:
+                return ''
+        return data
 
 try:
     import xmms.common
-    pyxmmsInstalled = True;
-except ImportError:
-    pyxmmsInstalled = False;
+    class XmmsPlayer(Player):
+        def __init__(self, display_name):
+            Player.__init__(self, display_name)
 
-try:
-    from subprocess import *
-except ImportError:
+        def isRunning(self):
+            self.running = xmms.control.is_running()
+            return self.running
 
-    if (sys.hexversion >> 16) < 0x0204:
-        err="The media script requires python 2.4 (or the subprocess module from same)"
-    else:
-        err="The media script could not import subprocess module"
-    os.popen('dcop %s default error "%s"'%(port,err))
-    raise
-
-global port;
-global server;
-global target;
-
-# checks for running dcop-aware media players
-def check_running(application):
-    running = Popen(["dcop", application+'*'], stdout=PIPE).communicate()[0]
-    if type(running) is list:
-        return running[0].strip()
-    return running.strip()
-
-def reencodeString(input):
-    if input:
-        try:
-            input = input.decode('utf-8')
-        except UnicodeError:
-            try:
-                input = input.decode('latin-1')
-            except UnicodeError:
-                input = input.decode('ascii', 'replace')
-        except NameError:
-                pass
-    return input.encode('utf-8')
-
-def pretty_print(title, artist='', album=''):
-    if title:
-        title = reencodeString(title)
-    if artist:
-        artist = reencodeString(artist)
-    if album:
-        album = reencodeString(album)
-
-    if (artist and album) and (artist != album):
-        return "/me is listening to \"%s\" by %s on %s"%(title,artist,album)
-    elif artist:
-        return "/me is listening to \"%s\" by %s"%(title,artist)
-    elif album:
-        return "/me is listening to \"%s\" on %s"%(title,album)
-    else:
-        return "/me is listening to \"%s\""%(title)
-
-if __name__ == "__main__":
-    bad_apps = None
-    error = None
-
-    # define variables to avoid errors
-    title = '';
-    artist = '';
-    album = '';
-
-    # only try to acquire title if xmms support in python is present
-    if pyxmmsInstalled:
-        # check if xmms is running
-        xmmsRunning = xmms.control.is_running()
-
-        if xmmsRunning:
-            # check if xmms is playing something
-            if xmms.control.is_playing():
+        def getData(self):
+            if self.isRunning() and xmms.control.is_playing():
                 # get the position in the playlist for current playing track
-                pos = xmms.control.get_playlist_pos();
+                index = xmms.control.get_playlist_pos();
                 # get the title of the currently playing track
-                title = xmms.control.get_playlist_title(pos)
+                title = self.reEncodeString(xmms.control.get_playlist_title(index))
+                return self.format(title)
+            return ''
 
-            # if there really is something playing
-            if title:
-                # format title and tell konversation about it
-                string = pretty_print(title)+' [xmms]'
-                Popen(['dcop', port, 'default', 'say', server, target, string]).communicate()
+except ImportError:
+    XmmsPlayer=Player
+
+def playing(playerList):
+    for i in playerList:
+        s=i.get()
+        if s:
+            tell([IRC_SERVER, TARGET, s], 'say' )
+            return 1
+    return 0
+
+def handleErrors(playerList, kind):
+    if kind:
+        kind=kind.strip()
+        kind=kind.center(len(kind)+2)
+    else:
+        kind= ' '
+    x=any([i.running for i in playerList])
+    if x:
+        l=[i.displayName for i in playerList if i.running]
+        err= "Nothing is playing in %s"%(', '.join(l))
+    else:
+        err= "No%splayers are running"%(kind,)
+    tell(err,'error')
+
+def run(kind):
+    if not kind:
+        kind = 'supported'
+        play=PLAYERS
+    else:
+        if kind in ['audio', 'video']:
+            play=[i for i in PLAYERS if kind in i.type]
+        else:
+            play=[i for i in PLAYERS if i.displayName.lower() == kind]
+            try:
+                kind=play[0].displayName
+            except IndexError:
+                tell("%s is not a supported player"%(kind,),'error')
                 sys.exit(0)
-            # xmms running but nothing's playing
-            else:
-                # remember to tell the user later in the script
-                error = True
-                bad_apps = ['xmms']
 
-    amarok = check_running('amarok')
-    if amarok:
-        title = os.popen('dcop '+amarok+' player title').readline().rstrip('\n')
-        artist = os.popen('dcop '+amarok+' player artist').readline().rstrip('\n')
-        album = os.popen('dcop '+amarok+' player album').readline().rstrip('\n')
+    if not playing(play):
+        handleErrors(play, kind)
 
-        if not title:
-            title = os.popen('dcop '+amarok+' player nowPlaying').readline().rstrip('\n')
 
-        if title:
-            string = pretty_print(title,artist,album)+' [Amarok]'
-            Popen(['dcop', port, 'default', 'say', server, target, string]).communicate()
-            sys.exit(0)
-        else:
-            error = True
-            bad_apps = ['Amarok']
+#It would be so nice to just keep this pipe open and use it for all the dcop action,
+#but of course you're supposed to use the big iron (language bindings) instead of
+#the command line tools. One could consider `dcop` the bash dcop language binding,
+#but of course when using shell you don't need to be efficient at all, right?
 
-    juk = check_running('juk')
-    if juk:
-        title = os.popen('dcop '+juk+' Player trackProperty Title').readline().rstrip('\n')
-        artist = os.popen('dcop '+juk+' Player trackProperty Artist').readline().rstrip('\n')
-        album = os.popen('dcop '+juk+' Player trackProperty Album').readline().rstrip('\n')
+DCOP_ITEMS=subprocess.Popen(['dcop'], stdout=subprocess.PIPE).communicate()[0]  #re.findall("^amarok(?:-\\d*)?$",l,re.M)
 
-        if title:
-            string = pretty_print(title,artist,album)+' [JuK]';
-            Popen(['dcop', port, 'default', 'say', server, target, string]).communicate()
-            sys.exit(0)
-        else:
-            if error:
-                bad_apps.append('JuK')
-            else:
-                error = True
-                bad_apps = ['JuK']
+# Add your new players here. No more faulty logic due to copy+paste.
+# (yeah, ok, so all the players are all here. *sigh*)
+PLAYERS = [
+AmarokPlayer(),
+DCOPPlayer("JuK","juk","Player trackProperty Title","Player trackProperty Artist","Player trackProperty Album"),
+DCOPPlayer("Kaffeine","kaffeine","KaffeineIface title","KaffeineIface artist","KaffeineIface album",playerType='video'),
+DCOPPlayer("Noatun",'noatun',"Noatun title",playerType='video'),
+DCOPPlayer("kscd","kscd","CDPlayer currentTrackTitle","CDPlayer currentArtist","CDPlayer currentAlbum"),
+XmmsPlayer('XMMS'),
+DCOPPlayer("Yammi","yammi","YammiPlayer songTitle","YammiPlayer songArtist","YammiPlayer songAlbum"),
+]
 
-    kaffeine = check_running('kaffeine')
-    if kaffeine:
-        title = os.popen('dcop '+kaffeine+' KaffeineIface title').readline().rstrip('\n')
-        artist = os.popen('dcop '+kaffeine+' KaffeineIface artist').readline().rstrip('\n')
-        album = os.popen('dcop '+kaffeine+' KaffeineIface album').readline().rstrip('\n')
+# It all comes together right here
+if __name__=="__main__":
 
-        if title:
-            string=pretty_print(title,artist,album)+' [Kaffeine]'
-            Popen(['dcop', port, 'default', 'say', server, target, string]).communicate()
-            sys.exit(0)
-        else:
-            if error:
-                bad_apps.append('Kaffeine')
-            else:
-                error = True
-                bad_apps = ['Kaffeine']
+    if not TARGET:
+        s="""media v2.0 for Konversation 1.0. One media command to rule them all, inspired from Kopete's now listening plugin.
+Usage:
+        "\00312/media\017" - report what the first player found is playing
+        "\00312/media\017 [ '\00312audio\017' | '\00312video\017' ]" - report what is playing in a supported audio or video player
+        "\00312/media\017 { \00312Player\017 }" - report what is playing in \00312Player\017 if it is supported
 
-    noatun = check_running('noatun')
-    if noatun:
-        string = os.popen('dcop '+noatun+' Noatun title').readline().rstrip('\n');
+        Available players are, in the order they will be checked:
+                """ + ', '.join([("%s (%s)"%(i.displayName,i.type[0])) for i in PLAYERS])
 
-        if string:
-            string=pretty_print(string)+' [Noatun]'
-            Popen(['dcop', port, 'default', 'say', server, target, string]).communicate();
-            sys.exit(0)
-        else:
-            if error:
-                bad_apps.append('Noatun')
-            else:
-                error = True
-                bad_apps = ['Noatun']
+        for i in s.splitlines():
+            tell(i)
+        #tell("%s"%(len(s.splitlines()),))
+        # called from the server tab
+        pass
+    else:
+        try:
+            kind = sys.argv[4].lower()
+        except IndexError:
+            kind = None
 
-    yammi = check_running('yammi')
-    if yammi:
-        title = os.popen('dcop '+yammi+' YammiPlayer songTitle').readline().rstrip('\n')
-        artist = os.popen('dcop '+yammi+' YammiPlayer songArtist').readline().rstrip('\n')
-        album = os.popen('dcop '+yammi+' YammiPlayer songAlbum').readline().rstrip('\n')
-
-        if title:
-            string = pretty_print(title,artist,album)+' [Yammi]';
-            Popen(['dcop', port, 'default', 'say', server, target, string]).communicate()
-            sys.exit(0)
-        else:
-            if error:
-                bad_apps.append('Yammi')
-            else:
-                error = True
-                bad_apps = ['Yammi']
-
-    kscd = check_running('kscd')
-    if kscd:
-        title = os.popen('dcop '+kscd+' CDPlayer currentTrackTitle').readline().rstrip('\n')
-        artist = os.popen('dcop '+kscd+' CDPlayer currentArtist').readline().rstrip('\n')
-        album = os.popen('dcop '+kscd+' CDPlayer currentAlbum').readline().rstrip('\n')
-        kscdplaying = os.popen('dcop '+kscd+' CDPlayer currentAlbum').readline().rstrip('\n')
-
-        if title and kscdplaying:
-            string = pretty_print(title,artist,album)+' [kscd]';
-            Popen(['dcop', port, 'default', 'say', server, target, string]).communicate()
-            sys.exit(0)
-        else:
-            if error:
-                bad_apps.append('kscd')
-            else:
-                error = True
-                bad_apps = ['kscd']
-
-    if not amarok and not juk and not kaffeine and not noatun and not yammi and not xmmsRunning and not kscd:
-        os.popen("dcop %s default error \"No supported media player is running\""%(port))
-
-    if bad_apps != None:
-        error = ','.join(bad_apps)
-        os.popen("dcop %s default error \"Nothing is playing in %s\""%(port,error))
-        sys.exit(1)
+        run(kind)
 
