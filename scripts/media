@@ -326,8 +326,8 @@ formatVariables['intro']=formatVariables['audio']
 PLAYERS = [
 AmarokPlayer(),
 DCOPPlayer("JuK","juk","Player trackProperty Title","Player trackProperty Artist","Player trackProperty Album"),
-DCOPPlayer("Kaffeine","kaffeine","KaffeineIface title","KaffeineIface artist","KaffeineIface album",playerType='video'),
 DCOPPlayer("Noatun",'noatun',"Noatun title",playerType='video, audio'),
+DCOPPlayer("Kaffeine","kaffeine","KaffeineIface title","KaffeineIface artist","KaffeineIface album",playerType='video, audio'),
 DCOPPlayer("KsCD","kscd","CDPlayer currentTrackTitle","CDPlayer currentArtist","CDPlayer currentAlbum"),
 XmmsPlayer('XMMS'),
 DCOPPlayer("Yammi","yammi","YammiPlayer songTitle","YammiPlayer songArtist","YammiPlayer songAlbum"),
