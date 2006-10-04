@@ -74,11 +74,11 @@ try:
     IRC_SERVER = sys.argv[2]
     TARGET = sys.argv[3]
 except IndexError:
-    print >>sys.stderr, "This script is intended to be run from within Konversation"
+    print >>sys.stderr, "This script is intended to be run from within Konversation."
     sys.exit(0)
 
 if (sys.hexversion >> 16) < 0x0204:
-    err="The media script requires Python 2.4"
+    err="The media script requires Python 2.4."
     os.popen('dcop %s default error "%s"' %(APP_ID,err))
     sys.exit(err)
 
@@ -281,9 +281,9 @@ def handleErrors(playerList, kind):
     x=any([i.running for i in playerList])
     if x:
         l=[i.displayName for i in playerList if i.isRunning()]
-        err= "Nothing is playing in %s"%(', '.join(l))
+        err= "Nothing is playing in %s."%(', '.join(l))
     else:
-        err= "No%splayers are running"%(kind,)
+        err= "No%splayers are running."%(kind,)
     tell(err,'error')
 
 def run(kind):
@@ -304,7 +304,7 @@ def run(kind):
             try:
                 kind=play[0].displayName
             except IndexError:
-                tell("%s is not a supported player"%(kind,),'error')
+                tell("%s is not a supported player."%(kind,),'error')
                 sys.exit(0)
 
     if not playing(play):
