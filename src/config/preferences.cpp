@@ -441,22 +441,37 @@ const IdentityPtr Preferences::identityById(int id)
 
 QStringList Preferences::defaultAliasList()
 {
-        // Auto-alias scripts
-        QStringList scripts = KGlobal::dirs()->findAllResources("data","konversation/scripts/*");
-        QFileInfo* fileInfo = new QFileInfo();
-        QStringList aliasList;
-	QString newAlias;
+    // Auto-alias scripts
+    QStringList scripts = KGlobal::dirs()->findAllResources("data","konversation/scripts/*");
+    QFileInfo* fileInfo = new QFileInfo();
+    QStringList aliasList;
+    QString newAlias;
 
-        for ( QStringList::ConstIterator it = scripts.begin(); it != scripts.end(); ++it )
+    for (QStringList::ConstIterator it = scripts.begin(); it != scripts.end(); ++it)
+    {
+        fileInfo->setFile(*it);
+        if (fileInfo->isExecutable())
         {
-            fileInfo->setFile( *it );
-            if ( fileInfo->isExecutable() )
+            newAlias = (*it).section('/',-1)+' '+"/exec "+(*it).section('/', -1 );
+            aliasList.append(newAlias);
+
+            // FIXME: Historically, defaultAliasList() is primarily used to dynamically
+            // compile a list of installed scripts and generate appropriate aliases for
+            // them. It's not only used when the alias preferences are reset or initia-
+            // lized, but also on application start. The following crudely adds two
+            // aliases when the 'media' script is found, to provide easy access to its
+            // capability to differenciate between audio and video media. This method
+            // needs at the very least to be split up in two, or scripts may in the
+            // future determine what aliases they want to add.
+            if ((*it).section('/',-1) == "media")
             {
-                newAlias = (*it).section('/',-1)+' '+"/exec "+(*it).section('/', -1 );
-                aliasList.append(newAlias);
+                aliasList.append("audio /exec media audio");
+                aliasList.append("video /exec media audio");
             }
         }
-	return aliasList;
+    }
+
+    return aliasList;
 }
 
 

@@ -23,6 +23,10 @@ Changes since 1.0:
   vents the OSD from being shown in non-KDE environments.
 - Stop systray flashing when cancelling a notification by clicking the
   OSD.
+- The 'media' script now sports improved player detection and configura-
+  bility, and allows for a distinction between audio and video media.
+  New '/audio' and '/video' aliases have been added to expose the new
+  'media' abilities.
 
 -------------------------------------------------------------------------------
 
