@@ -466,7 +466,7 @@ QStringList Preferences::defaultAliasList()
             if ((*it).section('/',-1) == "media")
             {
                 aliasList.append("audio /exec media audio");
-                aliasList.append("video /exec media audio");
+                aliasList.append("video /exec media video");
             }
         }
     }
