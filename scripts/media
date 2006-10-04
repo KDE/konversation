@@ -43,7 +43,7 @@ formatVariables={'audio': 'is listening to', 'video': 'is watching'}
 ## Static player ranking list
 ## If you add a new player, you must add it here or it won't get checked when in audio-only or video-only modes.
 playerRankings= {
-    'video' :['kaffeine','noatun','kdetv'],
+    'video' :['kaffeine', 'noatun', 'kdetv'],
     'audio' :['Amarok', 'JuK', 'Noatun', 'Kaffeine', 'kscd', 'XMMS', 'Yammi']
 }
 
