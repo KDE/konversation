@@ -260,9 +260,9 @@ try:
                 index = xmms.control.get_playlist_pos();
                 # get the title of the currently playing track
                 x=xmms.control.get_playlist_title(index)
-                print "x: <%s>"%(x,)
+                print "x: <%s>"%(type(x),)
                 title = self.reEncodeString(x)
-                print "title: <%s>"%(title,)
+                print "title: <%s>"%(type(title),)
                 return self.format(title)
             return ''
 
