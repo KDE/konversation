@@ -126,7 +126,7 @@ class Player(object):
             if mode:
                 self._format['intro']=self._format[mode]
             else:
-                self._format['intro']=self._format[mode.replace(',','').split()[0]]
+                self._format['intro']=self._format[self.type.replace(',','').split()[0]]
             return string.Template(outputFormat).safe_substitute(self._format)
         return ''
 
