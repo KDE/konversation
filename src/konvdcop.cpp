@@ -84,9 +84,16 @@ void KonvDCOP::actionToAll(const QString &message)
 
 void KonvDCOP::say(const QString& server,const QString& target,const QString& command)
 {
-    kdDebug() << "KonvDCOP::say()" << endl;
-    // Act as if the user typed it
-    emit dcopSay(server,target,command);
+    // TODO: this just masks a greater problem - Server::addQuery will return a query for '' --argonel
+    // TODO: other DCOP calls need argument checking too --argonel
+    if (server.isEmpty() || target.isEmpty() || command.isEmpty())
+        kdDebug() <<  "KonvDCOP::say() requires 3 arguments." << endl;
+    else
+    {
+        kdDebug() << "KonvDCOP::say()" << endl;
+        // Act as if the user typed it
+        emit dcopSay(server,target,command);
+    }
 }
 
 void KonvDCOP::info(const QString& string)
