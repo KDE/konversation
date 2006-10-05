@@ -460,7 +460,7 @@ QStringList Preferences::defaultAliasList()
             // them. It's not only used when the alias preferences are reset or initia-
             // lized, but also on application start. The following crudely adds two
             // aliases when the 'media' script is found, to provide easy access to its
-            // capability to differenciate between audio and video media. This method
+            // capability to differentiate  between audio and video media. This method
             // needs at the very least to be split up in two, or scripts may in the
             // future determine what aliases they want to add.
             if ((*it).section('/',-1) == "media")
