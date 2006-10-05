@@ -37,7 +37,7 @@ formatStrings = {
     Album              : "$album", #1,9
 }
 
-#Intro defaults to "audio" when a specific type was not demanded
+#Intro defaults to first type the player supports when a specific type was not demanded
 formatVariables={'audio': 'is listening to', 'video': 'is watching'}
 
 ## Static player ranking list
@@ -119,10 +119,14 @@ class Player(object):
         d['player']=self.displayName
         self._format = d
 
-    def get(self):
+    def get(self, mode):
         data=self.getData()
         if any(data):
             self._format['info']=self.format(*data)
+            if mode:
+                self._format['intro']=self._format[mode]
+            else:
+                self._format['intro']=self._format[mode.replace(',','').split()[0]]
             return string.Template(outputFormat).safe_substitute(self._format)
         return ''
 
@@ -264,9 +268,9 @@ try:
 except ImportError:
     XmmsPlayer=Player
 
-def playing(playerList):
+def playing(playerList, mode=None):
     for i in playerList:
-        s=i.get()
+        s=i.get(mode)
         if s:
             tell([IRC_SERVER, TARGET, s], 'say' )
             return 1
@@ -296,9 +300,6 @@ def run(kind):
             play=[unsorted.pop(i.lower(),Player("ImproperlySupported")) for i in playerRankings[kind]]
             if len(unsorted):
                 play.extend(unsorted.values)
-            global outputFormat
-            outputFormat=string.Template(outputFormat).safe_substitute({'intro':'$'+kind})
-            print outputFormat
         else:
             play=[i for i in PLAYERS if i.displayName.lower() == kind]
             try:
@@ -307,7 +308,7 @@ def run(kind):
                 tell("%s is not a supported player."%(kind,),'error')
                 sys.exit(0)
 
-    if not playing(play):
+    if not playing(play, kind):
         handleErrors(play, kind)
 
 
@@ -317,9 +318,6 @@ def run(kind):
 #but of course when using shell you don't need to be efficient at all, right?
 
 DCOP_ITEMS=subprocess.Popen(['dcop'], stdout=subprocess.PIPE).communicate()[0]  #re.findall("^amarok(?:-\\d*)?$",l,re.M)
-
-# Fudge.
-formatVariables['intro']=formatVariables['audio']
 
 # Add your new players here. No more faulty logic due to copy+paste.
 
