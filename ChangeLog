@@ -1,33 +1,46 @@
-Changes since 1.0:
-- Properly update "Switch to" tab context sub-menu on tab switch.
-- Fix dcop irc::setBack.
-- Don't treat & in tab names as accels in treelist items.
-- Fix ignoring nicknames with [ or ] in them.
-- Make protocol handler work with the changed DCOP interface,
-  don't hand bashism to sh.
-- Fix command aliases replacement tripping over regexp special chars
-  and breaking all internal commands.
-- Fix a bug where LTR text embedded in lines determined to be RTL would
-  be reversed.
-- Significantly improve line direction guessing based on plurality, i.e.
-  direction is now determined by how many LTR or RTL chars are preseent.
-- Warn before quitting Konversation.
-- Put the systray icon's quit warning under the Warning Dialogs prefs
-  page's control (one unified list entry for both quit warnings).
-- Change the lower boundary for the default DCC port range to 1026
-  to avoid clashes with the often-blocked Microsoft RPC port 1025.
-- The "Edit Network" dialog has been redesigned to be cleaner and easier
-  to use.
-- Add a new preference [OSD]OSDCheckDesktopLock to be set in the config
-  file allowing to disable the DCOP-based screensaver check that pre-
-  vents the OSD from being shown in non-KDE environments.
-- Stop systray flashing when cancelling a notification by clicking the
-  OSD.
-- The 'media' script now sports improved player detection and configura-
-  bility, and allows for a distinction between audio and video media.
-  Support for kdetv has been added. New '/audio' and '/video' aliases
-  have been added to expose the new 'media' abilities.
-- The auto-replace list can now be sorted.
+Changes from 1.0 to 1.0.1
+We are pleased to announce the immediate availability of Konversation 1.0.1,
+a maintenance release featuring notable improvements for users of right-to-
+left languages (including new Arabic and Hebrew translations), further re-
+finement of the user interface and application functionality, and fixes for
+minor defects found in the previous release.
+
+* A bug that caused left-to-right text contained in lines determined to be
+  right-to-left text to appear reversed has been fixed.
+* Whether a line is treated as right-to-left vs. left-to-right text is now
+  determined by the amount of each type of character in the line, improving
+  the user experience in chats involving bi-directional text considerably.
+* The "Edit Network" dialog has been refined for clarity and ease of use.
+* A warning dialog to prevent accidentally quitting Konversation has been
+  added.
+* The Auto Replace list can now be sorted.
+* The '/media' script command now sports improved player recognition, enhan-
+  ced and easier configurability, the ability to distinguish between audio
+  and video media as well as newly added support for kdetv. New '/audio' and
+  '/video' command aliases have been added to expose these new abilities.
+* The lower boundary of the default DCC port range has been raised from 1025
+  to 1026 to avoid conflicts with the commonly blocked Microsoft RPC port 1025.
+* Dismissing an OSD notification by clicking on it will now also cancel the
+  systray notification flash.
+* A new configuration file option [OSD]OSDCheckDesktopLock has been added,
+  allowing to manually disable the screensaver check in non-KDE environments
+  that do not support it, causing the OSD not to be displayed.
+* A bug that could lead to the "Switch to" sub-menu in the context menus of
+  tabs not to be updated properly upon switching tabs has been fixed.
+* A bug that caused the 'irc setBack' DCOP call not to function has been
+  fixed.
+* A bug that caused ampersands in the names of tabs not to be displayed and
+  an immediately following character to be used as keyboard accelerator has
+  been fixed.
+* A bug that caused ignoring nicknames with '[' or ']' characters in them to
+  fail has been fixed.
+* Command aliases no longer try to interpret regular expression syntax, which
+  could lead to built-in commands no longer functioning.
+* A bug that caused the Konversation irc:// protocol handler not to function
+  has been fixed. Its compatibility with systems that do not use the GNU bash
+  shell as default shell has been improved.
+* A notable number of code quality improvements suggested by KDEs automated
+  quality control service EBN have been implemented.
 
 -------------------------------------------------------------------------------
 
