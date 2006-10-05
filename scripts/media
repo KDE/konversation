@@ -123,7 +123,7 @@ class Player(object):
         data=self.getData()
         if any(data):
             self._format['info']=self.format(*data)
-            if mode:
+            if mode and mode != self.displayName:
                 self._format['intro']=self._format[mode]
             else:
                 self._format['intro']=self._format[self.type.replace(',','').split()[0]]
@@ -322,7 +322,7 @@ DCOP_ITEMS=subprocess.Popen(['dcop'], stdout=subprocess.PIPE).communicate()[0]  
 PLAYERS = [
 AmarokPlayer(),
 DCOPPlayer("JuK","juk","Player trackProperty Title","Player trackProperty Artist","Player trackProperty Album"),
-DCOPPlayer("Noatun",'noatun',"Noatun title",playerType='video, audio'),
+DCOPPlayer("Noatun",'noatun',"Noatun title",playerType='audio, video'),
 DCOPPlayer("Kaffeine","kaffeine","KaffeineIface title","KaffeineIface artist","KaffeineIface album",playerType='video, audio'),
 DCOPPlayer("KsCD","kscd","CDPlayer currentTrackTitle","CDPlayer currentArtist","CDPlayer currentAlbum"),
 XmmsPlayer('XMMS'),
