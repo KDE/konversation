@@ -19,6 +19,7 @@
 #include <qlayout.h>
 #include <qstringlist.h>
 #include <qwhatsthis.h>
+#include <qheader.h>
 
 #include <klocale.h>
 #include <kdebug.h>
@@ -121,6 +122,7 @@ namespace Konversation
         m_serverList->setDragEnabled(true);
         m_serverList->setAcceptDrops(true);
         m_serverList->setDropVisualizer(true);
+        m_serverList->header()->setMovingEnabled(false);
 
         m_addButton = new QPushButton(i18n("&New..."), mainWidget);
         QWhatsThis::add(m_addButton, i18n("Click here to define a new Network, including the server to connect to, and the Channels to automatically join once connected."));

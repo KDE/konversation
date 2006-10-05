@@ -12,6 +12,7 @@
 
 #include <qdir.h>
 #include <qlabel.h>
+#include <qheader.h>
 
 #include <kglobal.h>
 #include <kstandarddirs.h>
@@ -42,6 +43,7 @@ Highlight_Config::Highlight_Config(QWidget* parent, const char* name)
 
   // make list accept drag & drop
   highlightListView->setSorting(-1);
+  highlightListView->header()->setMovingEnabled(false);
 
   soundPlayBtn->setIconSet(SmallIconSet( "player_play" ));
   soundURL->setCaption(i18n("Select Sound File"));

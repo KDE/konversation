@@ -12,6 +12,7 @@
 
 #include <qlabel.h>
 #include <qpushbutton.h>
+#include <qheader.h>
 
 #include <kapplication.h>
 #include <kdebug.h>
@@ -35,6 +36,7 @@ QuickButtons_Config::QuickButtons_Config(QWidget* parent, const char* name)
 
   // make items react to drag & drop
   buttonListView->setSorting(-1,false);
+  buttonListView->header()->setMovingEnabled(false);
 
   connect(buttonListView,SIGNAL (selectionChanged(QListViewItem*)),this,SLOT (entrySelected(QListViewItem*)) );
   connect(buttonListView,SIGNAL (clicked(QListViewItem*)),this,SLOT (entrySelected(QListViewItem*)) );

@@ -11,6 +11,8 @@
   Copyright (C) 2006 Eike Hein <sho@eikehein.com>
 */
 
+#include <qheader.h>
+
 #include <kapplication.h>
 #include <klocale.h>
 
@@ -28,6 +30,7 @@ NicklistBehavior_Config::NicklistBehavior_Config(QWidget *parent, const char *na
 
   // make items react to drag & drop
   sortOrder->setSorting(-1,false);
+  sortOrder->header()->setMovingEnabled(false);
 
   connect(sortOrder,SIGNAL (moved()),this,SIGNAL (modified()) );
 }

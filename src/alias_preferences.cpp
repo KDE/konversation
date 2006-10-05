@@ -12,6 +12,7 @@
 
 #include <qlabel.h>
 #include <qpushbutton.h>
+#include <qheader.h>
 
 #include <kapplication.h>
 #include <kdebug.h>
@@ -35,6 +36,7 @@ Alias_Config::Alias_Config(QWidget* parent, const char* name)
 
   // make items react to drag & drop
   aliasListView->setSorting(-1,false);
+  aliasListView->header()->setMovingEnabled(false);
 
   connect(aliasListView, SIGNAL(selectionChanged(QListViewItem*)), this, SLOT(entrySelected(QListViewItem*)));
   connect(aliasListView, SIGNAL(clicked(QListViewItem*)), this, SLOT(entrySelected(QListViewItem*)) );

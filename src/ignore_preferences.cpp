@@ -14,6 +14,7 @@
 #include <klistview.h>
 #include <qlistview.h>
 #include <qlineedit.h>
+#include <qheader.h>
 #include "ignore_preferences.h"
 #include "ignorelistviewitem.h"
 #include "ignore.h"
@@ -43,6 +44,8 @@ Ignore_Config::Ignore_Config( QWidget* parent, const char* name, WFlags fl )
     connect(txtPattern, SIGNAL(textChanged(const QString &)), this, SLOT(flagCheckboxChanged()));
 //    connect(chkException, SIGNAL(clicked()), this, SLOT(flagCheckboxChanged()));
     loadSettings();
+
+    ignoreListView->header()->setMovingEnabled(false);
 }
 
 Ignore_Config::~Ignore_Config()
