@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Theme
 Name=Classic Theme
+Name[ar]=سمة كلاسيكية
 Name[bg]=Класическа тема
 Name[br]=Giz da gustum
 Name[ca]=Tema clàssic
@@ -32,6 +33,7 @@ Name[uk]=Класична тема
 Name[xx]=xxClassic Themexx
 Name[zh_TW]=傳統式主題
 Comment="LED" by Dario Abatianni
+Comment[ar]="LED" من Dario Abatianni
 Comment[bg]="LED" от Dario Abatianni
 Comment[br]=« LED » gant Dario Abatianni
 Comment[ca]="LED" per Dario Abatianni
