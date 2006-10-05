@@ -136,8 +136,6 @@ class Player(object):
         Uses formatStrings from above."""
         #Update args last to prevent non-sensical override in formatVariables
         x={'title':title, 'artist':artist, 'album':album}
-        print x
-
         if FIXUP:
             for i,j in x.items():
                 if re.search(FIXUP,j):
