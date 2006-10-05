@@ -281,7 +281,7 @@ def handleErrors(playerList, kind):
         kind=kind.strip()
         kind=kind.center(len(kind)+2)
     else:
-        kind= ' '
+        kind= ' supported '
     x=any([i.running for i in playerList])
     if x:
         l=[i.displayName for i in playerList if i.isRunning()]
@@ -292,7 +292,7 @@ def handleErrors(playerList, kind):
 
 def run(kind):
     if not kind:
-        kind = 'supported'
+        kind = ''
         play=PLAYERS
     else:
         if kind in ['audio', 'video']:
