@@ -12,6 +12,7 @@
 #include <qlabel.h>
 #include <qpushbutton.h>
 #include <qcombobox.h>
+#include <qheader.h>
 
 #include <kapplication.h>
 #include <kdebug.h>
@@ -41,21 +42,27 @@ Autoreplace_Config::Autoreplace_Config(QWidget* parent, const char* name)
 
   // make items react to drag & drop
   patternListView->setSorting(-1,false);
+  patternListView->setShowSortIndicator(true);
+  patternListView->setShadeSortColumn(true);
+  patternListView->header()->setMovingEnabled(false);
 
   // populate listview
   loadSettings();
 
-  connect(patternListView,SIGNAL (selectionChanged(QListViewItem*)),this,SLOT (entrySelected(QListViewItem*)) );
-  connect(patternListView,SIGNAL (clicked(QListViewItem*)),this,SLOT (entrySelected(QListViewItem*)) );
-  connect(patternListView,SIGNAL (moved()),SIGNAL (modified()) );
+  connect(patternListView, SIGNAL(selectionChanged(QListViewItem*)), this, SLOT(entrySelected(QListViewItem*)));
+  connect(patternListView, SIGNAL(clicked(QListViewItem*)), this, SLOT(entrySelected(QListViewItem*)));
+  connect(patternListView, SIGNAL(moved()), SIGNAL(modified()));
 
-  connect(directionCombo,SIGNAL (activated(int)),this,SLOT (directionChanged(int)) );
+  connect(patternListView, SIGNAL(aboutToMove()), SLOT(disableSort()));
+  connect(patternListView->header(), SIGNAL(clicked(int)), SLOT(sort(int)));
 
-  connect(patternInput,SIGNAL (textChanged(const QString&)),this,SLOT (patternChanged(const QString&)) );
-  connect(replacementInput,SIGNAL (textChanged(const QString&)),this,SLOT (replacementChanged(const QString&)) );
+  connect(directionCombo, SIGNAL(activated(int)), this, SLOT(directionChanged(int)));
 
-  connect(newButton,SIGNAL (clicked()),this,SLOT (addEntry()));
-  connect(removeButton,SIGNAL (clicked()),this,SLOT (removeEntry()));
+  connect(patternInput, SIGNAL(textChanged(const QString&)), this, SLOT(patternChanged(const QString&)));
+  connect(replacementInput, SIGNAL(textChanged(const QString&)), this, SLOT(replacementChanged(const QString&)));
+
+  connect(newButton, SIGNAL(clicked()), this, SLOT(addEntry()));
+  connect(removeButton, SIGNAL(clicked()), this, SLOT(removeEntry()));
 }
 
 Autoreplace_Config::~Autoreplace_Config()
@@ -267,6 +274,8 @@ void Autoreplace_Config::replacementChanged(const QString& newReplacement)
 // add button pressed
 void Autoreplace_Config::addEntry()
 {
+  disableSort();
+
   // add new item at the bottom of list view
   QCheckListItem* newItem=new QCheckListItem(patternListView,QString::null,QCheckListItem::CheckBox);
   // if successful ...
@@ -322,6 +331,23 @@ void Autoreplace_Config::removeEntry()
     // tell the config system that somethig has changed
     emit modified();
   }
+}
+
+void Autoreplace_Config::sort(int column)
+{
+    bool ascending = true;
+
+    if (patternListView->sortColumn() != -1)
+        ascending  = (patternListView->sortOrder() == Qt::Ascending);
+
+    patternListView->setSorting(column, ascending);
+
+    emit modified();
+}
+
+void Autoreplace_Config::disableSort()
+{
+    patternListView->setSorting(-1);
 }
 
 #include "autoreplace_preferences.moc"

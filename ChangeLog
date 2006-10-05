@@ -27,6 +27,7 @@ Changes since 1.0:
   bility, and allows for a distinction between audio and video media.
   Support for kdetv has been added. New '/audio' and '/video' aliases
   have been added to expose the new 'media' abilities.
+- The auto-replace list can now be sorted.
 
 -------------------------------------------------------------------------------
 

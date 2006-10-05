@@ -43,6 +43,8 @@ class Autoreplace_Config : public Autoreplace_ConfigUI, public KonviSettingsPage
     void replacementChanged(const QString& newReplacement);
     void addEntry();
     void removeEntry();
+    void sort(int column);
+    void disableSort();
 
   protected:
     void setAutoreplaceListView(const QStringList &autoreplaceList);
