@@ -263,7 +263,7 @@ try:
                 print "x: <%s>"%(type(x),)
                 title = self.reEncodeString(x)
                 print "title: <%s>"%(type(title),)
-                return self.format(title)
+                return self.format((title,'',''))
             return ''
 
 except ImportError:
