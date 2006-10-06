@@ -24,6 +24,9 @@
 #include "version.h"
 #include "commit.h"
 
+#define HACKSTR(x) #x
+#define STRHACK(x) HACKSTR(x)
+
 /*
   Don't use i18n() here, use I18N_NOOP() instead!
   i18n() will only work as soon as a kapplication object was made.
@@ -46,7 +49,7 @@ int main(int argc, char* argv[])
 {
     KAboutData aboutData("konversation",
         I18N_NOOP("Konversation"),
-        KONVI_VERSION,
+        KONVI_VERSION " #" STRHACK(COMMIT),
         shortDescription,
         KAboutData::License_GPL,
         I18N_NOOP("(C) 2002-2006 by the Konversation team"),
