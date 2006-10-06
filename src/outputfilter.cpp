@@ -65,10 +65,13 @@ namespace Konversation
         {
             // cut alias pattern from definition
             QString aliasPattern(aliasList[index].section(' ',0,0));
+            // cut first word from command line, so we do not wrongly find an alias
+            // that starts with the same letters, like /m would override /me
+            QString lineStart=line.section(' ',0,0);
 
             // pattern found?
             // TODO: cc may be a regexp character here ... we should escape it then
-            if (line.startsWith(cc+aliasPattern))
+            if (lineStart==cc+aliasPattern)
             {
                 QString aliasReplace;
 
