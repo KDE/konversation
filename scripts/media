@@ -259,11 +259,7 @@ try:
                 # get the position in the playlist for current playing track
                 index = xmms.control.get_playlist_pos();
                 # get the title of the currently playing track
-                x=xmms.control.get_playlist_title(index)
-                print "x: <%s>"%(type(x),)
-                title = self.reEncodeString(x)
-                print "title: <%s>"%(type(title),)
-                return self.format((title,'',''))
+                return (self.reEncodeString(xmms.control.get_playlist_title(index)),'','')
             return ''
 
 except ImportError:
@@ -332,6 +328,11 @@ XmmsPlayer('XMMS'),
 DCOPPlayer("Yammi","yammi","YammiPlayer songTitle","YammiPlayer songArtist","YammiPlayer songAlbum"),
 DCOPPlayer("kdetv","kdetv","KdetvIface channelName",playerType='video'),
 ]
+
+# Get rid of players that didn't get subclassed so they don't appear in the available players list
+for i in PLAYERS[:]:
+    if type(i) is Player:
+        PLAYERS.remove(i)
 
 if REGEX_FIXUP:
     FIXUP=REGEX_FIXUP
