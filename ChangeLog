@@ -19,7 +19,7 @@ minor defects found in the previous release.
   and video media as well as newly added support for kdetv. New '/audio' and
   '/video' command aliases have been added to expose these new abilities.
 * The lower boundary of the default DCC port range has been raised from 1025
-  to 1026 to avoid conflicts with the commonly blocked Microsoft RPC port 1025.
+  to 1026 to avoid conflicts with the commonly blocked Windows RPC port 1025.
 * Dismissing an OSD notification by clicking on it will now also cancel the
   systray notification flash.
 * A new configuration file option [OSD]OSDCheckDesktopLock has been added,
@@ -34,8 +34,8 @@ minor defects found in the previous release.
   been fixed.
 * A bug that caused ignoring nicknames with '[' or ']' characters in them to
   fail has been fixed.
-* Command aliases no longer try to interpret regular expression syntax, which
-  could lead to built-in commands no longer functioning.
+* Command aliases containing regular expression syntax can no longer cause
+  built-in commands not to function.
 * A bug that caused the Konversation irc:// protocol handler not to function
   has been fixed. Its compatibility with systems that do not use the GNU bash
   shell as default shell has been improved.
