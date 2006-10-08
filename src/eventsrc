@@ -786,6 +786,7 @@ Name[pa]=ਤੁਸੀਂ ਇੱਕ ਚੈਨਲ 'ਚ ਦਾਖਲ ਹੋ ਗਏ
 Name[pt]=Você juntou-se a um canal
 Name[pt_BR]=Você entrou no canal
 Name[sv]=Du gick med i en kanal
+Name[tr]=Bir kanala girdiniz
 Name[xx]=xxYou joined a channelxx
 Name[zh_TW]=您加入了一個頻道
 Comment=You joined a channel
@@ -810,6 +811,7 @@ Comment[pa]=ਤੁਸੀਂ ਇੱਕ ਚੈਨਲ 'ਚ ਦਾਖਲ ਹੋ ਗ�
 Comment[pt]=Você juntou-se a um canal
 Comment[pt_BR]=Você entrou em um canal
 Comment[sv]=Du gick med i en kanal
+Comment[tr]=Bir kanala girdiniz
 Comment[xx]=xxYou joined a channelxx
 Comment[zh_TW]=您加入了一個頻道
 default_presentation=64
@@ -839,6 +841,7 @@ Name[pa]=DCC ਗੱਲਬਾਤ
 Name[pt]=Conversa DCC
 Name[pt_BR]= Conversa privada (DCC)
 Name[sv]=DCC-chatt
+Name[tr]=Dcc Sohbeti
 Name[xx]=xxDCC Chatxx
 Name[zh_TW]=DCC 聊天
 Comment=Someone started a DCC chat with you
