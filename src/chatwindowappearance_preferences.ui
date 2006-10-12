@@ -67,6 +67,11 @@ the Free Software Foundation; either version 2 of the License, or
                             <string>hh:mm:ss</string>
                         </property>
                     </item>
+                    <item>
+                        <property name="text">
+                            <string>h:m ap</string>
+                        </property>
+                    </item>
                     <property name="name">
                         <cstring>kcfg_TimestampFormat</cstring>
                     </property>
