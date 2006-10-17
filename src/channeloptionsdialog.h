@@ -62,7 +62,7 @@ namespace Konversation
     };
 
     // This is needed to overcome two deficiencies in KListViewItem
-    // First there is no signal emited when a rename is canceled
+    // First there is no signal emitted when a rename is canceled
     // Second there is no way to get the old value of an item after a rename
     class BanListViewItem : public KListViewItem
     {
