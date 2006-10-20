@@ -820,6 +820,12 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     i18n("This channel was created on %1.")
                     .arg(when.toString(Qt::LocalDate))
                     );
+
+                if(Preferences::autoWhoContinuousEnabled())
+                {
+                    emit endOfWho(parameterList[1]);
+                }
+
                 break;
             }
             case RPL_WHOISACCOUNT:
@@ -1220,9 +1226,11 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             {
                 if(!whoRequestList.isEmpty())
                 {                                 // for safety
-                    if(parameterList[1].lower()==whoRequestList.front())
+                    QStringList::iterator it = whoRequestList.find(parameterList[1].lower());
+
+                    if(it != whoRequestList.end())
                     {
-                        if(getAutomaticRequest("WHO",whoRequestList.front())==0)
+                        if(getAutomaticRequest("WHO", *it) == 0)
                         {
                             server->appendMessageToFrontmost(i18n("Who"),
                                 i18n("End of /WHO list for %1")
@@ -1230,9 +1238,10 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                         }
                         else
                         {
-                            setAutomaticRequest("WHO",whoRequestList.front(),false);
+                            setAutomaticRequest("WHO", *it, false);
                         }
-                        whoRequestList.pop_front();
+
+                        whoRequestList.remove(it);
                     }
                     else
                     {
@@ -1249,6 +1258,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                         << parameterList[1]
                         << endl;
                 }
+
                 emit endOfWho(parameterList[1]);
                 break;
             }

@@ -293,7 +293,6 @@ Channel::Channel(QWidget* parent)
     // every few seconds try to get more userhosts
     userhostTimer.start(10000);
 
-    m_firstAutoWhoDone = false;
     connect(&m_whoTimer,SIGNAL (timeout()),this,SLOT (autoWho()));
     // re-schedule when the settings were changed
     connect(Preferences::self(), SIGNAL (autoContinuousWhoChanged()),this,SLOT (scheduleAutoWho()));
@@ -2289,8 +2288,6 @@ void Channel::setAutoUserhost(bool state)
 
 void Channel::scheduleAutoWho() // slot
 {
-    if(!m_firstAutoWhoDone) // abort if initialization hasn't done yet
-        return;
     if(m_whoTimer.isActive())
         m_whoTimer.stop();
     if(Preferences::autoWhoContinuousEnabled())
@@ -2445,14 +2442,6 @@ void Channel::processPendingNicks()
         sortNickList();
         nicknameListView->setUpdatesEnabled(true);
         nicknameListView->triggerUpdate();
-        if (!m_firstAutoWhoDone)
-        {
-            if(Preferences::autoWhoContinuousEnabled())
-            {
-                autoWho();
-            }
-            m_firstAutoWhoDone = true;
-        }
     }
 }
 
