@@ -370,6 +370,15 @@ bool KonversationMainWindow::queryClose()
     // send quit to all servers
     emit quitServer();
 
+    if(isHidden() && Preferences::showTrayIcon())
+    {
+        Preferences::setHiddenToTray(true);
+    }
+    else
+    {
+        Preferences::setHiddenToTray(false);
+    }
+
     return true;
 }
 

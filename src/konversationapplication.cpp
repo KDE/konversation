@@ -124,7 +124,15 @@ int KonversationApplication::newInstance()
 
         // apply GUI settings
         emit appearanceChanged();
-        mainWindow->show();
+
+        if(Preferences::showTrayIcon() && Preferences::hiddenToTray())
+        {
+            mainWindow->hide();
+        }
+        else
+        {
+            mainWindow->show();
+        }
 
         if (Preferences::showServerList()) mainWindow->openServerList();
 
@@ -409,8 +417,6 @@ Server* KonversationApplication::connectToServer(int serverGroupId, Konversation
         serverGroup->setQuickServerList(quickServer);
         clearQuickServerList = false;
     }
-
-    mainWindow->show();
 
     Server* newServer = new Server(mainWindow->getViewContainer(), serverGroupId, clearQuickServerList);
 
