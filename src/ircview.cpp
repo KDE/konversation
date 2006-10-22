@@ -1538,9 +1538,14 @@ void IRCView::keyPressEvent(QKeyEvent* e)
 
 void IRCView::resizeEvent(QResizeEvent* e)
 {
+    bool doScroll = ( KTextBrowser::verticalScrollBar()->value() == KTextBrowser::verticalScrollBar()->maxValue());
+    kdDebug() << "doScroll: " << doScroll << endl;
     KTextBrowser::resizeEvent(e);
 
-    QTimer::singleShot(0, this, SLOT(updateScrollBarPos()));
+    if(doScroll)
+    {
+        QTimer::singleShot(0, this, SLOT(updateScrollBarPos()));
+    }
 }
 
 void IRCView::updateScrollBarPos()
