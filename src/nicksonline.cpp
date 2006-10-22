@@ -428,13 +428,20 @@ void NicksOnline::updateServerOnlineList(Server* servr)
         item = nextItem;
     }
     item = offlineRoot->firstChild();
-    while (item)
+
+    if(item) {
+        while (item)
+        {
+            QListViewItem* nextItem = item->nextSibling();
+            QString nickname = item->text(nlvcNick);
+            if ((watchList.find(nickname) == watchList.end()) &&
+                (serverName == item->text(nlvcServerName))) delete item;
+            item = nextItem;
+        }
+    }
+    else
     {
-        QListViewItem* nextItem = item->nextSibling();
-        QString nickname = item->text(nlvcNick);
-        if ((watchList.find(nickname) == watchList.end()) &&
-            (serverName == item->text(nlvcServerName))) delete item;
-        item = nextItem;
+        delete offlineRoot;
     }
     // Expand server if newly added to list.
     if (newNetworkRoot)

@@ -960,8 +960,7 @@ void IRCView::doAppend(const QString& newLine, bool important, bool self)
 
         if(doScroll)
         {
-            setContentsPos( contentsX(), contentsHeight() - visibleHeight() );
-            repaintContents(false);
+            updateScrollBarPos();
         }
     }
 
