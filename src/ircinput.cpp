@@ -447,7 +447,7 @@ void IRCInput::paste()
               // signal pasted text
               emit textPasted(pasteText);
               // remember old line, in case the user does not paste eventually
-              addHistory(text());
+              addHistory(pasteText);
               // delete input text
               clear();
             }
