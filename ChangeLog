@@ -1,5 +1,11 @@
 Changes since 1.0.1:
-None yet.
+- Added a sample 12-hour clock format string to the timestamp format combobox.
+- Rearranged when and how auto-who is triggered upon channel join a bit, to
+  avoid excessive flooding on multiple concurrent joins in some cases.
+- Don't scroll ircview to bottom if the view was scrolled up before resizing.
+- Remember and recreate minimized-to-tray state across sessions.
+- Fix input line contents rather than actual sent text being appended to the
+  input history upon a multi-line paste edit.
 
 -------------------------------------------------------------------------------
 
