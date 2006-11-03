@@ -156,6 +156,11 @@ Comment[xx]=xxSomeone wrote your nick in a messagexx
 Comment[zh_TW]=有人在訊息中提到您的暱稱
 default_presentation=0
 
+[queryMessage]
+Name=Private message
+Comment=You recieved a private message
+default_presentation=0
+
 [nickchange]
 Name=Nick changed
 Name[ar]=تغيّر الإسم المستعار

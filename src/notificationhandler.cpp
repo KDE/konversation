@@ -89,22 +89,40 @@ namespace Konversation
 
         KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
 
-        if(chatWin->getType() == ChatWindow::Channel)
+        if((Preferences::oSDShowChannel() || Preferences::oSDShowOwnNick()) &&
+            (!m_mainWindow->isActiveWindow() ||
+            (chatWin != m_mainWindow->getViewContainer()->getFrontView())))
         {
-            if((Preferences::oSDShowChannel() ||
-                Preferences::oSDShowOwnNick()) &&
-                (!m_mainWindow->isActiveWindow() || (chatWin != m_mainWindow->getViewContainer()->getFrontView())))
-            {
-                konvApp->osd->showOSD(i18n("[HighLight] (%1) <%2> %3").arg(chatWin->getName()).arg(fromNick).arg(cleanedMessage));
-            }
+            konvApp->osd->showOSD(i18n("[HighLight] (%1) <%2> %3").arg(chatWin->getName()).arg(fromNick).arg(cleanedMessage));
         }
-        else if(chatWin->getType() == ChatWindow::Query)
+    }
+
+    void NotificationHandler::queryMessage(ChatWindow* chatWin,
+                                           const QString& fromNick, const QString& message)
+    {
+        if(!chatWin || !chatWin->notificationsEnabled())
         {
-            if(Preferences::oSDShowQuery() &&
-                (!m_mainWindow->isActiveWindow() || (chatWin != m_mainWindow->getViewContainer()->getFrontView())))
-            {
-                konvApp->osd->showOSD(i18n("(Query) <%1> %2").arg(fromNick).arg(cleanedMessage));
-            }
+            return;
+        }
+
+        if(Preferences::disableNotifyWhileAway() && chatWin->getServer()->isAway())
+        {
+            return;
+        }
+
+        QString cleanedMessage = QStyleSheet::escape(Konversation::removeIrcMarkup(message));
+        QString cutup = addLineBreaks(cleanedMessage);
+
+        KNotifyClient::event(m_mainWindow->winId(), "queryMessage", QString("<qt>&lt;%1&gt; %2</qt>").arg(fromNick).arg(cutup));
+
+        startTrayNotification(chatWin);
+
+        KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
+
+        if(Preferences::oSDShowQuery() && (!m_mainWindow->isActiveWindow() ||
+           (chatWin != m_mainWindow->getViewContainer()->getFrontView())))
+        {
+            konvApp->osd->showOSD(i18n("[Query] <%1> %2").arg(fromNick).arg(cleanedMessage));
         }
     }
 
