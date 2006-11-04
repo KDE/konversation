@@ -29,11 +29,12 @@ namespace Konversation
     class IdentityDialog : public KDialogBase
     {
         Q_OBJECT
-            public:
+        public:
             IdentityDialog(QWidget *parent = 0, const char *name = 0);
             ~IdentityDialog();
             void setCurrentIdentity(int index);
             IdentityPtr setCurrentIdentity(IdentityPtr identity);
+            IdentityPtr currentIdentity() const;
 
         protected slots:
             void updateIdentity(int index);

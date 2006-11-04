@@ -562,6 +562,11 @@ namespace Konversation
 
         return m_currentIdentity;
     }
+
+    IdentityPtr IdentityDialog::currentIdentity() const
+    {
+        return m_currentIdentity;
+    }
 }
 
 #include "identitydialog.moc"

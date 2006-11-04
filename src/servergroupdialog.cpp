@@ -381,12 +381,10 @@ namespace Konversation
     {
         IdentityDialog dlg(this);
         dlg.setCurrentIdentity(m_mainWidget->m_identityCBox->currentItem());
-        QValueList<IdentityPtr> identities = Preferences::identityList();
-        int identityId = identities[m_mainWidget->m_identityCBox->currentItem()]->id();
 
         if(dlg.exec() == KDialog::Accepted)
         {
-            identities = Preferences::identityList();
+            QValueList<IdentityPtr> identities = Preferences::identityList();
             m_mainWidget->m_identityCBox->clear();
 
             for(QValueList<IdentityPtr>::iterator it = identities.begin(); it != identities.end(); ++it)
@@ -394,7 +392,7 @@ namespace Konversation
                 m_mainWidget->m_identityCBox->insertItem((*it)->getName());
             }
 
-            m_mainWidget->m_identityCBox->setCurrentText(Preferences::identityById(identityId)->getName());
+            m_mainWidget->m_identityCBox->setCurrentText(dlg.currentIdentity()->getName());
             m_identitiesNeedsUpdate = true;
         }
     }
