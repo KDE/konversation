@@ -1663,7 +1663,7 @@ namespace Konversation
 
         if(!parameter.isEmpty())
         {
-            result.toServer = "NOTICE @"+destination+' '+parameter;
+            result.toServer = "NOTICE @"+destination+" :"+parameter;
         }
         else
         {
