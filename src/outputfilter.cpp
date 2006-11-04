@@ -568,7 +568,7 @@ namespace Konversation
     {
         OutputFilterResult result;
 
-        if (reason.isEmpty())
+        if (reason.isEmpty() && !m_server->isAway())
             reason = i18n("Gone away for now.");
 
         if (m_server->getIdentity()->getShowAwayMessage())
