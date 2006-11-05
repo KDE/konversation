@@ -81,7 +81,7 @@ void KonvDCOP::actionToAll(const QString &message)
 {
     emit dcopMultiServerRaw("me " + message);
 }
-#include "argnl.h"
+
 void KonvDCOP::say(const QString& _server,const QString& _target,const QString& _command)
 {
     //Sadly, copy on write doesn't exist with QString::replace
@@ -99,7 +99,6 @@ void KonvDCOP::say(const QString& _server,const QString& _target,const QString& 
         target.remove('\r');
         server.remove('\n');
         server.remove('\r');
-        kdDebug() << "KonvDCOP::say()" << _S(server) << _S(target) << _S(command) << endl;
         // Act as if the user typed it
         emit dcopSay(server,target,command);
     }
