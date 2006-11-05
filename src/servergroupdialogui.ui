@@ -56,19 +56,6 @@
                 <string>Identity:</string>
             </property>
         </widget>
-        <widget class="KComboBox" row="1" column="1">
-            <property name="name">
-                <cstring>m_identityCBox</cstring>
-            </property>
-            <property name="sizePolicy">
-                <sizepolicy>
-                    <hsizetype>7</hsizetype>
-                    <vsizetype>0</vsizetype>
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                </sizepolicy>
-            </property>
-        </widget>
         <widget class="QLabel" row="2" column="0">
             <property name="name">
                 <cstring>m_commandsLabel</cstring>
@@ -91,14 +78,14 @@
             </property>
             <property name="sizePolicy">
                 <sizepolicy>
-                    <hsizetype>5</hsizetype>
+                    <hsizetype>1</hsizetype>
                     <vsizetype>1</vsizetype>
                     <horstretch>0</horstretch>
                     <verstretch>0</verstretch>
                 </sizepolicy>
             </property>
             <property name="text">
-                <string>Edit...</string>
+                <string>&amp;Edit...</string>
             </property>
         </widget>
         <widget class="QLineEdit" row="2" column="1" rowspan="1" colspan="2">
@@ -111,7 +98,7 @@
                 <cstring>m_autoConnectCBox</cstring>
             </property>
             <property name="text">
-                <string>Connect on application start up</string>
+                <string>&amp;Connect on application start up</string>
             </property>
         </widget>
         <widget class="QGroupBox" row="4" column="0" rowspan="1" colspan="3">
@@ -135,7 +122,7 @@
                         <cstring>m_addServerButton</cstring>
                     </property>
                     <property name="text">
-                        <string>Add...</string>
+                        <string>&amp;Add...</string>
                     </property>
                 </widget>
                 <widget class="KPushButton" row="1" column="1">
@@ -146,7 +133,7 @@
                         <bool>false</bool>
                     </property>
                     <property name="text">
-                        <string>Edit...</string>
+                        <string>E&amp;dit...</string>
                     </property>
                 </widget>
                 <widget class="QToolButton" row="1" column="2">
@@ -239,7 +226,7 @@
                         <bool>false</bool>
                     </property>
                     <property name="text">
-                        <string>Edit...</string>
+                        <string>Ed&amp;it...</string>
                     </property>
                 </widget>
                 <widget class="QToolButton" row="1" column="5">
@@ -300,14 +287,24 @@
                 </widget>
             </grid>
         </widget>
+        <widget class="QComboBox" row="1" column="1">
+            <property name="name">
+                <cstring>m_identityCBox</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>1</hsizetype>
+                    <vsizetype>0</vsizetype>
+                    <horstretch>2</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+        </widget>
     </grid>
 </widget>
-<customwidgets>
-</customwidgets>
 <layoutdefaults spacing="6" margin="11"/>
 <layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
 <includehints>
-    <includehint>kcombobox.h</includehint>
     <includehint>kpushbutton.h</includehint>
     <includehint>klistbox.h</includehint>
     <includehint>kpushbutton.h</includehint>
