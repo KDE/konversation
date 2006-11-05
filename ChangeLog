@@ -6,6 +6,17 @@ Changes since 1.0.1:
 - Remember and recreate minimized-to-tray state across sessions.
 - Fix input line contents rather than actual sent text being appended to the
   input history upon a multi-line paste edit.
+- Turned parameter-less away into a toggle: Sets away state with default
+  message initially, and unsets away state if already away.
+- Added regular expression editor button to auto-replace preferences.
+- Improve auto-replace behavior with multiple matches in one line (fixes mul-
+  tiple Wikipedia links).
+- Fix onotice payload being cut off after the first word.
+- Apply switching the identity in the identity dialog as opened from the net-
+  work dialog to the network's settings.
+- Seperate query messages and messages containing the user's nickname into
+  two distinct KNotify events.
+- Move "Hide Nicklist" menu action from Edit to Settings.
 
 -------------------------------------------------------------------------------
 
