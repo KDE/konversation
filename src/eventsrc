@@ -158,7 +158,21 @@ default_presentation=0
 
 [queryMessage]
 Name=Private message
+Name[bg]=Лично съобщение
+Name[da]=Provat besked
+Name[ga]=Teachtaireacht phríobháideach
+Name[ja]=プライベートメッセージ
+Name[pt]=Mensagem privada
+Name[pt_BR]=Mensagem privada
+Name[sv]=Privat meddelande
 Comment=You recieved a private message
+Comment[bg]=Получихте лично съобщение
+Comment[da]=Du modtog en privat besked
+Comment[ga]=Fuair tú teachtaireacht phríobháideach
+Comment[ja]=プライベートメッセージを受け取りました
+Comment[pt]=Você recebeu uma mensagem privada
+Comment[pt_BR]=Você recebeu uma mensagem privada
+Comment[sv]=Du har tagit emot ett privat meddelande
 default_presentation=0
 
 [nickchange]
