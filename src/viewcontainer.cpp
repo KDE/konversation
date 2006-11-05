@@ -388,6 +388,9 @@ void ViewContainer::updateViewActions(int index)
         action = actionCollection()->action("previous_tab");
         if (action) action->setEnabled(true);
 
+        action = actionCollection()->action("next_active_tab");
+        if (action) action->setEnabled(true);
+
         action = actionCollection()->action("close_tab");
         if (action) action->setEnabled(true);
 
@@ -436,6 +439,9 @@ void ViewContainer::updateViewActions(int index)
         if (action) action->setEnabled(false);
 
         action = actionCollection()->action("next_tab");
+        if (action) action->setEnabled(false);
+
+        action = actionCollection()->action("next_active_tab");
         if (action) action->setEnabled(false);
 
         action = actionCollection()->action("previous_tab");
@@ -2339,6 +2345,46 @@ void ViewContainer::closeNicksOnlinePanel()
         m_nicksOnlinePanel = 0;
     }
     (dynamic_cast<KToggleAction*>(actionCollection()->action("open_nicksonline_window")))->setChecked(false);
+}
+
+void ViewContainer::showNextActiveView()
+{
+    int index = m_tabWidget->currentPageIndex();
+    int oldIndex = index;
+
+    if(index < (m_tabWidget->count() - 1))
+    {
+        ++index;
+    }
+    else
+    {
+        index = 0;
+    }
+
+    bool found = false;
+
+    while(index != oldIndex)
+    {
+        ChatWindow* view = static_cast<ChatWindow*>(m_tabWidget->page(index));
+
+        if(view && (view->currentTabNotification() < Konversation::tnfControl))
+        {
+            found = true;
+            break;
+        }
+
+        if(index < (m_tabWidget->count() - 1))
+        {
+            ++index;
+        }
+        else
+        {
+            index = 0;
+        }
+    }
+
+    if(found)
+        goToView(index);
 }
 
 #include "viewcontainer.moc"

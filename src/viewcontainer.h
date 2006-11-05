@@ -144,6 +144,8 @@ class ViewContainer : public QObject
         void openNicksOnlinePanel();
         void closeNicksOnlinePanel();
 
+        void showNextActiveView();
+
     signals:
         void viewChanged(ChatWindow* view);
         void removeView(ChatWindow* view);

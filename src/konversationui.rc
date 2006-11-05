@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="konversation" version="43">
+<kpartgui name="konversation" version="44">
 
   <MenuBar>
     <Menu name="file">
@@ -35,6 +35,7 @@
       <Text>&amp;Window</Text>
       <Action name="previous_tab" />
       <Action name="next_tab" />
+      <Action name="next_active_tab" />
       <Separator />
       <Action name="move_tab_left" />
       <Action name="move_tab_right" />

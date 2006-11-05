@@ -175,6 +175,9 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
     action->setEnabled(false);
     action = new KAction(i18n("Close &Tab"),"tab_remove",KShortcut("Ctrl+w"), m_viewContainer, SLOT(closeCurrentView()),actionCollection(),"close_tab");
     action->setEnabled(false);
+    action = new KAction(i18n("Next Active Tab"), 0, KShortcut("Ctrl+Alt+Space"), m_viewContainer, SLOT(showNextActiveView()),
+                         actionCollection(), "next_active_tab");
+    action->setEnabled(false);
 
     if (Preferences::tabPlacement()==Preferences::Left)
     {
