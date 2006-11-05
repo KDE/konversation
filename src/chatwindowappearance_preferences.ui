@@ -1,4 +1,4 @@
-<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>ChatWindowAppearance_Config</class>
 <comment>This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -13,8 +13,11 @@ the Free Software Foundation; either version 2 of the License, or
             <x>0</x>
             <y>0</y>
             <width>399</width>
-            <height>476</height>
+            <height>487</height>
         </rect>
+    </property>
+    <property name="caption">
+        <string>ChatWindowAppearance_Config</string>
     </property>
     <vbox>
         <property name="name">
@@ -171,6 +174,9 @@ the Free Software Foundation; either version 2 of the License, or
                     <property name="text">
                         <string>&amp;Show channel topic</string>
                     </property>
+                    <property name="accel">
+                        <string>Alt+S</string>
+                    </property>
                 </widget>
                 <widget class="QCheckBox" row="1" column="0" rowspan="1" colspan="2">
                     <property name="name">
@@ -187,6 +193,9 @@ the Free Software Foundation; either version 2 of the License, or
                     <property name="text">
                         <string>Show channel &amp;nick list and quick buttons</string>
                     </property>
+                    <property name="accel">
+                        <string>Alt+N</string>
+                    </property>
                 </widget>
                 <widget class="QCheckBox" row="5" column="0" rowspan="1" colspan="2">
                     <property name="name">
@@ -194,6 +203,9 @@ the Free Software Foundation; either version 2 of the License, or
                     </property>
                     <property name="text">
                         <string>Show bo&amp;x to change own nickname</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+X</string>
                     </property>
                 </widget>
                 <spacer row="3" column="0">
@@ -252,6 +264,17 @@ the Free Software Foundation; either version 2 of the License, or
                         <string>Show &amp;quick buttons</string>
                     </property>
                 </widget>
+                <widget class="QCheckBox" row="6" column="0" rowspan="1" colspan="2">
+                    <property name="name">
+                        <cstring>kcfg_ShowIRCViewScrollBar</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Show the irc view scrollbar</string>
+                    </property>
+                    <property name="accel">
+                        <string></string>
+                    </property>
+                </widget>
             </grid>
         </widget>
         <widget class="QGroupBox">
@@ -305,6 +328,8 @@ the Free Software Foundation; either version 2 of the License, or
         </spacer>
     </vbox>
 </widget>
+<customwidgets>
+</customwidgets>
 <connections>
     <connection>
         <sender>kcfg_ShowNickList</sender>

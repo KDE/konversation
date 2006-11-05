@@ -60,6 +60,17 @@ void ChatWindow::updateAppearance()
     // The font size of the KTabWidget container may be inappropriately
     // small due to the "Tab bar" font size setting.
     setFont(KGlobalSettings::generalFont());
+
+    if(textView) {
+        if(Preferences::showIRCViewScrollBar())
+        {
+            textView->setVScrollBarMode(QScrollView::Auto);
+        }
+        else
+        {
+            textView->setVScrollBarMode(QScrollView::AlwaysOff);
+        }
+    }
 }
 
 void ChatWindow::setName(const QString& newName)
@@ -128,6 +139,15 @@ void ChatWindow::setTextView(IRCView* newView)
     if(!textView)
     {
         return;
+    }
+
+    if(Preferences::showIRCViewScrollBar())
+    {
+        textView->setVScrollBarMode(QScrollView::Auto);
+    }
+    else
+    {
+        textView->setVScrollBarMode(QScrollView::AlwaysOff);
     }
 
     textView->setChatWin(this);

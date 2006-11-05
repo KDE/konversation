@@ -225,6 +225,10 @@
       <label></label>
       <whatsthis></whatsthis>
     </entry>
+    <entry key="ShowIRCViewScrollBar" type="Bool">
+      <default>true</default>
+      <label>Hide the scrollbar</label>
+    </entry>
   </group>
   <group name="General Options">
     <entry key="SpellChecking" type="Bool">
