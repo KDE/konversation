@@ -889,7 +889,7 @@ void Channel::sendChannelText(const QString& sendLine)
     }
 
     // Send all strings, one after another
-    QStringList outList=QStringList::split('\n',outputAll);
+    QStringList outList=QStringList::split(QRegExp("[\r\n]+"),outputAll);
     for(unsigned int index=0;index<outList.count();index++)
     {
         QString output(outList[index]);

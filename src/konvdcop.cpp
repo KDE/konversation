@@ -81,16 +81,25 @@ void KonvDCOP::actionToAll(const QString &message)
 {
     emit dcopMultiServerRaw("me " + message);
 }
-
-void KonvDCOP::say(const QString& server,const QString& target,const QString& command)
+#include "argnl.h"
+void KonvDCOP::say(const QString& _server,const QString& _target,const QString& _command)
 {
+    //Sadly, copy on write doesn't exist with QString::replace
+    QString server(_server), target(_target), command(_command);
+
     // TODO: this just masks a greater problem - Server::addQuery will return a query for '' --argonel
     // TODO: other DCOP calls need argument checking too --argonel
     if (server.isEmpty() || target.isEmpty() || command.isEmpty())
         kdDebug() <<  "KonvDCOP::say() requires 3 arguments." << endl;
     else
     {
-        kdDebug() << "KonvDCOP::say()" << endl;
+        command.replace('\n',"\\n");
+        command.replace('\r',"\\r");
+        target.remove('\n');
+        target.remove('\r');
+        server.remove('\n');
+        server.remove('\r');
+        kdDebug() << "KonvDCOP::say()" << _S(server) << _S(target) << _S(command) << endl;
         // Act as if the user typed it
         emit dcopSay(server,target,command);
     }
