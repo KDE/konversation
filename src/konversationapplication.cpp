@@ -1132,23 +1132,31 @@ QString KonversationApplication::doAutoreplace(const QString& text,bool output)
                 QRegExp needleReg=pattern;
                 // set pattern case insensitive
                 needleReg.setCaseSensitive(false);
-                // find matches
-                if(line.find(needleReg)!=-1)
-                {
-                    // prepare list of captured ( ) groups
-                    QStringList captures;
-                    // remember captured patterns
-                    captures=needleReg.capturedTexts();
+                int index = 0;
 
-                    // replace %0 - %9 in regex groups
-                    for(unsigned int capture=0;capture<captures.count();capture++)
+                do {
+                    replacement = definition.section(',',3);
+                    // find matches
+                    index = line.find(needleReg, index);
+
+                    if(index != -1)
                     {
-                        replacement.replace(QString("%%1").arg(capture),captures[capture]);
+                        // prepare list of captured ( ) groups
+                        QStringList captures;
+                        // remember captured patterns
+                        captures=needleReg.capturedTexts();
+
+                        // replace %0 - %9 in regex groups
+                        for(unsigned int capture=0;capture<captures.count();capture++)
+                        {
+                            replacement.replace(QString("%%1").arg(capture),captures[capture]);
+                        }
+                        replacement.replace(QRegExp("%[0-9]"),QString::null);
+                        // replace input with replacement
+                        line.replace(index, index + captures[0].length(), replacement);
+                        index += captures[0].length();
                     }
-                    replacement.replace(QRegExp("%[0-9]"),QString::null);
-                    // replace input with replacement
-                    line.replace(needleReg,replacement);
-                }
+                } while(index >= 0 && index < (int)line.length());
             }
             else
             {
