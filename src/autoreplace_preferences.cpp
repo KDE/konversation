@@ -20,6 +20,8 @@
 #include <klocale.h>
 #include <klineedit.h>
 #include <klistview.h>
+#include <kparts/componentfactory.h>
+#include <kregexpeditorinterface.h>
 
 #include "config/preferences.h"
 
@@ -34,6 +36,18 @@ Autoreplace_Config::Autoreplace_Config(QWidget* parent, const char* name)
 {
   // reset flag to defined state (used to block signals when just selecting a new item)
   m_newItemSelected=false;
+
+  //Check if the regexp editor is installed
+  bool installed = !KTrader::self()->query("KRegExpEditor/KRegExpEditor").isEmpty();
+
+  if(installed)
+  {
+    regExpEditorButton->show();
+  }
+  else
+  {
+    regExpEditorButton->hide();
+  }
 
   // populate combobox
   directionCombo->insertItem(i18n("Outgoing"),DIRECTION_OUTPUT);
@@ -59,6 +73,7 @@ Autoreplace_Config::Autoreplace_Config(QWidget* parent, const char* name)
   connect(directionCombo, SIGNAL(activated(int)), this, SLOT(directionChanged(int)));
 
   connect(patternInput, SIGNAL(textChanged(const QString&)), this, SLOT(patternChanged(const QString&)));
+  connect(regExpEditorButton, SIGNAL(clicked()), this, SLOT(showRegExpEditor()));
   connect(replacementInput, SIGNAL(textChanged(const QString&)), this, SLOT(replacementChanged(const QString&)));
 
   connect(newButton, SIGNAL(clicked()), this, SLOT(addEntry()));
@@ -212,6 +227,7 @@ void Autoreplace_Config::entrySelected(QListViewItem* autoreplaceEntry)
   patternInput->setEnabled(enabled);
   replacementLabel->setEnabled(enabled);
   replacementInput->setEnabled(enabled);
+  regExpEditorButton->setEnabled(enabled);
   // make checkboxes work
   emit modified();
 }
@@ -348,6 +364,30 @@ void Autoreplace_Config::sort(int column)
 void Autoreplace_Config::disableSort()
 {
     patternListView->setSorting(-1);
+}
+
+void Autoreplace_Config::showRegExpEditor()
+{
+    QDialog *editorDialog =
+            KParts::ComponentFactory::createInstanceFromQuery<QDialog>( "KRegExpEditor/KRegExpEditor" );
+
+    if(editorDialog)
+    {
+        // kdeutils was installed, so the dialog was found.  Fetch the editor interface.
+        KRegExpEditorInterface *reEditor =
+                static_cast<KRegExpEditorInterface *>(editorDialog->qt_cast( "KRegExpEditorInterface" ) );
+        Q_ASSERT(reEditor); // This should not fail!
+        reEditor->setRegExp(patternInput->text());
+        int dlgResult = editorDialog->exec();
+
+        if(dlgResult == QDialog::Accepted)
+        {
+            QString re = reEditor->regExp();
+            patternInput->setText(re);
+        }
+
+        delete editorDialog;
+    }
 }
 
 #include "autoreplace_preferences.moc"

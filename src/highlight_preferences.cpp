@@ -39,6 +39,18 @@ Highlight_Config::Highlight_Config(QWidget* parent, const char* name)
   // reset flag to defined state (used to block signals when just selecting a new item)
   newItemSelected=false;
 
+  //Check if the regexp editor is installed
+  bool installed = !KTrader::self()->query("KRegExpEditor/KRegExpEditor").isEmpty();
+
+  if(installed)
+  {
+    patternButton->show();
+  }
+  else
+  {
+    patternButton->hide();
+  }
+
   loadSettings();
 
   // make list accept drag & drop

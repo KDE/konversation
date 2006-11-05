@@ -45,6 +45,7 @@ class Autoreplace_Config : public Autoreplace_ConfigUI, public KonviSettingsPage
     void removeEntry();
     void sort(int column);
     void disableSort();
+    void showRegExpEditor();
 
   protected:
     void setAutoreplaceListView(const QStringList &autoreplaceList);

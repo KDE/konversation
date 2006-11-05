@@ -16,8 +16,6 @@
     <Menu name="edit">
       <Action name="clear_window" />
       <Action name="clear_tabs" />
-      <Separator />
-      <Action name="hide_nicknamelist" />
     </Menu>
     <Menu name="insert">
       <Text>&amp;Insert</Text>
@@ -29,6 +27,8 @@
       <Text>&amp;Bookmarks</Text>
     </Menu>
     <Menu name="settings">
+      <Action name="hide_nicknamelist" />
+      <Separator />
       <Action name="identities_dialog" append="save_merge" />
     </Menu>
     <Menu name="windows" append="settings_merge">
