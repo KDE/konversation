@@ -1014,7 +1014,7 @@ void ViewContainer::setViewNotification(ChatWindow* view, const Konversation::Ta
         }
     }
 
-    if(view->currentTabNotification() < Konversation::tnfControl)
+    if(type < Konversation::tnfControl)
     {
         m_activeViewOrderList.append(view);
     }

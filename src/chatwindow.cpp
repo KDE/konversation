@@ -64,7 +64,7 @@ void ChatWindow::updateAppearance()
     if(textView) {
         if(Preferences::showIRCViewScrollBar())
         {
-            textView->setVScrollBarMode(QScrollView::Auto);
+            textView->setVScrollBarMode(QScrollView::AlwaysOn);
         }
         else
         {
