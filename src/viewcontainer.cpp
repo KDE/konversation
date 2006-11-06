@@ -838,6 +838,11 @@ void ViewContainer::setViewNotification(ChatWindow* view, const Konversation::Ta
     if (!view || view == m_tabWidget->currentPage())
         return;
 
+    if(type < Konversation::tnfControl && (m_activeViewOrderList.find(view) == m_activeViewOrderList.end()))
+    {
+        m_activeViewOrderList.append(view);
+    }
+
     if (!Preferences::tabNotificationsLeds() && !Preferences::tabNotificationsText())
         return;
 
@@ -1012,11 +1017,6 @@ void ViewContainer::setViewNotification(ChatWindow* view, const Konversation::Ta
             default:
                 break;
         }
-    }
-
-    if(type < Konversation::tnfControl)
-    {
-        m_activeViewOrderList.append(view);
     }
 }
 
