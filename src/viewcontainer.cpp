@@ -1013,6 +1013,11 @@ void ViewContainer::setViewNotification(ChatWindow* view, const Konversation::Ta
                 break;
         }
     }
+
+    if(view->currentTabNotification() < Konversation::tnfControl)
+    {
+        m_activeViewOrderList.append(view);
+    }
 }
 
 void ViewContainer::unsetViewNotification(ChatWindow* view)
@@ -1066,6 +1071,13 @@ void ViewContainer::unsetViewNotification(ChatWindow* view)
         }
 
         m_tabWidget->setTabColor(view, m_window->colorGroup().foreground());
+    }
+
+    QValueList<ChatWindow*>::iterator it = m_activeViewOrderList.find(view);
+
+    if(it != m_activeViewOrderList.end())
+    {
+        m_activeViewOrderList.remove(it);
     }
 }
 
@@ -2349,42 +2361,8 @@ void ViewContainer::closeNicksOnlinePanel()
 
 void ViewContainer::showNextActiveView()
 {
-    int index = m_tabWidget->currentPageIndex();
-    int oldIndex = index;
-
-    if(index < (m_tabWidget->count() - 1))
-    {
-        ++index;
-    }
-    else
-    {
-        index = 0;
-    }
-
-    bool found = false;
-
-    while(index != oldIndex)
-    {
-        ChatWindow* view = static_cast<ChatWindow*>(m_tabWidget->page(index));
-
-        if(view && (view->currentTabNotification() < Konversation::tnfControl))
-        {
-            found = true;
-            break;
-        }
-
-        if(index < (m_tabWidget->count() - 1))
-        {
-            ++index;
-        }
-        else
-        {
-            index = 0;
-        }
-    }
-
-    if(found)
-        goToView(index);
+    if(!m_activeViewOrderList.isEmpty())
+        goToView(m_tabWidget->indexOf(m_activeViewOrderList.first()));
 }
 
 #include "viewcontainer.moc"

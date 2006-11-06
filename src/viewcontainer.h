@@ -203,6 +203,8 @@ class ViewContainer : public QObject
 
         int m_popupViewIndex;
         int m_queryViewCount;
+
+        QValueList<ChatWindow*> m_activeViewOrderList;
 };
 
 #endif
