@@ -1512,6 +1512,14 @@ void ViewContainer::closeView(ChatWindow* view)
         if (view==m_previousFrontView) m_previousFrontView=0;
         if (view==m_frontView) m_frontView=m_previousFrontView;
 
+        // Remove the view from the active view list if it's still on it
+        QValueList<ChatWindow*>::iterator it = m_activeViewOrderList.find(view);
+
+        if(it != m_activeViewOrderList.end())
+        {
+            m_activeViewOrderList.remove(it);
+        }
+
         m_tabWidget->removePage(view);
 
         if (viewType==ChatWindow::Query)
@@ -2362,7 +2370,7 @@ void ViewContainer::closeNicksOnlinePanel()
 void ViewContainer::showNextActiveView()
 {
     if(!m_activeViewOrderList.isEmpty())
-        goToView(m_tabWidget->indexOf(m_activeViewOrderList.first()));
+        m_tabWidget->setCurrentPage(m_tabWidget->indexOf(m_activeViewOrderList.first()));
 }
 
 #include "viewcontainer.moc"
