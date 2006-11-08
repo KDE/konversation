@@ -336,6 +336,13 @@ bool doHighlight, bool parseURL, bool self)
     QString filteredLine(line);
     KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
 
+    //Since we can't turn off whitespace simplification withouteliminating text wrapping,
+    //  if the line starts with a space turn it into a non-breaking space.
+    //    (which magically turns back into a space on copy)
+
+    if (filteredLine[0]==' ')
+        filteredLine[0]='\xA0';
+
     // TODO: Use QStyleSheet::escape() here
     // Replace all < with &lt;
     filteredLine.replace("<","\x0blt;");
@@ -568,15 +575,11 @@ bool doHighlight, bool parseURL, bool self)
     {
         // highlight own lines
         filteredLine = "<font color=\"" + Preferences::highlightOwnLinesColor().name() +
-            "\"> " + filteredLine + "</font>";
+            "\">" + filteredLine + "</font>";
     }
 
-    // Replace multiple Spaces with "<space>&nbsp;"
-    while((pos = filteredLine.find("  ")) != -1)
-    {
-        filteredLine.replace(pos + (pos == 0 ? 0 : 1), 1, "&nbsp;");
-    }
-
+    // Replace pairs of spaces with "<space>&nbsp;" to preserve some semblance of text wrapping
+    filteredLine.replace("  "," \xA0");
     return filteredLine;
 }
 
@@ -915,6 +918,7 @@ void IRCView::scrollToBottom()
     // QTextEdit::scrollToBottom does sync() too, but we don't want it because its slow
     setContentsPos( contentsX(), contentsHeight() - visibleHeight() );
 }
+
 void IRCView::doAppend(const QString& newLine, bool important, bool self)
 {
     // Add line to buffer
