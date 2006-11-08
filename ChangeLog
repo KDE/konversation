@@ -9,14 +9,20 @@ Changes since 1.0.1:
 - Turned parameter-less away into a toggle: Sets away state with default
   message initially, and unsets away state if already away.
 - Added regular expression editor button to auto-replace preferences.
-- Improve auto-replace behavior with multiple matches in one line (fixes mul-
+- Improved auto-replace behavior with multiple matches in one line (fixes mul-
   tiple Wikipedia links).
-- Fix onotice payload being cut off after the first word.
-- Apply switching the identity in the identity dialog as opened from the net-
+- Fixed onotice payload being cut off after the first word.
+- Applied switching the identity in the identity dialog as opened from the net-
   work dialog to the network's settings.
-- Seperate query messages and messages containing the user's nickname into
+- Seperated query messages and messages containing the user's nickname into
   two distinct KNotify events.
-- Move "Hide Nicklist" menu action from Edit to Settings.
+- Moved "Hide Nicklist" menu action from Edit to Settings.
+- Added an option to hide the scrollbar in chat windows.
+- Added a keyboard shortcut to jump to the next active tab.
+- Made newline handling in the DCOP interface more robust, fixing a potential
+  (minor) security problem.
+- Fixed a bug that lead to single leading whitespace characters in lines being
+  omitted from display in chat windows.
 
 -------------------------------------------------------------------------------
 
