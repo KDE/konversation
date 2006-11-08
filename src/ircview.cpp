@@ -915,12 +915,11 @@ void IRCView::scrollToBottom()
     // QTextEdit::scrollToBottom does sync() too, but we don't want it because its slow
     setContentsPos( contentsX(), contentsHeight() - visibleHeight() );
 }
-#include "argnl.h"
 void IRCView::doAppend(const QString& newLine, bool important, bool self)
 {
     // Add line to buffer
     QString line(newLine);
-    kdDebug() << _S(line) << endl;
+
     if(important || !Preferences::hideUnimportantEvents())
     {
         if(!self)
