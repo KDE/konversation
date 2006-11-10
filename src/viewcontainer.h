@@ -31,7 +31,7 @@ class ChatWindow;
 class Server;
 class Images;
 class UrlCatcher;
-class DccPanel;
+class DccTransferPanel;
 class NicksOnline;
 
 namespace Konversation
@@ -119,7 +119,7 @@ class ViewContainer : public QObject
         void addDccPanel();
         void closeDccPanel();
         void deleteDccPanel();
-        DccPanel* getDccPanel();
+        DccTransferPanel* getDccPanel();
 
         void addDccChat(const QString& myNick,const QString& nick,const QString& numericalIp,const QStringList& arguments,bool listen);
 
@@ -196,7 +196,7 @@ class ViewContainer : public QObject
         UrlCatcher* m_urlCatcherPanel;
         NicksOnline* m_nicksOnlinePanel;
 
-        DccPanel* m_dccPanel;
+        DccTransferPanel* m_dccPanel;
         bool m_dccPanelOpen;
 
         Konversation::InsertCharDialog* m_insertCharDialog;

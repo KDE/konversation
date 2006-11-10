@@ -22,10 +22,10 @@
 #include <kurlrequester.h>
 
 #include "dccdetaildialog.h"
-#include "dcctransfer.h"
+#include "dcctransferpanelitem.h"
 #include "dcctransferrecv.h"
 
-DccDetailDialog::DccDetailDialog( DccTransfer* item )
+DccDetailDialog::DccDetailDialog( DccTransferPanelItem* item )
 : KDialog( 0 ), m_item( item )
 {
     QVBoxLayout* baseLayout = new QVBoxLayout( this );
@@ -50,7 +50,7 @@ DccDetailDialog::DccDetailDialog( DccTransfer* item )
     // Local File URL
     QLabel* localFileURLHeader = new QLabel( infoFrame );
     localFileURLHeader->setAlignment( AlignHCenter | AlignVCenter );
-    if ( m_item->m_dccType == DccTransfer::Send )
+    if ( m_item->m_dccType == DccTransferPanelItem::Send )
         localFileURLHeader->setText( i18n("Local Path:") );
     else
         localFileURLHeader->setText( i18n("Saved to:") );
@@ -72,7 +72,7 @@ DccDetailDialog::DccDetailDialog( DccTransfer* item )
     // Partner
     QLabel* partnerHeader = new QLabel( infoFrame );
     partnerHeader->setAlignment( AlignHCenter | AlignVCenter );
-    if ( m_item->m_dccType == DccTransfer::Send )
+    if ( m_item->m_dccType == DccTransferPanelItem::Send )
         partnerHeader->setText( i18n("Receiver:") );
     else
         partnerHeader->setText( i18n("Sender:") );
@@ -85,7 +85,7 @@ DccDetailDialog::DccDetailDialog( DccTransfer* item )
     // Self
     QLabel* selfHeader = 0;
     m_self = 0;
-    if ( m_item->m_dccType == DccTransfer::Send )
+    if ( m_item->m_dccType == DccTransferPanelItem::Send )
     {
         selfHeader = new QLabel( i18n("Self:"), infoFrame );
         selfHeader->setAlignment( AlignHCenter | AlignVCenter );
@@ -128,7 +128,7 @@ DccDetailDialog::DccDetailDialog( DccTransfer* item )
 
     // Accept
     m_buttonAccept = 0;
-    if ( m_item->m_dccType == DccTransfer::Receive )
+    if ( m_item->m_dccType == DccTransferPanelItem::Receive )
     {
         m_buttonAccept = new KPushButton( KGlobal::iconLoader()->loadIconSet( "player_play", KIcon::Small ), i18n("&Accept"), buttonFrame );
         m_buttonAccept->setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ) );
@@ -216,13 +216,13 @@ void DccDetailDialog::updateView() // public
 
     // Local path
     m_localFileURL->setURL( m_item->getFileURL().prettyURL() );
-    m_localFileURL->lineEdit()->setFocusPolicy( m_item->m_dccStatus == DccTransfer::Queued ? StrongFocus : ClickFocus );
-    m_localFileURL->lineEdit()->setReadOnly( m_item->m_dccStatus != DccTransfer::Queued );
-    m_localFileURL->lineEdit()->setFrame( m_item->m_dccStatus == DccTransfer::Queued );
-    m_localFileURL->lineEdit()->setAlignment( m_item->m_dccStatus == DccTransfer::Queued ? AlignLeft : AlignHCenter );
-    m_localFileURL->button()->setEnabled( m_item->m_dccStatus == DccTransfer::Queued );
-    m_buttonOpenFile->setEnabled( m_item->m_dccType == DccTransfer::Send || m_item->m_dccStatus == DccTransfer::Done );
-    m_buttonRemoveFile->setEnabled( m_item->m_dccType == DccTransfer::Receive && m_item->m_dccStatus == DccTransfer::Done );
+    m_localFileURL->lineEdit()->setFocusPolicy( m_item->m_dccStatus == DccTransferPanelItem::Queued ? StrongFocus : ClickFocus );
+    m_localFileURL->lineEdit()->setReadOnly( m_item->m_dccStatus != DccTransferPanelItem::Queued );
+    m_localFileURL->lineEdit()->setFrame( m_item->m_dccStatus == DccTransferPanelItem::Queued );
+    m_localFileURL->lineEdit()->setAlignment( m_item->m_dccStatus == DccTransferPanelItem::Queued ? AlignLeft : AlignHCenter );
+    m_localFileURL->button()->setEnabled( m_item->m_dccStatus == DccTransferPanelItem::Queued );
+    m_buttonOpenFile->setEnabled( m_item->m_dccType == DccTransferPanelItem::Send || m_item->m_dccStatus == DccTransferPanelItem::Done );
+    m_buttonRemoveFile->setEnabled( m_item->m_dccType == DccTransferPanelItem::Receive && m_item->m_dccStatus == DccTransferPanelItem::Done );
 
     // Partner
     if ( !m_item->m_partnerIp.isEmpty() || !m_item->m_partnerPort.isEmpty() )
@@ -248,7 +248,7 @@ void DccDetailDialog::updateView() // public
     }
 
     // Status
-    if ( m_item->m_dccStatus == DccTransfer::Sending || m_item->m_dccStatus == DccTransfer::Receiving )
+    if ( m_item->m_dccStatus == DccTransferPanelItem::Sending || m_item->m_dccStatus == DccTransferPanelItem::Receiving )
         m_status->setText( m_item->getStatusText() + " ( " + m_item->getCPSPrettyText() + " )" );
     else
         m_status->setText( m_item->m_dccStatusDetail.isEmpty() ? m_item->getStatusText() : m_item->getStatusText() + " (" + m_item->m_dccStatusDetail + ')' );
@@ -264,10 +264,10 @@ void DccDetailDialog::updateView() // public
 
     // Accept
     if ( m_buttonAccept )
-        m_buttonAccept->setEnabled( m_item->m_dccStatus == DccTransfer::Queued );
+        m_buttonAccept->setEnabled( m_item->m_dccStatus == DccTransferPanelItem::Queued );
 
     // Abort
-    m_buttonAbort->setEnabled( m_item->m_dccStatus < DccTransfer::Done );
+    m_buttonAbort->setEnabled( m_item->m_dccStatus < DccTransferPanelItem::Done );
 }
 
 void DccDetailDialog::slotLocalFileURLChanged( const QString& newURL )

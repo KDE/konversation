@@ -36,14 +36,14 @@
 #include <kfileitem.h>
 #include <kinputdialog.h>
 
-#include "dccpanel.h"
+#include "dcctransferpanel.h"
 #include "dcctransfersend.h"
 #include "konversationapplication.h"
 
 using namespace KNetwork;
 
-DccTransferSend::DccTransferSend( DccPanel* panel, const QString& partnerNick, const KURL& fileURL, const QString& ownIp, const QString &altFileName, uint fileSize  )
-: DccTransfer( panel, DccTransfer::Send, partnerNick )
+DccTransferSend::DccTransferSend( DccTransferPanel* panel, const QString& partnerNick, const KURL& fileURL, const QString& ownIp, const QString &altFileName, uint fileSize  )
+: DccTransferPanelItem( panel, DccTransferPanelItem::Send, partnerNick )
 {
     kdDebug() << "DccTransferSend::DccTransferSend()" << endl
         << "DccTransferSend::DccTransferSend(): Partner: " << partnerNick << endl

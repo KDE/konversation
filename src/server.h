@@ -35,7 +35,7 @@
 #include "servergroupsettings.h"
 
 class Channel;
-class DccTransfer;
+class DccTransferPanelItem;
 class Query;
 class StatusPanel;
 class Identity;
@@ -466,9 +466,9 @@ class Server : public QObject
         void resumeDccSendTransfer(const QString& sourceNick,const QStringList& dccArguments);
         void dccSendRequest(const QString& recipient,const QString& fileName,const QString& address,const QString& port,unsigned long size);
         void dccResumeGetRequest(const QString& sender,const QString& fileName,const QString& port,KIO::filesize_t startAt);
-        void dccGetDone(const DccTransfer* item);
-        void dccSendDone(const DccTransfer* item);
-        void dccStatusChanged(const DccTransfer* item, int newStatus, int oldStatus);
+        void dccGetDone(const DccTransferPanelItem* item);
+        void dccSendDone(const DccTransferPanelItem* item);
+        void dccStatusChanged(const DccTransferPanelItem* item, int newStatus, int oldStatus);
         void away();
         void unAway();
         void scriptNotFound(const QString& name);

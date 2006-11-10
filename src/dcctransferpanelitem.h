@@ -33,13 +33,13 @@ namespace KIO
 }
 
 class DccDetailDialog;
-class DccPanel;
+class DccTransferPanel;
 
 /*
   @author Dario Abatianni
 */
 
-class DccTransfer : public QObject, public KListViewItem
+class DccTransferPanelItem : public QObject, public KListViewItem
 {
     Q_OBJECT
         friend class DccDetailDialog;
@@ -67,8 +67,8 @@ class DccTransfer : public QObject, public KListViewItem
             DccStatusCount
         };
 
-        DccTransfer( DccPanel* panel, DccType dccType, const QString& partnerNick );
-        virtual ~DccTransfer();
+        DccTransferPanelItem( DccTransferPanel* panel, DccType dccType, const QString& partnerNick );
+        virtual ~DccTransferPanelItem();
 
         virtual void paintCell( QPainter* painter, const QColorGroup& colorgroup, int column, int width, int alignment );
 
@@ -100,8 +100,8 @@ class DccTransfer : public QObject, public KListViewItem
         void closeDetailDialog();
 
         signals:
-        void done( const DccTransfer* item );
-        void statusChanged( const DccTransfer* item, int newStatus, int oldStatus );
+        void done( const DccTransferPanelItem* item );
+        void statusChanged( const DccTransferPanelItem* item, int newStatus, int oldStatus );
 
     public slots:
         virtual void start() = 0;
@@ -157,7 +157,7 @@ class DccTransfer : public QObject, public KListViewItem
          */
         KURL m_fileURL;
 
-        DccPanel* m_panel;
+        DccTransferPanel* m_panel;
 
     private slots:
         void slotRemoveFileDone( KIO::Job* job );

@@ -34,7 +34,7 @@
 #include "logfilereader.h"
 #include "konsolepanel.h"
 #include "urlcatcher.h"
-#include "dccpanel.h"
+#include "dcctransferpanel.h"
 #include "dccchat.h"
 #include "statuspanel.h"
 #include "channel.h"
@@ -1366,7 +1366,7 @@ void ViewContainer::switchView(QWidget* newView)
             ChatWindow::WindowType viewType = view->getType();
             notifyAction->setEnabled(viewType == ChatWindow::Channel || viewType == ChatWindow::Query ||
                                      viewType == ChatWindow::Status || viewType == ChatWindow::Konsole ||
-                                     viewType == ChatWindow::DccPanel || viewType == ChatWindow::RawLog);
+                                     viewType == ChatWindow::DccTransferPanel || viewType == ChatWindow::RawLog);
             notifyAction->setChecked(view->notificationsEnabled());
         }
 
@@ -1498,10 +1498,10 @@ void ViewContainer::closeView(ChatWindow* view)
         else if (viewType==ChatWindow::RawLog)       confirmClose = view->closeYourself();
         else if (viewType==ChatWindow::DccChat)      confirmClose = view->closeYourself();
 
-        else if (viewType==ChatWindow::DccPanel)     closeDccPanel();
-        else if (viewType==ChatWindow::Konsole)      closeKonsolePanel(view);
-        else if (viewType==ChatWindow::UrlCatcher)   closeUrlCatcher();
-        else if (viewType==ChatWindow::NicksOnline)  closeNicksOnlinePanel();
+        else if (viewType==ChatWindow::DccTransferPanel)  closeDccPanel();
+        else if (viewType==ChatWindow::Konsole)           closeKonsolePanel(view);
+        else if (viewType==ChatWindow::UrlCatcher)        closeUrlCatcher();
+        else if (viewType==ChatWindow::NicksOnline)       closeNicksOnlinePanel();
 
         else if (viewType == ChatWindow::LogFileReader) view->closeYourself();
 
@@ -1626,7 +1626,7 @@ void ViewContainer::showViewContextMenu(QWidget* tab, const QPoint& pos)
             ChatWindow::WindowType viewType = view->getType();
             notifyAction->setEnabled(viewType == ChatWindow::Channel || viewType == ChatWindow::Query ||
                                      viewType == ChatWindow::Status || viewType == ChatWindow::Konsole ||
-                                     viewType == ChatWindow::DccPanel || viewType == ChatWindow::RawLog ||
+                                     viewType == ChatWindow::DccTransferPanel || viewType == ChatWindow::RawLog ||
                                      viewType == ChatWindow::DccChat);
             notifyAction->setChecked(view->notificationsEnabled());
         }
@@ -1668,7 +1668,7 @@ void ViewContainer::showViewContextMenu(QWidget* tab, const QPoint& pos)
                 ChatWindow::WindowType viewType = view->getType();
                 notifyAction->setEnabled(viewType == ChatWindow::Channel || viewType == ChatWindow::Query ||
                                          viewType == ChatWindow::Status || viewType == ChatWindow::Konsole ||
-                                         viewType == ChatWindow::DccPanel || ChatWindow::RawLog ||
+                                         viewType == ChatWindow::DccTransferPanel || ChatWindow::RawLog ||
                                          viewType == ChatWindow::DccChat);
                 notifyAction->setChecked(view->notificationsEnabled());
             }
@@ -1965,7 +1965,7 @@ void ViewContainer::addDccPanel()
     // if the panel wasn't open yet
     if (m_dccPanel==0)
     {
-        m_dccPanel=new DccPanel(m_tabWidget);
+        m_dccPanel=new DccTransferPanel(m_tabWidget);
         addView(m_dccPanel, i18n("DCC Status"));
         connect(m_dccPanel, SIGNAL(updateTabNotification(ChatWindow*,const Konversation::TabNotifyType&)), this, SLOT(setViewNotification(ChatWindow*,const Konversation::TabNotifyType&)));
         m_dccPanelOpen = true;
@@ -2007,7 +2007,7 @@ void ViewContainer::deleteDccPanel()
     }
 }
 
-DccPanel* ViewContainer::getDccPanel()
+DccTransferPanel* ViewContainer::getDccPanel()
 {
     return m_dccPanel;
 }

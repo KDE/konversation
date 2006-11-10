@@ -20,7 +20,7 @@
 #include <qptrlist.h>
 
 #include "dccresumedialog.h"
-#include "dcctransfer.h"
+#include "dcctransferpanelitem.h"
 
 class QFile;
 class QTimer;
@@ -36,11 +36,11 @@ namespace KNetwork
     class KStreamSocket;
 }
 
-class DccPanel;
+class DccTransferPanel;
 
 class DccTransferRecvWriteCacheHandler;
 
-class DccTransferRecv : public DccTransfer
+class DccTransferRecv : public DccTransferPanelItem
 {
     Q_OBJECT
         friend class DccDetailDialog;
@@ -49,7 +49,7 @@ class DccTransferRecv : public DccTransfer
     public:
         /** Constructor.  This sets up the variables and updates the view, so the
          * user can see the filename, filesize etc, and can accept it. */
-        DccTransferRecv( DccPanel* panel, const QString& partnerNick, const KURL& defaultFolderURL, const QString& fileName, unsigned long fileSize, const QString& partnerIp, const QString& partnerPort );
+        DccTransferRecv( DccTransferPanel* panel, const QString& partnerNick, const KURL& defaultFolderURL, const QString& fileName, unsigned long fileSize, const QString& partnerIp, const QString& partnerPort );
         virtual ~DccTransferRecv();
 
         signals:

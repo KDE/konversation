@@ -16,14 +16,14 @@ class KLineEdit;
 class KProgress;
 class KPushButton;
 class KURLRequester;
-class DccTransfer;
+class DccTransferPanelItem;
 
 class DccDetailDialog : public KDialog
 {
     Q_OBJECT
 
         public:
-        explicit DccDetailDialog( DccTransfer* item );
+        explicit DccDetailDialog( DccTransferPanelItem* item );
         virtual ~DccDetailDialog();
 
         void updateView();
@@ -37,7 +37,7 @@ class DccDetailDialog : public KDialog
         void slotClose();
 
     protected:
-        DccTransfer* m_item;
+        DccTransferPanelItem* m_item;
 
         // UI
         KPushButton* m_buttonOpenFile;

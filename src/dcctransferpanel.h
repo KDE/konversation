@@ -11,22 +11,22 @@
   email:     eisfuchs@tigress.com
 */
 
-#ifndef DCCPANEL_H
-#define DCCPANEL_H
+#ifndef DCCTRANSFERPANEL_H
+#define DCCTRANSFERPANEL_H
 
 /*
   @author Dario Abatianni
 */
 
 #include "chatwindow.h"
-#include "dcctransfer.h"
+#include "dcctransferpanelitem.h"
 
 class QContextMenuEvent;
 class QPushButton;
 class KListView;
 class KPopupMenu;
 
-class DccPanel : public ChatWindow
+class DccTransferPanel : public ChatWindow
 {
     Q_OBJECT
 
@@ -67,19 +67,19 @@ class DccPanel : public ChatWindow
                 };
         };
 
-        DccPanel(QWidget* parent);
-        ~DccPanel();
+        DccTransferPanel(QWidget* parent);
+        ~DccTransferPanel();
 
         KListView* getListView();
-        DccTransfer* getTransferByPort(const QString& port,DccTransfer::DccType type,bool resumed=false);
-        DccTransfer* getTransferByName(const QString& name,DccTransfer::DccType type,bool resumed=false);
+        DccTransferPanelItem* getTransferByPort(const QString& port,DccTransferPanelItem::DccType type,bool resumed=false);
+        DccTransferPanelItem* getTransferByName(const QString& name,DccTransferPanelItem::DccType type,bool resumed=false);
 
         bool isLocalFileInWritingProcess( const KURL& localUrl );
 
-        void selectMe(DccTransfer* item);
+        void selectMe(DccTransferPanelItem* item);
 
     public slots:
-        void dccStatusChanged(const DccTransfer* item);
+        void dccStatusChanged(const DccTransferPanelItem* item);
 
     protected slots:
         void acceptDcc();

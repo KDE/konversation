@@ -30,7 +30,7 @@
 #include <kio/jobclasses.h>
 #include <kio/netaccess.h>
 
-#include "dccpanel.h"
+#include "dcctransferpanel.h"
 #include "dccresumedialog.h"
 #include "dcctransferrecv.h"
 #include "konversationapplication.h"
@@ -40,7 +40,7 @@
 
  DccTransferRecv()
 
- start()              : called from DccPanel or DccDetailDialog when user pushes the accept button
+ start()              : called from DccTransferPanel or DccDetailDialog when user pushes the accept button
   | \ 
   | requestResume()   : called when user chooses to resume in DccResumeDialog. it emits the signal ResumeRequest()
   |
@@ -52,8 +52,8 @@ connectionSuccess()  : called from recvSocket
 
 */
 
-DccTransferRecv::DccTransferRecv( DccPanel* panel, const QString& partnerNick, const KURL& defaultFolderURL, const QString& fileName, unsigned long fileSize, const QString& partnerIp, const QString& partnerPort )
-: DccTransfer( panel, DccTransfer::Receive, partnerNick )
+DccTransferRecv::DccTransferRecv( DccTransferPanel* panel, const QString& partnerNick, const KURL& defaultFolderURL, const QString& fileName, unsigned long fileSize, const QString& partnerIp, const QString& partnerPort )
+: DccTransferPanelItem( panel, DccTransferPanelItem::Receive, partnerNick )
 {
     kdDebug() << "DccTransferRecv::DccTransferRecv() [BEGIN]" << endl
         << "DccTransferRecv::DccTransferRecv(): Partner: " << partnerNick << endl

@@ -44,7 +44,7 @@ class ChatWindow : public QVBox
             Channel,
             Query,
             DccChat,
-            DccPanel,
+            DccTransferPanel,
             RawLog,
             Notice,
             SNotice,
