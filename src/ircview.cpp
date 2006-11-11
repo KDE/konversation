@@ -1565,6 +1565,10 @@ void IRCView::updateScrollBarPos()
 void IRCView::saveLinkAs(const QString& url)
 {
     KURL destination = KFileDialog::getSaveURL(":SaveLinkAs", QString::null, this, i18n("Save Link As"));
+
+    if(destination.isEmpty())
+        return;
+
     KURL source(url);
 
     KIO::copyAs(source, destination);
