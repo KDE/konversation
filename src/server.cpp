@@ -196,13 +196,12 @@ void Server::init(ViewContainer* viewContainer, const QString& nick, const QStri
     m_autoIdentifyLock = false;
     keepViewsOpenAfterQuit = false;
     reconnectAfterQuit = false;
+    m_messageCount = 0;
 
     // TODO fold these into a QMAP, and these need to be reset to RFC values if this server object is reused.
     serverNickPrefixModes = "ovh";
     serverNickPrefixes = "@+%";
     channelPrefixes = "#&";
-
-    timerInterval = 1;
 
     setName(QString("server_" + m_serverGroup->name()).ascii());
     setViewContainer(viewContainer);
@@ -244,6 +243,7 @@ void Server::initTimers()
     notifyTimer.setName("notify_timer");
     incomingTimer.setName("incoming_timer");
     outgoingTimer.setName("outgoing_timer");
+    m_messageCountResetTimer.setName("messageCountResetTimer");
 }
 
 void Server::connectSignals()
@@ -255,6 +255,7 @@ void Server::connectSignals()
     connect(&unlockTimer, SIGNAL(timeout()), this, SLOT(unlockSending()));
     connect(&notifyTimer, SIGNAL(timeout()), this, SLOT(notifyTimeout()));
     connect(&m_pingResponseTimer, SIGNAL(timeout()), this, SLOT(updateLongPongLag()));
+    connect(&m_messageCountResetTimer, SIGNAL(timeout()), this, SLOT(resetMessageCount()));
 
     // OutputFilter
     connect(outputFilter, SIGNAL(requestDccSend()), this,SLOT(requestDccSend()));
@@ -1194,7 +1195,7 @@ void Server::queue(const QString& buffer)
     {
         outputBuffer.append(buffer);
 
-        timerInterval*=2;
+        m_messageCount++;
 
         if(!outgoingTimer.isActive())
         {
@@ -1212,7 +1213,7 @@ void Server::queueAt(uint pos,const QString& buffer)
     {
         outputBuffer.insert(outputBuffer.at(pos),buffer);
 
-        timerInterval*=2;
+        m_messageCount++;
     }
     else
     {
@@ -1233,7 +1234,7 @@ void Server::queueList(const QStringList& buffer)
         for(unsigned int i=0;i<buffer.count();i++)
         {
             outputBuffer.append(*buffer.at(i));
-            timerInterval*=2;
+            m_messageCount++;
         }                                         // for
 
         if(!outgoingTimer.isActive())
@@ -1265,6 +1266,7 @@ void Server::send()
     // Check if we are still online
     if(!isConnected() || outputBuffer.isEmpty())
     {
+        outgoingTimer.stop();
         return;
     }
 
@@ -1344,25 +1346,16 @@ void Server::send()
 
     if(outputBuffer.isEmpty()) {
         outgoingTimer.stop();
-        timerInterval = 1;
     }
 
+
+    // Start the reset timer... it will reset the message count if no new message with in 1 sec
+    m_messageCountResetTimer.start(1000, true);
+
     // Flood-Protection
-    if(timerInterval > 1)
+    if(m_messageCount > 6)
     {
-        int time;
-        timerInterval /= 2;
-
-        if(timerInterval > 40)
-        {
-            time = 4000;
-        }
-        else
-        {
-            time = 1;
-        }
-
-        outgoingTimer.changeInterval(time);
+        outgoingTimer.changeInterval(3000);
     }
 }
 
@@ -3437,6 +3430,11 @@ void Server::updateLongPongLag()
         if (currentLag > (Preferences::maximumLagTime() * 1000))
             m_socket->close();
     }
+}
+
+void Server::resetMessageCount()
+{
+    m_messageCount = 0;
 }
 
 #include "server.moc"

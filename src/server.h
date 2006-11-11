@@ -486,6 +486,11 @@ class Server : public QObject
         /// Updates GUI when the lag gets high
         void updateLongPongLag();
 
+        /**
+         * Reset the message count used for flood protection, called when the m_messageCountRestTimer times out.
+         */
+        void resetMessageCount();
+
     protected:
         // constants
         static const int BUFFER_LEN=513;
@@ -593,8 +598,6 @@ class Server : public QObject
         QTimer outgoingTimer;
         QTimer unlockTimer;                       // timeout waiting for server to send initial messages
 
-        int timerInterval;                        // flood protection
-
         QTimer notifyTimer;
         QStringList notifyCache;                  // List of users found with ISON
         int checkTime;                            // Time elapsed while waiting for server 303 response
@@ -677,5 +680,10 @@ class Server : public QObject
         QTimer m_pingResponseTimer;
 
         bool m_autoIdentifyLock;
+
+        /// Number of messages sent within a 1 sec interval of each other
+        int m_messageCount;
+        /// Timer to reset the m_messageCount
+        QTimer m_messageCountResetTimer;
 };
 #endif
