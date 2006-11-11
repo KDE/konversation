@@ -50,6 +50,8 @@
 #include <kglobalsettings.h>
 #include <kdebug.h>
 #include <kmenubar.h>
+#include <kfiledialog.h>
+#include <kio/job.h>
 
 #include "channel.h"
 #include "dccchat.h"
@@ -229,12 +231,14 @@ void IRCView::highlightedSlot(const QString& _link)
         {
             m_popup->removeItem(CopyUrl);
             m_popup->removeItem(Bookmark);
+            m_popup->removeItem(SaveAs);
             m_copyUrlMenu = false;
         }
         else if (!link.isEmpty() && !m_copyUrlMenu)
         {
             m_popup->insertItem(i18n("Copy URL to Clipboard"),CopyUrl,1);
             m_popup->insertItem(i18n("Add to Bookmarks"),Bookmark,2);
+            m_popup->insertItem(i18n("Save Link As..."), SaveAs, 3);
             m_copyUrlMenu = true;
             m_urlToCopy = link;
         }
@@ -1160,6 +1164,9 @@ bool IRCView::contextMenu(QContextMenuEvent* ce)
                 bm->emitChanged(bg);
                 break;
             }
+            case SaveAs:
+                saveLinkAs(m_urlToCopy);
+                break;
             default:
                 emit extendedPopup(r);
         }
@@ -1553,6 +1560,14 @@ void IRCView::updateScrollBarPos()
 {
     ensureVisible(contentsX(), contentsHeight());
     repaintContents(false);
+}
+
+void IRCView::saveLinkAs(const QString& url)
+{
+    KURL destination = KFileDialog::getSaveURL(":SaveLinkAs", QString::null, this, i18n("Save Link As"));
+    KURL source(url);
+
+    KIO::copyAs(source, destination);
 }
 
 #include "ircview.moc"

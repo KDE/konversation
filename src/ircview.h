@@ -58,7 +58,8 @@ class IRCView : public KTextBrowser
             Copy,CopyUrl,SelectAll,
             Search,
             SendFile,
-            Bookmark
+            Bookmark,
+            SaveAs
         };
 
         void setChatWin(ChatWindow* chatWin);
@@ -115,6 +116,7 @@ class IRCView : public KTextBrowser
 
     protected slots:
         void highlightedSlot(const QString& link);
+        void saveLinkAs(const QString& url);
 
     protected:
         void openLink(const QString &url, bool newTab=false);
