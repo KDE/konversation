@@ -34,28 +34,28 @@
 class ViewTree::ToolTip : public QToolTip
 {
     public:
-        ToolTip(QWidget *parent, KListView *view);
+        ToolTip(QWidget *parent, KListView *viewTree);
         virtual ~ToolTip() {}
 
     protected:
         virtual void maybeTip(const QPoint &pos);
 
     private:
-        KListView* view;
+        KListView* viewTree;
 };
 
-ViewTree::ToolTip::ToolTip(QWidget *parent, KListView *view)
-    : QToolTip(parent), view(view)
+ViewTree::ToolTip::ToolTip(QWidget *parent, KListView *viewTree)
+    : QToolTip(parent), viewTree(viewTree)
 {
 }
 
 void ViewTree::ToolTip::maybeTip (const QPoint &pos)
 {
-    if (!parentWidget() || !view) return;
+    if (!parentWidget() || !viewTree) return;
 
-    ViewTreeItem* item = static_cast<ViewTreeItem*>(view->itemAt(pos));
+    ViewTreeItem* view = static_cast<ViewTreeItem*>(viewTree->itemAt(pos));
 
-    if (item && item->isTruncated()) tip(view->itemRect(item), item->getName());
+    if (view && view->isTruncated()) tip(viewTree->itemRect(view), view->getName());
 }
 
 
