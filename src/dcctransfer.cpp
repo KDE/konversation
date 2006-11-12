@@ -35,6 +35,7 @@ DccTransfer::DccTransfer( DccType dccType, const QString& partnerNick )
 
 DccTransfer::~DccTransfer()
 {
+    kdDebug() << "DccTransfer::~DccTransfer()" << endl;
     delete[] m_buffer;
     m_loggerTimer.stop();
 }

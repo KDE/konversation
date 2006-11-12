@@ -69,9 +69,13 @@ DccTransferPanelItem::DccTransferPanelItem( DccTransferPanel* panel, DccTransfer
 
 DccTransferPanelItem::~DccTransferPanelItem()
 {
+    kdDebug() << "DccTransferPanelItem::~DccTransferPanelItem()" << endl;
     stopAutoViewUpdate();
     closeDetailDialog();
     delete m_progressBar;
+
+    //FIXME: konversion4: this object should be under the control of Konversation network core. 
+    delete m_transfer;
 }
 
 void DccTransferPanelItem::updateView()
