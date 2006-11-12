@@ -33,8 +33,6 @@ ViewTreeItem::ViewTreeItem(QListView* parent, const QString& name, ChatWindow* v
     m_sortIndex = s_availableSortIndex;
     s_availableSortIndex++;
 
-    m_name = name;
-
     setView(view);
     setViewType(view->getType());
 
@@ -46,6 +44,7 @@ ViewTreeItem::ViewTreeItem(QListView* parent, const QString& name, ChatWindow* v
 
     m_isSeparator = false;
     m_isHighlighted = false;
+    m_isTruncated = false;
 
     images = KonversationApplication::instance()->images();
     m_closeButtonShown = false;
@@ -63,8 +62,6 @@ ViewTreeItem::ViewTreeItem(QListViewItem* parent, const QString& name, ChatWindo
         s_availableSortIndex++;
     }
 
-    m_name = name;
-
     setView(view);
     setViewType(view->getType());
 
@@ -76,6 +73,7 @@ ViewTreeItem::ViewTreeItem(QListViewItem* parent, const QString& name, ChatWindo
 
     m_isSeparator = false;
     m_isHighlighted = false;
+    m_isTruncated = false;
     m_customColorSet = false;
 
     images = KonversationApplication::instance()->images();
@@ -84,12 +82,10 @@ ViewTreeItem::ViewTreeItem(QListViewItem* parent, const QString& name, ChatWindo
 }
 
 ViewTreeItem::ViewTreeItem(QListViewItem* parent, QListViewItem* afterItem, const QString& name, ChatWindow* view)
-    : QListViewItem(parent, afterItem)
+    : QListViewItem(parent, afterItem, name)
 {
     m_sortIndex = s_availableSortIndex;
     s_availableSortIndex++;
-
-    m_name = name;
 
     setView(view);
     setViewType(view->getType());
@@ -102,6 +98,7 @@ ViewTreeItem::ViewTreeItem(QListViewItem* parent, QListViewItem* afterItem, cons
 
     m_isSeparator = false;
     m_isHighlighted = false;
+    m_isTruncated = false;
     m_customColorSet = false;
 
     images = KonversationApplication::instance()->images();
@@ -117,6 +114,7 @@ ViewTreeItem::ViewTreeItem(QListView* parent) : QListViewItem(parent)
 
     m_isSeparator = true;
     m_isHighlighted = false;
+    m_isTruncated = false;
 }
 
 ViewTreeItem::~ViewTreeItem()
@@ -135,11 +133,17 @@ int ViewTreeItem::getSortIndex() const
 
 void ViewTreeItem::setName(const QString& name)
 {
-    if (name != m_name)
-    {
-        m_name = name;
-        repaint();
-    }
+    setText(0, name);
+}
+
+QString ViewTreeItem::getName() const
+{
+    return text(0);
+}
+
+bool ViewTreeItem::isTruncated() const
+{
+    return m_isTruncated;
 }
 
 void ViewTreeItem::setView(ChatWindow* view)
@@ -150,11 +154,6 @@ void ViewTreeItem::setView(ChatWindow* view)
 ChatWindow* ViewTreeItem::getView() const
 {
     return m_view;
-}
-
-QString ViewTreeItem::getName() const
-{
-    return m_name;
 }
 
 void ViewTreeItem::setViewType(ChatWindow::WindowType viewType)
@@ -374,7 +373,7 @@ void ViewTreeItem::paintCell(QPainter* p, const QColorGroup& /* cg */, int /* co
             pBuffer.setPen(colorRound);
             pBuffer.setBrush(colorRound);
 
-            // If the rectangle is smaller in width than in height, don't overlap ellipses...
+            // If the rectangle is higher than wide, don't overlap ellipses.
             if (wRound > hRound)
             {
                 pBuffer.drawEllipse(0,                                 0, hRound * 2, hRound * 2);
@@ -452,7 +451,7 @@ void ViewTreeItem::paintCell(QPainter* p, const QColorGroup& /* cg */, int /* co
             painter.drawPixmap(xPixmap, yPixmap, *pixmap(0));
         }
 
-        // Enough space left to draw icon+text?
+        // Enough space left to draw icon and text?
         if (textWidth > 0)
         {
             int xText = MARGIN;
@@ -461,14 +460,19 @@ void ViewTreeItem::paintCell(QPainter* p, const QColorGroup& /* cg */, int /* co
             if (pixmap(0))
                 xText = MARGIN + LED_ICON_SIZE + MARGIN;
 
-            QString theText = getName();
+            QString text = getName();
 
-            if (p->fontMetrics().width(theText) > textWidth)
-                theText = KStringHandler::rPixelSqueeze(theText, p->fontMetrics(), textWidth);
+            if (p->fontMetrics().width(text) > textWidth)
+            {
+                m_isTruncated = true;
+                text = KStringHandler::rPixelSqueeze(text, p->fontMetrics(), textWidth);
+            }
+            else
+                m_isTruncated = false;
 
             painter.setPen(textColor);
             painter.setFont(listView()->font());
-            painter.drawText(xText, 0, textWidth, height(), Qt::AlignAuto | Qt::AlignVCenter, theText);
+            painter.drawText(xText, 0, textWidth, height(), Qt::AlignAuto | Qt::AlignVCenter, text);
         }
     }
     else
@@ -481,6 +485,5 @@ void ViewTreeItem::paintCell(QPainter* p, const QColorGroup& /* cg */, int /* co
 
     painter.end();
 
-    // Apply the buffer.
     p->drawPixmap(0, 0, buffer);
 }

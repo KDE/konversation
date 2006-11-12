@@ -23,6 +23,11 @@ Changes since 1.0.1:
   (minor) security problem.
 - Fixed a bug that lead to single leading whitespace characters in lines being
   omitted from display in chat windows.
+- Improve output buffer queue clamping algorithm for flood protection.
+- Fix display of '<' and '>' in backlog lines.
+- Add a "Save Link As" item to the context menu of links in the chat window.
+- Display tooltips for truncated treelist items.
+- DCC refactoring (in progress).
 
 -------------------------------------------------------------------------------
 

@@ -75,6 +75,9 @@ class ViewTree : public KListView
         void enableCloseButton();
 
     private:
+        class ToolTip;
+        ViewTree::ToolTip* m_toolTip;
+
         void toggleSeparator();
         void selectUpper(bool wrap = false);
         void selectLower(bool wrap = false);

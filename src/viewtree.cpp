@@ -16,6 +16,7 @@
 #include <qptrlist.h>
 #include <qpoint.h>
 #include <qpainter.h>
+#include <qtooltip.h>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -29,6 +30,34 @@
 #include "server.h"
 #include "channel.h"
 #include "ircview.h"
+
+class ViewTree::ToolTip : public QToolTip
+{
+    public:
+        ToolTip(QWidget *parent, KListView *view);
+        virtual ~ToolTip() {}
+
+    protected:
+        virtual void maybeTip(const QPoint &pos);
+
+    private:
+        KListView* view;
+};
+
+ViewTree::ToolTip::ToolTip(QWidget *parent, KListView *view)
+    : QToolTip(parent), view(view)
+{
+}
+
+void ViewTree::ToolTip::maybeTip (const QPoint &pos)
+{
+    if (!parentWidget() || !view) return;
+
+    ViewTreeItem* item = static_cast<ViewTreeItem*>(view->itemAt(pos));
+
+    if (item && item->isTruncated()) tip(view->itemRect(item), item->getName());
+}
+
 
 ViewTree::ViewTree(QWidget *parent)
     : KListView(parent)
@@ -47,6 +76,9 @@ ViewTree::ViewTree(QWidget *parent)
     setDragEnabled(true);
     setAcceptDrops(true);
     setDropVisualizer(true);
+
+    setShowToolTips(false);
+    m_toolTip = new ViewTree::ToolTip(viewport(), this);
 
     // Controls whether or not to select the first view added
     // to the tree. Don't do so by default; only when told to

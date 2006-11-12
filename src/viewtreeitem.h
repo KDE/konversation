@@ -15,6 +15,7 @@
 
 #include <qobject.h>
 #include <qlistview.h>
+#include <qtooltip.h>
 #include <qguardedptr.h>
 
 #include "chatwindow.h"
@@ -38,6 +39,7 @@ class ViewTreeItem : public QListViewItem
 
         void setName(const QString& name);
         QString getName() const;
+        bool isTruncated() const;
 
         void setView(ChatWindow* view);
         ChatWindow* getView() const;
@@ -68,13 +70,13 @@ class ViewTreeItem : public QListViewItem
     private:
         uint m_sortIndex;
         static int s_availableSortIndex;
-        QString m_name;
         QGuardedPtr<ChatWindow> m_view;
         ChatWindow::WindowType m_viewType;
         QColor m_color;
 
         bool m_isSeparator;
         bool m_isHighlighted;
+        bool m_isTruncated;
         bool m_customColorSet;
 
         Images* images;
