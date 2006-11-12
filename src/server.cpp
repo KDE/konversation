@@ -1876,7 +1876,7 @@ void Server::addDccGet(const QString &sourceNick, const QStringList &dccArgument
         SLOT (dccResumeGetRequest(const QString&,const QString&,const QString&,KIO::filesize_t)) );
     connect(newDcc,SIGNAL (done(DccTransfer*)),
         this,SLOT (dccGetDone(DccTransfer*)) );
-    connect(newDcc,SIGNAL (statusChanged(const DccTransfer*,int,int)), this,
+    connect(newDcc,SIGNAL (statusChanged(DccTransfer*,int,int)), this,
         SLOT(dccStatusChanged(DccTransfer*,int,int)) );
 
     appendMessageToFrontmost( i18n( "DCC" ),
