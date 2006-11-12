@@ -473,6 +473,12 @@ bool doHighlight, bool parseURL, bool self)
     {
         filteredLine = Konversation::tagURLs(filteredLine, whoSent);
     }
+    else
+    {
+        // Change & to &amp; to prevent html entities to do strange things to the text
+        filteredLine.replace('&', "&amp;");
+        filteredLine.replace("\x0b", "&");
+    }
 
     filteredLine = Konversation::EmotIcon::filter(filteredLine, fontMetrics());
 
