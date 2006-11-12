@@ -1831,18 +1831,18 @@ void Server::addDccSend(const QString &recipient,KURL fileURL, const QString &al
     QString ownIp = getIp(true);
 
     // We already checked that the file exists in output filter / requestDccSend() resp.
-    DccTransferSend* newDcc = new DccTransferSend( getViewContainer()->getDccPanel(),
-                                                   recipient,
+    DccTransferSend* newDcc = new DccTransferSend( recipient,
                                                    fileURL,  // url of the sending file
                                                    ownIp,
                                                    altFileName,
                                                    fileSize );
+    new DccTransferPanelItem( getViewContainer()->getDccPanel(), newDcc );
 
     connect(newDcc,SIGNAL (sendReady(const QString&,const QString&,const QString&,const QString&,unsigned long)),
         this,SLOT (dccSendRequest(const QString&,const QString&,const QString&,const QString&,unsigned long)) );
-    connect(newDcc,SIGNAL (done(const DccTransferPanelItem*)),this,SLOT (dccSendDone(const DccTransferPanelItem*)) );
-    connect(newDcc,SIGNAL (statusChanged(const DccTransferPanelItem*,int,int)), this,
-        SLOT(dccStatusChanged(const DccTransferPanelItem*,int,int)) );
+    connect(newDcc,SIGNAL (done(DccTransfer*)),this,SLOT (dccSendDone(DccTransfer*)) );
+    connect(newDcc,SIGNAL (statusChanged(DccTransfer*,int,int)), this,
+        SLOT(dccStatusChanged(DccTransfer*,int,int)) );
 
     newDcc->start();
 
@@ -1861,7 +1861,7 @@ void Server::addDccGet(const QString &sourceNick, const QStringList &dccArgument
 
     ip.setAddress(dccArguments[1].toULong());
 
-    DccTransferRecv* newDcc=new DccTransferRecv(getViewContainer()->getDccPanel(),
+    DccTransferRecv* newDcc=new DccTransferRecv(
         sourceNick,
         KURL(Preferences::dccPath()),
         dccArguments[0],                          // name
@@ -1870,12 +1870,14 @@ void Server::addDccGet(const QString &sourceNick, const QStringList &dccArgument
         ip.toString(),                            // ip
         dccArguments[2] );                        // port
 
+    new DccTransferPanelItem( getViewContainer()->getDccPanel(), newDcc );
+
     connect(newDcc,SIGNAL (resumeRequest(const QString&,const QString&,const QString&,KIO::filesize_t)),this,
         SLOT (dccResumeGetRequest(const QString&,const QString&,const QString&,KIO::filesize_t)) );
-    connect(newDcc,SIGNAL (done(const DccTransferPanelItem*)),
-        this,SLOT (dccGetDone(const DccTransferPanelItem*)) );
-    connect(newDcc,SIGNAL (statusChanged(const DccTransferPanelItem*,int,int)), this,
-        SLOT(dccStatusChanged(const DccTransferPanelItem*,int,int)) );
+    connect(newDcc,SIGNAL (done(DccTransfer*)),
+        this,SLOT (dccGetDone(DccTransfer*)) );
+    connect(newDcc,SIGNAL (statusChanged(const DccTransfer*,int,int)), this,
+        SLOT(dccStatusChanged(DccTransfer*,int,int)) );
 
     appendMessageToFrontmost( i18n( "DCC" ),
                               i18n( "%1 offers to send you \"%2\" (%3)..." )
@@ -1913,12 +1915,14 @@ void Server::dccResumeGetRequest(const QString &sender, const QString &fileName,
 void Server::resumeDccGetTransfer(const QString &sourceNick, const QStringList &dccArguments)
 {
     // Check if there actually is a transfer going on on that port
-    DccTransferRecv* dccTransfer=static_cast<DccTransferRecv*>(getViewContainer()->getDccPanel()->getTransferByPort(dccArguments[1],DccTransferPanelItem::Receive,true));
-    if(!dccTransfer)
+    DccTransferPanelItem* dccTransferPanelItem=static_cast<DccTransferPanelItem*>(getViewContainer()->getDccPanel()->getTransferByPort(dccArguments[1],DccTransfer::Receive,true));
+    if(!dccTransferPanelItem)
         // Check if there actually is a transfer going on with that name, could be behind a NAT
         // so the port number may get changed
         // mIRC substitutes this with "file.ext", so we have a problem here with mIRCs behind a NAT
-        dccTransfer=static_cast<DccTransferRecv*>(getViewContainer()->getDccPanel()->getTransferByName(dccArguments[0],DccTransferPanelItem::Receive,true));
+        dccTransferPanelItem=static_cast<DccTransferPanelItem*>(getViewContainer()->getDccPanel()->getTransferByName(dccArguments[0],DccTransfer::Receive,true));
+
+    DccTransferRecv* dccTransfer = static_cast<DccTransferRecv*>(dccTransferPanelItem->transfer());
 
     if(dccTransfer)
     {
@@ -1941,14 +1945,16 @@ void Server::resumeDccGetTransfer(const QString &sourceNick, const QStringList &
 void Server::resumeDccSendTransfer(const QString &recipient, const QStringList &dccArguments)
 {
     // Check if there actually is a transfer going on on that port
-    DccTransferSend* dccTransfer=static_cast<DccTransferSend*>(getViewContainer()->getDccPanel()->getTransferByPort(dccArguments[1],DccTransferPanelItem::Send));
-    if(!dccTransfer)
+    DccTransferPanelItem* dccTransferPanelItem=static_cast<DccTransferPanelItem*>(getViewContainer()->getDccPanel()->getTransferByPort(dccArguments[1],DccTransfer::Send));
+    if(!dccTransferPanelItem)
         // Check if there actually is a transfer going on with that name, could be behind a NAT
         // so the port number may get changed
         // mIRC substitutes this with "file.ext", so we have a problem here with mIRCs behind a NAT
-        dccTransfer=static_cast<DccTransferSend*>(getViewContainer()->getDccPanel()->getTransferByName(dccArguments[0],DccTransferPanelItem::Send));
+        dccTransferPanelItem=static_cast<DccTransferPanelItem*>(getViewContainer()->getDccPanel()->getTransferByName(dccArguments[0],DccTransfer::Send));
 
-    if(dccTransfer && dccTransfer->getStatus() == DccTransferPanelItem::WaitingRemote)
+    DccTransferSend* dccTransfer = static_cast<DccTransferSend*>(dccTransferPanelItem->transfer());
+
+    if(dccTransfer && dccTransfer->getStatus() == DccTransfer::WaitingRemote)
     {
         QString fileName=dccTransfer->getFileName();
         if(dccTransfer->setResume(dccArguments[2].toULong()))
@@ -1977,40 +1983,40 @@ void Server::resumeDccSendTransfer(const QString &recipient, const QStringList &
     }
 }
 
-void Server::dccGetDone(const DccTransferPanelItem* item)
+void Server::dccGetDone(DccTransfer* item)
 {
-    if(item->getStatus()==DccTransferPanelItem::Done)
+    if(item->getStatus()==DccTransfer::Done)
         appendMessageToFrontmost(i18n("DCC"),i18n("%1 = file name, %2 = nickname of sender",
             "Download of \"%1\" from %2 finished.").arg(item->getFileName(), item->getPartnerNick()));
-    else if(item->getStatus()==DccTransferPanelItem::Failed)
+    else if(item->getStatus()==DccTransfer::Failed)
         appendMessageToFrontmost(i18n("DCC"),i18n("%1 = file name, %2 = nickname of sender",
             "Download of \"%1\" from %2 failed. Reason: %3.").arg(item->getFileName(), item->getPartnerNick(), item->getStatusDetail()));
 }
 
-void Server::dccSendDone(const DccTransferPanelItem* item)
+void Server::dccSendDone(DccTransfer* item)
 {
-    if(item->getStatus()==DccTransferPanelItem::Done)
+    if(item->getStatus()==DccTransfer::Done)
         appendMessageToFrontmost(i18n("DCC"),i18n("%1 = file name, %2 = nickname of recipient",
             "Upload of \"%1\" to %2 finished.").arg(item->getFileName(), item->getPartnerNick()));
-    else if(item->getStatus()==DccTransferPanelItem::Failed)
+    else if(item->getStatus()==DccTransfer::Failed)
         appendMessageToFrontmost(i18n("DCC"),i18n("%1 = file name, %2 = nickname of recipient",
             "Upload of \"%1\" to %2 failed. Reason: %3.").arg(item->getFileName(), item->getPartnerNick(), item->getStatusDetail()));
 }
 
-void Server::dccStatusChanged(const DccTransferPanelItem *item, int newStatus, int oldStatus)
+void Server::dccStatusChanged(DccTransfer *item, int newStatus, int oldStatus)
 {
-    getViewContainer()->getDccPanel()->dccStatusChanged(item);
+    getViewContainer()->getDccPanel()->dccStatusChanged();
 
-    if ( item->getType() == DccTransferPanelItem::Send )
+    if ( item->getType() == DccTransfer::Send )
     {
         // when resuming, a message about the receiver's acceptance has been shown already, so suppress this message
-        if ( newStatus == DccTransferPanelItem::Sending && oldStatus == DccTransferPanelItem::WaitingRemote && !item->isResumed() )
+        if ( newStatus == DccTransfer::Sending && oldStatus == DccTransfer::WaitingRemote && !item->isResumed() )
             appendMessageToFrontmost( i18n( "DCC" ), i18n( "%1 = file name, %2 nickname of recipient",
                 "Sending \"%1\" to %2...").arg( item->getFileName(), item->getPartnerNick() ) );
     }
     else
     {
-        if ( newStatus == DccTransferPanelItem::Receiving && !item->isResumed() )
+        if ( newStatus == DccTransfer::Receiving && !item->isResumed() )
         {
             appendMessageToFrontmost( i18n( "DCC" ),
                                         i18n( "%1 = file name, %2 = file size, %3 = nickname of sender", "Downloading \"%1\" (%2) from %3...")

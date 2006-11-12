@@ -16,6 +16,7 @@ class KLineEdit;
 class KProgress;
 class KPushButton;
 class KURLRequester;
+class DccTransfer;
 class DccTransferPanelItem;
 
 class DccDetailDialog : public KDialog
@@ -38,6 +39,7 @@ class DccDetailDialog : public KDialog
 
     protected:
         DccTransferPanelItem* m_item;
+        DccTransfer* m_transfer;
 
         // UI
         KPushButton* m_buttonOpenFile;

@@ -30,10 +30,10 @@
 #include <kio/jobclasses.h>
 #include <kio/netaccess.h>
 
-#include "dcctransferpanel.h"
-#include "dccresumedialog.h"
 #include "dcctransferrecv.h"
 #include "konversationapplication.h"
+
+class DccResumeDialog;
 
 /*
  *flow chart*
@@ -52,8 +52,8 @@ connectionSuccess()  : called from recvSocket
 
 */
 
-DccTransferRecv::DccTransferRecv( DccTransferPanel* panel, const QString& partnerNick, const KURL& defaultFolderURL, const QString& fileName, unsigned long fileSize, const QString& partnerIp, const QString& partnerPort )
-: DccTransferPanelItem( panel, DccTransferPanelItem::Receive, partnerNick )
+DccTransferRecv::DccTransferRecv( const QString& partnerNick, const KURL& defaultFolderURL, const QString& fileName, unsigned long fileSize, const QString& partnerIp, const QString& partnerPort )
+    : DccTransfer( DccTransfer::Receive, partnerNick )
 {
     kdDebug() << "DccTransferRecv::DccTransferRecv() [BEGIN]" << endl
         << "DccTransferRecv::DccTransferRecv(): Partner: " << partnerNick << endl
@@ -115,9 +115,6 @@ DccTransferRecv::DccTransferRecv( DccTransferPanel* panel, const QString& partne
     kdDebug() << "DccTransferRecv::calculateSaveToFileURL(): Default URL: " << m_fileURL.prettyURL() << endl;
 
     setStatus( Queued );
-    updateView();
-
-    panel->selectMe( this );
 
     // TODO: should we support it?
     if ( fileSize == 0 )
@@ -155,7 +152,7 @@ void DccTransferRecv::cleanUp()
     kdDebug() << "DccTransferRecv::cleanUp()" << endl;
 
     stopConnectionTimer();
-    finishTransferMeter();
+    finishTransferLogger();
     if ( m_recvSocket )
     {
         m_recvSocket->close();
@@ -172,16 +169,9 @@ void DccTransferRecv::cleanUp()
 // just for convenience
 void DccTransferRecv::failed( const QString& errorMessage )
 {
-    // don't show the dialog if user didn't take action on this DCC
-    bool bNeedToOpenDetail = ( m_dccStatus != Queued );
-
     setStatus( Failed, errorMessage );
-    updateView();
     cleanUp();
     emit done( this );
-
-    if ( bNeedToOpenDetail )
-        openDetailDialog();
 }
 
 void DccTransferRecv::abort()                     // public slot
@@ -194,7 +184,6 @@ void DccTransferRecv::abort()                     // public slot
     }
 
     setStatus( Aborted );
-    updateView();
     cleanUp();
     emit done( this );
 }
@@ -263,7 +252,6 @@ void DccTransferRecv::askAndPrepareLocalKio( const QString& message, int enabled
         case DccResumeDialog::RA_Cancel:
         default:
             setStatus( Queued );
-            updateView();
     }
 }
 
@@ -287,8 +275,8 @@ bool DccTransferRecv::createDirs( const KURL& dirURL ) const
 
     QStringList::ConstIterator it;
     for ( it=dirList.begin() ; it!=dirList.end() ; ++it )
-        if ( !KIO::NetAccess::exists( *it, true, listView() ) )
-            if ( !KIO::NetAccess::mkdir( *it, listView(), -1 ) )
+        if ( !KIO::NetAccess::exists( *it, true, NULL ) )
+            if ( !KIO::NetAccess::mkdir( *it, NULL, -1 ) )
                 return false;
 
     return true;
@@ -306,6 +294,8 @@ void DccTransferRecv::slotLocalCanResume( KIO::Job* job, KIO::filesize_t size )
         disconnect( transferJob, 0, 0, 0 );
         transferJob->kill();
 
+        // FIXME (URGENT) - strm
+        /*
         if ( m_panel->isLocalFileInWritingProcess( m_fileURL ) )
         {
             askAndPrepareLocalKio( i18n( "<b>The file is used by another transfer.</b><br>"
@@ -314,7 +304,7 @@ void DccTransferRecv::slotLocalCanResume( KIO::Job* job, KIO::filesize_t size )
                 DccResumeDialog::RA_Rename | DccResumeDialog::RA_Cancel,
                 DccResumeDialog::RA_Rename );
         }
-        else if ( Preferences::dccAutoResume() )
+        else */ if ( Preferences::dccAutoResume() )
         {
             prepareLocalKio( false, true, size );
         }
@@ -391,7 +381,6 @@ void DccTransferRecv::requestResume()
     kdDebug() << "DccTransferRecv::requestResume()" << endl;
 
     setStatus( WaitingRemote, i18n( "Waiting for remote host's acceptance" ) );
-    updateView();
 
     startConnectionTimer( 30 );
 
@@ -427,7 +416,6 @@ void DccTransferRecv::connectToSender()
     // connect to sender
 
     setStatus( Connecting );
-    updateView();
 
     m_recvSocket = new KNetwork::KStreamSocket( m_partnerIp, m_partnerPort, this);
 
@@ -455,13 +443,12 @@ void DccTransferRecv::connectionSuccess()         // slot
     kdDebug() << "DccTransferRecv::connectionSuccess()" << endl;
 
     setStatus( Receiving );
-    updateView();
 
     m_transferStartPosition = m_transferringPosition;
 
     m_recvSocket->enableRead( true );
 
-    initTransferMeter();                          // initialize CPS counter, ETA counter, etc...
+    startTransferLogger();                          // initialize CPS counter, ETA counter, etc...
 }
 
                                                   // slot
@@ -496,7 +483,7 @@ void DccTransferRecv::sendAck()                   // slot
     {
         kdDebug() << "DccTransferRecv::sendAck(): Sent final ACK." << endl;
         m_recvSocket->enableRead( false );
-        finishTransferMeter();
+        finishTransferLogger();
         m_writeCacheHandler->close();             // WriteCacheHandler will send the signal done()
     }
     else if ( m_transferringPosition > (KIO::fileoffset_t)m_fileSize )
@@ -510,7 +497,6 @@ void DccTransferRecv::slotLocalWriteDone()        // <-WriteCacheHandler::done()
 {
     kdDebug() << "DccTransferRecv::slotLocalWriteDone()" << endl;
     setStatus( Done );
-    updateView();
     cleanUp();
     emit done( this );
 }
@@ -546,7 +532,7 @@ void DccTransferRecv::connectionTimeout()         // slot
 
 void DccTransferRecv::slotSocketClosed()
 {
-    finishTransferMeter();
+    finishTransferLogger();
     if ( m_dccStatus == Receiving )
         failed( i18n( "Remote user disconnected" ) );
 }

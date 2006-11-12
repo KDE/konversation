@@ -13,14 +13,16 @@
   (at your option) any later version.
 */
 
-#ifndef DCCTRANSFER_H
-#define DCCTRANSFER_H
+#ifndef DCCTRANSFERPANELITEM_H
+#define DCCTRANSFERPANELITEM_H
 
 #include <qdatetime.h>
 
 #include <klistview.h>
 #include <kurl.h>
 #include <kio/global.h>
+
+#include "dcctransfer.h"
 
 class QStringList;
 class QTimer;
@@ -45,52 +47,12 @@ class DccTransferPanelItem : public QObject, public KListViewItem
         friend class DccDetailDialog;
 
     public:
-        enum DccType
-        {
-            Send,
-            Receive,
-            DccTypeCount
-        };
-
-        enum DccStatus
-        {
-            Queued = 0,                           // Newly added DCC, RECV: Waiting for local user's response
-            Preparing,                            // Opening KIO to write received data
-            WaitingRemote,                        // Waiting for remote host's response
-            Connecting,                           // RECV: trying to connect to the server
-            Sending,                              // Sending
-            Receiving,                            // Receiving
-            Done,                                 // Transfer done
-            Failed,                               // Transfer failed
-            Aborted,                              // Transfer aborted by user
-            Removed,                              // The file was removed
-            DccStatusCount
-        };
-
-        DccTransferPanelItem( DccTransferPanel* panel, DccType dccType, const QString& partnerNick );
+        DccTransferPanelItem( DccTransferPanel* panel, DccTransfer* transfer );
         virtual ~DccTransferPanelItem();
 
         virtual void paintCell( QPainter* painter, const QColorGroup& colorgroup, int column, int width, int alignment );
 
         virtual int compare( QListViewItem* i, int col, bool ascending ) const;
-
-        DccType            getType()                  const;
-        DccStatus          getStatus()                const;
-        const QString&     getStatusDetail()          const;
-        QDateTime          getTimeOffer()             const;
-        QString            getOwnIp()                 const;
-        QString            getOwnPort()               const;
-        QString            getPartnerNick()           const;
-        QString            getPartnerIp()             const;
-        QString            getPartnerPort()           const;
-        QString            getFileName()              const;
-        KIO::filesize_t    getFileSize()              const;
-        KIO::fileoffset_t  getTransferringPosition()  const;
-        KURL               getFileURL()               const;
-        bool               isResumed()                const;
-        unsigned long      getCPS()                   const;
-        int                getTimeRemaining()         const;
-        int                getProgress()              const;
 
         void runFile();
         void removeFile();
@@ -99,110 +61,48 @@ class DccTransferPanelItem : public QObject, public KListViewItem
         void openDetailDialog();
         void closeDetailDialog();
 
-        signals:
-        void done( const DccTransferPanelItem* item );
-        void statusChanged( const DccTransferPanelItem* item, int newStatus, int oldStatus );
+        DccTransfer* transfer() const { return m_transfer; }
 
-    public slots:
-        virtual void start() = 0;
-        virtual void abort() = 0;
-
-    protected slots:
+    private slots:
+        void slotStatusChanged( DccTransfer* transfer, int newStatus, int oldStatus );
         void updateView();
 
-    protected:
-        void setStatus( DccStatus status, const QString& statusDetail = QString::null );
-        void initTransferMeter();
-        void finishTransferMeter();
-
-        static QString getNumericalIpText( const QString& ipString );
-        static unsigned long intel( unsigned long value );
-
-        // transfer information
-        DccType m_dccType;
-        DccStatus m_dccStatus;
-        QString m_dccStatusDetail;
-        bool m_resumed;
-        KIO::fileoffset_t m_transferringPosition;
-        KIO::fileoffset_t m_transferStartPosition;
-
-        /*
-        QValueList<QDateTime> m_transferTimeLog;  // write per packet to calc CPS
-        QValueList<KIO::fileoffset_t> m_transferPositionLog;  // write per packet to calc CPS
-        */
-
-        QString m_partnerNick;
-        QString m_partnerIp;                      // null when unknown
-        QString m_partnerPort;
-        QString m_ownIp;
-        QString m_ownPort;
-
-        unsigned long m_bufferSize;
-        char* m_buffer;
-
-        /**
-         * The filename.
-         * For receiving, it holds the filename as the sender said.
-         * So be careful, it can contain "../" and so on.
-         */
-        QString m_fileName;
-
-        /** The file size of the complete file sending/recieving. */
-        KIO::filesize_t  m_fileSize;
-
-        /**
-         * If we are sending a file, this is the url of the file we are sending.
-         * If we are recieving a file, this is the url of the file we are saving
-         * to in the end (Temporararily it will be filename+".part" ).
-         */
-        KURL m_fileURL;
-
+    private:
         DccTransferPanel* m_panel;
+        DccTransfer* m_transfer;
 
     private slots:
         void slotRemoveFileDone( KIO::Job* job );
 
-        void slotLogTransfer();
+        void startAutoViewUpdate();
+        void stopAutoViewUpdate();
 
     private:
         void updateTransferMeters();
 
         void showProgressBar();                   // called from printCell()
 
-        void startAutoUpdateView();
-        void stopAutoUpdateView();
-
         // called from updateView()
-        virtual QString getTypeText()                                  const = 0;
-        virtual QPixmap getTypeIcon()                                  const = 0;
-        QPixmap         getStatusIcon()                                const;
-        QString         getStatusText()                                const;
-        QString         getFileSizePrettyText()                        const;
-        QString         getPositionPrettyText( bool detailed = false ) const;
-        QString         getTimeRemainingPrettyText()                   const;
-        QString         getCPSPrettyText()                             const;
-        QString         getSenderAddressPrettyText()                   const;
-
-        QDateTime m_timeOffer;
-        QDateTime m_timeTransferStarted;
-        //QDateTime m_timeLastActive;
-        QDateTime m_timeTransferFinished;
-
-        QTimer* m_transferLoggerTimer;
-        QTime m_transferLoggerBaseTime;           // it's used for calculating CPS
-        QValueList<int> m_transferLogTime;
-        QValueList<KIO::fileoffset_t> m_transferLogPosition;
-
-        // transfer meters;
-        double m_cps;                             // bytes(characters) per second
-        int m_timeRemaining;
+        QString getTypeText()                                  const;
+        QPixmap getTypeIcon()                                  const;
+        QPixmap getStatusIcon()                                const;
+        QString getStatusText()                                const;
+        QString getFileSizePrettyText()                        const;
+        QString getPositionPrettyText( bool detailed = false ) const;
+        QString getTimeRemainingPrettyText()                   const;
+        QString getCPSPrettyText()                             const;
+        QString getSenderAddressPrettyText()                   const;
 
         // UI
         QTimer* m_autoUpdateViewTimer;
         KProgress* m_progressBar;
         DccDetailDialog* m_detailDialog;
 
-        static QString s_dccStatusText[ DccStatusCount ];
+        // file
+        bool m_fileRemoved;
+
+        static QString s_dccStatusText[ DccTransfer::DccStatusCount ];
 
 };
-#endif                                            // DCCTRANSFER_H
+
+#endif  // DCCTRANSFERPANELITEM_H

@@ -71,15 +71,15 @@ class DccTransferPanel : public ChatWindow
         ~DccTransferPanel();
 
         KListView* getListView();
-        DccTransferPanelItem* getTransferByPort(const QString& port,DccTransferPanelItem::DccType type,bool resumed=false);
-        DccTransferPanelItem* getTransferByName(const QString& name,DccTransferPanelItem::DccType type,bool resumed=false);
+        DccTransferPanelItem* getTransferByPort(const QString& port,DccTransfer::DccType type,bool resumed=false);
+        DccTransferPanelItem* getTransferByName(const QString& name,DccTransfer::DccType type,bool resumed=false);
 
         bool isLocalFileInWritingProcess( const KURL& localUrl );
 
         void selectMe(DccTransferPanelItem* item);
 
     public slots:
-        void dccStatusChanged(const DccTransferPanelItem* item);
+        void dccStatusChanged();
 
     protected slots:
         void acceptDcc();

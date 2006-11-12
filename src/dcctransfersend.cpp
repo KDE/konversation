@@ -42,8 +42,8 @@
 
 using namespace KNetwork;
 
-DccTransferSend::DccTransferSend( DccTransferPanel* panel, const QString& partnerNick, const KURL& fileURL, const QString& ownIp, const QString &altFileName, uint fileSize  )
-: DccTransferPanelItem( panel, DccTransferPanelItem::Send, partnerNick )
+DccTransferSend::DccTransferSend( const QString& partnerNick, const KURL& fileURL, const QString& ownIp, const QString &altFileName, uint fileSize  )
+    : DccTransfer( DccTransfer::Send, partnerNick )
 {
     kdDebug() << "DccTransferSend::DccTransferSend()" << endl
         << "DccTransferSend::DccTransferSend(): Partner: " << partnerNick << endl
@@ -94,7 +94,7 @@ DccTransferSend::DccTransferSend( DccTransferPanel* panel, const QString& partne
     //timer hasn't started yet.  qtimer will be deleted automatically when 'this' object is deleted
 
     //Check the file exists
-    if ( !KIO::NetAccess::exists( m_fileURL, true, listView() ) )
+    if ( !KIO::NetAccess::exists( m_fileURL, true, NULL ) )
     {
         failed( i18n( "The url \"%1\" does not exist" ).arg( m_fileURL.prettyURL() ) );
         return;
@@ -102,7 +102,7 @@ DccTransferSend::DccTransferSend( DccTransferPanel* panel, const QString& partne
 
     //FIXME: KIO::NetAccess::download() is a synchronous function. we should use KIO::get() instead.
     //Download the file.  Does nothing if it's local (file:/)
-    if ( !KIO::NetAccess::download( m_fileURL, m_tmpFile, listView() ) )
+    if ( !KIO::NetAccess::download( m_fileURL, m_tmpFile, NULL ) )
     {
         failed( i18n( "Could not retrieve \"%1\"" ).arg( m_fileURL.prettyURL() ) );
         kdDebug() << "DccTransferSend::DccTransferSend(): KIO::NetAccess::download() failed. reason: " << KIO::NetAccess::lastErrorString() << endl;
@@ -113,7 +113,7 @@ DccTransferSend::DccTransferSend( DccTransferPanel* panel, const QString& partne
     if ( m_fileName.isEmpty() )
     {
         bool pressedOk;
-        m_fileName = KInputDialog::getText( i18n( "Enter Filename" ), i18n( "<qt>The file that you are sending to <i>%1</i> does not have a filename.<br>Please enter a filename to be presented to the receiver, or cancel the dcc transfer</qt>" ).arg( getPartnerNick() ), "unknown", &pressedOk, listView() );
+        m_fileName = KInputDialog::getText( i18n( "Enter Filename" ), i18n( "<qt>The file that you are sending to <i>%1</i> does not have a filename.<br>Please enter a filename to be presented to the receiver, or cancel the dcc transfer</qt>" ).arg( getPartnerNick() ), "unknown", &pressedOk, NULL );
 
         if ( !pressedOk )
         {
@@ -136,9 +136,6 @@ DccTransferSend::DccTransferSend( DccTransferPanel* panel, const QString& partne
     else
         m_fileSize = m_file.size();
 
-    updateView();
-
-    panel->selectMe( this );
 }
 
 DccTransferSend::~DccTransferSend()
@@ -146,21 +143,11 @@ DccTransferSend::~DccTransferSend()
     cleanUp();
 }
 
-QString DccTransferSend::getTypeText() const
-{
-    return i18n( "Send" );
-}
-
-QPixmap DccTransferSend::getTypeIcon() const
-{
-    return KGlobal::iconLoader()->loadIcon( "up", KIcon::Small );
-}
-
 void DccTransferSend::cleanUp()
 {
     kdDebug() << "DccTransferSend::cleanUp()" << endl;
     stopConnectionTimer();
-    finishTransferMeter();
+    finishTransferLogger();
     if ( !m_tmpFile.isEmpty() )
         KIO::NetAccess::removeTempFile( m_tmpFile );
     m_tmpFile = QString();
@@ -181,10 +168,8 @@ void DccTransferSend::cleanUp()
 void DccTransferSend::failed( const QString& errorMessage )
 {
     setStatus( Failed, errorMessage );
-    updateView();
     cleanUp();
     emit done( this );
-    openDetailDialog();
 }
 
 void DccTransferSend::abort()                     // public slot
@@ -192,7 +177,6 @@ void DccTransferSend::abort()                     // public slot
     kdDebug() << "DccTransferSend::abort()" << endl;
 
     setStatus( Aborted );
-    updateView();
     cleanUp();
     emit done( this );
 }
@@ -254,7 +238,6 @@ void DccTransferSend::start()                     // public slot
     kdDebug() << "DccTransferSend::start(): own Address=" << m_ownIp << ":" << m_ownPort << endl;
 
     setStatus( WaitingRemote, i18n( "Waiting remote user's acceptance" ) );
-    updateView();
 
     startConnectionTimer( Preferences::dccSendTimeout() );
 
@@ -270,13 +253,11 @@ bool DccTransferSend::setResume( unsigned long position )
     {
         m_resumed = true;
         m_transferringPosition = position;
-        updateView();
         return true;
     }
     else
     {
         kdDebug() << "DccTransferSend::setResume(): Invalid position. (greater than filesize=" << QString::number( m_fileSize ) << ")" << endl;
-        updateView();
         return false;
     }
 }
@@ -316,8 +297,7 @@ void DccTransferSend::heard()                     // slot
         setStatus( Sending );
         m_sendSocket->enableWrite( true );
         m_sendSocket->enableRead( m_fastSend );
-        initTransferMeter();                      // initialize CPS counter, ETA counter, etc...
-        updateView();
+        startTransferLogger();                      // initialize CPS counter, ETA counter, etc...
     }
     else
         failed( i18n( "Could not open the file: %1" ).arg( getQFileErrorString( m_file.status() ) ) );
@@ -361,9 +341,8 @@ void DccTransferSend::getAck()                    // slot
         if ( pos == m_fileSize )
         {
             kdDebug() << "DccTransferSend::getAck(): Received final ACK." << endl;
-            finishTransferMeter();
+            finishTransferLogger();
             setStatus( Done );
-            updateView();
             cleanUp();
             emit done( this );
             break;                                // for safe
@@ -407,7 +386,7 @@ void DccTransferSend::slotServerSocketClosed()
 void DccTransferSend::slotSendSocketClosed()
 {
     kdDebug() << "DccTransferSend::slotSendSocketClosed()" << endl;
-    finishTransferMeter();
+    finishTransferLogger();
     if ( m_dccStatus == Sending && m_transferringPosition < (KIO::fileoffset_t)m_fileSize )
         failed( i18n( "Remote user disconnected" ) );
 }

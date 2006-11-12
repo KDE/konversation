@@ -17,7 +17,7 @@
 #ifndef DCCTRANSFERSEND_H
 #define DCCTRANSFERSEND_H
 
-#include "dcctransferpanelitem.h"
+#include "dcctransfer.h"
 
 class QTimer;
 
@@ -27,14 +27,12 @@ namespace KNetwork
     class KStreamSocket;
 }
 
-class DccTransferPanel;
-
-class DccTransferSend : public DccTransferPanelItem
+class DccTransferSend : public DccTransfer
 {
     Q_OBJECT
 
         public:
-        DccTransferSend( DccTransferPanel* panel, const QString& partnerNick, const KURL& fileURL, const QString& ownIp, const QString &altFileName = QString::null, uint fileSize = -1);
+        DccTransferSend( const QString& partnerNick, const KURL& fileURL, const QString& ownIp, const QString &altFileName = QString::null, uint fileSize = -1 );
         virtual ~DccTransferSend();
 
         bool setResume( unsigned long position );
@@ -76,8 +74,5 @@ class DccTransferSend : public DccTransferPanelItem
 
         QTimer* m_connectionTimer;
 
-    private:
-        virtual QString getTypeText() const;
-        virtual QPixmap getTypeIcon() const;
 };
 #endif                                            // DCCTRANSFERSEND_H

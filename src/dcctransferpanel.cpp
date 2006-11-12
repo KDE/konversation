@@ -147,7 +147,7 @@ DccTransferPanel::~DccTransferPanel()
     kdDebug() << "DccTransferPanel::~DccTransferPanel()" << endl;
 }
 
-void DccTransferPanel::dccStatusChanged(const DccTransferPanelItem* /* item */)
+void DccTransferPanel::dccStatusChanged()
 {
     updateButton();
     activateTabNotification(Konversation::tnfSystem);
@@ -172,30 +172,30 @@ void DccTransferPanel::updateButton()
     {
         DccTransferPanelItem* item = static_cast<DccTransferPanelItem*>( it.current() );
 
-        DccTransferPanelItem::DccType type = item->getType();
-        DccTransferPanelItem::DccStatus status = item->getStatus();
+        DccTransfer::DccType type = item->transfer()->getType();
+        DccTransfer::DccStatus status = item->transfer()->getStatus();
 
         selectAll = true;
-        selectAllCompleted |= ( status >= DccTransferPanelItem::Done );
+        selectAllCompleted |= ( status >= DccTransfer::Done );
 
         if( it.current()->isSelected() )
         {
             ++selectedItems;
 
-            accept &= ( status == DccTransferPanelItem::Queued );
+            accept &= ( status == DccTransfer::Queued );
 
-            abort  |= ( status < DccTransferPanelItem::Done );
+            abort  |= ( status < DccTransfer::Done );
 
-            clear  |= ( status >= DccTransferPanelItem::Done );
+            clear  |= ( status >= DccTransfer::Done );
 
-            info   &= ( type == DccTransferPanelItem::Send ||
-                status == DccTransferPanelItem::Done );
+            info   &= ( type == DccTransfer::Send ||
+                status == DccTransfer::Done );
 
-            open   &= ( type == DccTransferPanelItem::Send ||
-                status == DccTransferPanelItem::Done );
+            open   &= ( type == DccTransfer::Send ||
+                status == DccTransfer::Done );
 
-            remove &= ( type == DccTransferPanelItem::Receive &&
-                status == DccTransferPanelItem::Done );
+            remove &= ( type == DccTransfer::Receive &&
+                status == DccTransfer::Done );
         }
         ++it;
     }
@@ -249,8 +249,9 @@ void DccTransferPanel::acceptDcc()
         if( it.current()->isSelected() )
         {
             DccTransferPanelItem* item=static_cast<DccTransferPanelItem*>( it.current() );
-            if( item->getType() == DccTransferPanelItem::Receive && item->getStatus() == DccTransferPanelItem::Queued )
-                item->start();
+            DccTransfer* transfer = item->transfer();
+            if( transfer->getType() == DccTransfer::Receive && transfer->getStatus() == DccTransfer::Queued )
+                transfer->start();
         }
         ++it;
     }
@@ -264,8 +265,9 @@ void DccTransferPanel::abortDcc()
         if( it.current()->isSelected() )
         {
             DccTransferPanelItem* item=static_cast<DccTransferPanelItem*>( it.current() );
-            if( item->getStatus() < DccTransferPanelItem::Done )
-                item->abort();
+            DccTransfer* transfer = item->transfer();
+            if( transfer->getStatus() < DccTransfer::Done )
+                transfer->abort();
         }
         ++it;
     }
@@ -279,7 +281,7 @@ void DccTransferPanel::clearDcc()
     {
         DccTransferPanelItem* item = static_cast<DccTransferPanelItem*>( it.current() );
         // should we check that [item] is not null?
-        if( it.current()->isSelected() && item->getStatus() >= DccTransferPanelItem::Done )
+        if( it.current()->isSelected() && item->transfer()->getStatus() >= DccTransfer::Done )
             lst.append( it.current() );
         ++it;
     }
@@ -320,7 +322,8 @@ void DccTransferPanel::runDcc()
         if( it.current()->isSelected() )
         {
             DccTransferPanelItem* item=static_cast<DccTransferPanelItem*>( it.current() );
-            if( item->getType() == DccTransferPanelItem::Send || item->getStatus() == DccTransferPanelItem::Done )
+            DccTransfer* transfer = item->transfer();
+            if( transfer->getType() == DccTransfer::Send || transfer->getStatus() == DccTransfer::Done )
                 item->runFile();
         }
         ++it;
@@ -337,7 +340,8 @@ void DccTransferPanel::removeFile()
         if ( it.current()->isSelected() )
         {
             DccTransferPanelItem* item = static_cast<DccTransferPanelItem*>( it.current() );
-            if( item->getType() == DccTransferPanelItem::Receive && item->getStatus() == DccTransferPanelItem::Done )
+            DccTransfer* transfer = item->transfer();
+            if( transfer->getType() == DccTransfer::Receive && transfer->getStatus() == DccTransfer::Done )
                 ++deletableFiles;
         }
         ++it;
@@ -358,7 +362,8 @@ void DccTransferPanel::removeFile()
             if( it.current()->isSelected() )
             {
                 DccTransferPanelItem* item=static_cast<DccTransferPanelItem*>( it.current() );
-                if( item->getType() == DccTransferPanelItem::Receive && item->getStatus() == DccTransferPanelItem::Done )
+                DccTransfer* transfer = item->transfer();
+                if( transfer->getType() == DccTransfer::Receive && transfer->getStatus() == DccTransfer::Done )
                     item->removeFile();
             }
             ++it;
@@ -374,7 +379,7 @@ void DccTransferPanel::showFileInfo()
         if( it.current()->isSelected() )
         {
             DccTransferPanelItem* item=static_cast<DccTransferPanelItem*>( it.current() );
-            if( item->getType() == DccTransferPanelItem::Send || item->getStatus() == DccTransferPanelItem::Done )
+            if( item->transfer()->getType() == DccTransfer::Send || item->transfer()->getStatus() == DccTransfer::Done )
                 item->openFileInfoDialog();
         }
         ++it;
@@ -412,7 +417,7 @@ void DccTransferPanel::selectAllCompleted()
     while ( it.current() )
     {
         DccTransferPanelItem* item=static_cast<DccTransferPanelItem*>( it.current() );
-        m_listView->setSelected( *it, item->getStatus() >= DccTransferPanelItem::Done );
+        m_listView->setSelected( *it, item->transfer()->getStatus() >= DccTransfer::Done );
         ++it;
     }
     updateButton();
@@ -440,24 +445,25 @@ void DccTransferPanel::popupActivated( int id ) // slot
 void DccTransferPanel::doubleClicked(QListViewItem* _item, const QPoint& /* _pos */, int /* _col */)
 {
     DccTransferPanelItem* item = static_cast<DccTransferPanelItem*>(_item);
-    if(item->getType() == DccTransferPanelItem::Send || item->getStatus() == DccTransferPanelItem::Done)
-        new KRun( item->getFileURL() );
+    item->runFile();
 }
 
-DccTransferPanelItem* DccTransferPanel::getTransferByPort(const QString& port,DccTransferPanelItem::DccType type,bool resumed)
+DccTransferPanelItem* DccTransferPanel::getTransferByPort(const QString& port,DccTransfer::DccType type,bool resumed)
 {
     int index=0;
     DccTransferPanelItem* item;
+    DccTransfer* transfer;
     do
     {
         // TODO: Get rid of this cast
-        item=static_cast<DccTransferPanelItem*>(getListView()->itemAtIndex(index++));
-        if(item)
+        item = static_cast<DccTransferPanelItem*>(getListView()->itemAtIndex(index++));
+        if ( item )
         {
-            if( (item->getStatus()==DccTransferPanelItem::Queued || item->getStatus()==DccTransferPanelItem::WaitingRemote) &&
-                item->getType()==type &&
-                !(resumed && !item->isResumed()) &&
-                item->getOwnPort()==port) return item;
+            transfer = item->transfer();
+            if( (transfer->getStatus()==DccTransfer::Queued || transfer->getStatus()==DccTransfer::WaitingRemote) &&
+                transfer->getType()==type &&
+                !(resumed && !transfer->isResumed()) &&
+                transfer->getOwnPort()==port) return item;
         }
     } while(item);
 
@@ -465,20 +471,22 @@ DccTransferPanelItem* DccTransferPanel::getTransferByPort(const QString& port,Dc
 }
 
 // To find the resuming dcc over firewalls that change the port numbers
-DccTransferPanelItem* DccTransferPanel::getTransferByName(const QString& name,DccTransferPanelItem::DccType type,bool resumed)
+DccTransferPanelItem* DccTransferPanel::getTransferByName(const QString& name,DccTransfer::DccType type,bool resumed)
 {
     int index=0;
     DccTransferPanelItem* item;
+    DccTransfer* transfer;
     do
     {
         // TODO: Get rid of this cast
         item=static_cast<DccTransferPanelItem*>(getListView()->itemAtIndex(index++));
         if(item)
         {
-            if( (item->getStatus()==DccTransferPanelItem::Queued || item->getStatus()==DccTransferPanelItem::WaitingRemote) &&
-                item->getType()==type &&
-                !(resumed && !item->isResumed()) &&
-                item->getFileName()==name) return item;
+            transfer = item->transfer();
+            if( (transfer->getStatus()==DccTransfer::Queued || transfer->getStatus()==DccTransfer::WaitingRemote) &&
+                transfer->getType()==type &&
+                !(resumed && !transfer->isResumed()) &&
+                transfer->getFileName()==name) return item;
         }
     } while(item);
 
@@ -489,16 +497,18 @@ bool DccTransferPanel::isLocalFileInWritingProcess( const KURL& url )
 {
     int index=0;
     DccTransferPanelItem* item;
+    DccTransfer* transfer;
     do
     {
         // TODO: Get rid of this cast
         item=static_cast<DccTransferPanelItem*>(getListView()->itemAtIndex(index++));
         if(item)
         {
-            if( item->getType() == DccTransferPanelItem::Receive &&
-                ( item->getStatus() == DccTransferPanelItem::Connecting ||
-                  item->getStatus() == DccTransferPanelItem::Receiving ) &&
-                item->getFileURL() == url )
+            transfer = item->transfer();
+            if( transfer->getType() == DccTransfer::Receive &&
+                ( transfer->getStatus() == DccTransfer::Connecting ||
+                  transfer->getStatus() == DccTransfer::Receiving ) &&
+                transfer->getFileURL() == url )
             {
                 return true;
             }
