@@ -397,6 +397,9 @@ void KonversationMainWindow::hideEvent(QHideEvent *e)
 
 void KonversationMainWindow::focusOutEvent(QFocusEvent* e)
 {
+    if (Preferences::autoInsertRememberLineAfterMinimizing())
+        emit insertRememberLine();
+
     m_statusBar->clearMainLabelTempText();
 
     KMainWindow::focusOutEvent(e);
