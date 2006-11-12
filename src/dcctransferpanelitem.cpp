@@ -54,6 +54,8 @@ DccTransferPanelItem::DccTransferPanelItem( DccTransferPanel* panel, DccTransfer
 
     connect( m_transfer, SIGNAL( statusChanged( DccTransfer*, int, int ) ), this, SLOT( slotStatusChanged( DccTransfer*, int, int ) ) );
 
+    updateView();
+
     s_dccStatusText[ DccTransfer::Queued ]        = i18n("Queued");
     s_dccStatusText[ DccTransfer::Preparing ]     = i18n("Preparing");
     s_dccStatusText[ DccTransfer::WaitingRemote ] = i18n("Offering");
