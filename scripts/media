@@ -246,7 +246,7 @@ class AmarokPlayer(DCOPPlayer):
 
 class KMPLayer(DCOPPlayer):
     def getData(self):
-        data=DCOPPlayer.getData(self)
+        data=DCOPPlayer.getData(self)[0]
         if data:
             data=data.split(None,2)[2].rsplit(None,2)[0]
             return data
