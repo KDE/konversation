@@ -6,10 +6,8 @@
 */
 
 /*
-  copyright: (C) 2004 by Peter Simonsson
-  email:     psn@linux.se
-  copyright: (C) 2006 by Eike Hein
-  email:     sho@eikehein.com
+  Copyright (C) 2004 Peter Simonsson <psn@linux.se>
+  Copyright (C) 2006 Eike Hein <hein@kde.org>
 */
 
 #include "serverlistdialog.h"

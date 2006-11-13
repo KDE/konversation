@@ -6,8 +6,7 @@
 */
 
 /*
-  copyright: (C) 2006 by Eike Hein
-  email:     sho@eikehein.com
+  Copyright (C) 2006 Eike Hein <hein@kde.org>
 */
 
 #include <qheader.h>

@@ -11,7 +11,7 @@
   Copyright (C) 2002 Dario Abatianni <eisfuchs@tigress.com>
   Copyright (C) 2005 Ismail Donmez <ismail@kde.org>
   Copyright (C) 2005-2006 Peter Simonsson <psn@linux.se>
-  Copyright (C) 2005 Eike Hein <sho@eikehein.com>
+  Copyright (C) 2005-2006 Eike Hein <hein@kde.org>
 */
 
 #include <qregexp.h>

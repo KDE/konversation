@@ -32,8 +32,8 @@
  *  See the KConfigDialog reference for detailed documentation.
  *
  *  begin:     Nov 22 2005
- *  copyright: (C) 2005 by Eike Hein, KConfigDialog developers
- *  email:     sho@eikehein.com
+ *  copyright: (C) 2005-2006 by Eike Hein, KConfigDialog developers
+ *  email:     hein@kde.org
  */
 
 #include "konviconfigdialog.h"

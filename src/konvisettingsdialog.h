@@ -1,33 +1,14 @@
 /*
- *  This file is part of the KDE libraries
- *  Copyright (C) 2003 Benjamin C Meyer (ben+kdelibs at meyerhome dot net)
- *  Copyright (C) 2003 Waldo Bastian <bastian@kde.org>
- *  Copyright (C) 2004 Michael Brade <brade@kde.org>
- *
- *  This library is free software; you can redistribute it and/or
- *  modify it under the terms of the GNU Library General Public
- *  License as published by the Free Software Foundation; either
- *  version 2 of the License, or (at your option) any later version.
- *
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- *  Library General Public License for more details.
- *
- *  You should have received a copy of the GNU Library General Public License
- *  along with this library; see the file COPYING.LIB.  If not, write to
- *  the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
- *  Boston, MA 02110-1301, USA.
- */
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+*/
 
 /*
- *  This makes a konversation settings dialog.  Just create a single instance and call 'show' when you want
- *  to show it.
- *
- *  begin:     Dec 8 2005
- *  copyright: (C) 2005 by John Tapsell, Konversation Developers
- *  email:     sho@eikehein.com
- */
+  Copyright (C) 2006 John Tapsell <johnflux@gmail.com>
+  Copyright (C) 2006 Eike Hein <hein@kde.org>
+*/
 
 #ifndef KONVISETTINGSDIALOG_H
 #define KONVISETTINGSDIALOG_H

@@ -8,7 +8,7 @@
 /*
   Copyright (C) 2006 Dario Abatianni <eisfuchs@tigress.com>
   Copyright (C) 2006 John Tapsell <johnflux@gmail.com>
-  Copyright (C) 2006 Eike Hein <sho@eikehein.com>
+  Copyright (C) 2006 Eike Hein <hein@kde.org>
 */
 
 #include <qheader.h>

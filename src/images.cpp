@@ -6,12 +6,8 @@
 */
 
 /*
-  provides images
-  begin:     Fri Feb 22 2002
-  copyright: (C) 2002 by Dario Abatianni
-  email:     eisfuchs@tigress.com
-  copyright: (C) 2005 by Eike Hein
-  email:     sho@eikehein.com
+  Copyright (C) 2002 Dario Abatianni <eisfuchs@tigress.com>
+  Copyright (C) 2005-2006 Eike Hein <hein@kde.org>
 */
 
 #include <qbitmap.h>

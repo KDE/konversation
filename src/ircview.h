@@ -9,10 +9,9 @@
 */
 
 /*
-  the text widget used for all text based panels
-  begin:     Sun Jan 20 2002
-  copyright: (C) 2002 by Dario Abatianni
-  email:     eisfuchs@tigress.com
+  Copyright (C) 2002 Dario Abatianni <eisfuchs@tigress.com>
+  Copyright (C) 2005-2006 Peter Simonsson <psn@linux.se>
+  Copyright (C) 2006 Eike Hein <hein@kde.org>
 */
 
 #include <qmap.h>

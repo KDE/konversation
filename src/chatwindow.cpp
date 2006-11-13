@@ -6,10 +6,8 @@
 */
 
 /*
-  Base class for all chat panels
-  begin:     Fri Feb 1 2002
-  copyright: (C) 2002 by Dario Abatianni
-  email:     eisfuchs@tigress.com
+  Copyright (C) 2002 Dario Abatianni <eisfuchs@tigress.com>
+  Copyright (C) 2006 Eike Hein <hein@kde.org>
 */
 
 #include <qdatetime.h>

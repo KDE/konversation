@@ -6,10 +6,8 @@
 */
 
 /*
-    The class that controls dcc chats
-    begin:     Sun Nov 16 2003
-    copyright: (C) 2002 by Dario Abatianni
-    email:     eisfuchs@tigress.com
+  Copyright (C) 2002 Dario Abatianni <eisfuchs@tigress.com>
+  Copyright (C) 2006 Eike Hein <hein@kde.org>
 */
 
 #include <stdlib.h>

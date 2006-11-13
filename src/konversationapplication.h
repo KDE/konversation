@@ -10,7 +10,7 @@
   Copyright (C) 2005 Ismail Donmez <ismail@kde.org>
   Copyright (C) 2005 Peter Simonsson <psn@linux.se>
   Copyright (C) 2005 John Tapsell <johnflux@gmail.com>
-  Copyright (C) 2005 Eike Hein <sho@eikehein.com>
+  Copyright (C) 2005-2006 Eike Hein <hein@kde.org>
 */
 
 #ifndef KONVERSATIONAPPLICATION_H

@@ -6,10 +6,8 @@
 */
 
 /*
-  The panel where the server status messages go
-  begin:     Sam Jan 18 2003
-  copyright: (C) 2003 by Dario Abatianni
-  email:     eisfuchs@tigress.com
+  Copyright (C) 2003 Dario Abatianni <eisfuchs@tigress.com>
+  Copyright (C) 2006 Eike Hein <hein@kde.org>
 */
 
 #ifndef STATUSPANEL_H

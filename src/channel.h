@@ -6,11 +6,9 @@
 */
 
 /*
-    channel.h  -  The class that controls a channel
-    begin:     Wed Jan 23 2002
-    copyright: (C) 2002 by Dario Abatianni
-               (C) 2004 by Peter Simonsson <psn@linux.se>
-    email:     eisfuchs@tigress.com
+  Copyright (C) 2002 Dario Abatianni <eisfuchs@tigress.com>
+  Copyright (C) 2004-2006 Peter Simonsson <psn@linux.se>
+  Copyright (C) 2006 Eike Hein <hein@kde.org>
 */
 
 #ifndef CHANNEL_H

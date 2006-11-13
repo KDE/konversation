@@ -6,11 +6,9 @@
 */
 
 /*
-    The class that controls a channel
-    begin:     Wed Jan 23 2002
-    copyright: (C) 2002 by Dario Abatianni <eisfuchs@tigress.com>
-               (C) 2004-2006 by Peter Simonsson <psn@linux.se>
-               (C) 2005 by Ian Monroe <ian@monroe.nu>
+  Copyright (C) 2002 Dario Abatianni <eisfuchs@tigress.com>
+  Copyright (C) 2004-2006 Peter Simonsson <psn@linux.se>
+  Copyright (C) 2006 Eike Hein <hein@kde.org>
 */
 
 #include <qlabel.h>

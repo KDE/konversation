@@ -8,9 +8,8 @@
 /*
   ServerListView is derived from KListView and implements custom
   drag'n'drop behavior needed in ServerListDialog.
-  begin:     Wed Jan 18 2006
-  copyright: (C) 2006 by Eike Hein
-  email:     sho@eikehein.com
+
+  Copyright (C) 2006 Eike Hein <hein@kde.org>
 */
 
 #include <qdragobject.h>
@@ -18,9 +17,6 @@
 
 #include "serverlistview.h"
 
-/*
-  @author Eike Hein
-*/
 
 ServerListView::ServerListView(QWidget *parent)
     : KListView(parent)

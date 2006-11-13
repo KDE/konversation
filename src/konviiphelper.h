@@ -8,9 +8,8 @@
 /*
   Helper class to parse and disassemble IP+port combinations.
   WARNING: Does not attempt to validate IP addresses.
-  begin:     Fri Jan 6 2006
-  copyright: (C) 2006 by Eike Hein
-  email:     sho@eikehein.com
+
+  Copyright (C) 2006 Eike Hein <hein@kde.org>
 */
 
 #ifndef KONVIIPHELPER_H
@@ -19,9 +18,6 @@
 #include <qobject.h>
 #include <qstring.h>
 
-/*
-  @author Eike Hein
-*/
 
 class KonviIpHelper : QObject
 {

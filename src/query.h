@@ -7,7 +7,7 @@
 
 /*
   Copyright (C) 2002 Dario Abatianni <eisfuchs@tigress.com>
-  Copyright (C) 2005 Eike Hein <sho@eikehein.com>
+  Copyright (C) 2005-2006 Eike Hein <hein@kde.org>
 */
 
 #ifndef QUERY_H

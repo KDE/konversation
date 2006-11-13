@@ -8,7 +8,7 @@
 /*
   Copyright (C) 2002 Dario Abatianni <eisfuchs@tigress.com>
   Copyright (C) 2004 Peter Simonsson <psn@linux.se>
-  Copyright (C) 2006 Eike Hein <sho@eikehein.com>
+  Copyright (C) 2006 Eike Hein <hein@kde.org>
 */
 
 #ifndef INPUTFILTER_H

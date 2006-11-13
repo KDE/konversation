@@ -7,6 +7,7 @@
 
 /*
   Copyright (C) 2006 Dario Abatianni <eisfuchs@tigress.com>
+  Copyright (C) 2006 Eike Hein <hein@kde.org>
 */
 
 #ifndef AUTOREPLACECONFIG_H
