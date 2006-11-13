@@ -1599,13 +1599,13 @@ void Channel::updateMode(const QString& sourceNick, char mode, bool plus, const 
             {
                 if(fromMe)
                 {
-                    if(toMe) message=i18n("You give yourself the permission to talk.");
-                    else     message=i18n("You give %1 the permission to talk.").arg(parameter);
+                    if(toMe) message=i18n("You give yourself permission to talk.");
+                    else     message=i18n("You give %1  permission to talk.").arg(parameter);
                 }
                 else
                 {
-                    if(toMe) message=i18n("%1 gives you the permission to talk.").arg(sourceNick);
-                    else     message=i18n("%1 gives %2 the permission to talk.").arg(sourceNick).arg(parameter);
+                    if(toMe) message=i18n("%1 gives you permission to talk.").arg(sourceNick);
+                    else     message=i18n("%1 gives %2 permission to talk.").arg(sourceNick).arg(parameter);
                 }
             }
             else
