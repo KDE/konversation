@@ -249,7 +249,7 @@ class KMPLayer(DCOPPlayer):
         data=DCOPPlayer.getData(self)[0]
         if data:
             data=data.split(None,2)[2].rsplit(None,2)[0]
-            return data
+            return (data,'','')
         return ''
 
 try:
