@@ -43,8 +43,8 @@ formatVariables={'audio': 'is listening to', 'video': 'is watching'}
 ## Static player ranking list
 ## If you add a new player, you must add it here or it won't get checked when in audio-only or video-only modes.
 playerRankings= {
-    'video' :['kaffeine', 'noatun', 'kdetv','KMPlayer'],
-    'audio' :['Amarok', 'JuK', 'Noatun', 'Kaffeine', 'kscd', 'XMMS', 'Yammi','KMPlayer']
+    'video' :['kaffeine','KMPlayer', 'noatun', 'kdetv'],
+    'audio' :['Amarok', 'JuK', 'Noatun', 'kscd', 'Kaffeine', 'KMPlayer', 'XMMS', 'Yammi']
 }
 
 ## Title, album and artist fields to be quoted depending on contents
@@ -331,11 +331,11 @@ AmarokPlayer(),
 DCOPPlayer("JuK","juk","Player trackProperty Title","Player trackProperty Artist","Player trackProperty Album"),
 DCOPPlayer("Noatun",'noatun',"Noatun title",playerType='audio, video'),
 DCOPPlayer("Kaffeine","kaffeine","KaffeineIface title","KaffeineIface artist","KaffeineIface album",playerType='video, audio'),
+KMPLayer("KMPlayer","kmplayer","kmplayer-mainwindow#1 caption",playerType="video audio"),
 DCOPPlayer("KsCD","kscd","CDPlayer currentTrackTitle","CDPlayer currentArtist","CDPlayer currentAlbum"),
-XmmsPlayer('XMMS'),
-DCOPPlayer("Yammi","yammi","YammiPlayer songTitle","YammiPlayer songArtist","YammiPlayer songAlbum"),
 DCOPPlayer("kdetv","kdetv","KdetvIface channelName",playerType='video'),
-KMPLayer("KMPlayer","kmplayer","kmplayer-mainwindow#1 caption",playerType="video audio")
+XmmsPlayer('XMMS'),
+DCOPPlayer("Yammi","yammi","YammiPlayer songTitle","YammiPlayer songArtist","YammiPlayer songAlbum")
 ]
 
 # Get rid of players that didn't get subclassed so they don't appear in the available players list
