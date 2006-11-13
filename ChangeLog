@@ -30,6 +30,8 @@ Changes since 1.0.1:
 - DCC refactoring (in progress).
 - Primitive support for KMPlayer in the 'media' script (based on the window
   caption, as KMPlayer has no proper appropriate DCOP interface).
+- Fix superfluous closing parenthesis being inserted after links in lines which
+  contain multiple links followed by closing parenthesis.
 
 -------------------------------------------------------------------------------
 

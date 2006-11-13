@@ -71,7 +71,6 @@ namespace Konversation
 
         int pos = 0;
         int urlLen = 0;
-        QString append;
         QString href;
         QString insertText;
 
@@ -89,6 +88,8 @@ namespace Konversation
 
         while((pos = urlPattern.search(filteredLine, pos)) >= 0)
         {
+            QString append;
+
             // check if the matched text is already replaced as a channel
             if ( filteredLine.findRev( "<a", pos ) > filteredLine.findRev( "</a>", pos ) )
             {
