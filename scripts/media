@@ -304,7 +304,7 @@ def run(kind):
             unsorted=dict([(i.displayName.lower(),i) for i in PLAYERS if kind in i.type])
             play=[unsorted.pop(i.lower(),Player("ImproperlySupported")) for i in playerRankings[kind]]
             if len(unsorted):
-                play.extend(unsorted.values)
+                play.extend(unsorted.values())
         else:
             play=[i for i in PLAYERS if i.displayName.lower() == kind]
             try:
