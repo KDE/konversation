@@ -4,7 +4,7 @@ Changes since 1.0.1:
   avoid excessive flooding on multiple concurrent joins in some cases.
 - Don't scroll ircview to bottom if the view was scrolled up before resizing.
 - Remember and recreate minimized-to-tray state across sessions.
-- Fix input line contents rather than actual sent text being appended to the
+- Fixed input line contents rather than actual sent text being appended to the
   input history upon a multi-line paste edit.
 - Turned parameter-less away into a toggle: Sets away state with default
   message initially, and unsets away state if already away.
@@ -24,14 +24,16 @@ Changes since 1.0.1:
 - Fixed a bug that lead to single leading whitespace characters in lines being
   omitted from display in chat windows.
 - Improve output buffer queue clamping algorithm for flood protection.
-- Fix display of '<' and '>' in backlog lines.
-- Add a "Save Link As" item to the context menu of links in the chat window.
+- Fixed display of '<' and '>' in backlog lines.
+- Added a "Save Link As" item to the context menu of links in the chat window.
 - Display tooltips for truncated treelist items.
 - DCC refactoring (in progress).
 - Primitive support for KMPlayer in the 'media' script (based on the window
   caption, as KMPlayer has no proper appropriate DCOP interface).
-- Fix superfluous closing parenthesis being inserted after links in lines which
-  contain multiple links followed by closing parenthesis.
+- Fixed superfluous closing parenthesis being inserted after links in lines
+  which contain multiple links followed by closing parenthesis.
+- Fix unresponsive, defective Server List dialog window appearing at application
+  startup using the Beryl compositing window manager.
 
 -------------------------------------------------------------------------------
 

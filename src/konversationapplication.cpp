@@ -134,7 +134,7 @@ int KonversationApplication::newInstance()
             mainWindow->show();
         }
 
-        if (Preferences::showServerList()) mainWindow->openServerList();
+        bool openServerList = Preferences::showServerList();
 
         // handle autoconnect on startup
         Konversation::ServerGroupList serverGroups = Preferences::serverGroupList();
@@ -143,11 +143,17 @@ int KonversationApplication::newInstance()
         {
             for (Konversation::ServerGroupList::iterator it = serverGroups.begin(); it != serverGroups.end(); ++it)
             {
-                if ((*it)->autoConnectEnabled()) connectToServer((*it)->id());
+                if ((*it)->autoConnectEnabled())
+                {
+                    openServerList = false;
+                    connectToServer((*it)->id());
+                }
             }
         }
         else
             quickConnectToServer(m_hostName, m_port, m_channel, m_nick, m_password, m_useSSL);
+
+        if (openServerList) mainWindow->openServerList();
 
         // prepare dcop interface
         dcopObject = new KonvDCOP;
