@@ -31,6 +31,7 @@ DccTransfer::DccTransfer( DccType dccType, const QString& partnerNick )
     m_bufferSize = Preferences::dccBufferSize();
     m_buffer = new char[ m_bufferSize ];
 
+    connect( &m_loggerTimer, SIGNAL( timeout() ), this, SLOT( logTransfer() ) );
 }
 
 DccTransfer::~DccTransfer()
@@ -42,7 +43,6 @@ DccTransfer::~DccTransfer()
 
 void DccTransfer::startTransferLogger()
 {
-    connect( &m_loggerTimer, SIGNAL( timeout() ), this, SLOT( logTransfer() ) );
     m_timeTransferStarted = QDateTime::currentDateTime();
     m_loggerBaseTime.start();
     m_loggerTimer.start( 100 );

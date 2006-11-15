@@ -150,6 +150,9 @@ void DccTransferPanelItem::slotStatusChanged( DccTransfer* /* transfer */, int n
 {
     updateView();
 
+    if ( newStatus == DccTransfer::Sending || newStatus == DccTransfer::Receiving )
+        startAutoViewUpdate();
+
     if ( newStatus == DccTransfer::Failed && oldStatus != DccTransfer::Queued )
         openDetailDialog();
 }
