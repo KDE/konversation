@@ -28,7 +28,7 @@ namespace Konversation
         QFrame* mainWidget = plainPage();
         QGridLayout* mainLayout = new QGridLayout(mainWidget, 1, 2, 0, spacingHint());
 
-        QLabel* channelLbl = new QLabel(i18n("&Channel:"), mainWidget);
+        QLabel* channelLbl = new QLabel(i18n("C&hannel:"), mainWidget);
         m_channelEdit = new QLineEdit(mainWidget);
         m_channelEdit->setMaxLength(50);
         channelLbl->setBuddy(m_channelEdit);
