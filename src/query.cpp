@@ -507,9 +507,19 @@ QString Query::getTextInLine() { return queryInput->text(); }
 bool Query::canBeFrontView()        { return true; }
 bool Query::searchView()       { return true; }
 
-void Query::appendInputText(const QString& s)
+void Query::appendInputText(const QString& s, bool fromCursor)
 {
-    queryInput->setText(queryInput->text() + s);
+    if(!fromCursor)
+    {
+        queryInput->append(s);
+    }
+    else
+    {
+        int para = 0, index = 0;
+        queryInput->getCursorPosition(&para, &index);
+        queryInput->insertAt(s, para, index);
+        queryInput->setCursorPosition(para, index + s.length());
+    }
 }
 
                                                   // virtual

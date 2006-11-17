@@ -559,7 +559,7 @@ void ChannelListPanel::contextMenu (KListView* /* l */, QListViewItem* i, const 
     delete showURLmenu;
 }
 
-void ChannelListPanel::appendInputText(const QString& text)
+void ChannelListPanel::appendInputText(const QString& text, bool fromCursor)
 {
     filterInput->setText(filterInput->text() + text);
 }

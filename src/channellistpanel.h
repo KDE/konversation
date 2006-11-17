@@ -51,7 +51,7 @@ class ChannelListPanel : public ChatWindow
     public slots:
         void addToChannelList(const QString& channel,int users,const QString& topic);
 
-        virtual void appendInputText(const QString&);
+        virtual void appendInputText(const QString&, bool fromCursor);
         void setFilter(const QString& filter);
 
         void applyFilterClicked();

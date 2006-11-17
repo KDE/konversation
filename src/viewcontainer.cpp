@@ -1831,14 +1831,14 @@ void ViewContainer::insertChar(const QChar& chr)
 {
     ChatWindow* view = static_cast<ChatWindow*>(m_tabWidget->currentPage());
 
-    if (view) view->appendInputText(chr);
+    if (view) view->appendInputText(chr, true/*fromCursor*/);
 }
 
 void ViewContainer::insertIRCColor()
 {
     IRCColorChooser dlg(m_window);
 
-    if (dlg.exec() == QDialog::Accepted) m_frontView->appendInputText(dlg.color());
+    if (dlg.exec() == QDialog::Accepted) m_frontView->appendInputText(dlg.color(), true/*fromCursor*/);
 }
 
 void ViewContainer::insertRememberLine()

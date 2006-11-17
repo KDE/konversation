@@ -156,7 +156,7 @@ class ChatWindow : public QVBox
          */
         void adjustFocus();
 
-        virtual void appendInputText(const QString&);
+        virtual void appendInputText(const QString&, bool fromCursor);
         virtual void indicateAway(bool away);
 
         virtual void setNotificationsEnabled(bool enable) { m_notificationsEnabled = enable; }

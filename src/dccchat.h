@@ -58,7 +58,7 @@ class DccChat : public ChatWindow
         QString getMyNick() { return m_myNick; }
 
     public slots:
-        void appendInputText(const QString& s);
+        void appendInputText(const QString& s, bool fromCursor);
         void updateAppearance();
 
     protected slots:

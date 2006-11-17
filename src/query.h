@@ -76,7 +76,7 @@ class Query : public ChatWindow
 
     public slots:
         void sendQueryText(const QString& text);
-        void appendInputText(const QString& s);
+        void appendInputText(const QString& s, bool fromCursor);
         virtual void indicateAway(bool show);
         void updateAppearance();
 

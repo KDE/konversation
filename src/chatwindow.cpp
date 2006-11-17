@@ -431,7 +431,7 @@ void ChatWindow::indicateAway(bool)
 }
 
 // reimplement this in all panels that have user input
-void ChatWindow::appendInputText(const QString&)
+void ChatWindow::appendInputText(const QString&, bool)
 {
 }
 

@@ -317,9 +317,19 @@ void StatusPanel::emitUpdateInfo()
     emit updateInfo(info);
 }
 
-void StatusPanel::appendInputText(const QString& text)
+void StatusPanel::appendInputText(const QString& text, bool fromCursor)
 {
-    statusInput->setText(statusInput->text() + text);
+    if(!fromCursor)
+    {
+        statusInput->append(text);
+    }
+    else
+    {
+        int para = 0, index = 0;
+        statusInput->getCursorPosition(&para, &index);
+        statusInput->insertAt(text, para, index);
+        statusInput->setCursorPosition(para, index + text.length());
+    }
 }
 
                                                   // virtual

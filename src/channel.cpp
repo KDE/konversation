@@ -2320,9 +2320,19 @@ bool Channel::searchView()
   return true;
 }
 
-void Channel::appendInputText(const QString& s)
+void Channel::appendInputText(const QString& s, bool fromCursor)
 {
-    channelInput->setText(channelInput->text() + s);
+    if(!fromCursor)
+    {
+        channelInput->append(s);
+    }
+    else
+    {
+        int para = 0, index = 0;
+        channelInput->getCursorPosition(&para, &index);
+        channelInput->insertAt(s, para, index);
+        channelInput->setCursorPosition(para, index + s.length());
+    }
 }
 
 bool Channel::closeYourself()

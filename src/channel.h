@@ -245,7 +245,7 @@ class Channel : public ChatWindow
         void showQuickButtons(bool show);
         void showModeButtons(bool show);
 
-        void appendInputText(const QString& s);
+        void appendInputText(const QString& s, bool fromCursor);
         virtual void indicateAway(bool show);
         void showTopic(bool show);
         void showNicknameBox(bool show);

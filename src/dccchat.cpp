@@ -390,9 +390,19 @@ QString DccChat::getTextInLine()
     return m_dccChatInput->text();
 }
 
-void DccChat::appendInputText( const QString& s )
+void DccChat::appendInputText( const QString& s, bool fromCursor )
 {
-    m_dccChatInput->setText( m_dccChatInput->text() + s );
+    if(!fromCursor)
+    {
+        m_dccChatInput->append(s);
+    }
+    else
+    {
+        int para = 0, index = 0;
+        m_dccChatInput->getCursorPosition(&para, &index);
+        m_dccChatInput->insertAt(s, para, index);
+        m_dccChatInput->setCursorPosition(para, index + s.length());
+    }
 }
 
 bool DccChat::closeYourself()
