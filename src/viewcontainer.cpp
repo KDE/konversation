@@ -2022,11 +2022,13 @@ void ViewContainer::addDccChat(const QString& myNick,const QString& nick,const Q
     if (m_frontServer)
     {
         DccChat* dccChatPanel=new DccChat(m_tabWidget, myNick,nick,arguments,listen);
-        addView(dccChatPanel, dccChatPanel->getName());
         connect(dccChatPanel, SIGNAL(updateTabNotification(ChatWindow*,const Konversation::TabNotifyType&)), this, SLOT(setViewNotification(ChatWindow*,const Konversation::TabNotifyType&)));
         if(listen)
+	{
             m_frontServer->queue(QString("PRIVMSG %1 :\001DCC CHAT chat %2 %3\001")
               .arg(nick).arg(numericalIp).arg(dccChatPanel->getPort()));
+	}
+        addView(dccChatPanel, dccChatPanel->getName());
     }
 }
 
