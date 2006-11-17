@@ -2028,6 +2028,7 @@ void ViewContainer::addDccChat(const QString& myNick,const QString& nick,const Q
             m_frontServer->queue(QString("PRIVMSG %1 :\001DCC CHAT chat %2 %3\001")
               .arg(nick).arg(numericalIp).arg(dccChatPanel->getPort()));
 	}
+        // This needs to be here as addView will change m_frontServer if focus new tabs is enabled.
         addView(dccChatPanel, dccChatPanel->getName());
     }
 }
