@@ -32,8 +32,13 @@ Changes since 1.0.1:
   caption, as KMPlayer has no proper appropriate DCOP interface).
 - Fixed superfluous closing parenthesis being inserted after links in lines
   which contain multiple links followed by closing parenthesis.
-- Fix unresponsive, defective Server List dialog window appearing at application
-  startup using the Beryl compositing window manager.
+- Fixed unresponsive, defective Server List dialog window appearing at appli-
+  cation startup using the Beryl compositing window manager.
+- Minor fixes to accelerators and tabbing order in some dialogs.
+- Special characters and IRC color codes will now be inserted at the cursor
+  position rather than the end of the input line contents.
+- Fixed bug leading to crash upon initiating DCC Chat when "Focus new tabs"
+  was enabled.
 
 -------------------------------------------------------------------------------
 
