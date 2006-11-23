@@ -221,8 +221,6 @@ bool IRCInput::eventFilter(QObject *object,QEvent *event)
 // Take care of Tab, Cursor and so on
 void IRCInput::keyPressEvent(QKeyEvent* e)
 {
-        kdDebug() << "bloo" << endl;
-
     switch(e->key())
     {
         case Key_Tab:

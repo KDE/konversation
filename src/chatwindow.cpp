@@ -445,8 +445,6 @@ bool ChatWindow::eventFilter(QObject* watched, QEvent* e)
 {
     if(e->type() == QEvent::KeyPress)
     {
-        kdDebug() << "muh" << endl;
-
         QKeyEvent* ke = static_cast<QKeyEvent*>(e);
 
         bool scrollMod = (Preferences::useMultiRowInputBox() ? false : (ke->state() == Qt::ShiftButton));
