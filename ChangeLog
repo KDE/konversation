@@ -44,6 +44,9 @@ Changes since 1.0.1:
 - Fixed bug leading to crash upon initiating DCC Chat when "Focus new tabs"
   was enabled.
 - Support command aliases in network connect commands.
+- Fixed copy/paste from the ircview widget with shortcuts other than the
+  default Ctrl+C/V ones.
+
 -------------------------------------------------------------------------------
 
 Changes from 1.0 to 1.0.1

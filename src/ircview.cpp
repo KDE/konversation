@@ -51,6 +51,7 @@
 #include <kmenubar.h>
 #include <kfiledialog.h>
 #include <kio/job.h>
+#include <kstdaccel.h>
 
 #include "channel.h"
 #include "dccchat.h"
@@ -1541,9 +1542,18 @@ void IRCView::setChatWin(ChatWindow* chatWin)
 
 void IRCView::keyPressEvent(QKeyEvent* e)
 {
-    if((e->key() == Qt::Key_V) && (e->state() == Qt::ControlButton))
+    KKey key(e);
+
+    if (KStdAccel::copy().contains(key))
+    {
+        copy();
+        e->accept();
+        return;
+    }
+    else if (KStdAccel::paste().contains(key))
     {
         emit textPasted(false);
+        e->accept();
         return;
     }
 
