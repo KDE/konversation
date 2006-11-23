@@ -43,6 +43,7 @@ Changes since 1.0.1:
   position rather than the end of the input line contents.
 - Fixed bug leading to crash upon initiating DCC Chat when "Focus new tabs"
   was enabled.
+- Support command aliases in network connect commands.
 -------------------------------------------------------------------------------
 
 Changes from 1.0 to 1.0.1

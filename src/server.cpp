@@ -974,7 +974,8 @@ void Server::autoCommandsAndChannels()
         {
             QString output(*iter);
             output = output.simplifyWhiteSpace();
-            Konversation::OutputFilterResult result = outputFilter->parse(getNickname(),output,QString::null);
+            getOutputFilter()->replaceAliases(output);
+            Konversation::OutputFilterResult result = getOutputFilter()->parse(getNickname(),output,QString::null);
             queue(result.toServer);
         }
     }
