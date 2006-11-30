@@ -800,6 +800,8 @@ void ViewContainer::updateViews()
                 unsetViewNotification(view);
             else if (view->currentTabNotification()==Konversation::tnfNormal && !Preferences::tabNotificationsMsgs())
                 unsetViewNotification(view);
+            else if (view->currentTabNotification()==Konversation::tnfPrivate && !Preferences::tabNotificationsPrivate())
+                unsetViewNotification(view);
             else if (view->currentTabNotification()==Konversation::tnfSystem && !Preferences::tabNotificationsSystem())
                 unsetViewNotification(view);
             else if (view->currentTabNotification()==Konversation::tnfControl && !Preferences::tabNotificationsEvents())
@@ -856,6 +858,16 @@ void ViewContainer::setViewNotification(ChatWindow* view, const Konversation::Ta
                         m_viewTree->setViewIcon(view, images->getMsgsLed(true));
                     if (Preferences::tabNotificationsText())
                         m_viewTree->setViewColor(view, Preferences::tabNotificationsMsgsColor());
+                }
+                break;
+
+            case Konversation::tnfPrivate:
+                if (Preferences::tabNotificationsPrivate())
+                {
+                    if (Preferences::tabNotificationsLeds())
+                        m_viewTree->setViewIcon(view, images->getPrivateLed(true));
+                    if (Preferences::tabNotificationsText())
+                        m_viewTree->setViewColor(view, Preferences::tabNotificationsPrivateColor());
                 }
                 break;
 
@@ -945,6 +957,16 @@ void ViewContainer::setViewNotification(ChatWindow* view, const Konversation::Ta
                 }
                 break;
 
+            case Konversation::tnfPrivate:
+                if (Preferences::tabNotificationsPrivate())
+                {
+                    if (Preferences::tabNotificationsLeds())
+                        m_tabWidget->setTabIconSet(view, images->getPrivateLed(true));
+                    if (Preferences::tabNotificationsText())
+                        m_tabWidget->setTabColor(view, Preferences::tabNotificationsPrivateColor());
+                }
+                break;
+
             case Konversation::tnfSystem:
                 if (Preferences::tabNotificationsSystem())
                 {
@@ -1028,9 +1050,12 @@ void ViewContainer::unsetViewNotification(ChatWindow* view)
             switch (view->getType())
             {
                 case ChatWindow::Channel:
-                case ChatWindow::Query:
                 case ChatWindow::DccChat:
                     m_viewTree->setViewIcon(view, images->getMsgsLed(false));
+                    break;
+
+                case ChatWindow::Query:
+                    m_viewTree->setViewIcon(view, images->getPrivateLed(false));
                     break;
 
                 case ChatWindow::Status:
@@ -1054,9 +1079,12 @@ void ViewContainer::unsetViewNotification(ChatWindow* view)
             switch (view->getType())
             {
                 case ChatWindow::Channel:
-                case ChatWindow::Query:
                 case ChatWindow::DccChat:
                     m_tabWidget->setTabIconSet(view, images->getMsgsLed(false));
+                    break;
+
+                case ChatWindow::Query:
+                    m_tabWidget->setTabIconSet(view, images->getPrivateLed(false));
                     break;
 
                 case ChatWindow::Status:
@@ -1180,7 +1208,7 @@ void ViewContainer::addView(ChatWindow* view, const QString& label, bool weiniti
 
         case ChatWindow::Query:
             if (Preferences::tabNotificationsLeds())
-                iconSet = images->getMsgsLed(false);
+                iconSet = images->getPrivateLed(false);
             else if (Preferences::closeButtons())
                 iconSet = images->getCloseIcon();
 

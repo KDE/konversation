@@ -52,16 +52,19 @@ void Images::initializeLeds()
     m_serverColor = "steelblue";
     m_systemColor = Preferences::tabNotificationsSystemColor();
     m_msgsColor = Preferences::tabNotificationsMsgsColor();
+    m_privateColor = Preferences::tabNotificationsPrivateColor();
     m_eventsColor = Preferences::tabNotificationsEventsColor();
     m_nickColor = Preferences::tabNotificationsNickColor();
     m_highlightsColor = Preferences::tabNotificationsHighlightsColor();
 
     // m_serverLedOn = getLed(m_serverColor,true);
-    m_serverLedOff= getLed(m_serverColor,false);
+    m_serverLedOff = getLed(m_serverColor,false);
     m_systemLedOn = getLed(m_systemColor,true);
-    m_systemLedOff= getLed(m_systemColor,false);
-    m_msgsLedOn= getLed(m_msgsColor,true);
-    m_msgsLedOff= getLed(m_msgsColor,false);
+    m_systemLedOff = getLed(m_systemColor,false);
+    m_msgsLedOn = getLed(m_msgsColor,true);
+    m_msgsLedOff = getLed(m_msgsColor,false);
+    m_privateLedOn = getLed(m_privateColor,true);
+    m_privateLedOff = getLed(m_privateColor,false);
     m_eventsLedOn = getLed(m_eventsColor,true);
     m_nickLedOn = getLed(m_nickColor,true);
     m_highlightsLedOn = getLed(m_highlightsColor,true);
@@ -267,6 +270,24 @@ QIconSet Images::getMsgsLed(bool state)
             return m_msgsLedOn;
         else
             return m_msgsLedOff;
+    }
+}
+
+QIconSet Images::getPrivateLed(bool state)
+{
+    if (Preferences::tabNotificationsPrivateColor()!=m_privateColor)
+    {
+        if (state)
+            return getLed(Preferences::tabNotificationsPrivateColor(),true);
+        else
+            return getLed(Preferences::tabNotificationsPrivateColor(),false);
+    }
+    else
+    {
+        if (state)
+            return m_privateLedOn;
+        else
+            return m_privateLedOff;
     }
 }
 

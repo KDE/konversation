@@ -46,6 +46,8 @@ Changes since 1.0.1:
 - Support command aliases in network connect commands.
 - Fixed copy/paste from the ircview widget with shortcuts other than the
   default Ctrl+C/V ones.
+- Made the tab notification color of private messages configurable independent-
+  ly from normal messages.
 
 -------------------------------------------------------------------------------
 

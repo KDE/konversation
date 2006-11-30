@@ -9,17 +9,17 @@
             <x>0</x>
             <y>0</y>
             <width>278</width>
-            <height>364</height>
+            <height>418</height>
         </rect>
     </property>
-    <grid>
+    <vbox>
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
         <property name="margin">
             <number>0</number>
         </property>
-        <widget class="QGroupBox" row="0" column="0">
+        <widget class="QGroupBox">
             <property name="name">
                 <cstring>groupBox4</cstring>
             </property>
@@ -51,7 +51,7 @@
                 </widget>
             </grid>
         </widget>
-        <widget class="QGroupBox" row="1" column="0">
+        <widget class="QGroupBox">
             <property name="name">
                 <cstring>groupBox5</cstring>
             </property>
@@ -62,7 +62,73 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QCheckBox" row="3" column="0">
+                <widget class="QCheckBox" row="5" column="0" rowspan="1" colspan="3">
+                    <property name="name">
+                        <cstring>kcfg_TabNotificationsSystem</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Application event</string>
+                    </property>
+                    <property name="checked">
+                        <bool>true</bool>
+                    </property>
+                    <property name="whatsThis" stdset="0">
+                        <string>Application events occur in Konsole tabs, the DCC Status tab and other application tabs not used directly for chatting.</string>
+                    </property>
+                </widget>
+                <spacer row="5" column="3" rowspan="1" colspan="2">
+                    <property name="name">
+                        <cstring>spacer45_2</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Expanding</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>50</width>
+                            <height>21</height>
+                        </size>
+                    </property>
+                </spacer>
+                <widget class="KColorButton" row="5" column="5">
+                    <property name="name">
+                        <cstring>kcfg_TabNotificationsSystemColor</cstring>
+                    </property>
+                    <property name="text">
+                        <string></string>
+                    </property>
+                </widget>
+                <widget class="KColorButton" row="4" column="5">
+                    <property name="name">
+                        <cstring>kcfg_TabNotificationsHighlightsColor</cstring>
+                    </property>
+                    <property name="text">
+                        <string></string>
+                    </property>
+                </widget>
+                <widget class="KColorButton" row="3" column="5">
+                    <property name="name">
+                        <cstring>kcfg_TabNotificationsNickColor</cstring>
+                    </property>
+                    <property name="text">
+                        <string></string>
+                    </property>
+                </widget>
+                <widget class="KColorButton" row="2" column="5">
+                    <property name="name">
+                        <cstring>kcfg_TabNotificationsEventsColor</cstring>
+                    </property>
+                    <property name="enabled">
+                        <bool>false</bool>
+                    </property>
+                    <property name="text">
+                        <string></string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox" row="4" column="0">
                     <property name="name">
                         <cstring>kcfg_TabNotificationsHighlights</cstring>
                     </property>
@@ -73,7 +139,38 @@
                         <bool>true</bool>
                     </property>
                 </widget>
-                <widget class="QCheckBox" row="2" column="0" rowspan="1" colspan="4">
+                <widget class="QCheckBox" row="2" column="0" rowspan="1" colspan="2">
+                    <property name="name">
+                        <cstring>kcfg_TabNotificationsEvents</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Channel event</string>
+                    </property>
+                    <property name="checked">
+                        <bool>false</bool>
+                    </property>
+                    <property name="whatsThis" stdset="0">
+                        <string>Channel events are mode changes or users joining/leaving a channel.</string>
+                    </property>
+                </widget>
+                <spacer row="4" column="1" rowspan="1" colspan="4">
+                    <property name="name">
+                        <cstring>spacer45</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Expanding</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>50</width>
+                            <height>21</height>
+                        </size>
+                    </property>
+                </spacer>
+                <widget class="QCheckBox" row="3" column="0" rowspan="1" colspan="4">
                     <property name="name">
                         <cstring>kcfg_TabNotificationsNick</cstring>
                     </property>
@@ -84,7 +181,7 @@
                         <bool>true</bool>
                     </property>
                 </widget>
-                <spacer row="2" column="4">
+                <spacer row="3" column="4">
                     <property name="name">
                         <cstring>spacer44</cstring>
                     </property>
@@ -101,29 +198,7 @@
                         </size>
                     </property>
                 </spacer>
-                <widget class="KColorButton" row="2" column="5">
-                    <property name="name">
-                        <cstring>kcfg_TabNotificationsNickColor</cstring>
-                    </property>
-                    <property name="text">
-                        <string></string>
-                    </property>
-                </widget>
-                <widget class="QCheckBox" row="1" column="0" rowspan="1" colspan="2">
-                    <property name="name">
-                        <cstring>kcfg_TabNotificationsEvents</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Channel event</string>
-                    </property>
-                    <property name="checked">
-                        <bool>false</bool>
-                    </property>
-                    <property name="whatsThis" stdset="0">
-                        <string>Channel events are mode changes or users joining/leaving a channel.</string>
-                    </property>
-                </widget>
-                <spacer row="1" column="2" rowspan="1" colspan="3">
+                <spacer row="2" column="2" rowspan="1" colspan="3">
                     <property name="name">
                         <cstring>spacer43</cstring>
                     </property>
@@ -140,17 +215,6 @@
                         </size>
                     </property>
                 </spacer>
-                <widget class="KColorButton" row="1" column="5">
-                    <property name="name">
-                        <cstring>kcfg_TabNotificationsEventsColor</cstring>
-                    </property>
-                    <property name="enabled">
-                        <bool>false</bool>
-                    </property>
-                    <property name="text">
-                        <string></string>
-                    </property>
-                </widget>
                 <widget class="QCheckBox" row="0" column="0">
                     <property name="name">
                         <cstring>kcfg_TabNotificationsMsgs</cstring>
@@ -194,9 +258,9 @@
                         </color>
                     </property>
                 </widget>
-                <spacer row="3" column="1" rowspan="1" colspan="4">
+                <spacer row="1" column="4">
                     <property name="name">
-                        <cstring>spacer45</cstring>
+                        <cstring>spacer42_2</cstring>
                     </property>
                     <property name="orientation">
                         <enum>Horizontal</enum>
@@ -206,61 +270,40 @@
                     </property>
                     <property name="sizeHint">
                         <size>
-                            <width>50</width>
+                            <width>60</width>
                             <height>21</height>
                         </size>
                     </property>
                 </spacer>
-                <widget class="KColorButton" row="3" column="5">
+                <widget class="QCheckBox" row="1" column="0" rowspan="1" colspan="3">
                     <property name="name">
-                        <cstring>kcfg_TabNotificationsHighlightsColor</cstring>
+                        <cstring>kcfg_TabNotificationsPrivate</cstring>
                     </property>
                     <property name="text">
-                        <string></string>
-                    </property>
-                </widget>
-                <spacer row="4" column="3" rowspan="1" colspan="2">
-                    <property name="name">
-                        <cstring>spacer45_2</cstring>
-                    </property>
-                    <property name="orientation">
-                        <enum>Horizontal</enum>
-                    </property>
-                    <property name="sizeType">
-                        <enum>Expanding</enum>
-                    </property>
-                    <property name="sizeHint">
-                        <size>
-                            <width>50</width>
-                            <height>21</height>
-                        </size>
-                    </property>
-                </spacer>
-                <widget class="KColorButton" row="4" column="5">
-                    <property name="name">
-                        <cstring>kcfg_TabNotificationsSystemColor</cstring>
-                    </property>
-                    <property name="text">
-                        <string></string>
-                    </property>
-                </widget>
-                <widget class="QCheckBox" row="4" column="0" rowspan="1" colspan="3">
-                    <property name="name">
-                        <cstring>kcfg_TabNotificationsSystem</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Application event</string>
+                        <string>Private message</string>
                     </property>
                     <property name="checked">
                         <bool>true</bool>
                     </property>
-                    <property name="whatsThis" stdset="0">
-                        <string>Application events occur in Konsole tabs, the DCC Status tab and other application tabs not used directly for chatting.</string>
+                </widget>
+                <widget class="KColorButton" row="1" column="5">
+                    <property name="name">
+                        <cstring>kcfg_TabNotificationsPrivateColor</cstring>
+                    </property>
+                    <property name="text">
+                        <string></string>
+                    </property>
+                    <property name="defaultColor">
+                        <color>
+                            <red>0</red>
+                            <green>0</green>
+                            <blue>0</blue>
+                        </color>
                     </property>
                 </widget>
             </grid>
         </widget>
-        <widget class="QGroupBox" row="2" column="0">
+        <widget class="QGroupBox">
             <property name="name">
                 <cstring>groupBox10</cstring>
             </property>
@@ -284,7 +327,7 @@
                 </widget>
             </grid>
         </widget>
-        <spacer row="3" column="0">
+        <spacer>
             <property name="name">
                 <cstring>spacer47</cstring>
             </property>
@@ -297,11 +340,11 @@
             <property name="sizeHint">
                 <size>
                     <width>21</width>
-                    <height>20</height>
+                    <height>60</height>
                 </size>
             </property>
         </spacer>
-    </grid>
+    </vbox>
 </widget>
 <connections>
     <connection>
@@ -337,6 +380,7 @@
 </connections>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
+    <includehint>kcolorbutton.h</includehint>
     <includehint>kcolorbutton.h</includehint>
     <includehint>kcolorbutton.h</includehint>
     <includehint>kcolorbutton.h</includehint>

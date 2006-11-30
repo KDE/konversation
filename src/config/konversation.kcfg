@@ -878,6 +878,16 @@
       <label></label>
       <whatsthis></whatsthis>
     </entry>
+    <entry key="TabNotificationsPrivate" type="Bool">
+      <default>true</default>
+      <label></label>
+      <whatsthis></whatsthis>
+    </entry>
+    <entry key="TabNotificationsPrivateColor" type="Color">
+      <default>#008000</default>
+      <label></label>
+      <whatsthis></whatsthis>
+    </entry>
     <entry key="TabNotificationsEvents" type="Bool">
       <default>false</default>
       <label></label>

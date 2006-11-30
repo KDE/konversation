@@ -53,6 +53,7 @@ class Images : public QObject
         QIconSet getServerLed(bool state);
         QIconSet getSystemLed(bool state);
         QIconSet getMsgsLed(bool state);
+        QIconSet getPrivateLed(bool state);
         QIconSet getEventsLed();
         QIconSet getNickLed();
         QIconSet getHighlightsLed();
@@ -80,6 +81,8 @@ class Images : public QObject
         QIconSet m_systemLedOff;
         QIconSet m_msgsLedOn;
         QIconSet m_msgsLedOff;
+        QIconSet m_privateLedOn;
+        QIconSet m_privateLedOff;
         QIconSet m_eventsLedOn;
         QIconSet m_nickLedOn;
         QIconSet m_highlightsLedOn;
@@ -87,6 +90,7 @@ class Images : public QObject
         QColor m_serverColor;
         QColor m_systemColor;
         QColor m_msgsColor;
+        QColor m_privateColor;
         QColor m_eventsColor;
         QColor m_nickColor;
         QColor m_highlightsColor;
