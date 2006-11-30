@@ -30,8 +30,8 @@ namespace Konversation
     {
         tnfNick,
         tnfHighlight,
-        tnfNormal,
         tnfPrivate,
+        tnfNormal,
         tnfSystem,
         tnfControl,
         tnfNone
