@@ -732,7 +732,7 @@ void IRCView::appendQuery(const QString& nick,const QString& message)
     }
 
     QString line;
-    m_tabNotification = Konversation::tnfNormal;
+    m_tabNotification = Konversation::tnfNick;
 
     QString nickLine = createNickLine(nick);
 
