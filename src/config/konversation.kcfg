@@ -884,7 +884,7 @@
       <whatsthis></whatsthis>
     </entry>
     <entry key="TabNotificationsPrivateColor" type="Color">
-      <default>#008000</default>
+      <default>#FF0000</default>
       <label></label>
       <whatsthis></whatsthis>
     </entry>
