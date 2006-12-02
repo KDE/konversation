@@ -332,27 +332,36 @@ void Query::showEvent(QShowEvent*)
 void Query::popup(int id)
 {
     // get the nickname to the context menu popup
-    QString name=textView->getContextNick();
+    QString name = textView->getContextNick();
     // if there was none (right click into the text view) assume query partner
-    if(name.isEmpty()) name=getName();
+    if (name.isEmpty()) name = getName();
 
-    switch(id)
+    switch (id)
     {
         case Konversation::Whois:
-            sendQueryText(Preferences::commandChar()+"WHOIS "+name+' '+name);
+            /* sendQueryText(Preferences::commandChar()+"WHOIS "+name+' '+name); */
+            m_server->removeQuery(this);
             break;
 
         case Konversation::IgnoreNick:
-	    {
-              sendQueryText(Preferences::commandChar()+"IGNORE -ALL "+name+"!*");
-              int rc=KMessageBox::questionYesNo(this,
+        {
+            if (KMessageBox::warningContinueCancel(this, i18n("Do you want to ignore %1?").arg(name),
+                i18n("Ignore"), i18n("Ignore"), "IgnoreNick") == KMessageBox::Continue)
+            {
+                sendQueryText(Preferences::commandChar()+"IGNORE -ALL "+name);
+
+                int rc = KMessageBox::questionYesNo(this,
                 i18n("Do you want to close this query after ignoring this nickname?"),
                 i18n("Close This Query"),
                 i18n("Close"),
                 i18n("Keep Open"),
                 "CloseQueryAfterIgnore");
-              if(rc==KMessageBox::Yes) closeYourself();
-              break;
+
+                if (rc == KMessageBox::Yes && m_server)
+                    QTimer::singleShot(0, this, SLOT(closeWithoutAsking()));
+            }
+
+            break;
         }
         case Konversation::UnignoreNick:
         {
@@ -363,6 +372,7 @@ void Query::popup(int id)
             {
                 sendQueryText(Preferences::commandChar()+"UNIGNORE "+name);
             }
+
             break;
         }
         case Konversation::AddNotify:
@@ -554,6 +564,11 @@ bool Query::closeYourself()
     }
 
     return false;
+}
+
+void Query::closeWithoutAsking()
+{
+    m_server->removeQuery(this);
 }
 
 void Query::filesDropped(const QStrList& files)

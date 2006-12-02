@@ -1652,7 +1652,7 @@ class Query *Server::addQuery(const NickInfoPtr & nickInfo, bool weinitiated)
 
 void Server::closeQuery(const QString &name)
 {
-    class Query* query=getQueryByName(name);
+    class Query* query = getQueryByName(name);
     removeQuery(query);
 
     // Update NickInfo.  If no longer on any lists, delete it altogether, but
@@ -2031,20 +2031,22 @@ void Server::dccStatusChanged(DccTransfer *item, int newStatus, int oldStatus)
 void Server::removeQuery(class Query* query)
 {
     // Traverse through list to find the query
-    class Query* lookQuery=queryList.first();
-    while(lookQuery)
+    class Query* lookQuery = queryList.first();
+
+    while (lookQuery)
     {
         // Did we find our query?
-        if(lookQuery==query)
+        if (lookQuery == query)
         {
             // Remove it from the query list
             queryList.remove(lookQuery);
             // break out of the loop
-            lookQuery=0;
+            lookQuery = 0;
         }
         // else select next query
-        else lookQuery=queryList.next();
+        else lookQuery = queryList.next();
     }
+
     query->deleteLater();
 }
 

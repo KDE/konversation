@@ -1087,11 +1087,11 @@ void IRCView::contentsMouseMoveEvent(QMouseEvent* ev)
 void IRCView::contentsContextMenuEvent(QContextMenuEvent* ev)
 {
     bool block = contextMenu(ev);
+
     // Hack to counter the fact that we're given an decoded url
     m_highlightedURL = KURL::fromPathOrURL(anchorAt(viewportToContents(mapFromGlobal(QCursor::pos())))).url();
 
-    if (m_highlightedURL.isEmpty())
-        viewport()->setCursor(Qt::ArrowCursor);
+    if (m_highlightedURL.isEmpty()) viewport()->setCursor(Qt::ArrowCursor);
 
     if (!block)
         KTextBrowser::contentsContextMenuEvent(ev);

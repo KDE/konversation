@@ -48,6 +48,9 @@ Changes since 1.0.1:
   default Ctrl+C/V ones.
 - Made the tab notification color of private messages configurable independent-
   ly from normal messages.
+- Fixed crash when opting to close a query upon chosing to ignore the opponent
+  from the context menu of his nickname.
+- Fixed being asked twice whether to close a query upon ignoring the opponent.
 
 -------------------------------------------------------------------------------
 
