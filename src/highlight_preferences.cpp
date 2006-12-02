@@ -13,6 +13,8 @@
 #include <qdir.h>
 #include <qlabel.h>
 #include <qheader.h>
+#include <qtooltip.h>
+#include <qtoolbutton.h>
 
 #include <kglobal.h>
 #include <kstandarddirs.h>
@@ -20,7 +22,7 @@
 #include <kfiledialog.h>
 #include <klistview.h>
 #include <klineedit.h>
-#include <kcolorcombo.h>
+#include <kcolorbutton.h>
 #include <klocale.h>
 #include <kparts/componentfactory.h>
 #include <kregexpeditorinterface.h>
@@ -38,18 +40,6 @@ Highlight_Config::Highlight_Config(QWidget* parent, const char* name)
 {
   // reset flag to defined state (used to block signals when just selecting a new item)
   newItemSelected=false;
-
-  //Check if the regexp editor is installed
-  bool installed = !KTrader::self()->query("KRegExpEditor/KRegExpEditor").isEmpty();
-
-  if(installed)
-  {
-    patternButton->show();
-  }
-  else
-  {
-    patternButton->hide();
-  }
 
   loadSettings();
 
@@ -90,7 +80,7 @@ Highlight_Config::Highlight_Config(QWidget* parent, const char* name)
 
   connect(patternInput,SIGNAL (textChanged(const QString&)),this,SLOT (highlightTextChanged(const QString&)) );
   connect(patternButton,SIGNAL (clicked()),this,SLOT(highlightTextEditButtonClicked()));
-  connect(patternColor,SIGNAL (activated(const QColor&)),this,SLOT (highlightColorChanged(const QColor&)) );
+  connect(patternColor,SIGNAL (changed(const QColor&)),this,SLOT (highlightColorChanged(const QColor&)) );
 
   connect(soundURL, SIGNAL(textChanged(const QString&)), this, SLOT(soundURLChanged(const QString&)));
   connect(soundPlayBtn, SIGNAL(clicked()), this, SLOT(playSound()));
@@ -99,6 +89,8 @@ Highlight_Config::Highlight_Config(QWidget* parent, const char* name)
 
   connect(newButton,SIGNAL (clicked()),this,SLOT (addHighlight()) );
   connect(removeButton,SIGNAL (clicked()),this,SLOT (removeHighlight()) );
+
+  updateButtons();
 }
 
 Highlight_Config::~Highlight_Config()
@@ -153,9 +145,6 @@ void Highlight_Config::highlightSelected(QListViewItem* item)
       highlightItem->changeAcknowledged();
     }
 
-    // Determine if kdeutils Regular Expression Editor is installed.  If so, enable edit button.
-   patternButton->setEnabled(!KTrader::self()->query("KRegExpEditor/KRegExpEditor").isEmpty());
-
     // tell all now emitted signals that we just clicked on a new item, so they should
     // not emit the modified() signal.
     newItemSelected=true;
@@ -174,10 +163,13 @@ void Highlight_Config::highlightSelected(QListViewItem* item)
 void Highlight_Config::updateButtons()
 {
   bool enabled = highlightListView->selectedItem() != NULL;
+  // is the kregexpeditor installed?
+  bool installed = !KTrader::self()->query("KRegExpEditor/KRegExpEditor").isEmpty();
   // enable or disable edit widgets
   patternLabel->setEnabled(enabled);
   patternInput->setEnabled(enabled);
-  patternButton->setEnabled(enabled);
+  patternButton->setEnabled(enabled && installed);
+  colorLabel->setEnabled(enabled);
   patternColor->setEnabled(enabled);
   soundURL->setEnabled(enabled);
   soundLabel->setEnabled(enabled);
@@ -185,6 +177,14 @@ void Highlight_Config::updateButtons()
   autoTextLabel->setEnabled(enabled);
   autoTextInput->setEnabled(enabled);
 
+  if(installed)
+  {
+      QToolTip::add(patternButton, i18n("Click to run Regular Expression Editor (KRegExpEditor)"));
+  }
+  else
+  {
+      QToolTip::add(patternButton, i18n("The Regular Expression Editor (KRegExpEditor) isn't installed"));
+  }
 }
 
 void Highlight_Config::highlightTextChanged(const QString& newPattern)

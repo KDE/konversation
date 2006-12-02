@@ -33,7 +33,7 @@
                         <cstring>newButton</cstring>
                     </property>
                     <property name="text">
-                        <string>&amp;New</string>
+                        <string>Ne&amp;w</string>
                     </property>
                 </widget>
                 <widget class="QPushButton">
@@ -57,7 +57,7 @@
                     <property name="sizeHint">
                         <size>
                             <width>20</width>
-                            <height>310</height>
+                            <height>506</height>
                         </size>
                     </property>
                 </spacer>
@@ -116,7 +116,7 @@
                     <hsizetype>7</hsizetype>
                     <vsizetype>7</vsizetype>
                     <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
+                    <verstretch>1</verstretch>
                 </sizepolicy>
             </property>
             <property name="acceptDrops">
@@ -137,86 +137,13 @@
         </widget>
         <widget class="QLayoutWidget" row="1" column="0">
             <property name="name">
-                <cstring>layout9</cstring>
+                <cstring>layout16</cstring>
             </property>
             <grid>
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QLabel" row="2" column="0">
-                    <property name="name">
-                        <cstring>patternLabel</cstring>
-                    </property>
-                    <property name="enabled">
-                        <bool>false</bool>
-                    </property>
-                    <property name="sizePolicy">
-                        <sizepolicy>
-                            <hsizetype>0</hsizetype>
-                            <vsizetype>5</vsizetype>
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                        </sizepolicy>
-                    </property>
-                    <property name="text">
-                        <string>Find:</string>
-                    </property>
-                </widget>
-                <widget class="QLabel" row="3" column="0">
-                    <property name="name">
-                        <cstring>replacementLabel</cstring>
-                    </property>
-                    <property name="enabled">
-                        <bool>false</bool>
-                    </property>
-                    <property name="sizePolicy">
-                        <sizepolicy>
-                            <hsizetype>0</hsizetype>
-                            <vsizetype>5</vsizetype>
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                        </sizepolicy>
-                    </property>
-                    <property name="text">
-                        <string>Replace with:</string>
-                    </property>
-                </widget>
-                <widget class="QComboBox" row="0" column="1">
-                    <property name="name">
-                        <cstring>directionCombo</cstring>
-                    </property>
-                    <property name="enabled">
-                        <bool>false</bool>
-                    </property>
-                    <property name="sizePolicy">
-                        <sizepolicy>
-                            <hsizetype>4</hsizetype>
-                            <vsizetype>0</vsizetype>
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                        </sizepolicy>
-                    </property>
-                </widget>
-                <widget class="QLabel" row="0" column="0" rowspan="2" colspan="1">
-                    <property name="name">
-                        <cstring>directionLabel</cstring>
-                    </property>
-                    <property name="enabled">
-                        <bool>false</bool>
-                    </property>
-                    <property name="sizePolicy">
-                        <sizepolicy>
-                            <hsizetype>0</hsizetype>
-                            <vsizetype>5</vsizetype>
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                        </sizepolicy>
-                    </property>
-                    <property name="text">
-                        <string>Replace in:</string>
-                    </property>
-                </widget>
-                <widget class="QPushButton" row="1" column="2" rowspan="2" colspan="1">
+                <widget class="QPushButton" row="1" column="2">
                     <property name="name">
                         <cstring>regExpEditorButton</cstring>
                     </property>
@@ -238,7 +165,26 @@
                         <string></string>
                     </property>
                 </widget>
-                <widget class="KLineEdit" row="1" column="1" rowspan="2" colspan="1">
+                <widget class="QLabel" row="0" column="0">
+                    <property name="name">
+                        <cstring>directionLabel</cstring>
+                    </property>
+                    <property name="enabled">
+                        <bool>false</bool>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>5</hsizetype>
+                            <vsizetype>5</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                    <property name="text">
+                        <string>Replace in:</string>
+                    </property>
+                </widget>
+                <widget class="KLineEdit" row="1" column="1">
                     <property name="name">
                         <cstring>patternInput</cstring>
                     </property>
@@ -254,7 +200,7 @@
                         </sizepolicy>
                     </property>
                 </widget>
-                <widget class="KLineEdit" row="3" column="1" rowspan="1" colspan="2">
+                <widget class="KLineEdit" row="2" column="1" rowspan="1" colspan="2">
                     <property name="name">
                         <cstring>replacementInput</cstring>
                     </property>
@@ -266,6 +212,60 @@
                             <hsizetype>7</hsizetype>
                             <vsizetype>0</vsizetype>
                             <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                </widget>
+                <widget class="QLabel" row="1" column="0">
+                    <property name="name">
+                        <cstring>patternLabel</cstring>
+                    </property>
+                    <property name="enabled">
+                        <bool>false</bool>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>5</hsizetype>
+                            <vsizetype>5</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                    <property name="text">
+                        <string>Find:</string>
+                    </property>
+                </widget>
+                <widget class="QLabel" row="2" column="0">
+                    <property name="name">
+                        <cstring>replacementLabel</cstring>
+                    </property>
+                    <property name="enabled">
+                        <bool>false</bool>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>5</hsizetype>
+                            <vsizetype>5</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                    <property name="text">
+                        <string>Replace with:</string>
+                    </property>
+                </widget>
+                <widget class="QComboBox" row="0" column="1" rowspan="1" colspan="2">
+                    <property name="name">
+                        <cstring>directionCombo</cstring>
+                    </property>
+                    <property name="enabled">
+                        <bool>false</bool>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>5</hsizetype>
+                            <vsizetype>0</vsizetype>
+                            <horstretch>1</horstretch>
                             <verstretch>0</verstretch>
                         </sizepolicy>
                     </property>

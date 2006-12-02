@@ -14,6 +14,7 @@
 #include <qpushbutton.h>
 #include <qcombobox.h>
 #include <qheader.h>
+#include <qtooltip.h>
 
 #include <kapplication.h>
 #include <kdebug.h>
@@ -43,11 +44,13 @@ Autoreplace_Config::Autoreplace_Config(QWidget* parent, const char* name)
 
   if(installed)
   {
-    regExpEditorButton->show();
+      regExpEditorButton->setEnabled(true);
+      QToolTip::add(regExpEditorButton, i18n("Click to run Regular Expression Editor (KRegExpEditor)"));
   }
   else
   {
-    regExpEditorButton->hide();
+      regExpEditorButton->setEnabled(false);
+      QToolTip::add(regExpEditorButton, i18n("The Regular Expression Editor (KRegExpEditor) isn't installed"));
   }
 
   // populate combobox
