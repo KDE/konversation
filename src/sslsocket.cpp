@@ -85,12 +85,9 @@ void SSLSocket::stateChanging(KClientSocketBase::SocketState newState)
 
 const QString SSLSocket::details()
 {
-    QString details;
     int strength = d->kssl->connectionInfo().getCipherUsedBits();
 
-    details = "Connection is secured with ";
-    details += QString::number(strength);
-    details += " bit SSL";
+    QString details = i18n("Connection is secured with %1 bit SSL").arg(QString::number(strength));
 
     return details;
 }
