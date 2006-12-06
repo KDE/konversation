@@ -33,6 +33,7 @@
 ChatWindow::ChatWindow(QWidget* parent) : QVBox(parent)
 {
     setName("ChatWindowObject");
+    setTextView(0);
     parentWidget=parent;
     firstLog=true;
     m_server=0;
@@ -55,12 +56,12 @@ ChatWindow::~ChatWindow()
 
 void ChatWindow::updateAppearance()
 {
+    // The font size of the KTabWidget container may be inappropriately
+    // small due to the "Tab bar" font size setting.
+    setFont(KGlobalSettings::generalFont());
+
     if (textView)
     {
-        // The font size of the KTabWidget container may be inappropriately
-        // small due to the "Tab bar" font size setting.
-        setFont(KGlobalSettings::generalFont());
-
         if (Preferences::showIRCViewScrollBar())
             textView->setVScrollBarMode(QScrollView::AlwaysOn);
         else
