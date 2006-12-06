@@ -55,19 +55,16 @@ ChatWindow::~ChatWindow()
 
 void ChatWindow::updateAppearance()
 {
-    // The font size of the KTabWidget container may be inappropriately
-    // small due to the "Tab bar" font size setting.
-    setFont(KGlobalSettings::generalFont());
+    if (textView)
+    {
+        // The font size of the KTabWidget container may be inappropriately
+        // small due to the "Tab bar" font size setting.
+        setFont(KGlobalSettings::generalFont());
 
-    if(textView) {
-        if(Preferences::showIRCViewScrollBar())
-        {
+        if (Preferences::showIRCViewScrollBar())
             textView->setVScrollBarMode(QScrollView::AlwaysOn);
-        }
         else
-        {
             textView->setVScrollBarMode(QScrollView::AlwaysOff);
-        }
     }
 }
 

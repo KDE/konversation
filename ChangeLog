@@ -51,6 +51,7 @@ Changes since 1.0.1:
 - Fixed crash when opting to close a query upon chosing to ignore the opponent
   from the context menu of his nickname.
 - Fixed being asked twice whether to close a query upon ignoring the opponent.
+- Fixed crash when changing the KDE color scheme while a non-chat tab is open.
 
 -------------------------------------------------------------------------------
 
