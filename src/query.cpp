@@ -339,8 +339,7 @@ void Query::popup(int id)
     switch (id)
     {
         case Konversation::Whois:
-            /* sendQueryText(Preferences::commandChar()+"WHOIS "+name+' '+name); */
-            m_server->removeQuery(this);
+            sendQueryText(Preferences::commandChar()+"WHOIS "+name+' '+name);
             break;
 
         case Konversation::IgnoreNick:
