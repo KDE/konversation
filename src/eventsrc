@@ -174,20 +174,6 @@ Name[pt_BR]=Mensagem privada
 Name[sv]=Privat meddelande
 Name[uk]=Приватне повідомлення
 Comment=You received a private message
-Comment[bg]=Получихте лично съобщение
-Comment[da]=Du modtog en privat besked
-Comment[de]=Sie haben eine private Nachricht erhalten
-Comment[el]=Λάβατε ένα προσωπικό μήνυμα
-Comment[et]=Sa said privaatsõnumi
-Comment[ga]=Fuair tú teachtaireacht phríobháideach
-Comment[it]=Hai ricevuto un messaggio privato
-Comment[ja]=プライベートメッセージを受け取りました
-Comment[nl]=U ontving een privaat bericht
-Comment[pa]=ਤੁਹਾਨੂੰ ਇੱਕ ਪ੍ਰਾਈਵੇਟ ਸੁਨੇਹਾ ਮਿਲਿਆ ਹੈ
-Comment[pt]=Você recebeu uma mensagem privada
-Comment[pt_BR]=Você recebeu uma mensagem privada
-Comment[sv]=Du har tagit emot ett privat meddelande
-Comment[uk]=Ви отримали приватне повідомлення
 default_presentation=0
 
 [nickchange]
