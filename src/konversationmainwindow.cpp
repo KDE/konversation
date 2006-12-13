@@ -280,7 +280,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
     // set up system tray
     m_trayIcon = new Konversation::TrayIcon(this);
     connect(this, SIGNAL(endNotification()), m_trayIcon, SLOT(endNotification()));
-    connect(KonversationApplication::instance(), SIGNAL(appearanceChanged()), m_trayIcon, SLOT(updateAppearance()));
+    connect(KonversationApplication::instance(), SIGNAL(iconChanged(int)), m_trayIcon, SLOT(updateAppearance()));
     connect(m_trayIcon, SIGNAL(quitSelected()), this, SLOT(quitProgram()));
     KPopupMenu *trayMenu = m_trayIcon->contextMenu();
     #ifdef USE_KNOTIFY
