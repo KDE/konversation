@@ -32,11 +32,10 @@ namespace Konversation
     TrayIcon::TrayIcon(QWidget* parent) : KSystemTray(parent)
     {
         m_notificationEnabled = false;
-        m_nomessagePix = loadIcon("konversation");
-        m_messagePix = loadIcon("konv_message");
-        setPixmap(m_nomessagePix);
         m_blinkTimer = new QTimer(this);
         connect(m_blinkTimer, SIGNAL(timeout()), SLOT(blinkTimeout()));
+
+        updateAppearance();
 
         QToolTip::add(this,i18n("Konversation - IRC Client"));
     }
@@ -81,6 +80,13 @@ namespace Konversation
         {
             setPixmap(m_nomessagePix);
         }
+    }
+
+    void TrayIcon::updateAppearance()
+    {
+        m_nomessagePix = loadIcon("konversation");
+        m_messagePix = loadIcon("konv_message");
+        setPixmap(m_nomessagePix);
     }
 }
 

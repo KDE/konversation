@@ -39,6 +39,7 @@ namespace Konversation
             void startNotification();
             void endNotification();
             void setNotificationEnabled(bool notify) { m_notificationEnabled = notify; }
+            void updateAppearance();
 
         protected slots:
             void blinkTimeout();

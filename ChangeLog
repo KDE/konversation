@@ -52,6 +52,7 @@ Changes since 1.0.1:
   from the context menu of his nickname.
 - Fixed being asked twice whether to close a query upon ignoring the opponent.
 - Fixed crash when changing the KDE color scheme while a non-chat tab is open.
+- Reload tray icons when the icon theme changes at runtime.
 
 -------------------------------------------------------------------------------
 
