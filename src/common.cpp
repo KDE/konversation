@@ -53,26 +53,37 @@ namespace Konversation
         QString filteredLine = text;
         QString linkColor = Preferences::color(Preferences::Hyperlink).name();
         QString link;
+        QString insertText;
+        int pos = 0;
+        int urlLen = 0;
+        QString href;
 
         if(useCustomColor)
         {
-            link = "\\1<font color=\""+linkColor+"\"><a href=\"#\\2\">\\2</a></font>";
+            link = "<font color=\""+linkColor+"\"><a href=\"#%1\">%2</a></font>";
         }
         else
         {
-            link = "\\1<a href=\"#\\2\">\\2</a>";
+            link = "<a href=\"#%1\">%2</a>";
         }
 
         if(filteredLine.contains("#"))
         {
-          QRegExp chanExp("(^|\\s|^\"|\\s\"|,|'|\\(|\\:|!|@|%|\\+)(#[^,\\s;\\)\\:\\/\\(\\<\\>]*[^.,\\s;\\)\\:\\/\\(\"\''\\<\\>])");
-            filteredLine.replace(chanExp, link);
+            QRegExp chanExp("(^|\\s|^\"|\\s\"|,|'|\\(|\\:|!|@|%|\\+)(#[^,\\s;\\)\\:\\/\\(\\<\\>]*[^.,\\s;\\)\\:\\/\\(\"\''\\<\\>])");
+            while((pos = chanExp.search(filteredLine, pos)) >= 0)
+            {
+                urlLen = chanExp.matchedLength();
+                href = filteredLine.mid( pos, urlLen );
+
+                // HACK:Use space as a placeholder for \ as Qt tries to be clever and does a replace to / in urls in QTextEdit
+                insertText = link.arg(QString(href).replace('\\', " "), href);
+                filteredLine.replace(pos, urlLen, insertText);
+                pos += insertText.length();
+            }
         }
 
-        int pos = 0;
-        int urlLen = 0;
-        QString href;
-        QString insertText;
+        pos = 0;
+        urlLen = 0;
 
         urlPattern.setCaseSensitive(false);
         QString protocol;
@@ -129,7 +140,7 @@ namespace Konversation
             else if (urlPattern.cap(1).isEmpty())
                 protocol = "mailto:";
 
-            // Use \003 as a placeholder for & so we can readd them after changing all & in the normal text to &amp;
+            // Use \x0b as a placeholder for & so we can readd them after changing all & in the normal text to &amp;
             insertText = link.arg(protocol, QString(href).replace('&', "\x0b"), href) + append;
             filteredLine.replace(pos, urlLen, insertText);
             pos += insertText.length();

@@ -199,6 +199,13 @@ void IRCView::highlightedSlot(const QString& _link)
 {
     //Hack to handle the fact that we get a decoded url
     QString link = KURL::fromPathOrURL(_link).url();
+
+    // HACK:Use space as a placeholder for \ as Qt tries to be clever and does a replace to / in urls in QTextEdit
+    if(link.startsWith("#"))
+    {
+        link = link.replace(' ', "\\");
+    }
+
     //we just saw this a second ago.  no need to reemit.
     if (link == m_lastStatusText && !link.isEmpty())
         return;
@@ -598,7 +605,10 @@ QString IRCView::createNickLine(const QString& nick, bool encapsulateNick)
     QString nickLine = "%2";
 
     if(Preferences::useClickableNicks())
-        nickLine = "<a href=\"#" + nick + "\">%2</a>";
+    {
+        // HACK:Use space as a placeholder for \ as Qt tries to be clever and does a replace to / in urls in QTextEdit
+        nickLine = "<a href=\"#" + QString(nick).replace('\\', " ") + "\">%2</a>";
+    }
 
     if(encapsulateNick)
         nickLine = "&lt;" + nickLine + "&gt;";
@@ -1092,6 +1102,12 @@ void IRCView::contentsContextMenuEvent(QContextMenuEvent* ev)
     m_highlightedURL = KURL::fromPathOrURL(anchorAt(viewportToContents(mapFromGlobal(QCursor::pos())))).url();
 
     if (m_highlightedURL.isEmpty()) viewport()->setCursor(Qt::ArrowCursor);
+
+    if(m_highlightedURL.startsWith("#"))
+    {
+        // HACK:Use space as a placeholder for \ as Qt tries to be clever and does a replace to / in urls in QTextEdit
+        m_highlightedURL = m_highlightedURL.replace(' ', "\\");
+    }
 
     if (!block)
         KTextBrowser::contentsContextMenuEvent(ev);
