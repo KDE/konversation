@@ -561,6 +561,7 @@ void ChannelListPanel::contextMenu (KListView* /* l */, QListViewItem* i, const 
 
 void ChannelListPanel::appendInputText(const QString& text, bool fromCursor)
 {
+    Q_UNUSED(fromCursor);
     filterInput->setText(filterInput->text() + text);
 }
 

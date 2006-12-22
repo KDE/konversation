@@ -317,6 +317,7 @@ namespace Konversation
             else if(command == "setkey")   result = parseSetKey(parameter);
             else if(command == "delkey")   result = parseDelKey(parameter);
             else if(command == "dns")      result = parseDNS(parameter);
+            else if(command == "kill")     result = parseKill(parameter);
 
             // Forward unknown commands to server
             else
@@ -1818,6 +1819,22 @@ namespace Konversation
         return newNickList;
     }
 
+    OutputFilterResult OutputFilter::parseKill(const QString& parameter)
+    {
+        OutputFilterResult result;
+
+        if(parameter.isEmpty())
+        {
+            result = usage(i18n("Usage: %1KILL <nick> [comment]").arg(commandChar));
+        }
+        else
+        {
+            QString victim = parameter.section(' ', 0, 0);
+            result.toServer = "KILL " + victim + " :" + parameter.right(victim.length());
+        }
+
+        return result;
+    }
 }
 #include "outputfilter.moc"
 
