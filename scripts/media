@@ -44,7 +44,7 @@ formatVariables={'audio': 'is listening to', 'video': 'is watching'}
 ## If you add a new player, you must add it here or it won't get checked when in audio-only or video-only modes.
 playerRankings= {
     'video' :['kaffeine','kmplayer', 'noatun', 'kdetv'],
-    'audio' :['amarok', 'juk', 'noatun', 'kscd', 'kaffeine', 'kmplayer', 'xmms', 'yammi']
+    'audio' :['amarok', 'juk', 'noatun', 'kscd', 'kaffeine', 'kmplayer', 'Audacious', 'xmms', 'yammi']
 }
 
 ## Title, album and artist fields to be quoted depending on contents
@@ -273,6 +273,20 @@ try:
 except ImportError:
     XmmsPlayer=Player
 
+class AudaciousPlayer(Player):
+    def __init__(self, display_name):
+        Player.__init__(self, display_name)
+
+    def isRunning(self):
+        self.running = not os.system('audtool current-song')
+	return self.running
+
+    def getData(self):
+        if self.isRunning() and not os.system('audtool playback-playing'):
+            # get the title of the currently playing track
+            return (self.reEncodeString(os.popen('audtool current-song').read().strip()),'','')
+
+
 def playing(playerList, mode=None):
     for i in playerList:
         s=i.get(mode)
@@ -334,7 +348,7 @@ DCOPPlayer("Kaffeine","kaffeine","KaffeineIface title","KaffeineIface artist","K
 KMPLayer("KMPlayer","kmplayer","kmplayer-mainwindow#1 caption",playerType="video audio"),
 DCOPPlayer("KsCD","kscd","CDPlayer currentTrackTitle","CDPlayer currentArtist","CDPlayer currentAlbum"),
 DCOPPlayer("kdetv","kdetv","KdetvIface channelName",playerType='video'),
-XmmsPlayer('XMMS'),
+AudaciousPlayer('Audacious'), XmmsPlayer('XMMS'),
 DCOPPlayer("Yammi","yammi","YammiPlayer songTitle","YammiPlayer songArtist","YammiPlayer songAlbum")
 ]
 
