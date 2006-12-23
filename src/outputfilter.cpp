@@ -1830,7 +1830,7 @@ namespace Konversation
         else
         {
             QString victim = parameter.section(' ', 0, 0);
-            result.toServer = "KILL " + victim + " :" + parameter.right(victim.length());
+            result.toServer = "KILL " + victim + " :" + parameter.mid(victim.length() + 1);
         }
 
         return result;
