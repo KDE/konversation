@@ -183,7 +183,7 @@ void Highlight_Config::updateButtons()
   }
   else
   {
-      QToolTip::add(patternButton, i18n("The Regular Expression Editor (KRegExpEditor) isn't installed"));
+      QToolTip::add(patternButton, i18n("The Regular Expression Editor (KRegExpEditor) is not installed"));
   }
 }
 

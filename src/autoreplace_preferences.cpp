@@ -50,7 +50,7 @@ Autoreplace_Config::Autoreplace_Config(QWidget* parent, const char* name)
   else
   {
       regExpEditorButton->setEnabled(false);
-      QToolTip::add(regExpEditorButton, i18n("The Regular Expression Editor (KRegExpEditor) isn't installed"));
+      QToolTip::add(regExpEditorButton, i18n("The Regular Expression Editor (KRegExpEditor) is not installed"));
   }
 
   // populate combobox
