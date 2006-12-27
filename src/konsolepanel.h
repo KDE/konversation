@@ -25,6 +25,8 @@ class KonsolePanel : public ChatWindow
 
         virtual void setName(const QString& newName) { ChatWindow::setName(newName); }
 
+        QWidget* getWidget();
+
     signals:
         void closeView(ChatWindow* view);
 

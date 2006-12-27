@@ -46,8 +46,14 @@ KonsolePanel::~KonsolePanel()
     }
 }
 
+QWidget* KonsolePanel::getWidget()
+{
+    return k_part->widget();
+}
+
 void KonsolePanel::childAdjustFocus()
 {
+    k_part->widget()->setFocus();
 }
 
 void KonsolePanel::partDestroyed()

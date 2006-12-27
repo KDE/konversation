@@ -53,6 +53,13 @@ Changes since 1.0.1:
 - Fixed being asked twice whether to close a query upon ignoring the opponent.
 - Fixed crash when changing the KDE color scheme while a non-chat tab is open.
 - Reload tray icons when the icon theme changes at runtime.
+- Fixed operations on nicknames containing "\" characters from the nickname 
+  context menu of ircviews.
+- Added support for /kill.
+- Added support for Audacious to the media script.
+- Fixed forwarding keyboard events received by the treelist to Konsole widgets
+  and focus adjustment thereafter as well as generally after switching to Kon-
+  sole tabs by other means.
 
 -------------------------------------------------------------------------------
 

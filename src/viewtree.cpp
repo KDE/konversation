@@ -29,6 +29,7 @@
 #include "server.h"
 #include "channel.h"
 #include "ircview.h"
+#include "konsolepanel.h"
 
 class ViewTree::ToolTip : public QToolTip
 {
@@ -655,6 +656,12 @@ void ViewTree::keyPressEvent(QKeyEvent* e)
         if (item && item->getView()->isInsertSupported())
         {
             KApplication::sendEvent(item->getView()->getTextView(), e);
+            item->getView()->adjustFocus();
+        }
+        else if (item && item->getView()->getType() == ChatWindow::Konsole)
+        {
+            KonsolePanel* panel = static_cast<KonsolePanel*>(item->getView());
+            KApplication::sendEvent(panel->getWidget(), e);
             item->getView()->adjustFocus();
         }
     }
