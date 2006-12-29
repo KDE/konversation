@@ -1421,10 +1421,10 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 // Display message only if this was not an automatic request.
                 if(getAutomaticRequest("WHOIS",parameterList[1])==0)
                 {
-                    server->appendMessageToFrontmost(i18n("Whois"),
-                        i18n("%1 is a network admin.")
-                        .arg(parameterList[1])
-                        );
+                    if (trailing.lower().simplifyWhiteSpace().startsWith("is an irc operator"))
+                        server->appendMessageToFrontmost(i18n("Whois"),i18n("%1 is an IRC Operator.").arg(parameterList[1]));
+                    else
+                        server->appendMessageToFrontmost(i18n("Whois"),QString("%1 %2").arg(parameterList[1]).arg(trailing));
                 }
                 break;
             }

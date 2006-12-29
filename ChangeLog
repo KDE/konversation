@@ -60,6 +60,8 @@ Changes since 1.0.1:
 - Fixed forwarding keyboard events received by the treelist to Konsole widgets
   and focus adjustment thereafter as well as generally after switching to Kon-
   sole tabs by other means.
+- Change RPL_WHOISOPERATOR handling to internationalize the common case ("is an
+  IRC Operator") and otherwise passthrough the string sent by the server.
 
 -------------------------------------------------------------------------------
 
