@@ -651,6 +651,10 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
         {
             server->appendStatusMessage(i18n("Notice"),i18n("-%1- %2").arg(prefix).arg(trailing));
         }
+        else if(command=="kick")
+        {
+            server->nickWasKickedFromChannel(parameterList[0],parameterList[1],prefix,trailing);
+        }
         // All yet unknown messages go into the frontmost window unaltered
         else
         {
