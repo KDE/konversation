@@ -1317,6 +1317,7 @@ the Free Software Foundation; either version 2 of the License, or
     <tabstop>kcfg_TimeColor</tabstop>
     <tabstop>kcfg_AlternateBackgroundColor</tabstop>
     <tabstop>kcfg_InputFieldsBackgroundColor</tabstop>
+    <tabstop>kcfg_UseColoredNicks</tabstop>
     <tabstop>kcfg_NickColor0</tabstop>
     <tabstop>kcfg_NickColor1</tabstop>
     <tabstop>kcfg_NickColor2</tabstop>
@@ -1326,6 +1327,7 @@ the Free Software Foundation; either version 2 of the License, or
     <tabstop>kcfg_NickColor6</tabstop>
     <tabstop>kcfg_NickColor7</tabstop>
     <tabstop>kcfg_NickColor8</tabstop>
+    <tabstop>kcfg_AllowColorCodes</tabstop>
     <tabstop>kcfg_IrcColorCode0</tabstop>
     <tabstop>kcfg_IrcColorCode1</tabstop>
     <tabstop>kcfg_IrcColorCode2</tabstop>
