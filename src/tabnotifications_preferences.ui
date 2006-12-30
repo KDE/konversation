@@ -378,6 +378,23 @@
         <slot>setEnabled(bool)</slot>
     </connection>
 </connections>
+<tabstops>
+    <tabstop>kcfg_TabNotificationsText</tabstop>
+    <tabstop>kcfg_TabNotificationsLeds</tabstop>
+    <tabstop>kcfg_TabNotificationsMsgs</tabstop>
+    <tabstop>kcfg_TabNotificationsMsgsColor</tabstop>
+    <tabstop>kcfg_TabNotificationsPrivate</tabstop>
+    <tabstop>kcfg_TabNotificationsPrivateColor</tabstop>
+    <tabstop>kcfg_TabNotificationsNick</tabstop>
+    <tabstop>kcfg_TabNotificationsNickColor</tabstop>
+    <tabstop>kcfg_TabNotificationsHighlights</tabstop>
+    <tabstop>kcfg_TabNotificationsHighlightsColor</tabstop>
+    <tabstop>kcfg_TabNotificationsEvents</tabstop>
+    <tabstop>kcfg_TabNotificationsEventsColor</tabstop>
+    <tabstop>kcfg_TabNotificationsSystem</tabstop>
+    <tabstop>kcfg_TabNotificationsSystemColor</tabstop>
+    <tabstop>kcfg_TabNotificationsOverride</tabstop>
+</tabstops>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
     <includehint>kcolorbutton.h</includehint>

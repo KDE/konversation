@@ -203,6 +203,13 @@
         </widget>
     </grid>
 </widget>
+<tabstops>
+    <tabstop>buttonListView</tabstop>
+    <tabstop>nameInput</tabstop>
+    <tabstop>actionInput</tabstop>
+    <tabstop>newButton</tabstop>
+    <tabstop>removeButton</tabstop>
+</tabstops>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
     <includehint>klistview.h</includehint>

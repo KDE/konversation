@@ -157,6 +157,13 @@
         </widget>
     </grid>
 </widget>
+<tabstops>
+    <tabstop>aliasListView</tabstop>
+    <tabstop>aliasInput</tabstop>
+    <tabstop>replacementInput</tabstop>
+    <tabstop>newButton</tabstop>
+    <tabstop>removeButton</tabstop>
+</tabstops>
 <layoutdefaults spacing="6" margin="11"/>
 <layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
 <includehints>

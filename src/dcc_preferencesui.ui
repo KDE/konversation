@@ -483,11 +483,17 @@ the Free Software Foundation; either version 2 of the License, or
     </connection>
 </connections>
 <tabstops>
+    <tabstop>kcfg_DccPath</tabstop>
     <tabstop>kcfg_DccAddPartner</tabstop>
     <tabstop>kcfg_DccCreateFolder</tabstop>
+    <tabstop>kcfg_DccSpaceToUnderscore</tabstop>
     <tabstop>kcfg_DccAutoGet</tabstop>
     <tabstop>kcfg_DccAutoResume</tabstop>
+    <tabstop>kcfg_DccFastSend</tabstop>
+    <tabstop>kcfg_DccIPv4Fallback</tabstop>
+    <tabstop>kcfg_DccIPv4FallbackIface</tabstop>
     <tabstop>kcfg_DccSendTimeout</tabstop>
+    <tabstop>kcfg_DccBufferSize</tabstop>
     <tabstop>kcfg_DccMethodToGetOwnIp</tabstop>
     <tabstop>kcfg_DccSpecificOwnIp</tabstop>
     <tabstop>kcfg_DccSpecificSendPorts</tabstop>
@@ -496,8 +502,6 @@ the Free Software Foundation; either version 2 of the License, or
     <tabstop>kcfg_DccSpecificChatPorts</tabstop>
     <tabstop>kcfg_DccChatPortsFirst</tabstop>
     <tabstop>kcfg_DccChatPortsLast</tabstop>
-    <tabstop>kcfg_DccBufferSize</tabstop>
-    <tabstop>kcfg_DccFastSend</tabstop>
 </tabstops>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>

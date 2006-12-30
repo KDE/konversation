@@ -316,8 +316,6 @@ the Free Software Foundation; either version 2 of the License, or
         </spacer>
     </vbox>
 </widget>
-<customwidgets>
-</customwidgets>
 <connections>
     <connection>
         <sender>kcfg_ShowNickList</sender>
@@ -333,13 +331,19 @@ the Free Software Foundation; either version 2 of the License, or
     </connection>
 </connections>
 <tabstops>
-    <tabstop>kcfg_ShowDate</tabstop>
+    <tabstop>kcfg_Timestamping</tabstop>
     <tabstop>kcfg_TimestampFormat</tabstop>
+    <tabstop>kcfg_ShowDate</tabstop>
+    <tabstop>kcfg_ShowBacklog</tabstop>
+    <tabstop>kcfg_BacklogLines</tabstop>
     <tabstop>kcfg_ShowTopic</tabstop>
     <tabstop>kcfg_ShowModeButtons</tabstop>
-    <tabstop>kcfg_ShowQuickButtons</tabstop>
+    <tabstop>kcfg_ShowNickList</tabstop>
     <tabstop>kcfg_AutoUserhost</tabstop>
+    <tabstop>kcfg_ShowQuickButtons</tabstop>
     <tabstop>kcfg_ShowNicknameBox</tabstop>
+    <tabstop>kcfg_ShowIRCViewScrollBar</tabstop>
+    <tabstop>kcfg_ShowBackgroundImage</tabstop>
     <tabstop>kcfg_BackgroundImage</tabstop>
 </tabstops>
 <layoutdefaults spacing="6" margin="11"/>

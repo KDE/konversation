@@ -189,42 +189,6 @@
                         <cstring>patternInput</cstring>
                     </property>
                 </widget>
-                <widget class="QLabel" row="4" column="0">
-                    <property name="name">
-                        <cstring>autoTextLabel</cstring>
-                    </property>
-                    <property name="enabled">
-                        <bool>false</bool>
-                    </property>
-                    <property name="text">
-                        <string>&amp;Auto text:</string>
-                    </property>
-                    <property name="buddy" stdset="0">
-                        <cstring>autoTextInput</cstring>
-                    </property>
-                </widget>
-                <widget class="QLabel" row="3" column="0">
-                    <property name="name">
-                        <cstring>soundLabel</cstring>
-                    </property>
-                    <property name="enabled">
-                        <bool>false</bool>
-                    </property>
-                    <property name="text">
-                        <string>&amp;Sound:</string>
-                    </property>
-                    <property name="buddy" stdset="0">
-                        <cstring>soundURL</cstring>
-                    </property>
-                </widget>
-                <widget class="KLineEdit" row="4" column="1" rowspan="1" colspan="3">
-                    <property name="name">
-                        <cstring>autoTextInput</cstring>
-                    </property>
-                    <property name="enabled">
-                        <bool>false</bool>
-                    </property>
-                </widget>
                 <widget class="KLineEdit" row="1" column="1">
                     <property name="name">
                         <cstring>patternInput</cstring>
@@ -261,6 +225,20 @@
                     </property>
                     <property name="text">
                         <string></string>
+                    </property>
+                </widget>
+                <widget class="QLabel" row="3" column="0">
+                    <property name="name">
+                        <cstring>soundLabel</cstring>
+                    </property>
+                    <property name="enabled">
+                        <bool>false</bool>
+                    </property>
+                    <property name="text">
+                        <string>&amp;Sound:</string>
+                    </property>
+                    <property name="buddy" stdset="0">
+                        <cstring>soundURL</cstring>
                     </property>
                 </widget>
                 <widget class="KURLRequester" row="3" column="1" rowspan="1" colspan="2">
@@ -302,6 +280,28 @@
                     </property>
                     <property name="toolTip" stdset="0">
                         <string>Test sound</string>
+                    </property>
+                </widget>
+                <widget class="QLabel" row="4" column="0">
+                    <property name="name">
+                        <cstring>autoTextLabel</cstring>
+                    </property>
+                    <property name="enabled">
+                        <bool>false</bool>
+                    </property>
+                    <property name="text">
+                        <string>&amp;Auto text:</string>
+                    </property>
+                    <property name="buddy" stdset="0">
+                        <cstring>autoTextInput</cstring>
+                    </property>
+                </widget>
+                <widget class="KLineEdit" row="4" column="1" rowspan="1" colspan="3">
+                    <property name="name">
+                        <cstring>autoTextInput</cstring>
+                    </property>
+                    <property name="enabled">
+                        <bool>false</bool>
                     </property>
                 </widget>
             </grid>
@@ -421,15 +421,19 @@
 </connections>
 <tabstops>
     <tabstop>highlightListView</tabstop>
-    <tabstop>newButton</tabstop>
-    <tabstop>removeButton</tabstop>
     <tabstop>patternInput</tabstop>
     <tabstop>patternButton</tabstop>
+    <tabstop>patternColor</tabstop>
     <tabstop>soundURL</tabstop>
+    <tabstop>soundPlayBtn</tabstop>
     <tabstop>autoTextInput</tabstop>
     <tabstop>kcfg_HighlightSoundsEnabled</tabstop>
     <tabstop>kcfg_HighlightNick</tabstop>
+    <tabstop>kcfg_HighlightNickColor</tabstop>
     <tabstop>kcfg_HighlightOwnLines</tabstop>
+    <tabstop>kcfg_HighlightOwnLinesColor</tabstop>
+    <tabstop>newButton</tabstop>
+    <tabstop>removeButton</tabstop>
 </tabstops>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>

@@ -137,6 +137,12 @@ the Free Software Foundation; either version 2 of the License, or
         <slot>setEnabled(bool)</slot>
     </connection>
 </connections>
+<tabstops>
+    <tabstop>kcfg_ChannelDoubleClickAction</tabstop>
+    <tabstop>kcfg_SortCaseInsensitive</tabstop>
+    <tabstop>kcfg_SortByStatus</tabstop>
+    <tabstop>sortOrder</tabstop>
+</tabstops>
 <layoutdefaults spacing="6" margin="11"/>
 <layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
 <includehints>

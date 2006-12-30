@@ -196,6 +196,18 @@ the Free Software Foundation; either version 2 of the License, or
         </widget>
     </grid>
 </widget>
+<tabstops>
+    <tabstop>ignoreListView</tabstop>
+    <tabstop>txtPattern</tabstop>
+    <tabstop>chkChannel</tabstop>
+    <tabstop>chkQuery</tabstop>
+    <tabstop>chkNotice</tabstop>
+    <tabstop>chkCTCP</tabstop>
+    <tabstop>chkDCC</tabstop>
+    <tabstop>newButton</tabstop>
+    <tabstop>removeButton</tabstop>
+    <tabstop>removeAllButton</tabstop>
+</tabstops>
 <layoutdefaults spacing="6" margin="11"/>
 <layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
 <includehints>

@@ -162,6 +162,12 @@ the Free Software Foundation; either version 2 of the License, or
         </widget>
     </grid>
 </widget>
+<tabstops>
+    <tabstop>kcfg_AutoReconnect</tabstop>
+    <tabstop>kcfg_ReconnectTimeout</tabstop>
+    <tabstop>kcfg_ReconnectCount</tabstop>
+    <tabstop>kcfg_RawLog</tabstop>
+</tabstops>
 <layoutdefaults spacing="6" margin="11"/>
 <layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
 <includehints>

@@ -274,6 +274,15 @@
         </widget>
     </grid>
 </widget>
+<tabstops>
+    <tabstop>patternListView</tabstop>
+    <tabstop>directionCombo</tabstop>
+    <tabstop>patternInput</tabstop>
+    <tabstop>regExpEditorButton</tabstop>
+    <tabstop>replacementInput</tabstop>
+    <tabstop>newButton</tabstop>
+    <tabstop>removeButton</tabstop>
+</tabstops>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
     <includehint>klistview.h</includehint>

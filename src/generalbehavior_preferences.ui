@@ -326,6 +326,24 @@ the Free Software Foundation; either version 2 of the License, or
         <slot>setEnabled(bool)</slot>
     </connection>
 </connections>
+<tabstops>
+    <tabstop>kcfg_ShowTrayIcon</tabstop>
+    <tabstop>kcfg_TrayNotify</tabstop>
+    <tabstop>kcfg_TrayNotifyOnlyOwnNick</tabstop>
+    <tabstop>kcfg_NickCompletionMode</tabstop>
+    <tabstop>kcfg_NickCompleteSuffixStart</tabstop>
+    <tabstop>kcfg_NickCompleteSuffixMiddle</tabstop>
+    <tabstop>kcfg_NickCompletionCaseSensitive</tabstop>
+    <tabstop>kcfg_ShowServerList</tabstop>
+    <tabstop>kcfg_DisableNotifyWhileAway</tabstop>
+    <tabstop>kcfg_AutojoinOnInvite</tabstop>
+    <tabstop>kcfg_UseCustomBrowser</tabstop>
+    <tabstop>kcfg_WebBrowserCmd</tabstop>
+    <tabstop>kcfg_CommandChar</tabstop>
+    <tabstop>kcfg_CustomVersionReplyEnabled</tabstop>
+    <tabstop>kcfg_CustomVersionReply</tabstop>
+    <tabstop>kcfg_UseMultiRowInputBox</tabstop>
+</tabstops>
 <layoutdefaults spacing="6" margin="11"/>
 <layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
 <includehints>

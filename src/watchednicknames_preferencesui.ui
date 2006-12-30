@@ -392,6 +392,17 @@ When the nickname watcher is turned on, you will be notified when the nicknames 
         <slot>setEnabled(bool)</slot>
     </connection>
 </connections>
+<tabstops>
+    <tabstop>kcfg_UseNotify</tabstop>
+    <tabstop>kcfg_OpenWatchedNicksAtStartup</tabstop>
+    <tabstop>kcfg_NotifyDoubleClickAction</tabstop>
+    <tabstop>kcfg_NotifyDelay</tabstop>
+    <tabstop>notifyListView</tabstop>
+    <tabstop>networkDropdown</tabstop>
+    <tabstop>nicknameInput</tabstop>
+    <tabstop>newButton</tabstop>
+    <tabstop>removeButton</tabstop>
+</tabstops>
 <layoutdefaults spacing="6" margin="11"/>
 <layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
 <includehints>

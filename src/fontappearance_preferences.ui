@@ -140,6 +140,16 @@ the Free Software Foundation; either version 2 of the License, or
         <slot>setEnabled(bool)</slot>
     </connection>
 </connections>
+<tabstops>
+    <tabstop>kcfg_CustomTextFont</tabstop>
+    <tabstop>kcfg_TextFont</tabstop>
+    <tabstop>kcfg_CustomListFont</tabstop>
+    <tabstop>kcfg_ListFont</tabstop>
+    <tabstop>kcfg_CustomTabFont</tabstop>
+    <tabstop>kcfg_TabFont</tabstop>
+    <tabstop>kcfg_FixedMOTD</tabstop>
+    <tabstop>kcfg_UseBoldNicks</tabstop>
+</tabstops>
 <layoutdefaults spacing="6" margin="11"/>
 <layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
 <includehints>

@@ -40,6 +40,9 @@
         </widget>
     </hbox>
 </widget>
+<tabstops>
+    <tabstop>dialogListView</tabstop>
+</tabstops>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
     <includehint>klistview.h</includehint>

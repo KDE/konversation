@@ -37,33 +37,6 @@ the Free Software Foundation; either version 2 of the License, or
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="KURLRequester" row="3" column="1">
-                    <property name="name">
-                        <cstring>kcfg_LogfilePath</cstring>
-                    </property>
-                    <property name="sizePolicy">
-                        <sizepolicy>
-                            <hsizetype>7</hsizetype>
-                            <vsizetype>5</vsizetype>
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                        </sizepolicy>
-                    </property>
-                    <property name="mode">
-                        <number>26</number>
-                    </property>
-                </widget>
-                <widget class="QLabel" row="3" column="0">
-                    <property name="name">
-                        <cstring>textLabel1</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Logfile &amp;path:</string>
-                    </property>
-                    <property name="buddy" stdset="0">
-                        <cstring>kcfg_LogfilePath</cstring>
-                    </property>
-                </widget>
                 <widget class="QCheckBox" row="0" column="0" rowspan="1" colspan="2">
                     <property name="name">
                         <cstring>kcfg_LowerLog</cstring>
@@ -78,6 +51,33 @@ the Free Software Foundation; either version 2 of the License, or
                     </property>
                     <property name="text">
                         <string>&amp;Append hostname to logfile names</string>
+                    </property>
+                </widget>
+                <widget class="QLabel" row="3" column="0">
+                    <property name="name">
+                        <cstring>textLabel1</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Logfile &amp;path:</string>
+                    </property>
+                    <property name="buddy" stdset="0">
+                        <cstring>kcfg_LogfilePath</cstring>
+                    </property>
+                </widget>
+                <widget class="KURLRequester" row="3" column="1">
+                    <property name="name">
+                        <cstring>kcfg_LogfilePath</cstring>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>7</hsizetype>
+                            <vsizetype>5</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                    <property name="mode">
+                        <number>26</number>
                     </property>
                 </widget>
             </grid>
@@ -101,6 +101,11 @@ the Free Software Foundation; either version 2 of the License, or
         </spacer>
     </grid>
 </widget>
+<tabstops>
+    <tabstop>kcfg_LowerLog</tabstop>
+    <tabstop>kcfg_AddHostnameToLog</tabstop>
+    <tabstop>kcfg_LogfilePath</tabstop>
+</tabstops>
 <layoutdefaults spacing="6" margin="11"/>
 <layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
 <includehints>
