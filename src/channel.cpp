@@ -1200,7 +1200,7 @@ void Channel::removeNick(ChannelNickPtr channelNick, const QString &reason, bool
     }
 }
 
-void Channel::kickNick(ChannelNickPtr channelNick, const ChannelNick &kicker, const QString &reason)
+void Channel::kickNick(ChannelNickPtr channelNick, const QString &kicker, const QString &reason)
 {
     QString displayReason = reason;
 
@@ -1213,7 +1213,7 @@ void Channel::kickNick(ChannelNickPtr channelNick, const ChannelNick &kicker, co
 
     if(channelNick->getNickname() == m_server->getNickname())
     {
-        if(kicker.getNickname() == m_server->getNickname())
+        if(kicker == m_server->getNickname())
         {
             if (displayReason.isEmpty())
                 m_server->appendStatusMessage(i18n("Kick"), i18n("You have kicked yourself from channel %1.").arg(getName()));
@@ -1227,24 +1227,24 @@ void Channel::kickNick(ChannelNickPtr channelNick, const ChannelNick &kicker, co
             {
                 m_server->appendStatusMessage(i18n("Kick"), i18n("%1 adds the channel, %2 adds the kicker",
                                               "You have been kicked from channel %1 by %2.")
-                                              .arg(getName()).arg(kicker.getNickname()));
+                                              .arg(getName()).arg(kicker));
             }
             else
             {
                 m_server->appendStatusMessage(i18n("Kick"), i18n("%1 adds the channel, %2 the kicker and %3 the reason",
                                               "You have been kicked from channel %1 by %2 (%3).")
-                                              .arg(getName()).arg(kicker.getNickname()).arg(displayReason));
+                                              .arg(getName()).arg(kicker).arg(displayReason));
             }
 
             KonversationApplication* konv_app = static_cast<KonversationApplication*>(KApplication::kApplication());
-            konv_app->notificationHandler()->kick(this,getName(), kicker.getNickname());
+            konv_app->notificationHandler()->kick(this,getName(), kicker);
         }
 
         delete this;
     }
     else
     {
-        if(kicker.getNickname() == m_server->getNickname())
+        if(kicker == m_server->getNickname())
         {
             if (displayReason.isEmpty())
                 appendCommandMessage(i18n("Kick"), i18n("You have kicked %1 from the channel.").arg(channelNick->getNickname()));
@@ -1258,13 +1258,13 @@ void Channel::kickNick(ChannelNickPtr channelNick, const ChannelNick &kicker, co
             {
                 appendCommandMessage(i18n("Kick"), i18n("%1 adds the kicked nick, %2 adds the kicker",
                                      "%1 has been kicked from the channel by %2.")
-                                     .arg(channelNick->getNickname()).arg(kicker.getNickname()));
+                                     .arg(channelNick->getNickname()).arg(kicker));
             }
             else
             {
                 appendCommandMessage(i18n("Kick"), i18n("%1 adds the kicked nick, %2 the kicker and %3 the reason",
                                      "%1 has been kicked from the channel by %2 (%3).")
-                                     .arg(channelNick->getNickname()).arg(kicker.getNickname()).arg(displayReason));
+                                     .arg(channelNick->getNickname()).arg(kicker).arg(displayReason));
             }
         }
 

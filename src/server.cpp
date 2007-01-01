@@ -2680,10 +2680,10 @@ void Server::nickWasKickedFromChannel(const QString &channelName, const QString 
     if(outChannel)
     {
         ChannelNickPtr channelNick = getChannelNick(channelName, nickname);
-        ChannelNickPtr kickerNick = getChannelNick(channelName, kicker);
+
         if(channelNick)
         {
-          outChannel->kickNick(channelNick, *kickerNick, reason);
+          outChannel->kickNick(channelNick, kicker, reason);
           // Tell Nickinfo
           removeChannelNick(channelName,nickname);
         }

@@ -128,7 +128,7 @@ class Channel : public ChatWindow
 
         void joinNickname(ChannelNickPtr channelNick);
         void removeNick(ChannelNickPtr channelNick, const QString &reason, bool quit);
-        void kickNick(ChannelNickPtr channelNick, const ChannelNick &kicker, const QString &reason);
+        void kickNick(ChannelNickPtr channelNick, const QString &kicker, const QString &reason);
         void addNickname(ChannelNickPtr channelNick);
         void nickRenamed(const QString &oldNick, const NickInfo& channelnick);
         void resetNickList();
