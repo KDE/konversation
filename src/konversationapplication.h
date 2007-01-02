@@ -147,8 +147,6 @@ class KonversationApplication : public KUniqueApplication
         void clearUrlList();
         /** Send a message to all servers that you are away. */
         void toggleAway();
-        bool emitDCOPSig(const QString& appId, const QString& objId, const QString& signal, QByteArray& data);
-
         void dcopConnectToServer(const QString& url, int port, const QString& channel, const QString& password);
 
     protected slots:

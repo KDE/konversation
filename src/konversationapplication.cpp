@@ -1020,35 +1020,6 @@ void KonversationApplication::openQuickConnectDialog()
     quickConnectDialog->show();
 }
 
-bool KonversationApplication::emitDCOPSig(const QString &appId, const QString &objId, const QString &signal, QByteArray &data)
-{
-    kdDebug() << "emitDCOPSig (" << signal << ")" << endl;
-    //dcopObject->emitDCOPSignal(signal, data);
-    QByteArray replyData;
-    QCString replyType;
-    if (!KApplication::dcopClient()->call(appId.ascii(), objId.ascii(), signal.ascii() /*must have prototype*/,
-        data, replyType, replyData))
-    {
-        kdDebug() << "There was some error using DCOP." << endl;
-        return true;                              // Keep processing filters
-    }
-    else
-    {
-        QDataStream reply(replyData, IO_ReadOnly);
-        if (replyType == "bool")
-        {
-            bool result;
-            reply >> result;
-            return result;
-        }
-        else
-        {
-            kdDebug() << "doIt returned an unexpected type of reply!" << endl;
-            return true;                          // Keep processing
-        }
-    }
-}
-
 void KonversationApplication::sendMultiServerCommand(const QString& command, const QString& parameter)
 {
     for(Server* server = serverList.first(); server; server = serverList.next())
