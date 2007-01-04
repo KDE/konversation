@@ -208,5 +208,6 @@ class IRCView : public KTextBrowser
         QFontDatabase m_fontDataBase;
 
         ChatWindow* m_chatWin;
+        friend class IRCStyleSheet;
 };
 #endif

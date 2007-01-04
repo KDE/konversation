@@ -66,6 +66,150 @@
 #include "emoticon.h"
 #include "notificationhandler.h"
 
+#define KX kdDebug() << __FILE__ << ':' << __LINE__ << ' '
+
+struct IRCViewSelectionManager
+{
+    int last, lastParagId;
+    QTextDocument* doc;
+
+    IRCViewSelectionManager(QTextDocument *doc) :
+        last(1), lastParagId(0), doc(doc)
+    {}
+    int lastSelection() { return last; }
+    //We can only use selections 1 thru QTextDocument::IMSelectionText -1 (currently 31997)
+    int previousSelection(int x=-1)
+    {
+        if (x==-1)
+            x=last;
+        x--;
+        if (x<1)
+            x=QTextDocument::IMSelectionText-1;
+        return x;
+    }
+    void bumpSelection()
+    {
+        last++;
+        if (last == QTextDocument::IMSelectionText)
+            last = 1;
+    }
+    void add(QTextParagraph *parag, int pos, QColor *color)
+    {
+        if (!parag || !doc)
+            return;
+        QTextCursor c;
+        if (lastParagId) //TODO: could this be left over after a clear?
+        {
+            QTextParagraph* lastPara = doc->paragAt(lastParagId);
+
+            if (lastPara) // lastPara->isValid()==false before the paragraph is completed
+            {
+                if (lastParagId != parag->paragId())
+                    c.gotoPosition(lastPara, lastPara->length()-1);
+                else
+                    c.gotoPosition(parag, parag->length()-2);// -1 is our '*'
+                doc->setSelectionEnd(previousSelection(), c);
+            }
+            lastParagId=0;
+        }
+        if (color) // No colour means its being set back to default
+        {
+            //put the 'cursor' at the current length of the string, which will end at the '*' that represents this tag
+            c.gotoPosition(parag, pos-1);
+            doc->setSelectionColor(lastSelection(), *color);
+            doc->setSelectionStart(lastSelection(), c);
+            bumpSelection();
+            lastParagId=parag->paragId();
+        }
+    }
+    //This function will not be called while still adding selections
+    void fixupLast()
+    {
+        if (lastParagId)
+        {
+            QTextParagraph* lastPara=doc->paragAt(lastParagId);
+            if (lastPara && lastPara->isValid())
+            {
+                QTextCursor c;
+                c.gotoPosition(lastPara, lastPara->length()-1);
+                lastPara->document()->setSelectionEnd(previousSelection(), c);
+                lastParagId=0;
+            }
+            else
+                lastParagId=0;
+        }
+    }
+};
+
+struct IRCBackgroundChanger : public QTextCustomItem
+{
+    QColor *color; // is 0 on a background reset
+    IRCViewSelectionManager& manager;
+
+    IRCBackgroundChanger( QTextDocument *p, QString colour, IRCViewSelectionManager& ivsm ):
+            QTextCustomItem(p), color(0), manager(ivsm)
+    {
+        if (!colour.isEmpty())
+            color=new QColor(colour); //returns an "invalid" color if passed "" instead of 0
+    }
+
+    virtual void setParagraph( QTextParagraph *p )
+    {
+        if (!p) //This is a sign of /clear
+            return;
+        parag = p;
+        manager.add(parag, parag->string()->length(), color);
+    }
+    virtual ~IRCBackgroundChanger() {}
+    virtual void draw(QPainter* p, int x, int y, int cx, int cy, int cw, int ch, const QColorGroup& cg, bool selected);
+    virtual QString richText() const
+    {
+        return QString("<bg c=\"%1\">").arg(color->name());
+    }
+};
+
+void IRCBackgroundChanger::draw(QPainter*, int, int, int, int, int, int, const QColorGroup&, bool)
+{
+    manager.fixupLast();
+}
+
+class IRCStyleSheet : public QStyleSheet
+{
+public:
+    mutable IRCViewSelectionManager manager;//mutable because all virtuals are const
+    QTextDocument *pardoc;
+
+    IRCStyleSheet( IRCView *parent=0, const char *name=0 ) :
+        QStyleSheet(parent, name), manager(parent->document()), pardoc(parent->document())
+    {}
+    virtual ~IRCStyleSheet() {}
+
+    virtual QTextCustomItem* tag( const QString& name,
+                  const QMap<QString, QString> &attr,
+                  const QString& context,
+                  const QMimeSourceFactory& factory,
+                  bool emptyTag, QTextDocument *doc ) const;
+    virtual void error( const QString& ) const { /*KX << _S(error) << endl;*/ }
+};
+
+QTextCustomItem* IRCStyleSheet::tag(
+                   const QString& name,
+                   const QMap<QString, QString> &attr,
+                   const QString& context,
+                   const QMimeSourceFactory& factory,
+                   bool emptyTag, QTextDocument *doc ) const
+{
+    Q_ASSERT(doc == pardoc);
+    const QStyleSheetItem* style = item( name );
+    if ( !style )
+        return 0;
+    if ( style->name() == "bg" )
+        return new IRCBackgroundChanger( doc, attr["c"], manager );
+
+    return QStyleSheet::tag(name, attr, context, factory, emptyTag, doc);
+}
+
+
 IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent)
 {
     m_copyUrlMenu = false;
@@ -89,8 +233,9 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent)
     setFocusPolicy(QWidget::ClickFocus);
 
     // set basic style sheet for <p> to make paragraph spacing possible
-    QStyleSheet* sheet=new QStyleSheet(this,"ircview_style_sheet");
+    QStyleSheet* sheet=new IRCStyleSheet(this,"ircview_style_sheet");
     new QStyleSheetItem(sheet,"p");
+    new QStyleSheetItem(sheet,"bg");
     setStyleSheet(sheet);
 
     m_popup = new QPopupMenu(this,"ircview_context_menu");
@@ -437,6 +582,7 @@ bool doHighlight, bool parseURL, bool self)
     int pos;
     bool allowColors = Preferences::allowColorCodes();
     bool firstColor = true;
+    bool haveBg = false;
     QString colorString;
 
     while((pos=colorRegExp.search(filteredLine))!=-1)
@@ -451,9 +597,24 @@ bool doHighlight, bool parseURL, bool self)
 
             // reset colors on \017 to default value
             if(colorRegExp.cap(1) == "\017")
+            {
+                if (haveBg)
+                {
+                    //KX << _S(Preferences::TextViewBackground) << endl;
+                    //TODO - this isn't supposed to contain a colour value...
+                    colorString += QString("<bg>").arg(paletteBackgroundColor().name());
+                    haveBg=false;
+                }
                 colorString += "<font color=\""+defaultColor+"\">";
+            }
             else
             {
+                if (!colorRegExp.cap(4).isEmpty())
+                {
+                    haveBg=true;
+                    int bg = colorRegExp.cap(4).toInt();
+                    colorString += QString("<bg c=\"%1\">").arg(Preferences::ircColorCode(bg).name());
+                }
                 int foregroundColor = colorRegExp.cap(2).toInt();
                 colorString += "<font color=\"" + Preferences::ircColorCode(foregroundColor).name() + "\">";
             }
