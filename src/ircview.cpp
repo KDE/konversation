@@ -171,7 +171,7 @@ struct IRCBackgroundChanger : public QTextCustomItem
 
 void IRCBackgroundChanger::draw(QPainter*, int, int, int, int, int, int, const QColorGroup&, bool)
 {
-    manager.fixupLast();
+    //manager.fixupLast();
 }
 
 class IRCStyleSheet : public QStyleSheet
@@ -1122,6 +1122,10 @@ void IRCView::doAppend(const QString& newLine, bool important, bool self)
 
         KTextBrowser::viewport()->setUpdatesEnabled(false);
         KTextBrowser::append(line);
+
+        //finish the last paragraph now, rather than waiting until its painted so it does the right kind of painting
+        IRCStyleSheet *s=static_cast<IRCStyleSheet*>(styleSheet());
+        s->manager.fixupLast();
 
         document()->lastParagraph()->format();
         resizeContents(contentsWidth(), document()->height());
