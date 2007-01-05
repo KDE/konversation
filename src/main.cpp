@@ -52,7 +52,7 @@ int main(int argc, char* argv[])
         KONVI_VERSION " #" STRHACK(COMMIT),
         shortDescription,
         KAboutData::License_GPL,
-        I18N_NOOP("(C) 2002-2006 by the Konversation team"),
+        I18N_NOOP("(C) 2002-2007 by the Konversation team"),
         I18N_NOOP("Konversation is a client for the Internet Relay Chat (IRC) protocol.\n"
         "Meet friends on the net, make new acquaintances and lose yourself in\n"
         "talk about your favorite subject."),
