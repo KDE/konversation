@@ -118,6 +118,7 @@ struct IRCViewSelectionManager
             c.gotoPosition(parag, pos-1);
             doc->setSelectionColor(lastSelection(), *color);
             doc->setSelectionStart(lastSelection(), c);
+            doc->setInvertSelectionText(lastSelection(), false);
             bumpSelection();
             lastParagId=parag->paragId();
         }
