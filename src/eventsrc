@@ -160,6 +160,7 @@ default_presentation=0
 [queryMessage]
 Name=Private message
 Name[bg]=Лично съобщение
+Name[cs]=Soukromá zpráva
 Name[da]=Provat besked
 Name[de]=Private Nachricht
 Name[el]=Προσωπικό μήνυμα
@@ -176,6 +177,7 @@ Name[sv]=Privat meddelande
 Name[uk]=Приватне повідомлення
 Comment=You received a private message
 Comment[bg]=Получихте лично съобщение
+Comment[cs]=Obdrželi jste soukromou zprávu
 Comment[da]=Du modtog en privat besked
 Comment[de]=Sie haben eine private Nachricht erhalten
 Comment[el]=Λάβατε ένα προσωπικό μήνυμα
