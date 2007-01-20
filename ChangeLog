@@ -64,6 +64,8 @@ Changes since 1.0.1:
   an IRC Operator") and otherwise passthrough the string sent by the server.
 - Fixed tab order in various preferences dialog pages.
 - Fixed parsing of alternate invite format on Asuka ircds (QuakeNet).
+- Fixed crash when minimizing or closing the application window prior to any
+  tab switch when the auto-insertion of remember lines is enabled.
 
 -------------------------------------------------------------------------------
 

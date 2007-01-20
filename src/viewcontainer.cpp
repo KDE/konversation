@@ -1885,7 +1885,7 @@ void ViewContainer::insertRememberLine()
     }
     else
     {
-        if (m_frontView->isInsertSupported())
+        if (m_frontView && m_frontView->isInsertSupported())
             m_frontView->insertRememberLine();
     }
 }
