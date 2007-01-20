@@ -591,11 +591,15 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
     }
     else if(command=="invite")
     {
+        QString channel(trailing);
+
+        if (channel.isEmpty()) channel=parameterList[1];
+
         server->appendMessageToFrontmost(i18n("Invite"),
-            i18n("%1 invited you to channel %2")
-            .arg(sourceNick).arg(trailing)
+            i18n("%1 invited you to channel %2.")
+            .arg(sourceNick).arg(channel)
             );
-        emit invitation(sourceNick,trailing);
+        emit invitation(sourceNick,channel);
     }
     else
     {

@@ -63,6 +63,7 @@ Changes since 1.0.1:
 - Changed RPL_WHOISOPERATOR handling to internationalize the common case ("is
   an IRC Operator") and otherwise passthrough the string sent by the server.
 - Fixed tab order in various preferences dialog pages.
+- Fixed parsing of alternate invite format on Asuka ircds (QuakeNet).
 
 -------------------------------------------------------------------------------
 
