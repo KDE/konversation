@@ -299,7 +299,6 @@ void ViewContainer::syncTabBarToTree()
     }
 
     updateViewActions(m_tabWidget->currentPageIndex());
-    updateSwitchViewAction();
 }
 
 void ViewContainer::silenceViews()
@@ -487,22 +486,6 @@ void ViewContainer::updateViewActions(int index)
 
         action = actionCollection()->action("reconnect_server");
         if (action) action->setEnabled(false);
-    }
-}
-
-void ViewContainer::updateSwitchViewAction()
-{
-    QStringList tabList;
-
-    for (int i = 0; i < m_tabWidget->count(); ++i)
-        tabList << static_cast<ChatWindow*>(m_tabWidget->page(i))->getName();
-
-    KSelectAction* action = static_cast<KSelectAction*>(actionCollection()->action("switch_to_tab"));
-
-    if (action)
-    {
-        action->setItems(tabList);
-        action->setCurrentItem(m_tabWidget->currentPageIndex());
     }
 }
 
@@ -1339,7 +1322,6 @@ void ViewContainer::addView(ChatWindow* view, const QString& label, bool weiniti
     if (doBringToFront) showView(view);
 
     updateViewActions(m_tabWidget->currentPageIndex());
-    updateSwitchViewAction();
 }
 
 void ViewContainer::switchView(QWidget* newView)
@@ -1383,7 +1365,6 @@ void ViewContainer::switchView(QWidget* newView)
         view->adjustFocus();
 
     updateViewActions(m_tabWidget->currentPageIndex());
-    updateSwitchViewAction();
 
     if (view)
     {
@@ -1470,7 +1451,6 @@ void ViewContainer::moveViewLeft()
         }
     }
 
-    updateSwitchViewAction();
     m_popupViewIndex = -1;
 }
 
@@ -1498,7 +1478,6 @@ void ViewContainer::moveViewRight()
         }
     }
 
-    updateSwitchViewAction();
     m_popupViewIndex = -1;
 }
 
@@ -1564,7 +1543,6 @@ void ViewContainer::closeView(ChatWindow* view)
     }
 
     updateViewActions(m_tabWidget->currentPageIndex());
-    updateSwitchViewAction();
 }
 
 void ViewContainer::closeCurrentView()

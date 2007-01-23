@@ -225,10 +225,6 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
     selectAction->setEnabled(false);
     connect(selectAction, SIGNAL(activated(int)), m_viewContainer, SLOT(changeViewCharset(int)));
 
-    selectAction = new KSelectAction(i18n("Switch To"), 0, 0, actionCollection(), "switch_to_tab");
-    selectAction->setEditable(false);
-    connect(selectAction, SIGNAL(activated(int)), m_viewContainer, SLOT(goToView(int)));
-
     QSignalMapper* tabSelectionMapper = new QSignalMapper(this);
     connect(tabSelectionMapper, SIGNAL(mapped(int)), m_viewContainer, SLOT(goToView(int)));
 
