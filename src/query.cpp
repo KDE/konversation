@@ -440,7 +440,7 @@ void Query::nickInfoChanged()
         if(!m_nickInfo->getHostmask().isEmpty() && !text.isEmpty())
             text += " - ";
         text += m_nickInfo->getHostmask();
-        if(m_nickInfo->isAway() )
+        if(m_nickInfo->isAway() && !m_nickInfo->getAwayMessage().isEmpty())
             text += " (" + KStringHandler::rsqueeze(m_nickInfo->getAwayMessage(),100) + ") ";
         queryHostmask->setText(Konversation::removeIrcMarkup(text));
 
