@@ -17,6 +17,7 @@
 #include <qregexp.h>
 #include <qclipboard.h>
 #include <qwhatsthis.h>
+#include <qlayout.h>
 
 #include <kapplication.h>
 #include <kactionclasses.h>
@@ -28,6 +29,7 @@
 #include <kprocess.h>
 #include <kdeversion.h>
 #include <kshell.h>
+#include <klistviewsearchline.h>
 
 #include "urlcatcher.h"
 #include "channel.h"
@@ -37,6 +39,7 @@
 
 UrlCatcher::UrlCatcher(QWidget* parent) : ChatWindow(parent)
 {
+    layout()->setAutoAdd(false);
     setName(i18n("URL Catcher"));
     setType(ChatWindow::UrlCatcher);
 
@@ -49,6 +52,9 @@ UrlCatcher::UrlCatcher(QWidget* parent) : ChatWindow(parent)
         "List of Uniform Resource Locators mentioned in any of the Konversation windows "
         "during this session.");
     QWhatsThis::add(urlListView, urlListViewWT);
+
+    searchWidget = new KListViewSearchLineWidget(urlListView, this, "search_line");
+    searchWidget->setEnabled(false);
 
     QHBox* buttonBox=new QHBox(this);
     buttonBox->setSpacing(spacing());
@@ -89,6 +95,10 @@ UrlCatcher::UrlCatcher(QWidget* parent) : ChatWindow(parent)
     saveListButton->setEnabled(false);
     clearListButton->setEnabled(false);
 
+    layout()->add(searchWidget);
+    layout()->add(urlListView);
+    layout()->add(buttonBox);
+
     urlSelected();
 }
 
@@ -119,6 +129,7 @@ void UrlCatcher::addUrl(const QString& who,const QString& url)
     new KListViewItem(urlListView,who,url);
     clearListButton->setEnabled(true);
     saveListButton->setEnabled(true);
+    searchWidget->setEnabled(true);
 }
 
 void UrlCatcher::openUrl(QListViewItem* item)
@@ -175,6 +186,7 @@ void UrlCatcher::deleteUrlClicked()
         {
             saveListButton->setEnabled(false);
             clearListButton->setEnabled(false);
+            searchWidget->setEnabled(false);
         }
     }
 }

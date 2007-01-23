@@ -25,6 +25,7 @@ class KListView;
 class QListViewItem;
 class QPushButton;
 class ViewContainer;
+class KListViewSearchLineWidget;
 
 class UrlCatcher : public ChatWindow
 {
@@ -55,6 +56,7 @@ class UrlCatcher : public ChatWindow
 
     protected:
         KListView* urlListView;
+        KListViewSearchLineWidget* searchWidget;
 
         /** Called from ChatWindow adjustFocus */
         virtual void childAdjustFocus();
