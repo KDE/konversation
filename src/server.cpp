@@ -2794,11 +2794,11 @@ void Server::appendServerMessageToChannel(const QString& channel,const QString& 
         outChannel->appendServerMessage(type,message);
 }
 
-void Server::appendCommandMessageToChannel(const QString& channel,const QString& command,const QString& message)
+void Server::appendCommandMessageToChannel(const QString& channel,const QString& command,const QString& message, bool highlight)
 {
     Channel* outChannel = getChannelByName(channel);
     if(outChannel)
-        outChannel->appendCommandMessage(command,message);
+        outChannel->appendCommandMessage(command,message,true,true,!highlight);
 }
 
 void Server::appendStatusMessage(const QString& type,const QString& message)

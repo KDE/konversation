@@ -1124,7 +1124,7 @@ void Channel::joinNickname(ChannelNickPtr channelNick)
         QString nick = channelNick->getNickname();
         QString hostname = channelNick->getHostmask();
         appendCommandMessage(i18n("Join"), i18n("%1 is the nick joining and %2 the hostmask of that nick",
-                             "%1 has joined this channel (%2).").arg(nick).arg(hostname),false, false);
+                             "%1 has joined this channel (%2).").arg(nick).arg(hostname),false, false, true);
         addNickname(channelNick);
     }
 }
@@ -1146,17 +1146,17 @@ void Channel::removeNick(ChannelNickPtr channelNick, const QString &reason, bool
         if (quit)
         {
             if (displayReason.isEmpty())
-                appendCommandMessage(i18n("Quit"), i18n("You have left this server."), false);
+                appendCommandMessage(i18n("Quit"), i18n("You have left this server."), false, true, true);
             else
-                appendCommandMessage(i18n("Quit"), i18n("%1 adds the reason", "You have left this server (%1).").arg(displayReason), false);
+                appendCommandMessage(i18n("Quit"), i18n("%1 adds the reason", "You have left this server (%1).").arg(displayReason), false, true, true);
         }
         else
         {
             if (displayReason.isEmpty())
-                appendCommandMessage(i18n("Part"), i18n("You have left channel %1.").arg(getName()), false);
+                appendCommandMessage(i18n("Part"), i18n("You have left channel %1.").arg(getName()), false, true, true);
             else
                 appendCommandMessage(i18n("Part"), i18n("%1 adds the channel and %2 the reason",
-                                     "You have left channel %1 (%2).").arg(getName()).arg(displayReason), false);
+                                     "You have left channel %1 (%2).").arg(getName()).arg(displayReason), false, true, true);
 
         }
 
@@ -1167,18 +1167,18 @@ void Channel::removeNick(ChannelNickPtr channelNick, const QString &reason, bool
         if (quit)
         {
             if (displayReason.isEmpty())
-                appendCommandMessage(i18n("Quit"), i18n("%1 has left this server.").arg(channelNick->getNickname()), false);
+                appendCommandMessage(i18n("Quit"), i18n("%1 has left this server.").arg(channelNick->getNickname()), false, true, true);
             else
                 appendCommandMessage(i18n("Quit"), i18n("%1 adds the nick and %2 the reason",
-                                     "%1 has left this server (%2).").arg(channelNick->getNickname()).arg(displayReason), false);
+                                     "%1 has left this server (%2).").arg(channelNick->getNickname()).arg(displayReason), false, true, true);
         }
         else
         {
             if (displayReason.isEmpty())
-                appendCommandMessage(i18n("Part"), i18n("%1 has left this channel.").arg(channelNick->getNickname()), false);
+                appendCommandMessage(i18n("Part"), i18n("%1 has left this channel.").arg(channelNick->getNickname()), false, true, true);
             else
                 appendCommandMessage(i18n("Part"), i18n("%1 adds the nick and %2 the reason",
-                                     "%1 has left this channel (%2).").arg(channelNick->getNickname()).arg(displayReason), false);
+                                     "%1 has left this channel (%2).").arg(channelNick->getNickname()).arg(displayReason), false, true, true);
         }
 
         if(channelNick->isAnyTypeOfOp())
