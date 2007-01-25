@@ -411,7 +411,15 @@ void KonversationMainWindow::leaveEvent(QEvent* e)
 
 bool KonversationMainWindow::event(QEvent* e)
 {
-    if (e->type() == QEvent::WindowActivate) emit endNotification();
+    if (e->type() == QEvent::WindowActivate)
+    {
+        emit endNotification();
+    }
+    else if(e->type() == QEvent::WindowDeactivate)
+    {
+        if (Preferences::autoInsertRememberLineAfterMinimizing())
+            emit insertRememberLine();
+    }
 
     return KMainWindow::event(e);
 }
