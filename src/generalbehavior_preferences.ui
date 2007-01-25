@@ -14,7 +14,7 @@ the Free Software Foundation; either version 2 of the License, or
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>509</width>
+            <width>590</width>
             <height>549</height>
         </rect>
     </property>
@@ -76,6 +76,14 @@ the Free Software Foundation; either version 2 of the License, or
                     </property>
                     <property name="text">
                         <string>Only notify when a highlight is triggered or your current nick is used</string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox" row="2" column="0" rowspan="1" colspan="2">
+                    <property name="name">
+                        <cstring>kcfg_HideToTrayOnStartup</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Start with hidden mainwindow</string>
                     </property>
                 </widget>
             </grid>
@@ -300,7 +308,7 @@ the Free Software Foundation; either version 2 of the License, or
             <property name="sizeHint">
                 <size>
                     <width>20</width>
-                    <height>10</height>
+                    <height>20</height>
                 </size>
             </property>
         </spacer>

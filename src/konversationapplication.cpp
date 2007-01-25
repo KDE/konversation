@@ -125,7 +125,7 @@ int KonversationApplication::newInstance()
         // apply GUI settings
         emit appearanceChanged();
 
-        if(Preferences::showTrayIcon() && Preferences::hiddenToTray())
+        if(Preferences::showTrayIcon() && (Preferences::hiddenToTray() || Preferences::hideToTrayOnStartup()))
         {
             mainWindow->hide();
         }

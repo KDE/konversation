@@ -273,6 +273,10 @@
       <default>false</default>
       <label>Hidden to system tray</label>
     </entry>
+    <entry key="HideToTrayOnStartup" type="Bool">
+      <default>false</default>
+      <label>Start with hidden mainwindow</label>
+    </entry>
     <entry key="ShowBackgroundImage" type="Bool">
       <default>false</default>
       <label></label>
