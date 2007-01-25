@@ -1665,6 +1665,9 @@ namespace Konversation
         if(!parameter.isEmpty())
         {
             result.toServer = "NOTICE @"+destination+" :"+parameter;
+            result.typeString = i18n("Notice");
+            result.type = Program;
+            result.output = i18n("Sending notice \"%1\" to %2.").arg(parameter, destination);
         }
         else
         {
