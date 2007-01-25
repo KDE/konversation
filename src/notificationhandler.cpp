@@ -133,12 +133,12 @@ namespace Konversation
             return;
         }
 
-        if(Preferences::disableNotifyWhileAway() && chatWin->getServer()->isAway())
+        if(!chatWin->getServer() || (Preferences::disableNotifyWhileAway() && chatWin->getServer()->isAway()))
         {
             return;
         }
 
-        if(!m_mainWindow->isActiveWindow() && chatWin->getServer() && chatWin->getServer()->connected())
+        if(!m_mainWindow->isActiveWindow() && chatWin->getServer()->connected())
         {
             m_mainWindow->systemTrayIcon()->startNotification();
         }
