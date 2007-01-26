@@ -1121,7 +1121,10 @@ void IRCView::doAppend(const QString& newLine, bool important, bool self)
         bool up = KTextBrowser::viewport()->isUpdatesEnabled();
 
         KTextBrowser::viewport()->setUpdatesEnabled(false);
+        int paraFrom, indexFrom, paraTo, indexTo;
+        getSelection(&paraFrom, &indexFrom, &paraTo, &indexTo); // Remember the selection so we don't loose it when adding the new line
         KTextBrowser::append(line);
+        setSelection(paraFrom, indexFrom, paraTo, indexTo);
 
         //finish the last paragraph now, rather than waiting until its painted so it does the right kind of painting
         IRCStyleSheet *s=static_cast<IRCStyleSheet*>(styleSheet());
@@ -1138,10 +1141,20 @@ void IRCView::doAppend(const QString& newLine, bool important, bool self)
             int sbm = Preferences::scrollbackMax();
             if (sbm)
             {
+                getSelection(&paraFrom, &indexFrom, &paraTo, &indexTo); // Remember the selection so we don't loose it when removing lines
+                int numRemoved = 0;
                 //loop for two reasons: 1) preference changed 2) lines added while scrolled up
                 for(sbm = paragraphs() - sbm; sbm > 0; --sbm)
+                {
                     removeParagraph(0);
+                    ++numRemoved;
+                }
                 resizeContents(contentsWidth(), document()->height());
+
+                if((paraFrom - numRemoved) >= 0 && (paraTo - numRemoved) >= 0)
+                {
+                    setSelection(paraFrom - numRemoved, indexFrom, paraTo - numRemoved, indexTo);
+                }
             }
         }
 
