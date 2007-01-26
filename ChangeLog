@@ -66,6 +66,10 @@ Changes since 1.0.1:
 - Fixed parsing of alternate invite format on Asuka ircds (QuakeNet).
 - Fixed crash when minimizing or closing the application window prior to any
   tab switch when the auto-insertion of remember lines is enabled.
+- Added option for hidden startup.
+- Fixed crash upon auto-connect at application startup.
+- Fix onotice display.
+- Don't highlight own nick on join/leave and topic created by messages.
 
 -------------------------------------------------------------------------------
 
