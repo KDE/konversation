@@ -727,7 +727,7 @@ bool doHighlight, bool parseURL, bool self)
                 m_highlightColor = highlightColor;
                 m_tabNotification = Konversation::tnfHighlight;
 
-                if(Preferences::highlightSoundsEnabled())
+                if(Preferences::highlightSoundsEnabled() && m_chatWin->notificationsEnabled())
                 {
                     konvApp->sound()->play(highlight->getSoundURL());
                 }
