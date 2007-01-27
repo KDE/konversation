@@ -17,9 +17,12 @@
 #include <ktextedit.h>
 #include <klineedit.h>
 #include <knuminput.h>
+#include <klistviewsearchline.h>
+#include <kiconloader.h>
 #include <qpushbutton.h>
 #include <qregexp.h>
 #include <qheader.h>
+#include <qtoolbutton.h>
 
 #include "channeloptionsdialog.h"
 #include "konversationapplication.h"
@@ -42,7 +45,9 @@ namespace Konversation
 
         // don't allow sorting. most recent topic is always first
         m_widget->topicHistoryList->setSortColumn(-1);
+        m_widget->clearButton->setIconSet(SmallIconSet("locationbar_erase"));
         m_widget->banList->setDefaultRenameAction(QListView::Accept);
+        m_widget->banListSearchLine->setListView(m_widget->banList);
         // hide column where the complete topic will be put in for convenience
         m_widget->topicHistoryList->hideColumn(2);
         // do not allow the user to resize the hidden column back into view
