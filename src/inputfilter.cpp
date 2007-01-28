@@ -847,8 +847,11 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             }
             case RPL_WHOISACCOUNT:
             {
-                server->appendMessageToFrontmost(i18n("Whois"),i18n("%1 is logged in as %2.").arg(parameterList[1]).arg(parameterList[2]));
-
+                // Display message only if this was not an automatic request.
+                if(getAutomaticRequest("WHOIS",parameterList[1])==0)
+                {
+                    server->appendMessageToFrontmost(i18n("Whois"),i18n("%1 is logged in as %2.").arg(parameterList[1]).arg(parameterList[2]));
+                }
                 break;
             }
             case RPL_NAMREPLY:
