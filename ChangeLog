@@ -68,8 +68,12 @@ Changes since 1.0.1:
   tab switch when the auto-insertion of remember lines is enabled.
 - Added option for hidden startup.
 - Fixed crash upon auto-connect at application startup.
-- Fix onotice display.
-- Don't highlight own nick on join/leave and topic created by messages.
+- Fixed onotice display.
+- Don't highlight own nick on topic created by messages.
+- Fixed disabling notifications for a tab not cancelling highlight sounds.
+- Fixed selected text being deselected on channel activity.
+- Added a search line to the ban list.
+- Fixed display of WHOIS spam prompted by the Watch List's WHOIS activity.
 
 -------------------------------------------------------------------------------
 
