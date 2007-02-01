@@ -76,6 +76,7 @@ Preferences::Preferences()
     serverGroup->setName("Freenode");
     Konversation::ServerSettings server;
     server.setServer("irc.freenode.org");
+    server.setPort(8001);
     serverGroup->addServer(server);
     serverGroup->setIdentityId(mIdentity->id());
     Konversation::ChannelSettings channel;
