@@ -150,9 +150,14 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                 {
                     Channel* channel = server->getChannelByName( parameterList[0] );
 
+                    if(!channel) {
+                        kdError() << "Didn't find the channel " << parameterList[0] << endl;
+                        return;
+                    }
+
                     channel->appendAction(sourceNick,ctcpArgument);
 
-                    if(channel && sourceNick != server->getNickname())
+                    if(sourceNick != server->getNickname())
                     {
                         if(ctcpArgument.lower().find(QRegExp("(^|[^\\d\\w])"
                             + QRegExp::escape(server->loweredNickname())
