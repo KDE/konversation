@@ -76,6 +76,8 @@ Changes since 1.0.1:
 - Fixed display of WHOIS spam prompted by the Watch List's WHOIS activity.
 - Fixed treelist scrollbar not picking up on new palette when the KDE color
   scheme changes.
+- Fixed hidden join/part/quit events marking tabs as dirty, allowing multiple
+  consecutive remember lines to appear.
 
 -------------------------------------------------------------------------------
 

@@ -856,9 +856,9 @@ void IRCView::append(const QString& nick,const QString& message)
 
     emit textToLog(QString("<%1>\t%2").arg(nick).arg(message));
 
-    m_lastInsertionWasLine = false;
-
     doAppend(line);
+
+    m_lastInsertionWasLine = false;
 }
 
 void IRCView::appendLine()
@@ -889,9 +889,9 @@ void IRCView::appendRaw(const QString& message, bool suppressTimestamps, bool se
         line = QString("<p>" + timeStamp() + " <font color=\"" + channelColor.name() + "\">" + message + "</font></p>\n");
     }
 
-    m_lastInsertionWasLine = false;
+    doAppend(line, self);
 
-    doAppend(line, true, self);
+    m_lastInsertionWasLine = false;
 }
 
 void IRCView::appendQuery(const QString& nick,const QString& message)
@@ -923,9 +923,9 @@ void IRCView::appendQuery(const QString& nick,const QString& message)
 
     emit textToLog(QString("<%1>\t%2").arg(nick).arg(message));
 
-    m_lastInsertionWasLine = false;
-
     doAppend(line);
+
+    m_lastInsertionWasLine = false;
 }
 
 void IRCView::appendAction(const QString& nick,const QString& message)
@@ -957,9 +957,9 @@ void IRCView::appendAction(const QString& nick,const QString& message)
 
     emit textToLog(QString("\t * %1 %2").arg(nick).arg(message));
 
-    m_lastInsertionWasLine = false;
-
     doAppend(line);
+
+    m_lastInsertionWasLine = false;
 }
 
 void IRCView::appendServerMessage(const QString& type, const QString& message, bool parseURL)
@@ -995,13 +995,16 @@ void IRCView::appendServerMessage(const QString& type, const QString& message, b
 
     emit textToLog(QString("%1\t%2").arg(type).arg(message));
 
-    m_lastInsertionWasLine = false;
-
     doAppend(line);
+
+    m_lastInsertionWasLine = false;
 }
 
 void IRCView::appendCommandMessage(const QString& type,const QString& message, bool important, bool parseURL, bool self)
 {
+    if (Preferences::hideUnimportantEvents() && !important)
+        return;
+
     QString commandColor = Preferences::color(Preferences::CommandMessage).name();
     QString line;
     QString prefix="***";
@@ -1034,9 +1037,9 @@ void IRCView::appendCommandMessage(const QString& type,const QString& message, b
 
     emit textToLog(QString("%1\t%2").arg(type).arg(message));
 
-    m_lastInsertionWasLine = false;
+    doAppend(line, self);
 
-    doAppend(line, important, self);
+    m_lastInsertionWasLine = false;
 }
 
 void IRCView::appendBacklogMessage(const QString& firstColumn,const QString& rawMessage)
@@ -1101,70 +1104,61 @@ void IRCView::scrollToBottom()
     setContentsPos( contentsX(), contentsHeight() - visibleHeight() );
 }
 
-void IRCView::doAppend(const QString& newLine, bool important, bool self)
+void IRCView::doAppend(const QString& newLine, bool self)
 {
     // Add line to buffer
     QString line(newLine);
 
-    if(important || !Preferences::hideUnimportantEvents())
+    if (!self) emit updateTabNotification(m_tabNotification);
+
+    // scroll view only if the scroll bar is already at the bottom
+    bool doScroll = ( KTextBrowser::verticalScrollBar()->value() == KTextBrowser::verticalScrollBar()->maxValue());
+
+    line.remove('\n');                        // TODO why have newlines? we get <p>, so the \n are unnecessary...
+
+    bool up = KTextBrowser::viewport()->isUpdatesEnabled();
+
+    KTextBrowser::viewport()->setUpdatesEnabled(false);
+    int paraFrom, indexFrom, paraTo, indexTo;
+    getSelection(&paraFrom, &indexFrom, &paraTo, &indexTo); // Remember the selection so we don't loose it when adding the new line
+    KTextBrowser::append(line);
+    setSelection(paraFrom, indexFrom, paraTo, indexTo);
+
+    //finish the last paragraph now, rather than waiting until its painted so it does the right kind of painting
+    IRCStyleSheet *s=static_cast<IRCStyleSheet*>(styleSheet());
+    s->manager.fixupLast();
+
+    document()->lastParagraph()->format();
+    resizeContents(contentsWidth(), document()->height());
+
+    //Explanation: the scrolling mechanism cannot handle the buffer changing when the scrollbar is not
+    // at an end, so the scrollbar wets its pants and forgets who it is for ten minutes
+    // TODO: make this eat multiple lines at once when the preference is changed so it doesn't take so long
+    if (doScroll)
     {
-        if(!self)
+        int sbm = Preferences::scrollbackMax();
+        if (sbm)
         {
-            emit updateTabNotification(m_tabNotification);
-        }
-
-        // scroll view only if the scroll bar is already at the bottom
-        bool doScroll = ( KTextBrowser::verticalScrollBar()->value() == KTextBrowser::verticalScrollBar()->maxValue());
-
-        line.remove('\n');                        // TODO why have newlines? we get <p>, so the \n are unnecessary...
-
-        bool up = KTextBrowser::viewport()->isUpdatesEnabled();
-
-        KTextBrowser::viewport()->setUpdatesEnabled(false);
-        int paraFrom, indexFrom, paraTo, indexTo;
-        getSelection(&paraFrom, &indexFrom, &paraTo, &indexTo); // Remember the selection so we don't loose it when adding the new line
-        KTextBrowser::append(line);
-        setSelection(paraFrom, indexFrom, paraTo, indexTo);
-
-        //finish the last paragraph now, rather than waiting until its painted so it does the right kind of painting
-        IRCStyleSheet *s=static_cast<IRCStyleSheet*>(styleSheet());
-        s->manager.fixupLast();
-
-        document()->lastParagraph()->format();
-        resizeContents(contentsWidth(), document()->height());
-
-        //Explanation: the scrolling mechanism cannot handle the buffer changing when the scrollbar is not
-        // at an end, so the scrollbar wets its pants and forgets who it is for ten minutes
-        // TODO: make this eat multiple lines at once when the preference is changed so it doesn't take so long
-        if (doScroll)
-        {
-            int sbm = Preferences::scrollbackMax();
-            if (sbm)
+            getSelection(&paraFrom, &indexFrom, &paraTo, &indexTo); // Remember the selection so we don't loose it when removing lines
+            int numRemoved = 0;
+            //loop for two reasons: 1) preference changed 2) lines added while scrolled up
+            for (sbm = paragraphs() - sbm; sbm > 0; --sbm)
             {
-                getSelection(&paraFrom, &indexFrom, &paraTo, &indexTo); // Remember the selection so we don't loose it when removing lines
-                int numRemoved = 0;
-                //loop for two reasons: 1) preference changed 2) lines added while scrolled up
-                for(sbm = paragraphs() - sbm; sbm > 0; --sbm)
-                {
-                    removeParagraph(0);
-                    ++numRemoved;
-                }
-                resizeContents(contentsWidth(), document()->height());
+                removeParagraph(0);
+                ++numRemoved;
+            }
+            resizeContents(contentsWidth(), document()->height());
 
-                if((paraFrom - numRemoved) >= 0 && (paraTo - numRemoved) >= 0)
-                {
-                    setSelection(paraFrom - numRemoved, indexFrom, paraTo - numRemoved, indexTo);
-                }
+            if ((paraFrom - numRemoved) >= 0 && (paraTo - numRemoved) >= 0)
+            {
+                setSelection(paraFrom - numRemoved, indexFrom, paraTo - numRemoved, indexTo);
             }
         }
-
-        KTextBrowser::viewport()->setUpdatesEnabled(up);
-
-        if(doScroll)
-        {
-            updateScrollBarPos();
-        }
     }
+
+    KTextBrowser::viewport()->setUpdatesEnabled(up);
+
+    if (doScroll) updateScrollBarPos();
 
     //FIXME: Disable auto-text for DCC Chats since we don't have a server
     // to parse wildcards.
