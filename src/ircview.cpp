@@ -863,15 +863,16 @@ void IRCView::append(const QString& nick,const QString& message)
 
 void IRCView::appendLine()
 {
+    if (m_lastInsertionWasLine) return;
+
     QColor channelColor=Preferences::color(Preferences::ChannelMessage);
     m_tabNotification = Konversation::tnfNone;
 
     QString line = "<p><font color=\"" + channelColor.name() + "\"><br><hr color=\""+Preferences::color(Preferences::CommandMessage).name()+"\" noshade></font></p>\n";
-    if (!m_lastInsertionWasLine)
-    {
-        doAppend(line);
-        m_lastInsertionWasLine = true;
-    }
+
+    doAppend(line);
+
+    m_lastInsertionWasLine = true;
 }
 
 void IRCView::appendRaw(const QString& message, bool suppressTimestamps, bool self)
