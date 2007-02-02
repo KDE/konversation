@@ -122,6 +122,7 @@ void ViewTree::updateAppearance()
         fg = KGlobalSettings::textColor();
     }
 
+    setPalette(KApplication::palette());
     setPaletteForegroundColor(fg);
     setPaletteBackgroundColor(bg);
 }

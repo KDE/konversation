@@ -74,6 +74,8 @@ Changes since 1.0.1:
 - Fixed selected text being deselected on channel activity.
 - Added a search line to the ban list.
 - Fixed display of WHOIS spam prompted by the Watch List's WHOIS activity.
+- Fixed treelist scrollbar not picking up on new palette when the KDE color
+  scheme changes.
 
 -------------------------------------------------------------------------------
 
