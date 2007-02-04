@@ -231,7 +231,12 @@ void Autoreplace_Config::entrySelected(QListViewItem* autoreplaceEntry)
   patternInput->setEnabled(enabled);
   replacementLabel->setEnabled(enabled);
   replacementInput->setEnabled(enabled);
-  regExpEditorButton->setEnabled(enabled);
+
+  if(!KTrader::self()->query("KRegExpEditor/KRegExpEditor").isEmpty())
+  {
+    regExpEditorButton->setEnabled(enabled);
+  }
+
   // make checkboxes work
   emit modified();
 }

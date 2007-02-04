@@ -1118,10 +1118,8 @@ QString KonversationApplication::doAutoreplace(const QString& text,bool output)
 
                     if(index != -1)
                     {
-                        // prepare list of captured ( ) groups
-                        QStringList captures;
                         // remember captured patterns
-                        captures=needleReg.capturedTexts();
+                        QStringList captures = needleReg.capturedTexts();
 
                         // replace %0 - %9 in regex groups
                         for(unsigned int capture=0;capture<captures.count();capture++)
@@ -1130,8 +1128,8 @@ QString KonversationApplication::doAutoreplace(const QString& text,bool output)
                         }
                         replacement.replace(QRegExp("%[0-9]"),QString::null);
                         // replace input with replacement
-                        line.replace(index, index + captures[0].length(), replacement);
-                        index += captures[0].length();
+                        line.replace(index, captures[0].length(), replacement);
+                        index += replacement.length();
                     }
                 } while(index >= 0 && index < (int)line.length());
             }
