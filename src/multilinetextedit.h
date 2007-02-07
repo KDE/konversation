@@ -23,22 +23,22 @@ class QWheelEvent;
 
 class MultilineTextEdit : public QTextEdit
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
-    MultilineTextEdit(QWidget* parent=0,const char* name=0);
-    ~MultilineTextEdit();
+    public:
+        explicit MultilineTextEdit(QWidget* parent=0,const char* name=0);
+        ~MultilineTextEdit();
 
-  protected slots:
-    void drawWhitespaces();
-    void cursorChanged(int,int);
+    protected slots:
+        void drawWhitespaces();
+        void cursorChanged(int,int);
 
-  protected:
-    // reimplemented
-    virtual void drawContents(QPainter* p,int clipx,int clipy,int clipw,int cliph);
+    protected:
+        // reimplemented
+        virtual void drawContents(QPainter* p,int clipx,int clipy,int clipw,int cliph);
 
-    // the stuff below is copied from kbabel. Thanks, guys!
-    QRect mapToView(int paragraph,int index);
+        // the stuff below is copied from kbabel. Thanks, guys!
+        QRect mapToView(int paragraph,int index);
 };
 
 #endif

@@ -57,8 +57,9 @@ namespace Konversation
     class ServerListDialog : public KDialogBase
     {
         Q_OBJECT
-            public:
-            ServerListDialog(QWidget *parent = 0, const char *name = 0);
+
+        public:
+            explicit ServerListDialog(QWidget *parent = 0, const char *name = 0);
             ~ServerListDialog();
 
         public slots:

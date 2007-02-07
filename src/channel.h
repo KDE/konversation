@@ -78,7 +78,7 @@ class Channel : public ChatWindow
     Q_OBJECT
 
     public:
-        Channel(QWidget* parent);
+        explicit Channel(QWidget* parent);
         ~Channel();
 //META
         virtual bool canBeFrontView();

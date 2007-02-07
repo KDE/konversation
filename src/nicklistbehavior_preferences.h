@@ -23,27 +23,26 @@
 
 class NicklistBehavior_Config : public NicklistBehavior_ConfigUI, public KonviSettingsPage
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
-    NicklistBehavior_Config(QWidget *parent = 0, const char *name = 0);
-    ~NicklistBehavior_Config();
+    public:
+        explicit NicklistBehavior_Config(QWidget *parent = 0, const char *name = 0);
+        ~NicklistBehavior_Config();
 
-    virtual void saveSettings();
-    virtual void loadSettings();
-    virtual void restorePageToDefaults();
+        virtual void saveSettings();
+        virtual void loadSettings();
+        virtual void restorePageToDefaults();
 
-    virtual bool hasChanged();
+        virtual bool hasChanged();
 
-  private:
-    void setNickList(const QString &sortingOrder);
-    QString currentSortingOrder();
+    private:
+        void setNickList(const QString &sortingOrder);
+        QString currentSortingOrder();
 
-    QString m_oldSortingOrder;
+        QString m_oldSortingOrder;
 
-  signals:
-    void modified();
-
+    signals:
+        void modified();
 };
 
 #endif

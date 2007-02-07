@@ -25,39 +25,39 @@ class Highlight_Config;
 
 class Highlight_Config : public Highlight_ConfigUI, public KonviSettingsPage
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
-    Highlight_Config(QWidget *parent = 0, const char *name = 0);
-    ~Highlight_Config();
+    public:
+        explicit Highlight_Config(QWidget *parent = 0, const char *name = 0);
+        ~Highlight_Config();
 
-  public:
-    virtual void saveSettings();
-    virtual void loadSettings();
-    virtual void restorePageToDefaults();
+    public:
+        virtual void saveSettings();
+        virtual void loadSettings();
+        virtual void restorePageToDefaults();
 
-    virtual bool hasChanged();
+        virtual bool hasChanged();
 
-  signals:
-    void modified();
+    signals:
+        void modified();
 
-  protected slots:
-    void highlightSelected(QListViewItem* item);
-    void highlightTextChanged(const QString& newPattern);
-    void highlightTextEditButtonClicked();
-    void highlightColorChanged(const QColor& newColor);
-    void soundURLChanged(const QString& newURL);
-    void autoTextChanged(const QString& newText);
-    void addHighlight();
-    void removeHighlight();
-    void playSound();
-    QPtrList<Highlight> getHighlightList(); // prefs format
-    QStringList currentHighlightList();     // hasChanged() format
-  protected:
-    void updateButtons();
+    protected slots:
+        void highlightSelected(QListViewItem* item);
+        void highlightTextChanged(const QString& newPattern);
+        void highlightTextEditButtonClicked();
+        void highlightColorChanged(const QColor& newColor);
+        void soundURLChanged(const QString& newURL);
+        void autoTextChanged(const QString& newText);
+        void addHighlight();
+        void removeHighlight();
+        void playSound();
+        QPtrList<Highlight> getHighlightList(); // prefs format
+        QStringList currentHighlightList();     // hasChanged() format
+    protected:
+        void updateButtons();
 
-    bool newItemSelected;
-    QStringList m_oldHighlightList;
+        bool newItemSelected;
+        QStringList m_oldHighlightList;
 };
 
 #endif

@@ -27,11 +27,11 @@ class QuickConnectDialog : public KDialogBase
 {
     Q_OBJECT
 
-        public:
-        QuickConnectDialog(QWidget* parent=0);
+    public:
+        explicit QuickConnectDialog(QWidget* parent=0);
         ~QuickConnectDialog();
 
-        signals:
+    signals:
         void connectClicked(const QString& hostName,
             const QString& port,
             const QString& channel,

@@ -19,7 +19,7 @@ class Tabs_Config : public Tabs_PreferencesUI
     Q_OBJECT
 
     public:
-        Tabs_Config(QWidget *parent = 0, const char *name = 0);
+        explicit Tabs_Config(QWidget *parent = 0, const char *name = 0);
         ~Tabs_Config();
 
     public slots:

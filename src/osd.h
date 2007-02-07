@@ -102,8 +102,9 @@ class OSDWidget : public QWidget
 class OSDPreviewWidget : public OSDWidget
 {
     Q_OBJECT
-        public:
-        OSDPreviewWidget( const QString &appName, QWidget *parent = 0, const char *name = "osdpreview" );
+
+    public:
+        explicit OSDPreviewWidget( const QString &appName, QWidget *parent = 0, const char *name = "osdpreview" );
 
         static QPoint m_previewOffset;
 

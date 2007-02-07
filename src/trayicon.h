@@ -29,8 +29,9 @@ namespace Konversation
     class TrayIcon : public KSystemTray
     {
         Q_OBJECT
-            public:
-            TrayIcon(QWidget* parent = 0);
+
+        public:
+            explicit TrayIcon(QWidget* parent = 0);
             ~TrayIcon();
 
             bool notificationEnabled() { return m_notificationEnabled; }

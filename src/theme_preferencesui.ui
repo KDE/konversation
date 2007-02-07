@@ -149,7 +149,7 @@
                         <set>AlignCenter</set>
                     </property>
                     <property name="toolTip" stdset="0">
-                        <string>Icon for users with half-operator priviliges</string>
+                        <string>Icon for users with half-operator privileges</string>
                     </property>
                 </widget>
                 <widget class="QLabel" row="0" column="4">
@@ -163,7 +163,7 @@
                         <set>AlignCenter</set>
                     </property>
                     <property name="toolTip" stdset="0">
-                        <string>Icon for users with operator priviliges</string>
+                        <string>Icon for users with operator privileges</string>
                     </property>
                 </widget>
                 <widget class="QLabel" row="0" column="5">

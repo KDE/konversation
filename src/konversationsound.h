@@ -27,8 +27,9 @@ namespace Konversation
     class Sound : public QObject
     {
         Q_OBJECT
-            public:
-            Sound(QObject *parent = 0, const char *name = 0);
+
+        public:
+            explicit Sound(QObject *parent = 0, const char *name = 0);
             ~Sound();
 
         public slots:

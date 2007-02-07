@@ -135,7 +135,7 @@ class DccTransferRecvWriteCacheHandler : public QObject
     Q_OBJECT
 
         public:
-        DccTransferRecvWriteCacheHandler( KIO::TransferJob* transferJob );
+        explicit DccTransferRecvWriteCacheHandler( KIO::TransferJob* transferJob );
         virtual ~DccTransferRecvWriteCacheHandler();
 
         void append( char* data, int size );

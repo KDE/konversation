@@ -32,8 +32,8 @@ class EditNotifyDialog : public KDialogBase
 {
     Q_OBJECT
 
-        public:
-        EditNotifyDialog(QWidget* parent=0,const QString& network=QString::null,
+    public:
+        explicit EditNotifyDialog(QWidget* parent=0,const QString& network=QString::null,
             const QString& nickname=QString::null);
         ~EditNotifyDialog();
 

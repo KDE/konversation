@@ -23,8 +23,9 @@ namespace Konversation
     class InsertCharDialog : public KDialogBase
     {
         Q_OBJECT
-            public:
-            InsertCharDialog(const QString& font = QString::null, QWidget *parent = 0, const char *name = 0);
+
+        public:
+            explicit InsertCharDialog(const QString& font = QString::null, QWidget *parent = 0, const char *name = 0);
             ~InsertCharDialog();
 
             QChar chr();
