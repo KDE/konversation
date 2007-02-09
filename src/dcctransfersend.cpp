@@ -26,19 +26,18 @@
 #include <qtimer.h>
 
 #include <kdebug.h>
-#include <kiconloader.h>
 #include <klocale.h>
-#include <kmessagebox.h>
 #include <kserversocket.h>
 #include <ksocketaddress.h>
 #include <kstreamsocket.h>
 #include <kio/netaccess.h>
 #include <kfileitem.h>
-#include <kinputdialog.h>
 
-#include "dcctransferpanel.h"
 #include "dcctransfersend.h"
 #include "konversationapplication.h"
+
+// TODO: remove the dependence
+#include <kinputdialog.h>
 
 using namespace KNetwork;
 
@@ -53,10 +52,10 @@ DccTransferSend::DccTransferSend( const QString& partnerNick, const KURL& fileUR
     m_fileURL = fileURL;
     m_ownIp = ownIp;
 
-    if(Preferences::dccIPv4Fallback())
+    if ( Preferences::dccIPv4Fallback() )
     {
-        KIpAddress ip(m_ownIp);
-        if(ip.isIPv6Addr())
+        KIpAddress ip( m_ownIp );
+        if ( ip.isIPv6Addr() )
         {
             /* This is fucking ugly but there is no KDE way to do this yet :| -cartman */
             struct ifreq ifr;
@@ -64,8 +63,8 @@ DccTransferSend::DccTransferSend( const QString& partnerNick, const KURL& fileUR
             int sock = socket(AF_INET, SOCK_DGRAM, 0);
             strncpy( ifr.ifr_name, address, IF_NAMESIZE );
             ifr.ifr_addr.sa_family = AF_INET;
-            if( ioctl( sock, SIOCGIFADDR, &ifr ) >= 0 )
-                m_ownIp =  inet_ntoa( ((struct sockaddr_in *)&ifr.ifr_addr)->sin_addr );
+            if ( ioctl( sock, SIOCGIFADDR, &ifr ) >= 0 )
+                m_ownIp =  inet_ntoa( ( (struct sockaddr_in *)&ifr.ifr_addr )->sin_addr );
             kdDebug() << "Falling back to IPv4 address " << m_ownIp << endl;
         }
     }
@@ -82,7 +81,7 @@ DccTransferSend::DccTransferSend( const QString& partnerNick, const KURL& fileUR
 
     m_connectionTimer = new QTimer( this );
 
-    if (!kapp->authorize("allow_downloading"))
+    if ( !kapp->authorize( "allow_downloading" ) )
     {
         //Do not have the rights to send the file.  Shouldn't have gotten this far anyway
         //Note this is after the initialisation so the view looks correct still
@@ -90,7 +89,7 @@ DccTransferSend::DccTransferSend( const QString& partnerNick, const KURL& fileUR
         return;
     }
 
-    connect( m_connectionTimer, SIGNAL( timeout() ), this, SLOT( connectionTimeout() ) );
+    connect( m_connectionTimer, SIGNAL( timeout() ), this, SLOT( slotConnectionTimeout() ) );
     //timer hasn't started yet.  qtimer will be deleted automatically when 'this' object is deleted
 
     //Check the file exists
@@ -226,8 +225,8 @@ void DccTransferSend::start()                     // public slot
         }
     }
 
-    connect( m_serverSocket, SIGNAL( readyAccept() ),   this, SLOT( heard() )            );
-    connect( m_serverSocket, SIGNAL( gotError( int ) ), this, SLOT( socketError( int ) ) );
+    connect( m_serverSocket, SIGNAL( readyAccept() ),   this, SLOT( acceptClient() ) );
+    connect( m_serverSocket, SIGNAL( gotError( int ) ), this, SLOT( slotGotSocketError( int ) ) );
     connect( m_serverSocket, SIGNAL( closed() ),        this, SLOT( slotServerSocketClosed() ) );
 
     // Get our own port number
@@ -262,9 +261,9 @@ bool DccTransferSend::setResume( unsigned long position )
     }
 }
 
-void DccTransferSend::heard()                     // slot
+void DccTransferSend::acceptClient()                     // slot
 {
-    kdDebug() << "DccTransferSend::heard()" << endl;
+    kdDebug() << "DccTransferSend::acceptClient()" << endl;
 
     stopConnectionTimer();
 
@@ -350,9 +349,9 @@ void DccTransferSend::getAck()                    // slot
     }
 }
 
-void DccTransferSend::socketError( int errorCode )
+void DccTransferSend::slotGotSocketError( int errorCode )
 {
-    kdDebug() << "DccTransferSend::socketError(): code =  " << errorCode << " string = " << m_serverSocket->errorString() << endl;
+    kdDebug() << "DccTransferSend::slotGotSocketError(): code =  " << errorCode << " string = " << m_serverSocket->errorString() << endl;
     failed( i18n( "Socket error: %1" ).arg( m_serverSocket->errorString() ) );
 }
 
@@ -372,9 +371,9 @@ void DccTransferSend::stopConnectionTimer()
     }
 }
 
-void DccTransferSend::connectionTimeout()         // slot
+void DccTransferSend::slotConnectionTimeout()         // slot
 {
-    kdDebug() << "DccTransferSend::connectionTimeout()" << endl;
+    kdDebug() << "DccTransferSend::slotConnectionTimeout()" << endl;
     failed( i18n( "Timed out" ) );
 }
 

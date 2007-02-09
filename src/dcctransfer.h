@@ -144,12 +144,12 @@ class DccTransfer : public QObject
         QDateTime m_timeTransferFinished;
 
         QTimer m_loggerTimer;
-        QTime m_loggerBaseTime;           // it's used for calculating CPS
+        QTime m_loggerBaseTime;  // for calculating CPS
         QValueList<int> m_transferLogTime;
         QValueList<KIO::fileoffset_t> m_transferLogPosition;
 
         // transfer meters;
-        double m_cps;                             // bytes(characters) per second
+        double m_cps;  // bytes(characters) per second
         int m_timeRemaining;
 };
 

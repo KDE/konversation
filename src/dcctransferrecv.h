@@ -19,9 +19,11 @@
 
 #include <qptrlist.h>
 
+#include "dcctransfer.h"
+
+// TODO: remove the dependence
 #include "dccresumedialog.h"
 
-#include "dcctransfer.h"
 
 class QFile;
 class QTimer;

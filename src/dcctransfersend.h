@@ -45,11 +45,11 @@ class DccTransferSend : public DccTransfer
         virtual void abort();
 
     protected slots:
-        void heard();
+        void acceptClient();
         void writeData();
         void getAck();
-        void socketError( int errorCode );
-        void connectionTimeout();
+        void slotGotSocketError( int errorCode );
+        void slotConnectionTimeout();
         void slotSendSocketClosed();
         void slotServerSocketClosed();
 
