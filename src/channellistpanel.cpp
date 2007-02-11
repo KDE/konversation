@@ -270,7 +270,7 @@ void ChannelListPanel::addToChannelList(const QString& channel,int users,const Q
 
     if(!updateTimer.isActive())
     {
-        updateTimer.start(0);
+        updateTimer.start(10);
         channelListView->setUpdatesEnabled(false);
     }
 }
