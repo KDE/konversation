@@ -78,6 +78,13 @@ Changes since 1.0.1:
   scheme changes.
 - Fixed hidden join/part/quit events marking tabs as dirty, allowing multiple
   consecutive remember lines to appear.
+- Slightly delay Channel List Panel update to improve its performance.
+- Fixed conditional enabling of the RegExpEditor button in the auto-replace
+  preferences page.
+- Fixed bug that could cause auto-replace to replace the wrong group of the
+  matching string.
+- Fixed middle-click-to-open-in-new-tab on chat window URLs when Konqueror
+  wasn't running.
 
 -------------------------------------------------------------------------------
 

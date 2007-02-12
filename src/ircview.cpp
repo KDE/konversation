@@ -439,7 +439,8 @@ void IRCView::openLink(const QString& url, bool newTab)
                 {
                     DCOPRef ref(foundApp, foundObj);
                     ref.call("newTab", url);
-                }
+                } else
+                    new KRun(KURL::fromPathOrURL(url));
             } else
                 new KRun(KURL::fromPathOrURL(url));
         }
