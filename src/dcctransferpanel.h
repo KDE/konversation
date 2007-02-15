@@ -71,10 +71,6 @@ class DccTransferPanel : public ChatWindow
         ~DccTransferPanel();
 
         KListView* getListView();
-        DccTransferPanelItem* getTransferByPort(const QString& port,DccTransfer::DccType type,bool resumed=false);
-        DccTransferPanelItem* getTransferByName(const QString& name,DccTransfer::DccType type,bool resumed=false);
-
-        bool isLocalFileInWritingProcess( const KURL& localUrl );
 
         void selectMe(DccTransferPanelItem* item);
 

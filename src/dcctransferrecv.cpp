@@ -4,7 +4,7 @@
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com
 */
-// Copyright (C) 2004,2005 Shintaro Matsuoka <shin@shoegazed.org>
+// Copyright (C) 2004-2007 Shintaro Matsuoka <shin@shoegazed.org>
 // Copyright (C) 2004,2005 John Tapsell <john@geola.co.uk>
 
 /*
@@ -30,8 +30,10 @@
 #include <kio/jobclasses.h>
 #include <kio/netaccess.h>
 
-#include "dcctransferrecv.h"
+#include "dcctransfermanager.h"
 #include "konversationapplication.h"
+
+#include "dcctransferrecv.h"
 
 class DccResumeDialog;
 
@@ -44,11 +46,11 @@ class DccResumeDialog;
   | \ 
   | requestResume()   : called when user chooses to resume in DccResumeDialog. it emits the signal ResumeRequest()
   |
-  | startResume()     : called from "Server"
+  | startResume()     : called by "Server"
   | |
 connectToSender()
 
-connectionSuccess()  : called from recvSocket
+connectionSuccess()  : called by recvSocket
 
 */
 
@@ -294,9 +296,7 @@ void DccTransferRecv::slotLocalCanResume( KIO::Job* job, KIO::filesize_t size )
         disconnect( transferJob, 0, 0, 0 );
         transferJob->kill();
 
-        // FIXME (URGENT) - strm
-        /*
-        if ( m_panel->isLocalFileInWritingProcess( m_fileURL ) )
+        if ( KonversationApplication::instance()->dccTransferManager()->isLocalFileInWritingProcess( m_fileURL ) )
         {
             askAndPrepareLocalKio( i18n( "<b>The file is used by another transfer.</b><br>"
                 "%1<br>" )
@@ -304,7 +304,7 @@ void DccTransferRecv::slotLocalCanResume( KIO::Job* job, KIO::filesize_t size )
                 DccResumeDialog::RA_Rename | DccResumeDialog::RA_Cancel,
                 DccResumeDialog::RA_Rename );
         }
-        else */ if ( Preferences::dccAutoResume() )
+        else if ( Preferences::dccAutoResume() )
         {
             prepareLocalKio( false, true, size );
         }

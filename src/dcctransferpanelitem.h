@@ -78,6 +78,7 @@ class DccTransferPanelItem : public QObject, public KListViewItem
         void stopAutoViewUpdate();
 
     private:
+        void updateTransferInfo();
         void updateTransferMeters();
 
         void showProgressBar();                   // called from printCell()

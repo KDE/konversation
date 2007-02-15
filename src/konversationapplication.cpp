@@ -26,6 +26,7 @@
 #include <kmessagebox.h>
 #include <kiconloader.h>
 
+#include "dcctransfermanager.h"
 #include "konversationapplication.h"
 #include "konversationmainwindow.h"
 #include "viewcontainer.h"
@@ -78,6 +79,9 @@ int KonversationApplication::newInstance()
 {
     if(!mainWindow)
     {
+        // an instance of DccTransferManager needs to be created before GUI class instances' creation.
+        m_dccTransferManager = new DccTransferManager(this);
+
         // make sure all vars are initialized properly
         quickConnectDialog = 0;
 
@@ -489,6 +493,21 @@ Server* KonversationApplication::getServerByName(const QString& name)
     }
 
     return 0;
+}
+
+Server* KonversationApplication::getServerByServerGroupId(int id)
+{
+    Server* lookServer=serverList.first();
+
+    while(lookServer)
+    {
+        if (lookServer->serverGroupSettings()->id() == id)
+            return lookServer;
+        lookServer=serverList.next();
+    }
+
+    return 0;
+
 }
 
 void KonversationApplication::removeServer(Server* server)

@@ -26,6 +26,7 @@
 
 class QCString;
 
+class DccTransferManager;
 class KonversationMainWindow;
 class KonvDCOP;
 class Server;
@@ -75,6 +76,7 @@ class KonversationApplication : public KUniqueApplication
         static KonversationApplication* instance();
 
         Server* getServerByName(const QString& name);
+        Server* getServerByServerGroupId(int id);
 
         /** For dcop and addressbook, a user can be specified as user@irc.server.net
          *  or user\@servergroup or using the unicode separator symbol 0xE120 instead
@@ -97,6 +99,8 @@ class KonversationApplication : public KUniqueApplication
         NickInfoPtr getNickInfo(const QString &ircnick, const QString &serverOrGroup);
 
         bool validateIdentity(IdentityPtr identity, bool interactive=true);
+
+        DccTransferManager* dccTransferManager() { return m_dccTransferManager; }
 
         OSDWidget* osd;
 
@@ -161,6 +165,7 @@ class KonversationApplication : public KUniqueApplication
 
     private:
         QPtrList<Server> serverList;
+        DccTransferManager* m_dccTransferManager;
         QStringList urlList;
         KonvDCOP* dcopObject;
         KonvIdentDCOP* identDCOP;

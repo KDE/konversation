@@ -73,9 +73,6 @@ DccTransferPanelItem::~DccTransferPanelItem()
     stopAutoViewUpdate();
     closeDetailDialog();
     delete m_progressBar;
-
-    //FIXME: konversion4: this object should be under the control of Konversation network core. 
-    delete m_transfer;
 }
 
 void DccTransferPanelItem::updateView()
@@ -107,6 +104,8 @@ void DccTransferPanelItem::updateView()
 
 int DccTransferPanelItem::compare( QListViewItem* i, int col, bool ascending ) const
 {
+    // FIXME: m_transfer is no longer available when the transfer has done
+/*
     DccTransferPanelItem* item = static_cast<DccTransferPanelItem*>( i );
 
     switch ( col )
@@ -144,6 +143,8 @@ int DccTransferPanelItem::compare( QListViewItem* i, int col, bool ascending ) c
         default:
             return QListViewItem::compare( i, col, ascending );
     }
+*/
+    return QListViewItem::compare( i, col, ascending );
 }
 
 void DccTransferPanelItem::slotStatusChanged( DccTransfer* /* transfer */, int newStatus, int oldStatus )

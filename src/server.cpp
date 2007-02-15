@@ -54,6 +54,7 @@
 #include "common.h"
 #include "notificationhandler.h"
 #include "blowfish.h"
+#include "dcctransfermanager.h"
 
 #include <config.h>
 
@@ -1832,7 +1833,7 @@ void Server::addDccSend(const QString &recipient,KURL fileURL, const QString &al
     QString ownIp = getIp(true);
 
     // We already checked that the file exists in output filter / requestDccSend() resp.
-    DccTransferSend* newDcc = new DccTransferSend( recipient,
+    DccTransferSend* newDcc = KonversationApplication::instance()->dccTransferManager()->newUpload( recipient,
                                                    fileURL,  // url of the sending file
                                                    ownIp,
                                                    altFileName,
@@ -1862,7 +1863,7 @@ void Server::addDccGet(const QString &sourceNick, const QStringList &dccArgument
 
     ip.setAddress(dccArguments[1].toULong());
 
-    DccTransferRecv* newDcc=new DccTransferRecv(
+    DccTransferRecv* newDcc = KonversationApplication::instance()->dccTransferManager()->newDownload(
         sourceNick,
         KURL(Preferences::dccPath()),
         dccArguments[0],                          // name
@@ -1916,14 +1917,14 @@ void Server::dccResumeGetRequest(const QString &sender, const QString &fileName,
 void Server::resumeDccGetTransfer(const QString &sourceNick, const QStringList &dccArguments)
 {
     // Check if there actually is a transfer going on on that port
-    DccTransferPanelItem* dccTransferPanelItem=static_cast<DccTransferPanelItem*>(getViewContainer()->getDccPanel()->getTransferByPort(dccArguments[1],DccTransfer::Receive,true));
-    if(!dccTransferPanelItem)
+    DccTransfer* dccTransfer_ = KonversationApplication::instance()->dccTransferManager()->searchStandbyTransferByOwnPort(dccArguments[1],DccTransfer::Receive,true);
+    if(!dccTransfer_)
         // Check if there actually is a transfer going on with that name, could be behind a NAT
         // so the port number may get changed
         // mIRC substitutes this with "file.ext", so we have a problem here with mIRCs behind a NAT
-        dccTransferPanelItem=static_cast<DccTransferPanelItem*>(getViewContainer()->getDccPanel()->getTransferByName(dccArguments[0],DccTransfer::Receive,true));
+        dccTransfer_ = KonversationApplication::instance()->dccTransferManager()->searchStandbyTransferByFileName(dccArguments[0],DccTransfer::Receive,true);
 
-    DccTransferRecv* dccTransfer = static_cast<DccTransferRecv*>(dccTransferPanelItem->transfer());
+    DccTransferRecv* dccTransfer = static_cast< DccTransferRecv* >( dccTransfer_ );
 
     if(dccTransfer)
     {
@@ -1946,14 +1947,14 @@ void Server::resumeDccGetTransfer(const QString &sourceNick, const QStringList &
 void Server::resumeDccSendTransfer(const QString &recipient, const QStringList &dccArguments)
 {
     // Check if there actually is a transfer going on on that port
-    DccTransferPanelItem* dccTransferPanelItem=static_cast<DccTransferPanelItem*>(getViewContainer()->getDccPanel()->getTransferByPort(dccArguments[1],DccTransfer::Send));
-    if(!dccTransferPanelItem)
+    DccTransfer* dccTransfer_ = KonversationApplication::instance()->dccTransferManager()->searchStandbyTransferByOwnPort(dccArguments[1],DccTransfer::Send);
+    if(!dccTransfer_)
         // Check if there actually is a transfer going on with that name, could be behind a NAT
         // so the port number may get changed
         // mIRC substitutes this with "file.ext", so we have a problem here with mIRCs behind a NAT
-        dccTransferPanelItem=static_cast<DccTransferPanelItem*>(getViewContainer()->getDccPanel()->getTransferByName(dccArguments[0],DccTransfer::Send));
+        dccTransfer_ = KonversationApplication::instance()->dccTransferManager()->searchStandbyTransferByFileName(dccArguments[0],DccTransfer::Send);
 
-    DccTransferSend* dccTransfer = static_cast<DccTransferSend*>(dccTransferPanelItem->transfer());
+    DccTransferSend* dccTransfer = static_cast<DccTransferSend*>(dccTransfer_);
 
     if(dccTransfer && dccTransfer->getStatus() == DccTransfer::WaitingRemote)
     {
