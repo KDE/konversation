@@ -58,8 +58,8 @@ DccTransferPanel::DccTransferPanel(QWidget* parent)
     m_listView->setColumnText(Column::PartnerNick,   i18n("Partner"));
     m_listView->setColumnText(Column::Progress,      i18n("Progress"));
     m_listView->setColumnText(Column::Position,      i18n("Position"));
-    m_listView->setColumnText(Column::TimeRemaining, i18n("Remaining"));
-    m_listView->setColumnText(Column::CPS,           i18n("Speed"));
+    m_listView->setColumnText(Column::TimeLeft,      i18n("Remaining"));
+    m_listView->setColumnText(Column::CurrentSpeed,  i18n("Speed"));
     m_listView->setColumnText(Column::SenderAddress, i18n("Sender Address"));
 
     m_listView->setColumnWidth(Column::TypeIcon,       16);
@@ -69,8 +69,8 @@ DccTransferPanel::DccTransferPanel(QWidget* parent)
     m_listView->setColumnWidth(Column::PartnerNick,    70);
     m_listView->setColumnWidth(Column::Progress,       90);
     m_listView->setColumnWidth(Column::Position,      120);
-    m_listView->setColumnWidth(Column::TimeRemaining,  80);
-    m_listView->setColumnWidth(Column::CPS,            70);
+    m_listView->setColumnWidth(Column::TimeLeft,       80);
+    m_listView->setColumnWidth(Column::CurrentSpeed,   70);
     m_listView->setColumnWidth(Column::SenderAddress, 120);
 
     m_listView->setColumnWidthMode(Column::FileName, QListView::Manual);
@@ -78,8 +78,8 @@ DccTransferPanel::DccTransferPanel(QWidget* parent)
     m_listView->setColumnAlignment(Column::OfferDate,     AlignHCenter);
     m_listView->setColumnAlignment(Column::Progress,      AlignHCenter);
     m_listView->setColumnAlignment(Column::Position,      AlignHCenter);
-    m_listView->setColumnAlignment(Column::TimeRemaining, AlignHCenter);
-    m_listView->setColumnAlignment(Column::CPS,           AlignHCenter);
+    m_listView->setColumnAlignment(Column::TimeLeft,      AlignHCenter);
+    m_listView->setColumnAlignment(Column::CurrentSpeed,  AlignHCenter);
 
     m_listView->setSorting(Column::OfferDate, false);
 

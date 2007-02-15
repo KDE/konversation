@@ -255,7 +255,7 @@ void DccDetailDialog::updateView() // public
 
     // Status
     if ( m_transfer->getStatus() == DccTransfer::Sending || m_transfer->getStatus() == DccTransfer::Receiving )
-        m_status->setText( m_item->getStatusText() + " ( " + m_item->getCPSPrettyText() + " )" );
+        m_status->setText( m_item->getStatusText() + " ( " + m_item->getCurrentSpeedPrettyText() + " )" );
     else
         m_status->setText( m_transfer->getStatusDetail().isEmpty() ? m_item->getStatusText() : m_item->getStatusText() + " (" + m_transfer->getStatusDetail() + ')' );
 

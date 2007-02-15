@@ -85,8 +85,8 @@ void DccTransferPanelItem::updateView()
     setText( DccTransferPanel::Column::FileName,      m_transfer->getFileURL().fileName() );
     setText( DccTransferPanel::Column::PartnerNick,   m_transfer->getPartnerNick() );
     setText( DccTransferPanel::Column::Position,      getPositionPrettyText() );
-    setText( DccTransferPanel::Column::TimeRemaining, getTimeRemainingPrettyText() );
-    setText( DccTransferPanel::Column::CPS,           getCPSPrettyText() );
+    setText( DccTransferPanel::Column::TimeLeft,      getTimeLeftPrettyText() );
+    setText( DccTransferPanel::Column::CurrentSpeed,  getCurrentSpeedPrettyText() );
     setText( DccTransferPanel::Column::SenderAddress, getSenderAddressPrettyText() );
 
     if ( m_transfer->getFileSize() )
@@ -131,13 +131,13 @@ int DccTransferPanelItem::compare( QListViewItem* i, int col, bool ascending ) c
             return 0;
             break;
         case DccTransferPanel::Column::TimeRemaining:
-            if ( m_transfer->getTimeRemaining() > item->transfer()->getTimeRemaining() ) return 1;
-            if ( m_transfer->getTimeRemaining() < item->transfer()->getTimeRemaining() ) return -1;
+            if ( m_transfer->getTimeLeft() > item->transfer()->getTimeLeft() ) return 1;
+            if ( m_transfer->getTimeLeft() < item->transfer()->getTimeLeft() ) return -1;
             return 0;
             break;
-        case DccTransferPanel::Column::CPS:
-            if ( m_transfer->getCPS() > item->transfer()->getCPS() ) return 1;
-            if ( m_transfer->getCPS() < item->transfer()->getCPS() ) return -1;
+        case DccTransferPanel::Column::CurrentSpeed:
+            if ( m_transfer->getCurrentSpeed() > item->transfer()->getCurrentSpeed() ) return 1;
+            if ( m_transfer->getCurrentSpeed() < item->transfer()->getCurrentSpeed() ) return -1;
             return 0;
             break;
         default:
@@ -379,17 +379,17 @@ QString DccTransferPanelItem::getPositionPrettyText( bool detailed ) const
         return KIO::convertSize( m_transfer->getTransferringPosition() ) + " / " + KIO::convertSize( m_transfer->getFileSize() );
 }
 
-QString DccTransferPanelItem::getTimeRemainingPrettyText() const
+QString DccTransferPanelItem::getTimeLeftPrettyText() const
 {
     QString text;
 
-    if ( m_transfer->getTimeRemaining() == TIME_REMAINING_NOT_AVAILABLE )
+    if ( m_transfer->getTimeLeft() == DccTransfer::NotInTransfer )
         ;
-    else if ( m_transfer->getTimeRemaining() == TIME_REMAINING_INFINITE )
+    else if ( m_transfer->getTimeLeft() == DccTransfer::InfiniteValue )
         text = "?";
     else
     {
-        int remSec = m_transfer->getTimeRemaining(); 
+        int remSec = m_transfer->getTimeLeft();
         int remHour = remSec / 3600; remSec -= remHour * 3600; 
         int remMin = remSec / 60; remSec -= remMin * 60; 
 
@@ -403,14 +403,14 @@ QString DccTransferPanelItem::getTimeRemainingPrettyText() const
     return text;
 }
 
-QString DccTransferPanelItem::getCPSPrettyText() const
+QString DccTransferPanelItem::getCurrentSpeedPrettyText() const
 {
-    if ( m_transfer->getCPS() == CPS_CALCULATING )
+    if ( m_transfer->getCurrentSpeed() == DccTransfer::Calculating )
         return QString( "?" );
-    else if ( m_transfer->getCPS() == CPS_NOT_IN_TRANSFER )
+    else if ( m_transfer->getCurrentSpeed() == DccTransfer::NotInTransfer )
         return QString();
     else
-        return i18n("%1/sec").arg( KIO::convertSize( (KIO::fileoffset_t)m_transfer->getCPS() ) );
+        return i18n("%1/sec").arg( KIO::convertSize( (KIO::fileoffset_t)m_transfer->getCurrentSpeed() ) );
 }
 
 QString DccTransferPanelItem::getSenderAddressPrettyText() const

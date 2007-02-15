@@ -78,7 +78,7 @@ void DccTransfer::updateTransferMeters()
 
     if ( m_dccStatus == Sending || m_dccStatus == Receiving )
     {
-        // update CPS
+        // update CurrentSpeed
 
         // remove too old data
         QValueList<int>::iterator itTime = m_transferLogTime.begin();
@@ -97,29 +97,26 @@ void DccTransfer::updateTransferMeters()
             (*itTime) = (*itTime) - shiftOffset;
 
         if ( m_transferLogTime.count() >= 2 )
-            m_cps = (double)( m_transferLogPosition.last() - m_transferLogPosition.front() ) / (double)( m_transferLogTime.last() - m_transferLogTime.front() ) * 1000;
+            m_currentSpeed = (double)( m_transferLogPosition.last() - m_transferLogPosition.front() ) / (double)( m_transferLogTime.last() - m_transferLogTime.front() ) * 1000;
         else // avoid zero devision
-            m_cps = CPS_CALCULATING;
+            m_currentSpeed = DccTransfer::Calculating;
 
         // update the remaining time
-        if ( m_cps <= 0 )
-            m_timeRemaining = TIME_REMAINING_INFINITE;
+        if ( m_currentSpeed <= 0 )
+            m_timeLeft = DccTransfer::InfiniteValue;
         else
-            m_timeRemaining = (int)( (double)( m_fileSize - m_transferringPosition ) / m_cps );
+            m_timeLeft = (int)( (double)( m_fileSize - m_transferringPosition ) / m_currentSpeed );
     }
     else if ( m_dccStatus >= Done )
     {
-        // avoid zero devision
-        if ( m_timeTransferStarted.secsTo( m_timeTransferFinished ) <= 0 )
-            m_cps = CPS_NOT_IN_TRANSFER;
-        else
-            m_cps = (double)( m_transferringPosition - m_transferStartPosition ) / (double)m_timeTransferStarted.secsTo( m_timeTransferFinished );
-        m_timeRemaining = TIME_REMAINING_NOT_AVAILABLE;
+        //m_averageSpeed = (double)( m_transferringPosition - m_transferStartPosition ) / (double)m_timeTransferStarted.secsTo( m_timeTransferFinished );
+        m_currentSpeed = 0;
+        m_timeLeft = 0;
     }
     else
     {
-        m_cps = 0;
-        m_timeRemaining = TIME_REMAINING_NOT_AVAILABLE;
+        m_currentSpeed = 0;
+        m_timeLeft = DccTransfer::NotInTransfer;
     }
 }
 
@@ -212,18 +209,18 @@ bool DccTransfer::isResumed() const
   return m_resumed; 
 }
 
-long DccTransfer::getCPS()
+long DccTransfer::getCurrentSpeed()
 { 
     //FIXME
     updateTransferMeters();
-  return (unsigned long)m_cps; 
+  return (unsigned long)m_currentSpeed;
 }
 
-int DccTransfer::getTimeRemaining()
+int DccTransfer::getTimeLeft()
 { 
     //FIXME
     updateTransferMeters();
-  return m_timeRemaining; 
+  return m_timeLeft;
 }
 
 int DccTransfer::getProgress() const

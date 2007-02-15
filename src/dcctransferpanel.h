@@ -43,8 +43,8 @@ class DccTransferPanel : public ChatWindow
                     PartnerNick,
                     Progress,
                     Position,
-                    TimeRemaining,
-                    CPS,
+                    TimeLeft,
+                    CurrentSpeed,
                     SenderAddress,
                     COUNT
                 };

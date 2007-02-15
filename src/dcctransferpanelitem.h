@@ -90,8 +90,8 @@ class DccTransferPanelItem : public QObject, public KListViewItem
         QString getStatusText()                                const;
         QString getFileSizePrettyText()                        const;
         QString getPositionPrettyText( bool detailed = false ) const;
-        QString getTimeRemainingPrettyText()                   const;
-        QString getCPSPrettyText()                             const;
+        QString getTimeLeftPrettyText()                        const;
+        QString getCurrentSpeedPrettyText()                    const;
         QString getSenderAddressPrettyText()                   const;
 
         // UI

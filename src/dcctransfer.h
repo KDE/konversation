@@ -25,12 +25,6 @@
 #include <kurl.h>
 #include <kio/global.h>
 
-#define TIME_REMAINING_NOT_AVAILABLE -1
-#define TIME_REMAINING_INFINITE      -2
-
-#define CPS_CALCULATING -1
-#define CPS_NOT_IN_TRANSFER -2
-
 class DccTransfer : public QObject
 {
     Q_OBJECT
@@ -74,9 +68,16 @@ class DccTransfer : public QObject
         KIO::fileoffset_t  getTransferringPosition()  const;
         KURL               getFileURL()               const;
         bool               isResumed()                const;
-        long               getCPS()                   ;
-        int                getTimeRemaining()         ;
+        long               getCurrentSpeed()          ;
+        int                getTimeLeft()              ;
         int                getProgress()              const;
+
+        enum UnavailableStatus
+        {
+            Calculating = -1,
+            NotInTransfer = -2,
+            InfiniteValue = -3,
+        };
 
     signals:
         void transferStarted( DccTransfer* item );
@@ -155,8 +156,8 @@ class DccTransfer : public QObject
         QValueList<KIO::fileoffset_t> m_transferLogPosition;
 
         // transfer meters;
-        double m_cps;  // bytes(characters) per second
-        int m_timeRemaining;
+        double m_currentSpeed;
+        int m_timeLeft;
 };
 
 #endif  // DCCTRANSFER_H
