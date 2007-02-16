@@ -35,7 +35,8 @@ konversation_SOURCES = konviface.skel konviconfigdialog.cpp konversationstatusba
 	konviiphelper.cpp tabnotifications_preferences.ui \
 	multilinetextedit.cpp serverlistview.cpp nicksonlineitem.cpp searchbarbase.ui \
 	autoreplace_preferencesui.ui autoreplace_preferences.cpp viewcontainer.cpp viewtree.cpp \
-	viewtreeitem.cpp servergroupdialogui.ui dcctransfer.cpp dcctransfermanager.cpp
+	viewtreeitem.cpp servergroupdialogui.ui dcctransfer.cpp dcctransfermanager.cpp \
+	dcctransferdetailedinfopanelui.ui dcctransferdetailedinfopanel.cpp
 
 konversation_COMPILE_FIRST = config/preferences_base.h
 konversation_LDADD = $(LIB_KIO) $(LIB_KABC) $(LIB_KIMIFACE) linkaddressbook/liblinkaddressbookui.la blowfish/libblowfish.la config/libkonversationconfig.la

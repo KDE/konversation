@@ -3,7 +3,7 @@
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com
 */
-// Copyright (C) 2004,2005 Shintaro Matsuoka <shin@shoegazed.org>
+// Copyright (C) 2004-2007 Shintaro Matsuoka <shin@shoegazed.org>
 // Copyright (C) 2004,2005 John Tapsell <john@geola.co.uk>
 
 /*
@@ -70,12 +70,15 @@ class DccTransferPanelItem : public QObject, public KListViewItem
     private:
         DccTransferPanel* m_panel;
         DccTransfer* m_transfer;
+        bool m_isTransferInstanceBackup;
 
     private slots:
         void slotRemoveFileDone( KIO::Job* job );
 
         void startAutoViewUpdate();
         void stopAutoViewUpdate();
+
+        void backupTransferInfo( DccTransfer* transfer );
 
     private:
         void updateTransferInfo();

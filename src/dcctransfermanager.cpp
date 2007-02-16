@@ -9,6 +9,8 @@
   Copyright (C) 2007 Shintaro Matsuoka <shin@shoegazed.org>
 */
 
+#include <kdebug.h>
+
 #include "dcctransferrecv.h"
 #include "dcctransfersend.h"
 
@@ -34,8 +36,7 @@ DccTransferRecv* DccTransferManager::newDownload( const QString& partnerNick, co
 {
     DccTransferRecv* transfer = new DccTransferRecv( partnerNick, defaultFolderURL, fileName, fileSize, partnerIp, partnerPort );
     m_transfers.push_back( transfer );
-    // FIXME: workaround. it causes memory leak
-    //connect( transfer, SIGNAL( done( DccTransfer* ) ), this, SLOT( removeItem( DccTransfer* ) ) );
+    connect( transfer, SIGNAL( done( DccTransfer* ) ), this, SLOT( removeItem( DccTransfer* ) ) );
     emit newTransferAdded( transfer );
     return transfer;
 }
@@ -44,8 +45,7 @@ DccTransferSend* DccTransferManager::newUpload( const QString& partnerNick, cons
 {
     DccTransferSend* transfer = new DccTransferSend( partnerNick, fileURL, ownIp, altFileName, fileSize );
     m_transfers.push_back( transfer );
-    // FIXME: workaround. it causes memory leak.
-    //connect( transfer, SIGNAL( done( DccTransfer* ) ), this, SLOT( removeItem( DccTransfer* ) ) );
+    connect( transfer, SIGNAL( done( DccTransfer* ) ), this, SLOT( removeItem( DccTransfer* ) ) );
     emit newTransferAdded( transfer );
     return transfer;
 }
@@ -100,6 +100,7 @@ bool DccTransferManager::isLocalFileInWritingProcess( const KURL& url )
 
 void DccTransferManager::removeItem( DccTransfer* item )
 {
+    kdDebug() << "DccTransferManager::removeItem(): removing " << item->getFileName() << " (" << item->getType() << ")" << endl;
     item->deleteLater();
     m_transfers.remove( item );
 }

@@ -38,6 +38,7 @@ DccTransferPanelItem::DccTransferPanelItem( DccTransferPanel* panel, DccTransfer
     : KListViewItem( panel->getListView() )
     , m_panel( panel )
     , m_transfer( transfer )
+    , m_isTransferInstanceBackup( false )
 {
     m_autoUpdateViewTimer = 0;
 
@@ -51,6 +52,7 @@ DccTransferPanelItem::DccTransferPanelItem( DccTransferPanel* panel, DccTransfer
 
     connect( m_transfer, SIGNAL( transferStarted( DccTransfer* ) ), this, SLOT( startAutoViewUpdate() ) );
     connect( m_transfer, SIGNAL( done( DccTransfer* ) ), this, SLOT( stopAutoViewUpdate() ) );
+    connect( m_transfer, SIGNAL( done( DccTransfer* ) ), this, SLOT( backupTransferInfo( DccTransfer* ) ) );
 
     connect( m_transfer, SIGNAL( statusChanged( DccTransfer*, int, int ) ), this, SLOT( slotStatusChanged( DccTransfer*, int, int ) ) );
 
@@ -73,6 +75,8 @@ DccTransferPanelItem::~DccTransferPanelItem()
     stopAutoViewUpdate();
     closeDetailDialog();
     delete m_progressBar;
+    if ( m_isTransferInstanceBackup )
+        delete m_transfer;
 }
 
 void DccTransferPanelItem::updateView()
@@ -104,8 +108,6 @@ void DccTransferPanelItem::updateView()
 
 int DccTransferPanelItem::compare( QListViewItem* i, int col, bool ascending ) const
 {
-    // FIXME: m_transfer is no longer available when the transfer has done
-/*
     DccTransferPanelItem* item = static_cast<DccTransferPanelItem*>( i );
 
     switch ( col )
@@ -130,7 +132,7 @@ int DccTransferPanelItem::compare( QListViewItem* i, int col, bool ascending ) c
             if ( m_transfer->getTransferringPosition() < item->transfer()->getTransferringPosition() ) return -1;
             return 0;
             break;
-        case DccTransferPanel::Column::TimeRemaining:
+        case DccTransferPanel::Column::TimeLeft:
             if ( m_transfer->getTimeLeft() > item->transfer()->getTimeLeft() ) return 1;
             if ( m_transfer->getTimeLeft() < item->transfer()->getTimeLeft() ) return -1;
             return 0;
@@ -143,7 +145,6 @@ int DccTransferPanelItem::compare( QListViewItem* i, int col, bool ascending ) c
         default:
             return QListViewItem::compare( i, col, ascending );
     }
-*/
     return QListViewItem::compare( i, col, ascending );
 }
 
@@ -312,6 +313,16 @@ void DccTransferPanelItem::closeDetailDialog()
         delete m_detailDialog;
         m_detailDialog = 0;
     }
+}
+
+void DccTransferPanelItem::backupTransferInfo( DccTransfer* transfer )
+{
+    kdDebug() << "DccTransferPanelItem::backupTransferInfo()" << endl;
+    // instances of DccTransfer are deleted immediately after the transfer is done
+    // so we need to make a backup of DccTransfer.
+
+    m_transfer = new DccTransfer( *transfer );
+    m_isTransferInstanceBackup = true;
 }
 
 QString DccTransferPanelItem::getTypeText() const

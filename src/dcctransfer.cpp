@@ -41,6 +41,36 @@ DccTransfer::~DccTransfer()
     m_loggerTimer.stop();
 }
 
+DccTransfer::DccTransfer( const DccTransfer& obj )
+    : QObject()
+{
+    m_buffer = 0;
+    m_bufferSize = 0;
+    m_currentSpeed = obj.getCurrentSpeed();
+    m_dccStatus = obj.getStatus();
+    m_dccStatusDetail = obj.getStatusDetail();
+    m_dccType = obj.getType();
+    m_fileName = obj.getFileName();
+    m_fileSize = obj.getFileSize();
+    m_fileURL = obj.getFileURL();
+    // m_loggerBaseTime
+    // m_loggerTimer
+    m_ownIp = obj.getOwnIp();
+    m_ownPort = obj.getOwnPort();
+    m_partnerIp = obj.getPartnerIp();
+    m_partnerNick = obj.getPartnerNick();
+    m_partnerPort = obj.getPartnerPort();
+    m_resumed = obj.isResumed();
+    m_timeLeft = obj.getTimeLeft();
+    m_timeOffer = obj.getTimeOffer();
+    m_timeTransferFinished = obj.getTimeTransferFinished();
+    m_timeTransferStarted = obj.getTimeTransferStarted();
+    // m_transferLogPosition
+    // m_transferLogTime
+    m_transferringPosition = obj.getTransferringPosition();
+    m_transferStartPosition = obj.getTransferStartPosition();
+}
+
 void DccTransfer::startTransferLogger()
 {
     m_timeTransferStarted = QDateTime::currentDateTime();
@@ -52,7 +82,8 @@ void DccTransfer::finishTransferLogger()
 {
     if ( m_timeTransferFinished.isNull() )
         m_timeTransferFinished = QDateTime::currentDateTime();
-   m_loggerTimer.stop();
+    m_loggerTimer.stop();
+    updateTransferMeters();
 }
 
 // called by m_loggerTimer
@@ -60,6 +91,7 @@ void DccTransfer::logTransfer()
 {
     m_transferLogTime.append( m_loggerBaseTime.elapsed() );
     m_transferLogPosition.append( m_transferringPosition );
+    updateTransferMeters();
 }
 
 void DccTransfer::setStatus( DccStatus status, const QString& statusDetail )
@@ -140,13 +172,13 @@ unsigned long DccTransfer::intel( unsigned long value )
 }
 
 DccTransfer::DccType DccTransfer::getType() const
-{ 
-  return m_dccType; 
+{
+    return m_dccType; 
 }
 
 DccTransfer::DccStatus DccTransfer::getStatus() const 
-{ 
-  return m_dccStatus; 
+{
+    return m_dccStatus; 
 }
 
 const QString& DccTransfer::getStatusDetail() const
@@ -156,76 +188,87 @@ const QString& DccTransfer::getStatusDetail() const
 
 QDateTime DccTransfer::getTimeOffer() const 
 {
-  return m_timeOffer; 
+    return m_timeOffer; 
 }
 
 QString DccTransfer::getOwnIp() const 
-{ 
-  return m_ownIp; 
+{
+    return m_ownIp; 
 }
 
 QString DccTransfer::getOwnPort() const 
-{ 
-  return m_ownPort; 
+{
+    return m_ownPort; 
 }
 
 QString DccTransfer::getPartnerNick() const 
-{ 
-  return m_partnerNick; 
+{
+    return m_partnerNick; 
 }
 
 QString DccTransfer::getPartnerIp() const 
-{ 
-  return m_partnerIp; 
+{
+    return m_partnerIp; 
 }
 
 QString DccTransfer::getPartnerPort() const 
-{ 
-  return m_partnerPort; 
+{
+    return m_partnerPort; 
 }
 
 QString DccTransfer::getFileName() const 
-{ 
-  return m_fileName; 
+{
+    return m_fileName; 
 }
 
 KIO::filesize_t DccTransfer::getFileSize() const 
-{ 
-  return m_fileSize; 
+{
+    return m_fileSize; 
 }
 
 KIO::fileoffset_t DccTransfer::getTransferringPosition() const
-{ 
-  return m_transferringPosition; 
+{
+    return m_transferringPosition; 
+}
+
+KIO::fileoffset_t DccTransfer::getTransferStartPosition() const
+{
+    return m_transferStartPosition;
 }
 
 KURL DccTransfer::getFileURL() const 
-{ 
-  return m_fileURL;
+{
+    return m_fileURL;
 }
 
 bool DccTransfer::isResumed() const 
-{ 
-  return m_resumed; 
+{
+    return m_resumed; 
 }
 
-long DccTransfer::getCurrentSpeed()
-{ 
-    //FIXME
-    updateTransferMeters();
-  return (unsigned long)m_currentSpeed;
+long DccTransfer::getCurrentSpeed() const
+{
+    return (unsigned long)m_currentSpeed;
 }
 
-int DccTransfer::getTimeLeft()
-{ 
-    //FIXME
-    updateTransferMeters();
-  return m_timeLeft;
+int DccTransfer::getTimeLeft() const
+{
+    return m_timeLeft;
 }
 
 int DccTransfer::getProgress() const
 {
     return (int)( ( (double)getTransferringPosition() / (double)getFileSize() ) * 100 );
+}
+
+QDateTime DccTransfer::getTimeTransferStarted() const
+{
+    return m_timeTransferStarted;
+}
+
+QDateTime DccTransfer::getTimeTransferFinished() const
+{
+    return m_timeTransferFinished;
 }
 
 #include "dcctransfer.moc"

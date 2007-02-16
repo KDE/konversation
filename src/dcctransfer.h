@@ -51,8 +51,18 @@ class DccTransfer : public QObject
             DccStatusCount
         };
 
+        enum UnavailableStatus
+        {
+            Calculating = -1,
+            NotInTransfer = -2,
+            InfiniteValue = -3,
+        };
+
         DccTransfer( DccType dccType, const QString& partnerNick );
         virtual ~DccTransfer();
+
+        // info of DccTransfer can be copied with this constructor.
+        DccTransfer( const DccTransfer& obj );
 
         DccType            getType()                  const;
         DccStatus          getStatus()                const;
@@ -66,18 +76,14 @@ class DccTransfer : public QObject
         QString            getFileName()              const;
         KIO::filesize_t    getFileSize()              const;
         KIO::fileoffset_t  getTransferringPosition()  const;
+        KIO::fileoffset_t  getTransferStartPosition() const;
         KURL               getFileURL()               const;
         bool               isResumed()                const;
-        long               getCurrentSpeed()          ;
-        int                getTimeLeft()              ;
+        long               getCurrentSpeed()          const;
+        int                getTimeLeft()              const;
         int                getProgress()              const;
-
-        enum UnavailableStatus
-        {
-            Calculating = -1,
-            NotInTransfer = -2,
-            InfiniteValue = -3,
-        };
+        QDateTime          getTimeTransferStarted()   const;
+        QDateTime          getTimeTransferFinished()  const;
 
     signals:
         void transferStarted( DccTransfer* item );
@@ -85,8 +91,8 @@ class DccTransfer : public QObject
         void statusChanged( DccTransfer* item, int newStatus, int oldStatus );
 
     public slots:
-        virtual void start() = 0;
-        virtual void abort() = 0;
+        virtual void start() {};
+        virtual void abort() {};
 
     protected:
         void setStatus( DccStatus status, const QString& statusDetail = QString::null );
@@ -140,7 +146,7 @@ class DccTransfer : public QObject
         KURL m_fileURL;
 
     private:
-        DccTransfer( const DccTransfer& );
+        DccTransfer& operator = ( const DccTransfer& obj );
 
         void updateTransferMeters();
 
