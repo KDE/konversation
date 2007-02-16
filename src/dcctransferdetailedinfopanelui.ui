@@ -21,7 +21,7 @@
         </sizepolicy>
     </property>
     <property name="caption">
-        <string>DCC transfer window detailed info panel mockup</string>
+        <string></string>
     </property>
     <vbox>
         <property name="name">
@@ -68,9 +68,6 @@
                     <property name="name">
                         <cstring>m_labelDccType</cstring>
                     </property>
-                    <property name="text">
-                        <string>DCC Receive (Passive DCC)</string>
-                    </property>
                 </widget>
                 <widget class="QLabel" row="5" column="0">
                     <property name="name">
@@ -92,16 +89,10 @@
                     <property name="name">
                         <cstring>m_progress</cstring>
                     </property>
-                    <property name="progress">
-                        <number>26</number>
-                    </property>
                 </widget>
                 <widget class="QLabel" row="3" column="1">
                     <property name="name">
                         <cstring>m_labelPartner</cstring>
-                    </property>
-                    <property name="text">
-                        <string>strm on Freenode</string>
                     </property>
                 </widget>
                 <widget class="QLabel" row="4" column="0">
@@ -116,16 +107,10 @@
                     <property name="name">
                         <cstring>m_labelStatus</cstring>
                     </property>
-                    <property name="text">
-                        <string>Receiving</string>
-                    </property>
                 </widget>
                 <widget class="QLabel" row="1" column="1">
                     <property name="name">
                         <cstring>m_labelFilename</cstring>
-                    </property>
-                    <property name="text">
-                        <string>konversation.tar.bz2</string>
                     </property>
                 </widget>
             </grid>
@@ -178,9 +163,6 @@
                                     <height>0</height>
                                 </size>
                             </property>
-                            <property name="text">
-                                <string>138,768,873</string>
-                            </property>
                             <property name="alignment">
                                 <set>AlignVCenter|AlignRight</set>
                             </property>
@@ -219,9 +201,6 @@
                                     <height>0</height>
                                 </size>
                             </property>
-                            <property name="text">
-                                <string>1,750,798,168</string>
-                            </property>
                             <property name="alignment">
                                 <set>AlignVCenter|AlignRight</set>
                             </property>
@@ -244,9 +223,6 @@
                                     <height>0</height>
                                 </size>
                             </property>
-                            <property name="text">
-                                <string>524.3 KB/s</string>
-                            </property>
                             <property name="alignment">
                                 <set>AlignVCenter|AlignRight</set>
                             </property>
@@ -268,9 +244,6 @@
                                     <width>120</width>
                                     <height>0</height>
                                 </size>
-                            </property>
-                            <property name="text">
-                                <string>864.3 KB/s</string>
                             </property>
                             <property name="alignment">
                                 <set>AlignVCenter|AlignRight</set>
@@ -334,9 +307,6 @@
                                     <height>0</height>
                                 </size>
                             </property>
-                            <property name="text">
-                                <string>532,452</string>
-                            </property>
                             <property name="alignment">
                                 <set>AlignVCenter|AlignRight</set>
                             </property>
@@ -383,9 +353,6 @@
                                     <height>0</height>
                                 </size>
                             </property>
-                            <property name="text">
-                                <string>00:34:23</string>
-                            </property>
                             <property name="alignment">
                                 <set>AlignVCenter|AlignRight</set>
                             </property>
@@ -407,9 +374,6 @@
                                     <width>120</width>
                                     <height>0</height>
                                 </size>
-                            </property>
-                            <property name="text">
-                                <string>00:00:32</string>
                             </property>
                             <property name="alignment">
                                 <set>AlignVCenter|AlignRight</set>
@@ -440,9 +404,6 @@
                                     <width>120</width>
                                     <height>0</height>
                                 </size>
-                            </property>
-                            <property name="text">
-                                <string>Yes</string>
                             </property>
                             <property name="alignment">
                                 <set>AlignVCenter|AlignRight</set>
@@ -503,9 +464,6 @@
                             <verstretch>0</verstretch>
                         </sizepolicy>
                     </property>
-                    <property name="text">
-                        <string>135.416:132:146 (port 48461)</string>
-                    </property>
                 </widget>
                 <widget class="QLabel" row="0" column="0">
                     <property name="name">
@@ -526,9 +484,6 @@
                             <horstretch>0</horstretch>
                             <verstretch>0</verstretch>
                         </sizepolicy>
-                    </property>
-                    <property name="text">
-                        <string>132.311.131.131 (port 5000) (server)</string>
                     </property>
                 </widget>
                 <widget class="QLabel" row="1" column="0">
