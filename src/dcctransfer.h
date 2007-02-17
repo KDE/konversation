@@ -86,6 +86,8 @@ class DccTransfer : public QObject
         QDateTime          getTimeTransferStarted()   const;
         QDateTime          getTimeTransferFinished()  const;
 
+        void setFileURL( const KURL& url );
+
     signals:
         void transferStarted( DccTransfer* item );
         void done( DccTransfer* item );

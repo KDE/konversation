@@ -32,6 +32,7 @@ class DccTransferDetailedInfoPanel : public DccTransferDetailedInfoPanelUI
     private slots:
         void updateView();
         void slotTransferStatusChanged( DccTransfer* transfer, int newStatus, int oldStatus );
+        void slotLocationChanged( const QString& url );
 
     private:
         DccTransferPanelItem* m_item;

@@ -71,6 +71,16 @@ DccTransfer::DccTransfer( const DccTransfer& obj )
     m_transferStartPosition = obj.getTransferStartPosition();
 }
 
+void DccTransfer::setFileURL( const KURL& url )
+{
+    // FIXME
+
+    if ( m_dccStatus == Queued )
+    {
+        m_fileURL = url;
+    }
+}
+
 void DccTransfer::startTransferLogger()
 {
     m_timeTransferStarted = QDateTime::currentDateTime();

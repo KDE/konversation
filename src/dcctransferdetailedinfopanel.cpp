@@ -26,6 +26,8 @@ DccTransferDetailedInfoPanel::DccTransferDetailedInfoPanel( QWidget* parent, con
     : DccTransferDetailedInfoPanelUI( parent, name )
 {
     m_autoViewUpdateTimer = new QTimer( this );
+
+    connect( m_urlreqLocation, SIGNAL( textChanged( const QString& ) ), this, SLOT( slotLocationChanged( const QString& ) ) );
 }
 
 DccTransferDetailedInfoPanel::~DccTransferDetailedInfoPanel()
@@ -152,6 +154,11 @@ void DccTransferDetailedInfoPanel::slotTransferStatusChanged( DccTransfer* /* tr
         // stop auto view-update timer
         m_autoViewUpdateTimer->stop();
     }
+}
+
+void DccTransferDetailedInfoPanel::slotLocationChanged( const QString& url )
+{
+    m_item->transfer()->setFileURL( KURL::fromPathOrURL( url ) );
 }
 
 #include "dcctransferdetailedinfopanel.moc"
