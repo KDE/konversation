@@ -28,7 +28,6 @@
 #include <kprogress.h>
 #include <krun.h>
 
-#include "dccdetaildialog.h"
 #include "dcctransferpanel.h"
 #include "dcctransferpanelitem.h"
 #include "konversationapplication.h"
@@ -45,8 +44,6 @@ DccTransferPanelItem::DccTransferPanelItem( DccTransferPanel* panel, DccTransfer
     m_progressBar = new KProgress( 100, listView()->viewport() );
     m_progressBar->setCenterIndicator( true );
     m_progressBar->setPercentageVisible( true );
-
-    m_detailDialog = 0;
 
     m_fileRemoved = false;
 
@@ -73,7 +70,6 @@ DccTransferPanelItem::~DccTransferPanelItem()
 {
     kdDebug() << "DccTransferPanelItem::~DccTransferPanelItem()" << endl;
     stopAutoViewUpdate();
-    closeDetailDialog();
     delete m_progressBar;
     if ( m_isTransferInstanceBackup )
         delete m_transfer;
@@ -100,9 +96,6 @@ void DccTransferPanelItem::updateView()
         m_progressBar->hide();
         setText( DccTransferPanel::Column::Progress, i18n( "unknown" ) );
     }
-
-    if ( m_detailDialog )
-        m_detailDialog->updateView();
 }
 
 
@@ -148,15 +141,12 @@ int DccTransferPanelItem::compare( QListViewItem* i, int col, bool ascending ) c
     return QListViewItem::compare( i, col, ascending );
 }
 
-void DccTransferPanelItem::slotStatusChanged( DccTransfer* /* transfer */, int newStatus, int oldStatus )
+void DccTransferPanelItem::slotStatusChanged( DccTransfer* /* transfer */, int newStatus, int /* oldStatus */ )
 {
     updateView();
 
     if ( newStatus == DccTransfer::Sending || newStatus == DccTransfer::Receiving )
         startAutoViewUpdate();
-
-    if ( newStatus == DccTransfer::Failed && oldStatus != DccTransfer::Queued )
-        openDetailDialog();
 }
 
 void DccTransferPanelItem::startAutoViewUpdate()
@@ -299,22 +289,6 @@ void DccTransferPanelItem::openFileInfoDialog()
     }
 }
 
-void DccTransferPanelItem::openDetailDialog()
-{
-    if ( !m_detailDialog )
-        m_detailDialog = new DccDetailDialog( this );
-    m_detailDialog->show();
-}
-
-void DccTransferPanelItem::closeDetailDialog()
-{
-    if ( m_detailDialog )
-    {
-        delete m_detailDialog;
-        m_detailDialog = 0;
-    }
-}
-
 void DccTransferPanelItem::backupTransferInfo( DccTransfer* transfer )
 {
     kdDebug() << "DccTransferPanelItem::backupTransferInfo()" << endl;
@@ -399,17 +373,7 @@ QString DccTransferPanelItem::getTimeLeftPrettyText() const
     else if ( m_transfer->getTimeLeft() == DccTransfer::InfiniteValue )
         text = "?";
     else
-    {
-        int remSec = m_transfer->getTimeLeft();
-        int remHour = remSec / 3600; remSec -= remHour * 3600; 
-        int remMin = remSec / 60; remSec -= remMin * 60; 
-
-        // remHour can be more than 25, so we can't use QTime here.
-        text = QString( "%1:%2:%3" )
-	  .arg( QString::number( remHour ).rightJustify( 2, '0', false ) )
-	  .arg( QString::number( remMin ).rightJustify( 2, '0' ) )
-	  .arg( QString::number( remSec ).rightJustify( 2, '0' ) );
-    }
+        text = secToHMS( m_transfer->getTimeLeft() );
 
     return text;
 }
@@ -432,6 +396,18 @@ QString DccTransferPanelItem::getSenderAddressPrettyText() const
         return QString( "%1:%2" ).arg( m_transfer->getPartnerIp() ).arg( m_transfer->getPartnerPort() );
 }
 
+QString DccTransferPanelItem::secToHMS( long sec )
+{
+        int remSec = sec;
+        int remHour = remSec / 3600; remSec -= remHour * 3600; 
+        int remMin = remSec / 60; remSec -= remMin * 60; 
+
+        // remHour can be more than 25, so we can't use QTime here.
+        return QString( "%1:%2:%3" )
+            .arg( QString::number( remHour ).rightJustify( 2, '0', false ) )
+            .arg( QString::number( remMin ).rightJustify( 2, '0' ) )
+            .arg( QString::number( remSec ).rightJustify( 2, '0' ) );
+}
 
 QString DccTransferPanelItem::s_dccStatusText[ DccTransfer::DccStatusCount ];
 

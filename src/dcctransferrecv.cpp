@@ -42,7 +42,7 @@ class DccResumeDialog;
 
  DccTransferRecv()
 
- start()              : called from DccTransferPanel or DccDetailDialog when user pushes the accept button
+ start()              : called from DccTransferPanel when user pushes the accept button
   | \ 
   | requestResume()   : called when user chooses to resume in DccResumeDialog. it emits the signal ResumeRequest()
   |

@@ -46,7 +46,6 @@ class DccTransferRecv : public DccTransfer
     Q_OBJECT
 
     //FIXME: get rid of this
-    friend class DccDetailDialog;
     friend class DccResumeDialog;
 
     public:

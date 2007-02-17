@@ -10,6 +10,7 @@
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com
 */
+// Copyright (C) 2004-2007 Shintaro Matsuoka <shin@shoegazed.org>
 
 #include <qhbox.h>
 #include <qheader.h>
@@ -30,6 +31,7 @@
 #include <krun.h>
 #include <kapplication.h>
 
+#include "dcctransferdetailedinfopanel.h"
 #include "dcctransferpanel.h"
 #include "dcctransferpanelitem.h"
 #include "dcctransfersend.h"
@@ -39,6 +41,8 @@ DccTransferPanel::DccTransferPanel(QWidget* parent)
 {
     setType(ChatWindow::DccTransferPanel);
     setName(i18n("DCC Status"));
+
+    setSpacing( 0 );
 
     m_listView = new KListView(this,"dcc_control_panel");
 
@@ -85,6 +89,9 @@ DccTransferPanel::DccTransferPanel(QWidget* parent)
 
     connect(m_listView,SIGNAL (selectionChanged()),this,SLOT (updateButton()) );
 
+    // detailed info panel
+    m_detailPanel = new DccTransferDetailedInfoPanel(this);
+
     // button
 
     QHBox* buttonsBox=new QHBox(this);
@@ -99,6 +106,7 @@ DccTransferPanel::DccTransferPanel(QWidget* parent)
     m_buttonOpen   = new QPushButton(icon("exec"),        i18n("Open File"),   buttonsBox, "open_dcc_file");
     m_buttonRemove = new QPushButton(icon("edittrash"),   i18n("Remove File"), buttonsBox, "remove_dcc_file");
     m_buttonDetail = new QPushButton(icon("view_text"),   i18n("Transfer Details"), buttonsBox, "detail_dcc");
+    m_buttonDetail->setToggleButton( true );
 
     QToolTip::add( m_buttonAccept, i18n( "Start receiving" ) );
     QToolTip::add( m_buttonAbort,  i18n( "Abort the transfer(s)" ) );
@@ -112,7 +120,10 @@ DccTransferPanel::DccTransferPanel(QWidget* parent)
     connect( m_buttonClear,  SIGNAL(clicked()), this, SLOT(clearDcc()) );
     connect( m_buttonOpen,   SIGNAL(clicked()), this, SLOT(runDcc()) );
     connect( m_buttonRemove, SIGNAL(clicked()), this, SLOT(removeFile()) );
-    connect( m_buttonDetail, SIGNAL(clicked()), this, SLOT(openDetail()) );
+    //connect( m_buttonDetail, SIGNAL(clicked()), this, SLOT(openDetail()) );
+    connect( m_buttonDetail, SIGNAL(toggled(bool)), m_detailPanel, SLOT(setShown(bool)) );
+    m_buttonDetail->setOn(true);
+
 
     // popup menu
 
@@ -128,8 +139,6 @@ DccTransferPanel::DccTransferPanel(QWidget* parent)
     m_popup->insertItem(icon("exec"),            i18n("&Open File"),                  Popup::Open);
     m_popup->insertItem(icon("edittrash"),       i18n("&Remove File"),                Popup::Remove);
     m_popup->insertItem(icon("messagebox_info"), i18n("File &Information"),           Popup::Info);
-    m_popup->insertSeparator();                   // -----
-    m_popup->insertItem(icon("view_text"),       i18n("DCC Transfer &Details"),     Popup::Detail);
 
     #undef icon
 
@@ -138,6 +147,8 @@ DccTransferPanel::DccTransferPanel(QWidget* parent)
 
     // misc.
     connect(m_listView, SIGNAL(doubleClicked(QListViewItem*,const QPoint&,int)), this, SLOT(doubleClicked(QListViewItem*,const QPoint&,int)));
+
+    connect(m_listView, SIGNAL(currentChanged(QListViewItem*)), this, SLOT(setDetailPanelItem(QListViewItem*)));
 
     updateButton();
 }
@@ -158,7 +169,6 @@ void DccTransferPanel::updateButton()
     bool accept             = true,
          abort              = false,
          clear              = false,
-         detail             = true,
          info               = true,
          open               = true,
          remove             = true,
@@ -205,7 +215,6 @@ void DccTransferPanel::updateButton()
         accept = false;
         abort = false;
         clear = false;
-        detail = false;
         info = false;
         open = false;
         remove = false;
@@ -221,7 +230,6 @@ void DccTransferPanel::updateButton()
     m_buttonClear->setEnabled( clear );
     m_buttonOpen->setEnabled( open );
     m_buttonRemove->setEnabled( remove );
-    m_buttonDetail->setEnabled( detail );
 
     m_popup->setItemEnabled( Popup::SelectAll,          selectAll );
     m_popup->setItemEnabled( Popup::SelectAllCompleted, selectAllCompleted );
@@ -231,7 +239,15 @@ void DccTransferPanel::updateButton()
     m_popup->setItemEnabled( Popup::Open,               open );
     m_popup->setItemEnabled( Popup::Remove,             remove );
     m_popup->setItemEnabled( Popup::Info,               info );
-    m_popup->setItemEnabled( Popup::Detail,             detail );
+}
+
+void DccTransferPanel::setDetailPanelItem(QListViewItem* item_)
+{
+    if ( item_ )
+    {
+        DccTransferPanelItem* item = static_cast< DccTransferPanelItem* >( item_ );
+        m_detailPanel->setItem( item );
+    }
 }
 
 void DccTransferPanel::selectMe(DccTransferPanelItem* item)
@@ -386,20 +402,6 @@ void DccTransferPanel::showFileInfo()
     }
 }
 
-void DccTransferPanel::openDetail()
-{
-    QListViewItemIterator it( m_listView );
-    while( it.current() )
-    {
-        if( it.current()->isSelected() )
-        {
-            DccTransferPanelItem* item=static_cast<DccTransferPanelItem*>( it.current() );
-            item->openDetailDialog();
-        }
-        ++it;
-    }
-}
-
 void DccTransferPanel::selectAll()
 {
     QListViewItemIterator it( m_listView );
@@ -434,7 +436,6 @@ void DccTransferPanel::popupActivated( int id ) // slot
     if ( id == Popup::Abort )                    abortDcc();
     else if ( id == Popup::Accept )              acceptDcc();
     else if ( id == Popup::Clear )               clearDcc();
-    else if ( id == Popup::Detail )              openDetail();
     else if ( id == Popup::Info )                showFileInfo();
     else if ( id == Popup::Open )                runDcc();
     else if ( id == Popup::Remove )              removeFile();

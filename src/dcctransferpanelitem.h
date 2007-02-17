@@ -34,7 +34,6 @@ namespace KIO
     class Job;
 }
 
-class DccDetailDialog;
 class DccTransferPanel;
 
 /*
@@ -44,7 +43,6 @@ class DccTransferPanel;
 class DccTransferPanelItem : public QObject, public KListViewItem
 {
     Q_OBJECT
-        friend class DccDetailDialog;
 
     public:
         DccTransferPanelItem( DccTransferPanel* panel, DccTransfer* transfer );
@@ -58,10 +56,20 @@ class DccTransferPanelItem : public QObject, public KListViewItem
         void removeFile();
         void openFileInfoDialog();
 
-        void openDetailDialog();
-        void closeDetailDialog();
-
         DccTransfer* transfer() const { return m_transfer; }
+
+        // called from updateView()
+        QString getTypeText()                                  const;
+        QPixmap getTypeIcon()                                  const;
+        QPixmap getStatusIcon()                                const;
+        QString getStatusText()                                const;
+        QString getFileSizePrettyText()                        const;
+        QString getPositionPrettyText( bool detailed = false ) const;
+        QString getTimeLeftPrettyText()                        const;
+        QString getCurrentSpeedPrettyText()                    const;
+        QString getSenderAddressPrettyText()                   const;
+
+        static QString secToHMS( long sec );
 
     private slots:
         void slotStatusChanged( DccTransfer* transfer, int newStatus, int oldStatus );
@@ -86,21 +94,9 @@ class DccTransferPanelItem : public QObject, public KListViewItem
 
         void showProgressBar();                   // called from printCell()
 
-        // called from updateView()
-        QString getTypeText()                                  const;
-        QPixmap getTypeIcon()                                  const;
-        QPixmap getStatusIcon()                                const;
-        QString getStatusText()                                const;
-        QString getFileSizePrettyText()                        const;
-        QString getPositionPrettyText( bool detailed = false ) const;
-        QString getTimeLeftPrettyText()                        const;
-        QString getCurrentSpeedPrettyText()                    const;
-        QString getSenderAddressPrettyText()                   const;
-
         // UI
         QTimer* m_autoUpdateViewTimer;
         KProgress* m_progressBar;
-        DccDetailDialog* m_detailDialog;
 
         // file
         bool m_fileRemoved;

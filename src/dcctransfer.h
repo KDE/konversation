@@ -43,6 +43,7 @@ class DccTransfer : public QObject
             Preparing,                            // Opening KIO to write received data
             WaitingRemote,                        // Waiting for remote host's response
             Connecting,                           // RECV: trying to connect to the server
+            // TODO: replace the following two with "Transferring"
             Sending,                              // Sending
             Receiving,                            // Receiving
             Done,                                 // Transfer done

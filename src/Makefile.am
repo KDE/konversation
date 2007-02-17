@@ -19,7 +19,7 @@ konversation_SOURCES = konviface.skel konviconfigdialog.cpp konversationstatusba
 	irccolorchooser.cpp channellistviewitem.cpp osd.cpp trayicon.cpp dccchat.cpp \
 	logfilereader.cpp multilineedit.cpp nickinfo.cpp 	dccresumedialog.cpp \
 	konversationsound.cpp quickconnectdialog.cpp serverlistdialog.cpp 	dcctransfersend.cpp \
-	dcctransferrecv.cpp channelnick.cpp dccdetaildialog.cpp 	insertchardialog.cpp \
+	dcctransferrecv.cpp channelnick.cpp insertchardialog.cpp \
 	irccharsets.cpp editnotifydialog.cpp common.cpp serverison.cpp 	sslsocket.cpp \
 	servergroupsettings.cpp serversettings.cpp servergroupdialog.cpp 	ssllabel.cpp serverdialog.cpp \
 	channeldialog.cpp identitydialog.cpp topiclabel.cpp 	channeloptionsui.ui \
@@ -69,7 +69,7 @@ messages: rc.cpp
 	fi
 
 noinst_HEADERS = serverlistdialog.h dcctransfersend.h dcctransferrecv.h 		 \
-	dccdetaildialog.h insertchardialog.h editnotifydialog.h serverison.h 		 \
+	insertchardialog.h editnotifydialog.h serverison.h 		 \
 	servergroupsettings.h serversettings.h	servergroupdialog.h serverdialog.h channeldialog.h 		 \
 	identitydialog.h topiclabel.h channeloptionsdialog.h joinchanneldialog.h  		 \
 	highlight_preferences.h watchednicknames_preferences.h quickbuttons_preferences.h 		 \

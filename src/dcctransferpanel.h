@@ -10,6 +10,7 @@
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com
 */
+// Copyright (C) 2004-2007 Shintaro Matsuoka <shin@shoegazed.org>
 
 #ifndef DCCTRANSFERPANEL_H
 #define DCCTRANSFERPANEL_H
@@ -25,6 +26,8 @@ class QContextMenuEvent;
 class QPushButton;
 class KListView;
 class KPopupMenu;
+
+class DccTransferDetailedInfoPanel;
 
 class DccTransferPanel : public ChatWindow
 {
@@ -63,7 +66,6 @@ class DccTransferPanel : public ChatWindow
                     Open,
                     Remove,
                     Info,
-                    Detail
                 };
         };
 
@@ -84,7 +86,6 @@ class DccTransferPanel : public ChatWindow
         void runDcc();
         void removeFile();
         void showFileInfo();
-        void openDetail();
         void selectAll();
         void selectAllCompleted();
 
@@ -95,12 +96,16 @@ class DccTransferPanel : public ChatWindow
 
         void updateButton();
 
+        void setDetailPanelItem(QListViewItem* item_);
+
     protected:
         /** Called from ChatWindow adjustFocus */
         virtual void childAdjustFocus();
 
         KListView* m_listView;
         KPopupMenu* m_popup;
+
+        DccTransferDetailedInfoPanel* m_detailPanel;
 
         QPushButton* m_buttonAccept;
         QPushButton* m_buttonAbort;
