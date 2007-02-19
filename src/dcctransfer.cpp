@@ -7,7 +7,7 @@
 
 /*
   Copyright (C) 2002-2004 Dario Abatianni <eisfuchs@tigress.com>
-  Copyright (C) 2004-2006 Shintaro Matsuoka <shin@shoegazed.org>
+  Copyright (C) 2004-2007 Shintaro Matsuoka <shin@shoegazed.org>
   Copyright (C) 2004,2005 John Tapsell <john@geola.co.uk>
 */
 

@@ -45,9 +45,6 @@ class DccTransferRecv : public DccTransfer
 {
     Q_OBJECT
 
-    //FIXME: get rid of this
-    friend class DccResumeDialog;
-
     public:
         /** Constructor.  This sets up the variables and updates the view, so the
          * user can see the filename, filesize etc, and can accept it. */

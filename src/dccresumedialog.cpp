@@ -47,9 +47,8 @@ DccResumeDialog::ReceiveAction DccResumeDialog::ask(DccTransferRecv* item, const
 
     ReceiveAction ra = dlg.m_selectedAction;
 
-    //FIXME
     if(ra == RA_Rename)
-        item->m_fileURL = dlg.m_urlreqFileURL->url();
+        item->setFileURL( dlg.m_urlreqFileURL->url() );
 
     return ra;
 }
