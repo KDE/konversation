@@ -19,10 +19,11 @@
 
 DccTransfer::DccTransfer( DccType dccType, const QString& partnerNick )
 {
-    m_dccType = dccType;
+    kdDebug() << "DccTransfer::DccTransfer()" << endl;
+    m_type = dccType;
     m_partnerNick = partnerNick;
 
-    m_dccStatus = Queued;
+    m_status = Configuring;
     m_resumed = false;
     m_transferringPosition = 0;
     m_transferStartPosition = 0;
@@ -47,9 +48,9 @@ DccTransfer::DccTransfer( const DccTransfer& obj )
     m_buffer = 0;
     m_bufferSize = 0;
     m_currentSpeed = obj.getCurrentSpeed();
-    m_dccStatus = obj.getStatus();
-    m_dccStatusDetail = obj.getStatusDetail();
-    m_dccType = obj.getType();
+    m_status = obj.getStatus();
+    m_statusDetail = obj.getStatusDetail();
+    m_type = obj.getType();
     m_fileName = obj.getFileName();
     m_fileSize = obj.getFileSize();
     m_fileURL = obj.getFileURL();
@@ -75,10 +76,16 @@ void DccTransfer::setFileURL( const KURL& url )
 {
     // FIXME
 
-    if ( m_dccStatus == Queued )
+    if ( getStatus() == Queued )
     {
         m_fileURL = url;
     }
+}
+
+void DccTransfer::queue()
+{
+    if ( getStatus() == Configuring )
+        setStatus( Queued );
 }
 
 void DccTransfer::startTransferLogger()
@@ -106,19 +113,19 @@ void DccTransfer::logTransfer()
 
 void DccTransfer::setStatus( DccStatus status, const QString& statusDetail )
 {
-    bool changed = ( status != m_dccStatus );
-    DccStatus oldStatus = m_dccStatus;
-    m_dccStatus = status;
-    m_dccStatusDetail = statusDetail;
+    bool changed = ( status != m_status );
+    DccStatus oldStatus = m_status;
+    m_status = status;
+    m_statusDetail = statusDetail;
     if ( changed )
-        emit statusChanged( this, m_dccStatus, oldStatus );
+        emit statusChanged( this, m_status, oldStatus );
 }
 
 void DccTransfer::updateTransferMeters()
 {
     const int timeToCalc = 5;
 
-    if ( m_dccStatus == Sending || m_dccStatus == Receiving )
+    if ( getStatus() == Transferring )
     {
         // update CurrentSpeed
 
@@ -149,7 +156,7 @@ void DccTransfer::updateTransferMeters()
         else
             m_timeLeft = (int)( (double)( m_fileSize - m_transferringPosition ) / m_currentSpeed );
     }
-    else if ( m_dccStatus >= Done )
+    else if ( m_status >= Done )
     {
         //m_averageSpeed = (double)( m_transferringPosition - m_transferStartPosition ) / (double)m_timeTransferStarted.secsTo( m_timeTransferFinished );
         m_currentSpeed = 0;
@@ -183,17 +190,17 @@ unsigned long DccTransfer::intel( unsigned long value )
 
 DccTransfer::DccType DccTransfer::getType() const
 {
-    return m_dccType; 
+    return m_type;
 }
 
 DccTransfer::DccStatus DccTransfer::getStatus() const 
 {
-    return m_dccStatus; 
+    return m_status;
 }
 
 const QString& DccTransfer::getStatusDetail() const
 {
-    return m_dccStatusDetail;
+    return m_statusDetail;
 }
 
 QDateTime DccTransfer::getTimeOffer() const 

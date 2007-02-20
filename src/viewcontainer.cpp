@@ -34,6 +34,7 @@
 #include "konsolepanel.h"
 #include "urlcatcher.h"
 #include "dcctransferpanel.h"
+#include "dcctransfermanager.h"
 #include "dccchat.h"
 #include "statuspanel.h"
 #include "channel.h"
@@ -65,6 +66,7 @@ ViewContainer::ViewContainer(KonversationMainWindow* window)
 
     m_dccPanel = 0;
     m_dccPanelOpen = false;
+    connect( KonversationApplication::instance()->dccTransferManager(), SIGNAL( newTransferAdded( DccTransfer* ) ), this, SLOT( addDccPanel() ) );
 
     m_insertCharDialog = 0;
 

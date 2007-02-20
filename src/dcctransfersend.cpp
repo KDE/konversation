@@ -293,7 +293,7 @@ void DccTransferSend::acceptClient()                     // slot
         m_file.at( m_transferringPosition );
         m_transferStartPosition = m_transferringPosition;
 
-        setStatus( Sending );
+        setStatus( Transferring );
         m_sendSocket->enableWrite( true );
         m_sendSocket->enableRead( m_fastSend );
         startTransferLogger();                      // initialize CPS counter, ETA counter, etc...
@@ -386,7 +386,7 @@ void DccTransferSend::slotSendSocketClosed()
 {
     kdDebug() << "DccTransferSend::slotSendSocketClosed()" << endl;
     finishTransferLogger();
-    if ( m_dccStatus == Sending && m_transferringPosition < (KIO::fileoffset_t)m_fileSize )
+    if ( getStatus() == Transferring && m_transferringPosition < (KIO::fileoffset_t)m_fileSize )
         failed( i18n( "Remote user disconnected" ) );
 }
 

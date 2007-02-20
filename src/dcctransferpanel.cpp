@@ -31,7 +31,9 @@
 #include <krun.h>
 #include <kapplication.h>
 
+#include "konversationapplication.h"
 #include "dcctransferdetailedinfopanel.h"
+#include "dcctransfermanager.h"
 #include "dcctransferpanel.h"
 #include "dcctransferpanelitem.h"
 #include "dcctransfersend.h"
@@ -39,9 +41,23 @@
 DccTransferPanel::DccTransferPanel(QWidget* parent)
 : ChatWindow(parent)
 {
+    kdDebug() << "DccTransferPanel::DccTransferPanel()" << endl;
+
     setType(ChatWindow::DccTransferPanel);
     setName(i18n("DCC Status"));
 
+    initGUI();
+
+    connect( KonversationApplication::instance()->dccTransferManager(), SIGNAL( newTransferQueued( DccTransfer* ) ), this, SLOT( slotNewTransferQueued( DccTransfer* ) ) );
+}
+
+DccTransferPanel::~DccTransferPanel()
+{
+    kdDebug() << "DccTransferPanel::~DccTransferPanel()" << endl;
+}
+
+void DccTransferPanel::initGUI()
+{
     setSpacing( 0 );
 
     m_listView = new KListView(this,"dcc_control_panel");
@@ -153,12 +169,14 @@ DccTransferPanel::DccTransferPanel(QWidget* parent)
     updateButton();
 }
 
-DccTransferPanel::~DccTransferPanel()
+void DccTransferPanel::slotNewTransferQueued( DccTransfer* transfer )
 {
-    kdDebug() << "DccTransferPanel::~DccTransferPanel()" << endl;
+    new DccTransferPanelItem( this, transfer );
+    connect( transfer, SIGNAL( statusChanged( DccTransfer*, int, int ) ), this, SLOT( slotTransferStatusChanged() ) );
+    updateButton();
 }
 
-void DccTransferPanel::dccStatusChanged()
+void DccTransferPanel::slotTransferStatusChanged()
 {
     updateButton();
     activateTabNotification(Konversation::tnfSystem);

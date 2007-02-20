@@ -54,16 +54,6 @@ DccTransferPanelItem::DccTransferPanelItem( DccTransferPanel* panel, DccTransfer
     connect( m_transfer, SIGNAL( statusChanged( DccTransfer*, int, int ) ), this, SLOT( slotStatusChanged( DccTransfer*, int, int ) ) );
 
     updateView();
-
-    s_dccStatusText[ DccTransfer::Queued ]        = i18n("Queued");
-    s_dccStatusText[ DccTransfer::Preparing ]     = i18n("Preparing");
-    s_dccStatusText[ DccTransfer::WaitingRemote ] = i18n("Offering");
-    s_dccStatusText[ DccTransfer::Connecting ]    = i18n("Connecting");
-    s_dccStatusText[ DccTransfer::Sending ]       = i18n("Sending");
-    s_dccStatusText[ DccTransfer::Receiving ]     = i18n("Receiving");
-    s_dccStatusText[ DccTransfer::Done ]          = i18n("Done");
-    s_dccStatusText[ DccTransfer::Failed ]        = i18n("Failed");
-    s_dccStatusText[ DccTransfer::Aborted ]       = i18n("Aborted");
 }
 
 DccTransferPanelItem::~DccTransferPanelItem()
@@ -145,7 +135,7 @@ void DccTransferPanelItem::slotStatusChanged( DccTransfer* /* transfer */, int n
 {
     updateView();
 
-    if ( newStatus == DccTransfer::Sending || newStatus == DccTransfer::Receiving )
+    if ( newStatus == DccTransfer::Transferring )
         startAutoViewUpdate();
 }
 
@@ -328,8 +318,7 @@ QPixmap DccTransferPanelItem::getStatusIcon() const
         case DccTransfer::Connecting:
             icon = "goto";
             break;
-        case DccTransfer::Sending:
-        case DccTransfer::Receiving:
+        case DccTransfer::Transferring:
             icon = "player_play";
             break;
         case DccTransfer::Done:
@@ -347,7 +336,29 @@ QPixmap DccTransferPanelItem::getStatusIcon() const
 
 QString DccTransferPanelItem::getStatusText() const
 {
-    return s_dccStatusText[ m_transfer->getStatus() ];
+    DccTransfer::DccStatus status = m_transfer->getStatus();
+    DccTransfer::DccType type = m_transfer->getType();
+
+    if ( status == DccTransfer::Queued )
+        return i18n( "Queued" );
+    else if ( status == DccTransfer::Preparing )
+        return i18n( "Preparing" );
+    else if ( status == DccTransfer::WaitingRemote )
+        return i18n( "Offering" );
+    else if ( status == DccTransfer::Connecting )
+        return i18n( "Connecting" );
+    else if ( status == DccTransfer::Transferring && type == DccTransfer::Receive )
+        return i18n( "Receiving" );
+    else if ( status == DccTransfer::Transferring && type == DccTransfer::Send )
+        return i18n( "Sending" );
+    else if ( status == DccTransfer::Done )
+        return i18n( "Done" );
+    else if ( status == DccTransfer::Failed )
+        return i18n( "Failed" );
+    else if ( status == DccTransfer::Aborted )
+        return i18n( "Aborted" );
+
+    return QString();
 }
 
 QString DccTransferPanelItem::getFileSizePrettyText() const
@@ -408,7 +419,5 @@ QString DccTransferPanelItem::secToHMS( long sec )
             .arg( QString::number( remMin ).rightJustify( 2, '0' ) )
             .arg( QString::number( remSec ).rightJustify( 2, '0' ) );
 }
-
-QString DccTransferPanelItem::s_dccStatusText[ DccTransfer::DccStatusCount ];
 
 #include "dcctransferpanelitem.moc"

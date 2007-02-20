@@ -37,7 +37,15 @@ class DccTransferManager : public QObject
         ~DccTransferManager();
 
     signals:
+        /*
+         * The status of the item is DccTransfer::Configuring when this signal is emitted.
+         */
         void newTransferAdded( DccTransfer* transfer );
+        /*
+         * The status of the item is DccTransfer::Queued when this signal is emitted.
+         * This signal is provided for the convenience for frontend code.
+         */
+        void newTransferQueued( DccTransfer* transfer );
 
     public:
         DccTransferRecv* newDownload( const QString& partnerNick, const KURL& defaultFolderURL, const QString& fileName, unsigned long fileSize, const QString& partnerIp, const QString& partnerPort );
@@ -48,7 +56,14 @@ class DccTransferManager : public QObject
 
         bool isLocalFileInWritingProcess( const KURL& localUrl );
 
+    private:
+        /*
+         * initTransfer() does the common jobs for newDownload() and newUpload()
+         */
+        void initTransfer( DccTransfer* transfer );
+
     private slots:
+        void slotTransferStatusChanged( DccTransfer* item, int newStatus, int oldStatus );
         void removeItem( DccTransfer* item );
 
     private:

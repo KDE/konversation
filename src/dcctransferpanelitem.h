@@ -100,9 +100,6 @@ class DccTransferPanelItem : public QObject, public KListViewItem
 
         // file
         bool m_fileRemoved;
-
-        static QString s_dccStatusText[ DccTransfer::DccStatusCount ];
-
 };
 
 #endif  // DCCTRANSFERPANELITEM_H

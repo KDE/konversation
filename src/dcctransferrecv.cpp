@@ -116,8 +116,6 @@ DccTransferRecv::DccTransferRecv( const QString& partnerNick, const KURL& defaul
 
     kdDebug() << "DccTransferRecv::calculateSaveToFileURL(): Default URL: " << m_fileURL.prettyURL() << endl;
 
-    setStatus( Queued );
-
     // TODO: should we support it?
     if ( fileSize == 0 )
     {
@@ -194,7 +192,7 @@ void DccTransferRecv::start()                     // public slot
 {
     kdDebug() << "DccTransferRecv::start() [BEGIN]" << endl;
 
-    if ( m_dccStatus != Queued )
+    if ( getStatus() != Queued )
         return;
 
     setStatus( Preparing );
@@ -442,7 +440,7 @@ void DccTransferRecv::connectionSuccess()         // slot
 {
     kdDebug() << "DccTransferRecv::connectionSuccess()" << endl;
 
-    setStatus( Receiving );
+    setStatus( Transferring );
 
     m_transferStartPosition = m_transferringPosition;
 
@@ -533,7 +531,7 @@ void DccTransferRecv::connectionTimeout()         // slot
 void DccTransferRecv::slotSocketClosed()
 {
     finishTransferLogger();
-    if ( m_dccStatus == Receiving )
+    if ( getStatus() == Transferring )
         failed( i18n( "Remote user disconnected" ) );
 }
 

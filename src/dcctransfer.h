@@ -32,24 +32,21 @@ class DccTransfer : public QObject
     public:
         enum DccType
         {
-            Send,
             Receive,
-            DccTypeCount
+            Send
         };
 
         enum DccStatus
         {
-            Queued = 0,                           // Newly added DCC, RECV: Waiting for local user's response
+            Configuring = 0,                      // Not queud yet (this means that user can't see the item at this time)
+            Queued,                               // Newly added DCC, waiting user's response
             Preparing,                            // Opening KIO to write received data
             WaitingRemote,                        // Waiting for remote host's response
             Connecting,                           // RECV: trying to connect to the server
-            // TODO: replace the following two with "Transferring"
-            Sending,                              // Sending
-            Receiving,                            // Receiving
+            Transferring,
             Done,                                 // Transfer done
             Failed,                               // Transfer failed
             Aborted,                              // Transfer aborted by user
-            DccStatusCount
         };
 
         enum UnavailableStatus
@@ -94,6 +91,7 @@ class DccTransfer : public QObject
         void statusChanged( DccTransfer* item, int newStatus, int oldStatus );
 
     public slots:
+        void queue();
         virtual void start() {};
         virtual void abort() {};
 
@@ -110,9 +108,9 @@ class DccTransfer : public QObject
 
     protected:
         // transfer information
-        DccType m_dccType;
-        DccStatus m_dccStatus;
-        QString m_dccStatusDetail;
+        DccType m_type;
+        DccStatus m_status;
+        QString m_statusDetail;
         bool m_resumed;
         KIO::fileoffset_t m_transferringPosition;
         KIO::fileoffset_t m_transferStartPosition;

@@ -35,19 +35,25 @@ DccTransferManager::~DccTransferManager()
 DccTransferRecv* DccTransferManager::newDownload( const QString& partnerNick, const KURL& defaultFolderURL, const QString& fileName, unsigned long fileSize, const QString& partnerIp, const QString& partnerPort )
 {
     DccTransferRecv* transfer = new DccTransferRecv( partnerNick, defaultFolderURL, fileName, fileSize, partnerIp, partnerPort );
-    m_transfers.push_back( transfer );
-    connect( transfer, SIGNAL( done( DccTransfer* ) ), this, SLOT( removeItem( DccTransfer* ) ) );
-    emit newTransferAdded( transfer );
+    initTransfer( transfer );
     return transfer;
 }
 
 DccTransferSend* DccTransferManager::newUpload( const QString& partnerNick, const KURL& fileURL, const QString& ownIp, const QString &altFileName, uint fileSize )
 {
     DccTransferSend* transfer = new DccTransferSend( partnerNick, fileURL, ownIp, altFileName, fileSize );
-    m_transfers.push_back( transfer );
-    connect( transfer, SIGNAL( done( DccTransfer* ) ), this, SLOT( removeItem( DccTransfer* ) ) );
-    emit newTransferAdded( transfer );
+    initTransfer( transfer );
     return transfer;
+}
+
+void DccTransferManager::initTransfer( DccTransfer* transfer )
+{
+    m_transfers.push_back( transfer );
+
+    connect( transfer, SIGNAL( statusChanged( DccTransfer*, int, int ) ), this, SLOT( slotTransferStatusChanged( DccTransfer*, int, int ) ) );
+    connect( transfer, SIGNAL( done( DccTransfer* ) ), this, SLOT( removeItem( DccTransfer* ) ) );
+
+    emit newTransferAdded( transfer );
 }
 
 DccTransfer* DccTransferManager::searchStandbyTransferByFileName( const QString& fileName, DccTransfer::DccType type, bool resumed )
@@ -89,7 +95,7 @@ bool DccTransferManager::isLocalFileInWritingProcess( const KURL& url )
     {
         if ( (*it)->getType() == DccTransfer::Receive &&
              ( (*it)->getStatus() == DccTransfer::Connecting ||
-               (*it)->getStatus() == DccTransfer::Receiving ) &&
+               (*it)->getStatus() == DccTransfer::Transferring ) &&
              (*it)->getFileURL() == url )
         {
             return true;
@@ -98,9 +104,16 @@ bool DccTransferManager::isLocalFileInWritingProcess( const KURL& url )
     return false;
 }
 
+void DccTransferManager::slotTransferStatusChanged( DccTransfer* item, int newStatus, int oldStatus )
+{
+    kdDebug() << "DccTransferManager::slotTransferStatusChanged(): " << oldStatus << " -> " << newStatus << " " << item->getFileName() << " (" << item->getType() << ")" << endl;
+
+    if ( newStatus == DccTransfer::Queued )
+        emit newTransferQueued( item );
+}
+
 void DccTransferManager::removeItem( DccTransfer* item )
 {
-    kdDebug() << "DccTransferManager::removeItem(): removing " << item->getFileName() << " (" << item->getType() << ")" << endl;
     item->deleteLater();
     m_transfers.remove( item );
 }

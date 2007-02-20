@@ -1838,7 +1838,6 @@ void Server::addDccSend(const QString &recipient,KURL fileURL, const QString &al
                                                    ownIp,
                                                    altFileName,
                                                    fileSize );
-    new DccTransferPanelItem( getViewContainer()->getDccPanel(), newDcc );
 
     connect(newDcc,SIGNAL (sendReady(const QString&,const QString&,const QString&,const QString&,unsigned long)),
         this,SLOT (dccSendRequest(const QString&,const QString&,const QString&,const QString&,unsigned long)) );
@@ -1846,6 +1845,7 @@ void Server::addDccSend(const QString &recipient,KURL fileURL, const QString &al
     connect(newDcc,SIGNAL (statusChanged(DccTransfer*,int,int)), this,
         SLOT(dccStatusChanged(DccTransfer*,int,int)) );
 
+    newDcc->queue();
     newDcc->start();
 
     appendMessageToFrontmost( i18n( "DCC" ),
@@ -1872,14 +1872,14 @@ void Server::addDccGet(const QString &sourceNick, const QStringList &dccArgument
         ip.toString(),                            // ip
         dccArguments[2] );                        // port
 
-    new DccTransferPanelItem( getViewContainer()->getDccPanel(), newDcc );
-
     connect(newDcc,SIGNAL (resumeRequest(const QString&,const QString&,const QString&,KIO::filesize_t)),this,
         SLOT (dccResumeGetRequest(const QString&,const QString&,const QString&,KIO::filesize_t)) );
     connect(newDcc,SIGNAL (done(DccTransfer*)),
         this,SLOT (dccGetDone(DccTransfer*)) );
     connect(newDcc,SIGNAL (statusChanged(DccTransfer*,int,int)), this,
         SLOT(dccStatusChanged(DccTransfer*,int,int)) );
+
+    newDcc->queue();
 
     appendMessageToFrontmost( i18n( "DCC" ),
                               i18n( "%1 offers to send you \"%2\" (%3)..." )
@@ -2007,18 +2007,16 @@ void Server::dccSendDone(DccTransfer* item)
 
 void Server::dccStatusChanged(DccTransfer *item, int newStatus, int oldStatus)
 {
-    getViewContainer()->getDccPanel()->dccStatusChanged();
-
     if ( item->getType() == DccTransfer::Send )
     {
         // when resuming, a message about the receiver's acceptance has been shown already, so suppress this message
-        if ( newStatus == DccTransfer::Sending && oldStatus == DccTransfer::WaitingRemote && !item->isResumed() )
+        if ( newStatus == DccTransfer::Transferring && oldStatus == DccTransfer::WaitingRemote && !item->isResumed() )
             appendMessageToFrontmost( i18n( "DCC" ), i18n( "%1 = file name, %2 nickname of recipient",
                 "Sending \"%1\" to %2...").arg( item->getFileName(), item->getPartnerNick() ) );
     }
-    else
+    else  // type == Receive
     {
-        if ( newStatus == DccTransfer::Receiving && !item->isResumed() )
+        if ( newStatus == DccTransfer::Transferring && !item->isResumed() )
         {
             appendMessageToFrontmost( i18n( "DCC" ),
                                         i18n( "%1 = file name, %2 = file size, %3 = nickname of sender", "Downloading \"%1\" (%2) from %3...")

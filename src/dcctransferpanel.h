@@ -76,10 +76,10 @@ class DccTransferPanel : public ChatWindow
 
         void selectMe(DccTransferPanelItem* item);
 
-    public slots:
-        void dccStatusChanged();
-
     protected slots:
+        void slotNewTransferQueued( DccTransfer* transfer );
+        void slotTransferStatusChanged();
+
         void acceptDcc();
         void abortDcc();
         void clearDcc();
@@ -101,6 +101,8 @@ class DccTransferPanel : public ChatWindow
     protected:
         /** Called from ChatWindow adjustFocus */
         virtual void childAdjustFocus();
+
+        void initGUI();
 
         KListView* m_listView;
         KPopupMenu* m_popup;

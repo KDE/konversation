@@ -83,7 +83,7 @@ void DccTransferDetailedInfoPanel::updateView()
         m_labelSelf->setText( i18n( "%1 (port %2)" ).arg( transfer->getOwnIp() ).arg( transfer->getOwnPort() ) );
 
     // Status:
-    if ( transfer->getStatus() == DccTransfer::Sending || transfer->getStatus() == DccTransfer::Receiving )
+    if ( transfer->getStatus() == DccTransfer::Transferring )
         m_labelStatus->setText( m_item->getStatusText() + " ( " + m_item->getCurrentSpeedPrettyText() + " )" );
     else
         m_labelStatus->setText( transfer->getStatusDetail().isEmpty() ? m_item->getStatusText() : m_item->getStatusText() + " (" + transfer->getStatusDetail() + ')' );
@@ -144,12 +144,12 @@ void DccTransferDetailedInfoPanel::updateView()
 void DccTransferDetailedInfoPanel::slotTransferStatusChanged( DccTransfer* /* transfer */, int newStatus, int oldStatus )
 {
     updateView();
-    if ( newStatus == DccTransfer::Sending || newStatus == DccTransfer::Receiving )
+    if ( newStatus == DccTransfer::Transferring )
     {
         // start auto view-update timer
         m_autoViewUpdateTimer->start( 500, false );
     }
-    else if ( oldStatus == DccTransfer::Sending || newStatus == DccTransfer::Receiving )
+    else if ( oldStatus == DccTransfer::Transferring )
     {
         // stop auto view-update timer
         m_autoViewUpdateTimer->stop();
