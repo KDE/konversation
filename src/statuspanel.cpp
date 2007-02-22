@@ -100,7 +100,7 @@ void StatusPanel::sendStatusText(const QString& sendLine)
     // replace aliases and wildcards
     if(m_server->getOutputFilter()->replaceAliases(outputAll))
     {
-        outputAll = m_server->parseWildcards(outputAll, m_server->getNickname(), QString::null, QString::null, QString::null, QString::null);
+        outputAll = m_server->parseWildcards(outputAll, m_server->getNickname(), QString(), QString(), QString(), QString());
     }
 
     // Send all strings, one after another
@@ -110,7 +110,7 @@ void StatusPanel::sendStatusText(const QString& sendLine)
         QString output(outList[index]);
 
         // encoding stuff is done in Server()
-        Konversation::OutputFilterResult result = m_server->getOutputFilter()->parse(m_server->getNickname(), output, QString::null);
+        Konversation::OutputFilterResult result = m_server->getOutputFilter()->parse(m_server->getNickname(), output, QString());
 
         if(!result.output.isEmpty())
         {
@@ -177,7 +177,7 @@ void StatusPanel::updateAppearance()
     else
     {
         getTextView()->setViewBackground(Preferences::color(Preferences::TextViewBackground),
-            QString::null);
+            QString());
     }
 
     if (Preferences::customTextFont())

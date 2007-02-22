@@ -107,7 +107,7 @@ void Autoreplace_Config::setAutoreplaceListView(const QStringList &autoreplaceLi
     // get autoreplace definition
     QString definition=autoreplaceList[index-1];
     // cut definition apart in name and action, and create a new listview item
-    QCheckListItem* newItem=new QCheckListItem(patternListView,QString::null,QCheckListItem::CheckBox);
+    QCheckListItem* newItem=new QCheckListItem(patternListView,QString(),QCheckListItem::CheckBox);
     // Regular expression?
     if(definition.section(',',0,0)=="1") newItem->setOn(true);
     // direction input/output/both
@@ -151,7 +151,7 @@ void Autoreplace_Config::saveSettings()
   // if there were no entries at all, write a dummy entry to prevent KConfigXT from "optimizing"
   // the group out, which would in turn make konvi restore the default entries
   else
-    config->writeEntry("Empty List",QString::null);
+    config->writeEntry("Empty List",QString());
 
   // set internal autoreplace list
   Preferences::setAutoreplaceList(newList);
@@ -302,7 +302,7 @@ void Autoreplace_Config::addEntry()
   disableSort();
 
   // add new item at the bottom of list view
-  QCheckListItem* newItem=new QCheckListItem(patternListView,QString::null,QCheckListItem::CheckBox);
+  QCheckListItem* newItem=new QCheckListItem(patternListView,QString(),QCheckListItem::CheckBox);
   // if successful ...
   if(newItem)
   {

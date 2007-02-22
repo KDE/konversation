@@ -32,7 +32,7 @@ namespace Konversation
     void Sound::play(const KURL& url)
     {
         #ifdef USE_KNOTIFY
-        KNotifyClient::userEvent(0,QString::null,1,1,url.path());
+        KNotifyClient::userEvent(0,QString(),1,1,url.path());
         #endif
     }
 }

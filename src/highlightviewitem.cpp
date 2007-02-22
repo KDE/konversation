@@ -19,7 +19,7 @@
 #include "highlightviewitem.h"
 
 HighlightViewItem::HighlightViewItem(KListView* parent, Highlight* passed_Highlight)
-: QCheckListItem(parent, QString::null,QCheckListItem::CheckBox)
+: QCheckListItem(parent, QString(), QCheckListItem::CheckBox)
 {
     setText(1,passed_Highlight->getPattern());
     itemColor = passed_Highlight->getColor();

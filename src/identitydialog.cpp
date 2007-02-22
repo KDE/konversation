@@ -322,7 +322,7 @@ namespace Konversation
     void IdentityDialog::addNickname()
     {
         bool ok = false;
-        QString txt = KInputDialog::getText(i18n("Add Nickname"), i18n("Nickname:"), QString::null, &ok, this);
+        QString txt = KInputDialog::getText(i18n("Add Nickname"), i18n("Nickname:"), QString(), &ok, this);
 
         if(ok && !txt.isEmpty())
         {
@@ -438,7 +438,7 @@ namespace Konversation
     void IdentityDialog::newIdentity()
     {
         bool ok = false;
-        QString txt = KInputDialog::getText(i18n("Add Identity"), i18n("Identity name:"), QString::null, &ok, this);
+        QString txt = KInputDialog::getText(i18n("Add Identity"), i18n("Identity name:"), QString(), &ok, this);
 
         if(ok && !txt.isEmpty())
         {

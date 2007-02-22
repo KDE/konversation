@@ -74,7 +74,7 @@ namespace Konversation
              * Send the file to the contact
              */
             void sendFile(const QString &uid, const KURL &sourceURL,
-                const QString &altFileName = QString::null, uint fileSize = 0);
+                const QString &altFileName = QString(), uint fileSize = 0);
 
             /**
              * Lets outsiders tell us to emit presenceChanged signal.

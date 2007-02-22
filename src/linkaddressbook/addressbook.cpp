@@ -238,7 +238,7 @@ namespace Konversation
         focusAndShowErrorMessage(i18n("Another KDE application tried to use Konversation for instant messaging, but did not specify any contact to send the message to.  This is probably a bug in the other application."));
         return;
     }
-    messageContact(contactId, QString::null);
+    messageContact(contactId, QString());
 }
 
 /**
@@ -253,7 +253,7 @@ void Addressbook::chatWithContact( const QString &uid )
         focusAndShowErrorMessage(i18n("Another KDE application tried to use Konversation for instant messaging, but did not specify any contact to send the message to.  This is probably a bug in the other application."));
         return;
     }
-    messageContact(uid, QString::null);
+    messageContact(uid, QString());
 }
 
 /**

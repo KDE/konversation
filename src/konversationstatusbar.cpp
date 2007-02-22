@@ -125,7 +125,7 @@ void KonversationStatusBar::updateInfoLabel(const QString& text)
 
 void KonversationStatusBar::clearInfoLabel()
 {
-    m_infoLabel->setText(QString::null);
+    m_infoLabel->setText(QString());
 }
 
 void KonversationStatusBar::setLagLabelShown(bool shown)

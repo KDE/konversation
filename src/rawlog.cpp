@@ -53,7 +53,7 @@ void RawLog::updateAppearance()
     else
     {
         getTextView()->setViewBackground(Preferences::color(Preferences::TextViewBackground),
-            QString::null);
+            QString());
     }
 
     if (Preferences::customTextFont())

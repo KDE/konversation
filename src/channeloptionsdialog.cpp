@@ -402,7 +402,7 @@ namespace Konversation
         {
             if (!m_NewBan->text(0).isEmpty())
             {
-                m_channel->getServer()->requestBan(QStringList(m_NewBan->text(0)), m_channel->getName(), QString::null);
+                m_channel->getServer()->requestBan(QStringList(m_NewBan->text(0)), m_channel->getName(), QString());
             }
 
             // We will delete the item and let the addBan slot handle
@@ -423,7 +423,7 @@ namespace Konversation
 
             if (!new_edited->text(0).isEmpty())
             {
-                m_channel->getServer()->requestBan(QStringList(new_edited->text(0)), m_channel->getName(), QString::null);
+                m_channel->getServer()->requestBan(QStringList(new_edited->text(0)), m_channel->getName(), QString());
             }
 
             // We delete the existing item because it's possible the server may

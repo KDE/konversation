@@ -56,7 +56,7 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
     setTopicTarget(false);
     setRegExp(false);
 
-    filterTextChanged(QString::null);
+    filterTextChanged(QString());
 
     QHGroupBox* filterGroup=new QHGroupBox(i18n("Filter Settings"),this);
     QGrid* mainGrid=new QGrid(2,Qt::Vertical,filterGroup);
@@ -108,8 +108,8 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
     QHBox* statsBox=new QHBox(this);
     statsBox->setSpacing(spacing());
 
-    QLabel* channelsLabel=new QLabel(QString::null,statsBox);
-    QLabel* usersLabel=new QLabel(QString::null,statsBox);
+    QLabel* channelsLabel=new QLabel(QString(),statsBox);
+    QLabel* usersLabel=new QLabel(QString(),statsBox);
 
     statsBox->setStretchFactor(usersLabel,10);
 
@@ -180,8 +180,8 @@ void ChannelListPanel::saveList()
 {
     // Ask user for file name
     QString fileName=KFileDialog::getSaveFileName(
-        QString::null,
-        QString::null,
+        QString(),
+        QString(),
         this,
         i18n("Save Channel List"));
 

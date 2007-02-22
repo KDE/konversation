@@ -204,8 +204,8 @@ void UrlCatcher::saveListClicked()
 {
     // Ask user for file name
     QString fileName=KFileDialog::getSaveFileName(
-        QString::null,
-        QString::null,
+        QString(),
+        QString(),
         this,
         i18n("Save URL List"));
 

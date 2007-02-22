@@ -29,7 +29,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 /**
  * Generic DCOP interface for KDE instant messenger applications
  * Note one omission of this interface is the lack of control over the range of values used for protocols' names.
- * @since 3.3
  * @author Will Stephenson <lists@stevello.free-online.co.uk>
  */
 class KIMIface : virtual public DCOPObject
@@ -159,7 +158,7 @@ class KIMIface : virtual public DCOPObject
      * @param fileSize file size in bytes
      */
     virtual void sendFile(const QString &uid, const KURL &sourceURL,
-        const QString &altFileName = QString::null, uint fileSize = 0) = 0;
+        const QString &altFileName = QString(), uint fileSize = 0) = 0;
 
     // MUTATORS
     // Contact list

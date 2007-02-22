@@ -194,8 +194,8 @@ Channel::Channel(QWidget* parent)
     nicknameListView->setSelectionModeExt(KListView::Extended);
     nicknameListView->setAllColumnsShowFocus(true);
     nicknameListView->setSorting(1,true);
-    nicknameListView->addColumn(QString::null);
-    nicknameListView->addColumn(QString::null);
+    nicknameListView->addColumn(QString());
+    nicknameListView->addColumn(QString());
     nicknameListView->setColumnWidthMode(1,KListView::Maximum);
 
     nicknameListView->header()->hide();
@@ -883,7 +883,7 @@ void Channel::sendChannelText(const QString& sendLine)
     if(m_server->getOutputFilter()->replaceAliases(outputAll))
     {
         outputAll = m_server->parseWildcards(outputAll,m_server->getNickname(),getName(),getKey(),
-            getSelectedNickList(),QString::null);
+            getSelectedNickList(),QString());
     }
 
     // Send all strings, one after another
@@ -1001,7 +1001,7 @@ void Channel::modeButtonClicked(int id,bool on)
             if(result==KPasswordDialog::Accepted && !key.isEmpty()) setKey(key);
         }
         args=getKey();
-        if(!on) setKey(QString::null);
+        if(!on) setKey(QString());
     }
     else if(mode[id]=='l')
     {
@@ -1027,7 +1027,7 @@ void Channel::modeButtonClicked(int id,bool on)
 void Channel::quickButtonClicked(const QString &buttonText)
 {
     // parse wildcards (toParse,nickname,channelName,nickList,queryName,parameter)
-    QString out=m_server->parseWildcards(buttonText,m_server->getNickname(),getName(),getKey(),getSelectedNickList(),QString::null);
+    QString out=m_server->parseWildcards(buttonText,m_server->getNickname(),getName(),getKey(),getSelectedNickList(),QString());
 
     // are there any newlines in the definition?
     if(out.find('\n')!=-1)
@@ -1402,7 +1402,7 @@ void Channel::updateMode(const QString& sourceNick, char mode, bool plus, const 
     //Note for future expansion: doing m_server->getChannelNick(getName(), sourceNick);  may not return a valid channelNickPtr if the
     //mode is updated by the server.
 
-    QString message(QString::null);
+    QString message;
     ChannelNickPtr parameterChannelNick=m_server->getChannelNick(getName(), parameter);
 
     bool fromMe=false;
@@ -1903,7 +1903,7 @@ void Channel::updateQuickButtons(const QStringList &newButtonList)
     for(unsigned int index=0;index<newButtonList.count();index++)
     {
         // generate empty buttons first, text will be added later
-        QuickButton* quickButton = new QuickButton(QString::null, QString::null, buttonsGrid);
+        QuickButton* quickButton = new QuickButton(QString(), QString(), buttonsGrid);
         buttonList.append(quickButton);
 
         connect(quickButton, SIGNAL(clicked(const QString &)), this, SLOT(quickButtonClicked(const QString &)));
@@ -2082,7 +2082,7 @@ void Channel::updateAppearance()
     else
     {
         getTextView()->setViewBackground(Preferences::color(Preferences::TextViewBackground),
-            QString::null);
+            QString());
     }
 
     if (Preferences::customTextFont())
@@ -2260,7 +2260,7 @@ void Channel::setAutoUserhost(bool state)
         if(nicknameListView->columns()==2)
         {
             // re-add the hostmask column
-            nicknameListView->addColumn(QString::null);
+            nicknameListView->addColumn(QString());
             nicknameListView->setColumnWidthMode(2,KListView::Maximum);
             nicknameListView->setResizeMode(QListView::NoColumn);
 

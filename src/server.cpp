@@ -433,7 +433,7 @@ void Server::connectToIRCServer()
         // connect() will do a async lookup too
         if(!m_serverGroup->serverByIndex(m_currentServerIndex).SSLEnabled())
         {
-            m_socket = new KNetwork::KBufferedSocket(QString::null, QString::null, 0L, "serverSocket");
+            m_socket = new KNetwork::KBufferedSocket(QString(), QString(), 0L, "serverSocket");
             connect(m_socket,SIGNAL (connected(const KResolverEntry&)),this,SLOT (ircServerConnectionSuccess()));
         }
         else
@@ -811,7 +811,7 @@ void Server::connectionEstablished(const QString& ownHost)
             m_isAway = false;
             QString awayReason = m_awayReason.isEmpty() ? i18n("Gone away for now.") : m_awayReason;
             QString command(Preferences::commandChar() + "AWAY " + awayReason);
-            Konversation::OutputFilterResult result = outputFilter->parse(getNickname(),command, QString::null);
+            Konversation::OutputFilterResult result = outputFilter->parse(getNickname(),command, QString());
             queue(result.toServer);
         }
 
@@ -860,7 +860,7 @@ void Server::gotOwnResolvedHostByWelcome(KResolverResults res)
 void Server::quitServer()
 {
     QString command(Preferences::commandChar()+"QUIT");
-    Konversation::OutputFilterResult result = outputFilter->parse(getNickname(),command, QString::null);
+    Konversation::OutputFilterResult result = outputFilter->parse(getNickname(),command, QString());
     queue(result.toServer);
     if (m_socket) m_socket->enableRead(false);
 }
@@ -870,16 +870,16 @@ void Server::notifyAction(const QString& nick)
     // parse wildcards (toParse,nickname,channelName,nickList,parameter)
     QString out = parseWildcards(Preferences::notifyDoubleClickAction(),
         getNickname(),
-        QString::null,
-        QString::null,
+        QString(),
+        QString(),
         nick,
-        QString::null);
+        QString());
 
     // Send all strings, one after another
     QStringList outList = QStringList::split('\n',out);
     for(unsigned int index=0; index<outList.count(); ++index)
     {
-        Konversation::OutputFilterResult result = outputFilter->parse(getNickname(),outList[index],QString::null);
+        Konversation::OutputFilterResult result = outputFilter->parse(getNickname(),outList[index],QString());
         queue(result.toServer);
     }                                             // endfor
 }
@@ -976,7 +976,7 @@ void Server::autoCommandsAndChannels()
             QString output(*iter);
             output = output.simplifyWhiteSpace();
             getOutputFilter()->replaceAliases(output);
-            Konversation::OutputFilterResult result = getOutputFilter()->parse(getNickname(),output,QString::null);
+            Konversation::OutputFilterResult result = getOutputFilter()->parse(getNickname(),output,QString());
             queue(result.toServer);
         }
     }
@@ -1004,7 +1004,7 @@ QString Server::getNextNickname()
     {
         QString inputText = i18n("No nicknames from the \"%1\" identity were accepted by the connection \"%2\".\nPlease enter a new one or press Cancel to disconnect:").arg(getIdentity()->getName()).arg(getServerGroup());
         newNick = KInputDialog::getText(i18n("Nickname error"), inputText,
-                                        QString::null, 0, getStatusView(), "NickChangeDialog");
+                                        QString(), 0, getStatusView(), "NickChangeDialog");
     }
 
     return newNick;
@@ -1679,7 +1679,7 @@ void Server::closeChannel(const QString& name)
 
 void Server::requestChannelList()
 {
-    inputFilter.setAutomaticRequest("LIST", QString::null, true);
+    inputFilter.setAutomaticRequest("LIST", QString(), true);
     queue("LIST");
 }
 
@@ -1767,7 +1767,7 @@ void Server::requestUnban(const QString& mask,const QString& channel)
 
 void Server::requestDccSend()
 {
-    requestDccSend(QString::null);
+    requestDccSend(QString());
 }
 
 void Server::sendURIs(const QStrList& uris, const QString& nick)
@@ -1813,7 +1813,7 @@ void Server::requestDccSend(const QString &a_recipient)
     {
         KURL::List fileURLs=KFileDialog::getOpenURLs(
             lastDccDir,
-            QString::null,
+            QString(),
             getViewContainer()->getWindow(),
             i18n("Select File(s) to Send to %1").arg(recipient)
         );
@@ -2052,7 +2052,7 @@ void Server::removeQuery(class Query* query)
 void Server::sendJoinCommand(const QString& name, const QString& password)
 {
     Konversation::OutputFilterResult result = outputFilter->parse(getNickname(),
-        Preferences::commandChar() + "JOIN " + name + ' ' + password, QString::null);
+        Preferences::commandChar() + "JOIN " + name + ' ' + password, QString());
     queue(result.toServer);
 }
 
@@ -3237,7 +3237,7 @@ void Server::executeMultiServerCommand(const QString& command, const QString& pa
         if(!parameter.isEmpty() && command == "away")
             str += ' ' + parameter;
 
-        Konversation::OutputFilterResult result = outputFilter->parse(getNickname(), str, QString::null);
+        Konversation::OutputFilterResult result = outputFilter->parse(getNickname(), str, QString());
         queue(result.toServer);
     }
     else if(command == "msg")

@@ -69,10 +69,10 @@ namespace Konversation
         public:
             explicit BanListViewItem( QListView *parent );
             BanListViewItem( QListView *parent, bool isNew );
-            BanListViewItem ( QListView *parent, const QString& label1, const QString& label2 = QString::null,
-                const QString& label3 = QString::null);
+            BanListViewItem ( QListView *parent, const QString& label1, const QString& label2 = QString(),
+                const QString& label3 = QString());
             BanListViewItem ( QListView *parent, bool isNew, const QString& label1,
-                const QString& label2 = QString::null, const QString& label3 = QString::null);
+                const QString& label2 = QString(), const QString& label3 = QString());
             virtual void startRename( int col );
             virtual QString getOldValue() { return m_oldValue; }
 

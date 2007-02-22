@@ -201,7 +201,7 @@ namespace Konversation
                 case Bookmark:
                 {
                     KBookmarkManager* bm = KBookmarkManager::userBookmarksManager();
-                    KBookmarkGroup bg = bm->addBookmarkDialog(m_urlToCopy, QString::null);
+                    KBookmarkGroup bg = bm->addBookmarkDialog(m_urlToCopy, QString());
                     bm->save();
                     bm->emitChanged(bg);
                     break;

@@ -249,7 +249,7 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent)
 
     setServer(newServer);
 
-    setViewBackground(Preferences::color(Preferences::TextViewBackground),QString::null);
+    setViewBackground(Preferences::color(Preferences::TextViewBackground),QString());
 
     if (Preferences::customTextFont())
         setFont(Preferences::textFont());
@@ -741,7 +741,7 @@ bool doHighlight, bool parseURL, bool self)
                 {
                   m_autoTextToSend.replace(QString("%%1").arg(capture),captures[capture]);
                 }
-                m_autoTextToSend.replace(QRegExp("%[0-9]"),QString::null);
+                m_autoTextToSend.replace(QRegExp("%[0-9]"),QString());
             }
         }
 
@@ -1168,7 +1168,7 @@ void IRCView::doAppend(const QString& newLine, bool self)
     {
         // replace placeholders in autoText
         QString sendText = m_server->parseWildcards(m_autoTextToSend,m_server->getNickname(),
-            QString::null, QString::null, QString::null, QString::null);
+            QString(), QString(), QString(), QString());
         // avoid recursion due to signalling
         m_autoTextToSend = QString();
         // send signal only now
@@ -1356,7 +1356,7 @@ bool IRCView::contextMenu(QContextMenuEvent* ce)
             case Bookmark:
             {
                 KBookmarkManager* bm = KBookmarkManager::userBookmarksManager();
-                KBookmarkGroup bg = bm->addBookmarkDialog(m_urlToCopy, QString::null);
+                KBookmarkGroup bg = bm->addBookmarkDialog(m_urlToCopy, QString());
                 bm->save();
                 bm->emitChanged(bg);
                 break;
@@ -1770,7 +1770,7 @@ void IRCView::updateScrollBarPos()
 
 void IRCView::saveLinkAs(const QString& url)
 {
-    KURL destination = KFileDialog::getSaveURL(":SaveLinkAs", QString::null, this, i18n("Save Link As"));
+    KURL destination = KFileDialog::getSaveURL(":SaveLinkAs", QString(), this, i18n("Save Link As"));
 
     if(destination.isEmpty())
         return;

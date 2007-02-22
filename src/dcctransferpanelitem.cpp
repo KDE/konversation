@@ -221,7 +221,7 @@ void DccTransferPanelItem::openFileInfoDialog()
         QString path=m_transfer->getFileURL().path();
 
         // get meta info object
-        KFileMetaInfo fileInfo(path,QString::null,KFileMetaInfo::Everything);
+        KFileMetaInfo fileInfo(path,QString(),KFileMetaInfo::Everything);
 
         // is there any info for this file?
         if(!fileInfo.isEmpty())

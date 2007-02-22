@@ -34,7 +34,7 @@ class DccTransferSend : public DccTransfer
     Q_OBJECT
 
         public:
-        DccTransferSend( const QString& partnerNick, const KURL& fileURL, const QString& ownIp, const QString &altFileName = QString::null, uint fileSize = -1 );
+        DccTransferSend( const QString& partnerNick, const KURL& fileURL, const QString& ownIp, const QString &altFileName = QString(), uint fileSize = -1 );
         virtual ~DccTransferSend();
 
         bool setResume( unsigned long position );
@@ -57,7 +57,7 @@ class DccTransferSend : public DccTransfer
 
     protected:
         void cleanUp();
-        void failed(const QString& errorMessage = QString::null );
+        void failed(const QString& errorMessage = QString() );
         void startConnectionTimer( int sec );
         void stopConnectionTimer();
 

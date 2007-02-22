@@ -742,7 +742,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                         pos = value.find(')',1);
                         if(pos==-1)
                         {
-                            server->setPrefixes (QString::null, value);
+                            server->setPrefixes(QString(), value);
                             // XXX if ) isn't in the string, NOTHING should be there. anyone got a server
                             if (value.length() || property.length())
                                 server->appendStatusMessage("","XXX Server sent bad PREFIX in RPL_ISUPPORT, please report.");
@@ -772,12 +772,12 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             {
                 const QString modeString=parameterList[2];
                 // This is the string the user will see
-                QString modesAre(QString::null);
+                QString modesAre;
                 QString message = i18n("Channel modes: ") + modeString;
 
                 for(unsigned int index=0;index<modeString.length();index++)
                 {
-                    QString parameter(QString::null);
+                    QString parameter;
                     int parameterCount=3;
                     char mode=modeString[index];
                     if(mode!='+')
@@ -1231,7 +1231,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     nickInfo->setAway(bAway);
                     if(!bAway)
                     {
-                        nickInfo->setAwayMessage(QString::null);
+                        nickInfo->setAwayMessage(QString());
                     }
                 }
                 // Display message only if this was not an automatic request.
@@ -1244,7 +1244,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                             .arg(parameterList[2])
                             .arg(parameterList[3])
                             .arg(trailing.section(" ", 1))
-                            .arg(bAway?i18n(" (Away)"):QString::null)
+                            .arg(bAway?i18n(" (Away)"):QString())
                             , false); // Don't parse as url
                     }
                 }
@@ -1399,7 +1399,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     // Clear the away state on assumption that if nick is away, this message will be followed
                     // by a 301 RPL_AWAY message.  Not necessary a invalid assumption, but what can we do?
                     nickInfo->setAway(false);
-                    nickInfo->setAwayMessage(QString::null);
+                    nickInfo->setAwayMessage(QString());
                 }
                 // Display message only if this was not an automatic request.
                 if(getAutomaticRequest("WHOIS",parameterList[1])==0)
@@ -1574,9 +1574,9 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                         server->appendMessageToFrontmost(i18n("Userhost"),
                             i18n("%1 = nick, %2 = shows if nick is op, %3 = hostmask, %4 = shows away", "%1%2 is %3%4.")
                             .arg(nick)
-                            .arg((ircOp) ? i18n(" (IRC Operator)") : QString::null)
+                            .arg((ircOp) ? i18n(" (IRC Operator)") : QString())
                             .arg(mask)
-                            .arg((away) ? i18n(" (away)") : QString::null));
+                            .arg((away) ? i18n(" (away)") : QString()));
                     }
 
                     // was this an automatic request?
@@ -1589,7 +1589,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             }
             case RPL_LISTSTART:                   //FIXME This reply is obsolete!!!
             {
-                if(getAutomaticRequest("LIST",QString::null)==0)
+                if(getAutomaticRequest("LIST",QString())==0)
                 {
                     server->appendMessageToFrontmost(i18n("List"),i18n("List of channels:"));
                 }
@@ -1597,7 +1597,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             }
             case RPL_LIST:
             {
-                if(getAutomaticRequest("LIST",QString::null)==0)
+                if(getAutomaticRequest("LIST",QString())==0)
                 {
                     QString message;
                     message=i18n("%1 (%n user): %2", "%1 (%n users): %2", parameterList[2].toInt());
@@ -1613,13 +1613,13 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             case RPL_LISTEND:
             {
                 // was this an automatic request?
-                if(getAutomaticRequest("LIST",QString::null)==0)
+                if(getAutomaticRequest("LIST",QString())==0)
                 {
                     server->appendMessageToFrontmost(i18n("List"),i18n("End of channel list."));
                 }
                 else
                 {
-                    setAutomaticRequest("LIST",QString::null,false);
+                    setAutomaticRequest("LIST",QString(),false);
                 }
                 break;
             }
@@ -1637,7 +1637,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 if(nickInfo)
                 {
                     nickInfo->setAway(false);
-                    nickInfo->setAwayMessage(QString::null);
+                    nickInfo->setAwayMessage(QString());
                 }
 
                 Identity identity = *(server->getIdentity());

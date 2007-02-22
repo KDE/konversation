@@ -104,7 +104,7 @@ void QuickButtons_Config::saveSettings()
   // if there were no buttons at all, write a dummy entry to prevent KConfigXT from "optimizing"
   // the group out, which would in turn make konvi restore the default buttons
   else
-    config->writeEntry("Empty List",QString::null);
+    config->writeEntry("Empty List",QString());
 
   // set internal button list
   Preferences::setQuickButtonList(newList);
@@ -209,7 +209,7 @@ void QuickButtons_Config::actionChanged(const QString& newAction)
 void QuickButtons_Config::addEntry()
 {
   // add new item at the bottom of list view
-  KListViewItem* newItem=new KListViewItem(buttonListView,buttonListView->lastChild(),i18n("New"),QString::null);
+  KListViewItem* newItem=new KListViewItem(buttonListView,buttonListView->lastChild(),i18n("New"),QString());
   // if successful ...
   if(newItem)
   {

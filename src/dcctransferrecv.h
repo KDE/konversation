@@ -87,7 +87,7 @@ class DccTransferRecv : public DccTransfer
 
     protected:
         void cleanUp();
-        void failed(const QString& errorMessage = QString::null );
+        void failed(const QString& errorMessage = QString() );
 
                                                   // (startPosition == 0) means "don't resume"
         void prepareLocalKio( bool overwrite, bool resume, KIO::fileoffset_t startPosition = 0 );

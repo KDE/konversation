@@ -24,7 +24,7 @@ class DccTransferDetailedInfoPanel : public DccTransferDetailedInfoPanelUI
     Q_OBJECT
 
     public:
-        DccTransferDetailedInfoPanel( QWidget* parent = 0, const char* name = 0 );
+        explicit DccTransferDetailedInfoPanel( QWidget* parent = 0, const char* name = 0 );
         virtual ~DccTransferDetailedInfoPanel();
 
         void setItem( DccTransferPanelItem* item );

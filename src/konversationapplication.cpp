@@ -220,9 +220,9 @@ void KonversationApplication::toggleAway()
 
     //alreadyaway is true if _any_ servers are away
     if (alreadyaway)
-        sendMultiServerCommand("back", QString::null);
+        sendMultiServerCommand("back", QString());
     else
-        sendMultiServerCommand("away", QString::null);
+        sendMultiServerCommand("away", QString());
 }
 
 void KonversationApplication::dcopMultiServerRaw(const QString &command)
@@ -727,7 +727,7 @@ void KonversationApplication::readOptions()
         unsigned int hiIndex;
         for(hiIndex=0;hiIndex<hiList.count();hiIndex+=2)
         {
-            Preferences::addHighlight(hiList[hiIndex],false,'#'+hiList[hiIndex+1],QString::null,QString::null);
+            Preferences::addHighlight(hiList[hiIndex],false,'#'+hiList[hiIndex+1],QString(),QString());
         }
 
         config->deleteEntry("Highlight");
@@ -1145,7 +1145,7 @@ QString KonversationApplication::doAutoreplace(const QString& text,bool output)
                         {
                             replacement.replace(QString("%%1").arg(capture),captures[capture]);
                         }
-                        replacement.replace(QRegExp("%[0-9]"),QString::null);
+                        replacement.replace(QRegExp("%[0-9]"),QString());
                         // replace input with replacement
                         line.replace(index, captures[0].length(), replacement);
                         index += replacement.length();

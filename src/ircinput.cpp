@@ -52,7 +52,7 @@ IRCInput::IRCInput(QWidget* parent) : KTextEdit(parent)
     // connect history signal
     connect(this,SIGNAL (history(bool)) ,this,SLOT (getHistory(bool)) );
     // add one empty line to the history (will be overwritten with newest entry)
-    historyList.prepend(QString::null);
+    historyList.prepend(QString());
     // reset history line counter
     lineNum=0;
     // reset completion mode
@@ -304,7 +304,7 @@ void IRCInput::addHistory(const QString& line)
         // Replace empty first entry with line
         historyList[0]=line;
         // Add new empty entry to history
-        historyList.prepend(QString::null);
+        historyList.prepend(QString());
         // Remove oldest line in history, if the list grows beyond MAXHISTORY
         if(historyList.count()>MAXHISTORY) historyList.remove(historyList.last());
     }

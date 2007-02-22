@@ -164,7 +164,7 @@ void Theme_Config::restorePageToDefaults()
 
 void Theme_Config::installTheme()
 {
-    KURL themeURL = KFileDialog::getOpenURL(QString::null,
+    KURL themeURL = KFileDialog::getOpenURL(QString(),
         i18n("*.tar.gz *.tar.bz2 *.tar *.zip|Konversation Themes"),
         NULL,
         i18n("Select Theme Package")

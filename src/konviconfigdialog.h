@@ -70,13 +70,13 @@ class KDEUI_EXPORT KonviConfigDialog : public KDialogBase
 
         void addPage( QWidget *page, const QStringList &items,
                       const QString &pixmapName,
-                      const QString &header=QString::null,
+                      const QString &header=QString(),
                       bool manage=true );
 
         void addPage( QWidget *page, KConfigSkeleton *config,
                       const QStringList &items,
                       const QString &pixmapName,
-                      const QString &header=QString::null );
+                      const QString &header=QString() );
 
         static KonviConfigDialog* exists( const char* name );
 

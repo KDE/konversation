@@ -191,7 +191,7 @@ void Query::sendQueryText(const QString& sendLine)
     // replace aliases and wildcards
     if(m_server->getOutputFilter()->replaceAliases(outputAll))
     {
-        outputAll = m_server->parseWildcards(outputAll, m_server->getNickname(), getName(), QString::null, QString::null, QString::null);
+        outputAll = m_server->parseWildcards(outputAll, m_server->getNickname(), getName(), QString(), QString(), QString());
     }
 
     // Send all strings, one after another
@@ -261,7 +261,7 @@ void Query::updateAppearance()
     else
     {
         getTextView()->setViewBackground(Preferences::color(Preferences::TextViewBackground),
-            QString::null);
+            QString());
     }
 
     if (Preferences::customTextFont())

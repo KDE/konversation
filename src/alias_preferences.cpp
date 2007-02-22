@@ -170,7 +170,7 @@ void Alias_Config::actionChanged(const QString& newAction)
 void Alias_Config::addEntry()
 {
     // add new item at the bottom of list view
-    KListViewItem* newItem = new KListViewItem(aliasListView,aliasListView->lastChild(),i18n("New"),QString::null);
+    KListViewItem* newItem = new KListViewItem(aliasListView,aliasListView->lastChild(),i18n("New"),QString());
     // if successful ...
     if (newItem)
     {

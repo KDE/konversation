@@ -403,10 +403,10 @@ class Server : public QObject
         void requestBan(const QStringList& users,const QString& channel,const QString& option);
         void requestUnban(const QString& mask,const QString& channel);
 
-        void addDccSend(const QString &recipient,KURL fileURL, const QString &altFileName = QString::null, uint fileSize = 0);
+        void addDccSend(const QString &recipient,KURL fileURL, const QString &altFileName = QString(), uint fileSize = 0);
         void removeQuery(Query *query);
         void startNotifyTimer(int msec=0);
-        void sendJoinCommand(const QString& channelName, const QString& password = QString::null);
+        void sendJoinCommand(const QString& channelName, const QString& password = QString());
         void requestChannelList();
         void requestWhois(const QString& nickname);
         void requestWho(const QString& channel);
@@ -508,7 +508,7 @@ class Server : public QObject
         void setViewContainer(ViewContainer* newViewContainer);
 
         void autoRejoinChannels();
-        void updateAutoJoin(const QString& channel=QString::null);
+        void updateAutoJoin(const QString& channel=QString());
 
         /** Adds a nickname to the unjoinedChannels list.
          *  Creates new NickInfo if necessary.

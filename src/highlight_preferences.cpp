@@ -257,7 +257,7 @@ void Highlight_Config::autoTextChanged(const QString& newText)
 
 void Highlight_Config::addHighlight()
 {
-  Highlight* newHighlight=new Highlight(i18n("New"),false,QColor("#ff0000"),KURL(),QString::null);
+  Highlight* newHighlight=new Highlight(i18n("New"),false,QColor("#ff0000"),KURL(),QString());
 
   HighlightViewItem* item=new HighlightViewItem(highlightListView,newHighlight);
   highlightListView->setSelected(item,true);

@@ -32,12 +32,12 @@ class NicksOnlineItem : public KListViewItem
         NicksOnlineItem(int type,
                         QListView* parent,
                         const QString& name,
-                        const QString& col2 = QString::null);
+                        const QString& col2 = QString());
 
         NicksOnlineItem(int type,
                         QListViewItem* parent,
                         const QString& name,
-                        const QString& col2 = QString::null);
+                        const QString& col2 = QString());
 
         /**
         * Reimplemented to make sure, "Offline" items always get sorted to the bottom of the list

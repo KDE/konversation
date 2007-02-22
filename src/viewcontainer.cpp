@@ -1388,7 +1388,7 @@ void ViewContainer::switchView(QWidget* newView)
     if (tabName != "ChatWindowObject")
         emit setWindowCaption(tabName);
     else
-        emit setWindowCaption(QString::null);
+        emit setWindowCaption(QString());
 }
 
 void ViewContainer::showView(ChatWindow* view)
@@ -1569,7 +1569,7 @@ void ViewContainer::changeViewCharset(int index)
     if (chatWin)
     {
         if (index == 0)
-            chatWin->setChannelEncoding(QString::null);
+            chatWin->setChannelEncoding(QString());
         else
             chatWin->setChannelEncoding(Konversation::IRCCharsets::self()->availableEncodingShortNames()[index - 1]);
     }

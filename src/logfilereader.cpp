@@ -127,7 +127,7 @@ void LogfileReader::saveLog()
         "SaveLogfileNote");
 
     QString destination=KFileDialog::getSaveFileName(fileName,
-        QString::null,
+        QString(),
         this,
         i18n("Choose Destination Folder"));
     if(!destination.isEmpty())

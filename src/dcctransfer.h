@@ -96,7 +96,7 @@ class DccTransfer : public QObject
         virtual void abort() {};
 
     protected:
-        void setStatus( DccStatus status, const QString& statusDetail = QString::null );
+        void setStatus( DccStatus status, const QString& statusDetail = QString() );
         void startTransferLogger();
         void finishTransferLogger();
 
