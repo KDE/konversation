@@ -65,7 +65,7 @@ class DccTransferPanel : public ChatWindow
                     Clear,
                     Open,
                     Remove,
-                    Info,
+                    Info
                 };
         };
 

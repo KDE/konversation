@@ -46,14 +46,14 @@ class DccTransfer : public QObject
             Transferring,
             Done,                                 // Transfer done
             Failed,                               // Transfer failed
-            Aborted,                              // Transfer aborted by user
+            Aborted                               // Transfer aborted by user
         };
 
         enum UnavailableStatus
         {
             Calculating = -1,
             NotInTransfer = -2,
-            InfiniteValue = -3,
+            InfiniteValue = -3
         };
 
         DccTransfer( DccType dccType, const QString& partnerNick );
