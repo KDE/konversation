@@ -48,7 +48,7 @@ class DccTransferManager : public QObject
         void newTransferQueued( DccTransfer* transfer );
 
     public:
-        DccTransferRecv* newDownload( const QString& partnerNick, const KURL& defaultFolderURL, const QString& fileName, unsigned long fileSize, const QString& partnerIp, const QString& partnerPort );
+        DccTransferRecv* newDownload();
         DccTransferSend* newUpload( const QString& partnerNick, const KURL& fileURL, const QString& ownIp, const QString &altFileName = QString(), uint fileSize = -1 );
 
         DccTransfer* searchStandbyTransferByFileName( const QString& fileName, DccTransfer::DccType type, bool resumed = false );

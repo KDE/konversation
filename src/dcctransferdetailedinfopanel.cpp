@@ -18,6 +18,7 @@
 #include <kurlrequester.h>
 
 #include "dcctransfer.h"
+#include "dcctransferrecv.h"
 #include "dcctransferpanelitem.h"
 
 #include "dcctransferdetailedinfopanel.h"
@@ -158,7 +159,11 @@ void DccTransferDetailedInfoPanel::slotTransferStatusChanged( DccTransfer* /* tr
 
 void DccTransferDetailedInfoPanel::slotLocationChanged( const QString& url )
 {
-    m_item->transfer()->setFileURL( KURL::fromPathOrURL( url ) );
+    if ( m_item->transfer()->getType() == DccTransfer::Receive )
+    {
+        DccTransferRecv* transfer = static_cast< DccTransferRecv* >( m_item->transfer() );
+        transfer->setFileURL( KURL::fromPathOrURL( url ) );
+    }
 }
 
 #include "dcctransferdetailedinfopanel.moc"

@@ -44,9 +44,9 @@ class DccTransfer : public QObject
             WaitingRemote,                        // Waiting for remote host's response
             Connecting,                           // RECV: trying to connect to the server
             Transferring,
-            Done,                                 // Transfer done
-            Failed,                               // Transfer failed
-            Aborted                               // Transfer aborted by user
+            Done,
+            Failed,
+            Aborted
         };
 
         enum UnavailableStatus
@@ -56,7 +56,7 @@ class DccTransfer : public QObject
             InfiniteValue = -3
         };
 
-        DccTransfer( DccType dccType, const QString& partnerNick );
+        DccTransfer( DccType dccType );
         virtual ~DccTransfer();
 
         // info of DccTransfer can be copied with this constructor.
@@ -83,7 +83,12 @@ class DccTransfer : public QObject
         QDateTime          getTimeTransferStarted()   const;
         QDateTime          getTimeTransferFinished()  const;
 
-        void setFileURL( const KURL& url );
+        // common settings for DccTransferRecv / DccTransferSend
+
+        // REQUIRED
+        void setServerGroupId( int id );
+        // REQUIRED
+        void setPartnerNick( const QString& nick );
 
     signals:
         void transferStarted( DccTransfer* item );
@@ -91,7 +96,7 @@ class DccTransfer : public QObject
         void statusChanged( DccTransfer* item, int newStatus, int oldStatus );
 
     public slots:
-        void queue();
+        virtual bool queue();
         virtual void start() {};
         virtual void abort() {};
 
@@ -100,6 +105,7 @@ class DccTransfer : public QObject
         void startTransferLogger();
         void finishTransferLogger();
 
+        static QString sanitizeFileName( const QString& fileName );
         static QString getNumericalIpText( const QString& ipString );
         static unsigned long intel( unsigned long value );
 
@@ -120,6 +126,8 @@ class DccTransfer : public QObject
         QValueList<KIO::fileoffset_t> m_transferPositionLog;  // write per packet to calc CPS
         */
 
+        // we'll communicate with the partner via this server
+        int m_serverGroupId;
         QString m_partnerNick;
         QString m_partnerIp;                      // null when unknown
         QString m_partnerPort;

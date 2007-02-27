@@ -14,8 +14,6 @@
   (at your option) any later version.
 */
 
-#include <qfileinfo.h>
-
 #include <kdebug.h>
 #include <kfileitem.h>
 #include <kiconloader.h>
@@ -54,82 +52,17 @@ connectionSuccess()  : called by recvSocket
 
 */
 
-DccTransferRecv::DccTransferRecv( const QString& partnerNick, const KURL& defaultFolderURL, const QString& fileName, unsigned long fileSize, const QString& partnerIp, const QString& partnerPort )
-    : DccTransfer( DccTransfer::Receive, partnerNick )
+DccTransferRecv::DccTransferRecv()
+    : DccTransfer( DccTransfer::Receive )
 {
-    kdDebug() << "DccTransferRecv::DccTransferRecv() [BEGIN]" << endl
-        << "DccTransferRecv::DccTransferRecv(): Partner: " << partnerNick << endl
-        << "DccTransferRecv::DccTransferRecv(): File: " << fileName << endl
-        << "DccTransferRecv::DccTransferRecv(): Sanitised Filename: " << m_fileName << endl
-        << "DccTransferRecv::DccTransferRecv(): FileSize: " << fileSize << endl
-        << "DccTransferRecv::DccTransferRecv(): Partner Address: " << partnerIp << ":" << partnerPort << endl;
+    kdDebug() << "DccTransferRecv::DccTransferRecv()" << endl;
 
     m_recvSocket = 0;
     m_writeCacheHandler = 0;
 
-    m_fileName = fileName;
-    m_fileSize = fileSize;
-    m_partnerIp = partnerIp;
-    m_partnerPort = partnerPort;
-
     m_connectionTimer = new QTimer( this );
     connect( m_connectionTimer, SIGNAL( timeout() ), this, SLOT( connectionTimeout() ) );
     //timer hasn't started yet.  qtimer will be deleted automatically when 'this' object is deleted
-
-    // determine default incoming file URL
-
-    // set default folder
-    if ( !defaultFolderURL.isEmpty() )
-        m_fileURL = defaultFolderURL;
-    else
-                                                  // default folder is *not* specified
-        m_fileURL.setPath( KUser( KUser::UseRealUserID ).homeDir() );
-    // add a slash if there is none
-    m_fileURL.adjustPath( 1 );
-    // Append folder with partner's name if wanted
-    if ( Preferences::dccCreateFolder() )
-        m_fileURL.addPath( m_partnerNick + '/' );
-
-    if (!kapp->authorize("allow_downloading"))
-    {
-        //note we have this after the initialisations so that item looks okay
-        //Do not have the rights to send the file.  Shouldn't have gotten this far anyway
-        failed(i18n("The admin has restricted the right to receive files"));
-        return;
-    }
-
-    // set default filename
-    // note: Don't edit m_fileName. (i.e. leave it as it is)
-    // because we need the original file name to resume its transfer.
-                                                  //Just incase anyone tries to do anything nasty
-    QString fileNameTmp = QFileInfo( m_fileName ).fileName();
-    if ( fileNameTmp.startsWith( "." ) )
-        fileNameTmp.replace( 0, 1, '_' );         // Don't create hidden files
-    if ( fileNameTmp.isEmpty() )
-        fileNameTmp = "unnamed";
-
-    // Append partner's name to file name if wanted
-    if ( Preferences::dccAddPartner() )
-        m_fileURL.addPath( m_partnerNick + '.' + fileNameTmp );
-    else
-        m_fileURL.addPath( fileNameTmp );
-
-    kdDebug() << "DccTransferRecv::calculateSaveToFileURL(): Default URL: " << m_fileURL.prettyURL() << endl;
-
-    // TODO: should we support it?
-    if ( fileSize == 0 )
-    {
-        failed( i18n( "Unsupported negotiation (filesize=0)" ) );
-        return;
-    }
-
-    if ( Preferences::dccAutoGet() )
-    {
-        kdDebug() << "DccTransferRecv::DccTransferRecv(): starting automatically..." << endl;
-        start();
-    }
-
-    kdDebug() << "DccTransferRecv::DccTransferRecv() [END]" << endl;
 }
 
 DccTransferRecv::~DccTransferRecv()
@@ -172,6 +105,96 @@ void DccTransferRecv::failed( const QString& errorMessage )
     setStatus( Failed, errorMessage );
     cleanUp();
     emit done( this );
+}
+
+void DccTransferRecv::setPartnerIp( const QString& ip )
+{
+    if ( getStatus() == Configuring )
+        m_partnerIp = ip;
+}
+
+void DccTransferRecv::setPartnerPort( const QString& port )
+{
+    if ( getStatus() == Configuring )
+        m_partnerPort = port;
+}
+
+void DccTransferRecv::setFileSize( unsigned long fileSize )
+{
+    if ( getStatus() == Configuring )
+        m_fileSize = fileSize;
+}
+
+void DccTransferRecv::setFileName( const QString& fileName )
+{
+    if ( getStatus() == Configuring )
+        m_fileName = fileName;
+}
+
+void DccTransferRecv::setFileURL( const KURL& url )
+{
+    if ( getStatus() == Configuring || getStatus() == Queued )
+        m_fileURL = url;
+}
+
+bool DccTransferRecv::queue()
+{
+    kdDebug() << "DccTransferRecv::queue()" << endl;
+
+    if ( getStatus() != Configuring )
+        return false;
+
+    if ( m_partnerIp.isEmpty() || m_partnerPort.isEmpty() )
+        return false;
+
+    if (!kapp->authorize("allow_downloading"))
+    {
+        //note we have this after the initialisations so that item looks okay
+        //Do not have the rights to send the file.  Shouldn't have gotten this far anyway
+        failed(i18n("The admin has restricted the right to receive files"));
+        return false;
+    }
+
+    // TODO: should we support it?
+    if ( m_fileSize == 0 )
+    {
+        failed( i18n( "Unsupported negotiation (filesize=0)" ) );
+        return false;
+    }
+
+    if ( m_fileName.isEmpty() )
+    {
+        m_fileName = "unnamed_file";
+    }
+
+    if ( m_fileURL.isEmpty() )
+    {
+        // determine default incoming file URL
+
+        // set default folder
+        if ( !Preferences::dccPath().isEmpty() )
+            m_fileURL = KURL( Preferences::dccPath() );
+        else
+            m_fileURL.setPath( KUser( KUser::UseRealUserID ).homeDir() );  // default folder is *not* specified
+
+        // add a slash if there is none
+        m_fileURL.adjustPath( 1 );
+
+        // Append folder with partner's name if wanted
+        if ( Preferences::dccCreateFolder() )
+            m_fileURL.addPath( m_partnerNick + '/' );
+
+        // Just incase anyone tries to do anything nasty
+        QString fileNameSanitized = sanitizeFileName( m_fileName );
+
+        // Append partner's name to file name if wanted
+        if ( Preferences::dccAddPartner() )
+            m_fileURL.addPath( m_partnerNick + '.' + fileNameSanitized );
+        else
+            m_fileURL.addPath( fileNameSanitized );
+    }
+
+    return DccTransfer::queue();
 }
 
 void DccTransferRecv::abort()                     // public slot

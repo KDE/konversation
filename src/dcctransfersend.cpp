@@ -4,7 +4,7 @@
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com
 */
-// Copyright (C) 2004,2005 Shintaro Matsuoka <shin@shoegazed.org>
+// Copyright (C) 2004-2007 Shintaro Matsuoka <shin@shoegazed.org>
 // Copyright (C) 2004,2005 John Tapsell <john@geola.co.uk>
 
 /*
@@ -42,12 +42,13 @@
 using namespace KNetwork;
 
 DccTransferSend::DccTransferSend( const QString& partnerNick, const KURL& fileURL, const QString& ownIp, const QString &altFileName, uint fileSize  )
-    : DccTransfer( DccTransfer::Send, partnerNick )
+    : DccTransfer( DccTransfer::Send )
 {
     kdDebug() << "DccTransferSend::DccTransferSend()" << endl
         << "DccTransferSend::DccTransferSend(): Partner: " << partnerNick << endl
         << "DccTransferSend::DccTransferSend(): File: " << fileURL.prettyURL() << endl;
 
+    m_partnerNick = partnerNick;
     m_fileName = fileURL.fileName();
     m_fileURL = fileURL;
     m_ownIp = ownIp;

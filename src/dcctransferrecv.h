@@ -4,7 +4,7 @@
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com
 */
-// Copyright (C) 2004,2005 Shintaro Matsuoka <shin@shoegazed.org>
+// Copyright (C) 2004-2007 Shintaro Matsuoka <shin@shoegazed.org>
 // Copyright (C) 2004,2005 John Tapsell <john@geola.co.uk>
 
 /*
@@ -46,16 +46,28 @@ class DccTransferRecv : public DccTransfer
     Q_OBJECT
 
     public:
-        /** Constructor.  This sets up the variables and updates the view, so the
-         * user can see the filename, filesize etc, and can accept it. */
-        DccTransferRecv( const QString& partnerNick, const KURL& defaultFolderURL, const QString& fileName, unsigned long fileSize, const QString& partnerIp, const QString& partnerPort );
+        DccTransferRecv();
         virtual ~DccTransferRecv();
 
-        signals:
+        // REQUIRED
+        void setPartnerIp( const QString& ip );
+        // REQUIRED
+        void setPartnerPort( const QString& port );
+        // REQUIRED
+        void setFileSize( unsigned long fileSize );
+        // OPTIONAL, if not specified, "unnamed_file"
+        // TODO: "$sendername-$receiveddate" is better
+        void setFileName( const QString& fileName );
+        // OPTIONAL, if not specified, default folder + the file name
+        void setFileURL( const KURL& url );
+
+    signals:
                                                   // emitted by requestResume()
         void resumeRequest( const QString& partnerNick, const QString& fileName, const QString& partnerPort, KIO::filesize_t filePosition);
 
     public slots:
+        virtual bool queue();
+
         /** The user has accepted the download.
          *  Check we are saving it somewhere valid, create any directories needed, and
          *  connect to remote host.

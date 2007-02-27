@@ -11,23 +11,26 @@
   Copyright (C) 2004,2005 John Tapsell <john@geola.co.uk>
 */
 
+#include <qfileinfo.h>
 #include <qhostaddress.h>
 
 #include "preferences.h"
 
 #include "dcctransfer.h"
 
-DccTransfer::DccTransfer( DccType dccType, const QString& partnerNick )
+DccTransfer::DccTransfer( DccType dccType )
 {
     kdDebug() << "DccTransfer::DccTransfer()" << endl;
+
     m_type = dccType;
-    m_partnerNick = partnerNick;
 
     m_status = Configuring;
+
+    m_fileSize = 0;
     m_resumed = false;
+    m_serverGroupId = -1;  // Not configured
     m_transferringPosition = 0;
     m_transferStartPosition = 0;
-    m_timeOffer = QDateTime::currentDateTime();
 
     m_bufferSize = Preferences::dccBufferSize();
     m_buffer = new char[ m_bufferSize ];
@@ -72,20 +75,34 @@ DccTransfer::DccTransfer( const DccTransfer& obj )
     m_transferStartPosition = obj.getTransferStartPosition();
 }
 
-void DccTransfer::setFileURL( const KURL& url )
+void DccTransfer::setServerGroupId( int id )
 {
-    // FIXME
-
-    if ( getStatus() == Queued )
-    {
-        m_fileURL = url;
-    }
+    if ( getStatus() == Configuring || getStatus() == Queued )
+        m_serverGroupId = id;
 }
 
-void DccTransfer::queue()
+void DccTransfer::setPartnerNick( const QString& nick )
 {
-    if ( getStatus() == Configuring )
-        setStatus( Queued );
+    if ( getStatus() == Configuring || getStatus() == Queued )
+        m_partnerNick = nick;
+}
+
+bool DccTransfer::queue()
+{
+    kdDebug() << "DccTransfer::queue()" << endl;
+    if ( getStatus() != Configuring )
+        return false;
+
+    if ( m_fileName.isEmpty() )
+        return false;
+
+    if ( m_serverGroupId == -1 || m_partnerNick.isEmpty() )
+        return false;
+
+    m_timeOffer = QDateTime::currentDateTime();
+
+    setStatus( Queued );
+    return true;
 }
 
 void DccTransfer::startTransferLogger()
@@ -167,6 +184,16 @@ void DccTransfer::updateTransferMeters()
         m_currentSpeed = 0;
         m_timeLeft = DccTransfer::NotInTransfer;
     }
+}
+
+QString DccTransfer::sanitizeFileName( const QString& fileName )
+{
+    QString fileNameTmp = QFileInfo( fileName ).fileName();
+    if ( fileNameTmp.startsWith( "." ) )
+        fileNameTmp.replace( 0, 1, '_' );         // Don't create hidden files
+    if ( fileNameTmp.isEmpty() )
+        fileNameTmp = "unnamed";
+    return fileNameTmp;
 }
 
 //FIXME: IPv6 support

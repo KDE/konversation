@@ -32,9 +32,9 @@ DccTransferManager::~DccTransferManager()
     }
 }
 
-DccTransferRecv* DccTransferManager::newDownload( const QString& partnerNick, const KURL& defaultFolderURL, const QString& fileName, unsigned long fileSize, const QString& partnerIp, const QString& partnerPort )
+DccTransferRecv* DccTransferManager::newDownload()
 {
-    DccTransferRecv* transfer = new DccTransferRecv( partnerNick, defaultFolderURL, fileName, fileSize, partnerIp, partnerPort );
+    DccTransferRecv* transfer = new DccTransferRecv();
     initTransfer( transfer );
     return transfer;
 }

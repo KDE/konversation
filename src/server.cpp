@@ -1845,6 +1845,8 @@ void Server::addDccSend(const QString &recipient,KURL fileURL, const QString &al
     connect(newDcc,SIGNAL (statusChanged(DccTransfer*,int,int)), this,
         SLOT(dccStatusChanged(DccTransfer*,int,int)) );
 
+    newDcc->setServerGroupId( serverGroupSettings()->id() );
+
     newDcc->queue();
     newDcc->start();
 
@@ -1863,14 +1865,16 @@ void Server::addDccGet(const QString &sourceNick, const QStringList &dccArgument
 
     ip.setAddress(dccArguments[1].toULong());
 
-    DccTransferRecv* newDcc = KonversationApplication::instance()->dccTransferManager()->newDownload(
-        sourceNick,
-        KURL(Preferences::dccPath()),
-        dccArguments[0],                          // name
-                                                  // size
-        dccArguments[3].isEmpty() ? 0 : dccArguments[3].toULong(),
-        ip.toString(),                            // ip
-        dccArguments[2] );                        // port
+    DccTransferRecv* newDcc = KonversationApplication::instance()->dccTransferManager()->newDownload();
+
+    newDcc->setServerGroupId( serverGroupSettings()->id() );
+
+    newDcc->setPartnerNick( sourceNick );
+    newDcc->setPartnerIp( ip.toString() );
+    newDcc->setPartnerPort( dccArguments[2] );
+
+    newDcc->setFileName( dccArguments[0] );
+    newDcc->setFileSize( dccArguments[3].isEmpty() ? 0 : dccArguments[3].toULong() );
 
     connect(newDcc,SIGNAL (resumeRequest(const QString&,const QString&,const QString&,KIO::filesize_t)),this,
         SLOT (dccResumeGetRequest(const QString&,const QString&,const QString&,KIO::filesize_t)) );
@@ -1887,7 +1891,8 @@ void Server::addDccGet(const QString &sourceNick, const QStringList &dccArgument
                                     newDcc->getFileName(),
                                     ( newDcc->getFileSize() == 0 ) ? i18n( "unknown size" ) : KIO::convertSize( newDcc->getFileSize() ) ) );
 
-    if(Preferences::dccAutoGet()) newDcc->start();
+    if(Preferences::dccAutoGet())
+        newDcc->start();
 }
 
 void Server::requestDccChat(const QString& nickname)
