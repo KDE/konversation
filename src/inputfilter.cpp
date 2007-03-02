@@ -189,7 +189,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
 
                     if(sourceNick != server->getNickname() && query)
                     {
-                        konv_app->notificationHandler()->nick(query, sourceNick, ctcpArgument);
+                        konv_app->notificationHandler()->queryMessage(query, sourceNick, ctcpArgument);
                     }
                 }
             }
