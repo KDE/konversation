@@ -1384,4 +1384,12 @@ the Free Software Foundation; either version 2 of the License, or
     <includehint>kcolorbutton.h</includehint>
     <includehint>kcolorbutton.h</includehint>
 </includehints>
+<connections>
+    <connection>
+	<sender>kcfg_InputFieldsBackgroundColor</sender>
+        <signal>toggled(bool)</signal>
+	<receiver>kcfg_AlternateBackgroundColor</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+</connections>
 </UI>
