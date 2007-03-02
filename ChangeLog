@@ -1,4 +1,5 @@
 Changes since 1.0.1:
+- Made "Alternate Background" colorchooser disable when unneeded
 - Added a sample 12-hour clock format string to the timestamp format combobox.
 - Rearranged when and how auto-who is triggered upon channel join a bit, to
   avoid excessive flooding on multiple concurrent joins in some cases.
