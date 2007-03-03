@@ -198,6 +198,7 @@ void Server::init(ViewContainer* viewContainer, const QString& nick, const QStri
     keepViewsOpenAfterQuit = false;
     reconnectAfterQuit = false;
     m_messageCount = 0;
+    m_prevISONList = QStringList();
 
     // TODO fold these into a QMAP, and these need to be reset to RFC values if this server object is reused.
     serverNickPrefixModes = "ovh";
@@ -887,46 +888,31 @@ void Server::notifyAction(const QString& nick)
 void Server::notifyResponse(const QString& nicksOnline)
 {
     bool nicksOnlineChanged = false;
-    // Create a case correct nick list from the notification reply
-    QStringList nickList = QStringList::split(' ',nicksOnline);
+    QStringList actualList = QStringList::split(' ',nicksOnline);
+    QString lcActual = ' ' + nicksOnline.lower() + ' ';
+    QString lcPrevISON = ' ' + (m_prevISONList.join(" ")).lower() + ' ';
 
     QStringList::iterator it;
-    QStringList::iterator itEnd = nickList.end();
 
-    // Any new watched nicks online?
-    for(it = nickList.begin(); it != itEnd; ++it)
-    {
-        QString nickname = (*it);
-
-        if (!isNickOnline(nickname))
+    //Are any nicks gone offline
+    for(it = m_prevISONList.begin(); it != m_prevISONList.end(); ++it)
+        if (lcActual.find(' ' + (*it).lower() + ' ', 0, 0) == -1)
         {
-            setWatchedNickOnline(nickname);
+            setNickOffline(*it);
             nicksOnlineChanged = true;
         }
-    }
 
-    // Create a lower case nick list from the notification reply
-    QStringList nickLowerList = QStringList::split(' ',nicksOnline.lower());
-    // Get ISON list from preferences and addressbook.
-    QString watchlist = getISONListString();
-    // Create a case correct nick list from the watch list.
-    QStringList watchList = QStringList::split(' ',watchlist);
-    itEnd = watchList.end();
-
-    // Any watched nicks now offline?
-    for(it = watchList.begin(); it != itEnd; ++it)
-    {
-        QString lcNickName = (*it).lower();
-        if (nickLowerList.find(lcNickName) == nickLowerList.end())
-        {
-            QString nickname = (*it);
-            if (setNickOffline(nickname))
-                nicksOnlineChanged = true;
+    //Are any nicks gone online
+    for(it = actualList.begin(); it != actualList.end(); ++it)
+        if (lcPrevISON.find(' ' + (*it).lower() + ' ', 0, 0) == -1) {
+            setWatchedNickOnline(*it);
+            nicksOnlineChanged = true;
         }
-    }
 
-    // Note: The list emitted in this signal does not include nicks in joined channels.
-    emit nicksNowOnline(this, nickList, nicksOnlineChanged);
+    // Note: The list emitted in this signal *does* include nicks in joined channels.
+    emit nicksNowOnline(this, actualList, nicksOnlineChanged);
+
+    m_prevISONList = actualList;
 
     // Next round
     startNotifyTimer();
@@ -2377,15 +2363,36 @@ NickInfoPtr Server::setWatchedNickOnline(const QString& nickname)
         QString lcNickname = nickname.lower();
         nickInfo = new NickInfo(nickname, this);
         m_allNicks.insert(lcNickname, nickInfo);
-        emit watchedNickChanged(this, nickname, true);
-        Konversation::Addressbook::self()->emitContactPresenceChanged(nickInfo->getAddressee().uid());
-        appendMessageToFrontmost(i18n("Notify"),"<a href=\"#"+nickname+"\">"+
-            i18n("%1 is online (%2).").arg(nickname).arg(getServerName())+"</a>",statusView);
-
-        static_cast<KonversationApplication*>(kapp)->notificationHandler()->nickOnline(getStatusView(), nickname);
     }
+
+    emit watchedNickChanged(this, nickname, true);
+    KABC::Addressee addressee = nickInfo->getAddressee();
+    if (!addressee.isEmpty()) Konversation::Addressbook::self()->emitContactPresenceChanged(addressee.uid());
+
+    appendMessageToFrontmost(i18n("Notify"),"<a href=\"#"+nickname+"\">"+
+        i18n("%1 is online (%2).").arg(nickname).arg(getServerName())+"</a>",statusView);
+
+    static_cast<KonversationApplication*>(kapp)->notificationHandler()->nickOnline(getStatusView(), nickname);
+
     nickInfo->setPrintedOnline(true);
     return nickInfo;
+}
+
+void Server::setWatchedNickOffline(const QString& nickname, const NickInfoPtr nickInfo)
+{
+    QString lcNickname = nickname.lower();
+
+    if (nickInfo) {
+        KABC::Addressee addressee = nickInfo->getAddressee();
+        if (!addressee.isEmpty()) Konversation::Addressbook::self()->emitContactPresenceChanged(addressee.uid(), 1);
+    }
+
+    emit watchedNickChanged(this, nickname, false);
+
+    appendMessageToFrontmost(i18n("Notify"), i18n("%1 went offline (%2).").arg(nickname).arg(getServerName()),statusView);
+
+    static_cast<KonversationApplication*>(kapp)->notificationHandler()->nickOffline(getStatusView(), nickname);
+
 }
 
 bool Server::setNickOffline(const QString& nickname)
@@ -2396,7 +2403,6 @@ bool Server::setNickOffline(const QString& nickname)
 
     if (nickInfo && wasOnline)
     {
-        KABC::Addressee addressee = nickInfo->getAddressee();
         // Delete from query list, if present.
         if (m_queryNicks.contains(lcNickname)) m_queryNicks.remove(lcNickname);
         // Delete the nickname from all channels (joined or unjoined).
@@ -2412,19 +2418,7 @@ bool Server::setNickOffline(const QString& nickname)
         // Delete NickInfo.
         if (m_allNicks.contains(lcNickname)) m_allNicks.remove(lcNickname);
         // If the nick was in the watch list, emit various signals and messages.
-        if (isWatchedNick(nickname))
-        {
-            emit watchedNickChanged(this, nickname, false);
-
-            if (!addressee.isEmpty())
-            {
-                Konversation::Addressbook::self()->emitContactPresenceChanged(addressee.uid(), 1);
-            }
-
-            appendMessageToFrontmost(i18n("Notify"), i18n("%1 went offline (%2).").arg(nickname).arg(getServerName()),statusView);
-
-            static_cast<KonversationApplication*>(kapp)->notificationHandler()->nickOffline(getStatusView(), nickname);
-        }
+        if (isWatchedNick(nickname)) setWatchedNickOffline(nickname, nickInfo);
 
         nickInfo->setPrintedOnline(false);
     }
@@ -2528,8 +2522,10 @@ QString Server::getISONListString() { return getISONList().join(" "); }
  */
 bool Server::isWatchedNick(const QString& nickname)
 {
-    QStringList watchList = getWatchList();
-    return (watchList.contains(nickname.lower()));
+    // Get watch list from preferences.
+    QString watchlist= ' ' + getWatchListString() + ' ';
+    // Search case-insensitivly
+    return (watchlist.find(' ' + nickname + ' ', 0, 0) != -1);
 }
 
 /**
@@ -2755,6 +2751,8 @@ void Server::renameNick(const QString &nickname, const QString &newNick)
             if(channel->getNickByName(newNick)) channel->nickRenamed(nickname, *nickInfo);
             channel=channelList.next();
         }
+        //Watched nicknames stuff
+        if (isWatchedNick(nickname)) setWatchedNickOffline(nickname, 0);
     }
     // If we had a query with this nick, change that name, too
 

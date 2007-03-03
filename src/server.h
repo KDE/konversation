@@ -529,6 +529,14 @@ class Server : public QObject
          */
         NickInfoPtr setWatchedNickOnline(const QString& nickname);
         /**
+        * Display offline notification for a certain nickname. The function doesn't change NickInfo objects.
+        * If NickInfoPtr is given, then also the integration with KAddressBook is engaged (i.e. the
+        * nick is marked as away)
+        * @param nickname           The nickname that is offline
+        * @param nickInfo           Pointer to NickInfo for nick
+        */
+        void setWatchedNickOffline(const QString& nickname, const NickInfoPtr nickInfo);
+        /**
          * If nickname is no longer on any channel list, or the query list, delete it altogether.
          * Call this routine only if the nick is not on the notify list or is on the notify
          * list but is known to be offline.
@@ -686,5 +694,8 @@ class Server : public QObject
         int m_messageCount;
         /// Timer to reset the m_messageCount
         QTimer m_messageCountResetTimer;
+
+        /// Previous ISON reply of the server, needed for comparison with the next reply
+        QStringList m_prevISONList;
 };
 #endif

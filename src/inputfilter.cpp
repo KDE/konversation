@@ -974,7 +974,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 {
                     server->appendMessageToFrontmost(i18n("Error"),i18n("%1: No such nick/channel.").arg(parameterList[1]));
                 }
-                else
+                else if(getAutomaticRequest("WHOIS",parameterList[1])==0) //Display message only if this was not an automatic request.
                 {
                     server->appendMessageToFrontmost(i18n("Error"),i18n("No such nick: %1.").arg(parameterList[1]));
                     setAutomaticRequest("DNS", parameterList[1], false);
@@ -984,8 +984,11 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             }
             case ERR_NOSUCHCHANNEL:
             {
-                server->appendMessageToFrontmost(i18n("Error"),i18n("%1: No such channel.").arg(parameterList[1]));
-
+                // Display message only if this was not an automatic request.
+                if(getAutomaticRequest("WHOIS",parameterList[1])==0)
+                {
+                    server->appendMessageToFrontmost(i18n("Error"),i18n("%1: No such channel.").arg(parameterList[1]));
+                }
                 break;
             }
             // Nick already on the server, so try another one
