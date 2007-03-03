@@ -172,6 +172,31 @@ void DccTransferSend::failed( const QString& errorMessage )
     emit done( this );
 }
 
+void DccTransferSend::setFileURL( const KURL& url )
+{
+    if ( getStatus() == Configuring )
+        m_fileURL = url;
+}
+
+void DccTransferSend::setFileName( const QString& fileName )
+{
+    if ( getStatus() == Configuring )
+        m_fileName = fileName;
+}
+
+bool DccTransferSend::queue()
+{
+    kdDebug() << "DccTransferSend::queue()" << endl;
+
+    if ( getStatus() != Configuring )
+        return false;
+
+    if ( m_fileName.isEmpty() )
+        m_fileName = sanitizeFileName( m_fileURL.fileName() );
+
+    return DccTransfer::queue();
+}
+
 void DccTransferSend::abort()                     // public slot
 {
     kdDebug() << "DccTransferSend::abort()" << endl;

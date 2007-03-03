@@ -37,12 +37,18 @@ class DccTransferSend : public DccTransfer
         DccTransferSend( const QString& partnerNick, const KURL& fileURL, const QString& ownIp, const QString &altFileName = QString(), uint fileSize = -1 );
         virtual ~DccTransferSend();
 
+        // REQUIRED
+        void setFileURL( const KURL& url );
+        // OPTIONAL
+        void setFileName( const QString& fileName );
+
         bool setResume( unsigned long position );
 
-        signals:
+    signals:
         void sendReady( const QString& partner, const QString& fileName, const QString& ownIp, const QString& ownPort, unsigned long fileSize );
 
     public slots:
+        virtual bool queue();
         virtual void start();
         virtual void abort();
 
