@@ -64,7 +64,7 @@
 #include "linkaddressbook/linkaddressbookui.h"
 #include "linkaddressbook/addressbook.h"
 
-Channel::Channel(QWidget* parent)  : ChatWindow(parent), key(" ")
+Channel::Channel(QWidget* parent) : ChatWindow(parent), key(" ")
 {
     // init variables
     m_processingTimer = 0;
