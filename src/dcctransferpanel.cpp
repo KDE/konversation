@@ -38,8 +38,7 @@
 #include "dcctransferpanelitem.h"
 #include "dcctransfersend.h"
 
-DccTransferPanel::DccTransferPanel(QWidget* parent)
-: ChatWindow(parent)
+DccTransferPanel::DccTransferPanel(QWidget* parent) : ChatWindow(parent)
 {
     kdDebug() << "DccTransferPanel::DccTransferPanel()" << endl;
 

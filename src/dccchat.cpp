@@ -40,8 +40,7 @@
 
 #define DCCCHAT_BUFFER_SIZE 1024
 
-DccChat::DccChat(QWidget* parent, const QString& myNickname,const QString& nickname,const QStringList& parameters,bool listen)
-: ChatWindow(parent)
+DccChat::DccChat(QWidget* parent, const QString& myNickname,const QString& nickname,const QStringList& parameters,bool listen) : ChatWindow(parent)
 {
     kdDebug() << "DccChat::DccChat() [BEGIN]" << endl;
     m_dccSocket=0;
