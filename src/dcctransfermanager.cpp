@@ -107,9 +107,6 @@ bool DccTransferManager::isLocalFileInWritingProcess( const KURL& url )
 void DccTransferManager::slotTransferStatusChanged( DccTransfer* item, int newStatus, int oldStatus )
 {
     kdDebug() << "DccTransferManager::slotTransferStatusChanged(): " << oldStatus << " -> " << newStatus << " " << item->getFileName() << " (" << item->getType() << ")" << endl;
-
-    if ( newStatus == DccTransfer::Queued )
-        emit newTransferQueued( item );
 }
 
 void DccTransferManager::removeItem( DccTransfer* item )
