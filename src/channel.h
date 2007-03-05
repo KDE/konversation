@@ -86,6 +86,7 @@ class Channel : public ChatWindow
 
         virtual void append(const QString& nickname,const QString& message);
         virtual void appendAction(const QString& nickname,const QString& message, bool usenotifications = false);
+        void nickActive(const QString& nickname);
 
 //General administrative stuff
     public:

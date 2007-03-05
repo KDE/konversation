@@ -2590,8 +2590,9 @@ void Channel::clearBanList()
   emit banListCleared();
 }
 
-void Channel::append(const QString& nickname,const QString& message)
+void Channel::append(const QString& nickname, const QString& message)
 {
+    nickActive(nickname);
     if(nickname != getServer()->getNickname()) {
         Nick* nick = getNickByName(nickname);
 
@@ -2603,8 +2604,9 @@ void Channel::append(const QString& nickname,const QString& message)
     ChatWindow::append(nickname, message);
 }
 
-void Channel::appendAction(const QString& nickname,const QString& message, bool usenotifications)
+void Channel::appendAction(const QString& nickname, const QString& message, bool usenotifications)
 {
+    nickActive(nickname);
     if(nickname != getServer()->getNickname()) {
         Nick* nick = getNickByName(nickname);
 
@@ -2614,6 +2616,12 @@ void Channel::appendAction(const QString& nickname,const QString& message, bool 
     }
 
     ChatWindow::appendAction(nickname, message, usenotifications);
+}
+
+void Channel::nickActive(const QString& nickname)
+{
+    getChannelNick(nickname)->moreActive();
+    sortNickList(); //FIXME: no need to completely resort, we can just see if this particular nick should move
 }
 
 //

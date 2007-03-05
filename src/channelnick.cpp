@@ -33,6 +33,7 @@ ChannelNick::ChannelNick(const NickInfoPtr& nickInfo, const bool& isop, const bo
     this->ishalfop = ishalfop;
     this->hasvoice = hasvoice;
     m_timeStamp = 0;
+    m_recentActivity = 0;
 }
 
 ChannelNick::~ChannelNick()
@@ -232,6 +233,22 @@ QString ChannelNick::loweredNickname() const
 uint ChannelNick::timeStamp() const
 {
   return m_timeStamp;
+}
+
+uint ChannelNick::recentActivity() const
+{
+    return m_recentActivity;
+}
+
+void ChannelNick::moreActive()
+{
+    m_recentActivity++;
+    QTimer::singleShot(5*60*1000, this, SLOT(lessActive())); //only care about the last several minutes
+}
+
+void ChannelNick::lessActive()
+{
+    m_recentActivity--;
 }
 
 void ChannelNick::setTimeStamp(uint stamp)

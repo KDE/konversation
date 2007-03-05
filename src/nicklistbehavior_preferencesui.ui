@@ -44,7 +44,15 @@ the Free Software Foundation; either version 2 of the License, or
                 <string>Sort case &amp;insensitive</string>
             </property>
         </widget>
-        <widget class="QCheckBox" row="2" column="0">
+        <widget class="QCheckBox" row="2" column="0" rowspan="1" colspan="3">
+            <property name="name">
+                <cstring>kcfg_SortByActivity</cstring>
+            </property>
+            <property name="text">
+                <string>Sort by &amp;activity</string>
+            </property>
+        </widget>
+        <widget class="QCheckBox" row="3" column="0">
             <property name="name">
                 <cstring>kcfg_SortByStatus</cstring>
             </property>
@@ -60,7 +68,7 @@ the Free Software Foundation; either version 2 of the License, or
                 <string>Sort b&amp;y user status</string>
             </property>
         </widget>
-        <widget class="KListView" row="3" column="0" rowspan="1" colspan="3">
+        <widget class="KListView" row="4" column="0" rowspan="1" colspan="3">
             <column>
                 <property name="text">
                     <string>Mode</string>
@@ -110,7 +118,7 @@ the Free Software Foundation; either version 2 of the License, or
                 <cstring>kcfg_ChannelDoubleClickAction</cstring>
             </property>
         </widget>
-        <widget class="QLabel" row="2" column="1" rowspan="1" colspan="2">
+        <widget class="QLabel" row="3" column="1" rowspan="1" colspan="2">
             <property name="name">
                 <cstring>orderHintLabel</cstring>
             </property>

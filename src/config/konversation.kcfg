@@ -421,6 +421,11 @@
       <label></label>
       <whatsthis></whatsthis>
     </entry>
+    <entry key="SortByActivity" type="Bool">
+      <default>false</default>
+      <label></label>
+      <whatsthis></whatsthis>
+    </entry>
     <entry key="SortCaseInsensitive" type="Bool">
       <default>true</default>
       <label></label>

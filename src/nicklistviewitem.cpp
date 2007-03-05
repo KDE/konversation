@@ -148,6 +148,20 @@ int NickListViewItem::compare(QListViewItem* item,int col,bool ascending) const
 {
     NickListViewItem* otherItem = static_cast<NickListViewItem*>(item);
 
+    if(Preferences::sortByActivity())
+    {
+        uint thisRecentActivity = nick->getChannelNick()->recentActivity();
+        uint otherRecentActivity = otherItem->getNick()->getChannelNick()->recentActivity();
+        if(thisRecentActivity > otherRecentActivity)
+        {
+            return -1;
+        }
+        if(thisRecentActivity < otherRecentActivity)
+        {
+            return 1;
+        }
+    }
+
     if(Preferences::sortByStatus())
     {
         int thisFlags = getSortingValue();
@@ -166,31 +180,15 @@ int NickListViewItem::compare(QListViewItem* item,int col,bool ascending) const
     QString thisKey;
     QString otherKey;
 
-    if(col > 1)
+    if(Preferences::sortCaseInsensitive())
     {
-        if(Preferences::sortCaseInsensitive())
-        {
-            thisKey = thisKey.lower();
-            otherKey = otherKey.lower();
-        }
-        else
-        {
-            thisKey = key(col, ascending);
-            otherKey = otherItem->key(col, ascending);
-        }
+        thisKey = nick->loweredNickname();
+        otherKey = otherItem->getNick()->loweredNickname();
     }
-    else if(col == 1)
+    else
     {
-        if(Preferences::sortCaseInsensitive())
-        {
-            thisKey = nick->loweredNickname();
-            otherKey = otherItem->getNick()->loweredNickname();
-        }
-        else
-        {
-            thisKey = key(col, ascending);
-            otherKey = otherItem->key(col, ascending);
-        }
+        thisKey = key(col, ascending);
+        otherKey = otherItem->key(col, ascending);
     }
 
     return thisKey.compare(otherKey);
@@ -224,7 +222,7 @@ int NickListViewItem::getSortingValue() const
     return flags;
 }
 
-Nick *NickListViewItem::getNick()
+Nick *NickListViewItem::getNick() const
 {
     return nick;
 }

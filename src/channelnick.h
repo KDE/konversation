@@ -38,6 +38,8 @@ class ChannelNick :  public QObject, public KShared
         bool isAnyTypeOfOp() const;
         bool hasVoice() const;
         uint timeStamp() const;
+        uint recentActivity() const;
+        void moreActive();
 
         bool setVoice(bool state);
         bool setOp(bool state);
@@ -50,7 +52,7 @@ class ChannelNick :  public QObject, public KShared
         void setTimeStamp(uint stamp);
 
         NickInfoPtr getNickInfo() const;
-        //Purely provided for convience because they are used so often.
+        //Purely provided for convenience because they are used so often.
         //Just calls nickInfo->getNickname() etc
         QString getNickname() const;
         QString loweredNickname() const;
@@ -64,9 +66,13 @@ class ChannelNick :  public QObject, public KShared
         bool ishalfop;
         bool hasvoice;
         uint m_timeStamp;
+        uint m_recentActivity;
 
     signals:
         void channelNickChanged();
+
+    private slots:
+        void lessActive();
 };
 
 /** A ChannelNickPtr is a pointer to a ChannelNick.  Since it is a KSharedPtr,
