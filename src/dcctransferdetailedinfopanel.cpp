@@ -17,6 +17,7 @@
 #include <kprogress.h>
 #include <kurlrequester.h>
 
+#include "channel.h"
 #include "dcctransfer.h"
 #include "dcctransferrecv.h"
 #include "dcctransferpanelitem.h"
