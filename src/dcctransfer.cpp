@@ -36,6 +36,8 @@ DccTransfer::DccTransfer( DccType dccType )
     m_buffer = new char[ m_bufferSize ];
 
     connect( &m_loggerTimer, SIGNAL( timeout() ), this, SLOT( logTransfer() ) );
+
+    m_timeOffer = QDateTime::currentDateTime();
 }
 
 DccTransfer::~DccTransfer()
@@ -98,8 +100,6 @@ bool DccTransfer::queue()
 
     if ( m_serverGroupId == -1 || m_partnerNick.isEmpty() )
         return false;
-
-    m_timeOffer = QDateTime::currentDateTime();
 
     setStatus( Queued );
     return true;

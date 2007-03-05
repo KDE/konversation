@@ -47,7 +47,7 @@ DccTransferPanel::DccTransferPanel(QWidget* parent) : ChatWindow(parent)
 
     initGUI();
 
-    connect( KonversationApplication::instance()->dccTransferManager(), SIGNAL( newTransferAdded( DccTransfer* ) ), this, SLOT( slotNewTransferQueued( DccTransfer* ) ) );
+    connect( KonversationApplication::instance()->dccTransferManager(), SIGNAL( newTransferAdded( DccTransfer* ) ), this, SLOT( slotNewTransferAdded( DccTransfer* ) ) );
 }
 
 DccTransferPanel::~DccTransferPanel()
@@ -168,7 +168,7 @@ void DccTransferPanel::initGUI()
     updateButton();
 }
 
-void DccTransferPanel::slotNewTransferQueued( DccTransfer* transfer )
+void DccTransferPanel::slotNewTransferAdded( DccTransfer* transfer )
 {
     new DccTransferPanelItem( this, transfer );
     connect( transfer, SIGNAL( statusChanged( DccTransfer*, int, int ) ), this, SLOT( slotTransferStatusChanged() ) );

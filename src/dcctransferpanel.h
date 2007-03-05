@@ -77,7 +77,7 @@ class DccTransferPanel : public ChatWindow
         void selectMe(DccTransferPanelItem* item);
 
     protected slots:
-        void slotNewTransferQueued( DccTransfer* transfer );
+        void slotNewTransferAdded( DccTransfer* transfer );
         void slotTransferStatusChanged();
 
         void acceptDcc();
