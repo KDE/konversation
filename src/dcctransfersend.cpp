@@ -41,101 +41,16 @@
 
 using namespace KNetwork;
 
-DccTransferSend::DccTransferSend( const QString& partnerNick, const KURL& fileURL, const QString& ownIp, const QString &altFileName, uint fileSize  )
+DccTransferSend::DccTransferSend()
     : DccTransfer( DccTransfer::Send )
 {
-    kdDebug() << "DccTransferSend::DccTransferSend()" << endl
-        << "DccTransferSend::DccTransferSend(): Partner: " << partnerNick << endl
-        << "DccTransferSend::DccTransferSend(): File: " << fileURL.prettyURL() << endl;
-
-    m_partnerNick = partnerNick;
-    m_fileName = fileURL.fileName();
-    m_fileURL = fileURL;
-    m_ownIp = ownIp;
-
-    if ( Preferences::dccIPv4Fallback() )
-    {
-        KIpAddress ip( m_ownIp );
-        if ( ip.isIPv6Addr() )
-        {
-            /* This is fucking ugly but there is no KDE way to do this yet :| -cartman */
-            struct ifreq ifr;
-            const char* address = Preferences::dccIPv4FallbackIface().ascii();
-            int sock = socket(AF_INET, SOCK_DGRAM, 0);
-            strncpy( ifr.ifr_name, address, IF_NAMESIZE );
-            ifr.ifr_addr.sa_family = AF_INET;
-            if ( ioctl( sock, SIOCGIFADDR, &ifr ) >= 0 )
-                m_ownIp =  inet_ntoa( ( (struct sockaddr_in *)&ifr.ifr_addr )->sin_addr );
-            kdDebug() << "Falling back to IPv4 address " << m_ownIp << endl;
-        }
-    }
-
-    if ( altFileName.isEmpty() )
-        m_fileName = m_fileURL.fileName();
-    else
-        m_fileName = altFileName;
+    kdDebug() << "DccTransferSend::DccTransferSend()" << endl;
 
     m_serverSocket = 0;
     m_sendSocket = 0;
-    m_fastSend = Preferences::dccFastSend();
-    kdDebug() << "DccTransferSend::DccTransferSend(): Fast DCC send: " << m_fastSend << endl;
 
     m_connectionTimer = new QTimer( this );
-
-    if ( !kapp->authorize( "allow_downloading" ) )
-    {
-        //Do not have the rights to send the file.  Shouldn't have gotten this far anyway
-        //Note this is after the initialisation so the view looks correct still
-        failed(i18n("The admin has restricted the right to send files"));
-        return;
-    }
-
     connect( m_connectionTimer, SIGNAL( timeout() ), this, SLOT( slotConnectionTimeout() ) );
-    //timer hasn't started yet.  qtimer will be deleted automatically when 'this' object is deleted
-
-    //Check the file exists
-    if ( !KIO::NetAccess::exists( m_fileURL, true, NULL ) )
-    {
-        failed( i18n( "The url \"%1\" does not exist" ).arg( m_fileURL.prettyURL() ) );
-        return;
-    }
-
-    //FIXME: KIO::NetAccess::download() is a synchronous function. we should use KIO::get() instead.
-    //Download the file.  Does nothing if it's local (file:/)
-    if ( !KIO::NetAccess::download( m_fileURL, m_tmpFile, NULL ) )
-    {
-        failed( i18n( "Could not retrieve \"%1\"" ).arg( m_fileURL.prettyURL() ) );
-        kdDebug() << "DccTransferSend::DccTransferSend(): KIO::NetAccess::download() failed. reason: " << KIO::NetAccess::lastErrorString() << endl;
-        return;
-    }
-
-    //Some protocols, like http, maybe not return a filename, and altFileName may be empty, So prompt the user for one.
-    if ( m_fileName.isEmpty() )
-    {
-        bool pressedOk;
-        m_fileName = KInputDialog::getText( i18n( "Enter Filename" ), i18n( "<qt>The file that you are sending to <i>%1</i> does not have a filename.<br>Please enter a filename to be presented to the receiver, or cancel the dcc transfer</qt>" ).arg( getPartnerNick() ), "unknown", &pressedOk, NULL );
-
-        if ( !pressedOk )
-        {
-            failed( i18n( "No filename was given" ) );
-            return;
-        }
-    }
-
-    if (Preferences::dccSpaceToUnderscore())
-        m_fileName.replace( " ", "_" );
-    else {
-        if (m_fileName.contains(" ") > 0)
-            m_fileName = "\"" + m_fileName + "\"";
-    }
-
-    m_file.setName( m_tmpFile );
-
-    if ( fileSize > 0 )
-        m_fileSize = fileSize;
-    else
-        m_fileSize = m_file.size();
-
 }
 
 DccTransferSend::~DccTransferSend()
@@ -184,6 +99,18 @@ void DccTransferSend::setFileName( const QString& fileName )
         m_fileName = fileName;
 }
 
+void DccTransferSend::setOwnIp( const QString& ownIp )
+{
+    if ( getStatus() == Configuring )
+        m_ownIp = ownIp;
+}
+
+void DccTransferSend::setFileSize( KIO::filesize_t fileSize )
+{
+    if ( getStatus() == Configuring )
+        m_fileSize = fileSize;
+}
+
 bool DccTransferSend::queue()
 {
     kdDebug() << "DccTransferSend::queue()" << endl;
@@ -191,8 +118,81 @@ bool DccTransferSend::queue()
     if ( getStatus() != Configuring )
         return false;
 
+    // FIXME
+    if ( m_ownIp.isEmpty() )
+        return false;
+
+    if ( !kapp->authorize( "allow_downloading" ) )
+    {
+        //Do not have the rights to send the file.  Shouldn't have gotten this far anyway
+        //Note this is after the initialisation so the view looks correct still
+        failed(i18n("The admin has restricted the right to send files"));
+        return false;
+    }
+
     if ( m_fileName.isEmpty() )
         m_fileName = sanitizeFileName( m_fileURL.fileName() );
+
+    if ( Preferences::dccIPv4Fallback() )
+    {
+        KIpAddress ip( m_ownIp );
+        if ( ip.isIPv6Addr() )
+        {
+            /* This is fucking ugly but there is no KDE way to do this yet :| -cartman */
+            struct ifreq ifr;
+            const char* address = Preferences::dccIPv4FallbackIface().ascii();
+            int sock = socket(AF_INET, SOCK_DGRAM, 0);
+            strncpy( ifr.ifr_name, address, IF_NAMESIZE );
+            ifr.ifr_addr.sa_family = AF_INET;
+            if ( ioctl( sock, SIOCGIFADDR, &ifr ) >= 0 )
+                m_ownIp =  inet_ntoa( ( (struct sockaddr_in *)&ifr.ifr_addr )->sin_addr );
+            kdDebug() << "Falling back to IPv4 address " << m_ownIp << endl;
+        }
+    }
+
+    m_fastSend = Preferences::dccFastSend();
+    kdDebug() << "DccTransferSend::DccTransferSend(): Fast DCC send: " << m_fastSend << endl;
+
+    //Check the file exists
+    if ( !KIO::NetAccess::exists( m_fileURL, true, NULL ) )
+    {
+        failed( i18n( "The url \"%1\" does not exist" ).arg( m_fileURL.prettyURL() ) );
+        return false;
+    }
+
+    //FIXME: KIO::NetAccess::download() is a synchronous function. we should use KIO::get() instead.
+    //Download the file.  Does nothing if it's local (file:/)
+    if ( !KIO::NetAccess::download( m_fileURL, m_tmpFile, NULL ) )
+    {
+        failed( i18n( "Could not retrieve \"%1\"" ).arg( m_fileURL.prettyURL() ) );
+        kdDebug() << "DccTransferSend::DccTransferSend(): KIO::NetAccess::download() failed. reason: " << KIO::NetAccess::lastErrorString() << endl;
+        return false;
+    }
+
+    //Some protocols, like http, maybe not return a filename, and altFileName may be empty, So prompt the user for one.
+    if ( m_fileName.isEmpty() )
+    {
+        bool pressedOk;
+        m_fileName = KInputDialog::getText( i18n( "Enter Filename" ), i18n( "<qt>The file that you are sending to <i>%1</i> does not have a filename.<br>Please enter a filename to be presented to the receiver, or cancel the dcc transfer</qt>" ).arg( getPartnerNick() ), "unknown", &pressedOk, NULL );
+
+        if ( !pressedOk )
+        {
+            failed( i18n( "No filename was given" ) );
+            return false;
+        }
+    }
+
+    if (Preferences::dccSpaceToUnderscore())
+        m_fileName.replace( " ", "_" );
+    else {
+        if (m_fileName.contains(" ") > 0)
+            m_fileName = "\"" + m_fileName + "\"";
+    }
+
+    m_file.setName( m_tmpFile );
+
+    if ( m_fileSize == 0 )
+        m_fileSize = m_file.size();
 
     return DccTransfer::queue();
 }

@@ -1819,19 +1819,24 @@ void Server::addDccSend(const QString &recipient,KURL fileURL, const QString &al
     QString ownIp = getIp(true);
 
     // We already checked that the file exists in output filter / requestDccSend() resp.
-    DccTransferSend* newDcc = KonversationApplication::instance()->dccTransferManager()->newUpload( recipient,
-                                                   fileURL,  // url of the sending file
-                                                   ownIp,
-                                                   altFileName,
-                                                   fileSize );
+    DccTransferSend* newDcc = KonversationApplication::instance()->dccTransferManager()->newUpload();
+
+    newDcc->setServerGroupId( serverGroupSettings()->id() );
+
+    newDcc->setPartnerNick( recipient );
+    newDcc->setFileURL( fileURL );
+    // FIXME
+    newDcc->setOwnIp( getIp( true ) );
+    if ( !altFileName.isEmpty() )
+        newDcc->setFileName( altFileName );
+    if ( fileSize != 0 )
+        newDcc->setFileSize( fileSize );
 
     connect(newDcc,SIGNAL (sendReady(const QString&,const QString&,const QString&,const QString&,unsigned long)),
         this,SLOT (dccSendRequest(const QString&,const QString&,const QString&,const QString&,unsigned long)) );
     connect(newDcc,SIGNAL (done(DccTransfer*)),this,SLOT (dccSendDone(DccTransfer*)) );
     connect(newDcc,SIGNAL (statusChanged(DccTransfer*,int,int)), this,
         SLOT(dccStatusChanged(DccTransfer*,int,int)) );
-
-    newDcc->setServerGroupId( serverGroupSettings()->id() );
 
     newDcc->queue();
     newDcc->start();

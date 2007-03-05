@@ -64,9 +64,9 @@ ViewContainer::ViewContainer(KonversationMainWindow* window)
     m_urlCatcherPanel = 0;
     m_nicksOnlinePanel = 0;
 
-    m_dccPanel = 0;
+    m_dccPanel = new DccTransferPanel(m_tabWidget);
     m_dccPanelOpen = false;
-    connect( KonversationApplication::instance()->dccTransferManager(), SIGNAL( newTransferAdded( DccTransfer* ) ), this, SLOT( addDccPanel() ) );
+    connect(m_dccPanel, SIGNAL(updateTabNotification(ChatWindow*,const Konversation::TabNotifyType&)), this, SLOT(setViewNotification(ChatWindow*,const Konversation::TabNotifyType&)));
 
     m_insertCharDialog = 0;
 
@@ -1969,26 +1969,13 @@ void ViewContainer::toggleDccPanel()
 
 void ViewContainer::addDccPanel()
 {
-    // if the panel wasn't open yet
-    if (m_dccPanel==0)
+    if (!m_dccPanelOpen)
     {
-        m_dccPanel=new DccTransferPanel(m_tabWidget);
         addView(m_dccPanel, i18n("DCC Status"));
-        connect(m_dccPanel, SIGNAL(updateTabNotification(ChatWindow*,const Konversation::TabNotifyType&)), this, SLOT(setViewNotification(ChatWindow*,const Konversation::TabNotifyType&)));
-        m_dccPanelOpen = true;
+        m_dccPanelOpen=true;
         (dynamic_cast<KToggleAction*>(actionCollection()->action("open_dccstatus_window")))->setChecked(true);
     }
-    // show already opened panel
-    else
-    {
-        if (!m_dccPanelOpen)
-        {
-            addView(m_dccPanel, i18n("DCC Status"));
-            m_dccPanelOpen=true;
-            (dynamic_cast<KToggleAction*>(actionCollection()->action("open_dccstatus_window")))->setChecked(true);
-        }
-        // FIXME newText(dccPanel,QString::null,true);
-    }
+    // FIXME newText(dccPanel,QString::null,true);
 }
 
 void ViewContainer::closeDccPanel()

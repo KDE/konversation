@@ -39,9 +39,9 @@ DccTransferRecv* DccTransferManager::newDownload()
     return transfer;
 }
 
-DccTransferSend* DccTransferManager::newUpload( const QString& partnerNick, const KURL& fileURL, const QString& ownIp, const QString &altFileName, uint fileSize )
+DccTransferSend* DccTransferManager::newUpload()
 {
-    DccTransferSend* transfer = new DccTransferSend( partnerNick, fileURL, ownIp, altFileName, fileSize );
+    DccTransferSend* transfer = new DccTransferSend();
     initTransfer( transfer );
     return transfer;
 }
