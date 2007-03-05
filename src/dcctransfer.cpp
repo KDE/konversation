@@ -235,6 +235,11 @@ QDateTime DccTransfer::getTimeOffer() const
     return m_timeOffer; 
 }
 
+int DccTransfer::getServerGroupId() const
+{
+    return m_serverGroupId;
+}
+
 QString DccTransfer::getOwnIp() const 
 {
     return m_ownIp; 

@@ -66,6 +66,7 @@ class DccTransfer : public QObject
         DccStatus          getStatus()                const;
         const QString&     getStatusDetail()          const;
         QDateTime          getTimeOffer()             const;
+        int                getServerGroupId()         const;
         QString            getOwnIp()                 const;
         QString            getOwnPort()               const;
         QString            getPartnerNick()           const;

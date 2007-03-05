@@ -20,6 +20,8 @@
 #include "dcctransfer.h"
 #include "dcctransferrecv.h"
 #include "dcctransferpanelitem.h"
+#include "konversationapplication.h"
+#include "server.h"
 
 #include "dcctransferdetailedinfopanel.h"
 
@@ -71,11 +73,13 @@ void DccTransferDetailedInfoPanel::updateView()
     m_urlreqLocation->button()->setEnabled( transfer->getStatus() == DccTransfer::Queued );
 
     // Partner:
-    // FIXME: also display the server which the nick belongs to
-    if ( transfer->getPartnerNick().isEmpty() )
-        m_labelPartner->setText( "" );
-    else
-        m_labelPartner->setText( i18n( "%1 %2 (port %3)" ).arg( transfer->getPartnerNick(), transfer->getPartnerIp(), transfer->getPartnerPort() ) );
+    QString partnerInfo( i18n( "%1 on %2" )
+        .arg( transfer->getPartnerNick().isEmpty() ? "?" : transfer->getPartnerNick() )
+        .arg( transfer->getServerGroupId() == -1 ? i18n( "unknown server" )
+            : KonversationApplication::instance()->getServerByServerGroupId( transfer->getServerGroupId() )->getServerName() ) );
+    if ( !transfer->getPartnerIp().isEmpty() )
+        partnerInfo += i18n( ", %1 (port %2)" ).arg( transfer->getPartnerIp() ).arg( transfer->getPartnerPort() );
+    m_labelPartner->setText( partnerInfo );
 
     // Self:
     if ( transfer->getOwnIp().isEmpty() )
