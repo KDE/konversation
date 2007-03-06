@@ -45,7 +45,7 @@ class KConfigDialogManager;
 #include <kdialogbase.h>
 #include <qasciidict.h>
 
-class KDEUI_EXPORT KonviConfigDialog : public KDialogBase
+class KonviConfigDialog : public KDialogBase
 {
     Q_OBJECT
 
