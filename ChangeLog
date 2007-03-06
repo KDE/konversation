@@ -29,7 +29,6 @@ Changes since 1.0.1:
 - Fixed display of '<' and '>' in backlog lines.
 - Added a "Save Link As" item to the context menu of links in the chat window.
 - Display tooltips for truncated treelist items.
-- DCC refactoring (in progress).
 - The automatic remember line will now also be inserted when the window
   has lost focus.
 - Primitive support for KMPlayer in the 'media' script (based on the window
@@ -87,6 +86,12 @@ Changes since 1.0.1:
   wasn't running.
 - Made "Alternate Background" colorchooser disable when unneeded.
 - Improved robustness of the Watched Nicknames Online system.
+- DCC refactoring (in progress).
+- Replaced the DCC Transfer Details dialog with a retractable transfer details
+  pane directly in the DCC Status tab.
+- Implemented an additional "Sort by activity" nicklist sorting mode (in pro-
+  gress).
+
 -------------------------------------------------------------------------------
 
 Changes from 1.0 to 1.0.1
