@@ -2620,8 +2620,10 @@ void Channel::appendAction(const QString& nickname, const QString& message, bool
 
 void Channel::nickActive(const QString& nickname)
 {
+/*
     getChannelNick(nickname)->moreActive();
     sortNickList(); //FIXME: no need to completely resort, we can just see if this particular nick should move
+*/
 }
 
 //
