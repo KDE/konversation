@@ -4,6 +4,7 @@ Exec=konversation -caption "%c" %i %m
 Icon=konversation
 DocPath=konversation/index.html
 GenericName=IRC Client
+GenericName[el]=Πελάτης IRC
 Terminal=false
 Name=Konversation
 Categories=Qt;KDE;Network;IRCClient;X-SuSE-IRCClient;

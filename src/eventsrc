@@ -4,70 +4,98 @@ Comment=Konversation
 
 [message]
 Name=New message
+Name[el]=Νέο μήνυμα
 Comment=New message arrived in a channel
+Comment[el]=Νέο μήνυμα έφτασε στο κανάλι
 default_presentation=0
 
 [nick]
 Name=Nick written
+Name[el]=Το ψευδώνυμο γράφτηκε
 Comment=Someone wrote your nick in a message
+Comment[el]=Κάποιος έγραψε το ψευδώνυμο σας σε ένα μήνυμα
 default_presentation=0
 
 [queryMessage]
 Name=Private message
+Name[el]=Προσωπικό μήνυμα
 Comment=You received a private message
+Comment[el]=Λάβατε ένα προσωπικό μήνυμα
 default_presentation=0
 
 [nickchange]
 Name=Nick changed
+Name[el]=Το ψευδώνυμο άλλαξε
 Comment=Someone changed their nick
+Comment[el]=Κάποιος άλλαξε το ψευδώνυμο του
 default_presentation=0
 
 [dcc_incoming]
 Name=Incoming file
+Name[el]=Εισερχόμενο αρχείο
 Comment=Someone wants to transmit a file to you over DCC
+Comment[el]=Κάποιος θέλει να σας στείλει ένα αρχείο μέσω DCC
 default_presentation=0
 
 [join]
 Name=Nick joined channel
+Name[el]=Το ψευδώνυμο συνδέθηκε στο κανάλι
 Comment=New nick joined a channel
+Comment[el]=Νέο ψευδώνυμο συνδέθηκε σε ένα κανάλι
 default_presentation=0
 
 [part]
 Name=Nick left channel
+Name[el]=Το ψευδώνυμο έφυγε από το κανάλι
 Comment=A nick left a channel
+Comment[el]=Ένα ψευδώνυμο έφυγε από ένα κανάλι
 default_presentation=0
 
 [mode]
 Name=Mode change
+Name[el]=Αλλαγή κατάστασης
 Comment=A user or channel mode was changed
+Comment[el]=Η κατάσταση ενός χρήστης ή καναλιού άλλαξε
 default_presentation=0
 
 [notify]
 Name=Notify
+Name[el]=Ειδοποίηση
 Comment=A user on your watched nicks list has come online
+Comment[el]=Ένας χρήστης από τη λίστα ψευδώνυμων παρακολούθησης συνδέθηκε στο δίκτυο
 default_presentation=0
 
 [query]
 Name=Query
+Name[el]=Ερώτηση
 Comment=Someone started a conversation (query) with you
+Comment[el]=Κάποιος ξεκίνησε μια συζήτηση (ερώτηση) μαζί σας
 default_presentation=0
 
 [kick]
 Name=Kick
+Name[el]=Απομάκρυνση
 Comment=Someone kicked you out of a channel
+Comment[el]=Κάποιος σας απομάκρυνε από ένα κανάλι
 default_presentation=0
 
 [connectionFailure]
 Name=Connection failure
+Name[el]=Αποτυχία σύνδεσης
 Comment=Failed to connect to server
+Comment[el]=Η σύνδεση με τον εξυπηρετητή απέτυχε
 default_presentation=64
 
 [channelJoin]
 Name=You joined a channel
+Name[el]=Συνδεθήκατε σε ένα κανάλι
 Comment=You joined a channel
+Comment[el]=Συνδεθήκατε σε ένα κανάλι
 default_presentation=64
 
 [dccChat]
 Name=DCC Chat
+Name[el]=Συζήτηση DCC
 Comment=Someone started a DCC chat with you
+Comment[el]=Κάποιος ξεκίνησε μια συζήτηση DCC μαζί σας
 default_presentation=0
