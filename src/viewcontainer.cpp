@@ -471,6 +471,9 @@ void ViewContainer::updateViewActions(int index)
         action = actionCollection()->action("edit_find_next");
         if (action) action->setEnabled(false);
 
+        action = actionCollection()->action("edit_find_last");
+        if (action) action->setEnabled(false);
+
         action = actionCollection()->action("open_channel_list");
         if (action) action->setEnabled(false);
 
@@ -564,6 +567,9 @@ void ViewContainer::updateFrontView()
         }
 
         action = actionCollection()->action("edit_find_next");
+        if(action) action->setEnabled(view->searchView());
+
+        action = actionCollection()->action("edit_find_last");
         if(action) action->setEnabled(view->searchView());
 
         KToggleAction* channelListAction = static_cast<KToggleAction*>(actionCollection()->action("open_channel_list"));
@@ -684,6 +690,9 @@ void ViewContainer::updateFrontView()
         if (action) action->setEnabled(false);
 
         action = actionCollection()->action("edit_find_next");
+        if (action) action->setEnabled(false);
+
+        action = actionCollection()->action("edit_find_last");
         if (action) action->setEnabled(false);
 
         action = actionCollection()->action("open_channel_list");
@@ -1785,6 +1794,11 @@ void ViewContainer::findText()
 void ViewContainer::findNextText()
 {
     if (m_searchView) m_searchView->getTextView()->searchAgain();
+}
+
+void ViewContainer::findPrevText()
+{
+    if (m_searchView) m_searchView->getTextView()->searchNext(true);
 }
 
 void ViewContainer::appendToFrontmost(const QString& type,const QString& message,ChatWindow* serverView, bool parseURL)

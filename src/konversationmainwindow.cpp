@@ -254,6 +254,8 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
     action->setEnabled(false);
     action = KStdAction::findNext(m_viewContainer, SLOT(findNextText()), actionCollection());
     action->setEnabled(false);
+    action = KStdAction::findPrev(m_viewContainer, SLOT(findPrevText()), actionCollection());
+    action->setEnabled(false);
 
     action = new KAction(i18n("&IRC Color..."), "colorize", CTRL+Key_K, m_viewContainer, SLOT(insertIRCColor()), actionCollection(), "irc_colors");
     action->setToolTip(i18n("Set the color of your current IRC message"));

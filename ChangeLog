@@ -91,6 +91,7 @@ Changes since 1.0.1:
   pane directly in the DCC Status tab.
 - Implemented an additional "Sort by activity" nicklist sorting mode (in pro-
   gress).
+- Added a Find Previous standard action.
 
 -------------------------------------------------------------------------------
 

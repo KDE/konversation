@@ -98,6 +98,7 @@ class ViewContainer : public QObject
 
         void findText();
         void findNextText();
+        void findPrevText();
 
         void insertCharacter();
         void insertChar(const QChar& chr);
