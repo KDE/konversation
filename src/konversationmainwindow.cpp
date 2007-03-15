@@ -105,7 +105,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
 
 
     // Actions
-    KStdAction::quit(this,SLOT(quitProgram()),actionCollection());
+    KStdAction::quit(this,SLOT(quitProgram()),actionCollection(), "quit");
 
     hideMenuBarAction = KStdAction::showMenubar(this, SLOT(toggleMenubar()), actionCollection());
 
@@ -121,6 +121,9 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
 
     KAction* action;
 
+    (new KAction(i18n("&Server List..."), "server", KShortcut("F2"), this, SLOT(openServerList()),
+        actionCollection(), "open_server_list"))->setToolTip(i18n("Manage networks and servers"));
+    
     (new KAction(i18n("&Server List..."), "server", KShortcut("F2"), this, SLOT(openServerList()),
         actionCollection(), "open_server_list"))->setToolTip(i18n("Manage networks and servers"));
     (new KAction(i18n("Quick &Connect..."), "connect_creating", KShortcut("F7"), this, SLOT(openQuickConnectDialog()),

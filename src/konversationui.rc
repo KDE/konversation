@@ -1,8 +1,9 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="konversation" version="45">
+<kpartgui name="konversation" version="46">
 
   <MenuBar>
-    <Menu name="file">
+    <Menu name="file" noMerge="1">
+      <Text>&amp;Connection</Text>
       <Action name="open_server_list" />
       <Action name="quick_connect_dialog" />
       <Separator />
@@ -11,7 +12,9 @@
       <Separator />
       <Action name="join_channel" />
       <Separator />
-      <Action name="toggle_away" /> 
+      <Action name="toggle_away" />
+      <Separator />
+      <Action name="quit"/>
     </Menu>
     <Menu name="edit">
       <Action name="clear_window" />

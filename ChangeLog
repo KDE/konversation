@@ -92,6 +92,7 @@ Changes since 1.0.1:
 - Implemented an additional "Sort by activity" nicklist sorting mode (in pro-
   gress).
 - Added a Find Previous standard action.
+- Renamed the "File" menu to "Connection".
 
 -------------------------------------------------------------------------------
 
