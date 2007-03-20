@@ -58,6 +58,7 @@ void DccTransferDetailedInfoPanel::setItem( DccTransferPanelItem* item )
 
 void DccTransferDetailedInfoPanel::updateView()
 {
+    kdDebug() << "DccTransferDetailedInfoPanel::updateView() BEGIN" << endl;
     DccTransfer* transfer = m_item->transfer();
 
     // Type:
@@ -74,10 +75,16 @@ void DccTransferDetailedInfoPanel::updateView()
     m_urlreqLocation->button()->setEnabled( transfer->getStatus() == DccTransfer::Queued );
 
     // Partner:
+    QString partnerInfoServerName;
+    if ( transfer->getServerGroupId() == -1 )
+        partnerInfoServerName = i18n( "Unknown server" );
+    else if ( KonversationApplication::instance()->getServerByServerGroupId( transfer->getServerGroupId() ) )
+        partnerInfoServerName = KonversationApplication::instance()->getServerByServerGroupId( transfer->getServerGroupId() )->getServerName();
+    else
+        partnerInfoServerName = i18n( "Unknown server" );
     QString partnerInfo( i18n( "%1 on %2" )
         .arg( transfer->getPartnerNick().isEmpty() ? "?" : transfer->getPartnerNick() )
-        .arg( transfer->getServerGroupId() == -1 ? i18n( "unknown server" )
-            : KonversationApplication::instance()->getServerByServerGroupId( transfer->getServerGroupId() )->getServerName() ) );
+        .arg( partnerInfoServerName ) );
     if ( !transfer->getPartnerIp().isEmpty() )
         partnerInfo += i18n( ", %1 (port %2)" ).arg( transfer->getPartnerIp() ).arg( transfer->getPartnerPort() );
     m_labelPartner->setText( partnerInfo );
@@ -145,6 +152,7 @@ void DccTransferDetailedInfoPanel::updateView()
     else
         m_labelTimeFinished->setText( "" );
 
+    kdDebug() << "DccTransferDetailedInfoPanel::updateView() END" << endl;
 }
 
 void DccTransferDetailedInfoPanel::slotTransferStatusChanged( DccTransfer* /* transfer */, int newStatus, int oldStatus )
