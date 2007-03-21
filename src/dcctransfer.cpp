@@ -67,6 +67,7 @@ DccTransfer::DccTransfer( const DccTransfer& obj )
     m_partnerNick = obj.getPartnerNick();
     m_partnerPort = obj.getPartnerPort();
     m_resumed = obj.isResumed();
+    m_serverGroupId = obj.getServerGroupId();
     m_timeLeft = obj.getTimeLeft();
     m_timeOffer = obj.getTimeOffer();
     m_timeTransferFinished = obj.getTimeTransferFinished();
