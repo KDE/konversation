@@ -1838,14 +1838,16 @@ void Server::addDccSend(const QString &recipient,KURL fileURL, const QString &al
     connect(newDcc,SIGNAL (statusChanged(DccTransfer*,int,int)), this,
         SLOT(dccStatusChanged(DccTransfer*,int,int)) );
 
-    newDcc->queue();
-    newDcc->start();
+    if ( newDcc->queue() )
+    {
+        newDcc->start();
 
-    appendMessageToFrontmost( i18n( "DCC" ),
-                              i18n( "Asking %1 to accept upload of \"%2\" (%3)..." )
-                              .arg( newDcc->getPartnerNick(),
-                                    newDcc->getFileName(),
-                                    ( newDcc->getFileSize() == 0 ) ? i18n( "unknown size" ) : KIO::convertSize( newDcc->getFileSize() ) ) );
+        appendMessageToFrontmost( i18n( "DCC" ),
+                                  i18n( "Asking %1 to accept upload of \"%2\" (%3)..." )
+                                  .arg( newDcc->getPartnerNick(),
+                                        newDcc->getFileName(),
+                                        ( newDcc->getFileSize() == 0 ) ? i18n( "unknown size" ) : KIO::convertSize( newDcc->getFileSize() ) ) );
+    }
 }
 
 void Server::addDccGet(const QString &sourceNick, const QStringList &dccArguments)
@@ -1874,16 +1876,17 @@ void Server::addDccGet(const QString &sourceNick, const QStringList &dccArgument
     connect(newDcc,SIGNAL (statusChanged(DccTransfer*,int,int)), this,
         SLOT(dccStatusChanged(DccTransfer*,int,int)) );
 
-    newDcc->queue();
+    if ( newDcc->queue() )
+    {
+        appendMessageToFrontmost( i18n( "DCC" ),
+                                  i18n( "%1 offers to send you \"%2\" (%3)..." )
+                                  .arg( newDcc->getPartnerNick(),
+                                        newDcc->getFileName(),
+                                        ( newDcc->getFileSize() == 0 ) ? i18n( "unknown size" ) : KIO::convertSize( newDcc->getFileSize() ) ) );
 
-    appendMessageToFrontmost( i18n( "DCC" ),
-                              i18n( "%1 offers to send you \"%2\" (%3)..." )
-                              .arg( newDcc->getPartnerNick(),
-                                    newDcc->getFileName(),
-                                    ( newDcc->getFileSize() == 0 ) ? i18n( "unknown size" ) : KIO::convertSize( newDcc->getFileSize() ) ) );
-
-    if(Preferences::dccAutoGet())
-        newDcc->start();
+        if(Preferences::dccAutoGet())
+            newDcc->start();
+    }
 }
 
 void Server::requestDccChat(const QString& nickname)
