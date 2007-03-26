@@ -342,6 +342,11 @@ class Server : public QObject
 
         ChannelListPanel* addChannelListPanel();
 
+        // invoked by DccTransferSend
+        void dccSendRequest(const QString& recipient,const QString& fileName,const QString& address,const QString& port,unsigned long size);
+        // invoked by DccTransferRecv
+        void dccResumeGetRequest(const QString& sender,const QString& fileName,const QString& port,KIO::filesize_t startAt);
+
     signals:
         void nicknameChanged(const QString&);
         void serverLag(Server* server,int msec);  /// will be connected to KonversationMainWindow::updateLag()
@@ -465,8 +470,6 @@ class Server : public QObject
         void resumeDccGetTransfer(const QString& sourceNick,const QStringList& dccArguments);
                                                   // -> to inputFilter
         void resumeDccSendTransfer(const QString& sourceNick,const QStringList& dccArguments);
-        void dccSendRequest(const QString& recipient,const QString& fileName,const QString& address,const QString& port,unsigned long size);
-        void dccResumeGetRequest(const QString& sender,const QString& fileName,const QString& port,KIO::filesize_t startAt);
         void dccGetDone(DccTransfer* item);
         void dccSendDone(DccTransfer* item);
         void dccStatusChanged(DccTransfer* item, int newStatus, int oldStatus);

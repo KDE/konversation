@@ -49,9 +49,6 @@ class DccTransferSend : public DccTransfer
 
         bool setResume( unsigned long position );
 
-    signals:
-        void sendReady( const QString& partner, const QString& fileName, const QString& ownIp, const QString& ownPort, unsigned long fileSize );
-
     public slots:
         virtual bool queue();
         virtual void start();

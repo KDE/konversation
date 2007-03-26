@@ -28,8 +28,10 @@
 #include <kio/jobclasses.h>
 #include <kio/netaccess.h>
 
+#include "channel.h"
 #include "dcctransfermanager.h"
 #include "konversationapplication.h"
+#include "server.h"
 
 #include "dcctransferrecv.h"
 
@@ -408,7 +410,15 @@ void DccTransferRecv::requestResume()
     kdDebug() << "DccTransferRecv::requestResume(): requesting resume for " << m_partnerNick << " file " << m_fileName << " partner " << m_partnerPort << endl;
 
     //TODO   m_filename could have been sanitized - will this effect this?
-    emit resumeRequest( m_partnerNick, m_fileName, m_partnerPort, m_transferringPosition );
+    Server* server = KonversationApplication::instance()->getServerByServerGroupId( m_serverGroupId );
+    if ( !server )
+    {
+        kdDebug() << "DccTransferSend::start(): could not retrieve the instance of Server. id: " << m_serverGroupId << endl;
+        failed( i18n( "Could not send a DCC RECV resume request to the partner via the IRC server." ) );
+        return;
+    }
+
+    server->dccResumeGetRequest( m_partnerNick, m_fileName, m_partnerPort, m_transferringPosition );
 }
 
                                                   // public slot

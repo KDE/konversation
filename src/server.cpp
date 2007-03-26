@@ -1832,8 +1832,6 @@ void Server::addDccSend(const QString &recipient,KURL fileURL, const QString &al
     if ( fileSize != 0 )
         newDcc->setFileSize( fileSize );
 
-    connect(newDcc,SIGNAL (sendReady(const QString&,const QString&,const QString&,const QString&,unsigned long)),
-        this,SLOT (dccSendRequest(const QString&,const QString&,const QString&,const QString&,unsigned long)) );
     connect(newDcc,SIGNAL (done(DccTransfer*)),this,SLOT (dccSendDone(DccTransfer*)) );
     connect(newDcc,SIGNAL (statusChanged(DccTransfer*,int,int)), this,
         SLOT(dccStatusChanged(DccTransfer*,int,int)) );
@@ -1869,8 +1867,6 @@ void Server::addDccGet(const QString &sourceNick, const QStringList &dccArgument
     newDcc->setFileName( dccArguments[0] );
     newDcc->setFileSize( dccArguments[3].isEmpty() ? 0 : dccArguments[3].toULong() );
 
-    connect(newDcc,SIGNAL (resumeRequest(const QString&,const QString&,const QString&,KIO::filesize_t)),this,
-        SLOT (dccResumeGetRequest(const QString&,const QString&,const QString&,KIO::filesize_t)) );
     connect(newDcc,SIGNAL (done(DccTransfer*)),
         this,SLOT (dccGetDone(DccTransfer*)) );
     connect(newDcc,SIGNAL (statusChanged(DccTransfer*,int,int)), this,

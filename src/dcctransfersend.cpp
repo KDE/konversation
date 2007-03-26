@@ -33,8 +33,11 @@
 #include <kio/netaccess.h>
 #include <kfileitem.h>
 
-#include "dcctransfersend.h"
+#include "channel.h"
 #include "konversationapplication.h"
+#include "server.h"
+
+#include "dcctransfersend.h"
 
 // TODO: remove the dependence
 #include <kinputdialog.h>
@@ -266,9 +269,16 @@ void DccTransferSend::start()                     // public slot
 
     startConnectionTimer( Preferences::dccSendTimeout() );
 
-    emit sendReady( m_partnerNick, m_fileName, getNumericalIpText( m_ownIp ), m_ownPort, m_fileSize );
+    // now we're ready to send the file!
+    Server* server = KonversationApplication::instance()->getServerByServerGroupId( m_serverGroupId );
+    if ( !server )
+    {
+        kdDebug() << "DccTransferSend::start(): could not retrieve the instance of Server. id: " << m_serverGroupId << endl;
+        failed( i18n( "Could not send a DCC SEND request to the partner via the IRC server." ) );
+        return;
+    }
+    server->dccSendRequest( m_partnerNick, m_fileName, getNumericalIpText( m_ownIp ), m_ownPort, m_fileSize );
 }
-
                                                   // public
 bool DccTransferSend::setResume( unsigned long position )
 {
