@@ -170,8 +170,10 @@ void DccTransferPanel::initGUI()
 
 void DccTransferPanel::slotNewTransferAdded( DccTransfer* transfer )
 {
-    new DccTransferPanelItem( this, transfer );
+    DccTransferPanelItem* item = new DccTransferPanelItem( this, transfer );
     connect( transfer, SIGNAL( statusChanged( DccTransfer*, int, int ) ), this, SLOT( slotTransferStatusChanged() ) );
+    m_listView->clearSelection();
+    m_listView->setSelected( item, true );
     updateButton();
 }
 
