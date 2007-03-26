@@ -74,8 +74,6 @@ class DccTransferPanel : public ChatWindow
 
         KListView* getListView();
 
-        void selectMe(DccTransferPanelItem* item);
-
     protected slots:
         void slotNewTransferAdded( DccTransfer* transfer );
         void slotTransferStatusChanged();

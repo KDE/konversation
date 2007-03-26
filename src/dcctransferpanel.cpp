@@ -269,13 +269,6 @@ void DccTransferPanel::setDetailPanelItem(QListViewItem* item_)
     }
 }
 
-void DccTransferPanel::selectMe(DccTransferPanelItem* item)
-{
-    m_listView->clearSelection();
-    m_listView->setSelected(item, true);
-    updateButton();
-}
-
 void DccTransferPanel::acceptDcc()
 {
     QListViewItemIterator it( m_listView );
