@@ -51,6 +51,8 @@ class DccTransferManager : public QObject
 
         bool isLocalFileInWritingProcess( const KURL& localUrl );
 
+        int generatePassiveSendTokenNumber();
+
     private:
         /*
          * initTransfer() does the common jobs for newDownload() and newUpload()
@@ -63,6 +65,8 @@ class DccTransferManager : public QObject
 
     private:
         QValueList< DccTransfer* > m_transfers;
+
+        int m_nextPassiveSendTokenNumber;
 };
 
 #endif  // DCCTRANSFERMANAGER_H

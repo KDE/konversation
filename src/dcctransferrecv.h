@@ -61,10 +61,6 @@ class DccTransferRecv : public DccTransfer
         // OPTIONAL, if not specified, default folder + the file name
         void setFileURL( const KURL& url );
 
-    signals:
-                                                  // emitted by requestResume()
-        void resumeRequest( const QString& partnerNick, const QString& fileName, const QString& partnerPort, KIO::filesize_t filePosition);
-
     public slots:
         virtual bool queue();
 
@@ -172,4 +168,5 @@ class DccTransferRecvWriteCacheHandler : public QObject
         QValueList<QByteArray> m_cacheList;
         QDataStream* m_cacheStream;
 };
-#endif                                            // DCCTRANSFERRECV_H
+
+#endif  // DCCTRANSFERRECV_H

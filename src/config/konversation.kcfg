@@ -684,6 +684,9 @@
     <entry key="IPv4FallbackIface" type="String" name="DccIPv4FallbackIface">
       <default>eth0</default>
     </entry>
+    <entry key="PassiveSend" type="Bool" name="DccPassiveSend">
+      <default>false</default>
+    </entry>
   </group>
   <group name="Path Settings">
     <entry key="LogfilePath" type="Path">

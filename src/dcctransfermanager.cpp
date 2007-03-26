@@ -19,6 +19,7 @@
 DccTransferManager::DccTransferManager( QObject* parent )
     : QObject( parent )
 {
+    m_nextPassiveSendTokenNumber = 1;
 }
 
 DccTransferManager::~DccTransferManager()
@@ -102,6 +103,11 @@ bool DccTransferManager::isLocalFileInWritingProcess( const KURL& url )
         }
     }
     return false;
+}
+
+int DccTransferManager::generatePassiveSendTokenNumber()
+{
+    return m_nextPassiveSendTokenNumber++;
 }
 
 void DccTransferManager::slotTransferStatusChanged( DccTransfer* item, int newStatus, int oldStatus )

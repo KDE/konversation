@@ -46,8 +46,12 @@ class DccTransferSend : public DccTransfer
         void setOwnIp( const QString& ownIp );
         // OPTIONAL
         void setFileSize( KIO::filesize_t fileSize );
+        // OPTIONAL
+        void setReverse( bool reverse );
 
         bool setResume( unsigned long position );
+
+        QString getPassiveSendToken() const;
 
     public slots:
         virtual bool queue();
@@ -66,6 +70,7 @@ class DccTransferSend : public DccTransfer
     protected:
         void cleanUp();
         void failed(const QString& errorMessage = QString() );
+
         void startConnectionTimer( int sec );
         void stopConnectionTimer();
 
@@ -84,5 +89,7 @@ class DccTransferSend : public DccTransfer
 
         QTimer* m_connectionTimer;
 
+        QString m_passiveSendToken;
 };
-#endif                                            // DCCTRANSFERSEND_H
+
+#endif  // DCCTRANSFERSEND_H

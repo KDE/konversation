@@ -78,6 +78,7 @@ class DccTransfer : public QObject
         KIO::fileoffset_t  getTransferStartPosition() const;
         KURL               getFileURL()               const;
         bool               isResumed()                const;
+        bool               isReverse()                const;
         long               getCurrentSpeed()          const;
         int                getTimeLeft()              const;
         int                getProgress()              const;
@@ -119,6 +120,7 @@ class DccTransfer : public QObject
         DccStatus m_status;
         QString m_statusDetail;
         bool m_resumed;
+        bool m_reverse;
         KIO::fileoffset_t m_transferringPosition;
         KIO::fileoffset_t m_transferStartPosition;
 

@@ -34,6 +34,7 @@
 #include <kfileitem.h>
 
 #include "channel.h"
+#include "dcctransfermanager.h"
 #include "konversationapplication.h"
 #include "server.h"
 
@@ -54,6 +55,9 @@ DccTransferSend::DccTransferSend()
 
     m_connectionTimer = new QTimer( this );
     connect( m_connectionTimer, SIGNAL( timeout() ), this, SLOT( slotConnectionTimeout() ) );
+
+    // set defualt values
+    m_reverse = Preferences::dccPassiveSend();
 }
 
 DccTransferSend::~DccTransferSend()
@@ -112,6 +116,17 @@ void DccTransferSend::setFileSize( KIO::filesize_t fileSize )
 {
     if ( getStatus() == Configuring )
         m_fileSize = fileSize;
+}
+
+void DccTransferSend::setReverse( bool reverse )
+{
+    if ( getStatus() == Configuring )
+        m_reverse = reverse;
+}
+
+QString DccTransferSend::getPassiveSendToken() const
+{
+    return m_passiveSendToken;
 }
 
 bool DccTransferSend::queue()
@@ -216,60 +231,8 @@ void DccTransferSend::start()                     // public slot
     if ( getStatus() != Queued )
         return;
 
-    // Set up server socket
-    m_serverSocket = new KNetwork::KServerSocket( this );
-    m_serverSocket->setFamily( KNetwork::KResolver::InetFamily );
+    // common procedure
 
-                                                  // user is specifying ports
-    if ( Preferences::dccSpecificSendPorts() )
-    {
-        // set port
-        bool found = false;                       // whether succeeded to set port
-        unsigned long port = Preferences::dccSendPortsFirst();
-        for ( ; port <= Preferences::dccSendPortsLast() ; ++port )
-        {
-            kdDebug() << "DccTransferSend::start(): trying port " << port << endl;
-            m_serverSocket->setAddress( QString::number( port ) );
-            bool success = m_serverSocket->listen();
-            if ( found = ( success && m_serverSocket->error() == KNetwork::KSocketBase::NoError ) )
-                break;
-            m_serverSocket->close();
-        }
-        if ( !found )
-        {
-            failed( i18n( "No vacant port" ) );
-            return;
-        }
-    }
-    else                                          // user isn't specifying ports
-    {
-        // Let the operating system choose a port
-        m_serverSocket->setAddress( "0" );
-
-        if ( !m_serverSocket->listen() )
-        {
-            kdDebug() << "DccTransferSend::start(): listen() failed!" << endl;
-            failed( i18n( "Could not open a socket" ) );
-            return;
-        }
-    }
-
-    connect( m_serverSocket, SIGNAL( readyAccept() ),   this, SLOT( acceptClient() ) );
-    connect( m_serverSocket, SIGNAL( gotError( int ) ), this, SLOT( slotGotSocketError( int ) ) );
-    connect( m_serverSocket, SIGNAL( closed() ),        this, SLOT( slotServerSocketClosed() ) );
-
-    // Get our own port number
-    KNetwork::KSocketAddress ipAddr = m_serverSocket->localAddress();
-    const struct sockaddr_in* socketAddress = (sockaddr_in*)ipAddr.address();
-    m_ownPort = QString::number( ntohs( socketAddress->sin_port ) );
-
-    kdDebug() << "DccTransferSend::start(): own Address=" << m_ownIp << ":" << m_ownPort << endl;
-
-    setStatus( WaitingRemote, i18n( "Waiting remote user's acceptance" ) );
-
-    startConnectionTimer( Preferences::dccSendTimeout() );
-
-    // now we're ready to send the file!
     Server* server = KonversationApplication::instance()->getServerByServerGroupId( m_serverGroupId );
     if ( !server )
     {
@@ -277,7 +240,77 @@ void DccTransferSend::start()                     // public slot
         failed( i18n( "Could not send a DCC SEND request to the partner via the IRC server." ) );
         return;
     }
-    server->dccSendRequest( m_partnerNick, m_fileName, getNumericalIpText( m_ownIp ), m_ownPort, m_fileSize );
+
+    if ( !m_reverse )
+    {
+        // Normal DCC SEND
+        kdDebug() << "DccTransferSend::start(): normal DCC SEND" << endl;
+
+        // Set up server socket
+        m_serverSocket = new KNetwork::KServerSocket( this );
+        m_serverSocket->setFamily( KNetwork::KResolver::InetFamily );
+
+                                                  // user is specifying ports
+        if ( Preferences::dccSpecificSendPorts() )
+        {
+            // set port
+            bool found = false;                       // whether succeeded to set port
+            unsigned long port = Preferences::dccSendPortsFirst();
+            for ( ; port <= Preferences::dccSendPortsLast() ; ++port )
+            {
+                kdDebug() << "DccTransferSend::start(): trying port " << port << endl;
+                m_serverSocket->setAddress( QString::number( port ) );
+                bool success = m_serverSocket->listen();
+                if ( found = ( success && m_serverSocket->error() == KNetwork::KSocketBase::NoError ) )
+                    break;
+                m_serverSocket->close();
+            }
+            if ( !found )
+            {
+                failed( i18n( "No vacant port" ) );
+                return;
+            }
+        }
+        else                                          // user isn't specifying ports
+        {
+            // Let the operating system choose a port
+            m_serverSocket->setAddress( "0" );
+
+            if ( !m_serverSocket->listen() )
+            {
+                kdDebug() << "DccTransferSend::start(): listen() failed!" << endl;
+                failed( i18n( "Could not open a socket" ) );
+                return;
+            }
+        }
+
+        connect( m_serverSocket, SIGNAL( readyAccept() ),   this, SLOT( acceptClient() ) );
+        connect( m_serverSocket, SIGNAL( gotError( int ) ), this, SLOT( slotGotSocketError( int ) ) );
+        connect( m_serverSocket, SIGNAL( closed() ),        this, SLOT( slotServerSocketClosed() ) );
+
+        // Get our own port number
+        KNetwork::KSocketAddress ipAddr = m_serverSocket->localAddress();
+        const struct sockaddr_in* socketAddress = (sockaddr_in*)ipAddr.address();
+        m_ownPort = QString::number( ntohs( socketAddress->sin_port ) );
+
+        kdDebug() << "DccTransferSend::start(): own Address=" << m_ownIp << ":" << m_ownPort << endl;
+
+        setStatus( WaitingRemote, i18n( "Waiting remote user's acceptance" ) );
+
+        startConnectionTimer( Preferences::dccSendTimeout() );
+
+        server->dccSendRequest( m_partnerNick, m_fileName, getNumericalIpText( m_ownIp ), m_ownPort, m_fileSize );
+    }
+    else
+    {
+        // Passive DCC SEND
+        kdDebug() << "DccTransferSend::start(): passive DCC SEND" << endl;
+
+        int tokenNumber = KonversationApplication::instance()->dccTransferManager()->generatePassiveSendTokenNumber();
+        // TODO: should we append a letter "T" to this token?
+        m_passiveSendToken = QString::number( tokenNumber );
+        server->dccPassiveSendRequest( m_partnerNick, m_fileName, getNumericalIpText( m_ownIp ), m_fileSize, m_passiveSendToken );
+    }
 }
                                                   // public
 bool DccTransferSend::setResume( unsigned long position )

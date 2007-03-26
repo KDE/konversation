@@ -1892,8 +1892,13 @@ void Server::requestDccChat(const QString& nickname)
 
 void Server::dccSendRequest(const QString &partner, const QString &fileName, const QString &address, const QString &port, unsigned long size)
 {
-    kdDebug() << "dccSendRequest sent" << endl;
     Konversation::OutputFilterResult result = outputFilter->sendRequest(partner,fileName,address,port,size);
+    queue(result.toServer);
+}
+
+void Server::dccPassiveSendRequest(const QString& recipient,const QString& fileName,const QString& address,unsigned long size,const QString& token)
+{
+    Konversation::OutputFilterResult result = outputFilter->passiveSendRequest(recipient,fileName,address,size,token);
     queue(result.toServer);
 }
 

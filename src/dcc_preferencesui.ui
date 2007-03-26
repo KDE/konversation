@@ -1,4 +1,4 @@
-<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>DCC_ConfigUI</class>
 <comment>This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -12,8 +12,8 @@ the Free Software Foundation; either version 2 of the License, or
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>553</width>
-            <height>501</height>
+            <width>533</width>
+            <height>525</height>
         </rect>
     </property>
     <property name="caption">
@@ -26,22 +26,6 @@ the Free Software Foundation; either version 2 of the License, or
         <property name="margin">
             <number>0</number>
         </property>
-        <widget class="QCheckBox" row="1" column="0" rowspan="1" colspan="4">
-            <property name="name">
-                <cstring>kcfg_DccAddPartner</cstring>
-            </property>
-            <property name="text">
-                <string>&amp;Add sender to file name</string>
-            </property>
-        </widget>
-        <widget class="QCheckBox" row="2" column="0" rowspan="1" colspan="4">
-            <property name="name">
-                <cstring>kcfg_DccCreateFolder</cstring>
-            </property>
-            <property name="text">
-                <string>Cr&amp;eate folder for sender</string>
-            </property>
-        </widget>
         <widget class="QLabel" row="0" column="0">
             <property name="name">
                 <cstring>dccPathLbl</cstring>
@@ -69,6 +53,25 @@ the Free Software Foundation; either version 2 of the License, or
                 <number>2</number>
             </property>
         </widget>
+        <widget class="QCheckBox" row="1" column="0" rowspan="1" colspan="4">
+            <property name="name">
+                <cstring>kcfg_DccAddPartner</cstring>
+            </property>
+            <property name="text">
+                <string>&amp;Add sender to file name</string>
+            </property>
+            <property name="accel">
+                <string>Alt+A</string>
+            </property>
+        </widget>
+        <widget class="QCheckBox" row="2" column="0" rowspan="1" colspan="4">
+            <property name="name">
+                <cstring>kcfg_DccCreateFolder</cstring>
+            </property>
+            <property name="text">
+                <string>Cr&amp;eate folder for sender</string>
+            </property>
+        </widget>
         <widget class="QCheckBox" row="3" column="0" rowspan="1" colspan="4">
             <property name="name">
                 <cstring>kcfg_DccSpaceToUnderscore</cstring>
@@ -80,21 +83,20 @@ the Free Software Foundation; either version 2 of the License, or
                 <string></string>
             </property>
         </widget>
-        <widget class="QSpinBox" row="9" column="2">
+        <widget class="QCheckBox" row="4" column="0" rowspan="1" colspan="4">
             <property name="name">
-                <cstring>kcfg_DccBufferSize</cstring>
+                <cstring>kcfg_DccAutoGet</cstring>
             </property>
-            <property name="suffix">
-                <string> bytes</string>
+            <property name="text">
+                <string>Automaticall&amp;y accept download offer</string>
             </property>
-            <property name="maxValue">
-                <number>65536</number>
+        </widget>
+        <widget class="QCheckBox" row="5" column="0" rowspan="1" colspan="4">
+            <property name="name">
+                <cstring>kcfg_DccAutoResume</cstring>
             </property>
-            <property name="minValue">
-                <number>512</number>
-            </property>
-            <property name="lineStep">
-                <number>128</number>
+            <property name="text">
+                <string>Au&amp;tomatically resume download</string>
             </property>
         </widget>
         <widget class="QCheckBox" row="6" column="0" rowspan="1" colspan="4">
@@ -104,18 +106,35 @@ the Free Software Foundation; either version 2 of the License, or
             <property name="text">
                 <string>Enable fast DCC send (Might &amp;not work with all clients)</string>
             </property>
+            <property name="accel">
+                <string>Alt+N</string>
+            </property>
         </widget>
-        <widget class="QLabel" row="9" column="0" rowspan="1" colspan="2">
+        <widget class="KLineEdit" row="7" column="2">
             <property name="name">
-                <cstring>textLabel6</cstring>
+                <cstring>kcfg_DccIPv4FallbackIface</cstring>
             </property>
-            <property name="text">
-                <string>Buffer si&amp;ze:</string>
-            </property>
-            <property name="buddy" stdset="0">
-                <cstring>kcfg_DccBufferSize</cstring>
+            <property name="enabled">
+                <bool>false</bool>
             </property>
         </widget>
+        <spacer row="7" column="3">
+            <property name="name">
+                <cstring>spacer5</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Horizontal</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Maximum</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>196</width>
+                    <height>20</height>
+                </size>
+            </property>
+        </spacer>
         <widget class="QCheckBox" row="7" column="0" rowspan="1" colspan="2">
             <property name="name">
                 <cstring>kcfg_DccIPv4Fallback</cstring>
@@ -158,6 +177,45 @@ the Free Software Foundation; either version 2 of the License, or
                 </size>
             </property>
         </spacer>
+        <widget class="QLabel" row="8" column="0" rowspan="1" colspan="2">
+            <property name="name">
+                <cstring>textLabel7</cstring>
+            </property>
+            <property name="text">
+                <string>DCC send t&amp;imeout:</string>
+            </property>
+            <property name="buddy" stdset="0">
+                <cstring>kcfg_DccSendTimeout</cstring>
+            </property>
+        </widget>
+        <widget class="QSpinBox" row="9" column="2">
+            <property name="name">
+                <cstring>kcfg_DccBufferSize</cstring>
+            </property>
+            <property name="suffix">
+                <string> bytes</string>
+            </property>
+            <property name="maxValue">
+                <number>65536</number>
+            </property>
+            <property name="minValue">
+                <number>512</number>
+            </property>
+            <property name="lineStep">
+                <number>128</number>
+            </property>
+        </widget>
+        <widget class="QLabel" row="9" column="0" rowspan="1" colspan="2">
+            <property name="name">
+                <cstring>textLabel6</cstring>
+            </property>
+            <property name="text">
+                <string>Buffer si&amp;ze:</string>
+            </property>
+            <property name="buddy" stdset="0">
+                <cstring>kcfg_DccBufferSize</cstring>
+            </property>
+        </widget>
         <spacer row="9" column="3">
             <property name="name">
                 <cstring>spacer3_2</cstring>
@@ -175,26 +233,63 @@ the Free Software Foundation; either version 2 of the License, or
                 </size>
             </property>
         </spacer>
-        <widget class="QCheckBox" row="4" column="0" rowspan="1" colspan="4">
+        <widget class="QCheckBox" row="10" column="0" rowspan="1" colspan="2">
             <property name="name">
-                <cstring>kcfg_DccAutoGet</cstring>
+                <cstring>kcfg_DccPassiveSend</cstring>
             </property>
             <property name="text">
-                <string>Automaticall&amp;y accept download offer</string>
+                <string>Enable Passive DCC send</string>
             </property>
-        </widget>
-        <widget class="QLabel" row="8" column="0" rowspan="1" colspan="2">
-            <property name="name">
-                <cstring>textLabel7</cstring>
-            </property>
-            <property name="text">
-                <string>DCC send t&amp;imeout:</string>
-            </property>
-            <property name="buddy" stdset="0">
-                <cstring>kcfg_DccSendTimeout</cstring>
+            <property name="accel">
+                <string></string>
             </property>
         </widget>
         <widget class="QGroupBox" row="11" column="0" rowspan="1" colspan="4">
+            <property name="name">
+                <cstring>groupBox1</cstring>
+            </property>
+            <property name="title">
+                <string>IP</string>
+            </property>
+            <grid>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QLineEdit" row="1" column="1">
+                    <property name="name">
+                        <cstring>kcfg_DccSpecificOwnIp</cstring>
+                    </property>
+                </widget>
+                <widget class="QLabel" row="0" column="0">
+                    <property name="name">
+                        <cstring>textLabel4</cstring>
+                    </property>
+                    <property name="text">
+                        <string>&amp;Method to get own IP:</string>
+                    </property>
+                    <property name="buddy" stdset="0">
+                        <cstring>kcfg_DccMethodToGetOwnIp</cstring>
+                    </property>
+                </widget>
+                <widget class="QLabel" row="1" column="0">
+                    <property name="name">
+                        <cstring>ownIP</cstring>
+                    </property>
+                    <property name="text">
+                        <string>O&amp;wn IP:</string>
+                    </property>
+                    <property name="buddy" stdset="0">
+                        <cstring>kcfg_DccSpecificOwnIp</cstring>
+                    </property>
+                </widget>
+                <widget class="QComboBox" row="0" column="1">
+                    <property name="name">
+                        <cstring>kcfg_DccMethodToGetOwnIp</cstring>
+                    </property>
+                </widget>
+            </grid>
+        </widget>
+        <widget class="QGroupBox" row="12" column="0" rowspan="1" colspan="4">
             <property name="name">
                 <cstring>groupBox2</cstring>
             </property>
@@ -277,7 +372,10 @@ the Free Software Foundation; either version 2 of the License, or
                         <cstring>kcfg_DccSpecificSendPorts</cstring>
                     </property>
                     <property name="text">
-                        <string>Enable specific &amp;ports for DCC send:</string>
+                        <string>Enable specific &amp;ports for DCC transfer server:</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+P</string>
                     </property>
                 </widget>
                 <spacer row="0" column="1">
@@ -341,7 +439,7 @@ the Free Software Foundation; either version 2 of the License, or
                 </widget>
             </grid>
         </widget>
-        <spacer row="12" column="2">
+        <spacer row="13" column="2">
             <property name="name">
                 <cstring>spacer4_2</cstring>
             </property>
@@ -355,84 +453,6 @@ the Free Software Foundation; either version 2 of the License, or
                 <size>
                     <width>20</width>
                     <height>10</height>
-                </size>
-            </property>
-        </spacer>
-        <widget class="QCheckBox" row="5" column="0" rowspan="1" colspan="4">
-            <property name="name">
-                <cstring>kcfg_DccAutoResume</cstring>
-            </property>
-            <property name="text">
-                <string>Au&amp;tomatically resume download</string>
-            </property>
-        </widget>
-        <widget class="KLineEdit" row="7" column="2">
-            <property name="name">
-                <cstring>kcfg_DccIPv4FallbackIface</cstring>
-            </property>
-            <property name="enabled">
-                <bool>false</bool>
-            </property>
-        </widget>
-        <widget class="QGroupBox" row="10" column="0" rowspan="1" colspan="4">
-            <property name="name">
-                <cstring>groupBox1</cstring>
-            </property>
-            <property name="title">
-                <string>IP</string>
-            </property>
-            <grid>
-                <property name="name">
-                    <cstring>unnamed</cstring>
-                </property>
-                <widget class="QLineEdit" row="1" column="1">
-                    <property name="name">
-                        <cstring>kcfg_DccSpecificOwnIp</cstring>
-                    </property>
-                </widget>
-                <widget class="QLabel" row="0" column="0">
-                    <property name="name">
-                        <cstring>textLabel4</cstring>
-                    </property>
-                    <property name="text">
-                        <string>&amp;Method to get own IP:</string>
-                    </property>
-                    <property name="buddy" stdset="0">
-                        <cstring>kcfg_DccMethodToGetOwnIp</cstring>
-                    </property>
-                </widget>
-                <widget class="QLabel" row="1" column="0">
-                    <property name="name">
-                        <cstring>ownIP</cstring>
-                    </property>
-                    <property name="text">
-                        <string>O&amp;wn IP:</string>
-                    </property>
-                    <property name="buddy" stdset="0">
-                        <cstring>kcfg_DccSpecificOwnIp</cstring>
-                    </property>
-                </widget>
-                <widget class="QComboBox" row="0" column="1">
-                    <property name="name">
-                        <cstring>kcfg_DccMethodToGetOwnIp</cstring>
-                    </property>
-                </widget>
-            </grid>
-        </widget>
-        <spacer row="7" column="3">
-            <property name="name">
-                <cstring>spacer5</cstring>
-            </property>
-            <property name="orientation">
-                <enum>Horizontal</enum>
-            </property>
-            <property name="sizeType">
-                <enum>Maximum</enum>
-            </property>
-            <property name="sizeHint">
-                <size>
-                    <width>196</width>
-                    <height>20</height>
                 </size>
             </property>
         </spacer>

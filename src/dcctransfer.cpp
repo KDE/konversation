@@ -28,6 +28,7 @@ DccTransfer::DccTransfer( DccType dccType )
 
     m_fileSize = 0;
     m_resumed = false;
+    m_reverse = false;
     m_serverGroupId = -1;  // Not configured
     m_transferringPosition = 0;
     m_transferStartPosition = 0;
@@ -67,6 +68,7 @@ DccTransfer::DccTransfer( const DccTransfer& obj )
     m_partnerNick = obj.getPartnerNick();
     m_partnerPort = obj.getPartnerPort();
     m_resumed = obj.isResumed();
+    m_reverse = obj.isReverse();
     m_serverGroupId = obj.getServerGroupId();
     m_timeLeft = obj.getTimeLeft();
     m_timeOffer = obj.getTimeOffer();
@@ -221,7 +223,7 @@ DccTransfer::DccType DccTransfer::getType() const
     return m_type;
 }
 
-DccTransfer::DccStatus DccTransfer::getStatus() const 
+DccTransfer::DccStatus DccTransfer::getStatus() const
 {
     return m_status;
 }
@@ -231,9 +233,9 @@ const QString& DccTransfer::getStatusDetail() const
     return m_statusDetail;
 }
 
-QDateTime DccTransfer::getTimeOffer() const 
+QDateTime DccTransfer::getTimeOffer() const
 {
-    return m_timeOffer; 
+    return m_timeOffer;
 }
 
 int DccTransfer::getServerGroupId() const
@@ -241,44 +243,44 @@ int DccTransfer::getServerGroupId() const
     return m_serverGroupId;
 }
 
-QString DccTransfer::getOwnIp() const 
+QString DccTransfer::getOwnIp() const
 {
-    return m_ownIp; 
+    return m_ownIp;
 }
 
-QString DccTransfer::getOwnPort() const 
+QString DccTransfer::getOwnPort() const
 {
-    return m_ownPort; 
+    return m_ownPort;
 }
 
-QString DccTransfer::getPartnerNick() const 
+QString DccTransfer::getPartnerNick() const
 {
-    return m_partnerNick; 
+    return m_partnerNick;
 }
 
-QString DccTransfer::getPartnerIp() const 
+QString DccTransfer::getPartnerIp() const
 {
-    return m_partnerIp; 
+    return m_partnerIp;
 }
 
-QString DccTransfer::getPartnerPort() const 
+QString DccTransfer::getPartnerPort() const
 {
-    return m_partnerPort; 
+    return m_partnerPort;
 }
 
-QString DccTransfer::getFileName() const 
+QString DccTransfer::getFileName() const
 {
-    return m_fileName; 
+    return m_fileName;
 }
 
-KIO::filesize_t DccTransfer::getFileSize() const 
+KIO::filesize_t DccTransfer::getFileSize() const
 {
-    return m_fileSize; 
+    return m_fileSize;
 }
 
 KIO::fileoffset_t DccTransfer::getTransferringPosition() const
 {
-    return m_transferringPosition; 
+    return m_transferringPosition;
 }
 
 KIO::fileoffset_t DccTransfer::getTransferStartPosition() const
@@ -286,14 +288,19 @@ KIO::fileoffset_t DccTransfer::getTransferStartPosition() const
     return m_transferStartPosition;
 }
 
-KURL DccTransfer::getFileURL() const 
+KURL DccTransfer::getFileURL() const
 {
     return m_fileURL;
 }
 
-bool DccTransfer::isResumed() const 
+bool DccTransfer::isResumed() const
 {
-    return m_resumed; 
+    return m_resumed;
+}
+
+bool DccTransfer::isReverse() const
+{
+    return m_reverse;
 }
 
 long DccTransfer::getCurrentSpeed() const

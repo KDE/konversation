@@ -897,6 +897,22 @@ namespace Konversation
         return result;
     }
 
+    OutputFilterResult OutputFilter::passiveSendRequest(const QString& recipient,const QString &fileName,const QString &address,unsigned long size,const QString &token)
+    {
+        OutputFilterResult result;
+        QString niftyFileName(fileName);
+
+        result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + "DCC SEND "
+            + fileName
+            + ' ' + address + " 0 " + QString::number(size) + token + '\x01';
+
+        // Dirty hack to avoid printing ""name with spaces.ext"" instead of "name with spaces.ext"
+        if ((fileName.startsWith("\"")) && (fileName.endsWith("\"")))
+            niftyFileName = fileName.mid(1, fileName.length()-2);
+
+        return result;
+    }
+
     // Accepting Resume Request
     OutputFilterResult OutputFilter::acceptRequest(const QString &recipient,const QString &fileName,const QString &port,int startAt)
     {

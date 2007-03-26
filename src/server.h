@@ -344,6 +344,7 @@ class Server : public QObject
 
         // invoked by DccTransferSend
         void dccSendRequest(const QString& recipient,const QString& fileName,const QString& address,const QString& port,unsigned long size);
+        void dccPassiveSendRequest(const QString& recipient,const QString& fileName,const QString& address,unsigned long size,const QString& token);
         // invoked by DccTransferRecv
         void dccResumeGetRequest(const QString& sender,const QString& fileName,const QString& port,KIO::filesize_t startAt);
 
