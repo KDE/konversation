@@ -19,23 +19,32 @@
 DccTransferManager::DccTransferManager( QObject* parent )
     : QObject( parent )
 {
-    m_nextPassiveSendTokenNumber = 1;
+    m_nextPassiveSendTokenNumber = 1001;
 }
 
 DccTransferManager::~DccTransferManager()
 {
-    // delete all items
-    QValueListIterator< DccTransfer* > it = m_transfers.begin();
-    while ( it != m_transfers.end() )
+    // delete SEND items
+    QValueListIterator< DccTransferSend* > itSend = m_sendItems.begin();
+    while ( itSend != m_sendItems.end() )
     {
-        delete (*it);
-        it = m_transfers.erase( it );
+        delete (*itSend);
+        itSend = m_sendItems.erase( itSend );
+    }
+    // delete RECV items
+    QValueListIterator< DccTransferRecv* > itRecv = m_recvItems.begin();
+    while ( itRecv != m_recvItems.end() )
+    {
+        delete (*itRecv);
+        itRecv = m_recvItems.erase( itRecv );
     }
 }
 
 DccTransferRecv* DccTransferManager::newDownload()
 {
     DccTransferRecv* transfer = new DccTransferRecv();
+    m_recvItems.push_back( transfer );
+    connect( transfer, SIGNAL( done( DccTransfer* ) ), this, SLOT( removeRecvItem( DccTransfer* ) ) );
     initTransfer( transfer );
     return transfer;
 }
@@ -43,29 +52,27 @@ DccTransferRecv* DccTransferManager::newDownload()
 DccTransferSend* DccTransferManager::newUpload()
 {
     DccTransferSend* transfer = new DccTransferSend();
+    m_sendItems.push_back( transfer );
+    connect( transfer, SIGNAL( done( DccTransfer* ) ), this, SLOT( removeSendItem( DccTransfer* ) ) );
     initTransfer( transfer );
     return transfer;
 }
 
 void DccTransferManager::initTransfer( DccTransfer* transfer )
 {
-    m_transfers.push_back( transfer );
-
     connect( transfer, SIGNAL( statusChanged( DccTransfer*, int, int ) ), this, SLOT( slotTransferStatusChanged( DccTransfer*, int, int ) ) );
-    connect( transfer, SIGNAL( done( DccTransfer* ) ), this, SLOT( removeItem( DccTransfer* ) ) );
 
     emit newTransferAdded( transfer );
 }
 
-DccTransfer* DccTransferManager::searchStandbyTransferByFileName( const QString& fileName, DccTransfer::DccType type, bool resumed )
+DccTransferSend* DccTransferManager::findStandbySendItemByFileName( const QString& fileName, bool resumedItemOnly ) const
 {
-    QValueListConstIterator< DccTransfer* > it;
-    for ( it = m_transfers.begin() ; it != m_transfers.end() ; ++it )
+    QValueListConstIterator< DccTransferSend* > it;
+    for ( it = m_sendItems.begin() ; it != m_sendItems.end() ; ++it )
     {
         if ( ( (*it)->getStatus() == DccTransfer::Queued || (*it)->getStatus() == DccTransfer::WaitingRemote ) &&
              (*it)->getFileName() == fileName &&
-             (*it)->getType() == type &&
-             !(resumed && !(*it)->isResumed() ) )  // <- what the hell does it mean? (strm)
+             ( !resumedItemOnly || (*it)->isResumed() ) )
         {
             return *it;
         }
@@ -73,15 +80,29 @@ DccTransfer* DccTransferManager::searchStandbyTransferByFileName( const QString&
     return 0;
 }
 
-DccTransfer* DccTransferManager::searchStandbyTransferByOwnPort( const QString& ownPort, DccTransfer::DccType type, bool resumed )
+DccTransferRecv* DccTransferManager::findStandbyRecvItemByFileName( const QString& fileName, bool resumedItemOnly ) const
 {
-    QValueListConstIterator< DccTransfer* > it;
-    for ( it = m_transfers.begin() ; it != m_transfers.end() ; ++it )
+    QValueListConstIterator< DccTransferRecv* > it;
+    for ( it = m_recvItems.begin() ; it != m_recvItems.end() ; ++it )
+    {
+        if ( ( (*it)->getStatus() == DccTransfer::Queued || (*it)->getStatus() == DccTransfer::WaitingRemote ) &&
+             (*it)->getFileName() == fileName &&
+             ( !resumedItemOnly || (*it)->isResumed() ) )
+        {
+            return *it;
+        }
+    }
+    return 0;
+}
+
+DccTransferSend* DccTransferManager::findStandbySendItemByOwnPort( const QString& ownPort, bool resumedItemOnly ) const
+{
+    QValueListConstIterator< DccTransferSend* > it;
+    for ( it = m_sendItems.begin() ; it != m_sendItems.end() ; ++it )
     {
         if ( ( (*it)->getStatus() == DccTransfer::Queued || (*it)->getStatus() == DccTransfer::WaitingRemote ) &&
              (*it)->getOwnPort() == ownPort &&
-             (*it)->getType() == type &&
-             !(resumed && !(*it)->isResumed() ) )  // <- what the hell does it mean? (strm)
+             ( !resumedItemOnly || (*it)->isResumed() ) )
         {
             return *it;
         }
@@ -89,13 +110,27 @@ DccTransfer* DccTransferManager::searchStandbyTransferByOwnPort( const QString& 
     return 0;
 }
 
-bool DccTransferManager::isLocalFileInWritingProcess( const KURL& url )
+DccTransferRecv* DccTransferManager::findStandbyRecvItemByOwnPort( const QString& ownPort, bool resumedItemOnly ) const
 {
-    QValueListConstIterator< DccTransfer* > it;
-    for ( it = m_transfers.begin() ; it != m_transfers.end() ; ++it )
+    QValueListConstIterator< DccTransferRecv* > it;
+    for ( it = m_recvItems.begin() ; it != m_recvItems.end() ; ++it )
     {
-        if ( (*it)->getType() == DccTransfer::Receive &&
-             ( (*it)->getStatus() == DccTransfer::Connecting ||
+        if ( ( (*it)->getStatus() == DccTransfer::Queued || (*it)->getStatus() == DccTransfer::WaitingRemote ) &&
+             (*it)->getOwnPort() == ownPort &&
+             ( !resumedItemOnly || (*it)->isResumed() ) )
+        {
+            return *it;
+        }
+    }
+    return 0;
+}
+
+bool DccTransferManager::isLocalFileInWritingProcess( const KURL& url ) const
+{
+    QValueListConstIterator< DccTransferRecv* > it;
+    for ( it = m_recvItems.begin() ; it != m_recvItems.end() ; ++it )
+    {
+        if ( ( (*it)->getStatus() == DccTransfer::Connecting ||
                (*it)->getStatus() == DccTransfer::Transferring ) &&
              (*it)->getFileURL() == url )
         {
@@ -115,10 +150,18 @@ void DccTransferManager::slotTransferStatusChanged( DccTransfer* item, int newSt
     kdDebug() << "DccTransferManager::slotTransferStatusChanged(): " << oldStatus << " -> " << newStatus << " " << item->getFileName() << " (" << item->getType() << ")" << endl;
 }
 
-void DccTransferManager::removeItem( DccTransfer* item )
+void DccTransferManager::removeSendItem( DccTransfer* item_ )
 {
+    DccTransferSend* item = static_cast< DccTransferSend* > ( item_ );
+    m_sendItems.remove( item );
     item->deleteLater();
-    m_transfers.remove( item );
+}
+
+void DccTransferManager::removeRecvItem( DccTransfer* item_ )
+{
+    DccTransferRecv* item = static_cast< DccTransferRecv* > ( item_ );
+    m_recvItems.remove( item );
+    item->deleteLater();
 }
 
 #include "dcctransfermanager.moc"

@@ -46,10 +46,12 @@ class DccTransferManager : public QObject
         DccTransferRecv* newDownload();
         DccTransferSend* newUpload();
 
-        DccTransfer* searchStandbyTransferByFileName( const QString& fileName, DccTransfer::DccType type, bool resumed = false );
-        DccTransfer* searchStandbyTransferByOwnPort( const QString& ownPort, DccTransfer::DccType type, bool resumed = false );
+        DccTransferSend* findStandbySendItemByFileName( const QString& fileName, bool resumedItemOnly = false ) const;
+        DccTransferRecv* findStandbyRecvItemByFileName( const QString& fileName, bool resumedItemOnly = false ) const;
+        DccTransferSend* findStandbySendItemByOwnPort( const QString& ownPort, bool resumedItemOnly = false ) const;
+        DccTransferRecv* findStandbyRecvItemByOwnPort( const QString& ownPort, bool resumedItemOnly = false ) const;
 
-        bool isLocalFileInWritingProcess( const KURL& localUrl );
+        bool isLocalFileInWritingProcess( const KURL& localUrl ) const;
 
         int generatePassiveSendTokenNumber();
 
@@ -61,10 +63,12 @@ class DccTransferManager : public QObject
 
     private slots:
         void slotTransferStatusChanged( DccTransfer* item, int newStatus, int oldStatus );
-        void removeItem( DccTransfer* item );
+        void removeSendItem( DccTransfer* item );
+        void removeRecvItem( DccTransfer* item );
 
     private:
-        QValueList< DccTransfer* > m_transfers;
+        QValueList< DccTransferSend* > m_sendItems;
+        QValueList< DccTransferRecv* > m_recvItems;
 
         int m_nextPassiveSendTokenNumber;
 };

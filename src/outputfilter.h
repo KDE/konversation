@@ -62,11 +62,14 @@ namespace Konversation
             QStringList splitForEncoding(const QString& inputLine, int MAX);
             OutputFilterResult parse(const QString& myNick,const QString& line,const QString& name);
 
+            // dcc send
             OutputFilterResult sendRequest(const QString &recipient,const QString &fileName,const QString &address,const QString &port,unsigned long size);
             OutputFilterResult passiveSendRequest(const QString& recipient,const QString &fileName,const QString &address,unsigned long size,const QString &token);
+            OutputFilterResult acceptResumeRequest(const QString &recipient,const QString &fileName,const QString &port,int startAt);
 
+            // dcc recv
             OutputFilterResult resumeRequest(const QString &sender,const QString &fileName,const QString &port,KIO::filesize_t startAt);
-            OutputFilterResult acceptRequest(const QString &recipient,const QString &fileName,const QString &port,int startAt);
+            OutputFilterResult acceptPassiveSendRequest(const QString& recipient,const QString &fileName,const QString &address,const QString &port,unsigned long size,const QString &token);
 
             bool replaceAliases(QString& line);
 

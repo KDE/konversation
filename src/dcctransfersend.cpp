@@ -309,6 +309,9 @@ void DccTransferSend::start()                     // public slot
         int tokenNumber = KonversationApplication::instance()->dccTransferManager()->generatePassiveSendTokenNumber();
         // TODO: should we append a letter "T" to this token?
         m_passiveSendToken = QString::number( tokenNumber );
+
+        kdDebug() << "DccTransferSend::start(): passive DCC key(token): " << m_passiveSendToken << endl;
+
         server->dccPassiveSendRequest( m_partnerNick, m_fileName, getNumericalIpText( m_ownIp ), m_fileSize, m_passiveSendToken );
     }
 }

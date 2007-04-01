@@ -904,7 +904,7 @@ namespace Konversation
 
         result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + "DCC SEND "
             + fileName
-            + ' ' + address + " 0 " + QString::number(size) + token + '\x01';
+            + ' ' + address + " 0 " + QString::number(size) + ' ' + token + '\x01';
 
         // Dirty hack to avoid printing ""name with spaces.ext"" instead of "name with spaces.ext"
         if ((fileName.startsWith("\"")) && (fileName.endsWith("\"")))
@@ -914,7 +914,7 @@ namespace Konversation
     }
 
     // Accepting Resume Request
-    OutputFilterResult OutputFilter::acceptRequest(const QString &recipient,const QString &fileName,const QString &port,int startAt)
+    OutputFilterResult OutputFilter::acceptResumeRequest(const QString &recipient,const QString &fileName,const QString &port,int startAt)
     {
         QString niftyFileName(fileName);
 
@@ -938,6 +938,23 @@ namespace Konversation
         newFileName.replace(" ", "_");*/
         result.toServer = "PRIVMSG " + sender + " :" + '\x01' + "DCC RESUME " + fileName + ' ' + port + ' '
             + QString::number(startAt) + '\x01';
+
+        // Dirty hack to avoid printing ""name with spaces.ext"" instead of "name with spaces.ext"
+        if ((fileName.startsWith("\"")) && (fileName.endsWith("\"")))
+            niftyFileName = fileName.mid(1, fileName.length()-2);
+
+        return result;
+    }
+
+    OutputFilterResult OutputFilter::acceptPassiveSendRequest(const QString& recipient,const QString &fileName,const QString &address,const QString &port,unsigned long size,const QString &token)
+    {
+        OutputFilterResult result;
+        QString niftyFileName(fileName);
+
+        // "DCC SEND" to receive a file sounds weird, but it's ok.
+        result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + "DCC SEND "
+            + fileName
+            + ' ' + address + ' ' + port + ' ' + QString::number(size) + ' ' + token + '\x01';
 
         // Dirty hack to avoid printing ""name with spaces.ext"" instead of "name with spaces.ext"
         if ((fileName.startsWith("\"")) && (fileName.endsWith("\"")))

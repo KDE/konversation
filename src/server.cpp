@@ -1917,14 +1917,13 @@ void Server::dccResumeGetRequest(const QString &sender, const QString &fileName,
 void Server::resumeDccGetTransfer(const QString &sourceNick, const QStringList &dccArguments)
 {
     // Check if there actually is a transfer going on on that port
-    DccTransfer* dccTransfer_ = KonversationApplication::instance()->dccTransferManager()->searchStandbyTransferByOwnPort(dccArguments[1],DccTransfer::Receive,true);
-    if(!dccTransfer_)
+    DccTransferRecv* dccTransfer = KonversationApplication::instance()->dccTransferManager()->findStandbyRecvItemByOwnPort(dccArguments[1],true);
+
+    if(!dccTransfer)
         // Check if there actually is a transfer going on with that name, could be behind a NAT
         // so the port number may get changed
         // mIRC substitutes this with "file.ext", so we have a problem here with mIRCs behind a NAT
-        dccTransfer_ = KonversationApplication::instance()->dccTransferManager()->searchStandbyTransferByFileName(dccArguments[0],DccTransfer::Receive,true);
-
-    DccTransferRecv* dccTransfer = static_cast< DccTransferRecv* >( dccTransfer_ );
+        dccTransfer = KonversationApplication::instance()->dccTransferManager()->findStandbyRecvItemByFileName(dccArguments[0],true);
 
     if(dccTransfer)
     {
@@ -1947,14 +1946,13 @@ void Server::resumeDccGetTransfer(const QString &sourceNick, const QStringList &
 void Server::resumeDccSendTransfer(const QString &recipient, const QStringList &dccArguments)
 {
     // Check if there actually is a transfer going on on that port
-    DccTransfer* dccTransfer_ = KonversationApplication::instance()->dccTransferManager()->searchStandbyTransferByOwnPort(dccArguments[1],DccTransfer::Send);
-    if(!dccTransfer_)
+    DccTransferSend* dccTransfer = KonversationApplication::instance()->dccTransferManager()->findStandbySendItemByOwnPort(dccArguments[1]);
+
+    if(!dccTransfer)
         // Check if there actually is a transfer going on with that name, could be behind a NAT
         // so the port number may get changed
         // mIRC substitutes this with "file.ext", so we have a problem here with mIRCs behind a NAT
-        dccTransfer_ = KonversationApplication::instance()->dccTransferManager()->searchStandbyTransferByFileName(dccArguments[0],DccTransfer::Send);
-
-    DccTransferSend* dccTransfer = static_cast<DccTransferSend*>(dccTransfer_);
+        dccTransfer = KonversationApplication::instance()->dccTransferManager()->findStandbySendItemByFileName(dccArguments[0]);
 
     if(dccTransfer && dccTransfer->getStatus() == DccTransfer::WaitingRemote)
     {
@@ -1968,7 +1966,7 @@ void Server::resumeDccSendTransfer(const QString &recipient, const QStringList &
                                             recipient,
                                             QString::number(dccTransfer->getProgress()),
                                             ( dccTransfer->getFileSize() == 0 ) ? i18n( "unknown size" ) : KIO::convertSize( dccTransfer->getFileSize() ) ) );
-            Konversation::OutputFilterResult result = outputFilter->acceptRequest(recipient,
+            Konversation::OutputFilterResult result = outputFilter->acceptResumeRequest(recipient,
                 fileName, dccArguments[1], dccArguments[2].toUInt());
             queue(result.toServer);
             //appendMessageToFrontmost(result.typeString, result.output);
