@@ -1,4 +1,4 @@
-<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
 <class>DCC_ConfigUI</class>
 <comment>This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -60,9 +60,6 @@ the Free Software Foundation; either version 2 of the License, or
             <property name="text">
                 <string>&amp;Add sender to file name</string>
             </property>
-            <property name="accel">
-                <string>Alt+A</string>
-            </property>
         </widget>
         <widget class="QCheckBox" row="2" column="0" rowspan="1" colspan="4">
             <property name="name">
@@ -105,9 +102,6 @@ the Free Software Foundation; either version 2 of the License, or
             </property>
             <property name="text">
                 <string>Enable fast DCC send (Might &amp;not work with all clients)</string>
-            </property>
-            <property name="accel">
-                <string>Alt+N</string>
             </property>
         </widget>
         <widget class="KLineEdit" row="7" column="2">
@@ -373,9 +367,6 @@ the Free Software Foundation; either version 2 of the License, or
                     </property>
                     <property name="text">
                         <string>Enable specific &amp;ports for DCC transfer server:</string>
-                    </property>
-                    <property name="accel">
-                        <string>Alt+P</string>
                     </property>
                 </widget>
                 <spacer row="0" column="1">
