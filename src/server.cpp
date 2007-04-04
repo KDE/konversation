@@ -1916,6 +1916,35 @@ void Server::dccResumeGetRequest(const QString &sender, const QString &fileName,
 
 void Server::resumeDccGetTransfer(const QString &sourceNick, const QStringList &dccArguments)
 {
+    DccTransferManager* dtm = KonversationApplication::instance()->dccTransferManager();
+
+    QString fileName( dccArguments[0] );
+    QString ownPort( dccArguments[1] );
+    unsigned long position = dccArguments[2].toULong();
+
+    DccTransferRecv* dccTransfer = dtm->resumeDownload( serverGroupSettings()->id(), sourceNick, fileName, ownPort, position );
+
+    if ( dccTransfer )
+    {
+        appendMessageToFrontmost( i18n( "DCC" ),
+                                  i18n( "%1 = file name, %2 = nickname of sender, %3 = percentage of file size, %4 = file size",
+                                        "Resuming download of \"%1\" from %2 starting at %3% of %4..." )
+                                  .arg( fileName,
+                                        sourceNick,
+                                        QString::number( dccTransfer->getProgress() ),
+                                        ( dccTransfer->getFileSize() == 0 ) ? i18n( "unknown size" ) : KIO::convertSize( dccTransfer->getFileSize() ) ) );
+    }
+    else
+    {
+        appendMessageToFrontmost( i18n( "Error" ),
+                                  i18n( "%1 = file name, %2 = nickname",
+                                        "Received invalid resume acceptance message for \"%1\" from %2." )
+                                  .arg( fileName,
+                                        sourceNick ) );
+    }
+
+    /*
+
     // Check if there actually is a transfer going on on that port
     DccTransferRecv* dccTransfer = KonversationApplication::instance()->dccTransferManager()->findStandbyRecvItemByOwnPort(dccArguments[1],true);
 
@@ -1941,10 +1970,45 @@ void Server::resumeDccGetTransfer(const QString &sourceNick, const QStringList &
     {
         appendMessageToFrontmost(i18n("Error"),i18n("No DCC download running on port %1.").arg(dccArguments[1]));
     }
+
+    */
 }
 
-void Server::resumeDccSendTransfer(const QString &recipient, const QStringList &dccArguments)
+void Server::resumeDccSendTransfer(const QString &sourceNick, const QStringList &dccArguments)
 {
+    DccTransferManager* dtm = KonversationApplication::instance()->dccTransferManager();
+
+    QString fileName( dccArguments[0] );
+    QString ownPort( dccArguments[1] );
+    unsigned long position = dccArguments[2].toULong();
+
+    DccTransferSend* dccTransfer = dtm->resumeUpload( serverGroupSettings()->id(), sourceNick, fileName, ownPort, position );
+
+    if ( dccTransfer )
+    {
+        appendMessageToFrontmost( i18n( "DCC" ),
+                                  i18n( "%1 = file name, %2 = nickname of recipient, %3 = percentage of file size, %4 = file size",
+                                        "Resuming upload of \"%1\" to %2 starting at %3% of %4...")
+                                  .arg( fileName,
+                                        sourceNick,
+                                        QString::number(dccTransfer->getProgress()),
+                                        ( dccTransfer->getFileSize() == 0 ) ? i18n( "unknown size" ) : KIO::convertSize( dccTransfer->getFileSize() ) ) );
+
+        // FIXME: this operation should be done by DccTransferManager
+        Konversation::OutputFilterResult result = outputFilter->acceptResumeRequest( sourceNick, fileName, ownPort, position );
+        queue( result.toServer );
+
+    }
+    else
+    {
+        appendMessageToFrontmost( i18n( "Error" ),
+                                  i18n( "%1 = file name, %2 = nickname",
+                                        "Received invalid resume request for \"%1\" from %2." )
+                                  .arg( fileName,
+                                        sourceNick ) );
+    }
+
+    /*
     // Check if there actually is a transfer going on on that port
     DccTransferSend* dccTransfer = KonversationApplication::instance()->dccTransferManager()->findStandbySendItemByOwnPort(dccArguments[1]);
 
@@ -1981,6 +2045,7 @@ void Server::resumeDccSendTransfer(const QString &recipient, const QStringList &
     {
         appendMessageToFrontmost(i18n("Error"),i18n("No DCC upload running on port %1.").arg(dccArguments[1]));
     }
+    */
 }
 
 void Server::dccGetDone(DccTransfer* item)

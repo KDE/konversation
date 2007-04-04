@@ -46,10 +46,15 @@ class DccTransferManager : public QObject
         DccTransferRecv* newDownload();
         DccTransferSend* newUpload();
 
-        DccTransferSend* findStandbySendItemByFileName( const QString& fileName, bool resumedItemOnly = false ) const;
-        DccTransferRecv* findStandbyRecvItemByFileName( const QString& fileName, bool resumedItemOnly = false ) const;
-        DccTransferSend* findStandbySendItemByOwnPort( const QString& ownPort, bool resumedItemOnly = false ) const;
-        DccTransferRecv* findStandbyRecvItemByOwnPort( const QString& ownPort, bool resumedItemOnly = false ) const;
+        /**
+         * @return a DccTransferRecv item if applicable one found, otherwise 0.
+         */
+        DccTransferRecv* resumeDownload( int serverGroupId, const QString& partnerNick, const QString& fileName, const QString& ownPort, unsigned long position );
+
+        /**
+         * @return a DccTransferSend item if applicable one found, otherwise 0.
+         */
+        DccTransferSend* resumeUpload( int serverGroupId, const QString& partnerNick, const QString& fileName, const QString& ownPort, unsigned long position );
 
         bool isLocalFileInWritingProcess( const KURL& localUrl ) const;
 

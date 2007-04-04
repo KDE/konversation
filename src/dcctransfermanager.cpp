@@ -58,71 +58,71 @@ DccTransferSend* DccTransferManager::newUpload()
     return transfer;
 }
 
+DccTransferRecv* DccTransferManager::resumeDownload( int serverGroupId, const QString& partnerNick, const QString& fileName, const QString& ownPort, unsigned long position )
+{
+    DccTransferRecv* transfer = 0;
+
+    // find applicable one
+    QValueListConstIterator< DccTransferRecv* > it;
+    for ( it = m_recvItems.begin() ; it != m_recvItems.end() ; ++it )
+    {
+        if ( ( (*it)->getStatus() == DccTransfer::Queued || (*it)->getStatus() == DccTransfer::WaitingRemote ) &&
+             (*it)->getServerGroupId() == serverGroupId &&
+             (*it)->getPartnerNick() == partnerNick &&
+             (*it)->getFileName() == fileName &&
+             (*it)->isResumed() )
+        {
+            kdDebug() << "DccTransferManager::resumeDownload(): filename match: " << fileName << ", claimed port: " << ownPort << ", item port: " << transfer->getOwnPort() << endl;
+            transfer = (*it);
+            // the port number can be changed behind NAT, so we pick an item which only the filename is correspondent in that case.
+            if ( transfer->getOwnPort() == ownPort )
+            {
+                break;
+            }
+        }
+    }
+
+    if ( transfer )
+        transfer->startResume( position );
+
+    return transfer;
+}
+
+DccTransferSend* DccTransferManager::resumeUpload( int serverGroupId, const QString& partnerNick, const QString& fileName, const QString& ownPort, unsigned long position )
+{
+    DccTransferSend* transfer = 0;
+
+    // find applicable one
+    QValueListConstIterator< DccTransferSend* > it;
+    for ( it = m_sendItems.begin() ; it != m_sendItems.end() ; ++it )
+    {
+        if ( ( (*it)->getStatus() == DccTransfer::Queued || (*it)->getStatus() == DccTransfer::WaitingRemote ) &&
+             (*it)->getServerGroupId() == serverGroupId &&
+             (*it)->getPartnerNick() == partnerNick &&
+             (*it)->getFileName() == fileName &&
+             !(*it)->isResumed() )
+        {
+            kdDebug() << "DccTransferManager::resumeUpload(): filename match: " << fileName << ", claimed port: " << ownPort << ", item port: " << transfer->getOwnPort() << endl;
+            transfer = (*it);
+            // the port number can be changed behind NAT, so we pick an item which only the filename is correspondent in that case.
+            if ( transfer->getOwnPort() == ownPort )
+            {
+                break;
+            }
+        }
+    }
+
+    if ( transfer )
+        transfer->setResume( position );
+
+    return transfer;
+}
+
 void DccTransferManager::initTransfer( DccTransfer* transfer )
 {
     connect( transfer, SIGNAL( statusChanged( DccTransfer*, int, int ) ), this, SLOT( slotTransferStatusChanged( DccTransfer*, int, int ) ) );
 
     emit newTransferAdded( transfer );
-}
-
-DccTransferSend* DccTransferManager::findStandbySendItemByFileName( const QString& fileName, bool resumedItemOnly ) const
-{
-    QValueListConstIterator< DccTransferSend* > it;
-    for ( it = m_sendItems.begin() ; it != m_sendItems.end() ; ++it )
-    {
-        if ( ( (*it)->getStatus() == DccTransfer::Queued || (*it)->getStatus() == DccTransfer::WaitingRemote ) &&
-             (*it)->getFileName() == fileName &&
-             ( !resumedItemOnly || (*it)->isResumed() ) )
-        {
-            return *it;
-        }
-    }
-    return 0;
-}
-
-DccTransferRecv* DccTransferManager::findStandbyRecvItemByFileName( const QString& fileName, bool resumedItemOnly ) const
-{
-    QValueListConstIterator< DccTransferRecv* > it;
-    for ( it = m_recvItems.begin() ; it != m_recvItems.end() ; ++it )
-    {
-        if ( ( (*it)->getStatus() == DccTransfer::Queued || (*it)->getStatus() == DccTransfer::WaitingRemote ) &&
-             (*it)->getFileName() == fileName &&
-             ( !resumedItemOnly || (*it)->isResumed() ) )
-        {
-            return *it;
-        }
-    }
-    return 0;
-}
-
-DccTransferSend* DccTransferManager::findStandbySendItemByOwnPort( const QString& ownPort, bool resumedItemOnly ) const
-{
-    QValueListConstIterator< DccTransferSend* > it;
-    for ( it = m_sendItems.begin() ; it != m_sendItems.end() ; ++it )
-    {
-        if ( ( (*it)->getStatus() == DccTransfer::Queued || (*it)->getStatus() == DccTransfer::WaitingRemote ) &&
-             (*it)->getOwnPort() == ownPort &&
-             ( !resumedItemOnly || (*it)->isResumed() ) )
-        {
-            return *it;
-        }
-    }
-    return 0;
-}
-
-DccTransferRecv* DccTransferManager::findStandbyRecvItemByOwnPort( const QString& ownPort, bool resumedItemOnly ) const
-{
-    QValueListConstIterator< DccTransferRecv* > it;
-    for ( it = m_recvItems.begin() ; it != m_recvItems.end() ; ++it )
-    {
-        if ( ( (*it)->getStatus() == DccTransfer::Queued || (*it)->getStatus() == DccTransfer::WaitingRemote ) &&
-             (*it)->getOwnPort() == ownPort &&
-             ( !resumedItemOnly || (*it)->isResumed() ) )
-        {
-            return *it;
-        }
-    }
-    return 0;
 }
 
 bool DccTransferManager::isLocalFileInWritingProcess( const KURL& url ) const
