@@ -65,7 +65,8 @@ class DccTransferPanel : public ChatWindow
                     Clear,
                     Open,
                     Remove,
-                    Info
+                    Info,
+                    Resend
                 };
         };
 
@@ -80,6 +81,7 @@ class DccTransferPanel : public ChatWindow
 
         void acceptDcc();
         void abortDcc();
+        void resendFile();
         void clearDcc();
         void runDcc();
         void removeFile();

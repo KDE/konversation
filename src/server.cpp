@@ -236,6 +236,8 @@ void Server::init(ViewContainer* viewContainer, const QString& nick, const QStri
     if(getIdentity()->getShellCommand().isEmpty())
         connectSignals();
 
+    connect( KonversationApplication::instance()->dccTransferManager(), SIGNAL( newTransferQueued( DccTransfer* ) ), this, SLOT( slotNewDccTransferItemQueued( DccTransfer* ) ) );
+
     emit serverOnline(false);
     emit connectionChangedState(this, SSDisconnected);
 }
@@ -1812,6 +1814,24 @@ void Server::requestDccSend(const QString &a_recipient)
     }
 }
 
+void Server::slotNewDccTransferItemQueued(DccTransfer* transfer)
+{
+    if ( transfer->getServerGroupId() == serverGroupSettings()->id() )
+    {
+        kdDebug() << "Server::slotNewDccTranfserItemQueued(): connecting slots for " << transfer->getFileName() << " [" << transfer->getType() << "]" << endl;
+        if ( transfer->getType() == DccTransfer::Receive )
+        {
+            connect( transfer, SIGNAL( done( DccTransfer* ) ), this, SLOT( dccGetDone( DccTransfer* ) ) );
+            connect( transfer, SIGNAL( statusChanged( DccTransfer*, int, int ) ), this, SLOT( dccStatusChanged( DccTransfer*, int, int ) ) );
+        }
+        else
+        {
+            connect( transfer, SIGNAL( done( DccTransfer* ) ), this, SLOT( dccSendDone( DccTransfer* ) ) );
+            connect( transfer, SIGNAL( statusChanged( DccTransfer*, int, int ) ), this, SLOT( dccStatusChanged( DccTransfer*, int, int ) ) );
+        }
+    }
+}
+
 void Server::addDccSend(const QString &recipient,KURL fileURL, const QString &altFileName, uint fileSize)
 {
     emit addDccPanel();
@@ -1832,20 +1852,8 @@ void Server::addDccSend(const QString &recipient,KURL fileURL, const QString &al
     if ( fileSize != 0 )
         newDcc->setFileSize( fileSize );
 
-    connect(newDcc,SIGNAL (done(DccTransfer*)),this,SLOT (dccSendDone(DccTransfer*)) );
-    connect(newDcc,SIGNAL (statusChanged(DccTransfer*,int,int)), this,
-        SLOT(dccStatusChanged(DccTransfer*,int,int)) );
-
     if ( newDcc->queue() )
-    {
         newDcc->start();
-
-        appendMessageToFrontmost( i18n( "DCC" ),
-                                  i18n( "Asking %1 to accept upload of \"%2\" (%3)..." )
-                                  .arg( newDcc->getPartnerNick(),
-                                        newDcc->getFileName(),
-                                        ( newDcc->getFileSize() == 0 ) ? i18n( "unknown size" ) : KIO::convertSize( newDcc->getFileSize() ) ) );
-    }
 }
 
 void Server::addDccGet(const QString &sourceNick, const QStringList &dccArguments)
@@ -1866,11 +1874,6 @@ void Server::addDccGet(const QString &sourceNick, const QStringList &dccArgument
 
     newDcc->setFileName( dccArguments[0] );
     newDcc->setFileSize( dccArguments[3].isEmpty() ? 0 : dccArguments[3].toULong() );
-
-    connect(newDcc,SIGNAL (done(DccTransfer*)),
-        this,SLOT (dccGetDone(DccTransfer*)) );
-    connect(newDcc,SIGNAL (statusChanged(DccTransfer*,int,int)), this,
-        SLOT(dccStatusChanged(DccTransfer*,int,int)) );
 
     if ( newDcc->queue() )
     {
@@ -1894,6 +1897,11 @@ void Server::dccSendRequest(const QString &partner, const QString &fileName, con
 {
     Konversation::OutputFilterResult result = outputFilter->sendRequest(partner,fileName,address,port,size);
     queue(result.toServer);
+    appendMessageToFrontmost( i18n( "DCC" ),
+                              i18n( "Asking %1 to accept upload of \"%2\" (%3)..." )
+                              .arg( partner,
+                                    fileName,
+                                    ( size == 0 ) ? i18n( "unknown size" ) : KIO::convertSize( size ) ) );
 }
 
 void Server::dccPassiveSendRequest(const QString& recipient,const QString& fileName,const QString& address,unsigned long size,const QString& token)

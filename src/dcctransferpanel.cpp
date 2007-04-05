@@ -149,6 +149,8 @@ void DccTransferPanel::initGUI()
     m_popup->insertItem(icon("player_play"),     i18n("&Accept"),                     Popup::Accept);
     m_popup->insertItem(icon("stop"),            i18n("A&bort"),                      Popup::Abort);
     m_popup->insertSeparator();                   // -----
+    // FIXME: make it neat
+    m_popup->insertItem(icon("redo"),            i18n("Resend"),                      Popup::Resend);
     m_popup->insertItem(icon("editdelete"),      i18n("&Clear"),                      Popup::Clear);
     m_popup->insertSeparator();                   // -----
     m_popup->insertItem(icon("exec"),            i18n("&Open File"),                  Popup::Open);
@@ -297,6 +299,34 @@ void DccTransferPanel::abortDcc()
             DccTransfer* transfer = item->transfer();
             if( transfer->getStatus() < DccTransfer::Done )
                 transfer->abort();
+        }
+        ++it;
+    }
+}
+
+void DccTransferPanel::resendFile()
+{
+    QListViewItemIterator it( m_listView );
+    while( it.current() )
+    {
+        if( it.current()->isSelected() )
+        {
+            DccTransferPanelItem* item=static_cast<DccTransferPanelItem*>( it.current() );
+            DccTransfer* transfer = item->transfer();
+            if( transfer->getType() == DccTransfer::Send && transfer->getStatus() >= DccTransfer::Done )
+            {
+                DccTransferSend* newTransfer = KonversationApplication::instance()->dccTransferManager()->newUpload();
+
+                newTransfer->setServerGroupId( transfer->getServerGroupId() );
+                newTransfer->setPartnerNick( transfer->getPartnerNick() );
+                newTransfer->setFileURL( transfer->getFileURL() );
+                newTransfer->setFileName( transfer->getFileName() );
+                // FIXME
+                newTransfer->setOwnIp( transfer->getOwnIp() );
+
+                if ( newTransfer->queue() )
+                    newTransfer->start();
+            }
         }
         ++it;
     }
@@ -454,6 +484,7 @@ void DccTransferPanel::popupActivated( int id ) // slot
     else if ( id == Popup::Remove )              removeFile();
     else if ( id == Popup::SelectAll )           selectAll();
     else if ( id == Popup::SelectAllCompleted )  selectAllCompleted();
+    else if ( id == Popup::Resend )              resendFile();
 }
 
 void DccTransferPanel::doubleClicked(QListViewItem* _item, const QPoint& /* _pos */, int /* _col */)

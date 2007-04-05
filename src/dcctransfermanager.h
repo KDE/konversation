@@ -41,6 +41,10 @@ class DccTransferManager : public QObject
          * The status of the item is DccTransfer::Configuring when this signal is emitted.
          */
         void newTransferAdded( DccTransfer* transfer );
+        /*
+         * The status of the item is DccTransfer::Queued when this signal is emitted.
+         */
+        void newTransferQueued( DccTransfer* transfer );
 
     public:
         DccTransferRecv* newDownload();

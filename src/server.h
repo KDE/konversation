@@ -463,6 +463,7 @@ class Server : public QObject
         void sslError(const QString& reason);
         void connectionEstablished(const QString& ownHost);
         void notifyResponse(const QString& nicksOnline);
+        void slotNewDccTransferItemQueued(DccTransfer* transfer);
         void addDccGet(const QString& sourceNick,const QStringList& dccArguments);
         void requestDccSend();                    // -> to outputFilter, dccPanel
                                                   // -> to outputFilter

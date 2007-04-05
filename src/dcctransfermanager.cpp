@@ -148,6 +148,9 @@ int DccTransferManager::generatePassiveSendTokenNumber()
 void DccTransferManager::slotTransferStatusChanged( DccTransfer* item, int newStatus, int oldStatus )
 {
     kdDebug() << "DccTransferManager::slotTransferStatusChanged(): " << oldStatus << " -> " << newStatus << " " << item->getFileName() << " (" << item->getType() << ")" << endl;
+
+    if ( newStatus == DccTransfer::Queued )
+        emit newTransferQueued( item );
 }
 
 void DccTransferManager::removeSendItem( DccTransfer* item_ )
