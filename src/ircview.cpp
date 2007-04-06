@@ -9,7 +9,7 @@
 
 /*
   Copyright (C) 2002 Dario Abatianni <eisfuchs@tigress.com>
-  Copyright (C) 2005-2006 Peter Simonsson <psn@linux.se>
+  Copyright (C) 2005-2007 Peter Simonsson <psn@linux.se>
   Copyright (C) 2006 Eike Hein <hein@kde.org>
 */
 
@@ -1770,13 +1770,15 @@ void IRCView::updateScrollBarPos()
 
 void IRCView::saveLinkAs(const QString& url)
 {
-    KURL destination = KFileDialog::getSaveURL(":SaveLinkAs", QString(), this, i18n("Save Link As"));
+    KURL source(url);
+    KFileDialog dialog(":SaveLinkAs", QString (), this, "savelinkdia", true);
+    dialog.setCaption(i18n("Save Link As"));
+    dialog.setSelection(source.fileName());
 
-    if(destination.isEmpty())
+    if(dialog.exec() == QDialog::Rejected)
         return;
 
-    KURL source(url);
-
+    KURL destination = dialog.selectedURL();
     KIO::copyAs(source, destination);
 }
 
