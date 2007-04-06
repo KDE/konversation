@@ -25,6 +25,7 @@
 #include "channel.h"
 #include "server.h"
 #include "chatwindow.h"
+#include "config/preferences.h"
 
 namespace Konversation
 {
@@ -51,21 +52,26 @@ namespace Konversation
             return;
         }
 
-        if(!m_blinkTimer->isActive())
+        if(Preferences::trayNotifyBlink())
+        {
+            if(!m_blinkTimer->isActive())
+            {
+                setPixmap(m_messagePix);
+                m_blinkOn = true;
+                m_blinkTimer->start(500);
+            }
+        }
+        else
         {
             setPixmap(m_messagePix);
-            m_blinkOn = true;
-            m_blinkTimer->start(500);
+            m_blinkTimer->stop();
         }
     }
 
     void TrayIcon::endNotification()
     {
-        if(m_blinkTimer->isActive())
-        {
-            m_blinkTimer->stop();
-            setPixmap(m_nomessagePix);
-        }
+        m_blinkTimer->stop();
+        setPixmap(m_nomessagePix);
     }
 
     void TrayIcon::blinkTimeout()

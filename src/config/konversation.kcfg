@@ -269,6 +269,11 @@
       <label></label>
       <whatsthis></whatsthis>
     </entry>
+    <entry key="TrayNotifyBlink" type="Bool">
+      <default>true</default>
+      <label></label>
+      <whatsthis></whatsthis>
+    </entry>
     <entry key="HiddenToTray" type="Bool">
       <default>false</default>
       <label>Hidden to system tray</label>

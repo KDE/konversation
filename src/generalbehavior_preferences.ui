@@ -15,7 +15,7 @@ the Free Software Foundation; either version 2 of the License, or
             <x>0</x>
             <y>0</y>
             <width>590</width>
-            <height>549</height>
+            <height>575</height>
         </rect>
     </property>
     <vbox>
@@ -78,7 +78,32 @@ the Free Software Foundation; either version 2 of the License, or
                         <string>Only notify when a highlight is triggered or your current nick is used</string>
                     </property>
                 </widget>
-                <widget class="QCheckBox" row="2" column="0" rowspan="1" colspan="2">
+                <spacer row="2" column="0">
+                    <property name="name">
+                        <cstring>spacer51_2</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Fixed</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>31</width>
+                            <height>20</height>
+                        </size>
+                    </property>
+                </spacer>
+                <widget class="QCheckBox" row="2" column="1">
+                    <property name="name">
+                        <cstring>kcfg_TrayNotifyBlink</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Blink the icon</string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox" row="3" column="0" rowspan="1" colspan="2">
                     <property name="name">
                         <cstring>kcfg_HideToTrayOnStartup</cstring>
                     </property>
@@ -314,6 +339,8 @@ the Free Software Foundation; either version 2 of the License, or
         </spacer>
     </vbox>
 </widget>
+<customwidgets>
+</customwidgets>
 <connections>
     <connection>
         <sender>kcfg_TrayNotify</sender>
