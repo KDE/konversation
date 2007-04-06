@@ -1218,7 +1218,11 @@ void IRCView::contentsMouseReleaseEvent(QMouseEvent *ev)
     {
         if (m_mousePressed)
         {
-            openLink(m_highlightedURL);
+            if (ev->state() & (Qt::LeftButton|Qt::ShiftButton))
+                saveLinkAs(m_highlightedURL);
+            else
+                openLink(m_highlightedURL);
+
             m_mousePressed = false;
             return;
         }
