@@ -459,34 +459,20 @@ void IRCInput::paste()
 
 bool IRCInput::checkPaste(QString& text)
 {
-    int doPaste=KMessageBox::Yes;
-
     //text is now preconditioned when you get here
     int lines=text.contains('\n');
 
     if(text.length()>256 || lines)
     {
-        doPaste=KMessageBox::warningYesNoCancel
-            (this,
-            i18n("<qt>You are attempting to paste a large portion of text (%1 bytes or %2 lines) into "
-            "the chat. This can cause connection resets or flood kills. "
-            "Do you really want to continue?</qt>").arg(text.length()).arg(lines+1),
-            i18n("Large Paste Warning"),
-            i18n("Paste"),
-            i18n("&Edit..."),
-            "LargePaste");
-    }
-
-    if (doPaste==KMessageBox::No)
-    {
         QString ret(MultilineEdit::edit(this,text));
         if (ret.isEmpty())
             return false;
+
         text=ret;
         return true;
     }
 
-    return (doPaste==KMessageBox::Yes);
+    return true;
 }
 
 void IRCInput::showCompletionList(const QStringList& nicks)

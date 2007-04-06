@@ -10,6 +10,7 @@
 */
 
 #include <qlayout.h>
+#include <qlabel.h>
 
 #include <klocale.h>
 
@@ -30,12 +31,16 @@ KGuiItem(i18n("Add &Quotation Indicators")))
     // Add the layout to the widget
     QVBoxLayout* dialogLayout=new QVBoxLayout(page);
     dialogLayout->setSpacing(spacingHint());
+    QLabel* label = new QLabel (page);
+    label->setText (i18n("<qt>You are attempting to paste a large portion of text (%1 characters) into "
+            "the chat. This can cause connection resets or flood kills.</qt>").arg(text.length()));
     // add the text editor
     textEditor=new MultilineTextEdit(page,"multiline_text_editor");
     textEditor->setTextFormat(PlainText);
     textEditor->setText(text);
     returnText=text;
 
+    dialogLayout->addWidget(label);
     dialogLayout->addWidget(textEditor);
 
     setInitialSize(Preferences::multilineEditSize());
