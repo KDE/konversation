@@ -86,7 +86,6 @@ Changes since 1.0.1:
   wasn't running.
 - Made "Alternate Background" colorchooser disable when unneeded.
 - Improved robustness of the Watched Nicknames Online system.
-- DCC refactoring (in progress).
 - Replaced the DCC Transfer Details dialog with a retractable transfer details
   pane directly in the DCC Status tab.
 - Implemented an additional "Sort by activity" nicklist sorting mode (in pro-
@@ -94,6 +93,12 @@ Changes since 1.0.1:
 - Added a Find Previous standard action.
 - Renamed the "File" menu to "Connection".
 - Have the "Insert Character" dialog pick up on ircview font changes.
+- DCC refactoring (in progress).
+- Passive DCC support (in progress).
+- Added option to not blink the systray icon, but just light it up.
+- Implemented Shift+Click to "Save as..." URLs from ircview.
+- Have the "Save as..." dialog suggest a file name.
+
 
 -------------------------------------------------------------------------------
 
