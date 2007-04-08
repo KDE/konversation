@@ -1831,21 +1831,20 @@ void ViewContainer::appendToFrontmost(const QString& type,const QString& message
 
 void ViewContainer::insertCharacter()
 {
+    QFont font;
+
+    if (Preferences::customTextFont())
+        font = Preferences::textFont();
+    else
+        font = KGlobalSettings::generalFont();
+
     if (!m_insertCharDialog)
     {
-        ChatWindow* view = static_cast<ChatWindow*>(m_tabWidget->currentPage());
-
-        QFont font;
-
-        if (view && view->getTextView())
-            font = view->getTextView()->font();
-        else if (view)
-            font = static_cast<QWidget*>(view)->font();
-
         m_insertCharDialog = new Konversation::InsertCharDialog(font.family(), m_window);
         connect(m_insertCharDialog, SIGNAL(insertChar(const QChar&)), this, SLOT(insertChar(const QChar&)));
     }
 
+    m_insertCharDialog->setFont(font);
     m_insertCharDialog->show();
 }
 

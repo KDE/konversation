@@ -36,6 +36,11 @@ namespace Konversation
     {
     }
 
+    void InsertCharDialog::setFont(const QFont &font)
+    {
+        m_charTable->setFont(font.family());
+    }
+
     QChar InsertCharDialog::chr()
     {
         return m_charTable->chr();

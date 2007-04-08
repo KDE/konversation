@@ -93,6 +93,7 @@ Changes since 1.0.1:
   gress).
 - Added a Find Previous standard action.
 - Renamed the "File" menu to "Connection".
+- Have the "Insert Character" dialog pick up on ircview font changes.
 
 -------------------------------------------------------------------------------
 
