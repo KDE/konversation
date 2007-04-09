@@ -25,7 +25,6 @@
 #include "connectionbehavior_preferences.h"
 #include "highlight_preferences.h"
 #include "warnings_preferences.h"
-#include "chatwindowappearance_preferences.h"
 #include "log_preferences.h"
 #include "quickbuttons_preferences.h"
 #include "autoreplace_preferences.h"

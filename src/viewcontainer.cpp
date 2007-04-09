@@ -29,7 +29,6 @@
 #include "images.h"
 #include "irccharsets.h"
 #include "ircview.h"
-#include "statuspanel.h"
 #include "logfilereader.h"
 #include "konsolepanel.h"
 #include "urlcatcher.h"
