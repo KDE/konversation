@@ -42,7 +42,7 @@ namespace Konversation
             void addNickname();
             void editNickname();
             void deleteNickname();
-            void updateArrows();
+            void updateButtons();
             void moveNicknameUp();
             void moveNicknameDown();
 
@@ -76,6 +76,9 @@ namespace Konversation
             QToolButton* m_delBtn;
             QToolButton* m_upNicknameBtn;
             QToolButton* m_downNicknameBtn;
+            QPushButton* m_addNicknameBtn;
+            QPushButton* m_changeNicknameBtn;
+            QPushButton* m_removeNicknameBtn;
 
             QValueList<IdentityPtr> m_identityList;
             IdentityPtr m_currentIdentity;

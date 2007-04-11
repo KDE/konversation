@@ -92,9 +92,11 @@ namespace Konversation
 
         m_nicknameLBox = new QListBox(nicknameGBox);
         QWhatsThis::add(m_nicknameLBox, i18n("This is your list of nicknames. A nickname is the name that other users will know you by. You may use any name you desire. The first character must be a letter.\n\nSince nicknames must be unique across an entire IRC network, your desired name may be rejected by the server because someone else is already using that nickname. Enter alternate nicknames for yourself. If your first choice is rejected by the server, Konversation will try the alternate nicknames."));
-        QPushButton* addNicknameBtn = new QPushButton(i18n("Add..."), nicknameGBox);
-        QPushButton* changeNicknameBtn = new QPushButton(i18n("Edit..."), nicknameGBox);
-        QPushButton* removeNicknameBtn = new QPushButton(i18n("Delete"), nicknameGBox);
+        m_addNicknameBtn = new QPushButton(i18n("Add..."), nicknameGBox);
+        m_changeNicknameBtn = new QPushButton(i18n("Edit..."), nicknameGBox);
+        m_changeNicknameBtn->setEnabled(false);
+        m_removeNicknameBtn = new QPushButton(i18n("Delete"), nicknameGBox);
+        m_removeNicknameBtn->setEnabled(false);
         m_upNicknameBtn = new QToolButton(nicknameGBox);
         m_upNicknameBtn->setIconSet(SmallIconSet("up"));
         m_upNicknameBtn->setAutoRepeat(true);
@@ -104,19 +106,19 @@ namespace Konversation
         m_downNicknameBtn->setAutoRepeat(true);
         m_downNicknameBtn->setEnabled(false);
 
-        connect(addNicknameBtn, SIGNAL(clicked()), this, SLOT(addNickname()));
-        connect(changeNicknameBtn, SIGNAL(clicked()), this, SLOT(editNickname()));
-        connect(removeNicknameBtn, SIGNAL(clicked()), this, SLOT(deleteNickname()));
-        connect(m_nicknameLBox, SIGNAL(selectionChanged()), this, SLOT(updateArrows()));
+        connect(m_addNicknameBtn, SIGNAL(clicked()), this, SLOT(addNickname()));
+        connect(m_changeNicknameBtn, SIGNAL(clicked()), this, SLOT(editNickname()));
+        connect(m_removeNicknameBtn, SIGNAL(clicked()), this, SLOT(deleteNickname()));
+        connect(m_nicknameLBox, SIGNAL(selectionChanged()), this, SLOT(updateButtons()));
         connect(m_upNicknameBtn, SIGNAL(clicked()), this, SLOT(moveNicknameUp()));
         connect(m_downNicknameBtn, SIGNAL(clicked()), this, SLOT(moveNicknameDown()));
 
         nicknameLayout->setColStretch(0, 10);
         nicknameLayout->setRowStretch(4, 10);
         nicknameLayout->addMultiCellWidget(m_nicknameLBox, 0, 4, 0, 0);
-        nicknameLayout->addMultiCellWidget(addNicknameBtn, 0, 0, 1, 4);
-        nicknameLayout->addMultiCellWidget(changeNicknameBtn, 1, 1, 1, 4);
-        nicknameLayout->addMultiCellWidget(removeNicknameBtn, 2, 2, 1, 4);
+        nicknameLayout->addMultiCellWidget(m_addNicknameBtn, 0, 0, 1, 4);
+        nicknameLayout->addMultiCellWidget(m_changeNicknameBtn, 1, 1, 1, 4);
+        nicknameLayout->addMultiCellWidget(m_removeNicknameBtn, 2, 2, 1, 4);
         nicknameLayout->addWidget(m_upNicknameBtn, 3, 2);
         nicknameLayout->addWidget(m_downNicknameBtn, 3, 3);
 
@@ -327,7 +329,7 @@ namespace Konversation
         if(ok && !txt.isEmpty())
         {
             m_nicknameLBox->insertItem(txt);
-            updateArrows();
+            updateButtons();
         }
     }
 
@@ -345,16 +347,20 @@ namespace Konversation
     void IdentityDialog::deleteNickname()
     {
         m_nicknameLBox->removeItem(m_nicknameLBox->currentItem());
-        updateArrows();
+        updateButtons();
     }
 
-    void IdentityDialog::updateArrows()
+    void IdentityDialog::updateButtons()
     {
-        m_upNicknameBtn->setEnabled( m_nicknameLBox->count()>1 && m_nicknameLBox->currentItem()>0 );
+        m_changeNicknameBtn->setEnabled(m_nicknameLBox->selectedItem());
+        m_removeNicknameBtn->setEnabled(m_nicknameLBox->selectedItem());
+
+        m_upNicknameBtn->setEnabled(m_nicknameLBox->selectedItem() && m_nicknameLBox->count()>1
+            && m_nicknameLBox->currentItem()>0);
 
         // FIXME: find another way than casting to overcome signedness warning
-        m_downNicknameBtn->setEnabled( m_nicknameLBox->count()>1 &&
-            m_nicknameLBox->currentItem()< static_cast<int>(m_nicknameLBox->count()-1) );
+        m_downNicknameBtn->setEnabled(m_nicknameLBox->selectedItem() && m_nicknameLBox->count()>1
+            && m_nicknameLBox->currentItem()<static_cast<int>(m_nicknameLBox->count()-1) );
 
     }
 
@@ -370,7 +376,7 @@ namespace Konversation
             m_nicknameLBox->setCurrentItem(current - 1);
         }
 
-        updateArrows();
+        updateButtons();
     }
 
     void IdentityDialog::moveNicknameDown()
@@ -385,7 +391,7 @@ namespace Konversation
             m_nicknameLBox->setCurrentItem(current + 1);
         }
 
-        updateArrows();
+        updateButtons();
     }
 
     void IdentityDialog::refreshCurrentIdentity()
@@ -456,7 +462,7 @@ namespace Konversation
             KMessageBox::error(this, i18n("You need to give the identity a name."));
             newIdentity();
         }
-        updateArrows();
+        updateButtons();
     }
 
     void IdentityDialog::renameIdentity()
@@ -519,7 +525,7 @@ namespace Konversation
             m_identityList.remove(m_currentIdentity);
             m_currentIdentity = 0;
             updateIdentity(m_identityCBox->currentItem());
-            updateArrows();
+            updateButtons();
         }
     }
 
