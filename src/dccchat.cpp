@@ -413,7 +413,7 @@ void DccChat::appendInputText( const QString& s, bool fromCursor )
 
 bool DccChat::closeYourself()
 {
-    delete this;
+    deleteLater();
     return true;
 }
 
