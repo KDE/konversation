@@ -269,7 +269,7 @@ void Server::connectSignals()
     connect(outputFilter, SIGNAL(reconnectServer()), this, SLOT(reconnect()));
     connect(outputFilter, SIGNAL(disconnectServer()), this, SLOT(disconnect()));
     connect(outputFilter, SIGNAL(openDccSend(const QString &, KURL)), this, SLOT(addDccSend(const QString &, KURL)));
-    connect(outputFilter, SIGNAL(requestDccChat(const QString &)), this, SLOT(requestDccChat(const QString &)));
+    connect(outputFilter, SIGNAL(openDccChat(const QString &)), this, SLOT(openDccChat(const QString &)));
     connect(outputFilter, SIGNAL(connectToServer(const QString&, const QString&, const QString&)),
         this, SLOT(connectToNewServer(const QString&, const QString&, const QString&)));
     connect(outputFilter, SIGNAL(connectToServerGroup(const QString&)),
@@ -285,8 +285,8 @@ void Server::connectSignals()
    // ViewContainer
     connect(this, SIGNAL(showView(ChatWindow*)), getViewContainer(), SLOT(showView(ChatWindow*)));
     connect(this, SIGNAL(addDccPanel()), getViewContainer(), SLOT(addDccPanel()));
-    connect(this, SIGNAL(addDccChat(const QString&,const QString&,const QString&,const QStringList&,bool)),
-        getViewContainer(), SLOT(addDccChat(const QString&,const QString&,const QString&,const QStringList&,bool)) );
+    connect(this, SIGNAL(addDccChat(const QString&,const QString&,const QStringList&,bool)),
+        getViewContainer(), SLOT(addDccChat(const QString&,const QString&,const QStringList&,bool)) );
     connect(this, SIGNAL(serverLag(Server*, int)), getViewContainer(), SIGNAL(updateStatusBarLagLabel(Server*, int)));
     connect(this, SIGNAL(tooLongLag(Server*, int)), getViewContainer(), SIGNAL(setStatusBarLagLabelTooLongLag(Server*, int)));
     connect(this, SIGNAL(resetLag()), getViewContainer(), SIGNAL(resetStatusBarLagLabel()));
@@ -295,8 +295,8 @@ void Server::connectSignals()
     connect(outputFilter, SIGNAL(openChannelList(const QString&, bool)), getViewContainer(), SLOT(openChannelList(const QString&, bool)));
     connect(outputFilter, SIGNAL(closeDccPanel()), getViewContainer(), SLOT(closeDccPanel()));
     connect(outputFilter, SIGNAL(addDccPanel()), getViewContainer(), SLOT(addDccPanel()));
-    connect(&inputFilter, SIGNAL(addDccChat(const QString&,const QString&,const QString&,const QStringList&,bool)),
-        getViewContainer(), SLOT(addDccChat(const QString&,const QString&,const QString&,const QStringList&,bool)) );
+    connect(&inputFilter, SIGNAL(addDccChat(const QString&,const QString&,const QStringList&,bool)),
+        getViewContainer(), SLOT(addDccChat(const QString&,const QString&,const QStringList&,bool)) );
 
     // Inputfilter
     connect(&inputFilter, SIGNAL(welcome(const QString&)), this, SLOT(connectionEstablished(const QString&)));
@@ -1403,7 +1403,7 @@ void Server::ctcpReply(const QString &receiver,const QString &text)
 {
     queue("NOTICE "+receiver+" :"+'\x01'+text+'\x01');
 }
-
+/*
 QString Server::getNumericalIp(bool followDccSetting)
 {
     QHostAddress ip;
@@ -1413,7 +1413,7 @@ QString Server::getNumericalIp(bool followDccSetting)
 
     return QString::number(ip.ip4Addr());
 }
-
+*/
 // Given a nickname, returns NickInfo object.   0 if not found.
 NickInfoPtr Server::getNickInfo(const QString& nickname)
 {
@@ -1563,49 +1563,19 @@ bool Server::isNickOnline(const QString &nickname)
     return (nickInfo != 0);
 }
 
-QString Server::getIp(bool followDccSetting)
+QString Server::getOwnIpByNetworkInterface()
 {
-    QString ip;
+    return m_socket->localAddress().nodeName();
+}
 
-    if(followDccSetting)
-    {
-        int methodId = Preferences::dccMethodToGetOwnIp();
-
-        if(methodId == 1)                         // Reply from IRC server
-        {
-            if(!ownIpByWelcome.isEmpty())
-            {
-                kdDebug() << "Server::getIp(): using RPL_WELCOME" << endl;
-                ip = ownIpByWelcome;
-            }
-            else if(!ownIpByUserhost.isEmpty())
-            {
-                kdDebug() << "Server::getIp(): using RPL_USERHOST" << endl;
-                ip = ownIpByUserhost;
-            }
-        }
-                                                  // user specifies
-        else if(methodId == 2 && !Preferences::dccSpecificOwnIp().isEmpty())
-        {
-            KNetwork::KResolverResults res = KNetwork::KResolver::resolve(Preferences::dccSpecificOwnIp(), "");
-            if(res.error() == KResolver::NoError && res.size() > 0)
-            {
-                kdDebug() << "Server::getIp(): using IP specified by user" << endl;
-                ip = res.first().address().nodeName();
-            }
-        }
-    }
-
-    if(ip.isEmpty())
-    {
-        kdDebug() << "Server::getIp(): using the network interface" << endl;
-
-        // Return our ip using serverSocket
-        ip = m_socket->localAddress().nodeName();
-    }
-
-    kdDebug() << "Server::getIp(): returned: " << ip << endl;
-    return ip;
+QString Server::getOwnIpByServerMessage()
+{
+    if(!ownIpByWelcome.isEmpty())
+        return ownIpByWelcome;
+    else if(!ownIpByUserhost.isEmpty())
+        return ownIpByUserhost;
+    else
+        return QString();
 }
 
 class Query *Server::addQuery(const NickInfoPtr & nickInfo, bool weinitiated)
@@ -1836,8 +1806,6 @@ void Server::addDccSend(const QString &recipient,KURL fileURL, const QString &al
 {
     emit addDccPanel();
 
-    QString ownIp = getIp(true);
-
     // We already checked that the file exists in output filter / requestDccSend() resp.
     DccTransferSend* newDcc = KonversationApplication::instance()->dccTransferManager()->newUpload();
 
@@ -1845,8 +1813,6 @@ void Server::addDccSend(const QString &recipient,KURL fileURL, const QString &al
 
     newDcc->setPartnerNick( recipient );
     newDcc->setFileURL( fileURL );
-    // FIXME
-    newDcc->setOwnIp( getIp( true ) );
     if ( !altFileName.isEmpty() )
         newDcc->setFileName( altFileName );
     if ( fileSize != 0 )
@@ -1888,9 +1854,14 @@ void Server::addDccGet(const QString &sourceNick, const QStringList &dccArgument
     }
 }
 
-void Server::requestDccChat(const QString& nickname)
+void Server::openDccChat(const QString& nickname)
 {
-    emit addDccChat(getNickname(),nickname,getNumericalIp(true),QStringList(),true);
+    emit addDccChat(getNickname(),nickname,QStringList(),true);
+}
+
+void Server::requestDccChat(const QString& partnerNick, const QString& numericalOwnIp, const QString& ownPort)
+{
+    queue(QString("PRIVMSG %1 :\001DCC CHAT chat %2 %3\001").arg(partnerNick).arg(numericalOwnIp).arg(ownPort));
 }
 
 void Server::dccSendRequest(const QString &partner, const QString &fileName, const QString &address, const QString &port, unsigned long size)

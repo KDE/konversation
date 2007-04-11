@@ -34,6 +34,7 @@
 #include <kfileitem.h>
 
 #include "channel.h"
+#include "dcccommon.h"
 #include "dcctransfermanager.h"
 #include "konversationapplication.h"
 #include "server.h"
@@ -136,9 +137,8 @@ bool DccTransferSend::queue()
     if ( getStatus() != Configuring )
         return false;
 
-    // FIXME
     if ( m_ownIp.isEmpty() )
-        return false;
+        m_ownIp = DccCommon::getOwnIp( KonversationApplication::instance()->getServerByServerGroupId( m_serverGroupId ) );
 
     if ( !kapp->authorize( "allow_downloading" ) )
     {

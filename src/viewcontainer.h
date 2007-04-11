@@ -121,7 +121,7 @@ class ViewContainer : public QObject
         void deleteDccPanel();
         DccTransferPanel* getDccPanel();
 
-        void addDccChat(const QString& myNick,const QString& nick,const QString& numericalIp,const QStringList& arguments,bool listen);
+        void addDccChat(const QString& myNick,const QString& nick,const QStringList& arguments,bool listen);
 
         StatusPanel* addStatusView(Server* server);
         RawLog* addRawLog(Server* server);

@@ -8,6 +8,7 @@
 /*
   Copyright (C) 2002 Dario Abatianni <eisfuchs@tigress.com>
   Copyright (C) 2006 Eike Hein <hein@kde.org>
+  Copyright (C) 2004,2007 Shintaro Matsuoka <shin@shoegazed.org>
 */
 
 #include <stdlib.h>
@@ -29,6 +30,7 @@
 #include <kstreamsocket.h>
 #include <kaction.h>
 
+#include "dcccommon.h"
 #include "konversationapplication.h"
 #include "konversationmainwindow.h"
 #include "irccharsets.h"
@@ -37,28 +39,27 @@
 #include "ircinput.h"
 #include "dccchat.h"
 #include "topiclabel.h"
+#include "server.h"
+#include "channel.h"
 
 #define DCCCHAT_BUFFER_SIZE 1024
 
-DccChat::DccChat(QWidget* parent, const QString& myNickname,const QString& nickname,const QStringList& parameters,bool listen) : ChatWindow(parent)
+DccChat::DccChat(QWidget* parent, bool listen, Server* server, const QString& ownNick, const QString& partnerNick, const QString& partnerHost, int partnerPort)
+    : ChatWindow(parent)
 {
     kdDebug() << "DccChat::DccChat() [BEGIN]" << endl;
-    m_dccSocket=0;
-    m_listenSocket=0;
-    m_port=0;
-    m_initialShow = true;
 
-    m_myNick=myNickname;
-    m_partnerNick=nickname;
+    m_dccSocket = 0;
+    m_listenSocket = 0;
+
+    m_ownNick = ownNick;
+
+    m_partnerNick = partnerNick;
+    m_partnerHost = partnerHost;
+    m_partnerPort = partnerPort;
 
     setType(ChatWindow::DccChat);
     setChannelEncodingSupported(true);
-
-    if (!listen)
-    {
-        host=parameters[1];
-        m_port=parameters[2].toInt();
-    }
 
     m_headerSplitter = new QSplitter(Qt::Vertical, this);
 
@@ -98,9 +99,15 @@ DccChat::DccChat(QWidget* parent, const QString& myNickname,const QString& nickn
     connect( getTextView(), SIGNAL( autoText(const QString&) ), this, SLOT( sendDccChatText( const QString& ) ) );
 
     if (listen)
+    {
         listenForPartner();
+        QString ownNumericalIp = DccCommon::getNumericalIp( DccCommon::getOwnIp( server ) );
+        server->requestDccChat( m_partnerNick, ownNumericalIp, QString::number( m_ownPort ) );
+    }
     else
+    {
         connectToPartner();
+    }
 
     kdDebug() << "DccChat::DccChat() [END]" << endl;
 
@@ -161,11 +168,11 @@ void DccChat::listenForPartner()
     // Get our own port number
     const KNetwork::KSocketAddress ipAddr = m_listenSocket->localAddress();
     const struct sockaddr_in* socketAddress = (sockaddr_in*)ipAddr.address();
-    m_port = ntohs( socketAddress->sin_port );
-    kdDebug() << "DccChat::listenForPartner(): using port " << m_port << endl;
+    m_ownPort = ntohs( socketAddress->sin_port );
+    kdDebug() << "DccChat::listenForPartner(): using port " << m_ownPort << endl;
 
-    getTextView()->appendServerMessage( i18n("DCC"), i18n("Offering DCC Chat connection to %1 on port %2...").arg( m_partnerNick ).arg( m_port ) );
-    m_sourceLine->setText(i18n( "DCC chat with %1 on port %2." ).arg( m_partnerNick ).arg( m_port ) );
+    getTextView()->appendServerMessage( i18n("DCC"), i18n("Offering DCC Chat connection to %1 on port %2...").arg( m_partnerNick ).arg( m_ownPort ) );
+    m_sourceLine->setText(i18n( "DCC chat with %1 on port %2." ).arg( m_partnerNick ).arg( m_ownPort ) );
     kdDebug() << "DccChat::listenForPartner() [END]" << endl;
 }
 
@@ -173,15 +180,15 @@ void DccChat::connectToPartner()
 {
     QHostAddress ip;
 
-    ip.setAddress(host.toUInt());
-    host=ip.toString();
+    ip.setAddress(m_partnerHost.toUInt());
+    m_partnerHost=ip.toString();
 
     getTextView()->appendServerMessage( i18n( "DCC" ), i18n( "%1 = nickname, %2 = IP, %3 = port",
-        "Establishing DCC Chat connection to %1 (%2:%3)..." ).arg( m_partnerNick ).arg( host ).arg( m_port ) );
+        "Establishing DCC Chat connection to %1 (%2:%3)..." ).arg( m_partnerNick ).arg( m_partnerHost ).arg( m_ownPort ) );
 
-    m_sourceLine->setText( i18n( "%1 = nickname, %2 = IP, %3 = port", "DCC chat with %1 on %2:%3." ).arg( m_partnerNick ).arg( host ).arg( m_port ) );
+    m_sourceLine->setText( i18n( "%1 = nickname, %2 = IP, %3 = port", "DCC chat with %1 on %2:%3." ).arg( m_partnerNick ).arg( host ).arg( m_ownPort ) );
 
-    m_dccSocket = new KNetwork::KStreamSocket( host, QString::number( m_port ), this );
+    m_dccSocket = new KNetwork::KStreamSocket( m_partnerHost, QString::number( m_ownPort ), this );
 
     m_dccSocket->setBlocking(false);
     m_dccSocket->setFamily(KNetwork::KResolver::InetFamily);
@@ -313,10 +320,10 @@ void DccChat::sendDccChatText(const QString& sendLine)
             // convert /me actions
             if(line.lower().startsWith(cc+"me "))
             {
-                getTextView()->appendAction( m_myNick, line.section( " ", 1 ) );
+                getTextView()->appendAction( m_ownNick, line.section( " ", 1 ) );
                 line=QString("\x01%1 %2\x01").arg("ACTION").arg(line.section(" ",1));
             }
-            else getTextView()->append( m_myNick, line );
+            else getTextView()->append( m_ownNick, line );
 
             stream << line << endl;
         }                                         // endfor
@@ -379,9 +386,9 @@ bool DccChat::searchView()
     return true;
 }
 
-int DccChat::getPort()
+int DccChat::getOwnPort()
 {
-    return m_port;
+    return m_ownPort;
 }
 
 QString DccChat::getTextInLine() 

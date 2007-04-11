@@ -2018,7 +2018,7 @@ DccTransferPanel* ViewContainer::getDccPanel()
     return m_dccPanel;
 }
 
-void ViewContainer::addDccChat(const QString& myNick,const QString& nick,const QString& numericalIp,const QStringList& arguments,bool listen)
+void ViewContainer::addDccChat(const QString& myNick,const QString& nick,const QStringList& arguments,bool listen)
 {
     if (!listen) // Someone else initiated dcc chat
     {
@@ -2028,13 +2028,12 @@ void ViewContainer::addDccChat(const QString& myNick,const QString& nick,const Q
 
     if (m_frontServer)
     {
-        DccChat* dccChatPanel=new DccChat(m_tabWidget, myNick,nick,arguments,listen);
+        DccChat* dccChatPanel=listen
+            ? new DccChat(m_tabWidget, listen, m_frontServer, myNick, nick )
+            : new DccChat(m_tabWidget, listen, m_frontServer, myNick, nick, arguments[1], arguments[2].toInt() );
+
         connect(dccChatPanel, SIGNAL(updateTabNotification(ChatWindow*,const Konversation::TabNotifyType&)), this, SLOT(setViewNotification(ChatWindow*,const Konversation::TabNotifyType&)));
-        if(listen)
-	{
-            m_frontServer->queue(QString("PRIVMSG %1 :\001DCC CHAT chat %2 %3\001")
-              .arg(nick).arg(numericalIp).arg(dccChatPanel->getPort()));
-	}
+
         // This needs to be here as addView will change m_frontServer if focus new tabs is enabled.
         addView(dccChatPanel, dccChatPanel->getName());
     }

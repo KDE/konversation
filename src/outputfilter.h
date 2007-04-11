@@ -78,7 +78,7 @@ namespace Konversation
             void requestDccSend();                // Choose Recipient and File from requester
                                                   // Choose File from requester
             void requestDccSend(const QString& recipient);
-            void requestDccChat(const QString& nick);
+            void openDccChat(const QString& nick);
             void addDccPanel();
             void closeDccPanel();
             void openRawLog(bool show);

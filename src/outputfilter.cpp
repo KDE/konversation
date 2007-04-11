@@ -863,7 +863,7 @@ namespace Konversation
             {
                 if(parameterList.count()==2)
                 {
-                    emit requestDccChat(parameterList[1]);
+                    emit openDccChat(parameterList[1]);
                 }
                 else
                 {

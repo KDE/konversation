@@ -174,8 +174,10 @@ class Server : public QObject
         /** This returns true when we are 'online' - ready to take commands, join channels and so on.
          */
         bool connected() const;
-        QString getIp(bool followDccSetting = false);
-        QString getNumericalIp(bool followDccSetting = false);
+
+        QString getOwnIpByNetworkInterface();
+        QString getOwnIpByServerMessage();
+
         /**
          * Returns true if the given nickname is known to be online.
          * @param nickname      The nickname.  Case insensitive.
@@ -387,7 +389,7 @@ class Server : public QObject
 
         void showView(ChatWindow* view);
         void addDccPanel();
-        void addDccChat(const QString& myNick,const QString& nick,const QString& numericalIp,const QStringList& arguments,bool listen);
+        void addDccChat(const QString& myNick,const QString& nick,const QStringList& arguments,bool listen);
 
     public slots:
         void lookupFinished();
@@ -405,7 +407,8 @@ class Server : public QObject
         void closeQuery(const QString &name);
         void closeChannel(const QString &name);
         void quitServer();
-        void requestDccChat(const QString& nickname);
+        void openDccChat(const QString& nickname);
+        void requestDccChat(const QString& partnerNick, const QString& numericalOwnIp, const QString& ownPort);
         void requestBan(const QStringList& users,const QString& channel,const QString& option);
         void requestUnban(const QString& mask,const QString& channel);
 

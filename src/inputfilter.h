@@ -69,7 +69,7 @@ class InputFilter : public QObject
         void away();
         void unAway();
 
-        void addDccChat(const QString& myNick,const QString& nick,const QString& numericalIp,const QStringList& arguments,bool listen);
+        void addDccChat(const QString& myNick,const QString& nick,const QStringList& arguments,bool listen);
 
     protected:
         void parseClientCommand(const QString &prefix, const QString &command, const QStringList &parameterList, const QString &trailing);

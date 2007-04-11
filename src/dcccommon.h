@@ -1,0 +1,29 @@
+/*
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; either version 2 of the License, or
+  (at your option) any later version.
+*/
+
+/*
+  Copyright (C) 2007 Shintaro Matsuoka <shin@shoegazed.org>
+*/
+
+#ifndef DCCCOMMON_H
+#define DCCCOMMON_H
+
+#include <qstring.h>
+
+class Server;
+
+class DccCommon
+{
+    public:
+        // converts an IP text like "127.0.0.1" to a number.
+        static QString getNumericalIp( const QString& ipString );
+
+        // returns the self IP following the setting.
+        static QString getOwnIp( Server* server = 0 );
+};
+
+#endif  // DCCCOMMON_H

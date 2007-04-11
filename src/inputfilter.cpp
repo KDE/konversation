@@ -294,7 +294,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                     else if(dccType=="chat")
                     {
                         // will be connected via Server to KonversationMainWindow::addDccChat()
-                        emit addDccChat(server->getNickname(),sourceNick,server->getNumericalIp(),dccArgumentList,false);
+                        emit addDccChat(server->getNickname(),sourceNick,dccArgumentList,false);
                     }
                     else
                     {

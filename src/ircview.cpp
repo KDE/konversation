@@ -661,7 +661,7 @@ bool doHighlight, bool parseURL, bool self)
     }
     else if (m_chatWin->getType() == ChatWindow::DccChat)
     {
-        ownNick = static_cast<DccChat*>(m_chatWin)->getMyNick();
+        ownNick = static_cast<DccChat*>(m_chatWin)->getOwnNick();
     }
 
     if(doHighlight && (whoSent != ownNick) && !self)
@@ -797,7 +797,7 @@ QString IRCView::createNickLine(const QString& nick, bool encapsulateNick)
     // have a server.
     else if (Preferences::useColoredNicks() && m_chatWin->getType() == ChatWindow::DccChat)
     {
-        QString ownNick = static_cast<DccChat*>(m_chatWin)->getMyNick();
+        QString ownNick = static_cast<DccChat*>(m_chatWin)->getOwnNick();
         QString nickColor;
 
         if (nick != ownNick)
