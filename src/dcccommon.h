@@ -24,6 +24,9 @@ class DccCommon
 
         // returns the self IP following the setting.
         static QString getOwnIp( Server* server = 0 );
+
+    private:
+        DccCommon();
 };
 
 #endif  // DCCCOMMON_H
