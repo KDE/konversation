@@ -2348,7 +2348,7 @@ bool Channel::closeYourself()
         m_server->closeChannel(getName());
         m_server->removeChannel(this);
 	Preferences::setSpellChecking(channelInput->checkSpellingEnabled());
-        delete this;
+        deleteLater();
         return true;
     }
     return false;
