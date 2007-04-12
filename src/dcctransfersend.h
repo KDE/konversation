@@ -51,19 +51,25 @@ class DccTransferSend : public DccTransfer
 
         bool setResume( unsigned long position );
 
-        QString getPassiveSendToken() const;
+        QString getReverseSendToken() const;
 
     public slots:
         virtual bool queue();
         virtual void start();
         virtual void abort();
 
+        // invoked when the receiver accepts the offer (Reverse DCC)
+        void connectToReceiver( const QString& partnerHost, const QString& partnerPort );
+
     protected slots:
         void acceptClient();
+        // it must be invoked when m_sendSocket is ready
+        void startSending();
         void writeData();
         void getAck();
         void slotGotSocketError( int errorCode );
         void slotConnectionTimeout();
+        void slotConnectionFailed( int errorCode );
         void slotSendSocketClosed();
         void slotServerSocketClosed();
 
@@ -89,7 +95,7 @@ class DccTransferSend : public DccTransfer
 
         QTimer* m_connectionTimer;
 
-        QString m_passiveSendToken;
+        QString m_reverseSendToken;
 };
 
 #endif  // DCCTRANSFERSEND_H

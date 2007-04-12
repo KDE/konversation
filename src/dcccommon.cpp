@@ -20,12 +20,20 @@
 
 #include "dcccommon.h"
 
-QString DccCommon::getNumericalIp( const QString& ipString )
+QString DccCommon::textIpToNumericalIp( const QString& ipString )
 {
     QHostAddress ip;
     ip.setAddress( ipString );
 
     return QString::number( ip.ip4Addr() );
+}
+
+QString DccCommon::numericalIpToTextIp( const QString& numericalIp )
+{
+    QHostAddress ip;
+    ip.setAddress( numericalIp.toULong() );
+
+    return ip.toString();
 }
 
 QString DccCommon::getOwnIp( Server* server )

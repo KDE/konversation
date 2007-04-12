@@ -60,9 +60,11 @@ class DccTransferManager : public QObject
          */
         DccTransferSend* resumeUpload( int serverGroupId, const QString& partnerNick, const QString& fileName, const QString& ownPort, unsigned long position );
 
+        DccTransferSend* startReverseSending( int serverGroupId, const QString& partnerNick, const QString& fileName, const QString& partnerHost, const QString& partnerPort, unsigned long fileSize, const QString& token );
+
         bool isLocalFileInWritingProcess( const KURL& localUrl ) const;
 
-        int generatePassiveSendTokenNumber();
+        int generateReverseSendTokenNumber();
 
     private:
         /*
@@ -79,7 +81,7 @@ class DccTransferManager : public QObject
         QValueList< DccTransferSend* > m_sendItems;
         QValueList< DccTransferRecv* > m_recvItems;
 
-        int m_nextPassiveSendTokenNumber;
+        int m_nextReverseSendTokenNumber;
 };
 
 #endif  // DCCTRANSFERMANAGER_H

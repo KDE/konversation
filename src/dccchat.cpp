@@ -101,7 +101,7 @@ DccChat::DccChat(QWidget* parent, bool listen, Server* server, const QString& ow
     if (listen)
     {
         listenForPartner();
-        QString ownNumericalIp = DccCommon::getNumericalIp( DccCommon::getOwnIp( server ) );
+        QString ownNumericalIp = DccCommon::numericalIpToTextIp( DccCommon::getOwnIp( server ) );
         server->requestDccChat( m_partnerNick, ownNumericalIp, QString::number( m_ownPort ) );
     }
     else

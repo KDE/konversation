@@ -36,6 +36,7 @@
 #include "query.h"
 #include "channel.h"
 #include "konversationapplication.h"
+#include "dcccommon.h"
 #include "dcctransferpanel.h"
 #include "dcctransferpanelitem.h"
 #include "dcctransfersend.h"
@@ -301,6 +302,8 @@ void Server::connectSignals()
     // Inputfilter
     connect(&inputFilter, SIGNAL(welcome(const QString&)), this, SLOT(connectionEstablished(const QString&)));
     connect(&inputFilter, SIGNAL(notifyResponse(const QString&)), this, SLOT(notifyResponse(const QString&)));
+    connect(&inputFilter, SIGNAL(startReverseDccSendTransfer(const QString&,const QStringList&)),
+        this, SLOT(startReverseDccSendTransfer(const QString&,const QStringList&)));
     connect(&inputFilter, SIGNAL(addDccGet(const QString&, const QStringList&)),
         this, SLOT(addDccGet(const QString&, const QStringList&)));
     connect(&inputFilter, SIGNAL(resumeDccGetTransfer(const QString&, const QStringList&)),
@@ -1826,16 +1829,12 @@ void Server::addDccGet(const QString &sourceNick, const QStringList &dccArgument
 {
     emit addDccPanel();
 
-    QHostAddress ip;
-
-    ip.setAddress(dccArguments[1].toULong());
-
     DccTransferRecv* newDcc = KonversationApplication::instance()->dccTransferManager()->newDownload();
 
     newDcc->setServerGroupId( serverGroupSettings()->id() );
 
     newDcc->setPartnerNick( sourceNick );
-    newDcc->setPartnerIp( ip.toString() );
+    newDcc->setPartnerIp( DccCommon::numericalIpToTextIp( dccArguments[1] ) );
     newDcc->setPartnerPort( dccArguments[2] );
 
     newDcc->setFileName( dccArguments[0] );
@@ -1891,6 +1890,28 @@ void Server::dccResumeGetRequest(const QString &sender, const QString &fileName,
         result = outputFilter->resumeRequest(sender,fileName,port,startAt);
 
     queue(result.toServer);
+}
+
+void Server::startReverseDccSendTransfer(const QString& sourceNick,const QStringList& dccArguments)
+{
+    DccTransferManager* dtm = KonversationApplication::instance()->dccTransferManager();
+    if ( dtm->startReverseSending( serverGroupSettings()->id(), sourceNick,
+                                   dccArguments[0],  // filename
+                                   DccCommon::numericalIpToTextIp( dccArguments[1] ),  // partner IP
+                                   dccArguments[2],  // partner port
+                                   dccArguments[3].toInt(),  // filesize
+                                   dccArguments[4]  // Reverse DCC token
+         ) == 0 )
+    {
+        // DTM could not find a matched item
+        appendMessageToFrontmost( i18n( "Error" ),
+                                  i18n( "%1 = file name, %2 = nickname",
+                                        "Received invalid passive DCC send acceptance message for \"%1\" from %2." )
+                                  .arg( dccArguments[0],
+                                        sourceNick ) );
+
+    }
+
 }
 
 void Server::resumeDccGetTransfer(const QString &sourceNick, const QStringList &dccArguments)

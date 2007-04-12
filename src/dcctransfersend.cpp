@@ -125,9 +125,9 @@ void DccTransferSend::setReverse( bool reverse )
         m_reverse = reverse;
 }
 
-QString DccTransferSend::getPassiveSendToken() const
+QString DccTransferSend::getReverseSendToken() const
 {
-    return m_passiveSendToken;
+    return m_reverseSendToken;
 }
 
 bool DccTransferSend::queue()
@@ -295,8 +295,6 @@ void DccTransferSend::start()                     // public slot
 
         kdDebug() << "DccTransferSend::start(): own Address=" << m_ownIp << ":" << m_ownPort << endl;
 
-        setStatus( WaitingRemote, i18n( "Waiting remote user's acceptance" ) );
-
         startConnectionTimer( Preferences::dccSendTimeout() );
 
         server->dccSendRequest( m_partnerNick, m_fileName, getNumericalIpText( m_ownIp ), m_ownPort, m_fileSize );
@@ -306,14 +304,35 @@ void DccTransferSend::start()                     // public slot
         // Passive DCC SEND
         kdDebug() << "DccTransferSend::start(): passive DCC SEND" << endl;
 
-        int tokenNumber = KonversationApplication::instance()->dccTransferManager()->generatePassiveSendTokenNumber();
+        int tokenNumber = KonversationApplication::instance()->dccTransferManager()->generateReverseSendTokenNumber();
         // TODO: should we append a letter "T" to this token?
-        m_passiveSendToken = QString::number( tokenNumber );
+        m_reverseSendToken = QString::number( tokenNumber );
 
-        kdDebug() << "DccTransferSend::start(): passive DCC key(token): " << m_passiveSendToken << endl;
+        kdDebug() << "DccTransferSend::start(): passive DCC key(token): " << m_reverseSendToken << endl;
 
-        server->dccPassiveSendRequest( m_partnerNick, m_fileName, getNumericalIpText( m_ownIp ), m_fileSize, m_passiveSendToken );
+        server->dccPassiveSendRequest( m_partnerNick, m_fileName, getNumericalIpText( m_ownIp ), m_fileSize, m_reverseSendToken );
     }
+
+    setStatus( WaitingRemote, i18n( "Waiting remote user's acceptance" ) );
+}
+
+void DccTransferSend::connectToReceiver( const QString& partnerHost, const QString& partnerPort )
+{
+    // Reverse DCC
+
+    m_partnerIp = partnerHost;
+    m_partnerPort = partnerPort;
+
+    m_sendSocket = new KNetwork::KStreamSocket( partnerHost, partnerPort, this );
+
+    m_sendSocket->setBlocking( false );
+
+    connect( m_sendSocket, SIGNAL( connected( const KResolverEntry& ) ), this, SLOT( startSending() ) );
+    connect( m_sendSocket, SIGNAL( gotError( int ) ), this, SLOT( slotConnectionFailed( int ) ) );
+
+    setStatus( Connecting );
+
+    m_sendSocket->connect();
 }
                                                   // public
 bool DccTransferSend::setResume( unsigned long position )
@@ -335,6 +354,8 @@ bool DccTransferSend::setResume( unsigned long position )
 
 void DccTransferSend::acceptClient()                     // slot
 {
+    // Normal DCC
+
     kdDebug() << "DccTransferSend::acceptClient()" << endl;
 
     stopConnectionTimer();
@@ -346,6 +367,14 @@ void DccTransferSend::acceptClient()                     // slot
         return;
     }
 
+    // we don't need ServerSocket anymore
+    m_serverSocket->close();
+
+    startSending();
+}
+
+void DccTransferSend::startSending()
+{
     connect( m_sendSocket, SIGNAL( readyWrite() ), this, SLOT( writeData() )            );
     connect( m_sendSocket, SIGNAL( readyRead() ),  this, SLOT( getAck() )               );
     connect( m_sendSocket, SIGNAL( closed() ),     this, SLOT( slotSendSocketClosed() ) );
@@ -355,9 +384,6 @@ void DccTransferSend::acceptClient()                     // slot
     else
         m_partnerIp = m_sendSocket->peerAddress().asInet().ipAddress().toString();
     m_partnerPort = m_sendSocket->peerAddress().serviceName();
-
-    // we don't need ServerSocket anymore
-    m_serverSocket->close();
 
     if ( m_file.open( IO_ReadOnly ) )
     {
@@ -447,6 +473,11 @@ void DccTransferSend::slotConnectionTimeout()         // slot
 {
     kdDebug() << "DccTransferSend::slotConnectionTimeout()" << endl;
     failed( i18n( "Timed out" ) );
+}
+
+void DccTransferSend::slotConnectionFailed( int /* errorCode */ )
+{
+    failed( i18n( "Connection failure: %1" ).arg( m_sendSocket->errorString() ) );
 }
 
 void DccTransferSend::slotServerSocketClosed()

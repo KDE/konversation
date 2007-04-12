@@ -275,11 +275,19 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                     }
                     dccArgumentList += QStringList::split(' ', dccArguments);
 
-                    // Incoming file?
                     if(dccType=="send")
                     {
-                        konv_app->notificationHandler()->dccIncoming(server->getStatusView(), sourceNick);
-                        emit addDccGet(sourceNick,dccArgumentList);
+                        if(dccArgumentList.count()==5)
+                        {
+                            // the receiver accepted the offer on Reverse DCC
+                            emit startReverseDccSendTransfer(sourceNick,dccArgumentList);
+                        }
+                        else  // dccArgumentList.count() must be 4..
+                        {
+                            // incoming file
+                            konv_app->notificationHandler()->dccIncoming(server->getStatusView(), sourceNick);
+                            emit addDccGet(sourceNick,dccArgumentList);
+                        }
                     }
                     // Incoming file that shall be resumed?
                     else if(dccType=="accept")

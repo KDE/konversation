@@ -20,7 +20,10 @@ class DccCommon
 {
     public:
         // converts an IP text like "127.0.0.1" to a number.
-        static QString getNumericalIp( const QString& ipString );
+        static QString textIpToNumericalIp( const QString& ipString );
+
+        // converts a numerical IP text like "12345678" to a normal IP text.
+        static QString numericalIpToTextIp( const QString& numericalIp );
 
         // returns the self IP following the setting.
         static QString getOwnIp( Server* server = 0 );

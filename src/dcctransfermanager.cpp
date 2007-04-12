@@ -19,7 +19,7 @@
 DccTransferManager::DccTransferManager( QObject* parent )
     : QObject( parent )
 {
-    m_nextPassiveSendTokenNumber = 1001;
+    m_nextReverseSendTokenNumber = 1001;
 }
 
 DccTransferManager::~DccTransferManager()
@@ -118,6 +118,35 @@ DccTransferSend* DccTransferManager::resumeUpload( int serverGroupId, const QStr
     return transfer;
 }
 
+DccTransferSend* DccTransferManager::startReverseSending( int serverGroupId, const QString& partnerNick, const QString& fileName, const QString& partnerHost, const QString& partnerPort, unsigned long fileSize, const QString& token )
+{
+    kdDebug() << "DccTransferManager::startReverseSending(): server group ID: " << serverGroupId << ", partner: " << partnerNick << ", filename: " << fileName << ", partner IP: " << partnerHost << ", parnter port: " << partnerPort << ", filesize: " << fileSize << ", token: " << token << endl;
+    DccTransferSend* transfer = 0;
+
+    // find applicable one
+    QValueListConstIterator< DccTransferSend* > it;
+    for ( it = m_sendItems.begin() ; it != m_sendItems.end() ; ++it )
+    {
+        if (
+            (*it)->getStatus() == DccTransfer::WaitingRemote &&
+            (*it)->getServerGroupId() == serverGroupId &&
+            (*it)->getPartnerNick() == partnerNick &&
+            (*it)->getFileName() == fileName &&
+            (*it)->getFileSize() == fileSize &&
+            (*it)->getReverseSendToken() == token
+        )
+        {
+            transfer = (*it);
+            break;
+        }
+    }
+
+    if ( transfer )
+        transfer->connectToReceiver( partnerHost, partnerPort );
+
+    return transfer;
+}
+
 void DccTransferManager::initTransfer( DccTransfer* transfer )
 {
     connect( transfer, SIGNAL( statusChanged( DccTransfer*, int, int ) ), this, SLOT( slotTransferStatusChanged( DccTransfer*, int, int ) ) );
@@ -140,9 +169,9 @@ bool DccTransferManager::isLocalFileInWritingProcess( const KURL& url ) const
     return false;
 }
 
-int DccTransferManager::generatePassiveSendTokenNumber()
+int DccTransferManager::generateReverseSendTokenNumber()
 {
-    return m_nextPassiveSendTokenNumber++;
+    return m_nextReverseSendTokenNumber++;
 }
 
 void DccTransferManager::slotTransferStatusChanged( DccTransfer* item, int newStatus, int oldStatus )

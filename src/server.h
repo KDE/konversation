@@ -467,6 +467,7 @@ class Server : public QObject
         void connectionEstablished(const QString& ownHost);
         void notifyResponse(const QString& nicksOnline);
         void slotNewDccTransferItemQueued(DccTransfer* transfer);
+        void startReverseDccSendTransfer(const QString& sourceNick,const QStringList& dccArguments);
         void addDccGet(const QString& sourceNick,const QStringList& dccArguments);
         void requestDccSend();                    // -> to outputFilter, dccPanel
                                                   // -> to outputFilter

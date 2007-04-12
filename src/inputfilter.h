@@ -52,6 +52,8 @@ class InputFilter : public QObject
     signals:
         void welcome(const QString& ownHost);
         void notifyResponse(const QString &nicksOnline);
+                                                  // will be connected to Server::startReverseDccSendTransfer()
+        void startReverseDccSendTransfer(const QString &sourceNick, const QStringList &dccArgument);
                                                   // will be connected to Server::addDccGet()
         void addDccGet(const QString &sourceNick, const QStringList &dccArgument);
                                                   // will be connected to Server::resumeDccGetTransfer()

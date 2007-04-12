@@ -40,7 +40,6 @@ DccTransferDetailedInfoPanel::~DccTransferDetailedInfoPanel()
 
 void DccTransferDetailedInfoPanel::setItem( DccTransferPanelItem* item )
 {
-    kdDebug() << "DccTransferDetailedInfoPanel::setItem(): " << item->transfer()->getFileName() << endl;
     m_autoViewUpdateTimer->stop();
 
     // disconnect all slots once
@@ -59,7 +58,6 @@ void DccTransferDetailedInfoPanel::setItem( DccTransferPanelItem* item )
 
 void DccTransferDetailedInfoPanel::updateView()
 {
-    kdDebug() << "DccTransferDetailedInfoPanel::updateView() BEGIN" << endl;
     DccTransfer* transfer = m_item->transfer();
 
     // Type:
@@ -155,13 +153,10 @@ void DccTransferDetailedInfoPanel::updateView()
         m_labelTimeFinished->setText( transfer->getTimeTransferFinished().toString( "hh:mm:ss" ) );
     else
         m_labelTimeFinished->setText( "" );
-
-    kdDebug() << "DccTransferDetailedInfoPanel::updateView() END" << endl;
 }
 
-void DccTransferDetailedInfoPanel::slotTransferStatusChanged( DccTransfer* transfer, int newStatus, int oldStatus )
+void DccTransferDetailedInfoPanel::slotTransferStatusChanged( DccTransfer* /* transfer */, int newStatus, int oldStatus )
 {
-    kdDebug() << "DccTransferDetailedInfoPanel::slotTransferStatusChanged(): " << transfer->getFileName() << endl;
     updateView();
     if ( newStatus == DccTransfer::Transferring )
     {
