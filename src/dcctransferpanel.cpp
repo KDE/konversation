@@ -178,6 +178,7 @@ void DccTransferPanel::slotNewTransferAdded( DccTransfer* transfer )
     m_listView->setSelected( item, true );
     m_listView->setCurrentItem( item );
     updateButton();
+    setDetailPanelItem( item );
 }
 
 void DccTransferPanel::slotTransferStatusChanged()

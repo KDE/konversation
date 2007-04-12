@@ -40,6 +40,7 @@ DccTransferDetailedInfoPanel::~DccTransferDetailedInfoPanel()
 
 void DccTransferDetailedInfoPanel::setItem( DccTransferPanelItem* item )
 {
+    kdDebug() << "DccTransferDetailedInfoPanel::setItem(): " << item->transfer()->getFileName() << endl;
     m_autoViewUpdateTimer->stop();
 
     // disconnect all slots once
@@ -158,8 +159,9 @@ void DccTransferDetailedInfoPanel::updateView()
     kdDebug() << "DccTransferDetailedInfoPanel::updateView() END" << endl;
 }
 
-void DccTransferDetailedInfoPanel::slotTransferStatusChanged( DccTransfer* /* transfer */, int newStatus, int oldStatus )
+void DccTransferDetailedInfoPanel::slotTransferStatusChanged( DccTransfer* transfer, int newStatus, int oldStatus )
 {
+    kdDebug() << "DccTransferDetailedInfoPanel::slotTransferStatusChanged(): " << transfer->getFileName() << endl;
     updateView();
     if ( newStatus == DccTransfer::Transferring )
     {
