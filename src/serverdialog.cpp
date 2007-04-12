@@ -39,8 +39,8 @@ namespace Konversation
         serverLbl->setBuddy(m_serverEdit);
 
         QLabel* portLbl = new QLabel(i18n("&Port:"), mainWidget);
-                                                  // FIXME Need to check the real min & max
-        m_portSBox = new QSpinBox(1, 99999, 1, mainWidget);
+
+        m_portSBox = new QSpinBox(1024, 65535, 1, mainWidget);
         m_portSBox->setValue(6667);
         QWhatsThis::add(m_portSBox, i18n("Enter the port number required to connect to the server. For most servers, this should be <b>6667</b>."));
         portLbl->setBuddy(m_portSBox);

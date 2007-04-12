@@ -234,9 +234,8 @@ namespace Konversation
     {
         m_mainWidget->m_upServerBtn->setEnabled( m_mainWidget->m_serverLBox->count()>1 && m_mainWidget->m_serverLBox->currentItem()>0 );
 
-        // FIXME: find another way than casting to overcome signedness warning
         m_mainWidget->m_downServerBtn->setEnabled( m_mainWidget->m_serverLBox->count()>1 &&
-            m_mainWidget->m_serverLBox->currentItem()< static_cast<int>(m_mainWidget->m_serverLBox->count()-1) );
+            m_mainWidget->m_serverLBox->currentItem()<m_mainWidget->m_serverLBox->numRows()-1 );
         bool enabled = m_mainWidget->m_serverLBox->currentItem() >= 0;
         m_mainWidget->m_removeServerButton->setEnabled(enabled);
         m_mainWidget->m_changeServerButton->setEnabled(enabled);
@@ -333,9 +332,8 @@ namespace Konversation
     {
         m_mainWidget->m_upChannelBtn->setEnabled( m_mainWidget->m_channelLBox->count()>1 && m_mainWidget->m_channelLBox->currentItem()>0 );
 
-        // FIXME: find another way than casting to overcome signedness warning
         m_mainWidget->m_downChannelBtn->setEnabled( m_mainWidget->m_channelLBox->count()>1 &&
-            m_mainWidget->m_channelLBox->currentItem()< static_cast<int>(m_mainWidget->m_channelLBox->count()-1) );
+            m_mainWidget->m_channelLBox->currentItem()<m_mainWidget->m_channelLBox->numRows()-1 );
         bool selected = m_mainWidget->m_channelLBox->currentItem() >= 0;
         m_mainWidget->m_removeChannelButton->setEnabled(selected);
         m_mainWidget->m_changeChannelButton->setEnabled(selected);
