@@ -11,16 +11,17 @@
   email:     eisfuchs@tigress.com
 */
 
-#include <klocale.h>
+/* An instance of ChannelNick is made for each nick in each channel.
+   So for a person in multiple channels, they will have one NickInfo, and multiple ChannelNicks.
+   It contains a pointer to the NickInfo, and the mode of that person in the channel.
+*/
 
-#include "channel.h"
 #include "channelnick.h"
+#include "channel.h"
 #include "server.h"
 
-/** An instance of ChannelNick is made for each nick in each channel.
-    So for a person in multiple channels, they will have one NickInfo, and multiple ChannelNicks.
-    It contains a pointer to the NickInfo, and the mode of that person in the channel.
-*/
+#include <klocale.h>
+
 
 ChannelNick::ChannelNick(const NickInfoPtr& nickInfo, const bool& isop, const bool& isadmin,
 			 const bool& isowner, const bool& ishalfop, const bool& hasvoice)

@@ -16,9 +16,6 @@
 
 #include <kcombobox.h>
 
-/*
-  @author Dario Abatianni
-*/
 
 class TopicComboBox : public KComboBox
 {

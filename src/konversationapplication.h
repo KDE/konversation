@@ -16,13 +16,14 @@
 #ifndef KONVERSATIONAPPLICATION_H
 #define KONVERSATIONAPPLICATION_H
 
-#include <kuniqueapplication.h>
-
 #include "preferences.h"
 #include "osd.h"
 #include "konvdcop.h"
 #include "identity.h"
 #include "nickinfo.h"
+
+#include <kuniqueapplication.h>
+
 
 class QCString;
 

@@ -14,9 +14,6 @@
 
 #include <qtextedit.h>
 
-/**
-  @author Dario Abatianni <eisfuchs@tigress.com> and the kbabel Team
-*/
 
 class QPaintEvent;
 class QWheelEvent;

@@ -9,13 +9,14 @@
   Copyright (C) 2006 Dario Abatianni <eisfuchs@tigress.com>
 */
 
+#include "multilineedit.h"
+#include "multilinetextedit.h"
+#include "konversationapplication.h"
+
 #include <qlayout.h>
 
 #include <klocale.h>
 
-#include "multilineedit.h"
-#include "multilinetextedit.h"
-#include "konversationapplication.h"
 
 QString MultilineEdit::returnText;                // static
 

@@ -10,6 +10,11 @@
   email:     psn@linux.se
 */
 
+#include "channeloptionsdialog.h"
+#include "konversationapplication.h"
+#include "channeloptionsui.h"
+#include "channel.h"
+
 #include <qcheckbox.h>
 
 #include <klocale.h>
@@ -24,10 +29,6 @@
 #include <qheader.h>
 #include <qtoolbutton.h>
 
-#include "channeloptionsdialog.h"
-#include "konversationapplication.h"
-#include "channeloptionsui.h"
-#include "channel.h"
 
 namespace Konversation
 {

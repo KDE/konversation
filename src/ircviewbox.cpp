@@ -9,14 +9,15 @@
   Copyright (C) 2005 Renchi Raju <renchi@pooh.tam.uiuc.edu>
 */
 
+#include "ircviewbox.h"
+#include "ircview.h"
+#include "searchbar.h"
+
 #include <klocale.h>
 #include <kapplication.h>
 #include <kiconloader.h>
 #include <qpixmap.h>
 
-#include "ircview.h"
-#include "searchbar.h"
-#include "ircviewbox.h"
 
 static QPixmap getIcon(const QString& name)
 {

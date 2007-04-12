@@ -10,6 +10,8 @@
   email:     psn@linux.se
 */
 #include "identitydialog.h"
+#include "konversationapplication.h"
+#include "irccharsets.h"
 
 #include <qframe.h>
 #include <qlayout.h>
@@ -31,8 +33,6 @@
 #include <kmessagebox.h>
 #include <kuser.h>
 
-#include "konversationapplication.h"
-#include "irccharsets.h"
 
 namespace Konversation
 {

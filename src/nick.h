@@ -14,11 +14,8 @@
 #ifndef NICK_H
 #define NICK_H
 
-/*
-  @author Dario Abatianni
-*/
-
 #include "channelnick.h"
+
 
 class KListView;
 class NickListViewItem;

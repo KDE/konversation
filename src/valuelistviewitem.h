@@ -17,9 +17,6 @@
 
 #include <klistview.h>
 
-/*
-  @author Dario Abatianni
-*/
 
 class ValueListViewItem : public KListViewItem
 {

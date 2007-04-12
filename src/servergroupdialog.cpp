@@ -9,7 +9,16 @@
   copyright: (C) 2004 by Peter Simonsson
   email:     psn@linux.se
 */
+
 #include "servergroupdialog.h"
+#include "identity.h"
+#include "konversationapplication.h"
+#include "preferences.h"
+#include "serversettings.h"
+#include "serverdialog.h"
+#include "channeldialog.h"
+#include "identitydialog.h"
+#include "servergroupdialogui.h"
 
 #include <qframe.h>
 #include <qlayout.h>
@@ -30,14 +39,6 @@
 #include <klistbox.h>
 #include <kpushbutton.h>
 
-#include "identity.h"
-#include "konversationapplication.h"
-#include "preferences.h"
-#include "serversettings.h"
-#include "serverdialog.h"
-#include "channeldialog.h"
-#include "identitydialog.h"
-#include "servergroupdialogui.h"
 
 namespace Konversation
 {

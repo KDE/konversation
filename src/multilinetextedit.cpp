@@ -9,12 +9,13 @@
   Copyright (C) 2006 Dario Abatianni <eisfuchs@tigress.com>
 */
 
+#include "multilinetextedit.h"
+
 #include <qpainter.h>
 #include <qregexp.h>
 
 #include <kdebug.h>
 
-#include "multilinetextedit.h"
 
 MultilineTextEdit::MultilineTextEdit(QWidget* parent,const char* name) : QTextEdit(parent,name)
 {

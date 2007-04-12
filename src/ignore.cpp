@@ -13,6 +13,7 @@
 
 #include "ignore.h"
 
+
 Ignore::Ignore(const QString &newName,int newFlags)
 {
     setFlags(newFlags);

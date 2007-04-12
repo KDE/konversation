@@ -13,14 +13,15 @@
  *                                                                         *
  ***************************************************************************/
 
-#include <kdebug.h>
-
 #include "nicklistviewitem.h"
 #include "konversationapplication.h"
 #include "nick.h"
 #include "nickinfo.h"
 #include "nicklistview.h"
 #include "images.h"
+
+#include <kdebug.h>
+
 
 NickListViewItem::NickListViewItem(KListView* parent,
 QListViewItem *after,

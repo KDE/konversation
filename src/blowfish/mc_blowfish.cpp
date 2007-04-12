@@ -15,9 +15,10 @@
 
 //---------------------------------------------------------------------------
 // include header
+#include "mc_blowfish.h"
 #include "newblowfish.h"
 #include "oldblowfish1.h"
-#include "mc_blowfish.h"
+
 #include <string.h>
 //---------------------------------------------------------------------------
 

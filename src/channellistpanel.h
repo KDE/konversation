@@ -17,13 +17,15 @@
 
 #include "chatwindow.h"
 
-/*
-  Dario Abatianni
-*/
+#include <qtimer.h>
+
 
 class QCheckBox;
 class QStringList;
 class QTimer;
+class QListView;
+class QListViewItem;
+class QPushButton;
 
 class KListView;
 class KLineEdit;

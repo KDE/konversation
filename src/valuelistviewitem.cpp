@@ -15,6 +15,7 @@
 
 #include "valuelistviewitem.h"
 
+
 ValueListViewItem::ValueListViewItem(int newValue, KListView* parent, const QString& label)
 : KListViewItem(parent,label)
 {

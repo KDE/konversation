@@ -12,15 +12,17 @@
     email:     john@geola.co.uk
 */
 
-#include <klocale.h>
-#include <qtooltip.h>
-#include <qlistview.h>
 #include "nicklisttooltip.h"
 #include "../nick.h"
 #include "../nicklistview.h"
 #include "../nicklistviewitem.h"
 #include "../nickinfo.h"
 #include "../common.h"
+
+#include <klocale.h>
+#include <qtooltip.h>
+#include <qlistview.h>
+
 
 class NickListView;
 

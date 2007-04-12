@@ -13,14 +13,10 @@
 #ifndef QUERY_H
 #define QUERY_H
 
-#include <qstring.h>
-
 #include "chatwindow.h"
 #include "nickinfo.h"
 
-/*
-  @author Dario Abatianni
-*/
+#include <qstring.h>
 
 /* TODO: Idle counter to close query after XXX minutes of inactivity */
 /* TODO: Use /USERHOST to check if queries are still valid */

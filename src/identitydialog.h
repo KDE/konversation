@@ -12,9 +12,10 @@
 #ifndef KONVERSATIONIDENTITYDIALOG_H
 #define KONVERSATIONIDENTITYDIALOG_H
 
+#include "identity.h"
+
 #include <kdialogbase.h>
 
-#include "identity.h"
 
 class KComboBox;
 class KLineEdit;

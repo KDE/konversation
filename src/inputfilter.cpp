@@ -11,18 +11,6 @@
   Copyright (C) 2006 Eike Hein <hein@kde.org>
 */
 
-#include <qdatastream.h>
-#include <qstringlist.h>
-#include <qdatetime.h>
-#include <qregexp.h>
-
-#include <klocale.h>
-#include <kdeversion.h>
-#include <kstringhandler.h>
-
-#include <config.h>
-#include <kdebug.h>
-
 #include "inputfilter.h"
 #include "server.h"
 #include "replycodes.h"
@@ -35,7 +23,18 @@
 #include "common.h"
 #include "notificationhandler.h"
 
+#include <qdatastream.h>
+#include <qstringlist.h>
+#include <qdatetime.h>
+#include <qregexp.h>
+
+#include <klocale.h>
+#include <kdeversion.h>
+#include <kstringhandler.h>
+#include <config.h>
+#include <kdebug.h>
 #include <kresolver.h>
+
 
 InputFilter::InputFilter()
 {

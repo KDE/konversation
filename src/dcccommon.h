@@ -14,6 +14,7 @@
 
 #include <qstring.h>
 
+
 class Server;
 
 class DccCommon

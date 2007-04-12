@@ -14,6 +14,10 @@
 
 #include "trayicon.h"
 #include "konversationapplication.h"
+#include "channel.h"
+#include "server.h"
+#include "chatwindow.h"
+#include "config/preferences.h"
 
 #include <qtimer.h>
 #include <qtooltip.h>
@@ -22,10 +26,6 @@
 #include <kiconloader.h>
 #include <klocale.h>
 
-#include "channel.h"
-#include "server.h"
-#include "chatwindow.h"
-#include "config/preferences.h"
 
 namespace Konversation
 {

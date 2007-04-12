@@ -14,6 +14,7 @@
 
 #include "tabs_preferencesui.h"
 
+
 class Tabs_Config : public Tabs_PreferencesUI
 {
     Q_OBJECT

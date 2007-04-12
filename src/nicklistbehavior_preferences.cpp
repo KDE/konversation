@@ -11,16 +11,15 @@
   Copyright (C) 2006 Eike Hein <hein@kde.org>
 */
 
+#include "nicklistbehavior_preferences.h"
+#include "valuelistviewitem.h"
+#include "config/preferences.h"
+
 #include <qheader.h>
 
 #include <kapplication.h>
 #include <klocale.h>
 
-#include "valuelistviewitem.h"
-
-#include "config/preferences.h"
-
-#include "nicklistbehavior_preferences.h"
 
 NicklistBehavior_Config::NicklistBehavior_Config(QWidget *parent, const char *name)
  : NicklistBehavior_ConfigUI(parent, name)

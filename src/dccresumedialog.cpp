@@ -10,6 +10,9 @@
   Copyright (C) 2004 Shintaro Matsuoka <shin@shoegazed.org>
 */
 
+#include "dccresumedialog.h"
+#include "dcctransferrecv.h"
+
 #include <qhbox.h>
 #include <qlabel.h>
 #include <qlayout.h>
@@ -20,8 +23,6 @@
 #include <kurl.h>
 #include <kurlrequester.h>
 
-#include "dcctransferrecv.h"
-#include "dccresumedialog.h"
 
 DccResumeDialog::ReceiveAction DccResumeDialog::ask(DccTransferRecv* item, const QString& message, int enabledActions, ReceiveAction defaultAction)
 {

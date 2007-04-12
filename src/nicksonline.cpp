@@ -14,28 +14,8 @@
   email:     eisfuchs@tigress.com
 */
 
-// Qt includes.
-#include <qlayout.h>
-#include <qstringlist.h>
-#include <qhbox.h>
-#include <qpushbutton.h>
-#include <qlabel.h>
-#include <qpopupmenu.h>
-#include <qptrlist.h>
-#include <qwhatsthis.h>
-
-// KDE includes.
-#include <kdebug.h>
-#include <klocale.h>
-#include <kdialog.h>
-#include <klistview.h>
-#include <kiconloader.h>
-#include <kprocess.h>
-#include <kmessagebox.h>
-
-// Konversation includes.
-#include "channel.h"
 #include "nicksonline.h"
+#include "channel.h"
 #include "server.h"
 #include "konversationapplication.h"
 #include "images.h"
@@ -46,6 +26,25 @@
 #include "konversationmainwindow.h"
 #include "viewcontainer.h"
 #include "nicksonlineitem.h"
+
+#include <qlayout.h>
+#include <qstringlist.h>
+#include <qhbox.h>
+#include <qpushbutton.h>
+#include <qlabel.h>
+#include <qpopupmenu.h>
+#include <qptrlist.h>
+#include <qwhatsthis.h>
+
+
+#include <kdebug.h>
+#include <klocale.h>
+#include <kdialog.h>
+#include <klistview.h>
+#include <kiconloader.h>
+#include <kprocess.h>
+#include <kmessagebox.h>
+
 
 NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
 {

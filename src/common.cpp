@@ -10,6 +10,10 @@
   email:     psn@linux.se
 */
 
+#include "common.h"
+#include "konversationapplication.h"
+#include "config/preferences.h"
+
 #include <qcstring.h>
 #include <qstring.h>
 #include <qregexp.h>
@@ -18,9 +22,6 @@
 #include <qpainter.h>
 #include <klocale.h>
 
-#include "common.h"
-#include "konversationapplication.h"
-#include "config/preferences.h"
 
 namespace Konversation
 {

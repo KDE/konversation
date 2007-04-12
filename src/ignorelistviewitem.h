@@ -14,13 +14,10 @@
 #ifndef IGNORELISTVIEWITEM_H
 #define IGNORELISTVIEWITEM_H
 
-/*
-  @author Dario Abatianni
-*/
-
 #include <qstring.h>
 
 #include <klistview.h>
+
 
 class IgnoreListViewItem : public KListViewItem
 {

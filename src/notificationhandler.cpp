@@ -9,14 +9,8 @@
   copyright: (C) 2004 by Peter Simonsson
   email:     psn@linux.se
 */
+
 #include "notificationhandler.h"
-
-#include <qstylesheet.h>
-
-#include <knotifyclient.h>
-#include <kstringhandler.h>
-#include <klocale.h>
-
 #include "common.h"
 #include "chatwindow.h"
 #include "konversationapplication.h"
@@ -24,6 +18,13 @@
 #include "viewcontainer.h"
 #include "trayicon.h"
 #include "server.h"
+
+#include <qstylesheet.h>
+
+#include <knotifyclient.h>
+#include <kstringhandler.h>
+#include <klocale.h>
+
 
 namespace Konversation
 {

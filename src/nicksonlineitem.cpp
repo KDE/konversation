@@ -9,9 +9,8 @@
   Copyright (C) 2006 Dario Abatianni <eisfuchs@tigress.com>
 */
 
-#include <kdebug.h>
-
 #include "nicksonlineitem.h"
+
 
 NicksOnlineItem::NicksOnlineItem(int type, QListView* parent, const QString& name, const QString& col2) :
                  KListViewItem(parent, name, col2)

@@ -9,17 +9,6 @@
   Copyright (C) 2006 Eike Hein <hein@kde.org>
 */
 
-#include <qsplitter.h>
-#include <qpopupmenu.h>
-
-#include <kdebug.h>
-#include <klocale.h>
-#include <ktabwidget.h>
-#include <kpushbutton.h>
-#include <kiconloader.h>
-#include <kmessagebox.h>
-#include <kglobalsettings.h>
-
 #include "viewcontainer.h"
 #include "viewtree.h"
 #include "konversationmainwindow.h"
@@ -44,6 +33,18 @@
 #include "insertchardialog.h"
 #include "irccolorchooser.h"
 #include "joinchanneldialog.h"
+
+#include <qsplitter.h>
+#include <qpopupmenu.h>
+
+#include <kdebug.h>
+#include <klocale.h>
+#include <ktabwidget.h>
+#include <kpushbutton.h>
+#include <kiconloader.h>
+#include <kmessagebox.h>
+#include <kglobalsettings.h>
+
 
 ViewContainer::ViewContainer(KonversationMainWindow* window)
 {

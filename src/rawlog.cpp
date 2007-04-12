@@ -12,15 +12,16 @@
   email:     eisfuchs@tigress.com
 */
 
-#include <klocale.h>
-#include <kdebug.h>
-
 #include "rawlog.h"
 #include "channel.h"
 #include "ircview.h"
 #include "ircviewbox.h"
 #include "server.h"
 #include "konversationapplication.h"
+
+#include <klocale.h>
+#include <kdebug.h>
+
 
 RawLog::RawLog(QWidget* parent) : ChatWindow(parent)
 {

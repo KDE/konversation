@@ -36,6 +36,7 @@
 #define UTF8_6Bytes(c) ( k6BytesLeadByte == ((c) & kLeft7BitsMask))
 #define UTF8_ValidTrialByte(c) ( kTrialByte == ((c) & kLeft2BitsMask))
 
+
 bool isUtf8(const QCString& text)
 {
     int i;

@@ -15,6 +15,7 @@
 
 #include "ignore_preferencesui.h"
 #include "konvisettingspage.h"
+
 #include <qptrlist.h>
 
 

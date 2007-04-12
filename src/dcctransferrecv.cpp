@@ -14,6 +14,12 @@
   (at your option) any later version.
 */
 
+#include "dcctransferrecv.h"
+#include "channel.h"
+#include "dcctransfermanager.h"
+#include "konversationapplication.h"
+#include "server.h"
+
 #include <kdebug.h>
 #include <kfileitem.h>
 #include <kiconloader.h>
@@ -28,12 +34,6 @@
 #include <kio/jobclasses.h>
 #include <kio/netaccess.h>
 
-#include "channel.h"
-#include "dcctransfermanager.h"
-#include "konversationapplication.h"
-#include "server.h"
-
-#include "dcctransferrecv.h"
 
 class DccResumeDialog;
 

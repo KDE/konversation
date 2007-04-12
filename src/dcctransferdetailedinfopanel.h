@@ -14,6 +14,7 @@
 
 #include "dcctransferdetailedinfopanelui.h"
 
+
 class QTimer;
 
 class DccTransfer;

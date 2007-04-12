@@ -14,16 +14,14 @@
 #ifndef CHANNEL_H
 #define CHANNEL_H
 
-#include <qtimer.h>
-#include <qstring.h>
 #include "server.h"
 #include "chatwindow.h"
 #include "channelnick.h"
 #include "nick.h"
 
-/*
-  @author Dario Abatianni
-*/
+#include <qtimer.h>
+#include <qstring.h>
+
 
 class QPushButton;
 class QCheckBox;

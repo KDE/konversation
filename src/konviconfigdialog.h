@@ -39,11 +39,14 @@
 #ifndef KONVICONFIGDIALOG_H
 #define KONVICONFIGDIALOG_H
 
+#include <qasciidict.h>
+
+#include <kdialogbase.h>
+
+
 class KConfig;
 class KConfigSkeleton;
 class KConfigDialogManager;
-#include <kdialogbase.h>
-#include <qasciidict.h>
 
 class KonviConfigDialog : public KDialogBase
 {

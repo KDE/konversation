@@ -17,9 +17,6 @@
 #include <qpixmap.h>
 #include <qobject.h>
 
-/*
-  @author Dario Abatianni
-*/
 
 /**
  * Do not create an instance of this class yourself.

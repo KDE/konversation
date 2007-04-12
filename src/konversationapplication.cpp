@@ -13,22 +13,9 @@
   Copyright (C) 2005-2006 Eike Hein <hein@kde.org>
 */
 
-#include <qtextcodec.h>
-#include <qregexp.h>
-#include <qfileinfo.h>
-
-#include <kdebug.h>
-#include <kconfig.h>
-#include <dcopclient.h>
-#include <kdeversion.h>
-#include <kstandarddirs.h>
-#include <klocale.h>
-#include <kmessagebox.h>
-#include <kiconloader.h>
-
-#include "dcctransfermanager.h"
 #include "konversationapplication.h"
 #include "konversationmainwindow.h"
+#include "dcctransfermanager.h"
 #include "viewcontainer.h"
 #include "highlight.h"
 #include "server.h"
@@ -42,6 +29,20 @@
 #include "notificationhandler.h"
 #include "commit.h"
 #include "version.h"
+
+#include <qtextcodec.h>
+#include <qregexp.h>
+#include <qfileinfo.h>
+
+#include <kdebug.h>
+#include <kconfig.h>
+#include <dcopclient.h>
+#include <kdeversion.h>
+#include <kstandarddirs.h>
+#include <klocale.h>
+#include <kmessagebox.h>
+#include <kiconloader.h>
+
 
 KonversationApplication::KonversationApplication()
 : KUniqueApplication(true, true, true)

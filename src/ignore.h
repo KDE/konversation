@@ -16,9 +16,6 @@
 
 #include <qstring.h>
 
-/*
-  @author Dario Abatianni
-*/
 
 class Ignore
 {

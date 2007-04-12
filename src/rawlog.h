@@ -17,9 +17,6 @@
 
 #include "chatwindow.h"
 
-/*
-  Dario Abatianni
-*/
 
 class RawLog : public ChatWindow
 {

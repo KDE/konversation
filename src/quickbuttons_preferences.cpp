@@ -10,6 +10,9 @@
   Copyright (C) 2006 John Tapsell <johnflux@gmail.com>
 */
 
+#include "quickbuttons_preferences.h"
+#include "config/preferences.h"
+
 #include <qlabel.h>
 #include <qpushbutton.h>
 #include <qheader.h>
@@ -21,9 +24,6 @@
 #include <klineedit.h>
 #include <klistview.h>
 
-#include "config/preferences.h"
-
-#include "quickbuttons_preferences.h"
 
 QuickButtons_Config::QuickButtons_Config(QWidget* parent, const char* name)
  : QuickButtons_ConfigUI(parent, name)

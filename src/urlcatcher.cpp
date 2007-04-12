@@ -12,6 +12,12 @@
   email:     eisfuchs@tigress.com
 */
 
+#include "urlcatcher.h"
+#include "channel.h"
+#include "server.h"
+#include "konversationapplication.h"
+#include "viewcontainer.h"
+
 #include <qhbox.h>
 #include <qpushbutton.h>
 #include <qregexp.h>
@@ -31,11 +37,6 @@
 #include <kshell.h>
 #include <klistviewsearchline.h>
 
-#include "urlcatcher.h"
-#include "channel.h"
-#include "server.h"
-#include "konversationapplication.h"
-#include "viewcontainer.h"
 
 UrlCatcher::UrlCatcher(QWidget* parent) : ChatWindow(parent)
 {

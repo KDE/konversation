@@ -17,12 +17,11 @@
 #ifndef DCCTRANSFERRECV_H
 #define DCCTRANSFERRECV_H
 
-#include <qptrlist.h>
-
 #include "dcctransfer.h"
-
 // TODO: remove the dependence
 #include "dccresumedialog.h"
+
+#include <qptrlist.h>
 
 
 class QFile;

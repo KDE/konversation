@@ -14,24 +14,6 @@
   Copyright (C) 2005-2006 Eike Hein <hein@kde.org>
 */
 
-#include <qregexp.h>
-#include <qhostaddress.h>
-#include <qtextcodec.h>
-#include <qdatetime.h>
-
-#include <kapplication.h>
-#include <klocale.h>
-#include <kdebug.h>
-#include <kfiledialog.h>
-#include <kinputdialog.h>
-#include <kmessagebox.h>
-#include <kresolver.h>
-#include <ksocketdevice.h>
-#include <kaction.h>
-#include <kstringhandler.h>
-#include <kdeversion.h>
-#include <kwin.h>
-
 #include "server.h"
 #include "query.h"
 #include "channel.h"
@@ -57,7 +39,25 @@
 #include "blowfish.h"
 #include "dcctransfermanager.h"
 
+#include <qregexp.h>
+#include <qhostaddress.h>
+#include <qtextcodec.h>
+#include <qdatetime.h>
+
+#include <kapplication.h>
+#include <klocale.h>
+#include <kdebug.h>
+#include <kfiledialog.h>
+#include <kinputdialog.h>
+#include <kmessagebox.h>
+#include <kresolver.h>
+#include <ksocketdevice.h>
+#include <kaction.h>
+#include <kstringhandler.h>
+#include <kdeversion.h>
+#include <kwin.h>
 #include <config.h>
+
 
 Server::Server(ViewContainer* viewContainer, int serverGroupId, bool clearQuickServerList)
 {

@@ -15,17 +15,19 @@
 #ifndef ADDRESSBOOKBASE_H
 #define ADDRESSBOOKBASE_H
 
-#include <kabc/addressbook.h>
-#include <kabc/stdaddressbook.h>
+#include "../images.h"
+#include "../nickinfo.h"
+#include "../channelnick.h"
 
 #include <kstaticdeleter.h>
 #include <qobject.h>
 #include <qregexp.h>
-#include "config.h"
+#include <config.h>
 
-#include "../images.h"
-#include "../nickinfo.h"
-#include "../channelnick.h"
+
+#include <kabc/addressbook.h>
+#include <kabc/stdaddressbook.h>
+
 
 namespace Konversation
 {

@@ -15,6 +15,8 @@
 *************************************************************************
 */
 
+#include "sslsocket.h"
+
 #include <klocale.h>
 #include <kdebug.h>
 #include <kssl.h>
@@ -25,7 +27,6 @@
 #include <kmessagebox.h>
 #include <ksocketdevice.h>
 
-#include "sslsocket.h"
 
 struct SSLSocketPrivate
 {

@@ -9,11 +9,12 @@
   Copyright (C) 2006 Eike Hein <hein@kde.org>
 */
 
+#include "tabs_preferences.h"
+#include "tabs_preferencesui.h"
+
 #include <qcombobox.h>
 #include <qcheckbox.h>
 
-#include "tabs_preferences.h"
-#include "tabs_preferencesui.h"
 
 Tabs_Config::Tabs_Config(QWidget *parent, const char *name)
  : Tabs_PreferencesUI(parent, name)

@@ -12,14 +12,16 @@
 #ifndef KONVERSATIONCHANNELOPTIONSDIALOG_H
 #define KONVERSATIONCHANNELOPTIONSDIALOG_H
 
-#include <kdialogbase.h>
+#include "channel.h"
 
 #include <qstringlist.h>
-#include "channel.h"
+
+#include <kdialogbase.h>
+#include <klistview.h>
+
 
 namespace Konversation
 {
-
     class ChannelOptionsUI;
 
     class ChannelOptionsDialog : public KDialogBase

@@ -12,18 +12,17 @@
   email:     zipzippy@sonic.net
 */
 
+#include "konvdcop.h"
+#include "konversationapplication.h"
+#include "channel.h"
+#include "identity.h"
+#include "server.h"
+
 #include <kapplication.h>
 #include <kdebug.h>
 #include <dcopclient.h>
-
-#include <qstring.h>
 #include <klocale.h>
 
-#include "konversationapplication.h"
-#include "channel.h"
-#include "konvdcop.h"
-#include "identity.h"
-#include "server.h"
 
 KonvDCOP::KonvDCOP()
 : DCOPObject("irc"),

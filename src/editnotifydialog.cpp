@@ -11,21 +11,19 @@
   email:     garycramblitt@comcast.net
 */
 
-// Qt includes.
+#include "editnotifydialog.h"
+#include "konversationapplication.h"
+#include "servergroupsettings.h"
+
 #include <qlayout.h>
 #include <qlabel.h>
 #include <qwhatsthis.h>
 
-// KDE includes.
 #include <klineedit.h>
 #include <kcombobox.h>
 #include <kdebug.h>
 #include <klocale.h>
 
-// Konversation includes.
-#include "editnotifydialog.h"
-#include "konversationapplication.h"
-#include "servergroupsettings.h"
 
 EditNotifyDialog::EditNotifyDialog(QWidget* parent,
 const QString& network,

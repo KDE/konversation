@@ -11,12 +11,12 @@
   Copyright (C) 2004,2005 John Tapsell <john@geola.co.uk>
 */
 
+#include "dcctransfer.h"
+#include "preferences.h"
+
 #include <qfileinfo.h>
 #include <qhostaddress.h>
 
-#include "preferences.h"
-
-#include "dcctransfer.h"
 
 DccTransfer::DccTransfer( DccType dccType )
 {

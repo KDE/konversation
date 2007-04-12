@@ -15,13 +15,16 @@
   email:     john@geola.co.uk
 */
 
-#ifndef SERVERISON_H
-#define SERVERISON_H
-
 /**
  * @author John Tapsell <john@geola.co.uk>
  * @author Gary Cramblitt <garycramblitt@comcast.net>
  */
+
+#ifndef SERVERISON_H
+#define SERVERISON_H
+
+#include "nickinfo.h"
+
 
 class Server;
 

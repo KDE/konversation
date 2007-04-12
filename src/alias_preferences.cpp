@@ -10,6 +10,9 @@
   Copyright (C) 2006 John Tapsell <johnflux@gmail.com>
 */
 
+#include "alias_preferences.h"
+#include "config/preferences.h"
+
 #include <qlabel.h>
 #include <qpushbutton.h>
 #include <qheader.h>
@@ -21,9 +24,6 @@
 #include <klineedit.h>
 #include <klistview.h>
 
-#include "config/preferences.h"
-
-#include "alias_preferences.h"
 
 Alias_Config::Alias_Config(QWidget* parent, const char* name)
  : Alias_ConfigUI(parent, name)

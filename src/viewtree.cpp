@@ -9,6 +9,15 @@
   Copyright (C) 2006 Eike Hein <hein@kde.org>
 */
 
+#include "viewtree.h"
+#include "viewtreeitem.h"
+#include "preferences.h"
+#include "chatwindow.h"
+#include "server.h"
+#include "channel.h"
+#include "ircview.h"
+#include "konsolepanel.h"
+
 #include <qheader.h>
 #include <qdragobject.h>
 #include <qlistview.h>
@@ -22,14 +31,6 @@
 #include <kglobalsettings.h>
 #include <kapplication.h>
 
-#include "viewtree.h"
-#include "viewtreeitem.h"
-#include "preferences.h"
-#include "chatwindow.h"
-#include "server.h"
-#include "channel.h"
-#include "ircview.h"
-#include "konsolepanel.h"
 
 class ViewTree::ToolTip : public QToolTip
 {

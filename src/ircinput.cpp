@@ -12,13 +12,13 @@
   email:     eisfuchs@tigress.com
 */
 
-#include <kapplication.h>
-#include <kmessagebox.h>
-#include <klocale.h>
-#include <kcompletionbox.h>
+#include "ircinput.h"
+#include "konversationapplication.h"
+#include "multilineedit.h"
+#include "chatwindow.h"
+#include "ircview.h"
 
 #include <private/qrichtext_p.h>
-
 #include <qclipboard.h>
 #include <qregexp.h>
 #include <qdom.h>
@@ -27,14 +27,14 @@
 #include <qwhatsthis.h>
 #include <qpopupmenu.h>
 
-#include "ircinput.h"
-#include "konversationapplication.h"
-#include "multilineedit.h"
-#include "chatwindow.h"
-#include "ircview.h"
+#include <kapplication.h>
+#include <kmessagebox.h>
+#include <klocale.h>
+#include <kcompletionbox.h>
 
 #define MAXHISTORY 100
 #define RICHTEXT 0
+
 
 IRCInput::IRCInput(QWidget* parent) : KTextEdit(parent)
 {

@@ -15,15 +15,13 @@
 #ifndef NICKLISTVIEW_H
 #define NICKLISTVIEW_H
 
-#include <klistview.h>
 #include "channel.h"
 #include "nicklisttooltip.h"
 #include "images.h"
 #include "common.h"
 
-/*
-  @author Dario Abatianni
-*/
+#include <klistview.h>
+
 
 class QPopupMenu;
 class QContextMenuEvent;

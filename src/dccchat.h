@@ -15,9 +15,8 @@
 
 #include "chatwindow.h"
 
-/*
- @author Dario Abatianni
-*/
+
+class QSplitter;
 
 class IRCInput;
 class KLineEdit;

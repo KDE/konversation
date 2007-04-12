@@ -13,12 +13,13 @@
 #ifndef KONVISETTINGSDIALOG_H
 #define KONVISETTINGSDIALOG_H
 
+#include "konviconfigdialog.h"
+#include "konvisettingspage.h"
+
 #include <kdialogbase.h>
 #include <qasciidict.h>
 #include <qintdict.h>
 
-#include "konviconfigdialog.h"
-#include "konvisettingspage.h"
 
 class Warnings_Config;
 class ChatWindowAppearance_Config;

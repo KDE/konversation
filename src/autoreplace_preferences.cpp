@@ -10,6 +10,9 @@
   Copyright (C) 2006 Eike Hein <hein@kde.org>
 */
 
+#include "autoreplace_preferences.h"
+#include "config/preferences.h"
+
 #include <qlabel.h>
 #include <qpushbutton.h>
 #include <qcombobox.h>
@@ -25,13 +28,10 @@
 #include <kparts/componentfactory.h>
 #include <kregexpeditorinterface.h>
 
-#include "config/preferences.h"
-
-#include "autoreplace_preferences.h"
-
 #define DIRECTION_OUTPUT 0
 #define DIRECTION_INPUT  1
 #define DIRECTION_BOTH   2
+
 
 Autoreplace_Config::Autoreplace_Config(QWidget* parent, const char* name)
  : Autoreplace_ConfigUI(parent, name)

@@ -12,8 +12,8 @@ the Free Software Foundation; either version 2 of the License, or
   Copyright (C) 2004 Michael Goettsche <michael.goettsche@kdemail.net>
 */
 
-#include "konversationapplication.h"
 #include "osd.h"
+#include "konversationapplication.h"
 #include "common.h"
 
 #include <qapplication.h>
@@ -27,6 +27,7 @@ the Free Software Foundation; either version 2 of the License, or
 #include <kglobalsettings.h>                      //unsetColors()
 
 #include <X11/Xlib.h>                             //reposition()
+
 
 OSDWidget::OSDWidget( const QString &appName, QWidget *parent, const char *name )
 : QWidget( parent, name, WNoAutoErase | WStyle_Customize | WX11BypassWM | WStyle_StaysOnTop | WStyle_Tool )

@@ -11,9 +11,8 @@
   email:     eisfuchs@tigress.com
 */
 
-#include <kdebug.h>
-
 #include "topiccombobox.h"
+
 
 TopicComboBox::TopicComboBox(QWidget* parent) :
 KComboBox(parent,"topic_combo_box")

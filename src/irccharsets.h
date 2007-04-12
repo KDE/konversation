@@ -14,6 +14,7 @@
 #include <qmap.h>
 #include <qstringlist.h>
 
+
 namespace Konversation
 {
 

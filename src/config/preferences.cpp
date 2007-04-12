@@ -13,6 +13,13 @@
   Copyright (C) 2005-2006 Eike Hein <hein@kde.org>
 */
 
+#include "config/preferences.h"
+#include "identity.h"
+#include "ignore.h"
+#include "highlight.h"
+#include "commit.h"
+#include "version.h"
+
 #include <ktoolbar.h>
 #include <kstandarddirs.h>
 #include <kstaticdeleter.h>
@@ -27,12 +34,6 @@
 #include <qregexp.h>
 #include <qfileinfo.h>
 
-#include "config/preferences.h"
-#include "identity.h"
-#include "ignore.h"
-#include "highlight.h"
-#include "commit.h"
-#include "version.h"
 
 Preferences *Preferences::mSelf = 0;
 static KStaticDeleter<Preferences> staticPreferencesDeleter;

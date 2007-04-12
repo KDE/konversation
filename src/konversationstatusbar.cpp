@@ -9,6 +9,11 @@
   Copyright (C) 2006 Eike Hein <hein@kde.org>
 */
 
+#include "konversationstatusbar.h"
+#include "konversationmainwindow.h"
+#include "viewcontainer.h"
+#include "ssllabel.h"
+
 #include <qwhatsthis.h>
 #include <qlabel.h>
 #include <qtooltip.h>
@@ -18,10 +23,6 @@
 #include <kiconloader.h>
 #include <ksqueezedtextlabel.h>
 
-#include "konversationstatusbar.h"
-#include "konversationmainwindow.h"
-#include "viewcontainer.h"
-#include "ssllabel.h"
 
 KonversationStatusBar::KonversationStatusBar(KonversationMainWindow* window)
 {

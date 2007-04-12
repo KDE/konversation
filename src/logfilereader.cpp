@@ -12,6 +12,11 @@
   email:     eisfuchs@tigress.com
 */
 
+#include "logfilereader.h"
+#include "konversationapplication.h"
+#include "ircview.h"
+#include "ircviewbox.h"
+
 #include <qlayout.h>
 #include <qfile.h>
 #include <qtextstream.h>
@@ -29,13 +34,8 @@
 #include <kfiledialog.h>
 #include <klocale.h>
 #include <kdebug.h>
-
 #include <kio/jobclasses.h>
 
-#include "logfilereader.h"
-#include "konversationapplication.h"
-#include "ircview.h"
-#include "ircviewbox.h"
 
 LogfileReader::LogfileReader(QWidget* parent, const QString& log) : ChatWindow(parent)
 {

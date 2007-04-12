@@ -16,13 +16,14 @@
 #ifndef DCCTRANSFERPANELITEM_H
 #define DCCTRANSFERPANELITEM_H
 
+#include "dcctransfer.h"
+
 #include <qdatetime.h>
 
 #include <klistview.h>
 #include <kurl.h>
 #include <kio/global.h>
 
-#include "dcctransfer.h"
 
 class QStringList;
 class QTimer;
@@ -35,10 +36,6 @@ namespace KIO
 }
 
 class DccTransferPanel;
-
-/*
-  @author Dario Abatianni
-*/
 
 class DccTransferPanelItem : public QObject, public KListViewItem
 {

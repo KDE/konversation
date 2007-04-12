@@ -8,17 +8,16 @@
 /*
   Copyright (C) 2007 Shintaro Matsuoka <shin@shoegazed.org>
 */
+#include "dcccommon.h"
+#include "channel.h"
+#include "preferences.h"
+#include "server.h"
 
 #include <qhostaddress.h>
 
 #include <kresolver.h>
 #include <kserversocket.h>
 
-#include "channel.h"
-#include "preferences.h"
-#include "server.h"
-
-#include "dcccommon.h"
 
 QString DccCommon::textIpToNumericalIp( const QString& ipString )
 {

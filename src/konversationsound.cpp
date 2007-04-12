@@ -12,13 +12,14 @@
 */
 
 #include "konversationsound.h"
-#include "config.h"
 
+#include <config.h>
 #include <kurl.h>
 
 #ifdef USE_KNOTIFY
 #include <knotifyclient.h>
 #endif
+
 
 namespace Konversation
 {

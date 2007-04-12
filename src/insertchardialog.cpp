@@ -15,6 +15,7 @@
 #include <klocale.h>
 #include <kguiitem.h>
 
+
 namespace Konversation
 {
 

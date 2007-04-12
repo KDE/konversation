@@ -19,6 +19,7 @@
 #include "osd_preferencesui.h"
 #include "konvisettingspage.h"
 
+
 class OSDPreviewWidget;
 
 class OSD_Config : public OSD_ConfigUI, public KonviSettingsPage

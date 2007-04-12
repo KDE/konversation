@@ -13,6 +13,20 @@
   Copyright (C) 2005-2006 Eike Hein <hein@kde.org>
 */
 
+#include "konversationmainwindow.h"
+#include "konversationapplication.h"
+#include "linkaddressbook/addressbook.h"
+#include "konvisettingsdialog.h"
+#include "viewcontainer.h"
+#include "konversationstatusbar.h"
+#include "konvibookmarkhandler.h"
+#include "trayicon.h"
+#include "serverlistdialog.h"
+#include "identitydialog.h"
+#include "notificationhandler.h"
+#include "irccharsets.h"
+#include "konviiphelper.h"
+
 #include <qnamespace.h>
 #include <qwhatsthis.h>
 #include <qsignalmapper.h>
@@ -43,19 +57,6 @@
 #include <knotifydialog.h>
 #endif
 
-#include "linkaddressbook/addressbook.h"
-#include "konversationmainwindow.h"
-#include "konvisettingsdialog.h"
-#include "viewcontainer.h"
-#include "konversationstatusbar.h"
-#include "konvibookmarkhandler.h"
-#include "konversationapplication.h"
-#include "trayicon.h"
-#include "serverlistdialog.h"
-#include "identitydialog.h"
-#include "notificationhandler.h"
-#include "irccharsets.h"
-#include "konviiphelper.h"
 
 KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", WStyle_ContextHelp | WType_TopLevel | WDestructiveClose)
 {

@@ -13,15 +13,12 @@
 #ifndef CHATWINDOW_H
 #define CHATWINDOW_H
 
-#include <qvbox.h>
-#include <qfile.h>
-
 #include "identity.h"
 #include "common.h"
 
-/*
-  @author Dario Abatianni
-*/
+#include <qvbox.h>
+#include <qfile.h>
+
 
 class IRCView;
 class Server;

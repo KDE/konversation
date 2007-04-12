@@ -15,6 +15,7 @@
 
 #include "highlight.h"
 
+
 unsigned int Highlight::s_id = 0;                 // static
 
 Highlight::Highlight(const QString& itemPattern,

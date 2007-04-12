@@ -10,17 +10,9 @@
   Copyright (C) 2006 Eike Hein <hein@kde.org>
 */
 
-#include <qsplitter.h>
-
 #include "konvisettingsdialog.h"
 #include "konviconfigdialog.h"
 #include "config/preferences.h"
-
-#include <klocale.h>
-#include <kdebug.h>
-#include <kiconloader.h>
-#include <klistview.h>
-
 #include "chatwindowappearance_preferences.h"
 #include "connectionbehavior_preferences.h"
 #include "highlight_preferences.h"
@@ -41,6 +33,14 @@
 #include "ignore_preferences.h"
 #include "watchednicknames_preferences.h"
 #include "tabnotifications_preferences.h"
+
+#include <qsplitter.h>
+
+#include <klocale.h>
+#include <kdebug.h>
+#include <kiconloader.h>
+#include <klistview.h>
+
 
 KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
 	           KonviConfigDialog( parent, "settings", Preferences::self(), KDialogBase::TreeList)

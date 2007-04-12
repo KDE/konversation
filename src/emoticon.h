@@ -15,6 +15,7 @@
 #include <qstring.h>
 #include <qmap.h>
 
+
 class QFontMetrics;
 
 namespace Konversation

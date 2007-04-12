@@ -11,11 +11,12 @@
   email:     eisfuchs@tigress.com
 */
 
+#include "ignorelistviewitem.h"
+#include "ignore.h"
+
 #include <klocale.h>
 #include <kdebug.h>
 
-#include "ignorelistviewitem.h"
-#include "ignore.h"
 
 IgnoreListViewItem::IgnoreListViewItem(QListView* parent,const QString& name,int newFlags):
 KListViewItem(parent,name)

@@ -14,9 +14,6 @@
 
 #include <klistview.h>
 
-/**
-  @author Dario Abatianni <eisfuchs@tigress.com>
-*/
 
 class NicksOnlineItem : public KListViewItem
 {

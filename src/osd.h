@@ -19,6 +19,7 @@
 #include <qtimer.h>                               //stack allocated
 #include <qwidget.h>                              //baseclass
 
+
 class QFont;
 class QString;
 class QStringList;

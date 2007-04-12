@@ -9,6 +9,14 @@
   Copyright (C) 2007 Shintaro Matsuoka <shin@shoegazed.org>
 */
 
+#include "dcctransferdetailedinfopanel.h"
+#include "channel.h"
+#include "dcctransfer.h"
+#include "dcctransferrecv.h"
+#include "dcctransferpanelitem.h"
+#include "konversationapplication.h"
+#include "server.h"
+
 #include <qlabel.h>
 #include <qtimer.h>
 
@@ -17,14 +25,6 @@
 #include <kprogress.h>
 #include <kurlrequester.h>
 
-#include "channel.h"
-#include "dcctransfer.h"
-#include "dcctransferrecv.h"
-#include "dcctransferpanelitem.h"
-#include "konversationapplication.h"
-#include "server.h"
-
-#include "dcctransferdetailedinfopanel.h"
 
 DccTransferDetailedInfoPanel::DccTransferDetailedInfoPanel( QWidget* parent, const char* name )
     : DccTransferDetailedInfoPanelUI( parent, name )

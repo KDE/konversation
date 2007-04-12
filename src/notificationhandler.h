@@ -14,6 +14,7 @@
 
 #include <qobject.h>
 
+
 class ChatWindow;
 class KonversationApplication;
 class KonversationMainWindow;

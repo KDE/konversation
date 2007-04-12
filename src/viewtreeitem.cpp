@@ -9,6 +9,13 @@
   Copyright (C) 2006 Eike Hein <hein@kde.org>
 */
 
+#include "viewtreeitem.h"
+#include "konversationapplication.h"
+#include "chatwindow.h"
+#include "preferences.h"
+#include "images.h"
+
+
 #include <qpainter.h>
 #include <qpixmap.h>
 #include <qimage.h>
@@ -18,11 +25,6 @@
 #include <kglobalsettings.h>
 #include <kstringhandler.h>
 
-#include "viewtreeitem.h"
-#include "konversationapplication.h"
-#include "chatwindow.h"
-#include "preferences.h"
-#include "images.h"
 
 int ViewTreeItem::s_availableSortIndex = 0;
 

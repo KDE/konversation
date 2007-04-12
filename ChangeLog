@@ -100,7 +100,7 @@ Changes since 1.0.1:
 - Have the "Save as..." dialog suggest a file name.
 - Have the Edit/Delete/Up/Down buttons for the nickname list of an Identity
   correctly change state according to the selection.
-
+- Don't allow impossible ports to be set for servers.
 
 -------------------------------------------------------------------------------
 

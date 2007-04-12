@@ -13,10 +13,11 @@
  *                                                                         *
  ***************************************************************************/
 
+#include "highlightviewitem.h"
+
 #include <kurl.h>
 #include <klistview.h>
 
-#include "highlightviewitem.h"
 
 HighlightViewItem::HighlightViewItem(KListView* parent, Highlight* passed_Highlight)
 : QCheckListItem(parent, QString(), QCheckListItem::CheckBox)

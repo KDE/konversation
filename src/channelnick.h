@@ -15,9 +15,10 @@
 #ifndef CHANNEL_NICK_H
 #define CHANNEL_NICK_H
 
+#include "nickinfo.h"
+
 #include <ksharedptr.h>
 
-#include "nickinfo.h"
 
 class ChannelNick :  public QObject, public KShared
 {

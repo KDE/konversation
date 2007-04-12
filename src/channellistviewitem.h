@@ -19,6 +19,7 @@
 
 #include <klistview.h>
 
+
 class ChannelListViewItem : public KListViewItem
 {
     public:

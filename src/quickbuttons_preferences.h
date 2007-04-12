@@ -16,9 +16,6 @@
 #include "quickbuttons_preferencesui.h"
 #include "konvisettingspage.h"
 
-/**
-  @author Dario Abatianni <eisfuchs@tigress.com>
-*/
 
 class QuickButtons_Config : public QuickButtons_ConfigUI, public KonviSettingsPage
 {

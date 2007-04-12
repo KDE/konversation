@@ -9,7 +9,9 @@
   copyright: (C) 2004 by Peter Simonsson
   email:     psn@linux.se
 */
+
 #include "serversettings.h"
+
 
 namespace Konversation
 {

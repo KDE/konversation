@@ -16,13 +16,13 @@ Copyright (C) 2002 Carsten Pfeiffer <pfeiffer@kde.org>
 */
 
 #include "konvibookmarkmenu.h"
+#include "konvibookmarkhandler.h"
 
 #include <qregexp.h>
 
 #include <kpopupmenu.h>
 #include <kaction.h>
 
-#include "konvibookmarkhandler.h"
 
 KonviBookmarkMenu::KonviBookmarkMenu( KBookmarkManager* mgr,
 KonviBookmarkHandler * _owner, KPopupMenu * _parentMenu,

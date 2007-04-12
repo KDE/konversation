@@ -10,6 +10,16 @@
   Copyright (C) 2005-2006 Eike Hein <hein@kde.org>
 */
 
+#include "query.h"
+#include "channel.h"
+#include "server.h"
+#include "konversationapplication.h"
+#include "ircinput.h"
+#include "ircview.h"
+#include "ircviewbox.h"
+#include "common.h"
+#include "topiclabel.h"
+
 #include <qhbox.h>
 #include <qcheckbox.h>
 #include <qlabel.h>
@@ -28,15 +38,6 @@
 #include <kstringhandler.h>
 #include <kpopupmenu.h>
 
-#include "channel.h"
-#include "query.h"
-#include "server.h"
-#include "konversationapplication.h"
-#include "ircinput.h"
-#include "ircview.h"
-#include "ircviewbox.h"
-#include "common.h"
-#include "topiclabel.h"
 
 Query::Query(QWidget* parent) : ChatWindow(parent)
 {

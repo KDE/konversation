@@ -12,6 +12,11 @@
   email:     eisfuchs@tigress.com
 */
 
+#include "channellistpanel.h"
+#include "channel.h"
+#include "channellistviewitem.h"
+#include "server.h"
+
 #include <qhbox.h>
 #include <qvbox.h>
 #include <qgrid.h>
@@ -34,10 +39,6 @@
 #include <kpopupmenu.h>
 #include <kdeversion.h>
 
-#include "channel.h"
-#include "channellistpanel.h"
-#include "channellistviewitem.h"
-#include "server.h"
 
 ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
 {

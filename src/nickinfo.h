@@ -15,15 +15,12 @@
 #ifndef NICKINFO_H
 #define NICKINFO_H
 
-/*
-  @author Gary Cramblitt
-*/
-
 #include <qstringlist.h>
 #include <qdatetime.h>
 #include <ksharedptr.h>
 
 #include <kabc/addressbook.h>
+
 
 class Server;
 class QTimer;

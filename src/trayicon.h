@@ -20,6 +20,7 @@
 
 #include <ksystemtray.h>
 
+
 class QTimer;
 class Server;
 

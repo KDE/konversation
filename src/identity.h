@@ -18,11 +18,8 @@
 #include <ksharedptr.h>
 #include <qstringlist.h>
 
-class QTextCodec;
 
-/*
- *@author Dario Abatianni
- */
+class QTextCodec;
 
 class Identity : public KShared
 {

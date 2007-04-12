@@ -12,7 +12,12 @@
 #ifndef BLOWFISH_H
 #define BLOWFISH_H
 
+
 class Server;
+
+class QString;
+class QCString;
+
 
 namespace Konversation
 {

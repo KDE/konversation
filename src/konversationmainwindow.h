@@ -16,16 +16,17 @@
 #ifndef _KONVERSATIONMAINWINDOW_H_
 #define _KONVERSATIONMAINWINDOW_H_
 
-#include <qstringlist.h>
-
-#include <kmainwindow.h>
-#include <kaction.h>
-
 #include "channel.h"
 #include "preferences.h"
 #include "ssllabel.h"
 #include "nickinfo.h"
 #include "server.h"
+
+#include <qstringlist.h>
+
+#include <kmainwindow.h>
+#include <kaction.h>
+
 
 class KToggleAction;
 class KScriptManager;

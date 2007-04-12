@@ -12,10 +12,10 @@
   Copyright (C) 2006 Eike Hein <hein@kde.org>
 */
 
+#include "serverlistview.h"
+
 #include <qdragobject.h>
 #include <kdebug.h>
-
-#include "serverlistview.h"
 
 
 ServerListView::ServerListView(QWidget *parent)

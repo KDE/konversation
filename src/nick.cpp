@@ -11,14 +11,15 @@
   email:     eisfuchs@tigress.com
 */
 
+#include "nick.h"
+#include "nicklistviewitem.h"
+#include "addressbook.h"
+
+#include <qtextstream.h>
+
 #include <kdebug.h>
 #include <klistview.h>
-
-#include "nicklistviewitem.h"
-#include "nick.h"
-#include "addressbook.h"
 #include <klocale.h>
-#include <qtextstream.h>
 #include <kabc/phonenumber.h>
 
 Nick::Nick(KListView *listView,

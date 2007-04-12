@@ -14,6 +14,7 @@
 
 #include <klistview.h>
 
+
 class ViewTreeItem;
 class ChatWindow;
 

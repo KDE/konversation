@@ -9,12 +9,14 @@
   copyright: (C) 2004 by Peter Simonsson
   email:     psn@linux.se
 */
+
 #ifndef KONVERSATIONSERVERGROUPDIALOG_H
 #define KONVERSATIONSERVERGROUPDIALOG_H
 
+#include "servergroupsettings.h"
+
 #include <kdialogbase.h>
 
-#include "servergroupsettings.h"
 
 class QLineEdit;
 class QComboBox;

@@ -15,12 +15,15 @@
 #ifndef KONVERSATIONNICKLISTTOOLTIP_H
 #define KONVERSATIONNICKLISTTOOLTIP_H
 
-#include <klocale.h>
-#include <qtooltip.h>
 #include "addressbook.h"
+
+#include <qtooltip.h>
 #include <qwidget.h>
 #include <qpoint.h>
 #include <qstring.h>
+
+#include <klocale.h>
+
 
 class NickListView;
 

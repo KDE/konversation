@@ -9,16 +9,18 @@
   copyright: (C) 2004 by Peter Simonsson
   email:     psn@linux.se
 */
+
 #ifndef KONVERSATIONSERVERGROUPSETTINGS_H
 #define KONVERSATIONSERVERGROUPSETTINGS_H
+
+#include "serversettings.h"
+#include "identity.h"
 
 #include <qvaluelist.h>
 #include <qstringlist.h>
 
 #include <ksharedptr.h>
 
-#include "serversettings.h"
-#include "identity.h"
 
 namespace Konversation
 {

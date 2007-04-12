@@ -13,15 +13,14 @@
 #ifndef KONVERSATIONHIGHLIGHT_CONFIG_H
 #define KONVERSATIONHIGHLIGHT_CONFIG_H
 
-#include <qobject.h>
 #include "highlight_preferencesui.h"
 #include "konvisettingspage.h"
 
-class Highlight_Config;
+#include <qobject.h>
 
-/**
-  @author Dario Abatianni
-*/
+
+class Highlight_Config;
+class Highlight;
 
 class Highlight_Config : public Highlight_ConfigUI, public KonviSettingsPage
 {

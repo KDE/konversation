@@ -12,13 +12,14 @@
   email:     eisfuchs@tigress.com
 */
 
+#include "dccrecipientdialog.h"
+
 #include <qlayout.h>
 
 #include <klineedit.h>
 #include <klocale.h>
 #include <kdebug.h>
 
-#include "dccrecipientdialog.h"
 
 QString DccRecipientDialog::selectedNickname;     // static
 

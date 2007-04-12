@@ -16,9 +16,6 @@
 
 #include <qpushbutton.h>
 
-/*
-  @author Dario Abatianni
-*/
 
 class ModeButton : public QPushButton
 {

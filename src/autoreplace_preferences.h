@@ -16,9 +16,6 @@
 #include "autoreplace_preferencesui.h"
 #include "konvisettingspage.h"
 
-/**
-  @author Dario Abatianni <eisfuchs@tigress.com>
-*/
 
 class Autoreplace_Config : public Autoreplace_ConfigUI, public KonviSettingsPage
 {

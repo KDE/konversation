@@ -13,7 +13,9 @@
 #define KONSOLE_PANEL_H
 
 #include "chatwindow.h"
+
 #include <kparts/part.h>
+
 
 class KonsolePanel : public ChatWindow
 {

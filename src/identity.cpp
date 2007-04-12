@@ -12,14 +12,14 @@
   email: eisfuchs@tigress.com
 */
 
+#include "identity.h"
+#include "irccharsets.h"
+
 #include <qtextcodec.h>
 
 #include <kdebug.h>
 #include <kglobal.h>
 
-#include "irccharsets.h"
-
-#include "identity.h"
 
 int Identity::s_availableId = 0;
 

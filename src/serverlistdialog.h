@@ -13,10 +13,11 @@
 #ifndef KONVERSATIONSERVERLISTDIALOG_H
 #define KONVERSATIONSERVERLISTDIALOG_H
 
+#include "serverlistview.h"
+#include "servergroupsettings.h"
+
 #include <kdialogbase.h>
 
-#include <serverlistview.h>
-#include "servergroupsettings.h"
 
 class Preferences;
 class QPushButton;

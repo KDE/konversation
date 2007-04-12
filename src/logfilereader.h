@@ -19,9 +19,6 @@
 
 #include <kio/job.h>
 
-/*
-  @author Dario Abatianni
-*/
 
 class KToolBar;
 class QSpinBox;

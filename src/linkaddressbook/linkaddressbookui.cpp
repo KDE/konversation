@@ -20,31 +20,32 @@ Kopete    (c) 2002-2004 by the Kopete developers  <kopete-devel@kde.org>
 *                                                                       *
 *************************************************************************
 */
-#include <qcheckbox.h>
-#include <kapplication.h>
-#include <kconfig.h>
-#include <klocale.h>
-#include <kiconloader.h>
-
-#include <kdeversion.h>
-#include <kinputdialog.h>
-
-#include <kpushbutton.h>
-#include <kactivelabel.h>
-#include <kdebug.h>
-#include <klistview.h>
-#include <klistviewsearchline.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qtooltip.h>
-#include <qwhatsthis.h>
-#include <kabc/addressbook.h>
-#include <kabc/stdaddressbook.h>
 
 #include "linkaddressbookui.h"
 #include "addressbook.h"
 #include "linkaddressbookui_base.h"
 #include "addresseeitem.h"
+
+#include <qcheckbox.h>
+#include <qlabel.h>
+#include <qlayout.h>
+#include <qtooltip.h>
+#include <qwhatsthis.h>
+
+#include <kapplication.h>
+#include <kconfig.h>
+#include <klocale.h>
+#include <kiconloader.h>
+#include <kdeversion.h>
+#include <kinputdialog.h>
+#include <kpushbutton.h>
+#include <kactivelabel.h>
+#include <kdebug.h>
+#include <klistview.h>
+#include <klistviewsearchline.h>
+#include <kabc/addressbook.h>
+#include <kabc/stdaddressbook.h>
+
 
 LinkAddressbookUI::LinkAddressbookUI( QWidget *parent, const char *name, const QString &ircnick, const QString &servername, const QString &servergroup, const QString &suggested_realname )
 : KDialogBase(Plain, i18n("Link IRC Nick to Addressbook Contact"), Ok|Cancel|Help, Ok, parent, name)

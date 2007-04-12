@@ -19,7 +19,9 @@ Copyright (C) 2002 Carsten Pfeiffer <pfeiffer@kde.org>
 */
 
 #include <qobject.h>
+
 #include <kbookmarkmenu.h>
+
 
 class QString;
 class KBookmark;

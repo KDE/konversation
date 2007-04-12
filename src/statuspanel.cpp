@@ -10,6 +10,14 @@
   Copyright (C) 2006 Eike Hein <hein@kde.org>
 */
 
+#include "statuspanel.h"
+#include "channel.h"
+#include "konversationapplication.h"
+#include "ircinput.h"
+#include "ircview.h"
+#include "ircviewbox.h"
+#include "server.h"
+
 #include <qpushbutton.h>
 #include <qcombobox.h>
 #include <qlabel.h>
@@ -21,13 +29,6 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 
-#include "channel.h"
-#include "statuspanel.h"
-#include "konversationapplication.h"
-#include "ircinput.h"
-#include "ircview.h"
-#include "ircviewbox.h"
-#include "server.h"
 
 StatusPanel::StatusPanel(QWidget* parent) : ChatWindow(parent)
 {

@@ -13,8 +13,20 @@
   Copyright (C) 2006 Eike Hein <hein@kde.org>
 */
 
-#include <private/qrichtext_p.h>
+#include "ircview.h"
+#include "channel.h"
+#include "dccchat.h"
+#include "konversationapplication.h"
+#include "konversationmainwindow.h"
+#include "viewcontainer.h"
+#include "highlight.h"
+#include "server.h"
+#include "konversationsound.h"
+#include "common.h"
+#include "emoticon.h"
+#include "notificationhandler.h"
 
+#include <private/qrichtext_p.h>
 #include <qstylesheet.h>
 #include <qstringlist.h>
 #include <qregexp.h>
@@ -53,20 +65,8 @@
 #include <kio/job.h>
 #include <kstdaccel.h>
 
-#include "channel.h"
-#include "dccchat.h"
-#include "konversationapplication.h"
-#include "konversationmainwindow.h"
-#include "viewcontainer.h"
-#include "ircview.h"
-#include "highlight.h"
-#include "server.h"
-#include "konversationsound.h"
-#include "common.h"
-#include "emoticon.h"
-#include "notificationhandler.h"
-
 #define KX kdDebug() << __FILE__ << ':' << __LINE__ << ' '
+
 
 struct IRCViewSelectionManager
 {

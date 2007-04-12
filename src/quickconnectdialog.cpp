@@ -12,6 +12,9 @@
   email:     mail@tuxipuxi.de
 */
 
+#include "quickconnectdialog.h"
+#include "konversationapplication.h"
+
 #include <qlayout.h>
 #include <qwhatsthis.h>
 #include <qlabel.h>
@@ -20,8 +23,6 @@
 #include <klineedit.h>
 #include <klocale.h>
 
-#include "quickconnectdialog.h"
-#include "konversationapplication.h"
 
 QuickConnectDialog::QuickConnectDialog(QWidget *parent)
 :KDialogBase(parent, "quickconnect", true, i18n("Quick Connect"),

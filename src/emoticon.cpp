@@ -23,6 +23,7 @@
 #include "konversationapplication.h"
 #include "config/preferences.h"
 
+
 namespace Konversation
 {
 

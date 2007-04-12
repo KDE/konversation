@@ -14,6 +14,7 @@
 
 #include <qvbox.h>
 
+
 class IRCView;
 class SearchBar;
 class Server;

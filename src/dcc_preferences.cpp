@@ -10,11 +10,12 @@
   Copyright (C) 2006 John Tapsell <johnflux@gmail.com>
 */
 
+#include "dcc_preferences.h"
+
 #include <qcombobox.h>
 #include <qlineedit.h>
 #include <klocale.h>
 
-#include "dcc_preferences.h"
 
 DCC_Config::DCC_Config(QWidget *parent, const char* name) :
   DCC_ConfigUI(parent,name)

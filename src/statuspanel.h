@@ -17,9 +17,6 @@
 
 #include <qstring.h>
 
-/*
-  @author Dario Abatianni
-*/
 
 class QPushButton;
 class QCheckBox;

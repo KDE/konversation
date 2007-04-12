@@ -17,9 +17,6 @@
 
 #include "chatwindow.h"
 
-/*
-  @author Dario Abatianni
-*/
 
 class KListView;
 class QListViewItem;

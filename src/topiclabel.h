@@ -16,6 +16,7 @@
 #include <kactivelabel.h>
 #include <klocale.h>
 
+
 class QFontMetrics;
 class Server;
 class KPopupMenu;

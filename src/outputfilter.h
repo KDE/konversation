@@ -16,16 +16,13 @@
 #ifndef OUTPUTFILTER_H
 #define OUTPUTFILTER_H
 
+#include "identity.h"
+
 #include <qobject.h>
 #include <qstring.h>
 #include <kurl.h>
 #include <kio/global.h>
 
-#include "identity.h"
-
-/*
-  @author Dario Abatianni
-*/
 
 class Server;
 class ChatWindow;

@@ -13,6 +13,16 @@
   Copyright (C) 2005-2006 Eike Hein <hein@kde.org>
 */
 
+#include "outputfilter.h"
+#include "konversationapplication.h"
+#include "konversationmainwindow.h"
+#include "ignore.h"
+#include "server.h"
+#include "irccharsets.h"
+#include "linkaddressbook/addressbook.h"
+#include "konviiphelper.h"
+#include "query.h"
+
 #include <qstringlist.h>
 #include <qfile.h>
 #include <qfileinfo.h>
@@ -27,21 +37,11 @@
 #include <kconfig.h>
 #include <kdeversion.h>
 #include <kshell.h>
-
 #include <ksocketaddress.h>
 #include <kresolver.h>
 #include <kreverseresolver.h>
 
-#include "outputfilter.h"
-#include "konversationapplication.h"
-#include "konversationmainwindow.h"
-#include "ignore.h"
-#include "server.h"
-#include "irccharsets.h"
-#include "linkaddressbook/addressbook.h"
-#include "konviiphelper.h"
 
-#include "query.h"
 
 namespace Konversation
 {

@@ -12,11 +12,11 @@
   Copyright (C) 2006 Eike Hein <hein@kde.org>
 */
 
+#include "konviiphelper.h"
+
 #include <qstring.h>
 #include <qstringlist.h>
 #include <kdebug.h>
-
-#include "konviiphelper.h"
 
 
 KonviIpHelper::KonviIpHelper(const QString target)

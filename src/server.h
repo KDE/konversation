@@ -15,6 +15,14 @@
 #ifndef SERVER_H
 #define SERVER_H
 
+#include "channelnick.h"
+#include "inputfilter.h"
+#include "outputfilter.h"
+#include "nickinfo.h"
+#include "sslsocket.h"
+#include "serversettings.h"
+#include "servergroupsettings.h"
+
 #include <qtimer.h>
 #include <qdict.h>
 
@@ -26,13 +34,6 @@
 #include <kbufferedsocket.h>
 #include <kstreamsocket.h>
 
-#include "channelnick.h"
-#include "inputfilter.h"
-#include "outputfilter.h"
-#include "nickinfo.h"
-#include "sslsocket.h"
-#include "serversettings.h"
-#include "servergroupsettings.h"
 
 class Channel;
 class DccTransfer;

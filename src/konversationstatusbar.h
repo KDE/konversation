@@ -14,6 +14,7 @@
 
 #include <qobject.h>
 
+
 class QLabel;
 
 class KonversationMainWindow;

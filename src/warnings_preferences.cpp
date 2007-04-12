@@ -10,14 +10,18 @@
   Copyright (C) 2006 John Tapsell <johnflux@gmail.com>
 */
 
-#include <klocale.h>
-#include <klistview.h>
-#include <qlistview.h>
+
 #include "warnings_preferences.h"
+#include "konviconfigdialog.h"
+
+#include <qlistview.h>
+
+#include <kdebug.h>
 #include <kapplication.h>
 #include <kconfig.h>
-#include "konviconfigdialog.h"
-#include <kdebug.h>
+#include <klocale.h>
+#include <klistview.h>
+
 
 Warnings_Config::Warnings_Config( QWidget* parent, const char* name, WFlags fl )
     : Warnings_ConfigUI( parent, name, fl )

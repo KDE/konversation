@@ -9,12 +9,12 @@
   Copyright (C) 2007 Shintaro Matsuoka <shin@shoegazed.org>
 */
 
-#include <kdebug.h>
-
+#include "dcctransfermanager.h"
 #include "dcctransferrecv.h"
 #include "dcctransfersend.h"
 
-#include "dcctransfermanager.h"
+#include <kdebug.h>
+
 
 DccTransferManager::DccTransferManager( QObject* parent )
     : QObject( parent )

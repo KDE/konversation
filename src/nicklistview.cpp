@@ -12,6 +12,12 @@
   email:     eisfuchs@tigress.com
 */
 
+#include "nicklistview.h"
+#include "konversationapplication.h"
+#include "images.h"
+#include "nicklistviewitem.h"
+#include "linkaddressbook/addressbook.h"
+
 #include <kpopupmenu.h>
 #include <klocale.h>
 #include <kdebug.h>
@@ -21,12 +27,6 @@
 #include <qwhatsthis.h>
 #include <qdragobject.h>
 
-#include "images.h"
-
-#include "konversationapplication.h"
-#include "nicklistview.h"
-#include "nicklistviewitem.h"
-#include "linkaddressbook/addressbook.h"
 
 NickListView::NickListView(QWidget* parent, Channel *chan) :
 KListView(parent)

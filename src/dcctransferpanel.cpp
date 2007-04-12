@@ -12,6 +12,13 @@
 */
 // Copyright (C) 2004-2007 Shintaro Matsuoka <shin@shoegazed.org>
 
+#include "dcctransferpanel.h"
+#include "konversationapplication.h"
+#include "dcctransferdetailedinfopanel.h"
+#include "dcctransfermanager.h"
+#include "dcctransferpanelitem.h"
+#include "dcctransfersend.h"
+
 #include <qhbox.h>
 #include <qheader.h>
 #include <qpushbutton.h>
@@ -31,12 +38,6 @@
 #include <krun.h>
 #include <kapplication.h>
 
-#include "konversationapplication.h"
-#include "dcctransferdetailedinfopanel.h"
-#include "dcctransfermanager.h"
-#include "dcctransferpanel.h"
-#include "dcctransferpanelitem.h"
-#include "dcctransfersend.h"
 
 DccTransferPanel::DccTransferPanel(QWidget* parent) : ChatWindow(parent)
 {

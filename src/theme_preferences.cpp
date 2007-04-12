@@ -11,6 +11,12 @@
   Copyright (C) 2006 John Tapsell <johnflux@gmail.com>
 */
 
+#include "theme_preferences.h"
+#include "preferences_base.h"
+#include "images.h"
+#include "common.h"
+#include "konversationapplication.h"
+
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qhbox.h>
@@ -37,11 +43,6 @@
 
 #include <unistd.h> // unlink()
 
-#include "theme_preferences.h"
-#include "preferences_base.h"
-#include "images.h"
-#include "common.h"
-#include "konversationapplication.h"
 
 using namespace Konversation;
 

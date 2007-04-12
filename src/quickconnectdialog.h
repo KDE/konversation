@@ -17,10 +17,8 @@
 
 #include <kdialogbase.h>
 
-/*
-    @author Michael Goettsche
-*/
 
+class QCheckBox;
 class KLineEdit;
 
 class QuickConnectDialog : public KDialogBase

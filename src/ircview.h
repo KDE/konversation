@@ -14,12 +14,13 @@
   Copyright (C) 2006 Eike Hein <hein@kde.org>
 */
 
+#include "common.h"
+
 #include <qmap.h>
 #include <qfontdatabase.h>
 
 #include <ktextbrowser.h>
 
-#include "common.h"
 
 class QPixmap;
 class QStrList;

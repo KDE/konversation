@@ -10,20 +10,23 @@
   Copyright (C) 2006 John Tapsell <johnflux@gmail.com>
 */
 
+#include "ignore_preferences.h"
+#include "ignorelistviewitem.h"
+#include "ignore.h"
+#include "preferences.h"
+
 #include <klocale.h>
 #include <klistview.h>
 #include <qlistview.h>
 #include <qlineedit.h>
 #include <qheader.h>
-#include "ignore_preferences.h"
-#include "ignorelistviewitem.h"
-#include "ignore.h"
+
 #include <kapplication.h>
 #include <kconfig.h>
 #include <kdebug.h>
 #include <kpushbutton.h>
 #include <qcheckbox.h>
-#include "preferences.h"
+
 
 Ignore_Config::Ignore_Config( QWidget* parent, const char* name, WFlags fl )
     : Ignore_ConfigUI( parent, name, fl )

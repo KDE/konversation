@@ -17,9 +17,6 @@
 
 #include <kdialogbase.h>
 
-/*
-  @author Dario Abatianni
-*/
 
 class KLineEdit;
 

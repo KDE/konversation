@@ -13,17 +13,19 @@
 */
 
 #include "addressbook.h"
-#include <qstringlist.h>
-#include <klocale.h>
 #include "../server.h"
 #include "../konversationapplication.h"
+#include "../konversationmainwindow.h"
+#include "../channel.h"
+
+#include <qstringlist.h>
+
+#include <klocale.h>
+#include <kstringhandler.h>
+#include <krun.h>
 #include <kapplication.h>
 #include <dcopclient.h>
 #include <kmessagebox.h>
-#include "../konversationmainwindow.h"
-#include <kstringhandler.h>
-#include <krun.h>
-#include "../channel.h"
 
 namespace Konversation
 {

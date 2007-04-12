@@ -15,20 +15,15 @@
 #ifndef NICKSONLINE_H
 #define NICKSONLINE_H
 
-// Qt includes.
-#include <qvbox.h>
-#include <qiconset.h>
-#include <qpair.h>
-
-// Konversation includes.
 #include "nickinfo.h"
 #include "nicksonlineitem.h"
 #include "chatwindow.h"
 #include "linkaddressbook/nicksonlinetooltip.h"
-/**
- *  @author Dario Abatianni
- *  @author Gary Cramblitt <garycramblitt@comcast.net>
- */
+
+#include <qvbox.h>
+#include <qiconset.h>
+#include <qpair.h>
+
 
 class KListView;
 class QPushButton;

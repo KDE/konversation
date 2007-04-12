@@ -20,6 +20,7 @@ Copyright (C) 2002 Carsten Pfeiffer <pfeiffer@kde.org>
 
 #include <kbookmarkmanager.h>
 
+
 class QString;
 class KPopupMenu;
 class KonversationMainWindow;

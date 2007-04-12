@@ -14,9 +14,6 @@
 
 #include <kdialogbase.h>
 
-/*
-  @author Dario Abatianni
-*/
 
 class QWidget;
 class MultilineTextEdit;

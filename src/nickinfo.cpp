@@ -12,27 +12,24 @@
   email:     garycramblitt@comcast.net
 */
 
-#include "nickinfo.h"
-
-#include <qtooltip.h>
-#include "server.h"
-#include <klocale.h>
-
-#include "konversationapplication.h"
-#include "linkaddressbook/addressbook.h"
-#include "linkaddressbook/linkaddressbookui.h"
-#include "konversationmainwindow.h"
-#include "viewcontainer.h"
-
-/*
-  @author Gary Cramblitt
-*/
-
 /*
   The NickInfo object is a data container for information about a single nickname.
   It is owned by the Server object and should NOT be deleted by anything other than Server.
   Store a pointer to this with NickInfoPtr
 */
+
+#include "nickinfo.h"
+#include "konversationapplication.h"
+#include "linkaddressbook/addressbook.h"
+#include "linkaddressbook/linkaddressbookui.h"
+#include "konversationmainwindow.h"
+#include "viewcontainer.h"
+#include "server.h"
+
+#include <qtooltip.h>
+
+#include <klocale.h>
+
 
 NickInfo::NickInfo(const QString& nick, Server* server): KShared()
 {

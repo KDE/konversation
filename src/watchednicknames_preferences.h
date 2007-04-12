@@ -16,12 +16,9 @@
 #include "servergroupsettings.h"
 #include "watchednicknames_preferencesui.h"
 
+
 class QListView;
 class QListViewItem;
-
-/**
-  @author Dario Abatianni
-*/
 
 class WatchedNicknames_Config : public WatchedNicknames_ConfigUI, public KonviSettingsPage
 {

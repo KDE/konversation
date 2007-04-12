@@ -8,14 +8,9 @@
   (at your option) any later version.
 */
 
+#include "irccharsets.h"
+
 #include <qglobal.h>
-
-#if QT_VERSION < 0x030300
-#include <klocale.h>
-#else
-#include <qlocale.h>
-#endif
-
 #include <qregexp.h>
 #include <qtextcodec.h>
 #include <kcharsets.h>
@@ -23,7 +18,12 @@
 #include <kglobal.h>
 #include <kstaticdeleter.h>
 
-#include "irccharsets.h"
+#if QT_VERSION < 0x030300
+#include <klocale.h>
+#else
+#include <qlocale.h>
+#endif
+
 
 namespace Konversation
 {

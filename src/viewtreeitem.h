@@ -12,12 +12,14 @@
 #ifndef VIEWTREEITEM_H
 #define VIEWTREEITEM_H
 
+#include "chatwindow.h"
+
 #include <qobject.h>
 #include <qlistview.h>
 #include <qtooltip.h>
 #include <qguardedptr.h>
+#include <qpixmap.h>
 
-#include "chatwindow.h"
 
 class ChatWindow;
 class Images;

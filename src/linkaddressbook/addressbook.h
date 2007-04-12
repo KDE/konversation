@@ -21,7 +21,7 @@
 #include <kstaticdeleter.h>
 #include <qobject.h>
 #include <qregexp.h>
-#include "config.h"
+#include <config.h>
 #include "kimiface.h"
 
 #include "../images.h"

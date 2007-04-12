@@ -10,6 +10,12 @@
   Copyright (C) 2006 John Tapsell <johnflux@gmail.com>
 */
 
+#include "highlight_preferences.h"
+#include "highlightviewitem.h"
+#include "konversationapplication.h"
+#include "konversationsound.h"
+#include "config/preferences.h"
+
 #include <qdir.h>
 #include <qlabel.h>
 #include <qheader.h>
@@ -28,12 +34,6 @@
 #include <kregexpeditorinterface.h>
 #include <kiconloader.h>
 
-#include "config/preferences.h"
-
-#include "highlight_preferences.h"
-#include "highlightviewitem.h"
-#include "konversationapplication.h"
-#include "konversationsound.h"
 
 Highlight_Config::Highlight_Config(QWidget* parent, const char* name)
  : Highlight_ConfigUI(parent,name)

@@ -11,6 +11,26 @@
   Copyright (C) 2006 Eike Hein <hein@kde.org>
 */
 
+#include "channel.h"
+#include "konversationapplication.h"
+#include "server.h"
+#include "nick.h"
+#include "nicklistview.h"
+#include "nicklistviewitem.h"
+#include "quickbutton.h"
+#include "modebutton.h"
+#include "ircinput.h"
+#include "ircviewbox.h"
+#include "ircview.h"
+#include <kabc/addressbook.h>
+#include <kabc/stdaddressbook.h>
+#include "common.h"
+#include "topiclabel.h"
+#include "channeloptionsdialog.h"
+#include "notificationhandler.h"
+#include "linkaddressbook/linkaddressbookui.h"
+#include "linkaddressbook/addressbook.h"
+
 #include <qlabel.h>
 #include <qvbox.h>
 #include <qevent.h>
@@ -43,26 +63,6 @@
 #include <kiconloader.h>
 #include <kwin.h>
 
-#include "konversationapplication.h"
-#include "channel.h"
-#include "server.h"
-#include "nick.h"
-#include "nicklistview.h"
-#include "nicklistviewitem.h"
-#include "quickbutton.h"
-#include "modebutton.h"
-#include "ircinput.h"
-#include "ircviewbox.h"
-#include "ircview.h"
-#include <kabc/addressbook.h>
-#include <kabc/stdaddressbook.h>
-#include "common.h"
-#include "topiclabel.h"
-#include "channeloptionsdialog.h"
-#include "notificationhandler.h"
-
-#include "linkaddressbook/linkaddressbookui.h"
-#include "linkaddressbook/addressbook.h"
 
 Channel::Channel(QWidget* parent) : ChatWindow(parent), key(" ")
 {

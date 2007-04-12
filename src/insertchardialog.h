@@ -14,6 +14,7 @@
 
 #include <kdialogbase.h>
 
+
 class KCharSelect;
 class QChar;
 

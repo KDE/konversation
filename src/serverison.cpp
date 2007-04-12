@@ -15,20 +15,19 @@
   email:     john@geola.co.uk
 */
 
-// Qt includes.
+#include "serverison.h"
+#include "server.h"
+#include "addressbook.h"
+#include "konversationapplication.h"
+#include "nickinfo.h"
+#include "viewcontainer.h"
+
 #include <qmap.h>
 #include <qstring.h>
 #include <qstringlist.h>
 #include <kabc/addressbook.h>
 #include <kabc/stdaddressbook.h>
 
-// Konversation includes.
-#include "server.h"
-#include "serverison.h"
-#include "addressbook.h"
-#include "konversationapplication.h"
-#include "nickinfo.h"
-#include "viewcontainer.h"
 
 ServerISON::ServerISON(Server* server) : m_server(server)
 {

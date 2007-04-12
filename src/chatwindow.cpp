@@ -10,6 +10,13 @@
   Copyright (C) 2006 Eike Hein <hein@kde.org>
 */
 
+#include "chatwindow.h"
+#include "channel.h"
+#include "ircview.h"
+#include "server.h"
+#include "konversationapplication.h"
+#include "logfilereader.h"
+
 #include <qdatetime.h>
 #include <qdir.h>
 #include <qregexp.h>
@@ -23,12 +30,6 @@
 #include <kactioncollection.h>
 #include <kaction.h>
 
-#include "channel.h"
-#include "chatwindow.h"
-#include "ircview.h"
-#include "server.h"
-#include "konversationapplication.h"
-#include "logfilereader.h"
 
 ChatWindow::ChatWindow(QWidget* parent) : QVBox(parent)
 {

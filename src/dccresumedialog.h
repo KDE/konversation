@@ -15,9 +15,6 @@
 
 #include <kdialogbase.h>
 
-/*
-  @author Dario Abatianni
-*/
 
 class KURLRequester;
 class DccTransferRecv;

@@ -9,13 +9,14 @@
   Copyright (C) 2003 Mickael Marchand <marchand@kde.org>
 */
 
+#include "konsolepanel.h"
+#include "common.h"
+#include "viewcontainer.h"
+
 #include <kdebug.h>
 #include <klibloader.h>
 #include <klocale.h>
 
-#include "konsolepanel.h"
-#include "common.h"
-#include "viewcontainer.h"
 
 KonsolePanel::KonsolePanel(QWidget *p) : ChatWindow( p )
 {

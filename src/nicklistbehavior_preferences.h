@@ -13,13 +13,11 @@
 #ifndef NICKLISTBEHAVIOR_Config_H
 #define NICKLISTBEHAVIOR_Config_H
 
-#include <qobject.h>
 #include "konvisettingspage.h"
 #include "nicklistbehavior_preferencesui.h"
 
-/**
-  @author Dario Abatianni <eisfuchs@tigress.com>
- */
+#include <qobject.h>
+
 
 class NicklistBehavior_Config : public NicklistBehavior_ConfigUI, public KonviSettingsPage
 {

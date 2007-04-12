@@ -11,6 +11,18 @@
   Copyright (C) 2004,2007 Shintaro Matsuoka <shin@shoegazed.org>
 */
 
+#include "dccchat.h"
+#include "dcccommon.h"
+#include "konversationapplication.h"
+#include "konversationmainwindow.h"
+#include "irccharsets.h"
+#include "ircview.h"
+#include "ircviewbox.h"
+#include "ircinput.h"
+#include "topiclabel.h"
+#include "server.h"
+#include "channel.h"
+
 #include <stdlib.h>
 #include <sys/types.h>
 #include <netinet/in.h>
@@ -30,19 +42,8 @@
 #include <kstreamsocket.h>
 #include <kaction.h>
 
-#include "dcccommon.h"
-#include "konversationapplication.h"
-#include "konversationmainwindow.h"
-#include "irccharsets.h"
-#include "ircview.h"
-#include "ircviewbox.h"
-#include "ircinput.h"
-#include "dccchat.h"
-#include "topiclabel.h"
-#include "server.h"
-#include "channel.h"
-
 #define DCCCHAT_BUFFER_SIZE 1024
+
 
 DccChat::DccChat(QWidget* parent, bool listen, Server* server, const QString& ownNick, const QString& partnerNick, const QString& partnerHost, int partnerPort)
     : ChatWindow(parent)

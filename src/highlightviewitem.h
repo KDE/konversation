@@ -16,16 +16,13 @@
 #ifndef HIGHLIGHTVIEWITEM_H
 #define HIGHLIGHTVIEWITEM_H
 
-#include <qlistview.h>
-
 #include "highlight.h"
 
-/**
- *@author Matthias Gierlings
- */
+#include <qlistview.h>
+
 
 class KURL;
-class KListVIew;
+class KListView;
 
 class HighlightViewItem : public QCheckListItem
 {

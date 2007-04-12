@@ -15,12 +15,9 @@
 #ifndef DCCTRANSFERPANEL_H
 #define DCCTRANSFERPANEL_H
 
-/*
-  @author Dario Abatianni
-*/
-
 #include "chatwindow.h"
 #include "dcctransferpanelitem.h"
+
 
 class QContextMenuEvent;
 class QPushButton;

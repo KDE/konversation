@@ -16,6 +16,10 @@
 #ifndef PREFERENCES_H
 #define PREFERENCES_H
 
+#include "servergroupsettings.h"
+#include "identity.h"
+#include "preferences_base.h"
+
 #include <qobject.h>
 #include <qptrlist.h>
 #include <qsize.h>
@@ -27,13 +31,6 @@
 
 #include <kdeversion.h>
 
-#include "servergroupsettings.h"
-#include "identity.h"
-#include "preferences_base.h"
-
-/*
-  @author Dario Abatianni
-*/
 
 /*
 Options still to be GUIfied:

@@ -14,14 +14,11 @@
 #ifndef INPUTFILTER_H
 #define INPUTFILTER_H
 
+#include "ignore.h"
+
 #include <qobject.h>
 #include <qstringlist.h>
 
-#include "ignore.h"
-
-/*
-  @author Dario Abatianni
-*/
 
 class Server;
 class QWidget;

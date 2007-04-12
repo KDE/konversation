@@ -17,6 +17,7 @@
 
 #include <kdialogbase.h>
 
+
 class IRCColorChooserUI;
 class KComboBox;
 class Preferences;

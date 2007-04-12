@@ -16,6 +16,7 @@
 
 #include <qobject.h>
 
+
 class KURL;
 
 namespace Konversation

@@ -11,6 +11,9 @@
 */
 
 #include "serverlistdialog.h"
+#include "preferences.h"
+#include "konversationapplication.h"
+#include "servergroupdialog.h"
 
 #include <qpushbutton.h>
 #include <qframe.h>
@@ -24,9 +27,6 @@
 #include <kguiitem.h>
 #include <kmessagebox.h>
 
-#include "preferences.h"
-#include "konversationapplication.h"
-#include "servergroupdialog.h"
 
 namespace Konversation
 {

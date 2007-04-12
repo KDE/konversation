@@ -18,10 +18,11 @@
 #ifndef DCCTRANSFERMANAGER_H
 #define DCCTRANSFERMANAGER_H
 
+#include "dcctransfer.h"
+
 #include <qobject.h>
 #include <qvaluelist.h>
 
-#include "dcctransfer.h"
 
 class KURL;
 

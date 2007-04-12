@@ -10,6 +10,10 @@
 */
 
 #include "joinchanneldialog.h"
+#include "joinchannelui.h"
+#include "server.h"
+#include "channel.h"
+#include "servergroupsettings.h"
 
 #include <qlabel.h>
 
@@ -17,10 +21,6 @@
 #include <kcombobox.h>
 #include <klineedit.h>
 
-#include "joinchannelui.h"
-#include "server.h"
-#include "channel.h"
-#include "servergroupsettings.h"
 
 namespace Konversation
 {

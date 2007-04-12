@@ -19,9 +19,6 @@
 
 #include <ktextedit.h>
 
-/*
-  @author Dario Abatianni
-*/
 
 class KCompletionBox;
 class QMouseEvent;

@@ -9,6 +9,13 @@
   Copyright (C) 2006 Dario Abatianni <eisfuchs@tigress.com>
 */
 
+#include "watchednicknames_preferences.h"
+#include "watchednicknames_preferencesui.h"
+#include "config/preferences.h"
+#include "konversationapplication.h"
+#include "konversationmainwindow.h"
+#include "valuelistviewitem.h"
+
 #include <qlabel.h>
 #include <qcombobox.h>
 #include <qcheckbox.h>
@@ -20,13 +27,6 @@
 #include <klocale.h>
 #include <kdebug.h>
 
-#include "config/preferences.h"
-#include "konversationapplication.h"
-#include "konversationmainwindow.h"
-#include "valuelistviewitem.h"
-
-#include "watchednicknames_preferences.h"
-#include "watchednicknames_preferencesui.h"
 
 WatchedNicknames_Config::WatchedNicknames_Config(QWidget *parent, const char *name)
  : WatchedNicknames_ConfigUI(parent, name)

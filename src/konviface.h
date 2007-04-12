@@ -13,12 +13,13 @@
 #ifndef KONV_IFACE_H
 #define KONV_IFACE_H
 
+#include "ignore.h"
+
 #include <qobject.h>
 #include <qstringlist.h>
 
 #include <dcopobject.h>
 
-#include "ignore.h"
 
 class KonvIface : virtual public DCOPObject
 {

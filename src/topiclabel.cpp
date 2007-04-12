@@ -11,6 +11,10 @@
 */
 
 #include "topiclabel.h"
+#include "konversationapplication.h"
+#include "server.h"
+#include "common.h"
+#include "channel.h"
 
 #include <qsimplerichtext.h>
 #include <qtooltip.h>
@@ -26,13 +30,8 @@
 #include <kpopupmenu.h>
 #include <kiconloader.h>
 #include <kbookmarkmanager.h>
-
-#include "konversationapplication.h"
-#include "server.h"
-#include "common.h"
-#include "channel.h"
-
 #include <kdeversion.h>
+
 
 namespace Konversation
 {

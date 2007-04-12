@@ -48,6 +48,7 @@
 #include <qvbox.h>
 #include <qmap.h>
 
+
 QAsciiDict<KonviConfigDialog> KonviConfigDialog::openDialogs;
 
 // This class is here purly so we don't break binary compatibility down the road.

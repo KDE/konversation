@@ -25,6 +25,7 @@
 #include <kurl.h>
 #include <kio/global.h>
 
+
 class DccTransfer : public QObject
 {
     Q_OBJECT

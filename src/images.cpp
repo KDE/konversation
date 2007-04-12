@@ -10,6 +10,10 @@
   Copyright (C) 2005-2006 Eike Hein <hein@kde.org>
 */
 
+#include "images.h"
+#include "common.h"
+#include "konversationapplication.h"
+
 #include <qbitmap.h>
 #include <qpainter.h>
 #include <qstringlist.h>
@@ -18,9 +22,6 @@
 #include <kiconloader.h>
 #include <kstandarddirs.h>
 
-#include "images.h"
-#include "common.h"
-#include "konversationapplication.h"
 
 using namespace Konversation;
 

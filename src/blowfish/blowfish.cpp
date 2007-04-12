@@ -9,13 +9,14 @@
   Copyright (C) 2005 İsmail Dönmez <ismail@kde.org>
 */
 
-#include <qcstring.h>
-#include <qstringlist.h>
-
 #include "blowfish.h"
 #include "mc_blowfish.h"
 #include "server.h"
 #include "channel.h"
+
+#include <qcstring.h>
+#include <qstringlist.h>
+
 
 namespace Konversation
 {

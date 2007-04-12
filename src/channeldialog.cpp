@@ -8,6 +8,9 @@
   email:     psn@linux.se
 */
 
+#include "channeldialog.h"
+#include "servergroupsettings.h"
+
 #include <qlayout.h>
 #include <qframe.h>
 #include <qlabel.h>
@@ -16,8 +19,6 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 
-#include "channeldialog.h"
-#include "servergroupsettings.h"
 
 namespace Konversation
 {

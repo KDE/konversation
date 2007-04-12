@@ -12,12 +12,13 @@
 #ifndef VIEWCONTAINER_H
 #define VIEWCONTAINER_H
 
-#include <qobject.h>
-#include <qguardedptr.h>
-
 #include "konversationmainwindow.h"
 #include "common.h"
 #include "server.h"
+
+#include <qobject.h>
+#include <qguardedptr.h>
+
 
 class QSplitter;
 

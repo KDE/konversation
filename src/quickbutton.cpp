@@ -13,6 +13,7 @@
 
 #include "quickbutton.h"
 
+
 QuickButton::QuickButton(const QString &label,const QString &newDefinition,QWidget* parent) :
 QPushButton::QPushButton(label,parent)
 {

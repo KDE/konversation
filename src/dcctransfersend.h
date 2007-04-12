@@ -17,9 +17,10 @@
 #ifndef DCCTRANSFERSEND_H
 #define DCCTRANSFERSEND_H
 
+#include "dcctransfer.h"
+
 #include <qfile.h>
 
-#include "dcctransfer.h"
 
 class QTimer;
 

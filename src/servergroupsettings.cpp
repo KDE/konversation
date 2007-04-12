@@ -9,9 +9,10 @@
   copyright: (C) 2004 by Peter Simonsson
   email:     psn@linux.se
 */
-#include "servergroupsettings.h"
 
+#include "servergroupsettings.h"
 #include "konversationapplication.h"
+
 
 namespace Konversation
 {

@@ -16,15 +16,15 @@ Copyright (C) 2002 Carsten Pfeiffer <pfeiffer@kde.org>
 */
 
 #include "konvibookmarkhandler.h"
+#include "konversationapplication.h"
+#include "konversationmainwindow.h"
+#include "konvibookmarkmenu.h"
 
 #include <qstring.h>
 
 #include <kpopupmenu.h>
 #include <kstandarddirs.h>
 
-#include "konversationapplication.h"
-#include "konversationmainwindow.h"
-#include "konvibookmarkmenu.h"
 
 KonviBookmarkHandler::KonviBookmarkHandler(KonversationMainWindow* mainWindow)
 : QObject( mainWindow, "KonviBookmarkHandler" ),

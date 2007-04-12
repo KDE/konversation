@@ -16,6 +16,8 @@ License along with this library; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
+#include "addresseeitem.h"
+
 #include <qlayout.h>
 #include <qpushbutton.h>
 #include <qgroupbox.h>
@@ -24,7 +26,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #include <klocale.h>
 #include <kdebug.h>
 
-#include "addresseeitem.h"
 
 AddresseeItem::AddresseeItem( QListView *parent, const KABC::Addressee &addressee) :
 KListViewItem( parent ),

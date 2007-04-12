@@ -41,10 +41,11 @@
 //    Implementation of Bruce Schneier's BLOWFISH algorithm from "Applied 
 //    Cryptography", Second Edition.
 
+#include "BlowfishCbc.h"
+
 #include <cstring>
 #include <memory.h>
 
-#include "BlowfishCbc.h"
 //#include <exception>
 
 //Initialization with a fixed string which consists of the hexadecimal digits of PI (less the initial 3)

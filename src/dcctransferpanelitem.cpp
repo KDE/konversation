@@ -13,6 +13,11 @@
   (at your option) any later version.
 */
 
+#include "dcctransferpanelitem.h"
+#include "dcctransferpanel.h"
+#include "konversationapplication.h"
+#include "config/preferences.h"
+
 #include <qheader.h>
 #include <qhostaddress.h>
 #include <qstyle.h>
@@ -28,10 +33,6 @@
 #include <kprogress.h>
 #include <krun.h>
 
-#include "dcctransferpanel.h"
-#include "dcctransferpanelitem.h"
-#include "konversationapplication.h"
-#include "config/preferences.h"
 
 DccTransferPanelItem::DccTransferPanelItem( DccTransferPanel* panel, DccTransfer* transfer )
     : KListViewItem( panel->getListView() )

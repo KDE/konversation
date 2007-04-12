@@ -14,6 +14,13 @@
   (at your option) any later version.
 */
 
+#include "dcctransfersend.h"
+#include "channel.h"
+#include "dcccommon.h"
+#include "dcctransfermanager.h"
+#include "konversationapplication.h"
+#include "server.h"
+
 #include <stdlib.h>
 #include <sys/types.h>
 #include <netinet/in.h>
@@ -33,16 +40,9 @@
 #include <kio/netaccess.h>
 #include <kfileitem.h>
 
-#include "channel.h"
-#include "dcccommon.h"
-#include "dcctransfermanager.h"
-#include "konversationapplication.h"
-#include "server.h"
-
-#include "dcctransfersend.h"
-
 // TODO: remove the dependence
 #include <kinputdialog.h>
+
 
 using namespace KNetwork;
 

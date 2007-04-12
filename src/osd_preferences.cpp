@@ -27,6 +27,7 @@
 
 #include <kconfigdialog.h>
 
+
 OSD_Config::OSD_Config( QWidget* parent, const char* name, WFlags fl )
     : OSD_ConfigUI( parent, name, fl )
 {

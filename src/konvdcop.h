@@ -15,11 +15,12 @@
 #ifndef KONV_DCOP_H
 #define KONV_DCOP_H
 
+#include "konviface.h"
+
 #include <qobject.h>
 #include <dcopobject.h>
 #include <qptrlist.h>
 
-#include "konviface.h"
 
 class KonvDCOP : public QObject, virtual public KonvIface
 {

@@ -35,6 +35,7 @@
 #define WHOLE_WORDS_ONLY_MENU 3
 #define FROM_CURSOR_MENU 4
 
+
 SearchBar::SearchBar(QWidget* parent)
 : SearchBarBase(parent)
 {

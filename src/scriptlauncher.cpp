@@ -10,6 +10,11 @@
   Copyright (C) 2004 Peter Simonsson <psn@linux.se>
 */
 
+#include "scriptlauncher.h"
+#include "channel.h"
+#include "konversationapplication.h"
+#include "server.h"
+
 #include <qstringlist.h>
 #include <qfile.h>
 #include <qfileinfo.h>
@@ -19,10 +24,6 @@
 #include <kprocess.h>
 #include <dcopclient.h>
 
-#include "channel.h"
-#include "scriptlauncher.h"
-#include "konversationapplication.h"
-#include "server.h"
 
 ScriptLauncher::ScriptLauncher(Server* server)
 : QObject(server)

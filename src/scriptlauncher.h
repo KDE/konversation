@@ -15,9 +15,6 @@
 #ifndef SCRIPTLAUNCHER_H
 #define SCRIPTLAUNCHER_H
 
-/*
-  @author Dario Abatianni
-*/
 
 class Server;
 
