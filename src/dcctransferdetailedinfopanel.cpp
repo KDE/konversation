@@ -62,7 +62,10 @@ void DccTransferDetailedInfoPanel::updateView()
     DccTransfer* transfer = m_item->transfer();
 
     // Type:
-    m_labelDccType->setText( transfer->getType() == DccTransfer::Send ? i18n( "DCC Send" ) : i18n( "DCC Receive" ) );
+    QString type( transfer->getType() == DccTransfer::Send ? i18n( "DCC Send" ) : i18n( "DCC Receive" ) );
+    if ( transfer->isReverse() )
+        type += i18n( " (Reverse DCC)" );
+    m_labelDccType->setText( type );
 
     // Filename:
     m_labelFilename->setText( transfer->getFileName() );
