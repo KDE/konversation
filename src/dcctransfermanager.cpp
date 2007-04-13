@@ -72,8 +72,8 @@ DccTransferRecv* DccTransferManager::resumeDownload( int serverGroupId, const QS
              (*it)->getFileName() == fileName &&
              (*it)->isResumed() )
         {
-            kdDebug() << "DccTransferManager::resumeDownload(): filename match: " << fileName << ", claimed port: " << ownPort << ", item port: " << transfer->getOwnPort() << endl;
             transfer = (*it);
+            kdDebug() << "DccTransferManager::resumeDownload(): filename match: " << fileName << ", claimed port: " << ownPort << ", item port: " << transfer->getOwnPort() << endl;
             // the port number can be changed behind NAT, so we pick an item which only the filename is correspondent in that case.
             if ( transfer->getOwnPort() == ownPort )
             {
@@ -102,8 +102,8 @@ DccTransferSend* DccTransferManager::resumeUpload( int serverGroupId, const QStr
              (*it)->getFileName() == fileName &&
              !(*it)->isResumed() )
         {
-            kdDebug() << "DccTransferManager::resumeUpload(): filename match: " << fileName << ", claimed port: " << ownPort << ", item port: " << transfer->getOwnPort() << endl;
             transfer = (*it);
+            kdDebug() << "DccTransferManager::resumeUpload(): filename match: " << fileName << ", claimed port: " << ownPort << ", item port: " << transfer->getOwnPort() << endl;
             // the port number can be changed behind NAT, so we pick an item which only the filename is correspondent in that case.
             if ( transfer->getOwnPort() == ownPort )
             {
