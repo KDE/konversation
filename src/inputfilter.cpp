@@ -276,32 +276,70 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
 
                     if(dccType=="send")
                     {
-                        if(dccArgumentList.count()==5)
-                        {
-                            // the receiver accepted the offer on Reverse DCC
-                            emit startReverseDccSendTransfer(sourceNick,dccArgumentList);
-                        }
-                        else  // dccArgumentList.count() must be 4..
+                        if(dccArgumentList.count()==4)
                         {
                             // incoming file
                             konv_app->notificationHandler()->dccIncoming(server->getStatusView(), sourceNick);
                             emit addDccGet(sourceNick,dccArgumentList);
                         }
+                        else if(dccArgumentList.count()==5)
+                        {
+                            // the receiver accepted the offer on Reverse DCC
+                            emit startReverseDccSendTransfer(sourceNick,dccArgumentList);
+                        }
+                        else
+                        {
+                            server->appendMessageToFrontmost(i18n("DCC"),
+                                i18n("Received invalid DCC SEND request from %1")
+                                .arg(sourceNick)
+                                );
+                        }
                     }
-                    // Incoming file that shall be resumed?
                     else if(dccType=="accept")
                     {
-                        emit resumeDccGetTransfer(sourceNick,dccArgumentList);
+                        // resume request was accepted
+                        if(dccArgumentList.count()==3)
+                        {
+                            emit resumeDccGetTransfer(sourceNick,dccArgumentList);
+                        }
+                        else
+                        {
+                            server->appendMessageToFrontmost(i18n("DCC"),
+                                i18n("Received invalid DCC ACCEPT request from %1")
+                                .arg(sourceNick)
+                                );
+                        }
                     }
                     // Remote client wants our sent file resumed
                     else if(dccType=="resume")
                     {
-                        emit resumeDccSendTransfer(sourceNick,dccArgumentList);
+                        if(dccArgumentList.count()==3)
+                        {
+                            emit resumeDccSendTransfer(sourceNick,dccArgumentList);
+                        }
+                        else
+                        {
+                            server->appendMessageToFrontmost(i18n("DCC"),
+                                i18n("Received invalid DCC RESUME request from %1")
+                                .arg(sourceNick)
+                                );
+                        }
                     }
                     else if(dccType=="chat")
                     {
-                        // will be connected via Server to KonversationMainWindow::addDccChat()
-                        emit addDccChat(server->getNickname(),sourceNick,dccArgumentList,false);
+
+                        if(dccArgumentList.count()==3)
+                        {
+                            // will be connected via Server to KonversationMainWindow::addDccChat()
+                            emit addDccChat(server->getNickname(),sourceNick,dccArgumentList,false);
+                        }
+                        else
+                        {
+                            server->appendMessageToFrontmost(i18n("DCC"),
+                                i18n("Received invalid DCC CHAT request from %1")
+                                .arg(sourceNick)
+                                );
+                        }
                     }
                     else
                     {
