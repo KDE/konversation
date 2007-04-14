@@ -78,7 +78,7 @@ namespace Konversation
                 pos += chanExp.cap(1).length();
 
                 // HACK:Use space as a placeholder for \ as Qt tries to be clever and does a replace to / in urls in QTextEdit
-                insertText = link.arg(QString(href).stripWhiteSpace().replace('\\', " "), href);
+                insertText = link.arg(QString(href).replace('\\', " "), href);
                 filteredLine.replace(pos, urlLen, insertText);
                 pos += insertText.length();
             }
