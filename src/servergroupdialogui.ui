@@ -32,7 +32,7 @@
                 </sizepolicy>
             </property>
             <property name="text">
-                <string>Network:</string>
+                <string>Network name:</string>
             </property>
         </widget>
         <widget class="QLineEdit" row="0" column="1" rowspan="1" colspan="2">
@@ -98,7 +98,7 @@
                 <cstring>m_autoConnectCBox</cstring>
             </property>
             <property name="text">
-                <string>&amp;Connect on application start up</string>
+                <string>Co&amp;nnect on application start up</string>
             </property>
         </widget>
         <widget class="QGroupBox" row="4" column="0" rowspan="1" colspan="3">
@@ -302,6 +302,8 @@
         </widget>
     </grid>
 </widget>
+<customwidgets>
+</customwidgets>
 <layoutdefaults spacing="6" margin="11"/>
 <layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
 <includehints>
