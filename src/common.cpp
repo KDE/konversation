@@ -73,8 +73,9 @@ namespace Konversation
             QRegExp chanExp("(^|\\s|^\"|\\s\"|,|'|\\(|\\:|!|@|%|\\+)(#[^,\\s;\\)\\:\\/\\(\\<\\>]*[^.,\\s;\\)\\:\\/\\(\"\''\\<\\>])");
             while((pos = chanExp.search(filteredLine, pos)) >= 0)
             {
-                urlLen = chanExp.matchedLength();
-                href = filteredLine.mid( pos, urlLen );
+                href = chanExp.cap(2);
+                urlLen = href.length();
+                pos += chanExp.cap(1).length();
 
                 // HACK:Use space as a placeholder for \ as Qt tries to be clever and does a replace to / in urls in QTextEdit
                 insertText = link.arg(QString(href).stripWhiteSpace().replace('\\', " "), href);
