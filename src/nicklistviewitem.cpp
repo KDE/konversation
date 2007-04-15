@@ -191,15 +191,31 @@ int NickListViewItem::compare(QListViewItem* item,int col,bool ascending) const
     QString thisKey;
     QString otherKey;
 
-    if(Preferences::sortCaseInsensitive())
+    if(col > 1) //the reason we need this: enabling hostnames adds another column
     {
-        thisKey = nick->loweredNickname();
-        otherKey = otherItem->getNick()->loweredNickname();
+        if(Preferences::sortCaseInsensitive())
+        {
+            thisKey = thisKey.lower();
+            otherKey = otherKey.lower();
+        }
+        else
+        {
+            thisKey = key(col, ascending);
+            otherKey = otherItem->key(col, ascending);
+        }
     }
-    else
+    else if(col == 1)
     {
-        thisKey = key(col, ascending);
-        otherKey = otherItem->key(col, ascending);
+        if(Preferences::sortCaseInsensitive())
+        {
+            thisKey = nick->loweredNickname();
+            otherKey = otherItem->getNick()->loweredNickname();
+        }
+        else
+        {
+            thisKey = key(col, ascending);
+            otherKey = otherItem->key(col, ascending);
+        }
     }
 
     return thisKey.compare(otherKey);
