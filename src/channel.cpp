@@ -2618,7 +2618,7 @@ void Channel::appendAction(const QString& nickname, const QString& message, bool
     ChatWindow::appendAction(nickname, message, usenotifications);
 }
 
-void Channel::nickActive(const QString& nickname)
+void Channel::nickActive(const QString& nickname) //FIXME: crashes.
 {
 /*
     getChannelNick(nickname)->moreActive();

@@ -161,6 +161,16 @@ int NickListViewItem::compare(QListViewItem* item,int col,bool ascending) const
         {
             return 1;
         }
+        uint thisTimestamp = nick->getChannelNick()->timeStamp();
+        uint otherTimestamp = otherItem->getNick()->getChannelNick()->timeStamp();
+        if(thisTimestamp > otherTimestamp)
+        {
+            return -1;
+        }
+        if(thisTimestamp < otherTimestamp)
+        {
+            return 1;
+	}
     }
 
     if(Preferences::sortByStatus())
