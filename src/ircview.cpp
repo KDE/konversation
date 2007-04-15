@@ -223,6 +223,7 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent)
     m_findParagraph=0;
     m_findIndex=0;
     m_lastInsertionWasLine = false;
+    m_trimScrollBackRequested = false;
 
     setAutoFormatting(QTextEdit::AutoNone);
     setUndoRedoEnabled(0);
@@ -1135,26 +1136,15 @@ void IRCView::doAppend(const QString& newLine, bool self)
 
     //Explanation: the scrolling mechanism cannot handle the buffer changing when the scrollbar is not
     // at an end, so the scrollbar wets its pants and forgets who it is for ten minutes
-    // TODO: make this eat multiple lines at once when the preference is changed so it doesn't take so long
-    if (doScroll)
+    if (doScroll && !m_trimScrollBackRequested)
     {
         int sbm = Preferences::scrollbackMax();
         if (sbm)
         {
-            getSelection(&paraFrom, &indexFrom, &paraTo, &indexTo); // Remember the selection so we don't loose it when removing lines
-            int numRemoved = 0;
-            //loop for two reasons: 1) preference changed 2) lines added while scrolled up
-            for (sbm = paragraphs() - sbm; sbm > 0; --sbm)
-            {
-                removeParagraph(0);
-                ++numRemoved;
-            }
-            resizeContents(contentsWidth(), document()->height());
-
-            if ((paraFrom - numRemoved) >= 0 && (paraTo - numRemoved) >= 0)
-            {
-                setSelection(paraFrom - numRemoved, indexFrom, paraTo - numRemoved, indexTo);
-            }
+            // Delay the triming of the scroll back buffer so we don't do it for every line in
+            // high traffic channels.
+            QTimer::singleShot(1000, this, SLOT(trimScrollBack()));
+            m_trimScrollBackRequested = true;
         }
     }
 
@@ -1180,6 +1170,43 @@ void IRCView::doAppend(const QString& newLine, bool self)
     }
 
     if (!m_lastStatusText.isEmpty()) emit clearStatusBarTempText();
+}
+
+void IRCView::trimScrollBack()
+{
+    m_trimScrollBackRequested = false;
+    int sbm = Preferences::scrollbackMax();
+
+    if (sbm == 0) return;
+
+    //Explanation: the scrolling mechanism cannot handle the buffer changing when the scrollbar is not
+    // at an end, so the scrollbar wets its pants and forgets who it is for ten minutes
+    if (KTextBrowser::verticalScrollBar()->value() == KTextBrowser::verticalScrollBar()->maxValue())
+    {
+        bool up = KTextBrowser::viewport()->isUpdatesEnabled();
+        KTextBrowser::viewport()->setUpdatesEnabled(false);
+
+        int paraFrom, indexFrom, paraTo, indexTo;
+        getSelection(&paraFrom, &indexFrom, &paraTo, &indexTo); // Remember the selection so we don't loose it when removing lines
+        int numRemoved = 0;
+
+        for (sbm = paragraphs() - sbm; sbm > 0; --sbm)
+        {
+            removeParagraph(0);
+            ++numRemoved;
+        }
+
+        resizeContents(contentsWidth(), document()->height());
+
+        if ((paraFrom - numRemoved) >= 0 && (paraTo - numRemoved) >= 0)
+        {
+            setSelection(paraFrom - numRemoved, indexFrom, paraTo - numRemoved, indexTo);
+        }
+
+        KTextBrowser::viewport()->setUpdatesEnabled(up);
+
+        updateScrollBarPos();
+    }
 }
 
 // remember if scrollbar was positioned at the end of the text or not
