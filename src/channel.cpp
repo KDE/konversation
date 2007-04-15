@@ -291,6 +291,12 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent), key(" ")
     userhostTimer.start(10000);
 
     connect(&m_whoTimer,SIGNAL (timeout()),this,SLOT (autoWho()));
+
+    // every 5 minutes decrease everyone's activity by 1 unit
+    m_fadeActivityTimer.start(5*60*1000);
+    
+    connect(&m_fadeActivityTimer, SIGNAL(timeout()), this, SLOT(fadeActivity()));
+
     // re-schedule when the settings were changed
     connect(Preferences::self(), SIGNAL (autoContinuousWhoChanged()),this,SLOT (scheduleAutoWho()));
 
@@ -2304,6 +2310,16 @@ void Channel::autoWho()
     m_server->requestWho(getName());
 }
 
+void Channel::fadeActivity()
+{
+    QPtrListIterator<Nick> it( nicknameList );
+    Nick *nick;
+    while ( (nick = it.current()) != 0 ) {
+        ++it;
+        nick->getChannelNick()->lessActive();
+    }
+}
+
 QString Channel::getTextInLine()
 {
   return channelInput->text();
@@ -2640,6 +2656,7 @@ void NickList::setCompareMethod(CompareMethod method)
     m_compareMethod = method;
 }
 
+//doesn't the following somehow duplicate NickListViewItem::compare()?
 int NickList::compareItems(QPtrCollection::Item item1, QPtrCollection::Item item2)
 {
     if(m_compareMethod == NickList::TimeStamp) {

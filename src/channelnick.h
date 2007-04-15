@@ -72,7 +72,7 @@ class ChannelNick :  public QObject, public KShared
     signals:
         void channelNickChanged();
 
-    private slots:
+    public slots:
         void lessActive();
 };
 

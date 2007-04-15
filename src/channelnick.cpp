@@ -244,8 +244,6 @@ uint ChannelNick::recentActivity() const
 void ChannelNick::moreActive()
 {
     m_recentActivity++;
-    QTimer::singleShot(5*60*1000, this, SLOT(lessActive())); //only care about the last several minutes
-    //TODO use a single, central timer for better performance, especially for not waking up laptop CPUs
 }
 
 void ChannelNick::lessActive()

@@ -117,6 +117,7 @@ class Channel : public ChatWindow
     protected slots:
         void autoUserhost();
         void autoWho();
+        void fadeActivity();
         virtual void serverOnline(bool online);
 
 
@@ -346,6 +347,7 @@ class Channel : public ChatWindow
 
         bool m_firstAutoWhoDone;
         QTimer m_whoTimer; ///< For continuous auto /WHO
+        QTimer m_fadeActivityTimer; ///< For the smoothing function used in activity sorting
 
         QValueList<QStringList> m_pendingChannelNickLists;
         int m_opsToAdd;
