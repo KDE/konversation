@@ -88,8 +88,7 @@ Changes since 1.0.1:
 - Improved robustness of the Watched Nicknames Online system.
 - Replaced the DCC Transfer Details dialog with a retractable transfer details
   pane directly in the DCC Status tab.
-- Implemented an additional "Sort by activity" nicklist sorting mode (in pro-
-  gress).
+- Implemented an additional "Sort by activity" nicklist sorting mode.
 - Added a Find Previous standard action.
 - Renamed the "File" menu to "Connection".
 - Have the "Insert Character" dialog pick up on ircview font changes.
