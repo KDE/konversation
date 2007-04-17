@@ -18,6 +18,7 @@
 #include <qcombobox.h>
 #include <qheader.h>
 #include <qtooltip.h>
+#include <qdialog.h>
 
 #include <kapplication.h>
 #include <kdebug.h>

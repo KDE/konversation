@@ -17,6 +17,8 @@
 #include <qfileinfo.h>
 #include <qhostaddress.h>
 
+#include <kdebug.h>
+
 
 DccTransfer::DccTransfer( DccType dccType )
 {
