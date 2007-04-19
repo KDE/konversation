@@ -1204,8 +1204,6 @@ void IRCView::trimScrollBack()
         }
 
         KTextBrowser::viewport()->setUpdatesEnabled(up);
-
-        updateScrollBarPos();
     }
 }
 
