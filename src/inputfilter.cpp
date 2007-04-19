@@ -290,7 +290,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                         else
                         {
                             server->appendMessageToFrontmost(i18n("DCC"),
-                                i18n("Received invalid DCC SEND request from %1")
+                                i18n("Received invalid DCC SEND request from %1.")
                                 .arg(sourceNick)
                                 );
                         }
@@ -305,7 +305,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                         else
                         {
                             server->appendMessageToFrontmost(i18n("DCC"),
-                                i18n("Received invalid DCC ACCEPT request from %1")
+                                i18n("Received invalid DCC ACCEPT request from %1.")
                                 .arg(sourceNick)
                                 );
                         }
@@ -320,7 +320,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                         else
                         {
                             server->appendMessageToFrontmost(i18n("DCC"),
-                                i18n("Received invalid DCC RESUME request from %1")
+                                i18n("Received invalid DCC RESUME request from %1.")
                                 .arg(sourceNick)
                                 );
                         }
@@ -336,7 +336,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                         else
                         {
                             server->appendMessageToFrontmost(i18n("DCC"),
-                                i18n("Received invalid DCC CHAT request from %1")
+                                i18n("Received invalid DCC CHAT request from %1.")
                                 .arg(sourceNick)
                                 );
                         }
@@ -376,12 +376,12 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                         server->appendServerMessageToChannel(
                             parameterList[0],
                             "CTCP",
-                            i18n("Received unknown CTCP-%1 request from %2 to Channel %3")
+                            i18n("Received unknown CTCP-%1 request from %2 to Channel %3.")
                             .arg(ctcp).arg(sourceNick).arg(parameterList[0])
                             );
                     else
                         server->appendMessageToFrontmost(i18n("CTCP"),
-                            i18n("Received unknown CTCP-%1 request from %2")
+                            i18n("Received unknown CTCP-%1 request from %2.")
                             .arg(ctcp).arg(sourceNick)
                             );
                 }
@@ -495,7 +495,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                     else
                     {
                         server->appendMessageToFrontmost(i18n("CTCP"),
-                            i18n("Received CTCP-%1 reply from %2: %3")
+                            i18n("Received CTCP-%1 reply from %2: %3.")
                             .arg(replyReason).arg(sourceNick).arg(reply)
                             );
                     }
