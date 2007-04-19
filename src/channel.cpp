@@ -2608,7 +2608,6 @@ void Channel::clearBanList()
 
 void Channel::append(const QString& nickname, const QString& message)
 {
-    nickActive(nickname);
     if(nickname != getServer()->getNickname()) {
         Nick* nick = getNickByName(nickname);
 
@@ -2618,11 +2617,11 @@ void Channel::append(const QString& nickname, const QString& message)
     }
 
     ChatWindow::append(nickname, message);
+    nickActive(nickname);
 }
 
 void Channel::appendAction(const QString& nickname, const QString& message, bool usenotifications)
 {
-    nickActive(nickname);
     if(nickname != getServer()->getNickname()) {
         Nick* nick = getNickByName(nickname);
 
@@ -2632,12 +2631,17 @@ void Channel::appendAction(const QString& nickname, const QString& message, bool
     }
 
     ChatWindow::appendAction(nickname, message, usenotifications);
+    nickActive(nickname);
 }
 
-void Channel::nickActive(const QString& nickname) //reported to crash, can't reproduce
+void Channel::nickActive(const QString& nickname) //FIXME reported to crash, can't reproduce
 {
-    getChannelNick(nickname)->moreActive();
-    sortNickList(); //FIXME: no need to completely resort, we can just see if this particular nick should move
+    ChannelNickPtr nick=getChannelNick(nickname);
+    //XXX Would be nice to know why it can be null here...
+    if (nick) {
+        nick->moreActive();
+        sortNickList(); //FIXME: no need to completely resort, we can just see if this particular nick should move
+    }
 }
 
 //
