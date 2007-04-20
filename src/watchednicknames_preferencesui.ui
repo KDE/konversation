@@ -87,7 +87,7 @@ command is placed in the &lt;b&gt;Input Line&lt;/b&gt; on the server window.&lt;
                 <bool>false</bool>
             </property>
             <property name="text">
-                <string>Update &amp;interval:</string>
+                <string>&amp;Update interval:</string>
             </property>
             <property name="buddy" stdset="0">
                 <cstring>kcfg_NotifyDelay</cstring>
@@ -141,7 +141,7 @@ command is placed in the &lt;b&gt;Input Line&lt;/b&gt; on the server window.&lt;
                 <bool>false</bool>
             </property>
             <property name="text">
-                <string>&amp;Show watched nicks online tab on application startup</string>
+                <string>Show watched nicks online tab on &amp;application startup</string>
             </property>
             <property name="whatsThis" stdset="0">
                 <string>&lt;qt&gt;When checked, the &lt;b&gt;Nicks Online&lt;/b&gt; window will be automatically opened when starting Konversation.&lt;/qt&gt;</string>
@@ -152,7 +152,7 @@ command is placed in the &lt;b&gt;Input Line&lt;/b&gt; on the server window.&lt;
                 <cstring>kcfg_UseNotify</cstring>
             </property>
             <property name="text">
-                <string>&amp;Enable nickname watcher</string>
+                <string>Enable nic&amp;kname watcher</string>
             </property>
             <property name="whatsThis" stdset="0">
                 <string>&lt;qt&gt;
@@ -268,9 +268,7 @@ When the nickname watcher is turned on, you will be notified when the nicknames 
                         <string>&lt;qt&gt;
 &lt;p&gt;
 When the nickname watcher is turned on, you will be notified when the nicknames appearing in the &lt;b&gt;Watched Networks/Nicknames&lt;/b&gt; list come online or go offline.&lt;/p&gt;
-&lt;p&gt;You can also open the &lt;b&gt;Nicks Online&lt;/b&gt; window to see the status of all the watched nicknames.&lt;/p&gt;
-)
-&lt;/qt&gt;</string>
+&lt;p&gt;You can also open the &lt;b&gt;Nicks Online&lt;/b&gt; window to see the status of all the watched nicknames.&lt;/p&gt;&lt;/qt&gt;</string>
                     </property>
                 </widget>
                 <widget class="QLayoutWidget" row="0" column="4" rowspan="2" colspan="1">
@@ -348,6 +346,8 @@ When the nickname watcher is turned on, you will be notified when the nicknames 
         </widget>
     </grid>
 </widget>
+<customwidgets>
+</customwidgets>
 <connections>
     <connection>
         <sender>kcfg_UseNotify</sender>
