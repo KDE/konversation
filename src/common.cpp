@@ -143,7 +143,8 @@ namespace Konversation
                 protocol = "mailto:";
 
             // Use \x0b as a placeholder for & so we can readd them after changing all & in the normal text to &amp;
-            insertText = link.arg(protocol, QString(href).replace('&', "\x0b"), href) + append;
+            // HACK Replace % with \x03 in the url to keep Qt from doing stupid things
+            insertText = link.arg(protocol, QString(href).replace('&', "\x0b").replace('%', "\x03"), href) + append;
             filteredLine.replace(pos, urlLen, insertText);
             pos += insertText.length();
             KonversationApplication::instance()->storeUrl(fromNick, href);

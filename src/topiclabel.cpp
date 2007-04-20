@@ -81,8 +81,11 @@ namespace Konversation
         if (e->button()==QMouseEvent::LeftButton)
         {
             pressPosition=e->pos();
+            urlToDrag = anchorAt(pressPosition);
+            // HACK Replace % with \x03 in the url to keep Qt from doing stupid things
+            urlToDrag = urlToDrag.replace ('\x03', "%");
             // Hack to counter the fact that we're given an decoded url
-            urlToDrag = KURL::fromPathOrURL(anchorAt(pressPosition)).url();
+            urlToDrag = KURL::fromPathOrURL(urlToDrag).url();
             if (!urlToDrag.isNull())
             {
                 mousePressed=true;

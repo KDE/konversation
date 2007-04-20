@@ -344,8 +344,11 @@ void IRCView::clear()
 
 void IRCView::highlightedSlot(const QString& _link)
 {
+    QString link = _link;
+    // HACK Replace % with \x03 in the url to keep Qt from doing stupid things
+    link = link.replace ('\x03', "%");
     //Hack to handle the fact that we get a decoded url
-    QString link = KURL::fromPathOrURL(_link).url();
+    link = KURL::fromPathOrURL(link).url();
 
     // HACK:Use space as a placeholder for \ as Qt tries to be clever and does a replace to / in urls in QTextEdit
     if(link.startsWith("#"))
@@ -1302,8 +1305,11 @@ void IRCView::contentsContextMenuEvent(QContextMenuEvent* ev)
 {
     bool block = contextMenu(ev);
 
+    // HACK Replace % with \x03 in the url to keep Qt from doing stupid things
+    m_highlightedURL = anchorAt(viewportToContents(mapFromGlobal(QCursor::pos())));
+    m_highlightedURL = m_highlightedURL.replace('\x03', "%");
     // Hack to counter the fact that we're given an decoded url
-    m_highlightedURL = KURL::fromPathOrURL(anchorAt(viewportToContents(mapFromGlobal(QCursor::pos())))).url();
+    m_highlightedURL = KURL::fromPathOrURL(m_highlightedURL).url();
 
     if (m_highlightedURL.isEmpty()) viewport()->setCursor(Qt::ArrowCursor);
 
