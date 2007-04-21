@@ -152,7 +152,7 @@ void Query::setName(const QString& newName)
 void Query::queryTextEntered()
 {
     QString line=queryInput->text();
-    queryInput->clear();
+    queryInput->setText("");
     if(line.lower()==Preferences::commandChar()+"clear")
     {
         textView->clear();
@@ -172,7 +172,7 @@ void Query::queryPassthroughCommand()
     QString commandChar = Preferences::commandChar();
     QString line = queryInput->text();
 
-    queryInput->clear();
+    queryInput->setText("");
 
     if(!line.isEmpty())
     {

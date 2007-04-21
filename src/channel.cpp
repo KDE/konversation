@@ -867,7 +867,7 @@ void Channel::channelPassthroughCommand()
     QString commandChar = Preferences::commandChar();
     QString line = channelInput->text();
 
-    channelInput->clear();
+    channelInput->setText("");
 
     if(!line.isEmpty())
     {

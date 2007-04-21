@@ -339,7 +339,7 @@ void IRCView::clearContextNick()
 void IRCView::clear()
 {
     m_buffer = QString();
-    KTextBrowser::clear();
+    KTextBrowser::setText("");
 }
 
 void IRCView::highlightedSlot(const QString& _link)

@@ -188,7 +188,7 @@ namespace Konversation
             m_widget->topicPreview->setText(item->text(2));
         else
             // clear topic preview
-            m_widget->topicPreview->clear();
+            m_widget->topicPreview->setText("");
     }
 
     void ChannelOptionsDialog::refreshEnableModes()
@@ -248,7 +248,7 @@ namespace Konversation
         m_widget->moderatedModeChBox->setChecked(false);
         m_widget->secretModeChBox->setChecked(false);
         m_widget->keyModeChBox->setChecked(false);
-        m_widget->keyModeEdit->clear();
+        m_widget->keyModeEdit->setText("");
 
         QListViewItem* item = m_widget->otherModesList->firstChild();
 

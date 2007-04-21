@@ -124,7 +124,7 @@ void StatusPanel::sendStatusText(const QString& sendLine)
 void StatusPanel::statusTextEntered()
 {
     QString line=statusInput->text();
-    statusInput->clear();
+    statusInput->setText("");
 
     if(line.lower()==Preferences::commandChar()+"clear") textView->clear();
     else

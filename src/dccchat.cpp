@@ -283,7 +283,7 @@ void DccChat::readData()
 void DccChat::dccChatTextEntered()
 {
     QString line = m_dccChatInput->text();
-    m_dccChatInput->clear();
+    m_dccChatInput->setText("");
     if ( line.lower() == Preferences::commandChar()+"clear" )
     {
         textView->clear();

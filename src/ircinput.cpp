@@ -290,7 +290,7 @@ void IRCInput::keyPressEvent(QKeyEvent* e)
                 insert("%G");
             // support ^U (delete text in input box)
             else if(e->ascii() == 21)
-                clear();
+                setText("");
     }
 
     KTextEdit::keyPressEvent(e);
@@ -331,7 +331,7 @@ void IRCInput::getHistory(bool up)
         if(lineNum==0)
         {
             if(text().length()) addHistory(text());
-            clear();
+            setText("");
         }
         // If we aren't at the top of the list, decrement the line counter
         else
@@ -449,7 +449,7 @@ void IRCInput::paste()
               // remember old line, in case the user does not paste eventually
               addHistory(pasteText);
               // delete input text
-              clear();
+              setText("");
             }
         }
         // otherwise let the KLineEdit handle the pasting
