@@ -894,14 +894,14 @@ void Server::notifyResponse(const QString& nicksOnline)
 {
     bool nicksOnlineChanged = false;
     QStringList actualList = QStringList::split(' ',nicksOnline);
-    QString lcActual = ' ' + nicksOnline.lower() + ' ';
-    QString lcPrevISON = ' ' + (m_prevISONList.join(" ")).lower() + ' ';
+    QString lcActual = ' ' + nicksOnline + ' ';
+    QString lcPrevISON = ' ' + (m_prevISONList.join(" ")) + ' ';
 
     QStringList::iterator it;
 
     //Are any nicks gone offline
     for(it = m_prevISONList.begin(); it != m_prevISONList.end(); ++it)
-        if (lcActual.find(' ' + (*it).lower() + ' ', 0, 0) == -1)
+        if (lcActual.find(' ' + (*it) + ' ', 0, false) == -1)
         {
             setNickOffline(*it);
             nicksOnlineChanged = true;
@@ -909,7 +909,7 @@ void Server::notifyResponse(const QString& nicksOnline)
 
     //Are any nicks gone online
     for(it = actualList.begin(); it != actualList.end(); ++it)
-        if (lcPrevISON.find(' ' + (*it).lower() + ' ', 0, 0) == -1) {
+        if (lcPrevISON.find(' ' + (*it) + ' ', 0, false) == -1) {
             setWatchedNickOnline(*it);
             nicksOnlineChanged = true;
         }
@@ -1319,7 +1319,7 @@ void Server::send()
         }
 
         // convert encoded data to IRC ascii only when we don't have the same codec locally
-        if(QString(QTextCodec::codecForLocale()->name()).lower() != QString(codec->name()).lower())
+        if(QTextCodec::codecForLocale()->name() != codec->name())
         {
             serverStream.setCodec(codec);
         }
@@ -1486,9 +1486,8 @@ const ChannelNickMap *Server::getChannelMembers(const QString& channelName) cons
 // 0 if not found.
 ChannelNickPtr Server::getChannelNick(const QString& channelName, const QString& nickname)
 {
-    QString lcChannelName = channelName.lower();
     QString lcNickname = nickname.lower();
-    const ChannelNickMap *channelNickMap = getChannelMembers(lcChannelName);
+    const ChannelNickMap *channelNickMap = getChannelMembers(channelName);
     if (channelNickMap)
     {
         if (channelNickMap->contains(lcNickname))
@@ -2387,7 +2386,7 @@ ChannelNickPtr Server::addNickToUnjoinedChannelsList(const QString& channelName,
     if (!nickInfo)
     {
         nickInfo = new NickInfo(nickname, this);
-        m_allNicks.insert(QString(nickname.lower()), nickInfo);
+        m_allNicks.insert(lcNickname, nickInfo);
         doWatchedNickChangedSignal = isWatchedNick(nickname);
     }
     // Move the channel from joined list (if present) to unjoined list.
@@ -2460,8 +2459,6 @@ NickInfoPtr Server::setWatchedNickOnline(const QString& nickname)
 
 void Server::setWatchedNickOffline(const QString& nickname, const NickInfoPtr nickInfo)
 {
-    QString lcNickname = nickname.lower();
-
     if (nickInfo) {
         KABC::Addressee addressee = nickInfo->getAddressee();
         if (!addressee.isEmpty()) Konversation::Addressbook::self()->emitContactPresenceChanged(addressee.uid(), 1);
@@ -2666,7 +2663,7 @@ void Server::renameNickInfo(NickInfoPtr nickInfo, const QString& newname)
     if (nickInfo)
     {
         // Get existing lowercase nickname and rename nickname in the NickInfo object.
-        QString lcNickname = nickInfo->getNickname().lower();
+        QString lcNickname = nickInfo->loweredNickname();
         nickInfo->setNickname(newname);
         nickInfo->setIdentified(false);
         QString lcNewname = newname.lower();

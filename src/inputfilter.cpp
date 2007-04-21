@@ -411,8 +411,11 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
 
                         if(sourceNick != server->getNickname())
                         {
-                            if(trailing.lower().find(QRegExp("(^|[^\\d\\w])" +
-                               QRegExp::escape(server->loweredNickname()) + "([^\\d\\w]|$)")) !=-1 )
+                            QRegExp regexp("(^|[^\\d\\w])" +
+                                    QRegExp::escape(server->loweredNickname()) +
+                                    "([^\\d\\w]|$)");
+                            regexp.setCaseSensitive(false);
+                            if(trailing.find(regexp) !=-1 )
                             {
                                 konv_app->notificationHandler()->nick(channel, sourceNick, trailing);
                             }
@@ -439,16 +442,20 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
 
                     if(sourceNick != server->getNickname() && query)
                     {
-                            if(trailing.lower().find(QRegExp("(^|[^\\d\\w])" +
-                               QRegExp::escape(server->loweredNickname()) + "([^\\d\\w]|$)")) !=-1 )
-                            {
-                                konv_app->notificationHandler()->nick(query, sourceNick, trailing);
-                            }
-                            else
-                            {
-                                konv_app->notificationHandler()->queryMessage(query, sourceNick,
-                                                                              trailing);
-                            }
+                        QRegExp regexp("(^|[^\\d\\w])" +
+                                QRegExp::escape(server->loweredNickname()) +
+                                 "([^\\d\\w]|$)");
+                        regexp.setCaseSensitive(false);
+                        if(trailing.find(regexp) !=-1 )
+                        {
+                            konv_app->notificationHandler()->nick(query,
+                                    sourceNick, trailing);
+                        }
+                        else
+                        {
+                            konv_app->notificationHandler()->queryMessage(query,
+                                    sourceNick, trailing);
+                        }
                     }
                 }
             }

@@ -279,7 +279,7 @@ QString NickInfo::getBestAddresseeName()
     {
         return m_addressee.realName();
     }
-    else if(!getRealName().isEmpty() && getRealName().lower() != loweredNickname())
+    else if(!getRealName().isEmpty())
     {
         return getRealName();
     }

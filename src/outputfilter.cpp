@@ -1134,10 +1134,11 @@ namespace Konversation
             QString channel;
             QString option;
             // check for option
-            bool host = (parameterList[0].lower() == "-host");
-            bool domain = (parameterList[0].lower() == "-domain");
-            bool uhost = (parameterList[0].lower() == "-userhost");
-            bool udomain = (parameterList[0].lower() == "-userdomain");
+            QString lowerParameter = parameterList[0].lower();
+            bool host = (lowerParameter == "-host");
+            bool domain = (lowerParameter == "-domain");
+            bool uhost = (lowerParameter == "-userhost");
+            bool udomain = (lowerParameter == "-userdomain");
 
             // remove possible option
             if (host || domain || uhost || udomain)
@@ -1579,10 +1580,10 @@ namespace Konversation
 
             if (splitted.count() > 0)
             {
-                QString group = splitted[0];
+                QString group = splitted[0].lower();
                 QStringList groupList(config->groupList());
                 uint i;
-                if (group.lower() == "list")
+                if (group == "list")
                 {
                     // List available groups.
                     result = usage(i18n("Available preferences groups: ") + groupList.join("|"));
@@ -1593,7 +1594,7 @@ namespace Konversation
                     bool validGroup = false;
                     for (i = 0; i < groupList.count(); ++i)
                     {
-                        if (group.lower() == groupList[i].lower())
+                        if (group == groupList[i].lower())
                         {
                             validGroup = true;
                             group = groupList[i];
@@ -1602,12 +1603,12 @@ namespace Konversation
                     }
                     if (validGroup && splitted.count() > 1)
                     {
-                        QString option = splitted[1];
+                        QString option = splitted[1].lower();
                         QMap<QString,QString> options = config->entryMap(group);
                         QValueList<QString> optionList = options.keys();
                         QValueList<QString> optionValueList = options.values();
 
-                        if (option.lower() == "list")
+                        if (option == "list")
                         {
                             // List available options in group.
                             QString output = i18n("Available options in group %1:").arg( group );
@@ -1625,7 +1626,7 @@ namespace Konversation
                             bool validOption = false;
                             for (i = 0; i < optionList.count(); ++i)
                             {
-                                if (option.lower() == optionList[i].lower())
+                                if (option == optionList[i].lower())
                                 {
                                     validOption = true;
                                     option = optionList[i];

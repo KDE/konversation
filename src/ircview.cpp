@@ -708,11 +708,11 @@ bool doHighlight, bool parseURL, bool self)
                 }
                 else
                 {
-                    QString needle=highlight->getPattern().lower();
+                    QString needle=highlight->getPattern();
                                                   // highlight patterns in text
-                    patternFound = ((filteredLine.lower().find(needle) != -1) ||
+                    patternFound = ((filteredLine.find(needle, 0, false) != -1) ||
                                                   // highlight patterns in nickname
-                        (whoSent.lower().find(needle) != -1));
+                        (whoSent.find(needle, 0, false) != -1));
                 }
 
                 if(!patternFound)
