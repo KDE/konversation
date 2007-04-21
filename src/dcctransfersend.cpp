@@ -339,17 +339,15 @@ bool DccTransferSend::setResume( unsigned long position )
 {
     kdDebug() << "DccTransferSend::setResume(): position=" << position << endl;
 
-    if ( position < m_fileSize )
-    {
-        m_resumed = true;
-        m_transferringPosition = position;
-        return true;
-    }
-    else
-    {
-        kdDebug() << "DccTransferSend::setResume(): Invalid position. (greater than filesize=" << QString::number( m_fileSize ) << ")" << endl;
+    if ( m_status > WaitingRemote )
         return false;
-    }
+
+    if ( position >= m_fileSize )
+        return false;
+
+    m_resumed = true;
+    m_transferringPosition = position;
+    return true;
 }
 
 void DccTransferSend::acceptClient()                     // slot
