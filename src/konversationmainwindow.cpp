@@ -124,9 +124,6 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
 
     (new KAction(i18n("&Server List..."), "server", KShortcut("F2"), this, SLOT(openServerList()),
         actionCollection(), "open_server_list"))->setToolTip(i18n("Manage networks and servers"));
-    
-    (new KAction(i18n("&Server List..."), "server", KShortcut("F2"), this, SLOT(openServerList()),
-        actionCollection(), "open_server_list"))->setToolTip(i18n("Manage networks and servers"));
     (new KAction(i18n("Quick &Connect..."), "connect_creating", KShortcut("F7"), this, SLOT(openQuickConnectDialog()),
         actionCollection(), "quick_connect_dialog"))->setToolTip(i18n("Type in the address of a new IRC server to connect to"));
 
