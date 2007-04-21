@@ -845,7 +845,7 @@ void Channel::sendFileMenu()
 void Channel::channelTextEntered()
 {
     QString line = channelInput->text();
-    channelInput->clear();
+    channelInput->setText ("");
 
     if(line.lower().stripWhiteSpace() == Preferences::commandChar()+"clear")
     {

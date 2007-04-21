@@ -91,7 +91,7 @@ Preferences::Preferences()
 
 Preferences::~Preferences()
 {
-    clearIdentityList();
+    mIdentityList.clear();
 
     if ( mSelf == this )
         staticPreferencesDeleter.setObject( mSelf, 0, false );
@@ -472,6 +472,8 @@ QStringList Preferences::defaultAliasList()
             }
         }
     }
+
+    delete fileInfo;
 
     return aliasList;
 }

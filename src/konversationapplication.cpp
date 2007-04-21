@@ -50,6 +50,7 @@ KonversationApplication::KonversationApplication()
     mainWindow = 0;
     quickConnectDialog = 0;
     m_connectDelayed=false;
+    osd = 0;
 }
 
 KonversationApplication::~KonversationApplication()
@@ -61,6 +62,8 @@ KonversationApplication::~KonversationApplication()
     delete dcopObject;
     //delete prefsDCOP;
     delete identDCOP;
+    delete osd;
+    osd = 0;
 }
 
 void KonversationApplication::delayedConnectToServer(const QString& hostname, const QString& port, const QString& channel,

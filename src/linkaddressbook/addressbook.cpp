@@ -41,6 +41,8 @@ namespace Konversation
     }
     Addressbook::~Addressbook()
     {
+        if (m_instance == this)
+            sd.setObject(m_instance, 0, false);
     }
 
     Addressbook *Addressbook::self()

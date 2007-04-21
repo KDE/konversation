@@ -100,6 +100,8 @@ ViewTree::ViewTree(QWidget *parent)
 
 ViewTree::~ViewTree()
 {
+    delete m_toolTip;
+    m_toolTip = 0;
     emit setViewTreeShown(false);
 }
 

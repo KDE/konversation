@@ -130,6 +130,8 @@ KListView(parent)
 
 NickListView::~NickListView()
 {
+    delete m_tooltip;
+    m_tooltip = 0;
 }
 
 void NickListView::setWhatsThis()
