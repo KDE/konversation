@@ -64,6 +64,7 @@
 #include <kfiledialog.h>
 #include <kio/job.h>
 #include <kstdaccel.h>
+#include <kglobal.h>
 
 #define KX kdDebug() << __FILE__ << ':' << __LINE__ << ' '
 
@@ -1745,7 +1746,9 @@ QString IRCView::timeStamp()
         {
             QDate date = QDate::currentDate();
             timeString = QString("<font color=\"" +
-                timeColor + "\">[%1 %2]</font> ").arg(date.toString(Qt::ISODate), time.toString(timeFormat));
+                timeColor + "\">[%1 %2]</font> ")
+                    .arg(KGlobal::locale()->formatDate(date, true /*short format*/),
+                         time.toString(timeFormat));
         }
 
         return timeString;
