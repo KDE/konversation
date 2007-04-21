@@ -293,8 +293,8 @@ void DccTransferSend::start()                     // public slot
         connect( m_serverSocket, SIGNAL( gotError( int ) ), this, SLOT( slotGotSocketError( int ) ) );
         connect( m_serverSocket, SIGNAL( closed() ),        this, SLOT( slotServerSocketClosed() ) );
 
-        // Get our own port number
-        m_ownPort = DccCommon::getServerSocketPort( m_serverSocket );
+        // Get own port number
+        m_ownPort = QString::number( DccCommon::getServerSocketPort( m_serverSocket ) );
         /*
         // FIXME: REMOVE ME (obsolete)
         KNetwork::KSocketAddress ipAddr = m_serverSocket->localAddress();
