@@ -32,9 +32,9 @@ END{
 }
 ' /proc/cpuinfo )
   
-HDD=$(df -l| awk '($1~/dev/){
-  use+=$3/1024**2;
-  tot+=$2/1024**2;
+HDD=$(df -l| awk '($1~/\/dev/){
+  use+=$3/1024^2;
+  tot+=$2/1024^2;
  }
  END{print "HD: " int(use) "/" int(tot) "GB"}')
 
