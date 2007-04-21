@@ -35,6 +35,7 @@ namespace KIO
 
 namespace KNetwork
 {
+    class KServerSocket;
     class KStreamSocket;
 }
 
@@ -59,6 +60,8 @@ class DccTransferRecv : public DccTransfer
         void setFileName( const QString& fileName );
         // OPTIONAL, if not specified, default folder + the file name
         void setFileURL( const KURL& url );
+        // OPTIONAL
+        void setReverse( bool reverse, const QString& reverseToken );
 
     public slots:
         virtual bool queue();
@@ -85,12 +88,17 @@ class DccTransferRecv : public DccTransfer
         void slotLocalGotWriteError( const QString& errorString );
 
         // Remote DCC
-        void connectionSuccess();
+        void connectWithSender();
+        void startReceiving();
         void connectionFailed( int errorCode );
         void readData();
         void sendAck();
         void connectionTimeout();
         void slotSocketClosed();
+
+        // Reverse DCC
+        void slotServerSocketReadyAccept();
+        void slotServerSocketGotError( int errorCode );
 
     protected:
         void cleanUp();
@@ -113,7 +121,10 @@ class DccTransferRecv : public DccTransfer
         bool createDirs(const KURL &dirURL) const;
 
         void requestResume();
-        void connectToSender();
+        // for non-reverse DCC
+        void connectToSendServer();
+        // for reverse DCC
+        bool startListeningForSender();
 
         void startConnectionTimer( int sec );
         void stopConnectionTimer();
@@ -128,6 +139,8 @@ class DccTransferRecv : public DccTransfer
         bool m_saveToFileExists;
         bool m_partialFileExists;
         QTimer* m_connectionTimer;
+
+        KNetwork::KServerSocket* m_serverSocket;
         KNetwork::KStreamSocket* m_recvSocket;
 
     private:

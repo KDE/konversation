@@ -125,11 +125,6 @@ void DccTransferSend::setReverse( bool reverse )
         m_reverse = reverse;
 }
 
-QString DccTransferSend::getReverseSendToken() const
-{
-    return m_reverseSendToken;
-}
-
 bool DccTransferSend::queue()
 {
     kdDebug() << "DccTransferSend::queue()" << endl;
@@ -247,6 +242,15 @@ void DccTransferSend::start()                     // public slot
         kdDebug() << "DccTransferSend::start(): normal DCC SEND" << endl;
 
         // Set up server socket
+        QString failedReason;
+        m_serverSocket = DccCommon::createServerSocketAndListen( this, &failedReason );
+        if ( !m_serverSocket )
+        {
+            failed( failedReason );
+            return;
+        }
+        /*
+        // FIXME (OBSOLETE)
         m_serverSocket = new KNetwork::KServerSocket( this );
         m_serverSocket->setFamily( KNetwork::KResolver::InetFamily );
 
@@ -283,15 +287,20 @@ void DccTransferSend::start()                     // public slot
                 return;
             }
         }
+        */
 
         connect( m_serverSocket, SIGNAL( readyAccept() ),   this, SLOT( acceptClient() ) );
         connect( m_serverSocket, SIGNAL( gotError( int ) ), this, SLOT( slotGotSocketError( int ) ) );
         connect( m_serverSocket, SIGNAL( closed() ),        this, SLOT( slotServerSocketClosed() ) );
 
         // Get our own port number
+        m_ownPort = DccCommon::getServerSocketPort( m_serverSocket );
+        /*
+        // FIXME: REMOVE ME (obsolete)
         KNetwork::KSocketAddress ipAddr = m_serverSocket->localAddress();
         const struct sockaddr_in* socketAddress = (sockaddr_in*)ipAddr.address();
         m_ownPort = QString::number( ntohs( socketAddress->sin_port ) );
+        */
 
         kdDebug() << "DccTransferSend::start(): own Address=" << m_ownIp << ":" << m_ownPort << endl;
 
@@ -304,13 +313,13 @@ void DccTransferSend::start()                     // public slot
         // Passive DCC SEND
         kdDebug() << "DccTransferSend::start(): passive DCC SEND" << endl;
 
-        int tokenNumber = KonversationApplication::instance()->dccTransferManager()->generateReverseSendTokenNumber();
+        int tokenNumber = KonversationApplication::instance()->dccTransferManager()->generateReverseTokenNumber();
         // TODO: should we append a letter "T" to this token?
-        m_reverseSendToken = QString::number( tokenNumber );
+        m_reverseToken = QString::number( tokenNumber );
 
-        kdDebug() << "DccTransferSend::start(): passive DCC key(token): " << m_reverseSendToken << endl;
+        kdDebug() << "DccTransferSend::start(): passive DCC key(token): " << m_reverseToken << endl;
 
-        server->dccPassiveSendRequest( m_partnerNick, m_fileName, getNumericalIpText( m_ownIp ), m_fileSize, m_reverseSendToken );
+        server->dccPassiveSendRequest( m_partnerNick, m_fileName, getNumericalIpText( m_ownIp ), m_fileSize, m_reverseToken );
     }
 
     setStatus( WaitingRemote, i18n( "Waiting remote user's acceptance" ) );
@@ -339,7 +348,7 @@ bool DccTransferSend::setResume( unsigned long position )
 {
     kdDebug() << "DccTransferSend::setResume(): position=" << position << endl;
 
-    if ( m_status > WaitingRemote )
+    if ( getStatus() > WaitingRemote )
         return false;
 
     if ( position >= m_fileSize )

@@ -19,7 +19,7 @@
 DccTransferManager::DccTransferManager( QObject* parent )
     : QObject( parent )
 {
-    m_nextReverseSendTokenNumber = 1001;
+    m_nextReverseTokenNumber = 1001;
 }
 
 DccTransferManager::~DccTransferManager()
@@ -133,7 +133,7 @@ DccTransferSend* DccTransferManager::startReverseSending( int serverGroupId, con
             (*it)->getPartnerNick() == partnerNick &&
             (*it)->getFileName() == fileName &&
             (*it)->getFileSize() == fileSize &&
-            (*it)->getReverseSendToken() == token
+            (*it)->getReverseToken() == token
         )
         {
             transfer = (*it);
@@ -169,9 +169,9 @@ bool DccTransferManager::isLocalFileInWritingProcess( const KURL& url ) const
     return false;
 }
 
-int DccTransferManager::generateReverseSendTokenNumber()
+int DccTransferManager::generateReverseTokenNumber()
 {
-    return m_nextReverseSendTokenNumber++;
+    return m_nextReverseTokenNumber++;
 }
 
 void DccTransferManager::slotTransferStatusChanged( DccTransfer* item, int newStatus, int oldStatus )

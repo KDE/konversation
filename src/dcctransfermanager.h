@@ -65,7 +65,7 @@ class DccTransferManager : public QObject
 
         bool isLocalFileInWritingProcess( const KURL& localUrl ) const;
 
-        int generateReverseSendTokenNumber();
+        int generateReverseTokenNumber();
 
     private:
         /*
@@ -82,7 +82,7 @@ class DccTransferManager : public QObject
         QValueList< DccTransferSend* > m_sendItems;
         QValueList< DccTransferRecv* > m_recvItems;
 
-        int m_nextReverseSendTokenNumber;
+        int m_nextReverseTokenNumber;
 };
 
 #endif  // DCCTRANSFERMANAGER_H

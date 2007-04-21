@@ -305,6 +305,11 @@ bool DccTransfer::isReverse() const
     return m_reverse;
 }
 
+QString DccTransfer::getReverseToken() const
+{
+    return m_reverseToken;
+}
+
 long DccTransfer::getCurrentSpeed() const
 {
     return (unsigned long)m_currentSpeed;

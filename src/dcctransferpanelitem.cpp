@@ -345,7 +345,7 @@ QString DccTransferPanelItem::getStatusText() const
     else if ( status == DccTransfer::Preparing )
         return i18n( "Preparing" );
     else if ( status == DccTransfer::WaitingRemote )
-        return i18n( "Offering" );
+        return i18n( "Awaiting" );
     else if ( status == DccTransfer::Connecting )
         return i18n( "Connecting" );
     else if ( status == DccTransfer::Transferring && type == DccTransfer::Receive )

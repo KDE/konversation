@@ -284,8 +284,17 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                         }
                         else if(dccArgumentList.count()==5)
                         {
-                            // the receiver accepted the offer on Reverse DCC
-                            emit startReverseDccSendTransfer(sourceNick,dccArgumentList);
+                            if(dccArgumentList[2]=="0")
+                            {
+                                // incoming file (Reverse DCC)
+                                konv_app->notificationHandler()->dccIncoming(server->getStatusView(), sourceNick);
+                                emit addDccGet(sourceNick,dccArgumentList);
+                            }
+                            else
+                            {
+                                // the receiver accepted the offer for Reverse DCC
+                                emit startReverseDccSendTransfer(sourceNick,dccArgumentList);
+                            }
                         }
                         else
                         {

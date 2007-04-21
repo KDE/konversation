@@ -8,13 +8,17 @@
 /*
   Copyright (C) 2007 Shintaro Matsuoka <shin@shoegazed.org>
 */
+
 #include "dcccommon.h"
 #include "channel.h"
 #include "preferences.h"
 #include "server.h"
 
+#include <arpa/inet.h>
+
 #include <qhostaddress.h>
 
+#include <klocale.h>
 #include <kresolver.h>
 #include <kserversocket.h>
 
@@ -62,4 +66,53 @@ QString DccCommon::getOwnIp( Server* server )
     }
 
     return ownIp;
+}
+
+KNetwork::KServerSocket* DccCommon::createServerSocketAndListen( QObject* parent, QString* failedReason )
+{
+    KNetwork::KServerSocket* socket = new KNetwork::KServerSocket( parent );
+    socket->setFamily( KNetwork::KResolver::InetFamily );
+
+    if ( Preferences::dccSpecificSendPorts() )  // ports are configured manually
+    {
+        // set port
+        bool found = false;                       // whether succeeded to set port
+        unsigned long port = Preferences::dccSendPortsFirst();
+        for ( ; port <= Preferences::dccSendPortsLast() ; ++port )
+        {
+            kdDebug() << "DccCommon::createServerSocket(): trying port " << port << endl;
+            socket->setAddress( QString::number( port ) );
+            bool success = socket->listen();
+            if ( found = ( success && socket->error() == KNetwork::KSocketBase::NoError ) )
+                break;
+            socket->close();
+        }
+        if ( !found )
+        {
+            *failedReason = i18n( "No vacant port" );
+            delete socket;
+            return 0;
+        }
+    }
+    else
+    {
+        // Let the operating system choose a port
+        socket->setAddress( "0" );
+        if ( !socket->listen() )
+        {
+            kdDebug() << "DccCommon::createServerSocket(): listen() failed!" << endl;
+            *failedReason = i18n( "Could not open a socket" );
+            delete socket;
+            return 0;
+        }
+    }
+
+    return socket;
+}
+
+int DccCommon::getServerSocketPort( KNetwork::KServerSocket* serverSocket )
+{
+    KNetwork::KSocketAddress ipAddr = serverSocket->localAddress();
+    const struct sockaddr_in* socketAddress = (sockaddr_in*)ipAddr.address();
+    return ntohs( socketAddress->sin_port );
 }

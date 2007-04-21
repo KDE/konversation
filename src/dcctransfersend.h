@@ -52,8 +52,6 @@ class DccTransferSend : public DccTransfer
 
         bool setResume( unsigned long position );
 
-        QString getReverseSendToken() const;
-
     public slots:
         virtual bool queue();
         virtual void start();
@@ -95,8 +93,6 @@ class DccTransferSend : public DccTransfer
         bool m_fastSend;
 
         QTimer* m_connectionTimer;
-
-        QString m_reverseSendToken;
 };
 
 #endif  // DCCTRANSFERSEND_H

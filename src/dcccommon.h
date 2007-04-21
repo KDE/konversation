@@ -14,6 +14,12 @@
 
 #include <qstring.h>
 
+class QObject;
+
+namespace KNetwork
+{
+    class KServerSocket;
+}
 
 class Server;
 
@@ -28,6 +34,12 @@ class DccCommon
 
         // returns the self IP following the setting.
         static QString getOwnIp( Server* server = 0 );
+
+        // creates an instance of KNetwork::ServerSocket following the DCC settings
+        static KNetwork::KServerSocket* createServerSocketAndListen( QObject* parent = 0, QString* failedReason = 0 );
+
+        // returns the port number from a server socket
+        static int getServerSocketPort( KNetwork::KServerSocket* serverSocket );
 
     private:
         DccCommon();

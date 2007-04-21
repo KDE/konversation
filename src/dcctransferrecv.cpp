@@ -14,6 +14,7 @@
   (at your option) any later version.
 */
 
+#include "dcccommon.h"
 #include "dcctransferrecv.h"
 #include "channel.h"
 #include "dcctransfermanager.h"
@@ -25,6 +26,7 @@
 #include <kiconloader.h>
 #include <klocale.h>
 #include <kmessagebox.h>
+#include <kserversocket.h>
 #include <kstandarddirs.h>
 #include <kstreamsocket.h>
 #include <kdirselectdialog.h>
@@ -59,6 +61,7 @@ DccTransferRecv::DccTransferRecv()
 {
     kdDebug() << "DccTransferRecv::DccTransferRecv()" << endl;
 
+    m_serverSocket = 0;
     m_recvSocket = 0;
     m_writeCacheHandler = 0;
 
@@ -88,6 +91,11 @@ void DccTransferRecv::cleanUp()
 
     stopConnectionTimer();
     finishTransferLogger();
+    if ( m_serverSocket )
+    {
+        m_serverSocket->close();
+        m_serverSocket = 0;
+    }
     if ( m_recvSocket )
     {
         m_recvSocket->close();
@@ -137,6 +145,19 @@ void DccTransferRecv::setFileURL( const KURL& url )
 {
     if ( getStatus() == Configuring || getStatus() == Queued )
         m_fileURL = url;
+}
+
+void DccTransferRecv::setReverse( bool reverse, const QString& reverseToken )
+{
+    if ( getStatus() == Configuring )
+    {
+        m_reverse = reverse;
+        if ( reverse )
+        {
+            m_partnerPort = QString::number( 0 );
+            m_reverseToken = reverseToken;
+        }
+    }
 }
 
 bool DccTransferRecv::queue()
@@ -394,9 +415,37 @@ void DccTransferRecv::slotLocalReady( KIO::Job* job )
     connect( m_writeCacheHandler, SIGNAL( gotError( const QString& ) ), this, SLOT( slotLocalGotWriteError( const QString& ) ) );
 
     if ( !m_resumed )
-        connectToSender();
+        connectWithSender();
     else
         requestResume();
+}
+
+void DccTransferRecv::connectWithSender()
+{
+    if ( m_reverse )
+    {
+        if ( !startListeningForSender() )
+            return;
+
+        Server* server = KonversationApplication::instance()->getServerByServerGroupId( m_serverGroupId );
+        if ( !server )
+        {
+            failed( i18n( "Could not send Reverse DCC SEND acknowledgement to the partner via the IRC server." ) );
+        }
+
+        m_ownIp = DccCommon::getOwnIp( server );
+        m_ownPort = QString::number( DccCommon::getServerSocketPort( m_serverSocket ) );
+
+        setStatus( WaitingRemote, i18n( "Waiting for connection" ) );
+
+        server->dccReverseSendAck( m_partnerNick, m_fileName, DccCommon::textIpToNumericalIp( m_ownIp ), m_ownPort, m_fileSize, m_reverseToken );
+
+        //FIXME: add connection timer here
+    }
+    else
+    {
+        connectToSendServer();
+    }
 }
 
 void DccTransferRecv::requestResume()
@@ -414,7 +463,7 @@ void DccTransferRecv::requestResume()
     if ( !server )
     {
         kdDebug() << "DccTransferSend::start(): could not retrieve the instance of Server. id: " << m_serverGroupId << endl;
-        failed( i18n( "Could not send a DCC RECV resume request to the partner via the IRC server." ) );
+        failed( i18n( "Could not send DCC RECV resume request to the partner via the IRC server." ) );
         return;
     }
 
@@ -437,12 +486,12 @@ void DccTransferRecv::startResume( unsigned long position )
         return;
     }
 
-    connectToSender();
+    connectWithSender();
 }
 
-void DccTransferRecv::connectToSender()
+void DccTransferRecv::connectToSendServer()
 {
-    kdDebug() << "DccTransferRecv::connectToSender()" << endl;
+    kdDebug() << "DccTransferRecv::connectToSendServer()" << endl;
 
     // connect to sender
 
@@ -458,26 +507,70 @@ void DccTransferRecv::connectToSender()
     m_recvSocket->enableRead( false );
     m_recvSocket->enableWrite( false );
 
-    connect( m_recvSocket, SIGNAL( connected( const KResolverEntry& ) ), this, SLOT( connectionSuccess() )     );
+    connect( m_recvSocket, SIGNAL( connected( const KResolverEntry& ) ), this, SLOT( startReceiving() )     );
     connect( m_recvSocket, SIGNAL( gotError( int ) ),                    this, SLOT( connectionFailed( int ) ) );
-    connect( m_recvSocket, SIGNAL( closed() ),                           this, SLOT( slotSocketClosed() )      );
-    connect( m_recvSocket, SIGNAL( readyRead() ),                        this, SLOT( readData() )              );
-    connect( m_recvSocket, SIGNAL( readyWrite() ),                       this, SLOT( sendAck() )               );
 
-    kdDebug() << "DccTransferRecv::connectToSender(): attempting to connect to " << m_partnerIp << ":" << m_partnerPort << endl;
+    kdDebug() << "DccTransferRecv::connectToServer(): attempting to connect to " << m_partnerIp << ":" << m_partnerPort << endl;
 
     m_recvSocket->connect();
 }
 
-void DccTransferRecv::connectionSuccess()         // slot
+bool DccTransferRecv::startListeningForSender()
 {
-    kdDebug() << "DccTransferRecv::connectionSuccess()" << endl;
+    // Set up server socket
+    QString failedReason;
+    m_serverSocket = DccCommon::createServerSocketAndListen( this, &failedReason );
+    if ( !m_serverSocket )
+    {
+        failed( failedReason );
+        return false;
+    }
+
+   connect( m_serverSocket, SIGNAL( readyAccept() ),   this, SLOT( slotServerSocketReadyAccept() ) );
+   connect( m_serverSocket, SIGNAL( gotError( int ) ), this, SLOT( slotSereerSocketGotError( int ) ) );
+
+    return true;
+}
+
+void DccTransferRecv::slotServerSocketReadyAccept()
+{
+    //stopConnectionTimer()
+
+    m_recvSocket = static_cast<KNetwork::KStreamSocket*>( m_serverSocket->accept() );
+    if ( !m_recvSocket )
+    {
+        failed( i18n( "Could not accept the connection. (Socket Error)" ) );
+        return;
+    }
+
+    // we don't need ServerSocket anymore
+    m_serverSocket->close();
+
+    startReceiving();
+}
+
+void DccTransferRecv::slotServerSocketGotError( int /* errorCode*/ )
+{
+    failed( i18n( "Socket error: %1" ).arg( m_serverSocket->errorString() ) );
+}
+
+void DccTransferRecv::startReceiving()
+{
+    kdDebug() << "DccTransferRecv::startReceiving()" << endl;
+
+    m_recvSocket->setBlocking( false );           // asynchronous mode
+
+    connect( m_recvSocket, SIGNAL( readyRead() ),                        this, SLOT( readData() )              );
+    connect( m_recvSocket, SIGNAL( readyWrite() ),                       this, SLOT( sendAck() )               );
+    connect( m_recvSocket, SIGNAL( gotError( int ) ),                    this, SLOT( connectionFailed( int ) ) );
+    connect( m_recvSocket, SIGNAL( closed() ),                           this, SLOT( slotSocketClosed() )      );
 
     setStatus( Transferring );
 
     m_transferStartPosition = m_transferringPosition;
 
     m_recvSocket->enableRead( true );
+    m_recvSocket->enableWrite( false );
 
     startTransferLogger();                          // initialize CPS counter, ETA counter, etc...
 }

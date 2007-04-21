@@ -1836,6 +1836,8 @@ void Server::addDccGet(const QString &sourceNick, const QStringList &dccArgument
     newDcc->setPartnerNick( sourceNick );
     newDcc->setPartnerIp( DccCommon::numericalIpToTextIp( dccArguments[1] ) );
     newDcc->setPartnerPort( dccArguments[2] );
+    if ( dccArguments[2] == "0" && dccArguments.count() == 5)  // Reverse DCC
+        newDcc->setReverse( true, dccArguments[4] );
 
     newDcc->setFileName( dccArguments[0] );
     newDcc->setFileSize( dccArguments[3].isEmpty() ? 0 : dccArguments[3].toULong() );
@@ -1889,6 +1891,12 @@ void Server::dccResumeGetRequest(const QString &sender, const QString &fileName,
     else
         result = outputFilter->resumeRequest(sender,fileName,port,startAt);
 
+    queue(result.toServer);
+}
+
+void Server::dccReverseSendAck(const QString& partnerNick,const QString& fileName,const QString& ownAddress,const QString& ownPort,unsigned long size,const QString& reverseToken)
+{
+    Konversation::OutputFilterResult result = outputFilter->acceptPassiveSendRequest(partnerNick,fileName,ownAddress,ownPort,size,reverseToken);
     queue(result.toServer);
 }
 

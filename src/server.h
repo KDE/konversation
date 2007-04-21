@@ -350,6 +350,7 @@ class Server : public QObject
         void dccPassiveSendRequest(const QString& recipient,const QString& fileName,const QString& address,unsigned long size,const QString& token);
         // invoked by DccTransferRecv
         void dccResumeGetRequest(const QString& sender,const QString& fileName,const QString& port,KIO::filesize_t startAt);
+        void dccReverseSendAck(const QString& partnerNick,const QString& fileName,const QString& ownAddress,const QString& ownPort,unsigned long size,const QString& reverseToken);
 
     signals:
         void nicknameChanged(const QString&);
