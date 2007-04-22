@@ -129,6 +129,16 @@ void DccChat::listenForPartner()
     kdDebug() << "DccChat::listenForPartner() [BEGIN]" << endl;
 
     // Set up server socket
+    QString failedReason;
+    m_listenSocket = DccCommon::createServerSocketAndListen( this, &failedReason );
+    if ( !m_listenSocket )
+    {
+        getTextView()->appendServerMessage( i18n( "DCC" ), i18n( "Could not open a socket for listening: %1" ).arg( failedReason ) );
+        return;
+    }
+
+    /*
+    //FIXME: REMOVE ME (obsolete)
     m_listenSocket = new KNetwork::KServerSocket( this );
     m_listenSocket->setFamily(KNetwork::KResolver::InetFamily);
 
@@ -163,6 +173,7 @@ void DccChat::listenForPartner()
             return;
         }
     }
+    */
 
     connect( m_listenSocket, SIGNAL(readyAccept()), this, SLOT(heardPartner()) );
 
