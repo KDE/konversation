@@ -399,66 +399,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
         // No CTCP, so it's an ordinary channel or query message
         else
         {
-            trailing=static_cast<KonversationApplication*>(kapp)->doAutoreplace(trailing,false);
-            if (isChan)
-            {
-                if(!isIgnore(prefix,Ignore::Channel))
-                {
-                    Channel* channel = server->getChannelByName(parameterList[0]);
-                    if(channel)
-                    {
-                        channel->append(sourceNick, trailing);
-
-                        if(sourceNick != server->getNickname())
-                        {
-                            QRegExp regexp("(^|[^\\d\\w])" +
-                                    QRegExp::escape(server->loweredNickname()) +
-                                    "([^\\d\\w]|$)");
-                            regexp.setCaseSensitive(false);
-                            if(trailing.find(regexp) !=-1 )
-                            {
-                                konv_app->notificationHandler()->nick(channel, sourceNick, trailing);
-                            }
-                            else
-                            {
-                                konv_app->notificationHandler()->message(channel, sourceNick, trailing);
-                            }
-                        }
-                    }
-                }
-            }
-            else
-            {
-                if(!isIgnore(prefix,Ignore::Query))
-                {
-                    NickInfoPtr nickinfo = server->obtainNickInfo(sourceNick);
-                    nickinfo->setHostmask(sourceHostmask);
-
-                    // Create a new query (server will check for dupes)
-                    query = server->addQuery(nickinfo, false /*we didn't initiate this*/ );
-
-                    // send action to query
-                    query->appendQuery(sourceNick, trailing, true /*use notifications if enabled - e.g. OSD */ );
-
-                    if(sourceNick != server->getNickname() && query)
-                    {
-                        QRegExp regexp("(^|[^\\d\\w])" +
-                                QRegExp::escape(server->loweredNickname()) +
-                                 "([^\\d\\w]|$)");
-                        regexp.setCaseSensitive(false);
-                        if(trailing.find(regexp) !=-1 )
-                        {
-                            konv_app->notificationHandler()->nick(query,
-                                    sourceNick, trailing);
-                        }
-                        else
-                        {
-                            konv_app->notificationHandler()->queryMessage(query,
-                                    sourceNick, trailing);
-                        }
-                    }
-                }
-            }
+            parsePrivMsg (prefix, parameterList, trailing);
         }
     }
     else if(command=="notice")
@@ -724,6 +665,10 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
         else if(command=="kick")
         {
             server->nickWasKickedFromChannel(parameterList[0],parameterList[1],prefix,trailing);
+        }
+        else if(command == "privmsg")
+        {
+            parsePrivMsg(prefix, parameterList, trailing);
         }
         // All yet unknown messages go into the frontmost window unaltered
         else
@@ -1937,6 +1882,91 @@ bool InputFilter::isWhoRequestUnderProcess(const QString& name) { return (whoReq
 void InputFilter::setLagMeasuring(bool state) { lagMeasuring=state; }
 
 bool InputFilter::getLagMeasuring()           { return lagMeasuring; }
+
+void InputFilter::parsePrivMsg(const QString& prefix,
+                               const QStringList& parameterList,
+                               QString trailing)
+{
+    int pos = prefix.find("!");
+    QString source;
+    QString sourceHostmask;
+
+    if(pos > 0)
+    {
+        source = prefix.left(pos);
+        sourceHostmask = prefix.mid(pos + 1);
+    }
+    else
+    {
+        source = prefix;
+    }
+
+    KonversationApplication* konv_app = static_cast<KonversationApplication*>(kapp);
+    trailing = konv_app->
+            doAutoreplace(trailing, false);
+
+    if(isAChannel(parameterList[0]))
+    {
+        if(!isIgnore(prefix, Ignore::Channel))
+        {
+            Channel* channel = server->getChannelByName(parameterList[0]);
+            if(channel)
+            {
+                channel->append(source, trailing);
+
+                if(source != server->getNickname())
+                {
+                    QRegExp regexp("(^|[^\\d\\w])" +
+                            QRegExp::escape(server->loweredNickname()) +
+                            "([^\\d\\w]|$)");
+                    regexp.setCaseSensitive(false);
+                    if(trailing.find(regexp) !=-1 )
+                    {
+                        konv_app->notificationHandler()->nick(channel,
+                                source, trailing);
+                    }
+                    else
+                    {
+                        konv_app->notificationHandler()->message(channel,
+                                source, trailing);
+                    }
+                }
+            }
+        }
+    }
+    else
+    {
+        if(!isIgnore(prefix,Ignore::Query))
+        {
+            NickInfoPtr nickinfo = server->obtainNickInfo(source);
+            nickinfo->setHostmask(sourceHostmask);
+
+            // Create a new query (server will check for dupes)
+            query = server->addQuery(nickinfo, false /*we didn't initiate this*/ );
+
+            // send action to query
+            query->appendQuery(source, trailing, true /*use notifications if enabled - e.g. OSD */ );
+
+            if(source != server->getNickname() && query)
+            {
+                QRegExp regexp("(^|[^\\d\\w])" +
+                        QRegExp::escape(server->loweredNickname()) +
+                        "([^\\d\\w]|$)");
+                regexp.setCaseSensitive(false);
+                if(trailing.find(regexp) !=-1 )
+                {
+                    konv_app->notificationHandler()->nick(query,
+                            source, trailing);
+                }
+                else
+                {
+                    konv_app->notificationHandler()->queryMessage(query,
+                            source, trailing);
+                }
+            }
+        }
+    }
+}
 
 #include "inputfilter.moc"
 
