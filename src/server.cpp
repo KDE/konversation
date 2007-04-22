@@ -1406,17 +1406,7 @@ void Server::ctcpReply(const QString &receiver,const QString &text)
 {
     queue("NOTICE "+receiver+" :"+'\x01'+text+'\x01');
 }
-/*
-QString Server::getNumericalIp(bool followDccSetting)
-{
-    QHostAddress ip;
-    QString sip = getIp(followDccSetting);
-    if(sip.isEmpty()) return sip;
-    ip.setAddress(sip);
 
-    return QString::number(ip.ip4Addr());
-}
-*/
 // Given a nickname, returns NickInfo object.   0 if not found.
 NickInfoPtr Server::getNickInfo(const QString& nickname)
 {
@@ -1949,36 +1939,6 @@ void Server::resumeDccGetTransfer(const QString &sourceNick, const QStringList &
                                   .arg( fileName,
                                         sourceNick ) );
     }
-
-    /*
-
-    // Check if there actually is a transfer going on on that port
-    DccTransferRecv* dccTransfer = KonversationApplication::instance()->dccTransferManager()->findStandbyRecvItemByOwnPort(dccArguments[1],true);
-
-    if(!dccTransfer)
-        // Check if there actually is a transfer going on with that name, could be behind a NAT
-        // so the port number may get changed
-        // mIRC substitutes this with "file.ext", so we have a problem here with mIRCs behind a NAT
-        dccTransfer = KonversationApplication::instance()->dccTransferManager()->findStandbyRecvItemByFileName(dccArguments[0],true);
-
-    if(dccTransfer)
-    {
-        // overcome mIRCs brain-dead "file.ext" substitution
-        appendMessageToFrontmost( i18n( "DCC" ),
-                                  i18n( "%1 = file name, %2 = nickname of sender, %3 = percentage of file size, %4 = file size",
-                                        "Resuming download of \"%1\" from %2 starting at %3% of %4..." )
-                                  .arg( dccTransfer->getFileName(),
-                                        sourceNick,
-                                        QString::number( dccTransfer->getProgress() ),
-                                        ( dccTransfer->getFileSize() == 0 ) ? i18n( "unknown size" ) : KIO::convertSize( dccTransfer->getFileSize() ) ) );
-        dccTransfer->startResume(dccArguments[2].toULong());
-    }
-    else
-    {
-        appendMessageToFrontmost(i18n("Error"),i18n("No DCC download running on port %1.").arg(dccArguments[1]));
-    }
-
-    */
 }
 
 void Server::resumeDccSendTransfer(const QString &sourceNick, const QStringList &dccArguments)
@@ -2014,45 +1974,6 @@ void Server::resumeDccSendTransfer(const QString &sourceNick, const QStringList 
                                   .arg( fileName,
                                         sourceNick ) );
     }
-
-    /*
-    // Check if there actually is a transfer going on on that port
-    DccTransferSend* dccTransfer = KonversationApplication::instance()->dccTransferManager()->findStandbySendItemByOwnPort(dccArguments[1]);
-
-    if(!dccTransfer)
-        // Check if there actually is a transfer going on with that name, could be behind a NAT
-        // so the port number may get changed
-        // mIRC substitutes this with "file.ext", so we have a problem here with mIRCs behind a NAT
-        dccTransfer = KonversationApplication::instance()->dccTransferManager()->findStandbySendItemByFileName(dccArguments[0]);
-
-    if(dccTransfer && dccTransfer->getStatus() == DccTransfer::WaitingRemote)
-    {
-        QString fileName=dccTransfer->getFileName();
-        if(dccTransfer->setResume(dccArguments[2].toULong()))
-        {
-            appendMessageToFrontmost( i18n( "DCC" ),
-                                      i18n( "%1 = file name, %2 = nickname of recipient, %3 = percentage of file size, %4 = file size",
-                                            "Resuming upload of \"%1\" to %2 starting at %3% of %4...")
-                                      .arg( fileName,
-                                            recipient,
-                                            QString::number(dccTransfer->getProgress()),
-                                            ( dccTransfer->getFileSize() == 0 ) ? i18n( "unknown size" ) : KIO::convertSize( dccTransfer->getFileSize() ) ) );
-            Konversation::OutputFilterResult result = outputFilter->acceptResumeRequest(recipient,
-                fileName, dccArguments[1], dccArguments[2].toUInt());
-            queue(result.toServer);
-            //appendMessageToFrontmost(result.typeString, result.output);
-        }
-        else
-        {
-            appendMessageToFrontmost(i18n("Error"),i18n("%1 = file name, %2 = nickname",
-                "Received invalid resume request for \"%1\" from %2.").arg(fileName, recipient));
-        }
-    }
-    else
-    {
-        appendMessageToFrontmost(i18n("Error"),i18n("No DCC upload running on port %1.").arg(dccArguments[1]));
-    }
-    */
 }
 
 void Server::dccGetDone(DccTransfer* item)

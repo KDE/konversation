@@ -252,45 +252,6 @@ void DccTransferSend::start()                     // public slot
             failed( failedReason );
             return;
         }
-        /*
-        // FIXME (OBSOLETE)
-        m_serverSocket = new KNetwork::KServerSocket( this );
-        m_serverSocket->setFamily( KNetwork::KResolver::InetFamily );
-
-                                                  // user is specifying ports
-        if ( Preferences::dccSpecificSendPorts() )
-        {
-            // set port
-            bool found = false;                       // whether succeeded to set port
-            unsigned long port = Preferences::dccSendPortsFirst();
-            for ( ; port <= Preferences::dccSendPortsLast() ; ++port )
-            {
-                kdDebug() << "DccTransferSend::start(): trying port " << port << endl;
-                m_serverSocket->setAddress( QString::number( port ) );
-                bool success = m_serverSocket->listen();
-                if ( found = ( success && m_serverSocket->error() == KNetwork::KSocketBase::NoError ) )
-                    break;
-                m_serverSocket->close();
-            }
-            if ( !found )
-            {
-                failed( i18n( "No vacant port" ) );
-                return;
-            }
-        }
-        else                                          // user isn't specifying ports
-        {
-            // Let the operating system choose a port
-            m_serverSocket->setAddress( "0" );
-
-            if ( !m_serverSocket->listen() )
-            {
-                kdDebug() << "DccTransferSend::start(): listen() failed!" << endl;
-                failed( i18n( "Could not open a socket" ) );
-                return;
-            }
-        }
-        */
 
         connect( m_serverSocket, SIGNAL( readyAccept() ),   this, SLOT( acceptClient() ) );
         connect( m_serverSocket, SIGNAL( gotError( int ) ), this, SLOT( slotGotSocketError( int ) ) );
@@ -298,12 +259,6 @@ void DccTransferSend::start()                     // public slot
 
         // Get own port number
         m_ownPort = QString::number( DccCommon::getServerSocketPort( m_serverSocket ) );
-        /*
-        // FIXME: REMOVE ME (obsolete)
-        KNetwork::KSocketAddress ipAddr = m_serverSocket->localAddress();
-        const struct sockaddr_in* socketAddress = (sockaddr_in*)ipAddr.address();
-        m_ownPort = QString::number( ntohs( socketAddress->sin_port ) );
-        */
 
         kdDebug() << "DccTransferSend::start(): own Address=" << m_ownIp << ":" << m_ownPort << endl;
 

@@ -140,50 +140,10 @@ void DccChat::listenForPartner()
         return;
     }
 
-    /*
-    //FIXME: REMOVE ME (obsolete)
-    m_listenSocket = new KNetwork::KServerSocket( this );
-    m_listenSocket->setFamily(KNetwork::KResolver::InetFamily);
-
-                                                  // user specifies ports
-    if(Preferences::dccSpecificChatPorts())
-    {
-        // set port
-        bool found = false;                       // wether succeeded to set port
-        unsigned long port = Preferences::dccChatPortsFirst();
-        for( ; port <= Preferences::dccChatPortsLast() ; ++port )
-        {
-            kdDebug() << "DccChat::listenForPartner(): trying port " << port << endl;
-            m_listenSocket->setAddress(QString::number(port));
-            bool success = m_listenSocket->listen();
-            if( found = ( success && m_listenSocket->error() == KNetwork::KSocketBase::NoError ) )
-                break;
-            m_listenSocket->close();
-        }
-        if(!found)
-        {
-            KMessageBox::sorry(this, i18n("There is no vacant port for DCC Chat."));
-            return;
-        }
-    }
-    else                                          // user doesn't specify ports
-    {
-        // Let the operating system choose a port
-        m_listenSocket->setAddress("0");
-        if(!m_listenSocket->listen())
-        {
-            kdDebug() << this << "DccChat::listenForPartner(): listen() failed!" << endl;
-            return;
-        }
-    }
-    */
-
     connect( m_listenSocket, SIGNAL(readyAccept()), this, SLOT(heardPartner()) );
 
     // Get our own port number
-    const KNetwork::KSocketAddress ipAddr = m_listenSocket->localAddress();
-    const struct sockaddr_in* socketAddress = (sockaddr_in*)ipAddr.address();
-    m_ownPort = ntohs( socketAddress->sin_port );
+    m_ownPort = DccCommon::getServerSocketPort( m_listenSocket );
     kdDebug() << "DccChat::listenForPartner(): using port " << m_ownPort << endl;
 
     getTextView()->appendServerMessage( i18n("DCC"), i18n("Offering DCC Chat connection to %1 on port %2...").arg( m_partnerNick ).arg( m_ownPort ) );
