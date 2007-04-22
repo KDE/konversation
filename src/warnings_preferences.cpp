@@ -130,7 +130,7 @@ void Warnings_Config::loadSettings()
     flagName = flagNames.section(",",i,i);
     item->setText(2,flagName);
 
-    if (flagName == "LargePaste")
+    if (flagName == "LargePaste" || flagName == "Invitation")
     {
         QString state = config->readEntry(flagName);
 
