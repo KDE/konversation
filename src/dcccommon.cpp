@@ -65,6 +65,7 @@ QString DccCommon::getOwnIp( Server* server )
         ownIp = server->getOwnIpByNetworkInterface();
     }
 
+    kdDebug() << "DccCommon::getOwnIp(): " << ownIp << endl;
     return ownIp;
 }
 
