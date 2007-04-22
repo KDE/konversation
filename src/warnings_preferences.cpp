@@ -68,7 +68,7 @@ void Warnings_Config::saveSettings()
     // save state of this item in hasChanged() list
     warningsChecked+=item->isOn();
 
-    if (item->text(2) == "LargePaste")
+    if (item->text(2) == "LargePaste" || item->text(2) == "Invitation")
     {
         if (item->isOn())
         {

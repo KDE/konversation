@@ -762,11 +762,6 @@
       <label></label>
       <whatsthis></whatsthis>
     </entry>
-    <entry key="AutojoinOnInvite" type="Bool">
-      <default>false</default>
-      <label></label>
-      <whatsthis></whatsthis>
-    </entry>
     <entry key="FixedMOTD" type="Bool">
       <default>true</default>
       <label></label>

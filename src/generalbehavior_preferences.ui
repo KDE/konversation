@@ -75,7 +75,7 @@ the Free Software Foundation; either version 2 of the License, or
                         <bool>false</bool>
                     </property>
                     <property name="text">
-                        <string>Only notify when a highlight is triggered or your current nick is used</string>
+                        <string>Only &amp;notify when a highlight is triggered or your current nick is used</string>
                     </property>
                 </widget>
                 <spacer row="2" column="0">
@@ -310,14 +310,6 @@ the Free Software Foundation; either version 2 of the License, or
                         <string>Use custom web &amp;browser:</string>
                     </property>
                 </widget>
-                <widget class="QCheckBox" row="2" column="0" rowspan="1" colspan="2">
-                    <property name="name">
-                        <cstring>kcfg_AutojoinOnInvite</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Automatically &amp;join channel on invite</string>
-                    </property>
-                </widget>
             </grid>
         </widget>
         <spacer>
@@ -339,8 +331,6 @@ the Free Software Foundation; either version 2 of the License, or
         </spacer>
     </vbox>
 </widget>
-<customwidgets>
-</customwidgets>
 <connections>
     <connection>
         <sender>kcfg_TrayNotify</sender>
@@ -371,7 +361,6 @@ the Free Software Foundation; either version 2 of the License, or
     <tabstop>kcfg_NickCompletionCaseSensitive</tabstop>
     <tabstop>kcfg_ShowServerList</tabstop>
     <tabstop>kcfg_DisableNotifyWhileAway</tabstop>
-    <tabstop>kcfg_AutojoinOnInvite</tabstop>
     <tabstop>kcfg_UseCustomBrowser</tabstop>
     <tabstop>kcfg_WebBrowserCmd</tabstop>
     <tabstop>kcfg_CommandChar</tabstop>
