@@ -14,8 +14,8 @@
   (at your option) any later version.
 */
 
-#include "dcccommon.h"
 #include "dcctransferrecv.h"
+#include "dcccommon.h"
 #include "channel.h"
 #include "dcctransfermanager.h"
 #include "konversationapplication.h"

@@ -86,20 +86,27 @@ Changes since 1.0.1:
   wasn't running.
 - Made "Alternate Background" colorchooser disable when unneeded.
 - Improved robustness of the Watched Nicknames Online system.
-- Replaced the DCC Transfer Details dialog with a retractable transfer details
-  pane directly in the DCC Status tab.
 - Implemented an additional "Sort by activity" nicklist sorting mode.
 - Added a Find Previous standard action.
 - Renamed the "File" menu to "Connection".
 - Have the "Insert Character" dialog pick up on ircview font changes.
-- DCC refactoring (in progress).
-- Passive DCC support (in progress).
+- Replaced the DCC Transfer Details dialog with a retractable transfer details
+  pane directly in the DCC Status tab.
+- Massive DCC refactoring and improved reliability.
+- Passive DCC support (Reverse DCC RECV, SEND).
 - Added option to not blink the systray icon, but just light it up.
 - Implemented Shift+Click to "Save as..." URLs from ircview.
 - Have the "Save as..." dialog suggest a file name.
 - Have the Edit/Delete/Up/Down buttons for the nickname list of an Identity
   correctly change state according to the selection.
 - Don't allow impossible ports to be set for servers.
+- Fixed the "Automatically join channel on invite" setting not to show an
+  inquiring dialog anyway.
+- Fixed the ircview date display not using the locale's date format.
+- Added support for PRIVMSG from the server.
+- Fixed URLs with encoded hash mark %23 being incorrectly passed off to handler
+  (143264).
+- A few speed optimizations and memory leak fixes.
 
 -------------------------------------------------------------------------------
 
