@@ -530,7 +530,7 @@ bool DccTransferRecv::startListeningForSender()
     }
 
    connect( m_serverSocket, SIGNAL( readyAccept() ),   this, SLOT( slotServerSocketReadyAccept() ) );
-   connect( m_serverSocket, SIGNAL( gotError( int ) ), this, SLOT( slotSereerSocketGotError( int ) ) );
+   connect( m_serverSocket, SIGNAL( gotError( int ) ), this, SLOT( slotServerSocketGotError( int ) ) );
 
     return true;
 }
@@ -610,6 +610,7 @@ void DccTransferRecv::sendAck()                   // slot
     {
         kdDebug() << "DccTransferRecv::sendAck(): Sent final ACK." << endl;
         m_recvSocket->enableRead( false );
+        disconnect( m_recvSocket, 0, 0, 0 );
         finishTransferLogger();
         m_writeCacheHandler->close();             // WriteCacheHandler will send the signal done()
     }
