@@ -130,7 +130,10 @@ void DccChat::listenForPartner()
 
     // Set up server socket
     QString failedReason;
-    m_listenSocket = DccCommon::createServerSocketAndListen( this, &failedReason );
+    if ( Preferences::dccSpecificChatPorts() )
+        m_listenSocket = DccCommon::createServerSocketAndListen( this, &failedReason, Preferences::dccChatPortsFirst(), Preferences::dccChatPortsLast() );
+    else
+        m_listenSocket = DccCommon::createServerSocketAndListen( this, &failedReason );
     if ( !m_listenSocket )
     {
         getTextView()->appendServerMessage( i18n( "DCC" ), i18n( "Could not open a socket for listening: %1" ).arg( failedReason ) );

@@ -69,19 +69,17 @@ QString DccCommon::getOwnIp( Server* server )
     return ownIp;
 }
 
-KNetwork::KServerSocket* DccCommon::createServerSocketAndListen( QObject* parent, QString* failedReason )
+KNetwork::KServerSocket* DccCommon::createServerSocketAndListen( QObject* parent, QString* failedReason, int minPort, int maxPort )
 {
     KNetwork::KServerSocket* socket = new KNetwork::KServerSocket( parent );
     socket->setFamily( KNetwork::KResolver::InetFamily );
 
-    if ( Preferences::dccSpecificSendPorts() )  // ports are configured manually
+    if ( minPort > 0 && maxPort >= minPort )  // ports are configured manually
     {
         // set port
         bool found = false;                       // whether succeeded to set port
-        unsigned long port = Preferences::dccSendPortsFirst();
-        for ( ; port <= Preferences::dccSendPortsLast() ; ++port )
+        for ( int port = minPort; port <= maxPort ; ++port )
         {
-            kdDebug() << "DccCommon::createServerSocket(): trying port " << port << endl;
             socket->setAddress( QString::number( port ) );
             bool success = socket->listen();
             if ( found = ( success && socket->error() == KNetwork::KSocketBase::NoError ) )
@@ -90,7 +88,8 @@ KNetwork::KServerSocket* DccCommon::createServerSocketAndListen( QObject* parent
         }
         if ( !found )
         {
-            *failedReason = i18n( "No vacant port" );
+            if ( failedReason )
+                *failedReason = i18n( "No vacant port" );
             delete socket;
             return 0;
         }
@@ -101,8 +100,8 @@ KNetwork::KServerSocket* DccCommon::createServerSocketAndListen( QObject* parent
         socket->setAddress( "0" );
         if ( !socket->listen() )
         {
-            kdDebug() << "DccCommon::createServerSocket(): listen() failed!" << endl;
-            *failedReason = i18n( "Could not open a socket" );
+            if ( failedReason )
+                *failedReason = i18n( "Could not open a socket" );
             delete socket;
             return 0;
         }

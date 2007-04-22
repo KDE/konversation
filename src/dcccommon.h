@@ -36,7 +36,7 @@ class DccCommon
         static QString getOwnIp( Server* server = 0 );
 
         // creates an instance of KNetwork::ServerSocket following the DCC settings
-        static KNetwork::KServerSocket* createServerSocketAndListen( QObject* parent = 0, QString* failedReason = 0 );
+        static KNetwork::KServerSocket* createServerSocketAndListen( QObject* parent = 0, QString* failedReason = 0, int minPort = 0, int maxPort = 0 );
 
         // returns the port number from a server socket
         static int getServerSocketPort( KNetwork::KServerSocket* serverSocket );

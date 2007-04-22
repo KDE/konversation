@@ -519,7 +519,10 @@ bool DccTransferRecv::startListeningForSender()
 {
     // Set up server socket
     QString failedReason;
-    m_serverSocket = DccCommon::createServerSocketAndListen( this, &failedReason );
+    if ( Preferences::dccSpecificSendPorts() )
+        m_serverSocket = DccCommon::createServerSocketAndListen( this, &failedReason, Preferences::dccSendPortsFirst(), Preferences::dccSendPortsLast() );
+    else
+        m_serverSocket = DccCommon::createServerSocketAndListen( this, &failedReason );
     if ( !m_serverSocket )
     {
         failed( failedReason );
