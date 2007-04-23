@@ -74,8 +74,7 @@ class InputFilter : public QObject
         void parseClientCommand(const QString &prefix, const QString &command, const QStringList &parameterList, const QString &trailing);
         void parseServerCommand(const QString &prefix, const QString &command, const QStringList &parameterList, const QString &trailing);
         void parseModes(const QString &sourceNick, const QStringList &parameterList);
-        void parsePrivMsg(const QString& prefix, const QStringList& parameterList,
-                          QString trailing);
+        void parsePrivMsg(const QString& prefix, const QStringList& parameterList, const QString& trailing);
 
         bool isAChannel(const QString &check);
         bool isIgnore(const QString &pattern, Ignore::Type type);

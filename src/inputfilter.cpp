@@ -1885,11 +1885,12 @@ bool InputFilter::getLagMeasuring()           { return lagMeasuring; }
 
 void InputFilter::parsePrivMsg(const QString& prefix,
                                const QStringList& parameterList,
-                               QString trailing)
+                               const QString& trailing)
 {
     int pos = prefix.find("!");
     QString source;
     QString sourceHostmask;
+    QString message(trailing);
 
     if(pos > 0)
     {
@@ -1902,8 +1903,7 @@ void InputFilter::parsePrivMsg(const QString& prefix,
     }
 
     KonversationApplication* konv_app = static_cast<KonversationApplication*>(kapp);
-    trailing = konv_app->
-            doAutoreplace(trailing, false);
+    message = konv_app->doAutoreplace(message, false);
 
     if(isAChannel(parameterList[0]))
     {
@@ -1912,7 +1912,7 @@ void InputFilter::parsePrivMsg(const QString& prefix,
             Channel* channel = server->getChannelByName(parameterList[0]);
             if(channel)
             {
-                channel->append(source, trailing);
+                channel->append(source, message);
 
                 if(source != server->getNickname())
                 {
@@ -1920,15 +1920,15 @@ void InputFilter::parsePrivMsg(const QString& prefix,
                             QRegExp::escape(server->loweredNickname()) +
                             "([^\\d\\w]|$)");
                     regexp.setCaseSensitive(false);
-                    if(trailing.find(regexp) !=-1 )
+                    if(message.find(regexp) !=-1 )
                     {
                         konv_app->notificationHandler()->nick(channel,
-                                source, trailing);
+                                source, message);
                     }
                     else
                     {
                         konv_app->notificationHandler()->message(channel,
-                                source, trailing);
+                                source, message);
                     }
                 }
             }
@@ -1945,7 +1945,7 @@ void InputFilter::parsePrivMsg(const QString& prefix,
             query = server->addQuery(nickinfo, false /*we didn't initiate this*/ );
 
             // send action to query
-            query->appendQuery(source, trailing, true /*use notifications if enabled - e.g. OSD */ );
+            query->appendQuery(source, message, true /*use notifications if enabled - e.g. OSD */ );
 
             if(source != server->getNickname() && query)
             {
@@ -1953,15 +1953,15 @@ void InputFilter::parsePrivMsg(const QString& prefix,
                         QRegExp::escape(server->loweredNickname()) +
                         "([^\\d\\w]|$)");
                 regexp.setCaseSensitive(false);
-                if(trailing.find(regexp) !=-1 )
+                if(message.find(regexp) !=-1 )
                 {
                     konv_app->notificationHandler()->nick(query,
-                            source, trailing);
+                            source, message);
                 }
                 else
                 {
                     konv_app->notificationHandler()->queryMessage(query,
-                            source, trailing);
+                            source, message);
                 }
             }
         }
