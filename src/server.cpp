@@ -472,7 +472,12 @@ void Server::connectToIRCServer()
 
 void Server::showSSLDialog()
 {
-    static_cast<SSLSocket*>(m_socket)->showInfoDialog();
+    SSLSocket* sslsocket = dynamic_cast<SSLSocket*>(m_socket);
+
+    if (sslsocket)
+    {
+        sslsocket->showInfoDialog();
+    }
 }
 
 // set available channel types according to 005 RPL_ISUPPORT
@@ -3209,12 +3214,19 @@ ViewContainer* Server::getViewContainer() const
 
 bool Server::getUseSSL() const
 {
-    return m_serverGroup->serverByIndex(m_currentServerIndex).SSLEnabled();
+    SSLSocket* sslsocket = dynamic_cast<SSLSocket*>(m_socket);
+
+    return (sslsocket != 0);
 }
 
 QString Server::getSSLInfo() const
 {
-    return static_cast<SSLSocket*>(m_socket)->details();
+    SSLSocket* sslsocket = dynamic_cast<SSLSocket*>(m_socket);
+
+    if(sslsocket)
+        return sslsocket->details();
+
+    return QString();
 }
 
 bool Server::connected() const
