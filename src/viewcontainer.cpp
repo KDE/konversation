@@ -1859,7 +1859,7 @@ void ViewContainer::insertIRCColor()
 {
     IRCColorChooser dlg(m_window);
 
-    if (dlg.exec() == QDialog::Accepted) m_frontView->appendInputText(dlg.color(), true/*fromCursor*/);
+    if (dlg.exec() == KDialog::Accepted) m_frontView->appendInputText(dlg.color(), true/*fromCursor*/);
 }
 
 void ViewContainer::insertRememberLine()
