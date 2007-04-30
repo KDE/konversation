@@ -224,7 +224,6 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent)
     m_findParagraph=0;
     m_findIndex=0;
     m_lastInsertionWasLine = false;
-    m_trimScrollBackRequested = false;
 
     setAutoFormatting(QTextEdit::AutoNone);
     setUndoRedoEnabled(0);
@@ -1140,16 +1139,9 @@ void IRCView::doAppend(const QString& newLine, bool self)
 
     //Explanation: the scrolling mechanism cannot handle the buffer changing when the scrollbar is not
     // at an end, so the scrollbar wets its pants and forgets who it is for ten minutes
-    if (doScroll && !m_trimScrollBackRequested)
+    if (doScroll)
     {
-        int sbm = Preferences::scrollbackMax();
-        if (sbm)
-        {
-            // Delay the triming of the scroll back buffer so we don't do it for every line in
-            // high traffic channels.
-            QTimer::singleShot(1000, this, SLOT(trimScrollBack()));
-            m_trimScrollBackRequested = true;
-        }
+        trimScrollBack();
     }
 
     KTextBrowser::viewport()->setUpdatesEnabled(up);
@@ -1178,10 +1170,9 @@ void IRCView::doAppend(const QString& newLine, bool self)
 
 void IRCView::trimScrollBack()
 {
-    m_trimScrollBackRequested = false;
     int sbm = Preferences::scrollbackMax();
 
-    if (sbm == 0) return;
+    if (sbm <= 0) return;
 
     //Explanation: the scrolling mechanism cannot handle the buffer changing when the scrollbar is not
     // at an end, so the scrollbar wets its pants and forgets who it is for ten minutes
@@ -1192,19 +1183,21 @@ void IRCView::trimScrollBack()
 
         int paraFrom, indexFrom, paraTo, indexTo;
         getSelection(&paraFrom, &indexFrom, &paraTo, &indexTo); // Remember the selection so we don't loose it when removing lines
-        int numRemoved = 0;
+        int numRemoved = paragraphs() - sbm;
 
-        for (sbm = paragraphs() - sbm; sbm > 0; --sbm)
+        for (sbm = numRemoved; sbm > 0; --sbm)
         {
             removeParagraph(0);
-            ++numRemoved;
         }
 
         resizeContents(contentsWidth(), document()->height());
 
-        if ((paraFrom - numRemoved) >= 0 && (paraTo - numRemoved) >= 0)
+        paraFrom -= numRemoved;
+        paraTo -= numRemoved;
+
+        if (paraFrom >= 0 && paraTo >= 0)
         {
-            setSelection(paraFrom - numRemoved, indexFrom, paraTo - numRemoved, indexTo);
+            setSelection(paraFrom, indexFrom, paraTo, indexTo);
         }
 
         KTextBrowser::viewport()->setUpdatesEnabled(up);

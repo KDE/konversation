@@ -212,7 +212,5 @@ class IRCView : public KTextBrowser
 
         ChatWindow* m_chatWin;
         friend class IRCStyleSheet;
-
-        bool m_trimScrollBackRequested;
 };
 #endif
