@@ -24,7 +24,7 @@
                 <cstring>groupBox1</cstring>
             </property>
             <property name="title">
-                <string>&amp;Highlight List</string>
+                <string>Highlight List</string>
             </property>
             <grid>
                 <property name="name">
