@@ -1178,9 +1178,6 @@ void IRCView::trimScrollBack()
     // at an end, so the scrollbar wets its pants and forgets who it is for ten minutes
     if (KTextBrowser::verticalScrollBar()->value() == KTextBrowser::verticalScrollBar()->maxValue())
     {
-        bool up = KTextBrowser::viewport()->isUpdatesEnabled();
-        KTextBrowser::viewport()->setUpdatesEnabled(false);
-
         int paraFrom, indexFrom, paraTo, indexTo;
         getSelection(&paraFrom, &indexFrom, &paraTo, &indexTo); // Remember the selection so we don't loose it when removing lines
         int numRemoved = paragraphs() - sbm;
@@ -1199,8 +1196,6 @@ void IRCView::trimScrollBack()
         {
             setSelection(paraFrom, indexFrom, paraTo, indexTo);
         }
-
-        KTextBrowser::viewport()->setUpdatesEnabled(up);
     }
 }
 
