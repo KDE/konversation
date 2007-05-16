@@ -7,12 +7,17 @@ $SERVER= shift;
 $TARGET= shift;
 
 my $i;
+my $command;
 
 if( $ARGV[0] eq "yes" ){
     exec 'dcop', $PORT, 'default', 'error', 'Requested command is not executed!';
 }
 
-$ARG_MESSAGE = `"@ARGV"`;
+foreach $word (@ARGV) {
+    $command = $command." ".$word;
+}
+
+$ARG_MESSAGE = `exec $command`;
 
 foreach $entry (split(/\n/, $ARG_MESSAGE)) {
     chomp $entry;
@@ -22,5 +27,5 @@ foreach $entry (split(/\n/, $ARG_MESSAGE)) {
 }
 
 unless($i) {
-    exec 'dcop', $PORT, 'default', 'error', 'Command @ARGV doesn\'t exist!';
+    exec 'dcop', $PORT, 'default', 'error', "Command @ARGV doesn't exist";
 }
