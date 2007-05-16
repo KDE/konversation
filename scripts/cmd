@@ -12,7 +12,7 @@ if( $ARGV[0] eq "yes" ){
     exec 'dcop', $PORT, 'default', 'error', 'Requested command is not executed!';
 }
 
-$ARG_MESSAGE = `@ARGV`;
+$ARG_MESSAGE = `"@ARGV"`;
 
 foreach $entry (split(/\n/, $ARG_MESSAGE)) {
     chomp $entry;
