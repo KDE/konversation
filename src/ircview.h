@@ -118,8 +118,6 @@ class IRCView : public KTextBrowser
         void highlightedSlot(const QString& link);
         void saveLinkAs(const QString& url);
 
-        void trimScrollBack();
-
     protected:
         void openLink(const QString &url, bool newTab=false);
         QString filter(const QString& line, const QString& defaultColor, const QString& who=NULL,

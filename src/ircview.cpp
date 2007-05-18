@@ -1141,7 +1141,34 @@ void IRCView::doAppend(const QString& newLine, bool self)
     // at an end, so the scrollbar wets its pants and forgets who it is for ten minutes
     if (doScroll)
     {
-        trimScrollBack();
+        int sbm = Preferences::scrollbackMax();
+
+        if(sbm)
+        {
+            //Explanation: the scrolling mechanism cannot handle the buffer changing when the scrollbar is not
+            // at an end, so the scrollbar wets its pants and forgets who it is for ten minutes
+            if (KTextBrowser::verticalScrollBar()->value() == KTextBrowser::verticalScrollBar()->maxValue())
+            {
+                int paraFrom, indexFrom, paraTo, indexTo;
+                getSelection(&paraFrom, &indexFrom, &paraTo, &indexTo); // Remember the selection so we don't loose it when removing lines
+                int numRemoved = paragraphs() - sbm;
+
+                for (sbm = numRemoved; sbm > 0; --sbm)
+                {
+                    removeParagraph(0);
+                }
+
+                resizeContents(contentsWidth(), document()->height());
+
+                paraFrom -= numRemoved;
+                paraTo -= numRemoved;
+
+                if (paraFrom >= 0 && paraTo >= 0)
+                {
+                    setSelection(paraFrom, indexFrom, paraTo, indexTo);
+                }
+            }
+        }
     }
 
     KTextBrowser::viewport()->setUpdatesEnabled(up);
@@ -1166,37 +1193,6 @@ void IRCView::doAppend(const QString& newLine, bool self)
     }
 
     if (!m_lastStatusText.isEmpty()) emit clearStatusBarTempText();
-}
-
-void IRCView::trimScrollBack()
-{
-    int sbm = Preferences::scrollbackMax();
-
-    if (sbm <= 0) return;
-
-    //Explanation: the scrolling mechanism cannot handle the buffer changing when the scrollbar is not
-    // at an end, so the scrollbar wets its pants and forgets who it is for ten minutes
-    if (KTextBrowser::verticalScrollBar()->value() == KTextBrowser::verticalScrollBar()->maxValue())
-    {
-        int paraFrom, indexFrom, paraTo, indexTo;
-        getSelection(&paraFrom, &indexFrom, &paraTo, &indexTo); // Remember the selection so we don't loose it when removing lines
-        int numRemoved = paragraphs() - sbm;
-
-        for (sbm = numRemoved; sbm > 0; --sbm)
-        {
-            removeParagraph(0);
-        }
-
-        resizeContents(contentsWidth(), document()->height());
-
-        paraFrom -= numRemoved;
-        paraTo -= numRemoved;
-
-        if (paraFrom >= 0 && paraTo >= 0)
-        {
-            setSelection(paraFrom, indexFrom, paraTo, indexTo);
-        }
-    }
 }
 
 // remember if scrollbar was positioned at the end of the text or not

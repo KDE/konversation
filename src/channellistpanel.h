@@ -141,5 +141,7 @@ class ChannelListPanel : public ChatWindow
         KLineEdit* filterInput;
 
         QString filterText;
+
+        int m_oldSortColumn;
 };
 #endif

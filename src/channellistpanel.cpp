@@ -46,6 +46,8 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
     setType(ChatWindow::ChannelList);
     setName(i18n("Channel List"));
 
+    m_oldSortColumn = 0;
+
     setNumChannels(0);
     setNumUsers(0);
     setVisibleChannels(0);
@@ -106,6 +108,7 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
     channelListView->addColumn(i18n("Channel Topic"));
     channelListView->setAllColumnsShowFocus(true);
     channelListView->setResizeMode( KListView::LastColumn );
+    channelListView->setSortColumn(-1); //Disable sorting
 
     QHBox* statsBox=new QHBox(this);
     statsBox->setSpacing(spacing());
@@ -274,7 +277,11 @@ void ChannelListPanel::addToChannelList(const QString& channel,int users,const Q
     if(!updateTimer.isActive())
     {
         updateTimer.start(10);
-        channelListView->setUpdatesEnabled(false);
+
+        if(channelListView->sortColumn() != -1)
+            m_oldSortColumn = channelListView->sortColumn();
+
+        channelListView->setSortColumn(-1); //Disable sorting
     }
 }
 
@@ -297,8 +304,7 @@ void ChannelListPanel::updateDisplay()
     {
         updateTimer.stop();
         updateUsersChannels();
-        channelListView->setUpdatesEnabled(true);
-        channelListView->triggerUpdate();
+        channelListView->setSortColumn(m_oldSortColumn); //Disable sorting
         applyFilter->setEnabled(true);
         refreshListButton->setEnabled(true);
     }
