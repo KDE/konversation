@@ -16,6 +16,7 @@
 #include "channel.h"
 #include "channellistviewitem.h"
 #include "server.h"
+#include "common.h"
 
 #include <qhbox.h>
 #include <qvbox.h>
@@ -263,7 +264,8 @@ void ChannelListPanel::joinChannelClicked()
 
 void ChannelListPanel::addToChannelList(const QString& channel,int users,const QString& topic)
 {
-    pendingChannels.append(channel+' '+QString::number(users)+' '+topic);
+    pendingChannels.append(channel + ' ' + QString::number(users)
+            + ' ' + Konversation::removeIrcMarkup(topic));
 
     // set internal numbers of channels and users, display will be updated by a timer
     setNumChannels(getNumChannels()+1);
@@ -307,28 +309,28 @@ void ChannelListPanel::filterTextChanged(const QString& newText)
     filterText=newText;
 }
 
-int ChannelListPanel::getNumChannels()     
-{ 
+int ChannelListPanel::getNumChannels()
+{
   return numChannels; 
 }
 
 int ChannelListPanel::getNumUsers()
-{ 
+{
   return numUsers; 
 }
 
-void ChannelListPanel::setNumChannels(int num) 
-{ 
+void ChannelListPanel::setNumChannels(int num)
+{
   numChannels=num; 
 }
 
-void ChannelListPanel::setNumUsers(int num)    
+void ChannelListPanel::setNumUsers(int num)
 { 
   numUsers=num; 
 }
 
 int ChannelListPanel::getVisibleChannels() 
-{ 
+{
   return visibleChannels; 
 }
 
