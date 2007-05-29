@@ -408,6 +408,12 @@ void IRCInput::paste()
         while(pasteText.contains(reBottomSpace))
             pasteText.remove(reBottomSpace);
 
+        // Escape % when var expansion is enabled
+        if (!Preferences::disableExpansion())
+        {
+            pasteText.replace ('%', "%%");
+        }
+
         // does the text contain at least one newline character?
         if(pasteText.find('\n')!=-1)
         {
