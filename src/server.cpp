@@ -446,8 +446,8 @@ void Server::connectToIRCServer()
         {
             m_socket = new SSLSocket(getViewContainer()->getWindow(), 0L, "serverSSLSocket");
             connect(m_socket,SIGNAL (sslInitDone()),this,SLOT (ircServerConnectionSuccess()));
-            connect(m_socket,SIGNAL (sslFailure(QString)),this,SIGNAL(sslInitFailure()));
-            connect(m_socket,SIGNAL (sslFailure(QString)),this,SLOT(sslError(QString)));
+            connect(m_socket,SIGNAL (sslFailure(const QString&)),this,SIGNAL(sslInitFailure()));
+            connect(m_socket,SIGNAL (sslFailure(const QString&)),this,SLOT(sslError(const QString&)));
         }
 
         connect(m_socket,SIGNAL (hostFound()),this,SLOT(lookupFinished()));

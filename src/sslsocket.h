@@ -45,7 +45,7 @@ class SSLSocket : public KStreamSocket
         /** Emitted when there is a problem with SSL
          *  @param reason An error string that has already been through i18n
          */
-        void sslFailure(QString reason);
+        void sslFailure(const QString& reason);
         void sslInitDone();
 
     private:
