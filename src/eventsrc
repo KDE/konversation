@@ -176,6 +176,7 @@ Name[pt_BR]=Mensagem particular
 Name[sv]=Privat meddelande
 Name[tr]=Özel ileti
 Name[uk]=Приватне повідомлення
+Name[xx]=xxPrivate messagexx
 Comment=You received a private message
 Comment[bg]=Получихте лично съобщение
 Comment[cs]=Obdrželi jste soukromou zprávu
@@ -193,6 +194,7 @@ Comment[pt_BR]=Você recebeu uma mensagem particular
 Comment[sv]=Du har tagit emot ett privat meddelande
 Comment[tr]=Bir özel ileti aldınız
 Comment[uk]=Ви отримали приватне повідомлення
+Comment[xx]=xxYou received a private messagexx
 default_presentation=0
 
 [nickchange]
