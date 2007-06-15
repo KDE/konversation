@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 # Licensed under GPL v2 or later
 # Copyright 2007 Terence Simpson
