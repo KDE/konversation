@@ -3,5 +3,9 @@ PORT=$1
 SERVER=$2
 TARGET=$3
 export URL="$4"
-TINYURL="$(curl -s -i http://tinyurl.com/create.php?url=$URL|grep "The following URL" -A3|tail -1|awk -F\> '{print $3}'|sed 's,</b,,')"
-dcop $PORT default say $SERVER "$TARGET" "$TINYURL"
+
+if test ! -z $URL; then
+    TINYURL="$(curl -s -i http://tinyurl.com/create.php?url=$URL|grep "The following URL" -A3|tail -1|awk -F\> '{print $3}'|sed 's,</b,,')"
+    dcop $PORT default say $SERVER "$TARGET" "$TINYURL"
+fi
+
