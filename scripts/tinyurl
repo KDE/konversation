@@ -10,7 +10,6 @@ export URL="$4"
 
 if test ! -z $URL; then
     TINYURL="$(curl -s -i http://tinyurl.com/create.php?url=$URL|grep "The following URL" -A3|tail -1|awk -F\> '{print $3}'|sed 's,</b,,')"
-
     if test -z $TINYURL; then
         dcop $PORT default error "Unable run tinyurl script, please make sure you have curl installed"
     else
