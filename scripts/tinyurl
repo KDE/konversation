@@ -1,4 +1,8 @@
 #!/bin/bash
+#
+# Licensed under GPL v2 or later
+# Copyright 2007 Terence Simpson
+
 PORT=$1
 SERVER=$2
 TARGET=$3
