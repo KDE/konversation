@@ -10,22 +10,23 @@ SERVER=$2
 TARGET=$3
 export URL="$4"
 NICK="$5"
+
 if test ! -z $URL; then
   if test $(which curl);then
     TINYURL="$(curl -s -i http://tinyurl.com/create.php?url=$URL|grep "The following URL" -A3|tail -1|awk -F\> '{print $3}'|sed 's,</b,,')"
   else
     TINYURL="$(wget -T10 -t2 -qO- http://tinyurl.com/create.php?url=$URL|grep "The following URL" -A3|tail -1|awk -F\> '{print $3}'|sed 's,</b,,')"
-  fi    
+  fi
 else dcop $PORT default error "No url given: usage is \"/tinyurl URL [NickName]\""
-     exit 1
-    if test -z $TINYURL; then
-        dcop $PORT default error "Unable run tinyurl script, please make sure you have curl or wget installed"
-    else
-        if test ! -z $NICK;then
-            dcop $PORT default say $SERVER "$TARGET" "${NICK}: $TINYURL"
-        else
-            dcop $PORT default say $SERVER "$TARGET" "$TINYURL"
-        fi
-    fi
+    exit 1
 fi
 
+if test -z $TINYURL; then
+    dcop $PORT default error "Unable run tinyurl script, please make sure you have curl or wget installed"
+else
+    if test ! -z $NICK;then
+        dcop $PORT default say $SERVER "$TARGET" "${NICK}: $TINYURL"
+    else
+        dcop $PORT default say $SERVER "$TARGET" "$TINYURL"
+    fi
+fi
