@@ -107,6 +107,8 @@ Changes since 1.0.1:
 - Fixed URLs with encoded hash mark %23 being incorrectly passed off to handler
   (143264).
 - A few speed optimizations and memory leak fixes.
+- Return focus to the text display widget after closing the search bar in
+  a log reader view.
 
 -------------------------------------------------------------------------------
 
