@@ -109,6 +109,15 @@ Changes since 1.0.1:
 - A few speed optimizations and memory leak fixes.
 - Return focus to the text display widget after closing the search bar in
   a log reader view.
+- Fixed saving the state of the invitation dialog option in the Warning Dialogs
+  preferences.
+- Fixed a bug where the SSL padlock icon would be shown on a non-SSL connection
+  (and clicking would cause a crash).
+- Fixed using the wrong palette for the disabled text color in the nickname
+  list.
+- IRC markup is now removed from content in the Channel List view.
+- Speed improvements in Channel List views.
+- Fixed variable expansion causing certain URLs to be corrupted when pasted.
 
 -------------------------------------------------------------------------------
 
