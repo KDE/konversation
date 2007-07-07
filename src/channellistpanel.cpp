@@ -537,8 +537,8 @@ void ChannelListPanel::contextMenu (KListView* /* l */, QListViewItem* i, const 
             else if(href.startsWith("ftp.")) href="ftp://"+href;
 
             // Replace all spaces with %20 in href
-            href.replace(" ","%20");
-            href.replace("&","&&");
+            href.replace(' ', "%20");
+            href.replace('&', "&&");
 
             // next search begins right after the link
             pos+=url.length();
