@@ -35,6 +35,7 @@
 #include "tabnotifications_preferences.h"
 
 #include <qsplitter.h>
+#include <qcombobox.h>
 
 #include <klocale.h>
 #include <kdebug.h>
@@ -69,6 +70,9 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
 
   //Interface/Chat Window
   m_confChatWindowAppearanceWdg = new ChatWindowAppearance_Config( 0, "ChatWindowAppearance" );
+  m_confChatWindowAppearanceWdg->kcfg_TimestampFormat->insertItem("hh:mm");
+  m_confChatWindowAppearanceWdg->kcfg_TimestampFormat->insertItem("hh:mm:ss");
+  m_confChatWindowAppearanceWdg->kcfg_TimestampFormat->insertItem("h:m ap");
   pagePath.clear();
   pagePath << i18n("Interface") << i18n("Chat Window");
   addPage ( m_confChatWindowAppearanceWdg, pagePath, "view_text", i18n("Chat Window") );
