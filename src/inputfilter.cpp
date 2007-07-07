@@ -1363,7 +1363,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     if(voiceChannels.count())
                     {
                         server->appendMessageToFrontmost(i18n("Whois"),
-                            i18n("%1 has voice on channels:  %2")
+                            i18n("%1 has voice on channels: %2")
                             .arg(parameterList[1]).arg(voiceChannels.join(" "))
                             );
                     }
