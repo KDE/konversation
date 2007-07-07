@@ -38,7 +38,7 @@ class IRCView : public KTextBrowser
 {
     Q_OBJECT
 
-        public:
+    public:
         IRCView(QWidget* parent,Server* newServer);
         ~IRCView();
 
@@ -93,7 +93,7 @@ class IRCView : public KTextBrowser
         void append(const QString& nick, const QString& message);
         void appendLine();
         void appendRaw(const QString& message, bool suppressTimestamps=false, bool self = false);
-        void appendQuery(const QString& nick, const QString& message);
+        void appendQuery(const QString& nick, const QString& message, bool inChannel = false);
         void appendAction(const QString& nick, const QString& message);
         void appendServerMessage(const QString& type, const QString& message, bool parseURL = true);
         void appendCommandMessage(const QString& command, const QString& message, bool important,
@@ -150,7 +150,7 @@ class IRCView : public KTextBrowser
         QString timeStamp();
 
         /// Returns a formated nick string
-        QString createNickLine(const QString& nick, bool encapsulateNick = true);
+        QString createNickLine(const QString& nick, bool encapsulateNick = true, bool privMsg = false);
 
         // used by search function
         int m_findParagraph;

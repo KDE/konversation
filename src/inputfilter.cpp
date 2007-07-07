@@ -184,7 +184,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                     query = server->addQuery(nickinfo, false /* we didn't initiate this*/ );
 
                     // send action to query
-                    query->appendAction(sourceNick,ctcpArgument, true /*use notifications if enabled - e.g. OSD */);
+                    query->appendAction(sourceNick,ctcpArgument);
 
                     if(sourceNick != server->getNickname() && query)
                     {
@@ -1945,7 +1945,7 @@ void InputFilter::parsePrivMsg(const QString& prefix,
             query = server->addQuery(nickinfo, false /*we didn't initiate this*/ );
 
             // send action to query
-            query->appendQuery(source, message, true /*use notifications if enabled - e.g. OSD */ );
+            query->appendQuery(source, message);
 
             if(source != server->getNickname() && query)
             {

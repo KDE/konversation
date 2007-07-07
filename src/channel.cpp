@@ -906,7 +906,7 @@ void Channel::sendChannelText(const QString& sendLine)
             if(result.type == Konversation::Action) appendAction(m_server->getNickname(), result.output);
             else if(result.type == Konversation::Command) appendCommandMessage(result.typeString, result.output);
             else if(result.type == Konversation::Program) appendServerMessage(result.typeString, result.output);
-            else if(result.type == Konversation::PrivateMessage) appendQuery(result.typeString, result.output);
+            else if(result.type == Konversation::PrivateMessage) appendQuery(result.typeString, result.output, true);
             else append(m_server->getNickname(), result.output);
         }
         else if (result.outputList.count())
@@ -2620,7 +2620,7 @@ void Channel::append(const QString& nickname, const QString& message)
     nickActive(nickname);
 }
 
-void Channel::appendAction(const QString& nickname, const QString& message, bool usenotifications)
+void Channel::appendAction(const QString& nickname, const QString& message)
 {
     if(nickname != getServer()->getNickname()) {
         Nick* nick = getNickByName(nickname);
@@ -2630,7 +2630,7 @@ void Channel::appendAction(const QString& nickname, const QString& message, bool
         }
     }
 
-    ChatWindow::appendAction(nickname, message, usenotifications);
+    ChatWindow::appendAction(nickname, message);
     nickActive(nickname);
 }
 

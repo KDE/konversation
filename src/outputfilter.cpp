@@ -704,7 +704,7 @@ namespace Konversation
         if(output.isEmpty()) return result;       //result should be completely empty;
         //FIXME - don't do below line if query is focused
         result.output = output;
-        result.typeString= "-> " + recipient;
+        result.typeString= recipient;
         result.type = PrivateMessage;
         return result;
     }

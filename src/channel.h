@@ -83,7 +83,7 @@ class Channel : public ChatWindow
         virtual bool searchView();
 
         virtual void append(const QString& nickname,const QString& message);
-        virtual void appendAction(const QString& nickname,const QString& message, bool usenotifications = false);
+        virtual void appendAction(const QString& nickname,const QString& message);
         void nickActive(const QString& nickname);
 
 //General administrative stuff

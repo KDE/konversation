@@ -77,8 +77,8 @@ class ChatWindow : public QVBox
         virtual void insertRememberLine();
         virtual void append(const QString& nickname,const QString& message);
         virtual void appendRaw(const QString& message, bool suppressTimestamps=false);
-        virtual void appendQuery(const QString& nickname,const QString& message, bool usenotifications = false);
-        virtual void appendAction(const QString& nickname,const QString& message, bool usenotifications = false);
+        virtual void appendQuery(const QString& nickname,const QString& message, bool inChannel = false);
+        virtual void appendAction(const QString& nickname,const QString& message);
         virtual void appendServerMessage(const QString& type,const QString& message, bool parseURL = true);
         virtual void appendCommandMessage(const QString& command, const QString& message, bool important = true,
             bool parseURL = true, bool self = false);

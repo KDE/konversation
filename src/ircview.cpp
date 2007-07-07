@@ -767,7 +767,7 @@ bool doHighlight, bool parseURL, bool self)
     return filteredLine;
 }
 
-QString IRCView::createNickLine(const QString& nick, bool encapsulateNick)
+QString IRCView::createNickLine(const QString& nick, bool encapsulateNick, bool privMsg)
 {
     QString nickLine = "%2";
 
@@ -775,6 +775,11 @@ QString IRCView::createNickLine(const QString& nick, bool encapsulateNick)
     {
         // HACK:Use space as a placeholder for \ as Qt tries to be clever and does a replace to / in urls in QTextEdit
         nickLine = "<a href=\"#" + QString(nick).replace('\\', " ") + "\">%2</a>";
+    }
+
+    if(privMsg)
+    {
+        nickLine.prepend ("-&gt; ");
     }
 
     if(encapsulateNick)
@@ -900,8 +905,9 @@ void IRCView::appendRaw(const QString& message, bool suppressTimestamps, bool se
     m_lastInsertionWasLine = false;
 }
 
-void IRCView::appendQuery(const QString& nick,const QString& message)
+void IRCView::appendQuery(const QString& nick, const QString& message, bool inChannel)
 {
+    kdDebug() << "In channel: " << inChannel << endl;
     QString queryColor=Preferences::color(Preferences::QueryMessage).name();
 
     if(queryColor  == "#000000")
@@ -912,7 +918,7 @@ void IRCView::appendQuery(const QString& nick,const QString& message)
     QString line;
     m_tabNotification = Konversation::tnfPrivate;
 
-    QString nickLine = createNickLine(nick);
+    QString nickLine = createNickLine(nick, true, inChannel);
 
     if(basicDirection(message) == QChar::DirR)
     {

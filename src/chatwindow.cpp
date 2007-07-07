@@ -171,13 +171,13 @@ void ChatWindow::append(const QString& nickname,const QString& message)
     textView->append(nickname,message);
 }
 
-void ChatWindow::appendQuery(const QString& nickname,const QString& message, bool)
+void ChatWindow::appendQuery(const QString& nickname,const QString& message, bool inChannel)
 {
     if(!textView) return ;
-    textView->appendQuery(nickname,message);
+    textView->appendQuery(nickname,message, inChannel);
 }
 
-void ChatWindow::appendAction(const QString& nickname,const QString& message, bool)
+void ChatWindow::appendAction(const QString& nickname,const QString& message)
 {
     if(!textView) return ;
     textView->appendAction(nickname,message);
