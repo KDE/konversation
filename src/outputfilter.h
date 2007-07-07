@@ -93,6 +93,7 @@ namespace Konversation
             void connectToServer(const QString& server, const QString& port, const QString& password);
 
             void showView(ChatWindow* view);
+            void encodingChanged ();
 
 
         public slots:
@@ -146,7 +147,7 @@ namespace Konversation
             OutputFilterResult parsePrefs(const QString& parameter);
             OutputFilterResult parseOmsg(const QString& parameter);
             OutputFilterResult parseOnotice(const QString& parameter);
-            void parseCharset(const QString& charset);
+            OutputFilterResult parseCharset(const QString& charset);
             void parseCycle();
             OutputFilterResult parseSetKey(const QString& parameter);
             OutputFilterResult parseDelKey(const QString& parameter);

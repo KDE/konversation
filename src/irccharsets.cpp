@@ -138,7 +138,8 @@ namespace Konversation
 
         // setup m_shortNameAliases
         // use only [a-z0-9] for keys!
-        m_shortNameAliases[ "unicode" ] = "utf8";
+        m_shortNameAliases["unicode"] = "utf8";
+        m_shortNameAliases["latin1"] = "iso-8859-1";
 
         // setup m_shortNames, m_descriptiveNames, m_simplifiedShortNames
         QRegExp reSimplify( "[^a-zA-Z0-9]" );

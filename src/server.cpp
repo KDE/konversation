@@ -282,6 +282,7 @@ void Server::connectSignals()
         this, SLOT(requestUnban(const QString&,const QString&)));
     connect(outputFilter, SIGNAL(openRawLog(bool)), this, SLOT(addRawLog(bool)));
     connect(outputFilter, SIGNAL(closeRawLog()), this, SLOT(closeRawLog()));
+    connect(outputFilter, SIGNAL(encodingChanged()), this, SLOT(updateEncoding()));
 
    // ViewContainer
     connect(this, SIGNAL(showView(ChatWindow*)), getViewContainer(), SLOT(showView(ChatWindow*)));
@@ -3455,6 +3456,12 @@ void Server::updateLongPongLag()
 void Server::resetMessageCount()
 {
     m_messageCount = 0;
+}
+
+void Server::updateEncoding()
+{
+    if(getViewContainer() && getViewContainer()->getFrontView())
+        getViewContainer()->updateViewEncoding(getViewContainer()->getFrontView());
 }
 
 #include "server.moc"

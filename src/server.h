@@ -503,6 +503,9 @@ class Server : public QObject
          */
         void resetMessageCount();
 
+        /// Update the encoding shown in the mainwindow's actions
+        void updateEncoding();
+
     protected:
         // constants
         static const int BUFFER_LEN=513;

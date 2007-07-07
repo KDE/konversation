@@ -313,7 +313,8 @@ namespace Konversation
             else if(command == "reconnect")  emit reconnectServer();
             else if(command == "disconnect") emit disconnectServer();
             else if(command == "prefs")    result = parsePrefs(parameter);
-            else if(command == "charset")  parseCharset(parameter);
+            else if(command == "charset")  result = parseCharset(parameter);
+            else if(command == "encoding")  result = parseCharset(parameter);
             else if(command == "setkey")   result = parseSetKey(parameter);
             else if(command == "delkey")   result = parseDelKey(parameter);
             else if(command == "dns")      result = parseDNS(parameter);
@@ -1711,11 +1712,31 @@ namespace Konversation
         return result;
     }
 
-    void OutputFilter::parseCharset(const QString& charset)
+    OutputFilterResult OutputFilter::parseCharset(const QString& charset)
     {
+        OutputFilterResult result;
+
+        if (charset.isEmpty ())
+        {
+            result = info (i18n("Current encoding is: %1")
+                    .arg(m_server->getIdentity()->getCodec()->name()));
+            return result;
+        }
+
         QString shortName = Konversation::IRCCharsets::self()->ambiguousNameToShortName(charset);
+
         if(!shortName.isEmpty())
+        {
             m_server->getIdentity()->setCodecName(shortName);
+            emit encodingChanged();
+            result = info (i18n("Switched to %1 encoding.").arg(shortName));
+        }
+        else
+        {
+            result = error(i18n("%1 isn't a valid encoding.").arg (charset));
+        }
+
+        return result;
     }
 
     OutputFilterResult OutputFilter::parseSetKey(const QString& parameter)
