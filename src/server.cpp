@@ -1864,10 +1864,16 @@ void Server::dccSendRequest(const QString &partner, const QString &fileName, con
 {
     Konversation::OutputFilterResult result = outputFilter->sendRequest(partner,fileName,address,port,size);
     queue(result.toServer);
+
+    QString showfile = fileName;
+
+    if(showfile.startsWith("\""))
+        showfile = showfile.mid(1, showfile.length() - 2);
+
     appendMessageToFrontmost( i18n( "DCC" ),
                               i18n( "Asking %1 to accept upload of \"%2\" (%3)..." )
                               .arg( partner,
-                                    fileName,
+                                    showfile,
                                     ( size == 0 ) ? i18n( "unknown size" ) : KIO::convertSize( size ) ) );
 }
 
