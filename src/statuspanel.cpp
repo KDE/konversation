@@ -71,6 +71,7 @@ StatusPanel::StatusPanel(QWidget* parent) : ChatWindow(parent)
     connect(statusInput,SIGNAL (submit()),this,SLOT(statusTextEntered()) );
     connect(statusInput,SIGNAL (textPasted(const QString&)),this,SLOT(textPasted(const QString&)) );
     connect(getTextView(), SIGNAL(textPasted(bool)), statusInput, SLOT(paste(bool)));
+    connect(getTextView(), SIGNAL(popupCommand(int)), this, SLOT(popupCommand(int)));
 
     connect(nicknameCombobox,SIGNAL (activated(int)),this,SLOT(nicknameComboboxChanged()));
     Q_ASSERT(nicknameCombobox->lineEdit());       //it should be editedable.  if we design it so it isn't, remove these lines.
@@ -380,6 +381,22 @@ void StatusPanel::setIdentity(const Identity *newIdentity)
     ChatWindow::setIdentity(newIdentity);
     nicknameCombobox->clear();
     nicknameCombobox->insertStringList(newIdentity->getNicknameList());
+}
+
+void StatusPanel::popupCommand(int command)
+{
+    switch(command)
+    {
+        case Konversation::Join:
+            m_server->queue("JOIN " + getTextView()->currentChannel());
+            break;
+        case Konversation::Topic:
+            m_server->requestTopic(getTextView()->currentChannel());
+            break;
+        case Konversation::Names:
+            m_server->queue("NAMES " + getTextView()->currentChannel());
+            break;
+    }
 }
 
 #include "statuspanel.moc"

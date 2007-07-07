@@ -74,6 +74,8 @@ class StatusPanel : public ChatWindow
         //Used to disable functions when not connected
         virtual void serverOnline(bool online);
 
+        void popupCommand(int command);
+
     protected:
 
         /** Called from ChatWindow adjustFocus */
