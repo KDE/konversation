@@ -25,7 +25,7 @@ seek(FORTUNES,0,0);
 srand;
 $LINE = RANDOM_INT(0,$TOTAL_LINES - 5);
 
-$MESSAGE = "%B%C4Random Fortune:%C%B ";
+$MESSAGE = "4Random Fortune: ";
 
 while (<FORTUNES>) {
     $LINE_COUNT++;
