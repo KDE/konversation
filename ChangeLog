@@ -118,6 +118,23 @@ Changes since 1.0.1:
 - IRC markup is now removed from content in the Channel List view.
 - Speed improvements in Channel List views.
 - Fixed variable expansion causing certain URLs to be corrupted when pasted.
+- Fixed the /fortune script not working properly when variable expansion is
+  turned off in the preferences. 
+- Fixed duplicated quotation marks around file names in DCC transfer status
+  messages.
+- Made the channel links context menu work in server status views.
+- Fixed keyboard accelerator collisions in Channel List views.
+- Fixed problems in disk space calculation in the /sysinfo script caused by
+  wrapped df(1) output.
+- Fixed nickname links in chat view messages created as a result of '/msg <nick>
+  <message>' commands erroneously prepending '->' to nicknames.
+- Cleanups in the nicklist item code.
+- Added an '/encoding' command as an aliasd to '/charset'.
+- '/charset' and '/encoding' now accept 'latin-1' as an alias for 'iso-8859-1'.
+- Update actions on charset changes.
+- Improved messages for the '/charset' and '/encoding' commands.
+- Fixed query view context menus operating on the wrong nickname under certain
+  circumstances.
 
 -------------------------------------------------------------------------------
 
