@@ -745,7 +745,6 @@ void IRCView::appendRaw(const QString& message, bool suppressTimestamps, bool se
 
 void IRCView::appendQuery(const QString& nick, const QString& message, bool inChannel)
 {
-    kdDebug() << "In channel: " << inChannel << endl;
     QString queryColor=Preferences::color(Preferences::QueryMessage).name();
 
     if(queryColor  == "#000000")
