@@ -1839,10 +1839,15 @@ void Server::addDccGet(const QString &sourceNick, const QStringList &dccArgument
 
     if ( newDcc->queue() )
     {
+        QString showfile = newDcc->getFileName();
+
+        if(showfile.startsWith("\"") && showfile.endsWith("\""))
+            showfile = showfile.mid(1, showfile.length() - 2);
+
         appendMessageToFrontmost( i18n( "DCC" ),
                                   i18n( "%1 offers to send you \"%2\" (%3)..." )
                                   .arg( newDcc->getPartnerNick(),
-                                        newDcc->getFileName(),
+                                        showfile,
                                         ( newDcc->getFileSize() == 0 ) ? i18n( "unknown size" ) : KIO::convertSize( newDcc->getFileSize() ) ) );
 
         if(Preferences::dccAutoGet())
@@ -1867,7 +1872,7 @@ void Server::dccSendRequest(const QString &partner, const QString &fileName, con
 
     QString showfile = fileName;
 
-    if(showfile.startsWith("\""))
+    if(showfile.startsWith("\"") && showfile.endsWith("\""))
         showfile = showfile.mid(1, showfile.length() - 2);
 
     appendMessageToFrontmost( i18n( "DCC" ),
