@@ -8,41 +8,48 @@
 /*
   begin:     Fri Jan 25 2002
   copyright: (C) 2002 by Dario Abatianni
+             (C) 2007 Peter Simonsson <peter.simonsson@gmail.com>
   email:     eisfuchs@tigress.com
 */
 
 #ifndef NICK_H
 #define NICK_H
 
+#include <qobject.h>
+#include <klistview.h>
+
 #include "channelnick.h"
 
-
-class KListView;
-class NickListViewItem;
-
-class Nick
+class Nick : public QObject, public KListViewItem
 {
+    Q_OBJECT
     public:
         Nick(KListView *listView,
             const ChannelNickPtr& channelnick);
         ~Nick();
 
-        bool isAdmin() const;
-        bool isOwner() const;
-        bool isOp() const;
-        bool isHalfop() const;
-        bool hasVoice() const;
-
-        bool isSelected() const;
-
-        QString getNickname() const;
-        QString loweredNickname() const;
-        QString getHostmask() const;
-        NickInfoPtr getNickInfo() const;
         ChannelNickPtr getChannelNick() const;
+        int getSortingValue() const;
+
+        virtual void paintCell(QPainter * p, const QColorGroup & cg, int column, int width, int align);
+        virtual int compare(QListViewItem* item,int col,bool ascending) const;
+
+    public slots:
+        void refresh();
+
+    signals:
+        void refreshed();
 
     protected:
-        ChannelNickPtr channelnickptr;
-        NickListViewItem* listViewItem;
+        QString calculateLabel1();
+        QString calculateLabel2();
+
+    protected:
+        ChannelNickPtr m_channelnickptr;
+
+        QString label;
+        int m_height;
+        int m_flags;
+        bool m_away;
 };
 #endif

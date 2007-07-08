@@ -10,7 +10,7 @@ konversation_SOURCES = konviface.skel konviconfigdialog.cpp konversationstatusba
 	scriptlauncher.cpp rawlog.cpp konvdcop.cpp channellistpanel.cpp \
 	konsolepanel.cpp identity.cpp statuspanel.cpp \
 	dccrecipientdialog.cpp topiccombobox.cpp nicksonline.cpp dcctransferpanel.cpp dcctransferpanelitem.cpp \
-	nicklistviewitem.cpp highlight.cpp highlightviewitem.cpp modebutton.cpp \
+	highlight.cpp highlightviewitem.cpp modebutton.cpp \
 	ignore_preferencesui.ui ignore_preferences.cpp ignore.cpp nicklistview.cpp ircinput.cpp \
 	ignorelistviewitem.cpp images.cpp quickbutton.cpp chatwindow.cpp outputfilter.cpp 	query.cpp \
 	konversationapplication.cpp nick.cpp inputfilter.cpp channel.cpp 	ircview.cpp server.cpp main.cpp \

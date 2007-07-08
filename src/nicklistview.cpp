@@ -15,7 +15,6 @@
 #include "nicklistview.h"
 #include "konversationapplication.h"
 #include "images.h"
-#include "nicklistviewitem.h"
 #include "linkaddressbook/addressbook.h"
 
 #include <kpopupmenu.h>
@@ -173,14 +172,14 @@ void NickListView::setWhatsThis()
 
 void NickListView::refresh()
 {
-    QPtrList<QListViewItem> nicklist;
     QListViewItemIterator it(this);
 
     while (it.current())
     {
-        static_cast<NickListViewItem*>(it.current())->refresh();
+        static_cast<Nick*>(it.current())->refresh();
         ++it;
     }
+
     setWhatsThis();
 }
 

@@ -15,7 +15,6 @@
 #include "nicklisttooltip.h"
 #include "../nick.h"
 #include "../nicklistview.h"
-#include "../nicklistviewitem.h"
 #include "../nickinfo.h"
 #include "../common.h"
 
@@ -43,18 +42,17 @@ namespace Konversation
             return;
 
         QListViewItem *item = m_listView->itemAt( pos );
+
         if( !item )
             return;
-        NickListViewItem *ledItem = dynamic_cast<NickListViewItem *>( item );
-        Nick *nick = NULL;
-        if(ledItem)
-            nick = ledItem->getNick();
 
-        QString toolTip;
-        QRect itemRect = m_listView->itemRect( item );
+        Nick *nick = dynamic_cast<Nick*>( item );
 
         if(! nick )
             return;
+
+        QString toolTip;
+        QRect itemRect = m_listView->itemRect( item );
 
         uint leftMargin = m_listView->treeStepSize() *
             ( item->depth() + ( m_listView->rootIsDecorated() ? 1 : 0 ) ) +

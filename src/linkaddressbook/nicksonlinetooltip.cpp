@@ -16,7 +16,6 @@
 #include "nicklisttooltip.h"
 #include "../nick.h"
 #include "../nicklistview.h"
-#include "../nicklistviewitem.h"
 #include "../nickinfo.h"
 #include "../nicksonline.h"
 

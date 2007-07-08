@@ -1691,11 +1691,11 @@ void Server::requestBan(const QStringList& users,const QString& channel,const QS
             // if we found the nick try to find their hostmask
             if(targetNick)
             {
-                QString hostmask=targetNick->getHostmask();
+                QString hostmask=targetNick->getChannelNick()->getHostmask();
                 // if we found the hostmask, add it to the ban mask
                 if(!hostmask.isEmpty())
                 {
-                    mask=targetNick->getNickname()+'!'+hostmask;
+                    mask=targetNick->getChannelNick()->getNickname()+'!'+hostmask;
 
                     // adapt ban mask to the option given
                     if(option=="host")
@@ -1748,7 +1748,7 @@ void Server::requestDccSend(const QString &a_recipient)
             Nick* lookNick=nicks.first();
             while(lookNick)
             {
-                if(!nickList.contains(lookNick->getNickname())) nickList.append(lookNick->getNickname());
+                if(!nickList.contains(lookNick->getChannelNick()->getNickname())) nickList.append(lookNick->getChannelNick()->getNickname());
                 lookNick=nicks.next();
             }
             lookChannel=channelList.next();

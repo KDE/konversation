@@ -16,7 +16,6 @@
 #include "server.h"
 #include "nick.h"
 #include "nicklistview.h"
-#include "nicklistviewitem.h"
 #include "quickbutton.h"
 #include "modebutton.h"
 #include "ircinput.h"
@@ -360,10 +359,11 @@ void Channel::showOptionsDialog()
 void Channel::filesDropped(QDropEvent* e)
 {
     QPoint p(nicknameListView->contentsToViewport(e->pos()));
-    NickListViewItem* it = dynamic_cast<NickListViewItem*>(nicknameListView->itemAt(p));
+    Nick* it = dynamic_cast<Nick*>(nicknameListView->itemAt(p));
     if (!it) return;
     QStrList uris;
-    if (QUriDrag::decode(e,uris)) m_server->sendURIs(uris, it->getNick()->getNickname());
+    if (QUriDrag::decode(e,uris))
+        m_server->sendURIs(uris, it->getChannelNick()->getNickname());
 }
 
 void Channel::textPasted(const QString& text)
@@ -726,7 +726,7 @@ void Channel::completeNick()
                     {
                         nick = it.current();
 
-                        if(nick->getNickname().startsWith(pattern, Preferences::nickCompletionCaseSensitive()) &&
+                        if(nick->getChannelNick()->getNickname().startsWith(pattern, Preferences::nickCompletionCaseSensitive()) &&
                           (nick->getChannelNick()->timeStamp() > timeStamp))
                         {
                             timeStamp = nick->getChannelNick()->timeStamp();
@@ -745,7 +745,7 @@ void Channel::completeNick()
 
                 do
                 {
-                    QString lookNick = nicknameList.at(completionPosition)->getNickname();
+                    QString lookNick = nicknameList.at(completionPosition)->getChannelNick()->getNickname();
 
                     if(!prefixCharacter.isEmpty() && lookNick.contains(prefixCharacter))
                     {
@@ -946,7 +946,7 @@ QStringList Channel::getSelectedNickList()
 
         while(nick)
         {
-            if(nick->isSelected()) result.append(nick->getNickname());
+            if(nick->isSelected()) result.append(nick->getChannelNick()->getNickname());
             nick=nicknameList.next();
         }
     }
@@ -963,7 +963,7 @@ ChannelNickList Channel::getSelectedChannelNicks()
     {
         if(channelCommand)
         {
-            if(nick->getNickname() == textView->getContextNick())
+            if(nick->getChannelNick()->getNickname() == textView->getContextNick())
             {
                 result.append(nick->getChannelNick());
                 return result;
@@ -1053,7 +1053,7 @@ void Channel::addNickname(ChannelNickPtr channelnick)
 
     while((lookNick = it.current()) != 0)
     {
-        if(lookNick->loweredNickname() == nickname)
+        if(lookNick->getChannelNick()->loweredNickname() == nickname)
         {
             nick = lookNick;
             break;
@@ -1297,7 +1297,7 @@ Nick* Channel::getNickByName(const QString &lookname)
 
     while(it.current() != 0)
     {
-        if(it.current()->loweredNickname() == lcLookname)
+        if(it.current()->getChannelNick()->loweredNickname() == lcLookname)
             return it.current();
 
         ++it;
@@ -2239,9 +2239,9 @@ void Channel::autoUserhost()
 
         while((nick = it.current()) != 0)
         {
-            if(nick->getHostmask().isEmpty())
+            if(nick->getChannelNick()->getHostmask().isEmpty())
             {
-                if(limit--) nickString = nickString + nick->getNickname() + ' ';
+                if(limit--) nickString = nickString + nick->getChannelNick()->getNickname() + ' ';
                 else break;
             }
 
@@ -2274,7 +2274,7 @@ void Channel::setAutoUserhost(bool state)
             while(item)
             {
                 Nick* lookNick=getNickByName(item->text(1));
-                if(lookNick) item->setText(2,lookNick->getHostmask());
+                if(lookNick) item->setText(2,lookNick->getChannelNick()->getHostmask());
                 item=item->itemBelow();
             }
         }
@@ -2665,15 +2665,15 @@ int NickList::compareItems(QPtrCollection::Item item1, QPtrCollection::Item item
         int returnValue = static_cast<Nick*>(item2)->getChannelNick()->timeStamp() - static_cast<Nick*>(item1)->getChannelNick()->timeStamp();
 
         if(returnValue == 0) {
-            returnValue = QString::compare(static_cast<Nick*>(item1)->loweredNickname(),
-                                           static_cast<Nick*>(item2)->loweredNickname());
+            returnValue = QString::compare(static_cast<Nick*>(item1)->getChannelNick()->loweredNickname(),
+                                           static_cast<Nick*>(item2)->getChannelNick()->loweredNickname());
         }
 
         return returnValue;
     }
 
-    return QString::compare(static_cast<Nick*>(item1)->loweredNickname(),
-                            static_cast<Nick*>(item2)->loweredNickname());
+    return QString::compare(static_cast<Nick*>(item1)->getChannelNick()->loweredNickname(),
+                            static_cast<Nick*>(item2)->getChannelNick()->loweredNickname());
 }
 
 QString NickList::completeNick(const QString& pattern, bool& complete, QStringList& found,
@@ -2697,7 +2697,7 @@ QString NickList::completeNick(const QString& pattern, bool& complete, QStringLi
 
     while(it.current() != 0)
     {
-        newNick = it.current()->getNickname();
+        newNick = it.current()->getChannelNick()->getNickname();
 
         if(!prefix.isEmpty() && newNick.contains(prefixCharacter))
         {
@@ -2718,7 +2718,7 @@ QString NickList::completeNick(const QString& pattern, bool& complete, QStringLi
 
     while(it2.current() != 0)
     {
-        found.append(it2.current()->getNickname());
+        found.append(it2.current()->getChannelNick()->getNickname());
         ++it2;
     }
 
@@ -2760,7 +2760,7 @@ bool NickList::containsNick(const QString& nickname)
 
     while (it.current() != 0)
     {
-        if (it.current()->getNickname()==nickname)
+        if (it.current()->getChannelNick()->getNickname()==nickname)
             return true;
 
         ++it;
