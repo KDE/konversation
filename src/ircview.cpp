@@ -970,12 +970,15 @@ void IRCView::doAppend(const QString& newLine, bool self)
 
     KTextBrowser::viewport()->setUpdatesEnabled(false);
     int paraFrom, indexFrom, paraTo, indexTo;
-    getSelection(&paraFrom, &indexFrom, &paraTo, &indexTo); // Remember the selection so we don't loose it when adding the new line
+    bool textselected = hasSelectedText();
+
+    // Remember the selection so we don't loose it when adding the new line
+    if(textselected)
+        getSelection(&paraFrom, &indexFrom, &paraTo, &indexTo);
+
     KTextBrowser::append(line);
-    setSelection(paraFrom, indexFrom, paraTo, indexTo);
 
     document()->lastParagraph()->format();
-    resizeContents(contentsWidth(), document()->height());
 
     //Explanation: the scrolling mechanism cannot handle the buffer changing when the scrollbar is not
     // at an end, so the scrollbar wets its pants and forgets who it is for ten minutes
@@ -990,38 +993,28 @@ void IRCView::doAppend(const QString& newLine, bool self)
             // at an end, so the scrollbar wets its pants and forgets who it is for ten minutes
             if (KTextBrowser::verticalScrollBar()->value() == KTextBrowser::verticalScrollBar()->maxValue())
             {
-                int paraFrom, indexFrom, paraTo, indexTo;
-                bool textselected = hasSelectedText();
-
-                // Remember the selection so we don't loose it when removing lines
-                if(textselected)
-                    getSelection(&paraFrom, &indexFrom, &paraTo, &indexTo);
-
                 for (sbm = numRemoved; sbm > 0; --sbm)
                 {
                     removeParagraph(0);
                 }
 
-                resizeContents(contentsWidth(), document()->height());
-
-                // Restore selection
                 if(textselected)
                 {
                     paraFrom -= numRemoved;
                     paraTo -= numRemoved;
-
-                    if (paraFrom >= 0 && paraTo >= 0)
-                    {
-                        setSelection(paraFrom, indexFrom, paraTo, indexTo);
-                    }
                 }
             }
         }
     }
 
+    resizeContents(contentsWidth(), document()->height());
     KTextBrowser::viewport()->setUpdatesEnabled(up);
 
     if (doScroll) updateScrollBarPos();
+
+    // Restore selection
+    if(textselected && paraFrom >= 0 && paraTo >= 0)
+        setSelection(paraFrom, indexFrom, paraTo, indexTo);
 
     //FIXME: Disable auto-text for DCC Chats since we don't have a server
     // to parse wildcards.
