@@ -991,7 +991,12 @@ void IRCView::doAppend(const QString& newLine, bool self)
             if (KTextBrowser::verticalScrollBar()->value() == KTextBrowser::verticalScrollBar()->maxValue())
             {
                 int paraFrom, indexFrom, paraTo, indexTo;
-                getSelection(&paraFrom, &indexFrom, &paraTo, &indexTo); // Remember the selection so we don't loose it when removing lines
+                bool textselected = hasSelectedText();
+
+                // Remember the selection so we don't loose it when removing lines
+                if(textselected)
+                    getSelection(&paraFrom, &indexFrom, &paraTo, &indexTo);
+
                 for (sbm = numRemoved; sbm > 0; --sbm)
                 {
                     removeParagraph(0);
@@ -999,12 +1004,16 @@ void IRCView::doAppend(const QString& newLine, bool self)
 
                 resizeContents(contentsWidth(), document()->height());
 
-                paraFrom -= numRemoved;
-                paraTo -= numRemoved;
-
-                if (paraFrom >= 0 && paraTo >= 0)
+                // Restore selection
+                if(textselected)
                 {
-                    setSelection(paraFrom, indexFrom, paraTo, indexTo);
+                    paraFrom -= numRemoved;
+                    paraTo -= numRemoved;
+
+                    if (paraFrom >= 0 && paraTo >= 0)
+                    {
+                        setSelection(paraFrom, indexFrom, paraTo, indexTo);
+                    }
                 }
             }
         }
