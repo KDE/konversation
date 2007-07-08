@@ -989,8 +989,6 @@ void IRCView::doAppend(const QString& newLine, bool self)
 
         if(numRemoved >0)
         {
-            //Explanation: the scrolling mechanism cannot handle the buffer changing when the scrollbar is not
-            // at an end, so the scrollbar wets its pants and forgets who it is for ten minutes
             if (KTextBrowser::verticalScrollBar()->value() == KTextBrowser::verticalScrollBar()->maxValue())
             {
                 for (sbm = numRemoved; sbm > 0; --sbm)
