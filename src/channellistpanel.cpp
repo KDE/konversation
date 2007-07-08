@@ -66,8 +66,8 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
     QGrid* mainGrid=new QGrid(2,Qt::Vertical,filterGroup);
     mainGrid->setSpacing(spacing());
 
-    QLabel* minLabel=new QLabel(i18n("M&inimum users:"),mainGrid);
-    QLabel* maxLabel=new QLabel(i18n("Ma&ximum users:"),mainGrid);
+    QLabel* minLabel=new QLabel(i18n("Minimum users:"),mainGrid);
+    QLabel* maxLabel=new QLabel(i18n("Maximum users:"),mainGrid);
     QSpinBox* minUsersSpin=new QSpinBox(mainGrid,"min_users_spin");
     QWhatsThis::add(minUsersSpin, i18n("You can limit the channel list to those channels with a minimum number of users here. Choosing 0 disables this criterion."));
     QSpinBox* maxUsersSpin=new QSpinBox(mainGrid,"max_users_spin");
@@ -77,7 +77,7 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
     minLabel->setBuddy(minUsersSpin);
     maxLabel->setBuddy(maxUsersSpin);
 
-    QLabel* patternLabel=new QLabel(i18n("Filter &pattern:"),mainGrid);
+    QLabel* patternLabel=new QLabel(i18n("Filter pattern:"),mainGrid);
     new QLabel(i18n("Filter target:"),mainGrid);
 
     filterInput=new KLineEdit(mainGrid,"channel_list_filter_input");
@@ -89,10 +89,10 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
     QHBox* targetBox=new QHBox(mainGrid);
     targetBox->setSpacing(spacing());
 
-    channelFilter=new QCheckBox(i18n("&Channel"),targetBox,"filter_target_channel_check");
-    topicFilter=new QCheckBox(i18n("&Topic"),targetBox,"filter_target_topic_check");
-    regexpCheck=new QCheckBox(i18n("&Regular expression"),targetBox,"regexp_check");
-    applyFilter=new QPushButton(i18n("Appl&y Filter"),targetBox,"apply_filter_button");
+    channelFilter=new QCheckBox(i18n("Channel"),targetBox,"filter_target_channel_check");
+    topicFilter=new QCheckBox(i18n("Topic"),targetBox,"filter_target_topic_check");
+    regexpCheck=new QCheckBox(i18n("Regular expression"),targetBox,"regexp_check");
+    applyFilter=new QPushButton(i18n("Apply Filter"),targetBox,"apply_filter_button");
     QWhatsThis::add(applyFilter, i18n("Click here to retrieve the list of channels from the server and apply the filter."));
 
     channelFilter->setChecked(getChannelTarget());
@@ -121,9 +121,9 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
     QHBox* actionBox=new QHBox(this);
     actionBox->setSpacing(spacing());
 
-    refreshListButton=new QPushButton(i18n("Re&fresh List"),actionBox,"refresh_list_button");
-    QPushButton* saveListButton=new QPushButton(i18n("&Save List..."),actionBox,"save_list_button");
-    joinChannelButton=new QPushButton(i18n("&Join Channel"),actionBox,"join_channel_button");
+    refreshListButton=new QPushButton(i18n("Refresh List"),actionBox,"refresh_list_button");
+    QPushButton* saveListButton=new QPushButton(i18n("Save List..."),actionBox,"save_list_button");
+    joinChannelButton=new QPushButton(i18n("Join Channel"),actionBox,"join_channel_button");
     QWhatsThis::add(joinChannelButton, i18n("Click here to join the channel. A new tab is created for the channel."));
 
     connect(&updateTimer,SIGNAL (timeout()),this,SLOT (updateDisplay()));
