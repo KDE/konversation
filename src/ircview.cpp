@@ -981,9 +981,10 @@ void IRCView::doAppend(const QString& newLine, bool self)
     // at an end, so the scrollbar wets its pants and forgets who it is for ten minutes
     if (doScroll)
     {
-        int sbm = Preferences::scrollbackMax();
+        int sbm = Preferences::scrollbackMax(); //note: reused below
+        int numRemoved = paragraphs() - sbm;
 
-        if(sbm)
+        if(numRemoved >0)
         {
             //Explanation: the scrolling mechanism cannot handle the buffer changing when the scrollbar is not
             // at an end, so the scrollbar wets its pants and forgets who it is for ten minutes
@@ -991,8 +992,6 @@ void IRCView::doAppend(const QString& newLine, bool self)
             {
                 int paraFrom, indexFrom, paraTo, indexTo;
                 getSelection(&paraFrom, &indexFrom, &paraTo, &indexTo); // Remember the selection so we don't loose it when removing lines
-                int numRemoved = paragraphs() - sbm;
-
                 for (sbm = numRemoved; sbm > 0; --sbm)
                 {
                     removeParagraph(0);
