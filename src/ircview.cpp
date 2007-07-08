@@ -1320,7 +1320,9 @@ bool IRCView::contextMenu(QContextMenuEvent* ce)
     {
         updateNickMenuEntries(m_nickPopup, getContextNick());
 
-        m_nickPopup->exec(ce->globalPos());
+        if(m_nickPopup->exec(ce->globalPos()) == -1)
+            clearContextNick();
+
         m_isOnNick = false;
     }
     else if (m_server && m_isOnChannel && m_channelPopup->isEnabled())
