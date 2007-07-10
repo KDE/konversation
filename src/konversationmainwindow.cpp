@@ -351,22 +351,25 @@ bool KonversationMainWindow::queryClose()
 {
     KonversationApplication* konv_app = static_cast<KonversationApplication*>(kapp);
 
-    if (konv_app->sessionSaving() || sender() == m_trayIcon)
-        m_closeApp = true;
-
-    if (Preferences::showTrayIcon() && !m_closeApp)
+    if (!konv_app->sessionSaving())
     {
-        KMessageBox::information( this,
-            i18n("<p>Closing the main window will keep Konversation running in the system tray. "
-            "Use <b>Quit</b> from the <b>Konversation</b> menu to quit the application.</p>"),
-            i18n( "Docking in System Tray" ),  "HideOnCloseInfo" );
-        hide();
+        if (sender() == m_trayIcon)
+            m_closeApp = true;
 
-        return false;
+        if (Preferences::showTrayIcon() && !m_closeApp)
+        {
+            KMessageBox::information( this,
+                i18n("<p>Closing the main window will keep Konversation running in the system tray. "
+                "Use <b>Quit</b> from the <b>Konversation</b> menu to quit the application.</p>"),
+                i18n( "Docking in System Tray" ),  "HideOnCloseInfo" );
+            hide();
+
+            return false;
+        }
+
+        if (!Preferences::showTrayIcon() && confirmQuit() == KMessageBox::Cancel)
+            return false;
     }
-
-    if (!Preferences::showTrayIcon() && confirmQuit() == KMessageBox::Cancel)
-        return false;
 
     m_viewContainer->silenceViews();
 
