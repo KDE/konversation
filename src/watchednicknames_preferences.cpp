@@ -289,7 +289,9 @@ void WatchedNicknames_Config::newNotify()
   // update network and nickname inputs
   entrySelected(item);
   // unfold group branch in case it was empty before
-  listView->setOpen(item->parent(),true);
+  listView->ensureItemVisible(item);
+  nicknameInput->setFocus();
+  nicknameInput->selectAll();
   // tell the config system that something has changed
   emit modified();
 }
