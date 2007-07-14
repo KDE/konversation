@@ -988,18 +988,15 @@ void IRCView::doAppend(const QString& newLine, bool self)
 
         if(numRemoved >0)
         {
-            if (KTextBrowser::verticalScrollBar()->value() == KTextBrowser::verticalScrollBar()->maxValue())
+            for (sbm = numRemoved; sbm > 0; --sbm)
             {
-                for (sbm = numRemoved; sbm > 0; --sbm)
-                {
-                    removeParagraph(0);
-                }
+                removeParagraph(0);
+            }
 
-                if(textselected)
-                {
-                    paraFrom -= numRemoved;
-                    paraTo -= numRemoved;
-                }
+            if(textselected)
+            {
+                paraFrom -= numRemoved;
+                paraTo -= numRemoved;
             }
         }
     }
