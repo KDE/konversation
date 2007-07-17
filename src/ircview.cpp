@@ -979,16 +979,19 @@ void IRCView::doAppend(const QString& newLine, bool self)
 
     document()->lastParagraph()->format();
 
-    //Explanation: the scrolling mechanism cannot handle the buffer changing when the scrollbar is not
-    // at an end, so the scrollbar wets its pants and forgets who it is for ten minutes
-    if (doScroll)
+    // get maximum number of lines we want to have in the scollback buffer
+    int sbm = Preferences::scrollbackMax();
+
+    // Explanation: the scrolling mechanism cannot handle the buffer changing when the scrollbar is not
+    //              at an end, so the scrollbar wets its pants and forgets who it is for ten minutes
+    // Also make sure not to delete any lines if maximum lines of scrollback is set to 0 (unlimited)
+    if (sbm && doScroll)
     {
-        int sbm = Preferences::scrollbackMax(); //note: reused below
         int numRemoved = paragraphs() - sbm;
 
         if(numRemoved >0)
         {
-            for (sbm = numRemoved; sbm > 0; --sbm)
+            for (int index = numRemoved; index > 0; --index)
             {
                 removeParagraph(0);
             }
