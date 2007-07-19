@@ -159,11 +159,11 @@ void DccChat::connectToPartner()
     m_partnerHost=ip.toString();
 
     getTextView()->appendServerMessage( i18n( "DCC" ), i18n( "%1 = nickname, %2 = IP, %3 = port",
-        "Establishing DCC Chat connection to %1 (%2:%3)..." ).arg( m_partnerNick ).arg( m_partnerHost ).arg( m_ownPort ) );
+        "Establishing DCC Chat connection to %1 (%2:%3)..." ).arg( m_partnerNick ).arg( m_partnerHost ).arg( m_partnerPort ) );
 
-    m_sourceLine->setText( i18n( "%1 = nickname, %2 = IP, %3 = port", "DCC chat with %1 on %2:%3." ).arg( m_partnerNick ).arg( host ).arg( m_ownPort ) );
+    m_sourceLine->setText( i18n( "%1 = nickname, %2 = IP, %3 = port", "DCC chat with %1 on %2:%3." ).arg( m_partnerNick ).arg( host ).arg( m_partnerPort ) );
 
-    m_dccSocket = new KNetwork::KStreamSocket( m_partnerHost, QString::number( m_ownPort ), this );
+    m_dccSocket = new KNetwork::KStreamSocket( m_partnerHost, QString::number( m_partnerPort ), this );
 
     m_dccSocket->setBlocking(false);
     m_dccSocket->setFamily(KNetwork::KResolver::InetFamily);
