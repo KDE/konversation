@@ -47,10 +47,15 @@ void DccTransferDetailedInfoPanel::setItem( DccTransferPanelItem* item )
     // we can't do disconnect( m_item->transfer(), 0, this, 0 ) here
     // because m_item can have been deleted already.
 
-    // set up the auto view-udpate timer
+    // set up the auto view-update timer
     connect( m_autoViewUpdateTimer, SIGNAL( timeout() ), this, SLOT( updateView() ) );
 
     m_item = item;
+
+    // If the file is already being transferred, the timer must be started here,
+    // otherwise the information will not be updated every 0.5sec
+    if (m_item->transfer()->getStatus() == DccTransfer::Transferring)
+        m_autoViewUpdateTimer->start(500, false);
     connect( m_item->transfer(), SIGNAL( statusChanged( DccTransfer*, int, int ) ), this, SLOT( slotTransferStatusChanged( DccTransfer*, int, int ) ) );
 
     updateView();
@@ -129,7 +134,15 @@ void DccTransferDetailedInfoPanel::updateView()
         m_labelTransferringTime->setText( "" );
     else
     {
-        int transferringTime = transfer->getTimeTransferStarted().secsTo( transfer->getTimeTransferFinished() );
+        int transferringTime;
+
+        // The transfer is still in progress
+        if ( transfer->getTimeTransferFinished().isNull() )
+            transferringTime = transfer->getTimeTransferStarted().secsTo( QDateTime::currentDateTime() );
+        // The transfer has finished
+        else
+            transferringTime = transfer->getTimeTransferStarted().secsTo( transfer->getTimeTransferFinished() );
+
         if ( transferringTime >= 1 )
             m_labelTransferringTime->setText( DccTransferPanelItem::secToHMS( transferringTime ) );
         else
