@@ -1621,7 +1621,7 @@ void Server::closeQuery(const QString &name)
     // is deleted altogether in that case.
     QString lcNickname = name.lower();
     m_queryNicks.remove(lcNickname);
-    if (!isWatchedNick(nickname)) deleteNickIfUnlisted(nickname);
+    if (!isWatchedNick(lcNickname)) deleteNickIfUnlisted(lcNickname);
 }
 
 void Server::closeChannel(const QString& name)
