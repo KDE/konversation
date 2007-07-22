@@ -323,7 +323,6 @@ class Channel : public ChatWindow
         KLineEdit* limit; //TODO: this GUI element is the only storage for the mode
 
         NickListView* nicknameListView;
-        QColor abgCache; ///< Caches the alternate background color for the nicklist
         QHBox* commandLineBox;
         QVBox* nickListButtons;
         QGrid* buttonsGrid;

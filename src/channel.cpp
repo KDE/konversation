@@ -256,8 +256,6 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent), key(" ")
 
     getTextView()->setSizePolicy(greedy);
     nicknameListView->setSizePolicy(hmodest);
-    // remember alternate background color
-    abgCache=nicknameListView->alternateBackground();
 
     connect(channelInput,SIGNAL (submit()),this,SLOT (channelTextEntered()) );
     connect(channelInput,SIGNAL (envelopeCommand()),this,SLOT (channelPassthroughCommand()) );
@@ -2066,7 +2064,7 @@ void Channel::updateAppearance()
         fg=colorGroup().foreground();
         bg=colorGroup().base();
         // get alternate background color from cache
-        abg=abgCache;
+        abg=nicknameListView->alternateBackground();
     }
 
     channelInput->unsetPalette();
