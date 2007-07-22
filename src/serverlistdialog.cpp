@@ -6,7 +6,7 @@
 */
 
 /*
-  Copyright (C) 2004 Peter Simonsson <psn@linux.se>
+  Copyright (C) 2004, 2007 Peter Simonsson <psn@linux.se>
   Copyright (C) 2006 Eike Hein <hein@kde.org>
 */
 
@@ -21,6 +21,7 @@
 #include <qstringlist.h>
 #include <qwhatsthis.h>
 #include <qheader.h>
+#include <qcheckbox.h>
 
 #include <klocale.h>
 #include <kdebug.h>
@@ -127,12 +128,17 @@ namespace Konversation
         m_editButton = new QPushButton(i18n("&Edit..."), mainWidget);
         m_delButton = new QPushButton(i18n("&Delete"), mainWidget);
 
-        QGridLayout* layout = new QGridLayout(mainWidget, 1, 2, 0, spacingHint());
+        QCheckBox* showAtStartup = new QCheckBox(i18n("Show at application startup"), mainWidget);
+        showAtStartup->setChecked(Preferences::showServerList());
+        connect(showAtStartup, SIGNAL(toggled(bool)), this, SLOT(setShowAtStartup(bool)));
+
+        QGridLayout* layout = new QGridLayout(mainWidget, 5, 2, 0, spacingHint());
 
         layout->addMultiCellWidget(m_serverList, 0, 3, 0, 0);
         layout->addWidget(m_addButton, 0, 1);
         layout->addWidget(m_editButton, 1, 1);
         layout->addWidget(m_delButton, 2, 1);
+        layout->addMultiCellWidget(showAtStartup, 4, 4, 0, 1);
         layout->setRowStretch(3, 10);
 
         m_editedItem = false;
@@ -530,6 +536,10 @@ namespace Konversation
         return networkItem;
     }
 
+    void ServerListDialog::setShowAtStartup(bool show)
+    {
+        Preferences::setShowServerList(show);
+    }
 }
 
 #include "serverlistdialog.moc"
