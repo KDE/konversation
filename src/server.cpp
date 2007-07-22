@@ -2619,7 +2619,7 @@ void Server::removeJoinedChannel(const QString& channelName)
                 // Remove the unwatched nickname from the unjoined channel.
                 channel->remove(member);
                 // If the nick is no longer listed in any channels or query list, delete it altogether.
-                deleteNickIfUnlisted(lcNickname);
+                deleteNickIfUnlisted(member.data()->getNickInfo()->getNickname());
                 member = channel->begin();
             }
             else
