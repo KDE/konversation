@@ -328,6 +328,18 @@ void ViewContainer::updateAppearance()
 
     KToggleAction* action = static_cast<KToggleAction*>(actionCollection()->action("hide_nicknamelist"));
     action->setChecked(!Preferences::showNickList());
+
+    if(m_insertCharDialog)
+    {
+        QFont font;
+
+        if (Preferences::customTextFont())
+            font = Preferences::textFont();
+        else
+            font = KGlobalSettings::generalFont();
+
+        m_insertCharDialog->setFont(font);
+    }
 }
 
 void ViewContainer::updateTabWidgetAppearance()
