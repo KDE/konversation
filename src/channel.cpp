@@ -2292,19 +2292,19 @@ void Channel::scheduleAutoWho() // slot
     if(m_whoTimer.isActive())
         m_whoTimer.stop();
     if(Preferences::autoWhoContinuousEnabled())
-        m_whoTimer.start(Preferences::autoWhoContinuousInterval()*1000, true);
+        m_whoTimer.start(Preferences::autoWhoContinuousInterval() * 1000, true);
 }
 
 void Channel::autoWho()
 {
     // don't use auto /WHO when the number of nicks is too large, or get banned.
-    if(nicks > Preferences::autoWhoNicksLimit())
+    if((nicks > Preferences::autoWhoNicksLimit()) ||
+       m_server->getInputFilter()->isWhoRequestUnderProcess(getName()))
     {
         scheduleAutoWho();
         return;
     }
-    if(m_server->getInputFilter()->isWhoRequestUnderProcess(getName()))
-        return;
+
     m_server->requestWho(getName());
 }
 
