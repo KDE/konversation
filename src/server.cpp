@@ -811,7 +811,7 @@ void Server::connectionEstablished(const QString& ownHost)
         // Register with services
         registerWithServices();
         // get own ip by userhost
-        requestUserhost(nickname);
+        requestUserhost(getNickname());
 
         // Start the PINGPONG match
         QTimer::singleShot(1000 /*1 sec*/, this, SLOT(sendPing()));
@@ -1250,7 +1250,7 @@ void Server::queueList(const QStringList& buffer)
 */
 int Server::getPreLength(const QString& command, const QString& dest)
 {
-    NickInfo* info = getNickInfo(nickname);
+    NickInfo* info = getNickInfo(getNickname());
     int hostMaskLength = 0;
 
     if(info)
@@ -1259,7 +1259,7 @@ int Server::getPreLength(const QString& command, const QString& dest)
     //:Sho_!i=ehs1@konversation/developer/hein PRIVMSG #konversation :and then back to it
 
     //<colon>$nickname<!>$hostmask<space>$command<space>$destination<space><colon>$message<cr><lf>
-    int x= 512 - 8 - (nickname.length() + hostMaskLength + command.length() + dest.length());
+    int x= 512 - 8 - (m_nickname.length() + hostMaskLength + command.length() + dest.length());
 
     return x;
 }
@@ -1621,7 +1621,7 @@ void Server::closeQuery(const QString &name)
     // is deleted altogether in that case.
     QString lcNickname = name.lower();
     m_queryNicks.remove(lcNickname);
-    if (!isWatchedNick(lcNickname)) deleteNickIfUnlisted(lcNickname);
+    if (!isWatchedNick(name)) deleteNickIfUnlisted(name);
 }
 
 void Server::closeChannel(const QString& name)
@@ -2493,7 +2493,7 @@ bool Server::setNickOffline(const QString& nickname)
  * @param nickname           The nickname to be deleted.  Case insensitive.
  * @return                   True if the nickname is deleted.
  */
-bool Server::deleteNickIfUnlisted(QString &nickname)
+bool Server::deleteNickIfUnlisted(const QString &nickname)
 {
     // Don't delete our own nickinfo.
     if (nickname == getNickname()) return false;
@@ -2823,7 +2823,7 @@ void Server::userhost(const QString& nick,const QString& hostmask,bool away,bool
     addHostmaskToNick(nick,hostmask);
     // remember my IP for DCC things
                                                   // myself
-    if( ownIpByUserhost.isEmpty() && nick==nickname )
+    if( ownIpByUserhost.isEmpty() && nick == getNickname() )
     {
         QString myhost = hostmask.section('@', 1);
         // Use async lookup else you will be blocking GUI badly
@@ -2875,7 +2875,7 @@ void Server::appendMessageToFrontmost(const QString& type,const QString& message
 
 void Server::setNickname(const QString &newNickname)
 {
-    nickname = newNickname;
+    m_nickname = newNickname;
     m_loweredNickname = newNickname.lower();
     emit nicknameChanged(newNickname);
 }
@@ -2917,12 +2917,12 @@ void Server::endOfWho(const QString& target)
 
 bool Server::isNickname(const QString &compare) const
 {
-    return (nickname == compare);
+    return (m_nickname == compare);
 }
 
 QString Server::getNickname() const
 {
-    return nickname;
+    return m_nickname;
 }
 
 QString Server::loweredNickname() const
@@ -3475,8 +3475,8 @@ void Server::sendPing()
     //It might be more intelligent to only do this when there is text
     //in the inputbox. Kinda changes this into a "do minutely"
     //queue :-) 
-    getInputFilter()->setAutomaticRequest("WHO", nickname, true);
-    queueAt(0, "WHO " + nickname);
+    getInputFilter()->setAutomaticRequest("WHO", getNickname(), true);
+    queueAt(0, "WHO " + getNickname());
 
     queueAt(0, "PING LAG" + QTime::currentTime().toString("hhmmss"));
     m_lagTime.start();

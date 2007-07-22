@@ -557,7 +557,7 @@ class Server : public QObject
          * @param nickname           The nickname to be deleted.  Case insensitive.
          * @return                   True if the nickname is deleted.
          */
-        bool deleteNickIfUnlisted(QString &nickname);
+        bool deleteNickIfUnlisted(const QString &nickname);
         /**
          * If not already offline, changes a nick to the offline state.
          * Removes it from all channels on the joined and unjoined lists.
@@ -630,7 +630,7 @@ class Server : public QObject
         QCString inputBufferIncomplete;
         QStringList inputBuffer;
         QStringList outputBuffer;
-        QString nickname;
+        QString m_nickname;
         QString m_loweredNickname;
         QString ownIpByUserhost;                  // RPL_USERHOST
         QString ownIpByWelcome;                   // RPL_WELCOME
