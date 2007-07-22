@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="konversation" version="46">
+<kpartgui name="konversation" version="47">
 
   <MenuBar>
     <Menu name="file" noMerge="1">
@@ -44,6 +44,9 @@
       <Action name="move_tab_right" />
       <Action name="close_tab" />
       <Action name="close_queries" />
+      <Separator />
+      <Action name="tab_notifications" />
+      <Action name="tab_encoding" />
       <Separator />
       <Action name="open_nicksonline_window" />
       <Action name="open_url_catcher" />
