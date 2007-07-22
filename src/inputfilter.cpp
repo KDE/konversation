@@ -1210,6 +1210,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             }
             // From a WHOIS.
             //[19:11] :zahn.freenode.net 320 PhantomsDad psn :is an identified user
+            case RPL_WHOISIDENTIFY:
             case RPL_IDENTIFIED:
             {
                 NickInfo* nickInfo = server->getNickInfo(parameterList[1]);
@@ -1419,18 +1420,6 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     server->appendMessageToFrontmost(i18n("Whois"),
                         i18n("%1 is online via %2 (%3).").arg(parameterList[1])
                         .arg(parameterList[2]).arg(trailing)
-                        );
-                }
-                break;
-            }
-            case RPL_WHOISIDENTIFY:
-            {
-                // Display message only if this was not an automatic request.
-                if(getAutomaticRequest("WHOIS",parameterList[1])==0)
-                {
-                    server->appendMessageToFrontmost(i18n("Whois"),
-                        i18n("%1 has identified for this nick.")
-                        .arg(parameterList[1])
                         );
                 }
                 break;

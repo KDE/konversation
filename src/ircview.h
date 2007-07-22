@@ -73,7 +73,7 @@ class IRCView : public KTextBrowser
 
         void setNickAndChannelContextMenusEnabled(bool enable);
 
-        signals:
+    signals:
         // Notify container of new text and highlight state
         void updateTabNotification(Konversation::TabNotifyType type);
         void gotFocus();                          // So we can set focus to input line
