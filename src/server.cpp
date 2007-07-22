@@ -1250,7 +1250,11 @@ void Server::queueList(const QStringList& buffer)
 */
 int Server::getPreLength(const QString& command, const QString& dest)
 {
-    int hostMaskLength=getNickInfo(nickname)->getHostmask().length();
+    NickInfo* info = getNickInfo(nickname);
+    int hostMaskLength = 0;
+
+    if(info)
+        hostMaskLength = info->getHostmask().length();
 
     //:Sho_!i=ehs1@konversation/developer/hein PRIVMSG #konversation :and then back to it
 
