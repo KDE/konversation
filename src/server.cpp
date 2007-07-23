@@ -1772,7 +1772,7 @@ void Server::requestDccSend(const QString &a_recipient)
     if(!recipient.isEmpty())
     {
         KURL::List fileURLs=KFileDialog::getOpenURLs(
-            lastDccDir,
+            ":lastDccDir",
             QString(),
             getViewContainer()->getWindow(),
             i18n("Select File(s) to Send to %1").arg(recipient)
@@ -1780,7 +1780,6 @@ void Server::requestDccSend(const QString &a_recipient)
         KURL::List::iterator it;
         for ( it = fileURLs.begin() ; it != fileURLs.end() ; ++it )
         {
-            lastDccDir = (*it).directory();
             addDccSend( recipient, *it );
         }
     }

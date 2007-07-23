@@ -136,6 +136,9 @@ Changes since 1.0.1:
 - Fixed query view context menus operating on the wrong nickname under certain
   circumstances.
 - Timestamps are no longer localized (BUG 139577 / rev 684814).
+- Auto-Who reliability improvements.
+- Added Notifications Toggle and Encoding sub-menu to the window menu.
+- Fixed "Open File" DCC dialog remembering the last viewed location incorrectly.
 
 -------------------------------------------------------------------------------
 

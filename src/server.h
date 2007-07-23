@@ -634,7 +634,6 @@ class Server : public QObject
         QString m_loweredNickname;
         QString ownIpByUserhost;                  // RPL_USERHOST
         QString ownIpByWelcome;                   // RPL_WELCOME
-        QString lastDccDir;
 
         QPtrList<Channel> channelList;
         QPtrList<Query> queryList;

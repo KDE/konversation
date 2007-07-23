@@ -1815,12 +1815,17 @@ void ViewContainer::findPrevText()
 
 void ViewContainer::appendToFrontmost(const QString& type,const QString& message,ChatWindow* serverView, bool parseURL)
 {
-    if (!serverView) serverView = m_frontView->getServer()->getStatusView();
+    if (!serverView) { // e.g. DCOP info call
+        if (m_frontView) // m_frontView == NULL if canBeFrontView() == false for active ChatWindow
+            serverView = m_frontView->getServer()->getStatusView();
+        else if (m_frontServer) // m_fronView == NULL && m_frontServer != NULL if ChannelListPanel is active.
+            serverView = m_frontServer->getStatusView();
+    }
 
-                                                  //if this fails, we need to fix frontServer
-    Q_ASSERT(m_frontView && m_frontView->getServer() == m_frontServer);
-
-    Q_ASSERT(serverView); if(!serverView) return;
+    // This might happen if canBeFrontView() is false for active ChatWindow
+    // and the view does not belong to any server (e.g. DCC Status View).
+    // Discard message in this case.
+    if(!serverView) return;
 
     updateFrontView();
 
