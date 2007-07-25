@@ -97,28 +97,17 @@ namespace Konversation
         return false;
     }
 
-    QStringList OutputFilter::splitForEncoding(const QString& inputLine, int MAX)
+    QStringList OutputFilter::splitForEncoding(const QString& inputLine, int max)
     {
-        QString channelCodecName=Preferences::channelEncoding(m_server->getServerGroup(), destination);
-
-        int sublen=0; //The encoded length since the last split
-        int charLength=0; //the length of this char
-
-        //MAX= 7; // for testing
+        int sublen = 0; //The encoded length since the last split
+        int charLength = 0; //the length of this char
+        int lastBreakPoint = 0;
 
         //FIXME should we run this through the encoder first, checking with "canEncode"?
-        QString text=inputLine; // the text we'll send, currently in Unicode
-
+        QString text = inputLine; // the text we'll send, currently in Unicode
         QStringList finals; // The strings we're going to output
 
-        QChar   *c=(QChar*)text.unicode(),  // Pointer to the character we're looking at
-                *end=c+text.length();       // If it were a char*, it would be pointing at the \0;
-
-        QChar   *frag=c,                    // The beginning of this fragment
-                *lastSBC=c,                 // The last single byte char we saw in case we have to chop
-                *lastSpace=c;               // The last space we saw
-        bool sbcGood = 0;                   // We can't trust that a single byte char was ever seen
-
+        QString channelCodecName=Preferences::channelEncoding(m_server->getServerGroup(), destination);
         //Get the codec we're supposed to use. This must not fail. (not verified)
         QTextCodec* codec;
 
@@ -129,74 +118,51 @@ namespace Konversation
         }
         else
         {
-            // FIXME Doesn't this just return `getIdentity()->getCodec();` if no codec set?
             codec = Konversation::IRCCharsets::self()->codecForName(channelCodecName);
         }
 
         Q_ASSERT(codec);
+        int textlength = text.length();
+        int index = 0;
 
-        while (c<end)
+        for(int i = 0; i < textlength; ++i)
         {
             // The most important bit - turn the current char into a QCString so we can measure it
-            QCString ch=codec->fromUnicode(*c);
-            charLength=ch.length();
+            QCString ch = codec->fromUnicode(QString(text[index]));
+            charLength = ch.length();
 
             // If adding this char puts us over the limit:
-            if (charLength+sublen > MAX)
+            if (charLength + sublen > max)
             {
-                // If lastSpace isn't pointing to a space, we have to chop
-                if ( !lastSpace->isSpace() ) //used in case we end up supporting unicode spaces
+                if(lastBreakPoint != 0)
                 {
-                    // FIXME This is only theory, it might not work
-                    if (sbcGood) // Copy up to and including the last SBC.
-                    {
-                        QString curs(frag, (++lastSBC)-frag); // Since there is a continue below, safe to increment here
-                        finals+=curs;
-                        lastSpace=frag=c=lastSBC;
-                    }
-                    else //Split right here
-                    {
-                        QString curs(frag, c-frag); // Don't include c
-                        finals+=curs;
-                        lastSpace=frag=c; //we need to see this char again, to collect its stats, so no increment
-                    }
+                    finals.append(text.left(lastBreakPoint + 1));
+                    text = text.mid(lastBreakPoint + 1);
                 }
-                else // Most common case, we saw a space we can split at
+                else
                 {
-                    // Copy the current substring, but not the space (unlike the SBC case)
-                    QString curs(frag, lastSpace-frag);
-                    finals+=curs;
-
-                    // Rewind to the last good splitpoint, dropping the space character as
-                    //  it was technically replaced with a \n
-                    frag=c=++lastSpace; //pre-increment
+                    finals.append(text.left(index));
+                    text = text.mid(index);
                 }
 
-                sbcGood=false;
-                // Since c always gets reset to the splitpoint, sublen gets recalculated
-                sublen=0;
-                continue; // SLAM!!!
+                lastBreakPoint = 0;
+                sublen = 0;
+                index = 0;
             }
-            else if (*c==' ') // If we want to support typographic spaces, change this to c->isSpace(), and rewrite above
+            else if (text[index].isSpace() || text[index].isPunct())
             {
-                lastSpace=c;
+                lastBreakPoint = index;
             }
-            // Won't get here if the string was split
-            if (charLength==1)
-            {
-                sbcGood=1;
-                lastSBC=c;
-            }
-            sublen+=charLength;
-            ++c;
-        }//wend
-        //so when we hit this point, frag to end is all thats left
-        Q_ASSERT((frag!=c));
-        if (frag != c)
-        {
-            QString curs(frag, c-frag);
-            finals+=curs;
+
+            ++index;
+            sublen += charLength;
         }
+
+        if (!text.isEmpty())
+        {
+            finals.append(text);
+        }
+
         return finals;
     }
 

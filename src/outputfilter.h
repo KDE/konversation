@@ -56,7 +56,7 @@ namespace Konversation
             explicit OutputFilter(Server* server);
             ~OutputFilter();
 
-            QStringList splitForEncoding(const QString& inputLine, int MAX);
+            QStringList splitForEncoding(const QString& inputLine, int max);
             OutputFilterResult parse(const QString& myNick,const QString& line,const QString& name);
 
             // dcc send
