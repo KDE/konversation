@@ -122,10 +122,9 @@ namespace Konversation
         }
 
         Q_ASSERT(codec);
-        int textlength = text.length();
         int index = 0;
 
-        for(int i = 0; i < textlength; ++i)
+        while(text.length() > max)
         {
             // The most important bit - turn the current char into a QCString so we can measure it
             QCString ch = codec->fromUnicode(QString(text[index]));
