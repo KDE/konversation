@@ -1007,11 +1007,11 @@ void IRCView::doAppend(const QString& newLine, bool self)
     resizeContents(contentsWidth(), document()->height());
     KTextBrowser::viewport()->setUpdatesEnabled(up);
 
-    if (doScroll) updateScrollBarPos();
-
     // Restore selection
     if(textselected && paraFrom >= 0 && paraTo >= 0)
         setSelection(paraFrom, indexFrom, paraTo, indexTo);
+
+    if (doScroll) updateScrollBarPos();
 
     //FIXME: Disable auto-text for DCC Chats since we don't have a server
     // to parse wildcards.
