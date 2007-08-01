@@ -35,7 +35,6 @@
 #include <kdebug.h>
 #include <kresolver.h>
 
-
 InputFilter::InputFilter()
 {
     m_connecting = false;
@@ -589,7 +588,10 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
     }
     else if(command=="mode") // mode #channel -/+ mmm params
     {
-        parseModes(sourceNick,parameterList);
+        QStringList params=parameterList;
+        if (!trailing.isEmpty())
+            params << trailing;
+        parseModes(sourceNick, params);
         Channel* channel = server->getChannelByName(parameterList[0]);
         if(sourceNick != server->getNickname())
         {
@@ -659,7 +661,10 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
         }
         else if(command=="mode")
         {
-            parseModes(prefix,parameterList);
+            QStringList params=parameterList;
+            if (!trailing.isEmpty())
+                params << trailing;
+            parseModes(prefix, params);
         }
         else if(command=="notice")
         {
@@ -777,6 +782,12 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 }                                 // endfor
                 break;
             }
+            case RPL_UMODEIS:
+            {
+                QString message=QString("%1 %2").arg(i18n("Your personal modes are:")).arg(parameterList.join(" ").section(' ',1) + ' '+trailing);
+                server->appendMessageToFrontmost("Info", message);
+                break;
+            }
             case RPL_CHANNELMODEIS:
             {
                 const QString modeString=parameterList[2];
@@ -829,9 +840,8 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                         }
                         server->updateChannelModeWidgets(parameterList[1],mode,parameter);
                     }
-                }                                 // endfor
-                if(!modesAre.isEmpty())
-                    if (Preferences::useLiteralModes())
+                } // endfor
+                if(!modesAre.isEmpty() && Preferences::useLiteralModes())
                 {
                     server->appendCommandMessageToChannel(parameterList[1],i18n("Mode"),message);
                 }
@@ -1764,6 +1774,26 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
 void InputFilter::parseModes(const QString &sourceNick, const QStringList &parameterList)
 {
     const QString modestring=parameterList[1];
+
+    if (!isAChannel(parameterList[0]))
+    {
+        QString message;
+        if (parameterList[0] == server->getNickname())
+        {
+            if (sourceNick == server->getNickname())
+            {
+                //XXX someone might care about the potentially unnecessary plural here
+                message = i18n("You have set personal modes: ") + modestring;
+            }
+            else
+            {   //XXX someone might care about the potentially unnecessary plural here
+                message = QString("%1 %2 %3").arg(sourceNick).arg(i18n("has changed your personal modes:")).arg(modestring);
+            }
+        }
+        if (!message.isEmpty())
+            server->appendStatusMessage(i18n("Mode"), message);
+        return;
+    }
 
     bool plus=false;
     int parameterIndex=0;

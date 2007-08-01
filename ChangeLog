@@ -139,6 +139,8 @@ Changes since 1.0.1:
 - Auto-Who reliability improvements.
 - Added Notifications Toggle and Encoding sub-menu to the window menu.
 - Fixed "Open File" DCC dialog remembering the last viewed location incorrectly.
+- Display mode for your nick and channels you're not in
+- Support RPL_UMODEIS
 
 -------------------------------------------------------------------------------
 
