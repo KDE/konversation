@@ -32,6 +32,7 @@ DccTransfer::DccTransfer( DccType dccType )
     m_resumed = false;
     m_reverse = false;
     m_serverGroupId = -1;  // Not configured
+    m_timeLeft = DccTransfer::NotInTransfer;
     m_transferringPosition = 0;
     m_transferStartPosition = 0;
 
@@ -182,7 +183,7 @@ void DccTransfer::updateTransferMeters()
     {
         //m_averageSpeed = (double)( m_transferringPosition - m_transferStartPosition ) / (double)m_timeTransferStarted.secsTo( m_timeTransferFinished );
         m_currentSpeed = 0;
-        m_timeLeft = 0;
+        m_timeLeft = DccTransfer::NotInTransfer;
     }
     else
     {
