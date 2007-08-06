@@ -104,6 +104,7 @@ namespace Konversation
         protected:
             OutputFilterResult parseMsg(const QString& myNick,const QString& parameter, bool focusQueryWindow);
             OutputFilterResult parseSMsg(const QString& parameter);
+            OutputFilterResult parseMe(const QString &parameter, const QString &destination);
             OutputFilterResult parseDescribe(const QString& parameter);
             OutputFilterResult parseNotice(const QString& parameter);
             OutputFilterResult parseJoin(QString& parameter);

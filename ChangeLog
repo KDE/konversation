@@ -141,6 +141,8 @@ Changes since 1.0.1:
 - Fixed "Open File" DCC dialog remembering the last viewed location incorrectly.
 - Display mode for your nick and channels you're not in
 - Support RPL_UMODEIS
+- Rewrite /me parsing to be less hackish and display usage info with an empty
+  parameter.
 
 -------------------------------------------------------------------------------
 

@@ -206,15 +206,8 @@ namespace Konversation
 
         QString line=inputLine.lower();
 
-        // Action?
-        if(line.startsWith(commandChar+"me ") && !destination.isEmpty())
-        {
-            result.toServer = "PRIVMSG " + name + " :" + '\x01' + "ACTION " + inputLine.mid(4) + '\x01';
-            result.output = inputLine.mid(4);
-            result.type = Action;
-        }
         // Convert double command chars at the beginning to single ones
-        else if(line.startsWith(commandChar+commandChar) && !destination.isEmpty())
+        if(line.startsWith(commandChar+commandChar) && !destination.isEmpty())
         {
             inputLine=inputLine.mid(1);
             goto BYPASS_COMMAND_PARSING;
@@ -234,6 +227,7 @@ namespace Konversation
             else if(command == "quit")     result = parseQuit(parameter);
             else if(command == "notice")   result = parseNotice(parameter);
             else if(command == "j")        result = parseJoin(parameter);
+            else if(command == "me")       result = parseMe(parameter, destination);
             else if(command == "msg")      result = parseMsg(myNick,parameter, false);
             else if(command == "m")        result = parseMsg(myNick,parameter, false);
             else if(command == "smsg")     result = parseSMsg(parameter);
@@ -602,6 +596,24 @@ namespace Konversation
             result.toServer = "NOTICE " + recipient + " :" + message;
             result.output=i18n("%1 is the message, %2 the recipient nickname","Sending notice \"%2\" to %1.").arg(recipient).arg(message);
             result.type = Program;
+        }
+
+        return result;
+    }
+
+    OutputFilterResult OutputFilter::parseMe(const QString &parameter, const QString &destination)
+    {
+        OutputFilterResult result;
+
+        if (!destination.isEmpty() && !parameter.isEmpty())
+        {
+            result.toServer = "PRIVMSG " + destination + " :" + '\x01' + "ACTION " + parameter + '\x01';
+            result.output = parameter;
+            result.type = Action;
+        }
+        else
+        {
+            result = usage(i18n("Usage: %1ME text").arg(commandChar));
         }
 
         return result;
