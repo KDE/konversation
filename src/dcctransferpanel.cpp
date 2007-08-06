@@ -41,8 +41,6 @@
 
 DccTransferPanel::DccTransferPanel(QWidget* parent) : ChatWindow(parent)
 {
-    kdDebug() << "DccTransferPanel::DccTransferPanel()" << endl;
-
     setType(ChatWindow::DccTransferPanel);
     setName(i18n("DCC Status"));
 
@@ -53,7 +51,6 @@ DccTransferPanel::DccTransferPanel(QWidget* parent) : ChatWindow(parent)
 
 DccTransferPanel::~DccTransferPanel()
 {
-    kdDebug() << "DccTransferPanel::~DccTransferPanel()" << endl;
 }
 
 void DccTransferPanel::initGUI()
@@ -196,6 +193,7 @@ void DccTransferPanel::updateButton()
          info               = true,
          open               = true,
          remove             = true,
+         resend             = false,
          selectAll          = false,
          selectAllCompleted = false;
 
@@ -230,6 +228,9 @@ void DccTransferPanel::updateButton()
 
             remove &= ( type == DccTransfer::Receive &&
                 status == DccTransfer::Done );
+
+            resend |= ( type == DccTransfer::Send &&
+                status >= DccTransfer::Done );
         }
         ++it;
     }
@@ -242,6 +243,7 @@ void DccTransferPanel::updateButton()
         info = false;
         open = false;
         remove = false;
+        resend = false;
     }
 
     if (!kapp->authorize("allow_downloading"))
@@ -262,6 +264,7 @@ void DccTransferPanel::updateButton()
     m_popup->setItemEnabled( Popup::Clear,              clear );
     m_popup->setItemEnabled( Popup::Open,               open );
     m_popup->setItemEnabled( Popup::Remove,             remove );
+    m_popup->setItemEnabled( Popup::Resend,             resend );
     m_popup->setItemEnabled( Popup::Info,               info );
 }
 

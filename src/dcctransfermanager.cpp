@@ -19,6 +19,7 @@
 DccTransferManager::DccTransferManager( QObject* parent )
     : QObject( parent )
 {
+    // initial number
     m_nextReverseTokenNumber = 1001;
 }
 
