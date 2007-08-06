@@ -2361,7 +2361,7 @@ bool Channel::closeYourself()
     {
         m_server->closeChannel(getName());
         m_server->removeChannel(this);
-	Preferences::setSpellChecking(channelInput->checkSpellingEnabled());
+        Preferences::setSpellChecking(channelInput->checkSpellingEnabled());
         deleteLater();
         return true;
     }
@@ -2383,6 +2383,9 @@ void Channel::serverOnline(bool online)
         //channelInput->setEnabled(false);
         getTextView()->setNickAndChannelContextMenusEnabled(false);
         nicknameCombobox->setEnabled(false);
+        topicLine->setText("");
+        clearModeList();
+        clearBanList();
     }
 }
 
