@@ -144,6 +144,8 @@ Changes since 1.0.1:
 - Rewrote /me parsing to be less hackish and display usage info with an empty
   parameter.
 - Added KPlayer support to the 'media' script.
+- Fixed bug that caused the topic state not to be cleared properly prior to
+  rejoining channels during reconnects.
 
 -------------------------------------------------------------------------------
 
