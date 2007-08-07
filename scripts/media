@@ -43,7 +43,7 @@ formatVariables={'audio': 'is listening to', 'video': 'is watching'}
 ## Static player ranking list
 ## If you add a new player, you must add it here or it won't get checked when in audio-only or video-only modes.
 playerRankings= {
-    'video' :['kaffeine','kmplayer', 'noatun', 'kdetv'],
+    'video' :['kaffeine','kmplayer', 'kplayer', 'noatun', 'kdetv'],
     'audio' :['amarok', 'juk', 'noatun', 'kscd', 'kaffeine', 'kmplayer', 'Audacious', 'xmms', 'yammi']
 }
 
@@ -244,11 +244,16 @@ class AmarokPlayer(DCOPPlayer):
                 return ''
         return data
 
-class KMPLayer(DCOPPlayer):
+class StupidPlayer(DCOPPlayer):
     def getData(self):
         data=DCOPPlayer.getData(self)[0]
         if data:
-            data=data.split(None,2)[2].rsplit(None,2)[0].rsplit('/')[-1]
+            if data.startswith('URL'):
+                # KMPlayer window titles in the form of "URL - file:///path/to/<media file> - KMPlayer"
+                data=data.split(None,2)[2].rsplit(None,2)[0].rsplit('/')[-1]
+            else:
+                # KPlayer window titles in the form of "<media file> - KPlayer"
+                data=data.rsplit(None,2)[0]
             return (data,'','')
         return ''
 
@@ -345,7 +350,8 @@ AmarokPlayer(),
 DCOPPlayer("JuK","juk","Player trackProperty Title","Player trackProperty Artist","Player trackProperty Album"),
 DCOPPlayer("Noatun",'noatun',"Noatun title",playerType='audio, video'),
 DCOPPlayer("Kaffeine","kaffeine","KaffeineIface title","KaffeineIface artist","KaffeineIface album",playerType='video, audio'),
-KMPLayer("KMPlayer","kmplayer","kmplayer-mainwindow#1 caption",playerType="video audio"),
+StupidPlayer("KMPlayer","kmplayer","kmplayer-mainwindow#1 caption",playerType="video audio"),
+StupidPlayer("KPlayer","kplayer","kplayer-mainwindow#1 caption",playerType="video audio"),
 DCOPPlayer("KsCD","kscd","CDPlayer currentTrackTitle","CDPlayer currentArtist","CDPlayer currentAlbum"),
 DCOPPlayer("kdetv","kdetv","KdetvIface channelName",playerType='video'),
 AudaciousPlayer('Audacious'), XmmsPlayer('XMMS'),
