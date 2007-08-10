@@ -1,58 +1,70 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# Copyright (C) 2005 by İsmail Dönmez <ismail@pardus.org.tr>
+#
+# Copyright 2005,2007 by İsmail Dönmez <ismail@pardus.org.tr>
 # Licensed under GPL v2 or later at your option
 
-import os
 import sys
-import re
 from subprocess import *
 
-if __name__ == "__main__":
+port = sys.argv[1]
+server = sys.argv[2]
+target = sys.argv[3]
 
-    port = sys.argv[1]
-    server = sys.argv[2]
-    target = sys.argv[3]
+msg_template = "Current weather for %%B%s%%B : Temperature: %%B%s%%B, Pressure: %%B%s%%B, Wind: %%B%s%%B"
+msg_detailed_template = "Current weather for %%B%s%%B : %%B%s%%B, Temperature: %%B%s%%B, Pressure: %%B%s%%B, Wind: %%B%s%%B"
+
+def printMessage(message=None):
+    Popen(['dcop', port, 'default', 'say', server, target, message]).communicate()
+
+def printError(message=None):
+    Popen(['dcop', port, 'default', 'error', message]).communicate()
+
+def getData(section, station=None):
+    if station:
+        data = Popen(['dcop','KWeatherService','WeatherService', section, station], stdout=PIPE).communicate()[0].rstrip("\n")
+    else:
+        data = Popen(['dcop','KWeatherService','WeatherService', section], stdout=PIPE).communicate()[0].rstrip("\n")
+        
+    return data
+
+def stationMessage(station):
+     city = getData("stationName", station)
+     temperature = getData("temperature", station)
+     pressure = getData("pressure", station)
+     wind = getData("wind", station)
+     detail = getData("weather", station)
+     detail2 = getData("cover", station)
+
+     if detail2:
+         if detail:
+             detail = detail+', '+detail2
+         else:
+             detail = detail2
+
+     if detail:
+         return msg_detailed_template % (city,detail,temperature,pressure,wind)
+     else:
+         return msg_template % (city,temperature,pressure,wind)
+
+def printWeather(index):
+    stations = getData("listStations").split("\n")
+
+    if index != None:
+        if index <= 0:
+            printError("Station index should be bigger than zero!")
+        elif index > len(stations):
+            printError("Station index is out of range")
+        else:
+            printMessage(stationMessage(stations[index-1]))
+    else:
+        for station in stations:
+            printMessage(stationMessage(station))
     
+if __name__ == "__main__":
     try:
-        option = int(sys.argv[4])
+        index = int(sys.argv[4])
     except IndexError:
-        pass
+        index = None
 
-    stations = os.popen('dcop KWeatherService WeatherService listStations').readlines()
-
-    if not stations:
-        os.popen('dcop %s default error KWeather is not installed or not running!'%(port))
-
-    try:
-        if option and stations[option-1]:
-            stations = stations[option-1]
-    except NameError:
-        pass
-
-    for station in stations:
-
-        city = os.popen('dcop KWeatherService WeatherService stationName %s'%(station)).readline().rstrip('\n')
-        temperature = os.popen('dcop KWeatherService WeatherService temperature %s'%(station)).readline().rstrip('\n')
-        pressure = os.popen('dcop KWeatherService WeatherService pressure %s'%(station)).readline() .rstrip('\n')
-        wind = os.popen('dcop KWeatherService WeatherService wind %s'%(station)).readline().rstrip('\n')
-        detail = os.popen('dcop KWeatherService WeatherService weather %s'%(station)).readline().rstrip('\n')
-        detail2 = os.popen('dcop KWeatherService WeatherService cover %s'%(station)).readline().rstrip('\n')
-
-        detail = ', '.join(re.split('\n',detail))
-        detail2 = ', '.join(re.split('\n',detail2))
-
-        if detail2:
-            if detail:
-                detail = detail+', '+detail2
-            else:
-                detail = detail2
-        else:
-            pass
-      
-        if detail:
-            message = 'Current weather for %%B%s%%B : %%B%s%%B, Temperature: %%B%s%%B, Pressure: %%B%s%%B, Wind: %%B%s%%B'%(city,detail,temperature,pressure,wind)
-        else:
-            message = 'Current weather for %s : Temperature: %%B%s%%B, Pressure: %%B%s%%B, Wind: %%B%s%%B'%(city,temperature,pressure,wind)
-
-        Popen(['dcop', port, 'default', 'say', server, target, message]).communicate()
+    printWeather(index)
