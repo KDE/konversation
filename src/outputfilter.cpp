@@ -1710,7 +1710,7 @@ namespace Konversation
         }
         else
         {
-            result = error(i18n("%1 isn't a valid encoding.").arg (charset));
+            result = error(i18n("%1 is not a valid encoding.").arg (charset));
         }
 
         return result;
