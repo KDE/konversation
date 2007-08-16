@@ -18,7 +18,7 @@
 #include <klocale.h>
 
 
-KonsolePanel::KonsolePanel(QWidget *p) : ChatWindow( p )
+KonsolePanel::KonsolePanel(QWidget *p) : ChatWindow( p ), k_part (0)
 {
     setName(i18n("Konsole"));
     setType(ChatWindow::Konsole);
@@ -49,12 +49,15 @@ KonsolePanel::~KonsolePanel()
 
 QWidget* KonsolePanel::getWidget()
 {
-    return k_part->widget();
+    if (k_part)
+        return k_part->widget();
+    else
+        return 0;
 }
 
 void KonsolePanel::childAdjustFocus()
 {
-    k_part->widget()->setFocus();
+    if (k_part) k_part->widget()->setFocus();
 }
 
 void KonsolePanel::partDestroyed()

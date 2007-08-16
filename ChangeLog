@@ -148,6 +148,7 @@ Changes since 1.0.1:
   rejoining channels during reconnects.
 - Rewrote 'weather' script for increased reliability in error handling and
   better readability.
+- Fixed crash when opening a Konsole tab and Konsole was not installed.
 
 -------------------------------------------------------------------------------
 
