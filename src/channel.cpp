@@ -2371,8 +2371,6 @@ bool Channel::closeYourself()
 //Used to disable functions when not connected
 void Channel::serverOnline(bool online)
 {
-    static QTime llast;
-    static int count=0;
     if (online)
     {
         //channelInput->setEnabled(true);
@@ -2381,8 +2379,6 @@ void Channel::serverOnline(bool online)
     }
     else
     {
-        kdDebug() << "Channel::serverOnline " << llast << ' ' << ++count << endl;
-        llast.start();
         purgeNicks();
         //channelInput->setEnabled(false);
         getTextView()->setNickAndChannelContextMenusEnabled(false);
