@@ -58,7 +58,6 @@
 #include <kwin.h>
 #include <config.h>
 
-
 Server::Server(ViewContainer* viewContainer, int serverGroupId, bool clearQuickServerList)
 {
     quickConnect = false;
@@ -2127,7 +2126,10 @@ void Server::joinChannel(const QString& name, const QString& hostmask)
         m_serverGroup->appendChannelHistory(channelSettings);
 
         connect(channel,SIGNAL (sendFile()),this,SLOT (requestDccSend()) );
-        connect(this,SIGNAL (serverOnline(bool)),channel,SLOT (serverOnline(bool)) );
+
+        //this is now set by ViewContainer::addChannel
+        //connect(this,SIGNAL (serverOnline(bool)),channel,SLOT (serverOnline(bool)) );
+
         connect(this, SIGNAL(nicknameChanged(const QString&)), channel, SLOT(setNickname(const QString&)));
     }
     // Move channel from unjoined (if present) to joined list and add our own nickname to the joined list.
