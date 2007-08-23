@@ -149,6 +149,7 @@ Changes since 1.0.1:
 - Rewrote 'weather' script for increased reliability in error handling and
   better readability.
 - Fixed crash when opening a Konsole tab and Konsole was not installed.
+- Now preserving trailing whitespace in raw log tabs.
 
 -------------------------------------------------------------------------------
 

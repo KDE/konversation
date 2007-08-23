@@ -1018,7 +1018,7 @@ void Server::processIncomingData()
         if(rawLog)
         {
             QString toRaw = front;
-            rawLog->appendRaw("&gt;&gt; " + toRaw.replace("&","&amp;").replace("<","&lt;").replace(">","&gt;"));
+            rawLog->appendRaw("&gt;&gt; " + toRaw.replace("&","&amp;").replace("<","&lt;").replace(">","&gt;").replace(QRegExp("\\s"), "&nbsp;"));
         }
         inputFilter.parseLine(front);
         m_processingIncoming = false;
