@@ -100,7 +100,7 @@ the Free Software Foundation; either version 2 of the License, or
                         <cstring>kcfg_TrayNotifyBlink</cstring>
                     </property>
                     <property name="text">
-                        <string>Blink the icon</string>
+                        <string>Blin&amp;k the icon</string>
                     </property>
                 </widget>
                 <widget class="QCheckBox" row="3" column="0" rowspan="1" colspan="2">
@@ -196,27 +196,6 @@ the Free Software Foundation; either version 2 of the License, or
                     </property>
                     <property name="accel">
                         <string></string>
-                    </property>
-                </widget>
-            </grid>
-        </widget>
-        <widget class="QGroupBox">
-            <property name="name">
-                <cstring>appStartGBox</cstring>
-            </property>
-            <property name="title">
-                <string>Application Startup</string>
-            </property>
-            <grid>
-                <property name="name">
-                    <cstring>unnamed</cstring>
-                </property>
-                <widget class="QCheckBox" row="0" column="0">
-                    <property name="name">
-                        <cstring>kcfg_ShowServerList</cstring>
-                    </property>
-                    <property name="text">
-                        <string>&amp;Show server list dialog</string>
                     </property>
                 </widget>
             </grid>
@@ -359,7 +338,6 @@ the Free Software Foundation; either version 2 of the License, or
     <tabstop>kcfg_NickCompleteSuffixStart</tabstop>
     <tabstop>kcfg_NickCompleteSuffixMiddle</tabstop>
     <tabstop>kcfg_NickCompletionCaseSensitive</tabstop>
-    <tabstop>kcfg_ShowServerList</tabstop>
     <tabstop>kcfg_DisableNotifyWhileAway</tabstop>
     <tabstop>kcfg_UseCustomBrowser</tabstop>
     <tabstop>kcfg_WebBrowserCmd</tabstop>
