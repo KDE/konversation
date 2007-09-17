@@ -54,6 +54,8 @@ namespace Konversation
             void topicHistoryItemClicked(QListViewItem* item);
             void topicBeingEdited(bool state);
 
+            void cancelClicked();
+
         protected:
             bool m_editingTopic;
             QListViewItem *m_NewBan;

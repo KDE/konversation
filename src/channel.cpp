@@ -351,6 +351,7 @@ void Channel::showOptionsDialog()
         m_optionsDialog = new Konversation::ChannelOptionsDialog(this);
 
     m_optionsDialog->refreshModes();
+    m_optionsDialog->refreshTopicHistory();
     m_optionsDialog->show();
 }
 

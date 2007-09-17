@@ -67,7 +67,7 @@ namespace Konversation
         connect(m_channel, SIGNAL(modesChanged()), this, SLOT(refreshModes()));
         connect(m_channel->getOwnChannelNick(), SIGNAL(channelNickChanged()), this, SLOT(refreshEnableModes()));
 
-        connect(this, SIGNAL(cancelClicked()), this, SLOT(hide()));
+        connect(this, SIGNAL(cancelClicked()), this, SLOT(cancelClicked()));
         connect(this, SIGNAL(okClicked()), this, SLOT(changeOptions()));
 
         connect(m_channel, SIGNAL(banAdded(const QString&)), this, SLOT(addBan(const QString&)));
@@ -448,6 +448,12 @@ namespace Konversation
         {
             m_channel->getServer()->requestUnban(m_widget->banList->currentItem()->text(0), m_channel->getName());
         }
+    }
+
+    void ChannelOptionsDialog::cancelClicked()
+    {
+        topicBeingEdited(false);
+        hide();
     }
 
     // This is our implementation of BanListViewItem
