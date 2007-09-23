@@ -151,6 +151,11 @@ Changes since 1.0.1:
 - Fixed crash when opening a Konsole tab and Konsole was not installed.
 - Now preserving trailing whitespace in raw log tabs.
 - Show correct number of colors in the color chooser dialog.
+- Fixed crash when receiving actions for channels the client is not attending.
+- Moved the "Show at application startup" option for the Server List dialog
+  to the dialog itself.
+- Reset topic editbox when the channel options dialog has been dismissed with
+  cancel.
 
 -------------------------------------------------------------------------------
 

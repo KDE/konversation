@@ -106,7 +106,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
 
 
     // Actions
-    KStdAction::quit(this,SLOT(quitProgram()),actionCollection(), "quit");
+    KStdAction::quit(this,SLOT(quitProgram()),actionCollection());
 
     hideMenuBarAction = KStdAction::showMenubar(this, SLOT(toggleMenubar()), actionCollection());
 
