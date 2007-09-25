@@ -88,7 +88,6 @@ Changes since 1.0.1:
 - Improved robustness of the Watched Nicknames Online system.
 - Implemented an additional "Sort by activity" nicklist sorting mode.
 - Added a Find Previous standard action.
-- Renamed the "File" menu to "Connection".
 - Have the "Insert Character" dialog pick up on ircview font changes.
 - Replaced the DCC Transfer Details dialog with a retractable transfer details
   pane directly in the DCC Status tab.
@@ -156,6 +155,9 @@ Changes since 1.0.1:
   to the dialog itself.
 - Reset topic editbox when the channel options dialog has been dismissed with
   cancel.
+- Fixed sorting the ban list by time set.
+- Made the ban list's "Time Set" column use KDE locale settings for the date
+  format.
 
 -------------------------------------------------------------------------------
 

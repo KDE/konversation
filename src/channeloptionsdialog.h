@@ -72,19 +72,23 @@ namespace Konversation
     {
         public:
             explicit BanListViewItem( QListView *parent );
-            BanListViewItem( QListView *parent, bool isNew );
-            BanListViewItem ( QListView *parent, const QString& label1, const QString& label2 = QString(),
-                const QString& label3 = QString());
-            BanListViewItem ( QListView *parent, bool isNew, const QString& label1,
-                const QString& label2 = QString(), const QString& label3 = QString());
-            virtual void startRename( int col );
-            virtual QString getOldValue() { return m_oldValue; }
+            BanListViewItem(QListView *parent, bool isNew);
+            BanListViewItem(QListView *parent, const QString& label1, const QString& label2 = QString(), uint timestamp = 0);
+            BanListViewItem (QListView *parent, bool isNew, const QString& label1, const QString& label2 = QString(), uint timestamp = 0);
+
+            QString getOldValue() { return m_oldValue; }
+            QDateTime timestamp() { return m_timestamp; }
+
+            virtual QString text(int column) const;
+            virtual int compare(QListViewItem *i, int col, bool ascending) const;
+            virtual void startRename(int col);
 
         protected:
-            virtual void cancelRename ( int col );
+            virtual void cancelRename (int col);
 
             QString m_oldValue;
             bool m_isNewBan;
+            QDateTime m_timestamp;
     };
 
 }

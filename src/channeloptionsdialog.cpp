@@ -6,8 +6,9 @@
 */
 
 /*
-  copyright: (C) 2004 by Peter Simonsson
-  email:     psn@linux.se
+  Copyright (C) 2005-2007 Peter Simonsson <psn@linux.se>
+  Copyright (C) 2006 Dario Abatianni <eisfuchs@tigress.com>
+  Copyright (C) 2006-2007 Eike Hein <hein@kde.org>
 */
 
 #include "channeloptionsdialog.h"
@@ -16,6 +17,10 @@
 #include "channel.h"
 
 #include <qcheckbox.h>
+#include <qpushbutton.h>
+#include <qregexp.h>
+#include <qheader.h>
+#include <qtoolbutton.h>
 
 #include <klocale.h>
 #include <klistview.h>
@@ -24,10 +29,6 @@
 #include <knuminput.h>
 #include <klistviewsearchline.h>
 #include <kiconloader.h>
-#include <qpushbutton.h>
-#include <qregexp.h>
-#include <qheader.h>
-#include <qtoolbutton.h>
 
 
 namespace Konversation
@@ -375,21 +376,14 @@ namespace Konversation
         QStringList banlist = m_channel->getBanList();
         m_widget->banList->clear();
 
-        for(QStringList::const_iterator it = banlist.fromLast(); it != banlist.end(); --it)
-        {
-            QDateTime date;
-            date.setTime_t((*it).section(' ', 2 ,2).toUInt());
-
-            new BanListViewItem(m_widget->banList, (*it).section(' ', 0, 0), (*it).section(' ', 1, 1).section('!', 0, 0), date.toString(Qt::LocalDate));
-        }
+        for (QStringList::const_iterator it = banlist.fromLast(); it != banlist.end(); --it)
+            addBan((*it));
     }
 
     void ChannelOptionsDialog::addBan(const QString& newban)
     {
-        QDateTime date;
-        date.setTime_t(newban.section(' ', 2 ,2).toUInt());
-
-        new BanListViewItem(m_widget->banList, newban.section(' ', 0, 0), newban.section(' ', 1, 1).section('!', 0, 0), date.toString(Qt::LocalDate));
+        //new BanListViewItem(m_widget->banList, newban.section(' ', 0, 0), newban.section(' ', 1, 1).section('!', 0, 0), date.toString(Qt::LocalDate));
+        new BanListViewItem(m_widget->banList, newban.section(' ', 0, 0), newban.section(' ', 1, 1).section('!', 0, 0), newban.section(' ', 2 ,2).toUInt());
     }
 
     void ChannelOptionsDialog::removeBan(const QString& ban)
@@ -471,15 +465,42 @@ namespace Konversation
     }
 
     BanListViewItem::BanListViewItem (QListView *parent, const QString& label1, const QString& label2,
-        const QString& label3) : KListViewItem(parent, label1, label2, label3)
+        uint timestamp) : KListViewItem(parent, label1, label2)
     {
         m_isNewBan = 0;
+        m_timestamp.setTime_t(timestamp);
     }
 
     BanListViewItem::BanListViewItem (QListView *parent, bool isNew, const QString& label1, const QString& label2,
-        const QString& label3) : KListViewItem(parent, label1, label2, label3)
+        uint timestamp) : KListViewItem(parent, label1, label2)
     {
         m_isNewBan = isNew;
+        m_timestamp.setTime_t(timestamp);
+    }
+
+    QString BanListViewItem::text(int column) const
+    {
+        if (column == 2)
+            return KGlobal::locale()->formatDateTime(m_timestamp, true, true);
+
+        return KListViewItem::text(column);
+    }
+
+    int BanListViewItem::compare(QListViewItem *i, int col, bool ascending) const
+    {
+        if (col == 2)
+        {
+            BanListViewItem* item = static_cast<BanListViewItem*>(i);
+
+            if (m_timestamp == item->timestamp())
+                return 0;
+            else if (m_timestamp < item->timestamp())
+                return -1;
+            else if (m_timestamp > item->timestamp())
+                return 1;
+        }
+
+        return KListViewItem::compare(i, col, ascending);
     }
 
     void BanListViewItem::startRename( int col )
