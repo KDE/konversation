@@ -382,7 +382,6 @@ namespace Konversation
 
     void ChannelOptionsDialog::addBan(const QString& newban)
     {
-        //new BanListViewItem(m_widget->banList, newban.section(' ', 0, 0), newban.section(' ', 1, 1).section('!', 0, 0), date.toString(Qt::LocalDate));
         new BanListViewItem(m_widget->banList, newban.section(' ', 0, 0), newban.section(' ', 1, 1).section('!', 0, 0), newban.section(' ', 2 ,2).toUInt());
     }
 
