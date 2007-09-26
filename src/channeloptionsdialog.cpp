@@ -495,7 +495,7 @@ namespace Konversation
                 return 0;
             else if (m_timestamp < item->timestamp())
                 return -1;
-            else if (m_timestamp > item->timestamp())
+            else
                 return 1;
         }
 
