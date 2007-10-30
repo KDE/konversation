@@ -546,6 +546,8 @@ void DccTransferRecv::slotServerSocketReadyAccept()
         return;
     }
 
+    connect( m_recvSocket, SIGNAL( gotError( int ) ), this, SLOT( connectionFailed( int ) ) );
+
     // we don't need ServerSocket anymore
     m_serverSocket->close();
 
@@ -565,7 +567,6 @@ void DccTransferRecv::startReceiving()
 
     connect( m_recvSocket, SIGNAL( readyRead() ),                        this, SLOT( readData() )              );
     connect( m_recvSocket, SIGNAL( readyWrite() ),                       this, SLOT( sendAck() )               );
-    connect( m_recvSocket, SIGNAL( gotError( int ) ),                    this, SLOT( connectionFailed( int ) ) );
     connect( m_recvSocket, SIGNAL( closed() ),                           this, SLOT( slotSocketClosed() )      );
 
     setStatus( Transferring );
