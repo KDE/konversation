@@ -370,7 +370,10 @@ namespace Konversation
 
             Channel* channel = m_server->getChannelByName(channelName);
             if (channel)
-                emit showView (channel);
+            {
+                if (Preferences::bringToFront())
+                    emit showView (channel);
+            }
             else
                 result.toServer = "JOIN " + channelName;
         }
