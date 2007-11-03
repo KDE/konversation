@@ -97,9 +97,9 @@ namespace Konversation
         return false;
     }
 
-    QStringList OutputFilter::splitForEncoding(const QString& inputLine, int max)
+    QStringList OutputFilter::splitForEncoding(const QString& inputLine, uint max)
     {
-        int sublen = 0; //The encoded length since the last split
+        uint sublen = 0; //The encoded length since the last split
         int charLength = 0; //the length of this char
         int lastBreakPoint = 0;
 
@@ -366,7 +366,11 @@ namespace Konversation
         else
         {
             if(!isAChannel(channelName))
-                result.toServer = "JOIN #" + channelName.stripWhiteSpace();
+                channelName = "#" + channelName.stripWhiteSpace();
+
+            Channel* channel = m_server->getChannelByName(channelName);
+            if (channel)
+                emit showView (channel);
             else
                 result.toServer = "JOIN " + channelName;
         }
