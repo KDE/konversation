@@ -756,11 +756,10 @@ void IRCView::insertMarkerLine()
 void IRCView::appendLine(const QString& color)
 {
     QColor channelColor = Preferences::color(Preferences::ChannelMessage);
-    m_tabNotification = Konversation::tnfNone;
 
-    QString line = "<p><hr color=\""+color+"\" noshade></p>\n";
+    QString line = "<p><br><br><hr color=\""+color+"\" noshade></p>\n";
 
-    doAppend(line);
+    doAppend(line, true);
 }
 
 void IRCView::clearLines()
