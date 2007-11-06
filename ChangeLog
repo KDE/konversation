@@ -158,6 +158,23 @@ Changes since 1.0.1:
 - Fixed sorting the ban list by time set.
 - Made the ban list's "Time Set" column use KDE locale settings for the date
   format.
+- If the preference to focus new tabs is enabled, Konversation will now also
+  focus the channel tab when doing /join for a channel that is already joined.
+- Konversation now distinguishes between manually and automatically inserted
+  marker lines, making the "show line in all chat windows" preference less
+  confusing.
+- The automatically inserted remember lines when chat windows are hidden are
+  now "sliding", i.e. there is only one per chat window, and it moves.
+- Automatically inserted remember lines will now only be inserted when there's
+  actually new text being appended to the chat window.
+- Added an action to clear all marker lines in a chat window.
+- Improved marker lines-related preferences and terminology.
+- Improved the appearance of marker lines in the chat window.
+- Made the (marker line-related and other) identity default settings consistent
+  between the initial identity and additional newly created identities.
+- Fixed race condition when removing a nicklist theme (listview would be re-
+  populated before deletion was complete).
+
 
 -------------------------------------------------------------------------------
 
