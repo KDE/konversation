@@ -9,6 +9,7 @@
   Copyright (C) 2005 Ismail Donmez <ismail@kde.org>
   Copyright (C) 2006 Dario Abatianni <eisfuchs@tigress.com>
   Copyright (C) 2006 John Tapsell <johnflux@gmail.com>
+  Copyright (C) 2007 Eike Hein <hein@kde.org>
 */
 
 #include "theme_preferences.h"
@@ -252,9 +253,14 @@ void Theme_Config::removeTheme()
     if(remove == KMessageBox::Continue)
     {
         unlink(QFile::encodeName(dir));
-        KIO::del(KURL(dir.remove("index.desktop")));
-        loadSettings();
+        KIO::DeleteJob* job = KIO::del(KURL(dir.remove("index.desktop")));
+        connect(job, SIGNAL(result(KIO::Job*)), this, SLOT(postRemoveTheme(KIO::Job*)));
     }
+}
+
+void Theme_Config::postRemoveTheme(KIO::Job* /* delete_job */)
+{
+    loadSettings();
 }
 
 void Theme_Config::updatePreview(int id)

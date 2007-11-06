@@ -9,6 +9,7 @@
   Copyright (C) 2005 Ismail Donmez <ismail@kde.org>
   Copyright (C) 2006 Dario Abatianni <eisfuchs@tigress.com>
   Copyright (C) 2006 John Tapsell <johnflux@gmail.com>
+  Copyright (C) 2007 Eike Hein <hein@kde.org>
 */
 
 #ifndef PREFSPAGETHEMES_H
@@ -16,6 +17,9 @@
 
 #include "theme_preferencesui.h"
 #include "konvisettingspage.h"
+
+#include <kio/job.h>
+
 
 class QStringList;
 
@@ -41,6 +45,7 @@ class Theme_Config : public Theme_ConfigUI, public KonviSettingsPage
         void updateButtons();
         void installTheme();
         void removeTheme();
+        void postRemoveTheme(KIO::Job* delete_job);
 
     private:
         QStringList m_dirs;
