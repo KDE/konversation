@@ -1,3 +1,15 @@
+Id=1.1-rememberline
+File=konversationrc
+Group=General Options
+Key=ShowRememberLineInAllWindows,MarkerLineInAllViews
+RemoveKey=ShowRememberLineInAllWindows
+
+Id=1.1-markerlines
+File=konversationrc
+Group=Appearance,General Options
+Key=AutoInsertRememberLineAfterMinimizing,AutomaticRememberLine
+RemoveKey=AutoInsertRememberLineAfterMinimizing
+
 Id=0.20-customfonts
 File=konversationrc
 Group=Appearance
