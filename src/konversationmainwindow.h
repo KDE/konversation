@@ -10,7 +10,7 @@
   Copyright (C) 2005 Ismail Donmez <ismail@kde.org>
   Copyright (C) 2005 Peter Simonsson <psn@linux.se>
   Copyright (C) 2005 John Tapsell <johnflux@gmail.com>
-  Copyright (C) 2005-2006 Eike Hein <hein@kde.org>
+  Copyright (C) 2005-2007 Eike Hein <hein@kde.org>
 */
 
 #ifndef _KONVERSATIONMAINWINDOW_H_
@@ -74,8 +74,10 @@ class KonversationMainWindow : public KMainWindow
         void endNotification();
         void quitServer();
         void serverStateChanged(Server* server, Server::State state);
-        void insertRememberLine();
-        void insertRememberLine(Server* server);
+        void triggerRememberLine();
+        void triggerRememberLines(Server*);
+        void cancelRememberLine();
+        void insertMarkerLine();
 
     public slots:
         void updateTrayIcon();
@@ -119,6 +121,7 @@ class KonversationMainWindow : public KMainWindow
         void notifyAction(const QString& serverName,const QString& nick);
 
         void quitProgram();
+        void showEvent(QShowEvent* e);
         void hideEvent(QHideEvent* e);
         void focusOutEvent(QFocusEvent* e);
         void leaveEvent(QEvent* e);

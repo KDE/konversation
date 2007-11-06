@@ -27,12 +27,13 @@ Identity::Identity() : KShared()
 {
     m_id = s_availableId;
     s_availableId++;
-    setCodecName(Konversation::IRCCharsets::self()->encodingForLocale());
+
+    init();
 }
 
 Identity::Identity(int id) : KShared()
 {
-    if(id < 0)
+    if (id < 0)
     {
         m_id = s_availableId;
         s_availableId++;
@@ -41,6 +42,8 @@ Identity::Identity(int id) : KShared()
     {
         m_id = id;
     }
+
+    init();
 }
 
 Identity::Identity(const Identity& original) : KShared()
@@ -51,6 +54,20 @@ Identity::Identity(const Identity& original) : KShared()
 
 Identity::~Identity()
 {
+}
+
+void Identity::init()
+{
+    setCodecName(Konversation::IRCCharsets::self()->encodingForLocale());
+
+    setInsertRememberLineOnAway(false);
+
+    setPartReason("Konversation terminated!");
+    setKickReason("User terminated!");
+
+    setShowAwayMessage(false);
+    setAwayMessage("/me is away: %s");
+    setReturnMessage("/me is back.");
 }
 
 void Identity::copy(const Identity& original)

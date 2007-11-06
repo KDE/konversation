@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="konversation" version="48">
+<kpartgui name="konversation" version="50">
 
   <MenuBar>
     <Menu name="file">
@@ -14,13 +14,15 @@
       <Action name="toggle_away" />
     </Menu>
     <Menu name="edit">
+      <Action name="clear_lines" />
+      <Separator />
       <Action name="clear_window" />
       <Action name="clear_tabs" />
     </Menu>
     <Menu name="insert">
       <Text>&amp;Insert</Text>
       <Action name="irc_colors" />
-      <Action name="insert_remember_line" />
+      <Action name="insert_marker_line" />
       <Action name="insert_character" />
     </Menu>
     <Menu name="bookmarks">

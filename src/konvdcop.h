@@ -36,7 +36,7 @@ class KonvDCOP : public QObject, virtual public KonvIface
         signals:
         void dcopSay(const QString& server,const QString& target,const QString& command);
         void dcopInfo(const QString& string);
-        void dcopInsertRememberLine();
+        void dcopInsertMarkerLine();
         void dcopConnectToServer(const QString& url, int port, const QString& channel, const QString& password);
         void dcopRaw(const QString& server, const QString& command);
         void dcopMultiServerRaw(const QString& command);
@@ -51,7 +51,7 @@ class KonvDCOP : public QObject, virtual public KonvIface
         void info(const QString& string);
         void debug(const QString& string);
         void error(const QString& string);
-        void insertRememberLine();
+        void insertMarkerLine();
         void connectToServer(const QString& url, int port, const QString& channel, const QString& password);
         QStringList listServers();
         QStringList listConnectedServers();

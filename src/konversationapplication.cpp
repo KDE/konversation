@@ -10,7 +10,7 @@
   Copyright (C) 2005 Ismail Donmez <ismail@kde.org>
   Copyright (C) 2005 Peter Simonsson <psn@linux.se>
   Copyright (C) 2005 John Tapsell <johnflux@gmail.com>
-  Copyright (C) 2005-2006 Eike Hein <hein@kde.org>
+  Copyright (C) 2005-2007 Eike Hein <hein@kde.org>
 */
 
 #include "konversationapplication.h"
@@ -178,8 +178,8 @@ int KonversationApplication::newInstance()
                 this,SLOT (dcopSay(const QString&,const QString&,const QString&)) );
             connect(dcopObject,SIGNAL (dcopInfo(const QString&)),
                 this,SLOT (dcopInfo(const QString&)) );
-            connect(dcopObject,SIGNAL (dcopInsertRememberLine()),
-                mainWindow,SIGNAL(insertRememberLine()));
+            connect(dcopObject,SIGNAL (dcopInsertMarkerLine()),
+                mainWindow,SIGNAL(insertMarkerLine()));
             connect(dcopObject,SIGNAL(dcopConnectToServer(const QString&, int,const QString&, const QString&)),
                 this,SLOT(dcopConnectToServer(const QString&, int,const QString&, const QString&)));
         }
@@ -445,7 +445,7 @@ Server* KonversationApplication::connectToServer(int serverGroupId, Konversation
 
     connect(newServer, SIGNAL(multiServerCommand(const QString&, const QString&)),
         this, SLOT(sendMultiServerCommand(const QString&, const QString&)));
-    connect(newServer, SIGNAL(awayInsertRememberLine(Server*)), mainWindow, SIGNAL(insertRememberLine(Server*)));
+    connect(newServer, SIGNAL(awayInsertRememberLine(Server*)), mainWindow, SIGNAL(triggerRememberLines(Server*)));
 
     serverList.append(newServer);
 
@@ -481,7 +481,7 @@ void KonversationApplication::quickConnectToServer(const QString& hostName, cons
 
     connect(newServer, SIGNAL(multiServerCommand(const QString&, const QString&)),
         this, SLOT(sendMultiServerCommand(const QString&, const QString&)));
-    connect(newServer, SIGNAL(awayInsertRememberLine(Server*)), mainWindow, SIGNAL(insertRememberLine(Server*)));
+    connect(newServer, SIGNAL(awayInsertRememberLine(Server*)), mainWindow, SIGNAL(triggerRememberLines(Server*)));
 
     serverList.append(newServer);
 }

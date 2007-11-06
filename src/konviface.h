@@ -6,8 +6,8 @@
 */
 
 /*
-  copyright: (C) 2005 by Dario Abatianni
-  email:     eisfuchs@tigress.com
+  Copyright (C) 2002 Dario Abatianni <eisfuchs@tigress.com>
+  Copyright (C) 2007-2007 Eike Hein <hein@kde.org>
 */
 
 #ifndef KONV_IFACE_H
@@ -36,7 +36,7 @@ class KonvIface : virtual public DCOPObject
     virtual void info(const QString& string) = 0;
     virtual void debug(const QString& string) = 0;
     virtual void error(const QString& string) = 0;
-    virtual void insertRememberLine() = 0;
+    virtual void insertMarkerLine() = 0;
     virtual void connectToServer(const QString& url, int port, const QString& channel, const QString& password) = 0;
     virtual QString getNickname (const QString &serverid) = 0;
     virtual QString getAnyNickname () = 0;

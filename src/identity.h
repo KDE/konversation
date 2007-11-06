@@ -109,6 +109,7 @@ class Identity : public KShared
     private:
         int m_id;
         static int s_availableId;
+        void init();
 };
 
 typedef KSharedPtr<Identity> IdentityPtr;

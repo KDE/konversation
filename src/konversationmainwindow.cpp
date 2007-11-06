@@ -10,7 +10,7 @@
   Copyright (C) 2005 Ismail Donmez <ismail@kde.org>
   Copyright (C) 2005 Peter Simonsson <psn@linux.se>
   Copyright (C) 2005 John Tapsell <johnflux@gmail.com>
-  Copyright (C) 2005-2006 Eike Hein <hein@kde.org>
+  Copyright (C) 2005-2007 Eike Hein <hein@kde.org>
 */
 
 #include "konversationmainwindow.h"
@@ -78,9 +78,10 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
     connect(KonversationApplication::instance(), SIGNAL(iconChanged(int)), m_viewContainer, SLOT(updateViewIcons()));
     connect(m_viewContainer, SIGNAL(setWindowCaption(const QString&)), this, SLOT(setCaption(const QString&)));
     connect(this, SIGNAL(serverStateChanged(Server*, Server::State)), m_viewContainer, SLOT(serverStateChanged(Server*, Server::State)));
-    connect(this, SIGNAL(insertRememberLine()), m_viewContainer, SLOT(insertRememberLine()));
-    connect(this, SIGNAL(insertRememberLine(Server*)), m_viewContainer, SLOT(insertRememberLine(Server*)));
-
+    connect(this, SIGNAL(triggerRememberLine()), m_viewContainer, SLOT(insertRememberLine()));
+    connect(this, SIGNAL(triggerRememberLines(Server*)), m_viewContainer, SLOT(insertRememberLines(Server*)));
+    connect(this, SIGNAL(cancelRememberLine()), m_viewContainer, SLOT(cancelRememberLine()));
+    connect(this, SIGNAL(insertMarkerLine()), m_viewContainer, SLOT(insertMarkerLine()));
 
     // Set up status bar
     m_statusBar = new KonversationStatusBar(this);
@@ -236,6 +237,9 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
         tabSelectionMapper->setMapping( tabSelectionAction, i-1);
     }
 
+    action = new KAction(i18n("Clear &Marker Lines"), 0, KShortcut("CTRL+SHIFT+R"), m_viewContainer, SLOT(clearViewLines()),actionCollection(),"clear_lines");
+    action->setToolTip(i18n("Clear marker lines in the current tab"));
+    action->setEnabled(false);
     action = new KAction(i18n("&Clear Window"), 0, KShortcut("Ctrl+L"), m_viewContainer, SLOT(clearView()),actionCollection(),"clear_window");
     action->setToolTip(i18n("Clear the contents of the current tab"));
     action->setEnabled(false);
@@ -261,7 +265,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
     action = new KAction(i18n("&IRC Color..."), "colorize", CTRL+Key_K, m_viewContainer, SLOT(insertIRCColor()), actionCollection(), "irc_colors");
     action->setToolTip(i18n("Set the color of your current IRC message"));
     action->setEnabled(false);
-    action = new KAction(i18n("&Remember Line"), 0,  KShortcut("Ctrl+R") , m_viewContainer, SLOT(insertRememberLine()), actionCollection(), "insert_remember_line");
+    action = new KAction(i18n("&Marker Line"), 0,  KShortcut("Ctrl+R") , m_viewContainer, SLOT(insertMarkerLine()), actionCollection(), "insert_marker_line");
     action->setToolTip(i18n("Insert a horizontal line into the current tab that only you can see"));
     action->setEnabled(false);
     action = new KAction(i18n("Special &Character..."), "char", KShortcut("Alt+Shift+C"), m_viewContainer, SLOT(insertCharacter()), actionCollection(), "insert_character");
@@ -390,19 +394,22 @@ bool KonversationMainWindow::queryClose()
 
 void KonversationMainWindow::hideEvent(QHideEvent *e)
 {
-    if (Preferences::autoInsertRememberLineAfterMinimizing())
-        emit insertRememberLine();
+    emit triggerRememberLine();
 
     m_statusBar->clearMainLabelTempText();
 
     KMainWindow::hideEvent(e);
 }
 
+void KonversationMainWindow::showEvent(QShowEvent *e)
+{
+    emit cancelRememberLine();
+
+    KMainWindow::showEvent(e);
+}
+
 void KonversationMainWindow::focusOutEvent(QFocusEvent* e)
 {
-    if (Preferences::autoInsertRememberLineAfterMinimizing())
-        emit insertRememberLine();
-
     m_statusBar->clearMainLabelTempText();
 
     KMainWindow::focusOutEvent(e);
@@ -420,11 +427,11 @@ bool KonversationMainWindow::event(QEvent* e)
     if (e->type() == QEvent::WindowActivate)
     {
         emit endNotification();
+        emit cancelRememberLine();
     }
     else if(e->type() == QEvent::WindowDeactivate)
     {
-        if (Preferences::autoInsertRememberLineAfterMinimizing())
-            emit insertRememberLine();
+        emit triggerRememberLine();
     }
 
     return KMainWindow::event(e);
@@ -522,7 +529,7 @@ void KonversationMainWindow::openKeyBindings()
     actionCollection()->action("toggle_away")->setText(i18n("Toggle Away Globally"));
     actionCollection()->action("irc_colors")->setText(i18n("Insert &IRC Color..."));
     actionCollection()->action("insert_character")->setText(i18n("Insert Special &Character..."));
-    actionCollection()->action("insert_remember_line")->setText(i18n("Insert &Remember Line"));
+    actionCollection()->action("insert_marker_line")->setText(i18n("Insert &Marker Line"));
     QString openChannelListString = actionCollection()->action("open_channel_list")->text();
     actionCollection()->action("open_channel_list")->setText(i18n("&Channel List"));
     QString openLogFileString = actionCollection()->action("open_logfile")->text();
@@ -536,7 +543,7 @@ void KonversationMainWindow::openKeyBindings()
     actionCollection()->action("toggle_away")->setText(i18n("Set &Away Globally"));
     actionCollection()->action("irc_colors")->setText(i18n("&IRC Color..."));
     actionCollection()->action("insert_character")->setText(i18n("Special &Character..."));
-    actionCollection()->action("insert_remember_line")->setText(i18n("&Remember Line"));
+    actionCollection()->action("insert_marker_line")->setText(i18n("&Marker Line"));
     actionCollection()->action("open_channel_list")->setText(openChannelListString);
     actionCollection()->action("open_logfile")->setText(openLogFileString);
 }

@@ -10,7 +10,7 @@
 /*
   Copyright (C) 2002 Dario Abatianni <eisfuchs@tigress.com>
   Copyright (C) 2005-2007 Peter Simonsson <psn@linux.se>
-  Copyright (C) 2006 Eike Hein <hein@kde.org>
+  Copyright (C) 2006-2007 Eike Hein <hein@kde.org>
 */
 
 #include "ircview.h"
@@ -78,7 +78,9 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent)
     m_chatWin = 0;
     m_findParagraph=0;
     m_findIndex=0;
-    m_lastInsertionWasLine = false;
+
+    m_rememberLineParagraph = -1;
+    m_rememberLineDirtyBit = false;
 
     setAutoFormatting(QTextEdit::AutoNone);
     setUndoRedoEnabled(0);
@@ -194,6 +196,7 @@ void IRCView::clear()
 {
     m_buffer = QString();
     KTextBrowser::setText("");
+    wipeLineParagraphs();
 }
 
 void IRCView::highlightedSlot(const QString& _link)
@@ -705,22 +708,115 @@ void IRCView::append(const QString& nick,const QString& message)
     emit textToLog(QString("<%1>\t%2").arg(nick).arg(message));
 
     doAppend(line);
-
-    m_lastInsertionWasLine = false;
 }
 
-void IRCView::appendLine()
+void IRCView::insertRememberLine()
 {
-    if (m_lastInsertionWasLine) return;
+    m_rememberLineDirtyBit = true;
+}
 
-    QColor channelColor=Preferences::color(Preferences::ChannelMessage);
+void IRCView::cancelRememberLine()
+{
+    m_rememberLineDirtyBit = false;
+}
+
+void IRCView::appendRememberLine()
+{
+    m_rememberLineDirtyBit = false;
+
+    if (m_rememberLineParagraph == paragraphs() - 1)
+        return;
+
+    if (m_rememberLineParagraph > -1) removeParagraph(m_rememberLineParagraph);
+
+    repaintChanged();
+
+    appendLine(Preferences::color(Preferences::CommandMessage).name());
+
+    m_rememberLineParagraph = paragraphs() - 1;
+}
+
+void IRCView::insertMarkerLine()
+{
+    qHeapSort(m_markerLineParagraphs);
+
+    if (m_markerLineParagraphs.last() == paragraphs() - 1)
+        return;
+
+    bool rememberLineDirtyBit = m_rememberLineDirtyBit;
+    m_rememberLineDirtyBit = false;
+
+    appendLine(Preferences::color(Preferences::ActionMessage).name());
+
+    m_rememberLineDirtyBit = rememberLineDirtyBit;
+
+    m_markerLineParagraphs.append(paragraphs() - 1);
+}
+
+void IRCView::appendLine(const QString& color)
+{
+    QColor channelColor = Preferences::color(Preferences::ChannelMessage);
     m_tabNotification = Konversation::tnfNone;
 
-    QString line = "<p><font color=\"" + channelColor.name() + "\"><br><hr color=\""+Preferences::color(Preferences::CommandMessage).name()+"\" noshade></font></p>\n";
+    QString line = "<p><hr color=\""+color+"\" noshade></p>\n";
 
     doAppend(line);
+}
 
-    m_lastInsertionWasLine = true;
+void IRCView::clearLines()
+{
+    if (m_rememberLineParagraph > -1)
+        m_markerLineParagraphs.append(m_rememberLineParagraph);
+
+    if (m_markerLineParagraphs.count() > 0)
+    {
+        qHeapSort(m_markerLineParagraphs);
+
+        QValueList<int>::iterator it;
+        int removeCounter = 0;
+
+        for (it = m_markerLineParagraphs.begin(); it != m_markerLineParagraphs.end(); ++it)
+        {
+            removeParagraph((*it) - removeCounter);
+            removeCounter++;
+        }
+
+        wipeLineParagraphs();
+
+        repaintChanged();
+    }
+}
+
+bool IRCView::hasLines()
+{
+    if (m_rememberLineParagraph > -1 || m_markerLineParagraphs.count() > 0)
+        return true;
+
+    return false;
+}
+
+void IRCView::updateLineParagraphs(int numRemoved)
+{
+    if (m_rememberLineParagraph < numRemoved)
+        m_rememberLineParagraph = -1;
+    else
+        m_rememberLineParagraph -= numRemoved;
+
+    QValueList<int>::iterator it;
+
+    for (it = m_markerLineParagraphs.begin(); it != m_markerLineParagraphs.end(); ++it)
+    {
+        if ((*it) < numRemoved)
+            m_markerLineParagraphs.remove((*it));
+        else
+            (*it) -= numRemoved;
+    }
+}
+
+void IRCView::wipeLineParagraphs()
+{
+    m_markerLineParagraphs.clear();
+    m_rememberLineParagraph = -1;
 }
 
 void IRCView::appendRaw(const QString& message, bool suppressTimestamps, bool self)
@@ -739,8 +835,6 @@ void IRCView::appendRaw(const QString& message, bool suppressTimestamps, bool se
     }
 
     doAppend(line, self);
-
-    m_lastInsertionWasLine = false;
 }
 
 void IRCView::appendQuery(const QString& nick, const QString& message, bool inChannel)
@@ -773,8 +867,6 @@ void IRCView::appendQuery(const QString& nick, const QString& message, bool inCh
     emit textToLog(QString("<%1>\t%2").arg(nick).arg(message));
 
     doAppend(line);
-
-    m_lastInsertionWasLine = false;
 }
 
 void IRCView::appendAction(const QString& nick,const QString& message)
@@ -807,8 +899,6 @@ void IRCView::appendAction(const QString& nick,const QString& message)
     emit textToLog(QString("\t * %1 %2").arg(nick).arg(message));
 
     doAppend(line);
-
-    m_lastInsertionWasLine = false;
 }
 
 void IRCView::appendServerMessage(const QString& type, const QString& message, bool parseURL)
@@ -845,8 +935,6 @@ void IRCView::appendServerMessage(const QString& type, const QString& message, b
     emit textToLog(QString("%1\t%2").arg(type).arg(message));
 
     doAppend(line);
-
-    m_lastInsertionWasLine = false;
 }
 
 void IRCView::appendCommandMessage(const QString& type,const QString& message, bool important, bool parseURL, bool self)
@@ -887,8 +975,6 @@ void IRCView::appendCommandMessage(const QString& type,const QString& message, b
     emit textToLog(QString("%1\t%2").arg(type).arg(message));
 
     doAppend(line, self);
-
-    m_lastInsertionWasLine = false;
 }
 
 void IRCView::appendBacklogMessage(const QString& firstColumn,const QString& rawMessage)
@@ -924,8 +1010,6 @@ void IRCView::appendBacklogMessage(const QString& firstColumn,const QString& raw
 
     line = line.arg(time, nick, filter(message, backlogColor, NULL, false, false));
 
-    m_lastInsertionWasLine = false;
-
     doAppend(line);
 }
 
@@ -955,6 +1039,8 @@ void IRCView::scrollToBottom()
 
 void IRCView::doAppend(const QString& newLine, bool self)
 {
+    if (m_rememberLineDirtyBit) appendRememberLine();
+
     // Add line to buffer
     QString line(newLine);
 
@@ -989,14 +1075,16 @@ void IRCView::doAppend(const QString& newLine, bool self)
     {
         int numRemoved = paragraphs() - sbm;
 
-        if(numRemoved >0)
+        if (numRemoved > 0)
         {
             for (int index = numRemoved; index > 0; --index)
             {
                 removeParagraph(0);
             }
 
-            if(textselected)
+            updateLineParagraphs(numRemoved);
+
+            if (textselected)
             {
                 paraFrom -= numRemoved;
                 paraTo -= numRemoved;

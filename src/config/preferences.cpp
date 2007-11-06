@@ -58,8 +58,8 @@ Preferences::Preferences()
     addIdentity(mIdentity);
 
     KUser user(KUser::UseRealUserID);
-    setIdent(user.loginName());
-    setRealName(user.fullName());
+    mIdentity->setIdent(user.loginName());
+    mIdentity->setRealName(user.fullName());
 
     QStringList nickList;
     nickList.append(user.loginName());
@@ -67,12 +67,6 @@ Preferences::Preferences()
     nickList.append(user.loginName() + "__");
     mIdentity->setNicknameList(nickList);
 
-    setPartReason("Konversation terminated!");
-    setKickReason("User terminated!");
-
-    setShowAwayMessage(false);
-    setAwayMessage("/me is away: %s");
-    setUnAwayMessage("/me is back.");
     Konversation::ServerGroupSettingsPtr serverGroup = new Konversation::ServerGroupSettings;
     serverGroup->setName("Freenode");
     Konversation::ServerSettings server;

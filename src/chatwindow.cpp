@@ -7,7 +7,7 @@
 
 /*
   Copyright (C) 2002 Dario Abatianni <eisfuchs@tigress.com>
-  Copyright (C) 2006 Eike Hein <hein@kde.org>
+  Copyright (C) 2006-2007 Eike Hein <hein@kde.org>
 */
 
 #include "chatwindow.h"
@@ -151,12 +151,6 @@ void ChatWindow::setTextView(IRCView* newView)
     connect(textView,SIGNAL(textToLog(const QString&)), this,SLOT(logText(const QString&)));
     connect(textView,SIGNAL(setStatusBarTempText(const QString&)), this, SIGNAL(setStatusBarTempText(const QString&)));
     connect(textView,SIGNAL(clearStatusBarTempText()), this, SIGNAL(clearStatusBarTempText()));
-}
-
-void ChatWindow::insertRememberLine()
-{
-    if(!textView) return;
-    textView->appendLine();
 }
 
 void ChatWindow::appendRaw(const QString& message, bool suppressTimestamps)

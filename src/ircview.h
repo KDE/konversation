@@ -11,7 +11,7 @@
 /*
   Copyright (C) 2002 Dario Abatianni <eisfuchs@tigress.com>
   Copyright (C) 2005-2006 Peter Simonsson <psn@linux.se>
-  Copyright (C) 2006 Eike Hein <hein@kde.org>
+  Copyright (C) 2006-2007 Eike Hein <hein@kde.org>
 */
 
 #include "common.h"
@@ -73,6 +73,9 @@ class IRCView : public KTextBrowser
 
         void setNickAndChannelContextMenusEnabled(bool enable);
 
+        bool hasLines();
+
+
     signals:
         // Notify container of new text and highlight state
         void updateTabNotification(Konversation::TabNotifyType type);
@@ -90,8 +93,12 @@ class IRCView : public KTextBrowser
         void clearStatusBarTempText();
 
     public slots:
+        void insertRememberLine();
+        void cancelRememberLine();
+        void insertMarkerLine();
+        void clearLines();
+
         void append(const QString& nick, const QString& message);
-        void appendLine();
         void appendRaw(const QString& message, bool suppressTimestamps=false, bool self = false);
         void appendQuery(const QString& nick, const QString& message, bool inChannel = false);
         void appendAction(const QString& nick, const QString& message);
@@ -121,7 +128,7 @@ class IRCView : public KTextBrowser
     protected:
         void openLink(const QString &url, bool newTab=false);
         QString filter(const QString& line, const QString& defaultColor, const QString& who=NULL,
-            bool doHighlight=true, bool parseURL=true, bool self=false);
+        bool doHighlight=true, bool parseURL=true, bool self=false);
         void doAppend(const QString& line, bool self=false);
         void replaceDecoration(QString& line,char decoration,char replacement);
         virtual void contentsDragMoveEvent(QDragMoveEvent* e);
@@ -156,7 +163,16 @@ class IRCView : public KTextBrowser
         int m_findParagraph;
         int m_findIndex;
 
-        bool m_lastInsertionWasLine;
+        void appendLine(const QString& color);
+        void appendRememberLine();
+
+        void updateLineParagraphs(int numRemoved);
+        void wipeLineParagraphs();
+
+        int m_rememberLineParagraph;
+        bool m_rememberLineDirtyBit;
+
+        QValueList<int> m_markerLineParagraphs;
 
         // This is set to what we last sent status text to the statusbar.  Empty if we have sent clearStatusBarTempText() string
         QString m_lastStatusText;

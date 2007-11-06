@@ -6,7 +6,7 @@
 */
 
 /*
-  Copyright (C) 2006 Eike Hein <hein@kde.org>
+  Copyright (C) 2006-2007 Eike Hein <hein@kde.org>
 */
 
 #include "viewcontainer.h"
@@ -471,6 +471,9 @@ void ViewContainer::updateViewActions(int index)
         action = actionCollection()->action("irc_colors");
         if (action) action->setEnabled(false);
 
+        action = actionCollection()->action("clear_lines");
+        if (action) action->setEnabled(false);
+
         action = actionCollection()->action("clear_window");
         if (action) action->setEnabled(false);
 
@@ -558,7 +561,7 @@ void ViewContainer::updateFrontView()
 
         bool insertSupported = view->isInsertSupported();
 
-        action = actionCollection()->action("insert_remember_line");
+        action = actionCollection()->action("insert_marker_line");
         if (action)  action->setEnabled(insertSupported);
 
         action = actionCollection()->action("insert_character");
@@ -566,6 +569,15 @@ void ViewContainer::updateFrontView()
 
         action = actionCollection()->action("irc_colors");
         if (action) action->setEnabled(insertSupported);
+
+        action = actionCollection()->action("clear_lines");
+        if (action)
+        {
+            if (view->isInsertSupported())
+                action->setEnabled(view->getTextView()->hasLines());
+            else
+                action->setEnabled(false);
+        }
 
         action = actionCollection()->action("clear_window");
         if (action) action->setEnabled(view->getTextView() != 0);
@@ -683,13 +695,16 @@ void ViewContainer::updateFrontView()
     }
     else
     {
-        action = actionCollection()->action("insert_remember_line");
+        action = actionCollection()->action("insert_marker_line");
         if (action) action->setEnabled(false);
 
         action = actionCollection()->action("insert_character");
         if (action) action->setEnabled(false);
 
         action = actionCollection()->action("irc_colors");
+        if (action) action->setEnabled(false);
+
+        action = actionCollection()->action("clear_lines");
         if (action) action->setEnabled(false);
 
         action = actionCollection()->action("clear_window");
@@ -1360,8 +1375,8 @@ void ViewContainer::switchView(QWidget* newView)
 
         disconnect(m_frontView, SIGNAL(updateInfo(const QString &)), this, SIGNAL(setStatusBarInfoLabel(const QString &)));
 
-        if (Preferences::autoInsertRememberLineAfterMinimizing() && m_previousFrontView->isInsertSupported())
-            m_previousFrontView->insertRememberLine();
+        if (Preferences::automaticRememberLine() && m_previousFrontView->isInsertSupported())
+            m_previousFrontView->getTextView()->insertRememberLine();
     }
 
     m_frontView = 0;
@@ -1391,6 +1406,8 @@ void ViewContainer::switchView(QWidget* newView)
 
     if (view)
     {
+        if (view->isInsertSupported()) view->getTextView()->cancelRememberLine();
+
         KToggleAction* notifyAction = static_cast<KToggleAction*>(actionCollection()->action("tab_notifications"));
         if (notifyAction)
         {
@@ -1879,35 +1896,69 @@ void ViewContainer::insertIRCColor()
     if (dlg.exec() == KDialog::Accepted) m_frontView->appendInputText(dlg.color(), true/*fromCursor*/);
 }
 
-void ViewContainer::insertRememberLine()
+void ViewContainer::clearViewLines()
 {
-    if (Preferences::showRememberLineInAllWindows())
+    if (m_frontView && m_frontView->isInsertSupported())
     {
-        int total = m_tabWidget->count()-1;
-        ChatWindow* nextPage;
+        m_frontView->getTextView()->clearLines();
 
-        for(int i = 0; i <= total; ++i)
-        {
-            nextPage = static_cast<ChatWindow*>(m_tabWidget->page(i));
-            if (nextPage->isInsertSupported())
-                nextPage->insertRememberLine();
-        }
-    }
-    else
-    {
-        if (m_frontView && m_frontView->isInsertSupported())
-            m_frontView->insertRememberLine();
+        KAction* action = actionCollection()->action("clear_lines");
+        if (action) action->setEnabled(false);
     }
 }
 
-void ViewContainer::insertRememberLine(Server* server)
+void ViewContainer::insertRememberLine()
+{
+    if (m_frontView && m_frontView->isInsertSupported())
+        m_frontView->getTextView()->insertRememberLine();
+}
+
+void ViewContainer::insertRememberLines(Server* server)
 {
     for (int i = 0; i <  m_tabWidget->count(); ++i)
     {
         ChatWindow* view = static_cast<ChatWindow*>(m_tabWidget->page(i));
 
-        if (view->getServer()==server && view->isInsertSupported())
-            view->insertRememberLine();
+        if (view->getServer() == server && view->isInsertSupported())
+            view->getTextView()->insertRememberLine();
+    }
+}
+
+void ViewContainer::cancelRememberLine()
+{
+    if (m_frontView && m_frontView->isInsertSupported())
+    {
+        m_frontView->getTextView()->cancelRememberLine();
+
+        KAction* action = actionCollection()->action("clear_lines");
+        if (action) action->setEnabled(m_frontView->getTextView()->hasLines());
+    }
+}
+
+void ViewContainer::insertMarkerLine()
+{
+    if (Preferences::markerLineInAllViews())
+    {
+        int total = m_tabWidget->count()-1;
+        ChatWindow* view;
+
+        for (int i = 0; i <= total; ++i)
+        {
+            view = static_cast<ChatWindow*>(m_tabWidget->page(i));
+
+            if (view->isInsertSupported()) view->getTextView()->insertMarkerLine();
+        }
+    }
+    else
+    {
+        if (m_frontView && m_frontView->isInsertSupported())
+            m_frontView->getTextView()->insertMarkerLine();
+    }
+
+    if (m_frontView && m_frontView->isInsertSupported())
+    {
+        KAction* action = actionCollection()->action("clear_lines");
+        if (action) action->setEnabled(m_frontView->getTextView()->hasLines());
     }
 }
 

@@ -215,11 +215,6 @@
       <label></label>
       <whatsthis></whatsthis>
     </entry>
-    <entry key="ShowRememberLineInAllWindows" type="Bool">
-      <default>false</default>
-      <label></label>
-      <whatsthis></whatsthis>
-    </entry>
     <entry key="FocusNewQueries" type="Bool">
       <default>true</default>
       <label></label>
@@ -377,7 +372,12 @@
       <label></label>
       <whatsthis></whatsthis>
     </entry>
-    <entry key="AutoInsertRememberLineAfterMinimizing" type="Bool">
+    <entry key="AutomaticRememberLine" type="Bool">
+      <default>false</default>
+      <label></label>
+      <whatsthis></whatsthis>
+    </entry>
+    <entry key="MarkerLineInAllViews" type="Bool">
       <default>false</default>
       <label></label>
       <whatsthis></whatsthis>

@@ -6,7 +6,7 @@
 */
 
 /*
-  Copyright (C) 2006 Eike Hein <hein@kde.org>
+  Copyright (C) 2006-2007 Eike Hein <hein@kde.org>
 */
 
 #ifndef VIEWCONTAINER_H
@@ -104,8 +104,12 @@ class ViewContainer : public QObject
         void insertCharacter();
         void insertChar(const QChar& chr);
         void insertIRCColor();
+
+        void clearViewLines();
         void insertRememberLine();
-        void insertRememberLine(Server* server);
+        void cancelRememberLine();
+        void insertMarkerLine();
+        void insertRememberLines(Server* server);
 
         void openLogFile();
         void openLogFile(const QString& caption, const QString& file);

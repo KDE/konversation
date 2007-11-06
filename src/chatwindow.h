@@ -7,7 +7,7 @@
 
 /*
   Copyright (C) 2002 Dario Abatianni <eisfuchs@tigress.com>
-  Copyright (C) 2006 Eike Hein <hein@kde.org>
+  Copyright (C) 2006-2007 Eike Hein <hein@kde.org>
 */
 
 #ifndef CHATWINDOW_H
@@ -74,7 +74,6 @@ class ChatWindow : public QVBox
         void setType(WindowType newType);
         WindowType getType();
 
-        virtual void insertRememberLine();
         virtual void append(const QString& nickname,const QString& message);
         virtual void appendRaw(const QString& message, bool suppressTimestamps=false);
         virtual void appendQuery(const QString& nickname,const QString& message, bool inChannel = false);

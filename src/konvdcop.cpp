@@ -121,9 +121,9 @@ void KonvDCOP::error(const QString& string)
     emit dcopInfo(QString("Error: %1").arg(string));
 }
 
-void KonvDCOP::insertRememberLine()
+void KonvDCOP::insertMarkerLine()
 {
-    emit dcopInsertRememberLine();
+    emit dcopInsertMarkerLine();
 }
 
 void KonvDCOP::connectToServer(const QString& url, int port, const QString& channel, const QString& password)
