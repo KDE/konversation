@@ -115,6 +115,7 @@ void Theme_Config::loadSettings()
             ++i;
         }
         // highlight currently active theme and update preview box
+        iconThemeIndex->sort();
         iconThemeIndex->setSelected(currentThemeIndex, true);
         updatePreview(currentThemeIndex);
     }
