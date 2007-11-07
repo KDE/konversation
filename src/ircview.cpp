@@ -757,7 +757,7 @@ void IRCView::appendLine(const QString& color)
 {
     QColor channelColor = Preferences::color(Preferences::ChannelMessage);
 
-    QString line = "<p><font style=\"font-size:2pt;\"><br><br><hr color=\""+color+"\" noshade></font></p>\n";
+    QString line = "<p><font style=\"font-size:1pt;\"><br><br><hr color=\""+color+"\" noshade></font></p>\n";
 
     doAppend(line, true);
 }

@@ -408,13 +408,6 @@ void KonversationMainWindow::showEvent(QShowEvent *e)
     KMainWindow::showEvent(e);
 }
 
-void KonversationMainWindow::focusOutEvent(QFocusEvent* e)
-{
-    m_statusBar->clearMainLabelTempText();
-
-    KMainWindow::focusOutEvent(e);
-}
-
 void KonversationMainWindow::leaveEvent(QEvent* e)
 {
     m_statusBar->clearMainLabelTempText();
@@ -431,7 +424,10 @@ bool KonversationMainWindow::event(QEvent* e)
     }
     else if(e->type() == QEvent::WindowDeactivate)
     {
-        emit triggerRememberLine();
+        m_statusBar->clearMainLabelTempText();
+
+        if (kapp->activeModalWidget() == 0)
+            emit triggerRememberLine();
     }
 
     return KMainWindow::event(e);

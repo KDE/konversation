@@ -123,7 +123,6 @@ class KonversationMainWindow : public KMainWindow
         void quitProgram();
         void showEvent(QShowEvent* e);
         void hideEvent(QHideEvent* e);
-        void focusOutEvent(QFocusEvent* e);
         void leaveEvent(QEvent* e);
 
         void openURL(const QString& url, const QString& title);
