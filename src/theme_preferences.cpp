@@ -78,6 +78,8 @@ void Theme_Config::loadSettings()
     // if we have any themes
     if(m_dirs.count() > 0)
     {
+        m_dirs.sort();
+
         // clear listview
         iconThemeIndex->clear();
         // initialize index counter
@@ -115,7 +117,6 @@ void Theme_Config::loadSettings()
             ++i;
         }
         // highlight currently active theme and update preview box
-        iconThemeIndex->sort();
         iconThemeIndex->setSelected(currentThemeIndex, true);
         updatePreview(currentThemeIndex);
     }
