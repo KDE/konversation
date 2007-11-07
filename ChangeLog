@@ -174,7 +174,7 @@ Changes since 1.0.1:
   between the initial identity and additional newly created identities.
 - Fixed race condition when removing a nicklist theme (listview would be re-
   populated before deletion was complete).
-- Added Tango nickname list them by the Tango Desktop Project and Sebastian
+- Added Tango nickname list theme by the Tango Desktop Project and Sebastian
   Sariego B.
 
 
