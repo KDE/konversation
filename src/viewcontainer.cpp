@@ -64,10 +64,6 @@ ViewContainer::ViewContainer(KonversationMainWindow* window)
     m_urlCatcherPanel = 0;
     m_nicksOnlinePanel = 0;
 
-    m_dccPanel = new DccTransferPanel(m_tabWidget);
-    m_dccPanelOpen = false;
-    connect(m_dccPanel, SIGNAL(updateTabNotification(ChatWindow*,const Konversation::TabNotifyType&)), this, SLOT(setViewNotification(ChatWindow*,const Konversation::TabNotifyType&)));
-
     m_insertCharDialog = 0;
 
     m_queryViewCount = 0;
@@ -83,6 +79,11 @@ ViewContainer::ViewContainer(KonversationMainWindow* window)
     setupTabWidget();
 
     initializeSplitterSizes();
+
+    m_dccPanel = new DccTransferPanel(m_tabWidget);
+    m_dccPanel->hide();
+    m_dccPanelOpen = false;
+    connect(m_dccPanel, SIGNAL(updateTabNotification(ChatWindow*,const Konversation::TabNotifyType&)), this, SLOT(setViewNotification(ChatWindow*,const Konversation::TabNotifyType&)));
 }
 
 ViewContainer::~ViewContainer()
