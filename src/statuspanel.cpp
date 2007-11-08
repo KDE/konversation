@@ -63,8 +63,6 @@ StatusPanel::StatusPanel(QWidget* parent) : ChatWindow(parent)
 
     connect(getTextView(),SIGNAL (gotFocus()),statusInput,SLOT (setFocus()) );
 
-    connect(getTextView(), SIGNAL(updateTabNotification(Konversation::TabNotifyType)),
-        this, SLOT(activateTabNotification(Konversation::TabNotifyType)));
     connect(getTextView(),SIGNAL (sendFile()),this,SLOT (sendFileMenu()) );
     connect(getTextView(),SIGNAL (autoText(const QString&)),this,SLOT (sendStatusText(const QString&)) );
 

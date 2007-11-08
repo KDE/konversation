@@ -78,7 +78,6 @@ class IRCView : public KTextBrowser
 
     signals:
         // Notify container of new text and highlight state
-        void updateTabNotification(Konversation::TabNotifyType type);
         void gotFocus();                          // So we can set focus to input line
         void textToLog(const QString& text);
         void sendFile();

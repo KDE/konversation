@@ -95,8 +95,6 @@ DccChat::DccChat(QWidget* parent, bool listen, Server* server, const QString& ow
 
     connect( getTextView(), SIGNAL( textPasted(bool) ), m_dccChatInput, SLOT( paste(bool) ) );
     connect( getTextView(), SIGNAL( gotFocus() ), m_dccChatInput, SLOT( setFocus() ) );
-    connect( getTextView(), SIGNAL( updateTabNotification(Konversation::TabNotifyType)),
-        this, SLOT( activateTabNotification( Konversation::TabNotifyType ) ) );
     connect( getTextView(), SIGNAL( autoText(const QString&) ), this, SLOT( sendDccChatText( const QString& ) ) );
 
     if (listen)

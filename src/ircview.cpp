@@ -1043,7 +1043,7 @@ void IRCView::doAppend(const QString& newLine, bool self)
     // Add line to buffer
     QString line(newLine);
 
-    if (!self) emit updateTabNotification(m_tabNotification);
+    if (!self && m_chatWin) m_chatWin->activateTabNotification(m_tabNotification);
 
     // scroll view only if the scroll bar is already at the bottom
     bool doScroll = ( KTextBrowser::verticalScrollBar()->value() == KTextBrowser::verticalScrollBar()->maxValue());

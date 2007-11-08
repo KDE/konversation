@@ -29,9 +29,6 @@ RawLog::RawLog(QWidget* parent) : ChatWindow(parent)
     setType(ChatWindow::RawLog);
     IRCViewBox* ircBox = new IRCViewBox(this, 0);
     setTextView(ircBox->ircView());               // Server will be set later in setServer()
-
-    connect(getTextView(), SIGNAL(updateTabNotification(Konversation::TabNotifyType)),
-        this, SLOT(morphNotification()));
 }
 
 RawLog::~RawLog()

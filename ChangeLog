@@ -177,6 +177,8 @@ Changes since 1.0.1:
 - Added Tango nickname list theme by the Tango Desktop Project and Sebastian
   Sariego B.
 - The list of nickname list themes is now sorted alphabetically.
+- Fixed a race condition where a highlight's autotext reply would outrun the
+  original line's tab notification.
 
 
 -------------------------------------------------------------------------------

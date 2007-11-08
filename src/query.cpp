@@ -112,8 +112,6 @@ Query::Query(QWidget* parent) : ChatWindow(parent)
     connect(getTextView(), SIGNAL(textPasted(bool)), queryInput, SLOT(paste(bool)));
     connect(getTextView(),SIGNAL (gotFocus()),queryInput,SLOT (setFocus()) );
 
-    connect(textView, SIGNAL(updateTabNotification(Konversation::TabNotifyType)),
-        this, SLOT(activateTabNotification(Konversation::TabNotifyType)));
     connect(textView,SIGNAL (sendFile()),this,SLOT (sendFileMenu()) );
     connect(textView,SIGNAL (extendedPopup(int)),this,SLOT (popup(int)) );
     connect(textView,SIGNAL (autoText(const QString&)),this,SLOT (sendQueryText(const QString&)) );

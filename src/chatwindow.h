@@ -155,15 +155,14 @@ class ChatWindow : public QVBox
         virtual void appendInputText(const QString&, bool fromCursor);
         virtual void indicateAway(bool away);
 
+
         virtual void setNotificationsEnabled(bool enable) { m_notificationsEnabled = enable; }
+        void activateTabNotification(Konversation::TabNotifyType type);
         void resetTabNotification();
 
     protected slots:
         ///Used to disable functions when not connected
         virtual void serverOnline(bool online);
-
-        ///Checks if we should update tab notification or not
-        void activateTabNotification(Konversation::TabNotifyType type);
 
     protected:
 

@@ -265,8 +265,6 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent), key(" ")
 
     connect(getTextView(), SIGNAL(textPasted(bool)), channelInput, SLOT(paste(bool)));
     connect(getTextView(),SIGNAL (gotFocus()),channelInput,SLOT (setFocus()) );
-    connect(getTextView(), SIGNAL(updateTabNotification(Konversation::TabNotifyType)),
-        this, SLOT(activateTabNotification(Konversation::TabNotifyType)));
     connect(getTextView(),SIGNAL (sendFile()),this,SLOT (sendFileMenu()) );
     connect(getTextView(),SIGNAL (autoText(const QString&)),this,SLOT (sendChannelText(const QString&)) );
 
