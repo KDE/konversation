@@ -1910,8 +1910,11 @@ void ViewContainer::clearViewLines()
 
 void ViewContainer::insertRememberLine()
 {
-    if (m_frontView && m_frontView->isInsertSupported())
-        m_frontView->getTextView()->insertRememberLine();
+    if (Preferences::automaticRememberLine())
+    {
+        if (m_frontView && m_frontView->isInsertSupported())
+            m_frontView->getTextView()->insertRememberLine();
+    }
 }
 
 void ViewContainer::insertRememberLines(Server* server)
