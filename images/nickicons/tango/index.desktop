@@ -2,6 +2,7 @@
 Type=Theme
 Name=Tango Theme
 Name[it]=Tema tango
+Name[nl]=Tango-thema
 Name[pt]=Tema Tango
 Name[pt_BR]=Tema Tango
 Name[sr]=Танго тема
@@ -9,6 +10,7 @@ Name[sr@Latn]=Танго тема
 Name[sv]=Tangotema
 Comment="Tango" by the Tango Desktop Project and Sebastian Sariego B.
 Comment[it]="Tango", del progetto desktop Tango e Sebastian Sariego B.
+Comment[nl]="Tango", van het Tango Desktop-project en Sebastian Sariego B
 Comment[pt]="Tango" do Projecto Tango e de Sebastian Sariego B.
 Comment[pt_BR]="Tango" do Projecto Tango e de Sebastian Sariego B.
 Comment[sr]=Танго од Танго десктоп пројекта и Себастијана Саријега
