@@ -730,7 +730,7 @@ void Server::broken(int state)
                     .arg(m_serverGroup->serverByIndex(m_currentServerIndex).server());
                 statusView->appendServerMessage(i18n("Error"),error );
 
-                connectToIRCServer();
+                QTimer::singleShot(0, this, SLOT(connectToIRCServer()));
             }
             else
             {
