@@ -100,7 +100,8 @@ class IRCView : public KTextBrowser
         void append(const QString& nick, const QString& message);
         void appendRaw(const QString& message, bool suppressTimestamps=false, bool self = false);
         void appendQuery(const QString& nick, const QString& message, bool inChannel = false);
-        void appendAction(const QString& nick, const QString& message);
+        void appendQueryAction(const QString& nick, const QString& message);
+        void appendChannelAction(const QString& nick, const QString& message);
         void appendServerMessage(const QString& type, const QString& message, bool parseURL = true);
         void appendCommandMessage(const QString& command, const QString& message, bool important,
             bool parseURL=true, bool self=false);
@@ -128,6 +129,7 @@ class IRCView : public KTextBrowser
         void openLink(const QString &url, bool newTab=false);
         QString filter(const QString& line, const QString& defaultColor, const QString& who=NULL,
         bool doHighlight=true, bool parseURL=true, bool self=false);
+        void appendAction(const QString& nick, const QString& message);
         void doAppend(const QString& line, bool self=false);
         void replaceDecoration(QString& line,char decoration,char replacement);
         virtual void contentsDragMoveEvent(QDragMoveEvent* e);

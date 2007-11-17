@@ -239,7 +239,7 @@ void DccChat::readData()
                 QString ctcpArgument = ctcp.section( " ", 1 );
 
                 if( ctcpCommand.lower() == "action" )
-                    getTextView()->appendAction( m_partnerNick, ctcpArgument );
+                    appendAction( m_partnerNick, ctcpArgument );
                 else
                     getTextView()->appendServerMessage( i18n( "CTCP" ), i18n( "Received unknown CTCP-%1 request from %2" ).arg( ctcp ).arg( m_partnerNick ) );
             }
@@ -293,7 +293,7 @@ void DccChat::sendDccChatText(const QString& sendLine)
             // convert /me actions
             if(line.lower().startsWith(cc+"me "))
             {
-                getTextView()->appendAction( m_ownNick, line.section( " ", 1 ) );
+                appendAction( m_ownNick, line.section( " ", 1 ) );
                 line=QString("\x01%1 %2\x01").arg("ACTION").arg(line.section(" ",1));
             }
             else getTextView()->append( m_ownNick, line );

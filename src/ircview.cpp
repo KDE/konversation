@@ -868,21 +868,32 @@ void IRCView::appendQuery(const QString& nick, const QString& message, bool inCh
     doAppend(line);
 }
 
+void IRCView::appendChannelAction(const QString& nick,const QString& message)
+{
+    m_tabNotification = Konversation::tnfNormal;
+
+    appendAction(nick, message);
+}
+
+
+void IRCView::appendQueryAction(const QString& nick,const QString& message)
+{
+    m_tabNotification = Konversation::tnfPrivate;
+
+    appendAction(nick, message);
+}
+
 void IRCView::appendAction(const QString& nick,const QString& message)
 {
     QString actionColor=Preferences::color(Preferences::ActionMessage).name();
 
-    if(actionColor  == "#000000")
-    {
-        actionColor = "#000001";               // HACK Working around QTextBrowser's auto link coloring
-    }
+    // HACK Working around QTextBrowser's auto link coloring
+    if (actionColor  == "#000000") actionColor = "#000001";
 
     QString line;
-    m_tabNotification = Konversation::tnfNormal;
-
     QString nickLine = createNickLine(nick, false);
 
-    if(basicDirection(message) == QChar::DirR)
+    if (basicDirection(message) == QChar::DirR)
     {
         line = RLE;
         line += LRE;

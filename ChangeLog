@@ -179,7 +179,8 @@ Changes since 1.0.1:
 - The list of nickname list themes is now sorted alphabetically.
 - Fixed a race condition where a highlight's autotext reply would outrun the
   original line's tab notification.
-
+- Fixed actions in queries and DCC chats producing message notification events
+  (rather than the correct private message ones).
 
 -------------------------------------------------------------------------------
 

@@ -171,10 +171,14 @@ void ChatWindow::appendQuery(const QString& nickname,const QString& message, boo
     textView->appendQuery(nickname,message, inChannel);
 }
 
-void ChatWindow::appendAction(const QString& nickname,const QString& message)
+void ChatWindow::appendAction(const QString& nickname, const QString& message)
 {
-    if(!textView) return ;
-    textView->appendAction(nickname,message);
+    if(!textView) return;
+
+    if (getType() == Query || getType() == DccChat)
+        textView->appendQueryAction(nickname, message);
+    else
+        textView->appendChannelAction(nickname, message);
 }
 
 void ChatWindow::appendServerMessage(const QString& type,const QString& message, bool parseURL)
