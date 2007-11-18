@@ -2496,9 +2496,10 @@ bool Server::setNickOffline(const QString& nickname)
  */
 bool Server::deleteNickIfUnlisted(const QString &nickname)
 {
-    // Don't delete our own nickinfo.
-    if (nickname == getNickname()) return false;
     QString lcNickname = nickname.lower();
+    // Don't delete our own nickinfo.
+    if (lcNickname == loweredNickname()) return false;
+
     if (!m_queryNicks.contains(lcNickname))
     {
         QStringList nickChannels = getNickChannels(nickname);
