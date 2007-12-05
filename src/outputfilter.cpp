@@ -1183,9 +1183,9 @@ namespace Konversation
         if (showUsage)
         {
             if (!kick)
-                result = usage(i18n("Usage: %1BAN [-HOST | -DOMAIN] [channel] <user|mask>").arg(commandChar));
+                result = usage(i18n("Usage: %1BAN [-HOST | -DOMAIN | -USERHOST | -USERDOMAIN] [channel] <user|mask>").arg(commandChar));
             else
-                result = usage(i18n("Usage: %1KICKBAN [-HOST | -DOMAIN] [channel] <user|mask> [reason]").arg(commandChar));
+                result = usage(i18n("Usage: %1KICKBAN [-HOST | -DOMAIN | -USERHOST | -USERDOMAIN] [channel] <user|mask> [reason]").arg(commandChar));
         }
 
         return result;
