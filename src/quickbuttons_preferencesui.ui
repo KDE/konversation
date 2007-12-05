@@ -8,7 +8,7 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>424</width>
+            <width>439</width>
             <height>351</height>
         </rect>
     </property>
@@ -149,7 +149,8 @@
                         </sizepolicy>
                     </property>
                     <property name="text">
-                        <string>%c: Current channel
+                        <string>%o: Current nickname
+%c: Current channel
 %K: Server password
 %u: List of selected nicknames
 %s&lt;term&gt;%: term used to separate nicknames in %u
@@ -203,6 +204,8 @@
         </widget>
     </grid>
 </widget>
+<customwidgets>
+</customwidgets>
 <tabstops>
     <tabstop>buttonListView</tabstop>
     <tabstop>nameInput</tabstop>
