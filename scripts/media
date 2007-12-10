@@ -289,7 +289,15 @@ class AudaciousPlayer(Player):
     def getData(self):
         if self.isRunning() and not os.system('audtool playback-playing'):
             # get the title of the currently playing track
-            return (self.reEncodeString(os.popen('audtool current-song').read().strip()),'','')
+            data = os.popen('audtool current-song').read().strip()
+            data_list = data.split(' - ')
+            list_length = len(data_list)
+            if list_length == 1:
+                return (self.reEncodeString(data_list[0]),'','')
+            if list_length == 3:
+                return (self.reEncodeString(data_list[-1]),data_list[0],data_list[1])
+            else:
+                return (self.reEncodeString(data),'','')
 
 
 def playing(playerList, mode=None):
