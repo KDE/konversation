@@ -294,7 +294,7 @@ class AudaciousPlayer(Player):
             list_length = len(data_list)
             if list_length == 1:
                 return (self.reEncodeString(data_list[0]),'','')
-            if list_length == 3:
+            elif list_length == 3:
                 return (self.reEncodeString(data_list[-1]),data_list[0],data_list[1])
             else:
                 return (self.reEncodeString(data),'','')
