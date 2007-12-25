@@ -32,6 +32,7 @@ GenericName[sv]=IRC-klient
 GenericName[tr]=IRC İstemcisi
 GenericName[uk]=Клієнт IRC
 GenericName[xx]=xxIRC Clientxx
+GenericName[zh_CN]=IRC 客户端
 GenericName[zh_TW]=IRC 客戶端程式
 Terminal=false
 Name=Konversation

@@ -33,6 +33,7 @@ Name[ta]=முன்னிருப்பு தலைப்பு
 Name[tr]=Öntanımlı tema
 Name[uk]=Типова тема
 Name[xx]=xxDefault Themexx
+Name[zh_CN]=默认页面
 Name[zh_TW]=預設主題
 Comment="Simplistic" by Shintaro Matsuoka
 Comment[ar]="Simplistic" من Shintaro Matsuoka
@@ -64,6 +65,7 @@ Comment[ta]="Simplistic" ஷிண்டாரோ மாட்சொக்கா
 Comment[tr]=Shintaro Matsuoka tarafından "Basitlik"
 Comment[uk]="Проста" - Shintaro Matsuoka
 Comment[xx]=xx"Simplistic" by Shintaro Matsuokaxx
+Comment[zh_CN]=“简洁”，由 Shintaro Matsuoka 设计
 Comment[zh_TW]="Simplistic" 由 Shintaro Matsuoka 撰寫
 Encoding=UTF-8
 
