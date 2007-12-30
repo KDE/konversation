@@ -44,7 +44,7 @@ formatVariables={'audio': 'is listening to', 'video': 'is watching'}
 ## If you add a new player, you must add it here or it won't get checked when in audio-only or video-only modes.
 playerRankings= {
     'video' :['kaffeine','kmplayer', 'kplayer', 'noatun', 'kdetv'],
-    'audio' :['amarok', 'juk', 'noatun', 'kscd', 'kaffeine', 'kmplayer', 'Audacious', 'xmms', 'yammi']
+    'audio' :['amarok', 'MPD' 'juk', 'noatun', 'kscd', 'kaffeine', 'kmplayer', 'Audacious', 'xmms', 'yammi']
 }
 
 ## Title, album and artist fields to be quoted depending on contents
@@ -244,6 +244,51 @@ class AmarokPlayer(DCOPPlayer):
                 return ''
         return data
 
+import socket
+
+class MPD(Player):
+    def __init__(self, display_name):
+        Player.__init__(self, display_name)
+
+        self.host = "localhost"
+        self.port = 6600
+        self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.sock.settimeout(0.5)
+
+        try:
+            self.sock.connect((self.host, self.port))
+            # just welcome message, we don't need it
+            self.sock.recv(1024)
+            self.running = True
+        except socket.error:
+            self.running = False
+
+    def getData(self):
+        if not self.running:
+            return ''
+        try:
+            self.sock.send("currentsong\n")
+            data = self.sock.recv(1024)
+        except socket.error:
+            return ''
+
+        # mpd sends OK always, so if nothing to show, we should seek for at least 3 chars
+        if len(data) < 4:
+            return ''
+        else:
+            # if there is Artist, Title and Album, get it
+            data=data.splitlines()
+            d={}
+            for i in data:
+                if ':' not in i:
+                    continue
+                k,v=i.split(':',1)
+                d[k.lower()]=self.reEncodeString(v.strip())
+            data=(d.get('title',''),d.get('artist',''),d.get('album',''))
+            if not any(data):
+                return d.get('file','')
+            return data
+
 class StupidPlayer(DCOPPlayer):
     def getData(self):
         data=DCOPPlayer.getData(self)[0]
@@ -363,7 +408,8 @@ StupidPlayer("KPlayer","kplayer","kplayer-mainwindow#1 caption",playerType="vide
 DCOPPlayer("KsCD","kscd","CDPlayer currentTrackTitle","CDPlayer currentArtist","CDPlayer currentAlbum"),
 DCOPPlayer("kdetv","kdetv","KdetvIface channelName",playerType='video'),
 AudaciousPlayer('Audacious'), XmmsPlayer('XMMS'),
-DCOPPlayer("Yammi","yammi","YammiPlayer songTitle","YammiPlayer songArtist","YammiPlayer songAlbum")
+DCOPPlayer("Yammi","yammi","YammiPlayer songTitle","YammiPlayer songArtist","YammiPlayer songAlbum"),
+MPD('MPD')
 ]
 
 # Get rid of players that didn't get subclassed so they don't appear in the available players list
@@ -382,13 +428,13 @@ else:
 if __name__=="__main__":
 
     if not TARGET:
-        s="""media v2.0 for Konversation 1.0. One media command to rule them all, inspired from Kopete's now listening plugin.
+        s="""media v2.0.1 for Konversation 1.0. One media command to rule them all, inspired from Kopete's now listening plugin.
 Usage:
         "\00312/media\017" - report what the first player found is playing
         "\00312/media\017 [ '\00312audio\017' | '\00312video\017' ]" - report what is playing in a supported audio or video player
         "\00312/media\017 { \00312Player\017 }" - report what is playing in \00312Player\017 if it is supported
 
-        Available players are, in the order they will be checked:
+        Available players are:
                 """ + ', '.join([("%s (%s)"%(i.displayName,i.type)) for i in PLAYERS])
 
         for i in s.splitlines():
