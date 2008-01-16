@@ -181,6 +181,8 @@ Changes since 1.0.1:
   original line's tab notification.
 - Fixed actions in queries and DCC chats producing message notification events
   (rather than the correct private message ones).
+- Auto-correct hostnames and passwords entered with preceding or trailing spaces
+  in the Server List dialog.
 
 -------------------------------------------------------------------------------
 

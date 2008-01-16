@@ -25,13 +25,13 @@ namespace Konversation
             explicit ServerSettings(const QString& server);
             ~ServerSettings();
 
-            void setServer(const QString& server) { m_server = server; }
+            void setServer(const QString& server);
             QString server() const { return m_server; }
 
             void setPort(int port) { m_port = port; }
             int port() const { return m_port;}
 
-            void setPassword(const QString& password) { m_password = password; }
+            void setPassword(const QString& password);
             QString password() const { return m_password; }
 
             void setSSLEnabled(bool enabled) { m_SSLEnabled = enabled; }

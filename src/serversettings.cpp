@@ -48,4 +48,14 @@ namespace Konversation
         else
             return false;
     }
+
+    void ServerSettings::setServer(const QString& server)
+    {
+        m_server = server.stripWhiteSpace();
+    }
+
+    void ServerSettings::setPassword(const QString& password)
+    {
+        m_password = password.stripWhiteSpace();
+    }
 }
