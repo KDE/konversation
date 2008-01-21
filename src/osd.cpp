@@ -241,7 +241,7 @@ void OSDWidget::mousePressEvent( QMouseEvent* )
 void OSDWidget::show()
 {
     // Don't show the OSD widget when the desktop is locked
-    if ( isKDesktopLockRunning() )
+    if ( isKDesktopLockRunning() == NotLocked )
     {
         minReached();                             // don't queue the message
         return;
@@ -409,11 +409,10 @@ OSDWidget::KDesktopLockStatus OSDWidget::isKDesktopLockRunning()
 
     DCOPClient *dcopptr = KApplication::kApplication()->dcopClient();
 
-    // Can't tell, very weird, err on the side of safety.
+    // Can't tell, very weird
     if (!dcopptr || !dcopptr->isAttached())
     {
-        kdWarning() << k_funcinfo << ": Could not make DCOP connection. "
-            << "Assuming screensaver is active." << endl;
+        kdWarning() << k_funcinfo << ": Could not make DCOP connection." << endl;
         return DCOPError;
     }
 
@@ -423,9 +422,8 @@ OSDWidget::KDesktopLockStatus OSDWidget::isKDesktopLockRunning()
     if (!dcopptr->call("kdesktop","KScreensaverIface","isBlanked()",
         data,returnType,returnValue,true))
     {
-        kdWarning() << k_funcinfo << ": Check for screensaver failed."
-            << "Assuming screensaver is active." << endl;
-        // Err on the side of safety again.
+        // KDesktop is not running. Maybe we are in a KDE4 desktop...
+        kdDebug() << k_funcinfo << ": Check for screensaver failed." << endl;
         return DCOPError;
     }
 
@@ -441,7 +439,7 @@ OSDWidget::KDesktopLockStatus OSDWidget::isKDesktopLockRunning()
         kdWarning() << k_funcinfo << ": Strange return value from screensaver. "
             << "Assuming screensaver is active." << endl;
         // Err on the side of safety.
-        return DCOPError;
+        return Locked;
     }
 }
 
