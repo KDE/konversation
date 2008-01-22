@@ -2157,7 +2157,7 @@ void ViewContainer::serverQuit(Server* server)
     {
         ChatWindow* view = static_cast<ChatWindow*>(m_tabWidget->page(i));
 
-        if (view->getServer() && view->getServer() == server)
+        if (view && view->getServer() && view->getServer() == server)
         {
             m_tabWidget->removePage(view);
             view->hide();
