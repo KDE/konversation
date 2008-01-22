@@ -2153,6 +2153,19 @@ RawLog* ViewContainer::addRawLog(Server* server)
 
 void ViewContainer::serverQuit(Server* server)
 {
+    for (int i = 0; i < m_tabWidget->count(); ++i)
+    {
+        ChatWindow* view = static_cast<ChatWindow*>(m_tabWidget->page(i));
+
+        if (view->getServer() && view->getServer() == server)
+        {
+            m_tabWidget->removePage(view);
+            view->hide();
+
+            i--;
+        }
+    }
+
     if (server == m_frontServer)
         m_frontServer = 0;
 
