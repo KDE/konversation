@@ -195,7 +195,6 @@ class ViewContainer : public QObject
         Server* m_frontServer;
         Server* m_contextServer;
         QGuardedPtr<ChatWindow> m_frontView;
-        QGuardedPtr<ChatWindow> m_previousFrontView;
         ChatWindow* m_searchView;
 
         UrlCatcher* m_urlCatcherPanel;

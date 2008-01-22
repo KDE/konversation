@@ -58,7 +58,6 @@ ViewContainer::ViewContainer(KonversationMainWindow* window)
     m_frontServer = 0;
     m_contextServer = 0;
     m_frontView = 0;
-    m_previousFrontView = 0;
     m_searchView = 0;
 
     m_urlCatcherPanel = 0;
@@ -520,8 +519,6 @@ void ViewContainer::updateFrontView()
         // Make sure that only views with info output get to be the m_frontView
         if (m_frontView)
         {
-            m_previousFrontView = m_frontView;
-
             disconnect(m_frontView, SIGNAL(updateInfo(const QString &)), this, SIGNAL(setStatusBarInfoLabel(const QString &)));
         }
 
@@ -1372,12 +1369,11 @@ void ViewContainer::switchView(QWidget* newView)
     if (m_frontView)
     {
         m_frontView->resetTabNotification();
-        m_previousFrontView = m_frontView;
 
         disconnect(m_frontView, SIGNAL(updateInfo(const QString &)), this, SIGNAL(setStatusBarInfoLabel(const QString &)));
 
-        if (Preferences::automaticRememberLine() && m_previousFrontView->isInsertSupported())
-            m_previousFrontView->getTextView()->insertRememberLine();
+        if (Preferences::automaticRememberLine() && m_frontView->isInsertSupported())
+            m_frontView->getTextView()->insertRememberLine();
     }
 
     m_frontView = 0;
@@ -1555,9 +1551,7 @@ void ViewContainer::closeView(ChatWindow* view)
         // We haven't done anything yet, so safe to return
         if (!confirmClose) return;
 
-        // if this view was the front view, delete the pointer
-        if (view==m_previousFrontView) m_previousFrontView=0;
-        if (view==m_frontView) m_frontView=m_previousFrontView;
+        if (view == m_frontView) m_frontView = 0;
 
         // Remove the view from the active view list if it's still on it
         QValueList<ChatWindow*>::iterator it = m_activeViewOrderList.find(view);
