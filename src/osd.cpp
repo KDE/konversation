@@ -241,7 +241,7 @@ void OSDWidget::mousePressEvent( QMouseEvent* )
 void OSDWidget::show()
 {
     // Don't show the OSD widget when the desktop is locked
-    if ( isKDesktopLockRunning() == NotLocked )
+    if ( isKDesktopLockRunning() == Locked )
     {
         minReached();                             // don't queue the message
         return;
