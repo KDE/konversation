@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Theme
 Name=Tango Theme
+Name[da]=Tango-tema
 Name[de]=Tango-Design
 Name[es]=Tema «Tango»
 Name[et]=Tango teema
@@ -15,6 +16,7 @@ Name[sv]=Tangotema
 Name[xx]=xxTango Themexx
 Name[zh_CN]=Tango 主题
 Comment="Tango" by the Tango Desktop Project and Sebastian Sariego B.
+Comment[da]="Tango" af Tango Desktop-projektet og Sebastian Sariego B.
 Comment[de]="Tango" vom Tango-Desktop-Projekt und Sebastian Sariego B.
 Comment[es]=«Tango», del Proyecto de escritorio Tango y Sebastian Sariego B.
 Comment[et]="Tango" (autor Tango Desktop Project ja Sebastian Sariego B)
