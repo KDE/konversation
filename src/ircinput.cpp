@@ -480,7 +480,8 @@ bool IRCInput::checkPaste(QString& text)
             i18n("Large Paste Warning"),
             i18n("Paste"),
             i18n("&Edit..."),
-            "LargePaste");
+            "LargePaste",
+            KMessageBox::Dangerous);
     }
 
     if (doPaste==KMessageBox::No)
