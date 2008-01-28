@@ -266,7 +266,8 @@ int SSLSocket::verifyCertificate()
                             i18n("Server Authentication"),
                             KGuiItem(i18n("Details")),
                             KGuiItem(i18n("Continue")),
-                            "SslInvalidHost");
+			    QString::null,
+			    KMessageBox::Dangerous);
                     }
                     else
                     {
@@ -277,7 +278,8 @@ int SSLSocket::verifyCertificate()
                             i18n("Server Authentication"),
                             KGuiItem(i18n("Details")),
                             KGuiItem(i18n("Continue")),
-                            "SslCertificateNotAuthentic" );
+			    QString::null,
+			    KMessageBox::Dangerous);
                     }
 
                     if (result == KMessageBox::Yes)
