@@ -183,6 +183,10 @@ Changes since 1.0.1:
   (rather than the correct private message ones).
 - Auto-correct hostnames and passwords entered with preceding or trailing spaces
   in the Server List dialog.
+- Fixed allowing the user to create an infinite loop of showing the SSL connec-
+  tion details dialog upon being presented with the invalid certificate multiple
+  choice dialog at connection time by checking "Do not ask again" and then click-
+  ing "Details".
 
 -------------------------------------------------------------------------------
 
