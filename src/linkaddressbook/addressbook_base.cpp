@@ -44,7 +44,6 @@ namespace Konversation
 
     KABC::Addressee AddressbookBase::getKABCAddresseeFromNick(const QString &ircnick, const QString &servername, const QString &servergroup)
     {
-        KABC::Addressee addr;
         KABC::AddressBook::Iterator it;
 
         for( it = addressBook->begin(); it != addressBook->end(); ++it )
@@ -56,7 +55,6 @@ namespace Konversation
     }
     KABC::Addressee AddressbookBase::getKABCAddresseeFromNick(const QString &nick_server)
     {
-        KABC::Addressee addr;
         KABC::AddressBook::Iterator it;
 
         for( it = addressBook->begin(); it != addressBook->end(); ++it )
