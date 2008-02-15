@@ -330,12 +330,6 @@
         <receiver>kcfg_AutoWhoContinuousInterval</receiver>
         <slot>setEnabled(bool)</slot>
     </connection>
-    <connection>
-        <sender>kcfg_AutomaticRememberLine</sender>
-        <signal>toggled(bool)</signal>
-        <receiver>kcfg_UseLiteralModes</receiver>
-        <slot>setEnabled(bool)</slot>
-    </connection>
 </connections>
 <tabstops>
     <tabstop>kcfg_Beep</tabstop>
