@@ -1282,7 +1282,10 @@ bool IRCView::contextMenu(QContextMenuEvent* ce)
         }
 
         if (m_chatWin->getType() == ChatWindow::Query)
+        {
             updateNickMenuEntries(m_popup, m_chatWin->getName());
+            clearContextNick();
+        }
 
         int r = m_popup->exec(ce->globalPos());
 

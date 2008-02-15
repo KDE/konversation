@@ -187,6 +187,9 @@ Changes since 1.0.1:
   tion details dialog upon being presented with the invalid certificate multiple
   choice dialog at connection time by checking "Do not ask again" and then click-
   ing "Details".
+- Fixed a bug that caused the "Send File..." action in the generic query con-
+  text menu to pick the wrong recipient after hovering the user's own nick in
+  the chat display.
 
 -------------------------------------------------------------------------------
 
