@@ -63,9 +63,11 @@ class DccTransferPanelItem : public QObject, public KListViewItem
         QString getFileSizePrettyText()                        const;
         QString getPositionPrettyText( bool detailed = false ) const;
         QString getTimeLeftPrettyText()                        const;
+        QString getAverageSpeedPrettyText()                    const;
         QString getCurrentSpeedPrettyText()                    const;
         QString getSenderAddressPrettyText()                   const;
 
+        static QString getSpeedPrettyText( transferspeed_t speed );
         static QString secToHMS( long sec );
 
     private slots:

@@ -56,6 +56,7 @@ DccTransfer::DccTransfer( const DccTransfer& obj )
 {
     m_buffer = 0;
     m_bufferSize = 0;
+    m_averageSpeed = obj.getAverageSpeed();
     m_currentSpeed = obj.getCurrentSpeed();
     m_status = obj.getStatus();
     m_statusDetail = obj.getStatusDetail();
@@ -169,9 +170,15 @@ void DccTransfer::updateTransferMeters()
             (*itTime) = (*itTime) - shiftOffset;
 
         if ( m_transferLogTime.count() >= 2 )
+        {
+            m_averageSpeed = (double)( m_transferringPosition - m_transferStartPosition ) / (double)m_timeTransferStarted.secsTo( QDateTime::currentDateTime() );
             m_currentSpeed = (double)( m_transferLogPosition.last() - m_transferLogPosition.front() ) / (double)( m_transferLogTime.last() - m_transferLogTime.front() ) * 1000;
+        }
         else // avoid zero devision
+        {
+            m_averageSpeed = DccTransfer::Calculating;
             m_currentSpeed = DccTransfer::Calculating;
+        }
 
         // update the remaining time
         if ( m_currentSpeed <= 0 )
@@ -181,12 +188,13 @@ void DccTransfer::updateTransferMeters()
     }
     else if ( m_status >= Done )
     {
-        //m_averageSpeed = (double)( m_transferringPosition - m_transferStartPosition ) / (double)m_timeTransferStarted.secsTo( m_timeTransferFinished );
+        m_averageSpeed = (double)( m_transferringPosition - m_transferStartPosition ) / (double)m_timeTransferStarted.secsTo( m_timeTransferFinished );
         m_currentSpeed = 0;
         m_timeLeft = DccTransfer::NotInTransfer;
     }
     else
     {
+        //FIXME: m_averageSpeed (what should I do for this?)
         m_currentSpeed = 0;
         m_timeLeft = DccTransfer::NotInTransfer;
     }
@@ -311,9 +319,14 @@ QString DccTransfer::getReverseToken() const
     return m_reverseToken;
 }
 
-long DccTransfer::getCurrentSpeed() const
+transferspeed_t DccTransfer::getAverageSpeed() const
 {
-    return (unsigned long)m_currentSpeed;
+    return m_averageSpeed;
+}
+
+transferspeed_t DccTransfer::getCurrentSpeed() const
+{
+    return m_currentSpeed;
 }
 
 int DccTransfer::getTimeLeft() const

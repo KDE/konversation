@@ -121,7 +121,7 @@ void DccTransferDetailedInfoPanel::updateView()
     m_labelCurrentSpeed->setText( m_item->getCurrentSpeedPrettyText() );
 
     // Average Speed:
-    // FIXME
+    m_labelAverageSpeed->setText( m_item->getAverageSpeedPrettyText() );
 
     // Resumed:
     if ( transfer->isResumed() )

@@ -25,6 +25,7 @@
 #include <kurl.h>
 #include <kio/global.h>
 
+typedef double transferspeed_t;
 
 class DccTransfer : public QObject
 {
@@ -81,7 +82,8 @@ class DccTransfer : public QObject
         bool               isResumed()                const;
         bool               isReverse()                const;
         QString            getReverseToken()          const;
-        long               getCurrentSpeed()          const;
+        transferspeed_t    getAverageSpeed()          const;
+        transferspeed_t    getCurrentSpeed()          const;
         int                getTimeLeft()              const;
         int                getProgress()              const;
         QDateTime          getTimeTransferStarted()   const;
@@ -176,8 +178,8 @@ class DccTransfer : public QObject
         QValueList<int> m_transferLogTime;
         QValueList<KIO::fileoffset_t> m_transferLogPosition;
 
-        // transfer meters;
-        double m_currentSpeed;
+        transferspeed_t m_averageSpeed;
+        transferspeed_t m_currentSpeed;
         int m_timeLeft;
 };
 

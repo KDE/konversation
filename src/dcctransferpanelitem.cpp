@@ -390,14 +390,14 @@ QString DccTransferPanelItem::getTimeLeftPrettyText() const
     return text;
 }
 
+QString DccTransferPanelItem::getAverageSpeedPrettyText() const
+{
+    return getSpeedPrettyText( m_transfer->getAverageSpeed() );
+}
+
 QString DccTransferPanelItem::getCurrentSpeedPrettyText() const
 {
-    if ( m_transfer->getCurrentSpeed() == DccTransfer::Calculating )
-        return QString( "?" );
-    else if ( m_transfer->getCurrentSpeed() == DccTransfer::NotInTransfer )
-        return QString();
-    else
-        return i18n("%1/sec").arg( KIO::convertSize( (KIO::fileoffset_t)m_transfer->getCurrentSpeed() ) );
+    return getSpeedPrettyText( m_transfer->getCurrentSpeed() );
 }
 
 QString DccTransferPanelItem::getSenderAddressPrettyText() const
@@ -406,6 +406,16 @@ QString DccTransferPanelItem::getSenderAddressPrettyText() const
         return QString( "%1:%2" ).arg( m_transfer->getOwnIp() ).arg( m_transfer->getOwnPort() );
     else
         return QString( "%1:%2" ).arg( m_transfer->getPartnerIp() ).arg( m_transfer->getPartnerPort() );
+}
+
+QString DccTransferPanelItem::getSpeedPrettyText( transferspeed_t speed )
+{
+    if ( speed == DccTransfer::Calculating )
+        return QString( "?" );
+    else if ( speed == DccTransfer::NotInTransfer )
+        return QString();
+    else
+        return i18n("%1/sec").arg( KIO::convertSize( (KIO::fileoffset_t)speed ) );
 }
 
 QString DccTransferPanelItem::secToHMS( long sec )
