@@ -410,7 +410,7 @@ QString DccTransferPanelItem::getSenderAddressPrettyText() const
 
 QString DccTransferPanelItem::getSpeedPrettyText( transferspeed_t speed )
 {
-    if ( speed == DccTransfer::Calculating )
+    if ( speed == DccTransfer::Calculating || speed == DccTransfer::InfiniteValue )
         return QString( "?" );
     else if ( speed == DccTransfer::NotInTransfer )
         return QString();

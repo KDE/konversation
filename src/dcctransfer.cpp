@@ -171,6 +171,7 @@ void DccTransfer::updateTransferMeters()
 
         if ( m_transferLogTime.count() >= 2 )
         {
+            // FIXME: precision of average speed is too bad
             m_averageSpeed = (double)( m_transferringPosition - m_transferStartPosition ) / (double)m_timeTransferStarted.secsTo( QDateTime::currentDateTime() );
             m_currentSpeed = (double)( m_transferLogPosition.last() - m_transferLogPosition.front() ) / (double)( m_transferLogTime.last() - m_transferLogTime.front() ) * 1000;
         }
@@ -188,13 +189,16 @@ void DccTransfer::updateTransferMeters()
     }
     else if ( m_status >= Done )
     {
-        m_averageSpeed = (double)( m_transferringPosition - m_transferStartPosition ) / (double)m_timeTransferStarted.secsTo( m_timeTransferFinished );
+        if ( m_timeTransferStarted.secsTo( m_timeTransferFinished ) > 1 )
+            m_averageSpeed = (double)( m_transferringPosition - m_transferStartPosition ) / (double)m_timeTransferStarted.secsTo( m_timeTransferFinished );
+        else
+            m_averageSpeed = DccTransfer::InfiniteValue;
         m_currentSpeed = 0;
         m_timeLeft = DccTransfer::NotInTransfer;
     }
     else
     {
-        //FIXME: m_averageSpeed (what should I do for this?)
+        m_averageSpeed = 0;
         m_currentSpeed = 0;
         m_timeLeft = DccTransfer::NotInTransfer;
     }
