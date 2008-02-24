@@ -23,6 +23,7 @@
 #include <klineedit.h>
 #include <klocale.h>
 #include <kprogress.h>
+#include <krun.h>
 #include <kurlrequester.h>
 
 
@@ -32,6 +33,7 @@ DccTransferDetailedInfoPanel::DccTransferDetailedInfoPanel( QWidget* parent, con
     m_autoViewUpdateTimer = new QTimer( this );
 
     connect( m_urlreqLocation, SIGNAL( textChanged( const QString& ) ), this, SLOT( slotLocationChanged( const QString& ) ) );
+    connect( m_buttonOpenFolder, SIGNAL( clicked() ), this, SLOT( slotOpenFolderButtonClicked() ) );
 }
 
 DccTransferDetailedInfoPanel::~DccTransferDetailedInfoPanel()
@@ -80,6 +82,7 @@ void DccTransferDetailedInfoPanel::updateView()
     m_urlreqLocation->lineEdit()->setReadOnly( transfer->getStatus() != DccTransfer::Queued );
     m_urlreqLocation->lineEdit()->setFrame( transfer->getStatus() == DccTransfer::Queued );
     m_urlreqLocation->button()->setEnabled( transfer->getStatus() == DccTransfer::Queued );
+    m_buttonOpenFolder->setEnabled( !m_urlreqLocation->lineEdit()->text().isEmpty() );
 
     // Partner:
     QString partnerInfoServerName;
@@ -189,6 +192,17 @@ void DccTransferDetailedInfoPanel::slotLocationChanged( const QString& url )
     {
         DccTransferRecv* transfer = static_cast< DccTransferRecv* >( m_item->transfer() );
         transfer->setFileURL( KURL::fromPathOrURL( url ) );
+    }
+}
+
+void DccTransferDetailedInfoPanel::slotOpenFolderButtonClicked()
+{
+    QString urlString = m_urlreqLocation->lineEdit()->text();
+    if ( !urlString.isEmpty() )
+    {
+        KURL url = KURL::fromPathOrURL( urlString );
+        url.setFileName( QString() );
+        new KRun( url, 0, true, true );
     }
 }
 

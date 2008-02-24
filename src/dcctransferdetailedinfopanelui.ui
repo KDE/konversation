@@ -1,4 +1,4 @@
-<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
 <class>DccTransferDetailedInfoPanelUI</class>
 <widget class="QWidget">
     <property name="name">
@@ -20,60 +20,29 @@
             <verstretch>0</verstretch>
         </sizepolicy>
     </property>
+    <property name="caption">
+        <string>DccTransferDetailedInfoPanelUI</string>
+    </property>
     <vbox>
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
         <widget class="QLayoutWidget">
             <property name="name">
-                <cstring>layout19</cstring>
+                <cstring>layout7</cstring>
             </property>
             <grid>
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="KProgress" row="5" column="1">
-                    <property name="name">
-                        <cstring>m_progress</cstring>
-                    </property>
-                </widget>
-                <widget class="QLabel" row="3" column="1">
-                    <property name="name">
-                        <cstring>m_labelSelf</cstring>
-                    </property>
-                </widget>
-                <widget class="QLabel" row="4" column="0">
-                    <property name="name">
-                        <cstring>textLabel10</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Status:</string>
-                    </property>
-                </widget>
-                <widget class="QLabel" row="2" column="1">
-                    <property name="name">
-                        <cstring>m_labelPartner</cstring>
-                    </property>
-                </widget>
                 <widget class="QLabel" row="1" column="1">
                     <property name="name">
                         <cstring>m_labelFilename</cstring>
                     </property>
                 </widget>
-                <widget class="QLabel" row="2" column="0">
+                <widget class="QLabel" row="0" column="1">
                     <property name="name">
-                        <cstring>textLabel23</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Partner:</string>
-                    </property>
-                </widget>
-                <widget class="QLabel" row="0" column="0">
-                    <property name="name">
-                        <cstring>textLabel12</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Type:</string>
+                        <cstring>m_labelDccType</cstring>
                     </property>
                 </widget>
                 <widget class="QLabel" row="1" column="0">
@@ -92,19 +61,28 @@
                         <string>Self:</string>
                     </property>
                 </widget>
-                <widget class="QLabel" row="0" column="1">
+                <widget class="QLabel" row="0" column="0">
                     <property name="name">
-                        <cstring>m_labelDccType</cstring>
+                        <cstring>textLabel12</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Type:</string>
                     </property>
                 </widget>
-                <widget class="QLabel" row="4" column="1">
+                <widget class="QLabel" row="4" column="0">
                     <property name="name">
-                        <cstring>m_labelStatus</cstring>
+                        <cstring>textLabel10</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Status:</string>
                     </property>
                 </widget>
-                <widget class="KURLRequester" row="6" column="1">
+                <widget class="QLabel" row="6" column="0">
                     <property name="name">
-                        <cstring>m_urlreqLocation</cstring>
+                        <cstring>textLabel3</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Location:</string>
                     </property>
                 </widget>
                 <widget class="QLabel" row="5" column="0">
@@ -115,12 +93,58 @@
                         <string>Progress:</string>
                     </property>
                 </widget>
-                <widget class="QLabel" row="6" column="0">
+                <widget class="QLabel" row="4" column="1">
                     <property name="name">
-                        <cstring>textLabel3</cstring>
+                        <cstring>m_labelStatus</cstring>
+                    </property>
+                </widget>
+                <widget class="QLabel" row="2" column="1">
+                    <property name="name">
+                        <cstring>m_labelPartner</cstring>
+                    </property>
+                </widget>
+                <widget class="KProgress" row="5" column="1">
+                    <property name="name">
+                        <cstring>m_progress</cstring>
+                    </property>
+                </widget>
+                <widget class="QLabel" row="2" column="0">
+                    <property name="name">
+                        <cstring>textLabel23</cstring>
                     </property>
                     <property name="text">
-                        <string>Location:</string>
+                        <string>Partner:</string>
+                    </property>
+                </widget>
+                <widget class="QLayoutWidget" row="6" column="1">
+                    <property name="name">
+                        <cstring>layout6</cstring>
+                    </property>
+                    <hbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="KURLRequester">
+                            <property name="name">
+                                <cstring>m_urlreqLocation</cstring>
+                            </property>
+                        </widget>
+                        <widget class="QPushButton">
+                            <property name="name">
+                                <cstring>m_buttonOpenFolder</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Open Folder</string>
+                            </property>
+                            <property name="accel">
+                                <string></string>
+                            </property>
+                        </widget>
+                    </hbox>
+                </widget>
+                <widget class="QLabel" row="3" column="1">
+                    <property name="name">
+                        <cstring>m_labelSelf</cstring>
                     </property>
                 </widget>
             </grid>
