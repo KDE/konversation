@@ -10,7 +10,7 @@
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com
 */
-// Copyright (C) 2004-2007 Shintaro Matsuoka <shin@shoegazed.org>
+// Copyright (C) 2004-2008 Shintaro Matsuoka <shin@shoegazed.org>
 
 #include "dcctransferpanel.h"
 #include "konversationapplication.h"
@@ -18,6 +18,7 @@
 #include "dcctransfermanager.h"
 #include "dcctransferpanelitem.h"
 #include "dcctransfersend.h"
+#include "preferences.h"
 
 #include <qhbox.h>
 #include <qheader.h>
@@ -51,6 +52,11 @@ DccTransferPanel::DccTransferPanel(QWidget* parent) : ChatWindow(parent)
 
 DccTransferPanel::~DccTransferPanel()
 {
+    // remember column widths
+    QValueList<int> columnWidths;
+    for ( uint i = 0 ; i < Column::COUNT ; ++i )
+        columnWidths.push_back( m_listView->columnWidth( i ) );
+    Preferences::setDccColumnWidths( columnWidths );
 }
 
 void DccTransferPanel::initGUI()
@@ -79,16 +85,9 @@ void DccTransferPanel::initGUI()
     m_listView->setColumnText(Column::CurrentSpeed,  i18n("Speed"));
     m_listView->setColumnText(Column::SenderAddress, i18n("Sender Address"));
 
-    m_listView->setColumnWidth(Column::TypeIcon,       16);
-    m_listView->setColumnWidth(Column::OfferDate,      90);
-    m_listView->setColumnWidth(Column::Status,         80);
-    m_listView->setColumnWidth(Column::FileName,      150);
-    m_listView->setColumnWidth(Column::PartnerNick,    70);
-    m_listView->setColumnWidth(Column::Progress,       90);
-    m_listView->setColumnWidth(Column::Position,      120);
-    m_listView->setColumnWidth(Column::TimeLeft,       80);
-    m_listView->setColumnWidth(Column::CurrentSpeed,   70);
-    m_listView->setColumnWidth(Column::SenderAddress, 120);
+    QValueList<int> columnWidths = Preferences::dccColumnWidths();
+    for ( uint i = 0 ; i < Column::COUNT && i < columnWidths.count() ; ++i )
+        m_listView->setColumnWidth( i, columnWidths[i] );
 
     m_listView->setColumnWidthMode(Column::FileName, QListView::Manual);
 

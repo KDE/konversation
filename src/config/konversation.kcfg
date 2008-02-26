@@ -692,6 +692,11 @@
     <entry key="PassiveSend" type="Bool" name="DccPassiveSend">
       <default>false</default>
     </entry>
+    <entry key="ColumnWidths" type="IntList" name="DccColumnWidths">
+      <default>16,90,80,150,70,90,120,80,70,120</default>
+      <label></label>
+      <whatsthis></whatsthis>
+    </entry>
   </group>
   <group name="Path Settings">
     <entry key="LogfilePath" type="Path">
