@@ -1731,7 +1731,19 @@ void Channel::updateMode(const QString& sourceNick, char mode, bool plus, const 
             modeT->setDown(plus);
             break;
 
-        //case 'k': break;
+        case 'k':
+            if(plus)
+            {
+                if(fromMe) message=i18n("You set the channel key to '%1'.").arg(parameter);
+                else message=i18n("%1 sets the channel key to '%2'.").arg(sourceNick).arg(parameter);
+            }
+            else
+            {
+                if(fromMe) message=i18n("You remove the channel key.");
+                else message=i18n("%1 removes the channel key.").arg(sourceNick);
+            }
+            modeK->setDown(plus);
+            break;
 
         case 'l':
             if(plus)

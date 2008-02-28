@@ -190,6 +190,12 @@ Changes since 1.0.1:
 - Fixed a bug that caused the "Send File..." action in the generic query con-
   text menu to pick the wrong recipient after hovering the user's own nick in
   the chat display.
+- Changed the OSD screensaver check logic to work in KDE 4.
+- Added DCC transfer average speed reading to the DCC transfer details panel.
+- Added an "Open Folder" button to the DCC transfer details panel.
+- The DCC Status tab now remembers its column widths across sessions.
+- Announce 'k' channel mode (i.e. channel key) changes in non-raw mode as well.
+
 
 -------------------------------------------------------------------------------
 
