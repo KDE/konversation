@@ -141,6 +141,8 @@ namespace Konversation
         layout->addMultiCellWidget(showAtStartup, 4, 4, 0, 1);
         layout->setRowStretch(3, 10);
 
+        m_serverList->setFocus();
+
         m_editedItem = false;
         m_editedServer = ServerSettings("");
 

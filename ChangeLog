@@ -195,6 +195,7 @@ Changes since 1.0.1:
 - Added an "Open Folder" button to the DCC transfer details panel.
 - The DCC Status tab now remembers its column widths across sessions.
 - Announce 'k' channel mode (i.e. channel key) changes in non-raw mode as well.
+- Sensible default focus in the server list dialog.
 
 
 -------------------------------------------------------------------------------
