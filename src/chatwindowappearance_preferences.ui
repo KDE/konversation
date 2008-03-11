@@ -88,7 +88,7 @@ the Free Software Foundation; either version 2 of the License, or
                 <cstring>kcfg_ShowBacklog</cstring>
             </property>
             <property name="title">
-                <string>Show Backlog</string>
+                <string>Show &amp;Backlog</string>
             </property>
             <property name="checkable">
                 <bool>true</bool>
@@ -242,7 +242,7 @@ the Free Software Foundation; either version 2 of the License, or
                         <cstring>kcfg_ShowIRCViewScrollBar</cstring>
                     </property>
                     <property name="text">
-                        <string>Show scrollbar</string>
+                        <string>Show sc&amp;rollbar</string>
                     </property>
                     <property name="accel">
                         <string></string>
