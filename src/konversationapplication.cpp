@@ -327,7 +327,7 @@ Server* KonversationApplication::connectToServerGroup(const QString& serverGroup
     return connectToServer(serverGroupId);
 }
 
-Server* KonversationApplication::connectToServer(int serverGroupId, Konversation::ServerSettings quickServer)
+Server* KonversationApplication::connectToServer(int serverGroupId, const QString& channel, Konversation::ServerSettings quickServer)
 {
     // Check if a server window with same name and port is already open
     Server* lookServer = serverList.first();
@@ -432,7 +432,7 @@ Server* KonversationApplication::connectToServer(int serverGroupId, Konversation
         clearQuickServerList = false;
     }
 
-    Server* newServer = new Server(mainWindow->getViewContainer(), serverGroupId, clearQuickServerList);
+    Server* newServer = new Server(mainWindow->getViewContainer(), serverGroupId, clearQuickServerList, channel);
 
     connect(mainWindow,SIGNAL (startNotifyTimer(int)),newServer,SLOT (startNotifyTimer(int)) );
     connect(mainWindow,SIGNAL (quitServer()),newServer,SLOT (quitServer()) );

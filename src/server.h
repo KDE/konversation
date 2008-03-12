@@ -65,13 +65,13 @@ class Server : public QObject
         /** Constructor used for connecting to a known server.
          *  Read in the prefrences to get all the details about the server.
          */
-        Server(ViewContainer* viewContainer, int serverGroupId, bool clearQuickServerList = true);
+        Server(ViewContainer* viewContainer, int serverGroupId, bool clearQuickServerList = true, const QString& channel = QString::null);
 
         /** Constructor used for a 'fast connect' to a server.
          *  The details are passed in.  Used for example when the user does "/server irc.somewhere.net"
          */
         Server(ViewContainer* viewContainer, const QString& hostName,const QString& port,
-            const QString& channel,const QString& nick, const QString& password, const bool& useSSL=false);
+            const QString& channel,const QString& nick, const QString& password = QString::null, const bool& useSSL=false);
         ~Server();
 
         QString getServerName() const;
@@ -99,11 +99,11 @@ class Server : public QObject
         bool isConnected() const;
         bool isConnecting() const;
 
-        QString getAutoJoinChannel() const;
-        void setAutoJoinChannel(const QString &channel);
+        QString getAutoJoinChannels() const;
+        void setAutoJoinChannels(const QString& channels);
 
-        QString getAutoJoinChannelKey() const;
-        void setAutoJoinChannelKey(const QString &key);
+        QString getAutoJoinChannelPasswords() const;
+        void setAutoJoinChannelPasswords(const QString& passwords);
 
         QString getNextNickname();
 
@@ -521,7 +521,6 @@ class Server : public QObject
 
         void setViewContainer(ViewContainer* newViewContainer);
 
-        void autoRejoinChannels();
         void updateAutoJoin(const QString& channel=QString());
 
         /** Adds a nickname to the unjoinedChannels list.
@@ -608,8 +607,8 @@ class Server : public QObject
         bool keepViewsOpenAfterQuit;
         bool reconnectAfterQuit;
 
-        QString autoJoinChannel;
-        QString autoJoinChannelKey;
+        QString autoJoinChannels;
+        QString autoJoinChannelPasswords;
 
         ViewContainer* m_viewContainerPtr;
 
@@ -649,7 +648,6 @@ class Server : public QObject
         QString m_awayReason;
 
         bool alreadyConnected;
-        bool rejoinChannels;
         bool sendUnlocked;
         bool connecting;
 

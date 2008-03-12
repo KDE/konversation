@@ -196,6 +196,12 @@ Changes since 1.0.1:
 - The DCC Status tab now remembers its column widths across sessions.
 - Announce 'k' channel mode (i.e. channel key) changes in non-raw mode as well.
 - Sensible default focus in the server list dialog.
+- Robustness improvements and less UI quirks around channel password handling.
+- Fixed bugs around rejoining channels after reconnects related to the cause of
+  the disconnect, channel passwords and picking the actual list of joined channels
+  over the network's auto-join list.
+- Improved behavioral consistency in situations where the auto-join list is pre-
+  empted by a transitory auto-join channel (bookmarks, etc.).
 
 
 -------------------------------------------------------------------------------

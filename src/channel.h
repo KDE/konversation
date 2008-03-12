@@ -89,8 +89,9 @@ class Channel : public ChatWindow
 //General administrative stuff
     public:
         void setName(const QString& newName);
-        void setKey(const QString& newKey);
-        QString getKey();
+        QString getPassword();
+
+        const Konversation::ChannelSettings channelSettings();
 
         virtual void setServer(Server* newServer);
         virtual void setIdentity(const Identity *newIdentity);
@@ -336,8 +337,6 @@ class Channel : public ChatWindow
         QStringList m_topicHistory;
         QStringList m_BanList;
         bool topicAuthorUnknown; ///< Stores whether the "<author>" bit is there or not.
-
-        QString key;
 
         bool m_firstAutoWhoDone;
         QTimer m_whoTimer; ///< For continuous auto /WHO

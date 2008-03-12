@@ -68,7 +68,7 @@ namespace Konversation
 
         signals:
             void connectToServer(int serverId);
-            void connectToServer(int serverId, Konversation::ServerSettings quickServer);
+            void connectToServer(int serverId, const QString& channel, Konversation::ServerSettings quickServer);
             void serverGroupsChanged();
 
         protected slots:

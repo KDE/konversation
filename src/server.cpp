@@ -58,7 +58,7 @@
 #include <kwin.h>
 #include <config.h>
 
-Server::Server(ViewContainer* viewContainer, int serverGroupId, bool clearQuickServerList)
+Server::Server(ViewContainer* viewContainer, int serverGroupId, bool clearQuickServerList, const QString& channel)
 {
     quickConnect = false;
 
@@ -70,11 +70,11 @@ Server::Server(ViewContainer* viewContainer, int serverGroupId, bool clearQuickS
     bot = getIdentity()->getBot();
     botPassword = getIdentity()->getPassword();
 
-    init(viewContainer, getIdentity()->getNickname(0), "");
+    init(viewContainer, getIdentity()->getNickname(0), channel);
 }
 
-Server::Server(ViewContainer* viewContainer,const QString& hostName,const QString& port,
-const QString& channel,const QString& _nick, const QString& password,const bool& useSSL)
+Server::Server(ViewContainer* viewContainer, const QString& hostName, const QString& port,
+const QString& channel, const QString& _nick, const QString& password, const bool& useSSL)
 {
     quickConnect = true;
 
@@ -189,7 +189,6 @@ void Server::init(ViewContainer* viewContainer, const QString& nick, const QStri
     rawLog = 0;
     channelListPanel = 0;
     alreadyConnected = false;
-    rejoinChannels = false;
     connecting = false;
     m_serverISON = 0;
     m_isAway = false;
@@ -366,24 +365,24 @@ void Server::setAutoJoin(bool on)
     autoJoin = on;
 }
 
-QString Server::getAutoJoinChannel() const
+QString Server::getAutoJoinChannels() const
 {
-    return autoJoinChannel;
+    return autoJoinChannels;
 }
 
-void Server::setAutoJoinChannel(const QString &channel)
+void Server::setAutoJoinChannels(const QString& channels)
 {
-    autoJoinChannel = channel;
+    autoJoinChannels = channels;
 }
 
-QString Server::getAutoJoinChannelKey() const
+QString Server::getAutoJoinChannelPasswords() const
 {
-    return autoJoinChannelKey;
+    return autoJoinChannelPasswords;
 }
 
-void Server::setAutoJoinChannelKey(const QString &key)
+void Server::setAutoJoinChannelPasswords(const QString& passwords)
 {
-    autoJoinChannelKey = key;
+    autoJoinChannelPasswords = passwords;
 }
 
 bool Server::isConnected() const
@@ -667,6 +666,7 @@ void Server::broken(int state)
 
     kdDebug() << "Connection broken (Socket fd " << m_socket->socketDevice()->socket() << ") " << state << "!" << endl;
 
+    updateAutoJoin();
 
     if (!deliberateQuit)
     {
@@ -676,8 +676,6 @@ void Server::broken(int state)
 
         if (Preferences::autoReconnect() && reconnectCounter <= Preferences::reconnectCount())
         {
-            updateAutoJoin();
-
             QString error = i18n("Connection to Server %1 lost: %2. Trying to reconnect.")
                 .arg(m_serverGroup->serverByIndex(m_currentServerIndex).server())
                 .arg(KNetwork::KSocketBase::errorString((KNetwork::KSocketBase::SocketError)state));
@@ -685,27 +683,15 @@ void Server::broken(int state)
             statusView->appendServerMessage(i18n("Error"), error);
 
             QTimer::singleShot(5000, this, SLOT(connectToIRCServer()));
-            rejoinChannels = true;
         }
         else if (!Preferences::autoReconnect() || reconnectCounter > Preferences::reconnectCount())
         {
-            updateAutoJoin();
-
             QString error = i18n("Connection to Server %1 failed: %2.")
                 .arg(m_serverGroup->serverByIndex(m_currentServerIndex).server())
                 .arg(KNetwork::KSocketBase::errorString((KNetwork::KSocketBase::SocketError)state));
 
             statusView->appendServerMessage(i18n("Error"),error);
             reconnectCounter = 0;
-
-            // If this iteration has occurred before we ever were connected,
-            // the channel list will be empty and we want to do autojoin.
-            // If the channel list is not empty, however, rejoin the old
-            // channels.
-            if (channelList.isEmpty())
-                rejoinChannels = false;
-            else
-                rejoinChannels = true;
 
             // Broke on a temp. server, so remove it from serverList; otherwise increment the index
             if (!m_serverGroup->quickServerList().isEmpty())
@@ -762,8 +748,6 @@ void Server::broken(int state)
             {
                 reconnectAfterQuit = false;
 
-                updateAutoJoin();
-                rejoinChannels = true;
                 reconnectCounter = 0;
                 QTimer::singleShot(3000, this, SLOT(connectToIRCServer()));
 
@@ -824,12 +808,6 @@ void Server::connectionEstablished(const QString& ownHost)
             QString command(Preferences::commandChar() + "AWAY " + awayReason);
             Konversation::OutputFilterResult result = outputFilter->parse(getNickname(),command, QString());
             queue(result.toServer);
-        }
-
-        if (rejoinChannels)
-        {
-            rejoinChannels = false;
-            autoRejoinChannels();
         }
     }
     else
@@ -977,17 +955,16 @@ void Server::autoCommandsAndChannels()
         }
     }
 
-    if (getAutoJoin() && !rejoinChannels)
-        queue(getAutoJoinCommand());
+    if (getAutoJoin()) queue(getAutoJoinCommand());
 }
 
 QString Server::getAutoJoinCommand() const
 {
     // Multichannel joins
-    QStringList channels = QStringList::split(' ',autoJoinChannel);
-    QStringList keys = QStringList::split(' ',autoJoinChannelKey);
+    QStringList channels = QStringList::split(' ', autoJoinChannels);
+    QStringList passwords = QStringList::split(' ', autoJoinChannelPasswords);
 
-    QString autoString("JOIN "+channels.join(",")+' '+keys.join(","));
+    QString autoString("JOIN "+channels.join(",")+' '+passwords.join(","));
 
     return autoString;
 }
@@ -3196,70 +3173,60 @@ void Server::closeChannelListPanel()
 
 void Server::updateAutoJoin(const QString& channel)
 {
-    Konversation::ChannelList tmpList = m_serverGroup->channelList();
-
     if (quickConnect && channel.isEmpty())
     {
+        quickConnect = false;
+
         setAutoJoin(false);
+
         return;
     }
 
-    if(!channel.isEmpty())
-        tmpList.push_front(Konversation::ChannelSettings(channel));
-
-    if(!tmpList.isEmpty())
+    if (!channel.isEmpty())
     {
         setAutoJoin(true);
 
-        QString channels;
-        QString keys;
+        setAutoJoinChannels(channel);
+        setAutoJoinChannelPasswords(QString::null);
 
-        if (tmpList.count()>1)
-        {
-            Konversation::ChannelList::iterator it;
-            for(it = tmpList.begin(); it != tmpList.end(); ++it)
-            {
-                if(it != tmpList.begin())
-                {
-                    channels += ',';
-                    keys += ',';
-                }
-
-                channels += (*it).name();
-                keys += ((*it).password().isEmpty() ? QString(".") : (*it).password());
-            }
-        }
-        else
-        {
-            channels = tmpList.first().name();
-            keys = (tmpList.first().password().isEmpty() ? QString("") : tmpList.first().password());
-        }
-
-        setAutoJoinChannel(channels);
-        setAutoJoinChannelKey(keys);
+        return;
     }
+
+    Konversation::ChannelList tmpList;
+
+    if (channelList.isEmpty())
+        tmpList = m_serverGroup->channelList();
     else
     {
-        setAutoJoin(false);
+        for (Channel* ch = channelList.first(); ch; ch = channelList.next())
+            tmpList << ch->channelSettings();
     }
-}
 
-void Server::autoRejoinChannels()
-{
-    if (channelList.isEmpty())
-        return;
+    if (!channel.isEmpty())
+        tmpList.push_front(Konversation::ChannelSettings(channel));
 
-    QStringList channels;
-    QStringList keys;
-
-    for (Channel* ch = channelList.first(); ch; ch = channelList.next())
+    if (!tmpList.isEmpty())
     {
-        channels.append(ch->getName());
-        keys.append(ch->getKey());
-    }
+        setAutoJoin(true);
 
-    QString joinString("JOIN "+channels.join(",")+' '+keys.join(","));
-    queue(joinString);
+        QStringList channels;
+        QStringList passwords;
+
+        Konversation::ChannelList::iterator it;
+
+        for (it = tmpList.begin(); it != tmpList.end(); ++it)
+        {
+            channels << (*it).name();
+            passwords << ((*it).password().isEmpty() ? "." : (*it).password());
+        }
+
+        if (passwords.last() == ".") passwords.pop_back();
+
+        setAutoJoinChannels(channels.join(","));
+        setAutoJoinChannelPasswords(passwords.join(","));
+    }
+    else
+        setAutoJoin(false);
 }
 
 IdentityPtr Server::getIdentity() const

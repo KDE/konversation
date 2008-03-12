@@ -554,7 +554,8 @@ void KonversationMainWindow::openServerList()
         connect(m_serverListDialog, SIGNAL(serverGroupsChanged()), this, SIGNAL(prefsChanged()));
         connect(m_serverListDialog, SIGNAL(serverGroupsChanged()), m_viewContainer, SLOT(updateViews()));
         connect(m_serverListDialog, SIGNAL(connectToServer(int)), konvApp, SLOT(connectToServer(int)));
-        connect(m_serverListDialog, SIGNAL(connectToServer(int, Konversation::ServerSettings)), konvApp, SLOT(connectToServer(int, Konversation::ServerSettings)));
+        connect(m_serverListDialog, SIGNAL(connectToServer(int, const QString&, Konversation::ServerSettings)),
+                konvApp, SLOT(connectToServer(int, const QString&, Konversation::ServerSettings)));
         connect(konvApp, SIGNAL(closeServerList()), m_serverListDialog, SLOT(slotClose()));
     }
 
@@ -631,23 +632,11 @@ void KonversationMainWindow::openURL(const QString& url, const QString& /*title*
     QString port = (hostParser.port().isEmpty() ? QString("6667") : hostParser.port());
 
     QString channel = urlN.section('/',1,1);
-    QString password;
 
     if (Preferences::isServerGroup(host))
-    {
-        Server* newServer = KonversationApplication::instance()->connectToServerGroup(host);
-
-        if (!newServer->isConnected())
-        {
-            newServer->setAutoJoin(true);
-            newServer->setAutoJoinChannel(channel);
-            newServer->setAutoJoinChannelKey(password);
-        }
-        else if (!channel.isEmpty())
-            newServer->queue("JOIN " + channel + ' ' + password);
-    }
+        KonversationApplication::instance()->connectToServer(Preferences::serverGroupIdByName(host), channel);
     else
-        KonversationApplication::instance()->quickConnectToServer(host,port,channel,"",password);
+        KonversationApplication::instance()->quickConnectToServer(host, port, channel, "");
 }
 
 QString KonversationMainWindow::currentURL(bool passNetwork)

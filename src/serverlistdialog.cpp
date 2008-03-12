@@ -192,7 +192,7 @@ namespace Konversation
         {
             if (item->isServer())
             {
-                emit connectToServer(item->serverGroupId(),item->server());
+                emit connectToServer(item->serverGroupId(), QString::null, item->server());
             }
             else
             {

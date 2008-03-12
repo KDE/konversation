@@ -226,7 +226,7 @@ the Free Software Foundation; either version 2 of the License, or
                                     <cstring>keyModeChBox</cstring>
                                 </property>
                                 <property name="text">
-                                    <string>Channel &amp;key:</string>
+                                    <string>Channel &amp;password:</string>
                                 </property>
                                 <property name="whatsThis" stdset="0">
                                     <string>&lt;qt&gt;These control the &lt;em&gt;mode&lt;/em&gt; of the channel.  Only an operator can change these.&lt;p&gt;A &lt;b&gt;P&lt;/b&gt;rotected channel requires users to enter a password in order to join.&lt;/qt&gt;</string>

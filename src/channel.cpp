@@ -63,7 +63,7 @@
 #include <kwin.h>
 
 
-Channel::Channel(QWidget* parent) : ChatWindow(parent), key(" ")
+Channel::Channel(QWidget* parent) : ChatWindow(parent)
 {
     // init variables
     m_processingTimer = 0;
@@ -822,14 +822,27 @@ void Channel::setName(const QString& newName)
     setLogfileName(newName.lower());
 }
 
-void Channel::setKey(const QString& newKey)
+QString Channel::getPassword()
 {
-    key=newKey;
+    QString password;
+
+    for (QStringList::const_iterator it = m_modeList.begin(); it != m_modeList.end(); ++it)
+    {
+        if ((*it)[0] = 'k') password = (*it).mid(1);
+    }
+
+    return password;
 }
 
-QString Channel::getKey()
+const Konversation::ChannelSettings Channel::channelSettings()
 {
-    return key;
+    Konversation::ChannelSettings channel;
+
+    channel.setName(getName());
+    channel.setPassword(getPassword());
+    channel.setNotificationsEnabled(notificationsEnabled());
+
+    return channel;
 }
 
 void Channel::sendFileMenu()
@@ -882,7 +895,7 @@ void Channel::sendChannelText(const QString& sendLine)
     // replace aliases and wildcards
     if(m_server->getOutputFilter()->replaceAliases(outputAll))
     {
-        outputAll = m_server->parseWildcards(outputAll,m_server->getNickname(),getName(),getKey(),
+        outputAll = m_server->parseWildcards(outputAll,m_server->getNickname(),getName(),getPassword(),
             getSelectedNickList(),QString());
     }
 
@@ -981,27 +994,24 @@ void Channel::channelLimitChanged()
     modeButtonClicked(7,lim>0);
 }
 
-void Channel::modeButtonClicked(int id,bool on)
+void Channel::modeButtonClicked(int id, bool on)
 {
     char mode[]={'t','n','s','i','p','m','k','l'};
     QString command("MODE %1 %2%3 %4");
-    QString args;
+    QString args = getPassword();
 
-    if(mode[id]=='k')
+    if (mode[id] == 'k')
     {
-        //FIXME: Apparently we initialize the key as a space so so the
-        // channel join code has something to work with when producing
-        // things like "JOIN #chan1,#chan2,#chan§ key1, ,key3".
-        if(getKey().isEmpty() || getKey() == " ")
+        if (args.isEmpty())
         {
-            QCString key;
+            QCString newPassword;
 
-            int result=KPasswordDialog::getPassword(key,i18n("Channel Password"));
+            int result = KPasswordDialog::getPassword(newPassword, i18n("Channel Password"));
 
-            if(result==KPasswordDialog::Accepted && !key.isEmpty()) setKey(key);
+            if (result == KPasswordDialog::Accepted && !newPassword.isEmpty())
+                args = newPassword;
         }
-        args=getKey();
-        if(!on) setKey(QString());
+
     }
     else if(mode[id]=='l')
     {
@@ -1027,7 +1037,7 @@ void Channel::modeButtonClicked(int id,bool on)
 void Channel::quickButtonClicked(const QString &buttonText)
 {
     // parse wildcards (toParse,nickname,channelName,nickList,queryName,parameter)
-    QString out=m_server->parseWildcards(buttonText,m_server->getNickname(),getName(),getKey(),getSelectedNickList(),QString());
+    QString out=m_server->parseWildcards(buttonText,m_server->getNickname(),getName(),getPassword(),getSelectedNickList(),QString());
 
     // are there any newlines in the definition?
     if(out.find('\n')!=-1)
@@ -1829,7 +1839,13 @@ void Channel::updateMode(const QString& sourceNick, char mode, bool plus, const 
 
 void Channel::clearModeList()
 {
-    m_modeList.clear();
+
+    for (QStringList::iterator it = m_modeList.begin(); it != m_modeList.end(); ++it)
+    {
+        // Keep channel password.
+        if ((*it)[0] != 'k') m_modeList.remove(it);
+    }
+
     modeT->setOn(0);
     modeT->setDown(0);
 
@@ -1848,12 +1864,11 @@ void Channel::clearModeList()
     modeM->setOn(0);
     modeM->setDown(0);
 
-    modeK->setOn(0);
-    modeK->setDown(0);
-
     modeL->setOn(0);
     modeL->setDown(0);
+
     limit->clear();
+
     emit modesChanged();
 }
 
@@ -2381,14 +2396,12 @@ void Channel::serverOnline(bool online)
 {
     if (online)
     {
-        //channelInput->setEnabled(true);
         getTextView()->setNickAndChannelContextMenusEnabled(true);
         nicknameCombobox->setEnabled(true);
     }
     else
     {
         purgeNicks();
-        //channelInput->setEnabled(false);
         getTextView()->setNickAndChannelContextMenusEnabled(false);
         nicknameCombobox->setEnabled(false);
         topicLine->setText("");
