@@ -295,8 +295,6 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent), key(" ")
     // re-schedule when the settings were changed
     connect(Preferences::self(), SIGNAL (autoContinuousWhoChanged()),this,SLOT (scheduleAutoWho()));
 
-    m_allowNotifications = true;
-
     updateAppearance();
 
     //FIXME JOHNFLUX

@@ -224,9 +224,6 @@ class Channel : public ChatWindow
         /// Sounds suspiciously like a destructor..
         virtual bool closeYourself();
 
-        ///TODO: kill this, it has been reimplemented at the ChatWindow level
-        bool allowNotifications() { return m_allowNotifications; }
-
         ChannelNickList getSelectedChannelNicks();
         ///TODO: this looks like a half-arsed overload.
         QStringList getSelectedNickList();
@@ -250,8 +247,6 @@ class Channel : public ChatWindow
         void showTopic(bool show);
         void showNicknameBox(bool show);
         void showNicknameList(bool show);
-
-        void setAllowNotifications(bool allow) { m_allowNotifications = allow; }
 
     protected slots:
         void completeNick(); ///< I guess this is a GUI function, might be nice to have at DCOP level though --argonel
@@ -361,8 +356,6 @@ class Channel : public ChatWindow
         bool pendingNicks; ///< are there still nicks to be added by /names reply?
         int nicks; ///< How many nicks on the channel
         int ops; ///< How many ops on the channel
-
-        bool m_allowNotifications; ///<TODO: remove this, its been implemented on the chatwindow object
 
         Konversation::ChannelOptionsDialog *m_optionsDialog;
 };
