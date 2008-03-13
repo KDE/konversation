@@ -1274,29 +1274,22 @@ void Server::send()
             deliberateQuit = true;
         }
 
-        // wrap server socket into a stream
-        QTextStream serverStream;
-
-        serverStream.setDevice(m_socket);
-
         // set channel encoding if specified
         QString channelCodecName;
 
         if(outputLineSplit.count()>2) //"for safe" <-- so no encoding if no data
         {
-        if(outboundCommand=="PRIVMSG"   //PRIVMSG target :message
-           || outboundCommand=="NOTICE" //NOTICE target :message
-           || outboundCommand=="KICK"   //KICK target :message
-           || outboundCommand=="PART"   //PART target :message
-           || outboundCommand=="TOPIC"  //TOPIC target :message
+            if(outboundCommand=="PRIVMSG"   //PRIVMSG target :message
+            || outboundCommand=="NOTICE" //NOTICE target :message
+            || outboundCommand=="KICK"   //KICK target :message
+            || outboundCommand=="PART"   //PART target :message
+            || outboundCommand=="TOPIC"  //TOPIC target :message
             )
-            { //KV << outboundCommand << " queued" <<endl;
+            {
                 channelCodecName=Preferences::channelEncoding(getServerGroup(),outputLineSplit[1]);
             }
         }
 
-        // init stream props
-        serverStream.setEncoding(QTextStream::Locale);
         QTextCodec* codec = getIdentity()->getCodec();
 
         if(!channelCodecName.isEmpty())
@@ -1304,11 +1297,8 @@ void Server::send()
             codec = Konversation::IRCCharsets::self()->codecForName(channelCodecName);
         }
 
-        // convert encoded data to IRC ascii only when we don't have the same codec locally
-        if(QTextCodec::codecForLocale()->name() != codec->name())
-        {
-            serverStream.setCodec(codec);
-        }
+        int outlen=-1;
+        QCString encoded=codec->fromUnicode(outputLine, outlen);
 
         // Blowfish
         if(outboundCommand=="PRIVMSG" || outboundCommand=="TOPIC")
@@ -1316,11 +1306,10 @@ void Server::send()
             Konversation::encrypt(outputLineSplit[1],outputLine,this);
         }
 
-        serverStream << outputLine;
+        Q_LONG sout = m_socket->writeBlock(encoded, outlen);
+
         if(rawLog) rawLog->appendRaw("&lt;&lt; " + outputLine.replace("&","&amp;").replace("<","&lt;").replace(">","&gt;"));
 
-        // detach server stream
-        serverStream.unsetDevice();
     }
 
     if(outputBuffer.isEmpty()) {
