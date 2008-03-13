@@ -93,6 +93,8 @@ class Channel : public ChatWindow
 
         const Konversation::ChannelSettings channelSettings();
 
+        QString getPassword() const;
+
         virtual void setServer(Server* newServer);
         virtual void setIdentity(const Identity *newIdentity);
 
@@ -225,11 +227,15 @@ class Channel : public ChatWindow
         /// Sounds suspiciously like a destructor..
         virtual bool closeYourself();
 
+        bool autoJoin();
+
         ChannelNickList getSelectedChannelNicks();
         ///TODO: this looks like a half-arsed overload.
         QStringList getSelectedNickList();
 
         NickListView* getNickListView() const { return nicknameListView; }
+
+        Konversation::ChannelSettings channelSettings() const;
 
     signals:
         void sendFile();
@@ -248,6 +254,8 @@ class Channel : public ChatWindow
         void showTopic(bool show);
         void showNicknameBox(bool show);
         void showNicknameList(bool show);
+
+        void setAutoJoin(bool autojoin);
 
     protected slots:
         void completeNick(); ///< I guess this is a GUI function, might be nice to have at DCOP level though --argonel

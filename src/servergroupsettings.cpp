@@ -28,6 +28,7 @@ namespace Konversation
         m_autoConnect = false;
         m_identityId = 0;
         m_enableNotifications = true;
+        m_configBacked = false;
     }
 
     ServerGroupSettings::ServerGroupSettings(int id)
@@ -47,6 +48,7 @@ namespace Konversation
         m_autoConnect = false;
         m_identityId = 0;
         m_enableNotifications = true;
+        m_configBacked = false;
     }
 
     ServerGroupSettings::ServerGroupSettings(const ServerGroupSettings& settings)
@@ -59,6 +61,7 @@ namespace Konversation
         setConnectCommands(settings.connectCommands());
         setAutoConnectEnabled(settings.autoConnectEnabled());
         setNotificationsEnabled(settings.enableNotifications());
+        setConfigBacked(settings.isConfigBacked());
         m_id = settings.id();
         m_sortIndex = settings.sortIndex();
     }
@@ -73,6 +76,7 @@ namespace Konversation
         m_autoConnect = false;
         m_identityId = 0;
         m_enableNotifications = true;
+        m_configBacked = false;
     }
 
     ServerGroupSettings::~ServerGroupSettings()
@@ -140,6 +144,19 @@ namespace Konversation
         return ChannelSettings();
     }
 
+    void ServerGroupSettings::addChannel(const ChannelSettings& channel, const ChannelSettings& before)
+    {
+        if (before.name().isEmpty())
+            m_channelList.append(channel);
+        else
+            m_channelList.insert(m_channelList.find(before), channel);
+    }
+
+    void ServerGroupSettings::removeChannel(const ChannelSettings& channel)
+    {
+        m_channelList.remove(channel);
+    }
+
     IdentityPtr ServerGroupSettings::identity() const
     {
         return Preferences::identityById(m_identityId);
@@ -175,6 +192,16 @@ namespace Konversation
         }
 
         return ChannelSettings(channelName);
+    }
+
+    bool ServerGroupSettings::isConfigBacked() const
+    {
+        return m_configBacked;
+    }
+
+    void ServerGroupSettings::setConfigBacked(bool configBacked)
+    {
+        m_configBacked = configBacked;
     }
 
     //
@@ -214,6 +241,14 @@ namespace Konversation
         setName(name);
         setPassword(password);
         setNotificationsEnabled(enableNotifications);
+    }
+
+    bool ChannelSettings::operator== (const ChannelSettings& channel) const
+    {
+        if (m_name == channel.name())
+            return true;
+        else
+            return false;
     }
 
     ChannelSettings::~ChannelSettings()

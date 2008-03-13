@@ -76,6 +76,10 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
     // Set up view container
     connect(KonversationApplication::instance(), SIGNAL(appearanceChanged()), m_viewContainer, SLOT(updateAppearance()));
     connect(KonversationApplication::instance(), SIGNAL(iconChanged(int)), m_viewContainer, SLOT(updateViewIcons()));
+    connect(KonversationApplication::instance(), SIGNAL(serverGroupsChanged(const Konversation::ServerGroupSettings*)),
+            m_viewContainer, SLOT(updateViews(const Konversation::ServerGroupSettings*)));
+    connect(m_viewContainer, SIGNAL(autoJoinToggled(const Konversation::ServerGroupSettings*)),
+            KonversationApplication::instance(), SIGNAL(serverGroupsChanged(const Konversation::ServerGroupSettings*)));
     connect(m_viewContainer, SIGNAL(setWindowCaption(const QString&)), this, SLOT(setCaption(const QString&)));
     connect(this, SIGNAL(serverStateChanged(Server*, Server::State)), m_viewContainer, SLOT(serverStateChanged(Server*, Server::State)));
     connect(this, SIGNAL(triggerRememberLine()), m_viewContainer, SLOT(insertRememberLine()));
@@ -217,6 +221,9 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
     }
 
     action = new KToggleAction(i18n("Enable Notifications"), 0, 0, m_viewContainer, SLOT(toggleViewNotifications()), actionCollection(), "tab_notifications");
+    action->setEnabled(false);
+
+    action = new KToggleAction(i18n("Join on Connect"), 0, 0, m_viewContainer, SLOT(toggleAutoJoin()), actionCollection(), "tab_autojoin");
     action->setEnabled(false);
 
     KSelectAction* selectAction = new KSelectAction(i18n("Set Encoding"), "charset", 0, actionCollection(), "tab_encoding");
@@ -550,9 +557,11 @@ void KonversationMainWindow::openServerList()
     {
         m_serverListDialog = new Konversation::ServerListDialog(this);
         KonversationApplication *konvApp = static_cast<KonversationApplication *>(KApplication::kApplication());
-        connect(m_serverListDialog, SIGNAL(serverGroupsChanged()), konvApp, SLOT(saveOptions()));
-        connect(m_serverListDialog, SIGNAL(serverGroupsChanged()), this, SIGNAL(prefsChanged()));
-        connect(m_serverListDialog, SIGNAL(serverGroupsChanged()), m_viewContainer, SLOT(updateViews()));
+
+        connect(m_serverListDialog, SIGNAL(serverGroupsChanged(const Konversation::ServerGroupSettings*)),
+                konvApp, SIGNAL(serverGroupsChanged(const Konversation::ServerGroupSettings*)));
+        connect(konvApp, SIGNAL(serverGroupsChanged(const Konversation::ServerGroupSettings*)),
+                m_serverListDialog, SLOT(updateServerList()));
         connect(m_serverListDialog, SIGNAL(connectToServer(int)), konvApp, SLOT(connectToServer(int)));
         connect(m_serverListDialog, SIGNAL(connectToServer(int, const QString&, Konversation::ServerSettings)),
                 konvApp, SLOT(connectToServer(int, const QString&, Konversation::ServerSettings)));

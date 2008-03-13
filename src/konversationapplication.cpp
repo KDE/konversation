@@ -126,7 +126,6 @@ int KonversationApplication::newInstance()
 
         connect(mainWindow, SIGNAL(showQuickConnectDialog()), this, SLOT(openQuickConnectDialog()) );
         connect(Preferences::self(), SIGNAL(updateTrayIcon()), mainWindow, SLOT(updateTrayIcon()) );
-        connect(this, SIGNAL(prefsChanged()), mainWindow, SIGNAL(prefsChanged()) );
         connect(osd, SIGNAL(hidden()), mainWindow, SIGNAL(endNotification()));
         // take care of user style changes, setting back colors and stuff
 
@@ -162,6 +161,8 @@ int KonversationApplication::newInstance()
             quickConnectToServer(m_hostName, m_port, m_channel, m_nick, m_password, m_useSSL);
 
         if (openServerList) mainWindow->openServerList();
+
+        connect(this, SIGNAL(serverGroupsChanged(const Konversation::ServerGroupSettings*)), this, SLOT(saveOptions()));
 
         // prepare dcop interface
         dcopObject = new KonvDCOP;

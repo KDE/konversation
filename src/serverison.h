@@ -81,7 +81,7 @@ class ServerISON : public QObject
     private slots:
         void addressbookChanged();
         void nickInfoChanged(Server* server, const NickInfoPtr nickInfo);
-        void slotPrefsChanged();
+        void slotServerGroupsChanged();
         void slotChannelMembersChanged(Server* server, const QString& channelName, bool joined, bool parted, const QString& nickname);
         void slotChannelJoinedOrUnjoined(Server* server, const QString& channelName, bool joined);
 

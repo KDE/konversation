@@ -151,11 +151,17 @@ void Preferences::setServerGroupList(const Konversation::ServerGroupList& list)
 {
     self()->mServerGroupList.clear();
     self()->mServerGroupList = list;
+
+    Konversation::ServerGroupList::iterator it;
+
+    for(it = self()->mServerGroupList.begin(); it != self()->mServerGroupList.end(); ++it)
+        (*it)->setConfigBacked(true);
 }
 
 void Preferences::addServerGroup(Konversation::ServerGroupSettingsPtr serverGroup)
 {
     self()->mServerGroupList.append(serverGroup);
+    serverGroup->setConfigBacked(true);
 }
 
 const Konversation::ServerGroupSettingsPtr Preferences::serverGroupById(int id)
@@ -245,6 +251,7 @@ void Preferences::removeServerGroup(int id)
         if((*it)->id() == id)
         {
             self()->mServerGroupList.remove(it);
+            (*it)->setConfigBacked(false);
             return;
         }
     }

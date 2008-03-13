@@ -114,6 +114,7 @@ namespace Konversation
         m_sortIndex = settings->sortIndex();
         m_expanded = settings->expanded();
         m_enableNotifications = settings->enableNotifications();
+        m_configBacked = settings->isConfigBacked();
         m_mainWidget->m_nameEdit->setText(settings->name());
         m_mainWidget->m_identityCBox->setCurrentText(settings->identity()->getName());
         m_mainWidget->m_commandEdit->setText(settings->connectCommands());
@@ -150,6 +151,7 @@ namespace Konversation
         settings->setChannelList(m_channelList);
         settings->setChannelHistory(m_channelHistory);
         settings->setNotificationsEnabled(m_enableNotifications);
+        settings->setConfigBacked(m_configBacked);
         settings->setExpanded(m_expanded);
 
         return settings;

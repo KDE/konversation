@@ -37,6 +37,7 @@ class NicksOnline;
 namespace Konversation
 {
     class InsertCharDialog;
+    class ServerGroupSettings;
 }
 
 class ViewContainer : public QObject
@@ -64,17 +65,21 @@ class ViewContainer : public QObject
         void appendToFrontmost(const QString& type,const QString& message,ChatWindow* serverView,
                                bool parseURL = true);
 
+        int getViewIndex(QWidget* widget);
+
+
     public slots:
         void updateAppearance();
         void saveSplitterSizes();
         void setViewTreeShown(bool show);
         void syncTabBarToTree();
 
-        void updateViews();
+        void updateViews(const Konversation::ServerGroupSettings* serverGroup = 0);
         void updateViewIcons();
         void setViewNotification(ChatWindow* widget, const Konversation::TabNotifyType& type);
         void unsetViewNotification(ChatWindow* view);
         void toggleViewNotifications();
+        void toggleAutoJoin();
 
         void switchView(QWidget* newView);
         void showView(ChatWindow* view);
@@ -168,6 +173,7 @@ class ViewContainer : public QObject
         void setStatusBarLagLabelTooLongLag(Server* server, int msec);
         void updateStatusBarSSLLabel(Server* server);
         void removeStatusBarSSLLabel();
+        void autoJoinToggled(const Konversation::ServerGroupSettings*);
 
     private:
         void setupTabWidget();

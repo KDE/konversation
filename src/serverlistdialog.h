@@ -25,7 +25,6 @@ class QStringList;
 
 namespace Konversation
 {
-
     class ServerListItem : public KListViewItem
     {
         public:
@@ -69,7 +68,7 @@ namespace Konversation
         signals:
             void connectToServer(int serverId);
             void connectToServer(int serverId, const QString& channel, Konversation::ServerSettings quickServer);
-            void serverGroupsChanged();
+            void serverGroupsChanged(const Konversation::ServerGroupSettings* serverGroup = 0);
 
         protected slots:
             virtual void slotOk();
@@ -98,10 +97,10 @@ namespace Konversation
             QPushButton* m_editButton;
             QPushButton* m_delButton;
 
-            bool m_editedItem;
-            int m_editedServerGroupId;
-            ServerSettings m_editedServer;
-            QListViewItem* m_editedItemPtr;
+            bool m_selectedItem;
+            int m_selectedServerGroupId;
+            ServerSettings m_selectedServer;
+            QListViewItem* m_selectedItemPtr;
 
             int m_lastSortColumn;
             SortOrder m_lastSortOrder;

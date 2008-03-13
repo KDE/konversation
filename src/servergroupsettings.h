@@ -44,6 +44,8 @@ namespace Konversation
             void setNotificationsEnabled(bool enable) { m_enableNotifications = enable; }
             bool enableNotifications() const { return m_enableNotifications; }
 
+            bool operator==(const ChannelSettings& channel) const;
+
         private:
             QString m_name;
             QString m_password;
@@ -85,6 +87,8 @@ namespace Konversation
 
             void setChannelList(const ChannelList& list);
             void addChannel(const ChannelSettings& channel) { m_channelList.append(channel); }
+            void addChannel(const ChannelSettings& channel, const ChannelSettings& before);
+            void removeChannel(const ChannelSettings& channel);
             ChannelList channelList() const { return m_channelList; }
             ChannelSettings channelByIndex(unsigned int index) const;
 
@@ -110,6 +114,9 @@ namespace Konversation
             void setExpanded(bool enable) { m_expanded = enable; }
             bool expanded() const { return m_expanded; }
 
+            void setConfigBacked(bool configBacked);
+            bool isConfigBacked() const;
+
         private:
             static int s_availableId;
             int m_sortIndex;
@@ -125,6 +132,7 @@ namespace Konversation
             int m_id;
             bool m_enableNotifications;
             bool m_expanded;
+            bool m_configBacked;
     };
 
 }

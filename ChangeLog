@@ -202,6 +202,8 @@ Changes since 1.0.1:
   over the network's auto-join list.
 - Improved behavioral consistency in situations where the auto-join list is pre-
   empted by a transitory auto-join channel (bookmarks, etc.).
+- Added option to add and remove a channel from its network's auto-join list from
+  the tab context menu.
 
 
 -------------------------------------------------------------------------------

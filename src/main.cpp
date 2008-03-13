@@ -91,6 +91,7 @@ int main(int argc, char* argv[])
     aboutData.addCredit("Ivor Hewitt",I18N_NOOP("Bug fixes, OSD work, clearing topics"),"ivor@ivor.org");
     aboutData.addCredit("Emil Obermayr",I18N_NOOP("Sysinfo script"),"nobs@tigress.com");
     aboutData.addCredit("Stanislav Nikolov",I18N_NOOP("Bug fixes"),"valsinats@gmail.com");
+    aboutData.addCredit("Juan Carlos Torres",I18N_NOOP("Auto-join context menu"),"carlosdgtorres@gmail.com");
 
     KCmdLineArgs::init(argc,argv,&aboutData);
     KCmdLineArgs::addCmdLineOptions(options);

@@ -33,6 +33,7 @@
 #include "insertchardialog.h"
 #include "irccolorchooser.h"
 #include "joinchanneldialog.h"
+#include "servergroupsettings.h"
 
 #include <qsplitter.h>
 #include <qpopupmenu.h>
@@ -406,6 +407,20 @@ void ViewContainer::updateViewActions(int index)
         action = actionCollection()->action("close_tab");
         if (action) action->setEnabled(true);
 
+        KToggleAction* autoJoinAction = static_cast<KToggleAction*>(actionCollection()->action("tab_autojoin"));
+        Channel* channel = static_cast<Channel*>(view);
+        if (autoJoinAction && channel->getType() == ChatWindow::Channel
+            && channel->getServer()->serverGroupSettings()->isConfigBacked())
+        {
+            autoJoinAction->setEnabled(true);
+            autoJoinAction->setChecked(channel->autoJoin());
+        }
+        else
+        {
+            autoJoinAction->setEnabled(false);
+            autoJoinAction->setChecked(false);
+        }
+
         action = actionCollection()->action("reconnect_server");
         if (action)
         {
@@ -746,34 +761,39 @@ void ViewContainer::updateFrontView()
     }
 }
 
-void ViewContainer::updateViews()
+void ViewContainer::updateViews(const Konversation::ServerGroupSettings* serverGroup)
 {
-    QString label;
-
     for (int i = 0; i < m_tabWidget->count(); ++i)
     {
         ChatWindow* view = static_cast<ChatWindow*>(m_tabWidget->page(i));
 
-        if (m_viewTree)
+        if (serverGroup)
         {
-            if (view->getType()==ChatWindow::Status)
+            if (view->getType() == ChatWindow::Status && view->getServer()->serverGroupSettings() == serverGroup)
             {
-                if (view->getServer()->serverGroupSettings())
-                    label = view->getServer()->serverGroupSettings()->name();
+                QString label = view->getServer()->serverGroupSettings()->name();
 
                 if (!label.isEmpty() && m_tabWidget->tabLabel(view) != label)
                 {
                     m_tabWidget->setTabLabel(view, label);
-                    m_viewTree->setViewName(view, label);
+                    if (m_viewTree) m_viewTree->setViewName(view, label);
 
-                    if (view==m_frontView)
+                    if (view == m_frontView)
                     {
                         emit setStatusBarInfoLabel(label);
                         emit setWindowCaption(label);
                     }
+
+                    static_cast<StatusPanel*>(view)->updateName();
                 }
             }
 
+            if (i == m_tabWidget->currentPageIndex())
+                updateViewActions(m_tabWidget->currentPageIndex());
+        }
+
+        if (m_viewTree)
+        {
             if (!Preferences::tabNotificationsLeds() && !Preferences::closeButtons())
                 m_viewTree->setViewIcon(view, QIconSet());
 
@@ -786,23 +806,6 @@ void ViewContainer::updateViews()
         }
         else
         {
-            if (view->getType()==ChatWindow::Status)
-            {
-                if (view->getServer()->serverGroupSettings())
-                    label = view->getServer()->serverGroupSettings()->name();
-
-                if (!label.isEmpty() && m_tabWidget->tabLabel(view) != label)
-                {
-                    m_tabWidget->setTabLabel(view, label);
-
-                    if (view==m_frontView)
-                    {
-                        emit setStatusBarInfoLabel(label);
-                        emit setWindowCaption(label);
-                    }
-                }
-            }
-
             if (!Preferences::tabNotificationsLeds() && !Preferences::closeButtons())
                 m_tabWidget->setTabIconSet(view, QIconSet());
 
@@ -1155,6 +1158,25 @@ void ViewContainer::toggleViewNotifications()
     }
 
     m_popupViewIndex = -1;
+}
+
+void ViewContainer::toggleAutoJoin()
+{
+    Channel* channel = 0;
+
+    if (m_popupViewIndex == -1)
+        channel = static_cast<Channel*>(m_tabWidget->currentPage());
+    else
+        channel = static_cast<Channel*>(m_tabWidget->page(m_popupViewIndex));
+
+    if (channel && channel->getType() == ChatWindow::Channel)
+    {
+        bool autoJoin = channel->autoJoin();
+
+        channel->setAutoJoin(!autoJoin);
+
+        emit autoJoinToggled(channel->getServer()->serverGroupSettings());
+    }
 }
 
 void ViewContainer::addView(ChatWindow* view, const QString& label, bool weinitiated)
@@ -1656,14 +1678,15 @@ void ViewContainer::showViewContextMenu(QWidget* tab, const QPoint& pos)
     if (!menu) return;
 
     ChatWindow* view = static_cast<ChatWindow*>(tab);
+    KToggleAction* autoJoinAction = static_cast<KToggleAction*>(actionCollection()->action("tab_autojoin"));
 
     if (view)
     {
         KToggleAction* notifyAction = static_cast<KToggleAction*>(actionCollection()->action("tab_notifications"));
+        ChatWindow::WindowType viewType = view->getType();
 
         if (notifyAction)
         {
-            ChatWindow::WindowType viewType = view->getType();
             notifyAction->setEnabled(viewType == ChatWindow::Channel || viewType == ChatWindow::Query ||
                                      viewType == ChatWindow::Status || viewType == ChatWindow::Konsole ||
                                      viewType == ChatWindow::DccTransferPanel || viewType == ChatWindow::RawLog ||
@@ -1673,7 +1696,10 @@ void ViewContainer::showViewContextMenu(QWidget* tab, const QPoint& pos)
 
         updateViewEncoding(view);
 
-        if (view->getType() == ChatWindow::Status)
+        if (viewType == ChatWindow::Channel)
+            autoJoinAction->plug(menu, 1);
+
+        if (viewType == ChatWindow::Status)
         {
             QPtrList<KAction> serverActions;
             KAction* action = actionCollection()->action("disconnect_server");
@@ -1690,6 +1716,7 @@ void ViewContainer::showViewContextMenu(QWidget* tab, const QPoint& pos)
         {
             if (menu->text(menu->idAt(menu->count()-1)).isEmpty())
                 menu->setItemVisible(menu->idAt(menu->count()-1), false);
+
             m_contextServer = 0;
         }
     }
@@ -1717,6 +1744,7 @@ void ViewContainer::showViewContextMenu(QWidget* tab, const QPoint& pos)
         }
     }
 
+    autoJoinAction->unplug(menu);
     m_window->unplugActionList("server_actions");
 
     emit contextMenuClosed();
@@ -1780,6 +1808,11 @@ QString ViewContainer::currentViewURL(bool passNetwork)
     }
 
     return url;
+}
+
+int ViewContainer::getViewIndex(QWidget* widget)
+{
+    return m_tabWidget->indexOf(widget);
 }
 
 void ViewContainer::clearView()
@@ -2126,7 +2159,6 @@ StatusPanel* ViewContainer::addStatusView(Server* server)
     // ... then put it into the tab widget, otherwise we'd have a race with server member
     addView(statusView,label);
 
-    connect(m_window, SIGNAL(prefsChanged()), statusView, SLOT(updateName()));
     connect(statusView, SIGNAL(updateTabNotification(ChatWindow*,const Konversation::TabNotifyType&)), this, SLOT(setViewNotification(ChatWindow*,const Konversation::TabNotifyType&)));
     connect(statusView, SIGNAL(sendFile()), server, SLOT(requestDccSend()));
     connect(server, SIGNAL(awayState(bool)), statusView, SLOT(indicateAway(bool)) );

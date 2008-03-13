@@ -33,6 +33,7 @@ class KonvDCOP;
 class Server;
 class QuickConnectDialog;
 class Images;
+class ServerGroupSettings;
 
 namespace Konversation
 {
@@ -132,7 +133,7 @@ class KonversationApplication : public KUniqueApplication
 
     signals:
         void catchUrl(const QString& who,const QString& url);
-        void prefsChanged();
+        void serverGroupsChanged(const Konversation::ServerGroupSettings* serverGroup);
         void closeServerList();
 
     public slots:

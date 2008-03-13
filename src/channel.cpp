@@ -27,6 +27,7 @@
 #include "topiclabel.h"
 #include "channeloptionsdialog.h"
 #include "notificationhandler.h"
+#include "viewcontainer.h"
 #include "linkaddressbook/linkaddressbookui.h"
 #include "linkaddressbook/addressbook.h"
 
@@ -821,6 +822,68 @@ void Channel::setName(const QString& newName)
     ChatWindow::setName(newName);
     setLogfileName(newName.lower());
 }
+
+bool Channel::autoJoin()
+{
+    Konversation::ChannelList channelList = m_server->serverGroupSettings()->channelList();
+
+    if (!channelList.empty())
+        return channelList.find(channelSettings()) != channelList.end();
+    else
+        return false;
+}
+
+void Channel::setAutoJoin(bool autojoin)
+{
+    if (autojoin && !(autoJoin()))
+    {
+        Konversation::ChannelSettings before;
+
+        QPtrList<Channel> channelList = m_server->getChannelList();
+
+        if (channelList.count() > 1)
+        {
+            QPtrListIterator<Channel> it(channelList);
+            Channel* channel;
+            QMap<int, Channel*> channelMap;
+
+            int index = -1;
+            int ownIndex = m_server->getViewContainer()->getViewIndex(this);
+
+            while ((channel = it.current()) != 0)
+            {
+                ++it;
+
+                index = m_server->getViewContainer()->getViewIndex(channel);
+
+                if (index && index > ownIndex) channelMap.insert(index, channel);
+            }
+
+            if (channelMap.count())
+            {
+                QMap<int, Channel*>::Iterator it2;
+
+                for (it2 = channelMap.begin(); it2 != channelMap.end(); ++it2)
+                {
+                    channel = it2.data();
+
+                    if (channel->autoJoin())
+                    {
+                        before = channel->channelSettings();
+
+                        break;
+                    }
+                }
+            }
+        }
+
+        m_server->serverGroupSettings()->addChannel(channelSettings(), before);
+    }
+    else
+        m_server->serverGroupSettings()->removeChannel(channelSettings());
+}
+
+
 
 QString Channel::getPassword()
 {

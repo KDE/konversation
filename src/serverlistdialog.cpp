@@ -143,8 +143,8 @@ namespace Konversation
 
         m_serverList->setFocus();
 
-        m_editedItem = false;
-        m_editedServer = ServerSettings("");
+        m_selectedItem = false;
+        m_selectedServer = ServerSettings("");
 
         // Load server list
         updateServerList();
@@ -210,12 +210,8 @@ namespace Konversation
         if(dlg.exec() == KDialog::Accepted)
         {
             addServerGroup(dlg.serverGroupSettings());
-            emit serverGroupsChanged();
 
-            if(dlg.identitiesNeedsUpdate())
-            {
-                updateServerList();
-            }
+            emit serverGroupsChanged(dlg.serverGroupSettings());
         }
     }
 
@@ -239,14 +235,13 @@ namespace Konversation
                     {
                         delete item;
 
-                        m_editedItem = true;
-                        m_editedServerGroupId = serverGroup->id();
-                        m_editedServer = dlg.editedServer();
+                        m_selectedItem = true;
+                        m_selectedServerGroupId = serverGroup->id();
+                        m_selectedServer = dlg.editedServer();
 
                         *serverGroup = *(dlg.serverGroupSettings());
-                        updateServerList();
 
-                        emit serverGroupsChanged();
+                        emit serverGroupsChanged(serverGroup);
                     }
                 }
                 else
@@ -255,14 +250,13 @@ namespace Konversation
                     {
                         delete item;
 
-                        m_editedItem = true;
-                        m_editedServerGroupId = serverGroup->id();
-                        m_editedServer = ServerSettings("");
+                        m_selectedItem = true;
+                        m_selectedServerGroupId = serverGroup->id();
+                        m_selectedServer = ServerSettings("");
 
                         *serverGroup = *(dlg.serverGroupSettings());
-                        updateServerList();
 
-                        emit serverGroupsChanged();
+                        emit serverGroupsChanged(serverGroup);
                     }
                 }
             }
@@ -359,6 +353,7 @@ namespace Konversation
                 m_serverList->setCurrentItem(m_serverList->firstChild());
             }
         }
+
         emit serverGroupsChanged();
    }
 
@@ -441,6 +436,20 @@ namespace Konversation
 
     void ServerListDialog::updateServerList()
     {
+        if (!m_selectedItem && m_serverList->currentItem())
+        {
+            ServerListItem* item = static_cast<ServerListItem*>(m_serverList->currentItem());
+
+            m_selectedItem = true;
+            m_selectedServerGroupId = item->serverGroupId();
+
+            if (item->isServer())
+                m_selectedServer = item->server();
+            else
+                m_selectedServer = ServerSettings("");
+        }
+
+        m_serverList->setUpdatesEnabled(false);
         m_serverList->clear();
 
         Konversation::ServerGroupList serverGroups = Preferences::serverGroupList();
@@ -454,19 +463,22 @@ namespace Konversation
 
             // The method was called by slotEdit() ... initialize a pointer to the new
             // location of the edited server group
-            if (m_editedItem && m_editedServer.server().isEmpty() && (*it)->id()==m_editedServerGroupId)
+            if (m_selectedItem && m_selectedServer.server().isEmpty() && (*it)->id()==m_selectedServerGroupId)
             {
-                m_editedItemPtr = networkItem;
+                m_selectedItemPtr = networkItem;
             }
         }
 
         // Highlight the last edited item
-        if (m_editedItem)
+        if (m_selectedItem)
         {
-            m_serverList->setSelected(m_editedItemPtr,true);
-            m_serverList->setCurrentItem(m_editedItemPtr);
-            m_editedItem = false;
+            m_serverList->setSelected(m_selectedItemPtr,true);
+            m_serverList->setCurrentItem(m_selectedItemPtr);
+            m_selectedItem = false;
         }
+
+        m_serverList->setUpdatesEnabled(true);
+        m_serverList->repaint();
     }
 
     QListViewItem* ServerListDialog::insertServerGroup(ServerGroupSettingsPtr serverGroup)
@@ -529,8 +541,8 @@ namespace Konversation
             serverItem->setDragEnabled(false);
 
             // Initialize a pointer to the new location of the last edited server
-            if (m_editedItem && m_editedServer==(*serverIt))
-                m_editedItemPtr = serverItem;
+            if (m_selectedItem && m_selectedServer==(*serverIt))
+                m_selectedItemPtr = serverItem;
 
             ++i;
         }

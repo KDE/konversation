@@ -48,8 +48,8 @@ ServerISON::ServerISON(Server* server) : m_server(server)
         SIGNAL(channelJoinedOrUnjoined(Server*, const QString&, bool )),
         this,
         SLOT(slotChannelJoinedOrUnjoined(Server*, const QString&, bool )));
-    connect(m_server->getViewContainer()->getWindow(), SIGNAL(prefsChanged()),
-        this, SLOT(slotPrefsChanged()));
+    connect(KonversationApplication::instance(), SIGNAL(serverGroupsChanged(const Konversation::ServerGroupSettings*)),
+        this, SLOT(slotServerGroupsChanged()));
 }
 
 QStringList ServerISON::getWatchList()
@@ -202,9 +202,9 @@ void ServerISON::recalculateAddressees()
 }
 
 // When user changes preferences and has nick watching turned on, rebuild notify list.
-void ServerISON::slotPrefsChanged()
+void ServerISON::slotServerGroupsChanged()
 {
-    kdDebug() << "ServerISON::slotPrefsChanged" << endl;
+    kdDebug() << "ServerISON::slotServerGroupsChanged" << endl;
     m_ISONList_invalid = true;
 }
 

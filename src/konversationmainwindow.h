@@ -67,7 +67,6 @@ class KonversationMainWindow : public KMainWindow
         QString currentTitle();
 
     signals:
-        void prefsChanged();
         void startNotifyTimer(int msec);
         void showQuickConnectDialog();
         void nicksNowOnline(Server*);

@@ -47,7 +47,8 @@ WatchedNicknames_Config::WatchedNicknames_Config(QWidget *parent, const char *na
   connect(networkDropdown,SIGNAL (activated(const QString&)),this,SLOT (networkChanged(const QString&)) );
   connect(nicknameInput,SIGNAL (textChanged(const QString&)),this,SLOT (nicknameChanged(const QString&)) );
 
-  connect(KonversationApplication::instance()->getMainWindow(), SIGNAL (prefsChanged()),this,SLOT (updateNetworkNames()) );
+  connect(KonversationApplication::instance(), SIGNAL(serverGroupsChanged(const Konversation::ServerGroupSettings*)),
+      this, SLOT(updateNetworkNames()));
 }
 
 WatchedNicknames_Config::~WatchedNicknames_Config()
