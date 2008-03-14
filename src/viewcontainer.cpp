@@ -371,9 +371,13 @@ void ViewContainer::updateViewActions(int index)
 {
     KAction* action;
 
-    if (m_tabWidget->count() > 0)
+    ChatWindow* view = static_cast<ChatWindow*>(m_tabWidget->page(index));
+
+    if (m_tabWidget->count() > 0 && view)
     {
-        ChatWindow* view = static_cast<ChatWindow*>(m_tabWidget->page(index));
+        ChatWindow::WindowType viewType = view->getType();
+        Server* server = view->getServer();
+        bool insertSupported = view->isInsertSupported();
 
         if (m_viewTree)
         {
@@ -392,7 +396,63 @@ void ViewContainer::updateViewActions(int index)
             if (action) action->setEnabled(index < (m_tabWidget->count() - 1));
         }
 
-        action = actionCollection()->action("tab_notifications");
+        if (server && (viewType == ChatWindow::Status || server == m_frontServer))
+        {
+            action = actionCollection()->action("reconnect_server");
+            if (action) action->setEnabled(!server->isConnected());
+
+
+            action = actionCollection()->action("disconnect_server");
+            if (action) action->setEnabled(server->isConnected());
+
+
+            action = actionCollection()->action("join_channel");
+            if (action) action->setEnabled(server->isConnected());
+        }
+        else
+        {
+            action = actionCollection()->action("reconnect_server");
+            if (action) action->setEnabled(false);
+
+
+            action = actionCollection()->action("disconnect_server");
+            if (action) action->setEnabled(false);
+
+
+            action = actionCollection()->action("join_channel");
+            if (action) action->setEnabled(false);
+        }
+
+        KToggleAction* notifyAction = static_cast<KToggleAction*>(actionCollection()->action("tab_notifications"));
+        if (notifyAction)
+        {
+            notifyAction->setEnabled(viewType == ChatWindow::Channel || viewType == ChatWindow::Query ||
+                                     viewType == ChatWindow::Status || viewType == ChatWindow::Konsole ||
+                                     viewType == ChatWindow::DccTransferPanel || viewType == ChatWindow::RawLog);
+            notifyAction->setChecked(view->notificationsEnabled());
+        }
+
+        KToggleAction* autoJoinAction = static_cast<KToggleAction*>(actionCollection()->action("tab_autojoin"));
+        Channel* channel = static_cast<Channel*>(view);
+        if (autoJoinAction && viewType == ChatWindow::Channel
+            && channel->getServer()->serverGroupSettings()->isConfigBacked())
+        {
+            autoJoinAction->setEnabled(true);
+            autoJoinAction->setChecked(channel->autoJoin());
+        }
+        else if (!(viewType != ChatWindow::Channel && index != m_tabWidget->currentPageIndex()))
+        {
+            autoJoinAction->setEnabled(false);
+            autoJoinAction->setChecked(false);
+        }
+
+        action = actionCollection()->action("close_queries");
+        if (action) action->setEnabled(m_queryViewCount > 0);
+
+        action = actionCollection()->action("clear_tabs");
+        if (action) action->setEnabled(true);
+
+        action = actionCollection()->action("toggle_away");
         if (action) action->setEnabled(true);
 
         action = actionCollection()->action("next_tab");
@@ -407,51 +467,87 @@ void ViewContainer::updateViewActions(int index)
         action = actionCollection()->action("close_tab");
         if (action) action->setEnabled(true);
 
-        KToggleAction* autoJoinAction = static_cast<KToggleAction*>(actionCollection()->action("tab_autojoin"));
-        Channel* channel = static_cast<Channel*>(view);
-        if (autoJoinAction && channel->getType() == ChatWindow::Channel
-            && channel->getServer()->serverGroupSettings()->isConfigBacked())
+        if (index == m_tabWidget->currentPageIndex())
         {
-            autoJoinAction->setEnabled(true);
-            autoJoinAction->setChecked(channel->autoJoin());
-        }
-        else
-        {
-            autoJoinAction->setEnabled(false);
-            autoJoinAction->setChecked(false);
-        }
+            // The following only need to be updated when this run is related
+            // to the active tab, e.g. when it was just changed.
 
-        action = actionCollection()->action("reconnect_server");
-        if (action)
-        {
-            Server* server = view->getServer();
+            action = actionCollection()->action("insert_marker_line");
+            if (action)  action->setEnabled(insertSupported);
 
-            if (server && !server->isConnected())
+            action = actionCollection()->action("insert_character");
+            if (action) action->setEnabled(insertSupported);
+
+            action = actionCollection()->action("irc_colors");
+            if (action) action->setEnabled(insertSupported);
+
+            action = actionCollection()->action("clear_lines");
+            if (action) action->setEnabled(insertSupported && view->getTextView()->hasLines());
+
+            action = actionCollection()->action("clear_window");
+            if (action) action->setEnabled(insertSupported);
+
+            action = actionCollection()->action("edit_find");
+            if (action)
+            {
+                action->setText(i18n("Find Text..."));
+                action->setEnabled(view->searchView());
+                action->setToolTip(i18n("Search for text in the current tab"));
+            }
+
+            action = actionCollection()->action("edit_find_next");
+            if (action) action->setEnabled(view->searchView());
+
+            action = actionCollection()->action("edit_find_last");
+            if (action) action->setEnabled(view->searchView());
+
+            KToggleAction* channelListAction = static_cast<KToggleAction*>(actionCollection()->action("open_channel_list"));
+            if (channelListAction)
+            {
+                if (m_frontServer)
+                {
+                    QString name = m_frontServer->getServerGroup();
+                    name = name.replace('&', "&&");
+                    channelListAction->setEnabled(true);
+                    channelListAction->setChecked(m_frontServer->getChannelListPanel());
+                    channelListAction->setText(i18n("Channel &List for %1").arg(name));
+                }
+                else
+                {
+                    channelListAction->setEnabled(false);
+                    channelListAction->setChecked(false);
+                    channelListAction->setText(i18n("Channel &List"));
+                }
+            }
+
+            action = actionCollection()->action("open_logfile");
+            if (action)
+            {
+                action->setEnabled(!view->logFileName().isEmpty());
+                if (view->logFileName().isEmpty())
+                    action->setText(i18n("&Open Logfile"));
+                else
+                {
+                    QString name = view->getName();
+                    name = name.replace('&', "&&");
+                    action->setText(i18n("&Open Logfile for %1").arg(name));
+                }
+            }
+
+            action = actionCollection()->action("hide_nicknamelist");
+            if (action) action->setEnabled(view->getType() == ChatWindow::Channel);
+
+            action = actionCollection()->action("channel_settings");
+            if (action && view->getType() == ChatWindow::Channel)
+            {
                 action->setEnabled(true);
-            else
+                action->setText(i18n("&Channel Settings for %1...").arg(view->getName()));
+            }
+            else if (action)
+            {
                 action->setEnabled(false);
-        }
-
-        action = actionCollection()->action("disconnect_server");
-        if (action)
-        {
-            Server* server = view->getServer();
-
-            if (server && server->isConnected())
-                action->setEnabled(true);
-            else
-                action->setEnabled(false);
-        }
-
-        action = actionCollection()->action("join_channel");
-        if (action)
-        {
-            Server* server = view->getServer();
-
-            if (!server || (server && !server->isConnected()))
-                action->setEnabled(false);
-            else
-                action->setEnabled(true);
+                action->setText(i18n("&Channel Settings..."));
+            }
         }
     }
     else
@@ -462,13 +558,7 @@ void ViewContainer::updateViewActions(int index)
         action = actionCollection()->action("move_tab_right");
         if(action) action->setEnabled(false);
 
-        action = actionCollection()->action("tab_notifications");
-        if (action) action->setEnabled(false);
-
         action = actionCollection()->action("next_tab");
-        if (action) action->setEnabled(false);
-
-        action = actionCollection()->action("next_active_tab");
         if (action) action->setEnabled(false);
 
         action = actionCollection()->action("previous_tab");
@@ -477,237 +567,15 @@ void ViewContainer::updateViewActions(int index)
         action = actionCollection()->action("close_tab");
         if (action) action->setEnabled(false);
 
-        action = actionCollection()->action("insert_remember_line");
+        action = actionCollection()->action("next_active_tab");
         if (action) action->setEnabled(false);
 
-        action = actionCollection()->action("insert_character");
+        action = actionCollection()->action("tab_notifications");
         if (action) action->setEnabled(false);
 
-        action = actionCollection()->action("irc_colors");
+        action = actionCollection()->action("tab_autojoin");
         if (action) action->setEnabled(false);
 
-        action = actionCollection()->action("clear_lines");
-        if (action) action->setEnabled(false);
-
-        action = actionCollection()->action("clear_window");
-        if (action) action->setEnabled(false);
-
-        action = actionCollection()->action("clear_tabs");
-        if (action) action->setEnabled(false);
-
-        action = actionCollection()->action("edit_find");
-        if (action) action->setEnabled(false);
-
-        action = actionCollection()->action("edit_find_next");
-        if (action) action->setEnabled(false);
-
-        action = actionCollection()->action("edit_find_last");
-        if (action) action->setEnabled(false);
-
-        action = actionCollection()->action("open_channel_list");
-        if (action) action->setEnabled(false);
-
-        action = actionCollection()->action("open_logfile");
-        if (action) action->setEnabled(false);
-
-        action = actionCollection()->action("toggle_away");
-        if (action) action->setEnabled(false);
-
-        action = actionCollection()->action("join_channel");
-        if (action) action->setEnabled(false);
-
-        action = actionCollection()->action("disconnect_server");
-        if (action) action->setEnabled(false);
-
-        action = actionCollection()->action("reconnect_server");
-        if (action) action->setEnabled(false);
-    }
-}
-
-void ViewContainer::updateFrontView()
-{
-    ChatWindow* view = static_cast<ChatWindow*>(m_tabWidget->currentPage());
-    KAction* action;
-
-    if (view)
-    {
-        // Make sure that only views with info output get to be the m_frontView
-        if (m_frontView)
-        {
-            disconnect(m_frontView, SIGNAL(updateInfo(const QString &)), this, SIGNAL(setStatusBarInfoLabel(const QString &)));
-        }
-
-        if (view->canBeFrontView())
-        {
-            m_frontView = view;
-
-            connect(view, SIGNAL(updateInfo(const QString &)), this, SIGNAL(setStatusBarInfoLabel(const QString &)));
-            view->emitUpdateInfo();
-        }
-        else
-        {
-            QString viewName = Konversation::removeIrcMarkup(view->getName());
-
-            if(viewName != "ChatWindowObject")
-                emit setStatusBarInfoLabel(viewName);
-            else
-                emit clearStatusBarInfoLabel();
-        }
-
-        switch (view->getType())
-        {
-            case ChatWindow::Channel:
-            case ChatWindow::Query:
-            case ChatWindow::Status:
-            case ChatWindow::ChannelList:
-            case ChatWindow::RawLog:
-                emit setStatusBarLagLabelShown(true);
-                break;
-
-            default:
-                emit setStatusBarLagLabelShown(false);
-                break;
-        }
-
-        // Make sure that only text views get to be the m_searchView
-        if (view->searchView()) m_searchView = view;
-
-        bool insertSupported = view->isInsertSupported();
-
-        action = actionCollection()->action("insert_marker_line");
-        if (action)  action->setEnabled(insertSupported);
-
-        action = actionCollection()->action("insert_character");
-        if (action) action->setEnabled(insertSupported);
-
-        action = actionCollection()->action("irc_colors");
-        if (action) action->setEnabled(insertSupported);
-
-        action = actionCollection()->action("clear_lines");
-        if (action)
-        {
-            if (view->isInsertSupported())
-                action->setEnabled(view->getTextView()->hasLines());
-            else
-                action->setEnabled(false);
-        }
-
-        action = actionCollection()->action("clear_window");
-        if (action) action->setEnabled(view->getTextView() != 0);
-
-        action = actionCollection()->action("edit_find");
-        if (action)
-        {
-            action->setText(i18n("Find Text..."));
-            action->setEnabled(view->searchView());
-            action->setToolTip(i18n("Search for text in the current tab"));
-        }
-
-        action = actionCollection()->action("edit_find_next");
-        if(action) action->setEnabled(view->searchView());
-
-        action = actionCollection()->action("edit_find_last");
-        if(action) action->setEnabled(view->searchView());
-
-        KToggleAction* channelListAction = static_cast<KToggleAction*>(actionCollection()->action("open_channel_list"));
-        if (channelListAction)
-        {
-            if (view->getServer())
-            {
-                QString name = view->getServer()->getServerGroup();
-                name = name.replace('&', "&&");
-                channelListAction->setEnabled(true);
-                channelListAction->setChecked(m_frontServer->getChannelListPanel());
-                channelListAction->setText(i18n("Channel &List for %1").arg(name));
-            }
-            else
-            {
-                channelListAction->setEnabled(false);
-                channelListAction->setChecked(false);
-                channelListAction->setText(i18n("Channel &List"));
-            }
-        }
-
-        action = actionCollection()->action("open_logfile");
-        if (action)
-        {
-            action->setEnabled(!view->logFileName().isEmpty());
-            if(view->logFileName().isEmpty())
-                action->setText(i18n("&Open Logfile"));
-            else
-            {
-                QString name = view->getName();
-                name = name.replace('&', "&&");
-                action->setText(i18n("&Open Logfile for %1").arg(name));
-            }
-        }
-
-        action = actionCollection()->action("clear_tabs");
-        if (action) action->setEnabled(true);
-
-        action = actionCollection()->action("toggle_away");
-        if (action) action->setEnabled(true);
-
-        action = actionCollection()->action("reconnect_server");
-        if (action)
-        {
-            Server* server = view->getServer();
-
-            if (server && !server->isConnected())
-                action->setEnabled(true);
-            else
-                action->setEnabled(false);
-        }
-
-        action = actionCollection()->action("disconnect_server");
-        if (action)
-        {
-            Server* server = view->getServer();
-
-            if (server && server->isConnected())
-                action->setEnabled(true);
-            else
-                action->setEnabled(false);
-        }
-
-        action = actionCollection()->action("join_channel");
-        if (action)
-        {
-            Server* server = view->getServer();
-
-            if (!server || (server && !server->isConnected()))
-                action->setEnabled(false);
-            else
-                action->setEnabled(true);
-        }
-
-        if (view->getType() == ChatWindow::Channel)
-        {
-            action = actionCollection()->action("hide_nicknamelist");
-            if (action) action->setEnabled(true);
-
-            action = actionCollection()->action("channel_settings");
-            if (action)
-            {
-                action->setEnabled(true);
-                action->setText(i18n("&Channel Settings for %1...").arg(view->getName()));
-            }
-        }
-        else
-        {
-            action = actionCollection()->action("hide_nicknamelist");
-            if (action) action->setEnabled(false);
-
-            action = actionCollection()->action("channel_settings");
-            if (action)
-            {
-                action->setEnabled(false);
-                action->setText(i18n("&Channel Settings..."));
-            }
-        }
-    }
-    else
-    {
         action = actionCollection()->action("insert_marker_line");
         if (action) action->setEnabled(false);
 
@@ -747,10 +615,10 @@ void ViewContainer::updateFrontView()
         action = actionCollection()->action("join_channel");
         if (action) action->setEnabled(false);
 
-        action = actionCollection()->action("reconnect_server");
+        action = actionCollection()->action("disconnect_server");
         if (action) action->setEnabled(false);
 
-        action = actionCollection()->action("disconnect_server");
+        action = actionCollection()->action("reconnect_server");
         if (action) action->setEnabled(false);
 
         action = actionCollection()->action("hide_nicknamelist");
@@ -758,7 +626,60 @@ void ViewContainer::updateFrontView()
 
         action = actionCollection()->action("channel_settings");
         if (action) action->setEnabled(false);
+
+        action = actionCollection()->action("close_queries");
+        if (action) action->setEnabled(false);
     }
+}
+
+void ViewContainer::updateFrontView()
+{
+    ChatWindow* view = static_cast<ChatWindow*>(m_tabWidget->currentPage());
+
+    if (!view) return;
+
+    // Make sure that only views with info output get to be the m_frontView
+    if (m_frontView)
+    {
+        disconnect(m_frontView, SIGNAL(updateInfo(const QString &)), this, SIGNAL(setStatusBarInfoLabel(const QString &)));
+    }
+
+    if (view->canBeFrontView())
+    {
+        m_frontView = view;
+
+        connect(view, SIGNAL(updateInfo(const QString &)), this, SIGNAL(setStatusBarInfoLabel(const QString &)));
+        view->emitUpdateInfo();
+    }
+    else
+    {
+        QString viewName = Konversation::removeIrcMarkup(view->getName());
+
+        if(viewName != "ChatWindowObject")
+            emit setStatusBarInfoLabel(viewName);
+        else
+            emit clearStatusBarInfoLabel();
+    }
+
+    switch (view->getType())
+    {
+        case ChatWindow::Channel:
+        case ChatWindow::Query:
+        case ChatWindow::Status:
+        case ChatWindow::ChannelList:
+        case ChatWindow::RawLog:
+            emit setStatusBarLagLabelShown(true);
+            break;
+
+        default:
+            emit setStatusBarLagLabelShown(false);
+            break;
+    }
+
+    // Make sure that only text views get to be the m_searchView
+    if (view->searchView()) m_searchView = view;
+
+    updateViewActions(m_tabWidget->currentPageIndex());
 }
 
 void ViewContainer::updateViews(const Konversation::ServerGroupSettings* serverGroup)
@@ -1418,27 +1339,11 @@ void ViewContainer::switchView(QWidget* newView)
 
     view->resetTabNotification();
 
-    if (!m_viewTree || !m_viewTree->hasFocus())
-        view->adjustFocus();
+    if (!m_viewTree || !m_viewTree->hasFocus()) view->adjustFocus();
 
-    updateViewActions(m_tabWidget->currentPageIndex());
+    if (view->isInsertSupported()) view->getTextView()->cancelRememberLine();
 
-    if (view)
-    {
-        if (view->isInsertSupported()) view->getTextView()->cancelRememberLine();
-
-        KToggleAction* notifyAction = static_cast<KToggleAction*>(actionCollection()->action("tab_notifications"));
-        if (notifyAction)
-        {
-            ChatWindow::WindowType viewType = view->getType();
-            notifyAction->setEnabled(viewType == ChatWindow::Channel || viewType == ChatWindow::Query ||
-                                     viewType == ChatWindow::Status || viewType == ChatWindow::Konsole ||
-                                     viewType == ChatWindow::DccTransferPanel || viewType == ChatWindow::RawLog);
-            notifyAction->setChecked(view->notificationsEnabled());
-        }
-
-        updateViewEncoding(view);
-    }
+    updateViewEncoding(view);
 
     QString tabName = Konversation::removeIrcMarkup(view->getName());
 
@@ -1682,17 +1587,7 @@ void ViewContainer::showViewContextMenu(QWidget* tab, const QPoint& pos)
 
     if (view)
     {
-        KToggleAction* notifyAction = static_cast<KToggleAction*>(actionCollection()->action("tab_notifications"));
         ChatWindow::WindowType viewType = view->getType();
-
-        if (notifyAction)
-        {
-            notifyAction->setEnabled(viewType == ChatWindow::Channel || viewType == ChatWindow::Query ||
-                                     viewType == ChatWindow::Status || viewType == ChatWindow::Konsole ||
-                                     viewType == ChatWindow::DccTransferPanel || viewType == ChatWindow::RawLog ||
-                                     viewType == ChatWindow::DccChat);
-            notifyAction->setChecked(view->notificationsEnabled());
-        }
 
         updateViewEncoding(view);
 
@@ -1726,22 +1621,7 @@ void ViewContainer::showViewContextMenu(QWidget* tab, const QPoint& pos)
         m_popupViewIndex = -1;
         view = static_cast<ChatWindow*>(m_tabWidget->currentPage());
 
-        if (view)
-        {
-            KToggleAction* notifyAction = static_cast<KToggleAction*>(actionCollection()->action("tab_notifications"));
-
-            if (notifyAction)
-            {
-                ChatWindow::WindowType viewType = view->getType();
-                notifyAction->setEnabled(viewType == ChatWindow::Channel || viewType == ChatWindow::Query ||
-                                         viewType == ChatWindow::Status || viewType == ChatWindow::Konsole ||
-                                         viewType == ChatWindow::DccTransferPanel || ChatWindow::RawLog ||
-                                         viewType == ChatWindow::DccChat);
-                notifyAction->setChecked(view->notificationsEnabled());
-            }
-
-            updateViewEncoding(view);
-        }
+        if (view) updateViewEncoding(view);
     }
 
     autoJoinAction->unplug(menu);
@@ -2396,6 +2276,10 @@ void ViewContainer::closeQueries()
         }
         ++operations;
     }
+
+    m_queryViewCount = 0;
+
+    actionCollection()->action("close_queries")->setEnabled(false);
 }
 
 ChannelListPanel* ViewContainer::addChannelListPanel(Server* server)

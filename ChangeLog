@@ -204,6 +204,10 @@ Changes since 1.0.1:
   empted by a transitory auto-join channel (bookmarks, etc.).
 - Added option to add and remove a channel from its network's auto-join list from
   the tab context menu.
+- Fixed some bugs of UI actions not to be updated appropriately as their context
+  changes.
+- Slightly sped up tab switching by eliminating some redundant UI action state
+  updates.
 
 
 -------------------------------------------------------------------------------
