@@ -2092,10 +2092,6 @@ void Server::joinChannel(const QString& name, const QString& hostmask)
         m_serverGroup->appendChannelHistory(channelSettings);
 
         connect(channel,SIGNAL (sendFile()),this,SLOT (requestDccSend()) );
-
-        //this is now set by ViewContainer::addChannel
-        //connect(this,SIGNAL (serverOnline(bool)),channel,SLOT (serverOnline(bool)) );
-
         connect(this, SIGNAL(nicknameChanged(const QString&)), channel, SLOT(setNickname(const QString&)));
     }
     // Move channel from unjoined (if present) to joined list and add our own nickname to the joined list.
@@ -3187,8 +3183,14 @@ void Server::updateAutoJoin(const QString& channel)
         tmpList = m_serverGroup->channelList();
     else
     {
-        for (Channel* ch = channelList.first(); ch; ch = channelList.next())
-            tmpList << ch->channelSettings();
+        QPtrListIterator<Channel> it(channelList);
+        Channel* channel;
+
+        while ((channel = it.current()) != 0)
+        {
+            ++it;
+            tmpList << channel->channelSettings();
+        }
     }
 
     if (!channel.isEmpty())
