@@ -339,10 +339,10 @@ namespace Konversation
                 m_popup->removeItem(Bookmark);
                 m_copyUrlMenu = false;
             }
-            else if(!link.isEmpty() && !m_copyUrlMenu)
+            else if (!link.isEmpty() && !m_copyUrlMenu)
             {
-                m_popup->insertItem(i18n("Copy URL to Clipboard"),CopyUrl,1);
-                m_popup->insertItem(i18n("Add to Bookmarks"),Bookmark,2);
+                m_popup->insertItem(SmallIcon("editcopy"), i18n("Copy URL to Clipboard"), CopyUrl, 0);
+                m_popup->insertItem(SmallIcon("bookmark"), i18n("Add to Bookmarks"), Bookmark, 1);
                 m_copyUrlMenu = true;
                 m_urlToCopy = link;
             }

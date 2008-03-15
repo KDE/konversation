@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="konversation" version="50">
+<kpartgui name="konversation" version="51">
 
   <MenuBar>
     <Menu name="file">
@@ -71,11 +71,11 @@
     <Action name="tab_notifications" />
     <Action name="tab_encoding" />
     <Separator />
+    <ActionList name="server_actions" />
+    <Separator />
     <Action name="move_tab_left" />
     <Action name="move_tab_right" />
     <Action name="close_tab" />
-    <Separator />
-    <ActionList name="server_actions" /> 
 </Menu>
 
 </kpartgui>

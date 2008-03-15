@@ -208,6 +208,8 @@ Changes since 1.0.1:
   changes.
 - Slightly sped up tab switching by eliminating some redundant UI action state
   updates.
+- Improved general layout and consistency of tab, chat view, query and topic
+  context menus. Added some missing icons.
 
 
 -------------------------------------------------------------------------------

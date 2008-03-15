@@ -189,6 +189,7 @@ class IRCView : public KTextBrowser
         Server* m_server;
         QPopupMenu* m_popup;
         int toggleMenuBarSeparator;
+        int copyUrlMenuSeparator;
         KPopupMenu* m_nickPopup;
         KPopupMenu* m_channelPopup;
         KPopupMenu* m_modes;

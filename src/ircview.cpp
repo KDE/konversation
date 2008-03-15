@@ -99,9 +99,10 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent)
     m_popup = new QPopupMenu(this,"ircview_context_menu");
     toggleMenuBarSeparator = m_popup->insertSeparator();
     m_popup->setItemVisible(toggleMenuBarSeparator, false);
+    copyUrlMenuSeparator = m_popup->insertSeparator();
+    m_popup->setItemVisible(copyUrlMenuSeparator, false);
     m_popup->insertItem(SmallIconSet("editcopy"),i18n("&Copy"),Copy);
     m_popup->insertItem(i18n("Select All"),SelectAll);
-    m_popup->insertSeparator();
     m_popup->insertItem(SmallIcon("find"),i18n("Find Text..."),Search);
 
     setServer(newServer);
@@ -246,13 +247,16 @@ void IRCView::highlightedSlot(const QString& _link)
             m_popup->removeItem(CopyUrl);
             m_popup->removeItem(Bookmark);
             m_popup->removeItem(SaveAs);
+            m_popup->setItemVisible(copyUrlMenuSeparator, false);
             m_copyUrlMenu = false;
+
         }
         else if (!link.isEmpty() && !m_copyUrlMenu)
         {
-            m_popup->insertItem(i18n("Copy URL to Clipboard"),CopyUrl,1);
-            m_popup->insertItem(i18n("Add to Bookmarks"),Bookmark,2);
-            m_popup->insertItem(i18n("Save Link As..."), SaveAs, 3);
+            m_popup->setItemVisible(copyUrlMenuSeparator, true);
+            m_popup->insertItem(SmallIcon("editcopy"), i18n("Copy URL to Clipboard"), CopyUrl, 1);
+            m_popup->insertItem(SmallIcon("bookmark"), i18n("Add to Bookmarks"), Bookmark, 2);
+            m_popup->insertItem(SmallIcon("filesaveas"), i18n("Save Link As..."), SaveAs, 3);
             m_copyUrlMenu = true;
             m_urlToCopy = link;
         }
@@ -1436,13 +1440,9 @@ void IRCView::setupQueryPopupMenu()
     m_nickPopup->insertItem(i18n("Unignore"), Konversation::UnignoreNick);
     m_nickPopup->setItemVisible(Konversation::IgnoreNick, false);
     m_nickPopup->setItemVisible(Konversation::UnignoreNick, false);
-    m_nickPopup->insertSeparator();
 
     if (kapp->authorize("allow_downloading"))
-    {
         m_nickPopup->insertItem(SmallIcon("2rightarrow"),i18n("Send &File..."),Konversation::DccSend);
-        m_nickPopup->insertSeparator();
-    }
 
     m_nickPopup->insertItem(i18n("Add to Watched Nicks"), Konversation::AddNotify);
 

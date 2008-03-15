@@ -75,6 +75,7 @@ Query::Query(QWidget* parent) : ChatWindow(parent)
 
     // link "Whois", "Ignore" ... menu items into ircview popup
     QPopupMenu* popup=textView->getPopup();
+    popup->insertSeparator();
     popup->insertItem(i18n("&Whois"),Konversation::Whois);
     popup->insertItem(i18n("&Version"),Konversation::Version);
     popup->insertItem(i18n("&Ping"),Konversation::Ping);
@@ -84,13 +85,9 @@ Query::Query(QWidget* parent) : ChatWindow(parent)
     popup->insertItem(i18n("Unignore"), Konversation::UnignoreNick);
     popup->setItemVisible(Konversation::IgnoreNick, false);
     popup->setItemVisible(Konversation::UnignoreNick, false);
-    popup->insertSeparator();
 
     if (kapp->authorize("allow_downloading"))
-    {
         popup->insertItem(SmallIcon("2rightarrow"),i18n("Send &File..."),Konversation::DccSend);
-        popup->insertSeparator();
-    }
 
     popup->insertItem(i18n("Add to Watched Nicks"), Konversation::AddNotify);
 
