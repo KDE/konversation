@@ -891,7 +891,7 @@ QString Channel::getPassword()
 
     for (QStringList::const_iterator it = m_modeList.begin(); it != m_modeList.end(); ++it)
     {
-        if ((*it)[0] = 'k') password = (*it).mid(1);
+        if ((*it)[0] == 'k') password = (*it).mid(1);
     }
 
     return password;
@@ -1902,12 +1902,17 @@ void Channel::updateMode(const QString& sourceNick, char mode, bool plus, const 
 
 void Channel::clearModeList()
 {
+    QString k;
 
-    for (QStringList::iterator it = m_modeList.begin(); it != m_modeList.end(); ++it)
+    // Keep channel password in the backing store, for rejoins.
+    for (QStringList::const_iterator it = m_modeList.begin(); it != m_modeList.end(); ++it)
     {
-        // Keep channel password.
-        if ((*it)[0] != 'k') m_modeList.remove(it);
+        if ((*it)[0] == 'k') k = (*it);
     }
+
+    m_modeList.clear();
+
+    if (!k.isEmpty()) m_modeList << k;
 
     modeT->setOn(0);
     modeT->setDown(0);
@@ -1926,6 +1931,9 @@ void Channel::clearModeList()
 
     modeM->setOn(0);
     modeM->setDown(0);
+
+    modeK->setOn(0);
+    modeK->setDown(0);
 
     modeL->setOn(0);
     modeL->setDown(0);
