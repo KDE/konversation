@@ -1770,6 +1770,8 @@ void Server::slotNewDccTransferItemQueued(DccTransfer* transfer)
 
 void Server::addDccSend(const QString &recipient,KURL fileURL, const QString &altFileName, uint fileSize)
 {
+    if (!fileURL.isValid()) return;
+
     emit addDccPanel();
 
     // We already checked that the file exists in output filter / requestDccSend() resp.
