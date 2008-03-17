@@ -805,6 +805,8 @@ void IRCView::updateLineParagraphs(int numRemoved)
     else
         m_rememberLineParagraph -= numRemoved;
 
+    if (m_markerLineParagraphs.isEmpty()) return;
+
     QValueList<int>::iterator it;
 
     for (it = m_markerLineParagraphs.begin(); it != m_markerLineParagraphs.end(); ++it)
