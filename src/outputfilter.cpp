@@ -365,12 +365,17 @@ namespace Konversation
         }
         else
         {
-            if(!isAChannel(channelName))
+            if (!isAChannel(channelName))
                 channelName = "#" + channelName.stripWhiteSpace();
 
             Channel* channel = m_server->getChannelByName(channelName);
+
             if (channel)
             {
+                // Note that this relies on the channels-flush-nicklists-on-disconnect behavior.
+                if (!channel->numberOfNicks())
+                    result.toServer = "JOIN " + channelName;
+
                 if (Preferences::bringToFront())
                     emit showView (channel);
             }
