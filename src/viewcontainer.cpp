@@ -2197,20 +2197,13 @@ void ViewContainer::toggleChannelNicklists()
 {
     KToggleAction* action = static_cast<KToggleAction*>(actionCollection()->action("hide_nicknamelist"));
 
-    if (action->isChecked())
+    if (action)
     {
-        Preferences::setShowNickList(false);
+        Preferences::setShowNickList(!action->isChecked());
         Preferences::writeConfig();
-        action->setChecked(true);
-    }
-    else
-    {
-        Preferences::setShowNickList(true);
-        Preferences::writeConfig();
-        action->setChecked(false);
-    }
 
-    emit updateChannelAppearance();
+        emit updateChannelAppearance();
+    }
 }
 
 Query* ViewContainer::addQuery(Server* server, const NickInfoPtr& nickInfo, bool weinitiated)
