@@ -407,33 +407,6 @@ bool doHighlight, bool parseURL, bool self)
     }
     #endif
 
-    // Replace all 0x03 without color number (reset color) with \0x031,0 or \0x030,1, depending on which one fits
-    // with the users chosen colours, based on the relative brightness. TODO defaultColor needs explanation
-
-    bool inverted = false;                        // TODO this flag should be stored somewhere
-    {
-        QColor fg(Preferences::color(Preferences::ChannelMessage));
-        QColor  bg(Preferences::color(Preferences::TextViewBackground));
-
-        int h = 0, s = 0,fv = 0,bv = 0;
-        fg.getHsv(&h,&s,&fv);
-        bg.getHsv(&h,&s,&bv);
-
-        if (bv <= fv)
-        {
-            inverted = false;
-        }
-    }
-
-    if(inverted)
-    {
-        filteredLine.replace(QRegExp("\003([^0-9]|$)"),"\0030,1\\1");
-    }
-    else
-    {
-        filteredLine.replace(QRegExp("\003([^0-9]|$)"),"\0031,0\\1");
-    }
-
     if(filteredLine.find("\x07") != -1)
     {
         if(Preferences::beep())
@@ -444,7 +417,7 @@ bool doHighlight, bool parseURL, bool self)
 
     // replace \003 and \017 codes with rich text color codes
     // captures          1    2                   23 4                   4 3     1
-    QRegExp colorRegExp("(\003([0-9]|0[0-9]|1[0-5])(,([0-9]|0[0-9]|1[0-5])|)|\017)");
+    QRegExp colorRegExp("(\003([0-9]|0[0-9]|1[0-5]|)(,([0-9]|0[0-9]|1[0-5])|,|)|\017)");
 
     int pos;
     bool allowColors = Preferences::allowColorCodes();
@@ -466,8 +439,15 @@ bool doHighlight, bool parseURL, bool self)
                 colorString += "<font color=\""+defaultColor+"\">";
             else
             {
-                int foregroundColor = colorRegExp.cap(2).toInt();
-                colorString += "<font color=\"" + Preferences::ircColorCode(foregroundColor).name() + "\">";
+                if(!colorRegExp.cap(2).isEmpty())
+                {
+                    int foregroundColor = colorRegExp.cap(2).toInt();
+                    colorString += "<font color=\"" + Preferences::ircColorCode(foregroundColor).name() + "\">";
+                }
+                else
+                {
+                    colorString += "<font color=\""+defaultColor+"\">";
+                }
             }
 
             firstColor = false;
