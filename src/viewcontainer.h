@@ -55,7 +55,7 @@ class ViewContainer : public QObject
         QGuardedPtr<ChatWindow> getFrontView() { return m_frontView; }
         Server* getFrontServer() { return m_frontServer; }
 
-        void silenceViews();
+        void prepareShutdown();
 
         void serverQuit(Server* server);
 

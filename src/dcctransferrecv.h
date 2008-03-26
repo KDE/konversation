@@ -46,7 +46,7 @@ class DccTransferRecv : public DccTransfer
     Q_OBJECT
 
     public:
-        DccTransferRecv();
+        DccTransferRecv(QObject* parent);
         virtual ~DccTransferRecv();
 
         // REQUIRED

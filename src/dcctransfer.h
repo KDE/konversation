@@ -58,7 +58,7 @@ class DccTransfer : public QObject
             InfiniteValue = -3
         };
 
-        DccTransfer( DccType dccType );
+        DccTransfer( DccType dccType, QObject* parent );
         virtual ~DccTransfer();
 
         // info of DccTransfer can be copied with this constructor.

@@ -91,6 +91,14 @@ ViewContainer::~ViewContainer()
     deleteDccPanel();
 }
 
+void ViewContainer::prepareShutdown()
+{
+    for (int i = 0; i < m_tabWidget->count(); ++i)
+        m_tabWidget->page(i)->blockSignals(true);
+
+    m_tabWidget = 0;
+}
+
 void ViewContainer::initializeSplitterSizes()
 {
     if (m_viewTree && !m_viewTree->isHidden())
@@ -281,7 +289,7 @@ void ViewContainer::syncTabBarToTree()
 {
     QPtrList<ChatWindow> viewList = m_viewTree->getSortedViewList();
 
-    if (!viewList.isEmpty())
+    if (m_tabWidget && !viewList.isEmpty())
     {
         QPtrListIterator<ChatWindow> it(viewList);
         ChatWindow* view;
@@ -302,12 +310,6 @@ void ViewContainer::syncTabBarToTree()
     }
 
     updateViewActions(m_tabWidget->currentPageIndex());
-}
-
-void ViewContainer::silenceViews()
-{
-    for (int i = 0; i < m_tabWidget->count(); ++i)
-        m_tabWidget->page(i)->blockSignals(true);
 }
 
 void ViewContainer::updateAppearance()
@@ -345,6 +347,8 @@ void ViewContainer::updateAppearance()
 
 void ViewContainer::updateTabWidgetAppearance()
 {
+    if (!m_tabWidget) return;
+
     m_tabWidget->setTabBarHidden((Preferences::tabPlacement()==Preferences::Left));
 
     if (Preferences::customTabFont())
@@ -369,6 +373,8 @@ void ViewContainer::updateTabWidgetAppearance()
 
 void ViewContainer::updateViewActions(int index)
 {
+    if (!m_tabWidget) return;
+
     KAction* action;
 
     ChatWindow* view = static_cast<ChatWindow*>(m_tabWidget->page(index));
@@ -634,6 +640,8 @@ void ViewContainer::updateViewActions(int index)
 
 void ViewContainer::updateFrontView()
 {
+    if (!m_tabWidget) return;
+
     ChatWindow* view = static_cast<ChatWindow*>(m_tabWidget->currentPage());
 
     if (!view) return;
@@ -684,6 +692,8 @@ void ViewContainer::updateFrontView()
 
 void ViewContainer::updateViews(const Konversation::ServerGroupSettings* serverGroup)
 {
+    if (!m_tabWidget) return;
+
     for (int i = 0; i < m_tabWidget->count(); ++i)
     {
         ChatWindow* view = static_cast<ChatWindow*>(m_tabWidget->page(i));
@@ -763,6 +773,8 @@ void ViewContainer::updateViews(const Konversation::ServerGroupSettings* serverG
 
 void ViewContainer::updateViewIcons()
 {
+    if (!m_tabWidget) return;
+
     for (int i = 0; i < m_tabWidget->count(); ++i)
     {
         ChatWindow* view = static_cast<ChatWindow*>(m_tabWidget->page(i));
@@ -1357,7 +1369,7 @@ void ViewContainer::showView(ChatWindow* view)
 {
     // Don't bring Tab to front if TabWidget is hidden. Otherwise QT gets confused
     // and shows the Tab as active but will display the wrong pane
-    if (m_tabWidget->isVisible())
+    if (m_tabWidget && m_tabWidget->isVisible())
         m_tabWidget->showPage(view);
 }
 
@@ -1639,6 +1651,7 @@ QString ViewContainer::currentViewTitle()
         else
         {
             QString serverGroup = m_frontServer->getServerGroup();
+
             if (!serverGroup.isEmpty())
             {
                 return serverGroup;
@@ -1736,7 +1749,10 @@ void ViewContainer::findPrevText()
 
 void ViewContainer::appendToFrontmost(const QString& type,const QString& message,ChatWindow* serverView, bool parseURL)
 {
-    if (!serverView) { // e.g. DCOP info call
+    if (!m_tabWidget) return;
+
+    if (!serverView) // e.g. DCOP info call
+    {
         if (m_frontView) // m_frontView == NULL if canBeFrontView() == false for active ChatWindow
             serverView = m_frontView->getServer()->getStatusView();
         else if (m_frontServer) // m_fronView == NULL && m_frontServer != NULL if ChannelListPanel is active.
@@ -1746,11 +1762,11 @@ void ViewContainer::appendToFrontmost(const QString& type,const QString& message
     // This might happen if canBeFrontView() is false for active ChatWindow
     // and the view does not belong to any server (e.g. DCC Status View).
     // Discard message in this case.
-    if(!serverView) return;
+    if (!serverView) return;
 
     updateFrontView();
 
-    if(!m_frontView ||                            // Check if the m_frontView can actually display text or ...
+    if (!m_frontView ||                           // Check if the m_frontView can actually display text or ...
                                                   // if it does not belong to this server or...
         serverView->getServer()!=m_frontView->getServer() ||
                                                   // if the user decided to force it.
@@ -2061,6 +2077,8 @@ RawLog* ViewContainer::addRawLog(Server* server)
 
 void ViewContainer::serverQuit(Server* server)
 {
+    if (!m_tabWidget) return;
+
     for (int i = 0; i < m_tabWidget->count(); ++i)
     {
         ChatWindow* view = static_cast<ChatWindow*>(m_tabWidget->page(i));

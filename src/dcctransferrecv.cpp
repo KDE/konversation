@@ -56,8 +56,8 @@ connectionSuccess()  : called by recvSocket
 
 */
 
-DccTransferRecv::DccTransferRecv()
-    : DccTransfer( DccTransfer::Receive )
+DccTransferRecv::DccTransferRecv(QObject* parent)
+    : DccTransfer( DccTransfer::Receive, parent )
 {
     kdDebug() << "DccTransferRecv::DccTransferRecv()" << endl;
 

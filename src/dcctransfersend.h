@@ -35,7 +35,7 @@ class DccTransferSend : public DccTransfer
     Q_OBJECT
 
         public:
-        DccTransferSend();
+        DccTransferSend(QObject* parent);
         virtual ~DccTransferSend();
 
         // REQUIRED

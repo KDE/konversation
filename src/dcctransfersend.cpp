@@ -46,8 +46,8 @@
 
 using namespace KNetwork;
 
-DccTransferSend::DccTransferSend()
-    : DccTransfer( DccTransfer::Send )
+DccTransferSend::DccTransferSend(QObject* parent)
+    : DccTransfer( DccTransfer::Send, parent )
 {
     kdDebug() << "DccTransferSend::DccTransferSend()" << endl;
 

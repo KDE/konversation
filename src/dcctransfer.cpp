@@ -20,7 +20,7 @@
 #include <kdebug.h>
 
 
-DccTransfer::DccTransfer( DccType dccType )
+DccTransfer::DccTransfer( DccType dccType, QObject* parent ) : QObject(parent)
 {
     kdDebug() << "DccTransfer::DccTransfer()" << endl;
 

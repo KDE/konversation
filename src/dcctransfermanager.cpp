@@ -25,25 +25,13 @@ DccTransferManager::DccTransferManager( QObject* parent )
 
 DccTransferManager::~DccTransferManager()
 {
-    // delete SEND items
-    QValueListIterator< DccTransferSend* > itSend = m_sendItems.begin();
-    while ( itSend != m_sendItems.end() )
-    {
-        delete (*itSend);
-        itSend = m_sendItems.erase( itSend );
-    }
-    // delete RECV items
-    QValueListIterator< DccTransferRecv* > itRecv = m_recvItems.begin();
-    while ( itRecv != m_recvItems.end() )
-    {
-        delete (*itRecv);
-        itRecv = m_recvItems.erase( itRecv );
-    }
+    m_sendItems.clear();
+    m_recvItems.clear();
 }
 
 DccTransferRecv* DccTransferManager::newDownload()
 {
-    DccTransferRecv* transfer = new DccTransferRecv();
+    DccTransferRecv* transfer = new DccTransferRecv(this);
     m_recvItems.push_back( transfer );
     connect( transfer, SIGNAL( done( DccTransfer* ) ), this, SLOT( removeRecvItem( DccTransfer* ) ) );
     initTransfer( transfer );
@@ -52,7 +40,7 @@ DccTransferRecv* DccTransferManager::newDownload()
 
 DccTransferSend* DccTransferManager::newUpload()
 {
-    DccTransferSend* transfer = new DccTransferSend();
+    DccTransferSend* transfer = new DccTransferSend(this);
     m_sendItems.push_back( transfer );
     connect( transfer, SIGNAL( done( DccTransfer* ) ), this, SLOT( removeSendItem( DccTransfer* ) ) );
     initTransfer( transfer );
