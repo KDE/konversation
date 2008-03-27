@@ -1,1 +1,1 @@
-SUBDIRS = alternative christmas classic default smiling square tango
+SUBDIRS = alternative christmas classic default smiling square
