@@ -211,6 +211,7 @@ Changes since 1.0.1:
 - Added check for whether the URL is well-formed before initiating a DCC send.
   Fixes a bug of dragging a nickname link in the chat view onto the query chat
   view drop target starting a DCC transfer that cannot succeed.
+- Added Oxygen nicklist icon theme by Nuno Pinheiro.
 
 
 -------------------------------------------------------------------------------
