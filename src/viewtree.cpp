@@ -657,12 +657,12 @@ void ViewTree::keyPressEvent(QKeyEvent* e)
     else
     {
         ViewTreeItem* item = static_cast<ViewTreeItem*>(selectedItem());
-        if (item && item->getView()->isInsertSupported())
+        if (item && item->getView() && item->getView()->isInsertSupported())
         {
             KApplication::sendEvent(item->getView()->getTextView(), e);
             item->getView()->adjustFocus();
         }
-        else if (item && item->getView()->getType() == ChatWindow::Konsole)
+        else if (item && item->getView() && item->getView()->getType() == ChatWindow::Konsole)
         {
             KonsolePanel* panel = static_cast<KonsolePanel*>(item->getView());
             KApplication::sendEvent(panel->getWidget(), e);
