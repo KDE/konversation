@@ -68,13 +68,11 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
 
     QLabel* minLabel=new QLabel(i18n("Minimum users:"),mainGrid);
     QLabel* maxLabel=new QLabel(i18n("Maximum users:"),mainGrid);
-    QSpinBox* minUsersSpin=new QSpinBox(mainGrid,"min_users_spin");
+    QSpinBox* minUsersSpin=new QSpinBox(0, 9999, 1, mainGrid,"min_users_spin");
     QWhatsThis::add(minUsersSpin, i18n("You can limit the channel list to those channels with a minimum number of users here. Choosing 0 disables this criterion."));
-    QSpinBox* maxUsersSpin=new QSpinBox(mainGrid,"max_users_spin");
+    QSpinBox* maxUsersSpin=new QSpinBox(0, 9999, 1, mainGrid,"max_users_spin");
     QWhatsThis::add(maxUsersSpin, i18n("You can limit the channel list to those channels with a maximum number of users here. Choosing 0 disables this criterion."));
-    minUsersSpin->setMaxValue(9999);
     minUsersSpin->setValue(getMinUsers());
-    maxUsersSpin->setMaxValue(9999);
     maxUsersSpin->setValue(getMaxUsers());
     minLabel->setBuddy(minUsersSpin);
     maxLabel->setBuddy(maxUsersSpin);
