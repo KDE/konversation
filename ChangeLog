@@ -212,7 +212,12 @@ Changes since 1.0.1:
   Fixes a bug of dragging a nickname link in the chat view onto the query chat
   view drop target starting a DCC transfer that cannot succeed.
 - Added Oxygen nicklist icon theme by Nuno Pinheiro.
-
+- Fixed a bug that could cause a crash when the view treelist would receive key-
+  press events during application shutdown.
+- Fixed IRC color parsing so that the colors gets reset to default if no color
+  numbers were given.
+- Allow higher values than 99 in the min/max users filter spin boxes in Channel
+  List tabs.
 
 -------------------------------------------------------------------------------
 

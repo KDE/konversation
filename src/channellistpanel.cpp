@@ -72,7 +72,9 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
     QWhatsThis::add(minUsersSpin, i18n("You can limit the channel list to those channels with a minimum number of users here. Choosing 0 disables this criterion."));
     QSpinBox* maxUsersSpin=new QSpinBox(mainGrid,"max_users_spin");
     QWhatsThis::add(maxUsersSpin, i18n("You can limit the channel list to those channels with a maximum number of users here. Choosing 0 disables this criterion."));
+    minUsersSpin->setMaxValue(999);
     minUsersSpin->setValue(getMinUsers());
+    maxUsersSpin->setMaxValue(999);
     maxUsersSpin->setValue(getMaxUsers());
     minLabel->setBuddy(minUsersSpin);
     maxLabel->setBuddy(maxUsersSpin);
