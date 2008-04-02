@@ -7,9 +7,9 @@
     <property name="geometry">
         <rect>
             <x>0</x>
-            <y>0</y>
-            <width>673</width>
-            <height>94</height>
+            <y>3</y>
+            <width>726</width>
+            <height>91</height>
         </rect>
     </property>
     <property name="sizePolicy">
@@ -128,7 +128,7 @@
                     <cstring>unnamed</cstring>
                 </property>
                 <property name="margin">
-                    <number>0</number>
+                    <number>5</number>
                 </property>
                 <widget class="QLayoutWidget" row="1" column="0" rowspan="1" colspan="2">
                     <property name="name">
@@ -310,7 +310,7 @@
                     <cstring>unnamed</cstring>
                 </property>
                 <property name="margin">
-                    <number>0</number>
+                    <number>5</number>
                 </property>
                 <widget class="QLayoutWidget" row="1" column="0" rowspan="1" colspan="2">
                     <property name="name">
@@ -319,6 +319,9 @@
                     <hbox>
                         <property name="name">
                             <cstring>unnamed</cstring>
+                        </property>
+                        <property name="margin">
+                            <number>0</number>
                         </property>
                         <property name="spacing">
                             <number>0</number>
@@ -489,7 +492,7 @@
                     <cstring>unnamed</cstring>
                 </property>
                 <property name="margin">
-                    <number>0</number>
+                    <number>5</number>
                 </property>
                 <widget class="QLayoutWidget" row="1" column="0" rowspan="1" colspan="2">
                     <property name="name">
@@ -674,7 +677,7 @@
                     <cstring>unnamed</cstring>
                 </property>
                 <property name="margin">
-                    <number>0</number>
+                    <number>5</number>
                 </property>
                 <widget class="QLayoutWidget">
                     <property name="name">
@@ -719,7 +722,7 @@
                                 <cstring>textLabel9</cstring>
                             </property>
                             <property name="text">
-                                <string>Bytes (Global):</string>
+                                <string>Bytes (Raw):</string>
                             </property>
                         </widget>
                         <widget class="QLabel" row="2" column="0">
@@ -727,7 +730,7 @@
                                 <cstring>textLabel4_3</cstring>
                             </property>
                             <property name="text">
-                                <string>Bytes (Server):</string>
+                                <string>Bytes (Encoded):</string>
                             </property>
                         </widget>
                         <widget class="QLabel" row="1" column="1">
