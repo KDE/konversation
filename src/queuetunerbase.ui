@@ -8,8 +8,8 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>624</width>
-            <height>88</height>
+            <width>673</width>
+            <height>94</height>
         </rect>
     </property>
     <property name="sizePolicy">
@@ -19,9 +19,6 @@
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
         </sizepolicy>
-    </property>
-    <property name="caption">
-        <string>QueueTunerBase</string>
     </property>
     <hbox>
         <property name="name">
@@ -124,16 +121,13 @@
                 <number>1</number>
             </property>
             <property name="title">
-                <string>SlowQueue</string>
+                <string>Slow Queue</string>
             </property>
             <grid>
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
                 <property name="margin">
-                    <number>1</number>
-                </property>
-                <property name="spacing">
                     <number>0</number>
                 </property>
                 <widget class="QLayoutWidget" row="1" column="0" rowspan="1" colspan="2">
@@ -309,19 +303,16 @@
                 <number>1</number>
             </property>
             <property name="title">
-                <string>NormalQueue</string>
+                <string>Normal Queue</string>
             </property>
             <grid>
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
                 <property name="margin">
-                    <number>1</number>
-                </property>
-                <property name="spacing">
                     <number>0</number>
                 </property>
-                <widget class="QLayoutWidget" row="2" column="0" rowspan="1" colspan="2">
+                <widget class="QLayoutWidget" row="1" column="0" rowspan="1" colspan="2">
                     <property name="name">
                         <cstring>layout163</cstring>
                     </property>
@@ -371,7 +362,55 @@
                         </widget>
                     </hbox>
                 </widget>
-                <widget class="QLayoutWidget" row="0" column="0" rowspan="2" colspan="1">
+                <widget class="QLayoutWidget" row="0" column="1">
+                    <property name="name">
+                        <cstring>layout236_2</cstring>
+                    </property>
+                    <grid>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <property name="margin">
+                            <number>0</number>
+                        </property>
+                        <property name="spacing">
+                            <number>0</number>
+                        </property>
+                        <widget class="QLabel" row="0" column="0">
+                            <property name="name">
+                                <cstring>textLabel4_2</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Lines:</string>
+                            </property>
+                        </widget>
+                        <widget class="QLabel" row="1" column="0">
+                            <property name="name">
+                                <cstring>textLabel5_2</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Bytes:</string>
+                            </property>
+                        </widget>
+                        <widget class="QLabel" row="0" column="1">
+                            <property name="name">
+                                <cstring>m_normalLines</cstring>
+                            </property>
+                            <property name="text">
+                                <string>888</string>
+                            </property>
+                        </widget>
+                        <widget class="QLabel" row="1" column="1">
+                            <property name="name">
+                                <cstring>m_normalBytes</cstring>
+                            </property>
+                            <property name="text">
+                                <string>888</string>
+                            </property>
+                        </widget>
+                    </grid>
+                </widget>
+                <widget class="QLayoutWidget" row="0" column="0">
                     <property name="name">
                         <cstring>layout240</cstring>
                     </property>
@@ -425,54 +464,6 @@
                         </widget>
                     </grid>
                 </widget>
-                <widget class="QLayoutWidget" row="0" column="1">
-                    <property name="name">
-                        <cstring>layout236_2</cstring>
-                    </property>
-                    <grid>
-                        <property name="name">
-                            <cstring>unnamed</cstring>
-                        </property>
-                        <property name="margin">
-                            <number>0</number>
-                        </property>
-                        <property name="spacing">
-                            <number>0</number>
-                        </property>
-                        <widget class="QLabel" row="0" column="0">
-                            <property name="name">
-                                <cstring>textLabel4_2</cstring>
-                            </property>
-                            <property name="text">
-                                <string>Lines:</string>
-                            </property>
-                        </widget>
-                        <widget class="QLabel" row="1" column="0">
-                            <property name="name">
-                                <cstring>textLabel5_2</cstring>
-                            </property>
-                            <property name="text">
-                                <string>Bytes:</string>
-                            </property>
-                        </widget>
-                        <widget class="QLabel" row="0" column="1">
-                            <property name="name">
-                                <cstring>m_normalLines</cstring>
-                            </property>
-                            <property name="text">
-                                <string>888</string>
-                            </property>
-                        </widget>
-                        <widget class="QLabel" row="1" column="1">
-                            <property name="name">
-                                <cstring>m_normalBytes</cstring>
-                            </property>
-                            <property name="text">
-                                <string>888</string>
-                            </property>
-                        </widget>
-                    </grid>
-                </widget>
             </grid>
         </widget>
         <widget class="QGroupBox">
@@ -491,16 +482,13 @@
                 <number>1</number>
             </property>
             <property name="title">
-                <string>FastQueue</string>
+                <string>Fast Queue</string>
             </property>
             <grid>
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
                 <property name="margin">
-                    <number>1</number>
-                </property>
-                <property name="spacing">
                     <number>0</number>
                 </property>
                 <widget class="QLayoutWidget" row="1" column="0" rowspan="1" colspan="2">
@@ -669,8 +657,8 @@
             </property>
             <property name="sizePolicy">
                 <sizepolicy>
-                    <hsizetype>1</hsizetype>
-                    <vsizetype>0</vsizetype>
+                    <hsizetype>5</hsizetype>
+                    <vsizetype>3</vsizetype>
                     <horstretch>0</horstretch>
                     <verstretch>0</verstretch>
                 </sizepolicy>
@@ -679,75 +667,96 @@
                 <number>1</number>
             </property>
             <property name="title">
-                <string>Global</string>
+                <string>All Queues</string>
             </property>
-            <grid>
+            <vbox>
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
                 <property name="margin">
-                    <number>1</number>
-                </property>
-                <property name="spacing">
                     <number>0</number>
                 </property>
-                <widget class="QLabel" row="1" column="1">
+                <widget class="QLayoutWidget">
                     <property name="name">
-                        <cstring>m_globalBytes</cstring>
+                        <cstring>layout88</cstring>
                     </property>
-                    <property name="text">
-                        <string>888</string>
-                    </property>
+                    <grid>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <property name="margin">
+                            <number>0</number>
+                        </property>
+                        <property name="spacing">
+                            <number>2</number>
+                        </property>
+                        <widget class="QLabel" row="3" column="0">
+                            <property name="name">
+                                <cstring>textLabel13</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Received:</string>
+                            </property>
+                        </widget>
+                        <widget class="QLabel" row="3" column="1">
+                            <property name="name">
+                                <cstring>m_recvBytes</cstring>
+                            </property>
+                            <property name="text">
+                                <string>888</string>
+                            </property>
+                        </widget>
+                        <widget class="QLabel" row="0" column="1">
+                            <property name="name">
+                                <cstring>m_globalLines</cstring>
+                            </property>
+                            <property name="text">
+                                <string>888</string>
+                            </property>
+                        </widget>
+                        <widget class="QLabel" row="1" column="0">
+                            <property name="name">
+                                <cstring>textLabel9</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Bytes (Global):</string>
+                            </property>
+                        </widget>
+                        <widget class="QLabel" row="2" column="0">
+                            <property name="name">
+                                <cstring>textLabel4_3</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Bytes (Server):</string>
+                            </property>
+                        </widget>
+                        <widget class="QLabel" row="1" column="1">
+                            <property name="name">
+                                <cstring>m_globalBytes</cstring>
+                            </property>
+                            <property name="text">
+                                <string>888</string>
+                            </property>
+                        </widget>
+                        <widget class="QLabel" row="2" column="1">
+                            <property name="name">
+                                <cstring>m_srverBytes</cstring>
+                            </property>
+                            <property name="text">
+                                <string>888</string>
+                            </property>
+                        </widget>
+                        <widget class="QLabel" row="0" column="0">
+                            <property name="name">
+                                <cstring>textLabel8</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Lines:</string>
+                            </property>
+                        </widget>
+                    </grid>
                 </widget>
-                <widget class="QLabel" row="2" column="1">
-                    <property name="name">
-                        <cstring>m_srverBytes</cstring>
-                    </property>
-                    <property name="text">
-                        <string>888</string>
-                    </property>
-                </widget>
-                <widget class="QLabel" row="0" column="0">
-                    <property name="name">
-                        <cstring>textLabel8</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Lines:</string>
-                    </property>
-                </widget>
-                <widget class="QLabel" row="1" column="0" rowspan="2" colspan="1">
-                    <property name="name">
-                        <cstring>textLabel9</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Bytes:</string>
-                    </property>
-                </widget>
-                <widget class="QLabel" row="0" column="1">
-                    <property name="name">
-                        <cstring>m_globalLines</cstring>
-                    </property>
-                    <property name="text">
-                        <string>888</string>
-                    </property>
-                </widget>
-                <widget class="QLabel" row="3" column="1">
-                    <property name="name">
-                        <cstring>m_recvBytes</cstring>
-                    </property>
-                    <property name="text">
-                        <string>888</string>
-                    </property>
-                </widget>
-                <widget class="QLabel" row="3" column="0">
-                    <property name="name">
-                        <cstring>textLabel13</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Recv:</string>
-                    </property>
-                </widget>
-            </grid>
+            </vbox>
         </widget>
     </hbox>
 </widget>
