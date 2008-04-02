@@ -514,12 +514,12 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
             server->getChannelByName(channelName)->clearModeList();
 
             // Request modes for the channel
-            server->queue("MODE "+channelName);
+            server->queue("MODE "+channelName, Server::LowPriority);
 
             // Initiate channel ban list
             server->getChannelByName(channelName)->clearBanList();
             setAutomaticRequest("BANLIST",channelName,true);
-            server->queue("MODE "+channelName+" +b");
+            server->queue("MODE "+channelName+" +b", Server::LowPriority);
         }
         else
         {
@@ -644,7 +644,8 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             }
 
             // queue the reply to send it as soon as possible
-            server->queueAt(0,"PONG"+text);
+            server->queue("PONG"+text, Server::HighPriority);
+
         }
         else if(command=="error :closing link:")
         {

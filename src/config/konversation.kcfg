@@ -947,4 +947,35 @@
       <label></label>
     </entry>
   </group>
+  <group name="QueueRates">
+    <entry name="queueRate$(QueueIndex)" type="IntList" key="EmptyingRate $(QueueIndex)">
+        <!-- kconfig_compiler really should do this for me... -->
+        <code>  QValueList&lt; QValueList&lt;int&gt; &gt; defaultRate;
+  QValueList&lt; QValueList&lt;int&gt; &gt;::iterator defaultRateInitIter;
+
+  defaultRateInitIter = defaultRate.append(QValueList&lt;int&gt;());
+  (*defaultRateInitIter).append( 6 );
+  (*defaultRateInitIter).append( 60 );
+  (*defaultRateInitIter).append( 0 );
+
+  defaultRateInitIter = defaultRate.append(QValueList&lt;int&gt;());
+  (*defaultRateInitIter).append( 20 );
+  (*defaultRateInitIter).append( 60 );
+  (*defaultRateInitIter).append( 0 );
+
+  defaultRateInitIter = defaultRate.append(QValueList&lt;int&gt;());
+  (*defaultRateInitIter).append( 1 );
+  (*defaultRateInitIter).append( 1 );
+  (*defaultRateInitIter).append( 0 );
+
+  if (0) //kconfig_compiler generates invalid code for int lists</code>
+        <parameter name="QueueIndex" type="Int" max="2"/>
+        <default param="0" code="true">defaultRate[0]</default>
+        <default param="1" code="true">defaultRate[1]</default>
+        <default param="2" code="true">defaultRate[2]</default>
+    </entry>
+    <entry key="ShowQueueTuner" type="Bool">
+        <default>false</default>
+    </entry>
+  </group>
 </kcfg>

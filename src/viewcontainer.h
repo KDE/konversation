@@ -33,6 +33,7 @@ class Images;
 class UrlCatcher;
 class DccTransferPanel;
 class NicksOnline;
+class QueueTuner;
 
 namespace Konversation
 {
@@ -65,8 +66,9 @@ class ViewContainer : public QObject
         void appendToFrontmost(const QString& type,const QString& message,ChatWindow* serverView,
                                bool parseURL = true);
 
-        int getViewIndex(QWidget* widget);
+        void showQueueTuner(bool);
 
+        int getViewIndex(QWidget* widget);
 
     public slots:
         void updateAppearance();
@@ -175,6 +177,8 @@ class ViewContainer : public QObject
         void removeStatusBarSSLLabel();
         void autoJoinToggled(const Konversation::ServerGroupSettings*);
 
+        void frontServerChanging(Server *);
+
     private:
         void setupTabWidget();
         void setupViewTree();
@@ -187,6 +191,8 @@ class ViewContainer : public QObject
         void updateSwitchViewAction();
         void updateFrontView();
 
+        void setFrontServer(Server *);
+
         void initializeSplitterSizes();
         bool m_saveSplitterSizesLock;
 
@@ -195,6 +201,8 @@ class ViewContainer : public QObject
         QSplitter* m_viewTreeSplitter;
         KTabWidget* m_tabWidget;
         ViewTree* m_viewTree;
+        QVBox *m_vbox;
+        QueueTuner *m_queueTuner;
 
         Images* images;
 

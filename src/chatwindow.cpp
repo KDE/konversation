@@ -53,6 +53,7 @@ ChatWindow::ChatWindow(QWidget* parent) : QVBox(parent)
 ChatWindow::~ChatWindow()
 {
     emit closing(this);
+    m_server=0;
 }
 
 void ChatWindow::updateAppearance()

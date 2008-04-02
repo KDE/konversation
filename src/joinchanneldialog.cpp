@@ -36,7 +36,7 @@ namespace Konversation
 
         ChannelList history = server->serverGroupSettings()->channelHistory();
         ChannelList::iterator endIt = history.end();
-        QPtrList<Channel> channels = server->getChannelList();
+        const QPtrList<Channel> &channels = server->getChannelList();
         QPtrListIterator<Channel> chanIt(channels);
         Channel* chan = 0;
         bool joined = false;

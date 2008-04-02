@@ -392,7 +392,7 @@ void StatusPanel::popupCommand(int command)
             m_server->requestTopic(getTextView()->currentChannel());
             break;
         case Konversation::Names:
-            m_server->queue("NAMES " + getTextView()->currentChannel());
+            m_server->queue("NAMES " + getTextView()->currentChannel(), Server::LowPriority);
             break;
     }
 }

@@ -55,6 +55,8 @@ KonversationApplication::KonversationApplication()
 
 KonversationApplication::~KonversationApplication()
 {
+    kdDebug() << k_funcinfo << endl;
+    Server::_stashRates();
     Preferences::writeConfig();
     saveOptions(false);
 
@@ -200,6 +202,11 @@ KonversationApplication* KonversationApplication::instance()
 KonversationMainWindow *KonversationApplication::getMainWindow()
 {
     return mainWindow;
+}
+
+void KonversationApplication::showQueueTuner(bool p)
+{
+    getMainWindow()->getViewContainer()->showQueueTuner(p);
 }
 
 void KonversationApplication::toggleAway()
@@ -776,6 +783,9 @@ void KonversationApplication::readOptions()
     for(unsigned int i=0; i<channelEncodingsEntry.count(); ++i)
         if(re.search(channelEncodingsEntryKeys[i]) > -1)
             Preferences::setChannelEncoding(re.cap(1),re.cap(2),channelEncodingsEntry[channelEncodingsEntryKeys[i]]);
+
+    // O, what a tangled web
+    Server::_fetchRates();
 }
 
 void KonversationApplication::saveOptions(bool updateGUI)
@@ -995,12 +1005,13 @@ void KonversationApplication::updateNickIcons()
 
     while(lookServer)
     {
-        QPtrList<Channel> channelList = lookServer->getChannelList();
-        Channel* channel=channelList.first();
-        while(channel)
+        const QPtrList<Channel> &channelList = lookServer->getChannelList();
+        QPtrListIterator<Channel> chanIt(channelList);
+        Channel* channel;
+        while((channel=chanIt.current()) != 0)
         {
+            ++chanIt;
             channel->getNickListView()->refresh();
-            channel=channelList.next();
         }
         lookServer=serverList.next();
     }

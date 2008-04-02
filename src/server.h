@@ -25,6 +25,7 @@
 
 #include <qtimer.h>
 #include <qdict.h>
+#include <qvaluevector.h>
 
 #include <qdeepcopy.h>
 
@@ -51,17 +52,37 @@ class ViewContainer;
 
 using namespace KNetwork;
 
+class IRCQueue;
+
 class Server : public QObject
 {
     Q_OBJECT
+    friend class IRCQueue;
+    friend class QueueTuner;
 
     public:
-        typedef enum
+
+        enum State
         {
             SSDisconnected,
             SSConnecting,
             SSConnected
-        } State;
+        };
+
+        enum QueuePriority
+        {
+            LowPriority,      ///<slow queue, for automatic info gathering
+            StandardPriority, ///<regular queue, for chat and user initiated commands
+            HighPriority,     ///<for pongs and quits
+
+            Howmanyqueuesdoweneedanywayquestionmark,
+
+            HiPriority=HighPriority,
+            LoPriority=LowPriority,
+            NormalPriorty=StandardPriority,
+            RegularPriority=StandardPriority
+        };
+
         /** Constructor used for connecting to a known server.
          *  Read in the prefrences to get all the details about the server.
          */
@@ -288,7 +309,7 @@ class Server : public QObject
         /**
          * Returns a QPtrList of all channels
          */
-        QPtrList<Channel> getChannelList() const { return channelList; }
+        const QPtrList<Channel>& getChannelList() const { return channelList; }
 
         /** Returns the time we have been away for.
          *  If we are not away, returns 00:00:00
@@ -352,34 +373,71 @@ class Server : public QObject
         void dccResumeGetRequest(const QString& sender,const QString& fileName,const QString& port,KIO::filesize_t startAt);
         void dccReverseSendAck(const QString& partnerNick,const QString& fileName,const QString& ownAddress,const QString& ownPort,unsigned long size,const QString& reverseToken);
 
+    // IRCQueueManager
+        bool validQueue(QueuePriority priority); ///< is this queue index valid?
+        void resetQueues(); ///< Tell all of the queues to reset
+        static int _max_queue() { return Howmanyqueuesdoweneedanywayquestionmark-1; }
+
+        /** Forces the queued data to be sent in sequence of age, without pause.
+
+            This could flood you off but since you're quitting, we probably don't care. This is done
+            here instead of in the queues themselves so we can interleave the queues without having to
+            zip the queues together. If you want to quit the server normally without sending, reset the queues
+            first.
+         */
+        void flushQueues();
+
+        //These are really only here to limit where ircqueue.h is included
+        static void _fetchRates(); ///< on server construction
+        static void _stashRates(); ///< on application exit
+    protected:
+        int _send_internal(QString outputline); ///< Guts of old send, isn't a slot.
+    public:
+
     signals:
         void nicknameChanged(const QString&);
         void serverLag(Server* server,int msec);  /// will be connected to KonversationMainWindow::updateLag()
         void tooLongLag(Server* server, int msec);/// will be connected to KonversationMainWindow::updateLag()
-        void resetLag();
-                                                  /// Will be emitted when new 303 came in
+        void resetLag(); ///< will be emitted when new 303 came in
         void nicksNowOnline(Server* server,const QStringList& list,bool changed);
         void deleted(Server* myself);             /// will be connected to KonversationApplication::removeServer()
         void awayState(bool away);                /// will be connected to any user input panel;
         void multiServerCommand(const QString& command, const QString& parameter);
 
-        /// Emitted when the server gains/loses connection.
-        void serverOnline(bool state);            /// will be connected to all server dependant tabs
+        /**
+         * Emitted when the server gains/loses connection.
+         * Will be connected to all server dependant tabs.
+         */
+        void serverOnline(bool state);
 
-        /// Note that these signals haven't been implemented yet.
+        /**
+         * Emitted every time something gets sent.
+         *
+         *  @param  bytes           The count of bytes sent to the server, before re-encoding.
+         *  @param  encodedBytes    The count of bytes sent to the server after re-encoding.
+         */
+        void sentStat(int bytes, int encodedBytes, IRCQueue *whichQueue);
+        //FIXME can anyone who can connect to a Server signal not know about an IRCQueue?
+        void sentStat(int bytes, int encodedBytes);
+
+        //Note that these signals haven't been implemented yet.
         /// Fires when the information in a NickInfo object changes.
         void nickInfoChanged(Server* server, const NickInfoPtr nickInfo);
+
         /// Fires when the mode of a nick in a channel changes.
         void channelNickChanged(Server* server, const ChannelNickPtr channelNick);
+
         /// Fires when a nick leaves or joins a channel.  Based on joined flag, receiver could
         /// call getJoinedChannelMembers or getUnjoinedChannelMembers, or just
         /// getChannelMembers to get a list of all the nicks now in the channel.
         /// parted indicates whether the nick joined or left the channel.
         void channelMembersChanged(Server* server, const QString& channelName, bool joined, bool parted, const QString& nickname);
+
         /// Fires when a channel is moved to/from the Joinied/Unjoined lists.
         /// joined indicates which list it is now on.  Note that if joined is False, it is
         /// possible the channel does not exist in any list anymore.
         void channelJoinedOrUnjoined(Server* server, const QString& channelName, bool joined);
+
         /// Fires when a nick on the watch list goes online or offline.
         void watchedNickChanged(Server* server, const QString& nickname, bool online);
         ///Fires when the user switches his state to away and has enabled "Insert Remember Line on away" in his identity.
@@ -396,9 +454,11 @@ class Server : public QObject
     public slots:
         void lookupFinished();
         void connectToIRCServer();
-        void queue(const QString &buffer);
-        void queueList(const QStringList &buffer);
-        void queueAt(uint pos,const QString& buffer);
+
+        bool queue(const QString& line, QueuePriority priority=StandardPriority);
+        //TODO this should be an overload, not a separate name. ambiguous cases need QString() around the cstring
+        bool queueList(const QStringList& buffer, QueuePriority priority=StandardPriority);
+
         void setNickname(const QString &newNickname);
         /** This is called when we want to open a new query, or focus an existing one.
          *  @param nickInfo The nickinfo we want to open the query to.  Must exist.
@@ -432,7 +492,7 @@ class Server : public QObject
         void sendMultiServerCommand(const QString& command, const QString& parameter);
         void executeMultiServerCommand(const QString& command, const QString& parameter);
         void reconnect();
-        void disconnect();
+        void disconnect(); //FIXME is this overriding a qobject method? do we care?
         void connectToServerGroup(const QString& serverGroup);
         void connectToNewServer(const QString& server, const QString& port, const QString& password);
         void showSSLDialog();
@@ -452,14 +512,11 @@ class Server : public QObject
         void preShellCommandExited(KProcess*);
         void ircServerConnectionSuccess();
         void startAwayTimer();
-        void lockSending();
-        void unlockSending();
         void incoming();
         void processIncomingData();
-        void send();
-        /**
-         *Because KBufferedSocket has no closed(int) signal we use this slot to call broken(0)
-         */
+        /// Sends the QString to the socket. No longer has any internal concept of queueing
+        void toServer(QString&, IRCQueue *);
+        /// Because KBufferedSocket has no closed(int) signal we use this slot to call broken(0)
         void closed();
         void broken(int state);
         /** This is connected to the SSLSocket failed.
@@ -498,13 +555,11 @@ class Server : public QObject
         /// Updates GUI when the lag gets high
         void updateLongPongLag();
 
-        /**
-         * Reset the message count used for flood protection, called when the m_messageCountRestTimer times out.
-         */
-        void resetMessageCount();
-
         /// Update the encoding shown in the mainwindow's actions
         void updateEncoding();
+
+    private slots:
+        void collectStats(int bytes, int encodedBytes);
 
     protected:
         // constants
@@ -533,6 +588,7 @@ class Server : public QObject
          *  @return            The NickInfo for the nickname.
          */
         ChannelNickPtr addNickToUnjoinedChannelsList(const QString& channelName, const QString& nickname);
+
         /**
          * If not already online, changes a nick to the online state by creating
          * a NickInfo for it and emits various signals and messages for it.
@@ -541,6 +597,7 @@ class Server : public QObject
          * @return                   Pointer to NickInfo for nick.
          */
         NickInfoPtr setWatchedNickOnline(const QString& nickname);
+
         /**
         * Display offline notification for a certain nickname. The function doesn't change NickInfo objects.
         * If NickInfoPtr is given, then also the integration with KAddressBook is engaged (i.e. the
@@ -549,6 +606,7 @@ class Server : public QObject
         * @param nickInfo           Pointer to NickInfo for nick
         */
         void setWatchedNickOffline(const QString& nickname, const NickInfoPtr nickInfo);
+
         /**
          * If nickname is no longer on any channel list, or the query list, delete it altogether.
          * Call this routine only if the nick is not on the notify list or is on the notify
@@ -557,6 +615,7 @@ class Server : public QObject
          * @return                   True if the nickname is deleted.
          */
         bool deleteNickIfUnlisted(const QString &nickname);
+
         /**
          * If not already offline, changes a nick to the offline state.
          * Removes it from all channels on the joined and unjoined lists.
@@ -569,16 +628,19 @@ class Server : public QObject
          * @return             True if the nick was online.
          */
         bool setNickOffline(const QString& nickname);
+
         /** Remove nickname from a channel (on joined or unjoined lists).
          *  @param channelName The channel name.  Case insensitive.
          *  @param nickname    The nickname.  Case insensitive.
          */
         void removeChannelNick(const QString& channelName, const QString& nickname);
+
         /** Remove channel from the joined list.
          *  Nicknames in the channel are added to the unjoined list if they are in the watch list.
          *  @param channelName The channel name.  Case insensitive.
          */
         void removeJoinedChannel(const QString& channelName);
+
         /** Renames a nickname in all NickInfo lists.
          *  @param nickInfo    Pointer to existing NickInfo object.
          *  @param newname     New nickname for the nick.  Case sensitive.
@@ -617,9 +679,6 @@ class Server : public QObject
 
         QTimer reconnectTimer;
         QTimer incomingTimer;
-        QTimer outgoingTimer;
-        QTimer unlockTimer;                       // timeout waiting for server to send initial messages
-
         QTimer notifyTimer;
         QStringList notifyCache;                  // List of users found with ISON
         int checkTime;                            // Time elapsed while waiting for server 303 response
@@ -628,7 +687,10 @@ class Server : public QObject
         QString ircName;
         QCString inputBufferIncomplete;
         QStringList inputBuffer;
-        QStringList outputBuffer;
+
+        QValueVector<IRCQueue *> m_queues;
+        int m_bytesSent, m_encodedBytesSent, m_linesSent, m_bytesReceived;
+
         QString m_nickname;
         QString m_loweredNickname;
         QString ownIpByUserhost;                  // RPL_USERHOST
@@ -648,7 +710,6 @@ class Server : public QObject
         QString m_awayReason;
 
         bool alreadyConnected;
-        bool sendUnlocked;
         bool connecting;
 
         QString nonAwayNick;
@@ -701,12 +762,8 @@ class Server : public QObject
 
         bool m_autoIdentifyLock;
 
-        /// Number of messages sent within a 1 sec interval of each other
-        int m_messageCount;
-        /// Timer to reset the m_messageCount
-        QTimer m_messageCountResetTimer;
-
         /// Previous ISON reply of the server, needed for comparison with the next reply
         QStringList m_prevISONList;
 };
+
 #endif

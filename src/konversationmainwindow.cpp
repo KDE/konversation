@@ -328,7 +328,6 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
 
 KonversationMainWindow::~KonversationMainWindow()
 {
-    Preferences::writeConfig();
 }
 
 int KonversationMainWindow::confirmQuit()

@@ -10,6 +10,7 @@
 */
 
 #include "viewcontainer.h"
+#include "queuetuner.h"
 #include "viewtree.h"
 #include "konversationmainwindow.h"
 #include "konversationapplication.h"
@@ -47,7 +48,8 @@
 #include <kglobalsettings.h>
 
 
-ViewContainer::ViewContainer(KonversationMainWindow* window)
+ViewContainer::ViewContainer(KonversationMainWindow* window):
+        m_vbox(0), m_queueTuner(0)
 {
     m_window = window;
 
@@ -91,6 +93,23 @@ ViewContainer::~ViewContainer()
     deleteDccPanel();
 }
 
+void ViewContainer::showQueueTuner(bool p)
+{
+    if (p)
+        m_queueTuner->open();
+    else
+        m_queueTuner->close();
+}
+
+///Use this instead of setting m_frontServer directly so we can emit the frontServerChanging signal easily.
+void ViewContainer::setFrontServer(Server *newserver)
+{
+    if (m_frontServer == newserver)
+        return;
+    emit frontServerChanging(newserver);
+    m_frontServer = newserver;
+}
+
 void ViewContainer::prepareShutdown()
 {
     for (int i = 0; i < m_tabWidget->count(); ++i)
@@ -126,11 +145,16 @@ void ViewContainer::setupTabWidget()
 {
     m_popupViewIndex = -1;
 
-    m_tabWidget = new KTabWidget(m_viewTreeSplitter, "main_window_tab_widget");
+    m_vbox = new QVBox(m_viewTreeSplitter, "main_window_right_side");
+    m_tabWidget = new KTabWidget(m_vbox, "main_window_tab_widget");
+    m_queueTuner = new QueueTuner(m_vbox, this);
+    m_queueTuner->hide();
+
     m_tabWidget->setTabReorderingEnabled(true);
     m_tabWidget->setTabCloseActivatePrevious(true);
 
-    m_tabWidget->hide();
+    m_vbox->hide();    //m_tabWidget->hide();
+
     KPushButton* closeBtn = new KPushButton(m_tabWidget);
     closeBtn->setPixmap(KGlobal::iconLoader()->loadIcon("tab_remove", KIcon::Small));
     closeBtn->resize(22, 22);
@@ -1281,7 +1305,7 @@ void ViewContainer::addView(ChatWindow* view, const QString& label, bool weiniti
     }
 
     m_tabWidget->insertTab(view, iconSet, label, placement);
-    m_tabWidget->show();
+    m_vbox->show();//m_tabWidget->show();
 
     if (m_viewTree)
     {
@@ -1334,7 +1358,7 @@ void ViewContainer::switchView(QWidget* newView)
     m_frontView = 0;
     m_searchView = 0;
 
-    m_frontServer = view->getServer();
+    setFrontServer(view->getServer());
 
     // display this server's lag time
     if (m_frontServer)
@@ -1511,7 +1535,7 @@ void ViewContainer::closeView(ChatWindow* view)
         if (m_tabWidget->count() <= 0)
         {
             m_saveSplitterSizesLock = true;
-            m_tabWidget->hide();
+            m_vbox->hide();//m_tabWidget->hide();
             emit resetStatusBar();
         }
     }
@@ -2057,7 +2081,8 @@ StatusPanel* ViewContainer::addStatusView(Server* server)
 
     // make sure that m_frontServer gets set on adding the first status panel, too,
     // since there won't be a switchView happening
-    if (!m_frontServer) m_frontServer = server;
+    if (!m_frontServer)
+        setFrontServer(server);
 
     return statusView;
 }
@@ -2093,7 +2118,9 @@ void ViewContainer::serverQuit(Server* server)
     }
 
     if (server == m_frontServer)
-        m_frontServer = 0;
+    {
+        setFrontServer(0);
+    }
 
     if (m_frontView && m_frontView->getServer() == server)
         m_frontView = 0;
@@ -2383,5 +2410,13 @@ void ViewContainer::showNextActiveView()
     if(!m_activeViewOrderList.isEmpty())
         m_tabWidget->setCurrentPage(m_tabWidget->indexOf(m_activeViewOrderList.first()));
 }
+
+/*!
+    \fn ViewContainer::frontServerChanging(Server *newServer)
+
+    This signal is emitted immediately before the front server is changed.
+
+    If the server is being removed this will fire with a null pointer.
+*/
 
 #include "viewcontainer.moc"

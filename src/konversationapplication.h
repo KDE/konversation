@@ -68,6 +68,10 @@ class KonversationApplication : public KUniqueApplication
          *  'main' one.
          */
         KonversationMainWindow *getMainWindow();
+
+        // HACK
+        void showQueueTuner(bool);
+
         // URL-Catcher
         void storeUrl(const QString& who,const QString& url);
         const QStringList& getUrlList();

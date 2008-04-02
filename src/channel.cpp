@@ -317,9 +317,12 @@ Channel::~Channel()
 
     // Purge nickname list
     purgeNicks();
+    kdDebug() << "nicks purged" << endl;
 
     // Unlink this channel from channel list
     m_server->removeChannel(this);
+    kdDebug() << "Channel removed." << endl;
+
 }
 
 ChannelNickPtr Channel::getOwnChannelNick()
@@ -492,7 +495,7 @@ void Channel::popupCommand(int id)
             m_server->requestTopic(getTextView()->currentChannel());
             break;
         case Konversation::Names:
-            m_server->queue("NAMES " + getTextView()->currentChannel());
+            m_server->queue("NAMES " + getTextView()->currentChannel(), Server::LowPriority);
             break;
         case Konversation::Join:
             m_server->queue("JOIN " + getTextView()->currentChannel());

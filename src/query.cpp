@@ -390,7 +390,7 @@ void Query::popup(int id)
             m_server->requestTopic(getTextView()->currentChannel());
             break;
         case Konversation::Names:
-            m_server->queue("NAMES " + getTextView()->currentChannel());
+            m_server->queue("NAMES " + getTextView()->currentChannel(), Server::LowPriority);
             break;
         case Konversation::Join:
             m_server->queue("JOIN " + getTextView()->currentChannel());

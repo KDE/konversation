@@ -278,6 +278,7 @@ namespace Konversation
             else if(command == "delkey")   result = parseDelKey(parameter);
             else if(command == "dns")      result = parseDNS(parameter);
             else if(command == "kill")     result = parseKill(parameter);
+            else if(command == "queuetuner") result = parseShowTuner(parameter);
 
             // Forward unknown commands to server
             else
@@ -317,6 +318,21 @@ namespace Konversation
             result.typeString = i18n("Raw");
             result.type = Program;
         }
+
+        return result;
+    }
+
+    OutputFilterResult OutputFilter::parseShowTuner(const QString &parameter)
+    {
+        KonversationApplication *konvApp = static_cast<KonversationApplication*>(KApplication::kApplication());
+        OutputFilterResult result;
+
+        if(parameter.isEmpty() || parameter == "on")
+            konvApp->showQueueTuner(true);
+        else if(parameter == "off")
+            konvApp->showQueueTuner(false);
+        else
+            result = usage(i18n("Usage: %1queuetuner [on | off]").arg(commandChar));
 
         return result;
     }

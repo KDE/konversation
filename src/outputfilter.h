@@ -154,6 +154,7 @@ namespace Konversation
             OutputFilterResult parseDelKey(const QString& parameter);
             OutputFilterResult parseDNS(const QString& parameter);
             OutputFilterResult parseKill(const QString& parameter);
+            OutputFilterResult parseShowTuner(const QString &p);
 
             OutputFilterResult changeMode(const QString& parameter,char mode,char giveTake);
             bool isAChannel(const QString& check);

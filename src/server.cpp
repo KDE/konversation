@@ -15,6 +15,7 @@
 */
 
 #include "server.h"
+#include "ircqueue.h"
 #include "query.h"
 #include "channel.h"
 #include "konversationapplication.h"
@@ -134,14 +135,17 @@ Server::~Server()
 {
     //send queued messages
     kdDebug() << "Server::~Server(" << getServerName() << ")" << endl;
+
     // Send out the last messages (usually the /QUIT)
-    send();
+    flushQueues(); //FIXME this might be the second time this gets called...
 
     // Delete helper object.
     delete m_serverISON;
     m_serverISON = 0;
+
     // clear nicks online
     emit nicksNowOnline(this,QStringList(),true);
+
     // Make sure no signals get sent to a soon to be dying Server Window
     if (m_socket)
     {
@@ -160,6 +164,7 @@ Server::~Server()
 
     // Delete all the NickInfos and ChannelNick structures.
     m_allNicks.clear();
+
     ChannelMembershipMap::ConstIterator it;
 
     for ( it = m_joinedChannels.begin(); it != m_joinedChannels.end(); ++it )
@@ -173,11 +178,42 @@ Server::~Server()
     m_queryNicks.clear();
 
     // notify KonversationApplication that this server is gone
-    emit deleted(this);
+    emit deleted(this); //FIXME shouldn't this happen first, before the tasty bits are all gone?
+
+    //Delete the queues
+    for (QValueVector<IRCQueue *>::iterator it=m_queues.begin(); it != m_queues.end(); ++it)
+        delete *it;
+
+    kdDebug() << "~Server done" << endl;
+}
+
+void Server::_fetchRates()
+{
+    for (int i=0;i<=_max_queue();i++) {
+        QValueList<int> r=Preferences::queueRate(i);
+        staticrates[i]=IRCQueue::EmptyingRate(r[0], r[1]*1000,IRCQueue::EmptyingRate::RateType(r[2]));
+    }
+}
+
+void Server::_stashRates()
+{
+    for (int i=0;i<=_max_queue();i++) {
+        QValueList<int> r;
+        r.append(staticrates[i].m_rate);
+        r.append(staticrates[i].m_interval/1000);
+        r.append(int(staticrates[i].m_type));
+        Preferences::setQueueRate(i, r);
+    }
 }
 
 void Server::init(ViewContainer* viewContainer, const QString& nick, const QString& channel)
 {
+    for (int i=0;i<=_max_queue();i++) {
+        QValueList<int> r=Preferences::queueRate(i);
+        IRCQueue *q=new IRCQueue(this, staticrates[i]); //FIXME these are supposed to be in the rc
+        m_queues.append(q);
+    }
+
     m_processingIncoming = false;
     m_identifyMsg = false;
     m_currentServerIndex = 0;
@@ -196,9 +232,11 @@ void Server::init(ViewContainer* viewContainer, const QString& nick, const QStri
     m_autoIdentifyLock = false;
     keepViewsOpenAfterQuit = false;
     reconnectAfterQuit = false;
-    m_messageCount = 0;
     m_prevISONList = QStringList();
-
+    m_bytesReceived = 0;
+    m_encodedBytesSent=0;
+    m_bytesSent=0;
+    m_linesSent=0;
     // TODO fold these into a QMAP, and these need to be reset to RFC values if this server object is reused.
     serverNickPrefixModes = "ovh";
     serverNickPrefixes = "@+%";
@@ -235,6 +273,7 @@ void Server::init(ViewContainer* viewContainer, const QString& nick, const QStri
     if(getIdentity()->getShellCommand().isEmpty())
         connectSignals();
 
+    //FIXME doesn't this belong in the connectSignals method?
     connect( KonversationApplication::instance()->dccTransferManager(), SIGNAL( newTransferQueued( DccTransfer* ) ), this, SLOT( slotNewDccTransferItemQueued( DccTransfer* ) ) );
 
     emit serverOnline(false);
@@ -245,8 +284,6 @@ void Server::initTimers()
 {
     notifyTimer.setName("notify_timer");
     incomingTimer.setName("incoming_timer");
-    outgoingTimer.setName("outgoing_timer");
-    m_messageCountResetTimer.setName("messageCountResetTimer");
 }
 
 void Server::connectSignals()
@@ -254,11 +291,8 @@ void Server::connectSignals()
 
     // Timers
     connect(&incomingTimer, SIGNAL(timeout()), this, SLOT(processIncomingData()));
-    connect(&outgoingTimer, SIGNAL(timeout()), this, SLOT(send()));
-    connect(&unlockTimer, SIGNAL(timeout()), this, SLOT(unlockSending()));
     connect(&notifyTimer, SIGNAL(timeout()), this, SLOT(notifyTimeout()));
     connect(&m_pingResponseTimer, SIGNAL(timeout()), this, SLOT(updateLongPongLag()));
-    connect(&m_messageCountResetTimer, SIGNAL(timeout()), this, SLOT(resetMessageCount()));
 
     // OutputFilter
     connect(outputFilter, SIGNAL(requestDccSend()), this,SLOT(requestDccSend()));
@@ -333,6 +367,8 @@ void Server::connectSignals()
     connect(m_scriptLauncher, SIGNAL(scriptExecutionError(const QString&)),
         this, SLOT(scriptExecutionError(const QString&)));
 
+    // Stats
+    connect(this, SIGNAL(sentStat(int, int)), SLOT(collectStats(int, int)));
 }
 
 QString Server::getServerName() const
@@ -421,13 +457,10 @@ void Server::connectToIRCServer()
 
     ownIpByUserhost = QString();
 
-    outputBuffer.clear();
+    resetQueues();
 
     if(m_socket)
-        m_socket->blockSignals(false);
-
-    // prevent sending queue until server has sent something or the timeout is through
-    lockSending();
+        m_socket->blockSignals(false); //FIXME if we're about to delete this socket, do we really want to disinhibit it's signals?
 
     if (!isConnected())
     {
@@ -439,21 +472,26 @@ void Server::connectToIRCServer()
         if(!m_serverGroup->serverByIndex(m_currentServerIndex).SSLEnabled())
         {
             m_socket = new KNetwork::KBufferedSocket(QString(), QString(), 0L, "serverSocket");
-            connect(m_socket,SIGNAL (connected(const KResolverEntry&)),this,SLOT (ircServerConnectionSuccess()));
+            connect(m_socket, SIGNAL(connected(const KResolverEntry&)), SLOT (ircServerConnectionSuccess()));
         }
         else
         {
             m_socket = new SSLSocket(getViewContainer()->getWindow(), 0L, "serverSSLSocket");
-            connect(m_socket,SIGNAL (sslInitDone()),this,SLOT (ircServerConnectionSuccess()));
-            connect(m_socket,SIGNAL (sslFailure(const QString&)),this,SIGNAL(sslInitFailure()));
-            connect(m_socket,SIGNAL (sslFailure(const QString&)),this,SLOT(sslError(const QString&)));
+            connect(m_socket, SIGNAL(sslInitDone()), SLOT(ircServerConnectionSuccess()));
+            connect(m_socket, SIGNAL(sslFailure(const QString&)), SIGNAL(sslInitFailure()));
+            connect(m_socket, SIGNAL(sslFailure(const QString&)), SLOT(sslError(const QString&)));
         }
 
-        connect(m_socket,SIGNAL (hostFound()),this,SLOT(lookupFinished()));
-        connect(m_socket,SIGNAL (gotError(int)),this,SLOT (broken(int)) );
-        connect(m_socket,SIGNAL (readyRead()),this,SLOT (incoming()) );
-        connect(m_socket,SIGNAL (readyWrite()),this,SLOT (send()) );
-        connect(m_socket,SIGNAL (closed()),this,SLOT(closed()));
+        m_socket->enableWrite(false);
+
+        connect(m_socket, SIGNAL(hostFound()), SLOT(lookupFinished()));
+        connect(m_socket, SIGNAL(gotError(int)), SLOT(broken(int)) );
+        connect(m_socket, SIGNAL(readyRead()), SLOT(incoming()));
+
+        //FIXME argonel: i've lived without the line below for months, ensure this isn't a problem for anyone else
+        //connect(m_socket, SIGNAL(readyWrite()), this, SLOT(()) );
+
+        connect(m_socket, SIGNAL(closed()), SLOT(closed()));
 
         m_socket->connect(m_serverGroup->serverByIndex(m_currentServerIndex).server(),
             QString::number(m_serverGroup->serverByIndex(m_currentServerIndex).port()));
@@ -615,18 +653,17 @@ void Server::ircServerConnectionSuccess()
         " 8 * :" +                                // 8 = +i; 4 = +w
         getIdentity()->getRealName();
 
+    QStringList ql;
     if(!serverSettings.password().isEmpty())
-        queueAt(0, "PASS " + serverSettings.password());
+        ql << "PASS " + serverSettings.password();
 
-    queueAt(1,"NICK "+getNickname());
-    queueAt(2,connectString);
+    ql << "NICK "+getNickname();
+    ql << connectString;
+    queueList(ql, HighPriority);
 
     emit nicknameChanged(getNickname());
 
     m_socket->enableRead(true);
-
-    // wait at most 2 seconds for server to send something before sending the queue ourselves
-    unlockTimer.start(2000);
 
     connecting = false;
 }
@@ -634,13 +671,14 @@ void Server::ircServerConnectionSuccess()
 void Server::broken(int state)
 {
     m_socket->enableRead(false);
-    m_socket->enableWrite(false);
+    m_socket->enableWrite(false); //FIXME if we rely on this signal, it should be turned back on somewhere...
     m_socket->blockSignals(true);
 
     alreadyConnected = false;
     connecting = false;
     m_autoIdentifyLock = false;
-    outputBuffer.clear();
+
+    resetQueues();
 
     notifyTimer.stop();
     m_pingResponseTimer.stop();
@@ -807,7 +845,7 @@ void Server::connectionEstablished(const QString& ownHost)
             QString awayReason = m_awayReason.isEmpty() ? i18n("Gone away for now.") : m_awayReason;
             QString command(Preferences::commandChar() + "AWAY " + awayReason);
             Konversation::OutputFilterResult result = outputFilter->parse(getNickname(),command, QString());
-            queue(result.toServer);
+            queue(result.toServer, LowPriority);
         }
     }
     else
@@ -820,7 +858,7 @@ void Server::registerWithServices()
 {
     if(!botPassword.isEmpty() && !bot.isEmpty() && !m_autoIdentifyLock)
     {
-        queue("PRIVMSG "+bot+" :identify "+botPassword);
+        queue("PRIVMSG "+bot+" :identify "+botPassword, HighPriority);
 
         // Set lock to prevent a second auto-identify attempt
         // Lock is unset if we nickchange
@@ -850,8 +888,10 @@ void Server::quitServer()
 {
     QString command(Preferences::commandChar()+"QUIT");
     Konversation::OutputFilterResult result = outputFilter->parse(getNickname(),command, QString());
-    queue(result.toServer);
-    if (m_socket) m_socket->enableRead(false);
+    queue(result.toServer, HighPriority);
+    if (m_socket)
+        m_socket->enableRead(false);
+    flushQueues();
 }
 
 void Server::notifyAction(const QString& nick)
@@ -928,7 +968,7 @@ void Server::notifyTimeout()
 
         if(!list.isEmpty())
         {
-            queue("ISON "+list);
+            queue("ISON "+list, LowPriority);
         }
     }
 }
@@ -1005,16 +1045,6 @@ void Server::processIncomingData()
             incomingTimer.start(0);
         }
     }
-}
-
-void Server::unlockSending()
-{
-    sendUnlocked=true;
-}
-
-void Server::lockSending()
-{
-    sendUnlocked=false;
 }
 
 void Server::incoming()
@@ -1153,70 +1183,11 @@ void Server::incoming()
             inputBuffer << codec->toUnicode(front);
         }
         qcsBufferLines.pop_front();
+        m_bytesReceived+=inputBuffer.back().length();
     }
-
-    // refresh lock timer if it was still locked
-    if( !sendUnlocked )
-        unlockSending();
 
     if( !incomingTimer.isActive() && !m_processingIncoming )
         incomingTimer.start(0);
-}
-
-void Server::queue(const QString& buffer)
-{
-    // Only queue lines if we are connected
-    if(!buffer.isEmpty())
-    {
-        outputBuffer.append(buffer);
-
-        m_messageCount++;
-
-        if(!outgoingTimer.isActive())
-        {
-            outgoingTimer.start(1);
-        }
-    }
-}
-
-void Server::queueAt(uint pos,const QString& buffer)
-{
-    if(buffer.isEmpty())
-        return;
-
-    if(pos < outputBuffer.count())
-    {
-        outputBuffer.insert(outputBuffer.at(pos),buffer);
-
-        m_messageCount++;
-    }
-    else
-    {
-        queue(buffer);
-    }
-
-    if(!outgoingTimer.isActive())
-    {
-        outgoingTimer.start(1);
-    }
-}
-
-void Server::queueList(const QStringList& buffer)
-{
-    // Only queue lines if we are connected
-    if(!buffer.isEmpty())
-    {
-        for(unsigned int i=0;i<buffer.count();i++)
-        {
-            outputBuffer.append(*buffer.at(i));
-            m_messageCount++;
-        }                                         // for
-
-        if(!outgoingTimer.isActive())
-        {
-            outgoingTimer.start(1);
-        }
-    }
 }
 
 /** Calculate how long this message premable will be.
@@ -1240,91 +1211,147 @@ int Server::getPreLength(const QString& command, const QString& dest)
     return x;
 }
 
-void Server::send()
+int Server::_send_internal(QString outputLine)
 {
-    // Check if we are still online
-    if(!isConnected() || outputBuffer.isEmpty())
+    QStringList outputLineSplit=QStringList::split(" ", outputLine);
+    // NOTE: It's important to add the linefeed here, so the encoding process does not trash it
+    //       for some servers.
+    if (!outputLine.endsWith("\n"))
+        outputLine+='\n';
+
+    //Lets cache the uppercase command so we don't miss or reiterate too much
+    QString outboundCommand(outputLineSplit[0].upper());
+
+    // remember the first arg of /WHO to identify responses
+    if(!outputLineSplit.isEmpty() && outboundCommand=="WHO")
     {
-        outgoingTimer.stop();
-        return;
+        if(outputLineSplit.count()>=2)
+            inputFilter.addWhoRequest(outputLineSplit[1]);
+        else // no argument (servers recognize it as "*")
+            inputFilter.addWhoRequest("*");
+    }
+    // Don't reconnect if we WANT to quit
+    else if(outboundCommand=="QUIT")
+    {
+        deliberateQuit = true;
     }
 
-    if(!outputBuffer.isEmpty() && sendUnlocked)
+    // set channel encoding if specified
+    QString channelCodecName;
+
+    if(outputLineSplit.count()>2) //"for safe" <-- so no encoding if no data
     {
-        // NOTE: It's important to add the linefeed here, so the encoding process does not trash it
-        //       for some servers.
-        QString outputLine=outputBuffer[0]+'\n';
-        QStringList outputLineSplit=QStringList::split(" ",outputBuffer[0]);
-        outputBuffer.pop_front();
-
-        //Lets cache the uppercase command so we don't miss or reiterate too much
-        QString outboundCommand(outputLineSplit[0].upper());
-
-        // remember the first arg of /WHO to identify responses
-        if(!outputLineSplit.isEmpty() && outboundCommand=="WHO")
+        if(outboundCommand=="PRIVMSG"   //PRIVMSG target :message
+        || outboundCommand=="NOTICE" //NOTICE target :message
+        || outboundCommand=="KICK"   //KICK target :message
+        || outboundCommand=="PART"   //PART target :message
+        || outboundCommand=="TOPIC"  //TOPIC target :message
+        )
         {
-            if(outputLineSplit.count()>=2)
-                inputFilter.addWhoRequest(outputLineSplit[1]);
-            else // no argument (servers recognize it as "*")
-                inputFilter.addWhoRequest("*");
+            channelCodecName=Preferences::channelEncoding(getServerGroup(),outputLineSplit[1]);
         }
-        // Don't reconnect if we WANT to quit
-        else if(outboundCommand=="QUIT")
-        {
-            deliberateQuit = true;
-        }
+    }
 
-        // set channel encoding if specified
-        QString channelCodecName;
+    QTextCodec* codec = getIdentity()->getCodec();
 
-        if(outputLineSplit.count()>2) //"for safe" <-- so no encoding if no data
+    if(!channelCodecName.isEmpty())
+    {
+        codec = Konversation::IRCCharsets::self()->codecForName(channelCodecName);
+    }
+
+    int outlen=-1;
+    QCString encoded=codec->fromUnicode(outputLine, outlen);
+
+    // Blowfish
+    if(outboundCommand=="PRIVMSG" || outboundCommand=="TOPIC")
+    {
+        Konversation::encrypt(outputLineSplit[1],outputLine,this);
+    }
+
+    Q_LONG sout = m_socket->writeBlock(encoded, outlen);
+
+    if(rawLog) rawLog->appendRaw("&lt;&lt; " + outputLine.replace("&","&amp;").replace("<","&lt;").replace(">","&gt;"));
+
+    return sout;
+}
+
+void Server::toServer(QString&s, IRCQueue* q)
+{
+
+    int sizesent = _send_internal(s);
+    emit sentStat(s.length(), sizesent, q); //tell the queues what we sent
+    //tell everyone else
+    emit sentStat(s.length(), sizesent);
+}
+
+void Server::collectStats(int bytes, int encodedBytes)
+{
+    m_bytesSent += bytes;
+    m_encodedBytesSent += encodedBytes;
+    m_linesSent++;
+}
+
+bool Server::validQueue(QueuePriority priority)
+{
+   if (priority >=0 && priority <= _max_queue())
+       return true;
+   return false;
+}
+
+bool Server::queue(const QString& line, QueuePriority priority)
+{
+    if (!line.isEmpty() && validQueue(priority))
+    {
+        IRCQueue& out=*m_queues[priority];
+        out.enqueue(line);
+        return true;
+    }
+    return false;
+}
+
+bool Server::queueList(const QStringList& buffer, QueuePriority priority)
+{
+    if (buffer.isEmpty() || !validQueue(priority))
+        return false;
+
+    IRCQueue& out=*(m_queues[priority]);
+
+    for(unsigned int i=0;i<buffer.count();i++)
+    {
+        QString line=*buffer.at(i);
+        if (!line.isEmpty())
+            out.enqueue(line);
+    }
+    return true;
+}
+
+void Server::resetQueues()
+{
+    for (int i=0;i<=_max_queue();i++)
+        m_queues[i]->reset();
+}
+
+//this could flood you off, but you're leaving anyway...
+void Server::flushQueues()
+{
+    int cue;
+    do
+    {
+        cue=-1;
+        int wait=0;
+        for (int i=1;i<=_max_queue();i++) //slow queue can rot
         {
-            if(outboundCommand=="PRIVMSG"   //PRIVMSG target :message
-            || outboundCommand=="NOTICE" //NOTICE target :message
-            || outboundCommand=="KICK"   //KICK target :message
-            || outboundCommand=="PART"   //PART target :message
-            || outboundCommand=="TOPIC"  //TOPIC target :message
-            )
+            IRCQueue *queue=m_queues[i];
+            //higher queue indices have higher priorty, higher queue priority wins tie
+            if (!queue->isEmpty() && queue->currentWait()>=wait)
             {
-                channelCodecName=Preferences::channelEncoding(getServerGroup(),outputLineSplit[1]);
+                cue=i;
+                wait=queue->currentWait();
             }
         }
-
-        QTextCodec* codec = getIdentity()->getCodec();
-
-        if(!channelCodecName.isEmpty())
-        {
-            codec = Konversation::IRCCharsets::self()->codecForName(channelCodecName);
-        }
-
-        int outlen=-1;
-        QCString encoded=codec->fromUnicode(outputLine, outlen);
-
-        // Blowfish
-        if(outboundCommand=="PRIVMSG" || outboundCommand=="TOPIC")
-        {
-            Konversation::encrypt(outputLineSplit[1],outputLine,this);
-        }
-
-        Q_LONG sout = m_socket->writeBlock(encoded, outlen);
-
-        if(rawLog) rawLog->appendRaw("&lt;&lt; " + outputLine.replace("&","&amp;").replace("<","&lt;").replace(">","&gt;"));
-
-    }
-
-    if(outputBuffer.isEmpty()) {
-        outgoingTimer.stop();
-    }
-
-
-    // Start the reset timer... it will reset the message count if no new message with in 1 sec
-    m_messageCountResetTimer.start(1000, true);
-
-    // Flood-Protection
-    if(m_messageCount > 6)
-    {
-        outgoingTimer.changeInterval(3000);
-    }
+        if (cue>-1)
+            m_queues[cue]->sendNow();
+    } while (cue>-1);
 }
 
 void Server::closed()
@@ -1605,19 +1632,19 @@ void Server::closeChannel(const QString& name)
 void Server::requestChannelList()
 {
     inputFilter.setAutomaticRequest("LIST", QString(), true);
-    queue("LIST");
+    queue(QString("LIST"));
 }
 
 void Server::requestWhois(const QString& nickname)
 {
     inputFilter.setAutomaticRequest("WHOIS", nickname, true);
-    queue("WHOIS "+nickname);
+    queue("WHOIS "+nickname, LowPriority);
 }
 
 void Server::requestWho(const QString& channel)
 {
     inputFilter.setAutomaticRequest("WHO", channel, true);
-    queue("WHO "+channel);
+    queue("WHO "+channel, LowPriority);
 }
 
 void Server::requestUserhost(const QString& nicks)
@@ -1625,20 +1652,20 @@ void Server::requestUserhost(const QString& nicks)
     QStringList nicksList = QStringList::split(" ", nicks);
     for(QStringList::ConstIterator it=nicksList.begin() ; it!=nicksList.end() ; ++it)
         inputFilter.setAutomaticRequest("USERHOST", *it, true);
-    queue("USERHOST "+nicks);
+    queue("USERHOST "+nicks, LowPriority);
 }
 
 void Server::requestTopic(const QString& channel)
 {
     inputFilter.setAutomaticRequest("TOPIC", channel, true);
-    queue("TOPIC "+channel);
+    queue("TOPIC "+channel, LowPriority);
 }
 
 void Server::resolveUserhost(const QString& nickname)
 {
     inputFilter.setAutomaticRequest("WHOIS", nickname, true);
     inputFilter.setAutomaticRequest("DNS", nickname, true);
-    queue("WHOIS "+nickname);
+    queue("WHOIS "+nickname, LowPriority); //FIXME when is this really used?
 }
 
 void Server::requestBan(const QStringList& users,const QString& channel,const QString& a_option)
@@ -3314,8 +3341,7 @@ void Server::reconnect()
     {
         keepViewsOpenAfterQuit = true;
         reconnectAfterQuit = true;
-        quitServer();
-        send();
+        quitServer(); //FIXED it flushes now
     }
     else if (!isConnected())
     {
@@ -3329,8 +3355,7 @@ void Server::disconnect()
     if (isConnected())
     {
         keepViewsOpenAfterQuit = true;
-        quitServer();
-        send();
+        quitServer(); //FIXED it flushes now
     }
 }
 
@@ -3442,11 +3467,13 @@ void Server::sendPing()
     //hostmask, such as what happens when a Freenode cloak is activated.
     //It might be more intelligent to only do this when there is text
     //in the inputbox. Kinda changes this into a "do minutely"
-    //queue :-) 
+    //queue :-)
+    QStringList ql;
+    ql << "PING LAG" + QTime::currentTime().toString("hhmmss");
     getInputFilter()->setAutomaticRequest("WHO", getNickname(), true);
-    queueAt(0, "WHO " + getNickname());
+    ql << "WHO " + getNickname();
+    queueList(ql, HighPriority);
 
-    queueAt(0, "PING LAG" + QTime::currentTime().toString("hhmmss"));
     m_lagTime.start();
     inputFilter.setLagMeasuring(true);
     m_pingResponseTimer.start(1000 /*1 sec*/);
@@ -3475,11 +3502,6 @@ void Server::updateLongPongLag()
         if (currentLag > (Preferences::maximumLagTime() * 1000))
             m_socket->close();
     }
-}
-
-void Server::resetMessageCount()
-{
-    m_messageCount = 0;
 }
 
 void Server::updateEncoding()
