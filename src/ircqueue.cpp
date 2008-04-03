@@ -16,6 +16,8 @@
 #include "ircqueue.h"
 #include "server.h"
 
+//#include "/home/ejm/argnl.h"
+
 IRCQueue::EmptyingRate staticrates[Server::Howmanyqueuesdoweneedanywayquestionmark]; /*=
     {
         IRCQueue::EmptyingRate(6,60000)
@@ -25,15 +27,18 @@ IRCQueue::EmptyingRate staticrates[Server::Howmanyqueuesdoweneedanywayquestionma
 */
 
 int IRCQueue::EmptyingRate::nextInterval(int, int elapsed)
-{ //KX << _S(m_interval) << endl;
+{
     if (!isValid())
         return 0;
-
+    //KX << _S(m_interval) << endl;
     if (m_type == Lines)
     {
         int i = m_interval/m_rate;
-        if (i<elapsed)
+        //KX << _S(i) << endl;
+        if (i<elapsed) {
+            //KX << _S(i) << _S(elapsed) << endl;
             return 0;
+        }
         else
         {
             //KX << _S(i) << endl;
@@ -54,10 +59,10 @@ IRCQueue::EmptyingRate& IRCQueue::getRate()
 }
 
 
-IRCQueue::IRCQueue(Server *server, EmptyingRate& rate) :
+IRCQueue::IRCQueue(Server *server, EmptyingRate& rate, int ind) :
         m_rate(rate), m_blocked(true), m_server(server),
         m_linesSent(0), m_globalLinesSent(0),
-        m_bytesSent(0), m_globalBytesSent(0), m_lastWait(0)
+        m_bytesSent(0), m_globalBytesSent(0), m_lastWait(0), m_myIndex(ind)
 {
     //KX << _S(m_rate.m_rate) << _S(m_rate.m_interval) << _S(m_rate.m_type) << endl;
     m_timer=new QTimer(this);
@@ -142,7 +147,9 @@ void IRCQueue::enqueue(QString line)
 void IRCQueue::adjustTimer()
 {
     int msec;
-    msec=getRate().nextInterval(nextSize(), currentWait());
+    msec=getRate().nextInterval(nextSize(), elapsed());
+    //if (m_myIndex == 0)
+    //    KX << _S(msec) << endl;
     m_timer->start(msec,true);
     m_startedAt.start();
     return;
@@ -153,8 +160,12 @@ bool IRCQueue::doSend()
     bool p=!m_pending.isEmpty();
     if (p)
     {
+        int plw = m_lastWait;
         QString s=pop();
+        //if (m_myIndex == 0)
+        //    KX << _S(plw) << _S(m_lastWait) << endl;
         m_server->toServer(s, this);
+        m_startedAt.start();
     }
     return p;//if we sent something, fire the timer again
 }
@@ -162,6 +173,7 @@ bool IRCQueue::doSend()
 ///it would probably be better to delete and recreate the queue.
 void IRCQueue::reset()
 {
+    KX << k_funcinfo << endl;
     m_timer->stop();
     m_lastWait=0;
     if (m_server)

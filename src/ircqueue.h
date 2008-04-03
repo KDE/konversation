@@ -83,7 +83,7 @@ public:
         bool isValid()  { return m_rate > 0; }
     };
 
-    IRCQueue(Server *server, EmptyingRate& rate);
+    IRCQueue(Server *server, EmptyingRate& rate, int myindex=0);
     ~IRCQueue();
 
     void enqueue(QString line);
@@ -129,6 +129,7 @@ private:
     int m_linesSent, m_globalLinesSent;
     int m_bytesSent, m_globalBytesSent;
     int m_lastWait;
+    int m_myIndex;
 };
 
 extern IRCQueue::EmptyingRate staticrates[];
