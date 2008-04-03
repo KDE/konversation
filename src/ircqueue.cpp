@@ -160,7 +160,7 @@ bool IRCQueue::doSend()
     bool p=!m_pending.isEmpty();
     if (p)
     {
-        int plw = m_lastWait;
+        // int plw = m_lastWait;
         QString s=pop();
         //if (m_myIndex == 0)
         //    KX << _S(plw) << _S(m_lastWait) << endl;
@@ -173,7 +173,7 @@ bool IRCQueue::doSend()
 ///it would probably be better to delete and recreate the queue.
 void IRCQueue::reset()
 {
-    KX << k_funcinfo << endl;
+    // KX << k_funcinfo << endl;
     m_timer->stop();
     m_lastWait=0;
     if (m_server)
