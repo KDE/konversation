@@ -73,7 +73,7 @@ void DccTransferPanelItem::updateView()
 
     setText( DccTransferPanel::Column::OfferDate,     m_transfer->getTimeOffer().toString( "hh:mm:ss" ) );
     setText( DccTransferPanel::Column::Status,        getStatusText() );
-    setText( DccTransferPanel::Column::FileName,      m_transfer->getFileURL().fileName() );
+    setText( DccTransferPanel::Column::FileName,      m_transfer->getFileName() );
     setText( DccTransferPanel::Column::PartnerNick,   m_transfer->getPartnerNick() );
     setText( DccTransferPanel::Column::Position,      getPositionPrettyText() );
     setText( DccTransferPanel::Column::TimeLeft,      getTimeLeftPrettyText() );
