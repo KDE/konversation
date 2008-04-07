@@ -153,11 +153,19 @@
             <property name="title">
                 <string>Marker Lines</string>
             </property>
-            <vbox>
+            <grid>
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QCheckBox">
+                <widget class="QCheckBox" row="2" column="0" rowspan="1" colspan="2">
+                    <property name="name">
+                        <cstring>kcfg_MarkerLineInAllViews</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Show manually inserted lines in all chat windows</string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox" row="0" column="0" rowspan="1" colspan="2">
                     <property name="name">
                         <cstring>kcfg_AutomaticRememberLine</cstring>
                     </property>
@@ -171,15 +179,32 @@
                         <string>Inserts a remember line into the chat window when you switch to another chat window or minimize the application.</string>
                     </property>
                 </widget>
-                <widget class="QCheckBox">
+                <widget class="QCheckBox" row="1" column="1">
                     <property name="name">
-                        <cstring>kcfg_MarkerLineInAllViews</cstring>
+                        <cstring>kcfg_AutomaticRememberLineOnlyOnTextChange</cstring>
                     </property>
                     <property name="text">
-                        <string>Show manually inserted lines in all chat windows</string>
+                        <string>Move the line only when new text is about to be shown</string>
                     </property>
                 </widget>
-            </vbox>
+                <spacer row="1" column="0">
+                    <property name="name">
+                        <cstring>spacer9</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Fixed</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>16</width>
+                            <height>20</height>
+                        </size>
+                    </property>
+                </spacer>
+            </grid>
         </widget>
         <widget class="QGroupBox">
             <property name="name">
@@ -317,7 +342,7 @@
             <property name="sizeHint">
                 <size>
                     <width>41</width>
-                    <height>16</height>
+                    <height>20</height>
                 </size>
             </property>
         </spacer>
@@ -330,20 +355,27 @@
         <receiver>kcfg_AutoWhoContinuousInterval</receiver>
         <slot>setEnabled(bool)</slot>
     </connection>
+    <connection>
+        <sender>kcfg_AutomaticRememberLine</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>kcfg_AutomaticRememberLineOnlyOnTextChange</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
 </connections>
 <tabstops>
     <tabstop>kcfg_Beep</tabstop>
     <tabstop>kcfg_HideUnimportantEvents</tabstop>
     <tabstop>kcfg_DisableExpansion</tabstop>
-    <tabstop>kcfg_AutomaticRememberLine</tabstop>
-    <tabstop>kcfg_MarkerLineInAllViews</tabstop>
     <tabstop>kcfg_RedirectServerAndAppMsgToStatusPane</tabstop>
     <tabstop>kcfg_UseLiteralModes</tabstop>
     <tabstop>kcfg_ScrollbackMax</tabstop>
-    <tabstop>kcfg_AutoWhoContinuousEnabled</tabstop>
+    <tabstop>kcfg_AutomaticRememberLine</tabstop>
+    <tabstop>kcfg_AutomaticRememberLineOnlyOnTextChange</tabstop>
+    <tabstop>kcfg_MarkerLineInAllViews</tabstop>
     <tabstop>kcfg_ShowRealNames</tabstop>
     <tabstop>kcfg_AutoWhoNicksLimit</tabstop>
     <tabstop>kcfg_AutoWhoContinuousInterval</tabstop>
+    <tabstop>kcfg_AutoWhoContinuousEnabled</tabstop>
     <tabstop>kcfg_AutoWhoContinuousEnabled</tabstop>
 </tabstops>
 <layoutdefaults spacing="6" margin="11"/>

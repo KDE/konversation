@@ -377,6 +377,11 @@
       <label></label>
       <whatsthis></whatsthis>
     </entry>
+    <entry key="AutomaticRememberLineOnlyOnTextChange" type="Bool">
+      <default>true</default>
+      <label></label>
+      <whatsthis></whatsthis>
+    </entry>
     <entry key="MarkerLineInAllViews" type="Bool">
       <default>false</default>
       <label></label>

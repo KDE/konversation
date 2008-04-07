@@ -697,6 +697,9 @@ void IRCView::append(const QString& nick,const QString& message)
 void IRCView::insertRememberLine()
 {
     m_rememberLineDirtyBit = true;
+
+    if (!Preferences::automaticRememberLineOnlyOnTextChange())
+        appendRememberLine();
 }
 
 void IRCView::cancelRememberLine()
