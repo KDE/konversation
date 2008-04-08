@@ -145,7 +145,6 @@ namespace Konversation
             void parseAaway(const QString& parameter);
             OutputFilterResult parseAme(const QString& parameter);
             OutputFilterResult parseAmsg(const QString& parameter);
-            OutputFilterResult parsePrefs(const QString& parameter);
             OutputFilterResult parseOmsg(const QString& parameter);
             OutputFilterResult parseOnotice(const QString& parameter);
             OutputFilterResult parseCharset(const QString& charset);

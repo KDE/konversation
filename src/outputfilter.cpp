@@ -271,7 +271,6 @@ namespace Konversation
             else if(command == "server")   parseServer(parameter);
             else if(command == "reconnect")  emit reconnectServer();
             else if(command == "disconnect") emit disconnectServer();
-            else if(command == "prefs")    result = parsePrefs(parameter);
             else if(command == "charset")  result = parseCharset(parameter);
             else if(command == "encoding")  result = parseCharset(parameter);
             else if(command == "setkey")   result = parseSetKey(parameter);
@@ -1569,117 +1568,6 @@ namespace Konversation
                 emit connectToServer(host, port, password);
             }
         }
-    }
-
-    OutputFilterResult OutputFilter::parsePrefs(const QString& parameter)
-    {
-        OutputFilterResult result;
-        bool showUsage = false;
-
-        if (parameter.isEmpty())
-            showUsage = true;
-        else
-        {
-            KConfig* config=KApplication::kApplication()->config();
-
-            QStringList splitted = KShell::splitArgs(parameter);
-
-            if (splitted.count() > 0)
-            {
-                QString group = splitted[0].lower();
-                QStringList groupList(config->groupList());
-                uint i;
-                if (group == "list")
-                {
-                    // List available groups.
-                    result = usage(i18n("Available preferences groups: ") + groupList.join("|"));
-                }
-                else
-                {
-                    // Validate group.
-                    bool validGroup = false;
-                    for (i = 0; i < groupList.count(); ++i)
-                    {
-                        if (group == groupList[i].lower())
-                        {
-                            validGroup = true;
-                            group = groupList[i];
-                            break;
-                        }
-                    }
-                    if (validGroup && splitted.count() > 1)
-                    {
-                        QString option = splitted[1].lower();
-                        QMap<QString,QString> options = config->entryMap(group);
-                        QValueList<QString> optionList = options.keys();
-                        QValueList<QString> optionValueList = options.values();
-
-                        if (option == "list")
-                        {
-                            // List available options in group.
-                            QString output = i18n("Available options in group %1:").arg( group );
-
-                            for (i = 0; i < optionList.count(); ++i)
-                            {
-                                output += optionList[i] + '(' + optionValueList[i] + ")|";
-                            }
-
-                            result = usage(output);
-                        }
-                        else
-                        {
-                            // Validate option.
-                            bool validOption = false;
-                            for (i = 0; i < optionList.count(); ++i)
-                            {
-                                if (option == optionList[i].lower())
-                                {
-                                    validOption = true;
-                                    option = optionList[i];
-                                    break;
-                                }
-                            }
-                            if (validOption)
-                            {
-                                if (splitted.count() > 2)
-                                {
-                                    // Set the desired option.
-                                    config->setGroup(group);
-                                    config->writeEntry(option, splitted[2]);
-                                    config->sync();
-                                    // Reload preferences object.
-                                    dynamic_cast<KonversationApplication*>(kapp)->readOptions();
-                                }
-                                // If no value given, just display current value.
-                                else
-                                {
-                                    result = usage(group + '/' + option + " = " + options[option]);
-                                }
-                            }
-                            else
-                            {
-                                showUsage = true;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        showUsage = true;
-                    }
-                }
-            }
-            else
-            {
-                showUsage = true;
-            }
-        }
-
-        if (showUsage)
-        {
-            result = usage(i18n("Usage: %1PREFS <group> <option> <value> or %2PREFS LIST to list groups or %3PREFS group LIST to list options in group.  Quote parameters if they contain spaces.").arg(commandChar, commandChar, commandChar));
-        }
-
-        return result;
     }
 
     OutputFilterResult OutputFilter::parseOmsg(const QString& parameter)
