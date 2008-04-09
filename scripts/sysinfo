@@ -16,7 +16,13 @@ export LC_ALL="C"
 
 HN="$(hostname)"
 OSKERN="$(uname -s) $(uname -r)"
-KDE="$(kde-config --version | sed -n '2p' | sed 's/://;s/ *$//')"
+if [ "$KDE_FULL_SESSION" == "true" ]; then
+	if [ "$KDE_SESSION_VERSION" == 4 ];  then
+		KDE="$(kde4-config --version | sed -n '2p' | sed 's/://;s/ *$//')"
+	else
+		KDE="$(kde-config --version | sed -n '2p' | sed 's/://;s/ *$//')"
+	fi
+fi
 
 CPU=$(awk -F':' '/model name/{name=$2}
  /cpu MHz/{mhz=int($2)}

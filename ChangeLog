@@ -218,6 +218,10 @@ Changes since 1.0.1:
   numbers were given.
 - Allow higher values than 99 in the min/max users filter spin boxes in Channel
   List tabs.
+- Rewrote the outbound queue scheduling system to be  smart enough to reorder
+  outbound traffic to reduce interactive latency while aggressively throttling
+  the rate to prevent flooding.
+- Added KDE 4 support to the sysinfo script.
 
 -------------------------------------------------------------------------------
 
