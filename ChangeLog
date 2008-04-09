@@ -158,8 +158,7 @@ Changes since 1.0.1:
 - Fixed sorting the ban list by time set.
 - Made the ban list's "Time Set" column use KDE locale settings for the date
   format.
-- If the preference to focus new tabs is enabled, Konversation will now also
-  focus the channel tab when doing /join for a channel that is already joined.
+- A /join command for an already-joined channel will now focus it.
 - Konversation now distinguishes between manually and automatically inserted
   marker lines, making the "show line in all chat windows" preference less
   confusing.
