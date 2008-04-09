@@ -79,7 +79,7 @@ Preferences::Preferences()
     serverGroup->addChannel(channel);
     serverGroup->setExpanded(false);
     serverGroup->setConfigBacked(true);
-    mServerGroupList.append(serverGroup);
+    addServerGroup(serverGroup);
     setQuickButtonList(defaultQuickButtonList());
     setAutoreplaceList(defaultAutoreplaceList());
 }
