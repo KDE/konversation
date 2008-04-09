@@ -78,6 +78,7 @@ Preferences::Preferences()
     channel.setName("#kde");
     serverGroup->addChannel(channel);
     serverGroup->setExpanded(false);
+    serverGroup->setConfigBacked(true);
     mServerGroupList.append(serverGroup);
     setQuickButtonList(defaultQuickButtonList());
     setAutoreplaceList(defaultAutoreplaceList());
