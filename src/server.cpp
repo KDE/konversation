@@ -1259,7 +1259,11 @@ int Server::_send_internal(QString outputLine)
         codec = Konversation::IRCCharsets::self()->codecForName(channelCodecName);
     }
 
-    int outlen=-1;
+    // Some codecs don't work with a negative value. This is a bug in Qt 3.
+    // ex.: JIS7, eucJP, SJIS
+    //int outlen=-1;
+    int outlen=outputLine.length();
+
     QCString encoded=codec->fromUnicode(outputLine, outlen);
 
     // Blowfish
