@@ -98,6 +98,7 @@ class Channel : public ChatWindow
         virtual void setServer(Server* newServer);
         virtual void setIdentity(const Identity *newIdentity);
 
+        bool rejoinable();
 //Unsure of future placement and/or continued existence of these members
         int numberOfNicks() const { return nicks; }
         int numberOfOps() const { return ops; }
@@ -109,13 +110,13 @@ class Channel : public ChatWindow
     protected:
         // use with caution! does not check for duplicates
         void fastAddNickname(ChannelNickPtr channelnick);
-
+        void setActive(bool active);
 
     public slots:
         void setNickname(const QString& newNickname);
         void scheduleAutoWho();
         void setAutoUserhost(bool state);
-
+        void rejoin();
 
     protected slots:
         void autoUserhost();
@@ -339,6 +340,7 @@ class Channel : public ChatWindow
         QPtrList<QuickButton> buttonList;
 
 //Members from here to end are not GUI
+        bool m_kicked;
         NickList nicknameList;
         QTimer userhostTimer;
 

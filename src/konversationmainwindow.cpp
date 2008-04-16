@@ -220,6 +220,8 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
         action2->setToolTip("Move this tab");
     }
 
+    action = new KAction(i18n("Rejoin Channel"), 0, m_viewContainer, SLOT(rejoinChannel()), actionCollection(), "rejoin_channel");
+
     action = new KToggleAction(i18n("Enable Notifications"), 0, 0, m_viewContainer, SLOT(toggleViewNotifications()), actionCollection(), "tab_notifications");
     action->setEnabled(false);
 

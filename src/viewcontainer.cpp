@@ -1049,6 +1049,16 @@ void ViewContainer::unsetViewNotification(ChatWindow* view)
 
         QColor textColor = (Preferences::inputFieldsBackgroundColor()
             ? Preferences::color(Preferences::ChannelMessage) : m_window->colorGroup().foreground());
+
+        if (view->getType() == ChatWindow::Channel)
+        {
+            Channel *channel = static_cast<Channel*>(view);
+            if (channel->rejoinable())
+            {
+                textColor = KonversationApplication::instance()->palette(m_viewTree).disabled().text();
+            }
+        }
+
         m_viewTree->setViewColor(view, textColor);
     }
     else
@@ -1076,7 +1086,19 @@ void ViewContainer::unsetViewNotification(ChatWindow* view)
             }
         }
 
-        m_tabWidget->setTabColor(view, m_window->colorGroup().foreground());
+        //Why does this one not use the configuration as the above does?
+        QColor textColor = m_window->colorGroup().foreground();
+
+        if (view->getType() == ChatWindow::Channel)
+        {
+            Channel *channel = static_cast<Channel*>(view);
+            if (channel->rejoinable())
+            {
+                textColor = KonversationApplication::instance()->palette(m_viewTree).disabled().text();
+            }
+        }
+
+        m_tabWidget->setTabColor(view, textColor);
     }
 
     QValueList<ChatWindow*>::iterator it = m_activeViewOrderList.find(view);
@@ -1620,6 +1642,7 @@ void ViewContainer::showViewContextMenu(QWidget* tab, const QPoint& pos)
 
     ChatWindow* view = static_cast<ChatWindow*>(tab);
     KToggleAction* autoJoinAction = static_cast<KToggleAction*>(actionCollection()->action("tab_autojoin"));
+    KAction* rejoinAction=actionCollection()->action("rejoin_channel");
 
     if (view)
     {
@@ -1628,7 +1651,13 @@ void ViewContainer::showViewContextMenu(QWidget* tab, const QPoint& pos)
         updateViewEncoding(view);
 
         if (viewType == ChatWindow::Channel)
+        {
             autoJoinAction->plug(menu, 1);
+
+            Channel *channel = static_cast<Channel*>(view);
+            if (channel->rejoinable() && rejoinAction)
+                rejoinAction->plug(menu, 0);
+        }
 
         if (viewType == ChatWindow::Status)
         {
@@ -1657,6 +1686,7 @@ void ViewContainer::showViewContextMenu(QWidget* tab, const QPoint& pos)
     }
 
     autoJoinAction->unplug(menu);
+    rejoinAction->unplug(menu);
     m_window->unplugActionList("server_actions");
 
     emit contextMenuClosed();
@@ -2227,6 +2257,19 @@ Channel* ViewContainer::addChannel(Server* server, const QString& name)
     connect(server, SIGNAL(awayState(bool)), channel, SLOT(indicateAway(bool)) );
 
     return channel;
+}
+
+void ViewContainer::rejoinChannel()
+{
+    Channel* channel = 0;
+
+    if (m_popupViewIndex == -1)
+        channel = static_cast<Channel*>(m_tabWidget->currentPage());
+    else
+        channel = static_cast<Channel*>(m_tabWidget->page(m_popupViewIndex));
+
+    if (channel && channel->getType() == ChatWindow::Channel)
+        channel->rejoin();
 }
 
 void ViewContainer::openChannelSettings()

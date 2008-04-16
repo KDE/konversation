@@ -376,26 +376,25 @@ namespace Konversation
 
         if (channelName.isEmpty())
         {
-            result = usage(i18n("Usage: %1JOIN <channel> [password]").arg(commandChar));
+            if (destination.isEmpty() || !isAChannel(destination))
+                return usage(i18n("Usage: %1JOIN <channel> [password]").arg(commandChar));
+            channelName=destination;
+        }
+        else if (!isAChannel(channelName))
+            channelName = "#" + channelName.stripWhiteSpace();
+
+        Channel* channel = m_server->getChannelByName(channelName);
+
+        if (channel)
+        {
+            // Note that this relies on the channels-flush-nicklists-on-disconnect behavior.
+            if (!channel->numberOfNicks())
+                result.toServer = "JOIN " + channelName;
+
+            emit showView (channel);
         }
         else
-        {
-            if (!isAChannel(channelName))
-                channelName = "#" + channelName.stripWhiteSpace();
-
-            Channel* channel = m_server->getChannelByName(channelName);
-
-            if (channel)
-            {
-                // Note that this relies on the channels-flush-nicklists-on-disconnect behavior.
-                if (!channel->numberOfNicks())
-                    result.toServer = "JOIN " + channelName;
-
-                emit showView (channel);
-            }
-            else
-                result.toServer = "JOIN " + channelName;
-        }
+            result.toServer = "JOIN " + channelName;
 
         return result;
     }

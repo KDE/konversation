@@ -143,6 +143,7 @@ class ViewContainer : public QObject
         void serverStateChanged(Server* server, Server::State state);
 
         Channel* addChannel(Server* server, const QString& name);
+        void rejoinChannel();
         void openChannelSettings();
         void toggleChannelNicklists();
 

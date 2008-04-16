@@ -704,7 +704,7 @@ void Server::broken(int state)
 
     kdDebug() << "Connection broken (Socket fd " << m_socket->socketDevice()->socket() << ") " << state << "!" << endl;
 
-    updateAutoJoin();
+    updateAutoJoin(); // add currently open but not configured channels to autojoin
 
     if (!deliberateQuit)
     {

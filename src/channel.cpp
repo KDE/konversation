@@ -79,6 +79,8 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
     nickChangeDialog = 0;
     channelCommand = false;
 
+    m_kicked = false;
+
     quickButtonsChanged = false;
     quickButtonsState = false;
 
@@ -323,6 +325,17 @@ Channel::~Channel()
     m_server->removeChannel(this);
     kdDebug() << "Channel removed." << endl;
 
+}
+
+bool Channel::rejoinable()
+{
+    return m_kicked;
+}
+
+void Channel::rejoin()
+{
+    if (rejoinable())
+        m_server->sendJoinCommand(getName(), getPassword());
 }
 
 ChannelNickPtr Channel::getOwnChannelNick()
@@ -1182,18 +1195,23 @@ void Channel::nickRenamed(const QString &oldNick, const NickInfo& nickInfo)
 
 }
 
-
 void Channel::joinNickname(ChannelNickPtr channelNick)
 {
     if(channelNick->getNickname() == m_server->getNickname())
     {
+        m_kicked = false;
         appendCommandMessage(i18n("Join"),i18n("%1 is the channel and %2 is our hostmask",
                              "You have joined the channel %1 (%2).").arg(getName()).arg(channelNick->getHostmask()),false, false, true);
         m_ownChannelNick = channelNick;
         connect(m_ownChannelNick, SIGNAL(channelNickChanged()), SLOT(refreshModeButtons()));
         refreshModeButtons();
-        KonversationApplication* konv_app = static_cast<KonversationApplication*>(KApplication::kApplication());
-        konv_app->notificationHandler()->channelJoin(this,getName());
+        setActive(true);
+
+        //HACK the way the notification priorities work sucks, this forces the tab text color to ungray right now.
+        if (m_currentTabNotify == Konversation::tnfNone || !Preferences::tabNotificationsEvents())
+            KonversationApplication::instance()->getMainWindow()->getViewContainer()->unsetViewNotification(this);
+
+        KonversationApplication::instance()->notificationHandler()->channelJoin(this,getName());
     }
     else
     {
@@ -1292,31 +1310,37 @@ void Channel::kickNick(ChannelNickPtr channelNick, const QString &kicker, const 
         if(kicker == m_server->getNickname())
         {
             if (displayReason.isEmpty())
-                m_server->appendStatusMessage(i18n("Kick"), i18n("You have kicked yourself from channel %1.").arg(getName()));
+                appendCommandMessage(i18n("Kick"), i18n("You have kicked yourself from channel %1.").arg(getName()));
             else
-                m_server->appendStatusMessage(i18n("Kick"), i18n("%1 adds the channel and %2 the reason",
+                appendCommandMessage(i18n("Kick"), i18n("%1 adds the channel and %2 the reason",
                                               "You have kicked yourself from channel %1 (%2).").arg(getName()).arg(displayReason));
         }
         else
         {
             if (displayReason.isEmpty())
             {
-                m_server->appendStatusMessage(i18n("Kick"), i18n("%1 adds the channel, %2 adds the kicker",
+                appendCommandMessage(i18n("Kick"), i18n("%1 adds the channel, %2 adds the kicker",
                                               "You have been kicked from channel %1 by %2.")
-                                              .arg(getName()).arg(kicker));
+                                              .arg(getName()).arg(kicker), true);
             }
             else
             {
-                m_server->appendStatusMessage(i18n("Kick"), i18n("%1 adds the channel, %2 the kicker and %3 the reason",
+                appendCommandMessage(i18n("Kick"), i18n("%1 adds the channel, %2 the kicker and %3 the reason",
                                               "You have been kicked from channel %1 by %2 (%3).")
-                                              .arg(getName()).arg(kicker).arg(displayReason));
+                                              .arg(getName()).arg(kicker).arg(displayReason), true);
             }
 
-            KonversationApplication* konv_app = static_cast<KonversationApplication*>(KApplication::kApplication());
-            konv_app->notificationHandler()->kick(this,getName(), kicker);
+            KonversationApplication::instance()->notificationHandler()->kick(this,getName(), kicker);
         }
 
-        delete this;
+        m_kicked=true;
+        setActive(false);
+
+        //HACK the way the notification priorities work sucks, this forces the tab text color to gray right now.
+        if (m_currentTabNotify == Konversation::tnfNone || !Preferences::tabNotificationsEvents())
+            KonversationApplication::instance()->getMainWindow()->getViewContainer()->unsetViewNotification(this);
+
+        return;
     }
     else
     {
@@ -1326,7 +1350,7 @@ void Channel::kickNick(ChannelNickPtr channelNick, const QString &kicker, const 
                 appendCommandMessage(i18n("Kick"), i18n("You have kicked %1 from the channel.").arg(channelNick->getNickname()));
             else
                 appendCommandMessage(i18n("Kick"), i18n("%1 adds the kicked nick and %2 the reason",
-                                     "You have kicked %1 from the channel (%2).").arg(channelNick->getNickname()).arg(displayReason));
+                                     "You have kicked %1 from the channel (%2).").arg(channelNick->getNickname()).arg(displayReason), true);
         }
         else
         {
@@ -1334,13 +1358,13 @@ void Channel::kickNick(ChannelNickPtr channelNick, const QString &kicker, const 
             {
                 appendCommandMessage(i18n("Kick"), i18n("%1 adds the kicked nick, %2 adds the kicker",
                                      "%1 has been kicked from the channel by %2.")
-                                     .arg(channelNick->getNickname()).arg(kicker));
+                                     .arg(channelNick->getNickname()).arg(kicker), true);
             }
             else
             {
                 appendCommandMessage(i18n("Kick"), i18n("%1 adds the kicked nick, %2 the kicker and %3 the reason",
                                      "%1 has been kicked from the channel by %2 (%3).")
-                                     .arg(channelNick->getNickname()).arg(kicker).arg(displayReason));
+                                     .arg(channelNick->getNickname()).arg(kicker).arg(displayReason), true);
             }
         }
 
@@ -2318,7 +2342,7 @@ void Channel::refreshModeButtons()
 void Channel::cycleChannel()
 {
     closeYourself();
-    m_server->sendJoinCommand(getName());
+    m_server->sendJoinCommand(getName(), getPassword());
 }
 
 void Channel::autoUserhost()
@@ -2465,10 +2489,15 @@ bool Channel::closeYourself()
     return false;
 }
 
-//Used to disable functions when not connected
 void Channel::serverOnline(bool online)
 {
-    if (online)
+    setActive(online);
+}
+
+//Used to disable functions when not connected, does not necessarily mean the server is offline
+void Channel::setActive(bool active)
+{
+    if (active)
     {
         getTextView()->setNickAndChannelContextMenusEnabled(true);
         nicknameCombobox->setEnabled(true);
