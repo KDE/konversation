@@ -1086,7 +1086,6 @@ void ViewContainer::unsetViewNotification(ChatWindow* view)
             }
         }
 
-        //Why does this one not use the configuration as the above does?
         QColor textColor = m_window->colorGroup().foreground();
 
         if (view->getType() == ChatWindow::Channel)
@@ -1094,7 +1093,7 @@ void ViewContainer::unsetViewNotification(ChatWindow* view)
             Channel *channel = static_cast<Channel*>(view);
             if (channel->rejoinable())
             {
-                textColor = KonversationApplication::instance()->palette(m_viewTree).disabled().text();
+                textColor = KonversationApplication::instance()->palette(m_tabWidget).disabled().text();
             }
         }
 
