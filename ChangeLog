@@ -221,6 +221,9 @@ Changes since 1.0.1:
   outbound traffic to reduce interactive latency while aggressively throttling
   the rate to prevent flooding.
 - Added KDE 4 support to the sysinfo script.
+- Channel tabs will no longer close when kicked, but rather grey out on the tab
+  bar and offer context menu actions to rejoin.
+- Auto-replace is now case-sensitive in regular expression mode.
 
 -------------------------------------------------------------------------------
 

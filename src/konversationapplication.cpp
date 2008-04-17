@@ -1143,7 +1143,7 @@ QString KonversationApplication::doAutoreplace(const QString& text,bool output)
                 // create regex from pattern
                 QRegExp needleReg=pattern;
                 // set pattern case insensitive
-                needleReg.setCaseSensitive(false);
+                needleReg.setCaseSensitive(true);
                 int index = 0;
 
                 do {
