@@ -572,9 +572,6 @@ void Server::broken(int state)
 {
     kdDebug() << "Connection broken (Socket fd " << m_socket->socketDevice()->socket() << ") " << state << "!" << endl;
 
-    if (getConnectionState() == Konversation::SSDeliberatelyDisconnected)
-        return;
-
     m_socket->enableRead(false);
     m_socket->enableWrite(false); //FIXME if we rely on this signal, it should be turned back on somewhere...
     m_socket->blockSignals(true);
@@ -600,13 +597,16 @@ void Server::broken(int state)
 
     updateAutoJoin();
 
-    QString error = i18n("Connection to Server %1 lost: %2..")
-        .arg(getConnectionSettings().server().host())
-         .arg(KNetwork::KSocketBase::errorString((KNetwork::KSocketBase::SocketError)state));
+    if (getConnectionState() != Konversation::SSDeliberatelyDisconnected)
+    {
+        QString error = i18n("Connection to Server %1 lost: %2..")
+            .arg(getConnectionSettings().server().host())
+            .arg(KNetwork::KSocketBase::errorString((KNetwork::KSocketBase::SocketError)state));
 
-    getStatusView()->appendServerMessage(i18n("Error"), error);
+        getStatusView()->appendServerMessage(i18n("Error"), error);
 
-    updateConnectionState(Konversation::SSInvoluntarilyDisconnected);
+        updateConnectionState(Konversation::SSInvoluntarilyDisconnected);
+    }
 }
 
 void Server::sslError(const QString& reason)
@@ -681,23 +681,22 @@ void Server::gotOwnResolvedHostByWelcome(KResolverResults res)
 
 void Server::quitServer()
 {
-        QString command(Preferences::commandChar()+"QUIT");
-        Konversation::OutputFilterResult result = getOutputFilter()->parse(getNickname(),command, QString());
-        queue(result.toServer, HighPriority);
+    // Make clear this is deliberate even if the QUIT never actually goes through the queue
+    // (i.e. this is not redundant with _send_internal()'s updateConnectionState() call for
+    // a QUIT).
+    updateConnectionState(Konversation::SSDeliberatelyDisconnected);
 
-        m_socket->enableRead(false);
+    QString command(Preferences::commandChar()+"QUIT");
+    Konversation::OutputFilterResult result = getOutputFilter()->parse(getNickname(),command, QString());
+    queue(result.toServer, HighPriority);
 
-        flushQueues();
+    m_socket->enableRead(false);
 
-        updateAutoJoin();
+    flushQueues();
 
-        // Don't end up in broken(), which is for involuntary disconnects.
-        m_socket->blockSignals(true);
-        m_socket->close();
+    m_socket->close();
 
-        getStatusView()->appendServerMessage(i18n("Info"), i18n("Disconnected from %1.").arg(getConnectionSettings().server().host()));
-
-        updateConnectionState(Konversation::SSDeliberatelyDisconnected);
+    getStatusView()->appendServerMessage(i18n("Info"), i18n("Disconnected from %1.").arg(getConnectionSettings().server().host()));
 }
 
 void Server::notifyAction(const QString& nick)
@@ -3111,7 +3110,11 @@ void Server::reconnect()
     {
         if (isSocketConnected()) quitServer();
 
-        connectToIRCServer();
+        // Use asynchronous invocation so that the broken() that the above
+        // quitServer might cause is delivered before connectToIRCServer
+        // sets SSConnecting and broken() announces a deliberate disconnect
+        // due to the failure allegedly occuring during SSConnecting.
+        QTimer::singleShot(0, this, SLOT(connectToIRCServer()));
     }
 }
 
