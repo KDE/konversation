@@ -18,6 +18,7 @@
 #include "channel.h"
 #include "server.h"
 #include "konversationapplication.h"
+#include "connectionmanager.h"
 #include "images.h"
 #include "query.h"
 #include "linkaddressbook/linkaddressbookui.h"
@@ -268,9 +269,7 @@ void NicksOnline::updateServerOnlineList(Server* servr)
 {
     bool newNetworkRoot = false;
     QString serverName = servr->getServerName();
-    // TODO: The method name "getServerGroup" is a misnomer.  Actually returns the
-    // network for a server.
-    QString networkName = servr->getServerGroup();
+    QString networkName = servr->getDisplayName();
     QListViewItem* networkRoot = findNetworkRoot(networkName);
     // If network is not in our list, add it.
     if (!networkRoot)
@@ -462,11 +461,11 @@ void NicksOnline::updateServerOnlineList(Server* servr)
 NickInfoPtr NicksOnline::getOnlineNickInfo(QString& networkName, QString& nickname)
 {
     // Get list of pointers to all servers.
-    KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
-    QPtrList<Server> serverList = konvApp->getServerList();
+    KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
+    QPtrList<Server> serverList = konvApp->getConnectionManager()->getServerList();
     for (Server* server = serverList.first(); server; server = serverList.next())
     {
-        if (server->getServerGroup() == networkName)
+        if (server->getDisplayName() == networkName)
         {
             NickInfoPtr nickInfo = server->getNickInfo(nickname);
             if (nickInfo) return nickInfo;
@@ -483,11 +482,11 @@ NickInfoPtr NicksOnline::getOnlineNickInfo(QString& networkName, QString& nickna
  */
 void NicksOnline::requestWhois(QString& networkName, QString& nickname)
 {
-    KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
-    QPtrList<Server> serverList = konvApp->getServerList();
+    KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
+    QPtrList<Server> serverList = konvApp->getConnectionManager()->getServerList();
     for (Server* server = serverList.first(); server; server = serverList.next())
     {
-        if (server->getServerGroup() == networkName)
+        if (server->getDisplayName() == networkName)
         {
             server->requestWhois(nickname);
             return;
@@ -500,9 +499,8 @@ void NicksOnline::requestWhois(QString& networkName, QString& nickname)
  */
 void NicksOnline::refreshAllServerOnlineLists()
 {
-    KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
-    // Get list of pointers to all servers.
-    QPtrList<Server> serverList = konvApp->getServerList();
+    KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
+    QPtrList<Server> serverList = konvApp->getConnectionManager()->getServerList();
     Server* server;
     // Remove servers no longer connected.
     QListViewItem* child = m_nickListView->firstChild();
@@ -521,7 +519,7 @@ void NicksOnline::refreshAllServerOnlineLists()
             for (server = serverList.first(); server; server = serverList.next())
             {
                 if ((server->getServerName() == serverName) &&
-                    (server->getServerGroup() == networkName)) found = true;
+                    (server->getDisplayName() == networkName)) found = true;
             }
             if (!found)
                 it = serverNameList.remove(it);
@@ -597,10 +595,17 @@ NickInfoPtr NicksOnline::getNickInfo(const QListViewItem* item)
 {
     QString serverName;
     QString nickname;
+
     getItemServerAndNick(item, serverName, nickname);
-    if(!serverName || !nickname) return 0;
-    Server *server = static_cast<KonversationApplication *>(kapp)->getServerByName(serverName);
-    return server->getNickInfo(nickname);
+
+    if (!serverName || !nickname)
+        return 0;
+
+    Server* server = KonversationApplication::instance()->getConnectionManager()->getServer(serverName);
+
+    if (server) return server->getNickInfo(nickname);
+
+    return 0;
 }
 
 /**
@@ -615,9 +620,9 @@ NickInfoPtr NicksOnline::getNickInfo(const QListViewItem* item)
 QListViewItem* NicksOnline::getServerAndNickItem(const QString& serverName,
 const QString& nickname)
 {
-    KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
-    Server* server = konvApp->getServerByName(serverName);
-    QString networkName = server->getServerGroup();
+    Server* server = KonversationApplication::instance()->getConnectionManager()->getServer(serverName);
+    if (!server) return 0;
+    QString networkName = server->getDisplayName();
     QListViewItem* networkRoot = m_nickListView->findItem(networkName, nlvcNetwork);
     if (!networkRoot) return 0;
     QListViewItem* nickRoot = findItemChild(networkRoot, nickname, NicksOnlineItem::NicknameItem);
@@ -652,13 +657,9 @@ void NicksOnline::doCommand(int id)
     }
 
     // Get the server object corresponding to the server name.
-    KonversationApplication *konvApp = static_cast<KonversationApplication *>(kapp);
-    Server* server = konvApp->getServerByName(serverName);
+    Server* server = KonversationApplication::instance()->getConnectionManager()->getServer(serverName);
 
-    if(!server)
-    {
-        return;
-    }
+    if (!server) return;
 
     // Get NickInfo object corresponding to the nickname.
     NickInfoPtr nickInfo = server->getNickInfo(nickname);
@@ -689,7 +690,7 @@ void NicksOnline::doCommand(int id)
             }
             else
             {
-                LinkAddressbookUI *linkaddressbookui = new LinkAddressbookUI(server->getViewContainer()->getWindow(), NULL, nickname, server->getServerName(), server->getServerGroup(), addressee.realName());
+                LinkAddressbookUI *linkaddressbookui = new LinkAddressbookUI(server->getViewContainer()->getWindow(), NULL, nickname, server->getServerName(), server->getDisplayName(), addressee.realName());
                 linkaddressbookui->show();
             }
             break;
@@ -707,13 +708,13 @@ void NicksOnline::doCommand(int id)
                         return;
                     }
 
-                    addressbook->unassociateNick(addressee, nickname, server->getServerName(), server->getServerGroup());
+                    addressbook->unassociateNick(addressee, nickname, server->getServerName(), server->getDisplayName());
                 }
                 else
                 {
                     addressee.setGivenName(nickname);
                     addressee.setNickName(nickname);
-                    addressbook->associateNickAndUnassociateFromEveryoneElse(addressee, nickname, server->getServerName(), server->getServerGroup());
+                    addressbook->associateNickAndUnassociateFromEveryoneElse(addressee, nickname, server->getServerName(), server->getDisplayName());
                 }
                 if(addressbook->saveTicket())
                 {
@@ -762,8 +763,7 @@ int NicksOnline::getNickAddressbookState(QListViewItem* item)
     QString nickname;
     if (getItemServerAndNick(item, serverName, nickname))
     {
-        Server *server =
-            static_cast<KonversationApplication *>(kapp)->getServerByName(serverName);
+        Server *server = KonversationApplication::instance()->getConnectionManager()->getServer(serverName);
         if (!server) return nsNotANick;
         NickInfoPtr nickInfo = server->getNickInfo(nickname);
         if (nickInfo)
@@ -931,8 +931,7 @@ void NicksOnline::refreshItem(QListViewItem* item)
     QString nickname;
     if (getItemServerAndNick(item, serverName, nickname))
     {
-        Server *server =
-            static_cast<KonversationApplication *>(kapp)->getServerByName(serverName);
+        Server *server = KonversationApplication::instance()->getConnectionManager()->getServer(serverName);
         if (server)
         {
             NickInfoPtr nickInfo = server->getNickInfo(nickname);

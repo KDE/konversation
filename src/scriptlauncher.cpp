@@ -48,10 +48,10 @@ void ScriptLauncher::launchScript(const QString& target, const QString &paramete
     // for one user alone in $HOME/.kde/share/apps/
     QString scriptPath(kstddir.findResource("data","konversation/scripts/"+parameterList[0]));
 
-    process << scriptPath                         // script path and name
-        << kapp->dcopClient()->appId()            // our dcop port
-        << m_server->getServerName()              // the server we are connected to
-        << target;                                // the target where the call came from
+    process << scriptPath                            // script path and name
+        << kapp->dcopClient()->appId()               // our dcop port
+        << QString::number(m_server->connectionId()) // the server we are connected to
+        << target;                                   // the target where the call came from
 
     // send remaining parameters to the script
     for(unsigned int index=1;index<parameterList.count();index++)

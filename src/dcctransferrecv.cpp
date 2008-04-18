@@ -19,6 +19,7 @@
 #include "channel.h"
 #include "dcctransfermanager.h"
 #include "konversationapplication.h"
+#include "connectionmanager.h"
 #include "server.h"
 
 #include <kdebug.h>
@@ -427,7 +428,7 @@ void DccTransferRecv::connectWithSender()
         if ( !startListeningForSender() )
             return;
 
-        Server* server = KonversationApplication::instance()->getServerByServerGroupId( m_serverGroupId );
+        Server* server = KonversationApplication::instance()->getConnectionManager()->getServerByConnectionId( m_connectionId );
         if ( !server )
         {
             failed( i18n( "Could not send Reverse DCC SEND acknowledgement to the partner via the IRC server." ) );
@@ -459,10 +460,10 @@ void DccTransferRecv::requestResume()
     kdDebug() << "DccTransferRecv::requestResume(): requesting resume for " << m_partnerNick << " file " << m_fileName << " partner " << m_partnerPort << endl;
 
     //TODO   m_filename could have been sanitized - will this effect this?
-    Server* server = KonversationApplication::instance()->getServerByServerGroupId( m_serverGroupId );
+    Server* server = KonversationApplication::instance()->getConnectionManager()->getServerByConnectionId( m_connectionId );
     if ( !server )
     {
-        kdDebug() << "DccTransferSend::start(): could not retrieve the instance of Server. id: " << m_serverGroupId << endl;
+        kdDebug() << "DccTransferSend::start(): could not retrieve the instance of Server. Connection id: " << m_connectionId << endl;
         failed( i18n( "Could not send DCC RECV resume request to the partner via the IRC server." ) );
         return;
     }

@@ -36,6 +36,7 @@ static const char* shortDescription=I18N_NOOP("A user friendly IRC client");
 
 static const KCmdLineOptions options[] =
 {
+    { "+[url]", I18N_NOOP("irc:// URL or server hostname"), 0 },
     { "server <server>", I18N_NOOP("Server to connect"), 0 },
     { "port <port>", I18N_NOOP("Port to use"), "6667"},
     { "channel <channel>", I18N_NOOP("Channel to join after connection"), ""},
@@ -93,22 +94,13 @@ int main(int argc, char* argv[])
     aboutData.addCredit("Stanislav Nikolov",I18N_NOOP("Bug fixes"),"valsinats@gmail.com");
     aboutData.addCredit("Juan Carlos Torres",I18N_NOOP("Auto-join context menu"),"carlosdgtorres@gmail.com");
 
-    KCmdLineArgs::init(argc,argv,&aboutData);
+    KCmdLineArgs::init(argc, argv, &aboutData);
     KCmdLineArgs::addCmdLineOptions(options);
     KApplication::addCmdLineOptions();
 
-    if(!KUniqueApplication::start())
-    {
-        return 0;
-    }
+    if (!KUniqueApplication::start()) return 0;
 
-    KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
     KonversationApplication app;
-
-    if(args->isSet("server"))
-        app.delayedConnectToServer(args->getOption("server"), args->getOption("port"),
-            args->getOption("channel"), args->getOption("nick"),
-            args->getOption("password"), args->isSet("ssl"));
 
     return app.exec();
 }

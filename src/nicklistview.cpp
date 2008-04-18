@@ -214,7 +214,10 @@ void NickListView::updateActions()
     int unignoreCounter = 0;
     int notifyCounter = 0;
 
-    int serverGroupId = channel->getServer()->serverGroupSettings()->id();
+    int serverGroupId = -1;
+
+    if (channel->getServer()->getServerGroup())
+        serverGroupId = channel->getServer()->getServerGroup()->id();
 
     ChannelNickList nickList=channel->getSelectedChannelNicks();
     ChannelNickList::ConstIterator it;
@@ -226,7 +229,7 @@ void NickListView::updateActions()
         else
             ++ignoreCounter;
 
-        if (Preferences::isNotify(serverGroupId,(*it)->getNickname()))
+        if (serverGroupId != -1 && Preferences::isNotify(serverGroupId, (*it)->getNickname()))
             ++notifyCounter;
     }
 

@@ -10,13 +10,14 @@
   Copyright (C) 2005 Ismail Donmez <ismail@kde.org>
   Copyright (C) 2005 Peter Simonsson <psn@linux.se>
   Copyright (C) 2005 John Tapsell <johnflux@gmail.com>
-  Copyright (C) 2005-2006 Eike Hein <hein@kde.org>
+  Copyright (C) 2005-2008 Eike Hein <hein@kde.org>
 */
 
 #ifndef OUTPUTFILTER_H
 #define OUTPUTFILTER_H
 
 #include "identity.h"
+#include "common.h"
 
 #include <qobject.h>
 #include <qstring.h>
@@ -89,8 +90,15 @@ namespace Konversation
             void multiServerCommand(const QString& command, const QString& parameter);
             void reconnectServer();
             void disconnectServer();
-            void connectToServerGroup(const QString& serverGroup);
-            void connectToServer(const QString& server, const QString& port, const QString& password);
+
+            void connectTo(Konversation::ConnectionFlag flag,
+                           const QString& hostName,
+                           const QString& port = "",
+                           const QString& password = "",
+                           const QString& nick = "",
+                           const QString& channel = "",
+                           bool useSSL = false
+            );
 
             void showView(ChatWindow* view);
             void encodingChanged ();

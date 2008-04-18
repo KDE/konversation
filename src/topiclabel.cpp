@@ -7,11 +7,12 @@
 
 /*
   Copyright (C) 2004 Peter Simonsson <psn@linux.se>
-  Copyright (C) 2006 Eike Hein <hein@kde.org>
+  Copyright (C) 2006-2008 Eike Hein <hein@kde.org>
 */
 
 #include "topiclabel.h"
 #include "konversationapplication.h"
+#include "connectionmanager.h"
 #include "server.h"
 #include "common.h"
 #include "channel.h"
@@ -112,6 +113,7 @@ namespace Konversation
             mousePressed=false;
             removeSelection();
             KURL ux = KURL::fromPathOrURL(urlToDrag);
+            //FIXME consistent IRC URL serialization
             if (urlToDrag.startsWith("##")) ux=QString("irc://%1:%2/%3").arg(m_server->getServerName()).
                     arg(m_server->getPort()).arg(urlToDrag.mid(2));
             KURLDrag* u=new KURLDrag(ux,viewport());
@@ -130,7 +132,12 @@ namespace Konversation
     {
         if (!link.isEmpty())
         {
-            if (link.startsWith("#") && m_server && m_server->isConnected())
+            if (link.startsWith("irc://"))
+            {
+                KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
+                konvApp->getConnectionManager()->connectTo(Konversation::SilentlyReuseConnection, link);
+            }
+            else if (link.startsWith("#") && m_server && m_server->isConnected())
             {
                 QString channel(link);
                 channel.replace("##","#");

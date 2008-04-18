@@ -64,7 +64,10 @@ SSLSocket::~SSLSocket()
 
 Q_LONG SSLSocket::writeBlock(const char *data, Q_ULONG len)
 {
-    return d->kssl->write( data,len );
+    if (d->kssl && KSSL::doesSSLWork() && state() == KNetwork::KClientSocketBase::Connected)
+        return d->kssl->write( data,len );
+    else
+        return 0;
 }
 
 Q_LONG SSLSocket::readBlock(char *data, Q_ULONG maxlen)

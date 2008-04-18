@@ -9,12 +9,14 @@
   Copyright (C) 2002 Dario Abatianni <eisfuchs@tigress.com>
   Copyright (C) 2005 Ismail Donmez <ismail@kde.org>
   Copyright (C) 2005-2006 Peter Simonsson <psn@linux.se>
-  Copyright (C) 2005-2006 Eike Hein <hein@kde.org>
+  Copyright (C) 2006-2008 Eli J. MacKenzie <argonel at gmail.com>
+  Copyright (C) 2005-2008 Eike Hein <hein@kde.org>
 */
 
 #ifndef SERVER_H
 #define SERVER_H
 
+#include "common.h"
 #include "channelnick.h"
 #include "inputfilter.h"
 #include "outputfilter.h"
@@ -22,11 +24,12 @@
 #include "sslsocket.h"
 #include "serversettings.h"
 #include "servergroupsettings.h"
+#include "connectionsettings.h"
 
 #include <qtimer.h>
 #include <qdict.h>
 #include <qvaluevector.h>
-
+#include <qguardedptr.h>
 #include <qdeepcopy.h>
 
 #include <ksharedptr.h>
@@ -61,14 +64,6 @@ class Server : public QObject
     friend class QueueTuner;
 
     public:
-
-        enum State
-        {
-            SSDisconnected,
-            SSConnecting,
-            SSConnected
-        };
-
         enum QueuePriority
         {
             LowPriority,      ///<slow queue, for automatic info gathering
@@ -83,53 +78,31 @@ class Server : public QObject
             RegularPriority=StandardPriority
         };
 
-        /** Constructor used for connecting to a known server.
-         *  Read in the prefrences to get all the details about the server.
-         */
-        Server(ViewContainer* viewContainer, int serverGroupId, bool clearQuickServerList = true, const QString& channel = QString::null);
-
-        /** Constructor used for a 'fast connect' to a server.
-         *  The details are passed in.  Used for example when the user does "/server irc.somewhere.net"
-         */
-        Server(ViewContainer* viewContainer, const QString& hostName,const QString& port,
-            const QString& channel,const QString& nick, const QString& password = QString::null, const bool& useSSL=false);
+        Server(QObject* parent, ConnectionSettings& settings);
         ~Server();
 
-        QString getServerName() const;
-        QString getServerGroup() const;
+        int connectionId() { return m_connectionId; }
 
-        void resetCurrentServerIndex() { m_currentServerIndex = 0; }
+        ConnectionSettings& getConnectionSettings() { return m_connectionSettings; }
+        void setConnectionSettings(ConnectionSettings& settings) { m_connectionSettings = settings; }
 
-        Konversation::ServerGroupSettingsPtr serverGroupSettings() const { return m_serverGroup; }
+        QString getDisplayName() { return m_connectionSettings.name(); }
+        QString getServerName() { return m_connectionSettings.server().host(); }
 
-        IdentityPtr getIdentity() const;
+        Konversation::ServerGroupSettingsPtr getServerGroup() { return m_connectionSettings.serverGroup(); }
+        IdentityPtr getIdentity() { return m_connectionSettings.identity(); }
+
+        Konversation::ConnectionState getConnectionState() { return m_connectionState; }
+
+        bool isConnected() { return (m_connectionState == Konversation::SSConnected); }
+        bool isConnecting() { return (m_connectionState == Konversation::SSConnecting); }
 
         bool getUseSSL() const;
         QString getSSLInfo() const;
-
-        int getPort() const;
+        int getPort();
         int getLag() const;
 
-        bool getAutoJoin() const;
-        void setAutoJoin(bool on);
-
-        /** This returns true when we have a socket connection.
-         *	Not necessarily 'online' and ready for commands.
-         *  @see connected()
-         */
-        bool isConnected() const;
-        bool isConnecting() const;
-
-        QString getAutoJoinChannels() const;
-        void setAutoJoinChannels(const QString& channels);
-
-        QString getAutoJoinChannelPasswords() const;
-        void setAutoJoinChannelPasswords(const QString& passwords);
-
-        QString getNextNickname();
-
-        void setIrcName(const QString &newIrcName);
-        QString getIrcName() const;
+        void updateAutoJoin(Konversation::ChannelSettings channel = Konversation::ChannelSettings());
 
         void resetNickList(const QString& channelName);
         void addPendingNickList(const QString& channelName,const QStringList& nickList);
@@ -154,8 +127,10 @@ class Server : public QObject
         QString getNickname() const;
         QString loweredNickname() const;
 
-        InputFilter* getInputFilter();
-        Konversation::OutputFilter* getOutputFilter();
+        QString getNextNickname();
+
+        InputFilter* getInputFilter() { return &m_inputFilter; }
+        Konversation::OutputFilter* getOutputFilter() { return m_outputFilter; };
 
         void joinChannel(const QString& name, const QString& hostmask);
         void removeChannel(Channel* channel);
@@ -182,8 +157,6 @@ class Server : public QObject
         QString parseWildcards(const QString& toParse, const QString& nickname, const QString& channelName, const QString &channelKey, const QStringList &nickList, const QString& parameter);
         QString parseWildcards(const QString& toParse, const QString& nickname, const QString& channelName, const QString &channelKey, const QString& nick, const QString& parameter);
 
-        QString getAutoJoinCommand() const;
-
         void autoCommandsAndChannels();
 
         void sendURIs(const QStrList& uris, const QString& nick);
@@ -191,11 +164,7 @@ class Server : public QObject
         void notifyAction(const QString& nick);
         ChannelListPanel* getChannelListPanel() const;
 
-        StatusPanel* getStatusView() const { return statusView; }
-
-        /** This returns true when we are 'online' - ready to take commands, join channels and so on.
-         */
-        bool connected() const;
+        StatusPanel* getStatusView() const { return m_statusView; }
 
         QString getOwnIpByNetworkInterface();
         QString getOwnIpByServerMessage();
@@ -309,7 +278,7 @@ class Server : public QObject
         /**
          * Returns a QPtrList of all channels
          */
-        const QPtrList<Channel>& getChannelList() const { return channelList; }
+        const QPtrList<Channel>& getChannelList() const { return m_channelList; }
 
         /** Returns the time we have been away for.
          *  If we are not away, returns 00:00:00
@@ -390,17 +359,15 @@ class Server : public QObject
         //These are really only here to limit where ircqueue.h is included
         static void _fetchRates(); ///< on server construction
         static void _stashRates(); ///< on application exit
-    protected:
-        int _send_internal(QString outputline); ///< Guts of old send, isn't a slot.
-    public:
+
 
     signals:
+        void destroyed(int connectionId);
         void nicknameChanged(const QString&);
         void serverLag(Server* server,int msec);  /// will be connected to KonversationMainWindow::updateLag()
         void tooLongLag(Server* server, int msec);/// will be connected to KonversationMainWindow::updateLag()
         void resetLag(); ///< will be emitted when new 303 came in
         void nicksNowOnline(Server* server,const QStringList& list,bool changed);
-        void deleted(Server* myself);             /// will be connected to KonversationApplication::removeServer()
         void awayState(bool away);                /// will be connected to any user input panel;
         void multiServerCommand(const QString& command, const QString& parameter);
 
@@ -445,14 +412,13 @@ class Server : public QObject
         void sslInitFailure();
         void sslConnected(Server* server);
 
-        void connectionChangedState(Server* server, Server::State state);
+        void connectionStateChanged(Server* server, Konversation::ConnectionState state);
 
         void showView(ChatWindow* view);
         void addDccPanel();
         void addDccChat(const QString& myNick,const QString& nick,const QStringList& arguments,bool listen);
 
     public slots:
-        void lookupFinished();
         void connectToIRCServer();
 
         bool queue(const QString& line, QueuePriority priority=StandardPriority);
@@ -493,8 +459,6 @@ class Server : public QObject
         void executeMultiServerCommand(const QString& command, const QString& parameter);
         void reconnect();
         void disconnect(); //FIXME is this overriding a qobject method? do we care?
-        void connectToServerGroup(const QString& serverGroup);
-        void connectToNewServer(const QString& server, const QString& port, const QString& password);
         void showSSLDialog();
         void sendToAllChannels(const QString& text);
         void notifyTimeout();
@@ -508,7 +472,7 @@ class Server : public QObject
         void pongReceived();
 
     protected slots:
-
+        void lookupFinished();
         void preShellCommandExited(KProcess*);
         void ircServerConnectionSuccess();
         void startAwayTimer();
@@ -561,12 +525,13 @@ class Server : public QObject
     private slots:
         void collectStats(int bytes, int encodedBytes);
 
+        /** Called in the server constructor if the preferences are set to run a command on a new server instance.
+         *  This sets up the kprocess, runs it, and connects the signals to call preShellCommandExited when done. */
+        void doPreShellCommand();
+
     protected:
         // constants
         static const int BUFFER_LEN=513;
-
-        /// Initialize the class
-        void init(ViewContainer* viewContainer, const QString& nick, const QString& channel);
 
         /// Initialize the timers
         void initTimers();
@@ -574,9 +539,7 @@ class Server : public QObject
         /// Connect to the signals used in this class.
         void connectSignals();
 
-        void setViewContainer(ViewContainer* newViewContainer);
-
-        void updateAutoJoin(const QString& channel=QString());
+        int _send_internal(QString outputline); ///< Guts of old send, isn't a slot.
 
         /** Adds a nickname to the unjoinedChannels list.
          *  Creates new NickInfo if necessary.
@@ -647,83 +610,76 @@ class Server : public QObject
          */
         void renameNickInfo(NickInfoPtr nickInfo, const QString& newname);
 
-        /** Called in the server constructor if the preferences are set to run a command on a new server instance.
-         *  This sets up the kprocess, runs it, and connects the signals to call preShellCommandExited when done. */
-        void doPreShellCommand();
+        bool getAutoJoin() const;
+        void setAutoJoin(bool on);
 
-        unsigned int completeQueryPosition;
-        unsigned int tryNickNumber;
-        unsigned int reconnectCounter;
+        QString getAutoJoinChannels() const;
+        void setAutoJoinChannels(const QString& channels);
 
-        QString bot;
-        QString botPassword;
+        QString getAutoJoinChannelPasswords() const;
+        void setAutoJoinChannelPasswords(const QString& passwords);
+
+        QString getAutoJoinCommand() const;
+
+        unsigned int m_completeQueryPosition;
+        unsigned int m_tryNickNumber;
 
         // TODO roll these into a QMap.
-        QString serverNickPrefixes;               // Prefixes used by the server to indicate a mode
-        QString serverNickPrefixModes;            // if supplied: modes related to those prefixes
-        QString channelPrefixes;                  // prefixes that indicate channel names. defaults to RFC1459 "#&"
+        QString m_serverNickPrefixes;               // Prefixes used by the server to indicate a mode
+        QString m_serverNickPrefixModes;            // if supplied: modes related to those prefixes
+        QString m_channelPrefixes;                  // prefixes that indicate channel names. defaults to RFC1459 "#&"
 
-        bool autoJoin;
-        bool quickConnect;
-        bool deliberateQuit;
-        bool keepViewsOpenAfterQuit;
-        bool reconnectAfterQuit;
+        bool m_autoJoin;
 
-        QString autoJoinChannels;
-        QString autoJoinChannelPasswords;
-
-        ViewContainer* m_viewContainerPtr;
+        QString m_autoJoinChannels;
+        QString m_autoJoinChannelPasswords;
 
         KNetwork::KStreamSocket* m_socket;
-        bool         m_tryReconnect;
 
-        QTimer reconnectTimer;
-        QTimer incomingTimer;
-        QTimer notifyTimer;
-        QStringList notifyCache;                  // List of users found with ISON
-        int checkTime;                            // Time elapsed while waiting for server 303 response
-        int currentLag;
+        QTimer m_reconnectTimer;
+        QTimer m_incomingTimer;
+        QTimer m_notifyTimer;
+        QStringList m_notifyCache;                  // List of users found with ISON
+        int m_checkTime;                            // Time elapsed while waiting for server 303 response
+        int m_currentLag;
 
-        QString ircName;
-        QCString inputBufferIncomplete;
-        QStringList inputBuffer;
+        QCString m_inputBufferIncomplete;
+        QStringList m_inputBuffer;
 
         QValueVector<IRCQueue *> m_queues;
         int m_bytesSent, m_encodedBytesSent, m_linesSent, m_bytesReceived;
 
         QString m_nickname;
         QString m_loweredNickname;
-        QString ownIpByUserhost;                  // RPL_USERHOST
-        QString ownIpByWelcome;                   // RPL_WELCOME
+        QString m_ownIpByUserhost;                  // RPL_USERHOST
+        QString m_ownIpByWelcome;                   // RPL_WELCOME
 
-        QPtrList<Channel> channelList;
-        QPtrList<Query> queryList;
+        QPtrList<Channel> m_channelList;
+        QPtrList<Query> m_queryList;
 
-        InputFilter inputFilter;
-        Konversation::OutputFilter* outputFilter;
+        InputFilter m_inputFilter;
+        Konversation::OutputFilter* m_outputFilter;
 
-        StatusPanel* statusView;
-        RawLog* rawLog;
-        ChannelListPanel* channelListPanel;
+        QGuardedPtr<StatusPanel> m_statusView;
+        QGuardedPtr<RawLog> m_rawLog;
+        QGuardedPtr<ChannelListPanel> m_channelListPanel;
 
         bool m_isAway;
         QString m_awayReason;
 
-        bool alreadyConnected;
-        bool connecting;
+        Konversation::ConnectionState m_connectionState;
+        void updateConnectionState(Konversation::ConnectionState state);
+        bool isSocketConnected() const;
 
-        QString nonAwayNick;
+        QString m_nonAwayNick;
 
         int m_awayTime;
 
         ScriptLauncher* m_scriptLauncher;
 
-        KProcess preShellCommand;
+        KProcess m_preShellCommand;
 
     private:
-        /// The server we're going to connect to initially.
-        Konversation::ServerSettings m_quickServer;
-
         /// Helper object to construct ISON (notify) list and map offline nicks to
         /// addressbook.
         ServerISON* m_serverISON;
@@ -742,13 +698,10 @@ class Server : public QObject
         /// List of nicks in Queries.
         NickInfoMap m_queryNicks;
 
-        Konversation::ServerGroupSettingsPtr m_serverGroup;
-        unsigned int m_currentServerIndex;
-
         QString m_allowedChannelModes;
 
         // Blowfish key map
-        QMap<QString,QCString> keyMap;
+        QMap<QString,QCString> m_keyMap;
 
         bool m_identifyMsg;
 
@@ -760,10 +713,13 @@ class Server : public QObject
         /// Updates the gui when the lag gets too high
         QTimer m_pingResponseTimer;
 
-        bool m_autoIdentifyLock;
-
         /// Previous ISON reply of the server, needed for comparison with the next reply
         QStringList m_prevISONList;
+
+        ConnectionSettings m_connectionSettings;
+
+        static int m_availableConnectionId;
+        int m_connectionId;
 };
 
 #endif

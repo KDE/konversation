@@ -112,7 +112,7 @@ void ServerISON::recalculateAddressees()
 
         // Lowercase server name and server group.
         QString lserverName = m_server->getServerName().lower();
-        QString lserverGroup = m_server->getServerGroup().lower();
+        QString lserverGroup = m_server->getDisplayName().lower();
 
         // Build notify list from nicks in addressbook, eliminating dups (case insensitive).
         QMap<QString,QString> ISONMap;
@@ -169,7 +169,7 @@ void ServerISON::recalculateAddressees()
         // TODO: Don't add nick on user watch list if nick is known to be online
         // under a different nickname?
         QStringList prefsWatchList =
-            Preferences::notifyListByGroupName(m_server->getServerGroup());
+            Preferences::notifyListByGroupName(m_server->getDisplayName());
         QStringList::iterator itEnd = prefsWatchList.end();
 
         for(QStringList::iterator it = prefsWatchList.begin(); it != itEnd; ++it)

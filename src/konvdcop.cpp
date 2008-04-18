@@ -14,6 +14,7 @@
 
 #include "konvdcop.h"
 #include "konversationapplication.h"
+#include "connectionmanager.h"
 #include "channel.h"
 #include "identity.h"
 #include "server.h"
@@ -39,23 +40,30 @@ void KonvDCOP::raw(const QString& server,const QString& command)
 
 QStringList KonvDCOP::listServers()
 {
-    QStringList serverlist;
-    QPtrList<Server>servers = static_cast<KonversationApplication *>(kapp)->getServerList();
-    Server *server;
-    for ( server = servers.first(); server; server = servers.next() )
-        serverlist.append(server->getServerName());
-    return serverlist;
+    KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
+
+    QStringList hosts;
+    QPtrList<Server> serverList = konvApp->getConnectionManager()->getServerList();
+    Server* server;
+
+    for (server = serverList.first(); server; server = serverList.next())
+        if (server) hosts << server->getServerName();
+
+    return hosts;
 }
 
 QStringList KonvDCOP::listConnectedServers()
 {
-    QStringList serverlist;
-    QPtrList<Server>servers = static_cast<KonversationApplication *>(kapp)->getServerList();
-    Server *server;
-    for ( server = servers.first(); server; server = servers.next() )
-        if(server->connected())
-            serverlist.append(server->getServerName());
-    return serverlist;
+    KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
+
+    QStringList connectedHosts;
+    QPtrList<Server> serverList = konvApp->getConnectionManager()->getServerList();
+    Server* server;
+
+    for (server = serverList.first(); server; server = serverList.next())
+        if (server && server->isConnected()) connectedHosts << server->getServerName();
+
+    return connectedHosts;
 }
 
 void KonvDCOP::setAway(const QString &awaymessage)
@@ -126,27 +134,33 @@ void KonvDCOP::insertMarkerLine()
     emit dcopInsertMarkerLine();
 }
 
-void KonvDCOP::connectToServer(const QString& url, int port, const QString& channel, const QString& password)
+void KonvDCOP::connectToServer(const QString& address, int port, const QString& channel, const QString& password)
 {
-    emit dcopConnectToServer(url, port, channel, password);
+    emit connectTo(Konversation::SilentlyReuseConnection, address, QString::number(port), password, "", channel);
 }
 
-QString KonvDCOP::getNickname (const QString &serverName)
+QString KonvDCOP::getNickname(const QString& serverName)
 {
-    Server* server = static_cast<KonversationApplication *>(kapp)->getServerByName(serverName);
-    if ( !server )
+    Server* server = KonversationApplication::instance()->getConnectionManager()->getServer(serverName);
+
+    if (!server)
     {
         error( i18n( "getNickname: Server %1 is not found." ).arg( serverName ) );
         return QString();
     }
+
     return server->getNickname();
 }
 
-QString KonvDCOP::getAnyNickname ()
+QString KonvDCOP::getAnyNickname()
 {
-    const QPtrList<Server>serverlist = static_cast<KonversationApplication *>(kapp)->getServerList();
-    Server *server = serverlist.getFirst();
-    return server->getNickname();
+    KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
+
+    Server* server = konvApp->getConnectionManager()->getServer();
+
+    if (server) return server->getNickname();
+
+    return QString();
 }
 
 QString KonvDCOP::getChannelEncoding(const QString& server, const QString& channel)

@@ -7,7 +7,7 @@
 
 /*
   Copyright (C) 2002 Dario Abatianni <eisfuchs@tigress.com>
-  Copyright (C) 2006-2007 Eike Hein <hein@kde.org>
+  Copyright (C) 2006-2008 Eike Hein <hein@kde.org>
 */
 
 #ifndef CHATWINDOW_H
@@ -64,7 +64,6 @@ class ChatWindow : public QVBox
          *  @return The server it is associated with, or null if none.
          */
         Server* getServer();
-        virtual void setIdentity(const Identity *newIdentity);
         void setTextView(IRCView* newView);
         IRCView* getTextView() const;
         void setLog(bool activate);
@@ -195,7 +194,6 @@ class ChatWindow : public QVBox
          *  Not always non-null - e.g. for konsolepanel
          */
         Server* m_server;
-        Identity identity;
         QFile logfile;
         WindowType type;
 

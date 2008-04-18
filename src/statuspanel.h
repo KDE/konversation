@@ -7,7 +7,7 @@
 
 /*
   Copyright (C) 2003 Dario Abatianni <eisfuchs@tigress.com>
-  Copyright (C) 2006 Eike Hein <hein@kde.org>
+  Copyright (C) 2006-2008 Eike Hein <hein@kde.org>
 */
 
 #ifndef STATUSPANEL_H
@@ -46,7 +46,7 @@ class StatusPanel : public ChatWindow
         virtual QString getChannelEncodingDefaultDesc();
         virtual void emitUpdateInfo();
 
-        virtual void setIdentity(const Identity *newIdentity);
+        void setIdentity(const IdentityPtr identity);
 
         virtual bool isInsertSupported() { return true; }
 

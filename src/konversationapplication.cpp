@@ -10,11 +10,12 @@
   Copyright (C) 2005 Ismail Donmez <ismail@kde.org>
   Copyright (C) 2005 Peter Simonsson <psn@linux.se>
   Copyright (C) 2005 John Tapsell <johnflux@gmail.com>
-  Copyright (C) 2005-2007 Eike Hein <hein@kde.org>
+  Copyright (C) 2005-2008 Eike Hein <hein@kde.org>
 */
 
 #include "konversationapplication.h"
 #include "konversationmainwindow.h"
+#include "connectionmanager.h"
 #include "dcctransfermanager.h"
 #include "viewcontainer.h"
 #include "highlight.h"
@@ -35,6 +36,7 @@
 #include <qfileinfo.h>
 
 #include <kdebug.h>
+#include <kcmdlineargs.h>
 #include <kconfig.h>
 #include <dcopclient.h>
 #include <kdeversion.h>
@@ -48,8 +50,8 @@ KonversationApplication::KonversationApplication()
 : KUniqueApplication(true, true, true)
 {
     mainWindow = 0;
+    m_connectionManager = 0;
     quickConnectDialog = 0;
-    m_connectDelayed=false;
     osd = 0;
 }
 
@@ -68,23 +70,16 @@ KonversationApplication::~KonversationApplication()
     osd = 0;
 }
 
-void KonversationApplication::delayedConnectToServer(const QString& hostname, const QString& port, const QString& channel,
-const QString& nick, const QString& password,
-const bool& useSSL)
-{
-    m_hostName=hostname;
-    m_port=port;
-    m_channel=channel;
-    m_nick=nick;
-    m_password=password;
-    m_useSSL=useSSL;
-    m_connectDelayed=true;
-}
-
 int KonversationApplication::newInstance()
 {
-    if(!mainWindow)
+    KCmdLineArgs* args = KCmdLineArgs::parsedArgs();
+    QCString url;
+    if (args->count() > 0) url = args->arg(0);
+
+    if (!mainWindow)
     {
+        m_connectionManager = new ConnectionManager(this);
+
         // an instance of DccTransferManager needs to be created before GUI class instances' creation.
         m_dccTransferManager = new DccTransferManager(this);
 
@@ -134,33 +129,27 @@ int KonversationApplication::newInstance()
         // apply GUI settings
         emit appearanceChanged();
 
-        if(Preferences::showTrayIcon() && (Preferences::hiddenToTray() || Preferences::hideToTrayOnStartup()))
-        {
+        if (Preferences::showTrayIcon() && (Preferences::hiddenToTray() || Preferences::hideToTrayOnStartup()))
             mainWindow->hide();
-        }
         else
-        {
             mainWindow->show();
-        }
 
         bool openServerList = Preferences::showServerList();
 
         // handle autoconnect on startup
         Konversation::ServerGroupList serverGroups = Preferences::serverGroupList();
 
-        if (!m_connectDelayed)
+        if (url.isEmpty() && !args->isSet("server"))
         {
             for (Konversation::ServerGroupList::iterator it = serverGroups.begin(); it != serverGroups.end(); ++it)
             {
                 if ((*it)->autoConnectEnabled())
                 {
                     openServerList = false;
-                    connectToServer((*it)->id());
+                    m_connectionManager->connectTo(Konversation::CreateNewConnection, (*it)->id());
                 }
             }
         }
-        else
-            quickConnectToServer(m_hostName, m_port, m_channel, m_nick, m_password, m_useSSL);
 
         if (openServerList) mainWindow->openServerList();
 
@@ -171,7 +160,7 @@ int KonversationApplication::newInstance()
         kapp->dcopClient()->setDefaultObject(dcopObject->objId());
         identDCOP = new KonvIdentDCOP;
 
-        if(dcopObject)
+        if (dcopObject)
         {
             connect(dcopObject,SIGNAL (dcopMultiServerRaw(const QString&)),
                 this,SLOT (dcopMultiServerRaw(const QString&)) );
@@ -183,25 +172,32 @@ int KonversationApplication::newInstance()
                 this,SLOT (dcopInfo(const QString&)) );
             connect(dcopObject,SIGNAL (dcopInsertMarkerLine()),
                 mainWindow,SIGNAL(insertMarkerLine()));
-            connect(dcopObject,SIGNAL(dcopConnectToServer(const QString&, int,const QString&, const QString&)),
-                this,SLOT(dcopConnectToServer(const QString&, int,const QString&, const QString&)));
+            connect(dcopObject, SIGNAL(connectTo(Konversation::ConnectionFlag, const QString&, const QString&, const QString&, const QString&, const QString&, bool)),
+                m_connectionManager, SLOT(connectTo(Konversation::ConnectionFlag, const QString&, const QString&, const QString&, const QString&, const QString&, bool)));
         }
 
         m_notificationHandler = new Konversation::NotificationHandler(this);
     }
 
+    if (!url.isEmpty())
+        getConnectionManager()->connectTo(Konversation::SilentlyReuseConnection, url);
+    else if (args->isSet("server"))
+    {
+        getConnectionManager()->connectTo(Konversation::SilentlyReuseConnection,
+                                          args->getOption("server"),
+                                          args->getOption("port"),
+                                          args->getOption("password"),
+                                          args->getOption("nick"),
+                                          args->getOption("channel"),
+                                          args->isSet("ssl"));
+    }
+
     return KUniqueApplication::newInstance();
 }
 
-                                                  // static
 KonversationApplication* KonversationApplication::instance()
 {
-    return static_cast<KonversationApplication*>( KApplication::kApplication() );
-}
-
-KonversationMainWindow *KonversationApplication::getMainWindow()
-{
-    return mainWindow;
+    return static_cast<KonversationApplication*>(KApplication::kApplication());
 }
 
 void KonversationApplication::showQueueTuner(bool p)
@@ -211,6 +207,8 @@ void KonversationApplication::showQueueTuner(bool p)
 
 void KonversationApplication::toggleAway()
 {
+    QPtrList<Server> serverList = getConnectionManager()->getServerList();
+
     bool anyservers = false;
     bool alreadyaway = false;
 
@@ -242,291 +240,27 @@ void KonversationApplication::dcopMultiServerRaw(const QString &command)
     sendMultiServerCommand(command.section(' ', 0,0), command.section(' ', 1));
 }
 
-void KonversationApplication::dcopRaw(const QString& server, const QString &command)
+void KonversationApplication::dcopRaw(const QString& connection, const QString &command)
 {
-    Server* lookServer=serverList.first();
-    while(lookServer)
-    {
-        if(lookServer->getServerName()==server)
-        {
-            lookServer->dcopRaw(command);
-            //      break; // leave while loop
-            //FIXME:   <muesli> there's a reason for not breaking this loop...  [see comment for dcopSay]
-        }
-        lookServer=serverList.next();
-    }
+    Server* server = getConnectionManager()->getServerByConnectionId(connection.toInt());
 
+    if (!server) server = getConnectionManager()->getServer(connection);
+
+    if (server) server->dcopRaw(command);
 }
 
-void KonversationApplication::dcopSay(const QString& server,const QString& target,const QString& command)
+void KonversationApplication::dcopSay(const QString& connection, const QString& target, const QString& command)
 {
-    Server* lookServer=serverList.first();
-    while(lookServer)
-    {
-        if(lookServer->getServerName()==server)
-        {
-            lookServer->dcopSay(target,command);
-            //      break; // leave while loop
-            //FIXME:   <muesli> there's a reason for not breaking this loop, here (which would spent only some
-            //                  cpu cycles, anyways): I am connected to two bouncers at the same time, which are
-            //                  also named the same (same ip, no dns). if a dcopSay gets emerged, it will always
-            //                  get the _same_ server name as its parameter (both are named the same). although
-            //                  the channel it gets sent to, is on the second server, it will always try to send
-            //                  this information to a channel on the first server, which i didn't even join.
-            //                  this is def. a quick-fix, we should probably handle server-id's instead of -names.
-        }
-        lookServer=serverList.next();
-    }
+    Server* server = getConnectionManager()->getServerByConnectionId(connection.toInt());
+
+    if (!server) server = getConnectionManager()->getServer(connection);
+
+    if (server) server->dcopSay(target, command);
 }
 
 void KonversationApplication::dcopInfo(const QString& string)
 {
     mainWindow->getViewContainer()->appendToFrontmost(i18n("DCOP"), string, 0);
-}
-
-bool KonversationApplication::validateIdentity(IdentityPtr identity, bool interactive)
-{
-    QString errors;
-
-    if (identity->getIdent().isEmpty())
-        errors+=i18n("Please fill in your <b>Ident</b>.<br>");
-
-    if (identity->getRealName().isEmpty())
-        errors+=i18n("Please fill in your <b>Real name</b>.<br>");
-
-    if (identity->getNickname(0).isEmpty())
-        errors+=i18n("Please provide at least one <b>Nickname</b>.<br>");
-
-    if (!errors.isEmpty())
-    {
-        if (interactive)
-        {
-            int result = KMessageBox::warningContinueCancel(0,
-                            i18n("<qt>Your identity \"%1\" is not set up correctly:<br>%2</qt>")
-                                .arg(identity->getName()).arg(errors),
-                            i18n("Identity Settings"),
-                            i18n("Edit Identity..."));
-
-            if (result==KMessageBox::Continue)
-            {
-                identity = mainWindow->editIdentity(identity);
-
-                if (identity && validateIdentity(identity,false))
-                    return true;
-                else
-                    return false;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        return false;
-    }
-
-    return true;
-}
-
-Server* KonversationApplication::connectToServerGroup(const QString& serverGroup)
-{
-    int serverGroupId = Preferences::serverGroupIdByName(serverGroup);
-
-    return connectToServer(serverGroupId);
-}
-
-Server* KonversationApplication::connectToServer(int serverGroupId, const QString& channel, Konversation::ServerSettings quickServer)
-{
-    // Check if a server window with same name and port is already open
-    Server* lookServer = serverList.first();
-    Server* existingServer = 0;
-
-    while (lookServer)
-    {
-      if (lookServer->serverGroupSettings()->id() == serverGroupId)
-      {
-          existingServer = lookServer;
-          break;
-      }
-
-      lookServer = serverList.next();
-    }
-
-    // There's already a connection to this network.
-    if (existingServer)
-    {
-        // The connection is active, and the server list dialog requested
-        // to connect to a specific server.
-        if (existingServer->isConnected() && !quickServer.server().isEmpty())
-        {
-            // This server differs from the server we're presently connected to.
-            if (quickServer.server() != existingServer->getServerName())
-            {
-                int result = KMessageBox::warningContinueCancel(
-                mainWindow,
-                i18n("You are already connected to %1. Do you want to disconnect from '%2' and connect to '%3' instead?")
-                    .arg(existingServer->getServerGroup())
-                    .arg(existingServer->getServerName())
-                    .arg(quickServer.server()),
-                i18n("Already connected to %1").arg(existingServer->getServerGroup()),
-                i18n("Disconnect"),
-                "ReconnectDifferentServer");
-
-                // The user has chosen to connect to this different server
-                // instead of the current one.
-                if (result == KMessageBox::Continue)
-                {
-                    existingServer->disconnect();
-                    existingServer->serverGroupSettings()->clearQuickServerList();
-                    existingServer->serverGroupSettings()->setQuickServerList(quickServer);
-                    existingServer->resetCurrentServerIndex();
-                    existingServer->reconnect();
-                    return existingServer;
-                }
-                // The user wants to keep the current connection alive, so
-                // return the existing connection.
-                else
-                    return existingServer;
-            }
-            // We've gotten a request to connect to the same server we're
-            // already connected to, so return the existing connection.
-            else
-                return existingServer;
-        }
-        // We haven't been told to connect to a specific server and already have
-        // a connection to this network, so return it.
-        else if (existingServer->isConnected() && quickServer.server().isEmpty())
-        {
-            return existingServer;
-        }
-        // The connection is inactive.
-        else if (!existingServer->isConnected())
-        {
-            // We've been told to connect to a specific server. Do so.
-            if (!quickServer.server().isEmpty())
-            {
-                existingServer->serverGroupSettings()->clearQuickServerList();
-                existingServer->serverGroupSettings()->setQuickServerList(quickServer);
-                existingServer->resetCurrentServerIndex();
-                existingServer->reconnect();
-                return existingServer;
-            }
-            // No specific server was part of the request, so reconnect
-            // the old one.
-            else
-            {
-                existingServer->reconnect();
-                return existingServer;
-            }
-        }
-    }
-
-    Konversation::ServerGroupSettingsPtr serverGroup = Preferences::serverGroupById(serverGroupId);
-    IdentityPtr identity = serverGroup->identity();
-
-    if (!identity || !validateIdentity(identity))
-        return 0;
-
-    emit closeServerList();
-
-    bool clearQuickServerList = true;
-
-    // Have we been called with a quickServer? If so, append to list & prevent
-    // simple Server constructor from cleaing its quickServer list like it
-    // would do normally.
-    if (!quickServer.server().isEmpty())
-    {
-        serverGroup->setQuickServerList(quickServer);
-        clearQuickServerList = false;
-    }
-
-    Server* newServer = new Server(mainWindow->getViewContainer(), serverGroupId, clearQuickServerList, channel);
-
-    connect(mainWindow,SIGNAL (startNotifyTimer(int)),newServer,SLOT (startNotifyTimer(int)) );
-    connect(mainWindow,SIGNAL (quitServer()),newServer,SLOT (quitServer()) );
-    connect(newServer, SIGNAL(connectionChangedState(Server*, Server::State)),
-        mainWindow, SIGNAL(serverStateChanged(Server*, Server::State)));
-
-    connect(newServer,SIGNAL (nicksNowOnline(Server*,const QStringList&,bool)),mainWindow,SLOT (setOnlineList(Server*,const QStringList&,bool)) );
-
-    connect(newServer,SIGNAL (deleted(Server*)),this,SLOT (removeServer(Server*)) );
-
-    connect(newServer, SIGNAL(multiServerCommand(const QString&, const QString&)),
-        this, SLOT(sendMultiServerCommand(const QString&, const QString&)));
-    connect(newServer, SIGNAL(awayInsertRememberLine(Server*)), mainWindow, SIGNAL(triggerRememberLines(Server*)));
-
-    serverList.append(newServer);
-
-    return newServer;
-}
-
-void KonversationApplication::quickConnectToServer(const QString& hostName, const QString& port, const QString& channel, const QString& nick, const QString& password, const bool& useSSL)
-{
-    //used for the quick connect dialog and /server command
-
-    IdentityPtr identity;
-    Konversation::ServerGroupSettingsPtr serverGroupOfServer;
-
-    // If server is in an existing group, use that group (first group if server is in multiple groups)
-    if (serverGroupOfServer = Preferences::serverGroupByServer(hostName))
-        identity = serverGroupOfServer->identity();
-    else
-        identity = Preferences::identityByName("Default");
-
-    if (!identity || !validateIdentity(identity))
-        return;
-
-    Server* newServer = new Server(mainWindow->getViewContainer(), hostName, port, channel, nick, password, useSSL);
-
-    connect(mainWindow,SIGNAL (startNotifyTimer(int)),newServer,SLOT (startNotifyTimer(int)) );
-    connect(mainWindow,SIGNAL (quitServer()),newServer,SLOT (quitServer()) );
-    connect(newServer, SIGNAL(connectionChangedState(Server*, Server::State)),
-        mainWindow, SIGNAL(serverStateChanged(Server*, Server::State)));
-
-    connect(newServer,SIGNAL (nicksNowOnline(Server*,const QStringList&,bool)),mainWindow,SLOT (setOnlineList(Server*,const QStringList&,bool)) );
-
-    connect(newServer,SIGNAL (deleted(Server*)),this,SLOT (removeServer(Server*)) );
-
-    connect(newServer, SIGNAL(multiServerCommand(const QString&, const QString&)),
-        this, SLOT(sendMultiServerCommand(const QString&, const QString&)));
-    connect(newServer, SIGNAL(awayInsertRememberLine(Server*)), mainWindow, SIGNAL(triggerRememberLines(Server*)));
-
-    serverList.append(newServer);
-}
-
-Server* KonversationApplication::getServerByName(const QString& name)
-{
-    Server* lookServer=serverList.first();
-
-    while(lookServer)
-    {
-        if(lookServer->getServerName()==name) return lookServer;
-        lookServer=serverList.next();
-    }
-
-    return 0;
-}
-
-Server* KonversationApplication::getServerByServerGroupId(int id)
-{
-    Server* lookServer=serverList.first();
-
-    while(lookServer)
-    {
-        if (lookServer->serverGroupSettings()->id() == id)
-            return lookServer;
-        lookServer=serverList.next();
-    }
-
-    return 0;
-
-}
-
-void KonversationApplication::removeServer(Server* server)
-{
-    serverList.setAutoDelete(false);              // don't delete items when they are removed
-    if(!serverList.remove(server))
-        kdDebug() << "Could not remove " << server->getServerName() << endl;
 }
 
 void KonversationApplication::readOptions()
@@ -639,7 +373,7 @@ void KonversationApplication::readOptions()
             for(it2 = tmp1.begin(); it2 != tmp1.end(); ++it2)
             {
                 config->setGroup((*it2));
-                server.setServer(config->readEntry("Server"));
+                server.setHost(config->readEntry("Server"));
                 server.setPort(config->readNumEntry("Port"));
                 server.setPassword(config->readEntry("Password"));
                 server.setSSLEnabled(config->readBoolEntry("SSLEnabled"));
@@ -884,7 +618,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
 
     for(it = serverGroupList.begin(); it != serverGroupList.end(); ++it)
     {
-        serverlist = (*it)->serverList(true);
+        serverlist = (*it)->serverList();
         servers.clear();
 
         for(it2 = serverlist.begin(); it2 != serverlist.end(); ++it2)
@@ -892,7 +626,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
             groupName = QString("Server %1").arg(index2);
             servers.append(groupName);
             config->setGroup(groupName);
-            config->writeEntry("Server", (*it2).server());
+            config->writeEntry("Server", (*it2).host());
             config->writeEntry("Port", (*it2).port());
             config->writeEntry("Password", (*it2).password());
             config->writeEntry("SSLEnabled", (*it2).SSLEnabled());
@@ -941,31 +675,6 @@ void KonversationApplication::saveOptions(bool updateGUI)
     }
 
     config->deleteGroup("Server List");
-/*
-    Should be done in HighlightConfigController now ...
-    remove this part as soon as we are certain it works
-
-    // Write all highlight entries
-    QPtrList<Highlight> hiList=Preferences::highlightList();
-    int i = 0;
-    for(Highlight* hl = hiList.first(); hl; hl = hiList.next())
-    {
-        config->setGroup(QString("Highlight%1").arg(i));
-        config->writeEntry("Pattern", hl->getPattern());
-        config->writeEntry("RegExp", hl->getRegExp());
-        config->writeEntry("Color", hl->getColor());
-        config->writePathEntry("Sound", hl->getSoundURL().prettyURL());
-        config->writeEntry("AutoText", hl->getAutoText());
-        i++;
-    }
-
-    // Remove unused entries...
-    while(config->hasGroup(QString("Highlight%1").arg(i)))
-    {
-        config->deleteGroup(QString("Highlight%1").arg(i));
-        i++;
-    }
-*/
 
     // Ignore List
     config->deleteGroup("Ignore List");
@@ -1001,6 +710,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
 
 void KonversationApplication::updateNickIcons()
 {
+    QPtrList<Server> serverList = getConnectionManager()->getServerList();
     Server* lookServer=serverList.first();
 
     while(lookServer)
@@ -1051,41 +761,20 @@ void KonversationApplication::clearUrlList()
 void KonversationApplication::openQuickConnectDialog()
 {
     quickConnectDialog = new QuickConnectDialog(mainWindow);
-    connect(quickConnectDialog, SIGNAL(connectClicked(const QString&, const QString&, const QString&, const QString&, const QString&, const bool&)),this, SLOT(quickConnectToServer(const QString&, const QString&, const QString&, const QString&, const QString&,const bool&)));
+    connect(quickConnectDialog, SIGNAL(connectClicked(Konversation::ConnectionFlag, const QString&, const QString&,
+        const QString&, const QString&, const QString&, bool)),
+        m_connectionManager, SLOT(connectTo(Konversation::ConnectionFlag, const QString&, const QString&,
+        const QString&, const QString&, const QString&, bool)));
     quickConnectDialog->show();
 }
 
 void KonversationApplication::sendMultiServerCommand(const QString& command, const QString& parameter)
 {
-    for(Server* server = serverList.first(); server; server = serverList.next())
-    {
+    QPtrList<Server> serverList = getConnectionManager()->getServerList();
+
+    for (Server* server = serverList.first(); server; server = serverList.next())
         server->executeMultiServerCommand(command, parameter);
-    }
 }
-
-void KonversationApplication::dcopConnectToServer(const QString& url, int port, const QString& channel,
-const QString& password)
-{
-    Server* server = getServerByName(url);
-
-    if(server)
-        server->sendJoinCommand(channel);
-    else
-        quickConnectToServer(url, QString::number(port), channel, password);
-}
-
-Konversation::Sound* KonversationApplication::sound()
-{
-    return m_sound;
-}
-
-Images* KonversationApplication::images()
-{
-    return m_images;
-}
-
-// Returns list of pointers to Servers.
-const QPtrList<Server> KonversationApplication::getServerList() { return serverList; }
 
 void KonversationApplication::splitNick_Server(const QString& nick_server, QString &ircnick, QString &serverOrGroup)
 {
@@ -1098,13 +787,14 @@ void KonversationApplication::splitNick_Server(const QString& nick_server, QStri
 
 NickInfoPtr KonversationApplication::getNickInfo(const QString &ircnick, const QString &serverOrGroup)
 {
+    QPtrList<Server> serverList = getConnectionManager()->getServerList();
     NickInfoPtr nickInfo;
     QString lserverOrGroup = serverOrGroup.lower();
     for(Server* lookServer = serverList.first(); lookServer; lookServer = serverList.next())
     {
         if(lserverOrGroup.isEmpty()
             || lookServer->getServerName().lower()==lserverOrGroup
-            || lookServer->getServerGroup().lower()==lserverOrGroup)
+            || lookServer->getDisplayName().lower()==lserverOrGroup)
         {
             nickInfo = lookServer->getNickInfo(ircnick);
             if(nickInfo) return nickInfo;         //If we found one

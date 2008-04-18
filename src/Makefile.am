@@ -3,7 +3,6 @@ SUBDIRS = config linkaddressbook blowfish .
 METASOURCES = AUTO
 
 bin_PROGRAMS = konversation
-bin_SCRIPTS = konversationircprotocolhandler
 
 konversation_SOURCES = konviface.skel konviconfigdialog.cpp konversationstatusbar.cpp \
 	konvisettingsdialog.cpp konversationmainwindow.cpp valuelistviewitem.cpp urlcatcher.cpp \
@@ -32,12 +31,12 @@ konversation_SOURCES = konviface.skel konviconfigdialog.cpp konversationstatusba
 	konvibookmarkmenu.cpp ircviewbox.cpp searchbar.cpp osd_preferences.cpp \
 	theme_preferences.cpp dcc_preferences.cpp alias_preferences.cpp highlight_preferences.cpp \
 	watchednicknames_preferences.cpp quickbuttons_preferences.cpp nicklistbehavior_preferences.cpp \
-	konviiphelper.cpp tabnotifications_preferences.ui \
+	tabnotifications_preferences.ui \
 	multilinetextedit.cpp serverlistview.cpp nicksonlineitem.cpp searchbarbase.ui \
 	autoreplace_preferencesui.ui autoreplace_preferences.cpp viewcontainer.cpp viewtree.cpp \
 	viewtreeitem.cpp servergroupdialogui.ui dcctransfer.cpp dcctransfermanager.cpp \
 	dcctransferdetailedinfopanelui.ui dcctransferdetailedinfopanel.cpp dcccommon.cpp \
-	queuetunerbase.ui queuetuner.cpp ircqueue.cpp
+	queuetunerbase.ui queuetuner.cpp ircqueue.cpp connectionsettings.cpp connectionmanager.cpp
 
 konversation_COMPILE_FIRST = config/preferences_base.h
 konversation_LDADD = $(LIB_KIO) $(LIB_KABC) $(LIB_KIMIFACE) linkaddressbook/liblinkaddressbookui.la blowfish/libblowfish.la config/libkonversationconfig.la

@@ -321,7 +321,7 @@ void DccTransferPanel::resendFile()
             {
                 DccTransferSend* newTransfer = KonversationApplication::instance()->dccTransferManager()->newUpload();
 
-                newTransfer->setServerGroupId( transfer->getServerGroupId() );
+                newTransfer->setConnectionId( transfer->getConnectionId() );
                 newTransfer->setPartnerNick( transfer->getPartnerNick() );
                 newTransfer->setFileURL( transfer->getFileURL() );
                 newTransfer->setFileName( transfer->getFileName() );

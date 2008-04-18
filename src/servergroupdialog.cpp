@@ -114,19 +114,18 @@ namespace Konversation
         m_sortIndex = settings->sortIndex();
         m_expanded = settings->expanded();
         m_enableNotifications = settings->enableNotifications();
-        m_configBacked = settings->isConfigBacked();
         m_mainWidget->m_nameEdit->setText(settings->name());
         m_mainWidget->m_identityCBox->setCurrentText(settings->identity()->getName());
         m_mainWidget->m_commandEdit->setText(settings->connectCommands());
         m_mainWidget->m_autoConnectCBox->setChecked(settings->autoConnectEnabled());
-        m_serverList = settings->serverList(true);
+        m_serverList = settings->serverList();
         m_channelHistory = settings->channelHistory();
         ServerList::iterator it;
         m_mainWidget->m_serverLBox->clear();
 
         for(it = m_serverList.begin(); it != m_serverList.end(); ++it)
         {
-            m_mainWidget->m_serverLBox->insertItem((*it).server());
+            m_mainWidget->m_serverLBox->insertItem((*it).host());
         }
 
         m_channelList = settings->channelList();
@@ -151,7 +150,6 @@ namespace Konversation
         settings->setChannelList(m_channelList);
         settings->setChannelHistory(m_channelHistory);
         settings->setNotificationsEnabled(m_enableNotifications);
-        settings->setConfigBacked(m_configBacked);
         settings->setExpanded(m_expanded);
 
         return settings;
@@ -181,7 +179,7 @@ namespace Konversation
         if(dlg.exec() == KDialog::Accepted)
         {
             ServerSettings server = dlg.serverSettings();
-            m_mainWidget->m_serverLBox->insertItem(server.server());
+            m_mainWidget->m_serverLBox->insertItem(server.host());
             m_serverList.append(server);
             updateServerArrows();
         }
@@ -199,7 +197,7 @@ namespace Konversation
             if(dlg.exec() == KDialog::Accepted)
             {
                 ServerSettings server = dlg.serverSettings();
-                m_mainWidget->m_serverLBox->changeItem(server.server(), current);
+                m_mainWidget->m_serverLBox->changeItem(server.host(), current);
                 m_serverList[current] = server;
             }
         }
@@ -252,7 +250,7 @@ namespace Konversation
         {
             ServerSettings server = m_serverList[current];
             m_mainWidget->m_serverLBox->removeItem(current);
-            m_mainWidget->m_serverLBox->insertItem(server.server(), current - 1);
+            m_mainWidget->m_serverLBox->insertItem(server.host(), current - 1);
             m_mainWidget->m_serverLBox->setCurrentItem(current - 1);
             ServerList::iterator it = m_serverList.remove(m_serverList.at(current));
             --it;
@@ -274,7 +272,7 @@ namespace Konversation
         {
             ServerSettings server = m_serverList[current];
             m_mainWidget->m_serverLBox->removeItem(current);
-            m_mainWidget->m_serverLBox->insertItem(server.server(), current + 1);
+            m_mainWidget->m_serverLBox->insertItem(server.host(), current + 1);
             m_mainWidget->m_serverLBox->setCurrentItem(current + 1);
             ServerList::iterator it = m_serverList.remove(m_serverList.at(current));
             ++it;

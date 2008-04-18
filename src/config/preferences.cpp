@@ -10,7 +10,7 @@
   Copyright (C) 2005 Ismail Donmez <ismail@kde.org>
   Copyright (C) 2005 Peter Simonsson <psn@linux.se>
   Copyright (C) 2005 John Tapsell <johnflux@gmail.com>
-  Copyright (C) 2005-2006 Eike Hein <hein@kde.org>
+  Copyright (C) 2005-2008 Eike Hein <hein@kde.org>
 */
 
 #include "config/preferences.h"
@@ -70,7 +70,7 @@ Preferences::Preferences()
     Konversation::ServerGroupSettingsPtr serverGroup = new Konversation::ServerGroupSettings;
     serverGroup->setName("Freenode");
     Konversation::ServerSettings server;
-    server.setServer("irc.freenode.org");
+    server.setHost("irc.freenode.org");
     server.setPort(8001);
     serverGroup->addServer(server);
     serverGroup->setIdentityId(mIdentity->id());
@@ -78,7 +78,6 @@ Preferences::Preferences()
     channel.setName("#kde");
     serverGroup->addChannel(channel);
     serverGroup->setExpanded(false);
-    serverGroup->setConfigBacked(true);
     addServerGroup(serverGroup);
     setQuickButtonList(defaultQuickButtonList());
     setAutoreplaceList(defaultAutoreplaceList());
@@ -154,29 +153,25 @@ void Preferences::setServerGroupList(const Konversation::ServerGroupList& list)
     self()->mServerGroupList = list;
 
     Konversation::ServerGroupList::iterator it;
-
-    for(it = self()->mServerGroupList.begin(); it != self()->mServerGroupList.end(); ++it)
-        (*it)->setConfigBacked(true);
 }
 
 void Preferences::addServerGroup(Konversation::ServerGroupSettingsPtr serverGroup)
 {
     self()->mServerGroupList.append(serverGroup);
-    serverGroup->setConfigBacked(true);
 }
 
 const Konversation::ServerGroupSettingsPtr Preferences::serverGroupById(int id)
 {
-    if(!self()->mServerGroupList.count())
+    if (!self()->mServerGroupList.count())
     {
         return 0;
     }
 
     Konversation::ServerGroupList::iterator it;
 
-    for(it = self()->mServerGroupList.begin(); it != self()->mServerGroupList.end(); ++it)
+    for (it = self()->mServerGroupList.begin(); it != self()->mServerGroupList.end(); ++it)
     {
-        if((*it)->id() == id)
+        if ((*it)->id() == id)
         {
             return (*it);
         }
@@ -187,18 +182,18 @@ const Konversation::ServerGroupSettingsPtr Preferences::serverGroupById(int id)
 
 const Konversation::ServerGroupSettingsPtr Preferences::serverGroupByServer(const QString& server)
 {
-    if(!self()->mServerGroupList.count())
+    if (!self()->mServerGroupList.count())
     {
         return 0;
     }
 
     Konversation::ServerGroupList::iterator it;
 
-    for(it = self()->mServerGroupList.begin(); it != self()->mServerGroupList.end(); ++it)
+    for (it = self()->mServerGroupList.begin(); it != self()->mServerGroupList.end(); ++it)
     {
         for (uint i = 0; i != (*it)->serverList().count(); i++)
         {
-            if ((*it)->serverByIndex(i).server().lower() == server)
+            if ((*it)->serverByIndex(i).host().lower() == server)
             {
                 return (*it);
             }
@@ -212,7 +207,7 @@ int Preferences::serverGroupIdByName(const QString& serverGroup)
 {
     Konversation::ServerGroupList::iterator it;
 
-    for(it = self()->mServerGroupList.begin(); it != self()->mServerGroupList.end(); ++it)
+    for (it = self()->mServerGroupList.begin(); it != self()->mServerGroupList.end(); ++it)
     {
         if((*it)->name().lower() == serverGroup.lower())
         {
@@ -220,7 +215,7 @@ int Preferences::serverGroupIdByName(const QString& serverGroup)
         }
     }
 
-    return 0;
+    return -1;
 }
 
 bool Preferences::isServerGroup(const QString& server)
@@ -240,19 +235,19 @@ bool Preferences::isServerGroup(const QString& server)
 
 void Preferences::removeServerGroup(int id)
 {
-    if(!self()->mServerGroupList.count())
+    if (!self()->mServerGroupList.count())
     {
         return;
     }
 
     Konversation::ServerGroupList::iterator it;
 
-    for(it = self()->mServerGroupList.begin(); it != self()->mServerGroupList.end(); ++it)
+    for (it = self()->mServerGroupList.begin(); it != self()->mServerGroupList.end(); ++it)
     {
-        if((*it)->id() == id)
+        if ((*it)->id() == id)
         {
             self()->mServerGroupList.remove(it);
-            (*it)->setConfigBacked(false);
+
             return;
         }
     }

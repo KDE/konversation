@@ -47,7 +47,7 @@ DccTransferSend* DccTransferManager::newUpload()
     return transfer;
 }
 
-DccTransferRecv* DccTransferManager::resumeDownload( int serverGroupId, const QString& partnerNick, const QString& fileName, const QString& ownPort, unsigned long position )
+DccTransferRecv* DccTransferManager::resumeDownload( uint connectionId, const QString& partnerNick, const QString& fileName, const QString& ownPort, unsigned long position )
 {
     DccTransferRecv* transfer = 0;
 
@@ -56,7 +56,7 @@ DccTransferRecv* DccTransferManager::resumeDownload( int serverGroupId, const QS
     for ( it = m_recvItems.begin() ; it != m_recvItems.end() ; ++it )
     {
         if ( ( (*it)->getStatus() == DccTransfer::Queued || (*it)->getStatus() == DccTransfer::WaitingRemote ) &&
-             (*it)->getServerGroupId() == serverGroupId &&
+             (*it)->getConnectionId() == connectionId &&
              (*it)->getPartnerNick() == partnerNick &&
              (*it)->getFileName() == fileName &&
              (*it)->isResumed() )
@@ -77,7 +77,7 @@ DccTransferRecv* DccTransferManager::resumeDownload( int serverGroupId, const QS
     return transfer;
 }
 
-DccTransferSend* DccTransferManager::resumeUpload( int serverGroupId, const QString& partnerNick, const QString& fileName, const QString& ownPort, unsigned long position )
+DccTransferSend* DccTransferManager::resumeUpload( uint connectionId, const QString& partnerNick, const QString& fileName, const QString& ownPort, unsigned long position )
 {
     DccTransferSend* transfer = 0;
 
@@ -86,7 +86,7 @@ DccTransferSend* DccTransferManager::resumeUpload( int serverGroupId, const QStr
     for ( it = m_sendItems.begin() ; it != m_sendItems.end() ; ++it )
     {
         if ( ( (*it)->getStatus() == DccTransfer::Queued || (*it)->getStatus() == DccTransfer::WaitingRemote ) &&
-             (*it)->getServerGroupId() == serverGroupId &&
+             (*it)->getConnectionId() == connectionId &&
              (*it)->getPartnerNick() == partnerNick &&
              (*it)->getFileName() == fileName &&
              !(*it)->isResumed() )
@@ -107,9 +107,9 @@ DccTransferSend* DccTransferManager::resumeUpload( int serverGroupId, const QStr
     return transfer;
 }
 
-DccTransferSend* DccTransferManager::startReverseSending( int serverGroupId, const QString& partnerNick, const QString& fileName, const QString& partnerHost, const QString& partnerPort, unsigned long fileSize, const QString& token )
+DccTransferSend* DccTransferManager::startReverseSending( uint connectionId, const QString& partnerNick, const QString& fileName, const QString& partnerHost, const QString& partnerPort, unsigned long fileSize, const QString& token )
 {
-    kdDebug() << "DccTransferManager::startReverseSending(): server group ID: " << serverGroupId << ", partner: " << partnerNick << ", filename: " << fileName << ", partner IP: " << partnerHost << ", parnter port: " << partnerPort << ", filesize: " << fileSize << ", token: " << token << endl;
+    kdDebug() << "DccTransferManager::startReverseSending(): server group ID: " << connectionId << ", partner: " << partnerNick << ", filename: " << fileName << ", partner IP: " << partnerHost << ", parnter port: " << partnerPort << ", filesize: " << fileSize << ", token: " << token << endl;
     DccTransferSend* transfer = 0;
 
     // find applicable one
@@ -118,7 +118,7 @@ DccTransferSend* DccTransferManager::startReverseSending( int serverGroupId, con
     {
         if (
             (*it)->getStatus() == DccTransfer::WaitingRemote &&
-            (*it)->getServerGroupId() == serverGroupId &&
+            (*it)->getConnectionId() == connectionId &&
             (*it)->getPartnerNick() == partnerNick &&
             (*it)->getFileName() == fileName &&
             (*it)->getFileSize() == fileSize &&

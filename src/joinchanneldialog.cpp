@@ -26,40 +26,43 @@ namespace Konversation
 {
 
     JoinChannelDialog::JoinChannelDialog(Server* server, QWidget *parent, const char *name)
-        : KDialogBase(parent, name, true, i18n("Join Channel on %1").arg(server->getServerGroup()), Ok|Cancel, Ok)
+        : KDialogBase(parent, name, true, i18n("Join Channel on %1").arg(server->getDisplayName()), Ok|Cancel, Ok)
     {
         m_server = server;
         m_widget = new JoinChannelUI(this);
         setMainWidget(m_widget);
 
-        m_widget->serverLbl->setText(server->getServerGroup());
+        m_widget->serverLbl->setText(server->getDisplayName());
 
-        ChannelList history = server->serverGroupSettings()->channelHistory();
-        ChannelList::iterator endIt = history.end();
-        const QPtrList<Channel> &channels = server->getChannelList();
-        QPtrListIterator<Channel> chanIt(channels);
-        Channel* chan = 0;
-        bool joined = false;
-
-        for(ChannelList::iterator it = history.begin(); it != endIt; ++it)
+        if (m_server->getServerGroup())
         {
-            chan = chanIt.toFirst();
-            joined = false;
+            ChannelList history = server->getServerGroup()->channelHistory();
+            ChannelList::iterator endIt = history.end();
+            const QPtrList<Channel> &channels = server->getChannelList();
+            QPtrListIterator<Channel> chanIt(channels);
+            Channel* chan = 0;
+            bool joined = false;
 
-            while(chan)
+            for(ChannelList::iterator it = history.begin(); it != endIt; ++it)
             {
-                if(chan->getName() == (*it).name())
+                chan = chanIt.toFirst();
+                joined = false;
+
+                while(chan)
                 {
-                    joined = true;
+                    if(chan->getName() == (*it).name())
+                    {
+                        joined = true;
+                    }
+
+                    ++chanIt;
+                    chan = chanIt.current();
                 }
 
-                ++chanIt;
-                chan = chanIt.current();
-            }
-
-            if(!joined)
-            {
-                m_widget->channelCombo->addToHistory((*it).name());
+                if(!joined)
+                {
+                    m_widget->channelCombo->addToHistory((*it).name());
+                }
             }
         }
 
@@ -90,7 +93,8 @@ namespace Konversation
     void JoinChannelDialog::slotOk()
     {
         // If the channel already exist in the history only the password will be updated.
-        m_server->serverGroupSettings()->appendChannelHistory(ChannelSettings(channel(), password()));
+        if (m_server->getServerGroup())
+            m_server->getServerGroup()->appendChannelHistory(ChannelSettings(channel(), password()));
 
         accept();
     }

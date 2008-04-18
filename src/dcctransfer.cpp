@@ -31,7 +31,7 @@ DccTransfer::DccTransfer( DccType dccType, QObject* parent ) : QObject(parent)
     m_fileSize = 0;
     m_resumed = false;
     m_reverse = false;
-    m_serverGroupId = -1;  // Not configured
+    m_connectionId = -1;  // Not configured
     m_timeLeft = DccTransfer::NotInTransfer;
     m_transferringPosition = 0;
     m_transferStartPosition = 0;
@@ -73,7 +73,7 @@ DccTransfer::DccTransfer( const DccTransfer& obj )
     m_partnerPort = obj.getPartnerPort();
     m_resumed = obj.isResumed();
     m_reverse = obj.isReverse();
-    m_serverGroupId = obj.getServerGroupId();
+    m_connectionId = obj.getConnectionId();
     m_timeLeft = obj.getTimeLeft();
     m_timeOffer = obj.getTimeOffer();
     m_timeTransferFinished = obj.getTimeTransferFinished();
@@ -84,10 +84,10 @@ DccTransfer::DccTransfer( const DccTransfer& obj )
     m_transferStartPosition = obj.getTransferStartPosition();
 }
 
-void DccTransfer::setServerGroupId( int id )
+void DccTransfer::setConnectionId( int id )
 {
     if ( getStatus() == Configuring || getStatus() == Queued )
-        m_serverGroupId = id;
+        m_connectionId = id;
 }
 
 void DccTransfer::setPartnerNick( const QString& nick )
@@ -105,7 +105,7 @@ bool DccTransfer::queue()
     if ( m_fileName.isEmpty() )
         return false;
 
-    if ( m_serverGroupId == -1 || m_partnerNick.isEmpty() )
+    if ( m_connectionId == -1 || m_partnerNick.isEmpty() )
         return false;
 
     setStatus( Queued );
@@ -253,9 +253,9 @@ QDateTime DccTransfer::getTimeOffer() const
     return m_timeOffer;
 }
 
-int DccTransfer::getServerGroupId() const
+int DccTransfer::getConnectionId() const
 {
-    return m_serverGroupId;
+    return m_connectionId;
 }
 
 QString DccTransfer::getOwnIp() const

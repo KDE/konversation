@@ -6,8 +6,8 @@
 */
 
 /*
-  copyright: (C) 2004 by Peter Simonsson
-  email:     psn@linux.se
+  Copyright (C) 2004 Peter Simonsson <psn@linux.se>
+  Copyright (C) 2006-2008 Eike Hein <hein@kde.org>
 */
 
 #include "common.h"
@@ -30,7 +30,7 @@ namespace Konversation
     #include "unicode.cpp"
 
     static QRegExp colorRegExp("((\003([0-9]|0[0-9]|1[0-5])(,([0-9]|0[0-9]|1[0-5])|)|\017)|\x02|\x09|\x13|\x16|\x1f)");
-    static QRegExp urlPattern("((www\\.(?!\\.)|(fish|(f|ht)tp(|s))://)(\\.?[\\d\\w/,\\':~\\?=;#@\\-\\+\\%\\*\\{\\}\\!\\(\\)]|&)+)|"
+    static QRegExp urlPattern("((www\\.(?!\\.)|(fish|irc|(f|sf|ht)tp(|s))://)(\\.?[\\d\\w/,\\':~\\?=;#@\\-\\+\\%\\*\\{\\}\\!\\(\\)]|&)+)|"
         "([-.\\d\\w]+@[-.\\d\\w]{2,}\\.[\\w]{2,})");
     static QRegExp tdlPattern("(.*)\\.(\\w+),$");
 

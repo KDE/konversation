@@ -10,7 +10,7 @@
   Copyright (C) 2005 Ismail Donmez <ismail@kde.org>
   Copyright (C) 2005 Peter Simonsson <psn@linux.se>
   Copyright (C) 2005 John Tapsell <johnflux@gmail.com>
-  Copyright (C) 2005-2006 Eike Hein <hein@kde.org>
+  Copyright (C) 2005-2008 Eike Hein <hein@kde.org>
 */
 
 #ifndef KONVERSATIONAPPLICATION_H
@@ -27,6 +27,7 @@
 
 class QCString;
 
+class ConnectionManager;
 class DccTransferManager;
 class KonversationMainWindow;
 class KonvDCOP;
@@ -67,7 +68,9 @@ class KonversationApplication : public KUniqueApplication
          *  Note to any MDI developer - get this to return any of the windows, or some
          *  'main' one.
          */
-        KonversationMainWindow *getMainWindow();
+        KonversationMainWindow* getMainWindow() { return mainWindow; }
+
+        ConnectionManager* getConnectionManager() { return m_connectionManager; }
 
         // HACK
         void showQueueTuner(bool);
@@ -80,9 +83,6 @@ class KonversationApplication : public KUniqueApplication
         ~KonversationApplication();
 
         static KonversationApplication* instance();
-
-        Server* getServerByName(const QString& name);
-        Server* getServerByServerGroupId(int id);
 
         /** For dcop and addressbook, a user can be specified as user@irc.server.net
          *  or user\@servergroup or using the unicode separator symbol 0xE120 instead
@@ -104,21 +104,16 @@ class KonversationApplication : public KUniqueApplication
          */
         NickInfoPtr getNickInfo(const QString &ircnick, const QString &serverOrGroup);
 
-        bool validateIdentity(IdentityPtr identity, bool interactive=true);
-
         DccTransferManager* dccTransferManager() { return m_dccTransferManager; }
 
         OSDWidget* osd;
 
-        Konversation::Sound* sound();
+        Konversation::Sound* sound() { return m_sound; }
 
-        Images* images();
+        Images* images() { return m_images; }
 
         /* Updates all nick icons according to new theme */
         void updateNickIcons();
-
-        // Returns list of pointers to Servers.
-        const QPtrList<Server> getServerList();
 
         Konversation::NotificationHandler* notificationHandler() const { return m_notificationHandler; }
 
@@ -127,30 +122,13 @@ class KonversationApplication : public KUniqueApplication
 
         int newInstance();
 
-        void delayedConnectToServer(const QString& hostName,
-            const QString& port = "6667",
-            const QString& channel="",
-            const QString& nick = Preferences::nickname(0),
-            const QString& password="",
-            const bool& useSSL=false
-            );
 
     signals:
         void catchUrl(const QString& who,const QString& url);
         void serverGroupsChanged(const Konversation::ServerGroupSettings* serverGroup);
-        void closeServerList();
+
 
     public slots:
-        Server* connectToServerGroup(const QString& serverGroup);
-        Server* connectToServer(int serverGroupId, const QString& channel = QString::null,
-                                Konversation::ServerSettings quickServer = Konversation::ServerSettings());
-        void quickConnectToServer(const QString& hostName,
-            const QString& port = "6667",
-            const QString& channel="",
-            const QString& nick = Preferences::nickname(0),
-            const QString& password="",
-            const bool& useSSL=false
-            );
         void readOptions();
         void saveOptions(bool updateGUI=true);
 
@@ -158,20 +136,20 @@ class KonversationApplication : public KUniqueApplication
         void clearUrlList();
         /** Send a message to all servers that you are away. */
         void toggleAway();
-        void dcopConnectToServer(const QString& url, int port, const QString& channel, const QString& password);
+
 
     protected slots:
         void openQuickConnectDialog();
-        void removeServer(Server* server);
 
         void dcopMultiServerRaw(const QString &command);
-        void dcopRaw(const QString& server, const QString &command);
-        void dcopSay(const QString& server,const QString& target,const QString& command);
+        void dcopRaw(const QString& connection, const QString &command);
+        void dcopSay(const QString& connection, const QString& target, const QString& command);
         void dcopInfo(const QString& string);
         void sendMultiServerCommand(const QString& command, const QString& parameter);
 
+
     private:
-        QPtrList<Server> serverList;
+        ConnectionManager* m_connectionManager;
         DccTransferManager* m_dccTransferManager;
         QStringList urlList;
         KonvDCOP* dcopObject;
@@ -184,15 +162,6 @@ class KonversationApplication : public KUniqueApplication
         Konversation::NotificationHandler* m_notificationHandler;
 
         QStringList colorList;
-
-        // For command line arguments
-        QString m_hostName;
-        QString m_port;
-        QString m_channel;
-        QString m_nick;
-        QString m_password;
-        bool m_useSSL;
-        bool m_connectDelayed;
 };
 
 #endif

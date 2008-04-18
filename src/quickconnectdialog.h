@@ -15,6 +15,8 @@
 #ifndef QUICKCONNECTDIALOG_H
 #define QUICKCONNECTDIALOG_H
 
+#include "common.h"
+
 #include <kdialogbase.h>
 
 
@@ -30,12 +32,13 @@ class QuickConnectDialog : public KDialogBase
         ~QuickConnectDialog();
 
     signals:
-        void connectClicked(const QString& hostName,
-            const QString& port,
-            const QString& channel,
-            const QString& nick,
-            const QString& password,
-            const bool& useSSL
+        void connectClicked(Konversation::ConnectionFlag flag,
+                            const QString& hostName,
+                            const QString& port,
+                            const QString& password,
+                            const QString& nick,
+                            const QString& channel,
+                            bool useSSL
             );
 
     protected slots:

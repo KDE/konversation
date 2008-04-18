@@ -7,7 +7,7 @@
 
 /*
   Copyright (C) 2002 Dario Abatianni <eisfuchs@tigress.com>
-  Copyright (C) 2006-2007 Eike Hein <hein@kde.org>
+  Copyright (C) 2006-2008 Eike Hein <hein@kde.org>
 */
 
 #include "chatwindow.h"
@@ -124,12 +124,6 @@ void ChatWindow::serverOnline(bool state)
     emit online(this,state);
 }
 
-void ChatWindow::setIdentity(const Identity *newIdentity)
-{
-    if(!newIdentity) return;
-    identity=*newIdentity;
-}
-
 void ChatWindow::setTextView(IRCView* newView)
 {
     textView = newView;
@@ -229,10 +223,10 @@ void ChatWindow::setLogfileName(const QString& name)
         {
             logName = name + ".log";
         }
-        else if(m_server)
+        else if (m_server)
         {
             // make sure that no path delimiters are in the name
-            logName = QString(m_server->getServerGroup().lower()).append('_').append(name).append(".log").replace('/','_');
+            logName = QString(m_server->getDisplayName().lower()).append('_').append(name).append(".log").replace('/','_');
         }
 
         // load backlog to show

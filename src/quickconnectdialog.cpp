@@ -89,16 +89,18 @@ QuickConnectDialog::~QuickConnectDialog()
 
 void QuickConnectDialog::slotOk()
 {
-    if(!hostNameInput->text().isEmpty() &&
+    if (!hostNameInput->text().isEmpty() &&
         !portInput->text().isEmpty() &&
         !nickInput->text().isEmpty())
     {
-        emit connectClicked(hostNameInput->text().stripWhiteSpace(),
-            portInput->text(),
-            "",
-            nickInput->text(),
-            passwordInput->text(),
-            sslCheckBox->isChecked() ? true : false);
+
+        emit connectClicked(Konversation::PromptToReuseConnection,
+                            hostNameInput->text().stripWhiteSpace(),
+                            portInput->text(),
+                            passwordInput->text(),
+                            nickInput->text(),
+                            "",
+                            sslCheckBox->isChecked());
         delayedDestruct();
     }
 }

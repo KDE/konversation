@@ -6,8 +6,8 @@
 */
 
 /*
-  copyright: (C) 2004 by Peter Simonsson
-  email:     psn@linux.se
+  Copyright (C) 2004, 2007 Peter Simonsson <psn@linux.se>
+  Copyright (C) 2006-2008 Eike Hein <hein@kde.org>
 */
 
 #ifndef KONVERSATIONSERVERGROUPSETTINGS_H
@@ -74,12 +74,9 @@ namespace Konversation
             void setServerList(const ServerList& list);
             void addServer(const ServerSettings& settings) { m_serverList.append(settings); }
             void removeServer(const ServerSettings settings);
-            ServerList serverList(bool hideQuickServer=false) const;
+            ServerList serverList() const { return m_serverList; }
             ServerSettings serverByIndex(unsigned int index) const;
 
-            ServerList quickServerList() const { return m_quickServerList; }
-            void setQuickServerList(const ServerSettings& settings) { m_quickServerList.append(settings); }
-            void clearQuickServerList() { m_quickServerList.clear(); }
 
             void setIdentityId(int identityId) { m_identityId = identityId; }
             int identityId() const { return m_identityId; }
@@ -114,15 +111,11 @@ namespace Konversation
             void setExpanded(bool enable) { m_expanded = enable; }
             bool expanded() const { return m_expanded; }
 
-            void setConfigBacked(bool configBacked);
-            bool isConfigBacked() const;
-
         private:
             static int s_availableId;
             int m_sortIndex;
             QString m_name;
             ServerList m_serverList;
-            ServerList m_quickServerList;
             int m_identityId;
             ChannelList m_channelList;
             ChannelList m_channelHistory;
@@ -132,7 +125,6 @@ namespace Konversation
             int m_id;
             bool m_enableNotifications;
             bool m_expanded;
-            bool m_configBacked;
     };
 
 }

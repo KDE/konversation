@@ -7,7 +7,7 @@
 
 /*
   Copyright (C) 2002 Dario Abatianni <eisfuchs@tigress.com>
-  Copyright (C) 2005-2006 Eike Hein <hein@kde.org>
+  Copyright (C) 2005-2008 Eike Hein <hein@kde.org>
 */
 
 #include "query.h"
@@ -371,9 +371,14 @@ void Query::popup(int id)
             break;
         }
         case Konversation::AddNotify:
-            if (!Preferences::isNotify(m_server->serverGroupSettings()->id(), name))
-                Preferences::addNotify(m_server->serverGroupSettings()->id(),name);
+        {
+            if (m_server->getServerGroup())
+            {
+                if (!Preferences::isNotify(m_server->getServerGroup()->id(), name))
+                    Preferences::addNotify(m_server->getServerGroup()->id(),name);
+            }
             break;
+        }
         case Konversation::DccSend:
             sendQueryText(Preferences::commandChar()+"DCC SEND "+name);
             break;
@@ -530,12 +535,12 @@ void Query::appendInputText(const QString& s, bool fromCursor)
                                                   // virtual
 void Query::setChannelEncoding(const QString& encoding)
 {
-    Preferences::setChannelEncoding(m_server->getServerGroup(), getName(), encoding);
+    Preferences::setChannelEncoding(m_server->getDisplayName(), getName(), encoding);
 }
 
 QString Query::getChannelEncoding()               // virtual
 {
-    return Preferences::channelEncoding(m_server->getServerGroup(), getName());
+    return Preferences::channelEncoding(m_server->getDisplayName(), getName());
 }
 
 QString Query::getChannelEncodingDefaultDesc()    // virtual

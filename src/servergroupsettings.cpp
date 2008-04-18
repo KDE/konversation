@@ -6,8 +6,8 @@
 */
 
 /*
-  copyright: (C) 2004 by Peter Simonsson
-  email:     psn@linux.se
+  Copyright (C) 2004, 2007 Peter Simonsson <psn@linux.se>
+  Copyright (C) 2006-2008 Eike Hein <hein@kde.org>
 */
 
 #include "servergroupsettings.h"
@@ -28,7 +28,6 @@ namespace Konversation
         m_autoConnect = false;
         m_identityId = 0;
         m_enableNotifications = true;
-        m_configBacked = false;
     }
 
     ServerGroupSettings::ServerGroupSettings(int id)
@@ -48,7 +47,6 @@ namespace Konversation
         m_autoConnect = false;
         m_identityId = 0;
         m_enableNotifications = true;
-        m_configBacked = false;
     }
 
     ServerGroupSettings::ServerGroupSettings(const ServerGroupSettings& settings)
@@ -61,7 +59,6 @@ namespace Konversation
         setConnectCommands(settings.connectCommands());
         setAutoConnectEnabled(settings.autoConnectEnabled());
         setNotificationsEnabled(settings.enableNotifications());
-        setConfigBacked(settings.isConfigBacked());
         m_id = settings.id();
         m_sortIndex = settings.sortIndex();
     }
@@ -76,23 +73,10 @@ namespace Konversation
         m_autoConnect = false;
         m_identityId = 0;
         m_enableNotifications = true;
-        m_configBacked = false;
     }
 
     ServerGroupSettings::~ServerGroupSettings()
     {
-    }
-
-    ServerList ServerGroupSettings::serverList(bool hideQuickServer) const
-    {
-        if (!m_quickServerList.isEmpty() && !hideQuickServer)
-        {
-            return m_quickServerList+m_serverList;
-        }
-        else
-        {
-            return m_serverList;
-        }
     }
 
     void ServerGroupSettings::setServerList(const ServerList& list)
@@ -194,24 +178,12 @@ namespace Konversation
         return ChannelSettings(channelName);
     }
 
-    bool ServerGroupSettings::isConfigBacked() const
-    {
-        return m_configBacked;
-    }
-
-    void ServerGroupSettings::setConfigBacked(bool configBacked)
-    {
-        m_configBacked = configBacked;
-    }
-
     //
     // ChannelSettings
     //
 
     ChannelSettings::ChannelSettings()
     {
-        setName("");
-        setPassword("");
         setNotificationsEnabled(true);
     }
 
@@ -225,7 +197,6 @@ namespace Konversation
     ChannelSettings::ChannelSettings(const QString& name)
     {
         setName(name);
-        setPassword("");
         setNotificationsEnabled(true);
     }
 

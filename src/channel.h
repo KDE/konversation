@@ -8,7 +8,7 @@
 /*
   Copyright (C) 2002 Dario Abatianni <eisfuchs@tigress.com>
   Copyright (C) 2004-2006 Peter Simonsson <psn@linux.se>
-  Copyright (C) 2006 Eike Hein <hein@kde.org>
+  Copyright (C) 2006-2008 Eike Hein <hein@kde.org>
 */
 
 #ifndef CHANNEL_H
@@ -96,7 +96,7 @@ class Channel : public ChatWindow
         QString getPassword() const;
 
         virtual void setServer(Server* newServer);
-        virtual void setIdentity(const Identity *newIdentity);
+        void setIdentity(const IdentityPtr identity);
 
         bool rejoinable();
 //Unsure of future placement and/or continued existence of these members

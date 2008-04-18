@@ -16,6 +16,7 @@
 #define KONV_DCOP_H
 
 #include "konviface.h"
+#include "common.h"
 
 #include <qobject.h>
 #include <dcopobject.h>
@@ -26,20 +27,28 @@ class KonvDCOP : public QObject, virtual public KonvIface
 {
     Q_OBJECT
 
-        public:
+    public:
         KonvDCOP();
 
         QString getNickname (const QString &server);
         QString getAnyNickname ();
         QString getChannelEncoding(const QString& server, const QString& channel);
 
-        signals:
+    signals:
         void dcopSay(const QString& server,const QString& target,const QString& command);
         void dcopInfo(const QString& string);
         void dcopInsertMarkerLine();
-        void dcopConnectToServer(const QString& url, int port, const QString& channel, const QString& password);
         void dcopRaw(const QString& server, const QString& command);
         void dcopMultiServerRaw(const QString& command);
+
+        void connectTo(Konversation::ConnectionFlag flag,
+                       const QString& hostName,
+                       const QString& port = "",
+                       const QString& password = "",
+                       const QString& nick = "",
+                       const QString& channel = "",
+                       bool useSSL = false
+        );
 
     public slots:
         void setAway(const QString &awaymessage);
@@ -52,7 +61,7 @@ class KonvDCOP : public QObject, virtual public KonvIface
         void debug(const QString& string);
         void error(const QString& string);
         void insertMarkerLine();
-        void connectToServer(const QString& url, int port, const QString& channel, const QString& password);
+        void connectToServer(const QString& adress, int port, const QString& channel, const QString& password);
         QStringList listServers();
         QStringList listConnectedServers();
 };

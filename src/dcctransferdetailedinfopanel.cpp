@@ -15,6 +15,7 @@
 #include "dcctransferrecv.h"
 #include "dcctransferpanelitem.h"
 #include "konversationapplication.h"
+#include "connectionmanager.h"
 #include "server.h"
 
 #include <qlabel.h>
@@ -86,10 +87,10 @@ void DccTransferDetailedInfoPanel::updateView()
 
     // Partner:
     QString partnerInfoServerName;
-    if ( transfer->getServerGroupId() == -1 )
+    if ( transfer->getConnectionId() == -1 )
         partnerInfoServerName = i18n( "Unknown server" );
-    else if ( KonversationApplication::instance()->getServerByServerGroupId( transfer->getServerGroupId() ) )
-        partnerInfoServerName = KonversationApplication::instance()->getServerByServerGroupId( transfer->getServerGroupId() )->getServerName();
+    else if ( KonversationApplication::instance()->getConnectionManager()->getServerByConnectionId( transfer->getConnectionId() ) )
+        partnerInfoServerName = KonversationApplication::instance()->getConnectionManager()->getServerByConnectionId( transfer->getConnectionId() )->getServerName();
     else
         partnerInfoServerName = i18n( "Unknown server" );
     QString partnerInfo( i18n( "%1 on %2" )

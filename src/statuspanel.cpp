@@ -7,7 +7,7 @@
 
 /*
   Copyright (C) 2003 Dario Abatianni <eisfuchs@tigress.com>
-  Copyright (C) 2006 Eike Hein <hein@kde.org>
+  Copyright (C) 2006-2008 Eike Hein <hein@kde.org>
 */
 
 #include "statuspanel.h"
@@ -206,12 +206,9 @@ void StatusPanel::setName(const QString& newName)
 
 void StatusPanel::updateName()
 {
-    if (getServer()->serverGroupSettings())
-    {
-        QString newName = getServer()->serverGroupSettings()->name();
-        setName(newName);
-        setLogfileName(newName.lower());
-    }
+    QString newName = getServer()->getDisplayName();
+    setName(newName);
+    setLogfileName(newName.lower());
 }
 
 void StatusPanel::sendFileMenu()
@@ -254,7 +251,8 @@ bool StatusPanel::searchView()       { return true; }
 
 void StatusPanel::setNotificationsEnabled(bool enable)
 {
-    m_server->serverGroupSettings()->setNotificationsEnabled(enable);
+    if (m_server->getServerGroup()) m_server->getServerGroup()->setNotificationsEnabled(enable);
+
     m_notificationsEnabled = enable;
 }
 
@@ -279,14 +277,13 @@ bool StatusPanel::closeYourself()
             "QuitServerTab");
     }
 
-    if(result==KMessageBox::Continue)
+    if (result==KMessageBox::Continue)
     {
-        m_server->serverGroupSettings()->setNotificationsEnabled(notificationsEnabled());
+        if (m_server->getServerGroup()) m_server->getServerGroup()->setNotificationsEnabled(notificationsEnabled());
         m_server->quitServer();
-        //Why are these separate?  why would deleting the server not quit it? FIXME
+        // This will delete the status view as well.
         delete m_server;
-        m_server=0;
-        deleteLater();                            //NO NO!  Deleting the server should delete this! FIXME
+        m_server = 0;
         return true;
     }
     return false;
@@ -312,9 +309,7 @@ void StatusPanel::changeNickname(const QString& newNickname)
 
 void StatusPanel::emitUpdateInfo()
 {
-    QString info = m_server->getServerGroup();
-
-    emit updateInfo(info);
+    emit updateInfo(getServer()->getDisplayName());
 }
 
 void StatusPanel::appendInputText(const QString& text, bool fromCursor)
@@ -335,12 +330,12 @@ void StatusPanel::appendInputText(const QString& text, bool fromCursor)
                                                   // virtual
 void StatusPanel::setChannelEncoding(const QString& encoding)
 {
-    Preferences::setChannelEncoding(m_server->getServerGroup(), ":server", encoding);
+    Preferences::setChannelEncoding(m_server->getDisplayName(), ":server", encoding);
 }
 
 QString StatusPanel::getChannelEncoding()         // virtual
 {
-    return Preferences::channelEncoding(m_server->getServerGroup(), ":server");
+    return Preferences::channelEncoding(m_server->getDisplayName(), ":server");
 }
 
                                                   // virtual
@@ -369,16 +364,13 @@ void StatusPanel::showNicknameBox(bool show)
     }
 }
 
-void StatusPanel::setIdentity(const Identity *newIdentity)
+void StatusPanel::setIdentity(const IdentityPtr identity)
 {
-    if(!newIdentity)
+    if (identity)
     {
-        return;
+        nicknameCombobox->clear();
+        nicknameCombobox->insertStringList(identity->getNicknameList());
     }
-
-    ChatWindow::setIdentity(newIdentity);
-    nicknameCombobox->clear();
-    nicknameCombobox->insertStringList(newIdentity->getNicknameList());
 }
 
 void StatusPanel::popupCommand(int command)

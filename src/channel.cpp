@@ -8,7 +8,7 @@
 /*
   Copyright (C) 2002 Dario Abatianni <eisfuchs@tigress.com>
   Copyright (C) 2004-2006 Peter Simonsson <psn@linux.se>
-  Copyright (C) 2006 Eike Hein <hein@kde.org>
+  Copyright (C) 2006-2008 Eike Hein <hein@kde.org>
 */
 
 #include "channel.h"
@@ -437,7 +437,7 @@ void Channel::popupCommand(int id)
                     if(id == Konversation::AddressbookDelete)
                     {
                         KABC::Addressee addr = (*it)->getNickInfo()->getAddressee();
-                        addressbook->unassociateNick(addr, (*it)->getNickname(), m_server->getServerName(), m_server->getServerGroup());
+                        addressbook->unassociateNick(addr, (*it)->getNickname(), m_server->getServerName(), m_server->getDisplayName());
                     }
                     else
                     {
@@ -449,7 +449,7 @@ void Channel::popupCommand(int id)
                         else
                             addr.setGivenName(nickInfo->getRealName());
                         addr.setNickName(nickInfo->getNickname());
-                        addressbook->associateNickAndUnassociateFromEveryoneElse(addr, (*it)->getNickname(), m_server->getServerName(), m_server->getServerGroup());
+                        addressbook->associateNickAndUnassociateFromEveryoneElse(addr, (*it)->getNickname(), m_server->getServerName(), m_server->getDisplayName());
                     }
                 }
                 addressbook->saveTicket(); // This will refresh the nicks automatically for us. At least, if it doesn't, it's a bug :)
@@ -593,12 +593,17 @@ void Channel::popupCommand(int id)
             break;
         }
         case Konversation::AddNotify:
-            for (QStringList::Iterator it=nickList.begin(); it!=nickList.end(); ++it)
+        {
+            if (m_server->getServerGroup())
             {
-                if (!Preferences::isNotify(m_server->serverGroupSettings()->id(), (*it)))
-                    Preferences::addNotify(m_server->serverGroupSettings()->id(), (*it));
+                for (QStringList::Iterator it=nickList.begin(); it!=nickList.end(); ++it)
+                {
+                    if (!Preferences::isNotify(m_server->getServerGroup()->id(), (*it)))
+                        Preferences::addNotify(m_server->getServerGroup()->id(), (*it));
+                }
             }
             break;
+        }
     } // switch
 
     if (!pattern.isEmpty())
@@ -841,7 +846,9 @@ void Channel::setName(const QString& newName)
 
 bool Channel::autoJoin()
 {
-    Konversation::ChannelList channelList = m_server->serverGroupSettings()->channelList();
+    if (!m_server->getServerGroup()) return false;
+
+    Konversation::ChannelList channelList = m_server->getServerGroup()->channelList();
 
     if (!channelList.empty())
         return channelList.find(channelSettings()) != channelList.end();
@@ -893,10 +900,14 @@ void Channel::setAutoJoin(bool autojoin)
             }
         }
 
-        m_server->serverGroupSettings()->addChannel(channelSettings(), before);
+        if (m_server->getServerGroup())
+            m_server->getServerGroup()->addChannel(channelSettings(), before);
     }
     else
-        m_server->serverGroupSettings()->removeChannel(channelSettings());
+    {
+        if (m_server->getServerGroup())
+            m_server->getServerGroup()->removeChannel(channelSettings());
+    }
 }
 
 
@@ -2595,12 +2606,12 @@ void Channel::processPendingNicks()
 
 void Channel::setChannelEncoding(const QString& encoding) // virtual
 {
-    Preferences::setChannelEncoding(m_server->getServerGroup(), getName(), encoding);
+    Preferences::setChannelEncoding(m_server->getDisplayName(), getName(), encoding);
 }
 
 QString Channel::getChannelEncoding() // virtual
 {
-    return Preferences::channelEncoding(m_server->getServerGroup(), getName());
+    return Preferences::channelEncoding(m_server->getDisplayName(), getName());
 }
 
 QString Channel::getChannelEncodingDefaultDesc()  // virtual
@@ -2659,16 +2670,13 @@ void Channel::sortNickList()
     }
 }
 
-void Channel::setIdentity(const Identity *newIdentity)
+void Channel::setIdentity(const IdentityPtr identity)
 {
-  if(!newIdentity)
-  {
-    return;
-  }
-
-  ChatWindow::setIdentity(newIdentity);
-  nicknameCombobox->clear();
-  nicknameCombobox->insertStringList(newIdentity->getNicknameList());
+    if (identity)
+    {
+        nicknameCombobox->clear();
+        nicknameCombobox->insertStringList(identity->getNicknameList());
+    }
 }
 
 bool Channel::eventFilter(QObject* watched, QEvent* e)

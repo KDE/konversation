@@ -10,7 +10,7 @@
   Copyright (C) 2005 Ismail Donmez <ismail@kde.org>
   Copyright (C) 2005 Peter Simonsson <psn@linux.se>
   Copyright (C) 2005 John Tapsell <johnflux@gmail.com>
-  Copyright (C) 2005-2007 Eike Hein <hein@kde.org>
+  Copyright (C) 2005-2008 Eike Hein <hein@kde.org>
 */
 
 #ifndef _KONVERSATIONMAINWINDOW_H_
@@ -71,8 +71,7 @@ class KonversationMainWindow : public KMainWindow
         void showQuickConnectDialog();
         void nicksNowOnline(Server*);
         void endNotification();
-        void quitServer();
-        void serverStateChanged(Server* server, Server::State state);
+        void serverStateChanged(Server* server, Konversation::ConnectionState state);
         void triggerRememberLine();
         void triggerRememberLines(Server*);
         void cancelRememberLine();
@@ -123,8 +122,6 @@ class KonversationMainWindow : public KMainWindow
         void showEvent(QShowEvent* e);
         void hideEvent(QHideEvent* e);
         void leaveEvent(QEvent* e);
-
-        void openURL(const QString& url, const QString& title);
 
     protected:
         int confirmQuit();

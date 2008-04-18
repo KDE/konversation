@@ -6,9 +6,10 @@
 */
 
 /*
-  copyright: (C) 2004 by Peter Simonsson
-  email:     psn@linux.se
+  Copyright (C) 2004 Peter Simonsson <psn@linux.se>
+  Copyright (C) 2008 Eike Hein <hein@kde.org>
 */
+
 #ifndef KONVERSATIONSERVERSETTINGS_H
 #define KONVERSATIONSERVERSETTINGS_H
 
@@ -22,11 +23,11 @@ namespace Konversation
         public:
             ServerSettings();
             ServerSettings(const ServerSettings& settings);
-            explicit ServerSettings(const QString& server);
+            explicit ServerSettings(const QString& host);
             ~ServerSettings();
 
-            void setServer(const QString& server);
-            QString server() const { return m_server; }
+            void setHost(const QString& host);
+            QString host() const { return m_host; }
 
             void setPort(int port) { m_port = port; }
             int port() const { return m_port;}
@@ -40,7 +41,7 @@ namespace Konversation
             bool operator== (const ServerSettings& settings) const;
 
         private:
-            QString m_server;
+            QString m_host;
             int m_port;
             QString m_password;
             bool m_SSLEnabled;

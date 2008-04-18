@@ -6,8 +6,8 @@
 */
 
 /*
-  copyright: (C) 2004 by Peter Simonsson
-  email:     psn@linux.se
+  Copyright (C) 2004 Peter Simonsson <psn@linux.se>
+  Copyright (C) 2006-2008 Eike Hein <hein@kde.org>
 */
 
 #ifndef COMMON_H
@@ -35,6 +35,22 @@ namespace Konversation
         tnfSystem,
         tnfControl,
         tnfNone
+    };
+
+    enum ConnectionState
+    {
+        SSNeverConnected,
+        SSDeliberatelyDisconnected,
+        SSInvoluntarilyDisconnected,
+        SSConnecting,
+        SSConnected
+    };
+
+    enum ConnectionFlag 
+    {
+        SilentlyReuseConnection,
+        PromptToReuseConnection,
+        CreateNewConnection
     };
 }
 #endif

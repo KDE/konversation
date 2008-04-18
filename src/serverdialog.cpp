@@ -70,7 +70,7 @@ namespace Konversation
 
     void ServerDialog::setServerSettings(const ServerSettings& server)
     {
-        m_serverEdit->setText(server.server());
+        m_serverEdit->setText(server.host());
         m_portSBox->setValue(server.port());
         m_passwordEdit->setText(server.password());
         m_sslChBox->setChecked(server.SSLEnabled());
@@ -79,7 +79,7 @@ namespace Konversation
     ServerSettings ServerDialog::serverSettings()
     {
         ServerSettings server;
-        server.setServer(m_serverEdit->text());
+        server.setHost(m_serverEdit->text());
         server.setPort(m_portSBox->value());
         server.setPassword(m_passwordEdit->text());
         server.setSSLEnabled(m_sslChBox->isChecked());

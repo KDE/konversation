@@ -10,7 +10,7 @@
   Copyright (C) 2005 Ismail Donmez <ismail@kde.org>
   Copyright (C) 2005 Peter Simonsson <psn@linux.se>
   Copyright (C) 2005 John Tapsell <johnflux@gmail.com>
-  Copyright (C) 2005-2006 Eike Hein <hein@kde.org>
+  Copyright (C) 2005-2008 Eike Hein <hein@kde.org>
 */
 
 #include "outputfilter.h"
@@ -20,7 +20,6 @@
 #include "server.h"
 #include "irccharsets.h"
 #include "linkaddressbook/addressbook.h"
-#include "konviiphelper.h"
 #include "query.h"
 
 #include <qstringlist.h>
@@ -107,7 +106,7 @@ namespace Konversation
         QString text = inputLine; // the text we'll send, currently in Unicode
         QStringList finals; // The strings we're going to output
 
-        QString channelCodecName=Preferences::channelEncoding(m_server->getServerGroup(), destination);
+        QString channelCodecName=Preferences::channelEncoding(m_server->getDisplayName(), destination);
         //Get the codec we're supposed to use. This must not fail. (not verified)
         QTextCodec* codec;
 
@@ -1056,10 +1055,14 @@ namespace Konversation
     {
         OutputFilterResult result;
 
-        QString groupName = m_server->getServerGroup();
-        int serverGroupId = m_server->serverGroupSettings()->id();
+        QString groupName = m_server->getDisplayName();
 
-        if (!parameter.isEmpty())
+        int serverGroupId = -1;
+
+        if (m_server->getServerGroup())
+            serverGroupId = m_server->getServerGroup()->id();
+
+        if (!parameter.isEmpty() && serverGroupId != -1)
         {
             QStringList list = QStringList::split(' ', parameter);
 
@@ -1078,7 +1081,7 @@ namespace Konversation
         }
 
         // show (new) notify list to user
-        QString list = Preferences::notifyStringByGroupName(groupName) + ' ' + Konversation::Addressbook::self()->allContactsNicksForServer(m_server->getServerName(), m_server->getServerGroup()).join(" ");
+        QString list = Preferences::notifyStringByGroupName(groupName) + ' ' + Konversation::Addressbook::self()->allContactsNicksForServer(m_server->getServerName(), m_server->getDisplayName()).join(" ");
 
         result.typeString = i18n("Notify");
 
@@ -1509,10 +1512,8 @@ namespace Konversation
 
     void OutputFilter::parseServer(const QString& parameter)
     {
-        if(parameter.isEmpty())
-        {
+        if (parameter.isEmpty() && !m_server->isConnected() && !m_server->isConnecting())
             emit reconnectServer();
-        }
         else
         {
             QStringList splitted = QStringList::split(" ", parameter);
@@ -1520,51 +1521,17 @@ namespace Konversation
             QString port = "6667";
             QString password;
 
-            // 'hostname port password'
-            if (splitted.count()==3) 
+            if (splitted.count() == 3)
+                emit connectTo(Konversation::CreateNewConnection, splitted[0], splitted[1], splitted[2]);
+            else if (splitted.count() == 2)
             {
-                KonviIpHelper hostParser(host);
-                host = hostParser.host();
-
-                port = splitted[1];
-                password = splitted[2];
-            }
-            // 'hostname:port password' or 'hostname port'
-            else if (splitted.count()==2) 
-            {
-                KonviIpHelper hostParser(host);
-                host = hostParser.host();
-
-                if (!hostParser.port().isEmpty())
-                {
-                    port = hostParser.port();
-                    password = splitted[1];
-                }
+                if (splitted[0].contains(QRegExp(":[0-9]+$")))
+                    emit connectTo(Konversation::CreateNewConnection, splitted[0], "", splitted[1]);
                 else
-                {
-                    port = splitted[1];
-                }
-            }
-            // 'hostname:port' or 'hostname'
-            else
-            {
-                KonviIpHelper hostParser(host);
-                host = hostParser.host();
-
-                if (!hostParser.port().isEmpty())
-                {
-                    port = hostParser.port();
-                }
-            }
-
-            if (Preferences::isServerGroup(host))
-            {
-                emit connectToServerGroup(host);
+                    emit connectTo(Konversation::CreateNewConnection, splitted[0], splitted[1]);
             }
             else
-            {
-                emit connectToServer(host, port, password);
-            }
+                emit connectTo(Konversation::CreateNewConnection, splitted[0]);
         }
     }
 

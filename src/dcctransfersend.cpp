@@ -19,6 +19,7 @@
 #include "dcccommon.h"
 #include "dcctransfermanager.h"
 #include "konversationapplication.h"
+#include "connectionmanager.h"
 #include "server.h"
 
 #include <stdlib.h>
@@ -133,7 +134,7 @@ bool DccTransferSend::queue()
         return false;
 
     if ( m_ownIp.isEmpty() )
-        m_ownIp = DccCommon::getOwnIp( KonversationApplication::instance()->getServerByServerGroupId( m_serverGroupId ) );
+        m_ownIp = DccCommon::getOwnIp( KonversationApplication::instance()->getConnectionManager()->getServerByConnectionId( m_connectionId ) );
 
     if ( !kapp->authorize( "allow_downloading" ) )
     {
@@ -228,10 +229,10 @@ void DccTransferSend::start()                     // public slot
 
     // common procedure
 
-    Server* server = KonversationApplication::instance()->getServerByServerGroupId( m_serverGroupId );
+    Server* server = KonversationApplication::instance()->getConnectionManager()->getServerByConnectionId( m_connectionId );
     if ( !server )
     {
-        kdDebug() << "DccTransferSend::start(): could not retrieve the instance of Server. id: " << m_serverGroupId << endl;
+        kdDebug() << "DccTransferSend::start(): could not retrieve the instance of Server. Connection id: " << m_connectionId << endl;
         failed( i18n( "Could not send a DCC SEND request to the partner via the IRC server." ) );
         return;
     }

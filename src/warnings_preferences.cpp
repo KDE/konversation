@@ -8,6 +8,7 @@
 /*
   Copyright (C) 2006 Dario Abatianni <eisfuchs@tigress.com>
   Copyright (C) 2006 John Tapsell <johnflux@gmail.com>
+  Copyright (C) 2006-2008 Eike Hein <hein@kde.org>
 */
 
 
@@ -100,12 +101,13 @@ void Warnings_Config::saveSettings()
 void Warnings_Config::loadSettings()
 {
   QStringList dialogDefinitions;
-  QString flagNames = "Invitation,SaveLogfileNote,ClearLogfileQuestion,CloseQueryAfterIgnore,ReconnectDifferentServer,QuitServerTab,QuitChannelTab,QuitQueryTab,ChannelListNoServerSelected,RemoveDCCReceivedFile,HideMenuBarWarning,ChannelListWarning,LargePaste,systemtrayquitKonversation,IgnoreNick,UnignoreNick";
+  QString flagNames = "Invitation,SaveLogfileNote,ClearLogfileQuestion,CloseQueryAfterIgnore,ReconnectWithDifferentServer,ReuseExistingConnection,QuitServerTab,QuitChannelTab,QuitQueryTab,ChannelListNoServerSelected,RemoveDCCReceivedFile,HideMenuBarWarning,ChannelListWarning,LargePaste,systemtrayquitKonversation,IgnoreNick,UnignoreNick";
   dialogDefinitions.append(i18n("Automatically join channel on invite"));
   dialogDefinitions.append(i18n("Notice that saving logfiles will save whole file"));
   dialogDefinitions.append(i18n("Ask before deleting logfile contents"));
   dialogDefinitions.append(i18n("Ask about closing queries after ignoring the nickname"));
-  dialogDefinitions.append(i18n("Ask before connecting to a different server in the network"));
+  dialogDefinitions.append(i18n("Ask before switching a connection to a network to a different server"));
+  dialogDefinitions.append(i18n("Ask before creating another connection to the same network or server"));
   dialogDefinitions.append(i18n("Close server tab"));
   dialogDefinitions.append(i18n("Close channel tab"));
   dialogDefinitions.append(i18n("Close query tab"));

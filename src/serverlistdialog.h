@@ -7,18 +7,19 @@
 
 /*
   Copyright (C) 2004 Peter Simonsson <psn@linux.se>
-  Copyright (C) 2006 Eike Hein <hein@kde.org>
+  Copyright (C) 2006-2008 Eike Hein <hein@kde.org>
 */
 
 #ifndef KONVERSATIONSERVERLISTDIALOG_H
 #define KONVERSATIONSERVERLISTDIALOG_H
 
 #include "serverlistview.h"
+#include "common.h"
 #include "servergroupsettings.h"
 
 #include <kdialogbase.h>
 
-
+class ConnectionSettings;
 class Preferences;
 class QPushButton;
 class QStringList;
@@ -66,8 +67,8 @@ namespace Konversation
             void updateServerList();
 
         signals:
-            void connectToServer(int serverId);
-            void connectToServer(int serverId, const QString& channel, Konversation::ServerSettings quickServer);
+            void connectTo(Konversation::ConnectionFlag flag, int serverGroupId);
+            void connectTo(Konversation::ConnectionFlag flag, ConnectionSettings& connectionSettings);
             void serverGroupsChanged(const Konversation::ServerGroupSettings* serverGroup = 0);
 
         protected slots:

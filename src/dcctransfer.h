@@ -68,7 +68,7 @@ class DccTransfer : public QObject
         DccStatus          getStatus()                const;
         const QString&     getStatusDetail()          const;
         QDateTime          getTimeOffer()             const;
-        int                getServerGroupId()         const;
+        int                getConnectionId()         const;
         QString            getOwnIp()                 const;
         QString            getOwnPort()               const;
         QString            getPartnerNick()           const;
@@ -92,7 +92,7 @@ class DccTransfer : public QObject
         // common settings for DccTransferRecv / DccTransferSend
 
         // REQUIRED
-        void setServerGroupId( int id );
+        void setConnectionId( int connectionId );
         // REQUIRED
         void setPartnerNick( const QString& nick );
 
@@ -135,7 +135,7 @@ class DccTransfer : public QObject
         */
 
         // we'll communicate with the partner via this server
-        int m_serverGroupId;
+        int m_connectionId;
         QString m_partnerNick;
         QString m_partnerIp;                      // null when unknown
         QString m_partnerPort;

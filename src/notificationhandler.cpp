@@ -139,7 +139,7 @@ namespace Konversation
             return;
         }
 
-        if(!m_mainWindow->isActiveWindow() && chatWin->getServer()->connected())
+        if(!m_mainWindow->isActiveWindow() && chatWin->getServer()->isConnected())
         {
             m_mainWindow->systemTrayIcon()->startNotification();
         }

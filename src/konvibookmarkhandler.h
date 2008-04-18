@@ -45,8 +45,6 @@ class KonviBookmarkHandler : public QObject, public KBookmarkOwner
         void slotBookmarksChanged(const QString &, const QString & caller);
         void slotEditBookmarks();
 
-        signals:
-        void openURL(const QString& url, const QString& title);
 
     private:
         KonversationMainWindow* m_mainWindow;

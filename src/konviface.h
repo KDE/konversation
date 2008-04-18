@@ -37,7 +37,7 @@ class KonvIface : virtual public DCOPObject
     virtual void debug(const QString& string) = 0;
     virtual void error(const QString& string) = 0;
     virtual void insertMarkerLine() = 0;
-    virtual void connectToServer(const QString& url, int port, const QString& channel, const QString& password) = 0;
+    virtual void connectToServer(const QString& address, int port, const QString& channel, const QString& password) = 0;
     virtual QString getNickname (const QString &serverid) = 0;
     virtual QString getAnyNickname () = 0;
     virtual QStringList listServers() = 0;

@@ -33,7 +33,7 @@
 
 NickInfo::NickInfo(const QString& nick, Server* server): KShared()
 {
-    m_addressee=Konversation::Addressbook::self()->getKABCAddresseeFromNick(nick, server->getServerName(), server->getServerGroup());
+    m_addressee=Konversation::Addressbook::self()->getKABCAddresseeFromNick(nick, server->getServerName(), server->getDisplayName());
     m_nickname = nick;
     m_loweredNickname = nick.lower();
     m_owningServer = server;
@@ -118,17 +118,17 @@ void NickInfo::setNickname(const QString& newNickname)
     Q_ASSERT(!newNickname.isEmpty());
     if(newNickname == m_nickname) return;
 
-    KABC::Addressee newaddressee = Konversation::Addressbook::self()->getKABCAddresseeFromNick(newNickname, m_owningServer->getServerName(), m_owningServer->getServerGroup());
+    KABC::Addressee newaddressee = Konversation::Addressbook::self()->getKABCAddresseeFromNick(newNickname, m_owningServer->getServerName(), m_owningServer->getDisplayName());
                                                   //We now know who this person is
     if(m_addressee.isEmpty() && !newaddressee.isEmpty())
     {
                                                   //Associate the old nickname with new contact
-        Konversation::Addressbook::self()->associateNick(newaddressee,m_nickname, m_owningServer->getServerName(), m_owningServer->getServerGroup());
+        Konversation::Addressbook::self()->associateNick(newaddressee,m_nickname, m_owningServer->getServerName(), m_owningServer->getDisplayName());
         Konversation::Addressbook::self()->saveAddressee(newaddressee);
     }
     else if(!m_addressee.isEmpty() && newaddressee.isEmpty())
     {
-        Konversation::Addressbook::self()->associateNick(m_addressee, newNickname, m_owningServer->getServerName(), m_owningServer->getServerGroup());
+        Konversation::Addressbook::self()->associateNick(m_addressee, newNickname, m_owningServer->getServerName(), m_owningServer->getDisplayName());
         Konversation::Addressbook::self()->saveAddressee(newaddressee);
         newaddressee = m_addressee;
     }
@@ -242,7 +242,7 @@ KABC::Addressee NickInfo::getAddressee() const { return m_addressee;}
 void NickInfo::refreshAddressee()
 {
     //m_addressee might not have changed, but information inside it may have.
-    KABC::Addressee addressee=Konversation::Addressbook::self()->getKABCAddresseeFromNick(m_nickname, m_owningServer->getServerName(), m_owningServer->getServerGroup());
+    KABC::Addressee addressee=Konversation::Addressbook::self()->getKABCAddresseeFromNick(m_nickname, m_owningServer->getServerName(), m_owningServer->getDisplayName());
     if(!addressee.isEmpty() && addressee.uid() != m_addressee.uid())
     {
         //This nick now belongs to a different addressee.  We need to update the status for both the old and new addressees.
@@ -411,7 +411,7 @@ void NickInfo::tooltipTableData(QTextStream &tooltip) const
 
 void NickInfo::showLinkAddressbookUI()
 {
-    LinkAddressbookUI *linkaddressbookui = new LinkAddressbookUI(m_owningServer->getViewContainer()->getWindow(), NULL, m_nickname, m_owningServer->getServerName(), m_owningServer->getServerGroup(), m_realName);
+    LinkAddressbookUI *linkaddressbookui = new LinkAddressbookUI(m_owningServer->getViewContainer()->getWindow(), NULL, m_nickname, m_owningServer->getServerName(), m_owningServer->getDisplayName(), m_realName);
     linkaddressbookui->show();
 
 }

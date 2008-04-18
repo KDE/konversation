@@ -224,6 +224,71 @@ Changes since 1.0.1:
 - Channel tabs will no longer close when kicked, but rather grey out on the tab
   bar and offer context menu actions to rejoin.
 - Auto-replace is now case-sensitive in regular expression mode.
+- Improved behavior with regard to reusing existing connections in connection
+  attempts that provide an initial channel to join, such as command line argu-
+  ments, the DCOP interface, the bookmark system or irc:// links). Previously,
+  the application would have inconsistently either reused an existing or crea-
+  ted a new connection.
+- Better dialog messages in the interactive variant of the decision to either
+  reuse or create a new connection (from the Server List dialog and the Quick
+  connect dialog).
+- Improved and more consistent display of connection names (i.e. network or
+  server host name) throughout the application.
+- Much improved irc:// URL support for connection intanciation, with support
+  added for IPv6 host names and many of the features proposed by the Mirashi
+  specification.
+- Eliminated redundant irc:// URL parsing codepaths in favor of a single one.
+- Added support for irc:// URLs to the chat views.
+- Removed "konversationircprotocolhandler" shell script. The Konversation exe-
+  cutable now understands irc:// URLs directly.
+- Initiating connections from command line arguments and options now works
+  also when the application is already running.
+- Fixed a bug that would cause a connection initiated from command line options
+  not to get past the identity validation stage when the configuration file was
+  unitialized and empty.
+- The server list dialog will now always be closed when starting Konversation
+  with command line arguments to initiate a connection, consistent with the
+  configuration-based auto-connect behavior
+- Providing a channel in the creation of a new connection (i.e. via command line
+  arguments, the DCOP interface, the Quick Connect dialog, the bookmark system
+  or irc:// links) now consistently pre-empts the stored auto-join channel list
+  if the target of the connection is a network or the hostname is found to be
+  part of a configured network. Previously, this would only work for Quick Connect
+  and the bookmark system (which caused the infamous Sabayon user flood in #kde
+  due to their "Get Support" desktop link connecting to Freenode, which in an
+  unconfigured Konversation has #kde in its auto-join list)..
+- Connections now have globally unique IDs.
+- The DCOP interface now understands connection IDs in addition to host names.
+- The scripting systems now uses globally unique connection IDs rather than
+  server host names to refer to connections, fixing a bug where scripted res-
+  ponses were being handed to all connections sharing a hostname (which was
+  actually intentional in the absence of connection IDs, but undesirable for
+  users).
+- Ported the DCC code away from relying on server group IDs to refer to connec-
+  tions, made it use connection IDs instead. Fixes potential bugs with multiple
+  concurrent connections to the same network.
+- Improved iteration behavior over a network's server list on connection losses.
+- The "Reconnect" action now works also when Konversation doesn't consider the
+  connection to be in a disconnected state.
+- Improved the server status view messages related to reconnection attempts.
+- Improved the naming of preferences related to automatic reconnection attempts
+  to be less confusing.
+- Made it possible to set the number of automatic reconnection attempts to un-
+  limited.
+- Provided better default values to the preferences related to automatic reconn-
+  ection attempts.
+- Consistently apply the "Reconnect delay" setting (previously confusingly named
+  "Reconnect timeout"), which wasn't done before.
+- Fixed a bug that could cause the connection process to claim that a DNS look-
+  up was successful when it actually wasn't.
+- Fixed opening bookmarks with spaces in the target address name (which may be
+  a network name, and networks may have spaces in their name).
+- Properly update the state of the "Add/Remove to Watched Nicknames" nickname
+  context menu actions when the connection isn't to a config-backed network,
+  in which case there's no way to store and make use of those list entries.
+- Fixed a crash when quitting the application with a resident connection that
+  disconnected due to an SSL error.
+- Fixed crashes in the DCOP interface if no connection was present.
 
 -------------------------------------------------------------------------------
 

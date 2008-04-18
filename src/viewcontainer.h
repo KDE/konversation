@@ -6,7 +6,7 @@
 */
 
 /*
-  Copyright (C) 2006-2007 Eike Hein <hein@kde.org>
+  Copyright (C) 2006-2008 Eike Hein <hein@kde.org>
 */
 
 #ifndef VIEWCONTAINER_H
@@ -57,8 +57,6 @@ class ViewContainer : public QObject
         Server* getFrontServer() { return m_frontServer; }
 
         void prepareShutdown();
-
-        void serverQuit(Server* server);
 
         QString currentViewTitle();
         QString currentViewURL(bool passNetwork);
@@ -140,7 +138,7 @@ class ViewContainer : public QObject
         void disconnectFrontServer();
         void reconnectFrontServer();
         void showJoinChannelDialog();
-        void serverStateChanged(Server* server, Server::State state);
+        void connectionStateChanged(Server* server, Konversation::ConnectionState state);
 
         Channel* addChannel(Server* server, const QString& name);
         void rejoinChannel();

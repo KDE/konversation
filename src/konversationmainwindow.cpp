@@ -10,7 +10,7 @@
   Copyright (C) 2005 Ismail Donmez <ismail@kde.org>
   Copyright (C) 2005 Peter Simonsson <psn@linux.se>
   Copyright (C) 2005 John Tapsell <johnflux@gmail.com>
-  Copyright (C) 2005-2007 Eike Hein <hein@kde.org>
+  Copyright (C) 2005-2008 Eike Hein <hein@kde.org>
 */
 
 #include "konversationmainwindow.h"
@@ -25,7 +25,7 @@
 #include "identitydialog.h"
 #include "notificationhandler.h"
 #include "irccharsets.h"
-#include "konviiphelper.h"
+#include "connectionmanager.h"
 
 #include <qnamespace.h>
 #include <qwhatsthis.h>
@@ -81,7 +81,8 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
     connect(m_viewContainer, SIGNAL(autoJoinToggled(const Konversation::ServerGroupSettings*)),
             KonversationApplication::instance(), SIGNAL(serverGroupsChanged(const Konversation::ServerGroupSettings*)));
     connect(m_viewContainer, SIGNAL(setWindowCaption(const QString&)), this, SLOT(setCaption(const QString&)));
-    connect(this, SIGNAL(serverStateChanged(Server*, Server::State)), m_viewContainer, SLOT(serverStateChanged(Server*, Server::State)));
+    connect(KonversationApplication::instance()->getConnectionManager(), SIGNAL(connectionChangedState(Server*, Konversation::ConnectionState)),
+            m_viewContainer, SLOT(connectionStateChanged(Server*, Konversation::ConnectionState)));
     connect(this, SIGNAL(triggerRememberLine()), m_viewContainer, SLOT(insertRememberLine()));
     connect(this, SIGNAL(triggerRememberLines(Server*)), m_viewContainer, SLOT(insertRememberLines(Server*)));
     connect(this, SIGNAL(cancelRememberLine()), m_viewContainer, SLOT(cancelRememberLine()));
@@ -315,7 +316,6 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
 
     // Bookmarks
     m_bookmarkHandler = new KonviBookmarkHandler(this);
-    connect(m_bookmarkHandler,SIGNAL(openURL(const QString&,const QString&)),this,SLOT(openURL(const QString&,const QString&)));
 
     // set up KABC with a nice gui error dialog
     KABC::GuiErrorHandler *m_guiErrorHandler = new KABC::GuiErrorHandler(this);
@@ -334,10 +334,10 @@ KonversationMainWindow::~KonversationMainWindow()
 
 int KonversationMainWindow::confirmQuit()
 {
-    KonversationApplication *konvApp=static_cast<KonversationApplication *>(kapp);
+    KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
 
-    QPtrList<Server> serverList = konvApp->getServerList();
-    if (serverList.isEmpty()) return KMessageBox::Continue;
+    if (konvApp->getConnectionManager()->connectionCount() == 0)
+        return KMessageBox::Continue;
 
     int result=KMessageBox::warningContinueCancel(
         this,
@@ -361,9 +361,9 @@ void KonversationMainWindow::quitProgram()
 
 bool KonversationMainWindow::queryClose()
 {
-    KonversationApplication* konv_app = static_cast<KonversationApplication*>(kapp);
+    KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
 
-    if (!konv_app->sessionSaving())
+    if (!konvApp->sessionSaving())
     {
         if (sender() == m_trayIcon)
             m_closeApp = true;
@@ -385,17 +385,12 @@ bool KonversationMainWindow::queryClose()
 
     m_viewContainer->prepareShutdown();
 
-    // send quit to all servers
-    emit quitServer();
+    konvApp->getConnectionManager()->quitServers();
 
-    if(isHidden() && Preferences::showTrayIcon())
-    {
+    if (isHidden() && Preferences::showTrayIcon())
         Preferences::setHiddenToTray(true);
-    }
     else
-    {
         Preferences::setHiddenToTray(false);
-    }
 
     return true;
 }
@@ -557,16 +552,17 @@ void KonversationMainWindow::openServerList()
     if (!m_serverListDialog)
     {
         m_serverListDialog = new Konversation::ServerListDialog(this);
-        KonversationApplication *konvApp = static_cast<KonversationApplication *>(KApplication::kApplication());
+        KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
 
         connect(m_serverListDialog, SIGNAL(serverGroupsChanged(const Konversation::ServerGroupSettings*)),
                 konvApp, SIGNAL(serverGroupsChanged(const Konversation::ServerGroupSettings*)));
         connect(konvApp, SIGNAL(serverGroupsChanged(const Konversation::ServerGroupSettings*)),
                 m_serverListDialog, SLOT(updateServerList()));
-        connect(m_serverListDialog, SIGNAL(connectToServer(int)), konvApp, SLOT(connectToServer(int)));
-        connect(m_serverListDialog, SIGNAL(connectToServer(int, const QString&, Konversation::ServerSettings)),
-                konvApp, SLOT(connectToServer(int, const QString&, Konversation::ServerSettings)));
-        connect(konvApp, SIGNAL(closeServerList()), m_serverListDialog, SLOT(slotClose()));
+        connect(m_serverListDialog, SIGNAL(connectTo(Konversation::ConnectionFlag, int)),
+                konvApp->getConnectionManager(), SLOT(connectTo(Konversation::ConnectionFlag, int)));
+        connect(m_serverListDialog, SIGNAL(connectTo(Konversation::ConnectionFlag, ConnectionSettings&)),
+                konvApp->getConnectionManager(), SLOT(connectTo(Konversation::ConnectionFlag, ConnectionSettings&)));
+        connect(konvApp->getConnectionManager(), SIGNAL(closeServerList()), m_serverListDialog, SLOT(slotClose()));
     }
 
     m_serverListDialog->show();
@@ -580,8 +576,8 @@ void KonversationMainWindow::openQuickConnectDialog()
 // open the preferences dialog and show the watched nicknames page
 void KonversationMainWindow::openNotify()
 {
-  openPrefsDialog();
-  if (m_settingsDialog) m_settingsDialog->openWatchedNicknamesPage();
+    openPrefsDialog();
+    if (m_settingsDialog) m_settingsDialog->openWatchedNicknamesPage();
 }
 
 void KonversationMainWindow::openIdentitiesDialog()
@@ -615,38 +611,18 @@ void KonversationMainWindow::openNotifications()
     #endif
 }
 
-void KonversationMainWindow::notifyAction(const QString& serverName,const QString& nick)
+void KonversationMainWindow::notifyAction(const QString& serverName, const QString& nick)
 {
-    KonversationApplication* konv_app=static_cast<KonversationApplication*>(KApplication::kApplication());
-    Server* server=konv_app->getServerByName(serverName);
-    server->notifyAction(nick);
+    KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
+    Server* server = konvApp->getConnectionManager()->getServer(serverName);
+    if (server) server->notifyAction(nick);
 }
-
 
 // TODO: Let an own class handle notify things
 void KonversationMainWindow::setOnlineList(Server* notifyServer,const QStringList& /*list*/, bool /*changed*/)
 {
     emit nicksNowOnline(notifyServer);
     // FIXME  if (changed && nicksOnlinePanel) newText(nicksOnlinePanel, QString::null, true);
-}
-
-void KonversationMainWindow::openURL(const QString& url, const QString& /*title*/)
-{
-    QString urlN = url;
-    urlN.remove("irc://");
-
-    QString host = urlN.section('/',0,0);
-    KonviIpHelper hostParser(host);
-    host = hostParser.host();
-
-    QString port = (hostParser.port().isEmpty() ? QString("6667") : hostParser.port());
-
-    QString channel = urlN.section('/',1,1);
-
-    if (Preferences::isServerGroup(host))
-        KonversationApplication::instance()->connectToServer(Preferences::serverGroupIdByName(host), channel);
-    else
-        KonversationApplication::instance()->quickConnectToServer(host, port, channel, "");
 }
 
 QString KonversationMainWindow::currentURL(bool passNetwork)

@@ -8,7 +8,7 @@
 /*
   Copyright (C) 2002 Dario Abatianni <eisfuchs@tigress.com>
   Copyright (C) 2004 Peter Simonsson <psn@linux.se>
-  Copyright (C) 2006 Eike Hein <hein@kde.org>
+  Copyright (C) 2006-2008 Eike Hein <hein@kde.org>
 */
 
 #include "inputfilter.h"
@@ -704,9 +704,6 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     if(parameterList[0]!=server->getNickname())
                         server->renameNick(server->getNickname(), parameterList[0]);
 
-                    // Remember server's insternal name
-                    server->setIrcName(prefix);
-
                     // Send the welcome signal, so the server class knows we are connected properly
                     emit welcome(host);
                     m_connecting = true;
@@ -1015,7 +1012,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             case ERR_NICKNAMEINUSE:
             {
                 // if we are already connected, don't try tro find another nick ourselves
-                if(server->connected())
+                if(server->isConnected())
                 {                                 // Show message
                     server->appendMessageToFrontmost(i18n("Nick"),i18n("Nickname already in use, try a different one."));
                 }
@@ -1044,7 +1041,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             }
             case ERR_ERRONEUSNICKNAME:
             {
-                if(server->connected())
+                if(server->isConnected())
                 {                                 // We are already connected. Just print the error message
                     server->appendMessageToFrontmost(i18n("Nick"), trailing);
                 }

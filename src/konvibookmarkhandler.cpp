@@ -18,6 +18,7 @@ Copyright (C) 2002 Carsten Pfeiffer <pfeiffer@kde.org>
 #include "konvibookmarkhandler.h"
 #include "konversationapplication.h"
 #include "konversationmainwindow.h"
+#include "connectionmanager.h"
 #include "konvibookmarkmenu.h"
 
 #include <qstring.h>
@@ -76,9 +77,10 @@ const QString &)
     m_bookmarkMenu->slotBookmarksChanged("");
 }
 
-void KonviBookmarkHandler::openBookmarkURL(const QString& url, const QString& title)
+void KonviBookmarkHandler::openBookmarkURL(const QString& url, const QString& /* title */)
 {
-    emit openURL(url,title);
+    KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
+    konvApp->getConnectionManager()->connectTo(Konversation::SilentlyReuseConnection, url);
 }
 
 QString KonviBookmarkHandler::currentURL() const

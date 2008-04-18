@@ -6,8 +6,8 @@
 */
 
 /*
-  copyright: (C) 2004 by Peter Simonsson
-  email:     psn@linux.se
+  Copyright (C) 2004 Peter Simonsson <psn@linux.se>
+  Copyright (C) 2008 Eike Hein <hein@kde.org>
 */
 
 #include "serversettings.h"
@@ -24,15 +24,15 @@ namespace Konversation
 
     ServerSettings::ServerSettings(const ServerSettings& settings)
     {
-        setServer(settings.server());
+        setHost(settings.host());
         setPort(settings.port());
         setPassword(settings.password());
         setSSLEnabled(settings.SSLEnabled());
     }
 
-    ServerSettings::ServerSettings(const QString& server)
+    ServerSettings::ServerSettings(const QString& host)
     {
-        setServer(server);
+        setHost(host);
         setPort(6667);
         setSSLEnabled(false);
     }
@@ -41,17 +41,22 @@ namespace Konversation
     {
     }
 
-    bool ServerSettings::operator== (const ServerSettings& settings) const
+    bool ServerSettings::operator==(const ServerSettings& settings) const
     {
-        if (m_server==settings.server() && m_port==settings.port() && m_password==settings.password() && m_SSLEnabled==settings.SSLEnabled())
+        if (m_host.lower() == settings.host().lower()
+            && m_port == settings.port()
+            && m_password == settings.password()
+            && m_SSLEnabled == settings.SSLEnabled())
+        {
             return true;
+        }
         else
             return false;
     }
 
-    void ServerSettings::setServer(const QString& server)
+    void ServerSettings::setHost(const QString& host)
     {
-        m_server = server.stripWhiteSpace();
+        m_host = host.stripWhiteSpace();
     }
 
     void ServerSettings::setPassword(const QString& password)

@@ -6,7 +6,7 @@
 */
 
 /*
-  Copyright (C) 2006-2007 Eike Hein <hein@kde.org>
+  Copyright (C) 2006-2008 Eike Hein <hein@kde.org>
 */
 
 #include "viewcontainer.h"
@@ -429,7 +429,7 @@ void ViewContainer::updateViewActions(int index)
         if (server && (viewType == ChatWindow::Status || server == m_frontServer))
         {
             action = actionCollection()->action("reconnect_server");
-            if (action) action->setEnabled(!server->isConnected());
+            if (action) action->setEnabled(!server->isConnecting());
 
 
             action = actionCollection()->action("disconnect_server");
@@ -464,8 +464,7 @@ void ViewContainer::updateViewActions(int index)
 
         KToggleAction* autoJoinAction = static_cast<KToggleAction*>(actionCollection()->action("tab_autojoin"));
         Channel* channel = static_cast<Channel*>(view);
-        if (autoJoinAction && viewType == ChatWindow::Channel
-            && channel->getServer()->serverGroupSettings()->isConfigBacked())
+        if (autoJoinAction && viewType == ChatWindow::Channel && channel->getServer()->getServerGroup())
         {
             autoJoinAction->setEnabled(true);
             autoJoinAction->setChecked(channel->autoJoin());
@@ -536,7 +535,7 @@ void ViewContainer::updateViewActions(int index)
             {
                 if (m_frontServer)
                 {
-                    QString name = m_frontServer->getServerGroup();
+                    QString name = m_frontServer->getDisplayName();
                     name = name.replace('&', "&&");
                     channelListAction->setEnabled(true);
                     channelListAction->setChecked(m_frontServer->getChannelListPanel());
@@ -724,9 +723,9 @@ void ViewContainer::updateViews(const Konversation::ServerGroupSettings* serverG
 
         if (serverGroup)
         {
-            if (view->getType() == ChatWindow::Status && view->getServer()->serverGroupSettings() == serverGroup)
+            if (view->getType() == ChatWindow::Status && view->getServer()->getServerGroup() == serverGroup)
             {
-                QString label = view->getServer()->serverGroupSettings()->name();
+                QString label = view->getServer()->getDisplayName();
 
                 if (!label.isEmpty() && m_tabWidget->tabLabel(view) != label)
                 {
@@ -1153,7 +1152,7 @@ void ViewContainer::toggleAutoJoin()
 
         channel->setAutoJoin(!autoJoin);
 
-        emit autoJoinToggled(channel->getServer()->serverGroupSettings());
+        emit autoJoinToggled(channel->getServer()->getServerGroup());
     }
 }
 
@@ -1540,10 +1539,8 @@ void ViewContainer::closeView(ChatWindow* view)
         // Remove the view from the active view list if it's still on it
         QValueList<ChatWindow*>::iterator it = m_activeViewOrderList.find(view);
 
-        if(it != m_activeViewOrderList.end())
-        {
+        if (it != m_activeViewOrderList.end())
             m_activeViewOrderList.remove(it);
-        }
 
         m_tabWidget->removePage(view);
 
@@ -1697,23 +1694,10 @@ QString ViewContainer::currentViewTitle()
 {
     if (m_frontServer)
     {
-        if(m_frontView && m_frontView->getType() == ChatWindow::Channel)
-        {
+        if (m_frontView && m_frontView->getType() == ChatWindow::Channel)
             return m_frontView->getName();
-        }
         else
-        {
-            QString serverGroup = m_frontServer->getServerGroup();
-
-            if (!serverGroup.isEmpty())
-            {
-                return serverGroup;
-            }
-            else
-            {
-                return m_frontServer->getServerName();
-            }
-        }
+            return m_frontServer->getDisplayName();
     }
     else
     {
@@ -1736,7 +1720,7 @@ QString ViewContainer::currentViewURL(bool passNetwork)
             channel = m_frontView->getName();
 
         if (passNetwork)
-            server = m_frontServer->getServerGroup();
+            server = m_frontServer->getDisplayName();
         else
         {
             server = m_frontServer->getServerName();
@@ -2086,78 +2070,49 @@ void ViewContainer::addDccChat(const QString& myNick,const QString& nick,const Q
 
 StatusPanel* ViewContainer::addStatusView(Server* server)
 {
-    StatusPanel* statusView=new StatusPanel(m_tabWidget);
+    StatusPanel* statusView = new StatusPanel(m_tabWidget);
 
-    // first set up internal data ...
     statusView->setServer(server);
     statusView->setIdentity(server->getIdentity());
-    statusView->setNotificationsEnabled(server->serverGroupSettings()->enableNotifications());
+
+    if (server->getServerGroup()) statusView->setNotificationsEnabled(server->getServerGroup()->enableNotifications());
 
     // Get group name for tab if available
-    QString label = server->getServerGroup();
-    if (label.isEmpty()) label = server->getServerName();
+    QString label = server->getDisplayName();
     statusView->setName(label);
 
     QObject::connect(server, SIGNAL(sslInitFailure()), this, SIGNAL(removeStatusBarSSLLabel()));
     QObject::connect(server, SIGNAL(sslConnected(Server*)), this, SIGNAL(updateStatusBarSSLLabel(Server*)));
 
     // ... then put it into the tab widget, otherwise we'd have a race with server member
-    addView(statusView,label);
+    addView(statusView, label);
 
-    connect(statusView, SIGNAL(updateTabNotification(ChatWindow*,const Konversation::TabNotifyType&)), this, SLOT(setViewNotification(ChatWindow*,const Konversation::TabNotifyType&)));
+    connect(statusView, SIGNAL(updateTabNotification(ChatWindow*,const Konversation::TabNotifyType&)),
+        this, SLOT(setViewNotification(ChatWindow*,const Konversation::TabNotifyType&)));
     connect(statusView, SIGNAL(sendFile()), server, SLOT(requestDccSend()));
     connect(server, SIGNAL(awayState(bool)), statusView, SLOT(indicateAway(bool)) );
 
     // make sure that m_frontServer gets set on adding the first status panel, too,
     // since there won't be a switchView happening
-    if (!m_frontServer)
-        setFrontServer(server);
+    if (!m_frontServer) setFrontServer(server);
 
     return statusView;
 }
 
 RawLog* ViewContainer::addRawLog(Server* server)
 {
-    RawLog* rawLog=new RawLog(m_tabWidget);
+    RawLog* rawLog = new RawLog(m_tabWidget);
     rawLog->setServer(server);
     rawLog->setLog(false);
-    rawLog->setNotificationsEnabled(server->serverGroupSettings()->enableNotifications());
+
+    if (server->getServerGroup()) rawLog->setNotificationsEnabled(server->getServerGroup()->enableNotifications());
+
     addView(rawLog, i18n("Raw Log"));
 
-    connect(rawLog, SIGNAL(updateTabNotification(ChatWindow*,const Konversation::TabNotifyType&)), this, SLOT(setViewNotification(ChatWindow*,const Konversation::TabNotifyType&)));
+    connect(rawLog, SIGNAL(updateTabNotification(ChatWindow*,const Konversation::TabNotifyType&)),
+        this, SLOT(setViewNotification(ChatWindow*,const Konversation::TabNotifyType&)));
 
     return rawLog;
-}
-
-void ViewContainer::serverQuit(Server* server)
-{
-    if (!m_tabWidget) return;
-
-    for (int i = 0; i < m_tabWidget->count(); ++i)
-    {
-        ChatWindow* view = static_cast<ChatWindow*>(m_tabWidget->page(i));
-
-        if (view && view->getServer() && view->getServer() == server)
-        {
-            m_tabWidget->removePage(view);
-            view->hide();
-
-            i--;
-        }
-    }
-
-    if (server == m_frontServer)
-    {
-        setFrontServer(0);
-    }
-
-    if (m_frontView && m_frontView->getServer() == server)
-        m_frontView = 0;
-
-    delete server->getStatusView();
-    delete server;
-
-    updateFrontView();
 }
 
 void ViewContainer::reconnectFrontServer()
@@ -2169,8 +2124,7 @@ void ViewContainer::reconnectFrontServer()
     else
         server = m_frontServer;
 
-    if (server && !server->isConnected() && !server->isConnecting())
-        server->reconnect();
+    if (server) server->reconnect();
 }
 
 void ViewContainer::disconnectFrontServer()
@@ -2204,7 +2158,7 @@ void ViewContainer::showJoinChannelDialog()
         server->sendJoinCommand(dlg.channel(), dlg.password());
 }
 
-void ViewContainer::serverStateChanged(Server* server, Server::State state)
+void ViewContainer::connectionStateChanged(Server* server, Konversation::ConnectionState state)
 {
     Server* updateServer = 0;
 
@@ -2216,31 +2170,13 @@ void ViewContainer::serverStateChanged(Server* server, Server::State state)
     if (updateServer && updateServer == server)
     {
         KAction* action = actionCollection()->action("disconnect_server");
-        if (action)
-        {
-            if (state == Server::SSConnected)
-                action->setEnabled(true);
-            else
-                action->setEnabled(false);
-        }
+        if (action) action->setEnabled(state == Konversation::SSConnected);
 
         action = actionCollection()->action("reconnect_server");
-        if (action)
-        {
-            if (state != Server::SSDisconnected)
-                action->setEnabled(false);
-            else
-                action->setEnabled(true);
-        }
+        if (action) action->setEnabled(state != Konversation::SSConnecting);
 
         action = actionCollection()->action("join_channel");
-        if (action)
-        {
-            if (state != Server::SSConnected)
-                action->setEnabled(false);
-            else
-                action->setEnabled(true);
-        }
+        if (action) action->setEnabled(state == Konversation::SSConnected);
     }
 }
 

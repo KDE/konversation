@@ -71,7 +71,7 @@ IRCQueue::IRCQueue(Server *server, EmptyingRate& rate, int ind) :
     {
         connect(server, SIGNAL(serverOnline(bool)), SLOT(serverOnline(bool)));
         connect(server, SIGNAL(sentStat(int, int, IRCQueue*)), SLOT(sent(int, int, IRCQueue*)));
-        m_blocked=!(m_server->connected());
+        m_blocked=!(m_server->isConnected());
     }
 }
 
@@ -177,7 +177,7 @@ void IRCQueue::reset()
     m_timer->stop();
     m_lastWait=0;
     if (m_server)
-        m_blocked=!(m_server->connected()); //FIXME  (maybe) "we can't do this anymore because blocked can't correspond to whether the server is online, instead must correspond to whether the socket has become writable (readyWrite)"
+        m_blocked=!(m_server->isConnected()); //FIXME  (maybe) "we can't do this anymore because blocked can't correspond to whether the server is online, instead must correspond to whether the socket has become writable (readyWrite)"
 
     m_startedAt=m_globalLastSent=m_lastSent=QTime();
     m_pending.clear();

@@ -11,7 +11,7 @@
 /*
   Copyright (C) 2002 Dario Abatianni <eisfuchs@tigress.com>
   Copyright (C) 2005-2006 Peter Simonsson <psn@linux.se>
-  Copyright (C) 2006-2007 Eike Hein <hein@kde.org>
+  Copyright (C) 2006-2008 Eike Hein <hein@kde.org>
 */
 
 #include "common.h"

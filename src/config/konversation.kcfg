@@ -762,13 +762,13 @@
       <label></label>
       <whatsthis></whatsthis>
     </entry>
-    <entry key="ReconnectTimeout" type="UInt">
-      <default>120</default>
+    <entry key="ReconnectDelay" type="UInt">
+      <default>10</default>
       <label></label>
       <whatsthis></whatsthis>
     </entry>
     <entry key="ReconnectCount" type="UInt">
-      <default>10</default>
+      <default>0</default>
       <label></label>
       <whatsthis></whatsthis>
     </entry>

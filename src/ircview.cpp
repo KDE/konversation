@@ -10,7 +10,7 @@
 /*
   Copyright (C) 2002 Dario Abatianni <eisfuchs@tigress.com>
   Copyright (C) 2005-2007 Peter Simonsson <psn@linux.se>
-  Copyright (C) 2006-2007 Eike Hein <hein@kde.org>
+  Copyright (C) 2006-2008 Eike Hein <hein@kde.org>
 */
 
 #include "ircview.h"
@@ -19,6 +19,7 @@
 #include "konversationapplication.h"
 #include "konversationmainwindow.h"
 #include "viewcontainer.h"
+#include "connectionmanager.h"
 #include "highlight.h"
 #include "server.h"
 #include "konversationsound.h"
@@ -291,8 +292,12 @@ void IRCView::openLink(const QString& url, bool newTab)
 {
     if (!url.isEmpty() && !url.startsWith("#"))
     {
-        // Always use KDE default mailer.
-        if (!Preferences::useCustomBrowser() || url.startsWith("mailto:"))
+        if (url.startsWith("irc://"))
+        {
+            KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
+            konvApp->getConnectionManager()->connectTo(Konversation::SilentlyReuseConnection, url);
+        }
+        else if (!Preferences::useCustomBrowser() || url.startsWith("mailto:"))
         {
             if(newTab && !url.startsWith("mailto:"))
             {
@@ -1199,6 +1204,7 @@ void IRCView::contentsMouseMoveEvent(QMouseEvent* ev)
 
         if (m_server && m_urlToDrag.startsWith("##"))
         {
+            //FIXME consistent IRC URL serialization
             ux = QString("irc://%1:%2/%3").arg(m_server->getServerName()).arg(m_server->getPort()).arg(m_urlToDrag.mid(2));
         }
         else if (m_urlToDrag.startsWith("#"))
@@ -1402,13 +1408,13 @@ void IRCView::updateNickMenuEntries(QPopupMenu* popup, const QString& nickname)
             popup->setItemVisible(Konversation::UnignoreNick, false);
         }
 
-        if (!m_server)
+        if (!m_server || !m_server->getServerGroup())
             popup->setItemEnabled(Konversation::AddNotify, false);
         else if (!m_server->isConnected())
             popup->setItemEnabled(Konversation::AddNotify, false);
-        else if (!Preferences::hasNotifyList(m_server->serverGroupSettings()->id()))
+        else if (!Preferences::hasNotifyList(m_server->getServerGroup()->id()))
             popup->setItemEnabled(Konversation::AddNotify, false);
-        else if (Preferences::isNotify(m_server->serverGroupSettings()->id(), nickname))
+        else if (Preferences::isNotify(m_server->getServerGroup()->id(), nickname))
             popup->setItemEnabled(Konversation::AddNotify, false);
         else
             popup->setItemEnabled(Konversation::AddNotify, true);

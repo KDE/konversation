@@ -7,13 +7,14 @@
 
 /*
   Copyright (C) 2004, 2007 Peter Simonsson <psn@linux.se>
-  Copyright (C) 2006 Eike Hein <hein@kde.org>
+  Copyright (C) 2006-2008 Eike Hein <hein@kde.org>
 */
 
 #include "serverlistdialog.h"
 #include "preferences.h"
 #include "konversationapplication.h"
 #include "servergroupdialog.h"
+#include "connectionsettings.h"
 
 #include <qpushbutton.h>
 #include <qframe.h>
@@ -79,7 +80,7 @@ namespace Konversation
 
         if (col==0)
         {
-            if (!item->server().server().isEmpty())
+            if (!item->server().host().isEmpty())
             {
                 if (sortIndex() == item->sortIndex())
                     return 0;
@@ -192,12 +193,16 @@ namespace Konversation
         {
             if (item->isServer())
             {
-                emit connectToServer(item->serverGroupId(), QString::null, item->server());
+                ConnectionSettings settings;
+
+                settings.setServerGroup(Preferences::serverGroupById(item->serverGroupId()));
+
+                settings.setServer(item->server());
+
+                emit connectTo(Konversation::PromptToReuseConnection, settings);
             }
             else
-            {
-                emit connectToServer(item->serverGroupId());
-            }
+                emit connectTo(Konversation::PromptToReuseConnection, item->serverGroupId());
 
             item = static_cast<ServerListItem*>(selected.next());
         }
@@ -463,7 +468,7 @@ namespace Konversation
 
             // The method was called by slotEdit() ... initialize a pointer to the new
             // location of the edited server group
-            if (m_selectedItem && m_selectedServer.server().isEmpty() && (*it)->id()==m_selectedServerGroupId)
+            if (m_selectedItem && m_selectedServer.host().isEmpty() && (*it)->id()==m_selectedServerGroupId)
             {
                 m_selectedItemPtr = networkItem;
             }
@@ -513,7 +518,7 @@ namespace Konversation
             networkItem->setOpen(true);
 
         // Produce a list of this server group's servers and iterate over it
-        Konversation::ServerList serverList = serverGroup->serverList(true);
+        Konversation::ServerList serverList = serverGroup->serverList();
         Konversation::ServerList::iterator serverIt;
 
         QListViewItem* serverItem = 0;
@@ -522,7 +527,7 @@ namespace Konversation
         for (serverIt = serverList.begin(); serverIt != serverList.end(); ++serverIt)
         {
             // Produce a string representation of the server object
-            QString name = (*serverIt).server();
+            QString name = (*serverIt).host();
 
             if ((*serverIt).port() != 6667)
                 name += ':' + QString::number((*serverIt).port());

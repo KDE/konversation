@@ -1,5 +1,5 @@
 [Protocol]
-exec=konversationircprotocolhandler %u
+exec=konversation %u
 protocol=irc6
 input=none
 output=none
