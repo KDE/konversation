@@ -79,6 +79,7 @@ Server::Server(QObject* parent, ConnectionSettings& settings) : QObject(parent)
 
     m_processingIncoming = false;
     m_identifyMsg = false;
+    m_autoIdentifyLock = false;
     m_autoJoin = false;
     m_tryNickNumber = 0;
     m_currentLag = -1;
@@ -371,14 +372,15 @@ void Server::preShellCommandExited(KProcess* proc)
 
 void Server::connectToIRCServer()
 {
-    updateConnectionState(Konversation::SSConnecting);
-
-    m_ownIpByUserhost = QString();
-
-    resetQueues();
-
     if (!isConnected())
     {
+        updateConnectionState(Konversation::SSConnecting);
+
+        m_autoIdentifyLock = false;
+        m_ownIpByUserhost = QString();
+
+        resetQueues();
+
         // This is needed to support server groups with mixed SSL and nonSSL servers
         delete m_socket;
         m_socket = 0;
@@ -415,6 +417,8 @@ void Server::connectToIRCServer()
         // reset InputFilter (auto request info, /WHO request info)
         m_inputFilter.reset();
     }
+    else
+        kdDebug() << "connectToIRCServer() called while already connected: This should never happen." << endl;
 }
 
 void Server::showSSLDialog()
@@ -657,8 +661,14 @@ void Server::connectionEstablished(const QString& ownHost)
 
 void Server::registerWithServices()
 {
-    if (getIdentity() && !getIdentity()->getBot().isEmpty() && !getIdentity()->getPassword().isEmpty())
+    if (getIdentity() && !getIdentity()->getBot().isEmpty()
+        && !getIdentity()->getPassword().isEmpty()
+        && !m_autoIdentifyLock)
+    {
         queue("PRIVMSG "+getIdentity()->getBot()+" :identify "+getIdentity()->getPassword(), HighPriority);
+
+        m_autoIdentifyLock = true;
+    }
 }
 
 QCString Server::getKeyForRecipient(const QString& recipient) const
@@ -2586,7 +2596,13 @@ void Server::renameNick(const QString &nickname, const QString &newNick)
     }
 
     // If this was our own nickchange, tell our server object about it
-    if (nickname == getNickname()) setNickname(newNick);
+    if (nickname == getNickname())
+    {
+        setNickname(newNick);
+
+        // We may get a request from nickserv, so remove the auto-identify lock.
+        m_autoIdentifyLock = false;
+    }
 
     //Actually do the rename.
     NickInfoPtr nickInfo = getNickInfo(nickname);

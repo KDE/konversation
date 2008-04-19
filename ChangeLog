@@ -248,7 +248,7 @@ Changes since 1.0.1:
   unitialized and empty.
 - The server list dialog will now always be closed when starting Konversation
   with command line arguments to initiate a connection, consistent with the
-  configuration-based auto-connect behavior
+  configuration-based auto-connect behavior.
 - Providing a channel in the creation of a new connection (i.e. via command line
   arguments, the DCOP interface, the Quick Connect dialog, the bookmark system
   or irc:// links) now consistently pre-empts the stored auto-join channel list
@@ -256,7 +256,7 @@ Changes since 1.0.1:
   part of a configured network. Previously, this would only work for Quick Connect
   and the bookmark system (which caused the infamous Sabayon user flood in #kde
   due to their "Get Support" desktop link connecting to Freenode, which in an
-  unconfigured Konversation has #kde in its auto-join list)..
+  unconfigured Konversation has #kde in its auto-join list).
 - Connections now have globally unique IDs.
 - The DCOP interface now understands connection IDs in addition to host names.
 - The scripting systems now uses globally unique connection IDs rather than

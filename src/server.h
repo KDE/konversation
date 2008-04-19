@@ -704,6 +704,7 @@ class Server : public QObject
         QMap<QString,QCString> m_keyMap;
 
         bool m_identifyMsg;
+        bool m_autoIdentifyLock;
 
         /// Used to lock incomingTimer while processing message.
         bool m_processingIncoming;
