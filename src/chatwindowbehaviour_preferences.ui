@@ -183,6 +183,9 @@
                     <property name="name">
                         <cstring>kcfg_AutomaticRememberLineOnlyOnTextChange</cstring>
                     </property>
+                    <property name="enabled">
+                        <bool>false</bool>
+                    </property>
                     <property name="text">
                         <string>Move the line only when new text is about to be shown</string>
                     </property>
