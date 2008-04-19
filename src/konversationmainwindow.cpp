@@ -385,7 +385,9 @@ bool KonversationMainWindow::queryClose()
 
     m_viewContainer->prepareShutdown();
 
-    konvApp->getConnectionManager()->quitServers();
+    ConnectionManager* connectionManager = konvApp->getConnectionManager();
+    connectionManager->quitServers();
+    connectionManager->deleteLater();
 
     if (isHidden() && Preferences::showTrayIcon())
         Preferences::setHiddenToTray(true);
