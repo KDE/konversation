@@ -289,6 +289,9 @@ Changes since 1.0.1:
 - Fixed a crash when quitting the application with a resident connection that
   disconnected due to an SSL error.
 - Fixed crashes in the DCOP interface if no connection was present.
+- Fix possible crash when closing all views and subsequently creating a new
+  connection.
+- Empty topic labels will no longer show empty tooltips, but rather none at all.
 
 -------------------------------------------------------------------------------
 
