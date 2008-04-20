@@ -60,7 +60,7 @@ class Server : public QObject
     Q_OBJECT
     friend class IRCQueue;
     friend class QueueTuner;
-
+void resetNickSelection();
     public:
         enum QueuePriority
         {
@@ -620,7 +620,8 @@ class Server : public QObject
         QString getAutoJoinCommand() const;
 
         unsigned int m_completeQueryPosition;
-        unsigned int m_tryNickNumber;
+        QValueList<int> m_nickIndices;
+        QStringList m_referenceNicklist;
 
         // TODO roll these into a QMap.
         QString m_serverNickPrefixes;               // Prefixes used by the server to indicate a mode

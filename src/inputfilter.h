@@ -87,7 +87,6 @@ class InputFilter : public QObject
 
         Query* query;
 
-        QStringList newNickList;
         int m_debugCount;
 
         /// Used when handling MOTD

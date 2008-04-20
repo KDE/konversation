@@ -121,7 +121,7 @@ Server* ChatWindow::getServer()
 
 void ChatWindow::serverOnline(bool state)
 {
-    emit online(this,state);
+    //emit online(this,state);
 }
 
 void ChatWindow::setTextView(IRCView* newView)

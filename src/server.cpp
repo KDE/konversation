@@ -81,7 +81,10 @@ Server::Server(QObject* parent, ConnectionSettings& settings) : QObject(parent)
     m_identifyMsg = false;
     m_autoIdentifyLock = false;
     m_autoJoin = false;
-    m_tryNickNumber = 0;
+
+    m_nickIndices.clear();
+    m_nickIndices.append(0);
+
     m_currentLag = -1;
     m_rawLog = 0;
     m_channelListPanel = 0;
@@ -384,7 +387,7 @@ void Server::connectToIRCServer()
         // This is needed to support server groups with mixed SSL and nonSSL servers
         delete m_socket;
         m_socket = 0;
-        m_tryNickNumber = 0;
+        resetNickSelection();
 
         // connect() will do a async lookup too
         if(!getConnectionSettings().server().SSLEnabled())
@@ -827,9 +830,40 @@ QString Server::getAutoJoinCommand() const
     return autoString;
 }
 
+/** Create a set of indices into the nickname list of the current identity based on the current nickname.
+ *
+ * The index list is only used if the current nickname is not available. If the nickname is in the identity,
+ * we do not want to retry it. If the nickname is not in the identity, it is considered to be at position -1.
+ */
+void Server::resetNickSelection()
+{
+    m_nickIndices.clear();
+    //for equivalence testing in case the identity gets changed underneath us
+    m_referenceNicklist = getIdentity()->getNicknameList();
+    //where in this identities nicklist will we have started?
+    int start = m_referenceNicklist.findIndex(getNickname());
+    int len = m_referenceNicklist.count();
+
+    //we first use this list of indices *after* we've already tried the current nick, which we don't want
+    //to retry if we wrapped, so exclude its index here
+    //if it wasn't in the list, we get -1 back, so then we *want* to include 0
+    for (int i=start+1; i<len; i++)
+        m_nickIndices.append(i);
+    //now, from the beginning of the list, to the item before start
+    for (int i=0; i<start; i++)
+        m_nickIndices.append(i);
+    //cause it to try to get an invalid nick number
+    m_nickIndices.append(len);
+}
+
 QString Server::getNextNickname()
 {
-    QString newNick = getIdentity()->getNickname(++m_tryNickNumber);
+     //if the identity changed underneath us (likely impossible), start over
+    if (m_referenceNicklist != getIdentity()->getNicknameList())
+        resetNickSelection();
+
+    QString newNick = getIdentity()->getNickname(m_nickIndices.front());
+    m_nickIndices.pop_front();
 
     if (newNick.isNull())
     {

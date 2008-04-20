@@ -125,7 +125,7 @@ class ChatWindow : public QVBox
 
         signals:
         void nameChanged(ChatWindow* view, const QString& newName);
-        void online(ChatWindow* myself, bool state);
+        //void online(ChatWindow* myself, bool state);
         /** Emit this signal when you want to change the status bar text for this tab.
          *  It is ignored if this tab isn't focused.
          */
