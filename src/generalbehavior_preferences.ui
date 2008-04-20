@@ -14,8 +14,8 @@ the Free Software Foundation; either version 2 of the License, or
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>590</width>
-            <height>575</height>
+            <width>448</width>
+            <height>477</height>
         </rect>
     </property>
     <vbox>
@@ -108,7 +108,7 @@ the Free Software Foundation; either version 2 of the License, or
                         <cstring>kcfg_HideToTrayOnStartup</cstring>
                     </property>
                     <property name="text">
-                        <string>Start with hidden mainwindow</string>
+                        <string>Hide window on startup</string>
                     </property>
                 </widget>
             </grid>
@@ -310,6 +310,8 @@ the Free Software Foundation; either version 2 of the License, or
         </spacer>
     </vbox>
 </widget>
+<customwidgets>
+</customwidgets>
 <connections>
     <connection>
         <sender>kcfg_TrayNotify</sender>
