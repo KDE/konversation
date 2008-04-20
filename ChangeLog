@@ -292,6 +292,9 @@ Changes since 1.0.1:
 - Fix possible crash when closing all views and subsequently creating a new
   connection.
 - Empty topic labels will no longer show empty tooltips, but rather none at all.
+- The command part of CTCP requests is now always converted to uppercase before
+  sending, as some clients don't like lower- or mixed-case commands as the user
+  may have entered them.
 
 -------------------------------------------------------------------------------
 

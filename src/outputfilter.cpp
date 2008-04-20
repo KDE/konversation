@@ -734,11 +734,13 @@ namespace Konversation
                                                   // who is the recipient?
         QString recipient = parameter.section(' ', 0, 0);
                                                   // what is the first word of the ctcp?
-        QString request = parameter.section(' ', 1, 1, QString::SectionSkipEmpty);
+        QString request = parameter.section(' ', 1, 1, QString::SectionSkipEmpty).upper();
                                                   // what is the complete ctcp command?
-        QString message = parameter.section(' ', 1, 0xffffff, QString::SectionSkipEmpty);
+        QString message = parameter.section(' ', 2, 0xffffff, QString::SectionSkipEmpty);
 
-        if(request.lower() == "ping")
+        QString out = request + ' ' + message;
+
+        if (request == "PING")
         {
             unsigned int time_t = QDateTime::currentDateTime().toTime_t();
             result.toServer = QString("PRIVMSG %1 :\x01PING %2\x01").arg(recipient).arg(time_t);
@@ -746,8 +748,8 @@ namespace Konversation
         }
         else
         {
-            result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + message + '\x01';
-            result.output = i18n("Sending CTCP-%1 request to %2.").arg(message).arg(recipient);
+            result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + out + '\x01';
+            result.output = i18n("Sending CTCP-%1 request to %2.").arg(out).arg(recipient);
         }
 
         result.typeString = i18n("CTCP");
