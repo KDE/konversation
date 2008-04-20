@@ -12,8 +12,8 @@ the Free Software Foundation; either version 2 of the License, or
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>399</width>
-            <height>487</height>
+            <width>401</width>
+            <height>502</height>
         </rect>
     </property>
     <vbox>
@@ -165,15 +165,18 @@ the Free Software Foundation; either version 2 of the License, or
                         <string>Show channel &amp;mode buttons</string>
                     </property>
                 </widget>
-                <widget class="QCheckBox" row="2" column="0" rowspan="1" colspan="2">
+                <widget class="QCheckBox" row="8" column="0" rowspan="1" colspan="2">
                     <property name="name">
-                        <cstring>kcfg_ShowNickList</cstring>
+                        <cstring>kcfg_ShowIRCViewScrollBar</cstring>
                     </property>
                     <property name="text">
-                        <string>Show channel &amp;nick list and quick buttons</string>
+                        <string>Show sc&amp;rollbar</string>
+                    </property>
+                    <property name="accel">
+                        <string></string>
                     </property>
                 </widget>
-                <widget class="QCheckBox" row="5" column="0" rowspan="1" colspan="2">
+                <widget class="QCheckBox" row="7" column="0" rowspan="1" colspan="2">
                     <property name="name">
                         <cstring>kcfg_ShowNicknameBox</cstring>
                     </property>
@@ -181,24 +184,18 @@ the Free Software Foundation; either version 2 of the License, or
                         <string>Show bo&amp;x to change own nickname</string>
                     </property>
                 </widget>
-                <spacer row="3" column="0">
+                <widget class="QCheckBox" row="6" column="1">
                     <property name="name">
-                        <cstring>spacer9</cstring>
+                        <cstring>kcfg_ShowQuickButtons</cstring>
                     </property>
-                    <property name="orientation">
-                        <enum>Horizontal</enum>
+                    <property name="enabled">
+                        <bool>false</bool>
                     </property>
-                    <property name="sizeType">
-                        <enum>Fixed</enum>
+                    <property name="text">
+                        <string>Show &amp;quick buttons</string>
                     </property>
-                    <property name="sizeHint">
-                        <size>
-                            <width>16</width>
-                            <height>20</height>
-                        </size>
-                    </property>
-                </spacer>
-                <spacer row="4" column="0">
+                </widget>
+                <spacer row="6" column="0">
                     <property name="name">
                         <cstring>spacer10</cstring>
                     </property>
@@ -215,7 +212,43 @@ the Free Software Foundation; either version 2 of the License, or
                         </size>
                     </property>
                 </spacer>
-                <widget class="QCheckBox" row="3" column="1">
+                <widget class="QCheckBox" row="5" column="1">
+                    <property name="name">
+                        <cstring>kcfg_ShowRealNames</cstring>
+                    </property>
+                    <property name="enabled">
+                        <bool>false</bool>
+                    </property>
+                    <property name="text">
+                        <string>Show real names in nickname list</string>
+                    </property>
+                </widget>
+                <spacer row="4" column="0" rowspan="2" colspan="1">
+                    <property name="name">
+                        <cstring>spacer9</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Fixed</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>16</width>
+                            <height>20</height>
+                        </size>
+                    </property>
+                </spacer>
+                <widget class="QCheckBox" row="2" column="0" rowspan="1" colspan="2">
+                    <property name="name">
+                        <cstring>kcfg_ShowNickList</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Show channel &amp;nick list and quick buttons</string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox" row="3" column="1" rowspan="2" colspan="1">
                     <property name="name">
                         <cstring>kcfg_AutoUserhost</cstring>
                     </property>
@@ -226,28 +259,23 @@ the Free Software Foundation; either version 2 of the License, or
                         <string>Show hostmas&amp;ks in nickname list</string>
                     </property>
                 </widget>
-                <widget class="QCheckBox" row="4" column="1">
+                <spacer row="3" column="0">
                     <property name="name">
-                        <cstring>kcfg_ShowQuickButtons</cstring>
+                        <cstring>spacer9_2</cstring>
                     </property>
-                    <property name="enabled">
-                        <bool>false</bool>
+                    <property name="orientation">
+                        <enum>Horizontal</enum>
                     </property>
-                    <property name="text">
-                        <string>Show &amp;quick buttons</string>
+                    <property name="sizeType">
+                        <enum>Fixed</enum>
                     </property>
-                </widget>
-                <widget class="QCheckBox" row="6" column="0" rowspan="1" colspan="2">
-                    <property name="name">
-                        <cstring>kcfg_ShowIRCViewScrollBar</cstring>
+                    <property name="sizeHint">
+                        <size>
+                            <width>16</width>
+                            <height>20</height>
+                        </size>
                     </property>
-                    <property name="text">
-                        <string>Show sc&amp;rollbar</string>
-                    </property>
-                    <property name="accel">
-                        <string></string>
-                    </property>
-                </widget>
+                </spacer>
             </grid>
         </widget>
         <widget class="QGroupBox">
@@ -295,12 +323,14 @@ the Free Software Foundation; either version 2 of the License, or
             <property name="sizeHint">
                 <size>
                     <width>20</width>
-                    <height>10</height>
+                    <height>20</height>
                 </size>
             </property>
         </spacer>
     </vbox>
 </widget>
+<customwidgets>
+</customwidgets>
 <connections>
     <connection>
         <sender>kcfg_ShowNickList</sender>
@@ -314,22 +344,29 @@ the Free Software Foundation; either version 2 of the License, or
         <receiver>kcfg_ShowQuickButtons</receiver>
         <slot>setEnabled(bool)</slot>
     </connection>
+    <connection>
+        <sender>kcfg_ShowNickList</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>kcfg_ShowRealNames</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
 </connections>
 <tabstops>
-    <tabstop>kcfg_Timestamping</tabstop>
     <tabstop>kcfg_TimestampFormat</tabstop>
     <tabstop>kcfg_ShowDate</tabstop>
-    <tabstop>kcfg_ShowBacklog</tabstop>
     <tabstop>kcfg_BacklogLines</tabstop>
     <tabstop>kcfg_ShowTopic</tabstop>
     <tabstop>kcfg_ShowModeButtons</tabstop>
     <tabstop>kcfg_ShowNickList</tabstop>
     <tabstop>kcfg_AutoUserhost</tabstop>
+    <tabstop>kcfg_ShowRealNames</tabstop>
     <tabstop>kcfg_ShowQuickButtons</tabstop>
     <tabstop>kcfg_ShowNicknameBox</tabstop>
     <tabstop>kcfg_ShowIRCViewScrollBar</tabstop>
-    <tabstop>kcfg_ShowBackgroundImage</tabstop>
     <tabstop>kcfg_BackgroundImage</tabstop>
+    <tabstop>kcfg_ShowBackgroundImage</tabstop>
+    <tabstop>kcfg_Timestamping</tabstop>
+    <tabstop>kcfg_ShowBacklog</tabstop>
 </tabstops>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>

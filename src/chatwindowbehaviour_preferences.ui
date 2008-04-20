@@ -8,8 +8,8 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>456</width>
-            <height>489</height>
+            <width>458</width>
+            <height>458</height>
         </rect>
     </property>
     <vbox>
@@ -226,7 +226,7 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <spacer row="3" column="2">
+                <spacer row="2" column="2">
                     <property name="name">
                         <cstring>spacer3</cstring>
                     </property>
@@ -243,7 +243,7 @@
                         </size>
                     </property>
                 </spacer>
-                <spacer row="1" column="2" rowspan="2" colspan="1">
+                <spacer row="0" column="2" rowspan="2" colspan="1">
                     <property name="name">
                         <cstring>spacer2</cstring>
                     </property>
@@ -260,7 +260,7 @@
                         </size>
                     </property>
                 </spacer>
-                <widget class="QLabel" row="1" column="0">
+                <widget class="QLabel" row="0" column="0">
                     <property name="name">
                         <cstring>textLabel2</cstring>
                     </property>
@@ -271,18 +271,7 @@
                         <cstring>kcfg_AutoWhoNicksLimit</cstring>
                     </property>
                 </widget>
-                <widget class="QCheckBox" row="0" column="0" rowspan="1" colspan="2">
-                    <property name="name">
-                        <cstring>kcfg_ShowRealNames</cstring>
-                    </property>
-                    <property name="text">
-                        <string>&amp;Show real names next to nicknames</string>
-                    </property>
-                    <property name="whatsThis" stdset="0">
-                        <string>Show the real name of a person next to his/her nick in nickname list.</string>
-                    </property>
-                </widget>
-                <widget class="QSpinBox" row="1" column="1" rowspan="2" colspan="1">
+                <widget class="QSpinBox" row="0" column="1" rowspan="2" colspan="1">
                     <property name="name">
                         <cstring>kcfg_AutoWhoNicksLimit</cstring>
                     </property>
@@ -299,7 +288,7 @@
                         <number>300</number>
                     </property>
                 </widget>
-                <widget class="QSpinBox" row="3" column="1">
+                <widget class="QSpinBox" row="2" column="1">
                     <property name="name">
                         <cstring>kcfg_AutoWhoContinuousInterval</cstring>
                     </property>
@@ -319,7 +308,7 @@
                         <number>30</number>
                     </property>
                 </widget>
-                <widget class="QLabel" row="2" column="0" rowspan="2" colspan="1">
+                <widget class="QLabel" row="1" column="0" rowspan="2" colspan="1">
                     <property name="name">
                         <cstring>whoIntervalLbl</cstring>
                     </property>
@@ -375,7 +364,6 @@
     <tabstop>kcfg_AutomaticRememberLine</tabstop>
     <tabstop>kcfg_AutomaticRememberLineOnlyOnTextChange</tabstop>
     <tabstop>kcfg_MarkerLineInAllViews</tabstop>
-    <tabstop>kcfg_ShowRealNames</tabstop>
     <tabstop>kcfg_AutoWhoNicksLimit</tabstop>
     <tabstop>kcfg_AutoWhoContinuousInterval</tabstop>
     <tabstop>kcfg_AutoWhoContinuousEnabled</tabstop>
