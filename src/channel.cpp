@@ -1978,8 +1978,6 @@ void Channel::clearModeList()
 
     limit->clear();
 
-    topicLine->setText(QString::null);
-
     emit modesChanged();
 }
 
@@ -2520,7 +2518,7 @@ void Channel::setActive(bool active)
         purgeNicks();
         getTextView()->setNickAndChannelContextMenusEnabled(false);
         nicknameCombobox->setEnabled(false);
-        topicLine->setText("");
+        topicLine->setText(QString::null);
         clearModeList();
         clearBanList();
     }
