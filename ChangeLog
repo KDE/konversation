@@ -299,6 +299,7 @@ Changes since 1.0.1:
 - Made it possible to set a Quit message independently from the Part message.
 - Saving a newly-created identity is no longer allowed without entering a real
   name.
+- Fixed build with --enable-final.
 
 -------------------------------------------------------------------------------
 

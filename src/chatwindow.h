@@ -23,7 +23,6 @@
 class IRCView;
 class Server;
 class KonversationMainWindow;
-class ViewContainer;
 
 class ChatWindow : public QVBox
 {

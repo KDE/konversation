@@ -27,10 +27,8 @@
 #include "connectionsettings.h"
 
 #include <qtimer.h>
-#include <qdict.h>
 #include <qvaluevector.h>
 #include <qguardedptr.h>
-#include <qdeepcopy.h>
 
 #include <ksharedptr.h>
 #include <kprocess.h>
