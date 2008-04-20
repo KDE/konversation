@@ -306,6 +306,7 @@ void KonversationApplication::readOptions()
             newIdentity->setAwayMessage(config->readEntry("AwayMessage"));
             newIdentity->setReturnMessage(config->readEntry("ReturnMessage"));
 
+            newIdentity->setQuitReason(config->readEntry("QuitReason"));
             newIdentity->setPartReason(config->readEntry("PartReason"));
             newIdentity->setKickReason(config->readEntry("KickReason"));
 
@@ -556,6 +557,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
         config->writeEntry("ShowAwayMessage",identity->getShowAwayMessage());
         config->writeEntry("AwayMessage",identity->getAwayMessage());
         config->writeEntry("ReturnMessage",identity->getReturnMessage());
+        config->writeEntry("QuitReason",identity->getQuitReason());
         config->writeEntry("PartReason",identity->getPartReason());
         config->writeEntry("KickReason",identity->getKickReason());
         config->writeEntry("PreShellCommand",identity->getShellCommand());

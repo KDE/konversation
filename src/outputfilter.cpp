@@ -597,7 +597,7 @@ namespace Konversation
         result.toServer = "QUIT :";
         // if no reason given, take default reason
         if(reason.isEmpty())
-            result.toServer += m_server->getIdentity()->getPartReason();
+            result.toServer += m_server->getIdentity()->getQuitReason();
         else
             result.toServer += reason;
 

@@ -54,6 +54,8 @@ class Identity : public KShared
         void setNicknameList(const QStringList& newList);
         QStringList getNicknameList() const;
 
+        void setQuitReason(const QString& reason);
+        QString getQuitReason() const;
         void setPartReason(const QString& reason);
         QString getPartReason() const;
         void setKickReason(const QString& reason);
@@ -93,6 +95,7 @@ class Identity : public KShared
         QStringList nicknameList;
 
         QString partReason;
+        QString quitReason;
         QString kickReason;
 
         bool insertRememberLineOnAway;

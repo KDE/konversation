@@ -64,6 +64,7 @@ namespace Konversation
             KComboBox* m_codecCBox;
             KLineEdit* m_botEdit;
             KLineEdit* m_passwordEdit;
+            KLineEdit* m_quitEdit;
             KLineEdit* m_partEdit;
             KLineEdit* m_kickEdit;
             KLineEdit* m_awayEdit;

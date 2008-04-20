@@ -274,6 +274,19 @@ QStringList KonvIdentDCOP::getNicknameList(const QString &identity)
     return Preferences::identityByName(identity)->getNicknameList();
 }
 
+void KonvIdentDCOP::setQuitReason(const QString &identity, const QString& reason)
+{
+    const Identity *i = Preferences::identityByName(identity);
+    const_cast<Identity *>(i)->setQuitReason(reason);
+    static_cast<KonversationApplication *>(kapp)->saveOptions(true);
+}
+
+QString KonvIdentDCOP::getQuitReason(const QString &identity)
+{
+    return Preferences::identityByName(identity)->getQuitReason();
+}
+
+
 void KonvIdentDCOP::setPartReason(const QString &identity, const QString& reason)
 {
     const Identity *i = Preferences::identityByName(identity);

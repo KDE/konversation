@@ -296,6 +296,9 @@ Changes since 1.0.1:
   sending, as some clients don't like lower- or mixed-case commands as the user
   may have entered them.
 - Removed broken qurl script in favor of new tinyurl one.
+- Made it possible to set a Quit message independently from the Part message.
+- Saving a newly-created identity is no longer allowed without entering a real
+  name.
 
 -------------------------------------------------------------------------------
 

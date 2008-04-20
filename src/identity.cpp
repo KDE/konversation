@@ -62,6 +62,7 @@ void Identity::init()
 
     setInsertRememberLineOnAway(false);
 
+    setQuitReason("Konversation terminated!");
     setPartReason("Konversation terminated!");
     setKickReason("User terminated!");
 
@@ -78,6 +79,7 @@ void Identity::copy(const Identity& original)
     setNicknameList(original.getNicknameList());
     setBot(original.getBot());
     setPassword(original.getPassword());
+    setQuitReason(original.getQuitReason());
     setPartReason(original.getPartReason());
     setKickReason(original.getKickReason());
     setInsertRememberLineOnAway(original.getInsertRememberLineOnAway());
@@ -113,6 +115,8 @@ QString Identity::getBot() const                        { return bot; }
 void Identity::setPassword(const QString& newPassword)  { password=newPassword; }
 QString Identity::getPassword() const                   { return password; }
 
+void Identity::setQuitReason(const QString& reason)     { quitReason=reason; }
+QString Identity::getQuitReason() const                 { return quitReason; }
 void Identity::setPartReason(const QString& reason)     { partReason=reason; }
 QString Identity::getPartReason() const                 { return partReason; }
 void Identity::setKickReason(const QString& reason)     { kickReason=reason; }

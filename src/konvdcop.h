@@ -89,6 +89,8 @@ class KonvIdentDCOP : public QObject, virtual public KonvIdentityIface
         void setNicknameList(const QString &identity, const QStringList& newList);
         QStringList getNicknameList(const QString &identity);
 
+        void setQuitReason(const QString &identity, const QString& reason);
+        QString getQuitReason(const QString &identity);
         void setPartReason(const QString &identity, const QString& reason);
         QString getPartReason(const QString &identity);
         void setKickReason(const QString &identity, const QString& reason);

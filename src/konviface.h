@@ -66,6 +66,8 @@ class KonvIdentityIface : virtual public DCOPObject
     virtual void setNicknameList(const QString &identity, const QStringList& newList) = 0;
     virtual QStringList getNicknameList(const QString &identity) = 0;
 
+    virtual void setQuitReason(const QString &identity, const QString& reason) = 0;
+    virtual QString getQuitReason(const QString &identity) = 0;
     virtual void setPartReason(const QString &identity, const QString& reason) = 0;
     virtual QString getPartReason(const QString &identity) = 0;
     virtual void setKickReason(const QString &identity, const QString& reason) = 0;

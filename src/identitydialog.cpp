@@ -225,6 +225,11 @@ namespace Konversation
         // add encodings to combo box
         m_codecCBox->insertStringList(Konversation::IRCCharsets::self()->availableEncodingDescriptiveNames());
 
+        QLabel* quitLabel = new QLabel(i18n("&Quit reason:"), advancedWidget);
+        m_quitEdit = new KLineEdit(advancedWidget);
+        QWhatsThis::add(m_quitEdit, i18n("Whenever you leave a server, this message is shown to others."));
+        quitLabel->setBuddy(m_quitEdit);
+
         QLabel* partLabel = new QLabel(i18n("&Part reason:"), advancedWidget);
         m_partEdit = new KLineEdit(advancedWidget);
         QWhatsThis::add(m_partEdit, i18n("Whenever you leave a channel, this message is sent to the channel."));
@@ -244,6 +249,9 @@ namespace Konversation
         row++;
         advancedLayout->addWidget(loginLabel,row,0);
         advancedLayout->addWidget(m_loginEdit, row, 1);
+        row++;
+        advancedLayout->addWidget(quitLabel, row, 0);
+        advancedLayout->addWidget(m_quitEdit, row, 1);
         row++;
         advancedLayout->addWidget(partLabel, row, 0);
         advancedLayout->addWidget(m_partEdit, row, 1);
@@ -287,6 +295,13 @@ namespace Konversation
             return;
         }
 
+        if(m_currentIdentity && m_realNameEdit->text().isEmpty())
+        {
+            KMessageBox::error(this, i18n("Please enter a real name."));
+            m_identityCBox->setCurrentText(m_currentIdentity->getName());
+            return;
+        }
+
         refreshCurrentIdentity();
 
         m_currentIdentity = m_identityList[index];
@@ -306,6 +321,7 @@ namespace Konversation
         m_sCommandEdit->setText(m_currentIdentity->getShellCommand());
         m_codecCBox->setCurrentItem(Konversation::IRCCharsets::self()->shortNameToIndex(m_currentIdentity->getCodecName()));
         m_loginEdit->setText(m_currentIdentity->getIdent());
+        m_quitEdit->setText(m_currentIdentity->getQuitReason());
         m_partEdit->setText(m_currentIdentity->getPartReason());
         m_kickEdit->setText(m_currentIdentity->getKickReason());
 
@@ -421,6 +437,7 @@ namespace Konversation
         m_currentIdentity->setShellCommand(m_sCommandEdit->text());
         m_currentIdentity->setCodecName(Konversation::IRCCharsets::self()->availableEncodingShortNames()[m_codecCBox->currentItem()]);
         m_currentIdentity->setIdent(m_loginEdit->text());
+        m_currentIdentity->setQuitReason(m_quitEdit->text());
         m_currentIdentity->setPartReason(m_partEdit->text());
         m_currentIdentity->setKickReason(m_kickEdit->text());
     }
@@ -430,6 +447,13 @@ namespace Konversation
         if(m_nicknameLBox->count() == 0)
         {
             KMessageBox::error(this, i18n("You must add at least one nick to the identity."));
+            m_identityCBox->setCurrentText(m_currentIdentity->getName());
+            return;
+        }
+
+        if(m_realNameEdit->text().isEmpty())
+        {
+            KMessageBox::error(this, i18n("Please enter a real name."));
             m_identityCBox->setCurrentText(m_currentIdentity->getName());
             return;
         }
