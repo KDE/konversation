@@ -2195,8 +2195,7 @@ void Channel::updateAppearance()
     {
         fg=colorGroup().foreground();
         bg=colorGroup().base();
-        // get alternate background color from cache
-        abg=nicknameListView->alternateBackground();
+        abg=KGlobalSettings::alternateBackgroundColor();
     }
 
     channelInput->unsetPalette();
