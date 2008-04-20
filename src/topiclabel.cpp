@@ -243,7 +243,12 @@ namespace Konversation
     {
         QToolTip::remove(this);
 
-        if (m_fullText.isEmpty()) return;
+        if (m_fullText.isEmpty())
+        {
+            KActiveLabel::setText(QString::null);
+
+            return;
+        }
 
         QFontMetrics fm(currentFont());
         QString text = m_fullText;

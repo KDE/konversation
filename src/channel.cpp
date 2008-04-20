@@ -1978,6 +1978,8 @@ void Channel::clearModeList()
 
     limit->clear();
 
+    topicLine->setText(QString::null);
+
     emit modesChanged();
 }
 

@@ -292,6 +292,8 @@ Changes since 1.0.1:
 - Fix possible crash when closing all views and subsequently creating a new
   connection.
 - Empty topic labels will no longer show empty tooltips, but rather none at all.
+- Channel topic labels are now cleared on disconnect, so that upon reconnect, they
+  won't show a topic that isn't actually set if the topic was removed inbetween.
 
 -------------------------------------------------------------------------------
 
