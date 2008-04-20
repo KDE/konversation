@@ -302,6 +302,8 @@ Changes since 1.0.1:
 - Fixed build with --enable-final.
 - Made pressing Return or Enter in the Log File Viewer's size spinbox apply the
   setting, just as pressing the Return button.
+- Connections to non-config-backed targets no longer show in Watched Nicks On-
+  line.
 
 -------------------------------------------------------------------------------
 
