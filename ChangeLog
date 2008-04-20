@@ -295,6 +295,7 @@ Changes since 1.0.1:
 - The command part of CTCP requests is now always converted to uppercase before
   sending, as some clients don't like lower- or mixed-case commands as the user
   may have entered them.
+- Removed broken qurl script in favor of new tinyurl one.
 
 -------------------------------------------------------------------------------
 
