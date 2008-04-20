@@ -603,6 +603,8 @@ void Server::broken(int state)
 
     if (getConnectionState() != Konversation::SSDeliberatelyDisconnected)
     {
+        static_cast<KonversationApplication*>(kapp)->notificationHandler()->connectionFailure(getStatusView(), getServerName());
+
         QString error = i18n("Connection to Server %1 lost: %2..")
             .arg(getConnectionSettings().server().host())
             .arg(KNetwork::KSocketBase::errorString((KNetwork::KSocketBase::SocketError)state));
