@@ -121,6 +121,13 @@ namespace Konversation
                 append = ',';
             }
 
+            // Don't consider trailing semicolon part of link.
+            if (href.right(1) == ";")
+            {
+                href.truncate(href.length()-1);
+                append = ';';
+            }
+
             // Don't consider trailing closing parenthesis part of link when
             // there's an opening parenthesis preceding the beginning of the
             // URL or there is no opening parenthesis in the URL at all.
