@@ -307,6 +307,7 @@ Changes since 1.0.1:
 - Fixed moving back from the custom alternate background color to system colors
   in the channel nickname listviews when disabling the "Use custom colors for
   lists, [...]" preference.
+- The window caption is now properly being reset when the last tab is closed.
 
 -------------------------------------------------------------------------------
 

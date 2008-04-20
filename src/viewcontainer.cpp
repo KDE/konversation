@@ -1162,6 +1162,7 @@ void ViewContainer::addView(ChatWindow* view, const QString& label, bool weiniti
     connect(view, SIGNAL(setStatusBarTempText(const QString&)), this, SIGNAL(setStatusBarTempText(const QString&)));
     connect(view, SIGNAL(clearStatusBarTempText()), this, SIGNAL(clearStatusBarTempText()));
     connect(view, SIGNAL(closing(ChatWindow*)), this, SIGNAL(removeView(ChatWindow*)));
+    connect(view, SIGNAL(closing(ChatWindow*)), this, SLOT(viewAboutToClose()));
 
     // Please be careful about changing any of the grouping behavior in here,
     // because it needs to match up with the sorting behavior of the tree list,
@@ -1564,6 +1565,13 @@ void ViewContainer::closeCurrentView()
         closeView(m_tabWidget->page(m_popupViewIndex));
 
     m_popupViewIndex = -1;
+}
+
+void ViewContainer::viewAboutToClose()
+{
+    // Last view is about to go down.
+    if (m_tabWidget && m_tabWidget->count() == 1)
+        emit setWindowCaption(QString::null);
 }
 
 void ViewContainer::changeViewCharset(int index)

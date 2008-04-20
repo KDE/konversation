@@ -93,6 +93,7 @@ class ViewContainer : public QObject
         void closeView(QWidget* view);
         void closeView(ChatWindow* view);
         void closeCurrentView();
+        void viewAboutToClose();
 
         void changeViewCharset(int index);
         void updateViewEncoding(ChatWindow* view);
