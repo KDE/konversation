@@ -110,6 +110,8 @@ void ViewContainer::prepareShutdown()
     for (int i = 0; i < m_tabWidget->count(); ++i)
         m_tabWidget->page(i)->blockSignals(true);
 
+    m_tabWidget->blockSignals(true);
+
     m_tabWidget = 0;
 }
 
