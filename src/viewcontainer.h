@@ -205,10 +205,10 @@ class ViewContainer : public QObject
 
         Images* images;
 
-        Server* m_frontServer;
-        Server* m_contextServer;
+        QGuardedPtr<Server> m_frontServer;
+        QGuardedPtr<Server> m_contextServer;
         QGuardedPtr<ChatWindow> m_frontView;
-        ChatWindow* m_searchView;
+        QGuardedPtr<ChatWindow> m_searchView;
 
         UrlCatcher* m_urlCatcherPanel;
         NicksOnline* m_nicksOnlinePanel;

@@ -58,11 +58,6 @@ ViewContainer::ViewContainer(KonversationMainWindow* window):
     m_tabWidget = 0;
     m_viewTree = 0;
 
-    m_frontServer = 0;
-    m_contextServer = 0;
-    m_frontView = 0;
-    m_searchView = 0;
-
     m_urlCatcherPanel = 0;
     m_nicksOnlinePanel = 0;
 
@@ -102,9 +97,9 @@ void ViewContainer::showQueueTuner(bool p)
 }
 
 ///Use this instead of setting m_frontServer directly so we can emit the frontServerChanging signal easily.
-void ViewContainer::setFrontServer(Server *newserver)
+void ViewContainer::setFrontServer(Server* newserver)
 {
-    if (m_frontServer == newserver)
+    if (m_frontServer == QGuardedPtr<Server>(newserver))
         return;
     emit frontServerChanging(newserver);
     m_frontServer = newserver;
@@ -1762,7 +1757,7 @@ void ViewContainer::clearAllViews()
 
 void ViewContainer::findText()
 {
-    if (m_searchView==0)
+    if (!m_searchView)
     {
         KMessageBox::sorry(m_window,
             i18n("You can only search in text fields."),

@@ -26,12 +26,12 @@ class ConnectionSettings
 
         bool isValid();
 
-        QString name();
+        QString name() const;
 
         Konversation::ServerSettings server() const { return m_server; }
         void setServer(Konversation::ServerSettings server) { m_server = server; }
 
-        Konversation::ServerGroupSettingsPtr serverGroup() { return m_serverGroup; }
+        Konversation::ServerGroupSettingsPtr serverGroup() const { return m_serverGroup; }
         void setServerGroup(Konversation::ServerGroupSettingsPtr serverGroup) { m_serverGroup = serverGroup; }
 
         IdentityPtr identity() const;
@@ -42,7 +42,7 @@ class ConnectionSettings
         Konversation::ChannelSettings initialChannel() const { return m_initialChannel; } 
         void setInitialChannel(Konversation::ChannelSettings& channel) { m_initialChannel = channel; }
 
-        uint reconnectCount() { return m_reconnectCount; }
+        uint reconnectCount() const { return m_reconnectCount; }
         void incrementReconnectCount() { m_reconnectCount++; }
         void setReconnectCount(uint count) { m_reconnectCount = count; }
 

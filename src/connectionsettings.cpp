@@ -29,10 +29,8 @@ bool ConnectionSettings::isValid()
     return true;
 }
 
-QString ConnectionSettings::name()
+QString ConnectionSettings::name() const
 {
-    if (!isValid()) return QString();
-
     if (m_serverGroup)
         return m_serverGroup->name();
     else
