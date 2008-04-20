@@ -34,12 +34,16 @@ class LogfileReader : public ChatWindow
         virtual bool closeYourself() { closeLog(); return true; }
         virtual bool searchView();
 
+        virtual bool eventFilter(QObject* watched, QEvent* e);
+
+
     protected slots:
         void updateView();
         void clearLog();
         void saveLog();
         void closeLog();
         void copyResult(KIO::Job* job);
+
 
     protected:
         int margin();

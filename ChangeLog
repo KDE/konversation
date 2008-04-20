@@ -300,6 +300,8 @@ Changes since 1.0.1:
 - Saving a newly-created identity is no longer allowed without entering a real
   name.
 - Fixed build with --enable-final.
+- Made pressing Return or Enter in the Log File Viewer's size spinbox apply the
+  setting, just as pressing the Return button.
 
 -------------------------------------------------------------------------------
 

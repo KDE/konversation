@@ -52,6 +52,7 @@ LogfileReader::LogfileReader(QWidget* parent, const QString& log) : ChatWindow(p
     QWhatsThis::add(sizeSpin, i18n("Use this box to set the maximum size of the log file. This setting does not take effect until you restart Konversation. Each log file may have a separate setting."));
     sizeSpin->setValue(Preferences::logfileBufferSize());
     sizeSpin->setSuffix(i18n(" KB"));
+    sizeSpin->installEventFilter(this);
 
     toolBar->insertButton("reload",0,SIGNAL(clicked()),this,SLOT(updateView()),true,i18n("Reload"));
     toolBar->insertButton("editdelete",0,SIGNAL(clicked()),this,SLOT(clearLog()),true,i18n("Clear Logfile"));
@@ -75,6 +76,25 @@ LogfileReader::~LogfileReader()
     Preferences::setLogfileBufferSize(sizeSpin->value());
 
     delete toolBar;
+}
+
+bool LogfileReader::eventFilter(QObject* /* watched */, QEvent* e)
+{
+    if (e->type() == QEvent::KeyPress)
+    {
+        QKeyEvent* ke = static_cast<QKeyEvent*>(e);
+
+        if (ke->key() == Qt::Key_Return || ke->key() == Qt::Key_Enter)
+        {
+            updateView();
+
+            return true;
+        }
+        else
+            return false;
+    }
+
+    return false;
 }
 
 void LogfileReader::updateView()
