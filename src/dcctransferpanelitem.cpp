@@ -46,8 +46,6 @@ DccTransferPanelItem::DccTransferPanelItem( DccTransferPanel* panel, DccTransfer
     m_progressBar->setCenterIndicator( true );
     m_progressBar->setPercentageVisible( true );
 
-    m_fileRemoved = false;
-
     connect( m_transfer, SIGNAL( transferStarted( DccTransfer* ) ), this, SLOT( startAutoViewUpdate() ) );
     connect( m_transfer, SIGNAL( done( DccTransfer* ) ), this, SLOT( stopAutoViewUpdate() ) );
     connect( m_transfer, SIGNAL( done( DccTransfer* ) ), this, SLOT( backupTransferInfo( DccTransfer* ) ) );
@@ -180,41 +178,12 @@ void DccTransferPanelItem::showProgressBar()
 
 void DccTransferPanelItem::runFile()
 {
-    if ( m_fileRemoved )
-        return;
-
     if ( m_transfer->getType() == DccTransfer::Send || m_transfer->getStatus() == DccTransfer::Done )
         new KRun( m_transfer->getFileURL(), listView() );
 }
 
-void DccTransferPanelItem::removeFile()
-{
-    if ( m_fileRemoved )
-        return;
-
-    if ( m_transfer->getType() != DccTransfer::Receive || m_transfer->getStatus() != DccTransfer::Done )
-        return;
-    // is it better to show the progress dialog?
-    KIO::SimpleJob* deleteJob = KIO::file_delete( m_transfer->getFileURL(), false );
-    connect( deleteJob, SIGNAL( result( KIO::Job* ) ), this, SLOT( slotRemoveFileDone( KIO::Job* ) ) );
-}
-
-void DccTransferPanelItem::slotRemoveFileDone( KIO::Job* job )
-{
-    if ( job->error() )
-        KMessageBox::sorry( listView(), i18n("Cannot remove file '%1'.").arg( m_transfer->getFileURL().url() ), i18n("DCC Error") );
-    else
-    {
-        m_fileRemoved = true;
-        updateView();
-    }
-}
-
 void DccTransferPanelItem::openFileInfoDialog()
 {
-    if ( m_fileRemoved )
-        return;
-
     if ( m_transfer->getType() == DccTransfer::Send || m_transfer->getStatus() == DccTransfer::Done )
     {
         QStringList infoList;

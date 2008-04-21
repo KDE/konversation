@@ -61,7 +61,6 @@ class DccTransferPanel : public ChatWindow
                     Abort,
                     Clear,
                     Open,
-                    Remove,
                     Info,
                     Resend
                 };
@@ -81,7 +80,6 @@ class DccTransferPanel : public ChatWindow
         void resendFile();
         void clearDcc();
         void runDcc();
-        void removeFile();
         void showFileInfo();
         void selectAll();
         void selectAllCompleted();
@@ -110,7 +108,6 @@ class DccTransferPanel : public ChatWindow
         QPushButton* m_buttonAbort;
         QPushButton* m_buttonClear;
         QPushButton* m_buttonOpen;
-        QPushButton* m_buttonRemove;
         QPushButton* m_buttonDetail;
 };
 #endif

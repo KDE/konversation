@@ -50,7 +50,6 @@ class DccTransferPanelItem : public QObject, public KListViewItem
         virtual int compare( QListViewItem* i, int col, bool ascending ) const;
 
         void runFile();
-        void removeFile();
         void openFileInfoDialog();
 
         DccTransfer* transfer() const { return m_transfer; }
@@ -80,8 +79,6 @@ class DccTransferPanelItem : public QObject, public KListViewItem
         bool m_isTransferInstanceBackup;
 
     private slots:
-        void slotRemoveFileDone( KIO::Job* job );
-
         void startAutoViewUpdate();
         void stopAutoViewUpdate();
 
@@ -96,9 +93,6 @@ class DccTransferPanelItem : public QObject, public KListViewItem
         // UI
         QTimer* m_autoUpdateViewTimer;
         KProgress* m_progressBar;
-
-        // file
-        bool m_fileRemoved;
 };
 
 #endif  // DCCTRANSFERPANELITEM_H
