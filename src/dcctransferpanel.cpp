@@ -116,7 +116,7 @@ void DccTransferPanel::initGUI()
     m_buttonAbort  = new QPushButton(icon("stop"),        i18n("Abort"),  buttonsBox, "abort_dcc");
     m_buttonClear  = new QPushButton(icon("editdelete"),  i18n("Clear"),  buttonsBox, "clear_dcc");
     m_buttonOpen   = new QPushButton(icon("exec"),        i18n("Open File"),   buttonsBox, "open_dcc_file");
-    m_buttonDetail = new QPushButton(icon("view_text"),   i18n("Transfer Details"), buttonsBox, "detail_dcc");
+    m_buttonDetail = new QPushButton(icon("view_text"),   i18n("Details"), buttonsBox, "detail_dcc");
     m_buttonDetail->setToggleButton( true );
 
     QToolTip::add( m_buttonAccept, i18n( "Start receiving" ) );
