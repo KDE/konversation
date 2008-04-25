@@ -1,6 +1,6 @@
 METASOURCES = AUTO
 
-INCLUDES = -I$(top_srcdir)/konversation/src -I$(top_builddir)/konversation/src -I$(top_srcdir)/konversation/src/config -I$(top_builddir)/konversation/src/config
+INCLUDES = -I$(srcdir)/.. -I.. -I$(srcdir)/../config -I../config
 AM_CPPFLAGS = $(all_includes) -I$(top_builddir)/konversation/src
 
 noinst_LTLIBRARIES = liblinkaddressbookui.la

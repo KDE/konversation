@@ -1,4 +1,4 @@
-INCLUDES = -I$(top_srcdir)/konversation/src -I$(top_builddir)/konversation/src $(all_includes)
+INCLUDES = -I.. -I$(srcdir)/.. $(all_includes)
 METASOURCES = AUTO
 
 noinst_LTLIBRARIES = libkonversationconfig.la

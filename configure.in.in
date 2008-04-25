@@ -1,3 +1,6 @@
+#MIN_CONFIG(3.2)
+CXXFLAGS="$CXXFLAGS $KDE_DEFAULT_CXXFLAGS"
+
 KDE_CHECK_HEADER(knotifyclient.h,
 	[
         AC_DEFINE(USE_KNOTIFY, 1, [Define if you have KNotify] )
