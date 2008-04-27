@@ -196,6 +196,8 @@ bool DccTransferSend::queue()
         }
     }
 
+    //FIXME: if "\\\"" works well on other IRC clients, replace "\"" with "\\\""
+    m_fileName.replace( "\"", "_" );
     if (Preferences::dccSpaceToUnderscore())
         m_fileName.replace( " ", "_" );
     else {
