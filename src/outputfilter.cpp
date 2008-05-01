@@ -39,7 +39,7 @@
 #include <ksocketaddress.h>
 #include <kresolver.h>
 #include <kreverseresolver.h>
-
+#include <kmessagebox.h>
 
 
 namespace Konversation
@@ -274,6 +274,7 @@ namespace Konversation
             else if(command == "encoding")  result = parseCharset(parameter);
             else if(command == "setkey")   result = parseSetKey(parameter);
             else if(command == "delkey")   result = parseDelKey(parameter);
+            else if(command == "showkey")  result = parseShowKey(parameter);
             else if(command == "dns")      result = parseDNS(parameter);
             else if(command == "kill")     result = parseKill(parameter);
             else if(command == "queuetuner") result = parseShowTuner(parameter);
@@ -1601,36 +1602,51 @@ namespace Konversation
 
     OutputFilterResult OutputFilter::parseSetKey(const QString& parameter)
     {
-        OutputFilterResult result;
 
-        if(parameter.isEmpty())
-        {
-            result = usage(i18n("Usage: %1setkey <nick> or <channel> <key> Sets the encryption key for nick or channel").arg(commandChar) );
-        }
-        else
-        {
-            QStringList tmp = QStringList::split(" ",parameter);
-            m_server->setKeyForRecipient(tmp[0], tmp[1].local8Bit());
-            result = info(i18n("The key for %1 is successfully set.").arg(tmp[0]));
-        }
+        QStringList parms = QStringList::split(" ", parameter);
 
-        return result;
+        if (parms.count() == 0 >> parms.count() > 2)
+            return usage(i18n("Usage: %1setkey [<nick|channel>] <key> sets the encryption key for nick or channel. %2setkey <key> when in a channel or query tab to set the key for it.").arg(commandChar).arg(commandChar) );
+        else if (parms.count() == 1)
+            parms.prepend(destination);
+
+        m_server->setKeyForRecipient(parms[0], parms[1].local8Bit());
+
+        if (isAChannel(parms[0]) && m_server->getChannelByName(parms[0]))
+            m_server->getChannelByName(parms[0])->setEncryptedOutput(true);
+        else if (m_server->getQueryByName(parms[0]))
+            m_server->getQueryByName(parms[0])->setEncryptedOutput(true);
+
+        return info(i18n("The key for %1 has been set.").arg(parms[0]));
     }
 
-    OutputFilterResult OutputFilter::parseDelKey(const QString& parameter)
+    OutputFilterResult OutputFilter::parseDelKey(const QString& prametr)
     {
-        OutputFilterResult result;
+        QString parameter(prametr.isEmpty()?destination:prametr);
 
-        if(parameter.isEmpty())
-        {
-            result = usage(i18n("Usage: %1delkey <nick> or <channel> Deletes the encryption key for nick or channel").arg(commandChar));
-        }
+        if(parameter.isEmpty() || parameter.contains(' '))
+            return usage(i18n("Usage: %1delkey <nick> or <channel> deletes the encryption key for nick or channel").arg(commandChar));
+
+        m_server->setKeyForRecipient(parameter, "");
+
+        if (isAChannel(parameter) && m_server->getChannelByName(parameter))
+            m_server->getChannelByName(parameter)->setEncryptedOutput(false);
+        else if (m_server->getQueryByName(parameter))
+            m_server->getQueryByName(parameter)->setEncryptedOutput(false);
+
+        return info(i18n("The key for %1 has been deleted.").arg(parameter));
+    }
+
+    OutputFilterResult OutputFilter::parseShowKey(const QString& prametr)
+    {
+        QString parameter(prametr.isEmpty()?destination:prametr);
+        QString key(m_server->getKeyForRecipient(parameter));
+        QWidget *mw=KonversationApplication::instance()->getMainWindow();
+        if (!key.isEmpty())
+            KMessageBox::information(mw, i18n("The key for %1 is \"%2\".").arg(parameter).arg(key), i18n("Blowfish"));
         else
-        {
-            m_server->setKeyForRecipient(parameter, "");
-            result = info(i18n("The key for %1 is now deleted.").arg(parameter));
-        }
-
+            KMessageBox::information(mw, i18n("No key has been set for %1.").arg(parameter));
+        OutputFilterResult result;
         return result;
     }
 

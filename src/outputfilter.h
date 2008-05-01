@@ -159,6 +159,7 @@ namespace Konversation
             void parseCycle();
             OutputFilterResult parseSetKey(const QString& parameter);
             OutputFilterResult parseDelKey(const QString& parameter);
+            OutputFilterResult parseShowKey(const QString& parameter);
             OutputFilterResult parseDNS(const QString& parameter);
             OutputFilterResult parseKill(const QString& parameter);
             OutputFilterResult parseShowTuner(const QString &p);

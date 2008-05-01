@@ -959,8 +959,6 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                         i18n("The topic was set by %1 on %2.")
                         .arg(parameterList[2]).arg(when.toString(Qt::LocalDate)),
                         false);
-
-                    emit topicAuthor(parameterList[1],parameterList[2]);
                 }
                 else
                 {
@@ -971,6 +969,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                         );
                     setAutomaticRequest("TOPIC",parameterList[1],false);
                 }
+                emit topicAuthor(parameterList[1], parameterList[2], when);
 
                 break;
             }

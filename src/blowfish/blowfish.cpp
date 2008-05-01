@@ -68,7 +68,11 @@ namespace Konversation
             qstrncpy(result.data(), cipher.data(), cipher.length());
             qstrncpy(ckey.data(), key.data(), key.length()+1);
             tmp2 = decrypt_string(ckey.data(),result.data());
-            cipher = backup+"(e) "+tmp2+' '+'\n';
+            const char *pfx="(e) ";
+            // If it's a CTCP we don't want to have the (e) interfering with the processing
+            if (tmp2[0] == 1)
+                pfx = "\x0";
+            cipher = backup+pfx+tmp2+' '+'\n'; // FIXME(??) why is there an added space here?
             free(tmp2);
         }
     }
@@ -105,30 +109,22 @@ namespace Konversation
         }
     }
 
-    void encrypt(const QString& recipient, QString& cipher, Server* server)
+    void encrypt(const QString& recipient, QCString& cipher, Server* server)
     {
         QString key = server->getKeyForRecipient(recipient);
 
         if(!key.isEmpty())
         {
-            if(cipher.startsWith("+p "))
+            if (cipher.left(3) == "+p ")
             {
                 cipher = cipher.mid(3);
                 return;
             }
 
-            QString backup = cipher.section(":",0,0)+':';
-            cipher = cipher.section(":",1).remove("\n");
+            QCString ckey(key.local8Bit());
 
-            char* tmp;
-            int size = cipher.utf8().length();
-            QCString encrypted( size+1 );
-            QCString ckey( key.length()+1 );
-
-            strcpy(ckey.data(),key.local8Bit());
-            strcpy(encrypted.data(),cipher.utf8());
-            tmp = encrypt_string(ckey.data(),encrypted.data());
-            cipher = backup +"+OK " + tmp +'\n';
+            char *tmp = encrypt_string(ckey.data(), cipher.data());
+            cipher = QCString("+OK ") + tmp;
             free(tmp);
         }
     }

@@ -76,7 +76,7 @@ class Channel : public ChatWindow
     Q_OBJECT
 
     public:
-        explicit Channel(QWidget* parent);
+        explicit Channel(QWidget* parent, QString name);
         ~Channel();
 //META
         virtual bool canBeFrontView();
@@ -97,6 +97,8 @@ class Channel : public ChatWindow
 
         virtual void setServer(Server* newServer);
         void setIdentity(const IdentityPtr identity);
+
+        void setEncryptedOutput(bool);
 
         bool rejoinable();
 //Unsure of future placement and/or continued existence of these members
@@ -170,7 +172,7 @@ class Channel : public ChatWindow
 
         void setTopic(const QString& topic);
         void setTopic(const QString& nickname, const QString& topic);
-        void setTopicAuthor(const QString& author);
+        void setTopicAuthor(const QString& author, QDateTime t);
 
     signals:
         void topicHistoryChanged();
@@ -334,6 +336,7 @@ class Channel : public ChatWindow
         QComboBox* nicknameCombobox;
         QString oldNick; ///< GUI
         QLabel* awayLabel;
+        QLabel* blowfishLabel;
         IRCInput* channelInput;
 
         NickChangeDialog* nickChangeDialog;

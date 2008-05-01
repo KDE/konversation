@@ -295,8 +295,8 @@ void Server::connectSignals()
         this, SLOT(resumeDccSendTransfer(const QString&, const QStringList&)));
     connect(&m_inputFilter, SIGNAL(userhost(const QString&,const QString&,bool,bool)),
         this, SLOT(userhost(const QString&,const QString&,bool,bool)) );
-    connect(&m_inputFilter, SIGNAL(topicAuthor(const QString&,const QString&)),
-        this, SLOT(setTopicAuthor(const QString&,const QString&)) );
+    connect(&m_inputFilter, SIGNAL(topicAuthor(const QString&,const QString&,QDateTime)),
+        this, SLOT(setTopicAuthor(const QString&,const QString&,QDateTime)) );
     connect(&m_inputFilter, SIGNAL(endOfWho(const QString&)),
         this, SLOT(endOfWho(const QString&)) );
     connect(&m_inputFilter, SIGNAL(invitation(const QString&,const QString&)),
@@ -676,6 +676,7 @@ void Server::registerWithServices()
     }
 }
 
+//FIXME operator[] inserts an empty T& so each destination might just as well have its own key storage
 QCString Server::getKeyForRecipient(const QString& recipient) const
 {
     return m_keyMap[recipient];
@@ -998,11 +999,10 @@ void Server::incoming()
             }
         }
         // END pre-parse to know where the message belongs to
-
         // Decrypt if necessary
         if(command == "privmsg")
             Konversation::decrypt(channelKey,front,this);
-        else if(command == "332")
+        else if(command == "332" || command == "topic")
         {
             Konversation::decryptTopic(channelKey,front,this);
         }
@@ -1060,42 +1060,44 @@ int Server::getPreLength(const QString& command, const QString& dest)
     return x;
 }
 
+//Commands greater than 1 have localizeable text:         0   1    2       3      4    5    6
+static QStringList outcmds=QStringList::split(QChar(' '),"WHO QUIT PRIVMSG NOTICE KICK PART TOPIC");
+
 int Server::_send_internal(QString outputLine)
 {
     QStringList outputLineSplit=QStringList::split(" ", outputLine);
-    // NOTE: It's important to add the linefeed here, so the encoding process does not trash it
-    //       for some servers.
-    if (!outputLine.endsWith("\n"))
-        outputLine+='\n';
-
     //Lets cache the uppercase command so we don't miss or reiterate too much
-    QString outboundCommand(outputLineSplit[0].upper());
+    //QString outboundCommand(outputLineSplit[0].upper());
+    int outboundCommand=outcmds.findIndex(outputLineSplit[0].upper());
+
+    if (outputLine.at(outputLine.length()-1) == '\n')
+    {
+        kdDebug() << "found \\n on " << outboundCommand << endl;
+        outputLine.setLength(outputLine.length()-1);
+    }
 
     // remember the first arg of /WHO to identify responses
-    if (!outputLineSplit.isEmpty() && outboundCommand=="WHO")
+    if (!outputLineSplit.isEmpty() && outboundCommand == 0) //"WHO"
     {
-        if (outputLineSplit.count()>=2)
+        if (outputLineSplit.count() >= 2)
             m_inputFilter.addWhoRequest(outputLineSplit[1]);
         else // no argument (servers recognize it as "*")
             m_inputFilter.addWhoRequest("*");
     }
 
-    else if (outboundCommand=="QUIT")
+    else if (outboundCommand == 1) //"QUIT"
         updateConnectionState(Konversation::SSDeliberatelyDisconnected);
+
 
     // set channel encoding if specified
     QString channelCodecName;
 
-    if(outputLineSplit.count()>2) //"for safe" <-- so no encoding if no data
+    //[ PRIVMSG | NOTICE | KICK | PART | TOPIC ] target :message
+    if(outputLineSplit.count() > 2) //"for safe" <-- so no encoding if no data
     {
-        if(outboundCommand=="PRIVMSG"   //PRIVMSG target :message
-        || outboundCommand=="NOTICE" //NOTICE target :message
-        || outboundCommand=="KICK"   //KICK target :message
-        || outboundCommand=="PART"   //PART target :message
-        || outboundCommand=="TOPIC"  //TOPIC target :message
-        )
+        if(outboundCommand > 1) //"PRIVMSG","NOTICE","KICK","PART","TOPIC"
         {
-            channelCodecName=Preferences::channelEncoding(getDisplayName(),outputLineSplit[1]);
+            channelCodecName=Preferences::channelEncoding(getDisplayName(), outputLineSplit[1]);
         }
     }
 
@@ -1111,15 +1113,47 @@ int Server::_send_internal(QString outputLine)
     //int outlen=-1;
     int outlen=outputLine.length();
 
+    //leaving this done twice for now, i'm uncertain of the implications of not encoding other commands
     QCString encoded=codec->fromUnicode(outputLine, outlen);
 
-    // Blowfish
-    if(outboundCommand=="PRIVMSG" || outboundCommand=="TOPIC")
+    if (outboundCommand >1)
     {
-        Konversation::encrypt(outputLineSplit[1],outputLine,this);
-    }
+        int colon = outputLine.find(':');
+        if (colon == -1) {
+            if (outputLineSplit.count() >2)
+                //this should never happen
+                kdDebug() << "No colon found in output: " << outputLineSplit << endl;
+        }
+        else
+        {
+            colon++;
 
-    Q_LONG sout = m_socket->writeBlock(encoded, outlen);
+            QString pay(outputLine.mid(colon));
+            int len=pay.length();
+            //only encode the actual user text, IRCD *should* desire only ASCII 31 < x < 127 for protocol elements
+            QCString payload=codec->fromUnicode(pay, len);
+
+            // Blowfish
+            if(outboundCommand == 2 || outboundCommand == 6) // outboundCommand == 3 
+            {
+                bool doit = true;
+                if (outboundCommand == 2)
+                {
+                    //if its a privmsg and a ctcp but not an action, don't encrypt
+                    //not working with `payload` in case encoding bollixed it
+                    if (outputLineSplit[2].startsWith(":\x01") && outputLineSplit[2] != ":\x01""ACTION")
+                        doit = false;
+                }
+                if (doit)
+                {
+                    Konversation::encrypt(outputLineSplit[1], payload, this);
+                }
+            }
+            encoded = outputLine.left(colon).latin1() + payload;
+        }
+    }
+    encoded += '\n';
+    Q_LONG sout = m_socket->writeBlock(encoded, encoded.length());
 
     if (m_rawLog) m_rawLog->appendRaw("&lt;&lt; " + outputLine.replace("&","&amp;").replace("<","&lt;").replace(">","&gt;"));
 
@@ -2754,11 +2788,11 @@ void Server::setChannelTopic(const QString& nickname, const QString &channel, co
     }
 }
 
-void Server::setTopicAuthor(const QString& channel,const QString& author)
+void Server::setTopicAuthor(const QString& channel, const QString& author, QDateTime time)
 {
     Channel* outChannel = getChannelByName(channel);
     if(outChannel)
-        outChannel->setTopicAuthor(author);
+        outChannel->setTopicAuthor(author, time);
 }
 
 void Server::endOfWho(const QString& target)

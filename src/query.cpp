@@ -39,8 +39,9 @@
 #include <kpopupmenu.h>
 
 
-Query::Query(QWidget* parent) : ChatWindow(parent)
+Query::Query(QWidget* parent, QString _name) : ChatWindow(parent)
 {
+    name=_name; // need the name a little bit earlier for setServer
     // don't setName here! It will break logfiles!
     //   setName("QueryWidget");
     setType(ChatWindow::Query);
@@ -97,6 +98,9 @@ Query::Query(QWidget* parent) : ChatWindow(parent)
 
     awayLabel=new QLabel(i18n("(away)"),inputBox);
     awayLabel->hide();
+    blowfishLabel = new QLabel(inputBox);
+    blowfishLabel->hide();
+    blowfishLabel->setPixmap(KGlobal::iconLoader()->loadIcon("encrypted", KIcon::Toolbar));
     queryInput=new IRCInput(inputBox);
 
     getTextView()->installEventFilter(queryInput);
@@ -122,6 +126,13 @@ Query::~Query()
 {
 }
 
+void Query::setServer(Server* newServer)
+{
+    ChatWindow::setServer(newServer);
+    if (newServer->getKeyForRecipient(getName()))
+        blowfishLabel->show();
+}
+
 void Query::setName(const QString& newName)
 {
     if(ChatWindow::getName() == newName) return;  // no change, so return
@@ -142,6 +153,14 @@ void Query::setName(const QString& newName)
 
         setLogfileName(logName);
     }
+}
+
+void Query::setEncryptedOutput(bool e)
+{
+    if (e)
+        blowfishLabel->show();
+    else
+        blowfishLabel->hide();
 }
 
 void Query::queryTextEntered()

@@ -23,6 +23,7 @@
 class Server;
 class QWidget;
 class Query;
+class QDateTime;
 
 class InputFilter : public QObject
 {
@@ -60,7 +61,7 @@ class InputFilter : public QObject
                                                   // will be connected to Server::userhost()
         void userhost(const QString& nick,const QString& hostmask,bool away,bool ircOp);
                                                   // will be connected to Server::setTopicAuthor()
-        void topicAuthor(const QString& channel,const QString& author);
+        void topicAuthor(const QString& channel, const QString& author, QDateTime t);
         void endOfWho(const QString& target);     // for scheduling auto /WHO
         void addChannelListPanel();
         void addToChannelList(const QString& channel,int users,const QString& topic);

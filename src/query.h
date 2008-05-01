@@ -37,7 +37,9 @@ class Query : public ChatWindow
     Q_OBJECT
 
     public:
-        explicit Query(QWidget* parent);
+        explicit Query(QWidget* parent, QString name);
+        virtual void setServer(Server* newServer);
+
         ~Query();
 
         /** This will always be called soon after this object is created.
@@ -75,6 +77,7 @@ class Query : public ChatWindow
         void appendInputText(const QString& s, bool fromCursor);
         virtual void indicateAway(bool show);
         void updateAppearance();
+        void setEncryptedOutput(bool);
 
     protected slots:
         void queryTextEntered();
@@ -105,6 +108,7 @@ class Query : public ChatWindow
         QLabel* addresseeimage;
         QLabel* addresseelogoimage;
         QLabel* awayLabel;
+        QLabel* blowfishLabel;
         IRCInput* queryInput;
         NickInfoPtr m_nickInfo;
 

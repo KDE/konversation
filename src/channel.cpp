@@ -14,6 +14,7 @@
 #include "channel.h"
 #include "konversationapplication.h"
 #include "server.h"
+#include "blowfish.h"
 #include "nick.h"
 #include "nicklistview.h"
 #include "quickbutton.h"
@@ -64,9 +65,13 @@
 #include <kwin.h>
 
 
-Channel::Channel(QWidget* parent) : ChatWindow(parent)
+Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
 {
     // init variables
+
+    //HACK I needed the channel name at time of setServer, but setName needs m_server..
+    //     This effectively assigns the name twice, but none of the other logic has been moved or updated.
+    name=_name;
     m_processingTimer = 0;
     m_delayedSortTimer = 0;
     m_optionsDialog = NULL;
@@ -225,6 +230,9 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
 
     awayLabel = new QLabel(i18n("(away)"), commandLineBox);
     awayLabel->hide();
+    blowfishLabel = new QLabel(commandLineBox);
+    blowfishLabel->hide();
+    blowfishLabel->setPixmap(KGlobal::iconLoader()->loadIcon("encrypted", KIcon::Toolbar));
     channelInput = new IRCInput(commandLineBox);
 
     getTextView()->installEventFilter(channelInput);
@@ -305,12 +313,36 @@ Channel::Channel(QWidget* parent) : ChatWindow(parent)
     //  connect( Konversation::Addressbook::self(), SIGNAL(addresseesChanged()), this, SLOT(slotLoadAddressees()));
 }
 
+//FIXME there is some logic in setLogfileName that needs to be split out and called here if the server display name gets changed
 void Channel::setServer(Server *server)
 {
     ChatWindow::setServer(server);
+    if (server->getKeyForRecipient(getName()))
+        blowfishLabel->show();
     topicLine->setServer(server);
     refreshModeButtons();
     setIdentity(server->getIdentity());
+}
+
+void Channel::setEncryptedOutput(bool e)
+{
+    if (e) {
+        blowfishLabel->show();
+        //scan the channel topic and decrypt it if necessary
+        QString topic(m_topicHistory[0].section(' ',2));
+
+        //prepend two colons to make it appear to be an irc message for decryption,
+        // \r because it won't decrypt without it, even though the message did not have a \r
+        // when encrypted. Bring on the QCA!
+        QCString cipher="::"+topic.utf8()+'\x0d';
+        Konversation::decryptTopic(getName(), cipher, m_server);
+        topic=QString::fromUtf8(cipher.data()+2, cipher.length()-2);
+        m_topicHistory[0] = m_topicHistory[0].section(' ', 0, 1) + ' ' + topic;
+        topicLine->setText(topic);
+        emit topicHistoryChanged();
+    }
+    else
+        blowfishLabel->hide();
 }
 
 Channel::~Channel()
@@ -1460,9 +1492,11 @@ void Channel::setTopic(const QString &newTopic)
     appendCommandMessage(i18n("Topic"), i18n("The channel topic is \"%1\".").arg(newTopic));
     QString topic = Konversation::removeIrcMarkup(newTopic);
     topicLine->setText(topic);
+    topicAuthorUnknown=true; // if we only get called with a topic, it was a 332, which usually has a 333 next
 
     // cut off "nickname" and "time_t" portion of the topic before comparing, otherwise the history
     // list will fill up with the same entries while the user only requests the topic to be seen.
+
     if(m_topicHistory.first().section(' ', 2) != newTopic)
     {
         m_topicHistory.prepend(QString("%1 "+i18n("unknown")+" %2").arg(QDateTime::currentDateTime().toTime_t()).arg(newTopic));
@@ -1498,12 +1532,17 @@ QString Channel::getTopic()
     return m_topicHistory[0];
 }
 
-void Channel::setTopicAuthor(const QString& newAuthor)
+void Channel::setTopicAuthor(const QString& newAuthor, QDateTime time)
 {
+    if (time.isNull() || !time.isValid())
+        time=QDateTime::currentDateTime();
+
     if(topicAuthorUnknown)
     {
-        m_topicHistory[0] = m_topicHistory[0].section(' ', 0, 0) + ' ' + newAuthor + ' ' + m_topicHistory[0].section(' ', 2);
+        m_topicHistory[0] =  QString("%1").arg(time.toTime_t()) + ' ' + newAuthor + ' ' + m_topicHistory[0].section(' ', 2);
         topicAuthorUnknown = false;
+
+        emit topicHistoryChanged();
     }
 }
 

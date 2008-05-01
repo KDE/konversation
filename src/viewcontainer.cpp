@@ -2185,9 +2185,9 @@ void ViewContainer::connectionStateChanged(Server* server, Konversation::Connect
 
 Channel* ViewContainer::addChannel(Server* server, const QString& name)
 {
-    Channel* channel=new Channel(m_tabWidget);
+    Channel* channel=new Channel(m_tabWidget, name);
     channel->setServer(server);
-    channel->setName(name);
+    channel->setName(name); //still have to do this for now
     addView(channel, name);
 
     connect(this, SIGNAL(updateChannelAppearance()), channel, SLOT(updateAppearance()));
@@ -2235,9 +2235,9 @@ void ViewContainer::toggleChannelNicklists()
 Query* ViewContainer::addQuery(Server* server, const NickInfoPtr& nickInfo, bool weinitiated)
 {
     QString name = nickInfo->getNickname();
-    Query* query=new Query(m_tabWidget);
+    Query* query=new Query(m_tabWidget, name);
     query->setServer(server);
-    query->setNickInfo(nickInfo);
+    query->setNickInfo(nickInfo); //still have to do this
     addView(query, name, weinitiated);
 
     // About to increase the number of queries, so enable the close action

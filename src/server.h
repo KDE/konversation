@@ -505,7 +505,7 @@ void resetNickSelection();
         void scriptNotFound(const QString& name);
         void scriptExecutionError(const QString& name);
         void userhost(const QString& nick,const QString& hostmask,bool away,bool ircOp);
-        void setTopicAuthor(const QString& channel,const QString& author);
+        void setTopicAuthor(const QString& channel,const QString& author, QDateTime t);
         void endOfWho(const QString& target);
         void invitation(const QString& nick,const QString& channel);
         void sendToAllChannelsAndQueries(const QString& text);
