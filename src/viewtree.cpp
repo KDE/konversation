@@ -576,7 +576,7 @@ void ViewTree::contentsMouseReleaseEvent(QMouseEvent* e)
         }
 
         if (Preferences::middleClickClose() && e->button() == MidButton
-            && item == m_middleClickItem)
+            && m_middleClicked && item == m_middleClickItem)
         {
             emit closeView(item->getView());
 
