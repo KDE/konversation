@@ -160,6 +160,7 @@ void ViewContainer::setupTabWidget()
     connect(m_tabWidget, SIGNAL(currentChanged(QWidget*)), this, SLOT (switchView(QWidget*)));
     connect(m_tabWidget, SIGNAL(closeRequest(QWidget*)), this, SLOT(closeView(QWidget*)));
     connect(m_tabWidget, SIGNAL(contextMenu(QWidget*, const QPoint&)), this, SLOT(showViewContextMenu(QWidget*, const QPoint&)));
+    connect(m_tabWidget, SIGNAL(mouseMiddleClick(QWidget*)), this, SLOT(closeViewMiddleClick(QWidget*)));
 
     updateTabWidgetAppearance();
 }
@@ -1555,6 +1556,12 @@ void ViewContainer::closeView(ChatWindow* view)
     }
 
     updateViewActions(m_tabWidget->currentPageIndex());
+}
+
+void ViewContainer::closeViewMiddleClick(QWidget* view)
+{
+    if (Preferences::middleClickClose())
+        closeView(view);
 }
 
 void ViewContainer::closeCurrentView()

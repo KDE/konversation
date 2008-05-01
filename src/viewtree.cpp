@@ -92,6 +92,9 @@ ViewTree::ViewTree(QWidget *parent)
     m_closeButtonItem = 0;
     m_enableCloseButtonTimer = new QTimer(this);
 
+    m_middleClickItem = 0;
+    m_middleClicked = false;
+
     connect(m_enableCloseButtonTimer, SIGNAL(timeout()), SLOT(enableCloseButton()));
     connect(this, SIGNAL(selectionChanged(QListViewItem*)), SLOT(announceSelection(QListViewItem*)));
     connect(this, SIGNAL(aboutToMove()), SLOT(slotAboutToMoveView()));
@@ -549,6 +552,9 @@ void ViewTree::contentsMousePressEvent(QMouseEvent* e)
             m_pressedAboveCloseButton = false;
             KListView::contentsMousePressEvent(e);
         }
+
+        m_middleClicked = (Preferences::middleClickClose() && e->button() == MidButton);
+        m_middleClickItem = m_middleClicked ? item : 0;
     }
 }
 
@@ -560,12 +566,22 @@ void ViewTree::contentsMouseReleaseEvent(QMouseEvent* e)
     if (!item && e->button() == RightButton)
         return;
 
-    if (Preferences::closeButtons() && item)
+    if (item)
     {
-        if (e->button() == LeftButton && isAboveIcon(vp, item)
-            && m_pressedAboveCloseButton && item->getCloseButtonEnabled())
+        if (Preferences::closeButtons() && e->button() == LeftButton
+            && isAboveIcon(vp, item) && m_pressedAboveCloseButton
+            && item->getCloseButtonEnabled())
         {
             emit closeView(item->getView());
+        }
+
+        if (Preferences::middleClickClose() && e->button() == MidButton
+            && item == m_middleClickItem)
+        {
+            emit closeView(item->getView());
+
+            m_middleClicked = false;
+            m_middleClickItem = 0;
         }
     }
     else
@@ -579,6 +595,10 @@ void ViewTree::contentsMouseMoveEvent(QMouseEvent* e)
 
     if (item && item->isSeparator())
         return;
+
+    // Cancel middle-click close.
+    m_middleClicked = (item == m_middleClickItem);
+    if (!m_middleClicked) m_middleClickItem = 0;
 
     // Allow dragging only with the middle mouse button, just
     // like for the tab bar.

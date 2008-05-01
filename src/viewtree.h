@@ -104,6 +104,10 @@ class ViewTree : public KListView
         bool m_pressedAboveCloseButton;
         ViewTreeItem* m_closeButtonItem;
         QTimer* m_enableCloseButtonTimer;
+
+        // Used for middle-click close.
+        ViewTreeItem* m_middleClickItem;
+        bool m_middleClicked;
 };
 
 #endif

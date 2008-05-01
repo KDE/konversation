@@ -308,6 +308,22 @@ Changes since 1.0.1:
   in the channel nickname listviews when disabling the "Use custom colors for
   lists, [...]" preference.
 - The window caption is now properly being reset when the last tab is closed.
+- Fixed incorrect time display in the topic history list in the Channel Settings
+  dialog.
+- Blowfish: Fixed FiSH-style +p prefix to send clear text to channel despite an
+  encryption key being set.
+- Blowfish: Text encoding is now being applied to the cleartext, rather than the
+  ciphertext. This fixes using characters outside the ASCII range with blowfish
+  encryption.
+- Blowfish: Fixed CTCP (and thus DCC) requests to nicknames for whom an encryp-
+  tion key is set.
+- Blowfish: Added support for encrypted topics.
+- Blowfish: If an encryption key is set, a lock icon will now be shown next to
+  the input box.
+- Blowfish: Added a '/showkey <channel|query>' command to show the encryption
+  key for the target in a popup dialog.
+- Added option to close tabs using middle-mouse.
+
 
 -------------------------------------------------------------------------------
 

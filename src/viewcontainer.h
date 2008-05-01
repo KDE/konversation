@@ -92,6 +92,7 @@ class ViewContainer : public QObject
 
         void closeView(QWidget* view);
         void closeView(ChatWindow* view);
+        void closeViewMiddleClick(QWidget* view);
         void closeCurrentView();
         void viewAboutToClose();
 
