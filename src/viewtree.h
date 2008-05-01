@@ -107,7 +107,6 @@ class ViewTree : public KListView
 
         // Used for middle-click close.
         ViewTreeItem* m_middleClickItem;
-        bool m_middleClicked;
 };
 
 #endif

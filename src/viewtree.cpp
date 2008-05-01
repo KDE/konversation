@@ -552,9 +552,7 @@ void ViewTree::contentsMousePressEvent(QMouseEvent* e)
             m_pressedAboveCloseButton = false;
             KListView::contentsMousePressEvent(e);
         }
-
-        m_middleClicked = (Preferences::middleClickClose() && e->button() == MidButton);
-        m_middleClickItem = m_middleClicked ? item : 0;
+        m_middleClickItem = (Preferences::middleClickClose() && e->button() == MidButton) ? item : 0;
     }
 }
 
@@ -576,11 +574,10 @@ void ViewTree::contentsMouseReleaseEvent(QMouseEvent* e)
         }
 
         if (Preferences::middleClickClose() && e->button() == MidButton
-            && m_middleClicked && item == m_middleClickItem)
+            && item == m_middleClickItem)
         {
             emit closeView(item->getView());
 
-            m_middleClicked = false;
             m_middleClickItem = 0;
         }
     }
@@ -597,8 +594,7 @@ void ViewTree::contentsMouseMoveEvent(QMouseEvent* e)
         return;
 
     // Cancel middle-click close.
-    m_middleClicked = (item == m_middleClickItem);
-    if (!m_middleClicked) m_middleClickItem = 0;
+    if (item != m_middleClickItem) m_middleClickItem = 0;
 
     // Allow dragging only with the middle mouse button, just
     // like for the tab bar.
