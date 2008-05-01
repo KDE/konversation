@@ -93,7 +93,6 @@ ViewTree::ViewTree(QWidget *parent)
     m_enableCloseButtonTimer = new QTimer(this);
 
     m_middleClickItem = 0;
-    m_middleClicked = false;
 
     connect(m_enableCloseButtonTimer, SIGNAL(timeout()), SLOT(enableCloseButton()));
     connect(this, SIGNAL(selectionChanged(QListViewItem*)), SLOT(announceSelection(QListViewItem*)));
