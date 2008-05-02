@@ -135,7 +135,7 @@ void Query::setServer(Server* newServer)
 
 void Query::setName(const QString& newName)
 {
-    if(ChatWindow::getName() == newName) return;  // no change, so return
+    //if(ChatWindow::getName() == newName) return;  // no change, so return
 
     ChatWindow::setName(newName);
 
