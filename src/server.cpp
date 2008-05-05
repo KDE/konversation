@@ -1147,9 +1147,9 @@ int Server::_send_internal(QString outputLine)
                 if (doit)
                 {
                     Konversation::encrypt(outputLineSplit[1], payload, this);
+                    encoded = outputLine.left(colon).latin1() + payload;
                 }
             }
-            encoded = outputLine.left(colon).latin1() + payload;
         }
     }
     encoded += '\n';
