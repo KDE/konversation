@@ -179,6 +179,13 @@ bool DccTransferRecv::queue()
         return false;
     }
 
+    // check if the sender IP is valid
+    if ( m_partnerIp == "0.0.0.0" )
+    {
+        failed( i18n( "Invalid sender address (%1)" ).arg( m_partnerIp ) );
+        return false;
+    }
+
     // TODO: should we support it?
     if ( m_fileSize == 0 )
     {
