@@ -109,23 +109,21 @@ namespace Konversation
         }
     }
 
-    void encrypt(const QString& recipient, QCString& cipher, Server* server)
+    bool encrypt(const QString& key, QCString& cipher)
     {
-        QString key = server->getKeyForRecipient(recipient);
+        if(key.isEmpty())
+            return false;
 
-        if(!key.isEmpty())
+        if (cipher.left(3) == "+p ")
+            cipher = cipher.mid(3);
+        else
         {
-            if (cipher.left(3) == "+p ")
-            {
-                cipher = cipher.mid(3);
-                return;
-            }
-
             QCString ckey(key.local8Bit());
 
             char *tmp = encrypt_string(ckey.data(), cipher.data());
             cipher = QCString("+OK ") + tmp;
             free(tmp);
         }
+        return true;
     }
 }

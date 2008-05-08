@@ -1067,7 +1067,6 @@ int Server::_send_internal(QString outputLine)
 {
     QStringList outputLineSplit=QStringList::split(" ", outputLine);
     //Lets cache the uppercase command so we don't miss or reiterate too much
-    //QString outboundCommand(outputLineSplit[0].upper());
     int outboundCommand=outcmds.findIndex(outputLineSplit[0].upper());
 
     if (outputLine.at(outputLine.length()-1) == '\n')
@@ -1077,36 +1076,28 @@ int Server::_send_internal(QString outputLine)
     }
 
     // remember the first arg of /WHO to identify responses
-    if (!outputLineSplit.isEmpty() && outboundCommand == 0) //"WHO"
+    if (outboundCommand == 0) //"WHO"
     {
         if (outputLineSplit.count() >= 2)
             m_inputFilter.addWhoRequest(outputLineSplit[1]);
         else // no argument (servers recognize it as "*")
             m_inputFilter.addWhoRequest("*");
     }
-
     else if (outboundCommand == 1) //"QUIT"
         updateConnectionState(Konversation::SSDeliberatelyDisconnected);
-
 
     // set channel encoding if specified
     QString channelCodecName;
 
     //[ PRIVMSG | NOTICE | KICK | PART | TOPIC ] target :message
-    if(outputLineSplit.count() > 2) //"for safe" <-- so no encoding if no data
-    {
-        if(outboundCommand > 1) //"PRIVMSG","NOTICE","KICK","PART","TOPIC"
-        {
-            channelCodecName=Preferences::channelEncoding(getDisplayName(), outputLineSplit[1]);
-        }
-    }
+    if (outputLineSplit.count() > 2 && outboundCommand > 1)
+        channelCodecName=Preferences::channelEncoding(getDisplayName(), outputLineSplit[1]);
 
-    QTextCodec* codec = getIdentity()->getCodec();
-
-    if(!channelCodecName.isEmpty())
-    {
+    QTextCodec* codec;
+    if (channelCodecName.isEmpty())
+        codec = getIdentity()->getCodec();
+    else
         codec = Konversation::IRCCharsets::self()->codecForName(channelCodecName);
-    }
 
     // Some codecs don't work with a negative value. This is a bug in Qt 3.
     // ex.: JIS7, eucJP, SJIS
@@ -1116,15 +1107,11 @@ int Server::_send_internal(QString outputLine)
     //leaving this done twice for now, i'm uncertain of the implications of not encoding other commands
     QCString encoded=codec->fromUnicode(outputLine, outlen);
 
-    if (outboundCommand >1)
+    QString blowfishKey=getKeyForRecipient(outputLineSplit[1]);
+    if (!blowfishKey.isEmpty() && outboundCommand >1)
     {
         int colon = outputLine.find(':');
-        if (colon == -1) {
-            if (outputLineSplit.count() >2)
-                //this should never happen
-                kdDebug() << "No colon found in output: " << outputLineSplit << endl;
-        }
-        else
+        if (colon > -1)
         {
             colon++;
 
@@ -1132,22 +1119,26 @@ int Server::_send_internal(QString outputLine)
             int len=pay.length();
             //only encode the actual user text, IRCD *should* desire only ASCII 31 < x < 127 for protocol elements
             QCString payload=codec->fromUnicode(pay, len);
+            //apparently channel name isn't a protocol element...
+            len=outputLineSplit[1].length();
+            QCString dest=codec->fromUnicode(outputLineSplit[1], len);
 
-            // Blowfish
-            if(outboundCommand == 2 || outboundCommand == 6) // outboundCommand == 3 
+            if (outboundCommand == 2 || outboundCommand == 6) // outboundCommand == 3
             {
                 bool doit = true;
                 if (outboundCommand == 2)
                 {
                     //if its a privmsg and a ctcp but not an action, don't encrypt
-                    //not working with `payload` in case encoding bollixed it
+                    //not interpreting `payload` in case encoding bollixed it
                     if (outputLineSplit[2].startsWith(":\x01") && outputLineSplit[2] != ":\x01""ACTION")
                         doit = false;
                 }
                 if (doit)
                 {
-                    Konversation::encrypt(outputLineSplit[1], payload, this);
-                    encoded = outputLine.left(colon).latin1() + payload;
+                    Konversation::encrypt(blowfishKey, payload);
+                    encoded = outputLineSplit[0].ascii();
+                    //two lines because the compiler insists on using the wrong operator+
+                    encoded += ' ' + dest + " :" + payload;
                 }
             }
         }
@@ -1155,7 +1146,8 @@ int Server::_send_internal(QString outputLine)
     encoded += '\n';
     Q_LONG sout = m_socket->writeBlock(encoded, encoded.length());
 
-    if (m_rawLog) m_rawLog->appendRaw("&lt;&lt; " + outputLine.replace("&","&amp;").replace("<","&lt;").replace(">","&gt;"));
+    if (m_rawLog)
+        m_rawLog->appendRaw("&lt;&lt; " + outputLine.replace("&","&amp;").replace("<","&lt;").replace(">","&gt;"));
 
     return sout;
 }

@@ -25,6 +25,6 @@ namespace Konversation
     int findOccurrence(const QCString& input, const QCString& separator, int nth);
     void decrypt(const QString& recipient, QCString& cipher, Server* server);
     void decryptTopic(const QString& recipient, QCString& cipher, Server* server);
-    void encrypt(const QString& recipient, QCString& cipher, Server* server);
+    bool encrypt(const QString& key, QCString& cipher);
 }
 #endif
