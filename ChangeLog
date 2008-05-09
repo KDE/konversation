@@ -323,6 +323,8 @@ Changes since 1.0.1:
 - Blowfish: Added a '/showkey <channel|query>' command to show the encryption
   key for the target in a popup dialog.
 - Added option to close tabs using middle-mouse.
+- The per-view encoding selection now allows returning to the used identity's
+  default encoding setting.
 
 
 -------------------------------------------------------------------------------
