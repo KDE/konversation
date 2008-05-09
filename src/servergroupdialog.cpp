@@ -13,6 +13,7 @@
 #include "servergroupdialog.h"
 #include "identity.h"
 #include "konversationapplication.h"
+#include "viewcontainer.h"
 #include "preferences.h"
 #include "serversettings.h"
 #include "serverdialog.h"
@@ -392,7 +393,9 @@ namespace Konversation
             }
 
             m_mainWidget->m_identityCBox->setCurrentText(dlg.currentIdentity()->getName());
-            m_identitiesNeedsUpdate = true;
+            m_identitiesNeedsUpdate = true; // and what's this for?
+            ViewContainer* vc = KonversationApplication::instance()->getMainWindow()->getViewContainer();
+            vc->updateViewEncoding(vc->getFrontView());
         }
     }
 

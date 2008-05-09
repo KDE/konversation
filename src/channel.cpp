@@ -361,7 +361,9 @@ Channel::~Channel()
 
 bool Channel::rejoinable()
 {
-    return m_kicked;
+    if (getServer() && getServer()->isConnected())
+        return m_kicked;
+    return false;
 }
 
 void Channel::rejoin()
@@ -1380,7 +1382,7 @@ void Channel::kickNick(ChannelNickPtr channelNick, const QString &kicker, const 
         setActive(false);
 
         //HACK the way the notification priorities work sucks, this forces the tab text color to gray right now.
-        if (m_currentTabNotify == Konversation::tnfNone || !Preferences::tabNotificationsEvents())
+        if (m_currentTabNotify == Konversation::tnfNone || (!Preferences::tabNotificationsEvents() && m_currentTabNotify == Konversation::tnfControl))
             KonversationApplication::instance()->getMainWindow()->getViewContainer()->unsetViewNotification(this);
 
         return;

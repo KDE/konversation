@@ -563,14 +563,7 @@ const QString Preferences::channelEncoding(const QString& server,const QString& 
 
 void Preferences::setChannelEncoding(const QString& server,const QString& channel,const QString& encoding)
 {
-    if(!encoding.isEmpty())
-        self()->mChannelEncodingsMap[server][channel.lower()]=encoding;
-    else
-    {
-        self()->mChannelEncodingsMap[server].remove(channel.lower());
-        if(self()->mChannelEncodingsMap[server].count()==0)
-            self()->mChannelEncodingsMap.remove(server);
-    }
+    self()->mChannelEncodingsMap[server][channel.lower()]=encoding;
 }
 
 const QStringList Preferences::channelEncodingsServerList()

@@ -693,15 +693,23 @@ void KonversationApplication::saveOptions(bool updateGUI)
 
     // Channel Encodings
     config->setGroup("Channel Encodings");
-    QStringList channelEncodingsServerList=Preferences::channelEncodingsServerList();
-    channelEncodingsServerList.sort();
-    for(unsigned int i=0; i<channelEncodingsServerList.count(); ++i)
+    QStringList encServers=Preferences::channelEncodingsServerList();
+    //i have no idea these would need to be sorted //encServers.sort();
+    QStringList::iterator encServer;
+    for ( encServer = encServers.begin(); encServer != encServers.end(); ++encServer )
     {
-        QStringList channelEncodingsChannelList=Preferences::channelEncodingsChannelList(channelEncodingsServerList[i]);
-        channelEncodingsChannelList.sort();
-        for(unsigned int j=0; j<channelEncodingsChannelList.count(); ++j)
-            if(!Preferences::channelEncoding(channelEncodingsServerList[i],channelEncodingsChannelList[j]).isEmpty())
-                config->writeEntry(channelEncodingsServerList[i]+' '+channelEncodingsChannelList[j],Preferences::channelEncoding(channelEncodingsServerList[i],channelEncodingsChannelList[j]));
+        QStringList encChannels=Preferences::channelEncodingsChannelList(*(encServer));
+        //ditto //encChannels.sort();
+        QStringList::iterator encChannel;
+        for ( encChannel = encChannels.begin(); encChannel != encChannels.end(); ++encChannel )
+        {
+            QString enc = Preferences::channelEncoding(*(encServer), *(encChannel));
+            QString name = *(encServer) + ' ' + *(encChannel);
+            if(!enc.isEmpty())
+                config->writeEntry(name, enc);
+            else
+                config->deleteEntry(name);
+        }
     }
 
     config->sync();

@@ -222,6 +222,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
     }
 
     action = new KAction(i18n("Rejoin Channel"), 0, m_viewContainer, SLOT(rejoinChannel()), actionCollection(), "rejoin_channel");
+    action->setEnabled(false);
 
     action = new KToggleAction(i18n("Enable Notifications"), 0, 0, m_viewContainer, SLOT(toggleViewNotifications()), actionCollection(), "tab_notifications");
     action->setEnabled(false);
@@ -586,8 +587,12 @@ void KonversationMainWindow::openIdentitiesDialog()
 {
     Konversation::IdentityDialog dlg(this);
 
-    if((dlg.exec() == KDialog::Accepted) && m_serverListDialog)
-        m_serverListDialog->updateServerList();
+    if (dlg.exec() == KDialog::Accepted)
+    {
+        if (m_serverListDialog)
+            m_serverListDialog->updateServerList();
+        m_viewContainer->updateViewEncoding(m_viewContainer->getFrontView());
+    }
 }
 
 IdentityPtr KonversationMainWindow::editIdentity(IdentityPtr identity)
