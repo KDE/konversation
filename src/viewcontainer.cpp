@@ -473,6 +473,12 @@ void ViewContainer::updateViewActions(int index)
             autoJoinAction->setChecked(false);
         }
 
+        if (viewType == ChatWindow::Channel)
+        {
+            action = actionCollection()->action("rejoin_channel");
+            if (action) action->setEnabled(channel->rejoinable());
+        }
+
         action = actionCollection()->action("close_queries");
         if (action) action->setEnabled(m_queryViewCount > 0);
 
@@ -601,6 +607,9 @@ void ViewContainer::updateViewActions(int index)
         if (action) action->setEnabled(false);
 
         action = actionCollection()->action("tab_autojoin");
+        if (action) action->setEnabled(false);
+
+        action = actionCollection()->action("rejoin_channel");
         if (action) action->setEnabled(false);
 
         action = actionCollection()->action("insert_marker_line");
@@ -1409,13 +1418,6 @@ void ViewContainer::switchView(QWidget* newView)
         emit setWindowCaption(tabName);
     else
         emit setWindowCaption(QString());
-
-    if (view->getType() == ChatWindow::Channel)
-    {
-        Channel *channel = static_cast<Channel*>(view);
-        KAction* rejoinAction=actionCollection()->action("rejoin_channel");
-        rejoinAction->setEnabled(channel->rejoinable());
-    }
 }
 
 void ViewContainer::showView(ChatWindow* view)
@@ -1660,8 +1662,7 @@ void ViewContainer::showViewContextMenu(QWidget* tab, const QPoint& pos)
 
     ChatWindow* view = static_cast<ChatWindow*>(tab);
     KToggleAction* autoJoinAction = static_cast<KToggleAction*>(actionCollection()->action("tab_autojoin"));
-    KAction* rejoinAction=actionCollection()->action("rejoin_channel");
-    bool rjaE = rejoinAction->isEnabled();
+    KAction* rejoinAction = actionCollection()->action("rejoin_channel");
 
     if (view)
     {
@@ -1709,7 +1710,6 @@ void ViewContainer::showViewContextMenu(QWidget* tab, const QPoint& pos)
 
     autoJoinAction->unplug(menu);
     rejoinAction->unplug(menu);
-    rejoinAction->setEnabled(rjaE);
 
     m_window->unplugActionList("server_actions");
 
