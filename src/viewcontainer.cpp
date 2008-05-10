@@ -473,11 +473,8 @@ void ViewContainer::updateViewActions(int index)
             autoJoinAction->setChecked(false);
         }
 
-        if (viewType == ChatWindow::Channel)
-        {
-            action = actionCollection()->action("rejoin_channel");
-            if (action) action->setEnabled(channel->rejoinable());
-        }
+        action = actionCollection()->action("rejoin_channel");
+        if (action) action->setEnabled(viewType == ChatWindow::Channel && channel->rejoinable());
 
         action = actionCollection()->action("close_queries");
         if (action) action->setEnabled(m_queryViewCount > 0);
