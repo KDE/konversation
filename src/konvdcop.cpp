@@ -141,7 +141,7 @@ void KonvDCOP::connectToServer(const QString& address, int port, const QString& 
 
 QString KonvDCOP::getNickname(const QString& serverName)
 {
-    Server* server = KonversationApplication::instance()->getConnectionManager()->getServer(serverName);
+    Server* server = KonversationApplication::instance()->getConnectionManager()->getServerByName(serverName);
 
     if (!server)
     {
@@ -156,7 +156,7 @@ QString KonvDCOP::getAnyNickname()
 {
     KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
 
-    Server* server = konvApp->getConnectionManager()->getServer();
+    Server* server = konvApp->getConnectionManager()->getAnyServer();
 
     if (server) return server->getNickname();
 

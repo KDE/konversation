@@ -33,7 +33,8 @@ class ConnectionManager : public QObject
         QPtrList<Server> getServerList();
 
         Server* getServerByConnectionId(int connectionId);
-        Server* getServer(const QString& name = "");
+        Server* getServerByName(const QString& name);
+        Server* getAnyServer();
 
         void quitServers();
         void toggleGlobalAway();

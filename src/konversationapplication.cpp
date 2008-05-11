@@ -244,7 +244,7 @@ void KonversationApplication::dcopRaw(const QString& connection, const QString &
 {
     Server* server = getConnectionManager()->getServerByConnectionId(connection.toInt());
 
-    if (!server) server = getConnectionManager()->getServer(connection);
+    if (!server) server = getConnectionManager()->getServerByName(connection);
 
     if (server) server->dcopRaw(command);
 }
@@ -253,7 +253,7 @@ void KonversationApplication::dcopSay(const QString& connection, const QString& 
 {
     Server* server = getConnectionManager()->getServerByConnectionId(connection.toInt());
 
-    if (!server) server = getConnectionManager()->getServer(connection);
+    if (!server) server = getConnectionManager()->getServerByName(connection);
 
     if (server) server->dcopSay(target, command);
 }

@@ -554,20 +554,23 @@ Server* ConnectionManager::getServerByConnectionId(int connectionId)
         return 0;
 }
 
-Server* ConnectionManager::getServer(const QString& name)
+Server* ConnectionManager::getServerByName(const QString& name)
 {
-    if (name.isEmpty() && m_connectionList.count() > 0)
-        return m_connectionList[0];
-    else
-    {
-        QMap<int, Server*>::ConstIterator it;
+    QMap<int, Server*>::ConstIterator it;
 
-        for (it = m_connectionList.begin(); it != m_connectionList.end(); ++it)
-        {
-            if (it.data()->getDisplayName() == name)
-                return it.data();
-        }
+    for (it = m_connectionList.begin(); it != m_connectionList.end(); ++it)
+    {
+        if (it.data()->getDisplayName() == name)
+            return it.data();
     }
+
+    return 0;
+}
+
+Server* ConnectionManager::getAnyServer()
+{
+    if ( m_connectionList.count() > 0)
+        return m_connectionList[0];
 
     return 0;
 }

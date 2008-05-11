@@ -621,7 +621,7 @@ void KonversationMainWindow::openNotifications()
 void KonversationMainWindow::notifyAction(const QString& serverName, const QString& nick)
 {
     KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
-    Server* server = konvApp->getConnectionManager()->getServer(serverName);
+    Server* server = konvApp->getConnectionManager()->getServerByName(serverName);
     if (server) server->notifyAction(nick);
 }
 

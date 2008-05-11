@@ -601,7 +601,7 @@ NickInfoPtr NicksOnline::getNickInfo(const QListViewItem* item)
     if (!serverName || !nickname)
         return 0;
 
-    Server* server = KonversationApplication::instance()->getConnectionManager()->getServer(serverName);
+    Server* server = KonversationApplication::instance()->getConnectionManager()->getServerByName(serverName);
 
     if (server) return server->getNickInfo(nickname);
 
@@ -620,7 +620,7 @@ NickInfoPtr NicksOnline::getNickInfo(const QListViewItem* item)
 QListViewItem* NicksOnline::getServerAndNickItem(const QString& serverName,
 const QString& nickname)
 {
-    Server* server = KonversationApplication::instance()->getConnectionManager()->getServer(serverName);
+    Server* server = KonversationApplication::instance()->getConnectionManager()->getServerByName(serverName);
     if (!server) return 0;
     QString networkName = server->getDisplayName();
     QListViewItem* networkRoot = m_nickListView->findItem(networkName, nlvcNetwork);
@@ -657,7 +657,7 @@ void NicksOnline::doCommand(int id)
     }
 
     // Get the server object corresponding to the server name.
-    Server* server = KonversationApplication::instance()->getConnectionManager()->getServer(serverName);
+    Server* server = KonversationApplication::instance()->getConnectionManager()->getServerByName(serverName);
 
     if (!server) return;
 
@@ -763,7 +763,7 @@ int NicksOnline::getNickAddressbookState(QListViewItem* item)
     QString nickname;
     if (getItemServerAndNick(item, serverName, nickname))
     {
-        Server *server = KonversationApplication::instance()->getConnectionManager()->getServer(serverName);
+        Server *server = KonversationApplication::instance()->getConnectionManager()->getServerByName(serverName);
         if (!server) return nsNotANick;
         NickInfoPtr nickInfo = server->getNickInfo(nickname);
         if (nickInfo)
@@ -931,7 +931,7 @@ void NicksOnline::refreshItem(QListViewItem* item)
     QString nickname;
     if (getItemServerAndNick(item, serverName, nickname))
     {
-        Server *server = KonversationApplication::instance()->getConnectionManager()->getServer(serverName);
+        Server *server = KonversationApplication::instance()->getConnectionManager()->getServerByName(serverName);
         if (server)
         {
             NickInfoPtr nickInfo = server->getNickInfo(nickname);
