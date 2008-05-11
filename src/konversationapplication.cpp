@@ -242,12 +242,18 @@ void KonversationApplication::dcopMultiServerRaw(const QString &command)
 
 void KonversationApplication::dcopRaw(const QString& connection, const QString &command)
 {
-    Server* server = getConnectionManager()->getServerByConnectionId(connection.toInt());
+    Server* server = 0;
+
+    bool conversion = false;
+    int connectionId = connection.toInt(&conversion);
+
+    if (conversion) server = getConnectionManager()->getServerByConnectionId(connectionId);
 
     if (!server) server = getConnectionManager()->getServerByName(connection);
 
     if (server) server->dcopRaw(command);
 }
+
 
 void KonversationApplication::dcopSay(const QString& connection, const QString& target, const QString& command)
 {
