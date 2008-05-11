@@ -560,7 +560,7 @@ Server* ConnectionManager::getServerByName(const QString& name)
 
     for (it = m_connectionList.begin(); it != m_connectionList.end(); ++it)
     {
-        if (it.data()->getDisplayName() == name)
+        if (it.data()->getDisplayName() == name || it.data()->getServerName() == name)
             return it.data();
     }
 
