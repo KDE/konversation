@@ -1050,13 +1050,13 @@ void Channel::sendChannelText(const QString& sendLine)
             }
         }
         // Send anything else to the server
-        if(!result.toServer.isEmpty())
+        if(!result.toServerList.empty())
         {
-            m_server->queue(result.toServer);
+            m_server->queueList(result.toServerList);
         }
         else
         {
-            m_server->queueList(result.toServerList);
+            m_server->queue(result.toServer);
         }
     } // for
 }
@@ -2520,16 +2520,14 @@ void Channel::appendInputText(const QString& s, bool fromCursor)
     }
 }
 
-bool Channel::closeYourself()
+bool Channel::closeYourself(bool confirm)
 {
-    int result=KMessageBox::warningContinueCancel(
-        this,
-        i18n("Do you want to leave %1?").arg(getName()),
-        i18n("Leave Channel"),
-        i18n("Leave"),
-        "QuitChannelTab");
+    int result=KMessageBox::Continue;
+    if (confirm)
+        result = KMessageBox::warningContinueCancel(this, i18n("Do you want to leave %1?").arg(getName()),
+            i18n("Leave Channel"), i18n("Leave"), "QuitChannelTab");
 
-    if(result==KMessageBox::Continue)
+    if (result==KMessageBox::Continue)
     {
         m_server->closeChannel(getName());
         m_server->removeChannel(this);

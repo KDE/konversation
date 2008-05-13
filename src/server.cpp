@@ -189,6 +189,13 @@ Server::~Server()
     kdDebug() << "~Server done" << endl;
 }
 
+//... so called to match the ChatWindow derivatives.
+bool Server::closeYourself(bool)
+{
+    QTimer::singleShot(0, m_statusView, SLOT(serverSaysClose()));
+    return true;
+}
+
 void Server::doPreShellCommand()
 {
 

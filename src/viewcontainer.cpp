@@ -1524,13 +1524,13 @@ void ViewContainer::closeView(ChatWindow* view)
 
         // the views should know by themselves how to close
 
-        bool confirmClose = true;
-        if (viewType==ChatWindow::Status)            confirmClose = view->closeYourself();
-        else if (viewType==ChatWindow::Channel)      confirmClose = view->closeYourself();
-        else if (viewType==ChatWindow::ChannelList)  confirmClose = view->closeYourself();
-        else if (viewType==ChatWindow::Query)        confirmClose = view->closeYourself();
-        else if (viewType==ChatWindow::RawLog)       confirmClose = view->closeYourself();
-        else if (viewType==ChatWindow::DccChat)      confirmClose = view->closeYourself();
+        bool closeConfirmed = true;
+        if (viewType==ChatWindow::Status)            closeConfirmed = view->closeYourself();
+        else if (viewType==ChatWindow::Channel)      closeConfirmed = view->closeYourself();
+        else if (viewType==ChatWindow::ChannelList)  closeConfirmed = view->closeYourself();
+        else if (viewType==ChatWindow::Query)        closeConfirmed = view->closeYourself();
+        else if (viewType==ChatWindow::RawLog)       closeConfirmed = view->closeYourself();
+        else if (viewType==ChatWindow::DccChat)      closeConfirmed = view->closeYourself();
 
         else if (viewType==ChatWindow::DccTransferPanel)  closeDccPanel();
         else if (viewType==ChatWindow::Konsole)           closeKonsolePanel(view);
@@ -1540,7 +1540,7 @@ void ViewContainer::closeView(ChatWindow* view)
         else if (viewType == ChatWindow::LogFileReader) view->closeYourself();
 
         // We haven't done anything yet, so safe to return
-        if (!confirmClose) return;
+        if (!closeConfirmed) return;
 
         if (view == m_frontView) m_frontView = 0;
 

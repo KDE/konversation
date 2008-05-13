@@ -228,7 +228,7 @@ class Channel : public ChatWindow
         /// Get the contents of the input line.
         virtual QString getTextInLine();
         /// Sounds suspiciously like a destructor..
-        virtual bool closeYourself();
+        virtual bool closeYourself(bool askForConfirmation=true);
 
         bool autoJoin();
 

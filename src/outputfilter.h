@@ -118,6 +118,7 @@ namespace Konversation
             OutputFilterResult parseJoin(QString& parameter);
             OutputFilterResult parsePart(const QString& parameter);
             OutputFilterResult parseQuit(const QString& parameter);
+            OutputFilterResult parseClose(QString parameter);
             OutputFilterResult parseKick(const QString& parameter);
             OutputFilterResult parseKickBan(const QString& parameter);
             OutputFilterResult parseBan(const QString& parameter, bool kick = false);

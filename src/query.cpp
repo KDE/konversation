@@ -235,11 +235,11 @@ void Query::sendQueryText(const QString& sendLine)
             }
         }
 
-        if (result.toServerList.count())
+        if (!result.toServerList.empty())
         {
             m_server->queueList(result.toServerList);
         }
-        else //per the original code, an empty string could be queued
+        else
         {
             m_server->queue(result.toServer);
         }
@@ -567,16 +567,13 @@ QString Query::getChannelEncodingDefaultDesc()    // virtual
     return i18n("Identity Default ( %1 )").arg(getServer()->getIdentity()->getCodecName());
 }
 
-bool Query::closeYourself()
+bool Query::closeYourself(bool confirm)
 {
-    int result=KMessageBox::warningContinueCancel(
-        this,
-        i18n("Do you want to close your query with %1?").arg(getName()),
-        i18n("Close Query"),
-        i18n("Close"),
-        "QuitQueryTab");
+    int result = KMessageBox::Continue;
+    if (confirm)
+        result=KMessageBox::warningContinueCancel(this, i18n("Do you want to close your query with %1?").arg(getName()), i18n("Close Query"), i18n("Close"), "QuitQueryTab");
 
-    if(result==KMessageBox::Continue)
+    if (result == KMessageBox::Continue)
     {
         m_server->removeQuery(this);
         return true;

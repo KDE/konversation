@@ -83,6 +83,11 @@ StatusPanel::~StatusPanel()
 {
 }
 
+void StatusPanel::serverSaysClose()
+{
+    closeYourself(false);
+}
+
 void StatusPanel::setNickname(const QString& newNickname)
 {
     nicknameCombobox->setCurrentText(newNickname);
@@ -256,14 +261,14 @@ void StatusPanel::setNotificationsEnabled(bool enable)
     m_notificationsEnabled = enable;
 }
 
-bool StatusPanel::closeYourself()
+bool StatusPanel::closeYourself(bool confirm)
 {
     int result;
 
     //FIXME: Show "Do you really want to close ..." warnings in
     // disconnected state instead of closing directly. Can't do
     // that due to string freeze at the moment.
-    if (!m_server->isConnected())
+    if (!m_server->isConnected() || !confirm)
     {
         result = KMessageBox::Continue;
     }
@@ -282,7 +287,7 @@ bool StatusPanel::closeYourself()
         if (m_server->getServerGroup()) m_server->getServerGroup()->setNotificationsEnabled(notificationsEnabled());
         m_server->quitServer();
         // This will delete the status view as well.
-        delete m_server;
+        m_server->deleteLater();
         m_server = 0;
         return true;
     }

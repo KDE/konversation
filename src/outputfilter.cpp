@@ -224,6 +224,7 @@ namespace Konversation
             else if(command == "part")     result = parsePart(parameter);
             else if(command == "leave")    result = parsePart(parameter);
             else if(command == "quit")     result = parseQuit(parameter);
+            else if(command == "close")    result = parseClose(parameter);
             else if(command == "notice")   result = parseNotice(parameter);
             else if(command == "j")        result = parseJoin(parameter);
             else if(command == "me")       result = parseMe(parameter, destination);
@@ -589,6 +590,22 @@ namespace Konversation
             result.toServer.append(parameter);
         }
         return result;
+    }
+
+    OutputFilterResult OutputFilter::parseClose(QString parm)
+    {
+        if (parm.isEmpty())
+            parm=destination;
+
+        if (isAChannel(parm) && m_server->getChannelByName(parm))
+            m_server->getChannelByName(parm)->closeYourself(false);
+        else if (m_server->getQueryByName(parm))
+            m_server->getQueryByName(parm)->closeYourself(false);
+        else if (parm.isEmpty()) // this can only mean one thing.. we're in the Server tab
+            m_server->closeYourself(false);
+        else
+            return usage(i18n("Usage: %1close [window] closes the named channel or query tab, or the current tab if none specified.").arg(commandChar));
+        return OutputFilterResult();
     }
 
     OutputFilterResult OutputFilter::parseQuit(const QString &reason)

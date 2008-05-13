@@ -163,7 +163,8 @@ void resetNickSelection();
         ChannelListPanel* getChannelListPanel() const;
 
         StatusPanel* getStatusView() const { return m_statusView; }
-
+        virtual bool closeYourself(bool askForConfirmation=true);
+        
         QString getOwnIpByNetworkInterface();
         QString getOwnIpByServerMessage();
 
@@ -419,6 +420,7 @@ void resetNickSelection();
     public slots:
         void connectToIRCServer();
 
+        /** Adds line to queue if non-empty. */
         bool queue(const QString& line, QueuePriority priority=StandardPriority);
         //TODO this should be an overload, not a separate name. ambiguous cases need QString() around the cstring
         bool queueList(const QStringList& buffer, QueuePriority priority=StandardPriority);

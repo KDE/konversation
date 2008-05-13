@@ -42,7 +42,7 @@ class DccChat : public ChatWindow
         ~DccChat();
 
         virtual QString getTextInLine();
-        virtual bool closeYourself();
+        virtual bool closeYourself(bool askForConfirmation=true);
         virtual bool canBeFrontView();
         virtual bool searchView();
 

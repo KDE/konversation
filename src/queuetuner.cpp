@@ -60,6 +60,12 @@ static void rateToWidget(IRCQueue::EmptyingRate& rate, QSpinBox *r, QComboBox* t
     i->setValue(rate.m_interval/1000);
 }
 
+void QueueTuner::serverDestroyed(QObject* ref)
+{
+    if (ref == m_server)
+        setServer(0);
+}
+
 void QueueTuner::setServer(Server* newServer)
 {
     const char *w=0;
@@ -77,6 +83,7 @@ void QueueTuner::setServer(Server* newServer)
     else
         w="unchanged";
     // since this is tied to the new signal, we assume we're only getting called with a change
+
     m_server = newServer;
 
     if (toShow)
@@ -84,6 +91,8 @@ void QueueTuner::setServer(Server* newServer)
 
     if (m_server)
     {
+        connect(m_server, SIGNAL(destroyed(QObject*)), SLOT(serverDestroyed(QObject*)));
+
         rateToWidget(m_server->m_queues[0]->getRate(), m_slowRate, m_slowType, m_slowInterval);
         rateToWidget(m_server->m_queues[1]->getRate(), m_normalRate, m_normalType, m_normalInterval);
         rateToWidget(m_server->m_queues[2]->getRate(), m_fastRate, m_fastType, m_fastInterval);

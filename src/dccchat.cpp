@@ -291,12 +291,19 @@ void DccChat::sendDccChatText(const QString& sendLine)
             //  line=filter.parse(nick,line,getName());
 
             // convert /me actions
-            if(line.lower().startsWith(cc+"me "))
+            QString cmd=line.section(' ', 0,0).lower();
+            if (cmd == cc+"me")
             {
                 appendAction( m_ownNick, line.section( " ", 1 ) );
                 line=QString("\x01%1 %2\x01").arg("ACTION").arg(line.section(" ",1));
             }
-            else getTextView()->append( m_ownNick, line );
+            else if (cmd == cc+"close")
+            {
+                closeYourself(false);
+                return;
+            }
+            else
+                getTextView()->append( m_ownNick, line );
 
             stream << line << endl;
         }                                         // endfor
@@ -384,7 +391,8 @@ void DccChat::appendInputText( const QString& s, bool fromCursor )
     }
 }
 
-bool DccChat::closeYourself()
+//FIXME uh... where is the confimation for this?
+bool DccChat::closeYourself(bool)
 {
     deleteLater();
     return true;

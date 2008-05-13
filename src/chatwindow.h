@@ -85,7 +85,7 @@ class ChatWindow : public QVBox
 
         virtual QString getTextInLine();
         /** Clean up and close this tab.  Return false if you want to cancel the close. */
-        virtual bool closeYourself();
+        virtual bool closeYourself(bool askForConfirmation=true);
         /** Reimplement this to return true in all classes that /can/ become front view.
          */
         virtual bool canBeFrontView();

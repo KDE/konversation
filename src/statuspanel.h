@@ -37,7 +37,7 @@ class StatusPanel : public ChatWindow
         virtual void setName(const QString& newName);
 
         virtual QString getTextInLine();
-        virtual bool closeYourself();
+        virtual bool closeYourself(bool askForConfirmation=true);
         virtual bool canBeFrontView();
         virtual bool searchView();
 
@@ -62,6 +62,7 @@ class StatusPanel : public ChatWindow
         void updateAppearance();
         virtual void appendInputText(const QString&, bool fromCursor);
         void updateName();
+        void serverSaysClose();
 
     protected slots:
         void sendFileMenu();

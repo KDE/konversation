@@ -47,12 +47,13 @@ class QueueTuner: public QueueTunerBase
         void fastRateChanged(int);
         void fastTypeChanged(int);
         void fastIntervalChanged(int);
+        void serverDestroyed(QObject*);
 
     signals:
         void hidden();
 
     private:
-        Server *m_server;
+        Server* m_server;
         QTimer m_timer;
         bool &m_vis;
 };
