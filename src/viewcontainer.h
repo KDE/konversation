@@ -94,7 +94,6 @@ class ViewContainer : public QObject
         void closeView(ChatWindow* view);
         void closeViewMiddleClick(QWidget* view);
         void closeCurrentView();
-        void viewAboutToClose();
 
         void changeViewCharset(int index);
         void updateViewEncoding(ChatWindow* view);
@@ -122,7 +121,6 @@ class ViewContainer : public QObject
         void openLogFile(const QString& caption, const QString& file);
 
         void addKonsolePanel();
-        void closeKonsolePanel(ChatWindow* konsolePanel);
 
         void addUrlCatcher();
         void closeUrlCatcher();

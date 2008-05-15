@@ -119,7 +119,7 @@ Server* ChatWindow::getServer()
     return m_server;
 }
 
-void ChatWindow::serverOnline(bool)
+void ChatWindow::serverOnline(bool /* state */)
 {
     //emit online(this,state);
 }
@@ -428,8 +428,10 @@ void ChatWindow::appendInputText(const QString&, bool)
 }
 
 // reimplement this if your window needs special close treatment
-bool ChatWindow::closeYourself(bool)
+bool ChatWindow::closeYourself(bool /* askForConfirmation */)
 {
+    deleteLater();
+
     return true;
 }
 

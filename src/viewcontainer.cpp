@@ -1172,7 +1172,6 @@ void ViewContainer::addView(ChatWindow* view, const QString& label, bool weiniti
     connect(view, SIGNAL(setStatusBarTempText(const QString&)), this, SIGNAL(setStatusBarTempText(const QString&)));
     connect(view, SIGNAL(clearStatusBarTempText()), this, SIGNAL(clearStatusBarTempText()));
     connect(view, SIGNAL(closing(ChatWindow*)), this, SIGNAL(removeView(ChatWindow*)));
-    connect(view, SIGNAL(closing(ChatWindow*)), this, SLOT(viewAboutToClose()));
 
     // Please be careful about changing any of the grouping behavior in here,
     // because it needs to match up with the sorting behavior of the tree list,
@@ -1523,19 +1522,22 @@ void ViewContainer::closeView(ChatWindow* view)
         // the views should know by themselves how to close
 
         bool closeConfirmed = true;
-        if (viewType==ChatWindow::Status)            closeConfirmed = view->closeYourself();
-        else if (viewType==ChatWindow::Channel)      closeConfirmed = view->closeYourself();
-        else if (viewType==ChatWindow::ChannelList)  closeConfirmed = view->closeYourself();
-        else if (viewType==ChatWindow::Query)        closeConfirmed = view->closeYourself();
-        else if (viewType==ChatWindow::RawLog)       closeConfirmed = view->closeYourself();
-        else if (viewType==ChatWindow::DccChat)      closeConfirmed = view->closeYourself();
 
-        else if (viewType==ChatWindow::DccTransferPanel)  closeDccPanel();
-        else if (viewType==ChatWindow::Konsole)           closeKonsolePanel(view);
-        else if (viewType==ChatWindow::UrlCatcher)        closeUrlCatcher();
-        else if (viewType==ChatWindow::NicksOnline)       closeNicksOnlinePanel();
-
-        else if (viewType == ChatWindow::LogFileReader) view->closeYourself();
+        switch (viewType)
+        {
+            case ChatWindow::DccTransferPanel:
+                closeDccPanel();
+                break;
+            case ChatWindow::UrlCatcher:
+                closeUrlCatcher();
+                break;
+            case ChatWindow::NicksOnline:
+                closeNicksOnlinePanel();
+                break;
+            default:
+                closeConfirmed = view->closeYourself();
+                break;
+        }
 
         // We haven't done anything yet, so safe to return
         if (!closeConfirmed) return;
@@ -1561,6 +1563,7 @@ void ViewContainer::closeView(ChatWindow* view)
             m_saveSplitterSizesLock = true;
             m_vbox->hide();//m_tabWidget->hide();
             emit resetStatusBar();
+            emit setWindowCaption(QString::null);
         }
     }
 
@@ -1581,13 +1584,6 @@ void ViewContainer::closeCurrentView()
         closeView(m_tabWidget->page(m_popupViewIndex));
 
     m_popupViewIndex = -1;
-}
-
-void ViewContainer::viewAboutToClose()
-{
-    // Last view is about to go down.
-    if (m_tabWidget && m_tabWidget->count() == 1)
-        emit setWindowCaption(QString::null);
 }
 
 void ViewContainer::changeViewCharset(int index)
@@ -1976,13 +1972,6 @@ void ViewContainer::addKonsolePanel()
     addView(panel, i18n("Konsole"));
     connect(panel, SIGNAL(updateTabNotification(ChatWindow*,const Konversation::TabNotifyType&)), this, SLOT(setViewNotification(ChatWindow*,const Konversation::TabNotifyType&)));
     connect(panel, SIGNAL(closeView(ChatWindow*)), this, SLOT(closeView(ChatWindow*)));
-}
-
-void ViewContainer::closeKonsolePanel(ChatWindow* konsolePanel)
-{
-    m_tabWidget->removePage(konsolePanel);
-    // tell QT to delete the panel during the next event loop since we are inside a signal here
-    konsolePanel->deleteLater();
 }
 
 void ViewContainer::addUrlCatcher()
