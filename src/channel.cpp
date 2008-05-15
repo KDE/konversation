@@ -84,7 +84,7 @@ Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
     nickChangeDialog = 0;
     channelCommand = false;
 
-    m_kicked = false;
+    m_joined = false;
 
     quickButtonsChanged = false;
     quickButtonsState = false;
@@ -316,12 +316,21 @@ Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
 //FIXME there is some logic in setLogfileName that needs to be split out and called here if the server display name gets changed
 void Channel::setServer(Server *server)
 {
+    if (m_server != server)
+        connect(server, SIGNAL(connectionStateChanged(Server*, Konversation::ConnectionState)),
+                SLOT(connectionStateChanged(Server*, Konversation::ConnectionState)));
     ChatWindow::setServer(server);
     if (server->getKeyForRecipient(getName()))
         blowfishLabel->show();
     topicLine->setServer(server);
     refreshModeButtons();
     setIdentity(server->getIdentity());
+}
+
+void Channel::connectionStateChanged(Server* server, Konversation::ConnectionState state)
+{
+    if (server == m_server)
+        m_joined = state != Konversation::SSConnected;
 }
 
 void Channel::setEncryptedOutput(bool e)
@@ -362,7 +371,7 @@ Channel::~Channel()
 bool Channel::rejoinable()
 {
     if (getServer() && getServer()->isConnected())
-        return m_kicked;
+        return !m_joined;
     return false;
 }
 
@@ -1244,7 +1253,7 @@ void Channel::joinNickname(ChannelNickPtr channelNick)
 {
     if(channelNick->getNickname() == m_server->getNickname())
     {
-        m_kicked = false;
+        m_joined = true;
         appendCommandMessage(i18n("Join"),i18n("%1 is the channel and %2 is our hostmask",
                              "You have joined the channel %1 (%2).").arg(getName()).arg(channelNick->getHostmask()),false, false, true);
         m_ownChannelNick = channelNick;
@@ -1334,7 +1343,7 @@ void Channel::removeNick(ChannelNickPtr channelNick, const QString &reason, bool
         }
         else
         {
-            kdWarning() << "Channel::kickNick(): Nickname " << channelNick->getNickname() << " not found!"<< endl;
+            kdWarning() << "Channel::removeNick(): Nickname " << channelNick->getNickname() << " not found!"<< endl;
         }
     }
 }
@@ -1378,7 +1387,7 @@ void Channel::kickNick(ChannelNickPtr channelNick, const QString &kicker, const 
             KonversationApplication::instance()->notificationHandler()->kick(this,getName(), kicker);
         }
 
-        m_kicked=true;
+        m_joined=false;
         setActive(false);
 
         //HACK the way the notification priorities work sucks, this forces the tab text color to gray right now.

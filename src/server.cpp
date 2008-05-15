@@ -61,6 +61,7 @@
 #include <kwin.h>
 #include <config.h>
 
+
 int Server::m_availableConnectionId = 0;
 
 Server::Server(QObject* parent, ConnectionSettings& settings) : QObject(parent)
@@ -3178,14 +3179,14 @@ void Server::updateConnectionState(Konversation::ConnectionState state)
 {
     if (state != m_connectionState)
     {
+        //emit this before changing the state member so we don't have to cache in the slots
+        emit connectionStateChanged(this, state);
         m_connectionState = state;
 
         if (m_connectionState == Konversation::SSConnected)
             emit serverOnline(true);
         else if (m_connectionState != Konversation::SSConnecting)
             emit serverOnline(false);
-
-        emit connectionStateChanged(this, state);
     }
 }
 

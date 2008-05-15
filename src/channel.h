@@ -260,6 +260,8 @@ class Channel : public ChatWindow
 
         void setAutoJoin(bool autojoin);
 
+        void connectionStateChanged(Server*, Konversation::ConnectionState);
+
     protected slots:
         void completeNick(); ///< I guess this is a GUI function, might be nice to have at DCOP level though --argonel
         void endCompleteNick();
@@ -343,7 +345,7 @@ class Channel : public ChatWindow
         QPtrList<QuickButton> buttonList;
 
 //Members from here to end are not GUI
-        bool m_kicked;
+        bool m_joined;
         NickList nicknameList;
         QTimer userhostTimer;
 
