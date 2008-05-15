@@ -412,6 +412,8 @@ void resetNickSelection();
         void sslConnected(Server* server);
 
         void connectionStateChanged(Server* server, Konversation::ConnectionState state);
+        void connectionStateChanged(Server* server, Konversation::ConnectionState newState,
+            Konversation::ConnectionState oldState);
 
         void showView(ChatWindow* view);
         void addDccPanel();

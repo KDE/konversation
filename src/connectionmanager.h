@@ -54,8 +54,11 @@ class ConnectionManager : public QObject
 
 
     signals:
-        void connectionChangedState(int connectionId, Konversation::ConnectionState state);
         void connectionChangedState(Server* server, Konversation::ConnectionState state);
+        void connectionChangedState(Server* server, Konversation::ConnectionState newState,
+            Konversation::ConnectionState oldState);
+
+        void connectionChangedAwayState(bool away);
 
         void requestReconnect(Server* server);
 
@@ -68,7 +71,9 @@ class ConnectionManager : public QObject
     private slots:
         void delistConnection(int connectionId);
 
-        void handleConnectionStateChange(Server* server, Konversation::ConnectionState state);
+        void handleConnectionStateChange(Server* server, Konversation::ConnectionState newState,
+            Konversation::ConnectionState oldState);
+
         void handleReconnect(Server* server);
 
 

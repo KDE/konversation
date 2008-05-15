@@ -81,8 +81,10 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
     connect(m_viewContainer, SIGNAL(autoJoinToggled(const Konversation::ServerGroupSettings*)),
             KonversationApplication::instance(), SIGNAL(serverGroupsChanged(const Konversation::ServerGroupSettings*)));
     connect(m_viewContainer, SIGNAL(setWindowCaption(const QString&)), this, SLOT(setCaption(const QString&)));
-    connect(KonversationApplication::instance()->getConnectionManager(), SIGNAL(connectionChangedState(Server*, Konversation::ConnectionState)),
-            m_viewContainer, SLOT(connectionStateChanged(Server*, Konversation::ConnectionState)));
+    connect(KonversationApplication::instance()->getConnectionManager(),
+            SIGNAL(connectionChangedState(Server*, Konversation::ConnectionState, Konversation::ConnectionState)),
+            m_viewContainer,
+            SLOT(connectionStateChanged(Server*, Konversation::ConnectionState, Konversation::ConnectionState)));
     connect(this, SIGNAL(triggerRememberLine()), m_viewContainer, SLOT(insertRememberLine()));
     connect(this, SIGNAL(triggerRememberLines(Server*)), m_viewContainer, SLOT(insertRememberLines(Server*)));
     connect(this, SIGNAL(cancelRememberLine()), m_viewContainer, SLOT(cancelRememberLine()));

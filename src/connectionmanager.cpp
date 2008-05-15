@@ -112,8 +112,10 @@ void ConnectionManager::connectTo(Konversation::ConnectionFlag flag, ConnectionS
 
     connect(server, SIGNAL(destroyed(int)), this, SLOT(delistConnection(int)));
 
-    connect(server, SIGNAL(connectionStateChanged(Server*, Konversation::ConnectionState)),
-        this, SLOT(handleConnectionStateChange(Server*, Konversation::ConnectionState)));
+    connect(server, SIGNAL(connectionStateChanged(Server*, Konversation::ConnectionState,
+                Konversation::ConnectionState)),
+            this, SLOT(handleConnectionStateChange(Server*, Konversation::ConnectionState,
+                Konversation::ConnectionState)));
 
     connect(server, SIGNAL(nicksNowOnline(Server*, const QStringList&, bool)),
         mainWindow, SLOT(setOnlineList(Server*, const QStringList&,bool)));
@@ -136,14 +138,15 @@ void ConnectionManager::delistConnection(int connectionId)
     m_connectionList.remove(connectionId);
 }
 
-void ConnectionManager::handleConnectionStateChange(Server* server, Konversation::ConnectionState state)
+void ConnectionManager::handleConnectionStateChange(Server* server, Konversation::ConnectionState newState,
+    Konversation::ConnectionState oldState)
 {
-    emit connectionChangedState(server->connectionId(), state);
-    emit connectionChangedState(server, state);
+    emit connectionChangedState(server, newState);
+    emit connectionChangedState(server, newState, oldState);
 
     int identityId = server->getIdentity()->id();
 
-    if (state == Konversation::SSConnected)
+    if (newState == Konversation::SSConnected)
     {
         if (!m_activeIdentities.contains(identityId))
         {
@@ -152,7 +155,7 @@ void ConnectionManager::handleConnectionStateChange(Server* server, Konversation
             emit identityOnline(identityId);
         }
     }
-    else if (state != Konversation::SSConnecting)
+    else if (newState != Konversation::SSConnecting)
     {
         if (m_activeIdentities.contains(identityId))
         {
@@ -162,7 +165,7 @@ void ConnectionManager::handleConnectionStateChange(Server* server, Konversation
         }
     }
 
-    if (state == Konversation::SSInvoluntarilyDisconnected)
+    if (newState == Konversation::SSInvoluntarilyDisconnected)
     {
         // The asynchronous invocation of handleReconnect() makes sure that
         // connectionChangedState() is emitted and delivered before it runs

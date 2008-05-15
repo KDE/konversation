@@ -3179,14 +3179,16 @@ void Server::updateConnectionState(Konversation::ConnectionState state)
 {
     if (state != m_connectionState)
     {
-        //emit this before changing the state member so we don't have to cache in the slots
-        emit connectionStateChanged(this, state);
+        Konversation::ConnectionState oldState = m_connectionState;
         m_connectionState = state;
 
         if (m_connectionState == Konversation::SSConnected)
             emit serverOnline(true);
         else if (m_connectionState != Konversation::SSConnecting)
             emit serverOnline(false);
+
+       emit connectionStateChanged(this, state);
+       emit connectionStateChanged(this, state, oldState);
     }
 }
 

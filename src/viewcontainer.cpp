@@ -2170,7 +2170,8 @@ void ViewContainer::showJoinChannelDialog()
         server->sendJoinCommand(dlg.channel(), dlg.password());
 }
 
-void ViewContainer::connectionStateChanged(Server* server, Konversation::ConnectionState state)
+void ViewContainer::connectionStateChanged(Server* server, Konversation::ConnectionState newState,
+    Konversation::ConnectionState oldState)
 {
     Server* updateServer = 0;
 
@@ -2183,23 +2184,23 @@ void ViewContainer::connectionStateChanged(Server* server, Konversation::Connect
     {
         KAction* action = actionCollection()->action("disconnect_server");
         if (action)
-            action->setEnabled(state == Konversation::SSConnected);
+            action->setEnabled(newState == Konversation::SSConnected);
 
         action = actionCollection()->action("reconnect_server");
         if (action)
-            action->setEnabled(state != Konversation::SSConnecting);
+            action->setEnabled(newState != Konversation::SSConnecting);
 
         action = actionCollection()->action("join_channel");
         if (action)
-            action->setEnabled(state == Konversation::SSConnected);
+            action->setEnabled(newState == Konversation::SSConnected);
     }
 
     int doit=0;
     //was and now is not
-    if (state != Konversation::SSConnected && server->getConnectionState() == Konversation::SSConnected)
+    if (newState != Konversation::SSConnected && oldState == Konversation::SSConnected)
         doit = 1;
     //wasn't and now is
-    else if (state == Konversation::SSConnected && server->getConnectionState() != Konversation::SSConnected)
+    else if (newState == Konversation::SSConnected && oldState != Konversation::SSConnected)
         doit = 2;
 
     if (doit)
