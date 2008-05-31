@@ -71,8 +71,8 @@ void Identity::init()
     setReturnMessage("/me is back.");
 
     setAutomaticAway(false);
-    setAwayInactivity(5);
-    setAutomaticUnaway(true);
+    setAwayInactivity(10);
+    setAutomaticUnaway(false);
 }
 
 void Identity::copy(const Identity& original)
