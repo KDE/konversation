@@ -329,7 +329,7 @@ namespace Konversation
             return;
         }
 
-        if(m_currentIdentity && m_realNameEdit->text().isEmpty())
+        if (isShown() && m_currentIdentity && m_realNameEdit->text().isEmpty())
         {
             KMessageBox::error(this, i18n("Please enter a real name."));
             m_identityCBox->setCurrentText(m_currentIdentity->getName());
