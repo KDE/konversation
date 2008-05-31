@@ -271,7 +271,7 @@ void Server::connectSignals()
             konvApp->getConnectionManager(), SLOT(connectTo(Konversation::ConnectionFlag,
                 const QString&, const QString&, const QString&, const QString&, const QString&, bool)));
 
-    connect(konvApp->dccTransferManager(), SIGNAL(newTransferQueued(DccTransfer*)),
+    connect(konvApp->getDccTransferManager(), SIGNAL(newTransferQueued(DccTransfer*)),
             this, SLOT(slotNewDccTransferItemQueued(DccTransfer*)));
 
    // ViewContainer
@@ -1682,7 +1682,7 @@ void Server::addDccSend(const QString &recipient,KURL fileURL, const QString &al
     emit addDccPanel();
 
     // We already checked that the file exists in output filter / requestDccSend() resp.
-    DccTransferSend* newDcc = KonversationApplication::instance()->dccTransferManager()->newUpload();
+    DccTransferSend* newDcc = KonversationApplication::instance()->getDccTransferManager()->newUpload();
 
     newDcc->setConnectionId( connectionId() );
 
@@ -1701,7 +1701,7 @@ void Server::addDccGet(const QString &sourceNick, const QStringList &dccArgument
 {
     emit addDccPanel();
 
-    DccTransferRecv* newDcc = KonversationApplication::instance()->dccTransferManager()->newDownload();
+    DccTransferRecv* newDcc = KonversationApplication::instance()->getDccTransferManager()->newDownload();
 
     newDcc->setConnectionId( connectionId() );
 
@@ -1785,7 +1785,7 @@ void Server::dccReverseSendAck(const QString& partnerNick,const QString& fileNam
 
 void Server::startReverseDccSendTransfer(const QString& sourceNick,const QStringList& dccArguments)
 {
-    DccTransferManager* dtm = KonversationApplication::instance()->dccTransferManager();
+    DccTransferManager* dtm = KonversationApplication::instance()->getDccTransferManager();
 
     if ( dtm->startReverseSending( connectionId(), sourceNick,
                                    dccArguments[0],  // filename
@@ -1813,7 +1813,7 @@ void Server::startReverseDccSendTransfer(const QString& sourceNick,const QString
 
 void Server::resumeDccGetTransfer(const QString &sourceNick, const QStringList &dccArguments)
 {
-    DccTransferManager* dtm = KonversationApplication::instance()->dccTransferManager();
+    DccTransferManager* dtm = KonversationApplication::instance()->getDccTransferManager();
 
     QString fileName( dccArguments[0] );
     QString ownPort( dccArguments[1] );
@@ -1848,7 +1848,7 @@ void Server::resumeDccGetTransfer(const QString &sourceNick, const QStringList &
 
 void Server::resumeDccSendTransfer(const QString &sourceNick, const QStringList &dccArguments)
 {
-    DccTransferManager* dtm = KonversationApplication::instance()->dccTransferManager();
+    DccTransferManager* dtm = KonversationApplication::instance()->getDccTransferManager();
 
     QString fileName( dccArguments[0] );
     QString ownPort( dccArguments[1] );

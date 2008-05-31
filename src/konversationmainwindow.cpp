@@ -27,6 +27,7 @@
 #include "irccharsets.h"
 #include "connectionmanager.h"
 #include "awaymanager.h"
+#include "dcctransfermanager.h"
 
 #include <qnamespace.h>
 #include <qwhatsthis.h>
@@ -343,12 +344,28 @@ int KonversationMainWindow::confirmQuit()
     if (konvApp->getConnectionManager()->connectionCount() == 0)
         return KMessageBox::Continue;
 
-    int result=KMessageBox::warningContinueCancel(
-        this,
-        i18n("<qt>Are you sure you want to quit <b>Konversation</b>?</qt>"),
-        i18n("Confirm Quit"),
-        i18n("Quit"),
-        "systemtrayquitKonversation");
+    int result = KMessageBox::Cancel;
+
+    if (!KMessageBox::shouldBeShownContinue("systemtrayquitKonversation")
+         && konvApp->getDccTransferManager()->hasActiveTransfers())
+    {
+        result = KMessageBox::warningContinueCancel(
+            this,
+            i18n("<qt>You have active DCC file transfers. Are you sure you want to quit <b>Konversation</b>?</qt>"),
+            i18n("Confirm Quit"),
+            i18n("Quit"),
+            "QuitWithActiveDccTransfers");
+    }
+    else
+    {
+        result = KMessageBox::warningContinueCancel(
+            this,
+            i18n("<qt>Are you sure you want to quit <b>Konversation</b>?</qt>"),
+            i18n("Confirm Quit"),
+            i18n("Quit"),
+            "systemtrayquitKonversation");
+    }
+
     return result;
 }
 

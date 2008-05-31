@@ -163,6 +163,25 @@ int DccTransferManager::generateReverseTokenNumber()
     return m_nextReverseTokenNumber++;
 }
 
+bool DccTransferManager::hasActiveTransfers()
+{
+    QValueListConstIterator< DccTransferSend* > it;
+    for ( it = m_sendItems.begin() ; it != m_sendItems.end() ; ++it )
+    {
+        if ((*it)->getStatus() == DccTransfer::Transferring)
+            return true;
+    }
+
+    QValueListConstIterator< DccTransferSend* > it2;
+    for ( it2 = m_sendItems.begin() ; it2 != m_sendItems.end() ; ++it2 )
+    {
+        if ((*it2)->getStatus() == DccTransfer::Transferring)
+            return true;
+    }
+
+    return false;
+}
+
 void DccTransferManager::slotTransferStatusChanged( DccTransfer* item, int newStatus, int oldStatus )
 {
     kdDebug() << "DccTransferManager::slotTransferStatusChanged(): " << oldStatus << " -> " << newStatus << " " << item->getFileName() << " (" << item->getType() << ")" << endl;

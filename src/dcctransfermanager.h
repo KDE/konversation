@@ -67,6 +67,8 @@ class DccTransferManager : public QObject
 
         int generateReverseTokenNumber();
 
+        bool hasActiveTransfers();
+
     private:
         /*
          * initTransfer() does the common jobs for newDownload() and newUpload()

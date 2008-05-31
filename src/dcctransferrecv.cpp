@@ -348,7 +348,7 @@ void DccTransferRecv::slotLocalCanResume( KIO::Job* job, KIO::filesize_t size )
         disconnect( transferJob, 0, 0, 0 );
         transferJob->kill();
 
-        if ( KonversationApplication::instance()->dccTransferManager()->isLocalFileInWritingProcess( m_fileURL ) )
+        if ( KonversationApplication::instance()->getDccTransferManager()->isLocalFileInWritingProcess( m_fileURL ) )
         {
             askAndPrepareLocalKio( i18n( "<b>The file is used by another transfer.</b><br>"
                 "%1<br>" )

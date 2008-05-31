@@ -337,6 +337,7 @@ Changes since 1.0.1:
 - Made units in spinboxen in the identity and app preferences UI more consistent.
 - Make the "Reconnect" action available even while ostensibly in the process of
   connecting.
+- Added a warning dialog for quitting with active DCC file transfers.
 
 
 -------------------------------------------------------------------------------

@@ -274,7 +274,7 @@ void DccTransferSend::start()                     // public slot
         // Passive DCC SEND
         kdDebug() << "DccTransferSend::start(): passive DCC SEND" << endl;
 
-        int tokenNumber = KonversationApplication::instance()->dccTransferManager()->generateReverseTokenNumber();
+        int tokenNumber = KonversationApplication::instance()->getDccTransferManager()->generateReverseTokenNumber();
         // TODO: should we append a letter "T" to this token?
         m_reverseToken = QString::number( tokenNumber );
 

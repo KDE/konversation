@@ -73,6 +73,7 @@ class KonversationApplication : public KUniqueApplication
 
         ConnectionManager* getConnectionManager() { return m_connectionManager; }
         AwayManager* getAwayManager() { return m_awayManager; }
+        DccTransferManager* getDccTransferManager() { return m_dccTransferManager; }
 
         // HACK
         void showQueueTuner(bool);
@@ -105,8 +106,6 @@ class KonversationApplication : public KUniqueApplication
          *  @return A nickinfo for this user and server if one is found.
          */
         NickInfoPtr getNickInfo(const QString &ircnick, const QString &serverOrGroup);
-
-        DccTransferManager* dccTransferManager() { return m_dccTransferManager; }
 
         OSDWidget* osd;
 
