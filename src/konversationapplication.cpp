@@ -295,9 +295,9 @@ void KonversationApplication::readOptions()
             newIdentity->setShowAwayMessage(config->readBoolEntry("ShowAwayMessage"));
             newIdentity->setAwayMessage(config->readEntry("AwayMessage"));
             newIdentity->setReturnMessage(config->readEntry("ReturnMessage"));
-            newIdentity->setAutomaticAway(config->readBoolEntry("AutomaticAway"));
-            newIdentity->setAwayInactivity(config->readNumEntry("AwayInactivity"));
-            newIdentity->setAutomaticUnaway(config->readBoolEntry("AutomaticUnaway"));
+            newIdentity->setAutomaticAway(config->readBoolEntry("AutomaticAway", false));
+            newIdentity->setAwayInactivity(config->readNumEntry("AwayInactivity", 10));
+            newIdentity->setAutomaticUnaway(config->readBoolEntry("AutomaticUnaway", false));
 
             newIdentity->setQuitReason(config->readEntry("QuitReason"));
             newIdentity->setPartReason(config->readEntry("PartReason"));
