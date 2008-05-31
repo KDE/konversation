@@ -20,6 +20,7 @@
 class KComboBox;
 class KLineEdit;
 class QCheckBox;
+class QSpinBox;
 class QListBox;
 class QGroupBox;
 class QToolButton;
@@ -36,6 +37,11 @@ namespace Konversation
             void setCurrentIdentity(int index);
             IdentityPtr setCurrentIdentity(IdentityPtr identity);
             IdentityPtr currentIdentity() const;
+
+
+        signals:
+            void identitiesChanged();
+
 
         protected slots:
             void updateIdentity(int index);
@@ -56,6 +62,7 @@ namespace Konversation
             void deleteIdentity();
             void copyIdentity();
 
+
         private:
             KComboBox* m_identityCBox;
             KLineEdit* m_realNameEdit;
@@ -73,7 +80,9 @@ namespace Konversation
             QCheckBox* m_insertRememberLineOnAwayChBox;
             QListBox* m_nicknameLBox;
             QGroupBox* m_awayMessageGBox;
-            QCheckBox* m_showAwayMessage;
+            QGroupBox* m_automaticAwayGBox;
+            QSpinBox* m_awayInactivitySpin;
+            QCheckBox* m_automaticUnawayChBox;
             QToolButton* m_editBtn;
             QToolButton* m_delBtn;
             QToolButton* m_upNicknameBtn;
@@ -82,7 +91,7 @@ namespace Konversation
             QPushButton* m_changeNicknameBtn;
             QPushButton* m_removeNicknameBtn;
 
-            QValueList<IdentityPtr> m_identityList;
+            IdentityList m_identityList;
             IdentityPtr m_currentIdentity;
     };
 

@@ -28,6 +28,7 @@
 class QCString;
 
 class ConnectionManager;
+class AwayManager;
 class DccTransferManager;
 class KonversationMainWindow;
 class KonvDCOP;
@@ -71,6 +72,7 @@ class KonversationApplication : public KUniqueApplication
         KonversationMainWindow* getMainWindow() { return mainWindow; }
 
         ConnectionManager* getConnectionManager() { return m_connectionManager; }
+        AwayManager* getAwayManager() { return m_awayManager; }
 
         // HACK
         void showQueueTuner(bool);
@@ -134,8 +136,6 @@ class KonversationApplication : public KUniqueApplication
 
         void deleteUrl(const QString& who,const QString& url);
         void clearUrlList();
-        /** Send a message to all servers that you are away. */
-        void toggleAway();
 
 
     protected slots:
@@ -150,6 +150,7 @@ class KonversationApplication : public KUniqueApplication
 
     private:
         ConnectionManager* m_connectionManager;
+        AwayManager* m_awayManager;
         DccTransferManager* m_dccTransferManager;
         QStringList urlList;
         KonvDCOP* dcopObject;

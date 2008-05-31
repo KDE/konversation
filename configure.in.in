@@ -13,3 +13,36 @@ KDE_CHECK_HEADER(kimiface.h,
 	LIB_KIMIFACE="-lkimproxy"
 	AC_SUBST(LIB_KIMIFACE)
 	])
+
+# Check for XScreenSaver
+AC_CHECK_HEADERS(tgmath.h)xss_save_ldflags="$LDFLAGS"
+LDFLAGS="$X_LDFLAGS"
+
+LIB_XSS=
+
+KDE_CHECK_HEADER(X11/extensions/scrnsaver.h,
+    [
+    AC_CHECK_LIB(Xext,XScreenSaverQueryInfo,
+    [
+        AC_DEFINE(HAVE_XSCREENSAVER, 1, [Define if you have the XScreenSaver extension])
+    LIB_XSS="-lXext"
+        ],
+        [
+        ld_shared_flag=
+        KDE_CHECK_COMPILER_FLAG(shared, [ld_shared_flag="-shared"])
+        AC_CHECK_LIB(Xss,XScreenSaverQueryInfo,
+            [
+            AC_DEFINE(HAVE_XSCREENSAVER, 1, [Define if you have the XScreenSaver extension])
+            LIB_XSS="-lXss"
+            ],
+            [],
+            [ $ld_shared_flag $X_PRE_LIBS -lXext -lX11 $X_EXTRA_LIBS ])
+        ],
+        [ $X_PRE_LIBS -lX11 $X_EXTRA_LIBS ])
+     ], [],
+     [
+     #include <X11/Xlib.h>
+     ] )
+
+AC_SUBST(LIB_XSS)
+LDFLAGS="$xss_save_ldflags"

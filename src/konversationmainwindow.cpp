@@ -26,6 +26,7 @@
 #include "notificationhandler.h"
 #include "irccharsets.h"
 #include "connectionmanager.h"
+#include "awaymanager.h"
 
 #include <qnamespace.h>
 #include <qwhatsthis.h>
@@ -260,8 +261,8 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
     action->setToolTip(i18n("Clear the contents of all open tabs"));
     action->setEnabled(false);
 
-    KAction* awayAction = new KAction(i18n("Set &Away Globally")/*, "konversationaway"*/, KShortcut("Ctrl+Shift+A"),
-        static_cast<KonversationApplication *>(kapp), SLOT(toggleAway()), actionCollection(),"toggle_away");
+    KToggleAction* awayAction = new KToggleAction(i18n("Global Away")/*, "konversationaway"*/, KShortcut("Ctrl+Shift+A"),
+        static_cast<KonversationApplication*>(kapp)->getAwayManager(), SLOT(toggleGlobalAway()), actionCollection(), "toggle_away");
     awayAction->setEnabled(false);
 
     action = new KAction(i18n("&Join Channel..."), "add", KShortcut("Ctrl+J"), m_viewContainer, SLOT(showJoinChannelDialog()), actionCollection(), "join_channel");
@@ -386,8 +387,11 @@ bool KonversationMainWindow::queryClose()
             return false;
     }
 
+    konvApp->getAwayManager()->blockSignals(true);
+
     ConnectionManager* connectionManager = konvApp->getConnectionManager();
     connectionManager->quitServers();
+    connectionManager->blockSignals(true);
     connectionManager->deleteLater();
 
     //i moved this down because quitServers could trigger maniuplations of m_tabWidget,

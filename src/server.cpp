@@ -90,7 +90,7 @@ Server::Server(QObject* parent, ConnectionSettings& settings) : QObject(parent)
     m_rawLog = 0;
     m_channelListPanel = 0;
     m_serverISON = 0;
-    m_isAway = false;
+    m_away = false;
     m_socket = 0;
     m_prevISONList = QStringList();
     m_bytesReceived = 0;
@@ -311,8 +311,6 @@ void Server::connectSignals()
         this,SLOT(invitation(const QString&,const QString&)) );
     connect(&m_inputFilter, SIGNAL(addToChannelList(const QString&, int, const QString& )),
         this, SLOT(addToChannelList(const QString&, int, const QString& )));
-    connect(&m_inputFilter, SIGNAL(away()), this, SLOT(away()));
-    connect(&m_inputFilter, SIGNAL(unAway()), this, SLOT(unAway()));
 
     // Status View
     connect(this, SIGNAL(serverOnline(bool)), getStatusView(), SLOT(serverOnline(bool)));
@@ -661,14 +659,11 @@ void Server::connectionEstablished(const QString& ownHost)
     QTimer::singleShot(1000 /*1 sec*/, this, SLOT(sendPing()));
 
     // Recreate away state if we were set away prior to a reconnect.
-    if (isAway())
+    if (m_away)
     {
         // Correct server's beliefs about its away state.
-        m_isAway = false;
-        QString awayReason = m_awayReason.isEmpty() ? i18n("Gone away for now.") : m_awayReason;
-        QString command(Preferences::commandChar() + "AWAY " + awayReason);
-        Konversation::OutputFilterResult result = getOutputFilter()->parse(getNickname(),command, QString());
-        queue(result.toServer, LowPriority);
+        m_away = false;
+        requestAway(m_awayReason);
     }
 }
 
@@ -1999,7 +1994,7 @@ void Server::joinChannel(const QString& name, const QString& hostmask)
         Q_ASSERT(channel);
         channel->setIdentity(getIdentity());
         channel->setNickname(getNickname());
-        channel->indicateAway(isAway());
+        channel->indicateAway(m_away);
 
         if (getServerGroup())
         {
@@ -2934,66 +2929,6 @@ void Server::scriptExecutionError(const QString& name)
     appendMessageToFrontmost(i18n("DCOP"),i18n("Error: Could not execute script \"%1\". Check file permissions.").arg(name));
 }
 
-void Server::away()
-{
-    if(!m_isAway)
-        startAwayTimer();                         //Don't start timer if we have already started it
-
-    m_isAway=true;
-    emit awayState(true);
-
-    if(!getIdentity()->getAwayNick().isEmpty() && getIdentity()->getAwayNick() != getNickname())
-    {
-        m_nonAwayNick = getNickname();
-        queue("NICK " + getIdentity()->getAwayNick());
-    }
-
-    if(getIdentity()->getInsertRememberLineOnAway())
-        emit awayInsertRememberLine(this);
-
-    // TODO: call renameNickInfo ?
-
-    if(getViewContainer()->getWindow())
-    {
-        KAction *action = getViewContainer()->getWindow()->actionCollection()->action("toggle_away");
-        if(action)
-        {
-            action->setText(i18n("Set &Available Globally"));
-            action->setIcon("konversationavailable");
-        }
-    }
-
-}
-
-void Server::unAway()
-{
-    m_isAway = false;
-    m_awayReason = QString();
-    emit awayState(false);
-
-    if(!getIdentity()->getAwayNick().isEmpty() && !m_nonAwayNick.isEmpty())
-        queue("NICK " + m_nonAwayNick);
-
-    // TODO: call renameNickInfo ?
-
-    if(getViewContainer()->getWindow())
-    {
-        KAction *action = getViewContainer()->getWindow()->actionCollection()->action("toggle_away");
-        if(action)
-        {
-                                                  //this may be wrong if other servers are still away
-            action->setText(i18n("Set &Away Globally"));
-            action->setIcon("konversationaway");
-        }
-    }
-
-}
-
-void Server::setAwayReason(const QString& reason)
-{
-    m_awayReason = reason;
-}
-
 bool Server::isAChannel(const QString &channel) const
 {
     return (getChannelTypes().contains(channel.at(0)) > 0);
@@ -3126,25 +3061,10 @@ void Server::sendMultiServerCommand(const QString& command, const QString& param
 
 void Server::executeMultiServerCommand(const QString& command, const QString& parameter)
 {
-    if(command == "away" || command == "back")    //back is the same as away, since paramater is ""
-    {
-        QString str = Preferences::commandChar() + command;
-
-                                                  //you cant have a message with 'back'
-        if(!parameter.isEmpty() && command == "away")
-            str += ' ' + parameter;
-
-        Konversation::OutputFilterResult result = getOutputFilter()->parse(getNickname(), str, QString());
-        queue(result.toServer);
-    }
-    else if(command == "msg")
-    {
+    if (command == "msg")
         sendToAllChannelsAndQueries(parameter);
-    }
     else
-    {
         sendToAllChannelsAndQueries(Preferences::commandChar() + command + ' ' + parameter);
-    }
 }
 
 void Server::sendToAllChannelsAndQueries(const QString& text)
@@ -3194,16 +3114,13 @@ void Server::updateConnectionState(Konversation::ConnectionState state)
 
 void Server::reconnect()
 {
-    if (!isConnecting())
-    {
-        if (isSocketConnected()) quitServer();
+    if (isConnecting() || isSocketConnected()) quitServer();
 
-        // Use asynchronous invocation so that the broken() that the above
-        // quitServer might cause is delivered before connectToIRCServer
-        // sets SSConnecting and broken() announces a deliberate disconnect
-        // due to the failure allegedly occuring during SSConnecting.
-        QTimer::singleShot(0, this, SLOT(connectToIRCServer()));
-    }
+    // Use asynchronous invocation so that the broken() that the above
+    // quitServer might cause is delivered before connectToIRCServer
+    // sets SSConnecting and broken() announces a deliberate disconnect
+    // due to the failure allegedly occuring during SSConnecting.
+    QTimer::singleShot(0, this, SLOT(connectToIRCServer()));
 }
 
 void Server::disconnect()
@@ -3211,16 +3128,87 @@ void Server::disconnect()
     if (isSocketConnected()) quitServer();
 }
 
-bool Server::isAway() const
+void Server::requestAway(const QString& reason)
 {
-    return m_isAway;
+    QString awayReason = reason;
+    IdentityPtr identity = getIdentity();
+
+    if (awayReason.isEmpty() || !identity)
+        awayReason = i18n("Gone away for now");
+
+    setAwayReason(awayReason);
+
+    queue("AWAY :" + awayReason);
+}
+
+void Server::requestUnaway()
+{
+    queue("AWAY");
+}
+
+void Server::setAway(bool away)
+{
+    IdentityPtr identity = getIdentity();
+
+    if (away)
+    {
+        if (!m_away) startAwayTimer();
+
+        m_away = true;
+
+        emit awayState(true);
+
+        if (identity && !identity->getAwayNick().isEmpty() && identity->getAwayNick() != getNickname())
+        {
+            m_nonAwayNick = getNickname();
+            queue("NICK " + getIdentity()->getAwayNick());
+        }
+
+        appendMessageToFrontmost(i18n("Away"), i18n("You are now marked as being away."));
+
+        if (identity && identity->getShowAwayMessage())
+        {
+            QString message = identity->getAwayMessage();
+            sendToAllChannels(message.replace(QRegExp("%s", false), m_awayReason));
+        }
+
+        if (identity && identity->getInsertRememberLineOnAway())
+            emit awayInsertRememberLine(this);
+    }
+    else
+    {
+        m_awayReason = QString();
+
+        emit awayState(false);
+
+        if (!identity->getAwayNick().isEmpty() && !m_nonAwayNick.isEmpty())
+        {
+            queue("NICK " + m_nonAwayNick);
+            m_nonAwayNick = "";
+        }
+
+        if (m_away)
+        {
+            appendMessageToFrontmost(i18n("Away"), i18n("You are no longer marked as being away."));
+
+            if (identity && identity->getShowAwayMessage())
+            {
+                QString message = identity->getReturnMessage();
+                sendToAllChannels(message.replace(QRegExp("%t", false), awayTime()));
+            }
+        }
+        else
+            appendMessageToFrontmost(i18n("Away"), i18n("You are not marked as being away."));
+
+        m_away = false;
+    }
 }
 
 QString Server::awayTime() const
 {
     QString retVal;
 
-    if (m_isAway)
+    if (m_away)
     {
         int diff = QDateTime::currentDateTime().toTime_t() - m_awayTime;
         int num = diff / 3600;

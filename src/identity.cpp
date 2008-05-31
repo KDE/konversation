@@ -69,6 +69,10 @@ void Identity::init()
     setShowAwayMessage(false);
     setAwayMessage("/me is away: %s");
     setReturnMessage("/me is back.");
+
+    setAutomaticAway(false);
+    setAwayInactivity(5);
+    setAutomaticUnaway(true);
 }
 
 void Identity::copy(const Identity& original)
@@ -87,6 +91,9 @@ void Identity::copy(const Identity& original)
     setAwayMessage(original.getAwayMessage());
     setAwayNick(original.getAwayNick());
     setReturnMessage(original.getReturnMessage());
+    setAutomaticAway(original.getAutomaticAway());
+    setAwayInactivity(original.getAwayInactivity());
+    setAutomaticUnaway(original.getAutomaticUnaway());
     setShellCommand(original.getShellCommand());
     setCodecName(original.getCodecName());
 }
@@ -131,6 +138,13 @@ void Identity::setAwayMessage(const QString& message)   { awayMessage=message; }
 QString Identity::getAwayMessage() const                { return awayMessage; }
 void Identity::setReturnMessage(const QString& message) { returnMessage=message; }
 QString Identity::getReturnMessage() const              { return returnMessage; }
+
+void Identity::setAutomaticAway(bool automaticAway)     { m_automaticAway = automaticAway; }
+bool Identity::getAutomaticAway() const                 { return m_automaticAway; }
+void Identity::setAwayInactivity(int awayInactivity)   { m_awayInactivity = awayInactivity; }
+int Identity::getAwayInactivity() const                { return m_awayInactivity; }
+void Identity::setAutomaticUnaway(bool automaticUnaway) { m_automaticUnaway = automaticUnaway; }
+bool Identity::getAutomaticUnaway() const               { return m_automaticUnaway; }
 
 void Identity::setNicknameList(const QStringList& newList)
 {

@@ -168,6 +168,15 @@ void resetNickSelection();
         QString getOwnIpByNetworkInterface();
         QString getOwnIpByServerMessage();
 
+        void requestAway(const QString& reason = "");
+        void requestUnaway();
+
+        bool isAway() { return m_away; }
+        void setAway(bool away);
+        QString awayTime() const;
+
+        void setAwayReason(const QString& reason) { m_awayReason = reason; }
+
         /**
          * Returns true if the given nickname is known to be online.
          * @param nickname      The nickname.  Case insensitive.
@@ -278,16 +287,6 @@ void resetNickSelection();
          * Returns a QPtrList of all channels
          */
         const QPtrList<Channel>& getChannelList() const { return m_channelList; }
-
-        /** Returns the time we have been away for.
-         *  If we are not away, returns 00:00:00
-         */
-        QString awayTime() const;
-        /** Does the _server_ think we are away.  Note that if we went auto-away when not connected to the server, this may
-         *  return false.
-         */
-        bool isAway() const;
-        void setAwayReason(const QString& reason);
 
         void emitChannelNickChanged(const ChannelNickPtr channelNick);
         void emitNickInfoChanged(const NickInfoPtr nickInfo);
@@ -504,8 +503,6 @@ void resetNickSelection();
         void dccGetDone(DccTransfer* item);
         void dccSendDone(DccTransfer* item);
         void dccStatusChanged(DccTransfer* item, int newStatus, int oldStatus);
-        void away();
-        void unAway();
         void scriptNotFound(const QString& name);
         void scriptExecutionError(const QString& name);
         void userhost(const QString& nick,const QString& hostmask,bool away,bool ircOp);
@@ -667,16 +664,14 @@ void resetNickSelection();
         QGuardedPtr<RawLog> m_rawLog;
         QGuardedPtr<ChannelListPanel> m_channelListPanel;
 
-        bool m_isAway;
+        bool m_away;
         QString m_awayReason;
+        QString m_nonAwayNick;
+        int m_awayTime;
 
         Konversation::ConnectionState m_connectionState;
         void updateConnectionState(Konversation::ConnectionState state);
         bool isSocketConnected() const;
-
-        QString m_nonAwayNick;
-
-        int m_awayTime;
 
         ScriptLauncher* m_scriptLauncher;
 

@@ -132,8 +132,8 @@ namespace Konversation
             OutputFilterResult parseVoice(const QString& parameter);
             OutputFilterResult parseUnvoice(const QString& ownNick, const QString& parameter);
             OutputFilterResult parseTopic(const QString& parameter);
-            OutputFilterResult parseAway(QString& parameter);
-            OutputFilterResult parseBack();
+            void parseAway(QString& parameter);
+            void parseBack();
             OutputFilterResult parseCtcp(const QString& parameter);
             OutputFilterResult parsePing(const QString& parameter);
             OutputFilterResult parseVersion(const QString& parameter);
@@ -151,7 +151,6 @@ namespace Konversation
             OutputFilterResult parseQuote(const QString& parameter);
             OutputFilterResult parseSay(const QString& parameter);
             void parseKonsole();
-            void parseAaway(const QString& parameter);
             OutputFilterResult parseAme(const QString& parameter);
             OutputFilterResult parseAmsg(const QString& parameter);
             OutputFilterResult parseOmsg(const QString& parameter);

@@ -16,6 +16,7 @@
 #include "konversationapplication.h"
 #include "konversationmainwindow.h"
 #include "connectionmanager.h"
+#include "awaymanager.h"
 #include "dcctransfermanager.h"
 #include "viewcontainer.h"
 #include "highlight.h"
@@ -51,6 +52,7 @@ KonversationApplication::KonversationApplication()
 {
     mainWindow = 0;
     m_connectionManager = 0;
+    m_awayManager = 0;
     quickConnectDialog = 0;
     osd = 0;
 }
@@ -79,6 +81,13 @@ int KonversationApplication::newInstance()
     if (!mainWindow)
     {
         m_connectionManager = new ConnectionManager(this);
+
+        m_awayManager = new AwayManager(this);
+
+        connect(m_connectionManager, SIGNAL(identityOnline(int)), m_awayManager, SLOT(identityOnline(int)));
+        connect(m_connectionManager, SIGNAL(identityOffline(int)), m_awayManager, SLOT(identityOffline(int)));
+        connect(m_connectionManager, SIGNAL(identityOffline(int)), m_awayManager, SLOT(identityOffline(int)));
+        connect(m_connectionManager, SIGNAL(connectionChangedAwayState(bool)), m_awayManager, SLOT(updateGlobalAwayAction(bool)));
 
         // an instance of DccTransferManager needs to be created before GUI class instances' creation.
         m_dccTransferManager = new DccTransferManager(this);
@@ -205,36 +214,6 @@ void KonversationApplication::showQueueTuner(bool p)
     getMainWindow()->getViewContainer()->showQueueTuner(p);
 }
 
-void KonversationApplication::toggleAway()
-{
-    QPtrList<Server> serverList = getConnectionManager()->getServerList();
-
-    bool anyservers = false;
-    bool alreadyaway = false;
-
-    Server* lookServer=serverList.first();
-
-    while(lookServer)
-    {
-        if(lookServer->isConnected())
-        {
-            anyservers = true;
-            if(lookServer->isAway())
-            {
-                alreadyaway= true;
-                break;
-            }
-        }
-        lookServer=serverList.next();
-    }
-
-    //alreadyaway is true if _any_ servers are away
-    if (alreadyaway)
-        sendMultiServerCommand("back", QString());
-    else
-        sendMultiServerCommand("away", QString());
-}
-
 void KonversationApplication::dcopMultiServerRaw(const QString &command)
 {
     sendMultiServerCommand(command.section(' ', 0,0), command.section(' ', 1));
@@ -316,6 +295,9 @@ void KonversationApplication::readOptions()
             newIdentity->setShowAwayMessage(config->readBoolEntry("ShowAwayMessage"));
             newIdentity->setAwayMessage(config->readEntry("AwayMessage"));
             newIdentity->setReturnMessage(config->readEntry("ReturnMessage"));
+            newIdentity->setAutomaticAway(config->readBoolEntry("AutomaticAway"));
+            newIdentity->setAwayInactivity(config->readNumEntry("AwayInactivity"));
+            newIdentity->setAutomaticUnaway(config->readBoolEntry("AutomaticUnaway"));
 
             newIdentity->setQuitReason(config->readEntry("QuitReason"));
             newIdentity->setPartReason(config->readEntry("PartReason"));
@@ -550,10 +532,10 @@ void KonversationApplication::saveOptions(bool updateGUI)
             config->deleteGroup(identities[index]);
     }
 
-    QValueList<IdentityPtr> identityList = Preferences::identityList();
+    IdentityList identityList = Preferences::identityList();
     int index = 0;
 
-    for(QValueList<IdentityPtr>::iterator it = identityList.begin(); it != identityList.end(); ++it)
+    for(IdentityList::ConstIterator it = identityList.begin(); it != identityList.end(); ++it)
     {
         IdentityPtr identity = (*it);
         config->setGroup(QString("Identity %1").arg(index));
@@ -568,6 +550,9 @@ void KonversationApplication::saveOptions(bool updateGUI)
         config->writeEntry("ShowAwayMessage",identity->getShowAwayMessage());
         config->writeEntry("AwayMessage",identity->getAwayMessage());
         config->writeEntry("ReturnMessage",identity->getReturnMessage());
+        config->writeEntry("AutomaticAway", identity->getAutomaticAway());
+        config->writeEntry("AwayInactivity", identity->getAwayInactivity());
+        config->writeEntry("AutomaticUnaway", identity->getAutomaticUnaway());
         config->writeEntry("QuitReason",identity->getQuitReason());
         config->writeEntry("PartReason",identity->getPartReason());
         config->writeEntry("KickReason",identity->getKickReason());

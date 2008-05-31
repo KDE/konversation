@@ -427,7 +427,7 @@ void ViewContainer::updateViewActions(int index)
         if (server && (viewType == ChatWindow::Status || server == m_frontServer))
         {
             action = actionCollection()->action("reconnect_server");
-            if (action) action->setEnabled(!server->isConnecting());
+            if (action) action->setEnabled(true);
 
 
             action = actionCollection()->action("disconnect_server");
@@ -2185,10 +2185,6 @@ void ViewContainer::connectionStateChanged(Server* server, Konversation::Connect
         KAction* action = actionCollection()->action("disconnect_server");
         if (action)
             action->setEnabled(newState == Konversation::SSConnected);
-
-        action = actionCollection()->action("reconnect_server");
-        if (action)
-            action->setEnabled(newState != Konversation::SSConnecting);
 
         action = actionCollection()->action("join_channel");
         if (action)

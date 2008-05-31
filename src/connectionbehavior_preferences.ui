@@ -92,7 +92,7 @@ the Free Software Foundation; either version 2 of the License, or
                         <number>9999</number>
                     </property>
                     <property name="suffix">
-                        <string> s</string>
+                        <string> seconds</string>
                     </property>
                 </widget>
                 <widget class="KIntNumInput" row="1" column="1">

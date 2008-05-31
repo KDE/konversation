@@ -108,8 +108,8 @@ class Preferences : public QObject, public PreferencesBase
         static void addIdentity(IdentityPtr identity);
         static void removeIdentity(IdentityPtr identity);
         static void clearIdentityList();
-        static const QValueList<IdentityPtr> identityList();
-        static void setIdentityList(const QValueList<IdentityPtr>& list);
+        static const IdentityList identityList();
+        static void setIdentityList(const IdentityList& list);
         static const IdentityPtr identityByName(const QString& name);
         static const IdentityPtr identityById(int id);
         static const QString ident();

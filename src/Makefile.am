@@ -10,32 +10,31 @@ konversation_SOURCES = konviface.skel konviconfigdialog.cpp konversationstatusba
 	konsolepanel.cpp identity.cpp statuspanel.cpp dccrecipientdialog.cpp topiccombobox.cpp nicksonline.cpp \
 	dcctransferpanel.cpp dcctransferpanelitem.cpp highlight.cpp highlightviewitem.cpp modebutton.cpp \
 	ignore_preferencesui.ui ignore_preferences.cpp ignore.cpp nicklistview.cpp ircinput.cpp \
-	ignorelistviewitem.cpp images.cpp quickbutton.cpp chatwindow.cpp outputfilter.cpp 	query.cpp \
-	konversationapplication.cpp nick.cpp inputfilter.cpp channel.cpp ircview.cpp server.cpp main.cpp \
-	dcc_preferencesui.ui log_preferences.ui tabs_preferencesui.ui tabs_preferences.cpp \
+	ignorelistviewitem.cpp images.cpp quickbutton.cpp chatwindow.cpp outputfilter.cpp logfilereader.cpp \
+	query.cpp konversationapplication.cpp nick.cpp inputfilter.cpp channel.cpp ircview.cpp server.cpp \
+	main.cpp dcc_preferencesui.ui log_preferences.ui tabs_preferencesui.ui tabs_preferences.cpp \
 	chatwindowappearance_preferences.ui irccolorchooserui.ui colorsappearance_preferences.ui \
-	irccolorchooser.cpp channellistviewitem.cpp osd.cpp trayicon.cpp dccchat.cpp \
-	logfilereader.cpp multilineedit.cpp nickinfo.cpp dccresumedialog.cpp \
-	konversationsound.cpp quickconnectdialog.cpp serverlistdialog.cpp dcctransfersend.cpp \
-	dcctransferrecv.cpp channelnick.cpp insertchardialog.cpp irccharsets.cpp editnotifydialog.cpp \
-	common.cpp serverison.cpp sslsocket.cpp servergroupsettings.cpp serversettings.cpp servergroupdialog.cpp \
-	ssllabel.cpp serverdialog.cpp channeldialog.cpp identitydialog.cpp topiclabel.cpp channeloptionsui.ui \
-	channeloptionsdialog.cpp notificationhandler.cpp joinchannelui.ui joinchanneldialog.cpp \
-	emoticon.cpp chatwindowbehaviour_preferences.ui alias_preferencesui.ui \
-	osd_preferencesui.ui theme_preferencesui.ui highlight_preferencesui.ui \
-	warnings_preferencesui.ui warnings_preferences.cpp quickbuttons_preferencesui.ui \
-	watchednicknames_preferencesui.ui generalbehavior_preferences.ui connectionbehavior_preferences.ui \
-	fontappearance_preferences.ui nicklistbehavior_preferencesui.ui konvibookmarkhandler.cpp \
-	konvibookmarkmenu.cpp ircviewbox.cpp searchbar.cpp osd_preferences.cpp \
-	theme_preferences.cpp dcc_preferences.cpp alias_preferences.cpp highlight_preferences.cpp \
+	irccolorchooser.cpp channellistviewitem.cpp osd.cpp trayicon.cpp dccchat.cpp multilineedit.cpp \
+	nickinfo.cpp dccresumedialog.cpp konversationsound.cpp quickconnectdialog.cpp serverlistdialog.cpp \
+	dcctransfersend.cpp dcctransferrecv.cpp channelnick.cpp insertchardialog.cpp irccharsets.cpp \
+	editnotifydialog.cpp common.cpp serverison.cpp sslsocket.cpp servergroupsettings.cpp serversettings.cpp \
+	servergroupdialog.cpp ssllabel.cpp serverdialog.cpp channeldialog.cpp identitydialog.cpp topiclabel.cpp \
+	channeloptionsui.ui channeloptionsdialog.cpp notificationhandler.cpp joinchannelui.ui \
+	joinchanneldialog.cpp emoticon.cpp chatwindowbehaviour_preferences.ui alias_preferencesui.ui \
+	osd_preferencesui.ui theme_preferencesui.ui highlight_preferencesui.ui warnings_preferencesui.ui \
+	warnings_preferences.cpp quickbuttons_preferencesui.ui watchednicknames_preferencesui.ui \
+	generalbehavior_preferences.ui connectionbehavior_preferences.ui fontappearance_preferences.ui \
+	nicklistbehavior_preferencesui.ui konvibookmarkhandler.cpp konvibookmarkmenu.cpp ircviewbox.cpp searchbar.cpp \
+	osd_preferences.cpp theme_preferences.cpp dcc_preferences.cpp alias_preferences.cpp highlight_preferences.cpp \
 	watchednicknames_preferences.cpp quickbuttons_preferences.cpp nicklistbehavior_preferences.cpp \
 	tabnotifications_preferences.ui multilinetextedit.cpp serverlistview.cpp nicksonlineitem.cpp \
 	searchbarbase.ui autoreplace_preferencesui.ui autoreplace_preferences.cpp servergroupdialogui.ui \
 	dcctransfer.cpp dcctransfermanager.cpp dcctransferdetailedinfopanelui.ui dcctransferdetailedinfopanel.cpp \
-	dcccommon.cpp queuetunerbase.ui queuetuner.cpp ircqueue.cpp connectionsettings.cpp connectionmanager.cpp
+	dcccommon.cpp queuetunerbase.ui queuetuner.cpp ircqueue.cpp connectionsettings.cpp connectionmanager.cpp \
+	awaymanager.cpp
 
 konversation_COMPILE_FIRST = config/preferences_base.h
-konversation_LDADD = $(LIB_KIO) $(LIB_KABC) $(LIB_KIMIFACE) linkaddressbook/liblinkaddressbookui.la blowfish/libblowfish.la config/libkonversationconfig.la
+konversation_LDADD = $(LIB_KIO) $(LIB_XSS) $(LIB_KABC) $(LIB_KIMIFACE) linkaddressbook/liblinkaddressbookui.la blowfish/libblowfish.la config/libkonversationconfig.la
 
 xdg_apps_DATA = konversation.desktop
 

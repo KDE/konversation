@@ -20,7 +20,6 @@
 
 #include <qobject.h>
 #include <dcopobject.h>
-#include <qptrlist.h>
 
 
 class KonvDCOP : public QObject, virtual public KonvIface
@@ -47,8 +46,7 @@ class KonvDCOP : public QObject, virtual public KonvIface
                        const QString& password = "",
                        const QString& nick = "",
                        const QString& channel = "",
-                       bool useSSL = false
-        );
+                       bool useSSL = false);
 
     public slots:
         void setAway(const QString &awaymessage);
@@ -64,6 +62,9 @@ class KonvDCOP : public QObject, virtual public KonvIface
         void connectToServer(const QString& adress, int port, const QString& channel, const QString& password);
         QStringList listServers();
         QStringList listConnectedServers();
+
+        void setScreenSaverStarted();
+        void setScreenSaverStopped();
 };
 
 class KonvIdentDCOP : public QObject, virtual public KonvIdentityIface

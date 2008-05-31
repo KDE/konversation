@@ -15,6 +15,7 @@
 #include "konvdcop.h"
 #include "konversationapplication.h"
 #include "connectionmanager.h"
+#include "awaymanager.h"
 #include "channel.h"
 #include "identity.h"
 #include "server.h"
@@ -25,10 +26,10 @@
 #include <klocale.h>
 
 
-KonvDCOP::KonvDCOP()
-: DCOPObject("irc"),
-QObject(0,"irc")
+KonvDCOP::KonvDCOP() : DCOPObject("irc"), QObject(0, "irc")
 {
+    connectDCOPSignal("kdesktop", "KScreensaverIface", "KDE_start_screensaver()", "setScreenSaverStarted()", false);
+    connectDCOPSignal("kdesktop", "KScreensaverIface", "KDE_stop_screensaver()", "setScreenSaverStopped()", false);
 }
 
 void KonvDCOP::raw(const QString& server,const QString& command)
@@ -66,17 +67,24 @@ QStringList KonvDCOP::listConnectedServers()
     return connectedHosts;
 }
 
-void KonvDCOP::setAway(const QString &awaymessage)
+void KonvDCOP::setAway(const QString& awaymessage)
 {
-    if(awaymessage.isEmpty())
-        emit dcopMultiServerRaw("away " + i18n("Gone away for now."));
-    else
-        emit dcopMultiServerRaw("away " + awaymessage);
+    static_cast<KonversationApplication*>(kapp)->getAwayManager()->requestAllAway(awaymessage);
 }
 
 void KonvDCOP::setBack()
 {
-    emit dcopMultiServerRaw("back");
+    static_cast<KonversationApplication*>(kapp)->getAwayManager()->requestAllUnaway();
+}
+
+void KonvDCOP::setScreenSaverStarted()
+{
+    static_cast<KonversationApplication*>(kapp)->getAwayManager()->setManagedIdentitiesAway();
+}
+
+void KonvDCOP::setScreenSaverStopped()
+{
+    static_cast<KonversationApplication*>(kapp)->getAwayManager()->setManagedIdentitiesUnaway();
 }
 
 void KonvDCOP::sayToAll(const QString &message)
@@ -178,8 +186,8 @@ QObject(0, "identity")
 QStringList KonvIdentDCOP::listIdentities()
 {
     QStringList identities;
-    QValueList<IdentityPtr> ids = Preferences::identityList();
-    for(QValueList<IdentityPtr>::iterator it = ids.begin(); it != ids.end(); ++it)
+    IdentityList ids = Preferences::identityList();
+    for(IdentityList::ConstIterator it = ids.begin(); it != ids.end(); ++it)
     {
         identities.append((*it)->getName());
     }
@@ -188,9 +196,9 @@ QStringList KonvIdentDCOP::listIdentities()
 
 void KonvIdentDCOP::setrealName(const QString &id_name, const QString& name)
 {
-    QValueList<IdentityPtr> ids = Preferences::identityList();
+    IdentityList ids = Preferences::identityList();
 
-    for(QValueList<IdentityPtr>::iterator it = ids.begin(); it != ids.end(); ++it)
+    for(IdentityList::iterator it = ids.begin(); it != ids.end(); ++it)
     {
         if ((*it)->getName() == id_name)
         {
@@ -203,9 +211,9 @@ void KonvIdentDCOP::setrealName(const QString &id_name, const QString& name)
 
 QString KonvIdentDCOP::getrealName(const QString &id_name)
 {
-    QValueList<IdentityPtr> ids = Preferences::identityList();
+    IdentityList ids = Preferences::identityList();
 
-    for(QValueList<IdentityPtr>::iterator it = ids.begin(); it != ids.end(); ++it)
+    for(IdentityList::ConstIterator it = ids.begin(); it != ids.end(); ++it)
     {
         if ((*it)->getName() == id_name)
         {

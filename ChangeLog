@@ -325,6 +325,18 @@ Changes since 1.0.1:
 - Added option to close tabs using middle-mouse.
 - The per-view encoding selection now allows returning to the used identity's
   default encoding setting.
+- Added per-identity support for automatic away on a configurable amount of user
+  desktop inactivity and/or screensaver activation, along with support for auto-
+  matic return on activity.
+- Fixed the "Global Away" toggle to make sense and update its state properly.
+- Added an '/aunaway' command to complement '/aaway' (previously, there was only
+  '/aback').
+- Broadly rewrote away management related code for improved robust ness and less
+  inane duplication and hacks (e.g. no more abuse of multiServerCommand for global
+  away).
+- Made units in spinboxen in the identity and app preferences UI more consistent.
+- Make the "Reconnect" action available even while ostensibly in the process of
+  connecting.
 
 
 -------------------------------------------------------------------------------

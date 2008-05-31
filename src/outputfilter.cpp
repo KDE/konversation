@@ -16,6 +16,7 @@
 #include "outputfilter.h"
 #include "konversationapplication.h"
 #include "konversationmainwindow.h"
+#include "awaymanager.h"
 #include "ignore.h"
 #include "server.h"
 #include "irccharsets.h"
@@ -243,9 +244,9 @@ namespace Konversation
             else if(command == "ping")     result = parseCtcp(parameter.section(' ', 0, 0) + " ping");
             else if(command == "kick")     result = parseKick(parameter);
             else if(command == "topic")    result = parseTopic(parameter);
-            else if(command == "away")     result = parseAway(parameter);
-            else if(command == "unaway")   result = parseBack();
-            else if(command == "back")     result = parseBack();
+            else if(command == "away")     parseAway(parameter);
+            else if(command == "unaway")   parseBack();
+            else if(command == "back")     parseBack();
             else if(command == "invite")   result = parseInvite(parameter);
             else if(command == "exec")     result = parseExec(parameter);
             else if(command == "notify")   result = parseNotify(parameter);
@@ -262,8 +263,9 @@ namespace Konversation
             else if(command == "raw")      result = parseRaw(parameter);
             else if(command == "dcc")      result = parseDcc(parameter);
             else if(command == "konsole")  parseKonsole();
-            else if(command == "aaway")    parseAaway(parameter);
-            else if(command == "aback")    emit multiServerCommand("back", QString());
+            else if(command == "aaway")    KonversationApplication::instance()->getAwayManager()->requestAllAway(parameter);
+            else if(command == "aunaway")    KonversationApplication::instance()->getAwayManager()->requestAllUnaway();
+            else if(command == "aback")    KonversationApplication::instance()->getAwayManager()->requestAllUnaway();
             else if(command == "ame")      result = parseAme(parameter);
             else if(command == "amsg")     result = parseAmsg(parameter);
             else if(command == "omsg")     result = parseOmsg(parameter);
@@ -551,30 +553,17 @@ namespace Konversation
         return result;
     }
 
-    OutputFilterResult OutputFilter::parseAway(QString &reason)
+    void OutputFilter::parseAway(QString& reason)
     {
-        OutputFilterResult result;
-
-        if (reason.isEmpty() && !m_server->isAway())
-            reason = i18n("Gone away for now.");
-
-        if (m_server->getIdentity()->getShowAwayMessage())
-        {
-            QString message = m_server->getIdentity()->getAwayMessage();
-            emit sendToAllChannels(message.replace(QRegExp("%s",false),reason));
-        }
-
-        m_server->setAwayReason(reason);
-        result.toServer = "AWAY :" + reason;
-
-        return result;
+        if (reason.isEmpty() && m_server->isAway())
+            m_server->requestUnaway();
+        else
+            m_server->requestAway(reason);
     }
 
-    OutputFilterResult OutputFilter::parseBack()
+    void OutputFilter::parseBack()
     {
-        OutputFilterResult result;
-        result.toServer = "AWAY";
-        return result;
+        m_server->requestUnaway();
     }
 
     OutputFilterResult OutputFilter::parseNames(const QString &parameter)
@@ -1497,11 +1486,6 @@ namespace Konversation
         result.output = string;
         result.type = Program;
         return result;
-    }
-
-    void OutputFilter::parseAaway(const QString& parameter)
-    {
-        emit multiServerCommand("away", parameter);
     }
 
     OutputFilterResult OutputFilter::parseAme(const QString& parameter)

@@ -11,6 +11,7 @@
 */
 #include "identitydialog.h"
 #include "konversationapplication.h"
+#include "awaymanager.h"
 #include "irccharsets.h"
 
 #include <qframe.h>
@@ -18,6 +19,7 @@
 #include <qlabel.h>
 #include <qvaluelist.h>
 #include <qcheckbox.h>
+#include <qspinbox.h>
 #include <qtoolbutton.h>
 #include <qtabwidget.h>
 #include <qlistbox.h>
@@ -48,9 +50,9 @@ namespace Konversation
         m_identityCBox->setEditable(false);
         identityLabel->setBuddy(m_identityCBox);
 
-        QValueList<IdentityPtr> tmpList = Preferences::identityList();
+        IdentityList tmpList = Preferences::identityList();
 
-        for(QValueList<IdentityPtr>::iterator it = tmpList.begin(); it != tmpList.end(); ++it)
+        for(IdentityList::ConstIterator it = tmpList.begin(); it != tmpList.end(); ++it)
         {
             m_identityCBox->insertItem((*it)->getName());
             m_identityList.append(new Identity(*(*it)));
@@ -161,15 +163,44 @@ namespace Konversation
         QWhatsThis::add(m_awayNickEdit, i18n("Enter a nickname that indicates you are away. Whenever you perform an <b>/away msg</b> command in any channel joined with this Identity, Konversation will automatically change your nickname to the Away nickname. Other users will be able to tell you are away from your computer. Whenever you perform an <b>/away</b> command in any channel in which you are away, Konversation will automatically change your nickname back to the original. If you do not wish to automatically change your nickname when going away, leave blank."));
         awayNickLabel->setBuddy(m_awayNickEdit);
 
-        QGroupBox* m_awayMessageGBox = new QGroupBox(i18n("Messages"), awayWidget);
-        //m_awayMessageGBox->setCheckable(true);
+        m_automaticAwayGBox = new QGroupBox(i18n("Automatic Away"), awayWidget);
+        m_automaticAwayGBox->setCheckable(true);
+        m_automaticAwayGBox->setColumnLayout(0, Qt::Horizontal);
+        m_automaticAwayGBox->setMargin(marginHint());
+        QGridLayout* automaticAwayLayout = new QGridLayout(m_automaticAwayGBox->layout(), 1, 2, spacingHint());
+
+        QWhatsThis::add(m_automaticAwayGBox, i18n("If you check this box, Konversation will automatically set all connections using this Identity away when the screensaver starts or after a period of user inactivity configured below."));
+
+        QLabel* autoAwayLabel1 = new QLabel(i18n("Set away after"), m_automaticAwayGBox);
+        m_awayInactivitySpin = new QSpinBox(1, 999, 1, m_automaticAwayGBox);
+        m_awayInactivitySpin->setSuffix(i18n(" minutes"));
+        QLabel* autoAwayLabel2 = new QLabel(i18n("of user inactivity"), m_automaticAwayGBox);
+        autoAwayLabel1->setBuddy(m_awayInactivitySpin);
+        autoAwayLabel2->setBuddy(m_awayInactivitySpin);
+        m_automaticUnawayChBox = new QCheckBox(i18n("Automatically return on activity"), m_automaticAwayGBox);
+        QWhatsThis::add(m_automaticUnawayChBox, i18n("If you check this box, Konversation will automatically cancel away for all connections using this identity when the screensaver stops or new user activity is detected."));
+
+        connect(m_automaticAwayGBox, SIGNAL(toggled(bool)), autoAwayLabel1, SLOT(setEnabled(bool)));
+        connect(m_automaticAwayGBox, SIGNAL(toggled(bool)), autoAwayLabel2, SLOT(setEnabled(bool)));
+        connect(m_automaticAwayGBox, SIGNAL(toggled(bool)), m_awayInactivitySpin, SLOT(setEnabled(bool)));
+        connect(m_automaticAwayGBox, SIGNAL(toggled(bool)), m_automaticUnawayChBox, SLOT(setEnabled(bool)));
+
+        row = 0;
+        automaticAwayLayout->addWidget(autoAwayLabel1, row, 0);
+        automaticAwayLayout->addWidget(m_awayInactivitySpin, row, 1);
+        automaticAwayLayout->addWidget(autoAwayLabel2, row, 2);
+        QSpacerItem* spacer = new QSpacerItem(0, 0, QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
+        automaticAwayLayout->addItem(spacer, row, 3);
+        row++;
+        automaticAwayLayout->addMultiCellWidget(m_automaticUnawayChBox, row, row, 0, 3);
+
+        m_awayMessageGBox = new QGroupBox(i18n("Away Messages"), awayWidget);
+        m_awayMessageGBox->setCheckable(true);
         m_awayMessageGBox->setColumnLayout(0, Qt::Horizontal);
         m_awayMessageGBox->setMargin(marginHint());
         QGridLayout* messagesLayout = new QGridLayout(m_awayMessageGBox->layout(), 1, 2, spacingHint());
 
-        m_showAwayMessage = new QCheckBox(i18n("Show a&way messages"), m_awayMessageGBox);
-        QWhatsThis::add(m_showAwayMessage, i18n("If you check this box, Konversation will automatically send the Away message to all channels joined with this Identity. <b>%s</b> is replaced with <b>msg</b>. Whenever you perform an <b>/away</b> command, the Return message will be displayed in all channels joined with this Identity."));
-        m_showAwayMessage->setChecked(true);
+        QWhatsThis::add(m_awayMessageGBox, i18n("If you check this box, Konversation will automatically send the Away message to all channels joined with this Identity. <b>%s</b> is replaced with <b>msg</b>. Whenever you perform an <b>/away</b> command, the Return message will be displayed in all channels joined with this Identity."));
 
         QLabel* awayLabel = new QLabel(i18n("Away &message:"), m_awayMessageGBox);
         m_awayEdit = new KLineEdit(m_awayMessageGBox);
@@ -179,14 +210,12 @@ namespace Konversation
         m_unAwayEdit = new KLineEdit(m_awayMessageGBox);
         unAwayLabel->setBuddy(m_unAwayEdit);
 
-        connect(m_showAwayMessage, SIGNAL(toggled(bool)), awayLabel, SLOT(setEnabled(bool)));
-        connect(m_showAwayMessage, SIGNAL(toggled(bool)), m_awayEdit, SLOT(setEnabled(bool)));
-        connect(m_showAwayMessage, SIGNAL(toggled(bool)), unAwayLabel, SLOT(setEnabled(bool)));
-        connect(m_showAwayMessage, SIGNAL(toggled(bool)), m_unAwayEdit, SLOT(setEnabled(bool)));
+        connect(m_awayMessageGBox, SIGNAL(toggled(bool)), awayLabel, SLOT(setEnabled(bool)));
+        connect(m_awayMessageGBox, SIGNAL(toggled(bool)), m_awayEdit, SLOT(setEnabled(bool)));
+        connect(m_awayMessageGBox, SIGNAL(toggled(bool)), unAwayLabel, SLOT(setEnabled(bool)));
+        connect(m_awayMessageGBox, SIGNAL(toggled(bool)), m_unAwayEdit, SLOT(setEnabled(bool)));
 
         row = 0;
-        messagesLayout->addMultiCellWidget(m_showAwayMessage, row, row, 0, 1);
-        row++;
         messagesLayout->addWidget(awayLabel, row, 0);
         messagesLayout->addWidget(m_awayEdit, row, 1);
         row++;
@@ -198,6 +227,8 @@ namespace Konversation
         row++;
         awayLayout->addWidget(awayNickLabel, row, 0);
         awayLayout->addWidget(m_awayNickEdit, row, 1);
+        row++;
+        awayLayout->addMultiCellWidget(m_automaticAwayGBox, row, row, 0, 1);
         row++;
         awayLayout->addMultiCellWidget(m_awayMessageGBox, row, row, 0, 1);
         row++;
@@ -280,6 +311,9 @@ namespace Konversation
 
         setButtonOK(KGuiItem(i18n("&OK"), "button_ok", i18n("Change identity information")));
         setButtonCancel(KGuiItem(i18n("&Cancel"), "button_cancel", i18n("Discards all changes made")));
+
+        AwayManager* awayManager = static_cast<KonversationApplication*>(kapp)->getAwayManager();
+        connect(this, SIGNAL(identitiesChanged()), awayManager, SLOT(identitiesChanged()));
     }
 
     IdentityDialog::~IdentityDialog()
@@ -314,9 +348,12 @@ namespace Konversation
 
         m_insertRememberLineOnAwayChBox->setChecked(m_currentIdentity->getInsertRememberLineOnAway());
         m_awayNickEdit->setText(m_currentIdentity->getAwayNick());
-        m_showAwayMessage->setChecked(m_currentIdentity->getShowAwayMessage());
+        m_awayMessageGBox->setChecked(m_currentIdentity->getShowAwayMessage());
         m_awayEdit->setText(m_currentIdentity->getAwayMessage());
         m_unAwayEdit->setText(m_currentIdentity->getReturnMessage());
+        m_automaticAwayGBox->setChecked(m_currentIdentity->getAutomaticAway());
+        m_awayInactivitySpin->setValue(m_currentIdentity->getAwayInactivity());
+        m_automaticUnawayChBox->setChecked(m_currentIdentity->getAutomaticUnaway());
 
         m_sCommandEdit->setText(m_currentIdentity->getShellCommand());
         m_codecCBox->setCurrentItem(Konversation::IRCCharsets::self()->shortNameToIndex(m_currentIdentity->getCodecName()));
@@ -430,9 +467,12 @@ namespace Konversation
 
         m_currentIdentity->setInsertRememberLineOnAway(m_insertRememberLineOnAwayChBox->isChecked());
         m_currentIdentity->setAwayNick(m_awayNickEdit->text());
-        m_currentIdentity->setShowAwayMessage(m_showAwayMessage->isChecked());
+        m_currentIdentity->setShowAwayMessage(m_awayMessageGBox->isChecked());
         m_currentIdentity->setAwayMessage(m_awayEdit->text());
         m_currentIdentity->setReturnMessage(m_unAwayEdit->text());
+        m_currentIdentity->setAutomaticAway(m_automaticAwayGBox->isChecked());
+        m_currentIdentity->setAwayInactivity(m_awayInactivitySpin->value());
+        m_currentIdentity->setAutomaticUnaway(m_automaticUnawayChBox->isChecked());
 
         m_currentIdentity->setShellCommand(m_sCommandEdit->text());
         m_currentIdentity->setCodecName(Konversation::IRCCharsets::self()->availableEncodingShortNames()[m_codecCBox->currentItem()]);
@@ -461,6 +501,7 @@ namespace Konversation
         refreshCurrentIdentity();
         Preferences::setIdentityList(m_identityList);
         static_cast<KonversationApplication*>(kapp)->saveOptions(true);
+        emit identitiesChanged();
         accept();
     }
 

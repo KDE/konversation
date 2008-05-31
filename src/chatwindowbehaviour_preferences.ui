@@ -9,7 +9,7 @@
             <x>0</x>
             <y>0</y>
             <width>458</width>
-            <height>458</height>
+            <height>461</height>
         </rect>
     </property>
     <vbox>
@@ -296,10 +296,10 @@
                         <bool>false</bool>
                     </property>
                     <property name="prefix">
-                        <string>Every </string>
+                        <string></string>
                     </property>
                     <property name="suffix">
-                        <string> sec</string>
+                        <string> seconds</string>
                     </property>
                     <property name="maxValue">
                         <number>1000</number>

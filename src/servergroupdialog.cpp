@@ -61,12 +61,10 @@ namespace Konversation
         m_mainWidget->m_identityLabel->setBuddy(m_mainWidget->m_identityCBox);
         connect(m_mainWidget->m_editIdentityButton, SIGNAL(clicked()), this, SLOT(editIdentity()));
 
-        QValueList<IdentityPtr> identities = Preferences::identityList();
+        IdentityList identities = Preferences::identityList();
 
-        for(QValueList<IdentityPtr>::iterator it = identities.begin(); it != identities.end(); ++it)
-        {
+        for (IdentityList::ConstIterator it = identities.begin(); it != identities.end(); ++it)
             m_mainWidget->m_identityCBox->insertItem((*it)->getName());
-        }
 
         QWhatsThis::add(m_mainWidget->m_commandEdit, i18n("Optional. This command will be sent to the server after connecting. Example: <b>/msg NickServ IDENTIFY <i>konvirocks</i></b>. This example is for the freenode network, which requires users to register their nickname with a password and login when connecting. <i>konvirocks<i> is the password for the nickname given in Identity. You may enter more than one command by separating them with semicolons."));
         m_mainWidget->m_commandsLabel->setBuddy(m_mainWidget->m_commandEdit);
@@ -143,7 +141,7 @@ namespace Konversation
         ServerGroupSettingsPtr settings = new ServerGroupSettings(m_id);
         settings->setSortIndex(m_sortIndex);
         settings->setName(m_mainWidget->m_nameEdit->text());
-        QValueList<IdentityPtr> identities = Preferences::identityList();
+        IdentityList identities = Preferences::identityList();
         settings->setIdentityId(identities[m_mainWidget->m_identityCBox->currentItem()]->id());
         settings->setConnectCommands(m_mainWidget->m_commandEdit->text());
         settings->setAutoConnectEnabled(m_mainWidget->m_autoConnectCBox->isChecked());
@@ -384,10 +382,10 @@ namespace Konversation
 
         if(dlg.exec() == KDialog::Accepted)
         {
-            QValueList<IdentityPtr> identities = Preferences::identityList();
+            IdentityList identities = Preferences::identityList();
             m_mainWidget->m_identityCBox->clear();
 
-            for(QValueList<IdentityPtr>::iterator it = identities.begin(); it != identities.end(); ++it)
+            for(IdentityList::ConstIterator it = identities.begin(); it != identities.end(); ++it)
             {
                 m_mainWidget->m_identityCBox->insertItem((*it)->getName());
             }

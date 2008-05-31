@@ -117,6 +117,8 @@ void ConnectionManager::connectTo(Konversation::ConnectionFlag flag, ConnectionS
             this, SLOT(handleConnectionStateChange(Server*, Konversation::ConnectionState,
                 Konversation::ConnectionState)));
 
+    connect(server, SIGNAL(awayState(bool)), this, SIGNAL(connectionChangedAwayState(bool)));
+
     connect(server, SIGNAL(nicksNowOnline(Server*, const QStringList&, bool)),
         mainWindow, SLOT(setOnlineList(Server*, const QStringList&,bool)));
     connect(server, SIGNAL(awayInsertRememberLine(Server*)),

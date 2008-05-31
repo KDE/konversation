@@ -397,9 +397,9 @@ void Preferences::clearIdentityList()
     self()->mIdentityList.clear();
 }
 
-const QValueList<IdentityPtr> Preferences::identityList() { return self()->mIdentityList; }
+const IdentityList Preferences::identityList() { return self()->mIdentityList; }
 
-void Preferences::setIdentityList(const QValueList<IdentityPtr>& list)
+void Preferences::setIdentityList(const IdentityList& list)
 {
     self()->mIdentityList.clear();
     self()->mIdentityList = list;

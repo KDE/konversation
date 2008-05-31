@@ -71,6 +71,13 @@ class Identity : public KShared
         void setReturnMessage(const QString& message);
         QString getReturnMessage() const;
 
+        void setAutomaticAway(bool automaticAway);
+        bool getAutomaticAway() const;
+        void setAwayInactivity(int awayInactivity);
+        int getAwayInactivity() const;
+        void setAutomaticUnaway(bool automaticUnaway);
+        bool getAutomaticUnaway() const;
+
         void setShellCommand(const QString &command);
         QString getShellCommand() const;
 
@@ -102,6 +109,11 @@ class Identity : public KShared
         bool showAwayMessages;
         QString awayMessage;
         QString returnMessage;
+
+        bool m_automaticAway;
+        int m_awayInactivity;
+        bool m_automaticUnaway;
+
         QString m_codecName;
         QTextCodec* m_codec;
 
@@ -116,4 +128,6 @@ class Identity : public KShared
 };
 
 typedef KSharedPtr<Identity> IdentityPtr;
+typedef QValueList<IdentityPtr> IdentityList;
+
 #endif
