@@ -247,6 +247,9 @@ bool AwayManager::Xactivity()
     if (rootX != d->mouseX || rootY != d->mouseY || mask != d->mouseMask
         || ((d->useXidle || d->useMit) && xIdleTime < d->xIdleTime + 2000))
     {
+        // Set by setManagedIdentitiesAway() to skip X-based activity checking for one
+        // round, to avoid jumping on residual mouse activity after manual screensaver
+        // activation.
         if (d->mouseX != -1) activity = true;
 
         d->mouseX = rootX;
@@ -323,6 +326,8 @@ void AwayManager::setManagedIdentitiesAway()
 {
     kdDebug() << "AwayManager - setManagedIdentitiesAway() - Setting all managed identities away as necessary." << endl;
 
+    // Used to skip X-based activity checking for one round, to avoid jumping
+    // on residual mouse activity after manual screensaver activation.
     d->mouseX = -1;
 
     QPtrList<Server> serverList = m_connectionManager->getServerList();
