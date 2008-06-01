@@ -368,7 +368,7 @@ void AwayManager::requestAllAway(const QString& reason)
     Server* server = 0;
 
     for (server = serverList.first(); server; server = serverList.next())
-        if (server->isConnected() && !server->isAway()) server->requestAway(reason);
+        if (server->isConnected()) server->requestAway(reason);
 }
 
 void AwayManager::requestAllUnaway()
