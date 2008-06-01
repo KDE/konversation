@@ -15,6 +15,7 @@
 #include "konversationmainwindow.h"
 #include "connectionmanager.h"
 #include "server.h"
+#include "preferences.h"
 
 #include <qtimer.h>
 
@@ -162,7 +163,7 @@ void AwayManager::toggleTimer()
         {
             kdDebug() << "AwayManager - toggleTimer() - Starting timer." << endl;
 
-            m_activityTimer->start(10000);
+            m_activityTimer->start(Preferences::autoAwayPollInterval() * 1000);
         }
         else
             kdDebug() << "AwayManager - toggleTimer() - Timer already running." << endl;
@@ -196,6 +197,8 @@ void AwayManager::checkActivity()
 
          implementIdleAutoAway(Xactivity());
     }
+    else
+        kdDebug() << "AwayManager - checkActivity() - Screensaver is blanked: Should be away already." << endl;
 }
 
 bool AwayManager::Xactivity()

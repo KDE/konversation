@@ -372,6 +372,12 @@
       <label></label>
       <whatsthis></whatsthis>
     </entry>
+    <entry key="AutoAwayPollInterval" type="Int">
+      <default>10</default>
+      <min>10</min>
+      <label></label>
+      <whatsthis></whatsthis>
+    </entry>
     <entry key="AutomaticRememberLine" type="Bool">
       <default>false</default>
       <label></label>
