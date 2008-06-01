@@ -46,7 +46,7 @@ class AwayManager : public QObject
         void setManagedIdentitiesAway();
         void setManagedIdentitiesUnaway();
 
-        void toggleGlobalAway();
+        void toggleGlobalAway(bool away);
         void updateGlobalAwayAction(bool away);
 
 

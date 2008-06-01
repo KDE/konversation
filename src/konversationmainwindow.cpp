@@ -262,8 +262,8 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
     action->setToolTip(i18n("Clear the contents of all open tabs"));
     action->setEnabled(false);
 
-    KToggleAction* awayAction = new KToggleAction(i18n("Global Away")/*, "konversationaway"*/, KShortcut("Ctrl+Shift+A"),
-        static_cast<KonversationApplication*>(kapp)->getAwayManager(), SLOT(toggleGlobalAway()), actionCollection(), "toggle_away");
+    KToggleAction* awayAction = new KToggleAction(i18n("Global Away"), KShortcut("Ctrl+Shift+A"), actionCollection(), "toggle_away");
+    connect(awayAction, SIGNAL(toggled(bool)), static_cast<KonversationApplication*>(kapp)->getAwayManager(), SLOT(toggleGlobalAway(bool)));
     awayAction->setEnabled(false);
 
     action = new KAction(i18n("&Join Channel..."), "add", KShortcut("Ctrl+J"), m_viewContainer, SLOT(showJoinChannelDialog()), actionCollection(), "join_channel");

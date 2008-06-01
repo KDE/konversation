@@ -372,23 +372,9 @@ void AwayManager::requestAllUnaway()
         if (server->isConnected() && server->isAway()) server->requestUnaway();
 }
 
-void AwayManager::toggleGlobalAway()
+void AwayManager::toggleGlobalAway(bool away)
 {
-    QPtrList<Server> serverList = m_connectionManager->getServerList();
-
-    bool unaway = false;
-
-    for (Server* server = serverList.first(); server; server = serverList.next())
-    {
-        if (!server->isAway())
-        {
-            unaway = true;
-
-            break;
-        }
-    }
-
-    if (unaway)
+    if (away)
         requestAllAway();
     else
         requestAllUnaway();
