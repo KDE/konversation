@@ -178,7 +178,7 @@ namespace Konversation
         autoAwayLabel1->setBuddy(m_awayInactivitySpin);
         autoAwayLabel2->setBuddy(m_awayInactivitySpin);
         m_automaticUnawayChBox = new QCheckBox(i18n("Automatically return on activity"), m_automaticAwayGBox);
-        QWhatsThis::add(m_automaticUnawayChBox, i18n("If you check this box, Konversation will automatically cancel away for all connections using this identity when the screensaver stops or new user activity is detected."));
+        QWhatsThis::add(m_automaticUnawayChBox, i18n("If you check this box, Konversation will automatically cancel away for all connections using this Identity when the screensaver stops or new user activity is detected."));
 
         connect(m_automaticAwayGBox, SIGNAL(toggled(bool)), autoAwayLabel1, SLOT(setEnabled(bool)));
         connect(m_automaticAwayGBox, SIGNAL(toggled(bool)), autoAwayLabel2, SLOT(setEnabled(bool)));
