@@ -821,10 +821,8 @@ void ViewContainer::setViewNotification(ChatWindow* view, const Konversation::Ta
     if (!view || view == m_tabWidget->currentPage())
         return;
 
-    if(type < Konversation::tnfControl && (m_activeViewOrderList.find(view) == m_activeViewOrderList.end()))
-    {
+    if (type < Konversation::tnfControl && (m_activeViewOrderList.find(view) == m_activeViewOrderList.end()))
         m_activeViewOrderList.append(view);
-    }
 
     if (!Preferences::tabNotificationsLeds() && !Preferences::tabNotificationsText())
         return;
@@ -1106,10 +1104,8 @@ void ViewContainer::unsetViewNotification(ChatWindow* view)
 
     QValueList<ChatWindow*>::iterator it = m_activeViewOrderList.find(view);
 
-    if(it != m_activeViewOrderList.end())
-    {
+    if (it != m_activeViewOrderList.end())
         m_activeViewOrderList.remove(it);
-    }
 }
 
 void ViewContainer::toggleViewNotifications()
@@ -2438,8 +2434,21 @@ void ViewContainer::closeNicksOnlinePanel()
 
 void ViewContainer::showNextActiveView()
 {
-    if(!m_activeViewOrderList.isEmpty())
-        m_tabWidget->setCurrentPage(m_tabWidget->indexOf(m_activeViewOrderList.first()));
+    if (!m_activeViewOrderList.isEmpty())
+    {
+        ChatWindow* prev = m_activeViewOrderList.first();
+        ChatWindow* view = prev;
+
+        QValueList<ChatWindow*>::ConstIterator it;
+
+        for (it = m_activeViewOrderList.begin(); it != m_activeViewOrderList.end(); ++it)
+        {
+            if ((*it)->currentTabNotification() > prev->currentTabNotification());
+                view = (*it);
+        }
+
+        m_tabWidget->setCurrentPage(m_tabWidget->indexOf(view));
+    }
 }
 
 /*!

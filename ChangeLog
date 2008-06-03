@@ -20,7 +20,8 @@ Changes since 1.0.1:
   two distinct KNotify events.
 - Moved "Hide Nicklist" menu action from Edit to Settings.
 - Added an option to hide the scrollbar in chat windows.
-- Added a keyboard shortcut to jump to the next active tab.
+- Added a keyboard shortcut to jump to the next active tab with the highest
+  priority notification.
 - Made newline handling in the DCOP interface more robust, fixing a potential
   (minor) security problem.
 - Fixed a bug that lead to single leading whitespace characters in lines being
