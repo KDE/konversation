@@ -745,7 +745,9 @@ namespace Konversation
                                                   // what is the complete ctcp command?
         QString message = parameter.section(' ', 2, 0xffffff, QString::SectionSkipEmpty);
 
-        QString out = request + ' ' + message;
+        QString out = request;
+        if (!message.isEmpty())
+            out+= ' ' + message;
 
         if (request == "PING")
         {
