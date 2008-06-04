@@ -1051,12 +1051,12 @@ void ViewContainer::unsetViewNotification(ChatWindow* view)
         QColor textColor = (Preferences::inputFieldsBackgroundColor()
             ? Preferences::color(Preferences::ChannelMessage) : m_window->colorGroup().foreground());
 
-        QColor gray = KonversationApplication::instance()->palette(m_viewTree).disabled().text();
         if (view->getType() == ChatWindow::Channel)
         {
             Channel *channel = static_cast<Channel*>(view);
+
             if (!channel->joined())
-                textColor = gray;
+                textColor = KonversationApplication::instance()->palette(m_viewTree).disabled().text();
         }
 
         m_viewTree->setViewColor(view, textColor);
@@ -1091,10 +1091,9 @@ void ViewContainer::unsetViewNotification(ChatWindow* view)
         if (view->getType() == ChatWindow::Channel)
         {
             Channel *channel = static_cast<Channel*>(view);
-            if (channel->rejoinable())
-            {
+
+            if (!channel->joined())
                 textColor = KonversationApplication::instance()->palette(m_tabWidget).disabled().text();
-            }
         }
 
         m_tabWidget->setTabColor(view, textColor);
