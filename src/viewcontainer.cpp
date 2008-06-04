@@ -1055,10 +1055,8 @@ void ViewContainer::unsetViewNotification(ChatWindow* view)
         if (view->getType() == ChatWindow::Channel)
         {
             Channel *channel = static_cast<Channel*>(view);
-            if (channel->rejoinable())
-            {
+            if (!channel->joined())
                 textColor = gray;
-            }
         }
 
         m_viewTree->setViewColor(view, textColor);
@@ -2166,8 +2164,7 @@ void ViewContainer::showJoinChannelDialog()
         server->sendJoinCommand(dlg.channel(), dlg.password());
 }
 
-void ViewContainer::connectionStateChanged(Server* server, Konversation::ConnectionState newState,
-    Konversation::ConnectionState oldState)
+void ViewContainer::connectionStateChanged(Server* server, Konversation::ConnectionState newState)
 {
     Server* updateServer = 0;
 
@@ -2185,47 +2182,6 @@ void ViewContainer::connectionStateChanged(Server* server, Konversation::Connect
         action = actionCollection()->action("join_channel");
         if (action)
             action->setEnabled(newState == Konversation::SSConnected);
-    }
-
-    int doit=0;
-    //was and now is not
-    if (newState != Konversation::SSConnected && oldState == Konversation::SSConnected)
-        doit = 1;
-    //wasn't and now is
-    else if (newState == Konversation::SSConnected && oldState != Konversation::SSConnected)
-        doit = 2;
-
-    if (doit)
-    {
-        QColor disabled, textColor;
-        if (m_viewTree)
-        {
-            disabled = KonversationApplication::instance()->palette(m_viewTree).disabled().text();
-            textColor = ( Preferences::inputFieldsBackgroundColor()
-                ? Preferences::color(Preferences::ChannelMessage)
-                : m_window->colorGroup().foreground()
-                );
-        }
-        else
-        {
-            disabled = KonversationApplication::instance()->palette(m_tabWidget).disabled().text();
-            textColor = m_window->colorGroup().foreground();
-        }
-        doit--;
-        for (int i = 0; i < m_tabWidget->count(); i++)
-        {
-            ChatWindow* view = static_cast<ChatWindow *>(m_tabWidget->page(i));
-            //channels are always disabled on reconnect because you have to rejoin them
-            bool notdisabled = (view->getType() != ChatWindow::Channel) && doit;
-
-            if (view->getServer() == server)
-            {
-                if (m_viewTree)
-                    m_viewTree->setViewColor(view, notdisabled ? textColor : disabled);
-                else
-                    m_tabWidget->setTabColor(view, notdisabled ? textColor : disabled);
-            }
-        }
     }
 }
 

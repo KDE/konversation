@@ -112,10 +112,8 @@ void ConnectionManager::connectTo(Konversation::ConnectionFlag flag, ConnectionS
 
     connect(server, SIGNAL(destroyed(int)), this, SLOT(delistConnection(int)));
 
-    connect(server, SIGNAL(connectionStateChanged(Server*, Konversation::ConnectionState,
-                Konversation::ConnectionState)),
-            this, SLOT(handleConnectionStateChange(Server*, Konversation::ConnectionState,
-                Konversation::ConnectionState)));
+    connect(server, SIGNAL(connectionStateChanged(Server*, Konversation::ConnectionState)),
+            this, SLOT(handleConnectionStateChange(Server*, Konversation::ConnectionState)));
 
     connect(server, SIGNAL(awayState(bool)), this, SIGNAL(connectionChangedAwayState(bool)));
 
@@ -140,11 +138,9 @@ void ConnectionManager::delistConnection(int connectionId)
     m_connectionList.remove(connectionId);
 }
 
-void ConnectionManager::handleConnectionStateChange(Server* server, Konversation::ConnectionState newState,
-    Konversation::ConnectionState oldState)
+void ConnectionManager::handleConnectionStateChange(Server* server, Konversation::ConnectionState newState)
 {
     emit connectionChangedState(server, newState);
-    emit connectionChangedState(server, newState, oldState);
 
     int identityId = server->getIdentity()->id();
 

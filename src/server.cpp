@@ -3099,7 +3099,6 @@ void Server::updateConnectionState(Konversation::ConnectionState state)
 {
     if (state != m_connectionState)
     {
-        Konversation::ConnectionState oldState = m_connectionState;
         m_connectionState = state;
 
         if (m_connectionState == Konversation::SSConnected)
@@ -3108,7 +3107,6 @@ void Server::updateConnectionState(Konversation::ConnectionState state)
             emit serverOnline(false);
 
        emit connectionStateChanged(this, state);
-       emit connectionStateChanged(this, state, oldState);
     }
 }
 

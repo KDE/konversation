@@ -330,7 +330,16 @@ void Channel::setServer(Server *server)
 void Channel::connectionStateChanged(Server* server, Konversation::ConnectionState state)
 {
     if (server == m_server)
-        m_joined = state != Konversation::SSConnected;
+    {
+        if (state !=  Konversation::SSConnected)
+        {
+            m_joined = false;
+
+            //HACK the way the notification priorities work sucks, this forces the tab text color to gray right now.
+            if (m_currentTabNotify == Konversation::tnfNone || (!Preferences::tabNotificationsEvents() && m_currentTabNotify == Konversation::tnfControl))
+                KonversationApplication::instance()->getMainWindow()->getViewContainer()->unsetViewNotification(this);
+        }
+    }
 }
 
 void Channel::setEncryptedOutput(bool e)
@@ -372,6 +381,7 @@ bool Channel::rejoinable()
 {
     if (getServer() && getServer()->isConnected())
         return !m_joined;
+
     return false;
 }
 

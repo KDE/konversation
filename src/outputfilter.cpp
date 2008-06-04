@@ -394,7 +394,7 @@ namespace Konversation
             if (!channel->numberOfNicks())
                 result.toServer = "JOIN " + channelName;
 
-            emit showView (channel);
+            if (channel->joined()) emit showView (channel);
         }
         else
             result.toServer = "JOIN " + channelName;

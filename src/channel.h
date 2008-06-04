@@ -100,6 +100,7 @@ class Channel : public ChatWindow
 
         void setEncryptedOutput(bool);
 
+        bool joined() { return m_joined; }
         bool rejoinable();
 //Unsure of future placement and/or continued existence of these members
         int numberOfNicks() const { return nicks; }
