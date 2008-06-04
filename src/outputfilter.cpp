@@ -663,18 +663,10 @@ namespace Konversation
             return result;
         }
 
-        if (isQuery)
+        if (isQuery && m_server->isAChannel(recipient))
         {
-            QString chanTypes = m_server->getChannelTypes();
-
-            for (uint i = 0; i < chanTypes.length(); i++)
-            {
-                if (recipient.at(0) == chanTypes.at(i))
-                {
-                    result = error("Error: You cannot open queries to channels.");
-                    return result;
-                }
-            }
+            result = error("Error: You cannot open queries to channels.");
+            return result;
         }
 
         if (message.stripWhiteSpace().isEmpty())
