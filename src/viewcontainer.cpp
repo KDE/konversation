@@ -2443,7 +2443,11 @@ void ViewContainer::showNextActiveView()
 
         for (it = m_activeViewOrderList.begin(); it != m_activeViewOrderList.end(); ++it)
         {
-            if ((*it)->currentTabNotification() > prev->currentTabNotification());
+            kdDebug() << prev->currentTabNotification() << endl;
+            kdDebug() << (*it)->currentTabNotification() << endl;
+            kdDebug() << "---" << endl;
+            
+            if ((*it)->currentTabNotification() < prev->currentTabNotification())
                 view = (*it);
         }
 
