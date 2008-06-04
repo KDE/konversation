@@ -1264,6 +1264,7 @@ void Channel::joinNickname(ChannelNickPtr channelNick)
     if(channelNick->getNickname() == m_server->getNickname())
     {
         m_joined = true;
+        emit joined(this);
         appendCommandMessage(i18n("Join"),i18n("%1 is the channel and %2 is our hostmask",
                              "You have joined the channel %1 (%2).").arg(getName()).arg(channelNick->getHostmask()),false, false, true);
         m_ownChannelNick = channelNick;

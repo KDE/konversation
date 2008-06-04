@@ -2163,7 +2163,7 @@ void ViewContainer::showJoinChannelDialog()
         server->sendJoinCommand(dlg.channel(), dlg.password());
 }
 
-void ViewContainer::connectionStateChanged(Server* server, Konversation::ConnectionState newState)
+void ViewContainer::connectionStateChanged(Server* server, Konversation::ConnectionState state)
 {
     Server* updateServer = 0;
 
@@ -2176,11 +2176,32 @@ void ViewContainer::connectionStateChanged(Server* server, Konversation::Connect
     {
         KAction* action = actionCollection()->action("disconnect_server");
         if (action)
-            action->setEnabled(newState == Konversation::SSConnected);
+            action->setEnabled(state == Konversation::SSConnected);
 
         action = actionCollection()->action("join_channel");
         if (action)
-            action->setEnabled(newState == Konversation::SSConnected);
+            action->setEnabled(state == Konversation::SSConnected);
+
+        if (m_frontView && m_frontView->getServer() == server
+            && m_frontView->getType() == ChatWindow::Channel)
+        {
+            ChatWindow* view = m_frontView;
+            Channel* channel = static_cast<Channel*>(view);
+
+            action = actionCollection()->action("rejoin_channel");
+            if (action) action->setEnabled(state == Konversation::SSConnected && channel->rejoinable());
+        }
+    }
+}
+
+void ViewContainer::channelJoined(Channel* channel)
+{
+    ChatWindow* view = m_frontView;
+
+    if (view == channel)
+    {
+        KAction* action = actionCollection()->action("rejoin_channel");
+        if (action) action->setEnabled(false);
     }
 }
 
@@ -2194,6 +2215,7 @@ Channel* ViewContainer::addChannel(Server* server, const QString& name)
     connect(this, SIGNAL(updateChannelAppearance()), channel, SLOT(updateAppearance()));
     connect(channel, SIGNAL(updateTabNotification(ChatWindow*,const Konversation::TabNotifyType&)), this, SLOT(setViewNotification(ChatWindow*,const Konversation::TabNotifyType&)));
     connect(server, SIGNAL(awayState(bool)), channel, SLOT(indicateAway(bool)) );
+    connect(channel, SIGNAL(joined(Channel*)), this, SLOT(channelJoined(Channel*)));
 
     return channel;
 }

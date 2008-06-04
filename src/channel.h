@@ -177,6 +177,7 @@ class Channel : public ChatWindow
 
     signals:
         void topicHistoryChanged();
+        void joined(Channel* channel);
 
 
 //Modes

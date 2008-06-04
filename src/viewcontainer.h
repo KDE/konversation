@@ -138,7 +138,8 @@ class ViewContainer : public QObject
         void disconnectFrontServer();
         void reconnectFrontServer();
         void showJoinChannelDialog();
-        void connectionStateChanged(Server* server, Konversation::ConnectionState newState);
+        void connectionStateChanged(Server* server, Konversation::ConnectionState state);
+        void channelJoined(Channel* channel);
 
         Channel* addChannel(Server* server, const QString& name);
         void rejoinChannel();

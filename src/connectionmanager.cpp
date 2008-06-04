@@ -138,13 +138,13 @@ void ConnectionManager::delistConnection(int connectionId)
     m_connectionList.remove(connectionId);
 }
 
-void ConnectionManager::handleConnectionStateChange(Server* server, Konversation::ConnectionState newState)
+void ConnectionManager::handleConnectionStateChange(Server* server, Konversation::ConnectionState state)
 {
-    emit connectionChangedState(server, newState);
+    emit connectionChangedState(server, state);
 
     int identityId = server->getIdentity()->id();
 
-    if (newState == Konversation::SSConnected)
+    if (state == Konversation::SSConnected)
     {
         if (!m_activeIdentities.contains(identityId))
         {
@@ -153,7 +153,7 @@ void ConnectionManager::handleConnectionStateChange(Server* server, Konversation
             emit identityOnline(identityId);
         }
     }
-    else if (newState != Konversation::SSConnecting)
+    else if (state != Konversation::SSConnecting)
     {
         if (m_activeIdentities.contains(identityId))
         {
@@ -163,7 +163,7 @@ void ConnectionManager::handleConnectionStateChange(Server* server, Konversation
         }
     }
 
-    if (newState == Konversation::SSInvoluntarilyDisconnected)
+    if (state == Konversation::SSInvoluntarilyDisconnected)
     {
         // The asynchronous invocation of handleReconnect() makes sure that
         // connectionChangedState() is emitted and delivered before it runs
