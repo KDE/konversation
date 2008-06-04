@@ -657,17 +657,36 @@ namespace Konversation
         QString message = parameter.section(" ", 1);
         QString output;
 
-        if(recipient.isEmpty())
+        if (recipient.isEmpty())
         {
             result = error("Error: You need to specify a recipient.");
             return result;
         }
 
-        if(message.stripWhiteSpace().isEmpty())
+        if (isQuery)
+        {
+            QString chanTypes = m_server->getChannelTypes();
+
+            for (uint i = 0; i < chanTypes.length(); i++)
+            {
+                if (recipient.at(0) == chanTypes.at(i))
+                {
+                    result = error("Error: You cannot open queries to channels.");
+                    return result;
+                }
+            }
+        }
+
+        if (message.stripWhiteSpace().isEmpty())
         {
             //empty result - we don't want to send any message to the server
+            if (!isQuery)
+            {
+                 result = error("Error: You need to specify a message.");
+                return result;
+            }
         }
-        else if(message.startsWith(commandChar+"me"))
+        else if (message.startsWith(commandChar+"me"))
         {
             result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + "ACTION " + message.mid(4) + '\x01';
             output = QString("* %1 %2").arg(myNick).arg(message.mid(4));
@@ -680,7 +699,7 @@ namespace Konversation
 
         ::Query *query;
 
-        if(isQuery || output.isEmpty())
+        if (isQuery || output.isEmpty())
         {
             //if this is a /query, always open a query window.
             //treat "/msg nick" as "/query nick"
@@ -699,9 +718,9 @@ namespace Konversation
             query = m_server->getQueryByName(recipient);
         }
 
-        if(query && !output.isEmpty())
+        if (query && !output.isEmpty())
         {
-            if(message.startsWith(commandChar+"me"))
+            if (message.startsWith(commandChar+"me"))
                                                   //log if and only if the query open
                 query->appendAction(m_server->getNickname(), message.mid(4));
             else
@@ -709,7 +728,7 @@ namespace Konversation
                 query->appendQuery(m_server->getNickname(), output);
         }
 
-        if(output.isEmpty()) return result;       //result should be completely empty;
+        if (output.isEmpty()) return result;       //result should be completely empty;
         //FIXME - don't do below line if query is focused
         result.output = output;
         result.typeString= recipient;
