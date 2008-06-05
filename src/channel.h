@@ -224,9 +224,6 @@ class Channel : public ChatWindow
         void updateModeWidgets(char mode, bool plus, const QString &parameter);
         void updateQuickButtons(const QStringList &newButtonList);
 
-        /// Thunks to ircview->updateStyleSheet
-        void updateStyleSheet();
-
         /// Get the contents of the input line.
         virtual QString getTextInLine();
         /// Sounds suspiciously like a destructor..

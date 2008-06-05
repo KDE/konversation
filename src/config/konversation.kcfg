@@ -136,6 +136,7 @@
     </entry>
     <entry key="ParagraphSpacing" type="Int">
       <default>2</default>
+      <min>0</min>
       <label></label>
       <whatsthis></whatsthis>
     </entry>

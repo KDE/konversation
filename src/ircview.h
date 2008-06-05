@@ -49,7 +49,7 @@ class IRCView : public KTextBrowser
         // Returns the current nick under context menu.
         const QString& getContextNick() const;
 
-        void updateStyleSheet();
+        void enableParagraphSpacing();
 
         QPopupMenu* getPopup() const;
 

@@ -2321,11 +2321,6 @@ void Channel::updateAppearance()
     ChatWindow::updateAppearance();
 }
 
-void Channel::updateStyleSheet()
-{
-    getTextView()->updateStyleSheet();
-}
-
 void Channel::nicknameComboboxChanged()
 {
     QString newNick=nicknameCombobox->currentText();

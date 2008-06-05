@@ -115,6 +115,8 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent)
     else
         setFont(KGlobalSettings::generalFont());
 
+    if (Preferences::useParagraphSpacing()) enableParagraphSpacing();
+
     connect(this, SIGNAL(highlighted(const QString&)), this, SLOT(highlightedSlot(const QString&)));
 }
 
@@ -123,31 +125,24 @@ IRCView::~IRCView()
     delete m_popup;
 }
 
-void IRCView::updateStyleSheet()
+void IRCView::enableParagraphSpacing()
 {
-    // set style sheet for <p> to define paragraph spacing
+    // Set style sheet for <p> to define paragraph spacing.
     QStyleSheet* sheet = styleSheet();
 
-    if(!sheet)
-        return;
+    if (!sheet) return;
 
-    int paragraphSpacing;
+    QStyleSheetItem* style = sheet->item("p");
 
-    if(Preferences::useParagraphSpacing())
-        paragraphSpacing=Preferences::paragraphSpacing();
-    else
-        paragraphSpacing = 0;
-
-    QStyleSheetItem* style=sheet->item("p");
-
-    if(!sheet)
+    if (!style)
     {
         kdDebug() << "IRCView::updateStyleSheet(): style == 0!" << endl;
+
         return;
     }
 
     style->setDisplayMode(QStyleSheetItem::DisplayBlock);
-    style->setMargin(QStyleSheetItem::MarginVertical,paragraphSpacing);
+    style->setMargin(QStyleSheetItem::MarginVertical, Preferences::paragraphSpacing());
     style->setSelfNesting(false);
 }
 
