@@ -2995,8 +2995,10 @@ void Server::updateAutoJoin(Konversation::ChannelSettings channel)
             QString channel = (*it).name();;
             QString password = ((*it).password().isEmpty() ? "." : (*it).password());
 
-            length += channel.utf8().length();;
-            length += password.utf8().length();
+            int tempLen = channel.length();
+            length += getIdentity()->getCodec()->fromUnicode(channel, tempLen).length();
+            tempLen = password.length();
+            length += getIdentity()->getCodec()->fromUnicode(password, tempLen).length();
 
             if (length + 6 < 512) // 6: "JOIN " plus separating space between chans and pws.
             {
@@ -3017,8 +3019,10 @@ void Server::updateAutoJoin(Konversation::ChannelSettings channel)
 
                 length = 0;
 
-                length += channel.utf8().length();;
-                length += password.utf8().length();
+                tempLen = channel.length();
+                length += getIdentity()->getCodec()->fromUnicode(channel, tempLen).length();
+                tempLen = password.length();
+                length += getIdentity()->getCodec()->fromUnicode(password, tempLen).length();
             }
         }
 
