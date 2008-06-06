@@ -345,7 +345,8 @@ Changes since 1.0.1:
 - Fixed an off-by-one error in scrollback culling.
 - Fixed a bug that could cause the text selection in a chat window to be messed
   up when new text was appended.
-
+- Fixed auto-join with very many channels (the auto-join command would exceed
+  the maximum buffer length; it is now split into multiple commands as needed.)
 
 -------------------------------------------------------------------------------
 
