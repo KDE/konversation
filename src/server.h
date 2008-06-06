@@ -610,7 +610,7 @@ void resetNickSelection();
         bool getAutoJoin() const;
         void setAutoJoin(bool on);
 
-        QStringList getAutoJoinCommands() { return m_autoJoinCommands; }
+        QStringList getAutoJoinCommands() const { return m_autoJoinCommands; }
         void setAutoJoinCommands(const QStringList& commands) { m_autoJoinCommands = commands; }
 
         unsigned int m_completeQueryPosition;

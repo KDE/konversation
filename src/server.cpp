@@ -2998,7 +2998,7 @@ void Server::updateAutoJoin(Konversation::ChannelSettings channel)
             length += channel.utf8().length();;
             length += password.utf8().length();
 
-            if (length + 6 < 512)
+            if (length + 6 < 512) // 6: "JOIN " plus separating space between chans and pws.
             {
                 channels << channel;
                 passwords << password;
