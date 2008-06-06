@@ -610,13 +610,8 @@ void resetNickSelection();
         bool getAutoJoin() const;
         void setAutoJoin(bool on);
 
-        QString getAutoJoinChannels() const;
-        void setAutoJoinChannels(const QString& channels);
-
-        QString getAutoJoinChannelPasswords() const;
-        void setAutoJoinChannelPasswords(const QString& passwords);
-
-        QString getAutoJoinCommand() const;
+        QStringList getAutoJoinCommands() { return m_autoJoinCommands; }
+        void setAutoJoinCommands(const QStringList& commands) { m_autoJoinCommands = commands; }
 
         unsigned int m_completeQueryPosition;
         QValueList<int> m_nickIndices;
@@ -629,8 +624,7 @@ void resetNickSelection();
 
         bool m_autoJoin;
 
-        QString m_autoJoinChannels;
-        QString m_autoJoinChannelPasswords;
+        QStringList m_autoJoinCommands;
 
         KNetwork::KStreamSocket* m_socket;
 

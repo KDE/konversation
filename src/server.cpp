@@ -347,26 +347,6 @@ void Server::setAutoJoin(bool on)
     m_autoJoin = on;
 }
 
-QString Server::getAutoJoinChannels() const
-{
-    return m_autoJoinChannels;
-}
-
-void Server::setAutoJoinChannels(const QString& channels)
-{
-    m_autoJoinChannels = channels;
-}
-
-QString Server::getAutoJoinChannelPasswords() const
-{
-    return m_autoJoinChannelPasswords;
-}
-
-void Server::setAutoJoinChannelPasswords(const QString& passwords)
-{
-    m_autoJoinChannelPasswords = passwords;
-}
-
 void Server::preShellCommandExited(KProcess* proc)
 {
 
@@ -820,18 +800,11 @@ void Server::autoCommandsAndChannels()
         }
     }
 
-    if (getAutoJoin()) queue(getAutoJoinCommand());
-}
-
-QString Server::getAutoJoinCommand() const
-{
-    // Multichannel joins
-    QStringList channels = QStringList::split(' ', m_autoJoinChannels);
-    QStringList passwords = QStringList::split(' ', m_autoJoinChannelPasswords);
-
-    QString autoString("JOIN "+channels.join(",")+' '+passwords.join(","));
-
-    return autoString;
+    if (getAutoJoin())
+    {
+        for ( QStringList::Iterator it = m_autoJoinCommands.begin(); it != m_autoJoinCommands.end(); ++it )
+            queue((*it));
+    }
 }
 
 /** Create a set of indices into the nickname list of the current identity based on the current nickname.
@@ -2985,8 +2958,7 @@ void Server::updateAutoJoin(Konversation::ChannelSettings channel)
     {
         setAutoJoin(true);
 
-        setAutoJoinChannels(channel.name());
-        setAutoJoinChannelPasswords(channel.password());
+        setAutoJoinCommands(QStringList("JOIN " + channel.name() + " " + channel.password()));
 
         return;
     }
@@ -3013,19 +2985,48 @@ void Server::updateAutoJoin(Konversation::ChannelSettings channel)
 
         QStringList channels;
         QStringList passwords;
+        QStringList joinCommands;
+        uint length = 0;
 
         Konversation::ChannelList::iterator it;
 
         for (it = tmpList.begin(); it != tmpList.end(); ++it)
         {
-            channels << (*it).name();
-            passwords << ((*it).password().isEmpty() ? "." : (*it).password());
+            QString channel = (*it).name();;
+            QString password = ((*it).password().isEmpty() ? "." : (*it).password());
+
+            length += channel.utf8().length();;
+            length += password.utf8().length();
+
+            if (length + 6 < 512)
+            {
+                channels << channel;
+                passwords << password;
+            }
+            else
+            {
+                if (passwords.last() == ".") passwords.pop_back();
+
+                joinCommands << "JOIN " + channels.join(",") + " " + passwords.join(",");
+
+                channels.clear();
+                passwords.clear();
+
+                channels << channel;
+                passwords << password;
+
+                length = 0;
+
+                length += channel.utf8().length();;
+                length += password.utf8().length();
+            }
         }
 
         if (passwords.last() == ".") passwords.pop_back();
 
-        setAutoJoinChannels(channels.join(","));
-        setAutoJoinChannelPasswords(passwords.join(","));
+        joinCommands << "JOIN " + channels.join(",") + " " + passwords.join(",");
+
+        setAutoJoinCommands(joinCommands);
     }
     else
         setAutoJoin(false);
