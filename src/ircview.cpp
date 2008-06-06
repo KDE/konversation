@@ -714,7 +714,23 @@ void IRCView::appendRememberLine()
     if (m_rememberLineParagraph == paragraphs() - 1)
         return;
 
-    if (m_rememberLineParagraph > -1) removeParagraph(m_rememberLineParagraph);
+    if (m_rememberLineParagraph > -1)
+    {
+        removeParagraph(m_rememberLineParagraph);
+
+        QValueList<int> newList;
+        QValueList<int>::ConstIterator it;
+
+        for (it = m_markerLineParagraphs.begin(); it != m_markerLineParagraphs.end(); ++it)
+        {
+            if ((*it) < m_rememberLineParagraph)
+                newList << (*it);
+            else if ((*it) > m_rememberLineParagraph)
+                newList << (*it) - 1;
+        }
+
+        m_markerLineParagraphs = newList;
+    }
 
     repaintChanged();
 
@@ -758,7 +774,7 @@ void IRCView::clearLines()
     {
         qHeapSort(m_markerLineParagraphs);
 
-        QValueList<int>::iterator it;
+        QValueList<int>::ConstIterator it;
         int removeCounter = 0;
 
         for (it = m_markerLineParagraphs.begin(); it != m_markerLineParagraphs.end(); ++it)
@@ -783,7 +799,7 @@ bool IRCView::hasLines()
 
 void IRCView::updateLineParagraphs(int numRemoved)
 {
-    if (m_rememberLineParagraph < numRemoved)
+    if (m_rememberLineParagraph - numRemoved < 0)
         m_rememberLineParagraph = -1;
     else
         m_rememberLineParagraph -= numRemoved;
@@ -796,7 +812,7 @@ void IRCView::updateLineParagraphs(int numRemoved)
 
         for (it = m_markerLineParagraphs.begin(); it != m_markerLineParagraphs.end(); ++it)
         {
-            if ((*it) > numRemoved)
+            if ((*it) - numRemoved >= 0)
                 newMarkerLineParagraphs << ((*it) - numRemoved);
         }
 
