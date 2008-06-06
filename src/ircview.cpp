@@ -1063,6 +1063,8 @@ void IRCView::doAppend(const QString& newLine, bool self)
     if(textselected)
         getSelection(&paraFrom, &indexFrom, &paraTo, &indexTo);
 
+    document()->lastParagraph()->format();
+
     KTextBrowser::append(line);
 
     document()->lastParagraph()->format();

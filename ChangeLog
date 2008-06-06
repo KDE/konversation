@@ -342,6 +342,9 @@ Changes since 1.0.1:
 - '/msg <nick>' is no longer treated as equivalent to '/query <nick>'.
 - '/msg <nick>' will now error out when lacking a message parameter.
 - '/query <recipient> [message]' will now error out when recipient is a channel.
+- Fixed an off-by-one error in scrollback culling.
+- Fixed a bug that could cause the text selection in a chat window to be messed
+  up when new text was appended.
 
 
 -------------------------------------------------------------------------------
