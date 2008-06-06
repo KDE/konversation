@@ -314,7 +314,7 @@ Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
 }
 
 //FIXME there is some logic in setLogfileName that needs to be split out and called here if the server display name gets changed
-void Channel::setServer(Server *server)
+void Channel::setServer(Server* server)
 {
     if (m_server != server)
         connect(server, SIGNAL(connectionStateChanged(Server*, Konversation::ConnectionState)),

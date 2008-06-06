@@ -1058,6 +1058,11 @@ void ViewContainer::unsetViewNotification(ChatWindow* view)
             if (!channel->joined())
                 textColor = KonversationApplication::instance()->palette(m_viewTree).disabled().text();
         }
+        else if (view->getType() == ChatWindow::Query)
+        {
+            if (!view->getServer()->isConnected())
+                textColor = KonversationApplication::instance()->palette(m_tabWidget).disabled().text();
+        }
 
         m_viewTree->setViewColor(view, textColor);
     }
@@ -1093,6 +1098,11 @@ void ViewContainer::unsetViewNotification(ChatWindow* view)
             Channel *channel = static_cast<Channel*>(view);
 
             if (!channel->joined())
+                textColor = KonversationApplication::instance()->palette(m_tabWidget).disabled().text();
+        }
+        else if (view->getType() == ChatWindow::Query)
+        {
+            if (!view->getServer()->isConnected())
                 textColor = KonversationApplication::instance()->palette(m_tabWidget).disabled().text();
         }
 

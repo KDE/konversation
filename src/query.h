@@ -78,6 +78,7 @@ class Query : public ChatWindow
         virtual void indicateAway(bool show);
         void updateAppearance();
         void setEncryptedOutput(bool);
+        void connectionStateChanged(Server*, Konversation::ConnectionState);
 
     protected slots:
         void queryTextEntered();

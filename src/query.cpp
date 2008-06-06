@@ -14,6 +14,8 @@
 #include "channel.h"
 #include "server.h"
 #include "konversationapplication.h"
+#include "konversationmainwindow.h"
+#include "viewcontainer.h"
 #include "ircinput.h"
 #include "ircview.h"
 #include "ircviewbox.h"
@@ -128,9 +130,33 @@ Query::~Query()
 
 void Query::setServer(Server* newServer)
 {
+    if (m_server != newServer)
+        connect(newServer, SIGNAL(connectionStateChanged(Server*, Konversation::ConnectionState)),
+                SLOT(connectionStateChanged(Server*, Konversation::ConnectionState)));
+
     ChatWindow::setServer(newServer);
+
     if (newServer->getKeyForRecipient(getName()))
         blowfishLabel->show();
+}
+
+void Query::connectionStateChanged(Server* server, Konversation::ConnectionState state)
+{
+    if (server == m_server)
+    {
+        if (state ==  Konversation::SSConnected)
+        {
+            //HACK the way the notification priorities work sucks, this forces the tab text color to ungray right now.
+            if (m_currentTabNotify == Konversation::tnfNone || !Preferences::tabNotificationsEvents())
+                KonversationApplication::instance()->getMainWindow()->getViewContainer()->unsetViewNotification(this);
+        }
+        else
+        {
+            //HACK the way the notification priorities work sucks, this forces the tab text color to gray right now.
+            if (m_currentTabNotify == Konversation::tnfNone || (!Preferences::tabNotificationsEvents() && m_currentTabNotify == Konversation::tnfControl))
+                KonversationApplication::instance()->getMainWindow()->getViewContainer()->unsetViewNotification(this);
+        }
+    }
 }
 
 void Query::setName(const QString& newName)

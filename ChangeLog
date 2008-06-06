@@ -224,6 +224,10 @@ Changes since 1.0.1:
 - Added KDE 4 support to the sysinfo script.
 - Channel tabs will no longer close when kicked, but rather grey out on the tab
   bar and offer context menu actions to rejoin.
+- Channel and query tabs will now grey out on the tab bar when disconnected and
+  no higher priority notification is present. Channel tabs will only ungrey if
+  and when the channel is successfully rejoined after reconnect; query tabs un-
+  grey immediately once reconnected.
 - Auto-replace is now case-sensitive in regular expression mode.
 - Improved behavior with regard to reusing existing connections in connection
   attempts that provide an initial channel to join, such as command line argu-
