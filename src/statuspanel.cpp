@@ -268,15 +268,16 @@ bool StatusPanel::closeYourself(bool confirm)
     //FIXME: Show "Do you really want to close ..." warnings in
     // disconnected state instead of closing directly. Can't do
     // that due to string freeze at the moment.
-    if (!m_server->isConnected() || !confirm)
+    if (confirm && !m_server->isConnected())
     {
-        result = KMessageBox::Continue;
+        result = KMessageBox::warningContinueCancel(this, i18n("Do you really want to close '%1'?\n\n All associated tabs will be closed as well.").arg(getName()),
+            i18n("Close Tab"), i18n("Close"), "QuitServerTab");
     }
     else
     {
         result = KMessageBox::warningContinueCancel(
             this,
-            i18n("Do you want to disconnect from '%1'?").arg(m_server->getServerName()),
+            i18n("Do you want to disconnect from '%1'?\n\n All associated tabs will be closed as well.").arg(m_server->getServerName()),
             i18n("Disconnect From Server"),
             i18n("Disconnect"),
             "QuitServerTab");

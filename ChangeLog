@@ -351,6 +351,8 @@ Changes since 1.0.1:
   up when new text was appended.
 - Fixed auto-join with very many channels (the auto-join command would exceed
   the maximum buffer length; it is now split into multiple commands as needed).
+- Fixed OK'ing/Cancel'ing/closing the Channel Options Dialog not dealing with
+  open ban list in-line edits correctly.
 
 -------------------------------------------------------------------------------
 
