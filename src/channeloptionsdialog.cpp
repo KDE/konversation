@@ -70,6 +70,7 @@ namespace Konversation
 
         connect(this, SIGNAL(cancelClicked()), this, SLOT(cancelClicked()));
         connect(this, SIGNAL(okClicked()), this, SLOT(changeOptions()));
+        connect(this, SIGNAL(okClicked()), this, SLOT(okClicked()));
 
         connect(m_channel, SIGNAL(banAdded(const QString&)), this, SLOT(addBan(const QString&)));
         connect(m_channel, SIGNAL(banRemoved(const QString&)), this, SLOT(removeBan(const QString&)));
@@ -438,15 +439,30 @@ namespace Konversation
     void ChannelOptionsDialog::removeBanClicked()
     {
         if (m_widget->banList->currentItem())
-        {
             m_channel->getServer()->requestUnban(m_widget->banList->currentItem()->text(0), m_channel->getName());
-        }
     }
 
     void ChannelOptionsDialog::cancelClicked()
     {
+        if (m_widget->banList->renameLineEdit()->isShown())
+        {
+            QKeyEvent e(QEvent::KeyPress, Qt::Key_Escape, 27, Qt::NoButton);
+
+            KApplication::sendEvent(m_widget->banList->renameLineEdit(), &e);
+        }
+
         topicBeingEdited(false);
         hide();
+    }
+
+    void ChannelOptionsDialog::okClicked()
+    {
+        if (m_widget->banList->renameLineEdit()->isShown())
+        {
+            QKeyEvent e(QEvent::KeyPress, Qt::Key_Return, 13, Qt::NoButton);
+
+            KApplication::sendEvent(m_widget->banList->renameLineEdit(), &e);
+        }
     }
 
     // This is our implementation of BanListViewItem

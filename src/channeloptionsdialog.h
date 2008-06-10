@@ -34,6 +34,7 @@ namespace Konversation
             QString topic();
             QStringList modes();
 
+
         public slots:
             void refreshTopicHistory();
             void refreshAllowedChannelModes();
@@ -50,20 +51,25 @@ namespace Konversation
 
             void changeOptions();
 
+
         protected slots:
             void topicHistoryItemClicked(QListViewItem* item);
             void topicBeingEdited(bool state);
 
             void cancelClicked();
+            void okClicked();
+
 
         protected:
             bool m_editingTopic;
             QListViewItem *m_NewBan;
 
+
         private:
             ChannelOptionsUI* m_widget;
             Channel *m_channel;
     };
+
 
     // This is needed to overcome two deficiencies in KListViewItem
     // First there is no signal emitted when a rename is canceled
@@ -83,8 +89,9 @@ namespace Konversation
             virtual int compare(QListViewItem *i, int col, bool ascending) const;
             virtual void startRename(int col);
 
+
         protected:
-            virtual void cancelRename (int col);
+            virtual void cancelRename(int col);
 
             QString m_oldValue;
             bool m_isNewBan;
