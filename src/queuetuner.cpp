@@ -16,15 +16,20 @@
 #include "ircqueue.h"
 #include "channel.h"
 #include "viewcontainer.h"
+#include "konversationapplication.h"
 
 #include <qtoolbutton.h>
 #include <qspinbox.h>
+#include <qpopupmenu.h>
+#include <qevent.h>
 
 #include <kdebug.h>
 #include <kapplication.h>
 #include <kiconloader.h>
+#include <kmessagebox.h>
+#include <kstdguiitem.h>
+#include <klocale.h>
 
-//#include "/home/ejm/argnl.h"
 
 QueueTuner::QueueTuner(QWidget* parent, ViewContainer *container)
 : QueueTunerBase(parent), m_server(0), m_timer(this, "qTuner"),
@@ -93,11 +98,18 @@ void QueueTuner::setServer(Server* newServer)
     {
         connect(m_server, SIGNAL(destroyed(QObject*)), SLOT(serverDestroyed(QObject*)));
 
-        rateToWidget(m_server->m_queues[0]->getRate(), m_slowRate, m_slowType, m_slowInterval);
-        rateToWidget(m_server->m_queues[1]->getRate(), m_normalRate, m_normalType, m_normalInterval);
-        rateToWidget(m_server->m_queues[2]->getRate(), m_fastRate, m_fastType, m_fastInterval);
+        getRates();
     }
-    //KX << _S(m_server) << _S(w) << endl;
+}
+
+void QueueTuner::getRates()
+{
+    if (!m_server) // you can only get the popup if there is a server, but.. paranoid
+        return;
+
+    rateToWidget(m_server->m_queues[0]->getRate(), m_slowRate, m_slowType, m_slowInterval);
+    rateToWidget(m_server->m_queues[1]->getRate(), m_normalRate, m_normalType, m_normalInterval);
+    rateToWidget(m_server->m_queues[2]->getRate(), m_fastRate, m_fastType, m_fastInterval);
 }
 
 void QueueTuner::timerFired()
@@ -129,9 +141,6 @@ void QueueTuner::timerFired()
         m_globalLines->setNum(m_server->m_linesSent);
         m_recvBytes->setNum(m_server->m_bytesReceived);
     }
-    return;
-    //m_queues
-
 }
 
 void QueueTuner::open()
@@ -146,49 +155,26 @@ void QueueTuner::close()
     QueueTunerBase::close();
 }
 
-void QueueTuner::showEvent(QShowEvent *e)
-{
-    if (!e->spontaneous())
-    {
-        //KX << "QueueTuner::showEvent" << endl;
-    }
-}
-
 void QueueTuner::show()
 {
-    //KX << k_funcinfo << endl;
     if (m_server && Preferences::showQueueTuner())
     {
         QueueTunerBase::show();
         m_timer.start(500);
 
     }
-    //KX << k_funcinfo << endl;
-}
-
-void QueueTuner::hideEvent(QHideEvent *e)
-{
-    if (!e->spontaneous())
-    {
-        //KX << "QueueTuner::hideEvent" << endl;
-    }
 }
 
 void QueueTuner::hide()
 {
-    //KX << k_funcinfo << endl;
-
     QueueTunerBase::hide();
     m_timer.stop();
-
-    //KX << "out" << endl;
 }
 
 void QueueTuner::slowRateChanged(int v)
 {
     if (!m_server) return;
     int &r=m_server->m_queues[0]->getRate().m_rate;
-    //KX << _S(r) << _S(v) << endl;
     r=v;
 }
 
@@ -196,7 +182,6 @@ void QueueTuner::slowTypeChanged(int v)
 {
     if (!m_server) return;
     IRCQueue::EmptyingRate::RateType &r=m_server->m_queues[0]->getRate().m_type;
-    //KX << _S(r) << _S(v) << endl;
     r=IRCQueue::EmptyingRate::RateType(v);
 }
 
@@ -204,7 +189,6 @@ void QueueTuner::slowIntervalChanged(int v)
 {
     if (!m_server) return;
     int &r=m_server->m_queues[0]->getRate().m_interval;
-    //KX << _S(r) << _S(v) << endl;
     r=v*1000;
 }
 
@@ -212,7 +196,6 @@ void QueueTuner::normalRateChanged(int v)
 {
     if (!m_server) return;
     int &r=m_server->m_queues[1]->getRate().m_rate;
-    //KX << _S(r) << _S(v) << endl;
     r=v;
 }
 
@@ -220,7 +203,6 @@ void QueueTuner::normalTypeChanged(int v)
 {
     if (!m_server) return;
     IRCQueue::EmptyingRate::RateType &r=m_server->m_queues[1]->getRate().m_type;
-    //KX << _S(r) << _S(v) << endl;
     r=IRCQueue::EmptyingRate::RateType(v);
 }
 
@@ -228,7 +210,6 @@ void QueueTuner::normalIntervalChanged(int v)
 {
     if (!m_server) return;
     int &r=m_server->m_queues[1]->getRate().m_interval;
-    //KX << _S(r) << _S(v) << endl;
     r=v*1000;
 }
 
@@ -236,7 +217,6 @@ void QueueTuner::fastRateChanged(int v)
 {
     if (!m_server) return;
     int &r=m_server->m_queues[2]->getRate().m_rate;
-    //KX << _S(r) << _S(v) << endl;
     r=v;
 }
 
@@ -244,7 +224,6 @@ void QueueTuner::fastTypeChanged(int v)
 {
     if (!m_server) return;
     IRCQueue::EmptyingRate::RateType &r=m_server->m_queues[2]->getRate().m_type;
-    //KX << _S(r) << _S(v) << endl;
     r=IRCQueue::EmptyingRate::RateType(v);
 }
 
@@ -252,8 +231,26 @@ void QueueTuner::fastIntervalChanged(int v)
 {
     if (!m_server) return;
     int &r=m_server->m_queues[2]->getRate().m_interval;
-    //KX << _S(r) << _S(v) << endl;
     r=v*1000;
+}
+
+void QueueTuner::contextMenuEvent(QContextMenuEvent* e)
+{
+    QPopupMenu p(this);
+    p.insertItem("Reset...", 1);
+    int id = p.exec(e->globalPos());
+    if (id > 0)
+    {
+
+        QString question(i18n("This cannot be undone, are you sure you wish to reset to default values?"));
+        int x = KMessageBox::warningContinueCancel(this, question, i18n("Reset Values"), KStdGuiItem::reset(), QString::null, KMessageBox::Dangerous);
+        if ( x == KMessageBox::Continue)
+        {
+            Server::_resetRates();
+            getRates();
+        }
+    }
+    e->accept();
 }
 
 #include "queuetuner.moc"

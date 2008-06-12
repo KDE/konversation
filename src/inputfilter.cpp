@@ -851,6 +851,12 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 }
                 break;
             }
+            case RPL_CHANNELURLIS:
+            {// :niven.freenode.net 328 argonel #channel :http://www.buggeroff.com/
+                server->appendCommandMessageToChannel(parameterList[1], i18n("URL"),
+                    i18n("Channel URL: %1").arg(trailing));
+                break;
+            }
             case RPL_CHANNELCREATED:
             {
                 QDateTime when;

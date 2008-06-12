@@ -969,12 +969,12 @@
   QValueList&lt; QValueList&lt;int&gt; &gt;::iterator defaultRateInitIter;
 
   defaultRateInitIter = defaultRate.append(QValueList&lt;int&gt;());
-  (*defaultRateInitIter).append( 6 );
+  (*defaultRateInitIter).append( 15 );
   (*defaultRateInitIter).append( 60 );
   (*defaultRateInitIter).append( 0 );
 
   defaultRateInitIter = defaultRate.append(QValueList&lt;int&gt;());
-  (*defaultRateInitIter).append( 20 );
+  (*defaultRateInitIter).append( 40 );
   (*defaultRateInitIter).append( 60 );
   (*defaultRateInitIter).append( 0 );
 

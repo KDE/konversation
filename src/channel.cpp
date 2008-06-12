@@ -1810,7 +1810,6 @@ void Channel::updateMode(const QString& sourceNick, char mode, bool plus, const 
                 if(fromMe) message=i18n("You set the channel mode to 'allow color codes'.");
                 else message=i18n("%1 sets the channel mode to 'allow color codes'.").arg(sourceNick);
             }
-            modeM->setDown(plus);
             break;
 
         case 'i':

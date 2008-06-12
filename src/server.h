@@ -357,6 +357,7 @@ void resetNickSelection();
         //These are really only here to limit where ircqueue.h is included
         static void _fetchRates(); ///< on server construction
         static void _stashRates(); ///< on application exit
+        static void _resetRates(); ///< when QueueTuner says to
 
 
     signals:

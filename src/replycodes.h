@@ -78,6 +78,7 @@
 #define RPL_LIST               322
 #define RPL_LISTEND            323
 #define RPL_CHANNELMODEIS      324
+#define RPL_CHANNELURLIS       328
 #define RPL_CHANNELCREATED     329
 #define RPL_WHOISACCOUNT       330
 #define RPL_NOTOPIC            331

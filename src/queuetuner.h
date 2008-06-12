@@ -28,11 +28,11 @@ class QueueTuner: public QueueTunerBase
     public:
         QueueTuner(QWidget* parent, ViewContainer *container);
         ~QueueTuner();
-        void hideEvent(QHideEvent *);
-        void showEvent(QShowEvent *);
+        virtual void contextMenuEvent (QContextMenuEvent*);
 
     public slots:
         void setServer(Server* newServer);
+        void getRates();
         void timerFired();
         virtual void hide();
         virtual void show();

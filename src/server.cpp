@@ -234,6 +234,16 @@ void Server::_stashRates()
     }
 }
 
+void Server::_resetRates()
+{
+    for (int i=0;i<=_max_queue();i++)
+    {
+        Preferences::self()->queueRateItem(i)->setDefault();
+        QValueList<int> r=Preferences::queueRate(i);
+        staticrates[i]=IRCQueue::EmptyingRate(r[0], r[1]*1000,IRCQueue::EmptyingRate::RateType(r[2]));
+    }
+}
+
 void Server::initTimers()
 {
     m_notifyTimer.setName("notify_timer");
