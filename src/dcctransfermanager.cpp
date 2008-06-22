@@ -172,8 +172,8 @@ bool DccTransferManager::hasActiveTransfers()
             return true;
     }
 
-    QValueListConstIterator< DccTransferSend* > it2;
-    for ( it2 = m_sendItems.begin() ; it2 != m_sendItems.end() ; ++it2 )
+    QValueListConstIterator< DccTransferRecv* > it2;
+    for ( it2 = m_recvItems.begin() ; it2 != m_recvItems.end() ; ++it2 )
     {
         if ((*it2)->getStatus() == DccTransfer::Transferring)
             return true;
