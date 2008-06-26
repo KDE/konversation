@@ -113,9 +113,6 @@ class KonversationApplication : public KUniqueApplication
 
         Images* images() { return m_images; }
 
-        /* Updates all nick icons according to new theme */
-        void updateNickIcons();
-
         Konversation::NotificationHandler* notificationHandler() const { return m_notificationHandler; }
 
         // auto replacement for input or output lines

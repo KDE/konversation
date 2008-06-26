@@ -26,7 +26,6 @@
 #include "servergroupsettings.h"
 #include "serversettings.h"
 #include "channel.h"
-#include "nicklistview.h"
 #include "images.h"
 #include "notificationhandler.h"
 #include "commit.h"
@@ -712,25 +711,6 @@ void KonversationApplication::saveOptions(bool updateGUI)
 
     if(updateGUI)
         emit appearanceChanged();
-}
-
-void KonversationApplication::updateNickIcons()
-{
-    QPtrList<Server> serverList = getConnectionManager()->getServerList();
-    Server* lookServer=serverList.first();
-
-    while(lookServer)
-    {
-        const QPtrList<Channel> &channelList = lookServer->getChannelList();
-        QPtrListIterator<Channel> chanIt(channelList);
-        Channel* channel;
-        while((channel=chanIt.current()) != 0)
-        {
-            ++chanIt;
-            channel->getNickListView()->refresh();
-        }
-        lookServer=serverList.next();
-    }
 }
 
 // FIXME: use KURL maybe?
