@@ -121,6 +121,9 @@ class IRCView : public KTextBrowser
         // Updates the scrollbar position
         void updateScrollBarPos();
 
+	// Override ensureCursorVisible() to have an ability to disable this call
+	virtual void ensureCursorVisible();
+
     protected slots:
         void highlightedSlot(const QString& link);
         void saveLinkAs(const QString& url);
@@ -225,6 +228,9 @@ class IRCView : public KTextBrowser
         int m_channelPopupId;
 
         QFontDatabase m_fontDataBase;
+	
+	// Provide ability to disable parent ensureCursorVisible() call
+	bool m_disableEnsureCursorVisible;
 
         ChatWindow* m_chatWin;
         friend class IRCStyleSheet;

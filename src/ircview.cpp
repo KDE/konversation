@@ -83,6 +83,8 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent)
     m_rememberLineParagraph = -1;
     m_rememberLineDirtyBit = false;
 
+    m_disableEnsureCursorVisible = false;
+
     setAutoFormatting(QTextEdit::AutoNone);
     setUndoRedoEnabled(0);
     setLinkUnderline(false);
@@ -1055,6 +1057,12 @@ void IRCView::scrollToBottom()
     setContentsPos( contentsX(), contentsHeight() - visibleHeight() );
 }
 
+void IRCView::ensureCursorVisible()
+{
+    if (!m_disableEnsureCursorVisible)
+        QTextEdit::ensureCursorVisible();
+}
+
 void IRCView::doAppend(const QString& newLine, bool self)
 {
     if (m_rememberLineDirtyBit) appendRememberLine();
@@ -1116,8 +1124,13 @@ void IRCView::doAppend(const QString& newLine, bool self)
     KTextBrowser::viewport()->setUpdatesEnabled(up);
 
     // Restore selection
-    if(textselected && paraFrom >= 0 && paraTo >= 0)
+    if(textselected && paraFrom >= 0 && paraTo >= 0) {
+        // HACK: do not change scrollback position: setSelection() calls
+	// ensureCursorVisible()
+        m_disableEnsureCursorVisible = true;
         setSelection(paraFrom, indexFrom, paraTo, indexTo);
+        m_disableEnsureCursorVisible = false;
+    }
 
     if (doScroll) updateScrollBarPos();
 
