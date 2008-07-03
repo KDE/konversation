@@ -353,6 +353,8 @@ Changes since 1.0.1:
   the maximum buffer length; it is now split into multiple commands as needed).
 - Fixed OK'ing/Cancel'ing/closing the Channel Options Dialog not dealing with
   open ban list in-line edits correctly.
+- Fixed chat views occassionally not being scrolled to the bottom at their in-
+  ception with long backlog appends.
 
 -------------------------------------------------------------------------------
 
