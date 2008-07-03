@@ -84,6 +84,7 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent)
     m_rememberLineDirtyBit = false;
 
     m_disableEnsureCursorVisible = false;
+    m_wasPainted = false;
 
     setAutoFormatting(QTextEdit::AutoNone);
     setUndoRedoEnabled(0);
@@ -1163,11 +1164,28 @@ void IRCView::hideEvent(QHideEvent* /* event */) {
 void IRCView::showEvent(QShowEvent* event) {
     Q_UNUSED(event);
     // did the user scroll the view to the end of the text before hiding?
-    if(m_resetScrollbar)
+    if (m_resetScrollbar)
     {
+        // NOTE: when the view has not been painted yet, contentsHeight() might
+        // not return accurate information and hence this code won't reset
+        // scrollback properly in such a case. See paintEvent() hack below.
         moveCursor(MoveEnd,false);
         ensureVisible(0,contentsHeight());
     }
+}
+
+void IRCView::paintEvent(QPaintEvent* event)
+{
+    // HACK: if the widget is being painted for the first time, call
+    // showEvent() which will reset scrollback position as needed. It seems
+    // that at the time this event is triggered, QTextEdit provides more
+    // accurate information than when showEvent() is triggered.
+    if (!m_wasPainted)
+    {
+        m_wasPainted = true;
+        showEvent(0);
+    }
+    KTextBrowser::paintEvent(event);
 }
 
 void IRCView::contentsMouseReleaseEvent(QMouseEvent *ev)

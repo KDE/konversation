@@ -147,6 +147,7 @@ class IRCView : public KTextBrowser
 
         void hideEvent(QHideEvent* event);
         void showEvent(QShowEvent* event);
+        void paintEvent(QPaintEvent* event);
 
         bool contextMenu(QContextMenuEvent* ce);
 
@@ -231,6 +232,9 @@ class IRCView : public KTextBrowser
 	
 	// Provide ability to disable parent ensureCursorVisible() call
 	bool m_disableEnsureCursorVisible;
+	// If this widget was painted at least once. Needed for scrollbar
+	// reset HACK as a precaution.
+	bool m_wasPainted;
 
         ChatWindow* m_chatWin;
         friend class IRCStyleSheet;
