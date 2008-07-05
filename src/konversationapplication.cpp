@@ -519,7 +519,6 @@ void KonversationApplication::readOptions()
 
 void KonversationApplication::saveOptions(bool updateGUI)
 {
-    kdDebug() << "KonversationApplication::saveOptions()" << endl;
     KConfig* config=kapp->config();
 
 //    Should be handled in NicklistBehaviorConfigController now
@@ -718,12 +717,9 @@ void KonversationApplication::saveOptions(bool updateGUI)
 
 void KonversationApplication::updateServerGroupNameInChannelEncodingsMap(const QString& newName, const QString& oldName)
 {
-    kdDebug() << "KonversationApplication::updateServerGroupNameInChannelEncodingsMap()" << endl
-              << oldName << " -> " << newName << endl;
     QStringList channelList = Preferences::channelEncodingsChannelList(oldName);
     for(QStringList::iterator it=channelList.begin(); it != channelList.end() ; ++it)
     {
-        kdDebug() << "processing " << (*it) << endl;
         Preferences::setChannelEncoding(newName, (*it), Preferences::channelEncoding(oldName, (*it)));
         Preferences::setChannelEncoding(oldName, (*it), QString());  // saveOptions() will remove the entry automatically
     }
