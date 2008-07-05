@@ -232,6 +232,7 @@ namespace Konversation
             {
                 ServerGroupDialog dlg(i18n("Edit Network"), this);
 
+                QString serverGroupOldName = serverGroup->name();
                 dlg.setServerGroupSettings(serverGroup);
 
                 if (item->isServer())
@@ -246,6 +247,8 @@ namespace Konversation
 
                         *serverGroup = *(dlg.serverGroupSettings());
 
+                        if (serverGroupOldName != serverGroup->name())
+                            emit serverGroupNameChanged(serverGroup->name(), serverGroupOldName);
                         emit serverGroupsChanged(serverGroup);
                     }
                 }
@@ -261,6 +264,8 @@ namespace Konversation
 
                         *serverGroup = *(dlg.serverGroupSettings());
 
+                        if (serverGroupOldName != serverGroup->name())
+                            emit serverGroupNameChanged(serverGroup->name(), serverGroupOldName);
                         emit serverGroupsChanged(serverGroup);
                     }
                 }

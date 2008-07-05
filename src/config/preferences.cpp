@@ -576,6 +576,11 @@ const QStringList Preferences::channelEncodingsChannelList(const QString& server
     return self()->mChannelEncodingsMap[server].keys();
 }
 
+void Preferences::clearChannelEncodingsMapForServer(const QString& server)
+{
+    self()->mChannelEncodingsMap.remove( server );
+}
+
 const QString Preferences::defaultNicknameSortingOrder()
 {
   return "qpohv-";

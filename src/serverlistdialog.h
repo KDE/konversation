@@ -70,6 +70,7 @@ namespace Konversation
             void connectTo(Konversation::ConnectionFlag flag, int serverGroupId);
             void connectTo(Konversation::ConnectionFlag flag, ConnectionSettings& connectionSettings);
             void serverGroupsChanged(const Konversation::ServerGroupSettings* serverGroup = 0);
+            void serverGroupNameChanged(const QString& newName, const QString& oldName);
 
         protected slots:
             virtual void slotOk();

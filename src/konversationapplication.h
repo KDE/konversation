@@ -124,6 +124,7 @@ class KonversationApplication : public KUniqueApplication
     signals:
         void catchUrl(const QString& who,const QString& url);
         void serverGroupsChanged(const Konversation::ServerGroupSettings* serverGroup);
+        void serverGroupNameChanged(const QString& newName,const QString& oldName);
 
 
     public slots:
@@ -143,6 +144,7 @@ class KonversationApplication : public KUniqueApplication
         void dcopInfo(const QString& string);
         void sendMultiServerCommand(const QString& command, const QString& parameter);
 
+        void updateServerGroupNameInChannelEncodingsMap(const QString& newName, const QString& oldName);
 
     private:
         ConnectionManager* m_connectionManager;

@@ -162,6 +162,8 @@ int KonversationApplication::newInstance()
         if (openServerList) mainWindow->openServerList();
 
         connect(this, SIGNAL(serverGroupsChanged(const Konversation::ServerGroupSettings*)), this, SLOT(saveOptions()));
+        connect(this, SIGNAL(serverGroupNameChanged(const QString&, const QString&)),
+                this, SLOT(updateServerGroupNameInChannelEncodingsMap(const QString&, const QString&)));
 
         // prepare dcop interface
         dcopObject = new KonvDCOP;
@@ -517,6 +519,7 @@ void KonversationApplication::readOptions()
 
 void KonversationApplication::saveOptions(bool updateGUI)
 {
+    kdDebug() << "KonversationApplication::saveOptions()" << endl;
     KConfig* config=kapp->config();
 
 //    Should be handled in NicklistBehaviorConfigController now
@@ -711,6 +714,19 @@ void KonversationApplication::saveOptions(bool updateGUI)
 
     if(updateGUI)
         emit appearanceChanged();
+}
+
+void KonversationApplication::updateServerGroupNameInChannelEncodingsMap(const QString& newName, const QString& oldName)
+{
+    kdDebug() << "KonversationApplication::updateServerGroupNameInChannelEncodingsMap()" << endl
+              << oldName << " -> " << newName << endl;
+    QStringList channelList = Preferences::channelEncodingsChannelList(oldName);
+    for(QStringList::iterator it=channelList.begin(); it != channelList.end() ; ++it)
+    {
+        kdDebug() << "processing " << (*it) << endl;
+        Preferences::setChannelEncoding(newName, (*it), Preferences::channelEncoding(oldName, (*it)));
+        Preferences::setChannelEncoding(oldName, (*it), QString());  // saveOptions() will remove the entry automatically
+    }
 }
 
 // FIXME: use KURL maybe?
