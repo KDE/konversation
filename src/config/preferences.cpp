@@ -573,7 +573,8 @@ void Preferences::setChannelEncoding(const QString& server,const QString& channe
 
 void Preferences::setChannelEncoding(int serverGroupId,const QString& channel,const QString& encoding)
 {
-    self()->mChannelEncodingsMap[serverGroupId][channel.lower()]=encoding;
+    if(serverGroupId!=-1)
+        self()->mChannelEncodingsMap[serverGroupId][channel.lower()]=encoding;
 }
 
 const QValueList<int> Preferences::channelEncodingsServerGroupIdList()
