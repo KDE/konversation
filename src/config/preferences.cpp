@@ -555,25 +555,35 @@ void Preferences::setDialogFlag(const QString& flagName,bool state)
 // Channel Encodings
 const QString Preferences::channelEncoding(const QString& server,const QString& channel)
 {
-    if(self()->mChannelEncodingsMap.contains(server))
-        if(self()->mChannelEncodingsMap[server].contains(channel.lower()))
-            return self()->mChannelEncodingsMap[server][channel.lower()];
+    return channelEncoding(serverGroupIdByName(server),channel);
+}
+
+const QString Preferences::channelEncoding(int serverGroupId,const QString& channel)
+{
+    if(self()->mChannelEncodingsMap.contains(serverGroupId))
+        if(self()->mChannelEncodingsMap[serverGroupId].contains(channel.lower()))
+            return self()->mChannelEncodingsMap[serverGroupId][channel.lower()];
     return QString();
 }
 
 void Preferences::setChannelEncoding(const QString& server,const QString& channel,const QString& encoding)
 {
-    self()->mChannelEncodingsMap[server][channel.lower()]=encoding;
+    setChannelEncoding(serverGroupIdByName(server),channel,encoding);
 }
 
-const QStringList Preferences::channelEncodingsServerList()
+void Preferences::setChannelEncoding(int serverGroupId,const QString& channel,const QString& encoding)
+{
+    self()->mChannelEncodingsMap[serverGroupId][channel.lower()]=encoding;
+}
+
+const QValueList<int> Preferences::channelEncodingsServerGroupIdList()
 {
     return self()->mChannelEncodingsMap.keys();
 }
 
-const QStringList Preferences::channelEncodingsChannelList(const QString& server)
+const QStringList Preferences::channelEncodingsChannelList(int serverGroupId)
 {
-    return self()->mChannelEncodingsMap[server].keys();
+    return self()->mChannelEncodingsMap[serverGroupId].keys();
 }
 
 const QString Preferences::defaultNicknameSortingOrder()

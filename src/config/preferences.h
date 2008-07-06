@@ -136,9 +136,11 @@ class Preferences : public QObject, public PreferencesBase
         static void setDialogFlag(const QString& flagName,bool state);
 
         static const QString channelEncoding(const QString& server,const QString& channel);
+        static const QString channelEncoding(int serverGroupId,const QString& channel);
         static void setChannelEncoding(const QString& server,const QString& channel,const QString& encoding);
-        static const QStringList channelEncodingsServerList();
-        static const QStringList channelEncodingsChannelList(const QString& server);
+        static void setChannelEncoding(int serverGroupId,const QString& channel,const QString& encoding);
+        static const QValueList<int> channelEncodingsServerGroupIdList();
+        static const QStringList channelEncodingsChannelList(int serverGroupId);
 
         static void setShowTrayIcon(bool state);
         static void setTrayNotify(bool state);
@@ -159,7 +161,7 @@ class Preferences : public QObject, public PreferencesBase
         QValueList<IdentityPtr> mIdentityList;
         QPtrList<Highlight> mHighlightList;
         QMap<int, QStringList> mNotifyList;  // network id, list of nicks
-        QMap< QString,QMap<QString,QString> > mChannelEncodingsMap;
+        QMap< int,QMap<QString,QString> > mChannelEncodingsMap;  // mChannelEncodingsMap[serverGroupdId][channelName]
         QStringList mQuickButtonList;
         QStringList mAutoreplaceList;
         QString mSortingOrder;

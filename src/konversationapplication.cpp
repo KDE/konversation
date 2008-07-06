@@ -504,12 +504,24 @@ void KonversationApplication::readOptions()
     if(!newList.isEmpty()) Preferences::setAliasList(newList);
 
     // Channel Encodings
-    QMap<QString,QString> channelEncodingsEntry=config->entryMap("Channel Encodings");
+    QMap<QString,QString> channelEncodingEntries=config->entryMap("Channel Encodings");
     QRegExp re("^(.+) ([^\\s]+)$");
-    QStringList channelEncodingsEntryKeys=channelEncodingsEntry.keys();
-    for(unsigned int i=0; i<channelEncodingsEntry.count(); ++i)
-        if(re.search(channelEncodingsEntryKeys[i]) > -1)
-            Preferences::setChannelEncoding(re.cap(1),re.cap(2),channelEncodingsEntry[channelEncodingsEntryKeys[i]]);
+    QStringList channelEncodingEntryKeys=channelEncodingEntries.keys();
+    QStringList::iterator itStr=channelEncodingEntryKeys.begin();
+    for(; itStr != channelEncodingEntryKeys.end(); ++itStr)
+    {
+        if(re.search(*itStr) > -1)
+        {
+            int serverGroupId = Preferences::serverGroupIdByName(re.cap(1));
+            if(serverGroupId != -1)
+                Preferences::setChannelEncoding(serverGroupId,re.cap(2),channelEncodingEntries[*itStr]);
+            kdDebug() << "loadOptions(): read: serverGroupName=" << re.cap(1)
+                    << ", serverGroupId=" << serverGroupId
+                    << ", channel=" << re.cap(2)
+                    << ", encoding=" << channelEncodingEntries[*itStr]
+                    << endl;
+        }
+    }
 
     // O, what a tangled web
     Server::_fetchRates();
@@ -687,23 +699,32 @@ void KonversationApplication::saveOptions(bool updateGUI)
     }
 
     // Channel Encodings
+    // remove all entries once
+    config->deleteGroup("Channel Encodings");
     config->setGroup("Channel Encodings");
-    QStringList encServers=Preferences::channelEncodingsServerList();
+    kdDebug() << "saveOptions(): channel encodings "<< endl;
+    QValueList<int> encServers=Preferences::channelEncodingsServerGroupIdList();
     //i have no idea these would need to be sorted //encServers.sort();
-    QStringList::iterator encServer;
+    QValueList<int>::iterator encServer;
     for ( encServer = encServers.begin(); encServer != encServers.end(); ++encServer )
     {
-        QStringList encChannels=Preferences::channelEncodingsChannelList(*(encServer));
-        //ditto //encChannels.sort();
-        QStringList::iterator encChannel;
-        for ( encChannel = encChannels.begin(); encChannel != encChannels.end(); ++encChannel )
+        Konversation::ServerGroupSettingsPtr sgsp = Preferences::serverGroupById(*encServer);
+        if ( sgsp )  // sgsp == 0 when the entry is of QuickConnect or something?
         {
-            QString enc = Preferences::channelEncoding(*(encServer), *(encChannel));
-            QString name = *(encServer) + ' ' + *(encChannel);
-            if(!enc.isEmpty())
-                config->writeEntry(name, enc);
-            else
-                config->deleteEntry(name);
+            QStringList encChannels=Preferences::channelEncodingsChannelList(*encServer);
+            //ditto //encChannels.sort();
+            QStringList::iterator encChannel;
+            for ( encChannel = encChannels.begin(); encChannel != encChannels.end(); ++encChannel )
+            {
+                QString enc = Preferences::channelEncoding(*encServer, *encChannel);
+                QString key = sgsp->name() + ' ' + (*encChannel);
+                config->writeEntry(key, enc);
+                kdDebug() << "saveOptions(): wrote: serverGroupName=" << Preferences::serverGroupById(*encServer)->name()
+                        << ", serverGroupId=" << *encServer
+                        << ", channel=" << *encChannel
+                        << ", encoding=" << Preferences::channelEncoding(*encServer, *encChannel)
+                        << endl;
+            }
         }
     }
 
