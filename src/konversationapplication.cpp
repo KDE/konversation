@@ -162,8 +162,6 @@ int KonversationApplication::newInstance()
         if (openServerList) mainWindow->openServerList();
 
         connect(this, SIGNAL(serverGroupsChanged(const Konversation::ServerGroupSettings*)), this, SLOT(saveOptions()));
-        connect(this, SIGNAL(serverGroupNameChanged(const QString&, const QString&)),
-                this, SLOT(updateServerGroupNameInChannelEncodingsMap(const QString&, const QString&)));
 
         // prepare dcop interface
         dcopObject = new KonvDCOP;
@@ -713,16 +711,6 @@ void KonversationApplication::saveOptions(bool updateGUI)
 
     if(updateGUI)
         emit appearanceChanged();
-}
-
-void KonversationApplication::updateServerGroupNameInChannelEncodingsMap(const QString& newName, const QString& oldName)
-{
-    QStringList channelList = Preferences::channelEncodingsChannelList(oldName);
-    for(QStringList::iterator it=channelList.begin(); it != channelList.end() ; ++it)
-    {
-        Preferences::setChannelEncoding(newName, (*it), Preferences::channelEncoding(oldName, (*it)));
-        Preferences::setChannelEncoding(oldName, (*it), QString());  // saveOptions() will remove the entry automatically
-    }
 }
 
 // FIXME: use KURL maybe?

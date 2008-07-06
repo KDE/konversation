@@ -583,8 +583,6 @@ void KonversationMainWindow::openServerList()
 
         connect(m_serverListDialog, SIGNAL(serverGroupsChanged(const Konversation::ServerGroupSettings*)),
                 konvApp, SIGNAL(serverGroupsChanged(const Konversation::ServerGroupSettings*)));
-        connect(m_serverListDialog, SIGNAL(serverGroupNameChanged(const QString&, const QString&)),
-                konvApp, SIGNAL(serverGroupNameChanged(const QString&, const QString&)));
         connect(konvApp, SIGNAL(serverGroupsChanged(const Konversation::ServerGroupSettings*)),
                 m_serverListDialog, SLOT(updateServerList()));
         connect(m_serverListDialog, SIGNAL(connectTo(Konversation::ConnectionFlag, int)),

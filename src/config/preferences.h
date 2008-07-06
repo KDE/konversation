@@ -139,7 +139,6 @@ class Preferences : public QObject, public PreferencesBase
         static void setChannelEncoding(const QString& server,const QString& channel,const QString& encoding);
         static const QStringList channelEncodingsServerList();
         static const QStringList channelEncodingsChannelList(const QString& server);
-        static void clearChannelEncodingsMapForServer(const QString& server);
 
         static void setShowTrayIcon(bool state);
         static void setTrayNotify(bool state);
