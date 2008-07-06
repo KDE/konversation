@@ -515,11 +515,6 @@ void KonversationApplication::readOptions()
             int serverGroupId = Preferences::serverGroupIdByName(re.cap(1));
             if(serverGroupId != -1)
                 Preferences::setChannelEncoding(serverGroupId,re.cap(2),channelEncodingEntries[*itStr]);
-            kdDebug() << "loadOptions(): read: serverGroupName=" << re.cap(1)
-                    << ", serverGroupId=" << serverGroupId
-                    << ", channel=" << re.cap(2)
-                    << ", encoding=" << channelEncodingEntries[*itStr]
-                    << endl;
         }
     }
 
@@ -702,7 +697,6 @@ void KonversationApplication::saveOptions(bool updateGUI)
     // remove all entries once
     config->deleteGroup("Channel Encodings");
     config->setGroup("Channel Encodings");
-    kdDebug() << "saveOptions(): channel encodings "<< endl;
     QValueList<int> encServers=Preferences::channelEncodingsServerGroupIdList();
     //i have no idea these would need to be sorted //encServers.sort();
     QValueList<int>::iterator encServer;
@@ -719,11 +713,6 @@ void KonversationApplication::saveOptions(bool updateGUI)
                 QString enc = Preferences::channelEncoding(*encServer, *encChannel);
                 QString key = sgsp->name() + ' ' + (*encChannel);
                 config->writeEntry(key, enc);
-                kdDebug() << "saveOptions(): wrote: serverGroupName=" << Preferences::serverGroupById(*encServer)->name()
-                        << ", serverGroupId=" << *encServer
-                        << ", channel=" << *encChannel
-                        << ", encoding=" << Preferences::channelEncoding(*encServer, *encChannel)
-                        << endl;
             }
         }
     }
