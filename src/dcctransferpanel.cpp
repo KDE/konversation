@@ -361,7 +361,7 @@ void DccTransferPanel::clearDcc()
     }
 
     lst.setAutoDelete( true );
-    while( lst.remove() );
+    while( lst.remove() ) ;
     updateButton();
 }
 

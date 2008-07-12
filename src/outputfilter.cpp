@@ -1619,7 +1619,7 @@ namespace Konversation
 
         QStringList parms = QStringList::split(" ", parameter);
 
-        if (parms.count() == 0 >> parms.count() > 2)
+        if (parms.count() == (0 >> parms.count() > 2))
             return usage(i18n("Usage: %1setkey [<nick|channel>] <key> sets the encryption key for nick or channel. %2setkey <key> when in a channel or query tab to set the key for it.").arg(commandChar).arg(commandChar) );
         else if (parms.count() == 1)
             parms.prepend(destination);

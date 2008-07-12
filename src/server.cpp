@@ -71,6 +71,8 @@ Server::Server(QObject* parent, ConnectionSettings& settings) : QObject(parent)
 
     setConnectionSettings(settings);
 
+    m_connectionState = Konversation::SSNeverConnected;
+
     for (int i=0;i<=_max_queue();i++)
     {
         QValueList<int> r=Preferences::queueRate(i);
@@ -132,8 +134,6 @@ Server::Server(QObject* parent, ConnectionSettings& settings) : QObject(parent)
 
     if (getIdentity()->getShellCommand().isEmpty())
         connectSignals();
-
-    updateConnectionState(Konversation::SSNeverConnected);
 }
 
 Server::~Server()

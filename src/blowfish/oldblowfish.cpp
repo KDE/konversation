@@ -271,7 +271,7 @@ void oldCBlowFish::Decode (BYTE * pInput, BYTE * pOutput, DWORD lSize)
 #define SALT2  0x23f6b095
 
 // Convert 64-bit encrypted passphrase to text for userfile
-char *base64 = "./0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+char base64[] = "./0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 int base64dec(char c)
 {

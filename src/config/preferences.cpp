@@ -339,7 +339,7 @@ const QString Preferences::notifyStringByGroupName(const QString& groupName)
     return notifyListByGroupName(groupName).join(" ");
 }
 
-const bool Preferences::addNotify(int serverGroupId, const QString& newPattern)
+bool Preferences::addNotify(int serverGroupId, const QString& newPattern)
 {
     if (!self()->mNotifyList[serverGroupId].contains(newPattern))
     {
@@ -351,7 +351,7 @@ const bool Preferences::addNotify(int serverGroupId, const QString& newPattern)
     return false;
 }
 
-const bool Preferences::removeNotify(const QString& groupName, const QString& pattern)
+bool Preferences::removeNotify(const QString& groupName, const QString& pattern)
 {
   int id=serverGroupIdByName(groupName);
   if(!id) return false;
@@ -369,7 +369,7 @@ const bool Preferences::removeNotify(const QString& groupName, const QString& pa
     return false;
 }
 
-const bool Preferences::isNotify(int serverGroupId, const QString& pattern)
+bool Preferences::isNotify(int serverGroupId, const QString& pattern)
 {
     if (self()->mNotifyList.find(serverGroupId) != self()->mNotifyList.end())
     {
@@ -380,7 +380,7 @@ const bool Preferences::isNotify(int serverGroupId, const QString& pattern)
     return false;
 }
 
-const bool Preferences::hasNotifyList(int serverGroupId)
+bool Preferences::hasNotifyList(int serverGroupId)
 {
     if (self()->mNotifyList.find(serverGroupId) != self()->mNotifyList.end())
         return true;
@@ -488,7 +488,7 @@ void Preferences::setPartReason(const QString &newReason) { self()->mIdentityLis
 const QString Preferences::kickReason() { return self()->mIdentityList[0]->getKickReason(); }
 void Preferences::setKickReason(const QString &newReason) { self()->mIdentityList[0]->setKickReason(newReason); }
 
-const bool Preferences::showAwayMessage() { return self()->mIdentityList[0]->getShowAwayMessage(); }
+bool Preferences::showAwayMessage() { return self()->mIdentityList[0]->getShowAwayMessage(); }
 void Preferences::setShowAwayMessage(bool state) { self()->mIdentityList[0]->setShowAwayMessage(state); }
 
 const QString Preferences::awayMessage() { return self()->mIdentityList[0]->getAwayMessage(); }
@@ -522,7 +522,7 @@ void Preferences::setAutoUserhost(bool state)
     PreferencesBase::setAutoUserhost(state);
 }
 
-const bool Preferences::dialogFlag(const QString& flagName)
+bool Preferences::dialogFlag(const QString& flagName)
 {
     KConfig* config=KApplication::kApplication()->config();
 

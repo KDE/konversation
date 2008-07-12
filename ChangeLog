@@ -357,6 +357,8 @@ Changes since 1.0.1:
   ception with long backlog appends.
 - Fixed enabled state of "Close All Open Queries" action not being updated co-
   rrectly when queries are closed by way of closing a status view tab.
+- Fixed queued DCC transfer items not picking up on download destination direc-
+  tory changes.
 
 -------------------------------------------------------------------------------
 

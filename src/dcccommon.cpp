@@ -82,7 +82,7 @@ KNetwork::KServerSocket* DccCommon::createServerSocketAndListen( QObject* parent
         {
             socket->setAddress( QString::number( port ) );
             bool success = socket->listen();
-            if ( found = ( success && socket->error() == KNetwork::KSocketBase::NoError ) )
+            if ( ( found = ( success && socket->error() == KNetwork::KSocketBase::NoError ) ) )
                 break;
             socket->close();
         }

@@ -34,7 +34,7 @@ ValueListViewItem::~ValueListViewItem()
 {
 }
 
-const int ValueListViewItem::getValue() const
+int ValueListViewItem::getValue() const
 {
     return m_value;
 }

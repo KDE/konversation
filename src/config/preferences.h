@@ -70,24 +70,24 @@ class Preferences : public QObject, public PreferencesBase
         static bool isServerGroup(const QString& server);
         static void removeServerGroup(int id);
 
-	/** Returns a list of alias set up by default.  This is a set of aliases for the scripts found. */
-	static QStringList defaultAliasList();
+        /** Returns a list of alias set up by default.  This is a set of aliases for the scripts found. */
+        static QStringList defaultAliasList();
 
-	//notifylist is in kconfigxt - FIXME
+        //notifylist is in kconfigxt - FIXME
         static const QMap<int, QStringList> notifyList();
         static const QStringList notifyListByGroupName(const QString& groupName);
         static const QString notifyStringByGroupName(const QString& groupName);
         static void setNotifyList(const QMap<int, QStringList>& newList);
-        static const bool addNotify(int serverGroupId, const QString& newPattern);
-        static const bool removeNotify(const QString& groupName, const QString& pattern);
-        static const bool isNotify(int serverGroupId, const QString& pattern);
-        static const bool hasNotifyList(int serverGroupId);
+        static bool addNotify(int serverGroupId, const QString& newPattern);
+        static bool removeNotify(const QString& groupName, const QString& pattern);
+        static bool isNotify(int serverGroupId, const QString& pattern);
+        static bool hasNotifyList(int serverGroupId);
 
         static const QPtrList<Highlight> highlightList();
         static void setHighlightList(QPtrList<Highlight> newList);
         static void addHighlight(const QString& newHighlight,bool regExp, const QColor &color,const QString& sound,const QString& autoText);
 
-	/* All of the below work on the first (default) identity in your identity list*/
+        /* All of the below work on the first (default) identity in your identity list*/
         static void addIgnore(const QString &newIgnore);
         static bool removeIgnore(const QString &oldIgnore);
         static bool isIgnored(const QString &nickname);
@@ -121,18 +121,18 @@ class Preferences : public QObject, public PreferencesBase
         static const QString kickReason();
         static void setKickReason(const QString &newReason);
         static void setShowAwayMessage(bool state);
-        static const bool showAwayMessage();
+        static bool showAwayMessage();
         static const QString awayMessage();
         static void setAwayMessage(const QString &newMessage);
         static const QString unAwayMessage();
         static void setUnAwayMessage(const QString &newMessage);
-	static const QString defaultNicknameSortingOrder();
+        static const QString defaultNicknameSortingOrder();
         static const QString nickname(int index);
         static const QStringList nicknameList();
         static void setNickname(int index,const QString &newName);
         static void setNicknameList(const QStringList &newList);
 
-        static const bool dialogFlag(const QString& flagName);
+        static bool dialogFlag(const QString& flagName);
         static void setDialogFlag(const QString& flagName,bool state);
 
         static const QString channelEncoding(const QString& server,const QString& channel);

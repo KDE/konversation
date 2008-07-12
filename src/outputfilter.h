@@ -30,7 +30,7 @@ class ChatWindow;
 
 namespace Konversation
 {
-    typedef enum MessageType
+    enum MessageType
     {
         Message,
         Action,
@@ -170,7 +170,7 @@ namespace Konversation
             OutputFilterResult info(const QString& check);
             OutputFilterResult error(const QString& check);
 
-	    QString addNickToEmptyNickList(const QString& nick, const QString& parameter);
+            QString addNickToEmptyNickList(const QString& nick, const QString& parameter);
 
         private:
             QString destination;

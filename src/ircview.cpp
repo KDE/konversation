@@ -79,6 +79,8 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent)
     m_chatWin = 0;
     m_findParagraph=0;
     m_findIndex=0;
+    m_nickPopup = 0;
+    m_channelPopup = 0;
 
     m_rememberLineParagraph = -1;
     m_rememberLineDirtyBit = false;
