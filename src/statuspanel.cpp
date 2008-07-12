@@ -288,7 +288,7 @@ bool StatusPanel::closeYourself(bool confirm)
         if (m_server->getServerGroup()) m_server->getServerGroup()->setNotificationsEnabled(notificationsEnabled());
         m_server->quitServer();
         // This will delete the status view as well.
-        delete m_server;
+        m_server->deleteLater();
         m_server = 0;
         return true;
     }

@@ -1175,6 +1175,7 @@ void ViewContainer::addView(ChatWindow* view, const QString& label, bool weiniti
     connect(view, SIGNAL(setStatusBarTempText(const QString&)), this, SIGNAL(setStatusBarTempText(const QString&)));
     connect(view, SIGNAL(clearStatusBarTempText()), this, SIGNAL(clearStatusBarTempText()));
     connect(view, SIGNAL(closing(ChatWindow*)), this, SIGNAL(removeView(ChatWindow*)));
+    connect(view, SIGNAL(closing(ChatWindow*)), this, SLOT(cleanupAfterClose(ChatWindow*)));
 
     // Please be careful about changing any of the grouping behavior in here,
     // because it needs to match up with the sorting behavior of the tree list,
@@ -1520,9 +1521,7 @@ void ViewContainer::closeView(ChatWindow* view)
 {
     if (view)
     {
-        ChatWindow::WindowType viewType=view->getType();
-
-        // the views should know by themselves how to close
+        ChatWindow::WindowType viewType = view->getType();
 
         bool closeConfirmed = true;
 
@@ -1541,36 +1540,43 @@ void ViewContainer::closeView(ChatWindow* view)
                 closeConfirmed = view->closeYourself();
                 break;
         }
+    }
+}
 
-        // We haven't done anything yet, so safe to return
-        if (!closeConfirmed) return;
+void ViewContainer::cleanupAfterClose(ChatWindow* view)
+{
+    if (view == m_frontView) m_frontView = 0;
 
-        if (view == m_frontView) m_frontView = 0;
-
-        // Remove the view from the active view list if it's still on it
-        QValueList<ChatWindow*>::iterator it = m_activeViewOrderList.find(view);
-
-        if (it != m_activeViewOrderList.end())
-            m_activeViewOrderList.remove(it);
-
+    if (m_tabWidget)
+    {
         m_tabWidget->removePage(view);
-
-        if (viewType==ChatWindow::Query)
-            --m_queryViewCount;
-
-        if (m_queryViewCount == 0)
-            actionCollection()->action("close_queries")->setEnabled(false);
+        emit removeView(view);
 
         if (m_tabWidget->count() <= 0)
         {
             m_saveSplitterSizesLock = true;
-            m_vbox->hide();//m_tabWidget->hide();
+            m_vbox->hide();
             emit resetStatusBar();
             emit setWindowCaption(QString::null);
         }
+
+        updateViewActions(m_tabWidget->currentPageIndex());
     }
 
-    updateViewActions(m_tabWidget->currentPageIndex());
+    // Remove the view from the active view list if it's still on it
+    QValueList<ChatWindow*>::iterator it = m_activeViewOrderList.find(view);
+
+    if (it != m_activeViewOrderList.end())
+        m_activeViewOrderList.remove(it);
+
+    if (view->getType() == ChatWindow::Query)
+        --m_queryViewCount;
+
+    if (m_queryViewCount == 0 && actionCollection())
+    {
+        KAction* action = actionCollection()->action("close_queries");
+        if (action) action->setEnabled(false);
+    }
 }
 
 void ViewContainer::closeViewMiddleClick(QWidget* view)
@@ -2031,7 +2037,6 @@ void ViewContainer::addDccPanel()
         m_dccPanelOpen=true;
         (dynamic_cast<KToggleAction*>(actionCollection()->action("open_dccstatus_window")))->setChecked(true);
     }
-    // FIXME newText(dccPanel,QString::null,true);
 }
 
 void ViewContainer::closeDccPanel()

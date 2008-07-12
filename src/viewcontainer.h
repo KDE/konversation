@@ -94,6 +94,7 @@ class ViewContainer : public QObject
         void closeView(ChatWindow* view);
         void closeViewMiddleClick(QWidget* view);
         void closeCurrentView();
+        void cleanupAfterClose(ChatWindow* view);
 
         void changeViewCharset(int index);
         void updateViewEncoding(ChatWindow* view);
