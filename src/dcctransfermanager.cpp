@@ -12,6 +12,8 @@
 #include "dcctransfermanager.h"
 #include "dcctransferrecv.h"
 #include "dcctransfersend.h"
+#include "konversationapplication.h"
+#include "preferences.h"
 
 #include <kdebug.h>
 
@@ -21,6 +23,13 @@ DccTransferManager::DccTransferManager( QObject* parent )
 {
     // initial number
     m_nextReverseTokenNumber = 1001;
+
+    kdDebug() << "DccTransferManager::DccTransferManager()" << endl;
+    m_defaultIncomingFolder = Preferences::dccPath();
+    kdDebug() << m_defaultIncomingFolder << endl;
+
+    connect( KonversationApplication::instance(), SIGNAL( appearanceChanged() ),
+             this, SLOT( slotSettingsChanged() ) );
 }
 
 DccTransferManager::~DccTransferManager()
@@ -188,6 +197,38 @@ void DccTransferManager::slotTransferStatusChanged( DccTransfer* item, int newSt
 
     if ( newStatus == DccTransfer::Queued )
         emit newTransferQueued( item );
+}
+
+void DccTransferManager::slotSettingsChanged()
+{
+    // update the default incoming directory for already existed DCCRECV items
+    if ( Preferences::dccPath() != m_defaultIncomingFolder )
+    {
+        QValueListConstIterator< DccTransferRecv* > it;
+        for ( it = m_recvItems.begin() ; it != m_recvItems.end() ; ++it )
+        {
+            kdDebug() << "DccTransferManager::slotSettingsChanged(): " << m_defaultIncomingFolder << " <=> " << (*it)->getFileURL().directory() << endl;
+            if ( (*it)->getStatus() == DccTransfer::Queued &&
+                 (*it)->getFileURL().directory() == m_defaultIncomingFolder )
+            {
+                kdDebug() << "DccTransferManager::slotSettingsChanged(): old: " << (*it)->getFileURL() << endl;
+                KURL url;
+                url.setDirectory( Preferences::dccPath() );
+                url.setFileName( (*it)->getFileURL().fileName() );
+                (*it)->setFileURL( url );
+                kdDebug() << "DccTransferManager::slotSettingsChanged(): new: " << url << endl;
+                kdDebug() << "DccTransferManager::slotSettingsChanged(): updating " << (*it)->getFileName() << endl;
+
+                emit fileURLChanged( *it );
+            }
+            else
+            {
+                kdDebug() << "DccTransferManager::slotSettingsChanged(): ignoring " << (*it)->getFileName() << endl;
+            }
+        }
+
+        m_defaultIncomingFolder = Preferences::dccPath();
+    }
 }
 
 void DccTransferManager::removeSendItem( DccTransfer* item_ )

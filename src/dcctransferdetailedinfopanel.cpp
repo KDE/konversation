@@ -12,6 +12,7 @@
 #include "dcctransferdetailedinfopanel.h"
 #include "channel.h"
 #include "dcctransfer.h"
+#include "dcctransfermanager.h"
 #include "dcctransferrecv.h"
 #include "dcctransferpanelitem.h"
 #include "konversationapplication.h"
@@ -35,6 +36,8 @@ DccTransferDetailedInfoPanel::DccTransferDetailedInfoPanel( QWidget* parent, con
 
     connect( m_urlreqLocation, SIGNAL( textChanged( const QString& ) ), this, SLOT( slotLocationChanged( const QString& ) ) );
     connect( m_buttonOpenFolder, SIGNAL( clicked() ), this, SLOT( slotOpenFolderButtonClicked() ) );
+    connect( KonversationApplication::instance()->getDccTransferManager(), SIGNAL( fileURLChanged( DccTransferRecv* ) ),
+             this, SLOT( updateView() ) );  // it's a little rough..
 }
 
 DccTransferDetailedInfoPanel::~DccTransferDetailedInfoPanel()
@@ -66,6 +69,7 @@ void DccTransferDetailedInfoPanel::setItem( DccTransferPanelItem* item )
 
 void DccTransferDetailedInfoPanel::updateView()
 {
+    kdDebug() << "DccTransferDetailedInfoPanel::updateView()" << endl;
     DccTransfer* transfer = m_item->transfer();
 
     // Type:

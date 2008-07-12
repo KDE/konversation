@@ -47,6 +47,8 @@ class DccTransferManager : public QObject
          */
         void newTransferQueued( DccTransfer* transfer );
 
+        void fileURLChanged( DccTransferRecv* transfer );
+
     public:
         DccTransferRecv* newDownload();
         DccTransferSend* newUpload();
@@ -80,11 +82,14 @@ class DccTransferManager : public QObject
         void removeSendItem( DccTransfer* item );
         void removeRecvItem( DccTransfer* item );
 
+        void slotSettingsChanged();
+
     private:
         QValueList< DccTransferSend* > m_sendItems;
         QValueList< DccTransferRecv* > m_recvItems;
 
         int m_nextReverseTokenNumber;
+        QString m_defaultIncomingFolder;  // store here to know if this settings is changed
 };
 
 #endif  // DCCTRANSFERMANAGER_H
