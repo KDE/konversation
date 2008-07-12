@@ -355,6 +355,8 @@ Changes since 1.0.1:
   open ban list in-line edits correctly.
 - Fixed chat views occassionally not being scrolled to the bottom at their in-
   ception with long backlog appends.
+- Fixed enabled state of "Close All Open Queries" action not being updated co-
+  rrectly when queries are closed by way of closing a status view tab.
 
 -------------------------------------------------------------------------------
 
