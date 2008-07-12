@@ -12,8 +12,8 @@ the Free Software Foundation; either version 2 of the License, or
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>533</width>
-            <height>525</height>
+            <width>578</width>
+            <height>517</height>
         </rect>
     </property>
     <property name="caption">
@@ -104,74 +104,35 @@ the Free Software Foundation; either version 2 of the License, or
                 <string>Enable fast DCC send (Might &amp;not work with all clients)</string>
             </property>
         </widget>
-        <widget class="KLineEdit" row="7" column="2">
+        <spacer row="13" column="2">
             <property name="name">
-                <cstring>kcfg_DccIPv4FallbackIface</cstring>
-            </property>
-            <property name="enabled">
-                <bool>false</bool>
-            </property>
-        </widget>
-        <spacer row="7" column="3">
-            <property name="name">
-                <cstring>spacer5</cstring>
+                <cstring>spacer4_2</cstring>
             </property>
             <property name="orientation">
-                <enum>Horizontal</enum>
-            </property>
-            <property name="sizeType">
-                <enum>Maximum</enum>
-            </property>
-            <property name="sizeHint">
-                <size>
-                    <width>196</width>
-                    <height>20</height>
-                </size>
-            </property>
-        </spacer>
-        <widget class="QCheckBox" row="7" column="0" rowspan="1" colspan="2">
-            <property name="name">
-                <cstring>kcfg_DccIPv4Fallback</cstring>
-            </property>
-            <property name="text">
-                <string>Fallback to an IPv&amp;4 interface for DCC send:</string>
-            </property>
-            <property name="whatsThis" stdset="0">
-                <string>If this option enabled dcc transfers for IPv6 connections will be done over IPv4 interface set here</string>
-            </property>
-        </widget>
-        <widget class="QSpinBox" row="8" column="2">
-            <property name="name">
-                <cstring>kcfg_DccSendTimeout</cstring>
-            </property>
-            <property name="suffix">
-                <string> sec</string>
-            </property>
-            <property name="maxValue">
-                <number>300</number>
-            </property>
-            <property name="minValue">
-                <number>1</number>
-            </property>
-        </widget>
-        <spacer row="8" column="3">
-            <property name="name">
-                <cstring>spacer3</cstring>
-            </property>
-            <property name="orientation">
-                <enum>Horizontal</enum>
+                <enum>Vertical</enum>
             </property>
             <property name="sizeType">
                 <enum>Expanding</enum>
             </property>
             <property name="sizeHint">
                 <size>
-                    <width>202</width>
-                    <height>20</height>
+                    <width>20</width>
+                    <height>16</height>
                 </size>
             </property>
         </spacer>
-        <widget class="QLabel" row="8" column="0" rowspan="1" colspan="2">
+        <widget class="QLabel" row="10" column="0" rowspan="1" colspan="2">
+            <property name="name">
+                <cstring>textLabel6</cstring>
+            </property>
+            <property name="text">
+                <string>Buffer si&amp;ze:</string>
+            </property>
+            <property name="buddy" stdset="0">
+                <cstring>kcfg_DccBufferSize</cstring>
+            </property>
+        </widget>
+        <widget class="QLabel" row="9" column="0" rowspan="1" colspan="2">
             <property name="name">
                 <cstring>textLabel7</cstring>
             </property>
@@ -182,7 +143,21 @@ the Free Software Foundation; either version 2 of the License, or
                 <cstring>kcfg_DccSendTimeout</cstring>
             </property>
         </widget>
-        <widget class="QSpinBox" row="9" column="2">
+        <widget class="QCheckBox" row="8" column="0" rowspan="1" colspan="2">
+            <property name="name">
+                <cstring>kcfg_DccIPv4Fallback</cstring>
+            </property>
+            <property name="text">
+                <string>Fallback to an IPv&amp;4 interface for DCC send:</string>
+            </property>
+            <property name="accel">
+                <string>Alt+4</string>
+            </property>
+            <property name="whatsThis" stdset="0">
+                <string>If this option enabled dcc transfers for IPv6 connections will be done over IPv4 interface set here</string>
+            </property>
+        </widget>
+        <widget class="QSpinBox" row="10" column="2">
             <property name="name">
                 <cstring>kcfg_DccBufferSize</cstring>
             </property>
@@ -199,18 +174,74 @@ the Free Software Foundation; either version 2 of the License, or
                 <number>128</number>
             </property>
         </widget>
-        <widget class="QLabel" row="9" column="0" rowspan="1" colspan="2">
+        <widget class="QSpinBox" row="9" column="2">
             <property name="name">
-                <cstring>textLabel6</cstring>
+                <cstring>kcfg_DccSendTimeout</cstring>
             </property>
-            <property name="text">
-                <string>Buffer si&amp;ze:</string>
+            <property name="suffix">
+                <string> sec</string>
             </property>
-            <property name="buddy" stdset="0">
-                <cstring>kcfg_DccBufferSize</cstring>
+            <property name="maxValue">
+                <number>300</number>
+            </property>
+            <property name="minValue">
+                <number>1</number>
             </property>
         </widget>
+        <widget class="KLineEdit" row="8" column="2">
+            <property name="name">
+                <cstring>kcfg_DccIPv4FallbackIface</cstring>
+            </property>
+            <property name="enabled">
+                <bool>false</bool>
+            </property>
+        </widget>
+        <widget class="QCheckBox" row="7" column="0" rowspan="1" colspan="2">
+            <property name="name">
+                <cstring>kcfg_DccPassiveSend</cstring>
+            </property>
+            <property name="text">
+                <string>Enable passive DCC send</string>
+            </property>
+            <property name="accel">
+                <string></string>
+            </property>
+        </widget>
+        <spacer row="8" column="3">
+            <property name="name">
+                <cstring>spacer5</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Horizontal</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Maximum</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>70</width>
+                    <height>20</height>
+                </size>
+            </property>
+        </spacer>
         <spacer row="9" column="3">
+            <property name="name">
+                <cstring>spacer3</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Horizontal</enum>
+            </property>
+            <property name="sizeType">
+                <enum>Expanding</enum>
+            </property>
+            <property name="sizeHint">
+                <size>
+                    <width>70</width>
+                    <height>20</height>
+                </size>
+            </property>
+        </spacer>
+        <spacer row="10" column="3">
             <property name="name">
                 <cstring>spacer3_2</cstring>
             </property>
@@ -222,22 +253,11 @@ the Free Software Foundation; either version 2 of the License, or
             </property>
             <property name="sizeHint">
                 <size>
-                    <width>202</width>
+                    <width>70</width>
                     <height>20</height>
                 </size>
             </property>
         </spacer>
-        <widget class="QCheckBox" row="10" column="0" rowspan="1" colspan="2">
-            <property name="name">
-                <cstring>kcfg_DccPassiveSend</cstring>
-            </property>
-            <property name="text">
-                <string>Enable Passive DCC send</string>
-            </property>
-            <property name="accel">
-                <string></string>
-            </property>
-        </widget>
         <widget class="QGroupBox" row="11" column="0" rowspan="1" colspan="4">
             <property name="name">
                 <cstring>groupBox1</cstring>
@@ -430,25 +450,10 @@ the Free Software Foundation; either version 2 of the License, or
                 </widget>
             </grid>
         </widget>
-        <spacer row="13" column="2">
-            <property name="name">
-                <cstring>spacer4_2</cstring>
-            </property>
-            <property name="orientation">
-                <enum>Vertical</enum>
-            </property>
-            <property name="sizeType">
-                <enum>Expanding</enum>
-            </property>
-            <property name="sizeHint">
-                <size>
-                    <width>20</width>
-                    <height>10</height>
-                </size>
-            </property>
-        </spacer>
     </grid>
 </widget>
+<customwidgets>
+</customwidgets>
 <connections>
     <connection>
         <sender>kcfg_DccSpecificSendPorts</sender>
@@ -501,6 +506,7 @@ the Free Software Foundation; either version 2 of the License, or
     <tabstop>kcfg_DccAutoGet</tabstop>
     <tabstop>kcfg_DccAutoResume</tabstop>
     <tabstop>kcfg_DccFastSend</tabstop>
+    <tabstop>kcfg_DccPassiveSend</tabstop>
     <tabstop>kcfg_DccIPv4Fallback</tabstop>
     <tabstop>kcfg_DccIPv4FallbackIface</tabstop>
     <tabstop>kcfg_DccSendTimeout</tabstop>
