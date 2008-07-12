@@ -69,7 +69,6 @@ void DccTransferDetailedInfoPanel::setItem( DccTransferPanelItem* item )
 
 void DccTransferDetailedInfoPanel::updateView()
 {
-    kdDebug() << "DccTransferDetailedInfoPanel::updateView()" << endl;
     DccTransfer* transfer = m_item->transfer();
 
     // Type:
