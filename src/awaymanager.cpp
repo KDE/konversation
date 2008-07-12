@@ -98,8 +98,6 @@ AwayManager::~AwayManager()
 
 void AwayManager::identitiesChanged()
 {
-    kdDebug() << "AwayManager - identitiesChanged() - Updating list of active identities with auto-away enabled." << endl;
-
     QValueList<int> newIdentityList;
 
     QPtrList<Server> serverList = m_connectionManager->getServerList();
@@ -120,66 +118,40 @@ void AwayManager::identitiesChanged()
 
 void AwayManager::identityOnline(int identityId)
 {
-    kdDebug() << "AwayManager - identityOnline() - Id: " << identityId << endl;
-
     IdentityPtr identity = Preferences::identityById(identityId);
 
     if (identity && identity->getAutomaticAway() &&
         !m_identitiesOnAutoAway.contains(identityId))
     {
-        kdDebug() << "AwayManager - identityOnline() - Adding identity " << identityId << " to list." << endl;
-
         m_identitiesOnAutoAway.append(identityId);
 
         toggleTimer();
     }
-    else
-        kdDebug() << "AwayManager - identityOnline() - Identity " << identityId << " is not managed." << endl;
 }
 
 void AwayManager::identityOffline(int identityId)
 {
-    kdDebug() << "AwayManager - identityOffline() - Id: " << identityId << endl;
-
     if (m_identitiesOnAutoAway.contains(identityId))
     {
-        kdDebug() << "AwayManager - identityOnline() - Removing identity " << identityId << " from list." << endl;
-
         m_identitiesOnAutoAway.remove(identityId);
 
         toggleTimer();
     }
-    else
-        kdDebug() << "AwayManager - identityOnline() - Identity " << identityId << " was not managed." << endl;
 }
 
 void AwayManager::toggleTimer()
 {
-    kdDebug() << "AwayManager - toggleTimer() - (Re-)checking whether to start or stop activity polling." << endl;
-
     if (m_identitiesOnAutoAway.count() > 0)
     {
         if (!m_activityTimer->isActive())
-        {
-            kdDebug() << "AwayManager - toggleTimer() - Starting timer." << endl;
-
             m_activityTimer->start(Preferences::autoAwayPollInterval() * 1000);
-        }
-        else
-            kdDebug() << "AwayManager - toggleTimer() - Timer already running." << endl;
     }
     else if (m_activityTimer->isActive())
-    {
-        kdDebug() << "AwayManager - toggleTimer() - Stopping timer." << endl;
-
         m_activityTimer->stop();
-    }
 }
 
 void AwayManager::checkActivity()
 {
-    kdDebug() << "AwayManager - checkActivity() - Checking for activity." << endl;
-
     // Allow the event loop to be called, to avoid deadlock.
     static bool rentrencyProtection = false;
     if (rentrencyProtection) return;
@@ -192,13 +164,7 @@ void AwayManager::checkActivity()
     rentrencyProtection = false;
 
     if (!(isBlanked.isValid() && isBlanked.type == "bool" && ((bool)isBlanked)))
-    {
-         kdDebug() << "AwayManager - checkActivity() - Using X method (screenserver not blanked, or DCOP error)." << endl;
-
          implementIdleAutoAway(Xactivity());
-    }
-    else
-        kdDebug() << "AwayManager - checkActivity() - Screensaver is blanked: Should be away already." << endl;
 }
 
 bool AwayManager::Xactivity()
@@ -262,8 +228,6 @@ bool AwayManager::Xactivity()
     }
 #endif
 
-    kdDebug() << "AwayManager - Xactivity() - Activity: " << activity << "." << endl;
-
     return activity;
 }
 
@@ -271,8 +235,6 @@ void AwayManager::implementIdleAutoAway(bool activity)
 {
     if (activity)
     {
-        kdDebug() << "AwayManager - implementIdleAutoAway() - Setting all managed identities with auto-return enabled unaway as necessary." << endl;
-
         m_idleTime.start();
 
         QPtrList<Server> serverList = m_connectionManager->getServerList();
@@ -285,19 +247,13 @@ void AwayManager::implementIdleAutoAway(bool activity)
             if (m_identitiesOnAutoAway.contains(identity->id()) && identity->getAutomaticUnaway()
                 && server->isConnected() && server->isAway())
             {
-                kdDebug() << "AwayManager - implementIdleAutoAway() - Setting connection " << server->connectionId() << " (identity: " << identity->id() << ") unaway." << endl;
-
                 server->requestUnaway();
             }
         }
     }
     else
     {
-        kdDebug() << "AwayManager - implementIdleAutoAway() - Setting managed identities with exceeded time limits away as necessary." << endl;
-
         long int idleTime = m_idleTime.elapsed() / 1000;
-
-        kdDebug() << "AwayManager - implementIdleAutoAway() - Idle time: " << idleTime << " seconds." << endl;
 
         QValueList<int> identitiesIdleTimeExceeded;
         QValueList<int>::ConstIterator it;
@@ -316,19 +272,13 @@ void AwayManager::implementIdleAutoAway(bool activity)
             int identityId = server->getIdentity()->id();
 
             if (identitiesIdleTimeExceeded.contains(identityId) && server->isConnected() && !server->isAway())
-            {
-                kdDebug() << "AwayManager - implementIdleAutoAway() - Time limit for identity " << identityId << " exceeded; setting connection " << server->connectionId() << " away." << endl;
-
                 server->requestAway();
-            }
         }
     }
 }
 
 void AwayManager::setManagedIdentitiesAway()
 {
-    kdDebug() << "AwayManager - setManagedIdentitiesAway() - Setting all managed identities away as necessary." << endl;
-
     // Used to skip X-based activity checking for one round, to avoid jumping
     // on residual mouse activity after manual screensaver activation.
     d->mouseX = -1;
@@ -345,8 +295,6 @@ void AwayManager::setManagedIdentitiesAway()
 
 void AwayManager::setManagedIdentitiesUnaway()
 {
-    kdDebug() << "AwayManager - setManagedIdentitiesUnaway() - Setting all managed identities with auto-return enabled unaway as necessary." << endl;
-
     QPtrList<Server> serverList = m_connectionManager->getServerList();
     Server* server = 0;
 
