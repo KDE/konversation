@@ -150,9 +150,6 @@ the Free Software Foundation; either version 2 of the License, or
             <property name="text">
                 <string>Fallback to an IPv&amp;4 interface for DCC send:</string>
             </property>
-            <property name="accel">
-                <string>Alt+4</string>
-            </property>
             <property name="whatsThis" stdset="0">
                 <string>If this option enabled dcc transfers for IPv6 connections will be done over IPv4 interface set here</string>
             </property>
