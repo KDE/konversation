@@ -182,6 +182,7 @@ Name[tr]=Özel ileti
 Name[uk]=Приватне повідомлення
 Name[xx]=xxPrivate messagexx
 Name[zh_CN]=私人消息
+Name[zh_TW]=私密訊息
 Comment=You received a private message
 Comment[bg]=Получихте лично съобщение
 Comment[cs]=Obdrželi jste soukromou zprávu
@@ -203,6 +204,7 @@ Comment[tr]=Bir özel ileti aldınız
 Comment[uk]=Ви отримали приватне повідомлення
 Comment[xx]=xxYou received a private messagexx
 Comment[zh_CN]=您收到了私人消息
+Comment[zh_TW]=您接收到一個私密訊息
 default_presentation=0
 
 [nickchange]
