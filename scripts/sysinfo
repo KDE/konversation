@@ -16,8 +16,8 @@ export LC_ALL="C"
 
 HN="$(hostname)"
 OSKERN="$(uname -s) $(uname -r)"
-if [ "$KDE_FULL_SESSION" == "true" ]; then
-	if [ "$KDE_SESSION_VERSION" == 4 ];  then
+if [ "$KDE_FULL_SESSION" = "true" ]; then
+	if [ "$KDE_SESSION_VERSION" = 4 ];  then
 		KDE="$(kde4-config --version | sed -n '2p' | sed 's/://;s/ *$//')"
 	else
 		KDE="$(kde-config --version | sed -n '2p' | sed 's/://;s/ *$//')"
@@ -75,10 +75,10 @@ printf ("%d.%d%s up",n, n2, u);
 
 out="Sysinfo for '$HN': $OSKERN running $KDE, $CPU, $HDD, $MEM, $PROC proc's, ${UPT}" 
 
-if [ "x$PORT" == "x" ] ; then
+if [ "x$PORT" = "x" ] ; then
     echo "$out"
 else
-    if [ "x$TARGET" == "x" ] ; then
+    if [ "x$TARGET" = "x" ] ; then
 	dcop $PORT default error "$out"
     else
 	dcop $PORT default say $SERVER "$TARGET" "$out"

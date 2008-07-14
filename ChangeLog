@@ -420,14 +420,15 @@ Included scripts
 * Support for KMPlayer in the 'media' script (based on the window caption, as
   KMPlayer has no proper appropriate DCOP interface).
 * Added KPlayer support to the 'media' script (also caption-based).
-* Added support for Audacious to the media script.
-* Fixed problems in disk space calculation in the /sysinfo script caused by
+* Added support for Audacious to the 'media' script.
+* Fixed problems in disk space calculation in the 'sysinfo' script caused by
   wrapped df(1) output.
-* Added KDE 4 support to the sysinfo script.
+* Added KDE 4 support to the 'sysinfo' script.
+* Removed some bashisms from the 'sysinfo' script.
 * Rewrote 'weather' script for increased reliability in error handling and
   better readability.
-* Removed broken qurl script in favor of new tinyurl one.
-* Fixed the /fortune script not working properly when variable expansion is
+* Removed broken 'qurl' script in favor of new 'tinyurl' one.
+* Fixed the 'fortune' script not working properly when variable expansion is
   turned off in the preferences.
 
 Build
