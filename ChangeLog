@@ -110,12 +110,12 @@ Tab bar / Tree list
   bar and offer context menu actions to rejoin.
 * Channel and query tabs will now grey out on the tab bar when disconnected and
   no higher priority notification is present. Channel tabs will only ungrey if
-  and  when the channel is successfully rejoined after reconnect; query tabs
-  ungrey  immediately once reconnected.
+  and when the channel is successfully rejoined after reconnect; query tabs
+  ungrey immediately once reconnected.
 * Display tooltips for truncated treelist items.
 * Fixed forwarding keyboard events received by the treelist to Konsole widgets
   and focus adjustment thereafter as well as generally after switching to
-  Konsole  tabs by other means.
+  Konsole tabs by other means.
 * Fixed treelist scrollbar not picking up on new palette when the KDE color
   scheme changes.
 * Fixed a bug that could cause a crash when the view treelist would receive
@@ -150,8 +150,8 @@ Server List Dialogs
   application startup using the Beryl or Compiz compositing window managers.
 
 Interface Misc
-* Added a keyboard shortcut to jump to the next active tab with the highest
-  priority notification.
+* Added a "Next Active Tab" keyboard shortcut to jump to the next active tab with
+  the highest priority notification.
 * Added a Find Previous standard action.
 * Have the "Insert Character" dialog pick up on text view font changes.
 * Show correct number of colors in the color chooser dialog.
@@ -224,8 +224,8 @@ Connection handling
 * Improved behavior with regard to reusing existing connections in connection
   attempts that provide an initial channel to join, such as command line
   arguments, the DCOP interface, the bookmark system or irc:// links).
-  Previously,  the application would have inconsistently either reused an
-  existing  or created a  new connection.
+  Previously, the application would have inconsistently either reused an
+  existing or created a new connection.
 * Better dialog messages in the interactive variant of the decision to either
   reuse or create a new connection (from the Server List dialog and the Quick
   Connect dialog).
@@ -248,18 +248,18 @@ Connection handling
   configuration-based auto-connect behavior.
 * Providing a channel in the creation of a new connection (i.e. via command line
   arguments, the DCOP interface, the Quick Connect dialog, the bookmark system
-  or  irc:// links) now consistently pre-empts the stored auto-join channel list
-  if  the target of the connection is a network or the hostname is found to be
-  part of  a configured network. Previously, this would only work for Quick
-  Connect and the  bookmark system (which caused the infamous Sabayon user flood
-  in #kde due to  their "Get Support" desktop link connecting to Freenode, which
-  in an  unconfigured Konversation has #kde in its auto-join list).
+  or irc:// links) now consistently pre-empts the stored auto-join channel list
+  if the target of the connection is a network or the hostname is found to be
+  part of a configured network. Previously, this would only work for Quick
+  Connect and the bookmark system (which caused the infamous Sabayon user flood
+  in #kde due to their "Get Support" desktop link connecting to Freenode, which
+  in an unconfigured Konversation has #kde in its auto-join list).
 * Connections now have globally unique IDs.
 * The DCOP interface now understands connection IDs in addition to host names.
 * The scripting systems now uses globally unique connection IDs rather than
   server host names to refer to connections, fixing a bug where scripted
-  responses  were being handed to all connections sharing a hostname (which was
-  actually  intentional in the absence of connection IDs, but undesirable for
+  responses were being handed to all connections sharing a hostname (which was
+  actually intentional in the absence of connection IDs, but undesirable for
   users).
 * Improved iteration behavior over a network's server list on connection losses.
 * The "Reconnect" action now works also when Konversation doesn't consider the
@@ -383,9 +383,9 @@ Channel List
   List views.
 
 Under the Hood / Protocol
-* Rewrote the outbound queue scheduling system to be  smart enough to reorder
+* Rewrote the outbound queue scheduling system to be smart enough to reorder
   outbound traffic to reduce interactive latency while aggressively throttling
-  the  rate to prevent flooding. Use '/queuetuner' to tweak.
+  the rate to prevent flooding. Use '/queuetuner' to tweak.
 * Rearranged when and how auto-who is triggered upon channel join a bit, to
   avoid excessive flooding on multiple concurrent joins in some cases.
 * Auto-Who reliability improvements.
@@ -393,7 +393,7 @@ Under the Hood / Protocol
   the maximum buffer length; it is now split into multiple commands as needed).
 * Fixed bugs around rejoining channels after reconnects related to the cause of
   the disconnect, channel passwords and picking the actual list of joined
-  channels  over the network's auto-join list.
+  channels over the network's auto-join list.
 * Improved behavioral consistency in situations where the auto-join list is
   preempted by a transitory auto-join channel (bookmarks, etc.).
 * Fixed bug that caused the topic state not to be cleared properly prior to
