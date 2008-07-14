@@ -12,9 +12,9 @@ more), redone DCC with better UI and Passive/Reverse DCC support, a redone away
 system with the addition of auto-away support, redone and much more useful
 remember / marker line support, a new outbound traffic scheduler that is capable
 of aggressive throttling to avoid flooding while smartly reordering messages to
-improve latencies, great convenience additions like a "Next Active View"
-shortcut, and much, much more, along with a large number of bugfixes and tweaks
-to round things out.
+improve latencies, great convenience additions like a "Next Active Tab" shortcut,
+and much, much more, along with a large number of bugfixes and tweaks to round
+things out.
 
 Please note that while we're generally quite confident that this release
 candidate is the most robust and stable version of Konversation published so
