@@ -2046,7 +2046,7 @@ void ViewContainer::closeDccPanel()
     {
         // hide it from view, does not delete it
         emit removeView(m_dccPanel);
-        m_tabWidget->removePage(m_dccPanel);
+        if (m_tabWidget) m_tabWidget->removePage(m_dccPanel);
         m_dccPanelOpen=false;
         (dynamic_cast<KToggleAction*>(actionCollection()->action("open_dccstatus_window")))->setChecked(false);
     }

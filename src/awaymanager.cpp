@@ -94,6 +94,7 @@ AwayManager::AwayManager(QObject* parent) : QObject(parent)
 
 AwayManager::~AwayManager()
 {
+    delete d;
 }
 
 void AwayManager::identitiesChanged()

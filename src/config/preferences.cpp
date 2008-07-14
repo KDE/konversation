@@ -56,6 +56,7 @@ Preferences::Preferences()
     mIdentity=new Identity();
     mIdentity->setName(i18n("Default Identity"));
     addIdentity(mIdentity);
+    mIgnoreList.setAutoDelete(true);
 
     KUser user(KUser::UseRealUserID);
     mIdentity->setIdent(user.loginName());

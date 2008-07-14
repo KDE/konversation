@@ -334,6 +334,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
 
 KonversationMainWindow::~KonversationMainWindow()
 {
+    delete m_viewContainer;
 }
 
 int KonversationMainWindow::confirmQuit()
