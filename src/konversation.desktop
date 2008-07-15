@@ -1,8 +1,8 @@
 [Desktop Entry]
 Type=Application
-Exec=konversation -caption "%c" %i %m
+Exec=konversation -caption "%c" %i
 Icon=konversation
-DocPath=konversation/index.html
+X-DocPath=konversation/index.html
 GenericName=IRC Client
 GenericName[ar]=زبون IRC
 GenericName[bg]=IRC клиент
@@ -45,4 +45,3 @@ Categories=Qt;KDE;Network;IRCClient;X-SuSE-IRCClient;
 ServiceTypes=DCOP/InstantMessenger;DCOP/Unique
 X-DCOP-ServiceName=konversation
 X-DCOP-ServiceType=Unique
-Encoding=UTF-8
