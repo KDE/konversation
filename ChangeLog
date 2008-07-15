@@ -1,3 +1,11 @@
+Changes since 1.1rc1:
+
+DCC
+* New transfer items added to the DCC panel's transfer list are no longer auto-
+  matically selected, meaning work on other items in the list occuring at the
+  same time gets no longer interrupted.
+
+
 Changes from 1.0.1 to 1.1rc1:
 We are extremely pleased to announce the first release candidate of
 Konversation's next major release, v1.1. Konversation 1.1 is a special release
