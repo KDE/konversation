@@ -92,12 +92,12 @@ void OSD_Config::saveSettings()
     if (kcfg_UseOSD->isChecked())
     {
         konvApp->osd->setFont(Preferences::oSDFont());
-	if(kcfg_OSDUseCustomColors->isChecked())
+        if(kcfg_OSDUseCustomColors->isChecked())
         {
             konvApp->osd->setTextColor(kcfg_OSDTextColor->color());
             konvApp->osd->setBackgroundColor(kcfg_OSDBackgroundColor->color());
         }
-    else
+        else
         {
             konvApp->osd->unsetColors();
         }
@@ -107,8 +107,8 @@ void OSD_Config::saveSettings()
         konvApp->osd->setShadow(kcfg_OSDDrawShadow->isChecked());
 
         //x is ignored anyway, but leave incase we use in future
-        konvApp->osd->setOffset(m_pOSDPreview->x(),m_pOSDPreview->y());
-        konvApp->osd->setAlignment((OSDWidget::Alignment)m_pOSDPreview->alignment());
+        konvApp->osd->setOffset(kcfg_OSDOffsetX->value(), kcfg_OSDOffsetY->value());
+        konvApp->osd->setAlignment((OSDWidget::Alignment)kcfg_OSDAlignment->value());
     }
 
 }

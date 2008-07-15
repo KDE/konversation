@@ -5,6 +5,10 @@ DCC
   matically selected, meaning work on other items in the list occuring at the
   same time gets no longer interrupted.
 
+On Screen Display
+* Fixed on screen display occassionally reverting to the default position when
+  using the settings dialog to change unrelated settings.
+
 
 Changes from 1.0.1 to 1.1rc1:
 We are extremely pleased to announce the first release candidate of
