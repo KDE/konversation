@@ -122,6 +122,7 @@ class KonversationMainWindow : public KMainWindow
         void showEvent(QShowEvent* e);
         void hideEvent(QHideEvent* e);
         void leaveEvent(QEvent* e);
+        
 
     protected:
         int confirmQuit();

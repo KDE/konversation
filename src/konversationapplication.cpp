@@ -79,6 +79,8 @@ int KonversationApplication::newInstance()
 
     if (!mainWindow)
     {
+        connect(this, SIGNAL(shutDown()), this, SLOT(prepareShutdown()));
+
         m_connectionManager = new ConnectionManager(this);
 
         m_awayManager = new AwayManager(this);
@@ -206,6 +208,23 @@ int KonversationApplication::newInstance()
 KonversationApplication* KonversationApplication::instance()
 {
     return static_cast<KonversationApplication*>(KApplication::kApplication());
+}
+
+void KonversationApplication::prepareShutdown()
+{
+    if (mainWindow->isHidden() && Preferences::showTrayIcon())
+        Preferences::setHiddenToTray(true);
+    else
+        Preferences::setHiddenToTray(false);
+
+    mainWindow->getViewContainer()->prepareShutdown();
+
+    m_awayManager->blockSignals(true);
+    delete m_awayManager;
+
+    m_connectionManager->quitServers();
+    m_connectionManager->blockSignals(true);
+    delete m_connectionManager;
 }
 
 void KonversationApplication::showQueueTuner(bool p)

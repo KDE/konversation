@@ -404,22 +404,6 @@ bool KonversationMainWindow::queryClose()
             return false;
     }
 
-    konvApp->getAwayManager()->blockSignals(true);
-
-    ConnectionManager* connectionManager = konvApp->getConnectionManager();
-    connectionManager->quitServers();
-    connectionManager->blockSignals(true);
-    connectionManager->deleteLater();
-
-    //i moved this down because quitServers could trigger maniuplations of m_tabWidget,
-    // but prepareShutdown nulls m_tabWidget, causing crashing.
-    m_viewContainer->prepareShutdown();
-
-    if (isHidden() && Preferences::showTrayIcon())
-        Preferences::setHiddenToTray(true);
-    else
-        Preferences::setHiddenToTray(false);
-
     return true;
 }
 

@@ -135,6 +135,8 @@ class KonversationApplication : public KUniqueApplication
 
 
     protected slots:
+        void prepareShutdown();
+
         void openQuickConnectDialog();
 
         void dcopMultiServerRaw(const QString &command);

@@ -83,7 +83,6 @@ ViewContainer::ViewContainer(KonversationMainWindow* window):
 
 ViewContainer::~ViewContainer()
 {
-    deleteDccPanel();
 }
 
 void ViewContainer::showQueueTuner(bool p)
@@ -106,6 +105,8 @@ void ViewContainer::setFrontServer(Server* newserver)
 void ViewContainer::prepareShutdown()
 {
     if (!m_tabWidget) return;
+
+    deleteDccPanel();
 
     for (int i = 0; i < m_tabWidget->count(); ++i)
         m_tabWidget->page(i)->blockSignals(true);
@@ -1549,7 +1550,7 @@ void ViewContainer::cleanupAfterClose(ChatWindow* view)
 
     if (m_tabWidget)
     {
-        m_tabWidget->removePage(view);
+        //m_tabWidget->removePage(view);
         emit removeView(view);
 
         if (m_tabWidget->count() <= 0)

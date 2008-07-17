@@ -164,7 +164,7 @@ void resetNickSelection();
 
         StatusPanel* getStatusView() const { return m_statusView; }
         virtual bool closeYourself(bool askForConfirmation=true);
-        
+
         QString getOwnIpByNetworkInterface();
         QString getOwnIpByServerMessage();
 
