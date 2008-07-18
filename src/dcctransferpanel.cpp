@@ -166,6 +166,14 @@ void DccTransferPanel::slotNewTransferAdded( DccTransfer* transfer )
 {
     DccTransferPanelItem* item = new DccTransferPanelItem( this, transfer );
     connect( transfer, SIGNAL( statusChanged( DccTransfer*, int, int ) ), this, SLOT( slotTransferStatusChanged() ) );
+    if ( m_listView->childCount() == 1 )
+    {
+        m_listView->clearSelection();
+        m_listView->setSelected( item, true );
+        m_listView->setCurrentItem( item );
+        updateButton();
+        setDetailPanelItem( item );
+    }
 }
 
 void DccTransferPanel::slotTransferStatusChanged()
