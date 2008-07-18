@@ -11,6 +11,8 @@ On Screen Display
 
 Misc
 * Fixed a crash on quit during KDE logout or when quitting by DCOP.
+* Standards compliancy fixes in the application .desktop file and the nicklist
+  icon theme .desktop files.
 
 
 Changes from 1.0.1 to 1.1rc1:
