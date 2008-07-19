@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Theme
 Name=Oxygen Theme
+Name[da]=Oxygen-tema
 Name[de]=Oxygen-Design
 Name[et]=Oxygeni teema
 Name[it]=Tema Oxygen
@@ -10,6 +11,7 @@ Name[sr@Latn]=Кисеоник тема
 Name[sv]=Oxygen-tema
 Name[zh_TW]=Oxygen 主題
 Comment="Oxygen" by Nuno Pinheiro
+Comment[da]="Oxygen" af Nuno Pinheiro
 Comment[de]="Oxygen" von Nuno Pinheiro
 Comment[et]="Oxygen" (autor Nuno Pinheiro)
 Comment[it]=«Oxygen» di Nuno Pinheiro
