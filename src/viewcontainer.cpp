@@ -1550,7 +1550,7 @@ void ViewContainer::cleanupAfterClose(ChatWindow* view)
 
     if (m_tabWidget)
     {
-        //m_tabWidget->removePage(view);
+        m_tabWidget->removePage(view);
         emit removeView(view);
 
         if (m_tabWidget->count() <= 0)
@@ -1560,8 +1560,6 @@ void ViewContainer::cleanupAfterClose(ChatWindow* view)
             emit resetStatusBar();
             emit setWindowCaption(QString::null);
         }
-
-        updateViewActions(m_tabWidget->currentPageIndex());
     }
 
     // Remove the view from the active view list if it's still on it
