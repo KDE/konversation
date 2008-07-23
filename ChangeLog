@@ -9,6 +9,13 @@ On Screen Display
 * Fixed on screen display occassionally reverting to the default position when
   using the settings dialog to change unrelated settings.
 
+Tree list
+* Fixed a corner case where a server status item could become a child item of
+  another server status item when dragging it below an special application pane
+  item such as DCC Status or Watched Nicks Online.
+* Fixed a crash when using the mouse wheel on the list within ~150ms of a drag
+  and drop operation.
+
 Misc
 * Fixed a crash on quit during KDE logout or when quitting by DCOP.
 * Standards compliancy fixes in the application .desktop file and the nicklist

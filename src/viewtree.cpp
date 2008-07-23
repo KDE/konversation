@@ -688,6 +688,8 @@ void ViewTree::keyPressEvent(QKeyEvent* e)
 
 void ViewTree::selectUpper(bool wrap)
 {
+    if (!selectedItem()) return;
+
     ViewTreeItem* itemAbove = static_cast<ViewTreeItem*>(selectedItem()->itemAbove());
 
     if (itemAbove)
@@ -707,6 +709,8 @@ void ViewTree::selectUpper(bool wrap)
 
 void ViewTree::selectLower(bool wrap)
 {
+    if (!selectedItem()) return;
+
     ViewTreeItem* itemBelow = static_cast<ViewTreeItem*>(selectedItem()->itemBelow());
 
     if (itemBelow)
@@ -776,19 +780,20 @@ void ViewTree::findDrop(const QPoint &pos, QListViewItem *&parent, QListViewItem
             if (itemAbove->sortLast())
             {
                 after = m_separator->itemAbove();
-                parent = after ? after->parent() : 0L;
+                after = (!after || after->depth() == 0) ? after : after->parent();
+                parent = 0L;
                 return;
             }
             else if (above->depth() == dragItem->depth())
             {
                 after = above;
-                parent = after->parent();
+                parent = 0L;
                 return;
             }
             else
             {
                 after = above->parent();
-                parent = after ? after->parent() : 0L;
+                parent = 0L;
                 return;
             }
         }
