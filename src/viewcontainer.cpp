@@ -416,7 +416,7 @@ void ViewContainer::updateViewActions(int index)
             action = actionCollection()->action("move_tab_right");
             if (action) action->setEnabled(m_viewTree->canMoveViewDown(view));
         }
-        else
+        else if (m_tabWidget)
         {
             action = actionCollection()->action("move_tab_left");
             if (action) action->setEnabled(index > 0);
@@ -734,7 +734,7 @@ void ViewContainer::updateViews(const Konversation::ServerGroupSettings* serverG
 
                 if (!label.isEmpty() && m_tabWidget->tabLabel(view) != label)
                 {
-                    m_tabWidget->setTabLabel(view, label);
+                    if (m_tabWidget) m_tabWidget->setTabLabel(view, label);
                     if (m_viewTree) m_viewTree->setViewName(view, label);
 
                     if (view == m_frontView)
@@ -763,7 +763,7 @@ void ViewContainer::updateViews(const Konversation::ServerGroupSettings* serverG
             if (!Preferences::tabNotificationsText())
                 m_viewTree->setViewColor(view, m_window->colorGroup().foreground());
         }
-        else
+        else if (m_tabWidget)
         {
             if (!Preferences::tabNotificationsLeds() && !Preferences::closeButtons())
                 m_tabWidget->setTabIconSet(view, QIconSet());
@@ -811,7 +811,7 @@ void ViewContainer::updateViewIcons()
         {
             if (m_viewTree)
                 m_viewTree->setViewIcon(view, images->getCloseIcon());
-            else
+            else if (m_tabWidget)
                 m_tabWidget->setTabIconSet(view, images->getCloseIcon());
         }
     }
@@ -924,7 +924,7 @@ void ViewContainer::setViewNotification(ChatWindow* view, const Konversation::Ta
                 break;
         }
     }
-    else
+    else if (m_tabWidget)
     {
         switch (type)
         {
@@ -1067,7 +1067,7 @@ void ViewContainer::unsetViewNotification(ChatWindow* view)
 
         m_viewTree->setViewColor(view, textColor);
     }
-    else
+    else if (m_tabWidget)
     {
         if (Preferences::tabNotificationsLeds())
         {
@@ -1474,7 +1474,7 @@ void ViewContainer::moveViewLeft()
             m_viewTree->moveViewUp(view);
             syncTabBarToTree();
         }
-        else
+        else if (m_tabWidget)
         {
             m_tabWidget->moveTab(index, index - 1);
             updateViewActions(index - 1);
@@ -1501,7 +1501,7 @@ void ViewContainer::moveViewRight()
             m_viewTree->moveViewDown(view);
             syncTabBarToTree();
         }
-        else
+        else if (m_tabWidget)
         {
             m_tabWidget->moveTab(index, index + 1);
             updateViewActions(index + 1);
@@ -2301,7 +2301,7 @@ void ViewContainer::updateQueryChrome(ChatWindow* view, const QString& name)
     if (!newName.isEmpty() && m_tabWidget->tabLabel(view) != newName)
     {
         if (m_viewTree) m_viewTree->setViewName(view, newName);
-        m_tabWidget->setTabLabel(view, newName);
+        if (m_tabWidget) m_tabWidget->setTabLabel(view, newName);
     }
 
     if (!newName.isEmpty() && view==m_frontView)
