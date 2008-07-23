@@ -587,9 +587,6 @@ void KonversationApplication::saveOptions(bool updateGUI)
         index++;
     }                                             // endfor
 
-    // FIXME: check if this group is still needed
-    config->setGroup("Notify List");
-
     // Remove the old servergroups from the config
     QStringList groups = config->groupList().grep(QRegExp("ServerGroup [0-9]+"));
     if(groups.count())

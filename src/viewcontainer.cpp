@@ -107,6 +107,7 @@ void ViewContainer::prepareShutdown()
     if (!m_tabWidget) return;
 
     deleteDccPanel();
+    closeNicksOnlinePanel();
 
     for (int i = 0; i < m_tabWidget->count(); ++i)
         m_tabWidget->page(i)->blockSignals(true);
