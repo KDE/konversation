@@ -284,6 +284,8 @@ void Server::connectSignals()
     connect(konvApp->getDccTransferManager(), SIGNAL(newTransferQueued(DccTransfer*)),
             this, SLOT(slotNewDccTransferItemQueued(DccTransfer*)));
 
+    connect(konvApp, SIGNAL(appearanceChanged()), this, SLOT(startNotifyTimer()));
+
    // ViewContainer
     connect(this, SIGNAL(showView(ChatWindow*)), getViewContainer(), SLOT(showView(ChatWindow*)));
     connect(this, SIGNAL(addDccPanel()), getViewContainer(), SLOT(addDccPanel()));
@@ -772,7 +774,8 @@ void Server::startNotifyTimer(int msec)
     if (msec == 0) msec = Preferences::notifyDelay()*1000;
 
     // start the timer in one shot mode
-    m_notifyTimer.start(msec, true);
+    if (Preferences::useNotify())
+        m_notifyTimer.start(msec, true);
 }
 
 void Server::notifyTimeout()

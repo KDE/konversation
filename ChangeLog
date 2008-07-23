@@ -16,6 +16,12 @@ Tree list
 * Fixed a crash when using the mouse wheel on the list within ~150ms of a drag
   and drop operation.
 
+Watched Nicknames
+* Actually honor the preference to enable/disable the Watched Nicknames Online
+  system, and apply it at runtime.
+* Make sure the periodic Watched Nicknames Online check actually starts running
+  within the same session after adding the first nickname to the list.
+
 Misc
 * Fixed a crash on quit during KDE logout or when quitting by DCOP.
 * Standards compliancy fixes in the application .desktop file and the nicklist
