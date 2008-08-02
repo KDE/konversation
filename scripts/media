@@ -244,6 +244,36 @@ class AmarokPlayer(DCOPPlayer):
                 return ''
         return data
 
+#class Amarok2Player(Player):
+#    def __init__(self):
+#        Player.__init__(self, 'Amarok2', 'audio')
+#        self.isRunning()
+#
+#    def getData(self):
+#        playing=os.popen("qdbus org.mpris.amarok /Player PositionGet").readline().strip() != "0"
+#        if playing and self.isRunning():
+#            for line in os.popen("qdbus org.mpris.amarok /Player GetMetadata").readlines():
+#                if re.match("^title", line):
+#                    title=self.reEncodeString(line.strip().split(None,1)[1])
+#                if re.match("^artist", line):
+#                    artist=self.reEncodeString(line.strip().split(None,1)[1])
+#                if re.match("^album", line):
+#                    album=self.reEncodeString(line.strip().split(None,1)[1])
+#            return (title, artist, album)
+#        else:
+#            return ''
+#
+#    def isRunning(self):
+#        qdbus_items=subprocess.Popen(['qdbus'], stdout=subprocess.PIPE).communicate()[0]
+#        running=re.findall('^ org.mpris.amarok$', qdbus_items, re.M)
+#        if type(running) is list:
+#            try:
+#                running=running[0]
+#            except IndexError:
+#                running=''
+#        self.running=bool(running.strip())
+#        return self.running
+
 import socket
 
 class MPD(Player):
