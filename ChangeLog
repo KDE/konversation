@@ -24,6 +24,10 @@ Watched Nicknames
 * Fixed a crash on quit with the Watched Nicks Online tab open and there being
   an open connection to a network that nicks are being watched for.
 
+Included scripts
+* Fixed a bug in the 'media' script that caused it to break when querying Auda-
+  cious with audtool not being available.
+
 Misc
 * Fixed a crash on quit during KDE logout or when quitting by DCOP.
 * Standards compliancy fixes in the application .desktop file and the nicklist

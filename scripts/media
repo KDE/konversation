@@ -329,7 +329,7 @@ class AudaciousPlayer(Player):
 
     def isRunning(self):
         self.running = not os.system('audtool current-song')
-	return self.running
+        return self.running
 
     def getData(self):
         if self.isRunning() and not os.system('audtool playback-playing'):
@@ -343,6 +343,8 @@ class AudaciousPlayer(Player):
                 return (self.reEncodeString(data_list[-1]),data_list[0],data_list[1])
             else:
                 return (self.reEncodeString(data),'','')
+        else:
+            return ''
 
 
 def playing(playerList, mode=None):
