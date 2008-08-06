@@ -4,6 +4,8 @@ DCC
 * New transfer items added to the DCC panel's transfer list are no longer auto-
   matically selected, meaning work on other items in the list occuring at the
   same time no longer gets interrupted.
+* The "Filename:" line in the DCC panel's detailled info pane is now using text
+  squeezing to avoid an increase in minimum window width with long file names.
 
 On Screen Display
 * Fixed on screen display occassionally reverting to the default position when

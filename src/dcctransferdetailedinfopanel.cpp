@@ -27,6 +27,7 @@
 #include <kprogress.h>
 #include <krun.h>
 #include <kurlrequester.h>
+#include <ksqueezedtextlabel.h>
 
 
 DccTransferDetailedInfoPanel::DccTransferDetailedInfoPanel( QWidget* parent, const char* name )
