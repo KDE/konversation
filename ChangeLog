@@ -1,48 +1,9 @@
-Changes since 1.1rc1:
-
-DCC
-* New transfer items added to the DCC panel's transfer list are no longer auto-
-  matically selected, meaning work on other items in the list occuring at the
-  same time no longer gets interrupted.
-* The "Filename:" line in the DCC panel's detailled info pane is now using text
-  squeezing to avoid an increase in minimum window width with long file names.
-* Failed receives now longer show 833TB/s as their transfer speed.
-
-On Screen Display
-* Fixed on screen display occassionally reverting to the default position when
-  using the settings dialog to change unrelated settings.
-
-Tree list
-* Fixed a corner case where a server status item could become a child item of
-  another server status item when dragging it below an special application pane
-  item such as DCC Status or Watched Nicks Online.
-* Fixed a crash when using the mouse wheel on the list within ~150ms of a drag
-  and drop operation.
-
-Watched Nicknames
-* Actually honor the preference to enable/disable the Watched Nicknames Online
-  system, and apply it at runtime.
-* Make sure the periodic Watched Nicknames Online check actually starts running
-  within the same session after adding the first nickname to the list.
-* Fixed a crash on quit with the Watched Nicks Online tab open and there being
-  an open connection to a network that nicks are being watched for.
-
-Included scripts
-* Fixed a bug in the 'media' script that caused it to break when querying Auda-
-  cious with audtool not being available.
-
-Misc
-* Fixed a crash on quit during KDE logout or when quitting by DCOP.
-* Standards compliancy fixes in the application .desktop file and the nicklist
-  icon theme .desktop files.
-
-
-Changes from 1.0.1 to 1.1rc1:
-We are extremely pleased to announce the first release candidate of
-Konversation's next major release, v1.1. Konversation 1.1 is a special release
-for us in multiple ways: It's our farewell to KDE 3, by way of being the last
-major release built upon that venerable platform. It's also our biggest release
-yet, in terms of the number and magnitude of the changes.
+Changes from 1.0.1 to 1.1:
+We are extremely pleased to announce Konversation's newest major release, v1.1.
+Konversation 1.1 is a special release for us in multiple ways: It's our farewell
+to KDE 3, by way of being the last major release built upon that venerable
+platform. It's also our biggest release yet, in terms of the number and
+magnitude of the changes.
 
 The additions and improvements in this release are both user-visible and under
 the hood. Some of the highlights are rewritten connection handling (robustness
@@ -53,13 +14,12 @@ remember / marker line support, a new outbound traffic scheduler that is capable
 of aggressive throttling to avoid flooding while smartly reordering messages to
 improve latencies, great convenience additions like a "Next Active Tab" shortcut,
 and much, much more, along with a large number of bugfixes and tweaks to round
-things out.
+things out. Note: All fixes made since RC1 are marked with a "[New since RC1]"
+label in the changelog.
 
-Please note that while we're generally quite confident that this release
-candidate is the most robust and stable version of Konversation published so
-far, this is not a final release version, and so nasty bugs might still be
-present (if you find any, please report :-). Translation coverage is also not
-yet finalized.
+We're confident that this release is the best and most robust version of
+Konversation published so far, and upgrading comes highly recommended to
+all users. Enjoy!
 
 
 Text views
@@ -159,6 +119,11 @@ Tab bar / Tree list
   scheme changes.
 * Fixed a bug that could cause a crash when the view treelist would receive
   keypress events during application shutdown.
+* [New since RC1] Fixed a corner case where a server status item could become a
+  child item of another server status item when dragging it below an special
+  application pane item such as DCC Status or Watched Nicks Online.
+* [New since RC1] Fixed a crash when using the mouse wheel on the list within
+  ~150ms of a drag and drop operation.
 
 System Tray icon
 * Remember and recreate minimized-to-tray state across sessions.
@@ -258,6 +223,8 @@ Notifications
 * Fixed actions in queries and DCC chats producing message notification events
   (rather than the correct private message ones).
 * Changed the OSD screensaver check logic to work in KDE 4.
+* [New since RC1] Fixed on screen display occassionally reverting to the default
+  position when using the settings dialog to change unrelated settings.
 
 Connection handling
 * Improved behavior with regard to reusing existing connections in connection
@@ -376,6 +343,14 @@ DCC
   directory changes.
 * Fixed bug leading to crash upon initiating DCC Chat when "Focus new tabs" was
   enabled.
+* [New since RC1] New transfer items added to the DCC panel's transfer list are no
+  longer automatically selected, meaning work on other items in the list occuring
+  at the same time no longer gets interrupted.
+* [New since RC1] The "Filename:" line in the DCC panel's detailed info pane is
+  now using text squeezing to avoid an increase in minimum window width with long
+  file names.
+* [New since RC1] Failed receives now longer show 833TB/s as their transfer
+  speed.
 
 Blowfish support
 * Fixed FiSH-style +p prefix to send clear text to channel despite an encryption
@@ -413,6 +388,13 @@ Watched Nicknames
 * Fixed display of WHOIS spam prompted by the Watch List's WHOIS activity.
 * Connections to non-config-backed targets no longer show in Watched Nicks
   Online.
+* [New since RC1] Actually honor the preference to enable/disable the Watched
+  Nicknames Online system, and apply it at runtime.
+* [New since RC1] Make sure the periodic Watched Nicknames Online check actually
+  starts running within the same session after adding the first nickname to the
+  list.
+* [New since RC1] Fixed a crash on quit with the Watched Nicks Online tab open and
+  there being an open connection to a network that nicks are being watched for.
 
 Channel List
 * IRC markup is now removed from content in the Channel List view.
@@ -454,6 +436,8 @@ Under the Hood / Protocol
 * Made newline handling in the DCOP interface more robust, fixing a potential
   security problem (CVE-2007-4400).
 * A few speed optimizations and memory leak fixes.
+* [New since RC1] Fixed a crash on quit during KDE logout or when quitting by
+  DCOP.
 
 Included scripts
 * Support for KMPlayer in the 'media' script (based on the window caption, as
@@ -469,6 +453,12 @@ Included scripts
 * Removed broken 'qurl' script in favor of new 'tinyurl' one.
 * Fixed the 'fortune' script not working properly when variable expansion is
   turned off in the preferences.
+* [New since RC1] Fixed a bug in the 'media' script that caused it to break when
+  querying Audacious with audtool not being available.
+
+Packaging
+* [New since RC1] Standards compliancy fixes in the application .desktop file and
+  the nicklist icon theme .desktop files.
 
 Build
 * Fixed build with --enable-final.
