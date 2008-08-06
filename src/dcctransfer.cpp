@@ -35,6 +35,8 @@ DccTransfer::DccTransfer( DccType dccType, QObject* parent ) : QObject(parent)
     m_timeLeft = DccTransfer::NotInTransfer;
     m_transferringPosition = 0;
     m_transferStartPosition = 0;
+    m_averageSpeed = 0.0;
+    m_currentSpeed = 0.0;
 
     m_bufferSize = Preferences::dccBufferSize();
     m_buffer = new char[ m_bufferSize ];
