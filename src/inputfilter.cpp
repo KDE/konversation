@@ -243,8 +243,10 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                     else
                     {
                         // Do not internationalize the below version string
-                        reply = QString("Konversation %1 (C) 2002-2008 by the Konversation team")
-                            .arg(QString(KONVI_VERSION));
+                        reply = QString("Konversation %1 Build %2 (C) 2002-2008 by the Konversation team")
+                            .arg(QString(KONVI_VERSION))
+                            .arg(QString::number(COMMIT));
+
                     }
                     server->ctcpReply(sourceNick,"VERSION "+reply);
                 }
