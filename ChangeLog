@@ -1,3 +1,7 @@
+Changes since 1.1:
+* Enabled the (experimental, hackish) Amarok 2 support in the 'media' script.
+
+
 Changes from 1.0.1 to 1.1:
 We are extremely pleased to announce Konversation's newest major release, v1.1.
 Konversation 1.1 is a special release for us in multiple ways: It's our farewell
