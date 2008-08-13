@@ -1,5 +1,7 @@
 Changes since 1.1:
 * Enabled the (experimental, hackish) Amarok 2 support in the 'media' script.
+* Fixed a bug that could cause channel notifications to be lost across recon-
+  nects.
 
 
 Changes from 1.0.1 to 1.1:

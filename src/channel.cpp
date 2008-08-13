@@ -1273,7 +1273,7 @@ void Channel::joinNickname(ChannelNickPtr channelNick)
         setActive(true);
 
         //HACK the way the notification priorities work sucks, this forces the tab text color to ungray right now.
-        if (m_currentTabNotify == Konversation::tnfNone || !Preferences::tabNotificationsEvents())
+        if (m_currentTabNotify == Konversation::tnfNone || (!Preferences::tabNotificationsEvents() && m_currentTabNotify == Konversation::tnfControl))
             KonversationApplication::instance()->getMainWindow()->getViewContainer()->unsetViewNotification(this);
 
         KonversationApplication::instance()->notificationHandler()->channelJoin(this,getName());
