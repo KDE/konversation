@@ -270,10 +270,6 @@
       <label></label>
       <whatsthis></whatsthis>
     </entry>
-    <entry key="HiddenToTray" type="Bool">
-      <default>false</default>
-      <label>Hidden to system tray</label>
-    </entry>
     <entry key="HideToTrayOnStartup" type="Bool">
       <default>false</default>
       <label>Start with hidden mainwindow</label>

@@ -139,7 +139,7 @@ int KonversationApplication::newInstance()
         // apply GUI settings
         emit appearanceChanged();
 
-        if (Preferences::showTrayIcon() && (Preferences::hiddenToTray() || Preferences::hideToTrayOnStartup()))
+        if (Preferences::showTrayIcon() && Preferences::hideToTrayOnStartup())
             mainWindow->hide();
         else
             mainWindow->show();
@@ -212,11 +212,6 @@ KonversationApplication* KonversationApplication::instance()
 
 void KonversationApplication::prepareShutdown()
 {
-    if (mainWindow->isHidden() && Preferences::showTrayIcon())
-        Preferences::setHiddenToTray(true);
-    else
-        Preferences::setHiddenToTray(false);
-
     mainWindow->getViewContainer()->prepareShutdown();
 
     m_awayManager->blockSignals(true);
