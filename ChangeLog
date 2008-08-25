@@ -9,6 +9,12 @@ Changes since 1.1:
   user demands more accurately anyhow. This fixes a bug that made Konversa-
   tion always hide to tray on startup regardless of the aforementioned op-
   tion when the system tray icon was enabled.
+* Added a network settings lookup fallback to retrieving the key of a channel.
+  Previously, this relied solely on the channel's mode map. Closes the brief
+  gap between a channel join and the server's reply to MODE where possible,
+  so that e.g. reconnecting directly after auto-joining a channel with a key
+  doesn't result in a failed rejoin due to not having the key by way of the
+  MODE reply yet.
 
 
 Changes from 1.0.1 to 1.1:

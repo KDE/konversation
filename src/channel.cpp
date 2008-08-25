@@ -974,6 +974,16 @@ QString Channel::getPassword()
         if ((*it)[0] == 'k') password = (*it).mid(1);
     }
 
+    if (password.isEmpty() && m_server->getServerGroup())
+    {
+        Konversation::ChannelList channelList = m_server->getServerGroup()->channelList();
+        Konversation::ChannelSettings channelSettings(getName());
+        QValueListIterator<Konversation::ChannelSettings> it = channelList.find(channelSettings);
+
+        if (it != channelList.end())
+            password = (*it).password();
+    }
+
     return password;
 }
 
