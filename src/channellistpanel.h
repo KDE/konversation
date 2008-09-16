@@ -73,6 +73,7 @@ class ChannelListPanel : public ChatWindow
         void regExpClicked();
 
         void contextMenu (KListView* l, QListViewItem* i, const QPoint& p);
+        void openURL();
 
         //Used to disable functions when not connected
         virtual void serverOnline(bool online);

@@ -18,6 +18,7 @@
 #include "server.h"
 #include "common.h"
 
+#include <qaction.h>
 #include <qhbox.h>
 #include <qvbox.h>
 #include <qgrid.h>
@@ -544,7 +545,10 @@ void ChannelListPanel::contextMenu (KListView* /* l */, QListViewItem* i, const 
             pos+=url.length();
 
             // tell the program that we have found a new url
-            showURLmenu->insertItem(href);
+            QAction* action = new QAction(showURLmenu);
+            action->setText(href);
+            action->addTo(showURLmenu);
+            connect(action, SIGNAL(activated()), this, SLOT(openURL()));
         }
         else
         {
@@ -558,14 +562,17 @@ void ChannelListPanel::contextMenu (KListView* /* l */, QListViewItem* i, const 
         showURLmenu->setItemEnabled(5,false);
     }
 
-    int selected = showURLmenu->exec(p);
-    if (selected!=-1)
-    {
-        QMenuItem* item = showURLmenu->findItem( selected );
-        new KRun(KURL(item->text().replace("&&","&")));
-    }
+    showURLmenu->exec(p);
 
     delete showURLmenu;
+}
+
+void ChannelListPanel::openURL()
+{
+    const QAction* action = static_cast<const QAction*>(sender());
+
+    if (action)
+        new KRun(KURL(action->text().replace("&&","&")));
 }
 
 void ChannelListPanel::appendInputText(const QString& text, bool fromCursor)

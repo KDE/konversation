@@ -15,6 +15,7 @@ Changes since 1.1:
   so that e.g. reconnecting directly after auto-joining a channel with a key
   doesn't result in a failed rejoin due to not having the key by way of the
   MODE reply yet.
+* Fixed opening URLs from the channel topic context menu in Channel List tabs.
 
 
 Changes from 1.0.1 to 1.1:
