@@ -16,6 +16,9 @@ Changes since 1.1:
   doesn't result in a failed rejoin due to not having the key by way of the
   MODE reply yet.
 * Fixed opening URLs from the channel topic context menu in Channel List tabs.
+* When connecting to multiple selected unexpanded network items from the Ser-
+  ver List, don't also try to connect to the hidden server sub-items selected
+  by implication, avoiding unwanted connection duplicates.
 
 
 Changes from 1.0.1 to 1.1:

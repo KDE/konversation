@@ -189,7 +189,7 @@ namespace Konversation
         QPtrList<QListViewItem> selected = m_serverList->selectedItems();
         ServerListItem * item = static_cast<ServerListItem*>(selected.first());
 
-        while (item)
+        while (item && item->isVisible())
         {
             if (item->isServer())
             {
