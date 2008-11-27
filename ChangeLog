@@ -19,6 +19,7 @@ Changes since 1.1:
 * When connecting to multiple selected unexpanded network items from the Ser-
   ver List, don't also try to connect to the hidden server sub-items selected
   by implication, avoiding unwanted connection duplicates.
+* Mask the password field in the Quick Connect dialog.
 
 
 Changes from 1.0.1 to 1.1:

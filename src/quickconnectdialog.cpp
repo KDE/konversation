@@ -21,6 +21,7 @@
 #include <qcheckbox.h>
 
 #include <klineedit.h>
+#include <kpassdlg.h>
 #include <klocale.h>
 
 
@@ -59,7 +60,7 @@ KDialogBase::Ok | KDialogBase::Cancel, KDialogBase::Ok, true)
     QLabel* passwordLabel = new QLabel(i18n("P&assword:"), page);
     QString passwordWT = i18n("If the IRC server requires a password, enter it here (most servers do not require a password.)");
     QWhatsThis::add(passwordLabel, passwordWT);
-    passwordInput = new KLineEdit(page);
+    passwordInput = new KPasswordEdit(page);
     QWhatsThis::add(passwordInput, passwordWT);
     passwordLabel->setBuddy(passwordInput);
 

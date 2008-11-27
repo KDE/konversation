@@ -22,6 +22,7 @@
 
 class QCheckBox;
 class KLineEdit;
+class KPasswordEdit;
 
 class QuickConnectDialog : public KDialogBase
 {
@@ -45,10 +46,10 @@ class QuickConnectDialog : public KDialogBase
         void slotOk();
 
     protected:
-        KLineEdit*  hostNameInput;
-        KLineEdit*  portInput;
-        KLineEdit*  passwordInput;
-        KLineEdit*  nickInput;
+        KLineEdit*      hostNameInput;
+        KLineEdit*      portInput;
+        KPasswordEdit*  passwordInput;
+        KLineEdit*      nickInput;
         QCheckBox*      sslCheckBox;
 };
 #endif
