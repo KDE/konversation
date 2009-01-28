@@ -6,7 +6,7 @@
 */
 
 /*
-  ServerListView is derived from KListView and implements custom
+  ServerListView is derived from K3ListView and implements custom
   drag'n'drop behavior needed in ServerListDialog.
 
   Copyright (C) 2006 Eike Hein <hein@kde.org>
@@ -15,14 +15,14 @@
 #ifndef SERVERLISTVIEW_H
 #define SERVERLISTVIEW_H
 
-#include <klistview.h>
+#include <k3listview.h>
 //Added by qt3to4:
 #include <Q3PtrList>
 
 
 class Q3DragObject;
 
-class ServerListView : public KListView
+class ServerListView : public K3ListView
 {
     Q_OBJECT
 

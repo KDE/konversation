@@ -69,7 +69,7 @@ DccTransferRecv* DccTransferManager::resumeDownload( int connectionId, const QSt
              (*it)->isResumed() )
         {
             transfer = (*it);
-            kdDebug() << "DccTransferManager::resumeDownload(): filename match: " << fileName << ", claimed port: " << ownPort << ", item port: " << transfer->getOwnPort() << endl;
+            kDebug() << "DccTransferManager::resumeDownload(): filename match: " << fileName << ", claimed port: " << ownPort << ", item port: " << transfer->getOwnPort() << endl;
             // the port number can be changed behind NAT, so we pick an item which only the filename is correspondent in that case.
             if ( transfer->getOwnPort() == ownPort )
             {
@@ -99,7 +99,7 @@ DccTransferSend* DccTransferManager::resumeUpload( int connectionId, const QStri
              !(*it)->isResumed() )
         {
             transfer = (*it);
-            kdDebug() << "DccTransferManager::resumeUpload(): filename match: " << fileName << ", claimed port: " << ownPort << ", item port: " << transfer->getOwnPort() << endl;
+            kDebug() << "DccTransferManager::resumeUpload(): filename match: " << fileName << ", claimed port: " << ownPort << ", item port: " << transfer->getOwnPort() << endl;
             // the port number can be changed behind NAT, so we pick an item which only the filename is correspondent in that case.
             if ( transfer->getOwnPort() == ownPort )
             {
@@ -116,7 +116,7 @@ DccTransferSend* DccTransferManager::resumeUpload( int connectionId, const QStri
 
 DccTransferSend* DccTransferManager::startReverseSending( int connectionId, const QString& partnerNick, const QString& fileName, const QString& partnerHost, const QString& partnerPort, unsigned long fileSize, const QString& token )
 {
-    kdDebug() << "DccTransferManager::startReverseSending(): server group ID: " << connectionId << ", partner: " << partnerNick << ", filename: " << fileName << ", partner IP: " << partnerHost << ", parnter port: " << partnerPort << ", filesize: " << fileSize << ", token: " << token << endl;
+    kDebug() << "DccTransferManager::startReverseSending(): server group ID: " << connectionId << ", partner: " << partnerNick << ", filename: " << fileName << ", partner IP: " << partnerHost << ", parnter port: " << partnerPort << ", filesize: " << fileSize << ", token: " << token << endl;
     DccTransferSend* transfer = 0;
 
     // find applicable one
@@ -150,7 +150,7 @@ void DccTransferManager::initTransfer( DccTransfer* transfer )
     emit newTransferAdded( transfer );
 }
 
-bool DccTransferManager::isLocalFileInWritingProcess( const KURL& url ) const
+bool DccTransferManager::isLocalFileInWritingProcess( const KUrl& url ) const
 {
     Q3ValueListConstIterator< DccTransferRecv* > it;
     for ( it = m_recvItems.begin() ; it != m_recvItems.end() ; ++it )
@@ -191,7 +191,7 @@ bool DccTransferManager::hasActiveTransfers()
 
 void DccTransferManager::slotTransferStatusChanged( DccTransfer* item, int newStatus, int oldStatus )
 {
-    kdDebug() << "DccTransferManager::slotTransferStatusChanged(): " << oldStatus << " -> " << newStatus << " " << item->getFileName() << " (" << item->getType() << ")" << endl;
+    kDebug() << "DccTransferManager::slotTransferStatusChanged(): " << oldStatus << " -> " << newStatus << " " << item->getFileName() << " (" << item->getType() << ")" << endl;
 
     if ( newStatus == DccTransfer::Queued )
         emit newTransferQueued( item );

@@ -36,7 +36,7 @@ the Free Software Foundation; either version 2 of the License, or
                 <cstring>channelCombo</cstring>
             </property>
         </widget>
-        <widget class="KHistoryCombo" row="1" column="1">
+        <widget class="KHistoryComboBox" row="1" column="1">
             <property name="name">
                 <cstring>channelCombo</cstring>
             </property>

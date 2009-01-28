@@ -16,7 +16,7 @@
 #include <kdialogbase.h>
 
 
-class KURLRequester;
+class KUrlRequester;
 class DccTransferRecv;
 
 class DccResumeDialog : public KDialogBase
@@ -48,7 +48,7 @@ class DccResumeDialog : public KDialogBase
         DccResumeDialog(DccTransferRecv* item, const QString& caption, const QString& message, int enabledActions, int enabledButtonCodes, KDialogBase::ButtonCode defaultButtonCode);
 
         // UI
-        KURLRequester* m_urlreqFileURL;
+        KUrlRequester* m_urlreqFileURL;
 
         // data
         DccTransferRecv* m_item;

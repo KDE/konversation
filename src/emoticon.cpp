@@ -16,7 +16,7 @@
 #include <qfile.h>
 #include <qfontmetrics.h>
 
-#include <kstaticdeleter.h>
+#include <k3staticdeleter.h>
 #include <kstandarddirs.h>
 #include <kdeversion.h>
 
@@ -28,7 +28,7 @@ namespace Konversation
 {
 
     EmotIcon* EmotIcon::s_self = 0;
-    static KStaticDeleter<EmotIcon> staticEmotIconDeleter;
+    static K3StaticDeleter<EmotIcon> staticEmotIconDeleter;
 
     EmotIcon* EmotIcon::self()
     {

@@ -72,7 +72,7 @@ namespace Konversation
             bool replaceAliases(QString& line);
 
         signals:
-            void openDccSend(const QString &recipient, KURL kurl);
+            void openDccSend(const QString &recipient, KUrl kurl);
             void requestDccSend();                // Choose Recipient and File from requester
                                                   // Choose File from requester
             void requestDccSend(const QString& recipient);

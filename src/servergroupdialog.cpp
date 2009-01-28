@@ -37,7 +37,7 @@
 #include <kiconloader.h>
 #include <kmessagebox.h>
 #include <kcombobox.h>
-#include <klistbox.h>
+#include <k3listbox.h>
 #include <kpushbutton.h>
 
 

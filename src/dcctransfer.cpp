@@ -24,7 +24,7 @@
 
 DccTransfer::DccTransfer( DccType dccType, QObject* parent ) : QObject(parent)
 {
-    kdDebug() << "DccTransfer::DccTransfer()" << endl;
+    kDebug() << "DccTransfer::DccTransfer()" << endl;
 
     m_type = dccType;
 
@@ -50,7 +50,7 @@ DccTransfer::DccTransfer( DccType dccType, QObject* parent ) : QObject(parent)
 
 DccTransfer::~DccTransfer()
 {
-    kdDebug() << "DccTransfer::~DccTransfer()" << endl;
+    kDebug() << "DccTransfer::~DccTransfer()" << endl;
     delete[] m_buffer;
     m_loggerTimer.stop();
 }
@@ -102,7 +102,7 @@ void DccTransfer::setPartnerNick( const QString& nick )
 
 bool DccTransfer::queue()
 {
-    kdDebug() << "DccTransfer::queue()" << endl;
+    kDebug() << "DccTransfer::queue()" << endl;
     if ( getStatus() != Configuring )
         return false;
 
@@ -307,7 +307,7 @@ KIO::fileoffset_t DccTransfer::getTransferStartPosition() const
     return m_transferStartPosition;
 }
 
-KURL DccTransfer::getFileURL() const
+KUrl DccTransfer::getFileURL() const
 {
     return m_fileURL;
 }

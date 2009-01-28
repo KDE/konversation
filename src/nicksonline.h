@@ -27,7 +27,7 @@
 #include <Q3PopupMenu>
 
 
-class KListView;
+class K3ListView;
 class QPushButton;
 class Q3PopupMenu;
 
@@ -66,7 +66,7 @@ class NicksOnline : public ChatWindow
         ~NicksOnline();
 
         // These are here for the benefit of NicksOnlineTooltip.
-        KListView* getNickListView();
+        K3ListView* getNickListView();
         NickInfoPtr getNickInfo(const Q3ListViewItem* item);
 
         virtual bool canBeFrontView()   { return true; }
@@ -241,7 +241,7 @@ class NicksOnline : public ChatWindow
         void requestWhois(QString& networkName, QString& nickname);
 
         // The main display of networks, nicks, and channels.
-        KListView* m_nickListView;
+        K3ListView* m_nickListView;
         // Buttons on screen.
         QPushButton* m_editContactButton;
         QPushButton* m_changeAssociationButton;

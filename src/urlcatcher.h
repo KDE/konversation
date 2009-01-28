@@ -18,7 +18,7 @@
 #include "chatwindow.h"
 
 
-class KListView;
+class K3ListView;
 class Q3ListViewItem;
 class QPushButton;
 class ViewContainer;
@@ -52,7 +52,7 @@ class UrlCatcher : public ChatWindow
         void clearListClicked();
 
     protected:
-        KListView* urlListView;
+        K3ListView* urlListView;
         KListViewSearchLineWidget* searchWidget;
 
         /** Called from ChatWindow adjustFocus */

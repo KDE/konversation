@@ -27,7 +27,7 @@
 #include <kiconloader.h>
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <kserversocket.h>
+include <k3serversocket.h>
 #include <kstandarddirs.h>
 #include <kstreamsocket.h>
 #include <kdirselectdialog.h>
@@ -38,6 +38,7 @@
 #include <kio/netaccess.h>
 //Added by qt3to4:
 #include <QPixmap>
+#include <kauthorized.h>
 
 
 class DccResumeDialog;
@@ -62,7 +63,7 @@ connectionSuccess()  : called by recvSocket
 DccTransferRecv::DccTransferRecv(QObject* parent)
     : DccTransfer( DccTransfer::Receive, parent )
 {
-    kdDebug() << "DccTransferRecv::DccTransferRecv()" << endl;
+    kDebug() << "DccTransferRecv::DccTransferRecv()" << endl;
 
     m_serverSocket = 0;
     m_recvSocket = 0;
@@ -85,12 +86,12 @@ QString DccTransferRecv::getTypeText() const
 
 QPixmap DccTransferRecv::getTypeIcon() const
 {
-    return KGlobal::iconLoader()->loadIcon( "down", KIcon::Small );
+    return KIconLoader::global()->loadIcon( "down", KIcon::Small );
 }
 
 void DccTransferRecv::cleanUp()
 {
-    kdDebug() << "DccTransferRecv::cleanUp()" << endl;
+    kDebug() << "DccTransferRecv::cleanUp()" << endl;
 
     stopConnectionTimer();
     finishTransferLogger();
@@ -144,7 +145,7 @@ void DccTransferRecv::setFileName( const QString& fileName )
         m_fileName = fileName;
 }
 
-void DccTransferRecv::setFileURL( const KURL& url )
+void DccTransferRecv::setFileURL( const KUrl& url )
 {
     if ( getStatus() == Configuring || getStatus() == Queued )
         m_fileURL = url;
@@ -165,7 +166,7 @@ void DccTransferRecv::setReverse( bool reverse, const QString& reverseToken )
 
 bool DccTransferRecv::queue()
 {
-    kdDebug() << "DccTransferRecv::queue()" << endl;
+    kDebug() << "DccTransferRecv::queue()" << endl;
 
     if ( getStatus() != Configuring )
         return false;
@@ -173,7 +174,7 @@ bool DccTransferRecv::queue()
     if ( m_partnerIp.isEmpty() || m_partnerPort.isEmpty() )
         return false;
 
-    if (!kapp->authorize("allow_downloading"))
+    if (!KAuthorized::authorizeKAction("allow_downloading"))
     {
         //note we have this after the initialisations so that item looks okay
         //Do not have the rights to send the file.  Shouldn't have gotten this far anyway
@@ -206,7 +207,7 @@ bool DccTransferRecv::queue()
 
         // set default folder
         if ( !Preferences::dccPath().isEmpty() )
-            m_fileURL = KURL( Preferences::dccPath() );
+            m_fileURL = KUrl( Preferences::dccPath() );
         else
             m_fileURL.setPath( KUser( KUser::UseRealUserID ).homeDir() );  // default folder is *not* specified
 
@@ -232,7 +233,7 @@ bool DccTransferRecv::queue()
 
 void DccTransferRecv::abort()                     // public slot
 {
-    kdDebug() << "DccTransferRecv::abort()" << endl;
+    kDebug() << "DccTransferRecv::abort()" << endl;
 
     if(m_writeCacheHandler)
     {
@@ -246,7 +247,7 @@ void DccTransferRecv::abort()                     // public slot
 
 void DccTransferRecv::start()                     // public slot
 {
-    kdDebug() << "DccTransferRecv::start() [BEGIN]" << endl;
+    kDebug() << "DccTransferRecv::start() [BEGIN]" << endl;
 
     if ( getStatus() != Queued )
         return;
@@ -255,12 +256,12 @@ void DccTransferRecv::start()                     // public slot
 
     prepareLocalKio( false, false );
 
-    kdDebug() << "DccTransferRecv::start() [END]" << endl;
+    kDebug() << "DccTransferRecv::start() [END]" << endl;
 }
 
 void DccTransferRecv::prepareLocalKio( bool overwrite, bool resume, KIO::fileoffset_t startPosition /* = 0 */ )
 {
-    kdDebug() << "DccTransferRecv::prepareLocalKio()" << endl
+    kDebug() << "DccTransferRecv::prepareLocalKio()" << endl
         << "DccTransferRecv::prepareLocalKio(): URL: " << m_fileURL << endl
         << "DccTransferRecv::prepareLocalKio(): Overwrite: " << overwrite << endl
         << "DccTransferRecv::prepareLocalKio(): Resume: " << resume << " (Position: " << QString::number( startPosition ) << ")" << endl;
@@ -268,11 +269,11 @@ void DccTransferRecv::prepareLocalKio( bool overwrite, bool resume, KIO::fileoff
     m_resumed = resume;
     m_transferringPosition = startPosition;
 
-    if ( !createDirs( m_fileURL.upURL() ) )
+    if ( !createDirs( m_fileURL.upUrl() ) )
     {
         askAndPrepareLocalKio( i18n( "<b>Cannot create the folder.</b><br>"
             "Folder: %1<br>" )
-            .arg( m_fileURL.upURL().prettyURL() ),
+            .arg( m_fileURL.upUrl().prettyUrl() ),
             DccResumeDialog::RA_Rename | DccResumeDialog::RA_Cancel,
             DccResumeDialog::RA_Rename );
         return;
@@ -282,7 +283,7 @@ void DccTransferRecv::prepareLocalKio( bool overwrite, bool resume, KIO::fileoff
 
     if ( !transferJob )
     {
-        kdDebug() << "DccTransferRecv::prepareLocalKio(): KIO::put() returned NULL. what happened?" << endl;
+        kDebug() << "DccTransferRecv::prepareLocalKio(): KIO::put() returned NULL. what happened?" << endl;
         failed( i18n( "Could not create a KIO instance" ) );
         return;
     }
@@ -311,19 +312,19 @@ void DccTransferRecv::askAndPrepareLocalKio( const QString& message, int enabled
     }
 }
 
-bool DccTransferRecv::createDirs( const KURL& dirURL ) const
+bool DccTransferRecv::createDirs( const KUrl& dirURL ) const
 {
-    KURL kurl( dirURL );
+    KUrl kurl( dirURL );
     QString surl = kurl.url();
 
     //First we split directories until we reach to the top,
     //since we need to create directories one by one
 
     QStringList dirList;
-    while ( surl != kurl.upURL().url() )
+    while ( surl != kurl.upUrl().url() )
     {
         dirList.prepend( surl );
-        kurl = kurl.upURL();
+        kurl = kurl.upUrl();
         surl = kurl.url();
     }
 
@@ -340,7 +341,7 @@ bool DccTransferRecv::createDirs( const KURL& dirURL ) const
 
 void DccTransferRecv::slotLocalCanResume( KIO::Job* job, KIO::filesize_t size )
 {
-    kdDebug() << "DccTransferRecv::slotLocalCanResume() [BEGIN]" << endl
+    kDebug() << "DccTransferRecv::slotLocalCanResume() [BEGIN]" << endl
         << "DccTransferRecv::slotLocalCanResume(): size: " << QString::number( size ) << endl;
 
     if ( size != 0 )
@@ -354,7 +355,7 @@ void DccTransferRecv::slotLocalCanResume( KIO::Job* job, KIO::filesize_t size )
         {
             askAndPrepareLocalKio( i18n( "<b>The file is used by another transfer.</b><br>"
                 "%1<br>" )
-                .arg( m_fileURL.prettyURL() ),
+                .arg( m_fileURL.prettyUrl() ),
                 DccResumeDialog::RA_Rename | DccResumeDialog::RA_Cancel,
                 DccResumeDialog::RA_Rename );
         }
@@ -367,7 +368,7 @@ void DccTransferRecv::slotLocalCanResume( KIO::Job* job, KIO::filesize_t size )
             askAndPrepareLocalKio( i18n( "<b>A partial file exists.</b><br>"
                 "%1<br>"
                 "Size of the partial file: %2 bytes<br>" )
-                .arg( m_fileURL.prettyURL() )
+                .arg( m_fileURL.prettyUrl() )
                 .arg( KGlobal::locale()->formatNumber( size, 0 ) ),
                 DccResumeDialog::RA_Resume | DccResumeDialog::RA_Overwrite | DccResumeDialog::RA_Rename | DccResumeDialog::RA_Cancel,
                 DccResumeDialog::RA_Resume,
@@ -375,12 +376,12 @@ void DccTransferRecv::slotLocalCanResume( KIO::Job* job, KIO::filesize_t size )
         }
     }
 
-    kdDebug() << "DccTransferRecv::slotLocalCanResume() [END]" << endl;
+    kDebug() << "DccTransferRecv::slotLocalCanResume() [END]" << endl;
 }
 
 void DccTransferRecv::slotLocalGotResult( KIO::Job* job )
 {
-    kdDebug() << "DccTransferRecv::slotLocalGotResult() [BEGIN]" << endl;
+    kDebug() << "DccTransferRecv::slotLocalGotResult() [BEGIN]" << endl;
 
     KIO::TransferJob* transferJob = static_cast<KIO::TransferJob*>( job );
     disconnect( transferJob, 0, 0, 0 );
@@ -388,13 +389,13 @@ void DccTransferRecv::slotLocalGotResult( KIO::Job* job )
     switch ( transferJob->error() )
     {
         case 0:                                   // no error
-            kdDebug() << "DccTransferRecv::slotLocalGotResult(): job->error() returned 0." << endl
+            kDebug() << "DccTransferRecv::slotLocalGotResult(): job->error() returned 0." << endl
                 << "DccTransferRecv::slotLocalGotResult(): Why was I called in spite of no error?" << endl;
             break;
         case KIO::ERR_FILE_ALREADY_EXIST:
             askAndPrepareLocalKio( i18n( "<b>The file already exists.</b><br>"
                 "%1<br>" )
-                .arg( m_fileURL.prettyURL() ),
+                .arg( m_fileURL.prettyUrl() ),
                 DccResumeDialog::RA_Overwrite | DccResumeDialog::RA_Rename | DccResumeDialog::RA_Cancel,
                 DccResumeDialog::RA_Overwrite );
             break;
@@ -403,17 +404,17 @@ void DccTransferRecv::slotLocalGotResult( KIO::Job* job )
                 "Error: %1</b><br>"
                 "%2<br>" )
                 .arg( transferJob->error() )
-                .arg( m_fileURL.prettyURL() ),
+                .arg( m_fileURL.prettyUrl() ),
                 DccResumeDialog::RA_Rename | DccResumeDialog::RA_Cancel,
                 DccResumeDialog::RA_Rename );
     }
 
-    kdDebug() << "DccTransferRecv::slotLocalGotResult() [END]" << endl;
+    kDebug() << "DccTransferRecv::slotLocalGotResult() [END]" << endl;
 }
 
 void DccTransferRecv::slotLocalReady( KIO::Job* job )
 {
-    kdDebug() << "DccTransferRecv::slotLocalReady()" << endl;
+    kDebug() << "DccTransferRecv::slotLocalReady()" << endl;
 
     KIO::TransferJob* transferJob = static_cast<KIO::TransferJob*>( job );
 
@@ -460,19 +461,19 @@ void DccTransferRecv::connectWithSender()
 
 void DccTransferRecv::requestResume()
 {
-    kdDebug() << "DccTransferRecv::requestResume()" << endl;
+    kDebug() << "DccTransferRecv::requestResume()" << endl;
 
     setStatus( WaitingRemote, i18n( "Waiting for remote host's acceptance" ) );
 
     startConnectionTimer( 30 );
 
-    kdDebug() << "DccTransferRecv::requestResume(): requesting resume for " << m_partnerNick << " file " << m_fileName << " partner " << m_partnerPort << endl;
+    kDebug() << "DccTransferRecv::requestResume(): requesting resume for " << m_partnerNick << " file " << m_fileName << " partner " << m_partnerPort << endl;
 
     //TODO   m_filename could have been sanitized - will this effect this?
     Server* server = KonversationApplication::instance()->getConnectionManager()->getServerByConnectionId( m_connectionId );
     if ( !server )
     {
-        kdDebug() << "DccTransferSend::start(): could not retrieve the instance of Server. Connection id: " << m_connectionId << endl;
+        kDebug() << "DccTransferSend::start(): could not retrieve the instance of Server. Connection id: " << m_connectionId << endl;
         failed( i18n( "Could not send DCC RECV resume request to the partner via the IRC server." ) );
         return;
     }
@@ -483,13 +484,13 @@ void DccTransferRecv::requestResume()
                                                   // public slot
 void DccTransferRecv::startResume( unsigned long position )
 {
-    kdDebug() << "DccTransferRecv::startResume():  position: " << position << endl;
+    kDebug() << "DccTransferRecv::startResume():  position: " << position << endl;
 
     stopConnectionTimer();
 
     if ( (unsigned long)m_transferringPosition != position )
     {
-        kdDebug() << "DccTransferRecv::startResume(): remote responsed an unexpected position" << endl
+        kDebug() << "DccTransferRecv::startResume(): remote responsed an unexpected position" << endl
             << "DccTransferRecv::startResume(): expected: " << QString::number( m_transferringPosition ) << endl
             << "DccTransferRecv::startResume(): remote response: " << position << endl;
         failed( i18n( "Unexpected response from remote host" ) );
@@ -501,7 +502,7 @@ void DccTransferRecv::startResume( unsigned long position )
 
 void DccTransferRecv::connectToSendServer()
 {
-    kdDebug() << "DccTransferRecv::connectToSendServer()" << endl;
+    kDebug() << "DccTransferRecv::connectToSendServer()" << endl;
 
     // connect to sender
 
@@ -520,7 +521,7 @@ void DccTransferRecv::connectToSendServer()
     connect( m_recvSocket, SIGNAL( connected( const KResolverEntry& ) ), this, SLOT( startReceiving() )     );
     connect( m_recvSocket, SIGNAL( gotError( int ) ),                    this, SLOT( connectionFailed( int ) ) );
 
-    kdDebug() << "DccTransferRecv::connectToServer(): attempting to connect to " << m_partnerIp << ":" << m_partnerPort << endl;
+    kDebug() << "DccTransferRecv::connectToServer(): attempting to connect to " << m_partnerIp << ":" << m_partnerPort << endl;
 
     m_recvSocket->connect();
 }
@@ -571,7 +572,7 @@ void DccTransferRecv::slotServerSocketGotError( int /* errorCode*/ )
 
 void DccTransferRecv::startReceiving()
 {
-    kdDebug() << "DccTransferRecv::startReceiving()" << endl;
+    kDebug() << "DccTransferRecv::startReceiving()" << endl;
 
     m_recvSocket->setBlocking( false );           // asynchronous mode
 
@@ -592,13 +593,13 @@ void DccTransferRecv::startReceiving()
                                                   // slot
 void DccTransferRecv::connectionFailed( int errorCode )
 {
-    kdDebug() << "DccTransferRecv::connectionFailed(): code = " << errorCode << ", string = " << m_recvSocket->errorString() << endl;
+    kDebug() << "DccTransferRecv::connectionFailed(): code = " << errorCode << ", string = " << m_recvSocket->errorString() << endl;
     failed( i18n( "Connection failure: %1" ).arg( m_recvSocket->errorString() ) );
 }
 
 void DccTransferRecv::readData()                  // slot
 {
-    //kdDebug() << "readData()" << endl;
+    //kDebug() << "readData()" << endl;
     int actual = m_recvSocket->readBlock( m_buffer, m_bufferSize );
     if ( actual > 0 )
     {
@@ -612,14 +613,14 @@ void DccTransferRecv::readData()                  // slot
 
 void DccTransferRecv::sendAck()                   // slot
 {
-    //kdDebug() << "sendAck()" << endl;
+    //kDebug() << "sendAck()" << endl;
     KIO::fileoffset_t pos = intel( m_transferringPosition );
 
     m_recvSocket->enableWrite( false );
     m_recvSocket->writeBlock( (char*)&pos, 4 );
     if ( m_transferringPosition == (KIO::fileoffset_t)m_fileSize )
     {
-        kdDebug() << "DccTransferRecv::sendAck(): Sent final ACK." << endl;
+        kDebug() << "DccTransferRecv::sendAck(): Sent final ACK." << endl;
         m_recvSocket->enableRead( false );
         disconnect( m_recvSocket, 0, 0, 0 );
         finishTransferLogger();
@@ -627,14 +628,14 @@ void DccTransferRecv::sendAck()                   // slot
     }
     else if ( m_transferringPosition > (KIO::fileoffset_t)m_fileSize )
     {
-        kdDebug() << "DccTransferRecv::sendAck(): the remote host sent larger data than expected: " << QString::number( m_transferringPosition ) << endl;
+        kDebug() << "DccTransferRecv::sendAck(): the remote host sent larger data than expected: " << QString::number( m_transferringPosition ) << endl;
         failed( i18n( "Transferring error" ) );
     }
 }
 
 void DccTransferRecv::slotLocalWriteDone()        // <-WriteCacheHandler::done()
 {
-    kdDebug() << "DccTransferRecv::slotLocalWriteDone()" << endl;
+    kDebug() << "DccTransferRecv::slotLocalWriteDone()" << endl;
     setStatus( Done );
     cleanUp();
     emit done( this );
@@ -643,14 +644,14 @@ void DccTransferRecv::slotLocalWriteDone()        // <-WriteCacheHandler::done()
                                                   // <- WriteCacheHandler::gotError()
 void DccTransferRecv::slotLocalGotWriteError( const QString& errorString )
 {
-    kdDebug() << "DccTransferRecv::slotLocalGotWriteError()" << endl;
+    kDebug() << "DccTransferRecv::slotLocalGotWriteError()" << endl;
     failed( i18n( "KIO error: %1" ).arg( errorString ) );
 }
 
 void DccTransferRecv::startConnectionTimer( int sec )
 {
     stopConnectionTimer();
-    kdDebug() << "DccTransferRecv::startConnectionTimer()" << endl;
+    kDebug() << "DccTransferRecv::startConnectionTimer()" << endl;
     m_connectionTimer->start( sec*1000, true );
 }
 
@@ -659,13 +660,13 @@ void DccTransferRecv::stopConnectionTimer()
     if ( m_connectionTimer->isActive() )
     {
         m_connectionTimer->stop();
-        kdDebug() << "DccTransferRecv::stopConnectionTimer(): stop" << endl;
+        kDebug() << "DccTransferRecv::stopConnectionTimer(): stop" << endl;
     }
 }
 
 void DccTransferRecv::connectionTimeout()         // slot
 {
-    kdDebug() << "DccTransferRecv::connectionTimeout()" << endl;
+    kDebug() << "DccTransferRecv::connectionTimeout()" << endl;
     failed( i18n( "Timed out" ) );
 }
 
@@ -729,7 +730,7 @@ bool DccTransferRecvWriteCacheHandler::write( bool force )
 
     m_writeReady = false;
     m_transferJob->sendAsyncData( m_cacheList.front() );
-    //kdDebug() << "DTRWriteCacheHandler::write(): wrote " << m_cacheList.front().size() << " bytes." << endl;
+    //kDebug() << "DTRWriteCacheHandler::write(): wrote " << m_cacheList.front().size() << " bytes." << endl;
     m_cacheList.pop_front();
 
     return true;
@@ -737,11 +738,11 @@ bool DccTransferRecvWriteCacheHandler::write( bool force )
 
 void DccTransferRecvWriteCacheHandler::close()    // public
 {
-    kdDebug() << "DTRWriteCacheHandler::close()" << endl;
+    kDebug() << "DTRWriteCacheHandler::close()" << endl;
     write( true );                                // write once if kio is ready to write
     m_transferJob->setAsyncDataEnabled( m_writeAsyncMode = false );
-    kdDebug() << "DTRWriteCacheHandler::close(): switched to synchronized mode." << endl;
-    kdDebug() << "DTRWriteCacheHandler::close(): flushing... (remaining caches: " << m_cacheList.count() << ")" << endl;
+    kDebug() << "DTRWriteCacheHandler::close(): switched to synchronized mode." << endl;
+    kDebug() << "DTRWriteCacheHandler::close(): flushing... (remaining caches: " << m_cacheList.count() << ")" << endl;
 }
 
 void DccTransferRecvWriteCacheHandler::closeNow() // public
@@ -770,13 +771,13 @@ void DccTransferRecvWriteCacheHandler::slotKIODataReq( KIO::Job*, QByteArray& da
             // once we write everything in cache, the file is complete.
             // This function will be called once more after this last data is written.
             data = m_cacheList.front();
-            kdDebug() << "DccTransferRecvWriteCacheHandler::slotKIODataReq(): will write " << m_cacheList.front().size() << " bytes." << endl;
+            kDebug() << "DccTransferRecvWriteCacheHandler::slotKIODataReq(): will write " << m_cacheList.front().size() << " bytes." << endl;
             m_cacheList.pop_front();
         }
         else
         {
             // finally, no data left to write or read.
-            kdDebug() << "DTRWriteCacheHandler::slotKIODataReq(): flushing done." << endl;
+            kDebug() << "DTRWriteCacheHandler::slotKIODataReq(): flushing done." << endl;
             m_transferJob = 0;
             emit done();                          // -> DccTransferRecv::slotLocalWriteDone()
         }

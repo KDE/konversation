@@ -16,7 +16,7 @@
 #include "warnings_preferencesui.h"
 #include "konvisettingspage.h"
 
-class KListView;
+class K3ListView;
 class Q3ListViewItem;
 
 class Warnings_Config : public Warnings_ConfigUI, public KonviSettingsPage

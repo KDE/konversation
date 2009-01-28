@@ -21,7 +21,8 @@
 #include <kapplication.h>
 #include <kconfig.h>
 #include <klocale.h>
-#include <klistview.h>
+#include <k3listview.h>
+#include <kglobal.h>
 
 
 Warnings_Config::Warnings_Config( QWidget* parent, const char* name, Qt::WFlags fl )
@@ -56,7 +57,7 @@ void Warnings_Config::restorePageToDefaults()
 
 void Warnings_Config::saveSettings()
 {
-  KConfig* config = kapp->config();
+  KConfig* config = KGlobal::config();
   config->setGroup("Notification Messages");
 
   // prepare list
@@ -122,7 +123,7 @@ void Warnings_Config::loadSettings()
   Q3CheckListItem *item;
   dialogListView->clear();
 
-  KConfig* config = kapp->config();
+  KConfig* config = KGlobal::config();
   config->setGroup("Notification Messages");
   QString flagName; 
   for(unsigned int i=0; i<dialogDefinitions.count() ;i++)

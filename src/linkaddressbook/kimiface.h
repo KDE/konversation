@@ -153,11 +153,11 @@ class KIMIface : virtual public DCOPObject
     /**
      * Send the file to the contact
      * @param uid the KABC uid you are sending to.
-     * @param sourceURL a KURL to send.
+     * @param sourceURL a KUrl to send.
      * @param altFileName an alternate filename describing the file
      * @param fileSize file size in bytes
      */
-    virtual void sendFile(const QString &uid, const KURL &sourceURL,
+    virtual void sendFile(const QString &uid, const KUrl &sourceURL,
         const QString &altFileName = QString(), uint fileSize = 0) = 0;
 
     // MUTATORS

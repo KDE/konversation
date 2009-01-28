@@ -96,7 +96,7 @@ bool ChannelNick::setMode(char mode, bool state)
         case 'v':
             return setVoice(state);
         default:
-            kdDebug() << "Mode '" << mode << "' not recognised in setModeForChannelNick";
+            kDebug() << "Mode '" << mode << "' not recognised in setModeForChannelNick";
             return false;
     }
 }
@@ -223,7 +223,7 @@ QString ChannelNick::tooltip()
         tooltip << "<tr><td><b>" << i18n("Mode") << ": </b></td><td>" << modes.join(", ") << "</td></tr>";
     }
     tooltip << "</table></qt>";
-    //kdDebug() << strTooltip << endl;
+    //kDebug() << strTooltip << endl;
     //if(!dirty) return QString();
     return strTooltip;
 }

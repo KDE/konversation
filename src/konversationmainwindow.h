@@ -139,7 +139,7 @@ class KonversationMainWindow : public KMainWindow
 
         KToggleAction* hideMenuBarAction;
 
-        KPopupMenu* m_bookmarks;
+        KMenu* m_bookmarks;
         KonviBookmarkHandler* m_bookmarkHandler;
         KonviSettingsDialog *m_settingsDialog;
         Konversation::ServerListDialog* m_serverListDialog;

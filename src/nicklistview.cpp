@@ -17,7 +17,7 @@
 #include "images.h"
 #include "linkaddressbook/addressbook.h"
 
-#include <kpopupmenu.h>
+#include <kmenu.h>
 #include <klocale.h>
 #include <kdebug.h>
 #include <qtooltip.h>
@@ -29,18 +29,19 @@
 #include <kiconloader.h>
 #include <q3whatsthis.h>
 #include <q3dragobject.h>
+#include <kauthorized.h>
 
 
 NickListView::NickListView(QWidget* parent, Channel *chan) :
-KListView(parent)
+K3ListView(parent)
 {
-    KListView::setSorting(-1);
+    K3ListView::setSorting(-1);
     setWhatsThis();
     channel=chan;
-    popup=new KPopupMenu(this,"nicklist_context_menu");
-    modes=new KPopupMenu(this,"nicklist_modes_context_submenu");
-    kickban=new KPopupMenu(this,"nicklist_kick_ban_context_submenu");
-    addressbook= new KPopupMenu(this,"nicklist_addressbook_context_submenu");
+    popup=new KMenu(this,"nicklist_context_menu");
+    modes=new KMenu(this,"nicklist_modes_context_submenu");
+    kickban=new KMenu(this,"nicklist_kick_ban_context_submenu");
+    addressbook= new KMenu(this,"nicklist_addressbook_context_submenu");
     setAcceptDrops(true);
     setDropHighlighter(true);
     setDropVisualizer(false);
@@ -94,7 +95,7 @@ KListView(parent)
         newitem = popup->insertItem(i18n("Open DCC &Chat"),Konversation::StartDccChat);
         popup->setWhatsThis(newitem, "<qt>Start a private <em>D</em>irect <em>C</em>lient <em>C</em>onnection chat between you and this person.<p/><em>Technical note:</em><br />The conversation between you and this person will be sent directly.  This means it is independent from the server - so if the server connection fails, or use disconnect, your DCC Chat will be unaffected.  It also means that no irc server admin can view or spy on this chat.</qt>");
 
-        if (kapp->authorize("allow_downloading"))
+        if (KAuthorized::authorizeKAction("allow_downloading"))
         {
             newitem = popup->insertItem(SmallIcon("2rightarrow"),i18n("Send &File..."),Konversation::DccSend);
             popup->setWhatsThis(newitem, "<qt>Send a file to this person.  If you are having problem sending files, or they are sending slowly, see the Konversation Handbook and DCC preferences page.</qt>");
@@ -116,7 +117,7 @@ KListView(parent)
     }
     else
     {
-        kdWarning() << "NickListView::NickListView(): Could not create popup!" << endl;
+        kWarning() << "NickListView::NickListView(): Could not create popup!" << endl;
     }
 
     #if KDE_IS_VERSION(3,3,90)
@@ -195,9 +196,9 @@ void NickListView::startResortTimer()
 
 void NickListView::resort()
 {
-    KListView::setSorting(m_column, m_ascending);
+    K3ListView::setSorting(m_column, m_ascending);
     sort();
-    KListView::setSorting(-1);
+    K3ListView::setSorting(-1);
 }
 
 void NickListView::contextMenuEvent(QContextMenuEvent* ce)

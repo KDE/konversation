@@ -68,10 +68,10 @@
 #include <kdeversion.h>
 #include <kstandarddirs.h>
 #include <krun.h>
-#include <kprocess.h>
+#include <k3process.h>
 #include <kiconloader.h>
 #include <kshell.h>
-#include <kpopupmenu.h>
+#include <kmenu.h>
 #include <kaction.h>
 #include <kglobalsettings.h>
 #include <kdebug.h>
@@ -81,6 +81,7 @@
 #include <kstdaccel.h>
 #include <kglobal.h>
 #include <QTextDocument>
+#include <kauthorized.h>
 
 
 IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent)
@@ -156,7 +157,7 @@ void IRCView::enableParagraphSpacing()
 
     if (!style)
     {
-        kdDebug() << "IRCView::updateStyleSheet(): style == 0!" << endl;
+        kDebug() << "IRCView::updateStyleSheet(): style == 0!" << endl;
 
         return;
     }
@@ -222,7 +223,7 @@ void IRCView::highlightedSlot(const QString& _link)
     // HACK Replace % with \x03 in the url to keep Qt from doing stupid things
     link = link.replace ('\x03', "%");
     //Hack to handle the fact that we get a decoded url
-    link = KURL::fromPathOrURL(link).url();
+    link = KUrl::fromPathOrUrl(link).url();
 
     // HACK:Use space as a placeholder for \ as Qt tries to be clever and does a replace to / in urls in QTextEdit
     if(link.startsWith("#"))
@@ -325,22 +326,22 @@ void IRCView::openLink(const QString& url, bool newTab)
                     DCOPRef ref(foundApp, foundObj);
                     ref.call("newTab", url);
                 } else
-                    new KRun(KURL::fromPathOrURL(url));
+                    new KRun(KUrl::fromPathOrUrl(url));
             } else
-                new KRun(KURL::fromPathOrURL(url));
+                new KRun(KUrl::fromPathOrUrl(url));
         }
         else
         {
             QString cmd = Preferences::webBrowserCmd();
             cmd.replace("%u", url);
-            KProcess *proc = new KProcess;
+            K3Process *proc = new K3Process;
             QStringList cmdAndArgs = KShell::splitArgs(cmd);
             *proc << cmdAndArgs;
             //      This code will also work, but starts an extra shell process.
-            //      kdDebug() << "IRCView::urlClickSlot(): cmd = " << cmd << endl;
+            //      kDebug() << "IRCView::urlClickSlot(): cmd = " << cmd << endl;
             //      *proc << cmd;
             //      proc->setUseShell(true);
-            proc->start(KProcess::DontCare);
+            proc->start(K3Process::DontCare);
             delete proc;
         }
     }
@@ -1261,7 +1262,7 @@ void IRCView::contentsMouseMoveEvent(QMouseEvent* ev)
     {
         m_mousePressed = false;
         removeSelection();
-        KURL ux = KURL::fromPathOrURL(m_urlToDrag);
+        KUrl ux = KUrl::fromPathOrUrl(m_urlToDrag);
 
         if (m_server && m_urlToDrag.startsWith("##"))
         {
@@ -1273,7 +1274,7 @@ void IRCView::contentsMouseMoveEvent(QMouseEvent* ev)
             ux = m_urlToDrag.mid(1);
         }
 
-        KURLDrag* u = new KURLDrag(ux, viewport());
+        K3URLDrag* u = new K3URLDrag(ux, viewport());
         u->drag();
         return;
     }
@@ -1289,7 +1290,7 @@ void IRCView::contentsContextMenuEvent(QContextMenuEvent* ev)
     m_highlightedURL = anchorAt(viewportToContents(mapFromGlobal(QCursor::pos())));
     m_highlightedURL = m_highlightedURL.replace('\x03', "%");
     // Hack to counter the fact that we're given an decoded url
-    m_highlightedURL = KURL::fromPathOrURL(m_highlightedURL).url();
+    m_highlightedURL = KUrl::fromPathOrUrl(m_highlightedURL).url();
 
     if (m_highlightedURL.isEmpty()) viewport()->setCursor(Qt::ArrowCursor);
 
@@ -1401,9 +1402,9 @@ bool IRCView::contextMenu(QContextMenuEvent* ce)
 
 void IRCView::setupNickPopupMenu()
 {
-    m_nickPopup = new KPopupMenu(this,"nicklist_context_menu");
-    m_modes = new KPopupMenu(this,"nicklist_modes_context_submenu");
-    m_kickban = new KPopupMenu(this,"nicklist_kick_ban_context_submenu");
+    m_nickPopup = new KMenu(this,"nicklist_context_menu");
+    m_modes = new KMenu(this,"nicklist_modes_context_submenu");
+    m_kickban = new KMenu(this,"nicklist_kick_ban_context_submenu");
     m_nickPopupId= m_nickPopup->insertTitle(m_currentNick);
 
     m_nickPopup->insertItem(i18n("&Whois"),Konversation::Whois);
@@ -1441,7 +1442,7 @@ void IRCView::setupNickPopupMenu()
     m_nickPopup->insertSeparator();
 
     m_nickPopup->insertItem(i18n("Open Query"),Konversation::OpenQuery);
-    if (kapp->authorize("allow_downloading"))
+    if (KAuthorized::authorizeKAction("allow_downloading"))
     {
         m_nickPopup->insertItem(SmallIcon("2rightarrow"),i18n("Send &File..."),Konversation::DccSend);
     }
@@ -1484,7 +1485,7 @@ void IRCView::updateNickMenuEntries(Q3PopupMenu* popup, const QString& nickname)
 
 void IRCView::setupQueryPopupMenu()
 {
-    m_nickPopup = new KPopupMenu(this,"query_context_menu");
+    m_nickPopup = new KMenu(this,"query_context_menu");
     m_nickPopupId = m_nickPopup->insertTitle(m_currentNick);
     m_nickPopup->insertItem(i18n("&Whois"),Konversation::Whois);
     m_nickPopup->insertItem(i18n("&Version"),Konversation::Version);
@@ -1496,7 +1497,7 @@ void IRCView::setupQueryPopupMenu()
     m_nickPopup->setItemVisible(Konversation::IgnoreNick, false);
     m_nickPopup->setItemVisible(Konversation::UnignoreNick, false);
 
-    if (kapp->authorize("allow_downloading"))
+    if (KAuthorized::authorizeKAction("allow_downloading"))
         m_nickPopup->insertItem(SmallIcon("2rightarrow"),i18n("Send &File..."),Konversation::DccSend);
 
     m_nickPopup->insertItem(i18n("Add to Watched Nicks"), Konversation::AddNotify);
@@ -1506,7 +1507,7 @@ void IRCView::setupQueryPopupMenu()
 
 void IRCView::setupChannelPopupMenu()
 {
-    m_channelPopup = new KPopupMenu(this,"channel_context_menu");
+    m_channelPopup = new KMenu(this,"channel_context_menu");
     m_channelPopupId = m_channelPopup->insertTitle(m_currentChannel);
     m_channelPopup->insertItem(i18n("&Join"),Konversation::Join);
     m_channelPopup->insertItem(i18n("Get &user list"),Konversation::Names);
@@ -1753,13 +1754,13 @@ void IRCView::keyPressEvent(QKeyEvent* e)
 {
     KKey key(e);
 
-    if (KStdAccel::copy().contains(key))
+    if (KStandardShortcut::copy().contains(key))
     {
         copy();
         e->accept();
         return;
     }
-    else if (KStdAccel::paste().contains(key))
+    else if (KStandardShortcut::paste().contains(key))
     {
         emit textPasted(false);
         e->accept();
@@ -1788,7 +1789,7 @@ void IRCView::updateScrollBarPos()
 
 void IRCView::saveLinkAs(const QString& url)
 {
-    KURL source(url);
+    KUrl source(url);
     KFileDialog dialog(":SaveLinkAs", QString (), this, "savelinkdia", true);
     dialog.setCaption(i18n("Save Link As"));
     dialog.setSelection(source.fileName());
@@ -1796,7 +1797,7 @@ void IRCView::saveLinkAs(const QString& url)
     if(dialog.exec() == QDialog::Rejected)
         return;
 
-    KURL destination = dialog.selectedURL();
+    KUrl destination = dialog.selectedURL();
     KIO::copyAs(source, destination);
 }
 

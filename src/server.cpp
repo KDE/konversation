@@ -58,12 +58,12 @@
 #include <kfiledialog.h>
 #include <kinputdialog.h>
 #include <kmessagebox.h>
-#include <kresolver.h>
+#include <k3resolver.h>
 #include <ksocketdevice.h>
 #include <kaction.h>
 #include <kstringhandler.h>
 #include <kdeversion.h>
-#include <kwin.h>
+#include <kwindowsystem.h>
 #include <config.h>
 
 
@@ -144,7 +144,7 @@ Server::Server(QObject* parent, ConnectionSettings& settings) : QObject(parent)
 Server::~Server()
 {
     //send queued messages
-    kdDebug() << "Server::~Server(" << getServerName() << ")" << endl;
+    kDebug() << "Server::~Server(" << getServerName() << ")" << endl;
 
     // Delete helper object.
     delete m_serverISON;
@@ -192,7 +192,7 @@ Server::~Server()
 
     emit destroyed(m_connectionId);
 
-    kdDebug() << "~Server done" << endl;
+    kDebug() << "~Server done" << endl;
 }
 
 //... so called to match the ChatWindow derivatives.
@@ -208,7 +208,7 @@ void Server::doPreShellCommand()
     QString command = getIdentity()->getShellCommand();
     getStatusView()->appendServerMessage(i18n("Info"),"Running preconfigured command...");
 
-    connect(&m_preShellCommand,SIGNAL(processExited(KProcess*)), this, SLOT(preShellCommandExited(KProcess*)));
+    connect(&m_preShellCommand,SIGNAL(processExited(K3Process*)), this, SLOT(preShellCommandExited(K3Process*)));
 
     QStringList commandList = QStringList::split(" ",command);
 
@@ -269,7 +269,7 @@ void Server::connectSignals()
         this, SLOT(sendMultiServerCommand(const QString&, const QString&)));
     connect(getOutputFilter(), SIGNAL(reconnectServer()), this, SLOT(reconnect()));
     connect(getOutputFilter(), SIGNAL(disconnectServer()), this, SLOT(disconnect()));
-    connect(getOutputFilter(), SIGNAL(openDccSend(const QString &, KURL)), this, SLOT(addDccSend(const QString &, KURL)));
+    connect(getOutputFilter(), SIGNAL(openDccSend(const QString &, KUrl)), this, SLOT(addDccSend(const QString &, KUrl)));
     connect(getOutputFilter(), SIGNAL(openDccChat(const QString &)), this, SLOT(openDccChat(const QString &)));
     connect(getOutputFilter(), SIGNAL(sendToAllChannels(const QString&)), this, SLOT(sendToAllChannels(const QString&)));
     connect(getOutputFilter(), SIGNAL(banUsers(const QStringList&,const QString&,const QString&)),
@@ -364,7 +364,7 @@ void Server::setAutoJoin(bool on)
     m_autoJoin = on;
 }
 
-void Server::preShellCommandExited(KProcess* proc)
+void Server::preShellCommandExited(K3Process* proc)
 {
 
     if (proc && proc->normalExit())
@@ -424,7 +424,7 @@ void Server::connectToIRCServer()
         m_inputFilter.reset();
     }
     else
-        kdDebug() << "connectToIRCServer() called while already connected: This should never happen." << endl;
+        kDebug() << "connectToIRCServer() called while already connected: This should never happen." << endl;
 }
 
 void Server::showSSLDialog()
@@ -580,7 +580,7 @@ void Server::ircServerConnectionSuccess()
 
 void Server::broken(int state)
 {
-    kdDebug() << "Connection broken (Socket fd " << m_socket->socketDevice()->socket() << ") " << state << "!" << endl;
+    kDebug() << "Connection broken (Socket fd " << m_socket->socketDevice()->socket() << ") " << state << "!" << endl;
 
     m_socket->enableRead(false);
     m_socket->enableWrite(false); //FIXME if we rely on this signal, it should be turned back on somewhere...
@@ -692,7 +692,7 @@ void Server::gotOwnResolvedHostByWelcome(KResolverResults res)
     if (res.error() == KResolver::NoError && !res.isEmpty())
         m_ownIpByWelcome = res.first().address().nodeName();
     else
-        kdDebug() << "Server::gotOwnResolvedHostByWelcome(): Got error: " << ( int )res.error() << endl;
+        kDebug() << "Server::gotOwnResolvedHostByWelcome(): Got error: " << ( int )res.error() << endl;
 }
 
 void Server::quitServer()
@@ -1065,7 +1065,7 @@ int Server::_send_internal(QString outputLine)
 
     if (outputLine.at(outputLine.length()-1) == '\n')
     {
-        kdDebug() << "found \\n on " << outboundCommand << endl;
+        kDebug() << "found \\n on " << outboundCommand << endl;
         outputLine.setLength(outputLine.length()-1);
     }
 
@@ -1263,8 +1263,8 @@ void Server::dcopSay(const QString& target,const QString& command)
             {
                 query->adjustFocus();
                 getViewContainer()->getWindow()->show();
-                KWin::demandAttention(getViewContainer()->getWindow()->winId());
-                KWin::activateWindow(getViewContainer()->getWindow()->winId());
+                KWindowSystem::demandAttention(getViewContainer()->getWindow()->winId());
+                KWindowSystem::activateWindow(getViewContainer()->getWindow()->winId());
             }
         }
     }
@@ -1489,7 +1489,7 @@ void Server::closeQuery(const QString &name)
 
 void Server::closeChannel(const QString& name)
 {
-    kdDebug() << "Server::closeChannel(" << name << ")" << endl;
+    kDebug() << "Server::closeChannel(" << name << ")" << endl;
     Channel* channelToClose = getChannelByName(name);
 
     if(channelToClose)
@@ -1596,7 +1596,7 @@ void Server::requestDccSend()
 void Server::sendURIs(const Q3StrList& uris, const QString& nick)
 {
     for (QStrListIterator it(uris) ; *it; ++it)
-        addDccSend(nick,KURL(*it));
+        addDccSend(nick,KUrl(*it));
 }
 
 void Server::requestDccSend(const QString &a_recipient)
@@ -1634,13 +1634,13 @@ void Server::requestDccSend(const QString &a_recipient)
     // do we have a recipient *now*?
     if(!recipient.isEmpty())
     {
-        KURL::List fileURLs=KFileDialog::getOpenURLs(
+        KUrl::List fileURLs=KFileDialog::getOpenUrls(
             ":lastDccDir",
             QString(),
             getViewContainer()->getWindow(),
             i18n("Select File(s) to Send to %1").arg(recipient)
         );
-        KURL::List::iterator it;
+        KUrl::List::iterator it;
         for ( it = fileURLs.begin() ; it != fileURLs.end() ; ++it )
         {
             addDccSend( recipient, *it );
@@ -1652,7 +1652,7 @@ void Server::slotNewDccTransferItemQueued(DccTransfer* transfer)
 {
     if (transfer->getConnectionId() == connectionId() )
     {
-        kdDebug() << "Server::slotNewDccTranfserItemQueued(): connecting slots for " << transfer->getFileName() << " [" << transfer->getType() << "]" << endl;
+        kDebug() << "Server::slotNewDccTranfserItemQueued(): connecting slots for " << transfer->getFileName() << " [" << transfer->getType() << "]" << endl;
         if ( transfer->getType() == DccTransfer::Receive )
         {
             connect( transfer, SIGNAL( done( DccTransfer* ) ), this, SLOT( dccGetDone( DccTransfer* ) ) );
@@ -1666,7 +1666,7 @@ void Server::slotNewDccTransferItemQueued(DccTransfer* transfer)
     }
 }
 
-void Server::addDccSend(const QString &recipient,KURL fileURL, const QString &altFileName, uint fileSize)
+void Server::addDccSend(const QString &recipient,KUrl fileURL, const QString &altFileName, uint fileSize)
 {
     if (!fileURL.isValid()) return;
 
@@ -2047,14 +2047,14 @@ void Server::updateChannelMode(const QString &updater, const QString &channelNam
 /*
             if(parameter.isEmpty())
             {
-                kdDebug() << "in updateChannelMode, a nick with no-name has had their mode '" << mode << "' changed to (" <<plus << ") in channel '" << channelName << "' by " << updater << ".  How this happened, I have no idea.  Please report this message to irc #konversation if you want to be helpful." << endl << "Ignoring the error and continuing." << endl;
+                kDebug() << "in updateChannelMode, a nick with no-name has had their mode '" << mode << "' changed to (" <<plus << ") in channel '" << channelName << "' by " << updater << ".  How this happened, I have no idea.  Please report this message to irc #konversation if you want to be helpful." << endl << "Ignoring the error and continuing." << endl;
                                                   //this will get their attention.
-                kdDebug() << kdBacktrace() << endl;
+                kDebug() << kBacktrace() << endl;
             }
             else
             {
-                kdDebug() << "in updateChannelMode, could not find updatee nick " << parameter << " for channel " << channelName << endl;
-                kdDebug() << "This could indicate an obscure race condition that is safely being handled (like the mode of someone changed and they quit almost simulatanously, or it could indicate an internal error." << endl;
+                kDebug() << "in updateChannelMode, could not find updatee nick " << parameter << " for channel " << channelName << endl;
+                kDebug() << "This could indicate an obscure race condition that is safely being handled (like the mode of someone changed and they quit almost simulatanously, or it could indicate an internal error." << endl;
             }
 */
             //TODO Do we need to add this nick?
@@ -2549,7 +2549,7 @@ void Server::renameNickInfo(NickInfoPtr nickInfo, const QString& newname)
     }
     else
     {
-        kdDebug() << "server::renameNickInfo() was called for newname='" << newname << "' but nickInfo is null" << endl;
+        kDebug() << "server::renameNickInfo() was called for newname='" << newname << "' but nickInfo is null" << endl;
     }
 }
 
@@ -2647,7 +2647,7 @@ void Server::renameNick(const QString &nickname, const QString &newNick)
 {
     if(nickname.isEmpty() || newNick.isEmpty())
     {
-        kdDebug() << "server::renameNick called with empty strings!  Trying to rename '" << nickname << "' to '" << newNick << "'" << endl;
+        kDebug() << "server::renameNick called with empty strings!  Trying to rename '" << nickname << "' to '" << newNick << "'" << endl;
         return;
     }
 
@@ -2665,7 +2665,7 @@ void Server::renameNick(const QString &nickname, const QString &newNick)
 
     if(!nickInfo)
     {
-        kdDebug() << "server::renameNick called for nickname '" << nickname << "' to '" << newNick << "' but getNickInfo('" << nickname << "') returned no results." << endl;
+        kDebug() << "server::renameNick called for nickname '" << nickname << "' to '" << newNick << "' but getNickInfo('" << nickname << "') returned no results." << endl;
     }
     else
     {
@@ -2714,7 +2714,7 @@ void Server::gotOwnResolvedHostByUserhost(KResolverResults res)
     if ( res.error() == KResolver::NoError && !res.isEmpty() )
         m_ownIpByUserhost = res.first().address().nodeName();
     else
-        kdDebug() << "Server::gotOwnResolvedHostByUserhost(): Got error: " << ( int )res.error() << endl;
+        kDebug() << "Server::gotOwnResolvedHostByUserhost(): Got error: " << ( int )res.error() << endl;
 }
 
 void Server::appendServerMessageToChannel(const QString& channel,const QString& type,const QString& message)
@@ -3334,7 +3334,7 @@ void Server::updateLongPongLag()
     {
         m_currentLag = m_lagTime.elapsed();
         emit tooLongLag(this, m_currentLag);
-        // kdDebug() << "Current lag: " << currentLag << endl;
+        // kDebug() << "Current lag: " << currentLag << endl;
 
         if (m_currentLag > (Preferences::maximumLagTime() * 1000))
             m_socket->close();

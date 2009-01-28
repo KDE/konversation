@@ -47,7 +47,7 @@ the Free Software Foundation; either version 2 of the License, or
                         <property name="orientation">
                             <enum>Vertical</enum>
                         </property>
-                        <widget class="KListView">
+                        <widget class="K3ListView">
                             <column>
                                 <property name="text">
                                     <string>Nickname</string>
@@ -328,7 +328,7 @@ the Free Software Foundation; either version 2 of the License, or
                             </spacer>
                         </hbox>
                     </widget>
-                    <widget class="KListView">
+                    <widget class="K3ListView">
                         <column>
                             <property name="text">
                                 <string>Mode</string>
@@ -435,7 +435,7 @@ the Free Software Foundation; either version 2 of the License, or
                             <string>&amp;Add Ban</string>
                         </property>
                     </widget>
-                    <widget class="KListView" row="1" column="0" rowspan="1" colspan="4">
+                    <widget class="K3ListView" row="1" column="0" rowspan="1" colspan="4">
                         <column>
                             <property name="text">
                                 <string>Hostmask</string>
@@ -511,7 +511,7 @@ the Free Software Foundation; either version 2 of the License, or
                             <string>Search:</string>
                         </property>
                     </widget>
-                    <widget class="KListViewSearchLine" row="0" column="2" rowspan="1" colspan="2">
+                    <widget class="K3ListViewSearchLine" row="0" column="2" rowspan="1" colspan="2">
                         <property name="name">
                             <cstring>banListSearchLine</cstring>
                         </property>

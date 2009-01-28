@@ -43,7 +43,7 @@ class QDropEvent;
 class QDragEnterEvent;
 class QEvent;
 
-class KPopupMenu;
+class KMenu;
 
 class Server;
 class ChatWindow;
@@ -209,10 +209,10 @@ class IRCView : public KTextBrowser
         Q3PopupMenu* m_popup;
         int toggleMenuBarSeparator;
         int copyUrlMenuSeparator;
-        KPopupMenu* m_nickPopup;
-        KPopupMenu* m_channelPopup;
-        KPopupMenu* m_modes;
-        KPopupMenu* m_kickban;
+        KMenu* m_nickPopup;
+        KMenu* m_channelPopup;
+        KMenu* m_modes;
+        KMenu* m_kickban;
 
         static QChar LRM;
         static QChar RLM;

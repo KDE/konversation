@@ -28,7 +28,7 @@ namespace Konversation
     ChannelDialog::ChannelDialog(const QString& title, QWidget *parent, const char *name)
         : KDialogBase(Plain, title, Ok|Cancel, Ok, parent, name)
     {
-        Q3Frame* mainWidget = plainPage();
+        QFrame* mainWidget = plainPage();
         Q3GridLayout* mainLayout = new Q3GridLayout(mainWidget, 1, 2, 0, spacingHint());
 
         QLabel* channelLbl = new QLabel(i18n("C&hannel:"), mainWidget);

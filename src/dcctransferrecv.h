@@ -62,7 +62,7 @@ class DccTransferRecv : public DccTransfer
         // TODO: "$sendername-$receiveddate" is better
         void setFileName( const QString& fileName );
         // OPTIONAL, if not specified, default folder + the file name
-        void setFileURL( const KURL& url );
+        void setFileURL( const KUrl& url );
         // OPTIONAL
         void setReverse( bool reverse, const QString& reverseToken );
 
@@ -121,7 +121,7 @@ class DccTransferRecv : public DccTransfer
          * @param dirURL A url for the directory to create.
          * @return True if the directory now exists.  False if there was a problem and the directory doesn't exist.
          */
-        bool createDirs(const KURL &dirURL) const;
+        bool createDirs(const KUrl &dirURL) const;
 
         void requestResume();
         // for non-reverse DCC
@@ -133,7 +133,7 @@ class DccTransferRecv : public DccTransfer
         void stopConnectionTimer();
 
     protected:
-        KURL m_saveToTmpFileURL;
+        KUrl m_saveToTmpFileURL;
         ///Current filesize of the file saved on the disk.
         KIO::filesize_t m_saveToFileSize;
         ///Current filesize of the file+".part" saved on the disk.

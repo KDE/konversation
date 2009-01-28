@@ -22,7 +22,7 @@
         <property name="margin">
             <number>0</number>
         </property>
-        <widget class="KListBox" row="0" column="0" rowspan="1" colspan="3">
+        <widget class="K3ListBox" row="0" column="0" rowspan="1" colspan="3">
             <property name="name">
                 <cstring>iconThemeIndex</cstring>
             </property>
@@ -217,6 +217,6 @@
 <layoutdefaults spacing="6" margin="11"/>
 <layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
 <includehints>
-    <includehint>klistbox.h</includehint>
+    <includehint>k3listbox.h</includehint>
 </includehints>
 </UI>

@@ -33,8 +33,8 @@ Images::Images()
     initializeNickIcons();
     initializeKimifaceIcons();
 
-    m_closeIcon = KGlobal::iconLoader()->loadIcon("fileclose",KIcon::Small);
-    m_disabledCloseIcon = KGlobal::iconLoader()->loadIconSet("fileclose",KIcon::Small).pixmap(QIcon::Small, false);
+    m_closeIcon = KIconLoader::global()->loadIcon("fileclose",KIcon::Small);
+    m_disabledCloseIcon = KIcon("fileclose").pixmap(QIcon::Small, false);
 }
 
 Images::~Images()
@@ -75,9 +75,9 @@ void Images::initializeLeds()
 
 void Images::initializeKimifaceIcons()
 {
-    kimproxyAway = KGlobal::iconLoader()->loadIconSet("kimproxyaway",KIcon::Small);
-    kimproxyOnline = KGlobal::iconLoader()->loadIconSet("kimproxyonline",KIcon::Small);
-    kimproxyOffline = KGlobal::iconLoader()->loadIconSet("kimproxyoffline",KIcon::Small);
+    kimproxyAway = KIcon("kimproxyaway");
+    kimproxyOnline = KIcon("kimproxyonline");
+    kimproxyOffline = KIcon("kimproxyoffline");
 }
 
 // NickIcons
@@ -139,8 +139,8 @@ void Images::initializeNickIcons()
 
 void Images::updateIcons()
 {
-    m_closeIcon = KGlobal::iconLoader()->loadIcon("fileclose",KIcon::Small);
-    m_disabledCloseIcon = KGlobal::iconLoader()->loadIconSet("fileclose",KIcon::Small).pixmap(QIcon::Small, false);
+    m_closeIcon = KIconLoader::global()->loadIcon("fileclose",KIcon::Small);
+    m_disabledCloseIcon = KIcon("fileclose").pixmap(QIcon::Small, false);
 }
 
 QIcon Images::getLed(QColor col,bool state)

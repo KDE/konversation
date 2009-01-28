@@ -17,13 +17,13 @@
 
 #include <qstring.h>
 
-#include <klistview.h>
+#include <k3listview.h>
 
 
-class ChannelListViewItem : public KListViewItem
+class ChannelListViewItem : public K3ListViewItem
 {
     public:
-        ChannelListViewItem(KListView* parent, const QString& channel, const QString& users, const QString& topic);
+        ChannelListViewItem(K3ListView* parent, const QString& channel, const QString& users, const QString& topic);
         ~ChannelListViewItem();
 
         int compare(Q3ListViewItem* item, int col, bool ascending) const;

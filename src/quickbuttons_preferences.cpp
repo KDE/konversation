@@ -22,7 +22,8 @@
 #include <kconfig.h>
 #include <klocale.h>
 #include <klineedit.h>
-#include <klistview.h>
+#include <k3listview.h>
+#include <kglobal.h>
 
 
 QuickButtons_Config::QuickButtons_Config(QWidget* parent, const char* name)
@@ -72,7 +73,7 @@ void QuickButtons_Config::setButtonsListView(const QStringList &buttonList)
     // get button definition
     QString definition=buttonList[index-1];
     // cut definition apart in name and action, and create a new listview item
-    new KListViewItem(buttonListView,definition.section(',',0,0),definition.section(',',1));
+    new K3ListViewItem(buttonListView,definition.section(',',0,0),definition.section(',',1));
   } // for
   buttonListView->setSelected(buttonListView->firstChild(), true);
 }
@@ -81,7 +82,7 @@ void QuickButtons_Config::setButtonsListView(const QStringList &buttonList)
 void QuickButtons_Config::saveSettings()
 {
   // get configuration object
-  KConfig* config=kapp->config();
+  KConfig* config=KGlobal::config();
 
   // delete all buttons
   config->deleteGroup("Button List");
@@ -209,7 +210,7 @@ void QuickButtons_Config::actionChanged(const QString& newAction)
 void QuickButtons_Config::addEntry()
 {
   // add new item at the bottom of list view
-  KListViewItem* newItem=new KListViewItem(buttonListView,buttonListView->lastChild(),i18n("New"),QString());
+  K3ListViewItem* newItem=new K3ListViewItem(buttonListView,buttonListView->lastChild(),i18n("New"),QString());
   // if successful ...
   if(newItem)
   {

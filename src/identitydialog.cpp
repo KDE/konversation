@@ -44,7 +44,7 @@ namespace Konversation
     IdentityDialog::IdentityDialog(QWidget *parent, const char *name)
         : KDialogBase(Plain, i18n("Identities"), Ok|Cancel, Ok, parent, name)
     {
-        Q3Frame* mainWidget = plainPage();
+        QFrame* mainWidget = plainPage();
         Q3GridLayout* mainLayout = new Q3GridLayout(mainWidget, 1, 2, 0, spacingHint());
 
         QLabel* identityLabel = new QLabel(i18n("&Identity:"), mainWidget);

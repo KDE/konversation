@@ -28,7 +28,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
 
 AddresseeItem::AddresseeItem( QListView *parent, const KABC::Addressee &addressee) :
-KListViewItem( parent ),
+K3ListViewItem( parent ),
 mAddressee( addressee )
 {
     //We can't save showphoto because we don't have a d pointer

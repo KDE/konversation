@@ -13,13 +13,13 @@
 
 
 NicksOnlineItem::NicksOnlineItem(int type, Q3ListView* parent, const QString& name, const QString& col2) :
-                 KListViewItem(parent, name, col2)
+                 K3ListViewItem(parent, name, col2)
 {
   m_type=type;
 }
 
 NicksOnlineItem::NicksOnlineItem(int type, Q3ListViewItem* parent, const QString& name, const QString& col2) :
-                 KListViewItem(parent, name, col2)
+                 K3ListViewItem(parent, name, col2)
 {
   m_type=type;
 }

@@ -28,7 +28,7 @@
 #include <kstandarddirs.h>
 #include <kurlrequester.h>
 #include <kfiledialog.h>
-#include <klistview.h>
+#include <k3listview.h>
 #include <klineedit.h>
 #include <kcolorbutton.h>
 #include <klocale.h>
@@ -58,7 +58,7 @@ Highlight_Config::Highlight_Config(QWidget* parent, const char* name)
   soundDirs += KGlobal::dirs()->resourceDirs( "sound" );
 
   if ( !soundDirs.isEmpty() ) {
-    KURL url;
+    KUrl url;
     QDir dir;
     dir.setFilter( QDir::Files | QDir::Readable );
     QStringList::ConstIterator it = soundDirs.begin();
@@ -152,7 +152,7 @@ void Highlight_Config::highlightSelected(Q3ListViewItem* item)
     newItemSelected=true;
    patternColor->setColor(highlightItem->getColor());
    patternInput->setText(highlightItem->getPattern());
-   soundURL->setURL(highlightItem->getSoundURL().prettyURL());
+   soundURL->setURL(highlightItem->getSoundURL().prettyUrl());
    autoTextInput->setText(highlightItem->getAutoText());
     // all signals will now emit the modified() signal again
     newItemSelected=false;
@@ -241,7 +241,7 @@ void Highlight_Config::soundURLChanged(const QString& newURL)
 
   if(!newItemSelected && item)
   {
-    item->setSoundURL(KURL(newURL));
+    item->setSoundURL(KUrl(newURL));
     emit modified();
   }
 }
@@ -259,7 +259,7 @@ void Highlight_Config::autoTextChanged(const QString& newText)
 
 void Highlight_Config::addHighlight()
 {
-  Highlight* newHighlight=new Highlight(i18n("New"),false,QColor("#ff0000"),KURL(),QString());
+  Highlight* newHighlight=new Highlight(i18n("New"),false,QColor("#ff0000"),KUrl(),QString());
 
   HighlightViewItem* item=new HighlightViewItem(highlightListView,newHighlight);
   highlightListView->setSelected(item,true);
@@ -317,12 +317,12 @@ QStringList Highlight_Config::currentHighlightList()
 void Highlight_Config::playSound()
 {
   KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
-  konvApp->sound()->play(KURL(soundURL->url()));
+  konvApp->sound()->play(KUrl(soundURL->url()));
 }
 
 void Highlight_Config::saveSettings()
 {
-  KConfig* config = kapp->config();
+  KConfig* config = KGlobal::config();
 
   // Write all highlight entries
   Q3PtrList<Highlight> hiList=getHighlightList();
@@ -333,7 +333,7 @@ void Highlight_Config::saveSettings()
     config->writeEntry("Pattern", hl->getPattern());
     config->writeEntry("RegExp", hl->getRegExp());
     config->writeEntry("Color", hl->getColor());
-    config->writePathEntry("Sound", hl->getSoundURL().prettyURL());
+    config->writePathEntry("Sound", hl->getSoundURL().prettyUrl());
     config->writeEntry("AutoText", hl->getAutoText());
     i++;
   }

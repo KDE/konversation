@@ -16,15 +16,15 @@
 #define NICK_H
 
 #include <qobject.h>
-#include <klistview.h>
+#include <k3listview.h>
 
 #include "channelnick.h"
 
-class Nick : public QObject, public KListViewItem
+class Nick : public QObject, public K3ListViewItem
 {
     Q_OBJECT
     public:
-        Nick(KListView *listView,
+        Nick(K3ListView *listView,
             const ChannelNickPtr& channelnick);
         ~Nick();
 

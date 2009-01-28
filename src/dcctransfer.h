@@ -80,7 +80,7 @@ class DccTransfer : public QObject
         KIO::filesize_t    getFileSize()              const;
         KIO::fileoffset_t  getTransferringPosition()  const;
         KIO::fileoffset_t  getTransferStartPosition() const;
-        KURL               getFileURL()               const;
+        KUrl               getFileURL()               const;
         bool               isResumed()                const;
         bool               isReverse()                const;
         QString            getReverseToken()          const;
@@ -162,7 +162,7 @@ class DccTransfer : public QObject
          * If we are recieving a file, this is the url of the file we are saving
          * to in the end (Temporararily it will be filename+".part" ).
          */
-        KURL m_fileURL;
+        KUrl m_fileURL;
 
     private:
         DccTransfer& operator = ( const DccTransfer& obj );

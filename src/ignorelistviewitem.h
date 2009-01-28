@@ -16,10 +16,10 @@
 
 #include <qstring.h>
 
-#include <klistview.h>
+#include <k3listview.h>
 
 
-class IgnoreListViewItem : public KListViewItem
+class IgnoreListViewItem : public K3ListViewItem
 {
     public:
         IgnoreListViewItem(Q3ListView* parent,const QString& name,int flags);

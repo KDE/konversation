@@ -28,13 +28,13 @@
 #include <QEvent>
 
 #include <krun.h>
-#include <kprocess.h>
+#include <k3process.h>
 #include <kshell.h>
 #include <kurldrag.h>
 #include <kstringhandler.h>
 #include <kglobal.h>
 #include <kdebug.h>
-#include <kpopupmenu.h>
+#include <kmenu.h>
 #include <kiconloader.h>
 #include <kbookmarkmanager.h>
 #include <kdeversion.h>
@@ -45,7 +45,7 @@ namespace Konversation
 {
 
     TopicLabel::TopicLabel(QWidget *parent, const char *name)
-        : KActiveLabel(parent, name)
+        : K3ActiveLabel(parent, name)
     {
         setWrapPolicy(Q3TextEdit::AtWordOrDocumentBoundary);
         setFocusPolicy(QWidget::ClickFocus);
@@ -93,14 +93,14 @@ namespace Konversation
             // HACK Replace % with \x03 in the url to keep Qt from doing stupid things
             urlToDrag = urlToDrag.replace ('\x03', "%");
             // Hack to counter the fact that we're given an decoded url
-            urlToDrag = KURL::fromPathOrURL(urlToDrag).url();
+            urlToDrag = KUrl::fromPathOrUrl(urlToDrag).url();
             if (!urlToDrag.isNull())
             {
                 mousePressed=true;
                 return;
             }
         }
-        KActiveLabel::contentsMousePressEvent(e);
+        K3ActiveLabel::contentsMousePressEvent(e);
     }
 
     void TopicLabel::contentsMouseReleaseEvent(QMouseEvent *e)
@@ -110,7 +110,7 @@ namespace Konversation
             if (mousePressed) openLink(urlToDrag);
             mousePressed=false;
         }
-        KActiveLabel::contentsMouseReleaseEvent(e);
+        K3ActiveLabel::contentsMouseReleaseEvent(e);
     }
 
     void TopicLabel::contentsMouseMoveEvent(QMouseEvent *e)
@@ -119,14 +119,14 @@ namespace Konversation
         {
             mousePressed=false;
             removeSelection();
-            KURL ux = KURL::fromPathOrURL(urlToDrag);
+            KUrl ux = KUrl::fromPathOrUrl(urlToDrag);
             //FIXME consistent IRC URL serialization
             if (urlToDrag.startsWith("##")) ux=QString("irc://%1:%2/%3").arg(m_server->getServerName()).
                     arg(m_server->getPort()).arg(urlToDrag.mid(2));
-            KURLDrag* u=new KURLDrag(ux,viewport());
+            K3URLDrag* u=new K3URLDrag(ux,viewport());
             u->drag();
         }
-        KActiveLabel::contentsMouseMoveEvent(e);
+        K3ActiveLabel::contentsMouseMoveEvent(e);
     }
 
     void TopicLabel::leaveEvent(QEvent*)
@@ -153,20 +153,20 @@ namespace Konversation
             // Always use KDE default mailer.
             else if (!Preferences::useCustomBrowser() || link.lower().startsWith("mailto:"))
             {
-                new KRun(KURL::fromPathOrURL(link));
+                new KRun(KUrl::fromPathOrUrl(link));
             }
             else
             {
                 QString cmd = Preferences::webBrowserCmd();
-                cmd.replace("%u",KURL::fromPathOrURL(link).url());
-                KProcess *proc = new KProcess;
+                cmd.replace("%u",KUrl::fromPathOrUrl(link).url());
+                K3Process *proc = new K3Process;
                 QStringList cmdAndArgs = KShell::splitArgs(cmd);
                 *proc << cmdAndArgs;
                 //      This code will also work, but starts an extra shell process.
-                //      kdDebug() << "IRCView::linkClickSlot(): cmd = " << cmd << endl;
+                //      kDebug() << "IRCView::linkClickSlot(): cmd = " << cmd << endl;
                 //      *proc << cmd;
                 //      proc->setUseShell(true);
-                proc->start(KProcess::DontCare);
+                proc->start(K3Process::DontCare);
                 delete proc;
             }
         }
@@ -178,7 +178,7 @@ namespace Konversation
 
         if(!block)
         {
-            KActiveLabel::contentsContextMenuEvent(ev);
+            K3ActiveLabel::contentsContextMenuEvent(ev);
         }
     }
 
@@ -231,7 +231,7 @@ namespace Konversation
 
     void TopicLabel::setupChannelPopupMenu()
     {
-        m_channelPopup = new KPopupMenu(this,"channel_context_menu");
+        m_channelPopup = new KMenu(this,"channel_context_menu");
         m_channelPopupId = m_channelPopup->insertTitle(m_currentChannel);
         m_channelPopup->insertItem(i18n("&Join"),Konversation::Join);
         m_channelPopup->insertItem(i18n("Get &user list"),Konversation::Names);
@@ -252,7 +252,7 @@ namespace Konversation
 
         if (m_fullText.isEmpty())
         {
-            KActiveLabel::setText(QString::null);
+            K3ActiveLabel::setText(QString::null);
 
             return;
         }
@@ -280,12 +280,12 @@ namespace Konversation
             }
         }
 
-        KActiveLabel::setText("<qt>" + text + "</qt>");
+        K3ActiveLabel::setText("<qt>" + text + "</qt>");
     }
 
     void TopicLabel::resizeEvent(QResizeEvent* ev)
     {
-        KActiveLabel::resizeEvent(ev);
+        K3ActiveLabel::resizeEvent(ev);
         updateSqueezedText();
     }
 
@@ -327,7 +327,7 @@ namespace Konversation
 
     void TopicLabel::highlightedSlot(const QString& _link)
     {
-        QString link = KURL::fromPathOrURL(_link).url();
+        QString link = KUrl::fromPathOrUrl(_link).url();
         //we just saw this a second ago.  no need to reemit.
         if (link == m_lastStatusText && !link.isEmpty())
             return;

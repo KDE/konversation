@@ -226,7 +226,7 @@ When the nickname watcher is turned on, you will be notified when the nicknames 
                         <string>The nick (username) of the selected person to watch</string>
                     </property>
                 </widget>
-                <widget class="KListView" row="0" column="0" rowspan="1" colspan="4">
+                <widget class="K3ListView" row="0" column="0" rowspan="1" colspan="4">
                     <column>
                         <property name="text">
                             <string>Watched Networks/Nicknames</string>

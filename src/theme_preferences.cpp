@@ -31,7 +31,7 @@
 //Added by qt3to4:
 #include <QPixmap>
 
-#include <klistbox.h>
+#include <k3listbox.h>
 #include <kurl.h>
 #include <kdebug.h>
 #include <kmessagebox.h>
@@ -45,6 +45,7 @@
 #include <kconfigdialog.h>
 
 #include <unistd.h> // unlink()
+#include <kglobal.h>
 
 
 using namespace Konversation;
@@ -147,7 +148,7 @@ void Theme_Config::saveSettings()
         if(hasChanged())
         {
             // save icon theme name
-            KConfig* config = kapp->config();
+            KConfig* config = KGlobal::config();
             config->setGroup("Themes");
             config->writeEntry("IconTheme",m_currentTheme);
             // set in-memory theme to the saved theme
@@ -169,7 +170,7 @@ void Theme_Config::restorePageToDefaults()
 
 void Theme_Config::installTheme()
 {
-    KURL themeURL = KFileDialog::getOpenURL(QString(),
+    KUrl themeURL = KFileDialog::getOpenUrl(QString(),
         i18n("*.tar.gz *.tar.bz2 *.tar *.zip|Konversation Themes"),
         NULL,
         i18n("Select Theme Package")
@@ -178,7 +179,7 @@ void Theme_Config::installTheme()
     if(themeURL.isEmpty())
         return;
 
-    QString themesDir(locateLocal("data", "konversation/themes/"));
+    QString themesDir(KStandardDirs::locateLocal("data", "konversation/themes/"));
     QString tmpThemeFile;
 
     if(!KIO::NetAccess::download(themeURL, tmpThemeFile, NULL))
@@ -196,7 +197,7 @@ void Theme_Config::installTheme()
     if(themeInstallDir.exists()) // We got a directory not a file
     {
         if(themeInstallDir.exists("index.desktop"))
-            KIO::NetAccess::dircopy(KURL(tmpThemeFile),KURL(themesDir),0L);
+            KIO::NetAccess::dircopy(KUrl(tmpThemeFile),KUrl(themesDir),0L);
         else
         {
             KMessageBox::error(0L,
@@ -249,14 +250,14 @@ void Theme_Config::removeTheme()
     int remove = KMessageBox::warningContinueCancel(0L,
         i18n("Do you want to remove %1 ?").arg(themeName),
         i18n("Remove Theme"),
-        KStdGuiItem::del(),
+        KStandardGuiItem::del(),
         "warningRemoveTheme"
         );
 
     if(remove == KMessageBox::Continue)
     {
         unlink(QFile::encodeName(dir));
-        KIO::DeleteJob* job = KIO::del(KURL(dir.remove("index.desktop")));
+        KIO::DeleteJob* job = KIO::del(KUrl(dir.remove("index.desktop")));
         connect(job, SIGNAL(result(KIO::Job*)), this, SLOT(postRemoveTheme(KIO::Job*)));
     }
 }

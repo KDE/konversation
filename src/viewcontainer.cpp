@@ -158,7 +158,7 @@ void ViewContainer::setupTabWidget()
     m_vbox->hide();    //m_tabWidget->hide();
 
     KPushButton* closeBtn = new KPushButton(m_tabWidget);
-    closeBtn->setPixmap(KGlobal::iconLoader()->loadIcon("tab_remove", KIcon::Small));
+    closeBtn->setPixmap(KIconLoader::global()->loadIcon("tab_remove", KIcon::Small));
     closeBtn->resize(22, 22);
     closeBtn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     m_tabWidget->setCornerWidget(closeBtn);
@@ -2372,7 +2372,7 @@ void ViewContainer::openChannelList(const QString& filter, bool getList)
                       "of network traffic. If your connection is not fast "
                       "enough, it is possible that your client will be "
                       "disconnected by the server."), i18n("Channel List Warning"),
-                      KStdGuiItem::cont(), "ChannelListWarning");
+                      KStandardGuiItem::cont(), "ChannelListWarning");
             }
 
             if (ret != KMessageBox::Continue) return;

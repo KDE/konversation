@@ -68,7 +68,7 @@ the Free Software Foundation; either version 2 of the License, or
                 <string>Sort b&amp;y user status</string>
             </property>
         </widget>
-        <widget class="KListView" row="4" column="0" rowspan="1" colspan="3">
+        <widget class="K3ListView" row="4" column="0" rowspan="1" colspan="3">
             <column>
                 <property name="text">
                     <string>Mode</string>

@@ -32,7 +32,7 @@ namespace Konversation
     ServerDialog::ServerDialog(const QString& title, QWidget *parent, const char *name)
         : KDialogBase(Plain, title, Ok|Cancel, Ok, parent, name)
     {
-        Q3Frame* mainWidget = plainPage();
+        QFrame* mainWidget = plainPage();
         Q3GridLayout* mainLayout = new Q3GridLayout(mainWidget, 1, 4, 0, spacingHint());
 
         QLabel* serverLbl = new QLabel(i18n("&Server:"), mainWidget);

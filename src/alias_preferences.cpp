@@ -22,7 +22,7 @@
 #include <kconfig.h>
 #include <klocale.h>
 #include <klineedit.h>
-#include <klistview.h>
+#include <k3listview.h>
 
 
 Alias_Config::Alias_Config(QWidget* parent, const char* name)
@@ -86,7 +86,7 @@ void Alias_Config::setAliasListView(const QStringList& aliasList)
     for(int index=aliasList.count(); index!=0; index--)
     {
         QString item=aliasList[index-1];
-        new KListViewItem(aliasListView,item.section(' ',0,0),item.section(' ',1));
+        new K3ListViewItem(aliasListView,item.section(' ',0,0),item.section(' ',1));
     }
 
     aliasListView->setSelected(aliasListView->firstChild(), true);
@@ -170,7 +170,7 @@ void Alias_Config::actionChanged(const QString& newAction)
 void Alias_Config::addEntry()
 {
     // add new item at the bottom of list view
-    KListViewItem* newItem = new KListViewItem(aliasListView,aliasListView->lastChild(),i18n("New"),QString());
+    K3ListViewItem* newItem = new K3ListViewItem(aliasListView,aliasListView->lastChild(),i18n("New"),QString());
     // if successful ...
     if (newItem)
     {

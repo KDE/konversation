@@ -36,7 +36,7 @@ DccRecipientDialog::DccRecipientDialog(QWidget* parent, const QStringList &list,
     Q3VBoxLayout* dialogLayout=new Q3VBoxLayout(page);
     dialogLayout->setSpacing(spacingHint());
     // Add the nickname list widget
-    KListBox* nicknameList=new KListBox(page,"recipient_list");
+    K3ListBox* nicknameList=new K3ListBox(page,"recipient_list");
 
     nicknameList->insertStringList(list);
     nicknameList->sort(true);

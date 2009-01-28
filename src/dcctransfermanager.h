@@ -24,7 +24,7 @@
 #include <q3valuelist.h>
 
 
-class KURL;
+class KUrl;
 
 class DccTransferRecv;
 class DccTransferSend;
@@ -65,7 +65,7 @@ class DccTransferManager : public QObject
 
         DccTransferSend* startReverseSending(int connectionId, const QString& partnerNick, const QString& fileName, const QString& partnerHost, const QString& partnerPort, unsigned long fileSize, const QString& token );
 
-        bool isLocalFileInWritingProcess( const KURL& localUrl ) const;
+        bool isLocalFileInWritingProcess( const KUrl& localUrl ) const;
 
         int generateReverseTokenNumber();
 

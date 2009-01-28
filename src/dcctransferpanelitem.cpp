@@ -32,12 +32,12 @@
 #include <kio/job.h>
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <kprogress.h>
+#include <kprogressdialog.h>
 #include <krun.h>
 
 
 DccTransferPanelItem::DccTransferPanelItem( DccTransferPanel* panel, DccTransfer* transfer )
-    : KListViewItem( panel->getListView() )
+    : K3ListViewItem( panel->getListView() )
     , m_panel( panel )
     , m_transfer( transfer )
     , m_isTransferInstanceBackup( false )
@@ -59,7 +59,7 @@ DccTransferPanelItem::DccTransferPanelItem( DccTransferPanel* panel, DccTransfer
 
 DccTransferPanelItem::~DccTransferPanelItem()
 {
-    kdDebug() << "DccTransferPanelItem::~DccTransferPanelItem()" << endl;
+    kDebug() << "DccTransferPanelItem::~DccTransferPanelItem()" << endl;
     stopAutoViewUpdate();
     delete m_progressBar;
     if ( m_isTransferInstanceBackup )
@@ -160,7 +160,7 @@ void DccTransferPanelItem::stopAutoViewUpdate()
 
 void DccTransferPanelItem::paintCell( QPainter* painter, const QColorGroup& colorgroup, int column, int width, int alignment ) // virtual public
 {
-    KListViewItem::paintCell( painter, colorgroup, column, width, alignment );
+    K3ListViewItem::paintCell( painter, colorgroup, column, width, alignment );
     if ( column == DccTransferPanel::Column::Progress )
         showProgressBar();
 }
@@ -253,7 +253,7 @@ void DccTransferPanelItem::openFileInfoDialog()
 
 void DccTransferPanelItem::backupTransferInfo( DccTransfer* transfer )
 {
-    kdDebug() << "DccTransferPanelItem::backupTransferInfo()" << endl;
+    kDebug() << "DccTransferPanelItem::backupTransferInfo()" << endl;
     // instances of DccTransfer are deleted immediately after the transfer is done
     // so we need to make a backup of DccTransfer.
 
@@ -272,9 +272,9 @@ QString DccTransferPanelItem::getTypeText() const
 QPixmap DccTransferPanelItem::getTypeIcon() const
 {
     if ( m_transfer->getType() == DccTransfer::Send )
-        return KGlobal::iconLoader()->loadIcon( "up", KIcon::Small );
+        return KIconLoader::global()->loadIcon( "up", KIcon::Small );
     else
-        return KGlobal::iconLoader()->loadIcon( "down", KIcon::Small );
+        return KIconLoader::global()->loadIcon( "down", KIcon::Small );
 }
 
 QPixmap DccTransferPanelItem::getStatusIcon() const
@@ -303,7 +303,7 @@ QPixmap DccTransferPanelItem::getStatusIcon() const
         default:
 	    break;
     }
-    return KGlobal::iconLoader()->loadIcon( icon, KIcon::Small );
+    return KIconLoader::global()->loadIcon( icon, KIcon::Small );
 }
 
 QString DccTransferPanelItem::getStatusText() const

@@ -39,10 +39,10 @@ Kopete    (c) 2002-2004 by the Kopete developers  <kopete-devel@kde.org>
 #include <kdeversion.h>
 #include <kinputdialog.h>
 #include <kpushbutton.h>
-#include <kactivelabel.h>
+#include <k3activelabel.h>
 #include <kdebug.h>
-#include <klistview.h>
-#include <klistviewsearchline.h>
+#include <k3listview.h>
+#include <k3listviewsearchline.h>
 #include <kabc/addressbook.h>
 #include <kabc/stdaddressbook.h>
 
@@ -55,7 +55,7 @@ LinkAddressbookUI::LinkAddressbookUI( QWidget *parent, const char *name, const Q
     m_mainWidget = new LinkAddressbookUI_Base(page);
     pageLayout->addWidget(m_mainWidget, 0, 0);
 
-    enableButtonOK(false);
+    enableButtonOk(false);
     setHelp("linkaddressbook");
     m_addressBook = Konversation::Addressbook::self()->getAddressBook();
 
@@ -150,7 +150,7 @@ void LinkAddressbookUI::slotAddAddresseeClicked()
 void LinkAddressbookUI::slotAddresseeListClicked( QListViewItem *addressee )
 {
     // enable ok if a valid addressee is selected
-    enableButtonOK(addressee ? addressee->isSelected() : false);
+    enableButtonOk(addressee ? addressee->isSelected() : false);
 }
 
 void LinkAddressbookUI::slotOk()

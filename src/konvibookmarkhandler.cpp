@@ -23,7 +23,7 @@ Copyright (C) 2002 Carsten Pfeiffer <pfeiffer@kde.org>
 
 #include <qstring.h>
 
-#include <kpopupmenu.h>
+#include <kmenu.h>
 #include <kstandarddirs.h>
 
 
@@ -32,12 +32,12 @@ KonviBookmarkHandler::KonviBookmarkHandler(KonversationMainWindow* mainWindow)
 KBookmarkOwner(),
 m_mainWindow(mainWindow)
 {
-    m_menu = static_cast<KPopupMenu*>(mainWindow->factory()->container("bookmarks", mainWindow));
+    m_menu = static_cast<KMenu*>(mainWindow->factory()->container("bookmarks", mainWindow));
 
     m_file = locate( "data", "konversation/bookmarks.xml" );
 
     if ( m_file.isEmpty() )
-        m_file = locateLocal( "data", "konversation/bookmarks.xml" );
+        m_file = KStandardDirs::locateLocal( "data", "konversation/bookmarks.xml" );
 
     if(!m_menu)
     {
@@ -46,7 +46,7 @@ m_mainWindow(mainWindow)
     }
 
     KBookmarkManager *manager = KBookmarkManager::managerForFile( m_file, false);
-    manager->setEditorOptions(kapp->caption(), false);
+    manager->setEditorOptions(KInstance::caption(), false);
     manager->setUpdate( true );
     manager->setShowNSBookmarks( false );
 
@@ -62,12 +62,12 @@ KonviBookmarkHandler::~KonviBookmarkHandler()
 
 void KonviBookmarkHandler::slotEditBookmarks()
 {
-    KProcess proc;
+    K3Process proc;
     proc << QString::fromLatin1("keditbookmarks");
     proc << "--nobrowser";
     proc << "--caption" << i18n("Konversation Bookmarks Editor");
     proc << m_file;
-    proc.start(KProcess::DontCare);
+    proc.start(K3Process::DontCare);
 }
 
 void KonviBookmarkHandler::slotBookmarksChanged( const QString &,

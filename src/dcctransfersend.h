@@ -39,7 +39,7 @@ class DccTransferSend : public DccTransfer
         virtual ~DccTransferSend();
 
         // REQUIRED
-        void setFileURL( const KURL& url );
+        void setFileURL( const KUrl& url );
         // OPTIONAL
         void setFileName( const QString& fileName );
         // REQUIED

@@ -16,10 +16,10 @@
 #include "highlightviewitem.h"
 
 #include <kurl.h>
-#include <klistview.h>
+#include <k3listview.h>
 
 
-HighlightViewItem::HighlightViewItem(KListView* parent, Highlight* passed_Highlight)
+HighlightViewItem::HighlightViewItem(K3ListView* parent, Highlight* passed_Highlight)
 : Q3CheckListItem(parent, QString(), Q3CheckListItem::CheckBox)
 {
     setText(1,passed_Highlight->getPattern());
@@ -51,10 +51,10 @@ HighlightViewItem* HighlightViewItem::itemBelow()
 void HighlightViewItem::setPattern(const QString& newPattern) { setText(1,newPattern); }
 QString HighlightViewItem::getPattern()                       { return text(1); }
 
-void HighlightViewItem::setSoundURL(const KURL& url)
+void HighlightViewItem::setSoundURL(const KUrl& url)
 {
     soundURL = url;
-    setText(2, soundURL.prettyURL());
+    setText(2, soundURL.prettyUrl());
 }
 
 void HighlightViewItem::setAutoText(const QString& newAutoText)

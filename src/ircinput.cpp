@@ -35,7 +35,7 @@
 #include <kapplication.h>
 #include <kmessagebox.h>
 #include <klocale.h>
-#include <kcompletionbox.h>
+#include <k3completionbox.h>
 
 #define MAXHISTORY 100
 #define RICHTEXT 0
@@ -62,7 +62,7 @@ IRCInput::IRCInput(QWidget* parent) : KTextEdit(parent)
     lineNum=0;
     // reset completion mode
     setCompletionMode('\0');
-    completionBox = new KCompletionBox(this);
+    completionBox = new K3CompletionBox(this);
     connect(completionBox, SIGNAL(activated(const QString&)), this, SLOT(insertCompletion(const QString&)));
 
     // widget may not be resized vertically
@@ -155,7 +155,7 @@ QSize IRCInput::sizeHint() const
 
     int ObscurePadding = 4;
     int f=2*frameWidth();
-    int w=12 * (kMax(fontMetrics().lineSpacing(),14) + f + ObscurePadding);
+    int w=12 * (qMax(fontMetrics().lineSpacing(),14) + f + ObscurePadding);
     int h=m_lastHeight - m_qtBoxPadding + f + ObscurePadding;
     return QSize(w,h);
 }

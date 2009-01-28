@@ -19,17 +19,17 @@
 #include <QPixmap>
 
 #include <kdebug.h>
-#include <klistview.h>
+#include <k3listview.h>
 #include <klocale.h>
 #include <kabc/phonenumber.h>
 
 #include "konversationapplication.h"
 #include "preferences.h"
 
-Nick::Nick(KListView *listView,
+Nick::Nick(K3ListView *listView,
 const ChannelNickPtr& channelnick)
     : QObject (),
-    KListViewItem (listView, listView->lastItem(), QString::null,
+    K3ListViewItem (listView, listView->lastItem(), QString::null,
                    channelnick->getNickname(), channelnick->getHostmask())
 {
     m_channelnickptr = channelnick;
@@ -243,7 +243,7 @@ void Nick::paintCell(QPainter * p, const QColorGroup & cg, int column, int width
         cg2.setColor(QColorGroup::Text, kapp->palette(listView()).disabled().text());
     }
 
-    KListViewItem::paintCell(p,cg2,column,width,align);
+    K3ListViewItem::paintCell(p,cg2,column,width,align);
 }
 
 int Nick::getSortingValue() const

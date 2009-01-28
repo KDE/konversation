@@ -47,6 +47,7 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kiconloader.h>
+#include <kglobal.h>
 
 
 KonversationApplication::KonversationApplication()
@@ -61,7 +62,7 @@ KonversationApplication::KonversationApplication()
 
 KonversationApplication::~KonversationApplication()
 {
-    kdDebug() << k_funcinfo << endl;
+    kDebug() << k_funcinfo << endl;
     Server::_stashRates();
     Preferences::writeConfig();
     saveOptions(false);
@@ -272,7 +273,7 @@ void KonversationApplication::dcopInfo(const QString& string)
 void KonversationApplication::readOptions()
 {
     // get standard config file
-    KConfig* config=kapp->config();
+    KConfig* config=KGlobal::config();
 
     // read nickname sorting order for channel nick lists
     config->setGroup("Sort Nicknames");
@@ -498,7 +499,7 @@ void KonversationApplication::readOptions()
             Preferences::addHighlight(config->readEntry("Pattern"),
                 config->readBoolEntry("RegExp"),
                 config->readColorEntry("Color"),
-                config->readPathEntry("Sound"),
+                config->readPathEntry("Sound", QString()),
                 config->readEntry("AutoText"));
             i++;
         }
@@ -541,7 +542,7 @@ void KonversationApplication::readOptions()
 
 void KonversationApplication::saveOptions(bool updateGUI)
 {
-    KConfig* config=kapp->config();
+    KConfig* config=KGlobal::config();
 
 //    Should be handled in NicklistBehaviorConfigController now
 //    config->setGroup("Sort Nicknames");
@@ -737,7 +738,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
         emit appearanceChanged();
 }
 
-// FIXME: use KURL maybe?
+// FIXME: use KUrl maybe?
 void KonversationApplication::storeUrl(const QString& who,const QString& newUrl)
 {
     QString url(newUrl);

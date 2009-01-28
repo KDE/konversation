@@ -23,8 +23,8 @@
 
 class QContextMenuEvent;
 class QPushButton;
-class KListView;
-class KPopupMenu;
+class K3ListView;
+class KMenu;
 
 class DccTransferDetailedInfoPanel;
 
@@ -71,7 +71,7 @@ class DccTransferPanel : public ChatWindow
         DccTransferPanel(QWidget* parent);
         ~DccTransferPanel();
 
-        KListView* getListView();
+        K3ListView* getListView();
 
     protected slots:
         void slotNewTransferAdded( DccTransfer* transfer );
@@ -101,8 +101,8 @@ class DccTransferPanel : public ChatWindow
 
         void initGUI();
 
-        KListView* m_listView;
-        KPopupMenu* m_popup;
+        K3ListView* m_listView;
+        KMenu* m_popup;
 
         DccTransferDetailedInfoPanel* m_detailPanel;
 

@@ -13,7 +13,7 @@
 #ifndef KONVERSATIONTOPICLABEL_H
 #define KONVERSATIONTOPICLABEL_H
 
-#include <kactivelabel.h>
+#include <k3activelabel.h>
 #include <klocale.h>
 //Added by qt3to4:
 #include <QResizeEvent>
@@ -25,12 +25,12 @@
 
 class QFontMetrics;
 class Server;
-class KPopupMenu;
+class KMenu;
 
 namespace Konversation
 {
 
-    class TopicLabel : public KActiveLabel
+    class TopicLabel : public K3ActiveLabel
     {
         Q_OBJECT
 
@@ -75,7 +75,7 @@ namespace Konversation
             Server* m_server;
 
             Q3PopupMenu* m_popup;
-            KPopupMenu* m_channelPopup;
+            KMenu* m_channelPopup;
 
             QString m_fullText;
             bool mousePressed;

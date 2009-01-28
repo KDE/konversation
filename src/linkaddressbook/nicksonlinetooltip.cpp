@@ -22,7 +22,7 @@
 #include <klocale.h>
 #include <qtooltip.h>
 #include <qlistview.h>
-#include <klistview.h>
+#include <k3listview.h>
 
 
 class NickListView;
@@ -42,7 +42,7 @@ namespace Konversation
     {
         if( !parentWidget() || !m_nicksOnline || !m_nicksOnline->getNickListView() )
             return;
-        KListView *m_listView = m_nicksOnline->getNickListView();
+        K3ListView *m_listView = m_nicksOnline->getNickListView();
         QListViewItem *item = m_listView->itemAt( pos );
         if( !item )
             return;

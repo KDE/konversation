@@ -41,9 +41,9 @@
 #include <kdebug.h>
 #include <klocale.h>
 #include <kdialog.h>
-#include <klistview.h>
+#include <k3listview.h>
 #include <kiconloader.h>
-#include <kprocess.h>
+#include <k3process.h>
 #include <kmessagebox.h>
 
 
@@ -52,14 +52,14 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
     setName(i18n("Watched Nicks Online"));
     setType(ChatWindow::NicksOnline);
 
-    m_nickListView=new KListView(this);
+    m_nickListView=new K3ListView(this);
 
     // Set to false every 8 seconds to permit a whois on watched nicks lacking information.
     // Remove when server or addressbook does this automatically.
     m_whoisRequested = true;
 
     m_nickListView->addColumn(i18n("Network/Nickname/Channel"));
-    m_kabcIconSet = KGlobal::iconLoader()->loadIconSet("kaddressbook",KIcon::Small);
+    m_kabcIconSet = KIcon("kaddressbook");
     m_nickListView->addColumn(i18n("Additional Information"));
     m_nickListView->setFullWidth(true);
     m_nickListView->setRootIsDecorated(true);
@@ -159,7 +159,7 @@ NicksOnline::~NicksOnline()
     delete m_nickListView;
 }
 
-KListView* NicksOnline::getNickListView()
+K3ListView* NicksOnline::getNickListView()
 {
     return m_nickListView;
 }

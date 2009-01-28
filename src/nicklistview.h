@@ -20,7 +20,7 @@
 #include "images.h"
 #include "common.h"
 
-#include <klistview.h>
+#include <k3listview.h>
 //Added by qt3to4:
 #include <Q3PopupMenu>
 #include <QContextMenuEvent>
@@ -31,7 +31,7 @@ class Q3PopupMenu;
 class QContextMenuEvent;
 class QTimer;
 
-class NickListView : public KListView
+class NickListView : public K3ListView
 {
     Q_OBJECT
 

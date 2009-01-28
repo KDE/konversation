@@ -99,7 +99,7 @@ void WatchedNicknames_Config::addNetworkBranch(Konversation::ServerGroupSettings
   // add nicknames to group branch (reverse order again)
   for(unsigned int index=nicks.count();index;index--)
   {
-    new KListViewItem(groupItem,nicks[index-1]);
+    new K3ListViewItem(groupItem,nicks[index-1]);
   } // for
   // unfold group branch
   notifyListView->setOpen(groupItem,true);
@@ -112,7 +112,7 @@ void WatchedNicknames_Config::saveSettings()
   QMap<int,QStringList> notifyList;
 
   // get first notify group
-  KListView* listView=notifyListView;
+  K3ListView* listView=notifyListView;
   Q3ListViewItem* group=listView->firstChild();
 
   // loop as long as there are more groups in the listview
@@ -154,7 +154,7 @@ QStringList WatchedNicknames_Config::currentNotifyList()
   QStringList newList;
 
   // get first item
-  KListView* listView=notifyListView;
+  K3ListView* listView=notifyListView;
   Q3ListViewItem* item=listView->firstChild();
 
   // loop as long as there are more groups in the listview
@@ -179,7 +179,7 @@ bool WatchedNicknames_Config::hasChanged()
 void WatchedNicknames_Config::updateNetworkNames()
 {
   // get first notify group
-  KListView* listView=notifyListView;
+  K3ListView* listView=notifyListView;
   Q3ListViewItem* group=listView->firstChild();
 
   // make sure all widgets are disabled
@@ -269,7 +269,7 @@ void WatchedNicknames_Config::checkIfEmptyListview(bool state)
 void WatchedNicknames_Config::newNotify()
 {
   // get listview object and possible first selected item
-  KListView* listView=notifyListView;
+  K3ListView* listView=notifyListView;
   Q3ListViewItem* item=listView->selectedItem();
 
   // if there was an item selected, try to find the group it belongs to,
@@ -301,7 +301,7 @@ void WatchedNicknames_Config::newNotify()
 void WatchedNicknames_Config::removeNotify()
 {
   // get listview pointer and the selected item
-  KListView* listView=notifyListView;
+  K3ListView* listView=notifyListView;
   Q3ListViewItem* item=listView->selectedItem();
 
   // sanity check
@@ -367,7 +367,7 @@ void WatchedNicknames_Config::enableEditWidgets(bool enabled)
 void WatchedNicknames_Config::networkChanged(const QString& newNetwork)
 {
   // get listview pointer and selected entry
-  KListView* listView=notifyListView;
+  K3ListView* listView=notifyListView;
   Q3ListViewItem* item=listView->selectedItem();
 
   // sanity check
@@ -404,7 +404,7 @@ void WatchedNicknames_Config::networkChanged(const QString& newNetwork)
 void WatchedNicknames_Config::nicknameChanged(const QString& newNickname)
 {
   // get listview pointer and selected item
-  KListView* listView=notifyListView;
+  K3ListView* listView=notifyListView;
   Q3ListViewItem* item=listView->selectedItem();
 
   // sanity check

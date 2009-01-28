@@ -36,9 +36,9 @@
 #include <Q3PtrList>
 
 #include <ksharedptr.h>
-#include <kprocess.h>
+#include <k3process.h>
 #include <ksocketbase.h>
-#include <kbufferedsocket.h>
+#include <k3bufferedsocket.h>
 #include <kstreamsocket.h>
 
 
@@ -445,7 +445,7 @@ void resetNickSelection();
         void requestBan(const QStringList& users,const QString& channel,const QString& option);
         void requestUnban(const QString& mask,const QString& channel);
 
-        void addDccSend(const QString &recipient,KURL fileURL, const QString &altFileName = QString(), uint fileSize = 0);
+        void addDccSend(const QString &recipient,KUrl fileURL, const QString &altFileName = QString(), uint fileSize = 0);
         void removeQuery(Query *query);
         void startNotifyTimer(int msec=0);
         void sendJoinCommand(const QString& channelName, const QString& password = QString());
@@ -478,7 +478,7 @@ void resetNickSelection();
 
     protected slots:
         void lookupFinished();
-        void preShellCommandExited(KProcess*);
+        void preShellCommandExited(K3Process*);
         void ircServerConnectionSuccess();
         void startAwayTimer();
         void incoming();
@@ -673,7 +673,7 @@ void resetNickSelection();
 
         ScriptLauncher* m_scriptLauncher;
 
-        KProcess m_preShellCommand;
+        K3Process m_preShellCommand;
 
     private:
         /// Helper object to construct ISON (notify) list and map offline nicks to

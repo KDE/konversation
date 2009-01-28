@@ -12,7 +12,7 @@
 #ifndef VIEWTREE_H
 #define VIEWTREE_H
 
-#include <klistview.h>
+#include <k3listview.h>
 //Added by qt3to4:
 #include <QResizeEvent>
 #include <QWheelEvent>
@@ -25,7 +25,7 @@
 class ViewTreeItem;
 class ChatWindow;
 
-class ViewTree : public KListView
+class ViewTree : public K3ListView
 {
     Q_OBJECT
 

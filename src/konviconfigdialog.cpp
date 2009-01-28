@@ -136,7 +136,7 @@ void KonviConfigDialog::addPageInternal(QWidget *page,
 {
     if(d->shown)
     {
-        kdDebug(240) << "KonviConfigDialog::addPage: can not add a page after the dialog has been shown.";
+        kDebug(240) << "KonviConfigDialog::addPage: can not add a page after the dialog has been shown.";
         return;
     }
     switch(d->type)
@@ -145,7 +145,7 @@ void KonviConfigDialog::addPageInternal(QWidget *page,
         case IconList:
         case Tabbed:
         {
-            Q3VBox *frame = addVBoxPage(items, header, SmallIcon(pixmapName, 16));
+            KVBox *frame = addVBoxPage(items, header, SmallIcon(pixmapName, 16));
             frame->setSpacing( 0 );
             frame->setMargin( 0 );
             page->reparent(((QWidget*)frame), 0, QPoint());
@@ -162,7 +162,7 @@ void KonviConfigDialog::addPageInternal(QWidget *page,
 
         case Plain:
         {
-            Q3Frame *main = plainPage();
+            QFrame *main = plainPage();
             Q3VBoxLayout *topLayout = new Q3VBoxLayout( main, 0, 0 );
             page->reparent(((QWidget*)main), 0, QPoint());
             topLayout->addWidget( page );
@@ -170,7 +170,7 @@ void KonviConfigDialog::addPageInternal(QWidget *page,
         break;
 
         default:
-            kdDebug(240) << "KonviConfigDialog::addpage: unknown type.";
+            kDebug(240) << "KonviConfigDialog::addpage: unknown type.";
     }
 }
 

@@ -15,14 +15,14 @@
 #ifndef VALUELISTVIEWITEM_H
 #define VALUELISTVIEWITEM_H
 
-#include <klistview.h>
+#include <k3listview.h>
 
 
-class ValueListViewItem : public KListViewItem
+class ValueListViewItem : public K3ListViewItem
 {
     public:
-        ValueListViewItem(int newValue, KListView* parent, const QString& label);
-        ValueListViewItem(int newValue, KListView* parent, Q3ListViewItem* after, const QString& label);
+        ValueListViewItem(int newValue, K3ListView* parent, const QString& label);
+        ValueListViewItem(int newValue, K3ListView* parent, Q3ListViewItem* after, const QString& label);
         ~ValueListViewItem();
 
         int getValue() const;

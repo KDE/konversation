@@ -21,7 +21,7 @@
 
 #include <kdebug.h>
 #include <kstandarddirs.h>
-#include <kprocess.h>
+#include <k3process.h>
 #include <dcopclient.h>
 
 
@@ -39,7 +39,7 @@ void ScriptLauncher::launchScript(const QString& target, const QString &paramete
 {
     KStandardDirs kstddir;
     //  QString scriptPath(kstddir.saveLocation("data",QString("konversation/scripts")));
-    KProcess process;
+    K3Process process;
 
     // send the script all the information it will need
     QStringList parameterList=QStringList::split(' ',parameter);

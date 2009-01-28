@@ -19,8 +19,8 @@
 #include <qhostaddress.h>
 
 #include <klocale.h>
-#include <kresolver.h>
-#include <kserversocket.h>
+#include <k3resolver.h>
+include <k3serversocket.h>
 
 
 QString DccCommon::textIpToNumericalIp( const QString& ipString )
@@ -65,7 +65,7 @@ QString DccCommon::getOwnIp( Server* server )
         ownIp = server->getOwnIpByNetworkInterface();
     }
 
-    kdDebug() << "DccCommon::getOwnIp(): " << ownIp << endl;
+    kDebug() << "DccCommon::getOwnIp(): " << ownIp << endl;
     return ownIp;
 }
 

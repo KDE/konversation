@@ -36,7 +36,7 @@ KonvDCOP::KonvDCOP() : DCOPObject("irc"), QObject(0, "irc")
 
 void KonvDCOP::raw(const QString& server,const QString& command)
 {
-    kdDebug() << "KonvDCOP::raw()" << endl;
+    kDebug() << "KonvDCOP::raw()" << endl;
     // send raw IRC protocol data
     emit dcopRaw(server,command);
 }
@@ -107,7 +107,7 @@ void KonvDCOP::say(const QString& _server,const QString& _target,const QString& 
     // TODO: this just masks a greater problem - Server::addQuery will return a query for '' --argonel
     // TODO: other DCOP calls need argument checking too --argonel
     if (server.isEmpty() || target.isEmpty() || command.isEmpty())
-        kdDebug() <<  "KonvDCOP::say() requires 3 arguments." << endl;
+        kDebug() <<  "KonvDCOP::say() requires 3 arguments." << endl;
     else
     {
         command.replace('\n',"\\n");
@@ -123,19 +123,19 @@ void KonvDCOP::say(const QString& _server,const QString& _target,const QString& 
 
 void KonvDCOP::info(const QString& string)
 {
-    kdDebug() << "KonvDCOP::info()" << endl;
+    kDebug() << "KonvDCOP::info()" << endl;
     emit dcopInfo(string);
 }
 
 void KonvDCOP::debug(const QString& string)
 {
-    kdDebug() << "KonvDCOP::debug()" << endl;
+    kDebug() << "KonvDCOP::debug()" << endl;
     emit dcopInfo(QString("Debug: %1").arg(string));
 }
 
 void KonvDCOP::error(const QString& string)
 {
-    kdDebug() << "KonvDCOP::error()" << endl;
+    kDebug() << "KonvDCOP::error()" << endl;
     emit dcopInfo(QString("Error: %1").arg(string));
 }
 

@@ -35,12 +35,13 @@
 #include <kglobal.h>
 #include <kglobalsettings.h>
 #include <kiconloader.h>
-#include <klistview.h>
+#include <k3listview.h>
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <kpopupmenu.h>
+#include <kmenu.h>
 #include <krun.h>
 #include <kapplication.h>
+#include <kauthorized.h>
 
 
 DccTransferPanel::DccTransferPanel(QWidget* parent) : ChatWindow(parent)
@@ -66,7 +67,7 @@ void DccTransferPanel::initGUI()
 {
     setSpacing( 0 );
 
-    m_listView = new KListView(this,"dcc_control_panel");
+    m_listView = new K3ListView(this,"dcc_control_panel");
 
     m_listView->setSelectionMode(Q3ListView::Extended);
     m_listView->setDragEnabled(true);
@@ -113,7 +114,7 @@ void DccTransferPanel::initGUI()
     buttonsBox->setSpacing(spacing());
 
     // convenience, undeffed below again to avoid name clashes
-    #define icon(s) KGlobal::iconLoader()->loadIconSet( s, KIcon::Small )
+    #define icon(s) KIconLoader::global()->loadIconSet( s, KIcon::Small )
 
     m_buttonAccept = new QPushButton(icon("player_play"), i18n("Accept"), buttonsBox, "start_dcc");
     m_buttonAbort  = new QPushButton(icon("stop"),        i18n("Abort"),  buttonsBox, "abort_dcc");
@@ -138,7 +139,7 @@ void DccTransferPanel::initGUI()
 
     // popup menu
 
-    m_popup = new KPopupMenu(this);
+    m_popup = new KMenu(this);
     m_popup->insertItem(                         i18n("&Select All Items"),           Popup::SelectAll);
     m_popup->insertItem(                         i18n("S&elect All Completed Items"), Popup::SelectAllCompleted);
     m_popup->insertSeparator();                   // -----
@@ -241,7 +242,7 @@ void DccTransferPanel::updateButton()
         resend = false;
     }
 
-    if (!kapp->authorize("allow_downloading"))
+    if (!KAuthorized::authorizeKAction("allow_downloading"))
     {
         accept = false;
     }
@@ -454,7 +455,7 @@ void DccTransferPanel::childAdjustFocus()
 {
 }
 
-KListView* DccTransferPanel::getListView() 
+K3ListView* DccTransferPanel::getListView() 
 { 
   return m_listView; 
 }

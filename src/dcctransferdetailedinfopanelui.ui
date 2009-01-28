@@ -121,7 +121,7 @@
                         <property name="name">
                             <cstring>unnamed</cstring>
                         </property>
-                        <widget class="KURLRequester">
+                        <widget class="KUrlRequester">
                             <property name="name">
                                 <cstring>m_urlreqLocation</cstring>
                             </property>

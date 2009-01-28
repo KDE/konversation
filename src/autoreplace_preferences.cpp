@@ -25,9 +25,10 @@
 #include <kconfig.h>
 #include <klocale.h>
 #include <klineedit.h>
-#include <klistview.h>
+#include <k3listview.h>
 #include <kparts/componentfactory.h>
 #include <kregexpeditorinterface.h>
+#include <kglobal.h>
 
 #define DIRECTION_OUTPUT 0
 #define DIRECTION_INPUT  1
@@ -129,7 +130,7 @@ void Autoreplace_Config::setAutoreplaceListView(const QStringList &autoreplaceLi
 void Autoreplace_Config::saveSettings()
 {
   // get configuration object
-  KConfig* config=kapp->config();
+  KConfig* config=KGlobal::config();
 
   // delete all patterns
   config->deleteGroup("Autoreplace List");

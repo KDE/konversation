@@ -30,7 +30,7 @@ class KActionMenu;
 class KActionCollection;
 class KBookmarkOwner;
 class KBookmarkMenu;
-class KPopupMenu;
+class KMenu;
 class KonviBookmarkHandler;
 class KonviBookmarkMenu;
 class KonviBookmarkMenuPrivate;
@@ -41,7 +41,7 @@ class KonviBookmarkMenu : public KBookmarkMenu
 
         public:
         KonviBookmarkMenu( KBookmarkManager* mgr,
-            KonviBookmarkHandler * _owner, KPopupMenu * _parentMenu,
+            KonviBookmarkHandler * _owner, KMenu * _parentMenu,
             KActionCollection *collec, bool _isRoot,
             bool _add = true, const QString & parentAddress = "");
 

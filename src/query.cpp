@@ -44,7 +44,8 @@
 #include <kmessagebox.h>
 #include <kiconloader.h>
 #include <kstringhandler.h>
-#include <kpopupmenu.h>
+#include <kmenu.h>
+#include <kauthorized.h>
 
 
 Query::Query(QWidget* parent, QString _name) : ChatWindow(parent)
@@ -95,7 +96,7 @@ Query::Query(QWidget* parent, QString _name) : ChatWindow(parent)
     popup->setItemVisible(Konversation::IgnoreNick, false);
     popup->setItemVisible(Konversation::UnignoreNick, false);
 
-    if (kapp->authorize("allow_downloading"))
+    if (KAuthorized::authorizeKAction("allow_downloading"))
         popup->insertItem(SmallIcon("2rightarrow"),i18n("Send &File..."),Konversation::DccSend);
 
     popup->insertItem(i18n("Add to Watched Nicks"), Konversation::AddNotify);
@@ -108,7 +109,7 @@ Query::Query(QWidget* parent, QString _name) : ChatWindow(parent)
     awayLabel->hide();
     blowfishLabel = new QLabel(inputBox);
     blowfishLabel->hide();
-    blowfishLabel->setPixmap(KGlobal::iconLoader()->loadIcon("encrypted", KIcon::Toolbar));
+    blowfishLabel->setPixmap(KIconLoader::global()->loadIcon("encrypted", KIconLoader::Toolbar));
     queryInput=new IRCInput(inputBox);
 
     getTextView()->installEventFilter(queryInput);
@@ -453,7 +454,7 @@ void Query::popup(int id)
             break;
 
         default:
-            kdDebug() << "Query::popup(): Popup id " << id << " does not belong to me!" << endl;
+            kDebug() << "Query::popup(): Popup id " << id << " does not belong to me!" << endl;
             break;
     }
 
@@ -640,7 +641,7 @@ void Query::serverOnline(bool online)
         popup->setItemEnabled(Konversation::UnignoreNick, online);
         popup->setItemEnabled(Konversation::AddNotify, online);
 
-        if (kapp->authorize("allow_downloading"))
+        if (KAuthorized::authorizeKAction("allow_downloading"))
             popup->setItemEnabled(Konversation::DccSend, online);
     }
 }

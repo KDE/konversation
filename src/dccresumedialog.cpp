@@ -76,7 +76,7 @@ DccResumeDialog::DccResumeDialog(DccTransferRecv* item, const QString& caption, 
     QLabel* labelMessage = new QLabel(page);
     labelMessage->setText(message);
 
-    m_urlreqFileURL = new KURLRequester(m_item->getFileURL().prettyURL(), page);
+    m_urlreqFileURL = new KUrlRequester(m_item->getFileURL().prettyUrl(), page);
     connect(m_urlreqFileURL, SIGNAL(textChanged(const QString&)), this, SLOT(updateDialogButtons()));
 
     pageLayout->addWidget(labelMessage);
@@ -152,7 +152,7 @@ void DccResumeDialog::suggestNewName() // slot
 {
     QString dotSuffix, suggestedName;
     QString basename = m_urlreqFileURL->url().section("/", -1);
-    KURL baseURL(m_urlreqFileURL->url().section("/", 0, -2));
+    KUrl baseURL(m_urlreqFileURL->url().section("/", 0, -2));
 
     int index = basename.find( '.' );
     if ( index != -1 )
@@ -196,7 +196,7 @@ void DccResumeDialog::suggestNewName() // slot
 
 void DccResumeDialog::setDefaultName() // slot
 {
-    m_urlreqFileURL->setURL(m_item->getFileURL().prettyURL());
+    m_urlreqFileURL->setURL(m_item->getFileURL().prettyUrl());
 }
 
 #include "dccresumedialog.moc"

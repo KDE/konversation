@@ -112,7 +112,7 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="KListBox" row="0" column="0" rowspan="1" colspan="6">
+                <widget class="K3ListBox" row="0" column="0" rowspan="1" colspan="6">
                     <property name="name">
                         <cstring>m_serverLBox</cstring>
                     </property>
@@ -205,7 +205,7 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="KListBox" row="0" column="0" rowspan="1" colspan="6">
+                <widget class="K3ListBox" row="0" column="0" rowspan="1" colspan="6">
                     <property name="name">
                         <cstring>m_channelLBox</cstring>
                     </property>
@@ -308,10 +308,10 @@
 <layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
 <includehints>
     <includehint>kpushbutton.h</includehint>
-    <includehint>klistbox.h</includehint>
+    <includehint>k3listbox.h</includehint>
     <includehint>kpushbutton.h</includehint>
     <includehint>kpushbutton.h</includehint>
-    <includehint>klistbox.h</includehint>
+    <includehint>k3listbox.h</includehint>
     <includehint>kpushbutton.h</includehint>
     <includehint>kpushbutton.h</includehint>
 </includehints>

@@ -39,8 +39,8 @@
 #include <QShowEvent>
 
 #include <kaccel.h>
-#include <kaccelmanager.h>
-#include <kstdaction.h>
+#include <kacceleratormanager.h>
+#include <kstandardaction.h>
 #include <kaction.h>
 #include <kdebug.h>
 #include <klocale.h>
@@ -49,8 +49,8 @@
 #include <kkeydialog.h>
 #include <kdeversion.h>
 #include <kedittoolbar.h>
-#include <kpopupmenu.h>
-#include <kwin.h>
+#include <kmenu.h>
+#include <kwindowsystem.h>
 #include <kglobal.h>
 #include <kstandarddirs.h>
 #include <dcopclient.h>
@@ -60,7 +60,9 @@
 
 #include <config.h>
 #ifdef  USE_KNOTIFY
-#include <knotifydialog.h>
+#include <knotifyconfigwidget.h>
+#include <kauthorized.h>
+#include <KShortcutsDialog>
 #endif
 
 
@@ -119,18 +121,18 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
 
 
     // Actions
-    KStdAction::quit(this,SLOT(quitProgram()),actionCollection());
+    KStandardAction::quit(this,SLOT(quitProgram()),actionCollection());
 
-    hideMenuBarAction = KStdAction::showMenubar(this, SLOT(toggleMenubar()), actionCollection());
+    hideMenuBarAction = KStandardAction::showMenubar(this, SLOT(toggleMenubar()), actionCollection());
 
     setStandardToolBarMenuEnabled(true);
-    KStdAction::configureToolbars(this, SLOT(configureToolbar()), actionCollection());
+    KStandardAction::configureToolbars(this, SLOT(configureToolbar()), actionCollection());
 
-    KStdAction::keyBindings(this, SLOT(openKeyBindings()), actionCollection());
-    KAction *preferencesAction = KStdAction::preferences(this, SLOT(openPrefsDialog()), actionCollection());
+    KStandardAction::keyBindings(this, SLOT(openKeyBindings()), actionCollection());
+    KAction *preferencesAction = KStandardAction::preferences(this, SLOT(openPrefsDialog()), actionCollection());
 
 #ifdef USE_KNOTIFY // options_configure_notifications
-    KAction *configureNotificationsAction = KStdAction::configureNotifications(this,SLOT(openNotifications()), actionCollection());
+    KAction *configureNotificationsAction = KStandardAction::configureNotifications(this,SLOT(openNotifications()), actionCollection());
 #endif
 
     KAction* action;
@@ -168,16 +170,16 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
     action = new KToggleAction(i18n("&URL Catcher"), "enhanced_browsing", KShortcut("F6"), m_viewContainer, SLOT(addUrlCatcher()), actionCollection(), "open_url_catcher");
     action->setToolTip(i18n("List all URLs that have been mentioned recently in a new tab"));
 
-    if (kapp->authorize("shell_access"))
+    if (KAuthorized::authorizeKAction("shell_access"))
     {
         action = new KAction(i18n("New &Konsole"), "openterm", 0, m_viewContainer, SLOT(addKonsolePanel()), actionCollection(), "open_konsole");
         action->setToolTip(i18n("Open a terminal in a new tab"));
     }
 
     // Actions to navigate through the different pages
-    KShortcut nextShortcut = KStdAccel::tabNext();
+    KShortcut nextShortcut = KStandardShortcut::tabNext();
     nextShortcut.setSeq(1, KKeySequence("Alt+Right"));
-    KShortcut prevShortcut = KStdAccel::tabPrev();
+    KShortcut prevShortcut = KStandardShortcut::tabPrev();
     prevShortcut.setSeq(1, KKeySequence("Alt+Left"));
     action = new KAction(i18n("&Next Tab"), QApplication::reverseLayout() ? "previous" : "next",
         QApplication::reverseLayout() ? prevShortcut : nextShortcut,
@@ -273,11 +275,11 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
     action->setEnabled(false);
     action->setToolTip("Join a new channel on this server");
 
-    action = KStdAction::find(m_viewContainer, SLOT(findText()), actionCollection());
+    action = KStandardAction::find(m_viewContainer, SLOT(findText()), actionCollection());
     action->setEnabled(false);
-    action = KStdAction::findNext(m_viewContainer, SLOT(findNextText()), actionCollection());
+    action = KStandardAction::findNext(m_viewContainer, SLOT(findNextText()), actionCollection());
     action->setEnabled(false);
-    action = KStdAction::findPrev(m_viewContainer, SLOT(findPrevText()), actionCollection());
+    action = KStandardAction::findPrev(m_viewContainer, SLOT(findPrevText()), actionCollection());
     action->setEnabled(false);
 
     action = new KAction(i18n("&IRC Color..."), "colorize", Qt::CTRL+Qt::Key_K, m_viewContainer, SLOT(insertIRCColor()), actionCollection(), "irc_colors");
@@ -303,7 +305,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
     connect(this, SIGNAL(endNotification()), m_trayIcon, SLOT(endNotification()));
     connect(KonversationApplication::instance(), SIGNAL(iconChanged(int)), m_trayIcon, SLOT(updateAppearance()));
     connect(m_trayIcon, SIGNAL(quitSelected()), this, SLOT(quitProgram()));
-    KPopupMenu *trayMenu = m_trayIcon->contextMenu();
+    KMenu *trayMenu = m_trayIcon->contextMenu();
     #ifdef USE_KNOTIFY
     configureNotificationsAction->plug(trayMenu);
     #endif
@@ -503,7 +505,7 @@ void KonversationMainWindow::toggleMenubar(bool dontShowWarning)
 int KonversationMainWindow::configureToolbar()
 {
     saveMainWindowSettings(KGlobal::config());
-    KEditToolbar dlg(actionCollection(), xmlFile(), true, this);
+    KEditToolBar dlg(actionCollection(), xmlFile(), true, this);
     connect(&dlg, SIGNAL(newToolbarConfig()), SLOT(saveToolbarConfig()));
     return dlg.exec();
 }
@@ -517,8 +519,8 @@ void KonversationMainWindow::saveToolbarConfig()
 void KonversationMainWindow::focusAndShowErrorMessage(const QString &errorMsg)
 {
     show();
-    KWin::demandAttention(winId());
-    KWin::activateWindow(winId());
+    KWindowSystem::demandAttention(winId());
+    KWindowSystem::activateWindow(winId());
     KMessageBox::error(this, errorMsg);
 }
 
@@ -551,7 +553,7 @@ void KonversationMainWindow::openKeyBindings()
     actionCollection()->action("open_logfile")->setText(i18n("&Open Logfile"));
 
     // Open shortcut configuration dialog.
-    KKeyDialog::configure(actionCollection());
+    KShortcutsDialog::configure(actionCollection());
 
     // Reset action names.
     actionCollection()->action("tab_notifications")->setText(i18n("Enable Notifications"));
@@ -627,7 +629,7 @@ IdentityPtr KonversationMainWindow::editIdentity(IdentityPtr identity)
 void KonversationMainWindow::openNotifications()
 {
     #ifdef USE_KNOTIFY
-    (void) KNotifyDialog::configure(this);
+    (void) KNotifyConfigWidget::configure(this);
     #endif
 }
 

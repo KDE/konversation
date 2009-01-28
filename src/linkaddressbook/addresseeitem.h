@@ -24,14 +24,14 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include <kdialogbase.h>
 #include <klineedit.h>
-#include <klistview.h>
+#include <k3listview.h>
 
 #include <kabc/addressbook.h>
 
 /**
   @short Special ListViewItem
 */
-class AddresseeItem : public KListViewItem
+class AddresseeItem : public K3ListViewItem
 {
     public:
 

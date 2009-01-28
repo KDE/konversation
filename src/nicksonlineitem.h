@@ -12,10 +12,10 @@
 #ifndef NICKSONLINEITEM_H
 #define NICKSONLINEITEM_H
 
-#include <klistview.h>
+#include <k3listview.h>
 
 
-class NicksOnlineItem : public KListViewItem
+class NicksOnlineItem : public K3ListViewItem
 {
     public:
         enum NickListViewColumn

@@ -27,7 +27,7 @@
 #include <ktextedit.h>
 
 
-class KCompletionBox;
+class K3CompletionBox;
 class QMouseEvent;
 
 class IRCInput : public KTextEdit
@@ -86,7 +86,7 @@ class IRCInput : public KTextEdit
         unsigned int lineNum;
         unsigned int oldPos;
         char completionMode;
-        KCompletionBox* completionBox;
+        K3CompletionBox* completionBox;
         QString m_lastCompletion;
         bool m_useSelection;
         bool m_multiRow;

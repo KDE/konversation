@@ -40,7 +40,7 @@
 #include <kdeversion.h>
 #include <kshell.h>
 #include <ksocketaddress.h>
-#include <kresolver.h>
+#include <k3resolver.h>
 #include <kreverseresolver.h>
 #include <kmessagebox.h>
 
@@ -866,7 +866,7 @@ namespace Konversation
                 {
                     // TODO: make sure this will work:
                     //output=i18n("Usage: %1DCC SEND nickname [fi6lename] [filename] ...").arg(commandChar);
-                    KURL fileURL(parameterList[2]);
+                    KUrl fileURL(parameterList[2]);
 
                     //We could easily check if the remote file exists, but then we might
                     //end up asking for creditionals twice, so settle for only checking locally
@@ -1098,7 +1098,7 @@ namespace Konversation
                     // If remove failed, try to add it instead
                     if(!Preferences::addNotify(serverGroupId, list[index]))
                     {
-                        kdDebug() << "OutputFilter::parseNotify(): Adding failed!" << endl;
+                        kDebug() << "OutputFilter::parseNotify(): Adding failed!" << endl;
                     }
                 }
             }                                     // endfor

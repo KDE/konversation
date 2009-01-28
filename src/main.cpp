@@ -96,7 +96,7 @@ int main(int argc, char* argv[])
 
     KCmdLineArgs::init(argc, argv, &aboutData);
     KCmdLineArgs::addCmdLineOptions(options);
-    KApplication::addCmdLineOptions();
+    KCmdLineArgs::addStdCmdLineOptions();
 
     if (!KUniqueApplication::start()) return 0;
 

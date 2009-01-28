@@ -34,13 +34,13 @@
 #include <Q3TextStream>
 
 #include <krun.h>
-#include <klistview.h>
+#include <k3listview.h>
 #include <klineedit.h>
 #include <klocale.h>
 #include <kdebug.h>
 #include <kfiledialog.h>
 #include <kmessagebox.h>
-#include <kpopupmenu.h>
+#include <kmenu.h>
 #include <kdeversion.h>
 
 
@@ -104,13 +104,13 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
 
     targetBox->setStretchFactor(topicFilter,10);
 
-    channelListView=new KListView(this,"channel_list_view");
+    channelListView=new K3ListView(this,"channel_list_view");
     Q3WhatsThis::add(channelListView, i18n("The filtered list of channels is displayed here. Notice that if you do not use regular expressions, Konversation lists any channel whose name contains the filter string you entered. The channel name does not have to start with the string you entered.\n\nSelect a channel you want to join by clicking on it. Right click on the channel to get a list of all web addresses mentioned in the channel's topic."));
     channelListView->addColumn(i18n("Channel Name"));
     channelListView->addColumn(i18n("Users"));
     channelListView->addColumn(i18n("Channel Topic"));
     channelListView->setAllColumnsShowFocus(true);
-    channelListView->setResizeMode( KListView::LastColumn );
+    channelListView->setResizeMode( K3ListView::LastColumn );
     channelListView->setSortColumn(-1); //Disable sorting
 
     Q3HBox* statsBox=new Q3HBox(this);
@@ -135,8 +135,8 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
     connect(channelListView,SIGNAL (doubleClicked(Q3ListViewItem*)),
         this,SLOT (joinChannelClicked()) );
 
-    connect(channelListView,SIGNAL (contextMenu (KListView*, Q3ListViewItem*, const QPoint&) ),
-        this, SLOT (contextMenu (KListView*, Q3ListViewItem*, const QPoint&)) );
+    connect(channelListView,SIGNAL (contextMenu (K3ListView*, Q3ListViewItem*, const QPoint&) ),
+        this, SLOT (contextMenu (K3ListView*, Q3ListViewItem*, const QPoint&)) );
 
     connect(minUsersSpin,SIGNAL (valueChanged(int)),this,SLOT(setMinUsers(int)) );
     connect(maxUsersSpin,SIGNAL (valueChanged(int)),this,SLOT(setMaxUsers(int)) );
@@ -501,11 +501,11 @@ void ChannelListPanel::childAdjustFocus()
 {
 }
 
-void ChannelListPanel::contextMenu (KListView* /* l */, Q3ListViewItem* i, const QPoint& p)
+void ChannelListPanel::contextMenu (K3ListView* /* l */, Q3ListViewItem* i, const QPoint& p)
 {
     if(!i) return;
 
-    KPopupMenu* showURLmenu = new KPopupMenu(this);
+    KMenu* showURLmenu = new KMenu(this);
     showURLmenu->insertTitle( i18n("Open URL") );
     QString filteredLine(i->text(2));
 

@@ -22,7 +22,7 @@
 static QPixmap getIcon(const QString& name)
 {
     KIconLoader* iconLoader = kapp->iconLoader();
-    return iconLoader->loadIcon(name, KIcon::Toolbar, 16);
+    return iconLoader->loadIcon(name, KIconLoader::Toolbar, 16);
 }
 
 IRCViewBox::IRCViewBox(QWidget* parent, Server* newServer)

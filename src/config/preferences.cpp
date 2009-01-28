@@ -22,7 +22,7 @@
 
 #include <ktoolbar.h>
 #include <kstandarddirs.h>
-#include <kstaticdeleter.h>
+#include <k3staticdeleter.h>
 #include <kdebug.h>
 #include <kapplication.h>
 #include <kconfig.h>
@@ -36,7 +36,7 @@
 
 
 Preferences *Preferences::mSelf = 0;
-static KStaticDeleter<Preferences> staticPreferencesDeleter;
+static K3StaticDeleter<Preferences> staticPreferencesDeleter;
 
 Preferences *Preferences::self()
 {
@@ -272,7 +272,7 @@ const QColor &newColor,
 const QString& sound,
 const QString& autoText)
 {
-    self()->mHighlightList.append(new Highlight(newHighlight,regExp,newColor,KURL(sound),autoText));
+    self()->mHighlightList.append(new Highlight(newHighlight,regExp,newColor,KUrl(sound),autoText));
 }
 
 void Preferences::setIgnoreList(QPtrList<Ignore> newList)

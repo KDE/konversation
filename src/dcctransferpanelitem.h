@@ -22,7 +22,7 @@
 //Added by qt3to4:
 #include <QPixmap>
 
-#include <klistview.h>
+#include <k3listview.h>
 #include <kurl.h>
 #include <kio/global.h>
 
@@ -39,7 +39,7 @@ namespace KIO
 
 class DccTransferPanel;
 
-class DccTransferPanelItem : public QObject, public KListViewItem
+class DccTransferPanelItem : public QObject, public K3ListViewItem
 {
     Q_OBJECT
 

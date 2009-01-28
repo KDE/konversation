@@ -77,7 +77,7 @@ IRCQueue::IRCQueue(Server *server, EmptyingRate& rate, int ind) :
 
 IRCQueue::~IRCQueue()
 {
-    kdDebug() << "~IRCQueue" << endl;
+    kDebug() << "~IRCQueue" << endl;
 }
 
 QString IRCQueue::pop()

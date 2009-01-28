@@ -60,18 +60,18 @@
 #include <qtoolbutton.h>
 #include <qlayout.h>
 
-#include <kprocess.h>
+#include <k3process.h>
 
 #include <klineedit.h>
 #include <kinputdialog.h>
-#include <kpassdlg.h>
+#include <kpassworddialog.h>
 #include <klocale.h>
 #include <kdebug.h>
 #include <kglobalsettings.h>
 #include <kdeversion.h>
 #include <kmessagebox.h>
 #include <kiconloader.h>
-#include <kwin.h>
+#include <kwindowsystem.h>
 
 
 Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
@@ -206,17 +206,17 @@ Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
 
     nicknameListView=new NickListView(nickListButtons, this);
     nicknameListView->setHScrollBarMode(Q3ScrollView::AlwaysOff);
-    nicknameListView->setSelectionModeExt(KListView::Extended);
+    nicknameListView->setSelectionModeExt(K3ListView::Extended);
     nicknameListView->setAllColumnsShowFocus(true);
     nicknameListView->setSorting(1,true);
     nicknameListView->addColumn(QString());
     nicknameListView->addColumn(QString());
-    nicknameListView->setColumnWidthMode(1,KListView::Maximum);
+    nicknameListView->setColumnWidthMode(1,K3ListView::Maximum);
 
     nicknameListView->header()->hide();
 
     // setResizeMode must be called after all the columns are added
-    nicknameListView->setResizeMode(KListView::LastColumn);
+    nicknameListView->setResizeMode(K3ListView::LastColumn);
 
     // separate LED from Text a little more
     nicknameListView->setColumnWidth(0, 10);
@@ -241,7 +241,7 @@ Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
     awayLabel->hide();
     blowfishLabel = new QLabel(commandLineBox);
     blowfishLabel->hide();
-    blowfishLabel->setPixmap(KGlobal::iconLoader()->loadIcon("encrypted", KIcon::Toolbar));
+    blowfishLabel->setPixmap(KIconLoader::global()->loadIcon("encrypted", KIconLoader::Toolbar));
     channelInput = new IRCInput(commandLineBox);
 
     getTextView()->installEventFilter(channelInput);
@@ -374,15 +374,15 @@ void Channel::setEncryptedOutput(bool e)
 
 Channel::~Channel()
 {
-    kdDebug() << "Channel::~Channel(" << getName() << ")" << endl;
+    kDebug() << "Channel::~Channel(" << getName() << ")" << endl;
 
     // Purge nickname list
     purgeNicks();
-    kdDebug() << "nicks purged" << endl;
+    kDebug() << "nicks purged" << endl;
 
     // Unlink this channel from channel list
     m_server->removeChannel(this);
-    kdDebug() << "Channel removed." << endl;
+    kDebug() << "Channel removed." << endl;
 
 }
 
@@ -533,7 +533,7 @@ void Channel::popupCommand(int id)
             break;
         }
         case Konversation::AddressbookSub:
-            kdDebug() << "sub called" << endl;
+            kDebug() << "sub called" << endl;
             break;
         case Konversation::GiveOp:
             pattern="MODE %c +o %u";
@@ -1373,7 +1373,7 @@ void Channel::removeNick(ChannelNickPtr channelNick, const QString &reason, bool
         }
         else
         {
-            kdWarning() << "Channel::removeNick(): Nickname " << channelNick->getNickname() << " not found!"<< endl;
+            kWarning() << "Channel::removeNick(): Nickname " << channelNick->getNickname() << " not found!"<< endl;
         }
     }
 }
@@ -1460,7 +1460,7 @@ void Channel::kickNick(ChannelNickPtr channelNick, const QString &kicker, const 
 
         if(nick == 0)
         {
-            kdWarning() << "Channel::kickNick(): Nickname " << channelNick->getNickname() << " not found!"<< endl;
+            kWarning() << "Channel::kickNick(): Nickname " << channelNick->getNickname() << " not found!"<< endl;
         }
         else
         {
@@ -2469,7 +2469,7 @@ void Channel::setAutoUserhost(bool state)
         {
             // re-add the hostmask column
             nicknameListView->addColumn(QString());
-            nicknameListView->setColumnWidthMode(2,KListView::Maximum);
+            nicknameListView->setColumnWidthMode(2,K3ListView::Maximum);
             nicknameListView->setResizeMode(Q3ListView::NoColumn);
 
             // re-add already known hostmasks

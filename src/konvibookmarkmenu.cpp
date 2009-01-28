@@ -20,12 +20,12 @@ Copyright (C) 2002 Carsten Pfeiffer <pfeiffer@kde.org>
 
 #include <qregexp.h>
 
-#include <kpopupmenu.h>
+#include <kmenu.h>
 #include <kaction.h>
 
 
 KonviBookmarkMenu::KonviBookmarkMenu( KBookmarkManager* mgr,
-KonviBookmarkHandler * _owner, KPopupMenu * _parentMenu,
+KonviBookmarkHandler * _owner, KMenu * _parentMenu,
 KActionCollection *collec, bool _isRoot, bool _add,
 const QString & parentAddress )
 : KBookmarkMenu( mgr, _owner, _parentMenu, collec, _isRoot, _add, parentAddress),
@@ -107,13 +107,13 @@ void KonviBookmarkMenu::fillBookmarkMenu()
             }
             else
             {
-                // kdDebug(1203) << "Creating URL bookmark menu item for " << bm.text() << endl;
+                // kDebug(1203) << "Creating URL bookmark menu item for " << bm.text() << endl;
                 // create a normal URL item, with ID as a name
                 KAction * action = new KAction( text, bm.icon(), 0,
                     this, SLOT( slotBookmarkSelected() ),
                     m_actionCollection, bm.url().url().utf8() );
 
-                action->setStatusText( bm.url().prettyURL() );
+                action->setStatusText( bm.url().prettyUrl() );
 
                 action->plug( m_parentMenu );
                 m_actions.append( action );
@@ -121,7 +121,7 @@ void KonviBookmarkMenu::fillBookmarkMenu()
         }
         else
         {
-            // kdDebug(1203) << "Creating bookmark submenu named " << bm.text() << endl;
+            // kDebug(1203) << "Creating bookmark submenu named " << bm.text() << endl;
             KActionMenu * actionMenu = new KActionMenu( text, bm.icon(),
                 m_actionCollection, 0L );
             actionMenu->plug( m_parentMenu );

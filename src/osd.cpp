@@ -332,7 +332,7 @@ void OSDPreviewWidget::mousePressEvent( QMouseEvent *event )
 
     if ( event->button() == Qt::LeftButton && !m_dragging )
     {
-        grabMouse( KCursor::sizeAllCursor() );
+        grabMouse( Qt::SizeAllCursor );
         m_dragging = true;
     }
 }
@@ -416,7 +416,7 @@ OSDWidget::KDesktopLockStatus OSDWidget::isKDesktopLockRunning()
     // Can't tell, very weird
     if (!dcopptr || !dcopptr->isAttached())
     {
-        kdWarning() << k_funcinfo << ": Could not make DCOP connection." << endl;
+        kWarning() << k_funcinfo << ": Could not make DCOP connection." << endl;
         return DCOPError;
     }
 
@@ -427,7 +427,7 @@ OSDWidget::KDesktopLockStatus OSDWidget::isKDesktopLockRunning()
         data,returnType,returnValue,true))
     {
         // KDesktop is not running. Maybe we are in a KDE4 desktop...
-        kdDebug() << k_funcinfo << ": Check for screensaver failed." << endl;
+        kDebug() << k_funcinfo << ": Check for screensaver failed." << endl;
         return DCOPError;
     }
 
@@ -440,7 +440,7 @@ OSDWidget::KDesktopLockStatus OSDWidget::isKDesktopLockRunning()
     }
     else
     {
-        kdWarning() << k_funcinfo << ": Strange return value from screensaver. "
+        kWarning() << k_funcinfo << ": Strange return value from screensaver. "
             << "Assuming screensaver is active." << endl;
         // Err on the side of safety.
         return Locked;

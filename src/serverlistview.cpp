@@ -6,7 +6,7 @@
 */
 
 /*
-  ServerListView is derived from KListView and implements custom
+  ServerListView is derived from K3ListView and implements custom
   drag'n'drop behavior needed in ServerListDialog.
 
   Copyright (C) 2006 Eike Hein <hein@kde.org>
@@ -21,7 +21,7 @@
 
 
 ServerListView::ServerListView(QWidget *parent)
-    : KListView(parent)
+    : K3ListView(parent)
 {
 }
 
@@ -32,7 +32,7 @@ ServerListView::~ServerListView()
 Q3PtrList<Q3ListViewItem> ServerListView::selectedServerListItems()
 {
 
-    Q3PtrList<Q3ListViewItem> selectedItems = KListView::selectedItems();
+    Q3PtrList<Q3ListViewItem> selectedItems = K3ListView::selectedItems();
     Q3PtrList<Q3ListViewItem> selectedServerListItems;
 
     Q3ListViewItem* item = selectedItems.first();

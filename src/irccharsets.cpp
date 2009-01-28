@@ -16,7 +16,7 @@
 #include <kcharsets.h>
 #include <kdebug.h>
 #include <kglobal.h>
-#include <kstaticdeleter.h>
+#include <k3staticdeleter.h>
 
 #if QT_VERSION < 0x030300
 #include <klocale.h>
@@ -29,7 +29,7 @@ namespace Konversation
 {
 
     IRCCharsets* IRCCharsets::s_self = 0;
-    static KStaticDeleter<IRCCharsets> staticIRCCharsetDeleter;
+    static K3StaticDeleter<IRCCharsets> staticIRCCharsetDeleter;
 
     IRCCharsets *IRCCharsets::self()
     {

@@ -17,7 +17,7 @@
 #include <kurl.h>
 
 #ifdef USE_KNOTIFY
-#include <knotifyclient.h>
+#include <knotification.h>
 #endif
 
 
@@ -30,7 +30,7 @@ namespace Konversation
     Sound::~Sound()
         {}
 
-    void Sound::play(const KURL& url)
+    void Sound::play(const KUrl& url)
     {
         #ifdef USE_KNOTIFY
         KNotifyClient::userEvent(0,QString(),1,1,url.path());

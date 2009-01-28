@@ -31,6 +31,7 @@
 #include <kdebug.h>
 #include <kguiitem.h>
 #include <kmessagebox.h>
+#include <kglobal.h>
 
 
 namespace Konversation
@@ -39,9 +40,9 @@ namespace Konversation
     // ServerListItem
     //
 
-    ServerListItem::ServerListItem(KListView* parent, int serverGroupId, int sortIndex,
+    ServerListItem::ServerListItem(K3ListView* parent, int serverGroupId, int sortIndex,
         const QString& serverGroup, const QString& identity, const QString& channels)
-        : KListViewItem(parent, serverGroup, identity, channels)
+        : K3ListViewItem(parent, serverGroup, identity, channels)
     {
         m_serverGroupId = serverGroupId;
         m_sortIndex = sortIndex;
@@ -51,7 +52,7 @@ namespace Konversation
 
     ServerListItem::ServerListItem(Q3ListViewItem* parent, int serverGroupId, int sortIndex,
         const QString& name, const ServerSettings& server)
-        : KListViewItem(parent, name)
+        : K3ListViewItem(parent, name)
     {
         m_serverGroupId = serverGroupId;
         m_sortIndex = sortIndex;
@@ -109,7 +110,7 @@ namespace Konversation
     {
         setButtonOK(KGuiItem(i18n("C&onnect"), "connect_creating", i18n("Connect to the server"), i18n("Click here to connect to the selected IRC network and channel.")));
 
-        Q3Frame* mainWidget = plainPage();
+        QFrame* mainWidget = plainPage();
 
         m_serverList = new ServerListView(mainWidget);
         Q3WhatsThis::add(m_serverList, i18n("This shows the listof configured IRC networks. An IRC network is a collection of cooperating servers. You need only connect to one of the servers in the network to be connected to the entire IRC network. Once connected, Konversation will automatically join the channels shown. When Konversation is started for the first time, the Freenode network and the <i>#kde</i> channel are already entered for you."));
@@ -119,7 +120,7 @@ namespace Konversation
         m_serverList->addColumn(i18n("Network"));
         m_serverList->addColumn(i18n("Identity"));
         m_serverList->addColumn(i18n("Channels"));
-        m_serverList->setSelectionModeExt(KListView::Extended);
+        m_serverList->setSelectionModeExt(K3ListView::Extended);
         m_serverList->setShowSortIndicator(true);
         m_serverList->setSortColumn(0);
         m_serverList->setDragEnabled(true);
@@ -165,7 +166,7 @@ namespace Konversation
 
         updateButtons();
 
-        KConfig* config = kapp->config();
+        KConfig* config = KGlobal::config();
         config->setGroup("ServerListDialog");
         QSize newSize = size();
         newSize = config->readSizeEntry("Size", &newSize);
@@ -176,7 +177,7 @@ namespace Konversation
 
     ServerListDialog::~ServerListDialog()
     {
-        KConfig* config = kapp->config();
+        KConfig* config = KGlobal::config();
         config->setGroup("ServerListDialog");
         config->writeEntry("Size", size());
     }
@@ -419,7 +420,7 @@ namespace Konversation
         int count = m_serverList->selectedItems().count();
         bool enable = (count > 0);
 
-        enableButtonOK(enable);
+        enableButtonOk(enable);
         m_delButton->setEnabled(enable);
 
         enable = (count == 1);

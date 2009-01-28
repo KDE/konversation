@@ -137,7 +137,7 @@ void LogfileReader::clearLog()
     if(KMessageBox::warningContinueCancel(this,
         i18n("Do you really want to permanently discard all log information of this file?"),
         i18n("Clear Logfile"),
-        KStdGuiItem::del(),
+        KStandardGuiItem::del(),
         "ClearLogfileQuestion")==KMessageBox::Continue)
     {
         QFile::remove(fileName);
@@ -159,8 +159,8 @@ void LogfileReader::saveLog()
     if(!destination.isEmpty())
     {
         // replace # with %25 to make it URL conforming
-        KIO::Job* job=KIO::copy(KURL(fileName.replace("#","%23")),
-            KURL(destination),
+        KIO::Job* job=KIO::copy(KUrl(fileName.replace("#","%23")),
+            KUrl(destination),
             true);
 
         connect(job,SIGNAL(result(KIO::Job*)),this,SLOT(copyResult(KIO::Job*)));

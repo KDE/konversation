@@ -17,7 +17,7 @@
 #include <qstringlist.h>
 
 #include <kdialogbase.h>
-#include <klistview.h>
+#include <k3listview.h>
 
 
 namespace Konversation
@@ -71,10 +71,10 @@ namespace Konversation
     };
 
 
-    // This is needed to overcome two deficiencies in KListViewItem
+    // This is needed to overcome two deficiencies in K3ListViewItem
     // First there is no signal emitted when a rename is canceled
     // Second there is no way to get the old value of an item after a rename
-    class BanListViewItem : public KListViewItem
+    class BanListViewItem : public K3ListViewItem
     {
         public:
             explicit BanListViewItem( Q3ListView *parent );

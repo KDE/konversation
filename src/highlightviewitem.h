@@ -21,13 +21,13 @@
 #include <q3listview.h>
 
 
-class KURL;
-class KListView;
+class KUrl;
+class K3ListView;
 
 class HighlightViewItem : public Q3CheckListItem
 {
     public:
-        HighlightViewItem(KListView* parent, Highlight* passed_Highlight);
+        HighlightViewItem(K3ListView* parent, Highlight* passed_Highlight);
         ~HighlightViewItem();
 
         QString getPattern();
@@ -35,13 +35,13 @@ class HighlightViewItem : public Q3CheckListItem
         QColor getColor() { return itemColor; }
         int getID() { return itemID; }
         bool getRegExp();
-        KURL getSoundURL() { return soundURL; }
+        KUrl getSoundURL() { return soundURL; }
 
         void setPattern(const QString& newPattern);
         void setAutoText(const QString& newAutoText);
         void setColor(QColor passed_itemColor) { itemColor = passed_itemColor; }
         void setID(int passed_itemID) { itemID = passed_itemID; }
-        void setSoundURL(const KURL& url);
+        void setSoundURL(const KUrl& url);
 
         /** checks if the checkbox has been changed by the user
          *  stored internally by m_changed
@@ -61,7 +61,7 @@ class HighlightViewItem : public Q3CheckListItem
         QColor itemColor;
         QColorGroup itemColorGroup;
         int itemID;
-        KURL soundURL;
+        KUrl soundURL;
         QString autoText;
 
         bool m_changed;  // true if the checkbox has been changed

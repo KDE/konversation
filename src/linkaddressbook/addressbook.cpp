@@ -26,7 +26,7 @@
 #include <kmessagebox.h>
 #include <kapplication.h>
 #include <dcopclient.h>
-#include <kwin.h>
+#include <kwindowsystem.h>
 
 
 namespace Konversation
@@ -95,7 +95,7 @@ namespace Konversation
     {
         if(uid.isEmpty())
         {
-            kdDebug() << "Addressbook::presenceString() called with an empty uid" << endl;
+            kDebug() << "Addressbook::presenceString() called with an empty uid" << endl;
             return QString("Error");
         }
         switch( presenceStatus(uid))
@@ -122,7 +122,7 @@ namespace Konversation
     {
         if(uid.isEmpty())
         {
-            kdDebug() << "Addressbook::canReceiveFiles() called with empty uid" << endl;
+            kDebug() << "Addressbook::canReceiveFiles() called with empty uid" << endl;
             return false;
         }
         int presence = presenceStatus(uid);
@@ -133,7 +133,7 @@ namespace Konversation
     {
         if(uid.isEmpty())
         {
-            kdDebug() << "Addressbook::canRespond called with empty uid" << endl;
+            kDebug() << "Addressbook::canRespond called with empty uid" << endl;
             return false;
         }
         //this should return false if they are offline.
@@ -145,7 +145,7 @@ namespace Konversation
     {
         if(contactId.isEmpty())
         {
-            kdDebug() << "Addressbook::locate called with empty contactId" << endl;
+            kDebug() << "Addressbook::locate called with empty contactId" << endl;
             return QString();
         }
         if(protocol != "messaging/irc")
@@ -176,7 +176,7 @@ namespace Konversation
                 break;
             default:
                 //error
-                kdDebug() << "Unknown status " << uid << endl;
+                kDebug() << "Unknown status " << uid << endl;
                 return QPixmap();
         }
 
@@ -187,7 +187,7 @@ namespace Konversation
     {
         if(uid.isEmpty())
         {
-            kdDebug() << "Addressbook::contact called with empty uid" << endl;
+            kDebug() << "Addressbook::contact called with empty uid" << endl;
             return QString();
         }
         QString context;
@@ -239,7 +239,7 @@ namespace Konversation
     void Addressbook::messageNewContact( const QString &contactId, const QString &/*protocol*/ ) {
     if(contactId.isEmpty() )
     {
-        kdDebug() << "Addressbook::messageNewContact called with empty contactid" << endl;
+        kDebug() << "Addressbook::messageNewContact called with empty contactid" << endl;
         focusAndShowErrorMessage(i18n("Another KDE application tried to use Konversation for instant messaging, but did not specify any contact to send the message to.  This is probably a bug in the other application."));
         return;
     }
@@ -254,7 +254,7 @@ void Addressbook::chatWithContact( const QString &uid )
 {
     if(uid.isEmpty())
     {
-        kdDebug() << "Addressbook::chatWithContact called with empty uid" << endl;
+        kDebug() << "Addressbook::chatWithContact called with empty uid" << endl;
         focusAndShowErrorMessage(i18n("Another KDE application tried to use Konversation for instant messaging, but did not specify any contact to send the message to.  This is probably a bug in the other application."));
         return;
     }
@@ -264,11 +264,11 @@ void Addressbook::chatWithContact( const QString &uid )
 /**
  * Send the file to the contact
  * @param uid the KABC uid you are sending to.
- * @param sourceURL a KURL to send.
+ * @param sourceURL a KUrl to send.
  * @param altFileName an alternate filename describing the file
  * @param fileSize file size in bytes
  */
-void Addressbook::sendFile(const QString &uid, const KURL &sourceURL, const QString &altFileName, uint fileSize)
+void Addressbook::sendFile(const QString &uid, const KUrl &sourceURL, const QString &altFileName, uint fileSize)
 {
     if(uid.isEmpty())
     {
@@ -291,8 +291,8 @@ void Addressbook::sendFile(const QString &uid, const KURL &sourceURL, const QStr
     }
     nickInfo->getServer()->addDccSend(nickInfo->getNickname(), sourceURL, altFileName, fileSize);
     QWidget *widget = nickInfo->getServer()->getViewContainer()->getWindow();
-    KWin::demandAttention(widget->winId());       //If activeWindow request is denied, at least demand attention!
-    KWin::activateWindow(widget->winId());        //May or may not work, depending on focus stealing prevention.
+    KWindowSystem::demandAttention(widget->winId());       //If activeWindow request is denied, at least demand attention!
+    KWindowSystem::activateWindow(widget->winId());        //May or may not work, depending on focus stealing prevention.
 
 }
 
@@ -315,19 +315,19 @@ void Addressbook::emitContactPresenceChanged(const QString &uid, int presence)
     if(uid.isEmpty())
     {
         //This warning below is annoying.  FIXME - disabled because it's too verbose
-        //		kdDebug() << "Addressbook::emitContactPresenceChanged was called with empty uid" << endl;
+        //		kDebug() << "Addressbook::emitContactPresenceChanged was called with empty uid" << endl;
         return;
     }
     Q_ASSERT(kapp->dcopClient());
     emit contactPresenceChanged(uid, kapp->dcopClient()->appId(), presence);
-    //	kdDebug() << "Presence changed for uid " << uid << " to " << presence << endl;
+    //	kDebug() << "Presence changed for uid " << uid << " to " << presence << endl;
 }
 
 void Addressbook::emitContactPresenceChanged(const QString &uid)
 {
     if(uid.isEmpty())
     {
-        kdDebug() << "Addressbook::emitContactPresenceChanged was called with empty uid" << endl;
+        kDebug() << "Addressbook::emitContactPresenceChanged was called with empty uid" << endl;
         return;
     };
 

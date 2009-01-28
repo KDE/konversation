@@ -21,7 +21,7 @@ unsigned int Highlight::s_id = 0;                 // static
 Highlight::Highlight(const QString& itemPattern,
 bool regExp,
 const QColor& itemColor,
-const KURL& soundURL,
+const KUrl& soundURL,
 const QString& autoText)
 {
     m_itemPattern = itemPattern;
@@ -38,12 +38,12 @@ int Highlight::getID() { return m_itemID; }
 QString Highlight::getPattern() { return m_itemPattern; }
 QString Highlight::getAutoText() { return m_autoText; }
 QColor Highlight::getColor() { return m_itemColor; }
-KURL Highlight::getSoundURL() { return m_soundURL; }
+KUrl Highlight::getSoundURL() { return m_soundURL; }
 
 void Highlight::setPattern(const QString& itemPattern) { m_itemPattern = itemPattern; }
 void Highlight::setAutoText(const QString& autoText) { m_autoText = autoText; }
 void Highlight::setColor(const QColor& itemColor) { m_itemColor = itemColor; }
-void Highlight::setSoundURL(const KURL& url) { m_soundURL = url; }
+void Highlight::setSoundURL(const KUrl& url) { m_soundURL = url; }
 
 void Highlight::setRegExp(bool state)  { m_regExp=state; }
 bool Highlight::getRegExp() { return m_regExp; }

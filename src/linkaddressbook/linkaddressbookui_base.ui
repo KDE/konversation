@@ -55,7 +55,7 @@
                 <string>Create a new entry in your address book</string>
             </property>
         </widget>
-        <widget class="KActiveLabel" row="0" column="0" rowspan="1" colspan="2">
+        <widget class="K3ActiveLabel" row="0" column="0" rowspan="1" colspan="2">
             <property name="name">
                 <cstring>lblHeader</cstring>
             </property>
@@ -68,7 +68,7 @@
                 </sizepolicy>
             </property>
         </widget>
-        <widget class="KListView" row="2" column="0" rowspan="1" colspan="2">
+        <widget class="K3ListView" row="2" column="0" rowspan="1" colspan="2">
             <column>
                 <property name="text">
                     <string>Photo</string>
@@ -150,7 +150,7 @@
                         <cstring>kListViewSearchLine</cstring>
                     </property>
                 </widget>
-                <widget class="KListViewSearchLine">
+                <widget class="K3ListViewSearchLine">
                     <property name="name">
                         <cstring>kListViewSearchLine</cstring>
                     </property>

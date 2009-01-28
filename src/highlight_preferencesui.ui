@@ -30,7 +30,7 @@
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="KListView" row="0" column="0" rowspan="1" colspan="4">
+                <widget class="K3ListView" row="0" column="0" rowspan="1" colspan="4">
                     <column>
                         <property name="text">
                             <string>RegEx</string>
@@ -241,7 +241,7 @@
                         <cstring>soundURL</cstring>
                     </property>
                 </widget>
-                <widget class="KURLRequester" row="3" column="1" rowspan="1" colspan="2">
+                <widget class="KUrlRequester" row="3" column="1" rowspan="1" colspan="2">
                     <property name="name">
                         <cstring>soundURL</cstring>
                     </property>

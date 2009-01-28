@@ -39,7 +39,7 @@ the Free Software Foundation; either version 2 of the License, or
         <property name="margin">
             <number>0</number>
         </property>
-        <widget class="KListView" row="0" column="0" rowspan="1" colspan="2">
+        <widget class="K3ListView" row="0" column="0" rowspan="1" colspan="2">
             <column>
                 <property name="text">
                     <string>Pattern</string>

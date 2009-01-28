@@ -31,13 +31,13 @@
 #include <kactionclasses.h>
 #include <klocale.h>
 #include <kdebug.h>
-#include <klistview.h>
+#include <k3listview.h>
 #include <krun.h>
 #include <kfiledialog.h>
-#include <kprocess.h>
+#include <k3process.h>
 #include <kdeversion.h>
 #include <kshell.h>
-#include <klistviewsearchline.h>
+#include <k3listviewsearchline.h>
 
 
 UrlCatcher::UrlCatcher(QWidget* parent) : ChatWindow(parent)
@@ -46,7 +46,7 @@ UrlCatcher::UrlCatcher(QWidget* parent) : ChatWindow(parent)
     setName(i18n("URL Catcher"));
     setType(ChatWindow::UrlCatcher);
 
-    urlListView=new KListView(this,"url_list_view");
+    urlListView=new K3ListView(this,"url_list_view");
     urlListView->addColumn(i18n("Nick"));
     urlListView->addColumn(i18n("URL"));
     urlListView->setFullWidth(true);
@@ -129,7 +129,7 @@ void UrlCatcher::urlSelected()
 
 void UrlCatcher::addUrl(const QString& who,const QString& url)
 {
-    new KListViewItem(urlListView,who,url);
+    new K3ListViewItem(urlListView,who,url);
     clearListButton->setEnabled(true);
     saveListButton->setEnabled(true);
     searchWidget->setEnabled(true);
@@ -140,20 +140,20 @@ void UrlCatcher::openUrl(Q3ListViewItem* item)
     QString url = item->text(1);
     if (!Preferences::useCustomBrowser() || url.lower().startsWith("mailto:") )
     {
-        new KRun(KURL(url));
+        new KRun(KUrl(url));
     }
     else
     {
         QString cmd = Preferences::webBrowserCmd();
         cmd.replace("%u", url);
-        KProcess *proc = new KProcess;
+        K3Process *proc = new K3Process;
         QStringList cmdAndArgs = KShell::splitArgs(cmd);
         *proc << cmdAndArgs;
         //    This code will also work, but starts an extra shell process.
-        //    kdDebug() << "UrlCatcher::openUrl(): cmd = " << cmd << endl;
+        //    kDebug() << "UrlCatcher::openUrl(): cmd = " << cmd << endl;
         //    *proc << cmd;
         //    proc->setUseShell(true);
-        proc->start(KProcess::DontCare);
+        proc->start(K3Process::DontCare);
         delete proc;
     }
 }

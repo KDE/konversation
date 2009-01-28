@@ -24,7 +24,7 @@
 
 #include <klineedit.h>
 #include <klocale.h>
-#include <kprogress.h>
+#include <kprogressdialog.h>
 #include <krun.h>
 #include <kurlrequester.h>
 #include <ksqueezedtextlabel.h>
@@ -82,7 +82,7 @@ void DccTransferDetailedInfoPanel::updateView()
     m_labelFilename->setText( transfer->getFileName() );
 
     // Location:
-    m_urlreqLocation->setURL( transfer->getFileURL().prettyURL() );
+    m_urlreqLocation->setURL( transfer->getFileURL().prettyUrl() );
     //m_urlreqLocation->lineEdit()->setFocusPolicy( transfer->getStatus() == DccTransfer::Queued ? Qt::StrongFocus : ClickFocus );
     m_urlreqLocation->lineEdit()->setReadOnly( transfer->getStatus() != DccTransfer::Queued );
     m_urlreqLocation->lineEdit()->setFrame( transfer->getStatus() == DccTransfer::Queued );
@@ -196,7 +196,7 @@ void DccTransferDetailedInfoPanel::slotLocationChanged( const QString& url )
     if ( m_item->transfer()->getType() == DccTransfer::Receive )
     {
         DccTransferRecv* transfer = static_cast< DccTransferRecv* >( m_item->transfer() );
-        transfer->setFileURL( KURL::fromPathOrURL( url ) );
+        transfer->setFileURL( KUrl::fromPathOrUrl( url ) );
     }
 }
 
@@ -205,7 +205,7 @@ void DccTransferDetailedInfoPanel::slotOpenFolderButtonClicked()
     QString urlString = m_urlreqLocation->lineEdit()->text();
     if ( !urlString.isEmpty() )
     {
-        KURL url = KURL::fromPathOrURL( urlString );
+        KUrl url = KUrl::fromPathOrUrl( urlString );
         url.setFileName( QString() );
         new KRun( url, 0, true, true );
     }

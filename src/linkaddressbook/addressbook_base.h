@@ -19,7 +19,7 @@
 #include "../nickinfo.h"
 #include "../channelnick.h"
 
-#include <kstaticdeleter.h>
+#include <k3staticdeleter.h>
 #include <qobject.h>
 #include <qregexp.h>
 #include <config.h>

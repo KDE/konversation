@@ -41,17 +41,17 @@
 class ViewTree::ToolTip : public QToolTip
 {
     public:
-        ToolTip(QWidget *parent, KListView *viewTree);
+        ToolTip(QWidget *parent, K3ListView *viewTree);
         virtual ~ToolTip() {}
 
     protected:
         virtual void maybeTip(const QPoint &pos);
 
     private:
-        KListView* viewTree;
+        K3ListView* viewTree;
 };
 
-ViewTree::ToolTip::ToolTip(QWidget *parent, KListView *viewTree)
+ViewTree::ToolTip::ToolTip(QWidget *parent, K3ListView *viewTree)
     : QToolTip(parent), viewTree(viewTree)
 {
 }
@@ -67,7 +67,7 @@ void ViewTree::ToolTip::maybeTip (const QPoint &pos)
 
 
 ViewTree::ViewTree(QWidget *parent)
-    : KListView(parent)
+    : K3ListView(parent)
 {
     header()->hide();
     setHScrollBarMode(Q3ScrollView::AlwaysOff);
@@ -77,7 +77,7 @@ ViewTree::ViewTree(QWidget *parent)
     setSortOrder(Qt::Ascending);
 
     setResizeMode(Q3ListView::AllColumns);
-    setSelectionModeExt(KListView::Single);
+    setSelectionModeExt(K3ListView::Single);
     setRootIsDecorated(false);
 
     setDragEnabled(true);
@@ -550,12 +550,12 @@ void ViewTree::contentsMousePressEvent(QMouseEvent* e)
         if (Preferences::closeButtons() && e->button() == Qt::LeftButton && isAboveIcon(vp, item))
         {
             m_pressedAboveCloseButton = true;
-            if (!item->getCloseButtonEnabled()) KListView::contentsMousePressEvent(e);
+            if (!item->getCloseButtonEnabled()) K3ListView::contentsMousePressEvent(e);
         }
         else
         {
             m_pressedAboveCloseButton = false;
-            KListView::contentsMousePressEvent(e);
+            K3ListView::contentsMousePressEvent(e);
         }
         m_middleClickItem = (Preferences::middleClickClose() && e->button() == MidButton) ? item : 0;
     }
@@ -587,7 +587,7 @@ void ViewTree::contentsMouseReleaseEvent(QMouseEvent* e)
         }
     }
     else
-        KListView::contentsMouseReleaseEvent(e);
+        K3ListView::contentsMouseReleaseEvent(e);
 }
 
 void ViewTree::contentsMouseMoveEvent(QMouseEvent* e)
@@ -604,7 +604,7 @@ void ViewTree::contentsMouseMoveEvent(QMouseEvent* e)
     // Allow dragging only with the middle mouse button, just
     // like for the tab bar.
     if ((e->state() & MidButton) == MidButton)
-        KListView::contentsMouseMoveEvent(e);
+        K3ListView::contentsMouseMoveEvent(e);
     else if ((e->state() & Qt::LeftButton) == Qt::LeftButton)
     {
         if (item && (item != selectedItem()) && !item->isSeparator())
@@ -652,7 +652,7 @@ void ViewTree::contentsContextMenuEvent(QContextMenuEvent* e)
         emit showViewContextMenu(atpos->getView(),e->globalPos());
     }
 
-    KListView::contentsContextMenuEvent(e);
+    K3ListView::contentsContextMenuEvent(e);
 }
 
 void ViewTree::contentsWheelEvent(QWheelEvent* e)
@@ -736,7 +736,7 @@ void ViewTree::selectLower(bool wrap)
 
 void ViewTree::resizeEvent(QResizeEvent* e)
 {
-    KListView::resizeEvent(e);
+    K3ListView::resizeEvent(e);
 
     emit sizeChanged();
 }
@@ -950,7 +950,7 @@ ViewTreeItem* ViewTree::getLastChild(Q3ListViewItem* parent)
 
 void ViewTree::paintEmptyArea(QPainter* p, const QRect& rect)
 {
-    KListView::paintEmptyArea(p, rect);
+    K3ListView::paintEmptyArea(p, rect);
 
     ViewTreeItem* last = static_cast<ViewTreeItem*>(lastItem());
 

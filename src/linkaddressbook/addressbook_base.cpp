@@ -26,6 +26,7 @@
 #include <kapplication.h>
 #include <dcopclient.h>
 #include <kmessagebox.h>
+#include <ktoolinvocation.h>
 
 namespace Konversation
 {
@@ -182,7 +183,7 @@ namespace Konversation
     void AddressbookBase::unassociateNick(KABC::Addressee &addressee, const QString &ircnick, const QString &servername, const QString &servergroup)
     {
 
-        kdDebug() << "in unassociatenick for '" << ircnick << endl;
+        kDebug() << "in unassociatenick for '" << ircnick << endl;
         if(ircnick.isEmpty()) return;
 
         QString lnick = ircnick.lower();
@@ -197,11 +198,11 @@ namespace Konversation
         // like johnflux, johnflux@freenode, or johnflux@irc.kde.org    except with the unicode
         // separator char 0xe120 instead of the @
 
-        kdDebug() << "nick" << ircnick<< endl;
+        kDebug() << "nick" << ircnick<< endl;
         bool changed = false;
         if(addressee.isEmpty())
         {
-            kdDebug() << "Ignoring unassociation command for empty addressee for nick " << ircnick << endl;
+            kDebug() << "Ignoring unassociation command for empty addressee for nick " << ircnick << endl;
         }
         QString lit;
         QStringList addresses = QStringList::split( QChar( 0xE000 ), addressee.custom("messaging/irc", "All") );
@@ -272,17 +273,17 @@ namespace Konversation
     {
         if(m_ticket)
         {
-            kdError() << "Internal error - getting new ticket without saving old" << endl;
+            kError() << "Internal error - getting new ticket without saving old" << endl;
             return false;
         }
         m_ticket = addressBook->requestSaveTicket();
         if ( !m_ticket )
         {
-            kdError() << "Resource is locked by other application!" << endl;
+            kError() << "Resource is locked by other application!" << endl;
             //emit error
             return false;
         }
-        kdDebug() << "gotTicketSuccessfully" << endl;
+        kDebug() << "gotTicketSuccessfully" << endl;
         return true;
     }
     void AddressbookBase::releaseTicket()
@@ -295,12 +296,12 @@ namespace Konversation
     {
         if(!addressBook->save( m_ticket) )
         {
-            kdError() << "Saving failed!" << endl;
+            kError() << "Saving failed!" << endl;
             addressBook->releaseSaveTicket(m_ticket);
             m_ticket = NULL;
             return false;
         }
-        kdDebug() << "saveTicket() was successful" << endl;
+        kDebug() << "saveTicket() was successful" << endl;
         m_ticket= NULL;
         emit addresseesChanged();
         return true;
@@ -310,26 +311,26 @@ namespace Konversation
     {
         if(m_ticket)
         {
-            kdError() << "Internal error - getting new ticket without saving old" << endl;
+            kError() << "Internal error - getting new ticket without saving old" << endl;
             return false;
         }
         m_ticket = addressBook->requestSaveTicket();
         if ( !m_ticket )
         {
-            kdError() << "Resource is locked by other application!" << endl;
+            kError() << "Resource is locked by other application!" << endl;
             return false;
         }
         else
         {
             if ( !addressBook->save( m_ticket ) )
             {
-                kdError() << "Saving failed!" << endl;
+                kError() << "Saving failed!" << endl;
                 addressBook->releaseSaveTicket(m_ticket);
                 m_ticket = NULL;
                 return false;
             }
         }
-        kdDebug() << "Save was successful" << endl;
+        kDebug() << "Save was successful" << endl;
         m_ticket = NULL;
         emit addresseesChanged();
         return true;
@@ -382,12 +383,12 @@ namespace Konversation
         //
         //Because of stupid bugs in kaddressbook, first load kaddressbook using startServiceByDesktopPath
         // then call it on the command line to actually put it in edit mode.  This is stupid :(
-        kapp->startServiceByDesktopName( "kaddressbook" );
+        KToolInvocation::startServiceByDesktopName( "kaddressbook" );
 
-        KProcess *proc = new KProcess;
+        K3Process *proc = new K3Process;
         *proc << "kaddressbook";
         *proc << "--editor-only" << "--uid" << uid;
-        kdDebug() << "running kaddressbook --editor-only --uid " << uid << endl;
+        kDebug() << "running kaddressbook --editor-only --uid " << uid << endl;
         if(!proc->start())
         {
             KMessageBox::error(0, i18n("Could not run your addressbook program (kaddressbook).  This is most likely because it is not installed.  Please install the 'kdepim' packages."));
@@ -408,8 +409,8 @@ namespace Konversation
 
     bool AddressbookBase::runEmailProgram(const QString &mailtoaddress)
     {
-        KRun *proc = new KRun(KURL(QString("mailto:") + KStringHandler::from8Bit(mailtoaddress.ascii())));
-        kdDebug() << "Sending email to " << mailtoaddress << endl;
+        KRun *proc = new KRun(KUrl(QString("mailto:") + KStringHandler::from8Bit(mailtoaddress.ascii())));
+        kDebug() << "Sending email to " << mailtoaddress << endl;
         if(proc->hasError())
         {
             KMessageBox::error(0, i18n("Could not run your email program.  This is possibly because one is not installed.  To install the KDE email program (kmail) please install the 'kdepim' packages."));

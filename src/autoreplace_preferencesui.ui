@@ -63,7 +63,7 @@
                 </spacer>
             </vbox>
         </widget>
-        <widget class="KListView" row="0" column="0">
+        <widget class="K3ListView" row="0" column="0">
             <column>
                 <property name="text">
                     <string>RegEx</string>

@@ -15,8 +15,8 @@
 #include "channellistviewitem.h"
 
 
-ChannelListViewItem::ChannelListViewItem(KListView* parent, const QString& channel, const QString& users, const QString& topic)
-: KListViewItem(parent,channel,users,topic)
+ChannelListViewItem::ChannelListViewItem(K3ListView* parent, const QString& channel, const QString& users, const QString& topic)
+: K3ListViewItem(parent,channel,users,topic)
 {
 }
 
@@ -36,5 +36,5 @@ int ChannelListViewItem::compare(Q3ListViewItem* item, int col, bool ascending) 
             if(ok) return (i<j) ? -1 : (i>j) ? 1 : 0;
         }
     }
-    return KListViewItem::compare(item,col,ascending);
+    return K3ListViewItem::compare(item,col,ascending);
 }

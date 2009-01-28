@@ -17,7 +17,7 @@
 #include <qobject.h>
 
 
-class KURL;
+class KUrl;
 
 namespace Konversation
 {
@@ -34,7 +34,7 @@ namespace Konversation
             ~Sound();
 
         public slots:
-            void play(const KURL& url);
+            void play(const KUrl& url);
 
     };
 }

@@ -38,7 +38,7 @@ KonsolePanel::KonsolePanel(QWidget *p) : ChatWindow( p ), k_part (0)
 
 KonsolePanel::~KonsolePanel()
 {
-    kdDebug() << "KonsolePanel::~KonsolePanel()" << endl;
+    kDebug() << "KonsolePanel::~KonsolePanel()" << endl;
     if ( k_part )
     {
         // make sure to prevent partDestroyed() signals from being sent

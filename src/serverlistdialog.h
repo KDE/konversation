@@ -26,10 +26,10 @@ class QStringList;
 
 namespace Konversation
 {
-    class ServerListItem : public KListViewItem
+    class ServerListItem : public K3ListViewItem
     {
         public:
-            ServerListItem(KListView* parent, int serverGroupId, int sortIndex,
+            ServerListItem(K3ListView* parent, int serverGroupId, int sortIndex,
                 const QString& serverGroup, const QString& identity, const QString& channels);
             ServerListItem(Q3ListViewItem* parent, int serverGroupId, int sortIndex, 
                 const QString& name, const ServerSettings& server);

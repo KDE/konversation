@@ -35,7 +35,7 @@
 #include <kstringhandler.h>
 #include <config.h>
 #include <kdebug.h>
-#include <kresolver.h>
+#include <k3resolver.h>
 
 InputFilter::InputFilter()
 {
@@ -151,7 +151,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                     Channel* channel = server->getChannelByName( parameterList[0] );
 
                     if(!channel) {
-                        kdError() << "Didn't find the channel " << parameterList[0] << endl;
+                        kError() << "Didn't find the channel " << parameterList[0] << endl;
                         return;
                     }
 
@@ -652,7 +652,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
         }
         else if(command=="error :closing link:")
         {
-            kdDebug() << "link closed" << endl;
+            kDebug() << "link closed" << endl;
         }
         else if(command=="pong")
         {
@@ -778,7 +778,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     }
                     else
                     {
-                        //kdDebug() << "Ignored server-capability: " << property << " with value '" << value << "'" << endl;
+                        //kDebug() << "Ignored server-capability: " << property << " with value '" << value << "'" << endl;
                     }
                 }                                 // endfor
                 break;
@@ -901,7 +901,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 }
                 else
                 {
-                    kdDebug() << "Hmm seems something is broken... can't get to the names!" << endl;
+                    kDebug() << "Hmm seems something is broken... can't get to the names!" << endl;
                 }
 
                 // send list to channel
@@ -1303,7 +1303,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     else
                     {
                         // whoReauestList seems to be broken.
-                        kdDebug()   << "InputFilter::parseServerCommand(): RPL_ENDOFWHO: malformed ENDOFWHO. retrieved: "
+                        kDebug()   << "InputFilter::parseServerCommand(): RPL_ENDOFWHO: malformed ENDOFWHO. retrieved: "
                             << parameterList[1] << " expected: " << whoRequestList.front()
                             << endl;
                         whoRequestList.clear();
@@ -1311,7 +1311,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 }
                 else
                 {
-                    kdDebug()   << "InputFilter::parseServerCommand(): RPL_ENDOFWHO: unexpected ENDOFWHO. retrieved: "
+                    kDebug()   << "InputFilter::parseServerCommand(): RPL_ENDOFWHO: unexpected ENDOFWHO. retrieved: "
                         << parameterList[1]
                         << endl;
                 }
@@ -1824,7 +1824,7 @@ void InputFilter::parseModes(const QString &sourceNick, const QStringList &param
             // Let the channel update its modes
             if(parameter.isEmpty())               // XXX Check this to ensure the braces are in the correct place
             {
-                kdDebug()   << "in updateChannelMode.  sourceNick: '" << sourceNick << "'  parameterlist: '"
+                kDebug()   << "in updateChannelMode.  sourceNick: '" << sourceNick << "'  parameterlist: '"
                     << parameterList.join(", ") << "'"
                     << endl;
             }
@@ -1878,7 +1878,7 @@ void InputFilter::setAutomaticRequest(const QString& command, const QString& nam
     automaticRequest[command][name.lower()] += (yes) ? 1 : -1;
     if(automaticRequest[command][name.lower()]<0)
     {
-        kdDebug()   << "InputFilter::automaticRequest( " << command << ", " << name
+        kDebug()   << "InputFilter::automaticRequest( " << command << ", " << name
             << " ) was negative! Resetting!"
             << endl;
         automaticRequest[command][name.lower()]=0;

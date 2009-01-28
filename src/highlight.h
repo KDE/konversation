@@ -33,7 +33,7 @@ class Highlight
         Highlight(const QString& itemPattern,
             bool regExp,
             const QColor& itemColor,
-            const KURL& soundURL,
+            const KUrl& soundURL,
             const QString& autoText);
 
         QString getPattern();
@@ -41,11 +41,11 @@ class Highlight
         QColor getColor();
         int getID();
         bool getRegExp();
-        KURL getSoundURL();
+        KUrl getSoundURL();
 
         void setPattern(const QString& itemPattern);
         void setColor(const QColor& itemColor);
-        void setSoundURL(const KURL& url);
+        void setSoundURL(const KUrl& url);
         void setAutoText(const QString& autoText);
         void setRegExp(bool state);
 
@@ -58,6 +58,6 @@ class Highlight
         QString m_itemPattern;
         QString m_autoText;
         QColor m_itemColor;
-        KURL m_soundURL;
+        KUrl m_soundURL;
 };
 #endif

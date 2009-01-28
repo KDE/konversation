@@ -27,7 +27,7 @@ class Q3ListView;
 class Q3ListViewItem;
 class QPushButton;
 
-class KListView;
+class K3ListView;
 class KLineEdit;
 class ChannelListViewItem;
 
@@ -72,7 +72,7 @@ class ChannelListPanel : public ChatWindow
         void topicTargetClicked();
         void regExpClicked();
 
-        void contextMenu (KListView* l, Q3ListViewItem* i, const QPoint& p);
+        void contextMenu (K3ListView* l, Q3ListViewItem* i, const QPoint& p);
         void openURL();
 
         //Used to disable functions when not connected
@@ -137,7 +137,7 @@ class ChannelListPanel : public ChatWindow
         QPushButton* refreshListButton;
         QPushButton* joinChannelButton;
 
-        KListView* channelListView;
+        K3ListView* channelListView;
 
         KLineEdit* filterInput;
 

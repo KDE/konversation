@@ -26,11 +26,11 @@
 #include <QEvent>
 
 #include <klocale.h>
-#include <klistview.h>
+#include <k3listview.h>
 #include <ktextedit.h>
 #include <klineedit.h>
 #include <knuminput.h>
-#include <klistviewsearchline.h>
+#include <k3listviewsearchline.h>
 #include <kiconloader.h>
 
 
@@ -175,7 +175,7 @@ namespace Konversation
         {
             QDateTime date;
             date.setTime_t((*it).section(' ', 0 ,0).toUInt());
-            new KListViewItem(m_widget->topicHistoryList, (*it).section(' ', 1, 1), date.toString(Qt::LocalDate), (*it).section(' ', 2));
+            new K3ListViewItem(m_widget->topicHistoryList, (*it).section(' ', 1, 1), date.toString(Qt::LocalDate), (*it).section(' ', 2));
         }
 
         // update topic preview
@@ -471,26 +471,26 @@ namespace Konversation
     // This is our implementation of BanListViewItem
 
     BanListViewItem::BanListViewItem(Q3ListView *parent)
-      : KListViewItem(parent)
+      : K3ListViewItem(parent)
     {
         m_isNewBan = 0;
     }
 
     BanListViewItem::BanListViewItem(Q3ListView *parent, bool isNew)
-      : KListViewItem(parent)
+      : K3ListViewItem(parent)
     {
         m_isNewBan = isNew;
     }
 
     BanListViewItem::BanListViewItem (Q3ListView *parent, const QString& label1, const QString& label2,
-        uint timestamp) : KListViewItem(parent, label1, label2)
+        uint timestamp) : K3ListViewItem(parent, label1, label2)
     {
         m_isNewBan = 0;
         m_timestamp.setTime_t(timestamp);
     }
 
     BanListViewItem::BanListViewItem (Q3ListView *parent, bool isNew, const QString& label1, const QString& label2,
-        uint timestamp) : KListViewItem(parent, label1, label2)
+        uint timestamp) : K3ListViewItem(parent, label1, label2)
     {
         m_isNewBan = isNew;
         m_timestamp.setTime_t(timestamp);
@@ -501,7 +501,7 @@ namespace Konversation
         if (column == 2)
             return KGlobal::locale()->formatDateTime(m_timestamp, true, true);
 
-        return KListViewItem::text(column);
+        return K3ListViewItem::text(column);
     }
 
     int BanListViewItem::compare(Q3ListViewItem *i, int col, bool ascending) const
@@ -518,14 +518,14 @@ namespace Konversation
                 return 1;
         }
 
-        return KListViewItem::compare(i, col, ascending);
+        return K3ListViewItem::compare(i, col, ascending);
     }
 
     void BanListViewItem::startRename( int col )
     {
         m_oldValue = text(col);
 
-        KListViewItem::startRename(col);
+        K3ListViewItem::startRename(col);
     }
 
     void BanListViewItem::cancelRename( int col )
@@ -533,7 +533,7 @@ namespace Konversation
         if (text(col).isEmpty() && m_isNewBan)
             delete this;
         else
-            KListViewItem::cancelRename(col);
+            K3ListViewItem::cancelRename(col);
     }
 }
 

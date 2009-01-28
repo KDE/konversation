@@ -16,7 +16,7 @@
 #include "preferences.h"
 
 #include <klocale.h>
-#include <klistview.h>
+#include <k3listview.h>
 #include <q3listview.h>
 #include <qlineedit.h>
 #include <q3header.h>
@@ -172,7 +172,7 @@ void Ignore_Config::updateEnabledness()
 void Ignore_Config::select(Q3ListViewItem* item)
 {
     updateEnabledness();
-    // FIXME: Cast to IgnoreListViewItem, maybe derive from KListView some day
+    // FIXME: Cast to IgnoreListViewItem, maybe derive from K3ListView some day
     IgnoreListViewItem* selectedItem=static_cast<IgnoreListViewItem*>(item);
 
     if(selectedItem)

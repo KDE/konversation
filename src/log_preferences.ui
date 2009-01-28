@@ -64,7 +64,7 @@ the Free Software Foundation; either version 2 of the License, or
                         <cstring>kcfg_LogfilePath</cstring>
                     </property>
                 </widget>
-                <widget class="KURLRequester" row="3" column="1">
+                <widget class="KUrlRequester" row="3" column="1">
                     <property name="name">
                         <cstring>kcfg_LogfilePath</cstring>
                     </property>

@@ -19,7 +19,7 @@
 
 
 IgnoreListViewItem::IgnoreListViewItem(Q3ListView* parent,const QString& name,int newFlags):
-KListViewItem(parent,name)
+K3ListViewItem(parent,name)
 {
     setFlags(newFlags);
 }

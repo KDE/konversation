@@ -43,7 +43,7 @@
 #include <klocale.h>
 #include <kdebug.h>
 #include <kiconloader.h>
-#include <klistview.h>
+#include <k3listview.h>
 
 
 KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
@@ -223,7 +223,7 @@ void KonviSettingsDialog::showEvent(QShowEvent* e)
   KonviConfigDialog::showEvent(e);
 
   QSplitter* splitter = ((QSplitter*)child(0, "QSplitter", true));
-  KListView* listView = ((KListView*)child(0, "KListView", true));
+  K3ListView* listView = ((K3ListView*)child(0, "K3ListView", true));
 
   if (splitter && listView)
   {
@@ -246,7 +246,7 @@ void KonviSettingsDialog::modifiedSlot()
 {
   // this is for the non KConfigXT parts to tell us, if the user actually changed
   // something or went back to the old settings
-// kdDebug() << "KonviSettingsDialog::modifiedSlot()" << endl;
+// kDebug() << "KonviSettingsDialog::modifiedSlot()" << endl;
   m_modified = false;
   Q3IntDictIterator<KonviSettingsPage> it( m_indexToPageMapping );
   for ( ; it.current(); ++it )
@@ -254,7 +254,7 @@ void KonviSettingsDialog::modifiedSlot()
     if ( (*it).hasChanged() )
     {
       m_modified = true;
-//      kdDebug() << "KonviSettingsDialog::modifiedSlot(): modified!" << endl;
+//      kDebug() << "KonviSettingsDialog::modifiedSlot(): modified!" << endl;
       break;
     }
   }

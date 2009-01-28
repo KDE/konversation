@@ -18,7 +18,7 @@
 #include <kabc/addressbook.h>
 #include <kabc/stdaddressbook.h>
 
-#include <kstaticdeleter.h>
+#include <k3staticdeleter.h>
 #include <qobject.h>
 #include <qregexp.h>
 #include <config.h>
@@ -73,7 +73,7 @@ namespace Konversation
             /**
              * Send the file to the contact
              */
-            void sendFile(const QString &uid, const KURL &sourceURL,
+            void sendFile(const QString &uid, const KUrl &sourceURL,
                 const QString &altFileName = QString(), uint fileSize = 0);
 
             /**
@@ -93,7 +93,7 @@ namespace Konversation
             static Addressbook *m_instance;
     };
 
-    static KStaticDeleter<Addressbook> sd;
+    static K3StaticDeleter<Addressbook> sd;
 
 }
 #endif
