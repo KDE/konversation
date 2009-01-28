@@ -353,7 +353,7 @@ void DccTransferSend::startSending()
         m_partnerIp = m_sendSocket->peerAddress().asInet().ipAddress().toString();
     m_partnerPort = m_sendSocket->peerAddress().serviceName();
 
-    if ( m_file.open( IO_ReadOnly ) )
+    if ( m_file.open( QIODevice::ReadOnly ) )
     {
         // seek to file position to make resume work
         m_file.at( m_transferringPosition );

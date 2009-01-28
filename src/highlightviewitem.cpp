@@ -20,7 +20,7 @@
 
 
 HighlightViewItem::HighlightViewItem(KListView* parent, Highlight* passed_Highlight)
-: QCheckListItem(parent, QString(), QCheckListItem::CheckBox)
+: Q3CheckListItem(parent, QString(), Q3CheckListItem::CheckBox)
 {
     setText(1,passed_Highlight->getPattern());
     itemColor = passed_Highlight->getColor();
@@ -40,12 +40,12 @@ void HighlightViewItem::paintCell(QPainter* p, const QColorGroup &cg, int column
     // copy all colors from cg and only then change needed colors
     itemColorGroup=cg;
     itemColorGroup.setColor(QColorGroup::Text, itemColor);
-    QCheckListItem::paintCell(p, itemColorGroup, column, width, alignment);
+    Q3CheckListItem::paintCell(p, itemColorGroup, column, width, alignment);
 }
 
 HighlightViewItem* HighlightViewItem::itemBelow()
 {
-    return (HighlightViewItem*) QCheckListItem::itemBelow();
+    return (HighlightViewItem*) Q3CheckListItem::itemBelow();
 }
 
 void HighlightViewItem::setPattern(const QString& newPattern) { setText(1,newPattern); }

@@ -1,3 +1,5 @@
+//Added by qt3to4:
+#include <Q3ValueList>
 /*
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -118,7 +120,7 @@ protected:
     EmptyingRate& m_rate;
 
 private:
-    QValueList<IRCMessage> m_pending;
+    Q3ValueList<IRCMessage> m_pending;
     QTimer *m_timer;
     bool m_blocked;
     bool m_online;

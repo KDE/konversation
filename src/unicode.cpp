@@ -1,3 +1,5 @@
+//Added by qt3to4:
+#include <Q3CString>
 /*
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -37,7 +39,7 @@
 #define UTF8_ValidTrialByte(c) ( kTrialByte == ((c) & kLeft2BitsMask))
 
 
-bool isUtf8(const QCString& text)
+bool isUtf8(const Q3CString& text)
 {
     int i;
     int j;

@@ -19,6 +19,9 @@
 #include "warnings_preferences.h"
 #include "log_preferences.h"
 #include "quickbuttons_preferences.h"
+//Added by qt3to4:
+#include <QShowEvent>
+#include <Q3ValueList>
 #include "autoreplace_preferences.h"
 #include "chatwindowbehaviour_preferences.h"
 #include "fontappearance_preferences.h"
@@ -231,8 +234,8 @@ void KonviSettingsDialog::showEvent(QShowEvent* e)
     {
       int shiftSplitterBy = content - visible;
       resize(width()+shiftSplitterBy, height());
-      QValueList<int> oldSizes = splitter->sizes();
-      QValueList<int> newSizes;
+      Q3ValueList<int> oldSizes = splitter->sizes();
+      Q3ValueList<int> newSizes;
       newSizes << oldSizes[0] + shiftSplitterBy << oldSizes[1] - shiftSplitterBy;
       splitter->setSizes(newSizes);
     }
@@ -245,7 +248,7 @@ void KonviSettingsDialog::modifiedSlot()
   // something or went back to the old settings
 // kdDebug() << "KonviSettingsDialog::modifiedSlot()" << endl;
   m_modified = false;
-  QIntDictIterator<KonviSettingsPage> it( m_indexToPageMapping );
+  Q3IntDictIterator<KonviSettingsPage> it( m_indexToPageMapping );
   for ( ; it.current(); ++it )
   {
     if ( (*it).hasChanged() )
@@ -264,7 +267,7 @@ KonviSettingsDialog::~KonviSettingsDialog()
 
 void KonviSettingsDialog::updateSettings()
 {
-  QIntDictIterator<KonviSettingsPage> it( m_indexToPageMapping );
+  Q3IntDictIterator<KonviSettingsPage> it( m_indexToPageMapping );
   for ( ; it.current(); ++it )
   {
     // this is for the non KConfigXT parts to update the UI (like quick buttons)
@@ -276,7 +279,7 @@ void KonviSettingsDialog::updateSettings()
 
 void KonviSettingsDialog::updateWidgets()
 {
-  QIntDictIterator<KonviSettingsPage> it( m_indexToPageMapping );
+  Q3IntDictIterator<KonviSettingsPage> it( m_indexToPageMapping );
   for ( ; it.current(); ++it )
   {
     (*it).loadSettings();
@@ -286,7 +289,7 @@ void KonviSettingsDialog::updateWidgets()
 
 void KonviSettingsDialog::updateWidgetsDefault()
 {
-  QIntDictIterator<KonviSettingsPage> it( m_indexToPageMapping );
+  Q3IntDictIterator<KonviSettingsPage> it( m_indexToPageMapping );
   for ( ; it.current(); ++it )
   {
     (*it).restorePageToDefaults();

@@ -14,6 +14,8 @@
 #include "konversationapplication.h"
 
 #include <qlayout.h>
+//Added by qt3to4:
+#include <Q3VBoxLayout>
 
 #include <klocale.h>
 
@@ -29,7 +31,7 @@ KGuiItem(i18n("Add &Quotation Indicators")))
     QWidget* page=new QWidget(this);
     setMainWidget(page);
     // Add the layout to the widget
-    QVBoxLayout* dialogLayout=new QVBoxLayout(page);
+    Q3VBoxLayout* dialogLayout=new Q3VBoxLayout(page);
     dialogLayout->setSpacing(spacingHint());
     // add the text editor
     textEditor=new MultilineTextEdit(page,"multiline_text_editor");

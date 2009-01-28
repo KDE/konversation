@@ -17,7 +17,9 @@
 #include "server.h"
 
 #include <qobject.h>
-#include <qguardedptr.h>
+#include <qpointer.h>
+//Added by qt3to4:
+#include <Q3ValueList>
 
 
 class QSplitter;
@@ -53,7 +55,7 @@ class ViewContainer : public QObject
         KonversationMainWindow* getWindow() { return m_window; }
         KActionCollection* actionCollection() { return m_window->actionCollection(); }
 
-        QGuardedPtr<ChatWindow> getFrontView() { return m_frontView; }
+        QPointer<ChatWindow> getFrontView() { return m_frontView; }
         Server* getFrontServer() { return m_frontServer; }
 
         void prepareShutdown();
@@ -202,15 +204,15 @@ class ViewContainer : public QObject
         QSplitter* m_viewTreeSplitter;
         KTabWidget* m_tabWidget;
         ViewTree* m_viewTree;
-        QVBox *m_vbox;
+        Q3VBox *m_vbox;
         QueueTuner *m_queueTuner;
 
         Images* images;
 
-        QGuardedPtr<Server> m_frontServer;
-        QGuardedPtr<Server> m_contextServer;
-        QGuardedPtr<ChatWindow> m_frontView;
-        QGuardedPtr<ChatWindow> m_searchView;
+        QPointer<Server> m_frontServer;
+        QPointer<Server> m_contextServer;
+        QPointer<ChatWindow> m_frontView;
+        QPointer<ChatWindow> m_searchView;
 
         UrlCatcher* m_urlCatcherPanel;
         NicksOnline* m_nicksOnlinePanel;
@@ -223,7 +225,7 @@ class ViewContainer : public QObject
         int m_popupViewIndex;
         int m_queryViewCount;
 
-        QValueList<ChatWindow*> m_activeViewOrderList;
+        Q3ValueList<ChatWindow*> m_activeViewOrderList;
 };
 
 #endif

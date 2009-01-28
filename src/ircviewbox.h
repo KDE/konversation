@@ -12,14 +12,14 @@
 #ifndef IRCVIEWBOX_H
 #define IRCVIEWBOX_H
 
-#include <qvbox.h>
+#include <q3vbox.h>
 
 
 class IRCView;
 class SearchBar;
 class Server;
 
-class IRCViewBox : public QVBox
+class IRCViewBox : public Q3VBox
 {
     Q_OBJECT
 

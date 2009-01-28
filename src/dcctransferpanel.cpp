@@ -20,11 +20,14 @@
 #include "dcctransfersend.h"
 #include "preferences.h"
 
-#include <qhbox.h>
-#include <qheader.h>
+#include <q3hbox.h>
+#include <q3header.h>
 #include <qpushbutton.h>
 #include <qtooltip.h>
-#include <qvbox.h>
+#include <q3vbox.h>
+//Added by qt3to4:
+#include <Q3ValueList>
+#include <Q3PtrList>
 
 #include <kdebug.h>
 #include <kdeversion.h>
@@ -53,7 +56,7 @@ DccTransferPanel::DccTransferPanel(QWidget* parent) : ChatWindow(parent)
 DccTransferPanel::~DccTransferPanel()
 {
     // remember column widths
-    QValueList<int> columnWidths;
+    Q3ValueList<int> columnWidths;
     for ( uint i = 0 ; i < Column::COUNT ; ++i )
         columnWidths.push_back( m_listView->columnWidth( i ) );
     Preferences::setDccColumnWidths( columnWidths );
@@ -65,7 +68,7 @@ void DccTransferPanel::initGUI()
 
     m_listView = new KListView(this,"dcc_control_panel");
 
-    m_listView->setSelectionMode(QListView::Extended);
+    m_listView->setSelectionMode(Q3ListView::Extended);
     m_listView->setDragEnabled(true);
     m_listView->setAcceptDrops(true);
     m_listView->setSorting(-1,false);
@@ -85,11 +88,11 @@ void DccTransferPanel::initGUI()
     m_listView->setColumnText(Column::CurrentSpeed,  i18n("Speed"));
     m_listView->setColumnText(Column::SenderAddress, i18n("Sender Address"));
 
-    QValueList<int> columnWidths = Preferences::dccColumnWidths();
+    Q3ValueList<int> columnWidths = Preferences::dccColumnWidths();
     for ( uint i = 0 ; i < Column::COUNT && i < columnWidths.count() ; ++i )
         m_listView->setColumnWidth( i, columnWidths[i] );
 
-    m_listView->setColumnWidthMode(Column::FileName, QListView::Manual);
+    m_listView->setColumnWidthMode(Column::FileName, Q3ListView::Manual);
 
     m_listView->setColumnAlignment(Column::OfferDate,     AlignHCenter);
     m_listView->setColumnAlignment(Column::Progress,      AlignHCenter);
@@ -106,7 +109,7 @@ void DccTransferPanel::initGUI()
 
     // button
 
-    QHBox* buttonsBox=new QHBox(this);
+    Q3HBox* buttonsBox=new Q3HBox(this);
     buttonsBox->setSpacing(spacing());
 
     // convenience, undeffed below again to avoid name clashes
@@ -151,13 +154,13 @@ void DccTransferPanel::initGUI()
 
     #undef icon
 
-    connect(m_listView, SIGNAL(contextMenuRequested(QListViewItem*,const QPoint&,int)), this, SLOT(popupRequested(QListViewItem*,const QPoint&,int)));
+    connect(m_listView, SIGNAL(contextMenuRequested(Q3ListViewItem*,const QPoint&,int)), this, SLOT(popupRequested(Q3ListViewItem*,const QPoint&,int)));
     connect(m_popup, SIGNAL(activated(int)), this, SLOT(popupActivated(int)));
 
     // misc.
-    connect(m_listView, SIGNAL(doubleClicked(QListViewItem*,const QPoint&,int)), this, SLOT(doubleClicked(QListViewItem*,const QPoint&,int)));
+    connect(m_listView, SIGNAL(doubleClicked(Q3ListViewItem*,const QPoint&,int)), this, SLOT(doubleClicked(Q3ListViewItem*,const QPoint&,int)));
 
-    connect(m_listView, SIGNAL(currentChanged(QListViewItem*)), this, SLOT(setDetailPanelItem(QListViewItem*)));
+    connect(m_listView, SIGNAL(currentChanged(Q3ListViewItem*)), this, SLOT(setDetailPanelItem(Q3ListViewItem*)));
 
     updateButton();
 }
@@ -194,7 +197,7 @@ void DccTransferPanel::updateButton()
          selectAllCompleted = false;
 
     int selectedItems = 0;
-    QListViewItemIterator it( m_listView );
+    Q3ListViewItemIterator it( m_listView );
 
     while( it.current() )
     {
@@ -258,7 +261,7 @@ void DccTransferPanel::updateButton()
     m_popup->setItemEnabled( Popup::Info,               info );
 }
 
-void DccTransferPanel::setDetailPanelItem(QListViewItem* item_)
+void DccTransferPanel::setDetailPanelItem(Q3ListViewItem* item_)
 {
     if ( item_ )
     {
@@ -269,7 +272,7 @@ void DccTransferPanel::setDetailPanelItem(QListViewItem* item_)
 
 void DccTransferPanel::acceptDcc()
 {
-    QListViewItemIterator it( m_listView );
+    Q3ListViewItemIterator it( m_listView );
     while( it.current() )
     {
         if( it.current()->isSelected() )
@@ -285,7 +288,7 @@ void DccTransferPanel::acceptDcc()
 
 void DccTransferPanel::abortDcc()
 {
-    QListViewItemIterator it( m_listView );
+    Q3ListViewItemIterator it( m_listView );
     while( it.current() )
     {
         if( it.current()->isSelected() )
@@ -301,7 +304,7 @@ void DccTransferPanel::abortDcc()
 
 void DccTransferPanel::resendFile()
 {
-    QListViewItemIterator it( m_listView );
+    Q3ListViewItemIterator it( m_listView );
     while( it.current() )
     {
         if( it.current()->isSelected() )
@@ -329,8 +332,8 @@ void DccTransferPanel::resendFile()
 
 void DccTransferPanel::clearDcc()
 {
-    QPtrList<QListViewItem> lst;
-    QListViewItemIterator it( m_listView );
+    Q3PtrList<Q3ListViewItem> lst;
+    Q3ListViewItemIterator it( m_listView );
     while( it.current() )
     {
         DccTransferPanelItem* item = static_cast<DccTransferPanelItem*>( it.current() );
@@ -342,7 +345,7 @@ void DccTransferPanel::clearDcc()
 
     // Figure out the first 'gap' in the selection and select that item, 
     // or, if there are no gaps, select first item below the selection
-    QPtrListIterator<QListViewItem> selected( lst );
+    Q3PtrListIterator<Q3ListViewItem> selected( lst );
     bool itemSelected = false;
     while( selected.current() )
     {
@@ -370,7 +373,7 @@ void DccTransferPanel::clearDcc()
 
 void DccTransferPanel::runDcc()
 {
-    QListViewItemIterator it( m_listView );
+    Q3ListViewItemIterator it( m_listView );
     while( it.current() )
     {
         if( it.current()->isSelected() )
@@ -386,7 +389,7 @@ void DccTransferPanel::runDcc()
 
 void DccTransferPanel::showFileInfo()
 {
-    QListViewItemIterator it( m_listView );
+    Q3ListViewItemIterator it( m_listView );
     while( it.current() )
     {
         if( it.current()->isSelected() )
@@ -401,7 +404,7 @@ void DccTransferPanel::showFileInfo()
 
 void DccTransferPanel::selectAll()
 {
-    QListViewItemIterator it( m_listView );
+    Q3ListViewItemIterator it( m_listView );
     while ( it.current() )
     {
         m_listView->setSelected( *it, true );
@@ -412,7 +415,7 @@ void DccTransferPanel::selectAll()
 
 void DccTransferPanel::selectAllCompleted()
 {
-    QListViewItemIterator it( m_listView );
+    Q3ListViewItemIterator it( m_listView );
     while ( it.current() )
     {
         DccTransferPanelItem* item=static_cast<DccTransferPanelItem*>( it.current() );
@@ -422,7 +425,7 @@ void DccTransferPanel::selectAllCompleted()
     updateButton();
 }
 
-void DccTransferPanel::popupRequested(QListViewItem* /* item */, const QPoint& pos, int /* col */)  // slot
+void DccTransferPanel::popupRequested(Q3ListViewItem* /* item */, const QPoint& pos, int /* col */)  // slot
 {
     updateButton();
     m_popup->popup(pos);
@@ -440,7 +443,7 @@ void DccTransferPanel::popupActivated( int id ) // slot
     else if ( id == Popup::Resend )              resendFile();
 }
 
-void DccTransferPanel::doubleClicked(QListViewItem* _item, const QPoint& /* _pos */, int /* _col */)
+void DccTransferPanel::doubleClicked(Q3ListViewItem* _item, const QPoint& /* _pos */, int /* _col */)
 {
     DccTransferPanelItem* item = static_cast<DccTransferPanelItem*>(_item);
     item->runFile();

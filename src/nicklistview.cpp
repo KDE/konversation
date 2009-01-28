@@ -22,9 +22,13 @@
 #include <kdebug.h>
 #include <qtooltip.h>
 #include <qtimer.h>
+//Added by qt3to4:
+#include <QContextMenuEvent>
+#include <QDropEvent>
+#include <Q3StrList>
 #include <kiconloader.h>
-#include <qwhatsthis.h>
-#include <qdragobject.h>
+#include <q3whatsthis.h>
+#include <q3dragobject.h>
 
 
 NickListView::NickListView(QWidget* parent, Channel *chan) :
@@ -139,19 +143,19 @@ void NickListView::setWhatsThis()
 
     if(images->getNickIcon( Images::Normal, false).isNull())
     {
-        QWhatsThis::add(this, i18n("<qt>This shows all the people in the channel.  The nick for each person is shown.<br>Usually an icon is shown showing the status of each person, but you do not seem to have any icon theme installed.  See the Konversation settings - <i>Configure Konversation</i> under the <i>Settings</i> menu.  Then view the page for <i>Themes</i> under <i>Appearence</i>.</qt>"));
+        Q3WhatsThis::add(this, i18n("<qt>This shows all the people in the channel.  The nick for each person is shown.<br>Usually an icon is shown showing the status of each person, but you do not seem to have any icon theme installed.  See the Konversation settings - <i>Configure Konversation</i> under the <i>Settings</i> menu.  Then view the page for <i>Themes</i> under <i>Appearence</i>.</qt>"));
     }
     else
     {
-        QMimeSourceFactory::defaultFactory()->setImage( "admin", images->getNickIcon( Images::Admin, false ).convertToImage() );
-        QMimeSourceFactory::defaultFactory()->setImage( "owner", images->getNickIcon( Images::Owner, false ).convertToImage());
-        QMimeSourceFactory::defaultFactory()->setImage( "op", images->getNickIcon( Images::Op, false ).convertToImage() );
-        QMimeSourceFactory::defaultFactory()->setImage( "halfop", images->getNickIcon( Images::HalfOp, false ).convertToImage() );
-        QMimeSourceFactory::defaultFactory()->setImage( "voice", images->getNickIcon( Images::Voice, false ).convertToImage() );
-        QMimeSourceFactory::defaultFactory()->setImage( "normal", images->getNickIcon( Images::Normal, false ).convertToImage() );
-        QMimeSourceFactory::defaultFactory()->setImage( "normalaway", images->getNickIcon( Images::Normal, true).convertToImage() );
+        Q3MimeSourceFactory::defaultFactory()->setImage( "admin", images->getNickIcon( Images::Admin, false ).convertToImage() );
+        Q3MimeSourceFactory::defaultFactory()->setImage( "owner", images->getNickIcon( Images::Owner, false ).convertToImage());
+        Q3MimeSourceFactory::defaultFactory()->setImage( "op", images->getNickIcon( Images::Op, false ).convertToImage() );
+        Q3MimeSourceFactory::defaultFactory()->setImage( "halfop", images->getNickIcon( Images::HalfOp, false ).convertToImage() );
+        Q3MimeSourceFactory::defaultFactory()->setImage( "voice", images->getNickIcon( Images::Voice, false ).convertToImage() );
+        Q3MimeSourceFactory::defaultFactory()->setImage( "normal", images->getNickIcon( Images::Normal, false ).convertToImage() );
+        Q3MimeSourceFactory::defaultFactory()->setImage( "normalaway", images->getNickIcon( Images::Normal, true).convertToImage() );
 
-        QWhatsThis::add(this, i18n("<qt>This shows all the people in the channel.  The nick for each person is shown, with a picture showing their status.<p>"
+        Q3WhatsThis::add(this, i18n("<qt>This shows all the people in the channel.  The nick for each person is shown, with a picture showing their status.<p>"
             "<table>"
 
             "<tr><th><img src=\"admin\"></th><td>This person has administrator privileges.</td></tr>"
@@ -172,7 +176,7 @@ void NickListView::setWhatsThis()
 
 void NickListView::refresh()
 {
-    QListViewItemIterator it(this);
+    Q3ListViewItemIterator it(this);
 
     while (it.current())
     {
@@ -314,9 +318,9 @@ bool NickListView::acceptDrag (QDropEvent* event) const
     {
         if (event->source())
         {
-            QStrList uris;
+            Q3StrList uris;
 
-            if (QUriDrag::decode(event,uris))
+            if (Q3UriDrag::decode(event,uris))
             {
                 QString first = uris.first();
 

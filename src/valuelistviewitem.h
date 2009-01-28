@@ -22,7 +22,7 @@ class ValueListViewItem : public KListViewItem
 {
     public:
         ValueListViewItem(int newValue, KListView* parent, const QString& label);
-        ValueListViewItem(int newValue, KListView* parent, QListViewItem* after, const QString& label);
+        ValueListViewItem(int newValue, KListView* parent, Q3ListViewItem* after, const QString& label);
         ~ValueListViewItem();
 
         int getValue() const;

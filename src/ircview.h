@@ -18,12 +18,27 @@
 
 #include <qmap.h>
 #include <qfontdatabase.h>
+//Added by qt3to4:
+#include <QContextMenuEvent>
+#include <QDragMoveEvent>
+#include <QDropEvent>
+#include <QShowEvent>
+#include <QResizeEvent>
+#include <Q3ValueList>
+#include <QPixmap>
+#include <QMouseEvent>
+#include <Q3StrList>
+#include <Q3PopupMenu>
+#include <QHideEvent>
+#include <QKeyEvent>
+#include <QEvent>
+#include <QDragEnterEvent>
 
 #include <ktextbrowser.h>
 
 
 class QPixmap;
-class QStrList;
+class Q3StrList;
 class QDropEvent;
 class QDragEnterEvent;
 class QEvent;
@@ -51,7 +66,7 @@ class IRCView : public KTextBrowser
 
         void enableParagraphSpacing();
 
-        QPopupMenu* getPopup() const;
+        Q3PopupMenu* getPopup() const;
 
         enum PopupIDs
         {
@@ -85,7 +100,7 @@ class IRCView : public KTextBrowser
         void autoText(const QString& text);
         void textPasted(bool useSelection);
         void popupCommand(int);
-        void filesDropped(const QStrList&);
+        void filesDropped(const Q3StrList&);
         void doSearch();
 
         void setStatusBarTempText(const QString&);
@@ -152,7 +167,7 @@ class IRCView : public KTextBrowser
         bool contextMenu(QContextMenuEvent* ce);
 
         void setupNickPopupMenu();
-        void updateNickMenuEntries(QPopupMenu* popup, const QString& nickname);
+        void updateNickMenuEntries(Q3PopupMenu* popup, const QString& nickname);
         void setupQueryPopupMenu();
         void setupChannelPopupMenu();
 
@@ -177,7 +192,7 @@ class IRCView : public KTextBrowser
         int m_rememberLineParagraph;
         bool m_rememberLineDirtyBit;
 
-        QValueList<int> m_markerLineParagraphs;
+        Q3ValueList<int> m_markerLineParagraphs;
 
         // This is set to what we last sent status text to the statusbar.  Empty if we have sent clearStatusBarTempText() string
         QString m_lastStatusText;
@@ -191,7 +206,7 @@ class IRCView : public KTextBrowser
 
         QString m_buffer;
         Server* m_server;
-        QPopupMenu* m_popup;
+        Q3PopupMenu* m_popup;
         int toggleMenuBarSeparator;
         int copyUrlMenuSeparator;
         KPopupMenu* m_nickPopup;

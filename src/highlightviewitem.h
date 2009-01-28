@@ -18,13 +18,13 @@
 
 #include "highlight.h"
 
-#include <qlistview.h>
+#include <q3listview.h>
 
 
 class KURL;
 class KListView;
 
-class HighlightViewItem : public QCheckListItem
+class HighlightViewItem : public Q3CheckListItem
 {
     public:
         HighlightViewItem(KListView* parent, Highlight* passed_Highlight);

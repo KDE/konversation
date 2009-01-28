@@ -14,6 +14,8 @@
 #define QUEUETUNER_H
 
 #include "queuetunerbase.h"
+//Added by qt3to4:
+#include <QContextMenuEvent>
 
 class Server;
 class ViewContainer;

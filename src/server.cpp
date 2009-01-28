@@ -18,6 +18,11 @@
 #include "server.h"
 #include "ircqueue.h"
 #include "query.h"
+//Added by qt3to4:
+#include <Q3StrList>
+#include <Q3ValueList>
+#include <Q3CString>
+#include <Q3PtrList>
 #include "channel.h"
 #include "konversationapplication.h"
 #include "connectionmanager.h"
@@ -75,7 +80,7 @@ Server::Server(QObject* parent, ConnectionSettings& settings) : QObject(parent)
 
     for (int i=0;i<=_max_queue();i++)
     {
-        QValueList<int> r=Preferences::queueRate(i);
+        Q3ValueList<int> r=Preferences::queueRate(i);
         IRCQueue *q=new IRCQueue(this, staticrates[i]); //FIXME these are supposed to be in the rc
         m_queues.append(q);
     }
@@ -182,7 +187,7 @@ Server::~Server()
     m_queryNicks.clear();
 
     //Delete the queues
-    for (QValueVector<IRCQueue *>::iterator it=m_queues.begin(); it != m_queues.end(); ++it)
+    for (Q3ValueVector<IRCQueue *>::iterator it=m_queues.begin(); it != m_queues.end(); ++it)
         delete *it;
 
     emit destroyed(m_connectionId);
@@ -217,7 +222,7 @@ void Server::_fetchRates()
 {
     for (int i=0;i<=_max_queue();i++)
     {
-        QValueList<int> r=Preferences::queueRate(i);
+        Q3ValueList<int> r=Preferences::queueRate(i);
         staticrates[i]=IRCQueue::EmptyingRate(r[0], r[1]*1000,IRCQueue::EmptyingRate::RateType(r[2]));
     }
 }
@@ -226,7 +231,7 @@ void Server::_stashRates()
 {
     for (int i=0;i<=_max_queue();i++)
     {
-        QValueList<int> r;
+        Q3ValueList<int> r;
         r.append(staticrates[i].m_rate);
         r.append(staticrates[i].m_interval/1000);
         r.append(int(staticrates[i].m_type));
@@ -239,7 +244,7 @@ void Server::_resetRates()
     for (int i=0;i<=_max_queue();i++)
     {
         Preferences::self()->queueRateItem(i)->setDefault();
-        QValueList<int> r=Preferences::queueRate(i);
+        Q3ValueList<int> r=Preferences::queueRate(i);
         staticrates[i]=IRCQueue::EmptyingRate(r[0], r[1]*1000,IRCQueue::EmptyingRate::RateType(r[2]));
     }
 }
@@ -672,12 +677,12 @@ void Server::registerWithServices()
 }
 
 //FIXME operator[] inserts an empty T& so each destination might just as well have its own key storage
-QCString Server::getKeyForRecipient(const QString& recipient) const
+Q3CString Server::getKeyForRecipient(const QString& recipient) const
 {
     return m_keyMap[recipient];
 }
 
-void Server::setKeyForRecipient(const QString& recipient, const QCString& key)
+void Server::setKeyForRecipient(const QString& recipient, const Q3CString& key)
 {
     m_keyMap[recipient] = key;
 }
@@ -916,10 +921,10 @@ void Server::incoming()
 
     buffer[len] = 0;
 
-    QCString qcsBuffer = m_inputBufferIncomplete + QCString(buffer);
+    Q3CString qcsBuffer = m_inputBufferIncomplete + Q3CString(buffer);
 
     // split buffer to lines
-    QValueList<QCString> qcsBufferLines;
+    Q3ValueList<Q3CString> qcsBufferLines;
     int lastLFposition = -1;
     for( int nextLFposition ; ( nextLFposition = qcsBuffer.find('\n', lastLFposition+1) ) != -1 ; lastLFposition = nextLFposition )
         qcsBufferLines << qcsBuffer.mid(lastLFposition+1, nextLFposition-lastLFposition-1);
@@ -935,7 +940,7 @@ void Server::incoming()
         bool isServerMessage = false;
         QString channelKey;
         QTextCodec* codec = getIdentity()->getCodec();
-        QCString front = qcsBufferLines.front();
+        Q3CString front = qcsBufferLines.front();
 
         QStringList lineSplit = QStringList::split(" ",codec->toUnicode(front));
 
@@ -1094,7 +1099,7 @@ int Server::_send_internal(QString outputLine)
     int outlen=outputLine.length();
 
     //leaving this done twice for now, i'm uncertain of the implications of not encoding other commands
-    QCString encoded=codec->fromUnicode(outputLine, outlen);
+    Q3CString encoded=codec->fromUnicode(outputLine, outlen);
 
     QString blowfishKey=getKeyForRecipient(outputLineSplit[1]);
     if (!blowfishKey.isEmpty() && outboundCommand >1)
@@ -1107,10 +1112,10 @@ int Server::_send_internal(QString outputLine)
             QString pay(outputLine.mid(colon));
             int len=pay.length();
             //only encode the actual user text, IRCD *should* desire only ASCII 31 < x < 127 for protocol elements
-            QCString payload=codec->fromUnicode(pay, len);
+            Q3CString payload=codec->fromUnicode(pay, len);
             //apparently channel name isn't a protocol element...
             len=outputLineSplit[1].length();
-            QCString dest=codec->fromUnicode(outputLineSplit[1], len);
+            Q3CString dest=codec->fromUnicode(outputLineSplit[1], len);
 
             if (outboundCommand == 2 || outboundCommand == 6) // outboundCommand == 3
             {
@@ -1588,7 +1593,7 @@ void Server::requestDccSend()
     requestDccSend(QString());
 }
 
-void Server::sendURIs(const QStrList& uris, const QString& nick)
+void Server::sendURIs(const Q3StrList& uris, const QString& nick)
 {
     for (QStrListIterator it(uris) ; *it; ++it)
         addDccSend(nick,KURL(*it));
@@ -1606,7 +1611,7 @@ void Server::requestDccSend(const QString &a_recipient)
         // fill nickList with all nicks we know about
         while (lookChannel)
         {
-            QPtrList<Nick> nicks=lookChannel->getNickList();
+            Q3PtrList<Nick> nicks=lookChannel->getNickList();
             Nick* lookNick=nicks.first();
             while(lookNick)
             {
@@ -2982,7 +2987,7 @@ void Server::updateAutoJoin(Konversation::ChannelSettings channel)
         tmpList = getServerGroup()->channelList();
     else
     {
-        QPtrListIterator<Channel> it(m_channelList);
+        Q3PtrListIterator<Channel> it(m_channelList);
         Channel* channel;
 
         while ((channel = it.current()) != 0)

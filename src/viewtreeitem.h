@@ -15,24 +15,24 @@
 #include "chatwindow.h"
 
 #include <qobject.h>
-#include <qlistview.h>
+#include <q3listview.h>
 #include <qtooltip.h>
-#include <qguardedptr.h>
+#include <qpointer.h>
 #include <qpixmap.h>
 
 
 class ChatWindow;
 class Images;
 
-class ViewTreeItem : public QListViewItem
+class ViewTreeItem : public Q3ListViewItem
 {
 
     public:
-        ViewTreeItem(QListView* parent, const QString& name, ChatWindow* view);
-        ViewTreeItem(QListViewItem* parent, const QString& name, ChatWindow* view, int sortIndex = -1);
-        ViewTreeItem(QListViewItem* parent, QListViewItem* afterItem, const QString& name, ChatWindow* view);
+        ViewTreeItem(Q3ListView* parent, const QString& name, ChatWindow* view);
+        ViewTreeItem(Q3ListViewItem* parent, const QString& name, ChatWindow* view, int sortIndex = -1);
+        ViewTreeItem(Q3ListViewItem* parent, Q3ListViewItem* afterItem, const QString& name, ChatWindow* view);
         // Minimal constructor for separator items.
-        explicit ViewTreeItem(QListView* parent);
+        explicit ViewTreeItem(Q3ListView* parent);
         ~ViewTreeItem();
 
         void setSortIndex(int newSortIndex);
@@ -60,7 +60,7 @@ class ViewTreeItem : public QListViewItem
 
         bool sortLast() const;
         bool isSeparator() const;
-        int compare(QListViewItem* i, int col, bool ascending) const;
+        int compare(Q3ListViewItem* i, int col, bool ascending) const;
 
         void setup();
         void paintFocus(QPainter* p, const QColorGroup& cg, const QRect& r);
@@ -71,7 +71,7 @@ class ViewTreeItem : public QListViewItem
     private:
         uint m_sortIndex;
         static int s_availableSortIndex;
-        QGuardedPtr<ChatWindow> m_view;
+        QPointer<ChatWindow> m_view;
         ChatWindow::WindowType m_viewType;
         QColor m_color;
 

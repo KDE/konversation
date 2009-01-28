@@ -17,7 +17,9 @@
 
 #include <qlayout.h>
 #include <qlabel.h>
-#include <qwhatsthis.h>
+#include <q3whatsthis.h>
+//Added by qt3to4:
+#include <Q3HBoxLayout>
 
 #include <klineedit.h>
 #include <kcombobox.h>
@@ -37,23 +39,23 @@ KDialogBase::Ok,true)
     QWidget* page=new QWidget(this);
     setMainWidget(page);
 
-    QHBoxLayout* layout = new QHBoxLayout(page);
+    Q3HBoxLayout* layout = new Q3HBoxLayout(page);
     layout->setSpacing(spacingHint());
 
     QLabel* networkNameLabel=new QLabel(i18n("&Network name:"),page);
     QString networkNameWT = i18n(
         "Pick the server network you will connect to here.");
-    QWhatsThis::add(networkNameLabel, networkNameWT);
+    Q3WhatsThis::add(networkNameLabel, networkNameWT);
     m_networkNameCombo=new KComboBox(page,"notify_network_combo");
-    QWhatsThis::add(m_networkNameCombo, networkNameWT);
+    Q3WhatsThis::add(m_networkNameCombo, networkNameWT);
     networkNameLabel->setBuddy(m_networkNameCombo);
 
     QLabel* nicknameLabel=new QLabel(i18n("N&ickname:"),page);
     QString nicknameWT = i18n(
         "<qt>The nickname to watch for when connected to a server in the network.</qt>");
-    QWhatsThis::add(nicknameLabel, nicknameWT);
+    Q3WhatsThis::add(nicknameLabel, nicknameWT);
     m_nicknameInput = new KLineEdit(nickname, page);
-    QWhatsThis::add(m_nicknameInput, nicknameWT);
+    Q3WhatsThis::add(m_nicknameInput, nicknameWT);
     nicknameLabel->setBuddy(m_nicknameInput);
 
     // Build a list of unique server network names.

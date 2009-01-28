@@ -18,8 +18,11 @@
 #include "osd.h"
 #include "konversationapplication.h"
 
-#include <qgroupbox.h>
+#include <q3groupbox.h>
 #include <qspinbox.h>
+//Added by qt3to4:
+#include <QShowEvent>
+#include <QHideEvent>
 #include <kcombobox.h>
 #include <kcolorbutton.h>
 #include <qcheckbox.h>
@@ -28,7 +31,7 @@
 #include <kconfigdialog.h>
 
 
-OSD_Config::OSD_Config( QWidget* parent, const char* name, WFlags fl )
+OSD_Config::OSD_Config( QWidget* parent, const char* name, Qt::WFlags fl )
     : OSD_ConfigUI( parent, name, fl )
 {
     bool enableScreenChooser = false;

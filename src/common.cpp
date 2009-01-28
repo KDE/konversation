@@ -14,7 +14,7 @@
 #include "konversationapplication.h"
 #include "config/preferences.h"
 
-#include <qcstring.h>
+#include <q3cstring.h>
 #include <qstring.h>
 #include <qregexp.h>
 #include <qpixmap.h>

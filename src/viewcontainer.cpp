@@ -11,6 +11,9 @@
 
 #include "viewcontainer.h"
 #include "queuetuner.h"
+//Added by qt3to4:
+#include <Q3ValueList>
+#include <Q3PtrList>
 #include "viewtree.h"
 #include "konversationapplication.h"
 #include "notificationhandler.h"
@@ -35,7 +38,7 @@
 #include "servergroupsettings.h"
 
 #include <qsplitter.h>
-#include <qpopupmenu.h>
+#include <q3popupmenu.h>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -96,7 +99,7 @@ void ViewContainer::showQueueTuner(bool p)
 ///Use this instead of setting m_frontServer directly so we can emit the frontServerChanging signal easily.
 void ViewContainer::setFrontServer(Server* newserver)
 {
-    if (m_frontServer == QGuardedPtr<Server>(newserver))
+    if (m_frontServer == QPointer<Server>(newserver))
         return;
     emit frontServerChanging(newserver);
     m_frontServer = newserver;
@@ -121,7 +124,7 @@ void ViewContainer::initializeSplitterSizes()
 {
     if (m_viewTree && !m_viewTree->isHidden())
     {
-        QValueList<int> sizes = Preferences::treeSplitterSizes();
+        Q3ValueList<int> sizes = Preferences::treeSplitterSizes();
 
         if (sizes.isEmpty())
             sizes << 145 << (m_window->width()-145);
@@ -144,7 +147,7 @@ void ViewContainer::setupTabWidget()
 {
     m_popupViewIndex = -1;
 
-    m_vbox = new QVBox(m_viewTreeSplitter, "main_window_right_side");
+    m_vbox = new Q3VBox(m_viewTreeSplitter, "main_window_right_side");
     m_tabWidget = new KTabWidget(m_vbox, "main_window_tab_widget");
     m_queueTuner = new QueueTuner(m_vbox, this);
     m_queueTuner->hide();
@@ -311,11 +314,11 @@ void ViewContainer::removeViewTree()
 
 void ViewContainer::syncTabBarToTree()
 {
-    QPtrList<ChatWindow> viewList = m_viewTree->getSortedViewList();
+    Q3PtrList<ChatWindow> viewList = m_viewTree->getSortedViewList();
 
     if (m_tabWidget && !viewList.isEmpty())
     {
-        QPtrListIterator<ChatWindow> it(viewList);
+        Q3PtrListIterator<ChatWindow> it(viewList);
         ChatWindow* view;
         int index = 0;
         int oldIndex = 0;
@@ -755,7 +758,7 @@ void ViewContainer::updateViews(const Konversation::ServerGroupSettings* serverG
         if (m_viewTree)
         {
             if (!Preferences::tabNotificationsLeds() && !Preferences::closeButtons())
-                m_viewTree->setViewIcon(view, QIconSet());
+                m_viewTree->setViewIcon(view, QIcon());
 
             if (Preferences::closeButtons() && !Preferences::tabNotificationsLeds())
                  m_viewTree->setViewIcon(view, images->getCloseIcon());
@@ -767,7 +770,7 @@ void ViewContainer::updateViews(const Konversation::ServerGroupSettings* serverG
         else if (m_tabWidget)
         {
             if (!Preferences::tabNotificationsLeds() && !Preferences::closeButtons())
-                m_tabWidget->setTabIconSet(view, QIconSet());
+                m_tabWidget->setTabIconSet(view, QIcon());
 
             if (Preferences::closeButtons() && !Preferences::tabNotificationsLeds())
                 m_tabWidget->setTabIconSet(view, images->getCloseIcon());
@@ -1111,7 +1114,7 @@ void ViewContainer::unsetViewNotification(ChatWindow* view)
         m_tabWidget->setTabColor(view, textColor);
     }
 
-    QValueList<ChatWindow*>::iterator it = m_activeViewOrderList.find(view);
+    Q3ValueList<ChatWindow*>::iterator it = m_activeViewOrderList.find(view);
 
     if (it != m_activeViewOrderList.end())
         m_activeViewOrderList.remove(it);
@@ -1171,7 +1174,7 @@ void ViewContainer::addView(ChatWindow* view, const QString& label, bool weiniti
     ChatWindow *tmp_ChatWindow;
     int placement = -1;
     ChatWindow::WindowType wtype;
-    QIconSet iconSet;
+    QIcon iconSet;
 
     connect(KonversationApplication::instance(), SIGNAL(appearanceChanged()), view, SLOT(updateAppearance()));
     connect(view, SIGNAL(setStatusBarTempText(const QString&)), this, SIGNAL(setStatusBarTempText(const QString&)));
@@ -1564,7 +1567,7 @@ void ViewContainer::cleanupAfterClose(ChatWindow* view)
     }
 
     // Remove the view from the active view list if it's still on it
-    QValueList<ChatWindow*>::iterator it = m_activeViewOrderList.find(view);
+    Q3ValueList<ChatWindow*>::iterator it = m_activeViewOrderList.find(view);
 
     if (it != m_activeViewOrderList.end())
         m_activeViewOrderList.remove(it);
@@ -1656,7 +1659,7 @@ void ViewContainer::showViewContextMenu(QWidget* tab, const QPoint& pos)
     m_popupViewIndex = m_tabWidget->indexOf(tab);
 
     updateViewActions(m_popupViewIndex);
-    QPopupMenu* menu = static_cast<QPopupMenu*>(m_window->factory()->container("tabContextMenu", m_window));
+    Q3PopupMenu* menu = static_cast<Q3PopupMenu*>(m_window->factory()->container("tabContextMenu", m_window));
 
     if (!menu) return;
 
@@ -1684,7 +1687,7 @@ void ViewContainer::showViewContextMenu(QWidget* tab, const QPoint& pos)
 
         if (viewType == ChatWindow::Status)
         {
-            QPtrList<KAction> serverActions;
+            Q3PtrList<KAction> serverActions;
             KAction* action = actionCollection()->action("disconnect_server");
             if (action) serverActions.append(action);
             action = actionCollection()->action("reconnect_server");
@@ -2431,7 +2434,7 @@ void ViewContainer::showNextActiveView()
         ChatWindow* prev = m_activeViewOrderList.first();
         ChatWindow* view = prev;
 
-        QValueList<ChatWindow*>::ConstIterator it;
+        Q3ValueList<ChatWindow*>::ConstIterator it;
 
         for (it = m_activeViewOrderList.begin(); it != m_activeViewOrderList.end(); ++it)
         {

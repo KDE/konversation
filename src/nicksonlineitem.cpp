@@ -12,13 +12,13 @@
 #include "nicksonlineitem.h"
 
 
-NicksOnlineItem::NicksOnlineItem(int type, QListView* parent, const QString& name, const QString& col2) :
+NicksOnlineItem::NicksOnlineItem(int type, Q3ListView* parent, const QString& name, const QString& col2) :
                  KListViewItem(parent, name, col2)
 {
   m_type=type;
 }
 
-NicksOnlineItem::NicksOnlineItem(int type, QListViewItem* parent, const QString& name, const QString& col2) :
+NicksOnlineItem::NicksOnlineItem(int type, Q3ListViewItem* parent, const QString& name, const QString& col2) :
                  KListViewItem(parent, name, col2)
 {
   m_type=type;
@@ -31,7 +31,7 @@ NicksOnlineItem::NicksOnlineItem(int type, QListViewItem* parent, const QString&
  * @param ascending         Specify sorting direction
  * @return                  -1 if this item's value is smaller than i, 0 if they are equal, 1 if it's greater
  */
-int NicksOnlineItem::compare(QListViewItem* i,int col,bool ascending) const
+int NicksOnlineItem::compare(Q3ListViewItem* i,int col,bool ascending) const
 {
   // if we are the Offline item, make sure we get sorted at the end of the list
   if(m_type==OfflineItem) return ascending ? 1 : -1;

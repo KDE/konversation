@@ -18,10 +18,12 @@
 #include "konversationapplication.h"
 #include "config/preferences.h"
 
-#include <qheader.h>
+#include <q3header.h>
 #include <qhostaddress.h>
 #include <qstyle.h>
 #include <qtimer.h>
+//Added by qt3to4:
+#include <QPixmap>
 
 #include <kdebug.h>
 #include <kfilemetainfo.h>
@@ -88,7 +90,7 @@ void DccTransferPanelItem::updateView()
 }
 
 
-int DccTransferPanelItem::compare( QListViewItem* i, int col, bool ascending ) const
+int DccTransferPanelItem::compare( Q3ListViewItem* i, int col, bool ascending ) const
 {
     DccTransferPanelItem* item = static_cast<DccTransferPanelItem*>( i );
 
@@ -125,9 +127,9 @@ int DccTransferPanelItem::compare( QListViewItem* i, int col, bool ascending ) c
             return 0;
             break;
         default:
-            return QListViewItem::compare( i, col, ascending );
+            return Q3ListViewItem::compare( i, col, ascending );
     }
-    return QListViewItem::compare( i, col, ascending );
+    return Q3ListViewItem::compare( i, col, ascending );
 }
 
 void DccTransferPanelItem::slotStatusChanged( DccTransfer* /* transfer */, int newStatus, int /* oldStatus */ )
@@ -168,7 +170,7 @@ void DccTransferPanelItem::showProgressBar()
     if ( m_transfer->getFileSize() )
     {
         QRect rect = listView()->itemRect( this );
-        QHeader *head = listView()->header();
+        Q3Header *head = listView()->header();
         rect.setLeft( head->sectionPos( DccTransferPanel::Column::Progress ) - head->offset() );
         rect.setWidth( head->sectionSize( DccTransferPanel::Column::Progress ) );
         m_progressBar->setGeometry( rect );

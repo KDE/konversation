@@ -30,9 +30,13 @@
 #include "dcctransfermanager.h"
 
 #include <qnamespace.h>
-#include <qwhatsthis.h>
+#include <q3whatsthis.h>
 #include <qsignalmapper.h>
-#include <qobjectlist.h>
+#include <qobject.h>
+//Added by qt3to4:
+#include <QHideEvent>
+#include <QEvent>
+#include <QShowEvent>
 
 #include <kaccel.h>
 #include <kaccelmanager.h>
@@ -60,7 +64,7 @@
 #endif
 
 
-KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", WStyle_ContextHelp | WType_TopLevel | WDestructiveClose)
+KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", Qt::WStyle_ContextHelp | Qt::WType_TopLevel | Qt::WDestructiveClose)
 {
     m_hasDirtySettings = false;
     m_closeApp = false;

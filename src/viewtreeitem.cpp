@@ -28,8 +28,8 @@
 
 int ViewTreeItem::s_availableSortIndex = 0;
 
-ViewTreeItem::ViewTreeItem(QListView* parent, const QString& name, ChatWindow* view)
-    : QListViewItem(parent, name)
+ViewTreeItem::ViewTreeItem(Q3ListView* parent, const QString& name, ChatWindow* view)
+    : Q3ListViewItem(parent, name)
 {
     m_sortIndex = s_availableSortIndex;
     s_availableSortIndex++;
@@ -52,8 +52,8 @@ ViewTreeItem::ViewTreeItem(QListView* parent, const QString& name, ChatWindow* v
     m_closeButtonEnabled = false;
 }
 
-ViewTreeItem::ViewTreeItem(QListViewItem* parent, const QString& name, ChatWindow* view, int sortIndex)
-    : QListViewItem(parent, name)
+ViewTreeItem::ViewTreeItem(Q3ListViewItem* parent, const QString& name, ChatWindow* view, int sortIndex)
+    : Q3ListViewItem(parent, name)
 {
     if (sortIndex != -1)
         setSortIndex(sortIndex);
@@ -82,8 +82,8 @@ ViewTreeItem::ViewTreeItem(QListViewItem* parent, const QString& name, ChatWindo
     m_closeButtonEnabled = false;
 }
 
-ViewTreeItem::ViewTreeItem(QListViewItem* parent, QListViewItem* afterItem, const QString& name, ChatWindow* view)
-    : QListViewItem(parent, afterItem, name)
+ViewTreeItem::ViewTreeItem(Q3ListViewItem* parent, Q3ListViewItem* afterItem, const QString& name, ChatWindow* view)
+    : Q3ListViewItem(parent, afterItem, name)
 {
     m_sortIndex = s_availableSortIndex;
     s_availableSortIndex++;
@@ -107,7 +107,7 @@ ViewTreeItem::ViewTreeItem(QListViewItem* parent, QListViewItem* afterItem, cons
     m_closeButtonEnabled = false;
 }
 
-ViewTreeItem::ViewTreeItem(QListView* parent) : QListViewItem(parent)
+ViewTreeItem::ViewTreeItem(Q3ListView* parent) : Q3ListViewItem(parent)
 {
     setView(0);
     setOpen(true);
@@ -269,7 +269,7 @@ bool ViewTreeItem::isSeparator() const
     return m_isSeparator;
 }
 
-int ViewTreeItem::compare(QListViewItem *i, int /* col */, bool /* ascending */) const
+int ViewTreeItem::compare(Q3ListViewItem *i, int /* col */, bool /* ascending */) const
 {
     ViewTreeItem* item = static_cast<ViewTreeItem*>(i);
 
@@ -359,7 +359,7 @@ void ViewTreeItem::paintCell(QPainter* p, const QColorGroup& /* cg */, int /* co
     if (!m_isSeparator)
     {
         // Draw the rounded rectangle.
-        QRect textRect = listView()->fontMetrics().boundingRect(0, 0, /*width=*/1, 500000, Qt::AlignAuto | Qt::AlignTop | Qt::ShowPrefix, text(/*column=*/0));
+        QRect textRect = listView()->fontMetrics().boundingRect(0, 0, /*width=*/1, 500000, Qt::AlignLeft | Qt::AlignTop | Qt::TextShowMnemonic, text(/*column=*/0));
         int xRound = MARGIN;
         int yRound = MARGIN;
         int hRound = height() - 2 * MARGIN;
@@ -473,7 +473,7 @@ void ViewTreeItem::paintCell(QPainter* p, const QColorGroup& /* cg */, int /* co
 
             painter.setPen(textColor);
             painter.setFont(listView()->font());
-            painter.drawText(xText, 0, textWidth, height(), Qt::AlignAuto | Qt::AlignVCenter, text);
+            painter.drawText(xText, 0, textWidth, height(), Qt::AlignLeft | Qt::AlignVCenter, text);
         }
     }
     else

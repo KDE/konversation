@@ -18,6 +18,9 @@
 
 #include "osd_preferencesui.h"
 #include "konvisettingspage.h"
+//Added by qt3to4:
+#include <QShowEvent>
+#include <QHideEvent>
 
 
 class OSDPreviewWidget;
@@ -27,7 +30,7 @@ class OSD_Config : public OSD_ConfigUI, public KonviSettingsPage
     Q_OBJECT
 
     public:
-        explicit OSD_Config( QWidget* parent = 0, const char* name = 0, WFlags fl = 0 );
+        explicit OSD_Config( QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0 );
         ~OSD_Config();
 
         virtual void restorePageToDefaults();

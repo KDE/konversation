@@ -45,11 +45,15 @@
 #include <kdebug.h>
 
 #include <qlayout.h>
-#include <qvbox.h>
+#include <q3vbox.h>
 #include <qmap.h>
+//Added by qt3to4:
+#include <Q3CString>
+#include <Q3VBoxLayout>
+#include <Q3Frame>
 
 
-QAsciiDict<KonviConfigDialog> KonviConfigDialog::openDialogs;
+Q3AsciiDict<KonviConfigDialog> KonviConfigDialog::openDialogs;
 
 // This class is here purly so we don't break binary compatibility down the road.
 class KonviConfigDialog::KConfigDialogPrivate
@@ -79,7 +83,7 @@ KonviConfigDialog::KonviConfigDialog( QWidget *parent, const char *name,
     }
     else
     {
-        QCString genericName;
+        Q3CString genericName;
         genericName.sprintf("SettingsDialog-%p", this);
         openDialogs.insert(genericName, this);
         setName(genericName);
@@ -141,7 +145,7 @@ void KonviConfigDialog::addPageInternal(QWidget *page,
         case IconList:
         case Tabbed:
         {
-            QVBox *frame = addVBoxPage(items, header, SmallIcon(pixmapName, 16));
+            Q3VBox *frame = addVBoxPage(items, header, SmallIcon(pixmapName, 16));
             frame->setSpacing( 0 );
             frame->setMargin( 0 );
             page->reparent(((QWidget*)frame), 0, QPoint());
@@ -158,8 +162,8 @@ void KonviConfigDialog::addPageInternal(QWidget *page,
 
         case Plain:
         {
-            QFrame *main = plainPage();
-            QVBoxLayout *topLayout = new QVBoxLayout( main, 0, 0 );
+            Q3Frame *main = plainPage();
+            Q3VBoxLayout *topLayout = new Q3VBoxLayout( main, 0, 0 );
             page->reparent(((QWidget*)main), 0, QPoint());
             topLayout->addWidget( page );
         }

@@ -26,7 +26,7 @@ static QPixmap getIcon(const QString& name)
 }
 
 IRCViewBox::IRCViewBox(QWidget* parent, Server* newServer)
-: QVBox(parent)
+: Q3VBox(parent)
 {
     m_ircView = new IRCView(this, newServer);
     m_searchBar = new SearchBar(this);

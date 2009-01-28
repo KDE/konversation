@@ -39,7 +39,7 @@
 #ifndef KONVICONFIGDIALOG_H
 #define KONVICONFIGDIALOG_H
 
-#include <qasciidict.h>
+#include <q3asciidict.h>
 
 #include <kdialogbase.h>
 
@@ -113,7 +113,7 @@ class KonviConfigDialog : public KDialogBase
         void setupManagerConnections(KConfigDialogManager *manager);
 
     private:
-        static QAsciiDict<KonviConfigDialog> openDialogs;
+        static Q3AsciiDict<KonviConfigDialog> openDialogs;
 
         class KConfigDialogPrivate;
 

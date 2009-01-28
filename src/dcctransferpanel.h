@@ -17,6 +17,8 @@
 
 #include "chatwindow.h"
 #include "dcctransferpanelitem.h"
+//Added by qt3to4:
+#include <QContextMenuEvent>
 
 
 class QContextMenuEvent;
@@ -84,14 +86,14 @@ class DccTransferPanel : public ChatWindow
         void selectAll();
         void selectAllCompleted();
 
-        void popupRequested(QListViewItem* item,const QPoint& pos,int col);
+        void popupRequested(Q3ListViewItem* item,const QPoint& pos,int col);
         void popupActivated(int id);
 
-        void doubleClicked(QListViewItem* _item,const QPoint& _pos,int _col);
+        void doubleClicked(Q3ListViewItem* _item,const QPoint& _pos,int _col);
 
         void updateButton();
 
-        void setDetailPanelItem(QListViewItem* item_);
+        void setDetailPanelItem(Q3ListViewItem* item_);
 
     protected:
         /** Called from ChatWindow adjustFocus */

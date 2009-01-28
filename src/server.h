@@ -27,8 +27,13 @@
 #include "connectionsettings.h"
 
 #include <qtimer.h>
-#include <qvaluevector.h>
-#include <qguardedptr.h>
+#include <q3valuevector.h>
+#include <qpointer.h>
+//Added by qt3to4:
+#include <Q3ValueList>
+#include <Q3StrList>
+#include <Q3CString>
+#include <Q3PtrList>
 
 #include <ksharedptr.h>
 #include <kprocess.h>
@@ -47,7 +52,7 @@ class RawLog;
 class ChannelListPanel;
 class ScriptLauncher;
 class ServerISON;
-class QStrList;
+class Q3StrList;
 class ChatWindow;
 class ViewContainer;
 
@@ -157,7 +162,7 @@ void resetNickSelection();
 
         void autoCommandsAndChannels();
 
-        void sendURIs(const QStrList& uris, const QString& nick);
+        void sendURIs(const Q3StrList& uris, const QString& nick);
 
         void notifyAction(const QString& nick);
         ChannelListPanel* getChannelListPanel() const;
@@ -286,7 +291,7 @@ void resetNickSelection();
         /**
          * Returns a QPtrList of all channels
          */
-        const QPtrList<Channel>& getChannelList() const { return m_channelList; }
+        const Q3PtrList<Channel>& getChannelList() const { return m_channelList; }
 
         void emitChannelNickChanged(const ChannelNickPtr channelNick);
         void emitNickInfoChanged(const NickInfoPtr nickInfo);
@@ -326,8 +331,8 @@ void resetNickSelection();
         void registerWithServices();
 
         // Blowfish stuff
-        QCString getKeyForRecipient(const QString& recipient) const;
-        void setKeyForRecipient(const QString& recipient, const QCString& key);
+        Q3CString getKeyForRecipient(const QString& recipient) const;
+        void setKeyForRecipient(const QString& recipient, const Q3CString& key);
 
         bool identifyMsg() const { return m_identifyMsg; }
 
@@ -615,7 +620,7 @@ void resetNickSelection();
         void setAutoJoinCommands(const QStringList& commands) { m_autoJoinCommands = commands; }
 
         unsigned int m_completeQueryPosition;
-        QValueList<int> m_nickIndices;
+        Q3ValueList<int> m_nickIndices;
         QStringList m_referenceNicklist;
 
         // TODO roll these into a QMap.
@@ -636,10 +641,10 @@ void resetNickSelection();
         int m_checkTime;                            // Time elapsed while waiting for server 303 response
         int m_currentLag;
 
-        QCString m_inputBufferIncomplete;
+        Q3CString m_inputBufferIncomplete;
         QStringList m_inputBuffer;
 
-        QValueVector<IRCQueue *> m_queues;
+        Q3ValueVector<IRCQueue *> m_queues;
         int m_bytesSent, m_encodedBytesSent, m_linesSent, m_bytesReceived;
 
         QString m_nickname;
@@ -647,15 +652,15 @@ void resetNickSelection();
         QString m_ownIpByUserhost;                  // RPL_USERHOST
         QString m_ownIpByWelcome;                   // RPL_WELCOME
 
-        QPtrList<Channel> m_channelList;
-        QPtrList<Query> m_queryList;
+        Q3PtrList<Channel> m_channelList;
+        Q3PtrList<Query> m_queryList;
 
         InputFilter m_inputFilter;
         Konversation::OutputFilter* m_outputFilter;
 
-        QGuardedPtr<StatusPanel> m_statusView;
-        QGuardedPtr<RawLog> m_rawLog;
-        QGuardedPtr<ChannelListPanel> m_channelListPanel;
+        QPointer<StatusPanel> m_statusView;
+        QPointer<RawLog> m_rawLog;
+        QPointer<ChannelListPanel> m_channelListPanel;
 
         bool m_away;
         QString m_awayReason;
@@ -692,7 +697,7 @@ void resetNickSelection();
         QString m_allowedChannelModes;
 
         // Blowfish key map
-        QMap<QString,QCString> m_keyMap;
+        QMap<QString,Q3CString> m_keyMap;
 
         bool m_identifyMsg;
         bool m_autoIdentifyLock;

@@ -18,18 +18,20 @@
 #include "server.h"
 #include "common.h"
 
-#include <qaction.h>
-#include <qhbox.h>
-#include <qvbox.h>
-#include <qgrid.h>
+#include <q3action.h>
+#include <q3hbox.h>
+#include <q3vbox.h>
+#include <q3grid.h>
 #include <qlabel.h>
 #include <qspinbox.h>
 #include <qpushbutton.h>
-#include <qhgroupbox.h>
+#include <q3hgroupbox.h>
 #include <qregexp.h>
 #include <qcheckbox.h>
 #include <qtimer.h>
-#include <qwhatsthis.h>
+#include <q3whatsthis.h>
+//Added by qt3to4:
+#include <Q3TextStream>
 
 #include <krun.h>
 #include <klistview.h>
@@ -63,16 +65,16 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
 
     filterTextChanged(QString());
 
-    QHGroupBox* filterGroup=new QHGroupBox(i18n("Filter Settings"),this);
-    QGrid* mainGrid=new QGrid(2,Qt::Vertical,filterGroup);
+    Q3HGroupBox* filterGroup=new Q3HGroupBox(i18n("Filter Settings"),this);
+    Q3Grid* mainGrid=new Q3Grid(2,Qt::Vertical,filterGroup);
     mainGrid->setSpacing(spacing());
 
     QLabel* minLabel=new QLabel(i18n("Minimum users:"),mainGrid);
     QLabel* maxLabel=new QLabel(i18n("Maximum users:"),mainGrid);
     QSpinBox* minUsersSpin=new QSpinBox(0, 9999, 1, mainGrid,"min_users_spin");
-    QWhatsThis::add(minUsersSpin, i18n("You can limit the channel list to those channels with a minimum number of users here. Choosing 0 disables this criterion."));
+    Q3WhatsThis::add(minUsersSpin, i18n("You can limit the channel list to those channels with a minimum number of users here. Choosing 0 disables this criterion."));
     QSpinBox* maxUsersSpin=new QSpinBox(0, 9999, 1, mainGrid,"max_users_spin");
-    QWhatsThis::add(maxUsersSpin, i18n("You can limit the channel list to those channels with a maximum number of users here. Choosing 0 disables this criterion."));
+    Q3WhatsThis::add(maxUsersSpin, i18n("You can limit the channel list to those channels with a maximum number of users here. Choosing 0 disables this criterion."));
     minUsersSpin->setValue(getMinUsers());
     maxUsersSpin->setValue(getMaxUsers());
     minLabel->setBuddy(minUsersSpin);
@@ -82,19 +84,19 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
     new QLabel(i18n("Filter target:"),mainGrid);
 
     filterInput=new KLineEdit(mainGrid,"channel_list_filter_input");
-    QWhatsThis::add(filterInput, i18n("Enter a filter string here."));
+    Q3WhatsThis::add(filterInput, i18n("Enter a filter string here."));
     filterInput->setText(getFilterText());
 
     patternLabel->setBuddy(filterInput);
 
-    QHBox* targetBox=new QHBox(mainGrid);
+    Q3HBox* targetBox=new Q3HBox(mainGrid);
     targetBox->setSpacing(spacing());
 
     channelFilter=new QCheckBox(i18n("Channel"),targetBox,"filter_target_channel_check");
     topicFilter=new QCheckBox(i18n("Topic"),targetBox,"filter_target_topic_check");
     regexpCheck=new QCheckBox(i18n("Regular expression"),targetBox,"regexp_check");
     applyFilter=new QPushButton(i18n("Apply Filter"),targetBox,"apply_filter_button");
-    QWhatsThis::add(applyFilter, i18n("Click here to retrieve the list of channels from the server and apply the filter."));
+    Q3WhatsThis::add(applyFilter, i18n("Click here to retrieve the list of channels from the server and apply the filter."));
 
     channelFilter->setChecked(getChannelTarget());
     topicFilter->setChecked(getTopicTarget());
@@ -103,7 +105,7 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
     targetBox->setStretchFactor(topicFilter,10);
 
     channelListView=new KListView(this,"channel_list_view");
-    QWhatsThis::add(channelListView, i18n("The filtered list of channels is displayed here. Notice that if you do not use regular expressions, Konversation lists any channel whose name contains the filter string you entered. The channel name does not have to start with the string you entered.\n\nSelect a channel you want to join by clicking on it. Right click on the channel to get a list of all web addresses mentioned in the channel's topic."));
+    Q3WhatsThis::add(channelListView, i18n("The filtered list of channels is displayed here. Notice that if you do not use regular expressions, Konversation lists any channel whose name contains the filter string you entered. The channel name does not have to start with the string you entered.\n\nSelect a channel you want to join by clicking on it. Right click on the channel to get a list of all web addresses mentioned in the channel's topic."));
     channelListView->addColumn(i18n("Channel Name"));
     channelListView->addColumn(i18n("Users"));
     channelListView->addColumn(i18n("Channel Topic"));
@@ -111,7 +113,7 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
     channelListView->setResizeMode( KListView::LastColumn );
     channelListView->setSortColumn(-1); //Disable sorting
 
-    QHBox* statsBox=new QHBox(this);
+    Q3HBox* statsBox=new Q3HBox(this);
     statsBox->setSpacing(spacing());
 
     QLabel* channelsLabel=new QLabel(QString(),statsBox);
@@ -119,22 +121,22 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
 
     statsBox->setStretchFactor(usersLabel,10);
 
-    QHBox* actionBox=new QHBox(this);
+    Q3HBox* actionBox=new Q3HBox(this);
     actionBox->setSpacing(spacing());
 
     refreshListButton=new QPushButton(i18n("Refresh List"),actionBox,"refresh_list_button");
     QPushButton* saveListButton=new QPushButton(i18n("Save List..."),actionBox,"save_list_button");
     joinChannelButton=new QPushButton(i18n("Join Channel"),actionBox,"join_channel_button");
-    QWhatsThis::add(joinChannelButton, i18n("Click here to join the channel. A new tab is created for the channel."));
+    Q3WhatsThis::add(joinChannelButton, i18n("Click here to join the channel. A new tab is created for the channel."));
 
     connect(&updateTimer,SIGNAL (timeout()),this,SLOT (updateDisplay()));
 
     // double click on channel entry joins the channel
-    connect(channelListView,SIGNAL (doubleClicked(QListViewItem*)),
+    connect(channelListView,SIGNAL (doubleClicked(Q3ListViewItem*)),
         this,SLOT (joinChannelClicked()) );
 
-    connect(channelListView,SIGNAL (contextMenu (KListView*, QListViewItem*, const QPoint&) ),
-        this, SLOT (contextMenu (KListView*, QListViewItem*, const QPoint&)) );
+    connect(channelListView,SIGNAL (contextMenu (KListView*, Q3ListViewItem*, const QPoint&) ),
+        this, SLOT (contextMenu (KListView*, Q3ListViewItem*, const QPoint&)) );
 
     connect(minUsersSpin,SIGNAL (valueChanged(int)),this,SLOT(setMinUsers(int)) );
     connect(maxUsersSpin,SIGNAL (valueChanged(int)),this,SLOT(setMaxUsers(int)) );
@@ -197,7 +199,7 @@ void ChannelListPanel::saveList()
         unsigned int maxChannelWidth=0;
         unsigned int maxNicksWidth=0;
 
-        QListViewItem* item = channelListView->firstChild();
+        Q3ListViewItem* item = channelListView->firstChild();
         while(item)
         {
             if(item->isVisible())
@@ -218,9 +220,9 @@ void ChannelListPanel::saveList()
 
         // now save the list to disk
         QFile listFile(fileName);
-        listFile.open(IO_WriteOnly);
+        listFile.open(QIODevice::WriteOnly);
         // wrap the file into a stream
-        QTextStream stream(&listFile);
+        Q3TextStream stream(&listFile);
 
         QString header(i18n("Konversation Channel List: %1 - %2\n\n")
             .arg(m_server->getServerName())
@@ -259,7 +261,7 @@ void ChannelListPanel::saveList()
 
 void ChannelListPanel::joinChannelClicked()
 {
-    QListViewItem* item=channelListView->selectedItem();
+    Q3ListViewItem* item=channelListView->selectedItem();
     if(item)
     {
         emit joinChannel(item->text(0));
@@ -426,7 +428,7 @@ void ChannelListPanel::regExpClicked()
   setRegExp(regexpCheck->state()==2); 
 }
 
-void ChannelListPanel::applyFilterToItem(QListViewItem* item)
+void ChannelListPanel::applyFilterToItem(Q3ListViewItem* item)
 {
     bool visible=true;
 
@@ -467,7 +469,7 @@ void ChannelListPanel::applyFilterClicked()
     }
     else
     {
-        QListViewItem* item = channelListView->firstChild();
+        Q3ListViewItem* item = channelListView->firstChild();
 
         setVisibleChannels(0);
         setVisibleUsers(0);
@@ -499,7 +501,7 @@ void ChannelListPanel::childAdjustFocus()
 {
 }
 
-void ChannelListPanel::contextMenu (KListView* /* l */, QListViewItem* i, const QPoint& p)
+void ChannelListPanel::contextMenu (KListView* /* l */, Q3ListViewItem* i, const QPoint& p)
 {
     if(!i) return;
 

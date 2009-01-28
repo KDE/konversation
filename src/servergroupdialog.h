@@ -20,7 +20,7 @@
 
 class QLineEdit;
 class QComboBox;
-class QListBox;
+class Q3ListBox;
 class QCheckBox;
 class QToolButton;
 class ServerGroupDialogUI;

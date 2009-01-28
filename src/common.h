@@ -1,3 +1,6 @@
+//Added by qt3to4:
+#include <Q3CString>
+#include <QPixmap>
 /*
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -13,7 +16,7 @@
 #ifndef COMMON_H
 #define COMMON_H
 
-class QCString;
+class Q3CString;
 class QString;
 class QBitmap;
 class QPixmap;
@@ -24,7 +27,7 @@ namespace Konversation
     QString tagURLs(const QString& text, const QString& fromNick, bool useCustomColor = true);
     QBitmap overlayMasks( const QBitmap *under, const QBitmap *over );
     QPixmap overlayPixmaps(const QPixmap &under, const QPixmap &over);
-    bool isUtf8(const QCString& text);
+    bool isUtf8(const Q3CString& text);
 
     enum TabNotifyType
     {

@@ -26,6 +26,8 @@
 #include <ksslcertificatecache.h>
 #include <kmessagebox.h>
 #include <ksocketdevice.h>
+//Added by qt3to4:
+#include <Q3PtrList>
 
 
 struct SSLSocketPrivate
@@ -191,7 +193,7 @@ int SSLSocket::verifyCertificate()
     if (peerCertificate.chain().isValid() && peerCertificate.chain().depth() > 1)
     {
         QString theChain;
-        QPtrList<KSSLCertificate> chain = peerCertificate.chain().getChain();
+        Q3PtrList<KSSLCertificate> chain = peerCertificate.chain().getChain();
         for (KSSLCertificate *c = chain.first(); c; c = chain.next())
         {
             theChain += c->toString();

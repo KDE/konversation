@@ -23,6 +23,9 @@
 #include "server.h"
 #include "konversationsound.h"
 #include "quickconnectdialog.h"
+//Added by qt3to4:
+#include <Q3CString>
+#include <Q3PtrList>
 #include "servergroupsettings.h"
 #include "serversettings.h"
 #include "channel.h"
@@ -74,7 +77,7 @@ KonversationApplication::~KonversationApplication()
 int KonversationApplication::newInstance()
 {
     KCmdLineArgs* args = KCmdLineArgs::parsedArgs();
-    QCString url;
+    Q3CString url;
     if (args->count() > 0) url = args->arg(0);
 
     if (!mainWindow)
@@ -694,7 +697,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
     // Ignore List
     config->deleteGroup("Ignore List");
     config->setGroup("Ignore List");
-    QPtrList<Ignore> ignoreList=Preferences::ignoreList();
+    Q3PtrList<Ignore> ignoreList=Preferences::ignoreList();
     Ignore* item=ignoreList.first();
     index=0;
     while(item)
@@ -777,7 +780,7 @@ void KonversationApplication::openQuickConnectDialog()
 
 void KonversationApplication::sendMultiServerCommand(const QString& command, const QString& parameter)
 {
-    QPtrList<Server> serverList = getConnectionManager()->getServerList();
+    Q3PtrList<Server> serverList = getConnectionManager()->getServerList();
 
     for (Server* server = serverList.first(); server; server = serverList.next())
         server->executeMultiServerCommand(command, parameter);
@@ -794,7 +797,7 @@ void KonversationApplication::splitNick_Server(const QString& nick_server, QStri
 
 NickInfoPtr KonversationApplication::getNickInfo(const QString &ircnick, const QString &serverOrGroup)
 {
-    QPtrList<Server> serverList = getConnectionManager()->getServerList();
+    Q3PtrList<Server> serverList = getConnectionManager()->getServerList();
     NickInfoPtr nickInfo;
     QString lserverOrGroup = serverOrGroup.lower();
     for(Server* lookServer = serverList.first(); lookServer; lookServer = serverList.next())

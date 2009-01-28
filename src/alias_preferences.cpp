@@ -15,7 +15,7 @@
 
 #include <qlabel.h>
 #include <qpushbutton.h>
-#include <qheader.h>
+#include <q3header.h>
 
 #include <kapplication.h>
 #include <kdebug.h>
@@ -38,8 +38,8 @@ Alias_Config::Alias_Config(QWidget* parent, const char* name)
   aliasListView->setSorting(-1,false);
   aliasListView->header()->setMovingEnabled(false);
 
-  connect(aliasListView, SIGNAL(selectionChanged(QListViewItem*)), this, SLOT(entrySelected(QListViewItem*)));
-  connect(aliasListView, SIGNAL(clicked(QListViewItem*)), this, SLOT(entrySelected(QListViewItem*)) );
+  connect(aliasListView, SIGNAL(selectionChanged(Q3ListViewItem*)), this, SLOT(entrySelected(Q3ListViewItem*)));
+  connect(aliasListView, SIGNAL(clicked(Q3ListViewItem*)), this, SLOT(entrySelected(Q3ListViewItem*)) );
   connect(aliasListView, SIGNAL(moved()), this, SIGNAL(modified()));
 
   connect(aliasInput, SIGNAL(textChanged(const QString&)), this, SLOT(nameChanged(const QString&)));
@@ -98,7 +98,7 @@ QStringList Alias_Config::currentAliasList()
 {
     QStringList newList;
 
-    QListViewItem* item=aliasListView->itemAtIndex(0);
+    Q3ListViewItem* item=aliasListView->itemAtIndex(0);
     while(item)
         {
         newList.append(item->text(0)+' '+item->text(1));
@@ -108,7 +108,7 @@ QStringList Alias_Config::currentAliasList()
 }
 
 // what to do when the user selects an item
-void Alias_Config::entrySelected(QListViewItem* aliasEntry)
+void Alias_Config::entrySelected(Q3ListViewItem* aliasEntry)
 {
     // play it safe, assume disabling all widgets first
     bool enabled = false;
@@ -138,7 +138,7 @@ void Alias_Config::entrySelected(QListViewItem* aliasEntry)
 void Alias_Config::nameChanged(const QString& newName)
 {
     // get possible first selected item
-    QListViewItem* item = aliasListView->selectedItem();
+    Q3ListViewItem* item = aliasListView->selectedItem();
 
     // sanity check
     if (item)
@@ -154,7 +154,7 @@ void Alias_Config::nameChanged(const QString& newName)
 void Alias_Config::actionChanged(const QString& newAction)
 {
     // get possible first selected item
-    QListViewItem* item = aliasListView->selectedItem();
+    Q3ListViewItem* item = aliasListView->selectedItem();
 
     // sanity check
     if (item)
@@ -190,13 +190,13 @@ void Alias_Config::addEntry()
 void Alias_Config::removeEntry()
 {
     // get possible first selected item
-    QListViewItem* item = aliasListView->selectedItem();
+    Q3ListViewItem* item = aliasListView->selectedItem();
 
     // sanity check
     if (item)
     {
         // get item below the current one
-        QListViewItem* nextItem = item->itemBelow();
+        Q3ListViewItem* nextItem = item->itemBelow();
         // if there was none, get the one above
         if(!nextItem) nextItem = item->itemAbove();
 

@@ -17,6 +17,8 @@
 #include "konvisettingspage.h"
 
 #include <qobject.h>
+//Added by qt3to4:
+#include <Q3PtrList>
 
 
 class Highlight_Config;
@@ -41,7 +43,7 @@ class Highlight_Config : public Highlight_ConfigUI, public KonviSettingsPage
         void modified();
 
     protected slots:
-        void highlightSelected(QListViewItem* item);
+        void highlightSelected(Q3ListViewItem* item);
         void highlightTextChanged(const QString& newPattern);
         void highlightTextEditButtonClicked();
         void highlightColorChanged(const QColor& newColor);
@@ -50,7 +52,7 @@ class Highlight_Config : public Highlight_ConfigUI, public KonviSettingsPage
         void addHighlight();
         void removeHighlight();
         void playSound();
-        QPtrList<Highlight> getHighlightList(); // prefs format
+        Q3PtrList<Highlight> getHighlightList(); // prefs format
         QStringList currentHighlightList();     // hasChanged() format
     protected:
         void updateButtons();

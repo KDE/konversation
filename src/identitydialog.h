@@ -21,8 +21,8 @@ class KComboBox;
 class KLineEdit;
 class QCheckBox;
 class QSpinBox;
-class QListBox;
-class QGroupBox;
+class Q3ListBox;
+class Q3GroupBox;
 class QToolButton;
 
 namespace Konversation
@@ -78,9 +78,9 @@ namespace Konversation
             KLineEdit* m_unAwayEdit;
             KLineEdit* m_awayNickEdit;
             QCheckBox* m_insertRememberLineOnAwayChBox;
-            QListBox* m_nicknameLBox;
-            QGroupBox* m_awayMessageGBox;
-            QGroupBox* m_automaticAwayGBox;
+            Q3ListBox* m_nicknameLBox;
+            Q3GroupBox* m_awayMessageGBox;
+            Q3GroupBox* m_automaticAwayGBox;
             QSpinBox* m_awayInactivitySpin;
             QCheckBox* m_automaticUnawayChBox;
             QToolButton* m_editBtn;

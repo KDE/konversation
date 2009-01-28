@@ -21,17 +21,25 @@
 
 #include <qtimer.h>
 #include <qstring.h>
+//Added by qt3to4:
+#include <Q3ValueList>
+#include <QLabel>
+#include <Q3PtrList>
+#include <QDropEvent>
+#include <QEvent>
+#include <Q3PtrCollection>
+#include <QShowEvent>
 
 
 class QPushButton;
 class QCheckBox;
 class QLabel;
 class QTimer;
-class QListViewItem;
-class QHBox;
+class Q3ListViewItem;
+class Q3HBox;
 class QStringList;
 class QSplitter;
-class QGrid;
+class Q3Grid;
 class QComboBox;
 class QDropEvent;
 class QToolButton;
@@ -50,7 +58,7 @@ namespace Konversation
     class ChannelOptionsDialog;
 }
 
-class NickList : public QPtrList<Nick>
+class NickList : public Q3PtrList<Nick>
 {
     public:
         NickList();
@@ -65,7 +73,7 @@ class NickList : public QPtrList<Nick>
         bool containsNick(const QString& nickname);
 
     protected:
-        virtual int compareItems(QPtrCollection::Item item1, QPtrCollection::Item item2);
+        virtual int compareItems(Q3PtrCollection::Item item1, Q3PtrCollection::Item item2);
 
     private:
         CompareMethod m_compareMethod;
@@ -271,7 +279,7 @@ class Channel : public ChatWindow
 
         void popupChannelCommand(int id);         ///< Connected to IRCView::popupCommand()
         void popupCommand(int id);                ///< Connected to NickListView::popupCommand()
-        void doubleClickCommand(QListViewItem*);  ///< Connected to NickListView::doubleClicked()
+        void doubleClickCommand(Q3ListViewItem*);  ///< Connected to NickListView::doubleClicked()
         // Dialogs
         void changeNickname(const QString& newNickname);
 
@@ -318,7 +326,7 @@ class Channel : public ChatWindow
         Konversation::TopicLabel* topicLine;
 
         //TODO: abstract these
-        QHBox* modeBox;
+        Q3HBox* modeBox;
         ModeButton* modeT;
         ModeButton* modeN;
         ModeButton* modeS;
@@ -331,9 +339,9 @@ class Channel : public ChatWindow
         KLineEdit* limit; //TODO: this GUI element is the only storage for the mode
 
         NickListView* nicknameListView;
-        QHBox* commandLineBox;
-        QVBox* nickListButtons;
-        QGrid* buttonsGrid;
+        Q3HBox* commandLineBox;
+        Q3VBox* nickListButtons;
+        Q3Grid* buttonsGrid;
         QComboBox* nicknameCombobox;
         QString oldNick; ///< GUI
         QLabel* awayLabel;
@@ -341,7 +349,7 @@ class Channel : public ChatWindow
         IRCInput* channelInput;
 
         NickChangeDialog* nickChangeDialog;
-        QPtrList<QuickButton> buttonList;
+        Q3PtrList<QuickButton> buttonList;
 
 //Members from here to end are not GUI
         bool m_joined;
@@ -356,7 +364,7 @@ class Channel : public ChatWindow
         QTimer m_whoTimer; ///< For continuous auto /WHO
         QTimer m_fadeActivityTimer; ///< For the smoothing function used in activity sorting
 
-        QValueList<QStringList> m_pendingChannelNickLists;
+        Q3ValueList<QStringList> m_pendingChannelNickLists;
         int m_opsToAdd;
         uint m_currentIndex;
 

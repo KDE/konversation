@@ -12,9 +12,11 @@
 #include "servergroupsettings.h"
 
 #include <qlayout.h>
-#include <qframe.h>
+#include <q3frame.h>
 #include <qlabel.h>
 #include <qlineedit.h>
+//Added by qt3to4:
+#include <Q3GridLayout>
 
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -26,8 +28,8 @@ namespace Konversation
     ChannelDialog::ChannelDialog(const QString& title, QWidget *parent, const char *name)
         : KDialogBase(Plain, title, Ok|Cancel, Ok, parent, name)
     {
-        QFrame* mainWidget = plainPage();
-        QGridLayout* mainLayout = new QGridLayout(mainWidget, 1, 2, 0, spacingHint());
+        Q3Frame* mainWidget = plainPage();
+        Q3GridLayout* mainLayout = new Q3GridLayout(mainWidget, 1, 2, 0, spacingHint());
 
         QLabel* channelLbl = new QLabel(i18n("C&hannel:"), mainWidget);
         m_channelEdit = new QLineEdit(mainWidget);

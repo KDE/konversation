@@ -14,7 +14,9 @@
 #include "nick.h"
 #include "addressbook.h"
 
-#include <qtextstream.h>
+#include <q3textstream.h>
+//Added by qt3to4:
+#include <QPixmap>
 
 #include <kdebug.h>
 #include <klistview.h>
@@ -155,7 +157,7 @@ QString Nick::calculateLabel2()
     return getChannelNick()->getNickInfo()->getHostmask();
 }
 
-int Nick::compare(QListViewItem* item,int col,bool ascending) const
+int Nick::compare(Q3ListViewItem* item,int col,bool ascending) const
 {
     Nick* otherItem = static_cast<Nick*>(item);
 

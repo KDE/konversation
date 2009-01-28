@@ -1,0 +1,1276 @@
+Log for qt3to4 on Tue Jul 1 02:45:27 2008. Number of log entries: 1179
+In file /kde4/konversation/src/alias_preferences.cpp at line 15 column 17: qheader.h -> q3header.h
+In file /kde4/konversation/src/alias_preferences.cpp at line 38 column 62: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/alias_preferences.cpp at line 38 column 105: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/alias_preferences.cpp at line 39 column 53: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/alias_preferences.cpp at line 39 column 96: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/alias_preferences.cpp at line 98 column 17: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/alias_preferences.cpp at line 108 column 46: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/alias_preferences.cpp at line 138 column 17: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/alias_preferences.cpp at line 154 column 17: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/alias_preferences.cpp at line 190 column 17: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/alias_preferences.cpp at line 196 column 21: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/alias_preferences.h at line 33 column 40: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/autoreplace_preferences.cpp at line 16 column 17: qheader.h -> q3header.h
+In file /kde4/konversation/src/autoreplace_preferences.cpp at line 68 column 64: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/autoreplace_preferences.cpp at line 68 column 107: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/autoreplace_preferences.cpp at line 69 column 55: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/autoreplace_preferences.cpp at line 69 column 98: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/autoreplace_preferences.cpp at line 108 column 18: QCheckListItem -> Q3CheckListItem
+In file /kde4/konversation/src/autoreplace_preferences.cpp at line 108 column 46: QCheckListItem -> Q3CheckListItem
+In file /kde4/konversation/src/autoreplace_preferences.cpp at line 108 column 87: QCheckListItem -> Q3CheckListItem
+In file /kde4/konversation/src/autoreplace_preferences.cpp at line 169 column 15: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/autoreplace_preferences.cpp at line 177 column 33: QCheckListItem -> Q3CheckListItem
+In file /kde4/konversation/src/autoreplace_preferences.cpp at line 197 column 52: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/autoreplace_preferences.cpp at line 246 column 15: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/autoreplace_preferences.cpp at line 269 column 15: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/autoreplace_preferences.cpp at line 285 column 15: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/autoreplace_preferences.cpp at line 303 column 16: QCheckListItem -> Q3CheckListItem
+In file /kde4/konversation/src/autoreplace_preferences.cpp at line 303 column 44: QCheckListItem -> Q3CheckListItem
+In file /kde4/konversation/src/autoreplace_preferences.cpp at line 303 column 85: QCheckListItem -> Q3CheckListItem
+In file /kde4/konversation/src/autoreplace_preferences.cpp at line 329 column 15: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/autoreplace_preferences.cpp at line 335 column 17: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/autoreplace_preferences.h at line 35 column 36: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/awaymanager.cpp at line 103 column 14: QValueList -> Q3ValueList
+In file /kde4/konversation/src/awaymanager.cpp at line 105 column 12: QPtrList -> Q3PtrList
+In file /kde4/konversation/src/awaymanager.cpp at line 278 column 16: QPtrList -> Q3PtrList
+In file /kde4/konversation/src/awaymanager.cpp at line 302 column 18: QValueList -> Q3ValueList
+In file /kde4/konversation/src/awaymanager.cpp at line 303 column 18: QValueList -> Q3ValueList
+In file /kde4/konversation/src/awaymanager.cpp at line 311 column 16: QPtrList -> Q3PtrList
+In file /kde4/konversation/src/awaymanager.cpp at line 336 column 12: QPtrList -> Q3PtrList
+In file /kde4/konversation/src/awaymanager.cpp at line 350 column 12: QPtrList -> Q3PtrList
+In file /kde4/konversation/src/awaymanager.cpp at line 367 column 12: QPtrList -> Q3PtrList
+In file /kde4/konversation/src/awaymanager.cpp at line 376 column 12: QPtrList -> Q3PtrList
+In file /kde4/konversation/src/awaymanager.cpp at line 400 column 16: QPtrList -> Q3PtrList
+In file /kde4/konversation/src/awaymanager.cpp: Added the following include directives:
+	#include <Q3ValueList> 	#include <Q3PtrList> 
+In file /kde4/konversation/src/awaymanager.h at line 68 column 18: QValueList -> Q3ValueList
+In file /kde4/konversation/src/awaymanager.h: Added the following include directives:
+	#include <Q3ValueList> 
+In file /kde4/konversation/src/channel.cpp at line 41 column 15: qvbox.h -> q3vbox.h
+In file /kde4/konversation/src/channel.cpp at line 43 column 15: qhbox.h -> q3hbox.h
+In file /kde4/konversation/src/channel.cpp at line 44 column 15: qgrid.h -> q3grid.h
+In file /kde4/konversation/src/channel.cpp at line 45 column 21: qdragobject.h -> q3dragobject.h
+In file /kde4/konversation/src/channel.cpp at line 47 column 17: qheader.h -> q3header.h
+In file /kde4/konversation/src/channel.cpp at line 55 column 20: qwhatsthis.h -> q3whatsthis.h
+In file /kde4/konversation/src/channel.cpp at line 129 column 15: QGridLayout -> Q3GridLayout
+In file /kde4/konversation/src/channel.cpp at line 129 column 46: QGridLayout -> Q3GridLayout
+In file /kde4/konversation/src/channel.cpp at line 137 column 14: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/channel.cpp at line 146 column 23: QHBox -> Q3HBox
+In file /kde4/konversation/src/channel.cpp at line 157 column 14: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/channel.cpp at line 158 column 14: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/channel.cpp at line 159 column 14: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/channel.cpp at line 160 column 14: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/channel.cpp at line 161 column 14: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/channel.cpp at line 162 column 14: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/channel.cpp at line 163 column 14: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/channel.cpp at line 164 column 14: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/channel.cpp at line 177 column 14: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/channel.cpp at line 199 column 31: QVBox -> Q3VBox
+In file /kde4/konversation/src/channel.cpp at line 204 column 51: QScrollView -> Q3ScrollView
+In file /kde4/konversation/src/channel.cpp at line 227 column 30: QHBox -> Q3HBox
+In file /kde4/konversation/src/channel.cpp at line 233 column 14: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/channel.cpp at line 288 column 64: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/channel.cpp at line 288 column 111: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/channel.cpp at line 289 column 70: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/channel.cpp at line 360 column 16: QCString -> Q3CString
+In file /kde4/konversation/src/channel.cpp at line 434 column 12: QStrList -> Q3StrList
+In file /kde4/konversation/src/channel.cpp at line 435 column 16: QUriDrag -> Q3UriDrag
+In file /kde4/konversation/src/channel.cpp at line 709 column 46: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/channel.cpp at line 795 column 36: QPtrListIterator -> Q3PtrListIterator
+In file /kde4/konversation/src/channel.cpp at line 923 column 16: QPtrList -> Q3PtrList
+In file /kde4/konversation/src/channel.cpp at line 927 column 28: QPtrListIterator -> Q3PtrListIterator
+In file /kde4/konversation/src/channel.cpp at line 1155 column 20: QCString -> Q3CString
+In file /kde4/konversation/src/channel.cpp at line 1205 column 20: QPtrListIterator -> Q3PtrListIterator
+In file /kde4/konversation/src/channel.cpp at line 1461 column 20: QPtrListIterator -> Q3PtrListIterator
+In file /kde4/konversation/src/channel.cpp at line 2100 column 27: QGrid -> Q3Grid
+In file /kde4/konversation/src/channel.cpp at line 2227 column 14: QValueList -> Q3ValueList
+In file /kde4/konversation/src/channel.cpp at line 2228 column 14: QValueList -> Q3ValueList
+In file /kde4/konversation/src/channel.cpp at line 2418 column 16: QPtrList -> Q3PtrList
+In file /kde4/konversation/src/channel.cpp at line 2419 column 24: QPtrListIterator -> Q3PtrListIterator
+In file /kde4/konversation/src/channel.cpp at line 2442 column 55: QScrollView -> Q3ScrollView
+In file /kde4/konversation/src/channel.cpp at line 2452 column 53: QListView -> Q3ListView
+In file /kde4/konversation/src/channel.cpp at line 2455 column 25: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/channel.cpp at line 2468 column 55: QScrollView -> Q3ScrollView
+In file /kde4/konversation/src/channel.cpp at line 2470 column 49: QListView -> Q3ListView
+In file /kde4/konversation/src/channel.cpp at line 2497 column 20: QPtrListIterator -> Q3PtrListIterator
+In file /kde4/konversation/src/channel.cpp at line 2834 column 31: QPtrList -> Q3PtrList
+In file /kde4/konversation/src/channel.cpp at line 2845 column 41: QPtrCollection -> Q3PtrCollection
+In file /kde4/konversation/src/channel.cpp at line 2845 column 69: QPtrCollection -> Q3PtrCollection
+In file /kde4/konversation/src/channel.cpp at line 2879 column 20: QPtrListIterator -> Q3PtrListIterator
+In file /kde4/konversation/src/channel.cpp at line 2900 column 20: QPtrListIterator -> Q3PtrListIterator
+In file /kde4/konversation/src/channel.cpp at line 2942 column 20: QPtrListIterator -> Q3PtrListIterator
+In file /kde4/konversation/src/channel.cpp: Added the following include directives:
+	#include <Q3StrList> 	#include <Q3GridLayout> 	#include <QShowEvent> 	#include <Q3ValueList> 	#include <Q3PtrCollection> 	#include <QDropEvent> 	#include <Q3CString> 	#include <Q3PtrList> 
+In file /kde4/konversation/src/channel.h at line 34 column 19: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/channel.h at line 35 column 11: QHBox -> Q3HBox
+In file /kde4/konversation/src/channel.h at line 38 column 11: QGrid -> Q3Grid
+In file /kde4/konversation/src/channel.h at line 57 column 32: QPtrList -> Q3PtrList
+In file /kde4/konversation/src/channel.h at line 72 column 47: QPtrCollection -> Q3PtrCollection
+In file /kde4/konversation/src/channel.h at line 72 column 75: QPtrCollection -> Q3PtrCollection
+In file /kde4/konversation/src/channel.h at line 260 column 45: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/channel.h at line 307 column 13: QHBox -> Q3HBox
+In file /kde4/konversation/src/channel.h at line 320 column 13: QHBox -> Q3HBox
+In file /kde4/konversation/src/channel.h at line 321 column 13: QVBox -> Q3VBox
+In file /kde4/konversation/src/channel.h at line 322 column 13: QGrid -> Q3Grid
+In file /kde4/konversation/src/channel.h at line 330 column 16: QPtrList -> Q3PtrList
+In file /kde4/konversation/src/channel.h at line 345 column 18: QValueList -> Q3ValueList
+In file /kde4/konversation/src/channel.h: Added the following include directives:
+	#include <Q3ValueList> 	#include <QLabel> 	#include <Q3PtrList> 	#include <QDropEvent> 	#include <QEvent> 	#include <Q3PtrCollection> 	#include <QShowEvent> 
+In file /kde4/konversation/src/channeldialog.cpp at line 17 column 16: qframe.h -> q3frame.h
+In file /kde4/konversation/src/channeldialog.cpp at line 31 column 14: QFrame -> Q3Frame
+In file /kde4/konversation/src/channeldialog.cpp at line 32 column 19: QGridLayout -> Q3GridLayout
+In file /kde4/konversation/src/channeldialog.cpp at line 32 column 49: QGridLayout -> Q3GridLayout
+In file /kde4/konversation/src/channeldialog.cpp: Added the following include directives:
+	#include <Q3GridLayout> 
+No changes made to file /kde4/konversation/src/channeldialog.h
+In file /kde4/konversation/src/channellistpanel.cpp at line 18 column 15: qhbox.h -> q3hbox.h
+In file /kde4/konversation/src/channellistpanel.cpp at line 19 column 15: qvbox.h -> q3vbox.h
+In file /kde4/konversation/src/channellistpanel.cpp at line 20 column 15: qgrid.h -> q3grid.h
+In file /kde4/konversation/src/channellistpanel.cpp at line 24 column 20: qhgroupbox.h -> q3hgroupbox.h
+In file /kde4/konversation/src/channellistpanel.cpp at line 28 column 20: qwhatsthis.h -> q3whatsthis.h
+In file /kde4/konversation/src/channellistpanel.cpp at line 62 column 14: QHGroupBox -> Q3HGroupBox
+In file /kde4/konversation/src/channellistpanel.cpp at line 62 column 42: QHGroupBox -> Q3HGroupBox
+In file /kde4/konversation/src/channellistpanel.cpp at line 63 column 9: QGrid -> Q3Grid
+In file /kde4/konversation/src/channellistpanel.cpp at line 63 column 29: QGrid -> Q3Grid
+In file /kde4/konversation/src/channellistpanel.cpp at line 69 column 14: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/channellistpanel.cpp at line 71 column 14: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/channellistpanel.cpp at line 81 column 14: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/channellistpanel.cpp at line 86 column 9: QHBox -> Q3HBox
+In file /kde4/konversation/src/channellistpanel.cpp at line 86 column 30: QHBox -> Q3HBox
+In file /kde4/konversation/src/channellistpanel.cpp at line 93 column 14: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/channellistpanel.cpp at line 102 column 14: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/channellistpanel.cpp at line 110 column 9: QHBox -> Q3HBox
+In file /kde4/konversation/src/channellistpanel.cpp at line 110 column 29: QHBox -> Q3HBox
+In file /kde4/konversation/src/channellistpanel.cpp at line 118 column 9: QHBox -> Q3HBox
+In file /kde4/konversation/src/channellistpanel.cpp at line 118 column 30: QHBox -> Q3HBox
+In file /kde4/konversation/src/channellistpanel.cpp at line 124 column 14: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/channellistpanel.cpp at line 129 column 63: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/channellistpanel.cpp at line 132 column 74: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/channellistpanel.cpp at line 133 column 58: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/channellistpanel.cpp at line 194 column 21: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/channellistpanel.cpp at line 215 column 34: IO_WriteOnly -> QIODevice::WriteOnly
+In file /kde4/konversation/src/channellistpanel.cpp at line 217 column 19: QTextStream -> Q3TextStream
+In file /kde4/konversation/src/channellistpanel.cpp at line 256 column 17: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/channellistpanel.cpp at line 423 column 54: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/channellistpanel.cpp at line 464 column 21: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/channellistpanel.cpp at line 496 column 69: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/channellistpanel.cpp: Added the following include directives:
+	#include <Q3TextStream> 
+In file /kde4/konversation/src/channellistpanel.h at line 21 column 15: QListView -> Q3ListView
+In file /kde4/konversation/src/channellistpanel.h at line 22 column 19: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/channellistpanel.h at line 70 column 53: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/channellistpanel.h at line 105 column 45: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/channellistviewitem.cpp at line 22 column 46: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/channellistviewitem.h at line 24 column 33: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/channelnick.cpp at line 193 column 15: QTextStream -> Q3TextStream
+In file /kde4/konversation/src/channelnick.cpp at line 193 column 50: IO_WriteOnly -> QIODevice::WriteOnly
+In file /kde4/konversation/src/channelnick.cpp: Added the following include directives:
+	#include <Q3TextStream> 
+In file /kde4/konversation/src/channelnick.h at line 81 column 18: QValueList -> Q3ValueList
+In file /kde4/konversation/src/channelnick.h: Added the following include directives:
+	#include <Q3ValueList> 
+In file /kde4/konversation/src/channeloptionsdialog.cpp at line 21 column 17: qheader.h -> q3header.h
+In file /kde4/konversation/src/channeloptionsdialog.cpp at line 50 column 59: QListView -> Q3ListView
+In file /kde4/konversation/src/channeloptionsdialog.cpp at line 60 column 72: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/channeloptionsdialog.cpp at line 60 column 125: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/channeloptionsdialog.cpp at line 61 column 81: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/channeloptionsdialog.cpp at line 61 column 134: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/channeloptionsdialog.cpp at line 80 column 68: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/channeloptionsdialog.cpp at line 80 column 107: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/channeloptionsdialog.cpp at line 81 column 68: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/channeloptionsdialog.cpp at line 81 column 128: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/channeloptionsdialog.cpp at line 184 column 68: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/channeloptionsdialog.cpp at line 236 column 30: QCheckListItem -> Q3CheckListItem
+In file /kde4/konversation/src/channeloptionsdialog.cpp at line 236 column 95: QCheckListItem -> Q3CheckListItem
+In file /kde4/konversation/src/channeloptionsdialog.cpp at line 254 column 21: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/channeloptionsdialog.cpp at line 258 column 38: QCheckListItem -> Q3CheckListItem
+In file /kde4/konversation/src/channeloptionsdialog.cpp at line 305 column 54: QCheckListItem -> Q3CheckListItem
+In file /kde4/konversation/src/channeloptionsdialog.cpp at line 359 column 21: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/channeloptionsdialog.cpp at line 363 column 46: QCheckListItem -> Q3CheckListItem
+In file /kde4/konversation/src/channeloptionsdialog.cpp at line 393 column 54: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/channeloptionsdialog.cpp at line 469 column 46: QListView -> Q3ListView
+In file /kde4/konversation/src/channeloptionsdialog.cpp at line 475 column 46: QListView -> Q3ListView
+In file /kde4/konversation/src/channeloptionsdialog.cpp at line 481 column 47: QListView -> Q3ListView
+In file /kde4/konversation/src/channeloptionsdialog.cpp at line 488 column 47: QListView -> Q3ListView
+In file /kde4/konversation/src/channeloptionsdialog.cpp at line 503 column 46: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/channeloptionsdialog.cpp: Added the following include directives:
+	#include <QKeyEvent> 	#include <QEvent> 
+In file /kde4/konversation/src/channeloptionsdialog.h at line 47 column 40: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/channeloptionsdialog.h at line 53 column 54: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/channeloptionsdialog.h at line 62 column 25: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/channeloptionsdialog.h at line 77 column 47: QListView -> Q3ListView
+In file /kde4/konversation/src/channeloptionsdialog.h at line 78 column 37: QListView -> Q3ListView
+In file /kde4/konversation/src/channeloptionsdialog.h at line 79 column 37: QListView -> Q3ListView
+In file /kde4/konversation/src/channeloptionsdialog.h at line 80 column 38: QListView -> Q3ListView
+In file /kde4/konversation/src/channeloptionsdialog.h at line 86 column 45: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/chatwindow.cpp at line 35 column 47: QVBox -> Q3VBox
+In file /kde4/konversation/src/chatwindow.cpp at line 69 column 51: QScrollView -> Q3ScrollView
+In file /kde4/konversation/src/chatwindow.cpp at line 71 column 51: QScrollView -> Q3ScrollView
+In file /kde4/konversation/src/chatwindow.cpp at line 139 column 47: QScrollView -> Q3ScrollView
+In file /kde4/konversation/src/chatwindow.cpp at line 143 column 47: QScrollView -> Q3ScrollView
+In file /kde4/konversation/src/chatwindow.cpp at line 240 column 64: IO_ReadOnly -> QIODevice::ReadOnly
+In file /kde4/konversation/src/chatwindow.cpp at line 245 column 27: QTextStream -> Q3TextStream
+In file /kde4/konversation/src/chatwindow.cpp at line 246 column 47: QTextStream -> Q3TextStream
+In file /kde4/konversation/src/chatwindow.cpp at line 338 column 36: IO_WriteOnly -> QIODevice::WriteOnly
+In file /kde4/konversation/src/chatwindow.cpp at line 338 column 48: IO_Append -> QIODevice::Append
+In file /kde4/konversation/src/chatwindow.cpp at line 341 column 23: QTextStream -> Q3TextStream
+In file /kde4/konversation/src/chatwindow.cpp at line 343 column 45: QTextStream -> Q3TextStream
+In file /kde4/konversation/src/chatwindow.cpp at line 490 column 16: QVBox -> Q3VBox
+In file /kde4/konversation/src/chatwindow.cpp: Added the following include directives:
+	#include <Q3TextStream> 	#include <QKeyEvent> 	#include <QEvent> 
+In file /kde4/konversation/src/chatwindow.h at line 18 column 15: qvbox.h -> q3vbox.h
+In file /kde4/konversation/src/chatwindow.h at line 26 column 31: QVBox -> Q3VBox
+In file /kde4/konversation/src/chatwindow.h: Added the following include directives:
+	#include <QEvent> 
+No changes made to file /kde4/konversation/src/commit.h
+In file /kde4/konversation/src/common.cpp at line 14 column 18: qcstring.h -> q3cstring.h
+In file /kde4/konversation/src/common.h at line 16 column 14: QCString -> Q3CString
+In file /kde4/konversation/src/common.h at line 27 column 30: QCString -> Q3CString
+In file /kde4/konversation/src/common.h: Added the following include directives:
+	#include <Q3CString> 	#include <QPixmap> 
+In file /kde4/konversation/src/connectionmanager.cpp at line 539 column 8: QPtrList -> Q3PtrList
+In file /kde4/konversation/src/connectionmanager.cpp at line 541 column 12: QPtrList -> Q3PtrList
+In file /kde4/konversation/src/connectionmanager.cpp: Added the following include directives:
+	#include <Q3PtrList> 
+In file /kde4/konversation/src/connectionmanager.h at line 34 column 16: QPtrList -> Q3PtrList
+In file /kde4/konversation/src/connectionmanager.h at line 91 column 18: QValueList -> Q3ValueList
+In file /kde4/konversation/src/connectionmanager.h: Added the following include directives:
+	#include <Q3ValueList> 	#include <Q3PtrList> 
+No changes made to file /kde4/konversation/src/connectionsettings.cpp
+No changes made to file /kde4/konversation/src/connectionsettings.h
+No changes made to file /kde4/konversation/src/dcc_preferences.cpp
+No changes made to file /kde4/konversation/src/dcc_preferences.h
+In file /kde4/konversation/src/dccchat.cpp at line 30 column 15: qvbox.h -> q3vbox.h
+In file /kde4/konversation/src/dccchat.cpp at line 34 column 20: qpopupmenu.h -> q3popupmenu.h
+In file /kde4/konversation/src/dccchat.cpp at line 79 column 14: QPopupMenu -> Q3PopupMenu
+In file /kde4/konversation/src/dccchat.cpp at line 280 column 19: QTextStream -> Q3TextStream
+In file /kde4/konversation/src/dccchat.cpp at line 420 column 18: QValueList -> Q3ValueList
+In file /kde4/konversation/src/dccchat.cpp: Added the following include directives:
+	#include <Q3TextStream> 	#include <QShowEvent> 	#include <Q3ValueList> 
+In file /kde4/konversation/src/dccchat.h: Added the following include directives:
+	#include <QShowEvent> 
+No changes made to file /kde4/konversation/src/dcccommon.cpp
+No changes made to file /kde4/konversation/src/dcccommon.h
+In file /kde4/konversation/src/dccrecipientdialog.cpp at line 31 column 15: QVBoxLayout -> Q3VBoxLayout
+In file /kde4/konversation/src/dccrecipientdialog.cpp at line 31 column 45: QVBoxLayout -> Q3VBoxLayout
+In file /kde4/konversation/src/dccrecipientdialog.cpp at line 44 column 57: QListBoxItem -> Q3ListBoxItem
+In file /kde4/konversation/src/dccrecipientdialog.cpp at line 44 column 104: QListBoxItem -> Q3ListBoxItem
+In file /kde4/konversation/src/dccrecipientdialog.cpp at line 45 column 59: QListBoxItem -> Q3ListBoxItem
+In file /kde4/konversation/src/dccrecipientdialog.cpp at line 45 column 110: QListBoxItem -> Q3ListBoxItem
+In file /kde4/konversation/src/dccrecipientdialog.cpp at line 63 column 57: QListBoxItem -> Q3ListBoxItem
+In file /kde4/konversation/src/dccrecipientdialog.cpp at line 68 column 61: QListBoxItem -> Q3ListBoxItem
+In file /kde4/konversation/src/dccrecipientdialog.cpp: Added the following include directives:
+	#include <Q3VBoxLayout> 
+In file /kde4/konversation/src/dccrecipientdialog.h at line 29 column 45: QListBoxItem -> Q3ListBoxItem
+In file /kde4/konversation/src/dccrecipientdialog.h at line 31 column 49: QListBoxItem -> Q3ListBoxItem
+In file /kde4/konversation/src/dccresumedialog.cpp at line 17 column 15: qhbox.h -> q3hbox.h
+In file /kde4/konversation/src/dccresumedialog.cpp at line 20 column 15: qvbox.h -> q3vbox.h
+In file /kde4/konversation/src/dccresumedialog.cpp at line 68 column 10: QFrame -> Q3Frame
+In file /kde4/konversation/src/dccresumedialog.cpp at line 68 column 29: QFrame -> Q3Frame
+In file /kde4/konversation/src/dccresumedialog.cpp at line 69 column 15: QVBoxLayout -> Q3VBoxLayout
+In file /kde4/konversation/src/dccresumedialog.cpp at line 69 column 45: QVBoxLayout -> Q3VBoxLayout
+In file /kde4/konversation/src/dccresumedialog.cpp at line 84 column 14: QFrame -> Q3Frame
+In file /kde4/konversation/src/dccresumedialog.cpp at line 84 column 47: QFrame -> Q3Frame
+In file /kde4/konversation/src/dccresumedialog.cpp at line 85 column 19: QHBoxLayout -> Q3HBoxLayout
+In file /kde4/konversation/src/dccresumedialog.cpp at line 85 column 58: QHBoxLayout -> Q3HBoxLayout
+In file /kde4/konversation/src/dccresumedialog.cpp: Added the following include directives:
+	#include <Q3HBoxLayout> 	#include <Q3VBoxLayout> 	#include <Q3Frame> 
+No changes made to file /kde4/konversation/src/dccresumedialog.h
+In file /kde4/konversation/src/dcctransfer.cpp at line 155 column 18: QValueList -> Q3ValueList
+In file /kde4/konversation/src/dcctransfer.cpp at line 156 column 18: QValueList -> Q3ValueList
+In file /kde4/konversation/src/dcctransfer.cpp: Added the following include directives:
+	#include <Q3ValueList> 
+In file /kde4/konversation/src/dcctransfer.h at line 163 column 18: QValueList -> Q3ValueList
+In file /kde4/konversation/src/dcctransfer.h at line 164 column 18: QValueList -> Q3ValueList
+In file /kde4/konversation/src/dcctransfer.h: Added the following include directives:
+	#include <Q3ValueList> 
+No changes made to file /kde4/konversation/src/dcctransferdetailedinfopanel.cpp
+No changes made to file /kde4/konversation/src/dcctransferdetailedinfopanel.h
+In file /kde4/konversation/src/dcctransfermanager.cpp at line 53 column 27: QValueListConstIterator -> Q3ValueListConstIterator
+In file /kde4/konversation/src/dcctransfermanager.cpp at line 83 column 27: QValueListConstIterator -> Q3ValueListConstIterator
+In file /kde4/konversation/src/dcctransfermanager.cpp at line 114 column 27: QValueListConstIterator -> Q3ValueListConstIterator
+In file /kde4/konversation/src/dcctransfermanager.cpp at line 146 column 27: QValueListConstIterator -> Q3ValueListConstIterator
+In file /kde4/konversation/src/dcctransfermanager.cpp at line 166 column 27: QValueListConstIterator -> Q3ValueListConstIterator
+In file /kde4/konversation/src/dcctransfermanager.cpp at line 173 column 27: QValueListConstIterator -> Q3ValueListConstIterator
+In file /kde4/konversation/src/dcctransfermanager.h at line 18 column 20: qvaluelist.h -> q3valuelist.h
+In file /kde4/konversation/src/dcctransfermanager.h at line 68 column 18: QValueList -> Q3ValueList
+In file /kde4/konversation/src/dcctransfermanager.h at line 69 column 18: QValueList -> Q3ValueList
+In file /kde4/konversation/src/dcctransferpanel.cpp at line 22 column 15: qhbox.h -> q3hbox.h
+In file /kde4/konversation/src/dcctransferpanel.cpp at line 23 column 17: qheader.h -> q3header.h
+In file /kde4/konversation/src/dcctransferpanel.cpp at line 26 column 15: qvbox.h -> q3vbox.h
+In file /kde4/konversation/src/dcctransferpanel.cpp at line 55 column 14: QValueList -> Q3ValueList
+In file /kde4/konversation/src/dcctransferpanel.cpp at line 67 column 42: QListView -> Q3ListView
+In file /kde4/konversation/src/dcctransferpanel.cpp at line 87 column 14: QValueList -> Q3ValueList
+In file /kde4/konversation/src/dcctransferpanel.cpp at line 91 column 62: QListView -> Q3ListView
+In file /kde4/konversation/src/dcctransferpanel.cpp at line 108 column 9: QHBox -> Q3HBox
+In file /kde4/konversation/src/dcctransferpanel.cpp at line 108 column 31: QHBox -> Q3HBox
+In file /kde4/konversation/src/dcctransferpanel.cpp at line 153 column 65: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/dcctransferpanel.cpp at line 153 column 127: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/dcctransferpanel.cpp at line 157 column 58: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/dcctransferpanel.cpp at line 157 column 119: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/dcctransferpanel.cpp at line 159 column 59: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/dcctransferpanel.cpp at line 159 column 107: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/dcctransferpanel.cpp at line 193 column 25: QListViewItemIterator -> Q3ListViewItemIterator
+In file /kde4/konversation/src/dcctransferpanel.cpp at line 257 column 55: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/dcctransferpanel.cpp at line 268 column 25: QListViewItemIterator -> Q3ListViewItemIterator
+In file /kde4/konversation/src/dcctransferpanel.cpp at line 284 column 25: QListViewItemIterator -> Q3ListViewItemIterator
+In file /kde4/konversation/src/dcctransferpanel.cpp at line 300 column 25: QListViewItemIterator -> Q3ListViewItemIterator
+In file /kde4/konversation/src/dcctransferpanel.cpp at line 328 column 12: QPtrList -> Q3PtrList
+In file /kde4/konversation/src/dcctransferpanel.cpp at line 328 column 26: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/dcctransferpanel.cpp at line 329 column 25: QListViewItemIterator -> Q3ListViewItemIterator
+In file /kde4/konversation/src/dcctransferpanel.cpp at line 341 column 20: QPtrListIterator -> Q3PtrListIterator
+In file /kde4/konversation/src/dcctransferpanel.cpp at line 341 column 34: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/dcctransferpanel.cpp at line 369 column 25: QListViewItemIterator -> Q3ListViewItemIterator
+In file /kde4/konversation/src/dcctransferpanel.cpp at line 385 column 25: QListViewItemIterator -> Q3ListViewItemIterator
+In file /kde4/konversation/src/dcctransferpanel.cpp at line 400 column 25: QListViewItemIterator -> Q3ListViewItemIterator
+In file /kde4/konversation/src/dcctransferpanel.cpp at line 411 column 25: QListViewItemIterator -> Q3ListViewItemIterator
+In file /kde4/konversation/src/dcctransferpanel.cpp at line 421 column 51: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/dcctransferpanel.cpp at line 439 column 50: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/dcctransferpanel.cpp: Added the following include directives:
+	#include <Q3ValueList> 	#include <Q3PtrList> 
+In file /kde4/konversation/src/dcctransferpanel.h at line 85 column 41: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/dcctransferpanel.h at line 88 column 40: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/dcctransferpanel.h at line 92 column 45: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/dcctransferpanel.h: Added the following include directives:
+	#include <QContextMenuEvent> 
+In file /kde4/konversation/src/dcctransferpanelitem.cpp at line 19 column 17: qheader.h -> q3header.h
+In file /kde4/konversation/src/dcctransferpanelitem.cpp at line 89 column 48: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/dcctransferpanelitem.cpp at line 126 column 32: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/dcctransferpanelitem.cpp at line 128 column 24: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/dcctransferpanelitem.cpp at line 169 column 15: QHeader -> Q3Header
+In file /kde4/konversation/src/dcctransferpanelitem.cpp: Added the following include directives:
+	#include <QPixmap> 
+In file /kde4/konversation/src/dcctransferpanelitem.h at line 48 column 42: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/dcctransferpanelitem.h: Added the following include directives:
+	#include <QPixmap> 
+In file /kde4/konversation/src/dcctransferrecv.cpp at line 691 column 73: IO_WriteOnly -> QIODevice::WriteOnly
+In file /kde4/konversation/src/dcctransferrecv.cpp: Added the following include directives:
+	#include <QPixmap> 
+In file /kde4/konversation/src/dcctransferrecv.h at line 22 column 18: qptrlist.h -> q3ptrlist.h
+In file /kde4/konversation/src/dcctransferrecv.h at line 162 column 18: QValueList -> Q3ValueList
+In file /kde4/konversation/src/dcctransferrecv.h: Added the following include directives:
+	#include <QPixmap> 	#include <Q3ValueList> 
+In file /kde4/konversation/src/dcctransfersend.cpp at line 351 column 33: IO_ReadOnly -> QIODevice::ReadOnly
+No changes made to file /kde4/konversation/src/dcctransfersend.h
+In file /kde4/konversation/src/decoder.h at line 86 column 12: QCString -> Q3CString
+In file /kde4/konversation/src/decoder.h at line 87 column 12: QCString -> Q3CString
+In file /kde4/konversation/src/decoder.h at line 88 column 12: QCString -> Q3CString
+In file /kde4/konversation/src/decoder.h at line 89 column 12: QCString -> Q3CString
+In file /kde4/konversation/src/decoder.h at line 90 column 12: QCString -> Q3CString
+In file /kde4/konversation/src/decoder.h at line 91 column 12: QCString -> Q3CString
+In file /kde4/konversation/src/decoder.h at line 92 column 12: QCString -> Q3CString
+In file /kde4/konversation/src/decoder.h at line 93 column 12: QCString -> Q3CString
+In file /kde4/konversation/src/decoder.h at line 94 column 12: QCString -> Q3CString
+In file /kde4/konversation/src/decoder.h at line 99 column 12: QCString -> Q3CString
+In file /kde4/konversation/src/decoder.h at line 102 column 12: QCString -> Q3CString
+In file /kde4/konversation/src/decoder.h: Added the following include directives:
+	#include <Q3CString> 
+In file /kde4/konversation/src/editnotifydialog.cpp at line 18 column 20: qwhatsthis.h -> q3whatsthis.h
+In file /kde4/konversation/src/editnotifydialog.cpp at line 38 column 15: QHBoxLayout -> Q3HBoxLayout
+In file /kde4/konversation/src/editnotifydialog.cpp at line 38 column 41: QHBoxLayout -> Q3HBoxLayout
+In file /kde4/konversation/src/editnotifydialog.cpp at line 44 column 14: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/editnotifydialog.cpp at line 46 column 14: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/editnotifydialog.cpp at line 52 column 14: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/editnotifydialog.cpp at line 54 column 14: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/editnotifydialog.cpp: Added the following include directives:
+	#include <Q3HBoxLayout> 
+No changes made to file /kde4/konversation/src/editnotifydialog.h
+In file /kde4/konversation/src/emoticon.cpp at line 87 column 29: IO_ReadOnly -> QIODevice::ReadOnly
+No changes made to file /kde4/konversation/src/emoticon.h
+No changes made to file /kde4/konversation/src/guess_ja.cpp
+No changes made to file /kde4/konversation/src/guess_ja.h
+No changes made to file /kde4/konversation/src/highlight.cpp
+No changes made to file /kde4/konversation/src/highlight.h
+In file /kde4/konversation/src/highlight_preferences.cpp at line 20 column 17: qheader.h -> q3header.h
+In file /kde4/konversation/src/highlight_preferences.cpp at line 74 column 66: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/highlight_preferences.cpp at line 74 column 112: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/highlight_preferences.cpp at line 75 column 57: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/highlight_preferences.cpp at line 75 column 103: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/highlight_preferences.cpp at line 76 column 62: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/highlight_preferences.cpp at line 76 column 108: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/highlight_preferences.cpp at line 109 column 10: QPtrList -> Q3PtrList
+In file /kde4/konversation/src/highlight_preferences.cpp at line 131 column 54: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/highlight_preferences.cpp at line 286 column 8: QPtrList -> Q3PtrList
+In file /kde4/konversation/src/highlight_preferences.cpp at line 288 column 10: QPtrList -> Q3PtrList
+In file /kde4/konversation/src/highlight_preferences.cpp at line 325 column 10: QPtrList -> Q3PtrList
+In file /kde4/konversation/src/highlight_preferences.cpp: Added the following include directives:
+	#include <Q3PtrList> 
+In file /kde4/konversation/src/highlight_preferences.h at line 43 column 44: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/highlight_preferences.h at line 52 column 16: QPtrList -> Q3PtrList
+In file /kde4/konversation/src/highlight_preferences.h: Added the following include directives:
+	#include <Q3PtrList> 
+In file /kde4/konversation/src/highlightviewitem.cpp at line 19 column 16: QCheckListItem -> Q3CheckListItem
+In file /kde4/konversation/src/highlightviewitem.cpp at line 19 column 50: QCheckListItem -> Q3CheckListItem
+In file /kde4/konversation/src/highlightviewitem.cpp at line 39 column 18: QCheckListItem -> Q3CheckListItem
+In file /kde4/konversation/src/highlightviewitem.cpp at line 44 column 46: QCheckListItem -> Q3CheckListItem
+In file /kde4/konversation/src/highlightviewitem.h at line 17 column 19: qlistview.h -> q3listview.h
+In file /kde4/konversation/src/highlightviewitem.h at line 23 column 47: QCheckListItem -> Q3CheckListItem
+No changes made to file /kde4/konversation/src/identity.cpp
+In file /kde4/konversation/src/identity.h at line 128 column 18: QValueList -> Q3ValueList
+In file /kde4/konversation/src/identity.h: Added the following include directives:
+	#include <Q3ValueList> 
+In file /kde4/konversation/src/identitydialog.cpp at line 16 column 16: qframe.h -> q3frame.h
+In file /kde4/konversation/src/identitydialog.cpp at line 19 column 20: qvaluelist.h -> q3valuelist.h
+In file /kde4/konversation/src/identitydialog.cpp at line 24 column 18: qlistbox.h -> q3listbox.h
+In file /kde4/konversation/src/identitydialog.cpp at line 25 column 19: qgroupbox.h -> q3groupbox.h
+In file /kde4/konversation/src/identitydialog.cpp at line 27 column 20: qwhatsthis.h -> q3whatsthis.h
+In file /kde4/konversation/src/identitydialog.cpp at line 44 column 14: QFrame -> Q3Frame
+In file /kde4/konversation/src/identitydialog.cpp at line 45 column 19: QGridLayout -> Q3GridLayout
+In file /kde4/konversation/src/identitydialog.cpp at line 45 column 49: QGridLayout -> Q3GridLayout
+In file /kde4/konversation/src/identitydialog.cpp at line 83 column 19: QGridLayout -> Q3GridLayout
+In file /kde4/konversation/src/identitydialog.cpp at line 83 column 52: QGridLayout -> Q3GridLayout
+In file /kde4/konversation/src/identitydialog.cpp at line 87 column 18: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/identitydialog.cpp at line 90 column 17: QGroupBox -> Q3GroupBox
+In file /kde4/konversation/src/identitydialog.cpp at line 90 column 47: QGroupBox -> Q3GroupBox
+In file /kde4/konversation/src/identitydialog.cpp at line 92 column 19: QGridLayout -> Q3GridLayout
+In file /kde4/konversation/src/identitydialog.cpp at line 92 column 53: QGridLayout -> Q3GridLayout
+In file /kde4/konversation/src/identitydialog.cpp at line 94 column 37: QListBox -> Q3ListBox
+In file /kde4/konversation/src/identitydialog.cpp at line 95 column 18: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/identitydialog.cpp at line 126 column 17: QGroupBox -> Q3GroupBox
+In file /kde4/konversation/src/identitydialog.cpp at line 126 column 51: QGroupBox -> Q3GroupBox
+In file /kde4/konversation/src/identitydialog.cpp at line 128 column 19: QGridLayout -> Q3GridLayout
+In file /kde4/konversation/src/identitydialog.cpp at line 128 column 57: QGridLayout -> Q3GridLayout
+In file /kde4/konversation/src/identitydialog.cpp at line 131 column 18: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/identitydialog.cpp at line 155 column 19: QGridLayout -> Q3GridLayout
+In file /kde4/konversation/src/identitydialog.cpp at line 155 column 49: QGridLayout -> Q3GridLayout
+In file /kde4/konversation/src/identitydialog.cpp at line 158 column 18: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/identitydialog.cpp at line 162 column 18: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/identitydialog.cpp at line 165 column 43: QGroupBox -> Q3GroupBox
+In file /kde4/konversation/src/identitydialog.cpp at line 169 column 19: QGridLayout -> Q3GridLayout
+In file /kde4/konversation/src/identitydialog.cpp at line 169 column 58: QGridLayout -> Q3GridLayout
+In file /kde4/konversation/src/identitydialog.cpp at line 171 column 18: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/identitydialog.cpp at line 180 column 18: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/identitydialog.cpp at line 196 column 41: QGroupBox -> Q3GroupBox
+In file /kde4/konversation/src/identitydialog.cpp at line 200 column 19: QGridLayout -> Q3GridLayout
+In file /kde4/konversation/src/identitydialog.cpp at line 200 column 53: QGridLayout -> Q3GridLayout
+In file /kde4/konversation/src/identitydialog.cpp at line 202 column 18: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/identitydialog.cpp at line 238 column 19: QGridLayout -> Q3GridLayout
+In file /kde4/konversation/src/identitydialog.cpp at line 238 column 53: QGridLayout -> Q3GridLayout
+In file /kde4/konversation/src/identitydialog.cpp at line 242 column 18: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/identitydialog.cpp at line 247 column 18: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/identitydialog.cpp at line 253 column 18: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/identitydialog.cpp at line 260 column 18: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/identitydialog.cpp at line 265 column 18: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/identitydialog.cpp at line 270 column 18: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/identitydialog.cpp: Added the following include directives:
+	#include <Q3GridLayout> 
+In file /kde4/konversation/src/identitydialog.h at line 21 column 14: QListBox -> Q3ListBox
+In file /kde4/konversation/src/identitydialog.h at line 22 column 15: QGroupBox -> Q3GroupBox
+In file /kde4/konversation/src/identitydialog.h at line 78 column 20: QListBox -> Q3ListBox
+In file /kde4/konversation/src/identitydialog.h at line 79 column 21: QGroupBox -> Q3GroupBox
+In file /kde4/konversation/src/identitydialog.h at line 80 column 21: QGroupBox -> Q3GroupBox
+No changes made to file /kde4/konversation/src/ignore.cpp
+No changes made to file /kde4/konversation/src/ignore.h
+In file /kde4/konversation/src/ignore_preferences.cpp at line 19 column 19: qlistview.h -> q3listview.h
+In file /kde4/konversation/src/ignore_preferences.cpp at line 21 column 17: qheader.h -> q3header.h
+In file /kde4/konversation/src/ignore_preferences.cpp at line 30 column 71: WFlags -> Qt::WFlags
+In file /kde4/konversation/src/ignore_preferences.cpp at line 39 column 64: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/ignore_preferences.cpp at line 40 column 38: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/ignore_preferences.cpp at line 86 column 8: QPtrList -> Q3PtrList
+In file /kde4/konversation/src/ignore_preferences.cpp at line 88 column 12: QPtrList -> Q3PtrList
+In file /kde4/konversation/src/ignore_preferences.cpp at line 139 column 12: QPtrList -> Q3PtrList
+In file /kde4/konversation/src/ignore_preferences.cpp at line 169 column 40: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/ignore_preferences.cpp: Added the following include directives:
+	#include <Q3PtrList> 
+In file /kde4/konversation/src/ignore_preferences.h at line 16 column 18: qptrlist.h -> q3ptrlist.h
+In file /kde4/konversation/src/ignore_preferences.h at line 25 column 81: WFlags -> Qt::WFlags
+In file /kde4/konversation/src/ignore_preferences.h at line 39 column 16: QPtrList -> Q3PtrList
+In file /kde4/konversation/src/ignore_preferences.h at line 49 column 33: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/ignorelistviewitem.cpp at line 17 column 48: QListView -> Q3ListView
+In file /kde4/konversation/src/ignorelistviewitem.cpp at line 50 column 46: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/ignorelistviewitem.h at line 21 column 36: QListView -> Q3ListView
+In file /kde4/konversation/src/images.cpp at line 34 column 102: QIconSet -> QIcon
+In file /kde4/konversation/src/images.cpp at line 41 column 8: QIconSet -> QIcon
+In file /kde4/konversation/src/images.cpp at line 42 column 8: QIconSet -> QIcon
+In file /kde4/konversation/src/images.cpp at line 43 column 8: QIconSet -> QIcon
+In file /kde4/konversation/src/images.cpp at line 134 column 102: QIconSet -> QIcon
+In file /kde4/konversation/src/images.cpp at line 137 column 8: QIconSet -> QIcon
+In file /kde4/konversation/src/images.cpp at line 221 column 12: QIconSet -> QIcon
+In file /kde4/konversation/src/images.cpp at line 222 column 34: QIconSet -> QIcon
+In file /kde4/konversation/src/images.cpp at line 226 column 8: QIconSet -> QIcon
+In file /kde4/konversation/src/images.cpp at line 234 column 8: QIconSet -> QIcon
+In file /kde4/konversation/src/images.cpp at line 252 column 8: QIconSet -> QIcon
+In file /kde4/konversation/src/images.cpp at line 270 column 8: QIconSet -> QIcon
+In file /kde4/konversation/src/images.cpp at line 288 column 8: QIconSet -> QIcon
+In file /kde4/konversation/src/images.cpp at line 296 column 8: QIconSet -> QIcon
+In file /kde4/konversation/src/images.cpp at line 304 column 8: QIconSet -> QIcon
+In file /kde4/konversation/src/images.cpp: Added the following include directives:
+	#include <QPixmap> 
+In file /kde4/konversation/src/images.h at line 13 column 18: qiconset.h -> qicon.h
+In file /kde4/konversation/src/images.h at line 42 column 16: QIconSet -> QIcon
+In file /kde4/konversation/src/images.h at line 44 column 16: QIconSet -> QIcon
+In file /kde4/konversation/src/images.h at line 45 column 16: QIconSet -> QIcon
+In file /kde4/konversation/src/images.h at line 46 column 16: QIconSet -> QIcon
+In file /kde4/konversation/src/images.h at line 47 column 16: QIconSet -> QIcon
+In file /kde4/konversation/src/images.h at line 48 column 16: QIconSet -> QIcon
+In file /kde4/konversation/src/images.h at line 49 column 16: QIconSet -> QIcon
+In file /kde4/konversation/src/images.h at line 50 column 16: QIconSet -> QIcon
+In file /kde4/konversation/src/images.h at line 52 column 16: QIconSet -> QIcon
+In file /kde4/konversation/src/images.h at line 53 column 16: QIconSet -> QIcon
+In file /kde4/konversation/src/images.h at line 54 column 16: QIconSet -> QIcon
+In file /kde4/konversation/src/images.h at line 69 column 16: QIconSet -> QIcon
+In file /kde4/konversation/src/images.h at line 70 column 16: QIconSet -> QIcon
+In file /kde4/konversation/src/images.h at line 71 column 16: QIconSet -> QIcon
+In file /kde4/konversation/src/images.h at line 72 column 16: QIconSet -> QIcon
+In file /kde4/konversation/src/images.h at line 73 column 16: QIconSet -> QIcon
+In file /kde4/konversation/src/images.h at line 74 column 16: QIconSet -> QIcon
+In file /kde4/konversation/src/images.h at line 75 column 16: QIconSet -> QIcon
+In file /kde4/konversation/src/images.h at line 76 column 16: QIconSet -> QIcon
+In file /kde4/konversation/src/images.h at line 77 column 16: QIconSet -> QIcon
+In file /kde4/konversation/src/images.h at line 78 column 16: QIconSet -> QIcon
+In file /kde4/konversation/src/images.h at line 79 column 16: QIconSet -> QIcon
+In file /kde4/konversation/src/images.h at line 89 column 16: QIconSet -> QIcon
+In file /kde4/konversation/src/images.h at line 90 column 16: QIconSet -> QIcon
+In file /kde4/konversation/src/images.h at line 91 column 16: QIconSet -> QIcon
+In file /kde4/konversation/src/inputfilter.cpp at line 1836 column 12: QPtrList -> Q3PtrList
+In file /kde4/konversation/src/inputfilter.cpp: Added the following include directives:
+	#include <Q3PtrList> 
+No changes made to file /kde4/konversation/src/inputfilter.h
+No changes made to file /kde4/konversation/src/insertchardialog.cpp
+No changes made to file /kde4/konversation/src/insertchardialog.h
+No changes made to file /kde4/konversation/src/irccharsets.cpp
+No changes made to file /kde4/konversation/src/irccharsets.h
+No changes made to file /kde4/konversation/src/irccolorchooser.cpp
+No changes made to file /kde4/konversation/src/irccolorchooser.h
+In file /kde4/konversation/src/ircinput.cpp at line 27 column 20: qwhatsthis.h -> q3whatsthis.h
+In file /kde4/konversation/src/ircinput.cpp at line 28 column 20: qpopupmenu.h -> q3popupmenu.h
+In file /kde4/konversation/src/ircinput.cpp at line 72 column 31: QTextEdit -> Q3TextEdit
+In file /kde4/konversation/src/ircinput.cpp at line 73 column 26: RichText -> Qt::RichText
+In file /kde4/konversation/src/ircinput.cpp at line 78 column 14: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/ircinput.cpp at line 158 column 10: QPopupMenu -> Q3PopupMenu
+In file /kde4/konversation/src/ircinput.cpp at line 160 column 14: QPopupMenu -> Q3PopupMenu
+In file /kde4/konversation/src/ircinput.cpp at line 226 column 20: Key_Tab -> Qt::Key_Tab
+In file /kde4/konversation/src/ircinput.cpp: Added the following include directives:
+	#include <QShowEvent> 	#include <QMouseEvent> 	#include <QHideEvent> 	#include <QKeyEvent> 
+In file /kde4/konversation/src/ircinput.h at line 76 column 26: QPopupMenu -> Q3PopupMenu
+In file /kde4/konversation/src/ircinput.h: Added the following include directives:
+	#include <QShowEvent> 	#include <QEvent> 	#include <QHideEvent> 	#include <QMouseEvent> 	#include <QKeyEvent> 	#include <Q3PopupMenu> 
+No changes made to file /kde4/konversation/src/ircqueue.cpp
+In file /kde4/konversation/src/ircqueue.h at line 104 column 14: QValueList -> Q3ValueList
+In file /kde4/konversation/src/ircqueue.h: Added the following include directives:
+	#include <Q3ValueList> 
+In file /kde4/konversation/src/ircview.cpp at line 39 column 21: qstylesheet.h -> q3stylesheet.h
+In file /kde4/konversation/src/ircview.cpp at line 42 column 22: qtextbrowser.h -> q3textbrowser.h
+In file /kde4/konversation/src/ircview.cpp at line 46 column 21: qdragobject.h -> q3dragobject.h
+In file /kde4/konversation/src/ircview.cpp at line 47 column 20: qpopupmenu.h -> q3popupmenu.h
+In file /kde4/konversation/src/ircview.cpp at line 48 column 20: qwhatsthis.h -> q3whatsthis.h
+In file /kde4/konversation/src/ircview.cpp at line 94 column 31: QTextEdit -> Q3TextEdit
+In file /kde4/konversation/src/ircview.cpp at line 99 column 27: QTextEdit -> Q3TextEdit
+In file /kde4/konversation/src/ircview.cpp at line 104 column 15: QStyleSheet -> Q3StyleSheet
+In file /kde4/konversation/src/ircview.cpp at line 104 column 38: QStyleSheet -> Q3StyleSheet
+In file /kde4/konversation/src/ircview.cpp at line 105 column 23: QStyleSheetItem -> Q3StyleSheetItem
+In file /kde4/konversation/src/ircview.cpp at line 108 column 28: QPopupMenu -> Q3PopupMenu
+In file /kde4/konversation/src/ircview.cpp at line 139 column 15: QStyleSheet -> Q3StyleSheet
+In file /kde4/konversation/src/ircview.cpp at line 143 column 19: QStyleSheetItem -> Q3StyleSheetItem
+In file /kde4/konversation/src/ircview.cpp at line 152 column 41: QStyleSheetItem -> Q3StyleSheetItem
+In file /kde4/konversation/src/ircview.cpp at line 153 column 36: QStyleSheetItem -> Q3StyleSheetItem
+In file /kde4/konversation/src/ircview.cpp at line 307 column 24: QCString -> Q3CString
+In file /kde4/konversation/src/ircview.cpp at line 309 column 50: IO_WriteOnly -> QIODevice::WriteOnly
+In file /kde4/konversation/src/ircview.cpp at line 519 column 20: QPtrList -> Q3PtrList
+In file /kde4/konversation/src/ircview.cpp at line 520 column 28: QPtrListIterator -> Q3PtrListIterator
+In file /kde4/konversation/src/ircview.cpp at line 729 column 18: QValueList -> Q3ValueList
+In file /kde4/konversation/src/ircview.cpp at line 730 column 18: QValueList -> Q3ValueList
+In file /kde4/konversation/src/ircview.cpp at line 752 column 13: qHeapSort -> qSort
+In file /kde4/konversation/src/ircview.cpp at line 783 column 17: qHeapSort -> qSort
+In file /kde4/konversation/src/ircview.cpp at line 785 column 18: QValueList -> Q3ValueList
+In file /kde4/konversation/src/ircview.cpp at line 817 column 18: QValueList -> Q3ValueList
+In file /kde4/konversation/src/ircview.cpp at line 819 column 18: QValueList -> Q3ValueList
+In file /kde4/konversation/src/ircview.cpp at line 986 column 22: QStyleSheet -> Q3StyleSheet
+In file /kde4/konversation/src/ircview.cpp at line 1055 column 46: QTextEdit -> Q3TextEdit
+In file /kde4/konversation/src/ircview.cpp at line 1417 column 46: QPopupMenu -> Q3PopupMenu
+In file /kde4/konversation/src/ircview.cpp at line 1593 column 10: QPopupMenu -> Q3PopupMenu
+In file /kde4/konversation/src/ircview.cpp at line 1661 column 32: QUriDrag -> Q3UriDrag
+In file /kde4/konversation/src/ircview.cpp at line 1667 column 12: QStrList -> Q3StrList
+In file /kde4/konversation/src/ircview.cpp at line 1668 column 15: QUriDrag -> Q3UriDrag
+In file /kde4/konversation/src/ircview.cpp: Added the following include directives:
+	#include <QResizeEvent> 	#include <QContextMenuEvent> 	#include <Q3StrList> 	#include <QPixmap> 	#include <QMouseEvent> 	#include <QShowEvent> 	#include <Q3ValueList> 	#include <QKeyEvent> 	#include <QHideEvent> 	#include <QDropEvent> 	#include <QDragMoveEvent> 	#include <Q3CString> 	#include <Q3PtrList> 
+In file /kde4/konversation/src/ircview.h at line 36 column 14: QStrList -> Q3StrList
+In file /kde4/konversation/src/ircview.h at line 64 column 18: QPopupMenu -> Q3PopupMenu
+In file /kde4/konversation/src/ircview.h at line 98 column 40: QStrList -> Q3StrList
+In file /kde4/konversation/src/ircview.h at line 161 column 45: QPopupMenu -> Q3PopupMenu
+In file /kde4/konversation/src/ircview.h at line 186 column 18: QValueList -> Q3ValueList
+In file /kde4/konversation/src/ircview.h at line 200 column 18: QPopupMenu -> Q3PopupMenu
+In file /kde4/konversation/src/ircview.h: Added the following include directives:
+	#include <QContextMenuEvent> 	#include <QDragMoveEvent> 	#include <QDropEvent> 	#include <QShowEvent> 	#include <QResizeEvent> 	#include <Q3ValueList> 	#include <QPixmap> 	#include <QMouseEvent> 	#include <Q3StrList> 	#include <Q3PopupMenu> 	#include <QHideEvent> 	#include <QKeyEvent> 	#include <QEvent> 	#include <QDragEnterEvent> 
+In file /kde4/konversation/src/ircviewbox.cpp at line 27 column 7: QVBox -> Q3VBox
+In file /kde4/konversation/src/ircviewbox.h at line 13 column 15: qvbox.h -> q3vbox.h
+In file /kde4/konversation/src/ircviewbox.h at line 20 column 31: QVBox -> Q3VBox
+In file /kde4/konversation/src/joinchanneldialog.cpp at line 41 column 26: QPtrList -> Q3PtrList
+In file /kde4/konversation/src/joinchanneldialog.cpp at line 42 column 28: QPtrListIterator -> Q3PtrListIterator
+In file /kde4/konversation/src/joinchanneldialog.cpp: Added the following include directives:
+	#include <Q3PtrList> 
+No changes made to file /kde4/konversation/src/joinchanneldialog.h
+No changes made to file /kde4/konversation/src/konsolepanel.cpp
+No changes made to file /kde4/konversation/src/konsolepanel.h
+In file /kde4/konversation/src/konvdcop.cpp at line 44 column 12: QPtrList -> Q3PtrList
+In file /kde4/konversation/src/konvdcop.cpp at line 58 column 12: QPtrList -> Q3PtrList
+In file /kde4/konversation/src/konvdcop.cpp: Added the following include directives:
+	#include <Q3PtrList> 
+No changes made to file /kde4/konversation/src/konvdcop.h
+In file /kde4/konversation/src/konversationapplication.cpp at line 75 column 12: QCString -> Q3CString
+In file /kde4/konversation/src/konversationapplication.cpp at line 677 column 12: QPtrList -> Q3PtrList
+In file /kde4/konversation/src/konversationapplication.cpp at line 757 column 12: QPtrList -> Q3PtrList
+In file /kde4/konversation/src/konversationapplication.cpp at line 774 column 12: QPtrList -> Q3PtrList
+In file /kde4/konversation/src/konversationapplication.cpp: Added the following include directives:
+	#include <Q3CString> 	#include <Q3PtrList> 
+In file /kde4/konversation/src/konversationapplication.h at line 25 column 14: QCString -> Q3CString
+In file /kde4/konversation/src/konversationapplication.h: Added the following include directives:
+	#include <Q3CString> 
+In file /kde4/konversation/src/konversationmainwindow.cpp at line 32 column 20: qwhatsthis.h -> q3whatsthis.h
+In file /kde4/konversation/src/konversationmainwindow.cpp at line 34 column 21: qobjectlist.h -> qobject.h
+In file /kde4/konversation/src/konversationmainwindow.cpp at line 62 column 98: WStyle_ContextHelp -> Qt::WStyle_ContextHelp
+In file /kde4/konversation/src/konversationmainwindow.cpp at line 62 column 115: WType_TopLevel -> Qt::WType_TopLevel
+In file /kde4/konversation/src/konversationmainwindow.cpp at line 62 column 135: WDestructiveClose -> Qt::WDestructiveClose
+In file /kde4/konversation/src/konversationmainwindow.cpp: Added the following include directives:
+	#include <QHideEvent> 	#include <QEvent> 	#include <QShowEvent> 
+In file /kde4/konversation/src/konversationmainwindow.h: Added the following include directives:
+	#include <QShowEvent> 	#include <QEvent> 	#include <QHideEvent> 
+No changes made to file /kde4/konversation/src/konversationsound.cpp
+No changes made to file /kde4/konversation/src/konversationsound.h
+In file /kde4/konversation/src/konversationstatusbar.cpp at line 15 column 20: qwhatsthis.h -> q3whatsthis.h
+In file /kde4/konversation/src/konversationstatusbar.cpp at line 43 column 14: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/konversationstatusbar.cpp at line 51 column 14: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/konversationstatusbar.cpp at line 58 column 14: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/konversationstatusbar.h: Added the following include directives:
+	#include <QLabel> 
+No changes made to file /kde4/konversation/src/konvibookmarkhandler.cpp
+No changes made to file /kde4/konversation/src/konvibookmarkhandler.h
+In file /kde4/konversation/src/konvibookmarkmenu.cpp at line 53 column 20: QPtrListIterator -> Q3PtrListIterator
+No changes made to file /kde4/konversation/src/konvibookmarkmenu.h
+In file /kde4/konversation/src/konviconfigdialog.cpp at line 38 column 15: qvbox.h -> q3vbox.h
+In file /kde4/konversation/src/konviconfigdialog.cpp at line 42 column 10: QAsciiDict -> Q3AsciiDict
+In file /kde4/konversation/src/konviconfigdialog.cpp at line 72 column 16: QCString -> Q3CString
+In file /kde4/konversation/src/konviconfigdialog.cpp at line 134 column 17: QVBox -> Q3VBox
+In file /kde4/konversation/src/konviconfigdialog.cpp at line 151 column 18: QFrame -> Q3Frame
+In file /kde4/konversation/src/konviconfigdialog.cpp at line 152 column 23: QVBoxLayout -> Q3VBoxLayout
+In file /kde4/konversation/src/konviconfigdialog.cpp at line 152 column 52: QVBoxLayout -> Q3VBoxLayout
+In file /kde4/konversation/src/konviconfigdialog.cpp: Added the following include directives:
+	#include <Q3CString> 	#include <Q3VBoxLayout> 	#include <Q3Frame> 
+In file /kde4/konversation/src/konviconfigdialog.h at line 28 column 20: qasciidict.h -> q3asciidict.h
+In file /kde4/konversation/src/konviconfigdialog.h at line 102 column 25: QAsciiDict -> Q3AsciiDict
+No changes made to file /kde4/konversation/src/konviface.h
+In file /kde4/konversation/src/konvisettingsdialog.cpp at line 234 column 16: QValueList -> Q3ValueList
+In file /kde4/konversation/src/konvisettingsdialog.cpp at line 235 column 16: QValueList -> Q3ValueList
+In file /kde4/konversation/src/konvisettingsdialog.cpp at line 248 column 18: QIntDictIterator -> Q3IntDictIterator
+In file /kde4/konversation/src/konvisettingsdialog.cpp at line 267 column 18: QIntDictIterator -> Q3IntDictIterator
+In file /kde4/konversation/src/konvisettingsdialog.cpp at line 279 column 18: QIntDictIterator -> Q3IntDictIterator
+In file /kde4/konversation/src/konvisettingsdialog.cpp at line 289 column 18: QIntDictIterator -> Q3IntDictIterator
+In file /kde4/konversation/src/konvisettingsdialog.cpp: Added the following include directives:
+	#include <QShowEvent> 	#include <Q3ValueList> 
+In file /kde4/konversation/src/konvisettingsdialog.h at line 19 column 20: qasciidict.h -> q3asciidict.h
+In file /kde4/konversation/src/konvisettingsdialog.h at line 20 column 18: qintdict.h -> q3intdict.h
+In file /kde4/konversation/src/konvisettingsdialog.h at line 91 column 16: QIntDict -> Q3IntDict
+In file /kde4/konversation/src/konvisettingsdialog.h: Added the following include directives:
+	#include <QShowEvent> 
+No changes made to file /kde4/konversation/src/konvisettingspage.h
+In file /kde4/konversation/src/logfilereader.cpp at line 20 column 21: qtextstream.h -> q3textstream.h
+In file /kde4/konversation/src/logfilereader.cpp at line 21 column 19: qdockarea.h -> q3dockarea.h
+In file /kde4/konversation/src/logfilereader.cpp at line 26 column 21: qstylesheet.h -> q3stylesheet.h
+In file /kde4/konversation/src/logfilereader.cpp at line 27 column 20: qwhatsthis.h -> q3whatsthis.h
+In file /kde4/konversation/src/logfilereader.cpp at line 43 column 13: QDockArea -> Q3DockArea
+In file /kde4/konversation/src/logfilereader.cpp at line 43 column 42: QDockArea -> Q3DockArea
+In file /kde4/konversation/src/logfilereader.cpp at line 43 column 67: QDockArea -> Q3DockArea
+In file /kde4/konversation/src/logfilereader.cpp at line 50 column 14: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/logfilereader.cpp at line 60 column 14: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/logfilereader.cpp at line 106 column 28: IO_ReadOnly -> QIODevice::ReadOnly
+In file /kde4/konversation/src/logfilereader.cpp at line 108 column 19: QTextStream -> Q3TextStream
+In file /kde4/konversation/src/logfilereader.cpp at line 109 column 38: QTextStream -> Q3TextStream
+In file /kde4/konversation/src/logfilereader.cpp at line 120 column 29: QStyleSheet -> Q3StyleSheet
+In file /kde4/konversation/src/logfilereader.cpp: Added the following include directives:
+	#include <QEvent> 	#include <QKeyEvent> 
+In file /kde4/konversation/src/logfilereader.h: Added the following include directives:
+	#include <QEvent> 
+No changes made to file /kde4/konversation/src/main.cpp
+No changes made to file /kde4/konversation/src/modebutton.cpp
+No changes made to file /kde4/konversation/src/modebutton.h
+In file /kde4/konversation/src/multilineedit.cpp at line 32 column 15: QVBoxLayout -> Q3VBoxLayout
+In file /kde4/konversation/src/multilineedit.cpp at line 32 column 45: QVBoxLayout -> Q3VBoxLayout
+In file /kde4/konversation/src/multilineedit.cpp: Added the following include directives:
+	#include <Q3VBoxLayout> 
+No changes made to file /kde4/konversation/src/multilineedit.h
+In file /kde4/konversation/src/multilinetextedit.cpp at line 20 column 82: QTextEdit -> Q3TextEdit
+In file /kde4/konversation/src/multilinetextedit.cpp at line 34 column 11: QTextEdit -> Q3TextEdit
+In file /kde4/konversation/src/multilinetextedit.cpp at line 56 column 13: QPointArray -> Q3PointArray
+In file /kde4/konversation/src/multilinetextedit.cpp at line 58 column 13: QPointArray -> Q3PointArray
+In file /kde4/konversation/src/multilinetextedit.cpp: Added the following include directives:
+	#include <Q3PointArray> 
+In file /kde4/konversation/src/multilinetextedit.h at line 16 column 19: qtextedit.h -> q3textedit.h
+In file /kde4/konversation/src/multilinetextedit.h at line 22 column 42: QTextEdit -> Q3TextEdit
+In file /kde4/konversation/src/multilinetextedit.h: Added the following include directives:
+	#include <QWheelEvent> 	#include <QPaintEvent> 
+In file /kde4/konversation/src/nick.cpp at line 15 column 21: qtextstream.h -> q3textstream.h
+In file /kde4/konversation/src/nick.cpp at line 156 column 31: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/nick.cpp: Added the following include directives:
+	#include <QPixmap> 
+In file /kde4/konversation/src/nick.h at line 30 column 41: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/nickinfo.cpp at line 256 column 15: QTextStream -> Q3TextStream
+In file /kde4/konversation/src/nickinfo.cpp at line 256 column 50: IO_WriteOnly -> QIODevice::WriteOnly
+In file /kde4/konversation/src/nickinfo.cpp at line 286 column 43: QTextStream -> Q3TextStream
+In file /kde4/konversation/src/nickinfo.cpp at line 296 column 26: QMimeSourceFactory -> Q3MimeSourceFactory
+In file /kde4/konversation/src/nickinfo.cpp at line 312 column 26: QMimeSourceFactory -> Q3MimeSourceFactory
+In file /kde4/konversation/src/nickinfo.cpp: Added the following include directives:
+	#include <Q3TextStream> 
+In file /kde4/konversation/src/nickinfo.h at line 87 column 41: QTextStream -> Q3TextStream
+In file /kde4/konversation/src/nickinfo.h at line 141 column 18: QValueList -> Q3ValueList
+In file /kde4/konversation/src/nickinfo.h: Added the following include directives:
+	#include <Q3TextStream> 	#include <Q3ValueList> 
+In file /kde4/konversation/src/nicklistbehavior_preferences.cpp at line 14 column 17: qheader.h -> q3header.h
+In file /kde4/konversation/src/nicklistbehavior_preferences.cpp at line 71 column 15: QListViewItem -> Q3ListViewItem
+No changes made to file /kde4/konversation/src/nicklistbehavior_preferences.h
+In file /kde4/konversation/src/nicklistview.cpp at line 25 column 20: qwhatsthis.h -> q3whatsthis.h
+In file /kde4/konversation/src/nicklistview.cpp at line 26 column 21: qdragobject.h -> q3dragobject.h
+In file /kde4/konversation/src/nicklistview.cpp at line 141 column 18: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/nicklistview.cpp at line 145 column 26: QMimeSourceFactory -> Q3MimeSourceFactory
+In file /kde4/konversation/src/nicklistview.cpp at line 146 column 26: QMimeSourceFactory -> Q3MimeSourceFactory
+In file /kde4/konversation/src/nicklistview.cpp at line 147 column 26: QMimeSourceFactory -> Q3MimeSourceFactory
+In file /kde4/konversation/src/nicklistview.cpp at line 148 column 26: QMimeSourceFactory -> Q3MimeSourceFactory
+In file /kde4/konversation/src/nicklistview.cpp at line 149 column 26: QMimeSourceFactory -> Q3MimeSourceFactory
+In file /kde4/konversation/src/nicklistview.cpp at line 150 column 26: QMimeSourceFactory -> Q3MimeSourceFactory
+In file /kde4/konversation/src/nicklistview.cpp at line 151 column 26: QMimeSourceFactory -> Q3MimeSourceFactory
+In file /kde4/konversation/src/nicklistview.cpp at line 153 column 18: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/nicklistview.cpp at line 174 column 25: QListViewItemIterator -> Q3ListViewItemIterator
+In file /kde4/konversation/src/nicklistview.cpp at line 316 column 20: QStrList -> Q3StrList
+In file /kde4/konversation/src/nicklistview.cpp at line 318 column 24: QUriDrag -> Q3UriDrag
+In file /kde4/konversation/src/nicklistview.cpp: Added the following include directives:
+	#include <QContextMenuEvent> 	#include <QDropEvent> 	#include <Q3StrList> 
+In file /kde4/konversation/src/nicklistview.h at line 25 column 16: QPopupMenu -> Q3PopupMenu
+In file /kde4/konversation/src/nicklistview.h at line 60 column 18: QPopupMenu -> Q3PopupMenu
+In file /kde4/konversation/src/nicklistview.h at line 61 column 18: QPopupMenu -> Q3PopupMenu
+In file /kde4/konversation/src/nicklistview.h at line 62 column 18: QPopupMenu -> Q3PopupMenu
+In file /kde4/konversation/src/nicklistview.h at line 63 column 18: QPopupMenu -> Q3PopupMenu
+In file /kde4/konversation/src/nicklistview.h: Added the following include directives:
+	#include <Q3PopupMenu> 	#include <QContextMenuEvent> 	#include <QDropEvent> 
+In file /kde4/konversation/src/nicksonline.cpp at line 26 column 15: qhbox.h -> q3hbox.h
+In file /kde4/konversation/src/nicksonline.cpp at line 29 column 20: qpopupmenu.h -> q3popupmenu.h
+In file /kde4/konversation/src/nicksonline.cpp at line 30 column 18: qptrlist.h -> q3ptrlist.h
+In file /kde4/konversation/src/nicksonline.cpp at line 31 column 20: qwhatsthis.h -> q3whatsthis.h
+In file /kde4/konversation/src/nicksonline.cpp at line 73 column 14: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/nicksonline.cpp at line 80 column 9: QHBox -> Q3HBox
+In file /kde4/konversation/src/nicksonline.cpp at line 80 column 30: QHBox -> Q3HBox
+In file /kde4/konversation/src/nicksonline.cpp at line 86 column 14: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/nicksonline.cpp at line 89 column 62: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/nicksonline.cpp at line 90 column 50: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/nicksonline.cpp at line 97 column 14: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/nicksonline.cpp at line 104 column 14: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/nicksonline.cpp at line 110 column 14: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/nicksonline.cpp at line 117 column 14: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/nicksonline.cpp at line 132 column 32: QPopupMenu -> Q3PopupMenu
+In file /kde4/konversation/src/nicksonline.cpp at line 133 column 67: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/nicksonline.cpp at line 134 column 68: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/nicksonline.cpp at line 161 column 13: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/nicksonline.cpp at line 161 column 61: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/nicksonline.cpp at line 164 column 17: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/nicksonline.cpp at line 173 column 13: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/nicksonline.cpp at line 173 column 60: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/nicksonline.cpp at line 176 column 17: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/nicksonline.cpp at line 185 column 13: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/nicksonline.cpp at line 187 column 17: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/nicksonline.cpp at line 240 column 17: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/nicksonline.cpp at line 257 column 17: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/nicksonline.cpp at line 285 column 25: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/nicksonline.cpp at line 288 column 25: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/nicksonline.cpp at line 304 column 28: QIconSet -> QIcon
+In file /kde4/konversation/src/nicksonline.cpp at line 304 column 45: QIconSet -> QIcon
+In file /kde4/konversation/src/nicksonline.cpp at line 304 column 63: QIconSet -> QIcon
+In file /kde4/konversation/src/nicksonline.cpp at line 307 column 28: QIconSet -> QIcon
+In file /kde4/konversation/src/nicksonline.cpp at line 307 column 45: QIconSet -> QIcon
+In file /kde4/konversation/src/nicksonline.cpp at line 307 column 65: QIconSet -> QIcon
+In file /kde4/konversation/src/nicksonline.cpp at line 328 column 29: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/nicksonline.cpp at line 348 column 25: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/nicksonline.cpp at line 351 column 29: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/nicksonline.cpp at line 361 column 25: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/nicksonline.cpp at line 364 column 25: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/nicksonline.cpp at line 376 column 28: QIconSet -> QIcon
+In file /kde4/konversation/src/nicksonline.cpp at line 376 column 45: QIconSet -> QIcon
+In file /kde4/konversation/src/nicksonline.cpp at line 376 column 63: QIconSet -> QIcon
+In file /kde4/konversation/src/nicksonline.cpp at line 379 column 28: QIconSet -> QIcon
+In file /kde4/konversation/src/nicksonline.cpp at line 379 column 45: QIconSet -> QIcon
+In file /kde4/konversation/src/nicksonline.cpp at line 379 column 65: QIconSet -> QIcon
+In file /kde4/konversation/src/nicksonline.cpp at line 383 column 17: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/nicksonline.cpp at line 386 column 21: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/nicksonline.cpp at line 400 column 25: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/nicksonline.cpp at line 426 column 12: QPtrList -> Q3PtrList
+In file /kde4/konversation/src/nicksonline.cpp at line 442 column 12: QPtrList -> Q3PtrList
+In file /kde4/konversation/src/nicksonline.cpp at line 457 column 12: QPtrList -> Q3PtrList
+In file /kde4/konversation/src/nicksonline.cpp at line 460 column 17: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/nicksonline.cpp at line 463 column 21: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/nicksonline.cpp at line 508 column 50: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/nicksonline.cpp at line 519 column 58: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/nicksonline.cpp at line 540 column 56: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/nicksonline.cpp at line 558 column 13: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/nicksonline.cpp at line 564 column 17: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/nicksonline.cpp at line 566 column 17: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/nicksonline.cpp at line 580 column 17: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/nicksonline.cpp at line 682 column 54: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/nicksonline.cpp at line 761 column 17: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/nicksonline.cpp at line 767 column 67: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/nicksonline.cpp at line 823 column 17: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/nicksonline.cpp at line 828 column 43: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/nicksonline.cpp at line 853 column 32: QIconSet -> QIcon
+In file /kde4/konversation/src/nicksonline.cpp at line 853 column 49: QIconSet -> QIcon
+In file /kde4/konversation/src/nicksonline.cpp at line 853 column 69: QIconSet -> QIcon
+In file /kde4/konversation/src/nicksonline.cpp at line 858 column 32: QIconSet -> QIcon
+In file /kde4/konversation/src/nicksonline.cpp at line 858 column 49: QIconSet -> QIcon
+In file /kde4/konversation/src/nicksonline.cpp at line 858 column 67: QIconSet -> QIcon
+In file /kde4/konversation/src/nicksonline.h at line 20 column 15: qvbox.h -> q3vbox.h
+In file /kde4/konversation/src/nicksonline.h at line 21 column 18: qiconset.h -> qicon.h
+In file /kde4/konversation/src/nicksonline.h at line 27 column 16: QPopupMenu -> Q3PopupMenu
+In file /kde4/konversation/src/nicksonline.h at line 65 column 51: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/nicksonline.h at line 84 column 45: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/nicksonline.h at line 96 column 62: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/nicksonline.h at line 108 column 21: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/nicksonline.h at line 108 column 56: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/nicksonline.h at line 110 column 21: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/nicksonline.h at line 110 column 55: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/nicksonline.h at line 112 column 21: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/nicksonline.h at line 116 column 38: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/nicksonline.h at line 123 column 53: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/nicksonline.h at line 125 column 21: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/nicksonline.h at line 129 column 49: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/nicksonline.h at line 144 column 18: QPopupMenu -> Q3PopupMenu
+In file /kde4/konversation/src/nicksonline.h at line 152 column 16: QIconSet -> QIcon
+In file /kde4/konversation/src/nicksonline.h: Added the following include directives:
+	#include <Q3PopupMenu> 
+In file /kde4/konversation/src/nicksonlineitem.cpp at line 13 column 52: QListView -> Q3ListView
+In file /kde4/konversation/src/nicksonlineitem.cpp at line 19 column 56: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/nicksonlineitem.cpp at line 26 column 42: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/nicksonlineitem.h at line 28 column 33: QListView -> Q3ListView
+In file /kde4/konversation/src/nicksonlineitem.h at line 33 column 37: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/nicksonlineitem.h at line 38 column 41: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/notificationhandler.cpp at line 19 column 21: qstylesheet.h -> q3stylesheet.h
+In file /kde4/konversation/src/notificationhandler.cpp at line 47 column 44: QStyleSheet -> Q3StyleSheet
+In file /kde4/konversation/src/notificationhandler.cpp at line 73 column 44: QStyleSheet -> Q3StyleSheet
+In file /kde4/konversation/src/notificationhandler.cpp at line 99 column 44: QStyleSheet -> Q3StyleSheet
+No changes made to file /kde4/konversation/src/notificationhandler.h
+In file /kde4/konversation/src/osd.cpp at line 33 column 37: WNoAutoErase -> Qt::WNoAutoErase
+In file /kde4/konversation/src/osd.cpp at line 33 column 56: WStyle_Customize -> Qt::WStyle_Customize
+In file /kde4/konversation/src/osd.cpp at line 33 column 71: WX11BypassWM -> Qt::WX11BypassWM
+In file /kde4/konversation/src/osd.cpp at line 33 column 91: WStyle_StaysOnTop -> Qt::WStyle_StaysOnTop
+In file /kde4/konversation/src/osd.cpp at line 33 column 105: WStyle_Tool -> Qt::WStyle_Tool
+In file /kde4/konversation/src/osd.cpp at line 420 column 12: QCString -> Q3CString
+In file /kde4/konversation/src/osd.cpp at line 433 column 49: IO_ReadOnly -> QIODevice::ReadOnly
+In file /kde4/konversation/src/osd.cpp: Added the following include directives:
+	#include <Q3CString> 	#include <QMouseEvent> 	#include <QEvent> 
+In file /kde4/konversation/src/osd.h: Added the following include directives:
+	#include <QEvent> 	#include <QMouseEvent> 
+In file /kde4/konversation/src/osd_preferences.cpp at line 19 column 19: qgroupbox.h -> q3groupbox.h
+In file /kde4/konversation/src/osd_preferences.cpp at line 29 column 65: WFlags -> Qt::WFlags
+In file /kde4/konversation/src/osd_preferences.cpp: Added the following include directives:
+	#include <QShowEvent> 	#include <QHideEvent> 
+In file /kde4/konversation/src/osd_preferences.h at line 28 column 78: WFlags -> Qt::WFlags
+In file /kde4/konversation/src/osd_preferences.h: Added the following include directives:
+	#include <QShowEvent> 	#include <QHideEvent> 
+In file /kde4/konversation/src/outputfilter.cpp at line 28 column 20: qvaluelist.h -> q3valuelist.h
+In file /kde4/konversation/src/outputfilter.cpp at line 127 column 20: QCString -> Q3CString
+In file /kde4/konversation/src/outputfilter.cpp: Added the following include directives:
+	#include <Q3CString> 
+No changes made to file /kde4/konversation/src/outputfilter.h
+In file /kde4/konversation/src/query.cpp at line 28 column 15: qhbox.h -> q3hbox.h
+In file /kde4/konversation/src/query.cpp at line 34 column 21: qtextstream.h -> q3textstream.h
+In file /kde4/konversation/src/query.cpp at line 35 column 20: qwhatsthis.h -> q3whatsthis.h
+In file /kde4/konversation/src/query.cpp at line 61 column 9: QHBox -> Q3HBox
+In file /kde4/konversation/src/query.cpp at line 61 column 26: QHBox -> Q3HBox
+In file /kde4/konversation/src/query.cpp at line 72 column 14: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/query.cpp at line 73 column 14: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/query.cpp at line 74 column 14: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/query.cpp at line 79 column 55: QStrList -> Q3StrList
+In file /kde4/konversation/src/query.cpp at line 79 column 96: QStrList -> Q3StrList
+In file /kde4/konversation/src/query.cpp at line 83 column 14: QPopupMenu -> Q3PopupMenu
+In file /kde4/konversation/src/query.cpp at line 101 column 9: QHBox -> Q3HBox
+In file /kde4/konversation/src/query.cpp at line 101 column 29: QHBox -> Q3HBox
+In file /kde4/konversation/src/query.cpp at line 370 column 18: QValueList -> Q3ValueList
+In file /kde4/konversation/src/query.cpp at line 534 column 19: QTextStream -> Q3TextStream
+In file /kde4/konversation/src/query.cpp at line 534 column 54: IO_WriteOnly -> QIODevice::WriteOnly
+In file /kde4/konversation/src/query.cpp at line 619 column 39: QStrList -> Q3StrList
+In file /kde4/konversation/src/query.cpp at line 629 column 14: QPopupMenu -> Q3PopupMenu
+In file /kde4/konversation/src/query.cpp: Added the following include directives:
+	#include <Q3ValueList> 	#include <Q3StrList> 	#include <QPixmap> 	#include <Q3PopupMenu> 	#include <QShowEvent> 
+In file /kde4/konversation/src/query.h at line 81 column 40: QStrList -> Q3StrList
+In file /kde4/konversation/src/query.h: Added the following include directives:
+	#include <Q3StrList> 	#include <QShowEvent> 	#include <QLabel> 
+In file /kde4/konversation/src/queuetuner.cpp at line 23 column 20: qpopupmenu.h -> q3popupmenu.h
+In file /kde4/konversation/src/queuetuner.cpp at line 239 column 14: QPopupMenu -> Q3PopupMenu
+In file /kde4/konversation/src/queuetuner.cpp: Added the following include directives:
+	#include <QContextMenuEvent> 
+In file /kde4/konversation/src/queuetuner.h: Added the following include directives:
+	#include <QContextMenuEvent> 
+No changes made to file /kde4/konversation/src/quickbutton.cpp
+No changes made to file /kde4/konversation/src/quickbutton.h
+In file /kde4/konversation/src/quickbuttons_preferences.cpp at line 15 column 17: qheader.h -> q3header.h
+In file /kde4/konversation/src/quickbuttons_preferences.cpp at line 38 column 63: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/quickbuttons_preferences.cpp at line 38 column 105: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/quickbuttons_preferences.cpp at line 39 column 54: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/quickbuttons_preferences.cpp at line 39 column 96: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/quickbuttons_preferences.cpp at line 121 column 15: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/quickbuttons_preferences.cpp at line 146 column 53: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/quickbuttons_preferences.cpp at line 177 column 15: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/quickbuttons_preferences.cpp at line 193 column 15: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/quickbuttons_preferences.cpp at line 229 column 15: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/quickbuttons_preferences.cpp at line 235 column 17: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/quickbuttons_preferences.h at line 35 column 36: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/quickconnectdialog.cpp at line 16 column 20: qwhatsthis.h -> q3whatsthis.h
+In file /kde4/konversation/src/quickconnectdialog.cpp at line 31 column 15: QGridLayout -> Q3GridLayout
+In file /kde4/konversation/src/quickconnectdialog.cpp at line 31 column 41: QGridLayout -> Q3GridLayout
+In file /kde4/konversation/src/quickconnectdialog.cpp at line 37 column 14: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/quickconnectdialog.cpp at line 39 column 14: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/quickconnectdialog.cpp at line 44 column 14: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/quickconnectdialog.cpp at line 46 column 14: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/quickconnectdialog.cpp at line 51 column 14: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/quickconnectdialog.cpp at line 53 column 14: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/quickconnectdialog.cpp at line 58 column 14: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/quickconnectdialog.cpp at line 60 column 14: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/quickconnectdialog.cpp: Added the following include directives:
+	#include <Q3GridLayout> 
+No changes made to file /kde4/konversation/src/quickconnectdialog.h
+No changes made to file /kde4/konversation/src/rawlog.cpp
+No changes made to file /kde4/konversation/src/rawlog.h
+No changes made to file /kde4/konversation/src/replycodes.h
+No changes made to file /kde4/konversation/src/scriptlauncher.cpp
+No changes made to file /kde4/konversation/src/scriptlauncher.h
+In file /kde4/konversation/src/searchbar.cpp at line 17 column 16: qaccel.h -> q3accel.h
+In file /kde4/konversation/src/searchbar.cpp at line 20 column 21: qobjectlist.h -> qobject.h
+In file /kde4/konversation/src/searchbar.cpp at line 22 column 20: qpopupmenu.h -> q3popupmenu.h
+In file /kde4/konversation/src/searchbar.cpp at line 23 column 22: qwidgetstack.h -> q3widgetstack.h
+In file /kde4/konversation/src/searchbar.cpp at line 56 column 10: QAccel -> Q3Accel
+In file /kde4/konversation/src/searchbar.cpp at line 56 column 30: QAccel -> Q3Accel
+In file /kde4/konversation/src/searchbar.cpp at line 67 column 34: QPopupMenu -> Q3PopupMenu
+In file /kde4/konversation/src/searchbar.cpp: Added the following include directives:
+	#include <QShowEvent> 
+In file /kde4/konversation/src/searchbar.h at line 21 column 16: QPopupMenu -> Q3PopupMenu
+In file /kde4/konversation/src/searchbar.h at line 71 column 18: QPopupMenu -> Q3PopupMenu
+In file /kde4/konversation/src/searchbar.h: Added the following include directives:
+	#include <Q3PopupMenu> 	#include <QShowEvent> 	#include <QPixmap> 
+In file /kde4/konversation/src/server.cpp at line 73 column 18: QValueList -> Q3ValueList
+In file /kde4/konversation/src/server.cpp at line 182 column 21: QValueVector -> Q3ValueVector
+In file /kde4/konversation/src/server.cpp at line 217 column 18: QValueList -> Q3ValueList
+In file /kde4/konversation/src/server.cpp at line 226 column 18: QValueList -> Q3ValueList
+In file /kde4/konversation/src/server.cpp at line 239 column 18: QValueList -> Q3ValueList
+In file /kde4/konversation/src/server.cpp at line 670 column 8: QCString -> Q3CString
+In file /kde4/konversation/src/server.cpp at line 675 column 72: QCString -> Q3CString
+In file /kde4/konversation/src/server.cpp at line 909 column 12: QCString -> Q3CString
+In file /kde4/konversation/src/server.cpp at line 909 column 59: QCString -> Q3CString
+In file /kde4/konversation/src/server.cpp at line 912 column 14: QValueList -> Q3ValueList
+In file /kde4/konversation/src/server.cpp at line 912 column 23: QCString -> Q3CString
+In file /kde4/konversation/src/server.cpp at line 928 column 16: QCString -> Q3CString
+In file /kde4/konversation/src/server.cpp at line 1083 column 12: QCString -> Q3CString
+In file /kde4/konversation/src/server.cpp at line 1096 column 20: QCString -> Q3CString
+In file /kde4/konversation/src/server.cpp at line 1099 column 20: QCString -> Q3CString
+In file /kde4/konversation/src/server.cpp at line 1577 column 36: QStrList -> Q3StrList
+In file /kde4/konversation/src/server.cpp at line 1595 column 20: QPtrList -> Q3PtrList
+In file /kde4/konversation/src/server.cpp at line 2928 column 24: QPtrListIterator -> Q3PtrListIterator
+In file /kde4/konversation/src/server.cpp: Added the following include directives:
+	#include <Q3StrList> 	#include <Q3ValueList> 	#include <Q3CString> 	#include <Q3PtrList> 
+In file /kde4/konversation/src/server.h at line 30 column 22: qvaluevector.h -> q3valuevector.h
+In file /kde4/konversation/src/server.h at line 31 column 21: qguardedptr.h -> qpointer.h
+In file /kde4/konversation/src/server.h at line 50 column 14: QStrList -> Q3StrList
+In file /kde4/konversation/src/server.h at line 160 column 36: QStrList -> Q3StrList
+In file /kde4/konversation/src/server.h at line 206 column 22: QPtrList -> Q3PtrList
+In file /kde4/konversation/src/server.h at line 231 column 16: QCString -> Q3CString
+In file /kde4/konversation/src/server.h at line 232 column 72: QCString -> Q3CString
+In file /kde4/konversation/src/server.h at line 454 column 18: QValueList -> Q3ValueList
+In file /kde4/konversation/src/server.h at line 475 column 16: QCString -> Q3CString
+In file /kde4/konversation/src/server.h at line 478 column 20: QValueVector -> Q3ValueVector
+In file /kde4/konversation/src/server.h at line 486 column 16: QPtrList -> Q3PtrList
+In file /kde4/konversation/src/server.h at line 487 column 16: QPtrList -> Q3PtrList
+In file /kde4/konversation/src/server.h at line 492 column 19: QGuardedPtr -> QPointer
+In file /kde4/konversation/src/server.h at line 493 column 19: QGuardedPtr -> QPointer
+In file /kde4/konversation/src/server.h at line 494 column 19: QGuardedPtr -> QPointer
+In file /kde4/konversation/src/server.h at line 531 column 29: QCString -> Q3CString
+In file /kde4/konversation/src/server.h: Added the following include directives:
+	#include <Q3ValueList> 	#include <Q3StrList> 	#include <Q3CString> 	#include <Q3PtrList> 
+In file /kde4/konversation/src/serverdialog.cpp at line 15 column 16: qframe.h -> q3frame.h
+In file /kde4/konversation/src/serverdialog.cpp at line 20 column 20: qwhatsthis.h -> q3whatsthis.h
+In file /kde4/konversation/src/serverdialog.cpp at line 32 column 14: QFrame -> Q3Frame
+In file /kde4/konversation/src/serverdialog.cpp at line 33 column 19: QGridLayout -> Q3GridLayout
+In file /kde4/konversation/src/serverdialog.cpp at line 33 column 49: QGridLayout -> Q3GridLayout
+In file /kde4/konversation/src/serverdialog.cpp at line 37 column 18: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/serverdialog.cpp at line 44 column 18: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/serverdialog.cpp at line 53 column 18: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/serverdialog.cpp: Added the following include directives:
+	#include <Q3GridLayout> 
+No changes made to file /kde4/konversation/src/serverdialog.h
+In file /kde4/konversation/src/servergroupdialog.cpp at line 21 column 16: qframe.h -> q3frame.h
+In file /kde4/konversation/src/servergroupdialog.cpp at line 26 column 19: qgroupbox.h -> q3groupbox.h
+In file /kde4/konversation/src/servergroupdialog.cpp at line 27 column 18: qlistbox.h -> q3listbox.h
+In file /kde4/konversation/src/servergroupdialog.cpp at line 31 column 20: qwhatsthis.h -> q3whatsthis.h
+In file /kde4/konversation/src/servergroupdialog.cpp at line 54 column 18: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/servergroupdialog.cpp at line 57 column 18: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/servergroupdialog.cpp at line 66 column 18: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/servergroupdialog.cpp at line 69 column 18: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/servergroupdialog.cpp at line 71 column 18: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/servergroupdialog.cpp at line 84 column 18: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/servergroupdialog.h at line 20 column 14: QListBox -> Q3ListBox
+No changes made to file /kde4/konversation/src/servergroupsettings.cpp
+In file /kde4/konversation/src/servergroupsettings.h at line 16 column 20: qvaluelist.h -> q3valuelist.h
+In file /kde4/konversation/src/servergroupsettings.h at line 55 column 22: QValueList -> Q3ValueList
+In file /kde4/konversation/src/servergroupsettings.h at line 56 column 22: QValueList -> Q3ValueList
+In file /kde4/konversation/src/servergroupsettings.h at line 57 column 22: QValueList -> Q3ValueList
+No changes made to file /kde4/konversation/src/serverison.cpp
+No changes made to file /kde4/konversation/src/serverison.h
+In file /kde4/konversation/src/serverlistdialog.cpp at line 20 column 16: qframe.h -> q3frame.h
+In file /kde4/konversation/src/serverlistdialog.cpp at line 23 column 20: qwhatsthis.h -> q3whatsthis.h
+In file /kde4/konversation/src/serverlistdialog.cpp at line 24 column 17: qheader.h -> q3header.h
+In file /kde4/konversation/src/serverlistdialog.cpp at line 49 column 48: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/serverlistdialog.cpp at line 64 column 21: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/serverlistdialog.cpp at line 77 column 45: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/serverlistdialog.cpp at line 109 column 14: QFrame -> Q3Frame
+In file /kde4/konversation/src/serverlistdialog.cpp at line 112 column 18: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/serverlistdialog.cpp at line 115 column 45: QListView -> Q3ListView
+In file /kde4/konversation/src/serverlistdialog.cpp at line 128 column 18: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/serverlistdialog.cpp at line 136 column 19: QGridLayout -> Q3GridLayout
+In file /kde4/konversation/src/serverlistdialog.cpp at line 136 column 45: QGridLayout -> Q3GridLayout
+In file /kde4/konversation/src/serverlistdialog.cpp at line 155 column 64: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/serverlistdialog.cpp at line 157 column 59: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/serverlistdialog.cpp at line 157 column 109: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/serverlistdialog.cpp at line 158 column 60: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/serverlistdialog.cpp at line 158 column 111: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/serverlistdialog.cpp at line 189 column 16: QPtrList -> Q3PtrList
+In file /kde4/konversation/src/serverlistdialog.cpp at line 189 column 30: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/serverlistdialog.cpp at line 273 column 16: QPtrList -> Q3PtrList
+In file /kde4/konversation/src/serverlistdialog.cpp at line 273 column 30: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/serverlistdialog.cpp at line 319 column 21: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/serverlistdialog.cpp at line 320 column 21: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/serverlistdialog.cpp at line 365 column 61: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/serverlistdialog.cpp at line 372 column 62: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/serverlistdialog.cpp at line 435 column 21: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/serverlistdialog.cpp at line 463 column 21: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/serverlistdialog.cpp at line 489 column 17: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/serverlistdialog.cpp at line 506 column 21: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/serverlistdialog.cpp at line 524 column 21: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/serverlistdialog.cpp: Added the following include directives:
+	#include <Q3GridLayout> 	#include <Q3PtrList> 
+In file /kde4/konversation/src/serverlistdialog.h at line 31 column 40: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/serverlistdialog.h at line 45 column 37: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/serverlistdialog.h at line 78 column 51: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/serverlistdialog.h at line 79 column 52: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/serverlistdialog.h at line 89 column 25: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/serverlistdialog.h at line 101 column 25: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/serverlistview.cpp at line 14 column 21: qdragobject.h -> q3dragobject.h
+In file /kde4/konversation/src/serverlistview.cpp at line 27 column 8: QPtrList -> Q3PtrList
+In file /kde4/konversation/src/serverlistview.cpp at line 27 column 22: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/serverlistview.cpp at line 30 column 12: QPtrList -> Q3PtrList
+In file /kde4/konversation/src/serverlistview.cpp at line 30 column 26: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/serverlistview.cpp at line 31 column 12: QPtrList -> Q3PtrList
+In file /kde4/konversation/src/serverlistview.cpp at line 31 column 26: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/serverlistview.cpp at line 33 column 17: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/serverlistview.cpp at line 53 column 62: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/serverlistview.cpp at line 53 column 86: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/serverlistview.cpp at line 58 column 17: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/serverlistview.cpp at line 60 column 17: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/serverlistview.cpp at line 92 column 11: QDragObject -> Q3DragObject
+In file /kde4/konversation/src/serverlistview.cpp at line 97 column 12: QPtrList -> Q3PtrList
+In file /kde4/konversation/src/serverlistview.cpp at line 97 column 26: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/serverlistview.cpp at line 98 column 17: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/serverlistview.cpp at line 108 column 26: QStoredDrag -> Q3StoredDrag
+In file /kde4/konversation/src/serverlistview.cpp: Added the following include directives:
+	#include <Q3PtrList> 
+In file /kde4/konversation/src/serverlistview.h at line 18 column 17: QDragObject -> Q3DragObject
+In file /kde4/konversation/src/serverlistview.h at line 28 column 16: QPtrList -> Q3PtrList
+In file /kde4/konversation/src/serverlistview.h at line 28 column 30: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/serverlistview.h at line 31 column 54: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/serverlistview.h at line 31 column 78: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/serverlistview.h at line 32 column 19: QDragObject -> Q3DragObject
+In file /kde4/konversation/src/serverlistview.h: Added the following include directives:
+	#include <Q3PtrList> 
+No changes made to file /kde4/konversation/src/serversettings.cpp
+No changes made to file /kde4/konversation/src/serversettings.h
+In file /kde4/konversation/src/ssllabel.cpp: Added the following include directives:
+	#include <QMouseEvent> 	#include <QLabel> 
+In file /kde4/konversation/src/ssllabel.h: Added the following include directives:
+	#include <QMouseEvent> 
+In file /kde4/konversation/src/sslsocket.cpp at line 196 column 16: QPtrList -> Q3PtrList
+In file /kde4/konversation/src/sslsocket.cpp: Added the following include directives:
+	#include <Q3PtrList> 
+No changes made to file /kde4/konversation/src/sslsocket.h
+In file /kde4/konversation/src/statuspanel.cpp at line 23 column 15: qhbox.h -> q3hbox.h
+In file /kde4/konversation/src/statuspanel.cpp at line 45 column 9: QHBox -> Q3HBox
+In file /kde4/konversation/src/statuspanel.cpp at line 45 column 35: QHBox -> Q3HBox
+In file /kde4/konversation/src/statuspanel.cpp: Added the following include directives:
+	#include <QShowEvent> 
+In file /kde4/konversation/src/statuspanel.h: Added the following include directives:
+	#include <QShowEvent> 	#include <QLabel> 
+No changes made to file /kde4/konversation/src/tabs_preferences.cpp
+No changes made to file /kde4/konversation/src/tabs_preferences.h
+In file /kde4/konversation/src/theme_preferences.cpp at line 20 column 15: qhbox.h -> q3hbox.h
+In file /kde4/konversation/src/theme_preferences.cpp at line 22 column 15: qvbox.h -> q3vbox.h
+In file /kde4/konversation/src/theme_preferences.cpp at line 208 column 37: IO_ReadOnly -> QIODevice::ReadOnly
+In file /kde4/konversation/src/theme_preferences.cpp at line 296 column 32: IO_ReadOnly -> QIODevice::ReadOnly
+In file /kde4/konversation/src/theme_preferences.cpp at line 296 column 47: IO_WriteOnly -> QIODevice::WriteOnly
+In file /kde4/konversation/src/theme_preferences.cpp: Added the following include directives:
+	#include <QPixmap> 
+No changes made to file /kde4/konversation/src/theme_preferences.h
+In file /kde4/konversation/src/topiccombobox.cpp: Added the following include directives:
+	#include <QWheelEvent> 
+In file /kde4/konversation/src/topiccombobox.h: Added the following include directives:
+	#include <QWheelEvent> 
+In file /kde4/konversation/src/topiclabel.cpp at line 23 column 25: qsimplerichtext.h -> q3simplerichtext.h
+In file /kde4/konversation/src/topiclabel.cpp at line 46 column 31: QTextEdit -> Q3TextEdit
+In file /kde4/konversation/src/topiclabel.cpp at line 53 column 32: QPopupMenu -> Q3PopupMenu
+In file /kde4/konversation/src/topiclabel.cpp at line 267 column 52: QStyleSheet -> Q3StyleSheet
+In file /kde4/konversation/src/topiclabel.cpp at line 275 column 56: QStyleSheet -> Q3StyleSheet
+In file /kde4/konversation/src/topiclabel.cpp at line 318 column 23: QSimpleRichText -> Q3SimpleRichText
+In file /kde4/konversation/src/topiclabel.cpp: Added the following include directives:
+	#include <QContextMenuEvent> 	#include <QResizeEvent> 	#include <QMouseEvent> 	#include <Q3PopupMenu> 	#include <QEvent> 
+In file /kde4/konversation/src/topiclabel.h at line 74 column 22: QPopupMenu -> Q3PopupMenu
+In file /kde4/konversation/src/topiclabel.h: Added the following include directives:
+	#include <QResizeEvent> 	#include <QEvent> 	#include <QMouseEvent> 	#include <QContextMenuEvent> 	#include <Q3PopupMenu> 
+No changes made to file /kde4/konversation/src/trayicon.cpp
+In file /kde4/konversation/src/trayicon.h at line 13 column 18: qptrlist.h -> q3ptrlist.h
+In file /kde4/konversation/src/unicode.cpp at line 36 column 26: QCString -> Q3CString
+In file /kde4/konversation/src/unicode.cpp: Added the following include directives:
+	#include <Q3CString> 
+In file /kde4/konversation/src/urlcatcher.cpp at line 18 column 15: qhbox.h -> q3hbox.h
+In file /kde4/konversation/src/urlcatcher.cpp at line 22 column 20: qwhatsthis.h -> q3whatsthis.h
+In file /kde4/konversation/src/urlcatcher.cpp at line 52 column 14: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/urlcatcher.cpp at line 57 column 9: QHBox -> Q3HBox
+In file /kde4/konversation/src/urlcatcher.cpp at line 57 column 30: QHBox -> Q3HBox
+In file /kde4/konversation/src/urlcatcher.cpp at line 66 column 14: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/urlcatcher.cpp at line 70 column 14: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/urlcatcher.cpp at line 74 column 14: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/urlcatcher.cpp at line 78 column 14: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/urlcatcher.cpp at line 82 column 14: QWhatsThis -> Q3WhatsThis
+In file /kde4/konversation/src/urlcatcher.cpp at line 84 column 54: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/urlcatcher.cpp at line 84 column 90: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/urlcatcher.cpp at line 110 column 17: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/urlcatcher.cpp at line 133 column 38: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/urlcatcher.cpp at line 158 column 17: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/urlcatcher.cpp at line 164 column 17: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/urlcatcher.cpp at line 175 column 17: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/urlcatcher.cpp at line 214 column 34: IO_WriteOnly -> QIODevice::WriteOnly
+In file /kde4/konversation/src/urlcatcher.cpp at line 216 column 19: QTextStream -> Q3TextStream
+In file /kde4/konversation/src/urlcatcher.cpp at line 217 column 21: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/urlcatcher.cpp: Added the following include directives:
+	#include <Q3TextStream> 
+In file /kde4/konversation/src/urlcatcher.h at line 17 column 19: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/urlcatcher.h at line 41 column 34: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/valuelistviewitem.cpp at line 20 column 83: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/valuelistviewitem.h at line 20 column 72: QListViewItem -> Q3ListViewItem
+No changes made to file /kde4/konversation/src/version.h
+In file /kde4/konversation/src/viewcontainer.cpp at line 39 column 20: qpopupmenu.h -> q3popupmenu.h
+In file /kde4/konversation/src/viewcontainer.cpp at line 101 column 36: QGuardedPtr -> QPointer
+In file /kde4/konversation/src/viewcontainer.cpp at line 123 column 18: QValueList -> Q3ValueList
+In file /kde4/konversation/src/viewcontainer.cpp at line 146 column 22: QVBox -> Q3VBox
+In file /kde4/konversation/src/viewcontainer.cpp at line 313 column 12: QPtrList -> Q3PtrList
+In file /kde4/konversation/src/viewcontainer.cpp at line 317 column 24: QPtrListIterator -> Q3PtrListIterator
+In file /kde4/konversation/src/viewcontainer.cpp at line 757 column 54: QIconSet -> QIcon
+In file /kde4/konversation/src/viewcontainer.cpp at line 769 column 57: QIconSet -> QIcon
+In file /kde4/konversation/src/viewcontainer.cpp at line 1113 column 14: QValueList -> Q3ValueList
+In file /kde4/konversation/src/viewcontainer.cpp at line 1173 column 12: QIconSet -> QIcon
+In file /kde4/konversation/src/viewcontainer.cpp at line 1552 column 18: QValueList -> Q3ValueList
+In file /kde4/konversation/src/viewcontainer.cpp at line 1654 column 14: QPopupMenu -> Q3PopupMenu
+In file /kde4/konversation/src/viewcontainer.cpp at line 1654 column 45: QPopupMenu -> Q3PopupMenu
+In file /kde4/konversation/src/viewcontainer.cpp at line 1682 column 20: QPtrList -> Q3PtrList
+In file /kde4/konversation/src/viewcontainer.cpp at line 2430 column 18: QValueList -> Q3ValueList
+In file /kde4/konversation/src/viewcontainer.cpp: Added the following include directives:
+	#include <Q3ValueList> 	#include <Q3PtrList> 
+In file /kde4/konversation/src/viewcontainer.h at line 20 column 21: qguardedptr.h -> qpointer.h
+In file /kde4/konversation/src/viewcontainer.h at line 56 column 19: QGuardedPtr -> QPointer
+In file /kde4/konversation/src/viewcontainer.h at line 204 column 13: QVBox -> Q3VBox
+In file /kde4/konversation/src/viewcontainer.h at line 209 column 19: QGuardedPtr -> QPointer
+In file /kde4/konversation/src/viewcontainer.h at line 210 column 19: QGuardedPtr -> QPointer
+In file /kde4/konversation/src/viewcontainer.h at line 211 column 19: QGuardedPtr -> QPointer
+In file /kde4/konversation/src/viewcontainer.h at line 212 column 19: QGuardedPtr -> QPointer
+In file /kde4/konversation/src/viewcontainer.h at line 225 column 18: QValueList -> Q3ValueList
+In file /kde4/konversation/src/viewcontainer.h: Added the following include directives:
+	#include <Q3ValueList> 
+In file /kde4/konversation/src/viewtree.cpp at line 25 column 17: qheader.h -> q3header.h
+In file /kde4/konversation/src/viewtree.cpp at line 26 column 21: qdragobject.h -> q3dragobject.h
+In file /kde4/konversation/src/viewtree.cpp at line 27 column 19: qlistview.h -> q3listview.h
+In file /kde4/konversation/src/viewtree.cpp at line 28 column 18: qptrlist.h -> q3ptrlist.h
+In file /kde4/konversation/src/viewtree.cpp at line 71 column 33: QScrollView -> Q3ScrollView
+In file /kde4/konversation/src/viewtree.cpp at line 77 column 27: QListView -> Q3ListView
+In file /kde4/konversation/src/viewtree.cpp at line 102 column 55: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/viewtree.cpp at line 102 column 96: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/viewtree.cpp at line 139 column 76: QIconSet -> QIcon
+In file /kde4/konversation/src/viewtree.cpp at line 281 column 59: QIconSet -> QIcon
+In file /kde4/konversation/src/viewtree.cpp at line 288 column 46: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/viewtree.cpp at line 738 column 56: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/viewtree.cpp at line 738 column 80: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/viewtree.cpp at line 742 column 17: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/viewtree.cpp at line 744 column 17: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/viewtree.cpp at line 860 column 11: QDragObject -> Q3DragObject
+In file /kde4/konversation/src/viewtree.cpp at line 865 column 17: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/viewtree.cpp at line 870 column 26: QStoredDrag -> Q3StoredDrag
+In file /kde4/konversation/src/viewtree.cpp at line 873 column 8: QPtrList -> Q3PtrList
+In file /kde4/konversation/src/viewtree.cpp at line 875 column 12: QPtrList -> Q3PtrList
+In file /kde4/konversation/src/viewtree.cpp at line 929 column 50: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/viewtree.cpp: Added the following include directives:
+	#include <QContextMenuEvent> 	#include <QKeyEvent> 	#include <QResizeEvent> 	#include <QMouseEvent> 	#include <QWheelEvent> 
+In file /kde4/konversation/src/viewtree.h at line 35 column 74: QIconSet -> QIcon
+In file /kde4/konversation/src/viewtree.h at line 38 column 57: QIconSet -> QIcon
+In file /kde4/konversation/src/viewtree.h at line 45 column 16: QPtrList -> Q3PtrList
+In file /kde4/konversation/src/viewtree.h at line 71 column 54: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/viewtree.h at line 71 column 78: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/viewtree.h at line 72 column 19: QDragObject -> Q3DragObject
+In file /kde4/konversation/src/viewtree.h at line 77 column 44: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/viewtree.h at line 92 column 48: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/viewtree.h: Added the following include directives:
+	#include <QResizeEvent> 	#include <QWheelEvent> 	#include <QMouseEvent> 	#include <QContextMenuEvent> 	#include <QKeyEvent> 	#include <Q3PtrList> 
+In file /kde4/konversation/src/viewtreeitem.cpp at line 29 column 36: QListView -> Q3ListView
+In file /kde4/konversation/src/viewtreeitem.cpp at line 30 column 19: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/viewtreeitem.cpp at line 53 column 40: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/viewtreeitem.cpp at line 54 column 19: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/viewtreeitem.cpp at line 83 column 40: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/viewtreeitem.cpp at line 83 column 63: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/viewtreeitem.cpp at line 84 column 19: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/viewtreeitem.cpp at line 108 column 36: QListView -> Q3ListView
+In file /kde4/konversation/src/viewtreeitem.cpp at line 108 column 61: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/viewtreeitem.cpp at line 270 column 39: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/viewtreeitem.cpp at line 360 column 104: AlignAuto -> AlignLeft
+In file /kde4/konversation/src/viewtreeitem.cpp at line 360 column 136: ShowPrefix -> TextShowMnemonic
+In file /kde4/konversation/src/viewtreeitem.cpp at line 474 column 73: AlignAuto -> AlignLeft
+In file /kde4/konversation/src/viewtreeitem.h at line 16 column 19: qlistview.h -> q3listview.h
+In file /kde4/konversation/src/viewtreeitem.h at line 18 column 21: qguardedptr.h -> qpointer.h
+In file /kde4/konversation/src/viewtreeitem.h at line 25 column 41: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/viewtreeitem.h at line 29 column 30: QListView -> Q3ListView
+In file /kde4/konversation/src/viewtreeitem.h at line 30 column 34: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/viewtreeitem.h at line 31 column 34: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/viewtreeitem.h at line 31 column 57: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/viewtreeitem.h at line 33 column 39: QListView -> Q3ListView
+In file /kde4/konversation/src/viewtreeitem.h at line 61 column 33: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/viewtreeitem.h at line 72 column 19: QGuardedPtr -> QPointer
+In file /kde4/konversation/src/warnings_preferences.cpp at line 14 column 19: qlistview.h -> q3listview.h
+In file /kde4/konversation/src/warnings_preferences.cpp at line 23 column 75: WFlags -> Qt::WFlags
+In file /kde4/konversation/src/warnings_preferences.cpp at line 28 column 54: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/warnings_preferences.cpp at line 38 column 16: QCheckListItem -> Q3CheckListItem
+In file /kde4/konversation/src/warnings_preferences.cpp at line 38 column 49: QCheckListItem -> Q3CheckListItem
+In file /kde4/konversation/src/warnings_preferences.cpp at line 46 column 35: QCheckListItem -> Q3CheckListItem
+In file /kde4/konversation/src/warnings_preferences.cpp at line 61 column 16: QCheckListItem -> Q3CheckListItem
+In file /kde4/konversation/src/warnings_preferences.cpp at line 61 column 49: QCheckListItem -> Q3CheckListItem
+In file /kde4/konversation/src/warnings_preferences.cpp at line 89 column 35: QCheckListItem -> Q3CheckListItem
+In file /kde4/konversation/src/warnings_preferences.cpp at line 118 column 16: QCheckListItem -> Q3CheckListItem
+In file /kde4/konversation/src/warnings_preferences.cpp at line 126 column 27: QCheckListItem -> Q3CheckListItem
+In file /kde4/konversation/src/warnings_preferences.cpp at line 126 column 78: QCheckListItem -> Q3CheckListItem
+In file /kde4/konversation/src/warnings_preferences.cpp at line 156 column 15: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/warnings_preferences.cpp at line 160 column 40: QCheckListItem -> Q3CheckListItem
+In file /kde4/konversation/src/warnings_preferences.h at line 17 column 19: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/warnings_preferences.h at line 24 column 83: WFlags -> Qt::WFlags
+In file /kde4/konversation/src/watchednicknames_preferences.cpp at line 42 column 63: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/watchednicknames_preferences.cpp at line 42 column 105: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/watchednicknames_preferences.cpp at line 43 column 54: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/watchednicknames_preferences.cpp at line 43 column 96: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/watchednicknames_preferences.cpp at line 114 column 15: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/watchednicknames_preferences.cpp at line 124 column 17: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/watchednicknames_preferences.cpp at line 156 column 15: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/watchednicknames_preferences.cpp at line 181 column 15: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/watchednicknames_preferences.cpp at line 215 column 19: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/watchednicknames_preferences.cpp at line 241 column 13: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/watchednicknames_preferences.cpp at line 241 column 61: QListView -> Q3ListView
+In file /kde4/konversation/src/watchednicknames_preferences.cpp at line 244 column 15: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/watchednicknames_preferences.cpp at line 271 column 15: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/watchednicknames_preferences.cpp at line 284 column 24: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/watchednicknames_preferences.cpp at line 303 column 15: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/watchednicknames_preferences.cpp at line 309 column 17: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/watchednicknames_preferences.cpp at line 327 column 57: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/watchednicknames_preferences.cpp at line 336 column 17: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/watchednicknames_preferences.cpp at line 369 column 15: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/watchednicknames_preferences.cpp at line 375 column 17: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/watchednicknames_preferences.cpp at line 380 column 19: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/watchednicknames_preferences.cpp at line 406 column 15: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/watchednicknames_preferences.h at line 18 column 15: QListView -> Q3ListView
+In file /kde4/konversation/src/watchednicknames_preferences.h at line 19 column 19: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/watchednicknames_preferences.h at line 42 column 40: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/watchednicknames_preferences.h at line 51 column 21: QListViewItem -> Q3ListViewItem
+In file /kde4/konversation/src/watchednicknames_preferences.h at line 51 column 44: QListView -> Q3ListView
+

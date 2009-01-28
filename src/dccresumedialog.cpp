@@ -13,10 +13,14 @@
 #include "dccresumedialog.h"
 #include "dcctransferrecv.h"
 
-#include <qhbox.h>
+#include <q3hbox.h>
 #include <qlabel.h>
 #include <qlayout.h>
-#include <qvbox.h>
+#include <q3vbox.h>
+//Added by qt3to4:
+#include <Q3HBoxLayout>
+#include <Q3VBoxLayout>
+#include <Q3Frame>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -64,8 +68,8 @@ DccResumeDialog::DccResumeDialog(DccTransferRecv* item, const QString& caption, 
     if(enabledButtonCodes & KDialogBase::User1)
         setButtonText(KDialogBase::User1, i18n("&Resume"));
 
-    QFrame* page = new QFrame(this);
-    QVBoxLayout* pageLayout = new QVBoxLayout(page);
+    Q3Frame* page = new Q3Frame(this);
+    Q3VBoxLayout* pageLayout = new Q3VBoxLayout(page);
     pageLayout->setSpacing(spacingHint());
     setMainWidget(page);
 
@@ -80,8 +84,8 @@ DccResumeDialog::DccResumeDialog(DccTransferRecv* item, const QString& caption, 
 
     if(m_enabledActions & RA_Rename)
     {
-        QFrame* filePathToolsFrame = new QFrame(page);
-        QHBoxLayout* filePathToolsLayout = new QHBoxLayout(filePathToolsFrame);
+        Q3Frame* filePathToolsFrame = new Q3Frame(page);
+        Q3HBoxLayout* filePathToolsLayout = new Q3HBoxLayout(filePathToolsFrame);
         filePathToolsLayout->setSpacing(spacingHint());
 
         QPushButton* btnDefaultName = new QPushButton(i18n("O&riginal Filename"),filePathToolsFrame);

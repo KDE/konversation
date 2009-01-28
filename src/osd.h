@@ -18,6 +18,9 @@
 #include <qpixmap.h>                              //stack allocated
 #include <qtimer.h>                               //stack allocated
 #include <qwidget.h>                              //baseclass
+//Added by qt3to4:
+#include <QEvent>
+#include <QMouseEvent>
 
 
 class QFont;

@@ -12,6 +12,8 @@
 
 
 #include "queuetuner.h"
+//Added by qt3to4:
+#include <QContextMenuEvent>
 #include "server.h"
 #include "ircqueue.h"
 #include "channel.h"
@@ -20,7 +22,7 @@
 
 #include <qtoolbutton.h>
 #include <qspinbox.h>
-#include <qpopupmenu.h>
+#include <q3popupmenu.h>
 #include <qevent.h>
 
 #include <kdebug.h>
@@ -236,7 +238,7 @@ void QueueTuner::fastIntervalChanged(int v)
 
 void QueueTuner::contextMenuEvent(QContextMenuEvent* e)
 {
-    QPopupMenu p(this);
+    Q3PopupMenu p(this);
     p.insertItem("Reset...", 1);
     int id = p.exec(e->globalPos());
     if (id > 0)

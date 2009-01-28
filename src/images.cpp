@@ -17,6 +17,8 @@
 #include <qbitmap.h>
 #include <qpainter.h>
 #include <qstringlist.h>
+//Added by qt3to4:
+#include <QPixmap>
 
 #include <kdebug.h>
 #include <kiconloader.h>
@@ -32,16 +34,16 @@ Images::Images()
     initializeKimifaceIcons();
 
     m_closeIcon = KGlobal::iconLoader()->loadIcon("fileclose",KIcon::Small);
-    m_disabledCloseIcon = KGlobal::iconLoader()->loadIconSet("fileclose",KIcon::Small).pixmap(QIconSet::Small, false);
+    m_disabledCloseIcon = KGlobal::iconLoader()->loadIconSet("fileclose",KIcon::Small).pixmap(QIcon::Small, false);
 }
 
 Images::~Images()
 {
 }
 
-QIconSet Images::getKimproxyAway() const { return kimproxyAway; }
-QIconSet Images::getKimproxyOnline() const { return kimproxyOnline; }
-QIconSet Images::getKimproxyOffline() const { return kimproxyOffline; }
+QIcon Images::getKimproxyAway() const { return kimproxyAway; }
+QIcon Images::getKimproxyOnline() const { return kimproxyOnline; }
+QIcon Images::getKimproxyOffline() const { return kimproxyOffline; }
 
 QPixmap Images::getNickIcon(NickPrivilege privilege,bool isAway) const
 {
@@ -138,10 +140,10 @@ void Images::initializeNickIcons()
 void Images::updateIcons()
 {
     m_closeIcon = KGlobal::iconLoader()->loadIcon("fileclose",KIcon::Small);
-    m_disabledCloseIcon = KGlobal::iconLoader()->loadIconSet("fileclose",KIcon::Small).pixmap(QIconSet::Small, false);
+    m_disabledCloseIcon = KGlobal::iconLoader()->loadIconSet("fileclose",KIcon::Small).pixmap(QIcon::Small, false);
 }
 
-QIconSet Images::getLed(QColor col,bool state)
+QIcon Images::getLed(QColor col,bool state)
 {
     QColor color;
     QPainter paint;
@@ -225,12 +227,12 @@ QIconSet Images::getLed(QColor col,bool state)
 
     QPixmap dest = i;
 
-    QIconSet result;
-    result.setPixmap(dest,QIconSet::Automatic);
+    QIcon result;
+    result.setPixmap(dest,QIcon::Automatic);
     return dest;
 }
 
-QIconSet Images::getServerLed(bool state)
+QIcon Images::getServerLed(bool state)
 {
     if (state)
         return m_serverLedOn;
@@ -238,7 +240,7 @@ QIconSet Images::getServerLed(bool state)
         return m_serverLedOff;
 }
 
-QIconSet Images::getSystemLed(bool state)
+QIcon Images::getSystemLed(bool state)
 {
     if (Preferences::tabNotificationsSystemColor()!=m_systemColor)
     {
@@ -256,7 +258,7 @@ QIconSet Images::getSystemLed(bool state)
     }
 }
 
-QIconSet Images::getMsgsLed(bool state)
+QIcon Images::getMsgsLed(bool state)
 {
     if (Preferences::tabNotificationsMsgsColor()!=m_msgsColor)
     {
@@ -274,7 +276,7 @@ QIconSet Images::getMsgsLed(bool state)
     }
 }
 
-QIconSet Images::getPrivateLed(bool state)
+QIcon Images::getPrivateLed(bool state)
 {
     if (Preferences::tabNotificationsPrivateColor()!=m_privateColor)
     {
@@ -292,7 +294,7 @@ QIconSet Images::getPrivateLed(bool state)
     }
 }
 
-QIconSet Images::getEventsLed()
+QIcon Images::getEventsLed()
 {
     if (Preferences::tabNotificationsEventsColor()!=m_eventsColor)
         return getLed(Preferences::tabNotificationsEventsColor(),true);
@@ -300,7 +302,7 @@ QIconSet Images::getEventsLed()
         return m_eventsLedOn;
 }
 
-QIconSet Images::getNickLed()
+QIcon Images::getNickLed()
 {
     if (Preferences::tabNotificationsNickColor()!=m_nickColor)
         return getLed(Preferences::tabNotificationsNickColor(),true);
@@ -308,7 +310,7 @@ QIconSet Images::getNickLed()
         return m_nickLedOn;
 }
 
-QIconSet Images::getHighlightsLed()
+QIcon Images::getHighlightsLed()
 {
     if (Preferences::tabNotificationsHighlightsColor()!=m_highlightsColor)
         return getLed(Preferences::tabNotificationsHighlightsColor(),true);

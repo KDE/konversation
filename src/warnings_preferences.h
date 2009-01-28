@@ -17,14 +17,14 @@
 #include "konvisettingspage.h"
 
 class KListView;
-class QListViewItem;
+class Q3ListViewItem;
 
 class Warnings_Config : public Warnings_ConfigUI, public KonviSettingsPage
 {
     Q_OBJECT
 
     public:
-        explicit Warnings_Config( QWidget* parent = 0, const char* name = 0, WFlags fl = 0 );
+        explicit Warnings_Config( QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0 );
         ~Warnings_Config();
 
         virtual void restorePageToDefaults();

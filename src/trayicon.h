@@ -15,7 +15,7 @@
 #ifndef TRAYICON_H
 #define TRAYICON_H
 
-#include <qptrlist.h>
+#include <q3ptrlist.h>
 #include <qpixmap.h>
 
 #include <ksystemtray.h>

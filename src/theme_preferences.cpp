@@ -20,14 +20,16 @@
 
 #include <qlabel.h>
 #include <qlayout.h>
-#include <qhbox.h>
+#include <q3hbox.h>
 #include <qpushbutton.h>
-#include <qvbox.h>
+#include <q3vbox.h>
 #include <qfileinfo.h>
 #include <qstringlist.h>
 #include <qbitmap.h>
 #include <qpainter.h>
 #include <qtooltip.h>
+//Added by qt3to4:
+#include <QPixmap>
 
 #include <klistbox.h>
 #include <kurl.h>
@@ -208,7 +210,7 @@ void Theme_Config::installTheme()
     {
 
         KTar themeArchive(tmpThemeFile);
-        themeArchive.open(IO_ReadOnly);
+        themeArchive.open(QIODevice::ReadOnly);
         kapp->processEvents();
 
         const KArchiveDirectory* themeDir = themeArchive.directory();;
@@ -296,7 +298,7 @@ void Theme_Config::updateButtons()
     m_currentTheme = dir.section('/',-2,-2);
 
     // allow delete action only for themes that have been installed by the user
-    if(!themeRC.open(IO_ReadOnly | IO_WriteOnly))
+    if(!themeRC.open(QIODevice::ReadOnly | QIODevice::WriteOnly))
         removeButton->setEnabled(false);
     else
         removeButton->setEnabled(true);

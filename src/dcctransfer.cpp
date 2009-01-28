@@ -16,6 +16,8 @@
 
 #include <qfileinfo.h>
 #include <qhostaddress.h>
+//Added by qt3to4:
+#include <Q3ValueList>
 
 #include <kdebug.h>
 
@@ -156,8 +158,8 @@ void DccTransfer::updateTransferMeters()
         // update CurrentSpeed
 
         // remove too old data
-        QValueList<int>::iterator itTime = m_transferLogTime.begin();
-        QValueList<KIO::fileoffset_t>::iterator itPos = m_transferLogPosition.begin();
+        Q3ValueList<int>::iterator itTime = m_transferLogTime.begin();
+        Q3ValueList<KIO::fileoffset_t>::iterator itPos = m_transferLogPosition.begin();
         while ( itTime != m_transferLogTime.end() && ( m_transferLogTime.last() - (*itTime) > timeToCalc * 1000 ) )
         {
             itTime = m_transferLogTime.remove( itTime );

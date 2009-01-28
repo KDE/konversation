@@ -19,8 +19,11 @@
 #include <qcheckbox.h>
 #include <qpushbutton.h>
 #include <qregexp.h>
-#include <qheader.h>
+#include <q3header.h>
 #include <qtoolbutton.h>
+//Added by qt3to4:
+#include <QKeyEvent>
+#include <QEvent>
 
 #include <klocale.h>
 #include <klistview.h>
@@ -48,7 +51,7 @@ namespace Konversation
         // don't allow sorting. most recent topic is always first
         m_widget->topicHistoryList->setSortColumn(-1);
         m_widget->clearButton->setIconSet(SmallIconSet("locationbar_erase"));
-        m_widget->banList->setDefaultRenameAction(QListView::Accept);
+        m_widget->banList->setDefaultRenameAction(Q3ListView::Accept);
         m_widget->banListSearchLine->setListView(m_widget->banList);
         // hide column where the complete topic will be put in for convenience
         m_widget->topicHistoryList->hideColumn(2);
@@ -58,8 +61,8 @@ namespace Konversation
         m_channel = channel;
         m_editingTopic = false;
 
-        connect(m_widget->topicHistoryList, SIGNAL(clicked(QListViewItem*)), this, SLOT(topicHistoryItemClicked(QListViewItem*)));
-        connect(m_widget->topicHistoryList, SIGNAL(selectionChanged(QListViewItem*)), this, SLOT(topicHistoryItemClicked(QListViewItem*)));
+        connect(m_widget->topicHistoryList, SIGNAL(clicked(Q3ListViewItem*)), this, SLOT(topicHistoryItemClicked(Q3ListViewItem*)));
+        connect(m_widget->topicHistoryList, SIGNAL(selectionChanged(Q3ListViewItem*)), this, SLOT(topicHistoryItemClicked(Q3ListViewItem*)));
         connect(m_widget->toggleAdvancedModes, SIGNAL(clicked()), this, SLOT(toggleAdvancedModes()));
         connect(m_widget->topicEdit, SIGNAL(modificationChanged(bool)), this, SLOT(topicBeingEdited(bool)));
 
@@ -78,8 +81,8 @@ namespace Konversation
 
         connect(m_widget->addBan, SIGNAL(clicked()), this, SLOT(addBanClicked()));
         connect(m_widget->removeBan, SIGNAL(clicked()), this, SLOT(removeBanClicked()));
-        connect(m_widget->banList, SIGNAL(itemRenamed (QListViewItem*)), this, SLOT(banEdited(QListViewItem*)));
-        connect(m_widget->banList, SIGNAL(itemRenamed (QListViewItem*, int, const QString&)), this, SLOT(banEdited(QListViewItem*)));
+        connect(m_widget->banList, SIGNAL(itemRenamed (Q3ListViewItem*)), this, SLOT(banEdited(Q3ListViewItem*)));
+        connect(m_widget->banList, SIGNAL(itemRenamed (Q3ListViewItem*, int, const QString&)), this, SLOT(banEdited(Q3ListViewItem*)));
 
         refreshTopicHistory();
         refreshBanList();
@@ -182,7 +185,7 @@ namespace Konversation
             m_widget->topicEdit->setText(history.first().section(' ', 2));
     }
 
-    void ChannelOptionsDialog::topicHistoryItemClicked(QListViewItem* item)
+    void ChannelOptionsDialog::topicHistoryItemClicked(Q3ListViewItem* item)
     {
         // if they didn't click on anything, item is null
         if(item)
@@ -234,7 +237,7 @@ namespace Konversation
 
         for(unsigned int i = 0; i < modeString.length(); i++)
         {
-            new QCheckListItem(m_widget->otherModesList, QString(modeString[i]), QCheckListItem::CheckBox);
+            new Q3CheckListItem(m_widget->otherModesList, QString(modeString[i]), Q3CheckListItem::CheckBox);
         }
     }
 
@@ -252,11 +255,11 @@ namespace Konversation
         m_widget->keyModeChBox->setChecked(false);
         m_widget->keyModeEdit->setText("");
 
-        QListViewItem* item = m_widget->otherModesList->firstChild();
+        Q3ListViewItem* item = m_widget->otherModesList->firstChild();
 
         while(item)
         {
-            static_cast<QCheckListItem*>(item)->setOn(false);
+            static_cast<Q3CheckListItem*>(item)->setOn(false);
             item = item->nextSibling();
         }
 
@@ -303,7 +306,7 @@ namespace Konversation
                         if(item->text(0) == modeString)
                         {
                             found = true;
-                            static_cast<QCheckListItem*>(item)->setOn(true);
+                            static_cast<Q3CheckListItem*>(item)->setOn(true);
                             item->setText(1, (*it).mid(1));
                         }
                         else
@@ -357,11 +360,11 @@ namespace Konversation
             modes.append(mode);
         }
 
-        QListViewItem* item = m_widget->otherModesList->firstChild();
+        Q3ListViewItem* item = m_widget->otherModesList->firstChild();
 
         while(item)
         {
-            mode = (static_cast<QCheckListItem*>(item)->isOn() ? "+" : "-");
+            mode = (static_cast<Q3CheckListItem*>(item)->isOn() ? "+" : "-");
             mode += item->text(0) + item->text(1);
             modes.append(mode);
             item = item->nextSibling();
@@ -391,7 +394,7 @@ namespace Konversation
         delete m_widget->banList->findItem(ban, 0);
     }
 
-    void ChannelOptionsDialog::banEdited(QListViewItem *edited)
+    void ChannelOptionsDialog::banEdited(Q3ListViewItem *edited)
     {
         if (edited == m_NewBan)
         {
@@ -467,26 +470,26 @@ namespace Konversation
 
     // This is our implementation of BanListViewItem
 
-    BanListViewItem::BanListViewItem(QListView *parent)
+    BanListViewItem::BanListViewItem(Q3ListView *parent)
       : KListViewItem(parent)
     {
         m_isNewBan = 0;
     }
 
-    BanListViewItem::BanListViewItem(QListView *parent, bool isNew)
+    BanListViewItem::BanListViewItem(Q3ListView *parent, bool isNew)
       : KListViewItem(parent)
     {
         m_isNewBan = isNew;
     }
 
-    BanListViewItem::BanListViewItem (QListView *parent, const QString& label1, const QString& label2,
+    BanListViewItem::BanListViewItem (Q3ListView *parent, const QString& label1, const QString& label2,
         uint timestamp) : KListViewItem(parent, label1, label2)
     {
         m_isNewBan = 0;
         m_timestamp.setTime_t(timestamp);
     }
 
-    BanListViewItem::BanListViewItem (QListView *parent, bool isNew, const QString& label1, const QString& label2,
+    BanListViewItem::BanListViewItem (Q3ListView *parent, bool isNew, const QString& label1, const QString& label2,
         uint timestamp) : KListViewItem(parent, label1, label2)
     {
         m_isNewBan = isNew;
@@ -501,7 +504,7 @@ namespace Konversation
         return KListViewItem::text(column);
     }
 
-    int BanListViewItem::compare(QListViewItem *i, int col, bool ascending) const
+    int BanListViewItem::compare(Q3ListViewItem *i, int col, bool ascending) const
     {
         if (col == 2)
         {

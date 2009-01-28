@@ -23,7 +23,7 @@ ValueListViewItem::ValueListViewItem(int newValue, KListView* parent, const QStr
     enforceSortOrder();
 }
 
-ValueListViewItem::ValueListViewItem(int newValue, KListView* parent, QListViewItem* after, const QString& label)
+ValueListViewItem::ValueListViewItem(int newValue, KListView* parent, Q3ListViewItem* after, const QString& label)
 : KListViewItem(parent,after,label)
 {
     m_value=newValue;

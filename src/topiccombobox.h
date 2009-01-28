@@ -15,6 +15,8 @@
 #define TOPICCOMBOBOX_H
 
 #include <kcombobox.h>
+//Added by qt3to4:
+#include <QWheelEvent>
 
 
 class TopicComboBox : public KComboBox

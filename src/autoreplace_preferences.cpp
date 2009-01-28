@@ -16,7 +16,7 @@
 #include <qlabel.h>
 #include <qpushbutton.h>
 #include <qcombobox.h>
-#include <qheader.h>
+#include <q3header.h>
 #include <qtooltip.h>
 #include <qdialog.h>
 
@@ -68,8 +68,8 @@ Autoreplace_Config::Autoreplace_Config(QWidget* parent, const char* name)
   // populate listview
   loadSettings();
 
-  connect(patternListView, SIGNAL(selectionChanged(QListViewItem*)), this, SLOT(entrySelected(QListViewItem*)));
-  connect(patternListView, SIGNAL(clicked(QListViewItem*)), this, SLOT(entrySelected(QListViewItem*)));
+  connect(patternListView, SIGNAL(selectionChanged(Q3ListViewItem*)), this, SLOT(entrySelected(Q3ListViewItem*)));
+  connect(patternListView, SIGNAL(clicked(Q3ListViewItem*)), this, SLOT(entrySelected(Q3ListViewItem*)));
   connect(patternListView, SIGNAL(moved()), SIGNAL(modified()));
 
   connect(patternListView, SIGNAL(aboutToMove()), SLOT(disableSort()));
@@ -108,7 +108,7 @@ void Autoreplace_Config::setAutoreplaceListView(const QStringList &autoreplaceLi
     // get autoreplace definition
     QString definition=autoreplaceList[index-1];
     // cut definition apart in name and action, and create a new listview item
-    QCheckListItem* newItem=new QCheckListItem(patternListView,QString(),QCheckListItem::CheckBox);
+    Q3CheckListItem* newItem=new Q3CheckListItem(patternListView,QString(),Q3CheckListItem::CheckBox);
     // Regular expression?
     if(definition.section(',',0,0)=="1") newItem->setOn(true);
     // direction input/output/both
@@ -169,7 +169,7 @@ void Autoreplace_Config::restorePageToDefaults()
 QStringList Autoreplace_Config::currentAutoreplaceList()
 {
   // get first item of the autoreplace listview
-  QListViewItem* item=patternListView->firstChild();
+  Q3ListViewItem* item=patternListView->firstChild();
   // create empty list
   QStringList newList;
 
@@ -177,7 +177,7 @@ QStringList Autoreplace_Config::currentAutoreplaceList()
   while(item)
   {
     QString checked="0";
-    if(static_cast<QCheckListItem*>(item)->isOn()) checked="1";
+    if(static_cast<Q3CheckListItem*>(item)->isOn()) checked="1";
 
     // remember entry in internal list (col 4 is hidden for input/output)
     newList.append(checked+','+item->text(4)+','+item->text(2)+','+item->text(3));
@@ -197,7 +197,7 @@ bool Autoreplace_Config::hasChanged()
 // slots
 
 // what to do when the user selects an item
-void Autoreplace_Config::entrySelected(QListViewItem* autoreplaceEntry)
+void Autoreplace_Config::entrySelected(Q3ListViewItem* autoreplaceEntry)
 {
   // play it safe, assume disabling all widgets first
   bool enabled=false;
@@ -246,7 +246,7 @@ void Autoreplace_Config::entrySelected(QListViewItem* autoreplaceEntry)
 void Autoreplace_Config::directionChanged(int newDirection)
 {
   // get possible selected item
-  QListViewItem* item=patternListView->selectedItem();
+  Q3ListViewItem* item=patternListView->selectedItem();
 
   // sanity check
   if(item)
@@ -269,7 +269,7 @@ void Autoreplace_Config::directionChanged(int newDirection)
 void Autoreplace_Config::patternChanged(const QString& newPattern)
 {
   // get possible selected item
-  QListViewItem* item=patternListView->selectedItem();
+  Q3ListViewItem* item=patternListView->selectedItem();
 
   // sanity check
   if(item)
@@ -285,7 +285,7 @@ void Autoreplace_Config::patternChanged(const QString& newPattern)
 void Autoreplace_Config::replacementChanged(const QString& newReplacement)
 {
   // get possible selected item
-  QListViewItem* item=patternListView->selectedItem();
+  Q3ListViewItem* item=patternListView->selectedItem();
 
   // sanity check
   if(item)
@@ -303,7 +303,7 @@ void Autoreplace_Config::addEntry()
   disableSort();
 
   // add new item at the bottom of list view
-  QCheckListItem* newItem=new QCheckListItem(patternListView,QString(),QCheckListItem::CheckBox);
+  Q3CheckListItem* newItem=new Q3CheckListItem(patternListView,QString(),Q3CheckListItem::CheckBox);
   // if successful ...
   if(newItem)
   {
@@ -329,13 +329,13 @@ void Autoreplace_Config::addEntry()
 void Autoreplace_Config::removeEntry()
 {
   // get possible first selected item
-  QListViewItem* item=patternListView->selectedItem();
+  Q3ListViewItem* item=patternListView->selectedItem();
 
   // sanity check
   if(item)
   {
     // get item below the current one
-    QListViewItem* nextItem=item->itemBelow();
+    Q3ListViewItem* nextItem=item->itemBelow();
     // if there was none, get the one above
     if(!nextItem) nextItem=item->itemAbove();
 

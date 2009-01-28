@@ -18,6 +18,9 @@
 #include "preferences.h"
 
 #include <qtimer.h>
+//Added by qt3to4:
+#include <Q3ValueList>
+#include <Q3PtrList>
 
 #include <dcopref.h>
 #include <kaction.h>
@@ -99,9 +102,9 @@ AwayManager::~AwayManager()
 
 void AwayManager::identitiesChanged()
 {
-    QValueList<int> newIdentityList;
+    Q3ValueList<int> newIdentityList;
 
-    QPtrList<Server> serverList = m_connectionManager->getServerList();
+    Q3PtrList<Server> serverList = m_connectionManager->getServerList();
     Server* server = 0;
 
     for (server = serverList.first(); server; server = serverList.next())
@@ -238,7 +241,7 @@ void AwayManager::implementIdleAutoAway(bool activity)
     {
         m_idleTime.start();
 
-        QPtrList<Server> serverList = m_connectionManager->getServerList();
+        Q3PtrList<Server> serverList = m_connectionManager->getServerList();
         Server* server = 0;
 
         for (server = serverList.first(); server; server = serverList.next())
@@ -256,8 +259,8 @@ void AwayManager::implementIdleAutoAway(bool activity)
     {
         long int idleTime = m_idleTime.elapsed() / 1000;
 
-        QValueList<int> identitiesIdleTimeExceeded;
-        QValueList<int>::ConstIterator it;
+        Q3ValueList<int> identitiesIdleTimeExceeded;
+        Q3ValueList<int>::ConstIterator it;
 
         for (it = m_identitiesOnAutoAway.begin(); it != m_identitiesOnAutoAway.end(); ++it)
         {
@@ -265,7 +268,7 @@ void AwayManager::implementIdleAutoAway(bool activity)
                 identitiesIdleTimeExceeded.append((*it));
         }
 
-        QPtrList<Server> serverList = m_connectionManager->getServerList();
+        Q3PtrList<Server> serverList = m_connectionManager->getServerList();
         Server* server = 0;
 
         for (server = serverList.first(); server; server = serverList.next())
@@ -284,7 +287,7 @@ void AwayManager::setManagedIdentitiesAway()
     // on residual mouse activity after manual screensaver activation.
     d->mouseX = -1;
 
-    QPtrList<Server> serverList = m_connectionManager->getServerList();
+    Q3PtrList<Server> serverList = m_connectionManager->getServerList();
     Server* server = 0;
 
     for (server = serverList.first(); server; server = serverList.next())
@@ -296,7 +299,7 @@ void AwayManager::setManagedIdentitiesAway()
 
 void AwayManager::setManagedIdentitiesUnaway()
 {
-    QPtrList<Server> serverList = m_connectionManager->getServerList();
+    Q3PtrList<Server> serverList = m_connectionManager->getServerList();
     Server* server = 0;
 
     for (server = serverList.first(); server; server = serverList.next())
@@ -313,7 +316,7 @@ void AwayManager::setManagedIdentitiesUnaway()
 
 void AwayManager::requestAllAway(const QString& reason)
 {
-    QPtrList<Server> serverList = m_connectionManager->getServerList();
+    Q3PtrList<Server> serverList = m_connectionManager->getServerList();
     Server* server = 0;
 
     for (server = serverList.first(); server; server = serverList.next())
@@ -322,7 +325,7 @@ void AwayManager::requestAllAway(const QString& reason)
 
 void AwayManager::requestAllUnaway()
 {
-    QPtrList<Server> serverList = m_connectionManager->getServerList();
+    Q3PtrList<Server> serverList = m_connectionManager->getServerList();
     Server* server = 0;
 
     for (server = serverList.first(); server; server = serverList.next())
@@ -346,7 +349,7 @@ void AwayManager::updateGlobalAwayAction(bool away)
 
     if (away)
     {
-        QPtrList<Server> serverList = m_connectionManager->getServerList();
+        Q3PtrList<Server> serverList = m_connectionManager->getServerList();
         Server* server = 0;
         uint awayCount = 0;
 

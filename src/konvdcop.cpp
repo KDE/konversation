@@ -24,6 +24,8 @@
 #include <kdebug.h>
 #include <dcopclient.h>
 #include <klocale.h>
+//Added by qt3to4:
+#include <Q3PtrList>
 
 
 KonvDCOP::KonvDCOP() : DCOPObject("irc"), QObject(0, "irc")
@@ -44,7 +46,7 @@ QStringList KonvDCOP::listServers()
     KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
 
     QStringList hosts;
-    QPtrList<Server> serverList = konvApp->getConnectionManager()->getServerList();
+    Q3PtrList<Server> serverList = konvApp->getConnectionManager()->getServerList();
     Server* server;
 
     for (server = serverList.first(); server; server = serverList.next())
@@ -58,7 +60,7 @@ QStringList KonvDCOP::listConnectedServers()
     KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
 
     QStringList connectedHosts;
-    QPtrList<Server> serverList = konvApp->getConnectionManager()->getServerList();
+    Q3PtrList<Server> serverList = konvApp->getConnectionManager()->getServerList();
     Server* server;
 
     for (server = serverList.first(); server; server = serverList.next())

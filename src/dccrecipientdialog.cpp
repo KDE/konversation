@@ -15,6 +15,8 @@
 #include "dccrecipientdialog.h"
 
 #include <qlayout.h>
+//Added by qt3to4:
+#include <Q3VBoxLayout>
 
 #include <klineedit.h>
 #include <klocale.h>
@@ -31,7 +33,7 @@ DccRecipientDialog::DccRecipientDialog(QWidget* parent, const QStringList &list,
     QWidget* page=new QWidget(this);
     setMainWidget(page);
     // Add the layout to the widget
-    QVBoxLayout* dialogLayout=new QVBoxLayout(page);
+    Q3VBoxLayout* dialogLayout=new Q3VBoxLayout(page);
     dialogLayout->setSpacing(spacingHint());
     // Add the nickname list widget
     KListBox* nicknameList=new KListBox(page,"recipient_list");
@@ -44,8 +46,8 @@ DccRecipientDialog::DccRecipientDialog(QWidget* parent, const QStringList &list,
     dialogLayout->addWidget(nicknameList);
     dialogLayout->addWidget(nicknameInput);
 
-    connect(nicknameList,SIGNAL (highlighted(QListBoxItem*)),this,SLOT (newNicknameSelected(QListBoxItem*)) );
-    connect(nicknameList,SIGNAL (doubleClicked(QListBoxItem*)),this,SLOT (newNicknameSelectedQuit(QListBoxItem*)) );
+    connect(nicknameList,SIGNAL (highlighted(Q3ListBoxItem*)),this,SLOT (newNicknameSelected(Q3ListBoxItem*)) );
+    connect(nicknameList,SIGNAL (doubleClicked(Q3ListBoxItem*)),this,SLOT (newNicknameSelectedQuit(Q3ListBoxItem*)) );
 
     setButtonOK(KGuiItem(i18n("&OK"),"button_ok",i18n("Select nickname and close the window")));
     setButtonCancel(KGuiItem(i18n("&Cancel"),"button_cancel",i18n("Close the window without changes")));
@@ -63,12 +65,12 @@ QString DccRecipientDialog::getSelectedNickname()
     return selectedNickname;
 }
 
-void DccRecipientDialog::newNicknameSelected(QListBoxItem* item)
+void DccRecipientDialog::newNicknameSelected(Q3ListBoxItem* item)
 {
     nicknameInput->setText(item->text());
 }
 
-void DccRecipientDialog::newNicknameSelectedQuit(QListBoxItem* item)
+void DccRecipientDialog::newNicknameSelectedQuit(Q3ListBoxItem* item)
 {
     newNicknameSelected(item);
     selectedNickname=nicknameInput->text();

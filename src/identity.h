@@ -17,6 +17,8 @@
 
 #include <ksharedptr.h>
 #include <qstringlist.h>
+//Added by qt3to4:
+#include <Q3ValueList>
 
 
 class QTextCodec;
@@ -128,6 +130,6 @@ class Identity : public KShared
 };
 
 typedef KSharedPtr<Identity> IdentityPtr;
-typedef QValueList<IdentityPtr> IdentityList;
+typedef Q3ValueList<IdentityPtr> IdentityList;
 
 #endif

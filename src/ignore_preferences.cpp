@@ -17,9 +17,11 @@
 
 #include <klocale.h>
 #include <klistview.h>
-#include <qlistview.h>
+#include <q3listview.h>
 #include <qlineedit.h>
-#include <qheader.h>
+#include <q3header.h>
+//Added by qt3to4:
+#include <Q3PtrList>
 
 #include <kapplication.h>
 #include <kconfig.h>
@@ -28,7 +30,7 @@
 #include <qcheckbox.h>
 
 
-Ignore_Config::Ignore_Config( QWidget* parent, const char* name, WFlags fl )
+Ignore_Config::Ignore_Config( QWidget* parent, const char* name, Qt::WFlags fl )
     : Ignore_ConfigUI( parent, name, fl )
 {
     connect(newButton,SIGNAL(clicked()),
@@ -37,8 +39,8 @@ Ignore_Config::Ignore_Config( QWidget* parent, const char* name, WFlags fl )
         this,SLOT(removeIgnore()));
     connect(removeAllButton,SIGNAL(clicked()),
 	this,SLOT(removeAllIgnore()));
-    connect(ignoreListView,SIGNAL(selectionChanged(QListViewItem*)),
-        this,SLOT(select(QListViewItem*)));
+    connect(ignoreListView,SIGNAL(selectionChanged(Q3ListViewItem*)),
+        this,SLOT(select(Q3ListViewItem*)));
     connect(chkChannel, SIGNAL(clicked()), this, SLOT(flagCheckboxChanged()));
     connect(chkQuery, SIGNAL(clicked()), this, SLOT(flagCheckboxChanged()));
     connect(chkNotice, SIGNAL(clicked()), this, SLOT(flagCheckboxChanged()));
@@ -84,9 +86,9 @@ void Ignore_Config::removeIgnore()
     emit modified();
 }
 
-QPtrList<Ignore> Ignore_Config::getIgnoreList()
+Q3PtrList<Ignore> Ignore_Config::getIgnoreList()
 {
-    QPtrList<Ignore> newList;
+    Q3PtrList<Ignore> newList;
 
     IgnoreListViewItem* item=static_cast<IgnoreListViewItem*>(ignoreListView->firstChild());
     while(item)
@@ -137,7 +139,7 @@ void Ignore_Config::saveSettings()
 
 void Ignore_Config::loadSettings()
 {
-    QPtrList<Ignore> ignoreList=Preferences::ignoreList();
+    Q3PtrList<Ignore> ignoreList=Preferences::ignoreList();
     // Insert Ignore items backwards to get them sorted properly
     Ignore* item=ignoreList.last();
     ignoreListView->clear();
@@ -167,7 +169,7 @@ void Ignore_Config::updateEnabledness()
 
 }
 
-void Ignore_Config::select(QListViewItem* item)
+void Ignore_Config::select(Q3ListViewItem* item)
 {
     updateEnabledness();
     // FIXME: Cast to IgnoreListViewItem, maybe derive from KListView some day

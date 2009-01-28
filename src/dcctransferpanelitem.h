@@ -19,6 +19,8 @@
 #include "dcctransfer.h"
 
 #include <qdatetime.h>
+//Added by qt3to4:
+#include <QPixmap>
 
 #include <klistview.h>
 #include <kurl.h>
@@ -47,7 +49,7 @@ class DccTransferPanelItem : public QObject, public KListViewItem
 
         virtual void paintCell( QPainter* painter, const QColorGroup& colorgroup, int column, int width, int alignment );
 
-        virtual int compare( QListViewItem* i, int col, bool ascending ) const;
+        virtual int compare( Q3ListViewItem* i, int col, bool ascending ) const;
 
         void runFile();
         void openFileInfoDialog();

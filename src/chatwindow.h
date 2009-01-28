@@ -16,15 +16,17 @@
 #include "identity.h"
 #include "common.h"
 
-#include <qvbox.h>
+#include <q3vbox.h>
 #include <qfile.h>
+//Added by qt3to4:
+#include <QEvent>
 
 
 class IRCView;
 class Server;
 class KonversationMainWindow;
 
-class ChatWindow : public QVBox
+class ChatWindow : public Q3VBox
 {
     Q_OBJECT
 

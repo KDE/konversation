@@ -36,6 +36,8 @@
 #include <kio/job.h>
 #include <kio/jobclasses.h>
 #include <kio/netaccess.h>
+//Added by qt3to4:
+#include <QPixmap>
 
 
 class DccResumeDialog;
@@ -706,7 +708,7 @@ void DccTransferRecvWriteCacheHandler::append( char* data, int size )
     {
         m_cacheList.append( QByteArray() );
         delete m_cacheStream;
-        m_cacheStream = new QDataStream( m_cacheList.back(), IO_WriteOnly );
+        m_cacheStream = new QDataStream( m_cacheList.back(), QIODevice::WriteOnly );
     }
 
     m_cacheStream->writeRawBytes( data, size );

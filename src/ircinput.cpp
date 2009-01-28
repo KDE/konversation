@@ -24,8 +24,13 @@
 #include <qdom.h>
 #include <qevent.h>
 #include <qobject.h>
-#include <qwhatsthis.h>
-#include <qpopupmenu.h>
+#include <q3whatsthis.h>
+#include <q3popupmenu.h>
+//Added by qt3to4:
+#include <QShowEvent>
+#include <QMouseEvent>
+#include <QHideEvent>
+#include <QKeyEvent>
 
 #include <kapplication.h>
 #include <kmessagebox.h>
@@ -69,13 +74,13 @@ IRCInput::IRCInput(QWidget* parent) : KTextEdit(parent)
     setHScrollBarMode(AlwaysOff);
     setVScrollBarMode(AlwaysOff);
     #if RICHTEXT == 1
-    setAutoFormatting(QTextEdit::AutoNone);
-    setTextFormat(RichText);
+    setAutoFormatting(Q3TextEdit::AutoNone);
+    setTextFormat(Qt::RichText);
     #else
     setTextFormat(PlainText);
     #endif
 
-    QWhatsThis::add(this, i18n("<qt>The input line is where you type messages to be sent the channel, query, or server.  A message sent to a channel is seen by everyone on the channel, whereas a message in a query is sent only to the person in the query with you.<p>To automatically complete the nickname you began typing, press Tab. If you have not begun typing, the last successfully completed nickname will be used.<p>You can also send special commands:<br><table><tr><th>/me <i>action</i></th><td>shows up as an action in the channel or query.  For example:  <em>/me sings a song</em> will show up in the channel as 'Nick sings a song'.</td></tr><tr><th>/whois <i>nickname</i></th><td>shows information about this person, including what channels they are in.</td></tr></table><p>For more commands, see the Konversation Handbook.<p>A message cannot contain multiple lines.</qt>"));
+    Q3WhatsThis::add(this, i18n("<qt>The input line is where you type messages to be sent the channel, query, or server.  A message sent to a channel is seen by everyone on the channel, whereas a message in a query is sent only to the person in the query with you.<p>To automatically complete the nickname you began typing, press Tab. If you have not begun typing, the last successfully completed nickname will be used.<p>You can also send special commands:<br><table><tr><th>/me <i>action</i></th><td>shows up as an action in the channel or query.  For example:  <em>/me sings a song</em> will show up in the channel as 'Nick sings a song'.</td></tr><tr><th>/whois <i>nickname</i></th><td>shows information about this person, including what channels they are in.</td></tr></table><p>For more commands, see the Konversation Handbook.<p>A message cannot contain multiple lines.</qt>"));
 
     m_disableSpellCheckTimer = new QTimer(this);
     connect(m_disableSpellCheckTimer, SIGNAL(timeout()), this, SLOT(disableSpellChecking()));
@@ -155,9 +160,9 @@ QSize IRCInput::sizeHint() const
     return QSize(w,h);
 }
 
-QPopupMenu *IRCInput::createPopupMenu( const QPoint &pos )
+Q3PopupMenu *IRCInput::createPopupMenu( const QPoint &pos )
 {
-    QPopupMenu *menu=KTextEdit::createPopupMenu(pos);
+    Q3PopupMenu *menu=KTextEdit::createPopupMenu(pos);
     menu->removeItemAt(menu->count()-1);
     menu->removeItemAt(menu->count()-1);
     return menu;
@@ -223,7 +228,7 @@ void IRCInput::keyPressEvent(QKeyEvent* e)
 {
     switch(e->key())
     {
-        case Key_Tab:
+        case Qt::Key_Tab:
             emit nickCompletion();
             return;
             break;

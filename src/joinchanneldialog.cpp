@@ -16,6 +16,8 @@
 #include "servergroupsettings.h"
 
 #include <qlabel.h>
+//Added by qt3to4:
+#include <Q3PtrList>
 
 #include <klocale.h>
 #include <kcombobox.h>
@@ -38,8 +40,8 @@ namespace Konversation
         {
             ChannelList history = server->getServerGroup()->channelHistory();
             ChannelList::iterator endIt = history.end();
-            const QPtrList<Channel> &channels = server->getChannelList();
-            QPtrListIterator<Channel> chanIt(channels);
+            const Q3PtrList<Channel> &channels = server->getChannelList();
+            Q3PtrListIterator<Channel> chanIt(channels);
             Channel* chan = 0;
             bool joined = false;
 

@@ -33,7 +33,7 @@ class Alias_Config : public Alias_ConfigUI, public KonviSettingsPage
         void modified();
 
     protected slots:
-        void entrySelected(QListViewItem* aliasEntry);
+        void entrySelected(Q3ListViewItem* aliasEntry);
         void nameChanged(const QString& newName);
         void actionChanged(const QString& newAction);
         void addEntry();

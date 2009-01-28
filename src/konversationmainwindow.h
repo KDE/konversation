@@ -23,6 +23,10 @@
 #include "server.h"
 
 #include <qstringlist.h>
+//Added by qt3to4:
+#include <QShowEvent>
+#include <QEvent>
+#include <QHideEvent>
 
 #include <kmainwindow.h>
 #include <kaction.h>

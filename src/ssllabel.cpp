@@ -13,6 +13,9 @@
  */
 
 #include "ssllabel.h"
+//Added by qt3to4:
+#include <QMouseEvent>
+#include <QLabel>
 
 
 SSLLabel::SSLLabel(QWidget* parent,const char* name)

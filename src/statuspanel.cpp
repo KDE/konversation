@@ -21,9 +21,11 @@
 #include <qpushbutton.h>
 #include <qcombobox.h>
 #include <qlabel.h>
-#include <qhbox.h>
+#include <q3hbox.h>
 #include <qtextcodec.h>
 #include <qlineedit.h>
+//Added by qt3to4:
+#include <QShowEvent>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -43,7 +45,7 @@ StatusPanel::StatusPanel(QWidget* parent) : ChatWindow(parent)
     IRCViewBox* ircBox = new IRCViewBox(this, 0); // Server will be set later in setServer()
     setTextView(ircBox->ircView());
 
-    QHBox* commandLineBox=new QHBox(this);
+    Q3HBox* commandLineBox=new Q3HBox(this);
     commandLineBox->setSpacing(spacing());
     commandLineBox->setMargin(0);
 

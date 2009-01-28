@@ -23,6 +23,10 @@
 #include <qtextcodec.h>
 #include <qtooltip.h>
 #include <qlayout.h>
+//Added by qt3to4:
+#include <Q3TextStream>
+#include <QKeyEvent>
+#include <QEvent>
 
 #include <klocale.h>
 #include <kdialog.h>
@@ -31,7 +35,7 @@
 #include <kaction.h>
 
 
-ChatWindow::ChatWindow(QWidget* parent) : QVBox(parent)
+ChatWindow::ChatWindow(QWidget* parent) : Q3VBox(parent)
 {
     setName("ChatWindowObject");
     setTextView(0);
@@ -65,9 +69,9 @@ void ChatWindow::updateAppearance()
     if (textView)
     {
         if (Preferences::showIRCViewScrollBar())
-            textView->setVScrollBarMode(QScrollView::AlwaysOn);
+            textView->setVScrollBarMode(Q3ScrollView::AlwaysOn);
         else
-            textView->setVScrollBarMode(QScrollView::AlwaysOff);
+            textView->setVScrollBarMode(Q3ScrollView::AlwaysOff);
     }
 }
 
@@ -135,11 +139,11 @@ void ChatWindow::setTextView(IRCView* newView)
 
     if(Preferences::showIRCViewScrollBar())
     {
-        textView->setVScrollBarMode(QScrollView::Auto);
+        textView->setVScrollBarMode(Q3ScrollView::Auto);
     }
     else
     {
-        textView->setVScrollBarMode(QScrollView::AlwaysOff);
+        textView->setVScrollBarMode(Q3ScrollView::AlwaysOff);
     }
 
     textView->setChatWin(this);
@@ -236,13 +240,13 @@ void ChatWindow::setLogfileName(const QString& name)
             cdIntoLogPath();
             // Show last log lines. This idea was stole ... um ... inspired by PMP :)
             // Don't do this for the server status windows, though
-            if((getType() != Status) && logfile.open(IO_ReadOnly))
+            if((getType() != Status) && logfile.open(QIODevice::ReadOnly))
             {
                 unsigned long filePosition;
 
                 QString backlogLine;
-                QTextStream backlog(&logfile);
-                backlog.setEncoding(QTextStream::UnicodeUTF8);
+                Q3TextStream backlog(&logfile);
+                backlog.setEncoding(Q3TextStream::UnicodeUTF8);
 
                 QStringList firstColumns;
                 QStringList messages;
@@ -334,12 +338,12 @@ void ChatWindow::logText(const QString& text)
         // "cd" into log path or create path, if it's not there
         cdIntoLogPath();
 
-        if(logfile.open(IO_WriteOnly | IO_Append))
+        if(logfile.open(QIODevice::WriteOnly | QIODevice::Append))
         {
             // wrap the file into a stream
-            QTextStream logStream(&logfile);
+            Q3TextStream logStream(&logfile);
             // write log in utf8 to help i18n
-            logStream.setEncoding(QTextStream::UnicodeUTF8);
+            logStream.setEncoding(Q3TextStream::UnicodeUTF8);
 
             if(firstLog)
             {
@@ -486,7 +490,7 @@ bool ChatWindow::eventFilter(QObject* watched, QEvent* e)
 
     }
 
-    return QVBox::eventFilter(watched, e);
+    return Q3VBox::eventFilter(watched, e);
 }
 
 void ChatWindow::adjustFocus()

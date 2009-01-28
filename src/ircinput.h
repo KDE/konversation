@@ -16,6 +16,13 @@
 #define IRCINPUT_H
 
 #include <qstringlist.h>
+//Added by qt3to4:
+#include <QShowEvent>
+#include <QEvent>
+#include <QHideEvent>
+#include <QMouseEvent>
+#include <QKeyEvent>
+#include <Q3PopupMenu>
 
 #include <ktextedit.h>
 
@@ -71,7 +78,7 @@ class IRCInput : public KTextEdit
         void contentsMouseReleaseEvent(QMouseEvent *);
 
         virtual void keyPressEvent(QKeyEvent* e);
-        virtual QPopupMenu *createPopupMenu( const QPoint& pos );
+        virtual Q3PopupMenu *createPopupMenu( const QPoint& pos );
         virtual void showEvent(QShowEvent* e);
         virtual void hideEvent(QHideEvent* e);
 

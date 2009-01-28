@@ -28,8 +28,10 @@
 #include <qfileinfo.h>
 #include <qregexp.h>
 #include <qmap.h>
-#include <qvaluelist.h>
+#include <q3valuelist.h>
 #include <qtextcodec.h>
+//Added by qt3to4:
+#include <Q3CString>
 
 #include <klocale.h>
 #include <kdebug.h>
@@ -127,7 +129,7 @@ namespace Konversation
         while(text.length() > max)
         {
             // The most important bit - turn the current char into a QCString so we can measure it
-            QCString ch = codec->fromUnicode(QString(text[index]));
+            Q3CString ch = codec->fromUnicode(QString(text[index]));
             charLength = ch.length();
 
             // If adding this char puts us over the limit:

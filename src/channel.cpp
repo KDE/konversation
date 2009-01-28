@@ -18,6 +18,15 @@
 #include "nick.h"
 #include "nicklistview.h"
 #include "quickbutton.h"
+//Added by qt3to4:
+#include <Q3StrList>
+#include <Q3GridLayout>
+#include <QShowEvent>
+#include <Q3ValueList>
+#include <Q3PtrCollection>
+#include <QDropEvent>
+#include <Q3CString>
+#include <Q3PtrList>
 #include "modebutton.h"
 #include "ircinput.h"
 #include "ircviewbox.h"
@@ -33,13 +42,13 @@
 #include "linkaddressbook/addressbook.h"
 
 #include <qlabel.h>
-#include <qvbox.h>
+#include <q3vbox.h>
 #include <qevent.h>
-#include <qhbox.h>
-#include <qgrid.h>
-#include <qdragobject.h>
+#include <q3hbox.h>
+#include <q3grid.h>
+#include <q3dragobject.h>
 #include <qsizepolicy.h>
-#include <qheader.h>
+#include <q3header.h>
 #include <qregexp.h>
 #include <qtooltip.h>
 #include <qsplitter.h>
@@ -47,7 +56,7 @@
 #include <qtimer.h>
 #include <qcombobox.h>
 #include <qtextcodec.h>
-#include <qwhatsthis.h>
+#include <q3whatsthis.h>
 #include <qtoolbutton.h>
 #include <qlayout.h>
 
@@ -121,7 +130,7 @@ Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
     QWidget* topicWidget = new QWidget(m_vertSplitter);
     m_vertSplitter->setResizeMode(topicWidget,QSplitter::KeepSize);
 
-    QGridLayout* topicLayout = new QGridLayout(topicWidget, 2, 3, 0, 0);
+    Q3GridLayout* topicLayout = new Q3GridLayout(topicWidget, 2, 3, 0, 0);
 
     m_topicButton = new QToolButton(topicWidget);
     m_topicButton->setIconSet(SmallIconSet("edit", 16));
@@ -129,7 +138,7 @@ Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
     connect(m_topicButton, SIGNAL(clicked()), this, SLOT(showOptionsDialog()));
 
     topicLine = new Konversation::TopicLabel(topicWidget);
-    QWhatsThis::add(topicLine, i18n("<qt>Every channel on IRC has a topic associated with it.  This is simply a message that everybody can see.<p>If you are an operator, or the channel mode <em>'T'</em> has not been set, then you can change the topic by clicking the Edit Channel Properties button to the left of the topic.  You can also view the history of topics there.</qt>"));
+    Q3WhatsThis::add(topicLine, i18n("<qt>Every channel on IRC has a topic associated with it.  This is simply a message that everybody can see.<p>If you are an operator, or the channel mode <em>'T'</em> has not been set, then you can change the topic by clicking the Edit Channel Properties button to the left of the topic.  You can also view the history of topics there.</qt>"));
     connect(topicLine, SIGNAL(setStatusBarTempText(const QString&)), this, SIGNAL(setStatusBarTempText(const QString&)));
     connect(topicLine, SIGNAL(clearStatusBarTempText()), this, SIGNAL(clearStatusBarTempText()));
     connect(topicLine,SIGNAL(popupCommand(int)),this,SLOT(popupChannelCommand(int)));
@@ -138,7 +147,7 @@ Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
     topicLayout->addMultiCellWidget(topicLine, 0, 1, 1, 1);
 
     // The box holding the channel modes
-    modeBox = new QHBox(topicWidget);
+    modeBox = new Q3HBox(topicWidget);
     modeBox->setSizePolicy(hfixed);
     modeT = new ModeButton("T",modeBox,0);
     modeN = new ModeButton("N",modeBox,1);
@@ -149,14 +158,14 @@ Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
     modeK = new ModeButton("K",modeBox,6);
     modeL = new ModeButton("L",modeBox,7);
 
-    QWhatsThis::add(modeT, i18n("<qt>These control the <em>mode</em> of the channel.  Only an operator can change these.<p>The <b>T</b>opic mode means that only the channel operator can change the topic for the channel.</qt>"));
-    QWhatsThis::add(modeN, i18n("<qt>These control the <em>mode</em> of the channel.  Only an operator can change these.<p><b>N</b>o messages from outside means that users that are not in the channel cannot send messages that everybody in the channel can see.  Almost all channels have this set to prevent nuisance messages.</qt>"));
-    QWhatsThis::add(modeS, i18n("<qt>These control the <em>mode</em> of the channel.  Only an operator can change these.<p>A <b>S</b>ecret channel will not show up in the channel list, nor will any user be able to see that you are in the channel with the <em>WHOIS</em> command or anything similar.  Only the people that are in the same channel will know that you are in this channel, if this mode is set.</qt>"));
-    QWhatsThis::add(modeI, i18n("<qt>These control the <em>mode</em> of the channel.  Only an operator can change these.<p>An <b>I</b>nvite only channel means that people can only join the channel if they are invited.  To invite someone, a channel operator needs to issue the command <em>/invite nick</em> from within the channel.</qt>"));
-    QWhatsThis::add(modeP, i18n("<qt>These control the <em>mode</em> of the channel.  Only an operator can change these.<p>A <b>P</b>rivate channel is shown in a listing of all channels, but the topic is not shown.  A user's <em>WHOIS</e> may or may not show them as being in a private channel depending on the IRC server.</qt>"));
-    QWhatsThis::add(modeM, i18n("<qt>These control the <em>mode</em> of the channel.  Only an operator can change these.<p>A <b>M</b>oderated channel is one where only operators, half-operators and those with voice can talk.</qt>"));
-    QWhatsThis::add(modeK, i18n("<qt>These control the <em>mode</em> of the channel.  Only an operator can change these.<p>A <b>P</b>rotected channel requires users to enter a password in order to join.</qt>"));
-    QWhatsThis::add(modeL, i18n("<qt>These control the <em>mode</em> of the channel.  Only an operator can change these.<p>A channel that has a user <b>L</b>imit means that only that many users can be in the channel at any one time.  Some channels have a bot that sits in the channel and changes this automatically depending on how busy the channel is.</qt>"));
+    Q3WhatsThis::add(modeT, i18n("<qt>These control the <em>mode</em> of the channel.  Only an operator can change these.<p>The <b>T</b>opic mode means that only the channel operator can change the topic for the channel.</qt>"));
+    Q3WhatsThis::add(modeN, i18n("<qt>These control the <em>mode</em> of the channel.  Only an operator can change these.<p><b>N</b>o messages from outside means that users that are not in the channel cannot send messages that everybody in the channel can see.  Almost all channels have this set to prevent nuisance messages.</qt>"));
+    Q3WhatsThis::add(modeS, i18n("<qt>These control the <em>mode</em> of the channel.  Only an operator can change these.<p>A <b>S</b>ecret channel will not show up in the channel list, nor will any user be able to see that you are in the channel with the <em>WHOIS</em> command or anything similar.  Only the people that are in the same channel will know that you are in this channel, if this mode is set.</qt>"));
+    Q3WhatsThis::add(modeI, i18n("<qt>These control the <em>mode</em> of the channel.  Only an operator can change these.<p>An <b>I</b>nvite only channel means that people can only join the channel if they are invited.  To invite someone, a channel operator needs to issue the command <em>/invite nick</em> from within the channel.</qt>"));
+    Q3WhatsThis::add(modeP, i18n("<qt>These control the <em>mode</em> of the channel.  Only an operator can change these.<p>A <b>P</b>rivate channel is shown in a listing of all channels, but the topic is not shown.  A user's <em>WHOIS</e> may or may not show them as being in a private channel depending on the IRC server.</qt>"));
+    Q3WhatsThis::add(modeM, i18n("<qt>These control the <em>mode</em> of the channel.  Only an operator can change these.<p>A <b>M</b>oderated channel is one where only operators, half-operators and those with voice can talk.</qt>"));
+    Q3WhatsThis::add(modeK, i18n("<qt>These control the <em>mode</em> of the channel.  Only an operator can change these.<p>A <b>P</b>rotected channel requires users to enter a password in order to join.</qt>"));
+    Q3WhatsThis::add(modeL, i18n("<qt>These control the <em>mode</em> of the channel.  Only an operator can change these.<p>A channel that has a user <b>L</b>imit means that only that many users can be in the channel at any one time.  Some channels have a bot that sits in the channel and changes this automatically depending on how busy the channel is.</qt>"));
 
     connect(modeT,SIGNAL(clicked(int,bool)),this,SLOT(modeButtonClicked(int,bool)));
     connect(modeN,SIGNAL(clicked(int,bool)),this,SLOT(modeButtonClicked(int,bool)));
@@ -169,7 +178,7 @@ Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
 
     limit=new KLineEdit(modeBox);
     QToolTip::add(limit, i18n("Maximum users allowed in channel"));
-    QWhatsThis::add(limit, i18n("<qt>This is the channel user limit - the maximum number of users that can be in the channel at a time.  If you are an operator, you can set this.  The channel mode <b>T</b>opic (button to left) will automatically be set if set this.</qt>"));
+    Q3WhatsThis::add(limit, i18n("<qt>This is the channel user limit - the maximum number of users that can be in the channel at a time.  If you are an operator, you can set this.  The channel mode <b>T</b>opic (button to left) will automatically be set if set this.</qt>"));
     connect(limit,SIGNAL (returnPressed()),this,SLOT (channelLimitChanged()) );
     connect(limit,SIGNAL (lostFocus()), this, SLOT(channelLimitChanged()) );
 
@@ -191,12 +200,12 @@ Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
     connect(topicLine, SIGNAL(currentChannelChanged(const QString&)),textView,SLOT(setCurrentChannel(const QString&)));
 
     // The box that holds the Nick List and the quick action buttons
-    nickListButtons = new QVBox(m_horizSplitter);
+    nickListButtons = new Q3VBox(m_horizSplitter);
     m_horizSplitter->setResizeMode(nickListButtons,QSplitter::KeepSize);
     nickListButtons->setSpacing(spacing());
 
     nicknameListView=new NickListView(nickListButtons, this);
-    nicknameListView->setHScrollBarMode(QScrollView::AlwaysOff);
+    nicknameListView->setHScrollBarMode(Q3ScrollView::AlwaysOff);
     nicknameListView->setSelectionModeExt(KListView::Extended);
     nicknameListView->setAllColumnsShowFocus(true);
     nicknameListView->setSorting(1,true);
@@ -219,13 +228,13 @@ Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
     buttonsGrid=0;
 
     // The box holding the Nickname button and Channel input
-    commandLineBox = new QHBox(this);
+    commandLineBox = new Q3HBox(this);
     commandLineBox->setSpacing(spacing());
 
     nicknameCombobox = new QComboBox(commandLineBox);
     nicknameCombobox->setEditable(true);
     nicknameCombobox->insertStringList(Preferences::nicknameList());
-    QWhatsThis::add(nicknameCombobox, i18n("<qt>This shows your current nick, and any alternatives you have set up.  If you select or type in a different nickname, then a request will be sent to the IRC server to change your nick.  If the server allows it, the new nickname will be selected.  If you type in a new nickname, you need to press 'Enter' at the end.<p>You can add change the alternative nicknames from the <em>Identities</em> option in the <em>File</em> menu.</qt>"));
+    Q3WhatsThis::add(nicknameCombobox, i18n("<qt>This shows your current nick, and any alternatives you have set up.  If you select or type in a different nickname, then a request will be sent to the IRC server to change your nick.  If the server allows it, the new nickname will be selected.  If you type in a new nickname, you need to press 'Enter' at the end.<p>You can add change the alternative nicknames from the <em>Identities</em> option in the <em>File</em> menu.</qt>"));
     oldNick = nicknameCombobox->currentText();
 
     awayLabel = new QLabel(i18n("(away)"), commandLineBox);
@@ -280,8 +289,8 @@ Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
     connect(getTextView(),SIGNAL (autoText(const QString&)),this,SLOT (sendChannelText(const QString&)) );
 
     connect(nicknameListView,SIGNAL (popupCommand(int)),this,SLOT (popupCommand(int)) );
-    connect(nicknameListView,SIGNAL (doubleClicked(QListViewItem*)),this,SLOT (doubleClickCommand(QListViewItem*)) );
-    connect(nicknameListView,SIGNAL (dropped(QDropEvent*,QListViewItem*)),this,SLOT (filesDropped(QDropEvent*)) );
+    connect(nicknameListView,SIGNAL (doubleClicked(Q3ListViewItem*)),this,SLOT (doubleClickCommand(Q3ListViewItem*)) );
+    connect(nicknameListView,SIGNAL (dropped(QDropEvent*,Q3ListViewItem*)),this,SLOT (filesDropped(QDropEvent*)) );
     connect(nicknameCombobox,SIGNAL (activated(int)),this,SLOT(nicknameComboboxChanged()));
 
     if(nicknameCombobox->lineEdit())
@@ -352,7 +361,7 @@ void Channel::setEncryptedOutput(bool e)
         //prepend two colons to make it appear to be an irc message for decryption,
         // \r because it won't decrypt without it, even though the message did not have a \r
         // when encrypted. Bring on the QCA!
-        QCString cipher="::"+topic.utf8()+'\x0d';
+        Q3CString cipher="::"+topic.utf8()+'\x0d';
         Konversation::decryptTopic(getName(), cipher, m_server);
         topic=QString::fromUtf8(cipher.data()+2, cipher.length()-2);
         m_topicHistory[0] = m_topicHistory[0].section(' ', 0, 1) + ' ' + topic;
@@ -426,8 +435,8 @@ void Channel::filesDropped(QDropEvent* e)
     QPoint p(nicknameListView->contentsToViewport(e->pos()));
     Nick* it = dynamic_cast<Nick*>(nicknameListView->itemAt(p));
     if (!it) return;
-    QStrList uris;
-    if (QUriDrag::decode(e,uris))
+    Q3StrList uris;
+    if (Q3UriDrag::decode(e,uris))
         m_server->sendURIs(uris, it->getChannelNick()->getNickname());
 }
 
@@ -701,7 +710,7 @@ void Channel::popupCommand(int id)
 }
 
 // Will be connected to NickListView::doubleClicked()
-void Channel::doubleClickCommand(QListViewItem* item)
+void Channel::doubleClickCommand(Q3ListViewItem* item)
 {
     if(item)
     {
@@ -787,7 +796,7 @@ void Channel::completeNick()
             else if(Preferences::nickCompletionMode() == 0)
             {
                 if(mode == '\0') {
-                    QPtrListIterator<Nick> it(nicknameList);
+                    Q3PtrListIterator<Nick> it(nicknameList);
                     uint timeStamp = 0;
                     int listPosition = 0;
                     Nick* nick = 0;
@@ -915,11 +924,11 @@ void Channel::setAutoJoin(bool autojoin)
     {
         Konversation::ChannelSettings before;
 
-        QPtrList<Channel> channelList = m_server->getChannelList();
+        Q3PtrList<Channel> channelList = m_server->getChannelList();
 
         if (channelList.count() > 1)
         {
-            QPtrListIterator<Channel> it(channelList);
+            Q3PtrListIterator<Channel> it(channelList);
             Channel* channel;
             QMap<int, Channel*> channelMap;
 
@@ -1157,7 +1166,7 @@ void Channel::modeButtonClicked(int id, bool on)
     {
         if (args.isEmpty())
         {
-            QCString newPassword;
+            Q3CString newPassword;
 
             int result = KPasswordDialog::getPassword(newPassword, i18n("Channel Password"));
 
@@ -1207,7 +1216,7 @@ void Channel::addNickname(ChannelNickPtr channelnick)
 
     Nick* nick=0;
     Nick* lookNick;
-    QPtrListIterator<Nick> it(nicknameList);
+    Q3PtrListIterator<Nick> it(nicknameList);
 
     while((lookNick = it.current()) != 0)
     {
@@ -1463,7 +1472,7 @@ void Channel::kickNick(ChannelNickPtr channelNick, const QString &kicker, const 
 Nick* Channel::getNickByName(const QString &lookname)
 {
     QString lcLookname = lookname.lower();
-    QPtrListIterator<Nick> it(nicknameList);
+    Q3PtrListIterator<Nick> it(nicknameList);
 
     while(it.current() != 0)
     {
@@ -2102,7 +2111,7 @@ void Channel::updateQuickButtons(const QStringList &newButtonList)
     if(buttonsGrid)delete buttonsGrid;
 
     // the grid that holds the quick action buttons
-    buttonsGrid = new QGrid(2, nickListButtons);
+    buttonsGrid = new Q3Grid(2, nickListButtons);
 
     // add new quick buttons
     for(unsigned int index=0;index<newButtonList.count();index++)
@@ -2229,8 +2238,8 @@ void Channel::showEvent(QShowEvent*)
 
 void Channel::syncSplitters()
 {
-    QValueList<int> vertSizes = Preferences::topicSplitterSizes();
-    QValueList<int> horizSizes = Preferences::channelSplitterSizes();
+    Q3ValueList<int> vertSizes = Preferences::topicSplitterSizes();
+    Q3ValueList<int> horizSizes = Preferences::channelSplitterSizes();
 
     if (vertSizes.isEmpty())
     {
@@ -2427,8 +2436,8 @@ void Channel::autoUserhost()
         int limit = 5;
 
         QString nickString;
-        QPtrList<Nick> nickList = getNickList();
-        QPtrListIterator<Nick> it(nickList);
+        Q3PtrList<Nick> nickList = getNickList();
+        Q3PtrListIterator<Nick> it(nickList);
         Nick* nick;
 
         while((nick = it.current()) != 0)
@@ -2451,7 +2460,7 @@ void Channel::setAutoUserhost(bool state)
     if(state)
     {
         // we can't have automatic resizing with three columns; the hostname column is too wide
-        nicknameListView->setHScrollBarMode(QScrollView::Auto);
+        nicknameListView->setHScrollBarMode(Q3ScrollView::Auto);
 
         // restart userhost timer
         userhostTimer.start(10000);
@@ -2461,10 +2470,10 @@ void Channel::setAutoUserhost(bool state)
             // re-add the hostmask column
             nicknameListView->addColumn(QString());
             nicknameListView->setColumnWidthMode(2,KListView::Maximum);
-            nicknameListView->setResizeMode(QListView::NoColumn);
+            nicknameListView->setResizeMode(Q3ListView::NoColumn);
 
             // re-add already known hostmasks
-            QListViewItem* item=nicknameListView->itemAtIndex(0);
+            Q3ListViewItem* item=nicknameListView->itemAtIndex(0);
             while(item)
             {
                 Nick* lookNick=getNickByName(item->text(1));
@@ -2477,9 +2486,9 @@ void Channel::setAutoUserhost(bool state)
     {
         userhostTimer.stop();
         if(nicknameListView->columns()==3) nicknameListView->removeColumn(2);
-        nicknameListView->setHScrollBarMode(QScrollView::AlwaysOff);
+        nicknameListView->setHScrollBarMode(Q3ScrollView::AlwaysOff);
         // make the nick column resize itself automatically to prevent horizontal scrollbar
-        nicknameListView->setResizeMode(QListView::LastColumn);
+        nicknameListView->setResizeMode(Q3ListView::LastColumn);
     }
 }
 
@@ -2506,7 +2515,7 @@ void Channel::autoWho()
 
 void Channel::fadeActivity()
 {
-    QPtrListIterator<Nick> it( nicknameList );
+    Q3PtrListIterator<Nick> it( nicknameList );
     Nick *nick;
     while ( (nick = it.current()) != 0 ) {
         ++it;
@@ -2843,7 +2852,7 @@ void Channel::nickActive(const QString& nickname) //FIXME reported to crash, can
 // NickList
 //
 
-NickList::NickList() : QPtrList<Nick>()
+NickList::NickList() : Q3PtrList<Nick>()
 {
     m_compareMethod = NickList::AlphaNumeric;
 }
@@ -2854,7 +2863,7 @@ void NickList::setCompareMethod(CompareMethod method)
 }
 
 //doesn't the following somehow duplicate NickListViewItem::compare()?
-int NickList::compareItems(QPtrCollection::Item item1, QPtrCollection::Item item2)
+int NickList::compareItems(Q3PtrCollection::Item item1, Q3PtrCollection::Item item2)
 {
     if(m_compareMethod == NickList::TimeStamp) {
         int returnValue = static_cast<Nick*>(item2)->getChannelNick()->timeStamp() - static_cast<Nick*>(item1)->getChannelNick()->timeStamp();
@@ -2888,7 +2897,7 @@ QString NickList::completeNick(const QString& pattern, bool& complete, QStringLi
 
     QRegExp regexp(prefix + QRegExp::escape(pattern));
     regexp.setCaseSensitive(caseSensitive);
-    QPtrListIterator<Nick> it(*this);
+    Q3PtrListIterator<Nick> it(*this);
 
     while(it.current() != 0)
     {
@@ -2909,7 +2918,7 @@ QString NickList::completeNick(const QString& pattern, bool& complete, QStringLi
 
     foundNicks.sort();
 
-    QPtrListIterator<Nick> it2(foundNicks);
+    Q3PtrListIterator<Nick> it2(foundNicks);
 
     while(it2.current() != 0)
     {
@@ -2951,7 +2960,7 @@ QString NickList::completeNick(const QString& pattern, bool& complete, QStringLi
 
 bool NickList::containsNick(const QString& nickname)
 {
-    QPtrListIterator<Nick> it(*this);
+    Q3PtrListIterator<Nick> it(*this);
 
     while (it.current() != 0)
     {

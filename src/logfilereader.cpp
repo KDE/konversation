@@ -19,14 +19,17 @@
 
 #include <qlayout.h>
 #include <qfile.h>
-#include <qtextstream.h>
-#include <qdockarea.h>
+#include <q3textstream.h>
+#include <q3dockarea.h>
 #include <qpushbutton.h>
 #include <qlabel.h>
 #include <qregexp.h>
 #include <qspinbox.h>
-#include <qstylesheet.h>
-#include <qwhatsthis.h>
+#include <q3stylesheet.h>
+#include <q3whatsthis.h>
+//Added by qt3to4:
+#include <QEvent>
+#include <QKeyEvent>
 
 #include <kdialog.h>
 #include <ktoolbar.h>
@@ -42,14 +45,14 @@ LogfileReader::LogfileReader(QWidget* parent, const QString& log) : ChatWindow(p
     setType(ChatWindow::LogFileReader);
 
     fileName = log;
-    QDockArea* toolBarDock = new QDockArea(Qt::Horizontal,QDockArea::Normal,this,"logfile_toolbar_dock");
+    Q3DockArea* toolBarDock = new Q3DockArea(Qt::Horizontal,Q3DockArea::Normal,this,"logfile_toolbar_dock");
     toolBar = new KToolBar(toolBarDock,"logfile_toolbar",true,true);
 
     toolBar->insertButton("filesaveas",0,SIGNAL(clicked()),this,SLOT(saveLog()),true,i18n("Save As..."));
 
     new QLabel(i18n("Show last:"),toolBar,"logfile_size_label");
     sizeSpin = new QSpinBox(10,1000,10,toolBar,"logfile_size_spinbox");
-    QWhatsThis::add(sizeSpin, i18n("Use this box to set the maximum size of the log file. This setting does not take effect until you restart Konversation. Each log file may have a separate setting."));
+    Q3WhatsThis::add(sizeSpin, i18n("Use this box to set the maximum size of the log file. This setting does not take effect until you restart Konversation. Each log file may have a separate setting."));
     sizeSpin->setValue(Preferences::logfileBufferSize());
     sizeSpin->setSuffix(i18n(" KB"));
     sizeSpin->installEventFilter(this);
@@ -59,7 +62,7 @@ LogfileReader::LogfileReader(QWidget* parent, const QString& log) : ChatWindow(p
 
     IRCViewBox* ircBox = new IRCViewBox(this, 0);
     setTextView(ircBox->ircView());
-    QWhatsThis::add(getTextView(), i18n("The messages in the log file are displayed here. The oldest messages are at the top and the most recent are at the bottom."));
+    Q3WhatsThis::add(getTextView(), i18n("The messages in the log file are displayed here. The oldest messages are at the top and the most recent are at the bottom."));
 
     updateView();
     resize(Preferences::logfileReaderSize());
@@ -105,10 +108,10 @@ void LogfileReader::updateView()
 
     QFile file(fileName);
 
-    if(file.open(IO_ReadOnly))
+    if(file.open(QIODevice::ReadOnly))
     {
-        QTextStream stream(&file);
-        stream.setEncoding(QTextStream::UnicodeUTF8);
+        Q3TextStream stream(&file);
+        stream.setEncoding(Q3TextStream::UnicodeUTF8);
 
         // Set file pointer to <pos> bytes from the end
         if(stream.device()->size()>pos)
@@ -119,7 +122,7 @@ void LogfileReader::updateView()
 
         while(!stream.eof())
         {
-            str = QStyleSheet::escape(stream.readLine());
+            str = Q3StyleSheet::escape(stream.readLine());
             getTextView()->appendRaw(str, true);
         }
 

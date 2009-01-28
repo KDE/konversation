@@ -86,7 +86,7 @@ namespace Konversation
         }
 
         QFile file(filename);
-        file.open(IO_ReadOnly);
+        file.open(QIODevice::ReadOnly);
         QDomDocument doc;
         doc.setContent(&file);
 

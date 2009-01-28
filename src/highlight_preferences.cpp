@@ -18,9 +18,11 @@
 
 #include <qdir.h>
 #include <qlabel.h>
-#include <qheader.h>
+#include <q3header.h>
 #include <qtooltip.h>
 #include <qtoolbutton.h>
+//Added by qt3to4:
+#include <Q3PtrList>
 
 #include <kglobal.h>
 #include <kstandarddirs.h>
@@ -72,9 +74,9 @@ Highlight_Config::Highlight_Config(QWidget* parent, const char* name)
   }
   // End copy
 
-  connect(highlightListView,SIGNAL (selectionChanged(QListViewItem*)),this,SLOT (highlightSelected(QListViewItem*)) );
-  connect(highlightListView,SIGNAL (clicked(QListViewItem*)),this,SLOT (highlightSelected(QListViewItem*)) );
-  connect(highlightListView,SIGNAL (spacePressed(QListViewItem*)),this,SLOT (highlightSelected(QListViewItem*)) );
+  connect(highlightListView,SIGNAL (selectionChanged(Q3ListViewItem*)),this,SLOT (highlightSelected(Q3ListViewItem*)) );
+  connect(highlightListView,SIGNAL (clicked(Q3ListViewItem*)),this,SLOT (highlightSelected(Q3ListViewItem*)) );
+  connect(highlightListView,SIGNAL (spacePressed(Q3ListViewItem*)),this,SLOT (highlightSelected(Q3ListViewItem*)) );
 
   connect(highlightListView,SIGNAL (moved()),this,SIGNAL (modified()) );
 
@@ -107,7 +109,7 @@ void Highlight_Config::restorePageToDefaults()
 
 void Highlight_Config::loadSettings()
 {
-  QPtrList<Highlight> highlightList=Preferences::highlightList();
+  Q3PtrList<Highlight> highlightList=Preferences::highlightList();
   highlightListView->clear();
   // fill in the highlight patterns backwards to keep the right sorting order
   for(unsigned int i=highlightList.count();i!=0;i--)
@@ -129,7 +131,7 @@ bool Highlight_Config::hasChanged()
 
 // Slots:
 
-void Highlight_Config::highlightSelected(QListViewItem* item)
+void Highlight_Config::highlightSelected(Q3ListViewItem* item)
 {
   // check if there was a widget selected at all
   if(item)
@@ -284,9 +286,9 @@ void Highlight_Config::removeHighlight()
   updateButtons();
 }
 
-QPtrList<Highlight> Highlight_Config::getHighlightList()
+Q3PtrList<Highlight> Highlight_Config::getHighlightList()
 {
-  QPtrList<Highlight> newList;
+  Q3PtrList<Highlight> newList;
 
   HighlightViewItem* item=static_cast<HighlightViewItem*>(highlightListView->firstChild());
   while(item)
@@ -323,7 +325,7 @@ void Highlight_Config::saveSettings()
   KConfig* config = kapp->config();
 
   // Write all highlight entries
-  QPtrList<Highlight> hiList=getHighlightList();
+  Q3PtrList<Highlight> hiList=getHighlightList();
   int i = 0;
   for(Highlight* hl = hiList.first(); hl; hl = hiList.next())
   {

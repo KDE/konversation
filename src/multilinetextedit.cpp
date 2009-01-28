@@ -13,11 +13,13 @@
 
 #include <qpainter.h>
 #include <qregexp.h>
+//Added by qt3to4:
+#include <Q3PointArray>
 
 #include <kdebug.h>
 
 
-MultilineTextEdit::MultilineTextEdit(QWidget* parent,const char* name) : QTextEdit(parent,name)
+MultilineTextEdit::MultilineTextEdit(QWidget* parent,const char* name) : Q3TextEdit(parent,name)
 {
   // make sure, our whitespace highlighting gets called whenever needed
   connect(this,SIGNAL(textChanged()),this,SLOT(drawWhitespaces()));
@@ -31,7 +33,7 @@ MultilineTextEdit::~MultilineTextEdit()
 void MultilineTextEdit::drawContents(QPainter* p,int clipx,int clipy,int clipw,int cliph)
 {
   // redraw text
-  QTextEdit::drawContents(p,clipx,clipy,clipw,cliph);
+  Q3TextEdit::drawContents(p,clipx,clipy,clipw,cliph);
   // overlay whitespace markup
   drawWhitespaces();
 }
@@ -53,9 +55,9 @@ void MultilineTextEdit::drawWhitespaces()
   pa.setBrush(fillBrush);
 
   // prepare the carriage return coordinates array
-  QPointArray cr(4);
+  Q3PointArray cr(4);
   // and the tabulator arrow coordinate array
-  QPointArray tab(7);
+  Q3PointArray tab(7);
 
   // whitespace expression
   QRegExp regex("\\s");

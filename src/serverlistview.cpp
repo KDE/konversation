@@ -14,7 +14,9 @@
 
 #include "serverlistview.h"
 
-#include <qdragobject.h>
+#include <q3dragobject.h>
+//Added by qt3to4:
+#include <Q3PtrList>
 #include <kdebug.h>
 
 
@@ -27,13 +29,13 @@ ServerListView::~ServerListView()
 {
 }
 
-QPtrList<QListViewItem> ServerListView::selectedServerListItems()
+Q3PtrList<Q3ListViewItem> ServerListView::selectedServerListItems()
 {
 
-    QPtrList<QListViewItem> selectedItems = KListView::selectedItems();
-    QPtrList<QListViewItem> selectedServerListItems;
+    Q3PtrList<Q3ListViewItem> selectedItems = KListView::selectedItems();
+    Q3PtrList<Q3ListViewItem> selectedServerListItems;
 
-    QListViewItem* item = selectedItems.first();
+    Q3ListViewItem* item = selectedItems.first();
 
     while (item)
     {
@@ -53,14 +55,14 @@ QPtrList<QListViewItem> ServerListView::selectedServerListItems()
     return selectedServerListItems;
 }
 
-void ServerListView::findDrop(const QPoint &pos, QListViewItem *&parent, QListViewItem *&after)
+void ServerListView::findDrop(const QPoint &pos, Q3ListViewItem *&parent, Q3ListViewItem *&after)
 {
     QPoint p (contentsToViewport(pos));
 
     // Get the position to put it in
-    QListViewItem *atpos = itemAt(p);
+    Q3ListViewItem *atpos = itemAt(p);
 
-    QListViewItem *above;
+    Q3ListViewItem *above;
     if (!atpos) // put it at the end
         above = lastItem();
     else
@@ -92,13 +94,13 @@ void ServerListView::findDrop(const QPoint &pos, QListViewItem *&parent, QListVi
     parent = after ? after->parent() : 0L;
 }
 
-QDragObject* ServerListView::dragObject()
+Q3DragObject* ServerListView::dragObject()
 {
     if (!currentItem())
         return 0;
 
-    QPtrList<QListViewItem> selected = selectedItems();
-    QListViewItem* item = selected.first();
+    Q3PtrList<Q3ListViewItem> selected = selectedItems();
+    Q3ListViewItem* item = selected.first();
 
     while (item)
     {
@@ -108,7 +110,7 @@ QDragObject* ServerListView::dragObject()
         item = selected.next();
     }
 
-    return new QStoredDrag("application/x-qlistviewitem", viewport());
+    return new Q3StoredDrag("application/x-qlistviewitem", viewport());
 }
 
 #include "serverlistview.moc"

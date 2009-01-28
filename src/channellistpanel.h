@@ -23,8 +23,8 @@
 class QCheckBox;
 class QStringList;
 class QTimer;
-class QListView;
-class QListViewItem;
+class Q3ListView;
+class Q3ListViewItem;
 class QPushButton;
 
 class KListView;
@@ -72,7 +72,7 @@ class ChannelListPanel : public ChatWindow
         void topicTargetClicked();
         void regExpClicked();
 
-        void contextMenu (KListView* l, QListViewItem* i, const QPoint& p);
+        void contextMenu (KListView* l, Q3ListViewItem* i, const QPoint& p);
         void openURL();
 
         //Used to disable functions when not connected
@@ -108,7 +108,7 @@ class ChannelListPanel : public ChatWindow
         int getMaxUsers();
 
         const QString& getFilterText();
-        void  applyFilterToItem(QListViewItem* item);
+        void  applyFilterToItem(Q3ListViewItem* item);
 
         void updateUsersChannels();
 

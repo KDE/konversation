@@ -18,7 +18,7 @@
 #include <kdebug.h>
 
 
-IgnoreListViewItem::IgnoreListViewItem(QListView* parent,const QString& name,int newFlags):
+IgnoreListViewItem::IgnoreListViewItem(Q3ListView* parent,const QString& name,int newFlags):
 KListViewItem(parent,name)
 {
     setFlags(newFlags);
@@ -51,5 +51,5 @@ void IgnoreListViewItem::setFlags(int newFlags)
 
 IgnoreListViewItem* IgnoreListViewItem::itemBelow()
 {
-    return (IgnoreListViewItem*) QListViewItem::itemBelow();
+    return (IgnoreListViewItem*) Q3ListViewItem::itemBelow();
 }

@@ -17,6 +17,10 @@
 #include "nickinfo.h"
 
 #include <qstring.h>
+//Added by qt3to4:
+#include <Q3StrList>
+#include <QShowEvent>
+#include <QLabel>
 
 /* TODO: Idle counter to close query after XXX minutes of inactivity */
 /* TODO: Use /USERHOST to check if queries are still valid */
@@ -84,7 +88,7 @@ class Query : public ChatWindow
         void queryTextEntered();
         void queryPassthroughCommand();
         void sendFileMenu();
-        void filesDropped(const QStrList& files);
+        void filesDropped(const Q3StrList& files);
         // connected to IRCInput::textPasted() - used to handle large/multiline pastes
         void textPasted(const QString& text);
         void popup(int id);

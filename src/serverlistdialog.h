@@ -31,7 +31,7 @@ namespace Konversation
         public:
             ServerListItem(KListView* parent, int serverGroupId, int sortIndex,
                 const QString& serverGroup, const QString& identity, const QString& channels);
-            ServerListItem(QListViewItem* parent, int serverGroupId, int sortIndex, 
+            ServerListItem(Q3ListViewItem* parent, int serverGroupId, int sortIndex, 
                 const QString& name, const ServerSettings& server);
 
             int serverGroupId() const { return m_serverGroupId; }
@@ -45,7 +45,7 @@ namespace Konversation
 
             int selectedChildrenCount();
 
-            int compare(QListViewItem *i, int col, bool ascending) const;
+            int compare(Q3ListViewItem *i, int col, bool ascending) const;
 
         private:
             int m_serverGroupId;
@@ -78,8 +78,8 @@ namespace Konversation
             void slotEdit();
             void slotDelete();
 
-            void slotSetGroupExpanded(QListViewItem* item);
-            void slotSetGroupCollapsed(QListViewItem* item);
+            void slotSetGroupExpanded(Q3ListViewItem* item);
+            void slotSetGroupCollapsed(Q3ListViewItem* item);
 
             void slotAboutToMove();
             void slotMoved();
@@ -89,7 +89,7 @@ namespace Konversation
             void setShowAtStartup(bool show);
 
         protected:
-            QListViewItem* insertServerGroup(ServerGroupSettingsPtr serverGroup);
+            Q3ListViewItem* insertServerGroup(ServerGroupSettingsPtr serverGroup);
             void addServerGroup(ServerGroupSettingsPtr serverGroup);
 
         private:
@@ -101,7 +101,7 @@ namespace Konversation
             bool m_selectedItem;
             int m_selectedServerGroupId;
             ServerSettings m_selectedServer;
-            QListViewItem* m_selectedItemPtr;
+            Q3ListViewItem* m_selectedItemPtr;
 
             int m_lastSortColumn;
             SortOrder m_lastSortOrder;

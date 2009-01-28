@@ -21,17 +21,17 @@
 #include "identitydialog.h"
 #include "servergroupdialogui.h"
 
-#include <qframe.h>
+#include <q3frame.h>
 #include <qlayout.h>
 #include <qlabel.h>
 #include <qlineedit.h>
 #include <qcombobox.h>
-#include <qgroupbox.h>
-#include <qlistbox.h>
+#include <q3groupbox.h>
+#include <q3listbox.h>
 #include <qpushbutton.h>
 #include <qtoolbutton.h>
 #include <qcheckbox.h>
-#include <qwhatsthis.h>
+#include <q3whatsthis.h>
 
 #include <klocale.h>
 #include <kiconloader.h>
@@ -54,10 +54,10 @@ namespace Konversation
         m_mainWidget = new ServerGroupDialogUI(this);
         setMainWidget(m_mainWidget);
 
-        QWhatsThis::add(m_mainWidget->m_nameEdit, i18n("Enter the name of the Network here. You may create as many entries in the Server List screen with the same Network as you like."));
+        Q3WhatsThis::add(m_mainWidget->m_nameEdit, i18n("Enter the name of the Network here. You may create as many entries in the Server List screen with the same Network as you like."));
         m_mainWidget->m_networkLabel->setBuddy(m_mainWidget->m_nameEdit);
 
-        QWhatsThis::add(m_mainWidget->m_identityCBox,i18n("Choose an existing Identity or click the Edit button to add a new Identity or edit an existing one. The Identity will identify you and determine your nickname when you connect to the network."));
+        Q3WhatsThis::add(m_mainWidget->m_identityCBox,i18n("Choose an existing Identity or click the Edit button to add a new Identity or edit an existing one. The Identity will identify you and determine your nickname when you connect to the network."));
         m_mainWidget->m_identityLabel->setBuddy(m_mainWidget->m_identityCBox);
         connect(m_mainWidget->m_editIdentityButton, SIGNAL(clicked()), this, SLOT(editIdentity()));
 
@@ -66,12 +66,12 @@ namespace Konversation
         for (IdentityList::ConstIterator it = identities.begin(); it != identities.end(); ++it)
             m_mainWidget->m_identityCBox->insertItem((*it)->getName());
 
-        QWhatsThis::add(m_mainWidget->m_commandEdit, i18n("Optional. This command will be sent to the server after connecting. Example: <b>/msg NickServ IDENTIFY <i>konvirocks</i></b>. This example is for the freenode network, which requires users to register their nickname with a password and login when connecting. <i>konvirocks<i> is the password for the nickname given in Identity. You may enter more than one command by separating them with semicolons."));
+        Q3WhatsThis::add(m_mainWidget->m_commandEdit, i18n("Optional. This command will be sent to the server after connecting. Example: <b>/msg NickServ IDENTIFY <i>konvirocks</i></b>. This example is for the freenode network, which requires users to register their nickname with a password and login when connecting. <i>konvirocks<i> is the password for the nickname given in Identity. You may enter more than one command by separating them with semicolons."));
         m_mainWidget->m_commandsLabel->setBuddy(m_mainWidget->m_commandEdit);
 
-        QWhatsThis::add(m_mainWidget->m_autoConnectCBox, i18n("Check here if you want Konversation to automatically connect to this network whenever you open Konversation."));
+        Q3WhatsThis::add(m_mainWidget->m_autoConnectCBox, i18n("Check here if you want Konversation to automatically connect to this network whenever you open Konversation."));
 
-        QWhatsThis::add(m_mainWidget->m_serverLBox, i18n("This is a list of IRC Servers in the network. When connecting to the network, Konversation will attempt to connect to the top server first. If this fails, it will attempt the second server. If this fails, it will attempt the third, and so on. At least one server must be specified. Click a server to highlight it."));
+        Q3WhatsThis::add(m_mainWidget->m_serverLBox, i18n("This is a list of IRC Servers in the network. When connecting to the network, Konversation will attempt to connect to the top server first. If this fails, it will attempt the second server. If this fails, it will attempt the third, and so on. At least one server must be specified. Click a server to highlight it."));
         m_mainWidget->m_removeServerButton->setIconSet(SmallIconSet("editdelete"));
         m_mainWidget->m_removeServerButton->setTextLabel(i18n("Delete"));
         m_mainWidget->m_upServerBtn->setIconSet(SmallIconSet("up"));
@@ -84,7 +84,7 @@ namespace Konversation
         connect(m_mainWidget->m_upServerBtn, SIGNAL(clicked()), this, SLOT(moveServerUp()));
         connect(m_mainWidget->m_downServerBtn, SIGNAL(clicked()), this, SLOT(moveServerDown()));
 
-        QWhatsThis::add(m_mainWidget->m_channelLBox, i18n("Optional. This is a list of the channels that will be automatically joined once Konversation has connected to a server. You may leave this blank if you wish to not automatically join any channels."));
+        Q3WhatsThis::add(m_mainWidget->m_channelLBox, i18n("Optional. This is a list of the channels that will be automatically joined once Konversation has connected to a server. You may leave this blank if you wish to not automatically join any channels."));
         m_mainWidget->m_removeChannelButton->setIconSet(SmallIconSet("editdelete"));
         m_mainWidget->m_removeChannelButton->setTextLabel(i18n("Delete"));
         m_mainWidget->m_upChannelBtn->setIconSet(SmallIconSet("up"));

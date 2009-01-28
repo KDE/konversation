@@ -24,7 +24,7 @@ ChannelListViewItem::~ChannelListViewItem()
 {
 }
 
-int ChannelListViewItem::compare(QListViewItem* item, int col, bool ascending) const
+int ChannelListViewItem::compare(Q3ListViewItem* item, int col, bool ascending) const
 {
     if(col==1)
     {

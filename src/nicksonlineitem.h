@@ -27,12 +27,12 @@ class NicksOnlineItem : public KListViewItem
         };
 
         NicksOnlineItem(int type,
-                        QListView* parent,
+                        Q3ListView* parent,
                         const QString& name,
                         const QString& col2 = QString());
 
         NicksOnlineItem(int type,
-                        QListViewItem* parent,
+                        Q3ListViewItem* parent,
                         const QString& name,
                         const QString& col2 = QString());
 
@@ -43,7 +43,7 @@ class NicksOnlineItem : public KListViewItem
         * @param ascending         Specify sorting direction
         * @return                  -1 if this item's value is smaller than i, 0 if they are equal, 1 if it's greater
         */
-        virtual int compare(QListViewItem* i,int col,bool ascending) const;
+        virtual int compare(Q3ListViewItem* i,int col,bool ascending) const;
 
         /**
         * Returns the type of the item.

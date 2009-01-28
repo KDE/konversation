@@ -16,6 +16,9 @@
 #include "chatwindow.h"
 
 #include <qstring.h>
+//Added by qt3to4:
+#include <QShowEvent>
+#include <QLabel>
 
 
 class QPushButton;

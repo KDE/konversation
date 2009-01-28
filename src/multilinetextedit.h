@@ -12,13 +12,16 @@
 #ifndef MULTILINETEXTEDIT_H
 #define MULTILINETEXTEDIT_H
 
-#include <qtextedit.h>
+#include <q3textedit.h>
+//Added by qt3to4:
+#include <QWheelEvent>
+#include <QPaintEvent>
 
 
 class QPaintEvent;
 class QWheelEvent;
 
-class MultilineTextEdit : public QTextEdit
+class MultilineTextEdit : public Q3TextEdit
 {
     Q_OBJECT
 

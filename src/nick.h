@@ -32,7 +32,7 @@ class Nick : public QObject, public KListViewItem
         int getSortingValue() const;
 
         virtual void paintCell(QPainter * p, const QColorGroup & cg, int column, int width, int align);
-        virtual int compare(QListViewItem* item,int col,bool ascending) const;
+        virtual int compare(Q3ListViewItem* item,int col,bool ascending) const;
 
     public slots:
         void refresh();

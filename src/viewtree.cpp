@@ -18,13 +18,19 @@
 #include "ircview.h"
 #include "konsolepanel.h"
 
-#include <qheader.h>
-#include <qdragobject.h>
-#include <qlistview.h>
-#include <qptrlist.h>
+#include <q3header.h>
+#include <q3dragobject.h>
+#include <q3listview.h>
+#include <q3ptrlist.h>
 #include <qpoint.h>
 #include <qpainter.h>
 #include <qtooltip.h>
+//Added by qt3to4:
+#include <QContextMenuEvent>
+#include <QKeyEvent>
+#include <QResizeEvent>
+#include <QMouseEvent>
+#include <QWheelEvent>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -64,13 +70,13 @@ ViewTree::ViewTree(QWidget *parent)
     : KListView(parent)
 {
     header()->hide();
-    setHScrollBarMode(QScrollView::AlwaysOff);
+    setHScrollBarMode(Q3ScrollView::AlwaysOff);
 
     addColumn(i18n("Tabs"));
     setSortColumn(0);
     setSortOrder(Qt::Ascending);
 
-    setResizeMode(QListView::AllColumns);
+    setResizeMode(Q3ListView::AllColumns);
     setSelectionModeExt(KListView::Single);
     setRootIsDecorated(false);
 
@@ -95,7 +101,7 @@ ViewTree::ViewTree(QWidget *parent)
     m_middleClickItem = 0;
 
     connect(m_enableCloseButtonTimer, SIGNAL(timeout()), SLOT(enableCloseButton()));
-    connect(this, SIGNAL(selectionChanged(QListViewItem*)), SLOT(announceSelection(QListViewItem*)));
+    connect(this, SIGNAL(selectionChanged(Q3ListViewItem*)), SLOT(announceSelection(Q3ListViewItem*)));
     connect(this, SIGNAL(aboutToMove()), SLOT(slotAboutToMoveView()));
     connect(this, SIGNAL(moved()), SLOT(slotMovedView()));
 }
@@ -132,7 +138,7 @@ void ViewTree::updateAppearance()
     setPaletteBackgroundColor(bg);
 }
 
-void ViewTree::addView(const QString& name, ChatWindow* view, const QIconSet &iconset, bool select, ChatWindow* afterView)
+void ViewTree::addView(const QString& name, ChatWindow* view, const QIcon &iconset, bool select, ChatWindow* afterView)
 {
     ViewTreeItem* item = 0;
     ViewTreeItem* parent = 0;
@@ -274,14 +280,14 @@ void ViewTree::setViewColor(ChatWindow* view, QColor color)
     if (item) item->setColor(color);
 }
 
-void ViewTree::setViewIcon(ChatWindow* view, const QIconSet &iconset)
+void ViewTree::setViewIcon(ChatWindow* view, const QIcon &iconset)
 {
     ViewTreeItem* item = getItemForView(view);
 
     if (item) item->setIcon(iconset.pixmap());
 }
 
-void ViewTree::announceSelection(QListViewItem* item)
+void ViewTree::announceSelection(Q3ListViewItem* item)
 {
     unHighlight();
 
@@ -735,13 +741,13 @@ void ViewTree::resizeEvent(QResizeEvent* e)
     emit sizeChanged();
 }
 
-void ViewTree::findDrop(const QPoint &pos, QListViewItem *&parent, QListViewItem *&after)
+void ViewTree::findDrop(const QPoint &pos, Q3ListViewItem *&parent, Q3ListViewItem *&after)
 {
     QPoint p (contentsToViewport(pos));
 
-    QListViewItem *atpos = itemAt(p);
+    Q3ListViewItem *atpos = itemAt(p);
 
-    QListViewItem *above;
+    Q3ListViewItem *above;
 
     if (!atpos)
         above = lastItem();
@@ -858,22 +864,22 @@ void ViewTree::findDrop(const QPoint &pos, QListViewItem *&parent, QListViewItem
     parent = 0L;
 }
 
-QDragObject* ViewTree::dragObject()
+Q3DragObject* ViewTree::dragObject()
 {
     if (!currentItem())
         return 0;
 
-    QListViewItem* item = selectedItem();
+    Q3ListViewItem* item = selectedItem();
 
     if (!item->dragEnabled())
         return 0;
 
-    return new QStoredDrag("application/x-qlistviewitem", viewport());
+    return new Q3StoredDrag("application/x-qlistviewitem", viewport());
 }
 
-QPtrList<ChatWindow> ViewTree::getSortedViewList()
+Q3PtrList<ChatWindow> ViewTree::getSortedViewList()
 {
-    QPtrList<ChatWindow> viewList;
+    Q3PtrList<ChatWindow> viewList;
 
     ViewTreeItem* item = static_cast<ViewTreeItem*>(firstChild());
 
@@ -927,7 +933,7 @@ ViewTreeItem* ViewTree::getParentItemForView(ChatWindow* view)
     return 0;
 }
 
-ViewTreeItem* ViewTree::getLastChild(QListViewItem* parent)
+ViewTreeItem* ViewTree::getLastChild(Q3ListViewItem* parent)
 {
     ViewTreeItem* item = static_cast<ViewTreeItem*>(parent);
     Server* server = item->getView()->getServer();

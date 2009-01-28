@@ -27,6 +27,8 @@
 #include "server.h"
 
 #include <qtooltip.h>
+//Added by qt3to4:
+#include <Q3TextStream>
 
 #include <klocale.h>
 
@@ -260,7 +262,7 @@ QString NickInfo::tooltip() const
 {
 
     QString strTooltip;
-    QTextStream tooltip( &strTooltip, IO_WriteOnly );
+    Q3TextStream tooltip( &strTooltip, QIODevice::WriteOnly );
     tooltip << "<qt>";
 
     tooltip << "<table cellspacing=\"0\" cellpadding=\"0\">";
@@ -290,7 +292,7 @@ QString NickInfo::getBestAddresseeName()
 
 }
 
-void NickInfo::tooltipTableData(QTextStream &tooltip) const
+void NickInfo::tooltipTableData(Q3TextStream &tooltip) const
 {
     tooltip << "<tr><td colspan=\"2\" valign=\"top\">";
 
@@ -300,7 +302,7 @@ void NickInfo::tooltipTableData(QTextStream &tooltip) const
     bool isimage=false;
     if(photo.isIntern())
     {
-        QMimeSourceFactory::defaultFactory()->setImage( "photo", photo.data() );
+        Q3MimeSourceFactory::defaultFactory()->setImage( "photo", photo.data() );
         tooltip << "<img src=\"photo\">";
         dirty=true;
         isimage=true;
@@ -316,7 +318,7 @@ void NickInfo::tooltipTableData(QTextStream &tooltip) const
     }
     if(logo.isIntern())
     {
-        QMimeSourceFactory::defaultFactory()->setImage( "logo", logo.data() );
+        Q3MimeSourceFactory::defaultFactory()->setImage( "logo", logo.data() );
         tooltip << "<img src=\"logo\">";
         dirty=true;
         isimage=true;

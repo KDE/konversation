@@ -11,6 +11,12 @@
 */
 
 #include "query.h"
+//Added by qt3to4:
+#include <Q3ValueList>
+#include <Q3StrList>
+#include <QPixmap>
+#include <Q3PopupMenu>
+#include <QShowEvent>
 #include "channel.h"
 #include "server.h"
 #include "konversationapplication.h"
@@ -22,14 +28,14 @@
 #include "common.h"
 #include "topiclabel.h"
 
-#include <qhbox.h>
+#include <q3hbox.h>
 #include <qcheckbox.h>
 #include <qlabel.h>
 #include <qlineedit.h>
 #include <qtextcodec.h>
 #include <qtooltip.h>
-#include <qtextstream.h>
-#include <qwhatsthis.h>
+#include <q3textstream.h>
+#include <q3whatsthis.h>
 #include <qsplitter.h>
 
 #include <klocale.h>
@@ -55,7 +61,7 @@ Query::Query(QWidget* parent, QString _name) : ChatWindow(parent)
     m_initialShow = true;
     awayChanged=false;
     awayState=false;
-    QHBox *box = new QHBox(m_headerSplitter);
+    Q3HBox *box = new Q3HBox(m_headerSplitter);
     addresseeimage = new QLabel(box, "query_image");
     addresseeimage->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     addresseeimage->hide();
@@ -66,18 +72,18 @@ Query::Query(QWidget* parent, QString _name) : ChatWindow(parent)
     queryHostmask=new Konversation::TopicLabel(box, "query_hostmask");
 
     QString whatsthis = i18n("<qt>Some details of the person you are talking to in this query is shown in this bar.  The full name and hostmask is shown, along with any image or logo this person has associated with them in the KDE Addressbook.<p>See the <i>Konversation Handbook</i> for information on associating a nick with a contact in the Addressbook, and for an explanation of what the hostmask is.</qt>");
-    QWhatsThis::add(addresseeimage, whatsthis);
-    QWhatsThis::add(addresseelogoimage, whatsthis);
-    QWhatsThis::add(queryHostmask, whatsthis);
+    Q3WhatsThis::add(addresseeimage, whatsthis);
+    Q3WhatsThis::add(addresseelogoimage, whatsthis);
+    Q3WhatsThis::add(queryHostmask, whatsthis);
 
     IRCViewBox* ircBox = new IRCViewBox(m_headerSplitter,0);
     setTextView(ircBox->ircView());               // Server will be set later in setServer();
     textView->setAcceptDrops(true);
-    connect(textView,SIGNAL(filesDropped(const QStrList&)),this,SLOT(filesDropped(const QStrList&)));
+    connect(textView,SIGNAL(filesDropped(const Q3StrList&)),this,SLOT(filesDropped(const Q3StrList&)));
     connect(textView,SIGNAL(popupCommand(int)),this,SLOT(popup(int)));
 
     // link "Whois", "Ignore" ... menu items into ircview popup
-    QPopupMenu* popup=textView->getPopup();
+    Q3PopupMenu* popup=textView->getPopup();
     popup->insertSeparator();
     popup->insertItem(i18n("&Whois"),Konversation::Whois);
     popup->insertItem(i18n("&Version"),Konversation::Version);
@@ -95,7 +101,7 @@ Query::Query(QWidget* parent, QString _name) : ChatWindow(parent)
     popup->insertItem(i18n("Add to Watched Nicks"), Konversation::AddNotify);
 
     // This box holds the input line
-    QHBox* inputBox=new QHBox(this, "input_log_box");
+    Q3HBox* inputBox=new Q3HBox(this, "input_log_box");
     inputBox->setSpacing(spacing());
 
     awayLabel=new QLabel(i18n("(away)"),inputBox);
@@ -364,7 +370,7 @@ void Query::showEvent(QShowEvent*)
 
     if(m_initialShow) {
         m_initialShow = false;
-        QValueList<int> sizes;
+        Q3ValueList<int> sizes;
         sizes << queryHostmask->sizeHint().height() << (height() - queryHostmask->sizeHint().height());
         m_headerSplitter->setSizes(sizes);
     }
@@ -528,7 +534,7 @@ void Query::nickInfoChanged()
         }
 
         QString strTooltip;
-        QTextStream tooltip( &strTooltip, IO_WriteOnly );
+        Q3TextStream tooltip( &strTooltip, QIODevice::WriteOnly );
 
         tooltip << "<qt>";
 
@@ -613,7 +619,7 @@ void Query::closeWithoutAsking()
     m_server->removeQuery(this);
 }
 
-void Query::filesDropped(const QStrList& files)
+void Query::filesDropped(const Q3StrList& files)
 {
     m_server->sendURIs(files,getName());
 }
@@ -623,7 +629,7 @@ void Query::serverOnline(bool online)
     //queryInput->setEnabled(online);
     getTextView()->setNickAndChannelContextMenusEnabled(online);
 
-    QPopupMenu* popup = getTextView()->getPopup();
+    Q3PopupMenu* popup = getTextView()->getPopup();
 
     if (popup)
     {

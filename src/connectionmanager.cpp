@@ -19,6 +19,8 @@
 #include "statuspanel.h"
 
 #include <qregexp.h>
+//Added by qt3to4:
+#include <Q3PtrList>
 
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -536,9 +538,9 @@ bool ConnectionManager::validateIdentity(IdentityPtr identity, bool interactive)
     return true;
 }
 
-QPtrList<Server> ConnectionManager::getServerList()
+Q3PtrList<Server> ConnectionManager::getServerList()
 {
-    QPtrList<Server> serverList;
+    Q3PtrList<Server> serverList;
 
     QMap<int, Server*>::ConstIterator it;
 

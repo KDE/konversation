@@ -13,10 +13,12 @@
 */
 
 #include "quickconnectdialog.h"
+//Added by qt3to4:
+#include <Q3GridLayout>
 #include "konversationapplication.h"
 
 #include <qlayout.h>
-#include <qwhatsthis.h>
+#include <q3whatsthis.h>
 #include <qlabel.h>
 #include <qcheckbox.h>
 
@@ -32,36 +34,36 @@ KDialogBase::Ok | KDialogBase::Cancel, KDialogBase::Ok, true)
     QWidget* page = new QWidget(this);
     setMainWidget(page);
 
-    QGridLayout* layout = new QGridLayout(page, 2, 4);
+    Q3GridLayout* layout = new Q3GridLayout(page, 2, 4);
     layout->setSpacing(spacingHint());
     layout->setColStretch(1, 10);
 
     QLabel* hostNameLabel = new QLabel(i18n("&Server host:"), page);
     QString hostNameWT = i18n("Enter the host of the network here.");
-    QWhatsThis::add(hostNameLabel, hostNameWT);
+    Q3WhatsThis::add(hostNameLabel, hostNameWT);
     hostNameInput = new KLineEdit(page);
-    QWhatsThis::add(hostNameInput, hostNameWT);
+    Q3WhatsThis::add(hostNameInput, hostNameWT);
     hostNameLabel->setBuddy(hostNameInput);
 
     QLabel* portLabel = new QLabel(i18n("&Port:"), page);
     QString portWT = i18n("The port that the IRC server is using.");
-    QWhatsThis::add(portLabel, portWT);
+    Q3WhatsThis::add(portLabel, portWT);
     portInput = new KLineEdit("6667", page );
-    QWhatsThis::add(portInput, portWT);
+    Q3WhatsThis::add(portInput, portWT);
     portLabel->setBuddy(portInput);
 
     QLabel* nickLabel = new QLabel(i18n("&Nick:"), page);
     QString nickWT = i18n("The nick you want to use.");
-    QWhatsThis::add(nickLabel, nickWT);
+    Q3WhatsThis::add(nickLabel, nickWT);
     nickInput = new KLineEdit(Preferences::nickname(0), page);
-    QWhatsThis::add(nickInput, nickWT);
+    Q3WhatsThis::add(nickInput, nickWT);
     nickLabel->setBuddy(nickInput);
 
     QLabel* passwordLabel = new QLabel(i18n("P&assword:"), page);
     QString passwordWT = i18n("If the IRC server requires a password, enter it here (most servers do not require a password.)");
-    QWhatsThis::add(passwordLabel, passwordWT);
+    Q3WhatsThis::add(passwordLabel, passwordWT);
     passwordInput = new KPasswordEdit(page);
-    QWhatsThis::add(passwordInput, passwordWT);
+    Q3WhatsThis::add(passwordInput, passwordWT);
     passwordLabel->setBuddy(passwordInput);
 
     sslCheckBox = new QCheckBox(page, "sslCheckBox");

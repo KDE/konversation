@@ -21,9 +21,13 @@
 #include "common.h"
 
 #include <klistview.h>
+//Added by qt3to4:
+#include <Q3PopupMenu>
+#include <QContextMenuEvent>
+#include <QDropEvent>
 
 
-class QPopupMenu;
+class Q3PopupMenu;
 class QContextMenuEvent;
 class QTimer;
 
@@ -64,10 +68,10 @@ class NickListView : public KListView
         void insertAssociationSubMenu();
         void updateActions();
         Konversation::KonversationNickListViewToolTip *m_tooltip;
-        QPopupMenu* popup;
-        QPopupMenu* modes;
-        QPopupMenu* kickban;
-        QPopupMenu* addressbook;
+        Q3PopupMenu* popup;
+        Q3PopupMenu* modes;
+        Q3PopupMenu* kickban;
+        Q3PopupMenu* addressbook;
         Channel *channel;
         QTimer *m_resortTimer;
 

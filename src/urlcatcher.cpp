@@ -18,12 +18,14 @@
 #include "konversationapplication.h"
 #include "viewcontainer.h"
 
-#include <qhbox.h>
+#include <q3hbox.h>
 #include <qpushbutton.h>
 #include <qregexp.h>
 #include <qclipboard.h>
-#include <qwhatsthis.h>
+#include <q3whatsthis.h>
 #include <qlayout.h>
+//Added by qt3to4:
+#include <Q3TextStream>
 
 #include <kapplication.h>
 #include <kactionclasses.h>
@@ -52,12 +54,12 @@ UrlCatcher::UrlCatcher(QWidget* parent) : ChatWindow(parent)
     QString urlListViewWT = i18n(
         "List of Uniform Resource Locators mentioned in any of the Konversation windows "
         "during this session.");
-    QWhatsThis::add(urlListView, urlListViewWT);
+    Q3WhatsThis::add(urlListView, urlListViewWT);
 
     searchWidget = new KListViewSearchLineWidget(urlListView, this, "search_line");
     searchWidget->setEnabled(false);
 
-    QHBox* buttonBox=new QHBox(this);
+    Q3HBox* buttonBox=new Q3HBox(this);
     buttonBox->setSpacing(spacing());
 
     openUrlButton=new QPushButton(i18n("&Open URL"),buttonBox,"open_url_button");
@@ -66,25 +68,25 @@ UrlCatcher::UrlCatcher(QWidget* parent) : ChatWindow(parent)
         "application associated with the mimetype of the URL.</p>"
         "<p>In the <b>Settings</b>, under <b>Behavior</b> | <b>General</b>, "
         "you can specify a custom web browser for web URLs.</p>");
-    QWhatsThis::add(openUrlButton, openUrlButtonWT);
+    Q3WhatsThis::add(openUrlButton, openUrlButtonWT);
     copyUrlButton=new QPushButton(i18n("&Copy URL"),buttonBox,"copy_url_button");
     QString copyUrlButtonWT = i18n(
         "Select a <b>URL</b> above, then click this button to copy the URL to the clipboard.");
-    QWhatsThis::add(copyUrlButton, copyUrlButtonWT);
+    Q3WhatsThis::add(copyUrlButton, copyUrlButtonWT);
     deleteUrlButton=new QPushButton(i18n("&Delete URL"),buttonBox,"delete_url_button");
     QString deleteUrlButtonWT = i18n(
         "Select a <b>URL</b> above, then click this button to delete the URL from the list.");
-    QWhatsThis::add(deleteUrlButton, deleteUrlButtonWT);
+    Q3WhatsThis::add(deleteUrlButton, deleteUrlButtonWT);
     saveListButton=new QPushButton(i18n("Sa&ve List..."),buttonBox,"save_list_button");
     QString saveListButtonWT = i18n(
         "Click to save the entire list to a file.");
-    QWhatsThis::add(saveListButton, saveListButtonWT);
+    Q3WhatsThis::add(saveListButton, saveListButtonWT);
     clearListButton=new QPushButton(i18n("C&lear List"),buttonBox,"clear_list_button");
     QString clearListButtonWT = i18n(
         "Click to erase the entire list.");
-    QWhatsThis::add(clearListButton, clearListButtonWT);
+    Q3WhatsThis::add(clearListButton, clearListButtonWT);
 
-    connect(urlListView,SIGNAL (executed(QListViewItem*)),this,SLOT (openUrl(QListViewItem*)) );
+    connect(urlListView,SIGNAL (executed(Q3ListViewItem*)),this,SLOT (openUrl(Q3ListViewItem*)) );
     connect(urlListView,SIGNAL (selectionChanged()),this,SLOT (urlSelected()) );
 
     connect(openUrlButton,SIGNAL (clicked()),this,SLOT (openUrlClicked()) );
@@ -110,7 +112,7 @@ UrlCatcher::~UrlCatcher()
 
 void UrlCatcher::urlSelected()
 {
-    QListViewItem* item=urlListView->selectedItem();
+    Q3ListViewItem* item=urlListView->selectedItem();
     if(item)
     {
         openUrlButton->setEnabled(true);
@@ -133,7 +135,7 @@ void UrlCatcher::addUrl(const QString& who,const QString& url)
     searchWidget->setEnabled(true);
 }
 
-void UrlCatcher::openUrl(QListViewItem* item)
+void UrlCatcher::openUrl(Q3ListViewItem* item)
 {
     QString url = item->text(1);
     if (!Preferences::useCustomBrowser() || url.lower().startsWith("mailto:") )
@@ -158,13 +160,13 @@ void UrlCatcher::openUrl(QListViewItem* item)
 
 void UrlCatcher::openUrlClicked()
 {
-    QListViewItem* item=urlListView->selectedItem();
+    Q3ListViewItem* item=urlListView->selectedItem();
     if(item) openUrl(item);
 }
 
 void UrlCatcher::copyUrlClicked()
 {
-    QListViewItem* item=urlListView->selectedItem();
+    Q3ListViewItem* item=urlListView->selectedItem();
     if(item)
     {
         QClipboard *cb=KApplication::kApplication()->clipboard();
@@ -175,7 +177,7 @@ void UrlCatcher::copyUrlClicked()
 
 void UrlCatcher::deleteUrlClicked()
 {
-    QListViewItem* item=urlListView->selectedItem();
+    Q3ListViewItem* item=urlListView->selectedItem();
     if(item)
     {
         emit deleteUrl(item->text(0),item->text(1));
@@ -214,10 +216,10 @@ void UrlCatcher::saveListClicked()
     {
         // now save the list to disk
         QFile listFile(fileName);
-        listFile.open(IO_WriteOnly);
+        listFile.open(QIODevice::WriteOnly);
         // wrap the file into a stream
-        QTextStream stream(&listFile);
-        QListViewItem* item=urlListView->itemAtIndex(0);
+        Q3TextStream stream(&listFile);
+        Q3ListViewItem* item=urlListView->itemAtIndex(0);
         while(item)
         {
             stream << item->text(0) << ": " << item->text(1) << endl;

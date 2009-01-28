@@ -28,20 +28,34 @@
 #include "notificationhandler.h"
 
 #include <private/qrichtext_p.h>
-#include <qstylesheet.h>
+#include <q3stylesheet.h>
 #include <qstringlist.h>
 #include <qregexp.h>
-#include <qtextbrowser.h>
+#include <q3textbrowser.h>
 #include <qclipboard.h>
 #include <qbrush.h>
 #include <qevent.h>
-#include <qdragobject.h>
-#include <qpopupmenu.h>
-#include <qwhatsthis.h>
+#include <q3dragobject.h>
+#include <q3popupmenu.h>
+#include <q3whatsthis.h>
 #include <qmap.h>
 #include <qcolor.h>
 #include <qscrollbar.h>
 #include <qcursor.h>
+//Added by qt3to4:
+#include <QResizeEvent>
+#include <QContextMenuEvent>
+#include <Q3StrList>
+#include <QPixmap>
+#include <QMouseEvent>
+#include <QShowEvent>
+#include <Q3ValueList>
+#include <QKeyEvent>
+#include <QHideEvent>
+#include <QDropEvent>
+#include <QDragMoveEvent>
+#include <Q3CString>
+#include <Q3PtrList>
 
 #include <dcopref.h>
 #include <dcopclient.h>
@@ -88,21 +102,21 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent)
     m_disableEnsureCursorVisible = false;
     m_wasPainted = false;
 
-    setAutoFormatting(QTextEdit::AutoNone);
+    setAutoFormatting(Q3TextEdit::AutoNone);
     setUndoRedoEnabled(0);
     setLinkUnderline(false);
     setVScrollBarMode(AlwaysOn);
     setHScrollBarMode(AlwaysOff);
-    setWrapPolicy(QTextEdit::AtWordOrDocumentBoundary);
+    setWrapPolicy(Q3TextEdit::AtWordOrDocumentBoundary);
     setNotifyClick(true);
     setFocusPolicy(QWidget::ClickFocus);
 
     // set basic style sheet for <p> to make paragraph spacing possible
-    QStyleSheet* sheet=new QStyleSheet(this,"ircview_style_sheet");
-    new QStyleSheetItem(sheet,"p");
+    Q3StyleSheet* sheet=new Q3StyleSheet(this,"ircview_style_sheet");
+    new Q3StyleSheetItem(sheet,"p");
     setStyleSheet(sheet);
 
-    m_popup = new QPopupMenu(this,"ircview_context_menu");
+    m_popup = new Q3PopupMenu(this,"ircview_context_menu");
     toggleMenuBarSeparator = m_popup->insertSeparator();
     m_popup->setItemVisible(toggleMenuBarSeparator, false);
     copyUrlMenuSeparator = m_popup->insertSeparator();
@@ -133,11 +147,11 @@ IRCView::~IRCView()
 void IRCView::enableParagraphSpacing()
 {
     // Set style sheet for <p> to define paragraph spacing.
-    QStyleSheet* sheet = styleSheet();
+    Q3StyleSheet* sheet = styleSheet();
 
     if (!sheet) return;
 
-    QStyleSheetItem* style = sheet->item("p");
+    Q3StyleSheetItem* style = sheet->item("p");
 
     if (!style)
     {
@@ -146,8 +160,8 @@ void IRCView::enableParagraphSpacing()
         return;
     }
 
-    style->setDisplayMode(QStyleSheetItem::DisplayBlock);
-    style->setMargin(QStyleSheetItem::MarginVertical, Preferences::paragraphSpacing());
+    style->setDisplayMode(Q3StyleSheetItem::DisplayBlock);
+    style->setMargin(Q3StyleSheetItem::MarginVertical, Preferences::paragraphSpacing());
     style->setSelfNesting(false);
 }
 
@@ -301,9 +315,9 @@ void IRCView::openLink(const QString& url, bool newTab)
         {
             if(newTab && !url.startsWith("mailto:"))
             {
-                QCString foundApp, foundObj;
+                Q3CString foundApp, foundObj;
                 QByteArray data;
-                QDataStream str(data, IO_WriteOnly);
+                QDataStream str(data, QIODevice::WriteOnly);
                 if( KApplication::dcopClient()->findObject("konqueror*", "konqueror-mainwindow*",
                     "windowCanBeUsedForTab()", data, foundApp, foundObj, false, 3000))
                 {
@@ -513,8 +527,8 @@ bool doHighlight, bool parseURL, bool self)
         }
         else
         {
-            QPtrList<Highlight> highlightList = Preferences::highlightList();
-            QPtrListIterator<Highlight> it(highlightList);
+            Q3PtrList<Highlight> highlightList = Preferences::highlightList();
+            Q3PtrListIterator<Highlight> it(highlightList);
             Highlight* highlight = it.current();
             bool patternFound = false;
             int index = 0;
@@ -723,8 +737,8 @@ void IRCView::appendRememberLine()
     {
         removeParagraph(m_rememberLineParagraph);
 
-        QValueList<int> newList;
-        QValueList<int>::ConstIterator it;
+        Q3ValueList<int> newList;
+        Q3ValueList<int>::ConstIterator it;
 
         for (it = m_markerLineParagraphs.begin(); it != m_markerLineParagraphs.end(); ++it)
         {
@@ -746,7 +760,7 @@ void IRCView::appendRememberLine()
 
 void IRCView::insertMarkerLine()
 {
-    qHeapSort(m_markerLineParagraphs);
+    qSort(m_markerLineParagraphs);
 
     if (m_markerLineParagraphs.last() == paragraphs() - 1)
         return;
@@ -777,9 +791,9 @@ void IRCView::clearLines()
 
     if (m_markerLineParagraphs.count() > 0)
     {
-        qHeapSort(m_markerLineParagraphs);
+        qSort(m_markerLineParagraphs);
 
-        QValueList<int>::ConstIterator it;
+        Q3ValueList<int>::ConstIterator it;
         int removeCounter = 0;
 
         for (it = m_markerLineParagraphs.begin(); it != m_markerLineParagraphs.end(); ++it)
@@ -811,9 +825,9 @@ void IRCView::updateLineParagraphs(int numRemoved)
 
     if (!m_markerLineParagraphs.isEmpty())
     {
-        QValueList<int> newMarkerLineParagraphs;
+        Q3ValueList<int> newMarkerLineParagraphs;
 
-        QValueList<int>::const_iterator it;
+        Q3ValueList<int>::const_iterator it;
 
         for (it = m_markerLineParagraphs.begin(); it != m_markerLineParagraphs.end(); ++it)
         {
@@ -980,7 +994,7 @@ void IRCView::appendCommandMessage(const QString& type,const QString& message, b
         prefix="<--";
     }
 
-    prefix=QStyleSheet::escape(prefix);
+    prefix=Q3StyleSheet::escape(prefix);
 
     if(basicDirection(message) == QChar::DirR)
     {
@@ -1049,7 +1063,7 @@ void IRCView::removeSelectedText( int selNum )
     }
     // ...snip...
 
-    doc->removeSelectedText( selNum, QTextEdit::textCursor() );
+    doc->removeSelectedText( selNum, Q3TextEdit::textCursor() );
 
     // ...snip...
 }
@@ -1439,7 +1453,7 @@ void IRCView::setupNickPopupMenu()
     connect(m_kickban, SIGNAL(activated(int)), this, SIGNAL(popupCommand(int)));
 }
 
-void IRCView::updateNickMenuEntries(QPopupMenu* popup, const QString& nickname)
+void IRCView::updateNickMenuEntries(Q3PopupMenu* popup, const QString& nickname)
 {
     if (popup)
     {
@@ -1615,7 +1629,7 @@ bool IRCView::searchNext(bool reversed)
 }
 
 // other windows can link own menu entries here
-QPopupMenu* IRCView::getPopup() const
+Q3PopupMenu* IRCView::getPopup() const
 {
     return m_popup;
 }
@@ -1683,14 +1697,14 @@ QChar::Direction IRCView::basicDirection(const QString &string)
 
 void IRCView::contentsDragMoveEvent(QDragMoveEvent *e)
 {
-    if(acceptDrops() && QUriDrag::canDecode(e))
+    if(acceptDrops() && Q3UriDrag::canDecode(e))
         e->accept();
 }
 
 void IRCView::contentsDropEvent(QDropEvent *e)
 {
-    QStrList s;
-    if(QUriDrag::decode(e,s))
+    Q3StrList s;
+    if(Q3UriDrag::decode(e,s))
         emit filesDropped(s);
 }
 

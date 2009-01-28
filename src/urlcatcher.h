@@ -19,7 +19,7 @@
 
 
 class KListView;
-class QListViewItem;
+class Q3ListViewItem;
 class QPushButton;
 class ViewContainer;
 class KListViewSearchLineWidget;
@@ -43,7 +43,7 @@ class UrlCatcher : public ChatWindow
 
     protected slots:
         void urlSelected();
-        void openUrl(QListViewItem* item);
+        void openUrl(Q3ListViewItem* item);
 
         void openUrlClicked();
         void copyUrlClicked();

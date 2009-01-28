@@ -27,11 +27,15 @@
 #include <sys/types.h>
 #include <netinet/in.h>
 
-#include <qvbox.h>
+#include <q3vbox.h>
 #include <qhostaddress.h>
 #include <qtextcodec.h>
 #include <qsplitter.h>
-#include <qpopupmenu.h>
+#include <q3popupmenu.h>
+//Added by qt3to4:
+#include <Q3TextStream>
+#include <QShowEvent>
+#include <Q3ValueList>
 
 #include <klineedit.h>
 #include <klocale.h>
@@ -76,7 +80,7 @@ DccChat::DccChat(QWidget* parent, bool listen, Server* server, const QString& ow
     ChatWindow::setName( '-' + m_partnerNick + '-' );
     ChatWindow::setLogfileName( '-' + m_partnerNick + '-' );
 
-    QPopupMenu* popup = textView->getPopup();
+    Q3PopupMenu* popup = textView->getPopup();
 
     if (popup)
     {
@@ -277,7 +281,7 @@ void DccChat::sendDccChatText(const QString& sendLine)
     {
         QStringList lines = QStringList::split('\n',output);
         // wrap socket into a stream
-        QTextStream stream(m_dccSocket);
+        Q3TextStream stream(m_dccSocket);
         // init stream props
         stream.setCodec(Konversation::IRCCharsets::self()->codecForName(m_encoding.isEmpty() ? Konversation::IRCCharsets::self()->encodingForLocale() : m_encoding));
 
@@ -417,7 +421,7 @@ void DccChat::showEvent(QShowEvent* /* event */)
 {
     if(m_initialShow) {
         m_initialShow = false;
-        QValueList<int> sizes;
+        Q3ValueList<int> sizes;
         sizes << m_sourceLine->sizeHint().height() << (height() - m_sourceLine->sizeHint().height());
         m_headerSplitter->setSizes(sizes);
     }

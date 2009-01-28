@@ -18,6 +18,8 @@
 #include "nickinfo.h"
 
 #include <ksharedptr.h>
+//Added by qt3to4:
+#include <Q3ValueList>
 
 
 class ChannelNick :  public QObject, public KShared
@@ -86,7 +88,7 @@ typedef KSharedPtr<ChannelNick> ChannelNickPtr;
  */
 typedef QMap<QString,ChannelNickPtr> ChannelNickMap;
 
-typedef QValueList<ChannelNickPtr> ChannelNickList;
+typedef Q3ValueList<ChannelNickPtr> ChannelNickList;
 
 /** A ChannelMembershipMap is a list of ChannelNickMap pointers, indexed and
  *  sorted by lowercase channel name.

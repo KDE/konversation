@@ -20,6 +20,10 @@ the Free Software Foundation; either version 2 of the License, or
 #include <qbitmap.h>
 #include <qpainter.h>
 #include <qregexp.h>
+//Added by qt3to4:
+#include <Q3CString>
+#include <QMouseEvent>
+#include <QEvent>
 
 #include <dcopclient.h>
 #include <kapplication.h>
@@ -30,7 +34,7 @@ the Free Software Foundation; either version 2 of the License, or
 
 
 OSDWidget::OSDWidget( const QString &appName, QWidget *parent, const char *name )
-: QWidget( parent, name, WNoAutoErase | WStyle_Customize | WX11BypassWM | WStyle_StaysOnTop | WStyle_Tool )
+: QWidget( parent, name, Qt::WNoAutoErase | Qt::WStyle_Customize | Qt::WX11BypassWM | Qt::WStyle_StaysOnTop | Qt::WStyle_Tool )
 , m_appName( appName )
 , m_duration( 5000 )
 , m_shadow( true )
@@ -417,7 +421,7 @@ OSDWidget::KDesktopLockStatus OSDWidget::isKDesktopLockRunning()
     }
 
     QByteArray data,returnValue;
-    QCString returnType;
+    Q3CString returnType;
 
     if (!dcopptr->call("kdesktop","KScreensaverIface","isBlanked()",
         data,returnType,returnValue,true))
@@ -430,7 +434,7 @@ OSDWidget::KDesktopLockStatus OSDWidget::isKDesktopLockRunning()
     if (returnType == "bool")
     {
         bool b;
-        QDataStream reply(returnValue,IO_ReadOnly);
+        QDataStream reply(returnValue,QIODevice::ReadOnly);
         reply >> b;
         return (b ? Locked : NotLocked);
     }

@@ -13,7 +13,7 @@
 #ifndef IMAGES_H
 #define IMAGES_H
 
-#include <qiconset.h>
+#include <qicon.h>
 #include <qpixmap.h>
 #include <qobject.h>
 
@@ -45,19 +45,19 @@ class Images : public QObject
         QPixmap getCloseIcon() { return m_closeIcon; }
         QPixmap getDisabledCloseIcon() { return m_disabledCloseIcon; }
 
-        QIconSet getLed(QColor col,bool state = true);
+        QIcon getLed(QColor col,bool state = true);
 
-        QIconSet getServerLed(bool state);
-        QIconSet getSystemLed(bool state);
-        QIconSet getMsgsLed(bool state);
-        QIconSet getPrivateLed(bool state);
-        QIconSet getEventsLed();
-        QIconSet getNickLed();
-        QIconSet getHighlightsLed();
+        QIcon getServerLed(bool state);
+        QIcon getSystemLed(bool state);
+        QIcon getMsgsLed(bool state);
+        QIcon getPrivateLed(bool state);
+        QIcon getEventsLed();
+        QIcon getNickLed();
+        QIcon getHighlightsLed();
 
-        QIconSet getKimproxyAway() const;
-        QIconSet getKimproxyOnline() const;
-        QIconSet getKimproxyOffline() const;
+        QIcon getKimproxyAway() const;
+        QIcon getKimproxyOnline() const;
+        QIcon getKimproxyOffline() const;
 
         QPixmap getNickIcon(NickPrivilege privilege,bool isAway=false) const;
         void initializeNickIcons();
@@ -72,17 +72,17 @@ class Images : public QObject
         QPixmap m_closeIcon;
         QPixmap m_disabledCloseIcon;
 
-        QIconSet m_serverLedOn;
-        QIconSet m_serverLedOff;
-        QIconSet m_systemLedOn;
-        QIconSet m_systemLedOff;
-        QIconSet m_msgsLedOn;
-        QIconSet m_msgsLedOff;
-        QIconSet m_privateLedOn;
-        QIconSet m_privateLedOff;
-        QIconSet m_eventsLedOn;
-        QIconSet m_nickLedOn;
-        QIconSet m_highlightsLedOn;
+        QIcon m_serverLedOn;
+        QIcon m_serverLedOff;
+        QIcon m_systemLedOn;
+        QIcon m_systemLedOff;
+        QIcon m_msgsLedOn;
+        QIcon m_msgsLedOff;
+        QIcon m_privateLedOn;
+        QIcon m_privateLedOff;
+        QIcon m_eventsLedOn;
+        QIcon m_nickLedOn;
+        QIcon m_highlightsLedOn;
 
         QColor m_serverColor;
         QColor m_systemColor;
@@ -92,9 +92,9 @@ class Images : public QObject
         QColor m_nickColor;
         QColor m_highlightsColor;
 
-        QIconSet kimproxyAway;
-        QIconSet kimproxyOnline;
-        QIconSet kimproxyOffline;
+        QIcon kimproxyAway;
+        QIcon kimproxyOnline;
+        QIcon kimproxyOffline;
 
                                                   // [privilege][away]
         QPixmap nickIcons[_NickPrivilege_COUNT][2];

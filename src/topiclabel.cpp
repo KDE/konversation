@@ -17,9 +17,15 @@
 #include "common.h"
 #include "channel.h"
 
-#include <qsimplerichtext.h>
+#include <q3simplerichtext.h>
 #include <qtooltip.h>
 #include <qclipboard.h>
+//Added by qt3to4:
+#include <QContextMenuEvent>
+#include <QResizeEvent>
+#include <QMouseEvent>
+#include <Q3PopupMenu>
+#include <QEvent>
 
 #include <krun.h>
 #include <kprocess.h>
@@ -40,14 +46,14 @@ namespace Konversation
     TopicLabel::TopicLabel(QWidget *parent, const char *name)
         : KActiveLabel(parent, name)
     {
-        setWrapPolicy(QTextEdit::AtWordOrDocumentBoundary);
+        setWrapPolicy(Q3TextEdit::AtWordOrDocumentBoundary);
         setFocusPolicy(QWidget::ClickFocus);
 
         m_isOnChannel = false;
         m_copyUrlMenu = false;
         mousePressed=false;
 
-        m_popup = new QPopupMenu(this,"topiclabel_context_menu");
+        m_popup = new Q3PopupMenu(this,"topiclabel_context_menu");
         m_popup->insertItem(SmallIconSet("editcopy"),i18n("&Copy"),Copy);
         m_popup->insertItem(i18n("Select All"),SelectAll);
 
@@ -261,7 +267,7 @@ namespace Konversation
         {
             text = rPixelSqueeze(text, visibleWidth() - 10);
             setWordWrap(NoWrap);
-            QToolTip::add(this, "<qt>" + QStyleSheet::escape(m_fullText) + "</qt>");
+            QToolTip::add(this, "<qt>" + Q3StyleSheet::escape(m_fullText) + "</qt>");
         }
         else
         {
@@ -269,7 +275,7 @@ namespace Konversation
 
             if(height() < contentsHeight())
             {
-                QToolTip::add(this, "<qt>" + QStyleSheet::escape(m_fullText) + "</qt>");
+                QToolTip::add(this, "<qt>" + Q3StyleSheet::escape(m_fullText) + "</qt>");
             }
         }
 
@@ -312,7 +318,7 @@ namespace Konversation
 
     uint TopicLabel::textWidth(const QString& text, const QFontMetrics& fm)
     {
-        QSimpleRichText richText("<qt>" + text + "</qt>", currentFont());
+        Q3SimpleRichText richText("<qt>" + text + "</qt>", currentFont());
         richText.setWidth(fm.width(text));
 
         return richText.widthUsed();

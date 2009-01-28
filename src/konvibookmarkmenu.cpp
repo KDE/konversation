@@ -64,7 +64,7 @@ void KonviBookmarkMenu::slotAboutToShow2()
 void KonviBookmarkMenu::refill()
 {
     m_lstSubMenus.clear();
-    QPtrListIterator<KAction> it( m_actions );
+    Q3PtrListIterator<KAction> it( m_actions );
     for (; it.current(); ++it )
         it.current()->unplug( m_parentMenu );
     m_parentMenu->clear();

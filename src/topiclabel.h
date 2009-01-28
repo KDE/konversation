@@ -15,6 +15,12 @@
 
 #include <kactivelabel.h>
 #include <klocale.h>
+//Added by qt3to4:
+#include <QResizeEvent>
+#include <QEvent>
+#include <QMouseEvent>
+#include <QContextMenuEvent>
+#include <Q3PopupMenu>
 
 
 class QFontMetrics;
@@ -68,7 +74,7 @@ namespace Konversation
         private:
             Server* m_server;
 
-            QPopupMenu* m_popup;
+            Q3PopupMenu* m_popup;
             KPopupMenu* m_channelPopup;
 
             QString m_fullText;

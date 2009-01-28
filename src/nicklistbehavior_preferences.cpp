@@ -15,7 +15,7 @@
 #include "valuelistviewitem.h"
 #include "config/preferences.h"
 
-#include <qheader.h>
+#include <q3header.h>
 
 #include <kapplication.h>
 #include <klocale.h>
@@ -72,7 +72,7 @@ void NicklistBehavior_Config::setNickList(const QString &sortingOrder)
 QString NicklistBehavior_Config::currentSortingOrder()
 {
   // get the uppermost entry of the sorting list
-  QListViewItem* item=sortOrder->firstChild();
+  Q3ListViewItem* item=sortOrder->firstChild();
   // prepare the new sorting order string
   QString currentSortingOrder;
   // iterate through all items of the listview

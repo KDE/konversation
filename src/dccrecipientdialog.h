@@ -31,9 +31,9 @@ class DccRecipientDialog : public KDialogBase
         static QString getNickname(QWidget* parent, const QStringList& list);
 
     protected slots:
-        void newNicknameSelected(QListBoxItem* item);
+        void newNicknameSelected(Q3ListBoxItem* item);
                                                   // KDE double click
-        void newNicknameSelectedQuit(QListBoxItem* item);
+        void newNicknameSelectedQuit(Q3ListBoxItem* item);
 
         void slotOk();
         void slotCancel();

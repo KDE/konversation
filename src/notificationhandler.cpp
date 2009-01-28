@@ -19,7 +19,7 @@
 #include "trayicon.h"
 #include "server.h"
 
-#include <qstylesheet.h>
+#include <q3stylesheet.h>
 
 #include <knotifyclient.h>
 #include <kstringhandler.h>
@@ -47,7 +47,7 @@ namespace Konversation
         if (Preferences::disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
             return;
 
-        QString cleanedMessage = QStyleSheet::escape(Konversation::removeIrcMarkup(message));
+        QString cleanedMessage = Q3StyleSheet::escape(Konversation::removeIrcMarkup(message));
         QString cutup = addLineBreaks(cleanedMessage);
 
         KNotifyClient::event(m_mainWindow->winId(), "message", QString("<qt>&lt;%1&gt; %2</qt>").arg(fromNick).arg(cutup));
@@ -73,7 +73,7 @@ namespace Konversation
         if (Preferences::disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
             return;
 
-        QString cleanedMessage = QStyleSheet::escape(Konversation::removeIrcMarkup(message));
+        QString cleanedMessage = Q3StyleSheet::escape(Konversation::removeIrcMarkup(message));
         QString cutup = addLineBreaks(cleanedMessage);
 
         KNotifyClient::event(m_mainWindow->winId(), "nick", QString("<qt>&lt;%1&gt; %2</qt>").arg(fromNick).arg(cutup));
@@ -99,7 +99,7 @@ namespace Konversation
         if (Preferences::disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
             return;
 
-        QString cleanedMessage = QStyleSheet::escape(Konversation::removeIrcMarkup(message));
+        QString cleanedMessage = Q3StyleSheet::escape(Konversation::removeIrcMarkup(message));
         QString cutup = addLineBreaks(cleanedMessage);
 
         KNotifyClient::event(m_mainWindow->winId(), "queryMessage", QString("<qt>&lt;%1&gt; %2</qt>").arg(fromNick).arg(cutup));

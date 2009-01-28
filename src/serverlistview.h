@@ -16,9 +16,11 @@
 #define SERVERLISTVIEW_H
 
 #include <klistview.h>
+//Added by qt3to4:
+#include <Q3PtrList>
 
 
-class QDragObject;
+class Q3DragObject;
 
 class ServerListView : public KListView
 {
@@ -28,11 +30,11 @@ class ServerListView : public KListView
         explicit ServerListView(QWidget *parent);
         ~ServerListView();
 
-        QPtrList<QListViewItem> selectedServerListItems();
+        Q3PtrList<Q3ListViewItem> selectedServerListItems();
 
     protected:
-        void findDrop(const QPoint &pos, QListViewItem *&parent, QListViewItem *&after);
-        QDragObject* dragObject();
+        void findDrop(const QPoint &pos, Q3ListViewItem *&parent, Q3ListViewItem *&after);
+        Q3DragObject* dragObject();
 };
 
 #endif

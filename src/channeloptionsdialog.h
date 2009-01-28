@@ -47,13 +47,13 @@ namespace Konversation
             void addBanClicked();
             void removeBan(const QString& ban);
             void removeBanClicked();
-            void banEdited(QListViewItem *edited);
+            void banEdited(Q3ListViewItem *edited);
 
             void changeOptions();
 
 
         protected slots:
-            void topicHistoryItemClicked(QListViewItem* item);
+            void topicHistoryItemClicked(Q3ListViewItem* item);
             void topicBeingEdited(bool state);
 
             void cancelClicked();
@@ -62,7 +62,7 @@ namespace Konversation
 
         protected:
             bool m_editingTopic;
-            QListViewItem *m_NewBan;
+            Q3ListViewItem *m_NewBan;
 
 
         private:
@@ -77,16 +77,16 @@ namespace Konversation
     class BanListViewItem : public KListViewItem
     {
         public:
-            explicit BanListViewItem( QListView *parent );
-            BanListViewItem(QListView *parent, bool isNew);
-            BanListViewItem(QListView *parent, const QString& label1, const QString& label2 = QString(), uint timestamp = 0);
-            BanListViewItem (QListView *parent, bool isNew, const QString& label1, const QString& label2 = QString(), uint timestamp = 0);
+            explicit BanListViewItem( Q3ListView *parent );
+            BanListViewItem(Q3ListView *parent, bool isNew);
+            BanListViewItem(Q3ListView *parent, const QString& label1, const QString& label2 = QString(), uint timestamp = 0);
+            BanListViewItem (Q3ListView *parent, bool isNew, const QString& label1, const QString& label2 = QString(), uint timestamp = 0);
 
             QString getOldValue() { return m_oldValue; }
             QDateTime timestamp() { return m_timestamp; }
 
             virtual QString text(int column) const;
-            virtual int compare(QListViewItem *i, int col, bool ascending) const;
+            virtual int compare(Q3ListViewItem *i, int col, bool ascending) const;
             virtual void startRename(int col);
 
 

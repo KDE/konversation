@@ -13,6 +13,13 @@
 #define VIEWTREE_H
 
 #include <klistview.h>
+//Added by qt3to4:
+#include <QResizeEvent>
+#include <QWheelEvent>
+#include <QMouseEvent>
+#include <QContextMenuEvent>
+#include <QKeyEvent>
+#include <Q3PtrList>
 
 
 class ViewTreeItem;
@@ -27,17 +34,17 @@ class ViewTree : public KListView
         ~ViewTree();
 
         void selectFirstView(bool select);
-        void addView(const QString& name, ChatWindow* view, const QIconSet &iconset, bool select = false, ChatWindow* afterView = 0);
+        void addView(const QString& name, ChatWindow* view, const QIcon &iconset, bool select = false, ChatWindow* afterView = 0);
         void setViewName(ChatWindow* view, const QString& name);
         void setViewColor(ChatWindow* view, QColor color);
-        void setViewIcon(ChatWindow* view, const QIconSet &iconset);
+        void setViewIcon(ChatWindow* view, const QIcon &iconset);
 
         void moveViewUp(ChatWindow* view);
         void moveViewDown(ChatWindow* view);
         bool canMoveViewUp(ChatWindow* view);
         bool canMoveViewDown(ChatWindow* view);
 
-        QPtrList<ChatWindow> getSortedViewList();
+        Q3PtrList<ChatWindow> getSortedViewList();
 
     public slots:
         void updateAppearance();
@@ -63,13 +70,13 @@ class ViewTree : public KListView
 
         void resizeEvent(QResizeEvent* e);
 
-        void findDrop(const QPoint &pos, QListViewItem *&parent, QListViewItem *&after);
-        QDragObject* dragObject();
+        void findDrop(const QPoint &pos, Q3ListViewItem *&parent, Q3ListViewItem *&after);
+        Q3DragObject* dragObject();
 
         void paintEmptyArea(QPainter* p, const QRect& rect);
 
     private slots:
-        void announceSelection(QListViewItem* item);
+        void announceSelection(Q3ListViewItem* item);
         void slotAboutToMoveView();
         void slotMovedView();
         void enableCloseButton();
@@ -84,7 +91,7 @@ class ViewTree : public KListView
 
         ViewTreeItem* getItemForView(ChatWindow* view);
         ViewTreeItem* getParentItemForView(ChatWindow* view);
-        ViewTreeItem* getLastChild(QListViewItem* parent);
+        ViewTreeItem* getLastChild(Q3ListViewItem* parent);
 
         bool canMoveItemUp(ViewTreeItem* item);
         bool canMoveItemDown(ViewTreeItem* item);

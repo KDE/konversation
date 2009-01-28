@@ -15,7 +15,7 @@
 
 #include <qlabel.h>
 #include <qpushbutton.h>
-#include <qheader.h>
+#include <q3header.h>
 
 #include <kapplication.h>
 #include <kdebug.h>
@@ -38,8 +38,8 @@ QuickButtons_Config::QuickButtons_Config(QWidget* parent, const char* name)
   buttonListView->setSorting(-1,false);
   buttonListView->header()->setMovingEnabled(false);
 
-  connect(buttonListView,SIGNAL (selectionChanged(QListViewItem*)),this,SLOT (entrySelected(QListViewItem*)) );
-  connect(buttonListView,SIGNAL (clicked(QListViewItem*)),this,SLOT (entrySelected(QListViewItem*)) );
+  connect(buttonListView,SIGNAL (selectionChanged(Q3ListViewItem*)),this,SLOT (entrySelected(Q3ListViewItem*)) );
+  connect(buttonListView,SIGNAL (clicked(Q3ListViewItem*)),this,SLOT (entrySelected(Q3ListViewItem*)) );
   connect(buttonListView,SIGNAL (moved()),this,SIGNAL (modified()) );
 
   connect(nameInput,SIGNAL (textChanged(const QString&)),this,SLOT (nameChanged(const QString&)) );
@@ -121,7 +121,7 @@ void QuickButtons_Config::restorePageToDefaults()
 QStringList QuickButtons_Config::currentButtonList()
 {
   // get first item of the button listview
-  QListViewItem* item=buttonListView->firstChild();
+  Q3ListViewItem* item=buttonListView->firstChild();
   // create empty list
   QStringList newList;
 
@@ -146,7 +146,7 @@ bool QuickButtons_Config::hasChanged()
 // slots
 
 // what to do when the user selects an item
-void QuickButtons_Config::entrySelected(QListViewItem* quickButtonEntry)
+void QuickButtons_Config::entrySelected(Q3ListViewItem* quickButtonEntry)
 {
   // play it safe, assume disabling all widgets first
   bool enabled=false;
@@ -177,7 +177,7 @@ void QuickButtons_Config::entrySelected(QListViewItem* quickButtonEntry)
 void QuickButtons_Config::nameChanged(const QString& newName)
 {
   // get possible first selected item
-  QListViewItem* item=buttonListView->selectedItem();
+  Q3ListViewItem* item=buttonListView->selectedItem();
 
   // sanity check
   if(item)
@@ -193,7 +193,7 @@ void QuickButtons_Config::nameChanged(const QString& newName)
 void QuickButtons_Config::actionChanged(const QString& newAction)
 {
   // get possible first selected item
-  QListViewItem* item=buttonListView->selectedItem();
+  Q3ListViewItem* item=buttonListView->selectedItem();
 
   // sanity check
   if(item)
@@ -229,13 +229,13 @@ void QuickButtons_Config::addEntry()
 void QuickButtons_Config::removeEntry()
 {
   // get possible first selected item
-  QListViewItem* item=buttonListView->selectedItem();
+  Q3ListViewItem* item=buttonListView->selectedItem();
 
   // sanity check
   if(item)
   {
     // get item below the current one
-    QListViewItem* nextItem=item->itemBelow();
+    Q3ListViewItem* nextItem=item->itemBelow();
     // if there was none, get the one above
     if(!nextItem) nextItem=item->itemAbove();
 

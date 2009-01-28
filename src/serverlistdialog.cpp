@@ -17,12 +17,15 @@
 #include "connectionsettings.h"
 
 #include <qpushbutton.h>
-#include <qframe.h>
+#include <q3frame.h>
 #include <qlayout.h>
 #include <qstringlist.h>
-#include <qwhatsthis.h>
-#include <qheader.h>
+#include <q3whatsthis.h>
+#include <q3header.h>
 #include <qcheckbox.h>
+//Added by qt3to4:
+#include <Q3GridLayout>
+#include <Q3PtrList>
 
 #include <klocale.h>
 #include <kdebug.h>
@@ -46,7 +49,7 @@ namespace Konversation
         m_isServer = false;
     }
 
-    ServerListItem::ServerListItem(QListViewItem* parent, int serverGroupId, int sortIndex,
+    ServerListItem::ServerListItem(Q3ListViewItem* parent, int serverGroupId, int sortIndex,
         const QString& name, const ServerSettings& server)
         : KListViewItem(parent, name)
     {
@@ -61,7 +64,7 @@ namespace Konversation
     {
         int count = 0;
 
-        QListViewItem* item = firstChild();
+        Q3ListViewItem* item = firstChild();
 
         while (item)
         {
@@ -74,7 +77,7 @@ namespace Konversation
         return count;
     }
 
-    int ServerListItem::compare(QListViewItem *i, int col, bool ascending) const
+    int ServerListItem::compare(Q3ListViewItem *i, int col, bool ascending) const
     {
         ServerListItem* item = static_cast<ServerListItem*>(i);
 
@@ -106,13 +109,13 @@ namespace Konversation
     {
         setButtonOK(KGuiItem(i18n("C&onnect"), "connect_creating", i18n("Connect to the server"), i18n("Click here to connect to the selected IRC network and channel.")));
 
-        QFrame* mainWidget = plainPage();
+        Q3Frame* mainWidget = plainPage();
 
         m_serverList = new ServerListView(mainWidget);
-        QWhatsThis::add(m_serverList, i18n("This shows the listof configured IRC networks. An IRC network is a collection of cooperating servers. You need only connect to one of the servers in the network to be connected to the entire IRC network. Once connected, Konversation will automatically join the channels shown. When Konversation is started for the first time, the Freenode network and the <i>#kde</i> channel are already entered for you."));
+        Q3WhatsThis::add(m_serverList, i18n("This shows the listof configured IRC networks. An IRC network is a collection of cooperating servers. You need only connect to one of the servers in the network to be connected to the entire IRC network. Once connected, Konversation will automatically join the channels shown. When Konversation is started for the first time, the Freenode network and the <i>#kde</i> channel are already entered for you."));
         m_serverList->setAllColumnsShowFocus(true);
         m_serverList->setRootIsDecorated(true);
-        m_serverList->setResizeMode(QListView::AllColumns);
+        m_serverList->setResizeMode(Q3ListView::AllColumns);
         m_serverList->addColumn(i18n("Network"));
         m_serverList->addColumn(i18n("Identity"));
         m_serverList->addColumn(i18n("Channels"));
@@ -125,7 +128,7 @@ namespace Konversation
         m_serverList->header()->setMovingEnabled(false);
 
         m_addButton = new QPushButton(i18n("&New..."), mainWidget);
-        QWhatsThis::add(m_addButton, i18n("Click here to define a new Network, including the server to connect to, and the Channels to automatically join once connected."));
+        Q3WhatsThis::add(m_addButton, i18n("Click here to define a new Network, including the server to connect to, and the Channels to automatically join once connected."));
         m_editButton = new QPushButton(i18n("&Edit..."), mainWidget);
         m_delButton = new QPushButton(i18n("&Delete"), mainWidget);
 
@@ -133,7 +136,7 @@ namespace Konversation
         showAtStartup->setChecked(Preferences::showServerList());
         connect(showAtStartup, SIGNAL(toggled(bool)), this, SLOT(setShowAtStartup(bool)));
 
-        QGridLayout* layout = new QGridLayout(mainWidget, 5, 2, 0, spacingHint());
+        Q3GridLayout* layout = new Q3GridLayout(mainWidget, 5, 2, 0, spacingHint());
 
         layout->addMultiCellWidget(m_serverList, 0, 3, 0, 0);
         layout->addWidget(m_addButton, 0, 1);
@@ -152,10 +155,10 @@ namespace Konversation
 
         connect(m_serverList, SIGNAL(aboutToMove()), this, SLOT(slotAboutToMove()));
         connect(m_serverList, SIGNAL(moved()), this, SLOT(slotMoved()));
-        connect(m_serverList, SIGNAL(doubleClicked(QListViewItem *, const QPoint&, int)), this, SLOT(slotOk()));
+        connect(m_serverList, SIGNAL(doubleClicked(Q3ListViewItem *, const QPoint&, int)), this, SLOT(slotOk()));
         connect(m_serverList, SIGNAL(selectionChanged()), this, SLOT(updateButtons()));
-        connect(m_serverList, SIGNAL(expanded(QListViewItem*)), this, SLOT(slotSetGroupExpanded(QListViewItem*)));
-        connect(m_serverList, SIGNAL(collapsed(QListViewItem*)), this, SLOT(slotSetGroupCollapsed(QListViewItem*)));
+        connect(m_serverList, SIGNAL(expanded(Q3ListViewItem*)), this, SLOT(slotSetGroupExpanded(Q3ListViewItem*)));
+        connect(m_serverList, SIGNAL(collapsed(Q3ListViewItem*)), this, SLOT(slotSetGroupCollapsed(Q3ListViewItem*)));
         connect(m_addButton, SIGNAL(clicked()), this, SLOT(slotAdd()));
         connect(m_editButton, SIGNAL(clicked()), this, SLOT(slotEdit()));
         connect(m_delButton, SIGNAL(clicked()), this, SLOT(slotDelete()));
@@ -186,7 +189,7 @@ namespace Konversation
 
     void ServerListDialog::slotOk()
     {
-        QPtrList<QListViewItem> selected = m_serverList->selectedItems();
+        Q3PtrList<Q3ListViewItem> selected = m_serverList->selectedItems();
         ServerListItem * item = static_cast<ServerListItem*>(selected.first());
 
         while (item && item->isVisible())
@@ -270,7 +273,7 @@ namespace Konversation
 
     void ServerListDialog::slotDelete()
     {
-        QPtrList<QListViewItem> selectedItems = m_serverList->selectedServerListItems();
+        Q3PtrList<Q3ListViewItem> selectedItems = m_serverList->selectedServerListItems();
 
         if (selectedItems.isEmpty())
             return;
@@ -316,8 +319,8 @@ namespace Konversation
             return;
         }
 
-        QListViewItem* itemBelow = 0;
-        QListViewItem* itemAbove = 0;
+        Q3ListViewItem* itemBelow = 0;
+        Q3ListViewItem* itemAbove = 0;
 
         // Have fun deleting
         while (item)
@@ -362,14 +365,14 @@ namespace Konversation
         emit serverGroupsChanged();
    }
 
-    void ServerListDialog::slotSetGroupExpanded(QListViewItem* item)
+    void ServerListDialog::slotSetGroupExpanded(Q3ListViewItem* item)
     {
         ServerListItem* listItem = static_cast<ServerListItem*>(item);
         Konversation::ServerGroupSettingsPtr serverGroup = Preferences::serverGroupById(listItem->serverGroupId());
         serverGroup->setExpanded(true);
     }
 
-    void ServerListDialog::slotSetGroupCollapsed(QListViewItem* item)
+    void ServerListDialog::slotSetGroupCollapsed(Q3ListViewItem* item)
     {
         ServerListItem* listItem = static_cast<ServerListItem*>(item);
         Konversation::ServerGroupSettingsPtr serverGroup = Preferences::serverGroupById(listItem->serverGroupId());
@@ -432,7 +435,7 @@ namespace Konversation
         }
 
         Preferences::addServerGroup(serverGroup);
-        QListViewItem* item = insertServerGroup(serverGroup);
+        Q3ListViewItem* item = insertServerGroup(serverGroup);
         m_serverList->clearSelection();
         m_serverList->setSelected(item,true);
         m_serverList->setCurrentItem(item);
@@ -460,7 +463,7 @@ namespace Konversation
         Konversation::ServerGroupList serverGroups = Preferences::serverGroupList();
         Konversation::ServerGroupList::iterator it;
 
-        QListViewItem* networkItem = 0;
+        Q3ListViewItem* networkItem = 0;
 
         for(it = serverGroups.begin(); it != serverGroups.end(); ++it)
         {
@@ -486,7 +489,7 @@ namespace Konversation
         m_serverList->repaint();
     }
 
-    QListViewItem* ServerListDialog::insertServerGroup(ServerGroupSettingsPtr serverGroup)
+    Q3ListViewItem* ServerListDialog::insertServerGroup(ServerGroupSettingsPtr serverGroup)
     {
         // Produce a list of this server group's channels
         QString channels;
@@ -503,7 +506,7 @@ namespace Konversation
             channels += (*channelIt).name();
         }
 
-        QListViewItem* networkItem = 0;
+        Q3ListViewItem* networkItem = 0;
 
         // Insert the server group into the list
         networkItem = new ServerListItem(m_serverList,
@@ -521,7 +524,7 @@ namespace Konversation
         Konversation::ServerList serverList = serverGroup->serverList();
         Konversation::ServerList::iterator serverIt;
 
-        QListViewItem* serverItem = 0;
+        Q3ListViewItem* serverItem = 0;
         int i = 0;
 
         for (serverIt = serverList.begin(); serverIt != serverList.end(); ++serverIt)

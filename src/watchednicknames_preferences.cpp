@@ -41,8 +41,8 @@ WatchedNicknames_Config::WatchedNicknames_Config(QWidget *parent, const char *na
   connect(kcfg_UseNotify,SIGNAL (toggled(bool)),this,SLOT (checkIfEmptyListview(bool)) );
   connect(newButton,SIGNAL (clicked()),this,SLOT (newNotify()) );
   connect(removeButton,SIGNAL (clicked()),this,SLOT (removeNotify()) );
-  connect(notifyListView,SIGNAL (selectionChanged(QListViewItem*)),this,SLOT (entrySelected(QListViewItem*)) );
-  connect(notifyListView,SIGNAL (clicked(QListViewItem*)),this,SLOT (entrySelected(QListViewItem*)) );
+  connect(notifyListView,SIGNAL (selectionChanged(Q3ListViewItem*)),this,SLOT (entrySelected(Q3ListViewItem*)) );
+  connect(notifyListView,SIGNAL (clicked(Q3ListViewItem*)),this,SLOT (entrySelected(Q3ListViewItem*)) );
 
   connect(networkDropdown,SIGNAL (activated(const QString&)),this,SLOT (networkChanged(const QString&)) );
   connect(nicknameInput,SIGNAL (textChanged(const QString&)),this,SLOT (nicknameChanged(const QString&)) );
@@ -113,7 +113,7 @@ void WatchedNicknames_Config::saveSettings()
 
   // get first notify group
   KListView* listView=notifyListView;
-  QListViewItem* group=listView->firstChild();
+  Q3ListViewItem* group=listView->firstChild();
 
   // loop as long as there are more groups in the listview
   while(group)
@@ -123,7 +123,7 @@ void WatchedNicknames_Config::saveSettings()
     // later contains all nicks separated by blanks
     QString nicks;
     // get first nick in the group
-    QListViewItem* nick=group->firstChild();
+    Q3ListViewItem* nick=group->firstChild();
     // loop as long as there are still nicks in this group
     while(nick)
     {
@@ -155,7 +155,7 @@ QStringList WatchedNicknames_Config::currentNotifyList()
 
   // get first item
   KListView* listView=notifyListView;
-  QListViewItem* item=listView->firstChild();
+  Q3ListViewItem* item=listView->firstChild();
 
   // loop as long as there are more groups in the listview
   while(item)
@@ -180,7 +180,7 @@ void WatchedNicknames_Config::updateNetworkNames()
 {
   // get first notify group
   KListView* listView=notifyListView;
-  QListViewItem* group=listView->firstChild();
+  Q3ListViewItem* group=listView->firstChild();
 
   // make sure all widgets are disabled
   listView->clearSelection();
@@ -214,7 +214,7 @@ void WatchedNicknames_Config::updateNetworkNames()
     else
     {
       // get the next group from the listview
-      QListViewItem* tmp=group->nextSibling();
+      Q3ListViewItem* tmp=group->nextSibling();
       // remove the group
       delete group;
       // set the current group
@@ -240,10 +240,10 @@ void WatchedNicknames_Config::updateNetworkNames()
 }
 
 // check if an item with the given id exists in the listview
-QListViewItem* WatchedNicknames_Config::getItemById(QListView* listView,int id)
+Q3ListViewItem* WatchedNicknames_Config::getItemById(Q3ListView* listView,int id)
 {
   // get the first item in the listview
-  QListViewItem* lookItem=listView->firstChild();
+  Q3ListViewItem* lookItem=listView->firstChild();
   // look for an item with the given id
   while(lookItem)
   {
@@ -270,7 +270,7 @@ void WatchedNicknames_Config::newNotify()
 {
   // get listview object and possible first selected item
   KListView* listView=notifyListView;
-  QListViewItem* item=listView->selectedItem();
+  Q3ListViewItem* item=listView->selectedItem();
 
   // if there was an item selected, try to find the group it belongs to,
   // so the newly created item will go into the same group, otherwise
@@ -283,7 +283,7 @@ void WatchedNicknames_Config::newNotify()
     item=listView->firstChild();
 
   // finally insert new item
-  item=new QListViewItem(item,i18n("New"));
+  item=new Q3ListViewItem(item,i18n("New"));
   // make this item the current and selected item
   item->setSelected(true);
   listView->setCurrentItem(item);
@@ -302,13 +302,13 @@ void WatchedNicknames_Config::removeNotify()
 {
   // get listview pointer and the selected item
   KListView* listView=notifyListView;
-  QListViewItem* item=listView->selectedItem();
+  Q3ListViewItem* item=listView->selectedItem();
 
   // sanity check
   if(item)
   {
     // check which item to highlight after we deleted the chosen one
-    QListViewItem* itemAfter=item->itemBelow();
+    Q3ListViewItem* itemAfter=item->itemBelow();
     if(!itemAfter) itemAfter=item->itemAbove();
     delete(item);
 
@@ -326,7 +326,7 @@ void WatchedNicknames_Config::removeNotify()
 }
 
 // what to do when the user selects an entry
-void WatchedNicknames_Config::entrySelected(QListViewItem* notifyEntry)
+void WatchedNicknames_Config::entrySelected(Q3ListViewItem* notifyEntry)
 {
   // play it safe, assume disabling all widgets first
   bool enabled=false;
@@ -335,7 +335,7 @@ void WatchedNicknames_Config::entrySelected(QListViewItem* notifyEntry)
   if(notifyEntry)
   {
     // is this entry a nickname?
-    QListViewItem* group=notifyEntry->parent();
+    Q3ListViewItem* group=notifyEntry->parent();
     if(group)
     {
       // all edit widgets may be enabled
@@ -368,18 +368,18 @@ void WatchedNicknames_Config::networkChanged(const QString& newNetwork)
 {
   // get listview pointer and selected entry
   KListView* listView=notifyListView;
-  QListViewItem* item=listView->selectedItem();
+  Q3ListViewItem* item=listView->selectedItem();
 
   // sanity check
   if(item)
   {
     // get group the nickname is presently associated to
-    QListViewItem* group=item->parent();
+    Q3ListViewItem* group=item->parent();
     // did the user actually change anything?
     if(group && group->text(0)!=newNetwork)
     {
       // find the branch the new network is in
-      QListViewItem* lookGroup=listView->firstChild();
+      Q3ListViewItem* lookGroup=listView->firstChild();
       while(lookGroup && (lookGroup->text(0)!=newNetwork)) lookGroup=lookGroup->nextSibling();
       // if it was found (should never fail)
       if(lookGroup)
@@ -405,7 +405,7 @@ void WatchedNicknames_Config::nicknameChanged(const QString& newNickname)
 {
   // get listview pointer and selected item
   KListView* listView=notifyListView;
-  QListViewItem* item=listView->selectedItem();
+  Q3ListViewItem* item=listView->selectedItem();
 
   // sanity check
   if(item)

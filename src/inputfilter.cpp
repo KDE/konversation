@@ -18,6 +18,8 @@
 #include "commit.h"
 #include "version.h"
 #include "query.h"
+//Added by qt3to4:
+#include <Q3PtrList>
 #include "channel.h"
 #include "statuspanel.h"
 #include "common.h"
@@ -1850,7 +1852,7 @@ bool InputFilter::isIgnore(const QString &sender, Ignore::Type type)
 {
     bool doIgnore = false;
 
-    QPtrList<Ignore> list = Preferences::ignoreList();
+    Q3PtrList<Ignore> list = Preferences::ignoreList();
 
     for(unsigned int index =0; index<list.count(); index++)
     {

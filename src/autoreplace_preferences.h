@@ -35,7 +35,7 @@ class Autoreplace_Config : public Autoreplace_ConfigUI, public KonviSettingsPage
     void modified();
 
   protected slots:
-    void entrySelected(QListViewItem* autoreplaceEntry);
+    void entrySelected(Q3ListViewItem* autoreplaceEntry);
     void directionChanged(int newDirection);
     void patternChanged(const QString& newPattern);
     void replacementChanged(const QString& newReplacement);

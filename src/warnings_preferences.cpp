@@ -15,7 +15,7 @@
 #include "warnings_preferences.h"
 #include "konviconfigdialog.h"
 
-#include <qlistview.h>
+#include <q3listview.h>
 
 #include <kdebug.h>
 #include <kapplication.h>
@@ -24,12 +24,12 @@
 #include <klistview.h>
 
 
-Warnings_Config::Warnings_Config( QWidget* parent, const char* name, WFlags fl )
+Warnings_Config::Warnings_Config( QWidget* parent, const char* name, Qt::WFlags fl )
     : Warnings_ConfigUI( parent, name, fl )
 {
   dialogListView->setSorting(1);
   loadSettings();
-  connect(dialogListView, SIGNAL(clicked(QListViewItem *)), this, SIGNAL(modified()));
+  connect(dialogListView, SIGNAL(clicked(Q3ListViewItem *)), this, SIGNAL(modified()));
 }
 
 Warnings_Config::~Warnings_Config()
@@ -39,7 +39,7 @@ Warnings_Config::~Warnings_Config()
 void Warnings_Config::restorePageToDefaults()
 {
   
-  QCheckListItem* item=static_cast<QCheckListItem*>(dialogListView->itemAtIndex(0));
+  Q3CheckListItem* item=static_cast<Q3CheckListItem*>(dialogListView->itemAtIndex(0));
   bool changed=false;
   while(item)
   {
@@ -47,7 +47,7 @@ void Warnings_Config::restorePageToDefaults()
       item->setOn(true);
       changed=true;
     }
-    item=static_cast<QCheckListItem*>(item->itemBelow());
+    item=static_cast<Q3CheckListItem*>(item->itemBelow());
   }
   if(changed) {
     emit modified();
@@ -62,7 +62,7 @@ void Warnings_Config::saveSettings()
   // prepare list
   QString warningsChecked;
 
-  QCheckListItem* item=static_cast<QCheckListItem*>(dialogListView->itemAtIndex(0));
+  Q3CheckListItem* item=static_cast<Q3CheckListItem*>(dialogListView->itemAtIndex(0));
   int i = 0;
   while(item)
   {
@@ -90,7 +90,7 @@ void Warnings_Config::saveSettings()
         config->writeEntry(item->text(2),item->isOn() ? "1" : "0");
     }
 
-    item=static_cast<QCheckListItem*>(item->itemBelow());
+    item=static_cast<Q3CheckListItem*>(item->itemBelow());
     ++i;
   }
 
@@ -119,7 +119,7 @@ void Warnings_Config::loadSettings()
   dialogDefinitions.append(i18n("Ignore"));
   dialogDefinitions.append(i18n("Unignore"));
   dialogDefinitions.append(i18n("Warn before quitting with active DCC file transfers"));
-  QCheckListItem *item;
+  Q3CheckListItem *item;
   dialogListView->clear();
 
   KConfig* config = kapp->config();
@@ -127,7 +127,7 @@ void Warnings_Config::loadSettings()
   QString flagName; 
   for(unsigned int i=0; i<dialogDefinitions.count() ;i++)
   {
-    item=new QCheckListItem(dialogListView,dialogDefinitions[i],QCheckListItem::CheckBox);
+    item=new Q3CheckListItem(dialogListView,dialogDefinitions[i],Q3CheckListItem::CheckBox);
     item->setText(1,dialogDefinitions[i]);
     flagName = flagNames.section(",",i,i);
     item->setText(2,flagName);
@@ -157,11 +157,11 @@ QString Warnings_Config::currentWarningsChecked()
   QString newList;
 
   // get first checklist item
-  QListViewItem* item=dialogListView->firstChild();
+  Q3ListViewItem* item=dialogListView->firstChild();
   while(item)
   {
     // save state of this item in hasChanged() list
-    newList+=(static_cast<QCheckListItem*>(item)->isOn()) ? "1" : "0";
+    newList+=(static_cast<Q3CheckListItem*>(item)->isOn()) ? "1" : "0";
     item=item->itemBelow();
   }
   // return list

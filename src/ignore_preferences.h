@@ -16,7 +16,7 @@
 #include "ignore_preferencesui.h"
 #include "konvisettingspage.h"
 
-#include <qptrlist.h>
+#include <q3ptrlist.h>
 
 
 class Ignore;
@@ -25,7 +25,7 @@ class Ignore_Config : public Ignore_ConfigUI, public KonviSettingsPage
     Q_OBJECT
 
     public:
-        explicit Ignore_Config( QWidget* parent = 0, const char* name = 0, WFlags fl = 0 );
+        explicit Ignore_Config( QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0 );
         ~Ignore_Config();
         QString flagNames;
 
@@ -39,7 +39,7 @@ class Ignore_Config : public Ignore_ConfigUI, public KonviSettingsPage
         QStringList m_oldIgnoreList;
 
         QStringList currentIgnoreList();  // in hasChanged() format
-        QPtrList<Ignore> getIgnoreList(); // in prefs format
+        Q3PtrList<Ignore> getIgnoreList(); // in prefs format
         void updateEnabledness();
 
     public slots:
@@ -49,7 +49,7 @@ class Ignore_Config : public Ignore_ConfigUI, public KonviSettingsPage
         void newIgnore();
         void removeIgnore();
         void flagCheckboxChanged();
-        void select(QListViewItem* item);
+        void select(Q3ListViewItem* item);
         void removeAllIgnore();
     signals:
         void modified();

@@ -21,7 +21,10 @@
 // TODO: remove the dependence
 #include "dccresumedialog.h"
 
-#include <qptrlist.h>
+#include <q3ptrlist.h>
+//Added by qt3to4:
+#include <QPixmap>
+#include <Q3ValueList>
 
 
 class QFile;
@@ -177,7 +180,7 @@ class DccTransferRecvWriteCacheHandler : public QObject
         bool m_writeAsyncMode;
         bool m_writeReady;
 
-        QValueList<QByteArray> m_cacheList;
+        Q3ValueList<QByteArray> m_cacheList;
         QDataStream* m_cacheStream;
 };
 

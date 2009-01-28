@@ -23,6 +23,8 @@
 #define KHTMLDECODER_H
 
 #include <qstring.h>
+//Added by qt3to4:
+#include <Q3CString>
 
 class QTextCodec;
 class QTextDecoder;
@@ -83,23 +85,23 @@ public:
 
 
 private:
-    QCString automaticDetectionForArabic( const unsigned char* str, int size );
-    QCString automaticDetectionForBaltic( const unsigned char* str, int size );
-    QCString automaticDetectionForCentralEuropean( const unsigned char* str, int size );
-    QCString automaticDetectionForCyrillic( const unsigned char* str, int size, AutoDetectLanguage _language );
-    QCString automaticDetectionForGreek( const unsigned char* str, int size );
-    QCString automaticDetectionForHebrew( const unsigned char* str, int size );
-    QCString automaticDetectionForJapanese( const unsigned char* str, int size );
-    QCString automaticDetectionForTurkish( const unsigned char* str, int size );
-    QCString automaticDetectionForWesternEuropean( const unsigned char* str, int size );
+    Q3CString automaticDetectionForArabic( const unsigned char* str, int size );
+    Q3CString automaticDetectionForBaltic( const unsigned char* str, int size );
+    Q3CString automaticDetectionForCentralEuropean( const unsigned char* str, int size );
+    Q3CString automaticDetectionForCyrillic( const unsigned char* str, int size, AutoDetectLanguage _language );
+    Q3CString automaticDetectionForGreek( const unsigned char* str, int size );
+    Q3CString automaticDetectionForHebrew( const unsigned char* str, int size );
+    Q3CString automaticDetectionForJapanese( const unsigned char* str, int size );
+    Q3CString automaticDetectionForTurkish( const unsigned char* str, int size );
+    Q3CString automaticDetectionForWesternEuropean( const unsigned char* str, int size );
 
     // codec used for decoding. default is Latin1.
     QTextCodec *m_codec;
     QTextDecoder *m_decoder; // only used for utf16
-    QCString enc;
+    Q3CString enc;
     EncodingType m_type;
 
-    QCString buffer;
+    Q3CString buffer;
 
     bool body;
     bool beginning;

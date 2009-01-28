@@ -59,7 +59,7 @@ DccTransferRecv* DccTransferManager::resumeDownload( int connectionId, const QSt
     DccTransferRecv* transfer = 0;
 
     // find applicable one
-    QValueListConstIterator< DccTransferRecv* > it;
+    Q3ValueListConstIterator< DccTransferRecv* > it;
     for ( it = m_recvItems.begin() ; it != m_recvItems.end() ; ++it )
     {
         if ( ( (*it)->getStatus() == DccTransfer::Queued || (*it)->getStatus() == DccTransfer::WaitingRemote ) &&
@@ -89,7 +89,7 @@ DccTransferSend* DccTransferManager::resumeUpload( int connectionId, const QStri
     DccTransferSend* transfer = 0;
 
     // find applicable one
-    QValueListConstIterator< DccTransferSend* > it;
+    Q3ValueListConstIterator< DccTransferSend* > it;
     for ( it = m_sendItems.begin() ; it != m_sendItems.end() ; ++it )
     {
         if ( ( (*it)->getStatus() == DccTransfer::Queued || (*it)->getStatus() == DccTransfer::WaitingRemote ) &&
@@ -120,7 +120,7 @@ DccTransferSend* DccTransferManager::startReverseSending( int connectionId, cons
     DccTransferSend* transfer = 0;
 
     // find applicable one
-    QValueListConstIterator< DccTransferSend* > it;
+    Q3ValueListConstIterator< DccTransferSend* > it;
     for ( it = m_sendItems.begin() ; it != m_sendItems.end() ; ++it )
     {
         if (
@@ -152,7 +152,7 @@ void DccTransferManager::initTransfer( DccTransfer* transfer )
 
 bool DccTransferManager::isLocalFileInWritingProcess( const KURL& url ) const
 {
-    QValueListConstIterator< DccTransferRecv* > it;
+    Q3ValueListConstIterator< DccTransferRecv* > it;
     for ( it = m_recvItems.begin() ; it != m_recvItems.end() ; ++it )
     {
         if ( ( (*it)->getStatus() == DccTransfer::Connecting ||
@@ -172,14 +172,14 @@ int DccTransferManager::generateReverseTokenNumber()
 
 bool DccTransferManager::hasActiveTransfers()
 {
-    QValueListConstIterator< DccTransferSend* > it;
+    Q3ValueListConstIterator< DccTransferSend* > it;
     for ( it = m_sendItems.begin() ; it != m_sendItems.end() ; ++it )
     {
         if ((*it)->getStatus() == DccTransfer::Transferring)
             return true;
     }
 
-    QValueListConstIterator< DccTransferRecv* > it2;
+    Q3ValueListConstIterator< DccTransferRecv* > it2;
     for ( it2 = m_recvItems.begin() ; it2 != m_recvItems.end() ; ++it2 )
     {
         if ((*it2)->getStatus() == DccTransfer::Transferring)

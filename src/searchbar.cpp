@@ -15,13 +15,15 @@
 #include <qcheckbox.h>
 #include <qtimer.h>
 #include <qpalette.h>
-#include <qaccel.h>
+#include <q3accel.h>
 #include <qlabel.h>
 #include <qpixmap.h>
-#include <qobjectlist.h>
+#include <qobject.h>
 #include <qtoolbutton.h>
-#include <qpopupmenu.h>
-#include <qwidgetstack.h>
+#include <q3popupmenu.h>
+#include <q3widgetstack.h>
+//Added by qt3to4:
+#include <QShowEvent>
 
 #include <kdebug.h>
 #include <kapplication.h>
@@ -54,7 +56,7 @@ SearchBar::SearchBar(QWidget* parent)
 
     m_timer = new QTimer(this);
 
-    QAccel* accel = new QAccel(this);
+    Q3Accel* accel = new Q3Accel(this);
     accel->connectItem( accel->insertItem(Qt::Key_Escape), this, SLOT(hide()));
 
     connect(m_timer, SIGNAL(timeout()), SLOT(slotFind()));
@@ -65,7 +67,7 @@ SearchBar::SearchBar(QWidget* parent)
     connect(m_closeButton, SIGNAL(clicked()), SLOT(hide()));
     connect(m_optionsButton, SIGNAL(clicked()), this, SLOT(showOptionsMenu()));
 
-    m_optionsMenu = new QPopupMenu(m_optionsButton, "options_menu");
+    m_optionsMenu = new Q3PopupMenu(m_optionsButton, "options_menu");
     m_optionsMenu->setCheckable(true);
     m_optionsMenu->insertItem(i18n("Find Forward"), this, SLOT(toggleSearchFoward()), 0, SEARCH_FORWARD_MENU);
     m_optionsMenu->insertItem(i18n("Case Sensitive"), this, SLOT(toggleMatchCase()), 0, MATCH_CASE_MENU);

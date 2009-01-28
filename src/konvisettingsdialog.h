@@ -17,8 +17,10 @@
 #include "konvisettingspage.h"
 
 #include <kdialogbase.h>
-#include <qasciidict.h>
-#include <qintdict.h>
+#include <q3asciidict.h>
+#include <q3intdict.h>
+//Added by qt3to4:
+#include <QShowEvent>
 
 
 class Warnings_Config;
@@ -89,7 +91,7 @@ class KDEUI_EXPORT KonviSettingsDialog : public KonviConfigDialog
 
         // remember page index
         unsigned int m_watchedNicknamesIndex;
-        QIntDict<KonviSettingsPage> m_indexToPageMapping;
+        Q3IntDict<KonviSettingsPage> m_indexToPageMapping;
 };
 
 #endif //KONVISETTINGSDIALOG_H

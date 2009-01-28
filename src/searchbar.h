@@ -14,6 +14,10 @@
 #define SEARCHBAR_H
 
 #include "searchbarbase.h"
+//Added by qt3to4:
+#include <Q3PopupMenu>
+#include <QShowEvent>
+#include <QPixmap>
 
 /* TODO:
    - Changing case-sensitivity and search-forward restarts search from beginning.
@@ -22,7 +26,7 @@
      the konvi gods
  */
 
-class QPopupMenu;
+class Q3PopupMenu;
 
 class SearchBar : public SearchBarBase
 {
@@ -72,7 +76,7 @@ class SearchBar : public SearchBarBase
     private:
         QTimer* m_timer;
 
-        QPopupMenu* m_optionsMenu;
+        Q3PopupMenu* m_optionsMenu;
 
         bool m_searchFoward;
         bool m_matchCase;

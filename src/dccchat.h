@@ -14,6 +14,8 @@
 #define DCCCHAT_H
 
 #include "chatwindow.h"
+//Added by qt3to4:
+#include <QShowEvent>
 
 
 class QSplitter;

@@ -22,7 +22,7 @@
 class IgnoreListViewItem : public KListViewItem
 {
     public:
-        IgnoreListViewItem(QListView* parent,const QString& name,int flags);
+        IgnoreListViewItem(Q3ListView* parent,const QString& name,int flags);
         ~IgnoreListViewItem();
 
         void setFlag(int flag,bool active);
