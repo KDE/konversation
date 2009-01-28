@@ -1,0 +1,1 @@
+#cmakedefine HAVE_XSCREENSAVER 1

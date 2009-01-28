@@ -1,0 +1,5 @@
+.h.in-Files
+
+.in.in-Files
+network/configure.in.in
+network/konversation/configure.in.in

@@ -15,10 +15,11 @@
 #ifndef KONV_DCOP_H
 #define KONV_DCOP_H
 
-#include "konviface.h"
+//#include "konviface.h"
 #include "common.h"
 
 #include <qobject.h>
+#if 0
 #include <dcopobject.h>
 
 
@@ -107,4 +108,5 @@ class KonvIdentDCOP : public QObject, virtual public KonvIdentityIface
 
         QStringList listIdentities();
 };
+#endif
 #endif

@@ -21,9 +21,9 @@
 #include "preferences_base.h"
 
 #include <qobject.h>
-#include <qptrlist.h>
+#include <q3ptrlist.h>
 #include <qsize.h>
-#include <qvaluelist.h>
+#include <q3valuelist.h>
 #include <qstringlist.h>
 #include <qfont.h>
 #include <qcolor.h>
@@ -83,8 +83,8 @@ class Preferences : public QObject, public PreferencesBase
         static bool isNotify(int serverGroupId, const QString& pattern);
         static bool hasNotifyList(int serverGroupId);
 
-        static const QPtrList<Highlight> highlightList();
-        static void setHighlightList(QPtrList<Highlight> newList);
+        static const Q3PtrList<Highlight> highlightList();
+        static void setHighlightList(Q3PtrList<Highlight> newList);
         static void addHighlight(const QString& newHighlight,bool regExp, const QColor &color,const QString& sound,const QString& autoText);
 
         /* All of the below work on the first (default) identity in your identity list*/
@@ -92,8 +92,8 @@ class Preferences : public QObject, public PreferencesBase
         static bool removeIgnore(const QString &oldIgnore);
         static bool isIgnored(const QString &nickname);
         static void clearIgnoreList();
-        static const QPtrList<Ignore> ignoreList();
-        static void setIgnoreList(QPtrList<Ignore> newList);
+        static const Q3PtrList<Ignore> ignoreList();
+        static void setIgnoreList(Q3PtrList<Ignore> newList);
 
         static const QStringList quickButtonList();
         static const QStringList defaultQuickButtonList();
@@ -157,9 +157,9 @@ class Preferences : public QObject, public PreferencesBase
     protected:
         IdentityPtr mIdentity;
         Konversation::ServerGroupList mServerGroupList;
-        QPtrList<Ignore> mIgnoreList;
-        QValueList<IdentityPtr> mIdentityList;
-        QPtrList<Highlight> mHighlightList;
+        Q3PtrList<Ignore> mIgnoreList;
+        Q3ValueList<IdentityPtr> mIdentityList;
+        Q3PtrList<Highlight> mHighlightList;
         QMap<int, QStringList> mNotifyList;  // network id, list of nicks
         QMap< int,QMap<QString,QString> > mChannelEncodingsMap;  // mChannelEncodingsMap[serverGroupdId][channelName]
         QStringList mQuickButtonList;

@@ -1,0 +1,23 @@
+Log for qt3to4 on Fri Jul 11 19:00:41 2008. Number of log entries: 20
+In file /kde4/konversation/src/config/preferences.cpp at line 255 column 14: QPtrList -> Q3PtrList
+In file /kde4/konversation/src/config/preferences.cpp at line 260 column 43: QPtrList -> Q3PtrList
+In file /kde4/konversation/src/config/preferences.cpp at line 275 column 40: QPtrList -> Q3PtrList
+In file /kde4/konversation/src/config/preferences.cpp at line 290 column 20: QPtrListIterator -> Q3PtrListIterator
+In file /kde4/konversation/src/config/preferences.cpp at line 307 column 20: QPtrListIterator -> Q3PtrListIterator
+In file /kde4/konversation/src/config/preferences.cpp at line 408 column 14: QValueList -> Q3ValueList
+In file /kde4/konversation/src/config/preferences.cpp at line 409 column 14: QValueList -> Q3ValueList
+In file /kde4/konversation/src/config/preferences.cpp at line 427 column 14: QValueList -> Q3ValueList
+In file /kde4/konversation/src/config/preferences.cpp at line 428 column 18: QValueList -> Q3ValueList
+In file /kde4/konversation/src/config/preferences.cpp at line 498 column 14: QPtrList -> Q3PtrList
+In file /kde4/konversation/src/config/preferences.cpp: Added the following include directives:
+	#include <Q3ValueList> 	#include <Q3PtrList> 
+In file /kde4/konversation/src/config/preferences.h at line 19 column 18: qptrlist.h -> q3ptrlist.h
+In file /kde4/konversation/src/config/preferences.h at line 21 column 20: qvaluelist.h -> q3valuelist.h
+In file /kde4/konversation/src/config/preferences.h at line 74 column 29: QPtrList -> Q3PtrList
+In file /kde4/konversation/src/config/preferences.h at line 75 column 45: QPtrList -> Q3PtrList
+In file /kde4/konversation/src/config/preferences.h at line 83 column 29: QPtrList -> Q3PtrList
+In file /kde4/konversation/src/config/preferences.h at line 84 column 42: QPtrList -> Q3PtrList
+In file /kde4/konversation/src/config/preferences.h at line 146 column 16: QPtrList -> Q3PtrList
+In file /kde4/konversation/src/config/preferences.h at line 147 column 18: QValueList -> Q3ValueList
+In file /kde4/konversation/src/config/preferences.h at line 148 column 16: QPtrList -> Q3PtrList
+

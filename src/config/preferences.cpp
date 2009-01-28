@@ -33,6 +33,9 @@
 #include <qpalette.h>
 #include <qregexp.h>
 #include <qfileinfo.h>
+//Added by qt3to4:
+#include <Q3ValueList>
+#include <Q3PtrList>
 
 
 Preferences *Preferences::mSelf = 0;
@@ -255,12 +258,12 @@ void Preferences::removeServerGroup(int id)
 }
 
 
-const QPtrList<Highlight> Preferences::highlightList()
+const Q3PtrList<Highlight> Preferences::highlightList()
 {
     return self()->mHighlightList;
 }
 
-void Preferences::setHighlightList(QPtrList<Highlight> newList)
+void Preferences::setHighlightList(Q3PtrList<Highlight> newList)
 {
     self()->mHighlightList.clear();
     self()->mHighlightList=newList;
@@ -275,7 +278,7 @@ const QString& autoText)
     self()->mHighlightList.append(new Highlight(newHighlight,regExp,newColor,KUrl(sound),autoText));
 }
 
-void Preferences::setIgnoreList(QPtrList<Ignore> newList)
+void Preferences::setIgnoreList(Q3PtrList<Ignore> newList)
 {
     self()->mIgnoreList.clear();
     self()->mIgnoreList=newList;
@@ -290,7 +293,7 @@ void Preferences::addIgnore(const QString &newIgnore)
 
 bool Preferences::removeIgnore(const QString &oldIgnore)
 {
-    QPtrListIterator<Ignore> ignoreList( self()->mIgnoreList );
+    Q3PtrListIterator<Ignore> ignoreList( self()->mIgnoreList );
 
     while (ignoreList.current())
     {
@@ -307,7 +310,7 @@ bool Preferences::removeIgnore(const QString &oldIgnore)
 
 bool Preferences::isIgnored(const QString &nickname)
 {
-    QPtrListIterator<Ignore> ignoreList( self()->mIgnoreList );
+    Q3PtrListIterator<Ignore> ignoreList( self()->mIgnoreList );
 
     while (ignoreList.current())
     {
@@ -408,8 +411,8 @@ void Preferences::setIdentityList(const IdentityList& list)
 
 const IdentityPtr Preferences::identityByName(const QString& name)
 {
-    QValueList<IdentityPtr> identities = identityList();
-    QValueList<IdentityPtr>::iterator it = identities.begin();
+    Q3ValueList<IdentityPtr> identities = identityList();
+    Q3ValueList<IdentityPtr>::iterator it = identities.begin();
 
     while(it != identities.end())
     {
@@ -427,8 +430,8 @@ const IdentityPtr Preferences::identityByName(const QString& name)
 
 const IdentityPtr Preferences::identityById(int id)
 {
-    QValueList<IdentityPtr> identList = identityList();
-    for(QValueList<IdentityPtr>::iterator it = identList.begin(); it != identList.end(); ++it)
+    Q3ValueList<IdentityPtr> identList = identityList();
+    for(Q3ValueList<IdentityPtr>::iterator it = identList.begin(); it != identList.end(); ++it)
     {
         if((*it)->id() == id)
         {
@@ -498,7 +501,7 @@ const QString Preferences::unAwayMessage() { return self()->mIdentityList[0]->ge
 void Preferences::setUnAwayMessage(const QString &newMessage) { self()->mIdentityList[0]->setReturnMessage(newMessage); }
 
 void Preferences::clearIgnoreList() { self()->mIgnoreList.clear(); }
-const QPtrList<Ignore> Preferences::ignoreList() { return self()->mIgnoreList; }
+const Q3PtrList<Ignore> Preferences::ignoreList() { return self()->mIgnoreList; }
 
 const QString Preferences::nickname(int index) { return self()->mIdentityList[0]->getNickname(index); }
 const QStringList Preferences::nicknameList() { return self()->mIdentityList[0]->getNicknameList(); }

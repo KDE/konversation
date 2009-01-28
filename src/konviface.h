@@ -17,7 +17,7 @@
 
 #include <qobject.h>
 #include <qstringlist.h>
-
+#if 0
 #include <dcopobject.h>
 
 
@@ -87,3 +87,5 @@ class KonvIdentityIface : virtual public DCOPObject
     virtual QStringList listIdentities() = 0;
 };
 #endif
+#endif
+
