@@ -12,7 +12,7 @@
 */
 
 #include "nick.h"
-#include "addressbook.h"
+//#include "addressbook.h"
 
 #include <q3textstream.h>
 //Added by qt3to4:
@@ -23,11 +23,11 @@
 #include <klocale.h>
 #include <kabc/phonenumber.h>
 
-#include "konversationapplication.h"
+#include "application.h" ////// header renamed
+#include "images.h"
 #include "preferences.h"
 
-Nick::Nick(K3ListView *listView,
-const ChannelNickPtr& channelnick)
+Nick::Nick(K3ListView *listView, const ChannelNickPtr& channelnick)
     : QObject (),
     K3ListViewItem (listView, listView->lastItem(), QString::null,
                    channelnick->getNickname(), channelnick->getHostmask())
@@ -43,8 +43,8 @@ const ChannelNickPtr& channelnick)
     refresh();
 
     connect(this, SIGNAL(refreshed()), listView, SLOT(startResortTimer()));
-    connect(getChannelNick(), SIGNAL(channelNickChanged()), SLOT(refresh()));
-    connect(getChannelNick()->getNickInfo(), SIGNAL(nickInfoChanged()), SLOT(refresh()));
+    connect(getChannelNick().data(), SIGNAL(channelNickChanged()), SLOT(refresh()));
+    connect(getChannelNick()->getNickInfo().data(), SIGNAL(nickInfoChanged()), SLOT(refresh()));
 }
 
 Nick::~Nick()
@@ -60,7 +60,7 @@ ChannelNickPtr Nick::getChannelNick() const
 void Nick::refresh()
 {
     int flags = 0;
-    NickInfo* nickInfo = getChannelNick()->getNickInfo();
+    NickInfoPtr nickInfo(getChannelNick()->getNickInfo());
     bool away = false;
 
     if ( nickInfo )
@@ -105,7 +105,7 @@ void Nick::refresh()
 
     setPixmap( 0, icon );
 
-    KABC::Picture pic = nickInfo->getAddressee().photo();
+    /*KABC::Picture pic = nickInfo->getAddressee().photo();
 
     if(!pic.isIntern())
     {
@@ -116,7 +116,7 @@ void Nick::refresh()
     {
         QPixmap qpixmap(pic.data().scaleHeight(m_height));
         setPixmap(1,qpixmap);
-    }
+    }*/
 
     QString newtext1 = calculateLabel1();
     if(newtext1 != text(1))
@@ -138,16 +138,16 @@ void Nick::refresh()
 QString Nick::calculateLabel1()
 {
     NickInfoPtr nickinfo = getChannelNick()->getNickInfo();
-    KABC::Addressee addressee = nickinfo->getAddressee();
+    /*KABC::Addressee addressee = nickinfo->getAddressee();
 
     if(!addressee.realName().isEmpty())           //if no addressee, realName will be empty
     {
         return nickinfo->getNickname() + " (" + addressee.realName() + ')';
     }
     else if(Preferences::showRealNames() && !nickinfo->getRealName().isEmpty())
-    {
+    {*/
         return nickinfo->getNickname() + " (" + nickinfo->getRealName() + ')';
-    }
+    //}
 
     return nickinfo->getNickname();
 }
@@ -236,7 +236,7 @@ int Nick::compare(Q3ListViewItem* item,int col,bool ascending) const
 void Nick::paintCell(QPainter * p, const QColorGroup & cg, int column, int width, int align )
 {
     QColorGroup cg2 = cg;
-    NickInfo* nickInfo = getChannelNick()->getNickInfo();
+    NickInfoPtr nickInfo(getChannelNick()->getNickInfo());
 
     if(nickInfo->isAway())
     {
@@ -261,4 +261,4 @@ int Nick::getSortingValue() const
     return flags;
 }
 
-#include "nick.moc"
+// #include "./irc/nick.moc"

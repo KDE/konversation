@@ -21,10 +21,11 @@
 #include "inputfilter.h"
 #include "outputfilter.h"
 #include "nickinfo.h"
-#include "sslsocket.h"
+//#include "sslsocket.h"
 #include "serversettings.h"
 #include "servergroupsettings.h"
 #include "connectionsettings.h"
+#include "statuspanel.h"
 
 #include <qtimer.h>
 #include <q3valuevector.h>
@@ -37,16 +38,16 @@
 
 #include <ksharedptr.h>
 #include <k3process.h>
-#include <ksocketbase.h>
+#include <k3socketbase.h>
 #include <k3bufferedsocket.h>
-#include <kstreamsocket.h>
+#include <k3streamsocket.h>
 
 
 class Channel;
 class DccTransfer;
 class DccTransferPanelItem;
 class Query;
-class StatusPanel;
+//class StatusPanel;
 class Identity;
 class RawLog;
 class ChannelListPanel;
@@ -464,7 +465,7 @@ void resetNickSelection();
         void executeMultiServerCommand(const QString& command, const QString& parameter);
         void reconnect();
         void disconnect(); //FIXME is this overriding a qobject method? do we care?
-        void showSSLDialog();
+        //void showSSLDialog();
         void sendToAllChannels(const QString& text);
         void notifyTimeout();
 
@@ -491,7 +492,7 @@ void resetNickSelection();
         /** This is connected to the SSLSocket failed.
          * @param reason The reason why this failed.  This is already translated, ready to show the user.
          */
-        void sslError(const QString& reason);
+        //void sslError(const QString& reason);
         void connectionEstablished(const QString& ownHost);
         void notifyResponse(const QString& nicksOnline);
         void slotNewDccTransferItemQueued(DccTransfer* transfer);
@@ -671,7 +672,7 @@ void resetNickSelection();
         void updateConnectionState(Konversation::ConnectionState state);
         bool isSocketConnected() const;
 
-        ScriptLauncher* m_scriptLauncher;
+        //ScriptLauncher* m_scriptLauncher;
 
         K3Process m_preShellCommand;
 

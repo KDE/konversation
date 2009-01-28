@@ -12,7 +12,7 @@
 
 #include "images.h"
 #include "common.h"
-#include "konversationapplication.h"
+#include "application.h" ////// header renamed
 
 #include <qbitmap.h>
 #include <qpainter.h>
@@ -33,7 +33,7 @@ Images::Images()
     initializeNickIcons();
     initializeKimifaceIcons();
 
-    m_closeIcon = KIconLoader::global()->loadIcon("fileclose",KIcon::Small);
+    m_closeIcon = KIconLoader::global()->loadIcon("fileclose",KIconLoader::Small);
     m_disabledCloseIcon = KIcon("fileclose").pixmap(QIcon::Small, false);
 }
 
@@ -139,7 +139,7 @@ void Images::initializeNickIcons()
 
 void Images::updateIcons()
 {
-    m_closeIcon = KIconLoader::global()->loadIcon("fileclose",KIcon::Small);
+    m_closeIcon = KIconLoader::global()->loadIcon("fileclose",KIconLoader::Small);
     m_disabledCloseIcon = KIcon("fileclose").pixmap(QIcon::Small, false);
 }
 
@@ -167,7 +167,7 @@ QIcon Images::getLed(QColor col,bool state)
 
     // Set the brush to Qt::SolidPattern, this fills the entire area
     // of the ellipse which is drawn first
-    brush.setStyle( QBrush::Qt::SolidPattern );
+    brush.setStyle( Qt::SolidPattern );
     brush.setColor( color );
     paint.setBrush( brush );
 
@@ -218,18 +218,13 @@ QIcon Images::getLed(QColor col,bool state)
     tmpMap->setMask(tmpMap->createHeuristicMask(true));
 
     // painting done
-    QImage i = tmpMap->convertToImage();
+
+    width /= 3;
+
+    QIcon result(tmpMap->scaled(width, width, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
     delete tmpMap;
 
-    i.setAlphaBuffer(true);
-    width /= 3;
-    i = i.smoothScale(width, width);
-
-    QPixmap dest = i;
-
-    QIcon result;
-    result.setPixmap(dest,QIcon::Automatic);
-    return dest;
+    return result; // TODO FIXME why did this return dest?
 }
 
 QIcon Images::getServerLed(bool state)
@@ -318,4 +313,4 @@ QIcon Images::getHighlightsLed()
         return m_highlightsLedOn;
 }
 
-#include "images.moc"
+// #include "./viewer/images.moc"

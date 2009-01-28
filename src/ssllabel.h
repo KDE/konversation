@@ -24,7 +24,7 @@ class SSLLabel : public QLabel
     Q_OBJECT
 
         public:
-        SSLLabel(QWidget* parent, const char* name);
+        SSLLabel(QWidget* parent);
 
     protected:
         void mouseReleaseEvent(QMouseEvent *e);

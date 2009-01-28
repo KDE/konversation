@@ -10,7 +10,7 @@
   email:     psn@linux.se
 */
 #include "identitydialog.h"
-#include "konversationapplication.h"
+#include "application.h" ////// header renamed
 #include "awaymanager.h"
 #include "irccharsets.h"
 
@@ -641,4 +641,4 @@ namespace Konversation
     }
 }
 
-#include "identitydialog.moc"
+// #include "./identitydialog.moc"

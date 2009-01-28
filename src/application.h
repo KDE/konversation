@@ -126,7 +126,7 @@ class KonversationApplication : public KUniqueApplication
     signals:
         void catchUrl(const QString& who,const QString& url);
         void serverGroupsChanged(const Konversation::ServerGroupSettings* serverGroup);
-
+        void appearanceChanged();
 
     public slots:
         void readOptions();
@@ -153,8 +153,8 @@ class KonversationApplication : public KUniqueApplication
         AwayManager* m_awayManager;
         DccTransferManager* m_dccTransferManager;
         QStringList urlList;
-        KonvDCOP* dcopObject;
-        KonvIdentDCOP* identDCOP;
+        //KonvDCOP* dcopObject;
+        //KonvIdentDCOP* identDCOP;
         KonversationMainWindow* mainWindow;
         Konversation::Sound* m_sound;
         QuickConnectDialog* quickConnectDialog;

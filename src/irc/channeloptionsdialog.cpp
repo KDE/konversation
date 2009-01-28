@@ -12,7 +12,7 @@
 */
 
 #include "channeloptionsdialog.h"
-#include "konversationapplication.h"
+#include "application.h" ////// header renamed
 #include "channeloptionsui.h"
 #include "channel.h"
 
@@ -537,4 +537,4 @@ namespace Konversation
     }
 }
 
-#include "channeloptionsdialog.moc"
+// #include "./irc/channeloptionsdialog.moc"

@@ -18,7 +18,7 @@
 #ifndef DCCTRANSFERMANAGER_H
 #define DCCTRANSFERMANAGER_H
 
-#include "dcctransfer.h"
+#include "transfer.h" ////// header renamed
 
 #include <qobject.h>
 #include <q3valuelist.h>

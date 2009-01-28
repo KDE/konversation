@@ -19,10 +19,10 @@
 */
 
 #include "nickinfo.h"
-#include "konversationapplication.h"
-#include "linkaddressbook/addressbook.h"
-#include "linkaddressbook/linkaddressbookui.h"
-#include "konversationmainwindow.h"
+#include "application.h" ////// header renamed
+//#include "linkaddressbook/addressbook.h"
+//#include "linkaddressbook/linkaddressbookui.h"
+#include "mainwindow.h" ////// header renamed
 #include "viewcontainer.h"
 #include "server.h"
 
@@ -35,7 +35,7 @@
 
 NickInfo::NickInfo(const QString& nick, Server* server): KShared()
 {
-    m_addressee=Konversation::Addressbook::self()->getKABCAddresseeFromNick(nick, server->getServerName(), server->getDisplayName());
+    //m_addressee=Konversation::Addressbook::self()->getKABCAddresseeFromNick(nick, server->getServerName(), server->getDisplayName());
     m_nickname = nick;
     m_loweredNickname = nick.lower();
     m_owningServer = server;
@@ -43,13 +43,13 @@ NickInfo::NickInfo(const QString& nick, Server* server): KShared()
     m_notified = false;
     m_identified = false;
     m_printedOnline = true;
-
+/*
     if(!m_addressee.isEmpty())
         Konversation::Addressbook::self()->emitContactPresenceChanged(m_addressee.uid(), 4);
 
     connect( Konversation::Addressbook::self()->getAddressBook(), SIGNAL( addressBookChanged( AddressBook * ) ), this, SLOT( refreshAddressee() ) );
     connect( Konversation::Addressbook::self(), SIGNAL(addresseesChanged()), this, SLOT(refreshAddressee()));
-
+*/
     m_changedTimer = new QTimer( this);
     connect(m_changedTimer, SIGNAL( timeout()), SLOT(emitNickInfoChanged()));
 
@@ -59,8 +59,10 @@ NickInfo::NickInfo(const QString& nick, Server* server): KShared()
 
 NickInfo::~NickInfo()
 {
+    /*
     if(!m_addressee.isEmpty())
         Konversation::Addressbook::self()->emitContactPresenceChanged(m_addressee.uid(), 1);
+    */
 }
 
 // Get properties of NickInfo object.
@@ -119,7 +121,7 @@ void NickInfo::setNickname(const QString& newNickname)
 {
     Q_ASSERT(!newNickname.isEmpty());
     if(newNickname == m_nickname) return;
-
+/*
     KABC::Addressee newaddressee = Konversation::Addressbook::self()->getKABCAddresseeFromNick(newNickname, m_owningServer->getServerName(), m_owningServer->getDisplayName());
                                                   //We now know who this person is
     if(m_addressee.isEmpty() && !newaddressee.isEmpty())
@@ -136,16 +138,17 @@ void NickInfo::setNickname(const QString& newNickname)
     }
 
     m_addressee = newaddressee;
+    */
     m_nickname = newNickname;
     m_loweredNickname = newNickname.lower();
 
-    QString realname = m_addressee.realName();
+    //QString realname = m_addressee.realName(); //TODO why the fuck is this called?
     startNickInfoChangedTimer();
 }
 
 void NickInfo::emitNickInfoChanged()
 {
-    m_owningServer->emitNickInfoChanged(this);
+    //m_owningServer->emitNickInfoChanged(this); //TODO FIXME can't use self anymore, have to have the item which is of course allocated externally and so we can't fucking know it inside this code
     emit nickInfoChanged();
 }
 
@@ -169,8 +172,10 @@ void NickInfo::setAway(bool state)
     m_away = state;
 
     startNickInfoChangedTimer();
+    /*
     if(!m_addressee.isEmpty())
         Konversation::Addressbook::self()->emitContactPresenceChanged(m_addressee.uid());
+    */
 }
 
 void NickInfo::setIdentified(bool identified)
@@ -239,10 +244,11 @@ void NickInfo::setOnlineSince(const QDateTime& datetime)
     startNickInfoChangedTimer();
 }
 
-KABC::Addressee NickInfo::getAddressee() const { return m_addressee;}
 
-void NickInfo::refreshAddressee()
-{
+//KABC::Addressee NickInfo::getAddressee() const { return m_addressee;}
+
+void NickInfo::refreshAddressee() {}
+/*{
     //m_addressee might not have changed, but information inside it may have.
     KABC::Addressee addressee=Konversation::Addressbook::self()->getKABCAddresseeFromNick(m_nickname, m_owningServer->getServerName(), m_owningServer->getDisplayName());
     if(!addressee.isEmpty() && addressee.uid() != m_addressee.uid())
@@ -257,7 +263,7 @@ void NickInfo::refreshAddressee()
     if(!m_addressee.isEmpty())
         Konversation::Addressbook::self()->emitContactPresenceChanged(m_addressee.uid());
 }
-
+*/
 QString NickInfo::tooltip() const
 {
 
@@ -271,8 +277,9 @@ QString NickInfo::tooltip() const
     return strTooltip;
 }
 
+
 QString NickInfo::getBestAddresseeName()
-{
+{/*
     if(!m_addressee.formattedName().isEmpty())
     {
         return m_addressee.formattedName();
@@ -286,9 +293,9 @@ QString NickInfo::getBestAddresseeName()
         return getRealName();
     }
     else
-    {
+    {*/
         return getNickname();
-    }
+    //}
 
 }
 
@@ -297,9 +304,10 @@ void NickInfo::tooltipTableData(Q3TextStream &tooltip) const
     tooltip << "<tr><td colspan=\"2\" valign=\"top\">";
 
     bool dirty = false;
-    KABC::Picture photo = m_addressee.photo();
-    KABC::Picture logo = m_addressee.logo();
+    //KABC::Picture photo = m_addressee.photo();
+    //KABC::Picture logo = m_addressee.logo();
     bool isimage=false;
+    /*
     if(photo.isIntern())
     {
         Q3MimeSourceFactory::defaultFactory()->setImage( "photo", photo.data() );
@@ -331,9 +339,9 @@ void NickInfo::tooltipTableData(Q3TextStream &tooltip) const
         tooltip << "<img src=\"" << logo.url() << "\">";
         dirty=true;
         isimage=true;
-    }
+    } */
     tooltip << "<b>" << (isimage?"":"<center>");
-    if(!m_addressee.formattedName().isEmpty())
+/*    if(!m_addressee.formattedName().isEmpty())
     {
         tooltip << m_addressee.formattedName();
         dirty = true;
@@ -343,7 +351,7 @@ void NickInfo::tooltipTableData(Q3TextStream &tooltip) const
         tooltip << m_addressee.realName();
         dirty = true;
     }
-    else if(!getRealName().isEmpty() && getRealName().lower() != loweredNickname())
+    else */ if(!getRealName().isEmpty() && getRealName().lower() != loweredNickname())
     {
         QString escapedRealName( getRealName() );
         escapedRealName.replace("<","&lt;").replace(">","&gt;");
@@ -359,7 +367,7 @@ void NickInfo::tooltipTableData(Q3TextStream &tooltip) const
     tooltip << (isimage?"":"</center>") << "</b>";
 
     tooltip << "</td></tr>";
-    if(!m_addressee.emails().isEmpty())
+/*    if(!m_addressee.emails().isEmpty())
     {
         tooltip << "<tr><td><b>" << i18n("Email") << ": </b></td><td>";
         tooltip << m_addressee.emails().join(", ");
@@ -387,7 +395,7 @@ void NickInfo::tooltipTableData(Q3TextStream &tooltip) const
     {
         tooltip << "<tr><td><b>" << m_addressee.birthdayLabel() << ": </b></td><td>" << m_addressee.birthday().toString("ddd d MMMM yyyy") << "</td></tr>";
         dirty=true;
-    }
+    } */
     if(!getHostmask().isEmpty())
     {
         tooltip << "<tr><td><b>" << i18n("Hostmask:") << " </b></td><td>" << getHostmask() << "</td></tr>";
@@ -411,6 +419,7 @@ void NickInfo::tooltipTableData(Q3TextStream &tooltip) const
 
 }
 
+/*
 void NickInfo::showLinkAddressbookUI()
 {
     LinkAddressbookUI *linkaddressbookui = new LinkAddressbookUI(m_owningServer->getViewContainer()->getWindow(), NULL, m_nickname, m_owningServer->getServerName(), m_owningServer->getDisplayName(), m_realName);
@@ -430,7 +439,7 @@ bool NickInfo::sendEmail() const
 {
     return Konversation::Addressbook::self()->sendEmail(m_addressee);
 }
-
+*/
 void NickInfo::setPrintedOnline(bool printed)
 {
     m_printedOnline=printed;
@@ -444,4 +453,4 @@ bool NickInfo::getPrintedOnline()
         return false;
 }
 
-#include "nickinfo.moc"
+// #include "./irc/nickinfo.moc"

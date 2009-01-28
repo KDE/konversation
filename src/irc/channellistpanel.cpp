@@ -42,7 +42,7 @@
 #include <kmessagebox.h>
 #include <kmenu.h>
 #include <kdeversion.h>
-
+#include <K3PopupMenu>
 
 ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
 {
@@ -83,7 +83,8 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
     QLabel* patternLabel=new QLabel(i18n("Filter pattern:"),mainGrid);
     new QLabel(i18n("Filter target:"),mainGrid);
 
-    filterInput=new KLineEdit(mainGrid,"channel_list_filter_input");
+    filterInput=new KLineEdit(mainGrid);
+    filterInput->setObjectName("channel_list_filter_input");
     Q3WhatsThis::add(filterInput, i18n("Enter a filter string here."));
     filterInput->setText(getFilterText());
 
@@ -104,7 +105,9 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
 
     targetBox->setStretchFactor(topicFilter,10);
 
-    channelListView=new K3ListView(this,"channel_list_view");
+    channelListView=new K3ListView(this);
+    channelListView->setObjectName("channel_list_view");
+    
     Q3WhatsThis::add(channelListView, i18n("The filtered list of channels is displayed here. Notice that if you do not use regular expressions, Konversation lists any channel whose name contains the filter string you entered. The channel name does not have to start with the string you entered.\n\nSelect a channel you want to join by clicking on it. Right click on the channel to get a list of all web addresses mentioned in the channel's topic."));
     channelListView->addColumn(i18n("Channel Name"));
     channelListView->addColumn(i18n("Users"));
@@ -505,7 +508,7 @@ void ChannelListPanel::contextMenu (K3ListView* /* l */, Q3ListViewItem* i, cons
 {
     if(!i) return;
 
-    KMenu* showURLmenu = new KMenu(this);
+    K3PopupMenu* showURLmenu = new K3PopupMenu(this);
     showURLmenu->insertTitle( i18n("Open URL") );
     QString filteredLine(i->text(2));
 
@@ -574,7 +577,7 @@ void ChannelListPanel::openURL()
     const QAction* action = static_cast<const QAction*>(sender());
 
     if (action)
-        new KRun(KURL(action->text().replace("&&","&")));
+        new KRun(KUrl(action->text().replace("&&","&")), this);
 }
 
 void ChannelListPanel::appendInputText(const QString& text, bool fromCursor)
@@ -603,4 +606,4 @@ void ChannelListPanel::setFilter(const QString& filter)
     filterInput->setText(filter);
 }
 
-#include "channellistpanel.moc"
+// #include "./irc/channellistpanel.moc"

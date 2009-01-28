@@ -16,7 +16,7 @@
 #include "preferences_base.h"
 #include "images.h"
 #include "common.h"
-#include "konversationapplication.h"
+#include "application.h" ////// header renamed
 
 #include <qlabel.h>
 #include <qlayout.h>
@@ -307,4 +307,4 @@ void Theme_Config::updateButtons()
     themeRC.close();
 }
 
-#include "theme_preferences.moc"
+// #include "./preferences/theme_preferences.moc"

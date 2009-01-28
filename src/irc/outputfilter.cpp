@@ -14,13 +14,13 @@
 */
 
 #include "outputfilter.h"
-#include "konversationapplication.h"
-#include "konversationmainwindow.h"
+#include "application.h" ////// header renamed
+#include "mainwindow.h" ////// header renamed
 #include "awaymanager.h"
 #include "ignore.h"
 #include "server.h"
 #include "irccharsets.h"
-#include "linkaddressbook/addressbook.h"
+//#include "linkaddressbook/addressbook.h"
 #include "query.h"
 
 #include <qstringlist.h>
@@ -35,13 +35,13 @@
 
 #include <klocale.h>
 #include <kdebug.h>
-#include <kio/passdlg.h>
+#include <passdlg.h>
 #include <kconfig.h>
 #include <kdeversion.h>
 #include <kshell.h>
-#include <ksocketaddress.h>
+//#include <ksocketaddress.h>
 #include <k3resolver.h>
-#include <kreverseresolver.h>
+#include <k3reverseresolver.h>
 #include <kmessagebox.h>
 
 
@@ -627,7 +627,7 @@ namespace Konversation
         {
             result.typeString = i18n("Notice");
             result.toServer = "NOTICE " + recipient + " :" + message;
-            result.output=i18n("%1 is the message, %2 the recipient nickname","Sending notice \"%2\" to %1.").arg(recipient).arg(message);
+            result.output=i18nc("%1 is the message, %2 the recipient nickname","Sending notice \"%2\" to %1.").arg(recipient).arg(message);
             result.type = Program;
         }
 
@@ -1105,14 +1105,16 @@ namespace Konversation
         }
 
         // show (new) notify list to user
+        //TODO FIXME uh, wtf? my brain has no room in it for this kind of fucking shit
+        /*
         QString list = Preferences::notifyStringByGroupName(groupName) + ' ' + Konversation::Addressbook::self()->allContactsNicksForServer(m_server->getServerName(), m_server->getDisplayName()).join(" ");
-
+*/
         result.typeString = i18n("Notify");
 
-        if(list.isEmpty())
+        if(1)//list.isEmpty())
             result.output = i18n("Current notify list is empty.");
-        else
-            result.output = i18n("Current notify list: %1").arg(list);
+        //else
+        //    result.output = i18n("Current notify list: %1").arg(list);
 
         result.type = Program;
         return result;
@@ -1596,7 +1598,7 @@ namespace Konversation
         if (charset.isEmpty ())
         {
             result = info (i18n("Current encoding is: %1")
-                    .arg(m_server->getIdentity()->getCodec()->name()));
+                    .arg(QString(m_server->getIdentity()->getCodec()->name())));
             return result;
         }
 
@@ -1786,7 +1788,7 @@ namespace Konversation
         return result;
     }
 }
-#include "outputfilter.moc"
+// #include "./irc/outputfilter.moc"
 
 // kate: space-indent on; tab-width 4; indent-width 4; mixed-indent off; replace-tabs on;
 // vim: set et sw=4 ts=4 cino=l1,cs,U1:

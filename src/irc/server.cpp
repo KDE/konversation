@@ -24,14 +24,14 @@
 #include <Q3CString>
 #include <Q3PtrList>
 #include "channel.h"
-#include "konversationapplication.h"
+#include "application.h" ////// header renamed
 #include "connectionmanager.h"
-#include "dcccommon.h"
-#include "dcctransferpanel.h"
-#include "dcctransferpanelitem.h"
-#include "dcctransfersend.h"
-#include "dcctransferrecv.h"
-#include "dccrecipientdialog.h"
+//#include "dcccommon.h"
+//#include "transferpanel.h" ////// header renamed
+//#include "transferpanelitem.h" ////// header renamed
+//#include "transfersend.h" ////// header renamed
+//#include "transferrecv.h" ////// header renamed
+//#include "recipientdialog.h" ////// header renamed
 #include "nick.h"
 #include "irccharsets.h"
 #include "viewcontainer.h"
@@ -40,12 +40,12 @@
 #include "channellistpanel.h"
 #include "scriptlauncher.h"
 #include "servergroupsettings.h"
-#include "addressbook.h"
+//#include "addressbook.h"
 #include "serverison.h"
 #include "common.h"
 #include "notificationhandler.h"
 #include "blowfish.h"
-#include "dcctransfermanager.h"
+//#include "transfermanager.h" ////// header renamed
 
 #include <qregexp.h>
 #include <qhostaddress.h>
@@ -59,7 +59,7 @@
 #include <kinputdialog.h>
 #include <kmessagebox.h>
 #include <k3resolver.h>
-#include <ksocketdevice.h>
+#include <k3socketdevice.h>
 #include <kaction.h>
 #include <kstringhandler.h>
 #include <kdeversion.h>
@@ -80,7 +80,7 @@ Server::Server(QObject* parent, ConnectionSettings& settings) : QObject(parent)
 
     for (int i=0;i<=_max_queue();i++)
     {
-        Q3ValueList<int> r=Preferences::queueRate(i);
+        //Q3ValueList<int> r=Preferences::queueRate(i);
         IRCQueue *q=new IRCQueue(this, staticrates[i]); //FIXME these are supposed to be in the rc
         m_queues.append(q);
     }
@@ -121,7 +121,7 @@ Server::Server(QObject* parent, ConnectionSettings& settings) : QObject(parent)
 
     m_inputFilter.setServer(this);
     m_outputFilter = new Konversation::OutputFilter(this);
-    m_scriptLauncher = new ScriptLauncher(this);
+    //m_scriptLauncher = new ScriptLauncher(this);
 
     // don't delete items when they are removed
     m_channelList.setAutoDelete(false);
@@ -139,6 +139,8 @@ Server::Server(QObject* parent, ConnectionSettings& settings) : QObject(parent)
 
     if (getIdentity()->getShellCommand().isEmpty())
         connectSignals();
+    // TODO FIXME this disappeared in a merge, ensure it should have
+    updateConnectionState(Konversation::SSNeverConnected);
 }
 
 Server::~Server()
@@ -219,16 +221,16 @@ void Server::doPreShellCommand()
 }
 
 void Server::_fetchRates()
-{
+{/*
     for (int i=0;i<=_max_queue();i++)
     {
         Q3ValueList<int> r=Preferences::queueRate(i);
         staticrates[i]=IRCQueue::EmptyingRate(r[0], r[1]*1000,IRCQueue::EmptyingRate::RateType(r[2]));
-    }
+    }*/
 }
 
 void Server::_stashRates()
-{
+{ /*
     for (int i=0;i<=_max_queue();i++)
     {
         Q3ValueList<int> r;
@@ -236,17 +238,17 @@ void Server::_stashRates()
         r.append(staticrates[i].m_interval/1000);
         r.append(int(staticrates[i].m_type));
         Preferences::setQueueRate(i, r);
-    }
+    } */
 }
 
 void Server::_resetRates()
-{
+{ /*
     for (int i=0;i<=_max_queue();i++)
     {
         Preferences::self()->queueRateItem(i)->setDefault();
         Q3ValueList<int> r=Preferences::queueRate(i);
         staticrates[i]=IRCQueue::EmptyingRate(r[0], r[1]*1000,IRCQueue::EmptyingRate::RateType(r[2]));
-    }
+    } */
 }
 
 void Server::initTimers()
@@ -285,17 +287,19 @@ void Server::connectSignals()
                 const QString&, const QString&, const QString&, const QString&, bool)),
             konvApp->getConnectionManager(), SLOT(connectTo(Konversation::ConnectionFlag,
                 const QString&, const QString&, const QString&, const QString&, const QString&, bool)));
-
+#ifdef USE_DCC
     connect(konvApp->getDccTransferManager(), SIGNAL(newTransferQueued(DccTransfer*)),
             this, SLOT(slotNewDccTransferItemQueued(DccTransfer*)));
-
+#endif
     connect(konvApp, SIGNAL(appearanceChanged()), this, SLOT(startNotifyTimer()));
 
    // ViewContainer
     connect(this, SIGNAL(showView(ChatWindow*)), getViewContainer(), SLOT(showView(ChatWindow*)));
+#ifdef USE_DCC
     connect(this, SIGNAL(addDccPanel()), getViewContainer(), SLOT(addDccPanel()));
     connect(this, SIGNAL(addDccChat(const QString&,const QString&,const QStringList&,bool)),
         getViewContainer(), SLOT(addDccChat(const QString&,const QString&,const QStringList&,bool)) );
+#endif
     connect(this, SIGNAL(serverLag(Server*, int)), getViewContainer(), SIGNAL(updateStatusBarLagLabel(Server*, int)));
     connect(this, SIGNAL(tooLongLag(Server*, int)), getViewContainer(), SIGNAL(setStatusBarLagLabelTooLongLag(Server*, int)));
     connect(this, SIGNAL(resetLag()), getViewContainer(), SIGNAL(resetStatusBarLagLabel()));
@@ -333,12 +337,12 @@ void Server::connectSignals()
     connect(this, SIGNAL(serverOnline(bool)), getStatusView(), SLOT(serverOnline(bool)));
 
     // Scripts
-    connect(getOutputFilter(), SIGNAL(launchScript(const QString&, const QString&)),
-        m_scriptLauncher, SLOT(launchScript(const QString&, const QString&)));
-    connect(m_scriptLauncher, SIGNAL(scriptNotFound(const QString&)),
-        this, SLOT(scriptNotFound(const QString&)));
-    connect(m_scriptLauncher, SIGNAL(scriptExecutionError(const QString&)),
-        this, SLOT(scriptExecutionError(const QString&)));
+    //connect(getOutputFilter(), SIGNAL(launchScript(const QString&, const QString&)),
+    //    m_scriptLauncher, SLOT(launchScript(const QString&, const QString&)));
+    //connect(m_scriptLauncher, SIGNAL(scriptNotFound(const QString&)),
+    //    this, SLOT(scriptNotFound(const QString&)));
+    //connect(m_scriptLauncher, SIGNAL(scriptExecutionError(const QString&)),
+    //    this, SLOT(scriptExecutionError(const QString&)));
 
     // Stats
     connect(this, SIGNAL(sentStat(int, int)), SLOT(collectStats(int, int)));
@@ -393,18 +397,19 @@ void Server::connectToIRCServer()
         resetNickSelection();
 
         // connect() will do a async lookup too
-        if(!getConnectionSettings().server().SSLEnabled())
-        {
-            m_socket = new KNetwork::KBufferedSocket(QString(), QString(), 0L, "serverSocket");
+        //if(!getConnectionSettings().server().SSLEnabled())
+        //{
+            m_socket = new KNetwork::KBufferedSocket(QString(), QString(), 0L);
+            m_socket->setName("serverSocket");
             connect(m_socket, SIGNAL(connected(const KResolverEntry&)), SLOT (ircServerConnectionSuccess()));
-        }
-        else
-        {
-            m_socket = new SSLSocket(getViewContainer()->getWindow(), 0L, "serverSSLSocket");
-            connect(m_socket, SIGNAL(sslInitDone()), SLOT(ircServerConnectionSuccess()));
-            connect(m_socket, SIGNAL(sslFailure(const QString&)), SIGNAL(sslInitFailure()));
-            connect(m_socket, SIGNAL(sslFailure(const QString&)), SLOT(sslError(const QString&)));
-        }
+        //}
+        //else
+        //{
+        //    m_socket = new SSLSocket(getViewContainer()->getWindow(), 0L, "serverSSLSocket");
+        //    connect(m_socket, SIGNAL(sslInitDone()), SLOT(ircServerConnectionSuccess()));
+        //    connect(m_socket, SIGNAL(sslFailure(const QString&)), SIGNAL(sslInitFailure()));
+        //    connect(m_socket, SIGNAL(sslFailure(const QString&)), SLOT(sslError(const QString&)));
+        //}
 
         m_socket->enableWrite(false);
 
@@ -427,12 +432,14 @@ void Server::connectToIRCServer()
         kDebug() << "connectToIRCServer() called while already connected: This should never happen." << endl;
 }
 
+/*
 void Server::showSSLDialog()
 {
     SSLSocket* sslsocket = dynamic_cast<SSLSocket*>(m_socket);
 
     if (sslsocket) sslsocket->showInfoDialog();
 }
+*/
 
 // set available channel types according to 005 RPL_ISUPPORT
 void Server::setChannelTypes(const QString &pre)
@@ -540,7 +547,7 @@ void Server::lookupFinished()
         // inform user about the error
         getStatusView()->appendServerMessage(i18n("Error"),i18n("Server %1 not found: %2")
             .arg(getConnectionSettings().server().host())
-            .arg(m_socket->errorString(m_socket->error())));
+            .arg(m_socket->errorString(/*m_socket->error()*/))); //TODO FIXME for some reason the compiler misses the static overload
 
         m_socket->resetStatus();
 
@@ -596,10 +603,11 @@ void Server::broken(int state)
     // HACK Only show one nick change dialog at connection time
     if (getStatusView())
     {
-        KDialogBase* nickChangeDialog = dynamic_cast<KDialogBase*>(
-                getStatusView()->child("NickChangeDialog", "KInputDialog"));
+        //! TODO FIXME uh, wtf. this should be a slot
+        //KDialogBase* nickChangeDialog = dynamic_cast<KDialogBase*>(
+        //        getStatusView()->child("NickChangeDialog", "KInputDialog"));
 
-        if (nickChangeDialog) nickChangeDialog->cancel();
+        //if (nickChangeDialog) nickChangeDialog->cancel();
     }
 
     emit resetLag();
@@ -621,6 +629,7 @@ void Server::broken(int state)
     }
 }
 
+/*
 void Server::sslError(const QString& reason)
 {
     QString error = i18n("Could not connect to %1:%2 using SSL encryption.Maybe the server does not support SSL, or perhaps you have the wrong port? %3")
@@ -631,6 +640,7 @@ void Server::sslError(const QString& reason)
 
     updateConnectionState(Konversation::SSDeliberatelyDisconnected);
 }
+*/
 
 // Will be called from InputFilter as soon as the Welcome message was received
 void Server::connectionEstablished(const QString& ownHost)
@@ -864,7 +874,7 @@ QString Server::getNextNickname()
     {
         QString inputText = i18n("No nicknames from the \"%1\" identity were accepted by the connection \"%2\".\nPlease enter a new one or press Cancel to disconnect:").arg(getIdentity()->getName()).arg(getDisplayName());
         newNick = KInputDialog::getText(i18n("Nickname error"), inputText,
-                                        QString(), 0, getStatusView(), "NickChangeDialog");
+                                        QString(), 0, getStatusView()); // TODO FIXME hope we don't need the name... "NickChangeDialog"
     }
 
     return newNick;
@@ -893,8 +903,8 @@ void Server::processIncomingData()
 
 void Server::incoming()
 {
-    if (getConnectionSettings().server().SSLEnabled())
-        emit sslConnected(this);
+    //if (getConnectionSettings().server().SSLEnabled())
+    //    emit sslConnected(this);
 
     // We read all available bytes here because readyRead() signal will be emitted when there is new data
     // else we will stall when displaying MOTD etc.
@@ -906,8 +916,8 @@ void Server::incoming()
     // Read at max "max_bytes" bytes into "buffer"
     len = m_socket->readBlock(buffer.data(),max_bytes);
 
-    if (len <= 0 && getConnectionSettings().server().SSLEnabled())
-        return;
+    //if (len <= 0 && getConnectionSettings().server().SSLEnabled())
+    //    return;
 
     if (len <= 0) // Zero means buffer is empty which shouldn't happen because readyRead signal is emitted
     {
@@ -994,12 +1004,14 @@ void Server::incoming()
         }
         // END pre-parse to know where the message belongs to
         // Decrypt if necessary
+        /*
         if(command == "privmsg")
             Konversation::decrypt(channelKey,front,this);
         else if(command == "332" || command == "topic")
         {
             Konversation::decryptTopic(channelKey,front,this);
         }
+        */
 
         bool isUtf8 = Konversation::isUtf8(front);
 
@@ -1040,7 +1052,7 @@ void Server::incoming()
 */
 int Server::getPreLength(const QString& command, const QString& dest)
 {
-    NickInfo* info = getNickInfo(getNickname());
+    NickInfoPtr info = getNickInfo(getNickname());
     int hostMaskLength = 0;
 
     if(info)
@@ -1100,7 +1112,7 @@ int Server::_send_internal(QString outputLine)
 
     //leaving this done twice for now, i'm uncertain of the implications of not encoding other commands
     Q3CString encoded=codec->fromUnicode(outputLine, outlen);
-
+    /*
     QString blowfishKey=getKeyForRecipient(outputLineSplit[1]);
     if (!blowfishKey.isEmpty() && outboundCommand >1)
     {
@@ -1137,6 +1149,7 @@ int Server::_send_internal(QString outputLine)
             }
         }
     }
+    */
     encoded += '\n';
     Q_LONG sout = m_socket->writeBlock(encoded, encoded.length());
 
@@ -1187,9 +1200,9 @@ bool Server::queueList(const QStringList& buffer, QueuePriority priority)
 
     IRCQueue& out=*(m_queues[priority]);
 
-    for(unsigned int i=0;i<buffer.count();i++)
+    for(int i=0;i<buffer.count();i++)
     {
-        QString line=*buffer.at(i);
+        QString line(buffer.at(i));
         if (!line.isEmpty())
             out.enqueue(line);
     }
@@ -1291,7 +1304,7 @@ NickInfoPtr Server::getNickInfo(const QString& nickname)
         return nickinfo;
     }
     else
-        return 0;
+        return NickInfoPtr(); //! TODO FIXME null null null
 }
 
 // Given a nickname, returns an existing NickInfo object, or creates a new NickInfo object.
@@ -1356,11 +1369,11 @@ ChannelNickPtr Server::getChannelNick(const QString& channelName, const QString&
         if (channelNickMap->contains(lcNickname))
             return (*channelNickMap)[lcNickname];
         else
-            return 0;
+            return ChannelNickPtr(); //! TODO FIXME null null null
     }
     else
     {
-        return 0;
+        return ChannelNickPtr(); //! TODO FIXME null null null
     }
 }
 
@@ -1385,7 +1398,7 @@ ChannelNickPtr Server::setChannelNick(const QString& channelName, const QString&
             channelNick = addNickToUnjoinedChannelsList(channelName, nickname);
             channelNick->setMode(mode);
         }
-        else return 0;
+        else return ChannelNickPtr(); //! TODO FIXME null null null
     }
 
     if (mode != 99) channelNick->setMode(mode);
@@ -1425,7 +1438,7 @@ QStringList Server::getNickChannels(const QString& nickname)
 bool Server::isNickOnline(const QString &nickname)
 {
     NickInfoPtr nickInfo = getNickInfo(nickname);
-    return (nickInfo != 0);
+    return (!nickInfo.isNull());
 }
 
 QString Server::getOwnIpByNetworkInterface()
@@ -1595,12 +1608,13 @@ void Server::requestDccSend()
 
 void Server::sendURIs(const Q3StrList& uris, const QString& nick)
 {
-    for (QStrListIterator it(uris) ; *it; ++it)
-        addDccSend(nick,KUrl(*it));
+//    for (Q3StrListIterator it(uris) ; *it; ++it)
+//        addDccSend(nick,KUrl(*it));
 }
 
 void Server::requestDccSend(const QString &a_recipient)
 {
+/*
     QString recipient(a_recipient);
     // if we don't have a recipient yet, let the user select one
     if(recipient.isEmpty())
@@ -1646,10 +1660,12 @@ void Server::requestDccSend(const QString &a_recipient)
             addDccSend( recipient, *it );
         }
     }
+*/
 }
 
 void Server::slotNewDccTransferItemQueued(DccTransfer* transfer)
 {
+/*
     if (transfer->getConnectionId() == connectionId() )
     {
         kDebug() << "Server::slotNewDccTranfserItemQueued(): connecting slots for " << transfer->getFileName() << " [" << transfer->getType() << "]" << endl;
@@ -1664,10 +1680,12 @@ void Server::slotNewDccTransferItemQueued(DccTransfer* transfer)
             connect( transfer, SIGNAL( statusChanged( DccTransfer*, int, int ) ), this, SLOT( dccStatusChanged( DccTransfer*, int, int ) ) );
         }
     }
+*/
 }
 
 void Server::addDccSend(const QString &recipient,KUrl fileURL, const QString &altFileName, uint fileSize)
 {
+/*
     if (!fileURL.isValid()) return;
 
     emit addDccPanel();
@@ -1686,10 +1704,12 @@ void Server::addDccSend(const QString &recipient,KUrl fileURL, const QString &al
 
     if ( newDcc->queue() )
         newDcc->start();
+*/
 }
 
 void Server::addDccGet(const QString &sourceNick, const QStringList &dccArguments)
 {
+/*
     emit addDccPanel();
 
     DccTransferRecv* newDcc = KonversationApplication::instance()->getDccTransferManager()->newDownload();
@@ -1721,20 +1741,22 @@ void Server::addDccGet(const QString &sourceNick, const QStringList &dccArgument
         if(Preferences::dccAutoGet())
             newDcc->start();
     }
+*/
 }
 
 void Server::openDccChat(const QString& nickname)
 {
-    emit addDccChat(getNickname(),nickname,QStringList(),true);
+    //emit addDccChat(getNickname(),nickname,QStringList(),true);
 }
 
 void Server::requestDccChat(const QString& partnerNick, const QString& numericalOwnIp, const QString& ownPort)
 {
-    queue(QString("PRIVMSG %1 :\001DCC CHAT chat %2 %3\001").arg(partnerNick).arg(numericalOwnIp).arg(ownPort));
+    //queue(QString("PRIVMSG %1 :\001DCC CHAT chat %2 %3\001").arg(partnerNick).arg(numericalOwnIp).arg(ownPort));
 }
 
 void Server::dccSendRequest(const QString &partner, const QString &fileName, const QString &address, const QString &port, unsigned long size)
 {
+/*
     Konversation::OutputFilterResult result = getOutputFilter()->sendRequest(partner,fileName,address,port,size);
     queue(result.toServer);
 
@@ -1748,16 +1770,20 @@ void Server::dccSendRequest(const QString &partner, const QString &fileName, con
                               .arg( partner,
                                     showfile,
                                     ( size == 0 ) ? i18n( "unknown size" ) : KIO::convertSize( size ) ) );
+*/
 }
 
 void Server::dccPassiveSendRequest(const QString& recipient,const QString& fileName,const QString& address,unsigned long size,const QString& token)
 {
+/*
     Konversation::OutputFilterResult result = getOutputFilter()->passiveSendRequest(recipient,fileName,address,size,token);
     queue(result.toServer);
+*/
 }
 
 void Server::dccResumeGetRequest(const QString &sender, const QString &fileName, const QString &port, KIO::filesize_t startAt)
 {
+/*
     Konversation::OutputFilterResult result;
 
     if (fileName.contains(" ") > 0)
@@ -1766,16 +1792,20 @@ void Server::dccResumeGetRequest(const QString &sender, const QString &fileName,
         result = getOutputFilter()->resumeRequest(sender,fileName,port,startAt);
 
     queue(result.toServer);
+*/
 }
 
 void Server::dccReverseSendAck(const QString& partnerNick,const QString& fileName,const QString& ownAddress,const QString& ownPort,unsigned long size,const QString& reverseToken)
 {
+/*
     Konversation::OutputFilterResult result = getOutputFilter()->acceptPassiveSendRequest(partnerNick,fileName,ownAddress,ownPort,size,reverseToken);
     queue(result.toServer);
+*/
 }
 
 void Server::startReverseDccSendTransfer(const QString& sourceNick,const QStringList& dccArguments)
 {
+/*
     DccTransferManager* dtm = KonversationApplication::instance()->getDccTransferManager();
 
     if ( dtm->startReverseSending( connectionId(), sourceNick,
@@ -1799,11 +1829,12 @@ void Server::startReverseDccSendTransfer(const QString& sourceNick,const QString
                                         sourceNick ) );
 
     }
-
+*/
 }
 
 void Server::resumeDccGetTransfer(const QString &sourceNick, const QStringList &dccArguments)
 {
+/*
     DccTransferManager* dtm = KonversationApplication::instance()->getDccTransferManager();
 
     QString fileName( dccArguments[0] );
@@ -1835,10 +1866,12 @@ void Server::resumeDccGetTransfer(const QString &sourceNick, const QStringList &
                                   .arg( showfile,
                                         sourceNick ) );
     }
+*/
 }
 
 void Server::resumeDccSendTransfer(const QString &sourceNick, const QStringList &dccArguments)
 {
+/*
     DccTransferManager* dtm = KonversationApplication::instance()->getDccTransferManager();
 
     QString fileName( dccArguments[0] );
@@ -1875,10 +1908,12 @@ void Server::resumeDccSendTransfer(const QString &sourceNick, const QStringList 
                                   .arg( showfile,
                                         sourceNick ) );
     }
+*/
 }
 
 void Server::dccGetDone(DccTransfer* item)
 {
+/*
     if (!item)
         return;
 
@@ -1894,10 +1929,12 @@ void Server::dccGetDone(DccTransfer* item)
         appendMessageToFrontmost(i18n("DCC"),i18n("%1 = file name, %2 = nickname of sender",
             "Download of \"%1\" from %2 failed. Reason: %3.").arg(showfile,
             item->getPartnerNick(), item->getStatusDetail()));
+*/
 }
 
 void Server::dccSendDone(DccTransfer* item)
 {
+/*
     if (!item)
         return;
 
@@ -1913,10 +1950,12 @@ void Server::dccSendDone(DccTransfer* item)
         appendMessageToFrontmost(i18n("DCC"),i18n("%1 = file name, %2 = nickname of recipient",
             "Upload of \"%1\" to %2 failed. Reason: %3.").arg(showfile, item->getPartnerNick(),
             item->getStatusDetail()));
+*/
 }
 
 void Server::dccStatusChanged(DccTransfer *item, int newStatus, int oldStatus)
 {
+/*
     if(!item)
         return;
 
@@ -1943,6 +1982,7 @@ void Server::dccStatusChanged(DccTransfer *item, int newStatus, int oldStatus)
                                             item->getPartnerNick() ) );
         }
     }
+*/
 }
 
 void Server::removeQuery(class Query* query)
@@ -2300,8 +2340,8 @@ NickInfoPtr Server::setWatchedNickOnline(const QString& nickname)
     }
 
     emit watchedNickChanged(this, nickname, true);
-    KABC::Addressee addressee = nickInfo->getAddressee();
-    if (!addressee.isEmpty()) Konversation::Addressbook::self()->emitContactPresenceChanged(addressee.uid());
+    //KABC::Addressee addressee = nickInfo->getAddressee();
+    //if (!addressee.isEmpty()) Konversation::Addressbook::self()->emitContactPresenceChanged(addressee.uid());
 
     appendMessageToFrontmost(i18n("Notify"),"<a href=\"#"+nickname+"\">"+
         i18n("%1 is online (%2).").arg(nickname).arg(getServerName())+"</a>", getStatusView());
@@ -2314,11 +2354,11 @@ NickInfoPtr Server::setWatchedNickOnline(const QString& nickname)
 
 void Server::setWatchedNickOffline(const QString& nickname, const NickInfoPtr nickInfo)
 {
-    if (nickInfo) {
+/*    if (nickInfo) {
         KABC::Addressee addressee = nickInfo->getAddressee();
         if (!addressee.isEmpty()) Konversation::Addressbook::self()->emitContactPresenceChanged(addressee.uid(), 1);
     }
-
+*/
     emit watchedNickChanged(this, nickname, false);
 
     appendMessageToFrontmost(i18n("Notify"), i18n("%1 went offline (%2).").arg(nickname).arg(getServerName()), getStatusView());
@@ -2355,7 +2395,7 @@ bool Server::setNickOffline(const QString& nickname)
         nickInfo->setPrintedOnline(false);
     }
 
-    return (nickInfo != 0);
+    return (!nickInfo.isNull());
 }
 
 /**
@@ -2682,7 +2722,7 @@ void Server::renameNick(const QString &nickname, const QString &newNick)
             channel = m_channelList.next();
         }
         //Watched nicknames stuff
-        if (isWatchedNick(nickname)) setWatchedNickOffline(nickname, 0);
+        if (isWatchedNick(nickname)) setWatchedNickOffline(nickname, NickInfoPtr());
     }
     // If we had a query with this nick, change that name, too
 
@@ -2902,8 +2942,8 @@ void Server::invitation(const QString& nick,const QString& channel)
         i18n("You were invited by %1 to join channel %2. "
         "Do you accept the invitation?").arg(nick).arg(channel),
         i18n("Invitation"),
-        i18n("Join"),
-        i18n("Ignore"),
+        KGuiItem(i18n("Join")),
+        KGuiItem(i18n("Ignore")),
         "Invitation")==KMessageBox::Yes)
     {
         sendJoinCommand(channel);
@@ -3060,22 +3100,26 @@ ViewContainer* Server::getViewContainer() const
     return konvApp->getMainWindow()->getViewContainer();
 }
 
+
 bool Server::getUseSSL() const
 {
-    SSLSocket* sslsocket = dynamic_cast<SSLSocket*>(m_socket);
+    //SSLSocket* sslsocket = dynamic_cast<SSLSocket*>(m_socket);
 
-    return (sslsocket != 0);
+    //return (sslsocket != 0);
+    return false;
 }
+
 
 QString Server::getSSLInfo() const
 {
-    SSLSocket* sslsocket = dynamic_cast<SSLSocket*>(m_socket);
+//     SSLSocket* sslsocket = dynamic_cast<SSLSocket*>(m_socket);
 
-    if(sslsocket)
-        return sslsocket->details();
+//     if(sslsocket)
+//         return sslsocket->details();
 
     return QString();
 }
+
 
 void Server::sendMultiServerCommand(const QString& command, const QString& parameter)
 {
@@ -3144,6 +3188,7 @@ void Server::reconnect()
     QTimer::singleShot(0, this, SLOT(connectToIRCServer()));
 }
 
+//! TODO FIXME this is a QObject....
 void Server::disconnect()
 {
     if (isSocketConnected()) quitServer();
@@ -3261,7 +3306,7 @@ void Server::startAwayTimer()
 {
     m_awayTime = QDateTime::currentDateTime().toTime_t();
 }
-
+/*
 KABC::Addressee Server::getOfflineNickAddressee(QString& nickname)
 {
     if (m_serverISON)
@@ -3269,7 +3314,7 @@ KABC::Addressee Server::getOfflineNickAddressee(QString& nickname)
     else
         return KABC::Addressee();
 }
-
+*/
 void Server::enableIdentifyMsg(bool enabled)
 {
     m_identifyMsg = enabled;
@@ -3347,7 +3392,7 @@ void Server::updateEncoding()
         getViewContainer()->updateViewEncoding(getViewContainer()->getFrontView());
 }
 
-#include "server.moc"
+// #include "./irc/server.moc"
 
 // kate: space-indent on; tab-width 4; indent-width 4; mixed-indent off; replace-tabs on;
 // vim: set et sw=4 ts=4 cino=l1,cs,U1:

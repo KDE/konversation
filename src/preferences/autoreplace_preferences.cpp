@@ -401,4 +401,4 @@ void Autoreplace_Config::showRegExpEditor()
     }
 }
 
-#include "autoreplace_preferences.moc"
+// #include "./preferences/autoreplace_preferences.moc"

@@ -15,16 +15,17 @@ Copyright (C) 2002 Carsten Pfeiffer <pfeiffer@kde.org>
 
 */
 
-#include "konvibookmarkhandler.h"
-#include "konversationapplication.h"
-#include "konversationmainwindow.h"
+#include "bookmarkhandler.h" ////// header renamed
+#include "application.h" ////// header renamed
+#include "mainwindow.h" ////// header renamed
 #include "connectionmanager.h"
-#include "konvibookmarkmenu.h"
+#include "bookmarkmenu.h" ////// header renamed
 
 #include <qstring.h>
 
 #include <kmenu.h>
 #include <kstandarddirs.h>
+#include <KXMLGUIFactory>
 
 
 KonviBookmarkHandler::KonviBookmarkHandler(KonversationMainWindow* mainWindow)
@@ -46,7 +47,7 @@ m_mainWindow(mainWindow)
     }
 
     KBookmarkManager *manager = KBookmarkManager::managerForFile( m_file, false);
-    manager->setEditorOptions(KInstance::caption(), false);
+    manager->setEditorOptions(KComponentData::caption(), false);
     manager->setUpdate( true );
     manager->setShowNSBookmarks( false );
 
@@ -93,4 +94,4 @@ QString KonviBookmarkHandler::currentTitle() const
     return m_mainWindow->currentTitle();
 }
 
-#include "konvibookmarkhandler.moc"
+// #include "./bookmarkhandler.moc"

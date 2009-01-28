@@ -17,8 +17,9 @@
 
 
 TopicComboBox::TopicComboBox(QWidget* parent) :
-KComboBox(parent,"topic_combo_box")
+KComboBox(parent)
 {
+    setObjectName("topic_combo_box");
     connect(this,SIGNAL(activated(int)),this,SLOT(topicActivated(int)));
     connect(this,SIGNAL(returnPressed(const QString&)),this,SLOT(topicActivated(const QString&)));
 }
@@ -49,4 +50,4 @@ void TopicComboBox::wheelEvent(QWheelEvent *ev)
     ev->ignore();
 }
 
-#include "topiccombobox.moc"
+// #include "./viewer/topiccombobox.moc"

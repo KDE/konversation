@@ -16,11 +16,11 @@
 #include <kcmdlineargs.h>
 #include <kaboutdata.h>
 #include <klocale.h>
-#include <dcopclient.h>
-#include <dcopref.h>
+//#include <dcopclient.h>
+//#include <dcopref.h>
 #include <kdebug.h>
 
-#include "konversationapplication.h"
+#include "application.h" ////// header renamed
 #include "version.h"
 #include "commit.h"
 
@@ -28,73 +28,70 @@
 #define STRHACK(x) HACKSTR(x)
 
 /*
-  Don't use i18n() here, use I18N_NOOP() instead!
+  Don't use i18n() here, use ki18n() instead!
   i18n() will only work as soon as a kapplication object was made.
 */
-
-static const char* shortDescription=I18N_NOOP("A user friendly IRC client");
-
-static const KCmdLineOptions options[] =
-{
-    { "+[url]", I18N_NOOP("irc:// URL or server hostname"), 0 },
-    { "server <server>", I18N_NOOP("Server to connect"), 0 },
-    { "port <port>", I18N_NOOP("Port to use"), "6667"},
-    { "channel <channel>", I18N_NOOP("Channel to join after connection"), ""},
-    { "nick <nickname>", I18N_NOOP("Nickname to use"),""},
-    { "password <password>", I18N_NOOP("Password for connection"),""},
-    { "ssl", I18N_NOOP("Use SSL for connection"),"false"},
-    KCmdLineLastOption
-};
 
 int main(int argc, char* argv[])
 {
     KAboutData aboutData("konversation",
-        I18N_NOOP("Konversation"),
+        "",
+        ki18n("Konversation"),
         KONVI_VERSION " #" STRHACK(COMMIT),
-        shortDescription,
+        ki18n("A user friendly IRC client"),
         KAboutData::License_GPL,
-        I18N_NOOP("(C) 2002-2008 by the Konversation team"),
-        I18N_NOOP("Konversation is a client for the Internet Relay Chat (IRC) protocol.\n"
+        ki18n("(C) 2002-2008 by the Konversation team"),
+        ki18n("Konversation is a client for the Internet Relay Chat (IRC) protocol.\n"
         "Meet friends on the net, make new acquaintances and lose yourself in\n"
         "talk about your favorite subject."),
         "http://konversation.kde.org/");
 
-    aboutData.addAuthor("Dario Abatianni",I18N_NOOP("Original Author, Project Founder"),"eisfuchs@tigress.com");
-    aboutData.addAuthor("Peter Simonsson",I18N_NOOP("Maintainer"),"psn@linux.se");
-    aboutData.addAuthor("Eike Hein",I18N_NOOP("Maintainer, Release Manager, User interface, Protocol handling"),"hein@kde.org");
-    aboutData.addAuthor("Shintaro Matsuoka",I18N_NOOP("DCC, Encoding handling, OSD positioning"),"shin@shoegazed.org");
-    aboutData.addAuthor("Eli MacKenzie",I18N_NOOP("Protocol handling, Input line"),"argonel@gmail.com");
-    aboutData.addAuthor("İsmail Dönmez",I18N_NOOP("Blowfish, SSL support, KNetwork port, Colored nicks, Nicklist themes"),"ismail@kde.org");
-    aboutData.addAuthor("John Tapsell",I18N_NOOP("Refactoring, KAddressBook/Kontact integration"), "john@geola.co.uk");
+    aboutData.addAuthor(ki18n("Dario Abatianni"),ki18n("Original Author, Project Founder"),"eisfuchs@tigress.com");
+    aboutData.addAuthor(ki18n("Peter Simonsson"),ki18n("Maintainer"),"psn@linux.se");
+    aboutData.addAuthor(ki18n("Eike Hein"),ki18n("Maintainer, Release Manager, User interface, Protocol handling"),"hein@kde.org");
+    aboutData.addAuthor(ki18n("Shintaro Matsuoka"),ki18n("DCC, Encoding handling, OSD positioning"),"shin@shoegazed.org");
+    aboutData.addAuthor(ki18n("Eli MacKenzie"),ki18n("Protocol handling, Input line"),"argonel@gmail.com");
+    aboutData.addAuthor(ki18n("İsmail Dönmez"),ki18n("Blowfish, SSL support, KNetwork port, Colored nicks, Nicklist themes"),"ismail@kde.org");
+    aboutData.addAuthor(ki18n("John Tapsell"),ki18n("Refactoring, KAddressBook/Kontact integration"), "john@geola.co.uk");
 
-    aboutData.addCredit("Olivier Bédard",I18N_NOOP("Website hosting"));
-    aboutData.addCredit("Jędrzej Lisowski",I18N_NOOP("Website maintenance"),"yesoos@gmail.com");
-    aboutData.addCredit("Christian Muehlhaeuser",I18N_NOOP("Multiple modes extension, Close widget placement, OSD functionality"),"chris@chris.de");
-    aboutData.addCredit("Gary Cramblitt",I18N_NOOP("Documentation, Watched nicks online improvements, Custom web browser extension"),"garycramblitt@comcast.net");
-    aboutData.addCredit("Matthias Gierlings",I18N_NOOP("Color configurator, Highlight dialog"),"gismore@users.sourceforge.net");
-    aboutData.addCredit("Alex Zepeda",I18N_NOOP("DCOP interface"),"garbanzo@hooked.net");
-    aboutData.addCredit("Stanislav Karchebny",I18N_NOOP("Non-Latin1-Encodings"),"berkus@users.sourceforge.net");
-    aboutData.addCredit("Mickael Marchand",I18N_NOOP("Konsole part view"),"marchand@kde.org");
-    aboutData.addCredit("Michael Goettsche",I18N_NOOP("Quick connect, Ported new OSD, other features and bugfixes"),"michael.goettsche@kdemail.net");
-    aboutData.addCredit("Benjamin Meyer",I18N_NOOP("A Handful of fixes and code cleanup"),"ben+konversation@meyerhome.net");
-    aboutData.addCredit("Jakub Stachowski",I18N_NOOP("Drag&Drop improvements"),"qbast@go2.pl");
-    aboutData.addCredit("Sebastian Sariego",I18N_NOOP("Artwork"),"segfault@kde.cl");
-    aboutData.addCredit("Renchi Raju",I18N_NOOP("Firefox style searchbar"));
-    aboutData.addCredit("Michael Kreitzer",I18N_NOOP("Raw modes, Tab grouping per server, Ban list"),"mrgrim@gr1m.org");
-    aboutData.addCredit("Frauke Oster",I18N_NOOP("System tray patch"),"frauke@frsv.de");
-    aboutData.addCredit("Lucijan Busch",I18N_NOOP("Bug fixes"),"lucijan@kde.org");
-    aboutData.addCredit("Sascha Cunz",I18N_NOOP("Extended user modes patch"),"mail@sacu.de");
-    aboutData.addCredit("Steve Wollkind",I18N_NOOP("Close visible tab with shortcut patch"),"steve@njord.org");
-    aboutData.addCredit("Thomas Nagy",I18N_NOOP("Cycle tabs with mouse scroll wheel"),"thomas.nagy@eleve.emn.fr");
-    aboutData.addCredit("Tobias Olry",I18N_NOOP("Channel ownership mode patch"),"tobias.olry@web.de");
-    aboutData.addCredit("Ruud Nabben",I18N_NOOP("Option to enable IRC color filtering"),"r.nabben@gawab.com");
-    aboutData.addCredit("Lothar Braun",I18N_NOOP("Bug fixes"),"mail@lobraun.de");
-    aboutData.addCredit("Ivor Hewitt",I18N_NOOP("Bug fixes, OSD work, clearing topics"),"ivor@ivor.org");
-    aboutData.addCredit("Emil Obermayr",I18N_NOOP("Sysinfo script"),"nobs@tigress.com");
-    aboutData.addCredit("Stanislav Nikolov",I18N_NOOP("Bug fixes"),"valsinats@gmail.com");
-    aboutData.addCredit("Juan Carlos Torres",I18N_NOOP("Auto-join context menu"),"carlosdgtorres@gmail.com");
+    aboutData.addCredit(ki18n("Olivier Bédard"),ki18n("Website hosting"));
+    aboutData.addCredit(ki18n("Jędrzej Lisowski"),ki18n("Website maintenance"),"yesoos@gmail.com");
+    aboutData.addCredit(ki18n("Christian Muehlhaeuser"),ki18n("Multiple modes extension, Close widget placement, OSD functionality"),"chris@chris.de");
+    aboutData.addCredit(ki18n("Gary Cramblitt"),ki18n("Documentation, Watched nicks online improvements, Custom web browser extension"),"garycramblitt@comcast.net");
+    aboutData.addCredit(ki18n("Matthias Gierlings"),ki18n("Color configurator, Highlight dialog"),"gismore@users.sourceforge.net");
+    aboutData.addCredit(ki18n("Alex Zepeda"),ki18n("DCOP interface"),"garbanzo@hooked.net");
+    aboutData.addCredit(ki18n("Stanislav Karchebny"),ki18n("Non-Latin1-Encodings"),"berkus@users.sourceforge.net");
+    aboutData.addCredit(ki18n("Mickael Marchand"),ki18n("Konsole part view"),"marchand@kde.org");
+    aboutData.addCredit(ki18n("Michael Goettsche"),ki18n("Quick connect, Ported new OSD, other features and bugfixes"),"michael.goettsche@kdemail.net");
+    aboutData.addCredit(ki18n("Benjamin Meyer"),ki18n("A Handful of fixes and code cleanup"),"ben+konversation@meyerhome.net");
+    aboutData.addCredit(ki18n("Jakub Stachowski"),ki18n("Drag&Drop improvements"),"qbast@go2.pl");
+    aboutData.addCredit(ki18n("Sebastian Sariego"),ki18n("Artwork"),"segfault@kde.cl");
+    aboutData.addCredit(ki18n("Renchi Raju"),ki18n("Firefox style searchbar"));
+    aboutData.addCredit(ki18n("Michael Kreitzer"),ki18n("Raw modes, Tab grouping per server, Ban list"),"mrgrim@gr1m.org");
+    aboutData.addCredit(ki18n("Frauke Oster"),ki18n("System tray patch"),"frauke@frsv.de");
+    aboutData.addCredit(ki18n("Lucijan Busch"),ki18n("Bug fixes"),"lucijan@kde.org");
+    aboutData.addCredit(ki18n("Sascha Cunz"),ki18n("Extended user modes patch"),"mail@sacu.de");
+    aboutData.addCredit(ki18n("Steve Wollkind"),ki18n("Close visible tab with shortcut patch"),"steve@njord.org");
+    aboutData.addCredit(ki18n("Thomas Nagy"),ki18n("Cycle tabs with mouse scroll wheel"),"thomas.nagy@eleve.emn.fr");
+    aboutData.addCredit(ki18n("Tobias Olry"),ki18n("Channel ownership mode patch"),"tobias.olry@web.de");
+    aboutData.addCredit(ki18n("Ruud Nabben"),ki18n("Option to enable IRC color filtering"),"r.nabben@gawab.com");
+    aboutData.addCredit(ki18n("Lothar Braun"),ki18n("Bug fixes"),"mail@lobraun.de");
+    aboutData.addCredit(ki18n("Ivor Hewitt"),ki18n("Bug fixes, OSD work, clearing topics"),"ivor@ivor.org");
+    aboutData.addCredit(ki18n("Emil Obermayr"),ki18n("Sysinfo script"),"nobs@tigress.com");
+    aboutData.addCredit(ki18n("Stanislav Nikolov"),ki18n("Bug fixes"),"valsinats@gmail.com");
+    aboutData.addCredit(ki18n("Juan Carlos Torres"),ki18n("Auto-join context menu"),"carlosdgtorres@gmail.com");
 
     KCmdLineArgs::init(argc, argv, &aboutData);
+    KCmdLineOptions options;
+    options.add( "+[url]", ki18n("irc:// URL or server hostname"), 0);
+    options.add( "server <server>", ki18n("Server to connect"), 0 );
+    options.add( "port <port>", ki18n("Port to use"), "6667");
+    options.add( "channel <channel>", ki18n("Channel to join after connection"), "");
+    options.add( "nick <nickname>", ki18n("Nickname to use"),"");
+    options.add( "password <password>", ki18n("Password for connection"),"");
+    options.add( "ssl", ki18n("Use SSL for connection"),"false");
+
+    
     KCmdLineArgs::addCmdLineOptions(options);
     KCmdLineArgs::addStdCmdLineOptions();
 

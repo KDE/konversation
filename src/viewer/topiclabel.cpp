@@ -11,7 +11,7 @@
 */
 
 #include "topiclabel.h"
-#include "konversationapplication.h"
+#include "application.h" ////// header renamed
 #include "connectionmanager.h"
 #include "server.h"
 #include "common.h"
@@ -30,7 +30,7 @@
 #include <krun.h>
 #include <k3process.h>
 #include <kshell.h>
-#include <kurldrag.h>
+#include <k3urldrag.h>
 #include <kstringhandler.h>
 #include <kglobal.h>
 #include <kdebug.h>
@@ -45,8 +45,9 @@ namespace Konversation
 {
 
     TopicLabel::TopicLabel(QWidget *parent, const char *name)
-        : K3ActiveLabel(parent, name)
+        : K3ActiveLabel(parent)
     {
+        setObjectName(name);
         setWrapPolicy(Q3TextEdit::AtWordOrDocumentBoundary);
         setFocusPolicy(QWidget::ClickFocus);
 
@@ -389,4 +390,4 @@ namespace Konversation
     }
 }
 
-#include "topiclabel.moc"
+// #include "./viewer/topiclabel.moc"

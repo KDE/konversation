@@ -357,4 +357,4 @@ int SSLSocket::verifyCertificate()
     return rc;
 }
 
-#include "sslsocket.moc"
+// #include "./irc/sslsocket.moc"

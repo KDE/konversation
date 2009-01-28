@@ -16,7 +16,7 @@
 #ifndef DCCTRANSFERPANELITEM_H
 #define DCCTRANSFERPANELITEM_H
 
-#include "dcctransfer.h"
+#include "transfer.h" ////// header renamed
 
 #include <qdatetime.h>
 //Added by qt3to4:

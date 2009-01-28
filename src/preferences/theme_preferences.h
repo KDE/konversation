@@ -16,7 +16,7 @@
 #define PREFSPAGETHEMES_H
 
 #include "theme_preferencesui.h"
-#include "konvisettingspage.h"
+#include "settingspage.h" ////// header renamed
 
 #include <kio/job.h>
 

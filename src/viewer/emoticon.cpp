@@ -20,7 +20,7 @@
 #include <kstandarddirs.h>
 #include <kdeversion.h>
 
-#include "konversationapplication.h"
+#include "application.h" ////// header renamed
 #include "config/preferences.h"
 
 

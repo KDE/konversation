@@ -514,4 +514,4 @@ namespace Konversation
 
 }                                                 // NAMESPACE
 
-#include "addressbook_base.moc"
+// #include "./linkaddressbook/addressbook_base.moc"

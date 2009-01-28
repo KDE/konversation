@@ -13,8 +13,8 @@
 #ifndef KONVISETTINGSDIALOG_H
 #define KONVISETTINGSDIALOG_H
 
-#include "konviconfigdialog.h"
-#include "konvisettingspage.h"
+#include "configdialog.h" ////// header renamed
+#include "settingspage.h" ////// header renamed
 
 #include <kdialogbase.h>
 #include <q3asciidict.h>

@@ -103,4 +103,4 @@ namespace Konversation
 
 }
 
-#include "joinchanneldialog.moc"
+// #include "./irc/joinchanneldialog.moc"

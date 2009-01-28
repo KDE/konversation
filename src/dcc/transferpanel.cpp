@@ -12,12 +12,12 @@
 */
 // Copyright (C) 2004-2008 Shintaro Matsuoka <shin@shoegazed.org>
 
-#include "dcctransferpanel.h"
-#include "konversationapplication.h"
-#include "dcctransferdetailedinfopanel.h"
-#include "dcctransfermanager.h"
-#include "dcctransferpanelitem.h"
-#include "dcctransfersend.h"
+#include "transferpanel.h" ////// header renamed
+#include "application.h" ////// header renamed
+#include "transferdetailedinfopanel.h" ////// header renamed
+#include "transfermanager.h" ////// header renamed
+#include "transferpanelitem.h" ////// header renamed
+#include "transfersend.h" ////// header renamed
 #include "preferences.h"
 
 #include <q3hbox.h>
@@ -460,4 +460,4 @@ K3ListView* DccTransferPanel::getListView()
   return m_listView; 
 }
 
-#include "dcctransferpanel.moc"
+// #include "./dcc/transferpanel.moc"

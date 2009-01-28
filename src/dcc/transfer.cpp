@@ -11,7 +11,7 @@
   Copyright (C) 2004,2005 John Tapsell <john@geola.co.uk>
 */
 
-#include "dcctransfer.h"
+#include "transfer.h" ////// header renamed
 #include "preferences.h"
 
 #include <qfileinfo.h>
@@ -357,4 +357,4 @@ QDateTime DccTransfer::getTimeTransferFinished() const
     return m_timeTransferFinished;
 }
 
-#include "dcctransfer.moc"
+// #include "./dcc/transfer.moc"

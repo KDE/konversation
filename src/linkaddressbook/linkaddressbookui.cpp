@@ -186,6 +186,6 @@ void LinkAddressbookUI::slotCancel()
     reject();
 }
 
-#include "linkaddressbookui.moc"
+// #include "./linkaddressbook/linkaddressbookui.moc"
 
 // vim: set noet ts=4 sts=4 sw=4:

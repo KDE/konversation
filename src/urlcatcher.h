@@ -22,7 +22,7 @@ class K3ListView;
 class Q3ListViewItem;
 class QPushButton;
 class ViewContainer;
-class KListViewSearchLineWidget;
+class K3ListViewSearchLineWidget;
 
 class UrlCatcher : public ChatWindow
 {
@@ -53,7 +53,7 @@ class UrlCatcher : public ChatWindow
 
     protected:
         K3ListView* urlListView;
-        KListViewSearchLineWidget* searchWidget;
+        K3ListViewSearchLineWidget* searchWidget;
 
         /** Called from ChatWindow adjustFocus */
         virtual void childAdjustFocus();

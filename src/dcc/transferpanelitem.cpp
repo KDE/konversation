@@ -13,9 +13,9 @@
   (at your option) any later version.
 */
 
-#include "dcctransferpanelitem.h"
-#include "dcctransferpanel.h"
-#include "konversationapplication.h"
+#include "transferpanelitem.h" ////// header renamed
+#include "transferpanel.h" ////// header renamed
+#include "application.h" ////// header renamed
 #include "config/preferences.h"
 
 #include <q3header.h>
@@ -402,4 +402,4 @@ QString DccTransferPanelItem::secToHMS( long sec )
             .arg( QString::number( remSec ).rightJustified( 2, '0' ) );
 }
 
-#include "dcctransferpanelitem.moc"
+// #include "./dcc/transferpanelitem.moc"

@@ -14,7 +14,7 @@
 #define IGNORE_CONFIG_H
 
 #include "ignore_preferencesui.h"
-#include "konvisettingspage.h"
+#include "settingspage.h" ////// header renamed
 
 #include <q3ptrlist.h>
 

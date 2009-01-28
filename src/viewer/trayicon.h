@@ -18,7 +18,7 @@
 #include <q3ptrlist.h>
 #include <qpixmap.h>
 
-#include <ksystemtray.h>
+#include <ksystemtrayicon.h>
 
 
 class QTimer;
@@ -27,7 +27,7 @@ class Server;
 namespace Konversation
 {
 
-    class TrayIcon : public KSystemTray
+    class TrayIcon : public KSystemTrayIcon
     {
         Q_OBJECT
 
@@ -52,8 +52,8 @@ namespace Konversation
 
             bool m_notificationEnabled;
 
-            QPixmap m_nomessagePix;
-            QPixmap m_messagePix;
+            QIcon m_nomessagePix;
+            QIcon m_messagePix;
     };
 
 }

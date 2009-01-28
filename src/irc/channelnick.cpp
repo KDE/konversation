@@ -126,7 +126,7 @@ bool ChannelNick::setMode(bool admin,bool owner,bool op,bool halfop,bool voice)
     isop=op;
     ishalfop=halfop;
     hasvoice=voice;
-    nickInfo->getServer()->emitChannelNickChanged(this);
+    //nickInfo->getServer()->emitChannelNickChanged(this); //TODO FIXME can't use self anymore, have to have the item which is of course allocated externally and so we can't fucking know it inside this code
     emit channelNickChanged();
     return true;
 }
@@ -138,7 +138,7 @@ bool ChannelNick::setVoice(bool state)
 {
     if(hasvoice==state) return false;
     hasvoice=state;
-    nickInfo->getServer()->emitChannelNickChanged(this);
+    //nickInfo->getServer()->emitChannelNickChanged(this); //TODO FIXME can't use self anymore, have to have the item which is of course allocated externally and so we can't fucking know it inside this code
     emit channelNickChanged();
     return true;
 }
@@ -147,7 +147,7 @@ bool ChannelNick::setOwner(bool state)
 {
     if(isowner==state) return false;
     isowner=state;
-    nickInfo->getServer()->emitChannelNickChanged(this);
+    //nickInfo->getServer()->emitChannelNickChanged(this); //TODO FIXME can't use self anymore, have to have the item which is of course allocated externally and so we can't fucking know it inside this code
     emit channelNickChanged();
     return true;
 }
@@ -156,7 +156,7 @@ bool ChannelNick::setAdmin(bool state)
 {
     if(isadmin==state) return false;
     isadmin=state;
-    nickInfo->getServer()->emitChannelNickChanged(this);
+    //nickInfo->getServer()->emitChannelNickChanged(this);  //TODO FIXME can't use self anymore, have to have the item which is of course allocated externally and so we can't fucking know it inside this code
     emit channelNickChanged();
     return true;
 }
@@ -165,7 +165,7 @@ bool ChannelNick::setHalfOp(bool state)
 {
     if(ishalfop==state) return false;
     ishalfop=state;
-    nickInfo->getServer()->emitChannelNickChanged(this);
+    //nickInfo->getServer()->emitChannelNickChanged(this); //TODO FIXME can't use self anymore, have to have the item which is of course allocated externally and so we can't fucking know it inside this code
     emit channelNickChanged();
     return true;
 }
@@ -174,7 +174,7 @@ bool ChannelNick::setOp(bool state)
 {
     if(isop==state) return false;
     isop=state;
-    nickInfo->getServer()->emitChannelNickChanged(this);
+    //nickInfo->getServer()->emitChannelNickChanged(this); //TODO FIXME can't use self anymore, have to have the item which is of course allocated externally and so we can't fucking know it inside this code
     emit channelNickChanged();
     return true;
 }
@@ -200,7 +200,7 @@ QString ChannelNick::getHostmask() const
 QString ChannelNick::tooltip()
 {
     //  if(addressee.isEmpty()) return QString();
-    KABC::Addressee addressee = nickInfo->getAddressee();
+    //KABC::Addressee addressee = nickInfo->getAddressee();
     QString strTooltip;
     Q3TextStream tooltip( &strTooltip, QIODevice::WriteOnly );
 
@@ -258,4 +258,4 @@ void ChannelNick::setTimeStamp(uint stamp)
   m_timeStamp = stamp;
 }
 
-#include "channelnick.moc"
+// #include "./irc/channelnick.moc"

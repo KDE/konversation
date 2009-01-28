@@ -18,7 +18,7 @@
 #include "ircqueue.h"
 #include "channel.h"
 #include "viewcontainer.h"
-#include "konversationapplication.h"
+#include "application.h" ////// header renamed
 
 #include <qtoolbutton.h>
 #include <qspinbox.h>
@@ -255,4 +255,4 @@ void QueueTuner::contextMenuEvent(QContextMenuEvent* e)
     e->accept();
 }
 
-#include "queuetuner.moc"
+// #include "./queuetuner.moc"

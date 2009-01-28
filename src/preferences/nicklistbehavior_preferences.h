@@ -13,7 +13,7 @@
 #ifndef NICKLISTBEHAVIOR_Config_H
 #define NICKLISTBEHAVIOR_Config_H
 
-#include "konvisettingspage.h"
+#include "settingspage.h" ////// header renamed
 #include "nicklistbehavior_preferencesui.h"
 
 #include <qobject.h>

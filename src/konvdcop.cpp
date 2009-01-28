@@ -13,7 +13,7 @@
 */
 
 #include "konvdcop.h"
-#include "konversationapplication.h"
+#include "application.h" ////// header renamed
 #include "connectionmanager.h"
 #include "awaymanager.h"
 #include "channel.h"
@@ -358,4 +358,4 @@ QString KonvIdentDCOP::getReturnMessage(const QString &identity)
     return Preferences::identityByName(identity)->getReturnMessage();
 }
 
-#include "konvdcop.moc"
+// #include "./konvdcop.moc"

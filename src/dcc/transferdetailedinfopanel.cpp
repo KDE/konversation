@@ -9,13 +9,14 @@
   Copyright (C) 2007 Shintaro Matsuoka <shin@shoegazed.org>
 */
 
-#include "dcctransferdetailedinfopanel.h"
+#include "transferdetailedinfopanel.h" ////// header renamed
 #include "channel.h"
-#include "dcctransfer.h"
+#include "transfer.h" ////// header renamed
+#include "transferrecv.h" ////// header renamed
 #include "dcctransfermanager.h"
-#include "dcctransferrecv.h"
-#include "dcctransferpanelitem.h"
-#include "konversationapplication.h"
+#include "transferpanelitem.h" ////// header renamed
+#include "application.h" ////// header renamed
+
 #include "connectionmanager.h"
 #include "server.h"
 
@@ -211,4 +212,4 @@ void DccTransferDetailedInfoPanel::slotOpenFolderButtonClicked()
     }
 }
 
-#include "dcctransferdetailedinfopanel.moc"
+// #include "./dcc/transferdetailedinfopanel.moc"

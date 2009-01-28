@@ -174,4 +174,4 @@ QRect MultilineTextEdit::mapToView(int para,int index)
         ));
 }
 
-#include "multilinetextedit.moc"
+// #include "./viewer/multilinetextedit.moc"

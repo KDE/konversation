@@ -19,8 +19,8 @@
 #include <QShowEvent>
 #include "channel.h"
 #include "server.h"
-#include "konversationapplication.h"
-#include "konversationmainwindow.h"
+#include "application.h" ////// header renamed
+#include "mainwindow.h" ////// header renamed
 #include "viewcontainer.h"
 #include "ircinput.h"
 #include "ircview.h"
@@ -70,7 +70,8 @@ Query::Query(QWidget* parent, QString _name) : ChatWindow(parent)
     addresseelogoimage->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     addresseelogoimage->hide();
 
-    queryHostmask=new Konversation::TopicLabel(box, "query_hostmask");
+    queryHostmask=new QLabel(box);
+    queryHostmask->setObjectName("query_hostmask");
 
     QString whatsthis = i18n("<qt>Some details of the person you are talking to in this query is shown in this bar.  The full name and hostmask is shown, along with any image or logo this person has associated with them in the KDE Addressbook.<p>See the <i>Konversation Handbook</i> for information on associating a nick with a contact in the Addressbook, and for an explanation of what the hostmask is.</qt>");
     Q3WhatsThis::add(addresseeimage, whatsthis);
@@ -84,7 +85,7 @@ Query::Query(QWidget* parent, QString _name) : ChatWindow(parent)
     connect(textView,SIGNAL(popupCommand(int)),this,SLOT(popup(int)));
 
     // link "Whois", "Ignore" ... menu items into ircview popup
-    Q3PopupMenu* popup=textView->getPopup();
+    KMenu* popup=textView->getPopup();
     popup->insertSeparator();
     popup->insertItem(i18n("&Whois"),Konversation::Whois);
     popup->insertItem(i18n("&Version"),Konversation::Version);
@@ -143,7 +144,7 @@ void Query::setServer(Server* newServer)
 
     ChatWindow::setServer(newServer);
 
-    if (newServer->getKeyForRecipient(getName()))
+    if (!(newServer->getKeyForRecipient(getName()).isEmpty()))
         blowfishLabel->show();
 }
 
@@ -244,7 +245,7 @@ void Query::sendQueryText(const QString& sendLine)
 
     // Send all strings, one after another
     QStringList outList=QStringList::split('\n',outputAll);
-    for(unsigned int index=0;index<outList.count();index++)
+    for(int index=0;index<outList.count();index++)
     {
         QString output(outList[index]);
 
@@ -331,7 +332,7 @@ void Query::textPasted(const QString& text)
     if(m_server)
     {
         QStringList multiline=QStringList::split('\n',text);
-        for(unsigned int index=0;index<multiline.count();index++)
+        for(int index=0;index<multiline.count();index++)
         {
             QString line=multiline[index];
             QString cChar(Preferences::commandChar());
@@ -392,16 +393,22 @@ void Query::popup(int id)
 
         case Konversation::IgnoreNick:
         {
-            if (KMessageBox::warningContinueCancel(this, i18n("Do you want to ignore %1?").arg(name),
-                i18n("Ignore"), i18n("Ignore"), "IgnoreNick") == KMessageBox::Continue)
+            if (KMessageBox::warningContinueCancel(
+                this,
+                i18n("Do you want to ignore %1?").arg(name),
+                i18n("Ignore"),
+                KGuiItem(i18n("Ignore")),
+                KStandardGuiItem::cancel(),
+                "IgnoreNick")
+                == KMessageBox::Continue)
             {
                 sendQueryText(Preferences::commandChar()+"IGNORE -ALL "+name);
 
                 int rc = KMessageBox::questionYesNo(this,
                 i18n("Do you want to close this query after ignoring this nickname?"),
                 i18n("Close This Query"),
-                i18n("Close"),
-                i18n("Keep Open"),
+                KGuiItem(i18n("Close")),
+                KGuiItem(i18n("Keep Open")),
                 "CloseQueryAfterIgnore");
 
                 if (rc == KMessageBox::Yes && m_server)
@@ -412,9 +419,14 @@ void Query::popup(int id)
         }
         case Konversation::UnignoreNick:
         {
-            QString question = i18n("Do you want to stop ignoring %1?").arg(name);
-
-            if (KMessageBox::warningContinueCancel(this, question, i18n("Unignore"), i18n("Unignore"), "UnignoreNick") ==
+            if (KMessageBox::warningContinueCancel(
+                this,
+                i18n("Do you want to stop ignoring %1?", name),
+                i18n("Unignore"),
+                KGuiItem(i18n("Unignore")),
+                KStandardGuiItem::cancel(),
+                "UnignoreNick")
+                ==
                 KMessageBox::Continue)
             {
                 sendQueryText(Preferences::commandChar()+"UNIGNORE "+name);
@@ -475,18 +487,18 @@ void Query::childAdjustFocus()
 void Query::setNickInfo(const NickInfoPtr & nickInfo)
 {
     if(m_nickInfo)
-        disconnect(m_nickInfo, SIGNAL(nickInfoChanged()), this, SLOT(nickInfoChanged()));
+        disconnect(m_nickInfo.data(), SIGNAL(nickInfoChanged()),  this,  SLOT(nickInfoChanged()));
 
     m_nickInfo = nickInfo;
     Q_ASSERT(m_nickInfo); if(!m_nickInfo) return;
     setName(m_nickInfo->getNickname());
-    connect(m_nickInfo, SIGNAL(nickInfoChanged()), this, SLOT(nickInfoChanged()));
+    connect(m_nickInfo.data(), SIGNAL(nickInfoChanged()), this, SLOT(nickInfoChanged()));
     nickInfoChanged();
 }
 
 void Query::nickInfoChanged()
 {
-    if(m_nickInfo)
+    /*if(m_nickInfo)
     {
         setName(m_nickInfo->getNickname());
         QString text = m_nickInfo->getBestAddresseeName();
@@ -550,10 +562,10 @@ void Query::nickInfoChanged()
 
     }
     else
-    {
+    {*/
         addresseeimage->hide();
         addresseelogoimage->hide();
-    }
+    //}
 
     emit updateQueryChrome(this,getName());
     emitUpdateInfo();
@@ -571,10 +583,11 @@ bool Query::searchView()       { return true; }
 
 void Query::appendInputText(const QString& s, bool fromCursor)
 {
-    if(!fromCursor)
+    if(1)// !fromCursor) //TODO FIXME someday we'll be able to fix this
     {
         queryInput->append(s);
     }
+#if 0
     else
     {
         int para = 0, index = 0;
@@ -582,6 +595,7 @@ void Query::appendInputText(const QString& s, bool fromCursor)
         queryInput->insertAt(s, para, index);
         queryInput->setCursorPosition(para, index + s.length());
     }
+#endif
 }
 
                                                   // virtual
@@ -604,7 +618,13 @@ bool Query::closeYourself(bool confirm)
 {
     int result = KMessageBox::Continue;
     if (confirm)
-        result=KMessageBox::warningContinueCancel(this, i18n("Do you want to close your query with %1?").arg(getName()), i18n("Close Query"), i18n("Close"), "QuitQueryTab");
+        result=KMessageBox::warningContinueCancel(
+            this,
+            i18n("Do you want to close your query with %1?", getName()),
+            i18n("Close Query"),
+            KStandardGuiItem::close(),
+            KStandardGuiItem::cancel(),
+            "QuitQueryTab");
 
     if (result == KMessageBox::Continue)
     {
@@ -630,7 +650,7 @@ void Query::serverOnline(bool online)
     //queryInput->setEnabled(online);
     getTextView()->setNickAndChannelContextMenusEnabled(online);
 
-    Q3PopupMenu* popup = getTextView()->getPopup();
+    KMenu* popup = getTextView()->getPopup();
 
     if (popup)
     {
@@ -677,4 +697,4 @@ void Query::quitNick(const QString& reason)
     }
 }
 
-#include "query.moc"
+// #include "./irc/query.moc"

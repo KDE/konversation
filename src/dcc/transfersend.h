@@ -17,7 +17,7 @@
 #ifndef DCCTRANSFERSEND_H
 #define DCCTRANSFERSEND_H
 
-#include "dcctransfer.h"
+#include "transfer.h" ////// header renamed
 
 #include <qfile.h>
 

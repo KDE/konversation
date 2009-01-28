@@ -11,7 +11,7 @@
 */
 
 #include "common.h"
-#include "konversationapplication.h"
+#include "application.h" ////// header renamed
 #include "config/preferences.h"
 
 #include <q3cstring.h>
@@ -169,6 +169,7 @@ namespace Konversation
     //TODO: there's room for optimization as pahlibar said. (strm)
 
     // the below two functions were taken from kopeteonlinestatus.cpp.
+/*
     QBitmap overlayMasks( const QBitmap *under, const QBitmap *over )
     {
         if ( !under && !over ) return QBitmap();
@@ -179,17 +180,19 @@ namespace Konversation
         bitBlt( &result, 0, 0, over, 0, 0, over->width(), over->height(), Qt::OrROP );
         return result;
     }
-
+*/
     QPixmap overlayPixmaps( const QPixmap &under, const QPixmap &over )
     {
-        if ( over.isNull() ) return under;
+        if (over.isNull() && under.isNull())
+                return QPixmap();
+        else if (under.isNull())
+            return QPixmap(over);
+        else if (over.isNull())
+            return QPixmap(under);
 
-        QImage imResult; imResult=under;
-        QImage imOver; imOver=over;
-        QPixmap result;
-
-        bitBlt(&imResult,0,0,&imOver,0,0,imOver.width(),imOver.height(),0);
-        result=imResult;
+        QPixmap result(under);
+        QPainter painter(&result);
+        painter.drawPixmap(QPoint(0,0), over);
         return result;
     }
 

@@ -12,7 +12,7 @@
 */
 
 #include "channel.h"
-#include "konversationapplication.h"
+#include "application.h" ////// header renamed
 #include "server.h"
 #include "blowfish.h"
 #include "nick.h"
@@ -31,15 +31,15 @@
 #include "ircinput.h"
 #include "ircviewbox.h"
 #include "ircview.h"
-#include <kabc/addressbook.h>
-#include <kabc/stdaddressbook.h>
+//#include <kabc/addressbook.h>
+//#include <kabc/stdaddressbook.h>
 #include "common.h"
 #include "topiclabel.h"
-#include "channeloptionsdialog.h"
+//#include "channeloptionsdialog.h"
 #include "notificationhandler.h"
 #include "viewcontainer.h"
-#include "linkaddressbook/linkaddressbookui.h"
-#include "linkaddressbook/addressbook.h"
+//#include "linkaddressbook/linkaddressbookui.h"
+//#include "linkaddressbook/addressbook.h"
 
 #include <qlabel.h>
 #include <q3vbox.h>
@@ -64,7 +64,7 @@
 
 #include <klineedit.h>
 #include <kinputdialog.h>
-#include <kpassworddialog.h>
+#include <k3passworddialog.h>
 #include <klocale.h>
 #include <kdebug.h>
 #include <kglobalsettings.h>
@@ -72,7 +72,7 @@
 #include <kmessagebox.h>
 #include <kiconloader.h>
 #include <kwindowsystem.h>
-
+#include <KColorScheme>
 
 Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
 {
@@ -137,7 +137,7 @@ Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
     QToolTip::add(m_topicButton, i18n("Edit Channel Settings"));
     connect(m_topicButton, SIGNAL(clicked()), this, SLOT(showOptionsDialog()));
 
-    topicLine = new Konversation::TopicLabel(topicWidget);
+    topicLine = new QLabel(topicWidget);
     Q3WhatsThis::add(topicLine, i18n("<qt>Every channel on IRC has a topic associated with it.  This is simply a message that everybody can see.<p>If you are an operator, or the channel mode <em>'T'</em> has not been set, then you can change the topic by clicking the Edit Channel Properties button to the left of the topic.  You can also view the history of topics there.</qt>"));
     connect(topicLine, SIGNAL(setStatusBarTempText(const QString&)), this, SIGNAL(setStatusBarTempText(const QString&)));
     connect(topicLine, SIGNAL(clearStatusBarTempText()), this, SIGNAL(clearStatusBarTempText()));
@@ -329,9 +329,9 @@ void Channel::setServer(Server* server)
         connect(server, SIGNAL(connectionStateChanged(Server*, Konversation::ConnectionState)),
                 SLOT(connectionStateChanged(Server*, Konversation::ConnectionState)));
     ChatWindow::setServer(server);
-    if (server->getKeyForRecipient(getName()))
+    if (server->getKeyForRecipient(getName()).isEmpty())
         blowfishLabel->show();
-    topicLine->setServer(server);
+    //FIXME WTF!? topicLine->setServer(server);
     refreshModeButtons();
     setIdentity(server->getIdentity());
 }
@@ -353,7 +353,7 @@ void Channel::connectionStateChanged(Server* server, Konversation::ConnectionSta
 
 void Channel::setEncryptedOutput(bool e)
 {
-    if (e) {
+    /*if (e) {
         blowfishLabel->show();
         //scan the channel topic and decrypt it if necessary
         QString topic(m_topicHistory[0].section(' ',2));
@@ -368,7 +368,7 @@ void Channel::setEncryptedOutput(bool e)
         topicLine->setText(topic);
         emit topicHistoryChanged();
     }
-    else
+    else */
         blowfishLabel->hide();
 }
 
@@ -421,13 +421,13 @@ void Channel::purgeNicks()
 }
 
 void Channel::showOptionsDialog()
-{
+{ /*
     if(!m_optionsDialog)
         m_optionsDialog = new Konversation::ChannelOptionsDialog(this);
 
     m_optionsDialog->refreshModes();
     m_optionsDialog->refreshTopicHistory();
-    m_optionsDialog->show();
+    m_optionsDialog->show(); */
 }
 
 void Channel::filesDropped(QDropEvent* e)
@@ -477,6 +477,7 @@ void Channel::popupCommand(int id)
 
     switch(id)
     {
+#if 0
         case Konversation::AddressbookEdit:
         {
             ChannelNickList nickList=getSelectedChannelNicks();
@@ -535,6 +536,7 @@ void Channel::popupCommand(int id)
         case Konversation::AddressbookSub:
             kDebug() << "sub called" << endl;
             break;
+#endif
         case Konversation::GiveOp:
             pattern="MODE %c +o %u";
             raw=true;
@@ -629,7 +631,14 @@ void Channel::popupCommand(int id)
                 question=i18n("Do you want to ignore %1?").arg(nickList.first());
             else
                 question = i18n("Do you want to ignore the selected users?");
-            if (KMessageBox::warningContinueCancel(this, question, i18n("Ignore"), i18n("Ignore"), "IgnoreNick") ==
+            if (KMessageBox::warningContinueCancel(
+                this,
+                question,
+                i18n("Ignore"),
+                KGuiItem(i18n("Ignore")),
+                KStandardGuiItem::cancel(),
+                "IgnoreNick"
+                ) ==
                 KMessageBox::Continue)
                 pattern = cc+"IGNORE -ALL %l";
             break;
@@ -647,7 +656,13 @@ void Channel::popupCommand(int id)
                 question=i18n("Do you want to stop ignoring %1?").arg(selectedIgnoredNicks.first());
             else
                 question = i18n("Do you want to stop ignoring the selected users?");
-            if (KMessageBox::warningContinueCancel(this, question, i18n("Unignore"), i18n("Unignore"), "UnignoreNick") ==
+            if (KMessageBox::warningContinueCancel(
+                this,
+                question,
+                i18n("Unignore"),
+                KGuiItem(i18n("Unignore")),
+                KStandardGuiItem::cancel(),
+                "UnignoreNick") ==
                 KMessageBox::Continue)
             {
                 sendChannelText(cc+"UNIGNORE "+selectedIgnoredNicks.join(" "));
@@ -723,6 +738,7 @@ void Channel::doubleClickCommand(Q3ListViewItem* item)
 
 void Channel::completeNick()
 {
+#if 0
     int pos, oldPos;
 
     channelInput->getCursorPosition(&oldPos,&pos);// oldPos is a dummy here, taking the paragraph parameter
@@ -890,6 +906,7 @@ void Channel::completeNick()
     // Set new text and cursor position
     channelInput->setText(newLine);
     channelInput->setCursorPosition(0, pos);
+#endif
 }
 
 // make sure to step back one position when completion ends so the user starts
@@ -985,11 +1002,12 @@ QString Channel::getPassword()
 
     if (password.isEmpty() && m_server->getServerGroup())
     {
-        Konversation::ChannelList channelList = m_server->getServerGroup()->channelList();
+        //Q3ValueList<ChannelSettings>
+        Konversation::ChannelList channelSettingsList = m_server->getServerGroup()->channelList();
         Konversation::ChannelSettings channelSettings(getName());
-        QValueListIterator<Konversation::ChannelSettings> it = channelList.find(channelSettings);
+        Konversation::ChannelList::iterator it = channelSettingsList.find(channelSettings);
 
-        if (it != channelList.end())
+        if (it != channelSettingsList.end())
             password = (*it).password();
     }
 
@@ -1166,11 +1184,10 @@ void Channel::modeButtonClicked(int id, bool on)
     {
         if (args.isEmpty())
         {
-            Q3CString newPassword;
+            QByteArray newPassword;
 
-            int result = KPasswordDialog::getPassword(newPassword, i18n("Channel Password"));
-
-            if (result == KPasswordDialog::Accepted && !newPassword.isEmpty())
+            int result = K3PasswordDialog::getPassword(this, newPassword, i18n("Channel Password"));
+            if (result == K3PasswordDialog::Accepted && !newPassword.isEmpty())
                 args = newPassword;
         }
 
@@ -1284,10 +1301,10 @@ void Channel::joinNickname(ChannelNickPtr channelNick)
     {
         m_joined = true;
         emit joined(this);
-        appendCommandMessage(i18n("Join"),i18n("%1 is the channel and %2 is our hostmask",
-                             "You have joined the channel %1 (%2).").arg(getName()).arg(channelNick->getHostmask()),false, false, true);
+        appendCommandMessage(i18n("Join"), i18nc("%1 is the channel and %2 is our hostmask",
+                             "You have joined the channel %1 (%2).", getName(), channelNick->getHostmask()),false, false, true);
         m_ownChannelNick = channelNick;
-        connect(m_ownChannelNick, SIGNAL(channelNickChanged()), SLOT(refreshModeButtons()));
+        connect(m_ownChannelNick.data(), SIGNAL(channelNickChanged()), SLOT(refreshModeButtons()));
         refreshModeButtons();
         setActive(true);
 
@@ -1301,8 +1318,8 @@ void Channel::joinNickname(ChannelNickPtr channelNick)
     {
         QString nick = channelNick->getNickname();
         QString hostname = channelNick->getHostmask();
-        appendCommandMessage(i18n("Join"), i18n("%1 is the nick joining and %2 the hostmask of that nick",
-                             "%1 has joined this channel (%2).").arg(nick).arg(hostname),false, false);
+        appendCommandMessage(i18n("Join"), i18nc("%1 is the nick joining and %2 the hostmask of that nick",
+                             "%1 has joined this channel (%2).", nick, hostname),false, false);
         addNickname(channelNick);
     }
 }
@@ -1326,15 +1343,15 @@ void Channel::removeNick(ChannelNickPtr channelNick, const QString &reason, bool
             if (displayReason.isEmpty())
                 appendCommandMessage(i18n("Quit"), i18n("You have left this server."), false);
             else
-                appendCommandMessage(i18n("Quit"), i18n("%1 adds the reason", "You have left this server (%1).").arg(displayReason), false);
+                appendCommandMessage(i18n("Quit"), i18nc("%1 adds the reason", "You have left this server (%1).").arg(displayReason), false);
         }
         else
         {
             if (displayReason.isEmpty())
                 appendCommandMessage(i18n("Part"), i18n("You have left channel %1.").arg(getName()), false);
             else
-                appendCommandMessage(i18n("Part"), i18n("%1 adds the channel and %2 the reason",
-                                     "You have left channel %1 (%2).").arg(getName()).arg(displayReason), false);
+                appendCommandMessage(i18n("Part"), i18nc("%1 adds the channel and %2 the reason",
+                                     "You have left channel %1 (%2).", getName(), displayReason), false);
 
         }
 
@@ -1347,16 +1364,16 @@ void Channel::removeNick(ChannelNickPtr channelNick, const QString &reason, bool
             if (displayReason.isEmpty())
                 appendCommandMessage(i18n("Quit"), i18n("%1 has left this server.").arg(channelNick->getNickname()), false);
             else
-                appendCommandMessage(i18n("Quit"), i18n("%1 adds the nick and %2 the reason",
-                                     "%1 has left this server (%2).").arg(channelNick->getNickname()).arg(displayReason), false);
+                appendCommandMessage(i18n("Quit"), i18nc("%1 adds the nick and %2 the reason",
+                                     "%1 has left this server (%2).", channelNick->getNickname(), displayReason), false);
         }
         else
         {
             if (displayReason.isEmpty())
-                appendCommandMessage(i18n("Part"), i18n("%1 has left this channel.").arg(channelNick->getNickname()), false);
+                appendCommandMessage(i18n("Part"), i18n("%1 has left this channel.", channelNick->getNickname()), false);
             else
-                appendCommandMessage(i18n("Part"), i18n("%1 adds the nick and %2 the reason",
-                                     "%1 has left this channel (%2).").arg(channelNick->getNickname()).arg(displayReason), false);
+                appendCommandMessage(i18n("Part"), i18nc("%1 adds the nick and %2 the reason",
+                                     "%1 has left this channel (%2).", channelNick->getNickname(), displayReason), false);
         }
 
         if(channelNick->isAnyTypeOfOp())
@@ -1396,22 +1413,20 @@ void Channel::kickNick(ChannelNickPtr channelNick, const QString &kicker, const 
             if (displayReason.isEmpty())
                 appendCommandMessage(i18n("Kick"), i18n("You have kicked yourself from channel %1.").arg(getName()));
             else
-                appendCommandMessage(i18n("Kick"), i18n("%1 adds the channel and %2 the reason",
-                                              "You have kicked yourself from channel %1 (%2).").arg(getName()).arg(displayReason));
+                appendCommandMessage(i18n("Kick"), i18nc("%1 adds the channel and %2 the reason",
+                                              "You have kicked yourself from channel %1 (%2).", getName(), displayReason));
         }
         else
         {
             if (displayReason.isEmpty())
             {
-                appendCommandMessage(i18n("Kick"), i18n("%1 adds the channel, %2 adds the kicker",
-                                              "You have been kicked from channel %1 by %2.")
-                                              .arg(getName()).arg(kicker), true);
+                appendCommandMessage(i18n("Kick"), i18nc("%1 adds the channel, %2 adds the kicker",
+                                              "You have been kicked from channel %1 by %2.", getName(), kicker), true);
             }
             else
             {
-                appendCommandMessage(i18n("Kick"), i18n("%1 adds the channel, %2 the kicker and %3 the reason",
-                                              "You have been kicked from channel %1 by %2 (%3).")
-                                              .arg(getName()).arg(kicker).arg(displayReason), true);
+                appendCommandMessage(i18n("Kick"), i18nc("%1 adds the channel, %2 the kicker and %3 the reason",
+                                              "You have been kicked from channel %1 by %2 (%3).", getName(), kicker, displayReason), true);
             }
 
             KonversationApplication::instance()->notificationHandler()->kick(this,getName(), kicker);
@@ -1433,22 +1448,20 @@ void Channel::kickNick(ChannelNickPtr channelNick, const QString &kicker, const 
             if (displayReason.isEmpty())
                 appendCommandMessage(i18n("Kick"), i18n("You have kicked %1 from the channel.").arg(channelNick->getNickname()));
             else
-                appendCommandMessage(i18n("Kick"), i18n("%1 adds the kicked nick and %2 the reason",
-                                     "You have kicked %1 from the channel (%2).").arg(channelNick->getNickname()).arg(displayReason), true);
+                appendCommandMessage(i18n("Kick"), i18nc("%1 adds the kicked nick and %2 the reason",
+                                     "You have kicked %1 from the channel (%2).", channelNick->getNickname(), displayReason), true);
         }
         else
         {
             if (displayReason.isEmpty())
             {
-                appendCommandMessage(i18n("Kick"), i18n("%1 adds the kicked nick, %2 adds the kicker",
-                                     "%1 has been kicked from the channel by %2.")
-                                     .arg(channelNick->getNickname()).arg(kicker), true);
+                appendCommandMessage(i18n("Kick"), i18nc("%1 adds the kicked nick, %2 adds the kicker",
+                                     "%1 has been kicked from the channel by %2.", channelNick->getNickname(), kicker), true);
             }
             else
             {
-                appendCommandMessage(i18n("Kick"), i18n("%1 adds the kicked nick, %2 the kicker and %3 the reason",
-                                     "%1 has been kicked from the channel by %2 (%3).")
-                                     .arg(channelNick->getNickname()).arg(kicker).arg(displayReason), true);
+                appendCommandMessage(i18n("Kick"), i18nc("%1 adds the kicked nick, %2 the kicker and %3 the reason",
+                                     "%1 has been kicked from the channel by %2 (%3).", channelNick->getNickname(), kicker, displayReason), true);
             }
         }
 
@@ -1522,8 +1535,8 @@ void Channel::adjustOps(int value)
 void Channel::emitUpdateInfo()
 {
     QString info = getName() + " - ";
-    info += i18n("%n nick", "%n nicks", numberOfNicks());
-    info += i18n(" (%n op)", " (%n ops)", numberOfOps());
+    info += i18np("%n nick", "%n nicks", numberOfNicks());
+    info += i18np(" (%n op)", " (%n ops)", numberOfOps());
 
     emit updateInfo(info);
 }
@@ -2274,7 +2287,12 @@ void Channel::updateAppearance()
     {
         fg=colorGroup().foreground();
         bg=colorGroup().base();
-        abg=KGlobalSettings::alternateBackgroundColor();
+        //I really fucking wonder if anyone who designs these APIs actually uses them
+        //old code:        abg=KGlobalSettings::alternateBackgroundColor();
+        //new code:
+        KColorScheme stupidfuckingthing(QPalette::Normal, KColorScheme::View); //TODO FIXME fix the fucking palette parameter
+        QBrush stupidfuckingreturnvalue(stupidfuckingthing.background(KColorScheme::AlternateBackground));
+        abg=stupidfuckingreturnvalue.color();
     }
 
     channelInput->unsetPalette();
@@ -2540,10 +2558,11 @@ bool Channel::searchView()
 
 void Channel::appendInputText(const QString& s, bool fromCursor)
 {
-    if(!fromCursor)
+    if(1) // !fromCursor) //TODO FIXME port this fucking shit
     {
         channelInput->append(s);
     }
+#if 0
     else
     {
         int para = 0, index = 0;
@@ -2551,14 +2570,19 @@ void Channel::appendInputText(const QString& s, bool fromCursor)
         channelInput->insertAt(s, para, index);
         channelInput->setCursorPosition(para, index + s.length());
     }
+#endif
 }
 
 bool Channel::closeYourself(bool confirm)
 {
     int result=KMessageBox::Continue;
     if (confirm)
-        result = KMessageBox::warningContinueCancel(this, i18n("Do you want to leave %1?").arg(getName()),
-            i18n("Leave Channel"), i18n("Leave"), "QuitChannelTab");
+        result = KMessageBox::warningContinueCancel(this,
+            i18n("Do you want to leave %1?", getName()),
+            i18n("Leave Channel"),
+            KGuiItem(i18n("Leave")),
+            KStandardGuiItem::cancel(),
+            "QuitChannelTab");
 
     if (result==KMessageBox::Continue)
     {
@@ -2973,7 +2997,7 @@ bool NickList::containsNick(const QString& nickname)
     return false;
 }
 
-#include "channel.moc"
+// #include "./irc/channel.moc"
 
 // kate: space-indent on; tab-width 4; indent-width 4; mixed-indent off; replace-tabs on;
 // vim: set et sw=4 ts=4 cino=l1,cs,U1:

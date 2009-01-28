@@ -27,7 +27,7 @@
 #include <ktextedit.h>
 
 
-class K3CompletionBox;
+class KCompletionBox;
 class QMouseEvent;
 
 class IRCInput : public KTextEdit
@@ -45,7 +45,7 @@ class IRCInput : public KTextEdit
         QString lastCompletion() const { return m_lastCompletion; }
 
         virtual QSize sizeHint() const;
-        QString text() const;
+        //QString text() const;
 
     signals:
         void nickCompletion();
@@ -62,7 +62,7 @@ class IRCInput : public KTextEdit
         void setText(const QString& text);
         void setLastCompletion(const QString& completion);
         virtual void setOverwriteMode(bool) { }
-        virtual void resizeContents( int w, int h );
+        //virtual void resizeContents( int w, int h );
         virtual void updateAppearance();
 
     protected slots:
@@ -75,10 +75,10 @@ class IRCInput : public KTextEdit
         bool eventFilter(QObject *object,QEvent *event);
         void addHistory(const QString& text);
         bool checkPaste(QString& text);
-        void contentsMouseReleaseEvent(QMouseEvent *);
+        void mouseReleaseEvent(QMouseEvent *);
 
         virtual void keyPressEvent(QKeyEvent* e);
-        virtual Q3PopupMenu *createPopupMenu( const QPoint& pos );
+        //virtual Q3PopupMenu *createPopupMenu( const QPoint& pos );
         virtual void showEvent(QShowEvent* e);
         virtual void hideEvent(QHideEvent* e);
 
@@ -86,7 +86,7 @@ class IRCInput : public KTextEdit
         unsigned int lineNum;
         unsigned int oldPos;
         char completionMode;
-        K3CompletionBox* completionBox;
+        KCompletionBox* completionBox;
         QString m_lastCompletion;
         bool m_useSelection;
         bool m_multiRow;

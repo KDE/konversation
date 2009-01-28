@@ -11,7 +11,7 @@
 
 #include "multilineedit.h"
 #include "multilinetextedit.h"
-#include "konversationapplication.h"
+#include "application.h" ////// header renamed
 
 #include <qlayout.h>
 //Added by qt3to4:
@@ -78,4 +78,4 @@ QString MultilineEdit::edit(QWidget* parent, const QString& text)
     return returnText;
 }
 
-#include "multilineedit.moc"
+// #include "./viewer/multilineedit.moc"

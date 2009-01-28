@@ -13,7 +13,7 @@ the Free Software Foundation; either version 2 of the License, or
 */
 
 #include "osd.h"
-#include "konversationapplication.h"
+#include "application.h" ////// header renamed
 #include "common.h"
 
 #include <qapplication.h>
@@ -447,4 +447,4 @@ OSDWidget::KDesktopLockStatus OSDWidget::isKDesktopLockRunning()
     }
 }
 
-#include "osd.moc"
+// #include "./viewer/osd.moc"

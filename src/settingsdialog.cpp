@@ -10,8 +10,8 @@
   Copyright (C) 2006 Eike Hein <hein@kde.org>
 */
 
-#include "konvisettingsdialog.h"
-#include "konviconfigdialog.h"
+#include "settingsdialog.h" ////// header renamed
+#include "configdialog.h" ////// header renamed
 #include "config/preferences.h"
 #include "chatwindowappearance_preferences.h"
 #include "connectionbehavior_preferences.h"
@@ -315,5 +315,5 @@ bool KonviSettingsDialog::isDefault()
   return true;
 }
 
-#include "konvisettingsdialog.moc"
+// #include "./settingsdialog.moc"
 

@@ -27,7 +27,7 @@ namespace Konversation
         Q_OBJECT
 
         public:
-            explicit NotificationHandler(KonversationApplication* parent = 0, const char* name = 0);
+            explicit NotificationHandler(KonversationApplication* parent = 0);
             ~NotificationHandler();
 
         public slots:

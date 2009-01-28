@@ -15,7 +15,7 @@
 #include <Q3ValueList>
 #include <Q3PtrList>
 #include "viewtree.h"
-#include "konversationapplication.h"
+#include "application.h" ////// header renamed
 #include "notificationhandler.h"
 #include "images.h"
 #include "irccharsets.h"
@@ -23,8 +23,8 @@
 #include "logfilereader.h"
 #include "konsolepanel.h"
 #include "urlcatcher.h"
-#include "dcctransferpanel.h"
-#include "dcctransfermanager.h"
+#include "transferpanel.h" ////// header renamed
+#include "transfermanager.h" ////// header renamed
 #include "dccchat.h"
 #include "statuspanel.h"
 #include "channel.h"
@@ -32,9 +32,9 @@
 #include "rawlog.h"
 #include "channellistpanel.h"
 #include "nicksonline.h"
-#include "insertchardialog.h"
-#include "irccolorchooser.h"
-#include "joinchanneldialog.h"
+//#include "insertchardialog.h"
+//#include "irccolorchooser.h"
+//#include "joinchanneldialog.h"
 #include "servergroupsettings.h"
 
 #include <qsplitter.h>
@@ -48,9 +48,13 @@
 #include <kmessagebox.h>
 #include <kglobalsettings.h>
 
+#include <kactioncollection.h>
+#include <ktoggleaction.h>
+#include <kselectaction.h>
+#include <kxmlguifactory.h>
 
 ViewContainer::ViewContainer(KonversationMainWindow* window):
-        m_vbox(0), m_queueTuner(0)
+        m_vbox(0)//, m_queueTuner(0)
 {
     m_window = window;
 
@@ -78,10 +82,11 @@ ViewContainer::ViewContainer(KonversationMainWindow* window):
 
     initializeSplitterSizes();
 
-    m_dccPanel = new DccTransferPanel(m_tabWidget);
+    /*m_dccPanel = new DccTransferPanel(m_tabWidget);
     m_dccPanel->hide();
     m_dccPanelOpen = false;
     connect(m_dccPanel, SIGNAL(updateTabNotification(ChatWindow*,const Konversation::TabNotifyType&)), this, SLOT(setViewNotification(ChatWindow*,const Konversation::TabNotifyType&)));
+    */
 }
 
 ViewContainer::~ViewContainer()
@@ -89,12 +94,12 @@ ViewContainer::~ViewContainer()
 }
 
 void ViewContainer::showQueueTuner(bool p)
-{
+{/*
     if (p)
         m_queueTuner->open();
     else
         m_queueTuner->close();
-}
+*/}
 
 ///Use this instead of setting m_frontServer directly so we can emit the frontServerChanging signal easily.
 void ViewContainer::setFrontServer(Server* newserver)
@@ -147,10 +152,12 @@ void ViewContainer::setupTabWidget()
 {
     m_popupViewIndex = -1;
 
-    m_vbox = new Q3VBox(m_viewTreeSplitter, "main_window_right_side");
-    m_tabWidget = new KTabWidget(m_vbox, "main_window_tab_widget");
-    m_queueTuner = new QueueTuner(m_vbox, this);
-    m_queueTuner->hide();
+    m_vbox = new Q3VBox(m_viewTreeSplitter);
+    m_vbox->setObjectName("main_window_right_side");
+    m_tabWidget = new KTabWidget(m_vbox);
+    m_tabWidget->setObjectName("main_window_tab_widget");
+    //m_queueTuner = new QueueTuner(m_vbox, this);
+    //m_queueTuner->hide();
 
     m_tabWidget->setTabReorderingEnabled(true);
     m_tabWidget->setTabCloseActivatePrevious(true);
@@ -158,7 +165,7 @@ void ViewContainer::setupTabWidget()
     m_vbox->hide();    //m_tabWidget->hide();
 
     KPushButton* closeBtn = new KPushButton(m_tabWidget);
-    closeBtn->setPixmap(KIconLoader::global()->loadIcon("tab_remove", KIcon::Small));
+    closeBtn->setPixmap(KIconLoader::global()->loadIcon("tab_remove", KIconLoader::Small, 22));
     closeBtn->resize(22, 22);
     closeBtn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     m_tabWidget->setCornerWidget(closeBtn);
@@ -189,14 +196,14 @@ void ViewContainer::setupViewTree()
     connect(m_viewTree, SIGNAL(sizeChanged()), this, SLOT(saveSplitterSizes()));
     connect(m_viewTree, SIGNAL(syncTabBarToTree()), this, SLOT(syncTabBarToTree()));
 
-    KAction* action;
+    QAction* action;
 
     action = actionCollection()->action("move_tab_left");
 
     if (action)
     {
         action->setText(i18n("Move Tab Up"));
-        action->setIcon("1uparrow");
+        action->setIcon(KIcon("1uparrow"));
     }
 
     action = actionCollection()->action("move_tab_right");
@@ -204,7 +211,7 @@ void ViewContainer::setupViewTree()
     if (action)
     {
         action->setText(i18n("Move Tab Down"));
-        action->setIcon("1downarrow");
+        action->setIcon(KIcon("1downarrow"));
     }
 
     // If the tab widget already exists we may need to sync the ViewTree
@@ -290,14 +297,14 @@ void ViewContainer::removeViewTree()
     disconnect(m_viewTree, SIGNAL(sizeChanged()), this, SLOT(saveSplitterSizes()));
     disconnect(m_viewTree, SIGNAL(syncTabBarToTree()), this, SLOT(syncTabBarToTree()));
 
-    KAction* action;
+    QAction* action;
 
     action = actionCollection()->action("move_tab_left");
 
     if (action)
     {
         action->setText(i18n("Move Tab Left"));
-        action->setIcon("1leftarrow");
+        action->setIcon(KIcon("1leftarrow"));
     }
 
     action = actionCollection()->action("move_tab_right");
@@ -305,7 +312,7 @@ void ViewContainer::removeViewTree()
     if (action)
     {
         action->setText(i18n("Move Tab Right"));
-        action->setIcon("1rightarrow");
+        action->setIcon(KIcon("1rightarrow"));
     }
 
     delete m_viewTree;
@@ -356,7 +363,8 @@ void ViewContainer::updateAppearance()
     updateViews();
     updateTabWidgetAppearance();
 
-    KToggleAction* action = static_cast<KToggleAction*>(actionCollection()->action("hide_nicknamelist"));
+    KToggleAction* action = qobject_cast<KToggleAction*>(actionCollection()->action("hide_nicknamelist"));
+    Q_ASSERT(action);
     action->setChecked(!Preferences::showNickList());
 
     if(m_insertCharDialog)
@@ -367,8 +375,8 @@ void ViewContainer::updateAppearance()
             font = Preferences::textFont();
         else
             font = KGlobalSettings::generalFont();
-
-        m_insertCharDialog->setFont(font);
+        Q_ASSERT(0);
+        //m_insertCharDialog->setFont(font);
     }
 }
 
@@ -402,7 +410,7 @@ void ViewContainer::updateViewActions(int index)
 {
     if (!m_tabWidget) return;
 
-    KAction* action;
+    QAction* action;
 
     ChatWindow* view = static_cast<ChatWindow*>(m_tabWidget->page(index));
 
@@ -775,8 +783,9 @@ void ViewContainer::updateViews(const Konversation::ServerGroupSettings* serverG
             if (Preferences::closeButtons() && !Preferences::tabNotificationsLeds())
                 m_tabWidget->setTabIconSet(view, images->getCloseIcon());
 
-            if (!Preferences::tabNotificationsText())
-                m_tabWidget->setTabColor(view, m_window->colorGroup().foreground());
+            // TODO FIXME
+            //if (!Preferences::tabNotificationsText())
+            //    m_tabWidget->setTabColor(view, m_window->colorGroup().foreground());
         }
 
         if (Preferences::tabNotificationsLeds() || Preferences::tabNotificationsText())
@@ -937,8 +946,8 @@ void ViewContainer::setViewNotification(ChatWindow* view, const Konversation::Ta
                 {
                     if (Preferences::tabNotificationsLeds())
                         m_tabWidget->setTabIconSet(view, images->getMsgsLed(true));
-                    if (Preferences::tabNotificationsText())
-                        m_tabWidget->setTabColor(view, Preferences::tabNotificationsMsgsColor());
+                    //if (Preferences::tabNotificationsText())
+                    //    m_tabWidget->setTabColor(view, Preferences::tabNotificationsMsgsColor());
                 }
                 break;
 
@@ -947,8 +956,8 @@ void ViewContainer::setViewNotification(ChatWindow* view, const Konversation::Ta
                 {
                     if (Preferences::tabNotificationsLeds())
                         m_tabWidget->setTabIconSet(view, images->getPrivateLed(true));
-                    if (Preferences::tabNotificationsText())
-                        m_tabWidget->setTabColor(view, Preferences::tabNotificationsPrivateColor());
+                    //if (Preferences::tabNotificationsText())
+                    //    m_tabWidget->setTabColor(view, Preferences::tabNotificationsPrivateColor());
                 }
                 break;
 
@@ -957,8 +966,8 @@ void ViewContainer::setViewNotification(ChatWindow* view, const Konversation::Ta
                 {
                     if (Preferences::tabNotificationsLeds())
                         m_tabWidget->setTabIconSet(view, images->getSystemLed(true));
-                    if (Preferences::tabNotificationsText())
-                        m_tabWidget->setTabColor(view, Preferences::tabNotificationsSystemColor());
+                    //if (Preferences::tabNotificationsText())
+                    //    m_tabWidget->setTabColor(view, Preferences::tabNotificationsSystemColor());
                 }
                 break;
 
@@ -967,8 +976,8 @@ void ViewContainer::setViewNotification(ChatWindow* view, const Konversation::Ta
                 {
                     if (Preferences::tabNotificationsLeds())
                         m_tabWidget->setTabIconSet(view, images->getEventsLed());
-                    if (Preferences::tabNotificationsText())
-                        m_tabWidget->setTabColor(view, Preferences::tabNotificationsEventsColor());
+                    //if (Preferences::tabNotificationsText())
+                    //    m_tabWidget->setTabColor(view, Preferences::tabNotificationsEventsColor());
                 }
                 break;
 
@@ -979,15 +988,15 @@ void ViewContainer::setViewNotification(ChatWindow* view, const Konversation::Ta
                     {
                         if (Preferences::tabNotificationsLeds())
                             m_tabWidget->setTabIconSet(view, images->getLed(Preferences::highlightNickColor(),true));
-                        if (Preferences::tabNotificationsText())
-                            m_tabWidget->setTabColor(view, Preferences::highlightNickColor());
+                        //if (Preferences::tabNotificationsText())
+                        //    m_tabWidget->setTabColor(view, Preferences::highlightNickColor());
                     }
                     else
                     {
                         if (Preferences::tabNotificationsLeds())
                             m_tabWidget->setTabIconSet(view, images->getNickLed());
-                        if (Preferences::tabNotificationsText())
-                            m_tabWidget->setTabColor(view, Preferences::tabNotificationsNickColor());
+                        //if (Preferences::tabNotificationsText())
+                        //    m_tabWidget->setTabColor(view, Preferences::tabNotificationsNickColor());
                     }
                 }
                 else
@@ -1003,15 +1012,15 @@ void ViewContainer::setViewNotification(ChatWindow* view, const Konversation::Ta
                     {
                         if (Preferences::tabNotificationsLeds())
                             m_tabWidget->setTabIconSet(view, images->getLed(view->highlightColor(),true));
-                        if (Preferences::tabNotificationsText())
-                            m_tabWidget->setTabColor(view, view->highlightColor());
+                        //if (Preferences::tabNotificationsText())
+                        //    m_tabWidget->setTabColor(view, view->highlightColor());
                     }
                     else
                     {
                         if (Preferences::tabNotificationsLeds())
                             m_tabWidget->setTabIconSet(view, images->getHighlightsLed());
-                        if (Preferences::tabNotificationsText())
-                            m_tabWidget->setTabColor(view, Preferences::tabNotificationsHighlightsColor());
+                        //if (Preferences::tabNotificationsText())
+                        //    m_tabWidget->setTabColor(view, Preferences::tabNotificationsHighlightsColor());
                     }
                 }
                 else
@@ -1111,7 +1120,8 @@ void ViewContainer::unsetViewNotification(ChatWindow* view)
                 textColor = KonversationApplication::instance()->palette(m_tabWidget).disabled().text();
         }
 
-        m_tabWidget->setTabColor(view, textColor);
+        // TODO FIXME
+        //m_tabWidget->setTabColor(view, textColor);
     }
 
     Q3ValueList<ChatWindow*>::iterator it = m_activeViewOrderList.find(view);
@@ -1577,7 +1587,7 @@ void ViewContainer::cleanupAfterClose(ChatWindow* view)
 
     if (m_queryViewCount == 0 && actionCollection())
     {
-        KAction* action = actionCollection()->action("close_queries");
+        QAction* action = actionCollection()->action("close_queries");
         if (action) action->setEnabled(false);
     }
 }
@@ -1623,7 +1633,7 @@ void ViewContainer::updateViewEncoding(ChatWindow* view)
     if (view)
     {
         ChatWindow::WindowType viewType = view->getType();
-        KSelectAction* codecAction = static_cast<KSelectAction*>(actionCollection()->action("tab_encoding"));
+        KSelectAction* codecAction = qobject_cast<KSelectAction*>(actionCollection()->action("tab_encoding"));
 
         if (codecAction)
         {
@@ -1634,7 +1644,7 @@ void ViewContainer::updateViewEncoding(ChatWindow* view)
 
                 if(m_frontServer)
                 {
-                    codecAction->changeItem(0, i18n("Default encoding", "Default ( %1 )").arg(m_frontServer->getIdentity()->getCodecName()));
+                    codecAction->changeItem(0, i18nc("Default encoding", "Default ( %1 )", m_frontServer->getIdentity()->getCodecName()));
                 }
 
                 if(encoding.isEmpty())
@@ -1659,14 +1669,15 @@ void ViewContainer::showViewContextMenu(QWidget* tab, const QPoint& pos)
     m_popupViewIndex = m_tabWidget->indexOf(tab);
 
     updateViewActions(m_popupViewIndex);
-    Q3PopupMenu* menu = static_cast<Q3PopupMenu*>(m_window->factory()->container("tabContextMenu", m_window));
+    Q3PopupMenu* menu = static_cast<Q3PopupMenu*>(m_window->guiFactory()->container("tabContextMenu", m_window));
 
     if (!menu) return;
 
     ChatWindow* view = static_cast<ChatWindow*>(tab);
-    KToggleAction* autoJoinAction = static_cast<KToggleAction*>(actionCollection()->action("tab_autojoin"));
-    KAction* rejoinAction = actionCollection()->action("rejoin_channel");
+    KToggleAction* autoJoinAction = qobject_cast<KToggleAction*>(actionCollection()->action("tab_autojoin"));
+    QAction* rejoinAction = actionCollection()->action("rejoin_channel");
 
+    QList<QAction *> serverActions;
     if (view)
     {
         ChatWindow::WindowType viewType = view->getType();
@@ -1675,28 +1686,30 @@ void ViewContainer::showViewContextMenu(QWidget* tab, const QPoint& pos)
 
         if (viewType == ChatWindow::Channel)
         {
-            autoJoinAction->plug(menu, 1);
+            // TODO FIXME this used to be added at index 1, which we can't do anymore
+            menu->addAction(autoJoinAction);
 
             Channel *channel = static_cast<Channel*>(view);
             if (channel->rejoinable() && rejoinAction)
             {
-                rejoinAction->plug(menu, 0);
+                menu->addAction(rejoinAction);
                 rejoinAction->setEnabled(true);
             }
         }
 
         if (viewType == ChatWindow::Status)
         {
-            Q3PtrList<KAction> serverActions;
-            KAction* action = actionCollection()->action("disconnect_server");
+            QAction* action = actionCollection()->action("disconnect_server");
             if (action) serverActions.append(action);
             action = actionCollection()->action("reconnect_server");
             if (action) serverActions.append(action);
             action = actionCollection()->action("join_channel");
             if (action) serverActions.append(action);
-            action = new KActionSeparator();
+            // TODO FIXME who wants to own this action?
+            action = new QAction(this);
+            action->setSeparator(true);
             if (action) serverActions.append(action);
-            m_window->plugActionList("server_actions", serverActions);
+            m_window->addActions(serverActions);
             m_contextServer = view->getServer();
         }
         else
@@ -1711,10 +1724,13 @@ void ViewContainer::showViewContextMenu(QWidget* tab, const QPoint& pos)
         if (view) updateViewEncoding(view);
     }
 
-    autoJoinAction->unplug(menu);
-    rejoinAction->unplug(menu);
+    menu->removeAction(autoJoinAction);
+    menu->removeAction(rejoinAction);
 
-    m_window->unplugActionList("server_actions");
+    // TODO FIXME does this work?
+    QAction* action;
+    foreach(action, serverActions)
+        m_window->removeAction(action);
 
     emit contextMenuClosed();
 
@@ -1859,6 +1875,7 @@ void ViewContainer::insertCharacter()
         font = Preferences::textFont();
     else
         font = KGlobalSettings::generalFont();
+    /* // TODO FIXME
 
     if (!m_insertCharDialog)
     {
@@ -1868,6 +1885,7 @@ void ViewContainer::insertCharacter()
 
     m_insertCharDialog->setFont(font);
     m_insertCharDialog->show();
+    */
 }
 
 void ViewContainer::insertChar(const QChar& chr)
@@ -1879,9 +1897,10 @@ void ViewContainer::insertChar(const QChar& chr)
 
 void ViewContainer::insertIRCColor()
 {
-    IRCColorChooser dlg(m_window);
+    // TODO FIXME
+    //IRCColorChooser dlg(m_window);
 
-    if (dlg.exec() == KDialog::Accepted) m_frontView->appendInputText(dlg.color(), true/*fromCursor*/);
+    //if (dlg.exec() == KDialog::Accepted) m_frontView->appendInputText(dlg.color(), true/*fromCursor*/);
 }
 
 void ViewContainer::clearViewLines()
@@ -1890,7 +1909,7 @@ void ViewContainer::clearViewLines()
     {
         m_frontView->getTextView()->clearLines();
 
-        KAction* action = actionCollection()->action("clear_lines");
+        QAction* action = actionCollection()->action("clear_lines");
         if (action) action->setEnabled(false);
     }
 }
@@ -1921,7 +1940,7 @@ void ViewContainer::cancelRememberLine()
     {
         m_frontView->getTextView()->cancelRememberLine();
 
-        KAction* action = actionCollection()->action("clear_lines");
+        QAction* action = actionCollection()->action("clear_lines");
         if (action) action->setEnabled(m_frontView->getTextView()->hasLines());
     }
 }
@@ -1948,7 +1967,7 @@ void ViewContainer::insertMarkerLine()
 
     if (m_frontView && m_frontView->isInsertSupported())
     {
-        KAction* action = actionCollection()->action("clear_lines");
+        QAction* action = actionCollection()->action("clear_lines");
         if (action) action->setEnabled(m_frontView->getTextView()->hasLines());
     }
 }
@@ -1979,12 +1998,12 @@ void ViewContainer::openLogFile(const QString& caption, const QString& file)
 
 void ViewContainer::addKonsolePanel()
 {
-    KonsolePanel* panel=new KonsolePanel(m_tabWidget);
+/*    KonsolePanel* panel=new KonsolePanel(m_tabWidget);
     panel->setName(i18n("Konsole"));
     addView(panel, i18n("Konsole"));
     connect(panel, SIGNAL(updateTabNotification(ChatWindow*,const Konversation::TabNotifyType&)), this, SLOT(setViewNotification(ChatWindow*,const Konversation::TabNotifyType&)));
     connect(panel, SIGNAL(closeView(ChatWindow*)), this, SLOT(closeView(ChatWindow*)));
-}
+*/}
 
 void ViewContainer::addUrlCatcher()
 {
@@ -2025,25 +2044,25 @@ void ViewContainer::closeUrlCatcher()
 }
 
 void ViewContainer::toggleDccPanel()
-{
+{/*
     if (m_dccPanel==0 || !m_dccPanelOpen)
         addDccPanel();
     else
         closeDccPanel();
-}
+*/}
 
 void ViewContainer::addDccPanel()
-{
+{/*
     if (!m_dccPanelOpen)
     {
         addView(m_dccPanel, i18n("DCC Status"));
         m_dccPanelOpen=true;
         (dynamic_cast<KToggleAction*>(actionCollection()->action("open_dccstatus_window")))->setChecked(true);
     }
-}
+*/}
 
 void ViewContainer::closeDccPanel()
-{
+{/*
     // if there actually is a dcc panel
     if (m_dccPanel)
     {
@@ -2053,25 +2072,25 @@ void ViewContainer::closeDccPanel()
         m_dccPanelOpen=false;
         (dynamic_cast<KToggleAction*>(actionCollection()->action("open_dccstatus_window")))->setChecked(false);
     }
-}
+*/}
 
 void ViewContainer::deleteDccPanel()
-{
+{/*
     if (m_dccPanel)
     {
         closeDccPanel();
         delete m_dccPanel;
         m_dccPanel=0;
     }
-}
+*/}
 
 DccTransferPanel* ViewContainer::getDccPanel()
 {
-    return m_dccPanel;
+    return 0;//m_dccPanel;
 }
 
 void ViewContainer::addDccChat(const QString& myNick,const QString& nick,const QStringList& arguments,bool listen)
-{
+{/*
     if (!listen) // Someone else initiated dcc chat
     {
         KonversationApplication* konv_app=static_cast<KonversationApplication*>(KApplication::kApplication());
@@ -2088,7 +2107,7 @@ void ViewContainer::addDccChat(const QString& myNick,const QString& nick,const Q
 
         // This needs to be here as addView will change m_frontServer if focus new tabs is enabled.
         addView(dccChatPanel, dccChatPanel->getName());
-    }
+    }*/
 }
 
 StatusPanel* ViewContainer::addStatusView(Server* server)
@@ -2174,11 +2193,12 @@ void ViewContainer::showJoinChannelDialog()
 
     if (!server)
         return;
-
+    /* // TODO FIXME
     Konversation::JoinChannelDialog dlg(server, m_window);
 
     if (dlg.exec() == QDialog::Accepted)
         server->sendJoinCommand(dlg.channel(), dlg.password());
+    */
 }
 
 void ViewContainer::connectionStateChanged(Server* server, Konversation::ConnectionState state)
@@ -2192,7 +2212,7 @@ void ViewContainer::connectionStateChanged(Server* server, Konversation::Connect
 
     if (updateServer && updateServer == server)
     {
-        KAction* action = actionCollection()->action("disconnect_server");
+        QAction* action = actionCollection()->action("disconnect_server");
         if (action)
             action->setEnabled(state == Konversation::SSConnected);
 
@@ -2218,7 +2238,7 @@ void ViewContainer::channelJoined(Channel* channel)
 
     if (view == channel)
     {
-        KAction* action = actionCollection()->action("rejoin_channel");
+        QAction* action = actionCollection()->action("rejoin_channel");
         if (action) action->setEnabled(false);
     }
 }
@@ -2267,7 +2287,7 @@ void ViewContainer::toggleChannelNicklists()
     if (action)
     {
         Preferences::setShowNickList(!action->isChecked());
-        Preferences::writeConfig();
+        Preferences::self()->writeConfig();
 
         emit updateChannelAppearance();
     }
@@ -2371,8 +2391,11 @@ void ViewContainer::openChannelList(const QString& filter, bool getList)
                 ret = KMessageBox::warningContinueCancel(m_window,i18n("Using this function may result in a lot "
                       "of network traffic. If your connection is not fast "
                       "enough, it is possible that your client will be "
-                      "disconnected by the server."), i18n("Channel List Warning"),
-                      KStandardGuiItem::cont(), "ChannelListWarning");
+                      "disconnected by the server."),
+                      i18n("Channel List Warning"),
+                      KStandardGuiItem::cont(),
+                      KStandardGuiItem::cancel(),
+                      "ChannelListWarning");
             }
 
             if (ret != KMessageBox::Continue) return;
@@ -2454,4 +2477,4 @@ void ViewContainer::showNextActiveView()
     If the server is being removed this will fire with a null pointer.
 */
 
-#include "viewcontainer.moc"
+// #include "./viewer/viewcontainer.moc"

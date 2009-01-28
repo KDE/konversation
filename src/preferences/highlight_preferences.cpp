@@ -12,8 +12,8 @@
 
 #include "highlight_preferences.h"
 #include "highlightviewitem.h"
-#include "konversationapplication.h"
-#include "konversationsound.h"
+#include "application.h" ////// header renamed
+#include "sound.h" ////// header renamed
 #include "config/preferences.h"
 
 #include <qdir.h>
@@ -351,4 +351,4 @@ void Highlight_Config::saveSettings()
   m_oldHighlightList=currentHighlightList();
 }
 
-#include "highlight_preferences.moc"
+// #include "./preferences/highlight_preferences.moc"

@@ -16,7 +16,7 @@
 #define DCCTRANSFERPANEL_H
 
 #include "chatwindow.h"
-#include "dcctransferpanelitem.h"
+#include "transferpanelitem.h" ////// header renamed
 //Added by qt3to4:
 #include <QContextMenuEvent>
 

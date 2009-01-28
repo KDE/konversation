@@ -32,12 +32,12 @@ ServerListView::~ServerListView()
 Q3PtrList<Q3ListViewItem> ServerListView::selectedServerListItems()
 {
 
-    Q3PtrList<Q3ListViewItem> selectedItems = K3ListView::selectedItems();
+    QList<Q3ListViewItem*> selectedItems = K3ListView::selectedItems();
     Q3PtrList<Q3ListViewItem> selectedServerListItems;
 
-    Q3ListViewItem* item = selectedItems.first();
-
-    while (item)
+    Q3ListViewItem* item;// = selectedItems.first();
+    foreach (item, selectedItems)
+    //while (item)
     {
         if (item->parent())
         {
@@ -49,7 +49,7 @@ Q3PtrList<Q3ListViewItem> ServerListView::selectedServerListItems()
             selectedServerListItems.append(item);
         }
 
-        item = selectedItems.next();
+        //item = selectedItems.next();
     }
 
     return selectedServerListItems;
@@ -99,18 +99,19 @@ Q3DragObject* ServerListView::dragObject()
     if (!currentItem())
         return 0;
 
-    Q3PtrList<Q3ListViewItem> selected = selectedItems();
-    Q3ListViewItem* item = selected.first();
+    QList<Q3ListViewItem*> selected = selectedItems();
+    Q3ListViewItem* item;// = selected.first();
 
-    while (item)
+    foreach (item, selected)
+    //while (item)
     {
         if (!item->dragEnabled())
             return 0;
 
-        item = selected.next();
+        //item = selected.next();
     }
 
     return new Q3StoredDrag("application/x-qlistviewitem", viewport());
 }
 
-#include "serverlistview.moc"
+// #include "./irc/serverlistview.moc"

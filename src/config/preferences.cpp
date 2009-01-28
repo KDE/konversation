@@ -71,7 +71,7 @@ Preferences::Preferences()
     nickList.append(user.loginName() + "__");
     mIdentity->setNicknameList(nickList);
 
-    Konversation::ServerGroupSettingsPtr serverGroup = new Konversation::ServerGroupSettings;
+    Konversation::ServerGroupSettingsPtr serverGroup(new Konversation::ServerGroupSettings);
     serverGroup->setName("Freenode");
     Konversation::ServerSettings server;
     server.setHost("irc.freenode.org");
@@ -168,7 +168,7 @@ const Konversation::ServerGroupSettingsPtr Preferences::serverGroupById(int id)
 {
     if (!self()->mServerGroupList.count())
     {
-        return 0;
+        return Konversation::ServerGroupSettingsPtr();
     }
 
     Konversation::ServerGroupList::iterator it;
@@ -181,30 +181,30 @@ const Konversation::ServerGroupSettingsPtr Preferences::serverGroupById(int id)
         }
     }
 
-    return 0;
+    return  Konversation::ServerGroupSettingsPtr();
 }
 
 const Konversation::ServerGroupSettingsPtr Preferences::serverGroupByServer(const QString& server)
 {
     if (!self()->mServerGroupList.count())
     {
-        return 0;
+        return Konversation::ServerGroupSettingsPtr();
     }
 
     Konversation::ServerGroupList::iterator it;
 
     for (it = self()->mServerGroupList.begin(); it != self()->mServerGroupList.end(); ++it)
     {
-        for (uint i = 0; i != (*it)->serverList().count(); i++)
+        for (int i = 0; i != (*it)->serverList().count(); i++)
         {
-            if ((*it)->serverByIndex(i).host().lower() == server)
+            if ((*it)->serverByIndex(i).host().toLower() == server)
             {
                 return (*it);
             }
         }
     }
 
-    return 0;
+    return Konversation::ServerGroupSettingsPtr();
 }
 
 int Preferences::serverGroupIdByName(const QString& serverGroup)
@@ -213,7 +213,7 @@ int Preferences::serverGroupIdByName(const QString& serverGroup)
 
     for (it = self()->mServerGroupList.begin(); it != self()->mServerGroupList.end(); ++it)
     {
-        if((*it)->name().lower() == serverGroup.lower())
+        if((*it)->name().toLower() == serverGroup.toLower())
         {
             return (*it)->id();
         }
@@ -228,7 +228,7 @@ bool Preferences::isServerGroup(const QString& server)
 
     for(it = self()->mServerGroupList.begin(); it != self()->mServerGroupList.end(); ++it)
     {
-        if((*it)->name().lower() == server.lower())
+        if((*it)->name().toLower() == server.toLower())
         {
             return true;
         }
@@ -286,7 +286,7 @@ void Preferences::setIgnoreList(Q3PtrList<Ignore> newList)
 
 void Preferences::addIgnore(const QString &newIgnore)
 {
-    QStringList ignore = QStringList::split(',',newIgnore);
+    QStringList ignore = newIgnore.split(',');
     removeIgnore(ignore[0]);
     self()->mIgnoreList.append(new Ignore(ignore[0],ignore[1].toInt()));
 }
@@ -297,7 +297,7 @@ bool Preferences::removeIgnore(const QString &oldIgnore)
 
     while (ignoreList.current())
     {
-        if (ignoreList.current()->getName().lower()==oldIgnore.lower())
+        if (ignoreList.current()->getName().toLower() == oldIgnore.toLower())
         {
             self()->mIgnoreList.remove(ignoreList.current());
             return true;
@@ -314,7 +314,7 @@ bool Preferences::isIgnored(const QString &nickname)
 
     while (ignoreList.current())
     {
-        if (ignoreList.current()->getName().section('!',0,0).lower()==nickname.lower())
+        if (ignoreList.current()->getName().section('!',0,0).toLower()==nickname.toLower())
         {
             return true;
         }
@@ -363,7 +363,7 @@ bool Preferences::removeNotify(const QString& groupName, const QString& pattern)
   if (self()->mNotifyList.find(id) != self()->mNotifyList.end())
     {
         QStringList nicknameList = self()->mNotifyList[id];
-        nicknameList.remove(pattern);
+        nicknameList.removeAll(pattern); //FIXME: what semantics do you really want here?
         if (nicknameList.isEmpty())
             self()->mNotifyList.remove(id);
         else
@@ -528,11 +528,9 @@ void Preferences::setAutoUserhost(bool state)
 
 bool Preferences::dialogFlag(const QString& flagName)
 {
-    KConfig* config=KApplication::kApplication()->config();
+    KConfigGroup config(KGlobal::config()->group("Notification self()->Messages"));
 
-    config->setGroup("Notification self()->Messages");
-
-    if( !config->readEntry(flagName).isEmpty() )
+    if (!config.readEntry(flagName).isEmpty())
         return false;
     else
         return true;
@@ -540,19 +538,17 @@ bool Preferences::dialogFlag(const QString& flagName)
 
 void Preferences::setDialogFlag(const QString& flagName,bool state)
 {
-    KConfig* config=KApplication::kApplication()->config();
+    KConfigGroup config(KGlobal::config()->group("Notification self()->Messages"));
 
-    config->setGroup("Notification self()->Messages");
-
-    if(state)
-        config->deleteEntry(flagName);
+    if (state)
+        config.deleteEntry(flagName);
     else
     {
-        if ( config->readEntry(flagName).isEmpty() )
-            config->writeEntry(flagName,"no");
+        if (config.readEntry(flagName).isEmpty())
+            config.writeEntry(flagName,"no");
     }
 
-    config->sync();
+    config.sync();
 }
 
 
@@ -565,8 +561,8 @@ const QString Preferences::channelEncoding(const QString& server,const QString& 
 const QString Preferences::channelEncoding(int serverGroupId,const QString& channel)
 {
     if(self()->mChannelEncodingsMap.contains(serverGroupId))
-        if(self()->mChannelEncodingsMap[serverGroupId].contains(channel.lower()))
-            return self()->mChannelEncodingsMap[serverGroupId][channel.lower()];
+        if(self()->mChannelEncodingsMap[serverGroupId].contains(channel.toLower()))
+            return self()->mChannelEncodingsMap[serverGroupId][channel.toLower()];
     return QString();
 }
 
@@ -577,10 +573,10 @@ void Preferences::setChannelEncoding(const QString& server,const QString& channe
 
 void Preferences::setChannelEncoding(int serverGroupId,const QString& channel,const QString& encoding)
 {
-    self()->mChannelEncodingsMap[serverGroupId][channel.lower()]=encoding;
+    self()->mChannelEncodingsMap[serverGroupId][channel.toLower()]=encoding;
 }
 
-const QValueList<int> Preferences::channelEncodingsServerGroupIdList()
+const Q3ValueList<int> Preferences::channelEncodingsServerGroupIdList()
 {
     return self()->mChannelEncodingsMap.keys();
 }
@@ -600,8 +596,9 @@ QString Preferences::webBrowserCmd()
 {
   // add %u to command if it's not in there
   QString cmd=self()->mWebBrowserCmd;
-  if(cmd.find("%u")==-1) cmd+=" %u";
+  if (cmd.indexOf("%u") == -1)
+      cmd += " %u";
   return cmd;
 }
 
-#include "preferences.moc"
+// #include "./config/preferences.moc"

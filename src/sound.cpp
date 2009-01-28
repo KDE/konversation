@@ -11,7 +11,7 @@
   email:     psn@linux.se
 */
 
-#include "konversationsound.h"
+#include "sound.h" ////// header renamed
 
 #include <config.h>
 #include <kurl.h>
@@ -38,4 +38,4 @@ namespace Konversation
     }
 }
 
-#include "konversationsound.moc"
+// #include "./sound.moc"

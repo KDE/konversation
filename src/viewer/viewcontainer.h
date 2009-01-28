@@ -12,7 +12,7 @@
 #ifndef VIEWCONTAINER_H
 #define VIEWCONTAINER_H
 
-#include "konversationmainwindow.h"
+#include "mainwindow.h" ////// header renamed
 #include "common.h"
 #include "server.h"
 
@@ -178,7 +178,7 @@ class ViewContainer : public QObject
         void setStatusBarLagLabelTooLongLag(Server* server, int msec);
         void updateStatusBarSSLLabel(Server* server);
         void removeStatusBarSSLLabel();
-        void autoJoinToggled(const Konversation::ServerGroupSettings*);
+        void autoJoinToggled(const Konversation::ServerGroupSettingsPtr);
 
         void frontServerChanging(Server *);
 
@@ -205,7 +205,7 @@ class ViewContainer : public QObject
         KTabWidget* m_tabWidget;
         ViewTree* m_viewTree;
         Q3VBox *m_vbox;
-        QueueTuner *m_queueTuner;
+        //QueueTuner *m_queueTuner;
 
         Images* images;
 
@@ -217,7 +217,7 @@ class ViewContainer : public QObject
         UrlCatcher* m_urlCatcherPanel;
         NicksOnline* m_nicksOnlinePanel;
 
-        DccTransferPanel* m_dccPanel;
+        //DccTransferPanel* m_dccPanel;
         bool m_dccPanelOpen;
 
         Konversation::InsertCharDialog* m_insertCharDialog;

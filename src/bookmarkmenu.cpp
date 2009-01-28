@@ -15,8 +15,8 @@ Copyright (C) 2002 Carsten Pfeiffer <pfeiffer@kde.org>
 
 */
 
-#include "konvibookmarkmenu.h"
-#include "konvibookmarkhandler.h"
+#include "bookmarkmenu.h" ////// header renamed
+#include "bookmarkhandler.h" ////// header renamed
 
 #include <qregexp.h>
 
@@ -151,4 +151,4 @@ void KonviBookmarkMenu::slotBookmarkSelected()
         ( (KAction *)sender() )->text() /* Title */ );
 }
 
-#include "konvibookmarkmenu.moc"
+// #include "./bookmarkmenu.moc"

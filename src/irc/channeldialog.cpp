@@ -81,4 +81,4 @@ namespace Konversation
     }
 }
 
-#include "channeldialog.moc"
+// #include "./irc/channeldialog.moc"

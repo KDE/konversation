@@ -18,7 +18,7 @@
 
 #include <qobject.h>
 #include <qstringlist.h>
-
+#include <QMap>
 
 class Server;
 class QWidget;
@@ -80,7 +80,7 @@ class InputFilter : public QObject
 
         Server* server;
                                                   // automaticRequest[command][channel or nick]=count
-        QMap< QString, QMap<QString,int> > automaticRequest;
+        QMap< QString, QMap< QString, int > > automaticRequest;
         QStringList whoRequestList;
         int lagMeasuring;
 

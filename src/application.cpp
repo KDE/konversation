@@ -13,15 +13,15 @@
   Copyright (C) 2005-2008 Eike Hein <hein@kde.org>
 */
 
-#include "konversationapplication.h"
-#include "konversationmainwindow.h"
+#include "application.h" ////// header renamed
+#include "mainwindow.h" ////// header renamed
 #include "connectionmanager.h"
 #include "awaymanager.h"
-#include "dcctransfermanager.h"
+#include "transfermanager.h" ////// header renamed
 #include "viewcontainer.h"
 #include "highlight.h"
 #include "server.h"
-#include "konversationsound.h"
+#include "sound.h" ////// header renamed
 #include "quickconnectdialog.h"
 //Added by qt3to4:
 #include <Q3CString>
@@ -41,7 +41,7 @@
 #include <kdebug.h>
 #include <kcmdlineargs.h>
 #include <kconfig.h>
-#include <dcopclient.h>
+//#include <dcopclient.h>
 #include <kdeversion.h>
 #include <kstandarddirs.h>
 #include <klocale.h>
@@ -51,7 +51,7 @@
 
 
 KonversationApplication::KonversationApplication()
-: KUniqueApplication(true, true, true)
+: KUniqueApplication(true, true)
 {
     mainWindow = 0;
     m_connectionManager = 0;
@@ -64,13 +64,13 @@ KonversationApplication::~KonversationApplication()
 {
     kDebug() << k_funcinfo << endl;
     Server::_stashRates();
-    Preferences::writeConfig();
+    Preferences::self()->writeConfig();
     saveOptions(false);
 
     delete m_images;
-    delete dcopObject;
+    //delete dcopObject;
     //delete prefsDCOP;
-    delete identDCOP;
+    //delete identDCOP;
     delete osd;
     osd = 0;
 }
@@ -78,8 +78,9 @@ KonversationApplication::~KonversationApplication()
 int KonversationApplication::newInstance()
 {
     KCmdLineArgs* args = KCmdLineArgs::parsedArgs();
-    Q3CString url;
-    if (args->count() > 0) url = args->arg(0);
+    QString url; //TODO FIXME: does this really have to be a QCString?
+    if (args->count() > 0)
+        url = args->arg(0);
 
     if (!mainWindow)
     {
@@ -95,7 +96,7 @@ int KonversationApplication::newInstance()
         connect(m_connectionManager, SIGNAL(connectionChangedAwayState(bool)), m_awayManager, SLOT(updateGlobalAwayAction(bool)));
 
         // an instance of DccTransferManager needs to be created before GUI class instances' creation.
-        m_dccTransferManager = new DccTransferManager(this);
+        m_dccTransferManager = 0;//new DccTransferManager(this);
 
         // make sure all vars are initialized properly
         quickConnectDialog = 0;
@@ -104,7 +105,7 @@ int KonversationApplication::newInstance()
         m_sound = new Konversation::Sound(this);
 
         // initialize OSD display here, so we can read the Preferences::properly
-        osd = new OSDWidget( "Konversation" );
+        //osd = new OSDWidget( "Konversation" );
 
         Preferences::self();
         readOptions();
@@ -133,7 +134,7 @@ int KonversationApplication::newInstance()
 
         // open main window
         mainWindow = new KonversationMainWindow();
-        setMainWidget(mainWindow);
+        //setMainWidget(mainWindow); //TODO FIXME do we need any of the other semantics this use to gain us?
 
         connect(mainWindow, SIGNAL(showQuickConnectDialog()), this, SLOT(openQuickConnectDialog()) );
         connect(Preferences::self(), SIGNAL(updateTrayIcon()), mainWindow, SLOT(updateTrayIcon()) );
@@ -141,7 +142,7 @@ int KonversationApplication::newInstance()
         // take care of user style changes, setting back colors and stuff
 
         // apply GUI settings
-        emit appearanceChanged();
+        emit appearanceChanged(); //TODO FIXME i do believe this signal is abused
 
         if (Preferences::showTrayIcon() && Preferences::hideToTrayOnStartup())
             mainWindow->hide();
@@ -169,6 +170,7 @@ int KonversationApplication::newInstance()
 
         connect(this, SIGNAL(serverGroupsChanged(const Konversation::ServerGroupSettings*)), this, SLOT(saveOptions()));
 
+#ifdef SOMEHOW_MAGICALLY_DCOP_WORKS_IN_KDE4_NOW
         // prepare dcop interface
         dcopObject = new KonvDCOP;
         kapp->dcopClient()->setDefaultObject(dcopObject->objId());
@@ -189,6 +191,7 @@ int KonversationApplication::newInstance()
             connect(dcopObject, SIGNAL(connectTo(Konversation::ConnectionFlag, const QString&, const QString&, const QString&, const QString&, const QString&, bool)),
                 m_connectionManager, SLOT(connectTo(Konversation::ConnectionFlag, const QString&, const QString&, const QString&, const QString&, const QString&, bool)));
         }
+#endif //SOMEHOW_MAGICALLY_DCOP_WORKS_IN_KDE4_NOW
 
         m_notificationHandler = new Konversation::NotificationHandler(this);
     }
@@ -273,65 +276,64 @@ void KonversationApplication::dcopInfo(const QString& string)
 void KonversationApplication::readOptions()
 {
     // get standard config file
-    KConfig* config=KGlobal::config();
 
     // read nickname sorting order for channel nick lists
-    config->setGroup("Sort Nicknames");
-    QString sortOrder=config->readEntry("SortOrder");
-    QStringList sortOrderList=QStringList::split("",sortOrder);
+    KConfigGroup cgSortNicknames(KGlobal::config()->group("Sort Nicknames"));
+
+    QString sortOrder=cgSortNicknames.readEntry("SortOrder");
+    QStringList sortOrderList=sortOrder.split("");
     sortOrderList.sort();
     if (sortOrderList.join("")!="-hopqv")
     {
-      sortOrder=Preferences::defaultNicknameSortingOrder();
-      Preferences::setSortOrder(sortOrder);
+        sortOrder=Preferences::defaultNicknameSortingOrder();
+        Preferences::setSortOrder(sortOrder);
     }
 
     // Identity list
-    QStringList identityList=config->groupList().grep(QRegExp("Identity [0-9]+"));
-    if(!identityList.isEmpty())
+    QStringList identityList=KGlobal::config()->groupList().grep(QRegExp("Identity [0-9]+"));
+    if (!identityList.isEmpty())
     {
         Preferences::clearIdentityList();
 
-        for(unsigned int index=0;index<identityList.count();index++)
+        for(int index=0;index<identityList.count();index++)
         {
-            IdentityPtr newIdentity=new Identity();
+            IdentityPtr newIdentity(new Identity());
+            KConfigGroup cgIdentity(KGlobal::config()->group(identityList[index]));
 
-            config->setGroup(identityList[index]);
+            newIdentity->setName(cgIdentity.readEntry("Name"));
 
-            newIdentity->setName(config->readEntry("Name"));
+            newIdentity->setIdent(cgIdentity.readEntry("Ident"));
+            newIdentity->setRealName(cgIdentity.readEntry("Realname"));
 
-            newIdentity->setIdent(config->readEntry("Ident"));
-            newIdentity->setRealName(config->readEntry("Realname"));
+            newIdentity->setNicknameList(cgIdentity.readEntry<QStringList>("Nicknames",QStringList()));
 
-            newIdentity->setNicknameList(config->readListEntry("Nicknames"));
+            newIdentity->setBot(cgIdentity.readEntry("Bot"));
+            newIdentity->setPassword(cgIdentity.readEntry("Password"));
 
-            newIdentity->setBot(config->readEntry("Bot"));
-            newIdentity->setPassword(config->readEntry("Password"));
+            newIdentity->setInsertRememberLineOnAway(cgIdentity.readEntry("InsertRememberLineOnAway", false));
+            newIdentity->setShowAwayMessage(cgIdentity.readEntry("ShowAwayMessage", false));
+            newIdentity->setAwayMessage(cgIdentity.readEntry("AwayMessage"));
+            newIdentity->setReturnMessage(cgIdentity.readEntry("ReturnMessage"));
+            newIdentity->setAutomaticAway(cgIdentity.readEntry("AutomaticAway", false));
+            newIdentity->setAwayInactivity(cgIdentity.readEntry<int>("AwayInactivity", 10));
+            newIdentity->setAutomaticUnaway(cgIdentity.readEntry("AutomaticUnaway", false));
 
-            newIdentity->setInsertRememberLineOnAway(config->readBoolEntry("InsertRememberLineOnAway"));
-            newIdentity->setShowAwayMessage(config->readBoolEntry("ShowAwayMessage"));
-            newIdentity->setAwayMessage(config->readEntry("AwayMessage"));
-            newIdentity->setReturnMessage(config->readEntry("ReturnMessage"));
-            newIdentity->setAutomaticAway(config->readBoolEntry("AutomaticAway", false));
-            newIdentity->setAwayInactivity(config->readNumEntry("AwayInactivity", 10));
-            newIdentity->setAutomaticUnaway(config->readBoolEntry("AutomaticUnaway", false));
+            newIdentity->setQuitReason(cgIdentity.readEntry("QuitReason"));
+            newIdentity->setPartReason(cgIdentity.readEntry("PartReason"));
+            newIdentity->setKickReason(cgIdentity.readEntry("KickReason"));
 
-            newIdentity->setQuitReason(config->readEntry("QuitReason"));
-            newIdentity->setPartReason(config->readEntry("PartReason"));
-            newIdentity->setKickReason(config->readEntry("KickReason"));
+            newIdentity->setShellCommand(cgIdentity.readEntry("PreShellCommand"));
 
-            newIdentity->setShellCommand(config->readEntry("PreShellCommand"));
+            newIdentity->setCodecName(cgIdentity.readEntry("Codec"));
 
-            newIdentity->setCodecName(config->readEntry("Codec"));
-
-            newIdentity->setAwayNick(config->readEntry("AwayNick"));
+            newIdentity->setAwayNick(cgIdentity.readEntry("AwayNick"));
 
             Preferences::addIdentity(newIdentity);
 
         }
 
     }
-
+/*
     osd->setEnabled(Preferences::useOSD());
 
     //How to load the font from the text?
@@ -349,12 +351,12 @@ void KonversationApplication::readOptions()
         osd->setTextColor(Preferences::oSDTextColor());
         osd->setBackgroundColor(Preferences::oSDBackgroundColor());
     }
-
-    // Check if there is old server list config
-    config->setGroup("Server List");
+*/
+    // Check if there is old server list config //TODO FIXME why are we doing this here?
+    KConfigGroup cgServerList(KGlobal::config()->group("Server List"));
 
     // Read the new server settings
-    QStringList groups = config->groupList().grep(QRegExp("ServerGroup [0-9]+"));
+    QStringList groups = KGlobal::config()->groupList().grep(QRegExp("ServerGroup [0-9]+"));
     QMap<int,QStringList> notifyList;
 
     if(!groups.isEmpty())
@@ -367,58 +369,58 @@ void KonversationApplication::readOptions()
         Konversation::ServerSettings server;
         Konversation::ChannelSettings channel;
 
-        for(it = groups.begin(); it != groups.end(); ++it)
+        for (it = groups.begin(); it != groups.end(); ++it)
         {
-            config->setGroup((*it));
-            Konversation::ServerGroupSettingsPtr serverGroup = new Konversation::ServerGroupSettings;
-            serverGroup->setName(config->readEntry("Name"));
-            serverGroup->setIdentityId(Preferences::identityByName(config->readEntry("Identity"))->id());
-            serverGroup->setConnectCommands(config->readEntry("ConnectCommands"));
-            serverGroup->setAutoConnectEnabled(config->readBoolEntry("AutoConnect"));
-            serverGroup->setNotificationsEnabled(config->readBoolEntry("EnableNotifications", true));
-            serverGroup->setExpanded(config->readBoolEntry("Expanded", false));
+            KConfigGroup cgServerGroup(KGlobal::config()->group(*it));
+            Konversation::ServerGroupSettingsPtr serverGroup(new Konversation::ServerGroupSettings);
+            serverGroup->setName(cgServerGroup.readEntry("Name"));
+            serverGroup->setIdentityId(Preferences::identityByName(cgServerGroup.readEntry("Identity"))->id());
+            serverGroup->setConnectCommands(cgServerGroup.readEntry("ConnectCommands"));
+            serverGroup->setAutoConnectEnabled(cgServerGroup.readEntry("AutoConnect", false));
+            serverGroup->setNotificationsEnabled(cgServerGroup.readEntry("EnableNotifications", true));
+            serverGroup->setExpanded(cgServerGroup.readEntry("Expanded", false));
 
-            notifyList.insert((*serverGroup).id(),QStringList::split(' ',config->readEntry("NotifyList")));
+            notifyList.insert((*serverGroup).id(),QStringList::split(' ', cgServerGroup.readEntry("NotifyList")));
 
-            tmp1 = config->readListEntry("ServerList");
-            for(it2 = tmp1.begin(); it2 != tmp1.end(); ++it2)
+            tmp1 = cgServerGroup.readEntry("ServerList", QStringList());
+            for (it2 = tmp1.begin(); it2 != tmp1.end(); ++it2)
             {
-                config->setGroup((*it2));
-                server.setHost(config->readEntry("Server"));
-                server.setPort(config->readNumEntry("Port"));
-                server.setPassword(config->readEntry("Password"));
-                server.setSSLEnabled(config->readBoolEntry("SSLEnabled"));
+                KConfigGroup cgServer(KGlobal::config()->group(*it2));
+                server.setHost(cgServer.readEntry("Server"));
+                server.setPort(cgServer.readEntry<int>("Port", 0));
+                server.setPassword(cgServer.readEntry("Password"));
+                server.setSSLEnabled(cgServer.readEntry("SSLEnabled", false));
                 serverGroup->addServer(server);
             }
 
-            config->setGroup((*it));
-            tmp1 = config->readListEntry("AutoJoinChannels");
+            //config->setGroup((*it));
+            tmp1 = cgServerGroup.readEntry("AutoJoinChannels", QStringList());
 
-            for(it2 = tmp1.begin(); it2 != tmp1.end(); ++it2)
+            for (it2 = tmp1.begin(); it2 != tmp1.end(); ++it2)
             {
-                config->setGroup((*it2));
+                KConfigGroup cgJoin(KGlobal::config()->group(*it2));
 
-                if(!config->readEntry("Name").isEmpty())
+                if (!cgJoin.readEntry("Name").isEmpty())
                 {
-                    channel.setName(config->readEntry("Name"));
-                    channel.setPassword(config->readEntry("Password"));
+                    channel.setName(cgJoin.readEntry("Name"));
+                    channel.setPassword(cgJoin.readEntry("Password"));
                     serverGroup->addChannel(channel);
                 }
             }
 
-            config->setGroup((*it));
-            tmp1 = config->readListEntry("ChannelHistory");
+            //config->setGroup((*it));
+            tmp1 = cgServerGroup.readEntry("ChannelHistory", QStringList());
             channelHistory.clear();
 
-            for(it2 = tmp1.begin(); it2 != tmp1.end(); ++it2)
+            for (it2 = tmp1.begin(); it2 != tmp1.end(); ++it2)
             {
-                config->setGroup((*it2));
+                KConfigGroup cgChanHistory(KGlobal::config()->group(*it2));
 
-                if(!config->readEntry("Name").isEmpty())
+                if (!cgChanHistory.readEntry("Name").isEmpty())
                 {
-                    channel.setName(config->readEntry("Name"));
-                    channel.setPassword(config->readEntry("Password"));
-                    channel.setNotificationsEnabled(config->readBoolEntry("EnableNotifications", true));
+                    channel.setName(cgChanHistory.readEntry("Name"));
+                    channel.setPassword(cgChanHistory.readEntry("Password"));
+                    channel.setNotificationsEnabled(cgChanHistory.readEntry("EnableNotifications", true));
                     channelHistory.append(channel);
                 }
             }
@@ -439,15 +441,17 @@ void KonversationApplication::readOptions()
     // Quick Buttons List
 
     // if there are button definitions in the config file, remove default buttons
-    if(config->hasGroup("Button List")) Preferences::clearQuickButtonList();
-    config->setGroup("Button List");
+    if (KGlobal::config()->hasGroup("Button List"))
+        Preferences::clearQuickButtonList();
+
+    KConfigGroup cgQuickButtons(KGlobal::config()->group("Button List"));
     // Read all default buttons
     QStringList buttonList(Preferences::quickButtonList());
     // Read all quick buttons
     int index=0;
-    while(config->hasKey(QString("Button%1").arg(index)))
+    while (cgQuickButtons.hasKey(QString("Button%1").arg(index)))
     {
-      buttonList.append(config->readEntry(QString("Button%1").arg(index++)));
+        buttonList.append(cgQuickButtons.readEntry(QString("Button%1").arg(index++)));
     } // while
     // Put back the changed button list
     Preferences::setQuickButtonList(buttonList);
@@ -455,78 +459,87 @@ void KonversationApplication::readOptions()
     // Autoreplace List
 
     // if there are autoreplace definitions in the config file, remove default entries
-    if(config->hasGroup("Autoreplace List")) Preferences::clearAutoreplaceList();
-    config->setGroup("Autoreplace List");
+    if (KGlobal::config()->hasGroup("Autoreplace List"))
+        Preferences::clearAutoreplaceList();
+
+    KConfigGroup cgAutoreplace(KGlobal::config()->group("Autoreplace List"));
     // Read all default entries
     QStringList autoreplaceList(Preferences::autoreplaceList());
     // Read all entries
     index=0;
-    while(config->hasKey(QString("Autoreplace%1").arg(index)))
+    while (cgAutoreplace.hasKey(QString("Autoreplace%1").arg(index)))
     {
-      // read entry and get length of the string
-      QString entry=config->readEntry(QString("Autoreplace%1").arg(index++));
-      unsigned int length=entry.length()-1;
-      // if there's a "#" in the end, strip it (used to preserve blanks at the end of the replacement text)
-      // there should always be one, but older versions did not do it, so we check first
-      if(entry.at(length)=='#') entry=entry.left(length);
-      // add entry to internal list
-      autoreplaceList.append(entry);
+  // read entry and get length of the string
+        QString entry=cgAutoreplace.readEntry(QString("Autoreplace%1").arg(index++));
+        unsigned int length=entry.length()-1;
+        // if there's a "#" in the end, strip it (used to preserve blanks at the end of the replacement text)
+        // there should always be one, but older versions did not do it, so we check first
+        if (entry.at(length)=='#')
+            entry=entry.left(length);
+        // add entry to internal list
+        autoreplaceList.append(entry);
     } // while
     // Put back the changed autoreplace list
     Preferences::setAutoreplaceList(autoreplaceList);
 
+    //TODO FIXME I assume this is in the <default> group, but I have a hunch we just don't care about <1.0.1
     // Highlight List
-    if(config->hasKey("Highlight"))               // Stay compatible with versions < 0.14
+    KConfigGroup cgDefault(KGlobal::config()->group("<default>"));
+    if (cgDefault.hasKey("Highlight")) // Stay compatible with versions < 0.14
     {
-        QString highlight=config->readEntry("Highlight");
-        QStringList hiList=QStringList::split(' ',highlight);
+        QString highlight=cgDefault.readEntry("Highlight");
+        QStringList hiList=QStringList::split(' ', highlight);
 
-        unsigned int hiIndex;
-        for(hiIndex=0;hiIndex<hiList.count();hiIndex+=2)
+        for (int hiIndex=0; hiIndex < hiList.count(); hiIndex+=2)
         {
             Preferences::addHighlight(hiList[hiIndex],false,'#'+hiList[hiIndex+1],QString(),QString());
         }
 
-        config->deleteEntry("Highlight");
+        cgDefault.deleteEntry("Highlight");
     }
     else
     {
         int i = 0;
 
-        while(config->hasGroup(QString("Highlight%1").arg(i)))
+        while (KGlobal::config()->hasGroup(QString("Highlight%1").arg(i)))
         {
-            config->setGroup(QString("Highlight%1").arg(i));
-            Preferences::addHighlight(config->readEntry("Pattern"),
-                config->readBoolEntry("RegExp"),
-                config->readColorEntry("Color"),
-                config->readPathEntry("Sound", QString()),
-                config->readEntry("AutoText"));
+            KConfigGroup cgHilight(KGlobal::config()->group(QString("Highlight%1").arg(i)));
+            Preferences::addHighlight(
+                cgHilight.readEntry("Pattern"),
+                cgHilight.readEntry("RegExp", false),
+                cgHilight.readEntry("Color", QColor(Qt::black)),
+                cgHilight.readPathEntry("Sound", QString()),
+                cgHilight.readEntry("AutoText")
+                );
             i++;
         }
     }
 
     // Ignore List
-    config->setGroup("Ignore List");
+    KConfigGroup cgIgnoreList(KGlobal::config()->group("Ignore List"));
     // Remove all default entries if there is at least one Ignore in the Preferences::file
-    if(config->hasKey("Ignore0")) Preferences::clearIgnoreList();
+    if (cgIgnoreList.hasKey("Ignore0"))
+        Preferences::clearIgnoreList();
     // Read all ignores
     index=0;
-    while(config->hasKey(QString("Ignore%1").arg(index)))
+    while (cgIgnoreList.hasKey(QString("Ignore%1").arg(index)))
     {
-        Preferences::addIgnore(config->readEntry(QString("Ignore%1").arg(index++)));
+        Preferences::addIgnore(cgIgnoreList.readEntry(QString("Ignore%1").arg(index++)));
     }
 
     // Aliases
-    config->setGroup("Aliases");
-    QStringList newList=config->readListEntry("AliasList");
-    if(!newList.isEmpty()) Preferences::setAliasList(newList);
+    KConfigGroup cgAliases(KGlobal::config()->group("Aliases"));
+    QStringList newList=cgAliases.readEntry("AliasList", QStringList());
+    if (!newList.isEmpty())
+        Preferences::setAliasList(newList);
 
     // Channel Encodings
-    QMap<QString,QString> channelEncodingEntries=config->entryMap("Channel Encodings");
+    KConfigGroup cgChannelEncodings(KGlobal::config()->group("Channel Encodings"));
+    QMap<QString,QString> channelEncodingEntries=cgChannelEncodings.entryMap();
     QRegExp re("^(.+) ([^\\s]+)$");
-    QStringList channelEncodingEntryKeys=channelEncodingEntries.keys();
-    QStringList::iterator itStr=channelEncodingEntryKeys.begin();
-    for(; itStr != channelEncodingEntryKeys.end(); ++itStr)
+    QList<QString> channelEncodingEntryKeys=channelEncodingEntries.keys();
+
+    for(QList<QString>::iterator itStr=channelEncodingEntryKeys.begin(); itStr != channelEncodingEntryKeys.end(); ++itStr)
     {
         if(re.search(*itStr) > -1)
         {
@@ -542,80 +555,82 @@ void KonversationApplication::readOptions()
 
 void KonversationApplication::saveOptions(bool updateGUI)
 {
-    KConfig* config=KGlobal::config();
+    // template:    KConfigGroup  (KGlobal::config()->group( ));
+
+    //KConfig* config=KGlobal::config();
 
 //    Should be handled in NicklistBehaviorConfigController now
 //    config->setGroup("Sort Nicknames");
 
     // Clean up identity list
-    QStringList identities=config->groupList().grep(QRegExp("Identity [0-9]+"));
-    if(identities.count())
+    QStringList identities=KGlobal::config()->groupList().grep(QRegExp("Identity [0-9]+"));
+    if (identities.count())
     {
         // remove old identity list from Preferences::file to keep numbering under control
-        for(unsigned int index=0;index<identities.count();index++)
-            config->deleteGroup(identities[index]);
+        for (int index=0; index < identities.count(); index++)
+            KGlobal::config()->deleteGroup(identities[index]);
     }
 
     IdentityList identityList = Preferences::identityList();
     int index = 0;
 
-    for(IdentityList::ConstIterator it = identityList.begin(); it != identityList.end(); ++it)
+    for (IdentityList::ConstIterator it = identityList.begin(); it != identityList.end(); ++it)
     {
         IdentityPtr identity = (*it);
-        config->setGroup(QString("Identity %1").arg(index));
+        KConfigGroup cgIdentity(KGlobal::config()->group(QString("Identity %1").arg(index)));
 
-        config->writeEntry("Name",identity->getName());
-        config->writeEntry("Ident",identity->getIdent());
-        config->writeEntry("Realname",identity->getRealName());
-        config->writeEntry("Nicknames",identity->getNicknameList());
-        config->writeEntry("Bot",identity->getBot());
-        config->writeEntry("Password",identity->getPassword());
-        config->writeEntry("InsertRememberLineOnAway", identity->getInsertRememberLineOnAway());
-        config->writeEntry("ShowAwayMessage",identity->getShowAwayMessage());
-        config->writeEntry("AwayMessage",identity->getAwayMessage());
-        config->writeEntry("ReturnMessage",identity->getReturnMessage());
-        config->writeEntry("AutomaticAway", identity->getAutomaticAway());
-        config->writeEntry("AwayInactivity", identity->getAwayInactivity());
-        config->writeEntry("AutomaticUnaway", identity->getAutomaticUnaway());
-        config->writeEntry("QuitReason",identity->getQuitReason());
-        config->writeEntry("PartReason",identity->getPartReason());
-        config->writeEntry("KickReason",identity->getKickReason());
-        config->writeEntry("PreShellCommand",identity->getShellCommand());
-        config->writeEntry("Codec",identity->getCodecName());
-        config->writeEntry("AwayNick", identity->getAwayNick());
+        cgIdentity.writeEntry("Name",identity->getName());
+        cgIdentity.writeEntry("Ident",identity->getIdent());
+        cgIdentity.writeEntry("Realname",identity->getRealName());
+        cgIdentity.writeEntry("Nicknames",identity->getNicknameList());
+        cgIdentity.writeEntry("Bot",identity->getBot());
+        cgIdentity.writeEntry("Password",identity->getPassword());
+        cgIdentity.writeEntry("InsertRememberLineOnAway", identity->getInsertRememberLineOnAway());
+        cgIdentity.writeEntry("ShowAwayMessage",identity->getShowAwayMessage());
+        cgIdentity.writeEntry("AwayMessage",identity->getAwayMessage());
+        cgIdentity.writeEntry("ReturnMessage",identity->getReturnMessage());
+        cgIdentity.writeEntry("AutomaticAway", identity->getAutomaticAway());
+        cgIdentity.writeEntry("AwayInactivity", identity->getAwayInactivity());
+        cgIdentity.writeEntry("AutomaticUnaway", identity->getAutomaticUnaway());
+        cgIdentity.writeEntry("QuitReason",identity->getQuitReason());
+        cgIdentity.writeEntry("PartReason",identity->getPartReason());
+        cgIdentity.writeEntry("KickReason",identity->getKickReason());
+        cgIdentity.writeEntry("PreShellCommand",identity->getShellCommand());
+        cgIdentity.writeEntry("Codec",identity->getCodecName());
+        cgIdentity.writeEntry("AwayNick", identity->getAwayNick());
         index++;
-    }                                             // endfor
+    } // endfor
 
     // Remove the old servergroups from the config
-    QStringList groups = config->groupList().grep(QRegExp("ServerGroup [0-9]+"));
-    if(groups.count())
+    QStringList groups = KGlobal::config()->groupList().grep(QRegExp("ServerGroup [0-9]+"));
+    if (groups.count())
     {
         QStringList::iterator it;
         for(it = groups.begin(); it != groups.end(); ++it)
         {
-            config->deleteGroup((*it));
+            KGlobal::config()->deleteGroup((*it));
         }
     }
 
     // Remove the old servers from the config
-    groups = config->groupList().grep(QRegExp("Server [0-9]+"));
-    if(groups.count())
+    groups = KGlobal::config()->groupList().grep(QRegExp("Server [0-9]+"));
+    if (groups.count())
     {
         QStringList::iterator it;
         for(it = groups.begin(); it != groups.end(); ++it)
         {
-            config->deleteGroup((*it));
+            KGlobal::config()->deleteGroup((*it));
         }
     }
 
     // Remove the old channels from the config
-    groups = config->groupList().grep(QRegExp("Channel [0-9]+"));
-    if(groups.count())
+    groups = KGlobal::config()->groupList().grep(QRegExp("Channel [0-9]+"));
+    if (groups.count())
     {
         QStringList::iterator it;
         for(it = groups.begin(); it != groups.end(); ++it)
         {
-            config->deleteGroup((*it));
+            KGlobal::config()->deleteGroup((*it));
         }
     }
 
@@ -644,11 +659,11 @@ void KonversationApplication::saveOptions(bool updateGUI)
         {
             groupName = QString("Server %1").arg(index2);
             servers.append(groupName);
-            config->setGroup(groupName);
-            config->writeEntry("Server", (*it2).host());
-            config->writeEntry("Port", (*it2).port());
-            config->writeEntry("Password", (*it2).password());
-            config->writeEntry("SSLEnabled", (*it2).SSLEnabled());
+            KConfigGroup cgServer(KGlobal::config()->group(groupName));
+            cgServer.writeEntry("Server", (*it2).host());
+            cgServer.writeEntry("Port", (*it2).port());
+            cgServer.writeEntry("Password", (*it2).password());
+            cgServer.writeEntry("SSLEnabled", (*it2).SSLEnabled());
             index2++;
         }
 
@@ -659,9 +674,9 @@ void KonversationApplication::saveOptions(bool updateGUI)
         {
             groupName = QString("Channel %1").arg(index3);
             channels.append(groupName);
-            config->setGroup(groupName);
-            config->writeEntry("Name", (*it3).name());
-            config->writeEntry("Password", (*it3).password());
+            KConfigGroup cgChannel(KGlobal::config()->group(groupName));
+            cgChannel.writeEntry("Name", (*it3).name());
+            cgChannel.writeEntry("Password", (*it3).password());
             index3++;
         }
 
@@ -669,52 +684,54 @@ void KonversationApplication::saveOptions(bool updateGUI)
         channelHistory.clear();
 
         for(it3 = channelList.begin(); it3 != channelList.end(); ++it3)
-        {
+        {   // TODO FIXME: is it just me or is this broken?
             groupName = QString("Channel %1").arg(index3);
             channelHistory.append(groupName);
-            config->setGroup(groupName);
-            config->writeEntry("Name", (*it3).name());
-            config->writeEntry("Password", (*it3).password());
-            config->writeEntry("EnableNotifications", (*it3).enableNotifications());
+            KConfigGroup cgChannelHistory(KGlobal::config()->group(groupName));
+            cgChannelHistory.writeEntry("Name", (*it3).name());
+            cgChannelHistory.writeEntry("Password", (*it3).password());
+            cgChannelHistory.writeEntry("EnableNotifications", (*it3).enableNotifications());
             index3++;
         }
 
-        config->setGroup(QString("ServerGroup %1").arg(QString::number(index).rightJustified(width,'0')));
-        config->writeEntry("Name", (*it)->name());
-        config->writeEntry("Identity", (*it)->identity()->getName());
-        config->writeEntry("ServerList", servers);
-        config->writeEntry("AutoJoinChannels", channels);
-        config->writeEntry("ConnectCommands", (*it)->connectCommands());
-        config->writeEntry("AutoConnect", (*it)->autoConnectEnabled());
-        config->writeEntry("ChannelHistory", channelHistory);
-        config->writeEntry("EnableNotifications", (*it)->enableNotifications());
-        config->writeEntry("Expanded", (*it)->expanded());
-        config->writeEntry("NotifyList",Preferences::notifyStringByGroupName((*it)->name()));
+        QString sgn("ServerGroup %1");
+        sgn.arg(QString::number(index).rightJustified(width,'0'));
+        KConfigGroup cgServerGroup(KGlobal::config()->group(sgn));
+        cgServerGroup.writeEntry("Name", (*it)->name());
+        cgServerGroup.writeEntry("Identity", (*it)->identity()->getName());
+        cgServerGroup.writeEntry("ServerList", servers);
+        cgServerGroup.writeEntry("AutoJoinChannels", channels);
+        cgServerGroup.writeEntry("ConnectCommands", (*it)->connectCommands());
+        cgServerGroup.writeEntry("AutoConnect", (*it)->autoConnectEnabled());
+        cgServerGroup.writeEntry("ChannelHistory", channelHistory);
+        cgServerGroup.writeEntry("EnableNotifications", (*it)->enableNotifications());
+        cgServerGroup.writeEntry("Expanded", (*it)->expanded());
+        cgServerGroup.writeEntry("NotifyList",Preferences::notifyStringByGroupName((*it)->name()));
         index++;
     }
 
-    config->deleteGroup("Server List");
+    KGlobal::config()->deleteGroup("Server List");
 
     // Ignore List
-    config->deleteGroup("Ignore List");
-    config->setGroup("Ignore List");
+    KGlobal::config()->deleteGroup("Ignore List");
+    KConfigGroup cgIgnoreList(KGlobal::config()->group("Ignore List"));
     Q3PtrList<Ignore> ignoreList=Preferences::ignoreList();
     Ignore* item=ignoreList.first();
     index=0;
     while(item)
     {
-        config->writeEntry(QString("Ignore%1").arg(index),QString("%1,%2").arg(item->getName()).arg(item->getFlags()));
+        cgIgnoreList.writeEntry(QString("Ignore%1").arg(index),QString("%1,%2").arg(item->getName()).arg(item->getFlags()));
         item=ignoreList.next();
         index++;
     }
 
     // Channel Encodings
     // remove all entries once
-    config->deleteGroup("Channel Encodings");
-    config->setGroup("Channel Encodings");
-    QValueList<int> encServers=Preferences::channelEncodingsServerGroupIdList();
+    KGlobal::config()->deleteGroup("Channel Encodings");
+    KConfigGroup cgChanEncoding(KGlobal::config()->group("Channel Encodings"));
+    QList<int> encServers=Preferences::channelEncodingsServerGroupIdList();
     //i have no idea these would need to be sorted //encServers.sort();
-    QValueList<int>::iterator encServer;
+    QList<int>::iterator encServer;
     for ( encServer = encServers.begin(); encServer != encServers.end(); ++encServer )
     {
         Konversation::ServerGroupSettingsPtr sgsp = Preferences::serverGroupById(*encServer);
@@ -727,12 +744,12 @@ void KonversationApplication::saveOptions(bool updateGUI)
             {
                 QString enc = Preferences::channelEncoding(*encServer, *encChannel);
                 QString key = sgsp->name() + ' ' + (*encChannel);
-                config->writeEntry(key, enc);
+                cgChanEncoding.writeEntry(key, enc);
             }
         }
     }
 
-    config->sync();
+    KGlobal::config()->sync();
 
     if(updateGUI)
         emit appearanceChanged();
@@ -770,13 +787,13 @@ void KonversationApplication::clearUrlList()
 }
 
 void KonversationApplication::openQuickConnectDialog()
-{
+{/*
     quickConnectDialog = new QuickConnectDialog(mainWindow);
     connect(quickConnectDialog, SIGNAL(connectClicked(Konversation::ConnectionFlag, const QString&, const QString&,
         const QString&, const QString&, const QString&, bool)),
         m_connectionManager, SLOT(connectTo(Konversation::ConnectionFlag, const QString&, const QString&,
         const QString&, const QString&, const QString&, bool)));
-    quickConnectDialog->show();
+    quickConnectDialog->show();*/
 }
 
 void KonversationApplication::sendMultiServerCommand(const QString& command, const QString& parameter)
@@ -800,18 +817,19 @@ NickInfoPtr KonversationApplication::getNickInfo(const QString &ircnick, const Q
 {
     Q3PtrList<Server> serverList = getConnectionManager()->getServerList();
     NickInfoPtr nickInfo;
-    QString lserverOrGroup = serverOrGroup.lower();
-    for(Server* lookServer = serverList.first(); lookServer; lookServer = serverList.next())
+    QString lserverOrGroup = serverOrGroup.toLower();
+    for (Server* lookServer = serverList.first(); lookServer; lookServer = serverList.next())
     {
-        if(lserverOrGroup.isEmpty()
-            || lookServer->getServerName().lower()==lserverOrGroup
-            || lookServer->getDisplayName().lower()==lserverOrGroup)
+        if (lserverOrGroup.isEmpty()
+            || lookServer->getServerName().toLower()==lserverOrGroup
+            || lookServer->getDisplayName().toLower()==lserverOrGroup)
         {
             nickInfo = lookServer->getNickInfo(ircnick);
-            if(nickInfo) return nickInfo;         //If we found one
+            if (nickInfo)
+                return nickInfo;         //If we found one
         }
     }
-    return 0;
+    return (NickInfoPtr)0;
 }
 
 // auto replace on input/output
@@ -823,7 +841,7 @@ QString KonversationApplication::doAutoreplace(const QString& text,bool output)
     QString line=text;
 
     // loop through the list of replacement patterns
-    for(unsigned int index=0;index<autoreplaceList.count();index++)
+    for (int index=0;index<autoreplaceList.count();index++)
     {
         // get autoreplace definition
         QString definition=autoreplaceList[index];
@@ -836,13 +854,13 @@ QString KonversationApplication::doAutoreplace(const QString& text,bool output)
         QString isDirection=output ? "o" : "i";
 
         // only replace if this pattern is for the specific direction or both directions
-        if(direction==isDirection || direction=="io")
+        if (direction==isDirection || direction=="io")
         {
             // regular expression pattern?
-            if(regex=="1")
+            if (regex=="1")
             {
                 // create regex from pattern
-                QRegExp needleReg=pattern;
+                QRegExp needleReg(pattern);
                 // set pattern case insensitive
                 needleReg.setCaseSensitive(true);
                 int index = 0;
@@ -852,13 +870,13 @@ QString KonversationApplication::doAutoreplace(const QString& text,bool output)
                     // find matches
                     index = line.find(needleReg, index);
 
-                    if(index != -1)
+                    if (index != -1)
                     {
                         // remember captured patterns
                         QStringList captures = needleReg.capturedTexts();
 
                         // replace %0 - %9 in regex groups
-                        for(unsigned int capture=0;capture<captures.count();capture++)
+                        for (int capture=0;capture<captures.count();capture++)
                         {
                             replacement.replace(QString("%%1").arg(capture),captures[capture]);
                         }
@@ -867,7 +885,7 @@ QString KonversationApplication::doAutoreplace(const QString& text,bool output)
                         line.replace(index, captures[0].length(), replacement);
                         index += replacement.length();
                     }
-                } while(index >= 0 && index < (int)line.length());
+                } while (index >= 0 && index < (int)line.length());
             }
             else
             {
@@ -881,7 +899,7 @@ QString KonversationApplication::doAutoreplace(const QString& text,bool output)
   return line;
 }
 
-#include "konversationapplication.moc"
+// #include "./application.moc"
 
 // kate: space-indent on; tab-width 4; indent-width 4; mixed-indent off; replace-tabs on;
 // vim: set et sw=4 ts=4 cino=l1,cs,U1:

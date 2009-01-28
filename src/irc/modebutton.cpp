@@ -41,4 +41,4 @@ void ModeButton::wasClicked()
     setOn(on);
 }
 
-#include "modebutton.moc"
+// #include "./irc/modebutton.moc"

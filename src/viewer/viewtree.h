@@ -82,8 +82,8 @@ class ViewTree : public K3ListView
         void enableCloseButton();
 
     private:
-        class ToolTip;
-        ViewTree::ToolTip* m_toolTip;
+        //class ToolTip;
+        //ViewTree::ToolTip* m_toolTip;
 
         void toggleSeparator();
         void selectUpper(bool wrap = false);

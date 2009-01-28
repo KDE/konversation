@@ -13,8 +13,8 @@
 
 #include "dccchat.h"
 #include "dcccommon.h"
-#include "konversationapplication.h"
-#include "konversationmainwindow.h"
+#include "application.h" ////// header renamed
+#include "mainwindow.h" ////// header renamed
 #include "irccharsets.h"
 #include "ircview.h"
 #include "ircviewbox.h"
@@ -474,4 +474,4 @@ void DccChat::updateAppearance()
     ChatWindow::updateAppearance();
 }
 
-#include "dccchat.moc"
+// #include "./dcc/dccchat.moc"

@@ -14,6 +14,13 @@
   Copyright (C) 2006-2008 Eike Hein <hein@kde.org>
 */
 
+/** New IRCViewer.
+
+    Sadly, the k3 and q3 controls are useless for porting. I've chosen to use QPlainTextEdit for now,
+    as it's API fairly close to what we'll end up with.
+ */
+
+
 #include "common.h"
 
 #include <qmap.h>
@@ -34,8 +41,8 @@
 #include <QEvent>
 #include <QDragEnterEvent>
 
-#include <ktextbrowser.h>
-
+//#include <ktextbrowser.h>
+#include <QPlainTextEdit>
 
 class QPixmap;
 class Q3StrList;
@@ -49,7 +56,7 @@ class Server;
 class ChatWindow;
 class SearchBar;
 
-class IRCView : public KTextBrowser
+class IRCView : public QPlainTextEdit
 {
     Q_OBJECT
 
@@ -57,117 +64,139 @@ class IRCView : public KTextBrowser
         IRCView(QWidget* parent,Server* newServer);
         ~IRCView();
 
-        void clear();
-        void setViewBackground(const QColor& backgroundColor, const QString& pixmapName);
+        //void clear();
+        //! Some people apparently want the text in the view to be doublespaced :/
+        void enableParagraphSpacing();
+
+        //! this function is proper given it is not nessary for the ircview to have a server for DCC.
         void setServer(Server* server);
+        //! FIXME assumes the IRCView looks at a chatwin
+        void setChatWin(ChatWindow* chatWin);
 
         // Returns the current nick under context menu.
         const QString& getContextNick() const;
 
-        void enableParagraphSpacing();
-
-        Q3PopupMenu* getPopup() const;
+        //!Obtain the context menu popup in order to add things to it
+        KMenu* getPopup() const;
 
         enum PopupIDs
         {
-            Copy,CopyUrl,SelectAll,
+            Copy,
+            CopyUrl,
+            SelectAll,
             Search,
             SendFile,
             Bookmark,
             SaveAs
         };
 
-        void setChatWin(ChatWindow* chatWin);
 
-        bool search(const QString& pattern, bool caseSensitive,
-            bool wholeWords, bool forward, bool fromCursor);
+        bool search(const QString& pattern, bool caseSensitive, bool wholeWords, bool forward, bool fromCursor);
         bool searchNext(bool reversed = false);
 
+        //! FIXME maybe we should create some sort of palette of our own?
         QColor highlightColor() { return m_highlightColor; }
+        void setViewBackground(const QColor& backgroundColor, const QString& pixmapName);
+
         QString currentChannel() { return m_currentChannel; }
 
         void setNickAndChannelContextMenusEnabled(bool enable);
 
-        bool hasLines();
+        bool hasLines(); ///< are there any remember lines?
 
 
     signals:
-        // Notify container of new text and highlight state
-        void gotFocus();                          // So we can set focus to input line
-        void textToLog(const QString& text);
-        void sendFile();
-        void extendedPopup(int id);
-        void autoText(const QString& text);
-        void textPasted(bool useSelection);
-        void popupCommand(int);
-        void filesDropped(const Q3StrList&);
-        void doSearch();
+        void gotFocus(); // So we can set focus to input line
+        void textToLog(const QString& text); ///< send the to the log file
+        void sendFile(); ///< a command for a target to which we can DCC send
+        void extendedPopup(int id); ///< this is for the query/nickname popup
+        void autoText(const QString& text); ///< helper for autotext-on-highlight
+        void textPasted(bool useSelection); ///< middle button with no m_copyUrlMenu
+        void popupCommand(int); ///< wired to all of the popup menus
+        void filesDropped(const Q3StrList&); ///< Q3UriDrag::decode valid in contentsDropEvent
+        void doSearch(); ///< this is a 
 
-        void setStatusBarTempText(const QString&);
-        void clearStatusBarTempText();
+        void setStatusBarTempText(const QString&); //! these two look like mixins to me
+        void clearStatusBarTempText();//! these two look like mixins to me
 
     public slots:
+        //! FIXME  mixin?
         void insertRememberLine();
         void cancelRememberLine();
         void insertMarkerLine();
         void clearLines();
 
+        //! FIXME enum { Raw, Query, Query+Action, Channel+Action, Server Message, Command Message, Backlog message } this looks more like a tuple
         void append(const QString& nick, const QString& message);
         void appendRaw(const QString& message, bool suppressTimestamps=false, bool self = false);
+
         void appendQuery(const QString& nick, const QString& message, bool inChannel = false);
         void appendQueryAction(const QString& nick, const QString& message);
+    protected:
+        //! FIXME why is this protected, and all alone down there?
+        void appendAction(const QString& nick, const QString& message);
+
+    public slots:
         void appendChannelAction(const QString& nick, const QString& message);
+
         void appendServerMessage(const QString& type, const QString& message, bool parseURL = true);
-        void appendCommandMessage(const QString& command, const QString& message, bool important,
-            bool parseURL=true, bool self=false);
+        void appendCommandMessage(const QString& command, const QString& message, bool important, bool parseURL=true, bool self=false);
         void appendBacklogMessage(const QString& firstColumn, const QString& message);
-        void search();
+
+    protected:
+        void doAppend(const QString& line, bool self=false);
+        void appendLine(const QString& color);
+        void appendRememberLine();
+
+
+    public slots:
+        void search(); ///! TODO FIXME this is a dangerous overload
         void searchAgain();
 
+        //! FIXME eh? what is this?
         void setCurrentChannel(const QString& channel) { m_currentChannel = channel; }
 
-        virtual void removeSelectedText(int selNum=0);
-
-        virtual void scrollToBottom();            // Overwritten for internal reasons
+        /// Overwritten so the scrollview remains not freaked out
+        //virtual void removeSelectedText(int selNum=0);
+        //! TODO FIXME meta, derived
+        //virtual void scrollToBottom();            // Overwritten for internal reasons
 
         // Clears context nick
+        //! The name of this method is unclear enough that it needs documentation, but clear enough that the documentation just needs to be a repeat of the name. Thanks for playing, but get some kills next time.
         void clearContextNick();
 
         // Updates the scrollbar position
-        void updateScrollBarPos();
-
-	// Override ensureCursorVisible() to have an ability to disable this call
-	virtual void ensureCursorVisible();
+        //! Again. Really? Two in a row? Couldn't be more inventive, whoever you are? Come on, show some personality. Let your vocabulary loose! Because right now its looking like you don't know what you're taking about.
+        //void updateScrollBarPos();
 
     protected slots:
-        void highlightedSlot(const QString& link);
-        void saveLinkAs(const QString& url);
+        //void highlightedSlot(const QString& link);
+        //void saveLinkAs(const QString& url);
 
     protected:
         void openLink(const QString &url, bool newTab=false);
-        QString filter(const QString& line, const QString& defaultColor, const QString& who=NULL,
-        bool doHighlight=true, bool parseURL=true, bool self=false);
-        void appendAction(const QString& nick, const QString& message);
-        void doAppend(const QString& line, bool self=false);
+
+        QString filter(const QString& line, const QString& defaultColor, const QString& who=NULL, bool doHighlight=true, bool parseURL=true, bool self=false);
+
         void replaceDecoration(QString& line,char decoration,char replacement);
-        virtual void contentsDragMoveEvent(QDragMoveEvent* e);
-        virtual void contentsDropEvent(QDropEvent* e);
-        virtual void contentsMouseReleaseEvent(QMouseEvent* ev);
-        virtual void contentsMousePressEvent(QMouseEvent* ev);
-        virtual void contentsMouseMoveEvent(QMouseEvent* ev);
-        virtual void contentsContextMenuEvent(QContextMenuEvent* ev);
 
-        virtual void keyPressEvent(QKeyEvent* e);
-        virtual void resizeEvent(QResizeEvent* e);
+        //virtual void contentsDragMoveEvent(QDragMoveEvent* e);
+        //virtual void contentsDropEvent(QDropEvent* e);
+        //virtual void contentsMouseReleaseEvent(QMouseEvent* ev);
+        //virtual void contentsMousePressEvent(QMouseEvent* ev);
+        //virtual void contentsMouseMoveEvent(QMouseEvent* ev);
+        //virtual void contentsContextMenuEvent(QContextMenuEvent* ev);
 
-        void hideEvent(QHideEvent* event);
-        void showEvent(QShowEvent* event);
-        void paintEvent(QPaintEvent* event);
+        //virtual void keyPressEvent(QKeyEvent* e);
+        //virtual void resizeEvent(QResizeEvent* e);
+
+        //void hideEvent(QHideEvent* event);
+        //void showEvent(QShowEvent* event);
 
         bool contextMenu(QContextMenuEvent* ce);
 
         void setupNickPopupMenu();
-        void updateNickMenuEntries(Q3PopupMenu* popup, const QString& nickname);
+        void updateNickMenuEntries(KMenu* popup, const QString& nickname);
         void setupQueryPopupMenu();
         void setupChannelPopupMenu();
 
@@ -177,43 +206,62 @@ class IRCView : public KTextBrowser
         QString timeStamp();
 
         /// Returns a formated nick string
+        //! FIXME formatted in what way?
         QString createNickLine(const QString& nick, bool encapsulateNick = true, bool privMsg = false);
 
-        // used by search function
+
+
+        //// Search
         int m_findParagraph;
         int m_findIndex;
+        bool m_caseSensitive;
+        bool m_wholeWords;
+        bool m_forward;
+        bool m_fromCursor;
+        QString m_pattern;
 
-        void appendLine(const QString& color);
-        void appendRememberLine();
+        //used in ::filter
+        QColor m_highlightColor;
 
+        //// Remember line
         void updateLineParagraphs(int numRemoved);
         void wipeLineParagraphs();
-
         int m_rememberLineParagraph;
         bool m_rememberLineDirtyBit;
-
         Q3ValueList<int> m_markerLineParagraphs;
 
-        // This is set to what we last sent status text to the statusbar.  Empty if we have sent clearStatusBarTempText() string
-        QString m_lastStatusText;
-        // decide if we should place the scrollbar at the bottom on show()
-        bool m_resetScrollbar;
 
+        QString m_lastStatusText; //last sent status text to the statusbar. Is empty after clearStatusBarTempText()
+
+        bool m_resetScrollbar; ///< decide if we should place the scrollbar at the bottom on show()
+
+        //used in ::filter
         QString m_autoTextToSend;
+
+        //TODO FIXME light this on fire and send it sailing down an uncharted river riddled with arrows
         Konversation::TabNotifyType m_tabNotification;
-        bool m_copyUrlMenu;
-        QString m_urlToCopy;
 
-        QString m_buffer;
-        Server* m_server;
-        Q3PopupMenu* m_popup;
-        int toggleMenuBarSeparator;
-        int copyUrlMenuSeparator;
-        KMenu* m_nickPopup;
-        KMenu* m_channelPopup;
-        KMenu* m_modes;
-        KMenu* m_kickban;
 
+        //QString m_buffer; ///< our text
+        Server* m_server; //! FIXME assumes we have a server
+
+        //// Popup menus
+        KMenu* m_popup; ///< text area context menu
+        int toggleMenuBarSeparator; ///< stores the ID of the separator
+        int copyUrlMenuSeparator; ///< stores the ID of the separator
+        bool m_copyUrlMenu; ///<the menu we're popping up, is it for copying URI?
+        QString m_highlightedURL;   // the URL we're currently hovering on with the mouse
+        KMenu* m_nickPopup; ///<menu to show when context-click on a nickname
+        KMenu* m_channelPopup; ///<menu to show when context-click on a channel
+        KMenu* m_modes; ///< the submenu for mode changes on a nickname menu
+        KMenu* m_kickban; ///< the submenu for kicks/bans on a nickname menu
+        int m_nickPopupId; ///< context menu
+        int m_channelPopupId; ///< context menu
+
+
+        QString m_urlToCopy; ///< the URL we might be about to copy
+
+        //// RTL hack
         static QChar LRM;
         static QChar RLM;
         static QChar LRE;
@@ -222,34 +270,20 @@ class IRCView : public KTextBrowser
         static QChar LRO;
         static QChar PDF;
 
-        bool m_caseSensitive;
-        bool m_wholeWords;
-        bool m_forward;
-        bool m_fromCursor;
-        QString m_pattern;
-        QColor m_highlightColor;
-
+        //// Nickname colorization
         uint m_offset;
         QStringList m_colorList;
 
-        QString m_highlightedURL;   // the URL we're currently hovering on with the mouse
         QString m_currentNick;
         QString m_currentChannel;
-        bool m_isOnNick;
-        bool m_isOnChannel;
-        bool m_mousePressed;
-        QString m_urlToDrag;
-        QPoint m_pressPosition;
-        int m_nickPopupId;
-        int m_channelPopupId;
+        bool m_isOnNick; ///< context menu click hit a nickname
+        bool m_isOnChannel; ///< context menu click hit a channel
+        bool m_mousePressed; ///< currently processing a mouse press
+        QString m_urlToDrag; ///< we took a stab at whatever was clicked on, may or may not actually be a URL
+        QPoint m_pressPosition; ///< x,y of the click, relative to the GPS location of tip of Phantom's left ear
 
+        //! TODO FIXME i'll bite. why do we have this in here?
         QFontDatabase m_fontDataBase;
-	
-	// Provide ability to disable parent ensureCursorVisible() call
-	bool m_disableEnsureCursorVisible;
-	// If this widget was painted at least once. Needed for scrollbar
-	// reset HACK as a precaution.
-	bool m_wasPainted;
 
         ChatWindow* m_chatWin;
         friend class IRCStyleSheet;

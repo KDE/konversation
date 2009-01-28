@@ -16,7 +16,7 @@
 #include "osd_preferences.h"
 #include "config/preferences.h"
 #include "osd.h"
-#include "konversationapplication.h"
+#include "application.h" ////// header renamed
 
 #include <q3groupbox.h>
 #include <qspinbox.h>
@@ -189,5 +189,5 @@ void OSD_Config::slotUpdateFont(const QFont& font)
     m_pOSDPreview->setFont(font);
 }
 
-#include "osd_preferences.moc"
+// #include "./preferences/osd_preferences.moc"
 

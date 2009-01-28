@@ -16,13 +16,13 @@
 #define NICKLISTVIEW_H
 
 #include "channel.h"
-#include "nicklisttooltip.h"
+#include "../linkaddressbook/nicklisttooltip.h"
 #include "images.h"
 #include "common.h"
 
 #include <k3listview.h>
 //Added by qt3to4:
-#include <Q3PopupMenu>
+#include <K3PopupMenu>
 #include <QContextMenuEvent>
 #include <QDropEvent>
 
@@ -67,11 +67,11 @@ class NickListView : public K3ListView
         virtual bool acceptDrag (QDropEvent* event) const;
         void insertAssociationSubMenu();
         void updateActions();
-        Konversation::KonversationNickListViewToolTip *m_tooltip;
-        Q3PopupMenu* popup;
-        Q3PopupMenu* modes;
-        Q3PopupMenu* kickban;
-        Q3PopupMenu* addressbook;
+        //Konversation::KonversationNickListViewToolTip *m_tooltip;
+        K3PopupMenu* popup;
+        K3PopupMenu* modes;
+        K3PopupMenu* kickban;
+        //K3PopupMenu* addressbook;
         Channel *channel;
         QTimer *m_resortTimer;
 

@@ -109,7 +109,7 @@ class Query : public ChatWindow
         QString buffer;
 
         QSplitter* m_headerSplitter;
-        Konversation::TopicLabel* queryHostmask;
+        QLabel* queryHostmask;
         QLabel* addresseeimage;
         QLabel* addresseelogoimage;
         QLabel* awayLabel;

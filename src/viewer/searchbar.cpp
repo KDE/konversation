@@ -47,7 +47,7 @@ SearchBar::SearchBar(QWidget* parent)
     m_fromCursor = false;
 
     setFocusProxy(m_searchEdit);
-    KIconLoader* iconLoader = kapp->iconLoader();
+    KIconLoader* iconLoader = KIconLoader::global();
     m_closeButton->setIconSet(iconLoader->loadIconSet("fileclose", KIconLoader::Toolbar, 16));
     m_findNextButton->setIconSet(iconLoader->loadIconSet("up", KIconLoader::Toolbar, 16));
     m_findPreviousButton->setIconSet(iconLoader->loadIconSet("down", KIconLoader::Toolbar, 16));
@@ -89,22 +89,12 @@ void SearchBar::showEvent(QShowEvent *e)
 
 bool SearchBar::focusedChild()
 {
-    QObjectListl = queryList("QWidget", 0,0, true);
-    QObjectListIt it( *l ); 
-    QObject *obj;
-    bool has=false;
+    QList<QWidget *> l = findChildren<QWidget *>();
 
-    while ((obj = it.current()) != 0)
-    {
-        ++it;
-        if (((QWidget*)obj)->hasFocus())
-        {
-            has=true;
-            break;
-        }
-    }
-    delete l;
-    return has;
+    for (int i=0; i < l.size(); i++)
+        if (l.at(i)->hasFocus())
+            return true;
+    return false;
 }
 
 void SearchBar::hide()
@@ -244,4 +234,4 @@ void SearchBar::showOptionsMenu()
   m_optionsButton->openPopup();
 }
 
-#include "searchbar.moc"
+// #include "./viewer/searchbar.moc"

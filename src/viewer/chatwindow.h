@@ -100,7 +100,7 @@ class ChatWindow : public Q3VBox
 
         virtual bool eventFilter(QObject* watched, QEvent* e);
 
-        QString logFileName() { return logfile.name(); }
+        QString logFileName() { return logfile.fileName(); }
 
         virtual void setChannelEncoding(const QString& /* encoding */) {}
         virtual QString getChannelEncoding() { return QString(); }

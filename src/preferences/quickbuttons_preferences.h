@@ -14,7 +14,7 @@
 #define QUICKBUTTONSCONFIG_H
 
 #include "quickbuttons_preferencesui.h"
-#include "konvisettingspage.h"
+#include "settingspage.h" ////// header renamed
 
 
 class QuickButtons_Config : public QuickButtons_ConfigUI, public KonviSettingsPage

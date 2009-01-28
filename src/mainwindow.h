@@ -28,7 +28,7 @@
 #include <QEvent>
 #include <QHideEvent>
 
-#include <kmainwindow.h>
+#include <kxmlguiwindow.h>
 #include <kaction.h>
 
 
@@ -49,7 +49,7 @@ namespace Konversation
     class TrayIcon;
 }
 
-class KonversationMainWindow : public KMainWindow
+class KonversationMainWindow : public KXmlGuiWindow
 {
     Q_OBJECT
 
@@ -108,9 +108,6 @@ class KonversationMainWindow : public KMainWindow
         void resetHasDirtySettings();
 
         void toggleMenubar(bool dontShowWarning = false);
-
-        int configureToolbar();
-        void saveToolbarConfig();
 
         void openPrefsDialog();
         void openKeyBindings();

@@ -17,9 +17,9 @@
 #ifndef DCCTRANSFERRECV_H
 #define DCCTRANSFERRECV_H
 
-#include "dcctransfer.h"
+#include "transfer.h" ////// header renamed
 // TODO: remove the dependence
-#include "dccresumedialog.h"
+#include "resumedialog.h" ////// header renamed
 
 #include <q3ptrlist.h>
 //Added by qt3to4:

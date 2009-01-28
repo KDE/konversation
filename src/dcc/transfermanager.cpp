@@ -9,9 +9,9 @@
   Copyright (C) 2007 Shintaro Matsuoka <shin@shoegazed.org>
 */
 
-#include "dcctransfermanager.h"
-#include "dcctransferrecv.h"
-#include "dcctransfersend.h"
+#include "transfermanager.h" ////// header renamed
+#include "transferrecv.h" ////// header renamed
+#include "transfersend.h" ////// header renamed
 #include "konversationapplication.h"
 #include "preferences.h"
 
@@ -235,4 +235,4 @@ void DccTransferManager::removeRecvItem( DccTransfer* item_ )
     item->deleteLater();
 }
 
-#include "dcctransfermanager.moc"
+// #include "./dcc/transfermanager.moc"

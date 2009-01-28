@@ -44,7 +44,7 @@ NoRightsColor (int)
 class Ignore;
 class Highlight;
 
-class Preferences : public QObject, public PreferencesBase
+class Preferences : public PreferencesBase
 {
     Q_OBJECT
 
@@ -121,7 +121,7 @@ class Preferences : public QObject, public PreferencesBase
         static const QString kickReason();
         static void setKickReason(const QString &newReason);
         static void setShowAwayMessage(bool state);
-        static bool showAwayMessage();
+        static /* const */ bool showAwayMessage();
         static const QString awayMessage();
         static void setAwayMessage(const QString &newMessage);
         static const QString unAwayMessage();
@@ -139,7 +139,7 @@ class Preferences : public QObject, public PreferencesBase
         static const QString channelEncoding(int serverGroupId,const QString& channel);
         static void setChannelEncoding(const QString& server,const QString& channel,const QString& encoding);
         static void setChannelEncoding(int serverGroupId,const QString& channel,const QString& encoding);
-        static const QValueList<int> channelEncodingsServerGroupIdList();
+        static const Q3ValueList<int> channelEncodingsServerGroupIdList();
         static const QStringList channelEncodingsChannelList(int serverGroupId);
 
         static void setShowTrayIcon(bool state);

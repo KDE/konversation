@@ -14,7 +14,7 @@
 #define KONVERSATIONHIGHLIGHT_CONFIG_H
 
 #include "highlight_preferencesui.h"
-#include "konvisettingspage.h"
+#include "settingspage.h" ////// header renamed
 
 #include <qobject.h>
 //Added by qt3to4:

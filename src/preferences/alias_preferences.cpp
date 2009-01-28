@@ -220,4 +220,4 @@ void Alias_Config::removeEntry()
     }
 }
 
-#include "alias_preferences.moc"
+// #include "./preferences/alias_preferences.moc"

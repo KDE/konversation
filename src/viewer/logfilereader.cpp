@@ -13,7 +13,7 @@
 */
 
 #include "logfilereader.h"
-#include "konversationapplication.h"
+#include "application.h" ////// header renamed
 #include "ircview.h"
 #include "ircviewbox.h"
 
@@ -37,6 +37,7 @@
 #include <kfiledialog.h>
 #include <klocale.h>
 #include <kdebug.h>
+#include <kio/copyjob.h>
 #include <kio/jobclasses.h>
 #include <QTextDocument>
 
@@ -47,9 +48,9 @@ LogfileReader::LogfileReader(QWidget* parent, const QString& log) : ChatWindow(p
 
     fileName = log;
     Q3DockArea* toolBarDock = new Q3DockArea(Qt::Horizontal,Q3DockArea::Normal,this,"logfile_toolbar_dock");
-    toolBar = new KToolBar(toolBarDock,"logfile_toolbar",true,true);
-
-    toolBar->insertButton("filesaveas",0,SIGNAL(clicked()),this,SLOT(saveLog()),true,i18n("Save As..."));
+    toolBar = new KToolBar(toolBarDock, true, true);
+    toolBar->setObjectName("logfile_toolbar");
+    toolBar->addAction(KIcon("filesaveas"), i18n("Save As..."), this, SLOT(saveLog()));
 
     new QLabel(i18n("Show last:"),toolBar,"logfile_size_label");
     sizeSpin = new QSpinBox(10,1000,10,toolBar,"logfile_size_spinbox");
@@ -58,8 +59,8 @@ LogfileReader::LogfileReader(QWidget* parent, const QString& log) : ChatWindow(p
     sizeSpin->setSuffix(i18n(" KB"));
     sizeSpin->installEventFilter(this);
 
-    toolBar->insertButton("reload",0,SIGNAL(clicked()),this,SLOT(updateView()),true,i18n("Reload"));
-    toolBar->insertButton("editdelete",0,SIGNAL(clicked()),this,SLOT(clearLog()),true,i18n("Clear Logfile"));
+    toolBar->addAction(KIcon("reload"), i18n("Reload"), this, SLOT(updateView()));
+    toolBar->addAction(KIcon("editdelete"), i18n("Clear Logfile"), this, SLOT(clearLog()));
 
     IRCViewBox* ircBox = new IRCViewBox(this, 0);
     setTextView(ircBox->ircView());
@@ -138,6 +139,7 @@ void LogfileReader::clearLog()
         i18n("Do you really want to permanently discard all log information of this file?"),
         i18n("Clear Logfile"),
         KStandardGuiItem::del(),
+        KStandardGuiItem::cancel(),
         "ClearLogfileQuestion")==KMessageBox::Continue)
     {
         QFile::remove(fileName);
@@ -160,8 +162,7 @@ void LogfileReader::saveLog()
     {
         // replace # with %25 to make it URL conforming
         KIO::Job* job=KIO::copy(KUrl(fileName.replace("#","%23")),
-            KUrl(destination),
-            true);
+            KUrl(destination));
 
         connect(job,SIGNAL(result(KIO::Job*)),this,SLOT(copyResult(KIO::Job*)));
     }
@@ -188,4 +189,4 @@ int LogfileReader::margin() { return KDialog::marginHint(); }
 int LogfileReader::spacing() { return KDialog::spacingHint(); }
 bool LogfileReader::searchView() { return true; }
 
-#include "logfilereader.moc"
+// #include "./viewer/logfilereader.moc"

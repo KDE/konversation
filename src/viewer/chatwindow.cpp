@@ -14,7 +14,7 @@
 #include "channel.h"
 #include "ircview.h"
 #include "server.h"
-#include "konversationapplication.h"
+#include "application.h" ////// header renamed
 #include "logfilereader.h"
 
 #include <qdatetime.h>
@@ -67,11 +67,12 @@ void ChatWindow::updateAppearance()
     setFont(KGlobalSettings::generalFont());
 
     if (textView)
-    {
+    { /* TODO FIXME
         if (Preferences::showIRCViewScrollBar())
             textView->setVScrollBarMode(Q3ScrollView::AlwaysOn);
         else
             textView->setVScrollBarMode(Q3ScrollView::AlwaysOff);
+        */
     }
 }
 
@@ -138,12 +139,12 @@ void ChatWindow::setTextView(IRCView* newView)
     }
 
     if(Preferences::showIRCViewScrollBar())
-    {
-        textView->setVScrollBarMode(Q3ScrollView::Auto);
+    { // TODO FIXME
+        //textView->setVScrollBarMode(Q3ScrollView::Auto);
     }
     else
-    {
-        textView->setVScrollBarMode(Q3ScrollView::AlwaysOff);
+    { // TODO FIXME
+        //textView->setVScrollBarMode(Q3ScrollView::AlwaysOff);
     }
 
     textView->setChatWin(this);
@@ -202,14 +203,14 @@ void ChatWindow::cdIntoLogPath()
 {
     QDir logPath=QDir::home();
     // Try to "cd" into the logfile path
-    if(!logPath.cd(Preferences::logfilePath(),true))
+    if(!logPath.cd(Preferences::logfilePath()))
     {
         // Only create log path if logging is enabled
         if(log)
         {
             // Try to create the logfile path and "cd" into it again
-            logPath.mkdir(Preferences::logfilePath(),true);
-            logPath.cd(Preferences::logfilePath(),true);
+            logPath.mkdir(Preferences::logfilePath());
+            logPath.cd(Preferences::logfilePath());
         }
     }
 
@@ -527,4 +528,4 @@ void ChatWindow::resetTabNotification()
     m_currentTabNotify = Konversation::tnfNone;
 }
 
-#include "chatwindow.moc"
+// #include "./viewer/chatwindow.moc"

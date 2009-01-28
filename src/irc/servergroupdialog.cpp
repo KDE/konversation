@@ -12,7 +12,7 @@
 
 #include "servergroupdialog.h"
 #include "identity.h"
-#include "konversationapplication.h"
+#include "application.h" ////// header renamed
 #include "viewcontainer.h"
 #include "preferences.h"
 #include "serversettings.h"
@@ -415,4 +415,4 @@ namespace Konversation
 
 }
 
-#include "servergroupdialog.moc"
+// #include "./irc/servergroupdialog.moc"

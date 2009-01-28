@@ -11,21 +11,23 @@
 */
 
 #include "awaymanager.h"
-#include "konversationapplication.h"
-#include "konversationmainwindow.h"
+#include "application.h" ////// header renamed
+#include "mainwindow.h" ////// header renamed
 #include "connectionmanager.h"
 #include "server.h"
 #include "preferences.h"
 
+#include <qvariant.h>
 #include <qtimer.h>
 //Added by qt3to4:
 #include <Q3ValueList>
 #include <Q3PtrList>
 
-#include <dcopref.h>
 #include <kaction.h>
+#include <kselectaction.h>
 #include <klocale.h>
-
+#include <KActionCollection>
+#include <KToggleAction>
 #include <kdebug.h>
 
 #ifdef Q_WS_X11
@@ -44,6 +46,7 @@
 #undef HAVE_XIDLE
 #undef HasXidle
 
+#include <fixx11h.h>
 
 struct AwayManagerPrivate
 {
@@ -90,7 +93,8 @@ AwayManager::AwayManager(QObject* parent) : QObject(parent)
         d->useMit = XScreenSaverQueryExtension(QX11Info::display(), &dummy, &dummy);
 #endif
 
-    m_activityTimer = new QTimer(this, "AwayTimer");
+    m_activityTimer = new QTimer(this);
+    m_activityTimer->setObjectName("AwayTimer");
     connect(m_activityTimer, SIGNAL(timeout()), this, SLOT(checkActivity()));
 
     m_idleTime.start();
@@ -162,13 +166,14 @@ void AwayManager::checkActivity()
     if (rentrencyProtection) return;
 
     rentrencyProtection = true;
-
+/*
     DCOPRef screenSaver("kdesktop", "KScreensaverIface");
     DCOPReply isBlanked = screenSaver.callExt("isBlanked", DCOPRef::UseEventLoop, 10);
-
+*/
     rentrencyProtection = false;
 
-    if (!(isBlanked.isValid() && isBlanked.type == "bool" && ((bool)isBlanked)))
+    QVariant isBlanked(false);
+    if (!(isBlanked.isValid() && isBlanked.type() == QVariant::Bool && (isBlanked.toBool())))
          implementIdleAutoAway(Xactivity());
 }
 
@@ -344,7 +349,7 @@ void AwayManager::toggleGlobalAway(bool away)
 void AwayManager::updateGlobalAwayAction(bool away)
 {
     KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
-    KToggleAction* awayAction = static_cast<KToggleAction*>(konvApp->getMainWindow()->actionCollection()->action("toggle_away"));
+    KToggleAction* awayAction = qobject_cast<KToggleAction*>(konvApp->getMainWindow()->actionCollection()->action("toggle_away"));
 
     if (!awayAction) return;
 
@@ -363,14 +368,14 @@ void AwayManager::updateGlobalAwayAction(bool away)
         if (awayCount == serverList.count())
         {
             awayAction->setChecked(true);
-            awayAction->setIcon("konversationaway");
+            awayAction->setIcon(KIcon("konversationaway"));
         }
     }
     else
     {
         awayAction->setChecked(false);
-        awayAction->setIcon("konversationavailable");
+        awayAction->setIcon(KIcon("konversationavailable"));
     }
 }
 
-#include "awaymanager.moc"
+// #include "./awaymanager.moc"

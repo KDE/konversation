@@ -54,4 +54,4 @@ namespace Konversation
 
 }
 
-#include "insertchardialog.moc"
+// #include "./viewer/insertchardialog.moc"

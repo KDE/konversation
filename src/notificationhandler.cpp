@@ -13,8 +13,8 @@
 #include "notificationhandler.h"
 #include "common.h"
 #include "chatwindow.h"
-#include "konversationapplication.h"
-#include "konversationmainwindow.h"
+#include "application.h" ////// header renamed
+#include "mainwindow.h" ////// header renamed
 #include "viewcontainer.h"
 #include "trayicon.h"
 #include "server.h"
@@ -30,8 +30,8 @@
 namespace Konversation
 {
 
-    NotificationHandler::NotificationHandler(KonversationApplication* parent, const char* name)
-        : QObject(parent, name)
+    NotificationHandler::NotificationHandler(KonversationApplication* parent)
+        : QObject(parent)
     {
         m_mainWindow = parent->getMainWindow();
     }
@@ -58,12 +58,14 @@ namespace Konversation
             startTrayNotification(chatWin);
         }
 
+        /*
         if(Preferences::oSDShowChannel() &&
             (!m_mainWindow->isActiveWindow() || (chatWin != m_mainWindow->getViewContainer()->getFrontView())))
         {
             KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
             konvApp->osd->showOSD('(' + chatWin->getName() + ") <" + fromNick + "> " + cleanedMessage);
         }
+        */
     }
 
     void NotificationHandler::nick(ChatWindow* chatWin, const QString& fromNick, const QString& message)
@@ -83,12 +85,14 @@ namespace Konversation
 
         KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
 
+        /*
         if((Preferences::oSDShowChannel() || Preferences::oSDShowOwnNick()) &&
             (!m_mainWindow->isActiveWindow() ||
             (chatWin != m_mainWindow->getViewContainer()->getFrontView())))
         {
             konvApp->osd->showOSD(i18n("[HighLight] (%1) <%2> %3").arg(chatWin->getName()).arg(fromNick).arg(cleanedMessage));
         }
+        */
     }
 
     void NotificationHandler::queryMessage(ChatWindow* chatWin,
@@ -109,11 +113,13 @@ namespace Konversation
 
         KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
 
+        /*
         if(Preferences::oSDShowQuery() && (!m_mainWindow->isActiveWindow() ||
            (chatWin != m_mainWindow->getViewContainer()->getFrontView())))
         {
             konvApp->osd->showOSD(i18n("[Query] <%1> %2").arg(fromNick).arg(cleanedMessage));
         }
+        */
     }
 
     void NotificationHandler::startTrayNotification(ChatWindow* chatWin)
@@ -123,9 +129,10 @@ namespace Konversation
 
         if (!chatWin->getServer() || (Preferences::disableNotifyWhileAway() && chatWin->getServer()->isAway()))
             return;
-
+ //TODO FIXME port the tray icon
         if (!m_mainWindow->isActiveWindow() && chatWin->getServer()->isConnected())
             m_mainWindow->systemTrayIcon()->startNotification();
+
     }
 
     void NotificationHandler::join(ChatWindow* chatWin, const QString& nick)
@@ -139,12 +146,14 @@ namespace Konversation
         KNotification::event(QString::fromLatin1("join"), i18n("%1 joined %2").arg(nick, chatWin->getName()), QPixmap(), m_mainWindow);
 
         // OnScreen Message
+        /*
         if(Preferences::oSDShowChannelEvent() &&
             (!m_mainWindow->isActiveWindow() || (chatWin != m_mainWindow->getViewContainer()->getFrontView())))
         {
             KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
             konvApp->osd->showOSD(i18n("%1 joined %2").arg(nick, chatWin->getName()));
         }
+        */
     }
 
     void NotificationHandler::part(ChatWindow* chatWin, const QString& nick)
@@ -158,12 +167,14 @@ namespace Konversation
         KNotification::event(QString::fromLatin1("part"), i18n("%1 parted %2").arg(nick, chatWin->getName()), QPixmap(), m_mainWindow);
 
         // OnScreen Message
+        /*
         if(Preferences::oSDShowChannelEvent() &&
             (!m_mainWindow->isActiveWindow() || (chatWin != m_mainWindow->getViewContainer()->getFrontView())))
         {
             KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
             konvApp->osd->showOSD(i18n("%1 parted %2").arg(nick, chatWin->getName()));
         }
+        */
     }
 
     void NotificationHandler::quit(ChatWindow* chatWin, const QString& nick)
@@ -207,7 +218,8 @@ namespace Konversation
         if (Preferences::disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
             return;
 
-        KNotification::event(m_mainWindow->winId(), "mode");
+        KNotification *ev=new KNotification("mode", m_mainWindow);
+        ev->sendEvent();
     }
 
     void NotificationHandler::query(ChatWindow* chatWin, const QString& fromNick)
@@ -220,8 +232,9 @@ namespace Konversation
 
         startTrayNotification(chatWin);
 
-        KNotification::event(m_mainWindow->winId(), "query",
-            i18n("%1 has started a conversation (query) with you.").arg(fromNick));
+        KNotification *ev=new KNotification("query", m_mainWindow);
+        ev->setText(i18n("%1 has started a conversation (query) with you.",fromNick));
+        ev->sendEvent();
     }
 
     void NotificationHandler::nickOnline(ChatWindow* chatWin, const QString& nick)
@@ -232,8 +245,10 @@ namespace Konversation
         if (Preferences::disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
             return;
 
-        KNotification::event(m_mainWindow->winId(), "notify",
-            i18n("%1 is online (%2).").arg(nick).arg(chatWin->getServer()->getServerName()));
+        KNotification *ev=new KNotification("notify", m_mainWindow);
+        ev->setText(i18n("%1 is online (%2).", nick, chatWin->getServer()->getServerName()));
+        ev->sendEvent();
+
     }
 
     void NotificationHandler::nickOffline(ChatWindow* chatWin, const QString& nick)
@@ -244,8 +259,10 @@ namespace Konversation
         if (Preferences::disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
             return;
 
-        KNotification::event(m_mainWindow->winId(), "notify",
-            i18n("%1 went offline (%2).").arg(nick).arg(chatWin->getServer()->getServerName()));
+        KNotification *ev=new KNotification("notify", m_mainWindow);
+        ev->setText(i18n("%1 went offline (%2).", nick, chatWin->getServer()->getServerName()));
+        ev->sendEvent();
+
     }
 
     void NotificationHandler::kick(ChatWindow* chatWin, const QString& channel,const QString& nick)
@@ -256,8 +273,10 @@ namespace Konversation
         if (Preferences::disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
             return;
 
-        KNotification::event(m_mainWindow->winId(), "kick",
-            i18n("You are kicked by %1 from %2").arg(nick).arg(channel));
+        KNotification *ev=new KNotification("kick", m_mainWindow);
+        ev->setText(i18n("You are kicked by %1 from %2", nick, channel));
+        ev->sendEvent();
+
     }
 
     void NotificationHandler::dccChat(ChatWindow* chatWin, const QString& nick)
@@ -268,8 +287,10 @@ namespace Konversation
         if (Preferences::disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
             return;
 
-        KNotification::event(m_mainWindow->winId(), "dccChat",
-            i18n("%1 started a dcc chat with you").arg(nick));
+        KNotification *ev=new KNotification("dccChat", m_mainWindow);
+        ev->setText(i18n("%1 started a dcc chat with you", nick));
+        ev->sendEvent();
+
     }
 
     void NotificationHandler::highlight(ChatWindow* chatWin, const QString& fromNick, const QString& message)
@@ -281,7 +302,7 @@ namespace Konversation
             return;
 
         startTrayNotification(chatWin);
-
+        /*
         if(Preferences::oSDShowOwnNick() &&
             (!m_mainWindow->isActiveWindow() || (chatWin != m_mainWindow->getViewContainer()->getFrontView())))
         {
@@ -293,7 +314,7 @@ namespace Konversation
             // normal highlight message
             else
                 konvApp->osd->showOSD(i18n("[HighLight] (%1) <%2> %3").arg(chatWin->getName()).arg(fromNick).arg(message));
-        }
+        } */
     }
 
     void NotificationHandler::connectionFailure(ChatWindow* chatWin, const QString& server)
@@ -301,8 +322,10 @@ namespace Konversation
         if (!chatWin || !chatWin->notificationsEnabled())
             return;
 
-        KNotification::event(m_mainWindow->winId(), "connectionFailure",
-            i18n("Failed to connect to %1").arg(server));
+        KNotification *ev=new KNotification("connectionFailure", m_mainWindow);
+        ev->setText(i18n("Failed to connect to %1", server));
+        ev->sendEvent();
+
     }
 
     void NotificationHandler::channelJoin(ChatWindow* chatWin, const QString& channel)
@@ -332,4 +355,4 @@ namespace Konversation
 
 }
 
-#include "notificationhandler.moc"
+// #include "./notificationhandler.moc"

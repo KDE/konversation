@@ -15,7 +15,7 @@
 #include "urlcatcher.h"
 #include "channel.h"
 #include "server.h"
-#include "konversationapplication.h"
+#include "application.h" ////// header renamed
 #include "viewcontainer.h"
 
 #include <q3hbox.h>
@@ -28,7 +28,7 @@
 #include <Q3TextStream>
 
 #include <kapplication.h>
-#include <kactionclasses.h>
+//#include <kactionclasses.h>
 #include <klocale.h>
 #include <kdebug.h>
 #include <k3listview.h>
@@ -46,7 +46,8 @@ UrlCatcher::UrlCatcher(QWidget* parent) : ChatWindow(parent)
     setName(i18n("URL Catcher"));
     setType(ChatWindow::UrlCatcher);
 
-    urlListView=new K3ListView(this,"url_list_view");
+    urlListView=new K3ListView(this);
+    urlListView->setObjectName("url_list_view");
     urlListView->addColumn(i18n("Nick"));
     urlListView->addColumn(i18n("URL"));
     urlListView->setFullWidth(true);
@@ -56,7 +57,8 @@ UrlCatcher::UrlCatcher(QWidget* parent) : ChatWindow(parent)
         "during this session.");
     Q3WhatsThis::add(urlListView, urlListViewWT);
 
-    searchWidget = new KListViewSearchLineWidget(urlListView, this, "search_line");
+    searchWidget = new K3ListViewSearchLineWidget(urlListView, this);
+    searchWidget->setObjectName("search_line");
     searchWidget->setEnabled(false);
 
     Q3HBox* buttonBox=new Q3HBox(this);
@@ -140,7 +142,7 @@ void UrlCatcher::openUrl(Q3ListViewItem* item)
     QString url = item->text(1);
     if (!Preferences::useCustomBrowser() || url.lower().startsWith("mailto:") )
     {
-        new KRun(KUrl(url));
+        new KRun(KUrl(url), KonversationApplication::instance()->getMainWindow());
     }
     else
     {
@@ -232,4 +234,4 @@ void UrlCatcher::childAdjustFocus()
 {
 }
 
-#include "urlcatcher.moc"
+// #include "./urlcatcher.moc"

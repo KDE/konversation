@@ -14,8 +14,8 @@
 #include "serversettings.h"
 #include "servergroupsettings.h"
 #include "config/preferences.h"
-#include "konversationapplication.h"
-#include "konversationmainwindow.h"
+#include "application.h" ////// header renamed
+#include "mainwindow.h" ////// header renamed
 #include "statuspanel.h"
 
 #include <qregexp.h>
@@ -332,7 +332,7 @@ void ConnectionManager::decodeAddress(const QString& address, ConnectionSettings
     // Example: Without port, RFC 2732 notation:     [2001:0DB8:0000:0000:0000:0000:1428:57ab]
     // Example: Without port, Non-RFC 2732 notation: 2001:0DB8:0000:0000:0000:0000:1428:57ab
     // Example: With port, RFC 2732 notation:        [2001:0DB8::1428:57ab]:6666
-    else if (address.contains(':')>=4)
+    else if (address.count(QChar(':'))>=4)
     {
         // Last segment does not end with ], but the next to last does;
         // Assume not-full-length IPv6 address with port
@@ -351,7 +351,7 @@ void ConnectionManager::decodeAddress(const QString& address, ConnectionSettings
     // IPv4 address or ordinary hostname with port
     // Example: IPv4 address with port: 123.123.123.123:6666
     // Example: Hostname with port:     irc.bla.org:6666
-    else if (address.contains(':')==1)
+    else if (address.count(':')==1)
     {
         host = address.section(':',0,-2);
         port = address.section(':',-1);
@@ -438,11 +438,11 @@ bool ConnectionManager::reuseExistingConnection(ConnectionSettings& settings, bo
     {
         int result = KMessageBox::warningContinueCancel(
             mainWindow,
-            i18n("You are already connected to %1. Do you want to open another connection?")
-                .arg(dupe->getDisplayName()),
-            i18n("Already connected to %1").arg(dupe->getDisplayName()),
-            i18n("Create connection"),
-            "ReuseExistingConnection");
+            i18n("You are already connected to %1. Do you want to open another connection?", dupe->getDisplayName()),
+            i18n("Already connected to %1", dupe->getDisplayName()),
+            KGuiItem(i18n("Create connection")),
+            KStandardGuiItem::cancel(),
+            QString("ReuseExistingConnection"));
 
         if (result == KMessageBox::Continue) doReuse = false;
     }
@@ -454,14 +454,16 @@ bool ConnectionManager::reuseExistingConnection(ConnectionSettings& settings, bo
         {
             int result = KMessageBox::warningContinueCancel(
                 mainWindow,
-                i18n("You are presently connected to %1 via '%2' (port %3). Do you want to switch to '%4' (port %5) instead?")
-                    .arg(dupe->getDisplayName())
-                    .arg(dupe->getServerName())
-                    .arg(dupe->getPort())
-                    .arg(settings.server().host())
-                    .arg(settings.server().port()),
-                i18n("Already connected to %1").arg(dupe->getDisplayName()),
-                i18n("Switch Server"),
+                //my, isn't this fucking ugly
+                i18n("You are presently connected to %1 via '%2' (port %3). Do you want to switch to '%4' (port %5) instead?",
+                    dupe->getDisplayName(),
+                    dupe->getServerName(),
+                    dupe->getPort(),
+                    settings.server().host(),
+                    settings.server().port()),
+                i18n("Already connected to %1", dupe->getDisplayName()),
+                KGuiItem(i18n("Switch Server")),
+                KStandardGuiItem::cancel(),
                 "ReconnectWithDifferentServer");
 
             if (result == KMessageBox::Continue)
@@ -513,11 +515,12 @@ bool ConnectionManager::validateIdentity(IdentityPtr identity, bool interactive)
     {
         if (interactive)
         {
-            int result = KMessageBox::warningContinueCancel(mainWindow,
-                            i18n("<qt>Your identity \"%1\" is not set up correctly:<br>%2</qt>")
-                                .arg(identity->getName()).arg(errors),
-                            i18n("Identity Settings"),
-                            i18n("Edit Identity..."));
+            int result = KMessageBox::warningContinueCancel(
+                    mainWindow,
+                    i18n("<qt>Your identity \"%1\" is not set up correctly:<br>%2</qt>", identity->getName(), errors),
+                    i18n("Identity Settings"),
+                    KGuiItem(i18n("Edit Identity...")),
+                    KStandardGuiItem::cancel());
 
             if (result == KMessageBox::Continue)
             {
@@ -579,4 +582,4 @@ Server* ConnectionManager::getAnyServer()
     return 0;
 }
 
-#include "connectionmanager.moc"
+// #include "./connectionmanager.moc"

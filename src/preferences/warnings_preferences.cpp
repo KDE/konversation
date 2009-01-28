@@ -13,7 +13,7 @@
 
 
 #include "warnings_preferences.h"
-#include "konviconfigdialog.h"
+#include "configdialog.h" ////// header renamed
 
 #include <q3listview.h>
 
@@ -183,4 +183,4 @@ void Warnings_Config::languageChange()
   loadSettings();
 }
 
-#include "warnings_preferences.moc"
+// #include "./preferences/warnings_preferences.moc"

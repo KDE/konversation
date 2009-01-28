@@ -23,6 +23,8 @@
  * use KonversationApplication::instance()->images().
  */
 
+//TODO FIXME what fuck is the above statement supposed to prove? we don't know how to make a singleton?
+
 class Images : public QObject
 {
     Q_OBJECT

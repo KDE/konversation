@@ -12,7 +12,7 @@
 #ifndef WATCHEDNICKNAMES_CONFIG_H
 #define WATCHEDNICKNAMES_CONFIG_H
 
-#include "konvisettingspage.h"
+#include "settingspage.h" ////// header renamed
 #include "servergroupsettings.h"
 #include "watchednicknames_preferencesui.h"
 

@@ -13,9 +13,9 @@
 */
 
 #include "nicklistview.h"
-#include "konversationapplication.h"
+#include "application.h" ////// header renamed
 #include "images.h"
-#include "linkaddressbook/addressbook.h"
+//#include "linkaddressbook/addressbook.h"
 
 #include <kmenu.h>
 #include <klocale.h>
@@ -30,7 +30,7 @@
 #include <q3whatsthis.h>
 #include <q3dragobject.h>
 #include <kauthorized.h>
-
+#include <Q3MimeSourceFactory>
 
 NickListView::NickListView(QWidget* parent, Channel *chan) :
 K3ListView(parent)
@@ -38,10 +38,16 @@ K3ListView(parent)
     K3ListView::setSorting(-1);
     setWhatsThis();
     channel=chan;
-    popup=new KMenu(this,"nicklist_context_menu");
-    modes=new KMenu(this,"nicklist_modes_context_submenu");
-    kickban=new KMenu(this,"nicklist_kick_ban_context_submenu");
-    addressbook= new KMenu(this,"nicklist_addressbook_context_submenu");
+    popup=new K3PopupMenu(this);
+    popup->setObjectName("nicklist_context_menu");
+    modes=new K3PopupMenu(this);
+    modes->setObjectName("nicklist_modes_context_submenu");
+    kickban=new K3PopupMenu(this);
+    kickban->setObjectName("nicklist_kick_ban_context_submenu");
+    /*
+    addressbook= new K3PopupMenu(this);
+    addressbook->setObjectName("nicklist_addressbook_context_submenu");
+    */
     setAcceptDrops(true);
     setDropHighlighter(true);
     setDropVisualizer(false);
@@ -104,15 +110,17 @@ K3ListView(parent)
 
         popup->insertSeparator();
 
+        /*
         if (addressbook)
             popup->insertItem(i18n("Addressbook Associations"), addressbook, Konversation::AddressbookSub);
+        */
 
         popup->insertItem(i18n("Add to Watched Nicks"), Konversation::AddNotify);
 
         connect (popup, SIGNAL(activated(int)), this, SIGNAL(popupCommand(int)));
         connect (modes, SIGNAL(activated(int)), this, SIGNAL(popupCommand(int)));
         connect (kickban, SIGNAL(activated(int)), this, SIGNAL(popupCommand(int)));
-        connect (addressbook, SIGNAL(activated(int)), this, SIGNAL(popupCommand(int)));
+        //connect (addressbook, SIGNAL(activated(int)), this, SIGNAL(popupCommand(int)));
 
     }
     else
@@ -126,7 +134,7 @@ K3ListView(parent)
 
     // We have our own tooltips, don't use the default QListView ones
     setShowToolTips(false);
-    m_tooltip = new Konversation::KonversationNickListViewToolTip(viewport(), this);
+    //m_tooltip = new Konversation::KonversationNickListViewToolTip(viewport(), this);
 
     m_resortTimer = new QTimer(this);
     connect(m_resortTimer, SIGNAL(timeout()), SLOT(resort()));
@@ -134,8 +142,8 @@ K3ListView(parent)
 
 NickListView::~NickListView()
 {
-    delete m_tooltip;
-    m_tooltip = 0;
+    //delete m_tooltip;
+    //m_tooltip = 0;
 }
 
 void NickListView::setWhatsThis()
@@ -168,7 +176,9 @@ void NickListView::setWhatsThis()
             "<tr><th><img src=\"normalaway\"></th><td>This indicates that this person is currently away.</td></tr>"
             "</table><p>"
             "The meaning of admin, owner and halfop varies between different IRC servers.<p>"
-            "Hovering over any nick shows their current status, as well as any information in the addressbook for this person.  See the Konversation Handbook for more information."
+            "Hovering over any nick shows their current status"
+                    //", as well as any information in the addressbook for this person"
+                    ". See the Konversation Handbook for more information."
             "</qt>"
             ));
     }
@@ -260,7 +270,7 @@ void NickListView::insertAssociationSubMenu()
     bool existingAssociation = false;
     bool noAssociation = false;
     bool emailAddress = false;
-
+/*
     addressbook->clear();
 
     ChannelNickList nickList=channel->getSelectedChannelNicks();
@@ -299,7 +309,7 @@ void NickListView::insertAssociationSubMenu()
 
     if(existingAssociation)
         addressbook->insertItem(SmallIcon("editdelete"), i18n("Delete Association"), Konversation::AddressbookDelete);
-
+*/
     if(!emailAddress)
         popup->setItemEnabled(Konversation::SendEmail, false);
     else
@@ -338,4 +348,4 @@ bool NickListView::acceptDrag (QDropEvent* event) const
         return false;
 }
 
-#include "nicklistview.moc"
+// #include "./irc/nicklistview.moc"

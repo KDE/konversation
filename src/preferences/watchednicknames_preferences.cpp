@@ -12,8 +12,8 @@
 #include "watchednicknames_preferences.h"
 #include "watchednicknames_preferencesui.h"
 #include "config/preferences.h"
-#include "konversationapplication.h"
-#include "konversationmainwindow.h"
+#include "application.h" ////// header renamed
+#include "mainwindow.h" ////// header renamed
 #include "valuelistviewitem.h"
 
 #include <qlabel.h>
@@ -417,4 +417,4 @@ void WatchedNicknames_Config::nicknameChanged(const QString& newNickname)
   }
 }
 
-#include "watchednicknames_preferences.moc"
+// #include "./preferences/watchednicknames_preferences.moc"

@@ -36,7 +36,7 @@
  *  email:     hein@kde.org
  */
 
-#include "konviconfigdialog.h"
+#include "configdialog.h" ////// header renamed
 
 #include <kconfigskeleton.h>
 #include <kconfigdialogmanager.h>

@@ -260,4 +260,4 @@ void QuickButtons_Config::removeEntry()
   }
 }
 
-#include "quickbuttons_preferences.moc"
+// #include "./preferences/quickbuttons_preferences.moc"

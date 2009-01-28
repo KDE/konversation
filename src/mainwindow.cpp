@@ -13,21 +13,21 @@
   Copyright (C) 2005-2008 Eike Hein <hein@kde.org>
 */
 
-#include "konversationmainwindow.h"
-#include "konversationapplication.h"
-#include "linkaddressbook/addressbook.h"
-#include "konvisettingsdialog.h"
+#include "mainwindow.h" ////// header renamed
+#include "application.h" ////// header renamed
+//#include "linkaddressbook/addressbook.h"
+//#include "settingsdialog.h" ////// header renamed
 #include "viewcontainer.h"
-#include "konversationstatusbar.h"
-#include "konvibookmarkhandler.h"
+#include "statusbar.h" ////// header renamed
+#include "bookmarkhandler.h" ////// header renamed
 #include "trayicon.h"
-#include "serverlistdialog.h"
-#include "identitydialog.h"
+//#include "serverlistdialog.h"
+//#include "identitydialog.h"
 #include "notificationhandler.h"
 #include "irccharsets.h"
 #include "connectionmanager.h"
 #include "awaymanager.h"
-#include "dcctransfermanager.h"
+#include "transfermanager.h" ////// header renamed
 
 #include <qnamespace.h>
 #include <q3whatsthis.h>
@@ -37,8 +37,15 @@
 #include <QHideEvent>
 #include <QEvent>
 #include <QShowEvent>
+#include <QSplitter>
+#include <QKeySequence>
 
-#include <kaccel.h>
+//#include <kaccel.h>
+#include <KActionCollection>
+#include <KAction>
+#include <KToggleAction>
+#include <KSelectAction>
+#include <KAuthorized>
 #include <kacceleratormanager.h>
 #include <kstandardaction.h>
 #include <kaction.h>
@@ -46,17 +53,18 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kmenubar.h>
-#include <kkeydialog.h>
+//#include <kkeydialog.h>
 #include <kdeversion.h>
 #include <kedittoolbar.h>
 #include <kmenu.h>
 #include <kwindowsystem.h>
 #include <kglobal.h>
 #include <kstandarddirs.h>
-#include <dcopclient.h>
-#include <scriptmanager.h>
+//#include <dcopclient.h>
+//#include <scriptmanager.h>
 #include <kabc/addressbook.h>
 #include <kabc/errorhandler.h>
+#include <KShortcutsDialog>
 
 #include <config.h>
 #ifdef  USE_KNOTIFY
@@ -66,7 +74,7 @@
 #endif
 
 
-KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", Qt::WStyle_ContextHelp | Qt::WType_TopLevel | Qt::WDestructiveClose)
+KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0, Qt::WStyle_ContextHelp | Qt::WType_TopLevel | Qt::WDestructiveClose)
 {
     m_hasDirtySettings = false;
     m_closeApp = false;
@@ -105,7 +113,6 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
 
     connect(actionCollection(), SIGNAL(actionStatusText(const QString&)), m_statusBar, SLOT(setMainLabelTempText(const QString&)));
     connect(actionCollection(), SIGNAL(clearStatusText()), m_statusBar, SLOT(clearMainLabelTempText()));
-    actionCollection()->setHighlightingEnabled(true);
 
     connect(m_viewContainer, SIGNAL(resetStatusBar()), m_statusBar, SLOT(resetStatusBar()));
     connect(m_viewContainer, SIGNAL(setStatusBarTempText(const QString&)), m_statusBar, SLOT(setMainLabelTempText(const QString&)));
@@ -126,7 +133,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
     hideMenuBarAction = KStandardAction::showMenubar(this, SLOT(toggleMenubar()), actionCollection());
 
     setStandardToolBarMenuEnabled(true);
-    KStandardAction::configureToolbars(this, SLOT(configureToolbar()), actionCollection());
+    KStandardAction::configureToolbars(this, SLOT(configureToolbars()), actionCollection());
 
     KStandardAction::keyBindings(this, SLOT(openKeyBindings()), actionCollection());
     KAction *preferencesAction = KStandardAction::preferences(this, SLOT(openPrefsDialog()), actionCollection());
@@ -136,144 +143,341 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
 #endif
 
     KAction* action;
+    
+    //(new KAction(i18n("&Server List..."), "server", KShortcut("F2"), this, SLOT(openServerList()),actionCollection(), "open_server_list"))->setToolTip(i18n("Manage networks and servers"));
+    action=new KAction(this);
+    action->setText(i18n("&Server List..."));
+    action->setIcon(KIcon("server"));
+    action->setShortcut(KShortcut("F2"));
+    action->setToolTip(i18n("Manage networks and servers"));
+    connect(action, SIGNAL(triggered()), SLOT(openServerList()));
+    actionCollection()->addAction("open_server_list", action);
 
-    (new KAction(i18n("&Server List..."), "server", KShortcut("F2"), this, SLOT(openServerList()),
-        actionCollection(), "open_server_list"))->setToolTip(i18n("Manage networks and servers"));
-    (new KAction(i18n("Quick &Connect..."), "connect_creating", KShortcut("F7"), this, SLOT(openQuickConnectDialog()),
-        actionCollection(), "quick_connect_dialog"))->setToolTip(i18n("Type in the address of a new IRC server to connect to"));
+    //(new KAction(i18n("Quick &Connect..."), "connect_creating", KShortcut("F7"), this, SLOT(openQuickConnectDialog()), actionCollection(), "quick_connect_dialog"))->setToolTip(i18n("Type in the address of a new IRC server to connect to"));
+    action=new KAction(this);
+    action->setText(i18n("Quick &Connect..."));
+    action->setIcon(KIcon("connect_creating"));
+    action->setShortcut(KShortcut("F7"));
+    action->setToolTip(i18n("Type in the address of a new IRC server to connect to"));
+    connect(action, SIGNAL(triggered()), SLOT(openQuickConnectDialog()));
+    actionCollection()->addAction("quick_connect_dialog", action);
 
-    action = new KAction(i18n("&Reconnect"), "connect_creating", 0, m_viewContainer, SLOT(reconnectFrontServer()), actionCollection(), "reconnect_server");
+    //action = new KAction(i18n("&Reconnect"), "connect_creating", 0, m_viewContainer, SLOT(reconnectFrontServer()), actionCollection(), "reconnect_server");
+    action=new KAction(this);
+    action->setText(i18n("&Reconnect"));
+    action->setIcon(KIcon("connect_creating"));
     action->setEnabled(false);
     action->setToolTip(i18n("Reconnect to the current server."));
+    connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(reconnectFrontServer()));
+    actionCollection()->addAction("reconnect_server", action);
 
-    action = new KAction(i18n("&Disconnect"), "connect_no", 0, m_viewContainer, SLOT(disconnectFrontServer()), actionCollection(), "disconnect_server");
+
+    //action = new KAction(i18n("&Disconnect"), "connect_no", 0, m_viewContainer, SLOT(disconnectFrontServer()), actionCollection(), "disconnect_server");
+    action=new KAction(this);
+    action->setText(i18n("&Disconnect"));
+    action->setIcon(KIcon("connect_no"));
     action->setEnabled(false);
     action->setToolTip(i18n("Disconnect from the current server."));
+    connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(disconnectFrontServer()));
+    actionCollection()->addAction("disconnect_server", action);
 
-    (new KAction(i18n("&Identities..."), "identity", KShortcut("F8"), this, SLOT(openIdentitiesDialog()),
-        actionCollection(), "identities_dialog"))->setToolTip(i18n("Manage your nick, away and other identity settings"));
+    //(new KAction(i18n("&Identities..."), "identity", KShortcut("F8"), this, SLOT(openIdentitiesDialog()), actionCollection(), "identities_dialog"))->setToolTip(i18n("Manage your nick, away and other identity settings"));
+    action=new KAction(this);
+    action->setText(i18n("&Identities..."));
+    action->setIcon(KIcon("identity"));
+    action->setShortcut(KShortcut("F8"));
+    action->setToolTip(i18n("Manage your nick, away and other identity settings"));
+    connect(action, SIGNAL(triggered()), SLOT(openIdentitiesDialog()));
+    actionCollection()->addAction("identities_dialog", action);
 
-    new KToggleAction(i18n("&Watched Nicks Online"), "kontact_contacts", KShortcut("F4"), m_viewContainer, SLOT(openNicksOnlinePanel()), actionCollection(), "open_nicksonline_window");
-    new KToggleAction(i18n("&DCC Status"), "2rightarrow", KShortcut("F9"), m_viewContainer, SLOT(toggleDccPanel()), actionCollection(), "open_dccstatus_window");
-    action = new KAction(i18n("&Open Logfile"), "history", KShortcut("Ctrl+O"), m_viewContainer, SLOT(openLogFile()), actionCollection(), "open_logfile");
+    //new KToggleAction(i18n("&Watched Nicks Online"), "kontact_contacts", KShortcut("F4"), m_viewContainer, SLOT(openNicksOnlinePanel()), actionCollection(), "open_nicksonline_window");
+    action=new KToggleAction(this);
+    action->setText(i18n("&Watched Nicks Online"));
+    action->setIcon(KIcon("kontact_contacts"));
+    action->setShortcut(KShortcut("F4"));
+    connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(openNicksOnlinePanel()));
+    actionCollection()->addAction("open_nicksonline_window", action);
+
+
+    //new KToggleAction(i18n("&DCC Status"), "2rightarrow", KShortcut("F9"), m_viewContainer, SLOT(toggleDccPanel()), actionCollection(), "open_dccstatus_window");
+    action=new KToggleAction(this);
+    action->setText(i18n("&DCC Status"));
+    action->setIcon(KIcon("2rightarrow"));
+    action->setShortcut(KShortcut("F9"));
+    connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(toggleDccPanel()));
+    actionCollection()->addAction("open_dccstatus_window", action);
+
+
+    
+    //action = new KAction(i18n("&Open Logfile"), "history", KShortcut("Ctrl+O"), m_viewContainer, SLOT(openLogFile()), actionCollection(), "open_logfile");
+    action=new KAction(this);
+    action->setText(i18n("&Open Logfile"));
+    action->setIcon(KIcon("history"));
+    action->setShortcut(KShortcut("Ctrl+O"));
     action->setEnabled(false);
     action->setToolTip(i18n("Open the known history for this channel in a new tab"));
+    connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(openLogFile()));
+    actionCollection()->addAction("open_logfile", action);
 
-    action = new KAction(i18n("&Channel Settings..."), "edit", m_viewContainer, SLOT(openChannelSettings()), actionCollection(), "channel_settings");
+    //action = new KAction(i18n("&Channel Settings..."), "edit", m_viewContainer, SLOT(openChannelSettings()), actionCollection(), "channel_settings");
+    action=new KAction(this);
+    action->setText(i18n("&Channel Settings..."));
+    action->setIcon(KIcon("edit"));
     action->setEnabled(false);
     action->setToolTip(i18n("Open the channel settings dialog for this tab"));
+    connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(openChannelSettings()));
+    actionCollection()->addAction("channel_settings", action);
 
-    KToggleAction* channelListAction = new KToggleAction(i18n("Channel &List"), "view_text", KShortcut("F5"), m_viewContainer, SLOT(openChannelList()), actionCollection(), "open_channel_list");
-    channelListAction->setEnabled(false);
-    channelListAction->setToolTip(i18n("Show a list of all the known channels on this server"));
+    //KToggleAction* channelListAction = new KToggleAction(i18n("Channel &List"), "view_text", KShortcut("F5"), m_viewContainer, SLOT(openChannelList()), actionCollection(), "open_channel_list");
+    action=new KToggleAction(this);
+    action->setText(i18n("Channel &List"));
+    action->setIcon(KIcon("view_text"));
+    action->setShortcut(KShortcut("F5"));
+    action->setEnabled(false);
+    action->setToolTip(i18n("Show a list of all the known channels on this server"));
+    connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(openChannelList()));
+    actionCollection()->addAction("open_channel_list", action);
 
-    action = new KToggleAction(i18n("&URL Catcher"), "enhanced_browsing", KShortcut("F6"), m_viewContainer, SLOT(addUrlCatcher()), actionCollection(), "open_url_catcher");
+    //action = new KToggleAction(i18n("&URL Catcher"), "enhanced_browsing", KShortcut("F6"), m_viewContainer, SLOT(addUrlCatcher()), actionCollection(), "open_url_catcher");
+    action=new KToggleAction(this);
+    action->setText(i18n("&URL Catcher"));
+    action->setIcon(KIcon("enhanced_browsing"));
+    action->setShortcut(KShortcut("F6"));
     action->setToolTip(i18n("List all URLs that have been mentioned recently in a new tab"));
+    connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(addUrlCatcher()));
+    actionCollection()->addAction("open_url_catcher", action);
 
     if (KAuthorized::authorizeKAction("shell_access"))
     {
-        action = new KAction(i18n("New &Konsole"), "openterm", 0, m_viewContainer, SLOT(addKonsolePanel()), actionCollection(), "open_konsole");
+        //action = new KAction(i18n("New &Konsole"), "openterm", 0, m_viewContainer, SLOT(addKonsolePanel()), actionCollection(), "open_konsole");
+        action=new KAction(this);
+        action->setText(i18n("New &Konsole"));
+        action->setIcon(KIcon("openterm"));
         action->setToolTip(i18n("Open a terminal in a new tab"));
+        connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(addKonsolePanel()));
+        actionCollection()->addAction("open_konsole", action);
     }
 
     // Actions to navigate through the different pages
     KShortcut nextShortcut = KStandardShortcut::tabNext();
-    nextShortcut.setSeq(1, KKeySequence("Alt+Right"));
     KShortcut prevShortcut = KStandardShortcut::tabPrev();
-    prevShortcut.setSeq(1, KKeySequence("Alt+Left"));
-    action = new KAction(i18n("&Next Tab"), QApplication::reverseLayout() ? "previous" : "next",
-        QApplication::reverseLayout() ? prevShortcut : nextShortcut,
-        m_viewContainer, SLOT(showNextView()), actionCollection(), "next_tab");
-    action->setEnabled(false);
-    action = new KAction(i18n("&Previous Tab"), QApplication::reverseLayout() ? "next" : "previous",
-        QApplication::reverseLayout() ? nextShortcut : prevShortcut,
-        m_viewContainer, SLOT(showPreviousView()),actionCollection(),"previous_tab");
-    action->setEnabled(false);
-    action = new KAction(i18n("Close &Tab"),"tab_remove",KShortcut("Ctrl+w"), m_viewContainer, SLOT(closeCurrentView()),actionCollection(),"close_tab");
-    action->setEnabled(false);
-    action = new KAction(i18n("Next Active Tab"), 0, KShortcut("Ctrl+Alt+Space"), m_viewContainer, SLOT(showNextActiveView()),
-                         actionCollection(), "next_active_tab");
-    action->setEnabled(false);
 
-    if (Preferences::tabPlacement()==Preferences::Left)
+    const char *nextIcon, *prevIcon;
+    if (QApplication::reverseLayout())
     {
-        action = new KAction(i18n("Move Tab Up"), "1uparrow", KShortcut("Alt+Shift+Left"),
-            m_viewContainer, SLOT(moveViewLeft()), actionCollection(), "move_tab_left");
-        action->setEnabled(false);
-        action->setToolTip("Move this tab");
-        action = new KAction(i18n("Move Tab Down"), "1downarrow", KShortcut("Alt+Shift+Right"),
-            m_viewContainer, SLOT(moveViewRight()), actionCollection(), "move_tab_right");
-        action->setEnabled(false);
-        action->setToolTip("Move this tab");
+        prevShortcut.setAlternate(QKeySequence("Alt+Right"));
+        nextShortcut.setAlternate(QKeySequence("Alt+Left"));
+        nextIcon="prev";
+        prevIcon="next";
     }
     else
     {
-        KAction* action2;
+        nextShortcut.setAlternate(QKeySequence("Alt+Right"));
+        prevShortcut.setAlternate(QKeySequence("Alt+Left"));
+        nextIcon="next";
+        prevIcon="prev";
+    }
+
+    //action = new KAction(i18n("&Next Tab"), QApplication::reverseLayout() ? "previous" : "next", QApplication::reverseLayout() ? prevShortcut : nextShortcut, m_viewContainer, SLOT(showNextView()), actionCollection(), "next_tab");
+    action=new KAction(this);
+    action->setText(i18n("&Next Tab"));
+    action->setIcon(KIcon(nextIcon));
+    action->setShortcut(nextShortcut);
+    action->setEnabled(false);
+    connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(showNextView()));
+    actionCollection()->addAction("next_tab", action);
+
+    //action = new KAction(i18n("&Previous Tab"), QApplication::reverseLayout() ? "next" : "previous", QApplication::reverseLayout() ? nextShortcut : prevShortcut, m_viewContainer, SLOT(showPreviousView()),actionCollection(),"previous_tab");
+    action=new KAction(this);
+    action->setText(i18n("&Previous Tab"));
+    action->setIcon(KIcon(prevIcon));
+    action->setShortcut(prevShortcut);
+    action->setEnabled(false);
+    connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(showPreviousView()));
+    actionCollection()->addAction("previous_tab", action);
+
+    //action = new KAction(i18n("Close &Tab"),"tab_remove",KShortcut("Ctrl+w"), m_viewContainer, SLOT(closeCurrentView()),actionCollection(),"close_tab");
+    action=new KAction(this);
+    action->setText(i18n("Close &Tab"));
+    action->setIcon(KIcon("tab_remove"));
+    action->setShortcut(KShortcut("Ctrl+w"));
+    action->setEnabled(false);
+    connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(closeCurrentView()));
+    actionCollection()->addAction("close_tab", action);
+
+    //action = new KAction(i18n("Next Active Tab"), 0, KShortcut("Ctrl+Alt+Space"), m_viewContainer, SLOT(showNextActiveView()), actionCollection(), "next_active_tab");
+    action=new KAction(this);
+    action->setText(i18n("Next Active Tab"));
+    action->setShortcut(KShortcut("Ctrl+Alt+Space"));
+    action->setEnabled(false);
+    connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(showNextActiveView()));
+    actionCollection()->addAction("next_active_tab", action);
+
+    if (Preferences::tabPlacement()==Preferences::Left)
+    {
+        //action = new KAction(i18n("Move Tab Up"), "1uparrow", KShortcut("Alt+Shift+Left"), m_viewContainer, SLOT(moveViewLeft()), actionCollection(), "move_tab_left");
+        action=new KAction(this);
+        action->setText(i18n("Move Tab Up"));
+        action->setIcon(KIcon("1uparrow"));
+        action->setShortcut(KShortcut("Alt+Shift+Left"));
+        action->setEnabled(false);
+        action->setToolTip("Move this tab");
+        connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(moveViewLeft()));
+        actionCollection()->addAction("move_tab_left", action);
+
+        //action = new KAction(i18n("Move Tab Down"), "1downarrow", KShortcut("Alt+Shift+Right"), m_viewContainer, SLOT(moveViewRight()), actionCollection(), "move_tab_right");
+        action->setEnabled(false);
+        action->setToolTip("Move this tab");
+        action=new KAction(this);
+        action->setText(i18n("Move Tab Down"));
+        action->setIcon(KIcon("1downarrow"));
+        action->setShortcut(KShortcut("Alt+Shift+Right"));
+        connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(moveViewRight()));
+        actionCollection()->addAction("move_tab_right", action);
+    }
+    else
+    {
         if (QApplication::reverseLayout())
         {
-            action2 = new KAction(i18n("Move Tab Right"), "1rightarrow", KShortcut("Alt+Shift+Right"),
-                          m_viewContainer, SLOT(moveViewLeft()), actionCollection(), "move_tab_left");
-            action  = new KAction(i18n("Move Tab Left"), "1leftarrow", KShortcut("Alt+Shift+Left"),
-                          m_viewContainer, SLOT(moveViewRight()), actionCollection(), "move_tab_right");
+            //action = new KAction(i18n("Move Tab Right"), "1rightarrow", KShortcut("Alt+Shift+Right"), m_viewContainer, SLOT(moveViewLeft()), actionCollection(), "move_tab_left");
+            action=new KAction(this);
+            action->setText(i18n("Move Tab Right"));
+            action->setIcon(KIcon("1rightarrow"));
+            action->setShortcut(KShortcut("Alt+Shift+Right"));
+            action->setEnabled(false);
+            action->setToolTip("Move this tab");
+            connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(moveViewLeft()));
+            actionCollection()->addAction("move_tab_left", action);
+
+            //action  = new KAction(i18n("Move Tab Left"), "1leftarrow", KShortcut("Alt+Shift+Left"), m_viewContainer, SLOT(moveViewRight()), actionCollection(), "move_tab_right");
+            action=new KAction(this);
+            action->setText(i18n("Move Tab Left"));
+            action->setIcon(KIcon("1leftarrow"));
+            action->setShortcut(KShortcut("Alt+Shift+Left"));
+            action->setEnabled(false);
+            action->setToolTip("Move this tab");
+            connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(moveViewRight()));
+            actionCollection()->addAction("move_tab_right", action);
+
         }
         else
         {
-            action  = new KAction(i18n("Move Tab Left"), "1leftarrow", KShortcut("Alt+Shift+Left"),
-                          m_viewContainer, SLOT(moveViewLeft()), actionCollection(), "move_tab_left");
-                action2 = new KAction(i18n("Move Tab Right"), "1rightarrow", KShortcut("Alt+Shift+Right"),
-                          m_viewContainer, SLOT(moveViewRight()), actionCollection(), "move_tab_right");
+            //action  = new KAction(i18n("Move Tab Left"), "1leftarrow", KShortcut("Alt+Shift+Left"), m_viewContainer, SLOT(moveViewLeft()), actionCollection(), "move_tab_left");
+            action=new KAction(this);
+            action->setText(i18n("Move Tab Left"));
+            action->setIcon(KIcon("1leftarrow"));
+            action->setShortcut(KShortcut("Alt+Shift+Left"));
+            action->setEnabled(false);
+            action->setToolTip("Move this tab");
+            connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(moveViewLeft()));
+            actionCollection()->addAction("move_tab_left", action);
+
+            //action = new KAction(i18n("Move Tab Right"), "1rightarrow", KShortcut("Alt+Shift+Right"), m_viewContainer, SLOT(moveViewRight()), actionCollection(), "move_tab_right");
+            action=new KAction(this);
+            action->setText(i18n("Move Tab Right"));
+            action->setIcon(KIcon("1rightarrow"));
+            action->setShortcut(KShortcut("Alt+Shift+Right"));
+            action->setEnabled(false);
+            action->setToolTip("Move this tab");
+            connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(moveViewRight()));
+            actionCollection()->addAction("move_tab_right", action);
+
         }
 
-        action->setEnabled(false);
-        action->setToolTip("Move this tab");
-        action2->setEnabled(false);
-        action2->setToolTip("Move this tab");
     }
 
-    action = new KAction(i18n("Rejoin Channel"), 0, m_viewContainer, SLOT(rejoinChannel()), actionCollection(), "rejoin_channel");
+    //action = new KAction(i18n("Rejoin Channel"), 0, m_viewContainer, SLOT(rejoinChannel()), actionCollection(), "rejoin_channel");
     action->setEnabled(false);
+    action=new KAction(this);
+    action->setText(i18n("Rejoin Channel"));
+    connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(rejoinChannel()));
+    actionCollection()->addAction("rejoin_channel", action);
 
-    action = new KToggleAction(i18n("Enable Notifications"), 0, 0, m_viewContainer, SLOT(toggleViewNotifications()), actionCollection(), "tab_notifications");
+    //action = new KToggleAction(i18n("Enable Notifications"), 0, 0, m_viewContainer, SLOT(toggleViewNotifications()), actionCollection(), "tab_notifications");
     action->setEnabled(false);
+    action=new KToggleAction(this);
+    action->setText(i18n("Enable Notifications"));
+    connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(toggleViewNotifications()));
+    actionCollection()->addAction("tab_notifications", action);
 
-    action = new KToggleAction(i18n("Join on Connect"), 0, 0, m_viewContainer, SLOT(toggleAutoJoin()), actionCollection(), "tab_autojoin");
+    //action = new KToggleAction(i18n("Join on Connect"), 0, 0, m_viewContainer, SLOT(toggleAutoJoin()), actionCollection(), "tab_autojoin");
     action->setEnabled(false);
+    action=new KToggleAction(this);
+    action->setText(i18n("Join on Connect"));
+    connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(toggleAutoJoin()));
+    actionCollection()->addAction("tab_autojoin", action);
 
-    KSelectAction* selectAction = new KSelectAction(i18n("Set Encoding"), "charset", 0, actionCollection(), "tab_encoding");
-    selectAction->setEditable(false);
     QStringList encodingDescs = Konversation::IRCCharsets::self()->availableEncodingDescriptiveNames();
     encodingDescs.prepend(i18n("Default"));
+    //KSelectAction* selectAction = new KSelectAction(i18n("Set Encoding"), "charset", 0, actionCollection(), "tab_encoding");
+    KSelectAction* selectAction = new KSelectAction(this);
+    selectAction->setEditable(false);
     selectAction->setItems(encodingDescs);
     selectAction->setEnabled(false);
+    selectAction->setText(i18n("Set Encoding"));
+    selectAction->setIcon(KIcon("charset"));
     connect(selectAction, SIGNAL(activated(int)), m_viewContainer, SLOT(changeViewCharset(int)));
+    actionCollection()->addAction("tab_encoding", selectAction);
 
     QSignalMapper* tabSelectionMapper = new QSignalMapper(this);
     connect(tabSelectionMapper, SIGNAL(mapped(int)), m_viewContainer, SLOT(goToView(int)));
 
     for (uint i = 1; i <= 10; ++i)
     {
-        KAction* tabSelectionAction = new KAction(i18n("Go to Tab %1").arg(i), 0, KShortcut(QString("Alt+%1").arg(i%10)),
-            tabSelectionMapper, SLOT(map()), actionCollection(), QString("go_to_tab_%1").arg(i).local8Bit());
-        tabSelectionMapper->setMapping( tabSelectionAction, i-1);
+        //KAction* tabSelectionAction = new KAction(i18n("Go to Tab %1").arg(i), 0, KShortcut(QString("Alt+%1").arg(i%10)), tabSelectionMapper, SLOT(map()), actionCollection(), QString("go_to_tab_%1").arg(i).local8Bit());
+
+        action=new KAction(this);
+        action->setText(i18n("Go to Tab %1").arg(i));
+        action->setShortcut(KShortcut(QString("Alt+%1").arg(i%10)));
+        connect(action, SIGNAL(triggered()), tabSelectionMapper, SLOT(map()));
+        actionCollection()->addAction(QString("go_to_tab_%1").arg(i).local8Bit(), action);
+
+        tabSelectionMapper->setMapping(action, i-1);
     }
 
-    action = new KAction(i18n("Clear &Marker Lines"), 0, KShortcut("Qt::CTRL+Qt::SHIFT+R"), m_viewContainer, SLOT(clearViewLines()),actionCollection(),"clear_lines");
+    //action = new KAction(i18n("Clear &Marker Lines"), 0, KShortcut("Qt::CTRL+Qt::SHIFT+R"), m_viewContainer, SLOT(clearViewLines()),actionCollection(),"clear_lines");
+    action=new KAction(this);
+    action->setText(i18n("Clear &Marker Lines"));
+    action->setShortcut(KShortcut("Qt::CTRL+Qt::SHIFT+R"));
+    action->setEnabled(false);
     action->setToolTip(i18n("Clear marker lines in the current tab"));
+    connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(clearViewLines()));
+    actionCollection()->addAction("clear_lines", action);
+
+    //action = new KAction(i18n("&Clear Window"), 0, KShortcut("Ctrl+L"), m_viewContainer, SLOT(clearView()),actionCollection(),"clear_window");
+    action=new KAction(this);
+    action->setText(i18n("&Clear Window"));
+    action->setShortcut(KShortcut("Ctrl+L"));
     action->setEnabled(false);
-    action = new KAction(i18n("&Clear Window"), 0, KShortcut("Ctrl+L"), m_viewContainer, SLOT(clearView()),actionCollection(),"clear_window");
     action->setToolTip(i18n("Clear the contents of the current tab"));
+    connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(clearView()));
+    actionCollection()->addAction("clear_window", action);
+
+    //action = new KAction(i18n("Clear &All Windows"),0,KShortcut("Qt::CTRL+Qt::SHIFT+L"), m_viewContainer, SLOT(clearAllViews()),actionCollection(),"clear_tabs");
+    action=new KAction(this);
+    action->setText(i18n("Clear &All Windows"));
+    action->setShortcut(KShortcut("Qt::CTRL+Qt::SHIFT+L"));
     action->setEnabled(false);
-    action = new KAction(i18n("Clear &All Windows"),0,KShortcut("Qt::CTRL+Qt::SHIFT+L"), m_viewContainer, SLOT(clearAllViews()),actionCollection(),"clear_tabs");
     action->setToolTip(i18n("Clear the contents of all open tabs"));
-    action->setEnabled(false);
+    connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(clearAllViews()));
+    actionCollection()->addAction("clear_tabs", action);
 
-    KToggleAction* awayAction = new KToggleAction(i18n("Global Away"), KShortcut("Ctrl+Shift+A"), actionCollection(), "toggle_away");
-    connect(awayAction, SIGNAL(toggled(bool)), static_cast<KonversationApplication*>(kapp)->getAwayManager(), SLOT(toggleGlobalAway(bool)));
+    KToggleAction* awayAction = new KToggleAction(this);
+    action->setText(i18n("Global Away"));
+    action->setShortcut(KShortcut("Ctrl+Shift+A"));
     awayAction->setEnabled(false);
+    connect(awayAction, SIGNAL(toggled(bool)), KonversationApplication::instance()->getAwayManager(), SLOT(toggleGlobalAway(bool)));
+    actionCollection()->addAction("toggle_away", action);
 
-    action = new KAction(i18n("&Join Channel..."), "add", KShortcut("Ctrl+J"), m_viewContainer, SLOT(showJoinChannelDialog()), actionCollection(), "join_channel");
+    //action = new KAction(i18n("&Join Channel..."), "add", KShortcut("Ctrl+J"), m_viewContainer, SLOT(showJoinChannelDialog()), actionCollection(), "join_channel");
+    action=new KAction(this);
+    action->setText(i18n("&Join Channel..."));
+    action->setIcon(KIcon("add"));
+    action->setShortcut(KShortcut("Ctrl+J"));
     action->setEnabled(false);
     action->setToolTip("Join a new channel on this server");
+    connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(showJoinChannelDialog()));
+    actionCollection()->addAction("join_channel", action);
 
     action = KStandardAction::find(m_viewContainer, SLOT(findText()), actionCollection());
     action->setEnabled(false);
@@ -282,40 +486,78 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
     action = KStandardAction::findPrev(m_viewContainer, SLOT(findPrevText()), actionCollection());
     action->setEnabled(false);
 
-    action = new KAction(i18n("&IRC Color..."), "colorize", Qt::CTRL+Qt::Key_K, m_viewContainer, SLOT(insertIRCColor()), actionCollection(), "irc_colors");
+    //action = new KAction(i18n("&IRC Color..."), "colorize", Qt::CTRL+Qt::Key_K, m_viewContainer, SLOT(insertIRCColor()), actionCollection(), "irc_colors");
+    action=new KAction(this);
+    action->setText(i18n("&IRC Color..."));
+    action->setIcon(KIcon("colorize"));
+    action->setShortcut(KShortcut("Ctrl+K"));
+    action->setEnabled(false);
     action->setToolTip(i18n("Set the color of your current IRC message"));
+    connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(insertIRCColor()));
+    actionCollection()->addAction("irc_colors", action);
+
+    //action = new KAction(i18n("&Marker Line"), 0,  KShortcut("Ctrl+R") , m_viewContainer, SLOT(insertMarkerLine()), actionCollection(), "insert_marker_line");
+    action=new KAction(this);
+    action->setText(i18n("&Marker Line"));
+    action->setShortcut(KShortcut("Ctrl+R"));
     action->setEnabled(false);
-    action = new KAction(i18n("&Marker Line"), 0,  KShortcut("Ctrl+R") , m_viewContainer, SLOT(insertMarkerLine()), actionCollection(), "insert_marker_line");
     action->setToolTip(i18n("Insert a horizontal line into the current tab that only you can see"));
+    connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(insertMarkerLine()));
+    actionCollection()->addAction("insert_marker_line", action);
+
+    //action = new KAction(i18n("Special &Character..."), "char", KShortcut("Alt+Shift+C"), m_viewContainer, SLOT(insertCharacter()), actionCollection(), "insert_character");
+    action=new KAction(this);
+    action->setText(i18n("Special &Character..."));
+    action->setIcon(KIcon("char"));
+    action->setShortcut(KShortcut("Alt+Shift+C"));
     action->setEnabled(false);
-    action = new KAction(i18n("Special &Character..."), "char", KShortcut("Alt+Shift+C"), m_viewContainer, SLOT(insertCharacter()), actionCollection(), "insert_character");
     action->setToolTip(i18n("Insert any character into your current IRC message"));
-    action->setEnabled(false);
+    connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(insertCharacter()));
+    actionCollection()->addAction("insert_character", action);
 
-    action = new KAction(i18n("Close &All Open Queries"), 0, KShortcut("F11"), m_viewContainer, SLOT(closeQueries()), actionCollection(), "close_queries");
+    //action = new KAction(i18n("Close &All Open Queries"), 0, KShortcut("F11"), m_viewContainer, SLOT(closeQueries()), actionCollection(), "close_queries");
+    action=new KAction(this);
+    action->setText(i18n("Close &All Open Queries"));
+    action->setShortcut(KShortcut("F11"));
     action->setEnabled(false);
+    connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(closeQueries()));
+    actionCollection()->addAction("close_queries", action);
 
-    KToggleAction* toggleChannelNickListsAction = new KToggleAction(i18n("Hide Nicklist"), 0,
-        KShortcut("Ctrl+H"), m_viewContainer, SLOT(toggleChannelNicklists()), actionCollection(), "hide_nicknamelist");
+#if 1==0
+    action=new KAction(this);
+    action->setText();
+    action->setIcon(KIcon());
+    action->setShortcut();
+    action->setToolTip();
+    connect(action, SIGNAL(triggered()), SLOT());
+    actionCollection()->addAction(, action);
+#endif
+
+    //KToggleAction* toggleChannelNickListsAction = new KToggleAction(i18n("Hide Nicklist"), 0, KShortcut("Ctrl+H"), m_viewContainer, SLOT(toggleChannelNicklists()), actionCollection(), "hide_nicknamelist");
+    KToggleAction* toggleChannelNickListsAction = new KToggleAction(this);
     if (!Preferences::showNickList())
         toggleChannelNickListsAction->setChecked(true);
+    toggleChannelNickListsAction->setText(i18n("Hide Nicklist"));
+    toggleChannelNickListsAction->setShortcut(KShortcut("Ctrl+H"));
+    connect(toggleChannelNickListsAction, SIGNAL(triggered()), m_viewContainer, SLOT(toggleChannelNicklists()));
+    actionCollection()->addAction("hide_nicknamelist", toggleChannelNickListsAction);
 
     // set up system tray
     m_trayIcon = new Konversation::TrayIcon(this);
     connect(this, SIGNAL(endNotification()), m_trayIcon, SLOT(endNotification()));
     connect(KonversationApplication::instance(), SIGNAL(iconChanged(int)), m_trayIcon, SLOT(updateAppearance()));
     connect(m_trayIcon, SIGNAL(quitSelected()), this, SLOT(quitProgram()));
-    KMenu *trayMenu = m_trayIcon->contextMenu();
+    KMenu *trayMenu = qobject_cast<KMenu*>(m_trayIcon->contextMenu());
     #ifdef USE_KNOTIFY
     configureNotificationsAction->plug(trayMenu);
     #endif
-    preferencesAction->plug(trayMenu);
-    awayAction->plug(trayMenu);
+    trayMenu->addAction(preferencesAction);
+    trayMenu->addAction(awayAction);
 
     // decide whether to show the tray icon or not
     updateTrayIcon();
 
-    createGUI(NULL, false);
+    createGUI();
 
     resize(700, 500);                             // Give the app a sane default size
     setAutoSaveSettings();
@@ -325,13 +567,13 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
     toggleMenubar(true);
 
     // Bookmarks
-    m_bookmarkHandler = new KonviBookmarkHandler(this);
+    //m_bookmarkHandler = new KonviBookmarkHandler(this);
 
     // set up KABC with a nice gui error dialog
     KABC::GuiErrorHandler *m_guiErrorHandler = new KABC::GuiErrorHandler(this);
-    kapp->dcopClient()->setAcceptCalls( false );
-    Konversation::Addressbook::self()->getAddressBook()->setErrorHandler(m_guiErrorHandler);
-    kapp->dcopClient()->setAcceptCalls( true );
+    //kapp->dcopClient()->setAcceptCalls( false );
+    //Konversation::Addressbook::self()->getAddressBook()->setErrorHandler(m_guiErrorHandler);
+    //kapp->dcopClient()->setAcceptCalls( true );
 
     if (Preferences::useNotify() && Preferences::openWatchedNicksAtStartup())
         m_viewContainer->openNicksOnlinePanel();
@@ -352,6 +594,7 @@ int KonversationMainWindow::confirmQuit()
 
     int result = KMessageBox::Cancel;
 
+    /*
     if (!KMessageBox::shouldBeShownContinue("systemtrayquitKonversation")
          && konvApp->getDccTransferManager()->hasActiveTransfers())
     {
@@ -359,18 +602,21 @@ int KonversationMainWindow::confirmQuit()
             this,
             i18n("<qt>You have active DCC file transfers. Are you sure you want to quit <b>Konversation</b>?</qt>"),
             i18n("Confirm Quit"),
-            i18n("Quit"),
+            KStandardGuiItem::quit(),
+            KStandardGuiItem::cancel(),
             "QuitWithActiveDccTransfers");
     }
     else
     {
+    */
         result = KMessageBox::warningContinueCancel(
             this,
             i18n("<qt>Are you sure you want to quit <b>Konversation</b>?</qt>"),
             i18n("Confirm Quit"),
-            i18n("Quit"),
+            KStandardGuiItem::quit(),
+            KStandardGuiItem::cancel(),
             "systemtrayquitKonversation");
-    }
+    //}
 
     return result;
 }
@@ -502,20 +748,6 @@ void KonversationMainWindow::toggleMenubar(bool dontShowWarning)
     Preferences::setShowMenuBar(hideMenuBarAction->isChecked());
 }
 
-int KonversationMainWindow::configureToolbar()
-{
-    saveMainWindowSettings(KGlobal::config());
-    KEditToolBar dlg(actionCollection(), xmlFile(), true, this);
-    connect(&dlg, SIGNAL(newToolbarConfig()), SLOT(saveToolbarConfig()));
-    return dlg.exec();
-}
-
-void KonversationMainWindow::saveToolbarConfig()
-{
-    createGUI(xmlFile(), false);
-    applyMainWindowSettings(KGlobal::config());
-}
-
 void KonversationMainWindow::focusAndShowErrorMessage(const QString &errorMsg)
 {
     show();
@@ -525,7 +757,7 @@ void KonversationMainWindow::focusAndShowErrorMessage(const QString &errorMsg)
 }
 
 void KonversationMainWindow::openPrefsDialog()
-{
+{/*
     //An instance of your dialog could be already created and could be cached,
     //in which case you want to display the cached dialog instead of creating
     //another one
@@ -536,7 +768,7 @@ void KonversationMainWindow::openPrefsDialog()
         //configuration data
         connect(m_settingsDialog, SIGNAL(settingsChanged()), this, SLOT(settingsChangedSlot()));
     }
-    m_settingsDialog->show();
+    m_settingsDialog->show();*/
 }
 
 void KonversationMainWindow::openKeyBindings()
@@ -566,7 +798,7 @@ void KonversationMainWindow::openKeyBindings()
 }
 
 void KonversationMainWindow::openServerList()
-{
+{/*
     if (!m_serverListDialog)
     {
         m_serverListDialog = new Konversation::ServerListDialog(this);
@@ -583,7 +815,7 @@ void KonversationMainWindow::openServerList()
         connect(konvApp->getConnectionManager(), SIGNAL(closeServerList()), m_serverListDialog, SLOT(slotClose()));
     }
 
-    m_serverListDialog->show();
+    m_serverListDialog->show();*/
 }
 
 void KonversationMainWindow::openQuickConnectDialog()
@@ -593,13 +825,13 @@ void KonversationMainWindow::openQuickConnectDialog()
 
 // open the preferences dialog and show the watched nicknames page
 void KonversationMainWindow::openNotify()
-{
+{/*
     openPrefsDialog();
-    if (m_settingsDialog) m_settingsDialog->openWatchedNicknamesPage();
+    if (m_settingsDialog) m_settingsDialog->openWatchedNicknamesPage();*/
 }
 
 void KonversationMainWindow::openIdentitiesDialog()
-{
+{/*
     Konversation::IdentityDialog dlg(this);
 
     if (dlg.exec() == KDialog::Accepted)
@@ -607,11 +839,11 @@ void KonversationMainWindow::openIdentitiesDialog()
         if (m_serverListDialog)
             m_serverListDialog->updateServerList();
         m_viewContainer->updateViewEncoding(m_viewContainer->getFrontView());
-    }
+    }*/
 }
 
 IdentityPtr KonversationMainWindow::editIdentity(IdentityPtr identity)
-{
+{/*
     IdentityPtr newIdentity;
 
     Konversation::IdentityDialog dlg(this);
@@ -622,8 +854,8 @@ IdentityPtr KonversationMainWindow::editIdentity(IdentityPtr identity)
         m_serverListDialog->updateServerList();
         return newIdentity;
     }
-    else
-        return 0;
+    else */
+        return IdentityPtr();
 }
 
 void KonversationMainWindow::openNotifications()
@@ -657,4 +889,4 @@ QString KonversationMainWindow::currentTitle()
     return m_viewContainer->currentViewTitle();
 }
 
-#include "konversationmainwindow.moc"
+// // #include "./mainwindow.moc"

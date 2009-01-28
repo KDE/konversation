@@ -12,7 +12,7 @@
 
 #include "serverlistdialog.h"
 #include "preferences.h"
-#include "konversationapplication.h"
+#include "application.h" ////// header renamed
 #include "servergroupdialog.h"
 #include "connectionsettings.h"
 
@@ -565,4 +565,4 @@ namespace Konversation
     }
 }
 
-#include "serverlistdialog.moc"
+// #include "./irc/serverlistdialog.moc"

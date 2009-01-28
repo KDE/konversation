@@ -19,7 +19,7 @@
 *************************************************************************
 */
 
-#include <kstreamsocket.h>
+#include <k3streamsocket.h>
 using namespace KNetwork;
 
 struct SSLSocketPrivate;

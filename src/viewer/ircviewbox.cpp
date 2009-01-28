@@ -19,10 +19,10 @@
 #include <qpixmap.h>
 
 
+// TODO FIXME and this needs its own function because...?
 static QPixmap getIcon(const QString& name)
-{
-    KIconLoader* iconLoader = kapp->iconLoader();
-    return iconLoader->loadIcon(name, KIconLoader::Toolbar, 16);
+{ 
+    return KIconLoader::global()->loadIcon(name, KIconLoader::Toolbar, 16);
 }
 
 IRCViewBox::IRCViewBox(QWidget* parent, Server* newServer)
@@ -138,4 +138,4 @@ void IRCViewBox::slotSearchChanged(const QString& pattern)
     m_matchedOnce = match;
 }
 
-#include "ircviewbox.moc"
+// #include "./viewer/ircviewbox.moc"

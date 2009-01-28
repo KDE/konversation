@@ -14,7 +14,7 @@
 #include "inputfilter.h"
 #include "server.h"
 #include "replycodes.h"
-#include "konversationapplication.h"
+#include "application.h" ////// header renamed
 #include "commit.h"
 #include "version.h"
 #include "query.h"
@@ -265,7 +265,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                     QString dccArguments = ctcpArgument.mid(ctcpArgument.find(" ")+1);
                     QStringList dccArgumentList;
 
-                    if ((dccArguments.contains('\"') >= 2) && (dccArguments.startsWith("\""))) {
+                    if ((dccArguments.count('\"') >= 2) && (dccArguments.startsWith('\"'))) {
                         int lastQuotePos = dccArguments.findRev("\"");
                         if (dccArguments[lastQuotePos+1] == ' ') {
                             QString fileName = dccArguments.mid(1, lastQuotePos-1);
@@ -800,7 +800,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 {
                     QString parameter;
                     int parameterCount=3;
-                    char mode=modeString[index];
+                    char mode(modeString[index].toAscii());
                     if(mode!='+')
                     {
                         if(!modesAre.isEmpty())
@@ -833,7 +833,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                         {
                             parameter=parameterList[parameterCount++];
                             message += ' ' + parameter;
-                            modesAre+=i18n("limited to %n user", "limited to %n users", parameter.toInt());
+                            modesAre+=i18np("limited to %n user", "limited to %n users", parameter.toInt());
                         }
                         else
                         {
@@ -1137,7 +1137,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             }
             case RPL_AWAY:
             {
-                NickInfo* nickInfo = server->getNickInfo(parameterList[1]);
+                NickInfoPtr nickInfo = server->getNickInfo(parameterList[1]);
                 if(nickInfo)
                 {
                     nickInfo->setAway(true);
@@ -1174,7 +1174,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             //[19:11] :zahn.freenode.net 318 PhantomsDad psn :End of /WHOIS list.
             case RPL_WHOISUSER:
             {
-                NickInfo* nickInfo = server->getNickInfo(parameterList[1]);
+                NickInfoPtr nickInfo = server->getNickInfo(parameterList[1]);
                 if(nickInfo)
                 {
                     nickInfo->setHostmask(i18n("%1@%2").arg(parameterList[2]).arg(parameterList[3]));
@@ -1229,7 +1229,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             case RPL_WHOISIDENTIFY:
             case RPL_IDENTIFIED:
             {
-                NickInfo* nickInfo = server->getNickInfo(parameterList[1]);
+                NickInfoPtr nickInfo = server->getNickInfo(parameterList[1]);
                 if(nickInfo)
                 {
                     nickInfo->setIdentified(true);
@@ -1249,7 +1249,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             //[21:39] [352] #lounge ~Nottingha worldforge.org irc.worldforge.org SherwoodSpirit H 0 Arboreal Entity
             case RPL_WHOREPLY:
             {
-                NickInfo* nickInfo = server->getNickInfo(parameterList[5]);
+                NickInfoPtr nickInfo = server->getNickInfo(parameterList[5]);
                                                   // G=away G@=away,op G+=away,voice
                 bool bAway = parameterList[6].upper().startsWith("G");
                 if(nickInfo)
@@ -1420,7 +1420,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             }
             case RPL_WHOISSERVER:
             {
-                NickInfo* nickInfo = server->getNickInfo(parameterList[1]);
+                NickInfoPtr nickInfo = server->getNickInfo(parameterList[1]);
                 if(nickInfo)
                 {
                     nickInfo->setNetServer(parameterList[2]);
@@ -1478,13 +1478,13 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 {
                     if(days)
                     {
-                        const QString daysString = i18n("1 day", "%n days", days);
-                        const QString hoursString = i18n("1 hour", "%n hours", (hours % 24));
-                        const QString minutesString = i18n("1 minute", "%n minutes", (minutes % 60));
-                        const QString secondsString = i18n("1 second", "%n seconds", (seconds % 60));
+                        const QString daysString = i18np("1 day", "%n days", days);
+                        const QString hoursString = i18np("1 hour", "%n hours", (hours % 24));
+                        const QString minutesString = i18np("1 minute", "%n minutes", (minutes % 60));
+                        const QString secondsString = i18np("1 second", "%n seconds", (seconds % 60));
 
                         server->appendMessageToFrontmost(i18n("Whois"),
-                            i18n("%1 = name of person, %2 = (x days), %3 = (x hours), %4 = (x minutes), %5 = (x seconds)",
+                            i18nc("%1 = name of person, %2 = (x days), %3 = (x hours), %4 = (x minutes), %5 = (x seconds)",
                             "%1 has been idle for %2, %3, %4, and %5.")
                             .arg(parameterList[1])
                             .arg(daysString).arg(hoursString).arg(minutesString).arg(secondsString)
@@ -1493,34 +1493,29 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     }
                     else if(hours)
                     {
-                        const QString hoursString = i18n("1 hour", "%n hours", hours);
-                        const QString minutesString = i18n("1 minute", "%n minutes", (minutes % 60));
-                        const QString secondsString = i18n("1 second", "%n seconds", (seconds % 60));
+                        const QString hoursString = i18np("1 hour", "%n hours", hours);
+                        const QString minutesString = i18np("1 minute", "%n minutes", (minutes % 60));
+                        const QString secondsString = i18np("1 second", "%n seconds", (seconds % 60));
                         server->appendMessageToFrontmost(i18n("Whois"),
-                            i18n("%1 = name of person, %2 = (x hours), %3 = (x minutes), %4 = (x seconds)",
-                            "%1 has been idle for %2, %3, and %4.")
-                            .arg(parameterList[1])
-                            .arg(hoursString).arg(minutesString).arg(secondsString)
+                            i18nc("%1 = name of person, %2 = (x hours), %3 = (x minutes), %4 = (x seconds)",
+                            "%1 has been idle for %2, %3, and %4.", parameterList[1], hoursString, minutesString, secondsString)
                             );
                         // or longer than a minute
                     }
                     else if(minutes)
                     {
-                        const QString minutesString = i18n("1 minute", "%n minutes", minutes);
-                        const QString secondsString = i18n("1 second", "%n seconds", (seconds % 60));
+                        const QString minutesString = i18np("1 minute", "%n minutes", minutes);
+                        const QString secondsString = i18np("1 second", "%n seconds", (seconds % 60));
                         server->appendMessageToFrontmost(i18n("Whois"),
-                            i18n("%1 = name of person, %2 = (x minutes), %3 = (x seconds)",
-                            "%1 has been idle for %2 and %3.")
-                            .arg(parameterList[1])
-                            .arg(minutesString).arg(secondsString)
+                            i18nc("%1 = name of person, %2 = (x minutes), %3 = (x seconds)",
+                            "%1 has been idle for %2 and %3.", parameterList[1], minutesString, secondsString)
                             );
                         // or just some seconds
                     }
                     else
                     {
                         server->appendMessageToFrontmost(i18n("Whois"),
-                            i18n("%1 has been idle for 1 second.", "%1 has been idle for %n seconds.", seconds)
-                            .arg(parameterList[1])
+                            i18np("%1 has been idle for 1 second.", "%1 has been idle for %n seconds.", seconds, parameterList[1])
                             );
                     }
                 }
@@ -1529,7 +1524,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 {
                     QDateTime when;
                     when.setTime_t(parameterList[3].toUInt());
-                    NickInfo* nickInfo = server->getNickInfo(parameterList[1]);
+                    NickInfoPtr nickInfo = server->getNickInfo(parameterList[1]);
                     if(nickInfo)
                     {
                         nickInfo->setOnlineSince(when);
@@ -1547,7 +1542,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             }
             case RPL_ENDOFWHOIS:
             {
-                //NickInfo* nickInfo = server->getNickInfo(parameterList[1]);
+                //NickInfoPtr nickInfo = server->getNickInfo(parameterList[1]);
                 // Display message only if this was not an automatic request.
                 if(getAutomaticRequest("WHOIS",parameterList[1])==0)
                 {
@@ -1589,7 +1584,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     if(getAutomaticRequest("USERHOST",nick)==0)
                     {
                         server->appendMessageToFrontmost(i18n("Userhost"),
-                            i18n("%1 = nick, %2 = shows if nick is op, %3 = hostmask, %4 = shows away", "%1%2 is %3%4.")
+                            i18nc("%1 = nick, %2 = shows if nick is op, %3 = hostmask, %4 = shows away", "%1%2 is %3%4.")
                             .arg(nick)
                             .arg((ircOp) ? i18n(" (IRC Operator)") : QString())
                             .arg(mask)
@@ -1617,7 +1612,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 if(getAutomaticRequest("LIST",QString())==0)
                 {
                     QString message;
-                    message=i18n("%1 (%n user): %2", "%1 (%n users): %2", parameterList[2].toInt());
+                    message=i18np("%1 (%n user): %2", "%1 (%n users): %2", parameterList[2].toInt());
                     server->appendMessageToFrontmost(i18n("List"),message.arg(parameterList[1]).arg(trailing));
                 }
                 else                              // send them to /LIST window
@@ -1642,7 +1637,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             }
             case RPL_NOWAWAY:
             {
-                NickInfo* nickInfo = server->getNickInfo(parameterList[0]);
+                NickInfoPtr nickInfo = server->getNickInfo(parameterList[0]);
                 if (nickInfo) nickInfo->setAway(true);
 
                 server->setAway(true);
@@ -1651,7 +1646,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             }
             case RPL_UNAWAY:
             {
-                NickInfo* nickInfo = server->getNickInfo(parameterList[0]);
+                NickInfoPtr nickInfo = server->getNickInfo(parameterList[0]);
 
                 if (nickInfo)
                 {
@@ -1672,7 +1667,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     QDateTime when;
                     when.setTime_t(parameterList[4].toUInt());
 
-                    server->appendMessageToFrontmost(i18n("BanList:%1").arg(parameterList[1]), i18n("BanList message: e.g. *!*@aol.com set by MrGrim on <date>", "%1 set by %2 on %3").arg(parameterList[2]).arg(parameterList[3].section('!', 0, 0)).arg(when.toString(Qt::LocalDate)));
+                    server->appendMessageToFrontmost(i18n("BanList:%1").arg(parameterList[1]), i18nc("BanList message: e.g. *!*@aol.com set by MrGrim on <date>", "%1 set by %2 on %3").arg(parameterList[2]).arg(parameterList[3].section('!', 0, 0)).arg(when.toString(Qt::LocalDate)));
                 }
                 break;
             }
@@ -1798,7 +1793,7 @@ void InputFilter::parseModes(const QString &sourceNick, const QStringList &param
 
     for(unsigned int index=0;index<modestring.length();index++)
     {
-        unsigned char mode=modestring[index];
+        unsigned char mode(modestring[index].toAscii());
         QString parameter;
 
         // Check if this is a mode or a +/- qualifier
@@ -1983,7 +1978,7 @@ void InputFilter::parsePrivMsg(const QString& prefix,
     }
 }
 
-#include "inputfilter.moc"
+// #include "./irc/inputfilter.moc"
 
 // kate: space-indent on; tab-width 4; indent-width 4; mixed-indent off; replace-tabs on;
 // vim: set et sw=4 ts=4 cino=l1,cs,U1:

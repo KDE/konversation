@@ -12,7 +12,7 @@
 
 #include "statuspanel.h"
 #include "channel.h"
-#include "konversationapplication.h"
+#include "application.h" ////// header renamed
 #include "ircinput.h"
 #include "ircview.h"
 #include "ircviewbox.h"
@@ -272,8 +272,13 @@ bool StatusPanel::closeYourself(bool confirm)
     // that due to string freeze at the moment.
     if (confirm && !m_server->isConnected())
     {
-        result = KMessageBox::warningContinueCancel(this, i18n("Do you really want to close '%1'?\n\n All associated tabs will be closed as well.").arg(getName()),
-            i18n("Close Tab"), i18n("Close"), "QuitServerTab");
+        result = KMessageBox::warningContinueCancel(
+                this,
+                i18n("Do you really want to close '%1'?\n\n All associated tabs will be closed as well.",getName()),
+                i18n("Close Tab"),
+                KStandardGuiItem::close(),
+                KStandardGuiItem::cancel(),
+                "QuitServerTab");
     }
     else
     {
@@ -281,7 +286,8 @@ bool StatusPanel::closeYourself(bool confirm)
             this,
             i18n("Do you want to disconnect from '%1'?\n\n All associated tabs will be closed as well.").arg(m_server->getServerName()),
             i18n("Disconnect From Server"),
-            i18n("Disconnect"),
+            KGuiItem(i18n("Disconnect")),
+            KStandardGuiItem::cancel(),
             "QuitServerTab");
     }
 
@@ -322,19 +328,17 @@ void StatusPanel::emitUpdateInfo()
 
 void StatusPanel::appendInputText(const QString& text, bool fromCursor)
 {
-    if(!fromCursor)
+    if (!fromCursor)
     {
-        statusInput->append(text);
+        QTextCursor c(statusInput->textCursor());
+        c.movePosition(QTextCursor::End);
+        c.insertText(text);
     }
     else
     {
-        int para = 0, index = 0;
-        statusInput->getCursorPosition(&para, &index);
-        statusInput->insertAt(text, para, index);
-        statusInput->setCursorPosition(para, index + text.length());
+        statusInput->textCursor().insertText(text);
     }
 }
-
                                                   // virtual
 void StatusPanel::setChannelEncoding(const QString& encoding)
 {
@@ -397,4 +401,4 @@ void StatusPanel::popupCommand(int command)
     }
 }
 
-#include "statuspanel.moc"
+// #include "./statuspanel.moc"

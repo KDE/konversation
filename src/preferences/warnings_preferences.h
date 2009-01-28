@@ -14,7 +14,7 @@
 #define WARNINGS_CONFIG_H
 
 #include "warnings_preferencesui.h"
-#include "konvisettingspage.h"
+#include "settingspage.h" ////// header renamed
 
 class K3ListView;
 class Q3ListViewItem;

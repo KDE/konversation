@@ -12,7 +12,7 @@
 
 #include "scriptlauncher.h"
 #include "channel.h"
-#include "konversationapplication.h"
+#include "application.h" ////// header renamed
 #include "server.h"
 
 #include <qstringlist.h>
@@ -71,4 +71,4 @@ void ScriptLauncher::launchScript(const QString& target, const QString &paramete
     process.detach();
 }
 
-#include "scriptlauncher.moc"
+// #include "./scriptlauncher.moc"

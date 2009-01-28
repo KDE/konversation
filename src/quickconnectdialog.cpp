@@ -15,7 +15,7 @@
 #include "quickconnectdialog.h"
 //Added by qt3to4:
 #include <Q3GridLayout>
-#include "konversationapplication.h"
+#include "application.h" ////// header renamed
 
 #include <qlayout.h>
 #include <q3whatsthis.h>
@@ -28,8 +28,8 @@
 
 
 QuickConnectDialog::QuickConnectDialog(QWidget *parent)
-:KDialogBase(parent, "quickconnect", true, i18n("Quick Connect"),
-KDialogBase::Ok | KDialogBase::Cancel, KDialogBase::Ok, true)
+:KDialog(parent, "quickconnect", true, i18n("Quick Connect"),
+KDialog::Ok | KDialog::Cancel, KDialog::Ok, true)
 {
     QWidget* page = new QWidget(this);
     setMainWidget(page);
@@ -108,4 +108,4 @@ void QuickConnectDialog::slotOk()
     }
 }
 
-#include "quickconnectdialog.moc"
+// #include "./quickconnectdialog.moc"

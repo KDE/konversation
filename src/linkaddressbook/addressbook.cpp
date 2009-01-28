@@ -336,4 +336,4 @@ void Addressbook::emitContactPresenceChanged(const QString &uid)
 
 }                                                 //NAMESPACE
 
-#include "addressbook.moc"
+// #include "./linkaddressbook/addressbook.moc"

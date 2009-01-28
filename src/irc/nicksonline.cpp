@@ -17,14 +17,14 @@
 #include "nicksonline.h"
 #include "channel.h"
 #include "server.h"
-#include "konversationapplication.h"
+#include "application.h" ////// header renamed
 #include "connectionmanager.h"
 #include "images.h"
 #include "query.h"
-#include "linkaddressbook/linkaddressbookui.h"
-#include "linkaddressbook/addressbook.h"
+//#include "linkaddressbook/linkaddressbookui.h"
+//#include "linkaddressbook/addressbook.h"
 #include "linkaddressbook/nicksonlinetooltip.h"
-#include "konversationmainwindow.h"
+#include "mainwindow.h" ////// header renamed
 #include "viewcontainer.h"
 #include "nicksonlineitem.h"
 
@@ -79,7 +79,7 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
         "<p>Right-click with the mouse on a nickname to perform additional functions.</p>");
     Q3WhatsThis::add(m_nickListView, nickListViewWT);
 
-    m_tooltip = new Konversation::KonversationNicksOnlineToolTip(m_nickListView->viewport(), this);
+    //m_tooltip = new Konversation::KonversationNicksOnlineToolTip(m_nickListView->viewport(), this);
 
     setMargin(margin());
     setSpacing(spacing());
@@ -136,7 +136,8 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
     setupAddressbookButtons(nsNotANick);
 
     // Create context menu.  Individual menu entries are created in rightButtonClicked slot.
-    m_popupMenu = new Q3PopupMenu(this,"nicksonline_context_menu");
+    m_popupMenu = new K3PopupMenu(this);
+    m_popupMenu->setObjectName("nicksonline_context_menu");
     connect(m_nickListView, SIGNAL(rightButtonClicked(Q3ListViewItem *, const QPoint &, int )),
         this, SLOT(slotNickListView_Qt::RightButtonClicked(Q3ListViewItem*, const QPoint &)));
     connect(m_popupMenu, SIGNAL(activated(int)),
@@ -310,16 +311,18 @@ void NicksOnline::updateServerOnlineList(Server* servr)
             // Which server did NickInfo come from?
             Server* server=nickInfo->getServer();
             // Get addressbook entry (if any) for the nick.
-            KABC::Addressee addressee = nickInfo->getAddressee();
+            KABC::Addressee addressee;// = nickInfo->getAddressee();
             // Construct additional information string for nick.
             bool needWhois = false;
             QString nickAdditionalInfo = getNickAdditionalInfo(nickInfo, addressee, needWhois);
             // Remove from offline branch if present.
             Q3ListViewItem* item = findItemChild(offlineRoot, nickname, NicksOnlineItem::NicknameItem);
-            if (item) delete item;
+            if (item)
+                delete item;
             // Add to network if not already added.
             Q3ListViewItem* nickRoot = findItemChild(networkRoot, nickname, NicksOnlineItem::NicknameItem);
-            if (!nickRoot) nickRoot = new NicksOnlineItem(NicksOnlineItem::NicknameItem,networkRoot, nickname, nickAdditionalInfo);
+            if (!nickRoot)
+                nickRoot = new NicksOnlineItem(NicksOnlineItem::NicknameItem, networkRoot, nickname, nickAdditionalInfo);
             nickRoot->setText(nlvcAdditionalInfo, nickAdditionalInfo);
             nickRoot->setText(nlvcServerName, serverName);
             // If no additional info available, request a WHOIS on the nick.
@@ -397,6 +400,7 @@ void NicksOnline::updateServerOnlineList(Server* servr)
             Q3ListViewItem* nickRoot = findItemChild(offlineRoot, nickname, NicksOnlineItem::NicknameItem);
             if (!nickRoot) nickRoot = new NicksOnlineItem(NicksOnlineItem::NicknameItem,offlineRoot, nickname);
             nickRoot->setText(nlvcServerName, serverName);
+/*
             // Get addressbook entry for the nick.
             KABC::Addressee addressee = servr->getOfflineNickAddressee(nickname);
             // Format additional information for the nick.
@@ -410,6 +414,7 @@ void NicksOnline::updateServerOnlineList(Server* servr)
             else
                 nickRoot->setPixmap(nlvcKabc, m_kabcIconSet.pixmap(
                     QIcon::Small, QIcon::Disabled, QIcon::Off));
+*/
         }
     }
     // Erase nicks no longer being watched.
@@ -471,7 +476,7 @@ NickInfoPtr NicksOnline::getOnlineNickInfo(QString& networkName, QString& nickna
             if (nickInfo) return nickInfo;
         }
     }
-    return 0;
+    return NickInfoPtr(); //TODO FIXME NULL NULL NULL
 }
 
 /**
@@ -598,14 +603,15 @@ NickInfoPtr NicksOnline::getNickInfo(const Q3ListViewItem* item)
 
     getItemServerAndNick(item, serverName, nickname);
 
-    if (!serverName || !nickname)
-        return 0;
+    if (serverName.isEmpty() || nickname.isEmpty())
+        return NickInfoPtr(); //TODO FIXME NULL NULL NULL
 
     Server* server = KonversationApplication::instance()->getConnectionManager()->getServerByName(serverName);
 
-    if (server) return server->getNickInfo(nickname);
+    if (server)
+        return server->getNickInfo(nickname);
 
-    return 0;
+    return NickInfoPtr(); //TODO FIXME NULL NULL NULL
 }
 
 /**
@@ -663,6 +669,7 @@ void NicksOnline::doCommand(int id)
 
     // Get NickInfo object corresponding to the nickname.
     NickInfoPtr nickInfo = server->getNickInfo(nickname);
+/*
     // Get addressbook entry for the nick.
     KABC::Addressee addressee;
 
@@ -674,16 +681,17 @@ void NicksOnline::doCommand(int id)
     {
         addressee = server->getOfflineNickAddressee(nickname);
     }
-
+*/
     switch(id)
     {
         case ciSendEmail:
-            Konversation::Addressbook::self()->sendEmail(addressee);
+            //Konversation::Addressbook::self()->sendEmail(addressee);
             return;                               //no need to refresh item
         case ciAddressbookEdit:
-            Konversation::Addressbook::self()->editAddressee(addressee.uid());
+            //Konversation::Addressbook::self()->editAddressee(addressee.uid());
             return;                               //no need to refresh item - nickinfo changed will be called anyway.
         case ciAddressbookChange:
+            /*
             if(nickInfo)
             {
                 nickInfo->showLinkAddressbookUI();
@@ -693,10 +701,12 @@ void NicksOnline::doCommand(int id)
                 LinkAddressbookUI *linkaddressbookui = new LinkAddressbookUI(server->getViewContainer()->getWindow(), NULL, nickname, server->getServerName(), server->getDisplayName(), addressee.realName());
                 linkaddressbookui->show();
             }
+            */
             break;
         case ciAddressbookNew:
         case ciAddressbookDelete:
         {
+            /*
             Konversation::Addressbook *addressbook = Konversation::Addressbook::self();
 
             if(addressbook && addressbook->getAndCheckTicket())
@@ -725,6 +735,7 @@ void NicksOnline::doCommand(int id)
                     }
                 }
             }
+            */
             break;
         }
         case ciJoinChannel:
@@ -768,14 +779,14 @@ int NicksOnline::getNickAddressbookState(Q3ListViewItem* item)
         NickInfoPtr nickInfo = server->getNickInfo(nickname);
         if (nickInfo)
         {
-            if (nickInfo->getAddressee().isEmpty())
+            if (1)//nickInfo->getAddressee().isEmpty())
                 nickState = nsNoAddress;
             else
                 nickState = nsHasAddress;
         }
         else
         {
-            if (server->getOfflineNickAddressee(nickname).isEmpty())
+            if (1)//server->getOfflineNickAddressee(nickname).isEmpty())
                 nickState = nsNoAddress;
             else
                 nickState = nsHasAddress;
@@ -856,7 +867,7 @@ void NicksOnline::slotNickListView_SelectionChanged()
 /**
  * Received when right-clicking an item in the NickListView.
  */
-void NicksOnline::slotNickListView_Qt::RightButtonClicked(Q3ListViewItem* item, const QPoint& pt)
+void NicksOnline::slotNickListView_RightButtonClicked(Q3ListViewItem* item, const QPoint& pt)
 {
     if (!item) return;
     m_popupMenu->clear();
@@ -926,7 +937,8 @@ void NicksOnline::slotNickInfoChanged(Server* server, const NickInfoPtr nickInfo
  */
 void NicksOnline::refreshItem(Q3ListViewItem* item)
 {
-    if (!item) return;
+    if (!item)
+        return;
     QString serverName;
     QString nickname;
     if (getItemServerAndNick(item, serverName, nickname))
@@ -936,40 +948,44 @@ void NicksOnline::refreshItem(Q3ListViewItem* item)
         {
             NickInfoPtr nickInfo = server->getNickInfo(nickname);
             KABC::Addressee addressee;
-            if (nickInfo)
+            int nickState = nsNoAddress;
+            /*if (nickInfo)
                 addressee = nickInfo->getAddressee();
             else
                 addressee = server->getOfflineNickAddressee(nickname);
-            int nickState = 2;
-            if (addressee.isEmpty()) nickState = 1;
+            if (!addressee.isEmpty())
+                nickState = nsHasAddress;
+
             switch (nickState)
             {
                 case nsNotANick:
                     break;
                 case nsNoAddress:
-                {
+                {*/
                     item->setPixmap(nlvcKabc, m_kabcIconSet.pixmap(
-                        QIcon::Small, QIcon::Disabled, QIcon::Off)); break;
+                        QIcon::Small, QIcon::Disabled, QIcon::Off));
+                    /*break;
                 }
                 case nsHasAddress:
                 {
                     item->setPixmap(nlvcKabc, m_kabcIconSet.pixmap(
                         QIcon::Small, QIcon::Normal, QIcon::On)); break;
                 }
-            }
+            }*/
             QString nickAdditionalInfo;
             bool needWhois = false;
-            if (nickInfo) nickAdditionalInfo = getNickAdditionalInfo(nickInfo, addressee,
-                    needWhois);
+            if (nickInfo)
+                nickAdditionalInfo = getNickAdditionalInfo(nickInfo, addressee, needWhois);
             item->setText(nlvcAdditionalInfo, nickAdditionalInfo);
-            if (item == m_nickListView->selectedItem()) setupAddressbookButtons(nickState);
+            if (item == m_nickListView->selectedItem())
+                setupAddressbookButtons(nickState);
         }
     }
 }
 
 void NicksOnline::childAdjustFocus() {}
 
-#include "nicksonline.moc"
+// #include "./irc/nicksonline.moc"
 
 // kate: space-indent on; tab-width 4; indent-width 4; mixed-indent off; replace-tabs on;
 // vim: set et sw=4 ts=4 cino=l1,cs,U1:

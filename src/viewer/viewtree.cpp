@@ -24,7 +24,7 @@
 #include <q3ptrlist.h>
 #include <qpoint.h>
 #include <qpainter.h>
-#include <qtooltip.h>
+//#include <qtooltip.h>
 //Added by qt3to4:
 #include <QContextMenuEvent>
 #include <QKeyEvent>
@@ -37,7 +37,7 @@
 #include <kglobalsettings.h>
 #include <kapplication.h>
 
-
+/*
 class ViewTree::ToolTip : public QToolTip
 {
     public:
@@ -64,7 +64,7 @@ void ViewTree::ToolTip::maybeTip (const QPoint &pos)
 
     if (view && view->isTruncated()) tip(viewTree->itemRect(view), view->getName());
 }
-
+*/
 
 ViewTree::ViewTree(QWidget *parent)
     : K3ListView(parent)
@@ -85,7 +85,7 @@ ViewTree::ViewTree(QWidget *parent)
     setDropVisualizer(true);
 
     setShowToolTips(false);
-    m_toolTip = new ViewTree::ToolTip(viewport(), this);
+    //m_toolTip = new ViewTree::ToolTip(viewport(), this);
 
     // Controls whether or not to select the first view added
     // to the tree. Don't do so by default; only when told to
@@ -108,8 +108,8 @@ ViewTree::ViewTree(QWidget *parent)
 
 ViewTree::~ViewTree()
 {
-    delete m_toolTip;
-    m_toolTip = 0;
+    //delete m_toolTip;
+    //m_toolTip = 0;
     emit setViewTreeShown(false);
 }
 
@@ -129,8 +129,8 @@ void ViewTree::updateAppearance()
     }
     else
     {
-        bg = KGlobalSettings::baseColor();
-        fg = KGlobalSettings::textColor();
+        bg = palette().color(QPalette::Active, QPalette::Base); //KGlobalSettings::baseColor();
+        fg = palette().color(QPalette::Active, QPalette::Text); //KGlobalSettings::textColor();
     }
 
     setPalette(KApplication::palette());
@@ -557,7 +557,7 @@ void ViewTree::contentsMousePressEvent(QMouseEvent* e)
             m_pressedAboveCloseButton = false;
             K3ListView::contentsMousePressEvent(e);
         }
-        m_middleClickItem = (Preferences::middleClickClose() && e->button() == MidButton) ? item : 0;
+        m_middleClickItem = (Preferences::middleClickClose() && e->button() == Qt::MidButton) ? item : 0;
     }
 }
 
@@ -578,7 +578,7 @@ void ViewTree::contentsMouseReleaseEvent(QMouseEvent* e)
             emit closeView(item->getView());
         }
 
-        if (Preferences::middleClickClose() && e->button() == MidButton
+        if (Preferences::middleClickClose() && e->button() == Qt::MidButton
             && item == m_middleClickItem)
         {
             emit closeView(item->getView());
@@ -603,7 +603,7 @@ void ViewTree::contentsMouseMoveEvent(QMouseEvent* e)
 
     // Allow dragging only with the middle mouse button, just
     // like for the tab bar.
-    if ((e->state() & MidButton) == MidButton)
+    if ((e->state() & Qt::MidButton) == Qt::MidButton)
         K3ListView::contentsMouseMoveEvent(e);
     else if ((e->state() & Qt::LeftButton) == Qt::LeftButton)
     {
@@ -613,7 +613,7 @@ void ViewTree::contentsMouseMoveEvent(QMouseEvent* e)
 
     if (Preferences::closeButtons())
     {
-        if (!(e->state() & Qt::LeftButton) && !(e->state() & MidButton) && !(e->state() & Qt::RightButton))
+        if (!(e->state() & Qt::LeftButton) && !(e->state() & Qt::MidButton) && !(e->state() & Qt::RightButton))
         {
             if (item)
             {
@@ -683,12 +683,12 @@ void ViewTree::keyPressEvent(QKeyEvent* e)
             KApplication::sendEvent(item->getView()->getTextView(), e);
             item->getView()->adjustFocus();
         }
-        else if (item && item->getView() && item->getView()->getType() == ChatWindow::Konsole)
+        /*else if (item && item->getView() && item->getView()->getType() == ChatWindow::Konsole)
         {
             KonsolePanel* panel = static_cast<KonsolePanel*>(item->getView());
             KApplication::sendEvent(panel->getWidget(), e);
             item->getView()->adjustFocus();
-        }
+        }*/
     }
 }
 
@@ -963,7 +963,7 @@ void ViewTree::paintEmptyArea(QPainter* p, const QRect& rect)
             return;
 
         QColor bgColor  = paletteBackgroundColor();
-        QColor selColor = KGlobalSettings::highlightColor();
+        QColor selColor = palette().color(QPalette::Active, QPalette::Highlight);  //KGlobalSettings::highlightColor();
         QColor midColor = last->mixColor(bgColor, selColor);
 
         p->setPen(selColor);
@@ -976,4 +976,4 @@ void ViewTree::paintEmptyArea(QPainter* p, const QRect& rect)
     }
 }
 
-#include "viewtree.moc"
+// #include "./viewer/viewtree.moc"

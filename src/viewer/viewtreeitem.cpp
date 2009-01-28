@@ -10,7 +10,7 @@
 */
 
 #include "viewtreeitem.h"
-#include "konversationapplication.h"
+#include "application.h" ////// header renamed
 #include "chatwindow.h"
 #include "preferences.h"
 #include "images.h"
@@ -37,7 +37,7 @@ ViewTreeItem::ViewTreeItem(Q3ListView* parent, const QString& name, ChatWindow* 
     setView(view);
     setViewType(view->getType());
 
-    m_color = KGlobalSettings::textColor();
+    m_color = KonversationApplication::instance()->palette().color(QPalette::Active, QPalette::Text);//KGlobalSettings::textColor();
     m_customColorSet = false;
 
     setOpen(true);
@@ -66,7 +66,7 @@ ViewTreeItem::ViewTreeItem(Q3ListViewItem* parent, const QString& name, ChatWind
     setView(view);
     setViewType(view->getType());
 
-    m_color = KGlobalSettings::textColor();
+    m_color = KonversationApplication::instance()->palette().color(QPalette::Active, QPalette::Text);//KGlobalSettings::textColor();
     m_customColorSet = false;
 
     setOpen(true);
@@ -91,7 +91,7 @@ ViewTreeItem::ViewTreeItem(Q3ListViewItem* parent, Q3ListViewItem* afterItem, co
     setView(view);
     setViewType(view->getType());
 
-    m_color = KGlobalSettings::textColor();
+    m_color = KonversationApplication::instance()->palette().color(QPalette::Active, QPalette::Text);//KGlobalSettings::textColor();
     m_customColorSet = false;
 
     setOpen(true);
@@ -184,7 +184,7 @@ QColor ViewTreeItem::getColor() const
         if (Preferences::inputFieldsBackgroundColor())
             return Preferences::color(Preferences::ChannelMessage);
         else
-            return KGlobalSettings::textColor();
+            return KonversationApplication::instance()->palette().color(QPalette::Active, QPalette::Text);//KGlobalSettings::textColor();
     }
     else
         return m_color;
@@ -341,16 +341,16 @@ void ViewTreeItem::paintCell(QPainter* p, const QColorGroup& /* cg */, int /* co
     QPixmap buffer(width, height());
     QPainter painter(&buffer);
 
-    QColor textColor = isSelected() ? KGlobalSettings::highlightedTextColor() : getColor();
-    QColor background = isSelected() ? KGlobalSettings::highlightColor() : listView()->paletteBackgroundColor();
+    QColor textColor = isSelected() ? listView()->palette().color(QPalette::HighlightedText) /* KGlobalSettings::highlightedTextColor() */ : getColor();
+    QColor background = isSelected() ? listView()->palette().color(QPalette::Highlight) /* KGlobalSettings::highlightColor() */ : listView()->paletteBackgroundColor();
     if (m_isHighlighted) background = Preferences::inputFieldsBackgroundColor()
-        ? Preferences::color(Preferences::AlternateBackground) : KGlobalSettings::alternateBackgroundColor();
+        ? Preferences::color(Preferences::AlternateBackground) : listView()->palette().color(QPalette::AlternateBase); // KGlobalSettings::alternateBackgroundColor()
 
     // Fill in background.
     painter.fillRect(0, 0, width, height(), background);
 
     QColor bgColor  = listView()->paletteBackgroundColor();
-    QColor selColor = m_isHighlighted ? background : KGlobalSettings::highlightColor();
+    QColor selColor = m_isHighlighted ? background : listView()->palette().color(QPalette::Highlight);// KGlobalSettings::highlightColor();
     QColor midColor = mixColor(bgColor, selColor);
 
     int iconWidth = pixmap(0) ? LED_ICON_SIZE : 0;
@@ -411,7 +411,7 @@ void ViewTreeItem::paintCell(QPainter* p, const QColorGroup& /* cg */, int /* co
 
     if (m_isHighlighted)
     {
-        selColor = KGlobalSettings::highlightColor();
+        selColor = listView()->palette().color(QPalette::Highlight); // KGlobalSettings::highlightColor();
         midColor = mixColor(bgColor, selColor);
     }
 
@@ -466,7 +466,8 @@ void ViewTreeItem::paintCell(QPainter* p, const QColorGroup& /* cg */, int /* co
             if (p->fontMetrics().width(text) > textWidth)
             {
                 m_isTruncated = true;
-                text = KStringHandler::rPixelSqueeze(text, p->fontMetrics(), textWidth);
+                text = p->fontMetrics().elidedText(text, Qt::ElideRight, textWidth);
+
             }
             else
                 m_isTruncated = false;
@@ -479,7 +480,7 @@ void ViewTreeItem::paintCell(QPainter* p, const QColorGroup& /* cg */, int /* co
     else
     {
         QColor lineColor = Preferences::inputFieldsBackgroundColor()
-            ? Preferences::color(Preferences::AlternateBackground) : KGlobalSettings::alternateBackgroundColor();
+            ? Preferences::color(Preferences::AlternateBackground) : listView()->palette().color(QPalette::AlternateBase); //KGlobalSettings::alternateBackgroundColor();
         painter.setPen(lineColor);
         painter.drawLine(0, 5, width, 5);
     }

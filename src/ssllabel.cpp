@@ -18,8 +18,8 @@
 #include <QLabel>
 
 
-SSLLabel::SSLLabel(QWidget* parent,const char* name)
-: QLabel(parent,name)
+SSLLabel::SSLLabel(QWidget* parent)
+: QLabel(parent)
 {
 }
 
@@ -29,4 +29,4 @@ void SSLLabel::mouseReleaseEvent(QMouseEvent *e)
     emit clicked();
 }
 
-#include "ssllabel.moc"
+// #include "./ssllabel.moc"

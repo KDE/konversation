@@ -12,7 +12,7 @@
 */
 
 #include "editnotifydialog.h"
-#include "konversationapplication.h"
+#include "application.h" ////// header renamed
 #include "servergroupsettings.h"
 
 #include <qlayout.h>
@@ -102,4 +102,4 @@ void EditNotifyDialog::slotOk()
     delayedDestruct();
 }
 
-#include "editnotifydialog.moc"
+// #include "./viewer/editnotifydialog.moc"

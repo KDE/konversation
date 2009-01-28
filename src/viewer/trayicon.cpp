@@ -13,7 +13,7 @@
 */
 
 #include "trayicon.h"
-#include "konversationapplication.h"
+#include "application.h" ////// header renamed
 #include "channel.h"
 #include "server.h"
 #include "chatwindow.h"
@@ -30,7 +30,7 @@
 namespace Konversation
 {
 
-    TrayIcon::TrayIcon(QWidget* parent) : KSystemTray(parent)
+    TrayIcon::TrayIcon(QWidget* parent) : KSystemTrayIcon(parent)
     {
         m_notificationEnabled = false;
         m_blinkTimer = new QTimer(this);
@@ -38,7 +38,7 @@ namespace Konversation
 
         updateAppearance();
 
-        QToolTip::add(this,i18n("Konversation - IRC Client"));
+        setToolTip(i18n("Konversation - IRC Client"));
     }
 
     TrayIcon::~TrayIcon()
@@ -56,14 +56,14 @@ namespace Konversation
         {
             if(!m_blinkTimer->isActive())
             {
-                setPixmap(m_messagePix);
+                setIcon(m_messagePix);
                 m_blinkOn = true;
                 m_blinkTimer->start(500);
             }
         }
         else
         {
-            setPixmap(m_messagePix);
+            setIcon(m_messagePix);
             m_blinkTimer->stop();
         }
     }
@@ -71,7 +71,7 @@ namespace Konversation
     void TrayIcon::endNotification()
     {
         m_blinkTimer->stop();
-        setPixmap(m_nomessagePix);
+        setIcon(m_nomessagePix);
     }
 
     void TrayIcon::blinkTimeout()
@@ -80,11 +80,11 @@ namespace Konversation
 
         if(m_blinkOn)
         {
-            setPixmap(m_messagePix);
+            setIcon(m_messagePix);
         }
         else
         {
-            setPixmap(m_nomessagePix);
+            setIcon(m_nomessagePix);
         }
     }
 
@@ -92,8 +92,8 @@ namespace Konversation
     {
         m_nomessagePix = loadIcon("konversation");
         m_messagePix = loadIcon("konv_message");
-        setPixmap(m_nomessagePix);
+        setIcon(m_nomessagePix);
     }
 }
 
-#include "trayicon.moc"
+// #include "./viewer/trayicon.moc"

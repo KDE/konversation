@@ -14,11 +14,11 @@
   (at your option) any later version.
 */
 
-#include "dcctransferrecv.h"
+#include "transferrecv.h" ////// header renamed
 #include "dcccommon.h"
 #include "channel.h"
-#include "dcctransfermanager.h"
-#include "konversationapplication.h"
+#include "transfermanager.h" ////// header renamed
+#include "application.h" ////// header renamed
 #include "connectionmanager.h"
 #include "server.h"
 
@@ -799,4 +799,4 @@ void DccTransferRecvWriteCacheHandler::slotKIOResult( KIO::Job* job )
     }
 }
 
-#include "dcctransferrecv.moc"
+// #include "./dcc/transferrecv.moc"

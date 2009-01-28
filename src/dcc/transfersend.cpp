@@ -14,11 +14,11 @@
   (at your option) any later version.
 */
 
-#include "dcctransfersend.h"
+#include "transfersend.h" ////// header renamed
 #include "channel.h"
 #include "dcccommon.h"
-#include "dcctransfermanager.h"
-#include "konversationapplication.h"
+#include "transfermanager.h" ////// header renamed
+#include "application.h" ////// header renamed
 #include "connectionmanager.h"
 #include "server.h"
 
@@ -507,4 +507,4 @@ QString DccTransferSend::getQFileErrorString( int code )
     return errorString;
 }
 
-#include "dcctransfersend.moc"
+// #include "./dcc/transfersend.moc"

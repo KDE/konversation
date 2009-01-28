@@ -17,16 +17,16 @@
 
 #include "serverison.h"
 #include "server.h"
-#include "addressbook.h"
-#include "konversationapplication.h"
+//#include "addressbook.h"
+#include "application.h" ////// header renamed
 #include "nickinfo.h"
 #include "viewcontainer.h"
 
 #include <qmap.h>
 #include <qstring.h>
 #include <qstringlist.h>
-#include <kabc/addressbook.h>
-#include <kabc/stdaddressbook.h>
+//#include <kabc/addressbook.h>
+//#include <kabc/stdaddressbook.h>
 
 
 ServerISON::ServerISON(Server* server) : m_server(server)
@@ -34,10 +34,12 @@ ServerISON::ServerISON(Server* server) : m_server(server)
     m_ISONList_invalid = true;
     //We need to know when the addressbook changes because if the info for an offline nick changes,
     //we won't get a nickInfoChanged signal.
+    /*
     connect( Konversation::Addressbook::self()->getAddressBook(), SIGNAL( addressBookChanged( AddressBook * ) ),
         this, SLOT( addressbookChanged() ) );
     connect( Konversation::Addressbook::self(), SIGNAL(addresseesChanged()),
         this, SLOT(addressbookChanged()));
+    */
     connect( m_server, SIGNAL(nickInfoChanged(Server*, const NickInfoPtr)),
         this, SLOT(nickInfoChanged(Server*, const NickInfoPtr)));
     connect( m_server,
@@ -85,7 +87,7 @@ KABC::Addressee ServerISON::getOfflineNickAddressee(QString& nickname)
 }
 
 void ServerISON::recalculateAddressees()
-{
+{/*
     // If not watching nicks, no need to build notify list.
     if (Preferences::useNotify())
     {
@@ -117,6 +119,7 @@ void ServerISON::recalculateAddressees()
         // Build notify list from nicks in addressbook, eliminating dups (case insensitive).
         QMap<QString,QString> ISONMap;
         m_offlineNickToAddresseeMap.clear();
+
         for( KABC::AddressBook::ConstIterator it =
             Konversation::Addressbook::self()->getAddressBook()->begin();
             it != Konversation::Addressbook::self()->getAddressBook()->end(); ++it )
@@ -192,7 +195,7 @@ void ServerISON::recalculateAddressees()
             }
         }
     }
-    else
+    else */
     {
         m_addresseesISON.clear();
         m_ISONList.clear();
@@ -239,4 +242,4 @@ const QString& /*channelName*/, bool /*joined*/)
     m_ISONList_invalid = true;
 }
 
-#include "serverison.moc"
+// #include "./irc/serverison.moc"

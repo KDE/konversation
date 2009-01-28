@@ -10,8 +10,8 @@
   Copyright (C) 2004 Shintaro Matsuoka <shin@shoegazed.org>
 */
 
-#include "dccresumedialog.h"
-#include "dcctransferrecv.h"
+#include "resumedialog.h" ////// header renamed
+#include "transferrecv.h" ////// header renamed
 
 #include <q3hbox.h>
 #include <qlabel.h>
@@ -199,4 +199,4 @@ void DccResumeDialog::setDefaultName() // slot
     m_urlreqFileURL->setURL(m_item->getFileURL().prettyUrl());
 }
 
-#include "dccresumedialog.moc"
+// #include "./dcc/resumedialog.moc"

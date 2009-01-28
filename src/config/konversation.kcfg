@@ -958,9 +958,10 @@
       <label></label>
     </entry>
   </group>
+<!--
   <group name="QueueRates">
     <entry name="queueRate$(QueueIndex)" type="IntList" key="EmptyingRate $(QueueIndex)">
-        <!-- kconfig_compiler really should do this for me... -->
+        <!- - kconfig_compiler really should do this for me... - ->
         <code>  QValueList&lt; QValueList&lt;int&gt; &gt; defaultRate;
   QValueList&lt; QValueList&lt;int&gt; &gt;::iterator defaultRateInitIter;
 
@@ -989,4 +990,5 @@
         <default>false</default>
     </entry>
   </group>
+  -->
 </kcfg>

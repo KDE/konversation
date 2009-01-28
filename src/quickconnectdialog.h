@@ -17,14 +17,14 @@
 
 #include "common.h"
 
-#include <kdialogbase.h>
+#include <kdialog.h>
 
 
 class QCheckBox;
 class KLineEdit;
 class KPasswordEdit;
 
-class QuickConnectDialog : public KDialogBase
+class QuickConnectDialog : public KDialog
 {
     Q_OBJECT
 

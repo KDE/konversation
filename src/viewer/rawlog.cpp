@@ -17,7 +17,7 @@
 #include "ircview.h"
 #include "ircviewbox.h"
 #include "server.h"
-#include "konversationapplication.h"
+#include "application.h" ////// header renamed
 
 #include <klocale.h>
 #include <kdebug.h>
@@ -76,4 +76,4 @@ bool RawLog::closeYourself()
 
 bool RawLog::searchView() { return true; }
 
-#include "rawlog.moc"
+// #include "./viewer/rawlog.moc"

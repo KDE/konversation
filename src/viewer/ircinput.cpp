@@ -13,12 +13,12 @@
 */
 
 #include "ircinput.h"
-#include "konversationapplication.h"
-#include "multilineedit.h"
+#include "application.h" ////// header renamed
+//#include "multilineedit.h"
 #include "chatwindow.h"
 #include "ircview.h"
 
-#include <private/qrichtext_p.h>
+//#include <private/qrichtext_p.h>
 #include <qclipboard.h>
 #include <qregexp.h>
 #include <qdom.h>
@@ -35,7 +35,7 @@
 #include <kapplication.h>
 #include <kmessagebox.h>
 #include <klocale.h>
-#include <k3completionbox.h>
+#include <kcompletionbox.h>
 
 #define MAXHISTORY 100
 #define RICHTEXT 0
@@ -43,7 +43,7 @@
 
 IRCInput::IRCInput(QWidget* parent) : KTextEdit(parent)
 {
-    m_lastHeight=document()->height();
+    m_lastHeight=document()->size().toSize().height();
 
     //I am not terribly interested in finding out where this value comes from
     //nor in compensating for it if my guess is incorrect. so, cache it.
@@ -62,23 +62,17 @@ IRCInput::IRCInput(QWidget* parent) : KTextEdit(parent)
     lineNum=0;
     // reset completion mode
     setCompletionMode('\0');
-    completionBox = new K3CompletionBox(this);
+    completionBox = new KCompletionBox(this);
     connect(completionBox, SIGNAL(activated(const QString&)), this, SLOT(insertCompletion(const QString&)));
 
     // widget may not be resized vertically
     setSizePolicy(QSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::Fixed));
 
     //NoWrap coupled with the size policy constrains the line edit to be one row high
-    setWordWrap(m_multiRow ? WidgetWidth : NoWrap);
+    setLineWrapMode(m_multiRow ? WidgetWidth : NoWrap);
 
-    setHScrollBarMode(AlwaysOff);
-    setVScrollBarMode(AlwaysOff);
-    #if RICHTEXT == 1
-    setAutoFormatting(Q3TextEdit::AutoNone);
-    setTextFormat(Qt::RichText);
-    #else
-    setTextFormat(PlainText);
-    #endif
+    //setHScrollBarMode(AlwaysOff);
+    //setVScrollBarMode(AlwaysOff);
 
     Q3WhatsThis::add(this, i18n("<qt>The input line is where you type messages to be sent the channel, query, or server.  A message sent to a channel is seen by everyone on the channel, whereas a message in a query is sent only to the person in the query with you.<p>To automatically complete the nickname you began typing, press Tab. If you have not begun typing, the last successfully completed nickname will be used.<p>You can also send special commands:<br><table><tr><th>/me <i>action</i></th><td>shows up as an action in the channel or query.  For example:  <em>/me sings a song</em> will show up in the channel as 'Nick sings a song'.</td></tr><tr><th>/whois <i>nickname</i></th><td>shows information about this person, including what channels they are in.</td></tr></table><p>For more commands, see the Konversation Handbook.<p>A message cannot contain multiple lines.</qt>"));
 
@@ -110,7 +104,8 @@ void IRCInput::hideEvent(QHideEvent* /* event */)
     // the problem on the surface. In the KDE 4 version, we want to look
     // into having only one spell-checker instance instead of starting and
     // stopping at all.
-    m_disableSpellCheckTimer->start(5000, true);
+    m_disableSpellCheckTimer->setSingleShot(true);
+    m_disableSpellCheckTimer->start(5000);
 }
 
 void IRCInput::disableSpellChecking()
@@ -134,24 +129,28 @@ void IRCInput::slotSpellCheckDone(const QString& s)
 void IRCInput::updateAppearance()
 {
     m_multiRow = Preferences::useMultiRowInputBox();
-    setWordWrap(m_multiRow ? WidgetWidth : NoWrap);
+    setLineWrapMode(m_multiRow ? WidgetWidth : NoWrap);
     m_lastHeight=heightForWidth(sizeHint().width());
     ensureCursorVisible(); //appears to trigger updateGeometry
 }
 
+// TODO FIXME and so we don't need this, right...?
+/*
 void IRCInput::resizeContents( int w, int h )
 {
-    if (document()->height() != m_lastHeight) {
-        m_lastHeight=document()->height();
+    int height = document()->size().toSize().height();
+    if (height != m_lastHeight) {
+        m_lastHeight = height;
         updateGeometry();
     }
     KTextEdit::resizeContents(w,h);
 }
+*/
 
 // widget must be only one line high - luckily QT will enforce this via wrappping policy
 QSize IRCInput::sizeHint() const
 {
-    constPolish();
+    ensurePolished();
 
     int ObscurePadding = 4;
     int f=2*frameWidth();
@@ -160,6 +159,8 @@ QSize IRCInput::sizeHint() const
     return QSize(w,h);
 }
 
+// TODO FIXME - ok, wtf are we removing here? this is exactly the kind of shit i don't want to see any more
+/*
 Q3PopupMenu *IRCInput::createPopupMenu( const QPoint &pos )
 {
     Q3PopupMenu *menu=KTextEdit::createPopupMenu(pos);
@@ -167,33 +168,19 @@ Q3PopupMenu *IRCInput::createPopupMenu( const QPoint &pos )
     menu->removeItemAt(menu->count()-1);
     return menu;
 }
+*/
 
+/*
 QString IRCInput::text() const
 {
-    #if RICHTEXT == 1
-    QString content=KTextEdit::text();
-
-    QDomDocument document;
-
-    document.setContent(content,false);
-    QDomNodeList nodes=document.elementsByTagName("p");
-    if(nodes.count())
-    {
-        QDomElement node=nodes.item(0).toElement();
-        return node.text();
-    }
-    return QString();
-
-    #else
     return KTextEdit::text();
-    #endif
 }
-
+*/
 void IRCInput::setText(const QString& text)
 {
     // reimplemented to  set cursor at the end of the new text
     KTextEdit::setText(text);
-    setCursorPosition(0,text.length()+1);
+    moveCursor(QTextCursor::End);
 }
 
 // FIXME - find a better way to do this. eventfilters introduce nebulous behaviour
@@ -211,7 +198,7 @@ bool IRCInput::eventFilter(QObject *object,QEvent *event)
             if (ke->key() == Qt::Key_Tab && (ke->state() == 0 || ke->state() == Qt::ShiftModifier))
                 return false;
 
-            if (!ke->text().isEmpty() && ((ke->state() & (Qt::ShiftModifier|Qt::Qt::KeypadModifierModifier)) || ke->state() == 0))
+            if (!ke->text().isEmpty() && ((ke->state() & (Qt::ShiftModifier|Qt::KeypadModifier)) || ke->state() == 0))
             {
                 setFocus();
                 KonversationApplication::sendEvent(this,event);
@@ -269,7 +256,7 @@ void IRCInput::keyPressEvent(QKeyEvent* e)
             }
             else
             {
-                insertCompletion(completionBox->currentText());
+                insertCompletion(completionBox->currentItem()->text());
                 completionBox->hide();
             }
             // prevent widget from adding lines
@@ -352,7 +339,8 @@ void IRCInput::getHistory(bool up)
  * Work around the fact that while QTextEdit::paste() is virtual, whether we are
  * pasting from middle button or control-V is PRIVATE and NO ACCESSOR is given.
  */
-void IRCInput::contentsMouseReleaseEvent( QMouseEvent *ev)
+// TODO FIXME this might not be an equivalent event
+void IRCInput::mouseReleaseEvent( QMouseEvent *ev)
 {
     if (ev->button() == Qt::MidButton)
     {
@@ -363,7 +351,7 @@ void IRCInput::contentsMouseReleaseEvent( QMouseEvent *ev)
     setCompletionMode('\0');
     emit endCompletion();
 
-    KTextEdit::contentsMouseReleaseEvent(ev);
+    KTextEdit::mouseReleaseEvent(ev);
     m_useSelection=false;
 }
 
@@ -473,7 +461,7 @@ bool IRCInput::checkPaste(QString& text)
     int doPaste=KMessageBox::Yes;
 
     //text is now preconditioned when you get here
-    int lines=text.contains('\n');
+    int lines=text.count('\n');
 
     if(text.length()>256 || lines)
     {
@@ -483,15 +471,17 @@ bool IRCInput::checkPaste(QString& text)
             "the chat. This can cause connection resets or flood kills. "
             "Do you really want to continue?</qt>").arg(text.length()).arg(lines+1),
             i18n("Large Paste Warning"),
-            i18n("Paste"),
-            i18n("&Edit..."),
-            "LargePaste",
+            KGuiItem(i18n("Paste")),
+            KGuiItem(i18n("&Edit...")),
+            KStandardGuiItem::cancel(),
+            QString("LargePaste"),
             KMessageBox::Dangerous);
     }
 
     if (doPaste==KMessageBox::No)
     {
-        QString ret(MultilineEdit::edit(this,text));
+        // TODO FIXME
+        QString ret;//(MultilineEdit::edit(this,text));
         if (ret.isEmpty())
             return false;
         text=ret;
@@ -512,8 +502,8 @@ void IRCInput::insertCompletion(const QString& nick)
     int pos;                                      // = cursorPosition();
     int oldPos;                                   // = cursorPosition();
 
-    getCursorPosition(&oldPos,&pos);
-    oldPos=pos;
+    //getCursorPosition(&oldPos,&pos);
+    oldPos=pos=textCursor().position();
 
     QString line = text();
 
@@ -538,7 +528,7 @@ void IRCInput::insertCompletion(const QString& nick)
     }
 
     setText(line);
-    setCursorPosition(0,pos);
+    textCursor().setPosition(pos);
 }
 
 void IRCInput::setLastCompletion(const QString& completion)
@@ -553,4 +543,4 @@ char IRCInput::getCompletionMode() { return completionMode; }
 void IRCInput::setOldCursorPosition(int pos) { oldPos=pos; }
 int IRCInput::getOldCursorPosition() { return oldPos; }
 
-#include "ircinput.moc"
+// #include "./viewer/ircinput.moc"

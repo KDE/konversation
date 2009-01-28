@@ -323,7 +323,7 @@ class Channel : public ChatWindow
         QSplitter* m_vertSplitter;
         QWidget* topicWidget;
         QToolButton* m_topicButton;
-        Konversation::TopicLabel* topicLine;
+        QLabel* topicLine;
 
         //TODO: abstract these
         Q3HBox* modeBox;

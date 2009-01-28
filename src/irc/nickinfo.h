@@ -154,7 +154,7 @@ class NickInfo : public QObject, public KShared
         QString m_netServer;
         QString m_netServerInfo;
         QDateTime m_onlineSince;
-        KABC::Addressee m_addressee;
+        //KABC::Addressee m_addressee;
         /** Whether this user is identified with nickserv.
          *  Found only by doing /whois nick
          */

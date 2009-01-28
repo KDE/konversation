@@ -9,8 +9,8 @@
   Copyright (C) 2006 Eike Hein <hein@kde.org>
 */
 
-#include "konversationstatusbar.h"
-#include "konversationmainwindow.h"
+#include "statusbar.h" ////// header renamed
+#include "mainwindow.h" ////// header renamed
 #include "viewcontainer.h"
 #include "ssllabel.h"
 
@@ -31,7 +31,8 @@ KonversationStatusBar::KonversationStatusBar(KonversationMainWindow* window)
     // Initialize status bar.
     m_window->statusBar();
 
-    m_mainLabel = new KSqueezedTextLabel(m_window->statusBar(),"mainLabel");
+    m_mainLabel = new KSqueezedTextLabel(m_window->statusBar());
+    m_mainLabel->setObjectName("mainLabel");
     setMainLabelText(i18n("Ready."));
     m_mainLabel->setSizePolicy(QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed));
     m_mainLabel->setMinimumWidth(0);
@@ -40,14 +41,17 @@ KonversationStatusBar::KonversationStatusBar(KonversationMainWindow* window)
     int height = m_window->fontMetrics().height()+2;
     m_mainLabel->setFixedHeight(height);
 
-    m_infoLabel = new QLabel(m_window->statusBar(), "infoLabel");
+    m_infoLabel = new QLabel(m_window->statusBar());
+    m_infoLabel->setObjectName("infoLabel");
     m_infoLabel->hide();
     Q3WhatsThis::add(m_infoLabel, i18n("<qt>This shows the number of users in the channel, and the number of those that are operators (ops).<p>A channel operator is a user that has special privileges, such as the ability to kick and ban users, change the channel modes, make other users operators</qt>"));
 
-    m_lagLabel = new QLabel(i18n("Lag: Unknown"), m_window->statusBar(), "lagLabel");
+    m_lagLabel = new QLabel(i18n("Lag: Unknown"), m_window->statusBar());
+    m_lagLabel->setObjectName("lagLabel");
     m_lagLabel->hide();
 
-    m_sslLabel = new SSLLabel(m_window->statusBar(),"sslLabel");
+    m_sslLabel = new SSLLabel(m_window->statusBar());
+    m_sslLabel->setObjectName("sslLabel");
     m_sslLabel->setPixmap(SmallIcon("encrypted"));
     m_sslLabel->hide();
     Q3WhatsThis::add(m_sslLabel, i18n("All communication with the server is encrypted.  This makes it harder for someone to listen in on your communications."));
@@ -175,34 +179,31 @@ void KonversationStatusBar::setTooLongLag(Server* lagServer, int msec)
 
         if (days)
         {
-            const QString daysString = i18n("1 day", "%n days", days);
-            const QString hoursString = i18n("1 hour", "%n hours", (hours % 24));
-            const QString minutesString = i18n("1 minute", "%n minutes", (minutes % 60));
-            const QString secondsString = i18n("1 second", "%n seconds", (seconds % 60));
-            lagString = i18n("%1 = name of server, %2 = (x days), %3 = (x hours), %4 = (x minutes), %5 = (x seconds)", "No answer from server %1 for more than %2, %3, %4, and %5.").arg(lagServer->getServerName())
-                .arg(daysString).arg(hoursString).arg(minutesString).arg(secondsString);
+            const QString daysString = i18np("1 day", "%n days", days);
+            const QString hoursString = i18np("1 hour", "%n hours", (hours % 24));
+            const QString minutesString = i18np("1 minute", "%n minutes", (minutes % 60));
+            const QString secondsString = i18np("1 second", "%n seconds", (seconds % 60));
+            lagString = i18nc("%1 = name of server, %2 = (x days), %3 = (x hours), %4 = (x minutes), %5 = (x seconds)", "No answer from server %1 for more than %2, %3, %4, and %5.", lagServer->getServerName(), daysString, hoursString, minutesString, secondsString);
             // or longer than an hour
         }
         else if (hours)
         {
-            const QString hoursString = i18n("1 hour", "%n hours", hours);
-            const QString minutesString = i18n("1 minute", "%n minutes", (minutes % 60));
-            const QString secondsString = i18n("1 second", "%n seconds", (seconds % 60));
-            lagString = i18n("%1 = name of server, %2 = (x hours), %3 = (x minutes), %4 = (x seconds)", "No answer from server %1 for more than %2, %3, and %4.").arg(lagServer->getServerName())
-                .arg(hoursString).arg(minutesString).arg(secondsString);
+            const QString hoursString = i18np("1 hour", "%n hours", hours);
+            const QString minutesString = i18np("1 minute", "%n minutes", (minutes % 60));
+            const QString secondsString = i18np("1 second", "%n seconds", (seconds % 60));
+            lagString = i18nc("%1 = name of server, %2 = (x hours), %3 = (x minutes), %4 = (x seconds)", "No answer from server %1 for more than %2, %3, and %4.", lagServer->getServerName(), hoursString, minutesString, secondsString);
             // or longer than a minute
         }
         else if (minutes)
         {
-            const QString minutesString = i18n("1 minute", "%n minutes", minutes);
-            const QString secondsString = i18n("1 second", "%n seconds", (seconds % 60));
-            lagString = i18n("%1 = name of server, %2 = (x minutes), %3 = (x seconds)", "No answer from server %1 for more than %2 and %3.").arg(lagServer->getServerName())
-                .arg(minutesString).arg(secondsString);
+            const QString minutesString = i18np("1 minute", "%n minutes", minutes);
+            const QString secondsString = i18np("1 second", "%n seconds", (seconds % 60));
+            lagString = i18nc("%1 = name of server, %2 = (x minutes), %3 = (x seconds)", "No answer from server %1 for more than %2 and %3.", lagServer->getServerName(), minutesString, secondsString);
             // or just some seconds
         }
         else
         {
-            lagString = i18n("No answer from server %1 for more than 1 second.", "No answer from server %1 for more than %n seconds.", seconds).arg(lagServer->getServerName());
+            lagString = i18np("No answer from server %1 for more than 1 second.", "No answer from server %1 for more than %n seconds.", seconds, lagServer->getServerName());
         }
 
         setMainLabelText(lagString);
@@ -219,7 +220,7 @@ void KonversationStatusBar::setTooLongLag(Server* lagServer, int msec)
 }
 
 void KonversationStatusBar::updateSSLLabel(Server* server)
-{
+{/*
     if (server == m_window->getViewContainer()->getFrontServer()
         && server->getUseSSL() && server->isConnected())
     {
@@ -229,7 +230,7 @@ void KonversationStatusBar::updateSSLLabel(Server* server)
         QToolTip::add(m_sslLabel,server->getSSLInfo());
         m_sslLabel->show();
     }
-    else
+    else*/
         m_sslLabel->hide();
 }
 
@@ -239,4 +240,4 @@ void KonversationStatusBar::removeSSLLabel()
     m_sslLabel->hide();
 }
 
-#include "konversationstatusbar.moc"
+// #include "./statusbar.moc"

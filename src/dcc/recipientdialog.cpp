@@ -12,7 +12,7 @@
   email:     eisfuchs@tigress.com
 */
 
-#include "dccrecipientdialog.h"
+#include "recipientdialog.h" ////// header renamed
 
 #include <qlayout.h>
 //Added by qt3to4:
@@ -99,4 +99,4 @@ QString DccRecipientDialog::getNickname(QWidget* parent, const QStringList& list
     return dlg.getSelectedNickname();
 }
 
-#include "dccrecipientdialog.moc"
+// #include "./dcc/recipientdialog.moc"

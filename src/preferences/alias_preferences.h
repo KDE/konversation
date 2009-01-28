@@ -14,7 +14,7 @@
 #define EXALIASPREFERENCES_H
 
 #include "alias_preferencesui.h"
-#include "konvisettingspage.h"
+#include "settingspage.h" ////// header renamed
 
 class Alias_Config : public Alias_ConfigUI, public KonviSettingsPage
 {
