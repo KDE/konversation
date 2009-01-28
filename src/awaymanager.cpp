@@ -36,6 +36,7 @@
 #ifdef HAVE_XSCREENSAVER
 #define HasScreenSaver
 #include <X11/extensions/scrnsaver.h>
+#include <QX11Info>
 #endif
 #endif
 
@@ -73,7 +74,7 @@ AwayManager::AwayManager(QObject* parent) : QObject(parent)
     m_connectionManager = static_cast<KonversationApplication*>(kapp)->getConnectionManager();
 
 #ifdef Q_WS_X11
-    Display* display = qt_xdisplay();
+    Display* display = QX11Info::display();
     d->root = DefaultRootWindow(display);
     d->screen = ScreenOfDisplay(display, DefaultScreen (display));
 
@@ -81,12 +82,12 @@ AwayManager::AwayManager(QObject* parent) : QObject(parent)
 #endif
 
 #ifdef HasXidle
-    d->useXidle = XidleQueryExtension(qt_xdisplay(), &dummy, &dummy);
+    d->useXidle = XidleQueryExtension(QX11Info::display(), &dummy, &dummy);
 #endif
 
 #ifdef HasScreenSaver
     if (!d->useXidle)
-        d->useMit = XScreenSaverQueryExtension(qt_xdisplay(), &dummy, &dummy);
+        d->useMit = XScreenSaverQueryExtension(QX11Info::display(), &dummy, &dummy);
 #endif
 
     m_activityTimer = new QTimer(this, "AwayTimer");
@@ -176,7 +177,7 @@ bool AwayManager::Xactivity()
     bool activity = false;
 
 #ifdef Q_WS_X11
-    Display* display = qt_xdisplay();
+    Display* display = QX11Info::display();
     Window dummyW;
     int dummyC;
     unsigned int mask;

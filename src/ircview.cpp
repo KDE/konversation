@@ -80,6 +80,7 @@
 #include <kio/job.h>
 #include <kstdaccel.h>
 #include <kglobal.h>
+#include <QTextDocument>
 
 
 IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent)
@@ -994,7 +995,7 @@ void IRCView::appendCommandMessage(const QString& type,const QString& message, b
         prefix="<--";
     }
 
-    prefix=Q3StyleSheet::escape(prefix);
+    prefix=Qt::escape(prefix);
 
     if(basicDirection(message) == QChar::DirR)
     {
@@ -1220,11 +1221,11 @@ void IRCView::contentsMouseReleaseEvent(QMouseEvent *ev)
         }
     }
 
-    if (ev->button() == QMouseEvent::LeftButton)
+    if (ev->button() == Qt::LeftButton)
     {
         if (m_mousePressed)
         {
-            if (ev->state() == (Qt::LeftButton|Qt::ShiftButton))
+            if (ev->state() == (Qt::LeftButton|Qt::ShiftModifier))
                 saveLinkAs(m_highlightedURL);
             else
                 openLink(m_highlightedURL);
@@ -1239,7 +1240,7 @@ void IRCView::contentsMouseReleaseEvent(QMouseEvent *ev)
 
 void IRCView::contentsMousePressEvent(QMouseEvent* ev)
 {
-    if (ev->button() == QMouseEvent::LeftButton)
+    if (ev->button() == Qt::LeftButton)
     {
         m_urlToDrag = m_highlightedURL;
 

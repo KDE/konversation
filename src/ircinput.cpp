@@ -128,7 +128,7 @@ void IRCInput::slotSpellCheckDone(const QString& s)
     if (s == text() || s == (text() + '\n'+'\n'))
         return;
 
-    setText(s.simplifyWhiteSpace());
+    setText(s.simplified());
 }
 
 void IRCInput::updateAppearance()
@@ -208,10 +208,10 @@ bool IRCInput::eventFilter(QObject *object,QEvent *event)
 
             // Allow tab to be handled naturally by the widget.
             // Once it runs out of links it goes to the next control.
-            if (ke->key() == Key_Tab && (ke->state() == 0 || ke->state() == Qt::ShiftButton))
+            if (ke->key() == Qt::Key_Tab && (ke->state() == 0 || ke->state() == Qt::ShiftModifier))
                 return false;
 
-            if (!ke->text().isEmpty() && ((ke->state() & (Qt::ShiftButton|Qt::Keypad)) || ke->state() == 0))
+            if (!ke->text().isEmpty() && ((ke->state() & (Qt::ShiftModifier|Qt::Qt::KeypadModifierModifier)) || ke->state() == 0))
             {
                 setFocus();
                 KonversationApplication::sendEvent(this,event);
@@ -233,22 +233,22 @@ void IRCInput::keyPressEvent(QKeyEvent* e)
             return;
             break;
 
-        case Key_Up:
-            if (m_multiRow && (e->state() != (Qt::ShiftButton|Qt::ControlButton)))
+        case Qt::Key_Up:
+            if (m_multiRow && (e->state() != (Qt::ShiftModifier|Qt::ControlModifier)))
                 break;
             emit history(true);
             return;
             break;
 
-        case Key_Down:
-            if (m_multiRow && (e->state() != (Qt::ShiftButton|Qt::ControlButton)))
+        case Qt::Key_Down:
+            if (m_multiRow && (e->state() != (Qt::ShiftModifier|Qt::ControlModifier)))
                 break;
             emit history(false);
             return;
             break;
 
-        case Key_Enter:
-        case Key_Return:
+        case Qt::Key_Enter:
+        case Qt::Key_Return:
         {
             if(text().length()) addHistory(text());
             if(completionBox->isHidden())
@@ -257,7 +257,7 @@ void IRCInput::keyPressEvent(QKeyEvent* e)
                 setCompletionMode('\0');
 
                 // Ctrl+Enter is a special case in which commands should be send as normal messages
-                if ( e->state() & ControlButton )
+                if ( e->state() & Qt::ControlModifier )
                 {
                     emit envelopeCommand();
                 }

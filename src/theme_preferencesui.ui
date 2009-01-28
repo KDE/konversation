@@ -104,7 +104,7 @@
                         <string></string>
                     </property>
                     <property name="alignment">
-                        <set>AlignCenter</set>
+                        <set>Qt::AlignCenter</set>
                     </property>
                     <property name="toolTip" stdset="0">
                         <string>Icon for normal users</string>
@@ -118,7 +118,7 @@
                         <string></string>
                     </property>
                     <property name="alignment">
-                        <set>AlignCenter</set>
+                        <set>Qt::AlignCenter</set>
                     </property>
                     <property name="toolTip" stdset="0">
                         <string>Icon for away users</string>
@@ -132,7 +132,7 @@
                         <string></string>
                     </property>
                     <property name="alignment">
-                        <set>AlignCenter</set>
+                        <set>Qt::AlignCenter</set>
                     </property>
                     <property name="toolTip" stdset="0">
                         <string>Icon for users with voice</string>
@@ -146,7 +146,7 @@
                         <string></string>
                     </property>
                     <property name="alignment">
-                        <set>AlignCenter</set>
+                        <set>Qt::AlignCenter</set>
                     </property>
                     <property name="toolTip" stdset="0">
                         <string>Icon for users with half-operator privileges</string>
@@ -160,7 +160,7 @@
                         <string></string>
                     </property>
                     <property name="alignment">
-                        <set>AlignCenter</set>
+                        <set>Qt::AlignCenter</set>
                     </property>
                     <property name="toolTip" stdset="0">
                         <string>Icon for users with operator privileges</string>
@@ -174,7 +174,7 @@
                         <string></string>
                     </property>
                     <property name="alignment">
-                        <set>AlignCenter</set>
+                        <set>Qt::AlignCenter</set>
                     </property>
                     <property name="toolTip" stdset="0">
                         <string>Icon for users with admin privileges</string>
@@ -188,7 +188,7 @@
                         <string></string>
                     </property>
                     <property name="alignment">
-                        <set>AlignCenter</set>
+                        <set>Qt::AlignCenter</set>
                     </property>
                     <property name="toolTip" stdset="0">
                         <string>Icon for users with owner privileges</string>

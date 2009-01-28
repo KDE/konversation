@@ -361,7 +361,7 @@ the Free Software Foundation; either version 2 of the License, or
                         <string>to</string>
                     </property>
                     <property name="alignment">
-                        <set>AlignCenter</set>
+                        <set>Qt::AlignCenter</set>
                     </property>
                 </widget>
                 <widget class="QSpinBox" row="1" column="4">
@@ -428,7 +428,7 @@ the Free Software Foundation; either version 2 of the License, or
                         <string>to</string>
                     </property>
                     <property name="alignment">
-                        <set>AlignCenter</set>
+                        <set>Qt::AlignCenter</set>
                     </property>
                 </widget>
                 <widget class="QSpinBox" row="0" column="4">

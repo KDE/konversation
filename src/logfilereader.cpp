@@ -38,6 +38,7 @@
 #include <klocale.h>
 #include <kdebug.h>
 #include <kio/jobclasses.h>
+#include <QTextDocument>
 
 
 LogfileReader::LogfileReader(QWidget* parent, const QString& log) : ChatWindow(parent)
@@ -66,8 +67,8 @@ LogfileReader::LogfileReader(QWidget* parent, const QString& log) : ChatWindow(p
 
     updateView();
     resize(Preferences::logfileReaderSize());
-    ircBox->ircView()->setFocusPolicy(QWidget::StrongFocus);
-    setFocusPolicy(QWidget::StrongFocus);
+    ircBox->ircView()->setFocusPolicy(Qt::StrongFocus);
+    setFocusPolicy(Qt::StrongFocus);
     setFocusProxy(ircBox->ircView());
 
     connect(getTextView(), SIGNAL(gotFocus()), getTextView(), SLOT(setFocus()));
@@ -122,7 +123,7 @@ void LogfileReader::updateView()
 
         while(!stream.eof())
         {
-            str = Q3StyleSheet::escape(stream.readLine());
+            str = Qt::escape(stream.readLine());
             getTextView()->appendRaw(str, true);
         }
 

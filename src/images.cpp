@@ -165,9 +165,9 @@ QIcon Images::getLed(QColor col,bool state)
     tmpMap->fill(tmpWidget.paletteBackgroundColor());
     paint.begin(tmpMap);
 
-    // Set the brush to SolidPattern, this fills the entire area
+    // Set the brush to Qt::SolidPattern, this fills the entire area
     // of the ellipse which is drawn first
-    brush.setStyle( QBrush::SolidPattern );
+    brush.setStyle( QBrush::Qt::SolidPattern );
     brush.setColor( color );
     paint.setBrush( brush );
 
@@ -210,7 +210,7 @@ QIcon Images::getLed(QColor col,bool state)
     color = QColor("#7D7D7D");
     pen.setColor( color );             // Set the pen accordingly
     paint.setPen( pen );               // Select pen for drawing
-    brush.setStyle( QBrush::NoBrush ); // Switch off the brush
+    brush.setStyle( Qt::NoBrush ); // Switch off the brush
     paint.setBrush( brush );           // This avoids filling of the ellipse
     paint.drawEllipse( 2, 2, width, width );
     paint.end();

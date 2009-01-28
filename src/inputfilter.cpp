@@ -57,7 +57,7 @@ void InputFilter::parseLine(const QString& a_newLine)
     QString newLine(a_newLine);
 
     // Remove white spaces at the end and beginning
-    newLine = newLine.stripWhiteSpace();
+    newLine = newLine.trimmed();
     // Find end of middle parameter list
     int pos = newLine.find(" :");
     // Was there a trailing parameter?
@@ -69,7 +69,7 @@ void InputFilter::parseLine(const QString& a_newLine)
         newLine = newLine.left(pos);
     }
     // Remove all unnecessary white spaces to make parsing easier
-    newLine = newLine.simplifyWhiteSpace();
+    newLine = newLine.simplified();
 
     QString prefix;
 
@@ -240,7 +240,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                     QString reply;
                     if(Preferences::customVersionReplyEnabled())
                     {
-                        reply = Preferences::customVersionReply().stripWhiteSpace();
+                        reply = Preferences::customVersionReply().trimmed();
                     }
                     else
                     {
@@ -1457,7 +1457,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 // Display message only if this was not an automatic request.
                 if(getAutomaticRequest("WHOIS",parameterList[1])==0)
                 {
-                    if (trailing.lower().simplifyWhiteSpace().startsWith("is an irc operator"))
+                    if (trailing.lower().simplified().startsWith("is an irc operator"))
                         server->appendMessageToFrontmost(i18n("Whois"),i18n("%1 is an IRC Operator.").arg(parameterList[1]));
                     else
                         server->appendMessageToFrontmost(i18n("Whois"),QString("%1 %2").arg(parameterList[1]).arg(trailing));

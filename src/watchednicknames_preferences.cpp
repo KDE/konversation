@@ -134,7 +134,7 @@ void WatchedNicknames_Config::saveSettings()
     } // while
 
     // write nick list to in-memory notify qstringlist
-    notifyList.insert(groupId,QStringList::split(' ',nicks.stripWhiteSpace()));
+    notifyList.insert(groupId,QStringList::split(' ',nicks.trimmed()));
     // get next group
     group=group->nextSibling();
   } // while

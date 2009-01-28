@@ -94,11 +94,11 @@ void DccTransferPanel::initGUI()
 
     m_listView->setColumnWidthMode(Column::FileName, Q3ListView::Manual);
 
-    m_listView->setColumnAlignment(Column::OfferDate,     AlignHCenter);
-    m_listView->setColumnAlignment(Column::Progress,      AlignHCenter);
-    m_listView->setColumnAlignment(Column::Position,      AlignHCenter);
-    m_listView->setColumnAlignment(Column::TimeLeft,      AlignHCenter);
-    m_listView->setColumnAlignment(Column::CurrentSpeed,  AlignHCenter);
+    m_listView->setColumnAlignment(Column::OfferDate,     Qt::AlignHCenter);
+    m_listView->setColumnAlignment(Column::Progress,      Qt::AlignHCenter);
+    m_listView->setColumnAlignment(Column::Position,      Qt::AlignHCenter);
+    m_listView->setColumnAlignment(Column::TimeLeft,      Qt::AlignHCenter);
+    m_listView->setColumnAlignment(Column::CurrentSpeed,  Qt::AlignHCenter);
 
     m_listView->setSorting(Column::OfferDate, false);
 

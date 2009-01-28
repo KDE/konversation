@@ -544,10 +544,10 @@ void ViewTree::contentsMousePressEvent(QMouseEvent* e)
         // Don't change the selected item when the user only
         // wants to get the context menu for a non-selected
         // item.
-        if (e->button() == RightButton && !item->isSelected())
+        if (e->button() == Qt::RightButton && !item->isSelected())
             return;
 
-        if (Preferences::closeButtons() && e->button() == LeftButton && isAboveIcon(vp, item))
+        if (Preferences::closeButtons() && e->button() == Qt::LeftButton && isAboveIcon(vp, item))
         {
             m_pressedAboveCloseButton = true;
             if (!item->getCloseButtonEnabled()) KListView::contentsMousePressEvent(e);
@@ -566,12 +566,12 @@ void ViewTree::contentsMouseReleaseEvent(QMouseEvent* e)
     QPoint vp = contentsToViewport(e->pos());
     ViewTreeItem* item = static_cast<ViewTreeItem*>(itemAt(vp));
 
-    if (!item && e->button() == RightButton)
+    if (!item && e->button() == Qt::RightButton)
         return;
 
     if (item)
     {
-        if (Preferences::closeButtons() && e->button() == LeftButton
+        if (Preferences::closeButtons() && e->button() == Qt::LeftButton
             && isAboveIcon(vp, item) && m_pressedAboveCloseButton
             && item->getCloseButtonEnabled())
         {
@@ -605,7 +605,7 @@ void ViewTree::contentsMouseMoveEvent(QMouseEvent* e)
     // like for the tab bar.
     if ((e->state() & MidButton) == MidButton)
         KListView::contentsMouseMoveEvent(e);
-    else if ((e->state() & LeftButton) == LeftButton)
+    else if ((e->state() & Qt::LeftButton) == Qt::LeftButton)
     {
         if (item && (item != selectedItem()) && !item->isSeparator())
             setSelected(item, true);
@@ -613,7 +613,7 @@ void ViewTree::contentsMouseMoveEvent(QMouseEvent* e)
 
     if (Preferences::closeButtons())
     {
-        if (!(e->state() & LeftButton) && !(e->state() & MidButton) && !(e->state() & RightButton))
+        if (!(e->state() & Qt::LeftButton) && !(e->state() & MidButton) && !(e->state() & Qt::RightButton))
         {
             if (item)
             {
@@ -671,9 +671,9 @@ void ViewTree::contentsWheelEvent(QWheelEvent* e)
 
 void ViewTree::keyPressEvent(QKeyEvent* e)
 {
-    if (e->key() == Key_Up)
+    if (e->key() == Qt::Key_Up)
         selectUpper();
-    else if (e->key() == Key_Down)
+    else if (e->key() == Qt::Key_Down)
         selectLower();
     else
     {

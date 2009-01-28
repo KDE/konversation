@@ -1017,11 +1017,11 @@ void Channel::channelTextEntered()
     QString line = channelInput->text();
     channelInput->setText ("");
 
-    if(line.lower().stripWhiteSpace() == Preferences::commandChar()+"clear")
+    if(line.lower().trimmed() == Preferences::commandChar()+"clear")
     {
         textView->clear();
     }
-    else if(line.lower().stripWhiteSpace() == Preferences::commandChar()+"cycle")
+    else if(line.lower().trimmed() == Preferences::commandChar()+"cycle")
     {
         cycleChannel();
     }

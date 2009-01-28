@@ -33,7 +33,7 @@
                 <string>Preview</string>
             </property>
             <property name="alignment">
-                <set>AlignCenter</set>
+                <set>Qt::AlignCenter</set>
             </property>
             <property name="toolTip" stdset="0">
                 <string>This is how your message will look with these colors</string>

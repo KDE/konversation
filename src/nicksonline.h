@@ -120,7 +120,7 @@ class NicksOnline : public ChatWindow
         /**
          * Received when right-clicking an item in the NickListView.
          */
-        void slotNickListView_RightButtonClicked(Q3ListViewItem* item, const QPoint& pt);
+        void slotNickListView_Qt::RightButtonClicked(Q3ListViewItem* item, const QPoint& pt);
         /**
          * Received from server when a NickInfo changes its information.
          */

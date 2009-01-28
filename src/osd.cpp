@@ -101,16 +101,16 @@ void OSDWidget::renderOSDText( const QString &txt )
     if ( m_shadow )
     {
         bufferPainter.setPen( backgroundColor().dark( 175 ) );
-        bufferPainter.drawText( METRIC + 3, (METRIC/2) + titleFm.height() + 1, w, h, AlignLeft | WordBreak, text );
+        bufferPainter.drawText( METRIC + 3, (METRIC/2) + titleFm.height() + 1, w, h, Qt::AlignLeft | WordBreak, text );
     }
 
     // Draw the text
     bufferPainter.setPen( foregroundColor() );
-    bufferPainter.drawText( METRIC, (METRIC/2) + titleFm.height() - 1, w, h, AlignLeft | WordBreak, text );
+    bufferPainter.drawText( METRIC, (METRIC/2) + titleFm.height() - 1, w, h, Qt::AlignLeft | WordBreak, text );
 
     // Draw the title text
     bufferPainter.setFont( titleFont );
-    bufferPainter.drawText( METRIC * 2, (METRIC/2), w, h, AlignLeft, m_appName );
+    bufferPainter.drawText( METRIC * 2, (METRIC/2), w, h, Qt::AlignLeft, m_appName );
 
     // Masking for transparency
     mask.fill( Qt::black );
@@ -330,7 +330,7 @@ void OSDPreviewWidget::mousePressEvent( QMouseEvent *event )
 {
     m_dragOffset = event->pos();
 
-    if ( event->button() == LeftButton && !m_dragging )
+    if ( event->button() == Qt::LeftButton && !m_dragging )
     {
         grabMouse( KCursor::sizeAllCursor() );
         m_dragging = true;

@@ -255,13 +255,13 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
         tabSelectionMapper->setMapping( tabSelectionAction, i-1);
     }
 
-    action = new KAction(i18n("Clear &Marker Lines"), 0, KShortcut("CTRL+SHIFT+R"), m_viewContainer, SLOT(clearViewLines()),actionCollection(),"clear_lines");
+    action = new KAction(i18n("Clear &Marker Lines"), 0, KShortcut("Qt::CTRL+Qt::SHIFT+R"), m_viewContainer, SLOT(clearViewLines()),actionCollection(),"clear_lines");
     action->setToolTip(i18n("Clear marker lines in the current tab"));
     action->setEnabled(false);
     action = new KAction(i18n("&Clear Window"), 0, KShortcut("Ctrl+L"), m_viewContainer, SLOT(clearView()),actionCollection(),"clear_window");
     action->setToolTip(i18n("Clear the contents of the current tab"));
     action->setEnabled(false);
-    action = new KAction(i18n("Clear &All Windows"),0,KShortcut("CTRL+SHIFT+L"), m_viewContainer, SLOT(clearAllViews()),actionCollection(),"clear_tabs");
+    action = new KAction(i18n("Clear &All Windows"),0,KShortcut("Qt::CTRL+Qt::SHIFT+L"), m_viewContainer, SLOT(clearAllViews()),actionCollection(),"clear_tabs");
     action->setToolTip(i18n("Clear the contents of all open tabs"));
     action->setEnabled(false);
 
@@ -280,7 +280,7 @@ KonversationMainWindow::KonversationMainWindow() : KMainWindow(0,"main_window", 
     action = KStdAction::findPrev(m_viewContainer, SLOT(findPrevText()), actionCollection());
     action->setEnabled(false);
 
-    action = new KAction(i18n("&IRC Color..."), "colorize", CTRL+Key_K, m_viewContainer, SLOT(insertIRCColor()), actionCollection(), "irc_colors");
+    action = new KAction(i18n("&IRC Color..."), "colorize", Qt::CTRL+Qt::Key_K, m_viewContainer, SLOT(insertIRCColor()), actionCollection(), "irc_colors");
     action->setToolTip(i18n("Set the color of your current IRC message"));
     action->setEnabled(false);
     action = new KAction(i18n("&Marker Line"), 0,  KShortcut("Ctrl+R") , m_viewContainer, SLOT(insertMarkerLine()), actionCollection(), "insert_marker_line");

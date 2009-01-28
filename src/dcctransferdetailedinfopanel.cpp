@@ -83,7 +83,7 @@ void DccTransferDetailedInfoPanel::updateView()
 
     // Location:
     m_urlreqLocation->setURL( transfer->getFileURL().prettyURL() );
-    //m_urlreqLocation->lineEdit()->setFocusPolicy( transfer->getStatus() == DccTransfer::Queued ? StrongFocus : ClickFocus );
+    //m_urlreqLocation->lineEdit()->setFocusPolicy( transfer->getStatus() == DccTransfer::Queued ? Qt::StrongFocus : ClickFocus );
     m_urlreqLocation->lineEdit()->setReadOnly( transfer->getStatus() != DccTransfer::Queued );
     m_urlreqLocation->lineEdit()->setFrame( transfer->getStatus() == DccTransfer::Queued );
     m_urlreqLocation->button()->setEnabled( transfer->getStatus() == DccTransfer::Queued );

@@ -397,9 +397,9 @@ QString DccTransferPanelItem::secToHMS( long sec )
 
         // remHour can be more than 25, so we can't use QTime here.
         return QString( "%1:%2:%3" )
-            .arg( QString::number( remHour ).rightJustify( 2, '0', false ) )
-            .arg( QString::number( remMin ).rightJustify( 2, '0' ) )
-            .arg( QString::number( remSec ).rightJustify( 2, '0' ) );
+            .arg( QString::number( remHour ).rightJustified( 2, '0', false ) )
+            .arg( QString::number( remMin ).rightJustified( 2, '0' ) )
+            .arg( QString::number( remSec ).rightJustified( 2, '0' ) );
 }
 
 #include "dcctransferpanelitem.moc"

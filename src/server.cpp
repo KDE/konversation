@@ -811,7 +811,7 @@ void Server::autoCommandsAndChannels()
         for (iter = connectCommandsList.begin(); iter != connectCommandsList.end(); ++iter)
         {
             QString output(*iter);
-            output = output.simplifyWhiteSpace();
+            output = output.simplified();
             getOutputFilter()->replaceAliases(output);
             Konversation::OutputFilterResult result = getOutputFilter()->parse(getNickname(),output,QString());
             queue(result.toServer);

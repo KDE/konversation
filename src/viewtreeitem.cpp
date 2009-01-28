@@ -304,7 +304,7 @@ void ViewTreeItem::setup()
         int LED_ICON_SIZE = 14;
         int MARGIN = 2;
 
-        QRect textRect = listView()->fontMetrics().boundingRect(0, 0, /*width=*/1, 500000, Qt::AlignAuto | Qt::AlignTop | Qt::ShowPrefix, text(/*column=*/0));
+        QRect textRect = listView()->fontMetrics().boundingRect(0, 0, /*width=*/1, 500000, Qt::AlignAuto | Qt::AlignTop | Qt::TextShowMnemonic, text(/*column=*/0));
         int height = MARGIN + kMax(LED_ICON_SIZE, textRect.height()) + MARGIN;
         setHeight(height);
     }

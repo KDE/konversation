@@ -364,7 +364,7 @@ void ChatWindow::logText(const QString& text)
             // close file
             logfile.close();
         }
-        else kdWarning() << "ChatWindow::logText(): open(IO_Append) for " << logfile.name() << " failed!" << endl;
+        else kdWarning() << "ChatWindow::logText(): open(QIODevice::Append) for " << logfile.name() << " failed!" << endl;
     }
 }
 
@@ -445,7 +445,7 @@ bool ChatWindow::eventFilter(QObject* watched, QEvent* e)
     {
         QKeyEvent* ke = static_cast<QKeyEvent*>(e);
 
-        bool scrollMod = (Preferences::useMultiRowInputBox() ? false : (ke->state() == Qt::ShiftButton));
+        bool scrollMod = (Preferences::useMultiRowInputBox() ? false : (ke->state() == Qt::ShiftModifier));
 
         if(ke->key() == Qt::Key_Up && scrollMod)
         {
@@ -467,7 +467,7 @@ bool ChatWindow::eventFilter(QObject* watched, QEvent* e)
 
             return true;
         }
-        else if(ke->key() == Qt::Key_Prior)
+        else if(ke->key() == Qt::Key_PageUp)
         {
             if(textView)
             {
@@ -477,7 +477,7 @@ bool ChatWindow::eventFilter(QObject* watched, QEvent* e)
 
             return true;
         }
-        else if(ke->key() == Qt::Key_Next)
+        else if(ke->key() == Qt::Key_PageDown)
         {
             if(textView)
             {

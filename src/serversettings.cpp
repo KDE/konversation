@@ -56,11 +56,11 @@ namespace Konversation
 
     void ServerSettings::setHost(const QString& host)
     {
-        m_host = host.stripWhiteSpace();
+        m_host = host.trimmed();
     }
 
     void ServerSettings::setPassword(const QString& password)
     {
-        m_password = password.stripWhiteSpace();
+        m_password = password.trimmed();
     }
 }

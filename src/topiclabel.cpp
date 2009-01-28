@@ -38,6 +38,7 @@
 #include <kiconloader.h>
 #include <kbookmarkmanager.h>
 #include <kdeversion.h>
+#include <QTextDocument>
 
 
 namespace Konversation
@@ -85,7 +86,7 @@ namespace Konversation
 
     void TopicLabel::contentsMousePressEvent(QMouseEvent *e)
     {
-        if (e->button()==QMouseEvent::LeftButton)
+        if (e->button()==Qt::LeftButton)
         {
             pressPosition=e->pos();
             urlToDrag = anchorAt(pressPosition);
@@ -104,7 +105,7 @@ namespace Konversation
 
     void TopicLabel::contentsMouseReleaseEvent(QMouseEvent *e)
     {
-        if (e->button()==QMouseEvent::LeftButton)
+        if (e->button()==Qt::LeftButton)
         {
             if (mousePressed) openLink(urlToDrag);
             mousePressed=false;
@@ -267,7 +268,7 @@ namespace Konversation
         {
             text = rPixelSqueeze(text, visibleWidth() - 10);
             setWordWrap(NoWrap);
-            QToolTip::add(this, "<qt>" + Q3StyleSheet::escape(m_fullText) + "</qt>");
+            QToolTip::add(this, "<qt>" + Qt::escape(m_fullText) + "</qt>");
         }
         else
         {
@@ -275,7 +276,7 @@ namespace Konversation
 
             if(height() < contentsHeight())
             {
-                QToolTip::add(this, "<qt>" + Q3StyleSheet::escape(m_fullText) + "</qt>");
+                QToolTip::add(this, "<qt>" + Qt::escape(m_fullText) + "</qt>");
             }
         }
 

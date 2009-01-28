@@ -138,7 +138,7 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
     // Create context menu.  Individual menu entries are created in rightButtonClicked slot.
     m_popupMenu = new Q3PopupMenu(this,"nicksonline_context_menu");
     connect(m_nickListView, SIGNAL(rightButtonClicked(Q3ListViewItem *, const QPoint &, int )),
-        this, SLOT(slotNickListView_RightButtonClicked(Q3ListViewItem*, const QPoint &)));
+        this, SLOT(slotNickListView_Qt::RightButtonClicked(Q3ListViewItem*, const QPoint &)));
     connect(m_popupMenu, SIGNAL(activated(int)),
         this, SLOT(slotPopupMenu_Activated(int)));
 
@@ -856,7 +856,7 @@ void NicksOnline::slotNickListView_SelectionChanged()
 /**
  * Received when right-clicking an item in the NickListView.
  */
-void NicksOnline::slotNickListView_RightButtonClicked(Q3ListViewItem* item, const QPoint& pt)
+void NicksOnline::slotNickListView_Qt::RightButtonClicked(Q3ListViewItem* item, const QPoint& pt)
 {
     if (!item) return;
     m_popupMenu->clear();

@@ -182,7 +182,7 @@ namespace Konversation
         //Protect against nickserv auth being sent as a message on the off chance
         // someone didn't notice leading spaces
         {
-            QString testNickServ( inputLine.stripWhiteSpace() );
+            QString testNickServ( inputLine.trimmed() );
             if(testNickServ.startsWith(commandChar+"nickserv", false)
               || testNickServ.startsWith(commandChar+"ns", false))
             {
@@ -221,7 +221,7 @@ namespace Konversation
             QString parameter = inputLine.section(' ', 1);
 
             if (command !="topic")
-                parameter = parameter.stripWhiteSpace();
+                parameter = parameter.trimmed();
 
             if     (command == "join")     result = parseJoin(parameter);
             else if(command == "part")     result = parsePart(parameter);
@@ -386,7 +386,7 @@ namespace Konversation
             channelName=destination;
         }
         else if (!isAChannel(channelName))
-            channelName = "#" + channelName.stripWhiteSpace();
+            channelName = "#" + channelName.trimmed();
 
         Channel* channel = m_server->getChannelByName(channelName);
 
@@ -671,7 +671,7 @@ namespace Konversation
             return result;
         }
 
-        if (message.stripWhiteSpace().isEmpty())
+        if (message.trimmed().isEmpty())
         {
             //empty result - we don't want to send any message to the server
             if (!isQuery)
@@ -1360,7 +1360,7 @@ namespace Konversation
         }
         else
         {
-            QString unignore = parameter.simplifyWhiteSpace();
+            QString unignore = parameter.simplified();
             QStringList unignoreList = QStringList::split(' ',unignore);
 
             QStringList succeeded;

@@ -89,7 +89,7 @@ void SearchBar::showEvent(QShowEvent *e)
 
 bool SearchBar::focusedChild()
 {
-    QObjectList *l = queryList("QWidget", 0,0, true);
+    QObjectListl = queryList("QWidget", 0,0, true);
     QObjectListIt it( *l ); 
     QObject *obj;
     bool has=false;

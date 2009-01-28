@@ -195,7 +195,7 @@
                                 </size>
                             </property>
                             <property name="alignment">
-                                <set>AlignVCenter|AlignRight</set>
+                                <set>Qt::AlignVCenter|Qt::AlignRight</set>
                             </property>
                         </widget>
                         <widget class="QLabel" row="1" column="0">
@@ -225,7 +225,7 @@
                                 </size>
                             </property>
                             <property name="alignment">
-                                <set>AlignVCenter|AlignRight</set>
+                                <set>Qt::AlignVCenter|Qt::AlignRight</set>
                             </property>
                         </widget>
                         <widget class="QLabel" row="1" column="1">
@@ -247,7 +247,7 @@
                                 </size>
                             </property>
                             <property name="alignment">
-                                <set>AlignVCenter|AlignRight</set>
+                                <set>Qt::AlignVCenter|Qt::AlignRight</set>
                             </property>
                         </widget>
                         <widget class="QLabel" row="4" column="0">
@@ -285,7 +285,7 @@
                                 </size>
                             </property>
                             <property name="alignment">
-                                <set>AlignVCenter|AlignRight</set>
+                                <set>Qt::AlignVCenter|Qt::AlignRight</set>
                             </property>
                         </widget>
                         <widget class="QLabel" row="3" column="0">
@@ -323,7 +323,7 @@
                                 </size>
                             </property>
                             <property name="alignment">
-                                <set>AlignVCenter|AlignRight</set>
+                                <set>Qt::AlignVCenter|Qt::AlignRight</set>
                             </property>
                         </widget>
                     </grid>
@@ -371,7 +371,7 @@
                                 <cstring>m_labelTimeFinished</cstring>
                             </property>
                             <property name="alignment">
-                                <set>AlignVCenter|AlignRight</set>
+                                <set>Qt::AlignVCenter|Qt::AlignRight</set>
                             </property>
                         </widget>
                         <widget class="QLabel" row="0" column="1">
@@ -393,7 +393,7 @@
                                 </size>
                             </property>
                             <property name="alignment">
-                                <set>AlignVCenter|AlignRight</set>
+                                <set>Qt::AlignVCenter|Qt::AlignRight</set>
                             </property>
                         </widget>
                         <widget class="QLabel" row="4" column="0">
@@ -431,7 +431,7 @@
                                 </size>
                             </property>
                             <property name="alignment">
-                                <set>AlignVCenter|AlignRight</set>
+                                <set>Qt::AlignVCenter|Qt::AlignRight</set>
                             </property>
                         </widget>
                         <widget class="QLabel" row="2" column="1">
@@ -439,7 +439,7 @@
                                 <cstring>m_labelTimeOffered</cstring>
                             </property>
                             <property name="alignment">
-                                <set>AlignVCenter|AlignRight</set>
+                                <set>Qt::AlignVCenter|Qt::AlignRight</set>
                             </property>
                         </widget>
                         <widget class="QLabel" row="0" column="0">
@@ -455,7 +455,7 @@
                                 <cstring>m_labelTimeStarted</cstring>
                             </property>
                             <property name="alignment">
-                                <set>AlignVCenter|AlignRight</set>
+                                <set>Qt::AlignVCenter|Qt::AlignRight</set>
                             </property>
                         </widget>
                     </grid>
