@@ -36,7 +36,7 @@ configure_file(config.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config.h )
 
 
 add_subdirectory(src)
-#add_subdirectory(data)
+add_subdirectory(data)
 
 
 ########### install files ###############

@@ -1,6 +1,6 @@
 
-#add_subdirectory(images)
-#add_subdirectory(scripts)
+add_subdirectory(images)
+add_subdirectory(scripts)
 
 
 ########### install files ###############
