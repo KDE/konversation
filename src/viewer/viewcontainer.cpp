@@ -165,7 +165,7 @@ void ViewContainer::setupTabWidget()
     m_vbox->hide();    //m_tabWidget->hide();
 
     KPushButton* closeBtn = new KPushButton(m_tabWidget);
-    closeBtn->setPixmap(KIconLoader::global()->loadIcon("tab_remove", KIconLoader::Small, 22));
+    closeBtn->setPixmap(KIcon("tab-close").pixmap(22, 22));
     closeBtn->resize(22, 22);
     closeBtn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     m_tabWidget->setCornerWidget(closeBtn);
