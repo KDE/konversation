@@ -15,7 +15,7 @@
 
 #include "servergroupsettings.h"
 
-#include <kdialogbase.h>
+#include <kdialog.h>
 
 
 class QLineEdit;
@@ -23,16 +23,19 @@ class QComboBox;
 class Q3ListBox;
 class QCheckBox;
 class QToolButton;
+namespace Ui
+{
 class ServerGroupDialogUI;
+}
 
 namespace Konversation
 {
 
-    class ServerGroupDialog : public KDialogBase
+    class ServerGroupDialog : public KDialog
     {
         Q_OBJECT
         public:
-            explicit ServerGroupDialog(const QString& title, QWidget* parent = 0, const char* name = 0);
+            explicit ServerGroupDialog(const QString& title, QWidget* parent = 0);
             ~ServerGroupDialog();
 
             void setServerGroupSettings(ServerGroupSettingsPtr settings);
@@ -65,7 +68,7 @@ namespace Konversation
             void editIdentity();
 
         private:
-            ServerGroupDialogUI* m_mainWidget;
+            Ui::ServerGroupDialogUI* m_mainWidget;
             bool m_expanded;
             bool m_enableNotifications;
             bool m_configBacked;

@@ -12,7 +12,7 @@
 #ifndef KONVERSATIONCHANNELDIALOG_H
 #define KONVERSATIONCHANNELDIALOG_H
 
-#include <kdialogbase.h>
+#include <kdialog.h>
 
 
 class QLineEdit;
@@ -22,12 +22,12 @@ namespace Konversation
 
     class ChannelSettings;
 
-    class ChannelDialog : public KDialogBase
+    class ChannelDialog : public KDialog
     {
         Q_OBJECT
 
         public:
-            explicit ChannelDialog(const QString& title, QWidget *parent = 0, const char *name = 0);
+            explicit ChannelDialog(const QString& title, QWidget *parent = 0);
             ~ChannelDialog();
 
             void setChannelSettings(const ChannelSettings& channel);

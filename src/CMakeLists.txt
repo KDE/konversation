@@ -53,7 +53,7 @@ set (irc_SRCS
 
     irc/query.cpp
     irc/channel.cpp
-#    irc/channeldialog.cpp
+    irc/channeldialog.cpp
     irc/channellistpanel.cpp
     irc/channellistviewitem.cpp
 #    irc/channeloptionsdialog.cpp
@@ -74,18 +74,18 @@ set (irc_SRCS
     irc/outputfilter.cpp
 #    irc/sslsocket.cpp
     irc/ircqueue.cpp
-#    irc/serverdialog.cpp
-#    irc/servergroupdialog.cpp
+    irc/serverdialog.cpp
+    irc/servergroupdialog.cpp
     irc/servergroupsettings.cpp
     irc/serverison.cpp
-#    irc/serverlistdialog.cpp
+    irc/serverlistdialog.cpp
     irc/serverlistview.cpp
     irc/serversettings.cpp
 
 
 )
 
-kde4_add_ui3_files(irc_SRCS irc/joinchannelui.ui )
+kde4_add_ui3_files(irc_SRCS irc/joinchannelui.ui irc/servergroupdialogui.ui)
 
     #=== Preferences
 set(prefs_SRCS

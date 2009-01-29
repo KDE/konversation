@@ -12,7 +12,7 @@
 #ifndef KONVERSATIONSERVERDIALOG_H
 #define KONVERSATIONSERVERDIALOG_H
 
-#include <kdialogbase.h>
+#include <kdialog.h>
 
 class QLineEdit;
 class QSpinBox;
@@ -23,12 +23,12 @@ namespace Konversation
 
     class ServerSettings;
 
-    class ServerDialog : public KDialogBase
+    class ServerDialog : public KDialog
     {
         Q_OBJECT
 
         public:
-            explicit ServerDialog(const QString& title, QWidget *parent = 0, const char *name = 0);
+            explicit ServerDialog(const QString& title, QWidget *parent = 0);
             ~ServerDialog();
 
             void setServerSettings(const ServerSettings& server);

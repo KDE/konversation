@@ -21,7 +21,7 @@
 #include "statusbar.h" ////// header renamed
 #include "bookmarkhandler.h" ////// header renamed
 #include "trayicon.h"
-//#include "serverlistdialog.h"
+#include "serverlistdialog.h"
 //#include "identitydialog.h"
 #include "notificationhandler.h"
 #include "irccharsets.h"
@@ -798,7 +798,7 @@ void KonversationMainWindow::openKeyBindings()
 }
 
 void KonversationMainWindow::openServerList()
-{/*
+{
     if (!m_serverListDialog)
     {
         m_serverListDialog = new Konversation::ServerListDialog(this);
@@ -815,7 +815,7 @@ void KonversationMainWindow::openServerList()
         connect(konvApp->getConnectionManager(), SIGNAL(closeServerList()), m_serverListDialog, SLOT(slotClose()));
     }
 
-    m_serverListDialog->show();*/
+    m_serverListDialog->show();
 }
 
 void KonversationMainWindow::openQuickConnectDialog()

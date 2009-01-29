@@ -18,7 +18,7 @@
 #include "serversettings.h"
 #include "serverdialog.h"
 #include "channeldialog.h"
-#include "identitydialog.h"
+// #include "identitydialog.h"
 #include "servergroupdialogui.h"
 
 #include <q3frame.h>
@@ -44,15 +44,18 @@
 namespace Konversation
 {
 
-    ServerGroupDialog::ServerGroupDialog(const QString& title, QWidget *parent, const char *name)
-        : KDialogBase(Swallow, title, Ok|Cancel, Ok, parent, name)
+    ServerGroupDialog::ServerGroupDialog(const QString& title, QWidget *parent)
+        : KDialog(parent)
     {
+        setCaption(title);
+        setButtons(Ok|Cancel);
+
         m_id = -1;
         m_identitiesNeedsUpdate = false;
         m_editedServer = false;
 
-        m_mainWidget = new ServerGroupDialogUI(this);
-        setMainWidget(m_mainWidget);
+        m_mainWidget = new Ui::ServerGroupDialogUI();
+        m_mainWidget->setupUi(mainWidget());
 
         Q3WhatsThis::add(m_mainWidget->m_nameEdit, i18n("Enter the name of the Network here. You may create as many entries in the Server List screen with the same Network as you like."));
         m_mainWidget->m_networkLabel->setBuddy(m_mainWidget->m_nameEdit);
@@ -97,10 +100,12 @@ namespace Konversation
         connect(m_mainWidget->m_upChannelBtn, SIGNAL(clicked()), this, SLOT(moveChannelUp()));
         connect(m_mainWidget->m_downChannelBtn, SIGNAL(clicked()), this, SLOT(moveChannelDown()));
 
-        setButtonOK(KGuiItem(i18n("&OK"), "button_ok", i18n("Change network information")));
-        setButtonCancel(KGuiItem(i18n("&Cancel"), "button_cancel", i18n("Discards all changes made")));
+        setButtonGuiItem(Ok, KGuiItem(i18n("&OK"), "button_ok", i18n("Change network information")));
+        setButtonGuiItem(Cancel, KGuiItem(i18n("&Cancel"), "button_cancel", i18n("Discards all changes made")));
 
         m_mainWidget->m_nameEdit->setFocus();
+
+        connect(this, SIGNAL(okClicked()), this, SLOT(slotOk()));
     }
 
     ServerGroupDialog::~ServerGroupDialog()
@@ -138,7 +143,7 @@ namespace Konversation
 
     ServerGroupSettingsPtr ServerGroupDialog::serverGroupSettings()
     {
-        ServerGroupSettingsPtr settings = new ServerGroupSettings(m_id);
+        ServerGroupSettingsPtr settings(new ServerGroupSettings(m_id));
         settings->setSortIndex(m_sortIndex);
         settings->setName(m_mainWidget->m_nameEdit->text());
         IdentityList identities = Preferences::identityList();
@@ -377,6 +382,7 @@ namespace Konversation
 
     void ServerGroupDialog::editIdentity()
     {
+/*
         IdentityDialog dlg(this);
         dlg.setCurrentIdentity(m_mainWidget->m_identityCBox->currentItem());
 
@@ -395,6 +401,7 @@ namespace Konversation
             ViewContainer* vc = KonversationApplication::instance()->getMainWindow()->getViewContainer();
             vc->updateViewEncoding(vc->getFrontView());
         }
+*/
     }
 
     void ServerGroupDialog::slotOk()

@@ -29,30 +29,32 @@
 namespace Konversation
 {
 
-    ServerDialog::ServerDialog(const QString& title, QWidget *parent, const char *name)
-        : KDialogBase(Plain, title, Ok|Cancel, Ok, parent, name)
+    ServerDialog::ServerDialog(const QString& title, QWidget *parent)
+        : KDialog(parent)
     {
-        QFrame* mainWidget = plainPage();
-        Q3GridLayout* mainLayout = new Q3GridLayout(mainWidget, 1, 4, 0, spacingHint());
+        setCaption(title);
+        setButtons(Ok|Cancel);
 
-        QLabel* serverLbl = new QLabel(i18n("&Server:"), mainWidget);
-        m_serverEdit = new QLineEdit(mainWidget);
+        Q3GridLayout* mainLayout = new Q3GridLayout(mainWidget(), 1, 4, 0, spacingHint());
+
+        QLabel* serverLbl = new QLabel(i18n("&Server:"), mainWidget());
+        m_serverEdit = new QLineEdit(mainWidget());
         Q3WhatsThis::add(m_serverEdit, i18n("The name or IP number of the server. irchelp.org maintains a list of servers."));
         serverLbl->setBuddy(m_serverEdit);
 
-        QLabel* portLbl = new QLabel(i18n("&Port:"), mainWidget);
+        QLabel* portLbl = new QLabel(i18n("&Port:"), mainWidget());
 
-        m_portSBox = new QSpinBox(1, 65535, 1, mainWidget);
+        m_portSBox = new QSpinBox(1, 65535, 1, mainWidget());
         m_portSBox->setValue(6667);
         Q3WhatsThis::add(m_portSBox, i18n("Enter the port number required to connect to the server. For most servers, this should be <b>6667</b>."));
         portLbl->setBuddy(m_portSBox);
 
-        QLabel* passwordLbl = new QLabel(i18n("Pass&word:"), mainWidget);
-        m_passwordEdit = new QLineEdit(mainWidget);
+        QLabel* passwordLbl = new QLabel(i18n("Pass&word:"), mainWidget());
+        m_passwordEdit = new QLineEdit(mainWidget());
         m_passwordEdit->setEchoMode(QLineEdit::Password);
         passwordLbl->setBuddy(m_passwordEdit);
 
-        m_sslChBox = new QCheckBox(i18n("S&ecure connection (SSL)"), mainWidget);
+        m_sslChBox = new QCheckBox(i18n("S&ecure connection (SSL)"), mainWidget());
         Q3WhatsThis::add(m_sslChBox, i18n("Check if you want to use Secure Socket Layer (SSL) protocol to communicate with the server. This protects the privacy of your communications between your computer and the IRC server. The server must support SSL protocol for this to work. In most cases, if the server does not support SSL, the connection will fail."));
 
         mainLayout->addWidget(serverLbl, 0, 0);
@@ -64,6 +66,8 @@ namespace Konversation
         mainLayout->addMultiCellWidget(m_sslChBox, 2, 2, 0, 3);
 
         m_serverEdit->setFocus();
+
+        connect(this, SIGNAL(okClicked()), this, SLOT(slotOk()));
     }
 
     ServerDialog::~ServerDialog()

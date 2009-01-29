@@ -17,7 +17,7 @@
 #include "common.h"
 #include "servergroupsettings.h"
 
-#include <kdialogbase.h>
+#include <kdialog.h>
 
 class ConnectionSettings;
 class Preferences;
@@ -55,12 +55,12 @@ namespace Konversation
             bool m_isServer;
     };
 
-    class ServerListDialog : public KDialogBase
+    class ServerListDialog : public KDialog
     {
         Q_OBJECT
 
         public:
-            explicit ServerListDialog(QWidget *parent = 0, const char *name = 0);
+            explicit ServerListDialog(QWidget *parent = 0);
             ~ServerListDialog();
 
         public slots:
@@ -104,7 +104,7 @@ namespace Konversation
             Q3ListViewItem* m_selectedItemPtr;
 
             int m_lastSortColumn;
-            SortOrder m_lastSortOrder;
+            Qt::SortOrder m_lastSortOrder;
     };
 }
 #endif

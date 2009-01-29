@@ -25,19 +25,21 @@
 namespace Konversation
 {
 
-    ChannelDialog::ChannelDialog(const QString& title, QWidget *parent, const char *name)
-        : KDialogBase(Plain, title, Ok|Cancel, Ok, parent, name)
+    ChannelDialog::ChannelDialog(const QString& title, QWidget *parent)
+        : KDialog(parent)
     {
-        QFrame* mainWidget = plainPage();
-        Q3GridLayout* mainLayout = new Q3GridLayout(mainWidget, 1, 2, 0, spacingHint());
+        setCaption(title);
+        setButtons(Ok|Cancel);
 
-        QLabel* channelLbl = new QLabel(i18n("C&hannel:"), mainWidget);
-        m_channelEdit = new QLineEdit(mainWidget);
+        Q3GridLayout* mainLayout = new Q3GridLayout(mainWidget(), 1, 2, 0, spacingHint());
+
+        QLabel* channelLbl = new QLabel(i18n("C&hannel:"), mainWidget());
+        m_channelEdit = new QLineEdit(mainWidget());
         m_channelEdit->setMaxLength(50);
         channelLbl->setBuddy(m_channelEdit);
 
-        QLabel* passwordLbl = new QLabel(i18n("Pass&word:"), mainWidget);
-        m_passwordEdit = new QLineEdit(mainWidget);
+        QLabel* passwordLbl = new QLabel(i18n("Pass&word:"), mainWidget());
+        m_passwordEdit = new QLineEdit(mainWidget());
         m_passwordEdit->setEchoMode(QLineEdit::Password);
         passwordLbl->setBuddy(m_passwordEdit);
 

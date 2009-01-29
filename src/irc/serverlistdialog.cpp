@@ -105,14 +105,16 @@ namespace Konversation
         return key( col, ascending ).localeAwareCompare( i->key( col, ascending ) );
     }
 
-    ServerListDialog::ServerListDialog(QWidget *parent, const char *name)
-        : KDialogBase(Plain, i18n("Server List"), Ok|Close, Ok, parent, name, false)
+    ServerListDialog::ServerListDialog(QWidget *parent)
+        : KDialog(parent)
     {
-        setButtonOK(KGuiItem(i18n("C&onnect"), "connect_creating", i18n("Connect to the server"), i18n("Click here to connect to the selected IRC network and channel.")));
+        setCaption(i18n("Server List"));
+        setButtons(Ok|Close);
+        setModal(false);
 
-        QFrame* mainWidget = plainPage();
+        setButtonGuiItem(Ok, KGuiItem(i18n("C&onnect"), "connect_creating", i18n("Connect to the server"), i18n("Click here to connect to the selected IRC network and channel.")));
 
-        m_serverList = new ServerListView(mainWidget);
+        m_serverList = new ServerListView(mainWidget());
         Q3WhatsThis::add(m_serverList, i18n("This shows the listof configured IRC networks. An IRC network is a collection of cooperating servers. You need only connect to one of the servers in the network to be connected to the entire IRC network. Once connected, Konversation will automatically join the channels shown. When Konversation is started for the first time, the Freenode network and the <i>#kde</i> channel are already entered for you."));
         m_serverList->setAllColumnsShowFocus(true);
         m_serverList->setRootIsDecorated(true);
@@ -128,16 +130,16 @@ namespace Konversation
         m_serverList->setDropVisualizer(true);
         m_serverList->header()->setMovingEnabled(false);
 
-        m_addButton = new QPushButton(i18n("&New..."), mainWidget);
+        m_addButton = new QPushButton(i18n("&New..."), mainWidget());
         Q3WhatsThis::add(m_addButton, i18n("Click here to define a new Network, including the server to connect to, and the Channels to automatically join once connected."));
-        m_editButton = new QPushButton(i18n("&Edit..."), mainWidget);
-        m_delButton = new QPushButton(i18n("&Delete"), mainWidget);
+        m_editButton = new QPushButton(i18n("&Edit..."), mainWidget());
+        m_delButton = new QPushButton(i18n("&Delete"), mainWidget());
 
-        QCheckBox* showAtStartup = new QCheckBox(i18n("Show at application startup"), mainWidget);
+        QCheckBox* showAtStartup = new QCheckBox(i18n("Show at application startup"), mainWidget());
         showAtStartup->setChecked(Preferences::showServerList());
         connect(showAtStartup, SIGNAL(toggled(bool)), this, SLOT(setShowAtStartup(bool)));
 
-        Q3GridLayout* layout = new Q3GridLayout(mainWidget, 5, 2, 0, spacingHint());
+        Q3GridLayout* layout = new Q3GridLayout(mainWidget(), 5, 2, 0, spacingHint());
 
         layout->addMultiCellWidget(m_serverList, 0, 3, 0, 0);
         layout->addWidget(m_addButton, 0, 1);
@@ -163,13 +165,14 @@ namespace Konversation
         connect(m_addButton, SIGNAL(clicked()), this, SLOT(slotAdd()));
         connect(m_editButton, SIGNAL(clicked()), this, SLOT(slotEdit()));
         connect(m_delButton, SIGNAL(clicked()), this, SLOT(slotDelete()));
+        connect(this, SIGNAL(okClicked()), this, SLOT(slotOk()));
+        connect(this, SIGNAL(cancelClicked()), this, SLOT(slotClose()));
 
         updateButtons();
 
-        KConfig* config = KGlobal::config();
-        config->setGroup("ServerListDialog");
+        KConfigGroup config(KGlobal::config(), "ServerListDialog");
         QSize newSize = size();
-        newSize = config->readSizeEntry("Size", &newSize);
+        newSize = config.readEntry("Size", newSize);
         resize(newSize);
 
         m_serverList->setSelected(m_serverList->firstChild(), true);
@@ -177,24 +180,25 @@ namespace Konversation
 
     ServerListDialog::~ServerListDialog()
     {
-        KConfig* config = KGlobal::config();
-        config->setGroup("ServerListDialog");
-        config->writeEntry("Size", size());
+        KConfigGroup config(KGlobal::config(), "ServerListDialog");
+        config.writeEntry("Size", size());
     }
 
     void ServerListDialog::slotClose()
     {
-        slotApply();
+//         slotApply();
         accept();
     }
 
     void ServerListDialog::slotOk()
     {
-        Q3PtrList<Q3ListViewItem> selected = m_serverList->selectedItems();
-        ServerListItem * item = static_cast<ServerListItem*>(selected.first());
-
-        while (item && item->isVisible())
+        QList<Q3ListViewItem*> selected = m_serverList->selectedItems();
+        foreach (Q3ListViewItem* i, selected)
         {
+            if (!i->isVisible())
+                continue;
+
+            ServerListItem * item = static_cast<ServerListItem*>(i);
             if (item->isServer())
             {
                 ConnectionSettings settings;
@@ -207,8 +211,6 @@ namespace Konversation
             }
             else
                 emit connectTo(Konversation::PromptToReuseConnection, item->serverGroupId());
-
-            item = static_cast<ServerListItem*>(selected.next());
         }
     }
 
@@ -220,7 +222,7 @@ namespace Konversation
         {
             addServerGroup(dlg.serverGroupSettings());
 
-            emit serverGroupsChanged(dlg.serverGroupSettings());
+            emit serverGroupsChanged(dlg.serverGroupSettings().data());
         }
     }
 
@@ -248,9 +250,9 @@ namespace Konversation
                         m_selectedServerGroupId = serverGroup->id();
                         m_selectedServer = dlg.editedServer();
 
-                        *serverGroup = *(dlg.serverGroupSettings());
+                        serverGroup = dlg.serverGroupSettings();
 
-                        emit serverGroupsChanged(serverGroup);
+                        emit serverGroupsChanged(serverGroup.data());
                     }
                 }
                 else
@@ -263,9 +265,9 @@ namespace Konversation
                         m_selectedServerGroupId = serverGroup->id();
                         m_selectedServer = ServerSettings("");
 
-                        *serverGroup = *(dlg.serverGroupSettings());
+                        serverGroup = dlg.serverGroupSettings();
 
-                        emit serverGroupsChanged(serverGroup);
+                        emit serverGroupsChanged(serverGroup.data());
                     }
                 }
             }
