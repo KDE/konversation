@@ -14,7 +14,7 @@
 #ifndef EDITNOTIFYDIALOG_H
 #define EDITNOTIFYDIALOG_H
 
-#include <kdialogbase.h>
+#include <kdialog.h>
 
 /**
   The EditNotifyDialog implements the dialog for user to add or edit a
@@ -28,7 +28,7 @@
 class KLineEdit;
 class KComboBox;
 
-class EditNotifyDialog : public KDialogBase
+class EditNotifyDialog : public KDialog
 {
     Q_OBJECT
 

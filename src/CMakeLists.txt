@@ -131,7 +131,7 @@ set(viewer_SRCS
     viewer/topiccombobox.cpp
 #    viewer/topiclabel.cpp
     viewer/trayicon.cpp
-#    viewer/editnotifydialog.cpp
+    viewer/editnotifydialog.cpp
     viewer/emoticon.cpp
     viewer/images.cpp
     viewer/quickbutton.cpp
