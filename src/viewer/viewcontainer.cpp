@@ -553,7 +553,7 @@ void ViewContainer::updateViewActions(int index)
                     name = name.replace('&', "&&");
                     channelListAction->setEnabled(true);
                     channelListAction->setChecked(m_frontServer->getChannelListPanel());
-                    channelListAction->setText(i18n("Channel &List for %1").arg(name));
+                    channelListAction->setText(i18n("Channel &List for %1",name));
                 }
                 else
                 {
@@ -573,7 +573,7 @@ void ViewContainer::updateViewActions(int index)
                 {
                     QString name = view->getName();
                     name = name.replace('&', "&&");
-                    action->setText(i18n("&Open Logfile for %1").arg(name));
+                    action->setText(i18n("&Open Logfile for %1",name));
                 }
             }
 
@@ -584,7 +584,7 @@ void ViewContainer::updateViewActions(int index)
             if (action && view->getType() == ChatWindow::Channel)
             {
                 action->setEnabled(true);
-                action->setText(i18n("&Channel Settings for %1...").arg(view->getName()));
+                action->setText(i18n("&Channel Settings for %1...",view->getName()));
             }
             else if (action)
             {
@@ -1991,7 +1991,7 @@ void ViewContainer::openLogFile(const QString& caption, const QString& file)
     if (!file.isEmpty())
     {
         LogfileReader* logReader = new LogfileReader(m_tabWidget, file);
-        addView(logReader, i18n("Logfile of %1").arg(caption));
+        addView(logReader, i18n("Logfile of %1",caption));
         logReader->setServer(0);
     }
 }
