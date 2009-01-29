@@ -162,7 +162,7 @@ set (konvi_SRCS ${completed_SRCS}) #${prefs_SRCS})  #${dcc_SRCS})
 
 message(STATUS "DCOP has been removed in KDE 4; port code to D-Bus. kde4_add_dcop_skels macro does not exist anymore. We keep it just to remember to port to D-Bus.")
 #kde4_add_dcop_skels(konvi_SRCS konviface.h )
-kde4_add_ui3_files(konvi_SRCS searchbarbase.ui queuetunerbase.ui)
+kde4_add_ui3_files(konvi_SRCS viewer/searchbarbase.ui queuetunerbase.ui)
 kde4_add_kcfg_files(konvi_SRCS config/preferences_base.kcfgc)
 
 kde4_add_executable(konvi ${konvi_SRCS})
