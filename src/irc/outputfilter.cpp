@@ -336,7 +336,7 @@ namespace Konversation
         else if(parameter == "off")
             konvApp->showQueueTuner(false);
         else
-            result = usage(i18n("Usage: %1queuetuner [on | off]").arg(commandChar));
+            result = usage(i18n("Usage: %1queuetuner [on | off]", commandChar));
 
         return result;
     }
@@ -382,7 +382,7 @@ namespace Konversation
         if (channelName.isEmpty())
         {
             if (destination.isEmpty() || !isAChannel(destination))
-                return usage(i18n("Usage: %1JOIN <channel> [password]").arg(commandChar));
+                return usage(i18n("Usage: %1JOIN <channel> [password]", commandChar));
             channelName=destination;
         }
         else if (!isAChannel(channelName))
@@ -415,7 +415,7 @@ namespace Konversation
 
             if(victim.isEmpty())
             {
-                result = usage(i18n("Usage: %1KICK <nick> [reason]").arg(commandChar));
+                result = usage(i18n("Usage: %1KICK <nick> [reason]", commandChar));
             }
             else
             {
@@ -433,7 +433,7 @@ namespace Konversation
         }
         else
         {
-            result = error(i18n("%1KICK only works from within channels.").arg(commandChar));
+            result = error(i18n("%1KICK only works from within channels.", commandChar));
         }
 
         return result;
@@ -453,7 +453,7 @@ namespace Konversation
             }
             else
             {
-                result = error(i18n("%1PART without parameters only works from within a channel or a query.").arg(commandChar));
+                result = error(i18n("%1PART without parameters only works from within a channel or a query.", commandChar));
             }
         }
         else
@@ -483,7 +483,7 @@ namespace Konversation
                 }
                 else
                 {
-                    result = error(i18n("%1PART without channel name only works from within a channel.").arg(commandChar));
+                    result = error(i18n("%1PART without channel name only works from within a channel.", commandChar));
                 }
             }
         }
@@ -505,7 +505,7 @@ namespace Konversation
             }
             else
             {
-                result = error(i18n("%1TOPIC without parameters only works from within a channel.").arg(commandChar));
+                result = error(i18n("%1TOPIC without parameters only works from within a channel.", commandChar));
             }
         }
         else
@@ -547,7 +547,7 @@ namespace Konversation
                 }
                 else
                 {
-                    result = error(i18n("%1TOPIC without channel name only works from within a channel.").arg(commandChar));
+                    result = error(i18n("%1TOPIC without channel name only works from within a channel.", commandChar));
                 }
             }
         }
@@ -574,7 +574,7 @@ namespace Konversation
         result.toServer = "NAMES ";
         if (parameter.isNull())
         {
-            return error(i18n("%1NAMES with no target may disconnect you from the server. Specify '*' if you really want this.").arg(commandChar));
+            return error(i18n("%1NAMES with no target may disconnect you from the server. Specify '*' if you really want this.", commandChar));
         }
         else if (parameter != QChar('*'))
         {
@@ -595,7 +595,7 @@ namespace Konversation
         else if (parm.isEmpty()) // this can only mean one thing.. we're in the Server tab
             m_server->closeYourself(false);
         else
-            return usage(i18n("Usage: %1close [window] closes the named channel or query tab, or the current tab if none specified.").arg(commandChar));
+            return usage(i18n("Usage: %1close [window] closes the named channel or query tab, or the current tab if none specified.", commandChar));
         return OutputFilterResult();
     }
 
@@ -621,13 +621,13 @@ namespace Konversation
 
         if(parameter.isEmpty() || message.isEmpty())
         {
-            result = usage(i18n("Usage: %1NOTICE <recipient> <message>").arg(commandChar));
+            result = usage(i18n("Usage: %1NOTICE <recipient> <message>", commandChar));
         }
         else
         {
             result.typeString = i18n("Notice");
             result.toServer = "NOTICE " + recipient + " :" + message;
-            result.output=i18nc("%1 is the message, %2 the recipient nickname","Sending notice \"%2\" to %1.").arg(recipient).arg(message);
+            result.output=i18nc("%1 is the message, %2 the recipient nickname","Sending notice \"%2\" to %1.", recipient, message);
             result.type = Program;
         }
 
@@ -646,7 +646,7 @@ namespace Konversation
         }
         else
         {
-            result = usage(i18n("Usage: %1ME text").arg(commandChar));
+            result = usage(i18n("Usage: %1ME text", commandChar));
         }
 
         return result;
@@ -766,12 +766,12 @@ namespace Konversation
         {
             unsigned int time_t = QDateTime::currentDateTime().toTime_t();
             result.toServer = QString("PRIVMSG %1 :\x01PING %2\x01").arg(recipient).arg(time_t);
-            result.output = i18n("Sending CTCP-%1 request to %2.").arg("PING").arg(recipient);
+            result.output = i18n("Sending CTCP-%1 request to %2.", QString::fromLatin1("PING"), recipient);
         }
         else
         {
             result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + out + '\x01';
-            result.output = i18n("Sending CTCP-%1 request to %2.").arg(out).arg(recipient);
+            result.output = i18n("Sending CTCP-%1 request to %2.", out, recipient);
         }
 
         result.typeString = i18n("CTCP");
@@ -876,12 +876,12 @@ namespace Konversation
                     }
                     else
                     {
-                        result = error(i18n("File \"%1\" does not exist.").arg(parameterList[2]));
+                        result = error(i18n("File \"%1\" does not exist.", parameterList[2]));
                     }
                 }
                 else                              // Don't know how this should happen, but ...
                 {
-                    result = usage(i18n("Usage: %1DCC [SEND nickname filename]").arg(commandChar));
+                    result = usage(i18n("Usage: %1DCC [SEND nickname filename]", commandChar));
                 }
             }
             // TODO: DCC Chat etc. comes here
@@ -893,12 +893,12 @@ namespace Konversation
                 }
                 else
                 {
-                    result = usage(i18n("Usage: %1DCC [CHAT nickname]").arg(commandChar));
+                    result = usage(i18n("Usage: %1DCC [CHAT nickname]", commandChar));
                 }
             }
             else
             {
-                result = error(i18n("Unrecognized command %1DCC %2. Possible commands are SEND, CHAT, CLOSE.").arg(commandChar).arg(parameterList[0]));
+                result = error(i18n("Unrecognized command %1DCC %2. Possible commands are SEND, CHAT, CLOSE.", commandChar, parameterList[0]));
             }
         }
 
@@ -995,7 +995,7 @@ namespace Konversation
 
         if(parameter.isEmpty())
         {
-            result = usage(i18n("Usage: %1INVITE <nick> [channel]").arg(commandChar));
+            result = usage(i18n("Usage: %1INVITE <nick> [channel]", commandChar));
         }
         else
         {
@@ -1010,7 +1010,7 @@ namespace Konversation
                 }
                 else
                 {
-                    result = error(i18n("%1INVITE without channel name works only from within channels.").arg(commandChar));
+                    result = error(i18n("%1INVITE without channel name works only from within channels.", commandChar));
                 }
             }
 
@@ -1022,7 +1022,7 @@ namespace Konversation
                 }
                 else
                 {
-                    result = error(i18n("%1 is not a channel.").arg(channel));
+                    result = error(i18n("%1 is not a channel.", channel));
                 }
             }
         }
@@ -1036,7 +1036,7 @@ namespace Konversation
 
         if(parameter.isEmpty())
         {
-            result = usage(i18n("Usage: %1EXEC <script> [parameter list]").arg(commandChar));
+            result = usage(i18n("Usage: %1EXEC <script> [parameter list]", commandChar));
         }
         else
         {
@@ -1069,7 +1069,7 @@ namespace Konversation
         }
         else
         {
-            result = usage(i18n("Usage: %1RAW [OPEN | CLOSE]").arg(commandChar));
+            result = usage(i18n("Usage: %1RAW [OPEN | CLOSE]", commandChar));
         }
 
         return result;
@@ -1114,7 +1114,7 @@ namespace Konversation
         if(1)//list.isEmpty())
             result.output = i18n("Current notify list is empty.");
         //else
-        //    result.output = i18n("Current notify list: %1").arg(list);
+        //    result.output = i18n("Current notify list: %1", list);
 
         result.type = Program;
         return result;
@@ -1195,9 +1195,9 @@ namespace Konversation
                 {
                     // destination is no channel => error
                     if (!kick)
-                        result = error(i18n("%1BAN without channel name works only from inside a channel.").arg(commandChar));
+                        result = error(i18n("%1BAN without channel name works only from inside a channel.", commandChar));
                     else
-                        result = error(i18n("%1KICKBAN without channel name works only from inside a channel.").arg(commandChar));
+                        result = error(i18n("%1KICKBAN without channel name works only from inside a channel.", commandChar));
 
                     // no usage information after error
                     showUsage = false;
@@ -1230,9 +1230,9 @@ namespace Konversation
         if (showUsage)
         {
             if (!kick)
-                result = usage(i18n("Usage: %1BAN [-HOST | -DOMAIN | -USERHOST | -USERDOMAIN] [channel] <user|mask>").arg(commandChar));
+                result = usage(i18n("Usage: %1BAN [-HOST | -DOMAIN | -USERHOST | -USERDOMAIN] [channel] <user|mask>", commandChar));
             else
-                result = usage(i18n("Usage: %1KICKBAN [-HOST | -DOMAIN | -USERHOST | -USERDOMAIN] [channel] <user|mask> [reason]").arg(commandChar));
+                result = usage(i18n("Usage: %1KICKBAN [-HOST | -DOMAIN | -USERHOST | -USERDOMAIN] [channel] <user|mask> [reason]", commandChar));
         }
 
         return result;
@@ -1272,7 +1272,7 @@ namespace Konversation
             else
             {
                 // destination is no channel => error
-                result = error(i18n("%1UNBAN without channel name works only from inside a channel.").arg(commandChar));
+                result = error(i18n("%1UNBAN without channel name works only from inside a channel.", commandChar));
                 // no usage information after error
                 showUsage = false;
             }
@@ -1287,7 +1287,7 @@ namespace Konversation
 
         if(showUsage)
         {
-            result = usage(i18n("Usage: %1UNBAN [channel] pattern").arg(commandChar));
+            result = usage(i18n("Usage: %1UNBAN [channel] pattern", commandChar));
         }
 
         return result;
@@ -1335,7 +1335,7 @@ namespace Konversation
                     Preferences::addIgnore(parameterList[index] + ',' + QString::number(value));
                 }
 
-                result.output = i18n("Added %1 to your ignore list.").arg(parameterList.join(", "));
+                result.output = i18n("Added %1 to your ignore list.", parameterList.join(", "));
                 result.typeString = i18n("Ignore");
                 result.type = Program;
 
@@ -1346,7 +1346,7 @@ namespace Konversation
 
         if(showUsage)
         {
-            result = usage(i18n("Usage: %1IGNORE [ -ALL ] <user 1> <user 2> ... <user n>").arg(commandChar));
+            result = usage(i18n("Usage: %1IGNORE [ -ALL ] <user 1> <user 2> ... <user n>", commandChar));
         }
 
         return result;
@@ -1358,7 +1358,7 @@ namespace Konversation
 
         if(parameter.isEmpty())
         {
-            result = usage(i18n("Usage: %1UNIGNORE <user 1> <user 2> ... <user n>").arg(commandChar));
+            result = usage(i18n("Usage: %1UNIGNORE <user 1> <user 2> ... <user n>", commandChar));
         }
         else
         {
@@ -1408,19 +1408,19 @@ namespace Konversation
             // Print all successful unignores, in case there were any
             if (succeeded.count()>=1)
             {
-                m_server->appendMessageToFrontmost(i18n("Ignore"),i18n("Removed %1 from your ignore list.").arg(succeeded.join(", ")));
+                m_server->appendMessageToFrontmost(i18n("Ignore"),i18n("Removed %1 from your ignore list.", succeeded.join(", ")));
             }
 
             // One failed unignore
             if (failed.count()==1)
             {
-                m_server->appendMessageToFrontmost(i18n("Error"),i18n("No such ignore: %1").arg(failed.join(", ")));
+                m_server->appendMessageToFrontmost(i18n("Error"),i18n("No such ignore: %1", failed.join(", ")));
             }
 
             // Multiple failed unignores
             if (failed.count()>1)
             {
-                m_server->appendMessageToFrontmost(i18n("Error"),i18n("No such ignores: %1").arg(failed.join(", ")));
+                m_server->appendMessageToFrontmost(i18n("Error"),i18n("No such ignores: %1", failed.join(", ")));
             }
         }
 
@@ -1433,7 +1433,7 @@ namespace Konversation
 
         if(parameter.isEmpty())
         {
-            result = usage(i18n("Usage: %1QUOTE command list").arg(commandChar));
+            result = usage(i18n("Usage: %1QUOTE command list", commandChar));
         }
         else
         {
@@ -1449,7 +1449,7 @@ namespace Konversation
 
         if(parameter.isEmpty())
         {
-            result = usage(i18n("Usage: %1SAY text").arg(commandChar));
+            result = usage(i18n("Usage: %1SAY text", commandChar));
         }
         else
         {
@@ -1511,7 +1511,7 @@ namespace Konversation
 
         if(parameter.isEmpty())
         {
-            result = usage(i18n("Usage: %1AME text").arg(commandChar));
+            result = usage(i18n("Usage: %1AME text", commandChar));
         }
 
         emit multiServerCommand("me", parameter);
@@ -1524,7 +1524,7 @@ namespace Konversation
 
         if(parameter.isEmpty())
         {
-            result = usage(i18n("Usage: %1AMSG text").arg(commandChar));
+            result = usage(i18n("Usage: %1AMSG text", commandChar));
         }
 
         emit multiServerCommand("msg", parameter);
@@ -1566,7 +1566,7 @@ namespace Konversation
         }
         else
         {
-            result = usage(i18n("Usage: %1OMSG text").arg(commandChar));
+            result = usage(i18n("Usage: %1OMSG text", commandChar));
         }
 
         return result;
@@ -1581,11 +1581,11 @@ namespace Konversation
             result.toServer = "NOTICE @"+destination+" :"+parameter;
             result.typeString = i18n("Notice");
             result.type = Program;
-            result.output = i18n("Sending notice \"%1\" to %2.").arg(parameter, destination);
+            result.output = i18n("Sending notice \"%1\" to %2.", parameter, destination);
         }
         else
         {
-            result = usage(i18n("Usage: %1ONOTICE text").arg(commandChar));
+            result = usage(i18n("Usage: %1ONOTICE text", commandChar));
         }
 
         return result;
@@ -1597,8 +1597,8 @@ namespace Konversation
 
         if (charset.isEmpty ())
         {
-            result = info (i18n("Current encoding is: %1")
-                    .arg(QString(m_server->getIdentity()->getCodec()->name())));
+            result = info (i18n("Current encoding is: %1",
+                                QString(m_server->getIdentity()->getCodec()->name())));
             return result;
         }
 
@@ -1608,11 +1608,11 @@ namespace Konversation
         {
             m_server->getIdentity()->setCodecName(shortName);
             emit encodingChanged();
-            result = info (i18n("Switched to %1 encoding.").arg(shortName));
+            result = info (i18n("Switched to %1 encoding.", shortName));
         }
         else
         {
-            result = error(i18n("%1 is not a valid encoding.").arg (charset));
+            result = error(i18n("%1 is not a valid encoding.", charset));
         }
 
         return result;
@@ -1624,7 +1624,7 @@ namespace Konversation
         QStringList parms = QStringList::split(" ", parameter);
 
         if (parms.count() == (0 >> parms.count() > 2))
-            return usage(i18n("Usage: %1setkey [<nick|channel>] <key> sets the encryption key for nick or channel. %2setkey <key> when in a channel or query tab to set the key for it.").arg(commandChar).arg(commandChar) );
+            return usage(i18n("Usage: %1setkey [<nick|channel>] <key> sets the encryption key for nick or channel. %2setkey <key> when in a channel or query tab to set the key for it.", commandChar, commandChar) );
         else if (parms.count() == 1)
             parms.prepend(destination);
 
@@ -1635,7 +1635,7 @@ namespace Konversation
         else if (m_server->getQueryByName(parms[0]))
             m_server->getQueryByName(parms[0])->setEncryptedOutput(true);
 
-        return info(i18n("The key for %1 has been set.").arg(parms[0]));
+        return info(i18n("The key for %1 has been set.", parms[0]));
     }
 
     OutputFilterResult OutputFilter::parseDelKey(const QString& prametr)
@@ -1643,7 +1643,7 @@ namespace Konversation
         QString parameter(prametr.isEmpty()?destination:prametr);
 
         if(parameter.isEmpty() || parameter.contains(' '))
-            return usage(i18n("Usage: %1delkey <nick> or <channel> deletes the encryption key for nick or channel").arg(commandChar));
+            return usage(i18n("Usage: %1delkey <nick> or <channel> deletes the encryption key for nick or channel", commandChar));
 
         m_server->setKeyForRecipient(parameter, "");
 
@@ -1652,7 +1652,7 @@ namespace Konversation
         else if (m_server->getQueryByName(parameter))
             m_server->getQueryByName(parameter)->setEncryptedOutput(false);
 
-        return info(i18n("The key for %1 has been deleted.").arg(parameter));
+        return info(i18n("The key for %1 has been deleted.", parameter));
     }
 
     OutputFilterResult OutputFilter::parseShowKey(const QString& prametr)
@@ -1661,9 +1661,9 @@ namespace Konversation
         QString key(m_server->getKeyForRecipient(parameter));
         QWidget *mw=KonversationApplication::instance()->getMainWindow();
         if (!key.isEmpty())
-            KMessageBox::information(mw, i18n("The key for %1 is \"%2\".").arg(parameter).arg(key), i18n("Blowfish"));
+            KMessageBox::information(mw, i18n("The key for %1 is \"%2\".", parameter, key), i18n("Blowfish"));
         else
-            KMessageBox::information(mw, i18n("No key has been set for %1.").arg(parameter));
+            KMessageBox::information(mw, i18n("No key has been set for %1.", parameter));
         OutputFilterResult result;
         return result;
     }
@@ -1683,7 +1683,7 @@ namespace Konversation
 
         if(parameter.isEmpty())
         {
-            result = usage(i18n("Usage: %1DNS <nick>").arg(commandChar));
+            result = usage(i18n("Usage: %1DNS <nick>", commandChar));
         }
         else
         {
@@ -1706,12 +1706,12 @@ namespace Konversation
                 if (KNetwork::KReverseResolver::resolve(socketAddress,resolvedTarget,serv))
                 {
                     result.typeString = i18n("DNS");
-                    result.output = i18n("Resolved %1 to: %2").arg(target).arg(resolvedTarget);
+                    result.output = i18n("Resolved %1 to: %2", target, resolvedTarget);
                     result.type = Program;
                 }
                 else
                 {
-                    result = error(i18n("Unable to resolve %1").arg(target));
+                    result = error(i18n("Unable to resolve %1", target));
                 }
 #else
                 result = error(i18n("Reverse-resolving requires KDE version 3.5.1 or higher."));
@@ -1728,12 +1728,12 @@ namespace Konversation
                 {
                     QString resolvedTarget = resolved.first().address().nodeName();
                     result.typeString = i18n("DNS");
-                    result.output = i18n("Resolved %1 to: %2").arg(target).arg(resolvedTarget);
+                    result.output = i18n("Resolved %1 to: %2", target, resolvedTarget);
                     result.type = Program;
                 }
                 else
                 {
-                    result = error(i18n("Unable to resolve %1").arg(target));
+                    result = error(i18n("Unable to resolve %1", target));
                 }
             }
             // Parameter is either host nor IP, so request a lookup from server, which in
@@ -1777,7 +1777,7 @@ namespace Konversation
 
         if(parameter.isEmpty())
         {
-            result = usage(i18n("Usage: %1KILL <nick> [comment]").arg(commandChar));
+            result = usage(i18n("Usage: %1KILL <nick> [comment]", commandChar));
         }
         else
         {

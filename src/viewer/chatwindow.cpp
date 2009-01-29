@@ -348,7 +348,7 @@ void ChatWindow::logText(const QString& text)
 
             if(firstLog)
             {
-                QString intro(i18n("\n*** Logfile started\n*** on %1\n\n").arg(QDateTime::currentDateTime().toString()));
+                QString intro(i18n("\n*** Logfile started\n*** on %1\n\n", QDateTime::currentDateTime().toString()));
                 logStream << intro;
                 firstLog=false;
             }

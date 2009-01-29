@@ -422,9 +422,9 @@ void Server::connectToIRCServer()
 
         // set up the connection details
         setPrefixes(m_serverNickPrefixModes, m_serverNickPrefixes);
-        getStatusView()->appendServerMessage(i18n("Info"),i18n("Looking for server %1:%2...")
-            .arg(getConnectionSettings().server().host())
-            .arg(getConnectionSettings().server().port()));
+        getStatusView()->appendServerMessage(i18n("Info"),i18n("Looking for server %1:%2...",
+            getConnectionSettings().server().host(),
+            getConnectionSettings().server().port()));
         // reset InputFilter (auto request info, /WHO request info)
         m_inputFilter.reset();
     }
@@ -545,9 +545,9 @@ void Server::lookupFinished()
     if(m_socket->error())
     {
         // inform user about the error
-        getStatusView()->appendServerMessage(i18n("Error"),i18n("Server %1 not found: %2")
-            .arg(getConnectionSettings().server().host())
-            .arg(m_socket->errorString(/*m_socket->error()*/))); //TODO FIXME for some reason the compiler misses the static overload
+        getStatusView()->appendServerMessage(i18n("Error"),i18n("Server %1 not found: %2",
+            getConnectionSettings().server().host(),
+            m_socket->errorString(/*m_socket->error()*/))); //TODO FIXME for some reason the compiler misses the static overload
 
         m_socket->resetStatus();
 
@@ -619,9 +619,9 @@ void Server::broken(int state)
     {
         static_cast<KonversationApplication*>(kapp)->notificationHandler()->connectionFailure(getStatusView(), getServerName());
 
-        QString error = i18n("Connection to Server %1 lost: %2.")
-            .arg(getConnectionSettings().server().host())
-            .arg(KNetwork::KSocketBase::errorString((KNetwork::KSocketBase::SocketError)state));
+        QString error = i18n("Connection to Server %1 lost: %2.",
+            getConnectionSettings().server().host(),
+            KNetwork::KSocketBase::errorString((KNetwork::KSocketBase::SocketError)state));
 
         getStatusView()->appendServerMessage(i18n("Error"), error);
 
@@ -722,7 +722,7 @@ void Server::quitServer()
 
     m_socket->close();
 
-    getStatusView()->appendServerMessage(i18n("Info"), i18n("Disconnected from %1.").arg(getConnectionSettings().server().host()));
+    getStatusView()->appendServerMessage(i18n("Info"), i18n("Disconnected from %1.", getConnectionSettings().server().host()));
 }
 
 void Server::notifyAction(const QString& nick)
@@ -872,7 +872,7 @@ QString Server::getNextNickname()
 
     if (newNick.isNull())
     {
-        QString inputText = i18n("No nicknames from the \"%1\" identity were accepted by the connection \"%2\".\nPlease enter a new one or press Cancel to disconnect:").arg(getIdentity()->getName()).arg(getDisplayName());
+        QString inputText = i18n("No nicknames from the \"%1\" identity were accepted by the connection \"%2\".\nPlease enter a new one or press Cancel to disconnect:", getIdentity()->getName(), getDisplayName());
         newNick = KInputDialog::getText(i18n("Nickname error"), inputText,
                                         QString(), 0, getStatusView()); // TODO FIXME hope we don't need the name... "NickChangeDialog"
     }
@@ -922,8 +922,8 @@ void Server::incoming()
     if (len <= 0) // Zero means buffer is empty which shouldn't happen because readyRead signal is emitted
     {
         getStatusView()->appendServerMessage(i18n("Error"),
-            i18n("There was an error reading the data from the server: %1").
-            arg(m_socket->errorString()));
+            i18n("There was an error reading the data from the server: %1",
+                 m_socket->errorString()));
 
         broken(m_socket->error());
         return;
@@ -1652,7 +1652,7 @@ void Server::requestDccSend(const QString &a_recipient)
             ":lastDccDir",
             QString(),
             getViewContainer()->getWindow(),
-            i18n("Select File(s) to Send to %1").arg(recipient)
+            i18n("Select File(s) to Send to %1", recipient)
         );
         KUrl::List::iterator it;
         for ( it = fileURLs.begin() ; it != fileURLs.end() ; ++it )
@@ -1733,8 +1733,8 @@ void Server::addDccGet(const QString &sourceNick, const QStringList &dccArgument
             showfile = showfile.mid(1, showfile.length() - 2);
 
         appendMessageToFrontmost( i18n( "DCC" ),
-                                  i18n( "%1 offers to send you \"%2\" (%3)..." )
-                                  .arg( newDcc->getPartnerNick(),
+                                  i18n( "%1 offers to send you \"%2\" (%3)...",
+                                        newDcc->getPartnerNick(),
                                         showfile,
                                         ( newDcc->getFileSize() == 0 ) ? i18n( "unknown size" ) : KIO::convertSize( newDcc->getFileSize() ) ) );
 
@@ -1766,8 +1766,8 @@ void Server::dccSendRequest(const QString &partner, const QString &fileName, con
         showfile = showfile.mid(1, showfile.length() - 2);
 
     appendMessageToFrontmost( i18n( "DCC" ),
-                              i18n( "Asking %1 to accept upload of \"%2\" (%3)..." )
-                              .arg( partner,
+                              i18n( "Asking %1 to accept upload of \"%2\" (%3)...",
+                                    partner,
                                     showfile,
                                     ( size == 0 ) ? i18n( "unknown size" ) : KIO::convertSize( size ) ) );
 */
@@ -2344,7 +2344,7 @@ NickInfoPtr Server::setWatchedNickOnline(const QString& nickname)
     //if (!addressee.isEmpty()) Konversation::Addressbook::self()->emitContactPresenceChanged(addressee.uid());
 
     appendMessageToFrontmost(i18n("Notify"),"<a href=\"#"+nickname+"\">"+
-        i18n("%1 is online (%2).").arg(nickname).arg(getServerName())+"</a>", getStatusView());
+        i18n("%1 is online (%2).", nickname, getServerName())+"</a>", getStatusView());
 
     static_cast<KonversationApplication*>(kapp)->notificationHandler()->nickOnline(getStatusView(), nickname);
 
@@ -2361,7 +2361,7 @@ void Server::setWatchedNickOffline(const QString& nickname, const NickInfoPtr ni
 */
     emit watchedNickChanged(this, nickname, false);
 
-    appendMessageToFrontmost(i18n("Notify"), i18n("%1 went offline (%2).").arg(nickname).arg(getServerName()), getStatusView());
+    appendMessageToFrontmost(i18n("Notify"), i18n("%1 went offline (%2).", nickname, getServerName()), getStatusView());
 
     static_cast<KonversationApplication*>(kapp)->notificationHandler()->nickOffline(getStatusView(), nickname);
 
@@ -2940,7 +2940,7 @@ void Server::invitation(const QString& nick,const QString& channel)
 {
     if(KMessageBox::questionYesNo(getViewContainer()->getWindow(),
         i18n("You were invited by %1 to join channel %2. "
-        "Do you accept the invitation?").arg(nick).arg(channel),
+        "Do you accept the invitation?", nick, channel),
         i18n("Invitation"),
         KGuiItem(i18n("Join")),
         KGuiItem(i18n("Ignore")),
@@ -2952,12 +2952,12 @@ void Server::invitation(const QString& nick,const QString& channel)
 
 void Server::scriptNotFound(const QString& name)
 {
-    appendMessageToFrontmost(i18n("DCOP"),i18n("Error: Could not find script \"%1\".").arg(name));
+    appendMessageToFrontmost(i18n("DCOP"),i18n("Error: Could not find script \"%1\".", name));
 }
 
 void Server::scriptExecutionError(const QString& name)
 {
-    appendMessageToFrontmost(i18n("DCOP"),i18n("Error: Could not execute script \"%1\". Check file permissions.").arg(name));
+    appendMessageToFrontmost(i18n("DCOP"),i18n("Error: Could not execute script \"%1\". Check file permissions.", name));
 }
 
 bool Server::isAChannel(const QString &channel) const

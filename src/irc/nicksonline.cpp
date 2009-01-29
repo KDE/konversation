@@ -250,12 +250,12 @@ bool& needWhois)
             niInfo += " (" + nickInfo->getRealName() + ')';
         if (!nickInfo->getNetServer().isEmpty())
         {
-            niInfo += i18n( " online via %1" ).arg( nickInfo->getNetServer() );
+            niInfo += i18n( " online via %1", nickInfo->getNetServer() );
             if (!nickInfo->getNetServerInfo().isEmpty())
                 niInfo += " (" + nickInfo->getNetServerInfo() + ')';
         }
         if (!nickInfo->getOnlineSince().isNull())
-            niInfo += i18n( " since %1" ).arg( nickInfo->getPrettyOnlineSince() );
+            niInfo += i18n( " since %1", nickInfo->getPrettyOnlineSince() );
     }
     needWhois = niInfo.isEmpty();
     if (!info.isEmpty() && !needWhois) info += ' ';

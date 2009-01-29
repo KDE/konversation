@@ -202,15 +202,15 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                     if(isChan)
                     {
                         server->appendMessageToFrontmost(i18n("CTCP"),
-                            i18n("Received CTCP-PING request from %1 to channel %2, sending answer.")
-                            .arg(sourceNick).arg(parameterList[0])
+                            i18n("Received CTCP-PING request from %1 to channel %2, sending answer.",
+                                 sourceNick, parameterList[0])
                             );
                     }
                     else
                     {
                         server->appendMessageToFrontmost(i18n("CTCP"),
-                            i18n("Received CTCP-%1 request from %2, sending answer.")
-                            .arg("PING").arg(sourceNick)
+                            i18n("Received CTCP-%1 request from %2, sending answer.",
+                                 QString::fromLatin1("PING"), sourceNick)
                             );
                     }
                     server->ctcpReply(sourceNick,QString("PING %1").arg(ctcpArgument));
@@ -225,15 +225,15 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                     if (isChan)
                     {
                         server->appendMessageToFrontmost(i18n("CTCP"),
-                            i18n("Received Version request from %1 to channel %2.")
-                            .arg(sourceNick).arg(parameterList[0])
+                            i18n("Received Version request from %1 to channel %2.",
+                                 sourceNick, parameterList[0])
                             );
                     }
                     else
                     {
                         server->appendMessageToFrontmost(i18n("CTCP"),
-                            i18n("Received Version request from %1.")
-                            .arg(sourceNick)
+                            i18n("Received Version request from %1.",
+                                 sourceNick)
                             );
                     }
 
@@ -301,8 +301,8 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                         else
                         {
                             server->appendMessageToFrontmost(i18n("DCC"),
-                                i18n("Received invalid DCC SEND request from %1.")
-                                .arg(sourceNick)
+                                i18n("Received invalid DCC SEND request from %1.",
+                                     sourceNick)
                                 );
                         }
                     }
@@ -316,8 +316,8 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                         else
                         {
                             server->appendMessageToFrontmost(i18n("DCC"),
-                                i18n("Received invalid DCC ACCEPT request from %1.")
-                                .arg(sourceNick)
+                                i18n("Received invalid DCC ACCEPT request from %1.",
+                                     sourceNick)
                                 );
                         }
                     }
@@ -331,8 +331,8 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                         else
                         {
                             server->appendMessageToFrontmost(i18n("DCC"),
-                                i18n("Received invalid DCC RESUME request from %1.")
-                                .arg(sourceNick)
+                                i18n("Received invalid DCC RESUME request from %1.",
+                                     sourceNick)
                                 );
                         }
                     }
@@ -347,16 +347,16 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                         else
                         {
                             server->appendMessageToFrontmost(i18n("DCC"),
-                                i18n("Received invalid DCC CHAT request from %1.")
-                                .arg(sourceNick)
+                                i18n("Received invalid DCC CHAT request from %1.",
+                                     sourceNick)
                                 );
                         }
                     }
                     else
                     {
                         server->appendMessageToFrontmost(i18n("DCC"),
-                            i18n("Unknown DCC command %1 received from %2.")
-                            .arg(ctcpArgument).arg(sourceNick)
+                            i18n("Unknown DCC command %1 received from %2.",
+                                 ctcpArgument, sourceNick)
                             );
                     }
                 }
@@ -364,16 +364,16 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
             else if (ctcpCommand=="clientinfo" && !isChan)
             {
                 server->appendMessageToFrontmost(i18n("CTCP"),
-                    i18n("Received CTCP-%1 request from %2, sending answer.")
-                    .arg("CLIENTINFO").arg(sourceNick)
+                    i18n("Received CTCP-%1 request from %2, sending answer.",
+                         QString::fromLatin1("CLIENTINFO"), sourceNick)
                     );
                 server->ctcpReply(sourceNick,QString("CLIENTINFO ACTION CLIENTINFO DCC PING TIME VERSION"));
             }
             else if(ctcpCommand=="time" && !isChan)
             {
                 server->appendMessageToFrontmost(i18n("CTCP"),
-                    i18n("Received CTCP-%1 request from %2, sending answer.")
-                    .arg("TIME").arg(sourceNick)
+                    i18n("Received CTCP-%1 request from %2, sending answer.",
+                         QString::fromLatin1("TIME"), sourceNick)
                     );
                 server->ctcpReply(sourceNick,QString("TIME ")+QDateTime::currentDateTime().toString());
             }
@@ -387,13 +387,13 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                         server->appendServerMessageToChannel(
                             parameterList[0],
                             "CTCP",
-                            i18n("Received unknown CTCP-%1 request from %2 to Channel %3.")
-                            .arg(ctcp).arg(sourceNick).arg(parameterList[0])
+                            i18n("Received unknown CTCP-%1 request from %2 to Channel %3.",
+                                 ctcp, sourceNick, parameterList[0])
                             );
                     else
                         server->appendMessageToFrontmost(i18n("CTCP"),
-                            i18n("Received unknown CTCP-%1 request from %2.")
-                            .arg(ctcp).arg(sourceNick)
+                            i18n("Received unknown CTCP-%1 request from %2.",
+                                 ctcp, sourceNick)
                             );
                 }
             }
@@ -417,8 +417,8 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                 }
 
                 server->appendServerMessageToChannel(parameterList[0], i18n("Notice"),
-                    i18n("-%1 to %2- %3")
-                    .arg(sourceNick).arg(parameterList[0]).arg(trailing)
+                    i18n("-%1 to %2- %3",
+                         sourceNick, parameterList[0], trailing)
                     );
             }
             // Private notice
@@ -444,18 +444,16 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                             unit = "second";
 
                         server->appendMessageToFrontmost(i18n("CTCP"),
-                            i18n("Received CTCP-PING reply from %1: %2 %3.")
-                            .arg(sourceNick)
-                            .arg(time)
-                            .arg(unit)
+                            i18n("Received CTCP-PING reply from %1: %2 %3.",
+                                 sourceNick, time, unit)
                             );
                     }
                     // all other ctcp replies get a general message
                     else
                     {
                         server->appendMessageToFrontmost(i18n("CTCP"),
-                            i18n("Received CTCP-%1 reply from %2: %3.")
-                            .arg(replyReason).arg(sourceNick).arg(reply)
+                            i18n("Received CTCP-%1 reply from %2: %3.",
+                                 replyReason, sourceNick, reply)
                             );
                     }
                 }
@@ -478,7 +476,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                         if(nickInfo)
                             nickInfo->setIdentified(true);
                     }
-                    server->appendMessageToFrontmost(i18n("Notice"), i18n("-%1- %2").arg(sourceNick).arg(trailing));
+                    server->appendMessageToFrontmost(i18n("Notice"), i18n("-%1- %2", sourceNick, trailing));
                 }
             }
         }
@@ -611,8 +609,8 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
             channel = trailing;
 
         server->appendMessageToFrontmost(i18n("Invite"),
-            i18n("%1 invited you to channel %2.")
-            .arg(sourceNick).arg(channel)
+            i18n("%1 invited you to channel %2.",
+                 sourceNick, channel)
             );
         emit invitation(sourceNick,channel);
     }
@@ -672,7 +670,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
         }
         else if(command=="notice")
         {
-            server->appendStatusMessage(i18n("Notice"),i18n("-%1- %2").arg(prefix).arg(trailing));
+            server->appendStatusMessage(i18n("Notice"),i18n("-%1- %2", prefix, trailing));
         }
         else if(command=="kick")
         {
@@ -717,11 +715,11 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             case RPL_MYINFO:
             {
                 server->appendStatusMessage(i18n("Welcome"),
-                    i18n("Server %1 (Version %2), User modes: %3, Channel modes: %4")
-                    .arg(parameterList[1])
-                    .arg(parameterList[2])
-                    .arg(parameterList[3])
-                    .arg(parameterList[4])
+                    i18n("Server %1 (Version %2), User modes: %3, Channel modes: %4",
+                         parameterList[1],
+                         parameterList[2],
+                         parameterList[3],
+                         parameterList[4])
                     );
                 server->setAllowedChannelModes(parameterList[4]);
                 break;
@@ -857,7 +855,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             case RPL_CHANNELURLIS:
             {// :niven.freenode.net 328 argonel #channel :http://www.buggeroff.com/
                 server->appendCommandMessageToChannel(parameterList[1], i18n("URL"),
-                    i18n("Channel URL: %1").arg(trailing));
+                    i18n("Channel URL: %1", trailing));
                 break;
             }
             case RPL_CHANNELCREATED:
@@ -865,8 +863,8 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 QDateTime when;
                 when.setTime_t(parameterList[2].toUInt());
                 server->appendCommandMessageToChannel(parameterList[1],i18n("Created"),
-                    i18n("This channel was created on %1.")
-                    .arg(when.toString(Qt::LocalDate))
+                    i18n("This channel was created on %1.",
+                         when.toString(Qt::LocalDate))
                     );
 
                 if(Preferences::autoWhoContinuousEnabled())
@@ -881,7 +879,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 // Display message only if this was not an automatic request.
                 if(getAutomaticRequest("WHOIS",parameterList[1])==0)
                 {
-                    server->appendMessageToFrontmost(i18n("Whois"),i18n("%1 is logged in as %2.").arg(parameterList[1]).arg(parameterList[2]));
+                    server->appendMessageToFrontmost(i18n("Whois"),i18n("%1 is logged in as %2.", parameterList[1], parameterList[2]));
                 }
                 break;
             }
@@ -931,7 +929,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             // Topic set messages
             case RPL_NOTOPIC:
             {
-                server->appendMessageToFrontmost(i18n("TOPIC"),i18n("The channel %1 has no topic set.").arg(parameterList[1]) /*.arg(parameterList[2])*/); //FIXME ok, whats the second parameter supposed to be?
+                server->appendMessageToFrontmost(i18n("TOPIC"),i18n("The channel %1 has no topic set.", parameterList[1]) /*.arg(parameterList[2])*/); //FIXME ok, whats the second parameter supposed to be?
 
                 break;
             }
@@ -950,7 +948,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 }
                 else
                 {
-                    server->appendMessageToFrontmost(i18n("Topic"),i18n("The channel topic for %1 is: \"%2\"").arg(parameterList[1]).arg(topic));
+                    server->appendMessageToFrontmost(i18n("Topic"),i18n("The channel topic for %1 is: \"%2\"", parameterList[1], topic));
                 }
 
                 break;
@@ -965,16 +963,16 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 if(getAutomaticRequest("TOPIC",parameterList[1])==0)
                 {
                     server->appendCommandMessageToChannel(parameterList[1],i18n("Topic"),
-                        i18n("The topic was set by %1 on %2.")
-                        .arg(parameterList[2]).arg(when.toString(Qt::LocalDate)),
+                        i18n("The topic was set by %1 on %2.",
+                             parameterList[2], when.toString(Qt::LocalDate)),
                         false);
                 }
                 else
                 {
-                    server->appendMessageToFrontmost(i18n("Topic"),i18n("The topic for %1 was set by %2 on %3.")
-                        .arg(parameterList[1])
-                        .arg(parameterList[2])
-                        .arg(when.toString(Qt::LocalDate))
+                    server->appendMessageToFrontmost(i18n("Topic"),i18n("The topic for %1 was set by %2 on %3.",
+                        parameterList[1],
+                        parameterList[2],
+                        when.toString(Qt::LocalDate))
                         );
                     setAutomaticRequest("TOPIC",parameterList[1],false);
                 }
@@ -987,7 +985,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 // Display message only if this was not an automatic request.
                 if(getAutomaticRequest("WHOIS",parameterList[1])==0)
                 {
-                    server->appendMessageToFrontmost(i18n("Whois"),i18n("%1 is actually using the host %2.").arg(parameterList[1]).arg(parameterList[2]));
+                    server->appendMessageToFrontmost(i18n("Whois"),i18n("%1 is actually using the host %2.", parameterList[1], parameterList[2]));
                 }
                 break;
             }
@@ -997,11 +995,11 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 // IP resolve purposes, and clear it from the automaticRequest list
                 if(getAutomaticRequest("DNS",parameterList[1])==0)
                 {
-                    server->appendMessageToFrontmost(i18n("Error"),i18n("%1: No such nick/channel.").arg(parameterList[1]));
+                    server->appendMessageToFrontmost(i18n("Error"),i18n("%1: No such nick/channel.", parameterList[1]));
                 }
                 else if(getAutomaticRequest("WHOIS",parameterList[1])==0) //Display message only if this was not an automatic request.
                 {
-                    server->appendMessageToFrontmost(i18n("Error"),i18n("No such nick: %1.").arg(parameterList[1]));
+                    server->appendMessageToFrontmost(i18n("Error"),i18n("No such nick: %1.", parameterList[1]));
                     setAutomaticRequest("DNS", parameterList[1], false);
                 }
 
@@ -1012,7 +1010,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 // Display message only if this was not an automatic request.
                 if(getAutomaticRequest("WHOIS",parameterList[1])==0)
                 {
-                    server->appendMessageToFrontmost(i18n("Error"),i18n("%1: No such channel.").arg(parameterList[1]));
+                    server->appendMessageToFrontmost(i18n("Error"),i18n("%1: No such channel.", parameterList[1]));
                 }
                 break;
             }
@@ -1040,7 +1038,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                         server->obtainNickInfo(server->getNickname()) ;
                         server->renameNick(server->getNickname(), newNick);
                         // Show message
-                        server->appendMessageToFrontmost(i18n("Nick"), i18n("Nickname already in use. Trying %1.").arg(newNick));
+                        server->appendMessageToFrontmost(i18n("Nick"), i18n("Nickname already in use. Trying %1.", newNick));
                         // Send nickchange request to the server
                         server->queue("NICK "+newNick);
                     }
@@ -1066,7 +1064,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     {
                         server->obtainNickInfo(server->getNickname()) ;
                         server->renameNick(server->getNickname(), newNick);
-                        server->appendMessageToFrontmost(i18n("Nick"), i18n("Erroneus nickname. Changing nick to %1." ).arg(newNick)) ;
+                        server->appendMessageToFrontmost(i18n("Nick"), i18n("Erroneus nickname. Changing nick to %1.", newNick));
                         server->queue("NICK "+newNick);
                     }
                 }
@@ -1074,7 +1072,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             }
             case ERR_NOTONCHANNEL:
             {
-                server->appendMessageToFrontmost(i18n("Error"),i18n("You are not on %1.").arg(parameterList[1]));
+                server->appendMessageToFrontmost(i18n("Error"),i18n("You are not on %1.", parameterList[1]));
 
                 break;
             }
@@ -1119,14 +1117,14 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             {
                 QString current(trailing.section(' ',3));
                 //QString max(trailing.section(' ',5,5));
-                server->appendStatusMessage(i18n("Users"),i18n("Current users on the network: %1").arg(current));
+                server->appendStatusMessage(i18n("Users"),i18n("Current users on the network: %1", current));
                 break;
             }
             case RPL_LOCALUSERS:                  // Current local users: 589 Max: 845
             {
                 QString current(trailing.section(' ',3));
                 //QString max(trailing.section(' ',5,5));
-                server->appendStatusMessage(i18n("Users"),i18n("Current users on %1: %2.").arg(prefix).arg(current));
+                server->appendStatusMessage(i18n("Users"),i18n("Current users on %1: %2.", prefix, current));
                 break;
             }
             case RPL_ISON:
@@ -1148,8 +1146,8 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
 
                 if(getAutomaticRequest("WHOIS",parameterList[1])==0)
                 {
-                    server->appendMessageToFrontmost(i18n("Away"),i18n("%1 is away: %2")
-                        .arg(parameterList[1]).arg(trailing)
+                    server->appendMessageToFrontmost(i18n("Away"),i18n("%1 is away: %2",
+                        parameterList[1], trailing)
                         );
                 }
 
@@ -1158,8 +1156,8 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             case RPL_INVITING:
             {
                 server->appendMessageToFrontmost(i18n("Invite"),
-                    i18n("You invited %1 to channel %2.")
-                    .arg(parameterList[1]).arg(parameterList[2])
+                    i18n("You invited %1 to channel %2.",
+                         parameterList[1], parameterList[2])
                     );
                 break;
             }
@@ -1177,7 +1175,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 NickInfoPtr nickInfo = server->getNickInfo(parameterList[1]);
                 if(nickInfo)
                 {
-                    nickInfo->setHostmask(i18n("%1@%2").arg(parameterList[2]).arg(parameterList[3]));
+                    nickInfo->setHostmask(i18n("%1@%2", parameterList[2], parameterList[3]));
                     nickInfo->setRealName(trailing);
                 }
                 // Display message only if this was not an automatic request.
@@ -1187,11 +1185,11 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     QString escapedRealName(trailing);
                     escapedRealName.replace("<","&lt;").replace(">","&gt;");
                     server->appendMessageToFrontmost(i18n("Whois"),
-                        i18n("%1 is %2@%3 (%4)")
-                        .arg(parameterList[1])
-                        .arg(parameterList[2])
-                        .arg(parameterList[3])
-                        .arg(escapedRealName), false);   // Don't parse any urls
+                        i18n("%1 is %2@%3 (%4)",
+                             parameterList[1],
+                             parameterList[2],
+                             parameterList[3],
+                             escapedRealName), false);   // Don't parse any urls
                 }
                 else
                 {
@@ -1203,18 +1201,18 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                         {
                             QString ip = resolved.first().address().nodeName();
                             server->appendMessageToFrontmost(i18n("DNS"),
-                                i18n("Resolved %1 (%2) to address: %3")
-                                .arg(parameterList[1])
-                                .arg(parameterList[3])
-                                .arg(ip)
+                                i18n("Resolved %1 (%2) to address: %3",
+                                     parameterList[1],
+                                     parameterList[3],
+                                     ip)
                                 );
                         }
                         else
                         {
                             server->appendMessageToFrontmost(i18n("Error"),
-                                i18n("Unable to resolve address for %1 (%2)")
-                                .arg(parameterList[1])
-                                .arg(parameterList[3])
+                                i18n("Unable to resolve address for %1 (%2)",
+                                     parameterList[1],
+                                     parameterList[3])
                                 );
                         }
 
@@ -1239,7 +1237,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     // Prints "psn is an identified user"
                     //server->appendStatusMessage(i18n("Whois"),parameterList.join(" ").section(' ',1)+' '+trailing);
                     // The above line works fine, but can't be i18n'ised. So use the below instead.. I hope this is okay.
-                    server->appendMessageToFrontmost(i18n("Whois"), i18n("%1 is an identified user.").arg(parameterList[1]));
+                    server->appendMessageToFrontmost(i18n("Whois"), i18n("%1 is an identified user.", parameterList[1]));
                 }
                 break;
             }
@@ -1254,7 +1252,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 bool bAway = parameterList[6].toUpper().startsWith("G");
                 if(nickInfo)
                 {
-                    nickInfo->setHostmask(i18n("%1@%2").arg(parameterList[2]).arg(parameterList[3]));
+                    nickInfo->setHostmask(i18n("%1@%2", parameterList[2], parameterList[3]));
                                                   //Strip off the "0 "
                     nickInfo->setRealName(trailing.section(" ", 1));
                     nickInfo->setAway(bAway);
@@ -1290,8 +1288,8 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                         if(getAutomaticRequest("WHO", *it) == 0)
                         {
                             server->appendMessageToFrontmost(i18n("Who"),
-                                i18n("End of /WHO list for %1")
-                                .arg(parameterList[1]));
+                                i18n("End of /WHO list for %1",
+                                     parameterList[1]));
                         }
                         else
                         {
@@ -1375,44 +1373,44 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     if(userChannels.count())
                     {
                         server->appendMessageToFrontmost(i18n("Whois"),
-                            i18n("%1 is a user on channels: %2")
-                            .arg(parameterList[1])
-                            .arg(userChannels.join(" "))
+                            i18n("%1 is a user on channels: %2",
+                                 parameterList[1],
+                                 userChannels.join(" "))
                             );
                     }
                     if(voiceChannels.count())
                     {
                         server->appendMessageToFrontmost(i18n("Whois"),
-                            i18n("%1 has voice on channels: %2")
-                            .arg(parameterList[1]).arg(voiceChannels.join(" "))
+                            i18n("%1 has voice on channels: %2",
+                                 parameterList[1], voiceChannels.join(" "))
                             );
                     }
                     if(halfopChannels.count())
                     {
                         server->appendMessageToFrontmost(i18n("Whois"),
-                            i18n("%1 is a halfop on channels: %2")
-                            .arg(parameterList[1]).arg(halfopChannels.join(" "))
+                            i18n("%1 is a halfop on channels: %2",
+                                 parameterList[1], halfopChannels.join(" "))
                             );
                     }
                     if(opChannels.count())
                     {
                         server->appendMessageToFrontmost(i18n("Whois"),
-                            i18n("%1 is an operator on channels: %2")
-                            .arg(parameterList[1]).arg(opChannels.join(" "))
+                            i18n("%1 is an operator on channels: %2",
+                                 parameterList[1], opChannels.join(" "))
                             );
                     }
                     if(ownerChannels.count())
                     {
                         server->appendMessageToFrontmost(i18n("Whois"),
-                            i18n("%1 is owner of channels: %2")
-                            .arg(parameterList[1]).arg(ownerChannels.join(" "))
+                            i18n("%1 is owner of channels: %2",
+                                 parameterList[1], ownerChannels.join(" "))
                             );
                     }
                     if(adminChannels.count())
                     {
                         server->appendMessageToFrontmost(i18n("Whois"),
-                            i18n("%1 is admin on channels: %2")
-                            .arg(parameterList[1]).arg(adminChannels.join(" "))
+                            i18n("%1 is admin on channels: %2",
+                                 parameterList[1], adminChannels.join(" "))
                             );
                     }
                 }
@@ -1446,8 +1444,8 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 if(getAutomaticRequest("WHOIS",parameterList[1])==0)
                 {
                     server->appendMessageToFrontmost(i18n("Whois"),
-                        i18n("%1 is available for help.")
-                        .arg(parameterList[1])
+                        i18n("%1 is available for help.",
+                             parameterList[1])
                         );
                 }
                 break;
@@ -1458,7 +1456,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 if(getAutomaticRequest("WHOIS",parameterList[1])==0)
                 {
                     if (trailing.toLower().simplified().startsWith("is an irc operator"))
-                        server->appendMessageToFrontmost(i18n("Whois"),i18n("%1 is an IRC Operator.").arg(parameterList[1]));
+                        server->appendMessageToFrontmost(i18n("Whois"),i18n("%1 is an IRC Operator.", parameterList[1]));
                     else
                         server->appendMessageToFrontmost(i18n("Whois"),QString("%1 %2").arg(parameterList[1]).arg(trailing));
                 }
@@ -1485,9 +1483,9 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
 
                         server->appendMessageToFrontmost(i18n("Whois"),
                             i18nc("%1 = name of person, %2 = (x days), %3 = (x hours), %4 = (x minutes), %5 = (x seconds)",
-                            "%1 has been idle for %2, %3, %4, and %5.")
-                            .arg(parameterList[1])
-                            .arg(daysString).arg(hoursString).arg(minutesString).arg(secondsString)
+                            "%1 has been idle for %2, %3, %4, and %5.",
+                            parameterList[1],
+                            daysString, hoursString, minutesString, secondsString)
                             );
                         // or longer than an hour
                     }
@@ -1533,8 +1531,8 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     if(getAutomaticRequest("WHOIS",parameterList[1])==0)
                     {
                         server->appendMessageToFrontmost(i18n("Whois"),
-                            i18n("%1 has been online since %2.")
-                            .arg(parameterList[1]).arg(when.toString(Qt::LocalDate))
+                            i18n("%1 has been online since %2.",
+                                 parameterList[1], when.toString(Qt::LocalDate))
                             );
                     }
                 }
@@ -1667,7 +1665,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     QDateTime when;
                     when.setTime_t(parameterList[4].toUInt());
 
-                    server->appendMessageToFrontmost(i18n("BanList:%1").arg(parameterList[1]), i18nc("BanList message: e.g. *!*@aol.com set by MrGrim on <date>", "%1 set by %2 on %3").arg(parameterList[2]).arg(parameterList[3].section('!', 0, 0)).arg(when.toString(Qt::LocalDate)));
+                    server->appendMessageToFrontmost(i18n("BanList:%1", parameterList[1]), i18nc("BanList message: e.g. *!*@aol.com set by MrGrim on <date>", "%1 set by %2 on %3", parameterList[2], parameterList[3].section('!', 0, 0), when.toString(Qt::LocalDate)));
                 }
                 break;
             }
@@ -1677,7 +1675,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 {
                     setAutomaticRequest("BANLIST", parameterList[1], false);
                 } else {
-                    server->appendMessageToFrontmost(i18n("BanList:%1").arg(parameterList[1]), i18n("End of Ban List."));
+                    server->appendMessageToFrontmost(i18n("BanList:%1", parameterList[1]), i18n("End of Ban List."));
                 }
                 break;
             }
@@ -1705,7 +1703,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             }
             case ERR_UNAVAILRESOURCE:
             {
-                server->appendMessageToFrontmost(i18n("Error"),i18n("%1 is currently unavailable.").arg(parameterList[1]));
+                server->appendMessageToFrontmost(i18n("Error"),i18n("%1 is currently unavailable.", parameterList[1]));
 
                 break;
             }
@@ -1721,7 +1719,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             }
             case ERR_UNKNOWNCOMMAND:
             {
-                server->appendMessageToFrontmost(i18n("Error"),i18n("%1: Unknown command.").arg(parameterList[1]));
+                server->appendMessageToFrontmost(i18n("Error"),i18n("%1: Unknown command.", parameterList[1]));
 
                 break;
             }
@@ -1733,7 +1731,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             }
             case ERR_NEEDMOREPARAMS:
             {
-                server->appendMessageToFrontmost(i18n("Error"),i18n("%1: This command requires more parameters.").arg(parameterList[1]));
+                server->appendMessageToFrontmost(i18n("Error"),i18n("%1: This command requires more parameters.", parameterList[1]));
 
                 break;
             }
