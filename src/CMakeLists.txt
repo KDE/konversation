@@ -126,7 +126,7 @@ set(viewer_SRCS
     viewer/ignorelistviewitem.cpp
 #    viewer/irccolorchooser.cpp
     viewer/logfilereader.cpp
-#    viewer/insertchardialog.cpp
+    viewer/insertchardialog.cpp
 #    viewer/osd.cpp
     viewer/topiccombobox.cpp
 #    viewer/topiclabel.cpp
