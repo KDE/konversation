@@ -28,8 +28,12 @@ namespace Konversation
 {
 
     JoinChannelDialog::JoinChannelDialog(Server* server, QWidget *parent, const char *name)
-        : KDialogBase(parent, name, true, i18n("Join Channel on %1").arg(server->getDisplayName()), Ok|Cancel, Ok)
+        : KDialog(parent)
     {
+        setCaption( i18n("Join Channel on %1").arg(server->getDisplayName()) );
+        setButtons( KDialog::Ok|KDialog::Cancel );
+        setDefaultButton( KDialog::Ok );
+        setModal( true );
         m_server = server;
         m_widget = new JoinChannelUI(this);
         setMainWidget(m_widget);
@@ -69,6 +73,7 @@ namespace Konversation
         }
 
         m_widget->channelCombo->setCurrentText("");
+        connect( this, SIGNAL( okClicked() ), this, SLOT( slotOk() ) );
     }
 
     JoinChannelDialog::~JoinChannelDialog()
@@ -103,4 +108,4 @@ namespace Konversation
 
 }
 
-// #include "./irc/joinchanneldialog.moc"
+#include "joinchanneldialog.moc"

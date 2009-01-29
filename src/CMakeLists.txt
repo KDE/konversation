@@ -13,6 +13,8 @@ remove_definitions(-DKDE_DEPRECATED_WARNINGS)
 
 ########### next target ###############
 
+
+
 set(core_SRCS
     #====================================
     #=== Application
@@ -57,7 +59,7 @@ set (irc_SRCS
 #    irc/channeloptionsdialog.cpp
     irc/channelnick.cpp
     irc/modebutton.cpp
-#    irc/joinchanneldialog.cpp
+    irc/joinchanneldialog.cpp
 
     irc/irccharsets.cpp
 
@@ -82,6 +84,8 @@ set (irc_SRCS
 
 
 )
+
+kde4_add_ui3_files(irc_SRCS irc/joinchannelui.ui )
 
     #=== Preferences
 set(prefs_SRCS

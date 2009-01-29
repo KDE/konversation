@@ -12,7 +12,7 @@
 #ifndef KONVERSATIONJOINCHANNELDIALOG_H
 #define KONVERSATIONJOINCHANNELDIALOG_H
 
-#include <kdialogbase.h>
+#include <kdialog.h>
 
 
 class Server;
@@ -22,7 +22,7 @@ namespace Konversation
 
     class JoinChannelUI;
 
-    class JoinChannelDialog : public KDialogBase
+    class JoinChannelDialog : public KDialog
     {
         Q_OBJECT
             public:
