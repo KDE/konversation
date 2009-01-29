@@ -66,7 +66,7 @@
 #include <kabc/errorhandler.h>
 #include <KShortcutsDialog>
 
-#include <config.h>
+#include <config-konvi.h>
 #ifdef  USE_KNOTIFY
 #include <knotifyconfigwidget.h>
 #include <kauthorized.h>

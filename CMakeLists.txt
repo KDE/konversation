@@ -31,7 +31,7 @@ if (X11_Xscreensaver_FOUND)
 endif (X11_Xscreensaver_FOUND)
 
 
-configure_file(config.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config.h )
+configure_file(config-konvi.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-konvi.h )
 
 
 

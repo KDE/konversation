@@ -33,7 +33,7 @@
 #include <klocale.h>
 #include <kdeversion.h>
 #include <kstringhandler.h>
-#include <config.h>
+#include <config-konvi.h>
 #include <kdebug.h>
 #include <k3resolver.h>
 
