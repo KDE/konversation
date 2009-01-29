@@ -43,7 +43,7 @@ namespace Konversation
 
     bool ServerSettings::operator==(const ServerSettings& settings) const
     {
-        if (m_host.lower() == settings.host().lower()
+        if (m_host.toLower() == settings.host().toLower()
             && m_port == settings.port()
             && m_password == settings.password()
             && m_SSLEnabled == settings.SSLEnabled())

@@ -66,7 +66,7 @@ namespace Konversation
     QString IRCCharsets::ambiguousNameToShortName( const QString& ambiguousName )
     {
         // simplify ambiguousName
-        QString simplifiedAmbiguousName( ambiguousName.lower() );
+        QString simplifiedAmbiguousName( ambiguousName.toLower() );
         simplifiedAmbiguousName.replace( QRegExp( "[^a-z0-9]" ), "" );
 
         // search m_simplifiedShortNames

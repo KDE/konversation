@@ -673,8 +673,8 @@ bool doHighlight, bool parseURL, bool self)
         QString highlightColor;
 
         if(Preferences::highlightNick() &&
-            filteredLine.lower().find(QRegExp("(^|[^\\d\\w])" +
-            QRegExp::escape(ownNick.lower()) +
+            filteredLine.toLower().find(QRegExp("(^|[^\\d\\w])" +
+            QRegExp::escape(ownNick.toLower()) +
             "([^\\d\\w]|$)")) != -1)
         {
             // highlight current nickname

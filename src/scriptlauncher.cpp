@@ -60,7 +60,7 @@ void ScriptLauncher::launchScript(const QString& target, const QString &paramete
 
     QFileInfo fileInfo(scriptPath);
 
-    process.setWorkingDirectory(fileInfo.dirPath());
+    process.setWorkingDirectory(fileInfo.path());
     if(process.start()==false)
     {
         QFile file(parameterList[0]);

@@ -206,7 +206,7 @@ namespace Konversation
             inputLine.replace("%\x01","%");       // restore double %% as single %
         }
 
-        QString line=inputLine.lower();
+        QString line=inputLine.toLower();
 
         // Convert double command chars at the beginning to single ones
         if(line.startsWith(commandChar+commandChar) && !destination.isEmpty())
@@ -217,7 +217,7 @@ namespace Konversation
         // Server command?
         else if(line.startsWith(commandChar))
         {
-            QString command = inputLine.section(' ', 0, 0).mid(1).lower();
+            QString command = inputLine.section(' ', 0, 0).mid(1).toLower();
             QString parameter = inputLine.section(' ', 1);
 
             if (command !="topic")
@@ -754,7 +754,7 @@ namespace Konversation
                                                   // who is the recipient?
         QString recipient = parameter.section(' ', 0, 0);
                                                   // what is the first word of the ctcp?
-        QString request = parameter.section(' ', 1, 1, QString::SectionSkipEmpty).upper();
+        QString request = parameter.section(' ', 1, 1, QString::SectionSkipEmpty).toUpper();
                                                   // what is the complete ctcp command?
         QString message = parameter.section(' ', 2, 0xffffff, QString::SectionSkipEmpty);
 
@@ -846,7 +846,7 @@ namespace Konversation
             QString tmpParameter = parameter;
             QStringList parameterList = QStringList::split(' ', tmpParameter.replace("\\ ", "%20"));
 
-            QString dccType = parameterList[0].lower();
+            QString dccType = parameterList[0].toLower();
 
             if(dccType=="close")
             {
@@ -1166,7 +1166,7 @@ namespace Konversation
             QString channel;
             QString option;
             // check for option
-            QString lowerParameter = parameterList[0].lower();
+            QString lowerParameter = parameterList[0].toLower();
             bool host = (lowerParameter == "-host");
             bool domain = (lowerParameter == "-domain");
             bool uhost = (lowerParameter == "-userhost");
@@ -1315,7 +1315,7 @@ namespace Konversation
             int value = Ignore::Channel | Ignore::Query;
 
             // user specified -all option
-            if(parameterList[0].lower() == "-all")
+            if(parameterList[0].toLower() == "-all")
             {
                 // ignore everything
                 value = Ignore::All;

@@ -69,20 +69,20 @@ namespace Konversation
     bool AddressbookBase::hasNick(const KABC::Addressee &addressee, const QString &ircnick, const QString &servername, const QString &servergroup)
     {
 
-        QString lnick = ircnick.lower();
+        QString lnick = ircnick.toLower();
         QString lnick_servername;
         QString lnick_servergroup;
         if(!servername.isEmpty())
-            lnick_servername = lnick + QChar(0xE120) + servername.lower();
+            lnick_servername = lnick + QChar(0xE120) + servername.toLower();
         if(!servergroup.isEmpty())
-            lnick_servergroup = lnick + QChar(0xE120) + servergroup.lower();
+            lnick_servergroup = lnick + QChar(0xE120) + servergroup.toLower();
 
         QString lit;
         QStringList addresses = QStringList::split( QChar( 0xE000 ), addressee.custom("messaging/irc", "All") );
         QStringList::iterator end = addresses.end();
         for ( QStringList::iterator it = addresses.begin(); it != end; ++it )
         {
-            lit = (*it).lower();
+            lit = (*it).toLower();
             if(lit == lnick || lit == lnick_servername || lit == lnick_servergroup)
                 return true;
         }
@@ -103,8 +103,8 @@ namespace Konversation
     {
         QStringList nicks;
 
-        QString lservername = servername.lower();
-        QString lservergroup = servergroup.lower();
+        QString lservername = servername.toLower();
+        QString lservergroup = servergroup.toLower();
 
         QStringList addresses = QStringList::split( QChar( 0xE000 ), addressee.custom("messaging/irc", "All") );
         QStringList::iterator end = addresses.end();
@@ -114,7 +114,7 @@ namespace Konversation
                 nicks.append(*it);
             else
             {
-                QString it_server = (*it).section(QChar( 0xE120), 0,0).lower();
+                QString it_server = (*it).section(QChar( 0xE120), 0,0).toLower();
                 if(it_server == lservername || it_server == lservergroup)
                     nicks.append((*it).section(QChar( 0xE120 ), 1,1));
             }
@@ -124,12 +124,12 @@ namespace Konversation
 
     bool AddressbookBase::hasNick(const KABC::Addressee &addressee, const QString &nick_server)
     {
-        QString lnick_server = nick_server.lower();
+        QString lnick_server = nick_server.toLower();
         QStringList addresses = QStringList::split( QChar( 0xE000 ), addressee.custom("messaging/irc", "All") );
         QStringList::iterator end = addresses.end();
         for ( QStringList::iterator it = addresses.begin(); it != end; ++it )
         {
-            QString it_server = (*it).section(QChar( 0xE120), 0,0).lower();
+            QString it_server = (*it).section(QChar( 0xE120), 0,0).toLower();
             if(it_server ==lnick_server)
                 return true;
         }
@@ -186,13 +186,13 @@ namespace Konversation
         kDebug() << "in unassociatenick for '" << ircnick << endl;
         if(ircnick.isEmpty()) return;
 
-        QString lnick = ircnick.lower();
+        QString lnick = ircnick.toLower();
         QString lnick_servername;
         QString lnick_servergroup;
         if(!servername.isEmpty())
-            lnick_servername = lnick + QChar(0xE120) + servername.lower();
+            lnick_servername = lnick + QChar(0xE120) + servername.toLower();
         if(!servergroup.isEmpty())
-            lnick_servergroup = lnick + QChar(0xE120) + servergroup.lower();
+            lnick_servergroup = lnick + QChar(0xE120) + servergroup.toLower();
 
         //We should now have lnick = ircnick, and versions with servername and servergroup -
         // like johnflux, johnflux@freenode, or johnflux@irc.kde.org    except with the unicode
@@ -209,7 +209,7 @@ namespace Konversation
         QStringList::iterator it = addresses.begin();
         while(it != addresses.end())
         {
-            lit = (*it).lower();
+            lit = (*it).toLower();
             if(lit == lnick || lit == lnick_servername || lit == lnick_servergroup)
             {
                 changed = true;

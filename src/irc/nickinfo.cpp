@@ -37,7 +37,7 @@ NickInfo::NickInfo(const QString& nick, Server* server): KShared()
 {
     //m_addressee=Konversation::Addressbook::self()->getKABCAddresseeFromNick(nick, server->getServerName(), server->getDisplayName());
     m_nickname = nick;
-    m_loweredNickname = nick.lower();
+    m_loweredNickname = nick.toLower();
     m_owningServer = server;
     m_away = false;
     m_notified = false;
@@ -140,7 +140,7 @@ void NickInfo::setNickname(const QString& newNickname)
     m_addressee = newaddressee;
     */
     m_nickname = newNickname;
-    m_loweredNickname = newNickname.lower();
+    m_loweredNickname = newNickname.toLower();
 
     //QString realname = m_addressee.realName(); //TODO why the fuck is this called?
     startNickInfoChangedTimer();
@@ -351,7 +351,7 @@ void NickInfo::tooltipTableData(Q3TextStream &tooltip) const
         tooltip << m_addressee.realName();
         dirty = true;
     }
-    else */ if(!getRealName().isEmpty() && getRealName().lower() != loweredNickname())
+    else */ if(!getRealName().isEmpty() && getRealName().toLower() != loweredNickname())
     {
         QString escapedRealName( getRealName() );
         escapedRealName.replace("<","&lt;").replace(">","&gt;");

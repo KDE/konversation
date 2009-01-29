@@ -39,7 +39,7 @@ int NicksOnlineItem::compare(Q3ListViewItem* i,int col,bool ascending) const
   if(static_cast<NicksOnlineItem*>(i)->type()==OfflineItem) return ascending ? -1 : 1;
 
   // otherwise compare items case-insensitively
-  return key(col,ascending).lower().localeAwareCompare(i->key(col,ascending).lower());
+  return key(col,ascending).toLower().localeAwareCompare(i->key(col,ascending).toLower());
 }
 
 /**

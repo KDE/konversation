@@ -152,7 +152,7 @@ namespace Konversation
                 m_server->sendJoinCommand(channel);
             }
             // Always use KDE default mailer.
-            else if (!Preferences::useCustomBrowser() || link.lower().startsWith("mailto:"))
+            else if (!Preferences::useCustomBrowser() || link.toLower().startsWith("mailto:"))
             {
                 new KRun(KUrl::fromPathOrUrl(link));
             }

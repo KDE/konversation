@@ -132,7 +132,7 @@ void StatusPanel::statusTextEntered()
     QString line=statusInput->text();
     statusInput->setText("");
 
-    if(line.lower()==Preferences::commandChar()+"clear") textView->clear();
+    if(line.toLower()==Preferences::commandChar()+"clear") textView->clear();
     else
     {
         if(line.length()) sendStatusText(line);
@@ -208,14 +208,14 @@ void StatusPanel::updateAppearance()
 void StatusPanel::setName(const QString& newName)
 {
     ChatWindow::setName(newName);
-    setLogfileName(newName.lower());
+    setLogfileName(newName.toLower());
 }
 
 void StatusPanel::updateName()
 {
     QString newName = getServer()->getDisplayName();
     setName(newName);
-    setLogfileName(newName.lower());
+    setLogfileName(newName.toLower());
 }
 
 void StatusPanel::sendFileMenu()

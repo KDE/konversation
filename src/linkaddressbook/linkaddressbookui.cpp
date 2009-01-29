@@ -74,7 +74,7 @@ LinkAddressbookUI::LinkAddressbookUI( QWidget *parent, const char *name, const Q
     //We should add a clear KAction here.  But we can't really do that with a designer file :\  this sucks
 
     m_ircnick = ircnick;
-    m_lower_ircnick = m_ircnick.lower();
+    m_lower_ircnick = m_ircnick.toLower();
     m_servername = servername;
     m_servergroup = servergroup;
     m_suggested_realname = suggested_realname;

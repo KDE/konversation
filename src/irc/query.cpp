@@ -177,7 +177,7 @@ void Query::setName(const QString& newName)
     // This will prevent Nick-Changers to create more than one log file,
     if (logName.isEmpty())
     {
-        QString logName =  (Preferences::lowerLog()) ? getName().lower() : getName() ;
+        QString logName =  (Preferences::lowerLog()) ? getName().toLower() : getName() ;
 
         if(Preferences::addHostnameToLog())
         {
@@ -201,11 +201,11 @@ void Query::queryTextEntered()
 {
     QString line=queryInput->text();
     queryInput->setText("");
-    if(line.lower()==Preferences::commandChar()+"clear")
+    if(line.toLower()==Preferences::commandChar()+"clear")
     {
         textView->clear();
     }
-    else if(line.lower()==Preferences::commandChar()+"part")
+    else if(line.toLower()==Preferences::commandChar()+"part")
     {
         m_server->closeQuery(getName());
     }

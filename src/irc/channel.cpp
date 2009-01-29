@@ -920,7 +920,7 @@ void Channel::endCompleteNick()
 void Channel::setName(const QString& newName)
 {
     ChatWindow::setName(newName);
-    setLogfileName(newName.lower());
+    setLogfileName(newName.toLower());
 }
 
 bool Channel::autoJoin()
@@ -1035,11 +1035,11 @@ void Channel::channelTextEntered()
     QString line = channelInput->text();
     channelInput->setText ("");
 
-    if(line.lower().trimmed() == Preferences::commandChar()+"clear")
+    if(line.toLower().trimmed() == Preferences::commandChar()+"clear")
     {
         textView->clear();
     }
-    else if(line.lower().trimmed() == Preferences::commandChar()+"cycle")
+    else if(line.toLower().trimmed() == Preferences::commandChar()+"cycle")
     {
         cycleChannel();
     }
@@ -1484,7 +1484,7 @@ void Channel::kickNick(ChannelNickPtr channelNick, const QString &kicker, const 
 
 Nick* Channel::getNickByName(const QString &lookname)
 {
-    QString lcLookname = lookname.lower();
+    QString lcLookname = lookname.toLower();
     Q3PtrListIterator<Nick> it(nicknameList);
 
     while(it.current() != 0)
@@ -1616,9 +1616,9 @@ void Channel::updateMode(const QString& sourceNick, char mode, bool plus, const 
     if(parameterChannelNick)
         wasAnyOp=parameterChannelNick->isAnyTypeOfOp();
 
-    if(sourceNick.lower()==m_server->loweredNickname())
+    if(sourceNick.toLower()==m_server->loweredNickname())
         fromMe=true;
-    if(parameter.lower()==m_server->loweredNickname())
+    if(parameter.toLower()==m_server->loweredNickname())
         toMe=true;
 
     switch(mode)

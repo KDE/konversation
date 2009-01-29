@@ -87,7 +87,7 @@ void InputFilter::parseLine(const QString& a_newLine)
     // Find end of command
     pos = newLine.find(' ');
     // Copy command (all lowercase to make parsing easier)
-    QString command = newLine.left(pos).lower();
+    QString command = newLine.left(pos).toLower();
     // Are there parameters left in the string?
     QStringList parameterList;
 
@@ -139,7 +139,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
             // cut out the CTCP command
             QString ctcp = trailing.mid(1,trailing.find(1,1)-1);
 
-            QString ctcpCommand=ctcp.left(ctcp.find(" ")).lower();
+            QString ctcpCommand=ctcp.left(ctcp.find(" ")).toLower();
             QString ctcpArgument=ctcp.mid(ctcp.find(" ")+1);
             ctcpArgument=static_cast<KonversationApplication*>(kapp)->doAutoreplace(ctcpArgument,false);
 
@@ -159,7 +159,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
 
                     if(sourceNick != server->getNickname())
                     {
-                        if(ctcpArgument.lower().find(QRegExp("(^|[^\\d\\w])"
+                        if(ctcpArgument.toLower().find(QRegExp("(^|[^\\d\\w])"
                             + QRegExp::escape(server->loweredNickname())
                             + "([^\\d\\w]|$)")) !=-1 )
                         {
@@ -259,7 +259,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                 if(!isIgnore(prefix,Ignore::DCC))
                 {
                     // Extract DCC type and argument list
-                    QString dccType=ctcpArgument.lower().section(' ',0,0);
+                    QString dccType=ctcpArgument.toLower().section(' ',0,0);
 
                     // Support file names with spaces
                     QString dccArguments = ctcpArgument.mid(ctcpArgument.find(" ")+1);
@@ -433,7 +433,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                     QString reply(ctcp.section(' ',1));
 
                     // pong reply, calculate turnaround time
-                    if(replyReason.lower()=="ping")
+                    if(replyReason.toLower()=="ping")
                     {
                         int dateArrived=QDateTime::currentDateTime().toTime_t();
                         int dateSent=reply.toInt();
@@ -471,8 +471,8 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                     else if (server->identifyMsg())
                         trailing = trailing.mid(1);
 
-                    if(trailing.lower() == "password accepted - you are now recognized"
-                        || trailing.lower() == "you have already identified")
+                    if(trailing.toLower() == "password accepted - you are now recognized"
+                        || trailing.toLower() == "you have already identified")
                     {
                         NickInfoPtr nickInfo = server->getNickInfo(server->getNickname());
                         if(nickInfo)
@@ -1251,7 +1251,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             {
                 NickInfoPtr nickInfo = server->getNickInfo(parameterList[5]);
                                                   // G=away G@=away,op G+=away,voice
-                bool bAway = parameterList[6].upper().startsWith("G");
+                bool bAway = parameterList[6].toUpper().startsWith("G");
                 if(nickInfo)
                 {
                     nickInfo->setHostmask(i18n("%1@%2").arg(parameterList[2]).arg(parameterList[3]));
@@ -1283,7 +1283,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             {
                 if(!whoRequestList.isEmpty())
                 {                                 // for safety
-                    QStringList::iterator it = whoRequestList.find(parameterList[1].lower());
+                    QStringList::iterator it = whoRequestList.find(parameterList[1].toLower());
 
                     if(it != whoRequestList.end())
                     {
@@ -1457,7 +1457,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 // Display message only if this was not an automatic request.
                 if(getAutomaticRequest("WHOIS",parameterList[1])==0)
                 {
-                    if (trailing.lower().simplified().startsWith("is an irc operator"))
+                    if (trailing.toLower().simplified().startsWith("is an irc operator"))
                         server->appendMessageToFrontmost(i18n("Whois"),i18n("%1 is an IRC Operator.").arg(parameterList[1]));
                     else
                         server->appendMessageToFrontmost(i18n("Whois"),QString("%1 %2").arg(parameterList[1]).arg(trailing));
@@ -1870,24 +1870,24 @@ void InputFilter::reset()
 
 void InputFilter::setAutomaticRequest(const QString& command, const QString& name, bool yes)
 {
-    automaticRequest[command][name.lower()] += (yes) ? 1 : -1;
-    if(automaticRequest[command][name.lower()]<0)
+    automaticRequest[command][name.toLower()] += (yes) ? 1 : -1;
+    if(automaticRequest[command][name.toLower()]<0)
     {
         kDebug()   << "InputFilter::automaticRequest( " << command << ", " << name
             << " ) was negative! Resetting!"
             << endl;
-        automaticRequest[command][name.lower()]=0;
+        automaticRequest[command][name.toLower()]=0;
     }
 }
 
 int InputFilter::getAutomaticRequest(const QString& command, const QString& name)
 {
-    return automaticRequest[command][name.lower()];
+    return automaticRequest[command][name.toLower()];
 }
 
-void InputFilter::addWhoRequest(const QString& name) { whoRequestList << name.lower(); }
+void InputFilter::addWhoRequest(const QString& name) { whoRequestList << name.toLower(); }
 
-bool InputFilter::isWhoRequestUnderProcess(const QString& name) { return (whoRequestList.contains(name.lower())>0); }
+bool InputFilter::isWhoRequestUnderProcess(const QString& name) { return (whoRequestList.contains(name.toLower())>0); }
 
 void InputFilter::setLagMeasuring(bool state) { lagMeasuring=state; }
 

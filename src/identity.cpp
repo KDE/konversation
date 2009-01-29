@@ -165,7 +165,7 @@ void Identity::setCodecName(const QString &newCodecName)
     // We can get a QTextCodec from QString based on them, but can't do the reverse of that.
 
     // never set an empty or borked codec!
-    QString codecName=newCodecName.lower();
+    QString codecName=newCodecName.toLower();
     if(!Konversation::IRCCharsets::self()->isValidEncoding(codecName))
         codecName=Konversation::IRCCharsets::self()->encodingForLocale();
 

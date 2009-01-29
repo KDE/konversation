@@ -140,7 +140,7 @@ void UrlCatcher::addUrl(const QString& who,const QString& url)
 void UrlCatcher::openUrl(Q3ListViewItem* item)
 {
     QString url = item->text(1);
-    if (!Preferences::useCustomBrowser() || url.lower().startsWith("mailto:") )
+    if (!Preferences::useCustomBrowser() || url.toLower().startsWith("mailto:") )
     {
         new KRun(KUrl(url), KonversationApplication::instance()->getMainWindow());
     }

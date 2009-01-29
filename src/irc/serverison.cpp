@@ -77,7 +77,7 @@ QStringList ServerISON::getAddressees()
 
 KABC::Addressee ServerISON::getOfflineNickAddressee(QString& nickname)
 {
-    QString lcNickname = nickname.lower();
+    QString lcNickname = nickname.toLower();
     if(m_ISONList_invalid)
         recalculateAddressees();
     if (m_offlineNickToAddresseeMap.contains(lcNickname))
@@ -113,8 +113,8 @@ void ServerISON::recalculateAddressees()
         }
 
         // Lowercase server name and server group.
-        QString lserverName = m_server->getServerName().lower();
-        QString lserverGroup = m_server->getDisplayName().lower();
+        QString lserverName = m_server->getServerName().toLower();
+        QString lserverGroup = m_server->getDisplayName().toLower();
 
         // Build notify list from nicks in addressbook, eliminating dups (case insensitive).
         QMap<QString,QString> ISONMap;
@@ -137,7 +137,7 @@ void ServerISON::recalculateAddressees()
 
                     for(QStringList::iterator it = nicknames.begin(); it != itEnd; ++it)
                     {
-                        ISONMap.insert((*it).lower(), (*it), true);
+                        ISONMap.insert((*it).toLower(), (*it), true);
                     }
                 }
                 else
@@ -153,12 +153,12 @@ void ServerISON::recalculateAddressees()
                     for( QStringList::ConstIterator nicksIt = nicks.constBegin();
                         nicksIt != nicksItEnd; ++nicksIt )
                     {
-                        QString lserverOrGroup = (*nicksIt).section(QChar(0xE120),1).lower();
+                        QString lserverOrGroup = (*nicksIt).section(QChar(0xE120),1).toLower();
                         if(lserverOrGroup == lserverName || lserverOrGroup == lserverGroup ||
                             lserverOrGroup.isEmpty())
                         {
                             QString nickname = (*nicksIt).section(QChar(0xE120),0,0);
-                            QString lcNickname = nickname.lower();
+                            QString lcNickname = nickname.toLower();
                             ISONMap.insert(lcNickname, nickname, true);
                             m_offlineNickToAddresseeMap.insert(lcNickname, *it, true);
                         }
@@ -177,7 +177,7 @@ void ServerISON::recalculateAddressees()
 
         for(QStringList::iterator it = prefsWatchList.begin(); it != itEnd; ++it)
         {
-            ISONMap.insert((*it).lower(), (*it), true);
+            ISONMap.insert((*it).toLower(), (*it), true);
         }
 
         // Build final watch list.

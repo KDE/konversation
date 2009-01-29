@@ -216,7 +216,7 @@ namespace Konversation
 
     bool ChannelSettings::operator== (const ChannelSettings& channel) const
     {
-        if (m_name.lower() == channel.name().lower())
+        if (m_name.toLower() == channel.name().toLower())
             return true;
         else
             return false;

@@ -263,7 +263,7 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0, Qt::WStyle_C
     KShortcut prevShortcut = KStandardShortcut::tabPrev();
 
     const char *nextIcon, *prevIcon;
-    if (QApplication::reverseLayout())
+    if (QApplication::isRightToLeft())
     {
         prevShortcut.setAlternate(QKeySequence("Alt+Right"));
         nextShortcut.setAlternate(QKeySequence("Alt+Left"));
@@ -278,7 +278,7 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0, Qt::WStyle_C
         prevIcon="prev";
     }
 
-    //action = new KAction(i18n("&Next Tab"), QApplication::reverseLayout() ? "previous" : "next", QApplication::reverseLayout() ? prevShortcut : nextShortcut, m_viewContainer, SLOT(showNextView()), actionCollection(), "next_tab");
+    //action = new KAction(i18n("&Next Tab"), QApplication::isRightToLeft() ? "previous" : "next", QApplication::reverseLayout() ? prevShortcut : nextShortcut, m_viewContainer, SLOT(showNextView()), actionCollection(), "next_tab");
     action=new KAction(this);
     action->setText(i18n("&Next Tab"));
     action->setIcon(KIcon(nextIcon));
@@ -287,7 +287,7 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0, Qt::WStyle_C
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(showNextView()));
     actionCollection()->addAction("next_tab", action);
 
-    //action = new KAction(i18n("&Previous Tab"), QApplication::reverseLayout() ? "next" : "previous", QApplication::reverseLayout() ? nextShortcut : prevShortcut, m_viewContainer, SLOT(showPreviousView()),actionCollection(),"previous_tab");
+    //action = new KAction(i18n("&Previous Tab"), QApplication::isRightToLeft() ? "next" : "previous", QApplication::reverseLayout() ? nextShortcut : prevShortcut, m_viewContainer, SLOT(showPreviousView()),actionCollection(),"previous_tab");
     action=new KAction(this);
     action->setText(i18n("&Previous Tab"));
     action->setIcon(KIcon(prevIcon));
@@ -337,7 +337,7 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0, Qt::WStyle_C
     }
     else
     {
-        if (QApplication::reverseLayout())
+        if (QApplication::isRightToLeft())
         {
             //action = new KAction(i18n("Move Tab Right"), "1rightarrow", KShortcut("Alt+Shift+Right"), m_viewContainer, SLOT(moveViewLeft()), actionCollection(), "move_tab_left");
             action=new KAction(this);

@@ -207,8 +207,8 @@ int Nick::compare(Q3ListViewItem* item,int col,bool ascending) const
     {
         if(Preferences::sortCaseInsensitive())
         {
-            thisKey = thisKey.lower();
-            otherKey = otherKey.lower();
+            thisKey = thisKey.toLower();
+            otherKey = otherKey.toLower();
         }
         else
         {
