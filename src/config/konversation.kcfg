@@ -958,27 +958,28 @@
       <label></label>
     </entry>
   </group>
-<!--
   <group name="QueueRates">
     <entry name="queueRate$(QueueIndex)" type="IntList" key="EmptyingRate $(QueueIndex)">
-        <!- - kconfig_compiler really should do this for me... - ->
-        <code>  QValueList&lt; QValueList&lt;int&gt; &gt; defaultRate;
-  QValueList&lt; QValueList&lt;int&gt; &gt;::iterator defaultRateInitIter;
+        <!-- kconfig_compiler really should do this for me... -->
+        <code>  QList&lt; QList&lt;int&gt; &gt; defaultRate;
+  QList&lt; int &gt; defaultRateInit;
 
-  defaultRateInitIter = defaultRate.append(QValueList&lt;int&gt;());
-  (*defaultRateInitIter).append( 15 );
-  (*defaultRateInitIter).append( 60 );
-  (*defaultRateInitIter).append( 0 );
+  defaultRateInit.append( 15 );
+  defaultRateInit.append( 60 );
+  defaultRateInit.append( 0 );
+  defaultRate.append( defaultRateInit );
 
-  defaultRateInitIter = defaultRate.append(QValueList&lt;int&gt;());
-  (*defaultRateInitIter).append( 40 );
-  (*defaultRateInitIter).append( 60 );
-  (*defaultRateInitIter).append( 0 );
+  defaultRateInit.clear();
+  defaultRateInit.append( 40 );
+  defaultRateInit.append( 60 );
+  defaultRateInit.append( 0 );
+  defaultRate.append( defaultRateInit );
 
-  defaultRateInitIter = defaultRate.append(QValueList&lt;int&gt;());
-  (*defaultRateInitIter).append( 1 );
-  (*defaultRateInitIter).append( 1 );
-  (*defaultRateInitIter).append( 0 );
+  defaultRateInit.clear();
+  defaultRateInit.append( 1 );
+  defaultRateInit.append( 1 );
+  defaultRateInit.append( 0 );
+  defaultRate.append( defaultRateInit );
 
   if (0) //kconfig_compiler generates invalid code for int lists</code>
         <parameter name="QueueIndex" type="Int" max="2"/>
@@ -990,5 +991,4 @@
         <default>false</default>
     </entry>
   </group>
-  -->
 </kcfg>

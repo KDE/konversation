@@ -80,7 +80,7 @@ Server::Server(QObject* parent, ConnectionSettings& settings) : QObject(parent)
 
     for (int i=0;i<=_max_queue();i++)
     {
-        //Q3ValueList<int> r=Preferences::queueRate(i);
+        //QList<int> r=Preferences::queueRate(i);
         IRCQueue *q=new IRCQueue(this, staticrates[i]); //FIXME these are supposed to be in the rc
         m_queues.append(q);
     }
@@ -221,34 +221,34 @@ void Server::doPreShellCommand()
 }
 
 void Server::_fetchRates()
-{/*
+{
     for (int i=0;i<=_max_queue();i++)
     {
-        Q3ValueList<int> r=Preferences::queueRate(i);
+        QList<int> r=Preferences::queueRate(i);
         staticrates[i]=IRCQueue::EmptyingRate(r[0], r[1]*1000,IRCQueue::EmptyingRate::RateType(r[2]));
-    }*/
+    }
 }
 
 void Server::_stashRates()
-{ /*
+{
     for (int i=0;i<=_max_queue();i++)
     {
-        Q3ValueList<int> r;
+        QList<int> r;
         r.append(staticrates[i].m_rate);
         r.append(staticrates[i].m_interval/1000);
         r.append(int(staticrates[i].m_type));
         Preferences::setQueueRate(i, r);
-    } */
+    }
 }
 
 void Server::_resetRates()
-{ /*
+{
     for (int i=0;i<=_max_queue();i++)
     {
         Preferences::self()->queueRateItem(i)->setDefault();
-        Q3ValueList<int> r=Preferences::queueRate(i);
+        QList<int> r=Preferences::queueRate(i);
         staticrates[i]=IRCQueue::EmptyingRate(r[0], r[1]*1000,IRCQueue::EmptyingRate::RateType(r[2]));
-    } */
+    }
 }
 
 void Server::initTimers()
