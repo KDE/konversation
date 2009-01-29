@@ -6,7 +6,8 @@ add_subdirectory(scripts)
 ########### install files ###############
 
 install(FILES   konvi.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
-install(FILES   konviui.rc eventsrc DESTINATION ${DATA_INSTALL_DIR}/konvi)
+install(FILES   konversationui.rc eventsrc DESTINATION
+	${DATA_INSTALL_DIR}/konversation)
 #install(FILES   updaters/konvi.upd
 #                updaters/konvi-0.19-colors.pl
 #                updaters/konvi-0.19-sortorder.pl
