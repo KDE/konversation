@@ -15,14 +15,14 @@
 #ifndef IRCCOLORCHOOSER_H
 #define IRCCOLORCHOOSER_H
 
-#include <kdialogbase.h>
+#include <kdialog.h>
 
 
 class IRCColorChooserUI;
 class KComboBox;
 class Preferences;
 
-class IRCColorChooser : public KDialogBase
+class IRCColorChooser : public KDialog
 {
     Q_OBJECT
         public:

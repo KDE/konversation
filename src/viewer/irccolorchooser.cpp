@@ -24,8 +24,12 @@
 
 
 IRCColorChooser::IRCColorChooser(QWidget* parent, const char* name)
-: KDialogBase(parent, name, true, i18n("IRC Color Chooser"), Ok|Cancel, Ok)
+: KDialog(parent)
 {
+    setButtons( KDialog::Ok|KDialog::Cancel );
+    setDefaultButton( KDialog::Ok );
+    setCaption( i18n("IRC Color Chooser") );
+    setModal( true );
     m_view = new IRCColorChooserUI(this);
     setMainWidget(m_view);
     initColors(m_view->m_fgColorCBox);
@@ -34,8 +38,8 @@ IRCColorChooser::IRCColorChooser(QWidget* parent, const char* name)
 
     connect(m_view->m_fgColorCBox, SIGNAL(activated(int)), this, SLOT(updatePreview()));
     connect(m_view->m_bgColorCBox, SIGNAL(activated(int)), this, SLOT(updatePreview()));
-    m_view->m_fgColorCBox->setCurrentItem(1);
-    m_view->m_bgColorCBox->setCurrentItem(0);
+    m_view->m_fgColorCBox->setCurrentIndex(1);
+    m_view->m_bgColorCBox->setCurrentIndex(0);
     updatePreview();
 }
 
@@ -80,4 +84,4 @@ void IRCColorChooser::initColors(KComboBox* combo)
     }
 }
 
-// #include "./viewer/irccolorchooser.moc"
+#include "irccolorchooser.moc"

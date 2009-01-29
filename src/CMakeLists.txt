@@ -124,7 +124,7 @@ set(viewer_SRCS
     viewer/highlightviewitem.cpp
     viewer/ignore.cpp
     viewer/ignorelistviewitem.cpp
-#    viewer/irccolorchooser.cpp
+    viewer/irccolorchooser.cpp
     viewer/logfilereader.cpp
     viewer/insertchardialog.cpp
 #    viewer/osd.cpp
@@ -137,6 +137,7 @@ set(viewer_SRCS
     viewer/quickbutton.cpp
     viewer/searchbar.cpp
 )
+kde4_add_ui3_files(viewer_SRCS viewer/irccolorchooserui.ui)
 
 
     #=== DCC
