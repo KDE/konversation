@@ -112,7 +112,7 @@ int KonversationApplication::newInstance()
 
         // Images object providing LEDs, NickIcons
         m_images = new Images();
-        connect(this, SIGNAL(iconChanged(int)), m_images, SLOT(updateIcons()));
+        connect(KGlobalSettings::self(), SIGNAL(iconChanged(int)), m_images, SLOT(updateIcons()));
 
         // Auto-alias scripts.  This adds any missing aliases
         QStringList aliasList(Preferences::aliasList());

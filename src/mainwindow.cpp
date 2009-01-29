@@ -91,7 +91,7 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0, Qt::WStyle_C
 
     // Set up view container
     connect(KonversationApplication::instance(), SIGNAL(appearanceChanged()), m_viewContainer, SLOT(updateAppearance()));
-    connect(KonversationApplication::instance(), SIGNAL(iconChanged(int)), m_viewContainer, SLOT(updateViewIcons()));
+    connect(KGlobalSettings::self(), SIGNAL(iconChanged(int)), m_viewContainer, SLOT(updateViewIcons()));
     connect(KonversationApplication::instance(), SIGNAL(serverGroupsChanged(const Konversation::ServerGroupSettings*)),
             m_viewContainer, SLOT(updateViews(const Konversation::ServerGroupSettings*)));
     connect(m_viewContainer, SIGNAL(autoJoinToggled(const Konversation::ServerGroupSettings*)),
@@ -545,7 +545,7 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0, Qt::WStyle_C
     // set up system tray
     m_trayIcon = new Konversation::TrayIcon(this);
     connect(this, SIGNAL(endNotification()), m_trayIcon, SLOT(endNotification()));
-    connect(KonversationApplication::instance(), SIGNAL(iconChanged(int)), m_trayIcon, SLOT(updateAppearance()));
+    connect(KGlobalSettings::self(), SIGNAL(iconChanged(int)), m_trayIcon, SLOT(updateAppearance()));
     connect(m_trayIcon, SIGNAL(quitSelected()), this, SLOT(quitProgram()));
     KMenu *trayMenu = qobject_cast<KMenu*>(m_trayIcon->contextMenu());
     #ifdef USE_KNOTIFY
