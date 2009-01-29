@@ -154,8 +154,8 @@ QRect MultilineTextEdit::mapToView(int para,int index)
     }
     Q_ASSERT( linestart >= 0 );
 
-    int linewidth = fm.size(ExpandTabs, paratext.mid( linestart, index-linestart )).width();
-    int linewidth2 = fm.size(ExpandTabs, paratext.mid( linestart, index-linestart+1 )).width();
+    int linewidth = fm.size(Qt::ExpandTabs, paratext.mid( linestart, index-linestart )).width();
+    int linewidth2 = fm.size(Qt::ExpandTabs, paratext.mid( linestart, index-linestart+1 )).width();
 
     // FIXME as soon as it's possible to ask real margins from QTextEdit:
     const int left_margin = 4;
@@ -174,4 +174,4 @@ QRect MultilineTextEdit::mapToView(int para,int index)
         ));
 }
 
-// #include "./viewer/multilinetextedit.moc"
+#include "multilinetextedit.moc"

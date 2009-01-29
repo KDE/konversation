@@ -11,7 +11,7 @@
 
 #include "multilineedit.h"
 #include "multilinetextedit.h"
-#include "application.h" ////// header renamed
+#include "application.h"
 
 #include <qlayout.h>
 //Added by qt3to4:
@@ -23,10 +23,13 @@
 QString MultilineEdit::returnText;                // static
 
 MultilineEdit::MultilineEdit(QWidget* parent, const QString& text) :
-KDialogBase(parent,"multiline_edit_dialog",true,i18n("Edit Multiline Paste"),
-KDialogBase::User1 | KDialogBase::Ok | KDialogBase::Cancel,KDialogBase::Ok,true,
-KGuiItem(i18n("Add &Quotation Indicators")))
+KDialog(parent )
+                            //KGuiItem(i18n("Add &Quotation Indicators")))
 {
+    setButtons( KDialog::User1 | KDialog::Ok | KDialog::Cancel );
+    setDefaultButton( KDialog::Ok );
+    setCaption( i18n("Edit Multiline Paste") );
+    setModal( true );
     // Create the top level widget
     QWidget* page=new QWidget(this);
     setMainWidget(page);
@@ -35,7 +38,7 @@ KGuiItem(i18n("Add &Quotation Indicators")))
     dialogLayout->setSpacing(spacingHint());
     // add the text editor
     textEditor=new MultilineTextEdit(page,"multiline_text_editor");
-    textEditor->setTextFormat(PlainText);
+    textEditor->setTextFormat(Qt::PlainText);
     textEditor->setText(text);
     returnText=text;
 
@@ -43,6 +46,9 @@ KGuiItem(i18n("Add &Quotation Indicators")))
 
     setInitialSize(Preferences::multilineEditSize());
     show();
+    connect( this, SIGNAL( okClicked() ), this, SLOT( slotOk() ) );
+    connect( this, SIGNAL( cancelClicked() ), this, SLOT( slotCancel() ) );
+    connect( this, SIGNAL( user1Clicked() ), this, SLOT( slotUser1() ) );
 }
 
 MultilineEdit::~MultilineEdit()
@@ -53,13 +59,13 @@ MultilineEdit::~MultilineEdit()
 void MultilineEdit::slotCancel()
 {
     returnText=QString();
-    KDialogBase::slotCancel();
+    reject();
 }
 
 void MultilineEdit::slotOk()
 {
     returnText=textEditor->text();
-    KDialogBase::slotOk();
+    accept();
 }
 
 void MultilineEdit::slotUser1()
@@ -78,4 +84,4 @@ QString MultilineEdit::edit(QWidget* parent, const QString& text)
     return returnText;
 }
 
-// #include "./viewer/multilineedit.moc"
+#include "multilineedit.moc"

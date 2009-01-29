@@ -12,13 +12,13 @@
 #ifndef MULTILINEEDIT_H
 #define MULTILINEEDIT_H
 
-#include <kdialogbase.h>
+#include <kdialog.h>
 
 
 class QWidget;
 class MultilineTextEdit;
 
-class MultilineEdit : public KDialogBase
+class MultilineEdit : public KDialog
 {
     Q_OBJECT
 

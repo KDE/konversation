@@ -31,7 +31,7 @@ set(core_SRCS
 #    bookmarkmenu.cpp
 #    configdialog.cpp
 #    settingsdialog.cpp
-#    scriptlauncher.cpp
+    scriptlauncher.cpp
 #    konsolepanel.cpp
     notificationhandler.cpp
 
@@ -113,8 +113,8 @@ set(viewer_SRCS
 
     statuspanel.cpp
 
-#    viewer/multilineedit.cpp
-#    viewer/multilinetextedit.cpp
+    viewer/multilineedit.cpp
+    viewer/multilinetextedit.cpp
     viewer/ircviewbox.cpp
     viewer/viewcontainer.cpp
     viewer/viewtree.cpp

@@ -12,7 +12,7 @@
 
 #include "scriptlauncher.h"
 #include "channel.h"
-#include "application.h" ////// header renamed
+#include "application.h"
 #include "server.h"
 
 #include <qstringlist.h>
@@ -22,7 +22,6 @@
 #include <kdebug.h>
 #include <kstandarddirs.h>
 #include <k3process.h>
-#include <dcopclient.h>
 
 
 ScriptLauncher::ScriptLauncher(Server* server)
@@ -37,6 +36,8 @@ ScriptLauncher::~ScriptLauncher()
 
 void ScriptLauncher::launchScript(const QString& target, const QString &parameter)
 {
+#warning "port to kde4"
+#if 0 
     KStandardDirs kstddir;
     //  QString scriptPath(kstddir.saveLocation("data",QString("konversation/scripts")));
     K3Process process;
@@ -69,6 +70,7 @@ void ScriptLauncher::launchScript(const QString& target, const QString &paramete
 
     // to free the script's stdin, otherwise backticks won't work
     process.detach();
+#endif
 }
 
-// #include "./scriptlauncher.moc"
+#include "scriptlauncher.moc"
