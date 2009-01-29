@@ -20,16 +20,18 @@ namespace Konversation
 {
 
     InsertCharDialog::InsertCharDialog(const QString& font, QWidget *parent, const char *name)
-        : KDialogBase(parent, name, false, i18n("Insert Character"),
-        KDialogBase::Ok | KDialogBase::Close,
-        KDialogBase::Ok, false)
+        : KDialog(parent)
     {
-        setButtonOK(KGuiItem(i18n("&Insert"), "ok", i18n("Insert a character")));
+        setButtons( KDialog::Ok | KDialog::Close );
+        setDefaultButton( KDialog::Ok );
+        setModal( false );
+        setCaption(  i18n("Insert Character") );
+        setButtonGuiItem(KDialog::Ok, KGuiItem(i18n("&Insert"), "ok", i18n("Insert a character")));
 
-        m_charTable = new KCharSelect(this, "charTable", font);
-        m_charTable->enableFontCombo(false);
+        m_charTable = new KCharSelect(this, KCharSelect::CharacterTable);
+        m_charTable->setCurrentFont( QFont( font ) );
         setMainWidget(m_charTable);
-
+        connect( this, SIGNAL( okClicked() ), this, SLOT( slotOk ) );
         connect(m_charTable, SIGNAL(doubleClicked()), this, SLOT(slotOk()));
     }
 
@@ -44,14 +46,14 @@ namespace Konversation
 
     QChar InsertCharDialog::chr()
     {
-        return m_charTable->chr();
+        return m_charTable->currentChar();
     }
 
     void InsertCharDialog::slotOk()
     {
-        emit insertChar(m_charTable->chr());
+        emit insertChar(m_charTable->currentChar());
     }
 
 }
 
-// #include "./viewer/insertchardialog.moc"
+#include "insertchardialog.moc"

@@ -12,7 +12,7 @@
 #ifndef KONVERSATIONINSERTCHARDIALOG_H
 #define KONVERSATIONINSERTCHARDIALOG_H
 
-#include <kdialogbase.h>
+#include <kdialog.h>
 
 
 class KCharSelect;
@@ -21,7 +21,7 @@ class QChar;
 namespace Konversation
 {
 
-    class InsertCharDialog : public KDialogBase
+    class InsertCharDialog : public KDialog
     {
         Q_OBJECT
 
