@@ -120,7 +120,7 @@ void IRCInput::slotSpellCheckDone(const QString& s)
     // There's a FIXME to the effect in KSpell::check. This is
     // a workaround.
 
-    if (s == text() || s == (text() + '\n'+'\n'))
+    if (s == toPlainText() || s == (toPlainText() + '\n'+'\n'))
         return;
 
     setText(s.simplified());
@@ -187,7 +187,7 @@ void IRCInput::setText(const QString& text)
 //take text events from IRCView and TopicLabel
 bool IRCInput::eventFilter(QObject *object,QEvent *event)
 {
-    if (object->isA("IRCView") || object->isA("Konversation::TopicLabel"))
+    if (object->metaObject()->className() == QString("IRCView") || object->metaObject()->className() == QString("Konversation::TopicLabel"))
     {
         if (event->type() == QEvent::KeyPress)
         {
@@ -237,7 +237,7 @@ void IRCInput::keyPressEvent(QKeyEvent* e)
         case Qt::Key_Enter:
         case Qt::Key_Return:
         {
-            if(text().length()) addHistory(text());
+            if(!toPlainText().isEmpty()) addHistory(toPlainText());
             if(completionBox->isHidden())
             {
                 // Reset completion mode
@@ -250,7 +250,7 @@ void IRCInput::keyPressEvent(QKeyEvent* e)
                 }
                 else
                 {
-                    setText(static_cast<KonversationApplication*>(kapp)->doAutoreplace(text(),true));
+                    setText(static_cast<KonversationApplication*>(kapp)->doAutoreplace(toPlainText(),true));
                     emit submit();
                 }
             }
@@ -279,7 +279,7 @@ void IRCInput::keyPressEvent(QKeyEvent* e)
 
             // support ASCII BEL
             if(e->ascii() == 7)
-                insert("%G");
+                insertPlainText("%G");
             // support ^U (delete text in input box)
             else if(e->ascii() == 21)
                 setText("");
@@ -291,14 +291,14 @@ void IRCInput::keyPressEvent(QKeyEvent* e)
 void IRCInput::addHistory(const QString& line)
 {
     // Only add line if it's not the same as the last was
-    if(historyList[1]!=line)
+    if(historyList.value(1)!=line)
     {
         // Replace empty first entry with line
         historyList[0]=line;
         // Add new empty entry to history
         historyList.prepend(QString());
         // Remove oldest line in history, if the list grows beyond MAXHISTORY
-        if(historyList.count()>MAXHISTORY) historyList.remove(historyList.last());
+        if(historyList.count()>MAXHISTORY) historyList.removeLast();
     }
     // Reset history counter
     lineNum=0;
@@ -307,7 +307,7 @@ void IRCInput::addHistory(const QString& line)
 void IRCInput::getHistory(bool up)
 {
     // preserve text
-    historyList[lineNum]=text();
+    historyList[lineNum]=toPlainText();
     // Did the user press cursor up?
     if(up)
     {
@@ -322,7 +322,7 @@ void IRCInput::getHistory(bool up)
         // If we are at the top of the lest, arrow-down shall add the text to the history and clear the field for new input
         if(lineNum==0)
         {
-            if(text().length()) addHistory(text());
+            if(!toPlainText().isEmpty()) addHistory(toPlainText());
             setText("");
         }
         // If we aren't at the top of the list, decrement the line counter
@@ -408,11 +408,11 @@ void IRCInput::paste()
         }
 
         // does the text contain at least one newline character?
-        if(pasteText.find('\n')!=-1)
+        if(pasteText.indexOf('\n')!=-1)
         {
             // make comparisons easier (avoid signed / unsigned warnings)
-            unsigned int pos=pasteText.find('\n');
-            unsigned int rpos=pasteText.findRev('\n');
+            unsigned int pos=pasteText.indexOf('\n');
+            unsigned int rpos=pasteText.lastIndexOf('\n');
 
             // emit the signal if there's a line break in the middle of the text
             if(pos>0 && pos!=(pasteText.length()-1))
@@ -427,7 +427,7 @@ void IRCInput::paste()
         }
         else
         {
-            insert(pasteText);
+            insertPlainText(pasteText);
             return;
         }
 
@@ -435,10 +435,10 @@ void IRCInput::paste()
         if(signal)
         {
             // if there is text in the input line
-            if(!text().isEmpty())
+            if(!toPlainText().isEmpty())
             {
               // prepend text to the paste
-              pasteText=text()+'\n'+pasteText;
+              pasteText=toPlainText()+'\n'+pasteText;
             }
             // ask the user on long pastes
             if(checkPaste(pasteText))
@@ -505,7 +505,7 @@ void IRCInput::insertCompletion(const QString& nick)
     //getCursorPosition(&oldPos,&pos);
     oldPos=pos=textCursor().position();
 
-    QString line = text();
+    QString line = toPlainText();
 
     while(pos && line[pos-1] != ' ') pos--;
 
