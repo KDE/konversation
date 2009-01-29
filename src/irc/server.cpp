@@ -401,7 +401,7 @@ void Server::connectToIRCServer()
         //{
             m_socket = new KNetwork::KBufferedSocket(QString(), QString(), 0L);
             m_socket->setName("serverSocket");
-            connect(m_socket, SIGNAL(connected(const KResolverEntry&)), SLOT (ircServerConnectionSuccess()));
+            connect(m_socket, SIGNAL(connected(const KNetwork::KResolverEntry&)), SLOT (ircServerConnectionSuccess()));
         //}
         //else
         //{
@@ -542,7 +542,7 @@ bool& isOp,bool& isHalfop,bool& hasVoice)
 void Server::lookupFinished()
 {
     // error during lookup
-    if(m_socket->status())
+    if(m_socket->error())
     {
         // inform user about the error
         getStatusView()->appendServerMessage(i18n("Error"),i18n("Server %1 not found: %2")
