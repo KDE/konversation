@@ -32,7 +32,6 @@ namespace Konversation
         m_charTable->setCurrentFont( QFont( font ) );
         setMainWidget(m_charTable);
         connect( this, SIGNAL( okClicked() ), this, SLOT( slotOk ) );
-        connect(m_charTable, SIGNAL(doubleClicked()), this, SLOT(slotOk()));
     }
 
     InsertCharDialog::~InsertCharDialog()
