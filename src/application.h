@@ -125,7 +125,7 @@ class KonversationApplication : public KUniqueApplication
 
     signals:
         void catchUrl(const QString& who,const QString& url);
-        void serverGroupsChanged(const Konversation::ServerGroupSettings* serverGroup);
+        void serverGroupsChanged(const Konversation::ServerGroupSettingsPtr serverGroup);
         void appearanceChanged();
 
     public slots:

@@ -168,7 +168,7 @@ int KonversationApplication::newInstance()
 
         if (openServerList) mainWindow->openServerList();
 
-        connect(this, SIGNAL(serverGroupsChanged(const Konversation::ServerGroupSettings*)), this, SLOT(saveOptions()));
+        connect(this, SIGNAL(serverGroupsChanged(const Konversation::ServerGroupSettingsPtr)), this, SLOT(saveOptions()));
 
 #ifdef SOMEHOW_MAGICALLY_DCOP_WORKS_IN_KDE4_NOW
         // prepare dcop interface

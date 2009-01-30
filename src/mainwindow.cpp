@@ -92,10 +92,10 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0, Qt::WStyle_C
     // Set up view container
     connect(KonversationApplication::instance(), SIGNAL(appearanceChanged()), m_viewContainer, SLOT(updateAppearance()));
     connect(KGlobalSettings::self(), SIGNAL(iconChanged(int)), m_viewContainer, SLOT(updateViewIcons()));
-    connect(KonversationApplication::instance(), SIGNAL(serverGroupsChanged(const Konversation::ServerGroupSettings*)),
+    connect(KonversationApplication::instance(), SIGNAL(serverGroupsChanged(const Konversation::ServerGroupSettingsPtr)),
             m_viewContainer, SLOT(updateViews(const Konversation::ServerGroupSettings*)));
-    connect(m_viewContainer, SIGNAL(autoJoinToggled(const Konversation::ServerGroupSettings*)),
-            KonversationApplication::instance(), SIGNAL(serverGroupsChanged(const Konversation::ServerGroupSettings*)));
+    connect(m_viewContainer, SIGNAL(autoJoinToggled(const Konversation::ServerGroupSettingsPtr)),
+            KonversationApplication::instance(), SIGNAL(serverGroupsChanged(const Konversation::ServerGroupSettingsPtr)));
     connect(m_viewContainer, SIGNAL(setWindowCaption(const QString&)), this, SLOT(setCaption(const QString&)));
     connect(KonversationApplication::instance()->getConnectionManager(),
             SIGNAL(connectionChangedState(Server*, Konversation::ConnectionState)),
@@ -143,7 +143,7 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0, Qt::WStyle_C
 #endif
 
     KAction* action;
-    
+
     //(new KAction(i18n("&Server List..."), "server", KShortcut("F2"), this, SLOT(openServerList()),actionCollection(), "open_server_list"))->setToolTip(i18n("Manage networks and servers"));
     action=new KAction(this);
     action->setText(i18n("&Server List..."));
@@ -208,7 +208,7 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0, Qt::WStyle_C
     actionCollection()->addAction("open_dccstatus_window", action);
 
 
-    
+
     //action = new KAction(i18n("&Open Logfile"), "history", KShortcut("Ctrl+O"), m_viewContainer, SLOT(openLogFile()), actionCollection(), "open_logfile");
     action=new KAction(this);
     action->setText(i18n("&Open Logfile"));
@@ -707,7 +707,7 @@ void KonversationMainWindow::settingsChangedSlot()
     // via the appearanceChanged signal.  This prevents a series of settingsChanged signals
     // causing the app expensively rereading its settings many times.
     // The appearanceChanged signal is connected to resetHasDirtySettings to reset this bool
-    if (!m_hasDirtySettings) 
+    if (!m_hasDirtySettings)
     {
         QTimer::singleShot(0, KonversationApplication::instance(), SIGNAL(appearanceChanged()));
         m_hasDirtySettings = true;
@@ -804,9 +804,9 @@ void KonversationMainWindow::openServerList()
         m_serverListDialog = new Konversation::ServerListDialog(this);
         KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
 
-        connect(m_serverListDialog, SIGNAL(serverGroupsChanged(const Konversation::ServerGroupSettings*)),
-                konvApp, SIGNAL(serverGroupsChanged(const Konversation::ServerGroupSettings*)));
-        connect(konvApp, SIGNAL(serverGroupsChanged(const Konversation::ServerGroupSettings*)),
+        connect(m_serverListDialog, SIGNAL(serverGroupsChanged(const Konversation::ServerGroupSettingsPtr)),
+                konvApp, SIGNAL(serverGroupsChanged(const Konversation::ServerGroupSettingsPtr)));
+        connect(konvApp, SIGNAL(serverGroupsChanged(const Konversation::ServerGroupSettingsPtr)),
                 m_serverListDialog, SLOT(updateServerList()));
         connect(m_serverListDialog, SIGNAL(connectTo(Konversation::ConnectionFlag, int)),
                 konvApp->getConnectionManager(), SLOT(connectTo(Konversation::ConnectionFlag, int)));
@@ -854,7 +854,7 @@ IdentityPtr KonversationMainWindow::editIdentity(IdentityPtr identity)
         m_serverListDialog->updateServerList();
         return newIdentity;
     }
-    else 
+    else
         return IdentityPtr();
 }
 
