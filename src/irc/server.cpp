@@ -906,20 +906,11 @@ void Server::incoming()
     //if (getConnectionSettings().server().SSLEnabled())
     //    emit sslConnected(this);
 
-    // We read all available bytes here because readyRead() signal will be emitted when there is new data
-    // else we will stall when displaying MOTD etc.
-    int max_bytes = m_socket->bytesAvailable();
-
-    QByteArray buffer(max_bytes+1);
-    int len = 0;
-
-    // Read at max "max_bytes" bytes into "buffer"
-    len = m_socket->read(buffer.data(),max_bytes);
 
     //if (len <= 0 && getConnectionSettings().server().SSLEnabled())
     //    return;
 
-    if (len <= 0) // Zero means buffer is empty which shouldn't happen because readyRead signal is emitted
+    /*if (len <= 0) // Zero means buffer is empty which shouldn't happen because readyRead signal is emitted
     {
         getStatusView()->appendServerMessage(i18n("Error"),
             i18n("There was an error reading the data from the server: %1",
@@ -927,22 +918,18 @@ void Server::incoming()
 
         broken(m_socket->error());
         return;
-    }
-
-    buffer[len] = 0;
-
-    Q3CString qcsBuffer = m_inputBufferIncomplete + Q3CString(buffer);
+    }*/
 
     // split buffer to lines
-    Q3ValueList<Q3CString> qcsBufferLines;
-    int lastLFposition = -1;
-    for( int nextLFposition ; ( nextLFposition = qcsBuffer.find('\n', lastLFposition+1) ) != -1 ; lastLFposition = nextLFposition )
-        qcsBufferLines << qcsBuffer.mid(lastLFposition+1, nextLFposition-lastLFposition-1);
+    QList<QByteArray> bufferLines;
+    while(m_socket->canReadLine())
+    {
+        QByteArray line(m_socket->readLine());
+        if( !line.isEmpty() )
+            bufferLines.append(line);
+    }
 
-    // remember the incomplete line (split by packets)
-    m_inputBufferIncomplete = qcsBuffer.right(qcsBuffer.length()-lastLFposition-1);
-
-    while(!qcsBufferLines.isEmpty())
+    while(!bufferLines.isEmpty())
     {
         // Pre parsing is needed in case encryption/decryption is needed
         // BEGIN set channel encoding if specified
@@ -950,9 +937,9 @@ void Server::incoming()
         bool isServerMessage = false;
         QString channelKey;
         QTextCodec* codec = getIdentity()->getCodec();
-        Q3CString front = qcsBufferLines.front();
+        QByteArray first = bufferLines.first();
 
-        QStringList lineSplit = QStringList::split(" ",codec->toUnicode(front));
+        QStringList lineSplit = QStringList::split(" ",codec->toUnicode(first));
 
         if( lineSplit.count() >= 1 )
         {
@@ -963,7 +950,7 @@ void Server::incoming()
                 else
                     senderNick = lineSplit[0].mid(1, lineSplit[0].find('!')-1);
 
-                lineSplit.pop_front();            // remove prefix
+                lineSplit.removeFirst();          // remove prefix
             }
         }
 
@@ -1013,10 +1000,10 @@ void Server::incoming()
         }
         */
 
-        bool isUtf8 = Konversation::isUtf8(front);
+        bool isUtf8 = Konversation::isUtf8(first);
 
         if( isUtf8 )
-            m_inputBuffer << QString::fromUtf8(front);
+            m_inputBuffer << QString::fromUtf8(first);
         else
         {
             // check setting
@@ -1035,9 +1022,9 @@ void Server::incoming()
             if ( !isUtf8 && codec->mibEnum() == 106 )
                 codec = QTextCodec::codecForMib( 4 /* iso-8859-1 */ );
 
-            m_inputBuffer << codec->toUnicode(front);
+            m_inputBuffer << codec->toUnicode(first);
         }
-        qcsBufferLines.pop_front();
+        bufferLines.removeFirst();
         m_bytesReceived+=m_inputBuffer.back().length();
     }
 
@@ -2371,9 +2358,10 @@ bool Server::setNickOffline(const QString& nickname)
 {
     QString lcNickname = nickname.toLower();
     NickInfoPtr nickInfo = getNickInfo(lcNickname);
-    bool wasOnline = nickInfo->getPrintedOnline();
 
-    if (nickInfo && wasOnline)
+    bool wasOnline = nickInfo ? nickInfo->getPrintedOnline() : false;
+
+    if (wasOnline)
     {
         // Delete from query list, if present.
         if (m_queryNicks.contains(lcNickname)) m_queryNicks.remove(lcNickname);

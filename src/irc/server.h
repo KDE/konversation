@@ -642,7 +642,6 @@ void resetNickSelection();
         int m_checkTime;                            // Time elapsed while waiting for server 303 response
         int m_currentLag;
 
-        Q3CString m_inputBufferIncomplete;
         QStringList m_inputBuffer;
 
         Q3ValueVector<IRCQueue *> m_queues;

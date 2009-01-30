@@ -35,7 +35,7 @@
 //#include <kabc/stdaddressbook.h>
 #include "common.h"
 #include "topiclabel.h"
-//#include "channeloptionsdialog.h"
+#include "channeloptionsdialog.h"
 #include "notificationhandler.h"
 #include "viewcontainer.h"
 //#include "linkaddressbook/linkaddressbookui.h"
@@ -422,13 +422,13 @@ void Channel::purgeNicks()
 }
 
 void Channel::showOptionsDialog()
-{ /*
+{
     if(!m_optionsDialog)
         m_optionsDialog = new Konversation::ChannelOptionsDialog(this);
 
     m_optionsDialog->refreshModes();
     m_optionsDialog->refreshTopicHistory();
-    m_optionsDialog->show(); */
+    m_optionsDialog->show();
 }
 
 void Channel::filesDropped(QDropEvent* e)

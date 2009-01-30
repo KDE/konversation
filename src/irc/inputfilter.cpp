@@ -134,7 +134,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
             trailing = trailing.mid(1);
         }
 
-        if(trailing.at(0)==QChar(0x01))
+        if(!trailing.isEmpty() && trailing.at(0)==QChar(0x01))
         {
             // cut out the CTCP command
             QString ctcp = trailing.mid(1,trailing.find(1,1)-1);
