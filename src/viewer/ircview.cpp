@@ -15,7 +15,7 @@
 
 #include "ircview.h"
 #include "channel.h"
-#include "dccchat.h"
+#include "dcc/chat.h"
 #include "application.h" ////// header renamed
 #include "mainwindow.h" ////// header renamed
 #include "viewcontainer.h"
