@@ -399,9 +399,9 @@ void Server::connectToIRCServer()
         // connect() will do a async lookup too
         //if(!getConnectionSettings().server().SSLEnabled())
         //{
-            m_socket = new KNetwork::KBufferedSocket(QString(), QString(), 0L);
+            m_socket = new QTcpSocket();
             m_socket->setName("serverSocket");
-            connect(m_socket, SIGNAL(connected(const KNetwork::KResolverEntry&)), SLOT (ircServerConnectionSuccess()));
+            connect(m_socket, SIGNAL(connected()), SLOT (ircServerConnectionSuccess()));
         //}
         //else
         //{
@@ -411,14 +411,11 @@ void Server::connectToIRCServer()
         //    connect(m_socket, SIGNAL(sslFailure(const QString&)), SLOT(sslError(const QString&)));
         //}
 
-        m_socket->enableWrite(false);
-
-        connect(m_socket, SIGNAL(hostFound()), SLOT(lookupFinished()));
-        connect(m_socket, SIGNAL(gotError(int)), SLOT(broken(int)) );
+        connect(m_socket, SIGNAL(error(QAbstractSocket::SocketError)), SLOT(broken(QAbstractSocket::SocketError)) );
         connect(m_socket, SIGNAL(readyRead()), SLOT(incoming()));
-        connect(m_socket, SIGNAL(closed()), SLOT(closed()));
+        connect(m_socket, SIGNAL(disconnected()), SLOT(closed()));
 
-        m_socket->connect(getConnectionSettings().server().host(), QString::number(getConnectionSettings().server().port()));
+        m_socket->connectToHost(getConnectionSettings().server().host(), getConnectionSettings().server().port());
 
         // set up the connection details
         setPrefixes(m_serverNickPrefixModes, m_serverNickPrefixes);
@@ -582,15 +579,12 @@ void Server::ircServerConnectionSuccess()
 
     emit nicknameChanged(getNickname());
 
-    m_socket->enableRead(true);
 }
 
-void Server::broken(int state)
+void Server::broken(QAbstractSocket::SocketError state)
 {
-    kDebug() << "Connection broken (Socket fd " << m_socket->socketDevice()->socket() << ") " << state << "!" << endl;
+    kDebug() << "Connection broken " << m_socket->errorString() << "!" << endl;
 
-    m_socket->enableRead(false);
-    m_socket->enableWrite(false); //FIXME if we rely on this signal, it should be turned back on somewhere...
     m_socket->blockSignals(true);
 
     resetQueues();
@@ -621,7 +615,7 @@ void Server::broken(int state)
 
         QString error = i18n("Connection to Server %1 lost: %2.",
             getConnectionSettings().server().host(),
-            KNetwork::KSocketBase::errorString((KNetwork::KSocketBase::SocketError)state));
+            m_socket->errorString());
 
         getStatusView()->appendServerMessage(i18n("Error"), error);
 
@@ -648,7 +642,7 @@ void Server::connectionEstablished(const QString& ownHost)
     // Some servers don't include the userhost in RPL_WELCOME, so we
     // need to use RPL_USERHOST to get ahold of our IP later on
     if (!ownHost.isEmpty())
-        KNetwork::KResolver::resolveAsync(this,SLOT(gotOwnResolvedHostByWelcome(KNetwork::KResolverResults)),ownHost,"0");
+        QHostInfo::lookupHost(ownHost, this, SLOT(gotOwnResolvedHostByWelcome(QHostInfo)));
 
     updateConnectionState(Konversation::SSConnected);
 
@@ -697,12 +691,12 @@ void Server::setKeyForRecipient(const QString& recipient, const Q3CString& key)
     m_keyMap[recipient] = key;
 }
 
-void Server::gotOwnResolvedHostByWelcome(KNetwork::KResolverResults res)
+void Server::gotOwnResolvedHostByWelcome(QHostInfo res)
 {
-    if (res.error() == KResolver::NoError && !res.isEmpty())
-        m_ownIpByWelcome = res.first().address().nodeName();
+    if (res.error() == QHostInfo::NoError && !res.addresses().isEmpty())
+        m_ownIpByWelcome = res.addresses().first().toString();
     else
-        kDebug() << "Server::gotOwnResolvedHostByWelcome(): Got error: " << ( int )res.error() << endl;
+        kDebug() << "Server::gotOwnResolvedHostByWelcome(): Got error: " << res.errorString() << endl;
 }
 
 void Server::quitServer()
@@ -715,8 +709,6 @@ void Server::quitServer()
     QString command(Preferences::commandChar()+"QUIT");
     Konversation::OutputFilterResult result = getOutputFilter()->parse(getNickname(),command, QString());
     queue(result.toServer, HighPriority);
-
-    m_socket->enableRead(false);
 
     flushQueues();
 
@@ -1430,7 +1422,7 @@ bool Server::isNickOnline(const QString &nickname)
 
 QString Server::getOwnIpByNetworkInterface()
 {
-    return m_socket->localAddress().nodeName();
+    return m_socket->localAddress().toString();
 }
 
 QString Server::getOwnIpByServerMessage()
@@ -2725,7 +2717,7 @@ void Server::userhost(const QString& nick,const QString& hostmask,bool away,bool
     {
         QString myhost = hostmask.section('@', 1);
         // Use async lookup else you will be blocking GUI badly
-        KNetwork::KResolver::resolveAsync(this,SLOT(gotOwnResolvedHostByUserhost(KNetwork::KResolverResults)),myhost,"0");
+        QHostInfo::lookupHost(myhost, this, SLOT(gotOwnResolvedHostByUserhost(QHostInfo)));
     }
     NickInfoPtr nickInfo = getNickInfo(nick);
     if (nickInfo)
@@ -2737,12 +2729,12 @@ void Server::userhost(const QString& nick,const QString& hostmask,bool away,bool
     }
 }
 
-void Server::gotOwnResolvedHostByUserhost(KNetwork::KResolverResults res)
+void Server::gotOwnResolvedHostByUserhost(QHostInfo res)
 {
-    if ( res.error() == KResolver::NoError && !res.isEmpty() )
-        m_ownIpByUserhost = res.first().address().nodeName();
+    if ( res.error() == QHostInfo::NoError && !res.addresses().isEmpty() )
+        m_ownIpByUserhost = res.addresses().first().toString();
     else
-        kDebug() << "Server::gotOwnResolvedHostByUserhost(): Got error: " << ( int )res.error() << endl;
+        kDebug() << "Server::gotOwnResolvedHostByUserhost(): Got error: " << res.errorString() << endl;
 }
 
 void Server::appendServerMessageToChannel(const QString& channel,const QString& type,const QString& message)
@@ -3147,7 +3139,7 @@ bool Server::isSocketConnected() const
 {
     if (!m_socket) return false;
 
-    return (m_socket->state() == KNetwork::KClientSocketBase::Connected);
+    return (m_socket->state() == QAbstractSocket::ConnectedState);
 }
 
 void Server::updateConnectionState(Konversation::ConnectionState state)

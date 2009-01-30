@@ -35,7 +35,6 @@
 #include <kstringhandler.h>
 #include <config-konvi.h>
 #include <kdebug.h>
-#include <k3resolver.h>
 
 InputFilter::InputFilter()
 {
@@ -1196,10 +1195,10 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     // This WHOIS was requested by Server for DNS resolve purposes; try to resolve the host
                     if(getAutomaticRequest("DNS",parameterList[1])==1)
                     {
-                        KNetwork::KResolverResults resolved = KNetwork::KResolver::resolve(parameterList[3],"");
-                        if(resolved.error() == KResolver::NoError && resolved.size() > 0)
+                        QHostInfo resolved = QHostInfo::fromName(parameterList[3]);
+                        if(resolved.error() == QHostInfo::NoError && !resolved.addresses().isEmpty())
                         {
-                            QString ip = resolved.first().address().nodeName();
+                            QString ip = resolved.addresses().first().toString();
                             server->appendMessageToFrontmost(i18n("DNS"),
                                 i18n("Resolved %1 (%2) to address: %3",
                                      parameterList[1],

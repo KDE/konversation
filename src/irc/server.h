@@ -36,11 +36,11 @@
 #include <Q3CString>
 #include <Q3PtrList>
 
+#include <QTcpSocket>
+#include <QHostInfo>
+
 #include <ksharedptr.h>
 #include <k3process.h>
-#include <k3socketbase.h>
-#include <k3bufferedsocket.h>
-#include <k3streamsocket.h>
 
 
 class Channel;
@@ -56,8 +56,6 @@ class ServerISON;
 class Q3StrList;
 class ChatWindow;
 class ViewContainer;
-
-using namespace KNetwork;
 
 class IRCQueue;
 
@@ -488,7 +486,7 @@ void resetNickSelection();
         void toServer(QString&, IRCQueue *);
         /// Because KBufferedSocket has no closed(int) signal we use this slot to call broken(0)
         void closed();
-        void broken(int state);
+        void broken(QAbstractSocket::SocketError state);
         /** This is connected to the SSLSocket failed.
          * @param reason The reason why this failed.  This is already translated, ready to show the user.
          */
@@ -515,8 +513,8 @@ void resetNickSelection();
         void endOfWho(const QString& target);
         void invitation(const QString& nick,const QString& channel);
         void sendToAllChannelsAndQueries(const QString& text);
-        void gotOwnResolvedHostByWelcome(KNetwork::KResolverResults res);
-        void gotOwnResolvedHostByUserhost(KNetwork::KResolverResults res);
+        void gotOwnResolvedHostByWelcome(const QHostInfo& res);
+        void gotOwnResolvedHostByUserhost(const QHostInfo& res);
 
         /// Send a PING to the server so we can meassure the lag
         void sendPing();
@@ -633,7 +631,7 @@ void resetNickSelection();
 
         QStringList m_autoJoinCommands;
 
-        KNetwork::KStreamSocket* m_socket;
+        QTcpSocket* m_socket;
 
         QTimer m_reconnectTimer;
         QTimer m_incomingTimer;

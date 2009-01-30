@@ -1690,32 +1690,22 @@ namespace Konversation
             QStringList splitted = QStringList::split(" ", parameter);
             QString target = splitted[0];
 
-            KIpAddress address(target);
+            QHostAddress address(target);
 
             // Parameter is an IP address
-            if (address.isIPv4Addr() || address.isIPv6Addr())
+            if (address != QHostAddress::Null)
             {
-            // Disable the reverse resolve codepath on older KDE versions due to many
-            // distributions shipping visibility-enabled KDE 3.4 and KNetwork not 
-            // coping with it.
-#if KDE_IS_VERSION(3,5,1)
-                KNetwork:: KInetSocketAddress socketAddress(address,0);
-                QString resolvedTarget;
-                QString serv; // We don't need this, but KReverseResolver::resolve does.
-
-                if (KNetwork::KReverseResolver::resolve(socketAddress,resolvedTarget,serv))
+                QHostInfo resolved = QHostInfo::fromName(address.toString());
+                if (resolved.error() == QHostInfo::NoError)
                 {
                     result.typeString = i18n("DNS");
-                    result.output = i18n("Resolved %1 to: %2", target, resolvedTarget);
+                    result.output = i18n("Resolved %1 to: %2", target, resolved.hostName());
                     result.type = Program;
                 }
                 else
                 {
                     result = error(i18n("Unable to resolve %1", target));
                 }
-#else
-                result = error(i18n("Reverse-resolving requires KDE version 3.5.1 or higher."));
-#endif
             }
             // Parameter is presumed to be a host due to containing a dot. Yeah, it's dumb.
             // FIXME: The reason we detect the host by occurrence of a dot is the large penalty
@@ -1723,10 +1713,10 @@ namespace Konversation
             // server - once we have a better API for this, switch to it.
             else if (target.contains('.'))
             {
-                KNetwork::KResolverResults resolved = KNetwork::KResolver::resolve(target,"");
-                if(resolved.error() == KResolver::NoError && resolved.size() > 0)
+                QHostInfo resolved = QHostInfo::fromName(target);
+                if(resolved.error() == QHostInfo::NoError && !resolved.addresses().isEmpty())
                 {
-                    QString resolvedTarget = resolved.first().address().nodeName();
+                    QString resolvedTarget = resolved.addresses().first().toString();
                     result.typeString = i18n("DNS");
                     result.output = i18n("Resolved %1 to: %2", target, resolvedTarget);
                     result.type = Program;
