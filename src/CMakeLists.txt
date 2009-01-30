@@ -1,7 +1,6 @@
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/config ${KDE4_INCLUDES} ${KDE4_INCLUDE_DIR} ${QT_INCLUDES} )
 
-add_subdirectory(config)
 #add_subdirectory(linkaddressbook)
 add_subdirectory(blowfish)
 
