@@ -101,7 +101,8 @@ namespace Konversation
 
     void ChannelOptionsDialog::changeOptions()
     {
-        QString newTopic = topic(), oldTopic=m_channel->getTopicHistory().first().section(' ', 2);
+        QString newTopic = topic();
+        QString oldTopic = m_channel->getTopicHistory().isEmpty() ? 0 : m_channel->getTopicHistory().first().section(' ', 2);
 
         if(newTopic != oldTopic)
         {
@@ -175,17 +176,17 @@ namespace Konversation
     {
         QStringList history = m_channel->getTopicHistory();
         m_widget->topicHistoryList->clear();
-        for(QStringList::const_iterator it = history.fromLast(); it != history.begin(); --it)
+        foreach(const QString &topic, history)
         {
             QDateTime date;
-            date.setTime_t((*it).section(' ', 0 ,0).toUInt());
-            new K3ListViewItem(m_widget->topicHistoryList, (*it).section(' ', 1, 1), date.toString(Qt::LocalDate), (*it).section(' ', 2));
+            date.setTime_t(topic.section(' ', 0 ,0).toUInt());
+            new K3ListViewItem(m_widget->topicHistoryList, topic.section(' ', 1, 1), date.toString(Qt::LocalDate), topic.section(' ', 2));
         }
 
         // update topic preview
         topicHistoryItemClicked(m_widget->topicHistoryList->selectedItem());
         // don't destroy the user's edit box if they started editing
-        if(!m_editingTopic)
+        if(!m_editingTopic && !history.isEmpty())
             m_widget->topicEdit->setText(history.first().section(' ', 2));
     }
 
