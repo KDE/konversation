@@ -39,10 +39,8 @@ Autoreplace_Config::Autoreplace_Config(QWidget* parent, const char* name)
 {
   // reset flag to defined state (used to block signals when just selecting a new item)
   m_newItemSelected=false;
-#warning "kde4 port it"
-#if 0
   //Check if the regexp editor is installed
-  bool installed = !KTrader::self()->query("KRegExpEditor/KRegExpEditor").isEmpty();
+  bool installed = ( KServiceTypeTrader::createInstanceFromQuery<QDialog>( "KRegExpEditor/KRegExpEditor", QString(), this )!= 0 );
 
   if(installed)
   {
@@ -54,7 +52,6 @@ Autoreplace_Config::Autoreplace_Config(QWidget* parent, const char* name)
       regExpEditorButton->setEnabled(false);
       QToolTip::add(regExpEditorButton, i18n("The Regular Expression Editor (KRegExpEditor) is not installed"));
   }
-#endif
   // populate combobox
   directionCombo->insertItem(i18n("Outgoing"),DIRECTION_OUTPUT);
   directionCombo->insertItem(i18n("Incoming"),DIRECTION_INPUT);
@@ -381,29 +378,24 @@ void Autoreplace_Config::disableSort()
 
 void Autoreplace_Config::showRegExpEditor()
 {
-    #warning "kde4 port it"
-#if 0
-    QDialog *editorDialog =
-            KParts::ComponentFactory::createInstanceFromQuery<QDialog>( "KRegExpEditor/KRegExpEditor" );
+    QDialog *editorDialog = KServiceTypeTrader::createInstanceFromQuery<QDialog>( "KRegExpEditor/KRegExpEditor", QString(), this );
 
     if(editorDialog)
     {
         // kdeutils was installed, so the dialog was found.  Fetch the editor interface.
-        KRegExpEditorInterface *reEditor =
-                static_cast<KRegExpEditorInterface *>(editorDialog->qt_cast( "KRegExpEditorInterface" ) );
-        Q_ASSERT(reEditor); // This should not fail!
-        reEditor->setRegExp(patternInput->text());
+         KRegExpEditorInterface *iface = qobject_cast<KRegExpEditorInterface*>( editorDialog );
+        Q_ASSERT(iface); // This should not fail!
+        iface->setRegExp(patternInput->text());
         int dlgResult = editorDialog->exec();
 
         if(dlgResult == QDialog::Accepted)
         {
-            QString re = reEditor->regExp();
+            QString re = iface->regExp();
             patternInput->setText(re);
         }
 
         delete editorDialog;
     }
-#endif
 }
 
 #include "autoreplace_preferences.moc"
