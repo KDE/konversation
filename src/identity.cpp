@@ -108,7 +108,7 @@ QString Identity::getIdent() const                      { return ident; }
 
 void Identity::setNickname(uint index,const QString& newName) { nicknameList[index]=newName; }
 
-QString Identity::getNickname(uint index) const 
+QString Identity::getNickname(int index) const
 {
   if(index < nicknameList.count())
     return nicknameList[index];

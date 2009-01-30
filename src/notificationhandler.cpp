@@ -344,7 +344,7 @@ namespace Konversation
         QString cutup = string;
         int offset = 0;
 
-        for(uint i = 0; i < string.length(); i += 50)
+        for(int i = 0; i < string.length(); i += 50)
         {
             cutup.insert(i + (offset * 4), "<br>");
             ++offset;
