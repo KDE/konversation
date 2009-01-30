@@ -13,7 +13,7 @@
 #ifndef DCCRESUMEDIALOG_H
 #define DCCRESUMEDIALOG_H
 
-#include <kdialogbase.h>
+#include <kdialog.h>
 
 
 class KUrlRequester;

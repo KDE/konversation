@@ -16,7 +16,7 @@
 
 #include "transfersend.h" ////// header renamed
 #include "channel.h"
-#include "dcccommon.h"
+#include "common.h"
 #include "transfermanager.h" ////// header renamed
 #include "application.h" ////// header renamed
 #include "connectionmanager.h"

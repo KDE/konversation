@@ -15,12 +15,14 @@
 #ifndef DCCRECIPIENTDIALOG_H
 #define DCCRECIPIENTDIALOG_H
 
-#include <kdialogbase.h>
+#include <klineedit.h>
+#include <Q3ListBoxItem>
+#include <kdialog.h>
 
 
 class KLineEdit;
 
-class DccRecipientDialog : public KDialogBase
+class DccRecipientDialog : public KDialog
 {
     Q_OBJECT
 

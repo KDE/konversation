@@ -12,7 +12,7 @@
 #ifndef DCCTRANSFERDETAILEDINFOPANEL_H
 #define DCCTRANSFERDETAILEDINFOPANEL_H
 
-#include "dcctransferdetailedinfopanelui.h"
+#include "transferdetailedinfopanelui.h"
 
 
 class QTimer;

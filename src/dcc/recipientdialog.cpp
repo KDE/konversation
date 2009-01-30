@@ -12,7 +12,8 @@
   email:     eisfuchs@tigress.com
 */
 
-#include "recipientdialog.h" ////// header renamed
+#include "recipientdialog.h"
+#include <k3listbox.h>
 
 #include <qlayout.h>
 //Added by qt3to4:
@@ -26,12 +27,15 @@
 QString DccRecipientDialog::selectedNickname;     // static
 
 DccRecipientDialog::DccRecipientDialog(QWidget* parent, const QStringList &list,const QSize &size) :
-  KDialogBase(parent,"dcc_recipient_dialog",true,i18n("Select Recipient"),
-	      KDialogBase::Ok | KDialogBase::Cancel,KDialogBase::Ok,true)
+  KDialog(parent)
 {
     // Create the top level widget
     QWidget* page=new QWidget(this);
     setMainWidget(page);
+    setButtons( KDialog::Ok | KDialog::Cancel );
+    setDefaultButton( KDialog::Ok );
+    setModal( true );
+    setCaption( i18n("Select Recipient") );
     // Add the layout to the widget
     Q3VBoxLayout* dialogLayout=new Q3VBoxLayout(page);
     dialogLayout->setSpacing(spacingHint());
@@ -41,7 +45,7 @@ DccRecipientDialog::DccRecipientDialog(QWidget* parent, const QStringList &list,
     nicknameList->insertStringList(list);
     nicknameList->sort(true);
 
-    nicknameInput=new KLineEdit(page,"nickname_input");
+    nicknameInput=new KLineEdit(page);
 
     dialogLayout->addWidget(nicknameList);
     dialogLayout->addWidget(nicknameInput);
@@ -49,11 +53,13 @@ DccRecipientDialog::DccRecipientDialog(QWidget* parent, const QStringList &list,
     connect(nicknameList,SIGNAL (highlighted(Q3ListBoxItem*)),this,SLOT (newNicknameSelected(Q3ListBoxItem*)) );
     connect(nicknameList,SIGNAL (doubleClicked(Q3ListBoxItem*)),this,SLOT (newNicknameSelectedQuit(Q3ListBoxItem*)) );
 
-    setButtonOK(KGuiItem(i18n("&OK"),"button_ok",i18n("Select nickname and close the window")));
-    setButtonCancel(KGuiItem(i18n("&Cancel"),"button_cancel",i18n("Close the window without changes")));
+    setButtonGuiItem(KDialog::Ok, KGuiItem(i18n("&OK"),"button_ok",i18n("Select nickname and close the window")));
+    setButtonGuiItem(KDialog::Cancel, KGuiItem(i18n("&Cancel"),"button_cancel",i18n("Close the window without changes")));
 
     setInitialSize(size);
     show();
+    connect( this, SIGNAL( okClicked() ), this, SLOT( slotOk() ) );
+    connect( this, SIGNAL( cancelClicked() ), this, SLOT( slotCancel() ) );
 }
 
 DccRecipientDialog::~DccRecipientDialog()
@@ -81,13 +87,13 @@ void DccRecipientDialog::newNicknameSelectedQuit(Q3ListBoxItem* item)
 void DccRecipientDialog::slotCancel()
 {
     selectedNickname=QString();
-    KDialogBase::slotCancel();
+    reject();
 }
 
 void DccRecipientDialog::slotOk()
 {
     selectedNickname=nicknameInput->text();
-    KDialogBase::slotOk();
+    accept();
 }
 
 QString DccRecipientDialog::getNickname(QWidget* parent, const QStringList& list)
@@ -99,4 +105,4 @@ QString DccRecipientDialog::getNickname(QWidget* parent, const QStringList& list
     return dlg.getSelectedNickname();
 }
 
-// #include "./dcc/recipientdialog.moc"
+#include "recipientdialog.moc"

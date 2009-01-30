@@ -11,8 +11,8 @@
   Copyright (C) 2004,2007 Shintaro Matsuoka <shin@shoegazed.org>
 */
 
-#include "dccchat.h"
-#include "dcccommon.h"
+#include "chat.h"
+#include "common.h"
 #include "application.h" ////// header renamed
 #include "mainwindow.h" ////// header renamed
 #include "irccharsets.h"
@@ -474,4 +474,4 @@ void DccChat::updateAppearance()
     ChatWindow::updateAppearance();
 }
 
-// #include "./dcc/dccchat.moc"
+#include "chat.moc"
