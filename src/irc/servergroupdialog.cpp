@@ -18,7 +18,7 @@
 #include "serversettings.h"
 #include "serverdialog.h"
 #include "channeldialog.h"
-// #include "identitydialog.h"
+#include "identitydialog.h"
 #include "servergroupdialogui.h"
 
 #include <q3frame.h>
@@ -382,7 +382,6 @@ namespace Konversation
 
     void ServerGroupDialog::editIdentity()
     {
-/*
         IdentityDialog dlg(this);
         dlg.setCurrentIdentity(m_mainWidget->m_identityCBox->currentItem());
 
@@ -401,7 +400,6 @@ namespace Konversation
             ViewContainer* vc = KonversationApplication::instance()->getMainWindow()->getViewContainer();
             vc->updateViewEncoding(vc->getFrontView());
         }
-*/
     }
 
     void ServerGroupDialog::slotOk()
