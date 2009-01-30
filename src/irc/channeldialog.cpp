@@ -49,6 +49,7 @@ namespace Konversation
         mainLayout->addWidget(m_passwordEdit, 1, 1);
 
         m_channelEdit->setFocus();
+        connect(this,SIGNAL(okClicked()),this,SLOT(slotOk()));
     }
 
     ChannelDialog::~ChannelDialog()
