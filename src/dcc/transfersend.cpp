@@ -14,11 +14,11 @@
   (at your option) any later version.
 */
 
-#include "transfersend.h" ////// header renamed
+#include "transfersend.h"
 #include "channel.h"
 #include "common.h"
-#include "transfermanager.h" ////// header renamed
-#include "application.h" ////// header renamed
+#include "transfermanager.h"
+#include "application.h"
 #include "connectionmanager.h"
 #include "server.h"
 
@@ -35,9 +35,9 @@
 
 #include <kdebug.h>
 #include <klocale.h>
-include <k3serversocket.h>
-#include <ksocketaddress.h>
-#include <kstreamsocket.h>
+#include <k3serversocket.h>
+#include <k3socketaddress.h>
+#include <k3streamsocket.h>
 #include <kio/netaccess.h>
 #include <kfileitem.h>
 
@@ -507,4 +507,4 @@ QString DccTransferSend::getQFileErrorString( int code )
     return errorString;
 }
 
-// #include "./dcc/transfersend.moc"
+#include "transfersend.moc"
