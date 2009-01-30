@@ -520,8 +520,8 @@ namespace Konversation
         if(ok && !txt.isEmpty())
         {
             KUser user(KUser::UseRealUserID);
-            IdentityPtr identity;
-            identity->setName(txt);
+            IdentityPtr identity=IdentityPtr(new Identity);
+	    identity->setName(txt);
             identity->setIdent(user.loginName());
             m_identityList.append(identity);
             m_identityCBox->insertItem(txt);
