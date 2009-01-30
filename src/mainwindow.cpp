@@ -430,7 +430,7 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0, Qt::WStyle_C
         action->setText(i18n("Go to Tab %1",i));
         action->setShortcut(KShortcut(QString("Alt+%1").arg(i%10)));
         connect(action, SIGNAL(triggered()), tabSelectionMapper, SLOT(map()));
-        actionCollection()->addAction(QString("go_to_tab_%1").arg(i).local8Bit(), action);
+        actionCollection()->addAction(QString("go_to_tab_%1").arg(i).toLocal8Bit(), action);
 
         tabSelectionMapper->setMapping(action, i-1);
     }

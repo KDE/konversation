@@ -71,7 +71,7 @@ namespace Konversation
         if(filteredLine.contains("#"))
         {
             QRegExp chanExp("(^|\\s|^\"|\\s\"|,|'|\\(|\\:|!|@|%|\\+)(#[^,\\s;\\)\\:\\/\\(\\<\\>]*[^.,\\s;\\)\\:\\/\\(\"\''\\<\\>])");
-            while((pos = chanExp.search(filteredLine, pos)) >= 0)
+            while ((pos = chanExp.indexIn(filteredLine, pos)) >= 0)
             {
                 href = chanExp.cap(2);
                 urlLen = href.length();
@@ -87,7 +87,7 @@ namespace Konversation
         pos = 0;
         urlLen = 0;
 
-        urlPattern.setCaseSensitive(false);
+        urlPattern.setCaseSensitivity(Qt::CaseInsensitive);
         QString protocol;
 
         if(useCustomColor)
@@ -99,12 +99,12 @@ namespace Konversation
             link = "<u><a href=\"%1%2\">%3</a></u>";
         }
 
-        while((pos = urlPattern.search(filteredLine, pos)) >= 0)
+        while ((pos = urlPattern.indexIn(filteredLine, pos)) >= 0)
         {
             QString append;
 
             // check if the matched text is already replaced as a channel
-            if ( filteredLine.findRev( "<a", pos ) > filteredLine.findRev( "</a>", pos ) )
+            if ( filteredLine.lastIndexOf( "<a", pos ) > filteredLine.lastIndexOf( "</a>", pos ) )
             {
                 ++pos;
                 continue;
@@ -144,7 +144,7 @@ namespace Konversation
                 continue;
             }
 
-            if (urlPattern.cap(1).startsWith("www.", false))
+            if (urlPattern.cap(1).startsWith(QLatin1String("www."), Qt::CaseInsensitive))
                 protocol = "http://";
             else if (urlPattern.cap(1).isEmpty())
                 protocol = "mailto:";

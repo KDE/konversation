@@ -109,7 +109,7 @@ Server::Server(QObject* parent, ConnectionSettings& settings) : QObject(parent)
     m_serverNickPrefixes = "@+%";
     m_channelPrefixes = "#&";
 
-    setName(QString("server_" + settings.name()).ascii());
+    setObjectName(QString::fromLatin1("server_") + settings.name());
 
     setNickname(settings.initialNick());
     obtainNickInfo(getNickname());
@@ -179,11 +179,11 @@ Server::~Server()
     ChannelMembershipMap::ConstIterator it;
 
     for ( it = m_joinedChannels.begin(); it != m_joinedChannels.end(); ++it )
-        delete it.data();
+        delete it.value();
     m_joinedChannels.clear();
 
     for ( it = m_unjoinedChannels.begin(); it != m_unjoinedChannels.end(); ++it )
-        delete it.data();
+        delete it.value();
     m_unjoinedChannels.clear();
 
     m_queryNicks.clear();
@@ -253,8 +253,8 @@ void Server::_resetRates()
 
 void Server::initTimers()
 {
-    m_notifyTimer.setName("notify_timer");
-    m_incomingTimer.setName("incoming_timer");
+    m_notifyTimer.setObjectName("notify_timer");
+    m_incomingTimer.setObjectName("incoming_timer");
 }
 
 void Server::connectSignals()
@@ -400,7 +400,7 @@ void Server::connectToIRCServer()
         //if(!getConnectionSettings().server().SSLEnabled())
         //{
             m_socket = new QTcpSocket();
-            m_socket->setName("serverSocket");
+            m_socket->setObjectName("serverSocket");
             connect(m_socket, SIGNAL(connected()), SLOT (ircServerConnectionSuccess()));
         //}
         //else
@@ -472,7 +472,7 @@ bool& isOp,bool& isHalfop,bool& hasVoice)
 
     if (nickname.isEmpty()) return;
 
-    while ((modeIndex = m_serverNickPrefixes.find(nickname[0])) != -1)
+    while ((modeIndex = m_serverNickPrefixes.indexOf(nickname[0])) != -1)
     {
         if(nickname.isEmpty())
             return;
@@ -748,7 +748,7 @@ void Server::notifyResponse(const QString& nicksOnline)
     //Are any nicks gone offline
     for (it = m_prevISONList.begin(); it != m_prevISONList.end(); ++it)
     {
-        if (lcActual.find(' ' + (*it) + ' ', 0, false) == -1)
+        if (lcActual.indexOf(' ' + (*it) + ' ', 0, Qt::CaseInsensitive) == -1)
         {
             setNickOffline(*it);
             nicksOnlineChanged = true;
@@ -758,7 +758,7 @@ void Server::notifyResponse(const QString& nicksOnline)
     //Are any nicks gone online
     for (it = actualList.begin(); it != actualList.end(); ++it)
     {
-        if (lcPrevISON.find(' ' + (*it) + ' ', 0, false) == -1) {
+        if (lcPrevISON.indexOf(' ' + (*it) + ' ', 0, Qt::CaseInsensitive) == -1) {
             setWatchedNickOnline(*it);
             nicksOnlineChanged = true;
         }
@@ -1392,7 +1392,7 @@ QStringList Server::getNickJoinedChannels(const QString& nickname)
     ChannelMembershipMap::ConstIterator channel;
     for( channel = m_joinedChannels.begin(); channel != m_joinedChannels.end(); ++channel )
     {
-        if (channel.data()->contains(lcNickname)) channellist.append(channel.key());
+        if (channel.value()->contains(lcNickname)) channellist.append(channel.key());
     }
     return channellist;
 }
@@ -1405,11 +1405,11 @@ QStringList Server::getNickChannels(const QString& nickname)
     ChannelMembershipMap::ConstIterator channel;
     for( channel = m_joinedChannels.begin(); channel != m_joinedChannels.end(); ++channel )
     {
-        if (channel.data()->contains(lcNickname)) channellist.append(channel.key());
+        if (channel.value()->contains(lcNickname)) channellist.append(channel.key());
     }
     for( channel = m_unjoinedChannels.begin(); channel != m_unjoinedChannels.end(); ++channel )
     {
-        if (channel.data()->contains(lcNickname)) channellist.append(channel.key());
+        if (channel.value()->contains(lcNickname)) channellist.append(channel.key());
     }
     return channellist;
 }

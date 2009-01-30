@@ -133,7 +133,7 @@ Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
     Q3GridLayout* topicLayout = new Q3GridLayout(topicWidget, 2, 3, 0, 0);
 
     m_topicButton = new QToolButton(topicWidget);
-    m_topicButton->setIconSet(SmallIconSet("document-edit", 16));
+    m_topicButton->setIcon(KIcon("document-edit"));
     QToolTip::add(m_topicButton, i18n("Edit Channel Settings"));
     connect(m_topicButton, SIGNAL(clicked()), this, SLOT(showOptionsDialog()));
 
@@ -968,7 +968,7 @@ void Channel::setAutoJoin(bool autojoin)
 
                 for (it2 = channelMap.begin(); it2 != channelMap.end(); ++it2)
                 {
-                    channel = it2.data();
+                    channel = it2.value();
 
                     if (channel->autoJoin())
                     {
@@ -2921,7 +2921,7 @@ QString NickList::completeNick(const QString& pattern, bool& complete, QStringLi
     }
 
     QRegExp regexp(prefix + QRegExp::escape(pattern));
-    regexp.setCaseSensitive(caseSensitive);
+    regexp.setCaseSensitivity(caseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive);
     Q3PtrListIterator<Nick> it(*this);
 
     while(it.current() != 0)

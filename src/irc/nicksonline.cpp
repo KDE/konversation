@@ -109,20 +109,20 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
         "Click to create, view, or edit the KAddressBook entry associated with the nickname "
         "selected above.");
     Q3WhatsThis::add(m_editContactButton, editContactButtonWT);
-    m_editContactButton->setIconSet(m_kabcIconSet);
+    m_editContactButton->setIcon(m_kabcIconSet);
     m_changeAssociationButton = new QPushButton(i18n("&Change Association..."),
         buttonBox, "nicksonline_changeassociation_button");
     QString changeAssociationButtonWT = i18n(
         "Click to associate the nickname selected above with an entry in KAddressBook.");
     Q3WhatsThis::add(m_changeAssociationButton, changeAssociationButtonWT);
-    m_changeAssociationButton->setIconSet(m_kabcIconSet);
+    m_changeAssociationButton->setIcon(m_kabcIconSet);
     m_deleteAssociationButton = new QPushButton(i18n("&Delete Association"),
         buttonBox, "nicksonline_deleteassociation_button");
     QString deleteAssociationButtonWT = i18n(
         "Click to remove the association between the nickname selected above and a "
         "KAddressBook entry.");
     Q3WhatsThis::add(m_deleteAssociationButton, deleteAssociationButtonWT);
-    m_deleteAssociationButton->setIconSet(m_kabcIconSet);
+    m_deleteAssociationButton->setIcon(m_kabcIconSet);
 
     connect(m_editContactButton, SIGNAL(clicked()),
         this, SLOT(slotEditContactButton_Clicked()));

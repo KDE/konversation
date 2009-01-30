@@ -65,22 +65,22 @@ namespace Konversation
         }
 
         QToolButton* newBtn = new QToolButton(mainWidget);
-        newBtn->setIconSet(SmallIconSet("list-add"));
+        newBtn->setIcon(KIcon("list-add"));
         newBtn->setTextLabel(i18n("Add"));
         connect(newBtn, SIGNAL(clicked()), this, SLOT(newIdentity()));
 
         QToolButton* copyBtn = new QToolButton(mainWidget);
-        copyBtn->setIconSet(SmallIconSet("edit-copy"));
+        copyBtn->setIcon(KIcon("edit-copy"));
         copyBtn->setTextLabel(i18n("Duplicate"));
         connect(copyBtn, SIGNAL(clicked()), this, SLOT(copyIdentity()));
 
         m_editBtn = new QToolButton(mainWidget);
-        m_editBtn->setIconSet(SmallIconSet("edit-rename"));
+        m_editBtn->setIcon(KIcon("edit-rename"));
         m_editBtn->setTextLabel(i18n("Rename"));
         connect(m_editBtn, SIGNAL(clicked()), this, SLOT(renameIdentity()));
 
         m_delBtn = new QToolButton(mainWidget);
-        m_delBtn->setIconSet(SmallIconSet("edit-delete"));
+        m_delBtn->setIcon(KIcon("edit-delete"));
         m_delBtn->setTextLabel(i18n("Remove"));
         connect(m_delBtn, SIGNAL(clicked()), this, SLOT(deleteIdentity()));
 
@@ -110,7 +110,7 @@ namespace Konversation
         m_upNicknameBtn->setAutoRepeat(true);
         m_upNicknameBtn->setEnabled(false);
         m_downNicknameBtn = new QToolButton(nicknameGBox);
-        m_downNicknameBtn->setIconSet(SmallIconSet("arrow-down"));
+        m_downNicknameBtn->setIcon(KIcon("arrow-down"));
         m_downNicknameBtn->setAutoRepeat(true);
         m_downNicknameBtn->setEnabled(false);
 

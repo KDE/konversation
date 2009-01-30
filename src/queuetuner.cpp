@@ -37,7 +37,7 @@ QueueTuner::QueueTuner(QWidget* parent, ViewContainer *container)
 : QueueTunerBase(parent), m_server(0), m_timer(this, "qTuner"),
     m_vis(Preferences::self()->showQueueTunerItem()->value())
 {
-    m_closeButton->setIconSet(KIconLoader::global()->loadIcon( "fileClose", KIconLoader::Small ));
+    m_closeButton->setIcon(KIcon("document-close"));
     connect(m_closeButton, SIGNAL(clicked()), SLOT(close()));
     connect(container, SIGNAL(frontServerChanging(Server*)), SLOT(setServer(Server*)));
     connect(&m_timer, SIGNAL(timeout()), SLOT(timerFired()));

@@ -380,7 +380,7 @@ void KonversationApplication::readOptions()
             serverGroup->setNotificationsEnabled(cgServerGroup.readEntry("EnableNotifications", true));
             serverGroup->setExpanded(cgServerGroup.readEntry("Expanded", false));
 
-            notifyList.insert((*serverGroup).id(),QStringList::split(' ', cgServerGroup.readEntry("NotifyList")));
+            notifyList.insert((*serverGroup).id(), cgServerGroup.readEntry("NotifyList", QString()).split(' ', QString::SkipEmptyParts));
 
             tmp1 = cgServerGroup.readEntry("ServerList", QStringList());
             for (it2 = tmp1.begin(); it2 != tmp1.end(); ++it2)
@@ -488,7 +488,7 @@ void KonversationApplication::readOptions()
     if (cgDefault.hasKey("Highlight")) // Stay compatible with versions < 0.14
     {
         QString highlight=cgDefault.readEntry("Highlight");
-        QStringList hiList=QStringList::split(' ', highlight);
+        QStringList hiList = highlight.split(' ', QString::SkipEmptyParts);
 
         for (int hiIndex=0; hiIndex < hiList.count(); hiIndex+=2)
         {
@@ -541,7 +541,7 @@ void KonversationApplication::readOptions()
 
     for(QList<QString>::iterator itStr=channelEncodingEntryKeys.begin(); itStr != channelEncodingEntryKeys.end(); ++itStr)
     {
-        if(re.search(*itStr) > -1)
+        if(re.indexIn(*itStr) > -1)
         {
             int serverGroupId = Preferences::serverGroupIdByName(re.cap(1));
             if(serverGroupId != -1)
@@ -862,7 +862,7 @@ QString KonversationApplication::doAutoreplace(const QString& text,bool output)
                 // create regex from pattern
                 QRegExp needleReg(pattern);
                 // set pattern case insensitive
-                needleReg.setCaseSensitive(true);
+                needleReg.setCaseSensitivity(Qt::CaseSensitive);
                 int index = 0;
 
                 do {
@@ -890,7 +890,7 @@ QString KonversationApplication::doAutoreplace(const QString& text,bool output)
             else
             {
                 QRegExp needleReg("\\b" + QRegExp::escape(pattern) + "\\b");
-                needleReg.setCaseSensitive(false);
+                needleReg.setCaseSensitivity(Qt::CaseInsensitive);
                 line.replace(needleReg,replacement);
             }
         }

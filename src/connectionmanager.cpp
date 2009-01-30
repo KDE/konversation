@@ -229,7 +229,7 @@ void ConnectionManager::quitServers()
     QMap<int, Server*>::ConstIterator it;
 
     for (it = m_connectionList.begin(); it != m_connectionList.end(); ++it)
-        it.data()->quitServer();
+        it.value()->quitServer();
 }
 
 void ConnectionManager::decodeIrcUrl(const QString& url, ConnectionSettings& settings)
@@ -245,7 +245,7 @@ void ConnectionManager::decodeIrcUrl(const QString& url, ConnectionSettings& set
     // Parsing address and channel.
     QStringList mangledUrlSegments;
 
-    mangledUrlSegments = QStringList::split('/', mangledUrl, false);
+    mangledUrlSegments = mangledUrl.split('/', QString::KeepEmptyParts);
 
     // Check for ",isserver".
     if (mangledUrlSegments[0].contains(','))
@@ -253,7 +253,7 @@ void ConnectionManager::decodeIrcUrl(const QString& url, ConnectionSettings& set
         QStringList addressSegments;
         bool checkIfServerGroup = true;
 
-        addressSegments = QStringList::split(',', mangledUrlSegments[0], false);
+        addressSegments = mangledUrlSegments[0].split(',', QString::KeepEmptyParts);
 
         if (addressSegments.grep("isserver", false).size() > 0)
             checkIfServerGroup = false;
@@ -294,7 +294,7 @@ void ConnectionManager::decodeIrcUrl(const QString& url, ConnectionSettings& set
 
         parameterCatcher.setPattern("pass=([^&]+)");
 
-        if (parameterCatcher.search(parameterString) != -1)
+        if (parameterCatcher.indexIn(parameterString) != -1)
         {
             Konversation::ServerSettings server = settings.server();
 
@@ -305,7 +305,7 @@ void ConnectionManager::decodeIrcUrl(const QString& url, ConnectionSettings& set
 
         parameterCatcher.setPattern("key=([^&]+)");
 
-        if (parameterCatcher.search(parameterString) != -1)
+        if (parameterCatcher.indexIn(parameterString) != -1)
             channelSettings.setPassword(parameterCatcher.cap(1));
     }
 
@@ -410,8 +410,8 @@ bool ConnectionManager::reuseExistingConnection(ConnectionSettings& settings, bo
 
     for (it = m_connectionList.begin(); it != m_connectionList.end(); ++it)
     {
-        if (it.data()->getServerGroup() && settings.serverGroup()
-            && it.data()->getServerGroup() == settings.serverGroup())
+        if (it.value()->getServerGroup() && settings.serverGroup()
+            && it.value()->getServerGroup() == settings.serverGroup())
         {
             dupe = it.data();
             dupeType = SameServerGroup;
@@ -424,9 +424,9 @@ bool ConnectionManager::reuseExistingConnection(ConnectionSettings& settings, bo
     {
         for (it = m_connectionList.begin(); it != m_connectionList.end(); ++it)
         {
-            if (it.data()->getConnectionSettings().server() == settings.server())
+            if (it.value()->getConnectionSettings().server() == settings.server())
             {
-                dupe = it.data();
+                dupe = it.value();
                 dupeType = SameServer;
 
                 break;
@@ -548,7 +548,7 @@ Q3PtrList<Server> ConnectionManager::getServerList()
     QMap<int, Server*>::ConstIterator it;
 
     for (it = m_connectionList.begin(); it != m_connectionList.end(); ++it)
-        serverList.append(it.data());
+        serverList.append(it.value());
 
     return serverList;
 }
@@ -567,8 +567,8 @@ Server* ConnectionManager::getServerByName(const QString& name)
 
     for (it = m_connectionList.begin(); it != m_connectionList.end(); ++it)
     {
-        if (it.data()->getDisplayName() == name || it.data()->getServerName() == name)
-            return it.data();
+        if (it.value()->getDisplayName() == name || it.value()->getServerName() == name)
+            return it.value();
     }
 
     return 0;
