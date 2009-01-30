@@ -26,7 +26,7 @@
 #include <QMouseEvent>
 #include <Q3PopupMenu>
 #include <QEvent>
-
+#include <q3textedit.h>
 #include <krun.h>
 #include <k3process.h>
 #include <kshell.h>
@@ -48,8 +48,8 @@ namespace Konversation
         : K3ActiveLabel(parent)
     {
         setObjectName(name);
-        setWrapPolicy(Q3TextEdit::AtWordOrDocumentBoundary);
-        setFocusPolicy(QWidget::ClickFocus);
+        setWrapPolicy(Qt::AtWordOrDocumentBoundary);
+        setFocusPolicy(Qt::ClickFocus);
 
         m_isOnChannel = false;
         m_copyUrlMenu = false;
