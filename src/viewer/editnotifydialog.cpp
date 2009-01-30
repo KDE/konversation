@@ -90,8 +90,8 @@ const QString& nickname):
     layout->addWidget(nicknameLabel);
     layout->addWidget(m_nicknameInput);
 
-    setButtonGuiItem( KDialog::Ok, KGuiItem(i18n("&OK"),"button_ok",i18n("Change notify information")));
-    setButtonGuiItem( KDialog::Cancel, KGuiItem(i18n("&Cancel"),"button_cancel",i18n("Discards all changes made")));
+    setButtonGuiItem( KDialog::Ok, KGuiItem(i18n("&OK"),"dialog-ok",i18n("Change notify information")));
+    setButtonGuiItem( KDialog::Cancel, KGuiItem(i18n("&Cancel"),"dialog-cancel",i18n("Discards all changes made")));
     connect( this, SIGNAL( okClicked() ), this, SLOT( slotOk() ) );
 
 }

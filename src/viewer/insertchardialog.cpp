@@ -26,7 +26,7 @@ namespace Konversation
         setDefaultButton( KDialog::Ok );
         setModal( false );
         setCaption(  i18n("Insert Character") );
-        setButtonGuiItem(KDialog::Ok, KGuiItem(i18n("&Insert"), "ok", i18n("Insert a character")));
+        setButtonGuiItem(KDialog::Ok, KGuiItem(i18n("&Insert"), "dialog-ok", i18n("Insert a character")));
 
         m_charTable = new KCharSelect(this,0, KCharSelect::CharacterTable|KCharSelect::FontCombo|KCharSelect::BlockCombos);
         m_charTable->setCurrentFont( QFont( font ) );
