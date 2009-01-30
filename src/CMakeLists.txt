@@ -180,7 +180,7 @@ set(dcc_SRCS
 )
 
 set (completed_SRCS ${core_SRCS}  ${irc_SRCS} ${viewer_SRCS} ${prefs_SRCS})
-set (konvi_SRCS ${completed_SRCS}) #${prefs_SRCS})  #${dcc_SRCS})
+set (konvi_SRCS ${completed_SRCS}) #${dcc_SRCS})
 
 
 
