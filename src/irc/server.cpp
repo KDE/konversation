@@ -642,7 +642,7 @@ void Server::connectionEstablished(const QString& ownHost)
     // Some servers don't include the userhost in RPL_WELCOME, so we
     // need to use RPL_USERHOST to get ahold of our IP later on
     if (!ownHost.isEmpty())
-        QHostInfo::lookupHost(ownHost, this, SLOT(gotOwnResolvedHostByWelcome(QHostInfo)));
+        QHostInfo::lookupHost(ownHost, this, SLOT(gotOwnResolvedHostByWelcome(const QHostInfo&)));
 
     updateConnectionState(Konversation::SSConnected);
 
@@ -691,7 +691,7 @@ void Server::setKeyForRecipient(const QString& recipient, const Q3CString& key)
     m_keyMap[recipient] = key;
 }
 
-void Server::gotOwnResolvedHostByWelcome(QHostInfo res)
+void Server::gotOwnResolvedHostByWelcome(const QHostInfo& res)
 {
     if (res.error() == QHostInfo::NoError && !res.addresses().isEmpty())
         m_ownIpByWelcome = res.addresses().first().toString();
@@ -2717,7 +2717,7 @@ void Server::userhost(const QString& nick,const QString& hostmask,bool away,bool
     {
         QString myhost = hostmask.section('@', 1);
         // Use async lookup else you will be blocking GUI badly
-        QHostInfo::lookupHost(myhost, this, SLOT(gotOwnResolvedHostByUserhost(QHostInfo)));
+        QHostInfo::lookupHost(myhost, this, SLOT(gotOwnResolvedHostByUserhost(const QHostInfo&)));
     }
     NickInfoPtr nickInfo = getNickInfo(nick);
     if (nickInfo)
@@ -2729,7 +2729,7 @@ void Server::userhost(const QString& nick,const QString& hostmask,bool away,bool
     }
 }
 
-void Server::gotOwnResolvedHostByUserhost(QHostInfo res)
+void Server::gotOwnResolvedHostByUserhost(const QHostInfo& res)
 {
     if ( res.error() == QHostInfo::NoError && !res.addresses().isEmpty() )
         m_ownIpByUserhost = res.addresses().first().toString();
