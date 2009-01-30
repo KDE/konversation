@@ -20,7 +20,7 @@
 
 #include <klocale.h>
 #include <qtooltip.h>
-#include <qlistview.h>
+#include <q3listview.h>
 
 
 class NickListView;
@@ -41,7 +41,7 @@ namespace Konversation
         if( !parentWidget() || !m_listView )
             return;
 
-        QListViewItem *item = m_listView->itemAt( pos );
+        Q3ListViewItem *item = m_listView->itemAt( pos );
 
         if( !item )
             return;

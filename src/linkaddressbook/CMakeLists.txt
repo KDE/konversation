@@ -1,27 +1,20 @@
 
 include_directories(${KDE4_INCLUDES} ${KDE4_INCLUDE_DIR} ${QT_INCLUDES} )
 
-
 ########### next target ###############
 
+set(linkaddressbookui_STAT_SRCS
+    linkaddressbookui.cpp
+    addressbook_base.cpp
+    #addressbook.cpp
+    #nicklisttooltip.cpp
+    #nicksonlinetooltip.cpp
+    addresseeitem.cpp)
 
-########### install files ###############
+kde4_add_ui3_files(linkaddressbookui_STAT_SRCS linkaddressbookui_base.ui)
 
+message(STATUS "DCOP has been removed in KDE 4; port code to D-Bus. kde4_add_dcop_skels macro does not exist anymore. We keep it just to remember to port to D-Bus.")
+#kde4_add_dcop_skels(linkaddressbookui_STAT_SRCS
+#kimiface.h )
 
-
-
-#original Makefile.am contents follow:
-
-#METASOURCES = AUTO
-#
-#INCLUDES = -I$(srcdir)/.. -I.. -I$(srcdir)/../config -I../config
-#AM_CPPFLAGS = $(all_includes) -I$(top_builddir)/konversation/src
-#
-#noinst_LTLIBRARIES = liblinkaddressbookui.la
-#noinst_HEADERS = linkaddressbookui.h kimiface.h
-#
-#liblinkaddressbookui_la_SOURCES = linkaddressbookui_base.ui linkaddressbookui.cpp addressbook_base.cpp addressbook.cpp nicklisttooltip.cpp nicksonlinetooltip.cpp kimiface.skel addresseeitem.cpp
-#kimiface_DIR = $(kde_includes)
-#liblinkaddressbookui_la_LDFLAGS = $(all_libraries) -no-undefined
-#
-## vim: set noet:
+kde4_add_library(linkaddressbookui STATIC ${linkaddressbookui_STAT_SRCS})

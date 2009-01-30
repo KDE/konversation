@@ -21,7 +21,7 @@
 
 #include <klocale.h>
 #include <qtooltip.h>
-#include <qlistview.h>
+#include <q3listview.h>
 #include <k3listview.h>
 
 
@@ -43,7 +43,7 @@ namespace Konversation
         if( !parentWidget() || !m_nicksOnline || !m_nicksOnline->getNickListView() )
             return;
         K3ListView *m_listView = m_nicksOnline->getNickListView();
-        QListViewItem *item = m_listView->itemAt( pos );
+        Q3ListViewItem *item = m_listView->itemAt( pos );
         if( !item )
             return;
         NickInfoPtr nickInfo = m_nicksOnline->getNickInfo(item);

@@ -24,18 +24,19 @@ Kopete    (c) 2002-2004 by the Kopete developers  <kopete-devel@kde.org>
 #ifndef LINKADDRESSBOOKUI_H
 #define LINKADDRESSBOOKUI_H
 
-#include <qptrlist.h>
-#include <qvaluelist.h>
+#include <Q3ListViewItem>
+#include <q3ptrlist.h>
+#include <q3valuelist.h>
 #include <qmap.h>
 
-#include <kdialogbase.h>
+#include <kdialog.h>
 #include <kdebug.h>
 #include <kabc/addressbook.h>
 
-class QCheckListItem;
+class Q3CheckListItem;
 class LinkAddressbookUI_Base;
 
-class LinkAddressbookUI : public KDialogBase
+class LinkAddressbookUI : public KDialog
 {
     Q_OBJECT
 
@@ -56,7 +57,7 @@ class LinkAddressbookUI : public KDialogBase
         virtual void slotOk();
         virtual void slotCancel();
         void slotAddAddresseeClicked();
-        void slotAddresseeListClicked( QListViewItem *addressee );
+        void slotAddresseeListClicked( Q3ListViewItem *addressee );
         /**
          * Utility function, populates the addressee list
          */

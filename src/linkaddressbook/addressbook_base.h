@@ -15,14 +15,13 @@
 #ifndef ADDRESSBOOKBASE_H
 #define ADDRESSBOOKBASE_H
 
-#include "../images.h"
-#include "../nickinfo.h"
-#include "../channelnick.h"
+#include "../viewer/images.h"
+#include "../irc/nickinfo.h"
+#include "../irc/channelnick.h"
 
 #include <k3staticdeleter.h>
 #include <qobject.h>
 #include <qregexp.h>
-#include <config.h>
 
 
 #include <kabc/addressbook.h>
@@ -31,7 +30,7 @@
 
 namespace Konversation
 {
-    class AddressbookBase : public QObject, public KIMIface
+    class AddressbookBase : public QObject//, public KIMIface
     {
         Q_OBJECT
             public:

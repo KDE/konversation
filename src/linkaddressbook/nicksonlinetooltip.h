@@ -15,7 +15,7 @@
 #ifndef KONVERSATIONNICKSONLINETOOLTIP_H
 #define KONVERSATIONNICKSONLINETOOLTIP_H
 
-//#include "addressbook.h"
+#include "addressbook.h"
 
 #include <qtooltip.h>
 #include <qwidget.h>

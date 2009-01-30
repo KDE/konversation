@@ -22,6 +22,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #define KIMIFACE_H
 
 #include <qpixmap.h>
+//Added by qt3to4:
+#include <Q3CString>
 #include <dcopobject.h>
 #include <qstringlist.h>
 #include <kurl.h>
@@ -177,7 +179,7 @@ class KIMIface : virtual public DCOPObject
      * @param appId the dcop application id of the program the signal originates from.
      * @param presence the new numeric presence @ref presenceStatus
      */
-    void contactPresenceChanged( QString uid, QCString appId, int presence );
+    void contactPresenceChanged( QString uid, Q3CString appId, int presence );
 };
 #endif
 

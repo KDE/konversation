@@ -21,11 +21,11 @@
 #include <k3staticdeleter.h>
 #include <qobject.h>
 #include <qregexp.h>
-#include <config-konvi.h>
-#include "kimiface.h"
+//Added by qt3to4:
+#include <QPixmap>
 
-#include "../images.h"
-#include "../nickinfo.h"
+#include "../viewer/images.h"
+#include "../irc/nickinfo.h"
 #include "addressbook_base.h"
 
 namespace Konversation

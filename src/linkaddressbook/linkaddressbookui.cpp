@@ -30,7 +30,10 @@ Kopete    (c) 2002-2004 by the Kopete developers  <kopete-devel@kde.org>
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qtooltip.h>
-#include <qwhatsthis.h>
+#include <q3whatsthis.h>
+//Added by qt3to4:
+#include <Q3GridLayout>
+#include <Q3Frame>
 
 #include <kapplication.h>
 #include <kconfig.h>
@@ -48,10 +51,15 @@ Kopete    (c) 2002-2004 by the Kopete developers  <kopete-devel@kde.org>
 
 
 LinkAddressbookUI::LinkAddressbookUI( QWidget *parent, const char *name, const QString &ircnick, const QString &servername, const QString &servergroup, const QString &suggested_realname )
-: KDialogBase(Plain, i18n("Link IRC Nick to Addressbook Contact"), Ok|Cancel|Help, Ok, parent, name)
+: KDialog(parent)
 {
-    QFrame* page = plainPage();
-    QGridLayout* pageLayout = new QGridLayout(page, 1, 1, 0, 0);
+    setCaption( i18n("Link IRC Nick to Addressbook Contact") );
+    setButtons( KDialog::Ok|KDialog::Cancel|KDialog::Help );
+    setDefaultButton( KDialog::Ok );
+
+    QFrame* page = new QFrame(this);
+    setMainWidget( page );
+    Q3GridLayout* pageLayout = new Q3GridLayout(page, 1, 1, 0, 0);
     m_mainWidget = new LinkAddressbookUI_Base(page);
     pageLayout->addWidget(m_mainWidget, 0, 0);
 
@@ -61,12 +69,12 @@ LinkAddressbookUI::LinkAddressbookUI( QWidget *parent, const char *name, const Q
 
     // Addressee validation connections
     connect( m_mainWidget->addAddresseeButton, SIGNAL( clicked() ), SLOT( slotAddAddresseeClicked() ) );
-    connect( m_mainWidget->addresseeListView, SIGNAL( clicked(QListViewItem * ) ),
-        SLOT( slotAddresseeListClicked( QListViewItem * ) ) );
-    connect( m_mainWidget->addresseeListView, SIGNAL( selectionChanged( QListViewItem * ) ),
-        SLOT( slotAddresseeListClicked( QListViewItem * ) ) );
-    connect( m_mainWidget->addresseeListView, SIGNAL( spacePressed( QListViewItem * ) ),
-        SLOT( slotAddresseeListClicked( QListViewItem * ) ) );
+    connect( m_mainWidget->addresseeListView, SIGNAL( clicked(Q3ListViewItem * ) ),
+        SLOT( slotAddresseeListClicked( Q3ListViewItem * ) ) );
+    connect( m_mainWidget->addresseeListView, SIGNAL( selectionChanged( Q3ListViewItem * ) ),
+        SLOT( slotAddresseeListClicked( Q3ListViewItem * ) ) );
+    connect( m_mainWidget->addresseeListView, SIGNAL( spacePressed( Q3ListViewItem * ) ),
+        SLOT( slotAddresseeListClicked( Q3ListViewItem * ) ) );
 
     connect( m_addressBook, SIGNAL( addressBookChanged( AddressBook * ) ), this, SLOT( slotLoadAddressees() ) );
     connect( Konversation::Addressbook::self(), SIGNAL(addresseesChanged()), this, SLOT(slotLoadAddressees()));
@@ -74,7 +82,7 @@ LinkAddressbookUI::LinkAddressbookUI( QWidget *parent, const char *name, const Q
     //We should add a clear KAction here.  But we can't really do that with a designer file :\  this sucks
 
     m_ircnick = ircnick;
-    m_lower_ircnick = m_ircnick.toLower();
+    m_lower_ircnick = m_ircnick.lower();
     m_servername = servername;
     m_servergroup = servergroup;
     m_suggested_realname = suggested_realname;
@@ -86,10 +94,11 @@ LinkAddressbookUI::LinkAddressbookUI( QWidget *parent, const char *name, const Q
     m_mainWidget->kListViewSearchLine->setListView(m_mainWidget->addresseeListView);
     slotLoadAddressees();
 
-    m_mainWidget->addresseeListView->setColumnWidthMode(0, QListView::Manual);
+    m_mainWidget->addresseeListView->setColumnWidthMode(0, Q3ListView::Manual);
                                                   //Photo is 60, and it's nice to have a small gap, imho
     m_mainWidget->addresseeListView->setColumnWidth(0, 63);
-
+    connect( this, SIGNAL( okClicked() ), this, SLOT( slotOk() ) );
+    connect( this, SIGNAL( cancelClicked() ), this, SLOT( slotCancel() ) );
 }
 
 LinkAddressbookUI::~LinkAddressbookUI()
@@ -115,13 +124,13 @@ void LinkAddressbookUI::slotLoadAddressees()
     /*AddresseeItem *item =*/ new AddresseeItem( m_mainWidget->addresseeListView, (*it));
 
     if(num_contacts_with_nick == 0)
-        m_mainWidget->lblHeader->setText(i18n("Choose the person who '%1' is.", m_ircnick));
+        m_mainWidget->lblHeader->setText(i18n("Choose the person who '%1' is.",m_ircnick));
     else if(num_contacts_with_nick == 1 && realname.isEmpty())
-        m_mainWidget->lblHeader->setText(i18n("Currently '%1' is associated with a contact.", m_ircnick));
+        m_mainWidget->lblHeader->setText(i18n("Currently '%1' is associated with a contact.",m_ircnick));
     else if(num_contacts_with_nick == 1 && !realname.isEmpty())
-        m_mainWidget->lblHeader->setText(i18n("Currently '%1' is associated with contact '%2'.", m_ircnick, realname));
+        m_mainWidget->lblHeader->setText(i18n("Currently '%1' is associated with contact '%2'.",m_ircnick,realname));
     else
-        m_mainWidget->lblHeader->setText(i18n("<qt><b>Warning:</b> '%1' is currently being listed as belonging to multiple contacts.  Please select the correct contact.</qt>", m_ircnick));
+        m_mainWidget->lblHeader->setText(i18n("<qt><b>Warning:</b> '%1' is currently being listed as belonging to multiple contacts.  Please select the correct contact.</qt>",m_ircnick));
 
 }
 
@@ -147,7 +156,7 @@ void LinkAddressbookUI::slotAddAddresseeClicked()
     }
 }
 
-void LinkAddressbookUI::slotAddresseeListClicked( QListViewItem *addressee )
+void LinkAddressbookUI::slotAddresseeListClicked( Q3ListViewItem *addressee )
 {
     // enable ok if a valid addressee is selected
     enableButtonOk(addressee ? addressee->isSelected() : false);
@@ -186,6 +195,6 @@ void LinkAddressbookUI::slotCancel()
     reject();
 }
 
-// #include "./linkaddressbook/linkaddressbookui.moc"
+#include "linkaddressbookui.moc"
 
 // vim: set noet ts=4 sts=4 sw=4:

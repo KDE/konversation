@@ -20,9 +20,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #ifndef KABC_ADDRESSEEDIALOG_H
 #define KABC_ADDRESSEEDIALOG_H
 
-#include <qdict.h>
+#include <q3dict.h>
 
-#include <kdialogbase.h>
 #include <klineedit.h>
 #include <k3listview.h>
 
@@ -48,7 +47,7 @@ class AddresseeItem : public K3ListViewItem
           @param parent    The parent listview.
           @param addressee The associated addressee.
         */
-        AddresseeItem( QListView *parent, const KABC::Addressee &addressee );
+        AddresseeItem( Q3ListView *parent, const KABC::Addressee &addressee );
 
         /**
           Returns the addressee.

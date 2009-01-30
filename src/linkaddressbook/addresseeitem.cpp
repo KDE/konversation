@@ -20,14 +20,16 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include <qlayout.h>
 #include <qpushbutton.h>
-#include <qgroupbox.h>
+#include <q3groupbox.h>
 #include <qregexp.h>
+//Added by qt3to4:
+#include <QPixmap>
 
 #include <klocale.h>
 #include <kdebug.h>
 
 
-AddresseeItem::AddresseeItem( QListView *parent, const KABC::Addressee &addressee) :
+AddresseeItem::AddresseeItem( Q3ListView *parent, const KABC::Addressee &addressee) :
 K3ListViewItem( parent ),
 mAddressee( addressee )
 {
@@ -56,8 +58,8 @@ QString AddresseeItem::key( int column, bool ) const
         if (match > -1)
             value = value.mid(match + 1, emailRe.matchedLength() - 2);
 
-        return value.toLower();
+        return value.lower();
     }
 
-    return text(column).toLower();
+    return text(column).lower();
 }

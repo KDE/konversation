@@ -21,11 +21,12 @@
 
 #include <qstringlist.h>
 #include "qwidget.h"
+//Added by qt3to4:
+#include <QPixmap>
 
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kapplication.h>
-#include <dcopclient.h>
 #include <kwindowsystem.h>
 
 
@@ -157,7 +158,7 @@ namespace Konversation
     {
 
         Images* icons = KonversationApplication::instance()->images();
-        QIconSet currentIcon;
+        QIcon currentIcon;
         if(!isPresent(uid))
             return QPixmap();
 
@@ -180,7 +181,7 @@ namespace Konversation
                 return QPixmap();
         }
 
-        QPixmap joinedIcon = currentIcon.pixmap(QIconSet::Automatic, QIconSet::Active, QIconSet::On);
+        QPixmap joinedIcon = currentIcon.pixmap(QIcon::Automatic, QIcon::Active, QIcon::On);
         return joinedIcon;
     }
     QString Addressbook::context(const QString &uid)
@@ -336,4 +337,4 @@ void Addressbook::emitContactPresenceChanged(const QString &uid)
 
 }                                                 //NAMESPACE
 
-// #include "./linkaddressbook/addressbook.moc"
+#include "addressbook.moc"

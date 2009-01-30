@@ -14,9 +14,9 @@
 
 #include "addressbook.h"
 #include "../server.h"
-#include "../konversationapplication.h"
-#include "../konversationmainwindow.h"
-#include "../channel.h"
+#include "../application.h"
+#include "../mainwindow.h"
+#include "../irc/channel.h"
 
 #include <qstringlist.h>
 
@@ -24,7 +24,6 @@
 #include <kstringhandler.h>
 #include <krun.h>
 #include <kapplication.h>
-#include <dcopclient.h>
 #include <kmessagebox.h>
 #include <ktoolinvocation.h>
 
@@ -69,20 +68,20 @@ namespace Konversation
     bool AddressbookBase::hasNick(const KABC::Addressee &addressee, const QString &ircnick, const QString &servername, const QString &servergroup)
     {
 
-        QString lnick = ircnick.toLower();
+        QString lnick = ircnick.lower();
         QString lnick_servername;
         QString lnick_servergroup;
         if(!servername.isEmpty())
-            lnick_servername = lnick + QChar(0xE120) + servername.toLower();
+            lnick_servername = lnick + QChar(0xE120) + servername.lower();
         if(!servergroup.isEmpty())
-            lnick_servergroup = lnick + QChar(0xE120) + servergroup.toLower();
+            lnick_servergroup = lnick + QChar(0xE120) + servergroup.lower();
 
         QString lit;
         QStringList addresses = QStringList::split( QChar( 0xE000 ), addressee.custom("messaging/irc", "All") );
         QStringList::iterator end = addresses.end();
         for ( QStringList::iterator it = addresses.begin(); it != end; ++it )
         {
-            lit = (*it).toLower();
+            lit = (*it).lower();
             if(lit == lnick || lit == lnick_servername || lit == lnick_servergroup)
                 return true;
         }
@@ -103,8 +102,8 @@ namespace Konversation
     {
         QStringList nicks;
 
-        QString lservername = servername.toLower();
-        QString lservergroup = servergroup.toLower();
+        QString lservername = servername.lower();
+        QString lservergroup = servergroup.lower();
 
         QStringList addresses = QStringList::split( QChar( 0xE000 ), addressee.custom("messaging/irc", "All") );
         QStringList::iterator end = addresses.end();
@@ -114,7 +113,7 @@ namespace Konversation
                 nicks.append(*it);
             else
             {
-                QString it_server = (*it).section(QChar( 0xE120), 0,0).toLower();
+                QString it_server = (*it).section(QChar( 0xE120), 0,0).lower();
                 if(it_server == lservername || it_server == lservergroup)
                     nicks.append((*it).section(QChar( 0xE120 ), 1,1));
             }
@@ -124,12 +123,12 @@ namespace Konversation
 
     bool AddressbookBase::hasNick(const KABC::Addressee &addressee, const QString &nick_server)
     {
-        QString lnick_server = nick_server.toLower();
+        QString lnick_server = nick_server.lower();
         QStringList addresses = QStringList::split( QChar( 0xE000 ), addressee.custom("messaging/irc", "All") );
         QStringList::iterator end = addresses.end();
         for ( QStringList::iterator it = addresses.begin(); it != end; ++it )
         {
-            QString it_server = (*it).section(QChar( 0xE120), 0,0).toLower();
+            QString it_server = (*it).section(QChar( 0xE120), 0,0).lower();
             if(it_server ==lnick_server)
                 return true;
         }
@@ -186,13 +185,13 @@ namespace Konversation
         kDebug() << "in unassociatenick for '" << ircnick << endl;
         if(ircnick.isEmpty()) return;
 
-        QString lnick = ircnick.toLower();
+        QString lnick = ircnick.lower();
         QString lnick_servername;
         QString lnick_servergroup;
         if(!servername.isEmpty())
-            lnick_servername = lnick + QChar(0xE120) + servername.toLower();
+            lnick_servername = lnick + QChar(0xE120) + servername.lower();
         if(!servergroup.isEmpty())
-            lnick_servergroup = lnick + QChar(0xE120) + servergroup.toLower();
+            lnick_servergroup = lnick + QChar(0xE120) + servergroup.lower();
 
         //We should now have lnick = ircnick, and versions with servername and servergroup -
         // like johnflux, johnflux@freenode, or johnflux@irc.kde.org    except with the unicode
@@ -209,7 +208,7 @@ namespace Konversation
         QStringList::iterator it = addresses.begin();
         while(it != addresses.end())
         {
-            lit = (*it).toLower();
+            lit = (*it).lower();
             if(lit == lnick || lit == lnick_servername || lit == lnick_servergroup)
             {
                 changed = true;
@@ -409,7 +408,7 @@ namespace Konversation
 
     bool AddressbookBase::runEmailProgram(const QString &mailtoaddress)
     {
-        KRun *proc = new KRun(KUrl(QString("mailto:") + KStringHandler::from8Bit(mailtoaddress.ascii())));
+        KRun *proc = new KRun(KUrl(QString("mailto:") + KStringHandler::from8Bit(mailtoaddress.ascii())),0);
         kDebug() << "Sending email to " << mailtoaddress << endl;
         if(proc->hasError())
         {
@@ -464,9 +463,9 @@ namespace Konversation
                 else
                 {
                     if(nicksWithoutAddressee.count() > 1)
-                        message = i18n("Some of the contacts (%1) that you have selected are not associated with addressbook contacts. ", nicksWithoutAddressee.join(", "));
+                        message = i18n("Some of the contacts (%1) that you have selected are not associated with addressbook contacts. ",nicksWithoutAddressee.join(", "));
                     else
-                        message = i18n("One of the contacts (%1) that you have selected is not associated with an addressbook contact. ", nicksWithoutAddressee.join(", "));
+                        message = i18n("One of the contacts (%1) that you have selected is not associated with an addressbook contact. ",nicksWithoutAddressee.join(", "));
                 }
                 message += i18n("You can right click on a contact, and choose to edit the Addressbook Associations to link them to a contact in your addressbook.");
             }
@@ -482,15 +481,15 @@ namespace Konversation
                 else
                 {
                     if(nicksWithoutEmails.count() > 1)
-                        message = i18n("Some of the contacts (%1) that you have selected do not have an email address associated with them. ", nicksWithoutEmails.join(", "));
+                        message = i18n("Some of the contacts (%1) that you have selected do not have an email address associated with them. ",nicksWithoutEmails.join(", "));
                     else
-                        message = i18n("One of the contacts (%1) that you have selected does not have an email address associated with them. ", nicksWithoutEmails.join(", "));
+                        message = i18n("One of the contacts (%1) that you have selected does not have an email address associated with them. ",nicksWithoutEmails.join(", "));
                 }
                 message += i18n("You can right click on a contact, and choose to edit the addressbook contact, adding an email for them.");
             }
             else
             {
-                message = i18n("Some of the contacts (%1) that you have selected are not associated with addressbook contacts, and some of the contacts (%2) do not have an email address associated with them.  ", nicksWithoutAddressee.join(", "), nicksWithoutEmails.join(", "));
+                message = i18n("Some of the contacts (%1) that you have selected are not associated with addressbook contacts, and some of the contacts (%2) do not have an email address associated with them.  ",nicksWithoutAddressee.join(", "),nicksWithoutEmails.join(", ")));
                 message += i18n("You can right click on a contact, and choose to edit the Addressbook Associations to link them to a contact in your addressbook, and choose to edit the addressbook contact, adding an email for them.");
             }
             if(nicksWithEmails.isEmpty())
@@ -514,4 +513,4 @@ namespace Konversation
 
 }                                                 // NAMESPACE
 
-// #include "./linkaddressbook/addressbook_base.moc"
+#include "addressbook_base.moc"
