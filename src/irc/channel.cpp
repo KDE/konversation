@@ -138,6 +138,7 @@ Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
     connect(m_topicButton, SIGNAL(clicked()), this, SLOT(showOptionsDialog()));
 
     topicLine = new QLabel(topicWidget);
+    topicLine->setWordWrap(true);
     Q3WhatsThis::add(topicLine, i18n("<qt>Every channel on IRC has a topic associated with it.  This is simply a message that everybody can see.<p>If you are an operator, or the channel mode <em>'T'</em> has not been set, then you can change the topic by clicking the Edit Channel Properties button to the left of the topic.  You can also view the history of topics there.</qt>"));
     connect(topicLine, SIGNAL(setStatusBarTempText(const QString&)), this, SIGNAL(setStatusBarTempText(const QString&)));
     connect(topicLine, SIGNAL(clearStatusBarTempText()), this, SIGNAL(clearStatusBarTempText()));
@@ -1551,7 +1552,7 @@ void Channel::setTopic(const QString &newTopic)
     // cut off "nickname" and "time_t" portion of the topic before comparing, otherwise the history
     // list will fill up with the same entries while the user only requests the topic to be seen.
 
-    if(m_topicHistory.first().section(' ', 2) != newTopic)
+    if(m_topicHistory.isEmpty() || (m_topicHistory.first().section(' ', 2) != newTopic))
     {
         m_topicHistory.prepend(QString("%1 "+i18n("unknown")+" %2").arg(QDateTime::currentDateTime().toTime_t()).arg(newTopic));
         emit topicHistoryChanged();
