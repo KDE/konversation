@@ -694,8 +694,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
             index3++;
         }
 
-        QString sgn("ServerGroup %1");
-        sgn.arg(QString::number(index).rightJustified(width,'0'));
+        QString sgn = QString("ServerGroup %1").arg(QString::number(index).rightJustified(width,'0'));
         KConfigGroup cgServerGroup(KGlobal::config()->group(sgn));
         cgServerGroup.writeEntry("Name", (*it)->name());
         cgServerGroup.writeEntry("Identity", (*it)->identity()->getName());
