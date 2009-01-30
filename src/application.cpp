@@ -787,13 +787,13 @@ void KonversationApplication::clearUrlList()
 }
 
 void KonversationApplication::openQuickConnectDialog()
-{/*
+{
     quickConnectDialog = new QuickConnectDialog(mainWindow);
     connect(quickConnectDialog, SIGNAL(connectClicked(Konversation::ConnectionFlag, const QString&, const QString&,
         const QString&, const QString&, const QString&, bool)),
         m_connectionManager, SLOT(connectTo(Konversation::ConnectionFlag, const QString&, const QString&,
         const QString&, const QString&, const QString&, bool)));
-    quickConnectDialog->show();*/
+    quickConnectDialog->show();
 }
 
 void KonversationApplication::sendMultiServerCommand(const QString& command, const QString& parameter)
