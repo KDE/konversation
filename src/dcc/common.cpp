@@ -9,7 +9,7 @@
   Copyright (C) 2007 Shintaro Matsuoka <shin@shoegazed.org>
 */
 
-#include "dcccommon.h"
+#include "common.h"
 #include "channel.h"
 #include "preferences.h"
 #include "server.h"
@@ -20,7 +20,7 @@
 
 #include <klocale.h>
 #include <k3resolver.h>
-include <k3serversocket.h>
+#include <k3serversocket.h>
 
 
 QString DccCommon::textIpToNumericalIp( const QString& ipString )

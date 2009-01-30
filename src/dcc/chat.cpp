@@ -41,11 +41,12 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kdebug.h>
-include <k3serversocket.h>
-#include <ksocketaddress.h>
-#include <kstreamsocket.h>
+#include <k3serversocket.h>
+#include <k3socketaddress.h>
+#include <k3streamsocket.h>
+#include <KActionCollection>
 #include <kaction.h>
-
+#include <kmenu.h>
 #define DCCCHAT_BUFFER_SIZE 1024
 
 
@@ -80,16 +81,16 @@ DccChat::DccChat(QWidget* parent, bool listen, Server* server, const QString& ow
     ChatWindow::setName( '-' + m_partnerNick + '-' );
     ChatWindow::setLogfileName( '-' + m_partnerNick + '-' );
 
-    Q3PopupMenu* popup = textView->getPopup();
+    KMenu* popup = textView->getPopup();
 
     if (popup)
     {
-        KAction* action = KonversationApplication::instance()->getMainWindow()->actionCollection()->action("open_logfile");
+        QAction* action = KonversationApplication::instance()->getMainWindow()->actionCollection()->action("open_logfile");
 
         if (action)
         {
             popup->insertSeparator();
-            action->plug(popup);
+            action->setMenu(popup);
         }
     }
 
@@ -389,9 +390,12 @@ void DccChat::appendInputText( const QString& s, bool fromCursor )
     else
     {
         int para = 0, index = 0;
+#warning "port it"
+#if 0
         m_dccChatInput->getCursorPosition(&para, &index);
         m_dccChatInput->insertAt(s, para, index);
         m_dccChatInput->setCursorPosition(para, index + s.length());
+#endif
     }
 }
 
