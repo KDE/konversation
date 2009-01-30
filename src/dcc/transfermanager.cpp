@@ -12,7 +12,7 @@
 #include "transfermanager.h" ////// header renamed
 #include "transferrecv.h" ////// header renamed
 #include "transfersend.h" ////// header renamed
-#include "konversationapplication.h"
+#include "application.h"
 #include "preferences.h"
 
 #include <kdebug.h>
@@ -202,13 +202,13 @@ void DccTransferManager::slotSettingsChanged()
     // update the default incoming directory for already existed DCCRECV items
     if ( Preferences::dccPath() != m_defaultIncomingFolder )
     {
-        QValueListConstIterator< DccTransferRecv* > it;
+        Q3ValueListConstIterator< DccTransferRecv* > it;
         for ( it = m_recvItems.begin() ; it != m_recvItems.end() ; ++it )
         {
             if ( (*it)->getStatus() == DccTransfer::Queued &&
                  (*it)->getFileURL().directory() == m_defaultIncomingFolder )
             {
-                KURL url;
+                KUrl url;
                 url.setDirectory( Preferences::dccPath() );
                 url.setFileName( (*it)->getFileURL().fileName() );
                 (*it)->setFileURL( url );
