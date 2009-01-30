@@ -23,14 +23,16 @@
 #include <qcheckbox.h>
 
 #include <klineedit.h>
-#include <kpassdlg.h>
 #include <klocale.h>
 
 
 QuickConnectDialog::QuickConnectDialog(QWidget *parent)
-:KDialog(parent, "quickconnect", true, i18n("Quick Connect"),
-KDialog::Ok | KDialog::Cancel, KDialog::Ok, true)
+:KDialog(parent)
 {
+    setButtons( KDialog::Ok | KDialog::Cancel );
+    setDefaultButton( KDialog::Ok );
+    setCaption(  i18n("Quick Connect") );
+    setModal( true );
     QWidget* page = new QWidget(this);
     setMainWidget(page);
 
@@ -62,7 +64,8 @@ KDialog::Ok | KDialog::Cancel, KDialog::Ok, true)
     QLabel* passwordLabel = new QLabel(i18n("P&assword:"), page);
     QString passwordWT = i18n("If the IRC server requires a password, enter it here (most servers do not require a password.)");
     Q3WhatsThis::add(passwordLabel, passwordWT);
-    passwordInput = new KPasswordEdit(page);
+    passwordInput = new KLineEdit(page);
+    passwordInput->setPasswordMode(true);
     Q3WhatsThis::add(passwordInput, passwordWT);
     passwordLabel->setBuddy(passwordInput);
 
@@ -83,7 +86,7 @@ KDialog::Ok | KDialog::Cancel, KDialog::Ok, true)
 
     hostNameInput->setFocus();
 
-    setButtonOK(KGuiItem(i18n("C&onnect"),"connect_creating",i18n("Connect to the server")));
+    setButtonGuiItem(KDialog::Ok, KGuiItem(i18n("C&onnect"),"connect_creating",i18n("Connect to the server")));
 }
 
 QuickConnectDialog::~QuickConnectDialog()
