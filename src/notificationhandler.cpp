@@ -90,7 +90,7 @@ namespace Konversation
             (!m_mainWindow->isActiveWindow() ||
             (chatWin != m_mainWindow->getViewContainer()->getFrontView())))
         {
-            konvApp->osd->showOSD(i18n("[HighLight] (%1) <%2> %3").arg(chatWin->getName()).arg(fromNick).arg(cleanedMessage));
+            konvApp->osd->showOSD(i18n("[HighLight] (%1) <%2> %3",chatWin->getName(),fromNick,cleanedMessage));
         }
         */
     }
@@ -117,7 +117,7 @@ namespace Konversation
         if(Preferences::oSDShowQuery() && (!m_mainWindow->isActiveWindow() ||
            (chatWin != m_mainWindow->getViewContainer()->getFrontView())))
         {
-            konvApp->osd->showOSD(i18n("[Query] <%1> %2").arg(fromNick).arg(cleanedMessage));
+            konvApp->osd->showOSD(i18n("[Query] <%1> %2",fromNick,cleanedMessage));
         }
         */
     }
@@ -143,7 +143,7 @@ namespace Konversation
         if (Preferences::disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
             return;
 
-        KNotification::event(QString::fromLatin1("join"), i18n("%1 joined %2").arg(nick, chatWin->getName()), QPixmap(), m_mainWindow);
+        KNotification::event(QString::fromLatin1("join"), i18n("%1 joined %2",nick, chatWin->getName()), QPixmap(), m_mainWindow);
 
         // OnScreen Message
         /*
@@ -151,7 +151,7 @@ namespace Konversation
             (!m_mainWindow->isActiveWindow() || (chatWin != m_mainWindow->getViewContainer()->getFrontView())))
         {
             KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
-            konvApp->osd->showOSD(i18n("%1 joined %2").arg(nick, chatWin->getName()));
+            konvApp->osd->showOSD(i18n("%1 joined %2",nick, chatWin->getName()));
         }
         */
     }
@@ -164,7 +164,7 @@ namespace Konversation
         if (Preferences::disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
             return;
 
-        KNotification::event(QString::fromLatin1("part"), i18n("%1 parted %2").arg(nick, chatWin->getName()), QPixmap(), m_mainWindow);
+        KNotification::event(QString::fromLatin1("part"), i18n("%1 parted %2",nick, chatWin->getName()), QPixmap(), m_mainWindow);
 
         // OnScreen Message
         /*
@@ -172,7 +172,7 @@ namespace Konversation
             (!m_mainWindow->isActiveWindow() || (chatWin != m_mainWindow->getViewContainer()->getFrontView())))
         {
             KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
-            konvApp->osd->showOSD(i18n("%1 parted %2").arg(nick, chatWin->getName()));
+            konvApp->osd->showOSD(i18n("%1 parted %2",nick, chatWin->getName()));
         }
         */
     }
@@ -185,7 +185,7 @@ namespace Konversation
         if (Preferences::disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
             return;
 
-        KNotification::event(QString::fromLatin1("part"), i18n("%1 quit %2").arg(nick, chatWin->getServer()->getServerName()), QPixmap(), m_mainWindow);
+        KNotification::event(QString::fromLatin1("part"), i18n("%1 quit %2",nick, chatWin->getServer()->getServerName()), QPixmap(), m_mainWindow);
     }
 
     void NotificationHandler::nickChange(ChatWindow* chatWin, const QString& oldNick, const QString& newNick)
@@ -196,7 +196,7 @@ namespace Konversation
         if (Preferences::disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
             return;
 
-        KNotification::event(QString::fromLatin1("nickchange"), i18n("%1 changed nickname to %2").arg(oldNick, newNick), QPixmap(), m_mainWindow);
+        KNotification::event(QString::fromLatin1("nickchange"), i18n("%1 changed nickname to %2",oldNick, newNick), QPixmap(), m_mainWindow);
     }
 
     void NotificationHandler::dccIncoming(ChatWindow* chatWin, const QString& fromNick)
@@ -207,7 +207,7 @@ namespace Konversation
         if (Preferences::disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
             return;
 
-        KNotification::event(QString::fromLatin1("dcc_incoming"), i18n("%1 wants to send a file to you").arg(fromNick), QPixmap(), m_mainWindow);
+        KNotification::event(QString::fromLatin1("dcc_incoming"), i18n("%1 wants to send a file to you",fromNick), QPixmap(), m_mainWindow);
     }
 
     void NotificationHandler::mode(ChatWindow* chatWin, const QString& /*nick*/)
@@ -310,10 +310,10 @@ namespace Konversation
             // if there was no nick associated, this must be a command message, so don't try displaying
             // an empty nick in <>
             if(fromNick.isEmpty())
-                konvApp->osd->showOSD(i18n("[HighLight] (%1) *** %2").arg(chatWin->getName()).arg(message));
+                konvApp->osd->showOSD(i18n("[HighLight] (%1) *** %2",chatWin->getName(),message));
             // normal highlight message
             else
-                konvApp->osd->showOSD(i18n("[HighLight] (%1) <%2> %3").arg(chatWin->getName()).arg(fromNick).arg(message));
+                konvApp->osd->showOSD(i18n("[HighLight] (%1) <%2> %3",chatWin->getName(),fromNick,message));
         } */
     }
 
@@ -336,7 +336,7 @@ namespace Konversation
         if (Preferences::disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
             return;
 
-        KNotification::event(QString::fromLatin1("channelJoin"), i18n("You have joined %1.").arg(channel), QPixmap(), m_mainWindow);
+        KNotification::event(QString::fromLatin1("channelJoin"), i18n("You have joined %1.",channel), QPixmap(), m_mainWindow);
     }
 
     QString NotificationHandler::addLineBreaks(const QString& string)

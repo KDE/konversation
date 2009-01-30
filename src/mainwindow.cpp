@@ -424,10 +424,10 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0, Qt::WStyle_C
 
     for (uint i = 1; i <= 10; ++i)
     {
-        //KAction* tabSelectionAction = new KAction(i18n("Go to Tab %1").arg(i), 0, KShortcut(QString("Alt+%1").arg(i%10)), tabSelectionMapper, SLOT(map()), actionCollection(), QString("go_to_tab_%1").arg(i).local8Bit());
+        //KAction* tabSelectionAction = new KAction(i18n("Go to Tab %1",i), 0, KShortcut(QString("Alt+%1").arg(i%10)), tabSelectionMapper, SLOT(map()), actionCollection(), QString("go_to_tab_%1").arg(i).local8Bit());
 
         action=new KAction(this);
-        action->setText(i18n("Go to Tab %1").arg(i));
+        action->setText(i18n("Go to Tab %1",i));
         action->setShortcut(KShortcut(QString("Alt+%1").arg(i%10)));
         connect(action, SIGNAL(triggered()), tabSelectionMapper, SLOT(map()));
         actionCollection()->addAction(QString("go_to_tab_%1").arg(i).local8Bit(), action);
@@ -739,7 +739,7 @@ void KonversationMainWindow::toggleMenubar(bool dontShowWarning)
         {
             QString accel = hideMenuBarAction->shortcut().toString();
             KMessageBox::information(this,
-                i18n("<qt>This will hide the menu bar completely. You can show it again by typing %1.</qt>").arg(accel),
+                i18n("<qt>This will hide the menu bar completely. You can show it again by typing %1.</qt>",accel),
                 "Hide menu bar","HideMenuBarWarning");
         }
         menuBar()->hide();
