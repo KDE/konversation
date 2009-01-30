@@ -13,7 +13,7 @@
 */
 
 #include "addressbook.h"
-#include "../server.h"
+#include "../irc/server.h"
 #include "../application.h"
 #include "../mainwindow.h"
 #include "../irc/channel.h"
