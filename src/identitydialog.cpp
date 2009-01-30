@@ -10,7 +10,7 @@
   email:     psn@linux.se
 */
 #include "identitydialog.h"
-#include "konversationapplication.h"
+#include "application.h"
 #include "awaymanager.h"
 #include "irccharsets.h"
 
@@ -47,7 +47,8 @@ namespace Konversation
         setCaption( i18n("Identities") );
         setButtons( Ok|Cancel );
         setDefaultButton( Ok );
-        QFrame* mainWidget = plainPage();
+        QFrame* mainWidget = new QFrame();
+        setMainWidget(mainWidget);
         Q3GridLayout* mainLayout = new Q3GridLayout(mainWidget, 1, 2, 0, spacingHint());
 
         QLabel* identityLabel = new QLabel(i18n("&Identity:"), mainWidget);
@@ -60,7 +61,8 @@ namespace Konversation
         for(IdentityList::ConstIterator it = tmpList.begin(); it != tmpList.end(); ++it)
         {
             m_identityCBox->insertItem((*it)->getName());
-            m_identityList.append(new Identity(*(*it)));
+#warning "port kde4"
+            //m_identityList.append(new Identity(*(*it)));
         }
 
         QToolButton* newBtn = new QToolButton(mainWidget);
@@ -314,8 +316,8 @@ namespace Konversation
         // Set up signals / slots for identity page
         connect(m_identityCBox, SIGNAL(activated(int)), this, SLOT(updateIdentity(int)));
 
-        setButtonOK(KGuiItem(i18n("&OK"), "button_ok", i18n("Change identity information")));
-        setButtonCancel(KGuiItem(i18n("&Cancel"), "button_cancel", i18n("Discards all changes made")));
+        setButtonGuiItem(KDialog::Ok, KGuiItem(i18n("&OK"), "button_ok", i18n("Change identity information")));
+        setButtonGuiItem(KDialog::Cancel, KGuiItem(i18n("&Cancel"), "button_cancel", i18n("Discards all changes made")));
 
         AwayManager* awayManager = static_cast<KonversationApplication*>(kapp)->getAwayManager();
         connect(this, SIGNAL(identitiesChanged()), awayManager, SLOT(identitiesChanged()));
@@ -361,7 +363,7 @@ namespace Konversation
         m_automaticUnawayChBox->setChecked(m_currentIdentity->getAutomaticUnaway());
 
         m_sCommandEdit->setText(m_currentIdentity->getShellCommand());
-        m_codecCBox->setCurrentItem(Konversation::IRCCharsets::self()->shortNameToIndex(m_currentIdentity->getCodecName()));
+        m_codecCBox->setCurrentIndex(Konversation::IRCCharsets::self()->shortNameToIndex(m_currentIdentity->getCodecName()));
         m_loginEdit->setText(m_currentIdentity->getIdent());
         m_quitEdit->setText(m_currentIdentity->getQuitReason());
         m_partEdit->setText(m_currentIdentity->getPartReason());
@@ -518,12 +520,13 @@ namespace Konversation
         if(ok && !txt.isEmpty())
         {
             KUser user(KUser::UseRealUserID);
-            IdentityPtr identity = new Identity;
+            Identity* identity = new Identity;
             identity->setName(txt);
             identity->setIdent(user.loginName());
-            m_identityList.append(identity);
+#warning "PORT KDE4"
+            //m_identityList.append(identity);
             m_identityCBox->insertItem(txt);
-            m_identityCBox->setCurrentItem(m_identityCBox->count() - 1);
+            m_identityCBox->setCurrentIndex(m_identityCBox->count() - 1);
             updateIdentity(m_identityCBox->currentItem());
         }
         else if(ok && txt.isEmpty())
@@ -609,7 +612,8 @@ namespace Konversation
             Identity* identity = new Identity;
             identity->copy(*m_currentIdentity);
             identity->setName(txt);
-            m_identityList.append(identity);
+#warning "port kde4"
+            //m_identityList.append(identity);
             m_identityCBox->insertItem(txt);
             m_identityCBox->setCurrentIndex(m_identityCBox->count() - 1);
             updateIdentity(m_identityCBox->currentItem());

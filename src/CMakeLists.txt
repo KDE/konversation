@@ -39,7 +39,7 @@ set(core_SRCS
     connectionmanager.cpp
     connectionsettings.cpp
     identity.cpp
-    #identitydialog.cpp
+    identitydialog.cpp
 
     #=== GUI
     urlcatcher.cpp
