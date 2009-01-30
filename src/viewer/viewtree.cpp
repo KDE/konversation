@@ -877,9 +877,9 @@ Q3DragObject* ViewTree::dragObject()
     return new Q3StoredDrag("application/x-qlistviewitem", viewport());
 }
 
-Q3PtrList<ChatWindow> ViewTree::getSortedViewList()
+QList<ChatWindow*> ViewTree::getSortedViewList()
 {
-    Q3PtrList<ChatWindow> viewList;
+    QList<ChatWindow*> viewList;
 
     ViewTreeItem* item = static_cast<ViewTreeItem*>(firstChild());
 

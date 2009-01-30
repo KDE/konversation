@@ -16,10 +16,9 @@
 #include "common.h"
 #include "server.h"
 
-#include <qobject.h>
-#include <qpointer.h>
-//Added by qt3to4:
-#include <Q3ValueList>
+#include <QList>
+#include <QObject>
+#include <QPointer>
 
 
 class QSplitter;
@@ -225,7 +224,7 @@ class ViewContainer : public QObject
         int m_popupViewIndex;
         int m_queryViewCount;
 
-        Q3ValueList<ChatWindow*> m_activeViewOrderList;
+        QList<ChatWindow*> m_activeViewOrderList;
 };
 
 #endif

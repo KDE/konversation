@@ -44,7 +44,7 @@ class ViewTree : public K3ListView
         bool canMoveViewUp(ChatWindow* view);
         bool canMoveViewDown(ChatWindow* view);
 
-        Q3PtrList<ChatWindow> getSortedViewList();
+        QList<ChatWindow*> getSortedViewList();
 
     public slots:
         void updateAppearance();

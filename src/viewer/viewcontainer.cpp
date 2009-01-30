@@ -11,9 +11,6 @@
 
 #include "viewcontainer.h"
 #include "queuetuner.h"
-//Added by qt3to4:
-#include <Q3ValueList>
-#include <Q3PtrList>
 #include "viewtree.h"
 #include "application.h" ////// header renamed
 #include "notificationhandler.h"
@@ -37,21 +34,23 @@
 #include "joinchanneldialog.h"
 #include "servergroupsettings.h"
 
-#include <qsplitter.h>
-#include <q3popupmenu.h>
+#include <QList>
+#include <QSplitter>
+#include <Q3PopupMenu>
 
-#include <kdebug.h>
-#include <klocale.h>
-#include <ktabwidget.h>
-#include <kpushbutton.h>
-#include <kiconloader.h>
-#include <kmessagebox.h>
-#include <kglobalsettings.h>
+#include <KDebug>
+#include <KLocale>
+#include <KTabWidget>
+#include <KPushButton>
+#include <KPushButton>
+#include <KIconLoader>
+#include <KMessageBox>
+#include <KGlobalSettings>
 
-#include <kactioncollection.h>
-#include <ktoggleaction.h>
-#include <kselectaction.h>
-#include <kxmlguifactory.h>
+#include <KActionCollection>
+#include <KToggleAction>
+#include <KSelectAction>
+#include <KXMLGUIFactory>
 
 ViewContainer::ViewContainer(KonversationMainWindow* window):
         m_vbox(0), m_queueTuner(0)
@@ -320,18 +319,18 @@ void ViewContainer::removeViewTree()
 
 void ViewContainer::syncTabBarToTree()
 {
-    Q3PtrList<ChatWindow> viewList = m_viewTree->getSortedViewList();
+    QList<ChatWindow*> viewList = m_viewTree->getSortedViewList();
 
     if (m_tabWidget && !viewList.isEmpty())
     {
-        Q3PtrListIterator<ChatWindow> it(viewList);
+        QListIterator<ChatWindow*> it(viewList);
         ChatWindow* view;
         int index = 0;
         int oldIndex = 0;
 
-        while ((view = it.current()) != 0)
+        while (it.hasNext())
         {
-            ++it;
+            view = it.next();
 
             oldIndex = m_tabWidget->indexOf(view);
 
@@ -1123,7 +1122,7 @@ void ViewContainer::unsetViewNotification(ChatWindow* view)
         //m_tabWidget->setTabColor(view, textColor);
     }
 
-    Q3ValueList<ChatWindow*>::iterator it = m_activeViewOrderList.find(view);
+     QList<ChatWindow*>::iterator it = m_activeViewOrderList.find(view);
 
     if (it != m_activeViewOrderList.end())
         m_activeViewOrderList.remove(it);
@@ -1576,7 +1575,7 @@ void ViewContainer::cleanupAfterClose(ChatWindow* view)
     }
 
     // Remove the view from the active view list if it's still on it
-    Q3ValueList<ChatWindow*>::iterator it = m_activeViewOrderList.find(view);
+    QList<ChatWindow*>::iterator it = m_activeViewOrderList.find(view);
 
     if (it != m_activeViewOrderList.end())
         m_activeViewOrderList.remove(it);
@@ -2454,7 +2453,7 @@ void ViewContainer::showNextActiveView()
         ChatWindow* prev = m_activeViewOrderList.first();
         ChatWindow* view = prev;
 
-        Q3ValueList<ChatWindow*>::ConstIterator it;
+        QList<ChatWindow*>::ConstIterator it;
 
         for (it = m_activeViewOrderList.begin(); it != m_activeViewOrderList.end(); ++it)
         {
