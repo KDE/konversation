@@ -7,7 +7,7 @@
 
 /*
   Copyright (C) 2002 Dario Abatianni <eisfuchs@tigress.com>
-  Copyright (C) 2004-2006 Peter Simonsson <psn@linux.se>
+  Copyright (C) 2004-2006, 2009 Peter Simonsson <peter.simonsson@gmail.com>
   Copyright (C) 2006-2008 Eike Hein <hein@kde.org>
 */
 
@@ -323,7 +323,7 @@ class Channel : public ChatWindow
         QSplitter* m_vertSplitter;
         QWidget* topicWidget;
         QToolButton* m_topicButton;
-        QLabel* topicLine;
+        Konversation::TopicLabel* topicLine;
 
         //TODO: abstract these
         Q3HBox* modeBox;

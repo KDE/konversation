@@ -6,14 +6,13 @@
 */
 
 /*
-  Copyright (C) 2004 Peter Simonsson <psn@linux.se>
+  Copyright (C) 2004, 2009 Peter Simonsson <peter.simonsson@gmail.com>
   Copyright (C) 2006-2008 Eike Hein <hein@kde.org>
 */
 
 #ifndef KONVERSATIONTOPICLABEL_H
 #define KONVERSATIONTOPICLABEL_H
 
-#include <k3activelabel.h>
 #include <klocale.h>
 //Added by qt3to4:
 #include <QResizeEvent>
@@ -21,6 +20,7 @@
 #include <QMouseEvent>
 #include <QContextMenuEvent>
 #include <Q3PopupMenu>
+#include <QLabel>
 
 
 class QFontMetrics;
@@ -30,7 +30,7 @@ class KMenu;
 namespace Konversation
 {
 
-    class TopicLabel : public K3ActiveLabel
+    class TopicLabel : public QLabel
     {
         Q_OBJECT
 
@@ -57,14 +57,11 @@ namespace Konversation
         protected:
             void updateSqueezedText();
             QString rPixelSqueeze(const QString& text, uint maxPixels);
-            uint textWidth(const QString& text, const QFontMetrics& fm);
-            virtual void contentsMousePressEvent(QMouseEvent *e);
-            virtual void contentsMouseReleaseEvent(QMouseEvent *e);
-            virtual void contentsMouseMoveEvent(QMouseEvent *e);
+            uint textWidth(const QString& text);
             virtual void leaveEvent (QEvent*);
-            virtual void contentsContextMenuEvent(QContextMenuEvent* ev);
+//             virtual void contentsContextMenuEvent(QContextMenuEvent* ev);
             void resizeEvent(QResizeEvent*);
-            bool contextMenu(QContextMenuEvent* ce);
+//             bool contextMenu(QContextMenuEvent* ce);
 
             void setupChannelPopupMenu();
 

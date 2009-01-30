@@ -152,7 +152,7 @@ set(viewer_SRCS
     viewer/insertchardialog.cpp
     viewer/osd.cpp
     viewer/topiccombobox.cpp
-    #viewer/topiclabel.cpp
+    viewer/topiclabel.cpp
     viewer/trayicon.cpp
     viewer/editnotifydialog.cpp
     viewer/emoticons.cpp
@@ -181,7 +181,7 @@ set(dcc_SRCS
 kde4_add_ui3_files(dcc_SRCS dcc/transferdetailedinfopanelui.ui)
 
 set (completed_SRCS ${core_SRCS}  ${irc_SRCS} ${viewer_SRCS} ${prefs_SRCS} ${dcc_SRCS})
-set (konvi_SRCS ${completed_SRCS}) 
+set (konvi_SRCS ${completed_SRCS})
 
 
 

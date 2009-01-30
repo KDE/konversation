@@ -7,7 +7,7 @@
 
 /*
   Copyright (C) 2002 Dario Abatianni <eisfuchs@tigress.com>
-  Copyright (C) 2004-2006 Peter Simonsson <psn@linux.se>
+  Copyright (C) 2004-2006, 2009 Peter Simonsson <peter.simonsson@gmail.com>
   Copyright (C) 2006-2008 Eike Hein <hein@kde.org>
 */
 
@@ -135,7 +135,7 @@ Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
     m_topicButton->setToolTip(i18n("Edit Channel Settings"));
     connect(m_topicButton, SIGNAL(clicked()), this, SLOT(showOptionsDialog()));
 
-    topicLine = new QLabel(topicWidget);
+    topicLine = new Konversation::TopicLabel(topicWidget);
     topicLine->setWordWrap(true);
     topicLine->setWhatsThis(i18n("<qt>Every channel on IRC has a topic associated with it.  This is simply a message that everybody can see.<p>If you are an operator, or the channel mode <em>'T'</em> has not been set, then you can change the topic by clicking the Edit Channel Properties button to the left of the topic.  You can also view the history of topics there.</qt>"));
     connect(topicLine, SIGNAL(setStatusBarTempText(const QString&)), this, SIGNAL(setStatusBarTempText(const QString&)));
@@ -308,7 +308,7 @@ Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
 
     // every 5 minutes decrease everyone's activity by 1 unit
     m_fadeActivityTimer.start(5*60*1000);
-    
+
     connect(&m_fadeActivityTimer, SIGNAL(timeout()), this, SLOT(fadeActivity()));
 
     // re-schedule when the settings were changed

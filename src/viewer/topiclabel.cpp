@@ -6,7 +6,7 @@
 */
 
 /*
-  Copyright (C) 2004 Peter Simonsson <psn@linux.se>
+  Copyright (C) 2004, 2009 Peter Simonsson <peter.simonsson@gmail.com>
   Copyright (C) 2006-2008 Eike Hein <hein@kde.org>
 */
 
@@ -44,10 +44,10 @@ namespace Konversation
 {
 
     TopicLabel::TopicLabel(QWidget *parent, const char *name)
-        : K3ActiveLabel(parent)
+        : QLabel(parent)
     {
         setObjectName(name);
-        setWrapPolicy(Qt::AtWordOrDocumentBoundary);
+        setWordWrap(true);
         setFocusPolicy(Qt::ClickFocus);
 
         m_isOnChannel = false;
@@ -60,7 +60,8 @@ namespace Konversation
 
         setupChannelPopupMenu();
 
-        connect(this, SIGNAL(highlighted(const QString&)), this, SLOT(highlightedSlot(const QString&)));
+        connect(this, SIGNAL(linkActivated(const QString&)), this, SLOT(openLink (const QString&)));
+        connect(this, SIGNAL(linkHovered(const QString&)), this, SLOT(highlightedSlot(const QString&)));
     }
 
     TopicLabel::~TopicLabel()
@@ -75,58 +76,12 @@ namespace Konversation
 
     QSize TopicLabel::sizeHint() const
     {
-        int minHeight = fontMetrics().lineSpacing() + fontMetrics().descent();
-        return QSize(0, minHeight);
+        return minimumSizeHint();
     }
 
     void TopicLabel::setServer(Server* server)
     {
         m_server = server;
-    }
-
-    void TopicLabel::contentsMousePressEvent(QMouseEvent *e)
-    {
-        if (e->button()==Qt::LeftButton)
-        {
-            pressPosition=e->pos();
-            urlToDrag = anchorAt(pressPosition);
-            // HACK Replace % with \x03 in the url to keep Qt from doing stupid things
-            urlToDrag = urlToDrag.replace ('\x03', "%");
-            // Hack to counter the fact that we're given an decoded url
-            urlToDrag = KUrl::fromPathOrUrl(urlToDrag).url();
-            if (!urlToDrag.isNull())
-            {
-                mousePressed=true;
-                return;
-            }
-        }
-        K3ActiveLabel::contentsMousePressEvent(e);
-    }
-
-    void TopicLabel::contentsMouseReleaseEvent(QMouseEvent *e)
-    {
-        if (e->button()==Qt::LeftButton)
-        {
-            if (mousePressed) openLink(urlToDrag);
-            mousePressed=false;
-        }
-        K3ActiveLabel::contentsMouseReleaseEvent(e);
-    }
-
-    void TopicLabel::contentsMouseMoveEvent(QMouseEvent *e)
-    {
-        if (mousePressed && (pressPosition-e->pos()).manhattanLength() > QApplication::startDragDistance())
-        {
-            mousePressed=false;
-            removeSelection();
-            KUrl ux = KUrl::fromPathOrUrl(urlToDrag);
-            //FIXME consistent IRC URL serialization
-            if (urlToDrag.startsWith("##")) ux=QString("irc://%1:%2/%3").arg(m_server->getServerName()).
-                    arg(m_server->getPort()).arg(urlToDrag.mid(2));
-            K3URLDrag* u=new K3URLDrag(ux,viewport());
-            u->drag();
-        }
-        K3ActiveLabel::contentsMouseMoveEvent(e);
     }
 
     void TopicLabel::leaveEvent(QEvent*)
@@ -153,7 +108,7 @@ namespace Konversation
             // Always use KDE default mailer.
             else if (!Preferences::useCustomBrowser() || link.toLower().startsWith("mailto:"))
             {
-                new KRun(KUrl::fromPathOrUrl(link));
+                new KRun(KUrl::fromPathOrUrl(link), this);
             }
             else
             {
@@ -172,72 +127,72 @@ namespace Konversation
         }
     }
 
-    void TopicLabel::contentsContextMenuEvent(QContextMenuEvent* ev)
-    {
-        bool block = contextMenu(ev);
+//     void TopicLabel::contentsContextMenuEvent(QContextMenuEvent* ev)
+//     {
+//         bool block = contextMenu(ev);
+//
+//         if(!block)
+//         {
+//             QLabel::contentsContextMenuEvent(ev);
+//         }
+//     }
 
-        if(!block)
-        {
-            K3ActiveLabel::contentsContextMenuEvent(ev);
-        }
-    }
-
-    bool TopicLabel::contextMenu(QContextMenuEvent* ce)
-    {
-        if (m_isOnChannel)
-        {
-            m_channelPopup->exec(ce->globalPos());
-            m_isOnChannel = false;
-        }
-        else
-        {
-            m_popup->setItemEnabled(Copy,(hasSelectedText()));
-
-            int r = m_popup->exec(ce->globalPos());
-
-            switch(r)
-            {
-                case -1:
-                    // dummy. -1 means, no entry selected. we don't want -1to go in default, so
-                    // we catch it here
-                    break;
-                case Copy:
-                    copy();
-                    break;
-                case CopyUrl:
-                {
-                    QClipboard *cb = KApplication::kApplication()->clipboard();
-                    cb->setText(m_urlToCopy,QClipboard::Selection);
-                    cb->setText(m_urlToCopy,QClipboard::Clipboard);
-                    break;
-                }
-                case SelectAll:
-                    selectAll();
-                    break;
-                case Bookmark:
-                {
-                    KBookmarkManager* bm = KBookmarkManager::userBookmarksManager();
-                    KBookmarkGroup bg = bm->addBookmarkDialog(m_urlToCopy, QString());
-                    bm->save();
-                    bm->emitChanged(bg);
-                    break;
-                }
-                default:
-                    break;
-            }
-        }
-        return true;
-    }
+//     bool TopicLabel::contextMenu(QContextMenuEvent* ce)
+//     {
+//         if (m_isOnChannel)
+//         {
+//             m_channelPopup->exec(ce->globalPos());
+//             m_isOnChannel = false;
+//         }
+//         else
+//         {
+//             m_popup->setItemEnabled(Copy,(hasSelectedText()));
+//
+//             int r = m_popup->exec(ce->globalPos());
+//
+//             switch(r)
+//             {
+//                 case -1:
+//                     // dummy. -1 means, no entry selected. we don't want -1to go in default, so
+//                     // we catch it here
+//                     break;
+//                 case Copy:
+//                     copy();
+//                     break;
+//                 case CopyUrl:
+//                 {
+//                     QClipboard *cb = KApplication::kApplication()->clipboard();
+//                     cb->setText(m_urlToCopy,QClipboard::Selection);
+//                     cb->setText(m_urlToCopy,QClipboard::Clipboard);
+//                     break;
+//                 }
+//                 case SelectAll:
+//                     selectAll();
+//                     break;
+//                 case Bookmark:
+//                 {
+//                     KBookmarkManager* bm = KBookmarkManager::userBookmarksManager();
+//                     KBookmarkGroup bg = bm->addBookmarkDialog(m_urlToCopy, QString());
+//                     bm->save();
+//                     bm->emitChanged(bg);
+//                     break;
+//                 }
+//                 default:
+//                     break;
+//             }
+//         }
+//         return true;
+//     }
 
     void TopicLabel::setupChannelPopupMenu()
     {
-        m_channelPopup = new KMenu(this,"channel_context_menu");
+/*        m_channelPopup = new KMenu(this,"channel_context_menu");
         m_channelPopupId = m_channelPopup->insertTitle(m_currentChannel);
         m_channelPopup->insertItem(i18n("&Join"),Konversation::Join);
         m_channelPopup->insertItem(i18n("Get &user list"),Konversation::Names);
         m_channelPopup->insertItem(i18n("Get &topic"),Konversation::Topic);
 
-        connect(m_channelPopup, SIGNAL(activated(int)), this, SIGNAL(popupCommand(int)));
+        connect(m_channelPopup, SIGNAL(activated(int)), this, SIGNAL(popupCommand(int)));*/
     }
 
     void TopicLabel::setText(const QString& text)
@@ -252,63 +207,56 @@ namespace Konversation
 
         if (m_fullText.isEmpty())
         {
-            K3ActiveLabel::setText(QString::null);
+            QLabel::setText(QString::null);
 
             return;
         }
 
-        QFontMetrics fm(currentFont());
         QString text = m_fullText;
         // text.replace("&", "&amp;"). Not needed as we do it in tagURLs
         text.replace("<", "\x0blt;"). // tagUrls will replace \x0b with &
             replace(">", "\x0bgt;");
         text = tagURLs(text, "", false);
 
-        if(height() < (fm.lineSpacing() * 2))
+        if(height() < (fontMetrics().lineSpacing() * 2))
         {
-            text = rPixelSqueeze(text, visibleWidth() - 10);
-            setWordWrap(NoWrap);
-            setToolTip("<qt>" + Qt::escape(m_fullText) + "</qt>");
+            text = rPixelSqueeze(text, width() - 10);
+            setWordWrap(false);
         }
         else
         {
-            setWordWrap(WidgetWidth);
-
-            if(height() < contentsHeight())
-            {
-                setToolTip("<qt>" + Qt::escape(m_fullText) + "</qt>");
-            }
+            setWordWrap(true);
         }
 
-        K3ActiveLabel::setText("<qt>" + text + "</qt>");
+        setToolTip("<qt>" + Qt::escape(m_fullText) + "</qt>");
+        QLabel::setText("<qt>" + text + "</qt>");
     }
 
     void TopicLabel::resizeEvent(QResizeEvent* ev)
     {
-        K3ActiveLabel::resizeEvent(ev);
+        QLabel::resizeEvent(ev);
         updateSqueezedText();
     }
 
     QString TopicLabel::rPixelSqueeze(const QString& text, uint maxPixels)
     {
-        QFontMetrics fm(currentFont());
-        uint tw = textWidth(text, fm);
+        uint tw = textWidth(text);
 
         if(tw > maxPixels)
         {
             QString tmp = text;
-            const uint em = fm.maxWidth();
-            maxPixels -= fm.width("...");
+            const uint em = fontMetrics().maxWidth();
+            maxPixels -= fontMetrics().width("...");
             int len, delta;
 
             while((tw > maxPixels) && !tmp.isEmpty())
             {
                 len = tmp.length();
                 delta = (tw - maxPixels) / em;
-                delta = kClamp(delta, 1, len);
+                delta = qBound(1, delta, len);
 
                 tmp.remove(len - delta, delta);
-                tw = textWidth(tmp, fm);
+                tw = textWidth(tmp);
             }
 
             return tmp.append("...");
@@ -317,10 +265,10 @@ namespace Konversation
         return text;
     }
 
-    uint TopicLabel::textWidth(const QString& text, const QFontMetrics& fm)
+    uint TopicLabel::textWidth(const QString& text)
     {
-        Q3SimpleRichText richText("<qt>" + text + "</qt>", currentFont());
-        richText.setWidth(fm.width(text));
+        Q3SimpleRichText richText("<qt>" + text + "</qt>", font());
+        richText.setWidth(fontMetrics().width(text));
 
         return richText.widthUsed();
     }
@@ -382,7 +330,7 @@ namespace Konversation
                 prettyId.append("...");
             }
 
-            m_channelPopup->changeTitle(m_channelPopupId,prettyId);
+//             m_channelPopup->changeTitle(m_channelPopupId,prettyId);
             m_isOnChannel = true;
             emit setStatusBarTempText(i18n("Join the channel %1", m_currentChannel));
         }
