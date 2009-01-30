@@ -66,11 +66,7 @@
 #include <KShortcutsDialog>
 
 #include <config-konvi.h>
-#ifdef  USE_KNOTIFY
 #include <knotifyconfigwidget.h>
-#include <kauthorized.h>
-#include <KShortcutsDialog>
-#endif
 
 
 KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0, Qt::WStyle_ContextHelp | Qt::WType_TopLevel | Qt::WDestructiveClose)
@@ -137,9 +133,7 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0, Qt::WStyle_C
     KStandardAction::keyBindings(this, SLOT(openKeyBindings()), actionCollection());
     KAction *preferencesAction = KStandardAction::preferences(this, SLOT(openPrefsDialog()), actionCollection());
 
-#ifdef USE_KNOTIFY // options_configure_notifications
     KAction *configureNotificationsAction = KStandardAction::configureNotifications(this,SLOT(openNotifications()), actionCollection());
-#endif
 
     KAction* action;
 
@@ -547,9 +541,7 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0, Qt::WStyle_C
     connect(KGlobalSettings::self(), SIGNAL(iconChanged(int)), m_trayIcon, SLOT(updateAppearance()));
     connect(m_trayIcon, SIGNAL(quitSelected()), this, SLOT(quitProgram()));
     KMenu *trayMenu = qobject_cast<KMenu*>(m_trayIcon->contextMenu());
-    #ifdef USE_KNOTIFY
-    configureNotificationsAction->plug(trayMenu);
-    #endif
+    trayMenu->addAction(configureNotificationsAction);
     trayMenu->addAction(preferencesAction);
     trayMenu->addAction(awayAction);
 
@@ -859,9 +851,7 @@ IdentityPtr KonversationMainWindow::editIdentity(IdentityPtr identity)
 
 void KonversationMainWindow::openNotifications()
 {
-    #ifdef USE_KNOTIFY
     (void) KNotifyConfigWidget::configure(this);
-    #endif
 }
 
 void KonversationMainWindow::notifyAction(const QString& serverName, const QString& nick)
