@@ -777,7 +777,7 @@ const QStringList& KonversationApplication::getUrlList()
 
 void KonversationApplication::deleteUrl(const QString& who,const QString& url)
 {
-    urlList.remove(who+' '+url);
+    urlList.removeAll(who+' '+url);
 }
 
 void KonversationApplication::clearUrlList()
