@@ -2817,11 +2817,11 @@ void Channel::addBan(const QString& ban)
 
 void Channel::removeBan(const QString& ban)
 {
-  for ( QStringList::Iterator it = m_BanList.begin(); it != m_BanList.end(); ++it )
+  foreach(const QString &string, m_BanList)
   {
-    if ((*it).section(' ', 0, 0) == ban)
+    if (string.section(' ', 0, 0) == ban)
     {
-      it = m_BanList.remove(it);
+      m_BanList.remove(string);
 
       emit banRemoved(ban);
     }

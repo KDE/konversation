@@ -385,7 +385,7 @@ namespace Konversation
         QStringList banlist = m_channel->getBanList();
         m_widget->banList->clear();
 
-        for (QStringList::const_iterator it = banlist.fromLast(); it != banlist.end(); --it)
+        for (QStringList::const_iterator it = --banlist.constEnd(); it != --banlist.constBegin(); --it)
             addBan((*it));
     }
 
