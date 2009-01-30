@@ -220,7 +220,7 @@ void KonversationStatusBar::setTooLongLag(Server* lagServer, int msec)
 }
 
 void KonversationStatusBar::updateSSLLabel(Server* server)
-{/*
+{
     if (server == m_window->getViewContainer()->getFrontServer()
         && server->getUseSSL() && server->isConnected())
     {
@@ -230,7 +230,7 @@ void KonversationStatusBar::updateSSLLabel(Server* server)
         QToolTip::add(m_sslLabel,server->getSSLInfo());
         m_sslLabel->show();
     }
-    else*/
+    else
         m_sslLabel->hide();
 }
 
