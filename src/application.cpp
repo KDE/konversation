@@ -867,7 +867,7 @@ QString KonversationApplication::doAutoreplace(const QString& text,bool output)
                 do {
                     replacement = definition.section(',',3);
                     // find matches
-                    index = line.find(needleReg, index);
+                    index = line.indexOf(needleReg, index);
 
                     if (index != -1)
                     {
