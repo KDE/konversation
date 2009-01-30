@@ -648,7 +648,7 @@ void Server::connectionEstablished(const QString& ownHost)
     // Some servers don't include the userhost in RPL_WELCOME, so we
     // need to use RPL_USERHOST to get ahold of our IP later on
     if (!ownHost.isEmpty())
-        KNetwork::KResolver::resolveAsync(this,SLOT(gotOwnResolvedHostByWelcome(KResolverResults)),ownHost,"0");
+        KNetwork::KResolver::resolveAsync(this,SLOT(gotOwnResolvedHostByWelcome(KNetwork::KResolverResults)),ownHost,"0");
 
     updateConnectionState(Konversation::SSConnected);
 
@@ -697,7 +697,7 @@ void Server::setKeyForRecipient(const QString& recipient, const Q3CString& key)
     m_keyMap[recipient] = key;
 }
 
-void Server::gotOwnResolvedHostByWelcome(KResolverResults res)
+void Server::gotOwnResolvedHostByWelcome(KNetwork::KResolverResults res)
 {
     if (res.error() == KResolver::NoError && !res.isEmpty())
         m_ownIpByWelcome = res.first().address().nodeName();
@@ -2725,7 +2725,7 @@ void Server::userhost(const QString& nick,const QString& hostmask,bool away,bool
     {
         QString myhost = hostmask.section('@', 1);
         // Use async lookup else you will be blocking GUI badly
-        KNetwork::KResolver::resolveAsync(this,SLOT(gotOwnResolvedHostByUserhost(KResolverResults)),myhost,"0");
+        KNetwork::KResolver::resolveAsync(this,SLOT(gotOwnResolvedHostByUserhost(KNetwork::KResolverResults)),myhost,"0");
     }
     NickInfoPtr nickInfo = getNickInfo(nick);
     if (nickInfo)
@@ -2737,7 +2737,7 @@ void Server::userhost(const QString& nick,const QString& hostmask,bool away,bool
     }
 }
 
-void Server::gotOwnResolvedHostByUserhost(KResolverResults res)
+void Server::gotOwnResolvedHostByUserhost(KNetwork::KResolverResults res)
 {
     if ( res.error() == KResolver::NoError && !res.isEmpty() )
         m_ownIpByUserhost = res.first().address().nodeName();

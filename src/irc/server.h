@@ -515,8 +515,8 @@ void resetNickSelection();
         void endOfWho(const QString& target);
         void invitation(const QString& nick,const QString& channel);
         void sendToAllChannelsAndQueries(const QString& text);
-        void gotOwnResolvedHostByWelcome(KResolverResults res);
-        void gotOwnResolvedHostByUserhost(KResolverResults res);
+        void gotOwnResolvedHostByWelcome(KNetwork::KResolverResults res);
+        void gotOwnResolvedHostByUserhost(KNetwork::KResolverResults res);
 
         /// Send a PING to the server so we can meassure the lag
         void sendPing();
