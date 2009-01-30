@@ -35,7 +35,7 @@ m_mainWindow(mainWindow)
 {
     m_menu = static_cast<KMenu*>(mainWindow->factory()->container("bookmarks", mainWindow));
 
-    m_file = locate( "data", "konversation/bookmarks.xml" );
+    m_file = KStandardDirs::locate( "data", "konversation/bookmarks.xml" );
 
     if ( m_file.isEmpty() )
         m_file = KStandardDirs::locateLocal( "data", "konversation/bookmarks.xml" );
@@ -46,10 +46,11 @@ m_mainWindow(mainWindow)
         return;
     }
 
-    KBookmarkManager *manager = KBookmarkManager::managerForFile( m_file, false);
-    manager->setEditorOptions(KComponentData::caption(), false);
+    KBookmarkManager *manager = KBookmarkManager::managerForFile( m_file, "konversation");
+#warning "port to kde4"
+    //manager->setEditorOptions(caption(), false);
     manager->setUpdate( true );
-    manager->setShowNSBookmarks( false );
+    //manager->setShowNSBookmarks( false );
 
     connect( manager, SIGNAL(changed(const QString &,const QString &)), SLOT(slotBookmarksChanged(const QString &,const QString &)));
 
