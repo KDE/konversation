@@ -33,7 +33,6 @@
 #include <qlabel.h>
 #include <qlineedit.h>
 #include <qtextcodec.h>
-#include <qtooltip.h>
 #include <q3textstream.h>
 #include <q3whatsthis.h>
 #include <qsplitter.h>
@@ -556,9 +555,9 @@ void Query::nickInfoChanged()
         m_nickInfo->tooltipTableData(tooltip);
 
         tooltip << "</table></qt>";
-        QToolTip::add(queryHostmask, strTooltip);
-        QToolTip::add(addresseeimage, strTooltip);
-        QToolTip::add(addresseelogoimage, strTooltip);
+        queryHostmask->setToolTip(strTooltip);
+        addresseeimage->setToolTip(strTooltip);
+        addresseelogoimage->ToolTip(strTooltip);
 
     }
     else

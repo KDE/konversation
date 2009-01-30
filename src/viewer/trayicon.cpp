@@ -20,7 +20,6 @@
 #include "config/preferences.h"
 
 #include <qtimer.h>
-#include <qtooltip.h>
 
 #include <kglobal.h>
 #include <kiconloader.h>

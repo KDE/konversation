@@ -20,7 +20,6 @@
 #include <kmenu.h>
 #include <klocale.h>
 #include <kdebug.h>
-#include <qtooltip.h>
 #include <qtimer.h>
 //Added by qt3to4:
 #include <QContextMenuEvent>

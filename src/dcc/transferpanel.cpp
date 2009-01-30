@@ -23,7 +23,6 @@
 #include <q3hbox.h>
 #include <q3header.h>
 #include <qpushbutton.h>
-#include <qtooltip.h>
 #include <q3vbox.h>
 //Added by qt3to4:
 #include <Q3ValueList>
@@ -123,10 +122,10 @@ void DccTransferPanel::initGUI()
     m_buttonDetail = new QPushButton(icon("view_text"),   i18n("Details"), buttonsBox, "detail_dcc");
     m_buttonDetail->setToggleButton( true );
 
-    QToolTip::add( m_buttonAccept, i18n( "Start receiving" ) );
-    QToolTip::add( m_buttonAbort,  i18n( "Abort the transfer(s)" ) );
-    QToolTip::add( m_buttonOpen,   i18n( "Run the file" ) );
-    QToolTip::add( m_buttonDetail, i18n( "View DCC transfer details" ) );
+    m_buttonAccept->setToolTip(i18n("Start receiving"));
+    m_buttonAbort->setToolTip(i18n("Abort the transfer(s)"));
+    m_buttonOpen->setToolTip(i18n("Run the file"));
+    m_buttonDetail->setToolTip(i18n("View DCC transfer details"));
 
     connect( m_buttonAccept, SIGNAL(clicked()), this, SLOT(acceptDcc()) );
     connect( m_buttonAbort,  SIGNAL(clicked()), this, SLOT(abortDcc()) );

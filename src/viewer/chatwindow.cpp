@@ -21,7 +21,6 @@
 #include <qdir.h>
 #include <qregexp.h>
 #include <qtextcodec.h>
-#include <qtooltip.h>
 #include <qlayout.h>
 //Added by qt3to4:
 #include <Q3TextStream>

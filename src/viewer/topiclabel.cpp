@@ -18,7 +18,6 @@
 #include "channel.h"
 
 #include <q3simplerichtext.h>
-#include <qtooltip.h>
 #include <qclipboard.h>
 //Added by qt3to4:
 #include <QContextMenuEvent>
@@ -249,7 +248,7 @@ namespace Konversation
 
     void TopicLabel::updateSqueezedText()
     {
-        QToolTip::remove(this);
+        setToolTip(QString());
 
         if (m_fullText.isEmpty())
         {
@@ -269,7 +268,7 @@ namespace Konversation
         {
             text = rPixelSqueeze(text, visibleWidth() - 10);
             setWordWrap(NoWrap);
-            QToolTip::add(this, "<qt>" + Qt::escape(m_fullText) + "</qt>");
+            setToolTip("<qt>" + Qt::escape(m_fullText) + "</qt>");
         }
         else
         {
@@ -277,7 +276,7 @@ namespace Konversation
 
             if(height() < contentsHeight())
             {
-                QToolTip::add(this, "<qt>" + Qt::escape(m_fullText) + "</qt>");
+                setToolTip("<qt>" + Qt::escape(m_fullText) + "</qt>");
             }
         }
 

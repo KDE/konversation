@@ -19,7 +19,6 @@
 #include <qdir.h>
 #include <qlabel.h>
 #include <q3header.h>
-#include <qtooltip.h>
 #include <qtoolbutton.h>
 //Added by qt3to4:
 #include <Q3PtrList>
@@ -185,11 +184,11 @@ void Highlight_Config::updateButtons()
 
   if(installed)
   {
-      QToolTip::add(patternButton, i18n("Click to run Regular Expression Editor (KRegExpEditor)"));
+      patternButton->setToolTip(i18n("Click to run Regular Expression Editor (KRegExpEditor)"));
   }
   else
   {
-      QToolTip::add(patternButton, i18n("The Regular Expression Editor (KRegExpEditor) is not installed"));
+      patternButton->setToolTip(i18n("The Regular Expression Editor (KRegExpEditor) is not installed"));
   }
 }
 

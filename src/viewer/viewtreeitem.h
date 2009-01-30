@@ -16,7 +16,6 @@
 
 #include <qobject.h>
 #include <q3listview.h>
-#include <qtooltip.h>
 #include <qpointer.h>
 #include <qpixmap.h>
 

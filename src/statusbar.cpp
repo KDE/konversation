@@ -16,7 +16,6 @@
 
 #include <q3whatsthis.h>
 #include <qlabel.h>
-#include <qtooltip.h>
 
 #include <kstatusbar.h>
 #include <klocale.h>
@@ -226,8 +225,7 @@ void KonversationStatusBar::updateSSLLabel(Server* server)
     {
         disconnect(m_sslLabel,0,0,0);
         connect(m_sslLabel,SIGNAL(clicked()),server,SLOT(showSSLDialog()));
-        QToolTip::remove(m_sslLabel);
-        QToolTip::add(m_sslLabel,server->getSSLInfo());
+        m_sslLabel->setToolTip(server->getSSLInfo());
         m_sslLabel->show();
     }
     else

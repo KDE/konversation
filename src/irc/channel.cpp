@@ -50,7 +50,6 @@
 #include <qsizepolicy.h>
 #include <q3header.h>
 #include <qregexp.h>
-#include <qtooltip.h>
 #include <qsplitter.h>
 #include <qcheckbox.h>
 #include <qtimer.h>
@@ -134,7 +133,7 @@ Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
 
     m_topicButton = new QToolButton(topicWidget);
     m_topicButton->setIcon(KIcon("document-edit"));
-    QToolTip::add(m_topicButton, i18n("Edit Channel Settings"));
+    m_topicButton->setToolTip(i18n("Edit Channel Settings"));
     connect(m_topicButton, SIGNAL(clicked()), this, SLOT(showOptionsDialog()));
 
     topicLine = new QLabel(topicWidget);
@@ -178,7 +177,7 @@ Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
     connect(modeL,SIGNAL(clicked(int,bool)),this,SLOT(modeButtonClicked(int,bool)));
 
     limit=new KLineEdit(modeBox);
-    QToolTip::add(limit, i18n("Maximum users allowed in channel"));
+    limit->setToolTip(i18n("Maximum users allowed in channel"));
     Q3WhatsThis::add(limit, i18n("<qt>This is the channel user limit - the maximum number of users that can be in the channel at a time.  If you are an operator, you can set this.  The channel mode <b>T</b>opic (button to left) will automatically be set if set this.</qt>"));
     connect(limit,SIGNAL (returnPressed()),this,SLOT (channelLimitChanged()) );
     connect(limit,SIGNAL (lostFocus()), this, SLOT(channelLimitChanged()) );
@@ -2117,7 +2116,7 @@ void Channel::updateQuickButtons(const QStringList &newButtonList)
     {
       QuickButton* button=buttonList.at(0);
       // remove tool tips as well
-      QToolTip::remove(button);
+      button->setToolTip(QString());
       buttonList.remove(button);
       delete button;
     }
@@ -2151,7 +2150,7 @@ void Channel::updateQuickButtons(const QStringList &newButtonList)
             replace("<","&lt;").
             replace(">","&gt;");
 
-        QToolTip::add(quickButton,toolTip);
+        quickButton->setToolTip(toolTip);
 
         quickButton->show();
     } // for
@@ -2431,14 +2430,14 @@ void Channel::refreshModeButtons()
     QString opOnly;
     if(!enable) opOnly = i18n("You have to be an operator to change this.");
 
-    QToolTip::add(modeT, i18n("Topic can be changed by channel operator only.  %1", opOnly));
-    QToolTip::add(modeN, i18n("No messages to channel from clients on the outside.  %1", opOnly));
-    QToolTip::add(modeS, i18n("Secret channel.  %1", opOnly));
-    QToolTip::add(modeI, i18n("Invite only channel.  %1", opOnly));
-    QToolTip::add(modeP, i18n("Private channel.  %1", opOnly));
-    QToolTip::add(modeM, i18n("Moderated channel.  %1", opOnly));
-    QToolTip::add(modeK, i18n("Protect channel with a password."));
-    QToolTip::add(modeL, i18n("Set user limit to channel."));
+    modeT->setToolTip(i18n("Topic can be changed by channel operator only.  %1", opOnly));
+    modeN->setToolTip(i18n("No messages to channel from clients on the outside.  %1", opOnly));
+    modeS->setToolTip(i18n("Secret channel.  %1", opOnly));
+    modeI->setToolTip(i18n("Invite only channel.  %1", opOnly));
+    modeP->setToolTip(i18n("Private channel.  %1", opOnly));
+    modeM->setToolTip(i18n("Moderated channel.  %1", opOnly));
+    modeK->setToolTip(i18n("Protect channel with a password."));
+    modeL->setToolTip(i18n("Set user limit to channel."));
 
 }
 
