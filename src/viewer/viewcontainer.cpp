@@ -82,11 +82,10 @@ ViewContainer::ViewContainer(KonversationMainWindow* window):
 
     initializeSplitterSizes();
 
-    /*m_dccPanel = new DccTransferPanel(m_tabWidget);
+    m_dccPanel = new DccTransferPanel(m_tabWidget);
     m_dccPanel->hide();
     m_dccPanelOpen = false;
     connect(m_dccPanel, SIGNAL(updateTabNotification(ChatWindow*,const Konversation::TabNotifyType&)), this, SLOT(setViewNotification(ChatWindow*,const Konversation::TabNotifyType&)));
-    */
 }
 
 ViewContainer::~ViewContainer()
@@ -2043,25 +2042,25 @@ void ViewContainer::closeUrlCatcher()
 }
 
 void ViewContainer::toggleDccPanel()
-{/*
+{
     if (m_dccPanel==0 || !m_dccPanelOpen)
         addDccPanel();
     else
         closeDccPanel();
-*/}
+}
 
 void ViewContainer::addDccPanel()
-{/*
+{
     if (!m_dccPanelOpen)
     {
         addView(m_dccPanel, i18n("DCC Status"));
         m_dccPanelOpen=true;
         (dynamic_cast<KToggleAction*>(actionCollection()->action("open_dccstatus_window")))->setChecked(true);
     }
-*/}
+}
 
 void ViewContainer::closeDccPanel()
-{/*
+{
     // if there actually is a dcc panel
     if (m_dccPanel)
     {
@@ -2071,25 +2070,25 @@ void ViewContainer::closeDccPanel()
         m_dccPanelOpen=false;
         (dynamic_cast<KToggleAction*>(actionCollection()->action("open_dccstatus_window")))->setChecked(false);
     }
-*/}
+}
 
 void ViewContainer::deleteDccPanel()
-{/*
+{
     if (m_dccPanel)
     {
         closeDccPanel();
         delete m_dccPanel;
         m_dccPanel=0;
     }
-*/}
+}
 
 DccTransferPanel* ViewContainer::getDccPanel()
 {
-    return 0;//m_dccPanel;
+    return m_dccPanel;
 }
 
 void ViewContainer::addDccChat(const QString& myNick,const QString& nick,const QStringList& arguments,bool listen)
-{/*
+{
     if (!listen) // Someone else initiated dcc chat
     {
         KonversationApplication* konv_app=static_cast<KonversationApplication*>(KApplication::kApplication());
@@ -2106,7 +2105,7 @@ void ViewContainer::addDccChat(const QString& myNick,const QString& nick,const Q
 
         // This needs to be here as addView will change m_frontServer if focus new tabs is enabled.
         addView(dccChatPanel, dccChatPanel->getName());
-    }*/
+    }
 }
 
 StatusPanel* ViewContainer::addStatusView(Server* server)

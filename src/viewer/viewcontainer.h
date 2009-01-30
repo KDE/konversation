@@ -217,7 +217,7 @@ class ViewContainer : public QObject
         UrlCatcher* m_urlCatcherPanel;
         NicksOnline* m_nicksOnlinePanel;
 
-        //DccTransferPanel* m_dccPanel;
+        DccTransferPanel* m_dccPanel;
         bool m_dccPanelOpen;
 
         Konversation::InsertCharDialog* m_insertCharDialog;
