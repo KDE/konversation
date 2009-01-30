@@ -14,7 +14,7 @@
 
 #include "identity.h"
 
-#include <kdialogbase.h>
+#include <kdialog.h>
 
 
 class KComboBox;
@@ -28,7 +28,7 @@ class QToolButton;
 namespace Konversation
 {
 
-    class IdentityDialog : public KDialogBase
+    class IdentityDialog : public KDialog
     {
         Q_OBJECT
         public:

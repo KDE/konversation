@@ -10,7 +10,7 @@
   email:     psn@linux.se
 */
 #include "identitydialog.h"
-#include "application.h" ////// header renamed
+#include "konversationapplication.h"
 #include "awaymanager.h"
 #include "irccharsets.h"
 
@@ -42,13 +42,16 @@ namespace Konversation
 {
 
     IdentityDialog::IdentityDialog(QWidget *parent, const char *name)
-        : KDialogBase(Plain, i18n("Identities"), Ok|Cancel, Ok, parent, name)
+        : KDialog(parent)
     {
+        setCaption( i18n("Identities") );
+        setButtons( Ok|Cancel );
+        setDefaultButton( Ok );
         QFrame* mainWidget = plainPage();
         Q3GridLayout* mainLayout = new Q3GridLayout(mainWidget, 1, 2, 0, spacingHint());
 
         QLabel* identityLabel = new QLabel(i18n("&Identity:"), mainWidget);
-        m_identityCBox = new KComboBox(mainWidget, "identity_combo");
+        m_identityCBox = new KComboBox(mainWidget);
         m_identityCBox->setEditable(false);
         identityLabel->setBuddy(m_identityCBox);
 
@@ -154,7 +157,7 @@ namespace Konversation
         generalLayout->addMultiCellWidget(autoIdentifyGBox, row, row, 0, 1);
 
         QWidget* awayWidget = new QWidget(tabWidget);
-        tabWidget->addTab(awayWidget, i18n("Tab name", "Away"));
+        tabWidget->addTab(awayWidget, i18nc("Tab name", "Away"));
         Q3GridLayout* awayLayout = new Q3GridLayout(awayWidget, 1, 2, marginHint(), spacingHint());
 
         m_insertRememberLineOnAwayChBox = new QCheckBox(i18n("Mark the last position in chat windows when going away"), awayWidget);
@@ -252,7 +255,7 @@ namespace Konversation
 
         // encoding combo box
         QLabel* codecLabel = new QLabel(i18n("&Encoding:"), advancedWidget);
-        m_codecCBox = new KComboBox(advancedWidget,"codec_combo_box");
+        m_codecCBox = new KComboBox(advancedWidget);
         Q3WhatsThis::add(m_codecCBox, i18n("This setting affects how characters you type are encoded for sending to the server. It also affects how messages are displayed. When you first open Konversation, it automatically retrieves this setting from the operating system. If you seem to be having trouble seeing other user's messages correctly, try changing this setting."));
         codecLabel->setBuddy(m_codecCBox);
         // add encodings to combo box
@@ -603,12 +606,12 @@ namespace Konversation
 
         if(ok && !txt.isEmpty())
         {
-            IdentityPtr identity = new Identity;
+            Identity* identity = new Identity;
             identity->copy(*m_currentIdentity);
             identity->setName(txt);
             m_identityList.append(identity);
             m_identityCBox->insertItem(txt);
-            m_identityCBox->setCurrentItem(m_identityCBox->count() - 1);
+            m_identityCBox->setCurrentIndex(m_identityCBox->count() - 1);
             updateIdentity(m_identityCBox->currentItem());
         }
         else if(ok && txt.isEmpty())
@@ -623,7 +626,7 @@ namespace Konversation
         if (index >= m_identityCBox->count())
             index = 0;
 
-        m_identityCBox->setCurrentItem(index);
+        m_identityCBox->setCurrentIndex(index);
         updateIdentity(index);
     }
 
@@ -641,4 +644,4 @@ namespace Konversation
     }
 }
 
-// #include "./identitydialog.moc"
+#include "identitydialog.moc"
