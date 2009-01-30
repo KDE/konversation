@@ -175,8 +175,7 @@ namespace Konversation
     {
         QStringList history = m_channel->getTopicHistory();
         m_widget->topicHistoryList->clear();
-
-        for(QStringList::const_iterator it = history.fromLast(); it != history.end(); --it)
+        for(QStringList::const_iterator it = history.fromLast(); it != history.begin(); --it)
         {
             QDateTime date;
             date.setTime_t((*it).section(' ', 0 ,0).toUInt());
