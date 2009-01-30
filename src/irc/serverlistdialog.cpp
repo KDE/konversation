@@ -112,7 +112,7 @@ namespace Konversation
         setButtons(Ok|Close);
         setModal(false);
 
-        setButtonGuiItem(Ok, KGuiItem(i18n("C&onnect"), "connect_creating", i18n("Connect to the server"), i18n("Click here to connect to the selected IRC network and channel.")));
+        setButtonGuiItem(Ok, KGuiItem(i18n("C&onnect"), "network-connect", i18n("Connect to the server"), i18n("Click here to connect to the selected IRC network and channel.")));
 
         m_serverList = new ServerListView(mainWidget());
         Q3WhatsThis::add(m_serverList, i18n("This shows the listof configured IRC networks. An IRC network is a collection of cooperating servers. You need only connect to one of the servers in the network to be connected to the entire IRC network. Once connected, Konversation will automatically join the channels shown. When Konversation is started for the first time, the Freenode network and the <i>#kde</i> channel are already entered for you."));

@@ -75,10 +75,10 @@ namespace Konversation
         Q3WhatsThis::add(m_mainWidget->m_autoConnectCBox, i18n("Check here if you want Konversation to automatically connect to this network whenever you open Konversation."));
 
         Q3WhatsThis::add(m_mainWidget->m_serverLBox, i18n("This is a list of IRC Servers in the network. When connecting to the network, Konversation will attempt to connect to the top server first. If this fails, it will attempt the second server. If this fails, it will attempt the third, and so on. At least one server must be specified. Click a server to highlight it."));
-        m_mainWidget->m_removeServerButton->setIconSet(SmallIconSet("editdelete"));
+        m_mainWidget->m_removeServerButton->setIconSet(SmallIconSet("list-remove"));
         m_mainWidget->m_removeServerButton->setTextLabel(i18n("Delete"));
-        m_mainWidget->m_upServerBtn->setIconSet(SmallIconSet("up"));
-        m_mainWidget->m_downServerBtn->setIconSet(SmallIconSet("down"));
+        m_mainWidget->m_upServerBtn->setIconSet(SmallIconSet("arrow-up"));
+        m_mainWidget->m_downServerBtn->setIconSet(SmallIconSet("arrow-down"));
 
         connect(m_mainWidget->m_addServerButton, SIGNAL(clicked()), this, SLOT(addServer()));
         connect(m_mainWidget->m_changeServerButton, SIGNAL(clicked()), this, SLOT(editServer()));
@@ -88,10 +88,10 @@ namespace Konversation
         connect(m_mainWidget->m_downServerBtn, SIGNAL(clicked()), this, SLOT(moveServerDown()));
 
         Q3WhatsThis::add(m_mainWidget->m_channelLBox, i18n("Optional. This is a list of the channels that will be automatically joined once Konversation has connected to a server. You may leave this blank if you wish to not automatically join any channels."));
-        m_mainWidget->m_removeChannelButton->setIconSet(SmallIconSet("editdelete"));
+        m_mainWidget->m_removeChannelButton->setIconSet(SmallIconSet("list-remove"));
         m_mainWidget->m_removeChannelButton->setTextLabel(i18n("Delete"));
-        m_mainWidget->m_upChannelBtn->setIconSet(SmallIconSet("up"));
-        m_mainWidget->m_downChannelBtn->setIconSet(SmallIconSet("down"));
+        m_mainWidget->m_upChannelBtn->setIconSet(SmallIconSet("arrow-up"));
+        m_mainWidget->m_downChannelBtn->setIconSet(SmallIconSet("arrow-down"));
 
         connect(m_mainWidget->m_addChannelButton, SIGNAL(clicked()), this, SLOT(addChannel()));
         connect(m_mainWidget->m_changeChannelButton, SIGNAL(clicked()), this, SLOT(editChannel()));
@@ -100,8 +100,8 @@ namespace Konversation
         connect(m_mainWidget->m_upChannelBtn, SIGNAL(clicked()), this, SLOT(moveChannelUp()));
         connect(m_mainWidget->m_downChannelBtn, SIGNAL(clicked()), this, SLOT(moveChannelDown()));
 
-        setButtonGuiItem(Ok, KGuiItem(i18n("&OK"), "button_ok", i18n("Change network information")));
-        setButtonGuiItem(Cancel, KGuiItem(i18n("&Cancel"), "button_cancel", i18n("Discards all changes made")));
+        setButtonGuiItem(Ok, KGuiItem(i18n("&OK"), "dialog-ok", i18n("Change network information")));
+        setButtonGuiItem(Cancel, KGuiItem(i18n("&Cancel"), "dialog-cancel", i18n("Discards all changes made")));
 
         m_mainWidget->m_nameEdit->setFocus();
 
