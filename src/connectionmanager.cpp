@@ -255,7 +255,7 @@ void ConnectionManager::decodeIrcUrl(const QString& url, ConnectionSettings& set
 
         addressSegments = mangledUrlSegments[0].split(',', QString::KeepEmptyParts);
 
-        if (addressSegments.grep("isserver", false).size() > 0)
+        if (addressSegments.filter("isserver", false).size() > 0)
             checkIfServerGroup = false;
 
         decodeAddress(addressSegments[0], settings, checkIfServerGroup);
