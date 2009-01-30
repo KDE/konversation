@@ -34,7 +34,6 @@
 #include <qlineedit.h>
 #include <qtextcodec.h>
 #include <q3textstream.h>
-#include <q3whatsthis.h>
 #include <qsplitter.h>
 
 #include <klocale.h>
@@ -73,9 +72,9 @@ Query::Query(QWidget* parent, QString _name) : ChatWindow(parent)
     queryHostmask->setObjectName("query_hostmask");
 
     QString whatsthis = i18n("<qt>Some details of the person you are talking to in this query is shown in this bar.  The full name and hostmask is shown, along with any image or logo this person has associated with them in the KDE Addressbook.<p>See the <i>Konversation Handbook</i> for information on associating a nick with a contact in the Addressbook, and for an explanation of what the hostmask is.</qt>");
-    Q3WhatsThis::add(addresseeimage, whatsthis);
-    Q3WhatsThis::add(addresseelogoimage, whatsthis);
-    Q3WhatsThis::add(queryHostmask, whatsthis);
+    addresseeimage->setWhatsThis(whatsthis);
+    addresseelogoimage->setWhatsThis(whatsthis);
+    queryHostmask->setWhatsThis(whatsthis);
 
     IRCViewBox* ircBox = new IRCViewBox(m_headerSplitter,0);
     setTextView(ircBox->ircView());               // Server will be set later in setServer();

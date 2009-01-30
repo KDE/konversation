@@ -29,7 +29,6 @@
 #include <qregexp.h>
 #include <qcheckbox.h>
 #include <qtimer.h>
-#include <q3whatsthis.h>
 //Added by qt3to4:
 #include <Q3TextStream>
 
@@ -72,9 +71,9 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
     QLabel* minLabel=new QLabel(i18n("Minimum users:"),mainGrid);
     QLabel* maxLabel=new QLabel(i18n("Maximum users:"),mainGrid);
     QSpinBox* minUsersSpin=new QSpinBox(0, 9999, 1, mainGrid,"min_users_spin");
-    Q3WhatsThis::add(minUsersSpin, i18n("You can limit the channel list to those channels with a minimum number of users here. Choosing 0 disables this criterion."));
+    minUsersSpin->setWhatsThis(i18n("You can limit the channel list to those channels with a minimum number of users here. Choosing 0 disables this criterion."));
     QSpinBox* maxUsersSpin=new QSpinBox(0, 9999, 1, mainGrid,"max_users_spin");
-    Q3WhatsThis::add(maxUsersSpin, i18n("You can limit the channel list to those channels with a maximum number of users here. Choosing 0 disables this criterion."));
+    maxUsersSpin->setWhatsThis(i18n("You can limit the channel list to those channels with a maximum number of users here. Choosing 0 disables this criterion."));
     minUsersSpin->setValue(getMinUsers());
     maxUsersSpin->setValue(getMaxUsers());
     minLabel->setBuddy(minUsersSpin);
@@ -85,7 +84,7 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
 
     filterInput=new KLineEdit(mainGrid);
     filterInput->setObjectName("channel_list_filter_input");
-    Q3WhatsThis::add(filterInput, i18n("Enter a filter string here."));
+    filterInput->setWhatsThis(i18n("Enter a filter string here."));
     filterInput->setText(getFilterText());
 
     patternLabel->setBuddy(filterInput);
@@ -97,7 +96,7 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
     topicFilter=new QCheckBox(i18n("Topic"),targetBox,"filter_target_topic_check");
     regexpCheck=new QCheckBox(i18n("Regular expression"),targetBox,"regexp_check");
     applyFilter=new QPushButton(i18n("Apply Filter"),targetBox,"apply_filter_button");
-    Q3WhatsThis::add(applyFilter, i18n("Click here to retrieve the list of channels from the server and apply the filter."));
+    applyFilter->setWhatsThis(i18n("Click here to retrieve the list of channels from the server and apply the filter."));
 
     channelFilter->setChecked(getChannelTarget());
     topicFilter->setChecked(getTopicTarget());
@@ -108,7 +107,7 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
     channelListView=new K3ListView(this);
     channelListView->setObjectName("channel_list_view");
     
-    Q3WhatsThis::add(channelListView, i18n("The filtered list of channels is displayed here. Notice that if you do not use regular expressions, Konversation lists any channel whose name contains the filter string you entered. The channel name does not have to start with the string you entered.\n\nSelect a channel you want to join by clicking on it. Right click on the channel to get a list of all web addresses mentioned in the channel's topic."));
+    channelListView->setWhatsThis(i18n("The filtered list of channels is displayed here. Notice that if you do not use regular expressions, Konversation lists any channel whose name contains the filter string you entered. The channel name does not have to start with the string you entered.\n\nSelect a channel you want to join by clicking on it. Right click on the channel to get a list of all web addresses mentioned in the channel's topic."));
     channelListView->addColumn(i18n("Channel Name"));
     channelListView->addColumn(i18n("Users"));
     channelListView->addColumn(i18n("Channel Topic"));
@@ -130,7 +129,7 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
     refreshListButton=new QPushButton(i18n("Refresh List"),actionBox,"refresh_list_button");
     QPushButton* saveListButton=new QPushButton(i18n("Save List..."),actionBox,"save_list_button");
     joinChannelButton=new QPushButton(i18n("Join Channel"),actionBox,"join_channel_button");
-    Q3WhatsThis::add(joinChannelButton, i18n("Click here to join the channel. A new tab is created for the channel."));
+    joinChannelButton->setWhatsThis(i18n("Click here to join the channel. A new tab is created for the channel."));
 
     connect(&updateTimer,SIGNAL (timeout()),this,SLOT (updateDisplay()));
 

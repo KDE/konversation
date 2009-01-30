@@ -34,7 +34,6 @@
 #include <qevent.h>
 #include <q3dragobject.h>
 #include <q3popupmenu.h>
-#include <q3whatsthis.h>
 #include <qmap.h>
 #include <qcolor.h>
 #include <qscrollbar.h>

@@ -14,7 +14,6 @@
 #include "viewcontainer.h"
 #include "ssllabel.h"
 
-#include <q3whatsthis.h>
 #include <qlabel.h>
 
 #include <kstatusbar.h>
@@ -43,7 +42,7 @@ KonversationStatusBar::KonversationStatusBar(KonversationMainWindow* window)
     m_infoLabel = new QLabel(m_window->statusBar());
     m_infoLabel->setObjectName("infoLabel");
     m_infoLabel->hide();
-    Q3WhatsThis::add(m_infoLabel, i18n("<qt>This shows the number of users in the channel, and the number of those that are operators (ops).<p>A channel operator is a user that has special privileges, such as the ability to kick and ban users, change the channel modes, make other users operators</qt>"));
+    m_infoLabel->setWhatsThis(i18n("<qt>This shows the number of users in the channel, and the number of those that are operators (ops).<p>A channel operator is a user that has special privileges, such as the ability to kick and ban users, change the channel modes, make other users operators</qt>"));
 
     m_lagLabel = new QLabel(i18n("Lag: Unknown"), m_window->statusBar());
     m_lagLabel->setObjectName("lagLabel");
@@ -53,14 +52,14 @@ KonversationStatusBar::KonversationStatusBar(KonversationMainWindow* window)
     m_sslLabel->setObjectName("sslLabel");
     m_sslLabel->setPixmap(SmallIcon("encrypted"));
     m_sslLabel->hide();
-    Q3WhatsThis::add(m_sslLabel, i18n("All communication with the server is encrypted.  This makes it harder for someone to listen in on your communications."));
+    m_sslLabel->setWhatsThis(i18n("All communication with the server is encrypted.  This makes it harder for someone to listen in on your communications."));
 
     m_window->statusBar()->addWidget(m_mainLabel, 1, false);
     m_window->statusBar()->addWidget(m_infoLabel, 0, true);
     m_window->statusBar()->addWidget(m_lagLabel, 0, true);
     m_window->statusBar()->addWidget(m_sslLabel, 0, true);
 
-    Q3WhatsThis::add(m_window->statusBar(), i18n("<qt>The status bar shows various messages, including any problems connecting to the server.  On the far right the current delay to the server is shown.  The delay is the time it takes for messages from you to reach the server, and from the server back to you.</qt>"));
+    m_window->statusBar()->setWhatsThis(i18n("<qt>The status bar shows various messages, including any problems connecting to the server.  On the far right the current delay to the server is shown.  The delay is the time it takes for messages from you to reach the server, and from the server back to you.</qt>"));
 }
 
 KonversationStatusBar::~KonversationStatusBar()

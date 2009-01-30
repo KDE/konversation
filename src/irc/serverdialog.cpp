@@ -18,7 +18,6 @@
 #include <qlineedit.h>
 #include <qspinbox.h>
 #include <qcheckbox.h>
-#include <q3whatsthis.h>
 //Added by qt3to4:
 #include <Q3GridLayout>
 
@@ -39,14 +38,14 @@ namespace Konversation
 
         QLabel* serverLbl = new QLabel(i18n("&Server:"), mainWidget());
         m_serverEdit = new QLineEdit(mainWidget());
-        Q3WhatsThis::add(m_serverEdit, i18n("The name or IP number of the server. irchelp.org maintains a list of servers."));
+        m_serverEdit->setWhatsThis(i18n("The name or IP number of the server. irchelp.org maintains a list of servers."));
         serverLbl->setBuddy(m_serverEdit);
 
         QLabel* portLbl = new QLabel(i18n("&Port:"), mainWidget());
 
         m_portSBox = new QSpinBox(1, 65535, 1, mainWidget());
         m_portSBox->setValue(6667);
-        Q3WhatsThis::add(m_portSBox, i18n("Enter the port number required to connect to the server. For most servers, this should be <b>6667</b>."));
+        m_portSBox->setWhatsThis(i18n("Enter the port number required to connect to the server. For most servers, this should be <b>6667</b>."));
         portLbl->setBuddy(m_portSBox);
 
         QLabel* passwordLbl = new QLabel(i18n("Pass&word:"), mainWidget());
@@ -55,7 +54,7 @@ namespace Konversation
         passwordLbl->setBuddy(m_passwordEdit);
 
         m_sslChBox = new QCheckBox(i18n("S&ecure connection (SSL)"), mainWidget());
-        Q3WhatsThis::add(m_sslChBox, i18n("Check if you want to use Secure Socket Layer (SSL) protocol to communicate with the server. This protects the privacy of your communications between your computer and the IRC server. The server must support SSL protocol for this to work. In most cases, if the server does not support SSL, the connection will fail."));
+        m_sslChBox->setWhatsThis(i18n("Check if you want to use Secure Socket Layer (SSL) protocol to communicate with the server. This protects the privacy of your communications between your computer and the IRC server. The server must support SSL protocol for this to work. In most cases, if the server does not support SSL, the connection will fail."));
 
         mainLayout->addWidget(serverLbl, 0, 0);
         mainLayout->addWidget(m_serverEdit, 0, 1);

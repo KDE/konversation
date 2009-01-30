@@ -35,7 +35,6 @@
 #include <qlabel.h>
 #include <q3popupmenu.h>
 #include <q3ptrlist.h>
-#include <q3whatsthis.h>
 
 
 #include <kdebug.h>
@@ -77,7 +76,7 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
         "<p>Nicknames appearing under <b>Offline</b> are not connected to any of the "
         "servers in the network.</p>"
         "<p>Right-click with the mouse on a nickname to perform additional functions.</p>");
-    Q3WhatsThis::add(m_nickListView, nickListViewWT);
+    m_nickListView->setWhatsThis(nickListViewWT);
 
     //m_tooltip = new Konversation::KonversationNicksOnlineToolTip(m_nickListView->viewport(), this);
 
@@ -90,7 +89,7 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
         buttonBox,"edit_notify_button");
     QString editButtonWT = i18n(
         "Click to edit the list of nicknames that appear on this screen.");
-    Q3WhatsThis::add(editButton, editButtonWT);
+    editButton->setWhatsThis(editButtonWT);
 
     connect(editButton, SIGNAL(clicked()), SIGNAL(editClicked()) );
     connect(m_nickListView, SIGNAL(doubleClicked(Q3ListViewItem*)),
@@ -101,27 +100,27 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
     QString addressbookLabelWT = i18n(
         "When you select a nickname in the list above, the buttons here are used "
         "to associate the nickname with an entry in KAddressBook.");
-    Q3WhatsThis::add(addressbookLabel, addressbookLabelWT);
+    addressbookLabel->setWhatsThis(addressbookLabelWT);
     addressbookLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
     m_editContactButton = new QPushButton(i18n("Edit C&ontact..."),
         buttonBox, "nicksonline_editcontact_button");
     QString editContactButtonWT = i18n(
         "Click to create, view, or edit the KAddressBook entry associated with the nickname "
         "selected above.");
-    Q3WhatsThis::add(m_editContactButton, editContactButtonWT);
+    m_editContactButton->setWhatsThis(editContactButtonWT);
     m_editContactButton->setIcon(m_kabcIconSet);
     m_changeAssociationButton = new QPushButton(i18n("&Change Association..."),
         buttonBox, "nicksonline_changeassociation_button");
     QString changeAssociationButtonWT = i18n(
         "Click to associate the nickname selected above with an entry in KAddressBook.");
-    Q3WhatsThis::add(m_changeAssociationButton, changeAssociationButtonWT);
+    m_changeAssociationButton->setWhatsThis(changeAssociationButtonWT);
     m_changeAssociationButton->setIcon(m_kabcIconSet);
     m_deleteAssociationButton = new QPushButton(i18n("&Delete Association"),
         buttonBox, "nicksonline_deleteassociation_button");
     QString deleteAssociationButtonWT = i18n(
         "Click to remove the association between the nickname selected above and a "
         "KAddressBook entry.");
-    Q3WhatsThis::add(m_deleteAssociationButton, deleteAssociationButtonWT);
+    m_deleteAssociationButton->setWhatsThis(deleteAssociationButtonWT);
     m_deleteAssociationButton->setIcon(m_kabcIconSet);
 
     connect(m_editContactButton, SIGNAL(clicked()),

@@ -30,7 +30,6 @@
 #include "transfermanager.h" ////// header renamed
 
 #include <qnamespace.h>
-#include <q3whatsthis.h>
 #include <qsignalmapper.h>
 #include <qobject.h>
 //Added by qt3to4:

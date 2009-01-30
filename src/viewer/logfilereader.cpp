@@ -26,7 +26,6 @@
 #include <qregexp.h>
 #include <qspinbox.h>
 #include <q3stylesheet.h>
-#include <q3whatsthis.h>
 //Added by qt3to4:
 #include <QEvent>
 #include <QKeyEvent>
@@ -54,7 +53,7 @@ LogfileReader::LogfileReader(QWidget* parent, const QString& log) : ChatWindow(p
 
     new QLabel(i18n("Show last:"),toolBar,"logfile_size_label");
     sizeSpin = new QSpinBox(10,1000,10,toolBar,"logfile_size_spinbox");
-    Q3WhatsThis::add(sizeSpin, i18n("Use this box to set the maximum size of the log file. This setting does not take effect until you restart Konversation. Each log file may have a separate setting."));
+    sizeSpin->setWhatsThis(i18n("Use this box to set the maximum size of the log file. This setting does not take effect until you restart Konversation. Each log file may have a separate setting."));
     sizeSpin->setValue(Preferences::logfileBufferSize());
     sizeSpin->setSuffix(i18n(" KB"));
     sizeSpin->installEventFilter(this);
@@ -64,7 +63,7 @@ LogfileReader::LogfileReader(QWidget* parent, const QString& log) : ChatWindow(p
 
     IRCViewBox* ircBox = new IRCViewBox(this, 0);
     setTextView(ircBox->ircView());
-    Q3WhatsThis::add(getTextView(), i18n("The messages in the log file are displayed here. The oldest messages are at the top and the most recent are at the bottom."));
+    getTextView()->setWhatsThis(i18n("The messages in the log file are displayed here. The oldest messages are at the top and the most recent are at the bottom."));
 
     updateView();
     resize(Preferences::logfileReaderSize());

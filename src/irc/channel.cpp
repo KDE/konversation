@@ -55,7 +55,6 @@
 #include <qtimer.h>
 #include <qcombobox.h>
 #include <qtextcodec.h>
-#include <q3whatsthis.h>
 #include <qtoolbutton.h>
 #include <qlayout.h>
 
@@ -138,7 +137,7 @@ Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
 
     topicLine = new QLabel(topicWidget);
     topicLine->setWordWrap(true);
-    Q3WhatsThis::add(topicLine, i18n("<qt>Every channel on IRC has a topic associated with it.  This is simply a message that everybody can see.<p>If you are an operator, or the channel mode <em>'T'</em> has not been set, then you can change the topic by clicking the Edit Channel Properties button to the left of the topic.  You can also view the history of topics there.</qt>"));
+    topicLine->setWhatsThis(i18n("<qt>Every channel on IRC has a topic associated with it.  This is simply a message that everybody can see.<p>If you are an operator, or the channel mode <em>'T'</em> has not been set, then you can change the topic by clicking the Edit Channel Properties button to the left of the topic.  You can also view the history of topics there.</qt>"));
     connect(topicLine, SIGNAL(setStatusBarTempText(const QString&)), this, SIGNAL(setStatusBarTempText(const QString&)));
     connect(topicLine, SIGNAL(clearStatusBarTempText()), this, SIGNAL(clearStatusBarTempText()));
     connect(topicLine,SIGNAL(popupCommand(int)),this,SLOT(popupChannelCommand(int)));
@@ -158,14 +157,14 @@ Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
     modeK = new ModeButton("K",modeBox,6);
     modeL = new ModeButton("L",modeBox,7);
 
-    Q3WhatsThis::add(modeT, i18n("<qt>These control the <em>mode</em> of the channel.  Only an operator can change these.<p>The <b>T</b>opic mode means that only the channel operator can change the topic for the channel.</qt>"));
-    Q3WhatsThis::add(modeN, i18n("<qt>These control the <em>mode</em> of the channel.  Only an operator can change these.<p><b>N</b>o messages from outside means that users that are not in the channel cannot send messages that everybody in the channel can see.  Almost all channels have this set to prevent nuisance messages.</qt>"));
-    Q3WhatsThis::add(modeS, i18n("<qt>These control the <em>mode</em> of the channel.  Only an operator can change these.<p>A <b>S</b>ecret channel will not show up in the channel list, nor will any user be able to see that you are in the channel with the <em>WHOIS</em> command or anything similar.  Only the people that are in the same channel will know that you are in this channel, if this mode is set.</qt>"));
-    Q3WhatsThis::add(modeI, i18n("<qt>These control the <em>mode</em> of the channel.  Only an operator can change these.<p>An <b>I</b>nvite only channel means that people can only join the channel if they are invited.  To invite someone, a channel operator needs to issue the command <em>/invite nick</em> from within the channel.</qt>"));
-    Q3WhatsThis::add(modeP, i18n("<qt>These control the <em>mode</em> of the channel.  Only an operator can change these.<p>A <b>P</b>rivate channel is shown in a listing of all channels, but the topic is not shown.  A user's <em>WHOIS</e> may or may not show them as being in a private channel depending on the IRC server.</qt>"));
-    Q3WhatsThis::add(modeM, i18n("<qt>These control the <em>mode</em> of the channel.  Only an operator can change these.<p>A <b>M</b>oderated channel is one where only operators, half-operators and those with voice can talk.</qt>"));
-    Q3WhatsThis::add(modeK, i18n("<qt>These control the <em>mode</em> of the channel.  Only an operator can change these.<p>A <b>P</b>rotected channel requires users to enter a password in order to join.</qt>"));
-    Q3WhatsThis::add(modeL, i18n("<qt>These control the <em>mode</em> of the channel.  Only an operator can change these.<p>A channel that has a user <b>L</b>imit means that only that many users can be in the channel at any one time.  Some channels have a bot that sits in the channel and changes this automatically depending on how busy the channel is.</qt>"));
+    modeT->setWhatsThis(i18n("<qt>These control the <em>mode</em> of the channel.  Only an operator can change these.<p>The <b>T</b>opic mode means that only the channel operator can change the topic for the channel.</qt>"));
+    modeN->setWhatsThis(i18n("<qt>These control the <em>mode</em> of the channel.  Only an operator can change these.<p><b>N</b>o messages from outside means that users that are not in the channel cannot send messages that everybody in the channel can see.  Almost all channels have this set to prevent nuisance messages.</qt>"));
+    modeS->setWhatsThis(i18n("<qt>These control the <em>mode</em> of the channel.  Only an operator can change these.<p>A <b>S</b>ecret channel will not show up in the channel list, nor will any user be able to see that you are in the channel with the <em>WHOIS</em> command or anything similar.  Only the people that are in the same channel will know that you are in this channel, if this mode is set.</qt>"));
+    modeI->setWhatsThis(i18n("<qt>These control the <em>mode</em> of the channel.  Only an operator can change these.<p>An <b>I</b>nvite only channel means that people can only join the channel if they are invited.  To invite someone, a channel operator needs to issue the command <em>/invite nick</em> from within the channel.</qt>"));
+    modeP->setWhatsThis(i18n("<qt>These control the <em>mode</em> of the channel.  Only an operator can change these.<p>A <b>P</b>rivate channel is shown in a listing of all channels, but the topic is not shown.  A user's <em>WHOIS</e> may or may not show them as being in a private channel depending on the IRC server.</qt>"));
+    modeM->setWhatsThis(i18n("<qt>These control the <em>mode</em> of the channel.  Only an operator can change these.<p>A <b>M</b>oderated channel is one where only operators, half-operators and those with voice can talk.</qt>"));
+    modeK->setWhatsThis(i18n("<qt>These control the <em>mode</em> of the channel.  Only an operator can change these.<p>A <b>P</b>rotected channel requires users to enter a password in order to join.</qt>"));
+    modeL->setWhatsThis(i18n("<qt>These control the <em>mode</em> of the channel.  Only an operator can change these.<p>A channel that has a user <b>L</b>imit means that only that many users can be in the channel at any one time.  Some channels have a bot that sits in the channel and changes this automatically depending on how busy the channel is.</qt>"));
 
     connect(modeT,SIGNAL(clicked(int,bool)),this,SLOT(modeButtonClicked(int,bool)));
     connect(modeN,SIGNAL(clicked(int,bool)),this,SLOT(modeButtonClicked(int,bool)));
@@ -178,7 +177,7 @@ Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
 
     limit=new KLineEdit(modeBox);
     limit->setToolTip(i18n("Maximum users allowed in channel"));
-    Q3WhatsThis::add(limit, i18n("<qt>This is the channel user limit - the maximum number of users that can be in the channel at a time.  If you are an operator, you can set this.  The channel mode <b>T</b>opic (button to left) will automatically be set if set this.</qt>"));
+    limit->setWhatsThis(i18n("<qt>This is the channel user limit - the maximum number of users that can be in the channel at a time.  If you are an operator, you can set this.  The channel mode <b>T</b>opic (button to left) will automatically be set if set this.</qt>"));
     connect(limit,SIGNAL (returnPressed()),this,SLOT (channelLimitChanged()) );
     connect(limit,SIGNAL (lostFocus()), this, SLOT(channelLimitChanged()) );
 
@@ -234,7 +233,7 @@ Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
     nicknameCombobox = new QComboBox(commandLineBox);
     nicknameCombobox->setEditable(true);
     nicknameCombobox->insertStringList(Preferences::nicknameList());
-    Q3WhatsThis::add(nicknameCombobox, i18n("<qt>This shows your current nick, and any alternatives you have set up.  If you select or type in a different nickname, then a request will be sent to the IRC server to change your nick.  If the server allows it, the new nickname will be selected.  If you type in a new nickname, you need to press 'Enter' at the end.<p>You can add change the alternative nicknames from the <em>Identities</em> option in the <em>File</em> menu.</qt>"));
+    nicknameCombobox->setWhatsThis(i18n("<qt>This shows your current nick, and any alternatives you have set up.  If you select or type in a different nickname, then a request will be sent to the IRC server to change your nick.  If the server allows it, the new nickname will be selected.  If you type in a new nickname, you need to press 'Enter' at the end.<p>You can add change the alternative nicknames from the <em>Identities</em> option in the <em>File</em> menu.</qt>"));
     oldNick = nicknameCombobox->currentText();
 
     awayLabel = new QLabel(i18n("(away)"), commandLineBox);

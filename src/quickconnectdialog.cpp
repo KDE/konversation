@@ -18,7 +18,6 @@
 #include "application.h" ////// header renamed
 
 #include <qlayout.h>
-#include <q3whatsthis.h>
 #include <qlabel.h>
 #include <qcheckbox.h>
 
@@ -42,31 +41,31 @@ QuickConnectDialog::QuickConnectDialog(QWidget *parent)
 
     QLabel* hostNameLabel = new QLabel(i18n("&Server host:"), page);
     QString hostNameWT = i18n("Enter the host of the network here.");
-    Q3WhatsThis::add(hostNameLabel, hostNameWT);
+    hostNameLabel->setWhatsThis(hostNameWT);
     hostNameInput = new KLineEdit(page);
-    Q3WhatsThis::add(hostNameInput, hostNameWT);
+    hostNameInput->setWhatsThis(hostNameWT);
     hostNameLabel->setBuddy(hostNameInput);
 
     QLabel* portLabel = new QLabel(i18n("&Port:"), page);
     QString portWT = i18n("The port that the IRC server is using.");
-    Q3WhatsThis::add(portLabel, portWT);
+    portLabel->setWhatsThis(portWT);
     portInput = new KLineEdit("6667", page );
-    Q3WhatsThis::add(portInput, portWT);
+    portInput->setWhatsThis(portWT);
     portLabel->setBuddy(portInput);
 
     QLabel* nickLabel = new QLabel(i18n("&Nick:"), page);
     QString nickWT = i18n("The nick you want to use.");
-    Q3WhatsThis::add(nickLabel, nickWT);
+    nickLabel->setWhatsThis(nickWT);
     nickInput = new KLineEdit(Preferences::nickname(0), page);
-    Q3WhatsThis::add(nickInput, nickWT);
+    nickInput->setWhatsThis(nickWT);
     nickLabel->setBuddy(nickInput);
 
     QLabel* passwordLabel = new QLabel(i18n("P&assword:"), page);
     QString passwordWT = i18n("If the IRC server requires a password, enter it here (most servers do not require a password.)");
-    Q3WhatsThis::add(passwordLabel, passwordWT);
+    passwordLabel->setWhatsThis(passwordWT);
     passwordInput = new KLineEdit(page);
     passwordInput->setPasswordMode(true);
-    Q3WhatsThis::add(passwordInput, passwordWT);
+    passwordInput->setWhatsThis(passwordWT);
     passwordLabel->setBuddy(passwordInput);
 
     sslCheckBox = new QCheckBox(page, "sslCheckBox");

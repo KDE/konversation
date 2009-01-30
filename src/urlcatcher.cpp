@@ -22,7 +22,6 @@
 #include <qpushbutton.h>
 #include <qregexp.h>
 #include <qclipboard.h>
-#include <q3whatsthis.h>
 #include <qlayout.h>
 //Added by qt3to4:
 #include <Q3TextStream>
@@ -55,7 +54,7 @@ UrlCatcher::UrlCatcher(QWidget* parent) : ChatWindow(parent)
     QString urlListViewWT = i18n(
         "List of Uniform Resource Locators mentioned in any of the Konversation windows "
         "during this session.");
-    Q3WhatsThis::add(urlListView, urlListViewWT);
+    urlListView->setWhatsThis(urlListViewWT);
 
     searchWidget = new K3ListViewSearchLineWidget(urlListView, this);
     searchWidget->setObjectName("search_line");
@@ -70,23 +69,23 @@ UrlCatcher::UrlCatcher(QWidget* parent) : ChatWindow(parent)
         "application associated with the mimetype of the URL.</p>"
         "<p>In the <b>Settings</b>, under <b>Behavior</b> | <b>General</b>, "
         "you can specify a custom web browser for web URLs.</p>");
-    Q3WhatsThis::add(openUrlButton, openUrlButtonWT);
+    openUrlButton->setWhatsThis(openUrlButtonWT);
     copyUrlButton=new QPushButton(i18n("&Copy URL"),buttonBox,"copy_url_button");
     QString copyUrlButtonWT = i18n(
         "Select a <b>URL</b> above, then click this button to copy the URL to the clipboard.");
-    Q3WhatsThis::add(copyUrlButton, copyUrlButtonWT);
+    copyUrlButton->setWhatsThis(copyUrlButtonWT);
     deleteUrlButton=new QPushButton(i18n("&Delete URL"),buttonBox,"delete_url_button");
     QString deleteUrlButtonWT = i18n(
         "Select a <b>URL</b> above, then click this button to delete the URL from the list.");
-    Q3WhatsThis::add(deleteUrlButton, deleteUrlButtonWT);
+    deleteUrlButton->setWhatsThis(deleteUrlButtonWT);
     saveListButton=new QPushButton(i18n("Sa&ve List..."),buttonBox,"save_list_button");
     QString saveListButtonWT = i18n(
         "Click to save the entire list to a file.");
-    Q3WhatsThis::add(saveListButton, saveListButtonWT);
+    saveListButton->setWhatsThis(saveListButtonWT);
     clearListButton=new QPushButton(i18n("C&lear List"),buttonBox,"clear_list_button");
     QString clearListButtonWT = i18n(
         "Click to erase the entire list.");
-    Q3WhatsThis::add(clearListButton, clearListButtonWT);
+    clearListButton->setWhatsThis(clearListButtonWT);
 
     connect(urlListView,SIGNAL (executed(Q3ListViewItem*)),this,SLOT (openUrl(Q3ListViewItem*)) );
     connect(urlListView,SIGNAL (selectionChanged()),this,SLOT (urlSelected()) );

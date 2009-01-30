@@ -17,7 +17,6 @@
 
 #include <qlayout.h>
 #include <qlabel.h>
-#include <q3whatsthis.h>
 //Added by qt3to4:
 #include <Q3HBoxLayout>
 
@@ -46,17 +45,17 @@ const QString& nickname):
     QLabel* networkNameLabel=new QLabel(i18n("&Network name:"),page);
     QString networkNameWT = i18n(
         "Pick the server network you will connect to here.");
-    Q3WhatsThis::add(networkNameLabel, networkNameWT);
+    networkNameLabel->setWhatsThis(networkNameWT);
     m_networkNameCombo=new KComboBox(page);
-    Q3WhatsThis::add(m_networkNameCombo, networkNameWT);
+    m_networkNameCombo->setWhatsThis(networkNameWT);
     networkNameLabel->setBuddy(m_networkNameCombo);
 
     QLabel* nicknameLabel=new QLabel(i18n("N&ickname:"),page);
     QString nicknameWT = i18n(
         "<qt>The nickname to watch for when connected to a server in the network.</qt>");
-    Q3WhatsThis::add(nicknameLabel, nicknameWT);
+    nicknameLabel->setWhatsThis(nicknameWT);
     m_nicknameInput = new KLineEdit(nickname, page);
-    Q3WhatsThis::add(m_nicknameInput, nicknameWT);
+    m_nicknameInput->setWhatsThis(nicknameWT);
     nicknameLabel->setBuddy(m_nicknameInput);
 
     // Build a list of unique server network names.

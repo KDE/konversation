@@ -25,7 +25,6 @@
 #include <q3listbox.h>
 #include <q3groupbox.h>
 #include <qpushbutton.h>
-#include <q3whatsthis.h>
 //Added by qt3to4:
 #include <Q3GridLayout>
 
@@ -91,7 +90,7 @@ namespace Konversation
 
         QLabel* realNameLabel = new QLabel(i18n("&Real name:"), generalWidget);
         m_realNameEdit = new KLineEdit(generalWidget);
-        Q3WhatsThis::add(m_realNameEdit, i18n("Enter your real name here. IRC is not intended to keep you hidden from your friends or enemies. Keep this in mind if you are tempted to behave maliciously. A fake \"real name\" can be a good way to mask your gender from all the nerds out there, but the PC you use can always be traced so you will never be truly anonymous."));
+        m_realNameEdit->setWhatsThis(i18n("Enter your real name here. IRC is not intended to keep you hidden from your friends or enemies. Keep this in mind if you are tempted to behave maliciously. A fake \"real name\" can be a good way to mask your gender from all the nerds out there, but the PC you use can always be traced so you will never be truly anonymous."));
         realNameLabel->setBuddy(m_realNameEdit);
 
         Q3GroupBox* nicknameGBox = new Q3GroupBox(0, Qt::Horizontal, i18n("Nickname"), generalWidget);
@@ -99,7 +98,7 @@ namespace Konversation
         Q3GridLayout* nicknameLayout = new Q3GridLayout(nicknameGBox->layout(), 1, 2, spacingHint());
 
         m_nicknameLBox = new Q3ListBox(nicknameGBox);
-        Q3WhatsThis::add(m_nicknameLBox, i18n("This is your list of nicknames. A nickname is the name that other users will know you by. You may use any name you desire. The first character must be a letter.\n\nSince nicknames must be unique across an entire IRC network, your desired name may be rejected by the server because someone else is already using that nickname. Enter alternate nicknames for yourself. If your first choice is rejected by the server, Konversation will try the alternate nicknames."));
+        m_nicknameLBox->setWhatsThis(i18n("This is your list of nicknames. A nickname is the name that other users will know you by. You may use any name you desire. The first character must be a letter.\n\nSince nicknames must be unique across an entire IRC network, your desired name may be rejected by the server because someone else is already using that nickname. Enter alternate nicknames for yourself. If your first choice is rejected by the server, Konversation will try the alternate nicknames."));
         m_addNicknameBtn = new QPushButton(i18n("Add..."), nicknameGBox);
         m_changeNicknameBtn = new QPushButton(i18n("Edit..."), nicknameGBox);
         m_changeNicknameBtn->setEnabled(false);
@@ -135,7 +134,7 @@ namespace Konversation
         Q3GridLayout* autoIdentifyLayout = new Q3GridLayout(autoIdentifyGBox->layout(), 1, 2, spacingHint());
 
         QLabel* botLabel=new QLabel(i18n("Ser&vice:"), autoIdentifyGBox);
-        Q3WhatsThis::add(botLabel,i18n("Service name can be <b><i>nickserv</i></b> or a network dependant name like  <b><i>nickserv@services.dal.net</i></b>"));
+        botLabel->setWhatsThis(i18n("Service name can be <b><i>nickserv</i></b> or a network dependant name like  <b><i>nickserv@services.dal.net</i></b>"));
         m_botEdit = new KLineEdit(autoIdentifyGBox);
         botLabel->setBuddy(m_botEdit);
 
@@ -162,11 +161,11 @@ namespace Konversation
         Q3GridLayout* awayLayout = new Q3GridLayout(awayWidget, 1, 2, marginHint(), spacingHint());
 
         m_insertRememberLineOnAwayChBox = new QCheckBox(i18n("Mark the last position in chat windows when going away"), awayWidget);
-        Q3WhatsThis::add(m_insertRememberLineOnAwayChBox, i18n("If you check this box, whenever you perform an <b>/away</b> command, a horizontal line will appear in the channel, marking the point where you went away. Other IRC users do not see this horizontal line."));
+        m_insertRememberLineOnAwayChBox->setWhatsThis(i18n("If you check this box, whenever you perform an <b>/away</b> command, a horizontal line will appear in the channel, marking the point where you went away. Other IRC users do not see this horizontal line."));
 
         QLabel* awayNickLabel = new QLabel(i18n("Away nickname:"), awayWidget);
         m_awayNickEdit = new KLineEdit(awayWidget);
-        Q3WhatsThis::add(m_awayNickEdit, i18n("Enter a nickname that indicates you are away. Whenever you perform an <b>/away msg</b> command in any channel joined with this Identity, Konversation will automatically change your nickname to the Away nickname. Other users will be able to tell you are away from your computer. Whenever you perform an <b>/away</b> command in any channel in which you are away, Konversation will automatically change your nickname back to the original. If you do not wish to automatically change your nickname when going away, leave blank."));
+        m_awayNickEdit->setWhatsThis(i18n("Enter a nickname that indicates you are away. Whenever you perform an <b>/away msg</b> command in any channel joined with this Identity, Konversation will automatically change your nickname to the Away nickname. Other users will be able to tell you are away from your computer. Whenever you perform an <b>/away</b> command in any channel in which you are away, Konversation will automatically change your nickname back to the original. If you do not wish to automatically change your nickname when going away, leave blank."));
         awayNickLabel->setBuddy(m_awayNickEdit);
 
         m_automaticAwayGBox = new Q3GroupBox(i18n("Automatic Away"), awayWidget);
@@ -175,7 +174,7 @@ namespace Konversation
         m_automaticAwayGBox->setMargin(marginHint());
         Q3GridLayout* automaticAwayLayout = new Q3GridLayout(m_automaticAwayGBox->layout(), 1, 2, spacingHint());
 
-        Q3WhatsThis::add(m_automaticAwayGBox, i18n("If you check this box, Konversation will automatically set all connections using this Identity away when the screensaver starts or after a period of user inactivity configured below."));
+        m_automaticAwayGBox->setWhatsThis(i18n("If you check this box, Konversation will automatically set all connections using this Identity away when the screensaver starts or after a period of user inactivity configured below."));
 
         QLabel* autoAwayLabel1 = new QLabel(i18n("Set away after"), m_automaticAwayGBox);
         m_awayInactivitySpin = new QSpinBox(1, 999, 1, m_automaticAwayGBox);
@@ -184,7 +183,7 @@ namespace Konversation
         autoAwayLabel1->setBuddy(m_awayInactivitySpin);
         autoAwayLabel2->setBuddy(m_awayInactivitySpin);
         m_automaticUnawayChBox = new QCheckBox(i18n("Automatically return on activity"), m_automaticAwayGBox);
-        Q3WhatsThis::add(m_automaticUnawayChBox, i18n("If you check this box, Konversation will automatically cancel away for all connections using this Identity when the screensaver stops or new user activity is detected."));
+        m_automaticUnawayChBox->setWhatsThis(i18n("If you check this box, Konversation will automatically cancel away for all connections using this Identity when the screensaver stops or new user activity is detected."));
 
         connect(m_automaticAwayGBox, SIGNAL(toggled(bool)), autoAwayLabel1, SLOT(setEnabled(bool)));
         connect(m_automaticAwayGBox, SIGNAL(toggled(bool)), autoAwayLabel2, SLOT(setEnabled(bool)));
@@ -206,7 +205,7 @@ namespace Konversation
         m_awayMessageGBox->setMargin(marginHint());
         Q3GridLayout* messagesLayout = new Q3GridLayout(m_awayMessageGBox->layout(), 1, 2, spacingHint());
 
-        Q3WhatsThis::add(m_awayMessageGBox, i18n("If you check this box, Konversation will automatically send the Away message to all channels joined with this Identity. <b>%s</b> is replaced with <b>msg</b>. Whenever you perform an <b>/away</b> command, the Return message will be displayed in all channels joined with this Identity."));
+        m_awayMessageGBox->setWhatsThis(i18n("If you check this box, Konversation will automatically send the Away message to all channels joined with this Identity. <b>%s</b> is replaced with <b>msg</b>. Whenever you perform an <b>/away</b> command, the Return message will be displayed in all channels joined with this Identity."));
 
         QLabel* awayLabel = new QLabel(i18n("Away &message:"), m_awayMessageGBox);
         m_awayEdit = new KLineEdit(m_awayMessageGBox);
@@ -246,35 +245,35 @@ namespace Konversation
 
         QLabel* commandLabel = new QLabel(i18n("&Pre-shell command:"), advancedWidget);
         m_sCommandEdit = new KLineEdit(advancedWidget);
-        Q3WhatsThis::add(m_sCommandEdit,i18n("Here you can enter a command to be executed before connection to server starts<br>If you have multiple servers in this identity this command will be executed for each server"));
+        m_sCommandEdit->setWhatsThis(i18n("Here you can enter a command to be executed before connection to server starts<br>If you have multiple servers in this identity this command will be executed for each server"));
         commandLabel->setBuddy(m_sCommandEdit);
 
         QLabel* loginLabel = new QLabel(i18n("I&dent:"), advancedWidget);
         m_loginEdit = new KLineEdit(advancedWidget);
-        Q3WhatsThis::add(m_loginEdit, i18n("When you connect, many servers query your computer for an IDENT response. If you computer is not running an IDENT server, this response is sent by Konversation. No spaces are allowed."));
+        m_loginEdit->setWhatsThis(i18n("When you connect, many servers query your computer for an IDENT response. If you computer is not running an IDENT server, this response is sent by Konversation. No spaces are allowed."));
         loginLabel->setBuddy(m_loginEdit);
 
         // encoding combo box
         QLabel* codecLabel = new QLabel(i18n("&Encoding:"), advancedWidget);
         m_codecCBox = new KComboBox(advancedWidget);
-        Q3WhatsThis::add(m_codecCBox, i18n("This setting affects how characters you type are encoded for sending to the server. It also affects how messages are displayed. When you first open Konversation, it automatically retrieves this setting from the operating system. If you seem to be having trouble seeing other user's messages correctly, try changing this setting."));
+        m_codecCBox->setWhatsThis(i18n("This setting affects how characters you type are encoded for sending to the server. It also affects how messages are displayed. When you first open Konversation, it automatically retrieves this setting from the operating system. If you seem to be having trouble seeing other user's messages correctly, try changing this setting."));
         codecLabel->setBuddy(m_codecCBox);
         // add encodings to combo box
         m_codecCBox->insertStringList(Konversation::IRCCharsets::self()->availableEncodingDescriptiveNames());
 
         QLabel* quitLabel = new QLabel(i18n("&Quit reason:"), advancedWidget);
         m_quitEdit = new KLineEdit(advancedWidget);
-        Q3WhatsThis::add(m_quitEdit, i18n("Whenever you leave a server, this message is shown to others."));
+        m_quitEdit->setWhatsThis(i18n("Whenever you leave a server, this message is shown to others."));
         quitLabel->setBuddy(m_quitEdit);
 
         QLabel* partLabel = new QLabel(i18n("&Part reason:"), advancedWidget);
         m_partEdit = new KLineEdit(advancedWidget);
-        Q3WhatsThis::add(m_partEdit, i18n("Whenever you leave a channel, this message is sent to the channel."));
+        m_partEdit->setWhatsThis(i18n("Whenever you leave a channel, this message is sent to the channel."));
         partLabel->setBuddy(m_partEdit);
 
         QLabel* kickLabel = new QLabel(i18n("&Kick reason:"), advancedWidget);
         m_kickEdit = new KLineEdit(advancedWidget);
-        Q3WhatsThis::add(m_kickEdit, i18n("Whenever you are kicked from a channel (usually by an IRC operator), this message is sent to the channel."));
+        m_kickEdit->setWhatsThis(i18n("Whenever you are kicked from a channel (usually by an IRC operator), this message is sent to the channel."));
         kickLabel->setBuddy(m_kickEdit);
 
         row = 0;

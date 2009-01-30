@@ -20,7 +20,6 @@
 #include <q3frame.h>
 #include <qlayout.h>
 #include <qstringlist.h>
-#include <q3whatsthis.h>
 #include <q3header.h>
 #include <qcheckbox.h>
 //Added by qt3to4:
@@ -115,7 +114,7 @@ namespace Konversation
         setButtonGuiItem(Ok, KGuiItem(i18n("C&onnect"), "network-connect", i18n("Connect to the server"), i18n("Click here to connect to the selected IRC network and channel.")));
 
         m_serverList = new ServerListView(mainWidget());
-        Q3WhatsThis::add(m_serverList, i18n("This shows the listof configured IRC networks. An IRC network is a collection of cooperating servers. You need only connect to one of the servers in the network to be connected to the entire IRC network. Once connected, Konversation will automatically join the channels shown. When Konversation is started for the first time, the Freenode network and the <i>#kde</i> channel are already entered for you."));
+        m_serverList->setWhatsThis(i18n("This shows the listof configured IRC networks. An IRC network is a collection of cooperating servers. You need only connect to one of the servers in the network to be connected to the entire IRC network. Once connected, Konversation will automatically join the channels shown. When Konversation is started for the first time, the Freenode network and the <i>#kde</i> channel are already entered for you."));
         m_serverList->setAllColumnsShowFocus(true);
         m_serverList->setRootIsDecorated(true);
         m_serverList->setResizeMode(Q3ListView::AllColumns);
@@ -131,7 +130,7 @@ namespace Konversation
         m_serverList->header()->setMovingEnabled(false);
 
         m_addButton = new QPushButton(i18n("&New..."), mainWidget());
-        Q3WhatsThis::add(m_addButton, i18n("Click here to define a new Network, including the server to connect to, and the Channels to automatically join once connected."));
+        m_addButton->setWhatsThis(i18n("Click here to define a new Network, including the server to connect to, and the Channels to automatically join once connected."));
         m_editButton = new QPushButton(i18n("&Edit..."), mainWidget());
         m_delButton = new QPushButton(i18n("&Delete"), mainWidget());
 
