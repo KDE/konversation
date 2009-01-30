@@ -24,7 +24,7 @@
 #include "server.h"
 #include "sound.h" ////// header renamed
 #include "common.h"
-#include "emoticon.h"
+#include "emoticons.h"
 #include "notificationhandler.h"
 
 #include <qstringlist.h>
@@ -660,7 +660,7 @@ bool doHighlight, bool parseURL, bool self)
         filteredLine.replace("\x0b", "&");
     }
 
-    filteredLine = Konversation::EmotIcon::filter(filteredLine, fontMetrics());
+    filteredLine = Konversation::Emoticons::parseEmoticons(filteredLine);
 
     // Highlight
     QString ownNick;

@@ -155,7 +155,7 @@ set(viewer_SRCS
     #viewer/topiclabel.cpp
     viewer/trayicon.cpp
     viewer/editnotifydialog.cpp
-    viewer/emoticon.cpp
+    viewer/emoticons.cpp
     viewer/images.cpp
     viewer/quickbutton.cpp
     viewer/searchbar.cpp
@@ -192,7 +192,7 @@ kde4_add_kcfg_files(konvi_SRCS config/preferences_base.kcfgc)
 
 kde4_add_executable(konvi ${konvi_SRCS})
 
-target_link_libraries(konvi ${KDE4_KDECORE_LIBS} ${KDE4_KIO_LIBS} ${KDE4_KDE3SUPPORT_LIBS} ${KDEPIMLIBS_KABC_LIBS})
+target_link_libraries(konvi ${KDE4_KDECORE_LIBS} ${KDE4_KIO_LIBS} ${KDE4_KUTILS_LIBS} ${KDE4_KDE3SUPPORT_LIBS} ${KDEPIMLIBS_KABC_LIBS})
 if (X11_Xscreensaver_FOUND)
     target_link_libraries(konvi ${X11_Xscreensaver_LIB})
 endif (X11_Xscreensaver_FOUND)
