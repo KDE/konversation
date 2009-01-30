@@ -1,4 +1,4 @@
-[!Global!]
+[Global]
 IconName=konversation
 Comment=Konversation
 Comment[hi]=कनवर्सेसन
@@ -6,7 +6,7 @@ Comment[pa]=ਕੇ-ਗੱਲਬਾਤ
 Comment[ta]=உரையாடல்
 Comment[xx]=xxKonversationxx
 
-[message]
+[Event/message]
 Name=New message
 Name[ar]=رسالة جديدة
 Name[bg]=Ново съобщение
@@ -83,9 +83,9 @@ Comment[uk]=В канал надійшло нове повідомлення
 Comment[xx]=xxNew message arrived in a channelxx
 Comment[zh_CN]=频道中有新消息
 Comment[zh_TW]=新訊息已送達頻道
-default_presentation=0
+Action=None
 
-[nick]
+[Event/nick]
 Name=Nick written
 Name[ar]=كُُتِب الأسم المستعار
 Name[bg]=Написан псевдоним
@@ -157,9 +157,9 @@ Comment[uk]=Хтось в повідомленні написав ваше пр�
 Comment[xx]=xxSomeone wrote your nick in a messagexx
 Comment[zh_CN]=有人在消息中输入了你的昵称
 Comment[zh_TW]=有人在訊息中提到您的暱稱
-default_presentation=0
+Action=None
 
-[queryMessage]
+[Event/queryMessage]
 Name=Private message
 Name[bg]=Лично съобщение
 Name[cs]=Soukromá zpráva
@@ -205,9 +205,9 @@ Comment[uk]=Ви отримали приватне повідомлення
 Comment[xx]=xxYou received a private messagexx
 Comment[zh_CN]=您收到了私人消息
 Comment[zh_TW]=您接收到一個私密訊息
-default_presentation=0
+Action=None
 
-[nickchange]
+[Event/nickchange]
 Name=Nick changed
 Name[ar]=تغيّر الإسم المستعار
 Name[bg]=Псевдонимът е променен
@@ -279,9 +279,9 @@ Comment[uk]=Хтось змінив своє прізвисько
 Comment[xx]=xxSomeone changed their nickxx
 Comment[zh_CN]=有人改变了昵称
 Comment[zh_TW]=有人變更了暱稱
-default_presentation=0
+Action=None
 
-[dcc_incoming]
+[Event/dcc_incoming]
 Name=Incoming file
 Name[ar]=ملف وارِد
 Name[bg]=Пристигащ файл
@@ -353,9 +353,9 @@ Comment[uk]=Хтось хоче надіслати вам файл через DC
 Comment[xx]=xxSomeone wants to transmit a file to you over DCCxx
 Comment[zh_CN]=有人希望通过 DCC 向你传输文件
 Comment[zh_TW]=有人要透過 DCC 傳送檔案給您
-default_presentation=0
+Action=None
 
-[join]
+[Event/join]
 Name=Nick joined channel
 Name[ar]=الإسم المستعار إنضمّ إلى القناة
 Name[bg]=Псевдонимът се присъедини към канала
@@ -427,9 +427,9 @@ Comment[uk]=Нове прізвисько приєдналось до канал
 Comment[xx]=xxNew nick joined a channelxx
 Comment[zh_CN]=新昵称加入了频道
 Comment[zh_TW]=有人加入了頻道
-default_presentation=0
+Action=None
 
-[part]
+[Event/part]
 Name=Nick left channel
 Name[ar]=الإسم المستعار غادر القناة
 Name[bg]=Псевдонимът напусна канала
@@ -501,9 +501,9 @@ Comment[uk]=Прізвисько покинуло канал
 Comment[xx]=xxA nick left a channelxx
 Comment[zh_CN]=一个昵称离开了频道
 Comment[zh_TW]=有人離開了頻道
-default_presentation=0
+Action=None
 
-[mode]
+[Event/mode]
 Name=Mode change
 Name[ar]=تغيير النمط
 Name[bg]=Смяна на режим
@@ -575,9 +575,9 @@ Comment[uk]=Змінено користувацький або канальни�
 Comment[xx]=xxA user or channel mode was changedxx
 Comment[zh_CN]=一个用户或频道模式改变了
 Comment[zh_TW]=某位使用者或某個頻道的模式已被變更
-default_presentation=0
+Action=None
 
-[notify]
+[Event/notify]
 Name=Notify
 Name[ar]=بلِغ
 Name[bg]=Известяване
@@ -646,9 +646,9 @@ Comment[uk]=Вийшов у мережу користувач із вашого 
 Comment[xx]=xxA user on your watched nicks list has come onlinexx
 Comment[zh_CN]=一名在您的监视昵称列表上的用户已经上线
 Comment[zh_TW]=您監看的暱稱清單中有某人上線了
-default_presentation=0
+Action=None
 
-[query]
+[Event/query]
 Name=Query
 Name[ar]=أطلب
 Name[bg]=Запитване
@@ -716,9 +716,9 @@ Comment[uk]=Хтось почав з вами розмову (запит)
 Comment[xx]=xxSomeone started a conversation (query) with youxx
 Comment[zh_CN]=有人向您打开了一个对话。
 Comment[zh_TW]=有人開啟了與您的私密對話
-default_presentation=0
+Action=None
 
-[kick]
+[Event/kick]
 Name=Kick
 Name[ar]=ركل
 Name[bg]=Изритване
@@ -777,9 +777,9 @@ Comment[uk]=Хтось виштовхнув вас із каналу
 Comment[xx]=xxSomeone kicked you out of a channelxx
 Comment[zh_CN]=有人把您踢出了频道
 Comment[zh_TW]=有人將您踢出頻道
-default_presentation=0
+Action=None
 
-[connectionFailure]
+[Event/connectionFailure]
 Name=Connection failure
 Name[ar]=عطل في الإتصال
 Name[bg]=Неуспешно свързване
@@ -840,9 +840,9 @@ Comment[uk]=Не вдалося з'єднатись з сервером
 Comment[xx]=xxFailed to connect to serverxx
 Comment[zh_CN]=连接服务器失败
 Comment[zh_TW]=連線到伺服器失敗
-default_presentation=64
+Action=Taskbar
 
-[channelJoin]
+[Event/channelJoin]
 Name=You joined a channel
 Name[ar]=إنضممت إلى قناة
 Name[bg]=Вие се присъединихте към канал
@@ -905,9 +905,9 @@ Comment[uk]=Ви приєднались до каналу
 Comment[xx]=xxYou joined a channelxx
 Comment[zh_CN]=您加入了一个频道
 Comment[zh_TW]=您加入了一個頻道
-default_presentation=64
+Action=Taskbar
 
-[dccChat]
+[Event/dccChat]
 Name=DCC Chat
 Name[ar]=مكالمة DCC
 Name[bg]=DCC разговор
@@ -970,4 +970,4 @@ Comment[uk]=Хтось почав з вами DCC-балачку
 Comment[xx]=xxSomeone started a DCC chat with youxx
 Comment[zh_CN]=有人向您打开了一个 DCC 聊天对话
 Comment[zh_TW]=有人開啟了與您的 DCC 聊天
-default_presentation=0
+Action=None
