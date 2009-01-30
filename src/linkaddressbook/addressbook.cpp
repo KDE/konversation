@@ -227,7 +227,7 @@ namespace Konversation
         {
             QString user = addressee.fullEmail();
             if(!user.isEmpty()) user = " (" + user + ')';
-            focusAndShowErrorMessage(i18n("Another KDE application tried to use Konversation for instant messaging, but the requested user%1 is not online.",user));
+            focusAndShowErrorMessage(i18n("Another KDE application tried to use Konversation for instant messaging, but the requested user %1 is not online.",user));
             return;
         }
 
@@ -287,7 +287,7 @@ void Addressbook::sendFile(const QString &uid, const KUrl &sourceURL, const QStr
     {
         QString user = addressee.fullEmail();
         if(!user.isEmpty()) user = " (" + user + ')';
-        focusAndShowErrorMessage(i18n("Another KDE application tried to use Konversation to send a file to a contact, but the requested user%1 is not currently online.",user));
+        focusAndShowErrorMessage(i18n("Another KDE application tried to use Konversation to send a file to a contact, but the requested user %1 is not currently online.",user));
         return;
     }
     nickInfo->getServer()->addDccSend(nickInfo->getNickname(), sourceURL, altFileName, fileSize);
