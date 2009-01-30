@@ -176,11 +176,11 @@ namespace Konversation
     {
         QStringList history = m_channel->getTopicHistory();
         m_widget->topicHistoryList->clear();
-        foreach(const QString &topic, history)
+        for(QStringList::ConstIterator it = --history.constEnd(); it != --history.constBegin(); --it)
         {
             QDateTime date;
-            date.setTime_t(topic.section(' ', 0 ,0).toUInt());
-            new K3ListViewItem(m_widget->topicHistoryList, topic.section(' ', 1, 1), date.toString(Qt::LocalDate), topic.section(' ', 2));
+            date.setTime_t((*it).section(' ', 0 ,0).toUInt());
+            new K3ListViewItem(m_widget->topicHistoryList, (*it).section(' ', 1, 1), date.toString(Qt::LocalDate), (*it).section(' ', 2));
         }
 
         // update topic preview
