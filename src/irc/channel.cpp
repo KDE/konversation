@@ -133,7 +133,7 @@ Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
     Q3GridLayout* topicLayout = new Q3GridLayout(topicWidget, 2, 3, 0, 0);
 
     m_topicButton = new QToolButton(topicWidget);
-    m_topicButton->setIconSet(SmallIconSet("edit", 16));
+    m_topicButton->setIconSet(SmallIconSet("document-edit", 16));
     QToolTip::add(m_topicButton, i18n("Edit Channel Settings"));
     connect(m_topicButton, SIGNAL(clicked()), this, SLOT(showOptionsDialog()));
 
