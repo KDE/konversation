@@ -50,7 +50,7 @@ ServerISON::ServerISON(Server* server) : m_server(server)
         SIGNAL(channelJoinedOrUnjoined(Server*, const QString&, bool )),
         this,
         SLOT(slotChannelJoinedOrUnjoined(Server*, const QString&, bool )));
-    connect(KonversationApplication::instance(), SIGNAL(serverGroupsChanged(const Konversation::ServerGroupSettings*)),
+    connect(KonversationApplication::instance(), SIGNAL(serverGroupsChanged(const Konversation::ServerGroupSettingsPtr)),
         this, SLOT(slotServerGroupsChanged()));
 }
 
