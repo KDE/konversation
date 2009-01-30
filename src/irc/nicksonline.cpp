@@ -139,7 +139,7 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
     m_popupMenu = new K3PopupMenu(this);
     m_popupMenu->setObjectName("nicksonline_context_menu");
     connect(m_nickListView, SIGNAL(rightButtonClicked(Q3ListViewItem *, const QPoint &, int )),
-        this, SLOT(slotNickListView_Qt::RightButtonClicked(Q3ListViewItem*, const QPoint &)));
+        this, SLOT(slotNickListView_RightButtonClicked(Q3ListViewItem*, const QPoint &)));
     connect(m_popupMenu, SIGNAL(activated(int)),
         this, SLOT(slotPopupMenu_Activated(int)));
 
