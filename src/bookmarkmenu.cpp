@@ -22,7 +22,7 @@ Copyright (C) 2002 Carsten Pfeiffer <pfeiffer@kde.org>
 
 #include <kmenu.h>
 #include <kaction.h>
-
+#include <Q3PtrListIterator>
 
 KonviBookmarkMenu::KonviBookmarkMenu( KBookmarkManager* mgr,
 KonviBookmarkHandler * _owner, KMenu * _parentMenu,
