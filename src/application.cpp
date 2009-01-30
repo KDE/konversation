@@ -84,7 +84,7 @@ int KonversationApplication::newInstance()
 
     if (!mainWindow)
     {
-        connect(this, SIGNAL(shutDown()), this, SLOT(prepareShutdown()));
+        connect(this, SIGNAL(aboutToQuit()), this, SLOT(prepareShutdown()));
 
         m_connectionManager = new ConnectionManager(this);
 
