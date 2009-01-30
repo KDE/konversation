@@ -136,6 +136,8 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : QPlainTextEdit(parent)
     setWordWrapMode(QTextOption::WrapAtWordBoundaryOrAnywhere);
     //setNotifyClick(true); // TODO FIXME import the rest of the link handling
     setFocusPolicy(Qt::ClickFocus);
+    setReadOnly(true);
+    viewport()->setCursor(Qt::ArrowCursor);
 
 
 //     // set basic style sheet for <p> to make paragraph spacing possible
