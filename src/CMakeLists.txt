@@ -127,7 +127,7 @@ set(viewer_SRCS
     viewer/irccolorchooser.cpp
     viewer/logfilereader.cpp
     viewer/insertchardialog.cpp
-#    viewer/osd.cpp
+    viewer/osd.cpp
     viewer/topiccombobox.cpp
 #    viewer/topiclabel.cpp
     viewer/trayicon.cpp

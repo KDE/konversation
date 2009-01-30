@@ -13,7 +13,7 @@ the Free Software Foundation; either version 2 of the License, or
 */
 
 #include "osd.h"
-#include "application.h" ////// header renamed
+#include "application.h"
 #include "common.h"
 
 #include <qapplication.h>
@@ -25,13 +25,12 @@ the Free Software Foundation; either version 2 of the License, or
 #include <QMouseEvent>
 #include <QEvent>
 
-#include <dcopclient.h>
 #include <kapplication.h>
 #include <kdebug.h>
 #include <kglobalsettings.h>                      //unsetColors()
 
 #include <X11/Xlib.h>                             //reposition()
-
+#include <QDesktopWidget>
 
 OSDWidget::OSDWidget( const QString &appName, QWidget *parent, const char *name )
 : QWidget( parent, name, Qt::WNoAutoErase | Qt::WStyle_Customize | Qt::WX11BypassWM | Qt::WStyle_StaysOnTop | Qt::WStyle_Tool )
@@ -43,8 +42,8 @@ OSDWidget::OSDWidget( const QString &appName, QWidget *parent, const char *name 
 , m_y( MARGIN )
 , m_dirty( false )
 {
-    setFocusPolicy( NoFocus );
-    setBackgroundMode( NoBackground );
+    setFocusPolicy( Qt::NoFocus );
+    setBackgroundMode( Qt::NoBackground );
     unsetColors();
 
     connect( &timer,     SIGNAL( timeout() ), SLOT( hide() ) );
@@ -68,9 +67,9 @@ void OSDWidget::renderOSDText( const QString &txt )
 
     // The title cannnot be taller than one line
     // AlignAuto = align Arabic to the right, etc.
-    QRect titleRect = titleFm.boundingRect( 0, 0, max.width() - METRIC, titleFm.height(), AlignAuto, m_appName );
+    QRect titleRect = titleFm.boundingRect( 0, 0, max.width() - METRIC, titleFm.height(), Qt::AlignAuto, m_appName );
     // The osd cannot be larger than the screen
-    QRect textRect = fontMetrics().boundingRect( 0, 0, max.width(), max.height(), AlignAuto | WordBreak, text );
+    QRect textRect = fontMetrics().boundingRect( 0, 0, max.width(), max.height(), Qt::AlignAuto | Qt::WordBreak, text );
 
     if ( textRect.width() < titleRect.width() )
         textRect.setWidth( titleRect.width() );
@@ -101,12 +100,12 @@ void OSDWidget::renderOSDText( const QString &txt )
     if ( m_shadow )
     {
         bufferPainter.setPen( backgroundColor().dark( 175 ) );
-        bufferPainter.drawText( METRIC + 3, (METRIC/2) + titleFm.height() + 1, w, h, Qt::AlignLeft | WordBreak, text );
+        bufferPainter.drawText( METRIC + 3, (METRIC/2) + titleFm.height() + 1, w, h, Qt::AlignLeft | Qt::WordBreak, text );
     }
 
     // Draw the text
     bufferPainter.setPen( foregroundColor() );
-    bufferPainter.drawText( METRIC, (METRIC/2) + titleFm.height() - 1, w, h, Qt::AlignLeft | WordBreak, text );
+    bufferPainter.drawText( METRIC, (METRIC/2) + titleFm.height() - 1, w, h, Qt::AlignLeft | Qt::WordBreak, text );
 
     // Draw the title text
     bufferPainter.setFont( titleFont );
@@ -315,7 +314,6 @@ void OSDWidget::reposition( QSize newSize )
 
 //////  OSDPreviewWidget below /////////////////////
 
-#include <kcursor.h>                              //previewWidget
 #include <klocale.h>
 
 OSDPreviewWidget::OSDPreviewWidget( const QString &appName, QWidget *parent, const char *name )
@@ -408,6 +406,7 @@ void OSDPreviewWidget::mouseMoveEvent( QMouseEvent *e )
                                                   // static
 OSDWidget::KDesktopLockStatus OSDWidget::isKDesktopLockRunning()
 {
+#ifdef KDAB_TEMPORARILY_REMOVED
     if (!Preferences::oSDCheckDesktopLock())
 	return NotLocked;
 
@@ -445,6 +444,10 @@ OSDWidget::KDesktopLockStatus OSDWidget::isKDesktopLockRunning()
         // Err on the side of safety.
         return Locked;
     }
+#else // KDAB_TEMPORARILY_REMOVED
+    qWarning("Code commented out in OSDWidget::isKDesktopLockRunning");
+    return NotLocked;
+#endif //KDAB_TEMPORARILY_REMOVED
 }
 
-// #include "./viewer/osd.moc"
+#include "osd.moc"
