@@ -33,7 +33,7 @@
 #include "channellistpanel.h"
 #include "nicksonline.h"
 #include "insertchardialog.h"
-//#include "irccolorchooser.h"
+#include "irccolorchooser.h"
 #include "joinchanneldialog.h"
 #include "servergroupsettings.h"
 
@@ -1897,9 +1897,9 @@ void ViewContainer::insertChar(const QChar& chr)
 void ViewContainer::insertIRCColor()
 {
     // TODO FIXME
-    //IRCColorChooser dlg(m_window);
+    IRCColorChooser dlg(m_window);
 
-    //if (dlg.exec() == KDialog::Accepted) m_frontView->appendInputText(dlg.color(), true/*fromCursor*/);
+    if (dlg.exec() == KDialog::Accepted) m_frontView->appendInputText(dlg.color(), true/*fromCursor*/);
 }
 
 void ViewContainer::clearViewLines()
