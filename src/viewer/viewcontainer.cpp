@@ -34,7 +34,7 @@
 #include "nicksonline.h"
 //#include "insertchardialog.h"
 //#include "irccolorchooser.h"
-//#include "joinchanneldialog.h"
+#include "joinchanneldialog.h"
 #include "servergroupsettings.h"
 
 #include <qsplitter.h>
@@ -2193,12 +2193,11 @@ void ViewContainer::showJoinChannelDialog()
 
     if (!server)
         return;
-    /* // TODO FIXME
+
     Konversation::JoinChannelDialog dlg(server, m_window);
 
     if (dlg.exec() == QDialog::Accepted)
         server->sendJoinCommand(dlg.channel(), dlg.password());
-    */
 }
 
 void ViewContainer::connectionStateChanged(Server* server, Konversation::ConnectionState state)
