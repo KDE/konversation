@@ -55,9 +55,9 @@ KonversationStatusBar::KonversationStatusBar(KonversationMainWindow* window)
     m_sslLabel->setWhatsThis(i18n("All communication with the server is encrypted.  This makes it harder for someone to listen in on your communications."));
 
     m_window->statusBar()->addWidget(m_mainLabel, 1, false);
-    m_window->statusBar()->addWidget(m_infoLabel, 0, true);
-    m_window->statusBar()->addWidget(m_lagLabel, 0, true);
-    m_window->statusBar()->addWidget(m_sslLabel, 0, true);
+    m_window->statusBar()->addPermanentWidget(m_infoLabel, 0);
+    m_window->statusBar()->addPermanentWidget(m_lagLabel, 0);
+    m_window->statusBar()->addPermanentWidget(m_sslLabel, 0);
 
     m_window->statusBar()->setWhatsThis(i18n("<qt>The status bar shows various messages, including any problems connecting to the server.  On the far right the current delay to the server is shown.  The delay is the time it takes for messages from you to reach the server, and from the server back to you.</qt>"));
 }
