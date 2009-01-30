@@ -737,10 +737,10 @@ void Channel::doubleClickCommand(Q3ListViewItem* item)
 
 void Channel::completeNick()
 {
-#if 0
     int pos, oldPos;
+    QTextCursor cursor = channelInput->textCursor();
 
-    channelInput->getCursorPosition(&oldPos,&pos);// oldPos is a dummy here, taking the paragraph parameter
+    pos = cursor.position();
     oldPos = channelInput->getOldCursorPosition();
 
     QString line=channelInput->text();
@@ -904,8 +904,8 @@ void Channel::completeNick()
 
     // Set new text and cursor position
     channelInput->setText(newLine);
-    channelInput->setCursorPosition(0, pos);
-#endif
+    cursor.setPosition(pos);
+    channelInput->setTextCursor(cursor);
 }
 
 // make sure to step back one position when completion ends so the user starts
