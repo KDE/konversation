@@ -22,6 +22,7 @@
 #include <k3resolver.h>
 #include <k3serversocket.h>
 
+using namespace KNetwork;
 
 QString DccCommon::textIpToNumericalIp( const QString& ipString )
 {
