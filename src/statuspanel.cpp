@@ -353,7 +353,7 @@ QString StatusPanel::getChannelEncoding()         // virtual
                                                   // virtual
 QString StatusPanel::getChannelEncodingDefaultDesc()
 {
-    return i18n("Identity Default ( %1 )").arg(getServer()->getIdentity()->getCodecName());
+    return i18n("Identity Default ( %1 )", getServer()->getIdentity()->getCodecName());
 }
 
 //Used to disable functions when not connected

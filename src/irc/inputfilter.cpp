@@ -831,7 +831,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                         {
                             parameter=parameterList[parameterCount++];
                             message += ' ' + parameter;
-                            modesAre+=i18np("limited to %n user", "limited to %n users", parameter.toInt());
+                            modesAre+=i18np("limited to %1 user", "limited to %1 users", parameter.toInt());
                         }
                         else
                         {
@@ -1476,10 +1476,10 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 {
                     if(days)
                     {
-                        const QString daysString = i18np("1 day", "%n days", days);
-                        const QString hoursString = i18np("1 hour", "%n hours", (hours % 24));
-                        const QString minutesString = i18np("1 minute", "%n minutes", (minutes % 60));
-                        const QString secondsString = i18np("1 second", "%n seconds", (seconds % 60));
+                        const QString daysString = i18np("1 day", "%1 days", days);
+                        const QString hoursString = i18np("1 hour", "%1 hours", (hours % 24));
+                        const QString minutesString = i18np("1 minute", "%1 minutes", (minutes % 60));
+                        const QString secondsString = i18np("1 second", "%1 seconds", (seconds % 60));
 
                         server->appendMessageToFrontmost(i18n("Whois"),
                             i18nc("%1 = name of person, %2 = (x days), %3 = (x hours), %4 = (x minutes), %5 = (x seconds)",
@@ -1491,9 +1491,9 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     }
                     else if(hours)
                     {
-                        const QString hoursString = i18np("1 hour", "%n hours", hours);
-                        const QString minutesString = i18np("1 minute", "%n minutes", (minutes % 60));
-                        const QString secondsString = i18np("1 second", "%n seconds", (seconds % 60));
+                        const QString hoursString = i18np("1 hour", "% hours", hours);
+                        const QString minutesString = i18np("1 minute", "%1 minutes", (minutes % 60));
+                        const QString secondsString = i18np("1 second", "%1 seconds", (seconds % 60));
                         server->appendMessageToFrontmost(i18n("Whois"),
                             i18nc("%1 = name of person, %2 = (x hours), %3 = (x minutes), %4 = (x seconds)",
                             "%1 has been idle for %2, %3, and %4.", parameterList[1], hoursString, minutesString, secondsString)
@@ -1502,8 +1502,8 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     }
                     else if(minutes)
                     {
-                        const QString minutesString = i18np("1 minute", "%n minutes", minutes);
-                        const QString secondsString = i18np("1 second", "%n seconds", (seconds % 60));
+                        const QString minutesString = i18np("1 minute", "%1 minutes", minutes);
+                        const QString secondsString = i18np("1 second", "%1 seconds", (seconds % 60));
                         server->appendMessageToFrontmost(i18n("Whois"),
                             i18nc("%1 = name of person, %2 = (x minutes), %3 = (x seconds)",
                             "%1 has been idle for %2 and %3.", parameterList[1], minutesString, secondsString)
@@ -1513,7 +1513,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     else
                     {
                         server->appendMessageToFrontmost(i18n("Whois"),
-                            i18np("%1 has been idle for 1 second.", "%1 has been idle for %n seconds.", seconds, parameterList[1])
+                            i18np("%2 has been idle for 1 second.", "%2 has been idle for %1 seconds.", parameterList[1], seconds)
                             );
                     }
                 }
@@ -1610,8 +1610,8 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 if(getAutomaticRequest("LIST",QString())==0)
                 {
                     QString message;
-                    message=i18np("%1 (%n user): %2", "%1 (%n users): %2", parameterList[2].toInt());
-                    server->appendMessageToFrontmost(i18n("List"),message.arg(parameterList[1]).arg(trailing));
+                    message=i18np("%2 (%1 user): %3", "%2 (%1 users): %3", parameterList[2].toInt(), parameterList[1], trailing);
+                    server->appendMessageToFrontmost(i18n("List"),message);
                 }
                 else                              // send them to /LIST window
                 {

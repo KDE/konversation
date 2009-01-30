@@ -629,7 +629,7 @@ void Channel::popupCommand(int id)
             break;
         case Konversation::IgnoreNick:
             if (nickList.size() == 1)
-                question=i18n("Do you want to ignore %1?").arg(nickList.first());
+                question=i18n("Do you want to ignore %1?", nickList.first());
             else
                 question = i18n("Do you want to ignore the selected users?");
             if (KMessageBox::warningContinueCancel(
@@ -654,7 +654,7 @@ void Channel::popupCommand(int id)
             }
 
             if (selectedIgnoredNicks.count() == 1)
-                question=i18n("Do you want to stop ignoring %1?").arg(selectedIgnoredNicks.first());
+                question=i18n("Do you want to stop ignoring %1?", selectedIgnoredNicks.first());
             else
                 question = i18n("Do you want to stop ignoring the selected users?");
             if (KMessageBox::warningContinueCancel(
@@ -802,7 +802,7 @@ void Channel::completeNick()
                     if(Preferences::nickCompletionMode() == 1)
                     {
                         QString nicksFound = found.join(" ");
-                        appendServerMessage(i18n("Completion"), i18n("Possible completions: %1.").arg(nicksFound));
+                        appendServerMessage(i18n("Completion"), i18n("Possible completions: %1.", nicksFound));
                     }
                     else
                     {
@@ -1284,12 +1284,12 @@ void Channel::nickRenamed(const QString &oldNick, const NickInfo& nickInfo)
     if(newNick == m_server->getNickname()) /* Check newNick because  m_server->getNickname() is already updated to new nick */
     {
         setNickname(newNick);
-        appendCommandMessage(i18n("Nick"),i18n("You are now known as %1.").arg(newNick), false, true, true);
+        appendCommandMessage(i18n("Nick"),i18n("You are now known as %1.", newNick), false, true, true);
     }
     else
     {
         /* No, must've been someone else */
-        appendCommandMessage(i18n("Nick"),i18n("%1 is now known as %2.").arg(oldNick).arg(newNick),false);
+        appendCommandMessage(i18n("Nick"),i18n("%1 is now known as %2.", oldNick, newNick),false);
     }
 
     nicknameListView->sort();
@@ -1344,12 +1344,12 @@ void Channel::removeNick(ChannelNickPtr channelNick, const QString &reason, bool
             if (displayReason.isEmpty())
                 appendCommandMessage(i18n("Quit"), i18n("You have left this server."), false);
             else
-                appendCommandMessage(i18n("Quit"), i18nc("%1 adds the reason", "You have left this server (%1).").arg(displayReason), false);
+                appendCommandMessage(i18n("Quit"), i18nc("%1 adds the reason", "You have left this server (%1).", displayReason), false);
         }
         else
         {
             if (displayReason.isEmpty())
-                appendCommandMessage(i18n("Part"), i18n("You have left channel %1.").arg(getName()), false);
+                appendCommandMessage(i18n("Part"), i18n("You have left channel %1.", getName()), false);
             else
                 appendCommandMessage(i18n("Part"), i18nc("%1 adds the channel and %2 the reason",
                                      "You have left channel %1 (%2).", getName(), displayReason), false);
@@ -1363,7 +1363,7 @@ void Channel::removeNick(ChannelNickPtr channelNick, const QString &reason, bool
         if (quit)
         {
             if (displayReason.isEmpty())
-                appendCommandMessage(i18n("Quit"), i18n("%1 has left this server.").arg(channelNick->getNickname()), false);
+                appendCommandMessage(i18n("Quit"), i18n("%1 has left this server.", channelNick->getNickname()), false);
             else
                 appendCommandMessage(i18n("Quit"), i18nc("%1 adds the nick and %2 the reason",
                                      "%1 has left this server (%2).", channelNick->getNickname(), displayReason), false);
@@ -1412,7 +1412,7 @@ void Channel::kickNick(ChannelNickPtr channelNick, const QString &kicker, const 
         if(kicker == m_server->getNickname())
         {
             if (displayReason.isEmpty())
-                appendCommandMessage(i18n("Kick"), i18n("You have kicked yourself from channel %1.").arg(getName()));
+                appendCommandMessage(i18n("Kick"), i18n("You have kicked yourself from channel %1.", getName()));
             else
                 appendCommandMessage(i18n("Kick"), i18nc("%1 adds the channel and %2 the reason",
                                               "You have kicked yourself from channel %1 (%2).", getName(), displayReason));
@@ -1447,7 +1447,7 @@ void Channel::kickNick(ChannelNickPtr channelNick, const QString &kicker, const 
         if(kicker == m_server->getNickname())
         {
             if (displayReason.isEmpty())
-                appendCommandMessage(i18n("Kick"), i18n("You have kicked %1 from the channel.").arg(channelNick->getNickname()));
+                appendCommandMessage(i18n("Kick"), i18n("You have kicked %1 from the channel.", channelNick->getNickname()));
             else
                 appendCommandMessage(i18n("Kick"), i18nc("%1 adds the kicked nick and %2 the reason",
                                      "You have kicked %1 from the channel (%2).", channelNick->getNickname(), displayReason), true);
@@ -1536,15 +1536,15 @@ void Channel::adjustOps(int value)
 void Channel::emitUpdateInfo()
 {
     QString info = getName() + " - ";
-    info += i18np("%n nick", "%n nicks", numberOfNicks());
-    info += i18np(" (%n op)", " (%n ops)", numberOfOps());
+    info += i18np("%1 nick", "%1 nicks", numberOfNicks());
+    info += i18np(" (%1 op)", " (%1 ops)", numberOfOps());
 
     emit updateInfo(info);
 }
 
 void Channel::setTopic(const QString &newTopic)
 {
-    appendCommandMessage(i18n("Topic"), i18n("The channel topic is \"%1\".").arg(newTopic));
+    appendCommandMessage(i18n("Topic"), i18n("The channel topic is \"%1\".", newTopic));
     QString topic = Konversation::removeIrcMarkup(newTopic);
     topicLine->setText(topic);
     topicAuthorUnknown=true; // if we only get called with a topic, it was a 332, which usually has a 333 next
@@ -1563,11 +1563,11 @@ void Channel::setTopic(const QString &nickname, const QString &newTopic) // Over
 {
     if(nickname == m_server->getNickname())
     {
-        appendCommandMessage(i18n("Topic"), i18n("You set the channel topic to \"%1\".").arg(newTopic));
+        appendCommandMessage(i18n("Topic"), i18n("You set the channel topic to \"%1\".", newTopic));
     }
     else
     {
-        appendCommandMessage(i18n("Topic"), i18n("%1 sets the channel topic to \"%2\".").arg(nickname).arg(newTopic));
+        appendCommandMessage(i18n("Topic"), i18n("%1 sets the channel topic to \"%2\".", nickname, newTopic));
     }
 
     m_topicHistory.prepend(QString("%1 %2 %3").arg(QDateTime::currentDateTime().toTime_t()).arg(nickname).arg(newTopic));
@@ -1632,14 +1632,14 @@ void Channel::updateMode(const QString& sourceNick, char mode, bool plus, const 
                     if(toMe)
                         message=i18n("You give channel owner privileges to yourself.");
                     else
-                        message=i18n("You give channel owner privileges to %1.").arg(parameter);
+                        message=i18n("You give channel owner privileges to %1.", parameter);
                 }
                 else
                 {
                     if(toMe)
-                        message=i18n("%1 gives channel owner privileges to you.").arg(sourceNick);
+                        message=i18n("%1 gives channel owner privileges to you.", sourceNick);
                     else
-                        message=i18n("%1 gives channel owner privileges to %2.").arg(sourceNick).arg(parameter);
+                        message=i18n("%1 gives channel owner privileges to %2.", sourceNick, parameter);
                 }
             }
             else
@@ -1649,14 +1649,14 @@ void Channel::updateMode(const QString& sourceNick, char mode, bool plus, const 
                     if(toMe)
                         message=i18n("You take channel owner privileges from yourself.");
                     else
-                        message=i18n("You take channel owner privileges from %1.").arg(parameter);
+                        message=i18n("You take channel owner privileges from %1.", parameter);
                 }
                 else
                 {
                     if(toMe)
-                        message=i18n("%1 takes channel owner privileges from you.").arg(sourceNick);
+                        message=i18n("%1 takes channel owner privileges from you.", sourceNick);
                     else
-                        message=i18n("%1 takes channel owner privileges from %2.").arg(sourceNick).arg(parameter);
+                        message=i18n("%1 takes channel owner privileges from %2.", sourceNick, parameter);
                 }
             }
             if(parameterChannelNick)
@@ -1675,14 +1675,14 @@ void Channel::updateMode(const QString& sourceNick, char mode, bool plus, const 
                     if(toMe)
                         message=i18n("You give channel admin privileges to yourself.");
                     else
-                        message=i18n("You give channel admin privileges to %1.").arg(parameter);
+                        message=i18n("You give channel admin privileges to %1.", parameter);
                 }
                 else
                 {
                     if(toMe)
-                        message=i18n("%1 gives channel admin privileges to you.").arg(sourceNick);
+                        message=i18n("%1 gives channel admin privileges to you.", sourceNick);
                     else
-                        message=i18n("%1 gives channel admin privileges to %2.").arg(sourceNick).arg(parameter);
+                        message=i18n("%1 gives channel admin privileges to %2.", sourceNick, parameter);
                 }
             }
             else
@@ -1692,14 +1692,14 @@ void Channel::updateMode(const QString& sourceNick, char mode, bool plus, const 
                     if(toMe)
                         message=i18n("You take channel admin privileges from yourself.");
                     else
-                        message=i18n("You take channel admin privileges from %1.").arg(parameter);
+                        message=i18n("You take channel admin privileges from %1.", parameter);
                 }
                 else
                 {
                     if(toMe)
-                        message=i18n("%1 takes channel admin privileges from you.").arg(sourceNick);
+                        message=i18n("%1 takes channel admin privileges from you.", sourceNick);
                     else
-                        message=i18n("%1 takes channel admin privileges from %2.").arg(sourceNick).arg(parameter);
+                        message=i18n("%1 takes channel admin privileges from %2.", sourceNick, parameter);
                 }
             }
             if(parameterChannelNick)
@@ -1718,14 +1718,14 @@ void Channel::updateMode(const QString& sourceNick, char mode, bool plus, const 
                     if(toMe)
                         message=i18n("You give channel operator privileges to yourself.");
                     else
-                        message=i18n("You give channel operator privileges to %1.").arg(parameter);
+                        message=i18n("You give channel operator privileges to %1.", parameter);
                 }
                 else
                 {
                     if(toMe)
-                        message=i18n("%1 gives channel operator privileges to you.").arg(sourceNick);
+                        message=i18n("%1 gives channel operator privileges to you.", sourceNick);
                     else
-                        message=i18n("%1 gives channel operator privileges to %2.").arg(sourceNick).arg(parameter);
+                        message=i18n("%1 gives channel operator privileges to %2.", sourceNick, parameter);
                 }
             }
             else
@@ -1735,14 +1735,14 @@ void Channel::updateMode(const QString& sourceNick, char mode, bool plus, const 
                     if(toMe)
                         message=i18n("You take channel operator privileges from yourself.");
                     else
-                        message=i18n("You take channel operator privileges from %1.").arg(parameter);
+                        message=i18n("You take channel operator privileges from %1.", parameter);
                 }
                 else
                 {
                     if(toMe)
-                        message=i18n("%1 takes channel operator privileges from you.").arg(sourceNick);
+                        message=i18n("%1 takes channel operator privileges from you.", sourceNick);
                     else
-                        message=i18n("%1 takes channel operator privileges from %2.").arg(sourceNick).arg(parameter);
+                        message=i18n("%1 takes channel operator privileges from %2.", sourceNick, parameter);
                 }
             }
             if(parameterChannelNick)
@@ -1761,14 +1761,14 @@ void Channel::updateMode(const QString& sourceNick, char mode, bool plus, const 
                     if(toMe)
                         message=i18n("You give channel halfop privileges to yourself.");
                     else
-                        message=i18n("You give channel halfop privileges to %1.").arg(parameter);
+                        message=i18n("You give channel halfop privileges to %1.", parameter);
                 }
                 else
                 {
                     if(toMe)
-                        message=i18n("%1 gives channel halfop privileges to you.").arg(sourceNick);
+                        message=i18n("%1 gives channel halfop privileges to you.", sourceNick);
                     else
-                        message=i18n("%1 gives channel halfop privileges to %2.").arg(sourceNick).arg(parameter);
+                        message=i18n("%1 gives channel halfop privileges to %2.", sourceNick, parameter);
                 }
             }
             else
@@ -1778,14 +1778,14 @@ void Channel::updateMode(const QString& sourceNick, char mode, bool plus, const 
                     if(toMe)
                         message=i18n("You take channel halfop privileges from yourself.");
                     else
-                        message=i18n("You take channel halfop privileges from %1.").arg(parameter);
+                        message=i18n("You take channel halfop privileges from %1.", parameter);
                 }
                 else
                 {
                     if(toMe)
-                        message=i18n("%1 takes channel halfop privileges from you.").arg(sourceNick);
+                        message=i18n("%1 takes channel halfop privileges from you.", sourceNick);
                     else
-                        message=i18n("%1 takes channel halfop privileges from %2.").arg(sourceNick).arg(parameter);
+                        message=i18n("%1 takes channel halfop privileges from %2.", sourceNick, parameter);
                 }
             }
             if(parameterChannelNick)
@@ -1804,12 +1804,12 @@ void Channel::updateMode(const QString& sourceNick, char mode, bool plus, const 
                 if(fromMe)
                 {
                     if(toMe) message=i18n("You give yourself permission to talk.");
-                    else     message=i18n("You give %1  permission to talk.").arg(parameter);
+                    else     message=i18n("You give %1  permission to talk.", parameter);
                 }
                 else
                 {
-                    if(toMe) message=i18n("%1 gives you permission to talk.").arg(sourceNick);
-                    else     message=i18n("%1 gives %2 permission to talk.").arg(sourceNick).arg(parameter);
+                    if(toMe) message=i18n("%1 gives you permission to talk.", sourceNick);
+                    else     message=i18n("%1 gives %2 permission to talk.", sourceNick, parameter);
                 }
             }
             else
@@ -1817,12 +1817,12 @@ void Channel::updateMode(const QString& sourceNick, char mode, bool plus, const 
                 if(fromMe)
                 {
                     if(toMe) message=i18n("You take the permission to talk from yourself.");
-                    else     message=i18n("You take the permission to talk from %1.").arg(parameter);
+                    else     message=i18n("You take the permission to talk from %1.", parameter);
                 }
                 else
                 {
-                    if(toMe) message=i18n("%1 takes the permission to talk from you.").arg(sourceNick);
-                    else     message=i18n("%1 takes the permission to talk from %2.").arg(sourceNick).arg(parameter);
+                    if(toMe) message=i18n("%1 takes the permission to talk from you.", sourceNick);
+                    else     message=i18n("%1 takes the permission to talk from %2.", sourceNick, parameter);
                 }
             }
             if(parameterChannelNick)
@@ -1836,12 +1836,12 @@ void Channel::updateMode(const QString& sourceNick, char mode, bool plus, const 
             if(plus)
             {
                 if(fromMe) message=i18n("You set the channel mode to 'no colors allowed'.");
-                else message=i18n("%1 sets the channel mode to 'no colors allowed'.").arg(sourceNick);
+                else message=i18n("%1 sets the channel mode to 'no colors allowed'.", sourceNick);
             }
             else
             {
                 if(fromMe) message=i18n("You set the channel mode to 'allow color codes'.");
-                else message=i18n("%1 sets the channel mode to 'allow color codes'.").arg(sourceNick);
+                else message=i18n("%1 sets the channel mode to 'allow color codes'.", sourceNick);
             }
             break;
 
@@ -1849,12 +1849,12 @@ void Channel::updateMode(const QString& sourceNick, char mode, bool plus, const 
             if(plus)
             {
                 if(fromMe) message=i18n("You set the channel mode to 'invite only'.");
-                else message=i18n("%1 sets the channel mode to 'invite only'.").arg(sourceNick);
+                else message=i18n("%1 sets the channel mode to 'invite only'.", sourceNick);
             }
             else
             {
                 if(fromMe) message=i18n("You remove the 'invite only' mode from the channel.");
-                else message=i18n("%1 removes the 'invite only' mode from the channel.").arg(sourceNick);
+                else message=i18n("%1 removes the 'invite only' mode from the channel.", sourceNick);
             }
             modeI->setDown(plus);
             break;
@@ -1863,12 +1863,12 @@ void Channel::updateMode(const QString& sourceNick, char mode, bool plus, const 
             if(plus)
             {
                 if(fromMe) message=i18n("You set the channel mode to 'moderated'.");
-                else message=i18n("%1 sets the channel mode to 'moderated'.").arg(sourceNick);
+                else message=i18n("%1 sets the channel mode to 'moderated'.", sourceNick);
             }
             else
             {
                 if(fromMe) message=i18n("You set the channel mode to 'unmoderated'.");
-                else message=i18n("%1 sets the channel mode to 'unmoderated'.").arg(sourceNick);
+                else message=i18n("%1 sets the channel mode to 'unmoderated'.", sourceNick);
             }
             modeM->setDown(plus);
             break;
@@ -1877,12 +1877,12 @@ void Channel::updateMode(const QString& sourceNick, char mode, bool plus, const 
             if(plus)
             {
                 if(fromMe) message=i18n("You set the channel mode to 'no messages from outside'.");
-                else message=i18n("%1 sets the channel mode to 'no messages from outside'.").arg(sourceNick);
+                else message=i18n("%1 sets the channel mode to 'no messages from outside'.", sourceNick);
             }
             else
             {
                 if(fromMe) message=i18n("You set the channel mode to 'allow messages from outside'.");
-                else message=i18n("%1 sets the channel mode to 'allow messages from outside'.").arg(sourceNick);
+                else message=i18n("%1 sets the channel mode to 'allow messages from outside'.", sourceNick);
             }
             modeN->setDown(plus);
             break;
@@ -1891,12 +1891,12 @@ void Channel::updateMode(const QString& sourceNick, char mode, bool plus, const 
             if(plus)
             {
                 if(fromMe) message=i18n("You set the channel mode to 'private'.");
-                else message=i18n("%1 sets the channel mode to 'private'.").arg(sourceNick);
+                else message=i18n("%1 sets the channel mode to 'private'.", sourceNick);
             }
             else
             {
                 if(fromMe) message=i18n("You set the channel mode to 'public'.");
-                else message=i18n("%1 sets the channel mode to 'public'.").arg(sourceNick);
+                else message=i18n("%1 sets the channel mode to 'public'.", sourceNick);
             }
             modeP->setDown(plus);
             if(plus) modeS->setDown(false);
@@ -1906,12 +1906,12 @@ void Channel::updateMode(const QString& sourceNick, char mode, bool plus, const 
             if(plus)
             {
                 if(fromMe) message=i18n("You set the channel mode to 'secret'.");
-                else message=i18n("%1 sets the channel mode to 'secret'.").arg(sourceNick);
+                else message=i18n("%1 sets the channel mode to 'secret'.", sourceNick);
             }
             else
             {
                 if(fromMe) message=i18n("You set the channel mode to 'visible'.");
-                else message=i18n("%1 sets the channel mode to 'visible'.").arg(sourceNick);
+                else message=i18n("%1 sets the channel mode to 'visible'.", sourceNick);
             }
             modeS->setDown(plus);
             if(plus) modeP->setDown(false);
@@ -1923,12 +1923,12 @@ void Channel::updateMode(const QString& sourceNick, char mode, bool plus, const 
             if(plus)
             {
                 if(fromMe) message=i18n("You switch on 'topic protection'.");
-                else message=i18n("%1 switches on 'topic protection'.").arg(sourceNick);
+                else message=i18n("%1 switches on 'topic protection'.", sourceNick);
             }
             else
             {
                 if(fromMe) message=i18n("You switch off 'topic protection'.");
-                else message=i18n("%1 switches off 'topic protection'.").arg(sourceNick);
+                else message=i18n("%1 switches off 'topic protection'.", sourceNick);
             }
             modeT->setDown(plus);
             break;
@@ -1936,13 +1936,13 @@ void Channel::updateMode(const QString& sourceNick, char mode, bool plus, const 
         case 'k':
             if(plus)
             {
-                if(fromMe) message=i18n("You set the channel key to '%1'.").arg(parameter);
-                else message=i18n("%1 sets the channel key to '%2'.").arg(sourceNick).arg(parameter);
+                if(fromMe) message=i18n("You set the channel key to '%1'.", parameter);
+                else message=i18n("%1 sets the channel key to '%2'.", sourceNick, parameter);
             }
             else
             {
                 if(fromMe) message=i18n("You remove the channel key.");
-                else message=i18n("%1 removes the channel key.").arg(sourceNick);
+                else message=i18n("%1 removes the channel key.", sourceNick);
             }
             modeK->setDown(plus);
             break;
@@ -1950,13 +1950,13 @@ void Channel::updateMode(const QString& sourceNick, char mode, bool plus, const 
         case 'l':
             if(plus)
             {
-                if(fromMe) message=i18n("You set the channel limit to %1 nicks.").arg(parameter);
-                else message=i18n("%1 sets the channel limit to %2 nicks.").arg(sourceNick).arg(parameter);
+                if(fromMe) message=i18n("You set the channel limit to %1 nicks.", parameter);
+                else message=i18n("%1 sets the channel limit to %2 nicks.", sourceNick, parameter);
             }
             else
             {
                 if(fromMe) message=i18n("You remove the channel limit.");
-                else message=i18n("%1 removes the channel limit.").arg(sourceNick);
+                else message=i18n("%1 removes the channel limit.", sourceNick);
             }
             modeL->setDown(plus);
             if(plus) limit->setText(parameter);
@@ -1966,51 +1966,51 @@ void Channel::updateMode(const QString& sourceNick, char mode, bool plus, const 
         case 'b':
             if(plus)
             {
-                if(fromMe) message=i18n("You set a ban on %1.").arg(parameter);
-                else message=i18n("%1 sets a ban on %2.").arg(sourceNick).arg(parameter);
+                if(fromMe) message=i18n("You set a ban on %1.", parameter);
+                else message=i18n("%1 sets a ban on %2.", sourceNick, parameter);
             }
             else
             {
-                if(fromMe) message=i18n("You remove the ban on %1.").arg(parameter);
-                else message=i18n("%1 removes the ban on %2.").arg(sourceNick).arg(parameter);
+                if(fromMe) message=i18n("You remove the ban on %1.", parameter);
+                else message=i18n("%1 removes the ban on %2.", sourceNick, parameter);
             }
             break;
 
         case 'e':
             if(plus)
             {
-                if(fromMe) message=i18n("You set a ban exception on %1.").arg(parameter);
-                else message=i18n("%1 sets a ban exception on %2.").arg(sourceNick).arg(parameter);
+                if(fromMe) message=i18n("You set a ban exception on %1.", parameter);
+                else message=i18n("%1 sets a ban exception on %2.", sourceNick, parameter);
             }
             else
             {
-                if(fromMe) message=i18n("You remove the ban exception on %1.").arg(parameter);
-                else message=i18n("%1 removes the ban exception on %2.").arg(sourceNick).arg(parameter);
+                if(fromMe) message=i18n("You remove the ban exception on %1.", parameter);
+                else message=i18n("%1 removes the ban exception on %2.", sourceNick, parameter);
             }
             break;
 
         case 'I':
             if(plus)
             {
-                if(fromMe) message=i18n("You set invitation mask %1.").arg(parameter);
-                else message=i18n("%1 sets invitation mask %2.").arg(sourceNick).arg(parameter);
+                if(fromMe) message=i18n("You set invitation mask %1.", parameter);
+                else message=i18n("%1 sets invitation mask %2.", sourceNick, parameter);
             }
             else
             {
-                if(fromMe) message=i18n("You remove the invitation mask %1.").arg(parameter);
-                else message=i18n("%1 removes the invitation mask %2.").arg(sourceNick).arg(parameter);
+                if(fromMe) message=i18n("You remove the invitation mask %1.", parameter);
+                else message=i18n("%1 removes the invitation mask %2.", sourceNick, parameter);
             }
             break;
         default:
 	    if(plus)
 	    {
-	        if(fromMe) message=i18n("You set channel mode +%1").arg(mode);
-		else message=i18n("%1 sets channel mode +%2").arg(sourceNick).arg(mode);
+	        if(fromMe) message=i18n("You set channel mode +%1", mode);
+		else message=i18n("%1 sets channel mode +%2", sourceNick, mode);
 	    }
 	    else
 	    {
-	        if (fromMe) message=i18n("You set channel mode -%1").arg(mode);
-		else message= i18n("%1 sets channel mode -%2").arg(sourceNick).arg(mode);
+	        if (fromMe) message=i18n("You set channel mode -%1", mode);
+		else message= i18n("%1 sets channel mode -%2", sourceNick, mode);
 	    }
     }
 
@@ -2431,12 +2431,12 @@ void Channel::refreshModeButtons()
     QString opOnly;
     if(!enable) opOnly = i18n("You have to be an operator to change this.");
 
-    QToolTip::add(modeT, i18n("Topic can be changed by channel operator only.  %1").arg(opOnly));
-    QToolTip::add(modeN, i18n("No messages to channel from clients on the outside.  %1").arg(opOnly));
-    QToolTip::add(modeS, i18n("Secret channel.  %1").arg(opOnly));
-    QToolTip::add(modeI, i18n("Invite only channel.  %1").arg(opOnly));
-    QToolTip::add(modeP, i18n("Private channel.  %1").arg(opOnly));
-    QToolTip::add(modeM, i18n("Moderated channel.  %1").arg(opOnly));
+    QToolTip::add(modeT, i18n("Topic can be changed by channel operator only.  %1", opOnly));
+    QToolTip::add(modeN, i18n("No messages to channel from clients on the outside.  %1", opOnly));
+    QToolTip::add(modeS, i18n("Secret channel.  %1", opOnly));
+    QToolTip::add(modeI, i18n("Invite only channel.  %1", opOnly));
+    QToolTip::add(modeP, i18n("Private channel.  %1", opOnly));
+    QToolTip::add(modeM, i18n("Moderated channel.  %1", opOnly));
     QToolTip::add(modeK, i18n("Protect channel with a password."));
     QToolTip::add(modeL, i18n("Set user limit to channel."));
 
@@ -2712,7 +2712,7 @@ QString Channel::getChannelEncoding() // virtual
 
 QString Channel::getChannelEncodingDefaultDesc()  // virtual
 {
-    return i18n("Identity Default ( %1 )").arg(getServer()->getIdentity()->getCodecName());
+    return i18n("Identity Default ( %1 )", getServer()->getIdentity()->getCodecName());
 }
 
 void Channel::showNicknameBox(bool show)
