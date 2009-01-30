@@ -366,7 +366,7 @@ void DccTransferSend::startSending()
         startTransferLogger();                      // initialize CPS counter, ETA counter, etc...
     }
     else
-        failed( i18n( "Could not open the file: %1" ).arg( getQFileErrorString( m_file.status() ) ) );
+        failed( i18n( "Could not open the file: %1" , getQFileErrorString( m_file.status() ) ) );
 }
 
 void DccTransferSend::writeData()                 // slot
@@ -473,10 +473,10 @@ QString DccTransferSend::getQFileErrorString( int code )
             errorString=i18n("The operation was successful. Should never happen in an error dialog.");
             break;
         case IO_ReadError:
-            errorString=i18n("Could not read from file \"%1\".").arg( m_fileName );
+            errorString=i18n("Could not read from file \"%1\".",m_fileName );
             break;
         case IO_WriteError:
-            errorString=i18n("Could not write to file \"%1\".").arg( m_fileName );
+            errorString=i18n("Could not write to file \"%1\".", m_fileName );
             break;
         case IO_FatalError:
             errorString=i18n("A fatal unrecoverable error occurred.");
@@ -500,7 +500,7 @@ QString DccTransferSend::getQFileErrorString( int code )
             errorString=i18n("An unspecified error happened on close.");
             break;
         default:
-            errorString=i18n("Unknown error. Code %1").arg(code);
+            errorString=i18n("Unknown error. Code %1",code);
             break;
     }
 

@@ -24,6 +24,7 @@
 #include <qtimer.h>
 //Added by qt3to4:
 #include <QPixmap>
+#include <QProgressBar>
 
 #include <kdebug.h>
 #include <kfilemetainfo.h>
@@ -44,9 +45,9 @@ DccTransferPanelItem::DccTransferPanelItem( DccTransferPanel* panel, DccTransfer
 {
     m_autoUpdateViewTimer = 0;
 
-    m_progressBar = new KProgress( 100, listView()->viewport() );
-    m_progressBar->setCenterIndicator( true );
-    m_progressBar->setPercentageVisible( true );
+    m_progressBar = new QProgressBar( listView()->viewport() );
+    m_progressBar->setMaximum(100);
+    m_progressBar->setTextVisible( true );
 
     connect( m_transfer, SIGNAL( transferStarted( DccTransfer* ) ), this, SLOT( startAutoViewUpdate() ) );
     connect( m_transfer, SIGNAL( done( DccTransfer* ) ), this, SLOT( stopAutoViewUpdate() ) );
@@ -81,7 +82,7 @@ void DccTransferPanelItem::updateView()
     setText( DccTransferPanel::Column::SenderAddress, getSenderAddressPrettyText() );
 
     if ( m_transfer->getFileSize() )
-        m_progressBar->setProgress( m_transfer->getProgress() );
+        m_progressBar->setValue( m_transfer->getProgress() );
     else // filesize is unknown
     {
         m_progressBar->hide();
@@ -194,12 +195,13 @@ void DccTransferPanelItem::openFileInfoDialog()
 
         // get meta info object
         KFileMetaInfo fileInfo(path,QString(),KFileMetaInfo::Everything);
-
+#warning "port kde4"
+#if 0
         // is there any info for this file?
-        if(!fileInfo.isEmpty())
+        if(!fileInfo.isValid())
         {
             // get list of meta information groups
-            QStringList groupList=fileInfo.groups();
+            KFileMetaInfoGroupList groupList=fileInfo.groups();
             // look inside for keys
             for(unsigned int index=0;index<groupList.count();index++)
             {
@@ -248,6 +250,7 @@ void DccTransferPanelItem::openFileInfoDialog()
         {
             KMessageBox::sorry(listView(),i18n("No detailed information for this file found."),i18n("File Information"));
         }
+#endif
     }
 }
 
@@ -272,9 +275,9 @@ QString DccTransferPanelItem::getTypeText() const
 QPixmap DccTransferPanelItem::getTypeIcon() const
 {
     if ( m_transfer->getType() == DccTransfer::Send )
-        return KIconLoader::global()->loadIcon( "up", KIcon::Small );
+        return KIconLoader::global()->loadIcon( "up", KIconLoader::Small );
     else
-        return KIconLoader::global()->loadIcon( "down", KIcon::Small );
+        return KIconLoader::global()->loadIcon( "down", KIconLoader::Small );
 }
 
 QPixmap DccTransferPanelItem::getStatusIcon() const
@@ -303,7 +306,7 @@ QPixmap DccTransferPanelItem::getStatusIcon() const
         default:
 	    break;
     }
-    return KIconLoader::global()->loadIcon( icon, KIcon::Small );
+    return KIconLoader::global()->loadIcon( icon, KIconLoader::Small );
 }
 
 QString DccTransferPanelItem::getStatusText() const

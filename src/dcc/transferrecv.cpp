@@ -15,7 +15,7 @@
 */
 
 #include "transferrecv.h" ////// header renamed
-#include "dcccommon.h"
+#include "common.h"
 #include "channel.h"
 #include "transfermanager.h" ////// header renamed
 #include "application.h" ////// header renamed
@@ -27,9 +27,9 @@
 #include <kiconloader.h>
 #include <klocale.h>
 #include <kmessagebox.h>
-include <k3serversocket.h>
+#include <k3serversocket.h>
 #include <kstandarddirs.h>
-#include <kstreamsocket.h>
+#include <k3streamsocket.h>
 #include <kdirselectdialog.h>
 #include <kuser.h>
 
@@ -86,7 +86,7 @@ QString DccTransferRecv::getTypeText() const
 
 QPixmap DccTransferRecv::getTypeIcon() const
 {
-    return KIconLoader::global()->loadIcon( "down", KIcon::Small );
+    return KIconLoader::global()->loadIcon( "down",KIconLoader::Small );
 }
 
 void DccTransferRecv::cleanUp()
@@ -212,7 +212,7 @@ bool DccTransferRecv::queue()
             m_fileURL.setPath( KUser( KUser::UseRealUserID ).homeDir() );  // default folder is *not* specified
 
         // add a slash if there is none
-        m_fileURL.adjustPath( 1 );
+        m_fileURL.adjustPath( KUrl::AddTrailingSlash );
 
         // Append folder with partner's name if wanted
         if ( Preferences::dccCreateFolder() )
@@ -279,7 +279,12 @@ void DccTransferRecv::prepareLocalKio( bool overwrite, bool resume, KIO::fileoff
         return;
     }
 
-    KIO::TransferJob* transferJob = KIO::put( m_fileURL, -1, overwrite, m_resumed, false );
+    KIO::JobFlags flags;
+    if(overwrite)
+       flags |= KIO::Overwrite;
+    if(m_resumed)
+       flags |= KIO::HideProgressInfo;
+    KIO::TransferJob* transferJob = KIO::put( m_fileURL, -1, flags );
 
     if ( !transferJob )
     {
@@ -295,6 +300,8 @@ void DccTransferRecv::prepareLocalKio( bool overwrite, bool resume, KIO::fileoff
 
 void DccTransferRecv::askAndPrepareLocalKio( const QString& message, int enabledActions, DccResumeDialog::ReceiveAction defaultAction, KIO::fileoffset_t startPosition )
 {
+#warning "port kde4"
+#if 0
     switch ( DccResumeDialog::ask( this, message, enabledActions, defaultAction ) )
     {
         case DccResumeDialog::RA_Resume:
@@ -310,6 +317,7 @@ void DccTransferRecv::askAndPrepareLocalKio( const QString& message, int enabled
         default:
             setStatus( Queued );
     }
+#endif
 }
 
 bool DccTransferRecv::createDirs( const KUrl& dirURL ) const
@@ -709,7 +717,7 @@ void DccTransferRecvWriteCacheHandler::append( char* data, int size )
     {
         m_cacheList.append( QByteArray() );
         delete m_cacheStream;
-        m_cacheStream = new QDataStream( m_cacheList.back(), QIODevice::WriteOnly );
+        m_cacheStream = new QDataStream( &m_cacheList.back(), QIODevice::WriteOnly );
     }
 
     m_cacheStream->writeRawBytes( data, size );

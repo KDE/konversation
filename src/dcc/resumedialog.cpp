@@ -69,8 +69,8 @@ DccResumeDialog::DccResumeDialog(DccTransferRecv* item, const QString& caption, 
     setModal(true);
     setButtons(enabledButtonCodes);
     setDefaultButton(defaultButtonCode)
-    if(enabledButtonCodes & KDialogBase::User1)
-        setButtonText(KDialogBase::User1, i18n("&Resume"));
+    if(enabledButtonCodes & KDialog::User1)
+        setButtonText(KDialog::User1, i18n("&Resume"));
 
     Q3Frame* page = new Q3Frame(this);
     Q3VBoxLayout* pageLayout = new Q3VBoxLayout(page);
@@ -119,34 +119,34 @@ void DccResumeDialog::slotOk()
         m_selectedAction = RA_Overwrite;
     else
         m_selectedAction = RA_Rename;
-    KDialogBase::slotOk();
+    KDialog::accept();
 }
 
 void DccResumeDialog::slotUser1()
 {
     m_selectedAction = RA_Resume;
-    done(KDialogBase::User1);
+    done(KDialog::User1);
 }
 
 void DccResumeDialog::slotCancel()
 {
     m_selectedAction = RA_Cancel;
-    KDialogBase::slotCancel();
+    KDialog::reject();
 }
 
 void DccResumeDialog::updateDialogButtons() // slot
 {
     if(m_item->getFileURL() == m_urlreqFileURL->url())
     {
-        setButtonText(KDialogBase::Ok, i18n("&Overwrite"));
-        enableButton(KDialogBase::Ok, m_enabledActions & RA_Overwrite);
-        enableButton(KDialogBase::User1, true);
+        setButtonText(KDialog::Ok, i18n("&Overwrite"));
+        enableButton(KDialog::Ok, m_enabledActions & RA_Overwrite);
+        enableButton(KDialog::User1, true);
     }
     else
     {
-        setButtonText(KDialogBase::Ok, i18n("R&ename"));
-        enableButton(KDialogBase::Ok, m_enabledActions & RA_Rename);
-        enableButton(KDialogBase::User1, false);
+        setButtonText(KDialog::Ok, i18n("R&ename"));
+        enableButton(KDialog::Ok, m_enabledActions & RA_Rename);
+        enableButton(KDialog::User1, false);
     }
 }
 
@@ -190,9 +190,9 @@ void DccResumeDialog::suggestNewName() // slot
     // TODO: network transparency. However, using NetAccess from a modal dialog
     // could be a problem, no? (given that it uses a modal widget itself....)
     if ( baseURL.isLocalFile() )
-        exists = QFileInfo( baseURL.path(+1) + suggestedName ).exists();
+        exists = QFileInfo( baseURL.path(KUrl::AddTrailingSlash) + suggestedName ).exists();
 
-    m_urlreqFileURL->setURL( baseURL.path(+1) + suggestedName );
+    m_urlreqFileURL->setUrl( baseURL.path(KUrl::AddTrailingSlash) + suggestedName );
 
     if ( exists ) // already exists -> recurse
         suggestNewName();
@@ -200,7 +200,7 @@ void DccResumeDialog::suggestNewName() // slot
 
 void DccResumeDialog::setDefaultName() // slot
 {
-    m_urlreqFileURL->setURL(m_item->getFileURL().prettyUrl());
+    m_urlreqFileURL->setUrl(m_item->getFileURL().prettyUrl());
 }
 
 // #include "./dcc/resumedialog.moc"

@@ -167,20 +167,20 @@ kde4_add_ui3_files(viewer_SRCS viewer/irccolorchooserui.ui)
 set(dcc_SRCS
     dcc/chat.cpp
     dcc/common.cpp
-    #dcc/recipientdialog.cpp
+    dcc/recipientdialog.cpp
     #dcc/resumedialog.cpp
     dcc/transfer.cpp
-    #dcc/transferdetailedinfopanel.cpp
-    #dcc/transfermanager.cpp
+    dcc/transferdetailedinfopanel.cpp
+    dcc/transfermanager.cpp
     dcc/transferpanel.cpp
-    #dcc/transferpanelitem.cpp
-    #dcc/transferrecv.cpp
+    dcc/transferpanelitem.cpp
+    dcc/transferrecv.cpp
     dcc/transfersend.cpp
 )
 
 kde4_add_ui3_files(dcc_SRCS dcc/transferdetailedinfopanelui.ui)
 
-set (completed_SRCS ${core_SRCS}  ${irc_SRCS} ${viewer_SRCS} ${prefs_SRCS})# ${dcc_SRCS})
+set (completed_SRCS ${core_SRCS}  ${irc_SRCS} ${viewer_SRCS} ${prefs_SRCS} ${dcc_SRCS})
 set (konvi_SRCS ${completed_SRCS}) 
 
 

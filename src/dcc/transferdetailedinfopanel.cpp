@@ -13,7 +13,7 @@
 #include "channel.h"
 #include "transfer.h" ////// header renamed
 #include "transferrecv.h" ////// header renamed
-#include "dcctransfermanager.h"
+#include "transfermanager.h"
 #include "transferpanelitem.h" ////// header renamed
 #include "application.h" ////// header renamed
 
@@ -83,7 +83,7 @@ void DccTransferDetailedInfoPanel::updateView()
     m_labelFilename->setText( transfer->getFileName() );
 
     // Location:
-    m_urlreqLocation->setURL( transfer->getFileURL().prettyUrl() );
+    m_urlreqLocation->setUrl( transfer->getFileURL().prettyUrl() );
     //m_urlreqLocation->lineEdit()->setFocusPolicy( transfer->getStatus() == DccTransfer::Queued ? Qt::StrongFocus : ClickFocus );
     m_urlreqLocation->lineEdit()->setReadOnly( transfer->getStatus() != DccTransfer::Queued );
     m_urlreqLocation->lineEdit()->setFrame( transfer->getStatus() == DccTransfer::Queued );

@@ -29,8 +29,7 @@
 
 class QStringList;
 class QTimer;
-
-class KProgress;
+class QProgressBar;
 
 namespace KIO
 {
@@ -94,7 +93,7 @@ class DccTransferPanelItem : public QObject, public K3ListViewItem
 
         // UI
         QTimer* m_autoUpdateViewTimer;
-        KProgress* m_progressBar;
+        QProgressBar* m_progressBar;
 };
 
 #endif  // DCCTRANSFERPANELITEM_H
