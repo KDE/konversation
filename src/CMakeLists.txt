@@ -32,7 +32,7 @@ set(core_SRCS
 #    configdialog.cpp
 #    settingsdialog.cpp
     scriptlauncher.cpp
-#    konsolepanel.cpp
+    konsolepanel.cpp
     notificationhandler.cpp
 
     awaymanager.cpp

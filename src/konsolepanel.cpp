@@ -28,7 +28,7 @@ KonsolePanel::KonsolePanel(QWidget *p) : ChatWindow( p ), k_part (0)
     k_part = (KParts::ReadOnlyPart *) fact->create(this);
     if (!k_part) return;
 
-    k_part->widget()->setFocusPolicy(QWidget::WheelFocus);
+    k_part->widget()->setFocusPolicy(Qt::WheelFocus);
     setFocusProxy(k_part->widget());
     k_part->widget()->setFocus();
 
@@ -72,4 +72,4 @@ void KonsolePanel::konsoleChanged(const QString& /* data */)
   activateTabNotification(Konversation::tnfSystem);
 }
 
-// #include "./konsolepanel.moc"
+#include "konsolepanel.moc"
