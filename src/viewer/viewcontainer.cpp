@@ -1997,12 +1997,12 @@ void ViewContainer::openLogFile(const QString& caption, const QString& file)
 
 void ViewContainer::addKonsolePanel()
 {
-/*    KonsolePanel* panel=new KonsolePanel(m_tabWidget);
+    KonsolePanel* panel=new KonsolePanel(m_tabWidget);
     panel->setName(i18n("Konsole"));
     addView(panel, i18n("Konsole"));
     connect(panel, SIGNAL(updateTabNotification(ChatWindow*,const Konversation::TabNotifyType&)), this, SLOT(setViewNotification(ChatWindow*,const Konversation::TabNotifyType&)));
     connect(panel, SIGNAL(closeView(ChatWindow*)), this, SLOT(closeView(ChatWindow*)));
-*/}
+}
 
 void ViewContainer::addUrlCatcher()
 {
