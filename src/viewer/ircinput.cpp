@@ -44,7 +44,7 @@
 IRCInput::IRCInput(QWidget* parent) : KTextEdit(parent)
 {
     m_lastHeight=document()->size().toSize().height();
-
+    setAcceptRichText(false);
     //I am not terribly interested in finding out where this value comes from
     //nor in compensating for it if my guess is incorrect. so, cache it.
     m_qtBoxPadding=m_lastHeight-fontMetrics().lineSpacing();
@@ -179,7 +179,7 @@ QString IRCInput::text() const
 void IRCInput::setText(const QString& text)
 {
     // reimplemented to  set cursor at the end of the new text
-    KTextEdit::setText(text);
+    KTextEdit::setPlainText(text);
     moveCursor(QTextCursor::End);
 }
 
