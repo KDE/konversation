@@ -24,8 +24,8 @@
 namespace Konversation
 {
     Sound::Sound(QObject* parent, const char* name)
-        : QObject(parent, name)
-        {}
+        : QObject(parent)
+        { setObjectName(name); }
 
     Sound::~Sound()
         {}
