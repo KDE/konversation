@@ -12,12 +12,12 @@
 */
 // Copyright (C) 2004-2008 Shintaro Matsuoka <shin@shoegazed.org>
 
-#include "transferpanel.h" ////// header renamed
-#include "application.h" ////// header renamed
-#include "transferdetailedinfopanel.h" ////// header renamed
-#include "transfermanager.h" ////// header renamed
-#include "transferpanelitem.h" ////// header renamed
-#include "transfersend.h" ////// header renamed
+#include "transferpanel.h"
+#include "application.h"
+#include "transferdetailedinfopanel.h"
+#include "transfermanager.h"
+#include "transferpanelitem.h"
+#include "transfersend.h"
 #include "preferences.h"
 
 #include <q3hbox.h>
@@ -67,7 +67,7 @@ void DccTransferPanel::initGUI()
 {
     setSpacing( 0 );
 
-    m_listView = new K3ListView(this,"dcc_control_panel");
+    m_listView = new K3ListView(this);
 
     m_listView->setSelectionMode(Q3ListView::Extended);
     m_listView->setDragEnabled(true);
@@ -114,7 +114,7 @@ void DccTransferPanel::initGUI()
     buttonsBox->setSpacing(spacing());
 
     // convenience, undeffed below again to avoid name clashes
-    #define icon(s) KIconLoader::global()->loadIconSet( s, KIcon::Small )
+    #define icon(s) KIconLoader::global()->loadIconSet( s,KIconLoader::Small )
 
     m_buttonAccept = new QPushButton(icon("player_play"), i18n("Accept"), buttonsBox, "start_dcc");
     m_buttonAbort  = new QPushButton(icon("stop"),        i18n("Abort"),  buttonsBox, "abort_dcc");
@@ -344,7 +344,7 @@ void DccTransferPanel::clearDcc()
         ++it;
     }
 
-    // Figure out the first 'gap' in the selection and select that item, 
+    // Figure out the first 'gap' in the selection and select that item,
     // or, if there are no gaps, select first item below the selection
     Q3PtrListIterator<Q3ListViewItem> selected( lst );
     bool itemSelected = false;
@@ -355,7 +355,7 @@ void DccTransferPanel::clearDcc()
             m_listView->setSelected(selected.current()->itemBelow(),true);
             m_listView->setCurrentItem(selected.current()->itemBelow());
             itemSelected = true;
-            break; 
+            break;
         }
         ++selected;
     }
@@ -455,9 +455,9 @@ void DccTransferPanel::childAdjustFocus()
 {
 }
 
-K3ListView* DccTransferPanel::getListView() 
-{ 
-  return m_listView; 
+K3ListView* DccTransferPanel::getListView()
+{
+  return m_listView;
 }
 
-// #include "./dcc/transferpanel.moc"
+#include "transferpanel.moc"

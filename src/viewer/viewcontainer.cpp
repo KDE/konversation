@@ -25,7 +25,7 @@
 #include "urlcatcher.h"
 #include "transferpanel.h" ////// header renamed
 #include "transfermanager.h" ////// header renamed
-#include "dccchat.h"
+#include "chat.h"
 #include "statuspanel.h"
 #include "channel.h"
 #include "query.h"
