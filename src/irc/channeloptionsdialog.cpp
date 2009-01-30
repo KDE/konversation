@@ -73,7 +73,8 @@ namespace Konversation
         connect(m_channel, SIGNAL(topicHistoryChanged()), this, SLOT(refreshTopicHistory()));
 
         connect(m_channel, SIGNAL(modesChanged()), this, SLOT(refreshModes()));
-        connect(m_channel->getOwnChannelNick(), SIGNAL(channelNickChanged()), this, SLOT(refreshEnableModes()));
+#warning "port it to kde4"
+        //connect(m_channel->getOwnChannelNick(), SIGNAL(channelNickChanged()), this, SLOT(refreshEnableModes()));
 
         connect(this, SIGNAL(cancelClicked()), this, SLOT(cancelClicked()));
         connect(this, SIGNAL(okClicked()), this, SLOT(changeOptions()));
@@ -266,13 +267,13 @@ namespace Konversation
             static_cast<Q3CheckListItem*>(item)->setOn(false);
             item = item->nextSibling();
         }
-
+#warning "port to kde4"
+#if 0
         char mode;
 
         for(QStringList::const_iterator it = modes.begin(); it != modes.end(); ++it)
         {
             mode = (*it)[0];
-
             switch(mode)
             {
                 case 't':
@@ -323,7 +324,7 @@ namespace Konversation
                 }
             }
         }
-
+#endif
         refreshEnableModes();
     }
 
@@ -503,7 +504,7 @@ namespace Konversation
     QString BanListViewItem::text(int column) const
     {
         if (column == 2)
-            return KGlobal::locale()->formatDateTime(m_timestamp, true, true);
+            return KGlobal::locale()->formatDateTime(m_timestamp, KLocale::ShortDate, true);
 
         return K3ListViewItem::text(column);
     }

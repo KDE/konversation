@@ -239,7 +239,7 @@ the Free Software Foundation; either version 2 of the License, or
                                 <property name="enabled">
                                     <bool>false</bool>
                                 </property>
-                                <property name="minValue">
+                                <property name="minimum">
                                     <number>0</number>
                                 </property>
                                 <property name="whatsThis" stdset="0">
@@ -522,6 +522,10 @@ the Free Software Foundation; either version 2 of the License, or
     </vbox>
 </widget>
 <customwidgets>
+  <customwidget>
+   <class>KIntNumInput</class>
+   <header>knuminput.h</header>
+  </customwidget>
 </customwidgets>
 <connections>
     <connection>
@@ -546,14 +550,14 @@ the Free Software Foundation; either version 2 of the License, or
 <layoutdefaults spacing="6" margin="11"/>
 <layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
 <includehints>
-    <includehint>klistview.h</includehint>
+    <includehint>k3listview.h</includehint>
     <includehint>ktextedit.h</includehint>
     <includehint>ktextedit.h</includehint>
     <includehint>knuminput.h</includehint>
     <includehint>knuminput.h</includehint>
     <includehint>klineedit.h</includehint>
-    <includehint>klistview.h</includehint>
-    <includehint>klistview.h</includehint>
-    <includehint>klistviewsearchline.h</includehint>
+    <includehint>k3listview.h</includehint>
+    <includehint>k3listview.h</includehint>
+    <includehint>k3listviewsearchline.h</includehint>
 </includehints>
 </UI>

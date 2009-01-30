@@ -56,7 +56,7 @@ set (irc_SRCS
     irc/channeldialog.cpp
     irc/channellistpanel.cpp
     irc/channellistviewitem.cpp
-#    irc/channeloptionsdialog.cpp
+    irc/channeloptionsdialog.cpp
     irc/channelnick.cpp
     irc/modebutton.cpp
     irc/joinchanneldialog.cpp
@@ -85,7 +85,7 @@ set (irc_SRCS
 
 )
 
-kde4_add_ui3_files(irc_SRCS irc/joinchannelui.ui irc/servergroupdialogui.ui)
+kde4_add_ui3_files(irc_SRCS irc/channeloptionsui.ui irc/joinchannelui.ui irc/servergroupdialogui.ui)
 
     #=== Preferences
 set(prefs_SRCS
