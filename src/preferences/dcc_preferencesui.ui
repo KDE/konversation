@@ -49,9 +49,6 @@ the Free Software Foundation; either version 2 of the License, or
                     <verstretch>0</verstretch>
                 </sizepolicy>
             </property>
-            <property name="mode">
-                <number>2</number>
-            </property>
         </widget>
         <widget class="QCheckBox" row="1" column="0" rowspan="1" colspan="4">
             <property name="name">

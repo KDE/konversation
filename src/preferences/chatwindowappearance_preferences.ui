@@ -330,6 +330,10 @@ the Free Software Foundation; either version 2 of the License, or
     </vbox>
 </widget>
 <customwidgets>
+  <customwidget>
+   <class>KIntSpinBox</class>
+   <header>knuminput.h</header>
+  </customwidget>
 </customwidgets>
 <connections>
     <connection>

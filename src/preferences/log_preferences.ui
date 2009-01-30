@@ -76,9 +76,6 @@ the Free Software Foundation; either version 2 of the License, or
                             <verstretch>0</verstretch>
                         </sizepolicy>
                     </property>
-                    <property name="mode">
-                        <number>26</number>
-                    </property>
                 </widget>
             </grid>
         </widget>

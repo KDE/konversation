@@ -85,10 +85,10 @@ the Free Software Foundation; either version 2 of the License, or
                     <property name="value">
                         <number>120</number>
                     </property>
-                    <property name="minValue">
+                    <property name="minimum">
                         <number>1</number>
                     </property>
-                    <property name="maxValue">
+                    <property name="maximum">
                         <number>9999</number>
                     </property>
                     <property name="suffix">
@@ -102,7 +102,7 @@ the Free Software Foundation; either version 2 of the License, or
                     <property name="value">
                         <number>100</number>
                     </property>
-                    <property name="minValue">
+                    <property name="minimum">
                         <number>0</number>
                     </property>
                     <property name="specialValueText">
@@ -169,6 +169,10 @@ the Free Software Foundation; either version 2 of the License, or
     </grid>
 </widget>
 <customwidgets>
+  <customwidget>
+   <class>KIntNumInput</class>
+   <header>knuminput.h</header>
+  </customwidget>
 </customwidgets>
 <tabstops>
     <tabstop>kcfg_AutoReconnect</tabstop>
