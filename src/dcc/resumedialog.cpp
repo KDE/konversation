@@ -31,21 +31,21 @@
 DccResumeDialog::ReceiveAction DccResumeDialog::ask(DccTransferRecv* item, const QString& message, int enabledActions, ReceiveAction defaultAction)
 {
     int enabledButtonCodes = 0;
-    KDialogBase::ButtonCode defaultButtonCode = KDialogBase::Ok;
+    KDialog::ButtonCode defaultButtonCode = KDialog::Ok;
 
     if(enabledActions & RA_Rename || enabledActions & RA_Overwrite)
-        enabledButtonCodes |= KDialogBase::Ok;
+        enabledButtonCodes |= KDialog::Ok;
     if(enabledActions & RA_Resume)
-        enabledButtonCodes |= KDialogBase::User1;
+        enabledButtonCodes |= KDialog::User1;
     if(enabledActions & RA_Cancel)
-        enabledButtonCodes |= KDialogBase::Cancel;
+        enabledButtonCodes |= KDialog::Cancel;
 
     if(defaultAction == RA_Rename || defaultAction == RA_Overwrite)
-        defaultButtonCode = KDialogBase::Ok;
+        defaultButtonCode = KDialog::Ok;
     else if(defaultAction == RA_Resume)
-        defaultButtonCode = KDialogBase::User1;
+        defaultButtonCode = KDialog::User1;
     else if(defaultAction == RA_Cancel)
-        defaultButtonCode = KDialogBase::Cancel;
+        defaultButtonCode = KDialog::Cancel;
 
     DccResumeDialog dlg(item, i18n("DCC Receive Question"), message, enabledActions, enabledButtonCodes, defaultButtonCode);
     dlg.exec();
@@ -59,12 +59,16 @@ DccResumeDialog::ReceiveAction DccResumeDialog::ask(DccTransferRecv* item, const
 }
 
 DccResumeDialog::DccResumeDialog(DccTransferRecv* item, const QString& caption, const QString& message, int enabledActions, int enabledButtonCodes, 
-				 KDialogBase::ButtonCode defaultButtonCode)
-: KDialogBase(0, "dcc_resume_dialog", true, caption, enabledButtonCodes, defaultButtonCode, true)
+				 KDialog::ButtonCode defaultButtonCode)
+: KDialog(0) 
 , m_item(item)
 , m_enabledActions(enabledActions)
 , m_selectedAction(RA_Cancel)
 {
+    setCaption(caption);
+    setModal(true);
+    setButtons(enabledButtonCodes);
+    setDefaultButton(defaultButtonCode)
     if(enabledButtonCodes & KDialogBase::User1)
         setButtonText(KDialogBase::User1, i18n("&Resume"));
 

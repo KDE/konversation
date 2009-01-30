@@ -19,7 +19,7 @@
 class KUrlRequester;
 class DccTransferRecv;
 
-class DccResumeDialog : public KDialogBase
+class DccResumeDialog : public KDialog
 {
     Q_OBJECT
 
@@ -45,7 +45,7 @@ class DccResumeDialog : public KDialogBase
         void updateDialogButtons();
 
     protected:
-        DccResumeDialog(DccTransferRecv* item, const QString& caption, const QString& message, int enabledActions, int enabledButtonCodes, KDialogBase::ButtonCode defaultButtonCode);
+        DccResumeDialog(DccTransferRecv* item, const QString& caption, const QString& message, int enabledActions, int enabledButtonCodes, KDialog::ButtonCode defaultButtonCode);
 
         // UI
         KUrlRequester* m_urlreqFileURL;
