@@ -22,7 +22,7 @@
 #include "bookmarkhandler.h" ////// header renamed
 #include "trayicon.h"
 #include "serverlistdialog.h"
-//#include "identitydialog.h"
+#include "identitydialog.h"
 #include "notificationhandler.h"
 #include "irccharsets.h"
 #include "connectionmanager.h"
@@ -831,7 +831,7 @@ void KonversationMainWindow::openNotify()
 }
 
 void KonversationMainWindow::openIdentitiesDialog()
-{/*
+{
     Konversation::IdentityDialog dlg(this);
 
     if (dlg.exec() == KDialog::Accepted)
@@ -839,11 +839,11 @@ void KonversationMainWindow::openIdentitiesDialog()
         if (m_serverListDialog)
             m_serverListDialog->updateServerList();
         m_viewContainer->updateViewEncoding(m_viewContainer->getFrontView());
-    }*/
+    }
 }
 
 IdentityPtr KonversationMainWindow::editIdentity(IdentityPtr identity)
-{/*
+{
     IdentityPtr newIdentity;
 
     Konversation::IdentityDialog dlg(this);
@@ -854,7 +854,7 @@ IdentityPtr KonversationMainWindow::editIdentity(IdentityPtr identity)
         m_serverListDialog->updateServerList();
         return newIdentity;
     }
-    else */
+    else 
         return IdentityPtr();
 }
 
