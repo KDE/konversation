@@ -1,0 +1,107 @@
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN"
+"http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+<node>
+  <interface name="org.kde.konversation.identity">
+    <method name="setrealName">
+        <arg name="identity" type="s" direction="in" />
+        <arg name="name" type="s" direction="in" />
+    </method>
+    <method name="getrealName">
+        <arg name="identity" type="s" direction="in" />
+        <arg type="s" direction="out" />
+    </method>
+    <method name="setIdent">
+        <arg name="identity" type="s" direction="in" />
+        <arg name="ident" type="s" direction="in" />
+    </method>
+    <method name="getrealName">
+        <arg name="identity" type="s" direction="in" />
+        <arg type="s" direction="out" />
+    </method>
+    <method name="setNickname">
+        <arg name="identity" type="s" direction="in" />
+        <arg name="index" type="i" direction="in" />
+        <arg name="nick" type="s" direction="in" />
+    </method>
+    <method name="getNickname">
+        <arg name="identity" type="s" direction="in" />
+        <arg name="index" type="i" direction="in" />
+        <arg type="s" direction="out" />
+    </method>
+    <method name="setBot">
+        <arg name="identity" type="s" direction="in" />
+        <arg name="bot" type="s" direction="in" />
+    </method>
+    <method name="getBot">
+        <arg name="identity" type="s" direction="in" />
+        <arg type="s" direction="out" />
+    </method>
+    <method name="setPassword">
+        <arg name="identity" type="s" direction="in" />
+        <arg name="password" type="s" direction="in" />
+    </method>
+    <method name="getPassword">
+        <arg name="identity" type="s" direction="in" />
+        <arg type="s" direction="out" />
+    </method>
+    <method name="setNicknameList">
+        <arg name="identity" type="s" direction="in" />
+        <arg name="newList" type="as" direction="in" />
+    </method>
+    <method name="getNicknameList">
+        <arg name="identity" type="s" direction="in" />
+        <arg type="as" direction="out" />
+    </method>
+    <method name="setQuitReason">
+        <arg name="identity" type="s" direction="in" />
+        <arg name="reason" type="s" direction="in" />
+    </method>
+    <method name="getQuitReason">
+        <arg name="identity" type="s" direction="in" />
+        <arg type="s" direction="out" />
+    </method>
+    <method name="setPartReason">
+        <arg name="identity" type="s" direction="in" />
+        <arg name="reason" type="s" direction="in" />
+    </method>
+    <method name="getPartReason">
+        <arg name="identity" type="s" direction="in" />
+        <arg type="s" direction="out" />
+    </method>
+    <method name="setKickReason">
+        <arg name="identity" type="s" direction="in" />
+        <arg name="reason" type="s" direction="in" />
+    </method>
+    <method name="getKickReason">
+        <arg name="identity" type="s" direction="in" />
+        <arg type="s" direction="out" />
+    </method>
+    <method name="setShowAwayMessage">
+        <arg name="identity" type="s" direction="in" />
+        <arg name="reason" type="s" direction="in" />
+    </method>
+    <method name="getShowAwayMessage">
+        <arg name="identity" type="s" direction="in" />
+        <arg type="b" direction="out" />
+    </method>
+    <method name="setAwayMessage">
+        <arg name="identity" type="s" direction="in" />
+        <arg name="message" type="s" direction="in" />
+    </method>
+    <method name="getAwayMessage">
+        <arg name="identity" type="s" direction="in" />
+        <arg type="b" direction="out" />
+    </method>
+    <method name="setReturnMessage">
+        <arg name="identity" type="s" direction="in" />
+        <arg name="message" type="s" direction="in" />
+    </method>
+    <method name="getReturnMessage">
+        <arg name="identity" type="s" direction="in" />
+        <arg type="b" direction="out" />
+    </method>
+    <method name="listIdentities">
+        <arg type="as" direction="out" />
+    </method>
+  </interface>
+</node>
