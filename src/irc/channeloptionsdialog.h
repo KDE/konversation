@@ -16,7 +16,7 @@
 
 #include <qstringlist.h>
 
-#include <kdialogbase.h>
+#include <kdialog.h>
 #include <k3listview.h>
 
 
@@ -24,7 +24,7 @@ namespace Konversation
 {
     class ChannelOptionsUI;
 
-    class ChannelOptionsDialog : public KDialogBase
+    class ChannelOptionsDialog : public KDialog
     {
         Q_OBJECT
             public:

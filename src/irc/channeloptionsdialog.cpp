@@ -12,7 +12,7 @@
 */
 
 #include "channeloptionsdialog.h"
-#include "application.h" ////// header renamed
+#include "application.h"
 #include "channeloptionsui.h"
 #include "channel.h"
 
@@ -38,8 +38,12 @@ namespace Konversation
 {
 
     ChannelOptionsDialog::ChannelOptionsDialog(Channel *channel)
-        : KDialogBase(channel, "channelOptions", false, i18n("Channel Settings for %1").arg(channel->getName()), Ok|Cancel, Ok)
+        : KDialog(channel)
     {
+        setCaption(  i18n("Channel Settings for %1", channel->getName() ) );
+        setButtons( KDialog::Ok|KDialog::Cancel );
+        setDefaultButton( KDialog::Ok );
+
         Q_ASSERT(channel);
         m_widget = new ChannelOptionsUI(this);
         setMainWidget(m_widget);
@@ -537,4 +541,4 @@ namespace Konversation
     }
 }
 
-// #include "./irc/channeloptionsdialog.moc"
+#include "channeloptionsdialog.moc"
