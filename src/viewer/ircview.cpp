@@ -393,10 +393,14 @@ void IRCView::doAppend(const QString& newLine, bool self)
         m_chatWin->activateTabNotification(m_tabNotification);
 
     // scroll view only if the scroll bar is already at the bottom
+    bool doScroll = (verticalScrollBar()->value() == verticalScrollBar()->maximum());
 
     line.remove('\n'); // TODO why have newlines? we get <p>, so the \n are unnecessary...
 
     appendHtml(line);
+
+    if (doScroll)
+        verticalScrollBar()->setValue(verticalScrollBar()->maximum());
 
     //FIXME: Disable auto-text for DCC Chats since we don't have a server to parse wildcards.
     if (!m_autoTextToSend.isEmpty() && m_server)
@@ -405,13 +409,13 @@ void IRCView::doAppend(const QString& newLine, bool self)
         QString sendText = m_server->parseWildcards(m_autoTextToSend,m_server->getNickname(),
             QString(), QString(), QString(), QString());
         // avoid recursion due to signalling
-        m_autoTextToSend = QString();
+        m_autoTextToSend.clear();
         // send signal only now
         emit autoText(sendText);
     }
     else
     {
-        m_autoTextToSend = QString();
+        m_autoTextToSend.clear();
     }
 
     if (!m_lastStatusText.isEmpty())
