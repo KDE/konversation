@@ -165,7 +165,7 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0, Qt::WStyle_C
     //action = new KAction(i18n("&Reconnect"), "connect_creating", 0, m_viewContainer, SLOT(reconnectFrontServer()), actionCollection(), "reconnect_server");
     action=new KAction(this);
     action->setText(i18n("&Reconnect"));
-    action->setIcon(KIcon("connect_creating"));
+    action->setIcon(KIcon("view-refresh"));
     action->setEnabled(false);
     action->setToolTip(i18n("Reconnect to the current server."));
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(reconnectFrontServer()));
@@ -175,7 +175,7 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0, Qt::WStyle_C
     //action = new KAction(i18n("&Disconnect"), "connect_no", 0, m_viewContainer, SLOT(disconnectFrontServer()), actionCollection(), "disconnect_server");
     action=new KAction(this);
     action->setText(i18n("&Disconnect"));
-    action->setIcon(KIcon("connect_no"));
+    action->setIcon(KIcon("network-disconnect"));
     action->setEnabled(false);
     action->setToolTip(i18n("Disconnect from the current server."));
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(disconnectFrontServer()));
@@ -184,7 +184,7 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0, Qt::WStyle_C
     //(new KAction(i18n("&Identities..."), "identity", KShortcut("F8"), this, SLOT(openIdentitiesDialog()), actionCollection(), "identities_dialog"))->setToolTip(i18n("Manage your nick, away and other identity settings"));
     action=new KAction(this);
     action->setText(i18n("&Identities..."));
-    action->setIcon(KIcon("identity"));
+    action->setIcon(KIcon("user-identity"));
     action->setShortcut(KShortcut("F8"));
     action->setToolTip(i18n("Manage your nick, away and other identity settings"));
     connect(action, SIGNAL(triggered()), SLOT(openIdentitiesDialog()));
@@ -202,7 +202,7 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0, Qt::WStyle_C
     //new KToggleAction(i18n("&DCC Status"), "2rightarrow", KShortcut("F9"), m_viewContainer, SLOT(toggleDccPanel()), actionCollection(), "open_dccstatus_window");
     action=new KToggleAction(this);
     action->setText(i18n("&DCC Status"));
-    action->setIcon(KIcon("2rightarrow"));
+    action->setIcon(KIcon("arrow-right-double"));
     action->setShortcut(KShortcut("F9"));
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(toggleDccPanel()));
     actionCollection()->addAction("open_dccstatus_window", action);
@@ -212,7 +212,7 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0, Qt::WStyle_C
     //action = new KAction(i18n("&Open Logfile"), "history", KShortcut("Ctrl+O"), m_viewContainer, SLOT(openLogFile()), actionCollection(), "open_logfile");
     action=new KAction(this);
     action->setText(i18n("&Open Logfile"));
-    action->setIcon(KIcon("history"));
+    action->setIcon(KIcon("view-history"));
     action->setShortcut(KShortcut("Ctrl+O"));
     action->setEnabled(false);
     action->setToolTip(i18n("Open the known history for this channel in a new tab"));
@@ -222,7 +222,7 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0, Qt::WStyle_C
     //action = new KAction(i18n("&Channel Settings..."), "edit", m_viewContainer, SLOT(openChannelSettings()), actionCollection(), "channel_settings");
     action=new KAction(this);
     action->setText(i18n("&Channel Settings..."));
-    action->setIcon(KIcon("edit"));
+    action->setIcon(KIcon("configure"));
     action->setEnabled(false);
     action->setToolTip(i18n("Open the channel settings dialog for this tab"));
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(openChannelSettings()));
@@ -231,7 +231,7 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0, Qt::WStyle_C
     //KToggleAction* channelListAction = new KToggleAction(i18n("Channel &List"), "view_text", KShortcut("F5"), m_viewContainer, SLOT(openChannelList()), actionCollection(), "open_channel_list");
     action=new KToggleAction(this);
     action->setText(i18n("Channel &List"));
-    action->setIcon(KIcon("view_text"));
+    action->setIcon(KIcon("view-list-text"));
     action->setShortcut(KShortcut("F5"));
     action->setEnabled(false);
     action->setToolTip(i18n("Show a list of all the known channels on this server"));
@@ -252,7 +252,7 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0, Qt::WStyle_C
         //action = new KAction(i18n("New &Konsole"), "openterm", 0, m_viewContainer, SLOT(addKonsolePanel()), actionCollection(), "open_konsole");
         action=new KAction(this);
         action->setText(i18n("New &Konsole"));
-        action->setIcon(KIcon("openterm"));
+        action->setIcon(KIcon("utilities-terminal"));
         action->setToolTip(i18n("Open a terminal in a new tab"));
         connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(addKonsolePanel()));
         actionCollection()->addAction("open_konsole", action);
@@ -267,15 +267,15 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0, Qt::WStyle_C
     {
         prevShortcut.setAlternate(QKeySequence("Alt+Right"));
         nextShortcut.setAlternate(QKeySequence("Alt+Left"));
-        nextIcon="prev";
-        prevIcon="next";
+        nextIcon="go-previous-view";
+        prevIcon="go-next-view";
     }
     else
     {
         nextShortcut.setAlternate(QKeySequence("Alt+Right"));
         prevShortcut.setAlternate(QKeySequence("Alt+Left"));
-        nextIcon="next";
-        prevIcon="prev";
+        nextIcon="go-next-view";
+        prevIcon="go-previous-view";
     }
 
     //action = new KAction(i18n("&Next Tab"), QApplication::isRightToLeft() ? "previous" : "next", QApplication::reverseLayout() ? prevShortcut : nextShortcut, m_viewContainer, SLOT(showNextView()), actionCollection(), "next_tab");
@@ -299,7 +299,7 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0, Qt::WStyle_C
     //action = new KAction(i18n("Close &Tab"),"tab_remove",KShortcut("Ctrl+w"), m_viewContainer, SLOT(closeCurrentView()),actionCollection(),"close_tab");
     action=new KAction(this);
     action->setText(i18n("Close &Tab"));
-    action->setIcon(KIcon("tab_remove"));
+    action->setIcon(KIcon("tab-close-other"));
     action->setShortcut(KShortcut("Ctrl+w"));
     action->setEnabled(false);
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(closeCurrentView()));
@@ -318,7 +318,7 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0, Qt::WStyle_C
         //action = new KAction(i18n("Move Tab Up"), "1uparrow", KShortcut("Alt+Shift+Left"), m_viewContainer, SLOT(moveViewLeft()), actionCollection(), "move_tab_left");
         action=new KAction(this);
         action->setText(i18n("Move Tab Up"));
-        action->setIcon(KIcon("1uparrow"));
+        action->setIcon(KIcon("arrow-up"));
         action->setShortcut(KShortcut("Alt+Shift+Left"));
         action->setEnabled(false);
         action->setToolTip("Move this tab");
@@ -330,7 +330,7 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0, Qt::WStyle_C
         action->setToolTip("Move this tab");
         action=new KAction(this);
         action->setText(i18n("Move Tab Down"));
-        action->setIcon(KIcon("1downarrow"));
+        action->setIcon(KIcon("arrow-down"));
         action->setShortcut(KShortcut("Alt+Shift+Right"));
         connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(moveViewRight()));
         actionCollection()->addAction("move_tab_right", action);
@@ -342,7 +342,7 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0, Qt::WStyle_C
             //action = new KAction(i18n("Move Tab Right"), "1rightarrow", KShortcut("Alt+Shift+Right"), m_viewContainer, SLOT(moveViewLeft()), actionCollection(), "move_tab_left");
             action=new KAction(this);
             action->setText(i18n("Move Tab Right"));
-            action->setIcon(KIcon("1rightarrow"));
+            action->setIcon(KIcon("arrow-right"));
             action->setShortcut(KShortcut("Alt+Shift+Right"));
             action->setEnabled(false);
             action->setToolTip("Move this tab");
@@ -352,7 +352,7 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0, Qt::WStyle_C
             //action  = new KAction(i18n("Move Tab Left"), "1leftarrow", KShortcut("Alt+Shift+Left"), m_viewContainer, SLOT(moveViewRight()), actionCollection(), "move_tab_right");
             action=new KAction(this);
             action->setText(i18n("Move Tab Left"));
-            action->setIcon(KIcon("1leftarrow"));
+            action->setIcon(KIcon("arrow-left"));
             action->setShortcut(KShortcut("Alt+Shift+Left"));
             action->setEnabled(false);
             action->setToolTip("Move this tab");
@@ -365,7 +365,7 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0, Qt::WStyle_C
             //action  = new KAction(i18n("Move Tab Left"), "1leftarrow", KShortcut("Alt+Shift+Left"), m_viewContainer, SLOT(moveViewLeft()), actionCollection(), "move_tab_left");
             action=new KAction(this);
             action->setText(i18n("Move Tab Left"));
-            action->setIcon(KIcon("1leftarrow"));
+            action->setIcon(KIcon("arrow-left"));
             action->setShortcut(KShortcut("Alt+Shift+Left"));
             action->setEnabled(false);
             action->setToolTip("Move this tab");
@@ -375,7 +375,7 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0, Qt::WStyle_C
             //action = new KAction(i18n("Move Tab Right"), "1rightarrow", KShortcut("Alt+Shift+Right"), m_viewContainer, SLOT(moveViewRight()), actionCollection(), "move_tab_right");
             action=new KAction(this);
             action->setText(i18n("Move Tab Right"));
-            action->setIcon(KIcon("1rightarrow"));
+            action->setIcon(KIcon("arrow-right"));
             action->setShortcut(KShortcut("Alt+Shift+Right"));
             action->setEnabled(false);
             action->setToolTip("Move this tab");
@@ -472,7 +472,7 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0, Qt::WStyle_C
     //action = new KAction(i18n("&Join Channel..."), "add", KShortcut("Ctrl+J"), m_viewContainer, SLOT(showJoinChannelDialog()), actionCollection(), "join_channel");
     action=new KAction(this);
     action->setText(i18n("&Join Channel..."));
-    action->setIcon(KIcon("add"));
+    action->setIcon(KIcon("list-add"));
     action->setShortcut(KShortcut("Ctrl+J"));
     action->setEnabled(false);
     action->setToolTip("Join a new channel on this server");
@@ -489,7 +489,7 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0, Qt::WStyle_C
     //action = new KAction(i18n("&IRC Color..."), "colorize", Qt::CTRL+Qt::Key_K, m_viewContainer, SLOT(insertIRCColor()), actionCollection(), "irc_colors");
     action=new KAction(this);
     action->setText(i18n("&IRC Color..."));
-    action->setIcon(KIcon("colorize"));
+    action->setIcon(KIcon("format-text-color"));
     action->setShortcut(KShortcut("Ctrl+K"));
     action->setEnabled(false);
     action->setToolTip(i18n("Set the color of your current IRC message"));
@@ -508,7 +508,7 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0, Qt::WStyle_C
     //action = new KAction(i18n("Special &Character..."), "char", KShortcut("Alt+Shift+C"), m_viewContainer, SLOT(insertCharacter()), actionCollection(), "insert_character");
     action=new KAction(this);
     action->setText(i18n("Special &Character..."));
-    action->setIcon(KIcon("char"));
+    action->setIcon(KIcon("character-set"));
     action->setShortcut(KShortcut("Alt+Shift+C"));
     action->setEnabled(false);
     action->setToolTip(i18n("Insert any character into your current IRC message"));
