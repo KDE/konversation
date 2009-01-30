@@ -87,6 +87,8 @@ QuickConnectDialog::QuickConnectDialog(QWidget *parent)
     hostNameInput->setFocus();
 
     setButtonGuiItem(KDialog::Ok, KGuiItem(i18n("C&onnect"),"connect_creating",i18n("Connect to the server")));
+
+    connect(this, SIGNAL(okClicked()), this, SLOT(slotOk()));
 }
 
 QuickConnectDialog::~QuickConnectDialog()
