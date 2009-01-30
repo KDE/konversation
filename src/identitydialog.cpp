@@ -61,8 +61,7 @@ namespace Konversation
         for(IdentityList::ConstIterator it = tmpList.begin(); it != tmpList.end(); ++it)
         {
             m_identityCBox->insertItem((*it)->getName());
-#warning "port kde4"
-            //m_identityList.append(new Identity(*(*it)));
+            m_identityList.append( IdentityPtr( *it ) );
         }
 
         QToolButton* newBtn = new QToolButton(mainWidget);
@@ -521,11 +520,10 @@ namespace Konversation
         if(ok && !txt.isEmpty())
         {
             KUser user(KUser::UseRealUserID);
-            Identity* identity = new Identity;
+            IdentityPtr identity;
             identity->setName(txt);
             identity->setIdent(user.loginName());
-#warning "PORT KDE4"
-            //m_identityList.append(identity);
+            m_identityList.append(identity);
             m_identityCBox->insertItem(txt);
             m_identityCBox->setCurrentIndex(m_identityCBox->count() - 1);
             updateIdentity(m_identityCBox->currentItem());
