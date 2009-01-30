@@ -415,7 +415,7 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0, Qt::WStyle_C
     selectAction->setItems(encodingDescs);
     selectAction->setEnabled(false);
     selectAction->setText(i18n("Set Encoding"));
-    selectAction->setIcon(KIcon("charset"));
+    selectAction->setIcon(KIcon("character-set"));
     connect(selectAction, SIGNAL(activated(int)), m_viewContainer, SLOT(changeViewCharset(int)));
     actionCollection()->addAction("tab_encoding", selectAction);
 

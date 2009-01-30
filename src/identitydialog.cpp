@@ -65,22 +65,22 @@ namespace Konversation
         }
 
         QToolButton* newBtn = new QToolButton(mainWidget);
-        newBtn->setIconSet(SmallIconSet("add"));
+        newBtn->setIconSet(SmallIconSet("list-add"));
         newBtn->setTextLabel(i18n("Add"));
         connect(newBtn, SIGNAL(clicked()), this, SLOT(newIdentity()));
 
         QToolButton* copyBtn = new QToolButton(mainWidget);
-        copyBtn->setIconSet(SmallIconSet("editcopy"));
+        copyBtn->setIconSet(SmallIconSet("edit-copy"));
         copyBtn->setTextLabel(i18n("Duplicate"));
         connect(copyBtn, SIGNAL(clicked()), this, SLOT(copyIdentity()));
 
         m_editBtn = new QToolButton(mainWidget);
-        m_editBtn->setIconSet(SmallIconSet("edit"));
+        m_editBtn->setIconSet(SmallIconSet("edit-rename"));
         m_editBtn->setTextLabel(i18n("Rename"));
         connect(m_editBtn, SIGNAL(clicked()), this, SLOT(renameIdentity()));
 
         m_delBtn = new QToolButton(mainWidget);
-        m_delBtn->setIconSet(SmallIconSet("editdelete"));
+        m_delBtn->setIconSet(SmallIconSet("edit-delete"));
         m_delBtn->setTextLabel(i18n("Remove"));
         connect(m_delBtn, SIGNAL(clicked()), this, SLOT(deleteIdentity()));
 
@@ -106,11 +106,11 @@ namespace Konversation
         m_removeNicknameBtn = new QPushButton(i18n("Delete"), nicknameGBox);
         m_removeNicknameBtn->setEnabled(false);
         m_upNicknameBtn = new QToolButton(nicknameGBox);
-        m_upNicknameBtn->setIconSet(SmallIconSet("up"));
+        m_upNicknameBtn->setIconSet(SmallIconSet("arrow-up"));
         m_upNicknameBtn->setAutoRepeat(true);
         m_upNicknameBtn->setEnabled(false);
         m_downNicknameBtn = new QToolButton(nicknameGBox);
-        m_downNicknameBtn->setIconSet(SmallIconSet("down"));
+        m_downNicknameBtn->setIconSet(SmallIconSet("arrow-down"));
         m_downNicknameBtn->setAutoRepeat(true);
         m_downNicknameBtn->setEnabled(false);
 
@@ -315,8 +315,8 @@ namespace Konversation
         // Set up signals / slots for identity page
         connect(m_identityCBox, SIGNAL(activated(int)), this, SLOT(updateIdentity(int)));
 
-        setButtonGuiItem(KDialog::Ok, KGuiItem(i18n("&OK"), "button_ok", i18n("Change identity information")));
-        setButtonGuiItem(KDialog::Cancel, KGuiItem(i18n("&Cancel"), "button_cancel", i18n("Discards all changes made")));
+        setButtonGuiItem(KDialog::Ok, KGuiItem(i18n("&OK"), "dialog-ok", i18n("Change identity information")));
+        setButtonGuiItem(KDialog::Cancel, KGuiItem(i18n("&Cancel"), "dialog-cancel", i18n("Discards all changes made")));
 
         AwayManager* awayManager = static_cast<KonversationApplication*>(kapp)->getAwayManager();
         connect(this, SIGNAL(identitiesChanged()), awayManager, SLOT(identitiesChanged()));
