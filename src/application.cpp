@@ -290,7 +290,7 @@ void KonversationApplication::readOptions()
     }
 
     // Identity list
-    QStringList identityList=KGlobal::config()->groupList().grep(QRegExp("Identity [0-9]+"));
+    QStringList identityList=KGlobal::config()->groupList().filter(QRegExp("Identity [0-9]+"));
     if (!identityList.isEmpty())
     {
         Preferences::clearIdentityList();
@@ -356,7 +356,7 @@ void KonversationApplication::readOptions()
     KConfigGroup cgServerList(KGlobal::config()->group("Server List"));
 
     // Read the new server settings
-    QStringList groups = KGlobal::config()->groupList().grep(QRegExp("ServerGroup [0-9]+"));
+    QStringList groups = KGlobal::config()->groupList().filter(QRegExp("ServerGroup [0-9]+"));
     QMap<int,QStringList> notifyList;
 
     if(!groups.isEmpty())
@@ -563,7 +563,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
 //    config->setGroup("Sort Nicknames");
 
     // Clean up identity list
-    QStringList identities=KGlobal::config()->groupList().grep(QRegExp("Identity [0-9]+"));
+    QStringList identities=KGlobal::config()->groupList().filter(QRegExp("Identity [0-9]+"));
     if (identities.count())
     {
         // remove old identity list from Preferences::file to keep numbering under control
@@ -602,7 +602,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
     } // endfor
 
     // Remove the old servergroups from the config
-    QStringList groups = KGlobal::config()->groupList().grep(QRegExp("ServerGroup [0-9]+"));
+    QStringList groups = KGlobal::config()->groupList().filter(QRegExp("ServerGroup [0-9]+"));
     if (groups.count())
     {
         QStringList::iterator it;
@@ -613,7 +613,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
     }
 
     // Remove the old servers from the config
-    groups = KGlobal::config()->groupList().grep(QRegExp("Server [0-9]+"));
+    groups = KGlobal::config()->groupList().filter(QRegExp("Server [0-9]+"));
     if (groups.count())
     {
         QStringList::iterator it;
@@ -624,7 +624,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
     }
 
     // Remove the old channels from the config
-    groups = KGlobal::config()->groupList().grep(QRegExp("Channel [0-9]+"));
+    groups = KGlobal::config()->groupList().filter(QRegExp("Channel [0-9]+"));
     if (groups.count())
     {
         QStringList::iterator it;
