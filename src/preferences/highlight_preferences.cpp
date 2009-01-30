@@ -12,8 +12,8 @@
 
 #include "highlight_preferences.h"
 #include "highlightviewitem.h"
-#include "application.h" ////// header renamed
-#include "sound.h" ////// header renamed
+#include "application.h"
+#include "sound.h"
 #include "config/preferences.h"
 
 #include <qdir.h>
@@ -66,7 +66,7 @@ Highlight_Config::Highlight_Config(QWidget* parent, const char* name)
       dir = *it;
       if ( dir.isReadable() && dir.count() > 2 ) {
         url.setPath( *it );
-       soundURL->fileDialog()->setURL( url );
+       soundURL->fileDialog()->setUrl( url );
         break;
       }
       ++it;
@@ -152,7 +152,7 @@ void Highlight_Config::highlightSelected(Q3ListViewItem* item)
     newItemSelected=true;
    patternColor->setColor(highlightItem->getColor());
    patternInput->setText(highlightItem->getPattern());
-   soundURL->setURL(highlightItem->getSoundURL().prettyUrl());
+   soundURL->setUrl(highlightItem->getSoundURL().prettyUrl());
    autoTextInput->setText(highlightItem->getAutoText());
     // all signals will now emit the modified() signal again
     newItemSelected=false;
@@ -166,8 +166,12 @@ void Highlight_Config::updateButtons()
 {
   bool enabled = highlightListView->selectedItem() != NULL;
   // is the kregexpeditor installed?
-  bool installed = !KTrader::self()->query("KRegExpEditor/KRegExpEditor").isEmpty();
-  // enable or disable edit widgets
+  bool installed = false;
+#warning "kde4 port"
+#if 0
+       !KTrader::self()->query("KRegExpEditor/KRegExpEditor").isEmpty();
+#endif
+       // enable or disable edit widgets
   patternLabel->setEnabled(enabled);
   patternInput->setEnabled(enabled);
   patternButton->setEnabled(enabled && installed);
@@ -202,6 +206,8 @@ void Highlight_Config::highlightTextChanged(const QString& newPattern)
 
 void Highlight_Config::highlightTextEditButtonClicked()
 {
+#warning "kde4 port"
+#if 0
   QDialog *editorDialog =
       KParts::ComponentFactory::createInstanceFromQuery<QDialog>( "KRegExpEditor/KRegExpEditor" );
   if (editorDialog)
@@ -221,6 +227,7 @@ void Highlight_Config::highlightTextEditButtonClicked()
     }
     delete editorDialog;
   }
+#endif
 }
 
 void Highlight_Config::highlightColorChanged(const QColor& newColor)
@@ -322,19 +329,20 @@ void Highlight_Config::playSound()
 
 void Highlight_Config::saveSettings()
 {
-  KConfig* config = KGlobal::config();
+  KSharedConfigPtr config = KGlobal::config();
 
   // Write all highlight entries
   Q3PtrList<Highlight> hiList=getHighlightList();
   int i = 0;
   for(Highlight* hl = hiList.first(); hl; hl = hiList.next())
   {
-    config->setGroup(QString("Highlight%1").arg(i));
-    config->writeEntry("Pattern", hl->getPattern());
-    config->writeEntry("RegExp", hl->getRegExp());
-    config->writeEntry("Color", hl->getColor());
-    config->writePathEntry("Sound", hl->getSoundURL().prettyUrl());
-    config->writeEntry("AutoText", hl->getAutoText());
+
+      KConfigGroup grp = config->group(QString("Highlight%1").arg(i));
+    grp.writeEntry("Pattern", hl->getPattern());
+    grp.writeEntry("RegExp", hl->getRegExp());
+    grp.writeEntry("Color", hl->getColor());
+    grp.writePathEntry("Sound", hl->getSoundURL().prettyUrl());
+    grp.writeEntry("AutoText", hl->getAutoText());
     i++;
   }
 
@@ -351,4 +359,4 @@ void Highlight_Config::saveSettings()
   m_oldHighlightList=currentHighlightList();
 }
 
-// #include "./preferences/highlight_preferences.moc"
+#include "highlight_preferences.moc"

@@ -14,7 +14,7 @@
 #define AUTOREPLACECONFIG_H
 
 #include "autoreplace_preferencesui.h"
-#include "settingspage.h" ////// header renamed
+#include "settingspage.h"
 
 
 class Autoreplace_Config : public Autoreplace_ConfigUI, public KonviSettingsPage

@@ -104,6 +104,30 @@ set(prefs_SRCS
     preferences/watchednicknames_preferences.cpp
     preferences/valuelistviewitem.cpp
 )
+
+kde4_add_ui3_files(prefs_SRCS
+    preferences/alias_preferencesui.ui
+    preferences/autoreplace_preferencesui.ui
+    preferences/chatwindowappearance_preferences.ui
+    preferences/chatwindowbehaviour_preferences.ui
+    preferences/colorsappearance_preferences.ui
+    preferences/connectionbehavior_preferences.ui
+    preferences/dcc_preferencesui.ui
+    preferences/fontappearance_preferences.ui
+    preferences/generalbehavior_preferences.ui
+    preferences/highlight_preferencesui.ui
+    preferences/ignore_preferencesui.ui
+    preferences/log_preferences.ui
+    preferences/nicklistbehavior_preferencesui.ui
+    preferences/osd_preferencesui.ui
+    preferences/quickbuttons_preferencesui.ui
+    preferences/tabnotifications_preferences.ui
+    preferences/tabs_preferencesui.ui
+    preferences/theme_preferencesui.ui
+    preferences/warnings_preferencesui.ui
+    preferences/watchednicknames_preferencesui.ui
+)
+
     #=== Viewer
 set(viewer_SRCS
     viewer/ircinput.cpp
@@ -155,7 +179,7 @@ set(dcc_SRCS
     dcc/transfersend.cpp
 )
 
-set (completed_SRCS ${core_SRCS}  ${irc_SRCS} ${viewer_SRCS})
+set (completed_SRCS ${core_SRCS}  ${irc_SRCS} ${viewer_SRCS} ${prefs_SRCS})
 set (konvi_SRCS ${completed_SRCS}) #${prefs_SRCS})  #${dcc_SRCS})
 
 

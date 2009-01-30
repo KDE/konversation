@@ -41,7 +41,7 @@
 
 #include <q3asciidict.h>
 
-#include <kdialogbase.h>
+#include <kdialog.h>
 
 
 class KConfig;

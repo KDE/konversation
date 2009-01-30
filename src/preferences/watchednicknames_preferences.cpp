@@ -12,8 +12,8 @@
 #include "watchednicknames_preferences.h"
 #include "watchednicknames_preferencesui.h"
 #include "config/preferences.h"
-#include "application.h" ////// header renamed
-#include "mainwindow.h" ////// header renamed
+#include "application.h"
+#include "mainwindow.h"
 #include "valuelistviewitem.h"
 
 #include <qlabel.h>
@@ -90,7 +90,7 @@ void WatchedNicknames_Config::addNetworkBranch(Konversation::ServerGroupSettings
 
   ValueListViewItem* groupItem=new ValueListViewItem(serverGroupList->id(),notifyListView,notifyListView->lastChild(),serverGroupList->name());
   // get the group iterator to find all servers in the group
-  QMapConstIterator<int, QStringList> groupIt=notifyList.find(serverGroupList->id());
+  QMap<int, QStringList>::const_iterator groupIt=notifyList.find(serverGroupList->id());
 
   // get list of nicks for the current group
   QStringList nicks=groupIt.data();
@@ -417,4 +417,4 @@ void WatchedNicknames_Config::nicknameChanged(const QString& newNickname)
   }
 }
 
-// #include "./preferences/watchednicknames_preferences.moc"
+#include "watchednicknames_preferences.moc"

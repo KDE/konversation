@@ -16,7 +16,7 @@
 #include "preferences_base.h"
 #include "images.h"
 #include "common.h"
-#include "application.h" ////// header renamed
+#include "application.h"
 
 #include <qlabel.h>
 #include <qlayout.h>
@@ -148,9 +148,9 @@ void Theme_Config::saveSettings()
         if(hasChanged())
         {
             // save icon theme name
-            KConfig* config = KGlobal::config();
-            config->setGroup("Themes");
-            config->writeEntry("IconTheme",m_currentTheme);
+            KSharedConfigPtr config = KGlobal::config();
+            KConfigGroup grp = config->group("Themes");
+            grp.writeEntry("IconTheme",m_currentTheme);
             // set in-memory theme to the saved theme
             Preferences::setIconTheme(m_currentTheme);
             // update theme on runtime
@@ -250,15 +250,18 @@ void Theme_Config::removeTheme()
     int remove = KMessageBox::warningContinueCancel(0L,
         i18n("Do you want to remove %1 ?").arg(themeName),
         i18n("Remove Theme"),
-        KStandardGuiItem::del(),
+        KStandardGuiItem::del(),KStandardGuiItem::cancel(),
         "warningRemoveTheme"
         );
 
     if(remove == KMessageBox::Continue)
     {
+#warning "kde4 port it"
+#if 0
         unlink(QFile::encodeName(dir));
         KIO::DeleteJob* job = KIO::del(KUrl(dir.remove("index.desktop")));
         connect(job, SIGNAL(result(KIO::Job*)), this, SLOT(postRemoveTheme(KIO::Job*)));
+#endif
     }
 }
 
@@ -307,4 +310,4 @@ void Theme_Config::updateButtons()
     themeRC.close();
 }
 
-// #include "./preferences/theme_preferences.moc"
+#include "theme_preferences.moc"

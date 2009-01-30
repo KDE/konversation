@@ -13,7 +13,6 @@
 
 
 #include "warnings_preferences.h"
-#include "configdialog.h" ////// header renamed
 
 #include <q3listview.h>
 
@@ -39,7 +38,7 @@ Warnings_Config::~Warnings_Config()
 
 void Warnings_Config::restorePageToDefaults()
 {
-  
+
   Q3CheckListItem* item=static_cast<Q3CheckListItem*>(dialogListView->itemAtIndex(0));
   bool changed=false;
   while(item)
@@ -57,8 +56,8 @@ void Warnings_Config::restorePageToDefaults()
 
 void Warnings_Config::saveSettings()
 {
-  KConfig* config = KGlobal::config();
-  config->setGroup("Notification Messages");
+  KSharedConfigPtr config = KGlobal::config();
+  KConfigGroup grp = config->group("Notification Messages");
 
   // prepare list
   QString warningsChecked;
@@ -74,21 +73,21 @@ void Warnings_Config::saveSettings()
     {
         if (item->isOn())
         {
-            config->writeEntry(item->text(2), 1);
+            grp.writeEntry(item->text(2), 1);
         }
         else
         {
-            QString state = config->readEntry(item->text(2));
+            QString state = grp.readEntry(item->text(2));
 
             if (!state.isEmpty() && (state == "yes" || state == "no"))
-                config->writeEntry(item->text(2), state);
+                grp.writeEntry(item->text(2), state);
             else
-                config->writeEntry(item->text(2), "yes");
+                grp.writeEntry(item->text(2), "yes");
         }
     }
     else
     {
-        config->writeEntry(item->text(2),item->isOn() ? "1" : "0");
+        grp.writeEntry(item->text(2),item->isOn() ? "1" : "0");
     }
 
     item=static_cast<Q3CheckListItem*>(item->itemBelow());
@@ -123,9 +122,9 @@ void Warnings_Config::loadSettings()
   Q3CheckListItem *item;
   dialogListView->clear();
 
-  KConfig* config = KGlobal::config();
-  config->setGroup("Notification Messages");
-  QString flagName; 
+  KSharedConfigPtr config = KGlobal::config();
+  KConfigGroup grp =  config->group("Notification Messages");
+  QString flagName;
   for(unsigned int i=0; i<dialogDefinitions.count() ;i++)
   {
     item=new Q3CheckListItem(dialogListView,dialogDefinitions[i],Q3CheckListItem::CheckBox);
@@ -135,7 +134,7 @@ void Warnings_Config::loadSettings()
 
     if (flagName == "LargePaste" || flagName == "Invitation")
     {
-        QString state = config->readEntry(flagName);
+        QString state = grp.readEntry(flagName);
 
         if (state == "yes" || state == "no")
             item->setOn(false);
@@ -144,7 +143,7 @@ void Warnings_Config::loadSettings()
     }
     else
     {
-        item->setOn(config->readBoolEntry(flagName,true));
+        item->setOn(grp.readEntry(flagName,true));
     }
   }
   // remember checkbox state for hasChanged()
@@ -183,4 +182,4 @@ void Warnings_Config::languageChange()
   loadSettings();
 }
 
-// #include "./preferences/warnings_preferences.moc"
+#include "warnings_preferences.moc"

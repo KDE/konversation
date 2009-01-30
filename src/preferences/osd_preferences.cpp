@@ -16,7 +16,7 @@
 #include "osd_preferences.h"
 #include "config/preferences.h"
 #include "osd.h"
-#include "application.h" ////// header renamed
+#include "application.h"
 
 #include <q3groupbox.h>
 #include <qspinbox.h>
@@ -27,7 +27,7 @@
 #include <kcolorbutton.h>
 #include <qcheckbox.h>
 #include <kfontrequester.h>
-
+#include <QDesktopWidget>
 #include <kconfigdialog.h>
 
 
@@ -144,7 +144,7 @@ void OSD_Config::slotOSDEnabledChanged(bool on)
 
 void OSD_Config::slotPositionChanged()
 {
-    kcfg_OSDScreen->setCurrentItem(m_pOSDPreview->screen());
+    kcfg_OSDScreen->setCurrentIndex(m_pOSDPreview->screen());
 
     kcfg_OSDAlignment->setValue( m_pOSDPreview->alignment() );
     kcfg_OSDOffsetX->setValue( m_pOSDPreview->x());
@@ -189,5 +189,5 @@ void OSD_Config::slotUpdateFont(const QFont& font)
     m_pOSDPreview->setFont(font);
 }
 
-// #include "./preferences/osd_preferences.moc"
+#include "osd_preferences.moc"
 

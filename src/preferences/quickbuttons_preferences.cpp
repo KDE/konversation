@@ -82,12 +82,12 @@ void QuickButtons_Config::setButtonsListView(const QStringList &buttonList)
 void QuickButtons_Config::saveSettings()
 {
   // get configuration object
-  KConfig* config=KGlobal::config();
+  KSharedConfigPtr config=KGlobal::config();
 
   // delete all buttons
   config->deleteGroup("Button List");
   // create new empty button group
-  config->setGroup("Button List");
+  KConfigGroup grp = config->group("Button List");
 
   // create empty list
   QStringList newList=currentButtonList();
@@ -99,13 +99,13 @@ void QuickButtons_Config::saveSettings()
     for(unsigned int index=0;index<newList.count();index++)
     {
       // write the current button's name and definition
-      config->writeEntry(QString("Button%1").arg(index),newList[index]);
+      grp.writeEntry(QString("Button%1").arg(index),newList[index]);
     } // for
   }
   // if there were no buttons at all, write a dummy entry to prevent KConfigXT from "optimizing"
   // the group out, which would in turn make konvi restore the default buttons
   else
-    config->writeEntry("Empty List",QString());
+    grp.writeEntry("Empty List",QString());
 
   // set internal button list
   Preferences::setQuickButtonList(newList);
@@ -260,4 +260,4 @@ void QuickButtons_Config::removeEntry()
   }
 }
 
-// #include "./preferences/quickbuttons_preferences.moc"
+#include "quickbuttons_preferences.moc"

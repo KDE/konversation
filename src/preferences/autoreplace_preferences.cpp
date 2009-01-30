@@ -29,7 +29,6 @@
 #include <kparts/componentfactory.h>
 #include <kregexpeditorinterface.h>
 #include <kglobal.h>
-
 #define DIRECTION_OUTPUT 0
 #define DIRECTION_INPUT  1
 #define DIRECTION_BOTH   2
@@ -40,7 +39,8 @@ Autoreplace_Config::Autoreplace_Config(QWidget* parent, const char* name)
 {
   // reset flag to defined state (used to block signals when just selecting a new item)
   m_newItemSelected=false;
-
+#warning "kde4 port it"
+#if 0
   //Check if the regexp editor is installed
   bool installed = !KTrader::self()->query("KRegExpEditor/KRegExpEditor").isEmpty();
 
@@ -54,7 +54,7 @@ Autoreplace_Config::Autoreplace_Config(QWidget* parent, const char* name)
       regExpEditorButton->setEnabled(false);
       QToolTip::add(regExpEditorButton, i18n("The Regular Expression Editor (KRegExpEditor) is not installed"));
   }
-
+#endif
   // populate combobox
   directionCombo->insertItem(i18n("Outgoing"),DIRECTION_OUTPUT);
   directionCombo->insertItem(i18n("Incoming"),DIRECTION_INPUT);
@@ -130,12 +130,13 @@ void Autoreplace_Config::setAutoreplaceListView(const QStringList &autoreplaceLi
 void Autoreplace_Config::saveSettings()
 {
   // get configuration object
-  KConfig* config=KGlobal::config();
+  KSharedConfigPtr config=KGlobal::config();
 
   // delete all patterns
   config->deleteGroup("Autoreplace List");
   // create new empty autoreplace group
-  config->setGroup("Autoreplace List");
+
+  KConfigGroup grp = config->group("Autoreplace List");
 
   // create empty list
   QStringList newList=currentAutoreplaceList();
@@ -147,13 +148,13 @@ void Autoreplace_Config::saveSettings()
     for(unsigned int index=0;index<newList.count();index++)
     {
       // write the current entry's pattern and replacement (adds a "#" to preserve blanks at the end of the line)
-      config->writeEntry(QString("Autoreplace%1").arg(index),newList[index]+'#');
+     grp.writeEntry(QString("Autoreplace%1").arg(index),newList[index]+'#');
     } // for
   }
   // if there were no entries at all, write a dummy entry to prevent KConfigXT from "optimizing"
   // the group out, which would in turn make konvi restore the default entries
   else
-    config->writeEntry("Empty List",QString());
+    grp.writeEntry("Empty List",QString());
 
   // set internal autoreplace list
   Preferences::setAutoreplaceList(newList);
@@ -233,12 +234,13 @@ void Autoreplace_Config::entrySelected(Q3ListViewItem* autoreplaceEntry)
   patternInput->setEnabled(enabled);
   replacementLabel->setEnabled(enabled);
   replacementInput->setEnabled(enabled);
-
+#warning "kde4 por it"
+#if 0
   if(!KTrader::self()->query("KRegExpEditor/KRegExpEditor").isEmpty())
   {
     regExpEditorButton->setEnabled(enabled);
   }
-
+#endif
   // make checkboxes work
   emit modified();
 }
@@ -379,6 +381,8 @@ void Autoreplace_Config::disableSort()
 
 void Autoreplace_Config::showRegExpEditor()
 {
+    #warning "kde4 port it"
+#if 0
     QDialog *editorDialog =
             KParts::ComponentFactory::createInstanceFromQuery<QDialog>( "KRegExpEditor/KRegExpEditor" );
 
@@ -399,6 +403,7 @@ void Autoreplace_Config::showRegExpEditor()
 
         delete editorDialog;
     }
+#endif
 }
 
-// #include "./preferences/autoreplace_preferences.moc"
+#include "autoreplace_preferences.moc"
