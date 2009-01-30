@@ -730,7 +730,7 @@ void ViewContainer::updateFrontView()
     updateViewActions(m_tabWidget->currentPageIndex());
 }
 
-void ViewContainer::updateViews(const Konversation::ServerGroupSettings* serverGroup)
+void ViewContainer::updateViews(const Konversation::ServerGroupSettingsPtr serverGroup)
 {
     if (!m_tabWidget) return;
 

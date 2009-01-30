@@ -222,7 +222,7 @@ namespace Konversation
         {
             addServerGroup(dlg.serverGroupSettings());
 
-            emit serverGroupsChanged(dlg.serverGroupSettings().data());
+            emit serverGroupsChanged(dlg.serverGroupSettings());
         }
     }
 
@@ -252,7 +252,7 @@ namespace Konversation
 
                         serverGroup = dlg.serverGroupSettings();
 
-                        emit serverGroupsChanged(serverGroup.data());
+                        emit serverGroupsChanged(serverGroup);
                     }
                 }
                 else
@@ -267,7 +267,7 @@ namespace Konversation
 
                         serverGroup = dlg.serverGroupSettings();
 
-                        emit serverGroupsChanged(serverGroup.data());
+                        emit serverGroupsChanged(serverGroup);
                     }
                 }
             }

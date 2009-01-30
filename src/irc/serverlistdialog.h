@@ -69,7 +69,7 @@ namespace Konversation
         signals:
             void connectTo(Konversation::ConnectionFlag flag, int serverGroupId);
             void connectTo(Konversation::ConnectionFlag flag, ConnectionSettings& connectionSettings);
-            void serverGroupsChanged(const Konversation::ServerGroupSettings* serverGroup = 0);
+            void serverGroupsChanged(const Konversation::ServerGroupSettingsPtr serverGroup = Konversation::ServerGroupSettingsPtr());
 
         protected slots:
             virtual void slotOk();
