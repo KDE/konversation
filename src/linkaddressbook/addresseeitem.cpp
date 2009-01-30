@@ -58,8 +58,8 @@ QString AddresseeItem::key( int column, bool ) const
         if (match > -1)
             value = value.mid(match + 1, emailRe.matchedLength() - 2);
 
-        return value.lower();
+        return value.toLower();
     }
 
-    return text(column).lower();
+    return text(column).toLower();
 }

@@ -67,9 +67,9 @@ void OSDWidget::renderOSDText( const QString &txt )
 
     // The title cannnot be taller than one line
     // AlignAuto = align Arabic to the right, etc.
-    QRect titleRect = titleFm.boundingRect( 0, 0, max.width() - METRIC, titleFm.height(), Qt::AlignAuto, m_appName );
+    QRect titleRect = titleFm.boundingRect( 0, 0, max.width() - METRIC, titleFm.height(), Qt::AlignLeft, m_appName );
     // The osd cannot be larger than the screen
-    QRect textRect = fontMetrics().boundingRect( 0, 0, max.width(), max.height(), Qt::AlignAuto | Qt::WordBreak, text );
+    QRect textRect = fontMetrics().boundingRect( 0, 0, max.width(), max.height(), Qt::AlignLeft | Qt::WordBreak, text );
 
     if ( textRect.width() < titleRect.width() )
         textRect.setWidth( titleRect.width() );

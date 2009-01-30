@@ -278,7 +278,7 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0, Qt::WStyle_C
         prevIcon="go-previous-view";
     }
 
-    //action = new KAction(i18n("&Next Tab"), QApplication::isRightToLeft() ? "previous" : "next", QApplication::reverseLayout() ? prevShortcut : nextShortcut, m_viewContainer, SLOT(showNextView()), actionCollection(), "next_tab");
+    //action = new KAction(i18n("&Next Tab"), QApplication::isRightToLeft() ? "previous" : "next", QApplication::isRightToLeft() ? prevShortcut : nextShortcut, m_viewContainer, SLOT(showNextView()), actionCollection(), "next_tab");
     action=new KAction(this);
     action->setText(i18n("&Next Tab"));
     action->setIcon(KIcon(nextIcon));
@@ -287,7 +287,7 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0, Qt::WStyle_C
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(showNextView()));
     actionCollection()->addAction("next_tab", action);
 
-    //action = new KAction(i18n("&Previous Tab"), QApplication::isRightToLeft() ? "next" : "previous", QApplication::reverseLayout() ? nextShortcut : prevShortcut, m_viewContainer, SLOT(showPreviousView()),actionCollection(),"previous_tab");
+    //action = new KAction(i18n("&Previous Tab"), QApplication::isRightToLeft() ? "next" : "previous", QApplication::isRightToLeft() ? nextShortcut : prevShortcut, m_viewContainer, SLOT(showPreviousView()),actionCollection(),"previous_tab");
     action=new KAction(this);
     action->setText(i18n("&Previous Tab"));
     action->setIcon(KIcon(prevIcon));
