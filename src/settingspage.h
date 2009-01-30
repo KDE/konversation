@@ -15,6 +15,7 @@
 class KonviSettingsPage
 {
   public:
+    virtual ~KonviSettingsPage() {}
     virtual void restorePageToDefaults() = 0;  // function called when the user klicks "Default"
     virtual void saveSettings() = 0;           // function called when the user klicks "Ok" or "Apply"
     virtual void loadSettings() = 0;           // function called when the user opens the page
