@@ -321,6 +321,7 @@ namespace Konversation
 
         AwayManager* awayManager = static_cast<KonversationApplication*>(kapp)->getAwayManager();
         connect(this, SIGNAL(identitiesChanged()), awayManager, SLOT(identitiesChanged()));
+        connect( this, SIGNAL( okClicked() ), this, SLOT( slotOk() ) );
     }
 
     IdentityDialog::~IdentityDialog()
