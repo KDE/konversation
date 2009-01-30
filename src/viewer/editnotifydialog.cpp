@@ -62,8 +62,6 @@ const QString& nickname):
     // Build a list of unique server network names.
     // TODO: The "ServerGroupList type is a misnomer (it is actually networks), which
     // should be fixed at some point.
-#warning "port it"
-#if 0
     Konversation::ServerGroupList serverNetworks = Preferences::serverGroupList();
     QStringList networkNames;
 
@@ -84,7 +82,6 @@ const QString& nickname):
         m_networkNameCombo->insertItem(*it);
         if(*it == network) m_networkNameCombo->setCurrentIndex(m_networkNameCombo->count()-1);
     }
-#endif
     layout->addWidget(networkNameLabel);
     layout->addWidget(m_networkNameCombo);
     layout->addWidget(nicknameLabel);
