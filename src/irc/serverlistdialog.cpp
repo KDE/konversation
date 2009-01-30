@@ -293,12 +293,12 @@ namespace Konversation
 
                 if (parent && parent->childCount() == 1)
                 {
-                    KMessageBox::error(this, i18n("You cannot delete %1.\n\nThe network %2 needs to have at least one server.").arg(item->name()).arg(parent->name()));
+                    KMessageBox::error(this, i18n("You cannot delete %1.\n\nThe network %2 needs to have at least one server.",item->name(),parent->name()));
                     return;
                 }
                 else if (parent && parent->childCount() == parent->selectedChildrenCount())
                 {
-                    KMessageBox::error(this, i18n("You cannot delete the selected servers.\n\nThe network %1 needs to have at least one server.").arg(parent->name()));
+                    KMessageBox::error(this, i18n("You cannot delete the selected servers.\n\nThe network %1 needs to have at least one server.",parent->name()));
                     return;
                 }
             }
@@ -315,7 +315,7 @@ namespace Konversation
         if (selectedItems.count()>1)
             question = i18n("Do you really want to delete the selected entries?");
         else
-            question = i18n("Do you really want to delete %1?").arg(item->name());
+            question = i18n("Do you really want to delete %1?",item->name());
 
         if (KMessageBox::warningContinueCancel(this,question) == KMessageBox::Cancel)
         {

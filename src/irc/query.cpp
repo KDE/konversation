@@ -395,7 +395,7 @@ void Query::popup(int id)
         {
             if (KMessageBox::warningContinueCancel(
                 this,
-                i18n("Do you want to ignore %1?").arg(name),
+                i18n("Do you want to ignore %1?",name),
                 i18n("Ignore"),
                 KGuiItem(i18n("Ignore")),
                 KStandardGuiItem::cancel(),
@@ -611,7 +611,7 @@ QString Query::getChannelEncoding()               // virtual
 
 QString Query::getChannelEncodingDefaultDesc()    // virtual
 {
-    return i18n("Identity Default ( %1 )").arg(getServer()->getIdentity()->getCodecName());
+    return i18n("Identity Default ( %1 )",getServer()->getIdentity()->getCodecName());
 }
 
 bool Query::closeYourself(bool confirm)
@@ -686,14 +686,14 @@ void Query::quitNick(const QString& reason)
 
     if (displayReason.isEmpty())
     {
-        appendCommandMessage(i18n("Quit"),i18n("%1 has left this server.").arg(getName()),false);
+        appendCommandMessage(i18n("Quit"),i18n("%1 has left this server.",getName()),false);
     }
     else
     {
         if (displayReason.find(QRegExp("[\\0000-\\0037]"))!=-1)
             displayReason+="\017";
 
-        appendCommandMessage(i18n("Quit"),i18n("%1 has left this server (%2).").arg(getName()).arg(displayReason),false);
+        appendCommandMessage(i18n("Quit"),i18n("%1 has left this server (%2).",getName(),displayReason),false);
     }
 }
 

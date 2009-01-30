@@ -1267,11 +1267,11 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     if(getAutomaticRequest("WHO",whoRequestList.front())==0)
                     {
                         server->appendMessageToFrontmost(i18n("Who"),
-                            i18n("%1 is %2@%3 (%4)%5").arg(parameterList[5])
-                            .arg(parameterList[2])
-                            .arg(parameterList[3])
-                            .arg(trailing.section(" ", 1))
-                            .arg(bAway?i18n(" (Away)"):QString())
+                            i18n("%1 is %2@%3 (%4)%5",parameterList[5],
+                            parameterList[2],
+                            parameterList[3],
+                            trailing.section(" ", 1),
+                            bAway?i18n(" (Away)"):QString())
                             , false); // Don't parse as url
                     }
                 }
@@ -1432,8 +1432,8 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 if(getAutomaticRequest("WHOIS",parameterList[1])==0)
                 {
                     server->appendMessageToFrontmost(i18n("Whois"),
-                        i18n("%1 is online via %2 (%3).").arg(parameterList[1])
-                        .arg(parameterList[2]).arg(trailing)
+                        i18n("%1 is online via %2 (%3).",parameterList[1],
+                        parameterList[2],trailing)
                         );
                 }
                 break;
@@ -1582,11 +1582,11 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     if(getAutomaticRequest("USERHOST",nick)==0)
                     {
                         server->appendMessageToFrontmost(i18n("Userhost"),
-                            i18nc("%1 = nick, %2 = shows if nick is op, %3 = hostmask, %4 = shows away", "%1%2 is %3%4.")
-                            .arg(nick)
-                            .arg((ircOp) ? i18n(" (IRC Operator)") : QString())
-                            .arg(mask)
-                            .arg((away) ? i18n(" (away)") : QString()));
+                            i18nc("%1 = nick, %2 = shows if nick is op, %3 = hostmask, %4 = shows away", "%1%2 is %3%4.",
+                            nick,
+                            (ircOp) ? i18n(" (IRC Operator)") : QString()
+                            ,mask,
+                            (away) ? i18n(" (away)") : QString()));
                     }
 
                     // was this an automatic request?

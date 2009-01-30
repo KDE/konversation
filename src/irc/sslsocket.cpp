@@ -93,7 +93,7 @@ const QString SSLSocket::details()
 {
     int strength = d->kssl->connectionInfo().getCipherUsedBits();
 
-    QString details = i18n("Connection is secured with %1 bit SSL.").arg(strength);
+    QString details = i18n("Connection is secured with %1 bit SSL.",strength);
 
     return details;
 }
