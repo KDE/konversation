@@ -32,7 +32,7 @@
 #include "rawlog.h"
 #include "channellistpanel.h"
 #include "nicksonline.h"
-//#include "insertchardialog.h"
+#include "insertchardialog.h"
 //#include "irccolorchooser.h"
 #include "joinchanneldialog.h"
 #include "servergroupsettings.h"
@@ -376,7 +376,7 @@ void ViewContainer::updateAppearance()
         else
             font = KGlobalSettings::generalFont();
         Q_ASSERT(0);
-        //m_insertCharDialog->setFont(font);
+        m_insertCharDialog->setFont(font);
     }
 }
 
@@ -1875,7 +1875,7 @@ void ViewContainer::insertCharacter()
         font = Preferences::textFont();
     else
         font = KGlobalSettings::generalFont();
-    /* // TODO FIXME
+
 
     if (!m_insertCharDialog)
     {
@@ -1885,7 +1885,6 @@ void ViewContainer::insertCharacter()
 
     m_insertCharDialog->setFont(font);
     m_insertCharDialog->show();
-    */
 }
 
 void ViewContainer::insertChar(const QChar& chr)
