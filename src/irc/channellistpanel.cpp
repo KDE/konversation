@@ -227,9 +227,9 @@ void ChannelListPanel::saveList()
         // wrap the file into a stream
         Q3TextStream stream(&listFile);
 
-        QString header(i18n("Konversation Channel List: %1 - %2\n\n")
-            .arg(m_server->getServerName())
-            .arg(QDateTime::currentDateTime().toString()));
+        QString header(i18n("Konversation Channel List: %1 - %2\n\n",
+            m_server->getServerName(),
+            QDateTime::currentDateTime().toString()));
 
         // send header to stream
         stream << header;
@@ -489,8 +489,8 @@ void ChannelListPanel::applyFilterClicked()
 
 void ChannelListPanel::updateUsersChannels()
 {
-    emit updateNumChannels(i18n("Channels: %1 (%2 shown)").arg(getNumChannels()).arg(getVisibleChannels()));
-    emit updateNumUsers(i18n("Non-unique users: %1 (%2 shown)").arg(getNumUsers()).arg(getVisibleUsers()));
+    emit updateNumChannels(i18n("Channels: %1 (%2 shown)", getNumChannels(), getVisibleChannels()));
+    emit updateNumUsers(i18n("Non-unique users: %1 (%2 shown)", getNumUsers(), getVisibleUsers()));
 }
 
 bool ChannelListPanel::closeYourself()
@@ -597,7 +597,7 @@ void ChannelListPanel::serverOnline(bool online)
 void ChannelListPanel::emitUpdateInfo()
 {
     QString info;
-    info = i18n("Channel List for %1").arg(m_server->getDisplayName());
+    info = i18n("Channel List for %1", m_server->getDisplayName());
     emit updateInfo(info);
 }
 

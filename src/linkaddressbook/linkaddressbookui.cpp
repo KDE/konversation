@@ -115,13 +115,13 @@ void LinkAddressbookUI::slotLoadAddressees()
     /*AddresseeItem *item =*/ new AddresseeItem( m_mainWidget->addresseeListView, (*it));
 
     if(num_contacts_with_nick == 0)
-        m_mainWidget->lblHeader->setText(i18n("Choose the person who '%1' is.").arg(m_ircnick));
+        m_mainWidget->lblHeader->setText(i18n("Choose the person who '%1' is.", m_ircnick));
     else if(num_contacts_with_nick == 1 && realname.isEmpty())
-        m_mainWidget->lblHeader->setText(i18n("Currently '%1' is associated with a contact.").arg(m_ircnick));
+        m_mainWidget->lblHeader->setText(i18n("Currently '%1' is associated with a contact.", m_ircnick));
     else if(num_contacts_with_nick == 1 && !realname.isEmpty())
-        m_mainWidget->lblHeader->setText(i18n("Currently '%1' is associated with contact '%2'.").arg(m_ircnick).arg(realname));
+        m_mainWidget->lblHeader->setText(i18n("Currently '%1' is associated with contact '%2'.", m_ircnick, realname));
     else
-        m_mainWidget->lblHeader->setText(i18n("<qt><b>Warning:</b> '%1' is currently being listed as belonging to multiple contacts.  Please select the correct contact.</qt>").arg(m_ircnick));
+        m_mainWidget->lblHeader->setText(i18n("<qt><b>Warning:</b> '%1' is currently being listed as belonging to multiple contacts.  Please select the correct contact.</qt>", m_ircnick));
 
 }
 

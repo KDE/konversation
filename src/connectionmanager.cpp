@@ -204,16 +204,16 @@ void ConnectionManager::handleReconnect(Server* server)
             server->setConnectionSettings(settings);
 
             server->getStatusView()->appendServerMessage(i18n("Info"),
-                i18n("Trying to connect to %1 in %2 seconds.")
-                .arg(settings.server().host())
-                .arg(Preferences::reconnectDelay()));
+                i18n("Trying to connect to %1 in %2 seconds.",
+                settings.server().host(),
+                Preferences::reconnectDelay()));
         }
         else
         {
             server->getStatusView()->appendServerMessage(i18n("Info"),
-                i18n("Trying to reconnect to %1 in %2 seconds.")
-                .arg(settings.server().host())
-                .arg(Preferences::reconnectDelay()));
+                i18n("Trying to reconnect to %1 in %2 seconds.",
+                settings.server().host(),
+                Preferences::reconnectDelay()));
         }
 
         server->getConnectionSettings().incrementReconnectCount();

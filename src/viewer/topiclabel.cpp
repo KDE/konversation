@@ -385,7 +385,7 @@ namespace Konversation
 
             m_channelPopup->changeTitle(m_channelPopupId,prettyId);
             m_isOnChannel = true;
-            emit setStatusBarTempText(i18n("Join the channel %1").arg(m_currentChannel));
+            emit setStatusBarTempText(i18n("Join the channel %1", m_currentChannel));
         }
     }
 }
