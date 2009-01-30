@@ -46,7 +46,7 @@ class Identity : public KShared
         QString getIdent() const;
 
         void setNickname(uint index,const QString& nick);
-        QString getNickname(uint index) const;
+        QString getNickname(int index) const;
 
         void setBot(const QString& bot);
         QString getBot() const;
