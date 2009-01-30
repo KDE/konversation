@@ -185,7 +185,7 @@ bool DccTransferRecv::queue()
     // check if the sender IP is valid
     if ( m_partnerIp == "0.0.0.0" )
     {
-        failed( i18n( "Invalid sender address (%1)" ).arg( m_partnerIp ) );
+        failed( i18n( "Invalid sender address (%1)", m_partnerIp ) );
         return false;
     }
 
@@ -272,8 +272,8 @@ void DccTransferRecv::prepareLocalKio( bool overwrite, bool resume, KIO::fileoff
     if ( !createDirs( m_fileURL.upUrl() ) )
     {
         askAndPrepareLocalKio( i18n( "<b>Cannot create the folder.</b><br>"
-            "Folder: %1<br>" )
-            .arg( m_fileURL.upUrl().prettyUrl() ),
+            "Folder: %1<br>",
+            m_fileURL.upUrl().prettyUrl() ),
             DccResumeDialog::RA_Rename | DccResumeDialog::RA_Cancel,
             DccResumeDialog::RA_Rename );
         return;
@@ -362,8 +362,8 @@ void DccTransferRecv::slotLocalCanResume( KIO::Job* job, KIO::filesize_t size )
         if ( KonversationApplication::instance()->getDccTransferManager()->isLocalFileInWritingProcess( m_fileURL ) )
         {
             askAndPrepareLocalKio( i18n( "<b>The file is used by another transfer.</b><br>"
-                "%1<br>" )
-                .arg( m_fileURL.prettyUrl() ),
+                "%1<br>",
+                m_fileURL.prettyUrl() ),
                 DccResumeDialog::RA_Rename | DccResumeDialog::RA_Cancel,
                 DccResumeDialog::RA_Rename );
         }
@@ -375,9 +375,9 @@ void DccTransferRecv::slotLocalCanResume( KIO::Job* job, KIO::filesize_t size )
         {
             askAndPrepareLocalKio( i18n( "<b>A partial file exists.</b><br>"
                 "%1<br>"
-                "Size of the partial file: %2 bytes<br>" )
-                .arg( m_fileURL.prettyUrl() )
-                .arg( KGlobal::locale()->formatNumber( size, 0 ) ),
+                "Size of the partial file: %2 bytes<br>",
+                m_fileURL.prettyUrl(),
+                KGlobal::locale()->formatNumber( size, 0 ) ),
                 DccResumeDialog::RA_Resume | DccResumeDialog::RA_Overwrite | DccResumeDialog::RA_Rename | DccResumeDialog::RA_Cancel,
                 DccResumeDialog::RA_Resume,
                 size );
@@ -402,17 +402,17 @@ void DccTransferRecv::slotLocalGotResult( KIO::Job* job )
             break;
         case KIO::ERR_FILE_ALREADY_EXIST:
             askAndPrepareLocalKio( i18n( "<b>The file already exists.</b><br>"
-                "%1<br>" )
-                .arg( m_fileURL.prettyUrl() ),
+                "%1<br>",
+                m_fileURL.prettyUrl() ),
                 DccResumeDialog::RA_Overwrite | DccResumeDialog::RA_Rename | DccResumeDialog::RA_Cancel,
                 DccResumeDialog::RA_Overwrite );
             break;
         default:
             askAndPrepareLocalKio( i18n( "<b>Could not open the file.<br>"
                 "Error: %1</b><br>"
-                "%2<br>" )
-                .arg( transferJob->error() )
-                .arg( m_fileURL.prettyUrl() ),
+                "%2<br>",
+                transferJob->error(),
+                m_fileURL.prettyUrl() ),
                 DccResumeDialog::RA_Rename | DccResumeDialog::RA_Cancel,
                 DccResumeDialog::RA_Rename );
     }
@@ -575,7 +575,7 @@ void DccTransferRecv::slotServerSocketReadyAccept()
 
 void DccTransferRecv::slotServerSocketGotError( int /* errorCode*/ )
 {
-    failed( i18n( "Socket error: %1" ).arg( m_serverSocket->errorString() ) );
+    failed( i18n( "Socket error: %1", m_serverSocket->errorString() ) );
 }
 
 void DccTransferRecv::startReceiving()
@@ -602,7 +602,7 @@ void DccTransferRecv::startReceiving()
 void DccTransferRecv::connectionFailed( int errorCode )
 {
     kDebug() << "DccTransferRecv::connectionFailed(): code = " << errorCode << ", string = " << m_recvSocket->errorString() << endl;
-    failed( i18n( "Connection failure: %1" ).arg( m_recvSocket->errorString() ) );
+    failed( i18n( "Connection failure: %1", m_recvSocket->errorString() ) );
 }
 
 void DccTransferRecv::readData()                  // slot
@@ -653,7 +653,7 @@ void DccTransferRecv::slotLocalWriteDone()        // <-WriteCacheHandler::done()
 void DccTransferRecv::slotLocalGotWriteError( const QString& errorString )
 {
     kDebug() << "DccTransferRecv::slotLocalGotWriteError()" << endl;
-    failed( i18n( "KIO error: %1" ).arg( errorString ) );
+    failed( i18n( "KIO error: %1", errorString ) );
 }
 
 void DccTransferRecv::startConnectionTimer( int sec )

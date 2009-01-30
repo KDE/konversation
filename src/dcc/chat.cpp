@@ -140,7 +140,7 @@ void DccChat::listenForPartner()
         m_listenSocket = DccCommon::createServerSocketAndListen( this, &failedReason );
     if ( !m_listenSocket )
     {
-        getTextView()->appendServerMessage( i18n( "DCC" ), i18n( "Could not open a socket for listening: %1" ).arg( failedReason ) );
+        getTextView()->appendServerMessage(i18n("DCC"), i18n("Could not open a socket for listening: %1", failedReason));
         return;
     }
 
@@ -150,9 +150,9 @@ void DccChat::listenForPartner()
     m_ownPort = DccCommon::getServerSocketPort( m_listenSocket );
     kDebug() << "DccChat::listenForPartner(): using port " << m_ownPort << endl;
 
-    getTextView()->appendServerMessage( i18n("DCC"), i18n("Offering DCC Chat connection to %1 on port %2...").arg( m_partnerNick ).arg( m_ownPort ) );
+    getTextView()->appendServerMessage(i18n("DCC"), i18n("Offering DCC Chat connection to %1 on port %2...", m_partnerNick, m_ownPort));
 #warning "port kde4"
-    //m_sourceLine->setText(i18n( "DCC chat with %1 on port %2." ).arg( m_partnerNick ).arg( m_ownPort ) );
+    //m_sourceLine->setText(i18n("DCC chat with %1 on port %2.", m_partnerNick, m_ownPort));
     kDebug() << "DccChat::listenForPartner() [END]" << endl;
 }
 
@@ -163,11 +163,11 @@ void DccChat::connectToPartner()
     ip.setAddress(m_partnerHost.toUInt());
     m_partnerHost=ip.toString();
 
-    getTextView()->appendServerMessage( i18n( "DCC" ), i18n( "%1 = nickname, %2 = IP, %3 = port",
-        "Establishing DCC Chat connection to %1 (%2:%3)..." ).arg( m_partnerNick ).arg( m_partnerHost ).arg( m_partnerPort ) );
+    getTextView()->appendServerMessage( i18n( "DCC" ), i18nc("%1 = nickname, %2 = IP, %3 = port",
+        "Establishing DCC Chat connection to %1 (%2:%3)...", m_partnerNick, m_partnerHost, m_partnerPort));
 
 #warning "port kde4"
-    //m_sourceLine->setText( i18n( "%1 = nickname, %2 = IP, %3 = port", "DCC chat with %1 on %2:%3." ).arg( m_partnerNick ).arg( host ).arg( m_partnerPort ) );
+    //m_sourceLine->setText(i18nc("%1 = nickname, %2 = IP, %3 = port", "DCC chat with %1 on %2:%3.", m_partnerNick, host, m_partnerPort));
 
     m_dccSocket = new KNetwork::KStreamSocket( m_partnerHost, QString::number( m_partnerPort ), this );
 
@@ -187,7 +187,7 @@ void DccChat::connectToPartner()
     m_dccSocket->connect();
     
 #if 0
-    //getTextView()->appendServerMessage(i18n("DCC"),i18n("Looking for host %1...").arg(host));
+    //getTextView()->appendServerMessage(i18n("DCC"), i18n("Looking for host %1...", host));
 #endif
 
 }
@@ -203,14 +203,14 @@ void DccChat::lookupFinished()
 
 void DccChat::dccChatConnectionSuccess()
 {
-    getTextView()->appendServerMessage( i18n( "DCC" ), i18n( "Established DCC Chat connection to %1." ).arg( m_partnerNick ) );
+    getTextView()->appendServerMessage(i18n("DCC"), i18n("Established DCC Chat connection to %1.", m_partnerNick));
     m_dccSocket->enableRead(true);
     m_dccChatInput->setEnabled(true);
 }
 
 void DccChat::dccChatBroken(int error)
 {
-    getTextView()->appendServerMessage(i18n("Error"),i18n("Connection broken, error code %1.").arg(error));
+    getTextView()->appendServerMessage(i18n("Error"), i18n("Connection broken, error code %1.", error));
     m_dccSocket->enableRead(false);
     m_dccSocket->blockSignals(true);
     m_dccSocket->close();
@@ -249,7 +249,7 @@ void DccChat::readData()
                 if( ctcpCommand.lower() == "action" )
                     appendAction( m_partnerNick, ctcpArgument );
                 else
-                    getTextView()->appendServerMessage( i18n( "CTCP" ), i18n( "Received unknown CTCP-%1 request from %2" ).arg( ctcp ).arg( m_partnerNick ) );
+                    getTextView()->appendServerMessage(i18n("CTCP"), i18n("Received unknown CTCP-%1 request from %2", ctcp, m_partnerNick));
             }
             else getTextView()->append( m_partnerNick, *itLine );
         }                                         // endfor
@@ -344,12 +344,12 @@ void DccChat::heardPartner()
     m_dccSocket->enableRead(true);
     m_dccChatInput->setEnabled(true);
 
-    getTextView()->appendServerMessage( i18n( "DCC" ), i18n( "Established DCC Chat connection to %1." ).arg( m_partnerNick ) );
+    getTextView()->appendServerMessage(i18n("DCC"), i18n("Established DCC Chat connection to %1.", m_partnerNick));
 }
 
 void DccChat::socketClosed()
 {
-    getTextView()->appendServerMessage(i18n("DCC"),"Connection closed.");
+    getTextView()->appendServerMessage(i18n("DCC"), i18n("Connection closed."));
     m_dccChatInput->setEnabled(false);
     m_dccSocket = 0;
 }
@@ -421,7 +421,7 @@ QString DccChat::getChannelEncoding() // virtual
 
 QString DccChat::getChannelEncodingDefaultDesc()  // virtual
 {
-    return i18n("Default ( %1 )").arg(Konversation::IRCCharsets::self()->encodingForLocale());
+    return i18n("Default ( %1 )", Konversation::IRCCharsets::self()->encodingForLocale());
 }
 
 void DccChat::showEvent(QShowEvent* /* event */)

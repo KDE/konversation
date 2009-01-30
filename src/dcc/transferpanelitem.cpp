@@ -233,7 +233,7 @@ void DccTransferPanelItem::openFileInfoDialog()
                 #ifdef USE_INFOLIST
                 KMessageBox::informationList(
                     listView(),
-                    i18n("Available information for file %1:").arg(path),
+                    i18n("Available information for file %1:", path),
                     infoList,
                     i18n("File Information")
                     );
@@ -389,7 +389,7 @@ QString DccTransferPanelItem::getSpeedPrettyText( transferspeed_t speed )
     else if ( speed == DccTransfer::NotInTransfer )
         return QString();
     else
-        return i18n("%1/sec").arg( KIO::convertSize( (KIO::fileoffset_t)speed ) );
+        return i18n("%1/sec", KIO::convertSize( (KIO::fileoffset_t)speed ) );
 }
 
 QString DccTransferPanelItem::secToHMS( long sec )

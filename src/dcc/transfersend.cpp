@@ -171,7 +171,7 @@ bool DccTransferSend::queue()
     //Check the file exists
     if ( !KIO::NetAccess::exists( m_fileURL, true, NULL ) )
     {
-        failed( i18n( "The url \"%1\" does not exist" ).arg( m_fileURL.prettyUrl() ) );
+        failed( i18n( "The url \"%1\" does not exist", m_fileURL.prettyUrl() ) );
         return false;
     }
 
@@ -179,7 +179,7 @@ bool DccTransferSend::queue()
     //Download the file.  Does nothing if it's local (file:/)
     if ( !KIO::NetAccess::download( m_fileURL, m_tmpFile, NULL ) )
     {
-        failed( i18n( "Could not retrieve \"%1\"" ).arg( m_fileURL.prettyUrl() ) );
+        failed( i18n( "Could not retrieve \"%1\"", m_fileURL.prettyUrl() ) );
         kDebug() << "DccTransferSend::DccTransferSend(): KIO::NetAccess::download() failed. reason: " << KIO::NetAccess::lastErrorString() << endl;
         return false;
     }
@@ -188,7 +188,7 @@ bool DccTransferSend::queue()
     if ( m_fileName.isEmpty() )
     {
         bool pressedOk;
-        m_fileName = KInputDialog::getText( i18n( "Enter Filename" ), i18n( "<qt>The file that you are sending to <i>%1</i> does not have a filename.<br>Please enter a filename to be presented to the receiver, or cancel the dcc transfer</qt>" ).arg( getPartnerNick() ), "unknown", &pressedOk, NULL );
+        m_fileName = KInputDialog::getText( i18n( "Enter Filename" ), i18n( "<qt>The file that you are sending to <i>%1</i> does not have a filename.<br>Please enter a filename to be presented to the receiver, or cancel the dcc transfer</qt>", getPartnerNick() ), "unknown", &pressedOk, NULL );
 
         if ( !pressedOk )
         {
@@ -419,7 +419,7 @@ void DccTransferSend::getAck()                    // slot
 void DccTransferSend::slotGotSocketError( int errorCode )
 {
     kDebug() << "DccTransferSend::slotGotSocketError(): code =  " << errorCode << " string = " << m_serverSocket->errorString() << endl;
-    failed( i18n( "Socket error: %1" ).arg( m_serverSocket->errorString() ) );
+    failed( i18n( "Socket error: %1", m_serverSocket->errorString() ) );
 }
 
 void DccTransferSend::startConnectionTimer( int sec )
@@ -446,7 +446,7 @@ void DccTransferSend::slotConnectionTimeout()         // slot
 
 void DccTransferSend::slotConnectionFailed( int /* errorCode */ )
 {
-    failed( i18n( "Connection failure: %1" ).arg( m_sendSocket->errorString() ) );
+    failed( i18n( "Connection failure: %1", m_sendSocket->errorString() ) );
 }
 
 void DccTransferSend::slotServerSocketClosed()
@@ -482,7 +482,7 @@ QString DccTransferSend::getQFileErrorString( int code )
             errorString=i18n("A fatal unrecoverable error occurred.");
             break;
         case IO_OpenError:
-            errorString=i18n("Could not open file \"%1\".").arg( m_fileName );
+            errorString=i18n("Could not open file \"%1\".", m_fileName );
             break;
 
             // Same case value? Damn!

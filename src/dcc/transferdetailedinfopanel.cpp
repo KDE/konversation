@@ -98,18 +98,18 @@ void DccTransferDetailedInfoPanel::updateView()
         partnerInfoServerName = KonversationApplication::instance()->getConnectionManager()->getServerByConnectionId( transfer->getConnectionId() )->getServerName();
     else
         partnerInfoServerName = i18n( "Unknown server" );
-    QString partnerInfo( i18n( "%1 on %2" )
-        .arg( transfer->getPartnerNick().isEmpty() ? "?" : transfer->getPartnerNick() )
-        .arg( partnerInfoServerName ) );
+    QString partnerInfo( i18n( "%1 on %2",
+        transfer->getPartnerNick().isEmpty() ? "?" : transfer->getPartnerNick(),
+        partnerInfoServerName ) );
     if ( !transfer->getPartnerIp().isEmpty() )
-        partnerInfo += i18n( ", %1 (port %2)" ).arg( transfer->getPartnerIp() ).arg( transfer->getPartnerPort() );
+        partnerInfo += i18n( ", %1 (port %2)", transfer->getPartnerIp(), transfer->getPartnerPort() );
     m_labelPartner->setText( partnerInfo );
 
     // Self:
     if ( transfer->getOwnIp().isEmpty() )
         m_labelSelf->setText( "" );
     else
-        m_labelSelf->setText( i18n( "%1 (port %2)" ).arg( transfer->getOwnIp() ).arg( transfer->getOwnPort() ) );
+        m_labelSelf->setText( i18n( "%1 (port %2)", transfer->getOwnIp(), transfer->getOwnPort() ) );
 
     // Status:
     if ( transfer->getStatus() == DccTransfer::Transferring )
@@ -134,7 +134,7 @@ void DccTransferDetailedInfoPanel::updateView()
 
     // Resumed:
     if ( transfer->isResumed() )
-        m_labelIsResumed->setText( i18n( "Yes, %1" ).arg( KGlobal::locale()->formatNumber( transfer->getTransferStartPosition(), 0 ) ) );
+        m_labelIsResumed->setText( i18n( "Yes, %1", KGlobal::locale()->formatNumber( transfer->getTransferStartPosition(), 0 ) ) );
     else
         m_labelIsResumed->setText( i18n( "No" ) );
 
