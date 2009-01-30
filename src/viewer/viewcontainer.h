@@ -205,7 +205,7 @@ class ViewContainer : public QObject
         KTabWidget* m_tabWidget;
         ViewTree* m_viewTree;
         Q3VBox *m_vbox;
-        //QueueTuner *m_queueTuner;
+        QueueTuner *m_queueTuner;
 
         Images* images;
 

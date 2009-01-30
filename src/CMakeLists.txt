@@ -42,7 +42,7 @@ set(core_SRCS
 
     #=== GUI
     urlcatcher.cpp
-#    queuetuner.cpp
+    queuetuner.cpp
     quickconnectdialog.cpp
 )
 

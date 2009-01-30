@@ -37,7 +37,7 @@ QueueTuner::QueueTuner(QWidget* parent, ViewContainer *container)
 : QueueTunerBase(parent), m_server(0), m_timer(this, "qTuner"),
     m_vis(Preferences::self()->showQueueTunerItem()->value())
 {
-    m_closeButton->setIconSet(kapp->iconLoader()->loadIconSet("fileclose", KIconLoader::Toolbar, 16));
+    m_closeButton->setIconSet(KIconLoader::global()->loadIcon( "fileClose", KIconLoader::Small ));
     connect(m_closeButton, SIGNAL(clicked()), SLOT(close()));
     connect(container, SIGNAL(frontServerChanging(Server*)), SLOT(setServer(Server*)));
     connect(&m_timer, SIGNAL(timeout()), SLOT(timerFired()));
@@ -239,13 +239,13 @@ void QueueTuner::fastIntervalChanged(int v)
 void QueueTuner::contextMenuEvent(QContextMenuEvent* e)
 {
     Q3PopupMenu p(this);
-    p.insertItem("Reset...", 1);
+    p.insertItem(i18n("Reset..."), 1);
     int id = p.exec(e->globalPos());
     if (id > 0)
     {
 
         QString question(i18n("This cannot be undone, are you sure you wish to reset to default values?"));
-        int x = KMessageBox::warningContinueCancel(this, question, i18n("Reset Values"), KStandardGuiItem::reset(), QString::null, KMessageBox::Dangerous);
+        int x = KMessageBox::warningContinueCancel(this, question, i18n("Reset Values"), KStandardGuiItem::reset(), KGuiItem(),QString::null, KMessageBox::Dangerous);
         if ( x == KMessageBox::Continue)
         {
             Server::_resetRates();

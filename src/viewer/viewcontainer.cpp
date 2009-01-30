@@ -54,7 +54,7 @@
 #include <kxmlguifactory.h>
 
 ViewContainer::ViewContainer(KonversationMainWindow* window):
-        m_vbox(0)//, m_queueTuner(0)
+        m_vbox(0), m_queueTuner(0)
 {
     m_window = window;
 
@@ -94,12 +94,12 @@ ViewContainer::~ViewContainer()
 }
 
 void ViewContainer::showQueueTuner(bool p)
-{/*
+{
     if (p)
         m_queueTuner->open();
     else
         m_queueTuner->close();
-*/}
+}
 
 ///Use this instead of setting m_frontServer directly so we can emit the frontServerChanging signal easily.
 void ViewContainer::setFrontServer(Server* newserver)
@@ -156,8 +156,8 @@ void ViewContainer::setupTabWidget()
     m_vbox->setObjectName("main_window_right_side");
     m_tabWidget = new KTabWidget(m_vbox);
     m_tabWidget->setObjectName("main_window_tab_widget");
-    //m_queueTuner = new QueueTuner(m_vbox, this);
-    //m_queueTuner->hide();
+    m_queueTuner = new QueueTuner(m_vbox, this);
+    m_queueTuner->hide();
 
     m_tabWidget->setTabReorderingEnabled(true);
     m_tabWidget->setTabCloseActivatePrevious(true);
