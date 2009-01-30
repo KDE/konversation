@@ -40,13 +40,13 @@
 #include <X11/extensions/scrnsaver.h>
 #include <QX11Info>
 #endif
-#endif
 
 // Don't use XIdle for now, it's experimental.
 #undef HAVE_XIDLE
 #undef HasXidle
 
 #include <fixx11h.h>
+#endif
 
 struct AwayManagerPrivate
 {

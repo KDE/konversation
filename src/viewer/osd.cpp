@@ -29,7 +29,9 @@ the Free Software Foundation; either version 2 of the License, or
 #include <kdebug.h>
 #include <kglobalsettings.h>                      //unsetColors()
 
+#ifdef Q_WS_X11
 #include <X11/Xlib.h>                             //reposition()
+#endif
 #include <QDesktopWidget>
 
 OSDWidget::OSDWidget( const QString &appName, QWidget *parent, const char *name )
@@ -309,7 +311,9 @@ void OSDWidget::reposition( QSize newSize )
     if( isVisible() ) paintEvent( 0 );
 
     //fancy X11 move+resize, reduces visual artifacts
+#ifdef Q_WS_X11
     XMoveResizeWindow( x11Display(), winId(), newPos.x(), newPos.y(), newSize.width(), newSize.height() );
+#endif
 }
 
 //////  OSDPreviewWidget below /////////////////////
