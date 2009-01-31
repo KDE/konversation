@@ -656,21 +656,21 @@ void KonversationMainWindow::hideEvent(QHideEvent *e)
 
     m_statusBar->clearMainLabelTempText();
 
-    KMainWindow::hideEvent(e);
+    KXmlGuiWindow::hideEvent(e);
 }
 
 void KonversationMainWindow::showEvent(QShowEvent *e)
 {
     emit cancelRememberLine();
 
-    KMainWindow::showEvent(e);
+    KXmlGuiWindow::showEvent(e);
 }
 
 void KonversationMainWindow::leaveEvent(QEvent* e)
 {
     m_statusBar->clearMainLabelTempText();
 
-    KMainWindow::leaveEvent(e);
+    KXmlGuiWindow::leaveEvent(e);
 }
 
 bool KonversationMainWindow::event(QEvent* e)
@@ -688,7 +688,7 @@ bool KonversationMainWindow::event(QEvent* e)
             emit triggerRememberLine();
     }
 
-    return KMainWindow::event(e);
+    return KXmlGuiWindow::event(e);
 }
 
 void KonversationMainWindow::settingsChangedSlot()
