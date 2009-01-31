@@ -105,7 +105,7 @@ void Theme_Config::loadSettings()
                 currentThemeIndex = i;
             }
 
-            if (themeDir=="default")
+            if (themeDir=="oxygen")
                 m_defaultThemeIndex= i;
 
             // if there was a comment to the theme, add it to the listview entry string
@@ -126,7 +126,7 @@ void Theme_Config::loadSettings()
     // if there was no currently used theme found, use the default theme
     // If anyone knows how to get the default value from this, please change this!
     if(m_oldTheme.isEmpty())
-        m_oldTheme = "default";
+        m_oldTheme = "oxygen";
 
     // update enabled/disabled state of buttons
     updateButtons();
