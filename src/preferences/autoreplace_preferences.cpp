@@ -44,12 +44,12 @@ Autoreplace_Config::Autoreplace_Config(QWidget* parent, const char* name)
   if(installed)
   {
       regExpEditorButton->setEnabled(true);
-      regExpEditorButton->setToolTip(i18n("Click to run Regular Expression Editor (KRegExpEditor)"));
+      regExpEditorButton->setStatusTip(i18n("Click to run Regular Expression Editor (KRegExpEditor)"));
   }
   else
   {
       regExpEditorButton->setEnabled(false);
-      regExpEditorButton->setToolTip(i18n("The Regular Expression Editor (KRegExpEditor) is not installed"));
+      regExpEditorButton->setStatusTip(i18n("The Regular Expression Editor (KRegExpEditor) is not installed"));
   }
   // populate combobox
   directionCombo->insertItem(i18n("Outgoing"),DIRECTION_OUTPUT);

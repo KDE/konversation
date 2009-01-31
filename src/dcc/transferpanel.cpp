@@ -122,10 +122,10 @@ void DccTransferPanel::initGUI()
     m_buttonDetail = new QPushButton(icon("view_text"),   i18n("Details"), buttonsBox, "detail_dcc");
     m_buttonDetail->setToggleButton( true );
 
-    m_buttonAccept->setToolTip(i18n("Start receiving"));
-    m_buttonAbort->setToolTip(i18n("Abort the transfer(s)"));
-    m_buttonOpen->setToolTip(i18n("Run the file"));
-    m_buttonDetail->setToolTip(i18n("View DCC transfer details"));
+    m_buttonAccept->setStatusTip(i18n("Start receiving"));
+    m_buttonAbort->setStatusTip(i18n("Abort the transfer(s)"));
+    m_buttonOpen->setStatusTip(i18n("Run the file"));
+    m_buttonDetail->setStatusTip(i18n("View DCC transfer details"));
 
     connect( m_buttonAccept, SIGNAL(clicked()), this, SLOT(acceptDcc()) );
     connect( m_buttonAbort,  SIGNAL(clicked()), this, SLOT(abortDcc()) );

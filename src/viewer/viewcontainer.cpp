@@ -533,7 +533,7 @@ void ViewContainer::updateViewActions(int index)
             {
                 action->setText(i18n("Find Text..."));
                 action->setEnabled(view->searchView());
-                action->setToolTip(i18n("Search for text in the current tab"));
+                action->setStatusTip(i18n("Search for text in the current tab"));
             }
 
             action = actionCollection()->action("edit_find_next");

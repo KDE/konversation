@@ -184,11 +184,11 @@ void Highlight_Config::updateButtons()
 
   if(installed)
   {
-      patternButton->setToolTip(i18n("Click to run Regular Expression Editor (KRegExpEditor)"));
+      patternButton->setStatusTip(i18n("Click to run Regular Expression Editor (KRegExpEditor)"));
   }
   else
   {
-      patternButton->setToolTip(i18n("The Regular Expression Editor (KRegExpEditor) is not installed"));
+      patternButton->setStatusTip(i18n("The Regular Expression Editor (KRegExpEditor) is not installed"));
   }
 }
 
