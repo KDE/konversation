@@ -329,7 +329,7 @@ void Channel::setServer(Server* server)
     ChatWindow::setServer(server);
     if (server->getKeyForRecipient(getName()).isEmpty())
         blowfishLabel->show();
-    //FIXME WTF!? topicLine->setServer(server);
+    topicLine->setServer(server);
     refreshModeButtons();
     setIdentity(server->getIdentity());
 }

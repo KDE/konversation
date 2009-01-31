@@ -53,6 +53,7 @@ namespace Konversation
         m_isOnChannel = false;
         m_copyUrlMenu = false;
         mousePressed=false;
+        m_server = NULL;
 
         m_popup = new Q3PopupMenu(this,"topiclabel_context_menu");
         m_popup->insertItem(SmallIconSet("editcopy"),i18n("&Copy"),Copy);
