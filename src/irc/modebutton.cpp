@@ -15,7 +15,7 @@
 
 
 ModeButton::ModeButton(const QString& label,QWidget* parent,int newId) :
-QPushButton::QPushButton(label,parent)
+QPushButton(label,parent)
 {
     id=newId;
     on=false;
