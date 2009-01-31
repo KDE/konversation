@@ -62,7 +62,6 @@
 #include <kdeversion.h>
 #include <kstandarddirs.h>
 #include <krun.h>
-#include <k3process.h>
 #include <kiconloader.h>
 #include <kshell.h>
 #include <kmenu.h>

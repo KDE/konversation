@@ -42,7 +42,6 @@
 #include <kdialog.h>
 #include <k3listview.h>
 #include <kiconloader.h>
-#include <k3process.h>
 #include <kmessagebox.h>
 
 

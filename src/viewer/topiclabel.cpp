@@ -27,7 +27,7 @@
 #include <QEvent>
 #include <q3textedit.h>
 #include <krun.h>
-#include <k3process.h>
+#include <kprocess.h>
 #include <kshell.h>
 #include <k3urldrag.h>
 #include <kstringhandler.h>
@@ -114,14 +114,10 @@ namespace Konversation
             {
                 QString cmd = Preferences::webBrowserCmd();
                 cmd.replace("%u",KUrl::fromPathOrUrl(link).url());
-                K3Process *proc = new K3Process;
+                KProcess *proc = new KProcess;
                 QStringList cmdAndArgs = KShell::splitArgs(cmd);
                 *proc << cmdAndArgs;
-                //      This code will also work, but starts an extra shell process.
-                //      kDebug() << "IRCView::linkClickSlot(): cmd = " << cmd << endl;
-                //      *proc << cmd;
-                //      proc->setUseShell(true);
-                proc->start(K3Process::DontCare);
+                proc->startDetached();
                 delete proc;
             }
         }

@@ -33,7 +33,7 @@
 #include <k3listview.h>
 #include <krun.h>
 #include <kfiledialog.h>
-#include <k3process.h>
+#include <kprocess.h>
 #include <kdeversion.h>
 #include <kshell.h>
 #include <k3listviewsearchline.h>
@@ -147,14 +147,14 @@ void UrlCatcher::openUrl(Q3ListViewItem* item)
     {
         QString cmd = Preferences::webBrowserCmd();
         cmd.replace("%u", url);
-        K3Process *proc = new K3Process;
+        KProcess *proc = new KProcess;
         QStringList cmdAndArgs = KShell::splitArgs(cmd);
         *proc << cmdAndArgs;
         //    This code will also work, but starts an extra shell process.
         //    kDebug() << "UrlCatcher::openUrl(): cmd = " << cmd << endl;
         //    *proc << cmd;
         //    proc->setUseShell(true);
-        proc->start(K3Process::DontCare);
+        proc->startDetached();
         delete proc;
     }
 }

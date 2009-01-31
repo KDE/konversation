@@ -40,7 +40,7 @@
 #include <QHostInfo>
 
 #include <ksharedptr.h>
-#include <k3process.h>
+#include <kprocess.h>
 
 
 class Channel;
@@ -477,7 +477,7 @@ void resetNickSelection();
 
     protected slots:
         void lookupFinished();
-        void preShellCommandExited(K3Process*);
+        void preShellCommandExited(int exitCode, QProcess::ExitStatus exitStatus);
         void ircServerConnectionSuccess();
         void startAwayTimer();
         void incoming();
@@ -671,7 +671,7 @@ void resetNickSelection();
 
         //ScriptLauncher* m_scriptLauncher;
 
-        K3Process m_preShellCommand;
+        KProcess m_preShellCommand;
 
     private:
         /// Helper object to construct ISON (notify) list and map offline nicks to

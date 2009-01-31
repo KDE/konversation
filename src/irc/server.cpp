@@ -210,14 +210,15 @@ void Server::doPreShellCommand()
     QString command = getIdentity()->getShellCommand();
     getStatusView()->appendServerMessage(i18n("Info"),"Running preconfigured command...");
 
-    connect(&m_preShellCommand,SIGNAL(processExited(K3Process*)), this, SLOT(preShellCommandExited(K3Process*)));
+    connect(&m_preShellCommand,SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(preShellCommandExited(int, QProcess::ExitStatus)));
 
     QStringList commandList = QStringList::split(" ",command);
 
     for (QStringList::ConstIterator it = commandList.begin(); it != commandList.end(); ++it)
         m_preShellCommand << *it;
 
-    if (!m_preShellCommand.start()) preShellCommandExited(NULL);
+    m_preShellCommand.start();
+    if (m_preShellCommand.state() == QProcess::NotRunning) preShellCommandExited(m_preShellCommand.exitCode(), m_preShellCommand.exitStatus());
 }
 
 void Server::_fetchRates()
@@ -368,10 +369,10 @@ void Server::setAutoJoin(bool on)
     m_autoJoin = on;
 }
 
-void Server::preShellCommandExited(K3Process* proc)
+void Server::preShellCommandExited(int exitCode, QProcess::ExitStatus exitStatus)
 {
 
-    if (proc && proc->normalExit())
+    if (exitStatus == QProcess::NormalExit)
         getStatusView()->appendServerMessage(i18n("Info"),"Process executed successfully!");
     else
         getStatusView()->appendServerMessage(i18n("Warning"),"There was a problem while executing the command!");

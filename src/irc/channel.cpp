@@ -58,7 +58,6 @@
 #include <qtoolbutton.h>
 #include <qlayout.h>
 
-#include <k3process.h>
 
 #include <klineedit.h>
 #include <kinputdialog.h>
