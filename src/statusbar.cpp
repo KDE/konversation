@@ -42,7 +42,7 @@ KonversationStatusBar::KonversationStatusBar(KonversationMainWindow* window)
     m_infoLabel = new QLabel(m_window->statusBar());
     m_infoLabel->setObjectName("infoLabel");
     m_infoLabel->hide();
-    m_infoLabel->setWhatsThis(i18n("<qt>This shows the number of users in the channel, and the number of those that are operators (ops).<p>A channel operator is a user that has special privileges, such as the ability to kick and ban users, change the channel modes, make other users operators</qt>"));
+    m_infoLabel->setWhatsThis(i18n("<qt><p>This shows the number of users in the channel, and the number of those that are operators (ops).</p><p>A channel operator is a user that has special privileges, such as the ability to kick and ban users, change the channel modes, make other users operators</p></qt>"));
 
     m_lagLabel = new QLabel(i18n("Lag: Unknown"), m_window->statusBar());
     m_lagLabel->setObjectName("lagLabel");

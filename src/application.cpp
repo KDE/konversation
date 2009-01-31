@@ -105,7 +105,7 @@ int KonversationApplication::newInstance()
         m_sound = new Konversation::Sound(this);
 
         // initialize OSD display here, so we can read the Preferences::properly
-        //osd = new OSDWidget( "Konversation" );
+        osd = new OSDWidget( "Konversation" );
 
         Preferences::self();
         readOptions();
