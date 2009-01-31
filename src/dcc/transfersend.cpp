@@ -153,6 +153,7 @@ bool DccTransferSend::queue()
         KIpAddress ip( m_ownIp );
         if ( ip.isIPv6Addr() )
         {
+#ifndef Q_WS_WIN        
             /* This is fucking ugly but there is no KDE way to do this yet :| -cartman */
             struct ifreq ifr;
             const char* address = Preferences::dccIPv4FallbackIface().ascii();
@@ -162,6 +163,7 @@ bool DccTransferSend::queue()
             if ( ioctl( sock, SIOCGIFADDR, &ifr ) >= 0 )
                 m_ownIp =  inet_ntoa( ( (struct sockaddr_in *)&ifr.ifr_addr )->sin_addr );
             kDebug() << "Falling back to IPv4 address " << m_ownIp << endl;
+#endif
         }
     }
 
