@@ -35,8 +35,6 @@ namespace Konversation
             QSize sizeHint() const;
             void setServer(Server* server);
 
-            enum PopupIDs { Copy,CopyUrl,SelectAll,Bookmark };
-
         public slots:
             virtual void openLink(const QString& link);
             void setText(const QString& text);
@@ -75,7 +73,6 @@ namespace Konversation
             int m_nickPopupId;
             bool m_copyUrlMenu;
             QString m_urlToCopy;
-
     };
 
 }
