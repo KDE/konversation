@@ -22,10 +22,10 @@
 
 
 class QSplitter;
-class Q3VBox;
 
 class KTabWidget;
 class KActionCollection;
+class KVBox;
 
 class KonversationMainWindow;
 class ViewTree;
@@ -204,7 +204,7 @@ class ViewContainer : public QObject
         QSplitter* m_viewTreeSplitter;
         KTabWidget* m_tabWidget;
         ViewTree* m_viewTree;
-        Q3VBox *m_vbox;
+        KVBox *m_vbox;
         QueueTuner *m_queueTuner;
 
         Images* images;

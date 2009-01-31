@@ -37,15 +37,15 @@
 #include <QList>
 #include <QSplitter>
 #include <Q3PopupMenu>
+#include <QToolButton>
 
 #include <KDebug>
 #include <KLocale>
 #include <KTabWidget>
-#include <KPushButton>
-#include <KPushButton>
 #include <KIconLoader>
 #include <KMessageBox>
 #include <KGlobalSettings>
+#include <KVBox>
 
 #include <KActionCollection>
 #include <KToggleAction>
@@ -148,7 +148,7 @@ void ViewContainer::setupTabWidget()
 {
     m_popupViewIndex = -1;
 
-    m_vbox = new Q3VBox(m_viewTreeSplitter);
+    m_vbox = new KVBox(m_viewTreeSplitter);
     m_vbox->setObjectName("main_window_right_side");
     m_tabWidget = new KTabWidget(m_vbox);
     m_tabWidget->setObjectName("main_window_tab_widget");
@@ -160,8 +160,8 @@ void ViewContainer::setupTabWidget()
 
     m_vbox->hide();    //m_tabWidget->hide();
 
-    KPushButton* closeBtn = new KPushButton(m_tabWidget);
-    closeBtn->setPixmap(KIcon("tab-close").pixmap(22, 22));
+    QToolButton* closeBtn = new QToolButton(m_tabWidget);
+    closeBtn->setIcon(KIcon("tab-close"));
     closeBtn->resize(22, 22);
     closeBtn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     m_tabWidget->setCornerWidget(closeBtn);
