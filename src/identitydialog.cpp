@@ -14,19 +14,16 @@
 #include "awaymanager.h"
 #include "irccharsets.h"
 
-#include <q3frame.h>
+#include <qframe.h>
 #include <qlayout.h>
 #include <qlabel.h>
-#include <q3valuelist.h>
 #include <qcheckbox.h>
 #include <qspinbox.h>
 #include <qtoolbutton.h>
 #include <qtabwidget.h>
 #include <q3listbox.h>
-#include <q3groupbox.h>
+#include <qgroupbox.h>
 #include <qpushbutton.h>
-//Added by qt3to4:
-#include <Q3GridLayout>
 
 #include <kcombobox.h>
 #include <klocale.h>
@@ -48,7 +45,7 @@ namespace Konversation
         setDefaultButton( Ok );
         QFrame* mainWidget = new QFrame();
         setMainWidget(mainWidget);
-        Q3GridLayout* mainLayout = new Q3GridLayout(mainWidget, 1, 2, 0, spacingHint());
+        QGridLayout* mainLayout = new QGridLayout(mainWidget, 1, 2, 0, spacingHint());
 
         QLabel* identityLabel = new QLabel(i18n("&Identity:"), mainWidget);
         m_identityCBox = new KComboBox(mainWidget);
@@ -86,16 +83,15 @@ namespace Konversation
         QTabWidget* tabWidget = new QTabWidget(mainWidget);
         QWidget* generalWidget = new QWidget(tabWidget);
         tabWidget->addTab(generalWidget, i18n("General"));
-        Q3GridLayout* generalLayout = new Q3GridLayout(generalWidget, 1, 2, marginHint(), spacingHint());
+        QGridLayout* generalLayout = new QGridLayout(generalWidget, 1, 2, marginHint(), spacingHint());
 
         QLabel* realNameLabel = new QLabel(i18n("&Real name:"), generalWidget);
         m_realNameEdit = new KLineEdit(generalWidget);
         m_realNameEdit->setWhatsThis(i18n("Enter your real name here. IRC is not intended to keep you hidden from your friends or enemies. Keep this in mind if you are tempted to behave maliciously. A fake \"real name\" can be a good way to mask your gender from all the nerds out there, but the PC you use can always be traced so you will never be truly anonymous."));
         realNameLabel->setBuddy(m_realNameEdit);
 
-        Q3GroupBox* nicknameGBox = new Q3GroupBox(0, Qt::Horizontal, i18n("Nickname"), generalWidget);
-        nicknameGBox->setMargin(marginHint());
-        Q3GridLayout* nicknameLayout = new Q3GridLayout(nicknameGBox->layout(), 1, 2, spacingHint());
+        QGroupBox* nicknameGBox = new QGroupBox(i18n("Nickname"), generalWidget);
+        QGridLayout* nicknameLayout = new QGridLayout(nicknameGBox, 1, 2, spacingHint());
 
         m_nicknameLBox = new Q3ListBox(nicknameGBox);
         m_nicknameLBox->setWhatsThis(i18n("This is your list of nicknames. A nickname is the name that other users will know you by. You may use any name you desire. The first character must be a letter.\n\nSince nicknames must be unique across an entire IRC network, your desired name may be rejected by the server because someone else is already using that nickname. Enter alternate nicknames for yourself. If your first choice is rejected by the server, Konversation will try the alternate nicknames."));
@@ -129,9 +125,8 @@ namespace Konversation
         nicknameLayout->addWidget(m_upNicknameBtn, 3, 2);
         nicknameLayout->addWidget(m_downNicknameBtn, 3, 3);
 
-        Q3GroupBox* autoIdentifyGBox = new Q3GroupBox(0, Qt::Horizontal, i18n("Auto Identify"), generalWidget);
-        autoIdentifyGBox->setMargin(marginHint());
-        Q3GridLayout* autoIdentifyLayout = new Q3GridLayout(autoIdentifyGBox->layout(), 1, 2, spacingHint());
+        QGroupBox* autoIdentifyGBox = new QGroupBox(i18n("Auto Identify"), generalWidget);
+        QGridLayout* autoIdentifyLayout = new QGridLayout(autoIdentifyGBox, 1, 2, spacingHint());
 
         QLabel* botLabel=new QLabel(i18n("Ser&vice:"), autoIdentifyGBox);
         botLabel->setWhatsThis(i18n("Service name can be <b><i>nickserv</i></b> or a network dependant name like  <b><i>nickserv@services.dal.net</i></b>"));
@@ -158,7 +153,7 @@ namespace Konversation
 
         QWidget* awayWidget = new QWidget(tabWidget);
         tabWidget->addTab(awayWidget, i18nc("Tab name", "Away"));
-        Q3GridLayout* awayLayout = new Q3GridLayout(awayWidget, 1, 2, marginHint(), spacingHint());
+        QGridLayout* awayLayout = new QGridLayout(awayWidget, 1, 2, marginHint(), spacingHint());
 
         m_insertRememberLineOnAwayChBox = new QCheckBox(i18n("Mark the last position in chat windows when going away"), awayWidget);
         m_insertRememberLineOnAwayChBox->setWhatsThis(i18n("If you check this box, whenever you perform an <b>/away</b> command, a horizontal line will appear in the channel, marking the point where you went away. Other IRC users do not see this horizontal line."));
@@ -168,11 +163,9 @@ namespace Konversation
         m_awayNickEdit->setWhatsThis(i18n("Enter a nickname that indicates you are away. Whenever you perform an <b>/away msg</b> command in any channel joined with this Identity, Konversation will automatically change your nickname to the Away nickname. Other users will be able to tell you are away from your computer. Whenever you perform an <b>/away</b> command in any channel in which you are away, Konversation will automatically change your nickname back to the original. If you do not wish to automatically change your nickname when going away, leave blank."));
         awayNickLabel->setBuddy(m_awayNickEdit);
 
-        m_automaticAwayGBox = new Q3GroupBox(i18n("Automatic Away"), awayWidget);
+        m_automaticAwayGBox = new QGroupBox(i18n("Automatic Away"), awayWidget);
         m_automaticAwayGBox->setCheckable(true);
-        m_automaticAwayGBox->setColumnLayout(0, Qt::Horizontal);
-        m_automaticAwayGBox->setMargin(marginHint());
-        Q3GridLayout* automaticAwayLayout = new Q3GridLayout(m_automaticAwayGBox->layout(), 1, 2, spacingHint());
+        QGridLayout* automaticAwayLayout = new QGridLayout(m_automaticAwayGBox, 1, 2, spacingHint());
 
         m_automaticAwayGBox->setWhatsThis(i18n("If you check this box, Konversation will automatically set all connections using this Identity away when the screensaver starts or after a period of user inactivity configured below."));
 
@@ -199,11 +192,9 @@ namespace Konversation
         row++;
         automaticAwayLayout->addMultiCellWidget(m_automaticUnawayChBox, row, row, 0, 3);
 
-        m_awayMessageGBox = new Q3GroupBox(i18n("Away Messages"), awayWidget);
+        m_awayMessageGBox = new QGroupBox(i18n("Away Messages"), awayWidget);
         m_awayMessageGBox->setCheckable(true);
-        m_awayMessageGBox->setColumnLayout(0, Qt::Horizontal);
-        m_awayMessageGBox->setMargin(marginHint());
-        Q3GridLayout* messagesLayout = new Q3GridLayout(m_awayMessageGBox->layout(), 1, 2, spacingHint());
+        QGridLayout* messagesLayout = new QGridLayout(m_awayMessageGBox, 1, 2, spacingHint());
 
         m_awayMessageGBox->setWhatsThis(i18n("If you check this box, Konversation will automatically send the Away message to all channels joined with this Identity. <b>%s</b> is replaced with <b>msg</b>. Whenever you perform an <b>/away</b> command, the Return message will be displayed in all channels joined with this Identity."));
 
@@ -241,7 +232,7 @@ namespace Konversation
 
         QWidget* advancedWidget = new QWidget(tabWidget);
         tabWidget->addTab(advancedWidget, i18n("Advanced"));
-        Q3GridLayout* advancedLayout = new Q3GridLayout(advancedWidget, 1, 2, marginHint(), spacingHint());
+        QGridLayout* advancedLayout = new QGridLayout(advancedWidget, 1, 2, marginHint(), spacingHint());
 
         QLabel* commandLabel = new QLabel(i18n("&Pre-shell command:"), advancedWidget);
         m_sCommandEdit = new KLineEdit(advancedWidget);
