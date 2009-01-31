@@ -1,5 +1,3 @@
-if (NOT WIN32)
-
 #This isn't Konversation until it works.
 project(konvi)
 
@@ -63,4 +61,3 @@ add_subdirectory(data)
 #
 #include $(top_srcdir)/admin/Doxyfile.am
 #
-endif (NOT WIN32)
