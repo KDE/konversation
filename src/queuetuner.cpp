@@ -34,7 +34,7 @@
 
 
 QueueTuner::QueueTuner(QWidget* parent, ViewContainer *container)
-: QueueTunerBase(parent), m_server(0), m_timer(this, "qTuner"),
+: QueueTunerBase(parent), m_server(0), m_timer(this),
     m_vis(Preferences::self()->showQueueTunerItem()->value())
 {
     m_closeButton->setIcon(KIcon("document-close"));
@@ -53,6 +53,8 @@ QueueTuner::QueueTuner(QWidget* parent, ViewContainer *container)
     connect(m_fastRate, SIGNAL(valueChanged(int)), SLOT(fastRateChanged(int)));
     connect(m_fastType, SIGNAL(activated(int)), SLOT(fastTypeChanged(int)));
     connect(m_fastInterval, SIGNAL(valueChanged(int)), SLOT(fastIntervalChanged(int)));
+
+    m_timer.setObjectName("qTuner");
 }
 
 QueueTuner::~QueueTuner()
@@ -63,7 +65,7 @@ QueueTuner::~QueueTuner()
 static void rateToWidget(IRCQueue::EmptyingRate& rate, QSpinBox *r, QComboBox* t, QSpinBox *i)
 {
     r->setValue(rate.m_rate);
-    t->setCurrentItem(rate.m_type);
+    t->setCurrentIndex(rate.m_type);
     i->setValue(rate.m_interval/1000);
 }
 

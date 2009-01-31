@@ -213,7 +213,7 @@ void ChatWindow::cdIntoLogPath()
     }
 
     // add the logfile name to the path
-    logfile.setName(logPath.path()+'/'+logName);
+    logfile.setFileName(logPath.path()+'/'+logName);
 }
 
 void ChatWindow::setLogfileName(const QString& name)
@@ -363,7 +363,7 @@ void ChatWindow::logText(const QString& text)
             // close file
             logfile.close();
         }
-        else kWarning() << "ChatWindow::logText(): open(QIODevice::Append) for " << logfile.name() << " failed!" << endl;
+        else kWarning() << "ChatWindow::logText(): open(QIODevice::Append) for " << logfile.fileName() << " failed!" << endl;
     }
 }
 

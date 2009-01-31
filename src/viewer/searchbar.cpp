@@ -48,9 +48,9 @@ SearchBar::SearchBar(QWidget* parent)
 
     setFocusProxy(m_searchEdit);
     KIconLoader* iconLoader = KIconLoader::global();
-    m_closeButton->setIconSet(iconLoader->loadIconSet("fileclose", KIconLoader::Toolbar, 16));
-    m_findNextButton->setIconSet(iconLoader->loadIconSet("up", KIconLoader::Toolbar, 16));
-    m_findPreviousButton->setIconSet(iconLoader->loadIconSet("down", KIconLoader::Toolbar, 16));
+    m_closeButton->setIcon(KIcon("process-stop"));
+    m_findNextButton->setIcon(KIcon("arrow-up"));
+    m_findPreviousButton->setIcon(KIcon("arrow-down"));
     m_statusPixLabel->hide();
     m_statusTextLabel->hide();
 

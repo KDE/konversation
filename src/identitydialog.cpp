@@ -481,7 +481,7 @@ namespace Konversation
         m_currentIdentity->setAutomaticUnaway(m_automaticUnawayChBox->isChecked());
 
         m_currentIdentity->setShellCommand(m_sCommandEdit->text());
-        m_currentIdentity->setCodecName(Konversation::IRCCharsets::self()->availableEncodingShortNames()[m_codecCBox->currentItem()]);
+        m_currentIdentity->setCodecName(Konversation::IRCCharsets::self()->availableEncodingShortNames()[m_codecCBox->currentIndex()]);
         m_currentIdentity->setIdent(m_loginEdit->text());
         m_currentIdentity->setQuitReason(m_quitEdit->text());
         m_currentIdentity->setPartReason(m_partEdit->text());
@@ -525,7 +525,7 @@ namespace Konversation
             m_identityList.append(identity);
             m_identityCBox->insertItem(txt);
             m_identityCBox->setCurrentIndex(m_identityCBox->count() - 1);
-            updateIdentity(m_identityCBox->currentItem());
+            updateIdentity(m_identityCBox->currentIndex());
         }
         else if(ok && txt.isEmpty())
         {
@@ -544,7 +544,7 @@ namespace Konversation
         if(ok && !txt.isEmpty())
         {
             m_currentIdentity->setName(txt);
-            m_identityCBox->changeItem(txt, m_identityCBox->currentItem());
+            m_identityCBox->changeItem(txt, m_identityCBox->currentIndex());
         }
         else if(ok && txt.isEmpty())
         {
@@ -555,7 +555,7 @@ namespace Konversation
 
     void IdentityDialog::deleteIdentity()
     {
-        int current = m_identityCBox->currentItem();
+        int current = m_identityCBox->currentIndex();
 
         if(current <= 0)
         {
@@ -594,7 +594,7 @@ namespace Konversation
             m_identityCBox->removeItem(current);
             m_identityList.remove(m_currentIdentity);
             m_currentIdentity = 0;
-            updateIdentity(m_identityCBox->currentItem());
+            updateIdentity(m_identityCBox->currentIndex());
             updateButtons();
         }
     }
@@ -614,7 +614,7 @@ namespace Konversation
             //m_identityList.append(identity);
             m_identityCBox->insertItem(txt);
             m_identityCBox->setCurrentIndex(m_identityCBox->count() - 1);
-            updateIdentity(m_identityCBox->currentItem());
+            updateIdentity(m_identityCBox->currentIndex());
         }
         else if(ok && txt.isEmpty())
         {

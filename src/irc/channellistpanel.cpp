@@ -92,10 +92,14 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
     Q3HBox* targetBox=new Q3HBox(mainGrid);
     targetBox->setSpacing(spacing());
 
-    channelFilter=new QCheckBox(i18n("Channel"),targetBox,"filter_target_channel_check");
-    topicFilter=new QCheckBox(i18n("Topic"),targetBox,"filter_target_topic_check");
-    regexpCheck=new QCheckBox(i18n("Regular expression"),targetBox,"regexp_check");
-    applyFilter=new QPushButton(i18n("Apply Filter"),targetBox,"apply_filter_button");
+    channelFilter = new QCheckBox(i18n("Channel"), targetBox);
+    channelFilter->setObjectName("filter_target_channel_check");
+    topicFilter = new QCheckBox(i18n("Topic"), targetBox);
+    topicFilter->setObjectName("filter_target_topic_check");
+    regexpCheck = new QCheckBox(i18n("Regular expression"), targetBox);
+    regexpCheck->setObjectName("regexp_check");
+    applyFilter = new QPushButton(i18n("Apply Filter"), targetBox);
+    applyFilter->setObjectName("apply_filter_button");
     applyFilter->setWhatsThis(i18n("Click here to retrieve the list of channels from the server and apply the filter."));
 
     channelFilter->setChecked(getChannelTarget());
@@ -126,9 +130,12 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
     Q3HBox* actionBox=new Q3HBox(this);
     actionBox->setSpacing(spacing());
 
-    refreshListButton=new QPushButton(i18n("Refresh List"),actionBox,"refresh_list_button");
-    QPushButton* saveListButton=new QPushButton(i18n("Save List..."),actionBox,"save_list_button");
-    joinChannelButton=new QPushButton(i18n("Join Channel"),actionBox,"join_channel_button");
+    refreshListButton = new QPushButton(i18n("Refresh List"), actionBox);
+    refreshListButton->setObjectName("refresh_list_button");
+    QPushButton* saveListButton=new QPushButton(i18n("Save List..."), actionBox);
+    saveListButton->setObjectName("save_list_button");
+    joinChannelButton = new QPushButton(i18n("Join Channel"), actionBox);
+    joinChannelButton->setObjectName("join_channel_button");
     joinChannelButton->setWhatsThis(i18n("Click here to join the channel. A new tab is created for the channel."));
 
     connect(&updateTimer,SIGNAL (timeout()),this,SLOT (updateDisplay()));
@@ -523,12 +530,12 @@ void ChannelListPanel::contextMenu (K3ListView* /* l */, Q3ListViewItem* i, cons
     // eDonkey2000 links need special treatment
         "ed2k://\\|([^|]+\\|){4})");
 
-    pattern.setCaseSensitive(false);
+    pattern.setCaseSensitivity(Qt::CaseInsensitive);
 
     int pos=0;
     while(static_cast<unsigned int>(pos) < filteredLine.length())
     {
-        if(pattern.search(filteredLine,pos)!=-1)
+        if (pattern.indexIn(filteredLine, pos) != -1)
         {
             // Remember where we found the url
             pos=pattern.pos();
@@ -551,7 +558,7 @@ void ChannelListPanel::contextMenu (K3ListView* /* l */, Q3ListViewItem* i, cons
             // tell the program that we have found a new url
             QAction* action = new QAction(showURLmenu);
             action->setText(href);
-            action->addTo(showURLmenu);
+            showURLmenu->addAction(action);
             connect(action, SIGNAL(activated()), this, SLOT(openURL()));
         }
         else

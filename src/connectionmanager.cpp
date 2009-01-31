@@ -413,7 +413,7 @@ bool ConnectionManager::reuseExistingConnection(ConnectionSettings& settings, bo
         if (it.value()->getServerGroup() && settings.serverGroup()
             && it.value()->getServerGroup() == settings.serverGroup())
         {
-            dupe = it.data();
+            dupe = it.value();
             dupeType = SameServerGroup;
 
             break;

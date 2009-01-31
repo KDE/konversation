@@ -63,26 +63,31 @@ UrlCatcher::UrlCatcher(QWidget* parent) : ChatWindow(parent)
     Q3HBox* buttonBox=new Q3HBox(this);
     buttonBox->setSpacing(spacing());
 
-    openUrlButton=new QPushButton(i18n("&Open URL"),buttonBox,"open_url_button");
+    openUrlButton = new QPushButton(i18n("&Open URL"), buttonBox);
+    openUrlButton->setObjectName("open_url_button");
     QString openUrlButtonWT = i18n(
         "<p>Select a <b>URL</b> above, then click this button to launch the "
         "application associated with the mimetype of the URL.</p>"
         "<p>In the <b>Settings</b>, under <b>Behavior</b> | <b>General</b>, "
         "you can specify a custom web browser for web URLs.</p>");
     openUrlButton->setWhatsThis(openUrlButtonWT);
-    copyUrlButton=new QPushButton(i18n("&Copy URL"),buttonBox,"copy_url_button");
+    copyUrlButton = new QPushButton(i18n("&Copy URL"), buttonBox);
+    copyUrlButton->setObjectName("copy_url_button");
     QString copyUrlButtonWT = i18n(
         "Select a <b>URL</b> above, then click this button to copy the URL to the clipboard.");
     copyUrlButton->setWhatsThis(copyUrlButtonWT);
-    deleteUrlButton=new QPushButton(i18n("&Delete URL"),buttonBox,"delete_url_button");
+    deleteUrlButton = new QPushButton(i18n("&Delete URL"), buttonBox);
+    deleteUrlButton->setObjectName("delete_url_button");
     QString deleteUrlButtonWT = i18n(
         "Select a <b>URL</b> above, then click this button to delete the URL from the list.");
     deleteUrlButton->setWhatsThis(deleteUrlButtonWT);
-    saveListButton=new QPushButton(i18n("Sa&ve List..."),buttonBox,"save_list_button");
+    saveListButton = new QPushButton(i18n("Sa&ve List..."), buttonBox);
+    saveListButton->setObjectName("save_list_button");
     QString saveListButtonWT = i18n(
         "Click to save the entire list to a file.");
     saveListButton->setWhatsThis(saveListButtonWT);
-    clearListButton=new QPushButton(i18n("C&lear List"),buttonBox,"clear_list_button");
+    clearListButton = new QPushButton(i18n("C&lear List"), buttonBox);
+    clearListButton->setObjectName("clear_list_button");
     QString clearListButtonWT = i18n(
         "Click to erase the entire list.");
     clearListButton->setWhatsThis(clearListButtonWT);
@@ -99,9 +104,9 @@ UrlCatcher::UrlCatcher(QWidget* parent) : ChatWindow(parent)
     saveListButton->setEnabled(false);
     clearListButton->setEnabled(false);
 
-    layout()->add(searchWidget);
-    layout()->add(urlListView);
-    layout()->add(buttonBox);
+    layout()->addWidget(searchWidget);
+    layout()->addWidget(urlListView);
+    layout()->addWidget(buttonBox);
 
     urlSelected();
 }

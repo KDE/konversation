@@ -54,7 +54,7 @@ namespace Konversation
 
         // don't allow sorting. most recent topic is always first
         m_widget->topicHistoryList->setSortColumn(-1);
-        m_widget->clearButton->setIconSet(SmallIconSet("locationbar_erase"));
+        m_widget->clearButton->setIcon(KIcon("edit-clear-locationbar-ltr"));
         m_widget->banList->setDefaultRenameAction(Q3ListView::Accept);
         m_widget->banListSearchLine->setListView(m_widget->banList);
         // hide column where the complete topic will be put in for convenience

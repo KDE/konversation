@@ -57,7 +57,7 @@ K3ListView(parent)
         popup->insertItem(i18n("&Version"),Konversation::Version);
         popup->insertItem(i18n("&Ping"),Konversation::Ping);
 
-        popup->insertSeparator();
+        popup->addSeparator();
 
         if (modes)
         {
@@ -76,12 +76,12 @@ K3ListView(parent)
             kickban->insertItem(i18n("Kick"),Konversation::Kick);
             kickban->insertItem(i18n("Kickban"),Konversation::KickBan);
             kickban->insertItem(i18n("Ban Nickname"),Konversation::BanNick);
-            kickban->insertSeparator();
+            kickban->addSeparator();
             kickban->insertItem(i18n("Ban *!*@*.host"),Konversation::BanHost);
             kickban->insertItem(i18n("Ban *!*@domain"),Konversation::BanDomain);
             kickban->insertItem(i18n("Ban *!user@*.host"),Konversation::BanUserHost);
             kickban->insertItem(i18n("Ban *!user@domain"),Konversation::BanUserDomain);
-            kickban->insertSeparator();
+            kickban->addSeparator();
             kickban->insertItem(i18n("Kickban *!*@*.host"),Konversation::KickBanHost);
             kickban->insertItem(i18n("Kickban *!*@domain"),Konversation::KickBanDomain);
             kickban->insertItem(i18n("Kickban *!user@*.host"),Konversation::KickBanUserHost);
@@ -92,7 +92,7 @@ K3ListView(parent)
         popup->insertItem(i18n("Ignore"), Konversation::IgnoreNick);
         popup->insertItem(i18n("Unignore"), Konversation::UnignoreNick);
 
-        popup->insertSeparator();
+        popup->addSeparator();
 
         int newitem;
         newitem = popup->insertItem(i18n("Open &Query"),Konversation::OpenQuery);
@@ -107,7 +107,7 @@ K3ListView(parent)
         }
         popup->insertItem(SmallIconSet("mail_generic"),i18n("&Send Email..."), Konversation::SendEmail);
 
-        popup->insertSeparator();
+        popup->addSeparator();
 
         /*
         if (addressbook)
@@ -293,7 +293,7 @@ void NickListView::insertAssociationSubMenu()
     if(!noAssociation && existingAssociation)
     {
         addressbook->insertItem(SmallIcon("contents"), i18n("Edit Contact..."), Konversation::AddressbookEdit);
-        addressbook->insertSeparator();
+        addressbook->addSeparator();
     }
 
     if(noAssociation && existingAssociation)

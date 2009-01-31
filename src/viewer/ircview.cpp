@@ -181,7 +181,7 @@ void IRCView::setServer(Server* newServer)
         KAction *action = newServer->getViewContainer()->actionCollection()->action("open_logfile");
         Q_ASSERT(action);
         if(!action) return;
-        m_popup->insertSeparator();
+        m_popup->addSeparator();
         action->plug(m_popup);
     }
 */

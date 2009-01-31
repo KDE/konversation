@@ -737,7 +737,7 @@ void Server::notifyAction(const QString& nick)
         QString());
 
     // Send all strings, one after another
-    QStringList outList = QStringList::split('\n',out);
+    QStringList outList = out.split('\n', QString::SkipEmptyParts);
     for (unsigned int index=0; index<outList.count(); ++index)
     {
         Konversation::OutputFilterResult result = getOutputFilter()->parse(getNickname(),outList[index],QString());
@@ -748,7 +748,7 @@ void Server::notifyAction(const QString& nick)
 void Server::notifyResponse(const QString& nicksOnline)
 {
     bool nicksOnlineChanged = false;
-    QStringList actualList = QStringList::split(' ',nicksOnline);
+    QStringList actualList = nicksOnline.split(' ', QString::SkipEmptyParts);
     QString lcActual = ' ' + nicksOnline + ' ';
     QString lcPrevISON = ' ' + (m_prevISONList.join(" ")) + ' ';
 
@@ -816,7 +816,7 @@ void Server::autoCommandsAndChannels()
         if (!getNickname().isEmpty())
             connectCommands.replace("%nick", getNickname());
 
-        QStringList connectCommandsList = QStringList::split(";", connectCommands);
+        QStringList connectCommandsList = connectCommands.split(";", QString::SkipEmptyParts);
         QStringList::iterator iter;
 
         for (iter = connectCommandsList.begin(); iter != connectCommandsList.end(); ++iter)
@@ -940,7 +940,7 @@ void Server::incoming()
         QTextCodec* codec = getIdentity()->getCodec();
         QByteArray first = bufferLines.first();
 
-        QStringList lineSplit = QStringList::split(" ",codec->toUnicode(first));
+        QStringList lineSplit = codec->toUnicode(first).split(" ", QString::SkipEmptyParts);
 
         if( lineSplit.count() >= 1 )
         {
@@ -1059,7 +1059,7 @@ static QStringList outcmds=QStringList::split(QChar(' '),"WHO QUIT PRIVMSG NOTIC
 
 int Server::_send_internal(QString outputLine)
 {
-    QStringList outputLineSplit=QStringList::split(" ", outputLine);
+    QStringList outputLineSplit = outputLine.split(" ", QString::SkipEmptyParts);
     //Lets cache the uppercase command so we don't miss or reiterate too much
     int outboundCommand=outcmds.findIndex(outputLineSplit[0].toUpper());
 
@@ -1379,7 +1379,7 @@ ChannelNickPtr Server::setChannelNick(const QString& channelName, const QString&
         // Get watch list from preferences.
         QString watchlist=getWatchListString();
         // Create a lower case nick list from the watch list.
-        QStringList watchLowerList=QStringList::split(' ',watchlist.toLower());
+        QStringList watchLowerList = watchlist.toLower().split(' ', QString::SkipEmptyParts);
         // If on the watch list, add channel and nick to unjoinedChannels list.
         if (watchLowerList.find(lcNickname) != watchLowerList.end())
         {
@@ -1521,7 +1521,7 @@ void Server::requestWho(const QString& channel)
 
 void Server::requestUserhost(const QString& nicks)
 {
-    QStringList nicksList = QStringList::split(" ", nicks);
+    QStringList nicksList = nicks.split(" ", QString::SkipEmptyParts);
     for(QStringList::ConstIterator it=nicksList.begin() ; it!=nicksList.end() ; ++it)
         m_inputFilter.setAutomaticRequest("USERHOST", *it, true);
     queue("USERHOST "+nicks, LowPriority);
@@ -2066,7 +2066,7 @@ void Server::updateChannelMode(const QString &updater, const QString &channelNam
     // "q" is the likely answer.. UnrealIRCd and euIRCd use it.
     // TODO these need to become dynamic
     QString userModes="vhoqa";                    // voice halfop op owner admin
-    int modePos = userModes.find(mode);
+    int modePos = userModes.indexOf(mode);
     if (modePos > 0)
     {
         ChannelNickPtr updateeNick = getChannelNick(channelName, parameter);
@@ -2487,7 +2487,7 @@ bool Server::isWatchedNick(const QString& nickname)
     // Get watch list from preferences.
     QString watchlist= ' ' + getWatchListString() + ' ';
     // Search case-insensitivly
-    return (watchlist.find(' ' + nickname + ' ', 0, 0) != -1);
+    return (watchlist.indexOf(' ' + nickname + ' ', 0, Qt::CaseInsensitive) != -1);
 }
 
 /**
@@ -2839,7 +2839,7 @@ const QString& channelKey,
 const QString& nick,
 const QString& parameter)
 {
-    return parseWildcards(toParse,sender,channelName,channelKey,QStringList::split(' ',nick),parameter);
+    return parseWildcards(toParse, sender, channelName, channelKey, nick.split(' ', QString::SkipEmptyParts), parameter);
 }
 
 QString Server::parseWildcards(const QString& toParse,
@@ -2860,7 +2860,7 @@ const QString& /*parameter*/)
     int index = 0, found = 0;
     QChar toExpand;
 
-    while ((found = toParse.find('%',index)) != -1)
+    while ((found = toParse.indexOf('%', index)) != -1)
     {
                                                   // append part before the %
         out.append(toParse.mid(index,found-index));
@@ -2870,7 +2870,7 @@ const QString& /*parameter*/)
         toExpand = toParse.at(index++);
         if (toExpand == 's')
         {
-            found = toParse.find('%',index);
+            found = toParse.indexOf('%', index);
             if (found == -1)                      // no other % (not valid)
                 break;
             separator = toParse.mid(index,found-index);

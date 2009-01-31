@@ -84,8 +84,8 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
 
     Q3HBox* buttonBox=new Q3HBox(this);
     buttonBox->setSpacing(spacing());
-    QPushButton* editButton=new QPushButton(i18n("&Edit Watch List..."),
-        buttonBox,"edit_notify_button");
+    QPushButton* editButton = new QPushButton(i18n("&Edit Watch List..."), buttonBox);
+    editButton->setObjectName("edit_notify_button");
     QString editButtonWT = i18n(
         "Click to edit the list of nicknames that appear on this screen.");
     editButton->setWhatsThis(editButtonWT);
@@ -94,28 +94,28 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
     connect(m_nickListView, SIGNAL(doubleClicked(Q3ListViewItem*)),
         this,SLOT(processDoubleClick(Q3ListViewItem*)));
 
-    QLabel* addressbookLabel = new QLabel(i18n("Address book:"),
-        buttonBox, "nicksonline_addressbook_label");
+    QLabel* addressbookLabel = new QLabel(i18n("Address book:"), buttonBox);
+    addressbookLabel->setObjectName("nicksonline_addressbook_label");
     QString addressbookLabelWT = i18n(
         "When you select a nickname in the list above, the buttons here are used "
         "to associate the nickname with an entry in KAddressBook.");
     addressbookLabel->setWhatsThis(addressbookLabelWT);
     addressbookLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
-    m_editContactButton = new QPushButton(i18n("Edit C&ontact..."),
-        buttonBox, "nicksonline_editcontact_button");
+    m_editContactButton = new QPushButton(i18n("Edit C&ontact..."), buttonBox);
+    m_editContactButton->setObjectName("nicksonline_editcontact_button");
     QString editContactButtonWT = i18n(
         "Click to create, view, or edit the KAddressBook entry associated with the nickname "
         "selected above.");
     m_editContactButton->setWhatsThis(editContactButtonWT);
     m_editContactButton->setIcon(m_kabcIconSet);
-    m_changeAssociationButton = new QPushButton(i18n("&Change Association..."),
-        buttonBox, "nicksonline_changeassociation_button");
+    m_changeAssociationButton = new QPushButton(i18n("&Change Association..."), buttonBox);
+    m_changeAssociationButton->setObjectName("nicksonline_changeassociation_button");
     QString changeAssociationButtonWT = i18n(
         "Click to associate the nickname selected above with an entry in KAddressBook.");
     m_changeAssociationButton->setWhatsThis(changeAssociationButtonWT);
     m_changeAssociationButton->setIcon(m_kabcIconSet);
-    m_deleteAssociationButton = new QPushButton(i18n("&Delete Association"),
-        buttonBox, "nicksonline_deleteassociation_button");
+    m_deleteAssociationButton = new QPushButton(i18n("&Delete Association"), buttonBox);
+    m_deleteAssociationButton->setObjectName("nicksonline_deleteassociation_button");
     QString deleteAssociationButtonWT = i18n(
         "Click to remove the association between the nickname selected above and a "
         "KAddressBook entry.");
@@ -145,7 +145,8 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
     refreshAllServerOnlineLists();
 
     // Connect and start refresh timer.
-    m_timer = new QTimer(this, "nicksOnlineTimer");
+    m_timer = new QTimer(this);
+    m_timer->setObjectName("nicksOnlineTimer");
     connect(m_timer, SIGNAL (timeout()), this, SLOT(timerFired()));
     // TODO: User preference for refresh interval.
     m_timer->start(8000);
@@ -282,7 +283,7 @@ void NicksOnline::updateServerOnlineList(Server* servr)
     // watch list.
     networkRoot->setText(nlvcServerName, serverName);
     // Update list of servers in the network that are connected.
-    QStringList serverList = QStringList::split(",", networkRoot->text(nlvcAdditionalInfo));
+    QStringList serverList = networkRoot->text(nlvcAdditionalInfo).split(",", QString::SkipEmptyParts);
     if (!serverList.contains(serverName)) serverList.append(serverName);
     networkRoot->setText(nlvcAdditionalInfo, serverList.join(","));
     // Get item in nicklistview for the Offline branch.

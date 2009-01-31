@@ -251,12 +251,12 @@ int Nick::getSortingValue() const
     int flags;
     QString sortingOrder = Preferences::self()->sortOrder();
 
-    if(getChannelNick()->isOwner())       flags=sortingOrder.find('q');
-    else if(getChannelNick()->isAdmin())  flags=sortingOrder.find('p');
-    else if(getChannelNick()->isOp() )    flags=sortingOrder.find('o');
-    else if(getChannelNick()->isHalfOp()) flags=sortingOrder.find('h');
-    else if(getChannelNick()->hasVoice()) flags=sortingOrder.find('v');
-    else                                  flags=sortingOrder.find('-');
+    if(getChannelNick()->isOwner())       flags=sortingOrder.indexOf('q');
+    else if(getChannelNick()->isAdmin())  flags=sortingOrder.indexOf('p');
+    else if(getChannelNick()->isOp() )    flags=sortingOrder.indexOf('o');
+    else if(getChannelNick()->isHalfOp()) flags=sortingOrder.indexOf('h');
+    else if(getChannelNick()->hasVoice()) flags=sortingOrder.indexOf('v');
+    else                                  flags=sortingOrder.indexOf('-');
 
     return flags;
 }

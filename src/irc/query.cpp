@@ -61,10 +61,12 @@ Query::Query(QWidget* parent, QString _name) : ChatWindow(parent)
     awayChanged=false;
     awayState=false;
     Q3HBox *box = new Q3HBox(m_headerSplitter);
-    addresseeimage = new QLabel(box, "query_image");
+    addresseeimage = new QLabel(box);
+    addresseeimage->setObjectName("query_image");
     addresseeimage->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     addresseeimage->hide();
-    addresseelogoimage = new QLabel(box, "query_logo_image");
+    addresseelogoimage = new QLabel(box);
+    addresseelogoimage->setObjectName("query_logo_image");
     addresseelogoimage->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     addresseelogoimage->hide();
 
@@ -84,11 +86,11 @@ Query::Query(QWidget* parent, QString _name) : ChatWindow(parent)
 
     // link "Whois", "Ignore" ... menu items into ircview popup
     KMenu* popup=textView->getPopup();
-    popup->insertSeparator();
+    popup->addSeparator();
     popup->insertItem(i18n("&Whois"),Konversation::Whois);
     popup->insertItem(i18n("&Version"),Konversation::Version);
     popup->insertItem(i18n("&Ping"),Konversation::Ping);
-    popup->insertSeparator();
+    popup->addSeparator();
 
     popup->insertItem(i18n("Ignore"), Konversation::IgnoreNick);
     popup->insertItem(i18n("Unignore"), Konversation::UnignoreNick);
@@ -242,7 +244,7 @@ void Query::sendQueryText(const QString& sendLine)
     }
 
     // Send all strings, one after another
-    QStringList outList=QStringList::split('\n',outputAll);
+    QStringList outList = outputAll.split('\n', QString::SkipEmptyParts);
     for(int index=0;index<outList.count();index++)
     {
         QString output(outList[index]);
@@ -329,7 +331,7 @@ void Query::textPasted(const QString& text)
 {
     if(m_server)
     {
-        QStringList multiline=QStringList::split('\n',text);
+        QStringList multiline = text.split('\n', QString::SkipEmptyParts);
         for(int index=0;index<multiline.count();index++)
         {
             QString line=multiline[index];

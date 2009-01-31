@@ -68,7 +68,8 @@ QuickConnectDialog::QuickConnectDialog(QWidget *parent)
     passwordInput->setWhatsThis(passwordWT);
     passwordLabel->setBuddy(passwordInput);
 
-    sslCheckBox = new QCheckBox(page, "sslCheckBox");
+    sslCheckBox = new QCheckBox(page);
+    sslCheckBox->setObjectName("sslCheckBox");
     sslCheckBox->setText(i18n("&Use SSL"));
 
     layout->addWidget(hostNameLabel, 0, 0);

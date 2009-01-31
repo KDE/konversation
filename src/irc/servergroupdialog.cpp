@@ -74,10 +74,10 @@ namespace Konversation
         m_mainWidget->m_autoConnectCBox->setWhatsThis(i18n("Check here if you want Konversation to automatically connect to this network whenever you open Konversation."));
 
         m_mainWidget->m_serverLBox->setWhatsThis(i18n("This is a list of IRC Servers in the network. When connecting to the network, Konversation will attempt to connect to the top server first. If this fails, it will attempt the second server. If this fails, it will attempt the third, and so on. At least one server must be specified. Click a server to highlight it."));
-        m_mainWidget->m_removeServerButton->setIconSet(SmallIconSet("list-remove"));
+        m_mainWidget->m_removeServerButton->setIcon(KIcon("list-remove"));
         m_mainWidget->m_removeServerButton->setTextLabel(i18n("Delete"));
-        m_mainWidget->m_upServerBtn->setIconSet(SmallIconSet("arrow-up"));
-        m_mainWidget->m_downServerBtn->setIconSet(SmallIconSet("arrow-down"));
+        m_mainWidget->m_upServerBtn->setIcon(KIcon("arrow-up"));
+        m_mainWidget->m_downServerBtn->setIcon(KIcon("arrow-down"));
 
         connect(m_mainWidget->m_addServerButton, SIGNAL(clicked()), this, SLOT(addServer()));
         connect(m_mainWidget->m_changeServerButton, SIGNAL(clicked()), this, SLOT(editServer()));
@@ -87,10 +87,10 @@ namespace Konversation
         connect(m_mainWidget->m_downServerBtn, SIGNAL(clicked()), this, SLOT(moveServerDown()));
 
         m_mainWidget->m_channelLBox->setWhatsThis(i18n("Optional. This is a list of the channels that will be automatically joined once Konversation has connected to a server. You may leave this blank if you wish to not automatically join any channels."));
-        m_mainWidget->m_removeChannelButton->setIconSet(SmallIconSet("list-remove"));
+        m_mainWidget->m_removeChannelButton->setIcon(KIcon("list-remove"));
         m_mainWidget->m_removeChannelButton->setTextLabel(i18n("Delete"));
-        m_mainWidget->m_upChannelBtn->setIconSet(SmallIconSet("arrow-up"));
-        m_mainWidget->m_downChannelBtn->setIconSet(SmallIconSet("arrow-down"));
+        m_mainWidget->m_upChannelBtn->setIcon(KIcon("arrow-up"));
+        m_mainWidget->m_downChannelBtn->setIcon(KIcon("arrow-down"));
 
         connect(m_mainWidget->m_addChannelButton, SIGNAL(clicked()), this, SLOT(addChannel()));
         connect(m_mainWidget->m_changeChannelButton, SIGNAL(clicked()), this, SLOT(editChannel()));

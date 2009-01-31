@@ -443,7 +443,7 @@ void Channel::textPasted(const QString& text)
 {
     if(m_server)
     {
-        QStringList multiline=QStringList::split('\n',text);
+        QStringList multiline = text.split('\n', QString::SkipEmptyParts);
         for(unsigned int index=0;index<multiline.count();index++)
         {
             QString line=multiline[index];
@@ -704,7 +704,7 @@ void Channel::popupCommand(int id)
         }
         else
         {
-            QStringList patternList = QStringList::split('\n',pattern);
+            QStringList patternList = pattern.split('\n', QString::SkipEmptyParts);
 
             for (QStringList::Iterator it=nickList.begin(); it!=nickList.end(); ++it)
             {
@@ -1079,7 +1079,7 @@ void Channel::sendChannelText(const QString& sendLine)
     }
 
     // Send all strings, one after another
-    QStringList outList=QStringList::split(QRegExp("[\r\n]+"),outputAll);
+    QStringList outList = outputAll.split(QRegExp("[\r\n]+"), QString::SkipEmptyParts);
     for(unsigned int index=0;index<outList.count();index++)
     {
         QString output(outList[index]);
@@ -1218,7 +1218,7 @@ void Channel::quickButtonClicked(const QString &buttonText)
     QString out=m_server->parseWildcards(buttonText,m_server->getNickname(),getName(),getPassword(),getSelectedNickList(),QString());
 
     // are there any newlines in the definition?
-    if(out.find('\n')!=-1)
+    if (out.indexOf('\n')!=-1)
         sendChannelText(out);
     // single line without newline needs to be copied into input line
     else
