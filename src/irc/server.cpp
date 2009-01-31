@@ -397,26 +397,28 @@ void Server::connectToIRCServer()
         m_socket = 0;
         resetNickSelection();
 
-        // connect() will do a async lookup too
-        //if(!getConnectionSettings().server().SSLEnabled())
-        //{
-            m_socket = new QTcpSocket();
-            m_socket->setObjectName("serverSocket");
-            connect(m_socket, SIGNAL(connected()), SLOT (ircServerConnectionSuccess()));
-        //}
-        //else
-        //{
-        //    m_socket = new SSLSocket(getViewContainer()->getWindow(), 0L, "serverSSLSocket");
-        //    connect(m_socket, SIGNAL(sslInitDone()), SLOT(ircServerConnectionSuccess()));
-        //    connect(m_socket, SIGNAL(sslFailure(const QString&)), SIGNAL(sslInitFailure()));
-        //    connect(m_socket, SIGNAL(sslFailure(const QString&)), SLOT(sslError(const QString&)));
-        //}
+        m_socket = new QSslSocket();
+        m_socket->setObjectName("serverSocket");
 
         connect(m_socket, SIGNAL(error(QAbstractSocket::SocketError)), SLOT(broken(QAbstractSocket::SocketError)) );
         connect(m_socket, SIGNAL(readyRead()), SLOT(incoming()));
         connect(m_socket, SIGNAL(disconnected()), SLOT(closed()));
 
-        m_socket->connectToHost(getConnectionSettings().server().host(), getConnectionSettings().server().port());
+        // connect() will do a async lookup too
+        if(!getConnectionSettings().server().SSLEnabled())
+        {
+            connect(m_socket, SIGNAL(connected()), SLOT (ircServerConnectionSuccess()));
+
+            m_socket->connectToHost(getConnectionSettings().server().host(), getConnectionSettings().server().port());
+        }
+        else
+        {
+            connect(m_socket, SIGNAL(connected()), SLOT (ircServerConnectionSuccess()));
+            //connect(m_socket, SIGNAL(sslErrors(const QList<QSslError>&)), SIGNAL(sslInitFailure()));
+            connect(m_socket, SIGNAL(sslErrors(const QList<QSslError>&)), SLOT(sslError(const QList<QSslError>&)));
+
+            m_socket->connectToHostEncrypted(getConnectionSettings().server().host(), getConnectionSettings().server().port());
+        }
 
         // set up the connection details
         setPrefixes(m_serverNickPrefixModes, m_serverNickPrefixes);
@@ -624,18 +626,24 @@ void Server::broken(QAbstractSocket::SocketError state)
     }
 }
 
-/*
-void Server::sslError(const QString& reason)
+
+void Server::sslError( const QList<QSslError>&  errors)
 {
-    QString error = i18n("Could not connect to %1:%2 using SSL encryption.Maybe the server does not support SSL, or perhaps you have the wrong port? %3")
-        .arg(getConnectionSettings().server().host())
-        .arg(getConnectionSettings().server().port())
-        .arg(reason);
+    QString reason;
+    for(int i = 0; i < errors.size(); ++i)
+    {
+        reason += errors.at(i).errorString() + " ";
+    }
+
+    QString error = i18n("Could not connect to %1:%2 using SSL encryption.Maybe the server does not support SSL, or perhaps you have the wrong port? %3",
+        getConnectionSettings().server().host(),
+        getConnectionSettings().server().port(),
+        reason);
     getStatusView()->appendServerMessage(i18n("SSL Connection Error"),error);
 
     updateConnectionState(Konversation::SSDeliberatelyDisconnected);
 }
-*/
+
 
 // Will be called from InputFilter as soon as the Welcome message was received
 void Server::connectionEstablished(const QString& ownHost)

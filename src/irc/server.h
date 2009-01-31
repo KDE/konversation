@@ -36,7 +36,7 @@
 #include <Q3CString>
 #include <Q3PtrList>
 
-#include <QTcpSocket>
+#include <QSslSocket>
 #include <QHostInfo>
 
 #include <ksharedptr.h>
@@ -490,7 +490,7 @@ void resetNickSelection();
         /** This is connected to the SSLSocket failed.
          * @param reason The reason why this failed.  This is already translated, ready to show the user.
          */
-        //void sslError(const QString& reason);
+        void sslError(const QList<QSslError>& errors);
         void connectionEstablished(const QString& ownHost);
         void notifyResponse(const QString& nicksOnline);
         void slotNewDccTransferItemQueued(DccTransfer* transfer);
@@ -631,7 +631,7 @@ void resetNickSelection();
 
         QStringList m_autoJoinCommands;
 
-        QTcpSocket* m_socket;
+        QSslSocket* m_socket;
 
         QTimer m_reconnectTimer;
         QTimer m_incomingTimer;
