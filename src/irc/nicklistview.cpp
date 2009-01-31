@@ -102,10 +102,10 @@ K3ListView(parent)
 
         if (KAuthorized::authorizeKAction("allow_downloading"))
         {
-            newitem = popup->insertItem(SmallIcon("2rightarrow"),i18n("Send &File..."),Konversation::DccSend);
+            newitem = popup->insertItem(SmallIcon("arrow-right-double"),i18n("Send &File..."),Konversation::DccSend);
             popup->setWhatsThis(newitem, "<qt>Send a file to this person.  If you are having problem sending files, or they are sending slowly, see the Konversation Handbook and DCC preferences page.</qt>");
         }
-        popup->insertItem(SmallIconSet("mail_generic"),i18n("&Send Email..."), Konversation::SendEmail);
+        popup->insertItem(SmallIconSet("mail-send"),i18n("&Send Email..."), Konversation::SendEmail);
 
         popup->addSeparator();
 
@@ -292,7 +292,7 @@ void NickListView::insertAssociationSubMenu()
 
     if(!noAssociation && existingAssociation)
     {
-        addressbook->insertItem(SmallIcon("contents"), i18n("Edit Contact..."), Konversation::AddressbookEdit);
+        addressbook->insertItem(SmallIcon("document-edit"), i18n("Edit Contact..."), Konversation::AddressbookEdit);
         addressbook->addSeparator();
     }
 
@@ -307,7 +307,7 @@ void NickListView::insertAssociationSubMenu()
         addressbook->insertItem(i18n("Create New Contact..."), Konversation::AddressbookNew);
 
     if(existingAssociation)
-        addressbook->insertItem(SmallIcon("editdelete"), i18n("Delete Association"), Konversation::AddressbookDelete);
+        addressbook->insertItem(SmallIcon("edit-delete"), i18n("Delete Association"), Konversation::AddressbookDelete);
 */
     if(!emailAddress)
         popup->setItemEnabled(Konversation::SendEmail, false);
