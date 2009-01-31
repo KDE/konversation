@@ -15,7 +15,7 @@
 
 
 QuickButton::QuickButton(const QString &label,const QString &newDefinition,QWidget* parent) :
-QPushButton::QPushButton(label,parent)
+QPushButton(label,parent)
 {
     setDefinition(newDefinition);
     connect(this,SIGNAL (clicked()),this,SLOT (wasClicked()) );
