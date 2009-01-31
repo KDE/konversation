@@ -60,8 +60,8 @@ namespace Konversation
     // replace all aliases in the string and return true if anything got replaced at all
     bool OutputFilter::replaceAliases(QString& line)
     {
-        QStringList aliasList=Preferences::aliasList();
-        QString cc(Preferences::commandChar());
+        QStringList aliasList=Preferences::self()->aliasList();
+        QString cc(Preferences::self()->commandChar());
         // check if the line starts with a defined alias
         for(unsigned int index=0;index<aliasList.count();index++)
         {
@@ -190,7 +190,7 @@ namespace Konversation
             }
         }
 
-        if(!Preferences::disableExpansion())
+        if(!Preferences::self()->disableExpansion())
         {
             // replace placeholders
             inputLine.replace("%%","%\x01");      // make sure to protect double %%
@@ -1369,7 +1369,7 @@ namespace Konversation
             QStringList failed;
 
             // Iterate over potential unignores
-            for (QStringList::Iterator it = unignoreList.begin(); it != unignoreList.end(); ++it) 
+            for (QStringList::Iterator it = unignoreList.begin(); it != unignoreList.end(); ++it)
             {
                 // If pattern looks incomplete, try to complete it
                 if (!(*it).contains('!'))
@@ -1467,7 +1467,7 @@ namespace Konversation
 
     // Accessors
 
-    void OutputFilter::setCommandChar() { commandChar=Preferences::commandChar(); }
+    void OutputFilter::setCommandChar() { commandChar=Preferences::self()->commandChar(); }
 
     // # & + and ! are *often*, but not necessarily, channel identifiers. + and ! are non-RFC, so if a server doesn't offer 005 and
     // supports + and ! channels, I think thats broken behaviour on their part - not ours.
@@ -1757,7 +1757,7 @@ namespace Konversation
         {
             newNickList = parameter;
         }
-        
+
         return newNickList;
     }
 

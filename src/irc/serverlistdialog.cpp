@@ -135,7 +135,7 @@ namespace Konversation
         m_delButton = new QPushButton(i18n("&Delete"), mainWidget());
 
         QCheckBox* showAtStartup = new QCheckBox(i18n("Show at application startup"), mainWidget());
-        showAtStartup->setChecked(Preferences::showServerList());
+        showAtStartup->setChecked(Preferences::self()->showServerList());
         connect(showAtStartup, SIGNAL(toggled(bool)), this, SLOT(setShowAtStartup(bool)));
 
         Q3GridLayout* layout = new Q3GridLayout(mainWidget(), 5, 2, 0, spacingHint());
@@ -562,7 +562,7 @@ namespace Konversation
 
     void ServerListDialog::setShowAtStartup(bool show)
     {
-        Preferences::setShowServerList(show);
+        Preferences::self()->setShowServerList(show);
     }
 }
 

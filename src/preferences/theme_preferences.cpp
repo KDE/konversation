@@ -71,7 +71,7 @@ Theme_Config::~Theme_Config()
 void Theme_Config::loadSettings()
 {
     QString themeName, themeComment, themeDir;
-    QString currentTheme = Preferences::iconTheme();
+    QString currentTheme = Preferences::self()->iconTheme();
     int currentThemeIndex = 0;
 
     // get list of theme dirs
@@ -151,7 +151,7 @@ void Theme_Config::saveSettings()
             KConfigGroup grp = config->group("Themes");
             grp.writeEntry("IconTheme",m_currentTheme);
             // set in-memory theme to the saved theme
-            Preferences::setIconTheme(m_currentTheme);
+            Preferences::self()->setIconTheme(m_currentTheme);
             // update theme on runtime
             KonversationApplication::instance()->images()->initializeNickIcons();
 

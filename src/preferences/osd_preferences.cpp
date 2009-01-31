@@ -56,9 +56,9 @@ OSD_Config::OSD_Config( QWidget* parent, const char* name, Qt::WFlags fl )
 
     slotOSDEnabledChanged(kcfg_UseOSD->isChecked());
     slotCustomColorsChanged(kcfg_OSDUseCustomColors->isChecked());
-    slotScreenChanged(Preferences::oSDScreen());
+    slotScreenChanged(Preferences::self()->oSDScreen());
     slotDrawShadowChanged( kcfg_OSDDrawShadow->isChecked());
-    slotUpdateFont(Preferences::oSDFont());
+    slotUpdateFont(Preferences::self()->oSDFont());
 
     kcfg_OSDOffsetX->hide();
     kcfg_OSDOffsetY->hide();
@@ -94,7 +94,7 @@ void OSD_Config::saveSettings()
     konvApp->osd->setEnabled(kcfg_UseOSD->isChecked());
     if (kcfg_UseOSD->isChecked())
     {
-        konvApp->osd->setFont(Preferences::oSDFont());
+        konvApp->osd->setFont(Preferences::self()->oSDFont());
         if(kcfg_OSDUseCustomColors->isChecked())
         {
             konvApp->osd->setTextColor(kcfg_OSDTextColor->color());

@@ -181,8 +181,8 @@ QColor ViewTreeItem::getColor() const
 {
     if (!m_customColorSet)
     {
-        if (Preferences::inputFieldsBackgroundColor())
-            return Preferences::color(Preferences::ChannelMessage);
+        if (Preferences::self()->inputFieldsBackgroundColor())
+            return Preferences::self()->color(Preferences::ChannelMessage);
         else
             return KonversationApplication::instance()->palette().color(QPalette::Active, QPalette::Text);//KGlobalSettings::textColor();
     }
@@ -343,8 +343,8 @@ void ViewTreeItem::paintCell(QPainter* p, const QColorGroup& /* cg */, int /* co
 
     QColor textColor = isSelected() ? listView()->palette().color(QPalette::HighlightedText) /* KGlobalSettings::highlightedTextColor() */ : getColor();
     QColor background = isSelected() ? listView()->palette().color(QPalette::Highlight) /* KGlobalSettings::highlightColor() */ : listView()->paletteBackgroundColor();
-    if (m_isHighlighted) background = Preferences::inputFieldsBackgroundColor()
-        ? Preferences::color(Preferences::AlternateBackground) : listView()->palette().color(QPalette::AlternateBase); // KGlobalSettings::alternateBackgroundColor()
+    if (m_isHighlighted) background = Preferences::self()->inputFieldsBackgroundColor()
+        ? Preferences::self()->color(Preferences::AlternateBackground) : listView()->palette().color(QPalette::AlternateBase); // KGlobalSettings::alternateBackgroundColor()
 
     // Fill in background.
     painter.fillRect(0, 0, width, height(), background);
@@ -479,8 +479,8 @@ void ViewTreeItem::paintCell(QPainter* p, const QColorGroup& /* cg */, int /* co
     }
     else
     {
-        QColor lineColor = Preferences::inputFieldsBackgroundColor()
-            ? Preferences::color(Preferences::AlternateBackground) : listView()->palette().color(QPalette::AlternateBase); //KGlobalSettings::alternateBackgroundColor();
+        QColor lineColor = Preferences::self()->inputFieldsBackgroundColor()
+            ? Preferences::self()->color(Preferences::AlternateBackground) : listView()->palette().color(QPalette::AlternateBase); //KGlobalSettings::alternateBackgroundColor();
         painter.setPen(lineColor);
         painter.drawLine(0, 5, width, 5);
     }

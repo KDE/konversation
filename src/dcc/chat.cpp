@@ -134,8 +134,8 @@ void DccChat::listenForPartner()
 
     // Set up server socket
     QString failedReason;
-    if ( Preferences::dccSpecificChatPorts() )
-        m_listenSocket = DccCommon::createServerSocketAndListen( this, &failedReason, Preferences::dccChatPortsFirst(), Preferences::dccChatPortsLast() );
+    if ( Preferences::self()->dccSpecificChatPorts() )
+        m_listenSocket = DccCommon::createServerSocketAndListen( this, &failedReason, Preferences::self()->dccChatPortsFirst(), Preferences::self()->dccChatPortsLast() );
     else
         m_listenSocket = DccCommon::createServerSocketAndListen( this, &failedReason );
     if ( !m_listenSocket )
@@ -185,7 +185,7 @@ void DccChat::connectToPartner()
     connect( m_dccSocket, SIGNAL( closed() ),                           this, SLOT( socketClosed() )             );
 
     m_dccSocket->connect();
-    
+
 #if 0
     //getTextView()->appendServerMessage(i18n("DCC"), i18n("Looking for host %1...", host));
 #endif
@@ -194,7 +194,7 @@ void DccChat::connectToPartner()
 
 void DccChat::lookupFinished()
 {
-	
+
 #if 0
 	//getTextView()->appendServerMessage(i18n("DCC"),i18n("Host found, connecting..."));
 #endif
@@ -264,7 +264,7 @@ void DccChat::dccChatTextEntered()
 {
     QString line = m_dccChatInput->text();
     m_dccChatInput->setText("");
-    if ( line.lower() == Preferences::commandChar()+"clear" )
+    if ( line.lower() == Preferences::self()->commandChar()+"clear" )
     {
         textView->clear();
     }
@@ -279,7 +279,7 @@ void DccChat::sendDccChatText(const QString& sendLine)
     kDebug() << k_funcinfo << " BEGIN" << endl;
     // create a work copy
     QString output(sendLine);
-    QString cc=Preferences::commandChar();
+    QString cc=Preferences::self()->commandChar();
 
     if(!output.isEmpty())
     {
@@ -379,7 +379,7 @@ int DccChat::getOwnPort()
     return m_ownPort;
 }
 
-QString DccChat::getTextInLine() 
+QString DccChat::getTextInLine()
 {
     return m_dccChatInput->text();
 }
@@ -440,10 +440,10 @@ void DccChat::updateAppearance()
     QColor fg;
     QColor bg;
 
-    if(Preferences::inputFieldsBackgroundColor())
+    if(Preferences::self()->inputFieldsBackgroundColor())
     {
-        fg=Preferences::color(Preferences::ChannelMessage);
-        bg=Preferences::color(Preferences::TextViewBackground);
+        fg=Preferences::self()->color(Preferences::ChannelMessage);
+        bg=Preferences::self()->color(Preferences::TextViewBackground);
     }
     else
     {
@@ -457,21 +457,21 @@ void DccChat::updateAppearance()
 
     getTextView()->unsetPalette();
 
-    if(Preferences::showBackgroundImage())
+    if(Preferences::self()->showBackgroundImage())
     {
-        getTextView()->setViewBackground(Preferences::color(Preferences::TextViewBackground),
-        Preferences::backgroundImage());
+        getTextView()->setViewBackground(Preferences::self()->color(Preferences::TextViewBackground),
+        Preferences::self()->backgroundImage());
     }
     else
     {
-        getTextView()->setViewBackground(Preferences::color(Preferences::TextViewBackground),
+        getTextView()->setViewBackground(Preferences::self()->color(Preferences::TextViewBackground),
         QString());
     }
 
-    if (Preferences::customTextFont())
+    if (Preferences::self()->customTextFont())
     {
-        getTextView()->setFont(Preferences::textFont());
-        m_dccChatInput->setFont(Preferences::textFont());
+        getTextView()->setFont(Preferences::self()->textFont());
+        m_dccChatInput->setFont(Preferences::self()->textFont());
     }
     else
     {

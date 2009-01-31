@@ -40,7 +40,7 @@ DccTransfer::DccTransfer( DccType dccType, QObject* parent ) : QObject(parent)
     m_averageSpeed = 0.0;
     m_currentSpeed = 0.0;
 
-    m_bufferSize = Preferences::dccBufferSize();
+    m_bufferSize = Preferences::self()->dccBufferSize();
     m_buffer = new char[ m_bufferSize ];
 
     connect( &m_loggerTimer, SIGNAL( timeout() ), this, SLOT( logTransfer() ) );

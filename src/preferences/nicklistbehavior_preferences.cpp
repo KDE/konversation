@@ -46,7 +46,7 @@ void NicklistBehavior_Config::restorePageToDefaults()
 void NicklistBehavior_Config::loadSettings()
 {
   // get sorting order string from preferences
-  setNickList(Preferences::sortOrder());
+  setNickList(Preferences::self()->sortOrder());
   m_oldSortingOrder=currentSortingOrder();
 }
 
@@ -94,7 +94,7 @@ void NicklistBehavior_Config::saveSettings()
   QString newSortingOrder=currentSortingOrder();
 
   // update sorting order on in-memory preferences
-  Preferences::setSortOrder(newSortingOrder);
+  Preferences::self()->setSortOrder(newSortingOrder);
 
   // save current sorting order as a reference to hasChanged()
   m_oldSortingOrder=currentSortingOrder();

@@ -96,7 +96,7 @@ int KonversationApplication::newInstance()
         connect(m_connectionManager, SIGNAL(connectionChangedAwayState(bool)), m_awayManager, SLOT(updateGlobalAwayAction(bool)));
 
         // an instance of DccTransferManager needs to be created before GUI class instances' creation.
-        m_dccTransferManager = 0;//new DccTransferManager(this);
+        m_dccTransferManager = new DccTransferManager(this);
 
         // make sure all vars are initialized properly
         quickConnectDialog = 0;
@@ -115,7 +115,7 @@ int KonversationApplication::newInstance()
         connect(KGlobalSettings::self(), SIGNAL(iconChanged(int)), m_images, SLOT(updateIcons()));
 
         // Auto-alias scripts.  This adds any missing aliases
-        QStringList aliasList(Preferences::aliasList());
+        QStringList aliasList(Preferences::self()->aliasList());
         QStringList scripts(Preferences::defaultAliasList());
         bool changed = false;
         for ( QStringList::ConstIterator it = scripts.begin(); it != scripts.end(); ++it )
@@ -126,7 +126,7 @@ int KonversationApplication::newInstance()
             }
         }
         if(changed)
-            Preferences::setAliasList(aliasList);
+            Preferences::self()->setAliasList(aliasList);
 
         // Setup system codec
         // TODO: check if this works now as intended
@@ -144,12 +144,12 @@ int KonversationApplication::newInstance()
         // apply GUI settings
         emit appearanceChanged(); //TODO FIXME i do believe this signal is abused
 
-        if (Preferences::showTrayIcon() && Preferences::hideToTrayOnStartup())
+        if (Preferences::self()->showTrayIcon() && Preferences::self()->hideToTrayOnStartup())
             mainWindow->hide();
         else
             mainWindow->show();
 
-        bool openServerList = Preferences::showServerList();
+        bool openServerList = Preferences::self()->showServerList();
 
         // handle autoconnect on startup
         Konversation::ServerGroupList serverGroups = Preferences::serverGroupList();
@@ -286,7 +286,7 @@ void KonversationApplication::readOptions()
     if (sortOrderList.join("")!="-hopqv")
     {
         sortOrder=Preferences::defaultNicknameSortingOrder();
-        Preferences::setSortOrder(sortOrder);
+        Preferences::self()->setSortOrder(sortOrder);
     }
 
     // Identity list
@@ -435,8 +435,8 @@ void KonversationApplication::readOptions()
 
     // Notify Settings and lists.  Must follow Server List.
     Preferences::setNotifyList(notifyList);
-    Preferences::setNotifyDelay(Preferences::notifyDelay());
-    Preferences::setUseNotify(Preferences::useNotify());
+    Preferences::self()->setNotifyDelay(Preferences::self()->notifyDelay());
+    Preferences::self()->setUseNotify(Preferences::self()->useNotify());
 
     // Quick Buttons List
 
@@ -531,7 +531,7 @@ void KonversationApplication::readOptions()
     KConfigGroup cgAliases(KGlobal::config()->group("Aliases"));
     QStringList newList=cgAliases.readEntry("AliasList", QStringList());
     if (!newList.isEmpty())
-        Preferences::setAliasList(newList);
+        Preferences::self()->setAliasList(newList);
 
     // Channel Encodings
     KConfigGroup cgChannelEncodings(KGlobal::config()->group("Channel Encodings"));

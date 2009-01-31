@@ -510,20 +510,20 @@ void Preferences::setNicknameList(const QStringList &newList) { self()->mIdentit
 
 void Preferences::setShowTrayIcon(bool state)
 {
-    PreferencesBase::setShowTrayIcon(state);
+    self()->PreferencesBase::setShowTrayIcon(state);
     emit self()->updateTrayIcon();
 }
 
 void Preferences::setTrayNotify(bool state)
 {
-    PreferencesBase::setTrayNotify(state);
+    self()->PreferencesBase::setTrayNotify(state);
     emit self()->updateTrayIcon();
 }
 
 
 void Preferences::setAutoUserhost(bool state)
 {
-    PreferencesBase::setAutoUserhost(state);
+    self()->PreferencesBase::setAutoUserhost(state);
 }
 
 bool Preferences::dialogFlag(const QString& flagName)

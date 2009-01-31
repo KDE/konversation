@@ -127,7 +127,7 @@ Query::Query(QWidget* parent, QString _name) : ChatWindow(parent)
 
     updateAppearance();
 
-    setLog(Preferences::log());
+    setLog(Preferences::self()->log());
 }
 
 Query::~Query()
@@ -153,13 +153,13 @@ void Query::connectionStateChanged(Server* server, Konversation::ConnectionState
         if (state ==  Konversation::SSConnected)
         {
             //HACK the way the notification priorities work sucks, this forces the tab text color to ungray right now.
-            if (m_currentTabNotify == Konversation::tnfNone || !Preferences::tabNotificationsEvents())
+            if (m_currentTabNotify == Konversation::tnfNone || !Preferences::self()->tabNotificationsEvents())
                 KonversationApplication::instance()->getMainWindow()->getViewContainer()->unsetViewNotification(this);
         }
         else
         {
             //HACK the way the notification priorities work sucks, this forces the tab text color to gray right now.
-            if (m_currentTabNotify == Konversation::tnfNone || (!Preferences::tabNotificationsEvents() && m_currentTabNotify == Konversation::tnfControl))
+            if (m_currentTabNotify == Konversation::tnfNone || (!Preferences::self()->tabNotificationsEvents() && m_currentTabNotify == Konversation::tnfControl))
                 KonversationApplication::instance()->getMainWindow()->getViewContainer()->unsetViewNotification(this);
         }
     }
@@ -175,9 +175,9 @@ void Query::setName(const QString& newName)
     // This will prevent Nick-Changers to create more than one log file,
     if (logName.isEmpty())
     {
-        QString logName =  (Preferences::lowerLog()) ? getName().toLower() : getName() ;
+        QString logName =  (Preferences::self()->lowerLog()) ? getName().toLower() : getName() ;
 
-        if(Preferences::addHostnameToLog())
+        if(Preferences::self()->addHostnameToLog())
         {
             if(m_nickInfo)
                 logName += m_nickInfo->getHostmask();
@@ -199,11 +199,11 @@ void Query::queryTextEntered()
 {
     QString line=queryInput->text();
     queryInput->setText("");
-    if(line.toLower()==Preferences::commandChar()+"clear")
+    if(line.toLower()==Preferences::self()->commandChar()+"clear")
     {
         textView->clear();
     }
-    else if(line.toLower()==Preferences::commandChar()+"part")
+    else if(line.toLower()==Preferences::self()->commandChar()+"part")
     {
         m_server->closeQuery(getName());
     }
@@ -215,7 +215,7 @@ void Query::queryTextEntered()
 
 void Query::queryPassthroughCommand()
 {
-    QString commandChar = Preferences::commandChar();
+    QString commandChar = Preferences::self()->commandChar();
     QString line = queryInput->text();
 
     queryInput->setText("");
@@ -283,10 +283,10 @@ void Query::updateAppearance()
     QColor fg;
     QColor bg;
 
-    if(Preferences::inputFieldsBackgroundColor())
+    if(Preferences::self()->inputFieldsBackgroundColor())
     {
-        fg=Preferences::color(Preferences::ChannelMessage);
-        bg=Preferences::color(Preferences::TextViewBackground);
+        fg=Preferences::self()->color(Preferences::ChannelMessage);
+        bg=Preferences::self()->color(Preferences::TextViewBackground);
     }
     else
     {
@@ -300,21 +300,21 @@ void Query::updateAppearance()
 
     getTextView()->unsetPalette();
 
-    if (Preferences::showBackgroundImage())
+    if (Preferences::self()->showBackgroundImage())
     {
-        getTextView()->setViewBackground(Preferences::color(Preferences::TextViewBackground),
-            Preferences::backgroundImage());
+        getTextView()->setViewBackground(Preferences::self()->color(Preferences::TextViewBackground),
+            Preferences::self()->backgroundImage());
     }
     else
     {
-        getTextView()->setViewBackground(Preferences::color(Preferences::TextViewBackground),
+        getTextView()->setViewBackground(Preferences::self()->color(Preferences::TextViewBackground),
             QString());
     }
 
-    if (Preferences::customTextFont())
+    if (Preferences::self()->customTextFont())
     {
-        getTextView()->setFont(Preferences::textFont());
-        queryInput->setFont(Preferences::textFont());
+        getTextView()->setFont(Preferences::self()->textFont());
+        queryInput->setFont(Preferences::self()->textFont());
     }
     else
     {
@@ -333,7 +333,7 @@ void Query::textPasted(const QString& text)
         for(int index=0;index<multiline.count();index++)
         {
             QString line=multiline[index];
-            QString cChar(Preferences::commandChar());
+            QString cChar(Preferences::self()->commandChar());
             // make sure that lines starting with command char get escaped
             if(line.startsWith(cChar)) line=cChar+line;
             sendQueryText(line);
@@ -386,7 +386,7 @@ void Query::popup(int id)
     switch (id)
     {
         case Konversation::Whois:
-            sendQueryText(Preferences::commandChar()+"WHOIS "+name+' '+name);
+            sendQueryText(Preferences::self()->commandChar()+"WHOIS "+name+' '+name);
             break;
 
         case Konversation::IgnoreNick:
@@ -400,7 +400,7 @@ void Query::popup(int id)
                 "IgnoreNick")
                 == KMessageBox::Continue)
             {
-                sendQueryText(Preferences::commandChar()+"IGNORE -ALL "+name);
+                sendQueryText(Preferences::self()->commandChar()+"IGNORE -ALL "+name);
 
                 int rc = KMessageBox::questionYesNo(this,
                 i18n("Do you want to close this query after ignoring this nickname?"),
@@ -427,7 +427,7 @@ void Query::popup(int id)
                 ==
                 KMessageBox::Continue)
             {
-                sendQueryText(Preferences::commandChar()+"UNIGNORE "+name);
+                sendQueryText(Preferences::self()->commandChar()+"UNIGNORE "+name);
             }
 
             break;
@@ -442,15 +442,15 @@ void Query::popup(int id)
             break;
         }
         case Konversation::DccSend:
-            sendQueryText(Preferences::commandChar()+"DCC SEND "+name);
+            sendQueryText(Preferences::self()->commandChar()+"DCC SEND "+name);
             break;
 
         case Konversation::Version:
-            sendQueryText(Preferences::commandChar()+"CTCP "+name+" VERSION");
+            sendQueryText(Preferences::self()->commandChar()+"CTCP "+name+" VERSION");
             break;
 
         case Konversation::Ping:
-            sendQueryText(Preferences::commandChar()+"CTCP "+name+" PING");
+            sendQueryText(Preferences::self()->commandChar()+"CTCP "+name+" PING");
             break;
 
         case Konversation::Topic:

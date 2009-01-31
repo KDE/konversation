@@ -43,19 +43,19 @@ void RawLog::updateAppearance()
 {
     getTextView()->unsetPalette();
 
-    if(Preferences::showBackgroundImage())
+    if(Preferences::self()->showBackgroundImage())
     {
-        getTextView()->setViewBackground(Preferences::color(Preferences::TextViewBackground),
-            Preferences::backgroundImage());
+        getTextView()->setViewBackground(Preferences::self()->color(Preferences::TextViewBackground),
+            Preferences::self()->backgroundImage());
     }
     else
     {
-        getTextView()->setViewBackground(Preferences::color(Preferences::TextViewBackground),
+        getTextView()->setViewBackground(Preferences::self()->color(Preferences::TextViewBackground),
             QString());
     }
 
-    if (Preferences::customTextFont())
-        getTextView()->setFont(Preferences::textFont());
+    if (Preferences::self()->customTextFont())
+        getTextView()->setFont(Preferences::self()->textFont());
     else
         getTextView()->setFont(KGlobalSettings::generalFont());
 

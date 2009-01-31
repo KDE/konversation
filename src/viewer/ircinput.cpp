@@ -49,7 +49,7 @@ IRCInput::IRCInput(QWidget* parent) : KTextEdit(parent)
     m_qtBoxPadding=m_lastHeight-fontMetrics().lineSpacing();
 
     connect(KApplication::kApplication(), SIGNAL(appearanceChanged()), this, SLOT(updateAppearance()));
-    m_multiRow = Preferences::useMultiRowInputBox();
+    m_multiRow = Preferences::self()->useMultiRowInputBox();
 
     m_useSelection = false;
 
@@ -86,12 +86,12 @@ IRCInput::~IRCInput()
 void IRCInput::showEvent(QShowEvent* /* e */)
 {
     m_disableSpellCheckTimer->stop();
-    setCheckSpellingEnabled(Preferences::spellChecking());
+    setCheckSpellingEnabled(Preferences::self()->spellChecking());
 }
 
 void IRCInput::hideEvent(QHideEvent* /* event */)
 {
-    Preferences::setSpellChecking(checkSpellingEnabled());
+    Preferences::self()->setSpellChecking(checkSpellingEnabled());
 
     // If we disable spell-checking here immediately, tab switching will
     // be very slow. If we delay it by five seconds, a user would have to
@@ -127,7 +127,7 @@ void IRCInput::slotSpellCheckDone(const QString& s)
 
 void IRCInput::updateAppearance()
 {
-    m_multiRow = Preferences::useMultiRowInputBox();
+    m_multiRow = Preferences::self()->useMultiRowInputBox();
     setLineWrapMode(m_multiRow ? WidgetWidth : NoWrap);
     m_lastHeight=heightForWidth(sizeHint().width());
     ensureCursorVisible(); //appears to trigger updateGeometry
@@ -401,7 +401,7 @@ void IRCInput::paste()
             pasteText.remove(reBottomSpace);
 
         // Escape % when var expansion is enabled
-        if (!Preferences::disableExpansion())
+        if (!Preferences::self()->disableExpansion())
         {
             pasteText.replace ('%', "%%");
         }
@@ -513,7 +513,7 @@ void IRCInput::insertCompletion(const QString& nick)
     // did we find the nick in the middle of the line?
     if(pos)
     {
-        QString addMiddle(Preferences::nickCompleteSuffixMiddle());
+        QString addMiddle(Preferences::self()->nickCompleteSuffixMiddle());
         line.insert(pos, nick + addMiddle);
         pos += nick.length() + addMiddle.length();
     }
@@ -521,7 +521,7 @@ void IRCInput::insertCompletion(const QString& nick)
     else
     {
         setLastCompletion(nick);
-        QString addStart(Preferences::nickCompleteSuffixStart());
+        QString addStart(Preferences::self()->nickCompleteSuffixStart());
         line.insert(pos, nick + addStart);
         pos += nick.length() + addStart.length();
     }

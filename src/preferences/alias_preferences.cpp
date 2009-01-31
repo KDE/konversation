@@ -55,13 +55,13 @@ Alias_Config::~Alias_Config()
 
 void Alias_Config::loadSettings()
 {
-    setAliasListView(Preferences::aliasList());
+    setAliasListView(Preferences::self()->aliasList());
 }
 
 void Alias_Config::saveSettings()
 {
     QStringList newList=currentAliasList();
-    Preferences::setAliasList(newList);
+    Preferences::self()->setAliasList(newList);
 
     // saved list is now old list, to check for changes
     m_oldAliasList=newList;

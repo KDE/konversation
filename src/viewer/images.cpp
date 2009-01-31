@@ -53,12 +53,12 @@ QPixmap Images::getNickIcon(NickPrivilege privilege,bool isAway) const
 void Images::initializeLeds()
 {
     m_serverColor = "steelblue";
-    m_systemColor = Preferences::tabNotificationsSystemColor();
-    m_msgsColor = Preferences::tabNotificationsMsgsColor();
-    m_privateColor = Preferences::tabNotificationsPrivateColor();
-    m_eventsColor = Preferences::tabNotificationsEventsColor();
-    m_nickColor = Preferences::tabNotificationsNickColor();
-    m_highlightsColor = Preferences::tabNotificationsHighlightsColor();
+    m_systemColor = Preferences::self()->tabNotificationsSystemColor();
+    m_msgsColor = Preferences::self()->tabNotificationsMsgsColor();
+    m_privateColor = Preferences::self()->tabNotificationsPrivateColor();
+    m_eventsColor = Preferences::self()->tabNotificationsEventsColor();
+    m_nickColor = Preferences::self()->tabNotificationsNickColor();
+    m_highlightsColor = Preferences::self()->tabNotificationsHighlightsColor();
 
     // m_serverLedOn = getLed(m_serverColor,true);
     m_serverLedOff = getLed(m_serverColor,false);
@@ -85,7 +85,7 @@ void Images::initializeKimifaceIcons()
 void Images::initializeNickIcons()
 {
 
-    QString iconTheme = Preferences::iconTheme();
+    QString iconTheme = Preferences::self()->iconTheme();
     QStringList icons = KGlobal::dirs()->findAllResources("data","konversation/themes/"+iconTheme+"/*.png");
 
     if( icons.count() < 7 ) // Sanity
@@ -238,12 +238,12 @@ QIcon Images::getServerLed(bool state)
 
 QIcon Images::getSystemLed(bool state)
 {
-    if (Preferences::tabNotificationsSystemColor()!=m_systemColor)
+    if (Preferences::self()->tabNotificationsSystemColor()!=m_systemColor)
     {
         if (state)
-            return getLed(Preferences::tabNotificationsSystemColor(),true);
+            return getLed(Preferences::self()->tabNotificationsSystemColor(),true);
         else
-            return getLed(Preferences::tabNotificationsSystemColor(),false);
+            return getLed(Preferences::self()->tabNotificationsSystemColor(),false);
     }
     else
     {
@@ -256,12 +256,12 @@ QIcon Images::getSystemLed(bool state)
 
 QIcon Images::getMsgsLed(bool state)
 {
-    if (Preferences::tabNotificationsMsgsColor()!=m_msgsColor)
+    if (Preferences::self()->tabNotificationsMsgsColor()!=m_msgsColor)
     {
         if (state)
-            return getLed(Preferences::tabNotificationsMsgsColor(),true);
+            return getLed(Preferences::self()->tabNotificationsMsgsColor(),true);
         else
-            return getLed(Preferences::tabNotificationsMsgsColor(),false);
+            return getLed(Preferences::self()->tabNotificationsMsgsColor(),false);
     }
     else
     {
@@ -274,12 +274,12 @@ QIcon Images::getMsgsLed(bool state)
 
 QIcon Images::getPrivateLed(bool state)
 {
-    if (Preferences::tabNotificationsPrivateColor()!=m_privateColor)
+    if (Preferences::self()->tabNotificationsPrivateColor()!=m_privateColor)
     {
         if (state)
-            return getLed(Preferences::tabNotificationsPrivateColor(),true);
+            return getLed(Preferences::self()->tabNotificationsPrivateColor(),true);
         else
-            return getLed(Preferences::tabNotificationsPrivateColor(),false);
+            return getLed(Preferences::self()->tabNotificationsPrivateColor(),false);
     }
     else
     {
@@ -292,24 +292,24 @@ QIcon Images::getPrivateLed(bool state)
 
 QIcon Images::getEventsLed()
 {
-    if (Preferences::tabNotificationsEventsColor()!=m_eventsColor)
-        return getLed(Preferences::tabNotificationsEventsColor(),true);
+    if (Preferences::self()->tabNotificationsEventsColor()!=m_eventsColor)
+        return getLed(Preferences::self()->tabNotificationsEventsColor(),true);
     else
         return m_eventsLedOn;
 }
 
 QIcon Images::getNickLed()
 {
-    if (Preferences::tabNotificationsNickColor()!=m_nickColor)
-        return getLed(Preferences::tabNotificationsNickColor(),true);
+    if (Preferences::self()->tabNotificationsNickColor()!=m_nickColor)
+        return getLed(Preferences::self()->tabNotificationsNickColor(),true);
     else
         return m_nickLedOn;
 }
 
 QIcon Images::getHighlightsLed()
 {
-    if (Preferences::tabNotificationsHighlightsColor()!=m_highlightsColor)
-        return getLed(Preferences::tabNotificationsHighlightsColor(),true);
+    if (Preferences::self()->tabNotificationsHighlightsColor()!=m_highlightsColor)
+        return getLed(Preferences::self()->tabNotificationsHighlightsColor(),true);
     else
         return m_highlightsLedOn;
 }

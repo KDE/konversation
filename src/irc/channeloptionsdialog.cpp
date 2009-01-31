@@ -110,10 +110,10 @@ namespace Konversation
             if (newTopic.isEmpty())
             {
                 if (!oldTopic.isEmpty())
-                    m_channel->sendChannelText(Preferences::commandChar() + "TOPIC " + m_channel->getName() + " \x01");
+                    m_channel->sendChannelText(Preferences::self()->commandChar() + "TOPIC " + m_channel->getName() + " \x01");
             }
             else
-                m_channel->sendChannelText(Preferences::commandChar() + "TOPIC " + m_channel->getName() + ' ' + newTopic);
+                m_channel->sendChannelText(Preferences::self()->commandChar() + "TOPIC " + m_channel->getName() + ' ' + newTopic);
         }
 
         QStringList newModeList = modes();

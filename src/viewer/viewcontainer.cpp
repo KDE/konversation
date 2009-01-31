@@ -75,7 +75,7 @@ ViewContainer::ViewContainer(KonversationMainWindow* window):
 
     // The tree needs to be initialized before the tab widget so that it
     // may assume a leading role in view selection management.
-    if (Preferences::tabPlacement()==Preferences::Left) setupViewTree();
+    if (Preferences::self()->tabPlacement()==Preferences::Left) setupViewTree();
 
     setupTabWidget();
 
@@ -127,7 +127,7 @@ void ViewContainer::initializeSplitterSizes()
 {
     if (m_viewTree && !m_viewTree->isHidden())
     {
-        Q3ValueList<int> sizes = Preferences::treeSplitterSizes();
+        Q3ValueList<int> sizes = Preferences::self()->treeSplitterSizes();
 
         if (sizes.isEmpty())
             sizes << 145 << (m_window->width()-145);
@@ -141,7 +141,7 @@ void ViewContainer::saveSplitterSizes()
 {
     if (!m_saveSplitterSizesLock)
     {
-        Preferences::setTreeSplitterSizes(m_viewTreeSplitter->sizes());
+        Preferences::self()->setTreeSplitterSizes(m_viewTreeSplitter->sizes());
         m_saveSplitterSizesLock = false;
     }
 }
@@ -346,13 +346,13 @@ void ViewContainer::syncTabBarToTree()
 
 void ViewContainer::updateAppearance()
 {
-    if (Preferences::tabPlacement()==Preferences::Left && m_viewTree == 0)
+    if (Preferences::self()->tabPlacement()==Preferences::Left && m_viewTree == 0)
     {
         m_saveSplitterSizesLock = true;
         setupViewTree();
     }
 
-    if (!(Preferences::tabPlacement()==Preferences::Left) && m_viewTree)
+    if (!(Preferences::self()->tabPlacement()==Preferences::Left) && m_viewTree)
     {
         m_saveSplitterSizesLock = true;
         removeViewTree();
@@ -363,14 +363,14 @@ void ViewContainer::updateAppearance()
 
     KToggleAction* action = qobject_cast<KToggleAction*>(actionCollection()->action("hide_nicknamelist"));
     Q_ASSERT(action);
-    action->setChecked(!Preferences::showNickList());
+    action->setChecked(!Preferences::self()->showNickList());
 
     if(m_insertCharDialog)
     {
         QFont font;
 
-        if (Preferences::customTextFont())
-            font = Preferences::textFont();
+        if (Preferences::self()->customTextFont())
+            font = Preferences::self()->textFont();
         else
             font = KGlobalSettings::generalFont();
         Q_ASSERT(0);
@@ -382,25 +382,25 @@ void ViewContainer::updateTabWidgetAppearance()
 {
     if (!m_tabWidget) return;
 
-    m_tabWidget->setTabBarHidden((Preferences::tabPlacement()==Preferences::Left));
+    m_tabWidget->setTabBarHidden((Preferences::self()->tabPlacement()==Preferences::Left));
 
-    if (Preferences::customTabFont())
-        m_tabWidget->setFont(Preferences::tabFont());
+    if (Preferences::self()->customTabFont())
+        m_tabWidget->setFont(Preferences::self()->tabFont());
     else
         m_tabWidget->setFont(KGlobalSettings::generalFont());
 
-    m_tabWidget->setTabPosition((Preferences::tabPlacement()==Preferences::Top) ?
+    m_tabWidget->setTabPosition((Preferences::self()->tabPlacement()==Preferences::Top) ?
         QTabWidget::Top : QTabWidget::Bottom);
 
-    if (Preferences::showTabBarCloseButton() && !(Preferences::tabPlacement()==Preferences::Left))
+    if (Preferences::self()->showTabBarCloseButton() && !(Preferences::self()->tabPlacement()==Preferences::Left))
         m_tabWidget->cornerWidget()->show();
     else
         m_tabWidget->cornerWidget()->hide();
 
-    m_tabWidget->setHoverCloseButton(Preferences::closeButtons());
+    m_tabWidget->setHoverCloseButton(Preferences::self()->closeButtons());
 
     #if KDE_IS_VERSION(3,4,0)
-    m_tabWidget->setAutomaticResizeTabs(Preferences::useMaxSizedTabs());
+    m_tabWidget->setAutomaticResizeTabs(Preferences::self()->useMaxSizedTabs());
     #endif
 }
 
@@ -763,44 +763,44 @@ void ViewContainer::updateViews(const Konversation::ServerGroupSettingsPtr serve
 
         if (m_viewTree)
         {
-            if (!Preferences::tabNotificationsLeds() && !Preferences::closeButtons())
+            if (!Preferences::self()->tabNotificationsLeds() && !Preferences::self()->closeButtons())
                 m_viewTree->setViewIcon(view, QIcon());
 
-            if (Preferences::closeButtons() && !Preferences::tabNotificationsLeds())
+            if (Preferences::self()->closeButtons() && !Preferences::self()->tabNotificationsLeds())
                  m_viewTree->setViewIcon(view, images->getCloseIcon());
 
 
-            if (!Preferences::tabNotificationsText())
+            if (!Preferences::self()->tabNotificationsText())
                 m_viewTree->setViewColor(view, m_window->colorGroup().foreground());
         }
         else if (m_tabWidget)
         {
-            if (!Preferences::tabNotificationsLeds() && !Preferences::closeButtons())
+            if (!Preferences::self()->tabNotificationsLeds() && !Preferences::self()->closeButtons())
                 m_tabWidget->setTabIconSet(view, QIcon());
 
-            if (Preferences::closeButtons() && !Preferences::tabNotificationsLeds())
+            if (Preferences::self()->closeButtons() && !Preferences::self()->tabNotificationsLeds())
                 m_tabWidget->setTabIconSet(view, images->getCloseIcon());
 
             // TODO FIXME
-            //if (!Preferences::tabNotificationsText())
+            //if (!Preferences::self()->tabNotificationsText())
             //    m_tabWidget->setTabColor(view, m_window->colorGroup().foreground());
         }
 
-        if (Preferences::tabNotificationsLeds() || Preferences::tabNotificationsText())
+        if (Preferences::self()->tabNotificationsLeds() || Preferences::self()->tabNotificationsText())
         {
             if (view->currentTabNotification()==Konversation::tnfNone)
                 unsetViewNotification(view);
-            else if (view->currentTabNotification()==Konversation::tnfNormal && !Preferences::tabNotificationsMsgs())
+            else if (view->currentTabNotification()==Konversation::tnfNormal && !Preferences::self()->tabNotificationsMsgs())
                 unsetViewNotification(view);
-            else if (view->currentTabNotification()==Konversation::tnfPrivate && !Preferences::tabNotificationsPrivate())
+            else if (view->currentTabNotification()==Konversation::tnfPrivate && !Preferences::self()->tabNotificationsPrivate())
                 unsetViewNotification(view);
-            else if (view->currentTabNotification()==Konversation::tnfSystem && !Preferences::tabNotificationsSystem())
+            else if (view->currentTabNotification()==Konversation::tnfSystem && !Preferences::self()->tabNotificationsSystem())
                 unsetViewNotification(view);
-            else if (view->currentTabNotification()==Konversation::tnfControl && !Preferences::tabNotificationsEvents())
+            else if (view->currentTabNotification()==Konversation::tnfControl && !Preferences::self()->tabNotificationsEvents())
                 unsetViewNotification(view);
-            else if (view->currentTabNotification()==Konversation::tnfNick && !Preferences::tabNotificationsNick())
+            else if (view->currentTabNotification()==Konversation::tnfNick && !Preferences::self()->tabNotificationsNick())
                 unsetViewNotification(view);
-            else if (view->currentTabNotification()==Konversation::tnfHighlight && !Preferences::tabNotificationsHighlights())
+            else if (view->currentTabNotification()==Konversation::tnfHighlight && !Preferences::self()->tabNotificationsHighlights())
                 unsetViewNotification(view);
             else if (view==m_tabWidget->currentPage())
                 unsetViewNotification(view);
@@ -818,7 +818,7 @@ void ViewContainer::updateViewIcons()
     {
         ChatWindow* view = static_cast<ChatWindow*>(m_tabWidget->page(i));
 
-        if (Preferences::closeButtons() && !Preferences::tabNotificationsLeds())
+        if (Preferences::self()->closeButtons() && !Preferences::self()->tabNotificationsLeds())
         {
             if (m_viewTree)
                 m_viewTree->setViewIcon(view, images->getCloseIcon());
@@ -836,7 +836,7 @@ void ViewContainer::setViewNotification(ChatWindow* view, const Konversation::Ta
     if (type < Konversation::tnfControl && (m_activeViewOrderList.find(view) == m_activeViewOrderList.end()))
         m_activeViewOrderList.append(view);
 
-    if (!Preferences::tabNotificationsLeds() && !Preferences::tabNotificationsText())
+    if (!Preferences::self()->tabNotificationsLeds() && !Preferences::self()->self()->tabNotificationsText())
         return;
 
     if (m_viewTree)
@@ -844,61 +844,61 @@ void ViewContainer::setViewNotification(ChatWindow* view, const Konversation::Ta
         switch (type)
         {
             case Konversation::tnfNormal:
-                if (Preferences::tabNotificationsMsgs())
+                if (Preferences::self()->tabNotificationsMsgs())
                 {
-                    if (Preferences::tabNotificationsLeds())
+                    if (Preferences::self()->tabNotificationsLeds())
                         m_viewTree->setViewIcon(view, images->getMsgsLed(true));
-                    if (Preferences::tabNotificationsText())
-                        m_viewTree->setViewColor(view, Preferences::tabNotificationsMsgsColor());
+                    if (Preferences::self()->tabNotificationsText())
+                        m_viewTree->setViewColor(view, Preferences::self()->tabNotificationsMsgsColor());
                 }
                 break;
 
             case Konversation::tnfPrivate:
-                if (Preferences::tabNotificationsPrivate())
+                if (Preferences::self()->tabNotificationsPrivate())
                 {
-                    if (Preferences::tabNotificationsLeds())
+                    if (Preferences::self()->tabNotificationsLeds())
                         m_viewTree->setViewIcon(view, images->getPrivateLed(true));
-                    if (Preferences::tabNotificationsText())
-                        m_viewTree->setViewColor(view, Preferences::tabNotificationsPrivateColor());
+                    if (Preferences::self()->tabNotificationsText())
+                        m_viewTree->setViewColor(view, Preferences::self()->tabNotificationsPrivateColor());
                 }
                 break;
 
             case Konversation::tnfSystem:
-                if (Preferences::tabNotificationsSystem())
+                if (Preferences::self()->tabNotificationsSystem())
                 {
-                    if (Preferences::tabNotificationsLeds())
+                    if (Preferences::self()->tabNotificationsLeds())
                         m_viewTree->setViewIcon(view, images->getSystemLed(true));
-                    if (Preferences::tabNotificationsText())
-                        m_viewTree->setViewColor(view, Preferences::tabNotificationsSystemColor());
+                    if (Preferences::self()->tabNotificationsText())
+                        m_viewTree->setViewColor(view, Preferences::self()->tabNotificationsSystemColor());
                 }
                 break;
 
             case Konversation::tnfControl:
-                if (Preferences::tabNotificationsEvents())
+                if (Preferences::self()->tabNotificationsEvents())
                 {
-                    if (Preferences::tabNotificationsLeds())
+                    if (Preferences::self()->tabNotificationsLeds())
                         m_viewTree->setViewIcon(view, images->getEventsLed());
-                    if (Preferences::tabNotificationsText())
-                        m_viewTree->setViewColor(view, Preferences::tabNotificationsEventsColor());
+                    if (Preferences::self()->tabNotificationsText())
+                        m_viewTree->setViewColor(view, Preferences::self()->tabNotificationsEventsColor());
                 }
                 break;
 
             case Konversation::tnfNick:
-                if (Preferences::tabNotificationsNick())
+                if (Preferences::self()->tabNotificationsNick())
                 {
-                    if (Preferences::tabNotificationsOverride() && Preferences::highlightNick())
+                    if (Preferences::self()->tabNotificationsOverride() && Preferences::self()->highlightNick())
                     {
-                        if (Preferences::tabNotificationsLeds())
-                            m_viewTree->setViewIcon(view, images->getLed(Preferences::highlightNickColor(),true));
-                        if (Preferences::tabNotificationsText())
-                            m_viewTree->setViewColor(view, Preferences::highlightNickColor());
+                        if (Preferences::self()->tabNotificationsLeds())
+                            m_viewTree->setViewIcon(view, images->getLed(Preferences::self()->highlightNickColor(),true));
+                        if (Preferences::self()->tabNotificationsText())
+                            m_viewTree->setViewColor(view, Preferences::self()->highlightNickColor());
                     }
                     else
                     {
-                        if (Preferences::tabNotificationsLeds())
+                        if (Preferences::self()->tabNotificationsLeds())
                             m_viewTree->setViewIcon(view, images->getNickLed());
-                        if (Preferences::tabNotificationsText())
-                            m_viewTree->setViewColor(view, Preferences::tabNotificationsNickColor());
+                        if (Preferences::self()->tabNotificationsText())
+                            m_viewTree->setViewColor(view, Preferences::self()->tabNotificationsNickColor());
                     }
                 }
                 else
@@ -908,21 +908,21 @@ void ViewContainer::setViewNotification(ChatWindow* view, const Konversation::Ta
                 break;
 
             case Konversation::tnfHighlight:
-                if (Preferences::tabNotificationsHighlights())
+                if (Preferences::self()->tabNotificationsHighlights())
                 {
-                    if (Preferences::tabNotificationsOverride() && view->highlightColor().isValid())
+                    if (Preferences::self()->tabNotificationsOverride() && view->highlightColor().isValid())
                     {
-                        if (Preferences::tabNotificationsLeds())
+                        if (Preferences::self()->tabNotificationsLeds())
                             m_viewTree->setViewIcon(view, images->getLed(view->highlightColor(),true));
-                        if (Preferences::tabNotificationsText())
+                        if (Preferences::self()->tabNotificationsText())
                             m_viewTree->setViewColor(view, view->highlightColor());
                     }
                     else
                     {
-                        if (Preferences::tabNotificationsLeds())
+                        if (Preferences::self()->tabNotificationsLeds())
                             m_viewTree->setViewIcon(view, images->getHighlightsLed());
-                        if (Preferences::tabNotificationsText())
-                            m_viewTree->setViewColor(view, Preferences::tabNotificationsHighlightsColor());
+                        if (Preferences::self()->tabNotificationsText())
+                            m_viewTree->setViewColor(view, Preferences::self()->tabNotificationsHighlightsColor());
                     }
                 }
                 else
@@ -940,29 +940,29 @@ void ViewContainer::setViewNotification(ChatWindow* view, const Konversation::Ta
         switch (type)
         {
             case Konversation::tnfNormal:
-                if (Preferences::tabNotificationsMsgs())
+                if (Preferences::self()->tabNotificationsMsgs())
                 {
-                    if (Preferences::tabNotificationsLeds())
+                    if (Preferences::self()->tabNotificationsLeds())
                         m_tabWidget->setTabIconSet(view, images->getMsgsLed(true));
-                    //if (Preferences::tabNotificationsText())
+                    //if (Preferences::self()->tabNotificationsText())
                     //    m_tabWidget->setTabColor(view, Preferences::tabNotificationsMsgsColor());
                 }
                 break;
 
             case Konversation::tnfPrivate:
-                if (Preferences::tabNotificationsPrivate())
+                if (Preferences::self()->tabNotificationsPrivate())
                 {
-                    if (Preferences::tabNotificationsLeds())
+                    if (Preferences::self()->tabNotificationsLeds())
                         m_tabWidget->setTabIconSet(view, images->getPrivateLed(true));
-                    //if (Preferences::tabNotificationsText())
+                    //if (Preferences::self()->tabNotificationsText())
                     //    m_tabWidget->setTabColor(view, Preferences::tabNotificationsPrivateColor());
                 }
                 break;
 
             case Konversation::tnfSystem:
-                if (Preferences::tabNotificationsSystem())
+                if (Preferences::self()->tabNotificationsSystem())
                 {
-                    if (Preferences::tabNotificationsLeds())
+                    if (Preferences::self()->tabNotificationsLeds())
                         m_tabWidget->setTabIconSet(view, images->getSystemLed(true));
                     //if (Preferences::tabNotificationsText())
                     //    m_tabWidget->setTabColor(view, Preferences::tabNotificationsSystemColor());
@@ -970,30 +970,30 @@ void ViewContainer::setViewNotification(ChatWindow* view, const Konversation::Ta
                 break;
 
             case Konversation::tnfControl:
-                if (Preferences::tabNotificationsEvents())
+                if (Preferences::self()->tabNotificationsEvents())
                 {
-                    if (Preferences::tabNotificationsLeds())
+                    if (Preferences::self()->tabNotificationsLeds())
                         m_tabWidget->setTabIconSet(view, images->getEventsLed());
-                    //if (Preferences::tabNotificationsText())
+                    //if (Preferences::self()->tabNotificationsText())
                     //    m_tabWidget->setTabColor(view, Preferences::tabNotificationsEventsColor());
                 }
                 break;
 
             case Konversation::tnfNick:
-                if (Preferences::tabNotificationsNick())
+                if (Preferences::self()->tabNotificationsNick())
                 {
-                    if (Preferences::tabNotificationsOverride() && Preferences::highlightNick())
+                    if (Preferences::self()->tabNotificationsOverride() && Preferences::self()->highlightNick())
                     {
-                        if (Preferences::tabNotificationsLeds())
-                            m_tabWidget->setTabIconSet(view, images->getLed(Preferences::highlightNickColor(),true));
+                        if (Preferences::self()->tabNotificationsLeds())
+                            m_tabWidget->setTabIconSet(view, images->getLed(Preferences::self()->highlightNickColor(),true));
                         //if (Preferences::tabNotificationsText())
                         //    m_tabWidget->setTabColor(view, Preferences::highlightNickColor());
                     }
                     else
                     {
-                        if (Preferences::tabNotificationsLeds())
+                        if (Preferences::self()->tabNotificationsLeds())
                             m_tabWidget->setTabIconSet(view, images->getNickLed());
-                        //if (Preferences::tabNotificationsText())
+                        //if (Preferences::self()->tabNotificationsText())
                         //    m_tabWidget->setTabColor(view, Preferences::tabNotificationsNickColor());
                     }
                 }
@@ -1004,18 +1004,18 @@ void ViewContainer::setViewNotification(ChatWindow* view, const Konversation::Ta
                 break;
 
             case Konversation::tnfHighlight:
-                if (Preferences::tabNotificationsHighlights())
+                if (Preferences::self()->tabNotificationsHighlights())
                 {
-                    if (Preferences::tabNotificationsOverride() && view->highlightColor().isValid())
+                    if (Preferences::self()->tabNotificationsOverride() && view->highlightColor().isValid())
                     {
-                        if (Preferences::tabNotificationsLeds())
+                        if (Preferences::self()->tabNotificationsLeds())
                             m_tabWidget->setTabIconSet(view, images->getLed(view->highlightColor(),true));
                         //if (Preferences::tabNotificationsText())
                         //    m_tabWidget->setTabColor(view, view->highlightColor());
                     }
                     else
                     {
-                        if (Preferences::tabNotificationsLeds())
+                        if (Preferences::self()->tabNotificationsLeds())
                             m_tabWidget->setTabIconSet(view, images->getHighlightsLed());
                         //if (Preferences::tabNotificationsText())
                         //    m_tabWidget->setTabColor(view, Preferences::tabNotificationsHighlightsColor());
@@ -1037,7 +1037,7 @@ void ViewContainer::unsetViewNotification(ChatWindow* view)
 {
     if (m_viewTree)
     {
-        if (Preferences::tabNotificationsLeds())
+        if (Preferences::self()->tabNotificationsLeds())
         {
             switch (view->getType())
             {
@@ -1060,8 +1060,8 @@ void ViewContainer::unsetViewNotification(ChatWindow* view)
             }
         }
 
-        QColor textColor = (Preferences::inputFieldsBackgroundColor()
-            ? Preferences::color(Preferences::ChannelMessage) : m_window->colorGroup().foreground());
+        QColor textColor = (Preferences::self()->inputFieldsBackgroundColor()
+            ? Preferences::self()->color(Preferences::ChannelMessage) : m_window->colorGroup().foreground());
 
         if (view->getType() == ChatWindow::Channel)
         {
@@ -1080,7 +1080,7 @@ void ViewContainer::unsetViewNotification(ChatWindow* view)
     }
     else if (m_tabWidget)
     {
-        if (Preferences::tabNotificationsLeds())
+        if (Preferences::self()->tabNotificationsLeds())
         {
             switch (view->getType())
             {
@@ -1198,9 +1198,9 @@ void ViewContainer::addView(ChatWindow* view, const QString& label, bool weiniti
     switch (view->getType())
     {
         case ChatWindow::Channel:
-            if (Preferences::tabNotificationsLeds())
+            if (Preferences::self()->tabNotificationsLeds())
                 iconSet = images->getMsgsLed(false);
-            else if (Preferences::closeButtons())
+            else if (Preferences::self()->closeButtons())
                 iconSet = images->getCloseIcon();
 
             for (int sindex = 0; sindex < m_tabWidget->count(); sindex++)
@@ -1228,9 +1228,9 @@ void ViewContainer::addView(ChatWindow* view, const QString& label, bool weiniti
             break;
 
         case ChatWindow::RawLog:
-            if (Preferences::tabNotificationsLeds())
+            if (Preferences::self()->tabNotificationsLeds())
                 iconSet = images->getSystemLed(false);
-            else if (Preferences::closeButtons())
+            else if (Preferences::self()->closeButtons())
                 iconSet = images->getCloseIcon();
 
             for (int sindex = 0; sindex < m_tabWidget->count(); sindex++)
@@ -1247,9 +1247,9 @@ void ViewContainer::addView(ChatWindow* view, const QString& label, bool weiniti
             break;
 
         case ChatWindow::Query:
-            if (Preferences::tabNotificationsLeds())
+            if (Preferences::self()->tabNotificationsLeds())
                 iconSet = images->getPrivateLed(false);
-            else if (Preferences::closeButtons())
+            else if (Preferences::self()->closeButtons())
                 iconSet = images->getCloseIcon();
 
             for (int sindex = 0; sindex < m_tabWidget->count(); sindex++)
@@ -1277,9 +1277,9 @@ void ViewContainer::addView(ChatWindow* view, const QString& label, bool weiniti
             break;
 
         case ChatWindow::DccChat:
-            if (Preferences::tabNotificationsLeds())
+            if (Preferences::self()->tabNotificationsLeds())
                 iconSet = images->getMsgsLed(false);
-            else if (Preferences::closeButtons())
+            else if (Preferences::self()->closeButtons())
                 iconSet = images->getCloseIcon();
 
             for (int sindex = 0; sindex < m_tabWidget->count(); sindex++)
@@ -1298,9 +1298,9 @@ void ViewContainer::addView(ChatWindow* view, const QString& label, bool weiniti
             break;
 
         case ChatWindow::Status:
-            if (Preferences::tabNotificationsLeds())
+            if (Preferences::self()->tabNotificationsLeds())
                 iconSet = images->getServerLed(false);
-            else if (Preferences::closeButtons())
+            else if (Preferences::self()->closeButtons())
                 iconSet = images->getCloseIcon();
 
             if (m_viewTree)
@@ -1323,9 +1323,9 @@ void ViewContainer::addView(ChatWindow* view, const QString& label, bool weiniti
             break;
 
         case ChatWindow::ChannelList:
-            if (Preferences::tabNotificationsLeds())
+            if (Preferences::self()->tabNotificationsLeds())
                 iconSet = images->getSystemLed(false);
-            else if (Preferences::closeButtons())
+            else if (Preferences::self()->closeButtons())
                 iconSet = images->getCloseIcon();
 
             for (int sindex = 0; sindex < m_tabWidget->count(); sindex++)
@@ -1339,9 +1339,9 @@ void ViewContainer::addView(ChatWindow* view, const QString& label, bool weiniti
             break;
 
         default:
-            if (Preferences::tabNotificationsLeds())
+            if (Preferences::self()->tabNotificationsLeds())
                 iconSet = images->getSystemLed(false);
-            else if (Preferences::closeButtons())
+            else if (Preferences::self()->closeButtons())
                 iconSet = images->getCloseIcon();
             break;
     }
@@ -1363,10 +1363,10 @@ void ViewContainer::addView(ChatWindow* view, const QString& label, bool weiniti
     // Check, if user was typing in old input line
     bool doBringToFront=false;
 
-    if (Preferences::focusNewQueries() && view->getType()==ChatWindow::Query && !weinitiated)
+    if (Preferences::self()->focusNewQueries() && view->getType()==ChatWindow::Query && !weinitiated)
         doBringToFront = true;
 
-    if (Preferences::bringToFront() && view->getType()!=ChatWindow::RawLog)
+    if (Preferences::self()->bringToFront() && view->getType()!=ChatWindow::RawLog)
         doBringToFront = true;
 
     // make sure that bring to front only works when the user wasn't typing something
@@ -1393,7 +1393,7 @@ void ViewContainer::switchView(QWidget* newView)
 
         disconnect(m_frontView, SIGNAL(updateInfo(const QString &)), this, SIGNAL(setStatusBarInfoLabel(const QString &)));
 
-        if (Preferences::automaticRememberLine() && m_frontView->isInsertSupported())
+        if (Preferences::self()->automaticRememberLine() && m_frontView->isInsertSupported())
             m_frontView->getTextView()->insertRememberLine();
     }
 
@@ -1592,7 +1592,7 @@ void ViewContainer::cleanupAfterClose(ChatWindow* view)
 
 void ViewContainer::closeViewMiddleClick(QWidget* view)
 {
-    if (Preferences::middleClickClose())
+    if (Preferences::self()->middleClickClose())
         closeView(view);
 }
 
@@ -1852,7 +1852,7 @@ void ViewContainer::appendToFrontmost(const QString& type,const QString& message
                                                   // if it does not belong to this server or...
         serverView->getServer()!=m_frontView->getServer() ||
                                                   // if the user decided to force it.
-        Preferences::redirectServerAndAppMsgToStatusPane())
+        Preferences::self()->redirectServerAndAppMsgToStatusPane())
     {
         // if not, take server specified fallback view instead
         serverView->appendServerMessage(type,  message, parseURL);
@@ -1869,8 +1869,8 @@ void ViewContainer::insertCharacter()
 {
     QFont font;
 
-    if (Preferences::customTextFont())
-        font = Preferences::textFont();
+    if (Preferences::self()->customTextFont())
+        font = Preferences::self()->textFont();
     else
         font = KGlobalSettings::generalFont();
 
@@ -1913,7 +1913,7 @@ void ViewContainer::clearViewLines()
 
 void ViewContainer::insertRememberLine()
 {
-    if (Preferences::automaticRememberLine())
+    if (Preferences::self()->automaticRememberLine())
     {
         if (m_frontView && m_frontView->isInsertSupported())
             m_frontView->getTextView()->insertRememberLine();
@@ -1944,7 +1944,7 @@ void ViewContainer::cancelRememberLine()
 
 void ViewContainer::insertMarkerLine()
 {
-    if (Preferences::markerLineInAllViews())
+    if (Preferences::self()->markerLineInAllViews())
     {
         int total = m_tabWidget->count()-1;
         ChatWindow* view;
@@ -2282,7 +2282,7 @@ void ViewContainer::toggleChannelNicklists()
 
     if (action)
     {
-        Preferences::setShowNickList(!action->isChecked());
+        Preferences::self()->setShowNickList(!action->isChecked());
         Preferences::self()->writeConfig();
 
         emit updateChannelAppearance();

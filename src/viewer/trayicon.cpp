@@ -51,7 +51,7 @@ namespace Konversation
             return;
         }
 
-        if(Preferences::trayNotifyBlink())
+        if(Preferences::self()->trayNotifyBlink())
         {
             if(!m_blinkTimer->isActive())
             {

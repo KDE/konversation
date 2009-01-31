@@ -49,7 +49,7 @@ class DccResumeDialog;
  DccTransferRecv()
 
  start()              : called from DccTransferPanel when user pushes the accept button
-  | \ 
+  | \
   | requestResume()   : called when user chooses to resume in DccResumeDialog. it emits the signal ResumeRequest()
   |
   | startResume()     : called by "Server"
@@ -206,8 +206,8 @@ bool DccTransferRecv::queue()
         // determine default incoming file URL
 
         // set default folder
-        if ( !Preferences::dccPath().isEmpty() )
-            m_fileURL = KUrl( Preferences::dccPath() );
+        if ( !Preferences::self()->dccPath().isEmpty() )
+            m_fileURL = KUrl( Preferences::self()->dccPath() );
         else
             m_fileURL.setPath( KUser( KUser::UseRealUserID ).homeDir() );  // default folder is *not* specified
 
@@ -215,14 +215,14 @@ bool DccTransferRecv::queue()
         m_fileURL.adjustPath( KUrl::AddTrailingSlash );
 
         // Append folder with partner's name if wanted
-        if ( Preferences::dccCreateFolder() )
+        if ( Preferences::self()->dccCreateFolder() )
             m_fileURL.addPath( m_partnerNick + '/' );
 
         // Just incase anyone tries to do anything nasty
         QString fileNameSanitized = sanitizeFileName( m_fileName );
 
         // Append partner's name to file name if wanted
-        if ( Preferences::dccAddPartner() )
+        if ( Preferences::self()->dccAddPartner() )
             m_fileURL.addPath( m_partnerNick + '.' + fileNameSanitized );
         else
             m_fileURL.addPath( fileNameSanitized );
@@ -367,7 +367,7 @@ void DccTransferRecv::slotLocalCanResume( KIO::Job* job, KIO::filesize_t size )
                 DccResumeDialog::RA_Rename | DccResumeDialog::RA_Cancel,
                 DccResumeDialog::RA_Rename );
         }
-        else if ( Preferences::dccAutoResume() )
+        else if ( Preferences::self()->dccAutoResume() )
         {
             prepareLocalKio( false, true, size );
         }
@@ -538,8 +538,8 @@ bool DccTransferRecv::startListeningForSender()
 {
     // Set up server socket
     QString failedReason;
-    if ( Preferences::dccSpecificSendPorts() )
-        m_serverSocket = DccCommon::createServerSocketAndListen( this, &failedReason, Preferences::dccSendPortsFirst(), Preferences::dccSendPortsLast() );
+    if ( Preferences::self()->dccSpecificSendPorts() )
+        m_serverSocket = DccCommon::createServerSocketAndListen( this, &failedReason, Preferences::self()->dccSendPortsFirst(), Preferences::self()->dccSendPortsLast() );
     else
         m_serverSocket = DccCommon::createServerSocketAndListen( this, &failedReason );
     if ( !m_serverSocket )

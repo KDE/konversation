@@ -60,7 +60,7 @@ DccTransferSend::DccTransferSend(QObject* parent)
     connect( m_connectionTimer, SIGNAL( timeout() ), this, SLOT( slotConnectionTimeout() ) );
 
     // set defualt values
-    m_reverse = Preferences::dccPassiveSend();
+    m_reverse = Preferences::self()->dccPassiveSend();
 }
 
 DccTransferSend::~DccTransferSend()
@@ -148,7 +148,7 @@ bool DccTransferSend::queue()
     if ( m_fileName.isEmpty() )
         m_fileName = sanitizeFileName( m_fileURL.fileName() );
 
-    if ( Preferences::dccIPv4Fallback() )
+    if ( Preferences::self()->dccIPv4Fallback() )
     {
         KIpAddress ip( m_ownIp );
         if ( ip.isIPv6Addr() )
@@ -156,7 +156,7 @@ bool DccTransferSend::queue()
 #ifndef Q_WS_WIN        
             /* This is fucking ugly but there is no KDE way to do this yet :| -cartman */
             struct ifreq ifr;
-            const char* address = Preferences::dccIPv4FallbackIface().ascii();
+            const char* address = Preferences::self()->dccIPv4FallbackIface().ascii();
             int sock = socket(AF_INET, SOCK_DGRAM, 0);
             strncpy( ifr.ifr_name, address, IF_NAMESIZE );
             ifr.ifr_addr.sa_family = AF_INET;
@@ -167,7 +167,7 @@ bool DccTransferSend::queue()
         }
     }
 
-    m_fastSend = Preferences::dccFastSend();
+    m_fastSend = Preferences::self()->dccFastSend();
     kDebug() << "DccTransferSend::DccTransferSend(): Fast DCC send: " << m_fastSend << endl;
 
     //Check the file exists
@@ -201,7 +201,7 @@ bool DccTransferSend::queue()
 
     //FIXME: if "\\\"" works well on other IRC clients, replace "\"" with "\\\""
     m_fileName.replace( "\"", "_" );
-    if (Preferences::dccSpaceToUnderscore())
+    if (Preferences::self()->dccSpaceToUnderscore())
         m_fileName.replace( " ", "_" );
     else {
         if (m_fileName.contains(" ") > 0)
@@ -249,8 +249,8 @@ void DccTransferSend::start()                     // public slot
 
         // Set up server socket
         QString failedReason;
-        if ( Preferences::dccSpecificSendPorts() )
-            m_serverSocket = DccCommon::createServerSocketAndListen( this, &failedReason, Preferences::dccSendPortsFirst(), Preferences::dccSendPortsLast() );
+        if ( Preferences::self()->dccSpecificSendPorts() )
+            m_serverSocket = DccCommon::createServerSocketAndListen( this, &failedReason, Preferences::self()->dccSendPortsFirst(), Preferences::self()->dccSendPortsLast() );
         else
             m_serverSocket = DccCommon::createServerSocketAndListen( this, &failedReason );
         if ( !m_serverSocket )
@@ -268,7 +268,7 @@ void DccTransferSend::start()                     // public slot
 
         kDebug() << "DccTransferSend::start(): own Address=" << m_ownIp << ":" << m_ownPort << endl;
 
-        startConnectionTimer( Preferences::dccSendTimeout() );
+        startConnectionTimer( Preferences::self()->dccSendTimeout() );
 
         server->dccSendRequest( m_partnerNick, m_fileName, getNumericalIpText( m_ownIp ), m_ownPort, m_fileSize );
     }

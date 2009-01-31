@@ -24,7 +24,7 @@ DccTransferManager::DccTransferManager( QObject* parent )
     // initial number
     m_nextReverseTokenNumber = 1001;
 
-    m_defaultIncomingFolder = Preferences::dccPath();
+    m_defaultIncomingFolder = Preferences::self()->dccPath();
 
     connect( KonversationApplication::instance(), SIGNAL( appearanceChanged() ),
              this, SLOT( slotSettingsChanged() ) );
@@ -200,7 +200,7 @@ void DccTransferManager::slotTransferStatusChanged( DccTransfer* item, int newSt
 void DccTransferManager::slotSettingsChanged()
 {
     // update the default incoming directory for already existed DCCRECV items
-    if ( Preferences::dccPath() != m_defaultIncomingFolder )
+    if ( Preferences::self()->dccPath() != m_defaultIncomingFolder )
     {
         Q3ValueListConstIterator< DccTransferRecv* > it;
         for ( it = m_recvItems.begin() ; it != m_recvItems.end() ; ++it )
@@ -209,7 +209,7 @@ void DccTransferManager::slotSettingsChanged()
                  (*it)->getFileURL().directory() == m_defaultIncomingFolder )
             {
                 KUrl url;
-                url.setDirectory( Preferences::dccPath() );
+                url.setDirectory( Preferences::self()->dccPath() );
                 url.setFileName( (*it)->getFileURL().fileName() );
                 (*it)->setFileURL( url );
 
@@ -217,7 +217,7 @@ void DccTransferManager::slotSettingsChanged()
             }
         }
 
-        m_defaultIncomingFolder = Preferences::dccPath();
+        m_defaultIncomingFolder = Preferences::self()->dccPath();
     }
 }
 

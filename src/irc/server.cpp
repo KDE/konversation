@@ -116,7 +116,7 @@ Server::Server(QObject* parent, ConnectionSettings& settings) : QObject(parent)
 
     m_statusView = getViewContainer()->addStatusView(this);
 
-    if (Preferences::rawLog())
+    if (Preferences::self()->rawLog())
         addRawLog(false);
 
     m_inputFilter.setServer(this);
@@ -225,7 +225,7 @@ void Server::_fetchRates()
 {
     for (int i=0;i<=_max_queue();i++)
     {
-        QList<int> r=Preferences::queueRate(i);
+        QList<int> r=Preferences::self()->queueRate(i);
         staticrates[i]=IRCQueue::EmptyingRate(r[0], r[1]*1000,IRCQueue::EmptyingRate::RateType(r[2]));
     }
 }
@@ -238,7 +238,7 @@ void Server::_stashRates()
         r.append(staticrates[i].m_rate);
         r.append(staticrates[i].m_interval/1000);
         r.append(int(staticrates[i].m_type));
-        Preferences::setQueueRate(i, r);
+        Preferences::self()->setQueueRate(i, r);
     }
 }
 
@@ -247,7 +247,7 @@ void Server::_resetRates()
     for (int i=0;i<=_max_queue();i++)
     {
         Preferences::self()->queueRateItem(i)->setDefault();
-        QList<int> r=Preferences::queueRate(i);
+        QList<int> r=Preferences::self()->queueRate(i);
         staticrates[i]=IRCQueue::EmptyingRate(r[0], r[1]*1000,IRCQueue::EmptyingRate::RateType(r[2]));
     }
 }
@@ -707,7 +707,7 @@ void Server::quitServer()
     // a QUIT).
     updateConnectionState(Konversation::SSDeliberatelyDisconnected);
 
-    QString command(Preferences::commandChar()+"QUIT");
+    QString command(Preferences::self()->commandChar()+"QUIT");
     Konversation::OutputFilterResult result = getOutputFilter()->parse(getNickname(),command, QString());
     queue(result.toServer, HighPriority);
 
@@ -721,7 +721,7 @@ void Server::quitServer()
 void Server::notifyAction(const QString& nick)
 {
     // parse wildcards (toParse,nickname,channelName,nickList,parameter)
-    QString out = parseWildcards(Preferences::notifyDoubleClickAction(),
+    QString out = parseWildcards(Preferences::self()->notifyDoubleClickAction(),
         getNickname(),
         QString(),
         QString(),
@@ -779,17 +779,17 @@ void Server::startNotifyTimer(int msec)
     // make sure the timer gets started properly in case we have reconnected
     m_notifyTimer.stop();
 
-    if (msec == 0) msec = Preferences::notifyDelay()*1000;
+    if (msec == 0) msec = Preferences::self()->notifyDelay()*1000;
 
     // start the timer in one shot mode
-    if (Preferences::useNotify())
+    if (Preferences::self()->useNotify())
         m_notifyTimer.start(msec, true);
 }
 
 void Server::notifyTimeout()
 {
     // Notify delay time is over, send ISON request if desired
-    if (Preferences::useNotify())
+    if (Preferences::self()->useNotify())
     {
         // But only if there actually are nicks in the notify list
         QString list = getISONListString();
@@ -1225,9 +1225,9 @@ void Server::closed()
 
 void Server::dcopRaw(const QString& command)
 {
-    if(command.startsWith(Preferences::commandChar()))
+    if(command.startsWith(Preferences::self()->commandChar()))
     {
-        queue(command.section(Preferences::commandChar(), 1));
+        queue(command.section(Preferences::self()->commandChar(), 1));
     }
     else
         queue(command);
@@ -1488,7 +1488,7 @@ void Server::closeChannel(const QString& name)
     if(channelToClose)
     {
         Konversation::OutputFilterResult result = getOutputFilter()->parse(getNickname(),
-            Preferences::commandChar() + "PART", name);
+            Preferences::self()->commandChar() + "PART", name);
         queue(result.toServer);
     }
 }
@@ -1990,7 +1990,7 @@ void Server::removeQuery(class Query* query)
 void Server::sendJoinCommand(const QString& name, const QString& password)
 {
     Konversation::OutputFilterResult result = getOutputFilter()->parse(getNickname(),
-        Preferences::commandChar() + "JOIN " + name + ' ' + password, QString());
+        Preferences::self()->commandChar() + "JOIN " + name + ' ' + password, QString());
     queue(result.toServer);
 }
 
@@ -3112,7 +3112,7 @@ void Server::executeMultiServerCommand(const QString& command, const QString& pa
     if (command == "msg")
         sendToAllChannelsAndQueries(parameter);
     else
-        sendToAllChannelsAndQueries(Preferences::commandChar() + command + ' ' + parameter);
+        sendToAllChannelsAndQueries(Preferences::self()->commandChar() + command + ' ' + parameter);
 }
 
 void Server::sendToAllChannelsAndQueries(const QString& text)
@@ -3362,7 +3362,7 @@ void Server::updateLongPongLag()
         emit tooLongLag(this, m_currentLag);
         // kDebug() << "Current lag: " << currentLag << endl;
 
-        if (m_currentLag > (Preferences::maximumLagTime() * 1000))
+        if (m_currentLag > (Preferences::self()->maximumLagTime() * 1000))
             m_socket->close();
     }
 }

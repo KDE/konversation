@@ -237,9 +237,9 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                     }
 
                     QString reply;
-                    if(Preferences::customVersionReplyEnabled())
+                    if(Preferences::self()->customVersionReplyEnabled())
                     {
-                        reply = Preferences::customVersionReply().trimmed();
+                        reply = Preferences::self()->customVersionReply().trimmed();
                     }
                     else
                     {
@@ -839,7 +839,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                         server->updateChannelModeWidgets(parameterList[1],mode,parameter);
                     }
                 } // endfor
-                if(!modesAre.isEmpty() && Preferences::useLiteralModes())
+                if(!modesAre.isEmpty() && Preferences::self()->useLiteralModes())
                 {
                     server->appendCommandMessageToChannel(parameterList[1],i18n("Mode"),message);
                 }
@@ -866,7 +866,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                          when.toString(Qt::LocalDate))
                     );
 
-                if(Preferences::autoWhoContinuousEnabled())
+                if(Preferences::self()->autoWhoContinuousEnabled())
                 {
                     emit endOfWho(parameterList[1]);
                 }
@@ -1077,19 +1077,19 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             }
             case RPL_MOTDSTART:
             {
-                if(!m_connecting || !Preferences::skipMOTD())
+                if(!m_connecting || !Preferences::self()->skipMOTD())
                   server->appendStatusMessage(i18n("MOTD"),i18n("Message of the day:"));
                 break;
             }
             case RPL_MOTD:
             {
-                if(!m_connecting || !Preferences::skipMOTD())
+                if(!m_connecting || !Preferences::self()->skipMOTD())
                     server->appendStatusMessage(i18n("MOTD"),trailing);
                 break;
             }
             case RPL_ENDOFMOTD:
             {
-                if(!m_connecting || !Preferences::skipMOTD())
+                if(!m_connecting || !Preferences::self()->skipMOTD())
                     server->appendStatusMessage(i18n("MOTD"),i18n("End of message of the day"));
 
                 if(m_connecting)
@@ -1824,7 +1824,7 @@ void InputFilter::parseModes(const QString &sourceNick, const QStringList &param
         }
     }                                             // endfor
 
-    if (Preferences::useLiteralModes())
+    if (Preferences::self()->useLiteralModes())
     {
         server->appendCommandMessageToChannel(parameterList[0],i18n("Mode"),message);
     }

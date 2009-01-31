@@ -45,7 +45,7 @@ namespace Konversation
         if (!chatWin || !chatWin->notificationsEnabled())
             return;
 
-        if (Preferences::disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
+        if (Preferences::self()->disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
             return;
 
         QString cleanedMessage = Qt::escape(Konversation::removeIrcMarkup(message));
@@ -53,7 +53,7 @@ namespace Konversation
 
         KNotification::event(QString::fromLatin1("message"), QString("<qt>&lt;%1&gt; %2</qt>").arg(fromNick).arg(cutup), QPixmap(), m_mainWindow);
 
-        if(!Preferences::trayNotifyOnlyOwnNick())
+        if(!Preferences::self()->trayNotifyOnlyOwnNick())
         {
             startTrayNotification(chatWin);
         }
@@ -73,7 +73,7 @@ namespace Konversation
         if (!chatWin || !chatWin->notificationsEnabled())
             return;
 
-        if (Preferences::disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
+        if (Preferences::self()->disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
             return;
 
         QString cleanedMessage = Qt::escape(Konversation::removeIrcMarkup(message));
@@ -101,7 +101,7 @@ namespace Konversation
         if (!chatWin || !chatWin->notificationsEnabled())
             return;
 
-        if (Preferences::disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
+        if (Preferences::self()->disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
             return;
 
         QString cleanedMessage = Qt::escape(Konversation::removeIrcMarkup(message));
@@ -127,7 +127,7 @@ namespace Konversation
         if (!chatWin || !chatWin->notificationsEnabled())
             return;
 
-        if (!chatWin->getServer() || (Preferences::disableNotifyWhileAway() && chatWin->getServer()->isAway()))
+        if (!chatWin->getServer() || (Preferences::self()->disableNotifyWhileAway() && chatWin->getServer()->isAway()))
             return;
  //TODO FIXME port the tray icon
         if (!m_mainWindow->isActiveWindow() && chatWin->getServer()->isConnected())
@@ -140,7 +140,7 @@ namespace Konversation
         if (!chatWin || !chatWin->notificationsEnabled())
             return;
 
-        if (Preferences::disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
+        if (Preferences::self()->disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
             return;
 
         KNotification::event(QString::fromLatin1("join"), i18n("%1 joined %2",nick, chatWin->getName()), QPixmap(), m_mainWindow);
@@ -161,7 +161,7 @@ namespace Konversation
         if (!chatWin || !chatWin->notificationsEnabled())
             return;
 
-        if (Preferences::disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
+        if (Preferences::self()->disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
             return;
 
         KNotification::event(QString::fromLatin1("part"), i18n("%1 parted %2",nick, chatWin->getName()), QPixmap(), m_mainWindow);
@@ -182,7 +182,7 @@ namespace Konversation
         if (!chatWin || !chatWin->notificationsEnabled())
             return;
 
-        if (Preferences::disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
+        if (Preferences::self()->disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
             return;
 
         KNotification::event(QString::fromLatin1("part"), i18n("%1 quit %2",nick, chatWin->getServer()->getServerName()), QPixmap(), m_mainWindow);
@@ -193,7 +193,7 @@ namespace Konversation
         if (!chatWin || !chatWin->notificationsEnabled())
             return;
 
-        if (Preferences::disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
+        if (Preferences::self()->disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
             return;
 
         KNotification::event(QString::fromLatin1("nickchange"), i18n("%1 changed nickname to %2",oldNick, newNick), QPixmap(), m_mainWindow);
@@ -204,7 +204,7 @@ namespace Konversation
         if (!chatWin || !chatWin->notificationsEnabled())
             return;
 
-        if (Preferences::disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
+        if (Preferences::self()->disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
             return;
 
         KNotification::event(QString::fromLatin1("dcc_incoming"), i18n("%1 wants to send a file to you",fromNick), QPixmap(), m_mainWindow);
@@ -215,7 +215,7 @@ namespace Konversation
         if (!chatWin || !chatWin->notificationsEnabled())
             return;
 
-        if (Preferences::disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
+        if (Preferences::self()->disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
             return;
 
         KNotification *ev=new KNotification("mode", m_mainWindow);
@@ -227,7 +227,7 @@ namespace Konversation
         if (!chatWin || !chatWin->notificationsEnabled())
             return;
 
-        if (Preferences::disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
+        if (Preferences::self()->disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
             return;
 
         startTrayNotification(chatWin);
@@ -242,7 +242,7 @@ namespace Konversation
         if (!chatWin || !chatWin->notificationsEnabled())
             return;
 
-        if (Preferences::disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
+        if (Preferences::self()->disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
             return;
 
         KNotification *ev=new KNotification("notify", m_mainWindow);
@@ -256,7 +256,7 @@ namespace Konversation
         if (!chatWin || !chatWin->notificationsEnabled())
             return;
 
-        if (Preferences::disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
+        if (Preferences::self()->disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
             return;
 
         KNotification *ev=new KNotification("notify", m_mainWindow);
@@ -270,7 +270,7 @@ namespace Konversation
         if (!chatWin || !chatWin->notificationsEnabled())
             return;
 
-        if (Preferences::disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
+        if (Preferences::self()->disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
             return;
 
         KNotification *ev=new KNotification("kick", m_mainWindow);
@@ -284,7 +284,7 @@ namespace Konversation
         if (!chatWin || !chatWin->notificationsEnabled())
             return;
 
-        if (Preferences::disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
+        if (Preferences::self()->disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
             return;
 
         KNotification *ev=new KNotification("dccChat", m_mainWindow);
@@ -298,7 +298,7 @@ namespace Konversation
         if (!chatWin || !chatWin->notificationsEnabled())
             return;
 
-        if (Preferences::disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
+        if (Preferences::self()->disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
             return;
 
         startTrayNotification(chatWin);
@@ -333,7 +333,7 @@ namespace Konversation
         if (!chatWin || !chatWin->notificationsEnabled())
             return;
 
-        if (Preferences::disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
+        if (Preferences::self()->disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
             return;
 
         KNotification::event(QString::fromLatin1("channelJoin"), i18n("You have joined %1.",channel), QPixmap(), m_mainWindow);

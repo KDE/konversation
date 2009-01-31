@@ -306,7 +306,7 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0, Qt::WStyle_C
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(showNextActiveView()));
     actionCollection()->addAction("next_active_tab", action);
 
-    if (Preferences::tabPlacement()==Preferences::Left)
+    if (Preferences::self()->tabPlacement()==Preferences::Left)
     {
         //action = new KAction(i18n("Move Tab Up"), "1uparrow", KShortcut("Alt+Shift+Left"), m_viewContainer, SLOT(moveViewLeft()), actionCollection(), "move_tab_left");
         action=new KAction(this);
@@ -528,7 +528,7 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0, Qt::WStyle_C
 
     //KToggleAction* toggleChannelNickListsAction = new KToggleAction(i18n("Hide Nicklist"), 0, KShortcut("Ctrl+H"), m_viewContainer, SLOT(toggleChannelNicklists()), actionCollection(), "hide_nicknamelist");
     KToggleAction* toggleChannelNickListsAction = new KToggleAction(this);
-    if (!Preferences::showNickList())
+    if (!Preferences::self()->showNickList())
         toggleChannelNickListsAction->setChecked(true);
     toggleChannelNickListsAction->setText(i18n("Hide Nicklist"));
     toggleChannelNickListsAction->setShortcut(KShortcut("Ctrl+H"));
@@ -554,7 +554,7 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0, Qt::WStyle_C
     setAutoSaveSettings();
 
     // Apply menubar show/hide pref
-    hideMenuBarAction->setChecked(Preferences::showMenuBar());
+    hideMenuBarAction->setChecked(Preferences::self()->showMenuBar());
     toggleMenubar(true);
 
     // Bookmarks
@@ -566,7 +566,7 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0, Qt::WStyle_C
     //Konversation::Addressbook::self()->getAddressBook()->setErrorHandler(m_guiErrorHandler);
     //kapp->dcopClient()->setAcceptCalls( true );
 
-    if (Preferences::useNotify() && Preferences::openWatchedNicksAtStartup())
+    if (Preferences::self()->useNotify() && Preferences::self()->openWatchedNicksAtStartup())
         m_viewContainer->openNicksOnlinePanel();
 
 }
@@ -614,7 +614,7 @@ int KonversationMainWindow::confirmQuit()
 
 void KonversationMainWindow::quitProgram()
 {
-    if (Preferences::showTrayIcon() &&
+    if (Preferences::self()->showTrayIcon() &&
         sender() != m_trayIcon &&
         confirmQuit() == KMessageBox::Cancel) return;
 
@@ -632,7 +632,7 @@ bool KonversationMainWindow::queryClose()
         if (sender() == m_trayIcon)
             m_closeApp = true;
 
-        if (Preferences::showTrayIcon() && !m_closeApp)
+        if (Preferences::self()->showTrayIcon() && !m_closeApp)
         {
             KMessageBox::information( this,
                 i18n("<p>Closing the main window will keep Konversation running in the system tray. "
@@ -643,7 +643,7 @@ bool KonversationMainWindow::queryClose()
             return false;
         }
 
-        if (!Preferences::showTrayIcon() && confirmQuit() == KMessageBox::Cancel)
+        if (!Preferences::self()->showTrayIcon() && confirmQuit() == KMessageBox::Cancel)
             return false;
     }
 
@@ -712,9 +712,9 @@ void KonversationMainWindow::resetHasDirtySettings()
 
 void KonversationMainWindow::updateTrayIcon()
 {
-    m_trayIcon->setNotificationEnabled(Preferences::trayNotify());
+    m_trayIcon->setNotificationEnabled(Preferences::self()->trayNotify());
 
-    if (Preferences::showTrayIcon())
+    if (Preferences::self()->showTrayIcon())
         m_trayIcon->show();
     else
         m_trayIcon->hide();
@@ -736,7 +736,7 @@ void KonversationMainWindow::toggleMenubar(bool dontShowWarning)
         menuBar()->hide();
     }
 
-    Preferences::setShowMenuBar(hideMenuBarAction->isChecked());
+    Preferences::self()->setShowMenuBar(hideMenuBarAction->isChecked());
 }
 
 void KonversationMainWindow::focusAndShowErrorMessage(const QString &errorMsg)

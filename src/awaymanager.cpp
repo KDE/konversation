@@ -153,7 +153,7 @@ void AwayManager::toggleTimer()
     if (m_identitiesOnAutoAway.count() > 0)
     {
         if (!m_activityTimer->isActive())
-            m_activityTimer->start(Preferences::autoAwayPollInterval() * 1000);
+            m_activityTimer->start(Preferences::self()->autoAwayPollInterval() * 1000);
     }
     else if (m_activityTimer->isActive())
         m_activityTimer->stop();

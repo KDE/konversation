@@ -176,11 +176,11 @@ void ConnectionManager::handleConnectionStateChange(Server* server, Konversation
 
 void ConnectionManager::handleReconnect(Server* server)
 {
-    if (!Preferences::autoReconnect()) return;
+    if (!Preferences::self()->autoReconnect()) return;
 
     ConnectionSettings settings = server->getConnectionSettings();
 
-    uint reconnectCount = Preferences::reconnectCount();
+    uint reconnectCount = Preferences::self()->reconnectCount();
 
     // For server groups, one iteration over their server list shall count as one
     // connection attempt.
@@ -206,19 +206,19 @@ void ConnectionManager::handleReconnect(Server* server)
             server->getStatusView()->appendServerMessage(i18n("Info"),
                 i18n("Trying to connect to %1 in %2 seconds.",
                 settings.server().host(),
-                Preferences::reconnectDelay()));
+                Preferences::self()->reconnectDelay()));
         }
         else
         {
             server->getStatusView()->appendServerMessage(i18n("Info"),
                 i18n("Trying to reconnect to %1 in %2 seconds.",
                 settings.server().host(),
-                Preferences::reconnectDelay()));
+                Preferences::self()->reconnectDelay()));
         }
 
         server->getConnectionSettings().incrementReconnectCount();
 
-        QTimer::singleShot(Preferences::reconnectDelay() * 1000, server, SLOT(connectToIRCServer()));
+        QTimer::singleShot(Preferences::self()->reconnectDelay() * 1000, server, SLOT(connectToIRCServer()));
     }
     else
         server->getStatusView()->appendServerMessage(i18n("Error"), i18n("Reconnection attempts exceeded."));

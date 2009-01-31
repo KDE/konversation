@@ -155,14 +155,14 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : QPlainTextEdit(parent)
 
     setServer(newServer);
 
-    setViewBackground(Preferences::color(Preferences::TextViewBackground),QString());
+    setViewBackground(Preferences::self()->color(Preferences::TextViewBackground),QString());
 
-    if (Preferences::customTextFont())
-        setFont(Preferences::textFont());
+    if (Preferences::self()->customTextFont())
+        setFont(Preferences::self()->textFont());
     else
         setFont(KGlobalSettings::generalFont());
 
-    if (Preferences::useParagraphSpacing()) enableParagraphSpacing();
+    if (Preferences::self()->useParagraphSpacing()) enableParagraphSpacing();
 
     connect(this, SIGNAL(highlighted(const QString&)), this, SLOT(highlightedSlot(const QString&)));
 }
@@ -228,7 +228,7 @@ void IRCView::setViewBackground(QColor const&, QString const&) {}
 
 void IRCView::append(const QString& nick, const QString& message)
 {
-    QString channelColor = Preferences::color(Preferences::ChannelMessage).name();
+    QString channelColor = Preferences::self()->color(Preferences::ChannelMessage).name();
 
     m_tabNotification = Konversation::tnfNormal;
 
@@ -245,7 +245,7 @@ void IRCView::append(const QString& nick, const QString& message)
 
 void IRCView::appendRaw(const QString& message, bool suppressTimestamps, bool self)
 {
-    QColor channelColor=Preferences::color(Preferences::ChannelMessage);
+    QColor channelColor=Preferences::self()->color(Preferences::ChannelMessage);
     m_tabNotification = Konversation::tnfNone;
 
     QString line;
@@ -259,7 +259,7 @@ void IRCView::appendRaw(const QString& message, bool suppressTimestamps, bool se
 
 void IRCView::appendQuery(const QString& nick, const QString& message, bool inChannel)
 {
-    QString queryColor=Preferences::color(Preferences::QueryMessage).name();
+    QString queryColor=Preferences::self()->color(Preferences::QueryMessage).name();
 
     m_tabNotification = Konversation::tnfPrivate;
 
@@ -288,7 +288,7 @@ void IRCView::appendQueryAction(const QString& nick, const QString& message)
 
 void IRCView::appendAction(const QString& nick, const QString& message)
 {
-    QString actionColor=Preferences::color(Preferences::ActionMessage).name();
+    QString actionColor=Preferences::self()->color(Preferences::ActionMessage).name();
 
     QString nickLine = createNickLine(nick, false);
 
@@ -303,12 +303,12 @@ void IRCView::appendAction(const QString& nick, const QString& message)
 
 void IRCView::appendServerMessage(const QString& type, const QString& message, bool parseURL)
 {
-    QString serverColor = Preferences::color(Preferences::ServerMessage).name();
+    QString serverColor = Preferences::self()->color(Preferences::ServerMessage).name();
     m_tabNotification = Konversation::tnfControl;
 
     // Fixed width font option for MOTD
     QString fixed;
-    if(Preferences::fixedMOTD() && !m_fontDataBase.isFixedPitch(font().family()))
+    if(Preferences::self()->fixedMOTD() && !m_fontDataBase.isFixedPitch(font().family()))
     {
         if(type == i18n("MOTD"))
             fixed=" face=\"" + KGlobalSettings::fixedFont().family() + "\"";
@@ -328,10 +328,10 @@ void IRCView::appendServerMessage(const QString& type, const QString& message, b
 
 void IRCView::appendCommandMessage(const QString& type,const QString& message, bool important, bool parseURL, bool self)
 {
-    if (Preferences::hideUnimportantEvents() && !important)
+    if (Preferences::self()->hideUnimportantEvents() && !important)
         return;
 
-    QString commandColor = Preferences::color(Preferences::CommandMessage).name();
+    QString commandColor = Preferences::self()->color(Preferences::CommandMessage).name();
     QString prefix="***";
     m_tabNotification = Konversation::tnfControl;
 
@@ -362,7 +362,7 @@ void IRCView::appendBacklogMessage(const QString& firstColumn,const QString& raw
     QString time;
     QString message = rawMessage;
     QString nick = firstColumn;
-    QString backlogColor = Preferences::color(Preferences::BacklogMessage).name();
+    QString backlogColor = Preferences::self()->color(Preferences::BacklogMessage).name();
     m_tabNotification = Konversation::tnfNone;
 
     time = nick.section(' ', 0, 4);
@@ -424,14 +424,14 @@ void IRCView::doAppend(const QString& newLine, bool self)
 
 QString IRCView::timeStamp()
 {
-    if(Preferences::timestamping())
+    if(Preferences::self()->timestamping())
     {
         QTime time = QTime::currentTime();
-        QString timeColor = Preferences::color(Preferences::Time).name();
-        QString timeFormat = Preferences::timestampFormat();
+        QString timeColor = Preferences::self()->color(Preferences::Time).name();
+        QString timeFormat = Preferences::self()->timestampFormat();
         QString timeString;
 
-        if(!Preferences::showDate())
+        if(!Preferences::self()->showDate())
         {
             timeString = QString("<font color=\"" + timeColor + "\">[%1]</font> ").arg(time.toString(timeFormat));
         }
@@ -454,7 +454,7 @@ QString IRCView::createNickLine(const QString& nick, bool encapsulateNick, bool 
 {
     QString nickLine = "%2";
 
-    if(Preferences::useClickableNicks())
+    if(Preferences::self()->useClickableNicks())
     {
         // HACK:Use space as a placeholder for \ as Qt tries to be clever and does a replace to / in urls in QTextEdit
         nickLine = "<a href=\"#" + QString(nick).replace('\\', " ") + "\">%2</a>";
@@ -468,14 +468,14 @@ QString IRCView::createNickLine(const QString& nick, bool encapsulateNick, bool 
     if(encapsulateNick)
         nickLine = "&lt;" + nickLine + "&gt;";
 
-    if(Preferences::useColoredNicks() && m_server)
+    if(Preferences::self()->useColoredNicks() && m_server)
     {
         QString nickColor;
 
         if (nick != m_server->getNickname())
-            nickColor = Preferences::nickColor(m_server->obtainNickInfo(nick)->getNickColor()).name();
+            nickColor = Preferences::self()->nickColor(m_server->obtainNickInfo(nick)->getNickColor()).name();
         else
-            nickColor =  Preferences::nickColor(8).name();
+            nickColor =  Preferences::self()->nickColor(8).name();
 
         if(nickColor == "#000000")
         {
@@ -487,7 +487,7 @@ QString IRCView::createNickLine(const QString& nick, bool encapsulateNick, bool 
     //FIXME: Another last-minute hack to get DCC Chat colored nicknames
     // working. We can't use NickInfo::getNickColor() because we don't
     // have a server.
-    else if (Preferences::useColoredNicks() && m_chatWin->getType() == ChatWindow::DccChat)
+    else if (Preferences::self()->useColoredNicks() && m_chatWin->getType() == ChatWindow::DccChat)
     {
         QString ownNick = static_cast<DccChat*>(m_chatWin)->getOwnNick();
         QString nickColor;
@@ -501,10 +501,10 @@ QString IRCView::createNickLine(const QString& nick, bool encapsulateNick, bool 
                 nickvalue += nick[index].unicode();
             }
 
-            nickColor = Preferences::nickColor((nickvalue % 8)).name();
+            nickColor = Preferences::self()->nickColor((nickvalue % 8)).name();
         }
         else
-            nickColor =  Preferences::nickColor(8).name();
+            nickColor =  Preferences::self()->nickColor(8).name();
 
         if(nickColor == "#000000")
         {
@@ -514,7 +514,7 @@ QString IRCView::createNickLine(const QString& nick, bool encapsulateNick, bool 
         nickLine = "<font color=\"" + nickColor + "\">"+nickLine+"</font>";
     }
 
-    if(Preferences::useBoldNicks())
+    if(Preferences::self()->useBoldNicks())
         nickLine = "<b>" + nickLine + "</b>";
 
     return nickLine;
@@ -588,7 +588,7 @@ bool doHighlight, bool parseURL, bool self)
 
     if(filteredLine.find("\x07") != -1)
     {
-        if(Preferences::beep())
+        if(Preferences::self()->beep())
         {
             kapp->beep();
         }
@@ -599,7 +599,7 @@ bool doHighlight, bool parseURL, bool self)
     QRegExp colorRegExp("(\003([0-9]|0[0-9]|1[0-5]|)(,([0-9]|0[0-9]|1[0-5])|,|)|\017)");
 
     int pos;
-    bool allowColors = Preferences::allowColorCodes();
+    bool allowColors = Preferences::self()->allowColorCodes();
     bool firstColor = true;
     QString colorString;
 
@@ -621,7 +621,7 @@ bool doHighlight, bool parseURL, bool self)
                 if(!colorRegExp.cap(2).isEmpty())
                 {
                     int foregroundColor = colorRegExp.cap(2).toInt();
-                    colorString += "<font color=\"" + Preferences::ircColorCode(foregroundColor).name() + "\">";
+                    colorString += "<font color=\"" + Preferences::self()->ircColorCode(foregroundColor).name() + "\">";
                 }
                 else
                 {
@@ -676,13 +676,13 @@ bool doHighlight, bool parseURL, bool self)
     {
         QString highlightColor;
 
-        if(Preferences::highlightNick() &&
+        if(Preferences::self()->highlightNick() &&
             filteredLine.toLower().find(QRegExp("(^|[^\\d\\w])" +
             QRegExp::escape(ownNick.toLower()) +
             "([^\\d\\w]|$)")) != -1)
         {
             // highlight current nickname
-            highlightColor = Preferences::highlightNickColor().name();
+            highlightColor = Preferences::self()->highlightNickColor().name();
             m_tabNotification = Konversation::tnfNick;
         }
         else
@@ -736,7 +736,7 @@ bool doHighlight, bool parseURL, bool self)
                 m_highlightColor = highlightColor;
                 m_tabNotification = Konversation::tnfHighlight;
 
-                if(Preferences::highlightSoundsEnabled() && m_chatWin->notificationsEnabled())
+                if(Preferences::self()->highlightSoundsEnabled() && m_chatWin->notificationsEnabled())
                 {
                     konvApp->sound()->play(highlight->getSoundURL());
                 }
@@ -759,10 +759,10 @@ bool doHighlight, bool parseURL, bool self)
             filteredLine = "<font color=\"" + highlightColor + "\">" + filteredLine + "</font>";
         }
     }
-    else if(doHighlight && (whoSent == ownNick) && Preferences::highlightOwnLines())
+    else if(doHighlight && (whoSent == ownNick) && Preferences::self()->highlightOwnLines())
     {
         // highlight own lines
-        filteredLine = "<font color=\"" + Preferences::highlightOwnLinesColor().name() +
+        filteredLine = "<font color=\"" + Preferences::self()->highlightOwnLinesColor().name() +
             "\">" + filteredLine + "</font>";
     }
 

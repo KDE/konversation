@@ -61,7 +61,7 @@ StatusPanel::StatusPanel(QWidget* parent) : ChatWindow(parent)
     getTextView()->installEventFilter(statusInput);
     statusInput->installEventFilter(this);
 
-    setLog(Preferences::log());
+    setLog(Preferences::self()->log());
 
     connect(getTextView(),SIGNAL (gotFocus()),statusInput,SLOT (setFocus()) );
 
@@ -132,7 +132,7 @@ void StatusPanel::statusTextEntered()
     QString line=statusInput->text();
     statusInput->setText("");
 
-    if(line.toLower()==Preferences::commandChar()+"clear") textView->clear();
+    if(line.toLower()==Preferences::self()->commandChar()+"clear") textView->clear();
     else
     {
         if(line.length()) sendStatusText(line);
@@ -147,7 +147,7 @@ void StatusPanel::textPasted(const QString& text)
         for(unsigned int index=0;index<multiline.count();index++)
         {
             QString line=multiline[index];
-            QString cChar(Preferences::commandChar());
+            QString cChar(Preferences::self()->commandChar());
             // make sure that lines starting with command char get escaped
             if(line.startsWith(cChar)) line=cChar+line;
             sendStatusText(line);
@@ -159,10 +159,10 @@ void StatusPanel::updateAppearance()
 {
     QColor fg;
     QColor bg;
-    if(Preferences::inputFieldsBackgroundColor())
+    if(Preferences::self()->inputFieldsBackgroundColor())
     {
-        fg=Preferences::color(Preferences::ChannelMessage);
-        bg=Preferences::color(Preferences::TextViewBackground);
+        fg=Preferences::self()->color(Preferences::ChannelMessage);
+        bg=Preferences::self()->color(Preferences::TextViewBackground);
     }
     else
     {
@@ -176,22 +176,22 @@ void StatusPanel::updateAppearance()
 
     getTextView()->unsetPalette();
 
-    if(Preferences::showBackgroundImage())
+    if(Preferences::self()->showBackgroundImage())
     {
-        getTextView()->setViewBackground(Preferences::color(Preferences::TextViewBackground),
-            Preferences::backgroundImage());
+        getTextView()->setViewBackground(Preferences::self()->color(Preferences::TextViewBackground),
+            Preferences::self()->backgroundImage());
     }
     else
     {
-        getTextView()->setViewBackground(Preferences::color(Preferences::TextViewBackground),
+        getTextView()->setViewBackground(Preferences::self()->color(Preferences::TextViewBackground),
             QString());
     }
 
-    if (Preferences::customTextFont())
+    if (Preferences::self()->customTextFont())
     {
-        getTextView()->setFont(Preferences::textFont());
-        statusInput->setFont(Preferences::textFont());
-        nicknameCombobox->setFont(Preferences::textFont());
+        getTextView()->setFont(Preferences::self()->textFont());
+        statusInput->setFont(Preferences::self()->textFont());
+        nicknameCombobox->setFont(Preferences::self()->textFont());
     }
     else
     {
@@ -200,7 +200,7 @@ void StatusPanel::updateAppearance()
         nicknameCombobox->setFont(KGlobalSettings::generalFont());
     }
 
-    showNicknameBox(Preferences::showNicknameBox());
+    showNicknameBox(Preferences::self()->showNicknameBox());
 
     ChatWindow::updateAppearance();
 }

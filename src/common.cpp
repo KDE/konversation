@@ -52,7 +52,7 @@ namespace Konversation
         // timer.start();
 
         QString filteredLine = text;
-        QString linkColor = Preferences::color(Preferences::Hyperlink).name();
+        QString linkColor = Preferences::self()->color(Preferences::Hyperlink).name();
         QString link;
         QString insertText;
         int pos = 0;

@@ -54,7 +54,7 @@ LogfileReader::LogfileReader(QWidget* parent, const QString& log) : ChatWindow(p
     new QLabel(i18n("Show last:"),toolBar,"logfile_size_label");
     sizeSpin = new QSpinBox(10,1000,10,toolBar,"logfile_size_spinbox");
     sizeSpin->setWhatsThis(i18n("Use this box to set the maximum size of the log file. This setting does not take effect until you restart Konversation. Each log file may have a separate setting."));
-    sizeSpin->setValue(Preferences::logfileBufferSize());
+    sizeSpin->setValue(Preferences::self()->logfileBufferSize());
     sizeSpin->setSuffix(i18n(" KB"));
     sizeSpin->installEventFilter(this);
 
@@ -66,7 +66,7 @@ LogfileReader::LogfileReader(QWidget* parent, const QString& log) : ChatWindow(p
     getTextView()->setWhatsThis(i18n("The messages in the log file are displayed here. The oldest messages are at the top and the most recent are at the bottom."));
 
     updateView();
-    resize(Preferences::logfileReaderSize());
+    resize(Preferences::self()->logfileReaderSize());
     ircBox->ircView()->setFocusPolicy(Qt::StrongFocus);
     setFocusPolicy(Qt::StrongFocus);
     setFocusProxy(ircBox->ircView());
@@ -76,8 +76,8 @@ LogfileReader::LogfileReader(QWidget* parent, const QString& log) : ChatWindow(p
 
 LogfileReader::~LogfileReader()
 {
-    Preferences::setLogfileReaderSize(size());
-    Preferences::setLogfileBufferSize(sizeSpin->value());
+    Preferences::self()->setLogfileReaderSize(size());
+    Preferences::self()->setLogfileBufferSize(sizeSpin->value());
 
     delete toolBar;
 }

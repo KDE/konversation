@@ -43,17 +43,17 @@ QString DccCommon::numericalIpToTextIp( const QString& numericalIp )
 QString DccCommon::getOwnIp( Server* server )
 {
     QString ownIp;
-    int methodId = Preferences::dccMethodToGetOwnIp();
+    int methodId = Preferences::self()->dccMethodToGetOwnIp();
 
     if ( methodId == 1 && server )
     {
         // by the WELCOME message or the USERHOST message from the server
         ownIp = server->getOwnIpByServerMessage();
     }
-    else if ( methodId == 2 && !Preferences::dccSpecificOwnIp().isEmpty() )
+    else if ( methodId == 2 && !Preferences::self()->dccSpecificOwnIp().isEmpty() )
     {
         // manual
-        KNetwork::KResolverResults res = KNetwork::KResolver::resolve(Preferences::dccSpecificOwnIp(), "");
+        KNetwork::KResolverResults res = KNetwork::KResolver::resolve(Preferences::self()->dccSpecificOwnIp(), "");
         if(res.error() == KResolver::NoError && res.size() > 0)
         {
             ownIp = res.first().address().nodeName();

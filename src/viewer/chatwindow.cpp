@@ -137,7 +137,7 @@ void ChatWindow::setTextView(IRCView* newView)
         return;
     }
 
-    if(Preferences::showIRCViewScrollBar())
+    if(Preferences::self()->showIRCViewScrollBar())
     { // TODO FIXME
         //textView->setVScrollBarMode(Q3ScrollView::Auto);
     }
@@ -202,14 +202,14 @@ void ChatWindow::cdIntoLogPath()
 {
     QDir logPath=QDir::home();
     // Try to "cd" into the logfile path
-    if(!logPath.cd(Preferences::logfilePath()))
+    if(!logPath.cd(Preferences::self()->logfilePath()))
     {
         // Only create log path if logging is enabled
         if(log)
         {
             // Try to create the logfile path and "cd" into it again
-            logPath.mkdir(Preferences::logfilePath());
-            logPath.cd(Preferences::logfilePath());
+            logPath.mkdir(Preferences::self()->logfilePath());
+            logPath.cd(Preferences::self()->logfilePath());
         }
     }
 
@@ -234,7 +234,7 @@ void ChatWindow::setLogfileName(const QString& name)
         }
 
         // load backlog to show
-        if(Preferences::showBacklog())
+        if(Preferences::self()->showBacklog())
         {
             // "cd" into log path or create path, if it's not there
             cdIntoLogPath();
@@ -253,7 +253,7 @@ void ChatWindow::setLogfileName(const QString& name)
                 int offset = 0;
                 unsigned int lastPacketHeadPosition = backlog.device()->size();
                 const unsigned int packetSize = 4096;
-                while(messages.count() < (unsigned int)Preferences::backlogLines() && backlog.device()->size() > packetSize * offset)
+                while(messages.count() < (unsigned int)Preferences::self()->backlogLines() && backlog.device()->size() > packetSize * offset)
                 {
                     QStringList firstColumnsInPacket;
                     QStringList messagesInPacket;
@@ -311,7 +311,7 @@ void ChatWindow::setLogfileName(const QString& name)
                 logfile.close();
 
                 // trim
-                int surplus = messages.count() - Preferences::backlogLines();
+                int surplus = messages.count() - Preferences::self()->backlogLines();
                 // "surplus" can be a minus value. (when the backlog is too short)
                 if(surplus > 0)
                 {
@@ -380,45 +380,45 @@ bool ChatWindow::isChannelEncodingSupported() const
 
 int ChatWindow::spacing()
 {
-    if(Preferences::useSpacing())
-        return Preferences::spacing();
+    if(Preferences::self()->useSpacing())
+        return Preferences::self()->spacing();
     else
         return KDialog::spacingHint();
 }
 
 int ChatWindow::margin()
 {
-    if(Preferences::useSpacing())
-        return Preferences::margin();
+    if(Preferences::self()->useSpacing())
+        return Preferences::self()->margin();
     else
         return 0;
 }
 
 // Accessors
-IRCView* ChatWindow::getTextView() const 
-{ 
-  return textView; 
+IRCView* ChatWindow::getTextView() const
+{
+  return textView;
 }
 
-void ChatWindow::setLog(bool activate) 
-{ 
-  log=activate; 
+void ChatWindow::setLog(bool activate)
+{
+  log=activate;
 }
 
 // reimplement this in all panels that have user input
-QString ChatWindow::getTextInLine()    
-{ 
-  return QString(); 
+QString ChatWindow::getTextInLine()
+{
+  return QString();
 }
 
-bool ChatWindow::canBeFrontView()           
-{ 
-  return false; 
+bool ChatWindow::canBeFrontView()
+{
+  return false;
 }
 
-bool ChatWindow::searchView()          
-{ 
-  return false; 
+bool ChatWindow::searchView()
+{
+  return false;
 }
 
 // reimplement this in all panels that have user input
@@ -445,7 +445,7 @@ bool ChatWindow::eventFilter(QObject* watched, QEvent* e)
     {
         QKeyEvent* ke = static_cast<QKeyEvent*>(e);
 
-        bool scrollMod = (Preferences::useMultiRowInputBox() ? false : (ke->state() == Qt::ShiftModifier));
+        bool scrollMod = (Preferences::self()->useMultiRowInputBox() ? false : (ke->state() == Qt::ShiftModifier));
 
         if(ke->key() == Qt::Key_Up && scrollMod)
         {

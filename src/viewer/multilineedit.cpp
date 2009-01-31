@@ -44,7 +44,7 @@ KDialog(parent )
 
     dialogLayout->addWidget(textEditor);
 
-    setInitialSize(Preferences::multilineEditSize());
+    setInitialSize(Preferences::self()->multilineEditSize());
     show();
     connect( this, SIGNAL( okClicked() ), this, SLOT( slotOk() ) );
     connect( this, SIGNAL( cancelClicked() ), this, SLOT( slotCancel() ) );
@@ -53,7 +53,7 @@ KDialog(parent )
 
 MultilineEdit::~MultilineEdit()
 {
-    Preferences::setMultilineEditSize(size());
+    Preferences::self()->setMultilineEditSize(size());
 }
 
 void MultilineEdit::slotCancel()

@@ -115,17 +115,17 @@ ViewTree::~ViewTree()
 
 void ViewTree::updateAppearance()
 {
-    if (Preferences::customTabFont())
-        setFont(Preferences::tabFont());
+    if (Preferences::self()->customTabFont())
+        setFont(Preferences::self()->tabFont());
     else
         setFont(KGlobalSettings::generalFont());
 
     QColor fg, bg;
 
-    if (Preferences::inputFieldsBackgroundColor())
+    if (Preferences::self()->inputFieldsBackgroundColor())
     {
-        fg = Preferences::color(Preferences::ChannelMessage);
-        bg = Preferences::color(Preferences::TextViewBackground);
+        fg = Preferences::self()->color(Preferences::ChannelMessage);
+        bg = Preferences::self()->color(Preferences::TextViewBackground);
     }
     else
     {
@@ -547,7 +547,7 @@ void ViewTree::contentsMousePressEvent(QMouseEvent* e)
         if (e->button() == Qt::RightButton && !item->isSelected())
             return;
 
-        if (Preferences::closeButtons() && e->button() == Qt::LeftButton && isAboveIcon(vp, item))
+        if (Preferences::self()->closeButtons() && e->button() == Qt::LeftButton && isAboveIcon(vp, item))
         {
             m_pressedAboveCloseButton = true;
             if (!item->getCloseButtonEnabled()) K3ListView::contentsMousePressEvent(e);
@@ -557,7 +557,7 @@ void ViewTree::contentsMousePressEvent(QMouseEvent* e)
             m_pressedAboveCloseButton = false;
             K3ListView::contentsMousePressEvent(e);
         }
-        m_middleClickItem = (Preferences::middleClickClose() && e->button() == Qt::MidButton) ? item : 0;
+        m_middleClickItem = (Preferences::self()->middleClickClose() && e->button() == Qt::MidButton) ? item : 0;
     }
 }
 
@@ -571,14 +571,14 @@ void ViewTree::contentsMouseReleaseEvent(QMouseEvent* e)
 
     if (item)
     {
-        if (Preferences::closeButtons() && e->button() == Qt::LeftButton
+        if (Preferences::self()->closeButtons() && e->button() == Qt::LeftButton
             && isAboveIcon(vp, item) && m_pressedAboveCloseButton
             && item->getCloseButtonEnabled())
         {
             emit closeView(item->getView());
         }
 
-        if (Preferences::middleClickClose() && e->button() == Qt::MidButton
+        if (Preferences::self()->middleClickClose() && e->button() == Qt::MidButton
             && item == m_middleClickItem)
         {
             emit closeView(item->getView());
@@ -611,7 +611,7 @@ void ViewTree::contentsMouseMoveEvent(QMouseEvent* e)
             setSelected(item, true);
     }
 
-    if (Preferences::closeButtons())
+    if (Preferences::self()->closeButtons())
     {
         if (!(e->state() & Qt::LeftButton) && !(e->state() & Qt::MidButton) && !(e->state() & Qt::RightButton))
         {

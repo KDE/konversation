@@ -161,7 +161,7 @@ int Nick::compare(Q3ListViewItem* item,int col,bool ascending) const
 {
     Nick* otherItem = static_cast<Nick*>(item);
 
-    if(Preferences::sortByActivity())
+    if(Preferences::self()->sortByActivity())
     {
         uint thisRecentActivity = getChannelNick()->recentActivity();
         uint otherRecentActivity = otherItem->getChannelNick()->recentActivity();
@@ -185,7 +185,7 @@ int Nick::compare(Q3ListViewItem* item,int col,bool ascending) const
         }
     }
 
-    if(Preferences::sortByStatus())
+    if(Preferences::self()->sortByStatus())
     {
         int thisFlags = getSortingValue();
         int otherFlags = otherItem->getSortingValue();
@@ -205,7 +205,7 @@ int Nick::compare(Q3ListViewItem* item,int col,bool ascending) const
 
     if(col > 1) //the reason we need this: enabling hostnames adds another column
     {
-        if(Preferences::sortCaseInsensitive())
+        if(Preferences::self()->sortCaseInsensitive())
         {
             thisKey = thisKey.toLower();
             otherKey = otherKey.toLower();
@@ -218,7 +218,7 @@ int Nick::compare(Q3ListViewItem* item,int col,bool ascending) const
     }
     else if(col == 1)
     {
-        if(Preferences::sortCaseInsensitive())
+        if(Preferences::self()->sortCaseInsensitive())
         {
             thisKey = getChannelNick()->loweredNickname();
             otherKey = otherItem->getChannelNick()->loweredNickname();
@@ -249,7 +249,7 @@ void Nick::paintCell(QPainter * p, const QColorGroup & cg, int column, int width
 int Nick::getSortingValue() const
 {
     int flags;
-    QString sortingOrder = Preferences::sortOrder();
+    QString sortingOrder = Preferences::self()->sortOrder();
 
     if(getChannelNick()->isOwner())       flags=sortingOrder.find('q');
     else if(getChannelNick()->isAdmin())  flags=sortingOrder.find('p');

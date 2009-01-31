@@ -147,19 +147,19 @@ void QueueTuner::timerFired()
 
 void QueueTuner::open()
 {
-    Preferences::setShowQueueTuner(true);
+    Preferences::self()->setShowQueueTuner(true);
     show();
 }
 
 void QueueTuner::close()
 {
-    Preferences::setShowQueueTuner(false);
+    Preferences::self()->setShowQueueTuner(false);
     QueueTunerBase::close();
 }
 
 void QueueTuner::show()
 {
-    if (m_server && Preferences::showQueueTuner())
+    if (m_server && Preferences::self()->showQueueTuner())
     {
         QueueTunerBase::show();
         m_timer.start(500);
