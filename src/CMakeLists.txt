@@ -168,7 +168,7 @@ set(dcc_SRCS
     dcc/chat.cpp
     dcc/common.cpp
     dcc/recipientdialog.cpp
-    #dcc/resumedialog.cpp
+    dcc/resumedialog.cpp
     dcc/transfer.cpp
     dcc/transferdetailedinfopanel.cpp
     dcc/transfermanager.cpp

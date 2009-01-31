@@ -30,7 +30,7 @@
 
 DccResumeDialog::ReceiveAction DccResumeDialog::ask(DccTransferRecv* item, const QString& message, int enabledActions, ReceiveAction defaultAction)
 {
-    int enabledButtonCodes = 0;
+    QFlags<KDialog::ButtonCode> enabledButtonCodes = 0;
     KDialog::ButtonCode defaultButtonCode = KDialog::Ok;
 
     if(enabledActions & RA_Rename || enabledActions & RA_Overwrite)
@@ -58,7 +58,7 @@ DccResumeDialog::ReceiveAction DccResumeDialog::ask(DccTransferRecv* item, const
     return ra;
 }
 
-DccResumeDialog::DccResumeDialog(DccTransferRecv* item, const QString& caption, const QString& message, int enabledActions, int enabledButtonCodes, 
+DccResumeDialog::DccResumeDialog(DccTransferRecv* item, const QString& caption, const QString& message, int enabledActions, QFlags<KDialog::ButtonCode> enabledButtonCodes, 
 				 KDialog::ButtonCode defaultButtonCode)
 : KDialog(0) 
 , m_item(item)
@@ -68,7 +68,7 @@ DccResumeDialog::DccResumeDialog(DccTransferRecv* item, const QString& caption, 
     setCaption(caption);
     setModal(true);
     setButtons(enabledButtonCodes);
-    setDefaultButton(defaultButtonCode)
+    setDefaultButton(defaultButtonCode);
     if(enabledButtonCodes & KDialog::User1)
         setButtonText(KDialog::User1, i18n("&Resume"));
 
@@ -155,8 +155,8 @@ void DccResumeDialog::updateDialogButtons() // slot
 void DccResumeDialog::suggestNewName() // slot
 {
     QString dotSuffix, suggestedName;
-    QString basename = m_urlreqFileURL->url().section("/", -1);
-    KUrl baseURL(m_urlreqFileURL->url().section("/", 0, -2));
+    QString basename = m_urlreqFileURL->url().url().section('/', -1);
+    KUrl baseURL(m_urlreqFileURL->url().url().section('/', 0, -2));
 
     int index = basename.find( '.' );
     if ( index != -1 )

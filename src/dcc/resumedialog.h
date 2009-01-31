@@ -45,7 +45,7 @@ class DccResumeDialog : public KDialog
         void updateDialogButtons();
 
     protected:
-        DccResumeDialog(DccTransferRecv* item, const QString& caption, const QString& message, int enabledActions, int enabledButtonCodes, KDialog::ButtonCode defaultButtonCode);
+        DccResumeDialog(DccTransferRecv* item, const QString& caption, const QString& message, int enabledActions, QFlags<KDialog::ButtonCode> enabledButtonCodes, KDialog::ButtonCode defaultButtonCode);
 
         // UI
         KUrlRequester* m_urlreqFileURL;
