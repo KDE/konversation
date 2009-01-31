@@ -130,10 +130,9 @@ class KonversationApplication : public KUniqueApplication
         void deleteUrl(const QString& who,const QString& url);
         void clearUrlList();
 
-
-    protected slots:
         void prepareShutdown();
 
+    protected slots:
         void openQuickConnectDialog();
 
         void dcopMultiServerRaw(const QString &command);

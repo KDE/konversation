@@ -82,8 +82,6 @@ int KonversationApplication::newInstance()
 
     if (!mainWindow)
     {
-        connect(this, SIGNAL(aboutToQuit()), this, SLOT(prepareShutdown()));
-
         m_connectionManager = new ConnectionManager(this);
 
         m_awayManager = new AwayManager(this);
@@ -217,8 +215,6 @@ KonversationApplication* KonversationApplication::instance()
 
 void KonversationApplication::prepareShutdown()
 {
-    mainWindow->getViewContainer()->prepareShutdown();
-
     m_awayManager->blockSignals(true);
     delete m_awayManager;
 

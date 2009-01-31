@@ -2059,7 +2059,7 @@ void ViewContainer::addDccPanel()
 void ViewContainer::closeDccPanel()
 {
     // if there actually is a dcc panel
-    if (m_dccPanel)
+    if (m_dccPanel && m_dccPanelOpen)
     {
         // hide it from view, does not delete it
         emit removeView(m_dccPanel);
