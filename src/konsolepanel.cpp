@@ -13,6 +13,8 @@
 #include "common.h"
 #include "viewcontainer.h"
 
+#include <qlayout.h>
+
 #include <kdebug.h>
 #include <klibloader.h>
 #include <klocale.h>
@@ -22,10 +24,13 @@ KonsolePanel::KonsolePanel(QWidget *p) : ChatWindow( p ), k_part (0)
 {
     setName(i18n("Konsole"));
     setType(ChatWindow::Konsole);
-    KLibFactory *fact = KLibLoader::self()->factory("libkonsolepart");
+
+    setMargin(0);
+
+    KPluginFactory* fact = KPluginLoader("libkonsolepart").factory();
     if (!fact) return;
 
-    k_part = (KParts::ReadOnlyPart *) fact->create(this);
+    k_part = fact->create<KParts::ReadOnlyPart>(this);
     if (!k_part) return;
 
     k_part->widget()->setFocusPolicy(Qt::WheelFocus);
@@ -33,7 +38,9 @@ KonsolePanel::KonsolePanel(QWidget *p) : ChatWindow( p ), k_part (0)
     k_part->widget()->setFocus();
 
     connect(k_part, SIGNAL(destroyed()), this, SLOT(partDestroyed()));
+#if 0
     connect(k_part, SIGNAL(receivedData(const QString&)), this, SLOT(konsoleChanged(const QString&)));
+#endif
 }
 
 KonsolePanel::~KonsolePanel()
