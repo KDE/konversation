@@ -149,9 +149,9 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : QPlainTextEdit(parent)
     m_popup->setItemVisible(toggleMenuBarSeparator, false);
     copyUrlMenuSeparator = m_popup->insertSeparator();
     m_popup->setItemVisible(copyUrlMenuSeparator, false);
-    m_popup->insertItem(SmallIconSet("editcopy"),i18n("&Copy"),Copy);
+    m_popup->insertItem(KIcon("edit-copy"),i18n("&Copy"),Copy);
     m_popup->insertItem(i18n("Select All"),SelectAll);
-    m_popup->insertItem(SmallIcon("find"),i18n("Find Text..."),Search);
+    m_popup->insertItem(KIcon("edit-find"),i18n("Find Text..."),Search);
 
     setServer(newServer);
 

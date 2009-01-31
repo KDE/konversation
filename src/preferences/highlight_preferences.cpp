@@ -48,7 +48,7 @@ Highlight_Config::Highlight_Config(QWidget* parent, const char* name)
   highlightListView->setSorting(-1);
   highlightListView->header()->setMovingEnabled(false);
 
-  soundPlayBtn->setIcon(KIcon("player_play"));
+  soundPlayBtn->setIcon(KIcon("media-playback-start"));
   soundURL->setCaption(i18n("Select Sound File"));
 
   // This code was copied from KNotifyWidget::openSoundDialog() (knotifydialog.cpp) [it's under LGPL v2]

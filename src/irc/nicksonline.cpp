@@ -57,7 +57,7 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
     m_whoisRequested = true;
 
     m_nickListView->addColumn(i18n("Network/Nickname/Channel"));
-    m_kabcIconSet = KIcon("kaddressbook");
+    m_kabcIconSet = KIcon("office-address-book");
     m_nickListView->addColumn(i18n("Additional Information"));
     m_nickListView->setFullWidth(true);
     m_nickListView->setRootIsDecorated(true);
@@ -890,12 +890,12 @@ void NicksOnline::slotNickListView_RightButtonClicked(Q3ListViewItem* item, cons
         }
         case nsHasAddress:
         {
-            m_popupMenu->insertItem(SmallIcon("mail_generic"), i18n("&Send Email..."), ciSendEmail);
+            m_popupMenu->insertItem(SmallIcon("mail-send"), i18n("&Send Email..."), ciSendEmail);
             m_popupMenu->insertSeparator();
-            m_popupMenu->insertItem(SmallIcon("contents"), i18n("Edit C&ontact..."), ciAddressbookEdit);
+            m_popupMenu->insertItem(SmallIcon("document-edit"), i18n("Edit C&ontact..."), ciAddressbookEdit);
             m_popupMenu->insertSeparator();
             m_popupMenu->insertItem(i18n("&Change Association..."), ciAddressbookChange);
-            m_popupMenu->insertItem(SmallIconSet("editdelete"), i18n("&Delete Association"), ciAddressbookDelete);
+            m_popupMenu->insertItem(SmallIconSet("edit-delete"), i18n("&Delete Association"), ciAddressbookDelete);
             m_popupMenu->insertSeparator();
             m_popupMenu->insertItem(i18n("&Whois"), ciWhois);
             m_popupMenu->insertItem(i18n("Open &Query"), ciOpenQuery);

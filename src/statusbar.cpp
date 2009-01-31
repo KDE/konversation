@@ -50,7 +50,7 @@ KonversationStatusBar::KonversationStatusBar(KonversationMainWindow* window)
 
     m_sslLabel = new SSLLabel(m_window->statusBar());
     m_sslLabel->setObjectName("sslLabel");
-    m_sslLabel->setPixmap(SmallIcon("encrypted"));
+    m_sslLabel->setPixmap(SmallIcon("security-high"));
     m_sslLabel->hide();
     m_sslLabel->setWhatsThis(i18n("All communication with the server is encrypted.  This makes it harder for someone to listen in on your communications."));
 

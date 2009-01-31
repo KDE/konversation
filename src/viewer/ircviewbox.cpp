@@ -91,7 +91,7 @@ void IRCViewBox::searchNext(bool reversed)
     if (!m_matchedOnce)
     {
         m_searchBar->setHasMatch(false);
-        m_searchBar->setStatus(getIcon("messagebox_warning"),
+        m_searchBar->setStatus(getIcon("dialog-warning"),
                               i18n("Phrase not found"));
         return;
     }
@@ -105,13 +105,13 @@ void IRCViewBox::searchNext(bool reversed)
     if (!match)
     {
         m_searchBar->setHasMatch(false);
-        m_searchBar->setStatus(getIcon("messagebox_warning"),
+        m_searchBar->setStatus(getIcon("dialog-warning"),
                               i18n("Phrase not found"));
         return;
     }
 
     m_searchBar->setHasMatch(true);
-    m_searchBar->setStatus(getIcon("messagebox_info"),
+    m_searchBar->setStatus(getIcon("dialog-info"),
                           i18n("Wrapped search"));
 }
 
@@ -131,7 +131,7 @@ void IRCViewBox::slotSearchChanged(const QString& pattern)
     else
     {
         m_searchBar->setHasMatch(false);
-        m_searchBar->setStatus(getIcon("messagebox_warning"),
+        m_searchBar->setStatus(getIcon("dialog-warning"),
             i18n("Phrase not found"));
     }
 

@@ -49,7 +49,7 @@ LogfileReader::LogfileReader(QWidget* parent, const QString& log) : ChatWindow(p
     Q3DockArea* toolBarDock = new Q3DockArea(Qt::Horizontal,Q3DockArea::Normal,this,"logfile_toolbar_dock");
     toolBar = new KToolBar(toolBarDock, true, true);
     toolBar->setObjectName("logfile_toolbar");
-    toolBar->addAction(KIcon("filesaveas"), i18n("Save As..."), this, SLOT(saveLog()));
+    toolBar->addAction(KIcon("document-save-as"), i18n("Save As..."), this, SLOT(saveLog()));
 
     new QLabel(i18n("Show last:"),toolBar,"logfile_size_label");
     sizeSpin = new QSpinBox(10,1000,10,toolBar,"logfile_size_spinbox");
@@ -58,8 +58,8 @@ LogfileReader::LogfileReader(QWidget* parent, const QString& log) : ChatWindow(p
     sizeSpin->setSuffix(i18n(" KB"));
     sizeSpin->installEventFilter(this);
 
-    toolBar->addAction(KIcon("reload"), i18n("Reload"), this, SLOT(updateView()));
-    toolBar->addAction(KIcon("editdelete"), i18n("Clear Logfile"), this, SLOT(clearLog()));
+    toolBar->addAction(KIcon("view-refresh"), i18n("Reload"), this, SLOT(updateView()));
+    toolBar->addAction(KIcon("edit-delete"), i18n("Clear Logfile"), this, SLOT(clearLog()));
 
     IRCViewBox* ircBox = new IRCViewBox(this, 0);
     setTextView(ircBox->ircView());

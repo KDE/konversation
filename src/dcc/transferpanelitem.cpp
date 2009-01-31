@@ -275,9 +275,9 @@ QString DccTransferPanelItem::getTypeText() const
 QPixmap DccTransferPanelItem::getTypeIcon() const
 {
     if ( m_transfer->getType() == DccTransfer::Send )
-        return KIconLoader::global()->loadIcon( "up", KIconLoader::Small );
+        return KIconLoader::global()->loadIcon( "arrow-up", KIconLoader::Small );
     else
-        return KIconLoader::global()->loadIcon( "down", KIconLoader::Small );
+        return KIconLoader::global()->loadIcon( "arrow-down", KIconLoader::Small );
 }
 
 QPixmap DccTransferPanelItem::getStatusIcon() const
@@ -286,7 +286,7 @@ QPixmap DccTransferPanelItem::getStatusIcon() const
     switch ( m_transfer->getStatus() )
     {
         case DccTransfer::Queued:
-            icon = "player_stop";
+            icon = "media-playback-stop";
             break;
         case DccTransfer::Preparing:
         case DccTransfer::WaitingRemote:
@@ -294,7 +294,7 @@ QPixmap DccTransferPanelItem::getStatusIcon() const
             icon = "goto";
             break;
         case DccTransfer::Transferring:
-            icon = "player_play";
+            icon = "media-playback-play";
             break;
         case DccTransfer::Done:
             icon = "ok";

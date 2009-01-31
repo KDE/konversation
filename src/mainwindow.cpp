@@ -134,7 +134,7 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0)
     //(new KAction(i18n("&Server List..."), "server", KShortcut("F2"), this, SLOT(openServerList()),actionCollection(), "open_server_list"))->setStatusTip(i18n("Manage networks and servers"));
     action=new KAction(this);
     action->setText(i18n("&Server List..."));
-    action->setIcon(KIcon("server"));
+    action->setIcon(KIcon("network-server"));
     action->setShortcut(KShortcut("F2"));
     action->setStatusTip(i18n("Manage networks and servers"));
     connect(action, SIGNAL(triggered()), SLOT(openServerList()));
@@ -143,7 +143,7 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0)
     //(new KAction(i18n("Quick &Connect..."), "connect_creating", KShortcut("F7"), this, SLOT(openQuickConnectDialog()), actionCollection(), "quick_connect_dialog"))->setStatusTip(i18n("Type in the address of a new IRC server to connect to"));
     action=new KAction(this);
     action->setText(i18n("Quick &Connect..."));
-    action->setIcon(KIcon("connect_creating"));
+    action->setIcon(KIcon("network-connect"));
     action->setShortcut(KShortcut("F7"));
     action->setStatusTip(i18n("Type in the address of a new IRC server to connect to"));
     connect(action, SIGNAL(triggered()), SLOT(openQuickConnectDialog()));

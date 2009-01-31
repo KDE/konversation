@@ -115,11 +115,11 @@ void DccTransferPanel::initGUI()
     // convenience, undeffed below again to avoid name clashes
     #define icon(s) KIconLoader::global()->loadIconSet( s,KIconLoader::Small )
 
-    m_buttonAccept = new QPushButton(icon("player_play"), i18n("Accept"), buttonsBox, "start_dcc");
+    m_buttonAccept = new QPushButton(KIcon("media-playback-play"), i18n("Accept"),    buttonsBox, "start_dcc");
     m_buttonAbort  = new QPushButton(icon("stop"),        i18n("Abort"),  buttonsBox, "abort_dcc");
     m_buttonClear  = new QPushButton(icon("editdelete"),  i18n("Clear"),  buttonsBox, "clear_dcc");
-    m_buttonOpen   = new QPushButton(icon("exec"),        i18n("Open File"),   buttonsBox, "open_dcc_file");
-    m_buttonDetail = new QPushButton(icon("view_text"),   i18n("Details"), buttonsBox, "detail_dcc");
+    m_buttonOpen   = new QPushButton(KIcon("system-run"),          i18n("Open File"), buttonsBox, "open_dcc_file");
+    m_buttonDetail = new QPushButton(KIcon("dialog-information"),  i18n("Details"),   buttonsBox, "detail_dcc");
     m_buttonDetail->setToggleButton( true );
 
     m_buttonAccept->setStatusTip(i18n("Start receiving"));
@@ -142,15 +142,15 @@ void DccTransferPanel::initGUI()
     m_popup->insertItem(                         i18n("&Select All Items"),           Popup::SelectAll);
     m_popup->insertItem(                         i18n("S&elect All Completed Items"), Popup::SelectAllCompleted);
     m_popup->insertSeparator();                   // -----
-    m_popup->insertItem(icon("player_play"),     i18n("&Accept"),                     Popup::Accept);
+    m_popup->insertItem(KIcon("media-playback-play"), i18n("&Accept"),                     Popup::Accept);
     m_popup->insertItem(icon("stop"),            i18n("A&bort"),                      Popup::Abort);
     m_popup->insertSeparator();                   // -----
     // FIXME: make it neat
-    m_popup->insertItem(icon("redo"),            i18n("Resend"),                      Popup::Resend);
+    m_popup->insertItem(KIcon("edit-redo"),           i18n("Resend"),                      Popup::Resend);
     m_popup->insertItem(icon("editdelete"),      i18n("&Clear"),                      Popup::Clear);
     m_popup->insertSeparator();                   // -----
-    m_popup->insertItem(icon("exec"),            i18n("&Open File"),                  Popup::Open);
-    m_popup->insertItem(icon("messagebox_info"), i18n("File &Information"),           Popup::Info);
+    m_popup->insertItem(KIcon("system-run"),          i18n("&Open File"),                  Popup::Open);
+    m_popup->insertItem(KIcon("dialog-information"),  i18n("File &Information"),           Popup::Info);
 
     #undef icon
 

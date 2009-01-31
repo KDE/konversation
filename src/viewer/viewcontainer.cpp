@@ -199,7 +199,7 @@ void ViewContainer::setupViewTree()
     if (action)
     {
         action->setText(i18n("Move Tab Up"));
-        action->setIcon(KIcon("1uparrow"));
+        action->setIcon(KIcon("arrow-up"));
     }
 
     action = actionCollection()->action("move_tab_right");
@@ -207,7 +207,7 @@ void ViewContainer::setupViewTree()
     if (action)
     {
         action->setText(i18n("Move Tab Down"));
-        action->setIcon(KIcon("1downarrow"));
+        action->setIcon(KIcon("arrow-down"));
     }
 
     // If the tab widget already exists we may need to sync the ViewTree
@@ -300,7 +300,7 @@ void ViewContainer::removeViewTree()
     if (action)
     {
         action->setText(i18n("Move Tab Left"));
-        action->setIcon(KIcon("1leftarrow"));
+        action->setIcon(KIcon("arrow-left"));
     }
 
     action = actionCollection()->action("move_tab_right");
@@ -308,7 +308,7 @@ void ViewContainer::removeViewTree()
     if (action)
     {
         action->setText(i18n("Move Tab Right"));
-        action->setIcon(KIcon("1rightarrow"));
+        action->setIcon(KIcon("arrow-right"));
     }
 
     delete m_viewTree;
