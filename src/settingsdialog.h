@@ -16,11 +16,7 @@
 #include "configdialog.h" ////// header renamed
 #include "settingspage.h" ////// header renamed
 
-#include <kdialogbase.h>
-#include <q3asciidict.h>
 #include <q3intdict.h>
-//Added by qt3to4:
-#include <QShowEvent>
 
 
 class Warnings_Config;
@@ -87,10 +83,9 @@ class KDEUI_EXPORT KonviSettingsDialog : public KonviConfigDialog
     protected:
         virtual bool hasChanged();
         virtual bool isDefault();
-        virtual void showEvent(QShowEvent* e);
 
         // remember page index
-        unsigned int m_watchedNicknamesIndex;
+        KPageWidgetItem *m_watchedNicknamesPage;
         Q3IntDict<KonviSettingsPage> m_indexToPageMapping;
 };
 

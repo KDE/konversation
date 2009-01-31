@@ -23,9 +23,7 @@
 #include "server.h"
 #include "sound.h" ////// header renamed
 #include "quickconnectdialog.h"
-//Added by qt3to4:
-#include <Q3CString>
-#include <Q3PtrList>
+
 #include "servergroupsettings.h"
 #include "serversettings.h"
 #include "channel.h"
@@ -315,7 +313,7 @@ void KonversationApplication::readOptions()
             newIdentity->setAwayMessage(cgIdentity.readEntry("AwayMessage"));
             newIdentity->setReturnMessage(cgIdentity.readEntry("ReturnMessage"));
             newIdentity->setAutomaticAway(cgIdentity.readEntry("AutomaticAway", false));
-            newIdentity->setAwayInactivity(cgIdentity.readEntry<int>("AwayInactivity", 10));
+            newIdentity->setAwayInactivity(cgIdentity.readEntry("AwayInactivity", 10));
             newIdentity->setAutomaticUnaway(cgIdentity.readEntry("AutomaticUnaway", false));
 
             newIdentity->setQuitReason(cgIdentity.readEntry("QuitReason"));

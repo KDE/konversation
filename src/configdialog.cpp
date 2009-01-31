@@ -24,7 +24,7 @@
  *  KConfigDialog derivative allowing for a multi-level hierarchical TreeList.
  *  Differences from KConfigDialog:
  *  - Use QStringList instead of QString for the item name(s) in addPage and
- *    addPageInternal, thus calling the respective KDialogBase methods which
+ *    addPageInternal, thus calling the respective KDialog methods which
  *    allow specifying a path from which the TreeList hierarchy is constructed.
  *  - Use 16x16 icons in the TreeList.
  *  - Fill a new int m_lastAddedIndex with the pageIndex() of a new page added
@@ -43,14 +43,12 @@
 #include <klocale.h>
 #include <kiconloader.h>
 #include <kdebug.h>
+#include <kvbox.h>
 
 #include <qlayout.h>
-#include <q3vbox.h>
 #include <qmap.h>
 //Added by qt3to4:
 #include <Q3CString>
-#include <Q3VBoxLayout>
-#include <Q3Frame>
 
 
 Q3AsciiDict<KonviConfigDialog> KonviConfigDialog::openDialogs;
@@ -59,24 +57,28 @@ Q3AsciiDict<KonviConfigDialog> KonviConfigDialog::openDialogs;
 class KonviConfigDialog::KConfigDialogPrivate
 {
     public:
-        KConfigDialogPrivate(KDialogBase::DialogType t) : shown(false), type(t), manager(0) { }
+        KConfigDialogPrivate(KPageDialog::FaceType t) : shown(false), type(t), manager(0) { }
 
         bool shown;
-        KDialogBase::DialogType type;
+        KPageDialog::FaceType type;
         KConfigDialogManager *manager;
         QMap<QWidget *, KConfigDialogManager *> managerForPage;
 };
 
 KonviConfigDialog::KonviConfigDialog( QWidget *parent, const char *name,
                                       KConfigSkeleton *config,
-                                      DialogType dialogType,
-                                      int dialogButtons,
+                                      KPageDialog::FaceType dialogType,
+                                      QFlags<KDialog::ButtonCode> dialogButtons,
                                       ButtonCode defaultButton,
                                       bool modal ) :
-                   KDialogBase( dialogType, Qt::WStyle_DialogBorder,
-                                parent, name, modal, i18n("Configure"), dialogButtons, defaultButton ),
-                                d(new KConfigDialogPrivate(dialogType))
+                   KPageDialog(parent),
+                           d(new KConfigDialogPrivate(dialogType))
 {
+    setCaption(i18n("Configure"));
+    setModal(modal);
+    setFaceType(dialogType);
+    setButtons(dialogButtons);
+    setDefaultButton(defaultButton);
     if ( name )
     {
         openDialogs.insert(name, this);
@@ -86,7 +88,7 @@ KonviConfigDialog::KonviConfigDialog( QWidget *parent, const char *name,
         Q3CString genericName;
         genericName.sprintf("SettingsDialog-%p", this);
         openDialogs.insert(genericName, this);
-        setName(genericName);
+        setObjectName(genericName);
     }
 
     connect(this, SIGNAL(okClicked()), this, SLOT(updateSettings()));
@@ -107,71 +109,38 @@ KonviConfigDialog::~KonviConfigDialog()
     delete d;
 }
 
-void KonviConfigDialog::addPage(QWidget *page,
-                                const QStringList &items,
+KPageWidgetItem *KonviConfigDialog::addPage(QWidget *page,
+                                KPageWidgetItem *group,
                                 const QString &pixmapName,
                                 const QString &header,
                                 bool manage)
 {
-    addPageInternal(page, items, pixmapName, header);
+    KPageWidgetItem *pageWidgetItem = addPageInternal(page, group, pixmapName, header);
     if(manage)
         d->manager->addWidget(page);
+    return pageWidgetItem;
 }
 
-void KonviConfigDialog::addPage(QWidget *page,
+KPageWidgetItem *KonviConfigDialog::addPage(QWidget *page,
                                 KConfigSkeleton *config,
-                                const QStringList &items,
+                                KPageWidgetItem *group,
                                 const QString &pixmapName,
                                 const QString &header)
 {
-    addPageInternal(page, items, pixmapName, header);
+    KPageWidgetItem *pageWidgetItem = addPageInternal(page, group, pixmapName, header);
     d->managerForPage[page] = new KConfigDialogManager(page, config);
     setupManagerConnections(d->managerForPage[page]);
+    return pageWidgetItem;
 }
 
-void KonviConfigDialog::addPageInternal(QWidget *page,
-                                        const QStringList &items,
+KPageWidgetItem *KonviConfigDialog::addPageInternal(QWidget *page,
+                                        KPageWidgetItem *group,
                                         const QString &pixmapName,
                                         const QString &header)
 {
-    if(d->shown)
-    {
-        kDebug(240) << "KonviConfigDialog::addPage: can not add a page after the dialog has been shown.";
-        return;
-    }
-    switch(d->type)
-    {
-        case TreeList:
-        case IconList:
-        case Tabbed:
-        {
-            KVBox *frame = addVBoxPage(items, header, SmallIcon(pixmapName, 16));
-            frame->setSpacing( 0 );
-            frame->setMargin( 0 );
-            page->reparent(((QWidget*)frame), 0, QPoint());
-            m_lastAddedIndex = pageIndex(frame);
-        }
-        break;
-
-        case Swallow:
-        {
-            page->reparent(this, 0, QPoint());
-            setMainWidget(page);
-        }
-        break;
-
-        case Plain:
-        {
-            QFrame *main = plainPage();
-            Q3VBoxLayout *topLayout = new Q3VBoxLayout( main, 0, 0 );
-            page->reparent(((QWidget*)main), 0, QPoint());
-            topLayout->addWidget( page );
-        }
-        break;
-
-        default:
-            kDebug(240) << "KonviConfigDialog::addpage: unknown type.";
-    }
+    KPageWidgetItem *pageItem = addSubPage(group, page, header);
+    pageItem->setIcon(KIcon(pixmapName));
+    return pageItem;
 }
 
 void KonviConfigDialog::setupManagerConnections(KConfigDialogManager *manager)
@@ -266,7 +235,7 @@ void KonviConfigDialog::show()
 
     enableButton(Default, !is_default);
     d->shown = true;
-    KDialogBase::show();
+    KPageDialog::show();
 }
 
 int KonviConfigDialog::lastAddedIndex()

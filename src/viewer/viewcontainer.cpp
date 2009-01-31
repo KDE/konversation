@@ -53,21 +53,18 @@
 #include <KXMLGUIFactory>
 
 ViewContainer::ViewContainer(KonversationMainWindow* window):
-        m_vbox(0), m_queueTuner(0)
+        m_window(window)
+        , m_tabWidget(0)
+        , m_viewTree(0)
+        , m_vbox(0)
+        , m_queueTuner(0)
+        , m_urlCatcherPanel(0)
+        , m_nicksOnlinePanel(0)
+        , m_insertCharDialog(0)
+        , m_queryViewCount(0)
 {
-    m_window = window;
 
     images = KonversationApplication::instance()->images();
-
-    m_tabWidget = 0;
-    m_viewTree = 0;
-
-    m_urlCatcherPanel = 0;
-    m_nicksOnlinePanel = 0;
-
-    m_insertCharDialog = 0;
-
-    m_queryViewCount = 0;
 
     m_viewTreeSplitter = new QSplitter(m_window);
     m_viewTreeSplitter->setObjectName("view_tree_splitter");
@@ -2077,7 +2074,7 @@ void ViewContainer::deleteDccPanel()
     if (m_dccPanel)
     {
         closeDccPanel();
-        delete m_dccPanel;
+        m_dccPanel->deleteLater();
         m_dccPanel=0;
     }
 }
@@ -2432,18 +2429,14 @@ void ViewContainer::openNicksOnlinePanel()
     else
     {
         closeNicksOnlinePanel();
-        (dynamic_cast<KToggleAction*>(actionCollection()->action("open_nicksonline_window")))->setChecked(false);
     }
 
 }
 
 void ViewContainer::closeNicksOnlinePanel()
 {
-    if(m_nicksOnlinePanel)
-    {
-        delete m_nicksOnlinePanel;
-        m_nicksOnlinePanel = 0;
-    }
+    m_nicksOnlinePanel->deleteLater();
+    m_nicksOnlinePanel = 0;
     (dynamic_cast<KToggleAction*>(actionCollection()->action("open_nicksonline_window")))->setChecked(false);
 }
 

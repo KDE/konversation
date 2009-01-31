@@ -19,9 +19,6 @@
 #include "warnings_preferences.h"
 #include "log_preferences.h"
 #include "quickbuttons_preferences.h"
-//Added by qt3to4:
-#include <QShowEvent>
-#include <Q3ValueList>
 #include "autoreplace_preferences.h"
 #include "chatwindowbehaviour_preferences.h"
 #include "fontappearance_preferences.h"
@@ -43,203 +40,126 @@
 #include <klocale.h>
 #include <kdebug.h>
 #include <kiconloader.h>
-#include <k3listview.h>
-
 
 KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
-	           KonviConfigDialog( parent, "settings", Preferences::self(), KDialogBase::TreeList)
+    KonviConfigDialog( parent, "settings", Preferences::self(), KPageDialog::Tree)
 {
   m_modified = false;
-  setShowIconsInTreeList(true);
 
-  QStringList iconPath;
+  KPageWidgetItem *interfaceGroup = new KPageWidgetItem(new QWidget(this), i18n("Interface"));
+  interfaceGroup->setIcon(KIcon("looknfeel"));
+  KPageDialog::addPage(interfaceGroup);
 
-  iconPath << i18n("Interface");
-  setFolderIcon( iconPath, SmallIcon("looknfeel") );
+  KPageWidgetItem *behaviorGroup = new KPageWidgetItem(new QWidget(this), i18n("Behavior"));
+  behaviorGroup->setIcon(KIcon("configure"));
+  KPageDialog::addPage(behaviorGroup);
 
-  iconPath.clear();
-  iconPath << i18n("Behavior");
-  setFolderIcon( iconPath, SmallIcon("configure") );
-
-  iconPath.clear();
-  iconPath<< i18n("Behavior");
-  setFolderIcon( iconPath, SmallIcon("configure") );
-
-  iconPath.clear();
-  iconPath<< i18n("Notifications");
-  setFolderIcon( iconPath, SmallIcon("playsound") );
-
-  QStringList pagePath;
+  KPageWidgetItem *notificationGroup = new KPageWidgetItem(new QWidget(this), i18n("Notifications"));
+  notificationGroup->setIcon(KIcon("playsound"));
+  KPageDialog::addPage(notificationGroup);
 
   //Interface/Chat Window
-  m_confChatWindowAppearanceWdg = new ChatWindowAppearance_Config( 0, "ChatWindowAppearance" );
+  m_confChatWindowAppearanceWdg = new ChatWindowAppearance_Config( this, "ChatWindowAppearance" );
   m_confChatWindowAppearanceWdg->kcfg_TimestampFormat->insertItem("hh:mm");
   m_confChatWindowAppearanceWdg->kcfg_TimestampFormat->insertItem("hh:mm:ss");
   m_confChatWindowAppearanceWdg->kcfg_TimestampFormat->insertItem("h:m ap");
-  pagePath.clear();
-  pagePath << i18n("Interface") << i18n("Chat Window");
-  addPage ( m_confChatWindowAppearanceWdg, pagePath, "view_text", i18n("Chat Window") );
+  addPage ( m_confChatWindowAppearanceWdg, interfaceGroup, "view_text", i18n("Chat Window") );
 
   //Interface/Themes
   m_confThemeWdg = new Theme_Config( this, "Theme" );
-  pagePath.clear();
-  pagePath << i18n("Interface") << i18n("Nicklist Themes");
-  addPage ( m_confThemeWdg, pagePath, "iconthemes", i18n("Nicklist Themes") );
+  addPage ( m_confThemeWdg, interfaceGroup, "iconthemes", i18n("Nicklist Themes") );
   m_indexToPageMapping.insert(lastAddedIndex(), m_confThemeWdg);
   connect(m_confThemeWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
 
   //Interface/Colors
   m_confColorsAppearanceWdg = new ColorsAppearance_Config( this, "ColorsAppearance" );
-  pagePath.clear();
-  pagePath << i18n("Interface") << i18n("Colors");
-  addPage ( m_confColorsAppearanceWdg, pagePath, "colorize", i18n("Colors") );
+  addPage ( m_confColorsAppearanceWdg, interfaceGroup, "colorize", i18n("Colors") );
 
   //Interface/Fonts
   m_confFontAppearanceWdg = new FontAppearance_Config( this, "FontAppearance" );
-  pagePath.clear();
-  pagePath << i18n("Interface") << i18n("Fonts");
-  addPage ( m_confFontAppearanceWdg, pagePath, "fonts", i18n("Fonts") );
+  addPage ( m_confFontAppearanceWdg, interfaceGroup, "fonts", i18n("Fonts") );
 
   //Interface/Quick Buttons
   m_confQuickButtonsWdg = new QuickButtons_Config( this, "QuickButtons" );
-  pagePath.clear();
-  pagePath << i18n("Interface") << i18n("Quick Buttons");
-  addPage ( m_confQuickButtonsWdg, pagePath, "keyboard", i18n("Quick Buttons") );
+  addPage ( m_confQuickButtonsWdg, interfaceGroup, "keyboard", i18n("Quick Buttons") );
   m_indexToPageMapping.insert(lastAddedIndex(), m_confQuickButtonsWdg);
   connect(m_confQuickButtonsWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
 
   //Interface/Tabs
   m_confTabBarWdg = new Tabs_Config( this, "TabBar" );
-  pagePath.clear();
-  pagePath << i18n("Interface") << i18n("Tabs");
-  addPage ( m_confTabBarWdg, pagePath, "tab_new", i18n("Tabs") );
+  addPage ( m_confTabBarWdg, interfaceGroup, "tab_new", i18n("Tabs") );
 
   //Behavior/General
   m_confGeneralBehaviorWdg = new GeneralBehavior_Config( this, "GeneralBehavior" );
-  pagePath.clear();
-  pagePath << i18n("Behavior") << i18n("General");
-  addPage ( m_confGeneralBehaviorWdg, pagePath, "exec", i18n("General") );
+  addPage ( m_confGeneralBehaviorWdg, interfaceGroup, "exec", i18n("General") );
 
   //Behavior/Connection
   m_confConnectionBehaviorWdg = new ConnectionBehavior_Config( this, "ConnectionBehavior" );
-  pagePath.clear();
-  pagePath << i18n("Behavior") << i18n("Connection");
-  addPage ( m_confConnectionBehaviorWdg, pagePath, "connect_creating", i18n("Connection") );
+  addPage ( m_confConnectionBehaviorWdg, interfaceGroup, "connect_creating", i18n("Connection") );
 
   //Behaviour/Chat Window
   m_confChatwindowBehaviourWdg = new ChatwindowBehaviour_Config( this, "ChatwindowBehaviour" );
-  pagePath.clear();
-  pagePath << i18n("Behavior") << i18n("Chat Window");
-  addPage ( m_confChatwindowBehaviourWdg, pagePath, "view_text", i18n("Chat Window") );
+  addPage ( m_confChatwindowBehaviourWdg, behaviorGroup, "view_text", i18n("Chat Window") );
 
   //Behaviour/Nickname List
   m_confNicklistBehaviorWdg = new NicklistBehavior_Config( this, "NicklistBehavior" );
-  pagePath.clear();
-  pagePath << i18n("Behavior") << i18n("Nickname List");
-  addPage ( m_confNicklistBehaviorWdg, pagePath, "player_playlist", i18n("Nickname List") );
+  addPage ( m_confNicklistBehaviorWdg, behaviorGroup, "player_playlist", i18n("Nickname List") );
   connect(m_confNicklistBehaviorWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
   m_indexToPageMapping.insert(lastAddedIndex(), m_confNicklistBehaviorWdg);
 
   //Behaviour/Command Aliases
   m_confAliasWdg = new Alias_Config( this, "Alias" );
-  pagePath.clear();
-  pagePath << i18n("Behavior") << i18n("Command Aliases");
-  addPage ( m_confAliasWdg, pagePath, "editcopy", i18n("Command Aliases") );
+  addPage ( m_confAliasWdg, behaviorGroup, "editcopy", i18n("Command Aliases") );
   m_indexToPageMapping.insert(lastAddedIndex(), m_confAliasWdg);
   connect(m_confAliasWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
 
   //Behaviour/Auto Replace
   m_confAutoreplaceWdg = new Autoreplace_Config( this, "Autoreplace" );
-  pagePath.clear();
-  pagePath << i18n("Behavior") << i18n("Auto Replace");
-  addPage ( m_confAutoreplaceWdg, pagePath, "kview", i18n("Auto Replace") );
+  addPage ( m_confAutoreplaceWdg, behaviorGroup, "kview", i18n("Auto Replace") );
   m_indexToPageMapping.insert(lastAddedIndex(), m_confAutoreplaceWdg);
   connect(m_confAutoreplaceWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
 
   //Behaviour/Ignore
   m_confIgnoreWdg = new Ignore_Config(this, "Ignore");
-  pagePath.clear();
-  pagePath << i18n("Behavior") << i18n("Ignore");
-  addPage ( m_confIgnoreWdg, pagePath, "stop", i18n("Ignore") );
+  addPage ( m_confIgnoreWdg, behaviorGroup, "stop", i18n("Ignore") );
   connect(m_confIgnoreWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
   m_indexToPageMapping.insert(lastAddedIndex(), m_confIgnoreWdg);
 
   //Behaviour/Logging
   m_confLogWdg = new Log_Config( this, "Log" );
-  pagePath.clear();
-  pagePath << i18n("Behavior") << i18n("Logging");
-  addPage ( m_confLogWdg, pagePath, "log", i18n("Logging") );
+  addPage ( m_confLogWdg, behaviorGroup, "log", i18n("Logging") );
 
   m_confDCCWdg = new DCC_Config( this, "DCC" );
-  pagePath.clear();
-  pagePath << i18n("Behavior") << i18n("DCC");
-  addPage ( m_confDCCWdg, pagePath, "2rightarrow", i18n("DCC") );
+  addPage ( m_confDCCWdg, behaviorGroup, "2rightarrow", i18n("DCC") );
 
   //Notifications/Tab Bar
   m_confTabNotificationsWdg = new TabNotifications_Config( this, "TabBar" );
-  pagePath.clear();
-  pagePath << i18n("Notifications") << i18n("Tabs");
-  addPage ( m_confTabNotificationsWdg, pagePath, "tab_new", i18n("Tabs") );
+  addPage ( m_confTabNotificationsWdg, notificationGroup, "tab_new", i18n("Tabs") );
 
   //Notification/Highlighting
   m_confHighlightWdg = new Highlight_Config( this, "Highlight" );
-  pagePath.clear();
-  pagePath << i18n("Notifications") << i18n("Highlight");
-  addPage ( m_confHighlightWdg, pagePath, "paintbrush", i18n("Highlight") );
+  addPage ( m_confHighlightWdg, notificationGroup, "paintbrush", i18n("Highlight") );
   connect(m_confHighlightWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
   m_indexToPageMapping.insert(lastAddedIndex(), m_confHighlightWdg);
 
   //Notification/Watched Nicknames
   m_confWatchedNicknamesWdg = new WatchedNicknames_Config( this, "WatchedNicknames" );
-  pagePath.clear();
-  pagePath << i18n("Notifications") << i18n("Watched Nicknames");
-  addPage ( m_confWatchedNicknamesWdg, pagePath, "kfind", i18n("Watched Nicknames") );
   // remember index so we can open this page later from outside
-  m_watchedNicknamesIndex=lastAddedIndex();
+  m_watchedNicknamesPage = addPage ( m_confWatchedNicknamesWdg, notificationGroup, "kfind", i18n("Watched Nicknames") );
   connect(m_confWatchedNicknamesWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
   m_indexToPageMapping.insert(lastAddedIndex(), m_confWatchedNicknamesWdg);
 
   //Notification/On Screen Display
   m_confOSDWdg = new OSD_Config( this, "OSD" );
-  pagePath.clear();
-  pagePath << i18n("Notifications") << i18n("On Screen Display");
-  addPage ( m_confOSDWdg, pagePath, "tv", i18n("On Screen Display") );
+  addPage ( m_confOSDWdg, notificationGroup, "tv", i18n("On Screen Display") );
   //no modified connection needed - it's all kcfg widgets
   m_indexToPageMapping.insert(lastAddedIndex(), m_confOSDWdg);
 
   //Notification/Warning Dialogs
   m_confWarningsWdg = new Warnings_Config( this, "Warnings" );
-  pagePath.clear();
-  pagePath << i18n("Notifications") << i18n("Warning Dialogs");
-  addPage ( m_confWarningsWdg, pagePath, "messagebox_warning", i18n("Warning Dialogs") );
+  addPage ( m_confWarningsWdg, notificationGroup, "messagebox_warning", i18n("Warning Dialogs") );
   m_indexToPageMapping.insert(lastAddedIndex(), m_confWarningsWdg);
   connect(m_confWarningsWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
-
-  unfoldTreeList();
-}
-
-void KonviSettingsDialog::showEvent(QShowEvent* e)
-{
-  KonviConfigDialog::showEvent(e);
-
-  QSplitter* splitter = ((QSplitter*)child(0, "QSplitter", true));
-  K3ListView* listView = ((K3ListView*)child(0, "K3ListView", true));
-
-  if (splitter && listView)
-  {
-    int visible = listView->visibleWidth();
-    int content = listView->contentsWidth();
-
-    if (visible < content)
-    {
-      int shiftSplitterBy = content - visible;
-      resize(width()+shiftSplitterBy, height());
-      Q3ValueList<int> oldSizes = splitter->sizes();
-      Q3ValueList<int> newSizes;
-      newSizes << oldSizes[0] + shiftSplitterBy << oldSizes[1] - shiftSplitterBy;
-      splitter->setSizes(newSizes);
-    }
-  }
 }
 
 void KonviSettingsDialog::modifiedSlot()
@@ -300,7 +220,7 @@ void KonviSettingsDialog::updateWidgetsDefault()
 void KonviSettingsDialog::openWatchedNicknamesPage()
 {
   // page index has been calculated in the constructor
-  showPage(m_watchedNicknamesIndex);
+  setCurrentPage(m_watchedNicknamesPage);
 }
 
 // accessor method - will be used by KonviConfigDialog::updateButtons()

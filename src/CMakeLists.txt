@@ -28,8 +28,8 @@ set(core_SRCS
     statusbar.cpp
 #    bookmarkhandler.cpp
 #    bookmarkmenu.cpp
-#    configdialog.cpp
-#    settingsdialog.cpp
+   configdialog.cpp
+   settingsdialog.cpp
     scriptlauncher.cpp
     konsolepanel.cpp
     notificationhandler.cpp

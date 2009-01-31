@@ -41,14 +41,14 @@
 
 #include <q3asciidict.h>
 
-#include <kdialog.h>
+#include <kpagedialog.h>
 
 
 class KConfig;
 class KConfigSkeleton;
 class KConfigDialogManager;
 
-class KonviConfigDialog : public KDialogBase
+class KonviConfigDialog : public KPageDialog
 {
     Q_OBJECT
 
@@ -64,20 +64,20 @@ class KonviConfigDialog : public KDialogBase
     public:
         KonviConfigDialog( QWidget *parent, const char *name,
                            KConfigSkeleton *config,
-                           DialogType dialogType = IconList,
-                           int dialogButtons = Default|Ok|Apply|Cancel|Help,
+                           KPageDialog::FaceType  dialogType = List,
+                           QFlags<KDialog::ButtonCode> dialogButtons = Default|Ok|Apply|Cancel|Help,
                            ButtonCode defaultButton = Ok,
                            bool modal=false );
 
         ~KonviConfigDialog();
 
-        void addPage( QWidget *page, const QStringList &items,
+        KPageWidgetItem *addPage( QWidget *page, KPageWidgetItem *group,
                       const QString &pixmapName,
                       const QString &header=QString(),
                       bool manage=true );
 
-        void addPage( QWidget *page, KConfigSkeleton *config,
-                      const QStringList &items,
+        KPageWidgetItem *addPage( QWidget *page, KConfigSkeleton *config,
+                      KPageWidgetItem *group,
                       const QString &pixmapName,
                       const QString &header=QString() );
 
@@ -107,7 +107,7 @@ class KonviConfigDialog : public KDialogBase
         void settingsChangedSlot();
 
     private:
-        void addPageInternal(QWidget *page, const QStringList &items,
+        KPageWidgetItem *addPageInternal(QWidget *page, KPageWidgetItem *group,
                              const QString &pixmapName, const QString &header);
 
         void setupManagerConnections(KConfigDialogManager *manager);

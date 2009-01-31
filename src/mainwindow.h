@@ -126,6 +126,8 @@ class KonversationMainWindow : public KXmlGuiWindow
         
 
     protected:
+        virtual QSize sizeHint() const;
+
         int confirmQuit();
         bool queryClose();
         virtual bool event(QEvent* e);

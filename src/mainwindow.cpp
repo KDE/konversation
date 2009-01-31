@@ -16,7 +16,7 @@
 #include "mainwindow.h" ////// header renamed
 #include "application.h" ////// header renamed
 //#include "linkaddressbook/addressbook.h"
-//#include "settingsdialog.h" ////// header renamed
+#include "settingsdialog.h" ////// header renamed
 #include "viewcontainer.h"
 #include "statusbar.h" ////// header renamed
 #include "bookmarkhandler.h" ////// header renamed
@@ -31,13 +31,7 @@
 
 #include <qnamespace.h>
 #include <qsignalmapper.h>
-#include <qobject.h>
-//Added by qt3to4:
-#include <QHideEvent>
-#include <QEvent>
-#include <QShowEvent>
 #include <QSplitter>
-#include <QKeySequence>
 
 //#include <kaccel.h>
 #include <KActionCollection>
@@ -69,7 +63,7 @@
 #include <knotifyconfigwidget.h>
 
 
-KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0, Qt::WStyle_ContextHelp | Qt::WType_TopLevel | Qt::WDestructiveClose)
+KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0)
 {
     m_hasDirtySettings = false;
     m_closeApp = false;
@@ -550,7 +544,6 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0, Qt::WStyle_C
 
     createGUI();
 
-    resize(700, 500);                             // Give the app a sane default size
     setAutoSaveSettings();
 
     // Apply menubar show/hide pref
@@ -573,7 +566,11 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0, Qt::WStyle_C
 
 KonversationMainWindow::~KonversationMainWindow()
 {
-    delete m_viewContainer;
+}
+
+QSize KonversationMainWindow::sizeHint() const
+{
+    return QSize(700, 500); // Give the app a sane default size
 }
 
 int KonversationMainWindow::confirmQuit()
@@ -748,7 +745,7 @@ void KonversationMainWindow::focusAndShowErrorMessage(const QString &errorMsg)
 }
 
 void KonversationMainWindow::openPrefsDialog()
-{/*
+{
     //An instance of your dialog could be already created and could be cached,
     //in which case you want to display the cached dialog instead of creating
     //another one
@@ -759,7 +756,7 @@ void KonversationMainWindow::openPrefsDialog()
         //configuration data
         connect(m_settingsDialog, SIGNAL(settingsChanged()), this, SLOT(settingsChangedSlot()));
     }
-    m_settingsDialog->show();*/
+    m_settingsDialog->show();
 }
 
 void KonversationMainWindow::openKeyBindings()
