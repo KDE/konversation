@@ -73,7 +73,9 @@ namespace Konversation
         connect(m_channel, SIGNAL(topicHistoryChanged()), this, SLOT(refreshTopicHistory()));
 
         connect(m_channel, SIGNAL(modesChanged()), this, SLOT(refreshModes()));
+#ifndef Q_CC_MSVC
 #warning "port it to kde4"
+#endif
         //connect(m_channel->getOwnChannelNick(), SIGNAL(channelNickChanged()), this, SLOT(refreshEnableModes()));
 
         connect(this, SIGNAL(cancelClicked()), this, SLOT(cancelClicked()));
@@ -267,7 +269,9 @@ namespace Konversation
             static_cast<Q3CheckListItem*>(item)->setOn(false);
             item = item->nextSibling();
         }
+#ifndef Q_CC_MSVC
 #warning "port to kde4"
+#endif
 #if 0
         char mode;
 

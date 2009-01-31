@@ -36,7 +36,9 @@ ScriptLauncher::~ScriptLauncher()
 
 void ScriptLauncher::launchScript(const QString& target, const QString &parameter)
 {
+#ifndef Q_CC_MSVC
 #warning "port to kde4"
+#endif
 #if 0 
     KStandardDirs kstddir;
     //  QString scriptPath(kstddir.saveLocation("data",QString("konversation/scripts")));

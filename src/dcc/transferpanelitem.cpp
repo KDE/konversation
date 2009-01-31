@@ -195,7 +195,9 @@ void DccTransferPanelItem::openFileInfoDialog()
 
         // get meta info object
         KFileMetaInfo fileInfo(path,QString(),KFileMetaInfo::Everything);
+#ifndef Q_CC_MSVC
 #warning "port kde4"
+#endif
 #if 0
         // is there any info for this file?
         if(!fileInfo.isValid())

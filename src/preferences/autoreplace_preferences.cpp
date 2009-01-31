@@ -230,7 +230,9 @@ void Autoreplace_Config::entrySelected(Q3ListViewItem* autoreplaceEntry)
   patternInput->setEnabled(enabled);
   replacementLabel->setEnabled(enabled);
   replacementInput->setEnabled(enabled);
+#ifndef Q_CC_MSVC
 #warning "kde4 por it"
+#endif
 #if 0
   if(!KTrader::self()->query("KRegExpEditor/KRegExpEditor").isEmpty())
   {

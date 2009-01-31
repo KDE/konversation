@@ -73,7 +73,7 @@ class guess_dfa {
 class JapaneseCode
 {
  public:
-  enum Type {ASCII, JIS, EUC, SJIS, UNICODE, UTF8 };
+  enum Type {K_ASCII, K_JIS, K_EUC, K_SJIS, K_UNICODE, K_UTF8 };
   enum Type guess_jp(const char* buf, int buflen);
   
   JapaneseCode () {

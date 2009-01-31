@@ -321,7 +321,7 @@ enum JapaneseCode::Type JapaneseCode::guess_jp(const char *buf, int buflen)
                 last_JIS_escape = false;
 
                 if (c == '$' || c == '(') {
-                    return JapaneseCode::JIS;
+                    return JapaneseCode::K_JIS;
                 }
             } else {
                 last_JIS_escape = true;
@@ -329,27 +329,27 @@ enum JapaneseCode::Type JapaneseCode::guess_jp(const char *buf, int buflen)
         }
 
         if (DFA_ALIVE(eucj)) {
-            if (!DFA_ALIVE(sjis) && !DFA_ALIVE(utf8)) return JapaneseCode::EUC;
+            if (!DFA_ALIVE(sjis) && !DFA_ALIVE(utf8)) return JapaneseCode::K_EUC;
             DFA_NEXT(eucj, c);
         }
         if (DFA_ALIVE(sjis)) {
-            if (!DFA_ALIVE(eucj) && !DFA_ALIVE(utf8)) return JapaneseCode::SJIS;
+            if (!DFA_ALIVE(eucj) && !DFA_ALIVE(utf8)) return JapaneseCode::K_SJIS;
             DFA_NEXT(sjis, c);
         }
         if (DFA_ALIVE(utf8)) {
-            if (!DFA_ALIVE(sjis) && !DFA_ALIVE(eucj)) return JapaneseCode::UTF8;
+            if (!DFA_ALIVE(sjis) && !DFA_ALIVE(eucj)) return JapaneseCode::K_UTF8;
             DFA_NEXT(utf8, c);
         }
 
         if (!DFA_ALIVE(eucj) && !DFA_ALIVE(sjis) && !DFA_ALIVE(utf8)) {
             /* we ran out the possibilities */
-            return JapaneseCode::ASCII;
+            return JapaneseCode::K_ASCII;
         }
     }
 
     /* ascii code check */
     if (eucj->score == 1.0 && sjis->score == 1.0 && utf8->score == 1.0)
-        return JapaneseCode::ASCII;
+        return JapaneseCode::K_ASCII;
 
     /* Now, we have ambigous code.  Pick the highest score.  If more than
        one candidate tie, pick the default encoding. */
@@ -369,9 +369,9 @@ enum JapaneseCode::Type JapaneseCode::guess_jp(const char *buf, int buflen)
         }
     }
 
-    if (top == eucj) return JapaneseCode::EUC;
-    if (top == utf8) return JapaneseCode::UTF8;
-    if (top == sjis) return JapaneseCode::SJIS;
+    if (top == eucj) return JapaneseCode::K_EUC;
+    if (top == utf8) return JapaneseCode::K_UTF8;
+    if (top == sjis) return JapaneseCode::K_SJIS;
 
-    return JapaneseCode::ASCII;
+    return JapaneseCode::K_ASCII;
 }

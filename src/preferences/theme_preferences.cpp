@@ -255,7 +255,9 @@ void Theme_Config::removeTheme()
 
     if(remove == KMessageBox::Continue)
     {
+#ifndef Q_CC_MSVC
 #warning "kde4 port it"
+#endif
 #if 0
         unlink(QFile::encodeName(dir));
         KIO::DeleteJob* job = KIO::del(KUrl(dir.remove("index.desktop")));

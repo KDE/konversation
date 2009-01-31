@@ -12,7 +12,7 @@
 */
 
 #include "chat.h"
-#include "common.h"
+#include "dcccommon.h"
 #include "application.h" ////// header renamed
 #include "mainwindow.h" ////// header renamed
 #include "irccharsets.h"
@@ -68,7 +68,9 @@ DccChat::DccChat(QWidget* parent, bool listen, Server* server, const QString& ow
     setChannelEncodingSupported(true);
 
     m_headerSplitter = new QSplitter(Qt::Vertical, this);
+#ifndef Q_CC_MSVC
 #warning "port kde4"
+#endif
     m_sourceLine = 0;
     //m_sourceLine = new Konversation::TopicLabel(m_headerSplitter);
 
@@ -151,7 +153,9 @@ void DccChat::listenForPartner()
     kDebug() << "DccChat::listenForPartner(): using port " << m_ownPort << endl;
 
     getTextView()->appendServerMessage(i18n("DCC"), i18n("Offering DCC Chat connection to %1 on port %2...", m_partnerNick, m_ownPort));
+#ifndef Q_CC_MSVC
 #warning "port kde4"
+#endif
     //m_sourceLine->setText(i18n("DCC chat with %1 on port %2.", m_partnerNick, m_ownPort));
     kDebug() << "DccChat::listenForPartner() [END]" << endl;
 }
@@ -165,8 +169,9 @@ void DccChat::connectToPartner()
 
     getTextView()->appendServerMessage( i18n( "DCC" ), i18nc("%1 = nickname, %2 = IP, %3 = port",
         "Establishing DCC Chat connection to %1 (%2:%3)...", m_partnerNick, m_partnerHost, m_partnerPort));
-
+#ifndef Q_CC_MSVC
 #warning "port kde4"
+#endif
     //m_sourceLine->setText(i18nc("%1 = nickname, %2 = IP, %3 = port", "DCC chat with %1 on %2:%3.", m_partnerNick, host, m_partnerPort));
 
     m_dccSocket = new KNetwork::KStreamSocket( m_partnerHost, QString::number( m_partnerPort ), this );
@@ -393,7 +398,9 @@ void DccChat::appendInputText( const QString& s, bool fromCursor )
     else
     {
         int para = 0, index = 0;
+#ifndef Q_CC_MSVC
 #warning "port it"
+#endif
 #if 0
         m_dccChatInput->getCursorPosition(&para, &index);
         m_dccChatInput->insertAt(s, para, index);
@@ -429,7 +436,9 @@ void DccChat::showEvent(QShowEvent* /* event */)
     if(m_initialShow) {
         m_initialShow = false;
         Q3ValueList<int> sizes;
+#ifndef Q_CC_MSVC
 #warning "port kde4";
+#endif
         //sizes << m_sourceLine->sizeHint().height() << (height() - m_sourceLine->sizeHint().height());
         m_headerSplitter->setSizes(sizes);
     }

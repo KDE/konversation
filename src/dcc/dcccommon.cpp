@@ -9,7 +9,7 @@
   Copyright (C) 2007 Shintaro Matsuoka <shin@shoegazed.org>
 */
 
-#include "common.h"
+#include "dcccommon.h"
 #include "channel.h"
 #include "preferences.h"
 #include "server.h"

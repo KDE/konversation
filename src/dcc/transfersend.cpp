@@ -16,7 +16,7 @@
 
 #include "transfersend.h"
 #include "channel.h"
-#include "common.h"
+#include "dcccommon.h"
 #include "transfermanager.h"
 #include "application.h"
 #include "connectionmanager.h"
@@ -26,8 +26,10 @@
 #include <sys/types.h>
 #include <netinet/in.h>
 #include <sys/socket.h>
+#ifndef Q_CC_MSVC
 #include <net/if.h>
 #include <sys/ioctl.h>
+#endif
 #include <arpa/inet.h>
 
 #include <qfile.h>

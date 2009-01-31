@@ -52,8 +52,8 @@ bool isUtf8(const Q3CString& text)
 
     switch(result)
     {
-        case JapaneseCode::SJIS:
-        case JapaneseCode::JIS:
+        case JapaneseCode::K_SJIS:
+        case JapaneseCode::K_JIS:
             delete jc;
             return false;
         default:

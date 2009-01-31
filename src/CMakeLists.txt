@@ -166,7 +166,7 @@ kde4_add_ui3_files(viewer_SRCS viewer/irccolorchooserui.ui)
     #=== DCC
 set(dcc_SRCS
     dcc/chat.cpp
-    dcc/common.cpp
+    dcc/dcccommon.cpp
     dcc/recipientdialog.cpp
     dcc/resumedialog.cpp
     dcc/transfer.cpp

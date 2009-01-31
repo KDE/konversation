@@ -166,7 +166,9 @@ void Highlight_Config::updateButtons()
   bool enabled = highlightListView->selectedItem() != NULL;
   // is the kregexpeditor installed?
   bool installed = false;
+#ifndef Q_CC_MSVC
 #warning "kde4 port"
+#endif
 #if 0
        !KTrader::self()->query("KRegExpEditor/KRegExpEditor").isEmpty();
 #endif
@@ -205,7 +207,9 @@ void Highlight_Config::highlightTextChanged(const QString& newPattern)
 
 void Highlight_Config::highlightTextEditButtonClicked()
 {
+#ifndef Q_CC_MSVC
 #warning "kde4 port"
+#endif
 #if 0
   QDialog *editorDialog =
       KParts::ComponentFactory::createInstanceFromQuery<QDialog>( "KRegExpEditor/KRegExpEditor" );

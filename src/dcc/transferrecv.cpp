@@ -15,7 +15,7 @@
 */
 
 #include "transferrecv.h" ////// header renamed
-#include "common.h"
+#include "dcccommon.h"
 #include "channel.h"
 #include "transfermanager.h" ////// header renamed
 #include "application.h" ////// header renamed
@@ -300,7 +300,9 @@ void DccTransferRecv::prepareLocalKio( bool overwrite, bool resume, KIO::fileoff
 
 void DccTransferRecv::askAndPrepareLocalKio( const QString& message, int enabledActions, DccResumeDialog::ReceiveAction defaultAction, KIO::fileoffset_t startPosition )
 {
+#ifndef Q_CC_MSVC
 #warning "port kde4"
+#endif
 #if 0
     switch ( DccResumeDialog::ask( this, message, enabledActions, defaultAction ) )
     {
