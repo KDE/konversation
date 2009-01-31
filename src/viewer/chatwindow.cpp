@@ -34,11 +34,10 @@
 #include <kaction.h>
 
 
-ChatWindow::ChatWindow(QWidget* parent) : Q3VBox(parent)
+ChatWindow::ChatWindow(QWidget* parent) : KVBox(parent)
 {
     setName("ChatWindowObject");
     setTextView(0);
-    parentWidget=parent;
     firstLog=true;
     m_server=0;
     m_notificationsEnabled = true;
@@ -490,7 +489,7 @@ bool ChatWindow::eventFilter(QObject* watched, QEvent* e)
 
     }
 
-    return Q3VBox::eventFilter(watched, e);
+    return KVBox::eventFilter(watched, e);
 }
 
 void ChatWindow::adjustFocus()

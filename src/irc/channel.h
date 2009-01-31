@@ -36,7 +36,6 @@ class QCheckBox;
 class QLabel;
 class QTimer;
 class Q3ListViewItem;
-class Q3HBox;
 class QStringList;
 class QSplitter;
 class Q3Grid;
@@ -45,6 +44,8 @@ class QDropEvent;
 class QToolButton;
 
 class KLineEdit;
+class KVBox;
+class KHBox;
 
 class NickListView;
 class QuickButton;
@@ -326,7 +327,7 @@ class Channel : public ChatWindow
         Konversation::TopicLabel* topicLine;
 
         //TODO: abstract these
-        Q3HBox* modeBox;
+        KHBox* modeBox;
         ModeButton* modeT;
         ModeButton* modeN;
         ModeButton* modeS;
@@ -339,8 +340,8 @@ class Channel : public ChatWindow
         KLineEdit* limit; //TODO: this GUI element is the only storage for the mode
 
         NickListView* nicknameListView;
-        Q3HBox* commandLineBox;
-        Q3VBox* nickListButtons;
+        KHBox* commandLineBox;
+        KVBox* nickListButtons;
         Q3Grid* buttonsGrid;
         QComboBox* nicknameCombobox;
         QString oldNick; ///< GUI

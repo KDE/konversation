@@ -16,17 +16,16 @@
 #include "identity.h"
 #include "common.h"
 
-#include <q3vbox.h>
+#include <kvbox.h>
+
 #include <qfile.h>
-//Added by qt3to4:
-#include <QEvent>
 
 
 class IRCView;
 class Server;
 class KonversationMainWindow;
 
-class ChatWindow : public Q3VBox
+class ChatWindow : public KVBox
 {
     Q_OBJECT
 
@@ -83,8 +82,6 @@ class ChatWindow : public Q3VBox
             bool parseURL = true, bool self = false);
         virtual void appendBacklogMessage(const QString& firstColumn,const QString& message);
 
-        QWidget* parentWidget;
-
         virtual QString getTextInLine();
         /** Clean up and close this tab.  Return false if you want to cancel the close. */
         virtual bool closeYourself(bool askForConfirmation = true);
@@ -125,7 +122,7 @@ class ChatWindow : public Q3VBox
         Konversation::TabNotifyType currentTabNotification() { return m_currentTabNotify; }
         QColor highlightColor();
 
-        signals:
+    signals:
         void nameChanged(ChatWindow* view, const QString& newName);
         //void online(ChatWindow* myself, bool state);
         /** Emit this signal when you want to change the status bar text for this tab.

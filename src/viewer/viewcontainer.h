@@ -22,6 +22,7 @@
 
 
 class QSplitter;
+class Q3VBox;
 
 class KTabWidget;
 class KActionCollection;

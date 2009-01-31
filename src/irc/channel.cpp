@@ -20,7 +20,7 @@
 #include "quickbutton.h"
 //Added by qt3to4:
 #include <Q3StrList>
-#include <Q3GridLayout>
+#include <QGridLayout>
 #include <QShowEvent>
 #include <Q3ValueList>
 #include <Q3PtrCollection>
@@ -42,9 +42,7 @@
 //#include "linkaddressbook/addressbook.h"
 
 #include <qlabel.h>
-#include <q3vbox.h>
 #include <qevent.h>
-#include <q3hbox.h>
 #include <q3grid.h>
 #include <q3dragobject.h>
 #include <qsizepolicy.h>
@@ -70,6 +68,8 @@
 #include <kiconloader.h>
 #include <kwindowsystem.h>
 #include <KColorScheme>
+#include <kvbox.h>
+#include <khbox.h>
 
 Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
 {
@@ -127,7 +127,9 @@ Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
     QWidget* topicWidget = new QWidget(m_vertSplitter);
     m_vertSplitter->setResizeMode(topicWidget,QSplitter::KeepSize);
 
-    Q3GridLayout* topicLayout = new Q3GridLayout(topicWidget, 2, 3, 0, 0);
+    QGridLayout* topicLayout = new QGridLayout(topicWidget);
+    topicLayout->setMargin (0);
+    topicLayout->setSpacing (0);
 
     m_topicButton = new QToolButton(topicWidget);
     m_topicButton->setIcon(KIcon("document-edit"));
@@ -139,13 +141,12 @@ Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
     topicLine->setWhatsThis(i18n("<qt>Every channel on IRC has a topic associated with it.  This is simply a message that everybody can see.<p>If you are an operator, or the channel mode <em>'T'</em> has not been set, then you can change the topic by clicking the Edit Channel Properties button to the left of the topic.  You can also view the history of topics there.</qt>"));
     connect(topicLine, SIGNAL(setStatusBarTempText(const QString&)), this, SIGNAL(setStatusBarTempText(const QString&)));
     connect(topicLine, SIGNAL(clearStatusBarTempText()), this, SIGNAL(clearStatusBarTempText()));
-    connect(topicLine,SIGNAL(popupCommand(int)),this,SLOT(popupChannelCommand(int)));
 
     topicLayout->addWidget(m_topicButton, 0, 0);
-    topicLayout->addMultiCellWidget(topicLine, 0, 1, 1, 1);
+    topicLayout->addWidget(topicLine, 0, 1, -1, 1);
 
     // The box holding the channel modes
-    modeBox = new Q3HBox(topicWidget);
+    modeBox = new KHBox(topicWidget);
     modeBox->setSizePolicy(hfixed);
     modeT = new ModeButton("T",modeBox,0);
     modeN = new ModeButton("N",modeBox,1);
@@ -195,10 +196,9 @@ Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
     IRCViewBox* ircViewBox = new IRCViewBox(m_horizSplitter, NULL);
     setTextView(ircViewBox->ircView());
     connect(textView,SIGNAL(popupCommand(int)),this,SLOT(popupChannelCommand(int)));
-    connect(topicLine, SIGNAL(currentChannelChanged(const QString&)),textView,SLOT(setCurrentChannel(const QString&)));
 
     // The box that holds the Nick List and the quick action buttons
-    nickListButtons = new Q3VBox(m_horizSplitter);
+    nickListButtons = new KVBox(m_horizSplitter);
     m_horizSplitter->setResizeMode(nickListButtons,QSplitter::KeepSize);
     nickListButtons->setSpacing(spacing());
 
@@ -226,11 +226,12 @@ Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
     buttonsGrid=0;
 
     // The box holding the Nickname button and Channel input
-    commandLineBox = new Q3HBox(this);
+    commandLineBox = new KHBox(this);
     commandLineBox->setSpacing(spacing());
 
     nicknameCombobox = new QComboBox(commandLineBox);
     nicknameCombobox->setEditable(true);
+    nicknameCombobox->setSizeAdjustPolicy(QComboBox::AdjustToContents);
     nicknameCombobox->insertStringList(Preferences::nicknameList());
     nicknameCombobox->setWhatsThis(i18n("<qt>This shows your current nick, and any alternatives you have set up.  If you select or type in a different nickname, then a request will be sent to the IRC server to change your nick.  If the server allows it, the new nickname will be selected.  If you type in a new nickname, you need to press 'Enter' at the end.<p>You can add change the alternative nicknames from the <em>Identities</em> option in the <em>File</em> menu.</qt>"));
     oldNick = nicknameCombobox->currentText();
@@ -239,7 +240,7 @@ Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
     awayLabel->hide();
     blowfishLabel = new QLabel(commandLineBox);
     blowfishLabel->hide();
-    blowfishLabel->setPixmap(KIconLoader::global()->loadIcon("encrypted", KIconLoader::Toolbar));
+    blowfishLabel->setPixmap(KIconLoader::global()->loadIcon("document-encrypt", KIconLoader::Toolbar));
     channelInput = new IRCInput(commandLineBox);
 
     getTextView()->installEventFilter(channelInput);
@@ -327,7 +328,7 @@ void Channel::setServer(Server* server)
         connect(server, SIGNAL(connectionStateChanged(Server*, Konversation::ConnectionState)),
                 SLOT(connectionStateChanged(Server*, Konversation::ConnectionState)));
     ChatWindow::setServer(server);
-    if (server->getKeyForRecipient(getName()).isEmpty())
+    if (!server->getKeyForRecipient(getName()).isEmpty())
         blowfishLabel->show();
     topicLine->setServer(server);
     refreshModeButtons();
