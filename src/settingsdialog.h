@@ -40,7 +40,7 @@ class OSD_Config;
 class Ignore_Config;
 class TabNotifications_Config;
 
-class KDEUI_EXPORT KonviSettingsDialog : public KonviConfigDialog
+class KonviSettingsDialog : public KonviConfigDialog
 {
     Q_OBJECT
 
