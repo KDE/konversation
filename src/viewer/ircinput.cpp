@@ -194,10 +194,10 @@ bool IRCInput::eventFilter(QObject *object,QEvent *event)
 
             // Allow tab to be handled naturally by the widget.
             // Once it runs out of links it goes to the next control.
-            if (ke->key() == Qt::Key_Tab && (ke->state() == 0 || ke->state() == Qt::ShiftModifier))
+            if (ke->key() == Qt::Key_Tab && (ke->modifiers() == 0 || ke->modifiers() == Qt::ShiftModifier))
                 return false;
 
-            if (!ke->text().isEmpty() && ((ke->state() & (Qt::ShiftModifier|Qt::KeypadModifier)) || ke->state() == 0))
+            if (!ke->text().isEmpty() && ((ke->modifiers() & (Qt::ShiftModifier|Qt::KeypadModifier)) || ke->modifiers() == 0))
             {
                 setFocus();
                 KonversationApplication::sendEvent(this,event);
@@ -220,14 +220,14 @@ void IRCInput::keyPressEvent(QKeyEvent* e)
             break;
 
         case Qt::Key_Up:
-            if (m_multiRow && (e->state() != (Qt::ShiftModifier|Qt::ControlModifier)))
+            if (m_multiRow && (e->modifiers() != (Qt::ShiftModifier|Qt::ControlModifier)))
                 break;
             emit history(true);
             return;
             break;
 
         case Qt::Key_Down:
-            if (m_multiRow && (e->state() != (Qt::ShiftModifier|Qt::ControlModifier)))
+            if (m_multiRow && (e->modifiers() != (Qt::ShiftModifier|Qt::ControlModifier)))
                 break;
             emit history(false);
             return;
@@ -243,7 +243,7 @@ void IRCInput::keyPressEvent(QKeyEvent* e)
                 setCompletionMode('\0');
 
                 // Ctrl+Enter is a special case in which commands should be send as normal messages
-                if ( e->state() & Qt::ControlModifier )
+                if ( e->modifiers() & Qt::ControlModifier )
                 {
                     emit envelopeCommand();
                 }
@@ -277,10 +277,10 @@ void IRCInput::keyPressEvent(QKeyEvent* e)
             }
 
             // support ASCII BEL
-            if(e->ascii() == 7)
+            if(e->text().unicode()->toLatin1() == 7)
                 insertPlainText("%G");
             // support ^U (delete text in input box)
-            else if(e->ascii() == 21)
+            else if(e->text().unicode()->toLatin1() == 21)
                 setText("");
     }
 
@@ -410,8 +410,8 @@ void IRCInput::paste()
         if(pasteText.indexOf('\n')!=-1)
         {
             // make comparisons easier (avoid signed / unsigned warnings)
-            unsigned int pos=pasteText.indexOf('\n');
-            unsigned int rpos=pasteText.lastIndexOf('\n');
+            int pos=pasteText.indexOf('\n');
+            int rpos=pasteText.lastIndexOf('\n');
 
             // emit the signal if there's a line break in the middle of the text
             if(pos>0 && pos!=(pasteText.length()-1))

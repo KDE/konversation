@@ -13,9 +13,7 @@
 #include "multilinetextedit.h"
 #include "application.h"
 
-#include <qlayout.h>
-//Added by qt3to4:
-#include <Q3VBoxLayout>
+#include <QVBoxLayout>
 
 #include <klocale.h>
 
@@ -34,7 +32,7 @@ KDialog(parent )
     QWidget* page=new QWidget(this);
     setMainWidget(page);
     // Add the layout to the widget
-    Q3VBoxLayout* dialogLayout=new Q3VBoxLayout(page);
+    QVBoxLayout* dialogLayout=new QVBoxLayout(page);
     dialogLayout->setSpacing(spacingHint());
     // add the text editor
     textEditor=new MultilineTextEdit(page,"multiline_text_editor");
@@ -70,7 +68,7 @@ void MultilineEdit::slotOk()
 
 void MultilineEdit::slotUser1()
 {
-    QStringList lines=QStringList::split("\n",textEditor->text(),true);
+    QStringList lines=textEditor->text().split('\n', QString::KeepEmptyParts);
     for( QStringList::iterator it=lines.begin() ; it!=lines.end() ; ++it )
         (*it) = "> " + (*it);
     textEditor->setText(lines.join("\n"));

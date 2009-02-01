@@ -18,16 +18,14 @@ the Free Software Foundation; either version 2 of the License, or
 
 #include <qapplication.h>
 #include <qbitmap.h>
+#include <QMouseEvent>
 #include <qpainter.h>
 #include <qregexp.h>
-//Added by qt3to4:
-#include <Q3CString>
-#include <QMouseEvent>
-#include <QEvent>
 
 #include <kapplication.h>
 #include <kdebug.h>
 #include <kglobalsettings.h>                      //unsetColors()
+#include <kwindowsystem.h>
 
 #ifdef Q_WS_X11
 #include <X11/Xlib.h>                             //reposition()
@@ -35,7 +33,7 @@ the Free Software Foundation; either version 2 of the License, or
 #include <QDesktopWidget>
 
 OSDWidget::OSDWidget( const QString &appName, QWidget *parent, const char *name )
-: QWidget( parent, name, Qt::WNoAutoErase | Qt::WStyle_Customize | Qt::WX11BypassWM | Qt::WStyle_StaysOnTop | Qt::WStyle_Tool )
+: QWidget( parent, Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint )
 , m_appName( appName )
 , m_duration( 5000 )
 , m_shadow( true )
@@ -44,9 +42,15 @@ OSDWidget::OSDWidget( const QString &appName, QWidget *parent, const char *name 
 , m_y( MARGIN )
 , m_dirty( false )
 {
+    setObjectName( name );
+
+    KWindowSystem::setState( winId(), NET::SkipTaskbar );
+
     setFocusPolicy( Qt::NoFocus );
-    setBackgroundMode( Qt::NoBackground );
+//     setBackgroundMode( Qt::NoBackground );
     unsetColors();
+
+    timer.setSingleShot( true );
 
     connect( &timer,     SIGNAL( timeout() ), SLOT( hide() ) );
     connect( &timerMin,  SIGNAL( timeout() ), SLOT( minReached() ) );
@@ -56,8 +60,6 @@ void OSDWidget::renderOSDText( const QString &txt )
 {
                                                   // Escaped text
     QString text = Konversation::removeIrcMarkup(txt);
-
-    static QBitmap mask;
 
     //This is various spacings and margins, based on the font to look "just right"
     const uint METRIC = fontMetrics().width( 'x' );
@@ -80,7 +82,7 @@ void OSDWidget::renderOSDText( const QString &txt )
     textRect.addCoords( 0, 0, METRIC*2, titleRect.height() + METRIC );
 
     osdBuffer.resize( textRect.size() );
-    mask.resize( textRect.size() );
+    QBitmap mask( textRect.size() );
 
     // Start painting!
     QPainter bufferPainter( &osdBuffer );
@@ -114,7 +116,7 @@ void OSDWidget::renderOSDText( const QString &txt )
     bufferPainter.drawText( METRIC * 2, (METRIC/2), w, h, Qt::AlignLeft, m_appName );
 
     // Masking for transparency
-    mask.fill( Qt::black );
+    mask.fill( Qt::color0 );
     maskPainter.setBrush( Qt::white );
     maskPainter.drawRoundRect( textRect, xround, yround );
     setMask( mask );
@@ -160,7 +162,7 @@ void OSDWidget::minReached()                      //SLOT
 
         if( m_duration )
             //timerMin is still running
-            timer.start( m_duration, true );
+            timer.start( m_duration );
     }
     else timerMin.stop();
 }
@@ -224,17 +226,10 @@ void OSDWidget::setScreen( uint screen )
     reposition();
 }
 
-bool OSDWidget::event( QEvent *e )
+void OSDWidget::paintEvent( QPaintEvent * )
 {
-    switch( e->type() )
-    {
-        case QEvent::Paint:
-            bitBlt( this, 0, 0, &osdBuffer );
-            return true;
-
-        default:
-            return QWidget::event( e );
-    }
+    QPainter p(this);
+    p.drawPixmap(0, 0, osdBuffer);
 }
 
 void OSDWidget::mousePressEvent( QMouseEvent* )
@@ -258,7 +253,7 @@ void OSDWidget::show()
 
     if ( m_duration )                             //duration 0 -> stay forever
     {
-        timer.start( m_duration, true );          //calls hide()
+        timer.start( m_duration );          //calls hide()
         timerMin.start( 150 );                    //calls minReached()
     }
 }
@@ -312,7 +307,7 @@ void OSDWidget::reposition( QSize newSize )
 
     //fancy X11 move+resize, reduces visual artifacts
 #ifdef Q_WS_X11
-    XMoveResizeWindow( x11Display(), winId(), newPos.x(), newPos.y(), newSize.width(), newSize.height() );
+    XMoveResizeWindow( QX11Info::display(), winId(), newPos.x(), newPos.y(), newSize.width(), newSize.height() );
 #endif
 }
 

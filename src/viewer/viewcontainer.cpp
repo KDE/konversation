@@ -229,9 +229,9 @@ void ViewContainer::setupViewTree()
                 if (view->getType() == ChatWindow::Status)
                 {
                     if (view == m_frontView)
-                        m_viewTree->addView(view->getName(), view, m_tabWidget->tabIconSet(view), true);
+                        m_viewTree->addView(view->getName(), view, m_tabWidget->tabIcon(m_tabWidget->indexOf(view)), true);
                     else
-                        m_viewTree->addView(view->getName(), view, m_tabWidget->tabIconSet(view));
+                        m_viewTree->addView(view->getName(), view, m_tabWidget->tabIcon(m_tabWidget->indexOf(view)));
                 }
             }
 
@@ -242,9 +242,9 @@ void ViewContainer::setupViewTree()
                 if (!view->getType() == ChatWindow::Status)
                 {
                     if (view == m_frontView)
-                        m_viewTree->addView(view->getName(), view, m_tabWidget->tabIconSet(view), true);
+                        m_viewTree->addView(view->getName(), view, m_tabWidget->tabIcon(m_tabWidget->indexOf(view)), true);
                     else
-                        m_viewTree->addView(view->getName(), view, m_tabWidget->tabIconSet(view));
+                        m_viewTree->addView(view->getName(), view, m_tabWidget->tabIcon(m_tabWidget->indexOf(view)));
                 }
             }
 
@@ -395,11 +395,9 @@ void ViewContainer::updateTabWidgetAppearance()
     else
         m_tabWidget->cornerWidget()->hide();
 
-    m_tabWidget->setHoverCloseButton(Preferences::self()->closeButtons());
+    m_tabWidget->setCloseButtonEnabled(Preferences::self()->closeButtons());
 
-    #if KDE_IS_VERSION(3,4,0)
     m_tabWidget->setAutomaticResizeTabs(Preferences::self()->useMaxSizedTabs());
-    #endif
 }
 
 void ViewContainer::updateViewActions(int index)
@@ -740,9 +738,9 @@ void ViewContainer::updateViews(const Konversation::ServerGroupSettingsPtr serve
             {
                 QString label = view->getServer()->getDisplayName();
 
-                if (!label.isEmpty() && m_tabWidget->tabLabel(view) != label)
+                if (!label.isEmpty() && m_tabWidget->tabText(m_tabWidget->indexOf(view)) != label)
                 {
-                    if (m_tabWidget) m_tabWidget->setTabLabel(view, label);
+                    if (m_tabWidget) m_tabWidget->setTabText(m_tabWidget->indexOf(view), label);
                     if (m_viewTree) m_viewTree->setViewName(view, label);
 
                     if (view == m_frontView)
@@ -774,10 +772,10 @@ void ViewContainer::updateViews(const Konversation::ServerGroupSettingsPtr serve
         else if (m_tabWidget)
         {
             if (!Preferences::self()->tabNotificationsLeds() && !Preferences::self()->closeButtons())
-                m_tabWidget->setTabIconSet(view, QIcon());
+                m_tabWidget->setTabIcon(m_tabWidget->indexOf(view), QIcon());
 
             if (Preferences::self()->closeButtons() && !Preferences::self()->tabNotificationsLeds())
-                m_tabWidget->setTabIconSet(view, images->getCloseIcon());
+                m_tabWidget->setTabIcon(m_tabWidget->indexOf(view), images->getCloseIcon());
 
             // TODO FIXME
             //if (!Preferences::self()->tabNotificationsText())
@@ -819,9 +817,9 @@ void ViewContainer::updateViewIcons()
         if (Preferences::self()->closeButtons() && !Preferences::self()->tabNotificationsLeds())
         {
             if (m_viewTree)
-                m_viewTree->setViewIcon(view, images->getCloseIcon());
+                m_tabWidget->setTabIcon(m_tabWidget->indexOf(view), images->getCloseIcon());
             else if (m_tabWidget)
-                m_tabWidget->setTabIconSet(view, images->getCloseIcon());
+                m_tabWidget->setTabIcon(m_tabWidget->indexOf(view), images->getCloseIcon());
         }
     }
 }
@@ -941,7 +939,7 @@ void ViewContainer::setViewNotification(ChatWindow* view, const Konversation::Ta
                 if (Preferences::self()->tabNotificationsMsgs())
                 {
                     if (Preferences::self()->tabNotificationsLeds())
-                        m_tabWidget->setTabIconSet(view, images->getMsgsLed(true));
+                        m_tabWidget->setTabIcon(m_tabWidget->indexOf(view), images->getMsgsLed(true));
                     //if (Preferences::self()->tabNotificationsText())
                     //    m_tabWidget->setTabColor(view, Preferences::tabNotificationsMsgsColor());
                 }
@@ -951,7 +949,7 @@ void ViewContainer::setViewNotification(ChatWindow* view, const Konversation::Ta
                 if (Preferences::self()->tabNotificationsPrivate())
                 {
                     if (Preferences::self()->tabNotificationsLeds())
-                        m_tabWidget->setTabIconSet(view, images->getPrivateLed(true));
+                        m_tabWidget->setTabIcon(m_tabWidget->indexOf(view), images->getPrivateLed(true));
                     //if (Preferences::self()->tabNotificationsText())
                     //    m_tabWidget->setTabColor(view, Preferences::tabNotificationsPrivateColor());
                 }
@@ -961,7 +959,7 @@ void ViewContainer::setViewNotification(ChatWindow* view, const Konversation::Ta
                 if (Preferences::self()->tabNotificationsSystem())
                 {
                     if (Preferences::self()->tabNotificationsLeds())
-                        m_tabWidget->setTabIconSet(view, images->getSystemLed(true));
+                        m_tabWidget->setTabIcon(m_tabWidget->indexOf(view), images->getSystemLed(true));
                     //if (Preferences::tabNotificationsText())
                     //    m_tabWidget->setTabColor(view, Preferences::tabNotificationsSystemColor());
                 }
@@ -971,7 +969,7 @@ void ViewContainer::setViewNotification(ChatWindow* view, const Konversation::Ta
                 if (Preferences::self()->tabNotificationsEvents())
                 {
                     if (Preferences::self()->tabNotificationsLeds())
-                        m_tabWidget->setTabIconSet(view, images->getEventsLed());
+                        m_tabWidget->setTabIcon(m_tabWidget->indexOf(view), images->getEventsLed());
                     //if (Preferences::self()->tabNotificationsText())
                     //    m_tabWidget->setTabColor(view, Preferences::tabNotificationsEventsColor());
                 }
@@ -983,14 +981,14 @@ void ViewContainer::setViewNotification(ChatWindow* view, const Konversation::Ta
                     if (Preferences::self()->tabNotificationsOverride() && Preferences::self()->highlightNick())
                     {
                         if (Preferences::self()->tabNotificationsLeds())
-                            m_tabWidget->setTabIconSet(view, images->getLed(Preferences::self()->highlightNickColor(),true));
+                            m_tabWidget->setTabIcon(m_tabWidget->indexOf(view), images->getLed(Preferences::self()->highlightNickColor(),true));
                         //if (Preferences::tabNotificationsText())
                         //    m_tabWidget->setTabColor(view, Preferences::highlightNickColor());
                     }
                     else
                     {
                         if (Preferences::self()->tabNotificationsLeds())
-                            m_tabWidget->setTabIconSet(view, images->getNickLed());
+                            m_tabWidget->setTabIcon(m_tabWidget->indexOf(view), images->getNickLed());
                         //if (Preferences::self()->tabNotificationsText())
                         //    m_tabWidget->setTabColor(view, Preferences::tabNotificationsNickColor());
                     }
@@ -1007,14 +1005,14 @@ void ViewContainer::setViewNotification(ChatWindow* view, const Konversation::Ta
                     if (Preferences::self()->tabNotificationsOverride() && view->highlightColor().isValid())
                     {
                         if (Preferences::self()->tabNotificationsLeds())
-                            m_tabWidget->setTabIconSet(view, images->getLed(view->highlightColor(),true));
+                            m_tabWidget->setTabIcon(m_tabWidget->indexOf(view), images->getLed(view->highlightColor(),true));
                         //if (Preferences::tabNotificationsText())
                         //    m_tabWidget->setTabColor(view, view->highlightColor());
                     }
                     else
                     {
                         if (Preferences::self()->tabNotificationsLeds())
-                            m_tabWidget->setTabIconSet(view, images->getHighlightsLed());
+                            m_tabWidget->setTabIcon(m_tabWidget->indexOf(view), images->getHighlightsLed());
                         //if (Preferences::tabNotificationsText())
                         //    m_tabWidget->setTabColor(view, Preferences::tabNotificationsHighlightsColor());
                     }
@@ -1084,19 +1082,19 @@ void ViewContainer::unsetViewNotification(ChatWindow* view)
             {
                 case ChatWindow::Channel:
                 case ChatWindow::DccChat:
-                    m_tabWidget->setTabIconSet(view, images->getMsgsLed(false));
+                    m_tabWidget->setTabIcon(m_tabWidget->indexOf(view), images->getMsgsLed(false));
                     break;
 
                 case ChatWindow::Query:
-                    m_tabWidget->setTabIconSet(view, images->getPrivateLed(false));
+                    m_tabWidget->setTabIcon(m_tabWidget->indexOf(view), images->getPrivateLed(false));
                     break;
 
                 case ChatWindow::Status:
-                    m_tabWidget->setTabIconSet(view, images->getServerLed(false));
+                    m_tabWidget->setTabIcon(m_tabWidget->indexOf(view), images->getServerLed(false));
                     break;
 
                 default:
-                    m_tabWidget->setTabIconSet(view, images->getSystemLed(false));
+                    m_tabWidget->setTabIcon(m_tabWidget->indexOf(view), images->getSystemLed(false));
                     break;
             }
         }
@@ -2016,7 +2014,7 @@ void ViewContainer::addUrlCatcher()
             konvApp, SLOT(clearUrlList()));
 
         QStringList urlList=konvApp->getUrlList();
-        for(unsigned int index=0;index<urlList.count();index++)
+        for(int index=0;index<urlList.count();index++)
         {
             QString urlItem=urlList[index];
             m_urlCatcherPanel->addUrl(urlItem.section(' ',0,0),urlItem.section(' ',1,1));
@@ -2074,7 +2072,7 @@ void ViewContainer::deleteDccPanel()
     if (m_dccPanel)
     {
         closeDccPanel();
-        m_dccPanel->deleteLater();
+        delete m_dccPanel;
         m_dccPanel=0;
     }
 }
@@ -2316,10 +2314,10 @@ void ViewContainer::updateQueryChrome(ChatWindow* view, const QString& name)
 
     QString newName = Konversation::removeIrcMarkup(name);
 
-    if (!newName.isEmpty() && m_tabWidget->tabLabel(view) != newName)
+    if (!newName.isEmpty() && m_tabWidget->tabText(m_tabWidget->indexOf(view)) != newName)
     {
         if (m_viewTree) m_viewTree->setViewName(view, newName);
-        if (m_tabWidget) m_tabWidget->setTabLabel(view, newName);
+        if (m_tabWidget) m_tabWidget->setTabText(m_tabWidget->indexOf(view), newName);
     }
 
     if (!newName.isEmpty() && view==m_frontView)
@@ -2435,7 +2433,7 @@ void ViewContainer::openNicksOnlinePanel()
 
 void ViewContainer::closeNicksOnlinePanel()
 {
-    m_nicksOnlinePanel->deleteLater();
+    delete m_nicksOnlinePanel;
     m_nicksOnlinePanel = 0;
     (dynamic_cast<KToggleAction*>(actionCollection()->action("open_nicksonline_window")))->setChecked(false);
 }

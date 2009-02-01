@@ -21,10 +21,6 @@
 #include <klocale.h>
 #include <kdebug.h>
 #include <qtimer.h>
-//Added by qt3to4:
-#include <QContextMenuEvent>
-#include <QDropEvent>
-#include <Q3StrList>
 #include <kiconloader.h>
 #include <q3whatsthis.h>
 #include <q3dragobject.h>
@@ -37,14 +33,14 @@ K3ListView(parent)
     K3ListView::setSorting(-1);
     setWhatsThis();
     channel=chan;
-    popup=new K3PopupMenu(this);
+    popup=new KMenu(this);
     popup->setObjectName("nicklist_context_menu");
-    modes=new K3PopupMenu(this);
+    modes=new KMenu(this);
     modes->setObjectName("nicklist_modes_context_submenu");
-    kickban=new K3PopupMenu(this);
+    kickban=new KMenu(this);
     kickban->setObjectName("nicklist_kick_ban_context_submenu");
     /*
-    addressbook= new K3PopupMenu(this);
+    addressbook= new KMenu(this);
     addressbook->setObjectName("nicklist_addressbook_context_submenu");
     */
     setAcceptDrops(true);
@@ -127,9 +123,7 @@ K3ListView(parent)
         kWarning() << "NickListView::NickListView(): Could not create popup!" << endl;
     }
 
-    #if KDE_IS_VERSION(3,3,90)
     setShadeSortColumn(false);
-    #endif
 
     // We have our own tooltips, don't use the default QListView ones
     setShowToolTips(false);

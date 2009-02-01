@@ -32,26 +32,10 @@
 #include <qclipboard.h>
 #include <qbrush.h>
 #include <qevent.h>
-#include <q3dragobject.h>
-#include <q3popupmenu.h>
 #include <qmap.h>
 #include <qcolor.h>
 #include <qscrollbar.h>
 #include <qcursor.h>
-//Added by qt3to4:
-#include <QResizeEvent>
-#include <QContextMenuEvent>
-#include <Q3StrList>
-#include <QPixmap>
-#include <QMouseEvent>
-#include <QShowEvent>
-#include <Q3ValueList>
-#include <QKeyEvent>
-#include <QHideEvent>
-#include <QDropEvent>
-#include <QDragMoveEvent>
-#include <Q3CString>
-#include <Q3PtrList>
 
 #include <kmessagebox.h>
 #include <klocale.h>
@@ -73,13 +57,11 @@
 #include <kio/job.h>
 #include <kstdaccel.h>
 #include <kglobal.h>
-#include <QTextDocument>
 #include <kauthorized.h>
 #include <KActionCollection>
 #include <KToggleAction>
 
 class QPixmap;
-class Q3StrList;
 class QDropEvent;
 class QDragEnterEvent;
 class QEvent;
@@ -496,7 +478,7 @@ QString IRCView::createNickLine(const QString& nick, bool encapsulateNick, bool 
         {
             int nickvalue = 0;
 
-            for (uint index = 0; index < nick.length(); index++)
+            for (int index = 0; index < nick.length(); index++)
             {
                 nickvalue += nick[index].unicode();
             }
@@ -525,7 +507,7 @@ void IRCView::replaceDecoration(QString& line, char decoration, char replacement
     int pos;
     bool decorated = false;
 
-    while((pos=line.find(decoration))!=-1)
+    while((pos=line.indexOf(decoration))!=-1)
     {
         line.replace(pos,1,(decorated) ? QString("</%1>").arg(replacement) : QString("<%1>").arg(replacement));
         decorated = !decorated;
@@ -586,7 +568,7 @@ bool doHighlight, bool parseURL, bool self)
     }
     #endif
 
-    if(filteredLine.find("\x07") != -1)
+    if(filteredLine.indexOf('\x07') != -1)
     {
         if(Preferences::self()->beep())
         {
@@ -603,7 +585,7 @@ bool doHighlight, bool parseURL, bool self)
     bool firstColor = true;
     QString colorString;
 
-    while((pos=colorRegExp.search(filteredLine))!=-1)
+    while((pos=colorRegExp.indexIn(filteredLine))!=-1)
     {
         if(!allowColors)
         {
@@ -611,7 +593,7 @@ bool doHighlight, bool parseURL, bool self)
         }
         else
         {
-            colorString = (firstColor) ? QString::null : QString("</font>");
+            colorString = (firstColor) ? QString() : QString("</font>");
 
             // reset colors on \017 to default value
             if(colorRegExp.cap(1) == "\017")
@@ -677,7 +659,7 @@ bool doHighlight, bool parseURL, bool self)
         QString highlightColor;
 
         if(Preferences::self()->highlightNick() &&
-            filteredLine.toLower().find(QRegExp("(^|[^\\d\\w])" +
+            filteredLine.toLower().indexOf(QRegExp("(^|[^\\d\\w])" +
             QRegExp::escape(ownNick.toLower()) +
             "([^\\d\\w]|$)")) != -1)
         {
@@ -699,11 +681,11 @@ bool doHighlight, bool parseURL, bool self)
                 if(highlight->getRegExp())
                 {
                     QRegExp needleReg(highlight->getPattern());
-                    needleReg.setCaseSensitive(false);
+                    needleReg.setCaseSensitivity(Qt::CaseInsensitive);
                                                   // highlight regexp in text
-                    patternFound = ((filteredLine.find(needleReg) != -1) ||
+                    patternFound = ((filteredLine.indexOf(needleReg) != -1) ||
                                                   // highlight regexp in nickname
-                        (whoSent.find(needleReg) != -1));
+                        (whoSent.indexOf(needleReg) != -1));
 
                     // remember captured patterns for later
                     captures=needleReg.capturedTexts();
@@ -713,9 +695,9 @@ bool doHighlight, bool parseURL, bool self)
                 {
                     QString needle=highlight->getPattern();
                                                   // highlight patterns in text
-                    patternFound = ((filteredLine.find(needle, 0, false) != -1) ||
+                    patternFound = ((filteredLine.indexOf(needle, 0, Qt::CaseInsensitive) != -1) ||
                                                   // highlight patterns in nickname
-                        (whoSent.find(needle, 0, false) != -1));
+                        (whoSent.indexOf(needle, 0, Qt::CaseInsensitive) != -1));
                 }
 
                 if(!patternFound)
@@ -745,7 +727,7 @@ bool doHighlight, bool parseURL, bool self)
                 m_autoTextToSend = highlight->getAutoText();
 
                 // replace %0 - %9 in regex groups
-                for(unsigned int capture=0;capture<captures.count();capture++)
+                for(int capture=0;capture<captures.count();capture++)
                 {
                   m_autoTextToSend.replace(QString("%%1").arg(capture),captures[capture]);
                 }

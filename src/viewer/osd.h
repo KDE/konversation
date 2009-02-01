@@ -18,9 +18,6 @@
 #include <qpixmap.h>                              //stack allocated
 #include <qtimer.h>                               //stack allocated
 #include <qwidget.h>                              //baseclass
-//Added by qt3to4:
-#include <QEvent>
-#include <QMouseEvent>
 
 
 class QFont;
@@ -71,7 +68,7 @@ class OSDWidget : public QWidget
         /* render text into osdBuffer */
         void renderOSDText(const QString &text);
         void mousePressEvent( QMouseEvent* );
-        bool event(QEvent*);
+        void paintEvent( QPaintEvent * );
 
         void show();
 

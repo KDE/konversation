@@ -18,9 +18,6 @@
 
 #include "osd_preferencesui.h"
 #include "settingspage.h" ////// header renamed
-//Added by qt3to4:
-#include <QShowEvent>
-#include <QHideEvent>
 
 
 class OSDPreviewWidget;

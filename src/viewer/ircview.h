@@ -25,21 +25,7 @@
 
 #include <qmap.h>
 #include <qfontdatabase.h>
-//Added by qt3to4:
-#include <QContextMenuEvent>
-#include <QDragMoveEvent>
-#include <QDropEvent>
-#include <QShowEvent>
-#include <QResizeEvent>
 #include <Q3ValueList>
-#include <QPixmap>
-#include <QMouseEvent>
-#include <Q3StrList>
-#include <Q3PopupMenu>
-#include <QHideEvent>
-#include <QKeyEvent>
-#include <QEvent>
-#include <QDragEnterEvent>
 
 //#include <ktextbrowser.h>
 #include <QPlainTextEdit>

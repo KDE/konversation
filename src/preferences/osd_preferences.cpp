@@ -18,11 +18,6 @@
 #include "osd.h"
 #include "application.h"
 
-#include <q3groupbox.h>
-#include <qspinbox.h>
-//Added by qt3to4:
-#include <QShowEvent>
-#include <QHideEvent>
 #include <kcombobox.h>
 #include <kcolorbutton.h>
 #include <qcheckbox.h>
@@ -106,7 +101,7 @@ void OSD_Config::saveSettings()
         }
 
         konvApp->osd->setDuration(kcfg_OSDDuration->value());
-        konvApp->osd->setScreen(kcfg_OSDScreen->currentItem());
+        konvApp->osd->setScreen(kcfg_OSDScreen->currentIndex());
         konvApp->osd->setShadow(kcfg_OSDDrawShadow->isChecked());
 
         //x is ignored anyway, but leave incase we use in future
@@ -122,12 +117,12 @@ void OSD_Config::showEvent(QShowEvent*)
     m_pOSDPreview->setAlignment((OSDWidget::Alignment)( kcfg_OSDAlignment->value() ) );
     m_pOSDPreview->setOffset(kcfg_OSDOffsetX->value(),kcfg_OSDOffsetY->value());
 
-    m_pOSDPreview->setShown(kcfg_UseOSD->isChecked());
+    m_pOSDPreview->setVisible(kcfg_UseOSD->isChecked());
 }
 
 void OSD_Config::hideEvent(QHideEvent*)
 {
-    m_pOSDPreview->setShown(false);
+    m_pOSDPreview->setVisible(false);
 }
 
 bool OSD_Config::hasChanged()
@@ -139,7 +134,7 @@ bool OSD_Config::hasChanged()
 void OSD_Config::slotOSDEnabledChanged(bool on)
 {
     if ( isVisible() )
-        m_pOSDPreview->setShown(on);
+        m_pOSDPreview->setVisible(on);
 }
 
 void OSD_Config::slotPositionChanged()

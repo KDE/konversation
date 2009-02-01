@@ -100,13 +100,13 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   Ui::GeneralBehavior_Config confGeneralBehavior;
   w = new QWidget();
   confGeneralBehavior.setupUi(w);
-  addPage(w, interfaceGroup, "configure", i18n("General"));
+  addPage(w, behaviorGroup, "configure", i18n("General"));
 
   //Behavior/Connection
   Ui::ConnectionBehavior_Config confConnectionBehavior;
   w = new QWidget();
   confConnectionBehavior.setupUi(w);
-  addPage(w, interfaceGroup, "network-connect", i18n("Connection"));
+  addPage(w, behaviorGroup, "network-connect", i18n("Connection"));
 
   //Behaviour/Chat Window
   Ui::ChatwindowBehaviour_Config confChatwindowBehaviour;

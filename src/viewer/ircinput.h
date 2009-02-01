@@ -16,13 +16,6 @@
 #define IRCINPUT_H
 
 #include <qstringlist.h>
-//Added by qt3to4:
-#include <QShowEvent>
-#include <QEvent>
-#include <QHideEvent>
-#include <QMouseEvent>
-#include <QKeyEvent>
-#include <Q3PopupMenu>
 
 #include <ktextedit.h>
 
@@ -83,8 +76,8 @@ class IRCInput : public KTextEdit
         virtual void hideEvent(QHideEvent* e);
 
         QStringList historyList;
-        unsigned int lineNum;
-        unsigned int oldPos;
+        int lineNum;
+        int oldPos;
         char completionMode;
         KCompletionBox* completionBox;
         QString m_lastCompletion;
