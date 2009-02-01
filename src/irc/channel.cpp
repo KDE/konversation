@@ -2354,7 +2354,7 @@ void Channel::nicknameComboboxChanged()
     oldNick=m_server->getNickname();
     if(oldNick!=newNick)
     {
-      nicknameCombobox->setCurrentText(oldNick);
+      nicknameCombobox->setItemText(nicknameCombobox->currentIndex(), oldNick);
       changeNickname(newNick);
       // return focus to input line
       channelInput->setFocus();
