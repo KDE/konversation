@@ -2284,8 +2284,8 @@ void Channel::updateAppearance()
     }
     
     QPalette channelInputPalette;
-    palette.setColor(channelInput->foregroundRole(), fg);
-    palette.setColor(channelInput->backgroundRole(), bg);
+    channelInputPalette.setColor(channelInput->foregroundRole(), fg);
+    channelInputPalette.setColor(channelInput->backgroundRole(), bg);
     channelInput->setPalette(channelInputPalette);
 
     QPalette limitPalette;
@@ -2812,7 +2812,7 @@ void Channel::removeBan(const QString& ban)
   {
     if (string.section(' ', 0, 0) == ban)
     {
-      m_BanList.erase(string);
+      m_BanList.removeOne(string);
 
       emit banRemoved(ban);
     }
@@ -2953,7 +2953,7 @@ QString NickList::completeNick(const QString& pattern, bool& complete, QStringLi
         while(ok && ((patternLength) < firstNickLength))
         {
             ++patternLength;
-            QStringList tmp = found.filter(firstNick.left(patternLength), caseSensitive);
+            QStringList tmp = found.filter(firstNick.left(patternLength), caseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive);
 
             if(tmp.count() != foundCount)
             {
