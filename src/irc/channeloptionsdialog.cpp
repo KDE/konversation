@@ -67,10 +67,7 @@ namespace Konversation
         connect(m_channel, SIGNAL(topicHistoryChanged()), this, SLOT(refreshTopicHistory()));
 
         connect(m_channel, SIGNAL(modesChanged()), this, SLOT(refreshModes()));
-#ifndef Q_CC_MSVC
-#warning "port it to kde4"
-#endif
-        //connect(m_channel->getOwnChannelNick(), SIGNAL(channelNickChanged()), this, SLOT(refreshEnableModes()));
+        connect(m_channel->getOwnChannelNick().data(), SIGNAL(channelNickChanged()), this, SLOT(refreshEnableModes()));
 
         connect(this, SIGNAL(cancelClicked()), this, SLOT(cancelClicked()));
         connect(this, SIGNAL(okClicked()), this, SLOT(changeOptions()));
@@ -263,15 +260,12 @@ namespace Konversation
             static_cast<Q3CheckListItem*>(item)->setOn(false);
             item = item->nextSibling();
         }
-#ifndef Q_CC_MSVC
-#warning "port to kde4"
-#endif
-#if 0
+
         char mode;
 
-        for(QStringList::const_iterator it = modes.begin(); it != modes.end(); ++it)
+        foreach (const QString &currentMode, modes)
         {
-            mode = (*it)[0];
+            mode = currentMode[0].toLatin1();
             switch(mode)
             {
                 case 't':
@@ -282,7 +276,7 @@ namespace Konversation
                     break;
                 case 'l':
                     m_ui.userLimitChBox->setChecked(true);
-                    m_ui.userLimitEdit->setValue((*it).mid(1).toInt());
+                    m_ui.userLimitEdit->setValue(currentMode.mid(1).toInt());
                     break;
                 case 'i':
                     m_ui.inviteModeChBox->setChecked(true);
@@ -295,7 +289,7 @@ namespace Konversation
                     break;
                 case 'k':
                     m_ui.keyModeChBox->setChecked(true);
-                    m_ui.keyModeEdit->setText((*it).mid(1));
+                    m_ui.keyModeEdit->setText(currentMode.mid(1));
                     break;
                 default:
                 {
@@ -310,7 +304,7 @@ namespace Konversation
                         {
                             found = true;
                             static_cast<Q3CheckListItem*>(item)->setOn(true);
-                            item->setText(1, (*it).mid(1));
+                            item->setText(1, currentMode.mid(1));
                         }
                         else
                         {
@@ -322,7 +316,7 @@ namespace Konversation
                 }
             }
         }
-#endif
+
         refreshEnableModes();
     }
 
