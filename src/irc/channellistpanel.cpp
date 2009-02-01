@@ -454,12 +454,12 @@ void ChannelListPanel::applyFilterToItem(Q3ListViewItem* item)
     {
         if(getChannelTarget())
         {
-            if(item->text(0).indexOf(QRegExp(getFilterText(),false,!getRegExp()))==-1) visible=false;
+            if(item->text(0).indexOf(QRegExp(getFilterText(), Qt::CaseInsensitive, (getRegExp()) ? QRegExp::FixedString : QRegExp::Wildcard)) ==-1) visible=false;
         }
 
         if(getTopicTarget())
         {
-            if(item->text(2).indexOf(QRegExp(getFilterText(),false,!getRegExp()))==-1) visible=false;
+            if(item->text(2).indexOf(QRegExp(getFilterText(), Qt::CaseInsensitive, (getRegExp()) ? QRegExp::FixedString : QRegExp::Wildcard)) ==-1) visible=false;
         }
     }
 
