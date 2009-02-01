@@ -1925,7 +1925,7 @@ void InputFilter::parsePrivMsg(const QString& prefix,
                     QRegExp regexp("(^|[^\\d\\w])" +
                             QRegExp::escape(server->loweredNickname()) +
                             "([^\\d\\w]|$)");
-                    regexp.setCaseSensitive(false);
+                    regexp.setCaseSensitivity(Qt::CaseInsensitive);
                     if(message.indexOf(regexp) !=-1 )
                     {
                         konv_app->notificationHandler()->nick(channel,
@@ -1958,7 +1958,7 @@ void InputFilter::parsePrivMsg(const QString& prefix,
                 QRegExp regexp("(^|[^\\d\\w])" +
                         QRegExp::escape(server->loweredNickname()) +
                         "([^\\d\\w]|$)");
-                regexp.setCaseSensitive(false);
+                regexp.setCaseSensitivity(Qt::CaseInsensitive);
                 if(message.indexOf(regexp) !=-1 )
                 {
                     konv_app->notificationHandler()->nick(query,

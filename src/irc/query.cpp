@@ -288,8 +288,8 @@ void Query::updateAppearance()
     }
     else
     {
-        fg=colorGroup().foreground();
-        bg=colorGroup().base();
+        fg = palette().windowText().color();
+        bg = palette().base().color();
     }
 
     queryInput->unsetPalette();

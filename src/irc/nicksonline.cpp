@@ -513,7 +513,7 @@ void NicksOnline::refreshAllServerOnlineLists()
     {
         Q3ListViewItem* nextChild = child->nextSibling();
         QString networkName = child->text(nlvcNetwork);
-        QStringList serverNameList = QStringList::split(",", child->text(nlvcAdditionalInfo));
+        QStringList serverNameList = child->text(nlvcAdditionalInfo).split(",", QString::SkipEmptyParts);
         QStringList::Iterator itEnd = serverNameList.end();
         QStringList::Iterator it = serverNameList.begin();
         while (it != itEnd)

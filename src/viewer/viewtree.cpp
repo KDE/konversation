@@ -97,6 +97,7 @@ ViewTree::ViewTree(QWidget *parent)
 
     m_closeButtonItem = 0;
     m_enableCloseButtonTimer = new QTimer(this);
+    m_enableCloseButtonTimer->setSingleShot(true);
 
     m_middleClickItem = 0;
 
@@ -624,7 +625,7 @@ void ViewTree::contentsMouseMoveEvent(QMouseEvent* e)
                     item->setCloseButtonShown(true);
                     m_closeButtonItem = item;
                     if (!m_enableCloseButtonTimer->isActive())
-                        m_enableCloseButtonTimer->start(QApplication::doubleClickInterval(), true);
+                        m_enableCloseButtonTimer->start(QApplication::doubleClickInterval());
                 }
                 else
                 {

@@ -19,7 +19,7 @@ QPushButton(label,parent)
 {
     id=newId;
     on=false;
-    setToggleButton(true);
+    setCheckable(true);
     connect(this,SIGNAL (clicked()),this,SLOT (wasClicked()) );
 }
 

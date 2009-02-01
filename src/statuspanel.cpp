@@ -50,7 +50,7 @@ StatusPanel::StatusPanel(QWidget* parent) : ChatWindow(parent)
 
     nicknameCombobox=new QComboBox(commandLineBox);
     nicknameCombobox->setEditable(true);
-    nicknameCombobox->insertStringList(Preferences::nicknameList());
+    nicknameCombobox->addItems(Preferences::nicknameList());
     oldNick=nicknameCombobox->currentText();
 
     awayLabel=new QLabel(i18n("(away)"), commandLineBox);
@@ -165,8 +165,8 @@ void StatusPanel::updateAppearance()
     }
     else
     {
-        fg=colorGroup().foreground();
-        bg=colorGroup().base();
+        fg = palette().windowText().color();
+        bg = palette().base().color();
     }
 
     statusInput->unsetPalette();
@@ -380,7 +380,7 @@ void StatusPanel::setIdentity(const IdentityPtr identity)
     if (identity)
     {
         nicknameCombobox->clear();
-        nicknameCombobox->insertStringList(identity->getNicknameList());
+        nicknameCombobox->addItems(identity->getNicknameList());
     }
 }
 

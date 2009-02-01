@@ -766,7 +766,7 @@ void ViewContainer::updateViews(const Konversation::ServerGroupSettingsPtr serve
 
 
             if (!Preferences::self()->tabNotificationsText())
-                m_viewTree->setViewColor(view, m_window->colorGroup().foreground());
+                m_viewTree->setViewColor(view, m_window->palette().windowText().color());
         }
         else if (m_tabWidget)
         {
@@ -1056,7 +1056,7 @@ void ViewContainer::unsetViewNotification(ChatWindow* view)
         }
 
         QColor textColor = (Preferences::self()->inputFieldsBackgroundColor()
-            ? Preferences::self()->color(Preferences::ChannelMessage) : m_window->colorGroup().foreground());
+            ? Preferences::self()->color(Preferences::ChannelMessage) : m_window->palette().windowText().color());
 
         if (view->getType() == ChatWindow::Channel)
         {

@@ -49,7 +49,11 @@ LogfileReader::LogfileReader(QWidget* parent, const QString& log) : ChatWindow(p
     toolBar->addAction(KIcon("document-save-as"), i18n("Save As..."), this, SLOT(saveLog()));
 
     new QLabel(i18n("Show last:"),toolBar);
-    sizeSpin = new QSpinBox(10,1000,10,toolBar,"logfile_size_spinbox");
+    sizeSpin = new QSpinBox(toolBar);
+    sizeSpin->setMinimum(10);
+    sizeSpin->setMaximum(1000);
+    sizeSpin->setSingleStep(10);
+    sizeSpin->setObjectName("logfile_size_spinbox");
     sizeSpin->setWhatsThis(i18n("Use this box to set the maximum size of the log file. This setting does not take effect until you restart Konversation. Each log file may have a separate setting."));
     sizeSpin->setValue(Preferences::self()->logfileBufferSize());
     sizeSpin->setSuffix(i18n(" KB"));

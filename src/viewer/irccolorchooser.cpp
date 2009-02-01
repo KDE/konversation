@@ -44,11 +44,11 @@ IRCColorChooser::IRCColorChooser(QWidget* parent, const char* name)
 QString IRCColorChooser::color()
 {
     QString s;
-    s = "%C" + QString::number(m_ui.m_fgColorCBox->currentItem());
+    s = "%C" + QString::number(m_ui.m_fgColorCBox->currentIndex());
 
-    if(m_ui.m_bgColorCBox->currentItem() > 0)
+    if(m_ui.m_bgColorCBox->currentIndex() > 0)
     {
-        s += ',' + QString::number(m_ui.m_bgColorCBox->currentItem() - 1);
+        s += ',' + QString::number(m_ui.m_bgColorCBox->currentIndex() - 1);
     }
 
     return s;
@@ -58,9 +58,9 @@ void IRCColorChooser::updatePreview()
 {
     QColor bgc;
 
-    if(m_ui.m_bgColorCBox->currentItem() > 0)
+    if(m_ui.m_bgColorCBox->currentIndex() > 0)
     {
-        bgc = Preferences::self()->ircColorCode(m_ui.m_bgColorCBox->currentItem() - 1);
+        bgc = Preferences::self()->ircColorCode(m_ui.m_bgColorCBox->currentIndex() - 1);
     }
     else
     {
@@ -68,7 +68,7 @@ void IRCColorChooser::updatePreview()
     }
 
     m_ui.m_previewLbl->setBackgroundColor(bgc);
-    m_ui.m_previewLbl->setPaletteForegroundColor(Preferences::self()->ircColorCode(m_ui.m_fgColorCBox->currentItem()));
+    m_ui.m_previewLbl->setPaletteForegroundColor(Preferences::self()->ircColorCode(m_ui.m_fgColorCBox->currentIndex()));
 }
 
 void IRCColorChooser::initColors(KComboBox* combo)

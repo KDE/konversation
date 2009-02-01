@@ -58,7 +58,7 @@ namespace Konversation
 
         for(IdentityList::ConstIterator it = tmpList.begin(); it != tmpList.end(); ++it)
         {
-            m_identityCBox->insertItem((*it)->getName());
+            m_identityCBox->addItem((*it)->getName());
             m_identityList.append( IdentityPtr( *it ) );
         }
 

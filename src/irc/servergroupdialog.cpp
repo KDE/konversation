@@ -374,7 +374,7 @@ namespace Konversation
     void ServerGroupDialog::editIdentity()
     {
         IdentityDialog dlg(this);
-        dlg.setCurrentIdentity(m_mainWidget->m_identityCBox->currentItem());
+        dlg.setCurrentIdentity(m_mainWidget->m_identityCBox->currentIndex());
 
         if(dlg.exec() == KDialog::Accepted)
         {

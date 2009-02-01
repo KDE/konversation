@@ -35,7 +35,7 @@ void TopicComboBox::topicActivated(const QString& newTopic)
 
 void TopicComboBox::topicActivated(int index)
 {
-    emit topicChanged(text(index).section(' ',1));
+    emit topicChanged(itemText(index).section(' ',1));
 }
 
 void TopicComboBox::insertStringList(const QStringList& list)

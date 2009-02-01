@@ -2273,8 +2273,8 @@ void Channel::updateAppearance()
     }
     else
     {
-        fg=colorGroup().foreground();
-        bg=colorGroup().base();
+        fg = palette().windowText().color();
+        bg = palette().base().color();
         //I really fucking wonder if anyone who designs these APIs actually uses them
         //old code:        abg=KGlobalSettings::alternateBackgroundColor();
         //new code:
@@ -2759,7 +2759,7 @@ void Channel::setIdentity(const IdentityPtr identity)
     if (identity)
     {
         nicknameCombobox->clear();
-        nicknameCombobox->insertStringList(identity->getNicknameList());
+        nicknameCombobox->addItems(identity->getNicknameList());
     }
 }
 

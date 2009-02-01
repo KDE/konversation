@@ -46,7 +46,7 @@ void MultilineTextEdit::drawWhitespaces()
   QPainter pa(viewport());
 
   // get a sane color
-  QColor col=colorGroup().link();
+  QColor col = palette().link().color();
   // and a brush of the same color
   QBrush fillBrush(col);
   // use it for line drawing

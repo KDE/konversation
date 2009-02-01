@@ -286,12 +286,12 @@ void ChatWindow::setLogfileName(const QString& name)
                         if(backlog.device()->at() == filePosition) backlog.device()->at(filePosition + 1);
 
                         // if a tab character is present in the line
-                        if(backlogLine.find('\t') != -1)
+                        if (backlogLine.indexOf('\t') != -1)
                         {
                             // extract first column from log
-                            QString backlogFirst = backlogLine.left(backlogLine.find('\t'));
+                            QString backlogFirst = backlogLine.left(backlogLine.indexOf('\t'));
                             // cut first column from line
-                            backlogLine = backlogLine.mid(backlogLine.find('\t') + 1);
+                            backlogLine = backlogLine.mid(backlogLine.indexOf('\t') + 1);
                             // Logfile is in utf8 so we don't need to do encoding stuff here
                             // append backlog with time and first column to text view
                             firstColumnsInPacket << backlogFirst;
@@ -352,7 +352,7 @@ void ChatWindow::logText(const QString& text)
             }
 
             QTime time=QTime::currentTime();
-            QString logLine(QString("[%1] [%2] %3\n").arg(QDate::currentDate(Qt::LocalTime).toString()).
+            QString logLine(QString("[%1] [%2] %3\n").arg(QDate::currentDate().toString()).
                 arg(time.toString("hh:mm:ss")).arg(text));
 
             logStream << logLine;
@@ -451,7 +451,7 @@ bool ChatWindow::eventFilter(QObject* watched, QEvent* e)
             if(textView)
             {
                 QScrollBar* sbar = textView->verticalScrollBar();
-                sbar->setValue(sbar->value() - sbar->lineStep());
+                sbar->setValue(sbar->value() - sbar->singleStep());
             }
 
             return true;
@@ -461,7 +461,7 @@ bool ChatWindow::eventFilter(QObject* watched, QEvent* e)
             if(textView)
             {
                 QScrollBar* sbar = textView->verticalScrollBar();
-                sbar->setValue(sbar->value() + sbar->lineStep());
+                sbar->setValue(sbar->value() + sbar->singleStep());
             }
 
             return true;

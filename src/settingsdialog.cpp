@@ -63,9 +63,9 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   Ui::ChatWindowAppearance_Config confChatWindowAppearance;
   w = new QWidget();
   confChatWindowAppearance.setupUi(w);
-  confChatWindowAppearance.kcfg_TimestampFormat->insertItem("hh:mm");
-  confChatWindowAppearance.kcfg_TimestampFormat->insertItem("hh:mm:ss");
-  confChatWindowAppearance.kcfg_TimestampFormat->insertItem("h:m ap");
+  confChatWindowAppearance.kcfg_TimestampFormat->addItem("hh:mm");
+  confChatWindowAppearance.kcfg_TimestampFormat->addItem("hh:mm:ss");
+  confChatWindowAppearance.kcfg_TimestampFormat->addItem("h:m ap");
   addPage(w, interfaceGroup, "view-list-text", i18n("Chat Window"));
 
   //Interface/Themes
