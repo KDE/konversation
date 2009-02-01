@@ -47,7 +47,7 @@ namespace Konversation
 
         //IdentityList tmpList = Preferences::identityList();
         foreach(IdentityPtr id, Preferences::identityList()) {
-            m_identityCBox->insertItem(id->getName());
+            m_identityCBox->addItem(id->getName());
             m_identityList.append( IdentityPtr( id ) );
         }
         
