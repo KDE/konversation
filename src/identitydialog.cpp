@@ -21,6 +21,9 @@
 namespace Konversation
 {
 
+    // FIXME: One of the latest changes introduced a crash on duplication
+    // TODO: dialog closes if an error with a new identity occurs
+    //    (e.g.: on missing items, after showing the KMessageBox)
     IdentityDialog::IdentityDialog(QWidget *parent)
         : KDialog(parent)
     {
@@ -45,7 +48,6 @@ namespace Konversation
         m_delBtn->setIcon(KIcon("edit-delete"));
         connect(m_delBtn, SIGNAL(clicked()), this, SLOT(deleteIdentity()));
 
-        //IdentityList tmpList = Preferences::identityList();
         foreach(IdentityPtr id, Preferences::identityList()) {
             m_identityCBox->addItem(id->getName());
             m_identityList.append( IdentityPtr( id ) );
@@ -64,12 +66,9 @@ namespace Konversation
         setButtonGuiItem(KDialog::Cancel, KGuiItem(i18n("&Cancel"), "dialog-cancel", i18n("Discards all changes made")));
 
         AwayManager* awayManager = static_cast<KonversationApplication*>(kapp)->getAwayManager();
+        connect(m_identityCBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateIdentity(int)));
         connect(this, SIGNAL(identitiesChanged()), awayManager, SLOT(identitiesChanged()));
         connect(this, SIGNAL( okClicked() ), this, SLOT( slotOk() ) );
-    }
-
-    IdentityDialog::~IdentityDialog()
-    {
     }
 
     void IdentityDialog::updateIdentity(int index)
@@ -77,14 +76,14 @@ namespace Konversation
         if(m_currentIdentity && (m_nicknameLBox->count() == 0))
         {
             KMessageBox::error(this, i18n("You must add at least one nick to the identity."));
-            m_identityCBox->setCurrentText(m_currentIdentity->getName());
+            m_identityCBox->setItemText(0, m_currentIdentity->getName());
             return;
         }
 
         if (isVisible() && m_currentIdentity && m_realNameEdit->text().isEmpty())
         {
             KMessageBox::error(this, i18n("Please enter a real name."));
-            m_identityCBox->setCurrentText(m_currentIdentity->getName());
+            m_identityCBox->setItemText(0, m_currentIdentity->getName());
             return;
         }
 
@@ -168,14 +167,14 @@ namespace Konversation
         if(m_nicknameLBox->count() == 0)
         {
             KMessageBox::error(this, i18n("You must add at least one nick to the identity."));
-            m_identityCBox->setCurrentText(m_currentIdentity->getName());
+            m_identityCBox->setItemText(0, m_currentIdentity->getName());
             return;
         }
 
         if(m_realNameEdit->text().isEmpty())
         {
             KMessageBox::error(this, i18n("Please enter a real name."));
-            m_identityCBox->setCurrentText(m_currentIdentity->getName());
+            m_identityCBox->setItemText(0, m_currentIdentity->getName());
             return;
         }
 
@@ -218,7 +217,7 @@ namespace Konversation
         if(ok && !txt.isEmpty())
         {
             m_currentIdentity->setName(txt);
-            m_identityCBox->changeItem(txt, m_identityCBox->currentIndex());
+            m_identityCBox->setItemText(m_identityCBox->currentIndex(), txt);
         }
         else if(ok && txt.isEmpty())
         {
@@ -268,7 +267,7 @@ namespace Konversation
             m_identityCBox->removeItem(current);
             m_identityList.remove(m_currentIdentity);
             m_currentIdentity = 0;
-            updateIdentity(m_identityCBox->currentItem());
+            updateIdentity(m_identityCBox->currentIndex());
         }
     }
 
@@ -309,7 +308,7 @@ namespace Konversation
 
     IdentityPtr IdentityDialog::setCurrentIdentity(IdentityPtr identity)
     {
-        int index = Preferences::identityList().findIndex(identity);
+        int index = Preferences::identityList().indexOf(identity);
         setCurrentIdentity(index);
 
         return m_currentIdentity;
@@ -320,5 +319,3 @@ namespace Konversation
         return m_currentIdentity;
     }
 }
-
-#include "identitydialog.moc"
