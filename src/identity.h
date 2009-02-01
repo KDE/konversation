@@ -130,6 +130,6 @@ class Identity : public KShared
 };
 
 typedef KSharedPtr<Identity> IdentityPtr;
-typedef Q3ValueList<IdentityPtr> IdentityList;
+typedef QList<IdentityPtr> IdentityList;
 
 #endif

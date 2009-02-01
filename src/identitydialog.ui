@@ -1,0 +1,592 @@
+<ui version="4.0" >
+ <class>IdentityDialog</class>
+ <widget class="QWidget" name="IdentityDialog" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>427</width>
+    <height>404</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2" >
+   <item>
+    <layout class="QHBoxLayout" name="identityBarHLayout" >
+     <item>
+      <widget class="QLabel" name="label" >
+       <property name="sizePolicy" >
+        <sizepolicy vsizetype="Minimum" hsizetype="Fixed" >
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text" >
+        <string>Identity:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="KComboBox" name="m_identityCBox" >
+       <property name="sizePolicy" >
+        <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="identityButtonsHLayout" >
+       <item>
+        <widget class="KPushButton" name="newBtn" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize" >
+          <size>
+           <width>28</width>
+           <height>28</height>
+          </size>
+         </property>
+         <property name="maximumSize" >
+          <size>
+           <width>28</width>
+           <height>28</height>
+          </size>
+         </property>
+         <property name="iconSize" >
+          <size>
+           <width>16</width>
+           <height>16</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="KPushButton" name="copyBtn" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize" >
+          <size>
+           <width>28</width>
+           <height>28</height>
+          </size>
+         </property>
+         <property name="maximumSize" >
+          <size>
+           <width>28</width>
+           <height>28</height>
+          </size>
+         </property>
+         <property name="iconSize" >
+          <size>
+           <width>16</width>
+           <height>16</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="KPushButton" name="m_editBtn" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize" >
+          <size>
+           <width>28</width>
+           <height>28</height>
+          </size>
+         </property>
+         <property name="maximumSize" >
+          <size>
+           <width>28</width>
+           <height>28</height>
+          </size>
+         </property>
+         <property name="text" >
+          <string comment="Edit" />
+         </property>
+         <property name="iconSize" >
+          <size>
+           <width>16</width>
+           <height>16</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="KPushButton" name="m_delBtn" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize" >
+          <size>
+           <width>28</width>
+           <height>28</height>
+          </size>
+         </property>
+         <property name="maximumSize" >
+          <size>
+           <width>28</width>
+           <height>28</height>
+          </size>
+         </property>
+         <property name="iconSize" >
+          <size>
+           <width>16</width>
+           <height>16</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="KTabWidget" name="tabWidget" >
+     <property name="currentIndex" >
+      <number>1</number>
+     </property>
+     <widget class="QWidget" name="generalWidget" >
+      <attribute name="title" >
+       <string>General</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout" >
+       <item>
+        <layout class="QHBoxLayout" name="realNameHLayout" >
+         <item>
+          <widget class="QLabel" name="realNameLabel" >
+           <property name="text" >
+            <string>Real name:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="KLineEdit" name="m_realNameEdit" >
+           <property name="whatsThis" >
+            <string>Enter your real name here. IRC is not intended to keep you hidden from your friends or enemies. Keep this in mind if you are tempted to behave maliciously. A fake "real name" can be a good way to mask your gender from all the nerds out there, but the PC you use can always be traced so you will never be truly anonymous.</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="KEditListBox" name="m_nicknameLBox" >
+         <property name="whatsThis" >
+          <string>This is your list of nicknames. A nickname is the name that other users will know you by. You may use any name you desire. The first character must be a letter.
+
+Since nicknames must be unique across an entire IRC network, your desired name may be rejected by the server because someone else is already using that nickname. Enter alternate nicknames for yourself. If your first choice is rejected by the server, Konversation will try the alternate nicknames.</string>
+         </property>
+         <property name="title" >
+          <string>Nickname</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="autoIdentifyGroup" >
+         <property name="title" >
+          <string>Auto identify</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout" >
+          <item row="0" column="0" >
+           <widget class="QLabel" name="botLabel" >
+            <property name="text" >
+             <string>Service:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1" >
+           <widget class="KLineEdit" name="m_botEdit" >
+            <property name="whatsThis" >
+             <string>Service name can be &lt;b>&lt;i>nickserv&lt;/i>&lt;/b> or a network dependant name like  &lt;b>&lt;i>nickserv@services.dal.net&lt;/i>&lt;/b></string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2" >
+           <widget class="QLabel" name="passwordLabel" >
+            <property name="text" >
+             <string>Password:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="3" >
+           <widget class="KLineEdit" name="m_passwordEdit" >
+            <property name="passwordMode" >
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="awayWidget" >
+      <attribute name="title" >
+       <string>Away</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_4" >
+       <item>
+        <layout class="QGridLayout" name="gridLayout_4" >
+         <item row="0" column="0" colspan="2" >
+          <widget class="QCheckBox" name="m_insertRememberLineOnAwayChBox" >
+           <property name="whatsThis" >
+            <string>If you check this box, whenever you perform an &lt;b>/away&lt;/b> command, a horizontal line will appear in the channel, marking the point where you went away. Other IRC users do not see this horizontal line.</string>
+           </property>
+           <property name="text" >
+            <string>Mark the last position in chat windows when going away</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0" >
+          <widget class="QLabel" name="awayNicknameLabel" >
+           <property name="text" >
+            <string>Away nickname:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1" >
+          <widget class="KLineEdit" name="m_awayNickEdit" >
+           <property name="whatsThis" >
+            <string>Enter a nickname that indicates you are away. Whenever you perform an &lt;b>/away msg&lt;/b> command in any channel joined with this Identity, Konversation will automatically change your nickname to the Away nickname. Other users will be able to tell you are away from your computer. Whenever you perform an &lt;b>/away&lt;/b> command in any channel in which you are away, Konversation will automatically change your nickname back to the original. If you do not wish to automatically change your nickname when going away, leave blank.        </string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="automaticAwayGroup" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="whatsThis" >
+          <string>If you check this box, Konversation will automatically set all connections using this Identity away when the screensaver starts or after a period of user inactivity configured below.</string>
+         </property>
+         <property name="title" >
+          <string>Automatic away</string>
+         </property>
+         <property name="checkable" >
+          <bool>true</bool>
+         </property>
+         <property name="checked" >
+          <bool>false</bool>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_3" >
+          <item row="0" column="0" >
+           <widget class="QLabel" name="setAwayAfterLabel" >
+            <property name="sizePolicy" >
+             <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text" >
+             <string>Set away after</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1" >
+           <widget class="KIntSpinBox" name="m_awayInactivitySpin" >
+            <property name="sizePolicy" >
+             <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2" >
+           <widget class="QLabel" name="timeOfUserInactivityLabel" >
+            <property name="sizePolicy" >
+             <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text" >
+             <string>of user inactivity</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" colspan="3" >
+           <widget class="QCheckBox" name="m_automaticUnawayChBox" >
+            <property name="whatsThis" >
+             <string>If you check this box, Konversation will automatically cancel away for all connections using this Identity when the screensaver stops or new user activity is detected.</string>
+            </property>
+            <property name="text" >
+             <string>Automatically return on activity</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="awayMessageGroup" >
+         <property name="sizePolicy" >
+          <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="whatsThis" >
+          <string>If you check this box, Konversation will automatically send the Away message to all channels joined with this Identity. &lt;b>%s&lt;/b> is replaced with &lt;b>msg&lt;/b>. Whenever you perform an &lt;b>/away&lt;/b> command, the Return message will be displayed in all channels joined with this Identity.</string>
+         </property>
+         <property name="title" >
+          <string>Away messages</string>
+         </property>
+         <property name="checkable" >
+          <bool>true</bool>
+         </property>
+         <property name="checked" >
+          <bool>false</bool>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_2" >
+          <item row="0" column="0" >
+           <widget class="QLabel" name="awayLabel" >
+            <property name="text" >
+             <string>Away message:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1" >
+           <widget class="KLineEdit" name="m_awayEdit" />
+          </item>
+          <item row="1" column="0" >
+           <widget class="QLabel" name="unAwayLabel" >
+            <property name="text" >
+             <string>Return message:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1" >
+           <widget class="KLineEdit" name="m_unAwayEdit" />
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <spacer name="awayWidgetVSpacer" >
+         <property name="orientation" >
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0" >
+          <size>
+           <width>20</width>
+           <height>45</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="advancedWidget" >
+      <attribute name="title" >
+       <string>Advanced</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_3" >
+       <item>
+        <layout class="QHBoxLayout" name="preshellHBox" >
+         <item>
+          <widget class="QLabel" name="sCommandLabel" >
+           <property name="text" >
+            <string>Pre-shell command:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="KLineEdit" name="m_sCommandEdit" >
+           <property name="whatsThis" >
+            <string>Here you can enter a command to be executed before connection to server starts&lt;br>If you have multiple servers in this identity this command will be executed for each server</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="encodingHBox" >
+         <item>
+          <widget class="QLabel" name="codecLabel" >
+           <property name="sizePolicy" >
+            <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text" >
+            <string>Encoding:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="KComboBox" name="m_codecCBox" >
+           <property name="whatsThis" >
+            <string>This setting affects how characters you type are encoded for sending to the server. It also affects how messages are displayed. When you first open Konversation, it automatically retrieves this setting from the operating system. If you seem to be having trouble seeing other user's messages correctly, try changing this setting.</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="identHBox" >
+         <item>
+          <widget class="QLabel" name="loginLabel" >
+           <property name="text" >
+            <string>Ident:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="KLineEdit" name="m_loginEdit" >
+           <property name="whatsThis" >
+            <string>When you connect, many servers query your computer for an IDENT response. If you computer is not running an IDENT server, this response is sent by Konversation. No spaces are allowed.</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="quitHBox" >
+         <item>
+          <widget class="QLabel" name="quitLabel" >
+           <property name="text" >
+            <string>Quit reason:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="KLineEdit" name="m_quitEdit" >
+           <property name="whatsThis" >
+            <string>Whenever you leave a server, this message is shown to others.</string>
+           </property>
+           <property name="text" >
+            <string>Konversation terminated!</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="partHBox" >
+         <item>
+          <widget class="QLabel" name="partLabel" >
+           <property name="text" >
+            <string>Part reason:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="KLineEdit" name="m_partEdit" >
+           <property name="whatsThis" >
+            <string>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Sans Serif'; font-size:10pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" font-family:'Courier New'; color:#333333;">Whenever you leave a channel, this message is sent to the channel.&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
+           </property>
+           <property name="text" >
+            <string>Konversation terminated!</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="kickHBox" >
+         <item>
+          <widget class="QLabel" name="kickLabel" >
+           <property name="text" >
+            <string>Kick reason:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="KLineEdit" name="m_kickEdit" >
+           <property name="whatsThis" >
+            <string>Whenever you are kicked from a channel (usually by an IRC operator), this message is sent to the channel.</string>
+           </property>
+           <property name="text" >
+            <string>User terminated!</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <spacer name="advancedWidgetWSpacer" >
+         <property name="orientation" >
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType" >
+          <enum>QSizePolicy::Expanding</enum>
+         </property>
+         <property name="sizeHint" stdset="0" >
+          <size>
+           <width>20</width>
+           <height>107</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>KComboBox</class>
+   <extends>QComboBox</extends>
+   <header>kcombobox.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KEditListBox</class>
+   <extends>QGroupBox</extends>
+   <header>keditlistbox.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KIntSpinBox</class>
+   <extends>QSpinBox</extends>
+   <header>knuminput.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>klineedit.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KPushButton</class>
+   <extends>QPushButton</extends>
+   <header>kpushbutton.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KTabWidget</class>
+   <extends>QTabWidget</extends>
+   <header>ktabwidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

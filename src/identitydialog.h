@@ -13,45 +13,28 @@
 #define KONVERSATIONIDENTITYDIALOG_H
 
 #include "identity.h"
+#include "ui_identitydialog.h"
 
-#include <kdialog.h>
-
-
-class KComboBox;
-class KLineEdit;
-class QCheckBox;
-class QSpinBox;
-class Q3ListBox;
-class QGroupBox;
-class QToolButton;
+#include <KDialog>
 
 namespace Konversation
 {
 
-    class IdentityDialog : public KDialog
+    class IdentityDialog : public KDialog, private Ui::IdentityDialog
     {
         Q_OBJECT
         public:
-            explicit IdentityDialog(QWidget *parent = 0, const char *name = 0);
+            IdentityDialog(QWidget *parent = 0);
             ~IdentityDialog();
             void setCurrentIdentity(int index);
             IdentityPtr setCurrentIdentity(IdentityPtr identity);
             IdentityPtr currentIdentity() const;
 
-
         signals:
             void identitiesChanged();
 
-
         protected slots:
             void updateIdentity(int index);
-
-            void addNickname();
-            void editNickname();
-            void deleteNickname();
-            void updateButtons();
-            void moveNicknameUp();
-            void moveNicknameDown();
 
             void refreshCurrentIdentity();
 
@@ -61,36 +44,7 @@ namespace Konversation
             void renameIdentity();
             void deleteIdentity();
             void copyIdentity();
-
-
         private:
-            KComboBox* m_identityCBox;
-            KLineEdit* m_realNameEdit;
-            KLineEdit* m_sCommandEdit;
-            KLineEdit* m_loginEdit;
-            KComboBox* m_codecCBox;
-            KLineEdit* m_botEdit;
-            KLineEdit* m_passwordEdit;
-            KLineEdit* m_quitEdit;
-            KLineEdit* m_partEdit;
-            KLineEdit* m_kickEdit;
-            KLineEdit* m_awayEdit;
-            KLineEdit* m_unAwayEdit;
-            KLineEdit* m_awayNickEdit;
-            QCheckBox* m_insertRememberLineOnAwayChBox;
-            Q3ListBox* m_nicknameLBox;
-            QGroupBox* m_awayMessageGBox;
-            QGroupBox* m_automaticAwayGBox;
-            QSpinBox* m_awayInactivitySpin;
-            QCheckBox* m_automaticUnawayChBox;
-            QToolButton* m_editBtn;
-            QToolButton* m_delBtn;
-            QToolButton* m_upNicknameBtn;
-            QToolButton* m_downNicknameBtn;
-            QPushButton* m_addNicknameBtn;
-            QPushButton* m_changeNicknameBtn;
-            QPushButton* m_removeNicknameBtn;
-
             IdentityList m_identityList;
             IdentityPtr m_currentIdentity;
     };
