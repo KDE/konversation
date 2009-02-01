@@ -2282,16 +2282,18 @@ void Channel::updateAppearance()
         QBrush stupidfuckingreturnvalue(stupidfuckingthing.background(KColorScheme::AlternateBackground));
         abg=stupidfuckingreturnvalue.color();
     }
+    
+    QPalette channelInputPalette;
+    palette.setColor(channelInput->foregroundRole(), fg);
+    palette.setColor(channelInput->backgroundRole(), bg);
+    channelInput->setPalette(channelInputPalette);
 
-    channelInput->unsetPalette();
-    channelInput->setPaletteForegroundColor(fg);
-    channelInput->setPaletteBackgroundColor(bg);
+    QPalette limitPalette;
+    limitPalette.setColor(limit->foregroundRole(), fg);
+    limitPalette.setColor(limit->backgroundRole(), bg);
+    limit->setPalette(limitPalette);
 
-    limit->unsetPalette();
-    limit->setPaletteForegroundColor(fg);
-    limit->setPaletteBackgroundColor(bg);
-
-    getTextView()->unsetPalette();
+    getTextView()->setPalette(QPalette());
 
     if(Preferences::self()->showBackgroundImage())
     {
@@ -2321,10 +2323,11 @@ void Channel::updateAppearance()
         limit->setFont(KGlobalSettings::generalFont());
     }
 
+    QPalette nicknameListViewPalette;
+    nicknameListViewPalette.setColor(nicknameListView->foregroundRole(), fg);
+    nicknameListViewPalette.setColor(nicknameListView->backgroundRole(), bg);
     nicknameListView->resort();
-    nicknameListView->unsetPalette();
-    nicknameListView->setPaletteForegroundColor(fg);
-    nicknameListView->setPaletteBackgroundColor(bg);
+    nicknameListView->setPalette(nicknameListViewPalette);
     nicknameListView->setAlternateBackground(abg);
 
     if (Preferences::self()->customListFont())
