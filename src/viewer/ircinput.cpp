@@ -42,11 +42,10 @@
 
 IRCInput::IRCInput(QWidget* parent) : KTextEdit(parent)
 {
-    m_lastHeight=document()->size().toSize().height();
     setAcceptRichText(false);
     //I am not terribly interested in finding out where this value comes from
     //nor in compensating for it if my guess is incorrect. so, cache it.
-    m_qtBoxPadding=m_lastHeight-fontMetrics().lineSpacing();
+    m_qtBoxPadding = document()->size().toSize().height() - fontMetrics().lineSpacing();
 
     connect(KApplication::kApplication(), SIGNAL(appearanceChanged()), this, SLOT(updateAppearance()));
     m_multiRow = Preferences::self()->useMultiRowInputBox();
@@ -67,11 +66,10 @@ IRCInput::IRCInput(QWidget* parent) : KTextEdit(parent)
     // widget may not be resized vertically
     setSizePolicy(QSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::Fixed));
 
-    //NoWrap coupled with the size policy constrains the line edit to be one row high
-    setLineWrapMode(m_multiRow ? WidgetWidth : NoWrap);
+    updateAppearance();
 
-    //setHScrollBarMode(AlwaysOff);
-    //setVScrollBarMode(AlwaysOff);
+    setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
     setWhatsThis(i18n("<qt><p>The input line is where you type messages to be sent the channel, query, or server.  A message sent to a channel is seen by everyone on the channel, whereas a message in a query is sent only to the person in the query with you.</p><p>To automatically complete the nickname you began typing, press Tab. If you have not begun typing, the last successfully completed nickname will be used.</p><p>You can also send special commands:</p><table><tr><th>/me <i>action</i></th><td>shows up as an action in the channel or query.  For example:  <em>/me sings a song</em> will show up in the channel as 'Nick sings a song'.</td></tr><tr><th>/whois <i>nickname</i></th><td>shows information about this person, including what channels they are in.</td></tr></table><p>For more commands, see the Konversation Handbook.</p><p>A message cannot contain multiple lines.</p></qt>"));
 
@@ -129,33 +127,20 @@ void IRCInput::updateAppearance()
 {
     m_multiRow = Preferences::self()->useMultiRowInputBox();
     setLineWrapMode(m_multiRow ? WidgetWidth : NoWrap);
-    m_lastHeight=heightForWidth(sizeHint().width());
+
+    if (m_multiRow)
+        connect(this, SIGNAL(textChanged()), this, SLOT(maybeResize()));
+    else
+        disconnect(this, SIGNAL(textChanged()), this, SLOT(maybeResize()));
+
+    maybeResize();
     ensureCursorVisible(); //appears to trigger updateGeometry
 }
 
-// TODO FIXME and so we don't need this, right...?
-/*
-void IRCInput::resizeContents( int w, int h )
+void IRCInput::maybeResize()
 {
-    int height = document()->size().toSize().height();
-    if (height != m_lastHeight) {
-        m_lastHeight = height;
-        updateGeometry();
-    }
-    KTextEdit::resizeContents(w,h);
-}
-*/
-
-// widget must be only one line high - luckily QT will enforce this via wrappping policy
-QSize IRCInput::sizeHint() const
-{
-    ensurePolished();
-
-    int ObscurePadding = 4;
-    int f=2*frameWidth();
-    int w=12 * (qMax(fontMetrics().lineSpacing(),14) + f + ObscurePadding);
-    int h=m_lastHeight - m_qtBoxPadding + f + ObscurePadding;
-    return QSize(w,h);
+    int h = qMax(fontMetrics().lineSpacing() + m_qtBoxPadding, document()->size().toSize().height());
+    setFixedHeight(h + 2 * frameWidth());
 }
 
 // TODO FIXME - ok, wtf are we removing here? this is exactly the kind of shit i don't want to see any more

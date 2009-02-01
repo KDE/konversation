@@ -37,9 +37,6 @@ class IRCInput : public KTextEdit
         int getOldCursorPosition();
         QString lastCompletion() const { return m_lastCompletion; }
 
-        virtual QSize sizeHint() const;
-        //QString text() const;
-
     signals:
         void nickCompletion();
         void endCompletion();                     // tell channel that completion phase is over
@@ -55,7 +52,6 @@ class IRCInput : public KTextEdit
         void setText(const QString& text);
         void setLastCompletion(const QString& completion);
         virtual void setOverwriteMode(bool) { }
-        //virtual void resizeContents( int w, int h );
         virtual void updateAppearance();
 
     protected slots:
@@ -63,6 +59,8 @@ class IRCInput : public KTextEdit
         void insertCompletion(const QString& nick);
         void disableSpellChecking();
         virtual void slotSpellCheckDone(const QString& s);
+
+        void maybeResize();
 
     protected:
         bool eventFilter(QObject *object,QEvent *event);
@@ -83,7 +81,6 @@ class IRCInput : public KTextEdit
         QString m_lastCompletion;
         bool m_useSelection;
         bool m_multiRow;
-        int m_lastHeight; //essentially corresponds to qtextbrowser::doc->height()
         int m_qtBoxPadding; //see comment in constructor
 
         QTimer* m_disableSpellCheckTimer;
