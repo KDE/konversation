@@ -296,7 +296,7 @@ QPixmap DccTransferPanelItem::getStatusIcon() const
             icon = "goto";
             break;
         case DccTransfer::Transferring:
-            icon = "media-playback-play";
+            icon = "media-playback-start";
             break;
         case DccTransfer::Done:
             icon = "ok";
