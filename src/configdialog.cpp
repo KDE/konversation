@@ -105,7 +105,7 @@ KonviConfigDialog::KonviConfigDialog( QWidget *parent, const char *name,
 
 KonviConfigDialog::~KonviConfigDialog()
 {
-    openDialogs.remove(name());
+    openDialogs.remove(objectName());
     delete d;
 }
 
@@ -203,7 +203,7 @@ void KonviConfigDialog::settingsChangedSlot()
     // Update the buttons
     updateButtons();
     emit settingsChanged();
-    emit settingsChanged(name());
+    emit settingsChanged(objectName());
 }
 
 void KonviConfigDialog::show()
