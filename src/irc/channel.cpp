@@ -2953,7 +2953,7 @@ QString NickList::completeNick(const QString& pattern, bool& complete, QStringLi
         while(ok && ((patternLength) < firstNickLength))
         {
             ++patternLength;
-            QStringList tmp = found.grep(firstNick.left(patternLength), caseSensitive);
+            QStringList tmp = found.filter(firstNick.left(patternLength), caseSensitive);
 
             if(tmp.count() != foundCount)
             {
