@@ -165,8 +165,10 @@ set(viewer_SRCS
     viewer/quickbutton.cpp
     viewer/searchbar.cpp
 )
-kde4_add_ui3_files(viewer_SRCS viewer/irccolorchooserui.ui)
 
+kde4_add_ui_files(viewer_SRCS
+    viewer/irccolorchooserui.ui
+)
 
     #=== DCC
 set(dcc_SRCS

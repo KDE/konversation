@@ -17,6 +17,7 @@
 
 #include <kdialog.h>
 
+#include "ui_irccolorchooserui.h"
 
 class IRCColorChooserUI;
 class KComboBox;
@@ -36,6 +37,6 @@ class IRCColorChooser : public KDialog
         void initColors(KComboBox* combo);
 
     protected:
-        IRCColorChooserUI* m_view;
+        Ui::IRCColorChooserUI m_ui;
 };
 #endif
