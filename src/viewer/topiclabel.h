@@ -16,9 +16,7 @@
 #include <QLabel>
 
 
-class QFontMetrics;
 class Server;
-class KMenu;
 
 namespace Konversation
 {

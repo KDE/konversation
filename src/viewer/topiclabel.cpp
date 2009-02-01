@@ -17,8 +17,6 @@
 #include "common.h"
 #include "channel.h"
 
-#include <q3simplerichtext.h>
-
 #include <QClipboard>
 #include <QContextMenuEvent>
 #include <QResizeEvent>
@@ -234,10 +232,11 @@ namespace Konversation
 
     uint TopicLabel::textWidth(const QString& text)
     {
-        Q3SimpleRichText richText("<qt>" + text + "</qt>", font());
-        richText.setWidth(fontMetrics().width(text));
+        QTextDocument document("<qt>" + text + "</qt>", this);
+        document.setDefaultFont(font());
+        document.setTextWidth(fontMetrics().width(text));
 
-        return richText.widthUsed();
+        return document.size().width();
     }
 
     void TopicLabel::highlightedSlot(const QString& link)
