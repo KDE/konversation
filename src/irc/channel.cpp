@@ -2795,7 +2795,7 @@ void Channel::addBan(const QString& ban)
     if ((*it).section(' ', 0, 0) == ban.section(' ', 0, 0))
     {
 			// Ban is already in list.
-      it = m_BanList.remove(it);
+      it = m_BanList.erase(it);
 
       emit banRemoved(ban.section(' ', 0, 0));
     }
@@ -2812,7 +2812,7 @@ void Channel::removeBan(const QString& ban)
   {
     if (string.section(' ', 0, 0) == ban)
     {
-      m_BanList.remove(string);
+      m_BanList.erase(string);
 
       emit banRemoved(ban);
     }
