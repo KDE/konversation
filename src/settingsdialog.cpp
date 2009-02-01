@@ -13,26 +13,26 @@
 #include "settingsdialog.h" ////// header renamed
 #include "configdialog.h" ////// header renamed
 #include "config/preferences.h"
-#include "chatwindowappearance_preferences.h"
-#include "connectionbehavior_preferences.h"
+#include "ui_chatwindowappearance_preferences.h"
+#include "ui_connectionbehavior_preferences.h"
 #include "highlight_preferences.h"
 #include "warnings_preferences.h"
-#include "log_preferences.h"
+#include "ui_log_preferences.h"
 #include "quickbuttons_preferences.h"
 #include "autoreplace_preferences.h"
-#include "chatwindowbehaviour_preferences.h"
-#include "fontappearance_preferences.h"
+#include "ui_chatwindowbehaviour_preferences.h"
+#include "ui_fontappearance_preferences.h"
 #include "nicklistbehavior_preferences.h"
 #include "tabs_preferences.h"
-#include "colorsappearance_preferences.h"
-#include "generalbehavior_preferences.h"
+#include "ui_colorsappearance_preferences.h"
+#include "ui_generalbehavior_preferences.h"
 #include "dcc_preferences.h"
 #include "osd_preferences.h"
 #include "theme_preferences.h"
 #include "alias_preferences.h"
 #include "ignore_preferences.h"
 #include "watchednicknames_preferences.h"
-#include "tabnotifications_preferences.h"
+#include "ui_tabnotifications_preferences.h"
 
 #include <qsplitter.h>
 #include <qcombobox.h>
@@ -45,6 +45,7 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
     KonviConfigDialog( parent, "settings", Preferences::self(), KPageDialog::Tree)
 {
   m_modified = false;
+  QWidget *w = 0;
 
   KPageWidgetItem *interfaceGroup = new KPageWidgetItem(new QWidget(this), i18n("Interface"));
   interfaceGroup->setIcon(KIcon("preferences-desktop-theme"));
@@ -59,11 +60,13 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   KPageDialog::addPage(notificationGroup);
 
   //Interface/Chat Window
-  m_confChatWindowAppearanceWdg = new ChatWindowAppearance_Config( this, "ChatWindowAppearance" );
-  m_confChatWindowAppearanceWdg->kcfg_TimestampFormat->insertItem("hh:mm");
-  m_confChatWindowAppearanceWdg->kcfg_TimestampFormat->insertItem("hh:mm:ss");
-  m_confChatWindowAppearanceWdg->kcfg_TimestampFormat->insertItem("h:m ap");
-  addPage ( m_confChatWindowAppearanceWdg, interfaceGroup, "view-list-text", i18n("Chat Window") );
+  Ui::ChatWindowAppearance_Config confChatWindowAppearance;
+  w = new QWidget();
+  confChatWindowAppearance.setupUi(w);
+  confChatWindowAppearance.kcfg_TimestampFormat->insertItem("hh:mm");
+  confChatWindowAppearance.kcfg_TimestampFormat->insertItem("hh:mm:ss");
+  confChatWindowAppearance.kcfg_TimestampFormat->insertItem("h:m ap");
+  addPage(w, interfaceGroup, "view-list-text", i18n("Chat Window"));
 
   //Interface/Themes
   m_confThemeWdg = new Theme_Config( this, "Theme" );
@@ -72,12 +75,16 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   connect(m_confThemeWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
 
   //Interface/Colors
-  m_confColorsAppearanceWdg = new ColorsAppearance_Config( this, "ColorsAppearance" );
-  addPage ( m_confColorsAppearanceWdg, interfaceGroup, "preferences-desktop-color", i18n("Colors") );
+  Ui::ColorsAppearance_Config confColorsAppearance;
+  w = new QWidget();
+  confColorsAppearance.setupUi(w);
+  addPage(w, interfaceGroup, "preferences-desktop-color", i18n("Colors"));
 
   //Interface/Fonts
-  m_confFontAppearanceWdg = new FontAppearance_Config( this, "FontAppearance" );
-  addPage ( m_confFontAppearanceWdg, interfaceGroup, "preferences-desktop-font", i18n("Fonts") );
+  Ui::FontAppearance_Config confFontAppearance;
+  w = new QWidget();
+  confFontAppearance.setupUi(w);
+  addPage(w, interfaceGroup, "preferences-desktop-font", i18n("Fonts"));
 
   //Interface/Quick Buttons
   m_confQuickButtonsWdg = new QuickButtons_Config( this, "QuickButtons" );
@@ -90,16 +97,22 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   addPage ( m_confTabBarWdg, interfaceGroup, "tab-new", i18n("Tabs") );
 
   //Behavior/General
-  m_confGeneralBehaviorWdg = new GeneralBehavior_Config( this, "GeneralBehavior" );
-  addPage ( m_confGeneralBehaviorWdg, interfaceGroup, "configure", i18n("General") );
+  Ui::GeneralBehavior_Config confGeneralBehavior;
+  w = new QWidget();
+  confGeneralBehavior.setupUi(w);
+  addPage(w, interfaceGroup, "configure", i18n("General"));
 
   //Behavior/Connection
-  m_confConnectionBehaviorWdg = new ConnectionBehavior_Config( this, "ConnectionBehavior" );
-  addPage ( m_confConnectionBehaviorWdg, interfaceGroup, "network-connect", i18n("Connection") );
+  Ui::ConnectionBehavior_Config confConnectionBehavior;
+  w = new QWidget();
+  confConnectionBehavior.setupUi(w);
+  addPage(w, interfaceGroup, "network-connect", i18n("Connection"));
 
   //Behaviour/Chat Window
-  m_confChatwindowBehaviourWdg = new ChatwindowBehaviour_Config( this, "ChatwindowBehaviour" );
-  addPage ( m_confChatwindowBehaviourWdg, behaviorGroup, "view-list-text", i18n("Chat Window") );
+  Ui::ChatwindowBehaviour_Config confChatwindowBehaviour;
+  w = new QWidget();
+  confChatwindowBehaviour.setupUi(w);
+  addPage(w, behaviorGroup, "view-list-text", i18n("Chat Window"));
 
   //Behaviour/Nickname List
   m_confNicklistBehaviorWdg = new NicklistBehavior_Config( this, "NicklistBehavior" );
@@ -126,15 +139,19 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   m_indexToPageMapping.insert(lastAddedIndex(), m_confIgnoreWdg);
 
   //Behaviour/Logging
-  m_confLogWdg = new Log_Config( this, "Log" );
-  addPage ( m_confLogWdg, behaviorGroup, "log", i18n("Logging") );
+  Ui::Log_Config confLog;
+  w = new QWidget();
+  confLog.setupUi(w);
+  addPage(w, behaviorGroup, "log", i18n("Logging"));
 
   m_confDCCWdg = new DCC_Config( this, "DCC" );
   addPage ( m_confDCCWdg, behaviorGroup, "arrow-right-double", i18n("DCC") );
 
   //Notifications/Tab Bar
-  m_confTabNotificationsWdg = new TabNotifications_Config( this, "TabBar" );
-  addPage ( m_confTabNotificationsWdg, notificationGroup, "tab-new", i18n("Tabs") );
+  Ui::TabNotifications_Config confTabNotifications;
+  w = new QWidget();
+  confTabNotifications.setupUi(w);
+  addPage(w, notificationGroup, "tab-new", i18n("Tabs"));
 
   //Notification/Highlighting
   m_confHighlightWdg = new Highlight_Config( this, "Highlight" );

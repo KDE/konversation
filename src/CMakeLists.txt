@@ -104,23 +104,26 @@ set(prefs_SRCS
     preferences/valuelistviewitem.cpp
 )
 
-kde4_add_ui3_files(prefs_SRCS
-    preferences/alias_preferencesui.ui
-    preferences/autoreplace_preferencesui.ui
+kde4_add_ui_files(prefs_SRCS
     preferences/chatwindowappearance_preferences.ui
     preferences/chatwindowbehaviour_preferences.ui
     preferences/colorsappearance_preferences.ui
     preferences/connectionbehavior_preferences.ui
-    preferences/dcc_preferencesui.ui
     preferences/fontappearance_preferences.ui
     preferences/generalbehavior_preferences.ui
+    preferences/log_preferences.ui
+    preferences/tabnotifications_preferences.ui
+)
+
+kde4_add_ui3_files(prefs_SRCS
+    preferences/alias_preferencesui.ui
+    preferences/autoreplace_preferencesui.ui
+    preferences/dcc_preferencesui.ui
     preferences/highlight_preferencesui.ui
     preferences/ignore_preferencesui.ui
-    preferences/log_preferences.ui
     preferences/nicklistbehavior_preferencesui.ui
     preferences/osd_preferencesui.ui
     preferences/quickbuttons_preferencesui.ui
-    preferences/tabnotifications_preferences.ui
     preferences/tabs_preferencesui.ui
     preferences/theme_preferencesui.ui
     preferences/warnings_preferencesui.ui

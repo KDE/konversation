@@ -1,360 +1,371 @@
-<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
-<class>GeneralBehavior_Config</class>
-<comment>This program is free software; you can redistribute it and/or modify
+<ui version="4.0" >
+ <author>Copyright (C) 2005 Peter Simonsson</author>
+ <comment>This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation; either version 2 of the License, or
 (at your option) any later version.
 </comment>
-<author>Copyright (C) 2005 Peter Simonsson</author>
-<widget class="QWidget">
-    <property name="name">
-        <cstring>GeneralBehavior_Config</cstring>
-    </property>
-    <property name="geometry">
-        <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>448</width>
-            <height>477</height>
-        </rect>
-    </property>
-    <vbox>
-        <property name="name">
-            <cstring>unnamed</cstring>
+ <class>GeneralBehavior_Config</class>
+ <widget class="QWidget" name="GeneralBehavior_Config" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>504</width>
+    <height>477</height>
+   </rect>
+  </property>
+  <layout class="QVBoxLayout" >
+   <property name="margin" >
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="Q3GroupBox" name="kcfg_ShowTrayIcon" >
+     <property name="title" >
+      <string>Enable System Tray</string>
+     </property>
+     <property name="checkable" >
+      <bool>true</bool>
+     </property>
+     <property name="checked" >
+      <bool>false</bool>
+     </property>
+     <layout class="QGridLayout" >
+      <item row="0" column="0" colspan="2" >
+       <widget class="QCheckBox" name="kcfg_TrayNotify" >
+        <property name="text" >
+         <string>&amp;Use system tray for new message notification</string>
         </property>
-        <property name="margin">
-            <number>0</number>
+       </widget>
+      </item>
+      <item row="1" column="0" >
+       <spacer name="spacer51" >
+        <property name="orientation" >
+         <enum>Qt::Horizontal</enum>
         </property>
-        <widget class="QGroupBox">
-            <property name="name">
-                <cstring>kcfg_ShowTrayIcon</cstring>
-            </property>
-            <property name="title">
-                <string>Enable System Tray</string>
-            </property>
-            <property name="checkable">
-                <bool>true</bool>
-            </property>
-            <property name="checked">
-                <bool>false</bool>
-            </property>
-            <grid>
-                <property name="name">
-                    <cstring>unnamed</cstring>
-                </property>
-                <widget class="QCheckBox" row="0" column="0" rowspan="1" colspan="2">
-                    <property name="name">
-                        <cstring>kcfg_TrayNotify</cstring>
-                    </property>
-                    <property name="text">
-                        <string>&amp;Use system tray for new message notification</string>
-                    </property>
-                </widget>
-                <spacer row="1" column="0">
-                    <property name="name">
-                        <cstring>spacer51</cstring>
-                    </property>
-                    <property name="orientation">
-                        <enum>Horizontal</enum>
-                    </property>
-                    <property name="sizeType">
-                        <enum>Fixed</enum>
-                    </property>
-                    <property name="sizeHint">
-                        <size>
-                            <width>31</width>
-                            <height>20</height>
-                        </size>
-                    </property>
-                </spacer>
-                <widget class="QCheckBox" row="1" column="1">
-                    <property name="name">
-                        <cstring>kcfg_TrayNotifyOnlyOwnNick</cstring>
-                    </property>
-                    <property name="enabled">
-                        <bool>false</bool>
-                    </property>
-                    <property name="text">
-                        <string>Only &amp;notify when a highlight is triggered or your current nick is used</string>
-                    </property>
-                </widget>
-                <spacer row="2" column="0">
-                    <property name="name">
-                        <cstring>spacer51_2</cstring>
-                    </property>
-                    <property name="orientation">
-                        <enum>Horizontal</enum>
-                    </property>
-                    <property name="sizeType">
-                        <enum>Fixed</enum>
-                    </property>
-                    <property name="sizeHint">
-                        <size>
-                            <width>31</width>
-                            <height>20</height>
-                        </size>
-                    </property>
-                </spacer>
-                <widget class="QCheckBox" row="2" column="1">
-                    <property name="name">
-                        <cstring>kcfg_TrayNotifyBlink</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Blin&amp;k the icon</string>
-                    </property>
-                </widget>
-                <widget class="QCheckBox" row="3" column="0" rowspan="1" colspan="2">
-                    <property name="name">
-                        <cstring>kcfg_HideToTrayOnStartup</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Hide window on startup</string>
-                    </property>
-                </widget>
-            </grid>
-        </widget>
-        <widget class="QGroupBox">
-            <property name="name">
-                <cstring>middleLabel</cstring>
-            </property>
-            <property name="title">
-                <string>Nickname Completion</string>
-            </property>
-            <grid>
-                <property name="name">
-                    <cstring>unnamed</cstring>
-                </property>
-                <widget class="QLabel" row="0" column="0">
-                    <property name="name">
-                        <cstring>modeLbl</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Completion &amp;mode:</string>
-                    </property>
-                    <property name="buddy" stdset="0">
-                        <cstring>kcfg_NickCompletionMode</cstring>
-                    </property>
-                </widget>
-                <widget class="QComboBox" row="0" column="1" rowspan="1" colspan="3">
-                    <item>
-                        <property name="text">
-                            <string>Cycle NickList</string>
-                        </property>
-                    </item>
-                    <item>
-                        <property name="text">
-                            <string>Shell-Like</string>
-                        </property>
-                    </item>
-                    <item>
-                        <property name="text">
-                            <string>Shell-Like with Completion Box</string>
-                        </property>
-                    </item>
-                    <property name="name">
-                        <cstring>kcfg_NickCompletionMode</cstring>
-                    </property>
-                </widget>
-                <widget class="KLineEdit" row="1" column="1">
-                    <property name="name">
-                        <cstring>kcfg_NickCompleteSuffixStart</cstring>
-                    </property>
-                </widget>
-                <widget class="QLabel" row="1" column="0">
-                    <property name="name">
-                        <cstring>startOfLineLabel</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Suffi&amp;x at start of line:</string>
-                    </property>
-                    <property name="buddy" stdset="0">
-                        <cstring>kcfg_NickCompleteSuffixStart</cstring>
-                    </property>
-                </widget>
-                <widget class="KLineEdit" row="1" column="3">
-                    <property name="name">
-                        <cstring>kcfg_NickCompleteSuffixMiddle</cstring>
-                    </property>
-                </widget>
-                <widget class="QLabel" row="1" column="2">
-                    <property name="name">
-                        <cstring>textLabel3</cstring>
-                    </property>
-                    <property name="text">
-                        <string>&amp;Elsewhere:</string>
-                    </property>
-                    <property name="buddy" stdset="0">
-                        <cstring>kcfg_NickCompleteSuffixMiddle</cstring>
-                    </property>
-                </widget>
-                <widget class="QCheckBox" row="2" column="0">
-                    <property name="name">
-                        <cstring>kcfg_NickCompletionCaseSensitive</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Case sensitive</string>
-                    </property>
-                    <property name="accel">
-                        <string></string>
-                    </property>
-                </widget>
-            </grid>
-        </widget>
-        <widget class="QGroupBox">
-            <property name="name">
-                <cstring>miscGBox</cstring>
-            </property>
-            <property name="title">
-                <string>Miscellaneous</string>
-            </property>
-            <grid>
-                <property name="name">
-                    <cstring>unnamed</cstring>
-                </property>
-                <widget class="QCheckBox" row="0" column="0" rowspan="1" colspan="2">
-                    <property name="name">
-                        <cstring>kcfg_DisableNotifyWhileAway</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Disable notifications while &amp;away</string>
-                    </property>
-                </widget>
-                <widget class="QCheckBox" row="5" column="0">
-                    <property name="name">
-                        <cstring>kcfg_CustomVersionReplyEnabled</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Use custom &amp;version reply:</string>
-                    </property>
-                </widget>
-                <widget class="KLineEdit" row="5" column="1">
-                    <property name="name">
-                        <cstring>kcfg_CustomVersionReply</cstring>
-                    </property>
-                    <property name="enabled">
-                        <bool>false</bool>
-                    </property>
-                    <property name="whatsThis" stdset="0">
-                        <string>&lt;qt&gt;Here you can set a custom reply for &lt;b&gt;CTCP &lt;i&gt;VERSION&lt;/i&gt;&lt;/b&gt; requests.&lt;/qt&gt;</string>
-                    </property>
-                </widget>
-                <widget class="KLineEdit" row="4" column="1">
-                    <property name="name">
-                        <cstring>kcfg_CommandChar</cstring>
-                    </property>
-                    <property name="sizePolicy">
-                        <sizepolicy>
-                            <hsizetype>0</hsizetype>
-                            <vsizetype>0</vsizetype>
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                        </sizepolicy>
-                    </property>
-                    <property name="maxLength">
-                        <number>1</number>
-                    </property>
-                </widget>
-                <widget class="QCheckBox" row="6" column="0" rowspan="1" colspan="2">
-                    <property name="name">
-                        <cstring>kcfg_UseMultiRowInputBox</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Input box expands with text</string>
-                    </property>
-                </widget>
-                <widget class="KLineEdit" row="3" column="1">
-                    <property name="name">
-                        <cstring>kcfg_WebBrowserCmd</cstring>
-                    </property>
-                    <property name="enabled">
-                        <bool>false</bool>
-                    </property>
-                </widget>
-                <widget class="QLabel" row="4" column="0">
-                    <property name="name">
-                        <cstring>commandCharLabel</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Comman&amp;d char:</string>
-                    </property>
-                    <property name="buddy" stdset="0">
-                        <cstring>kcfg_CommandChar</cstring>
-                    </property>
-                </widget>
-                <widget class="QCheckBox" row="3" column="0">
-                    <property name="name">
-                        <cstring>kcfg_UseCustomBrowser</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Use custom web &amp;browser:</string>
-                    </property>
-                </widget>
-            </grid>
-        </widget>
-        <spacer>
-            <property name="name">
-                <cstring>spacer52</cstring>
-            </property>
-            <property name="orientation">
-                <enum>Vertical</enum>
-            </property>
-            <property name="sizeType">
-                <enum>Expanding</enum>
-            </property>
-            <property name="sizeHint">
-                <size>
-                    <width>20</width>
-                    <height>20</height>
-                </size>
-            </property>
-        </spacer>
-    </vbox>
-</widget>
-<customwidgets>
-</customwidgets>
-<connections>
-    <connection>
-        <sender>kcfg_TrayNotify</sender>
-        <signal>toggled(bool)</signal>
-        <receiver>kcfg_TrayNotifyOnlyOwnNick</receiver>
-        <slot>setEnabled(bool)</slot>
-    </connection>
-    <connection>
-        <sender>kcfg_UseCustomBrowser</sender>
-        <signal>toggled(bool)</signal>
-        <receiver>kcfg_WebBrowserCmd</receiver>
-        <slot>setEnabled(bool)</slot>
-    </connection>
-    <connection>
-        <sender>kcfg_CustomVersionReplyEnabled</sender>
-        <signal>toggled(bool)</signal>
-        <receiver>kcfg_CustomVersionReply</receiver>
-        <slot>setEnabled(bool)</slot>
-    </connection>
-</connections>
-<tabstops>
-    <tabstop>kcfg_ShowTrayIcon</tabstop>
-    <tabstop>kcfg_TrayNotify</tabstop>
-    <tabstop>kcfg_TrayNotifyOnlyOwnNick</tabstop>
-    <tabstop>kcfg_NickCompletionMode</tabstop>
-    <tabstop>kcfg_NickCompleteSuffixStart</tabstop>
-    <tabstop>kcfg_NickCompleteSuffixMiddle</tabstop>
-    <tabstop>kcfg_NickCompletionCaseSensitive</tabstop>
-    <tabstop>kcfg_DisableNotifyWhileAway</tabstop>
-    <tabstop>kcfg_UseCustomBrowser</tabstop>
-    <tabstop>kcfg_WebBrowserCmd</tabstop>
-    <tabstop>kcfg_CommandChar</tabstop>
-    <tabstop>kcfg_CustomVersionReplyEnabled</tabstop>
-    <tabstop>kcfg_CustomVersionReply</tabstop>
-    <tabstop>kcfg_UseMultiRowInputBox</tabstop>
-</tabstops>
-<layoutdefaults spacing="6" margin="11"/>
-<layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
-<includehints>
-    <includehint>klineedit.h</includehint>
-    <includehint>klineedit.h</includehint>
-    <includehint>klineedit.h</includehint>
-    <includehint>klineedit.h</includehint>
-    <includehint>klineedit.h</includehint>
-</includehints>
-</UI>
+        <property name="sizeType" >
+         <enum>QSizePolicy::Fixed</enum>
+        </property>
+        <property name="sizeHint" stdset="0" >
+         <size>
+          <width>31</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="1" column="1" >
+       <widget class="QCheckBox" name="kcfg_TrayNotifyOnlyOwnNick" >
+        <property name="enabled" >
+         <bool>false</bool>
+        </property>
+        <property name="text" >
+         <string>Only &amp;notify when a highlight is triggered or your current nick is used</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0" >
+       <spacer name="spacer51_2" >
+        <property name="orientation" >
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeType" >
+         <enum>QSizePolicy::Fixed</enum>
+        </property>
+        <property name="sizeHint" stdset="0" >
+         <size>
+          <width>31</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="2" column="1" >
+       <widget class="QCheckBox" name="kcfg_TrayNotifyBlink" >
+        <property name="text" >
+         <string>Blin&amp;k the icon</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0" colspan="2" >
+       <widget class="QCheckBox" name="kcfg_HideToTrayOnStartup" >
+        <property name="text" >
+         <string>Hide window on startup</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="Q3GroupBox" name="middleLabel" >
+     <property name="title" >
+      <string>Nickname Completion</string>
+     </property>
+     <layout class="QGridLayout" >
+      <item row="0" column="0" >
+       <widget class="QLabel" name="modeLbl" >
+        <property name="text" >
+         <string>Completion &amp;mode:</string>
+        </property>
+        <property name="wordWrap" >
+         <bool>false</bool>
+        </property>
+        <property name="buddy" >
+         <cstring>kcfg_NickCompletionMode</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1" colspan="3" >
+       <widget class="QComboBox" name="kcfg_NickCompletionMode" >
+        <item>
+         <property name="text" >
+          <string>Cycle NickList</string>
+         </property>
+        </item>
+        <item>
+         <property name="text" >
+          <string>Shell-Like</string>
+         </property>
+        </item>
+        <item>
+         <property name="text" >
+          <string>Shell-Like with Completion Box</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="1" column="1" >
+       <widget class="KLineEdit" name="kcfg_NickCompleteSuffixStart" />
+      </item>
+      <item row="1" column="0" >
+       <widget class="QLabel" name="startOfLineLabel" >
+        <property name="text" >
+         <string>Suffi&amp;x at start of line:</string>
+        </property>
+        <property name="wordWrap" >
+         <bool>false</bool>
+        </property>
+        <property name="buddy" >
+         <cstring>kcfg_NickCompleteSuffixStart</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="3" >
+       <widget class="KLineEdit" name="kcfg_NickCompleteSuffixMiddle" />
+      </item>
+      <item row="1" column="2" >
+       <widget class="QLabel" name="textLabel3" >
+        <property name="text" >
+         <string>&amp;Elsewhere:</string>
+        </property>
+        <property name="wordWrap" >
+         <bool>false</bool>
+        </property>
+        <property name="buddy" >
+         <cstring>kcfg_NickCompleteSuffixMiddle</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0" >
+       <widget class="QCheckBox" name="kcfg_NickCompletionCaseSensitive" >
+        <property name="text" >
+         <string>Case sensitive</string>
+        </property>
+        <property name="shortcut" >
+         <string/>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="Q3GroupBox" name="miscGBox" >
+     <property name="title" >
+      <string>Miscellaneous</string>
+     </property>
+     <layout class="QGridLayout" >
+      <item row="0" column="0" colspan="2" >
+       <widget class="QCheckBox" name="kcfg_DisableNotifyWhileAway" >
+        <property name="text" >
+         <string>Disable notifications while &amp;away</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="0" >
+       <widget class="QCheckBox" name="kcfg_CustomVersionReplyEnabled" >
+        <property name="text" >
+         <string>Use custom &amp;version reply:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="1" >
+       <widget class="KLineEdit" name="kcfg_CustomVersionReply" >
+        <property name="enabled" >
+         <bool>false</bool>
+        </property>
+        <property name="whatsThis" >
+         <string>&lt;qt>Here you can set a custom reply for &lt;b>CTCP &lt;i>VERSION&lt;/i>&lt;/b> requests.&lt;/qt></string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1" >
+       <widget class="KLineEdit" name="kcfg_CommandChar" >
+        <property name="sizePolicy" >
+         <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="maxLength" >
+         <number>1</number>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="0" colspan="2" >
+       <widget class="QCheckBox" name="kcfg_UseMultiRowInputBox" >
+        <property name="text" >
+         <string>Input box expands with text</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1" >
+       <widget class="KLineEdit" name="kcfg_WebBrowserCmd" >
+        <property name="enabled" >
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0" >
+       <widget class="QLabel" name="commandCharLabel" >
+        <property name="text" >
+         <string>Comman&amp;d char:</string>
+        </property>
+        <property name="wordWrap" >
+         <bool>false</bool>
+        </property>
+        <property name="buddy" >
+         <cstring>kcfg_CommandChar</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0" >
+       <widget class="QCheckBox" name="kcfg_UseCustomBrowser" >
+        <property name="text" >
+         <string>Use custom web &amp;browser:</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <spacer name="spacer52" >
+     <property name="orientation" >
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType" >
+      <enum>QSizePolicy::Expanding</enum>
+     </property>
+     <property name="sizeHint" stdset="0" >
+      <size>
+       <width>20</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11" />
+ <layoutfunction spacing="KDialog::spacingHint" margin="KDialog::marginHint" />
+ <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
+ <customwidgets>
+  <customwidget>
+   <class>Q3GroupBox</class>
+   <extends>QGroupBox</extends>
+   <header>Qt3Support/Q3GroupBox</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>KLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>klineedit.h</header>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>kcfg_ShowTrayIcon</tabstop>
+  <tabstop>kcfg_TrayNotify</tabstop>
+  <tabstop>kcfg_TrayNotifyOnlyOwnNick</tabstop>
+  <tabstop>kcfg_NickCompletionMode</tabstop>
+  <tabstop>kcfg_NickCompleteSuffixStart</tabstop>
+  <tabstop>kcfg_NickCompleteSuffixMiddle</tabstop>
+  <tabstop>kcfg_NickCompletionCaseSensitive</tabstop>
+  <tabstop>kcfg_DisableNotifyWhileAway</tabstop>
+  <tabstop>kcfg_UseCustomBrowser</tabstop>
+  <tabstop>kcfg_WebBrowserCmd</tabstop>
+  <tabstop>kcfg_CommandChar</tabstop>
+  <tabstop>kcfg_CustomVersionReplyEnabled</tabstop>
+  <tabstop>kcfg_CustomVersionReply</tabstop>
+  <tabstop>kcfg_UseMultiRowInputBox</tabstop>
+ </tabstops>
+ <includes>
+  <include location="local" >klineedit.h</include>
+  <include location="local" >klineedit.h</include>
+  <include location="local" >klineedit.h</include>
+  <include location="local" >klineedit.h</include>
+  <include location="local" >klineedit.h</include>
+ </includes>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>kcfg_TrayNotify</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>kcfg_TrayNotifyOnlyOwnNick</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>kcfg_UseCustomBrowser</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>kcfg_WebBrowserCmd</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>kcfg_CustomVersionReplyEnabled</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>kcfg_CustomVersionReply</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

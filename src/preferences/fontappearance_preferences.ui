@@ -1,160 +1,184 @@
-<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
-<class>FontAppearance_Config</class>
-<comment>This program is free software; you can redistribute it and/or modify
+<ui version="4.0" >
+ <author>Copyright (C) 2005 Peter Simonsson</author>
+ <comment>This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation; either version 2 of the License, or
 (at your option) any later version.
 </comment>
-<author>Copyright (C) 2005 Peter Simonsson</author>
-<widget class="QWidget">
-    <property name="name">
-        <cstring>FontAppearance_Config</cstring>
-    </property>
-    <property name="geometry">
-        <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>454</width>
-            <height>213</height>
-        </rect>
-    </property>
-    <grid>
-        <property name="name">
-            <cstring>unnamed</cstring>
-        </property>
-        <property name="margin">
-            <number>0</number>
-        </property>
-        <widget class="QCheckBox" row="3" column="0" rowspan="1" colspan="2">
-            <property name="name">
-                <cstring>kcfg_FixedMOTD</cstring>
-            </property>
-            <property name="text">
-                <string>Enable fi&amp;xed font for MOTD messages</string>
-            </property>
-            <property name="whatsThis" stdset="0">
-                <string>Show MOTD (Message Of The Day) message in fixed font</string>
-            </property>
-        </widget>
-        <widget class="QCheckBox" row="4" column="0" rowspan="1" colspan="2">
-            <property name="name">
-                <cstring>kcfg_UseBoldNicks</cstring>
-            </property>
-            <property name="text">
-                <string>Show sender nicknames &amp;bold in the chat view</string>
-            </property>
-        </widget>
-        <spacer row="5" column="1">
-            <property name="name">
-                <cstring>spacer89</cstring>
-            </property>
-            <property name="orientation">
-                <enum>Vertical</enum>
-            </property>
-            <property name="sizeType">
-                <enum>Expanding</enum>
-            </property>
-            <property name="sizeHint">
-                <size>
-                    <width>20</width>
-                    <height>161</height>
-                </size>
-            </property>
-        </spacer>
-        <widget class="QCheckBox" row="0" column="0">
-            <property name="name">
-                <cstring>kcfg_CustomTextFont</cstring>
-            </property>
-            <property name="enabled">
-                <bool>true</bool>
-            </property>
-            <property name="text">
-                <string>Chat text:</string>
-            </property>
-        </widget>
-        <widget class="KFontRequester" row="0" column="1">
-            <property name="name">
-                <cstring>kcfg_TextFont</cstring>
-            </property>
-            <property name="enabled">
-                <bool>false</bool>
-            </property>
-        </widget>
-        <widget class="KFontRequester" row="1" column="1">
-            <property name="name">
-                <cstring>kcfg_ListFont</cstring>
-            </property>
-            <property name="enabled">
-                <bool>false</bool>
-            </property>
-        </widget>
-        <widget class="KFontRequester" row="2" column="1">
-            <property name="name">
-                <cstring>kcfg_TabFont</cstring>
-            </property>
-            <property name="enabled">
-                <bool>false</bool>
-            </property>
-        </widget>
-        <widget class="QCheckBox" row="1" column="0">
-            <property name="name">
-                <cstring>kcfg_CustomListFont</cstring>
-            </property>
-            <property name="enabled">
-                <bool>true</bool>
-            </property>
-            <property name="text">
-                <string>Nickname list:</string>
-            </property>
-        </widget>
-        <widget class="QCheckBox" row="2" column="0">
-            <property name="name">
-                <cstring>kcfg_CustomTabFont</cstring>
-            </property>
-            <property name="enabled">
-                <bool>true</bool>
-            </property>
-            <property name="text">
-                <string>Tab bar:</string>
-            </property>
-        </widget>
-    </grid>
-</widget>
-<connections>
-    <connection>
-        <sender>kcfg_CustomTextFont</sender>
-        <signal>toggled(bool)</signal>
-        <receiver>kcfg_TextFont</receiver>
-        <slot>setEnabled(bool)</slot>
-    </connection>
-    <connection>
-        <sender>kcfg_CustomListFont</sender>
-        <signal>toggled(bool)</signal>
-        <receiver>kcfg_ListFont</receiver>
-        <slot>setEnabled(bool)</slot>
-    </connection>
-    <connection>
-        <sender>kcfg_CustomTabFont</sender>
-        <signal>toggled(bool)</signal>
-        <receiver>kcfg_TabFont</receiver>
-        <slot>setEnabled(bool)</slot>
-    </connection>
-</connections>
-<tabstops>
-    <tabstop>kcfg_CustomTextFont</tabstop>
-    <tabstop>kcfg_TextFont</tabstop>
-    <tabstop>kcfg_CustomListFont</tabstop>
-    <tabstop>kcfg_ListFont</tabstop>
-    <tabstop>kcfg_CustomTabFont</tabstop>
-    <tabstop>kcfg_TabFont</tabstop>
-    <tabstop>kcfg_FixedMOTD</tabstop>
-    <tabstop>kcfg_UseBoldNicks</tabstop>
-</tabstops>
-<layoutdefaults spacing="6" margin="11"/>
-<layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
-<includehints>
-    <includehint>kfontrequester.h</includehint>
-    <includehint>kfontrequester.h</includehint>
-    <includehint>kfontrequester.h</includehint>
-</includehints>
-</UI>
+ <class>FontAppearance_Config</class>
+ <widget class="QWidget" name="FontAppearance_Config" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>458</width>
+    <height>165</height>
+   </rect>
+  </property>
+  <layout class="QGridLayout" >
+   <property name="margin" >
+    <number>0</number>
+   </property>
+   <item row="3" column="0" colspan="2" >
+    <widget class="QCheckBox" name="kcfg_FixedMOTD" >
+     <property name="whatsThis" >
+      <string>Show MOTD (Message Of The Day) message in fixed font</string>
+     </property>
+     <property name="text" >
+      <string>Enable fi&amp;xed font for MOTD messages</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0" colspan="2" >
+    <widget class="QCheckBox" name="kcfg_UseBoldNicks" >
+     <property name="text" >
+      <string>Show sender nicknames &amp;bold in the chat view</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="1" >
+    <spacer name="spacer89" >
+     <property name="orientation" >
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType" >
+      <enum>QSizePolicy::Expanding</enum>
+     </property>
+     <property name="sizeHint" stdset="0" >
+      <size>
+       <width>20</width>
+       <height>161</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="0" column="0" >
+    <widget class="QCheckBox" name="kcfg_CustomTextFont" >
+     <property name="enabled" >
+      <bool>true</bool>
+     </property>
+     <property name="text" >
+      <string>Chat text:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1" >
+    <widget class="KFontRequester" name="kcfg_TextFont" >
+     <property name="enabled" >
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1" >
+    <widget class="KFontRequester" name="kcfg_ListFont" >
+     <property name="enabled" >
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1" >
+    <widget class="KFontRequester" name="kcfg_TabFont" >
+     <property name="enabled" >
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" >
+    <widget class="QCheckBox" name="kcfg_CustomListFont" >
+     <property name="enabled" >
+      <bool>true</bool>
+     </property>
+     <property name="text" >
+      <string>Nickname list:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0" >
+    <widget class="QCheckBox" name="kcfg_CustomTabFont" >
+     <property name="enabled" >
+      <bool>true</bool>
+     </property>
+     <property name="text" >
+      <string>Tab bar:</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11" />
+ <layoutfunction spacing="KDialog::spacingHint" margin="KDialog::marginHint" />
+ <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
+ <customwidgets>
+  <customwidget>
+   <class>KFontRequester</class>
+   <extends>QWidget</extends>
+   <header>kfontrequester.h</header>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>kcfg_CustomTextFont</tabstop>
+  <tabstop>kcfg_TextFont</tabstop>
+  <tabstop>kcfg_CustomListFont</tabstop>
+  <tabstop>kcfg_ListFont</tabstop>
+  <tabstop>kcfg_CustomTabFont</tabstop>
+  <tabstop>kcfg_TabFont</tabstop>
+  <tabstop>kcfg_FixedMOTD</tabstop>
+  <tabstop>kcfg_UseBoldNicks</tabstop>
+ </tabstops>
+ <includes>
+  <include location="local" >kfontrequester.h</include>
+  <include location="local" >kfontrequester.h</include>
+  <include location="local" >kfontrequester.h</include>
+ </includes>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>kcfg_CustomTextFont</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>kcfg_TextFont</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>kcfg_CustomListFont</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>kcfg_ListFont</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>kcfg_CustomTabFont</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>kcfg_TabFont</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
