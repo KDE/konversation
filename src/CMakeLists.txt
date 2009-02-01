@@ -1,8 +1,7 @@
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/config ${KDE4_INCLUDES} ${KDE4_INCLUDE_DIR} ${QT_INCLUDES} )
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/config)
 
 #add_subdirectory(linkaddressbook)
-add_subdirectory(blowfish)
 
 add_subdirectory(irc)
 
@@ -11,8 +10,6 @@ include_directories(blowfish config dcc irc preferences viewer)
 remove_definitions(-DKDE_DEPRECATED_WARNINGS)
 
 ########### next target ###############
-
-
 
 set(core_SRCS
     #====================================
