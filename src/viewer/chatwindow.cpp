@@ -207,7 +207,7 @@ void ChatWindow::cdIntoLogPath()
         if(log)
         {
             // Try to create the logfile path and "cd" into it again
-            logPath.mkdir(Preferences::self()->logfilePath());
+            logPath.mkpath(Preferences::self()->logfilePath());
             logPath.cd(Preferences::self()->logfilePath());
         }
     }
