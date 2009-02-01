@@ -551,7 +551,7 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0)
     toggleMenubar(true);
 
     // Bookmarks
-    //m_bookmarkHandler = new KonviBookmarkHandler(this);
+    m_bookmarkHandler = new KonviBookmarkHandler(this);
 
     // set up KABC with a nice gui error dialog
     KABC::GuiErrorHandler *m_guiErrorHandler = new KABC::GuiErrorHandler(this);

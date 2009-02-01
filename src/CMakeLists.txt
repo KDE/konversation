@@ -23,7 +23,7 @@ set(core_SRCS
     sound.cpp
     ssllabel.cpp
     statusbar.cpp
-#    bookmarkhandler.cpp
+    bookmarkhandler.cpp
 #    bookmarkmenu.cpp
    configdialog.cpp
    settingsdialog.cpp

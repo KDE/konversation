@@ -24,7 +24,7 @@ Copyright (C) 2002 Carsten Pfeiffer <pfeiffer@kde.org>
 class QString;
 class KMenu;
 class KonversationMainWindow;
-class KonviBookmarkMenu;
+class KBookmarkMenu;
 
 class KonviBookmarkHandler : public QObject, public KBookmarkOwner
 {
@@ -37,19 +37,19 @@ class KonviBookmarkHandler : public QObject, public KBookmarkOwner
         KMenu* popupMenu();
 
         // KBookmarkOwner interface:
-        virtual void openBookmarkURL(const QString& url, const QString& title);
-        virtual QString currentURL() const;
+        virtual void openBookmark(const KBookmark &bm, Qt::MouseButtons mb, Qt::KeyboardModifiers km);
+        virtual QString currentUrl() const;
         virtual QString currentTitle() const;
+        virtual bool enableOption(BookmarkOption option) const;
 
     private slots:
         void slotBookmarksChanged(const QString &, const QString & caller);
-        void slotEditBookmarks();
 
 
     private:
         KonversationMainWindow* m_mainWindow;
         KMenu *m_menu;
-        KonviBookmarkMenu *m_bookmarkMenu;
+        KBookmarkMenu *m_bookmarkMenu;
         QString m_file;
 };
 #endif                                            // KONVIBOOKMARKHANDLER_H

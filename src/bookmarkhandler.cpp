@@ -19,13 +19,14 @@ Copyright (C) 2002 Carsten Pfeiffer <pfeiffer@kde.org>
 #include "application.h" ////// header renamed
 #include "mainwindow.h" ////// header renamed
 #include "connectionmanager.h"
-#include "bookmarkmenu.h" ////// header renamed
+// #include "bookmarkmenu.h" ////// header renamed
 
 #include <qstring.h>
 
 #include <kmenu.h>
 #include <kstandarddirs.h>
 #include <KXMLGUIFactory>
+#include <kbookmarkmenu.h>
 
 
 KonviBookmarkHandler::KonviBookmarkHandler(KonversationMainWindow* mainWindow)
@@ -47,29 +48,18 @@ m_mainWindow(mainWindow)
     }
 
     KBookmarkManager *manager = KBookmarkManager::managerForFile( m_file, "konversation");
-#warning "port to kde4"
-    //manager->setEditorOptions(caption(), false);
+    manager->setEditorOptions(i18n("Konversation Bookmarks Editor"), false);
     manager->setUpdate( true );
     //manager->setShowNSBookmarks( false );
 
     connect( manager, SIGNAL(changed(const QString &,const QString &)), SLOT(slotBookmarksChanged(const QString &,const QString &)));
 
-    m_bookmarkMenu = new KonviBookmarkMenu( manager, this, m_menu, NULL, true );
+    m_bookmarkMenu = new KBookmarkMenu(manager, this, m_menu, m_mainWindow->actionCollection());
 }
 
 KonviBookmarkHandler::~KonviBookmarkHandler()
 {
     delete m_bookmarkMenu;
-}
-
-void KonviBookmarkHandler::slotEditBookmarks()
-{
-    K3Process proc;
-    proc << QString::fromLatin1("keditbookmarks");
-    proc << "--nobrowser";
-    proc << "--caption" << i18n("Konversation Bookmarks Editor");
-    proc << m_file;
-    proc.start(K3Process::DontCare);
 }
 
 void KonviBookmarkHandler::slotBookmarksChanged( const QString &,
@@ -79,13 +69,13 @@ const QString &)
     m_bookmarkMenu->slotBookmarksChanged("");
 }
 
-void KonviBookmarkHandler::openBookmarkURL(const QString& url, const QString& /* title */)
+void KonviBookmarkHandler::openBookmark(const KBookmark &bm, Qt::MouseButtons mb, Qt::KeyboardModifiers km)
 {
     KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
-    konvApp->getConnectionManager()->connectTo(Konversation::SilentlyReuseConnection, url);
+    konvApp->getConnectionManager()->connectTo(Konversation::SilentlyReuseConnection, bm.url().url());
 }
 
-QString KonviBookmarkHandler::currentURL() const
+QString KonviBookmarkHandler::currentUrl() const
 {
     return m_mainWindow->currentURL(true);
 }
@@ -93,6 +83,17 @@ QString KonviBookmarkHandler::currentURL() const
 QString KonviBookmarkHandler::currentTitle() const
 {
     return m_mainWindow->currentTitle();
+}
+
+bool KonviBookmarkHandler::enableOption(BookmarkOption option) const
+{
+    switch (option)
+    {
+        case ShowAddBookmark:
+        case ShowEditBookmark:
+            return true;
+    }
+    return false;
 }
 
 // #include "./bookmarkhandler.moc"
