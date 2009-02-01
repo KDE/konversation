@@ -7,7 +7,7 @@
     </method>
     <method name="setBack">
     </method>
-    <method name="sayToAll>
+    <method name="sayToAll">
         <arg name="message" type="s" direction="in" />
     </method>
     <method name="actionToAll">
