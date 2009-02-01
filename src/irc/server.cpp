@@ -838,7 +838,7 @@ void Server::resetNickSelection()
     //for equivalence testing in case the identity gets changed underneath us
     m_referenceNicklist = getIdentity()->getNicknameList();
     //where in this identities nicklist will we have started?
-    int start = m_referenceNicklist.findIndex(getNickname());
+    int start = m_referenceNicklist.indexOf(getNickname());
     int len = m_referenceNicklist.count();
 
     //we first use this list of indices *after* we've already tried the current nick, which we don't want
@@ -1032,17 +1032,17 @@ int Server::getPreLength(const QString& command, const QString& dest)
 }
 
 //Commands greater than 1 have localizeable text:         0   1    2       3      4    5    6
-static QStringList outcmds=QString("WHO QUIT PRIVMSG NOTICE KICK PART TOPIC").split(QChar(' '));
+static QStringList outcmds = QString("WHO QUIT PRIVMSG NOTICE KICK PART TOPIC").split(QChar(' '));
 
 int Server::_send_internal(QString outputLine)
 {
-    QStringList outputLineSplit = outputLine.split(" ", QString::SkipEmptyParts);
+    QStringList outputLineSplit = outputLine.split(' ', QString::SkipEmptyParts);
     //Lets cache the uppercase command so we don't miss or reiterate too much
-    int outboundCommand=outcmds.findIndex(outputLineSplit[0].toUpper());
+    int outboundCommand = outcmds.indexOf(outputLineSplit[0].toUpper());
 
     if (outputLine.at(outputLine.length()-1) == '\n')
     {
-        kDebug() << "found \\n on " << outboundCommand << endl;
+        kDebug() << "found \\n on " << outboundCommand;
         outputLine.resize(outputLine.length()-1);
     }
 
@@ -1073,10 +1073,9 @@ int Server::_send_internal(QString outputLine)
     // Some codecs don't work with a negative value. This is a bug in Qt 3.
     // ex.: JIS7, eucJP, SJIS
     //int outlen=-1;
-    int outlen=outputLine.length();
 
     //leaving this done twice for now, i'm uncertain of the implications of not encoding other commands
-    Q3CString encoded=codec->fromUnicode(outputLine, outlen);
+    QByteArray encoded = codec->fromUnicode(outputLine);
     /*
     QString blowfishKey=getKeyForRecipient(outputLineSplit[1]);
     if (!blowfishKey.isEmpty() && outboundCommand >1)
@@ -1358,7 +1357,7 @@ ChannelNickPtr Server::setChannelNick(const QString& channelName, const QString&
         // Create a lower case nick list from the watch list.
         QStringList watchLowerList = watchlist.toLower().split(' ', QString::SkipEmptyParts);
         // If on the watch list, add channel and nick to unjoinedChannels list.
-        if (watchLowerList.find(lcNickname) != watchLowerList.end())
+        if (watchLowerList.contains(lcNickname))
         {
             channelNick = addNickToUnjoinedChannelsList(channelName, nickname);
             channelNick->setMode(mode);
@@ -2468,10 +2467,10 @@ void Server::removeJoinedChannel(const QString& channelName)
         for ( member = channel->begin(); member != channel->end() ;)
         {
             QString lcNickname = member.key();
-            if (watchListLower.find(lcNickname) == watchListLower.end())
+            if (!watchListLower.contains(lcNickname))
             {
                 // Remove the unwatched nickname from the unjoined channel.
-                channel->remove(member);
+                channel->erase(member);
                 // If the nick is no longer listed in any channels or query list, delete it altogether.
                 deleteNickIfUnlisted(lcNickname);
                 member = channel->begin();
@@ -2983,10 +2982,8 @@ void Server::updateAutoJoin(Konversation::ChannelSettings channel)
             QString channel = (*it).name();;
             QString password = ((*it).password().isEmpty() ? "." : (*it).password());
 
-            int tempLen = channel.length();
-            length += getIdentity()->getCodec()->fromUnicode(channel, tempLen).length();
-            tempLen = password.length();
-            length += getIdentity()->getCodec()->fromUnicode(password, tempLen).length();
+            length += getIdentity()->getCodec()->fromUnicode(channel).length();
+            length += getIdentity()->getCodec()->fromUnicode(password).length();
 
             if (length + 6 < 512) // 6: "JOIN " plus separating space between chans and pws.
             {
@@ -3007,10 +3004,8 @@ void Server::updateAutoJoin(Konversation::ChannelSettings channel)
 
                 length = 0;
 
-                tempLen = channel.length();
-                length += getIdentity()->getCodec()->fromUnicode(channel, tempLen).length();
-                tempLen = password.length();
-                length += getIdentity()->getCodec()->fromUnicode(password, tempLen).length();
+                length += getIdentity()->getCodec()->fromUnicode(channel).length();
+                length += getIdentity()->getCodec()->fromUnicode(password).length();
             }
         }
 
@@ -3159,7 +3154,7 @@ void Server::setAway(bool away)
         if (identity && identity->getShowAwayMessage())
         {
             QString message = identity->getAwayMessage();
-            sendToAllChannels(message.replace(QRegExp("%s", false), m_awayReason));
+            sendToAllChannels(message.replace(QRegExp("%s", Qt::CaseInsensitive), m_awayReason));
         }
 
         if (identity && identity->getInsertRememberLineOnAway())
@@ -3184,7 +3179,7 @@ void Server::setAway(bool away)
             if (identity && identity->getShowAwayMessage())
             {
                 QString message = identity->getReturnMessage();
-                sendToAllChannels(message.replace(QRegExp("%t", false), awayTime()));
+                sendToAllChannels(message.replace(QRegExp("%t", Qt::CaseInsensitive), awayTime()));
             }
         }
         else
