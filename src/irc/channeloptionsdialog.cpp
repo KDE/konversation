@@ -122,7 +122,7 @@ namespace Konversation
         {
             modeString = (*it).mid(1);
             plus = ((*it)[0] == '+');
-            tmp = currentModeList.grep(QRegExp('^' + modeString));
+            tmp = currentModeList.filter(QRegExp('^' + modeString));
 
             if(tmp.isEmpty() && plus)
             {
