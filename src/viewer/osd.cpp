@@ -1,283 +1,173 @@
 /*
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
-*/
-
-/*
-  Provides an interface to a plain QWidget, which is independent of KDE (bypassed to X11)
-  begin:     Fre Sep 26 2003
-  Copyright (C) 2003 Christian Muehlhaeuser <chris@chris.de>
-  Copyright (C) 2004 Michael Goettsche <michael.goettsche@kdemail.net>
-*/
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * osd.cpp:   Shows some text in a pretty way independent to the WM
+ * begin:     Fre Sep 26 2003
+ * copyright: (C) 2004 Christian Muehlhaeuser <chris@chris.de>
+ *            (C) 2004-2006 Seb Ruiz <ruiz@kde.org>
+ *            (C) 2004, 2005 Max Howell
+ *            (C) 2005 Gábor Lehel <illissius@gmail.com>
+ *            (C) 2008 Mark Kretschmann <kretschmann@kde.org>
+ */
 
 #include "osd.h"
-#include "application.h"
 #include "common.h"
 
-#include <qapplication.h>
-#include <qbitmap.h>
-#include <QMouseEvent>
-#include <qpainter.h>
-#include <qregexp.h>
+#include <KApplication>
+#include <KIcon>
+#include <KDebug>
+#include <klocalizedstring.h>
 
-#include <kapplication.h>
-#include <kdebug.h>
-#include <kglobalsettings.h>                      //unsetColors()
-#include <kwindowsystem.h>
-
-#ifdef Q_WS_X11
-#include <X11/Xlib.h>                             //reposition()
-#endif
 #include <QDesktopWidget>
+#include <QMouseEvent>
+#include <QPainter>
+#include <QPixmap>
+#include <QBitmap>
+#include <QRegExp>
+#include <QTimer>
 
-OSDWidget::OSDWidget( const QString &appName, QWidget *parent, const char *name )
-: QWidget( parent, Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint )
-, m_appName( appName )
-, m_duration( 5000 )
-, m_shadow( true )
-, m_alignment( Middle )
-, m_screen( 0 )
-, m_y( MARGIN )
-, m_dirty( false )
+namespace ShadowEngine
 {
+    QImage makeShadow( const QPixmap &textPixmap, const QColor &bgColor );
+}
+
+OSDWidget::OSDWidget(const QString &appName, QWidget *parent, const char *name )
+    : QWidget( parent )
+    , m_appName( appName )
+    , m_duration( 5000 )
+    , m_timer( new QTimer( this ) )
+    , m_timerMin( new QTimer( this ) )
+    , m_alignment( Middle )
+    , m_screen( 0 )
+    , m_y( MARGIN )
+    , m_drawShadow( true )
+{
+    Qt::WindowFlags flags;
+    flags = Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint;
+    // The best of both worlds.  On Windows, setting the widget as a popup avoids a task manager entry.  On linux, a popup steals focus.
+    // Therefore we go need to do it platform specific :(
+    #ifdef Q_OS_WIN
+    flags |= Qt::Popup;
+    #else
+    flags |= Qt::Window | Qt::X11BypassWindowManagerHint;
+    #endif
+    setWindowFlags( flags );
     setObjectName( name );
-
-    KWindowSystem::setState( winId(), NET::SkipTaskbar );
-
     setFocusPolicy( Qt::NoFocus );
-//     setBackgroundMode( Qt::NoBackground );
     unsetColors();
 
-    timer.setSingleShot( true );
+    m_timer->setSingleShot( true );
 
-    connect( &timer,     SIGNAL( timeout() ), SLOT( hide() ) );
-    connect( &timerMin,  SIGNAL( timeout() ), SLOT( minReached() ) );
+    connect( m_timer,     SIGNAL( timeout() ), SLOT( hide() ) );
+    connect( m_timerMin,  SIGNAL( timeout() ), SLOT( minReached() ) );
+
+    //or crashes, KWindowSystem bug I think, crashes in QWidget::icon()
+    kapp->setTopWidget( this );
 }
 
-void OSDWidget::renderOSDText( const QString &txt )
+OSDWidget::~OSDWidget()
 {
-                                                  // Escaped text
-    QString text = Konversation::removeIrcMarkup(txt);
+    delete m_timer;
+    delete m_timerMin;
+}
 
-    //This is various spacings and margins, based on the font to look "just right"
-    const uint METRIC = fontMetrics().width( 'x' );
-
-    // Set a sensible maximum size, don't cover the whole desktop or cross the screen
-    QSize max = QApplication::desktop()->screen( m_screen )->size() - QSize( MARGIN*2 + METRIC*2, 100 );
-    QFont titleFont( "Arial", 12, QFont::Bold );
-    QFontMetrics titleFm( titleFont );
-
-    // The title cannnot be taller than one line
-    // AlignAuto = align Arabic to the right, etc.
-    QRect titleRect = titleFm.boundingRect( 0, 0, max.width() - METRIC, titleFm.height(), Qt::AlignLeft, m_appName );
-    // The osd cannot be larger than the screen
-    QRect textRect = fontMetrics().boundingRect( 0, 0, max.width(), max.height(), Qt::AlignLeft | Qt::WordBreak, text );
-
-    if ( textRect.width() < titleRect.width() )
-        textRect.setWidth( titleRect.width() );
-
-    //this should still be within the screen bounds
-    textRect.addCoords( 0, 0, METRIC*2, titleRect.height() + METRIC );
-
-    osdBuffer.resize( textRect.size() );
-    QBitmap mask( textRect.size() );
-
-    // Start painting!
-    QPainter bufferPainter( &osdBuffer );
-    QPainter maskPainter( &mask );
-
-    // Draw backing rectangle
-    const uint xround = (METRIC * 200) / textRect.width();
-    const uint yround = (METRIC * 200) / textRect.height();
-
-    bufferPainter.setPen( Qt::black );
-    bufferPainter.setBrush( backgroundColor() );
-    bufferPainter.drawRoundRect( textRect, xround, yround );
-    bufferPainter.setFont( font() );
-
-    const uint w = textRect.width()  - 1;
-    const uint h = textRect.height() - 1;
-
-    // Draw the text shadow
-    if ( m_shadow )
+void OSDWidget::show( const QString &text, bool preemptive )
+{
+    if ( preemptive || !m_timerMin->isActive() )
     {
-        bufferPainter.setPen( backgroundColor().dark( 175 ) );
-        bufferPainter.drawText( METRIC + 3, (METRIC/2) + titleFm.height() + 1, w, h, Qt::AlignLeft | Qt::WordBreak, text );
+        m_currentText = Konversation::removeIrcMarkup(text);
+
+        show();
     }
+    else textBuffer.append( Konversation::removeIrcMarkup(text) );      //queue
+}
 
-    // Draw the text
-    bufferPainter.setPen( foregroundColor() );
-    bufferPainter.drawText( METRIC, (METRIC/2) + titleFm.height() - 1, w, h, Qt::AlignLeft | Qt::WordBreak, text );
+void OSDWidget::show() //virtual
+{
+    if ( !isEnabled() || m_currentText.isEmpty() )
+        return;
 
-    // Draw the title text
-    bufferPainter.setFont( titleFont );
-    bufferPainter.drawText( METRIC * 2, (METRIC/2), w, h, Qt::AlignLeft, m_appName );
+    const uint M = fontMetrics().width( 'x' );
 
-    // Masking for transparency
-    mask.fill( Qt::color0 );
-    maskPainter.setBrush( Qt::white );
-    maskPainter.drawRoundRect( textRect, xround, yround );
-    setMask( mask );
+    const QRect oldGeometry = QRect( pos(), size() );
+    const QRect newGeometry = determineMetrics( M );
 
-    //do last to reduce noticeable change when showing multiple OSDs in succession
-    reposition( textRect.size() );
+    if( newGeometry.width() > 0 && newGeometry.height() > 0 )
+    {
+        m_m = M;
+        m_size = newGeometry.size();
+        setGeometry( newGeometry );
+        QWidget::show();
 
-    m_currentText = text;
-    m_dirty = false;
+        if ( m_duration )                             //duration 0 -> stay forever
+        {
+            m_timer->start( m_duration );          //calls hide()
+            m_timerMin->start( 1500 );                    //calls minReached()
+        }
+    }
+    else
+        kWarning() << "Attempted to make an invalid sized OSD\n";
 
     update();
-}
-
-                                                  // slot
-void OSDWidget::showOSD( const QString &text, bool preemptive )
-{
-    if ( isEnabled() && !text.isEmpty() )
-    {
-
-        QString plaintext = text.copy();
-        plaintext.replace(QRegExp("</?(?:font|a|b|i)\\b[^>]*>"), QString(""));
-        plaintext.replace(QString("&lt;"), QString("<"));
-        plaintext.replace(QString("&gt;"), QString(">"));
-        plaintext.replace(QString("&amp;"), QString("&"));
-
-        if ( preemptive || !timerMin.isActive() )
-        {
-            m_currentText = plaintext;
-            m_dirty = true;
-
-            show();
-        }
-        else textBuffer.append( plaintext );      //queue
-    }
 }
 
 void OSDWidget::minReached()                      //SLOT
 {
     if ( !textBuffer.isEmpty() )
     {
-        renderOSDText( textBuffer.front() );
-        textBuffer.pop_front();
+        show( textBuffer.first(), true );
+        textBuffer.removeFirst();
 
         if( m_duration )
             //timerMin is still running
-            timer.start( m_duration );
+            m_timer->start( m_duration );
     }
-    else timerMin.stop();
+    else m_timerMin->stop();
 }
 
 void OSDWidget::setDuration( int ms )
 {
     m_duration = ms;
 
-    if( !m_duration ) timer.stop();
+    if( !m_duration ) m_timer->stop();
 }
 
-void OSDWidget::setFont( QFont newFont )
+QRect OSDWidget::determineMetrics( const int M )
 {
-    QWidget::setFont( newFont );
-    refresh();
-}
+    // determine a sensible maximum size, don't cover the whole desktop or cross the screen
+    const QSize margin( ( M + MARGIN ) * 2, ( M + MARGIN ) * 2 ); //margins
+    const QSize max = QApplication::desktop()->screen( m_screen )->size() - margin;
 
-void OSDWidget::setShadow( bool shadow )
-{
-    m_shadow = shadow;
-    refresh();
-}
+    // If we don't do that, the boundingRect() might not be suitable for drawText() (Qt issue N67674)
+    m_currentText.replace( QRegExp( " +\n" ), "\n" );
+    // remove consecutive line breaks
+    m_currentText.replace( QRegExp( "\n+" ), "\n" );
 
-void OSDWidget::setTextColor( const QColor &newColor )
-{
-    setPaletteForegroundColor( newColor );
-    refresh();
-}
+    QFont titleFont = font();
+    titleFont.setBold(true);
+    QFontMetrics titleFm( titleFont );
 
-void OSDWidget::setBackgroundColor( const QColor &newColor )
-{
-    setPaletteBackgroundColor( newColor );
-    refresh();
-}
+    // The osd cannot be larger than the screen
+    QRect titleRect = titleFm.boundingRect( 0, 0, max.width() - M, titleFm.height(), Qt::AlignLeft, m_appName );
+    QRect textRect = fontMetrics().boundingRect( 0, 0, max.width(), max.height(), Qt::AlignCenter | Qt::TextWordWrap, m_currentText );
+    textRect.setHeight( textRect.height() + M + M );
+    
+    if ( textRect.width() < titleRect.width() )
+        textRect.setWidth( titleRect.width() );
 
-void OSDWidget::unsetColors()
-{
-    setPaletteForegroundColor( KGlobalSettings::activeTextColor() );
-    setPaletteBackgroundColor( KGlobalSettings::activeTitleColor() );
+    textRect.adjust( 0, 0, M*2, titleRect.height() + M );
 
-    refresh();
-}
+    // expand in all directions by M
+    textRect.adjust( -M, -M, M, M );
 
-void OSDWidget::setOffset( int /*x*/, int y )
-{
-    //m_offset = QPoint( x, y );
-    m_y = y;
-    reposition();
-}
-
-void OSDWidget::setAlignment( Alignment a )
-{
-    m_alignment = a;
-    reposition();
-}
-
-void OSDWidget::setScreen( uint screen )
-{
-    const uint n = QApplication::desktop()->numScreens();
-    m_screen = (screen >= n) ? n-1 : (int)screen;
-    reposition();
-}
-
-void OSDWidget::paintEvent( QPaintEvent * )
-{
-    QPainter p(this);
-    p.drawPixmap(0, 0, osdBuffer);
-}
-
-void OSDWidget::mousePressEvent( QMouseEvent* )
-{
-    hide();
-    emit hidden();
-}
-
-void OSDWidget::show()
-{
-    // Don't show the OSD widget when the desktop is locked
-    if ( isKDesktopLockRunning() == Locked )
-    {
-        minReached();                             // don't queue the message
-        return;
-    }
-
-    if ( m_dirty ) renderOSDText( m_currentText );
-
-    QWidget::show();
-
-    if ( m_duration )                             //duration 0 -> stay forever
-    {
-        timer.start( m_duration );          //calls hide()
-        timerMin.start( 150 );                    //calls minReached()
-    }
-}
-
-void OSDWidget::refresh()
-{
-    if ( isVisible() )
-    {
-        //we need to update the buffer
-        renderOSDText( m_currentText );
-    }
-    else m_dirty = true;                          //ensure we are re-rendered before we are shown
-}
-
-void OSDWidget::reposition( QSize newSize )
-{
-    if( !newSize.isValid() ) newSize = size();
-
-    QPoint newPos( MARGIN, m_y );
+    const QSize newSize = textRect.size();
     const QRect screen = QApplication::desktop()->screenGeometry( m_screen );
+    QPoint newPos( MARGIN, m_y );
 
-    //TODO m_y is the middle of the OSD, and don't exceed screen margins
-
-    switch ( m_alignment )
+    switch( m_alignment )
     {
         case Left:
             break;
@@ -287,47 +177,180 @@ void OSDWidget::reposition( QSize newSize )
             break;
 
         case Center:
-            newPos.ry() = (screen.height() - newSize.height()) / 2;
+            newPos.ry() = ( screen.height() - newSize.height() ) / 2;
 
             //FALL THROUGH
 
         case Middle:
-            newPos.rx() = (screen.width() - newSize.width()) / 2;
+            newPos.rx() = ( screen.width() - newSize.width() ) / 2;
             break;
     }
 
     //ensure we don't dip below the screen
-    if( newPos.y()+newSize.height() > screen.height()-MARGIN ) newPos.ry() = screen.height()-MARGIN-newSize.height();
+    if ( newPos.y() + newSize.height() > screen.height() - MARGIN )
+        newPos.ry() = screen.height() - MARGIN - newSize.height();
 
     // correct for screen position
     newPos += screen.topLeft();
 
-    //ensure we are painted before we move
-    if( isVisible() ) paintEvent( 0 );
-
-    //fancy X11 move+resize, reduces visual artifacts
-#ifdef Q_WS_X11
-    XMoveResizeWindow( QX11Info::display(), winId(), newPos.x(), newPos.y(), newSize.width(), newSize.height() );
-#endif
+    return QRect( newPos, textRect.size() );
 }
 
-//////  OSDPreviewWidget below /////////////////////
+void OSDWidget::paintEvent( QPaintEvent *e )
+{
+    int M = m_m;
+    QSize size = m_size;
 
-#include <klocale.h>
+    QFont titleFont = font();
+    titleFont.setBold(true);
+
+    QPoint point;
+    QRect rect( point, size );
+    rect.adjust( 0, 0, -1, -1 );
+
+    QColor shadowColor;
+    {
+        int h, s, v;
+        palette().color( QPalette::Normal, QPalette::Foreground ).getHsv( &h, &s, &v );
+        shadowColor = v > 128 ? Qt::black : Qt::white;
+    }
+
+    int align = Qt::AlignCenter | Qt::TextWordWrap;
+
+    QPainter p( this );
+    QBitmap mask( e->rect().size() );
+    QPainter maskPainter( &mask );
+
+    p.setRenderHints( QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform | QPainter::HighQualityAntialiasing );
+    p.setClipRect( e->rect() );
+
+    const qreal xround = 20.0;
+    const qreal yround = 20.0;
+
+    // Masking for transparency
+    mask.fill( Qt::color0 );
+    maskPainter.setBrush( Qt::color1 );
+    maskPainter.drawRoundedRect( e->rect(), xround, yround );
+    setMask( mask );
+
+    p.drawRoundedRect( e->rect(), xround, yround );
+
+    p.setPen( Qt::white ); // Revert this when the background can be colorized again.
+    rect.adjust( M, M, -M, -M );
+
+    int graphicsHeight = 0;
+
+    rect.setBottom( rect.bottom() - graphicsHeight );
+
+    // Draw "shadow" text effect (black outline)
+    if( m_drawShadow )
+    {
+        QPixmap pixmap( rect.size() + QSize( 10, 10 ) );
+        pixmap.fill( Qt::black );
+
+        QPainter p2( &pixmap );
+        p2.setFont( font() );
+        p2.setPen( Qt::white );
+        p2.setBrush( Qt::white );
+        p2.drawText( QRect( QPoint( 5, 5 ), rect.size() ), align, m_currentText );
+        p2.end();
+
+        p.drawImage( rect.topLeft() - QPoint( 5, 5 ), ShadowEngine::makeShadow( pixmap, shadowColor ) );
+        
+        pixmap.fill( Qt::black );
+        pixmap.scaled( QSize(e->rect().width()-1, e->rect().height()-1) + QSize( 10, 10 ) );
+
+        p2.begin( &pixmap );
+        p2.setFont( titleFont );
+        p2.setPen( Qt::white );
+        p2.setBrush( Qt::white );
+        p2.drawText( QRect( QPoint( 5, 5 ), QSize(e->rect().width()-1, e->rect().height()-1) ), Qt::AlignLeft, m_appName );
+        p2.end();
+
+        p.drawImage( QPoint(M*2, M/2) - QPoint( 5, 5 ), ShadowEngine::makeShadow( pixmap, shadowColor ) );
+    }
+    p.setPen( palette().color( QPalette::Active, QPalette::WindowText ) );
+    //p.setPen( Qt::white ); // This too.
+    p.setFont( font() );
+    p.drawText( rect, align, m_currentText );
+
+    p.setFont( titleFont );
+    p.drawText( M * 2, (M/2), e->rect().width()-1, e->rect().height()-1, Qt::AlignLeft, m_appName );
+}
+
+void OSDWidget::resizeEvent(QResizeEvent *e)
+{
+    //setMask(m_background->mask());
+    QWidget::resizeEvent( e );
+}
+
+bool OSDWidget::event( QEvent *e )
+{
+    switch( e->type() )
+    {
+    case QEvent::ApplicationPaletteChange:
+        //if( !AmarokConfig::osdUseCustomColors() )
+        //    unsetColors(); //use new palette's colours
+        return true;
+
+    default:
+        return QWidget::event( e );
+    }
+}
+
+void OSDWidget::mousePressEvent( QMouseEvent* )
+{
+    hide();
+}
+
+void OSDWidget::unsetColors()
+{
+    QPalette p = QApplication::palette();
+    QPalette newPal = palette();
+
+    newPal.setColor( QPalette::Active, QPalette::WindowText, p.color( QPalette::Active, QPalette::WindowText ) );
+    newPal.setColor( QPalette::Active, QPalette::Window    , p.color( QPalette::Active, QPalette::Window ) );
+    setPalette( newPal );
+}
+
+void OSDWidget::setOffset( int /*x*/, int y )
+{
+    //m_offset = QPoint( x, y );
+    m_y = y;
+}
+
+void OSDWidget::setScreen( int screen )
+{
+    const int n = QApplication::desktop()->numScreens();
+    m_screen = ( screen >= n ) ? n - 1 : screen;
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////////////
+// Class OSDPreviewWidget
+/////////////////////////////////////////////////////////////////////////////////////////
 
 OSDPreviewWidget::OSDPreviewWidget( const QString &appName, QWidget *parent, const char *name )
-: OSDWidget( appName, parent, name )
-, m_dragging( false )
+        : OSDWidget( appName, parent, name )
+        , m_dragging( false )
 {
+    setObjectName( "osdpreview" );
     m_currentText = i18n( "OSD Preview - drag to reposition" );
-    m_duration    = 0;
+    m_duration = 0;
+    //m_alignment = static_cast<Alignment>( AmarokConfig::osdAlignment() );
+    //m_y = AmarokConfig::osdYOffset();
+    QFont f = font();
+    f.setPointSize( 16 );
+    setFont( f );
+    //setTranslucent( AmarokConfig::osdUseTranslucency() );
+    show( m_currentText );
 }
 
 void OSDPreviewWidget::mousePressEvent( QMouseEvent *event )
 {
     m_dragOffset = event->pos();
 
-    if ( event->button() == Qt::LeftButton && !m_dragging )
+    if( event->button() == Qt::LeftButton && !m_dragging )
     {
         grabMouse( Qt::SizeAllCursor );
         m_dragging = true;
@@ -336,7 +359,7 @@ void OSDPreviewWidget::mousePressEvent( QMouseEvent *event )
 
 void OSDPreviewWidget::mouseReleaseEvent( QMouseEvent * /*event*/ )
 {
-    if ( m_dragging )
+    if( m_dragging )
     {
         m_dragging = false;
         releaseMouse();
@@ -345,7 +368,7 @@ void OSDPreviewWidget::mouseReleaseEvent( QMouseEvent * /*event*/ )
         QDesktopWidget *desktop = QApplication::desktop();
         int currentScreen = desktop->screenNumber( pos() );
 
-        if ( currentScreen != -1 )
+        if( currentScreen != -1 )
         {
             // set new data
             m_screen = currentScreen;
@@ -358,39 +381,42 @@ void OSDPreviewWidget::mouseReleaseEvent( QMouseEvent * /*event*/ )
 
 void OSDPreviewWidget::mouseMoveEvent( QMouseEvent *e )
 {
-    if ( m_dragging && this == mouseGrabber() )
+    if( m_dragging && this == mouseGrabber() )
     {
+        // Here we implement a "snap-to-grid" like positioning system for the preview widget
+
         const QRect screen      = QApplication::desktop()->screenGeometry( m_screen );
         const uint  hcenter     = screen.width() / 2;
         const uint  eGlobalPosX = e->globalPos().x() - screen.left();
-        const uint  snapZone    = screen.width() / 8;
+        const uint  snapZone    = screen.width() / 24;
 
         QPoint destination = e->globalPos() - m_dragOffset - screen.topLeft();
         int maxY = screen.height() - height() - MARGIN;
-        if( destination.y() < MARGIN ) destination.ry() = MARGIN;
-        if( destination.y() > maxY ) destination.ry() = maxY;
+        if( destination.y() < MARGIN )
+            destination.ry() = MARGIN;
+        if( destination.y() > maxY )
+            destination.ry() = maxY;
 
-        if( eGlobalPosX < (hcenter-snapZone) )
+        if( eGlobalPosX < ( hcenter - snapZone ) )
         {
             m_alignment = Left;
             destination.rx() = MARGIN;
         }
-        else if( eGlobalPosX > (hcenter+snapZone) )
+        else if( eGlobalPosX > ( hcenter + snapZone ) )
         {
             m_alignment = Right;
             destination.rx() = screen.width() - MARGIN - width();
         }
-        else
-        {
+        else {
             const uint eGlobalPosY = e->globalPos().y() - screen.top();
-            const uint vcenter     = screen.height()/2;
+            const uint vcenter     = screen.height() / 2;
 
-            destination.rx() = hcenter - width()/2;
+            destination.rx() = hcenter - width() / 2;
 
-            if( eGlobalPosY >= (vcenter-snapZone) && eGlobalPosY <= (vcenter+snapZone) )
+            if( eGlobalPosY >= ( vcenter - snapZone ) && eGlobalPosY <= ( vcenter + snapZone ) )
             {
                 m_alignment = Center;
-                destination.ry() = vcenter - height()/2;
+                destination.ry() = vcenter - height() / 2;
             }
             else m_alignment = Middle;
         }
@@ -401,52 +427,90 @@ void OSDPreviewWidget::mouseMoveEvent( QMouseEvent *e )
     }
 }
 
-// the code was taken from pilotDaemon.cc in KPilot
-                                                  // static
-OSDWidget::KDesktopLockStatus OSDWidget::isKDesktopLockRunning()
+/* Code copied from kshadowengine.cpp
+ *
+ * Copyright (C) 2003 Laur Ivan <laurivan@eircom.net>
+ *
+ * Many thanks to:
+ *  - Bernardo Hung <deciare@gta.igs.net> for the enhanced shadow
+ *    algorithm (currently used)
+ *  - Tim Jansen <tim@tjansen.de> for the API updates and fixes.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Library General Public
+ * License version 2 as published by the Free Software Foundation.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Library General Public License for more details.
+ *
+ * You should have received a copy of the GNU Library General Public License
+ * along with this library; see the file COPYING.LIB.  If not, write to
+ * the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+ * Boston, MA 02110-1301, USA.
+ */
+
+namespace ShadowEngine
 {
-#ifdef KDAB_TEMPORARILY_REMOVED
-    if (!Preferences::oSDCheckDesktopLock())
-	return NotLocked;
+    // Not sure, doesn't work above 10
+    static const int    MULTIPLICATION_FACTOR = 3;
+    // Multiplication factor for pixels directly above, under, or next to the text
+    static const double AXIS_FACTOR = 2.0;
+    // Multiplication factor for pixels diagonal to the text
+    static const double DIAGONAL_FACTOR = 0.1;
+    // Self explanatory
+    static const int    MAX_OPACITY = 200;
 
-    DCOPClient *dcopptr = KApplication::kApplication()->dcopClient();
+    double decay( QImage&, int, int );
 
-    // Can't tell, very weird
-    if (!dcopptr || !dcopptr->isAttached())
+    QImage makeShadow( const QPixmap& textPixmap, const QColor &bgColor )
     {
-        kWarning() << k_funcinfo << ": Could not make DCOP connection." << endl;
-        return DCOPError;
+        const int w   = textPixmap.width();
+        const int h   = textPixmap.height();
+        const int bgr = bgColor.red();
+        const int bgg = bgColor.green();
+        const int bgb = bgColor.blue();
+
+        int alphaShadow;
+
+        // This is the source pixmap
+        QImage img = textPixmap.toImage();
+
+        QImage result( w, h, QImage::Format_ARGB32 );
+        result.fill( 0 ); // fill with black
+
+        static const int M = 5;
+        for( int i = M; i < w - M; i++) {
+            for( int j = M; j < h - M; j++ )
+            {
+                alphaShadow = (int) decay( img, i, j );
+
+                result.setPixel( i,j, qRgba( bgr, bgg , bgb, qMin( MAX_OPACITY, alphaShadow ) ) );
+            }
+        }
+
+        return result;
     }
 
-    QByteArray data,returnValue;
-    Q3CString returnType;
+    double decay( QImage& source, int i, int j )
+    {
+        //if ((i < 1) || (j < 1) || (i > source.width() - 2) || (j > source.height() - 2))
+        //    return 0;
 
-    if (!dcopptr->call("kdesktop","KScreensaverIface","isBlanked()",
-        data,returnType,returnValue,true))
-    {
-        // KDesktop is not running. Maybe we are in a KDE4 desktop...
-        kDebug() << k_funcinfo << ": Check for screensaver failed." << endl;
-        return DCOPError;
-    }
+        double alphaShadow;
+        alphaShadow =(qGray(source.pixel(i-1,j-1)) * DIAGONAL_FACTOR +
+                qGray(source.pixel(i-1,j  )) * AXIS_FACTOR +
+                qGray(source.pixel(i-1,j+1)) * DIAGONAL_FACTOR +
+                qGray(source.pixel(i  ,j-1)) * AXIS_FACTOR +
+                0                         +
+                qGray(source.pixel(i  ,j+1)) * AXIS_FACTOR +
+                qGray(source.pixel(i+1,j-1)) * DIAGONAL_FACTOR +
+                qGray(source.pixel(i+1,j  )) * AXIS_FACTOR +
+                qGray(source.pixel(i+1,j+1)) * DIAGONAL_FACTOR) / MULTIPLICATION_FACTOR;
 
-    if (returnType == "bool")
-    {
-        bool b;
-        QDataStream reply(returnValue,QIODevice::ReadOnly);
-        reply >> b;
-        return (b ? Locked : NotLocked);
+        return alphaShadow;
     }
-    else
-    {
-        kWarning() << k_funcinfo << ": Strange return value from screensaver. "
-            << "Assuming screensaver is active." << endl;
-        // Err on the side of safety.
-        return Locked;
-    }
-#else // KDAB_TEMPORARILY_REMOVED
-    qWarning("Code commented out in OSDWidget::isKDesktopLockRunning");
-    return NotLocked;
-#endif //KDAB_TEMPORARILY_REMOVED
 }
 
-#include "osd.moc"
+#include "Osd.moc"

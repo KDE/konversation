@@ -58,14 +58,14 @@ namespace Konversation
             startTrayNotification(chatWin);
         }
 
-        /*
-        if(Preferences::oSDShowChannel() &&
+        
+        if(Preferences::self()->oSDShowChannel() &&
             (!m_mainWindow->isActiveWindow() || (chatWin != m_mainWindow->getViewContainer()->getFrontView())))
         {
             KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
-            konvApp->osd->showOSD('(' + chatWin->getName() + ") <" + fromNick + "> " + cleanedMessage);
+            konvApp->osd->show('(' + chatWin->getName() + ") <" + fromNick + "> " + cleanedMessage);
         }
-        */
+        
     }
 
     void NotificationHandler::nick(ChatWindow* chatWin, const QString& fromNick, const QString& message)
@@ -85,14 +85,12 @@ namespace Konversation
 
         KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
 
-        /*
-        if((Preferences::oSDShowChannel() || Preferences::oSDShowOwnNick()) &&
+        if((Preferences::self()->oSDShowChannel() || Preferences::self()->oSDShowOwnNick()) &&
             (!m_mainWindow->isActiveWindow() ||
             (chatWin != m_mainWindow->getViewContainer()->getFrontView())))
         {
-            konvApp->osd->showOSD(i18n("[HighLight] (%1) <%2> %3",chatWin->getName(),fromNick,cleanedMessage));
+            konvApp->osd->show(i18n("[HighLight] (%1) <%2> %3",chatWin->getName(),fromNick,cleanedMessage));
         }
-        */
     }
 
     void NotificationHandler::queryMessage(ChatWindow* chatWin,
@@ -113,13 +111,11 @@ namespace Konversation
 
         KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
 
-        /*
-        if(Preferences::oSDShowQuery() && (!m_mainWindow->isActiveWindow() ||
+        if(Preferences::self()->oSDShowQuery() && (!m_mainWindow->isActiveWindow() ||
            (chatWin != m_mainWindow->getViewContainer()->getFrontView())))
         {
-            konvApp->osd->showOSD(i18n("[Query] <%1> %2",fromNick,cleanedMessage));
+            konvApp->osd->show(i18n("[Query] <%1> %2",fromNick,cleanedMessage));
         }
-        */
     }
 
     void NotificationHandler::startTrayNotification(ChatWindow* chatWin)
@@ -146,14 +142,12 @@ namespace Konversation
         KNotification::event(QString::fromLatin1("join"), i18n("%1 joined %2",nick, chatWin->getName()), QPixmap(), m_mainWindow);
 
         // OnScreen Message
-        /*
-        if(Preferences::oSDShowChannelEvent() &&
+        if(Preferences::self()->oSDShowChannelEvent() &&
             (!m_mainWindow->isActiveWindow() || (chatWin != m_mainWindow->getViewContainer()->getFrontView())))
         {
             KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
-            konvApp->osd->showOSD(i18n("%1 joined %2",nick, chatWin->getName()));
+            konvApp->osd->show(i18n("%1 joined %2",nick, chatWin->getName()));
         }
-        */
     }
 
     void NotificationHandler::part(ChatWindow* chatWin, const QString& nick)
@@ -167,14 +161,12 @@ namespace Konversation
         KNotification::event(QString::fromLatin1("part"), i18n("%1 parted %2",nick, chatWin->getName()), QPixmap(), m_mainWindow);
 
         // OnScreen Message
-        /*
-        if(Preferences::oSDShowChannelEvent() &&
+        if(Preferences::self()->oSDShowChannelEvent() &&
             (!m_mainWindow->isActiveWindow() || (chatWin != m_mainWindow->getViewContainer()->getFrontView())))
         {
             KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
-            konvApp->osd->showOSD(i18n("%1 parted %2",nick, chatWin->getName()));
+            konvApp->osd->show(i18n("%1 parted %2",nick, chatWin->getName()));
         }
-        */
     }
 
     void NotificationHandler::quit(ChatWindow* chatWin, const QString& nick)
@@ -302,19 +294,18 @@ namespace Konversation
             return;
 
         startTrayNotification(chatWin);
-        /*
-        if(Preferences::oSDShowOwnNick() &&
+        if(Preferences::self()->oSDShowOwnNick() &&
             (!m_mainWindow->isActiveWindow() || (chatWin != m_mainWindow->getViewContainer()->getFrontView())))
         {
             KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
             // if there was no nick associated, this must be a command message, so don't try displaying
             // an empty nick in <>
             if(fromNick.isEmpty())
-                konvApp->osd->showOSD(i18n("[HighLight] (%1) *** %2",chatWin->getName(),message));
+                konvApp->osd->show(i18n("[HighLight] (%1) *** %2",chatWin->getName(),message));
             // normal highlight message
             else
-                konvApp->osd->showOSD(i18n("[HighLight] (%1) <%2> %3",chatWin->getName(),fromNick,message));
-        } */
+                konvApp->osd->show(i18n("[HighLight] (%1) <%2> %3",chatWin->getName(),fromNick,message));
+        }
     }
 
     void NotificationHandler::connectionFailure(ChatWindow* chatWin, const QString& server)

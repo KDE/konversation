@@ -23,6 +23,7 @@
 #include <qregexp.h>
 #include <qdom.h>
 #include <qevent.h>
+#include <QTimer>
 
 #include <kapplication.h>
 #include <kmessagebox.h>
