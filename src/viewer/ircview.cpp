@@ -98,8 +98,6 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : QPlainTextEdit(parent)
     m_isOnNick = false;
     m_isOnChannel = false;
     m_chatWin = 0;
-    m_findParagraph=0;
-    m_findIndex=0;
     m_nickPopup = 0;
     m_channelPopup = 0;
 
@@ -185,13 +183,44 @@ void IRCView::search()
 {
     emit doSearch();
 }
-bool IRCView::search(QString const&, bool, bool, bool, bool) { return false; }
+
+bool IRCView::search(const QString& pattern, bool caseSensitive, bool wholeWords, bool forward, bool fromCursor)
+{
+    if (pattern.isEmpty())
+        return true;
+
+    m_pattern       = pattern;
+    m_forward       = forward;
+    m_searchFlags = 0;
+    if (caseSensitive)
+        m_searchFlags |= QTextDocument::FindCaseSensitively;
+    if (wholeWords)
+        m_searchFlags |= QTextDocument::FindWholeWords;
+    if (!fromCursor)
+        m_forward ? moveCursor(QTextCursor::Start) : moveCursor(QTextCursor::End);
+
+    return searchNext();
+}
+
+bool IRCView::searchNext(bool reversed)
+{
+    bool fwd = (reversed ? !m_forward : m_forward);
+    if (fwd) {
+        moveCursor(QTextCursor::EndOfWord);
+        m_searchFlags &= ~QTextDocument::FindBackward;
+    }
+    else {
+        moveCursor(QTextCursor::StartOfWord);
+        m_searchFlags |= QTextDocument::FindBackward;
+    }
+    return find(m_pattern, m_searchFlags);
+}
+
 void IRCView::searchAgain(){}
 void IRCView::insertRememberLine(){}
 void IRCView::cancelRememberLine(){}
 void IRCView::insertMarkerLine(){}
 void IRCView::clearLines(){}
-bool IRCView::searchNext(bool) { return false; }
 bool IRCView::hasLines() { return false; }
 
 // TODO FIXME can't do this anymore, need to find another way

@@ -198,12 +198,8 @@ class IRCView : public QPlainTextEdit
 
 
         //// Search
-        int m_findParagraph;
-        int m_findIndex;
-        bool m_caseSensitive;
-        bool m_wholeWords;
+        QTextDocument::FindFlags m_searchFlags;
         bool m_forward;
-        bool m_fromCursor;
         QString m_pattern;
 
         //used in ::filter
