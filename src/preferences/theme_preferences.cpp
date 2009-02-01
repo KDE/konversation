@@ -20,9 +20,9 @@
 
 #include <qlabel.h>
 #include <qlayout.h>
-#include <q3hbox.h>
+
 #include <qpushbutton.h>
-#include <q3vbox.h>
+
 #include <qfileinfo.h>
 #include <qstringlist.h>
 #include <qbitmap.h>
@@ -45,6 +45,7 @@
 
 #include <unistd.h> // unlink()
 #include <kglobal.h>
+#include <kvbox.h>
 
 
 using namespace Konversation;

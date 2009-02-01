@@ -18,9 +18,6 @@
 #include "server.h"
 #include "common.h"
 
-#include <q3action.h>
-#include <q3hbox.h>
-#include <q3vbox.h>
 #include <q3grid.h>
 #include <qlabel.h>
 #include <qspinbox.h>
@@ -29,8 +26,6 @@
 #include <qregexp.h>
 #include <qcheckbox.h>
 #include <qtimer.h>
-//Added by qt3to4:
-#include <Q3TextStream>
 
 #include <krun.h>
 #include <k3listview.h>
@@ -41,7 +36,8 @@
 #include <kmessagebox.h>
 #include <kmenu.h>
 #include <kdeversion.h>
-#include <K3PopupMenu>
+#include <KMenu>
+#include <kvbox.h>
 
 ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
 {
@@ -68,8 +64,8 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
     Q3Grid* mainGrid=new Q3Grid(2,Qt::Vertical,filterGroup);
     mainGrid->setSpacing(spacing());
 
-    QLabel* minLabel=new QLabel(i18n("Minimum users:"),mainGrid);
-    QLabel* maxLabel=new QLabel(i18n("Maximum users:"),mainGrid);
+    QLabel* minLabel=new QLabel(i18n("Minimum users:"), mainGrid);
+    QLabel* maxLabel=new QLabel(i18n("Maximum users:"), mainGrid);
     QSpinBox* minUsersSpin=new QSpinBox(0, 9999, 1, mainGrid,"min_users_spin");
     minUsersSpin->setWhatsThis(i18n("You can limit the channel list to those channels with a minimum number of users here. Choosing 0 disables this criterion."));
     QSpinBox* maxUsersSpin=new QSpinBox(0, 9999, 1, mainGrid,"max_users_spin");
@@ -79,7 +75,7 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
     minLabel->setBuddy(minUsersSpin);
     maxLabel->setBuddy(maxUsersSpin);
 
-    QLabel* patternLabel=new QLabel(i18n("Filter pattern:"),mainGrid);
+    QLabel* patternLabel=new QLabel(i18n("Filter pattern:"), mainGrid);
     new QLabel(i18n("Filter target:"),mainGrid);
 
     filterInput=new KLineEdit(mainGrid);
@@ -89,7 +85,7 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
 
     patternLabel->setBuddy(filterInput);
 
-    Q3HBox* targetBox=new Q3HBox(mainGrid);
+    KHBox* targetBox=new KHBox(mainGrid);
     targetBox->setSpacing(spacing());
 
     channelFilter = new QCheckBox(i18n("Channel"), targetBox);
@@ -119,15 +115,15 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
     channelListView->setResizeMode( K3ListView::LastColumn );
     channelListView->setSortColumn(-1); //Disable sorting
 
-    Q3HBox* statsBox=new Q3HBox(this);
+    KHBox* statsBox=new KHBox(this);
     statsBox->setSpacing(spacing());
 
-    QLabel* channelsLabel=new QLabel(QString(),statsBox);
-    QLabel* usersLabel=new QLabel(QString(),statsBox);
+    QLabel* channelsLabel=new QLabel(statsBox);
+    QLabel* usersLabel=new QLabel(statsBox);
 
     statsBox->setStretchFactor(usersLabel,10);
 
-    Q3HBox* actionBox=new Q3HBox(this);
+    KHBox* actionBox=new KHBox(this);
     actionBox->setSpacing(spacing());
 
     refreshListButton = new QPushButton(i18n("Refresh List"), actionBox);
@@ -205,8 +201,8 @@ void ChannelListPanel::saveList()
     if(!fileName.isEmpty())
     {
         // first find the longest channel name and nick number for clean table layouting
-        unsigned int maxChannelWidth=0;
-        unsigned int maxNicksWidth=0;
+        int maxChannelWidth=0;
+        int maxNicksWidth=0;
 
         Q3ListViewItem* item = channelListView->firstChild();
         while(item)
@@ -424,17 +420,17 @@ void ChannelListPanel::setRegExp(bool state)
 
 void ChannelListPanel::channelTargetClicked()        
 { 
-  setChannelTarget(channelFilter->state()==2); 
+  setChannelTarget(channelFilter->checkState()==Qt::Checked); 
 }
 
 void ChannelListPanel::topicTargetClicked()          
 { 
-  setTopicTarget(topicFilter->state()==2); 
+  setTopicTarget(topicFilter->checkState()==Qt::Checked); 
 }
 
 void ChannelListPanel::regExpClicked()               
 { 
-  setRegExp(regexpCheck->state()==2); 
+  setRegExp(regexpCheck->checkState()==Qt::Checked); 
 }
 
 void ChannelListPanel::applyFilterToItem(Q3ListViewItem* item)
@@ -452,12 +448,12 @@ void ChannelListPanel::applyFilterToItem(Q3ListViewItem* item)
     {
         if(getChannelTarget())
         {
-            if(item->text(0).find(QRegExp(getFilterText(),false,!getRegExp()))==-1) visible=false;
+            if(item->text(0).indexOf(QRegExp(getFilterText(),false,!getRegExp()))==-1) visible=false;
         }
 
         if(getTopicTarget())
         {
-            if(item->text(2).find(QRegExp(getFilterText(),false,!getRegExp()))==-1) visible=false;
+            if(item->text(2).indexOf(QRegExp(getFilterText(),false,!getRegExp()))==-1) visible=false;
         }
     }
 
@@ -514,8 +510,8 @@ void ChannelListPanel::contextMenu (K3ListView* /* l */, Q3ListViewItem* i, cons
 {
     if(!i) return;
 
-    K3PopupMenu* showURLmenu = new K3PopupMenu(this);
-    showURLmenu->insertTitle( i18n("Open URL") );
+    KMenu* showURLmenu = new KMenu(this);
+    showURLmenu->addTitle( i18n("Open URL") );
     QString filteredLine(i->text(2));
 
     QRegExp pattern("((http://|https://|ftp://|nntp://|news://|gopher://|www\\.|ftp\\.)"
@@ -533,7 +529,7 @@ void ChannelListPanel::contextMenu (K3ListView* /* l */, Q3ListViewItem* i, cons
     pattern.setCaseSensitivity(Qt::CaseInsensitive);
 
     int pos=0;
-    while(static_cast<unsigned int>(pos) < filteredLine.length())
+    while(static_cast<int>(pos) < filteredLine.length())
     {
         if (pattern.indexIn(filteredLine, pos) != -1)
         {
@@ -567,7 +563,7 @@ void ChannelListPanel::contextMenu (K3ListView* /* l */, Q3ListViewItem* i, cons
         }
     }
 
-    if (showURLmenu->count()==1)
+    if (showURLmenu->actions().count()==1)
     {
         showURLmenu->insertItem(i18n("<<No URL found>>"),5);
         showURLmenu->setItemEnabled(5,false);

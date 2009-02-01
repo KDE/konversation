@@ -18,13 +18,10 @@
 #include "application.h" ////// header renamed
 #include "viewcontainer.h"
 
-#include <q3hbox.h>
 #include <qpushbutton.h>
 #include <qregexp.h>
 #include <qclipboard.h>
 #include <qlayout.h>
-//Added by qt3to4:
-#include <Q3TextStream>
 
 #include <kapplication.h>
 //#include <kactionclasses.h>
@@ -37,6 +34,7 @@
 #include <kdeversion.h>
 #include <kshell.h>
 #include <k3listviewsearchline.h>
+#include <kvbox.h>
 
 
 UrlCatcher::UrlCatcher(QWidget* parent) : ChatWindow(parent)
@@ -60,7 +58,7 @@ UrlCatcher::UrlCatcher(QWidget* parent) : ChatWindow(parent)
     searchWidget->setObjectName("search_line");
     searchWidget->setEnabled(false);
 
-    Q3HBox* buttonBox=new Q3HBox(this);
+    KHBox* buttonBox=new KHBox(this);
     buttonBox->setSpacing(spacing());
 
     openUrlButton = new QPushButton(i18n("&Open URL"), buttonBox);

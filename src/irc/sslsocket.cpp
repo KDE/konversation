@@ -64,7 +64,7 @@ SSLSocket::~SSLSocket()
     delete d;
 }
 
-Q_LONG SSLSocket::writeBlock(const char *data, Q_ULONG len)
+Q_LONG SSLSocket::write(const char *data, Q_ULONG len)
 {
     if (d->kssl && KSSL::doesSSLWork() && state() == KNetwork::KClientSocketBase::Connected)
         return d->kssl->write( data,len );
@@ -72,7 +72,7 @@ Q_LONG SSLSocket::writeBlock(const char *data, Q_ULONG len)
         return 0;
 }
 
-Q_LONG SSLSocket::readBlock(char *data, Q_ULONG maxlen)
+Q_LONG SSLSocket::read(char *data, Q_ULONG maxlen)
 {
     int err = d->kssl->read( data, maxlen );
     return err;

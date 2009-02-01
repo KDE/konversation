@@ -13,8 +13,7 @@
 */
 
 #include "quickconnectdialog.h"
-//Added by qt3to4:
-#include <Q3GridLayout>
+
 #include "application.h" ////// header renamed
 
 #include <qlayout.h>
@@ -28,16 +27,15 @@
 QuickConnectDialog::QuickConnectDialog(QWidget *parent)
 :KDialog(parent)
 {
+    showButtonSeparator( true );
     setButtons( KDialog::Ok | KDialog::Cancel );
     setDefaultButton( KDialog::Ok );
     setCaption(  i18n("Quick Connect") );
     setModal( true );
-    QWidget* page = new QWidget(this);
-    setMainWidget(page);
+    QWidget* page = mainWidget();
 
-    Q3GridLayout* layout = new Q3GridLayout(page, 2, 4);
+    QGridLayout* layout = new QGridLayout(mainWidget());
     layout->setSpacing(spacingHint());
-    layout->setColStretch(1, 10);
 
     QLabel* hostNameLabel = new QLabel(i18n("&Server host:"), page);
     QString hostNameWT = i18n("Enter the host of the network here.");

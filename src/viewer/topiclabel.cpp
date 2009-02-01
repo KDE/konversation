@@ -76,10 +76,11 @@ namespace Konversation
         m_server = server;
     }
 
-    void TopicLabel::leaveEvent(QEvent*)
+    void TopicLabel::leaveEvent(QEvent* e)
     {
        emit clearStatusBarTempText();
        m_lastStatusText = QString();
+       QLabel::leaveEvent(e);
     }
 
     void TopicLabel::openLink(const QString& link)
@@ -91,7 +92,7 @@ namespace Konversation
                 KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
                 konvApp->getConnectionManager()->connectTo(Konversation::SilentlyReuseConnection, link);
             }
-            else if (link.startsWith("#") && m_server && m_server->isConnected())
+            else if (link.startsWith('#') && m_server && m_server->isConnected())
             {
                 QString channel(link);
                 channel.replace("##","#");
@@ -146,8 +147,8 @@ namespace Konversation
         {
             if (m_copyUrlMenu)
             {
-                menu->addAction(SmallIcon("edit-copy"), i18n("Copy URL to Clipboard"), this, SLOT (copyUrl()));
-                menu->addAction(SmallIcon("bookmark-new"), i18n("Add to Bookmarks"), this, SLOT (bookmarkUrl()));
+                menu->addAction(KIcon("edit-copy"), i18n("Copy URL to Clipboard"), this, SLOT (copyUrl()));
+                menu->addAction(KIcon("bookmark-new"), i18n("Add to Bookmarks"), this, SLOT (bookmarkUrl()));
                 actionsAdded = true;
             }
         }
@@ -172,15 +173,15 @@ namespace Konversation
 
         if (m_fullText.isEmpty())
         {
-            QLabel::setText(QString::null);
+            QLabel::setText(QString());
 
             return;
         }
 
         QString text = m_fullText;
         // text.replace("&", "&amp;"). Not needed as we do it in tagURLs
-        text.replace("<", "\x0blt;"). // tagUrls will replace \x0b with &
-            replace(">", "\x0bgt;");
+        text.replace('<', "\x0blt;"). // tagUrls will replace \x0b with &
+            replace('>', "\x0bgt;");
         text = tagURLs(text, "", false);
 
         if(height() < (fontMetrics().lineSpacing() * 2))
@@ -256,7 +257,7 @@ namespace Konversation
             m_lastStatusText = link;
         }
 
-        if (!link.startsWith("#"))
+        if (!link.startsWith('#'))
         {
             m_isOnChannel = false;
 
@@ -287,7 +288,7 @@ namespace Konversation
         if (m_urlToCopy.isEmpty())
             return;
 
-        QClipboard *cb = KApplication::kApplication()->clipboard();
+        QClipboard *cb = QApplication::clipboard();
         cb->setText(m_urlToCopy,QClipboard::Selection);
         cb->setText(m_urlToCopy,QClipboard::Clipboard);
     }

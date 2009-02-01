@@ -610,7 +610,7 @@ void DccTransferRecv::connectionFailed( int errorCode )
 void DccTransferRecv::readData()                  // slot
 {
     //kDebug() << "readData()" << endl;
-    int actual = m_recvSocket->readBlock( m_buffer, m_bufferSize );
+    int actual = m_recvSocket->read( m_buffer, m_bufferSize );
     if ( actual > 0 )
     {
         //actual is the size we read in, and is guaranteed to be less than m_bufferSize
@@ -627,7 +627,7 @@ void DccTransferRecv::sendAck()                   // slot
     KIO::fileoffset_t pos = intel( m_transferringPosition );
 
     m_recvSocket->enableWrite( false );
-    m_recvSocket->writeBlock( (char*)&pos, 4 );
+    m_recvSocket->write( (char*)&pos, 4 );
     if ( m_transferringPosition == (KIO::fileoffset_t)m_fileSize )
     {
         kDebug() << "DccTransferRecv::sendAck(): Sent final ACK." << endl;

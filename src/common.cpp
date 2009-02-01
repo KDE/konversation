@@ -14,7 +14,6 @@
 #include "application.h" ////// header renamed
 #include "config/preferences.h"
 
-#include <q3cstring.h>
 #include <qstring.h>
 #include <qregexp.h>
 #include <qpixmap.h>

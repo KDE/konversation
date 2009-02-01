@@ -35,8 +35,8 @@ class SSLSocket : public KStreamSocket
         void showInfoDialog();
         const QString details();
 
-        Q_LONG writeBlock (const char *data, Q_ULONG len);
-        Q_LONG readBlock  (char *data, Q_ULONG maxlen);
+        Q_LONG write (const char *data, Q_ULONG len);
+        Q_LONG read  (char *data, Q_ULONG maxlen);
 
     protected:
         void stateChanging (KClientSocketBase::SocketState newState);

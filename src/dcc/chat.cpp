@@ -27,7 +27,7 @@
 #include <sys/types.h>
 #include <netinet/in.h>
 
-#include <q3vbox.h>
+
 #include <qhostaddress.h>
 #include <qtextcodec.h>
 #include <qsplitter.h>
@@ -47,6 +47,7 @@
 #include <KActionCollection>
 #include <kaction.h>
 #include <kmenu.h>
+#include <kvbox.h>
 #define DCCCHAT_BUFFER_SIZE 1024
 
 
@@ -234,7 +235,7 @@ void DccChat::readData()
     if( available > 0 )
     {
         buffer = new char[ available + 1 ];
-        actual = m_dccSocket->readBlock( buffer, available );
+        actual = m_dccSocket->read( buffer, available );
         buffer[ actual ] = 0;
         line.append( codec->toUnicode( buffer ) );
         delete[] buffer;
@@ -251,7 +252,7 @@ void DccChat::readData()
                 QString ctcpCommand = ctcp.section( " ", 0, 0 );
                 QString ctcpArgument = ctcp.section( " ", 1 );
 
-                if( ctcpCommand.lower() == "action" )
+                if( ctcpCommand.toLower() == "action" )
                     appendAction( m_partnerNick, ctcpArgument );
                 else
                     getTextView()->appendServerMessage(i18n("CTCP"), i18n("Received unknown CTCP-%1 request from %2", ctcp, m_partnerNick));
@@ -269,7 +270,7 @@ void DccChat::dccChatTextEntered()
 {
     QString line = m_dccChatInput->text();
     m_dccChatInput->setText("");
-    if ( line.lower() == Preferences::self()->commandChar()+"clear" )
+    if ( line.toLower() == Preferences::self()->commandChar()+"clear" )
     {
         textView->clear();
     }
@@ -304,7 +305,7 @@ void DccChat::sendDccChatText(const QString& sendLine)
             //  line=filter.parse(nick,line,getName());
 
             // convert /me actions
-            QString cmd=line.section(' ', 0,0).lower();
+            QString cmd=line.section(' ', 0,0).toLower();
             if (cmd == cc+"me")
             {
                 appendAction( m_ownNick, line.section( " ", 1 ) );

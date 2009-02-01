@@ -42,7 +42,7 @@ const QString& nickname):
     Q3HBoxLayout* layout = new Q3HBoxLayout(page);
     layout->setSpacing(spacingHint());
 
-    QLabel* networkNameLabel=new QLabel(i18n("&Network name:"),page);
+    QLabel* networkNameLabel=new QLabel(i18n("&Network name:"), page);
     QString networkNameWT = i18n(
         "Pick the server network you will connect to here.");
     networkNameLabel->setWhatsThis(networkNameWT);
@@ -50,7 +50,7 @@ const QString& nickname):
     m_networkNameCombo->setWhatsThis(networkNameWT);
     networkNameLabel->setBuddy(m_networkNameCombo);
 
-    QLabel* nicknameLabel=new QLabel(i18n("N&ickname:"),page);
+    QLabel* nicknameLabel=new QLabel(i18n("N&ickname:"), page);
     QString nicknameWT = i18n(
         "<qt>The nickname to watch for when connected to a server in the network.</qt>");
     nicknameLabel->setWhatsThis(nicknameWT);

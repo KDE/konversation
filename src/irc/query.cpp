@@ -11,12 +11,7 @@
 */
 
 #include "query.h"
-//Added by qt3to4:
-#include <Q3ValueList>
-#include <Q3StrList>
-#include <QPixmap>
-#include <Q3PopupMenu>
-#include <QShowEvent>
+
 #include "channel.h"
 #include "server.h"
 #include "application.h" ////// header renamed
@@ -28,7 +23,6 @@
 #include "common.h"
 #include "topiclabel.h"
 
-#include <q3hbox.h>
 #include <qcheckbox.h>
 #include <qlabel.h>
 #include <qlineedit.h>
@@ -44,6 +38,7 @@
 #include <kstringhandler.h>
 #include <kmenu.h>
 #include <kauthorized.h>
+#include <kvbox.h>
 
 
 Query::Query(QWidget* parent, QString _name) : ChatWindow(parent)
@@ -60,7 +55,7 @@ Query::Query(QWidget* parent, QString _name) : ChatWindow(parent)
     m_initialShow = true;
     awayChanged=false;
     awayState=false;
-    Q3HBox *box = new Q3HBox(m_headerSplitter);
+    KHBox *box = new KHBox(m_headerSplitter);
     addresseeimage = new QLabel(box);
     addresseeimage->setObjectName("query_image");
     addresseeimage->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
@@ -103,10 +98,11 @@ Query::Query(QWidget* parent, QString _name) : ChatWindow(parent)
     popup->insertItem(i18n("Add to Watched Nicks"), Konversation::AddNotify);
 
     // This box holds the input line
-    Q3HBox* inputBox=new Q3HBox(this, "input_log_box");
+    KHBox* inputBox=new KHBox(this);
+    inputBox->setObjectName("input_log_box");
     inputBox->setSpacing(spacing());
 
-    awayLabel=new QLabel(i18n("(away)"),inputBox);
+    awayLabel=new QLabel(i18n("(away)"), inputBox);
     awayLabel->hide();
     blowfishLabel = new QLabel(inputBox);
     blowfishLabel->hide();

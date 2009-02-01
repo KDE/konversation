@@ -45,7 +45,9 @@ namespace Konversation
         setDefaultButton( Ok );
         QFrame* mainWidget = new QFrame();
         setMainWidget(mainWidget);
-        QGridLayout* mainLayout = new QGridLayout(mainWidget, 1, 2, 0, spacingHint());
+        QGridLayout* mainLayout = new QGridLayout(mainWidget);
+        mainLayout->setSpacing(spacingHint());
+        mainLayout->setMargin(0);
 
         QLabel* identityLabel = new QLabel(i18n("&Identity:"), mainWidget);
         m_identityCBox = new KComboBox(mainWidget);
@@ -62,28 +64,30 @@ namespace Konversation
 
         QToolButton* newBtn = new QToolButton(mainWidget);
         newBtn->setIcon(KIcon("list-add"));
-        newBtn->setTextLabel(i18n("Add"));
+        newBtn->setText(i18n("Add"));
         connect(newBtn, SIGNAL(clicked()), this, SLOT(newIdentity()));
 
         QToolButton* copyBtn = new QToolButton(mainWidget);
         copyBtn->setIcon(KIcon("edit-copy"));
-        copyBtn->setTextLabel(i18n("Duplicate"));
+        copyBtn->setText(i18n("Duplicate"));
         connect(copyBtn, SIGNAL(clicked()), this, SLOT(copyIdentity()));
 
         m_editBtn = new QToolButton(mainWidget);
         m_editBtn->setIcon(KIcon("edit-rename"));
-        m_editBtn->setTextLabel(i18n("Rename"));
+        m_editBtn->setText(i18n("Rename"));
         connect(m_editBtn, SIGNAL(clicked()), this, SLOT(renameIdentity()));
 
         m_delBtn = new QToolButton(mainWidget);
         m_delBtn->setIcon(KIcon("edit-delete"));
-        m_delBtn->setTextLabel(i18n("Remove"));
+        m_delBtn->setText(i18n("Remove"));
         connect(m_delBtn, SIGNAL(clicked()), this, SLOT(deleteIdentity()));
 
         QTabWidget* tabWidget = new QTabWidget(mainWidget);
         QWidget* generalWidget = new QWidget(tabWidget);
         tabWidget->addTab(generalWidget, i18n("General"));
-        QGridLayout* generalLayout = new QGridLayout(generalWidget, 1, 2, marginHint(), spacingHint());
+        QGridLayout* generalLayout = new QGridLayout(generalWidget);
+        generalLayout->setSpacing(spacingHint());
+        generalLayout->setMargin(marginHint());
 
         QLabel* realNameLabel = new QLabel(i18n("&Real name:"), generalWidget);
         m_realNameEdit = new KLineEdit(generalWidget);
@@ -91,7 +95,8 @@ namespace Konversation
         realNameLabel->setBuddy(m_realNameEdit);
 
         QGroupBox* nicknameGBox = new QGroupBox(i18n("Nickname"), generalWidget);
-        QGridLayout* nicknameLayout = new QGridLayout(nicknameGBox, 1, 2, spacingHint());
+        QGridLayout* nicknameLayout = new QGridLayout(nicknameGBox);
+        nicknameLayout->setSpacing(spacingHint());
 
         m_nicknameLBox = new Q3ListBox(nicknameGBox);
         m_nicknameLBox->setWhatsThis(i18n("This is your list of nicknames. A nickname is the name that other users will know you by. You may use any name you desire. The first character must be a letter.\n\nSince nicknames must be unique across an entire IRC network, your desired name may be rejected by the server because someone else is already using that nickname. Enter alternate nicknames for yourself. If your first choice is rejected by the server, Konversation will try the alternate nicknames."));
@@ -101,7 +106,7 @@ namespace Konversation
         m_removeNicknameBtn = new QPushButton(i18n("Delete"), nicknameGBox);
         m_removeNicknameBtn->setEnabled(false);
         m_upNicknameBtn = new QToolButton(nicknameGBox);
-        m_upNicknameBtn->setIconSet(SmallIconSet("arrow-up"));
+        m_upNicknameBtn->setIcon(KIcon("arrow-up"));
         m_upNicknameBtn->setAutoRepeat(true);
         m_upNicknameBtn->setEnabled(false);
         m_downNicknameBtn = new QToolButton(nicknameGBox);
@@ -126,7 +131,8 @@ namespace Konversation
         nicknameLayout->addWidget(m_downNicknameBtn, 3, 3);
 
         QGroupBox* autoIdentifyGBox = new QGroupBox(i18n("Auto Identify"), generalWidget);
-        QGridLayout* autoIdentifyLayout = new QGridLayout(autoIdentifyGBox, 1, 2, spacingHint());
+        QGridLayout* autoIdentifyLayout = new QGridLayout(autoIdentifyGBox);
+        autoIdentifyLayout->setSpacing(spacingHint());
 
         QLabel* botLabel=new QLabel(i18n("Ser&vice:"), autoIdentifyGBox);
         botLabel->setWhatsThis(i18n("Service name can be <b><i>nickserv</i></b> or a network dependant name like  <b><i>nickserv@services.dal.net</i></b>"));
@@ -153,7 +159,9 @@ namespace Konversation
 
         QWidget* awayWidget = new QWidget(tabWidget);
         tabWidget->addTab(awayWidget, i18nc("Tab name", "Away"));
-        QGridLayout* awayLayout = new QGridLayout(awayWidget, 1, 2, marginHint(), spacingHint());
+        QGridLayout* awayLayout = new QGridLayout(awayWidget);
+        awayLayout->setSpacing(spacingHint());
+        awayLayout->setMargin(marginHint());
 
         m_insertRememberLineOnAwayChBox = new QCheckBox(i18n("Mark the last position in chat windows when going away"), awayWidget);
         m_insertRememberLineOnAwayChBox->setWhatsThis(i18n("If you check this box, whenever you perform an <b>/away</b> command, a horizontal line will appear in the channel, marking the point where you went away. Other IRC users do not see this horizontal line."));
@@ -165,7 +173,8 @@ namespace Konversation
 
         m_automaticAwayGBox = new QGroupBox(i18n("Automatic Away"), awayWidget);
         m_automaticAwayGBox->setCheckable(true);
-        QGridLayout* automaticAwayLayout = new QGridLayout(m_automaticAwayGBox, 1, 2, spacingHint());
+        QGridLayout* automaticAwayLayout = new QGridLayout(m_automaticAwayGBox);
+        automaticAwayLayout->setSpacing(spacingHint());
 
         m_automaticAwayGBox->setWhatsThis(i18n("If you check this box, Konversation will automatically set all connections using this Identity away when the screensaver starts or after a period of user inactivity configured below."));
 
@@ -194,7 +203,8 @@ namespace Konversation
 
         m_awayMessageGBox = new QGroupBox(i18n("Away Messages"), awayWidget);
         m_awayMessageGBox->setCheckable(true);
-        QGridLayout* messagesLayout = new QGridLayout(m_awayMessageGBox, 1, 2, spacingHint());
+        QGridLayout* messagesLayout = new QGridLayout(m_awayMessageGBox);
+        messagesLayout->setSpacing(spacingHint());
 
         m_awayMessageGBox->setWhatsThis(i18n("If you check this box, Konversation will automatically send the Away message to all channels joined with this Identity. <b>%s</b> is replaced with <b>msg</b>. Whenever you perform an <b>/away</b> command, the Return message will be displayed in all channels joined with this Identity."));
 
@@ -232,7 +242,9 @@ namespace Konversation
 
         QWidget* advancedWidget = new QWidget(tabWidget);
         tabWidget->addTab(advancedWidget, i18n("Advanced"));
-        QGridLayout* advancedLayout = new QGridLayout(advancedWidget, 1, 2, marginHint(), spacingHint());
+        QGridLayout* advancedLayout = new QGridLayout(advancedWidget);
+        advancedLayout->setSpacing(spacingHint());
+        advancedLayout->setMargin(marginHint());
 
         QLabel* commandLabel = new QLabel(i18n("&Pre-shell command:"), advancedWidget);
         m_sCommandEdit = new KLineEdit(advancedWidget);
@@ -326,7 +338,7 @@ namespace Konversation
             return;
         }
 
-        if (isShown() && m_currentIdentity && m_realNameEdit->text().isEmpty())
+        if (isVisible() && m_currentIdentity && m_realNameEdit->text().isEmpty())
         {
             KMessageBox::error(this, i18n("Please enter a real name."));
             m_identityCBox->setCurrentText(m_currentIdentity->getName());

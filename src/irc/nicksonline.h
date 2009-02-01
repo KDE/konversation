@@ -20,11 +20,12 @@
 #include "chatwindow.h"
 #include "linkaddressbook/nicksonlinetooltip.h"
 
-#include <q3vbox.h>
+
 #include <qicon.h>
 #include <qpair.h>
 //Added by qt3to4:
 #include <K3PopupMenu>
+#include <kvbox.h>
 
 
 class K3ListView;

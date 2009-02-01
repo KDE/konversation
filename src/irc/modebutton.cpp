@@ -30,7 +30,7 @@ ModeButton::~ModeButton()
 void ModeButton::setOn(bool state)
 {
     on=state;
-    QPushButton::setOn(state);
+    QPushButton::setChecked(state);
 }
 
 void ModeButton::wasClicked()

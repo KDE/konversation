@@ -381,10 +381,10 @@ void DccTransferSend::writeData()                 // slot
         m_sendSocket->enableWrite( false );
         m_sendSocket->enableRead( true );
     }
-    int actual = m_file.readBlock( m_buffer, m_bufferSize );
+    int actual = m_file.read( m_buffer, m_bufferSize );
     if ( actual > 0 )
     {
-        m_sendSocket->writeBlock( m_buffer, actual );
+        m_sendSocket->write( m_buffer, actual );
         m_transferringPosition += actual;
         if ( (KIO::fileoffset_t)m_fileSize <= m_transferringPosition )
         {
@@ -406,7 +406,7 @@ void DccTransferSend::getAck()                    // slot
     unsigned long pos;
     while ( m_sendSocket->bytesAvailable() >= 4 )
     {
-        m_sendSocket->readBlock( (char*)&pos, 4 );
+        m_sendSocket->read( (char*)&pos, 4 );
         pos = intel( pos );
         if ( pos == m_fileSize )
         {

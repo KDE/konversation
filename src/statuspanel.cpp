@@ -21,7 +21,7 @@
 #include <qpushbutton.h>
 #include <qcombobox.h>
 #include <qlabel.h>
-#include <q3hbox.h>
+
 #include <qtextcodec.h>
 #include <qlineedit.h>
 //Added by qt3to4:
@@ -30,6 +30,7 @@
 #include <kdebug.h>
 #include <klocale.h>
 #include <kmessagebox.h>
+#include <kvbox.h>
 
 
 StatusPanel::StatusPanel(QWidget* parent) : ChatWindow(parent)
@@ -45,7 +46,7 @@ StatusPanel::StatusPanel(QWidget* parent) : ChatWindow(parent)
     IRCViewBox* ircBox = new IRCViewBox(this, 0); // Server will be set later in setServer()
     setTextView(ircBox->ircView());
 
-    Q3HBox* commandLineBox=new Q3HBox(this);
+    KHBox* commandLineBox=new KHBox(this);
     commandLineBox->setSpacing(spacing());
     commandLineBox->setMargin(0);
 
@@ -54,7 +55,7 @@ StatusPanel::StatusPanel(QWidget* parent) : ChatWindow(parent)
     nicknameCombobox->insertStringList(Preferences::nicknameList());
     oldNick=nicknameCombobox->currentText();
 
-    awayLabel=new QLabel(i18n("(away)"),commandLineBox);
+    awayLabel=new QLabel(i18n("(away)"), commandLineBox);
     awayLabel->hide();
     statusInput=new IRCInput(commandLineBox);
 

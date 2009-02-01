@@ -21,9 +21,6 @@
 #include <qregexp.h>
 #include <q3header.h>
 #include <qtoolbutton.h>
-//Added by qt3to4:
-#include <QKeyEvent>
-#include <QEvent>
 
 #include <klocale.h>
 #include <k3listview.h>
@@ -152,8 +149,8 @@ namespace Konversation
 
     void ChannelOptionsDialog::toggleAdvancedModes()
     {
-        bool ison = m_widget->toggleAdvancedModes->isOn();
-        m_widget->otherModesList->setShown(ison);
+        bool ison = m_widget->toggleAdvancedModes->isChecked();
+        m_widget->otherModesList->setVisible(ison);
         if(ison)
         {
             m_widget->toggleAdvancedModes->setText(i18n("&Hide Advanced Modes <<"));
@@ -242,7 +239,7 @@ namespace Konversation
         modeString.remove('o');
         modeString.remove('v');
 
-        for(unsigned int i = 0; i < modeString.length(); i++)
+        for(int i = 0; i < modeString.length(); i++)
         {
             new Q3CheckListItem(m_widget->otherModesList, QString(modeString[i]), Q3CheckListItem::CheckBox);
         }
@@ -456,7 +453,7 @@ namespace Konversation
 
     void ChannelOptionsDialog::cancelClicked()
     {
-        if (m_widget->banList->renameLineEdit()->isShown())
+        if (m_widget->banList->renameLineEdit()->isVisible())
         {
             QKeyEvent e(QEvent::KeyPress, Qt::Key_Escape, 27, Qt::NoButton);
 
@@ -469,7 +466,7 @@ namespace Konversation
 
     void ChannelOptionsDialog::okClicked()
     {
-        if (m_widget->banList->renameLineEdit()->isShown())
+        if (m_widget->banList->renameLineEdit()->isVisible())
         {
             QKeyEvent e(QEvent::KeyPress, Qt::Key_Return, 13, Qt::NoButton);
 

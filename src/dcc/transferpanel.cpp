@@ -20,10 +20,10 @@
 #include "transfersend.h"
 #include "preferences.h"
 
-#include <q3hbox.h>
+
 #include <q3header.h>
 #include <qpushbutton.h>
-#include <q3vbox.h>
+
 //Added by qt3to4:
 #include <Q3ValueList>
 #include <Q3PtrList>
@@ -41,6 +41,7 @@
 #include <krun.h>
 #include <kapplication.h>
 #include <kauthorized.h>
+#include <kvbox.h>
 
 
 DccTransferPanel::DccTransferPanel(QWidget* parent) : ChatWindow(parent)
@@ -109,7 +110,7 @@ void DccTransferPanel::initGUI()
 
     // button
 
-    Q3HBox* buttonsBox=new Q3HBox(this);
+    KHBox* buttonsBox=new KHBox(this);
     buttonsBox->setSpacing(spacing());
 
     // convenience, undeffed below again to avoid name clashes

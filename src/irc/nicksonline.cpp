@@ -30,7 +30,7 @@
 
 #include <qlayout.h>
 #include <qstringlist.h>
-#include <q3hbox.h>
+
 #include <qpushbutton.h>
 #include <qlabel.h>
 #include <q3popupmenu.h>
@@ -43,6 +43,7 @@
 #include <k3listview.h>
 #include <kiconloader.h>
 #include <kmessagebox.h>
+#include <kvbox.h>
 
 
 NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
@@ -82,7 +83,7 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
     setMargin(margin());
     setSpacing(spacing());
 
-    Q3HBox* buttonBox=new Q3HBox(this);
+    KHBox* buttonBox=new KHBox(this);
     buttonBox->setSpacing(spacing());
     QPushButton* editButton = new QPushButton(i18n("&Edit Watch List..."), buttonBox);
     editButton->setObjectName("edit_notify_button");

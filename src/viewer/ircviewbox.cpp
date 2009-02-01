@@ -17,6 +17,7 @@
 #include <kapplication.h>
 #include <kiconloader.h>
 #include <qpixmap.h>
+#include <kvbox.h>
 
 
 // TODO FIXME and this needs its own function because...?
@@ -26,7 +27,7 @@ static QPixmap getIcon(const QString& name)
 }
 
 IRCViewBox::IRCViewBox(QWidget* parent, Server* newServer)
-: Q3VBox(parent)
+: KVBox(parent)
 {
     m_ircView = new IRCView(this, newServer);
     m_searchBar = new SearchBar(this);

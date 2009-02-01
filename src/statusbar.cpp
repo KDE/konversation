@@ -54,7 +54,7 @@ KonversationStatusBar::KonversationStatusBar(KonversationMainWindow* window)
     m_sslLabel->hide();
     m_sslLabel->setWhatsThis(i18n("All communication with the server is encrypted.  This makes it harder for someone to listen in on your communications."));
 
-    m_window->statusBar()->addWidget(m_mainLabel, 1, false);
+    m_window->statusBar()->addWidget(m_mainLabel, 1);
     m_window->statusBar()->addPermanentWidget(m_infoLabel, 0);
     m_window->statusBar()->addPermanentWidget(m_lagLabel, 0);
     m_window->statusBar()->addPermanentWidget(m_sslLabel, 0);

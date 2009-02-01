@@ -13,10 +13,10 @@
 #include "resumedialog.h" ////// header renamed
 #include "transferrecv.h" ////// header renamed
 
-#include <q3hbox.h>
+
 #include <qlabel.h>
 #include <qlayout.h>
-#include <q3vbox.h>
+
 //Added by qt3to4:
 #include <Q3HBoxLayout>
 #include <Q3VBoxLayout>
@@ -26,6 +26,7 @@
 #include <klocale.h>
 #include <kurl.h>
 #include <kurlrequester.h>
+#include <kvbox.h>
 
 
 DccResumeDialog::ReceiveAction DccResumeDialog::ask(DccTransferRecv* item, const QString& message, int enabledActions, ReceiveAction defaultAction)
