@@ -513,4 +513,4 @@ namespace ShadowEngine
     }
 }
 
-#include "Osd.moc"
+#include "osd.moc"
