@@ -66,6 +66,7 @@ IRCQueue::IRCQueue(Server *server, EmptyingRate& rate, int ind) :
 {
     //KX << _S(m_rate.m_rate) << _S(m_rate.m_interval) << _S(m_rate.m_type) << endl;
     m_timer=new QTimer(this);
+    m_timer->setSingleShot(true);
     connect(m_timer, SIGNAL(timeout()), SLOT(sendNow()));
     if (server)
     {
@@ -150,7 +151,7 @@ void IRCQueue::adjustTimer()
     msec=getRate().nextInterval(nextSize(), elapsed());
     //if (m_myIndex == 0)
     //    KX << _S(msec) << endl;
-    m_timer->start(msec,true);
+    m_timer->start(msec);
     m_startedAt.start();
     return;
 }

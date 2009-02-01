@@ -39,7 +39,6 @@
 
 UrlCatcher::UrlCatcher(QWidget* parent) : ChatWindow(parent)
 {
-    layout()->setAutoAdd(false);
     setName(i18n("URL Catcher"));
     setType(ChatWindow::UrlCatcher);
 

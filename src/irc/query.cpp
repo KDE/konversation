@@ -195,8 +195,8 @@ void Query::setEncryptedOutput(bool e)
 
 void Query::queryTextEntered()
 {
-    QString line=queryInput->text();
-    queryInput->setText("");
+    QString line=queryInput->toPlainText();
+    queryInput->clear();
     if(line.toLower()==Preferences::self()->commandChar()+"clear")
     {
         textView->clear();
@@ -214,9 +214,9 @@ void Query::queryTextEntered()
 void Query::queryPassthroughCommand()
 {
     QString commandChar = Preferences::self()->commandChar();
-    QString line = queryInput->text();
+    QString line = queryInput->toPlainText();
 
-    queryInput->setText("");
+    queryInput->clear();
 
     if(!line.isEmpty())
     {
@@ -572,7 +572,7 @@ NickInfoPtr Query::getNickInfo()
     return m_nickInfo;
 }
 
-QString Query::getTextInLine() { return queryInput->text(); }
+QString Query::getTextInLine() { return queryInput->toPlainText(); }
 
 bool Query::canBeFrontView()        { return true; }
 bool Query::searchView()       { return true; }
@@ -686,7 +686,7 @@ void Query::quitNick(const QString& reason)
     }
     else
     {
-        if (displayReason.find(QRegExp("[\\0000-\\0037]"))!=-1)
+        if (displayReason.indexOf(QRegExp("[\\0000-\\0037]"))!=-1)
             displayReason+="\017";
 
         appendCommandMessage(i18n("Quit"),i18n("%1 has left this server (%2).",getName(),displayReason),false);

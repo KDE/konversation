@@ -18,8 +18,7 @@
 #include "commit.h"
 #include "version.h"
 #include "query.h"
-//Added by qt3to4:
-#include <Q3PtrList>
+
 #include "channel.h"
 #include "statuspanel.h"
 #include "common.h"
@@ -58,7 +57,7 @@ void InputFilter::parseLine(const QString& a_newLine)
     // Remove white spaces at the end and beginning
     newLine = newLine.trimmed();
     // Find end of middle parameter list
-    int pos = newLine.find(" :");
+    int pos = newLine.indexOf(" :");
     // Was there a trailing parameter?
     if(pos != -1)
     {
@@ -76,7 +75,7 @@ void InputFilter::parseLine(const QString& a_newLine)
     if(newLine[0] == ':')
     {
         // Find end of prefix
-        pos = newLine.find(' ');
+        pos = newLine.indexOf(' ');
         // Copy prefix
         prefix = newLine.mid(1, pos - 1);
         // Remove prefix from line
@@ -84,7 +83,7 @@ void InputFilter::parseLine(const QString& a_newLine)
     }
 
     // Find end of command
-    pos = newLine.find(' ');
+    pos = newLine.indexOf(' ');
     // Copy command (all lowercase to make parsing easier)
     QString command = newLine.left(pos).toLower();
     // Are there parameters left in the string?
@@ -95,13 +94,13 @@ void InputFilter::parseLine(const QString& a_newLine)
         // Cut out the command
         newLine = newLine.mid(pos + 1);
         // The rest of the string will be the parameter list
-        parameterList = QStringList::split(" ", newLine);
+        parameterList = newLine.split(' ');
     }
 
     Q_ASSERT(server);
 
     // Server command, if no "!" was found in prefix
-    if((prefix.find('!') == -1) && (prefix != server->getNickname()))
+    if((prefix.indexOf('!') == -1) && (prefix != server->getNickname()))
     {
 
         parseServerCommand(prefix, command, parameterList, trailing);
@@ -118,7 +117,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
     Q_ASSERT(konv_app);
     Q_ASSERT(server);
     // Extract nickname from prefix
-    int pos = prefix.find("!");
+    int pos = prefix.indexOf('!');
     QString sourceNick = prefix.left(pos);
     QString sourceHostmask = prefix.mid(pos + 1);
     // remember hostmask for this nick, it could have changed
@@ -136,10 +135,10 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
         if(!trailing.isEmpty() && trailing.at(0)==QChar(0x01))
         {
             // cut out the CTCP command
-            QString ctcp = trailing.mid(1,trailing.find(1,1)-1);
+            QString ctcp = trailing.mid(1,trailing.indexOf(1,1)-1);
 
-            QString ctcpCommand=ctcp.left(ctcp.find(" ")).toLower();
-            QString ctcpArgument=ctcp.mid(ctcp.find(" ")+1);
+            QString ctcpCommand=ctcp.left(ctcp.indexOf(' ')).toLower();
+            QString ctcpArgument=ctcp.mid(ctcp.indexOf(' ')+1);
             ctcpArgument=static_cast<KonversationApplication*>(kapp)->doAutoreplace(ctcpArgument,false);
 
             // If it was a ctcp action, build an action string
@@ -158,7 +157,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
 
                     if(sourceNick != server->getNickname())
                     {
-                        if(ctcpArgument.toLower().find(QRegExp("(^|[^\\d\\w])"
+                        if(ctcpArgument.toLower().indexOf(QRegExp("(^|[^\\d\\w])"
                             + QRegExp::escape(server->loweredNickname())
                             + "([^\\d\\w]|$)")) !=-1 )
                         {
@@ -261,11 +260,11 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                     QString dccType=ctcpArgument.toLower().section(' ',0,0);
 
                     // Support file names with spaces
-                    QString dccArguments = ctcpArgument.mid(ctcpArgument.find(" ")+1);
+                    QString dccArguments = ctcpArgument.mid(ctcpArgument.indexOf(' ')+1);
                     QStringList dccArgumentList;
 
                     if ((dccArguments.count('\"') >= 2) && (dccArguments.startsWith('\"'))) {
-                        int lastQuotePos = dccArguments.findRev("\"");
+                        int lastQuotePos = dccArguments.lastIndexOf('\"');
                         if (dccArguments[lastQuotePos+1] == ' ') {
                             QString fileName = dccArguments.mid(1, lastQuotePos-1);
                             dccArguments = dccArguments.mid(lastQuotePos+2);
@@ -273,7 +272,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                             dccArgumentList.append(fileName);
                         }
                     }
-                    dccArgumentList += QStringList::split(' ', dccArguments);
+                    dccArgumentList += dccArguments.split(' ');
 
                     if(dccType=="send")
                     {
@@ -495,7 +494,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                 // TODO: Try to remember channel keys for autojoins and manual joins, so
                 //       we can get %k to work
 
-                if(channelName.find(' ')!=-1)
+                if(channelName.indexOf(' ')!=-1)
                 {
                     key=channelName.section(' ',1,1);
                     channelName=channelName.section(' ',0,0);
@@ -740,7 +739,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 {
                     QString property, value;
                     int pos;
-                    if ((pos=(*it).find( '=' )) !=-1)
+                    if ((pos=(*it).indexOf( '=' )) !=-1)
                     {
                         property = (*it).left(pos);
                         value = (*it).mid(pos+1);
@@ -751,7 +750,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     }
                     if (property=="PREFIX")
                     {
-                        pos = value.find(')',1);
+                        pos = value.indexOf(')',1);
                         if(pos==-1)
                         {
                             server->setPrefixes(QString(), value);
@@ -793,7 +792,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 QString modesAre;
                 QString message = i18n("Channel modes: ") + modeString;
 
-                for(unsigned int index=0;index<modeString.length();index++)
+                for(int index=0;index<modeString.length();index++)
                 {
                     QString parameter;
                     int parameterCount=3;
@@ -888,11 +887,11 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
 
                 if(!trailing.isEmpty())
                 {
-                    nickList = QStringList::split(" ", trailing);
+                    nickList = trailing.split(' ');
                 }
                 else if(parameterList.count() > 3)
                 {
-                    for(uint i = 3; i < parameterList.count(); i++) {
+                    for(int i = 3; i < parameterList.count(); i++) {
                         nickList.append(parameterList[i]);
                     }
                 }
@@ -1321,14 +1320,14 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 QStringList userChannels,voiceChannels,opChannels,halfopChannels,ownerChannels,adminChannels;
 
                 // get a list of all channels the user is in
-                QStringList channelList=QStringList::split(' ',trailing);
+                QStringList channelList=trailing.split(' ');
                 channelList.sort();
 
                 // split up the list in channels where they are operator / user / voice
-                for(unsigned int index=0; index < channelList.count(); index++)
+                for(int index=0; index < channelList.count(); index++)
                 {
                     QString lookChannel=channelList[index];
-                    if(lookChannel.startsWith("*") || lookChannel.startsWith("&"))
+                    if(lookChannel.startsWith('*') || lookChannel.startsWith('&'))
                     {
                         adminChannels.append(lookChannel.mid(1));
                         server->setChannelNick(lookChannel.mid(1), parameterList[1], 16);
@@ -1555,9 +1554,9 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             case RPL_USERHOST:
             {
                 // iterate over all nick/masks in reply
-                QStringList uhosts=QStringList::split(" ",trailing);
+                QStringList uhosts=trailing.split(' ');
 
-                for(unsigned int index=0;index<uhosts.count();index++)
+                for(int index=0;index<uhosts.count();index++)
                 {
                     // extract nickname and hostmask from reply
                     QString nick(uhosts[index].section('=',0,0));
@@ -1788,7 +1787,7 @@ void InputFilter::parseModes(const QString &sourceNick, const QStringList &param
     QString parameterModes="aAoOvhkbleIq";
     QString message = sourceNick + i18n(" sets mode: ") + modestring;
 
-    for(unsigned int index=0;index<modestring.length();index++)
+    for(int index=0;index<modestring.length();index++)
     {
         unsigned char mode(modestring[index].toAscii());
         QString parameter;
@@ -1801,7 +1800,7 @@ void InputFilter::parseModes(const QString &sourceNick, const QStringList &param
         else
         {
             // Check if this was a parameter mode
-            if(parameterModes.find(mode)!=-1)
+            if(parameterModes.indexOf(mode)!=-1)
             {
                 // Check if the mode actually wants a parameter. -k and -l do not!
                 if(plus || (!plus && (mode!='k') && (mode!='l')))
@@ -1894,7 +1893,7 @@ void InputFilter::parsePrivMsg(const QString& prefix,
                                const QStringList& parameterList,
                                const QString& trailing)
 {
-    int pos = prefix.find("!");
+    int pos = prefix.indexOf('!');
     QString source;
     QString sourceHostmask;
     QString message(trailing);
@@ -1927,7 +1926,7 @@ void InputFilter::parsePrivMsg(const QString& prefix,
                             QRegExp::escape(server->loweredNickname()) +
                             "([^\\d\\w]|$)");
                     regexp.setCaseSensitive(false);
-                    if(message.find(regexp) !=-1 )
+                    if(message.indexOf(regexp) !=-1 )
                     {
                         konv_app->notificationHandler()->nick(channel,
                                 source, message);
@@ -1960,7 +1959,7 @@ void InputFilter::parsePrivMsg(const QString& prefix,
                         QRegExp::escape(server->loweredNickname()) +
                         "([^\\d\\w]|$)");
                 regexp.setCaseSensitive(false);
-                if(message.find(regexp) !=-1 )
+                if(message.indexOf(regexp) !=-1 )
                 {
                     konv_app->notificationHandler()->nick(query,
                             source, message);

@@ -50,6 +50,7 @@ NickInfo::NickInfo(const QString& nick, Server* server): KShared()
     connect( Konversation::Addressbook::self(), SIGNAL(addresseesChanged()), this, SLOT(refreshAddressee()));
 */
     m_changedTimer = new QTimer( this);
+    m_changedTimer->setSingleShot( true );
     connect(m_changedTimer, SIGNAL( timeout()), SLOT(emitNickInfoChanged()));
 
     // reset nick color
@@ -86,7 +87,7 @@ uint NickInfo::getNickColor()
     {
         int nickvalue = 0;
 
-        for (uint index = 0; index < m_nickname.length(); index++)
+        for (int index = 0; index < m_nickname.length(); index++)
         {
             nickvalue += m_nickname[index].unicode();
         }
@@ -154,7 +155,7 @@ void NickInfo::emitNickInfoChanged()
 void NickInfo::startNickInfoChangedTimer()
 {
     if(!m_changedTimer->isActive())
-    m_changedTimer->start(3000, true /*single shot*/);
+    m_changedTimer->start(3000);
 }
 
 void NickInfo::setHostmask(const QString& newMask)

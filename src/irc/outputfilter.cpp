@@ -30,8 +30,6 @@
 #include <qmap.h>
 #include <q3valuelist.h>
 #include <qtextcodec.h>
-//Added by qt3to4:
-#include <Q3CString>
 
 #include <klocale.h>
 #include <kdebug.h>
@@ -39,9 +37,6 @@
 #include <kconfig.h>
 #include <kdeversion.h>
 #include <kshell.h>
-//#include <ksocketaddress.h>
-#include <k3resolver.h>
-#include <k3reverseresolver.h>
 #include <kmessagebox.h>
 
 
@@ -63,7 +58,7 @@ namespace Konversation
         QStringList aliasList=Preferences::self()->aliasList();
         QString cc(Preferences::self()->commandChar());
         // check if the line starts with a defined alias
-        for(unsigned int index=0;index<aliasList.count();index++)
+        for(int index=0;index<aliasList.count();index++)
         {
             // cut alias pattern from definition
             QString aliasPattern(aliasList[index].section(' ',0,0));
@@ -99,9 +94,9 @@ namespace Konversation
         return false;
     }
 
-    QStringList OutputFilter::splitForEncoding(const QString& inputLine, uint max)
+    QStringList OutputFilter::splitForEncoding(const QString& inputLine, int max)
     {
-        uint sublen = 0; //The encoded length since the last split
+        int sublen = 0; //The encoded length since the last split
         int charLength = 0; //the length of this char
         int lastBreakPoint = 0;
 
@@ -183,8 +178,8 @@ namespace Konversation
         // someone didn't notice leading spaces
         {
             QString testNickServ( inputLine.trimmed() );
-            if(testNickServ.startsWith(commandChar+"nickserv", false)
-              || testNickServ.startsWith(commandChar+"ns", false))
+            if(testNickServ.startsWith(commandChar+"nickserv", Qt::CaseInsensitive)
+              || testNickServ.startsWith(commandChar+"ns", Qt::CaseInsensitive))
             {
                     inputLine = testNickServ;
             }
@@ -411,7 +406,7 @@ namespace Konversation
         if(isAChannel(destination))
         {
             // get nick to kick
-            QString victim = parameter.left(parameter.find(" "));
+            QString victim = parameter.left(parameter.indexOf(' '));
 
             if(victim.isEmpty())
             {
@@ -462,7 +457,7 @@ namespace Konversation
             if(isAChannel(parameter))
             {
                 // get channel name
-                QString channel = parameter.left(parameter.find(" "));
+                QString channel = parameter.left(parameter.indexOf(' '));
                 // get part reason (if any)
                 QString reason = parameter.mid(channel.length() + 1);
 
@@ -514,7 +509,7 @@ namespace Konversation
             if(isAChannel(parameter))
             {
                 // get channel name
-                QString channel=parameter.left(parameter.find(" "));
+                QString channel=parameter.left(parameter.indexOf(' '));
                 // get topic (if any)
                 QString topic=parameter.mid(channel.length()+1);
                 // if no topic given, retrieve topic
@@ -616,7 +611,7 @@ namespace Konversation
     OutputFilterResult OutputFilter::parseNotice(const QString &parameter)
     {
         OutputFilterResult result;
-        QString recipient = parameter.left(parameter.find(" "));
+        QString recipient = parameter.left(parameter.indexOf(' '));
         QString message = parameter.mid(recipient.length()+1);
 
         if(parameter.isEmpty() || message.isEmpty())
@@ -733,7 +728,7 @@ namespace Konversation
     OutputFilterResult OutputFilter::parseSMsg(const QString &parameter)
     {
         OutputFilterResult result;
-        QString recipient = parameter.left(parameter.find(" "));
+        QString recipient = parameter.left(parameter.indexOf(' '));
         QString message = parameter.mid(recipient.length() + 1);
 
         if(message.startsWith(commandChar + "me"))
@@ -785,7 +780,7 @@ namespace Konversation
         // TODO: Make sure this works with +l <limit> and +k <password> also!
         QString token;
         QString tmpToken;
-        QStringList nickList = QStringList::split(' ', parameter);
+        QStringList nickList = parameter.split(' ');
 
         if(nickList.count())
         {
@@ -844,7 +839,7 @@ namespace Konversation
         else
         {
             QString tmpParameter = parameter;
-            QStringList parameterList = QStringList::split(' ', tmpParameter.replace("\\ ", "%20"));
+            QStringList parameterList = tmpParameter.replace("\\ ", "%20").split(' ');
 
             QString dccType = parameterList[0].toLower();
 
@@ -1040,9 +1035,9 @@ namespace Konversation
         }
         else
         {
-            QStringList parameterList = QStringList::split(' ', parameter);
+            QStringList parameterList = parameter.split(' ');
 
-            if(parameterList[0].find("../") == -1)
+            if(parameterList[0].indexOf("../") == -1)
             {
                 emit launchScript(destination, parameter);
             }
@@ -1088,9 +1083,9 @@ namespace Konversation
 
         if (!parameter.isEmpty() && serverGroupId != -1)
         {
-            QStringList list = QStringList::split(' ', parameter);
+            QStringList list = parameter.split(' ');
 
-            for(unsigned int index = 0; index < list.count(); index++)
+            for(int index = 0; index < list.count(); index++)
             {
                 // Try to remove current pattern
                 if(!Preferences::removeNotify(groupName, list[index]))
@@ -1123,7 +1118,7 @@ namespace Konversation
     OutputFilterResult OutputFilter::parseOper(const QString& myNick,const QString& parameter)
     {
         OutputFilterResult result;
-        QStringList parameterList = QStringList::split(' ', parameter);
+        QStringList parameterList = parameter.split(' ');
 
         if(parameter.isEmpty() || parameterList.count() == 1)
         {
@@ -1162,7 +1157,7 @@ namespace Konversation
 
         if(!parameter.isEmpty())
         {
-            QStringList parameterList=QStringList::split(' ',parameter);
+            QStringList parameterList=parameter.split(' ');
             QString channel;
             QString option;
             // check for option
@@ -1254,7 +1249,7 @@ namespace Konversation
 
         if(!parameter.isEmpty())
         {
-            QStringList parameterList = QStringList::split(' ', parameter);
+            QStringList parameterList = parameter.split(' ');
             QString channel;
             QString mask;
 
@@ -1309,7 +1304,7 @@ namespace Konversation
         // did the user give parameters at all?
         if(!parameter.isEmpty())
         {
-            QStringList parameterList = QStringList::split(' ', parameter);
+            QStringList parameterList = parameter.split(' ');
 
             // if nothing else said, only ignore channels and queries
             int value = Ignore::Channel | Ignore::Query;
@@ -1325,7 +1320,7 @@ namespace Konversation
             // were there enough parameters?
             if(parameterList.count() >= 1)
             {
-                for(unsigned int index=0;index<parameterList.count();index++)
+                for(int index=0;index<parameterList.count();index++)
                 {
                     if(!parameterList[index].contains('!'))
                     {
@@ -1363,7 +1358,7 @@ namespace Konversation
         else
         {
             QString unignore = parameter.simplified();
-            QStringList unignoreList = QStringList::split(' ',unignore);
+            QStringList unignoreList = unignore.split(' ');
 
             QStringList succeeded;
             QStringList failed;
@@ -1537,7 +1532,7 @@ namespace Konversation
             emit reconnectServer();
         else
         {
-            QStringList splitted = QStringList::split(" ", parameter);
+            QStringList splitted = parameter.split(' ');
             QString host = splitted[0];
             QString port = "6667";
             QString password;
@@ -1621,14 +1616,14 @@ namespace Konversation
     OutputFilterResult OutputFilter::parseSetKey(const QString& parameter)
     {
 
-        QStringList parms = QStringList::split(" ", parameter);
+        QStringList parms = parameter.split(' ');
 
         if (parms.count() == (0 >> parms.count() > 2))
             return usage(i18n("Usage: %1setkey [<nick|channel>] <key> sets the encryption key for nick or channel. %2setkey <key> when in a channel or query tab to set the key for it.", commandChar, commandChar) );
         else if (parms.count() == 1)
             parms.prepend(destination);
 
-        m_server->setKeyForRecipient(parms[0], parms[1].local8Bit());
+        m_server->setKeyForRecipient(parms[0], parms[1].toLocal8Bit());
 
         if (isAChannel(parms[0]) && m_server->getChannelByName(parms[0]))
             m_server->getChannelByName(parms[0])->setEncryptedOutput(true);
@@ -1687,7 +1682,7 @@ namespace Konversation
         }
         else
         {
-            QStringList splitted = QStringList::split(" ", parameter);
+            QStringList splitted = parameter.split(' ');
             QString target = splitted[0];
 
             QHostAddress address(target);
@@ -1740,7 +1735,7 @@ namespace Konversation
 
     QString OutputFilter::addNickToEmptyNickList(const QString& nick, const QString& parameter)
     {
-        QStringList nickList = QStringList::split(' ', parameter);
+        QStringList nickList = parameter.split(' ');
         QString newNickList;
 
         if (nickList.count() == 0)

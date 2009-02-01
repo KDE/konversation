@@ -53,8 +53,6 @@
 #include <kfiledialog.h>
 #include <kinputdialog.h>
 #include <kmessagebox.h>
-#include <k3resolver.h>
-#include <k3socketdevice.h>
 #include <kaction.h>
 #include <kstringhandler.h>
 #include <kdeversion.h>
@@ -204,7 +202,7 @@ void Server::doPreShellCommand()
 
     connect(&m_preShellCommand,SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(preShellCommandExited(int, QProcess::ExitStatus)));
 
-    QStringList commandList = QStringList::split(" ",command);
+    const QStringList commandList = command.split(' ');
 
     for (QStringList::ConstIterator it = commandList.begin(); it != commandList.end(); ++it)
         m_preShellCommand << *it;
@@ -247,6 +245,7 @@ void Server::_resetRates()
 void Server::initTimers()
 {
     m_notifyTimer.setObjectName("notify_timer");
+    m_notifyTimer.setSingleShot(true);
     m_incomingTimer.setObjectName("incoming_timer");
 }
 
@@ -730,7 +729,7 @@ void Server::notifyAction(const QString& nick)
 
     // Send all strings, one after another
     QStringList outList = out.split('\n', QString::SkipEmptyParts);
-    for (unsigned int index=0; index<outList.count(); ++index)
+    for (int index=0; index<outList.count(); ++index)
     {
         Konversation::OutputFilterResult result = getOutputFilter()->parse(getNickname(),outList[index],QString());
         queue(result.toServer);
@@ -783,7 +782,7 @@ void Server::startNotifyTimer(int msec)
 
     // start the timer in one shot mode
     if (Preferences::self()->useNotify())
-        m_notifyTimer.start(msec, true);
+        m_notifyTimer.start(msec);
 }
 
 void Server::notifyTimeout()
@@ -918,7 +917,7 @@ void Server::incoming()
         QTextCodec* codec = getIdentity()->getCodec();
         QByteArray first = bufferLines.first();
 
-        QStringList lineSplit = codec->toUnicode(first).split(" ", QString::SkipEmptyParts);
+        QStringList lineSplit = codec->toUnicode(first).split(' ', QString::SkipEmptyParts);
 
         if( lineSplit.count() >= 1 )
         {
@@ -927,7 +926,7 @@ void Server::incoming()
                 if( !lineSplit[0].contains('!') ) // is this a server(global) message?
                     isServerMessage = true;
                 else
-                    senderNick = lineSplit[0].mid(1, lineSplit[0].find('!')-1);
+                    senderNick = lineSplit[0].mid(1, lineSplit[0].indexOf('!')-1);
 
                 lineSplit.removeFirst();          // remove prefix
             }
@@ -1033,7 +1032,7 @@ int Server::getPreLength(const QString& command, const QString& dest)
 }
 
 //Commands greater than 1 have localizeable text:         0   1    2       3      4    5    6
-static QStringList outcmds=QStringList::split(QChar(' '),"WHO QUIT PRIVMSG NOTICE KICK PART TOPIC");
+static QStringList outcmds=QString("WHO QUIT PRIVMSG NOTICE KICK PART TOPIC").split(QChar(' '));
 
 int Server::_send_internal(QString outputLine)
 {
@@ -1044,7 +1043,7 @@ int Server::_send_internal(QString outputLine)
     if (outputLine.at(outputLine.length()-1) == '\n')
     {
         kDebug() << "found \\n on " << outboundCommand << endl;
-        outputLine.setLength(outputLine.length()-1);
+        outputLine.resize(outputLine.length()-1);
     }
 
     // remember the first arg of /WHO to identify responses
@@ -1525,7 +1524,7 @@ void Server::requestBan(const QStringList& users,const QString& channel,const QS
 
     Channel* targetChannel=getChannelByName(channel);
 
-    for(unsigned int index=0;index<users.count();index++)
+    for(int index=0;index<users.count();index++)
     {
         // first, set the ban mask to the specified nick
         QString mask=users[index];

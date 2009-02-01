@@ -24,8 +24,6 @@
 
 #include <qtextcodec.h>
 #include <qlineedit.h>
-//Added by qt3to4:
-#include <QShowEvent>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -112,8 +110,8 @@ void StatusPanel::sendStatusText(const QString& sendLine)
     }
 
     // Send all strings, one after another
-    QStringList outList=QStringList::split('\n',outputAll);
-    for(unsigned int index=0;index<outList.count();index++)
+    QStringList outList=outputAll.split('\n');
+    for(int index=0;index<outList.count();index++)
     {
         QString output(outList[index]);
 
@@ -130,8 +128,8 @@ void StatusPanel::sendStatusText(const QString& sendLine)
 
 void StatusPanel::statusTextEntered()
 {
-    QString line=statusInput->text();
-    statusInput->setText("");
+    QString line=statusInput->toPlainText();
+    statusInput->clear();
 
     if(line.toLower()==Preferences::self()->commandChar()+"clear") textView->clear();
     else
@@ -144,8 +142,8 @@ void StatusPanel::textPasted(const QString& text)
 {
     if(m_server)
     {
-        QStringList multiline=QStringList::split('\n',text);
-        for(unsigned int index=0;index<multiline.count();index++)
+        QStringList multiline=text.split('\n');
+        for(int index=0;index<multiline.count();index++)
         {
             QString line=multiline[index];
             QString cChar(Preferences::self()->commandChar());
@@ -252,7 +250,7 @@ void StatusPanel::showEvent(QShowEvent*)
     }
 }
 
-QString StatusPanel::getTextInLine() { return statusInput->text(); }
+QString StatusPanel::getTextInLine() { return statusInput->toPlainText(); }
 
 bool StatusPanel::canBeFrontView()        { return true; }
 bool StatusPanel::searchView()       { return true; }

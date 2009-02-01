@@ -130,6 +130,7 @@ K3ListView(parent)
     //m_tooltip = new Konversation::KonversationNickListViewToolTip(viewport(), this);
 
     m_resortTimer = new QTimer(this);
+    m_resortTimer->setSingleShot(true);
     connect(m_resortTimer, SIGNAL(timeout()), SLOT(resort()));
 }
 
@@ -194,7 +195,7 @@ void NickListView::refresh()
 void NickListView::startResortTimer()
 {
     if(!m_resortTimer->isActive())
-        m_resortTimer->start(3000, true /*single shot*/);
+        m_resortTimer->start(3000);
 }
 
 void NickListView::resort()

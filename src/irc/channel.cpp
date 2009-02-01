@@ -295,6 +295,7 @@ Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
     // every few seconds try to get more userhosts
     userhostTimer.start(10000);
 
+    m_whoTimer.setSingleShot(true);
     connect(&m_whoTimer,SIGNAL (timeout()),this,SLOT (autoWho()));
 
     // every 5 minutes decrease everyone's activity by 1 unit
@@ -699,7 +700,7 @@ void Channel::popupCommand(int id)
 
             for (QStringList::Iterator it=nickList.begin(); it!=nickList.end(); ++it)
             {
-                for (unsigned int index = 0; index<patternList.count(); index++)
+                for (int index = 0; index<patternList.count(); index++)
                 {
                     command = patternList[index];
                     command.replace("%u", (*it));
@@ -734,7 +735,7 @@ void Channel::completeNick()
     pos = cursor.position();
     oldPos = channelInput->getOldCursorPosition();
 
-    QString line=channelInput->text();
+    QString line=channelInput->toPlainText();
     QString newLine;
     // Check if completion position is out of range
     if(completionPosition >= nicknameList.count()) completionPosition = 0;
@@ -811,7 +812,7 @@ void Channel::completeNick()
                     {
                         nick = it.current();
 
-                        if(nick->getChannelNick()->getNickname().startsWith(pattern, Preferences::self()->nickCompletionCaseSensitive()) &&
+                        if(nick->getChannelNick()->getNickname().startsWith(pattern, Preferences::self()->nickCompletionCaseSensitive() ? Qt::CaseSensitive : Qt::CaseInsensitive) &&
                           (nick->getChannelNick()->timeStamp() > timeStamp))
                         {
                             timeStamp = nick->getChannelNick()->timeStamp();
@@ -837,7 +838,7 @@ void Channel::completeNick()
                         lookNick = lookNick.section( prefixCharacter,1 );
                     }
 
-                    if(lookNick.startsWith(pattern, Preferences::self()->nickCompletionCaseSensitive()))
+                    if(lookNick.startsWith(pattern, Preferences::self()->nickCompletionCaseSensitive() ? Qt::CaseSensitive : Qt::CaseInsensitive))
                     {
                         foundNick = lookNick;
                     }
@@ -1019,8 +1020,8 @@ void Channel::sendFileMenu()
 
 void Channel::channelTextEntered()
 {
-    QString line = channelInput->text();
-    channelInput->setText ("");
+    QString line = channelInput->toPlainText();
+    channelInput->clear();
 
     if(line.toLower().trimmed() == Preferences::self()->commandChar()+"clear")
     {
@@ -1040,9 +1041,9 @@ void Channel::channelTextEntered()
 void Channel::channelPassthroughCommand()
 {
     QString commandChar = Preferences::self()->commandChar();
-    QString line = channelInput->text();
+    QString line = channelInput->toPlainText();
 
-    channelInput->setText("");
+    channelInput->clear();
 
     if(!line.isEmpty())
     {
@@ -1068,7 +1069,7 @@ void Channel::sendChannelText(const QString& sendLine)
 
     // Send all strings, one after another
     QStringList outList = outputAll.split(QRegExp("[\r\n]+"), QString::SkipEmptyParts);
-    for(unsigned int index=0;index<outList.count();index++)
+    for(int index=0;index<outList.count();index++)
     {
         QString output(outList[index]);
 
@@ -2114,7 +2115,7 @@ void Channel::updateQuickButtons(const QStringList &newButtonList)
     buttonsGrid = new Q3Grid(2, nickListButtons);
 
     // add new quick buttons
-    for(unsigned int index=0;index<newButtonList.count();index++)
+    for(int index=0;index<newButtonList.count();index++)
     {
         // generate empty buttons first, text will be added later
         QuickButton* quickButton = new QuickButton(QString(), QString(), buttonsGrid);
@@ -2502,7 +2503,7 @@ void Channel::scheduleAutoWho() // slot
     if(m_whoTimer.isActive())
         m_whoTimer.stop();
     if(Preferences::self()->autoWhoContinuousEnabled())
-        m_whoTimer.start(Preferences::self()->autoWhoContinuousInterval() * 1000, true);
+        m_whoTimer.start(Preferences::self()->autoWhoContinuousInterval() * 1000);
 }
 
 void Channel::autoWho()
@@ -2530,7 +2531,7 @@ void Channel::fadeActivity()
 
 QString Channel::getTextInLine()
 {
-  return channelInput->text();
+  return channelInput->toPlainText();
 }
 
 bool Channel::canBeFrontView()
@@ -2732,12 +2733,13 @@ void Channel::requestNickListSort()
     if(!m_delayedSortTimer)
     {
         m_delayedSortTimer = new QTimer(this);
+        m_delayedSortTimer->setSingleShot(true);
         connect(m_delayedSortTimer, SIGNAL(timeout()), this, SLOT(sortNickList()));
     }
 
     if(!m_delayedSortTimer->isActive())
     {
-        m_delayedSortTimer->start(1000, true);
+        m_delayedSortTimer->start(1000);
     }
 }
 
@@ -2763,7 +2765,7 @@ void Channel::setIdentity(const IdentityPtr identity)
 
 bool Channel::eventFilter(QObject* watched, QEvent* e)
 {
-    if((watched == nicknameListView) && (e->type() == QEvent::Resize) && splittersInitialized && isShown())
+    if((watched == nicknameListView) && (e->type() == QEvent::Resize) && splittersInitialized && isVisible())
     {
         if (!topicSplitterHidden && !channelSplitterHidden)
         {
@@ -2940,10 +2942,10 @@ QString NickList::completeNick(const QString& pattern, bool& complete, QStringLi
     if(found.count() > 1)
     {
         bool ok = true;
-        unsigned int patternLength = pattern.length();
+        int patternLength = pattern.length();
         QString firstNick = found[0];
-        unsigned int firstNickLength = firstNick.length();
-        unsigned int foundCount = found.count();
+        int firstNickLength = firstNick.length();
+        int foundCount = found.count();
 
         while(ok && ((patternLength) < firstNickLength))
         {

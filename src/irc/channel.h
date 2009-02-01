@@ -21,14 +21,6 @@
 
 #include <qtimer.h>
 #include <qstring.h>
-//Added by qt3to4:
-#include <Q3ValueList>
-#include <QLabel>
-#include <Q3PtrList>
-#include <QDropEvent>
-#include <QEvent>
-#include <Q3PtrCollection>
-#include <QShowEvent>
 
 
 class QPushButton;
@@ -367,7 +359,7 @@ class Channel : public ChatWindow
 
         Q3ValueList<QStringList> m_pendingChannelNickLists;
         int m_opsToAdd;
-        uint m_currentIndex;
+        int m_currentIndex;
 
         QTimer* m_processingTimer;
         QTimer* m_delayedSortTimer;

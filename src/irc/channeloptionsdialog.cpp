@@ -162,7 +162,7 @@ namespace Konversation
 
     QString ChannelOptionsDialog::topic()
     {
-        return m_ui.topicEdit->text().replace("\n"," ");
+        return m_ui.topicEdit->toPlainText().replace('\n',' ');
     }
 
     void ChannelOptionsDialog::refreshTopicHistory()
