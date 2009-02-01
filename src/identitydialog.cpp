@@ -132,7 +132,7 @@ namespace Konversation
         m_currentIdentity->setRealName(m_realNameEdit->text());
         QStringList nicks;
 
-        for(unsigned int i = 0; i < m_nicknameLBox->count(); ++i)
+        for(int i = 0; i < m_nicknameLBox->count(); ++i)
         {
             nicks.append(m_nicknameLBox->text(i));
         }
@@ -194,7 +194,7 @@ namespace Konversation
             identity->setName(txt);
             identity->setIdent(user.loginName());
             m_identityList.append(identity);
-            m_identityCBox->insertItem(txt);
+            m_identityCBox->addItem(txt);
             m_identityCBox->setCurrentIndex(m_identityCBox->count() - 1);
             updateIdentity(m_identityCBox->currentIndex());
         }
@@ -262,7 +262,7 @@ namespace Konversation
             KGuiItem(i18n("Delete"), "editdelete")) == KMessageBox::Continue)
         {
             m_identityCBox->removeItem(current);
-            m_identityList.remove(m_currentIdentity);
+            m_identityList.removeAll(m_currentIdentity);
             m_currentIdentity = 0;
             updateIdentity(m_identityCBox->currentIndex());
         }
@@ -283,7 +283,7 @@ namespace Konversation
 #warning "port kde4"
 #endif
             m_identityList.append(identity);
-            m_identityCBox->insertItem(txt);
+            m_identityCBox->addItem(txt);
             m_identityCBox->setCurrentIndex(m_identityCBox->count() - 1);
             updateIdentity(m_identityCBox->currentIndex());
         }
