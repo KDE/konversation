@@ -99,7 +99,7 @@ class IRCView : public QPlainTextEdit
         void autoText(const QString& text); ///< helper for autotext-on-highlight
         void textPasted(bool useSelection); ///< middle button with no m_copyUrlMenu
         void popupCommand(int); ///< wired to all of the popup menus
-        void filesDropped(const Q3StrList&); ///< Q3UriDrag::decode valid in contentsDropEvent
+        void filesDropped(const QStringList&); ///< Q3UriDrag::decode valid in contentsDropEvent
         void doSearch(); ///< this is a 
 
         void setStatusBarTempText(const QString&); //! these two look like mixins to me

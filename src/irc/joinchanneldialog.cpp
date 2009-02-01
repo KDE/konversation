@@ -44,25 +44,19 @@ namespace Konversation
         {
             ChannelList history = server->getServerGroup()->channelHistory();
             ChannelList::iterator endIt = history.end();
-            const Q3PtrList<Channel> &channels = server->getChannelList();
-            Q3PtrListIterator<Channel> chanIt(channels);
-            Channel* chan = 0;
+            const QList<Channel *> &channels = server->getChannelList();
             bool joined = false;
 
             for(ChannelList::iterator it = history.begin(); it != endIt; ++it)
             {
-                chan = chanIt.toFirst();
                 joined = false;
 
-                while(chan)
+                foreach (Channel* chan, channels)
                 {
                     if(chan->getName() == (*it).name())
                     {
                         joined = true;
                     }
-
-                    ++chanIt;
-                    chan = chanIt.current();
                 }
 
                 if(!joined)

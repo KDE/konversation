@@ -425,9 +425,9 @@ void Channel::filesDropped(QDropEvent* e)
     QPoint p(nicknameListView->contentsToViewport(e->pos()));
     Nick* it = dynamic_cast<Nick*>(nicknameListView->itemAt(p));
     if (!it) return;
-    Q3StrList uris;
-    if (Q3UriDrag::decode(e,uris))
-        m_server->sendURIs(uris, it->getChannelNick()->getNickname());
+   // Q3StrList uris;
+   // if (Q3UriDrag::decode(e,uris))
+   //     m_server->sendURIs(uris, it->getChannelNick()->getNickname());
 }
 
 void Channel::textPasted(const QString& text)
@@ -931,21 +931,17 @@ void Channel::setAutoJoin(bool autojoin)
     {
         Konversation::ChannelSettings before;
 
-        Q3PtrList<Channel> channelList = m_server->getChannelList();
+        QList<Channel *> channelList = m_server->getChannelList();
 
         if (channelList.count() > 1)
         {
-            Q3PtrListIterator<Channel> it(channelList);
-            Channel* channel;
             QMap<int, Channel*> channelMap;
 
             int index = -1;
             int ownIndex = m_server->getViewContainer()->getViewIndex(this);
 
-            while ((channel = it.current()) != 0)
+            foreach (Channel* channel, channelList)
             {
-                ++it;
-
                 index = m_server->getViewContainer()->getViewIndex(channel);
 
                 if (index && index > ownIndex) channelMap.insert(index, channel);
@@ -954,6 +950,7 @@ void Channel::setAutoJoin(bool autojoin)
             if (channelMap.count())
             {
                 QMap<int, Channel*>::Iterator it2;
+                Channel* channel;
 
                 for (it2 = channelMap.begin(); it2 != channelMap.end(); ++it2)
                 {

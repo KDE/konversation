@@ -76,7 +76,7 @@ Query::Query(QWidget* parent, QString _name) : ChatWindow(parent)
     IRCViewBox* ircBox = new IRCViewBox(m_headerSplitter,0);
     setTextView(ircBox->ircView());               // Server will be set later in setServer();
     textView->setAcceptDrops(true);
-    connect(textView,SIGNAL(filesDropped(const Q3StrList&)),this,SLOT(filesDropped(const Q3StrList&)));
+    connect(textView,SIGNAL(filesDropped(const QStringList&)),this,SLOT(filesDropped(const QStringList&)));
     connect(textView,SIGNAL(popupCommand(int)),this,SLOT(popup(int)));
 
     // link "Whois", "Ignore" ... menu items into ircview popup
@@ -636,9 +636,9 @@ void Query::closeWithoutAsking()
     m_server->removeQuery(this);
 }
 
-void Query::filesDropped(const Q3StrList& files)
+void Query::filesDropped(const QStringList& files)
 {
-    m_server->sendURIs(files,getName());
+    m_server->sendURIs(files, getName());
 }
 
 void Query::serverOnline(bool online)

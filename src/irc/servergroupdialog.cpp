@@ -322,7 +322,7 @@ namespace Konversation
 
         if(current < m_channelList.count())
         {
-            m_channelList.remove(m_channelList.at(current));
+            m_channelList.removeOne(m_channelList.at(current));
             m_mainWidget->m_channelLBox->removeItem(current);
             updateChannelArrows();
         }
@@ -349,9 +349,7 @@ namespace Konversation
             m_mainWidget->m_channelLBox->removeItem(current);
             m_mainWidget->m_channelLBox->insertItem(channel.name(), current - 1);
             m_mainWidget->m_channelLBox->setCurrentItem(current - 1);
-            ChannelList::iterator it = m_channelList.remove(m_channelList.at(current));
-            --it;
-            m_channelList.insert(it, channel);
+            m_channelList.move(current, current - 1);
         }
 
         updateChannelArrows();
@@ -367,9 +365,7 @@ namespace Konversation
             m_mainWidget->m_channelLBox->removeItem(current);
             m_mainWidget->m_channelLBox->insertItem(channel.name(), current + 1);
             m_mainWidget->m_channelLBox->setCurrentItem(current + 1);
-            ChannelList::iterator it = m_channelList.remove(m_channelList.at(current));
-            ++it;
-            m_channelList.insert(it, channel);
+            m_channelList.move(current, current + 1);
         }
 
         updateChannelArrows();

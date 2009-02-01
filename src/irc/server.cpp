@@ -18,11 +18,6 @@
 #include "server.h"
 #include "ircqueue.h"
 #include "query.h"
-//Added by qt3to4:
-#include <Q3StrList>
-#include <Q3ValueList>
-#include <Q3CString>
-#include <Q3PtrList>
 #include "channel.h"
 #include "application.h" ////// header renamed
 #include "connectionmanager.h"
@@ -123,8 +118,6 @@ Server::Server(QObject* parent, ConnectionSettings& settings) : QObject(parent)
     m_outputFilter = new Konversation::OutputFilter(this);
     //m_scriptLauncher = new ScriptLauncher(this);
 
-    // don't delete items when they are removed
-    m_channelList.setAutoDelete(false);
     // For /msg query completion
     m_completeQueryPosition = 0;
 
@@ -167,10 +160,10 @@ Server::~Server()
     closeRawLog();
     closeChannelListPanel();
 
-    m_channelList.setAutoDelete(true);
+    qDeleteAll(m_channelList);
     m_channelList.clear();
 
-    m_queryList.setAutoDelete(true);
+    qDeleteAll(m_queryList);
     m_queryList.clear();
 
     // Delete all the NickInfos and ChannelNick structures.
@@ -189,8 +182,7 @@ Server::~Server()
     m_queryNicks.clear();
 
     //Delete the queues
-    for (Q3ValueVector<IRCQueue *>::iterator it=m_queues.begin(); it != m_queues.end(); ++it)
-        delete *it;
+    qDeleteAll(m_queues);
 
     emit destroyed(m_connectionId);
 
@@ -690,12 +682,12 @@ void Server::registerWithServices()
 }
 
 //FIXME operator[] inserts an empty T& so each destination might just as well have its own key storage
-Q3CString Server::getKeyForRecipient(const QString& recipient) const
+QByteArray Server::getKeyForRecipient(const QString& recipient) const
 {
     return m_keyMap[recipient];
 }
 
-void Server::setKeyForRecipient(const QString& recipient, const Q3CString& key)
+void Server::setKeyForRecipient(const QString& recipient, const QByteArray& key)
 {
     m_keyMap[recipient] = key;
 }
@@ -911,24 +903,10 @@ void Server::incoming()
     //if (len <= 0 && getConnectionSettings().server().SSLEnabled())
     //    return;
 
-    /*if (len <= 0) // Zero means buffer is empty which shouldn't happen because readyRead signal is emitted
-    {
-        getStatusView()->appendServerMessage(i18n("Error"),
-            i18n("There was an error reading the data from the server: %1",
-                 m_socket->errorString()));
-
-        broken(m_socket->error());
-        return;
-    }*/
-
     // split buffer to lines
     QList<QByteArray> bufferLines;
-    while(m_socket->canReadLine())
-    {
-        QByteArray line(m_socket->readLine());
-        if( !line.isEmpty() )
-            bufferLines.append(line);
-    }
+    while (m_socket->canReadLine())
+        bufferLines.append(m_socket->readLine());
 
     while(!bufferLines.isEmpty())
     {
@@ -1594,7 +1572,7 @@ void Server::requestDccSend()
     requestDccSend(QString());
 }
 
-void Server::sendURIs(const Q3StrList& uris, const QString& nick)
+void Server::sendURIs(const QStringList& uris, const QString& nick)
 {
 //    for (Q3StrListIterator it(uris) ; *it; ++it)
 //        addDccSend(nick,KUrl(*it));
@@ -1975,23 +1953,7 @@ void Server::dccStatusChanged(DccTransfer *item, int newStatus, int oldStatus)
 
 void Server::removeQuery(class Query* query)
 {
-    // Traverse through list to find the query
-    class Query* lookQuery = m_queryList.first();
-
-    while (lookQuery)
-    {
-        // Did we find our query?
-        if (lookQuery == query)
-        {
-            // Remove it from the query list
-            m_queryList.remove(lookQuery);
-            // break out of the loop
-            lookQuery = 0;
-        }
-        // else select next query
-        else lookQuery = m_queryList.next();
-    }
-
+    m_queryList.removeOne(query);
     query->deleteLater();
 }
 
@@ -2051,7 +2013,7 @@ void Server::removeChannel(Channel* channel)
         getServerGroup()->appendChannelHistory(channelSettings);
     }
 
-    m_channelList.removeRef(channel);
+    m_channelList.removeOne(channel);
 }
 
 void Server::updateChannelMode(const QString &updater, const QString &channelName, char mode, bool plus, const QString &parameter)
@@ -2116,27 +2078,21 @@ void Server::updateChannelModeWidgets(const QString &channelName, char mode, con
 
 void Server::updateChannelQuickButtons()
 {
-    Channel* channel=m_channelList.first();
-
-    while (channel)
+    foreach (Channel* channel, m_channelList)
     {
         channel->updateQuickButtons(Preferences::quickButtonList());
-        channel = m_channelList.next();
     }
 }
 
 Channel* Server::getChannelByName(const QString& name)
 {
     // Convert wanted channel name to lowercase
-    QString wanted=name;
-    wanted=wanted.toLower();
+    QString wanted = name.toLower();
 
     // Traverse through list to find the channel named "name"
-    Channel* lookChannel =m_channelList.first();
-    while (lookChannel)
+    foreach (Channel* lookChannel, m_channelList)
     {
         if (lookChannel->getName().toLower()==wanted) return lookChannel;
-        lookChannel = m_channelList.next();
     }
     // No channel by that name found? Return 0. Happens on first channel join
     return 0;
@@ -2145,15 +2101,12 @@ Channel* Server::getChannelByName(const QString& name)
 class Query* Server::getQueryByName(const QString& name)
 {
     // Convert wanted query name to lowercase
-    QString wanted=name;
-    wanted=wanted.toLower();
+    QString wanted = name.toLower();
 
     // Traverse through list to find the query with "name"
-    class Query* lookQuery=m_queryList.first();
-    while(lookQuery)
+    foreach (Query* lookQuery, m_queryList)
     {
         if(lookQuery->getName().toLower()==wanted) return lookQuery;
-        lookQuery=m_queryList.next();
     }
     // No query by that name found? Must be a new query request. Return 0
     return 0;
@@ -2654,14 +2607,11 @@ void Server::nickWasKickedFromChannel(const QString &channelName, const QString 
 
 void Server::removeNickFromServer(const QString &nickname,const QString &reason)
 {
-    Channel* channel = m_channelList.first();
-    while (channel)
+    foreach (Channel* channel, m_channelList)
     {
         // Check if nick is in this channel or not.
         if(channel->getNickByName(nickname))
             removeNickFromChannel(channel->getName(),nickname,reason,true);
-
-        channel = m_channelList.next();
     }
 
     Query* query=getQueryByName(nickname);
@@ -2702,13 +2652,11 @@ void Server::renameNick(const QString &nickname, const QString &newNick)
         //The rest of the code below allows the channels to echo to the user to tell them that the nick has changed.
 
         // Rename the nick in every channel they are in
-        Channel* channel=m_channelList.first();
-        while (channel)
+        foreach (Channel* channel, m_channelList)
         {
             // All we do is notify that the nick has been renamed.. we haven't actually renamed it yet
             // Note that NickPanel has already updated, so pass new nick to getNickByName.
             if (channel->getNickByName(newNick)) channel->nickRenamed(nickname, *nickInfo);
-            channel = m_channelList.next();
         }
         //Watched nicknames stuff
         if (isWatchedNick(nickname)) setWatchedNickOffline(nickname, NickInfoPtr());
@@ -2917,11 +2865,9 @@ const QString& /*parameter*/)
 void Server::sendToAllChannels(const QString &text)
 {
     // Send a message to all channels we are in
-    Channel* channel = m_channelList.first();
-    while (channel)
+    foreach (Channel* channel, m_channelList)
     {
         channel->sendChannelText(text);
-        channel = m_channelList.next();
     }
 }
 
@@ -3016,12 +2962,8 @@ void Server::updateAutoJoin(Konversation::ChannelSettings channel)
         tmpList = getServerGroup()->channelList();
     else
     {
-        Q3PtrListIterator<Channel> it(m_channelList);
-        Channel* channel;
-
-        while ((channel = it.current()) != 0)
+        foreach (Channel* channel, m_channelList)
         {
-            ++it;
             tmpList << channel->channelSettings();
         }
     }
@@ -3126,21 +3068,15 @@ void Server::executeMultiServerCommand(const QString& command, const QString& pa
 void Server::sendToAllChannelsAndQueries(const QString& text)
 {
     // Send a message to all channels we are in
-    Channel* channel = m_channelList.first();
-
-    while (channel)
+    foreach (Channel* channel, m_channelList)
     {
         channel->sendChannelText(text);
-        channel = m_channelList.next();
     }
 
     // Send a message to all queries we are in
-    class Query* query = m_queryList.first();
-
-    while (query)
+    foreach (Query* query, m_queryList)
     {
         query->sendQueryText(text);
-        query = m_queryList.next();
     }
 }
 

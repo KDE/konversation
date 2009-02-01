@@ -57,7 +57,7 @@ namespace Konversation
     typedef KSharedPtr<ServerGroupSettings> ServerGroupSettingsPtr;
     typedef Q3ValueList<ServerGroupSettingsPtr> ServerGroupList;
     typedef Q3ValueList<ServerSettings> ServerList;
-    typedef Q3ValueList<ChannelSettings> ChannelList;
+    typedef QList<ChannelSettings> ChannelList;
 
     class ServerGroupSettings : public KShared
     {
