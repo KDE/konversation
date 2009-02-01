@@ -23,13 +23,6 @@
 #include <qregexp.h>
 #include <qdom.h>
 #include <qevent.h>
-#include <qobject.h>
-#include <q3popupmenu.h>
-//Added by qt3to4:
-#include <QShowEvent>
-#include <QMouseEvent>
-#include <QHideEvent>
-#include <QKeyEvent>
 
 #include <kapplication.h>
 #include <kmessagebox.h>

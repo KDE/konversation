@@ -20,15 +20,12 @@
 #include <qpixmap.h>
 #include <qobject.h>
 #include <qtoolbutton.h>
-#include <q3popupmenu.h>
-#include <q3widgetstack.h>
-//Added by qt3to4:
-#include <QShowEvent>
 
 #include <kdebug.h>
 #include <kapplication.h>
 #include <kiconloader.h>
 #include <klineedit.h>
+#include <kmenu.h>
 #include <kpushbutton.h>
 #include <klocale.h>
 
@@ -67,7 +64,7 @@ SearchBar::SearchBar(QWidget* parent)
     connect(m_closeButton, SIGNAL(clicked()), SLOT(hide()));
     connect(m_optionsButton, SIGNAL(clicked()), this, SLOT(showOptionsMenu()));
 
-    m_optionsMenu = new Q3PopupMenu(m_optionsButton, "options_menu");
+    m_optionsMenu = new KMenu(m_optionsButton);
     m_optionsMenu->setCheckable(true);
     m_optionsMenu->insertItem(i18n("Find Forward"), this, SLOT(toggleSearchFoward()), 0, SEARCH_FORWARD_MENU);
     m_optionsMenu->insertItem(i18n("Case Sensitive"), this, SLOT(toggleMatchCase()), 0, MATCH_CASE_MENU);

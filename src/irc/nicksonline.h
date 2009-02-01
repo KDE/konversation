@@ -23,14 +23,11 @@
 
 #include <qicon.h>
 #include <qpair.h>
-//Added by qt3to4:
-#include <K3PopupMenu>
-#include <kvbox.h>
+#include <KMenu>
 
 
 class K3ListView;
 class QPushButton;
-class Q3PopupMenu;
 
 class ChatWindow;
 
@@ -248,7 +245,7 @@ class NicksOnline : public ChatWindow
         QPushButton* m_changeAssociationButton;
         QPushButton* m_deleteAssociationButton;
         // Context menu when right-clicking a nick.
-        K3PopupMenu* m_popupMenu;
+        KMenu* m_popupMenu;
         // Helper to display tooltip information for nicks.
         //Konversation::KonversationNicksOnlineToolTip *m_tooltip;
         // A string containing the identifier for the "Offline" listview item

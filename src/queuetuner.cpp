@@ -12,8 +12,7 @@
 
 
 #include "queuetuner.h"
-//Added by qt3to4:
-#include <QContextMenuEvent>
+
 #include "server.h"
 #include "ircqueue.h"
 #include "channel.h"
@@ -22,12 +21,12 @@
 
 #include <qtoolbutton.h>
 #include <qspinbox.h>
-#include <q3popupmenu.h>
 #include <qevent.h>
 
 #include <kdebug.h>
 #include <kapplication.h>
 #include <kiconloader.h>
+#include <kmenu.h>
 #include <kmessagebox.h>
 #include <kstdguiitem.h>
 #include <klocale.h>
@@ -240,14 +239,14 @@ void QueueTuner::fastIntervalChanged(int v)
 
 void QueueTuner::contextMenuEvent(QContextMenuEvent* e)
 {
-    Q3PopupMenu p(this);
+    KMenu p(this);
     p.insertItem(i18n("Reset..."), 1);
-    int id = p.exec(e->globalPos());
-    if (id > 0)
+    QAction *action = p.exec(e->globalPos());
+    if (action)
     {
 
         QString question(i18n("This cannot be undone, are you sure you wish to reset to default values?"));
-        int x = KMessageBox::warningContinueCancel(this, question, i18n("Reset Values"), KStandardGuiItem::reset(), KGuiItem(),QString::null, KMessageBox::Dangerous);
+        int x = KMessageBox::warningContinueCancel(this, question, i18n("Reset Values"), KStandardGuiItem::reset(), KGuiItem(), QString(), KMessageBox::Dangerous);
         if ( x == KMessageBox::Continue)
         {
             Server::_resetRates();

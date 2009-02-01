@@ -17,14 +17,10 @@
 #include "connectionsettings.h"
 
 #include <qpushbutton.h>
-#include <q3frame.h>
 #include <qlayout.h>
 #include <qstringlist.h>
 #include <q3header.h>
 #include <qcheckbox.h>
-//Added by qt3to4:
-#include <Q3GridLayout>
-#include <Q3PtrList>
 
 #include <klocale.h>
 #include <kdebug.h>
@@ -138,7 +134,9 @@ namespace Konversation
         showAtStartup->setChecked(Preferences::self()->showServerList());
         connect(showAtStartup, SIGNAL(toggled(bool)), this, SLOT(setShowAtStartup(bool)));
 
-        Q3GridLayout* layout = new Q3GridLayout(mainWidget(), 5, 2, 0, spacingHint());
+        QGridLayout* layout = new QGridLayout(mainWidget());
+        layout->setSpacing(spacingHint());
+        layout->setMargin(0);
 
         layout->addMultiCellWidget(m_serverList, 0, 3, 0, 0);
         layout->addWidget(m_addButton, 0, 1);

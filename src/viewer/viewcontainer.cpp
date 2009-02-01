@@ -36,7 +36,6 @@
 
 #include <QList>
 #include <QSplitter>
-#include <Q3PopupMenu>
 #include <QToolButton>
 
 #include <KDebug>
@@ -1663,7 +1662,7 @@ void ViewContainer::showViewContextMenu(QWidget* tab, const QPoint& pos)
     m_popupViewIndex = m_tabWidget->indexOf(tab);
 
     updateViewActions(m_popupViewIndex);
-    Q3PopupMenu* menu = static_cast<Q3PopupMenu*>(m_window->guiFactory()->container("tabContextMenu", m_window));
+    KMenu* menu = static_cast<KMenu*>(m_window->guiFactory()->container("tabContextMenu", m_window));
 
     if (!menu) return;
 
@@ -1710,7 +1709,7 @@ void ViewContainer::showViewContextMenu(QWidget* tab, const QPoint& pos)
             m_contextServer = 0;
     }
 
-    if (menu->exec(pos) == -1)
+    if (menu->exec(pos) == 0)
     {
         m_popupViewIndex = -1;
         view = static_cast<ChatWindow*>(m_tabWidget->currentWidget());

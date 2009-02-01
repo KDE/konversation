@@ -12,11 +12,8 @@
 #include "servergroupsettings.h"
 
 #include <qlayout.h>
-#include <q3frame.h>
 #include <qlabel.h>
 #include <qlineedit.h>
-//Added by qt3to4:
-#include <Q3GridLayout>
 
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -31,7 +28,9 @@ namespace Konversation
         setCaption(title);
         setButtons(Ok|Cancel);
 
-        Q3GridLayout* mainLayout = new Q3GridLayout(mainWidget(), 1, 2, 0, spacingHint());
+        QGridLayout* mainLayout = new QGridLayout(mainWidget());
+        mainLayout->setSpacing(spacingHint());
+        mainLayout->setMargin(0);
 
         QLabel* channelLbl = new QLabel(i18n("C&hannel:"), mainWidget());
         m_channelEdit = new QLineEdit(mainWidget());

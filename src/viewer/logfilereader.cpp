@@ -26,9 +26,6 @@
 #include <qregexp.h>
 #include <qspinbox.h>
 #include <q3stylesheet.h>
-//Added by qt3to4:
-#include <QEvent>
-#include <QKeyEvent>
 
 #include <kdialog.h>
 #include <ktoolbar.h>
@@ -51,7 +48,7 @@ LogfileReader::LogfileReader(QWidget* parent, const QString& log) : ChatWindow(p
     toolBar->setObjectName("logfile_toolbar");
     toolBar->addAction(KIcon("document-save-as"), i18n("Save As..."), this, SLOT(saveLog()));
 
-    new QLabel(i18n("Show last:"),toolBar,"logfile_size_label");
+    new QLabel(i18n("Show last:"),toolBar);
     sizeSpin = new QSpinBox(10,1000,10,toolBar,"logfile_size_spinbox");
     sizeSpin->setWhatsThis(i18n("Use this box to set the maximum size of the log file. This setting does not take effect until you restart Konversation. Each log file may have a separate setting."));
     sizeSpin->setValue(Preferences::self()->logfileBufferSize());
@@ -116,7 +113,7 @@ void LogfileReader::updateView()
 
         // Set file pointer to <pos> bytes from the end
         if(stream.device()->size()>pos)
-            stream.device()->at(stream.device()->size()-pos);
+            stream.device()->seek(stream.device()->size()-pos);
         // Skip first line, since it may be incomplete
         stream.readLine();
         QString str;

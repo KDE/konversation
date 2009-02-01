@@ -18,15 +18,6 @@
 #include "nick.h"
 #include "nicklistview.h"
 #include "quickbutton.h"
-//Added by qt3to4:
-#include <Q3StrList>
-#include <QGridLayout>
-#include <QShowEvent>
-#include <Q3ValueList>
-#include <Q3PtrCollection>
-#include <QDropEvent>
-#include <Q3CString>
-#include <Q3PtrList>
 #include "modebutton.h"
 #include "ircinput.h"
 #include "ircviewbox.h"
@@ -444,7 +435,7 @@ void Channel::textPasted(const QString& text)
     if(m_server)
     {
         QStringList multiline = text.split('\n', QString::SkipEmptyParts);
-        for(unsigned int index=0;index<multiline.count();index++)
+        for(int index=0;index<multiline.count();index++)
         {
             QString line=multiline[index];
             QString cChar(Preferences::self()->commandChar());
@@ -1330,7 +1321,7 @@ void Channel::removeNick(ChannelNickPtr channelNick, const QString &reason, bool
     if(!displayReason.isEmpty())
     {
         // if the reason contains text markup characters, play it safe and reset all
-        if(displayReason.find(QRegExp("[\\0000-\\0037]")) != -1)
+        if(displayReason.indexOf(QRegExp("[\\0000-\\0037]")) != -1)
             displayReason += "\017";
     }
 
@@ -1401,7 +1392,7 @@ void Channel::kickNick(ChannelNickPtr channelNick, const QString &kicker, const 
     if(!displayReason.isEmpty())
     {
         // if the reason contains text markup characters, play it safe and reset all
-        if(displayReason.find(QRegExp("[\\0000-\\0037]")) != -1)
+        if(displayReason.indexOf(QRegExp("[\\0000-\\0037]")) != -1)
             displayReason += "\017";
     }
 
@@ -2913,7 +2904,7 @@ QString NickList::completeNick(const QString& pattern, bool& complete, QStringLi
     NickList foundNicks;
     foundNicks.setCompareMethod(NickList::TimeStamp);
 
-    if((pattern.find(QRegExp("^(\\d|\\w)")) != -1) && skipNonAlfaNum)
+    if((pattern.indexOf(QRegExp("^(\\d|\\w)")) != -1) && skipNonAlfaNum)
     {
         prefix = "^([^\\d\\w]|[\\_]){0,}";
     }
@@ -2931,7 +2922,7 @@ QString NickList::completeNick(const QString& pattern, bool& complete, QStringLi
             newNick = newNick.section( prefixCharacter,1 );
         }
 
-        if(newNick.find(regexp) != -1)
+        if(newNick.indexOf(regexp) != -1)
         {
             foundNicks.append(it.current());
         }

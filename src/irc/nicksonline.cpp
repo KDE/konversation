@@ -135,7 +135,7 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
     setupAddressbookButtons(nsNotANick);
 
     // Create context menu.  Individual menu entries are created in rightButtonClicked slot.
-    m_popupMenu = new K3PopupMenu(this);
+    m_popupMenu = new KMenu(this);
     m_popupMenu->setObjectName("nicksonline_context_menu");
     connect(m_nickListView, SIGNAL(rightButtonClicked(Q3ListViewItem *, const QPoint &, int )),
         this, SLOT(slotNickListView_RightButtonClicked(Q3ListViewItem*, const QPoint &)));

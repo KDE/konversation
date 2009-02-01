@@ -78,7 +78,7 @@ namespace Konversation
             bool m_identitiesNeedsUpdate;
 
             bool m_editedServer;
-            uint m_editedServerIndex;
+            int m_editedServerIndex;
             ServerList m_serverList;
             ChannelList m_channelList;
             ChannelList m_channelHistory;

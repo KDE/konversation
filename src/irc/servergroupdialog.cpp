@@ -21,13 +21,10 @@
 #include "identitydialog.h"
 #include "servergroupdialogui.h"
 
-#include <q3frame.h>
 #include <qlayout.h>
 #include <qlabel.h>
 #include <qlineedit.h>
 #include <qcombobox.h>
-#include <q3groupbox.h>
-#include <q3listbox.h>
 #include <qpushbutton.h>
 #include <qtoolbutton.h>
 #include <qcheckbox.h>
@@ -36,7 +33,6 @@
 #include <kiconloader.h>
 #include <kmessagebox.h>
 #include <kcombobox.h>
-#include <k3listbox.h>
 #include <kpushbutton.h>
 
 
@@ -75,7 +71,7 @@ namespace Konversation
 
         m_mainWidget->m_serverLBox->setWhatsThis(i18n("This is a list of IRC Servers in the network. When connecting to the network, Konversation will attempt to connect to the top server first. If this fails, it will attempt the second server. If this fails, it will attempt the third, and so on. At least one server must be specified. Click a server to highlight it."));
         m_mainWidget->m_removeServerButton->setIcon(KIcon("list-remove"));
-        m_mainWidget->m_removeServerButton->setTextLabel(i18n("Delete"));
+        m_mainWidget->m_removeServerButton->setText(i18n("Delete"));
         m_mainWidget->m_upServerBtn->setIcon(KIcon("arrow-up"));
         m_mainWidget->m_downServerBtn->setIcon(KIcon("arrow-down"));
 
@@ -88,7 +84,7 @@ namespace Konversation
 
         m_mainWidget->m_channelLBox->setWhatsThis(i18n("Optional. This is a list of the channels that will be automatically joined once Konversation has connected to a server. You may leave this blank if you wish to not automatically join any channels."));
         m_mainWidget->m_removeChannelButton->setIcon(KIcon("list-remove"));
-        m_mainWidget->m_removeChannelButton->setTextLabel(i18n("Delete"));
+        m_mainWidget->m_removeChannelButton->setText(i18n("Delete"));
         m_mainWidget->m_upChannelBtn->setIcon(KIcon("arrow-up"));
         m_mainWidget->m_downChannelBtn->setIcon(KIcon("arrow-down"));
 
@@ -146,7 +142,7 @@ namespace Konversation
         settings->setSortIndex(m_sortIndex);
         settings->setName(m_mainWidget->m_nameEdit->text());
         IdentityList identities = Preferences::identityList();
-        settings->setIdentityId(identities[m_mainWidget->m_identityCBox->currentItem()]->id());
+        settings->setIdentityId(identities[m_mainWidget->m_identityCBox->currentIndex()]->id());
         settings->setConnectCommands(m_mainWidget->m_commandEdit->text());
         settings->setAutoConnectEnabled(m_mainWidget->m_autoConnectCBox->isChecked());
         settings->setServerList(m_serverList);
@@ -190,7 +186,7 @@ namespace Konversation
 
     void ServerGroupDialog::editServer()
     {
-        uint current = m_mainWidget->m_serverLBox->currentItem();
+        int current = m_mainWidget->m_serverLBox->currentItem();
 
         if(current < m_serverList.count())
         {
@@ -219,7 +215,7 @@ namespace Konversation
 
     void ServerGroupDialog::deleteServer()
     {
-        uint current = m_mainWidget->m_serverLBox->currentItem();
+        int current = m_mainWidget->m_serverLBox->currentItem();
 
         if (current < m_serverList.count())
         {
@@ -247,7 +243,7 @@ namespace Konversation
 
     void ServerGroupDialog::moveServerUp()
     {
-        uint current = m_mainWidget->m_serverLBox->currentItem();
+        int current = m_mainWidget->m_serverLBox->currentItem();
 
         if (current > 0)
         {
@@ -269,7 +265,7 @@ namespace Konversation
 
     void ServerGroupDialog::moveServerDown()
     {
-        uint current = m_mainWidget->m_serverLBox->currentItem();
+        int current = m_mainWidget->m_serverLBox->currentItem();
 
         if (current < (m_serverList.count() - 1))
         {
@@ -304,7 +300,7 @@ namespace Konversation
 
     void ServerGroupDialog::editChannel()
     {
-        uint current = m_mainWidget->m_channelLBox->currentItem();
+        int current = m_mainWidget->m_channelLBox->currentItem();
 
         if(current < m_channelList.count())
         {
@@ -322,7 +318,7 @@ namespace Konversation
 
     void ServerGroupDialog::deleteChannel()
     {
-        uint current = m_mainWidget->m_channelLBox->currentItem();
+        int current = m_mainWidget->m_channelLBox->currentItem();
 
         if(current < m_channelList.count())
         {
@@ -345,7 +341,7 @@ namespace Konversation
 
     void ServerGroupDialog::moveChannelUp()
     {
-        uint current = m_mainWidget->m_channelLBox->currentItem();
+        int current = m_mainWidget->m_channelLBox->currentItem();
 
         if(current > 0)
         {
@@ -363,7 +359,7 @@ namespace Konversation
 
     void ServerGroupDialog::moveChannelDown()
     {
-        uint current = m_mainWidget->m_channelLBox->currentItem();
+        int current = m_mainWidget->m_channelLBox->currentItem();
 
         if(current < (m_channelList.count() - 1))
         {
