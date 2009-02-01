@@ -19,6 +19,7 @@
 #include <kdialog.h>
 #include <k3listview.h>
 
+#include "ui_channeloptionsui.h"
 
 namespace Konversation
 {
@@ -66,7 +67,7 @@ namespace Konversation
 
 
         private:
-            ChannelOptionsUI* m_widget;
+            Ui::ChannelOptionsUI m_ui;
             Channel *m_channel;
     };
 

@@ -13,7 +13,6 @@
 
 #include "channeloptionsdialog.h"
 #include "application.h"
-#include "channeloptionsui.h"
 #include "channel.h"
 
 #include <qcheckbox.h>
@@ -42,30 +41,28 @@ namespace Konversation
         setDefaultButton( KDialog::Ok );
 
         Q_ASSERT(channel);
-        m_widget = new ChannelOptionsUI(this);
-        setMainWidget(m_widget);
+        m_ui.setupUi(mainWidget());
 
-        m_widget->otherModesList->setRenameable(0, false);
-        m_widget->otherModesList->setRenameable(1, true);
-        m_widget->otherModesList->hide();
+        m_ui.otherModesList->setRenameable(0, false);
+        m_ui.otherModesList->setRenameable(1, true);
+        m_ui.otherModesList->hide();
 
         // don't allow sorting. most recent topic is always first
-        m_widget->topicHistoryList->setSortColumn(-1);
-        m_widget->clearButton->setIcon(KIcon("edit-clear-locationbar-ltr"));
-        m_widget->banList->setDefaultRenameAction(Q3ListView::Accept);
-        m_widget->banListSearchLine->setListView(m_widget->banList);
+        m_ui.topicHistoryList->setSortColumn(-1);
+        m_ui.banList->setDefaultRenameAction(Q3ListView::Accept);
+        m_ui.banListSearchLine->setListView(m_ui.banList);
         // hide column where the complete topic will be put in for convenience
-        m_widget->topicHistoryList->hideColumn(2);
+        m_ui.topicHistoryList->hideColumn(2);
         // do not allow the user to resize the hidden column back into view
-        m_widget->topicHistoryList->header()->setResizeEnabled(false,2);
+        m_ui.topicHistoryList->header()->setResizeEnabled(false,2);
 
         m_channel = channel;
         m_editingTopic = false;
 
-        connect(m_widget->topicHistoryList, SIGNAL(clicked(Q3ListViewItem*)), this, SLOT(topicHistoryItemClicked(Q3ListViewItem*)));
-        connect(m_widget->topicHistoryList, SIGNAL(selectionChanged(Q3ListViewItem*)), this, SLOT(topicHistoryItemClicked(Q3ListViewItem*)));
-        connect(m_widget->toggleAdvancedModes, SIGNAL(clicked()), this, SLOT(toggleAdvancedModes()));
-        connect(m_widget->topicEdit, SIGNAL(modificationChanged(bool)), this, SLOT(topicBeingEdited(bool)));
+        connect(m_ui.topicHistoryList, SIGNAL(clicked(Q3ListViewItem*)), this, SLOT(topicHistoryItemClicked(Q3ListViewItem*)));
+        connect(m_ui.topicHistoryList, SIGNAL(selectionChanged(Q3ListViewItem*)), this, SLOT(topicHistoryItemClicked(Q3ListViewItem*)));
+        connect(m_ui.toggleAdvancedModes, SIGNAL(clicked()), this, SLOT(toggleAdvancedModes()));
+        connect(m_ui.topicEdit, SIGNAL(modificationChanged(bool)), this, SLOT(topicBeingEdited(bool)));
 
         connect(m_channel, SIGNAL(topicHistoryChanged()), this, SLOT(refreshTopicHistory()));
 
@@ -81,12 +78,12 @@ namespace Konversation
 
         connect(m_channel, SIGNAL(banAdded(const QString&)), this, SLOT(addBan(const QString&)));
         connect(m_channel, SIGNAL(banRemoved(const QString&)), this, SLOT(removeBan(const QString&)));
-        connect(m_channel, SIGNAL(banListCleared()), m_widget->banList, SLOT(clear()));
+        connect(m_channel, SIGNAL(banListCleared()), m_ui.banList, SLOT(clear()));
 
-        connect(m_widget->addBan, SIGNAL(clicked()), this, SLOT(addBanClicked()));
-        connect(m_widget->removeBan, SIGNAL(clicked()), this, SLOT(removeBanClicked()));
-        connect(m_widget->banList, SIGNAL(itemRenamed (Q3ListViewItem*)), this, SLOT(banEdited(Q3ListViewItem*)));
-        connect(m_widget->banList, SIGNAL(itemRenamed (Q3ListViewItem*, int, const QString&)), this, SLOT(banEdited(Q3ListViewItem*)));
+        connect(m_ui.addBan, SIGNAL(clicked()), this, SLOT(addBanClicked()));
+        connect(m_ui.removeBan, SIGNAL(clicked()), this, SLOT(removeBanClicked()));
+        connect(m_ui.banList, SIGNAL(itemRenamed (Q3ListViewItem*)), this, SLOT(banEdited(Q3ListViewItem*)));
+        connect(m_ui.banList, SIGNAL(itemRenamed (Q3ListViewItem*, int, const QString&)), this, SLOT(banEdited(Q3ListViewItem*)));
 
         refreshTopicHistory();
         refreshBanList();
@@ -149,15 +146,15 @@ namespace Konversation
 
     void ChannelOptionsDialog::toggleAdvancedModes()
     {
-        bool ison = m_widget->toggleAdvancedModes->isChecked();
-        m_widget->otherModesList->setVisible(ison);
+        bool ison = m_ui.toggleAdvancedModes->isChecked();
+        m_ui.otherModesList->setVisible(ison);
         if(ison)
         {
-            m_widget->toggleAdvancedModes->setText(i18n("&Hide Advanced Modes <<"));
+            m_ui.toggleAdvancedModes->setText(i18n("&Hide Advanced Modes <<"));
         }
         else
         {
-            m_widget->toggleAdvancedModes->setText(i18n("&Show Advanced Modes >>"));
+            m_ui.toggleAdvancedModes->setText(i18n("&Show Advanced Modes >>"));
         }
     }
 
@@ -168,25 +165,25 @@ namespace Konversation
 
     QString ChannelOptionsDialog::topic()
     {
-        return m_widget->topicEdit->text().replace("\n"," ");
+        return m_ui.topicEdit->text().replace("\n"," ");
     }
 
     void ChannelOptionsDialog::refreshTopicHistory()
     {
         QStringList history = m_channel->getTopicHistory();
-        m_widget->topicHistoryList->clear();
+        m_ui.topicHistoryList->clear();
         for(QStringList::ConstIterator it = --history.constEnd(); it != --history.constBegin(); --it)
         {
             QDateTime date;
             date.setTime_t((*it).section(' ', 0 ,0).toUInt());
-            new K3ListViewItem(m_widget->topicHistoryList, (*it).section(' ', 1, 1), date.toString(Qt::LocalDate), (*it).section(' ', 2));
+            new K3ListViewItem(m_ui.topicHistoryList, (*it).section(' ', 1, 1), date.toString(Qt::LocalDate), (*it).section(' ', 2));
         }
 
         // update topic preview
-        topicHistoryItemClicked(m_widget->topicHistoryList->selectedItem());
+        topicHistoryItemClicked(m_ui.topicHistoryList->selectedItem());
         // don't destroy the user's edit box if they started editing
         if(!m_editingTopic && !history.isEmpty())
-            m_widget->topicEdit->setText(history.first().section(' ', 2));
+            m_ui.topicEdit->setText(history.first().section(' ', 2));
     }
 
     void ChannelOptionsDialog::topicHistoryItemClicked(Q3ListViewItem* item)
@@ -194,31 +191,31 @@ namespace Konversation
         // if they didn't click on anything, item is null
         if(item)
             // update topic preview
-            m_widget->topicPreview->setText(item->text(2));
+            m_ui.topicPreview->setText(item->text(2));
         else
             // clear topic preview
-            m_widget->topicPreview->setText("");
+            m_ui.topicPreview->setText("");
     }
 
     void ChannelOptionsDialog::refreshEnableModes()
     {
         bool enable = m_channel->getOwnChannelNick()->isAnyTypeOfOp();
-        m_widget->otherModesList->setEnabled(enable);
-        m_widget->topicEdit->setReadOnly(!enable && m_widget->topicModeChBox->isChecked());
+        m_ui.otherModesList->setEnabled(enable);
+        m_ui.topicEdit->setReadOnly(!enable && m_ui.topicModeChBox->isChecked());
 
-        m_widget->topicModeChBox->setEnabled(enable);
-        m_widget->messageModeChBox->setEnabled(enable);
-        m_widget->userLimitChBox->setEnabled(enable);
-        m_widget->userLimitEdit->setEnabled(enable);
-        m_widget->inviteModeChBox->setEnabled(enable);
-        m_widget->moderatedModeChBox->setEnabled(enable);
-        m_widget->secretModeChBox->setEnabled(enable);
-        m_widget->keyModeChBox->setEnabled(enable);
-        m_widget->keyModeEdit->setEnabled(enable);
+        m_ui.topicModeChBox->setEnabled(enable);
+        m_ui.messageModeChBox->setEnabled(enable);
+        m_ui.userLimitChBox->setEnabled(enable);
+        m_ui.userLimitEdit->setEnabled(enable);
+        m_ui.inviteModeChBox->setEnabled(enable);
+        m_ui.moderatedModeChBox->setEnabled(enable);
+        m_ui.secretModeChBox->setEnabled(enable);
+        m_ui.keyModeChBox->setEnabled(enable);
+        m_ui.keyModeEdit->setEnabled(enable);
 
-        m_widget->banList->setItemsRenameable(enable);
-        m_widget->addBan->setEnabled(enable);
-        m_widget->removeBan->setEnabled(enable);
+        m_ui.banList->setItemsRenameable(enable);
+        m_ui.addBan->setEnabled(enable);
+        m_ui.removeBan->setEnabled(enable);
     }
 
     void ChannelOptionsDialog::refreshAllowedChannelModes()
@@ -241,7 +238,7 @@ namespace Konversation
 
         for(int i = 0; i < modeString.length(); i++)
         {
-            new Q3CheckListItem(m_widget->otherModesList, QString(modeString[i]), Q3CheckListItem::CheckBox);
+            new Q3CheckListItem(m_ui.otherModesList, QString(modeString[i]), Q3CheckListItem::CheckBox);
         }
     }
 
@@ -249,17 +246,17 @@ namespace Konversation
     {
         QStringList modes = m_channel->getModeList();
 
-        m_widget->topicModeChBox->setChecked(false);
-        m_widget->messageModeChBox->setChecked(false);
-        m_widget->userLimitChBox->setChecked(false);
-        m_widget->userLimitEdit->setValue(0);
-        m_widget->inviteModeChBox->setChecked(false);
-        m_widget->moderatedModeChBox->setChecked(false);
-        m_widget->secretModeChBox->setChecked(false);
-        m_widget->keyModeChBox->setChecked(false);
-        m_widget->keyModeEdit->setText("");
+        m_ui.topicModeChBox->setChecked(false);
+        m_ui.messageModeChBox->setChecked(false);
+        m_ui.userLimitChBox->setChecked(false);
+        m_ui.userLimitEdit->setValue(0);
+        m_ui.inviteModeChBox->setChecked(false);
+        m_ui.moderatedModeChBox->setChecked(false);
+        m_ui.secretModeChBox->setChecked(false);
+        m_ui.keyModeChBox->setChecked(false);
+        m_ui.keyModeEdit->setText("");
 
-        Q3ListViewItem* item = m_widget->otherModesList->firstChild();
+        Q3ListViewItem* item = m_ui.otherModesList->firstChild();
 
         while(item)
         {
@@ -278,32 +275,32 @@ namespace Konversation
             switch(mode)
             {
                 case 't':
-                    m_widget->topicModeChBox->setChecked(true);
+                    m_ui.topicModeChBox->setChecked(true);
                     break;
                 case 'n':
-                    m_widget->messageModeChBox->setChecked(true);
+                    m_ui.messageModeChBox->setChecked(true);
                     break;
                 case 'l':
-                    m_widget->userLimitChBox->setChecked(true);
-                    m_widget->userLimitEdit->setValue((*it).mid(1).toInt());
+                    m_ui.userLimitChBox->setChecked(true);
+                    m_ui.userLimitEdit->setValue((*it).mid(1).toInt());
                     break;
                 case 'i':
-                    m_widget->inviteModeChBox->setChecked(true);
+                    m_ui.inviteModeChBox->setChecked(true);
                     break;
                 case 'm':
-                    m_widget->moderatedModeChBox->setChecked(true);
+                    m_ui.moderatedModeChBox->setChecked(true);
                     break;
                 case 's':
-                    m_widget->secretModeChBox->setChecked(true);
+                    m_ui.secretModeChBox->setChecked(true);
                     break;
                 case 'k':
-                    m_widget->keyModeChBox->setChecked(true);
-                    m_widget->keyModeEdit->setText((*it).mid(1));
+                    m_ui.keyModeChBox->setChecked(true);
+                    m_ui.keyModeEdit->setText((*it).mid(1));
                     break;
                 default:
                 {
                     bool found = false;
-                    item = m_widget->otherModesList->firstChild();
+                    item = m_ui.otherModesList->firstChild();
                     QString modeString;
                     modeString = mode;
 
@@ -334,39 +331,39 @@ namespace Konversation
         QStringList modes;
         QString mode;
 
-        mode = (m_widget->topicModeChBox->isChecked() ? "+" : "-");
+        mode = (m_ui.topicModeChBox->isChecked() ? "+" : "-");
         mode += 't';
         modes.append(mode);
-        mode = (m_widget->messageModeChBox->isChecked() ? "+" : "-");
+        mode = (m_ui.messageModeChBox->isChecked() ? "+" : "-");
         mode += 'n';
         modes.append(mode);
-        mode = (m_widget->userLimitChBox->isChecked() ? "+" : "-");
-        mode += 'l' + QString::number( m_widget->userLimitEdit->value() );
+        mode = (m_ui.userLimitChBox->isChecked() ? "+" : "-");
+        mode += 'l' + QString::number( m_ui.userLimitEdit->value() );
         modes.append(mode);
-        mode = (m_widget->inviteModeChBox->isChecked() ? "+" : "-");
+        mode = (m_ui.inviteModeChBox->isChecked() ? "+" : "-");
         mode += 'i';
         modes.append(mode);
-        mode = (m_widget->moderatedModeChBox->isChecked() ? "+" : "-");
+        mode = (m_ui.moderatedModeChBox->isChecked() ? "+" : "-");
         mode += 'm';
         modes.append(mode);
-        mode = (m_widget->secretModeChBox->isChecked() ? "+" : "-");
+        mode = (m_ui.secretModeChBox->isChecked() ? "+" : "-");
         mode += 's';
         modes.append(mode);
 
-        if (m_widget->keyModeChBox->isChecked() && !m_widget->keyModeEdit->text().isEmpty())
+        if (m_ui.keyModeChBox->isChecked() && !m_ui.keyModeEdit->text().isEmpty())
         {
             mode = '+';
-            mode += 'k' + m_widget->keyModeEdit->text();
+            mode += 'k' + m_ui.keyModeEdit->text();
             modes.append(mode);
         }
-        else if (!m_widget->keyModeChBox->isChecked())
+        else if (!m_ui.keyModeChBox->isChecked())
         {
             mode = '-';
-            mode += 'k' + m_widget->keyModeEdit->text();
+            mode += 'k' + m_ui.keyModeEdit->text();
             modes.append(mode);
         }
 
-        Q3ListViewItem* item = m_widget->otherModesList->firstChild();
+        Q3ListViewItem* item = m_ui.otherModesList->firstChild();
 
         while(item)
         {
@@ -384,7 +381,7 @@ namespace Konversation
     void ChannelOptionsDialog::refreshBanList()
     {
         QStringList banlist = m_channel->getBanList();
-        m_widget->banList->clear();
+        m_ui.banList->clear();
 
         for (QStringList::const_iterator it = --banlist.constEnd(); it != --banlist.constBegin(); --it)
             addBan((*it));
@@ -392,12 +389,12 @@ namespace Konversation
 
     void ChannelOptionsDialog::addBan(const QString& newban)
     {
-        new BanListViewItem(m_widget->banList, newban.section(' ', 0, 0), newban.section(' ', 1, 1).section('!', 0, 0), newban.section(' ', 2 ,2).toUInt());
+        new BanListViewItem(m_ui.banList, newban.section(' ', 0, 0), newban.section(' ', 1, 1).section('!', 0, 0), newban.section(' ', 2 ,2).toUInt());
     }
 
     void ChannelOptionsDialog::removeBan(const QString& ban)
     {
-        delete m_widget->banList->findItem(ban, 0);
+        delete m_ui.banList->findItem(ban, 0);
     }
 
     void ChannelOptionsDialog::banEdited(Q3ListViewItem *edited)
@@ -439,7 +436,7 @@ namespace Konversation
 
     void ChannelOptionsDialog::addBanClicked()
     {
-        m_NewBan = new BanListViewItem(m_widget->banList, true);
+        m_NewBan = new BanListViewItem(m_ui.banList, true);
 
         m_NewBan->setRenameEnabled(0,true);
         m_NewBan->startRename(0);
@@ -447,17 +444,17 @@ namespace Konversation
 
     void ChannelOptionsDialog::removeBanClicked()
     {
-        if (m_widget->banList->currentItem())
-            m_channel->getServer()->requestUnban(m_widget->banList->currentItem()->text(0), m_channel->getName());
+        if (m_ui.banList->currentItem())
+            m_channel->getServer()->requestUnban(m_ui.banList->currentItem()->text(0), m_channel->getName());
     }
 
     void ChannelOptionsDialog::cancelClicked()
     {
-        if (m_widget->banList->renameLineEdit()->isVisible())
+        if (m_ui.banList->renameLineEdit()->isVisible())
         {
             QKeyEvent e(QEvent::KeyPress, Qt::Key_Escape, 27, Qt::NoButton);
 
-            KApplication::sendEvent(m_widget->banList->renameLineEdit(), &e);
+            KApplication::sendEvent(m_ui.banList->renameLineEdit(), &e);
         }
 
         topicBeingEdited(false);
@@ -466,11 +463,11 @@ namespace Konversation
 
     void ChannelOptionsDialog::okClicked()
     {
-        if (m_widget->banList->renameLineEdit()->isVisible())
+        if (m_ui.banList->renameLineEdit()->isVisible())
         {
             QKeyEvent e(QEvent::KeyPress, Qt::Key_Return, 13, Qt::NoButton);
 
-            KApplication::sendEvent(m_widget->banList->renameLineEdit(), &e);
+            KApplication::sendEvent(m_ui.banList->renameLineEdit(), &e);
         }
     }
 
