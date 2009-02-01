@@ -10,7 +10,6 @@
 */
 
 #include "joinchanneldialog.h"
-#include "joinchannelui.h"
 #include "server.h"
 #include "channel.h"
 #include "servergroupsettings.h"
@@ -35,10 +34,9 @@ namespace Konversation
         setDefaultButton( KDialog::Ok );
         setModal( true );
         m_server = server;
-        m_widget = new JoinChannelUI(this);
-        setMainWidget(m_widget);
+        m_ui.setupUi(mainWidget());
 
-        m_widget->serverLbl->setText(server->getDisplayName());
+        m_ui.serverLbl->setText(server->getDisplayName());
 
         if (m_server->getServerGroup())
         {
@@ -61,12 +59,12 @@ namespace Konversation
 
                 if(!joined)
                 {
-                    m_widget->channelCombo->addToHistory((*it).name());
+                    m_ui.channelCombo->addToHistory((*it).name());
                 }
             }
         }
 
-        m_widget->channelCombo->setCurrentText("");
+        m_ui.channelCombo->setCurrentText("");
         connect( this, SIGNAL( okClicked() ), this, SLOT( slotOk() ) );
     }
 
@@ -76,7 +74,7 @@ namespace Konversation
 
     QString JoinChannelDialog::channel() const
     {
-        QString channel = m_widget->channelCombo->currentText();
+        QString channel = m_ui.channelCombo->currentText();
 
         if(!m_server->isAChannel(channel))
         {
@@ -88,7 +86,7 @@ namespace Konversation
 
     QString JoinChannelDialog::password() const
     {
-        return m_widget->passwordEdit->text();
+        return m_ui.passwordEdit->text();
     }
 
     void JoinChannelDialog::slotOk()

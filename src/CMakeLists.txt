@@ -83,9 +83,10 @@ set (irc_SRCS
 
 kde4_add_ui_files(irc_SRCS
     irc/channeloptionsui.ui
+    irc/joinchannelui.ui
 )
 
-kde4_add_ui3_files(irc_SRCS irc/joinchannelui.ui irc/servergroupdialogui.ui)
+kde4_add_ui3_files(irc_SRCS irc/servergroupdialogui.ui)
 
     #=== Preferences
 set(prefs_SRCS

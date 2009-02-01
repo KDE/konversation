@@ -14,6 +14,7 @@
 
 #include <kdialog.h>
 
+#include "ui_joinchannelui.h"
 
 class Server;
 
@@ -36,7 +37,7 @@ namespace Konversation
             virtual void slotOk();
 
         private:
-            JoinChannelUI* m_widget;
+            Ui::JoinChannelUI m_ui;
             Server* m_server;
     };
 
