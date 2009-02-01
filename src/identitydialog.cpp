@@ -21,9 +21,6 @@
 namespace Konversation
 {
 
-    // FIXME: One of the latest changes introduced a crash on duplication
-    // TODO: dialog closes if an error with a new identity occurs
-    //    (e.g.: on missing items, after showing the KMessageBox)
     IdentityDialog::IdentityDialog(QWidget *parent)
         : KDialog(parent)
     {
