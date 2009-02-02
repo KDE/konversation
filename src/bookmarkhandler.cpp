@@ -21,9 +21,6 @@ Copyright (C) 2002 Carsten Pfeiffer <pfeiffer@kde.org>
 #include "connectionmanager.h"
 // #include "bookmarkmenu.h" ////// header renamed
 
-#include <qstring.h>
-
-#include <kmenu.h>
 #include <kstandarddirs.h>
 #include <KXMLGUIFactory>
 #include <kbookmarkmenu.h>
@@ -52,9 +49,6 @@ m_mainWindow(mainWindow)
     KBookmarkManager *manager = KBookmarkManager::managerForFile( m_file, "konversation");
     manager->setEditorOptions(i18n("Konversation Bookmarks Editor"), false);
     manager->setUpdate( true );
-    //manager->setShowNSBookmarks( false );
-
-    connect( manager, SIGNAL(changed(const QString &,const QString &)), SLOT(slotBookmarksChanged(const QString &,const QString &)));
 
     m_bookmarkMenu = new KBookmarkMenu(manager, this, m_menu, m_mainWindow->actionCollection());
 }
@@ -62,13 +56,6 @@ m_mainWindow(mainWindow)
 KonviBookmarkHandler::~KonviBookmarkHandler()
 {
     delete m_bookmarkMenu;
-}
-
-void KonviBookmarkHandler::slotBookmarksChanged( const QString &,
-const QString &)
-{
-    // This is called when someone changes bookmarks in konversation
-    m_bookmarkMenu->slotBookmarksChanged("");
 }
 
 void KonviBookmarkHandler::openBookmark(const KBookmark &bm, Qt::MouseButtons mb, Qt::KeyboardModifiers km)

@@ -40,10 +40,6 @@ class KonviBookmarkHandler : public QObject, public KBookmarkOwner
         virtual QString currentTitle() const;
         virtual bool enableOption(BookmarkOption option) const;
 
-    private slots:
-        void slotBookmarksChanged(const QString &, const QString & caller);
-
-
     private:
         KonversationMainWindow* m_mainWindow;
         KMenu *m_menu;
