@@ -6,29 +6,28 @@
 */
 
 /*
-  The konversation DCOP interface class
+  The konversation D-Bus interface class
   begin:     Mar 7 2003
   copyright: (C) 2003 by Alex Zepeda
   email:     zipzippy@sonic.net
 */
 
-#ifndef KONV_DCOP_H
-#define KONV_DCOP_H
+#ifndef KONVERSATION_DBUS_H
+#define KONVERSATION_DBUS_H
 
-//#include "konviface.h"
 #include "common.h"
 
 #include <qobject.h>
-#if 0
-#include <dcopobject.h>
 
+namespace Konversation
+{
 
-class KonvDCOP : public QObject, virtual public KonvIface
+class DBus : public QObject
 {
     Q_OBJECT
 
     public:
-        KonvDCOP();
+        DBus(QObject *parent = 0);
 
         QString getNickname (const QString &server);
         QString getAnyNickname ();
@@ -68,12 +67,12 @@ class KonvDCOP : public QObject, virtual public KonvIface
         void setScreenSaverStopped();
 };
 
-class KonvIdentDCOP : public QObject, virtual public KonvIdentityIface
+class IdentDBus : public QObject
 {
     Q_OBJECT
 
         public:
-        KonvIdentDCOP();
+        IdentDBus(QObject *parent = 0);
 
         void setrealName(const QString &identity, const QString& name);
         QString getrealName(const QString &identity);
@@ -108,5 +107,7 @@ class KonvIdentDCOP : public QObject, virtual public KonvIdentityIface
 
         QStringList listIdentities();
 };
-#endif
+
+}
+
 #endif

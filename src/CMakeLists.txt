@@ -14,9 +14,9 @@ remove_definitions(-DKDE_DEPRECATED_WARNINGS)
 set(core_SRCS
     #====================================
     #=== Application
-#   dcop.cpp
     config/preferences.cpp
     application.cpp
+    dbus.cpp
     mainwindow.cpp
     main.cpp
     common.cpp
