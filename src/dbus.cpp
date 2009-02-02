@@ -50,10 +50,9 @@ QStringList DBus::listServers()
     KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
 
     QStringList hosts;
-    Q3PtrList<Server> serverList = konvApp->getConnectionManager()->getServerList();
-    Server* server;
+    const QList<Server*> serverList = konvApp->getConnectionManager()->getServerList();
 
-    for (server = serverList.first(); server; server = serverList.next())
+    foreach (Server* server, serverList)
         if (server) hosts << server->getServerName();
 
     return hosts;
@@ -64,10 +63,9 @@ QStringList DBus::listConnectedServers()
     KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
 
     QStringList connectedHosts;
-    Q3PtrList<Server> serverList = konvApp->getConnectionManager()->getServerList();
-    Server* server;
+    const QList<Server*> serverList = konvApp->getConnectionManager()->getServerList();
 
-    for (server = serverList.first(); server; server = serverList.next())
+    foreach (Server* server, serverList)
         if (server && server->isConnected()) connectedHosts << server->getServerName();
 
     return connectedHosts;

@@ -791,9 +791,9 @@ void KonversationApplication::openQuickConnectDialog()
 
 void KonversationApplication::sendMultiServerCommand(const QString& command, const QString& parameter)
 {
-    Q3PtrList<Server> serverList = getConnectionManager()->getServerList();
+    const QList<Server*> serverList = getConnectionManager()->getServerList();
 
-    for (Server* server = serverList.first(); server; server = serverList.next())
+    foreach (Server* server, serverList)
         server->executeMultiServerCommand(command, parameter);
 }
 
@@ -808,10 +808,10 @@ void KonversationApplication::splitNick_Server(const QString& nick_server, QStri
 
 NickInfoPtr KonversationApplication::getNickInfo(const QString &ircnick, const QString &serverOrGroup)
 {
-    Q3PtrList<Server> serverList = getConnectionManager()->getServerList();
+    const QList<Server*> serverList = getConnectionManager()->getServerList();
     NickInfoPtr nickInfo;
     QString lserverOrGroup = serverOrGroup.toLower();
-    for (Server* lookServer = serverList.first(); lookServer; lookServer = serverList.next())
+    foreach (Server* lookServer, serverList)
     {
         if (lserverOrGroup.isEmpty()
             || lookServer->getServerName().toLower()==lserverOrGroup

@@ -467,8 +467,8 @@ NickInfoPtr NicksOnline::getOnlineNickInfo(QString& networkName, QString& nickna
 {
     // Get list of pointers to all servers.
     KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
-    Q3PtrList<Server> serverList = konvApp->getConnectionManager()->getServerList();
-    for (Server* server = serverList.first(); server; server = serverList.next())
+    const QList<Server*> serverList = konvApp->getConnectionManager()->getServerList();
+    foreach (Server* server, serverList)
     {
         if (server->getDisplayName() == networkName)
         {
@@ -488,8 +488,8 @@ NickInfoPtr NicksOnline::getOnlineNickInfo(QString& networkName, QString& nickna
 void NicksOnline::requestWhois(QString& networkName, QString& nickname)
 {
     KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
-    Q3PtrList<Server> serverList = konvApp->getConnectionManager()->getServerList();
-    for (Server* server = serverList.first(); server; server = serverList.next())
+    const QList<Server*> serverList = konvApp->getConnectionManager()->getServerList();
+    foreach (Server* server, serverList)
     {
         if (server->getDisplayName() == networkName)
         {
@@ -505,8 +505,7 @@ void NicksOnline::requestWhois(QString& networkName, QString& nickname)
 void NicksOnline::refreshAllServerOnlineLists()
 {
     KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
-    Q3PtrList<Server> serverList = konvApp->getConnectionManager()->getServerList();
-    Server* server;
+    const QList<Server*> serverList = konvApp->getConnectionManager()->getServerList();
     // Remove servers no longer connected.
     Q3ListViewItem* child = m_nickListView->firstChild();
     while (child)
@@ -521,7 +520,7 @@ void NicksOnline::refreshAllServerOnlineLists()
             QString serverName = *it;
             // Locate server in server list.
             bool found = false;
-            for (server = serverList.first(); server; server = serverList.next())
+            foreach (Server* server, serverList)
             {
                 if ((server->getServerName() == serverName) &&
                     (server->getDisplayName() == networkName)) found = true;
@@ -540,7 +539,7 @@ void NicksOnline::refreshAllServerOnlineLists()
         child = nextChild;
     }
     // Display info for all currently-connected servers.
-    for (server = serverList.first(); server; server = serverList.next())
+    foreach (Server* server, serverList)
     {
         updateServerOnlineList(server);
     }

@@ -541,9 +541,9 @@ bool ConnectionManager::validateIdentity(IdentityPtr identity, bool interactive)
     return true;
 }
 
-Q3PtrList<Server> ConnectionManager::getServerList()
+QList<Server*> ConnectionManager::getServerList() const
 {
-    Q3PtrList<Server> serverList;
+    QList<Server*> serverList;
 
     QMap<int, Server*>::ConstIterator it;
 

@@ -32,7 +32,7 @@ class ConnectionManager : public QObject
 
         uint connectionCount() const { return m_connectionList.count(); }
 
-        Q3PtrList<Server> getServerList();
+        QList<Server*> getServerList() const;
 
         Server* getServerByConnectionId(int connectionId);
         Server* getServerByName(const QString& name);
