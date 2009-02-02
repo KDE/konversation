@@ -19,14 +19,15 @@
 #include "ircqueue.h"
 #include "query.h"
 #include "channel.h"
-#include "application.h" ////// header renamed
+#include "application.h"
 #include "connectionmanager.h"
-//#include "dcccommon.h"
-//#include "transferpanel.h" ////// header renamed
-//#include "transferpanelitem.h" ////// header renamed
-//#include "transfersend.h" ////// header renamed
-//#include "transferrecv.h" ////// header renamed
-//#include "recipientdialog.h" ////// header renamed
+#include "dcccommon.h"
+#include "transfermanager.h"
+#include "transferpanel.h"
+#include "transferpanelitem.h"
+#include "transfersend.h"
+#include "transferrecv.h"
+#include "recipientdialog.h"
 #include "nick.h"
 #include "irccharsets.h"
 #include "viewcontainer.h"
@@ -40,7 +41,6 @@
 #include "common.h"
 #include "notificationhandler.h"
 #include "blowfish.h"
-//#include "transfermanager.h" ////// header renamed
 
 #include <qregexp.h>
 #include <qhostaddress.h>
@@ -1578,16 +1578,14 @@ void Server::sendURIs(const QStringList& uris, const QString& nick)
 
 void Server::requestDccSend(const QString &a_recipient)
 {
-/*
     QString recipient(a_recipient);
     // if we don't have a recipient yet, let the user select one
     if(recipient.isEmpty())
     {
         QStringList nickList;
-        Channel* lookChannel=m_channelList.first();
 
         // fill nickList with all nicks we know about
-        while (lookChannel)
+        foreach (Channel* lookChannel, m_channelList)
         {
             Q3PtrList<Nick> nicks=lookChannel->getNickList();
             Nick* lookNick=nicks.first();
@@ -1596,15 +1594,12 @@ void Server::requestDccSend(const QString &a_recipient)
                 if(!nickList.contains(lookNick->getChannelNick()->getNickname())) nickList.append(lookNick->getChannelNick()->getNickname());
                 lookNick=nicks.next();
             }
-            lookChannel=m_channelList.next();
         }
 
         // add Queries as well, but don't insert duplicates
-        class Query* lookQuery=m_queryList.first();
-        while(lookQuery)
+        foreach (Query* lookQuery, m_queryList)
         {
             if(!nickList.contains(lookQuery->getName())) nickList.append(lookQuery->getName());
-            lookQuery=m_queryList.next();
         }
 
         recipient=DccRecipientDialog::getNickname(getViewContainer()->getWindow(),nickList);
@@ -1613,7 +1608,7 @@ void Server::requestDccSend(const QString &a_recipient)
     if(!recipient.isEmpty())
     {
         KUrl::List fileURLs=KFileDialog::getOpenUrls(
-            ":lastDccDir",
+            KUrl(":lastDccDir"),
             QString(),
             getViewContainer()->getWindow(),
             i18n("Select File(s) to Send to %1", recipient)
@@ -1624,12 +1619,10 @@ void Server::requestDccSend(const QString &a_recipient)
             addDccSend( recipient, *it );
         }
     }
-*/
 }
 
 void Server::slotNewDccTransferItemQueued(DccTransfer* transfer)
 {
-/*
     if (transfer->getConnectionId() == connectionId() )
     {
         kDebug() << "Server::slotNewDccTranfserItemQueued(): connecting slots for " << transfer->getFileName() << " [" << transfer->getType() << "]" << endl;
@@ -1644,12 +1637,10 @@ void Server::slotNewDccTransferItemQueued(DccTransfer* transfer)
             connect( transfer, SIGNAL( statusChanged( DccTransfer*, int, int ) ), this, SLOT( dccStatusChanged( DccTransfer*, int, int ) ) );
         }
     }
-*/
 }
 
 void Server::addDccSend(const QString &recipient,KUrl fileURL, const QString &altFileName, uint fileSize)
 {
-/*
     if (!fileURL.isValid()) return;
 
     emit addDccPanel();
@@ -1668,12 +1659,10 @@ void Server::addDccSend(const QString &recipient,KUrl fileURL, const QString &al
 
     if ( newDcc->queue() )
         newDcc->start();
-*/
 }
 
 void Server::addDccGet(const QString &sourceNick, const QStringList &dccArguments)
 {
-/*
     emit addDccPanel();
 
     DccTransferRecv* newDcc = KonversationApplication::instance()->getDccTransferManager()->newDownload();
@@ -1702,25 +1691,23 @@ void Server::addDccGet(const QString &sourceNick, const QStringList &dccArgument
                                         showfile,
                                         ( newDcc->getFileSize() == 0 ) ? i18n( "unknown size" ) : KIO::convertSize( newDcc->getFileSize() ) ) );
 
-        if(Preferences::dccAutoGet())
+        if (Preferences::self()->dccAutoGet())
             newDcc->start();
     }
-*/
 }
 
 void Server::openDccChat(const QString& nickname)
 {
-    //emit addDccChat(getNickname(),nickname,QStringList(),true);
+    emit addDccChat(getNickname(),nickname,QStringList(),true);
 }
 
 void Server::requestDccChat(const QString& partnerNick, const QString& numericalOwnIp, const QString& ownPort)
 {
-    //queue(QString("PRIVMSG %1 :\001DCC CHAT chat %2 %3\001").arg(partnerNick).arg(numericalOwnIp).arg(ownPort));
+    queue(QString("PRIVMSG %1 :\001DCC CHAT chat %2 %3\001").arg(partnerNick).arg(numericalOwnIp).arg(ownPort));
 }
 
 void Server::dccSendRequest(const QString &partner, const QString &fileName, const QString &address, const QString &port, unsigned long size)
 {
-/*
     Konversation::OutputFilterResult result = getOutputFilter()->sendRequest(partner,fileName,address,port,size);
     queue(result.toServer);
 
@@ -1734,20 +1721,16 @@ void Server::dccSendRequest(const QString &partner, const QString &fileName, con
                                     partner,
                                     showfile,
                                     ( size == 0 ) ? i18n( "unknown size" ) : KIO::convertSize( size ) ) );
-*/
 }
 
 void Server::dccPassiveSendRequest(const QString& recipient,const QString& fileName,const QString& address,unsigned long size,const QString& token)
 {
-/*
     Konversation::OutputFilterResult result = getOutputFilter()->passiveSendRequest(recipient,fileName,address,size,token);
     queue(result.toServer);
-*/
 }
 
 void Server::dccResumeGetRequest(const QString &sender, const QString &fileName, const QString &port, KIO::filesize_t startAt)
 {
-/*
     Konversation::OutputFilterResult result;
 
     if (fileName.contains(" ") > 0)
@@ -1756,20 +1739,16 @@ void Server::dccResumeGetRequest(const QString &sender, const QString &fileName,
         result = getOutputFilter()->resumeRequest(sender,fileName,port,startAt);
 
     queue(result.toServer);
-*/
 }
 
 void Server::dccReverseSendAck(const QString& partnerNick,const QString& fileName,const QString& ownAddress,const QString& ownPort,unsigned long size,const QString& reverseToken)
 {
-/*
     Konversation::OutputFilterResult result = getOutputFilter()->acceptPassiveSendRequest(partnerNick,fileName,ownAddress,ownPort,size,reverseToken);
     queue(result.toServer);
-*/
 }
 
 void Server::startReverseDccSendTransfer(const QString& sourceNick,const QStringList& dccArguments)
 {
-/*
     DccTransferManager* dtm = KonversationApplication::instance()->getDccTransferManager();
 
     if ( dtm->startReverseSending( connectionId(), sourceNick,
@@ -1787,18 +1766,16 @@ void Server::startReverseDccSendTransfer(const QString& sourceNick,const QString
 
         // DTM could not find a matched item
         appendMessageToFrontmost( i18n( "Error" ),
-                                  i18n( "%1 = file name, %2 = nickname",
-                                        "Received invalid passive DCC send acceptance message for \"%1\" from %2." )
-                                  .arg( showfile,
+                                  i18nc( "%1 = file name, %2 = nickname",
+                                        "Received invalid passive DCC send acceptance message for \"%1\" from %2.",
+                                        showfile,
                                         sourceNick ) );
 
     }
-*/
 }
 
 void Server::resumeDccGetTransfer(const QString &sourceNick, const QStringList &dccArguments)
 {
-/*
     DccTransferManager* dtm = KonversationApplication::instance()->getDccTransferManager();
 
     QString fileName( dccArguments[0] );
@@ -1815,9 +1792,9 @@ void Server::resumeDccGetTransfer(const QString &sourceNick, const QStringList &
     if ( dccTransfer )
     {
         appendMessageToFrontmost( i18n( "DCC" ),
-                                  i18n( "%1 = file name, %2 = nickname of sender, %3 = percentage of file size, %4 = file size",
-                                        "Resuming download of \"%1\" from %2 starting at %3% of %4..." )
-                                  .arg( showfile,
+                                  i18nc( "%1 = file name, %2 = nickname of sender, %3 = percentage of file size, %4 = file size",
+                                        "Resuming download of \"%1\" from %2 starting at %3% of %4..." ,
+                                        showfile,
                                         sourceNick,
                                         QString::number( dccTransfer->getProgress() ),
                                         ( dccTransfer->getFileSize() == 0 ) ? i18n( "unknown size" ) : KIO::convertSize( dccTransfer->getFileSize() ) ) );
@@ -1825,17 +1802,15 @@ void Server::resumeDccGetTransfer(const QString &sourceNick, const QStringList &
     else
     {
         appendMessageToFrontmost( i18n( "Error" ),
-                                  i18n( "%1 = file name, %2 = nickname",
-                                        "Received invalid resume acceptance message for \"%1\" from %2." )
-                                  .arg( showfile,
+                                  i18nc( "%1 = file name, %2 = nickname",
+                                        "Received invalid resume acceptance message for \"%1\" from %2.",
+                                        showfile,
                                         sourceNick ) );
     }
-*/
 }
 
 void Server::resumeDccSendTransfer(const QString &sourceNick, const QStringList &dccArguments)
 {
-/*
     DccTransferManager* dtm = KonversationApplication::instance()->getDccTransferManager();
 
     QString fileName( dccArguments[0] );
@@ -1852,9 +1827,9 @@ void Server::resumeDccSendTransfer(const QString &sourceNick, const QStringList 
     if ( dccTransfer )
     {
         appendMessageToFrontmost( i18n( "DCC" ),
-                                  i18n( "%1 = file name, %2 = nickname of recipient, %3 = percentage of file size, %4 = file size",
-                                        "Resuming upload of \"%1\" to %2 starting at %3% of %4...")
-                                  .arg( showfile,
+                                  i18nc( "%1 = file name, %2 = nickname of recipient, %3 = percentage of file size, %4 = file size",
+                                        "Resuming upload of \"%1\" to %2 starting at %3% of %4...",
+                                        showfile,
                                         sourceNick,
                                         QString::number(dccTransfer->getProgress()),
                                         ( dccTransfer->getFileSize() == 0 ) ? i18n( "unknown size" ) : KIO::convertSize( dccTransfer->getFileSize() ) ) );
@@ -1867,17 +1842,15 @@ void Server::resumeDccSendTransfer(const QString &sourceNick, const QStringList 
     else
     {
         appendMessageToFrontmost( i18n( "Error" ),
-                                  i18n( "%1 = file name, %2 = nickname",
-                                        "Received invalid resume request for \"%1\" from %2." )
-                                  .arg( showfile,
+                                  i18nc( "%1 = file name, %2 = nickname",
+                                        "Received invalid resume request for \"%1\" from %2.",
+                                        showfile,
                                         sourceNick ) );
     }
-*/
 }
 
 void Server::dccGetDone(DccTransfer* item)
 {
-/*
     if (!item)
         return;
 
@@ -1887,18 +1860,16 @@ void Server::dccGetDone(DccTransfer* item)
         showfile = showfile.mid(1, showfile.length() - 2);
 
     if(item->getStatus()==DccTransfer::Done)
-        appendMessageToFrontmost(i18n("DCC"),i18n("%1 = file name, %2 = nickname of sender",
-            "Download of \"%1\" from %2 finished.").arg(showfile, item->getPartnerNick()));
+        appendMessageToFrontmost(i18n("DCC"), i18nc("%1 = file name, %2 = nickname of sender",
+            "Download of \"%1\" from %2 finished.", showfile, item->getPartnerNick()));
     else if(item->getStatus()==DccTransfer::Failed)
-        appendMessageToFrontmost(i18n("DCC"),i18n("%1 = file name, %2 = nickname of sender",
-            "Download of \"%1\" from %2 failed. Reason: %3.").arg(showfile,
+        appendMessageToFrontmost(i18n("DCC"), i18nc("%1 = file name, %2 = nickname of sender",
+            "Download of \"%1\" from %2 failed. Reason: %3.", showfile,
             item->getPartnerNick(), item->getStatusDetail()));
-*/
 }
 
 void Server::dccSendDone(DccTransfer* item)
 {
-/*
     if (!item)
         return;
 
@@ -1908,18 +1879,16 @@ void Server::dccSendDone(DccTransfer* item)
         showfile = showfile.mid(1, showfile.length() - 2);
 
     if(item->getStatus()==DccTransfer::Done)
-        appendMessageToFrontmost(i18n("DCC"),i18n("%1 = file name, %2 = nickname of recipient",
-            "Upload of \"%1\" to %2 finished.").arg(showfile, item->getPartnerNick()));
+        appendMessageToFrontmost(i18n("DCC"), i18nc("%1 = file name, %2 = nickname of recipient",
+            "Upload of \"%1\" to %2 finished.", showfile, item->getPartnerNick()));
     else if(item->getStatus()==DccTransfer::Failed)
-        appendMessageToFrontmost(i18n("DCC"),i18n("%1 = file name, %2 = nickname of recipient",
-            "Upload of \"%1\" to %2 failed. Reason: %3.").arg(showfile, item->getPartnerNick(),
+        appendMessageToFrontmost(i18n("DCC"), i18nc("%1 = file name, %2 = nickname of recipient",
+            "Upload of \"%1\" to %2 failed. Reason: %3.", showfile, item->getPartnerNick(),
             item->getStatusDetail()));
-*/
 }
 
 void Server::dccStatusChanged(DccTransfer *item, int newStatus, int oldStatus)
 {
-/*
     if(!item)
         return;
 
@@ -1932,21 +1901,20 @@ void Server::dccStatusChanged(DccTransfer *item, int newStatus, int oldStatus)
     {
         // when resuming, a message about the receiver's acceptance has been shown already, so suppress this message
         if ( newStatus == DccTransfer::Transferring && oldStatus == DccTransfer::WaitingRemote && !item->isResumed() )
-            appendMessageToFrontmost( i18n( "DCC" ), i18n( "%1 = file name, %2 nickname of recipient",
-                "Sending \"%1\" to %2...").arg( showfile, item->getPartnerNick() ) );
+            appendMessageToFrontmost( i18n( "DCC" ), i18nc( "%1 = file name, %2 nickname of recipient",
+                "Sending \"%1\" to %2...", showfile, item->getPartnerNick() ) );
     }
     else  // type == Receive
     {
         if ( newStatus == DccTransfer::Transferring && !item->isResumed() )
         {
             appendMessageToFrontmost( i18n( "DCC" ),
-                                        i18n( "%1 = file name, %2 = file size, %3 = nickname of sender", "Downloading \"%1\" (%2) from %3...")
-                                        .arg( showfile,
+                                        i18nc( "%1 = file name, %2 = file size, %3 = nickname of sender", "Downloading \"%1\" (%2) from %3...",
+                                              showfile,
                                             ( item->getFileSize() == 0 ) ? i18n( "unknown size" ) : KIO::convertSize( item->getFileSize() ),
                                             item->getPartnerNick() ) );
         }
     }
-*/
 }
 
 void Server::removeQuery(class Query* query)
