@@ -18,7 +18,7 @@
 
 #include "preferences.h"
 #include "osd.h"
-#include "konvdcop.h"
+// #include "konvdcop.h"
 #include "identity.h"
 #include "nickinfo.h"
 
