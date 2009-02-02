@@ -5,8 +5,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>345</width>
-    <height>400</height>
+    <width>349</width>
+    <height>407</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" >
@@ -14,7 +14,7 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="Q3GroupBox" name="groupBox4" >
+    <widget class="QGroupBox" name="groupBox4" >
      <property name="title" >
       <string>Look</string>
      </property>
@@ -40,7 +40,7 @@
     </widget>
    </item>
    <item>
-    <widget class="Q3GroupBox" name="groupBox5" >
+    <widget class="QGroupBox" name="groupBox5" >
      <property name="title" >
       <string>Notifications</string>
      </property>
@@ -270,7 +270,7 @@
     </widget>
    </item>
    <item>
-    <widget class="Q3GroupBox" name="groupBox10" >
+    <widget class="QGroupBox" name="groupBox10" >
      <property name="title" >
       <string>Options</string>
      </property>
@@ -309,12 +309,6 @@
  <layoutdefault spacing="6" margin="11" />
  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
  <customwidgets>
-  <customwidget>
-   <class>Q3GroupBox</class>
-   <extends>QGroupBox</extends>
-   <header>Qt3Support/Q3GroupBox</header>
-   <container>1</container>
-  </customwidget>
   <customwidget>
    <class>KColorButton</class>
    <extends>QPushButton</extends>

@@ -5,7 +5,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>524</width>
+    <width>528</width>
     <height>351</height>
    </rect>
   </property>
@@ -111,7 +111,7 @@
     </layout>
    </item>
    <item row="2" column="0" >
-    <widget class="Q3GroupBox" name="groupBox3" >
+    <widget class="QGroupBox" name="groupBox3" >
      <property name="title" >
       <string>Available Placeholders</string>
      </property>
@@ -179,12 +179,6 @@
  <layoutdefault spacing="6" margin="11" />
  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
  <customwidgets>
-  <customwidget>
-   <class>Q3GroupBox</class>
-   <extends>QGroupBox</extends>
-   <header>Qt3Support/Q3GroupBox</header>
-   <container>1</container>
-  </customwidget>
   <customwidget>
    <class>K3ListView</class>
    <extends>Q3ListView</extends>

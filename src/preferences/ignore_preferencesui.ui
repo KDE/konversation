@@ -12,7 +12,7 @@ the Free Software Foundation; either version 2 of the License, or
     <x>0</x>
     <y>0</y>
     <width>374</width>
-    <height>311</height>
+    <height>315</height>
    </rect>
   </property>
   <property name="sizePolicy" >
@@ -74,7 +74,7 @@ the Free Software Foundation; either version 2 of the License, or
     <widget class="QLineEdit" name="txtPattern" />
    </item>
    <item row="2" column="0" colspan="2" >
-    <widget class="Q3GroupBox" name="grpMessageTypes" >
+    <widget class="QGroupBox" name="grpMessageTypes" >
      <property name="sizePolicy" >
       <sizepolicy vsizetype="Preferred" hsizetype="Expanding" >
        <horstretch>0</horstretch>
@@ -170,12 +170,6 @@ the Free Software Foundation; either version 2 of the License, or
  <layoutfunction spacing="KDialog::spacingHint" margin="KDialog::marginHint" />
  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
  <customwidgets>
-  <customwidget>
-   <class>Q3GroupBox</class>
-   <extends>QGroupBox</extends>
-   <header>Qt3Support/Q3GroupBox</header>
-   <container>1</container>
-  </customwidget>
   <customwidget>
    <class>K3ListView</class>
    <extends>Q3ListView</extends>

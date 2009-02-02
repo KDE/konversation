@@ -235,7 +235,7 @@ the Free Software Foundation; either version 2 of the License, or
     </spacer>
    </item>
    <item row="11" column="0" colspan="4" >
-    <widget class="Q3GroupBox" name="groupBox1" >
+    <widget class="QGroupBox" name="groupBox1" >
      <property name="title" >
       <string>IP</string>
      </property>
@@ -276,7 +276,7 @@ the Free Software Foundation; either version 2 of the License, or
     </widget>
    </item>
    <item row="12" column="0" colspan="4" >
-    <widget class="Q3GroupBox" name="groupBox2" >
+    <widget class="QGroupBox" name="groupBox2" >
      <property name="title" >
       <string>Ports</string>
      </property>
@@ -419,12 +419,6 @@ the Free Software Foundation; either version 2 of the License, or
  <layoutdefault spacing="6" margin="11" />
  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
  <customwidgets>
-  <customwidget>
-   <class>Q3GroupBox</class>
-   <extends>QGroupBox</extends>
-   <header>Qt3Support/Q3GroupBox</header>
-   <container>1</container>
-  </customwidget>
   <customwidget>
    <class>KLineEdit</class>
    <extends>QLineEdit</extends>

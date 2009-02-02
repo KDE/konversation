@@ -6,7 +6,7 @@
     <x>0</x>
     <y>0</y>
     <width>623</width>
-    <height>418</height>
+    <height>416</height>
    </rect>
   </property>
   <layout class="QGridLayout" >
@@ -152,7 +152,7 @@ When the nickname watcher is turned on, you will be notified when the nicknames 
     </widget>
    </item>
    <item row="4" column="0" colspan="3" >
-    <widget class="Q3GroupBox" name="listGroupBox" >
+    <widget class="QGroupBox" name="listGroupBox" >
      <property name="enabled" >
       <bool>false</bool>
      </property>
@@ -321,12 +321,6 @@ When the nickname watcher is turned on, you will be notified when the nicknames 
  <layoutfunction spacing="KDialog::spacingHint" margin="KDialog::marginHint" />
  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
  <customwidgets>
-  <customwidget>
-   <class>Q3GroupBox</class>
-   <extends>QGroupBox</extends>
-   <header>Qt3Support/Q3GroupBox</header>
-   <container>1</container>
-  </customwidget>
   <customwidget>
    <class>K3ListView</class>
    <extends>Q3ListView</extends>

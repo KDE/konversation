@@ -10,7 +10,7 @@ the Free Software Foundation; either version 2 of the License, or
     <x>0</x>
     <y>0</y>
     <width>410</width>
-    <height>133</height>
+    <height>130</height>
    </rect>
   </property>
   <layout class="QGridLayout" >
@@ -18,7 +18,7 @@ the Free Software Foundation; either version 2 of the License, or
     <number>0</number>
    </property>
    <item row="0" column="0" >
-    <widget class="Q3GroupBox" name="kcfg_Log" >
+    <widget class="QGroupBox" name="kcfg_Log" >
      <property name="title" >
       <string>&amp;Enable Logging</string>
      </property>
@@ -88,12 +88,6 @@ the Free Software Foundation; either version 2 of the License, or
  <layoutfunction spacing="KDialog::spacingHint" margin="KDialog::marginHint" />
  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
  <customwidgets>
-  <customwidget>
-   <class>Q3GroupBox</class>
-   <extends>QGroupBox</extends>
-   <header>Qt3Support/Q3GroupBox</header>
-   <container>1</container>
-  </customwidget>
   <customwidget>
    <class>KUrlRequester</class>
    <extends>QFrame</extends>

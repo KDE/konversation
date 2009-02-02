@@ -12,7 +12,7 @@ the Free Software Foundation; either version 2 of the License, or
     <x>0</x>
     <y>0</y>
     <width>421</width>
-    <height>240</height>
+    <height>183</height>
    </rect>
   </property>
   <layout class="QGridLayout" >
@@ -20,7 +20,7 @@ the Free Software Foundation; either version 2 of the License, or
     <number>0</number>
    </property>
    <item row="0" column="0" >
-    <widget class="Q3GroupBox" name="kcfg_AutoReconnect" >
+    <widget class="QGroupBox" name="kcfg_AutoReconnect" >
      <property name="title" >
       <string>Enable Automatic Reconnect</string>
      </property>
@@ -135,7 +135,7 @@ the Free Software Foundation; either version 2 of the License, or
     </spacer>
    </item>
    <item row="1" column="0" >
-    <widget class="Q3GroupBox" name="debugGBox" >
+    <widget class="QGroupBox" name="debugGBox" >
      <property name="title" >
       <string>Debug</string>
      </property>
@@ -156,12 +156,6 @@ the Free Software Foundation; either version 2 of the License, or
  <layoutfunction spacing="KDialog::spacingHint" margin="KDialog::marginHint" />
  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
  <customwidgets>
-  <customwidget>
-   <class>Q3GroupBox</class>
-   <extends>QGroupBox</extends>
-   <header>Qt3Support/Q3GroupBox</header>
-   <container>1</container>
-  </customwidget>
   <customwidget>
    <class>KIntNumInput</class>
    <extends>QWidget</extends>

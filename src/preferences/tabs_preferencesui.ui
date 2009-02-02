@@ -9,8 +9,8 @@ the Free Software Foundation; either version 2 of the License, or
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>369</width>
-    <height>310</height>
+    <width>373</width>
+    <height>312</height>
    </rect>
   </property>
   <property name="windowTitle" >
@@ -21,7 +21,7 @@ the Free Software Foundation; either version 2 of the License, or
     <number>0</number>
    </property>
    <item>
-    <widget class="Q3GroupBox" name="lookGBox" >
+    <widget class="QGroupBox" name="lookGBox" >
      <property name="title" >
       <string>Look</string>
      </property>
@@ -100,7 +100,7 @@ the Free Software Foundation; either version 2 of the License, or
     </widget>
    </item>
    <item>
-    <widget class="Q3GroupBox" name="focusGBox" >
+    <widget class="QGroupBox" name="focusGBox" >
      <property name="title" >
       <string>Focus</string>
      </property>
@@ -123,7 +123,7 @@ the Free Software Foundation; either version 2 of the License, or
     </widget>
    </item>
    <item>
-    <widget class="Q3GroupBox" name="mouseGBox" >
+    <widget class="QGroupBox" name="mouseGBox" >
      <property name="title" >
       <string>Mouse</string>
      </property>
@@ -159,14 +159,6 @@ the Free Software Foundation; either version 2 of the License, or
  <layoutdefault spacing="6" margin="11" />
  <layoutfunction spacing="KDialog::spacingHint" margin="KDialog::marginHint" />
  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
- <customwidgets>
-  <customwidget>
-   <class>Q3GroupBox</class>
-   <extends>QGroupBox</extends>
-   <header>Qt3Support/Q3GroupBox</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>
