@@ -20,7 +20,6 @@
 //Added by qt3to4:
 #include <Q3HBoxLayout>
 #include <Q3VBoxLayout>
-#include <Q3Frame>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -73,10 +72,8 @@ DccResumeDialog::DccResumeDialog(DccTransferRecv* item, const QString& caption, 
     if(enabledButtonCodes & KDialog::User1)
         setButtonText(KDialog::User1, i18n("&Resume"));
 
-    Q3Frame* page = new Q3Frame(this);
-    Q3VBoxLayout* pageLayout = new Q3VBoxLayout(page);
-    pageLayout->setSpacing(spacingHint());
-    setMainWidget(page);
+    QWidget* page = mainWidget();
+    QVBoxLayout* pageLayout = new QVBoxLayout(page);
 
     QLabel* labelMessage = new QLabel(page);
     labelMessage->setText(message);
@@ -89,7 +86,7 @@ DccResumeDialog::DccResumeDialog(DccTransferRecv* item, const QString& caption, 
 
     if(m_enabledActions & RA_Rename)
     {
-        Q3Frame* filePathToolsFrame = new Q3Frame(page);
+        QFrame* filePathToolsFrame = new QFrame(page);
         Q3HBoxLayout* filePathToolsLayout = new Q3HBoxLayout(filePathToolsFrame);
         filePathToolsLayout->setSpacing(spacingHint());
 

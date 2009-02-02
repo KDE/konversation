@@ -32,7 +32,6 @@ Kopete    (c) 2002-2004 by the Kopete developers  <kopete-devel@kde.org>
 #include <qtooltip.h>
 //Added by qt3to4:
 #include <Q3GridLayout>
-#include <Q3Frame>
 
 #include <kapplication.h>
 #include <kconfig.h>

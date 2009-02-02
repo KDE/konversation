@@ -57,7 +57,7 @@
     </spacer>
    </item>
    <item row="1" column="1" >
-    <widget class="Q3Frame" name="frame3_2" >
+    <widget class="QFrame" name="frame3_2" >
      <property name="minimumSize" >
       <size>
        <width>0</width>
@@ -211,12 +211,6 @@
  <layoutfunction spacing="KDialog::spacingHint" margin="KDialog::marginHint" />
  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
  <customwidgets>
-  <customwidget>
-   <class>Q3Frame</class>
-   <extends>QFrame</extends>
-   <header>Qt3Support/Q3Frame</header>
-   <container>1</container>
-  </customwidget>
   <customwidget>
    <class>K3ListBox</class>
    <extends>Q3ListBox</extends>
