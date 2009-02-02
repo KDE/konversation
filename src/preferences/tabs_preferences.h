@@ -12,10 +12,10 @@
 #ifndef TABS_PREFERENCES_H
 #define TABS_PREFERENCES_H
 
-#include "tabs_preferencesui.h"
+#include "ui_tabs_preferencesui.h"
 
 
-class Tabs_Config : public Tabs_PreferencesUI
+class Tabs_Config : public QWidget, private Ui::Tabs_PreferencesUI
 {
     Q_OBJECT
 
@@ -23,11 +23,11 @@ class Tabs_Config : public Tabs_PreferencesUI
         explicit Tabs_Config(QWidget *parent = 0, const char *name = 0);
         ~Tabs_Config();
 
-    public slots:
-        virtual void show();
-
     protected slots:
         void toggleCheckBoxes(int activated);
+
+    protected:
+        virtual void showEvent(QShowEvent *event);
 };
 
 #endif

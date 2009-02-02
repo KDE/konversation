@@ -27,8 +27,11 @@
 
 
 QuickButtons_Config::QuickButtons_Config(QWidget* parent, const char* name)
- : QuickButtons_ConfigUI(parent, name)
+ : QWidget(parent)
 {
+  setObjectName(QString::fromLatin1(name));
+  setupUi(this);
+
   // reset flag to defined state (used to block signals when just selecting a new item)
   m_newItemSelected=false;
 

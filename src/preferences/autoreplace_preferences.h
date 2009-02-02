@@ -13,11 +13,11 @@
 #ifndef AUTOREPLACECONFIG_H
 #define AUTOREPLACECONFIG_H
 
-#include "autoreplace_preferencesui.h"
+#include "ui_autoreplace_preferencesui.h"
 #include "settingspage.h"
 
 
-class Autoreplace_Config : public Autoreplace_ConfigUI, public KonviSettingsPage
+class Autoreplace_Config : public QWidget, public KonviSettingsPage, private Ui::Autoreplace_ConfigUI
 {
   Q_OBJECT
 

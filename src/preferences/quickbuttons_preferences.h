@@ -13,11 +13,11 @@
 #ifndef QUICKBUTTONSCONFIG_H
 #define QUICKBUTTONSCONFIG_H
 
-#include "quickbuttons_preferencesui.h"
+#include "ui_quickbuttons_preferencesui.h"
 #include "settingspage.h" ////// header renamed
 
 
-class QuickButtons_Config : public QuickButtons_ConfigUI, public KonviSettingsPage
+class QuickButtons_Config : public QWidget, public KonviSettingsPage, private Ui::QuickButtons_ConfigUI
 {
   Q_OBJECT
 

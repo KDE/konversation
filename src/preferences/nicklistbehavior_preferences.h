@@ -14,12 +14,12 @@
 #define NICKLISTBEHAVIOR_Config_H
 
 #include "settingspage.h" ////// header renamed
-#include "nicklistbehavior_preferencesui.h"
+#include "ui_nicklistbehavior_preferencesui.h"
 
 #include <qobject.h>
 
 
-class NicklistBehavior_Config : public NicklistBehavior_ConfigUI, public KonviSettingsPage
+class NicklistBehavior_Config : public QWidget, public KonviSettingsPage, private Ui::NicklistBehavior_ConfigUI
 {
     Q_OBJECT
 

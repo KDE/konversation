@@ -10,15 +10,17 @@
 */
 
 #include "tabs_preferences.h"
-#include "tabs_preferencesui.h"
 
 #include <qcombobox.h>
 #include <qcheckbox.h>
 
 
 Tabs_Config::Tabs_Config(QWidget *parent, const char *name)
- : Tabs_PreferencesUI(parent, name)
+ : QWidget(parent)
 {
+    setObjectName(QString::fromLatin1(name));
+    setupUi(this);
+
     connect(kcfg_TabPlacement, SIGNAL(activated(int)), this, SLOT(toggleCheckBoxes(int)));
 }
 
@@ -26,9 +28,9 @@ Tabs_Config::~Tabs_Config()
 {
 }
 
-void Tabs_Config::show()
+void Tabs_Config::showEvent(QShowEvent *event)
 {
-    QWidget::show();
+    QWidget::showEvent(event);
 
     if (kcfg_TabPlacement->currentItem() == 0 || kcfg_TabPlacement->currentItem() == 1)
     {

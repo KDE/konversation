@@ -34,8 +34,11 @@
 
 
 Autoreplace_Config::Autoreplace_Config(QWidget* parent, const char* name)
- : Autoreplace_ConfigUI(parent, name)
+ : QWidget(parent)
 {
+  setObjectName(QString::fromLatin1(name));
+  setupUi(this);
+
   // reset flag to defined state (used to block signals when just selecting a new item)
   m_newItemSelected=false;
   //Check if the regexp editor is installed

@@ -13,10 +13,10 @@
 #ifndef EXALIASPREFERENCES_H
 #define EXALIASPREFERENCES_H
 
-#include "alias_preferencesui.h"
+#include "ui_alias_preferencesui.h"
 #include "settingspage.h" ////// header renamed
 
-class Alias_Config : public Alias_ConfigUI, public KonviSettingsPage
+class Alias_Config : public QWidget, public KonviSettingsPage, private Ui::Alias_ConfigUI
 {
     Q_OBJECT
 

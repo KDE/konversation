@@ -31,8 +31,11 @@
 
 
 Ignore_Config::Ignore_Config( QWidget* parent, const char* name, Qt::WFlags fl )
-    : Ignore_ConfigUI( parent, name, fl )
+    : QWidget( parent, fl )
 {
+    setObjectName(QString::fromLatin1(name));
+    setupUi(this);
+
     connect(newButton,SIGNAL(clicked()),
         this,SLOT(newIgnore()));
     connect(removeButton,SIGNAL(clicked()),

@@ -15,7 +15,7 @@
 #ifndef PREFSPAGETHEMES_H
 #define PREFSPAGETHEMES_H
 
-#include "theme_preferencesui.h"
+#include "ui_theme_preferencesui.h"
 #include "settingspage.h" ////// header renamed
 
 #include <kio/job.h>
@@ -23,7 +23,7 @@
 
 class QStringList;
 
-class Theme_Config : public Theme_ConfigUI, public KonviSettingsPage
+class Theme_Config : public QWidget, public KonviSettingsPage, private Ui::Theme_ConfigUI
 {
     Q_OBJECT
 

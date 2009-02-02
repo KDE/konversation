@@ -16,13 +16,13 @@
 #ifndef EXOSDPREFERENCES_H
 #define EXOSDPREFERENCES_H
 
-#include "osd_preferencesui.h"
+#include "ui_osd_preferencesui.h"
 #include "settingspage.h" ////// header renamed
 
 
 class OSDPreviewWidget;
 
-class OSD_Config : public OSD_ConfigUI, public KonviSettingsPage
+class OSD_Config : public QWidget, public KonviSettingsPage, private Ui::OSD_ConfigUI
 {
     Q_OBJECT
 

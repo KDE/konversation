@@ -27,8 +27,11 @@
 
 
 OSD_Config::OSD_Config( QWidget* parent, const char* name, Qt::WFlags fl )
-    : OSD_ConfigUI( parent, name, fl )
+    : QWidget(parent, fl)
 {
+    setObjectName(QString::fromLatin1(name));
+    setupUi(this);
+
     bool enableScreenChooser = false;
     QRect screenRect;
 

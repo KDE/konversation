@@ -18,8 +18,11 @@
 
 
 DCC_Config::DCC_Config(QWidget *parent, const char* name) :
-  DCC_ConfigUI(parent,name)
+  QWidget(parent)
 {
+    setObjectName(QString::fromLatin1(name));
+    setupUi(this);
+
     languageChange();
     connect(kcfg_DccMethodToGetOwnIp, SIGNAL(activated(int)), this, SLOT(dccMethodChanged(int)));          dccMethodChanged(kcfg_DccMethodToGetOwnIp->currentItem()); 
 

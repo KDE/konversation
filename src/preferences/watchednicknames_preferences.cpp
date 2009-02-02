@@ -10,7 +10,6 @@
 */
 
 #include "watchednicknames_preferences.h"
-#include "watchednicknames_preferencesui.h"
 #include "config/preferences.h"
 #include "application.h"
 #include "mainwindow.h"
@@ -29,8 +28,11 @@
 
 
 WatchedNicknames_Config::WatchedNicknames_Config(QWidget *parent, const char *name)
- : WatchedNicknames_ConfigUI(parent, name)
+ : QWidget(parent)
 {
+  setObjectName(QString::fromLatin1(name));
+  setupUi(this);
+
   notifyListView->setRenameable(0,false);
   notifyListView->setSorting(-1);
   // reset flag to defined state (used to block signals when just selecting a new item)

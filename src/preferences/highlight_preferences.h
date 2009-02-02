@@ -13,7 +13,7 @@
 #ifndef KONVERSATIONHIGHLIGHT_CONFIG_H
 #define KONVERSATIONHIGHLIGHT_CONFIG_H
 
-#include "highlight_preferencesui.h"
+#include "ui_highlight_preferencesui.h"
 #include "settingspage.h" ////// header renamed
 
 #include <qobject.h>
@@ -24,7 +24,7 @@
 class Highlight_Config;
 class Highlight;
 
-class Highlight_Config : public Highlight_ConfigUI, public KonviSettingsPage
+class Highlight_Config : public QWidget, public KonviSettingsPage, private Ui::Highlight_ConfigUI
 {
     Q_OBJECT
 

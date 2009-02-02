@@ -13,14 +13,14 @@
 #ifndef IGNORE_CONFIG_H
 #define IGNORE_CONFIG_H
 
-#include "ignore_preferencesui.h"
+#include "ui_ignore_preferencesui.h"
 #include "settingspage.h" ////// header renamed
 
 #include <q3ptrlist.h>
 
 
 class Ignore;
-class Ignore_Config : public Ignore_ConfigUI, public KonviSettingsPage
+class Ignore_Config : public QWidget, public KonviSettingsPage, private Ui::Ignore_ConfigUI
 {
     Q_OBJECT
 

@@ -1,160 +1,184 @@
-<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
-<class>NicklistBehavior_ConfigUI</class>
-<comment>This program is free software; you can redistribute it and/or modify
+<ui version="4.0" >
+ <author>Copyright (C) 2005 Peter Simonsson</author>
+ <comment>This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation; either version 2 of the License, or
 (at your option) any later version.
 </comment>
-<author>Copyright (C) 2005 Peter Simonsson</author>
-<widget class="QWidget">
-    <property name="name">
-        <cstring>NicklistBehavior_ConfigUI</cstring>
-    </property>
-    <property name="geometry">
-        <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>692</width>
-            <height>480</height>
-        </rect>
-    </property>
-    <grid>
-        <property name="name">
-            <cstring>unnamed</cstring>
-        </property>
-        <property name="margin">
-            <number>0</number>
-        </property>
-        <widget class="QLabel" row="0" column="0" rowspan="1" colspan="2">
-            <property name="name">
-                <cstring>textLabel1_2</cstring>
-            </property>
-            <property name="text">
-                <string>&amp;Command to be executed on double click:</string>
-            </property>
-            <property name="buddy" stdset="0">
-                <cstring>kcfg_ChannelDoubleClickAction</cstring>
-            </property>
-        </widget>
-        <widget class="QCheckBox" row="1" column="0" rowspan="1" colspan="3">
-            <property name="name">
-                <cstring>kcfg_SortCaseInsensitive</cstring>
-            </property>
-            <property name="text">
-                <string>Sort case &amp;insensitive</string>
-            </property>
-        </widget>
-        <widget class="QCheckBox" row="2" column="0" rowspan="1" colspan="3">
-            <property name="name">
-                <cstring>kcfg_SortByActivity</cstring>
-            </property>
-            <property name="text">
-                <string>Sort by &amp;activity</string>
-            </property>
-        </widget>
-        <widget class="QCheckBox" row="3" column="0">
-            <property name="name">
-                <cstring>kcfg_SortByStatus</cstring>
-            </property>
-            <property name="sizePolicy">
-                <sizepolicy>
-                    <hsizetype>4</hsizetype>
-                    <vsizetype>0</vsizetype>
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                </sizepolicy>
-            </property>
-            <property name="text">
-                <string>Sort b&amp;y user status</string>
-            </property>
-        </widget>
-        <widget class="K3ListView" row="4" column="0" rowspan="1" colspan="3">
-            <column>
-                <property name="text">
-                    <string>Mode</string>
-                </property>
-                <property name="clickable">
-                    <bool>true</bool>
-                </property>
-                <property name="resizable">
-                    <bool>true</bool>
-                </property>
-            </column>
-            <column>
-                <property name="text">
-                    <string>Explanation</string>
-                </property>
-                <property name="clickable">
-                    <bool>true</bool>
-                </property>
-                <property name="resizable">
-                    <bool>true</bool>
-                </property>
-            </column>
-            <property name="name">
-                <cstring>sortOrder</cstring>
-            </property>
-            <property name="enabled">
-                <bool>false</bool>
-            </property>
-            <property name="acceptDrops">
-                <bool>true</bool>
-            </property>
-            <property name="allColumnsShowFocus">
-                <bool>true</bool>
-            </property>
-            <property name="fullWidth">
-                <bool>true</bool>
-            </property>
-            <property name="dragEnabled">
-                <bool>true</bool>
-            </property>
-            <property name="shadeSortColumn">
-                <bool>false</bool>
-            </property>
-        </widget>
-        <widget class="KLineEdit" row="0" column="2">
-            <property name="name">
-                <cstring>kcfg_ChannelDoubleClickAction</cstring>
-            </property>
-        </widget>
-        <widget class="QLabel" row="3" column="1" rowspan="1" colspan="2">
-            <property name="name">
-                <cstring>orderHintLabel</cstring>
-            </property>
-            <property name="enabled">
-                <bool>false</bool>
-            </property>
-            <property name="text">
-                <string>(Reorder nick sorting order by drag and drop)</string>
-            </property>
-        </widget>
-    </grid>
-</widget>
-<connections>
-    <connection>
-        <sender>kcfg_SortByStatus</sender>
-        <signal>toggled(bool)</signal>
-        <receiver>sortOrder</receiver>
-        <slot>setEnabled(bool)</slot>
-    </connection>
-    <connection>
-        <sender>kcfg_SortByStatus</sender>
-        <signal>toggled(bool)</signal>
-        <receiver>orderHintLabel</receiver>
-        <slot>setEnabled(bool)</slot>
-    </connection>
-</connections>
-<tabstops>
-    <tabstop>kcfg_ChannelDoubleClickAction</tabstop>
-    <tabstop>kcfg_SortCaseInsensitive</tabstop>
-    <tabstop>kcfg_SortByStatus</tabstop>
-    <tabstop>sortOrder</tabstop>
-</tabstops>
-<layoutdefaults spacing="6" margin="11"/>
-<layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
-<includehints>
-    <includehint>k3listview.h</includehint>
-    <includehint>klineedit.h</includehint>
-</includehints>
-</UI>
+ <class>NicklistBehavior_ConfigUI</class>
+ <widget class="QWidget" name="NicklistBehavior_ConfigUI" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>692</width>
+    <height>480</height>
+   </rect>
+  </property>
+  <layout class="QGridLayout" >
+   <property name="margin" >
+    <number>0</number>
+   </property>
+   <item row="0" column="0" colspan="2" >
+    <widget class="QLabel" name="textLabel1_2" >
+     <property name="text" >
+      <string>&amp;Command to be executed on double click:</string>
+     </property>
+     <property name="wordWrap" >
+      <bool>false</bool>
+     </property>
+     <property name="buddy" >
+      <cstring>kcfg_ChannelDoubleClickAction</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="3" >
+    <widget class="QCheckBox" name="kcfg_SortCaseInsensitive" >
+     <property name="text" >
+      <string>Sort case &amp;insensitive</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0" colspan="3" >
+    <widget class="QCheckBox" name="kcfg_SortByActivity" >
+     <property name="text" >
+      <string>Sort by &amp;activity</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0" >
+    <widget class="QCheckBox" name="kcfg_SortByStatus" >
+     <property name="sizePolicy" >
+      <sizepolicy vsizetype="Fixed" hsizetype="Maximum" >
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text" >
+      <string>Sort b&amp;y user status</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0" colspan="3" >
+    <widget class="K3ListView" name="sortOrder" >
+     <property name="enabled" >
+      <bool>false</bool>
+     </property>
+     <property name="acceptDrops" >
+      <bool>true</bool>
+     </property>
+     <property name="allColumnsShowFocus" >
+      <bool>true</bool>
+     </property>
+     <property name="fullWidth" >
+      <bool>true</bool>
+     </property>
+     <property name="dragEnabled" >
+      <bool>true</bool>
+     </property>
+     <property name="shadeSortColumn" >
+      <bool>false</bool>
+     </property>
+     <column>
+      <property name="text" >
+       <string>Mode</string>
+      </property>
+      <property name="clickable" >
+       <bool>true</bool>
+      </property>
+      <property name="resizable" >
+       <bool>true</bool>
+      </property>
+     </column>
+     <column>
+      <property name="text" >
+       <string>Explanation</string>
+      </property>
+      <property name="clickable" >
+       <bool>true</bool>
+      </property>
+      <property name="resizable" >
+       <bool>true</bool>
+      </property>
+     </column>
+    </widget>
+   </item>
+   <item row="0" column="2" >
+    <widget class="KLineEdit" name="kcfg_ChannelDoubleClickAction" />
+   </item>
+   <item row="3" column="1" colspan="2" >
+    <widget class="QLabel" name="orderHintLabel" >
+     <property name="enabled" >
+      <bool>false</bool>
+     </property>
+     <property name="text" >
+      <string>(Reorder nick sorting order by drag and drop)</string>
+     </property>
+     <property name="wordWrap" >
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11" />
+ <layoutfunction spacing="KDialog::spacingHint" margin="KDialog::marginHint" />
+ <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
+ <customwidgets>
+  <customwidget>
+   <class>K3ListView</class>
+   <extends>Q3ListView</extends>
+   <header>k3listview.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>klineedit.h</header>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>kcfg_ChannelDoubleClickAction</tabstop>
+  <tabstop>kcfg_SortCaseInsensitive</tabstop>
+  <tabstop>kcfg_SortByStatus</tabstop>
+  <tabstop>sortOrder</tabstop>
+ </tabstops>
+ <includes>
+  <include location="local" >k3listview.h</include>
+  <include location="local" >klineedit.h</include>
+ </includes>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>kcfg_SortByStatus</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>sortOrder</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>kcfg_SortByStatus</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>orderHintLabel</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

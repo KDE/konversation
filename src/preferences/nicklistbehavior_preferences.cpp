@@ -22,8 +22,11 @@
 
 
 NicklistBehavior_Config::NicklistBehavior_Config(QWidget *parent, const char *name)
- : NicklistBehavior_ConfigUI(parent, name)
+ : QWidget(parent)
 {
+  setObjectName(QString::fromLatin1(name));
+  setupUi(this);
+
   // get page widget and populate listview
   loadSettings();
 

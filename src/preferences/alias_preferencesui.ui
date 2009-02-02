@@ -1,174 +1,169 @@
-<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
-<class>Alias_ConfigUI</class>
-<widget class="QWidget">
-    <property name="name">
-        <cstring>Alias_ConfigUI</cstring>
-    </property>
-    <property name="geometry">
-        <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>292</width>
-            <height>206</height>
-        </rect>
-    </property>
-    <grid>
-        <property name="name">
-            <cstring>unnamed</cstring>
-        </property>
-        <property name="margin">
-            <number>0</number>
-        </property>
-        <widget class="QLayoutWidget" row="1" column="0">
-            <property name="name">
-                <cstring>layout7</cstring>
-            </property>
-            <grid>
-                <property name="name">
-                    <cstring>unnamed</cstring>
-                </property>
-                <widget class="QLabel" row="0" column="0">
-                    <property name="name">
-                        <cstring>aliasLabel</cstring>
-                    </property>
-                    <property name="enabled">
-                        <bool>false</bool>
-                    </property>
-                    <property name="text">
-                        <string>Alias:</string>
-                    </property>
-                </widget>
-                <widget class="QLabel" row="1" column="0">
-                    <property name="name">
-                        <cstring>replacementLabel</cstring>
-                    </property>
-                    <property name="enabled">
-                        <bool>false</bool>
-                    </property>
-                    <property name="text">
-                        <string>Replacement:</string>
-                    </property>
-                </widget>
-                <widget class="KLineEdit" row="0" column="1">
-                    <property name="name">
-                        <cstring>aliasInput</cstring>
-                    </property>
-                    <property name="enabled">
-                        <bool>false</bool>
-                    </property>
-                </widget>
-                <widget class="KLineEdit" row="1" column="1">
-                    <property name="name">
-                        <cstring>replacementInput</cstring>
-                    </property>
-                    <property name="enabled">
-                        <bool>false</bool>
-                    </property>
-                </widget>
-            </grid>
-        </widget>
-        <widget class="K3ListView" row="0" column="0">
-            <column>
-                <property name="text">
-                    <string>Alias</string>
-                </property>
-                <property name="clickable">
-                    <bool>true</bool>
-                </property>
-                <property name="resizable">
-                    <bool>true</bool>
-                </property>
-            </column>
-            <column>
-                <property name="text">
-                    <string>Replacement</string>
-                </property>
-                <property name="clickable">
-                    <bool>true</bool>
-                </property>
-                <property name="resizable">
-                    <bool>true</bool>
-                </property>
-            </column>
-            <property name="name">
-                <cstring>aliasListView</cstring>
-            </property>
-            <property name="acceptDrops">
-                <bool>true</bool>
-            </property>
-            <property name="hScrollBarMode">
-                <enum>Auto</enum>
-            </property>
-            <property name="allColumnsShowFocus">
-                <bool>true</bool>
-            </property>
-            <property name="fullWidth">
-                <bool>true</bool>
-            </property>
-            <property name="itemsRenameable">
-                <bool>true</bool>
-            </property>
-            <property name="dragEnabled">
-                <bool>true</bool>
-            </property>
-        </widget>
-        <widget class="QLayoutWidget" row="0" column="1" rowspan="2" colspan="1">
-            <property name="name">
-                <cstring>layout8</cstring>
-            </property>
-            <vbox>
-                <property name="name">
-                    <cstring>unnamed</cstring>
-                </property>
-                <widget class="QPushButton">
-                    <property name="name">
-                        <cstring>newButton</cstring>
-                    </property>
-                    <property name="text">
-                        <string>&amp;New...</string>
-                    </property>
-                </widget>
-                <widget class="QPushButton">
-                    <property name="name">
-                        <cstring>removeButton</cstring>
-                    </property>
-                    <property name="text">
-                        <string>&amp;Remove</string>
-                    </property>
-                </widget>
-                <spacer>
-                    <property name="name">
-                        <cstring>spacer18</cstring>
-                    </property>
-                    <property name="orientation">
-                        <enum>Vertical</enum>
-                    </property>
-                    <property name="sizeType">
-                        <enum>Expanding</enum>
-                    </property>
-                    <property name="sizeHint">
-                        <size>
-                            <width>20</width>
-                            <height>350</height>
-                        </size>
-                    </property>
-                </spacer>
-            </vbox>
-        </widget>
-    </grid>
-</widget>
-<tabstops>
-    <tabstop>aliasListView</tabstop>
-    <tabstop>aliasInput</tabstop>
-    <tabstop>replacementInput</tabstop>
-    <tabstop>newButton</tabstop>
-    <tabstop>removeButton</tabstop>
-</tabstops>
-<layoutdefaults spacing="6" margin="11"/>
-<layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
-<includehints>
-    <includehint>klineedit.h</includehint>
-    <includehint>klineedit.h</includehint>
-    <includehint>k3listview.h</includehint>
-</includehints>
-</UI>
+<ui version="4.0" >
+ <class>Alias_ConfigUI</class>
+ <widget class="QWidget" name="Alias_ConfigUI" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>292</width>
+    <height>206</height>
+   </rect>
+  </property>
+  <layout class="QGridLayout" >
+   <property name="margin" >
+    <number>0</number>
+   </property>
+   <item row="1" column="0" >
+    <layout class="QGridLayout" >
+     <item row="0" column="0" >
+      <widget class="QLabel" name="aliasLabel" >
+       <property name="enabled" >
+        <bool>false</bool>
+       </property>
+       <property name="text" >
+        <string>Alias:</string>
+       </property>
+       <property name="wordWrap" >
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0" >
+      <widget class="QLabel" name="replacementLabel" >
+       <property name="enabled" >
+        <bool>false</bool>
+       </property>
+       <property name="text" >
+        <string>Replacement:</string>
+       </property>
+       <property name="wordWrap" >
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1" >
+      <widget class="KLineEdit" name="aliasInput" >
+       <property name="enabled" >
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1" >
+      <widget class="KLineEdit" name="replacementInput" >
+       <property name="enabled" >
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="0" column="0" >
+    <widget class="K3ListView" name="aliasListView" >
+     <property name="acceptDrops" >
+      <bool>true</bool>
+     </property>
+     <property name="hScrollBarMode" >
+      <enum>Q3ScrollView::Auto</enum>
+     </property>
+     <property name="allColumnsShowFocus" >
+      <bool>true</bool>
+     </property>
+     <property name="fullWidth" >
+      <bool>true</bool>
+     </property>
+     <property name="itemsRenameable" >
+      <bool>true</bool>
+     </property>
+     <property name="dragEnabled" >
+      <bool>true</bool>
+     </property>
+     <column>
+      <property name="text" >
+       <string>Alias</string>
+      </property>
+      <property name="clickable" >
+       <bool>true</bool>
+      </property>
+      <property name="resizable" >
+       <bool>true</bool>
+      </property>
+     </column>
+     <column>
+      <property name="text" >
+       <string>Replacement</string>
+      </property>
+      <property name="clickable" >
+       <bool>true</bool>
+      </property>
+      <property name="resizable" >
+       <bool>true</bool>
+      </property>
+     </column>
+    </widget>
+   </item>
+   <item rowspan="2" row="0" column="1" >
+    <layout class="QVBoxLayout" >
+     <item>
+      <widget class="QPushButton" name="newButton" >
+       <property name="text" >
+        <string>&amp;New...</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="removeButton" >
+       <property name="text" >
+        <string>&amp;Remove</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="spacer18" >
+       <property name="orientation" >
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeType" >
+        <enum>QSizePolicy::Expanding</enum>
+       </property>
+       <property name="sizeHint" stdset="0" >
+        <size>
+         <width>20</width>
+         <height>350</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11" />
+ <layoutfunction spacing="KDialog::spacingHint" margin="KDialog::marginHint" />
+ <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
+ <customwidgets>
+  <customwidget>
+   <class>K3ListView</class>
+   <extends>Q3ListView</extends>
+   <header>k3listview.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>klineedit.h</header>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>aliasListView</tabstop>
+  <tabstop>aliasInput</tabstop>
+  <tabstop>replacementInput</tabstop>
+  <tabstop>newButton</tabstop>
+  <tabstop>removeButton</tabstop>
+ </tabstops>
+ <includes>
+  <include location="local" >klineedit.h</include>
+  <include location="local" >klineedit.h</include>
+  <include location="local" >k3listview.h</include>
+ </includes>
+ <resources/>
+ <connections/>
+</ui>

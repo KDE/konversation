@@ -1,415 +1,479 @@
-<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
-<class>WatchedNicknames_ConfigUI</class>
-<widget class="QWidget">
-    <property name="name">
-        <cstring>WatchedNicknames_ConfigUI</cstring>
-    </property>
-    <property name="geometry">
-        <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>623</width>
-            <height>418</height>
-        </rect>
-    </property>
-    <grid>
-        <property name="name">
-            <cstring>unnamed</cstring>
+<ui version="4.0" >
+ <class>WatchedNicknames_ConfigUI</class>
+ <widget class="QWidget" name="WatchedNicknames_ConfigUI" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>623</width>
+    <height>418</height>
+   </rect>
+  </property>
+  <layout class="QGridLayout" >
+   <property name="margin" >
+    <number>0</number>
+   </property>
+   <item row="2" column="0" >
+    <widget class="QLabel" name="notifyActionLabel" >
+     <property name="enabled" >
+      <bool>false</bool>
+     </property>
+     <property name="sizePolicy" >
+      <sizepolicy vsizetype="Preferred" hsizetype="Fixed" >
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="whatsThis" >
+      <string>&lt;qt>
+&lt;p>When you double click a nickname in the &lt;b>Nicks Online&lt;/b> window, this
+command is placed in the &lt;b>Input Line&lt;/b> on the server window.&lt;/p>
+&lt;p>The following symbols can be used in the command:&lt;/p>&lt;ul>
+&lt;li>%u: The nickname double clicked.&lt;/li>
+&lt;li>%K: Server password.&lt;/li>
+&lt;li>%n: Send command directly to the server instead of your input line.&lt;/li>"
+&lt;/ul>
+&lt;/qt></string>
+     </property>
+     <property name="text" >
+      <string>Command e&amp;xecuted when nickname is double clicked:</string>
+     </property>
+     <property name="wordWrap" >
+      <bool>false</bool>
+     </property>
+     <property name="buddy" >
+      <cstring>kcfg_NotifyDoubleClickAction</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1" colspan="2" >
+    <widget class="KLineEdit" name="kcfg_NotifyDoubleClickAction" >
+     <property name="enabled" >
+      <bool>false</bool>
+     </property>
+     <property name="sizePolicy" >
+      <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="whatsThis" >
+      <string>&lt;qt>
+&lt;p>When you double click a nickname in the &lt;b>Nicks Online&lt;/b> window, this
+ command is placed in the &lt;b>Input Line&lt;/b> on the server window.&lt;/p>
+&lt;p>The following symbols can be used in the command:&lt;/p>&lt;ul>
+&lt;li>%u: The nickname double clicked.&lt;/li>
+&lt;li>%K: Server password.&lt;/li>
+&lt;li>%n: Send command directly to the server instead of your input line.&lt;/li>
+&lt;/ul>
+&lt;/qt></string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0" >
+    <widget class="QLabel" name="notifyDelayLabel" >
+     <property name="enabled" >
+      <bool>false</bool>
+     </property>
+     <property name="whatsThis" >
+      <string>Konversation will check the status of the nicknames listed below at this interval.</string>
+     </property>
+     <property name="text" >
+      <string>&amp;Update interval:</string>
+     </property>
+     <property name="wordWrap" >
+      <bool>false</bool>
+     </property>
+     <property name="buddy" >
+      <cstring>kcfg_NotifyDelay</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="2" >
+    <spacer name="spacer36" >
+     <property name="orientation" >
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeType" >
+      <enum>QSizePolicy::Expanding</enum>
+     </property>
+     <property name="sizeHint" stdset="0" >
+      <size>
+       <width>150</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="3" column="1" >
+    <widget class="QSpinBox" name="kcfg_NotifyDelay" >
+     <property name="enabled" >
+      <bool>false</bool>
+     </property>
+     <property name="whatsThis" >
+      <string>Konversation will check the status of the nicknames listed below at this interval.</string>
+     </property>
+     <property name="suffix" >
+      <string> seconds</string>
+     </property>
+     <property name="minimum" >
+      <number>5</number>
+     </property>
+     <property name="maximum" >
+      <number>1000</number>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="3" >
+    <widget class="QCheckBox" name="kcfg_OpenWatchedNicksAtStartup" >
+     <property name="enabled" >
+      <bool>false</bool>
+     </property>
+     <property name="whatsThis" >
+      <string>&lt;qt>When checked, the &lt;b>Nicks Online&lt;/b> window will be automatically opened when starting Konversation.&lt;/qt></string>
+     </property>
+     <property name="text" >
+      <string>Show watched nicks online tab on &amp;application startup</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0" colspan="3" >
+    <widget class="QCheckBox" name="kcfg_UseNotify" >
+     <property name="whatsThis" >
+      <string>&lt;qt>
+&lt;p>
+When the nickname watcher is turned on, you will be notified when the nicknames appearing in the &lt;b>Watched Networks/Nicknames&lt;/b> list come online or go offline.&lt;/p>
+&lt;p>You can also open the &lt;b>Nicks Online&lt;/b> window to see the status of all the watched nicknames.&lt;/p>
+&lt;/qt></string>
+     </property>
+     <property name="text" >
+      <string>Enable nic&amp;kname watcher</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0" colspan="3" >
+    <widget class="Q3GroupBox" name="listGroupBox" >
+     <property name="enabled" >
+      <bool>false</bool>
+     </property>
+     <property name="title" >
+      <string>Watched Nicknames</string>
+     </property>
+     <layout class="QGridLayout" >
+      <item row="1" column="0" >
+       <widget class="QLabel" name="networkLabel" >
+        <property name="enabled" >
+         <bool>false</bool>
         </property>
-        <property name="margin">
-            <number>0</number>
+        <property name="whatsThis" >
+         <string>The irc server network (such as 'freenode') that the selected user to watch is on.</string>
         </property>
-        <widget class="QLabel" row="2" column="0">
-            <property name="name">
-                <cstring>notifyActionLabel</cstring>
-            </property>
-            <property name="enabled">
-                <bool>false</bool>
-            </property>
-            <property name="sizePolicy">
-                <sizepolicy>
-                    <hsizetype>0</hsizetype>
-                    <vsizetype>5</vsizetype>
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                </sizepolicy>
-            </property>
-            <property name="text">
-                <string>Command e&amp;xecuted when nickname is double clicked:</string>
-            </property>
-            <property name="buddy" stdset="0">
-                <cstring>kcfg_NotifyDoubleClickAction</cstring>
-            </property>
-            <property name="whatsThis" stdset="0">
-                <string>&lt;qt&gt;
-&lt;p&gt;When you double click a nickname in the &lt;b&gt;Nicks Online&lt;/b&gt; window, this
-command is placed in the &lt;b&gt;Input Line&lt;/b&gt; on the server window.&lt;/p&gt;
-&lt;p&gt;The following symbols can be used in the command:&lt;/p&gt;&lt;ul&gt;
-&lt;li&gt;%u: The nickname double clicked.&lt;/li&gt;
-&lt;li&gt;%K: Server password.&lt;/li&gt;
-&lt;li&gt;%n: Send command directly to the server instead of your input line.&lt;/li&gt;"
-&lt;/ul&gt;
-&lt;/qt&gt;</string>
-            </property>
-        </widget>
-        <widget class="KLineEdit" row="2" column="1" rowspan="1" colspan="2">
-            <property name="name">
-                <cstring>kcfg_NotifyDoubleClickAction</cstring>
-            </property>
-            <property name="enabled">
-                <bool>false</bool>
-            </property>
-            <property name="sizePolicy">
-                <sizepolicy>
-                    <hsizetype>7</hsizetype>
-                    <vsizetype>0</vsizetype>
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                </sizepolicy>
-            </property>
-            <property name="whatsThis" stdset="0">
-                <string>&lt;qt&gt;
-&lt;p&gt;When you double click a nickname in the &lt;b&gt;Nicks Online&lt;/b&gt; window, this
- command is placed in the &lt;b&gt;Input Line&lt;/b&gt; on the server window.&lt;/p&gt;
-&lt;p&gt;The following symbols can be used in the command:&lt;/p&gt;&lt;ul&gt;
-&lt;li&gt;%u: The nickname double clicked.&lt;/li&gt;
-&lt;li&gt;%K: Server password.&lt;/li&gt;
-&lt;li&gt;%n: Send command directly to the server instead of your input line.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/qt&gt;</string>
-            </property>
-        </widget>
-        <widget class="QLabel" row="3" column="0">
-            <property name="name">
-                <cstring>notifyDelayLabel</cstring>
-            </property>
-            <property name="enabled">
-                <bool>false</bool>
-            </property>
-            <property name="text">
-                <string>&amp;Update interval:</string>
-            </property>
-            <property name="buddy" stdset="0">
-                <cstring>kcfg_NotifyDelay</cstring>
-            </property>
-            <property name="whatsThis" stdset="0">
-                <string>Konversation will check the status of the nicknames listed below at this interval.</string>
-            </property>
-        </widget>
-        <spacer row="3" column="2">
-            <property name="name">
-                <cstring>spacer36</cstring>
-            </property>
-            <property name="orientation">
-                <enum>Horizontal</enum>
-            </property>
-            <property name="sizeType">
-                <enum>Expanding</enum>
-            </property>
-            <property name="sizeHint">
-                <size>
-                    <width>150</width>
-                    <height>20</height>
-                </size>
-            </property>
-        </spacer>
-        <widget class="QSpinBox" row="3" column="1">
-            <property name="name">
-                <cstring>kcfg_NotifyDelay</cstring>
-            </property>
-            <property name="enabled">
-                <bool>false</bool>
-            </property>
-            <property name="suffix">
-                <string> seconds</string>
-            </property>
-            <property name="maxValue">
-                <number>1000</number>
-            </property>
-            <property name="minValue">
-                <number>5</number>
-            </property>
-            <property name="whatsThis" stdset="0">
-                <string>Konversation will check the status of the nicknames listed below at this interval.</string>
-            </property>
-        </widget>
-        <widget class="QCheckBox" row="1" column="0" rowspan="1" colspan="3">
-            <property name="name">
-                <cstring>kcfg_OpenWatchedNicksAtStartup</cstring>
-            </property>
-            <property name="enabled">
-                <bool>false</bool>
-            </property>
-            <property name="text">
-                <string>Show watched nicks online tab on &amp;application startup</string>
-            </property>
-            <property name="whatsThis" stdset="0">
-                <string>&lt;qt&gt;When checked, the &lt;b&gt;Nicks Online&lt;/b&gt; window will be automatically opened when starting Konversation.&lt;/qt&gt;</string>
-            </property>
-        </widget>
-        <widget class="QCheckBox" row="0" column="0" rowspan="1" colspan="3">
-            <property name="name">
-                <cstring>kcfg_UseNotify</cstring>
-            </property>
-            <property name="text">
-                <string>Enable nic&amp;kname watcher</string>
-            </property>
-            <property name="whatsThis" stdset="0">
-                <string>&lt;qt&gt;
-&lt;p&gt;
-When the nickname watcher is turned on, you will be notified when the nicknames appearing in the &lt;b&gt;Watched Networks/Nicknames&lt;/b&gt; list come online or go offline.&lt;/p&gt;
-&lt;p&gt;You can also open the &lt;b&gt;Nicks Online&lt;/b&gt; window to see the status of all the watched nicknames.&lt;/p&gt;
-&lt;/qt&gt;</string>
-            </property>
-        </widget>
-        <widget class="QGroupBox" row="4" column="0" rowspan="1" colspan="3">
-            <property name="name">
-                <cstring>listGroupBox</cstring>
-            </property>
-            <property name="enabled">
-                <bool>false</bool>
-            </property>
-            <property name="title">
-                <string>Watched Nicknames</string>
-            </property>
-            <grid>
-                <property name="name">
-                    <cstring>unnamed</cstring>
-                </property>
-                <widget class="QLabel" row="1" column="0">
-                    <property name="name">
-                        <cstring>networkLabel</cstring>
-                    </property>
-                    <property name="enabled">
-                        <bool>false</bool>
-                    </property>
-                    <property name="text">
-                        <string>Network:</string>
-                    </property>
-                    <property name="whatsThis" stdset="0">
-                        <string>The irc server network (such as 'freenode') that the selected user to watch is on.</string>
-                    </property>
-                </widget>
-                <widget class="QComboBox" row="1" column="1">
-                    <property name="name">
-                        <cstring>networkDropdown</cstring>
-                    </property>
-                    <property name="enabled">
-                        <bool>false</bool>
-                    </property>
-                    <property name="whatsThis" stdset="0">
-                        <string>The irc server network (such as 'freenode') that the selected user to watch is on.</string>
-                    </property>
-                </widget>
-                <widget class="QLabel" row="1" column="2">
-                    <property name="name">
-                        <cstring>nicknameLabel</cstring>
-                    </property>
-                    <property name="enabled">
-                        <bool>false</bool>
-                    </property>
-                    <property name="text">
-                        <string>Nickname:</string>
-                    </property>
-                    <property name="whatsThis" stdset="0">
-                        <string>The nick (username) of the selected person to watch</string>
-                    </property>
-                </widget>
-                <widget class="KLineEdit" row="1" column="3">
-                    <property name="name">
-                        <cstring>nicknameInput</cstring>
-                    </property>
-                    <property name="enabled">
-                        <bool>false</bool>
-                    </property>
-                    <property name="whatsThis" stdset="0">
-                        <string>The nick (username) of the selected person to watch</string>
-                    </property>
-                </widget>
-                <widget class="K3ListView" row="0" column="0" rowspan="1" colspan="4">
-                    <column>
-                        <property name="text">
-                            <string>Watched Networks/Nicknames</string>
-                        </property>
-                        <property name="clickable">
-                            <bool>true</bool>
-                        </property>
-                        <property name="resizable">
-                            <bool>true</bool>
-                        </property>
-                    </column>
-                    <property name="name">
-                        <cstring>notifyListView</cstring>
-                    </property>
-                    <property name="enabled">
-                        <bool>false</bool>
-                    </property>
-                    <property name="sizePolicy">
-                        <sizepolicy>
-                            <hsizetype>7</hsizetype>
-                            <vsizetype>7</vsizetype>
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                        </sizepolicy>
-                    </property>
-                    <property name="allColumnsShowFocus">
-                        <bool>true</bool>
-                    </property>
-                    <property name="rootIsDecorated">
-                        <bool>true</bool>
-                    </property>
-                    <property name="fullWidth">
-                        <bool>true</bool>
-                    </property>
-                    <property name="itemsRenameable">
-                        <bool>true</bool>
-                    </property>
-                    <property name="whatsThis" stdset="0">
-                        <string>&lt;qt&gt;
-&lt;p&gt;
-When the nickname watcher is turned on, you will be notified when the nicknames appearing in the &lt;b&gt;Watched Networks/Nicknames&lt;/b&gt; list come online or go offline.&lt;/p&gt;
-&lt;p&gt;You can also open the &lt;b&gt;Nicks Online&lt;/b&gt; window to see the status of all the watched nicknames.&lt;/p&gt;&lt;/qt&gt;</string>
-                    </property>
-                </widget>
-                <widget class="QLayoutWidget" row="0" column="4" rowspan="2" colspan="1">
-                    <property name="name">
-                        <cstring>layout3</cstring>
-                    </property>
-                    <vbox>
-                        <property name="name">
-                            <cstring>unnamed</cstring>
-                        </property>
-                        <widget class="KPushButton">
-                            <property name="name">
-                                <cstring>newButton</cstring>
-                            </property>
-                            <property name="enabled">
-                                <bool>false</bool>
-                            </property>
-                            <property name="sizePolicy">
-                                <sizepolicy>
-                                    <hsizetype>1</hsizetype>
-                                    <vsizetype>0</vsizetype>
-                                    <horstretch>0</horstretch>
-                                    <verstretch>0</verstretch>
-                                </sizepolicy>
-                            </property>
-                            <property name="text">
-                                <string>&amp;New...</string>
-                            </property>
-                            <property name="whatsThis" stdset="0">
-                                <string>Click to add a nickname to the list.</string>
-                            </property>
-                        </widget>
-                        <widget class="KPushButton">
-                            <property name="name">
-                                <cstring>removeButton</cstring>
-                            </property>
-                            <property name="enabled">
-                                <bool>false</bool>
-                            </property>
-                            <property name="sizePolicy">
-                                <sizepolicy>
-                                    <hsizetype>1</hsizetype>
-                                    <vsizetype>0</vsizetype>
-                                    <horstretch>0</horstretch>
-                                    <verstretch>0</verstretch>
-                                </sizepolicy>
-                            </property>
-                            <property name="text">
-                                <string>&amp;Remove</string>
-                            </property>
-                            <property name="whatsThis" stdset="0">
-                                <string>Click to remove the selected nickname from the list.</string>
-                            </property>
-                        </widget>
-                        <spacer>
-                            <property name="name">
-                                <cstring>spacer34</cstring>
-                            </property>
-                            <property name="orientation">
-                                <enum>Vertical</enum>
-                            </property>
-                            <property name="sizeType">
-                                <enum>Expanding</enum>
-                            </property>
-                            <property name="sizeHint">
-                                <size>
-                                    <width>20</width>
-                                    <height>160</height>
-                                </size>
-                            </property>
-                        </spacer>
-                    </vbox>
-                </widget>
-            </grid>
-        </widget>
-    </grid>
-</widget>
-<customwidgets>
-</customwidgets>
-<connections>
-    <connection>
-        <sender>kcfg_UseNotify</sender>
-        <signal>toggled(bool)</signal>
-        <receiver>kcfg_OpenWatchedNicksAtStartup</receiver>
-        <slot>setEnabled(bool)</slot>
-    </connection>
-    <connection>
-        <sender>kcfg_UseNotify</sender>
-        <signal>toggled(bool)</signal>
-        <receiver>kcfg_NotifyDelay</receiver>
-        <slot>setEnabled(bool)</slot>
-    </connection>
-    <connection>
-        <sender>kcfg_UseNotify</sender>
-        <signal>toggled(bool)</signal>
-        <receiver>notifyListView</receiver>
-        <slot>setEnabled(bool)</slot>
-    </connection>
-    <connection>
-        <sender>kcfg_UseNotify</sender>
-        <signal>toggled(bool)</signal>
-        <receiver>notifyDelayLabel</receiver>
-        <slot>setEnabled(bool)</slot>
-    </connection>
-    <connection>
-        <sender>kcfg_UseNotify</sender>
-        <signal>toggled(bool)</signal>
-        <receiver>notifyActionLabel</receiver>
-        <slot>setEnabled(bool)</slot>
-    </connection>
-    <connection>
-        <sender>kcfg_UseNotify</sender>
-        <signal>toggled(bool)</signal>
-        <receiver>kcfg_NotifyDoubleClickAction</receiver>
-        <slot>setEnabled(bool)</slot>
-    </connection>
-    <connection>
-        <sender>kcfg_UseNotify</sender>
-        <signal>toggled(bool)</signal>
-        <receiver>listGroupBox</receiver>
-        <slot>setEnabled(bool)</slot>
-    </connection>
-</connections>
-<tabstops>
-    <tabstop>kcfg_UseNotify</tabstop>
-    <tabstop>kcfg_OpenWatchedNicksAtStartup</tabstop>
-    <tabstop>kcfg_NotifyDoubleClickAction</tabstop>
-    <tabstop>kcfg_NotifyDelay</tabstop>
-    <tabstop>notifyListView</tabstop>
-    <tabstop>networkDropdown</tabstop>
-    <tabstop>nicknameInput</tabstop>
-    <tabstop>newButton</tabstop>
-    <tabstop>removeButton</tabstop>
-</tabstops>
-<layoutdefaults spacing="6" margin="11"/>
-<layoutfunctions spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
-<includehints>
-    <includehint>klineedit.h</includehint>
-    <includehint>klineedit.h</includehint>
-    <includehint>k3listview.h</includehint>
-    <includehint>kpushbutton.h</includehint>
-    <includehint>kpushbutton.h</includehint>
-</includehints>
-</UI>
+        <property name="text" >
+         <string>Network:</string>
+        </property>
+        <property name="wordWrap" >
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1" >
+       <widget class="QComboBox" name="networkDropdown" >
+        <property name="enabled" >
+         <bool>false</bool>
+        </property>
+        <property name="whatsThis" >
+         <string>The irc server network (such as 'freenode') that the selected user to watch is on.</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="2" >
+       <widget class="QLabel" name="nicknameLabel" >
+        <property name="enabled" >
+         <bool>false</bool>
+        </property>
+        <property name="whatsThis" >
+         <string>The nick (username) of the selected person to watch</string>
+        </property>
+        <property name="text" >
+         <string>Nickname:</string>
+        </property>
+        <property name="wordWrap" >
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="3" >
+       <widget class="KLineEdit" name="nicknameInput" >
+        <property name="enabled" >
+         <bool>false</bool>
+        </property>
+        <property name="whatsThis" >
+         <string>The nick (username) of the selected person to watch</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0" colspan="4" >
+       <widget class="K3ListView" name="notifyListView" >
+        <property name="enabled" >
+         <bool>false</bool>
+        </property>
+        <property name="sizePolicy" >
+         <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="whatsThis" >
+         <string>&lt;qt>
+&lt;p>
+When the nickname watcher is turned on, you will be notified when the nicknames appearing in the &lt;b>Watched Networks/Nicknames&lt;/b> list come online or go offline.&lt;/p>
+&lt;p>You can also open the &lt;b>Nicks Online&lt;/b> window to see the status of all the watched nicknames.&lt;/p>&lt;/qt></string>
+        </property>
+        <property name="allColumnsShowFocus" >
+         <bool>true</bool>
+        </property>
+        <property name="rootIsDecorated" >
+         <bool>true</bool>
+        </property>
+        <property name="fullWidth" >
+         <bool>true</bool>
+        </property>
+        <property name="itemsRenameable" >
+         <bool>true</bool>
+        </property>
+        <column>
+         <property name="text" >
+          <string>Watched Networks/Nicknames</string>
+         </property>
+         <property name="clickable" >
+          <bool>true</bool>
+         </property>
+         <property name="resizable" >
+          <bool>true</bool>
+         </property>
+        </column>
+       </widget>
+      </item>
+      <item rowspan="2" row="0" column="4" >
+       <layout class="QVBoxLayout" >
+        <item>
+         <widget class="KPushButton" name="newButton" >
+          <property name="enabled" >
+           <bool>false</bool>
+          </property>
+          <property name="sizePolicy" >
+           <sizepolicy vsizetype="Fixed" hsizetype="Minimum" >
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="whatsThis" >
+           <string>Click to add a nickname to the list.</string>
+          </property>
+          <property name="text" >
+           <string>&amp;New...</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="KPushButton" name="removeButton" >
+          <property name="enabled" >
+           <bool>false</bool>
+          </property>
+          <property name="sizePolicy" >
+           <sizepolicy vsizetype="Fixed" hsizetype="Minimum" >
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="whatsThis" >
+           <string>Click to remove the selected nickname from the list.</string>
+          </property>
+          <property name="text" >
+           <string>&amp;Remove</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="spacer34" >
+          <property name="orientation" >
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeType" >
+           <enum>QSizePolicy::Expanding</enum>
+          </property>
+          <property name="sizeHint" stdset="0" >
+           <size>
+            <width>20</width>
+            <height>160</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11" />
+ <layoutfunction spacing="KDialog::spacingHint" margin="KDialog::marginHint" />
+ <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
+ <customwidgets>
+  <customwidget>
+   <class>Q3GroupBox</class>
+   <extends>QGroupBox</extends>
+   <header>Qt3Support/Q3GroupBox</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>K3ListView</class>
+   <extends>Q3ListView</extends>
+   <header>k3listview.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>klineedit.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KPushButton</class>
+   <extends>QPushButton</extends>
+   <header>kpushbutton.h</header>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>kcfg_UseNotify</tabstop>
+  <tabstop>kcfg_OpenWatchedNicksAtStartup</tabstop>
+  <tabstop>kcfg_NotifyDoubleClickAction</tabstop>
+  <tabstop>kcfg_NotifyDelay</tabstop>
+  <tabstop>notifyListView</tabstop>
+  <tabstop>networkDropdown</tabstop>
+  <tabstop>nicknameInput</tabstop>
+  <tabstop>newButton</tabstop>
+  <tabstop>removeButton</tabstop>
+ </tabstops>
+ <includes>
+  <include location="local" >klineedit.h</include>
+  <include location="local" >klineedit.h</include>
+  <include location="local" >k3listview.h</include>
+  <include location="local" >kpushbutton.h</include>
+  <include location="local" >kpushbutton.h</include>
+ </includes>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>kcfg_UseNotify</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>kcfg_OpenWatchedNicksAtStartup</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>kcfg_UseNotify</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>kcfg_NotifyDelay</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>kcfg_UseNotify</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>notifyListView</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>kcfg_UseNotify</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>notifyDelayLabel</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>kcfg_UseNotify</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>notifyActionLabel</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>kcfg_UseNotify</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>kcfg_NotifyDoubleClickAction</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>kcfg_UseNotify</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>listGroupBox</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

@@ -13,12 +13,12 @@
 #ifndef EXDCCPREFERENCES_H
 #define EXDCCPREFERENCES_H
 
-#include "dcc_preferencesui.h"
+#include "ui_dcc_preferencesui.h"
 
 
 class QComboBox;
 
-class DCC_Config : public DCC_ConfigUI
+class DCC_Config : public QWidget, private Ui::DCC_ConfigUI
 {
     Q_OBJECT
 

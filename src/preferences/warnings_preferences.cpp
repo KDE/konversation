@@ -25,8 +25,11 @@
 
 
 Warnings_Config::Warnings_Config( QWidget* parent, const char* name, Qt::WFlags fl )
-    : Warnings_ConfigUI( parent, name, fl )
+    : QWidget(parent, fl)
 {
+  setObjectName(QString::fromLatin1(name));
+  setupUi(this);
+
   dialogListView->setSorting(1);
   loadSettings();
   connect(dialogListView, SIGNAL(clicked(Q3ListViewItem *)), this, SIGNAL(modified()));

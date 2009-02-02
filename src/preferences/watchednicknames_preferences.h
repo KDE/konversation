@@ -14,13 +14,13 @@
 
 #include "settingspage.h" ////// header renamed
 #include "servergroupsettings.h"
-#include "watchednicknames_preferencesui.h"
+#include "ui_watchednicknames_preferencesui.h"
 
 
 class Q3ListView;
 class Q3ListViewItem;
 
-class WatchedNicknames_Config : public WatchedNicknames_ConfigUI, public KonviSettingsPage
+class WatchedNicknames_Config : public QWidget, public KonviSettingsPage, private Ui::WatchedNicknames_ConfigUI
 {
     Q_OBJECT
 

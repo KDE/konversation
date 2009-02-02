@@ -37,8 +37,11 @@
 
 
 Highlight_Config::Highlight_Config(QWidget* parent, const char* name)
- : Highlight_ConfigUI(parent,name)
+ : QWidget(parent)
 {
+  setObjectName(QString::fromLatin1(name));
+  setupUi(this);
+
   // reset flag to defined state (used to block signals when just selecting a new item)
   newItemSelected=false;
 

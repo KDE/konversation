@@ -1,50 +1,53 @@
-<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
-<class>Warnings_ConfigUI</class>
-<widget class="QWidget">
-    <property name="name">
-        <cstring>Warnings_ConfigUI</cstring>
-    </property>
-    <property name="geometry">
-        <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>570</width>
-            <height>500</height>
-        </rect>
-    </property>
-    <hbox>
-        <property name="name">
-            <cstring>unnamed</cstring>
-        </property>
-        <property name="margin">
-            <number>0</number>
-        </property>
-        <widget class="K3ListView">
-            <column>
-                <property name="text">
-                    <string>Warning Dialogs to Show</string>
-                </property>
-                <property name="clickable">
-                    <bool>true</bool>
-                </property>
-                <property name="resizable">
-                    <bool>true</bool>
-                </property>
-            </column>
-            <property name="name">
-                <cstring>dialogListView</cstring>
-            </property>
-            <property name="allColumnsShowFocus">
-                <bool>true</bool>
-            </property>
-        </widget>
-    </hbox>
-</widget>
-<tabstops>
-    <tabstop>dialogListView</tabstop>
-</tabstops>
-<layoutdefaults spacing="6" margin="11"/>
-<includehints>
-    <includehint>k3listview.h</includehint>
-</includehints>
-</UI>
+<ui version="4.0" >
+ <class>Warnings_ConfigUI</class>
+ <widget class="QWidget" name="Warnings_ConfigUI" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>466</width>
+    <height>271</height>
+   </rect>
+  </property>
+  <layout class="QHBoxLayout" >
+   <property name="margin" >
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="K3ListView" name="dialogListView" >
+     <property name="allColumnsShowFocus" >
+      <bool>true</bool>
+     </property>
+     <column>
+      <property name="text" >
+       <string>Warning Dialogs to Show</string>
+      </property>
+      <property name="clickable" >
+       <bool>true</bool>
+      </property>
+      <property name="resizable" >
+       <bool>true</bool>
+      </property>
+     </column>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11" />
+ <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
+ <customwidgets>
+  <customwidget>
+   <class>K3ListView</class>
+   <extends>Q3ListView</extends>
+   <header>k3listview.h</header>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>dialogListView</tabstop>
+ </tabstops>
+ <includes>
+  <include location="local" >k3listview.h</include>
+ </includes>
+ <resources/>
+ <connections/>
+</ui>

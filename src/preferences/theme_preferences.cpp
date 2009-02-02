@@ -51,8 +51,11 @@
 using namespace Konversation;
 
 Theme_Config::Theme_Config(QWidget* parent, const char* name)
-  : Theme_ConfigUI( parent, name)
+  : QWidget(parent)
 {
+    setObjectName(QString::fromLatin1(name));
+    setupUi(this);
+
     m_defaultThemeIndex = -1;
 
     // load the current settings
