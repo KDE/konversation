@@ -36,8 +36,10 @@
 
 
 SearchBar::SearchBar(QWidget* parent)
-: SearchBarBase(parent)
+: QWidget(parent)
 {
+    setupUi(this);
+
     m_searchFoward = false;
     m_matchCase = false;
     m_wholeWords = false;
@@ -80,7 +82,7 @@ SearchBar::~SearchBar()
 
 void SearchBar::showEvent(QShowEvent *e)
 {
-    SearchBarBase::showEvent(e);
+    QWidget::showEvent(e);
     m_searchEdit->selectAll();
 }
 
@@ -97,7 +99,7 @@ bool SearchBar::focusedChild()
 void SearchBar::hide()
 {
     m_timer->stop();
-    SearchBarBase::hide();
+    QWidget::hide();
 
     if (focusedChild())
         emit hidden();

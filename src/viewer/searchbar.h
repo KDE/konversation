@@ -13,7 +13,7 @@
 #ifndef SEARCHBAR_H
 #define SEARCHBAR_H
 
-#include "searchbarbase.h"
+#include "ui_searchbarbase.h"
 
 /* TODO:
    - Changing case-sensitivity and search-forward restarts search from beginning.
@@ -24,7 +24,7 @@
 
 class KMenu;
 
-class SearchBar : public SearchBarBase
+class SearchBar : public QWidget, private Ui::SearchBarBase
 {
     Q_OBJECT
 
