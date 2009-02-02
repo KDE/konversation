@@ -25,6 +25,7 @@ namespace Konversation
 class DBus : public QObject
 {
     Q_OBJECT
+    Q_CLASSINFO("D-Bus Interface", "org.kde.konversation")
 
     public:
         DBus(QObject *parent = 0);
@@ -70,10 +71,12 @@ class DBus : public QObject
 class IdentDBus : public QObject
 {
     Q_OBJECT
+    Q_CLASSINFO("D-Bus Interface", "org.kde.konversation")
 
         public:
         IdentDBus(QObject *parent = 0);
 
+    public slots:
         void setrealName(const QString &identity, const QString& name);
         QString getrealName(const QString &identity);
         void setIdent(const QString &identity, const QString& ident);
