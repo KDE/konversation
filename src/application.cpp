@@ -264,7 +264,7 @@ void KonversationApplication::dcopSay(const QString& connection, const QString& 
 
 void KonversationApplication::dcopInfo(const QString& string)
 {
-    mainWindow->getViewContainer()->appendToFrontmost(i18n("DCOP"), string, 0);
+    mainWindow->getViewContainer()->appendToFrontmost(i18n("D-Bus"), string, 0);
 }
 
 void KonversationApplication::readOptions()

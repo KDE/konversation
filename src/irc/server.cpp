@@ -1249,7 +1249,7 @@ void Server::dcopSay(const QString& target,const QString& command)
 
 void Server::dcopInfo(const QString& string)
 {
-    appendMessageToFrontmost(i18n("DCOP"),string);
+    appendMessageToFrontmost(i18n("D-Bus"),string);
 }
 
 void Server::ctcpReply(const QString &receiver,const QString &text)
@@ -2853,12 +2853,12 @@ void Server::invitation(const QString& nick,const QString& channel)
 
 void Server::scriptNotFound(const QString& name)
 {
-    appendMessageToFrontmost(i18n("DCOP"),i18n("Error: Could not find script \"%1\".", name));
+    appendMessageToFrontmost(i18n("D-Bus"),i18n("Error: Could not find script \"%1\".", name));
 }
 
 void Server::scriptExecutionError(const QString& name)
 {
-    appendMessageToFrontmost(i18n("DCOP"),i18n("Error: Could not execute script \"%1\". Check file permissions.", name));
+    appendMessageToFrontmost(i18n("D-Bus"),i18n("Error: Could not execute script \"%1\". Check file permissions.", name));
 }
 
 bool Server::isAChannel(const QString &channel) const
