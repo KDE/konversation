@@ -450,11 +450,11 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0)
     actionCollection()->addAction("clear_tabs", action);
 
     KToggleAction* awayAction = new KToggleAction(this);
-    action->setText(i18n("Global Away"));
-    action->setShortcut(KShortcut("Ctrl+Shift+A"));
+    awayAction->setText(i18n("Global Away"));
+    awayAction->setShortcut(KShortcut("Ctrl+Shift+A"));
     awayAction->setEnabled(false);
     connect(awayAction, SIGNAL(toggled(bool)), KonversationApplication::instance()->getAwayManager(), SLOT(toggleGlobalAway(bool)));
-    actionCollection()->addAction("toggle_away", action);
+    actionCollection()->addAction("toggle_away", awayAction);
 
     //action = new KAction(i18n("&Join Channel..."), "add", KShortcut("Ctrl+J"), m_viewContainer, SLOT(showJoinChannelDialog()), actionCollection(), "join_channel");
     action=new KAction(this);
