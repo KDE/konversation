@@ -234,7 +234,7 @@ void IRCInput::keyPressEvent(QKeyEvent* e)
             }
             else
             {
-                insertCompletion(completionBox->currentItem()->text());
+                insertCompletion(completionBox->currentItem() ? completionBox->currentItem()->text() : completionBox->item(0)->text());
                 completionBox->hide();
             }
             // prevent widget from adding lines
