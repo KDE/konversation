@@ -9,7 +9,7 @@
  * copyright: (C) 2004 Christian Muehlhaeuser <chris@chris.de>
  *            (C) 2004-2006 Seb Ruiz <ruiz@kde.org>
  *            (C) 2004, 2005 Max Howell
- *            (C) 2005 Gábor Lehel <illissius@gmail.com>
+ *            (C) 2005 GÃ¡bor Lehel <illissius@gmail.com>
  *            (C) 2008 Mark Kretschmann <kretschmann@kde.org>
  */
 
