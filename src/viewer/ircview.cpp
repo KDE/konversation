@@ -597,7 +597,7 @@ bool doHighlight, bool parseURL, bool self)
     }
     #endif
 
-    if(filteredLine.indexOf('\x07') != -1)
+    if(filteredLine.contains('\x07'))
     {
         if(Preferences::self()->beep())
         {
@@ -688,9 +688,9 @@ bool doHighlight, bool parseURL, bool self)
         QString highlightColor;
 
         if(Preferences::self()->highlightNick() &&
-            filteredLine.toLower().indexOf(QRegExp("(^|[^\\d\\w])" +
+            filteredLine.toLower().contains(QRegExp("(^|[^\\d\\w])" +
             QRegExp::escape(ownNick.toLower()) +
-            "([^\\d\\w]|$)")) != -1)
+            "([^\\d\\w]|$)")))
         {
             // highlight current nickname
             highlightColor = Preferences::self()->highlightNickColor().name();
@@ -712,9 +712,9 @@ bool doHighlight, bool parseURL, bool self)
                     QRegExp needleReg(highlight->getPattern());
                     needleReg.setCaseSensitivity(Qt::CaseInsensitive);
                                                   // highlight regexp in text
-                    patternFound = ((filteredLine.indexOf(needleReg) != -1) ||
+                    patternFound = ((filteredLine.contains(needleReg)) ||
                                                   // highlight regexp in nickname
-                        (whoSent.indexOf(needleReg) != -1));
+                        (whoSent.contains(needleReg)));
 
                     // remember captured patterns for later
                     captures=needleReg.capturedTexts();
@@ -724,9 +724,9 @@ bool doHighlight, bool parseURL, bool self)
                 {
                     QString needle=highlight->getPattern();
                                                   // highlight patterns in text
-                    patternFound = ((filteredLine.indexOf(needle, 0, Qt::CaseInsensitive) != -1) ||
+                    patternFound = ((filteredLine.contains(needle, Qt::CaseInsensitive)) ||
                                                   // highlight patterns in nickname
-                        (whoSent.indexOf(needle, 0, Qt::CaseInsensitive) != -1));
+                        (whoSent.contains(needle, Qt::CaseInsensitive)));
                 }
 
                 if(!patternFound)

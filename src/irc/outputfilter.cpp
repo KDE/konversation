@@ -1037,7 +1037,7 @@ namespace Konversation
         {
             QStringList parameterList = parameter.split(' ');
 
-            if(parameterList[0].indexOf("../") == -1)
+            if(!parameterList[0].contains("../"))
             {
                 emit launchScript(destination, parameter);
             }

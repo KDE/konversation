@@ -386,7 +386,7 @@ void IRCInput::paste()
         }
 
         // does the text contain at least one newline character?
-        if(pasteText.indexOf('\n')!=-1)
+        if(pasteText.contains('\n'))
         {
             // make comparisons easier (avoid signed / unsigned warnings)
             int pos=pasteText.indexOf('\n');

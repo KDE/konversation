@@ -1207,7 +1207,7 @@ void Channel::quickButtonClicked(const QString &buttonText)
     QString out=m_server->parseWildcards(buttonText,m_server->getNickname(),getName(),getPassword(),getSelectedNickList(),QString());
 
     // are there any newlines in the definition?
-    if (out.indexOf('\n')!=-1)
+    if (out.contains('\n'))
         sendChannelText(out);
     // single line without newline needs to be copied into input line
     else
@@ -1319,7 +1319,7 @@ void Channel::removeNick(ChannelNickPtr channelNick, const QString &reason, bool
     if(!displayReason.isEmpty())
     {
         // if the reason contains text markup characters, play it safe and reset all
-        if(displayReason.indexOf(QRegExp("[\\0000-\\0037]")) != -1)
+        if(displayReason.contains(QRegExp("[\\0000-\\0037]")))
             displayReason += "\017";
     }
 
@@ -1390,7 +1390,7 @@ void Channel::kickNick(ChannelNickPtr channelNick, const QString &kicker, const 
     if(!displayReason.isEmpty())
     {
         // if the reason contains text markup characters, play it safe and reset all
-        if(displayReason.indexOf(QRegExp("[\\0000-\\0037]")) != -1)
+        if(displayReason.contains(QRegExp("[\\0000-\\0037]")))
             displayReason += "\017";
     }
 
@@ -2906,7 +2906,7 @@ QString NickList::completeNick(const QString& pattern, bool& complete, QStringLi
     NickList foundNicks;
     foundNicks.setCompareMethod(NickList::TimeStamp);
 
-    if((pattern.indexOf(QRegExp("^(\\d|\\w)")) != -1) && skipNonAlfaNum)
+    if((pattern.contains(QRegExp("^(\\d|\\w)"))) && skipNonAlfaNum)
     {
         prefix = "^([^\\d\\w]|[\\_]){0,}";
     }
@@ -2924,7 +2924,7 @@ QString NickList::completeNick(const QString& pattern, bool& complete, QStringLi
             newNick = newNick.section( prefixCharacter,1 );
         }
 
-        if(newNick.indexOf(regexp) != -1)
+        if(newNick.contains(regexp))
         {
             foundNicks.append(it.current());
         }

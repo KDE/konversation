@@ -100,7 +100,7 @@ void InputFilter::parseLine(const QString& a_newLine)
     Q_ASSERT(server);
 
     // Server command, if no "!" was found in prefix
-    if((prefix.indexOf('!') == -1) && (prefix != server->getNickname()))
+    if((!prefix.contains('!')) && (prefix != server->getNickname()))
     {
 
         parseServerCommand(prefix, command, parameterList, trailing);
@@ -157,9 +157,9 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
 
                     if(sourceNick != server->getNickname())
                     {
-                        if(ctcpArgument.toLower().indexOf(QRegExp("(^|[^\\d\\w])"
+                        if(ctcpArgument.toLower().contains(QRegExp("(^|[^\\d\\w])"
                             + QRegExp::escape(server->loweredNickname())
-                            + "([^\\d\\w]|$)")) !=-1 )
+                            + "([^\\d\\w]|$)")))
                         {
                             konv_app->notificationHandler()->nick(channel, sourceNick, ctcpArgument);
                         }
@@ -494,7 +494,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                 // TODO: Try to remember channel keys for autojoins and manual joins, so
                 //       we can get %k to work
 
-                if(channelName.indexOf(' ')!=-1)
+                if(channelName.contains(' '))
                 {
                     key=channelName.section(' ',1,1);
                     channelName=channelName.section(' ',0,0);
@@ -1800,7 +1800,7 @@ void InputFilter::parseModes(const QString &sourceNick, const QStringList &param
         else
         {
             // Check if this was a parameter mode
-            if(parameterModes.indexOf(mode)!=-1)
+            if(parameterModes.contains(mode))
             {
                 // Check if the mode actually wants a parameter. -k and -l do not!
                 if(plus || (!plus && (mode!='k') && (mode!='l')))
@@ -1926,7 +1926,7 @@ void InputFilter::parsePrivMsg(const QString& prefix,
                             QRegExp::escape(server->loweredNickname()) +
                             "([^\\d\\w]|$)");
                     regexp.setCaseSensitivity(Qt::CaseInsensitive);
-                    if(message.indexOf(regexp) !=-1 )
+                    if(message.contains(regexp))
                     {
                         konv_app->notificationHandler()->nick(channel,
                                 source, message);
@@ -1959,7 +1959,7 @@ void InputFilter::parsePrivMsg(const QString& prefix,
                         QRegExp::escape(server->loweredNickname()) +
                         "([^\\d\\w]|$)");
                 regexp.setCaseSensitivity(Qt::CaseInsensitive);
-                if(message.indexOf(regexp) !=-1 )
+                if(message.contains(regexp))
                 {
                     konv_app->notificationHandler()->nick(query,
                             source, message);

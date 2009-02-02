@@ -596,7 +596,7 @@ QString Preferences::webBrowserCmd()
 {
   // add %u to command if it's not in there
   QString cmd=self()->mWebBrowserCmd;
-  if (cmd.indexOf("%u") == -1)
+  if (!cmd.contains("%u"))
       cmd += " %u";
   return cmd;
 }

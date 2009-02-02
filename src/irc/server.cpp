@@ -748,7 +748,7 @@ void Server::notifyResponse(const QString& nicksOnline)
     //Are any nicks gone offline
     for (it = m_prevISONList.begin(); it != m_prevISONList.end(); ++it)
     {
-        if (lcActual.indexOf(' ' + (*it) + ' ', 0, Qt::CaseInsensitive) == -1)
+        if (!lcActual.contains(' ' + (*it) + ' ', Qt::CaseInsensitive))
         {
             setNickOffline(*it);
             nicksOnlineChanged = true;
@@ -758,7 +758,7 @@ void Server::notifyResponse(const QString& nicksOnline)
     //Are any nicks gone online
     for (it = actualList.begin(); it != actualList.end(); ++it)
     {
-        if (lcPrevISON.indexOf(' ' + (*it) + ' ', 0, Qt::CaseInsensitive) == -1) {
+        if (!lcPrevISON.contains(' ' + (*it) + ' ', Qt::CaseInsensitive)) {
             setWatchedNickOnline(*it);
             nicksOnlineChanged = true;
         }
@@ -2438,7 +2438,7 @@ bool Server::isWatchedNick(const QString& nickname)
     // Get watch list from preferences.
     QString watchlist= ' ' + getWatchListString() + ' ';
     // Search case-insensitivly
-    return (watchlist.indexOf(' ' + nickname + ' ', 0, Qt::CaseInsensitive) != -1);
+    return watchlist.contains(' ' + nickname + ' ', Qt::CaseInsensitive);
 }
 
 /**

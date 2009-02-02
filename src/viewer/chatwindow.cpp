@@ -286,7 +286,7 @@ void ChatWindow::setLogfileName(const QString& name)
                         if(backlog.device()->at() == filePosition) backlog.device()->at(filePosition + 1);
 
                         // if a tab character is present in the line
-                        if (backlogLine.indexOf('\t') != -1)
+                        if (backlogLine.contains('\t'))
                         {
                             // extract first column from log
                             QString backlogFirst = backlogLine.left(backlogLine.indexOf('\t'));
