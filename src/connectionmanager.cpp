@@ -150,7 +150,7 @@ void ConnectionManager::handleConnectionStateChange(Server* server, Konversation
     {
         if (!m_activeIdentities.contains(identityId))
         {
-            m_activeIdentities.append(identityId);
+            m_activeIdentities.insert(identityId);
 
             emit identityOnline(identityId);
         }

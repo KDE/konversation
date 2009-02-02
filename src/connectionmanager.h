@@ -16,8 +16,7 @@
 #include "identity.h"
 
 #include <qobject.h>
-//Added by qt3to4:
-#include <Q3ValueList>
+#include <QSet>
 #include <Q3PtrList>
 
 
@@ -90,7 +89,7 @@ class ConnectionManager : public QObject
         bool validateIdentity(IdentityPtr identity, bool interactive = true);
 
         QMap<int, Server*> m_connectionList;
-        Q3ValueList<uint> m_activeIdentities;
+        QSet<uint> m_activeIdentities;
 
         enum ConnectionDupe { SameServer, SameServerGroup };
 };
