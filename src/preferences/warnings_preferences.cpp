@@ -14,15 +14,14 @@
 
 #include "warnings_preferences.h"
 
-#include <q3listview.h>
+#include <QHeaderView>
 
 #include <kdebug.h>
-#include <kapplication.h>
 #include <kconfig.h>
 #include <klocale.h>
-#include <k3listview.h>
 #include <kglobal.h>
 
+static const int WarningNameRole = Qt::UserRole + 100;
 
 Warnings_Config::Warnings_Config( QWidget* parent, const char* name, Qt::WFlags fl )
     : QWidget(parent, fl)
@@ -30,9 +29,12 @@ Warnings_Config::Warnings_Config( QWidget* parent, const char* name, Qt::WFlags 
   setObjectName(QString::fromLatin1(name));
   setupUi(this);
 
-  dialogListView->setSorting(1);
+  dialogListView->header()->setClickable(false);
+  dialogListView->header()->setMovable(false);
+
   loadSettings();
-  connect(dialogListView, SIGNAL(clicked(Q3ListViewItem *)), this, SIGNAL(modified()));
+
+  connect(dialogListView, SIGNAL(itemChanged(QTreeWidgetItem *, int)), this, SIGNAL(modified()));
 }
 
 Warnings_Config::~Warnings_Config()
@@ -41,16 +43,14 @@ Warnings_Config::~Warnings_Config()
 
 void Warnings_Config::restorePageToDefaults()
 {
-
-  Q3CheckListItem* item=static_cast<Q3CheckListItem*>(dialogListView->itemAtIndex(0));
   bool changed=false;
-  while(item)
+  for (int i = 0; i < dialogListView->topLevelItemCount(); ++i)
   {
-    if(!item->isOn()) {
-      item->setOn(true);
+    QTreeWidgetItem *item = dialogListView->topLevelItem(i);
+    if (item->checkState(0) == Qt::Unchecked) {
+      item->setCheckState(0, Qt::Checked);
       changed=true;
     }
-    item=static_cast<Q3CheckListItem*>(item->itemBelow());
   }
   if(changed) {
     emit modified();
@@ -65,36 +65,35 @@ void Warnings_Config::saveSettings()
   // prepare list
   QString warningsChecked;
 
-  Q3CheckListItem* item=static_cast<Q3CheckListItem*>(dialogListView->itemAtIndex(0));
-  int i = 0;
-  while(item)
+  for (int i = 0; i < dialogListView->topLevelItemCount(); ++i)
   {
-    // save state of this item in hasChanged() list
-    warningsChecked+=item->isOn();
+    QTreeWidgetItem *item = dialogListView->topLevelItem(i);
+    const bool checked = item->checkState(0) == Qt::Checked;
+    const QString warningName = item->data(0, WarningNameRole).toString();
 
-    if (item->text(2) == "LargePaste" || item->text(2) == "Invitation")
+    // save state of this item in hasChanged() list
+    warningsChecked += checked ? "1" : "0";
+
+    if (warningName == "LargePaste" || warningName == "Invitation")
     {
-        if (item->isOn())
+        if (checked)
         {
-            grp.writeEntry(item->text(2), 1);
+            grp.writeEntry(warningName, 1);
         }
         else
         {
-            QString state = grp.readEntry(item->text(2));
+            QString state = grp.readEntry(warningName, QString());
 
             if (!state.isEmpty() && (state == "yes" || state == "no"))
-                grp.writeEntry(item->text(2), state);
+                grp.writeEntry(warningName, state);
             else
-                grp.writeEntry(item->text(2), "yes");
+                grp.writeEntry(warningName, "yes");
         }
     }
     else
     {
-        grp.writeEntry(item->text(2),item->isOn() ? "1" : "0");
+        grp.writeEntry(warningName, checked ? "1" : "0");
     }
-
-    item=static_cast<Q3CheckListItem*>(item->itemBelow());
-    ++i;
   }
 
   // remember checkbox state for hasChanged()
@@ -122,33 +121,35 @@ void Warnings_Config::loadSettings()
   dialogDefinitions.append(i18n("Ignore"));
   dialogDefinitions.append(i18n("Unignore"));
   dialogDefinitions.append(i18n("Warn before quitting with active DCC file transfers"));
-  Q3CheckListItem *item;
+  QTreeWidgetItem *item;
   dialogListView->clear();
 
   KSharedConfigPtr config = KGlobal::config();
   KConfigGroup grp =  config->group("Notification Messages");
   QString flagName;
-  for(unsigned int i=0; i<dialogDefinitions.count() ;i++)
+  for (int i = 0; i < dialogDefinitions.count(); ++i)
   {
-    item=new Q3CheckListItem(dialogListView,dialogDefinitions[i],Q3CheckListItem::CheckBox);
-    item->setText(1,dialogDefinitions[i]);
+    item = new QTreeWidgetItem(dialogListView);
+    item->setText(0, dialogDefinitions[i]);
+    item->setFlags(item->flags() | Qt::ItemIsUserCheckable);
     flagName = flagNames.section(",",i,i);
-    item->setText(2,flagName);
+    item->setData(0, WarningNameRole, flagName);
 
     if (flagName == "LargePaste" || flagName == "Invitation")
     {
-        QString state = grp.readEntry(flagName);
+        QString state = grp.readEntry(flagName, QString());
 
         if (state == "yes" || state == "no")
-            item->setOn(false);
+            item->setCheckState(0, Qt::Unchecked);
         else
-            item->setOn(true);
+            item->setCheckState(0, Qt::Checked);
     }
     else
     {
-        item->setOn(grp.readEntry(flagName,true));
+        item->setCheckState(0, grp.readEntry(flagName, true) ? Qt::Checked : Qt::Unchecked);
     }
   }
+  dialogListView->sortItems(0, Qt::AscendingOrder);
   // remember checkbox state for hasChanged()
   m_oldWarningsChecked=currentWarningsChecked();
 }
@@ -160,12 +161,9 @@ QString Warnings_Config::currentWarningsChecked()
   QString newList;
 
   // get first checklist item
-  Q3ListViewItem* item=dialogListView->firstChild();
-  while(item)
+  for (int i = 0; i < dialogListView->topLevelItemCount(); ++i)
   {
-    // save state of this item in hasChanged() list
-    newList+=(static_cast<Q3CheckListItem*>(item)->isOn()) ? "1" : "0";
-    item=item->itemBelow();
+    newList += dialogListView->topLevelItem(i)->checkState(0) == Qt::Checked ? "1" : "0";
   }
   // return list
   return newList;

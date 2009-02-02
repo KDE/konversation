@@ -16,9 +16,6 @@
 #include "ui_warnings_preferencesui.h"
 #include "settingspage.h" ////// header renamed
 
-class K3ListView;
-class Q3ListViewItem;
-
 class Warnings_Config : public QWidget, public KonviSettingsPage, private Ui::Warnings_ConfigUI
 {
     Q_OBJECT

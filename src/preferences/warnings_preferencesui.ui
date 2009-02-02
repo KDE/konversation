@@ -14,7 +14,13 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="K3ListView" name="dialogListView" >
+    <widget class="QTreeWidget" name="dialogListView" >
+     <property name="editTriggers" >
+      <set>QAbstractItemView::NoEditTriggers</set>
+     </property>
+     <property name="rootIsDecorated" >
+      <bool>false</bool>
+     </property>
      <property name="allColumnsShowFocus" >
       <bool>true</bool>
      </property>
@@ -22,32 +28,11 @@
       <property name="text" >
        <string>Warning Dialogs to Show</string>
       </property>
-      <property name="clickable" >
-       <bool>true</bool>
-      </property>
-      <property name="resizable" >
-       <bool>true</bool>
-      </property>
      </column>
     </widget>
    </item>
   </layout>
  </widget>
- <layoutdefault spacing="6" margin="11" />
- <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
- <customwidgets>
-  <customwidget>
-   <class>K3ListView</class>
-   <extends>Q3ListView</extends>
-   <header>k3listview.h</header>
-  </customwidget>
- </customwidgets>
- <tabstops>
-  <tabstop>dialogListView</tabstop>
- </tabstops>
- <includes>
-  <include location="local" >k3listview.h</include>
- </includes>
  <resources/>
  <connections/>
 </ui>
