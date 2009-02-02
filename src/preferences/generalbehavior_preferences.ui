@@ -11,16 +11,16 @@ the Free Software Foundation; either version 2 of the License, or
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>504</width>
+    <width>508</width>
     <height>477</height>
    </rect>
   </property>
-  <layout class="QVBoxLayout" >
+  <layout class="QVBoxLayout" name="verticalLayout_2" >
    <property name="margin" >
     <number>0</number>
    </property>
    <item>
-    <widget class="Q3GroupBox" name="kcfg_ShowTrayIcon" >
+    <widget class="QGroupBox" name="kcfg_ShowTrayIcon" >
      <property name="title" >
       <string>Enable System Tray</string>
      </property>
@@ -30,64 +30,72 @@ the Free Software Foundation; either version 2 of the License, or
      <property name="checked" >
       <bool>false</bool>
      </property>
-     <layout class="QGridLayout" >
-      <item row="0" column="0" colspan="2" >
+     <layout class="QVBoxLayout" name="verticalLayout" >
+      <item>
        <widget class="QCheckBox" name="kcfg_TrayNotify" >
         <property name="text" >
          <string>&amp;Use system tray for new message notification</string>
         </property>
        </widget>
       </item>
-      <item row="1" column="0" >
-       <spacer name="spacer51" >
-        <property name="orientation" >
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeType" >
-         <enum>QSizePolicy::Fixed</enum>
-        </property>
-        <property name="sizeHint" stdset="0" >
-         <size>
-          <width>31</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout" >
+        <item>
+         <spacer name="spacer51" >
+          <property name="orientation" >
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeType" >
+           <enum>QSizePolicy::Fixed</enum>
+          </property>
+          <property name="sizeHint" stdset="0" >
+           <size>
+            <width>16</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="kcfg_TrayNotifyOnlyOwnNick" >
+          <property name="enabled" >
+           <bool>false</bool>
+          </property>
+          <property name="text" >
+           <string>Only &amp;notify when a highlight is triggered or your current nick is used</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
-      <item row="1" column="1" >
-       <widget class="QCheckBox" name="kcfg_TrayNotifyOnlyOwnNick" >
-        <property name="enabled" >
-         <bool>false</bool>
-        </property>
-        <property name="text" >
-         <string>Only &amp;notify when a highlight is triggered or your current nick is used</string>
-        </property>
-       </widget>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_2" >
+        <item>
+         <spacer name="spacer51_2" >
+          <property name="orientation" >
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeType" >
+           <enum>QSizePolicy::Fixed</enum>
+          </property>
+          <property name="sizeHint" stdset="0" >
+           <size>
+            <width>16</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="kcfg_TrayNotifyBlink" >
+          <property name="text" >
+           <string>Blin&amp;k the icon</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
-      <item row="2" column="0" >
-       <spacer name="spacer51_2" >
-        <property name="orientation" >
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeType" >
-         <enum>QSizePolicy::Fixed</enum>
-        </property>
-        <property name="sizeHint" stdset="0" >
-         <size>
-          <width>31</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="2" column="1" >
-       <widget class="QCheckBox" name="kcfg_TrayNotifyBlink" >
-        <property name="text" >
-         <string>Blin&amp;k the icon</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="0" colspan="2" >
+      <item>
        <widget class="QCheckBox" name="kcfg_HideToTrayOnStartup" >
         <property name="text" >
          <string>Hide window on startup</string>
@@ -98,7 +106,7 @@ the Free Software Foundation; either version 2 of the License, or
     </widget>
    </item>
    <item>
-    <widget class="Q3GroupBox" name="middleLabel" >
+    <widget class="QGroupBox" name="middleLabel" >
      <property name="title" >
       <string>Nickname Completion</string>
      </property>
@@ -181,7 +189,7 @@ the Free Software Foundation; either version 2 of the License, or
     </widget>
    </item>
    <item>
-    <widget class="Q3GroupBox" name="miscGBox" >
+    <widget class="QGroupBox" name="miscGBox" >
      <property name="title" >
       <string>Miscellaneous</string>
      </property>
@@ -282,12 +290,6 @@ the Free Software Foundation; either version 2 of the License, or
  <layoutfunction spacing="KDialog::spacingHint" margin="KDialog::marginHint" />
  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
  <customwidgets>
-  <customwidget>
-   <class>Q3GroupBox</class>
-   <extends>QGroupBox</extends>
-   <header>Qt3Support/Q3GroupBox</header>
-   <container>1</container>
-  </customwidget>
   <customwidget>
    <class>KLineEdit</class>
    <extends>QLineEdit</extends>
