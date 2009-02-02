@@ -30,10 +30,12 @@ Copyright (C) 2002 Carsten Pfeiffer <pfeiffer@kde.org>
 
 
 KonviBookmarkHandler::KonviBookmarkHandler(KonversationMainWindow* mainWindow)
-: QObject( mainWindow, "KonviBookmarkHandler" ),
+: QObject(mainWindow),
 KBookmarkOwner(),
 m_mainWindow(mainWindow)
 {
+    setObjectName("KonviBookmarkHandler");
+
     m_menu = static_cast<KMenu*>(mainWindow->factory()->container("bookmarks", mainWindow));
 
     m_file = KStandardDirs::locate( "data", "konversation/bookmarks.xml" );

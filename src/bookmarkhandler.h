@@ -34,8 +34,6 @@ class KonviBookmarkHandler : public QObject, public KBookmarkOwner
         explicit KonviBookmarkHandler(KonversationMainWindow *mainWindow);
         ~KonviBookmarkHandler();
 
-        KMenu* popupMenu();
-
         // KBookmarkOwner interface:
         virtual void openBookmark(const KBookmark &bm, Qt::MouseButtons mb, Qt::KeyboardModifiers km);
         virtual QString currentUrl() const;
