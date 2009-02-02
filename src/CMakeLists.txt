@@ -24,7 +24,6 @@ set(core_SRCS
     ssllabel.cpp
     statusbar.cpp
     bookmarkhandler.cpp
-#    bookmarkmenu.cpp
    configdialog.cpp
    settingsdialog.cpp
     scriptlauncher.cpp

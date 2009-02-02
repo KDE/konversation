@@ -19,7 +19,6 @@ Copyright (C) 2002 Carsten Pfeiffer <pfeiffer@kde.org>
 #include "application.h" ////// header renamed
 #include "mainwindow.h" ////// header renamed
 #include "connectionmanager.h"
-// #include "bookmarkmenu.h" ////// header renamed
 
 #include <kstandarddirs.h>
 #include <KXMLGUIFactory>
