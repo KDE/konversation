@@ -23,6 +23,7 @@
 #include "server.h"
 #include "sound.h" ////// header renamed
 #include "quickconnectdialog.h"
+#include "dbus.h"
 
 #include "servergroupsettings.h"
 #include "serversettings.h"
@@ -35,11 +36,11 @@
 #include <qtextcodec.h>
 #include <qregexp.h>
 #include <qfileinfo.h>
+#include <QtDBus/QDBusConnection>
 
 #include <kdebug.h>
 #include <kcmdlineargs.h>
 #include <kconfig.h>
-//#include <dcopclient.h>
 #include <kdeversion.h>
 #include <kstandarddirs.h>
 #include <klocale.h>
@@ -66,9 +67,9 @@ KonversationApplication::~KonversationApplication()
     saveOptions(false);
 
     delete m_images;
-    //delete dcopObject;
+    //delete dbusObject;
     //delete prefsDCOP;
-    //delete identDCOP;
+    //delete identDBus;
     delete osd;
     osd = 0;
 }
@@ -166,28 +167,27 @@ int KonversationApplication::newInstance()
 
         connect(this, SIGNAL(serverGroupsChanged(const Konversation::ServerGroupSettingsPtr)), this, SLOT(saveOptions()));
 
-#ifdef SOMEHOW_MAGICALLY_DCOP_WORKS_IN_KDE4_NOW
         // prepare dcop interface
-        dcopObject = new KonvDCOP;
-        kapp->dcopClient()->setDefaultObject(dcopObject->objId());
-        identDCOP = new KonvIdentDCOP;
+        dbusObject = new Konversation::DBus(this);
+        QDBusConnection::sessionBus().registerObject("/irc", dbusObject, QDBusConnection::ExportNonScriptableSlots | QDBusConnection::ExportNonScriptableSignals);
+        identDBus = new Konversation::IdentDBus(this);
+        QDBusConnection::sessionBus().registerObject("/identity", identDBus, QDBusConnection::ExportNonScriptableSlots | QDBusConnection::ExportNonScriptableSignals);
 
-        if (dcopObject)
+        if (dbusObject)
         {
-            connect(dcopObject,SIGNAL (dcopMultiServerRaw(const QString&)),
+            connect(dbusObject,SIGNAL (dcopMultiServerRaw(const QString&)),
                 this,SLOT (dcopMultiServerRaw(const QString&)) );
-            connect(dcopObject,SIGNAL (dcopRaw(const QString&,const QString&)),
+            connect(dbusObject,SIGNAL (dcopRaw(const QString&,const QString&)),
                 this,SLOT (dcopRaw(const QString&,const QString&)) );
-            connect(dcopObject,SIGNAL (dcopSay(const QString&,const QString&,const QString&)),
+            connect(dbusObject,SIGNAL (dcopSay(const QString&,const QString&,const QString&)),
                 this,SLOT (dcopSay(const QString&,const QString&,const QString&)) );
-            connect(dcopObject,SIGNAL (dcopInfo(const QString&)),
+            connect(dbusObject,SIGNAL (dcopInfo(const QString&)),
                 this,SLOT (dcopInfo(const QString&)) );
-            connect(dcopObject,SIGNAL (dcopInsertMarkerLine()),
+            connect(dbusObject,SIGNAL (dcopInsertMarkerLine()),
                 mainWindow,SIGNAL(insertMarkerLine()));
-            connect(dcopObject, SIGNAL(connectTo(Konversation::ConnectionFlag, const QString&, const QString&, const QString&, const QString&, const QString&, bool)),
+            connect(dbusObject, SIGNAL(connectTo(Konversation::ConnectionFlag, const QString&, const QString&, const QString&, const QString&, const QString&, bool)),
                 m_connectionManager, SLOT(connectTo(Konversation::ConnectionFlag, const QString&, const QString&, const QString&, const QString&, const QString&, bool)));
         }
-#endif //SOMEHOW_MAGICALLY_DCOP_WORKS_IN_KDE4_NOW
 
         m_notificationHandler = new Konversation::NotificationHandler(this);
     }

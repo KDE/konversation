@@ -18,7 +18,6 @@
 
 #include "preferences.h"
 #include "osd.h"
-// #include "konvdcop.h"
 #include "identity.h"
 #include "nickinfo.h"
 
@@ -28,7 +27,6 @@ class ConnectionManager;
 class AwayManager;
 class DccTransferManager;
 class KonversationMainWindow;
-class KonvDCOP;
 class Server;
 class QuickConnectDialog;
 class Images;
@@ -36,6 +34,8 @@ class ServerGroupSettings;
 
 namespace Konversation
 {
+    class DBus;
+    class IdentDBus;
     class Sound;
     class NotificationHandler;
 
@@ -147,8 +147,8 @@ class KonversationApplication : public KUniqueApplication
         AwayManager* m_awayManager;
         DccTransferManager* m_dccTransferManager;
         QStringList urlList;
-        //KonvDCOP* dcopObject;
-        //KonvIdentDCOP* identDCOP;
+        Konversation::DBus* dbusObject;
+        Konversation::IdentDBus* identDBus;
         KonversationMainWindow* mainWindow;
         Konversation::Sound* m_sound;
         QuickConnectDialog* quickConnectDialog;
