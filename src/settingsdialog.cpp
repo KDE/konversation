@@ -71,7 +71,7 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   //Interface/Themes
   m_confThemeWdg = new Theme_Config( this, "Theme" );
   addPage ( m_confThemeWdg, interfaceGroup, "preferences-desktop-icons", i18n("Nicklist Themes") );
-  m_indexToPageMapping.insert(lastAddedIndex(), m_confThemeWdg);
+  m_pages.append(m_confThemeWdg);
   connect(m_confThemeWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
 
   //Interface/Colors
@@ -89,7 +89,7 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   //Interface/Quick Buttons
   m_confQuickButtonsWdg = new QuickButtons_Config( this, "QuickButtons" );
   addPage ( m_confQuickButtonsWdg, interfaceGroup, "preferences-desktop-keyboard", i18n("Quick Buttons") );
-  m_indexToPageMapping.insert(lastAddedIndex(), m_confQuickButtonsWdg);
+  m_pages.append(m_confQuickButtonsWdg);
   connect(m_confQuickButtonsWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
 
   //Interface/Tabs
@@ -118,25 +118,25 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   m_confNicklistBehaviorWdg = new NicklistBehavior_Config( this, "NicklistBehavior" );
   addPage ( m_confNicklistBehaviorWdg, behaviorGroup, "preferences-contact-list", i18n("Nickname List") );
   connect(m_confNicklistBehaviorWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
-  m_indexToPageMapping.insert(lastAddedIndex(), m_confNicklistBehaviorWdg);
+  m_pages.append(m_confNicklistBehaviorWdg);
 
   //Behaviour/Command Aliases
   m_confAliasWdg = new Alias_Config( this, "Alias" );
   addPage ( m_confAliasWdg, behaviorGroup, "edit-rename", i18n("Command Aliases") );
-  m_indexToPageMapping.insert(lastAddedIndex(), m_confAliasWdg);
+  m_pages.append(m_confAliasWdg);
   connect(m_confAliasWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
 
   //Behaviour/Auto Replace
   m_confAutoreplaceWdg = new Autoreplace_Config( this, "Autoreplace" );
   addPage ( m_confAutoreplaceWdg, behaviorGroup, "kview", i18n("Auto Replace") );
-  m_indexToPageMapping.insert(lastAddedIndex(), m_confAutoreplaceWdg);
+  m_pages.append(m_confAutoreplaceWdg);
   connect(m_confAutoreplaceWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
 
   //Behaviour/Ignore
   m_confIgnoreWdg = new Ignore_Config(this, "Ignore");
   addPage ( m_confIgnoreWdg, behaviorGroup, "process-stop", i18n("Ignore") );
   connect(m_confIgnoreWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
-  m_indexToPageMapping.insert(lastAddedIndex(), m_confIgnoreWdg);
+  m_pages.append(m_confIgnoreWdg);
 
   //Behaviour/Logging
   Ui::Log_Config confLog;
@@ -157,25 +157,25 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   m_confHighlightWdg = new Highlight_Config( this, "Highlight" );
   addPage ( m_confHighlightWdg, notificationGroup, "paintbrush", i18n("Highlight") );
   connect(m_confHighlightWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
-  m_indexToPageMapping.insert(lastAddedIndex(), m_confHighlightWdg);
+  m_pages.append(m_confHighlightWdg);
 
   //Notification/Watched Nicknames
   m_confWatchedNicknamesWdg = new WatchedNicknames_Config( this, "WatchedNicknames" );
   // remember index so we can open this page later from outside
   m_watchedNicknamesPage = addPage ( m_confWatchedNicknamesWdg, notificationGroup, "edit-find-user", i18n("Watched Nicknames") );
   connect(m_confWatchedNicknamesWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
-  m_indexToPageMapping.insert(lastAddedIndex(), m_confWatchedNicknamesWdg);
+  m_pages.append(m_confWatchedNicknamesWdg);
 
   //Notification/On Screen Display
   m_confOSDWdg = new OSD_Config( this, "OSD" );
   addPage ( m_confOSDWdg, notificationGroup, "video-display", i18n("On Screen Display") );
   //no modified connection needed - it's all kcfg widgets
-  m_indexToPageMapping.insert(lastAddedIndex(), m_confOSDWdg);
+  m_pages.append(m_confOSDWdg);
 
   //Notification/Warning Dialogs
   m_confWarningsWdg = new Warnings_Config( this, "Warnings" );
   addPage ( m_confWarningsWdg, notificationGroup, "dialog-warning", i18n("Warning Dialogs") );
-  m_indexToPageMapping.insert(lastAddedIndex(), m_confWarningsWdg);
+  m_pages.append(m_confWarningsWdg);
   connect(m_confWarningsWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
 }
 
@@ -185,10 +185,9 @@ void KonviSettingsDialog::modifiedSlot()
   // something or went back to the old settings
 // kDebug() << "KonviSettingsDialog::modifiedSlot()" << endl;
   m_modified = false;
-  Q3IntDictIterator<KonviSettingsPage> it( m_indexToPageMapping );
-  for ( ; it.current(); ++it )
+  foreach (KonviSettingsPage *page, m_pages)
   {
-    if ( (*it).hasChanged() )
+    if (page->hasChanged())
     {
       m_modified = true;
 //      kDebug() << "KonviSettingsDialog::modifiedSlot(): modified!" << endl;
@@ -204,11 +203,10 @@ KonviSettingsDialog::~KonviSettingsDialog()
 
 void KonviSettingsDialog::updateSettings()
 {
-  Q3IntDictIterator<KonviSettingsPage> it( m_indexToPageMapping );
-  for ( ; it.current(); ++it )
+  foreach (KonviSettingsPage *page, m_pages)
   {
     // this is for the non KConfigXT parts to update the UI (like quick buttons)
-    (*it).saveSettings();
+    page->saveSettings();
   }
   m_modified = false;
   emit settingsChanged();
@@ -216,20 +214,18 @@ void KonviSettingsDialog::updateSettings()
 
 void KonviSettingsDialog::updateWidgets()
 {
-  Q3IntDictIterator<KonviSettingsPage> it( m_indexToPageMapping );
-  for ( ; it.current(); ++it )
+  foreach (KonviSettingsPage *page, m_pages)
   {
-    (*it).loadSettings();
+    page->loadSettings();
   }
   m_modified = false;
 }
 
 void KonviSettingsDialog::updateWidgetsDefault()
 {
-  Q3IntDictIterator<KonviSettingsPage> it( m_indexToPageMapping );
-  for ( ; it.current(); ++it )
+  foreach (KonviSettingsPage *page, m_pages)
   {
-    (*it).restorePageToDefaults();
+    page->restorePageToDefaults();
   }
   m_modified = true;
 }

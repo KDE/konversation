@@ -16,7 +16,7 @@
 #include "configdialog.h" ////// header renamed
 #include "settingspage.h" ////// header renamed
 
-#include <q3intdict.h>
+#include <QList>
 
 
 class Warnings_Config;
@@ -70,7 +70,7 @@ class KonviSettingsDialog : public KonviConfigDialog
 
         // remember page index
         KPageWidgetItem *m_watchedNicknamesPage;
-        Q3IntDict<KonviSettingsPage> m_indexToPageMapping;
+        QList<KonviSettingsPage*> m_pages;
 };
 
 #endif //KONVISETTINGSDIALOG_H
