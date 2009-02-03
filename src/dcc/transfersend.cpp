@@ -59,6 +59,7 @@ DccTransferSend::DccTransferSend(QObject* parent)
     m_sendSocket = 0;
 
     m_connectionTimer = new QTimer( this );
+    m_connectionTimer->setSingleShot(true);
     connect( m_connectionTimer, SIGNAL( timeout() ), this, SLOT( slotConnectionTimeout() ) );
 
     // set defualt values
@@ -430,7 +431,6 @@ void DccTransferSend::startConnectionTimer( int sec )
 {
     kDebug() << "DccTransferSend::startConnectionTimer()"<< endl;
     stopConnectionTimer();
-    m_connectionTimer->setSingleShot(true);
     m_connectionTimer->start(sec*1000);
 }
 

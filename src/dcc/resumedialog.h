@@ -37,9 +37,7 @@ class DccResumeDialog : public KDialog
         static ReceiveAction ask(DccTransferRecv* item, const QString& message, int enabledActions, ReceiveAction defaultAction);
 
     protected slots:
-        void slotOk();
-        void slotUser1();
-        void slotCancel();
+        void slotButtonClicked(int button);
         void suggestNewName();
         void setDefaultName();
         void updateDialogButtons();

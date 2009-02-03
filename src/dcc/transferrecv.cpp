@@ -70,6 +70,7 @@ DccTransferRecv::DccTransferRecv(QObject* parent)
     m_writeCacheHandler = 0;
 
     m_connectionTimer = new QTimer( this );
+    m_connectionTimer->setSingleShot(true);
     connect( m_connectionTimer, SIGNAL( timeout() ), this, SLOT( connectionTimeout() ) );
     //timer hasn't started yet.  qtimer will be deleted automatically when 'this' object is deleted
 }
@@ -294,16 +295,12 @@ void DccTransferRecv::prepareLocalKio( bool overwrite, bool resume, KIO::fileoff
     }
 
     connect( transferJob, SIGNAL( canResume( KIO::Job*, KIO::filesize_t ) ), this, SLOT( slotLocalCanResume( KIO::Job*, KIO::filesize_t ) ) );
-    connect( transferJob, SIGNAL( result( KIO::Job* ) ),                     this, SLOT( slotLocalGotResult( KIO::Job* ) ) );
+    connect( transferJob, SIGNAL( result( KJob* ) ),                         this, SLOT( slotLocalGotResult( KJob* ) ) );
     connect( transferJob, SIGNAL( dataReq( KIO::Job*, QByteArray& ) ),       this, SLOT( slotLocalReady( KIO::Job* ) ) );
 }
 
 void DccTransferRecv::askAndPrepareLocalKio( const QString& message, int enabledActions, DccResumeDialog::ReceiveAction defaultAction, KIO::fileoffset_t startPosition )
 {
-#ifndef Q_CC_MSVC
-#warning "port kde4"
-#endif
-#if 0
     switch ( DccResumeDialog::ask( this, message, enabledActions, defaultAction ) )
     {
         case DccResumeDialog::RA_Resume:
@@ -319,7 +316,6 @@ void DccTransferRecv::askAndPrepareLocalKio( const QString& message, int enabled
         default:
             setStatus( Queued );
     }
-#endif
 }
 
 bool DccTransferRecv::createDirs( const KUrl& dirURL ) const
@@ -389,7 +385,7 @@ void DccTransferRecv::slotLocalCanResume( KIO::Job* job, KIO::filesize_t size )
     kDebug() << "DccTransferRecv::slotLocalCanResume() [END]" << endl;
 }
 
-void DccTransferRecv::slotLocalGotResult( KIO::Job* job )
+void DccTransferRecv::slotLocalGotResult( KJob* job )
 {
     kDebug() << "DccTransferRecv::slotLocalGotResult() [BEGIN]" << endl;
 
@@ -528,8 +524,8 @@ void DccTransferRecv::connectToSendServer()
     m_recvSocket->enableRead( false );
     m_recvSocket->enableWrite( false );
 
-    connect( m_recvSocket, SIGNAL( connected( const KResolverEntry& ) ), this, SLOT( startReceiving() )     );
-    connect( m_recvSocket, SIGNAL( gotError( int ) ),                    this, SLOT( connectionFailed( int ) ) );
+    connect( m_recvSocket, SIGNAL( connected( const KNetwork::KResolverEntry& ) ), this, SLOT( startReceiving() )     );
+    connect( m_recvSocket, SIGNAL( gotError( int ) ),                              this, SLOT( connectionFailed( int ) ) );
 
     kDebug() << "DccTransferRecv::connectToServer(): attempting to connect to " << m_partnerIp << ":" << m_partnerPort << endl;
 
@@ -662,7 +658,7 @@ void DccTransferRecv::startConnectionTimer( int sec )
 {
     stopConnectionTimer();
     kDebug() << "DccTransferRecv::startConnectionTimer()" << endl;
-    m_connectionTimer->start( sec*1000, true );
+    m_connectionTimer->start( sec*1000 );
 }
 
 void DccTransferRecv::stopConnectionTimer()
@@ -697,7 +693,7 @@ DccTransferRecvWriteCacheHandler::DccTransferRecvWriteCacheHandler( KIO::Transfe
 
     connect( this,          SIGNAL( dataFinished() ),                    m_transferJob, SLOT( slotFinished() )                           );
     connect( m_transferJob, SIGNAL( dataReq( KIO::Job*, QByteArray& ) ), this,          SLOT( slotKIODataReq( KIO::Job*, QByteArray& ) ) );
-    connect( m_transferJob, SIGNAL( result( KIO::Job* ) ),               this,          SLOT( slotKIOResult( KIO::Job* ) )               );
+    connect( m_transferJob, SIGNAL( result(KJob* ) ),                    this,          SLOT( slotKIOResult( KJob* ) )                   );
 
     m_transferJob->setAsyncDataEnabled( m_writeAsyncMode = true );
 }
@@ -713,7 +709,7 @@ void DccTransferRecvWriteCacheHandler::append( char* data, int size )
     // sendAsyncData() and dataReq() cost a lot of time, so we should pack some caches.
 
                                                   // 1meg
-    static const unsigned int maxWritePacketSize = 1 * 1024 * 1024;
+    static const int maxWritePacketSize = 1 * 1024 * 1024;
 
     if ( m_cacheList.isEmpty() || m_cacheList.back().size() + size > maxWritePacketSize )
     {
@@ -722,7 +718,7 @@ void DccTransferRecvWriteCacheHandler::append( char* data, int size )
         m_cacheStream = new QDataStream( &m_cacheList.back(), QIODevice::WriteOnly );
     }
 
-    m_cacheStream->writeRawBytes( data, size );
+    m_cacheStream->writeRawData( data, size );
 }
 
                                                   // public
@@ -794,7 +790,7 @@ void DccTransferRecvWriteCacheHandler::slotKIODataReq( KIO::Job*, QByteArray& da
     }
 }
 
-void DccTransferRecvWriteCacheHandler::slotKIOResult( KIO::Job* job )
+void DccTransferRecvWriteCacheHandler::slotKIOResult( KJob* job )
 {
     Q_ASSERT( m_transferJob );
 

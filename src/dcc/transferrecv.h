@@ -85,7 +85,7 @@ class DccTransferRecv : public DccTransfer
     protected slots:
         // Local KIO
         void slotLocalCanResume( KIO::Job* job, KIO::filesize_t size );
-        void slotLocalGotResult( KIO::Job* job );
+        void slotLocalGotResult( KJob* job );
         void slotLocalReady( KIO::Job* job );
         void slotLocalWriteDone();
         void slotLocalGotWriteError( const QString& errorString );
@@ -173,7 +173,7 @@ class DccTransferRecvWriteCacheHandler : public QObject
     protected slots:
                                                   // <-  m_transferJob->dataReq()
         void slotKIODataReq( KIO::Job* job, QByteArray& data );
-        void slotKIOResult( KIO::Job* job );      // <-  m_transferJob->result()
+        void slotKIOResult( KJob* job );          // <-  m_transferJob->result()
 
     protected:
         KIO::TransferJob* m_transferJob;

@@ -185,7 +185,7 @@ void DccChat::connectToPartner()
     m_dccSocket->blockSignals(false);
 
     connect( m_dccSocket, SIGNAL( hostFound() ),                        this, SLOT( lookupFinished() )           );
-    connect( m_dccSocket, SIGNAL( connected( const KResolverEntry& ) ), this, SLOT( dccChatConnectionSuccess() ) );
+    connect( m_dccSocket, SIGNAL( connected( const KNetwork::KResolverEntry& ) ), this, SLOT( dccChatConnectionSuccess() ) );
     connect( m_dccSocket, SIGNAL( gotError( int ) ),                    this, SLOT( dccChatBroken( int ) )       );
     connect( m_dccSocket, SIGNAL( readyRead() ),                        this, SLOT( readData() )                 );
     connect( m_dccSocket, SIGNAL( closed() ),                           this, SLOT( socketClosed() )             );
@@ -247,7 +247,7 @@ void DccChat::readData()
             if( (*itLine).startsWith( "\x01" ) )
             {
                 // cut out the CTCP command
-                QString ctcp = (*itLine).mid( 1, (*itLine).find( 1, 1 ) - 1 );
+                QString ctcp = (*itLine).mid( 1, (*itLine).indexOf( 1, 1 ) - 1 );
 
                 QString ctcpCommand = ctcp.section( " ", 0, 0 );
                 QString ctcpArgument = ctcp.section( " ", 1 );
@@ -268,7 +268,7 @@ void DccChat::readData()
 
 void DccChat::dccChatTextEntered()
 {
-    QString line = m_dccChatInput->text();
+    QString line = m_dccChatInput->toPlainText();
     m_dccChatInput->setText("");
     if ( line.toLower() == Preferences::self()->commandChar()+"clear" )
     {
@@ -387,7 +387,7 @@ int DccChat::getOwnPort()
 
 QString DccChat::getTextInLine()
 {
-    return m_dccChatInput->text();
+    return m_dccChatInput->toPlainText();
 }
 
 void DccChat::appendInputText( const QString& s, bool fromCursor )

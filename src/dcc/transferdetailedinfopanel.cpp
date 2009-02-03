@@ -63,7 +63,7 @@ void DccTransferDetailedInfoPanel::setItem( DccTransferPanelItem* item )
     // If the file is already being transferred, the timer must be started here,
     // otherwise the information will not be updated every 0.5sec
     if (m_item->transfer()->getStatus() == DccTransfer::Transferring)
-        m_autoViewUpdateTimer->start(500, false);
+        m_autoViewUpdateTimer->start( 500 );
     connect( m_item->transfer(), SIGNAL( statusChanged( DccTransfer*, int, int ) ), this, SLOT( slotTransferStatusChanged( DccTransfer*, int, int ) ) );
 
     updateView();
@@ -183,7 +183,7 @@ void DccTransferDetailedInfoPanel::slotTransferStatusChanged( DccTransfer* /* tr
     if ( newStatus == DccTransfer::Transferring )
     {
         // start auto view-update timer
-        m_autoViewUpdateTimer->start( 500, false );
+        m_autoViewUpdateTimer->start( 500 );
     }
     else if ( oldStatus == DccTransfer::Transferring )
     {

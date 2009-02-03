@@ -111,25 +111,24 @@ DccResumeDialog::~DccResumeDialog()
 {
 }
 
-void DccResumeDialog::slotOk()
+void DccResumeDialog::slotButtonClicked(int button)
 {
-    if(m_item->getFileURL() == m_urlreqFileURL->url())
-        m_selectedAction = RA_Overwrite;
-    else
-        m_selectedAction = RA_Rename;
-    KDialog::accept();
-}
-
-void DccResumeDialog::slotUser1()
-{
-    m_selectedAction = RA_Resume;
-    done(KDialog::User1);
-}
-
-void DccResumeDialog::slotCancel()
-{
-    m_selectedAction = RA_Cancel;
-    KDialog::reject();
+    switch (button)
+    {
+        case KDialog::Ok:
+            if (m_item->getFileURL() == m_urlreqFileURL->url())
+                m_selectedAction = RA_Overwrite;
+            else
+                m_selectedAction = RA_Rename;
+            break;
+        case KDialog::User1:
+            m_selectedAction = RA_Resume;
+            break;
+        case KDialog::Cancel:
+            m_selectedAction = RA_Cancel;
+            break;
+    }
+    KDialog::slotButtonClicked(button);
 }
 
 void DccResumeDialog::updateDialogButtons() // slot
@@ -156,14 +155,14 @@ void DccResumeDialog::suggestNewName() // slot
     QString basename = m_urlreqFileURL->url().url().section('/', -1);
     KUrl baseURL(m_urlreqFileURL->url().url().section('/', 0, -2));
 
-    int index = basename.find( '.' );
+    int index = basename.indexOf( '.' );
     if ( index != -1 )
     {
         dotSuffix = basename.mid( index );
         basename.truncate( index );
     }
 
-    int pos = basename.findRev( '_' );
+    int pos = basename.lastIndexOf( '_' );
     if(pos != -1 )
     {
         QString tmp = basename.mid( pos+1 );
