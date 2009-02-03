@@ -484,6 +484,7 @@ void resetNickSelection();
          * @param reason The reason why this failed.  This is already translated, ready to show the user.
          */
         void sslError(const QList<QSslError>& errors);
+        void sslVerifyError(const QSslError& error);
         void connectionEstablished(const QString& ownHost);
         void notifyResponse(const QString& nicksOnline);
         void slotNewDccTransferItemQueued(DccTransfer* transfer);
@@ -708,6 +709,8 @@ void resetNickSelection();
 
         static int m_availableConnectionId;
         int m_connectionId;
+
+        bool m_showSSLConfirmation;
 };
 
 #endif

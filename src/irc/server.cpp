@@ -101,6 +101,7 @@ Server::Server(QObject* parent, ConnectionSettings& settings) : QObject(parent)
     m_serverNickPrefixModes = "ovh";
     m_serverNickPrefixes = "@+%";
     m_channelPrefixes = "#&";
+    m_showSSLConfirmation = true;
 
     setObjectName(QString::fromLatin1("server_") + settings.name());
 
@@ -394,17 +395,20 @@ void Server::connectToIRCServer()
         connect(m_socket, SIGNAL(error(QAbstractSocket::SocketError)), SLOT(broken(QAbstractSocket::SocketError)) );
         connect(m_socket, SIGNAL(readyRead()), SLOT(incoming()));
         connect(m_socket, SIGNAL(disconnected()), SLOT(closed()));
-        connect(m_socket, SIGNAL(connected()), SLOT (ircServerConnectionSuccess()));
+
         connect(m_socket, SIGNAL(hostFound()), SLOT (hostFound()));
 
         // connect() will do a async lookup too
         if(!getConnectionSettings().server().SSLEnabled())
         {
+            connect(m_socket, SIGNAL(connected()), SLOT (ircServerConnectionSuccess()));
             m_socket->connectToHost(getConnectionSettings().server().host(), getConnectionSettings().server().port());
         }
         else
         {
+            connect(m_socket, SIGNAL(encrypted()), SLOT (ircServerConnectionSuccess()));
             //connect(m_socket, SIGNAL(sslErrors(const QList<QSslError>&)), SIGNAL(sslInitFailure()));
+            connect(m_socket, SIGNAL(peerVerifyError(const QSslError&)), SLOT(sslVerifyError(const QSslError&)));
             connect(m_socket, SIGNAL(sslErrors(const QList<QSslError>&)), SLOT(sslError(const QList<QSslError>&)));
 
             m_socket->connectToHostEncrypted(getConnectionSettings().server().host(), getConnectionSettings().server().port());
@@ -611,15 +615,38 @@ void Server::sslError( const QList<QSslError>&  errors)
         reason += errors.at(i).errorString() + " ";
     }
 
+    //this message should be changed since sslError is called even after calling ignoreSslErrors()
     QString error = i18n("Could not connect to %1:%2 using SSL encryption.Maybe the server does not support SSL, or perhaps you have the wrong port? %3",
         getConnectionSettings().server().host(),
         getConnectionSettings().server().port(),
         reason);
     getStatusView()->appendServerMessage(i18n("SSL Connection Error"),error);
-
-    updateConnectionState(Konversation::SSDeliberatelyDisconnected);
 }
 
+void Server::sslVerifyError( const QSslError&  error)
+{
+    if (!m_showSSLConfirmation)
+        return;
+
+    QString msg = i18n("The server (%1) certificate failed the authenticity test. %2", getConnectionSettings().server().host(), error.errorString());
+
+    KonversationApplication* konvApp = static_cast<KonversationApplication *>(kapp);
+
+    int result = KMessageBox::warningYesNo( konvApp->getMainWindow(),
+                                            msg,
+                                            i18n("Server Authentication"),
+                                            KStandardGuiItem::guiItem(KStandardGuiItem::Continue),
+                                            KStandardGuiItem::cancel(),
+                                            "ssl_"+getConnectionSettings().server().host(),
+                                            KMessageBox::Dangerous );
+
+    if (result == KMessageBox::Yes)
+    {
+        m_socket->ignoreSslErrors();
+    }
+
+    m_showSSLConfirmation = false; //this is needed since peerVerifyError is emitted multiple time if there are multiple errors
+}
 
 // Will be called from InputFilter as soon as the Welcome message was received
 void Server::connectionEstablished(const QString& ownHost)
