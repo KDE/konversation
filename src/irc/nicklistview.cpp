@@ -92,9 +92,9 @@ K3ListView(parent)
 
         int newitem;
         newitem = popup->insertItem(i18n("Open &Query"),Konversation::OpenQuery);
-        popup->setWhatsThis(newitem, "<qt>Start a private chat between you and this person.<p/><em>Technical note:</em><br>The conversation between you and this person will be sent via the server.  This means that the conversation will be affected by server lag, server stability, and will be terminated when you disconnect from the server.</qt>");
+        popup->setWhatsThis(newitem, "<qt><p>Start a private chat between you and this person.</p><p><em>Technical note:</em><br />The conversation between you and this person will be sent via the server.  This means that the conversation will be affected by server lag, server stability, and will be terminated when you disconnect from the server.</p></qt>");
         newitem = popup->insertItem(i18n("Open DCC &Chat"),Konversation::StartDccChat);
-        popup->setWhatsThis(newitem, "<qt>Start a private <em>D</em>irect <em>C</em>lient <em>C</em>onnection chat between you and this person.<p/><em>Technical note:</em><br />The conversation between you and this person will be sent directly.  This means it is independent from the server - so if the server connection fails, or use disconnect, your DCC Chat will be unaffected.  It also means that no irc server admin can view or spy on this chat.</qt>");
+        popup->setWhatsThis(newitem, "<qt><p>Start a private <em>D</em>irect <em>C</em>lient <em>C</em>onnection chat between you and this person.</p><p><em>Technical note:</em><br />The conversation between you and this person will be sent directly.  This means it is independent from the server - so if the server connection fails, or use disconnect, your DCC Chat will be unaffected.  It also means that no irc server admin can view or spy on this chat.</p></qt>");
 
         if (KAuthorized::authorizeKAction("allow_downloading"))
         {
@@ -146,7 +146,7 @@ void NickListView::setWhatsThis()
 
     if(images->getNickIcon( Images::Normal, false).isNull())
     {
-        Q3WhatsThis::add(this, i18n("<qt>This shows all the people in the channel.  The nick for each person is shown.<br>Usually an icon is shown showing the status of each person, but you do not seem to have any icon theme installed.  See the Konversation settings - <i>Configure Konversation</i> under the <i>Settings</i> menu.  Then view the page for <i>Themes</i> under <i>Appearence</i>.</qt>"));
+        Q3WhatsThis::add(this, i18n("<qt><p>This shows all the people in the channel.  The nick for each person is shown.<br />Usually an icon is shown showing the status of each person, but you do not seem to have any icon theme installed.  See the Konversation settings - <i>Configure Konversation</i> under the <i>Settings</i> menu.  Then view the page for <i>Themes</i> under <i>Appearence</i>.</p></qt>"));
     }
     else
     {
@@ -158,22 +158,22 @@ void NickListView::setWhatsThis()
         Q3MimeSourceFactory::defaultFactory()->setImage( "normal", images->getNickIcon( Images::Normal, false ).convertToImage() );
         Q3MimeSourceFactory::defaultFactory()->setImage( "normalaway", images->getNickIcon( Images::Normal, true).convertToImage() );
 
-        Q3WhatsThis::add(this, i18n("<qt>This shows all the people in the channel.  The nick for each person is shown, with a picture showing their status.<p>"
+        Q3WhatsThis::add(this, i18n("<qt><p>This shows all the people in the channel.  The nick for each person is shown, with a picture showing their status.</p>"
             "<table>"
 
-            "<tr><th><img src=\"admin\"></th><td>This person has administrator privileges.</td></tr>"
-            "<tr><th><img src=\"owner\"></th><td>This person is a channel owner.</td></tr>"
-            "<tr><th><img src=\"op\"></th><td>This person is a channel operator.</td></tr>"
-            "<tr><th><img src=\"halfop\"></th><td>This person is a channel half-operator.</td></tr>"
-            "<tr><th><img src=\"voice\"></th><td>This person has voice, and can therefore talk in a moderated channel.</td></tr>"
-            "<tr><th><img src=\"normal\"></th><td>This person does not have any special privileges.</td></tr>"
-            "<tr><th><img src=\"normalaway\"></th><td>This indicates that this person is currently away.</td></tr>"
+            "<tr><th><img src=\"admin\"/></th><td>This person has administrator privileges.</td></tr>"
+            "<tr><th><img src=\"owner\"/></th><td>This person is a channel owner.</td></tr>"
+            "<tr><th><img src=\"op\"/></th><td>This person is a channel operator.</td></tr>"
+            "<tr><th><img src=\"halfop\"/></th><td>This person is a channel half-operator.</td></tr>"
+            "<tr><th><img src=\"voice\"/></th><td>This person has voice, and can therefore talk in a moderated channel.</td></tr>"
+            "<tr><th><img src=\"normal\"/></th><td>This person does not have any special privileges.</td></tr>"
+            "<tr><th><img src=\"normalaway\"/></th><td>This indicates that this person is currently away.</td></tr>"
             "</table><p>"
-            "The meaning of admin, owner and halfop varies between different IRC servers.<p>"
+            "The meaning of admin, owner and halfop varies between different IRC servers.</p><p>"
             "Hovering over any nick shows their current status"
                     //", as well as any information in the addressbook for this person"
                     ". See the Konversation Handbook for more information."
-            "</qt>"
+            "</p></qt>"
             ));
     }
 
