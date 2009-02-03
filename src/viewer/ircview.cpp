@@ -405,6 +405,7 @@ void IRCView::doAppend(const QString& newLine, bool self)
 
     // scroll view only if the scroll bar is already at the bottom
     bool doScroll = (verticalScrollBar()->value() == verticalScrollBar()->maximum());
+    doScroll ? setMaximumBlockCount(Preferences::self()->scrollbackMax()) : setMaximumBlockCount(maximumBlockCount() + 1);
 
     line.remove('\n'); // TODO why have newlines? we get <p>, so the \n are unnecessary...
 
