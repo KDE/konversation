@@ -70,16 +70,15 @@ import re
 import string
 
 try:
-    APP_ID = sys.argv[1]
-    IRC_SERVER = sys.argv[2]
-    TARGET = sys.argv[3]
+    IRC_SERVER = sys.argv[1]
+    TARGET = sys.argv[2]
 except IndexError:
     print >>sys.stderr, "This script is intended to be run from within Konversation."
     sys.exit(0)
 
 if (sys.hexversion >> 16) < 0x0204:
     err="The media script requires Python 2.4."
-    os.popen('dcop %s default error "%s"' %(APP_ID,err))
+    os.popen('qdbus org.kde.konversation /irc error "%s"' %(err))
     sys.exit(err)
 
 import subprocess
@@ -99,7 +98,7 @@ except NameError:
 
 def tell(data, feedback='info'):
     """Report back to the user"""
-    l=['dcop', APP_ID, 'default', feedback]
+    l=['qdbus', 'org.kde.konversation', '/irc', feedback]
     if type(data) is type(''):
         l.append(data)
     else:
@@ -477,7 +476,7 @@ Usage:
         pass
     else:
         try:
-            kind = sys.argv[4].lower()
+            kind = sys.argv[3].lower()
         except IndexError:
             kind = None
 
