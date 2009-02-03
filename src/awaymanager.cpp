@@ -349,7 +349,7 @@ void AwayManager::updateGlobalAwayAction(bool away)
     if (away)
     {
         const QList<Server*> serverList = m_connectionManager->getServerList();
-        uint awayCount = 0;
+        int awayCount = 0;
 
         foreach (Server* server, serverList)
         {
