@@ -394,17 +394,16 @@ void Server::connectToIRCServer()
         connect(m_socket, SIGNAL(error(QAbstractSocket::SocketError)), SLOT(broken(QAbstractSocket::SocketError)) );
         connect(m_socket, SIGNAL(readyRead()), SLOT(incoming()));
         connect(m_socket, SIGNAL(disconnected()), SLOT(closed()));
+        connect(m_socket, SIGNAL(connected()), SLOT (ircServerConnectionSuccess()));
+        connect(m_socket, SIGNAL(hostFound()), SLOT (hostFound()));
 
         // connect() will do a async lookup too
         if(!getConnectionSettings().server().SSLEnabled())
         {
-            connect(m_socket, SIGNAL(connected()), SLOT (ircServerConnectionSuccess()));
-
             m_socket->connectToHost(getConnectionSettings().server().host(), getConnectionSettings().server().port());
         }
         else
         {
-            connect(m_socket, SIGNAL(connected()), SLOT (ircServerConnectionSuccess()));
             //connect(m_socket, SIGNAL(sslErrors(const QList<QSslError>&)), SIGNAL(sslInitFailure()));
             connect(m_socket, SIGNAL(sslErrors(const QList<QSslError>&)), SLOT(sslError(const QList<QSslError>&)));
 
@@ -530,23 +529,9 @@ bool& isOp,bool& isHalfop,bool& hasVoice)
     }                                             // loop through the name
 }
 
-void Server::lookupFinished()
+void Server::hostFound()
 {
-    // error during lookup
-    if(m_socket->error())
-    {
-        // inform user about the error
-        getStatusView()->appendServerMessage(i18n("Error"),i18n("Server %1 not found: %2",
-            getConnectionSettings().server().host(),
-            m_socket->errorString(/*m_socket->error()*/))); //TODO FIXME for some reason the compiler misses the static overload
-
-        m_socket->resetStatus();
-
-        // broken connection
-        broken(m_socket->error());
-    }
-    else
-        getStatusView()->appendServerMessage(i18n("Info"),i18n("Server found, connecting..."));
+    getStatusView()->appendServerMessage(i18n("Info"),i18n("Server found, connecting..."));
 }
 
 void Server::ircServerConnectionSuccess()

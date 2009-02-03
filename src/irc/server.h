@@ -469,7 +469,7 @@ void resetNickSelection();
         void pongReceived();
 
     protected slots:
-        void lookupFinished();
+        void hostFound();
         void preShellCommandExited(int exitCode, QProcess::ExitStatus exitStatus);
         void ircServerConnectionSuccess();
         void startAwayTimer();
