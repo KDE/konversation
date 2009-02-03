@@ -148,7 +148,7 @@ void DccTransferRecv::setFileName( const QString& fileName )
 
 void DccTransferRecv::setFileURL( const KUrl& url )
 {
-    if ( getStatus() == Configuring || getStatus() == Queued )
+    if ( getStatus() == Preparing || getStatus() == Configuring || getStatus() == Queued )
         m_fileURL = url;
 }
 
