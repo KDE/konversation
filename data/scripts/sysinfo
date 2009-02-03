@@ -8,9 +8,8 @@
 #
 # get full original version at http://rebelhomicide.demon.nl/scripts/
 
-PORT=$1;
-SERVER=$2;
-TARGET=$3;
+SERVER=$1;
+TARGET=$2;
 
 export LC_ALL="C"
 
@@ -75,12 +74,8 @@ printf ("%d.%d%s up",n, n2, u);
 
 out="Sysinfo for '$HN': $OSKERN running $KDE, $CPU, $HDD, $MEM, $PROC proc's, ${UPT}" 
 
-if [ "x$PORT" = "x" ] ; then
-    echo "$out"
+if [ "x$TARGET" = "x" ] ; then
+    qdbus org.kde.konversation /irc error "$out"
 else
-    if [ "x$TARGET" = "x" ] ; then
-	dcop $PORT default error "$out"
-    else
-	dcop $PORT default say $SERVER "$TARGET" "$out"
-    fi
+    qdbus org.kde.konversation /irc say $SERVER "$TARGET" "$out"
 fi

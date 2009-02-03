@@ -2,8 +2,7 @@
 
 # Prints the KDE version.
 
-PORT=$1;
-SERVER=$2;
-TARGET=$3;
+SERVER=$1;
+TARGET=$2;
 
-kde-config --version | while read line; do dcop $PORT default say $SERVER "$TARGET" "$line"; done
+kde4-config --version | while read line; do qdbus org.kde.konversation /irc say $SERVER "$TARGET" "$line"; done

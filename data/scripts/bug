@@ -1,18 +1,17 @@
 #!/bin/sh
 
-PORT=$1
-SERVER=$2
-TARGET=$3
-BUG=$4
+SERVER=$1
+TARGET=$2
+BUG=$3
 
 if [ ! $TARGET ]
 then
-  dcop $PORT default error "Can't write into status view."
+  qdbus org.kde.konversation /irc error "Can't write into status view."
 else
   if [ -z $BUG ]
   then
-    dcop $PORT default error "You forgot the bug number!"
+    qdbus org.kde.konversation /irc error "You forgot the bug number!"
   else
-    kfmclient openURL http://bugs.kde.org/show_bug.cgi?id=$4
+    kfmclient openURL http://bugs.kde.org/show_bug.cgi?id=$3
   fi
 fi

@@ -16,12 +16,11 @@
 #include "server.h"
 
 #include <qstringlist.h>
-#include <qfile.h>
 #include <qfileinfo.h>
+#include <qprocess.h>
 
 #include <kdebug.h>
 #include <kstandarddirs.h>
-#include <kprocess.h>
 
 
 ScriptLauncher::ScriptLauncher(Server* server)
@@ -36,43 +35,22 @@ ScriptLauncher::~ScriptLauncher()
 
 void ScriptLauncher::launchScript(const QString& target, const QString &parameter)
 {
-#ifndef Q_CC_MSVC
-#warning "port to kde4"
-#endif
-#if 0 
-    KStandardDirs kstddir;
-    //  QString scriptPath(kstddir.saveLocation("data",QString("konversation/scripts")));
-    KProcess process;
-
     // send the script all the information it will need
-    QStringList parameterList=QStringList::split(' ',parameter);
-
+    QStringList parameterList = parameter.split(' ');
     // find script path (could be installed for all users in $KDEDIR/share/apps/ or
     // for one user alone in $HOME/.kde/share/apps/
-    QString scriptPath(kstddir.findResource("data","konversation/scripts/"+parameterList[0]));
-
-    process << scriptPath                            // script path and name
-        << kapp->dcopClient()->appId()               // our dcop port
-        << QString::number(m_server->connectionId()) // the server we are connected to
-        << target;                                   // the target where the call came from
-
-    // send remaining parameters to the script
-    for(unsigned int index=1;index<parameterList.count();index++)
-        process << parameterList[index];
-
+    QString script(parameterList.takeFirst());
+    QString scriptPath(KStandardDirs::locate("data", "konversation/scripts/" + script));
+    parameterList.prepend(target);
+    parameterList.prepend(QString::number(m_server->connectionId()));
     QFileInfo fileInfo(scriptPath);
-
-    process.setWorkingDirectory(fileInfo.path());
-    if(process.start()==false)
+    if (!QProcess::startDetached(scriptPath, parameterList, fileInfo.path()))
     {
-        QFile file(parameterList[0]);
-        if(!file.exists()) emit scriptNotFound(file.name());
-        else emit scriptExecutionError(file.name());
+        if(!fileInfo.exists())
+           emit scriptNotFound(script);
+        else
+           emit scriptExecutionError(script);
     }
-
-    // to free the script's stdin, otherwise backticks won't work
-    process.detach();
-#endif
 }
 
 #include "scriptlauncher.moc"

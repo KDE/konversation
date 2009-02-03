@@ -6,8 +6,6 @@
 # only tested on Debian GNU/Linux Sid
 # use the code for whatever you wish :-)
 
-
-$PORT = shift;
 $SERVER = shift;
 $TARGET = shift;
 
@@ -21,7 +19,7 @@ if($PLATFORM eq "FreeBSD") {
 } else {
 	$UPTIME = `cat /proc/uptime`;
 	if (not $UPTIME) {
-		exec 'dcop', $PORT, 'default', 'info', 'Could not read uptime. Check that /proc/uptime exists.';
+		exec 'qdbus', 'org.kde.konversation', '/irc', 'info', 'Could not read uptime. Check that /proc/uptime exists.';
 	}
 	@uparray = split(/\./, $UPTIME);
     $seconds = $uparray[0];
@@ -42,15 +40,15 @@ if($seconds > 60)
 	$minutes = int($seconds/60);
 }
 if( $days && $hours ) {
-	exec 'dcop', $PORT, 'default', 'say', $SERVER, $TARGET, "Uptime: $days days, $hours hours and $minutes minutes";
+	exec 'qdbus', 'org.kde.konversation', '/irc', 'say', $SERVER, $TARGET, "Uptime: $days days, $hours hours and $minutes minutes";
 }
 elsif( !$days && $hours ) {
-	exec 'dcop', $PORT, 'default', 'say', $SERVER, $TARGET, "Uptime: $hours hours and $minutes minutes";
+	exec 'qdbus', 'org.kde.konversation', '/irc', 'say', $SERVER, $TARGET, "Uptime: $hours hours and $minutes minutes";
 }
 elsif( $days && !$hours ) {
-	exec 'dcop', $PORT, 'default', 'say', $SERVER, $TARGET, "Uptime: $days days and $minutes minutes";
+	exec 'qdbus', 'org.kde.konversation', '/irc', 'say', $SERVER, $TARGET, "Uptime: $days days and $minutes minutes";
 }
 elsif( !$days && !$hours ) {
-	exec 'dcop', $PORT, 'default', 'say', $SERVER, $TARGET, "Uptime: $minutes minutes";
+	exec 'qdbus', 'org.kde.konversation', '/irc', 'say', $SERVER, $TARGET, "Uptime: $minutes minutes";
 }
 

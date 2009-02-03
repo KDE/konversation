@@ -115,7 +115,7 @@ Server::Server(QObject* parent, ConnectionSettings& settings) : QObject(parent)
 
     m_inputFilter.setServer(this);
     m_outputFilter = new Konversation::OutputFilter(this);
-    //m_scriptLauncher = new ScriptLauncher(this);
+    m_scriptLauncher = new ScriptLauncher(this);
 
     // For /msg query completion
     m_completeQueryPosition = 0;
@@ -330,12 +330,12 @@ void Server::connectSignals()
     connect(this, SIGNAL(serverOnline(bool)), getStatusView(), SLOT(serverOnline(bool)));
 
     // Scripts
-    //connect(getOutputFilter(), SIGNAL(launchScript(const QString&, const QString&)),
-    //    m_scriptLauncher, SLOT(launchScript(const QString&, const QString&)));
-    //connect(m_scriptLauncher, SIGNAL(scriptNotFound(const QString&)),
-    //    this, SLOT(scriptNotFound(const QString&)));
-    //connect(m_scriptLauncher, SIGNAL(scriptExecutionError(const QString&)),
-    //    this, SLOT(scriptExecutionError(const QString&)));
+    connect(getOutputFilter(), SIGNAL(launchScript(const QString&, const QString&)),
+        m_scriptLauncher, SLOT(launchScript(const QString&, const QString&)));
+    connect(m_scriptLauncher, SIGNAL(scriptNotFound(const QString&)),
+        this, SLOT(scriptNotFound(const QString&)));
+    connect(m_scriptLauncher, SIGNAL(scriptExecutionError(const QString&)),
+        this, SLOT(scriptExecutionError(const QString&)));
 
     // Stats
     connect(this, SIGNAL(sentStat(int, int)), SLOT(collectStats(int, int)));

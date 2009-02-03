@@ -663,7 +663,7 @@ void resetNickSelection();
         void updateConnectionState(Konversation::ConnectionState state);
         bool isSocketConnected() const;
 
-        //ScriptLauncher* m_scriptLauncher;
+        ScriptLauncher* m_scriptLauncher;
 
         KProcess m_preShellCommand;
 

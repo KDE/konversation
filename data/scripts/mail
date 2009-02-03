@@ -4,11 +4,10 @@
 # Licensed under GPL v2 or later at your option
 # Copyright 2005 by John Tapsell <john.tapsell@kdemail.net>
 
-PORT=$1;
-SERVER=$2;
-TARGET=$3;
+SERVER=$1;
+TARGET=$2;
 
-FOLDER=$4;
+FOLDER=$3;
 
 
 if [ "$FOLDER" = "" ] ; then
@@ -19,17 +18,18 @@ fi
 getmails()
 {
 
-  dcop kmail > /dev/null || {
-    dcop $PORT default info "Sorry kmail is not running"
+  qdbus org.kde.kmail > /dev/null || {
+    qdbus org.kde.konversation /irc info "Sorry kmail is not running"
     exit
   }
   
-  for f in $(dcop kmail KMailIface folderList) ; do
-   MAILFOLDER=$(dcop $(dcop kmail KMailIface getFolder $f) "displayPath" | grep -i $FOLDER)
+  for f in $(qdbus org.kde.kmail /KMail folderList) ; do
+   qdbus org.kde.kmail /KMail getFolder $f > /dev/null
+   MAILFOLDER=$(qdbus org.kde.kmail /Folder "displayPath" | grep -i $FOLDER)
    if [ "$MAILFOLDER" != "" ] ; then
      FOUNDFOLDER=1
-     MAILCOUNT=$(dcop $(dcop kmail KMailIface getFolder $f ) "unreadMessages()" )
-     MAILTOTALCOUNT=$(dcop $(dcop kmail KMailIface getFolder $f ) "messages()" )
+     MAILCOUNT=$(qdbus org.kde.kmail /Folder unreadMessages )
+     MAILTOTALCOUNT=$(qdbus org.kde.kmail /Folder messages )
      MAILTOTALCOUNT=$(($MAILCOUNT + $MAILTOTALCOUNT))
      if [[ -z "$MAILCOUNT" ]] ; then MAILCOUNT = "0" ; fi
      if [ "$MAILCOUNT" != 0 ] ;  then
@@ -41,7 +41,7 @@ getmails()
 
   if [[ -z "$FOUNDEMAIL" ]] ; then
     if [[ -z "$FOUNDFOLDER" ]] ; then
-      dcop $PORT default info "No email folders were found that had a name containing '$FOLDER'"
+      qdbus org.kde.konversation /irc info "No email folders were found that had a name containing '$FOLDER'"
       exit
     else
       echo "No new emails in any folders matching '$FOLDER'"
@@ -50,10 +50,10 @@ getmails()
 
 }
 
-if [[ -z "$3" ]] ; then 
+if [[ -z "$2" ]] ; then 
   echo "Scripts are not meant to be called from the command line."
   echo "This script should be installed to  $KDEDIR/share/apps/konversation/scripts"
-  echo "Then executed with /script   from the konversation"
+  echo "Then executed with /exec mail from the konversation"
   echo
   echo The output is:
   getmails
@@ -66,5 +66,5 @@ fi
 #  exit
 #fi
 
-getmails | head -n 3 | while read line; do dcop $PORT default say $SERVER "$TARGET" "$line"; done
+getmails | head -n 3 | while read line; do qdbus org.kde.konversation /irc say $SERVER "$TARGET" "$line"; done
 

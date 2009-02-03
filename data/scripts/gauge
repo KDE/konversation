@@ -1,10 +1,8 @@
 #!/usr/bin/env bash
 
-PORT=$1
-SERVER=$2
-TARGET=$3
+SERVER=$1
+TARGET=$2
 
-shift
 shift
 shift
 
@@ -12,23 +10,23 @@ PERCENTAGE=$1
 
 if [ ! $TARGET ]
 then
-  dcop $PORT default error "Can't write into status view."
+  qdbus org.kde.konversation /irc error "Can't write into status view."
 else
   if [ ! $PERCENTAGE ]
   then
-    dcop $PORT default error "USAGE: $0 <percentage>"
+    qdbus org.kde.konversation /irc error "USAGE: $0 <percentage>"
   else
     PERCENTAGE=`echo $PERCENTAGE | sed 's/^0\+//'`
     LEFT=$(($PERCENTAGE/5))
     RIGHT=$((20-$LEFT))
 
     if [[ $PERCENTAGE -lt 0 ]]; then
-      dcop $PORT default error "Percentage has to be bigger than 0"
+      qdbus org.kde.konversation /irc error "Percentage has to be bigger than 0"
       exit
     fi
     
     if [[ $PERCENTAGE -gt 100 ]]; then
-      dcop $PORT default error "Percentage has to be smaller than 100"
+      qdbus org.kde.konversation /irc error "Percentage has to be smaller than 100"
       exit
     fi
 
@@ -66,6 +64,6 @@ else
 	OUTPUT="$OUTPUT *ding*"
     fi
 
-    dcop $PORT default say $SERVER "$TARGET" "Beer load $OUTPUT"
+    qdbus org.kde.konversation /irc say $SERVER "$TARGET" "Beer load $OUTPUT"
   fi
 fi

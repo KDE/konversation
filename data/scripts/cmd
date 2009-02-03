@@ -2,7 +2,6 @@
 # Copyright (C) 2004 by İsmail Dönmez
 # Licensed under GPL v2 or later at your option
 
-$PORT= shift;
 $SERVER= shift;
 $TARGET= shift;
 
@@ -10,7 +9,7 @@ my $i;
 my $command;
 
 if( $ARGV[0] eq "yes" ){
-    exec 'dcop', $PORT, 'default', 'error', 'Requested command is not executed!';
+    exec 'qdbus', 'org.kde.konversation', '/irc', 'error', 'Requested command is not executed!';
 }
 
 foreach $word (@ARGV) {
@@ -23,9 +22,9 @@ foreach $entry (split(/\n/, $ARG_MESSAGE)) {
     chomp $entry;
     $i=1;
     $entry =~ s/^\//\/\//;
-    system 'dcop', $PORT, 'default', 'say', $SERVER, $TARGET, $entry;
+    system 'qdbus', 'org.kde.konversation', '/irc', 'say', $SERVER, $TARGET, $entry;
 }
 
 unless($i) {
-    exec 'dcop', $PORT, 'default', 'error', "Command @ARGV doesn't exist";
+    exec 'qdbus', 'org.kde.konversation', '/irc', 'error', "Command @ARGV doesn't exist";
 }
