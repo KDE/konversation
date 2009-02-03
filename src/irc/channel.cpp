@@ -62,6 +62,8 @@
 #include <kvbox.h>
 #include <khbox.h>
 
+using Konversation::ChannelOptionsDialog;
+
 Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
 {
     // init variables
@@ -148,14 +150,14 @@ Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
     modeK = new ModeButton("K",modeBox,6);
     modeL = new ModeButton("L",modeBox,7);
 
-    modeT->setWhatsThis(i18n("<qt><p>These control the <em>mode</em> of the channel.  Only an operator can change these.</p><p>The <b>T</b>opic mode means that only the channel operator can change the topic for the channel.</p></qt>"));
-    modeN->setWhatsThis(i18n("<qt><p>These control the <em>mode</em> of the channel.  Only an operator can change these.</p><p><b>N</b>o messages from outside means that users that are not in the channel cannot send messages that everybody in the channel can see.  Almost all channels have this set to prevent nuisance messages.</p></qt>"));
-    modeS->setWhatsThis(i18n("<qt><p>These control the <em>mode</em> of the channel.  Only an operator can change these.</p><p>A <b>S</b>ecret channel will not show up in the channel list, nor will any user be able to see that you are in the channel with the <em>WHOIS</em> command or anything similar.  Only the people that are in the same channel will know that you are in this channel, if this mode is set.</p></qt>"));
-    modeI->setWhatsThis(i18n("<qt><p>These control the <em>mode</em> of the channel.  Only an operator can change these.</p><p>An <b>I</b>nvite only channel means that people can only join the channel if they are invited.  To invite someone, a channel operator needs to issue the command <em>/invite nick</em> from within the channel.</p></qt>"));
-    modeP->setWhatsThis(i18n("<qt><p>These control the <em>mode</em> of the channel.  Only an operator can change these.</p><p>A <b>P</b>rivate channel is shown in a listing of all channels, but the topic is not shown.  A user's <em>WHOIS</em> may or may not show them as being in a private channel depending on the IRC server.</p></qt>"));
-    modeM->setWhatsThis(i18n("<qt><p>These control the <em>mode</em> of the channel.  Only an operator can change these.</p><p>A <b>M</b>oderated channel is one where only operators, half-operators and those with voice can talk.</p></qt>"));
-    modeK->setWhatsThis(i18n("<qt><p>These control the <em>mode</em> of the channel.  Only an operator can change these.</p><p>A <b>P</b>rotected channel requires users to enter a password in order to join.</p></qt>"));
-    modeL->setWhatsThis(i18n("<qt><p>These control the <em>mode</em> of the channel.  Only an operator can change these.</p><p>A channel that has a user <b>L</b>imit means that only that many users can be in the channel at any one time.  Some channels have a bot that sits in the channel and changes this automatically depending on how busy the channel is.</p></qt>"));
+    modeT->setWhatsThis(ChannelOptionsDialog::whatsThisForMode('T'));
+    modeN->setWhatsThis(ChannelOptionsDialog::whatsThisForMode('N'));
+    modeS->setWhatsThis(ChannelOptionsDialog::whatsThisForMode('S'));
+    modeI->setWhatsThis(ChannelOptionsDialog::whatsThisForMode('I'));
+    modeP->setWhatsThis(ChannelOptionsDialog::whatsThisForMode('P'));
+    modeM->setWhatsThis(ChannelOptionsDialog::whatsThisForMode('M'));
+    modeK->setWhatsThis(ChannelOptionsDialog::whatsThisForMode('K'));
+    modeL->setWhatsThis(ChannelOptionsDialog::whatsThisForMode('L'));
 
     connect(modeT,SIGNAL(clicked(int,bool)),this,SLOT(modeButtonClicked(int,bool)));
     connect(modeN,SIGNAL(clicked(int,bool)),this,SLOT(modeButtonClicked(int,bool)));

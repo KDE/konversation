@@ -35,6 +35,12 @@ namespace Konversation
             QString topic();
             QStringList modes();
 
+            /**
+             * Return the whatsThis string for a mode-change button.
+             * These strings are shared between the Channel Options Dialog
+             * and the Channel window.
+             */
+            static QString whatsThisForMode(char mode);
 
         public slots:
             void refreshTopicHistory();
@@ -55,7 +61,7 @@ namespace Konversation
 
         protected slots:
             void topicHistoryItemClicked(Q3ListViewItem* item);
-            void topicBeingEdited(bool state);
+            void topicBeingEdited();
 
             void cancelClicked();
             void okClicked();

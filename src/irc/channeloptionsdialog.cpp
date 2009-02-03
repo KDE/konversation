@@ -62,7 +62,7 @@ namespace Konversation
         connect(m_ui.topicHistoryList, SIGNAL(clicked(Q3ListViewItem*)), this, SLOT(topicHistoryItemClicked(Q3ListViewItem*)));
         connect(m_ui.topicHistoryList, SIGNAL(selectionChanged(Q3ListViewItem*)), this, SLOT(topicHistoryItemClicked(Q3ListViewItem*)));
         connect(m_ui.toggleAdvancedModes, SIGNAL(clicked()), this, SLOT(toggleAdvancedModes()));
-        connect(m_ui.topicEdit, SIGNAL(modificationChanged(bool)), this, SLOT(topicBeingEdited(bool)));
+        connect(m_ui.topicEdit, SIGNAL(textChanged()), this, SLOT(topicBeingEdited()));
 
         connect(m_channel, SIGNAL(topicHistoryChanged()), this, SLOT(refreshTopicHistory()));
 
@@ -81,6 +81,16 @@ namespace Konversation
         connect(m_ui.removeBan, SIGNAL(clicked()), this, SLOT(removeBanClicked()));
         connect(m_ui.banList, SIGNAL(itemRenamed (Q3ListViewItem*)), this, SLOT(banEdited(Q3ListViewItem*)));
         connect(m_ui.banList, SIGNAL(itemRenamed (Q3ListViewItem*, int, const QString&)), this, SLOT(banEdited(Q3ListViewItem*)));
+
+        m_ui.topicModeChBox->setWhatsThis(whatsThisForMode('T'));
+        m_ui.messageModeChBox->setWhatsThis(whatsThisForMode('N'));
+        m_ui.secretModeChBox->setWhatsThis(whatsThisForMode('S'));
+        m_ui.inviteModeChBox->setWhatsThis(whatsThisForMode('I'));
+        m_ui.moderatedModeChBox->setWhatsThis(whatsThisForMode('M'));
+        m_ui.keyModeChBox->setWhatsThis(whatsThisForMode('P'));
+        m_ui.keyModeEdit->setWhatsThis(whatsThisForMode('P'));
+        m_ui.userLimitEdit->setWhatsThis(whatsThisForMode('L'));
+        m_ui.userLimitChBox->setWhatsThis(whatsThisForMode('L'));
 
         refreshTopicHistory();
         refreshBanList();
@@ -147,17 +157,17 @@ namespace Konversation
         m_ui.otherModesList->setVisible(ison);
         if(ison)
         {
-            m_ui.toggleAdvancedModes->setText(i18n("&Hide Advanced Modes <<"));
+            m_ui.toggleAdvancedModes->setText(i18n("&Hide Advanced Modes &lt;&lt;"));
         }
         else
         {
-            m_ui.toggleAdvancedModes->setText(i18n("&Show Advanced Modes >>"));
+            m_ui.toggleAdvancedModes->setText(i18n("&Show Advanced Modes &gt;&gt;"));
         }
     }
 
-    void ChannelOptionsDialog::topicBeingEdited(bool state)
+    void ChannelOptionsDialog::topicBeingEdited()
     {
-        m_editingTopic = state;
+        m_editingTopic = true;
     }
 
     QString ChannelOptionsDialog::topic()
@@ -446,12 +456,11 @@ namespace Konversation
     {
         if (m_ui.banList->renameLineEdit()->isVisible())
         {
-            QKeyEvent e(QEvent::KeyPress, Qt::Key_Escape, 27, Qt::NoButton);
-
-            KApplication::sendEvent(m_ui.banList->renameLineEdit(), &e);
+            QKeyEvent e(QEvent::KeyPress, Qt::Key_Escape, Qt::NoModifier);
+            QApplication::sendEvent(m_ui.banList->renameLineEdit(), &e);
         }
 
-        topicBeingEdited(false);
+        m_editingTopic = false;
         hide();
     }
 
@@ -459,9 +468,8 @@ namespace Konversation
     {
         if (m_ui.banList->renameLineEdit()->isVisible())
         {
-            QKeyEvent e(QEvent::KeyPress, Qt::Key_Return, 13, Qt::NoButton);
-
-            KApplication::sendEvent(m_ui.banList->renameLineEdit(), &e);
+            QKeyEvent e(QEvent::KeyPress, Qt::Key_Return, Qt::NoModifier);
+            QApplication::sendEvent(m_ui.banList->renameLineEdit(), &e);
         }
     }
 
@@ -531,6 +539,31 @@ namespace Konversation
             delete this;
         else
             K3ListViewItem::cancelRename(col);
+    }
+}
+
+QString Konversation::ChannelOptionsDialog::whatsThisForMode(char mode)
+{
+    switch (mode) {
+    case 'T':
+        return i18n("<qt><p>These control the <em>mode</em> of the channel.  Only an operator can change these.</p><p>The <b>T</b>opic mode means that only the channel operator can change the topic for the channel.</p></qt>");
+    case 'N':
+        return i18n("<qt><p>These control the <em>mode</em> of the channel.  Only an operator can change these.</p><p><b>N</b>o messages from outside means that users that are not in the channel cannot send messages that everybody in the channel can see.  Almost all channels have this set to prevent nuisance messages.</p></qt>");
+    case 'S':
+        return i18n("<qt><p>These control the <em>mode</em> of the channel.  Only an operator can change these.</p><p>A <b>S</b>ecret channel will not show up in the channel list, nor will any user be able to see that you are in the channel with the <em>WHOIS</em> command or anything similar.  Only the people that are in the same channel will know that you are in this channel, if this mode is set.</p></qt>");
+    case 'I':
+        return i18n("<qt><p>These control the <em>mode</em> of the channel.  Only an operator can change these.</p><p>An <b>I</b>nvite only channel means that people can only join the channel if they are invited.  To invite someone, a channel operator needs to issue the command <em>/invite nick</em> from within the channel.</p></qt>");
+    case 'P':
+        return i18n("<qt><p>These control the <em>mode</em> of the channel.  Only an operator can change these.</p><p>A <b>P</b>rivate channel is shown in a listing of all channels, but the topic is not shown.  A user's <em>WHOIS</em> may or may not show them as being in a private channel depending on the IRC server.</p></qt>");
+    case 'M':
+        return i18n("<qt><p>These control the <em>mode</em> of the channel.  Only an operator can change these.</p><p>A <b>M</b>oderated channel is one where only operators, half-operators and those with voice can talk.</p></qt>");
+    case 'K':
+        return i18n("<qt><p>These control the <em>mode</em> of the channel.  Only an operator can change these.</p><p>A <b>P</b>rotected channel requires users to enter a password in order to join.</p></qt>");
+    case 'L':
+        return i18n("<qt><p>These control the <em>mode</em> of the channel.  Only an operator can change these.</p><p>A channel that has a user <b>L</b>imit means that only that many users can be in the channel at any one time.  Some channels have a bot that sits in the channel and changes this automatically depending on how busy the channel is.</p></qt>");
+    default:
+        kWarning() << "called for unknown mode" << mode;
+        return QString();
     }
 }
 

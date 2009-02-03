@@ -125,9 +125,6 @@ the Free Software Foundation; either version 2 of the License, or
       <layout class="QVBoxLayout" >
        <item>
         <widget class="QCheckBox" name="topicModeChBox" >
-         <property name="whatsThis" >
-          <string>&lt;qt>These control the &lt;em>mode&lt;/em> of the channel.  Only an operator can change these.&lt;p>The &lt;b>T&lt;/b>opic mode means that only the channel operator can change the topic for the channel.&lt;/qt></string>
-         </property>
          <property name="text" >
           <string>&amp;Topic can only be changed by channel operators</string>
          </property>
@@ -135,9 +132,6 @@ the Free Software Foundation; either version 2 of the License, or
        </item>
        <item>
         <widget class="QCheckBox" name="messageModeChBox" >
-         <property name="whatsThis" >
-          <string>&lt;qt>These control the &lt;em>mode&lt;/em> of the channel.  Only an operator can change these.&lt;p>&lt;b>N&lt;/b>o messages from outside means that users that are not in the channel cannot send messages that everybody in the channel can see.  Almost all channels have this set to prevent nuisance messages.&lt;/qt></string>
-         </property>
          <property name="text" >
           <string>&amp;No messages from outside the channel</string>
          </property>
@@ -145,9 +139,6 @@ the Free Software Foundation; either version 2 of the License, or
        </item>
        <item>
         <widget class="QCheckBox" name="secretModeChBox" >
-         <property name="whatsThis" >
-          <string>&lt;qt>These control the &lt;em>mode&lt;/em> of the channel.  Only an operator can change these.&lt;p>A &lt;b>S&lt;/b>ecret channel will not show up in the channel list, nor will any user be able to see that you are in the channel with the &lt;em>WHOIS&lt;/em> command or anything similar.  Only the people that are in the same channel will know that you are in this channel, if this mode is set.&lt;/qt></string>
-         </property>
          <property name="text" >
           <string>&amp;Secret channel, the channel is not listed in the channel list</string>
          </property>
@@ -155,9 +146,6 @@ the Free Software Foundation; either version 2 of the License, or
        </item>
        <item>
         <widget class="QCheckBox" name="inviteModeChBox" >
-         <property name="whatsThis" >
-          <string>&lt;qt>These control the &lt;em>mode&lt;/em> of the channel.  Only an operator can change these.&lt;p>An &lt;b>I&lt;/b>nvite only channel means that people can only join the channel if they are invited.  To invite someone, a channel operator needs to issue the command&lt;em>/invite nick&lt;/em> from within the channel.&lt;/qt></string>
-         </property>
          <property name="text" >
           <string>Only &amp;invited are allowed to join the channel</string>
          </property>
@@ -165,9 +153,6 @@ the Free Software Foundation; either version 2 of the License, or
        </item>
        <item>
         <widget class="QCheckBox" name="moderatedModeChBox" >
-         <property name="whatsThis" >
-          <string>&lt;qt>These control the &lt;em>mode&lt;/em> of the channel.  Only an operator can change these.&lt;p>A &lt;b>M&lt;/b>oderated channel is one where only operators, half-operators and those with voice can talk.&lt;/qt></string>
-         </property>
          <property name="text" >
           <string>&amp;Moderated channel, only people with voice can write to the channel</string>
          </property>
@@ -177,9 +162,6 @@ the Free Software Foundation; either version 2 of the License, or
         <layout class="QGridLayout" >
          <item row="1" column="0" >
           <widget class="QCheckBox" name="keyModeChBox" >
-           <property name="whatsThis" >
-            <string>&lt;qt>These control the &lt;em>mode&lt;/em> of the channel.  Only an operator can change these.&lt;p>A &lt;b>P&lt;/b>rotected channel requires users to enter a password in order to join.&lt;/qt></string>
-           </property>
            <property name="text" >
             <string>Channel &amp;password:</string>
            </property>
@@ -190,9 +172,6 @@ the Free Software Foundation; either version 2 of the License, or
            <property name="enabled" >
             <bool>false</bool>
            </property>
-           <property name="whatsThis" >
-            <string>&lt;qt>These control the &lt;em>mode&lt;/em> of the channel.  Only an operator can change these.&lt;p>A channel that has a user &lt;b>L&lt;/b>imit means that only that many users can be in the channel at any one time.  Some channels have a bot that sits in the channel and changes this automatically depending on how busy the channel is.&lt;/qt></string>
-           </property>
            <property name="minimum" >
             <number>0</number>
            </property>
@@ -200,9 +179,6 @@ the Free Software Foundation; either version 2 of the License, or
          </item>
          <item row="0" column="0" >
           <widget class="QCheckBox" name="userLimitChBox" >
-           <property name="whatsThis" >
-            <string>&lt;qt>These control the &lt;em>mode&lt;/em> of the channel.  Only an operator can change these.&lt;p>A channel that has a user &lt;b>L&lt;/b>imit means that only that many users can be in the channel at any one time.  Some channels have a bot that sits in the channel and changes this automatically depending on how busy the channel is.&lt;/qt></string>
-           </property>
            <property name="text" >
             <string>User &amp;limit:</string>
            </property>
@@ -228,9 +204,6 @@ the Free Software Foundation; either version 2 of the License, or
           <widget class="KLineEdit" name="keyModeEdit" >
            <property name="enabled" >
             <bool>false</bool>
-           </property>
-           <property name="whatsThis" >
-            <string>&lt;qt>These control the &lt;em>mode&lt;/em> of the channel.  Only an operator can change these.&lt;p>A &lt;b>P&lt;/b>rotected channel requires users to enter a password in order to join.&lt;/qt></string>
            </property>
           </widget>
          </item>
