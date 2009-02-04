@@ -23,7 +23,6 @@ include_directories(${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR} ${KDE4_INCLUDES} ${K
 #looks like the original test is from Kopete, their port doesn't use Xext so neither shall ours
 if (X11_Xscreensaver_FOUND)
     set(HAVE_XSCREENSAVER 1)
-    message(STATUS "${PROJECT_NAME} -- ${X11_Xscreensaver_FOUND}")
 endif (X11_Xscreensaver_FOUND)
 
 configure_file(config-konvi.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-konvi.h )

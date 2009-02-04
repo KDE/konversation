@@ -185,10 +185,6 @@ kde4_add_ui3_files(dcc_SRCS dcc/transferdetailedinfopanelui.ui)
 set (completed_SRCS ${core_SRCS}  ${irc_SRCS} ${viewer_SRCS} ${prefs_SRCS} ${dcc_SRCS})
 set (konvi_SRCS ${completed_SRCS})
 
-
-
-message(STATUS "DCOP has been removed in KDE 4; port code to D-Bus. kde4_add_dcop_skels macro does not exist anymore. We keep it just to remember to port to D-Bus.")
-#kde4_add_dcop_skels(konvi_SRCS konviface.h )
 kde4_add_ui3_files(konvi_SRCS queuetunerbase.ui)
 
 kde4_add_ui_files(konvi_SRCS
