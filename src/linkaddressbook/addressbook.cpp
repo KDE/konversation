@@ -13,11 +13,11 @@
 */
 
 #include "addressbook.h"
-#include "../viewcontainer.h"
-#include "../konversationmainwindow.h"
-#include "../server.h"
-#include "../channel.h"
-#include "../konversationapplication.h"
+#include "viewcontainer.h"
+#include "mainwindow.h"
+#include "server.h"
+#include "channel.h"
+#include "application.h"
 
 #include <qstringlist.h>
 #include "qwidget.h"
@@ -35,7 +35,10 @@ namespace Konversation
 
     Addressbook *Addressbook::m_instance=0L;
 
-    Addressbook::Addressbook() : DCOPObject( "KIMIface")
+#ifdef __GNUC__
+#warning port the KIMIface DCOP interface to D-Bus
+#endif
+    Addressbook::Addressbook() //: DCOPObject( "KIMIface")
     {
         addressBook = KABC::StdAddressBook::self(true);
         m_ticket=NULL;
@@ -319,8 +322,13 @@ void Addressbook::emitContactPresenceChanged(const QString &uid, int presence)
         //		kDebug() << "Addressbook::emitContactPresenceChanged was called with empty uid" << endl;
         return;
     }
+#ifdef __GNUC__
+#warning port dcopClient->appId() usage
+#endif
+#if 0
     Q_ASSERT(kapp->dcopClient());
     emit contactPresenceChanged(uid, kapp->dcopClient()->appId(), presence);
+#endif
     //	kDebug() << "Presence changed for uid " << uid << " to " << presence << endl;
 }
 
