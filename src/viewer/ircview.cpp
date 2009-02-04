@@ -468,20 +468,6 @@ QString IRCView::createNickLine(const QString& nick, bool encapsulateNick, bool 
 {
     QString nickLine = "%2";
 
-    if(Preferences::self()->useClickableNicks())
-    {
-        // HACK:Use space as a placeholder for \ as Qt tries to be clever and does a replace to / in urls in QTextEdit
-        nickLine = "<a href=\"#" + QString(nick).replace('\\', " ") + "\">%2</a>";
-    }
-
-    if(privMsg)
-    {
-        nickLine.prepend ("-&gt; ");
-    }
-
-    if(encapsulateNick)
-        nickLine = "&lt;" + nickLine + "&gt;";
-
     if(Preferences::self()->useColoredNicks() && m_server)
     {
         QString nickColor;
@@ -527,6 +513,20 @@ QString IRCView::createNickLine(const QString& nick, bool encapsulateNick, bool 
 
         nickLine = "<font color=\"" + nickColor + "\">"+nickLine+"</font>";
     }
+
+    if(Preferences::self()->useClickableNicks())
+    {
+        // HACK:Use space as a placeholder for \ as Qt tries to be clever and does a replace to / in urls in QTextEdit
+        nickLine = "<a href=\"#" + QString(nick).replace('\\', " ") + "\">" + nickLine + "</a>";
+    }
+
+    if(privMsg)
+    {
+        nickLine.prepend ("-&gt; ");
+    }
+
+    if(encapsulateNick)
+        nickLine = "&lt;" + nickLine + "&gt;";
 
     if(Preferences::self()->useBoldNicks())
         nickLine = "<b>" + nickLine + "</b>";
