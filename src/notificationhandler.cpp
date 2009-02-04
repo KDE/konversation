@@ -58,14 +58,14 @@ namespace Konversation
             startTrayNotification(chatWin);
         }
 
-        
+
         if(Preferences::self()->oSDShowChannel() &&
             (!m_mainWindow->isActiveWindow() || (chatWin != m_mainWindow->getViewContainer()->getFrontView())))
         {
             KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
             konvApp->osd->show('(' + chatWin->getName() + ") <" + fromNick + "> " + cleanedMessage);
         }
-        
+
     }
 
     void NotificationHandler::nick(ChatWindow* chatWin, const QString& fromNick, const QString& message)
@@ -89,7 +89,7 @@ namespace Konversation
             (!m_mainWindow->isActiveWindow() ||
             (chatWin != m_mainWindow->getViewContainer()->getFrontView())))
         {
-            konvApp->osd->show(i18n("[HighLight] (%1) <%2> %3",chatWin->getName(),fromNick,cleanedMessage));
+            konvApp->osd->show(i18n("[HighLight] (%1) &lt;%2&gt; %3",chatWin->getName(),fromNick,cleanedMessage));
         }
     }
 
@@ -114,7 +114,7 @@ namespace Konversation
         if(Preferences::self()->oSDShowQuery() && (!m_mainWindow->isActiveWindow() ||
            (chatWin != m_mainWindow->getViewContainer()->getFrontView())))
         {
-            konvApp->osd->show(i18n("[Query] <%1> %2",fromNick,cleanedMessage));
+            konvApp->osd->show(i18n("[Query] &lt;%1&gt; %2",fromNick,cleanedMessage));
         }
     }
 
@@ -304,7 +304,7 @@ namespace Konversation
                 konvApp->osd->show(i18n("[HighLight] (%1) *** %2",chatWin->getName(),message));
             // normal highlight message
             else
-                konvApp->osd->show(i18n("[HighLight] (%1) <%2> %3",chatWin->getName(),fromNick,message));
+                konvApp->osd->show(i18n("[HighLight] (%1) &lt;%2&gt; %3",chatWin->getName(),fromNick,message));
         }
     }
 

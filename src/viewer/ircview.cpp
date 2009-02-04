@@ -89,8 +89,6 @@ IRCView::clear()
 //IRCView::setupChannelPopupMenu()
 #endif
 
-static QObjectList findByName(QObject *object, QString className, bool findAll=false);
-
 IRCView::IRCView(QWidget* parent, Server* newServer) : QPlainTextEdit(parent)
 {
 
