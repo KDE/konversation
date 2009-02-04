@@ -33,10 +33,14 @@ namespace Konversation
     class Addressbook : public AddressbookBase
     {
         Q_OBJECT
+        Q_CLASSINFO("D-Bus Interface", "org.kde.konversation")
+
             public:
 
             virtual ~Addressbook();               // This needs to be public so it can be deleted by our static pointer
             static Addressbook *self();
+
+        public slots:
             QStringList allContactsNicks();
             QStringList allContacts();
             QStringList reachableContacts();
@@ -76,6 +80,7 @@ namespace Konversation
             void sendFile(const QString &uid, const KUrl &sourceURL,
                 const QString &altFileName = QString(), uint fileSize = 0);
 
+        public:
             /**
              * Lets outsiders tell us to emit presenceChanged signal.
              */
@@ -85,7 +90,11 @@ namespace Konversation
              */
             void emitContactPresenceChanged(const QString &uid);
 
+        public slots:
             bool addContact( const QString &contactId, const QString &protocolId );
+
+        signals:
+            void contactPresenceChanged( QString uid, Q3CString appId, int presence );
 
         protected:
             Addressbook();
