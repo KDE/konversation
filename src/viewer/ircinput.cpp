@@ -199,14 +199,14 @@ void IRCInput::keyPressEvent(QKeyEvent* e)
             break;
 
         case Qt::Key_Up:
-            if (m_multiRow && (e->modifiers() != (Qt::ShiftModifier|Qt::ControlModifier)))
+            if (m_multiRow && textCursor().movePosition(QTextCursor::Up))
                 break;
             emit history(true);
             return;
             break;
 
         case Qt::Key_Down:
-            if (m_multiRow && (e->modifiers() != (Qt::ShiftModifier|Qt::ControlModifier)))
+            if (m_multiRow && textCursor().movePosition(QTextCursor::Down))
                 break;
             emit history(false);
             return;
@@ -292,7 +292,10 @@ void IRCInput::getHistory(bool up)
         // increment the line counter
         lineNum++;
         // if we are past the end of the list, go to the last entry
-        if(lineNum==historyList.count()) lineNum--;
+        if (lineNum==historyList.count()) {
+            lineNum--;
+            return;
+        }
     }
     // no, it was cursor down
     else
