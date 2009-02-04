@@ -26,13 +26,12 @@ class DCC_Config : public QWidget, private Ui::DCC_ConfigUI
         DCC_Config(QWidget* parent, const char* name);
         ~DCC_Config();
 
-    public slots:
-        virtual void show();
-
-
     protected slots:
         virtual void languageChange();
         void dccMethodChanged(int index);
+
+    protected:
+        virtual void showEvent(QShowEvent *event);
 };
 
 #endif

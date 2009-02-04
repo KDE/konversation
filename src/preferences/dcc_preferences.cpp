@@ -30,9 +30,9 @@ DCC_Config::DCC_Config(QWidget *parent, const char* name) :
 
 }
 
-void DCC_Config::show()
+void DCC_Config::showEvent(QShowEvent *event)
 {
-    QWidget::show();
+    QWidget::showEvent(event);
 
     kcfg_DccSpecificOwnIp->setEnabled(kcfg_DccMethodToGetOwnIp->currentIndex() == 2);
 }
