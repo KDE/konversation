@@ -26,6 +26,7 @@
 #include <kapplication.h>
 #include <kmessagebox.h>
 #include <ktoolinvocation.h>
+#include <k3process.h>
 
 namespace Konversation
 {
@@ -489,7 +490,7 @@ namespace Konversation
             }
             else
             {
-                message = i18n("Some of the contacts (%1) that you have selected are not associated with addressbook contacts, and some of the contacts (%2) do not have an email address associated with them.  ",nicksWithoutAddressee.join(", "),nicksWithoutEmails.join(", ")));
+                message = i18n("Some of the contacts (%1) that you have selected are not associated with addressbook contacts, and some of the contacts (%2) do not have an email address associated with them.  ",nicksWithoutAddressee.join(", "),nicksWithoutEmails.join(", "));
                 message += i18n("You can right click on a contact, and choose to edit the Addressbook Associations to link them to a contact in your addressbook, and choose to edit the addressbook contact, adding an email for them.");
             }
             if(nicksWithEmails.isEmpty())
