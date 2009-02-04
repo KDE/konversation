@@ -33,8 +33,9 @@ Kopete    (c) 2002-2004 by the Kopete developers  <kopete-devel@kde.org>
 #include <kdebug.h>
 #include <kabc/addressbook.h>
 
+#include "ui_linkaddressbookui_base.h"
+
 class Q3CheckListItem;
-class LinkAddressbookUI_Base;
 
 class LinkAddressbookUI : public KDialog
 {
@@ -51,7 +52,7 @@ class LinkAddressbookUI : public KDialog
         QString m_servername;
         QString m_servergroup;
         QString m_suggested_realname;
-        LinkAddressbookUI_Base* m_mainWidget;
+        Ui::LinkAddressbookUI_Base m_ui;
 
     protected slots:
         virtual void slotOk();

@@ -187,7 +187,7 @@ set(linkaddressbook_SRCS
     linkaddressbook/addresseeitem.cpp
 )
 
-kde4_add_ui3_files(linkaddressbook_SRCS
+kde4_add_ui_files(linkaddressbook_SRCS
     linkaddressbook/linkaddressbookui_base.ui
 )
 
