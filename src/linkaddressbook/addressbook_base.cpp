@@ -78,7 +78,7 @@ namespace Konversation
             lnick_servergroup = lnick + QChar(0xE120) + servergroup.toLower();
 
         QString lit;
-        QStringList addresses = QStringList::split( QChar( 0xE000 ), addressee.custom("messaging/irc", "All") );
+        QStringList addresses = addressee.custom("messaging/irc", "All").split(QChar(0xE000), QString::SkipEmptyParts);
         QStringList::iterator end = addresses.end();
         for ( QStringList::iterator it = addresses.begin(); it != end; ++it )
         {
@@ -106,7 +106,7 @@ namespace Konversation
         QString lservername = servername.toLower();
         QString lservergroup = servergroup.toLower();
 
-        QStringList addresses = QStringList::split( QChar( 0xE000 ), addressee.custom("messaging/irc", "All") );
+        QStringList addresses = addressee.custom("messaging/irc", "All").split(QChar(0xE000), QString::SkipEmptyParts);
         QStringList::iterator end = addresses.end();
         for ( QStringList::iterator it = addresses.begin(); it != end; ++it )
         {
@@ -125,7 +125,7 @@ namespace Konversation
     bool AddressbookBase::hasNick(const KABC::Addressee &addressee, const QString &nick_server)
     {
         QString lnick_server = nick_server.toLower();
-        QStringList addresses = QStringList::split( QChar( 0xE000 ), addressee.custom("messaging/irc", "All") );
+        QStringList addresses = addressee.custom("messaging/irc", "All").split(QChar(0xE000), QString::SkipEmptyParts);
         QStringList::iterator end = addresses.end();
         for ( QStringList::iterator it = addresses.begin(); it != end; ++it )
         {
@@ -145,7 +145,7 @@ namespace Konversation
             return nickInfo->getNickname();
         //No online nickinfo - not connected to server maybe.  just return the first nick.
 
-        QStringList addresses = QStringList::split( QChar( 0xE000 ), addressee.custom("messaging/irc", "All") );
+        QStringList addresses = addressee.custom("messaging/irc", "All").split(QChar(0xE000), QString::SkipEmptyParts);
         if(!addresses.empty())
             return addresses.first();
         //No irc nicks- nothing left to try - return null
@@ -155,7 +155,7 @@ namespace Konversation
     NickInfoPtr AddressbookBase::getNickInfo(const KABC::Addressee &addressee)
     {
         NickInfoPtr lastNickInfo;
-        QStringList addresses = QStringList::split( QChar( 0xE000 ), addressee.custom("messaging/irc", "All") );
+        QStringList addresses = addressee.custom("messaging/irc", "All").split(QChar(0xE000), QString::SkipEmptyParts);
         QStringList::iterator end = addresses.end();
         for ( QStringList::iterator it = addresses.begin(); it != end; ++it )
         {
@@ -205,7 +205,7 @@ namespace Konversation
             kDebug() << "Ignoring unassociation command for empty addressee for nick " << ircnick << endl;
         }
         QString lit;
-        QStringList addresses = QStringList::split( QChar( 0xE000 ), addressee.custom("messaging/irc", "All") );
+        QStringList addresses = addressee.custom("messaging/irc", "All").split(QChar(0xE000), QString::SkipEmptyParts);
         QStringList::iterator it = addresses.begin();
         while(it != addresses.end())
         {
@@ -249,7 +249,7 @@ namespace Konversation
             nick_server += QChar(0xE120) + servergroup;
         else if(!servername.isEmpty())
             nick_server += QChar(0xE120) + servername;
-        QStringList addresses = QStringList::split( QChar( 0xE000 ), addressee.custom("messaging/irc", "All") );
+        QStringList addresses = addressee.custom("messaging/irc", "All").split(QChar(0xE000), QString::SkipEmptyParts);
         //For sanity reasons, don't let the number of irc nicks go above 10.
         //To do this, just remove the irc nick at the end of the list.
         if(addresses.count() >= 10)

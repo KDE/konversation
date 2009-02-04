@@ -95,11 +95,11 @@ void WatchedNicknames_Config::addNetworkBranch(Konversation::ServerGroupSettings
   QMap<int, QStringList>::const_iterator groupIt=notifyList.find(serverGroupList->id());
 
   // get list of nicks for the current group
-  QStringList nicks=groupIt.data();
+  QStringList nicks=groupIt.value();
   // add group to dropdown list
   networkDropdown->insertItem(serverGroupList->name(),0);
   // add nicknames to group branch (reverse order again)
-  for(unsigned int index=nicks.count();index;index--)
+  for(int index=nicks.count();index;index--)
   {
     new K3ListViewItem(groupItem,nicks[index-1]);
   } // for
@@ -136,7 +136,7 @@ void WatchedNicknames_Config::saveSettings()
     } // while
 
     // write nick list to in-memory notify qstringlist
-    notifyList.insert(groupId,QStringList::split(' ',nicks.trimmed()));
+    notifyList.insert(groupId, nicks.trimmed().split(' ', QString::SkipEmptyParts));
     // get next group
     group=group->nextSibling();
   } // while

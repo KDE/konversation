@@ -224,7 +224,7 @@ QString DccTransfer::getNumericalIpText( const QString& ipString )
     QHostAddress ip;
     ip.setAddress( ipString );
 
-    return QString::number( ip.ip4Addr() );
+    return QString::number( ip.toIPv4Address() );
 }
 
 unsigned long DccTransfer::intel( unsigned long value )

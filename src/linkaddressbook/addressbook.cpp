@@ -67,7 +67,7 @@ namespace Konversation
     {
         QStringList contacts;
         for( KABC::AddressBook::Iterator it = addressBook->begin(); it != addressBook->end(); ++it )
-            contacts += QStringList::split( QChar( 0xE000 ), (*it).custom("messaging/irc", "All") );
+            contacts += (*it).custom("messaging/irc", "All").split(QChar(0xE000),  QString::SkipEmptyParts);
         return contacts;
     }
 

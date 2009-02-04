@@ -225,7 +225,7 @@ Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
     nicknameCombobox = new QComboBox(commandLineBox);
     nicknameCombobox->setEditable(true);
     nicknameCombobox->setSizeAdjustPolicy(QComboBox::AdjustToContents);
-    nicknameCombobox->insertStringList(Preferences::nicknameList());
+    nicknameCombobox->addItems(Preferences::nicknameList());
     nicknameCombobox->setWhatsThis(i18n("<qt><p>This shows your current nick, and any alternatives you have set up.  If you select or type in a different nickname, then a request will be sent to the IRC server to change your nick.  If the server allows it, the new nickname will be selected.  If you type in a new nickname, you need to press 'Enter' at the end.</p><p>You can add change the alternative nicknames from the <em>Identities</em> option in the <em>File</em> menu.</p></qt>"));
     oldNick = nicknameCombobox->currentText();
 

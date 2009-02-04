@@ -29,7 +29,7 @@ QString DccCommon::textIpToNumericalIp( const QString& ipString )
     QHostAddress ip;
     ip.setAddress( ipString );
 
-    return QString::number( ip.ip4Addr() );
+    return QString::number( ip.toIPv4Address() );
 }
 
 QString DccCommon::numericalIpToTextIp( const QString& numericalIp )

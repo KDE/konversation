@@ -93,7 +93,7 @@ DccChat::DccChat(QWidget* parent, bool listen, Server* server, const QString& ow
 
         if (action)
         {
-            popup->insertSeparator();
+            popup->addSeparator();
             action->setMenu(popup);
         }
     }
@@ -240,7 +240,7 @@ void DccChat::readData()
         line.append( codec->toUnicode( buffer ) );
         delete[] buffer;
 
-        QStringList lines = QStringList::split( '\n', line );
+        QStringList lines = line.split('\n', QString::SkipEmptyParts);
 
         for( QStringList::iterator itLine = lines.begin() ; itLine != lines.end() ; itLine++ )
         {
@@ -289,7 +289,7 @@ void DccChat::sendDccChatText(const QString& sendLine)
 
     if(!output.isEmpty())
     {
-        QStringList lines = QStringList::split('\n',output);
+        QStringList lines = output.split('\n', QString::SkipEmptyParts);
         // wrap socket into a stream
         Q3TextStream stream(m_dccSocket);
         // init stream props
