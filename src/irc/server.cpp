@@ -3205,7 +3205,7 @@ void Server::startAwayTimer()
 {
     m_awayTime = QDateTime::currentDateTime().toTime_t();
 }
-/*
+
 KABC::Addressee Server::getOfflineNickAddressee(QString& nickname)
 {
     if (m_serverISON)
@@ -3213,7 +3213,7 @@ KABC::Addressee Server::getOfflineNickAddressee(QString& nickname)
     else
         return KABC::Addressee();
 }
-*/
+
 void Server::enableIdentifyMsg(bool enabled)
 {
     m_identifyMsg = enabled;

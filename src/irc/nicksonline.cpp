@@ -21,7 +21,7 @@
 #include "connectionmanager.h"
 #include "images.h"
 #include "query.h"
-//#include "linkaddressbook/linkaddressbookui.h"
+#include "linkaddressbook/linkaddressbookui.h"
 //#include "linkaddressbook/addressbook.h"
 #include "linkaddressbook/nicksonlinetooltip.h"
 #include "mainwindow.h" ////// header renamed
@@ -311,7 +311,7 @@ void NicksOnline::updateServerOnlineList(Server* servr)
             // Which server did NickInfo come from?
             Server* server=nickInfo->getServer();
             // Get addressbook entry (if any) for the nick.
-            KABC::Addressee addressee;// = nickInfo->getAddressee();
+            KABC::Addressee addressee = nickInfo->getAddressee();
             // Construct additional information string for nick.
             bool needWhois = false;
             QString nickAdditionalInfo = getNickAdditionalInfo(nickInfo, addressee, needWhois);
@@ -400,12 +400,11 @@ void NicksOnline::updateServerOnlineList(Server* servr)
             Q3ListViewItem* nickRoot = findItemChild(offlineRoot, nickname, NicksOnlineItem::NicknameItem);
             if (!nickRoot) nickRoot = new NicksOnlineItem(NicksOnlineItem::NicknameItem,offlineRoot, nickname);
             nickRoot->setText(nlvcServerName, serverName);
-/*
             // Get addressbook entry for the nick.
             KABC::Addressee addressee = servr->getOfflineNickAddressee(nickname);
             // Format additional information for the nick.
             bool needWhois = false;
-            QString nickAdditionalInfo = getNickAdditionalInfo(0, addressee, needWhois);
+            QString nickAdditionalInfo = getNickAdditionalInfo(NickInfoPtr(), addressee, needWhois);
             nickRoot->setText(nlvcAdditionalInfo, nickAdditionalInfo);
             // Set Kabc icon if the nick is associated with an addressbook entry.
             if (!addressee.isEmpty())
@@ -414,7 +413,6 @@ void NicksOnline::updateServerOnlineList(Server* servr)
             else
                 nickRoot->setPixmap(nlvcKabc, m_kabcIconSet.pixmap(
                     QIcon::Small, QIcon::Disabled, QIcon::Off));
-*/
         }
     }
     // Erase nicks no longer being watched.
@@ -668,7 +666,6 @@ void NicksOnline::doCommand(int id)
 
     // Get NickInfo object corresponding to the nickname.
     NickInfoPtr nickInfo = server->getNickInfo(nickname);
-/*
     // Get addressbook entry for the nick.
     KABC::Addressee addressee;
 
@@ -680,17 +677,15 @@ void NicksOnline::doCommand(int id)
     {
         addressee = server->getOfflineNickAddressee(nickname);
     }
-*/
     switch(id)
     {
         case ciSendEmail:
-            //Konversation::Addressbook::self()->sendEmail(addressee);
+            Konversation::Addressbook::self()->sendEmail(addressee);
             return;                               //no need to refresh item
         case ciAddressbookEdit:
-            //Konversation::Addressbook::self()->editAddressee(addressee.uid());
+            Konversation::Addressbook::self()->editAddressee(addressee.uid());
             return;                               //no need to refresh item - nickinfo changed will be called anyway.
         case ciAddressbookChange:
-            /*
             if(nickInfo)
             {
                 nickInfo->showLinkAddressbookUI();
@@ -700,12 +695,10 @@ void NicksOnline::doCommand(int id)
                 LinkAddressbookUI *linkaddressbookui = new LinkAddressbookUI(server->getViewContainer()->getWindow(), NULL, nickname, server->getServerName(), server->getDisplayName(), addressee.realName());
                 linkaddressbookui->show();
             }
-            */
             break;
         case ciAddressbookNew:
         case ciAddressbookDelete:
         {
-            /*
             Konversation::Addressbook *addressbook = Konversation::Addressbook::self();
 
             if(addressbook && addressbook->getAndCheckTicket())
@@ -734,7 +727,6 @@ void NicksOnline::doCommand(int id)
                     }
                 }
             }
-            */
             break;
         }
         case ciJoinChannel:
@@ -778,14 +770,14 @@ int NicksOnline::getNickAddressbookState(Q3ListViewItem* item)
         NickInfoPtr nickInfo = server->getNickInfo(nickname);
         if (nickInfo)
         {
-            if (1)//nickInfo->getAddressee().isEmpty())
+            if (nickInfo->getAddressee().isEmpty())
                 nickState = nsNoAddress;
             else
                 nickState = nsHasAddress;
         }
         else
         {
-            if (1)//server->getOfflineNickAddressee(nickname).isEmpty())
+            if (server->getOfflineNickAddressee(nickname).isEmpty())
                 nickState = nsNoAddress;
             else
                 nickState = nsHasAddress;
@@ -948,7 +940,7 @@ void NicksOnline::refreshItem(Q3ListViewItem* item)
             NickInfoPtr nickInfo = server->getNickInfo(nickname);
             KABC::Addressee addressee;
             int nickState = nsNoAddress;
-            /*if (nickInfo)
+            if (nickInfo)
                 addressee = nickInfo->getAddressee();
             else
                 addressee = server->getOfflineNickAddressee(nickname);
@@ -960,17 +952,17 @@ void NicksOnline::refreshItem(Q3ListViewItem* item)
                 case nsNotANick:
                     break;
                 case nsNoAddress:
-                {*/
+                {
                     item->setPixmap(nlvcKabc, m_kabcIconSet.pixmap(
                         QIcon::Small, QIcon::Disabled, QIcon::Off));
-                    /*break;
+                    break;
                 }
                 case nsHasAddress:
                 {
                     item->setPixmap(nlvcKabc, m_kabcIconSet.pixmap(
                         QIcon::Small, QIcon::Normal, QIcon::On)); break;
                 }
-            }*/
+            }
             QString nickAdditionalInfo;
             bool needWhois = false;
             if (nickInfo)

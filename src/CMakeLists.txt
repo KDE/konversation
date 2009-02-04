@@ -182,7 +182,20 @@ set(dcc_SRCS
 
 kde4_add_ui3_files(dcc_SRCS dcc/transferdetailedinfopanelui.ui)
 
-set (completed_SRCS ${core_SRCS}  ${irc_SRCS} ${viewer_SRCS} ${prefs_SRCS} ${dcc_SRCS})
+set(linkaddressbook_SRCS
+    linkaddressbook/linkaddressbookui.cpp
+    linkaddressbook/addressbook_base.cpp
+    linkaddressbook/addressbook.cpp
+    #linkaddressbook/nicklisttooltip.cpp
+    #linkaddressbook/nicksonlinetooltip.cpp
+    linkaddressbook/addresseeitem.cpp
+)
+
+kde4_add_ui3_files(linkaddressbook_SRCS
+    linkaddressbook/linkaddressbookui_base.ui
+)
+
+set (completed_SRCS ${core_SRCS}  ${irc_SRCS} ${viewer_SRCS} ${prefs_SRCS} ${dcc_SRCS} ${linkaddressbook_SRCS})
 set (konvi_SRCS ${completed_SRCS})
 
 kde4_add_ui3_files(konvi_SRCS queuetunerbase.ui)

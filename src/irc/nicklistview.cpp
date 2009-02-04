@@ -15,7 +15,7 @@
 #include "nicklistview.h"
 #include "application.h" ////// header renamed
 #include "images.h"
-//#include "linkaddressbook/addressbook.h"
+#include "linkaddressbook/addressbook.h"
 
 #include <kmenu.h>
 #include <klocale.h>
@@ -39,10 +39,8 @@ K3ListView(parent)
     modes->setObjectName("nicklist_modes_context_submenu");
     kickban=new KMenu(this);
     kickban->setObjectName("nicklist_kick_ban_context_submenu");
-    /*
     addressbook= new KMenu(this);
     addressbook->setObjectName("nicklist_addressbook_context_submenu");
-    */
     setAcceptDrops(true);
     setDropHighlighter(true);
     setDropVisualizer(false);
@@ -105,17 +103,15 @@ K3ListView(parent)
 
         popup->addSeparator();
 
-        /*
         if (addressbook)
             popup->insertItem(i18n("Addressbook Associations"), addressbook, Konversation::AddressbookSub);
-        */
 
         popup->insertItem(i18n("Add to Watched Nicks"), Konversation::AddNotify);
 
         connect (popup, SIGNAL(activated(int)), this, SIGNAL(popupCommand(int)));
         connect (modes, SIGNAL(activated(int)), this, SIGNAL(popupCommand(int)));
         connect (kickban, SIGNAL(activated(int)), this, SIGNAL(popupCommand(int)));
-        //connect (addressbook, SIGNAL(activated(int)), this, SIGNAL(popupCommand(int)));
+        connect (addressbook, SIGNAL(activated(int)), this, SIGNAL(popupCommand(int)));
 
     }
     else
@@ -264,7 +260,7 @@ void NickListView::insertAssociationSubMenu()
     bool existingAssociation = false;
     bool noAssociation = false;
     bool emailAddress = false;
-/*
+
     addressbook->clear();
 
     ChannelNickList nickList=channel->getSelectedChannelNicks();
@@ -303,7 +299,7 @@ void NickListView::insertAssociationSubMenu()
 
     if(existingAssociation)
         addressbook->insertItem(SmallIcon("edit-delete"), i18n("Delete Association"), Konversation::AddressbookDelete);
-*/
+
     if(!emailAddress)
         popup->setItemEnabled(Konversation::SendEmail, false);
     else

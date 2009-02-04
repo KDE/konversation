@@ -470,7 +470,6 @@ void Channel::popupCommand(int id)
 
     switch(id)
     {
-#if 0
         case Konversation::AddressbookEdit:
         {
             ChannelNickList nickList=getSelectedChannelNicks();
@@ -529,7 +528,6 @@ void Channel::popupCommand(int id)
         case Konversation::AddressbookSub:
             kDebug() << "sub called" << endl;
             break;
-#endif
         case Konversation::GiveOp:
             pattern="MODE %c +o %u";
             raw=true;

@@ -66,7 +66,7 @@ class NickListView : public K3ListView
         KMenu* popup;
         KMenu* modes;
         KMenu* kickban;
-        //KMenu* addressbook;
+        KMenu* addressbook;
         Channel *channel;
         QTimer *m_resortTimer;
 
