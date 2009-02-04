@@ -79,7 +79,7 @@ Preferences::Preferences()
     serverGroup->addServer(server);
     serverGroup->setIdentityId(mIdentity->id());
     Konversation::ChannelSettings channel;
-    channel.setName("#kde");
+    channel.setName("#konversation");
     serverGroup->addChannel(channel);
     serverGroup->setExpanded(false);
     addServerGroup(serverGroup);

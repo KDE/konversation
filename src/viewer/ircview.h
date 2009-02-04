@@ -156,7 +156,7 @@ class IRCView : public QPlainTextEdit
         //void updateScrollBarPos();
 
     protected slots:
-        //void highlightedSlot(const QString& link);
+        void highlightedSlot(const QString& link);
         //void saveLinkAs(const QString& url);
 
     protected:
@@ -168,9 +168,9 @@ class IRCView : public QPlainTextEdit
 
         //virtual void contentsDragMoveEvent(QDragMoveEvent* e);
         //virtual void contentsDropEvent(QDropEvent* e);
-        //virtual void contentsMouseReleaseEvent(QMouseEvent* ev);
-        //virtual void contentsMousePressEvent(QMouseEvent* ev);
-        //virtual void contentsMouseMoveEvent(QMouseEvent* ev);
+        virtual void mouseReleaseEvent(QMouseEvent* ev);
+        virtual void mousePressEvent(QMouseEvent* ev);
+        virtual void mouseMoveEvent(QMouseEvent* ev);
         //virtual void contentsContextMenuEvent(QContextMenuEvent* ev);
 
         //virtual void keyPressEvent(QKeyEvent* e);
@@ -233,6 +233,7 @@ class IRCView : public QPlainTextEdit
         int copyUrlMenuSeparator; ///< stores the ID of the separator
         bool m_copyUrlMenu; ///<the menu we're popping up, is it for copying URI?
         QString m_highlightedURL;   // the URL we're currently hovering on with the mouse
+        QTextCharFormat m_fmtUnderMouse;
         KMenu* m_nickPopup; ///<menu to show when context-click on a nickname
         KMenu* m_channelPopup; ///<menu to show when context-click on a channel
         KMenu* m_modes; ///< the submenu for mode changes on a nickname menu

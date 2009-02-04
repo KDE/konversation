@@ -11,18 +11,19 @@
   Copyright (C) 2002 Dario Abatianni <eisfuchs@tigress.com>
   Copyright (C) 2005-2007 Peter Simonsson <psn@linux.se>
   Copyright (C) 2006-2008 Eike Hein <hein@kde.org>
+  Copyright (C) 2004-2009 Eli Mackenzie <argonel@gmail.com>
 */
 
 #include "ircview.h"
 #include "channel.h"
 #include "dcc/chat.h"
-#include "application.h" ////// header renamed
-#include "mainwindow.h" ////// header renamed
+#include "application.h"
+#include "mainwindow.h"
 #include "viewcontainer.h"
 #include "connectionmanager.h"
 #include "highlight.h"
 #include "server.h"
-#include "sound.h" ////// header renamed
+#include "sound.h"
 #include "common.h"
 #include "emoticons.h"
 #include "notificationhandler.h"
@@ -60,6 +61,7 @@
 #include <kauthorized.h>
 #include <KActionCollection>
 #include <KToggleAction>
+#include <KToolInvocation>
 
 class QPixmap;
 class QDropEvent;
@@ -72,7 +74,7 @@ class Server;
 class ChatWindow;
 class SearchBar;
 
-#if chew
+#if 0
 //IRCView::getPopup() const
 //IRCView::searchNext(bool)
 IRCView::clear()
@@ -87,6 +89,7 @@ IRCView::clear()
 //IRCView::setupChannelPopupMenu()
 #endif
 
+static QObjectList findByName(QObject *object, QString className, bool findAll=false);
 
 IRCView::IRCView(QWidget* parent, Server* newServer) : QPlainTextEdit(parent)
 {
@@ -116,7 +119,8 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : QPlainTextEdit(parent)
     setFocusPolicy(Qt::ClickFocus);
     setReadOnly(true);
     viewport()->setCursor(Qt::ArrowCursor);
-
+    setTextInteractionFlags(Qt::TextBrowserInteraction);
+    viewport()->setMouseTracking(true);
 
 //     // set basic style sheet for <p> to make paragraph spacing possible
 //     Q3StyleSheet* sheet=new Q3StyleSheet(this,"ircview_style_sheet");
@@ -812,3 +816,239 @@ void IRCView::setupNickPopupMenu() { m_nickPopup = 0; }
 void IRCView::setupQueryPopupMenu() { m_nickPopup = 0; }
 
 void IRCView::setupChannelPopupMenu() { m_nickPopup = 0; }
+
+
+// Mouse tracking
+
+// HACK -- QPlainTextEdit doesn't provide an implementation of hitTest that QAbstractTextDocumentLayout::anchorAt can call, nor does it override QTextControl::mouseMoveEvent in a useful way, so lets track the mouse cursor
+
+/* //Version from konvi3 for reference
+void IRCView::contentsMouseMoveEvent(QMouseEvent* ev)
+{
+    if (m_mousePressed && (m_pressPosition - ev->pos()).manhattanLength() > QApplication::startDragDistance()) {
+        m_mousePressed = false;
+        removeSelection();
+        KURL ux = KURL::fromPathOrURL(m_urlToDrag);
+
+        if (m_server && m_urlToDrag.startsWith("##")) {
+            //FIXME consistent IRC URL serialization
+            ux = QString("irc://%1:%2/%3").arg(m_server->getServerName()).arg(m_server->getPort()).arg(m_urlToDrag.mid(2));
+        }
+        else if (m_urlToDrag.startsWith("#"))
+            ux = m_urlToDrag.mid(1);
+        KURLDrag* u = new KURLDrag(ux, viewport());
+        u->drag();
+        return;
+    }
+    KTextBrowser::contentsMouseMoveEvent(ev);
+}
+*/
+void IRCView::mouseMoveEvent(QMouseEvent *e)
+{
+    const QPoint pos = e->pos();
+    QTextCharFormat fmt=cursorForPosition(pos).charFormat();
+    if (m_fmtUnderMouse != fmt)
+    {
+        m_fmtUnderMouse = fmt;
+        if (fmt.isAnchor())
+            m_highlightedURL = fmt.anchorHref();
+        else
+            m_highlightedURL=QString();
+    }
+    highlightedSlot(m_highlightedURL);
+    //it doesn't seem to do anything we're overly concerned about
+    QPlainTextEdit::mouseMoveEvent(e);
+}
+
+void IRCView::mousePressEvent(QMouseEvent* ev)
+{
+    if (ev->button() == Qt::LeftButton)
+    {
+        m_urlToDrag = m_highlightedURL;
+
+        if (!m_urlToDrag.isNull())
+        {
+            m_mousePressed = true;
+            m_pressPosition = ev->pos();
+            return;
+        }
+    }
+
+    QPlainTextEdit::mousePressEvent(ev);
+}
+
+void IRCView::mouseReleaseEvent(QMouseEvent *ev)
+{
+    /*
+    if (ev->button() == Qt::MidButton)
+    {
+        if(m_copyUrlMenu)
+        {
+            openLink(m_urlToCopy,true);
+            return;
+        }
+        else
+        {
+            emit textPasted(true);
+            return;
+        }
+    }
+    */
+    if (ev->button() == Qt::LeftButton)
+    {
+        if (m_mousePressed && !m_highlightedURL.isNull())
+        {
+            if (ev->state() == (Qt::LeftButton|Qt::ShiftButton))
+                ;//saveLinkAs(m_highlightedURL);
+            else
+                openLink(m_highlightedURL);
+
+            m_mousePressed = false;
+            return;
+        }
+    }
+
+    QPlainTextEdit::mouseReleaseEvent(ev);
+}
+
+// FIXME do we still care about newtab? looks like konqi has lots of config now..
+void IRCView::openLink(const QString& url, bool)
+{
+    if (!url.isEmpty() && !url.startsWith("#"))
+    {
+        if (url.startsWith("irc://"))
+        {
+            KonversationApplication* konvApp = KonversationApplication::instance();
+            konvApp->getConnectionManager()->connectTo(Konversation::SilentlyReuseConnection, url);
+        }
+        else if (!Preferences::self()->useCustomBrowser() || url.startsWith("mailto:"))
+        {
+            if (url.startsWith("mailto:"))
+                KToolInvocation::invokeMailer(KUrl(url));
+            else
+                KToolInvocation::invokeBrowser(url);
+        }
+        else
+        {
+            QString cmd = Preferences::self()->webBrowserCmd();
+            cmd.replace("%u", url);
+            KProcess *proc = new KProcess;
+            QStringList cmdAndArgs = KShell::splitArgs(cmd);
+            *proc << cmdAndArgs;
+            //      This code will also work, but starts an extra shell process.
+            //      kdDebug() << "IRCView::urlClickSlot(): cmd = " << cmd << endl;
+            //      *proc << cmd;
+            //      proc->setUseShell(true);
+            proc->startDetached();
+            delete proc;
+        }
+    }
+    //FIXME: Don't do channel links in DCC Chats to begin with since they don't have a server.
+    else if (url.startsWith("##") && m_server && m_server->isConnected())
+    {
+        QString channel(url);
+        channel.replace("##", "#");
+        m_server->sendJoinCommand(channel);
+    }
+    //FIXME: Don't do user links in DCC Chats to begin with since they don't have a server.
+    else if (url.startsWith("#") && m_server && m_server->isConnected()) 
+    {
+        QString recipient(url);
+        recipient.remove("#");
+        NickInfoPtr nickInfo = m_server->obtainNickInfo(recipient);
+        m_server->addQuery(nickInfo, true /*we initiated*/);
+    }
+}
+
+void IRCView::highlightedSlot(const QString& _link)
+{
+    QString link = _link;
+    // HACK Replace % with \x03 in the url to keep Qt from doing stupid things
+    link = link.replace ('\x03', "%");
+    //Hack to handle the fact that we get a decoded url
+    //FIXME someone who knows what it looks like when we get a decoded url can reenable this if necessary...
+    //link = KUrl(link).url();
+
+    // HACK:Use space as a placeholder for \ as Qt tries to be clever and does a replace to / in urls in QTextEdit
+    if(link.startsWith("#"))
+    {
+        link = link.replace(' ', "\\");
+    }
+
+    //we just saw this a second ago.  no need to reemit.
+    if (link == m_lastStatusText && !link.isEmpty())
+        return;
+
+    // remember current URL to overcome link clicking problems in QTextBrowser
+    //m_highlightedURL = link;
+
+    if (link.isEmpty())
+    {
+        if (!m_lastStatusText.isEmpty()) 
+        {
+            emit clearStatusBarTempText();
+            m_lastStatusText = QString();
+        }
+    } else
+    {
+        m_lastStatusText = link;
+    }
+
+    if(!link.startsWith("#"))
+    {
+        m_isOnNick = false;
+        m_isOnChannel = false;
+
+        if (!link.isEmpty()) {
+            //link therefore != m_lastStatusText  so emit with this new text
+            emit setStatusBarTempText(link);
+        }
+        if (link.isEmpty() && m_copyUrlMenu)
+        {
+            m_popup->removeItem(CopyUrl);
+            m_popup->removeItem(Bookmark);
+            m_popup->removeItem(SaveAs);
+            m_popup->setItemVisible(copyUrlMenuSeparator, false);
+            m_copyUrlMenu = false;
+
+        }
+        else if (!link.isEmpty() && !m_copyUrlMenu)
+        {
+            m_popup->setItemVisible(copyUrlMenuSeparator, true);
+            m_popup->insertItem(SmallIcon("editcopy"), i18n("Copy URL to Clipboard"), CopyUrl, 1);
+            m_popup->insertItem(SmallIcon("bookmark"), i18n("Add to Bookmarks"), Bookmark, 2);
+            m_popup->insertItem(SmallIcon("filesaveas"), i18n("Save Link As..."), SaveAs, 3);
+            m_copyUrlMenu = true;
+            m_urlToCopy = link;
+        }
+    }
+    else if (link.startsWith("#") && !link.startsWith("##"))
+    {
+        m_currentNick = link.mid(1);
+        //FIXME how are menu titles done now? /me is too tired
+        //m_nickPopup->changeTitle(m_nickPopupId,m_currentNick);
+        m_isOnNick = true;
+        emit setStatusBarTempText(i18n("Open a query with %1").arg(m_currentNick));
+    }
+    else
+    {
+        // link.startsWith("##")
+        m_currentChannel = link.mid(1);
+
+        QString prettyId = m_currentChannel;
+
+        if (prettyId.length()>15)
+        {
+            prettyId.truncate(15);
+            prettyId.append("...");
+        }
+
+        //m_channelPopup->changeTitle(m_channelPopupId,prettyId);
+        m_isOnChannel = true;
+        emit setStatusBarTempText(i18n("Join the channel %1").arg(m_currentChannel));
+    }
+}
+
+// **WARNING** the selectionChange signal comes BEFORE the selection has actually been changed, hook cursorPositionChanged too
+//void IRCView::mouseDoubleClickEvent(QEvent *e, Qt::MouseButton button, const QPointF &pos)
+
