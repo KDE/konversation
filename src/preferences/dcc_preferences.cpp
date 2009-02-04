@@ -24,7 +24,8 @@ DCC_Config::DCC_Config(QWidget *parent, const char* name) :
     setupUi(this);
 
     languageChange();
-    connect(kcfg_DccMethodToGetOwnIp, SIGNAL(activated(int)), this, SLOT(dccMethodChanged(int)));          dccMethodChanged(kcfg_DccMethodToGetOwnIp->currentItem()); 
+    connect(kcfg_DccMethodToGetOwnIp, SIGNAL(activated(int)), this, SLOT(dccMethodChanged(int)));
+    dccMethodChanged(kcfg_DccMethodToGetOwnIp->currentIndex()); 
 
 
 }
@@ -33,7 +34,7 @@ void DCC_Config::show()
 {
     QWidget::show();
 
-    kcfg_DccSpecificOwnIp->setEnabled(kcfg_DccMethodToGetOwnIp->currentItem() == 2);
+    kcfg_DccSpecificOwnIp->setEnabled(kcfg_DccMethodToGetOwnIp->currentIndex() == 2);
 }
 
 void DCC_Config::dccMethodChanged(int index)
@@ -44,9 +45,9 @@ void DCC_Config::dccMethodChanged(int index)
 void DCC_Config::languageChange()
 {
     kcfg_DccMethodToGetOwnIp->clear();
-    kcfg_DccMethodToGetOwnIp->insertItem(i18n("Network Interface"));
-    kcfg_DccMethodToGetOwnIp->insertItem(i18n("Reply From IRC Server"));
-    kcfg_DccMethodToGetOwnIp->insertItem(i18n("Specify Manually"));
+    kcfg_DccMethodToGetOwnIp->addItem(i18n("Network Interface"));
+    kcfg_DccMethodToGetOwnIp->addItem(i18n("Reply From IRC Server"));
+    kcfg_DccMethodToGetOwnIp->addItem(i18n("Specify Manually"));
 
 }
 

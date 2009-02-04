@@ -116,12 +116,17 @@ void DccTransferPanel::initGUI()
     // convenience, undeffed below again to avoid name clashes
     #define icon(s) KIconLoader::global()->loadIconSet( s,KIconLoader::Small )
 
-    m_buttonAccept = new QPushButton(KIcon("media-playback-start"), i18n("Accept"),    buttonsBox, "start_dcc");
-    m_buttonAbort  = new QPushButton(icon("stop"),        i18n("Abort"),  buttonsBox, "abort_dcc");
-    m_buttonClear  = new QPushButton(icon("editdelete"),  i18n("Clear"),  buttonsBox, "clear_dcc");
-    m_buttonOpen   = new QPushButton(KIcon("system-run"),          i18n("Open File"), buttonsBox, "open_dcc_file");
-    m_buttonDetail = new QPushButton(KIcon("dialog-information"),  i18n("Details"),   buttonsBox, "detail_dcc");
-    m_buttonDetail->setToggleButton( true );
+    m_buttonAccept = new QPushButton(KIcon("media-playback-start"), i18n("Accept"),    buttonsBox);
+    m_buttonAccept->setObjectName("start_dcc");
+    m_buttonAbort  = new QPushButton(icon("stop"),                  i18n("Abort"),     buttonsBox);
+    m_buttonAbort->setObjectName("abort_dcc");
+    m_buttonClear  = new QPushButton(icon("editdelete"),            i18n("Clear"),     buttonsBox);
+    m_buttonClear->setObjectName("clear_dcc");
+    m_buttonOpen   = new QPushButton(KIcon("system-run"),           i18n("Open File"), buttonsBox);
+    m_buttonOpen->setObjectName("open_dcc_file");
+    m_buttonDetail = new QPushButton(KIcon("dialog-information"),   i18n("Details"),   buttonsBox);
+    m_buttonDetail->setObjectName("detail_dcc");
+    m_buttonDetail->setCheckable(true);
 
     m_buttonAccept->setStatusTip(i18n("Start receiving"));
     m_buttonAbort->setStatusTip(i18n("Abort the transfer(s)"));
@@ -134,7 +139,7 @@ void DccTransferPanel::initGUI()
     connect( m_buttonOpen,   SIGNAL(clicked()), this, SLOT(runDcc()) );
     //connect( m_buttonDetail, SIGNAL(clicked()), this, SLOT(openDetail()) );
     connect( m_buttonDetail, SIGNAL(toggled(bool)), m_detailPanel, SLOT(setShown(bool)) );
-    m_buttonDetail->setOn(true);
+    m_buttonDetail->setChecked(true);
 
 
     // popup menu
@@ -142,14 +147,14 @@ void DccTransferPanel::initGUI()
     m_popup = new KMenu(this);
     m_popup->insertItem(                         i18n("&Select All Items"),           Popup::SelectAll);
     m_popup->insertItem(                         i18n("S&elect All Completed Items"), Popup::SelectAllCompleted);
-    m_popup->insertSeparator();                   // -----
+    m_popup->addSeparator();                           // -----
     m_popup->insertItem(KIcon("media-playback-start"), i18n("&Accept"),                     Popup::Accept);
     m_popup->insertItem(icon("stop"),            i18n("A&bort"),                      Popup::Abort);
-    m_popup->insertSeparator();                   // -----
+    m_popup->addSeparator();                           // -----
     // FIXME: make it neat
     m_popup->insertItem(KIcon("edit-redo"),           i18n("Resend"),                      Popup::Resend);
     m_popup->insertItem(icon("editdelete"),      i18n("&Clear"),                      Popup::Clear);
-    m_popup->insertSeparator();                   // -----
+    m_popup->addSeparator();                           // -----
     m_popup->insertItem(KIcon("system-run"),          i18n("&Open File"),                  Popup::Open);
     m_popup->insertItem(KIcon("dialog-information"),  i18n("File &Information"),           Popup::Info);
 

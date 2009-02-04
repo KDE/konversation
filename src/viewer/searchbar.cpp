@@ -46,7 +46,6 @@ SearchBar::SearchBar(QWidget* parent)
     m_fromCursor = false;
 
     setFocusProxy(m_searchEdit);
-    KIconLoader* iconLoader = KIconLoader::global();
     m_closeButton->setIcon(KIcon("process-stop"));
     m_findNextButton->setIcon(KIcon("arrow-up"));
     m_findPreviousButton->setIcon(KIcon("arrow-down"));
@@ -54,6 +53,7 @@ SearchBar::SearchBar(QWidget* parent)
     m_statusTextLabel->hide();
 
     m_timer = new QTimer(this);
+    m_timer->setSingleShot(true);
 
     Q3Accel* accel = new Q3Accel(this);
     accel->connectItem( accel->insertItem(Qt::Key_Escape), this, SLOT(hide()));
@@ -73,7 +73,7 @@ SearchBar::SearchBar(QWidget* parent)
     m_optionsMenu->insertItem(i18n("Whole Words Only"), this, SLOT(toggleWholeWords()), 0, WHOLE_WORDS_ONLY_MENU);
     m_optionsMenu->insertItem(i18n("From Cursor"), this, SLOT(toggleFromCursor()), 0, FROM_CURSOR_MENU);
 
-    m_optionsButton->setPopup(m_optionsMenu);
+    m_optionsButton->setMenu(m_optionsMenu);
 }
 
 SearchBar::~SearchBar()
@@ -107,7 +107,7 @@ void SearchBar::hide()
 
 void SearchBar::slotTextChanged()
 {
-    m_timer->start(50, true);
+    m_timer->start(50);
 }
 
 void SearchBar::slotFind()
@@ -230,7 +230,7 @@ void SearchBar::toggleFromCursor()
 
 void SearchBar::showOptionsMenu()
 {
-  m_optionsButton->openPopup();
+  m_optionsButton->showMenu();
 }
 
 // #include "./viewer/searchbar.moc"

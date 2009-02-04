@@ -112,9 +112,9 @@ void Autoreplace_Config::setAutoreplaceListView(const QStringList &autoreplaceLi
     // Regular expression?
     if(definition.section(',',0,0)=="1") newItem->setOn(true);
     // direction input/output/both
-    if(definition.section(',',1,1)=="i") newItem->setText(1,directionCombo->text(DIRECTION_INPUT));
-    else if(definition.section(',',1,1)=="o") newItem->setText(1,directionCombo->text(DIRECTION_OUTPUT));
-    else if(definition.section(',',1,1)=="io") newItem->setText(1,directionCombo->text(DIRECTION_BOTH));
+    if(definition.section(',',1,1)=="i") newItem->setText(1,directionCombo->itemText(DIRECTION_INPUT));
+    else if(definition.section(',',1,1)=="o") newItem->setText(1,directionCombo->itemText(DIRECTION_OUTPUT));
+    else if(definition.section(',',1,1)=="io") newItem->setText(1,directionCombo->itemText(DIRECTION_BOTH));
     // pattern
     newItem->setText(2,definition.section(',',2,2));
     // replacement
@@ -144,7 +144,7 @@ void Autoreplace_Config::saveSettings()
   if(newList.count())
   {
     // go through all patterns and save them into the configuration
-    for(unsigned int index=0;index<newList.count();index++)
+    for(int index=0;index<newList.count();index++)
     {
       // write the current entry's pattern and replacement (adds a "#" to preserve blanks at the end of the line)
      grp.writeEntry(QString("Autoreplace%1").arg(index),newList[index]+'#');
@@ -221,7 +221,7 @@ void Autoreplace_Config::entrySelected(Q3ListViewItem* autoreplaceEntry)
     if(direction=="i") itemIndex=DIRECTION_INPUT;
     else if(direction=="o") itemIndex=DIRECTION_OUTPUT;
     else if(direction=="io") itemIndex=DIRECTION_BOTH;
-    directionCombo->setCurrentItem(itemIndex);
+    directionCombo->setCurrentIndex(itemIndex);
     // re-enable modified() signal on text changes in edit widgets
     m_newItemSelected=false;
   }
@@ -262,7 +262,7 @@ void Autoreplace_Config::directionChanged(int newDirection)
     else if(newDirection==DIRECTION_OUTPUT) id="o";
     else if(newDirection==DIRECTION_BOTH)   id="io";
     // rename direction
-    item->setText(1,directionCombo->text(newDirection));
+    item->setText(1,directionCombo->itemText(newDirection));
     item->setText(4,id);
     // tell the config system that something has changed
     if(!m_newItemSelected) emit modified();
@@ -312,7 +312,7 @@ void Autoreplace_Config::addEntry()
   if(newItem)
   {
     // set default direction
-    newItem->setText(1,directionCombo->text(DIRECTION_OUTPUT));
+    newItem->setText(1,directionCombo->itemText(DIRECTION_OUTPUT));
     // set default pattern name
     newItem->setText(2,i18n("New"));
     // set default direction

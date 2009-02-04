@@ -32,7 +32,7 @@ void Tabs_Config::showEvent(QShowEvent *event)
 {
     QWidget::showEvent(event);
 
-    if (kcfg_TabPlacement->currentItem() == 0 || kcfg_TabPlacement->currentItem() == 1)
+    if (kcfg_TabPlacement->currentIndex() == 0 || kcfg_TabPlacement->currentIndex() == 1)
     {
         kcfg_ShowTabBarCloseButton->setEnabled(true);
         kcfg_UseMaxSizedTabs->setEnabled(true);

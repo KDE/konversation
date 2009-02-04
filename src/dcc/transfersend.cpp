@@ -159,7 +159,8 @@ bool DccTransferSend::queue()
 #ifndef Q_WS_WIN        
             /* This is fucking ugly but there is no KDE way to do this yet :| -cartman */
             struct ifreq ifr;
-            const char* address = Preferences::self()->dccIPv4FallbackIface().ascii();
+            const QByteArray addressBa = Preferences::self()->dccIPv4FallbackIface().toAscii();
+            const char* address = addressBa.constData();
             int sock = socket(AF_INET, SOCK_DGRAM, 0);
             strncpy( ifr.ifr_name, address, IF_NAMESIZE );
             ifr.ifr_addr.sa_family = AF_INET;
@@ -211,7 +212,7 @@ bool DccTransferSend::queue()
             m_fileName = "\"" + m_fileName + "\"";
     }
 
-    m_file.setName( m_tmpFile );
+    m_file.setFileName( m_tmpFile );
 
     if ( m_fileSize == 0 )
         m_fileSize = m_file.size();
