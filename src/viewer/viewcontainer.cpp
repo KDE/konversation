@@ -215,7 +215,7 @@ void ViewContainer::setupViewTree()
     {
         // Explicitly move to the left since we've been added after the
         // tab widget.
-        m_viewTreeSplitter->moveToFirst(m_viewTree);
+        m_viewTreeSplitter->insertWidget(0, m_viewTree);
 
         if (m_tabWidget->count() > 0)
         {
@@ -1064,12 +1064,12 @@ void ViewContainer::unsetViewNotification(ChatWindow* view)
             Channel *channel = static_cast<Channel*>(view);
 
             if (!channel->joined())
-                textColor = KonversationApplication::instance()->palette(m_viewTree).disabled().text();
+                textColor = m_viewTree->palette().color(QPalette::Disabled, QPalette::Text);
         }
         else if (view->getType() == ChatWindow::Query)
         {
             if (!view->getServer()->isConnected())
-                textColor = KonversationApplication::instance()->palette(m_tabWidget).disabled().text();
+                textColor = m_viewTree->palette().color(QPalette::Disabled, QPalette::Text);
         }
 
         m_viewTree->setViewColor(view, textColor);
@@ -1107,12 +1107,12 @@ void ViewContainer::unsetViewNotification(ChatWindow* view)
             Channel *channel = static_cast<Channel*>(view);
 
             if (!channel->joined())
-                textColor = KonversationApplication::instance()->palette(m_tabWidget).disabled().text();
+                textColor = m_tabWidget->palette().color(QPalette::Disabled, QPalette::Text);
         }
         else if (view->getType() == ChatWindow::Query)
         {
             if (!view->getServer()->isConnected())
-                textColor = KonversationApplication::instance()->palette(m_tabWidget).disabled().text();
+                textColor = m_tabWidget->palette().color(QPalette::Disabled, QPalette::Text);
         }
 
         m_tabWidget->setTabTextColor(idx, textColor);
@@ -1339,7 +1339,7 @@ void ViewContainer::addView(ChatWindow* view, const QString& label, bool weiniti
             break;
     }
 
-    m_tabWidget->insertTab(view, iconSet, label, placement);
+    m_tabWidget->insertTab(placement, view, iconSet, label);
     m_vbox->show();//m_tabWidget->show();
 
     if (m_viewTree)
