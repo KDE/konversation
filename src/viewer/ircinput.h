@@ -46,7 +46,6 @@ class IRCInput : public KTextEdit
         void envelopeCommand();
 
     public slots:
-        void paste();
         void paste(bool useSelection);
         void showCompletionList(const QStringList& nicks);
         void setText(const QString& text);
@@ -66,8 +65,8 @@ class IRCInput : public KTextEdit
         bool eventFilter(QObject *object,QEvent *event);
         void addHistory(const QString& text);
         bool checkPaste(QString& text);
-        void mouseReleaseEvent(QMouseEvent *);
 
+        virtual void insertFromMimeData(const QMimeData *source);
         virtual void keyPressEvent(QKeyEvent* e);
         //virtual Q3PopupMenu *createPopupMenu( const QPoint& pos );
         virtual void showEvent(QShowEvent* e);
@@ -79,7 +78,6 @@ class IRCInput : public KTextEdit
         char completionMode;
         KCompletionBox* completionBox;
         QString m_lastCompletion;
-        bool m_useSelection;
         bool m_multiRow;
         int m_qtBoxPadding; //see comment in constructor
 

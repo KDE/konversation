@@ -13,12 +13,11 @@
 */
 
 #include "ircinput.h"
-#include "application.h" ////// header renamed
-//#include "multilineedit.h"
+#include "application.h"
+#include "multilineedit.h"
 #include "chatwindow.h"
 #include "ircview.h"
 
-//#include <private/qrichtext_p.h>
 #include <qclipboard.h>
 #include <qregexp.h>
 #include <qdom.h>
@@ -43,8 +42,6 @@ IRCInput::IRCInput(QWidget* parent) : KTextEdit(parent)
 
     connect(KApplication::kApplication(), SIGNAL(appearanceChanged()), this, SLOT(updateAppearance()));
     m_multiRow = Preferences::self()->useMultiRowInputBox();
-
-    m_useSelection = false;
 
     // connect history signal
     connect(this,SIGNAL (history(bool)) ,this,SLOT (getHistory(bool)) );
@@ -316,48 +313,17 @@ void IRCInput::getHistory(bool up)
     setText(historyList[lineNum]);
 }
 
-/**
- * Work around the fact that while QTextEdit::paste() is virtual, whether we are
- * pasting from middle button or control-V is PRIVATE and NO ACCESSOR is given.
- */
-// TODO FIXME this might not be an equivalent event
-void IRCInput::mouseReleaseEvent( QMouseEvent *ev)
-{
-    if (ev->button() == Qt::MidButton)
-    {
-        m_useSelection=true;
-    }
-
-    // Reset completion
-    setCompletionMode('\0');
-    emit endCompletion();
-
-    KTextEdit::mouseReleaseEvent(ev);
-    m_useSelection=false;
-}
-
 void IRCInput::paste(bool useSelection)
 {
-    m_useSelection = useSelection;
-    paste();
-    m_useSelection = false;
+    insertFromMimeData(KApplication::clipboard()->mimeData(useSelection ? QClipboard::Selection : QClipboard::Clipboard));
 }
 
-void IRCInput::paste()
+void IRCInput::insertFromMimeData(const QMimeData * source)
 {
-    QClipboard *cb = KApplication::kApplication()->clipboard();
     setFocus();
 
     // Copy text from the clipboard (paste)
-    QString pasteText;
-    if(m_useSelection)
-    {
-        pasteText = cb->text( QClipboard::Selection);
-    }
-    else
-    {
-        pasteText = cb->text( QClipboard::Clipboard);
-    }
+    QString pasteText = source->text();
 
     // is there any text in the clipboard?
     if(!pasteText.isEmpty())
@@ -433,7 +399,7 @@ void IRCInput::paste()
             }
         }
         // otherwise let the KLineEdit handle the pasting
-        else KTextEdit::paste();
+        else KTextEdit::insertFromMimeData(source);
     }
 }
 
@@ -450,7 +416,7 @@ bool IRCInput::checkPaste(QString& text)
             (this,
             i18n("<qt>You are attempting to paste a large portion of text (%1 bytes or %2 lines) into "
             "the chat. This can cause connection resets or flood kills. "
-            "Do you really want to continue?</qt>").arg(text.length()).arg(lines+1),
+            "Do you really want to continue?</qt>", text.length(), lines+1),
             i18n("Large Paste Warning"),
             KGuiItem(i18n("Paste")),
             KGuiItem(i18n("&Edit...")),
@@ -461,8 +427,7 @@ bool IRCInput::checkPaste(QString& text)
 
     if (doPaste==KMessageBox::No)
     {
-        // TODO FIXME
-        QString ret;//(MultilineEdit::edit(this,text));
+        QString ret(MultilineEdit::edit(this,text));
         if (ret.isEmpty())
             return false;
         text=ret;
