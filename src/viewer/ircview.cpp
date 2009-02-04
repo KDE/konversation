@@ -1028,7 +1028,7 @@ void IRCView::highlightedSlot(const QString& _link)
         //FIXME how are menu titles done now? /me is too tired
         //m_nickPopup->changeTitle(m_nickPopupId,m_currentNick);
         m_isOnNick = true;
-        emit setStatusBarTempText(i18n("Open a query with %1").arg(m_currentNick));
+        emit setStatusBarTempText(i18n("Open a query with %1", m_currentNick));
     }
     else
     {
@@ -1045,7 +1045,7 @@ void IRCView::highlightedSlot(const QString& _link)
 
         //m_channelPopup->changeTitle(m_channelPopupId,prettyId);
         m_isOnChannel = true;
-        emit setStatusBarTempText(i18n("Join the channel %1").arg(m_currentChannel));
+        emit setStatusBarTempText(i18n("Join the channel %1", m_currentChannel));
     }
 }
 
