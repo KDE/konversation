@@ -272,7 +272,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                             dccArgumentList.append(fileName);
                         }
                     }
-                    dccArgumentList += dccArguments.split(' ');
+                    dccArgumentList += dccArguments.split(' ', QString::SkipEmptyParts);
 
                     if(dccType=="send")
                     {
@@ -887,7 +887,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
 
                 if(!trailing.isEmpty())
                 {
-                    nickList = trailing.split(' ');
+                    nickList = trailing.split(' ', QString::SkipEmptyParts);
                 }
                 else if(parameterList.count() > 3)
                 {
@@ -1278,12 +1278,13 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             case RPL_ENDOFWHO:
             {
                 if(!whoRequestList.isEmpty())
-                {                                 // for safety
-                    QStringList::iterator it = whoRequestList.find(parameterList[1].toLower());
-
-                    if(it != whoRequestList.end())
+                {
+                    const QString param = parameterList[1].toLower();
+                    // for safety
+                    const int idx = whoRequestList.indexOf(param);
+                    if(idx > -1)
                     {
-                        if(getAutomaticRequest("WHO", *it) == 0)
+                        if(getAutomaticRequest("WHO", param) == 0)
                         {
                             server->appendMessageToFrontmost(i18n("Who"),
                                 i18n("End of /WHO list for %1",
@@ -1291,14 +1292,14 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                         }
                         else
                         {
-                            setAutomaticRequest("WHO", *it, false);
+                            setAutomaticRequest("WHO", param, false);
                         }
 
-                        whoRequestList.remove(it);
+                        whoRequestList.removeAt(idx);
                     }
                     else
                     {
-                        // whoReauestList seems to be broken.
+                        // whoRequestList seems to be broken.
                         kDebug()   << "InputFilter::parseServerCommand(): RPL_ENDOFWHO: malformed ENDOFWHO. retrieved: "
                             << parameterList[1] << " expected: " << whoRequestList.front()
                             << endl;
@@ -1320,7 +1321,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 QStringList userChannels,voiceChannels,opChannels,halfopChannels,ownerChannels,adminChannels;
 
                 // get a list of all channels the user is in
-                QStringList channelList=trailing.split(' ');
+                QStringList channelList=trailing.split(' ', QString::SkipEmptyParts);
                 channelList.sort();
 
                 // split up the list in channels where they are operator / user / voice
@@ -1554,7 +1555,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             case RPL_USERHOST:
             {
                 // iterate over all nick/masks in reply
-                QStringList uhosts=trailing.split(' ');
+                QStringList uhosts=trailing.split(' ', QString::SkipEmptyParts);
 
                 for(int index=0;index<uhosts.count();index++)
                 {
