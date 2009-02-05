@@ -1584,8 +1584,6 @@ void Server::requestDccSend()
 
 void Server::sendURIs(const KUrl::List& uris, const QString& nick)
 {
-//    for (Q3StrListIterator it(uris) ; *it; ++it)
-//        addDccSend(nick,KUrl(*it));
     foreach(const KUrl& uri, uris)
          addDccSend(nick, uri);
 }
@@ -1601,12 +1599,10 @@ void Server::requestDccSend(const QString &a_recipient)
         // fill nickList with all nicks we know about
         foreach (Channel* lookChannel, m_channelList)
         {
-            Q3PtrList<Nick> nicks=lookChannel->getNickList();
-            Nick* lookNick=nicks.first();
-            while(lookNick)
+            foreach (Nick* lookNick, lookChannel->getNickList())
             {
-                if(!nickList.contains(lookNick->getChannelNick()->getNickname())) nickList.append(lookNick->getChannelNick()->getNickname());
-                lookNick=nicks.next();
+                if (!nickList.contains(lookNick->getChannelNick()->getNickname()))
+                    nickList.append(lookNick->getChannelNick()->getNickname());
             }
         }
 

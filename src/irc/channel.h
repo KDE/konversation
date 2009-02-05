@@ -51,25 +51,16 @@ namespace Konversation
     class ChannelOptionsDialog;
 }
 
-class NickList : public Q3PtrList<Nick>
+class NickList : public QList<Nick*>
 {
     public:
         NickList();
 
-        enum CompareMethod { AlphaNumeric, TimeStamp };
-
         QString completeNick(const QString& pattern, bool& complete, QStringList& found,
                              bool skipNonAlfaNum, bool caseSensitive);
 
-        void setCompareMethod(CompareMethod method);
-
         bool containsNick(const QString& nickname);
 
-    protected:
-        virtual int compareItems(Q3PtrCollection::Item item1, Q3PtrCollection::Item item2);
-
-    private:
-        CompareMethod m_compareMethod;
 };
 
 class Channel : public ChatWindow
@@ -310,7 +301,7 @@ class Channel : public ChatWindow
         bool topicSplitterHidden;
         bool channelSplitterHidden;
 
-        unsigned int completionPosition;
+        int completionPosition;
 
         QSplitter* m_horizSplitter;
         QSplitter* m_vertSplitter;

@@ -62,6 +62,24 @@
 #include <kvbox.h>
 #include <khbox.h>
 
+bool nickTimestampLessThan(const Nick* nick1, const Nick* nick2)
+{
+    int returnValue = nick2->getChannelNick()->timeStamp() - nick1->getChannelNick()->timeStamp();
+    if( returnValue == 0) {
+        returnValue = QString::compare(nick1->getChannelNick()->loweredNickname(),
+                                       nick2->getChannelNick()->loweredNickname());
+    }
+
+    return returnValue;
+}
+
+bool nickLessThan(const Nick* nick1, const Nick* nick2)
+{
+    return QString::compare(nick1->getChannelNick()->loweredNickname(),
+                            nick2->getChannelNick()->loweredNickname());
+}
+
+
 using Konversation::ChannelOptionsDialog;
 
 Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
@@ -288,7 +306,6 @@ Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
     if(nicknameCombobox->lineEdit())
         connect(nicknameCombobox->lineEdit(), SIGNAL (lostFocus()),this,SLOT(nicknameComboboxChanged()));
 
-    nicknameList.setAutoDelete(true);
 
     setLog(Preferences::self()->log());
 
@@ -406,6 +423,7 @@ ChannelNickPtr Channel::getChannelNick(const QString &ircnick)
 void Channel::purgeNicks()
 {
     // Purge nickname list
+    qDeleteAll(nicknameList);
     nicknameList.clear();
 
     // clear stats counter
@@ -803,29 +821,23 @@ void Channel::completeNick()
             else if(Preferences::self()->nickCompletionMode() == 0)
             {
                 if(mode == '\0') {
-                    Q3PtrListIterator<Nick> it(nicknameList);
                     uint timeStamp = 0;
                     int listPosition = 0;
-                    Nick* nick = 0;
 
-                    while(it.current() != 0)
+                    foreach (Nick* nick, nicknameList)
                     {
-                        nick = it.current();
-
                         if(nick->getChannelNick()->getNickname().startsWith(pattern, Preferences::self()->nickCompletionCaseSensitive() ? Qt::CaseSensitive : Qt::CaseInsensitive) &&
                           (nick->getChannelNick()->timeStamp() > timeStamp))
                         {
                             timeStamp = nick->getChannelNick()->timeStamp();
                             completionPosition = listPosition;
                         }
-
                         ++listPosition;
-                        ++it;
                     }
                 }
 
                 // remember old nick completion position
-                unsigned int oldCompletionPosition = completionPosition;
+                int oldCompletionPosition = completionPosition;
                 complete = true;
                 QString prefixCharacter = Preferences::self()->prefixCharacter();
 
@@ -1118,12 +1130,9 @@ QStringList Channel::getSelectedNickList()
         result.append(textView->getContextNick());
     else
     {
-        Nick* nick=nicknameList.first();
-
-        while(nick)
+        foreach (Nick* nick, nicknameList)
         {
             if(nick->isSelected()) result.append(nick->getChannelNick()->getNickname());
-            nick=nicknameList.next();
         }
     }
 
@@ -1133,9 +1142,8 @@ QStringList Channel::getSelectedNickList()
 ChannelNickList Channel::getSelectedChannelNicks()
 {
     ChannelNickList result;
-    Nick* nick=nicknameList.first();
 
-    while(nick)
+    foreach (Nick* nick, nicknameList)
     {
         if(channelCommand)
         {
@@ -1147,8 +1155,6 @@ ChannelNickList Channel::getSelectedChannelNicks()
         }
         else if(nick->isSelected())
             result.append(nick->getChannelNick());
-
-        nick=nicknameList.next();
     }
 
     return result;
@@ -1220,18 +1226,14 @@ void Channel::addNickname(ChannelNickPtr channelnick)
     QString nickname = channelnick->loweredNickname();
 
     Nick* nick=0;
-    Nick* lookNick;
-    Q3PtrListIterator<Nick> it(nicknameList);
 
-    while((lookNick = it.current()) != 0)
+    foreach (Nick* lookNick, nicknameList)
     {
         if(lookNick->getChannelNick()->loweredNickname() == nickname)
         {
             nick = lookNick;
             break;
         }
-
-        ++it;
     }
 
     if(nick == 0)
@@ -1374,7 +1376,8 @@ void Channel::removeNick(ChannelNickPtr channelNick, const QString &reason, bool
 
         if(nick)
         {
-            nicknameList.removeRef(nick);
+            nicknameList.removeOne(nick);
+            delete nick;
         }
         else
         {
@@ -1465,7 +1468,8 @@ void Channel::kickNick(ChannelNickPtr channelNick, const QString &kicker, const 
         }
         else
         {
-            nicknameList.removeRef(nick);
+            nicknameList.removeOne(nick);
+            delete nick;
         }
     }
 }
@@ -1473,14 +1477,11 @@ void Channel::kickNick(ChannelNickPtr channelNick, const QString &kicker, const 
 Nick* Channel::getNickByName(const QString &lookname)
 {
     QString lcLookname = lookname.toLower();
-    Q3PtrListIterator<Nick> it(nicknameList);
 
-    while(it.current() != 0)
+    foreach (Nick* nick, nicknameList)
     {
-        if(it.current()->getChannelNick()->loweredNickname() == lcLookname)
-            return it.current();
-
-        ++it;
+        if(nick->getChannelNick()->loweredNickname() == lcLookname)
+            return nick;
     }
 
     return 0;
@@ -2445,19 +2446,14 @@ void Channel::autoUserhost()
         int limit = 5;
 
         QString nickString;
-        Q3PtrList<Nick> nickList = getNickList();
-        Q3PtrListIterator<Nick> it(nickList);
-        Nick* nick;
 
-        while((nick = it.current()) != 0)
+        foreach (Nick* nick, getNickList())
         {
             if(nick->getChannelNick()->getHostmask().isEmpty())
             {
                 if(limit--) nickString = nickString + nick->getChannelNick()->getNickname() + ' ';
                 else break;
             }
-
-            ++it;
         }
 
         if(!nickString.isEmpty()) m_server->requestUserhost(nickString);
@@ -2524,10 +2520,7 @@ void Channel::autoWho()
 
 void Channel::fadeActivity()
 {
-    Q3PtrListIterator<Nick> it( nicknameList );
-    Nick *nick;
-    while ( (nick = it.current()) != 0 ) {
-        ++it;
+    foreach (Nick *nick,  nicknameList) {
         nick->getChannelNick()->lessActive();
     }
 }
@@ -2748,7 +2741,7 @@ void Channel::requestNickListSort()
 
 void Channel::sortNickList()
 {
-    nicknameList.sort();
+    qSort(nicknameList.begin(), nicknameList.end(), nickLessThan);
     nicknameListView->resort();
 
     if(m_delayedSortTimer)
@@ -2868,32 +2861,8 @@ void Channel::nickActive(const QString& nickname) //FIXME reported to crash, can
 // NickList
 //
 
-NickList::NickList() : Q3PtrList<Nick>()
+NickList::NickList() : QList<Nick*>()
 {
-    m_compareMethod = NickList::AlphaNumeric;
-}
-
-void NickList::setCompareMethod(CompareMethod method)
-{
-    m_compareMethod = method;
-}
-
-//doesn't the following somehow duplicate NickListViewItem::compare()?
-int NickList::compareItems(Q3PtrCollection::Item item1, Q3PtrCollection::Item item2)
-{
-    if(m_compareMethod == NickList::TimeStamp) {
-        int returnValue = static_cast<Nick*>(item2)->getChannelNick()->timeStamp() - static_cast<Nick*>(item1)->getChannelNick()->timeStamp();
-
-        if(returnValue == 0) {
-            returnValue = QString::compare(static_cast<Nick*>(item1)->getChannelNick()->loweredNickname(),
-                                           static_cast<Nick*>(item2)->getChannelNick()->loweredNickname());
-        }
-
-        return returnValue;
-    }
-
-    return QString::compare(static_cast<Nick*>(item1)->getChannelNick()->loweredNickname(),
-                            static_cast<Nick*>(item2)->getChannelNick()->loweredNickname());
 }
 
 QString NickList::completeNick(const QString& pattern, bool& complete, QStringList& found,
@@ -2904,7 +2873,6 @@ QString NickList::completeNick(const QString& pattern, bool& complete, QStringLi
     QString newNick;
     QString prefixCharacter = Preferences::self()->prefixCharacter();
     NickList foundNicks;
-    foundNicks.setCompareMethod(NickList::TimeStamp);
 
     if((pattern.contains(QRegExp("^(\\d|\\w)"))) && skipNonAlfaNum)
     {
@@ -2913,11 +2881,10 @@ QString NickList::completeNick(const QString& pattern, bool& complete, QStringLi
 
     QRegExp regexp(prefix + QRegExp::escape(pattern));
     regexp.setCaseSensitivity(caseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive);
-    Q3PtrListIterator<Nick> it(*this);
 
-    while(it.current() != 0)
+    foreach (Nick* nick, *this)
     {
-        newNick = it.current()->getChannelNick()->getNickname();
+        newNick = nick->getChannelNick()->getNickname();
 
         if(!prefix.isEmpty() && newNick.contains(prefixCharacter))
         {
@@ -2926,20 +2893,15 @@ QString NickList::completeNick(const QString& pattern, bool& complete, QStringLi
 
         if(newNick.contains(regexp))
         {
-            foundNicks.append(it.current());
+            foundNicks.append(nick);
         }
-
-        ++it;
     }
 
-    foundNicks.sort();
+    qSort(foundNicks.begin(), foundNicks.end(), nickTimestampLessThan);
 
-    Q3PtrListIterator<Nick> it2(foundNicks);
-
-    while(it2.current() != 0)
+    foreach (Nick *nick, foundNicks)
     {
-        found.append(it2.current()->getChannelNick()->getNickname());
-        ++it2;
+        found.append(nick->getChannelNick()->getNickname());
     }
 
     if(found.count() > 1)
@@ -2976,14 +2938,10 @@ QString NickList::completeNick(const QString& pattern, bool& complete, QStringLi
 
 bool NickList::containsNick(const QString& nickname)
 {
-    Q3PtrListIterator<Nick> it(*this);
-
-    while (it.current() != 0)
+    foreach (Nick* nick, *this)
     {
-        if (it.current()->getChannelNick()->getNickname()==nickname)
+        if (nick->getChannelNick()->getNickname()==nickname)
             return true;
-
-        ++it;
     }
 
     return false;
