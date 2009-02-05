@@ -249,6 +249,7 @@ namespace Konversation
                         m_selectedServer = dlg.editedServer();
 
                         serverGroup = dlg.serverGroupSettings();
+                        //updateServerList(); // why was this removed?
 
                         emit serverGroupsChanged(serverGroup);
                     }
@@ -264,6 +265,7 @@ namespace Konversation
                         m_selectedServer = ServerSettings("");
 
                         serverGroup = dlg.serverGroupSettings();
+                        //updateServerList(); // why was this removed?
 
                         emit serverGroupsChanged(serverGroup);
                     }
@@ -329,8 +331,8 @@ namespace Konversation
             itemBelow = item->nextSibling();
             itemAbove = item->itemAbove();
 
-            if (item == mSelectedItemPtr)
-                mSelectedItemPtr = 0;
+            if (item == m_selectedItemPtr)
+                m_selectedItemPtr = 0;
 
             if (item->isServer())
             {
@@ -526,11 +528,9 @@ namespace Konversation
 
         // Produce a list of this server group's servers and iterate over it
         Konversation::ServerList serverList = serverGroup->serverList();
-        Konversation::ServerList::iterator serverIt;
+        Konversation::ServerList::const_iterator serverIt;
 
-        Q3ListViewItem* serverItem = 0;
         int i = 0;
-
         for (serverIt = serverList.begin(); serverIt != serverList.end(); ++serverIt)
         {
             // Produce a string representation of the server object
@@ -543,7 +543,7 @@ namespace Konversation
                 name += + " (SSL)";
 
             // Insert the server into the list, as child of the server group list item
-            serverItem = new ServerListItem(networkItem,
+            Q3ListViewItem* serverItem = new ServerListItem(networkItem,
                                             serverGroup->id(),
                                             i,
                                             name,
