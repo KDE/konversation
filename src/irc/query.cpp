@@ -373,7 +373,7 @@ void Query::showEvent(QShowEvent*)
 
     if(m_initialShow) {
         m_initialShow = false;
-        Q3ValueList<int> sizes;
+        QList<int> sizes;
         sizes << queryHostmask->sizeHint().height() << (height() - queryHostmask->sizeHint().height());
         m_headerSplitter->setSizes(sizes);
     }
