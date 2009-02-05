@@ -263,7 +263,7 @@ void DccChat::readData()
         dccChatBroken(m_dccSocket->error());
     }
 
-    kDebug() << " END" ;
+    kDebug() << "END" ;
 }
 
 void DccChat::dccChatTextEntered()
@@ -282,7 +282,7 @@ void DccChat::dccChatTextEntered()
 
 void DccChat::sendDccChatText(const QString& sendLine)
 {
-    kDebug() << " BEGIN" ;
+    kDebug() << "BEGIN" ;
     // create a work copy
     QString output(sendLine);
     QString cc=Preferences::self()->commandChar();
@@ -325,7 +325,7 @@ void DccChat::sendDccChatText(const QString& sendLine)
         // detach stream
         stream.unsetDevice();
     }
-    kDebug() << " END" ;
+    kDebug() << "END" ;
 }
 
 void DccChat::heardPartner()
