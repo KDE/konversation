@@ -124,7 +124,7 @@ void ViewContainer::initializeSplitterSizes()
 {
     if (m_viewTree && !m_viewTree->isHidden())
     {
-        Q3ValueList<int> sizes = Preferences::self()->treeSplitterSizes();
+        QList<int> sizes = Preferences::self()->treeSplitterSizes();
 
         if (sizes.isEmpty())
             sizes << 145 << (m_window->width()-145);

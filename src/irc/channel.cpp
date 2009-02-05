@@ -2239,8 +2239,8 @@ void Channel::showEvent(QShowEvent*)
 
 void Channel::syncSplitters()
 {
-    Q3ValueList<int> vertSizes = Preferences::self()->topicSplitterSizes();
-    Q3ValueList<int> horizSizes = Preferences::self()->channelSplitterSizes();
+    QList<int> vertSizes = Preferences::self()->topicSplitterSizes();
+    QList<int> horizSizes = Preferences::self()->channelSplitterSizes();
 
     if (vertSizes.isEmpty())
     {

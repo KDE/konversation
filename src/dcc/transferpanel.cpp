@@ -57,7 +57,7 @@ DccTransferPanel::DccTransferPanel(QWidget* parent) : ChatWindow(parent)
 DccTransferPanel::~DccTransferPanel()
 {
     // remember column widths
-    Q3ValueList<int> columnWidths;
+    QList<int> columnWidths;
     for ( uint i = 0 ; i < Column::COUNT ; ++i )
         columnWidths.push_back( m_listView->columnWidth( i ) );
     Preferences::self()->setDccColumnWidths( columnWidths );
@@ -89,7 +89,7 @@ void DccTransferPanel::initGUI()
     m_listView->setColumnText(Column::CurrentSpeed,  i18n("Speed"));
     m_listView->setColumnText(Column::SenderAddress, i18n("Sender Address"));
 
-    Q3ValueList<int> columnWidths = Preferences::self()->dccColumnWidths();
+    QList<int> columnWidths = Preferences::self()->dccColumnWidths();
     for ( int i = 0 ; i < Column::COUNT && i < columnWidths.count() ; ++i )
         m_listView->setColumnWidth( i, columnWidths[i] );
 
