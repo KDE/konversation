@@ -315,20 +315,14 @@ void NickListView::setSorting(int column, bool ascending)
 
 bool NickListView::acceptDrag (QDropEvent* event) const
 {
-    if (event->provides("text/uri-list"))
+    if (KUrl::List::canDecode(event->mimeData()))
     {
-        if (event->source())
+        const KUrl::List uris = KUrl::List::fromMimeData(event->mimeData());
+        if (!uris.isEmpty())
         {
-            Q3StrList uris;
+            const KUrl first = uris.first();
 
-            if (Q3UriDrag::decode(event,uris))
-            {
-                QString first = uris.first();
-
-                if (first.startsWith("irc://") || channel->getNickList().containsNick(first))
-                    return false;
-            }
-            else
+            if ((first.protocol() == QLatin1String("irc")) || channel->getNickList().containsNick(first.url()))
                 return false;
         }
 
