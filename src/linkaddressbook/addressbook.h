@@ -33,7 +33,7 @@ namespace Konversation
     class Addressbook : public AddressbookBase
     {
         Q_OBJECT
-        Q_CLASSINFO("D-Bus Interface", "org.kde.konversation")
+        Q_CLASSINFO("D-Bus Interface", "org.kde.KIM")
 
             public:
 
@@ -94,7 +94,7 @@ namespace Konversation
             bool addContact( const QString &contactId, const QString &protocolId );
 
         signals:
-            void contactPresenceChanged( QString uid, Q3CString appId, int presence );
+            void contactPresenceChanged( const QString &uid, const QString &appId, int presence );
 
         protected:
             Addressbook();

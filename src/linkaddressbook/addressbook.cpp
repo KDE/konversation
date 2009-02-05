@@ -35,10 +35,7 @@ namespace Konversation
 
     Addressbook *Addressbook::m_instance=0L;
 
-#ifdef __GNUC__
-#warning port the KIMIface DCOP interface to D-Bus
-#endif
-    Addressbook::Addressbook() //: DCOPObject( "KIMIface")
+    Addressbook::Addressbook()
     {
         addressBook = KABC::StdAddressBook::self(true);
         m_ticket=NULL;
@@ -322,13 +319,7 @@ void Addressbook::emitContactPresenceChanged(const QString &uid, int presence)
         //		kDebug() << "Addressbook::emitContactPresenceChanged was called with empty uid" << endl;
         return;
     }
-#ifdef __GNUC__
-#warning port dcopClient->appId() usage
-#endif
-#if 0
-    Q_ASSERT(kapp->dcopClient());
-    emit contactPresenceChanged(uid, kapp->dcopClient()->appId(), presence);
-#endif
+    emit contactPresenceChanged(uid, QString::fromLatin1("org.kde.konversation"), presence);
     //	kDebug() << "Presence changed for uid " << uid << " to " << presence << endl;
 }
 
