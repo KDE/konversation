@@ -39,6 +39,7 @@
 #include <kmenu.h>
 #include <kauthorized.h>
 #include <kvbox.h>
+#include <qactiongroup.h>
 
 
 Query::Query(QWidget* parent, QString _name) : ChatWindow(parent)
@@ -80,22 +81,26 @@ Query::Query(QWidget* parent, QString _name) : ChatWindow(parent)
     connect(textView,SIGNAL(popupCommand(int)),this,SLOT(popup(int)));
 
     // link "Whois", "Ignore" ... menu items into ircview popup
+    m_actionGroup = new QActionGroup(this);
+    connect(m_actionGroup, SIGNAL(triggered(KAction*)), this, SLOT(slotActionTriggered(KAction*)));
+
     KMenu* popup=textView->getPopup();
     popup->addSeparator();
-    popup->insertItem(i18n("&Whois"),Konversation::Whois);
-    popup->insertItem(i18n("&Version"),Konversation::Version);
-    popup->insertItem(i18n("&Ping"),Konversation::Ping);
+    m_whoisAction = createAction(popup,i18n("&Whois"),Konversation::Whois);
+    m_versionAction = createAction(popup,i18n("&Version"),Konversation::Version);
+    m_pingAction = createAction(popup,i18n("&Ping"),Konversation::Ping);
     popup->addSeparator();
 
-    popup->insertItem(i18n("Ignore"), Konversation::IgnoreNick);
-    popup->insertItem(i18n("Unignore"), Konversation::UnignoreNick);
-    popup->setItemVisible(Konversation::IgnoreNick, false);
-    popup->setItemVisible(Konversation::UnignoreNick, false);
+    m_ignoreNickAction = createAction(popup,i18n("Ignore"), Konversation::IgnoreNick);
+    m_unignoreNickAction = createAction(popup,i18n("Unignore"), Konversation::UnignoreNick);
+    m_ignoreNickAction->setVisible(false);
+    m_unignoreNickAction->setVisible(false);
 
-    if (KAuthorized::authorizeKAction("allow_downloading"))
-        popup->insertItem(SmallIcon("2rightarrow"),i18n("Send &File..."),Konversation::DccSend);
+    m_dccAction = createAction(popup,i18n("Send &File..."),Konversation::DccSend);
+    m_dccAction->setIcon(KIcon("arrow-right-double"));
+    m_dccAction->setEnabled(KAuthorized::authorizeKAction("allow_downloading"));
 
-    popup->insertItem(i18n("Add to Watched Nicks"), Konversation::AddNotify);
+    m_addNotifyAction = createAction(popup,i18n("Add to Watched Nicks"), Konversation::AddNotify);
 
     // This box holds the input line
     KHBox* inputBox=new KHBox(this);
@@ -295,7 +300,7 @@ void Query::updateAppearance()
     queryInputPalette.setColor(queryInput->foregroundRole(), fg);
     queryInputPalette.setColor(queryInput->backgroundRole(), bg);
     queryInput->setPalette(queryInputPalette);
-    
+
     getTextView()->setPalette(QPalette());
 
     if (Preferences::self()->showBackgroundImage())
@@ -650,15 +655,12 @@ void Query::serverOnline(bool online)
 
     if (popup)
     {
-        popup->setItemEnabled(Konversation::Whois, online);
-        popup->setItemEnabled(Konversation::Version, online);
-        popup->setItemEnabled(Konversation::Ping, online);
-        popup->setItemEnabled(Konversation::IgnoreNick, online);
-        popup->setItemEnabled(Konversation::UnignoreNick, online);
-        popup->setItemEnabled(Konversation::AddNotify, online);
-
-        if (KAuthorized::authorizeKAction("allow_downloading"))
-            popup->setItemEnabled(Konversation::DccSend, online);
+        m_whoisAction->setEnabled(online);
+        m_versionAction->setEnabled(online);
+        m_ignoreNickAction->setEnabled(online);
+        m_unignoreNickAction->setEnabled(online);
+        m_addNotifyAction->setEnabled(online);
+        m_dccAction->setEnabled(online && KAuthorized::authorizeKAction("allow_downloading"));
     }
 }
 
@@ -693,4 +695,18 @@ void Query::quitNick(const QString& reason)
     }
 }
 
-// #include "./irc/query.moc"
+Q_DECLARE_METATYPE(Konversation::PopupIDs)
+
+KAction* Query::createAction(QMenu* menu, const QString& text, Konversation::PopupIDs id)
+{
+    KAction* action = new KAction(text, menu);
+    menu->addAction(action);
+    action->setData(QVariant::fromValue(id));
+    m_actionGroup->addAction(action);
+    return action;
+}
+
+void Query::slotActionTriggered(KAction* action)
+{
+    popup(action->data().value<Konversation::PopupIDs>());
+}
