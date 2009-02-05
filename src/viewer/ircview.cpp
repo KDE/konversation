@@ -110,7 +110,7 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : QPlainTextEdit(parent)
 
     setUndoRedoEnabled(0);
     //setLinkUnderline(false);
-    document()->setDefaultStyleSheet("A.nick:link {text-decoration: none}");
+    document()->setDefaultStyleSheet("a.nick:link {text-decoration: none}");
     //setVScrollBarMode(AlwaysOn);
     //setHScrollBarMode(AlwaysOff);
     setWordWrapMode(QTextOption::WrapAtWordBoundaryOrAnywhere);
