@@ -148,6 +148,7 @@ namespace Konversation
         m_serverList->setFocus();
 
         m_selectedItem = false;
+        m_selectedItemPtr = 0;
         m_selectedServer = ServerSettings("");
 
         // Load server list
@@ -327,6 +328,9 @@ namespace Konversation
         {
             itemBelow = item->nextSibling();
             itemAbove = item->itemAbove();
+
+            if (item == mSelectedItemPtr)
+                mSelectedItemPtr = 0;
 
             if (item->isServer())
             {
