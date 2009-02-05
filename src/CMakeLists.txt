@@ -196,10 +196,9 @@ kde4_add_ui_files(linkaddressbook_SRCS
 set (completed_SRCS ${core_SRCS}  ${irc_SRCS} ${viewer_SRCS} ${prefs_SRCS} ${dcc_SRCS} ${linkaddressbook_SRCS})
 set (konvi_SRCS ${completed_SRCS})
 
-kde4_add_ui3_files(konvi_SRCS queuetunerbase.ui)
-
 kde4_add_ui_files(konvi_SRCS
     identitydialog.ui
+    queuetunerbase.ui
     viewer/searchbarbase.ui
 )
 

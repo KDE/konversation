@@ -33,10 +33,12 @@
 
 
 QueueTuner::QueueTuner(QWidget* parent, ViewContainer *container)
-: QueueTunerBase(parent), m_server(0), m_timer(this),
+: QWidget(parent), m_server(0), m_timer(this),
     m_vis(Preferences::self()->showQueueTunerItem()->value())
 {
-    m_closeButton->setIcon(KIcon("document-close"));
+    setupUi(this);
+
+    m_closeButton->setIcon(KIcon("process-stop"));
     connect(m_closeButton, SIGNAL(clicked()), SLOT(close()));
     connect(container, SIGNAL(frontServerChanging(Server*)), SLOT(setServer(Server*)));
     connect(&m_timer, SIGNAL(timeout()), SLOT(timerFired()));
@@ -155,14 +157,14 @@ void QueueTuner::open()
 void QueueTuner::close()
 {
     Preferences::self()->setShowQueueTuner(false);
-    QueueTunerBase::close();
+    QWidget::close();
 }
 
 void QueueTuner::show()
 {
     if (m_server && Preferences::self()->showQueueTuner())
     {
-        QueueTunerBase::show();
+        QWidget::show();
         m_timer.start(500);
 
     }
@@ -170,7 +172,7 @@ void QueueTuner::show()
 
 void QueueTuner::hide()
 {
-    QueueTunerBase::hide();
+    QWidget::hide();
     m_timer.stop();
 }
 

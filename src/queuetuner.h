@@ -13,9 +13,7 @@
 #ifndef QUEUETUNER_H
 #define QUEUETUNER_H
 
-#include "queuetunerbase.h"
-//Added by qt3to4:
-#include <QContextMenuEvent>
+#include "ui_queuetunerbase.h"
 
 class Server;
 class ViewContainer;
@@ -23,7 +21,7 @@ class QTimer;
 
 #include <qtimer.h>
 
-class QueueTuner: public QueueTunerBase
+class QueueTuner: public QWidget, private Ui::QueueTunerBase
 {
     Q_OBJECT
 

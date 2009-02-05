@@ -1,767 +1,717 @@
-<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
-<class>QueueTunerBase</class>
-<widget class="QWidget">
-    <property name="name">
-        <cstring>QueueTunerBase</cstring>
-    </property>
-    <property name="geometry">
-        <rect>
-            <x>0</x>
-            <y>3</y>
-            <width>726</width>
-            <height>91</height>
-        </rect>
-    </property>
-    <property name="sizePolicy">
-        <sizepolicy>
-            <hsizetype>5</hsizetype>
-            <vsizetype>0</vsizetype>
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
+<ui version="4.0" >
+ <class>QueueTunerBase</class>
+ <widget class="QWidget" name="QueueTunerBase" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>745</width>
+    <height>105</height>
+   </rect>
+  </property>
+  <property name="sizePolicy" >
+   <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <layout class="QHBoxLayout" >
+   <property name="spacing" >
+    <number>1</number>
+   </property>
+   <property name="margin" >
+    <number>0</number>
+   </property>
+   <item>
+    <layout class="QVBoxLayout" >
+     <property name="spacing" >
+      <number>0</number>
+     </property>
+     <property name="margin" >
+      <number>1</number>
+     </property>
+     <item>
+      <spacer name="spacer34" >
+       <property name="orientation" >
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeType" >
+        <enum>QSizePolicy::Expanding</enum>
+       </property>
+       <property name="sizeHint" stdset="0" >
+        <size>
+         <width>16</width>
+         <height>34</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QToolButton" name="m_closeButton" >
+       <property name="sizePolicy" >
+        <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
         </sizepolicy>
-    </property>
-    <hbox>
-        <property name="name">
-            <cstring>unnamed</cstring>
+       </property>
+       <property name="toolTip" >
+        <string>Close</string>
+       </property>
+       <property name="text" >
+        <string/>
+       </property>
+       <property name="autoRaise" >
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="spacer35" >
+       <property name="orientation" >
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeType" >
+        <enum>QSizePolicy::Expanding</enum>
+       </property>
+       <property name="sizeHint" stdset="0" >
+        <size>
+         <width>16</width>
+         <height>33</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="m_slowBox" >
+     <property name="sizePolicy" >
+      <sizepolicy vsizetype="MinimumExpanding" hsizetype="Preferred" >
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="title" >
+      <string>Slow Queue</string>
+     </property>
+     <property name="lineWidth" stdset="0" >
+      <number>1</number>
+     </property>
+     <layout class="QGridLayout" >
+      <property name="margin" >
+       <number>5</number>
+      </property>
+      <item row="1" column="0" colspan="2" >
+       <layout class="QHBoxLayout" >
+        <property name="spacing" >
+         <number>0</number>
         </property>
-        <property name="margin">
-            <number>0</number>
+        <property name="margin" >
+         <number>0</number>
         </property>
-        <property name="spacing">
-            <number>1</number>
+        <item>
+         <widget class="QSpinBox" name="m_slowRate" >
+          <property name="enabled" >
+           <bool>true</bool>
+          </property>
+          <property name="maximum" >
+           <number>999</number>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="m_slowType" >
+          <property name="enabled" >
+           <bool>false</bool>
+          </property>
+          <item>
+           <property name="text" >
+            <string>Lines</string>
+           </property>
+          </item>
+          <item>
+           <property name="text" >
+            <string>Bytes</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSpinBox" name="m_slowInterval" >
+          <property name="maximum" >
+           <number>999</number>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="0" column="0" >
+       <layout class="QGridLayout" >
+        <property name="margin" >
+         <number>0</number>
         </property>
-        <widget class="QLayoutWidget">
-            <property name="name">
-                <cstring>layout92</cstring>
-            </property>
-            <vbox>
-                <property name="name">
-                    <cstring>unnamed</cstring>
-                </property>
-                <property name="margin">
-                    <number>1</number>
-                </property>
-                <property name="spacing">
-                    <number>0</number>
-                </property>
-                <spacer>
-                    <property name="name">
-                        <cstring>spacer34</cstring>
-                    </property>
-                    <property name="orientation">
-                        <enum>Vertical</enum>
-                    </property>
-                    <property name="sizeType">
-                        <enum>Expanding</enum>
-                    </property>
-                    <property name="sizeHint">
-                        <size>
-                            <width>16</width>
-                            <height>34</height>
-                        </size>
-                    </property>
-                </spacer>
-                <widget class="QToolButton">
-                    <property name="name">
-                        <cstring>m_closeButton</cstring>
-                    </property>
-                    <property name="sizePolicy">
-                        <sizepolicy>
-                            <hsizetype>0</hsizetype>
-                            <vsizetype>0</vsizetype>
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                        </sizepolicy>
-                    </property>
-                    <property name="text">
-                        <string></string>
-                    </property>
-                    <property name="autoRaise">
-                        <bool>true</bool>
-                    </property>
-                    <property name="textPosition">
-                        <enum>BesideIcon</enum>
-                    </property>
-                    <property name="toolTip" stdset="0">
-                        <string>Close</string>
-                    </property>
-                </widget>
-                <spacer>
-                    <property name="name">
-                        <cstring>spacer35</cstring>
-                    </property>
-                    <property name="orientation">
-                        <enum>Vertical</enum>
-                    </property>
-                    <property name="sizeType">
-                        <enum>Expanding</enum>
-                    </property>
-                    <property name="sizeHint">
-                        <size>
-                            <width>16</width>
-                            <height>33</height>
-                        </size>
-                    </property>
-                </spacer>
-            </vbox>
-        </widget>
-        <widget class="QGroupBox">
-            <property name="name">
-                <cstring>m_slowBox</cstring>
-            </property>
-            <property name="sizePolicy">
-                <sizepolicy>
-                    <hsizetype>5</hsizetype>
-                    <vsizetype>3</vsizetype>
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                </sizepolicy>
-            </property>
-            <property name="lineWidth">
-                <number>1</number>
-            </property>
-            <property name="title">
-                <string>Slow Queue</string>
-            </property>
-            <grid>
-                <property name="name">
-                    <cstring>unnamed</cstring>
-                </property>
-                <property name="margin">
-                    <number>5</number>
-                </property>
-                <widget class="QLayoutWidget" row="1" column="0" rowspan="1" colspan="2">
-                    <property name="name">
-                        <cstring>layout164</cstring>
-                    </property>
-                    <hbox>
-                        <property name="name">
-                            <cstring>unnamed</cstring>
-                        </property>
-                        <property name="margin">
-                            <number>0</number>
-                        </property>
-                        <property name="spacing">
-                            <number>0</number>
-                        </property>
-                        <widget class="QSpinBox">
-                            <property name="name">
-                                <cstring>m_slowRate</cstring>
-                            </property>
-                            <property name="enabled">
-                                <bool>true</bool>
-                            </property>
-                            <property name="maxValue">
-                                <number>999</number>
-                            </property>
-                        </widget>
-                        <widget class="QComboBox">
-                            <item>
-                                <property name="text">
-                                    <string>Lines</string>
-                                </property>
-                            </item>
-                            <item>
-                                <property name="text">
-                                    <string>Bytes</string>
-                                </property>
-                            </item>
-                            <property name="name">
-                                <cstring>m_slowType</cstring>
-                            </property>
-                            <property name="enabled">
-                                <bool>false</bool>
-                            </property>
-                        </widget>
-                        <widget class="QSpinBox">
-                            <property name="name">
-                                <cstring>m_slowInterval</cstring>
-                            </property>
-                            <property name="maxValue">
-                                <number>999</number>
-                            </property>
-                        </widget>
-                    </hbox>
-                </widget>
-                <widget class="QLayoutWidget" row="0" column="0">
-                    <property name="name">
-                        <cstring>layout242</cstring>
-                    </property>
-                    <grid>
-                        <property name="name">
-                            <cstring>unnamed</cstring>
-                        </property>
-                        <property name="margin">
-                            <number>0</number>
-                        </property>
-                        <property name="spacing">
-                            <number>0</number>
-                        </property>
-                        <widget class="QLabel" row="1" column="1" rowspan="2" colspan="1">
-                            <property name="name">
-                                <cstring>m_slowAge</cstring>
-                            </property>
-                            <property name="text">
-                                <string>888</string>
-                            </property>
-                            <property name="scaledContents">
-                                <bool>false</bool>
-                            </property>
-                        </widget>
-                        <widget class="QLabel" row="0" column="1">
-                            <property name="name">
-                                <cstring>m_slowCount</cstring>
-                            </property>
-                            <property name="text">
-                                <string>888</string>
-                            </property>
-                            <property name="scaledContents">
-                                <bool>false</bool>
-                            </property>
-                        </widget>
-                        <widget class="QLabel" row="2" column="0">
-                            <property name="name">
-                                <cstring>m_textLabel3_2</cstring>
-                            </property>
-                            <property name="text">
-                                <string>Age:</string>
-                            </property>
-                        </widget>
-                        <widget class="QLabel" row="0" column="0" rowspan="2" colspan="1">
-                            <property name="name">
-                                <cstring>m_textLabel3</cstring>
-                            </property>
-                            <property name="text">
-                                <string>Count:</string>
-                            </property>
-                        </widget>
-                    </grid>
-                </widget>
-                <widget class="QLayoutWidget" row="0" column="1">
-                    <property name="name">
-                        <cstring>layout236_2_2</cstring>
-                    </property>
-                    <grid>
-                        <property name="name">
-                            <cstring>unnamed</cstring>
-                        </property>
-                        <property name="margin">
-                            <number>0</number>
-                        </property>
-                        <property name="spacing">
-                            <number>0</number>
-                        </property>
-                        <widget class="QLabel" row="0" column="0">
-                            <property name="name">
-                                <cstring>textLabel4_2_2</cstring>
-                            </property>
-                            <property name="text">
-                                <string>Lines:</string>
-                            </property>
-                        </widget>
-                        <widget class="QLabel" row="1" column="0">
-                            <property name="name">
-                                <cstring>textLabel5_2_2</cstring>
-                            </property>
-                            <property name="text">
-                                <string>Bytes:</string>
-                            </property>
-                        </widget>
-                        <widget class="QLabel" row="0" column="1">
-                            <property name="name">
-                                <cstring>m_slowLines</cstring>
-                            </property>
-                            <property name="text">
-                                <string>888</string>
-                            </property>
-                        </widget>
-                        <widget class="QLabel" row="1" column="1">
-                            <property name="name">
-                                <cstring>m_slowBytes</cstring>
-                            </property>
-                            <property name="text">
-                                <string>888</string>
-                            </property>
-                        </widget>
-                    </grid>
-                </widget>
-            </grid>
-        </widget>
-        <widget class="QGroupBox">
-            <property name="name">
-                <cstring>m_normalBox</cstring>
-            </property>
-            <property name="sizePolicy">
-                <sizepolicy>
-                    <hsizetype>5</hsizetype>
-                    <vsizetype>3</vsizetype>
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                </sizepolicy>
-            </property>
-            <property name="lineWidth">
-                <number>1</number>
-            </property>
-            <property name="title">
-                <string>Normal Queue</string>
-            </property>
-            <grid>
-                <property name="name">
-                    <cstring>unnamed</cstring>
-                </property>
-                <property name="margin">
-                    <number>5</number>
-                </property>
-                <widget class="QLayoutWidget" row="1" column="0" rowspan="1" colspan="2">
-                    <property name="name">
-                        <cstring>layout163</cstring>
-                    </property>
-                    <hbox>
-                        <property name="name">
-                            <cstring>unnamed</cstring>
-                        </property>
-                        <property name="margin">
-                            <number>0</number>
-                        </property>
-                        <property name="spacing">
-                            <number>0</number>
-                        </property>
-                        <widget class="QSpinBox">
-                            <property name="name">
-                                <cstring>m_normalRate</cstring>
-                            </property>
-                            <property name="enabled">
-                                <bool>true</bool>
-                            </property>
-                            <property name="maxValue">
-                                <number>999</number>
-                            </property>
-                        </widget>
-                        <widget class="QComboBox">
-                            <item>
-                                <property name="text">
-                                    <string>Lines</string>
-                                </property>
-                            </item>
-                            <item>
-                                <property name="text">
-                                    <string>Bytes</string>
-                                </property>
-                            </item>
-                            <property name="name">
-                                <cstring>m_normalType</cstring>
-                            </property>
-                            <property name="enabled">
-                                <bool>false</bool>
-                            </property>
-                        </widget>
-                        <widget class="QSpinBox">
-                            <property name="name">
-                                <cstring>m_normalInterval</cstring>
-                            </property>
-                            <property name="maxValue">
-                                <number>999</number>
-                            </property>
-                        </widget>
-                    </hbox>
-                </widget>
-                <widget class="QLayoutWidget" row="0" column="1">
-                    <property name="name">
-                        <cstring>layout236_2</cstring>
-                    </property>
-                    <grid>
-                        <property name="name">
-                            <cstring>unnamed</cstring>
-                        </property>
-                        <property name="margin">
-                            <number>0</number>
-                        </property>
-                        <property name="spacing">
-                            <number>0</number>
-                        </property>
-                        <widget class="QLabel" row="0" column="0">
-                            <property name="name">
-                                <cstring>textLabel4_2</cstring>
-                            </property>
-                            <property name="text">
-                                <string>Lines:</string>
-                            </property>
-                        </widget>
-                        <widget class="QLabel" row="1" column="0">
-                            <property name="name">
-                                <cstring>textLabel5_2</cstring>
-                            </property>
-                            <property name="text">
-                                <string>Bytes:</string>
-                            </property>
-                        </widget>
-                        <widget class="QLabel" row="0" column="1">
-                            <property name="name">
-                                <cstring>m_normalLines</cstring>
-                            </property>
-                            <property name="text">
-                                <string>888</string>
-                            </property>
-                        </widget>
-                        <widget class="QLabel" row="1" column="1">
-                            <property name="name">
-                                <cstring>m_normalBytes</cstring>
-                            </property>
-                            <property name="text">
-                                <string>888</string>
-                            </property>
-                        </widget>
-                    </grid>
-                </widget>
-                <widget class="QLayoutWidget" row="0" column="0">
-                    <property name="name">
-                        <cstring>layout240</cstring>
-                    </property>
-                    <grid>
-                        <property name="name">
-                            <cstring>unnamed</cstring>
-                        </property>
-                        <property name="margin">
-                            <number>0</number>
-                        </property>
-                        <property name="spacing">
-                            <number>0</number>
-                        </property>
-                        <widget class="QLabel" row="0" column="0">
-                            <property name="name">
-                                <cstring>m_textLabel3_4</cstring>
-                            </property>
-                            <property name="text">
-                                <string>Count:</string>
-                            </property>
-                        </widget>
-                        <widget class="QLabel" row="1" column="1">
-                            <property name="name">
-                                <cstring>m_normalAge</cstring>
-                            </property>
-                            <property name="text">
-                                <string>888</string>
-                            </property>
-                            <property name="scaledContents">
-                                <bool>false</bool>
-                            </property>
-                        </widget>
-                        <widget class="QLabel" row="0" column="1">
-                            <property name="name">
-                                <cstring>m_normalCount</cstring>
-                            </property>
-                            <property name="text">
-                                <string>888</string>
-                            </property>
-                            <property name="scaledContents">
-                                <bool>false</bool>
-                            </property>
-                        </widget>
-                        <widget class="QLabel" row="1" column="0">
-                            <property name="name">
-                                <cstring>m_textLabel3_2_3</cstring>
-                            </property>
-                            <property name="text">
-                                <string>Age:</string>
-                            </property>
-                        </widget>
-                    </grid>
-                </widget>
-            </grid>
-        </widget>
-        <widget class="QGroupBox">
-            <property name="name">
-                <cstring>m_fastBox</cstring>
-            </property>
-            <property name="sizePolicy">
-                <sizepolicy>
-                    <hsizetype>5</hsizetype>
-                    <vsizetype>3</vsizetype>
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                </sizepolicy>
-            </property>
-            <property name="lineWidth">
-                <number>1</number>
-            </property>
-            <property name="title">
-                <string>Fast Queue</string>
-            </property>
-            <grid>
-                <property name="name">
-                    <cstring>unnamed</cstring>
-                </property>
-                <property name="margin">
-                    <number>5</number>
-                </property>
-                <widget class="QLayoutWidget" row="1" column="0" rowspan="1" colspan="2">
-                    <property name="name">
-                        <cstring>layout161</cstring>
-                    </property>
-                    <hbox>
-                        <property name="name">
-                            <cstring>unnamed</cstring>
-                        </property>
-                        <property name="margin">
-                            <number>0</number>
-                        </property>
-                        <property name="spacing">
-                            <number>0</number>
-                        </property>
-                        <widget class="QSpinBox">
-                            <property name="name">
-                                <cstring>m_fastRate</cstring>
-                            </property>
-                            <property name="maxValue">
-                                <number>999</number>
-                            </property>
-                        </widget>
-                        <widget class="QComboBox">
-                            <item>
-                                <property name="text">
-                                    <string>Lines</string>
-                                </property>
-                            </item>
-                            <item>
-                                <property name="text">
-                                    <string>Bytes</string>
-                                </property>
-                            </item>
-                            <property name="name">
-                                <cstring>m_fastType</cstring>
-                            </property>
-                            <property name="enabled">
-                                <bool>false</bool>
-                            </property>
-                        </widget>
-                        <widget class="QSpinBox">
-                            <property name="name">
-                                <cstring>m_fastInterval</cstring>
-                            </property>
-                            <property name="enabled">
-                                <bool>true</bool>
-                            </property>
-                            <property name="maxValue">
-                                <number>999</number>
-                            </property>
-                            <property name="lineStep">
-                                <number>1</number>
-                            </property>
-                        </widget>
-                    </hbox>
-                </widget>
-                <widget class="QLayoutWidget" row="0" column="0">
-                    <property name="name">
-                        <cstring>layout237</cstring>
-                    </property>
-                    <grid>
-                        <property name="name">
-                            <cstring>unnamed</cstring>
-                        </property>
-                        <property name="margin">
-                            <number>0</number>
-                        </property>
-                        <property name="spacing">
-                            <number>0</number>
-                        </property>
-                        <widget class="QLabel" row="1" column="0">
-                            <property name="name">
-                                <cstring>m_textLabel3_2_3_2</cstring>
-                            </property>
-                            <property name="text">
-                                <string>Age:</string>
-                            </property>
-                        </widget>
-                        <widget class="QLabel" row="1" column="1">
-                            <property name="name">
-                                <cstring>m_fastAge</cstring>
-                            </property>
-                            <property name="text">
-                                <string>888</string>
-                            </property>
-                            <property name="scaledContents">
-                                <bool>false</bool>
-                            </property>
-                        </widget>
-                        <widget class="QLabel" row="0" column="1">
-                            <property name="name">
-                                <cstring>m_fastCount</cstring>
-                            </property>
-                            <property name="text">
-                                <string>888</string>
-                            </property>
-                            <property name="scaledContents">
-                                <bool>false</bool>
-                            </property>
-                        </widget>
-                        <widget class="QLabel" row="0" column="0">
-                            <property name="name">
-                                <cstring>m_textLabel3_4_2</cstring>
-                            </property>
-                            <property name="text">
-                                <string>Count:</string>
-                            </property>
-                        </widget>
-                    </grid>
-                </widget>
-                <widget class="QLayoutWidget" row="0" column="1">
-                    <property name="name">
-                        <cstring>layout236</cstring>
-                    </property>
-                    <grid>
-                        <property name="name">
-                            <cstring>unnamed</cstring>
-                        </property>
-                        <property name="margin">
-                            <number>0</number>
-                        </property>
-                        <property name="spacing">
-                            <number>0</number>
-                        </property>
-                        <widget class="QLabel" row="0" column="0">
-                            <property name="name">
-                                <cstring>textLabel4</cstring>
-                            </property>
-                            <property name="text">
-                                <string>Lines:</string>
-                            </property>
-                        </widget>
-                        <widget class="QLabel" row="1" column="0">
-                            <property name="name">
-                                <cstring>textLabel5</cstring>
-                            </property>
-                            <property name="text">
-                                <string>Bytes:</string>
-                            </property>
-                        </widget>
-                        <widget class="QLabel" row="0" column="1">
-                            <property name="name">
-                                <cstring>m_fastLines</cstring>
-                            </property>
-                            <property name="text">
-                                <string>888</string>
-                            </property>
-                        </widget>
-                        <widget class="QLabel" row="1" column="1">
-                            <property name="name">
-                                <cstring>m_fastBytes</cstring>
-                            </property>
-                            <property name="text">
-                                <string>888</string>
-                            </property>
-                        </widget>
-                    </grid>
-                </widget>
-            </grid>
-        </widget>
-        <widget class="QGroupBox">
-            <property name="name">
-                <cstring>m_globalBox</cstring>
-            </property>
-            <property name="sizePolicy">
-                <sizepolicy>
-                    <hsizetype>5</hsizetype>
-                    <vsizetype>3</vsizetype>
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                </sizepolicy>
-            </property>
-            <property name="lineWidth">
-                <number>1</number>
-            </property>
-            <property name="title">
-                <string>All Queues</string>
-            </property>
-            <vbox>
-                <property name="name">
-                    <cstring>unnamed</cstring>
-                </property>
-                <property name="margin">
-                    <number>5</number>
-                </property>
-                <widget class="QLayoutWidget">
-                    <property name="name">
-                        <cstring>layout88</cstring>
-                    </property>
-                    <grid>
-                        <property name="name">
-                            <cstring>unnamed</cstring>
-                        </property>
-                        <property name="margin">
-                            <number>0</number>
-                        </property>
-                        <property name="spacing">
-                            <number>2</number>
-                        </property>
-                        <widget class="QLabel" row="3" column="0">
-                            <property name="name">
-                                <cstring>textLabel13</cstring>
-                            </property>
-                            <property name="text">
-                                <string>Received:</string>
-                            </property>
-                        </widget>
-                        <widget class="QLabel" row="3" column="1">
-                            <property name="name">
-                                <cstring>m_recvBytes</cstring>
-                            </property>
-                            <property name="text">
-                                <string>888</string>
-                            </property>
-                        </widget>
-                        <widget class="QLabel" row="0" column="1">
-                            <property name="name">
-                                <cstring>m_globalLines</cstring>
-                            </property>
-                            <property name="text">
-                                <string>888</string>
-                            </property>
-                        </widget>
-                        <widget class="QLabel" row="1" column="0">
-                            <property name="name">
-                                <cstring>textLabel9</cstring>
-                            </property>
-                            <property name="text">
-                                <string>Bytes (Raw):</string>
-                            </property>
-                        </widget>
-                        <widget class="QLabel" row="2" column="0">
-                            <property name="name">
-                                <cstring>textLabel4_3</cstring>
-                            </property>
-                            <property name="text">
-                                <string>Bytes (Encoded):</string>
-                            </property>
-                        </widget>
-                        <widget class="QLabel" row="1" column="1">
-                            <property name="name">
-                                <cstring>m_globalBytes</cstring>
-                            </property>
-                            <property name="text">
-                                <string>888</string>
-                            </property>
-                        </widget>
-                        <widget class="QLabel" row="2" column="1">
-                            <property name="name">
-                                <cstring>m_srverBytes</cstring>
-                            </property>
-                            <property name="text">
-                                <string>888</string>
-                            </property>
-                        </widget>
-                        <widget class="QLabel" row="0" column="0">
-                            <property name="name">
-                                <cstring>textLabel8</cstring>
-                            </property>
-                            <property name="text">
-                                <string>Lines:</string>
-                            </property>
-                        </widget>
-                    </grid>
-                </widget>
-            </vbox>
-        </widget>
-    </hbox>
-</widget>
-<layoutdefaults spacing="6" margin="11"/>
-</UI>
+        <property name="spacing" >
+         <number>0</number>
+        </property>
+        <item rowspan="2" row="1" column="1" >
+         <widget class="QLabel" name="m_slowAge" >
+          <property name="text" >
+           <string>888</string>
+          </property>
+          <property name="scaledContents" >
+           <bool>false</bool>
+          </property>
+          <property name="wordWrap" >
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1" >
+         <widget class="QLabel" name="m_slowCount" >
+          <property name="text" >
+           <string>888</string>
+          </property>
+          <property name="scaledContents" >
+           <bool>false</bool>
+          </property>
+          <property name="wordWrap" >
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0" >
+         <widget class="QLabel" name="m_textLabel3_2" >
+          <property name="text" >
+           <string>Age:</string>
+          </property>
+          <property name="wordWrap" >
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item rowspan="2" row="0" column="0" >
+         <widget class="QLabel" name="m_textLabel3" >
+          <property name="text" >
+           <string>Count:</string>
+          </property>
+          <property name="wordWrap" >
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="0" column="1" >
+       <layout class="QGridLayout" >
+        <property name="margin" >
+         <number>0</number>
+        </property>
+        <property name="spacing" >
+         <number>0</number>
+        </property>
+        <item row="0" column="0" >
+         <widget class="QLabel" name="textLabel4_2_2" >
+          <property name="text" >
+           <string>Lines:</string>
+          </property>
+          <property name="wordWrap" >
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0" >
+         <widget class="QLabel" name="textLabel5_2_2" >
+          <property name="text" >
+           <string>Bytes:</string>
+          </property>
+          <property name="wordWrap" >
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1" >
+         <widget class="QLabel" name="m_slowLines" >
+          <property name="text" >
+           <string>888</string>
+          </property>
+          <property name="wordWrap" >
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1" >
+         <widget class="QLabel" name="m_slowBytes" >
+          <property name="text" >
+           <string>888</string>
+          </property>
+          <property name="wordWrap" >
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="m_normalBox" >
+     <property name="sizePolicy" >
+      <sizepolicy vsizetype="MinimumExpanding" hsizetype="Preferred" >
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="title" >
+      <string>Normal Queue</string>
+     </property>
+     <property name="lineWidth" stdset="0" >
+      <number>1</number>
+     </property>
+     <layout class="QGridLayout" >
+      <property name="margin" >
+       <number>5</number>
+      </property>
+      <item row="1" column="0" colspan="2" >
+       <layout class="QHBoxLayout" >
+        <property name="spacing" >
+         <number>0</number>
+        </property>
+        <property name="margin" >
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QSpinBox" name="m_normalRate" >
+          <property name="enabled" >
+           <bool>true</bool>
+          </property>
+          <property name="maximum" >
+           <number>999</number>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="m_normalType" >
+          <property name="enabled" >
+           <bool>false</bool>
+          </property>
+          <item>
+           <property name="text" >
+            <string>Lines</string>
+           </property>
+          </item>
+          <item>
+           <property name="text" >
+            <string>Bytes</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSpinBox" name="m_normalInterval" >
+          <property name="maximum" >
+           <number>999</number>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="0" column="1" >
+       <layout class="QGridLayout" >
+        <property name="margin" >
+         <number>0</number>
+        </property>
+        <property name="spacing" >
+         <number>0</number>
+        </property>
+        <item row="0" column="0" >
+         <widget class="QLabel" name="textLabel4_2" >
+          <property name="text" >
+           <string>Lines:</string>
+          </property>
+          <property name="wordWrap" >
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0" >
+         <widget class="QLabel" name="textLabel5_2" >
+          <property name="text" >
+           <string>Bytes:</string>
+          </property>
+          <property name="wordWrap" >
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1" >
+         <widget class="QLabel" name="m_normalLines" >
+          <property name="text" >
+           <string>888</string>
+          </property>
+          <property name="wordWrap" >
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1" >
+         <widget class="QLabel" name="m_normalBytes" >
+          <property name="text" >
+           <string>888</string>
+          </property>
+          <property name="wordWrap" >
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="0" column="0" >
+       <layout class="QGridLayout" >
+        <property name="margin" >
+         <number>0</number>
+        </property>
+        <property name="spacing" >
+         <number>0</number>
+        </property>
+        <item row="0" column="0" >
+         <widget class="QLabel" name="m_textLabel3_4" >
+          <property name="text" >
+           <string>Count:</string>
+          </property>
+          <property name="wordWrap" >
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1" >
+         <widget class="QLabel" name="m_normalAge" >
+          <property name="text" >
+           <string>888</string>
+          </property>
+          <property name="scaledContents" >
+           <bool>false</bool>
+          </property>
+          <property name="wordWrap" >
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1" >
+         <widget class="QLabel" name="m_normalCount" >
+          <property name="text" >
+           <string>888</string>
+          </property>
+          <property name="scaledContents" >
+           <bool>false</bool>
+          </property>
+          <property name="wordWrap" >
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0" >
+         <widget class="QLabel" name="m_textLabel3_2_3" >
+          <property name="text" >
+           <string>Age:</string>
+          </property>
+          <property name="wordWrap" >
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="m_fastBox" >
+     <property name="sizePolicy" >
+      <sizepolicy vsizetype="MinimumExpanding" hsizetype="Preferred" >
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="title" >
+      <string>Fast Queue</string>
+     </property>
+     <property name="lineWidth" stdset="0" >
+      <number>1</number>
+     </property>
+     <layout class="QGridLayout" >
+      <property name="margin" >
+       <number>5</number>
+      </property>
+      <item row="1" column="0" colspan="2" >
+       <layout class="QHBoxLayout" >
+        <property name="spacing" >
+         <number>0</number>
+        </property>
+        <property name="margin" >
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QSpinBox" name="m_fastRate" >
+          <property name="maximum" >
+           <number>999</number>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="m_fastType" >
+          <property name="enabled" >
+           <bool>false</bool>
+          </property>
+          <item>
+           <property name="text" >
+            <string>Lines</string>
+           </property>
+          </item>
+          <item>
+           <property name="text" >
+            <string>Bytes</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSpinBox" name="m_fastInterval" >
+          <property name="enabled" >
+           <bool>true</bool>
+          </property>
+          <property name="maximum" >
+           <number>999</number>
+          </property>
+          <property name="singleStep" >
+           <number>1</number>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="0" column="0" >
+       <layout class="QGridLayout" >
+        <property name="margin" >
+         <number>0</number>
+        </property>
+        <property name="spacing" >
+         <number>0</number>
+        </property>
+        <item row="1" column="0" >
+         <widget class="QLabel" name="m_textLabel3_2_3_2" >
+          <property name="text" >
+           <string>Age:</string>
+          </property>
+          <property name="wordWrap" >
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1" >
+         <widget class="QLabel" name="m_fastAge" >
+          <property name="text" >
+           <string>888</string>
+          </property>
+          <property name="scaledContents" >
+           <bool>false</bool>
+          </property>
+          <property name="wordWrap" >
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1" >
+         <widget class="QLabel" name="m_fastCount" >
+          <property name="text" >
+           <string>888</string>
+          </property>
+          <property name="scaledContents" >
+           <bool>false</bool>
+          </property>
+          <property name="wordWrap" >
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0" >
+         <widget class="QLabel" name="m_textLabel3_4_2" >
+          <property name="text" >
+           <string>Count:</string>
+          </property>
+          <property name="wordWrap" >
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="0" column="1" >
+       <layout class="QGridLayout" >
+        <property name="margin" >
+         <number>0</number>
+        </property>
+        <property name="spacing" >
+         <number>0</number>
+        </property>
+        <item row="0" column="0" >
+         <widget class="QLabel" name="textLabel4" >
+          <property name="text" >
+           <string>Lines:</string>
+          </property>
+          <property name="wordWrap" >
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0" >
+         <widget class="QLabel" name="textLabel5" >
+          <property name="text" >
+           <string>Bytes:</string>
+          </property>
+          <property name="wordWrap" >
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1" >
+         <widget class="QLabel" name="m_fastLines" >
+          <property name="text" >
+           <string>888</string>
+          </property>
+          <property name="wordWrap" >
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1" >
+         <widget class="QLabel" name="m_fastBytes" >
+          <property name="text" >
+           <string>888</string>
+          </property>
+          <property name="wordWrap" >
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="m_globalBox" >
+     <property name="sizePolicy" >
+      <sizepolicy vsizetype="MinimumExpanding" hsizetype="Preferred" >
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="title" >
+      <string>All Queues</string>
+     </property>
+     <property name="lineWidth" stdset="0" >
+      <number>1</number>
+     </property>
+     <layout class="QVBoxLayout" >
+      <property name="margin" >
+       <number>5</number>
+      </property>
+      <item>
+       <layout class="QGridLayout" >
+        <property name="margin" >
+         <number>0</number>
+        </property>
+        <property name="spacing" >
+         <number>2</number>
+        </property>
+        <item row="3" column="0" >
+         <widget class="QLabel" name="textLabel13" >
+          <property name="text" >
+           <string>Received:</string>
+          </property>
+          <property name="wordWrap" >
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1" >
+         <widget class="QLabel" name="m_recvBytes" >
+          <property name="text" >
+           <string>888</string>
+          </property>
+          <property name="wordWrap" >
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1" >
+         <widget class="QLabel" name="m_globalLines" >
+          <property name="text" >
+           <string>888</string>
+          </property>
+          <property name="wordWrap" >
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0" >
+         <widget class="QLabel" name="textLabel9" >
+          <property name="text" >
+           <string>Bytes (Raw):</string>
+          </property>
+          <property name="wordWrap" >
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0" >
+         <widget class="QLabel" name="textLabel4_3" >
+          <property name="text" >
+           <string>Bytes (Encoded):</string>
+          </property>
+          <property name="wordWrap" >
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1" >
+         <widget class="QLabel" name="m_globalBytes" >
+          <property name="text" >
+           <string>888</string>
+          </property>
+          <property name="wordWrap" >
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1" >
+         <widget class="QLabel" name="m_srverBytes" >
+          <property name="text" >
+           <string>888</string>
+          </property>
+          <property name="wordWrap" >
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0" >
+         <widget class="QLabel" name="textLabel8" >
+          <property name="text" >
+           <string>Lines:</string>
+          </property>
+          <property name="wordWrap" >
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
