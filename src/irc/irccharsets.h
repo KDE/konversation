@@ -17,9 +17,12 @@
 
 namespace Konversation
 {
+    struct IRCCharsetsSingleton;
 
     class IRCCharsets
     {
+        friend struct IRCCharsetsSingleton;
+
         private:
             IRCCharsets();
 
@@ -98,8 +101,6 @@ namespace Konversation
              * used in @ref ambiguousNameToShortName()
              */
             QStringList m_simplifiedShortNames;
-
-            static IRCCharsets *s_self;
     };
 
 }

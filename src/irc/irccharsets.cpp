@@ -16,7 +16,6 @@
 #include <kcharsets.h>
 #include <kdebug.h>
 #include <kglobal.h>
-#include <k3staticdeleter.h>
 
 #if QT_VERSION < 0x030300
 #include <klocale.h>
@@ -28,14 +27,21 @@
 namespace Konversation
 {
 
-    IRCCharsets* IRCCharsets::s_self = 0;
-    static K3StaticDeleter<IRCCharsets> staticIRCCharsetDeleter;
+    struct IRCCharsetsSingleton
+    {
+        IRCCharsets charsets;
+    };
+
+}
+
+K_GLOBAL_STATIC(Konversation::IRCCharsetsSingleton, s_charsets)
+
+namespace Konversation
+{
 
     IRCCharsets *IRCCharsets::self()
     {
-        if(!s_self)
-            staticIRCCharsetDeleter.setObject(s_self, new IRCCharsets());
-        return s_self;
+        return &s_charsets->charsets;
     }
 
     QStringList IRCCharsets::availableEncodingShortNames()
@@ -134,8 +140,6 @@ namespace Konversation
 
     IRCCharsets::IRCCharsets()
     {
-        s_self = this;
-
         // setup m_shortNameAliases
         // use only [a-z0-9] for keys!
         m_shortNameAliases["unicode"] = "utf8";
