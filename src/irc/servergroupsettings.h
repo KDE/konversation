@@ -68,6 +68,8 @@ namespace Konversation
             ServerGroupSettings(const QString& name);
             ~ServerGroupSettings();
 
+            ServerGroupSettings& operator=(const ServerGroupSettings& settings);
+
             void setName(const QString& name) { m_name = name; }
             QString name() const { return m_name; }
 
@@ -75,7 +77,7 @@ namespace Konversation
             void addServer(const ServerSettings& settings) { m_serverList.append(settings); }
             void removeServer(const ServerSettings settings);
             ServerList serverList() const { return m_serverList; }
-            ServerSettings serverByIndex(unsigned int index) const;
+            ServerSettings serverByIndex(int index) const;
 
 
             void setIdentityId(int identityId) { m_identityId = identityId; }
@@ -87,7 +89,7 @@ namespace Konversation
             void addChannel(const ChannelSettings& channel, const ChannelSettings& before);
             void removeChannel(const ChannelSettings& channel);
             ChannelList channelList() const { return m_channelList; }
-            ChannelSettings channelByIndex(unsigned int index) const;
+            ChannelSettings channelByIndex(int index) const;
 
             void setConnectCommands(const QString& commands) { m_connectCommands = commands; }
             QString connectCommands() const { return m_connectCommands; }

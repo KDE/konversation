@@ -248,10 +248,9 @@ namespace Konversation
                         m_selectedServerGroupId = serverGroup->id();
                         m_selectedServer = dlg.editedServer();
 
-                        serverGroup = dlg.serverGroupSettings();
-                        //updateServerList(); // why was this removed?
+                        *serverGroup = *dlg.serverGroupSettings();
 
-                        emit serverGroupsChanged(serverGroup);
+                        emit serverGroupsChanged(serverGroup); // will call updateServerList
                     }
                 }
                 else
@@ -264,10 +263,9 @@ namespace Konversation
                         m_selectedServerGroupId = serverGroup->id();
                         m_selectedServer = ServerSettings("");
 
-                        serverGroup = dlg.serverGroupSettings();
-                        //updateServerList(); // why was this removed?
+                        *serverGroup = *dlg.serverGroupSettings();
 
-                        emit serverGroupsChanged(serverGroup);
+                        emit serverGroupsChanged(serverGroup); // will call updateServerList
                     }
                 }
             }
@@ -467,7 +465,7 @@ namespace Konversation
         m_serverList->clear();
 
         Konversation::ServerGroupList serverGroups = Preferences::serverGroupList();
-        Konversation::ServerGroupList::iterator it;
+        Konversation::ServerGroupList::const_iterator it;
 
         Q3ListViewItem* networkItem = 0;
 

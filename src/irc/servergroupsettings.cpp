@@ -52,6 +52,12 @@ namespace Konversation
     ServerGroupSettings::ServerGroupSettings(const ServerGroupSettings& settings)
         : KShared()
     {
+        (*this) = settings;
+    }
+
+
+    ServerGroupSettings& Konversation::ServerGroupSettings::operator=(const ServerGroupSettings& settings)
+    {
         setName(settings.name());
         setServerList(settings.serverList());
         setIdentityId(settings.identityId());
@@ -61,6 +67,7 @@ namespace Konversation
         setNotificationsEnabled(settings.enableNotifications());
         m_id = settings.id();
         m_sortIndex = settings.sortIndex();
+        return *this;
     }
 
     ServerGroupSettings::ServerGroupSettings(const QString& name)
@@ -100,7 +107,7 @@ namespace Konversation
         }
     }
 
-    ServerSettings ServerGroupSettings::serverByIndex(unsigned int index) const
+    ServerSettings ServerGroupSettings::serverByIndex(int index) const
     {
         ServerList servers = serverList();
 
@@ -118,7 +125,7 @@ namespace Konversation
         m_channelList = list;
     }
 
-    ChannelSettings ServerGroupSettings::channelByIndex(unsigned int index) const
+    ChannelSettings ServerGroupSettings::channelByIndex(int index) const
     {
         if(index < m_channelList.count())
         {
@@ -133,12 +140,12 @@ namespace Konversation
         if (before.name().isEmpty())
             m_channelList.append(channel);
         else
-            m_channelList.insert(m_channelList.find(before), channel);
+            m_channelList.insert(m_channelList.indexOf(before), channel);
     }
 
     void ServerGroupSettings::removeChannel(const ChannelSettings& channel)
     {
-        m_channelList.remove(channel);
+        m_channelList.removeAll(channel);
     }
 
     IdentityPtr ServerGroupSettings::identity() const

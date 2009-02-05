@@ -20,7 +20,6 @@
 
 class QLineEdit;
 class QComboBox;
-class Q3ListBox;
 class QCheckBox;
 class QToolButton;
 namespace Ui

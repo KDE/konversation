@@ -23,8 +23,6 @@
 #include <qclipboard.h>
 #include <qlayout.h>
 
-#include <kapplication.h>
-//#include <kactionclasses.h>
 #include <klocale.h>
 #include <kdebug.h>
 #include <k3listview.h>
@@ -172,7 +170,7 @@ void UrlCatcher::copyUrlClicked()
     Q3ListViewItem* item=urlListView->selectedItem();
     if(item)
     {
-        QClipboard *cb=KApplication::kApplication()->clipboard();
+        QClipboard *cb = qApp->clipboard();
         cb->setText(item->text(1),QClipboard::Selection);
         cb->setText(item->text(1),QClipboard::Clipboard);
     }
