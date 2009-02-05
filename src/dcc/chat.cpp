@@ -436,11 +436,8 @@ void DccChat::showEvent(QShowEvent* /* event */)
 {
     if(m_initialShow) {
         m_initialShow = false;
-        Q3ValueList<int> sizes;
-#ifndef Q_CC_MSVC
-#warning "port kde4";
-#endif
-        //sizes << m_sourceLine->sizeHint().height() << (height() - m_sourceLine->sizeHint().height());
+        QList<int> sizes;
+        sizes << m_sourceLine->sizeHint().height() << (height() - m_sourceLine->sizeHint().height());
         m_headerSplitter->setSizes(sizes);
     }
 }
