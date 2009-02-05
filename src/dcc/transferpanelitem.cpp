@@ -205,7 +205,7 @@ void DccTransferPanelItem::openFileInfoDialog()
             // get list of meta information groups
             KFileMetaInfoGroupList groupList=fileInfo.groups();
             // look inside for keys
-            for(unsigned int index=0;index<groupList.count();index++)
+            for(int index=0;index<groupList.count();index++)
             {
                 // get next group
                 KFileMetaInfoGroup group=fileInfo.group(groupList[index]);

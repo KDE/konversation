@@ -176,7 +176,7 @@ Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
 
     topicLayout->addWidget(modeBox, 0, 2);
     topicLayout->setRowStretch(1, 10);
-    topicLayout->setColStretch(1, 10);
+    topicLayout->setColumnStretch(1, 10);
 
     showTopic(Preferences::self()->showTopic());
     showModeButtons(Preferences::self()->showModeButtons());
