@@ -110,6 +110,7 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : QPlainTextEdit(parent)
 
     setUndoRedoEnabled(0);
     //setLinkUnderline(false);
+    document()->setDefaultStyleSheet("A.nick:link {text-decoration: none}");
     //setVScrollBarMode(AlwaysOn);
     //setHScrollBarMode(AlwaysOff);
     setWordWrapMode(QTextOption::WrapAtWordBoundaryOrAnywhere);
@@ -517,7 +518,7 @@ QString IRCView::createNickLine(const QString& nick, bool encapsulateNick, bool 
     if(Preferences::self()->useClickableNicks())
     {
         // HACK:Use space as a placeholder for \ as Qt tries to be clever and does a replace to / in urls in QTextEdit
-        nickLine = "<a href=\"#" + QString(nick).replace('\\', " ") + "\">" + nickLine + "</a>";
+        nickLine = "<a class=\"nick\" href=\"#" + QString(nick).replace('\\', " ") + "\">" + nickLine + "</a>";
     }
 
     if(privMsg)
