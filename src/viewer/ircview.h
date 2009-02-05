@@ -31,7 +31,6 @@
 #include <QPlainTextEdit>
 
 class QPixmap;
-class Q3StrList;
 class QDropEvent;
 class QDragEnterEvent;
 class QEvent;

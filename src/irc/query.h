@@ -18,10 +18,6 @@
 #include "application.h" // for PopupIDs...
 
 #include <qstring.h>
-//Added by qt3to4:
-#include <Q3StrList>
-#include <QShowEvent>
-#include <QLabel>
 
 /* TODO: Idle counter to close query after XXX minutes of inactivity */
 /* TODO: Use /USERHOST to check if queries are still valid */

@@ -13,13 +13,11 @@
 #define VIEWTREE_H
 
 #include <k3listview.h>
-//Added by qt3to4:
 #include <QResizeEvent>
 #include <QWheelEvent>
 #include <QMouseEvent>
 #include <QContextMenuEvent>
 #include <QKeyEvent>
-#include <Q3PtrList>
 
 
 class ViewTreeItem;

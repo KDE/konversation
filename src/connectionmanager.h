@@ -17,7 +17,6 @@
 
 #include <qobject.h>
 #include <QSet>
-#include <Q3PtrList>
 
 
 class ConnectionSettings;

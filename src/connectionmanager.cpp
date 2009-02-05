@@ -19,8 +19,6 @@
 #include "statuspanel.h"
 
 #include <qregexp.h>
-//Added by qt3to4:
-#include <Q3PtrList>
 
 #include <klocale.h>
 #include <kmessagebox.h>

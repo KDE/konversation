@@ -15,8 +15,6 @@
 #include "servergroupsettings.h"
 
 #include <qlabel.h>
-//Added by qt3to4:
-#include <Q3PtrList>
 
 #include <klocale.h>
 #include <kcombobox.h>

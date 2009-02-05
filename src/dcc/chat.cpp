@@ -31,11 +31,8 @@
 #include <qhostaddress.h>
 #include <qtextcodec.h>
 #include <qsplitter.h>
-#include <q3popupmenu.h>
-//Added by qt3to4:
 #include <Q3TextStream>
 #include <QShowEvent>
-#include <Q3ValueList>
 
 #include <klineedit.h>
 #include <klocale.h>

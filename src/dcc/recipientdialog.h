@@ -16,10 +16,9 @@
 #define DCCRECIPIENTDIALOG_H
 
 #include <klineedit.h>
-#include <Q3ListBoxItem>
 #include <kdialog.h>
 
-
+class Q3ListBoxItem;
 class KLineEdit;
 
 class DccRecipientDialog : public KDialog
