@@ -176,7 +176,9 @@ set(dcc_SRCS
     dcc/transfersend.cpp
 )
 
-kde4_add_ui3_files(dcc_SRCS dcc/transferdetailedinfopanelui.ui)
+kde4_add_ui_files(dcc_SRCS
+    dcc/transferdetailedinfopanelui.ui
+)
 
 set(linkaddressbook_SRCS
     linkaddressbook/linkaddressbookui.cpp

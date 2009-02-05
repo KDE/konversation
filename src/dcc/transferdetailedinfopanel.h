@@ -12,15 +12,14 @@
 #ifndef DCCTRANSFERDETAILEDINFOPANEL_H
 #define DCCTRANSFERDETAILEDINFOPANEL_H
 
-#include "transferdetailedinfopanelui.h"
-
+#include "ui_transferdetailedinfopanelui.h"
 
 class QTimer;
 
 class DccTransfer;
 class DccTransferPanelItem;
 
-class DccTransferDetailedInfoPanel : public DccTransferDetailedInfoPanelUI
+class DccTransferDetailedInfoPanel : public QWidget, private Ui::DccTransferDetailedInfoPanelUI
 {
     Q_OBJECT
 

@@ -32,8 +32,10 @@
 
 
 DccTransferDetailedInfoPanel::DccTransferDetailedInfoPanel( QWidget* parent, const char* name )
-    : DccTransferDetailedInfoPanelUI( parent, name )
+    : QWidget( parent, name )
 {
+    setupUi( this );
+
     m_autoViewUpdateTimer = new QTimer( this );
 
     connect( m_urlreqLocation, SIGNAL( textChanged( const QString& ) ), this, SLOT( slotLocationChanged( const QString& ) ) );
@@ -118,7 +120,7 @@ void DccTransferDetailedInfoPanel::updateView()
         m_labelStatus->setText( transfer->getStatusDetail().isEmpty() ? m_item->getStatusText() : m_item->getStatusText() + " (" + transfer->getStatusDetail() + ')' );
 
     // Progress:
-    m_progress->setProgress( transfer->getProgress() );
+    m_progress->setValue( transfer->getProgress() );
 
     // Current Position:
     m_labelCurrentPosition->setText( KGlobal::locale()->formatNumber( transfer->getTransferringPosition(), 0 ) );
