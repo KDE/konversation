@@ -75,7 +75,7 @@ void WatchedNicknames_Config::loadSettings()
   Konversation::ServerGroupList serverGroupList = Preferences::serverGroupList();
 
   // iterate through all networks in the server group list
-  for(unsigned int gIndex=0;gIndex<serverGroupList.count();gIndex++)
+  for(int gIndex=0;gIndex<serverGroupList.count();gIndex++)
   {
     // add server group branch to the notify listview so we can add notify items
     addNetworkBranch(serverGroupList[gIndex]);

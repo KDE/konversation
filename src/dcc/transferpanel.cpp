@@ -90,7 +90,7 @@ void DccTransferPanel::initGUI()
     m_listView->setColumnText(Column::SenderAddress, i18n("Sender Address"));
 
     Q3ValueList<int> columnWidths = Preferences::self()->dccColumnWidths();
-    for ( uint i = 0 ; i < Column::COUNT && i < columnWidths.count() ; ++i )
+    for ( int i = 0 ; i < Column::COUNT && i < columnWidths.count() ; ++i )
         m_listView->setColumnWidth( i, columnWidths[i] );
 
     m_listView->setColumnWidthMode(Column::FileName, Q3ListView::Manual);
