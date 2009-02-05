@@ -90,6 +90,11 @@ void WatchedNicknames_Config::addNetworkBranch(Konversation::ServerGroupSettings
   // get the current notify list and an iterator
   QMap<int, QStringList> notifyList = Preferences::notifyList();
 
+  if (notifyList.isEmpty())
+  {
+     return;
+  }
+
   ValueListViewItem* groupItem=new ValueListViewItem(serverGroupList->id(),notifyListView,notifyListView->lastChild(),serverGroupList->name());
   // get the group iterator to find all servers in the group
   QMap<int, QStringList>::const_iterator groupIt=notifyList.find(serverGroupList->id());
