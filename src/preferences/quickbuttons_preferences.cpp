@@ -71,7 +71,7 @@ void QuickButtons_Config::setButtonsListView(const QStringList &buttonList)
   // clear listView
   buttonListView->clear();
   // go through the list
-  for(unsigned int index=buttonList.count();index!=0;index--)
+  for(int index=buttonList.count();index!=0;index--)
   {
     // get button definition
     QString definition=buttonList[index-1];
@@ -99,7 +99,7 @@ void QuickButtons_Config::saveSettings()
   if(newList.count())
   {
     // go through all buttons and save them into the configuration
-    for(unsigned int index=0;index<newList.count();index++)
+    for(int index=0;index<newList.count();index++)
     {
       // write the current button's name and definition
       grp.writeEntry(QString("Button%1").arg(index),newList[index]);

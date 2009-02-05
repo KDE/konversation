@@ -129,7 +129,7 @@
 %c: Current channel
 %K: Server password
 %u: List of selected nicknames
-%s&lt;term>%: term used to separate nicknames in %u
+%s&amp;lt;term>%: term used to separate nicknames in %u
 %n: Send command directly to the server instead of your input line</string>
         </property>
         <property name="wordWrap" >
