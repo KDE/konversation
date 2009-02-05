@@ -2087,7 +2087,7 @@ void Channel::updateModeWidgets(char mode, bool plus, const QString &parameter)
     }
     else
     {
-        QStringList removable = m_modeList.grep(QRegExp(QString("^%1.*").arg(mode)));
+        QStringList removable = m_modeList.filter(QRegExp(QString("^%1.*").arg(mode)));
 
         for(QStringList::iterator it = removable.begin(); it != removable.end(); ++it)
         {
