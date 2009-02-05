@@ -16,13 +16,12 @@
 
 #include <qstring.h>
 
-#include <k3listview.h>
+#include <qtreewidget.h>
 
-
-class IgnoreListViewItem : public K3ListViewItem
+class IgnoreListViewItem : public QTreeWidgetItem
 {
     public:
-        IgnoreListViewItem(Q3ListView* parent,const QString& name,int flags);
+        IgnoreListViewItem(QTreeWidget* parent, const QString& name, int flags);
         ~IgnoreListViewItem();
 
         void setFlag(int flag,bool active);
@@ -30,7 +29,6 @@ class IgnoreListViewItem : public K3ListViewItem
 	QString getName() { return text(0); };
 	void setName(QString name) { setText(0, name); };
         int getFlags() { return m_flags; };
-        IgnoreListViewItem* itemBelow();
 
         void setFlags(int flags);
     protected:

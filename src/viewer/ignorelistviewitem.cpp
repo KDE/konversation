@@ -18,8 +18,8 @@
 #include <kdebug.h>
 
 
-IgnoreListViewItem::IgnoreListViewItem(Q3ListView* parent,const QString& name,int newFlags):
-K3ListViewItem(parent,name)
+IgnoreListViewItem::IgnoreListViewItem(QTreeWidget* parent,const QString& name,int newFlags):
+QTreeWidgetItem(parent, QStringList() << name)
 {
     setFlags(newFlags);
 }
@@ -49,7 +49,3 @@ void IgnoreListViewItem::setFlags(int newFlags)
     setText(1,flagsStr);
 }
 
-IgnoreListViewItem* IgnoreListViewItem::itemBelow()
-{
-    return (IgnoreListViewItem*) Q3ListViewItem::itemBelow();
-}

@@ -49,7 +49,7 @@ class Ignore_Config : public QWidget, public KonviSettingsPage, private Ui::Igno
         void newIgnore();
         void removeIgnore();
         void flagCheckboxChanged();
-        void select(Q3ListViewItem* item);
+        void select(QTreeWidgetItem* item);
         void removeAllIgnore();
     signals:
         void modified();

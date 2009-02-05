@@ -12,7 +12,7 @@ the Free Software Foundation; either version 2 of the License, or
     <x>0</x>
     <y>0</y>
     <width>374</width>
-    <height>315</height>
+    <height>340</height>
    </rect>
   </property>
   <property name="sizePolicy" >
@@ -32,30 +32,18 @@ the Free Software Foundation; either version 2 of the License, or
     <number>0</number>
    </property>
    <item row="0" column="0" colspan="2" >
-    <widget class="K3ListView" name="ignoreListView" >
-     <property name="fullWidth" >
-      <bool>true</bool>
+    <widget class="QTreeWidget" name="ignoreListView" >
+     <property name="rootIsDecorated" >
+      <bool>false</bool>
      </property>
      <column>
       <property name="text" >
        <string>Pattern</string>
       </property>
-      <property name="clickable" >
-       <bool>true</bool>
-      </property>
-      <property name="resizable" >
-       <bool>true</bool>
-      </property>
      </column>
      <column>
       <property name="text" >
        <string>Type</string>
-      </property>
-      <property name="clickable" >
-       <bool>true</bool>
-      </property>
-      <property name="resizable" >
-       <bool>true</bool>
       </property>
      </column>
     </widget>
@@ -171,11 +159,6 @@ the Free Software Foundation; either version 2 of the License, or
  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
  <customwidgets>
   <customwidget>
-   <class>K3ListView</class>
-   <extends>Q3ListView</extends>
-   <header>k3listview.h</header>
-  </customwidget>
-  <customwidget>
    <class>KPushButton</class>
    <extends>QPushButton</extends>
    <header>kpushbutton.h</header>
@@ -194,7 +177,6 @@ the Free Software Foundation; either version 2 of the License, or
   <tabstop>removeAllButton</tabstop>
  </tabstops>
  <includes>
-  <include location="local" >k3listview.h</include>
   <include location="local" >kpushbutton.h</include>
   <include location="local" >kpushbutton.h</include>
   <include location="local" >kpushbutton.h</include>

@@ -16,10 +16,8 @@
 #include "preferences.h"
 
 #include <klocale.h>
-#include <k3listview.h>
-#include <q3listview.h>
 #include <qlineedit.h>
-#include <q3header.h>
+#include <qheaderview.h>
 //Added by qt3to4:
 #include <Q3PtrList>
 
@@ -42,8 +40,8 @@ Ignore_Config::Ignore_Config( QWidget* parent, const char* name, Qt::WFlags fl )
         this,SLOT(removeIgnore()));
     connect(removeAllButton,SIGNAL(clicked()),
 	this,SLOT(removeAllIgnore()));
-    connect(ignoreListView,SIGNAL(selectionChanged(Q3ListViewItem*)),
-        this,SLOT(select(Q3ListViewItem*)));
+    connect(ignoreListView, SIGNAL(currentItemChanged(QTreeWidgetItem *, QTreeWidgetItem *)),
+        this,SLOT(select(QTreeWidgetItem*)));
     connect(chkChannel, SIGNAL(clicked()), this, SLOT(flagCheckboxChanged()));
     connect(chkQuery, SIGNAL(clicked()), this, SLOT(flagCheckboxChanged()));
     connect(chkNotice, SIGNAL(clicked()), this, SLOT(flagCheckboxChanged()));
@@ -53,7 +51,7 @@ Ignore_Config::Ignore_Config( QWidget* parent, const char* name, Qt::WFlags fl )
 //    connect(chkException, SIGNAL(clicked()), this, SLOT(flagCheckboxChanged()));
     loadSettings();
 
-    ignoreListView->header()->setMovingEnabled(false);
+    ignoreListView->header()->setMovable(false);
 }
 
 Ignore_Config::~Ignore_Config()
@@ -63,13 +61,14 @@ Ignore_Config::~Ignore_Config()
 
 void Ignore_Config::newIgnore()
 {
-     ignoreListView->setSelected(new IgnoreListViewItem(ignoreListView,
+    QTreeWidgetItem *item = new IgnoreListViewItem(ignoreListView,
         "new!new@new.new",
         Ignore::Channel |
         Ignore::Query |
         Ignore::Notice |
         Ignore::CTCP |
-        Ignore::DCC), true);
+        Ignore::DCC);
+    ignoreListView->setCurrentItem(item);
     txtPattern->setFocus();
     txtPattern->selectAll();
      
@@ -84,7 +83,7 @@ void Ignore_Config::removeAllIgnore()
 }
 void Ignore_Config::removeIgnore()
 {
-    delete ignoreListView->selectedItem();
+    delete ignoreListView->currentItem();
     updateEnabledness();
     emit modified();
 }
@@ -93,12 +92,12 @@ Q3PtrList<Ignore> Ignore_Config::getIgnoreList()
 {
     Q3PtrList<Ignore> newList;
 
-    IgnoreListViewItem* item=static_cast<IgnoreListViewItem*>(ignoreListView->firstChild());
-    while(item)
+    QTreeWidgetItem *root = ignoreListView->invisibleRootItem();
+    for (int i = 0; i < root->childCount(); ++i)
     {
+        IgnoreListViewItem* item = static_cast<IgnoreListViewItem *>(root->child(i));
         Ignore* newItem=new Ignore(item->text(0),item->getFlags());
         newList.append(newItem);
-        item=item->itemBelow();
     }
 
     return newList;
@@ -109,11 +108,11 @@ QStringList Ignore_Config::currentIgnoreList()
 {
     QStringList newList;
 
-    IgnoreListViewItem* item=static_cast<IgnoreListViewItem*>(ignoreListView->firstChild());
-    while(item)
+    QTreeWidgetItem *root = ignoreListView->invisibleRootItem();
+    for (int i = 0; i < root->childCount(); ++i)
     {
+        IgnoreListViewItem* item = static_cast<IgnoreListViewItem *>(root->child(i));
         newList.append(item->text(0)+' '+item->getFlags());
-        item=item->itemBelow();
     }
 
     return newList;
@@ -127,7 +126,7 @@ bool Ignore_Config::hasChanged()
 
 void Ignore_Config::restorePageToDefaults()
 {
-    if(ignoreListView->childCount() != 0) {
+    if(ignoreListView->topLevelItemCount() > 0) {
       ignoreListView->clear();
       updateEnabledness();
       emit modified();
@@ -158,7 +157,7 @@ void Ignore_Config::loadSettings()
 
 void Ignore_Config::updateEnabledness()
 {
-    IgnoreListViewItem* selectedItem=static_cast<IgnoreListViewItem*>(ignoreListView->selectedItem());
+    IgnoreListViewItem* selectedItem=static_cast<IgnoreListViewItem*>(ignoreListView->currentItem());
 
     chkChannel->setEnabled(selectedItem != NULL);
     chkQuery->setEnabled(selectedItem != NULL);
@@ -168,14 +167,13 @@ void Ignore_Config::updateEnabledness()
 //	chkExceptions->setEnabled(selectedItem != NULL);
     txtPattern->setEnabled(selectedItem != NULL);
     removeButton->setEnabled(selectedItem != NULL);
-    removeAllButton->setEnabled(ignoreListView->childCount() > 0);
+    removeAllButton->setEnabled(ignoreListView->topLevelItemCount() > 0);
 
 }
 
-void Ignore_Config::select(Q3ListViewItem* item)
+void Ignore_Config::select(QTreeWidgetItem* item)
 {
     updateEnabledness();
-    // FIXME: Cast to IgnoreListViewItem, maybe derive from K3ListView some day
     IgnoreListViewItem* selectedItem=static_cast<IgnoreListViewItem*>(item);
 
     if(selectedItem)
@@ -204,7 +202,7 @@ void Ignore_Config::flagCheckboxChanged()
     if(chkDCC->isChecked()) flags |= Ignore::DCC;
     
 //    if(chkExceptions->isChecked()) flags |= Ignore::Exceptions;
-    IgnoreListViewItem* selectedItem=static_cast<IgnoreListViewItem*>(ignoreListView->selectedItem());
+    IgnoreListViewItem* selectedItem=static_cast<IgnoreListViewItem*>(ignoreListView->currentItem());
     if(selectedItem) {
         selectedItem->setFlags(flags);
 	selectedItem->setName(txtPattern->text());
