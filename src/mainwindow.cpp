@@ -425,7 +425,7 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0)
     //action = new KAction(i18n("Clear &Marker Lines"), 0, KShortcut("Qt::CTRL+Qt::SHIFT+R"), m_viewContainer, SLOT(clearViewLines()),actionCollection(),"clear_lines");
     action=new KAction(this);
     action->setText(i18n("Clear &Marker Lines"));
-    action->setShortcut(KShortcut("Qt::CTRL+Qt::SHIFT+R"));
+    action->setShortcut(KShortcut("Ctrl+Shift+R"));
     action->setEnabled(false);
     action->setStatusTip(i18n("Clear marker lines in the current tab"));
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(clearViewLines()));
@@ -443,7 +443,7 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0)
     //action = new KAction(i18n("Clear &All Windows"),0,KShortcut("Qt::CTRL+Qt::SHIFT+L"), m_viewContainer, SLOT(clearAllViews()),actionCollection(),"clear_tabs");
     action=new KAction(this);
     action->setText(i18n("Clear &All Windows"));
-    action->setShortcut(KShortcut("Qt::CTRL+Qt::SHIFT+L"));
+    action->setShortcut(KShortcut("Ctrl+Shift+L"));
     action->setEnabled(false);
     action->setStatusTip(i18n("Clear the contents of all open tabs"));
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(clearAllViews()));
