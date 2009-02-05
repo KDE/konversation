@@ -64,7 +64,7 @@ namespace Konversation
         for (IdentityList::ConstIterator it = identities.begin(); it != identities.end(); ++it)
             m_mainWidget->m_identityCBox->addItem((*it)->getName());
 
-        m_mainWidget->m_commandEdit->setWhatsThis(i18n("Optional. This command will be sent to the server after connecting. Example: <b>/msg NickServ IDENTIFY <i>konvirocks</i></b>. This example is for the freenode network, which requires users to register their nickname with a password and login when connecting. <i>konvirocks<i> is the password for the nickname given in Identity. You may enter more than one command by separating them with semicolons."));
+        m_mainWidget->m_commandEdit->setWhatsThis(i18n("<qt>Optional. This command will be sent to the server after connecting. Example: <b>/msg NickServ IDENTIFY <i>konvirocks</i></b>. This example is for the freenode network, which requires users to register their nickname with a password and login when connecting. <i>konvirocks</i> is the password for the nickname given in Identity. You may enter more than one command by separating them with semicolons.</qt>"));
         m_mainWidget->m_commandsLabel->setBuddy(m_mainWidget->m_commandEdit);
 
         m_mainWidget->m_autoConnectCBox->setWhatsThis(i18n("Check here if you want Konversation to automatically connect to this network whenever you open Konversation."));
