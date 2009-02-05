@@ -406,16 +406,16 @@ void IRCView::doAppend(const QString& newLine, bool self)
     if (!self && m_chatWin)
         m_chatWin->activateTabNotification(m_tabNotification);
 
-    // scroll view only if the scroll bar is already at the bottom
-    bool doScroll = (verticalScrollBar()->value() == verticalScrollBar()->maximum());
-    doScroll ? setMaximumBlockCount(Preferences::self()->scrollbackMax()) : setMaximumBlockCount(maximumBlockCount() + 1);
+    int scrollMax = Preferences::self()->scrollbackMax();
+    if (scrollMax != 0) {
+        //don't remove lines if the user has scrolled up to read old lines
+        bool atBottom = (verticalScrollBar()->value() == verticalScrollBar()->maximum());
+        setMaximumBlockCount(atBottom ? scrollMax : maximumBlockCount() + 1);
+    }
 
     line.remove('\n'); // TODO why have newlines? we get <p>, so the \n are unnecessary...
 
     appendHtml(line);
-
-    if (doScroll)
-        verticalScrollBar()->setValue(verticalScrollBar()->maximum());
 
     //FIXME: Disable auto-text for DCC Chats since we don't have a server to parse wildcards.
     if (!m_autoTextToSend.isEmpty() && m_server)
