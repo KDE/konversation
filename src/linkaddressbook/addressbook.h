@@ -18,7 +18,6 @@
 #include <kabc/addressbook.h>
 #include <kabc/stdaddressbook.h>
 
-#include <k3staticdeleter.h>
 #include <qobject.h>
 #include <qregexp.h>
 //Added by qt3to4:
@@ -30,10 +29,14 @@
 
 namespace Konversation
 {
+    struct AddressbookSingleton;
+
     class Addressbook : public AddressbookBase
     {
         Q_OBJECT
         Q_CLASSINFO("D-Bus Interface", "org.kde.KIM")
+
+            friend struct AddressbookSingleton;
 
             public:
 
@@ -98,11 +101,7 @@ namespace Konversation
 
         protected:
             Addressbook();
-
-            static Addressbook *m_instance;
     };
-
-    static K3StaticDeleter<Addressbook> sd;
 
 }
 #endif

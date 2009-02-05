@@ -32,9 +32,16 @@
 
 namespace Konversation
 {
+    struct AddressbookSingleton
+    {
+        Addressbook addressBook;
+    };
+}
 
-    Addressbook *Addressbook::m_instance=0L;
+K_GLOBAL_STATIC(Konversation::AddressbookSingleton, s_addessbook)
 
+namespace Konversation
+{
     Addressbook::Addressbook()
     {
         addressBook = KABC::StdAddressBook::self(true);
@@ -42,14 +49,11 @@ namespace Konversation
     }
     Addressbook::~Addressbook()
     {
-        if (m_instance == this)
-            sd.setObject(m_instance, 0, false);
     }
 
     Addressbook *Addressbook::self()
     {
-        if (!m_instance) { sd.setObject(m_instance, new Addressbook()); }
-        return m_instance;
+        return &s_addessbook->addressBook;
     }
 
     QStringList Addressbook::allContacts()
