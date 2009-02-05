@@ -154,7 +154,7 @@ void resetNickSelection();
 
         void autoCommandsAndChannels();
 
-        void sendURIs(const QStringList& uris, const QString& nick);
+        void sendURIs(const KUrl::List& uris, const QString& nick);
 
         void notifyAction(const QString& nick);
         ChannelListPanel* getChannelListPanel() const;

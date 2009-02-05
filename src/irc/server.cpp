@@ -1582,10 +1582,12 @@ void Server::requestDccSend()
     requestDccSend(QString());
 }
 
-void Server::sendURIs(const QStringList& uris, const QString& nick)
+void Server::sendURIs(const KUrl::List& uris, const QString& nick)
 {
 //    for (Q3StrListIterator it(uris) ; *it; ++it)
 //        addDccSend(nick,KUrl(*it));
+    foreach(const KUrl& uri, uris)
+         addDccSend(nick, uri);
 }
 
 void Server::requestDccSend(const QString &a_recipient)

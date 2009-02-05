@@ -428,9 +428,9 @@ void Channel::filesDropped(QDropEvent* e)
     QPoint p(nicknameListView->contentsToViewport(e->pos()));
     Nick* it = dynamic_cast<Nick*>(nicknameListView->itemAt(p));
     if (!it) return;
-   // Q3StrList uris;
-   // if (Q3UriDrag::decode(e,uris))
-   //     m_server->sendURIs(uris, it->getChannelNick()->getNickname());
+
+    const KUrl::List uris = KUrl::List::fromMimeData(e->mimeData());
+    m_server->sendURIs(uris, it->getChannelNick()->getNickname());
 }
 
 void Channel::textPasted(const QString& text)
