@@ -54,7 +54,7 @@
 DccChat::DccChat(QWidget* parent, bool listen, Server* server, const QString& ownNick, const QString& partnerNick, const QString& partnerHost, int partnerPort)
     : ChatWindow(parent)
 {
-    kDebug() << "DccChat::DccChat() [BEGIN]" << endl;
+    kDebug() << "DccChat::DccChat() [BEGIN]" ;
 
     m_dccSocket = 0;
     m_listenSocket = 0;
@@ -117,14 +117,14 @@ DccChat::DccChat(QWidget* parent, bool listen, Server* server, const QString& ow
         connectToPartner();
     }
 
-    kDebug() << "DccChat::DccChat() [END]" << endl;
+    kDebug() << "DccChat::DccChat() [END]" ;
 
     updateAppearance();
 }
 
 DccChat::~DccChat()
 {
-    kDebug() << "DccChat::~DccChat()" << endl;
+    kDebug() << "DccChat::~DccChat()" ;
     if(m_dccSocket)
         m_dccSocket->close();
     if(m_listenSocket)
@@ -133,7 +133,7 @@ DccChat::~DccChat()
 
 void DccChat::listenForPartner()
 {
-    kDebug() << "DccChat::listenForPartner() [BEGIN]" << endl;
+    kDebug() << "DccChat::listenForPartner() [BEGIN]" ;
 
     // Set up server socket
     QString failedReason;
@@ -151,14 +151,14 @@ void DccChat::listenForPartner()
 
     // Get our own port number
     m_ownPort = DccCommon::getServerSocketPort( m_listenSocket );
-    kDebug() << "DccChat::listenForPartner(): using port " << m_ownPort << endl;
+    kDebug() << "DccChat::listenForPartner(): using port " << m_ownPort ;
 
     getTextView()->appendServerMessage(i18n("DCC"), i18n("Offering DCC Chat connection to %1 on port %2...", m_partnerNick, m_ownPort));
 #ifndef Q_CC_MSVC
 #warning "port kde4"
 #endif
     //m_sourceLine->setText(i18n("DCC chat with %1 on port %2.", m_partnerNick, m_ownPort));
-    kDebug() << "DccChat::listenForPartner() [END]" << endl;
+    kDebug() << "DccChat::listenFrPartner() [END]"; 
 }
 
 void DccChat::connectToPartner()
@@ -224,7 +224,7 @@ void DccChat::dccChatBroken(int error)
 
 void DccChat::readData()
 {
-    kDebug() << k_funcinfo << ( m_listenSocket == 0 ) << " BEGIN" << endl;
+    kDebug() << k_funcinfo << ( m_listenSocket == 0 ) << " BEGIN"; 
     int available=0;
     int actual=0;
     char* buffer=0;
@@ -263,7 +263,7 @@ void DccChat::readData()
         dccChatBroken(m_dccSocket->error());
     }
 
-    kDebug() << k_funcinfo << " END" << endl;
+    kDebug() << k_funcinfo << " END" ;
 }
 
 void DccChat::dccChatTextEntered()
@@ -282,7 +282,7 @@ void DccChat::dccChatTextEntered()
 
 void DccChat::sendDccChatText(const QString& sendLine)
 {
-    kDebug() << k_funcinfo << " BEGIN" << endl;
+    kDebug() << k_funcinfo << " BEGIN" ;
     // create a work copy
     QString output(sendLine);
     QString cc=Preferences::self()->commandChar();
@@ -325,7 +325,7 @@ void DccChat::sendDccChatText(const QString& sendLine)
         // detach stream
         stream.unsetDevice();
     }
-    kDebug() << k_funcinfo << " END" << endl;
+    kDebug() << k_funcinfo << " END" ;
 }
 
 void DccChat::heardPartner()
