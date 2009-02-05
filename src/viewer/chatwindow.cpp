@@ -241,7 +241,7 @@ void ChatWindow::setLogfileName(const QString& name)
             // Don't do this for the server status windows, though
             if((getType() != Status) && logfile.open(QIODevice::ReadOnly))
             {
-                unsigned long filePosition;
+                qint64 filePosition;
 
                 QString backlogLine;
                 Q3TextStream backlog(&logfile);
@@ -250,7 +250,7 @@ void ChatWindow::setLogfileName(const QString& name)
                 QStringList firstColumns;
                 QStringList messages;
                 int offset = 0;
-                unsigned int lastPacketHeadPosition = backlog.device()->size();
+                qint64 lastPacketHeadPosition = backlog.device()->size();
                 const unsigned int packetSize = 4096;
                 while(messages.count() < Preferences::self()->backlogLines() && backlog.device()->size() > packetSize * offset)
                 {
@@ -263,7 +263,7 @@ void ChatWindow::setLogfileName(const QString& name)
                     if(backlog.device()->size() > packetSize * ( offset + 1 ))
                     {
                         // Set file pointer to the packet size above the offset
-                        backlog.device()->at(backlog.device()->size() - packetSize * ( offset + 1 ));
+                        backlog.device()->seek(backlog.device()->size() - packetSize * ( offset + 1 ));
                         // Skip first line, since it may be incomplete
                         backlog.readLine();
                     }
@@ -273,17 +273,17 @@ void ChatWindow::setLogfileName(const QString& name)
                         backlog.device()->reset();
                     }
 
-                    unsigned int currentPacketHeadPosition = backlog.device()->at();
+                    qint64 currentPacketHeadPosition = backlog.device()->pos();
 
                     // Loop until end of file reached
-                    while(!backlog.atEnd() && backlog.device()->at() < lastPacketHeadPosition)
+                    while(!backlog.atEnd() && backlog.device()->pos() < lastPacketHeadPosition)
                     {
                         // remember actual file position to check for deadlocks
-                        filePosition = backlog.device()->at();
+                        filePosition = backlog.device()->pos();
                         backlogLine = backlog.readLine();
 
                         // check for deadlocks
-                        if(backlog.device()->at() == filePosition) backlog.device()->at(filePosition + 1);
+                        if(backlog.device()->pos() == filePosition) backlog.device()->seek(filePosition + 1);
 
                         // if a tab character is present in the line
                         if (backlogLine.contains('\t'))

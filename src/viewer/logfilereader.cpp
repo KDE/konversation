@@ -105,7 +105,7 @@ bool LogfileReader::eventFilter(QObject* /* watched */, QEvent* e)
 void LogfileReader::updateView()
 {
     // get maximum size of logfile to display
-    unsigned long pos=sizeSpin->value()*1024;
+    qint64 pos = Q_INT64_C(1024) * sizeSpin->value();
     getTextView()->clear();
 
     QFile file(fileName);
