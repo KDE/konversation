@@ -789,7 +789,7 @@ namespace Konversation
             {
                 token = "MODE " + nickList[0];
                 // remove the first element
-                nickList.remove(nickList.begin());
+                nickList.removeFirst();
             }
             // Add default destination if it is a channel
             else if(isAChannel(destination))

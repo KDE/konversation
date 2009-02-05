@@ -42,7 +42,9 @@ namespace Konversation
 
         QLabel* portLbl = new QLabel(i18n("&Port:"), mainWidget());
 
-        m_portSBox = new QSpinBox(1, 65535, 1, mainWidget());
+        m_portSBox = new QSpinBox(mainWidget());
+        m_portSBox->setMinimum(1);
+        m_portSBox->setMaximum(65535);
         m_portSBox->setValue(6667);
         m_portSBox->setWhatsThis(i18n("Enter the port number required to connect to the server. For most servers, this should be <b>6667</b>."));
         portLbl->setBuddy(m_portSBox);

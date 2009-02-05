@@ -1849,7 +1849,7 @@ bool InputFilter::isIgnore(const QString &sender, Ignore::Type type)
     for(unsigned int index =0; index<list.count(); index++)
     {
         Ignore* item = list.at(index);
-        QRegExp ignoreItem(QRegExp::escape(item->getName()).replace("\\*", "(.*)"),false);
+        QRegExp ignoreItem(QRegExp::escape(item->getName()).replace("\\*", "(.*)"), Qt::CaseInsensitive);
         if (ignoreItem.exactMatch(sender) && (item->getFlags() & type))
             doIgnore = true;
         if (ignoreItem.exactMatch(sender) && (item->getFlags() & Ignore::Exception))
