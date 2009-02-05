@@ -849,10 +849,14 @@ void IRCView::mouseMoveEvent(QMouseEvent *e)
     if (m_fmtUnderMouse != fmt)
     {
         m_fmtUnderMouse = fmt;
-        if (fmt.isAnchor())
+        if (fmt.isAnchor()) {
+            viewport()->setCursor(Qt::PointingHandCursor);
             m_highlightedURL = fmt.anchorHref();
-        else
-            m_highlightedURL=QString();
+        }
+        else {
+            m_highlightedURL.clear();
+            viewport()->setCursor(Qt::ArrowCursor);
+        }
     }
     highlightedSlot(m_highlightedURL);
     //it doesn't seem to do anything we're overly concerned about
