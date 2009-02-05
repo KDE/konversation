@@ -26,7 +26,7 @@
 #include <kapplication.h>
 #include <kmessagebox.h>
 #include <ktoolinvocation.h>
-#include <k3process.h>
+#include <kprocess.h>
 
 namespace Konversation
 {
@@ -385,11 +385,11 @@ namespace Konversation
         // then call it on the command line to actually put it in edit mode.  This is stupid :(
         KToolInvocation::startServiceByDesktopName( "kaddressbook" );
 
-        K3Process *proc = new K3Process;
+        KProcess *proc = new KProcess;
         *proc << "kaddressbook";
         *proc << "--editor-only" << "--uid" << uid;
         kDebug() << "running kaddressbook --editor-only --uid " << uid << endl;
-        if(!proc->start())
+        if(!proc->startDetached())
         {
             KMessageBox::error(0, i18n("Could not run your addressbook program (kaddressbook).  This is most likely because it is not installed.  Please install the 'kdepim' packages."));
             return false;
