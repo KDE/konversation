@@ -460,12 +460,12 @@ void DccChat::updateAppearance()
         fg=colorGroup().foreground();
         bg=colorGroup().base();
     }
-
-    m_dccChatInput->unsetPalette();
-    m_dccChatInput->setPaletteForegroundColor(fg);
-    m_dccChatInput->setPaletteBackgroundColor(bg);
-
-    getTextView()->unsetPalette();
+    QPalette dccChatInputPalette(m_dccChatInput->palette());
+    dccChatInputPalette.setColor(m_dccChatInput->foregroundRole(), fg);
+    dccChatInputPalette.setColor(m_dccChatInput->backgroundRole(), bg);
+    m_dccChatInput->setPalette(dccChatInputPalette);
+    
+    getTextView()->setPalette(QPalette()); 
 
     if(Preferences::self()->showBackgroundImage())
     {

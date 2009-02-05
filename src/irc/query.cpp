@@ -291,12 +291,12 @@ void Query::updateAppearance()
         fg = palette().windowText().color();
         bg = palette().base().color();
     }
-
-    queryInput->unsetPalette();
-    queryInput->setPaletteForegroundColor(fg);
-    queryInput->setPaletteBackgroundColor(bg);
-
-    getTextView()->unsetPalette();
+    QPalette queryInputPalette(queryInput->palette());
+    queryInputPalette.setColor(queryInput->foregroundRole(), fg);
+    queryInputPalette.setColor(queryInput->backgroundRole(), bg);
+    queryInput->setPalette(queryInputPalette);
+    
+    getTextView()->setPalette(QPalette());
 
     if (Preferences::self()->showBackgroundImage())
     {

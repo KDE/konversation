@@ -114,7 +114,7 @@ void SearchBar::slotFind()
 {
     if (m_searchEdit->text().isEmpty())
     {
-        m_searchEdit->unsetPalette();
+        m_searchEdit->setPalette(QPalette());
         m_findNextButton->setEnabled(false);
         m_findPreviousButton->setEnabled(false);
         setStatus(QPixmap(), "");
@@ -128,7 +128,7 @@ void SearchBar::slotFindNext()
 {
     if (m_searchEdit->text().isEmpty())
     {
-        m_searchEdit->unsetPalette();
+        m_searchEdit->setPalette(QPalette()); 
         m_findNextButton->setEnabled(false);
         m_findPreviousButton->setEnabled(false);
         setStatus(QPixmap(), "");
@@ -142,7 +142,7 @@ void SearchBar::slotFindPrevious()
 {
     if (m_searchEdit->text().isEmpty())
     {
-        m_searchEdit->unsetPalette();
+        m_searchEdit->setPalette(QPalette());
         m_findNextButton->setEnabled(false);
         m_findPreviousButton->setEnabled(false);
         setStatus(QPixmap(), "");

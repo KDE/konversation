@@ -168,12 +168,13 @@ void StatusPanel::updateAppearance()
         fg = palette().windowText().color();
         bg = palette().base().color();
     }
-
-    statusInput->unsetPalette();
-    statusInput->setPaletteForegroundColor(fg);
-    statusInput->setPaletteBackgroundColor(bg);
-
-    getTextView()->unsetPalette();
+    
+    QPalette statusInputPalette(statusInput->palette());
+    statusInputPalette.setColor(statusInput->foregroundRole(), fg);
+    statusInputPalette.setColor(statusInput->backgroundRole(), bg);
+    statusInput->setPalette(statusInputPalette);
+    
+    getTextView()->setPalette(QPalette()); 
 
     if(Preferences::self()->showBackgroundImage())
     {

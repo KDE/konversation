@@ -41,7 +41,7 @@ void RawLog::childAdjustFocus()
 
 void RawLog::updateAppearance()
 {
-    getTextView()->unsetPalette();
+    getTextView()->setPalette(QPalette());
 
     if(Preferences::self()->showBackgroundImage())
     {

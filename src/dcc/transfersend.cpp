@@ -363,7 +363,7 @@ void DccTransferSend::startSending()
     if ( m_file.open( QIODevice::ReadOnly ) )
     {
         // seek to file position to make resume work
-        m_file.at( m_transferringPosition );
+        m_file.seek( m_transferringPosition );
         m_transferStartPosition = m_transferringPosition;
 
         setStatus( Transferring );
