@@ -921,7 +921,7 @@ bool Channel::autoJoin()
     Konversation::ChannelList channelList = m_server->getServerGroup()->channelList();
 
     if (!channelList.empty())
-        return channelList.find(channelSettings()) != channelList.end();
+        return channelList.indexOf(channelSettings()) != -1;
     else
         return false;
 }

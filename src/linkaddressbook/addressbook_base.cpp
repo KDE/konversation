@@ -213,7 +213,7 @@ namespace Konversation
             if(lit == lnick || lit == lnick_servername || lit == lnick_servergroup)
             {
                 changed = true;
-                it = addresses.remove(it);
+                it = addresses.erase(it);
             }
             else
             {

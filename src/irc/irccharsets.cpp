@@ -158,7 +158,7 @@ namespace Konversation
                  encodingName == "utf16" ||
                  encodingName == "utf7" )
             {
-                it = m_descriptiveNames.remove( it );
+                it = m_descriptiveNames.erase( it );
             }
             else
             {
