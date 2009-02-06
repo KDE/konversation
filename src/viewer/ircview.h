@@ -156,7 +156,7 @@ class IRCView : public QPlainTextEdit
 
     protected slots:
         void highlightedSlot(const QString& link);
-        //void saveLinkAs(const QString& url);
+        void saveLinkAs(const QString& url);
 
     protected:
         void openLink(const QString &url, bool newTab=false);

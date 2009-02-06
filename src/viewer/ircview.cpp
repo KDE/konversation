@@ -62,6 +62,7 @@
 #include <KActionCollection>
 #include <KToggleAction>
 #include <KToolInvocation>
+#include <kio/copyjob.h>
 
 class QPixmap;
 class QDropEvent;
@@ -892,7 +893,7 @@ void IRCView::mouseReleaseEvent(QMouseEvent *ev)
         if (m_mousePressed && !m_highlightedURL.isNull())
         {
             if (ev->modifiers() == Qt::ShiftModifier)
-                ;//saveLinkAs(m_highlightedURL);
+                saveLinkAs(m_highlightedURL);
             else
                 openLink(m_highlightedURL);
 
@@ -951,6 +952,20 @@ void IRCView::openLink(const QString& url, bool)
         NickInfoPtr nickInfo = m_server->obtainNickInfo(recipient);
         m_server->addQuery(nickInfo, true /*we initiated*/);
     }
+}
+
+void IRCView::saveLinkAs(const QString& url)
+{
+    if(url.isEmpty())
+        return;
+
+    KUrl srcUrl (url);
+    KUrl saveUrl = KFileDialog::getSaveUrl(srcUrl.fileName(KUrl::ObeyTrailingSlash), QString(), this, i18n("Save link as"));
+
+    if (saveUrl.isEmpty() || !saveUrl.isValid())
+        return;
+
+    KIO::copy(srcUrl, saveUrl);
 }
 
 void IRCView::highlightedSlot(const QString& _link)
