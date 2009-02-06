@@ -37,7 +37,7 @@ mAddressee( addressee )
     if(pic.isIntern())
     {
                                                   //60 pixels seems okay.. kmail uses 60 btw
-        QPixmap qpixmap = QPixmap::fromImage( pic.data().scaleWidth(60) );
+        QPixmap qpixmap = QPixmap::fromImage( pic.data().scaledToWidth(60) );
         setPixmap( Photo,qpixmap );
     }
 

@@ -182,7 +182,7 @@ namespace Konversation
                 return QPixmap();
         }
 
-        QPixmap joinedIcon = currentIcon.pixmap(QIcon::Automatic, QIcon::Active, QIcon::On);
+        QPixmap joinedIcon = currentIcon.pixmap(22, QIcon::Active, QIcon::On);
         return joinedIcon;
     }
     QString Addressbook::context(const QString &uid)
