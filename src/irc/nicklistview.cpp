@@ -277,19 +277,19 @@ void NickListView::updateActions()
     }
 
     if (ignoreCounter)
-        popup->setItemVisible(Konversation::IgnoreNick, true);
+        m_ignoreAction->setVisible(true);
     else
-        popup->setItemVisible(Konversation::IgnoreNick, false);
+        m_ignoreAction->setVisible(false);
 
     if (unignoreCounter)
-        popup->setItemVisible(Konversation::UnignoreNick, true);
+        m_unIgnoreAction->setVisible(true);
     else
-        popup->setItemVisible(Konversation::UnignoreNick, false);
+        m_unIgnoreAction->setVisible(false);
 
     if (notifyCounter || !Preferences::hasNotifyList(serverGroupId))
-        popup->setItemEnabled(Konversation::AddNotify, false);
+        m_addNotifyAction->setEnabled(false);
     else
-        popup->setItemEnabled(Konversation::AddNotify, true);
+        m_addNotifyAction->setEnabled(true);
 }
 
 void NickListView::insertAssociationSubMenu()
@@ -341,9 +341,9 @@ void NickListView::insertAssociationSubMenu()
         m_AddressbookDeleteAction->setIcon(KIcon("edit-delete"));
 
     if(!emailAddress)
-        popup->setItemEnabled(Konversation::SendEmail, false);
+        m_sendMailAction->setEnabled(false);
     else
-        popup->setItemEnabled(Konversation::SendEmail, true);
+        m_sendMailAction->setEnabled(true);
 
 }
 
