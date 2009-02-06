@@ -13,7 +13,6 @@
 
 #include <qpainter.h>
 #include <qregexp.h>
-//Added by qt3to4:
 #include <Q3PointArray>
 
 #include <kdebug.h>
@@ -73,7 +72,7 @@ void MultilineTextEdit::drawWhitespaces()
     line=text(paragraph);
     // start looking for whitespaces from the beginning
     pos=0;
-    while((pos=line.find(regex,pos))!=-1)
+    while((pos=line.indexOf(regex,pos))!=-1)
     {
       // whitespace found is not the carriage return at the end of the line?
       if(pos<((int)line.length()-1))

@@ -24,13 +24,6 @@
 #include <q3ptrlist.h>
 #include <qpoint.h>
 #include <qpainter.h>
-//#include <qtooltip.h>
-//Added by qt3to4:
-#include <QContextMenuEvent>
-#include <QKeyEvent>
-#include <QResizeEvent>
-#include <QMouseEvent>
-#include <QWheelEvent>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -604,9 +597,9 @@ void ViewTree::contentsMouseMoveEvent(QMouseEvent* e)
 
     // Allow dragging only with the middle mouse button, just
     // like for the tab bar.
-    if ((e->state() & Qt::MidButton) == Qt::MidButton)
+    if ((e->modifiers() & Qt::MidButton) == Qt::MidButton)
         K3ListView::contentsMouseMoveEvent(e);
-    else if ((e->state() & Qt::LeftButton) == Qt::LeftButton)
+    else if ((e->modifiers() & Qt::LeftButton) == Qt::LeftButton)
     {
         if (item && (item != selectedItem()) && !item->isSeparator())
             setSelected(item, true);
@@ -614,7 +607,7 @@ void ViewTree::contentsMouseMoveEvent(QMouseEvent* e)
 
     if (Preferences::self()->closeButtons())
     {
-        if (!(e->state() & Qt::LeftButton) && !(e->state() & Qt::MidButton) && !(e->state() & Qt::RightButton))
+        if (!(e->modifiers() & Qt::LeftButton) && !(e->modifiers() & Qt::MidButton) && !(e->modifiers() & Qt::RightButton))
         {
             if (item)
             {

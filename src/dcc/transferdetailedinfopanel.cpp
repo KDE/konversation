@@ -31,8 +31,8 @@
 #include <ksqueezedtextlabel.h>
 
 
-DccTransferDetailedInfoPanel::DccTransferDetailedInfoPanel( QWidget* parent, const char* name )
-    : QWidget( parent, name )
+DccTransferDetailedInfoPanel::DccTransferDetailedInfoPanel( QWidget* parent )
+    : QWidget( parent )
 {
     setupUi( this );
 

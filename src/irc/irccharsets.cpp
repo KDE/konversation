@@ -17,12 +17,6 @@
 #include <kdebug.h>
 #include <kglobal.h>
 
-#if QT_VERSION < 0x030300
-#include <klocale.h>
-#else
-#include <qlocale.h>
-#endif
-
 
 namespace Konversation
 {
@@ -111,11 +105,7 @@ namespace Konversation
 
     QString IRCCharsets::encodingForLocale()
     {
-        #if QT_VERSION < 0x030300
-        QString locale = KLocale::defaultLanguage();
-        #else
         QString locale = QLocale::system().name();
-        #endif
 
         // Special cases
         // don't add conditions for the languages for which QTextCodec::codecForLocale() returns a correct codec.
@@ -124,7 +114,7 @@ namespace Konversation
 
         // it's a little hacky..
         for ( QStringList::iterator it = m_shortNames.begin() ; it != m_shortNames.end() ; ++it )
-            if ( QTextCodec::codecForName( (*it).ascii() ) == QTextCodec::codecForLocale() )
+            if ( QTextCodec::codecForName( (*it).toAscii() ) == QTextCodec::codecForLocale() )
                 return *it;
 
         return "utf8";
@@ -135,7 +125,7 @@ namespace Konversation
         if(shortName == "iso-2022-jp")
             return QTextCodec::codecForName( "jis7" );
         else
-            return QTextCodec::codecForName( shortName.ascii() );
+            return QTextCodec::codecForName( shortName.toAscii() );
     }
 
     IRCCharsets::IRCCharsets()

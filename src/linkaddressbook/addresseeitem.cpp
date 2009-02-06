@@ -20,10 +20,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include <qlayout.h>
 #include <qpushbutton.h>
-#include <q3groupbox.h>
 #include <qregexp.h>
-//Added by qt3to4:
-#include <QPixmap>
 
 #include <klocale.h>
 #include <kdebug.h>
@@ -40,7 +37,7 @@ mAddressee( addressee )
     if(pic.isIntern())
     {
                                                   //60 pixels seems okay.. kmail uses 60 btw
-        QPixmap qpixmap( pic.data().scaleWidth(60) );
+        QPixmap qpixmap = QPixmap::fromImage( pic.data().scaleWidth(60) );
         setPixmap( Photo,qpixmap );
     }
 

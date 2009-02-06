@@ -409,7 +409,7 @@ namespace Konversation
 
     bool AddressbookBase::runEmailProgram(const QString &mailtoaddress)
     {
-        KRun *proc = new KRun(KUrl(QString("mailto:") + KStringHandler::from8Bit(mailtoaddress.ascii())),0);
+        KRun *proc = new KRun(KUrl(QString("mailto:") + KStringHandler::from8Bit(mailtoaddress.toAscii())),0);
         kDebug() << "Sending email to " << mailtoaddress;
         if(proc->hasError())
         {

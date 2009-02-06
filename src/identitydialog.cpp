@@ -279,9 +279,6 @@ namespace Konversation
             IdentityPtr identity(new Identity);
             identity->copy(*m_currentIdentity);
             identity->setName(txt);
-#ifndef Q_CC_MSVC
-#warning "port kde4"
-#endif
             m_identityList.append(identity);
             m_identityCBox->addItem(txt);
             m_identityCBox->setCurrentIndex(m_identityCBox->count() - 1);

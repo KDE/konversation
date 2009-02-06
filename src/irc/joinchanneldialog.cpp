@@ -24,7 +24,7 @@
 namespace Konversation
 {
 
-    JoinChannelDialog::JoinChannelDialog(Server* server, QWidget *parent, const char *name)
+    JoinChannelDialog::JoinChannelDialog(Server* server, QWidget *parent)
         : KDialog(parent)
     {
         setCaption(i18n("Join Channel on %1", server->getDisplayName()));

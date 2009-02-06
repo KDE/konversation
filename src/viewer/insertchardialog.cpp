@@ -19,7 +19,7 @@
 namespace Konversation
 {
 
-    InsertCharDialog::InsertCharDialog(const QString& font, QWidget *parent, const char *name)
+    InsertCharDialog::InsertCharDialog(const QString& font, QWidget *parent)
         : KDialog(parent)
     {
         setButtons( KDialog::Ok | KDialog::Close );
