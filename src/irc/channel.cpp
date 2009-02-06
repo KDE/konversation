@@ -384,15 +384,15 @@ void Channel::setEncryptedOutput(bool e)
 
 Channel::~Channel()
 {
-    kDebug() << "Channel::~Channel(" << getName() << ")" << endl;
+    kDebug() << "(" << getName() << ")";
 
     // Purge nickname list
     purgeNicks();
-    kDebug() << "nicks purged" << endl;
+    kDebug() << "nicks purged";
 
     // Unlink this channel from channel list
     m_server->removeChannel(this);
-    kDebug() << "Channel removed." << endl;
+    kDebug() << "Channel removed.";
 
 }
 
@@ -544,7 +544,7 @@ void Channel::popupCommand(int id)
             break;
         }
         case Konversation::AddressbookSub:
-            kDebug() << "sub called" << endl;
+            kDebug() << "sub called";
             break;
         case Konversation::GiveOp:
             pattern="MODE %c +o %u";

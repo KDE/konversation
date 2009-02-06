@@ -1093,7 +1093,7 @@ namespace Konversation
                     // If remove failed, try to add it instead
                     if(!Preferences::addNotify(serverGroupId, list[index]))
                     {
-                        kDebug() << "OutputFilter::parseNotify(): Adding failed!" << endl;
+                        kDebug() << "Adding failed!";
                     }
                 }
             }                                     // endfor

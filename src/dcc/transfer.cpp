@@ -24,7 +24,7 @@
 
 DccTransfer::DccTransfer( DccType dccType, QObject* parent ) : QObject(parent)
 {
-    kDebug() << "DccTransfer::DccTransfer()" << endl;
+    kDebug();
 
     m_type = dccType;
 
@@ -50,7 +50,7 @@ DccTransfer::DccTransfer( DccType dccType, QObject* parent ) : QObject(parent)
 
 DccTransfer::~DccTransfer()
 {
-    kDebug() << "DccTransfer::~DccTransfer()" << endl;
+    kDebug();
     delete[] m_buffer;
     m_loggerTimer.stop();
 }
@@ -102,7 +102,7 @@ void DccTransfer::setPartnerNick( const QString& nick )
 
 bool DccTransfer::queue()
 {
-    kDebug() << "DccTransfer::queue()" << endl;
+    kDebug();
     if ( getStatus() != Configuring )
         return false;
 

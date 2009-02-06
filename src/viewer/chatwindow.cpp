@@ -99,7 +99,7 @@ void ChatWindow::setServer(Server* newServer)
 {
     if (!newServer)
     {
-        kDebug("ChatWindow::setServer(0)!") << endl;
+        kDebug() << "ChatWindow::setServer(0)!";
     }
     else
     {
@@ -110,7 +110,7 @@ void ChatWindow::setServer(Server* newServer)
         if(getType() != ChannelList)
         {
             if(textView) textView->setServer(newServer);
-            else kDebug() << "ChatWindow::setServer(): textView==0!" << endl;
+            else kDebug() << "textView==0!";
         }
 
         emit serverOnline(m_server->isConnected());

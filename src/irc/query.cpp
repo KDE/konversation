@@ -467,7 +467,7 @@ void Query::popup(int id)
             break;
 
         default:
-            kDebug() << "Query::popup(): Popup id " << id << " does not belong to me!" << endl;
+            kDebug() << "Popup id " << id << " does not belong to me!";
             break;
     }
 

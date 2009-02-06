@@ -38,7 +38,7 @@ DBus::DBus(QObject *parent) : QObject(parent)
 
 void DBus::raw(const QString& server,const QString& command)
 {
-    kDebug() << "DBus::raw()" << endl;
+    kDebug();
     // send raw IRC protocol data
     emit dcopRaw(server,command);
 }
@@ -107,7 +107,7 @@ void DBus::say(const QString& _server,const QString& _target,const QString& _com
     // TODO: this just masks a greater problem - Server::addQuery will return a query for '' --argonel
     // TODO: other DCOP calls need argument checking too --argonel
     if (server.isEmpty() || target.isEmpty() || command.isEmpty())
-        kDebug() <<  "DBus::say() requires 3 arguments." << endl;
+        kDebug() <<  "DBus::say() requires 3 arguments.";
     else
     {
         command.replace('\n',"\\n");
@@ -123,19 +123,19 @@ void DBus::say(const QString& _server,const QString& _target,const QString& _com
 
 void DBus::info(const QString& string)
 {
-    kDebug() << "DBus::info()" << endl;
+    kDebug();
     emit dcopInfo(string);
 }
 
 void DBus::debug(const QString& string)
 {
-    kDebug() << "DBus::debug()" << endl;
+    kDebug();
     emit dcopInfo(QString("Debug: %1").arg(string));
 }
 
 void DBus::error(const QString& string)
 {
-    kDebug() << "DBus::error()" << endl;
+    kDebug();
     emit dcopInfo(QString("Error: %1").arg(string));
 }
 

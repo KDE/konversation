@@ -937,7 +937,7 @@ void IRCView::openLink(const QString& url, bool)
             QStringList cmdAndArgs = KShell::splitArgs(cmd);
             *proc << cmdAndArgs;
             //      This code will also work, but starts an extra shell process.
-            //      kdDebug() << "IRCView::urlClickSlot(): cmd = " << cmd << endl;
+            //      kdDebug() << "cmd = " << cmd;
             //      *proc << cmd;
             //      proc->setUseShell(true);
             proc->startDetached();

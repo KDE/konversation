@@ -162,7 +162,7 @@ namespace Konversation
         filteredLine.replace('&', "&amp;");
         filteredLine.replace("\x0b", "&");
 
-        // kDebug() << "Took (msecs) : " << timer.elapsed() << " for " << filteredLine << endl;
+        // kDebug() << "Took (msecs) : " << timer.elapsed() << " for " << filteredLine;
 
         return filteredLine;
     }

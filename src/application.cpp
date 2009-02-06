@@ -62,7 +62,7 @@ KonversationApplication::KonversationApplication()
 
 KonversationApplication::~KonversationApplication()
 {
-    kDebug() << k_funcinfo << endl;
+    kDebug();
     Server::_stashRates();
     Preferences::self()->writeConfig();
     saveOptions(false);

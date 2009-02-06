@@ -138,7 +138,7 @@ Server::Server(QObject* parent, ConnectionSettings& settings) : QObject(parent)
 Server::~Server()
 {
     //send queued messages
-    kDebug() << "Server::~Server(" << getServerName() << ")" << endl;
+    kDebug() << "Server::~Server(" << getServerName() << ")";
 
     // Delete helper object.
     delete m_serverISON;
@@ -185,7 +185,7 @@ Server::~Server()
 
     emit destroyed(m_connectionId);
 
-    kDebug() << "~Server done" << endl;
+    kDebug() << "~Server done";
 }
 
 //... so called to match the ChatWindow derivatives.
@@ -423,7 +423,7 @@ void Server::connectToIRCServer()
         m_inputFilter.reset();
     }
     else
-        kDebug() << "connectToIRCServer() called while already connected: This should never happen." << endl;
+        kDebug() << "connectToIRCServer() called while already connected: This should never happen.";
 }
 
 /*
@@ -566,7 +566,7 @@ void Server::ircServerConnectionSuccess()
 
 void Server::broken(QAbstractSocket::SocketError state)
 {
-    kDebug() << "Connection broken " << m_socket->errorString() << "!" << endl;
+    kDebug() << "Connection broken " << m_socket->errorString() << "!";
 
     m_socket->blockSignals(true);
 
@@ -708,7 +708,7 @@ void Server::gotOwnResolvedHostByWelcome(const QHostInfo& res)
     if (res.error() == QHostInfo::NoError && !res.addresses().isEmpty())
         m_ownIpByWelcome = res.addresses().first().toString();
     else
-        kDebug() << "Server::gotOwnResolvedHostByWelcome(): Got error: " << res.errorString() << endl;
+        kDebug() << "Got error: " << res.errorString();
 }
 
 void Server::quitServer()
@@ -1478,7 +1478,7 @@ void Server::closeQuery(const QString &name)
 
 void Server::closeChannel(const QString& name)
 {
-    kDebug() << "Server::closeChannel(" << name << ")" << endl;
+    kDebug() << "Server::closeChannel(" << name << ")";
     Channel* channelToClose = getChannelByName(name);
 
     if(channelToClose)
@@ -1635,7 +1635,7 @@ void Server::slotNewDccTransferItemQueued(DccTransfer* transfer)
 {
     if (transfer->getConnectionId() == connectionId() )
     {
-        kDebug() << "Server::slotNewDccTranfserItemQueued(): connecting slots for " << transfer->getFileName() << " [" << transfer->getType() << "]" << endl;
+        kDebug() << "connecting slots for " << transfer->getFileName() << " [" << transfer->getType() << "]";
         if ( transfer->getType() == DccTransfer::Receive )
         {
             connect( transfer, SIGNAL( done( DccTransfer* ) ), this, SLOT( dccGetDone( DccTransfer* ) ) );
@@ -2013,14 +2013,14 @@ void Server::updateChannelMode(const QString &updater, const QString &channelNam
 /*
             if(parameter.isEmpty())
             {
-                kDebug() << "in updateChannelMode, a nick with no-name has had their mode '" << mode << "' changed to (" <<plus << ") in channel '" << channelName << "' by " << updater << ".  How this happened, I have no idea.  Please report this message to irc #konversation if you want to be helpful." << endl << "Ignoring the error and continuing." << endl;
+                kDebug() << "in updateChannelMode, a nick with no-name has had their mode '" << mode << "' changed to (" <<plus << ") in channel '" << channelName << "' by " << updater << ".  How this happened, I have no idea.  Please report this message to irc #konversation if you want to be helpful." << endl << "Ignoring the error and continuing.";
                                                   //this will get their attention.
-                kDebug() << kBacktrace() << endl;
+                kDebug() << kBacktrace();
             }
             else
             {
-                kDebug() << "in updateChannelMode, could not find updatee nick " << parameter << " for channel " << channelName << endl;
-                kDebug() << "This could indicate an obscure race condition that is safely being handled (like the mode of someone changed and they quit almost simulatanously, or it could indicate an internal error." << endl;
+                kDebug() << "in updateChannelMode, could not find updatee nick " << parameter << " for channel " << channelName;
+                kDebug() << "This could indicate an obscure race condition that is safely being handled (like the mode of someone changed and they quit almost simulatanously, or it could indicate an internal error.";
             }
 */
             //TODO Do we need to add this nick?
@@ -2507,7 +2507,7 @@ void Server::renameNickInfo(NickInfoPtr nickInfo, const QString& newname)
     }
     else
     {
-        kDebug() << "server::renameNickInfo() was called for newname='" << newname << "' but nickInfo is null" << endl;
+        kDebug() << "server::renameNickInfo() was called for newname='" << newname << "' but nickInfo is null";
     }
 }
 
@@ -2602,7 +2602,7 @@ void Server::renameNick(const QString &nickname, const QString &newNick)
 {
     if(nickname.isEmpty() || newNick.isEmpty())
     {
-        kDebug() << "server::renameNick called with empty strings!  Trying to rename '" << nickname << "' to '" << newNick << "'" << endl;
+        kDebug() << "server::renameNick called with empty strings!  Trying to rename '" << nickname << "' to '" << newNick << "'";
         return;
     }
 
@@ -2620,7 +2620,7 @@ void Server::renameNick(const QString &nickname, const QString &newNick)
 
     if(!nickInfo)
     {
-        kDebug() << "server::renameNick called for nickname '" << nickname << "' to '" << newNick << "' but getNickInfo('" << nickname << "') returned no results." << endl;
+        kDebug() << "server::renameNick called for nickname '" << nickname << "' to '" << newNick << "' but getNickInfo('" << nickname << "') returned no results.";
     }
     else
     {
@@ -2667,7 +2667,7 @@ void Server::gotOwnResolvedHostByUserhost(const QHostInfo& res)
     if ( res.error() == QHostInfo::NoError && !res.addresses().isEmpty() )
         m_ownIpByUserhost = res.addresses().first().toString();
     else
-        kDebug() << "Server::gotOwnResolvedHostByUserhost(): Got error: " << res.errorString() << endl;
+        kDebug() << "Got error: " << res.errorString();
 }
 
 void Server::appendServerMessageToChannel(const QString& channel,const QString& type,const QString& message)
@@ -3276,7 +3276,7 @@ void Server::updateLongPongLag()
     {
         m_currentLag = m_lagTime.elapsed();
         emit tooLongLag(this, m_currentLag);
-        // kDebug() << "Current lag: " << currentLag << endl;
+        // kDebug() << "Current lag: " << currentLag;
 
         if (m_currentLag > (Preferences::self()->maximumLagTime() * 1000))
             m_socket->close();

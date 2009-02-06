@@ -53,7 +53,7 @@ using namespace KNetwork;
 DccTransferSend::DccTransferSend(QObject* parent)
     : DccTransfer( DccTransfer::Send, parent )
 {
-    kDebug() << "DccTransferSend::DccTransferSend()" << endl;
+    kDebug();
 
     m_serverSocket = 0;
     m_sendSocket = 0;
@@ -73,7 +73,7 @@ DccTransferSend::~DccTransferSend()
 
 void DccTransferSend::cleanUp()
 {
-    kDebug() << "DccTransferSend::cleanUp()" << endl;
+    kDebug();
     stopConnectionTimer();
     finishTransferLogger();
     if ( !m_tmpFile.isEmpty() )
@@ -132,7 +132,7 @@ void DccTransferSend::setReverse( bool reverse )
 
 bool DccTransferSend::queue()
 {
-    kDebug() << "DccTransferSend::queue()" << endl;
+    kDebug();
 
     if ( getStatus() != Configuring )
         return false;
@@ -166,13 +166,13 @@ bool DccTransferSend::queue()
             ifr.ifr_addr.sa_family = AF_INET;
             if ( ioctl( sock, SIOCGIFADDR, &ifr ) >= 0 )
                 m_ownIp =  inet_ntoa( ( (struct sockaddr_in *)&ifr.ifr_addr )->sin_addr );
-            kDebug() << "Falling back to IPv4 address " << m_ownIp << endl;
+            kDebug() << "Falling back to IPv4 address " << m_ownIp;
 #endif
         }
     }
 
     m_fastSend = Preferences::self()->dccFastSend();
-    kDebug() << "DccTransferSend::DccTransferSend(): Fast DCC send: " << m_fastSend << endl;
+    kDebug() << "Fast DCC send: " << m_fastSend;
 
     //Check the file exists
     if ( !KIO::NetAccess::exists( m_fileURL, true, NULL ) )
@@ -186,7 +186,7 @@ bool DccTransferSend::queue()
     if ( !KIO::NetAccess::download( m_fileURL, m_tmpFile, NULL ) )
     {
         failed( i18n( "Could not retrieve \"%1\"", m_fileURL.prettyUrl() ) );
-        kDebug() << "DccTransferSend::DccTransferSend(): KIO::NetAccess::download() failed. reason: " << KIO::NetAccess::lastErrorString() << endl;
+        kDebug() << "KIO::NetAccess::download() failed. reason: " << KIO::NetAccess::lastErrorString();
         return false;
     }
 
@@ -222,7 +222,7 @@ bool DccTransferSend::queue()
 
 void DccTransferSend::abort()                     // public slot
 {
-    kDebug() << "DccTransferSend::abort()" << endl;
+    kDebug();
 
     setStatus( Aborted );
     cleanUp();
@@ -231,7 +231,7 @@ void DccTransferSend::abort()                     // public slot
 
 void DccTransferSend::start()                     // public slot
 {
-    kDebug() << "DccTransferSend::start()" << endl;
+    kDebug();
 
     if ( getStatus() != Queued )
         return;
@@ -241,7 +241,7 @@ void DccTransferSend::start()                     // public slot
     Server* server = KonversationApplication::instance()->getConnectionManager()->getServerByConnectionId( m_connectionId );
     if ( !server )
     {
-        kDebug() << "DccTransferSend::start(): could not retrieve the instance of Server. Connection id: " << m_connectionId << endl;
+        kDebug() << "could not retrieve the instance of Server. Connection id: " << m_connectionId;
         failed( i18n( "Could not send a DCC SEND request to the partner via the IRC server." ) );
         return;
     }
@@ -249,7 +249,7 @@ void DccTransferSend::start()                     // public slot
     if ( !m_reverse )
     {
         // Normal DCC SEND
-        kDebug() << "DccTransferSend::start(): normal DCC SEND" << endl;
+        kDebug() << "normal DCC SEND";
 
         // Set up server socket
         QString failedReason;
@@ -270,7 +270,7 @@ void DccTransferSend::start()                     // public slot
         // Get own port number
         m_ownPort = QString::number( DccCommon::getServerSocketPort( m_serverSocket ) );
 
-        kDebug() << "DccTransferSend::start(): own Address=" << m_ownIp << ":" << m_ownPort << endl;
+        kDebug() << "Own Address=" << m_ownIp << ":" << m_ownPort;
 
         startConnectionTimer( Preferences::self()->dccSendTimeout() );
 
@@ -279,13 +279,13 @@ void DccTransferSend::start()                     // public slot
     else
     {
         // Passive DCC SEND
-        kDebug() << "DccTransferSend::start(): passive DCC SEND" << endl;
+        kDebug() << "Passive DCC SEND";
 
         int tokenNumber = KonversationApplication::instance()->getDccTransferManager()->generateReverseTokenNumber();
         // TODO: should we append a letter "T" to this token?
         m_reverseToken = QString::number( tokenNumber );
 
-        kDebug() << "DccTransferSend::start(): passive DCC key(token): " << m_reverseToken << endl;
+        kDebug() << "Passive DCC key(token): " << m_reverseToken;
 
         server->dccPassiveSendRequest( m_partnerNick, m_fileName, getNumericalIpText( m_ownIp ), m_fileSize, m_reverseToken );
     }
@@ -314,7 +314,7 @@ void DccTransferSend::connectToReceiver( const QString& partnerHost, const QStri
                                                   // public
 bool DccTransferSend::setResume( unsigned long position )
 {
-    kDebug() << "DccTransferSend::setResume(): position=" << position << endl;
+    kDebug() << "Position=" << position;
 
     if ( getStatus() > WaitingRemote )
         return false;
@@ -331,7 +331,7 @@ void DccTransferSend::acceptClient()                     // slot
 {
     // Normal DCC
 
-    kDebug() << "DccTransferSend::acceptClient()" << endl;
+    kDebug();
 
     stopConnectionTimer();
 
@@ -377,7 +377,7 @@ void DccTransferSend::startSending()
 
 void DccTransferSend::writeData()                 // slot
 {
-    //kDebug() << "DccTransferSend::writeData()" << endl;
+    //kDebug();
     if ( !m_fastSend )
     {
         m_sendSocket->enableWrite( false );
@@ -391,7 +391,7 @@ void DccTransferSend::writeData()                 // slot
         if ( (KIO::fileoffset_t)m_fileSize <= m_transferringPosition )
         {
             Q_ASSERT( (KIO::fileoffset_t)m_fileSize == m_transferringPosition );
-            kDebug() << "DccTransferSend::writeData(): Done." << endl;
+            kDebug() << "Done.";
             m_sendSocket->enableWrite( false );   // there is no need to call this function anymore
         }
     }
@@ -399,7 +399,7 @@ void DccTransferSend::writeData()                 // slot
 
 void DccTransferSend::getAck()                    // slot
 {
-    //kDebug() << "DccTransferSend::getAck()" << endl;
+    //kDebug();
     if ( !m_fastSend && m_transferringPosition < (KIO::fileoffset_t)m_fileSize )
     {
         m_sendSocket->enableWrite( true );
@@ -412,7 +412,7 @@ void DccTransferSend::getAck()                    // slot
         pos = intel( pos );
         if ( pos == m_fileSize )
         {
-            kDebug() << "DccTransferSend::getAck(): Received final ACK." << endl;
+            kDebug() << "Received final ACK.";
             finishTransferLogger();
             setStatus( Done );
             cleanUp();
@@ -424,13 +424,13 @@ void DccTransferSend::getAck()                    // slot
 
 void DccTransferSend::slotGotSocketError( int errorCode )
 {
-    kDebug() << "DccTransferSend::slotGotSocketError(): code =  " << errorCode << " string = " << m_serverSocket->errorString() << endl;
+    kDebug() << "code =  " << errorCode << " string = " << m_serverSocket->errorString();
     failed( i18n( "Socket error: %1", m_serverSocket->errorString() ) );
 }
 
 void DccTransferSend::startConnectionTimer( int sec )
 {
-    kDebug() << "DccTransferSend::startConnectionTimer()"<< endl;
+    kDebug();
     stopConnectionTimer();
     m_connectionTimer->start(sec*1000);
 }
@@ -439,14 +439,14 @@ void DccTransferSend::stopConnectionTimer()
 {
     if ( m_connectionTimer->isActive() )
     {
-        kDebug() << "DccTransferSend::stopConnectionTimer(): stop" << endl;
+        kDebug() << "stop";
         m_connectionTimer->stop();
     }
 }
 
 void DccTransferSend::slotConnectionTimeout()         // slot
 {
-    kDebug() << "DccTransferSend::slotConnectionTimeout()" << endl;
+    kDebug();
     failed( i18n( "Timed out" ) );
 }
 
@@ -457,12 +457,12 @@ void DccTransferSend::slotConnectionFailed( int /* errorCode */ )
 
 void DccTransferSend::slotServerSocketClosed()
 {
-    kDebug() << "DccTransferSend::slotServerSocketClosed()" << endl;
+    kDebug();
 }
 
 void DccTransferSend::slotSendSocketClosed()
 {
-    kDebug() << "DccTransferSend::slotSendSocketClosed()" << endl;
+    kDebug();
     finishTransferLogger();
     if ( getStatus() == Transferring && m_transferringPosition < (KIO::fileoffset_t)m_fileSize )
         failed( i18n( "Remote user disconnected" ) );

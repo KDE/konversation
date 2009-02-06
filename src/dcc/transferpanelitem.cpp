@@ -60,7 +60,7 @@ DccTransferPanelItem::DccTransferPanelItem( DccTransferPanel* panel, DccTransfer
 
 DccTransferPanelItem::~DccTransferPanelItem()
 {
-    kDebug() << "DccTransferPanelItem::~DccTransferPanelItem()" << endl;
+    kDebug();
     stopAutoViewUpdate();
     delete m_progressBar;
     if ( m_isTransferInstanceBackup )
@@ -258,7 +258,7 @@ void DccTransferPanelItem::openFileInfoDialog()
 
 void DccTransferPanelItem::backupTransferInfo( DccTransfer* transfer )
 {
-    kDebug() << "DccTransferPanelItem::backupTransferInfo()" << endl;
+    kDebug();
     // instances of DccTransfer are deleted immediately after the transfer is done
     // so we need to make a backup of DccTransfer.
 

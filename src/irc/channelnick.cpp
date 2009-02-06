@@ -223,7 +223,7 @@ QString ChannelNick::tooltip()
         tooltip << "<tr><td><b>" << i18n("Mode") << ": </b></td><td>" << modes.join(", ") << "</td></tr>";
     }
     tooltip << "</table></qt>";
-    //kDebug() << strTooltip << endl;
+    //kDebug() << strTooltip ;
     //if(!dirty) return QString();
     return strTooltip;
 }

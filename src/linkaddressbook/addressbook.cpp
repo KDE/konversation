@@ -100,7 +100,7 @@ namespace Konversation
     {
         if(uid.isEmpty())
         {
-            kDebug() << "Addressbook::presenceString() called with an empty uid" << endl;
+            kDebug() << "Called with an empty uid";
             return QString("Error");
         }
         switch( presenceStatus(uid))
@@ -127,7 +127,7 @@ namespace Konversation
     {
         if(uid.isEmpty())
         {
-            kDebug() << "Addressbook::canReceiveFiles() called with empty uid" << endl;
+            kDebug() << "Called with empty uid";
             return false;
         }
         int presence = presenceStatus(uid);
@@ -138,7 +138,7 @@ namespace Konversation
     {
         if(uid.isEmpty())
         {
-            kDebug() << "Addressbook::canRespond called with empty uid" << endl;
+            kDebug() << "Called with empty uid";
             return false;
         }
         //this should return false if they are offline.
@@ -150,7 +150,7 @@ namespace Konversation
     {
         if(contactId.isEmpty())
         {
-            kDebug() << "Addressbook::locate called with empty contactId" << endl;
+            kDebug() << "Called with empty contactId";
             return QString();
         }
         if(protocol != "messaging/irc")
@@ -181,7 +181,7 @@ namespace Konversation
                 break;
             default:
                 //error
-                kDebug() << "Unknown status " << uid << endl;
+                kDebug() << "Unknown status " << uid;
                 return QPixmap();
         }
 
@@ -192,7 +192,7 @@ namespace Konversation
     {
         if(uid.isEmpty())
         {
-            kDebug() << "Addressbook::contact called with empty uid" << endl;
+            kDebug() << "Called with empty uid";
             return QString();
         }
         QString context;
@@ -244,7 +244,7 @@ namespace Konversation
     void Addressbook::messageNewContact( const QString &contactId, const QString &/*protocol*/ ) {
     if(contactId.isEmpty() )
     {
-        kDebug() << "Addressbook::messageNewContact called with empty contactid" << endl;
+        kDebug() << "Called with empty contactid";
         focusAndShowErrorMessage(i18n("Another KDE application tried to use Konversation for instant messaging, but did not specify any contact to send the message to.  This is probably a bug in the other application."));
         return;
     }
@@ -259,7 +259,7 @@ void Addressbook::chatWithContact( const QString &uid )
 {
     if(uid.isEmpty())
     {
-        kDebug() << "Addressbook::chatWithContact called with empty uid" << endl;
+        kDebug() << "Called with empty uid";
         focusAndShowErrorMessage(i18n("Another KDE application tried to use Konversation for instant messaging, but did not specify any contact to send the message to.  This is probably a bug in the other application."));
         return;
     }
@@ -320,18 +320,18 @@ void Addressbook::emitContactPresenceChanged(const QString &uid, int presence)
     if(uid.isEmpty())
     {
         //This warning below is annoying.  FIXME - disabled because it's too verbose
-        //		kDebug() << "Addressbook::emitContactPresenceChanged was called with empty uid" << endl;
+        //		kDebug() << "Addressbook::emitContactPresenceChanged was called with empty uid";
         return;
     }
     emit contactPresenceChanged(uid, QString::fromLatin1("org.kde.konversation"), presence);
-    //	kDebug() << "Presence changed for uid " << uid << " to " << presence << endl;
+    //	kDebug() << "Presence changed for uid " << uid << " to " << presence;
 }
 
 void Addressbook::emitContactPresenceChanged(const QString &uid)
 {
     if(uid.isEmpty())
     {
-        kDebug() << "Addressbook::emitContactPresenceChanged was called with empty uid" << endl;
+        kDebug() << "Called with empty uid";
         return;
     };
 

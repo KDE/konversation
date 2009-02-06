@@ -183,14 +183,14 @@ void KonviSettingsDialog::modifiedSlot()
 {
   // this is for the non KConfigXT parts to tell us, if the user actually changed
   // something or went back to the old settings
-// kDebug() << "KonviSettingsDialog::modifiedSlot()" << endl;
+// kDebug();
   m_modified = false;
   foreach (KonviSettingsPage *page, m_pages)
   {
     if (page->hasChanged())
     {
       m_modified = true;
-//      kDebug() << "KonviSettingsDialog::modifiedSlot(): modified!" << endl;
+//      kDebug() << "modified!";
       break;
     }
   }

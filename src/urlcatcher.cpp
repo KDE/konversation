@@ -151,7 +151,7 @@ void UrlCatcher::openUrl(Q3ListViewItem* item)
         QStringList cmdAndArgs = KShell::splitArgs(cmd);
         *proc << cmdAndArgs;
         //    This code will also work, but starts an extra shell process.
-        //    kDebug() << "UrlCatcher::openUrl(): cmd = " << cmd << endl;
+        //    kDebug() "cmd = " << cmd;
         //    *proc << cmd;
         //    proc->setUseShell(true);
         proc->startDetached();

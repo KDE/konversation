@@ -648,7 +648,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
         }
         else if(command=="error :closing link:")
         {
-            kDebug() << "link closed" << endl;
+            kDebug() << "link closed";
         }
         else if(command=="pong")
         {
@@ -774,7 +774,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     }
                     else
                     {
-                        //kDebug() << "Ignored server-capability: " << property << " with value '" << value << "'" << endl;
+                        //kDebug() << "Ignored server-capability: " << property << " with value '" << value << "'";
                     }
                 }                                 // endfor
                 break;
@@ -897,7 +897,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 }
                 else
                 {
-                    kDebug() << "Hmm seems something is broken... can't get to the names!" << endl;
+                    kDebug() << "Hmm seems something is broken... can't get to the names!";
                 }
 
                 // send list to channel
@@ -1300,17 +1300,15 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     else
                     {
                         // whoRequestList seems to be broken.
-                        kDebug()   << "InputFilter::parseServerCommand(): RPL_ENDOFWHO: malformed ENDOFWHO. retrieved: "
-                            << parameterList[1] << " expected: " << whoRequestList.front()
-                            << endl;
+                        kDebug() << "RPL_ENDOFWHO: malformed ENDOFWHO. retrieved: "
+                            << parameterList[1] << " expected: " << whoRequestList.front();
                         whoRequestList.clear();
                     }
                 }
                 else
                 {
-                    kDebug()   << "InputFilter::parseServerCommand(): RPL_ENDOFWHO: unexpected ENDOFWHO. retrieved: "
-                        << parameterList[1]
-                        << endl;
+                    kDebug() << "RPL_ENDOFWHO: unexpected ENDOFWHO. retrieved: "
+                        << parameterList[1];
                 }
 
                 emit endOfWho(parameterList[1]);
@@ -1817,8 +1815,7 @@ void InputFilter::parseModes(const QString &sourceNick, const QStringList &param
             if(parameter.isEmpty())               // XXX Check this to ensure the braces are in the correct place
             {
                 kDebug()   << "in updateChannelMode.  sourceNick: '" << sourceNick << "'  parameterlist: '"
-                    << parameterList.join(", ") << "'"
-                    << endl;
+                    << parameterList.join(", ") << "'";
             }
             server->updateChannelMode(sourceNick,parameterList[0],mode,plus,parameter);
         }
@@ -1870,9 +1867,8 @@ void InputFilter::setAutomaticRequest(const QString& command, const QString& nam
     automaticRequest[command][name.toLower()] += (yes) ? 1 : -1;
     if(automaticRequest[command][name.toLower()]<0)
     {
-        kDebug()   << "InputFilter::automaticRequest( " << command << ", " << name
-            << " ) was negative! Resetting!"
-            << endl;
+        kDebug()   << "( " << command << ", " << name
+            << " ) was negative! Resetting!";
         automaticRequest[command][name.toLower()]=0;
     }
 }

@@ -183,7 +183,7 @@ namespace Konversation
     void AddressbookBase::unassociateNick(KABC::Addressee &addressee, const QString &ircnick, const QString &servername, const QString &servergroup)
     {
 
-        kDebug() << "in unassociatenick for '" << ircnick << endl;
+        kDebug() << "in unassociatenick for '" << ircnick;
         if(ircnick.isEmpty()) return;
 
         QString lnick = ircnick.toLower();
@@ -198,11 +198,11 @@ namespace Konversation
         // like johnflux, johnflux@freenode, or johnflux@irc.kde.org    except with the unicode
         // separator char 0xe120 instead of the @
 
-        kDebug() << "nick" << ircnick<< endl;
+        kDebug() << "nick" << ircnick;
         bool changed = false;
         if(addressee.isEmpty())
         {
-            kDebug() << "Ignoring unassociation command for empty addressee for nick " << ircnick << endl;
+            kDebug() << "Ignoring unassociation command for empty addressee for nick " << ircnick;
         }
         QString lit;
         QStringList addresses = addressee.custom("messaging/irc", "All").split(QChar(0xE000), QString::SkipEmptyParts);
@@ -283,7 +283,7 @@ namespace Konversation
             //emit error
             return false;
         }
-        kDebug() << "gotTicketSuccessfully" << endl;
+        kDebug() << "gotTicketSuccessfully";
         return true;
     }
     void AddressbookBase::releaseTicket()
@@ -301,7 +301,7 @@ namespace Konversation
             m_ticket = NULL;
             return false;
         }
-        kDebug() << "saveTicket() was successful" << endl;
+        kDebug() << "saveTicket() was successful";
         m_ticket= NULL;
         emit addresseesChanged();
         return true;
@@ -330,7 +330,7 @@ namespace Konversation
                 return false;
             }
         }
-        kDebug() << "Save was successful" << endl;
+        kDebug() << "Save was successful";
         m_ticket = NULL;
         emit addresseesChanged();
         return true;
@@ -388,7 +388,7 @@ namespace Konversation
         KProcess *proc = new KProcess;
         *proc << "kaddressbook";
         *proc << "--editor-only" << "--uid" << uid;
-        kDebug() << "running kaddressbook --editor-only --uid " << uid << endl;
+        kDebug() << "running kaddressbook --editor-only --uid " << uid;
         if(!proc->startDetached())
         {
             KMessageBox::error(0, i18n("Could not run your addressbook program (kaddressbook).  This is most likely because it is not installed.  Please install the 'kdepim' packages."));
@@ -410,7 +410,7 @@ namespace Konversation
     bool AddressbookBase::runEmailProgram(const QString &mailtoaddress)
     {
         KRun *proc = new KRun(KUrl(QString("mailto:") + KStringHandler::from8Bit(mailtoaddress.ascii())),0);
-        kDebug() << "Sending email to " << mailtoaddress << endl;
+        kDebug() << "Sending email to " << mailtoaddress;
         if(proc->hasError())
         {
             KMessageBox::error(0, i18n("Could not run your email program.  This is possibly because one is not installed.  To install the KDE email program (kmail) please install the 'kdepim' packages."));
