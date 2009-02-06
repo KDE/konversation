@@ -30,7 +30,41 @@
 #include <kaction.h>
 
 NickListView::NickListView(QWidget* parent, Channel *chan) :
-K3ListView(parent)
+K3ListView(parent),
+    m_whoisAction(0),
+    m_versionAction(0), 
+    m_pingAction(0),
+    m_giveOpAction(0),
+    m_takeOpAction(0),
+    m_giveHalfOpAction(0),
+    m_takeHalfOpAction(0),
+    m_giveVoiceAction(0),
+    m_takeVoiceAction(0),
+    m_modeAction(0),
+    m_ignoreAction(0),
+    m_unIgnoreAction(0),
+    m_kickAction(0),
+    m_kickBanAction(0),
+    m_banNickAction(0),
+    m_banHostAction(0),
+    m_banDomainAction(0),
+    m_banUserHostAction(0),
+    m_banUserDomainAction(0),
+    m_kickBanHostAction(0),
+    m_kickBanDomainAction(0),
+    m_kickBanUserHostAction(0),
+    m_kickBanUserDomainAction(0),
+    m_kickBanSubAction(0),
+    m_addNotifyAction(0),
+    m_addressbookSubAction(0),
+    m_sendMailAction(0),
+    m_AddressbookNewAction(0),
+    m_AddressbookChangeAction(0),
+    m_AddressbookEditAction(0),
+    m_AddressbookDeleteAction(0),
+    m_openQueryAction(0),
+    m_startDccChatAction(0),
+    m_dccSendAction(0)
 {
     K3ListView::setSorting(-1);
     setWhatsThis();
