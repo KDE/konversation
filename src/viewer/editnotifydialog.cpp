@@ -17,8 +17,6 @@
 
 #include <qlayout.h>
 #include <qlabel.h>
-//Added by qt3to4:
-#include <Q3HBoxLayout>
 
 #include <klineedit.h>
 #include <kcombobox.h>
@@ -36,11 +34,9 @@ const QString& nickname):
     setModal( true );
     setButtons( KDialog::Ok | KDialog::Cancel );
     setDefaultButton( KDialog::Ok );
-    QWidget* page=new QWidget(this);
-    setMainWidget(page);
+    QWidget* page = mainWidget();
 
-    Q3HBoxLayout* layout = new Q3HBoxLayout(page);
-    layout->setSpacing(spacingHint());
+    QHBoxLayout* layout = new QHBoxLayout(page);
 
     QLabel* networkNameLabel=new QLabel(i18n("&Network name:"), page);
     QString networkNameWT = i18n(
@@ -78,7 +74,7 @@ const QString& nickname):
     // Add network names to network combobox and select the one corresponding to argument.
     for (QStringList::ConstIterator it = networkNames.begin(); it != networkNames.end(); ++it)
     {
-        m_networkNameCombo->insertItem(*it);
+        m_networkNameCombo->addItem(*it);
         if(*it == network) m_networkNameCombo->setCurrentIndex(m_networkNameCombo->count()-1);
     }
     layout->addWidget(networkNameLabel);
