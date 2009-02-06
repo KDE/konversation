@@ -510,8 +510,7 @@ QString IRCView::createNickLine(const QString& nick, bool encapsulateNick, bool 
 
     if(Preferences::self()->useClickableNicks())
     {
-        // HACK:Use space as a placeholder for \ as Qt tries to be clever and does a replace to / in urls in QTextEdit
-        nickLine = "<a class=\"nick\" href=\"#" + QString(nick).replace('\\', " ") + "\">" + nickLine + "</a>";
+        nickLine = "<a class=\"nick\" href=\"#" + nick + "\">" + nickLine + "</a>";
     }
 
     if(privMsg)
@@ -962,12 +961,6 @@ void IRCView::highlightedSlot(const QString& _link)
     //Hack to handle the fact that we get a decoded url
     //FIXME someone who knows what it looks like when we get a decoded url can reenable this if necessary...
     //link = KUrl(link).url();
-
-    // HACK:Use space as a placeholder for \ as Qt tries to be clever and does a replace to / in urls in QTextEdit
-    if(link.startsWith("#"))
-    {
-        link = link.replace(' ', "\\");
-    }
 
     //we just saw this a second ago.  no need to reemit.
     if (link == m_lastStatusText && !link.isEmpty())
