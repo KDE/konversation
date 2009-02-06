@@ -19,10 +19,14 @@
 #include "../linkaddressbook/nicklisttooltip.h"
 #include "images.h"
 #include "common.h"
+#include "application.h" // for PopupIDs...
 
 #include <k3listview.h>
 #include <KMenu>
 
+class QActionGroup;
+class QMenu;
+class KAction;
 class QContextMenuEvent;
 class QTimer;
 
@@ -57,6 +61,9 @@ class NickListView : public K3ListView
         /* Will be connected to Channel::popupCommand(int) */
         void popupCommand(int id);
 
+        protected slots:
+        void slotActionTriggered(QAction* action);
+
     protected:
         void contextMenuEvent(QContextMenuEvent* ce);
         virtual bool acceptDrag (QDropEvent* event) const;
@@ -72,5 +79,45 @@ class NickListView : public K3ListView
 
         int m_column;
         bool m_ascending;
+
+        private:
+        // TODO use a more specific enum for just our actions?
+        KAction* createAction(QMenu* menu, const QString& text, Konversation::PopupIDs);
+
+        QActionGroup* m_actionGroup;
+        KAction* m_whoisAction;
+        KAction* m_versionAction;
+        KAction* m_pingAction;
+        KAction* m_giveOpAction;
+        KAction* m_takeOpAction;
+        KAction* m_giveHalfOpAction;
+        KAction* m_takeHalfOpAction;
+        KAction* m_giveVoiceAction;
+        KAction* m_takeVoiceAction;
+        KAction* m_modeAction;
+        KAction* m_ignoreAction;
+        KAction* m_unIgnoreAction;
+        KAction* m_kickAction;
+        KAction* m_kickBanAction;
+        KAction* m_banNickAction;
+        KAction* m_banHostAction;
+        KAction* m_banDomainAction;
+        KAction* m_banUserHostAction;
+        KAction* m_banUserDomainAction;
+        KAction* m_kickBanHostAction;
+        KAction* m_kickBanDomainAction;
+        KAction* m_kickBanUserHostAction;
+        KAction* m_kickBanUserDomainAction;
+        KAction* m_kickBanSubAction;
+        KAction* m_addNotifyAction;
+        KAction* m_addressbookSubAction;
+        KAction* m_sendMailAction;
+        KAction* m_AddressbookNewAction;
+        KAction* m_AddressbookChangeAction;
+        KAction* m_AddressbookEditAction;
+        KAction* m_AddressbookDeleteAction;
+        KAction* m_openQueryAction;
+        KAction* m_startDccChatAction;
+        KAction* m_dccSendAction;
 };
 #endif

@@ -26,6 +26,8 @@
 #include <q3dragobject.h>
 #include <kauthorized.h>
 #include <Q3MimeSourceFactory>
+#include <qactiongroup.h>
+#include <kaction.h>
 
 NickListView::NickListView(QWidget* parent, Channel *chan) :
 K3ListView(parent)
@@ -45,68 +47,70 @@ K3ListView(parent)
     setDropHighlighter(true);
     setDropVisualizer(false);
 
+    m_actionGroup = new QActionGroup(this);
+    connect(m_actionGroup, SIGNAL(triggered(QAction*)), this, SLOT(slotActionTriggered(QAction*)));
+
     if (popup)
     {
-        popup->insertItem(i18n("&Whois"),Konversation::Whois);
-        popup->insertItem(i18n("&Version"),Konversation::Version);
-        popup->insertItem(i18n("&Ping"),Konversation::Ping);
+        m_whoisAction = createAction(popup,i18n("&Whois"),Konversation::Whois);
+        m_versionAction = createAction(popup,i18n("&Version"),Konversation::Version);
+        m_pingAction = createAction(popup,i18n("&Ping"),Konversation::Ping);
 
         popup->addSeparator();
 
         if (modes)
         {
-            modes->insertItem(i18n("Give Op"),Konversation::GiveOp);
-            modes->insertItem(i18n("Take Op"),Konversation::TakeOp);
-            modes->insertItem(i18n("Give HalfOp"),Konversation::GiveHalfOp);
-            modes->insertItem(i18n("Take HalfOp"),Konversation::TakeHalfOp);
-            modes->insertItem(i18n("Give Voice"),Konversation::GiveVoice);
-            modes->insertItem(i18n("Take Voice"),Konversation::TakeVoice);
-            popup->insertItem(i18n("Modes"),modes,Konversation::ModesSub);
+            m_giveOpAction = createAction(modes,i18n("Give Op"),Konversation::GiveOp);
+            m_takeOpAction = createAction(modes,i18n("Take Op"),Konversation::TakeOp);
+            m_giveHalfOpAction = createAction(modes,i18n("Give HalfOp"),Konversation::GiveHalfOp);
+            m_takeHalfOpAction = createAction(modes,i18n("Take HalfOp"),Konversation::TakeHalfOp);
+            m_giveVoiceAction = createAction(modes,i18n("Give Voice"),Konversation::GiveVoice);
+            m_takeVoiceAction = createAction(modes,i18n("Take Voice"),Konversation::TakeVoice);
+            m_modeAction = createAction(modes,i18n("Modes"),Konversation::ModesSub);
         }
 
         if (kickban)
         {
-
-            kickban->insertItem(i18n("Kick"),Konversation::Kick);
-            kickban->insertItem(i18n("Kickban"),Konversation::KickBan);
-            kickban->insertItem(i18n("Ban Nickname"),Konversation::BanNick);
+            m_kickAction = createAction(kickban,i18n("Kick"),Konversation::Kick);
+            m_kickBanAction = createAction(kickban,i18n("Kickban"),Konversation::KickBan);
+            m_banNickAction = createAction(kickban,i18n("Ban Nickname"),Konversation::BanNick);
             kickban->addSeparator();
-            kickban->insertItem(i18n("Ban *!*@*.host"),Konversation::BanHost);
-            kickban->insertItem(i18n("Ban *!*@domain"),Konversation::BanDomain);
-            kickban->insertItem(i18n("Ban *!user@*.host"),Konversation::BanUserHost);
-            kickban->insertItem(i18n("Ban *!user@domain"),Konversation::BanUserDomain);
+            m_banHostAction = createAction(kickban,i18n("Ban *!*@*.host"),Konversation::BanHost);
+            m_banDomainAction = createAction(kickban,i18n("Ban *!*@domain"),Konversation::BanDomain);
+            m_banUserHostAction = createAction(kickban,i18n("Ban *!user@*.host"),Konversation::BanUserHost);
+            m_banUserDomainAction = createAction(kickban,i18n("Ban *!user@domain"),Konversation::BanUserDomain);
             kickban->addSeparator();
-            kickban->insertItem(i18n("Kickban *!*@*.host"),Konversation::KickBanHost);
-            kickban->insertItem(i18n("Kickban *!*@domain"),Konversation::KickBanDomain);
-            kickban->insertItem(i18n("Kickban *!user@*.host"),Konversation::KickBanUserHost);
-            kickban->insertItem(i18n("Kickban *!user@domain"),Konversation::KickBanUserDomain);
-            popup->insertItem(i18n("Kick / Ban"),kickban,Konversation::KickBanSub);
+            m_kickBanHostAction = createAction(kickban,i18n("Kickban *!*@*.host"),Konversation::KickBanHost);
+            m_kickBanDomainAction = createAction(kickban,i18n("Kickban *!*@domain"),Konversation::KickBanDomain);
+            m_kickBanUserHostAction = createAction(kickban,i18n("Kickban *!user@*.host"),Konversation::KickBanUserHost);
+            m_kickBanUserDomainAction = createAction(kickban,i18n("Kickban *!user@domain"),Konversation::KickBanUserDomain);
+            m_kickBanSubAction = createAction(kickban,i18n("Kick / Ban"),Konversation::KickBanSub);
         }
 
-        popup->insertItem(i18n("Ignore"), Konversation::IgnoreNick);
-        popup->insertItem(i18n("Unignore"), Konversation::UnignoreNick);
+        m_ignoreAction = createAction(popup,i18n("Ignore"),Konversation::IgnoreNick);
+        m_unIgnoreAction = createAction(popup,i18n("Unignore"),Konversation::UnignoreNick);
 
         popup->addSeparator();
 
-        int newitem;
-        newitem = popup->insertItem(i18n("Open &Query"),Konversation::OpenQuery);
-        popup->setWhatsThis(newitem, "<qt><p>Start a private chat between you and this person.</p><p><em>Technical note:</em><br />The conversation between you and this person will be sent via the server.  This means that the conversation will be affected by server lag, server stability, and will be terminated when you disconnect from the server.</p></qt>");
-        newitem = popup->insertItem(i18n("Open DCC &Chat"),Konversation::StartDccChat);
-        popup->setWhatsThis(newitem, "<qt><p>Start a private <em>D</em>irect <em>C</em>lient <em>C</em>onnection chat between you and this person.</p><p><em>Technical note:</em><br />The conversation between you and this person will be sent directly.  This means it is independent from the server - so if the server connection fails, or use disconnect, your DCC Chat will be unaffected.  It also means that no irc server admin can view or spy on this chat.</p></qt>");
-
+        m_openQueryAction = createAction(popup,i18n("Open &Query"),Konversation::OpenQuery);
+        m_openQueryAction->setWhatsThis("<qt><p>Start a private chat between you and this person.</p><p><em>Technical note:</em><br />The conversation between you and this person will be sent via the server.  This means that the conversation will be affected by server lag, server stability, and will be terminated when you disconnect from the server.</p></qt>");
+        m_startDccChatAction = createAction(popup,i18n("Open DCC &Chat"),Konversation::StartDccChat);
+        m_startDccChatAction->setWhatsThis("<qt><p>Start a private <em>D</em>irect <em>C</em>lient <em>C</em>onnection chat between you and this person.</p><p><em>Technical note:</em><br />The conversation between you and this person will be sent directly.  This means it is independent from the server - so if the server connection fails, or use disconnect, your DCC Chat will be unaffected.  It also means that no irc server admin can view or spy on this chat.</p></qt>");
         if (KAuthorized::authorizeKAction("allow_downloading"))
         {
-            newitem = popup->insertItem(SmallIcon("arrow-right-double"),i18n("Send &File..."),Konversation::DccSend);
-            popup->setWhatsThis(newitem, "<qt>Send a file to this person.  If you are having problem sending files, or they are sending slowly, see the Konversation Handbook and DCC preferences page.</qt>");
+            m_dccSendAction = createAction(popup,i18n("Send &File..."),Konversation::DccSend);
+            m_dccSendAction->setIcon(KIcon("arrow-right-double"));
+            m_dccSendAction->setWhatsThis("<qt>Send a file to this person.  If you are having problem sending files, or they are sending slowly, see the Konversation Handbook and DCC preferences page.</qt>");
         }
-        popup->insertItem(SmallIconSet("mail-send"),i18n("&Send Email..."), Konversation::SendEmail);
+        m_sendMailAction = createAction(kickban,i18n("&Send Email..."),Konversation::SendEmail);
+        m_sendMailAction->setIcon(KIcon("mail-send"));
 
         popup->addSeparator();
-
+        
         if (addressbook)
-            popup->insertItem(i18n("Addressbook Associations"), addressbook, Konversation::AddressbookSub);
+            m_addressbookSubAction = createAction(kickban,i18n("Addressbook Associations"),Konversation::AddressbookSub);
 
-        popup->insertItem(i18n("Add to Watched Nicks"), Konversation::AddNotify);
+        m_addNotifyAction = createAction(kickban,i18n("Add to Watched Nicks"),Konversation::AddNotify);
 
         connect (popup, SIGNAL(activated(int)), this, SIGNAL(popupCommand(int)));
         connect (modes, SIGNAL(activated(int)), this, SIGNAL(popupCommand(int)));
@@ -116,7 +120,7 @@ K3ListView(parent)
     }
     else
     {
-        kWarning() << "NickListView::NickListView(): Could not create popup!" << endl;
+        kWarning() << "Could not create popup!" ;
     }
 
     setShadeSortColumn(false);
@@ -283,22 +287,24 @@ void NickListView::insertAssociationSubMenu()
 
     if(!noAssociation && existingAssociation)
     {
-        addressbook->insertItem(SmallIcon("document-edit"), i18n("Edit Contact..."), Konversation::AddressbookEdit);
+        m_AddressbookEditAction = createAction(addressbook,i18n("Edit Contact..."),Konversation::AddressbookEdit);
+        m_AddressbookEditAction->setIcon(KIcon("document-edit"));
         addressbook->addSeparator();
     }
 
     if(noAssociation && existingAssociation)
-        addressbook->insertItem(i18n("Choose/Change Associations..."), Konversation::AddressbookChange);
+        m_AddressbookChangeAction = createAction(addressbook,i18n("Choose/Change Associations..."),Konversation::AddressbookChange);
     else if(noAssociation)
-        addressbook->insertItem(i18n("Choose Contact..."), Konversation::AddressbookChange);
+        m_AddressbookChangeAction = createAction(addressbook,i18n("Choose Contact..."),Konversation::AddressbookChange);
     else
-        addressbook->insertItem(i18n("Change Association..."), Konversation::AddressbookChange);
+        m_AddressbookChangeAction = createAction(addressbook,i18n("Change Association..."),Konversation::AddressbookChange);
 
     if(noAssociation && !existingAssociation)
-        addressbook->insertItem(i18n("Create New Contact..."), Konversation::AddressbookNew);
+        m_AddressbookNewAction = createAction(addressbook,i18n("Create New Contact..."),Konversation::AddressbookNew);
 
     if(existingAssociation)
-        addressbook->insertItem(SmallIcon("edit-delete"), i18n("Delete Association"), Konversation::AddressbookDelete);
+        m_AddressbookDeleteAction = createAction(addressbook,i18n("Delete Association"),Konversation::AddressbookDelete);
+        m_AddressbookDeleteAction->setIcon(KIcon("edit-delete"));
 
     if(!emailAddress)
         popup->setItemEnabled(Konversation::SendEmail, false);
@@ -330,6 +336,22 @@ bool NickListView::acceptDrag (QDropEvent* event) const
     }
     else
         return false;
+}
+
+Q_DECLARE_METATYPE(Konversation::PopupIDs)
+
+KAction* NickListView::createAction(QMenu* menu, const QString& text, Konversation::PopupIDs id)
+{
+    KAction* action = new KAction(text, menu);
+    menu->addAction(action);
+    action->setData(QVariant::fromValue(id));
+    m_actionGroup->addAction(action);
+    return action;
+}
+
+void NickListView::slotActionTriggered(QAction* action)
+{
+    popupCommand(action->data().value<Konversation::PopupIDs>());
 }
 
 // #include "./irc/nicklistview.moc"
