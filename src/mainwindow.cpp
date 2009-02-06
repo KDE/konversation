@@ -58,6 +58,7 @@
 #include <kabc/addressbook.h>
 #include <kabc/errorhandler.h>
 #include <KShortcutsDialog>
+#include <kstandardshortcut.h>
 
 #include <config-konvi.h>
 #include <knotifyconfigwidget.h>
