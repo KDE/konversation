@@ -14,10 +14,7 @@
 #define IGNORE_CONFIG_H
 
 #include "ui_ignore_preferencesui.h"
-#include "settingspage.h" ////// header renamed
-
-#include <q3ptrlist.h>
-
+#include "settingspage.h"
 
 class Ignore;
 class Ignore_Config : public QWidget, public KonviSettingsPage, private Ui::Ignore_ConfigUI
@@ -39,7 +36,7 @@ class Ignore_Config : public QWidget, public KonviSettingsPage, private Ui::Igno
         QStringList m_oldIgnoreList;
 
         QStringList currentIgnoreList();  // in hasChanged() format
-        Q3PtrList<Ignore> getIgnoreList(); // in prefs format
+        QList<Ignore*> getIgnoreList(); // in prefs format
         void updateEnabledness();
 
     public slots:

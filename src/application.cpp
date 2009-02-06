@@ -710,14 +710,9 @@ void KonversationApplication::saveOptions(bool updateGUI)
     // Ignore List
     KGlobal::config()->deleteGroup("Ignore List");
     KConfigGroup cgIgnoreList(KGlobal::config()->group("Ignore List"));
-    Q3PtrList<Ignore> ignoreList=Preferences::ignoreList();
-    Ignore* item=ignoreList.first();
-    index=0;
-    while(item)
-    {
-        cgIgnoreList.writeEntry(QString("Ignore%1").arg(index),QString("%1,%2").arg(item->getName()).arg(item->getFlags()));
-        item=ignoreList.next();
-        index++;
+    QList<Ignore*> ignoreList=Preferences::ignoreList();
+    for (int i = 0; i < ignoreList.size(); ++i) {
+        cgIgnoreList.writeEntry(QString("Ignore%1").arg(i),QString("%1,%2").arg(ignoreList.at(i)->getName()).arg(ignoreList.at(i)->getFlags()));
     }
 
     // Channel Encodings

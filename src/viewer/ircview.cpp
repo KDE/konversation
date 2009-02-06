@@ -695,15 +695,15 @@ bool doHighlight, bool parseURL, bool self)
         }
         else
         {
-            Q3PtrList<Highlight> highlightList = Preferences::highlightList();
-            Q3PtrListIterator<Highlight> it(highlightList);
-            Highlight* highlight = it.current();
+            QList<Highlight*> highlightList = Preferences::highlightList();
+            QListIterator<Highlight*> it(highlightList);
+            Highlight* highlight;
             bool patternFound = false;
-            int index = 0;
 
             QStringList captures;
-            while(highlight)
+            while (it.hasNext())
             {
+                highlight = it.next();
                 if(highlight->getRegExp())
                 {
                     QRegExp needleReg(highlight->getPattern());
@@ -726,16 +726,8 @@ bool doHighlight, bool parseURL, bool self)
                         (whoSent.contains(needle, Qt::CaseInsensitive)));
                 }
 
-                if(!patternFound)
-                {
-                    ++it;
-                    highlight = it.current();
-                    ++index;
-                }
-                else
-                {
+                if (patternFound)
                     break;
-                }
             }
 
             if(patternFound)

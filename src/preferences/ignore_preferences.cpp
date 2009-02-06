@@ -86,9 +86,9 @@ void Ignore_Config::removeIgnore()
     emit modified();
 }
 
-Q3PtrList<Ignore> Ignore_Config::getIgnoreList()
+QList<Ignore*> Ignore_Config::getIgnoreList()
 {
-    Q3PtrList<Ignore> newList;
+    QList<Ignore*> newList;
 
     QTreeWidgetItem *root = ignoreListView->invisibleRootItem();
     for (int i = 0; i < root->childCount(); ++i)
@@ -139,15 +139,12 @@ void Ignore_Config::saveSettings()
 
 void Ignore_Config::loadSettings()
 {
-    Q3PtrList<Ignore> ignoreList=Preferences::ignoreList();
-    // Insert Ignore items backwards to get them sorted properly
-    Ignore* item=ignoreList.last();
     ignoreListView->clear();
-    while(item)
+    foreach (Ignore* item, Preferences::ignoreList())
     {
-        new IgnoreListViewItem(ignoreListView,item->getName(),item->getFlags());
-        item=ignoreList.prev();
+        new IgnoreListViewItem(ignoreListView, item->getName(), item->getFlags());
     }
+    ignoreListView->sortItems(0, Qt::AscendingOrder);
     // remember the list for hasChanged()
     m_oldIgnoreList=currentIgnoreList();
     updateEnabledness();

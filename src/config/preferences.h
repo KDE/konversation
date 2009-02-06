@@ -21,9 +21,7 @@
 #include "preferences_base.h"
 
 #include <qobject.h>
-#include <q3ptrlist.h>
 #include <qsize.h>
-#include <q3valuelist.h>
 #include <qstringlist.h>
 #include <qfont.h>
 #include <qcolor.h>
@@ -85,8 +83,8 @@ class Preferences : public PreferencesBase
         static bool isNotify(int serverGroupId, const QString& pattern);
         static bool hasNotifyList(int serverGroupId);
 
-        static const Q3PtrList<Highlight> highlightList();
-        static void setHighlightList(Q3PtrList<Highlight> newList);
+        static const QList<Highlight*> highlightList();
+        static void setHighlightList(QList<Highlight*> newList);
         static void addHighlight(const QString& newHighlight,bool regExp, const QColor &color,const QString& sound,const QString& autoText);
 
         /* All of the below work on the first (default) identity in your identity list*/
@@ -94,8 +92,8 @@ class Preferences : public PreferencesBase
         static bool removeIgnore(const QString &oldIgnore);
         static bool isIgnored(const QString &nickname);
         static void clearIgnoreList();
-        static const Q3PtrList<Ignore> ignoreList();
-        static void setIgnoreList(Q3PtrList<Ignore> newList);
+        static const QList<Ignore*> ignoreList();
+        static void setIgnoreList(QList<Ignore*> newList);
 
         static const QStringList quickButtonList();
         static const QStringList defaultQuickButtonList();
@@ -159,9 +157,9 @@ class Preferences : public PreferencesBase
     protected:
         IdentityPtr mIdentity;
         Konversation::ServerGroupList mServerGroupList;
-        Q3PtrList<Ignore> mIgnoreList;
+        QList<Ignore*> mIgnoreList;
         QList<IdentityPtr> mIdentityList;
-        Q3PtrList<Highlight> mHighlightList;
+        QList<Highlight*> mHighlightList;
         QMap<int, QStringList> mNotifyList;  // network id, list of nicks
         QMap< int,QMap<QString,QString> > mChannelEncodingsMap;  // mChannelEncodingsMap[serverGroupdId][channelName]
         QStringList mQuickButtonList;

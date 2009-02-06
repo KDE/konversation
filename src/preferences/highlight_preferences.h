@@ -14,10 +14,7 @@
 #define KONVERSATIONHIGHLIGHT_CONFIG_H
 
 #include "ui_highlight_preferencesui.h"
-#include "settingspage.h" ////// header renamed
-
-#include <qobject.h>
-
+#include "settingspage.h"
 
 class Highlight_Config;
 class Highlight;
@@ -50,7 +47,7 @@ class Highlight_Config : public QWidget, public KonviSettingsPage, private Ui::H
         void addHighlight();
         void removeHighlight();
         void playSound();
-        Q3PtrList<Highlight> getHighlightList(); // prefs format
+        QList<Highlight*> getHighlightList(); // prefs format
         QStringList currentHighlightList();     // hasChanged() format
     protected:
         void updateButtons();

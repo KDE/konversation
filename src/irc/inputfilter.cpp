@@ -1841,11 +1841,8 @@ bool InputFilter::isIgnore(const QString &sender, Ignore::Type type)
 {
     bool doIgnore = false;
 
-    Q3PtrList<Ignore> list = Preferences::ignoreList();
-
-    for(unsigned int index =0; index<list.count(); index++)
+    foreach (Ignore* item, Preferences::ignoreList())
     {
-        Ignore* item = list.at(index);
         QRegExp ignoreItem(QRegExp::escape(item->getName()).replace("\\*", "(.*)"), Qt::CaseInsensitive);
         if (ignoreItem.exactMatch(sender) && (item->getFlags() & type))
             doIgnore = true;

@@ -109,12 +109,9 @@ void Highlight_Config::restorePageToDefaults()
 
 void Highlight_Config::loadSettings()
 {
-  Q3PtrList<Highlight> highlightList=Preferences::highlightList();
   highlightListView->clear();
-  // fill in the highlight patterns backwards to keep the right sorting order
-  for(unsigned int i=highlightList.count();i!=0;i--)
+  foreach (Highlight* currentHighlight, Preferences::highlightList())
   {
-    Highlight* currentHighlight=highlightList.at(i-1);
     new HighlightViewItem(highlightListView,currentHighlight);
   }
 
@@ -296,9 +293,9 @@ void Highlight_Config::removeHighlight()
   updateButtons();
 }
 
-Q3PtrList<Highlight> Highlight_Config::getHighlightList()
+QList<Highlight*> Highlight_Config::getHighlightList()
 {
-  Q3PtrList<Highlight> newList;
+  QList<Highlight*> newList;
 
   HighlightViewItem* item=static_cast<HighlightViewItem*>(highlightListView->firstChild());
   while(item)
@@ -335,12 +332,11 @@ void Highlight_Config::saveSettings()
   KSharedConfigPtr config = KGlobal::config();
 
   // Write all highlight entries
-  Q3PtrList<Highlight> hiList=getHighlightList();
+  QList<Highlight*> hiList=getHighlightList();
   int i = 0;
-  for(Highlight* hl = hiList.first(); hl; hl = hiList.next())
+  foreach (Highlight* hl, hiList)
   {
-
-      KConfigGroup grp = config->group(QString("Highlight%1").arg(i));
+    KConfigGroup grp = config->group(QString("Highlight%1").arg(i));
     grp.writeEntry("Pattern", hl->getPattern());
     grp.writeEntry("RegExp", hl->getRegExp());
     grp.writeEntry("Color", hl->getColor());

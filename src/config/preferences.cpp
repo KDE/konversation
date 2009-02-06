@@ -57,7 +57,6 @@ Preferences::Preferences()
     mIdentity=new Identity();
     mIdentity->setName(i18n("Default Identity"));
     mIdentityList.append(mIdentity);
-    mIgnoreList.setAutoDelete(true);
 
     KUser user(KUser::UseRealUserID);
     mIdentity->setIdent(user.loginName());
@@ -88,6 +87,8 @@ Preferences::Preferences()
 Preferences::~Preferences()
 {
     mIdentityList.clear();
+    qDeleteAll(mIgnoreList);
+    qDeleteAll(mHighlightList);
 }
 const Konversation::ServerGroupList Preferences::serverGroupList()
 {
@@ -253,13 +254,14 @@ void Preferences::removeServerGroup(int id)
 }
 
 
-const Q3PtrList<Highlight> Preferences::highlightList()
+const QList<Highlight*> Preferences::highlightList()
 {
     return self()->mHighlightList;
 }
 
-void Preferences::setHighlightList(Q3PtrList<Highlight> newList)
+void Preferences::setHighlightList(QList<Highlight*> newList)
 {
+    qDeleteAll(self()->mHighlightList);
     self()->mHighlightList.clear();
     self()->mHighlightList=newList;
 }
@@ -273,9 +275,9 @@ const QString& autoText)
     self()->mHighlightList.append(new Highlight(newHighlight,regExp,newColor,KUrl(sound),autoText));
 }
 
-void Preferences::setIgnoreList(Q3PtrList<Ignore> newList)
+void Preferences::setIgnoreList(QList<Ignore*> newList)
 {
-    self()->mIgnoreList.clear();
+    clearIgnoreList();
     self()->mIgnoreList=newList;
 }
 
@@ -288,16 +290,14 @@ void Preferences::addIgnore(const QString &newIgnore)
 
 bool Preferences::removeIgnore(const QString &oldIgnore)
 {
-    Q3PtrListIterator<Ignore> ignoreList( self()->mIgnoreList );
-
-    while (ignoreList.current())
+    foreach (Ignore *ignore, self()->mIgnoreList)
     {
-        if (ignoreList.current()->getName().toLower() == oldIgnore.toLower())
+        if (ignore->getName().toLower() == oldIgnore.toLower())
         {
-            self()->mIgnoreList.remove(ignoreList.current());
+            self()->mIgnoreList.removeOne(ignore);
+            delete ignore;
             return true;
         }
-        ++ignoreList;
     }
 
     return false;
@@ -305,15 +305,12 @@ bool Preferences::removeIgnore(const QString &oldIgnore)
 
 bool Preferences::isIgnored(const QString &nickname)
 {
-    Q3PtrListIterator<Ignore> ignoreList( self()->mIgnoreList );
-
-    while (ignoreList.current())
+    foreach (Ignore *ignore, self()->mIgnoreList)
     {
-        if (ignoreList.current()->getName().section('!',0,0).toLower()==nickname.toLower())
+        if (ignore->getName().section('!',0,0).toLower()==nickname.toLower())
         {
             return true;
         }
-        ++ignoreList;
     }
 
     return false;
@@ -389,7 +386,7 @@ bool Preferences::hasNotifyList(int serverGroupId)
 
 // Default identity functions
 void Preferences::addIdentity(IdentityPtr identity) { self()->mIdentityList.append(identity); }
-void Preferences::removeIdentity(IdentityPtr identity) { self()->mIdentityList.remove(identity); }
+void Preferences::removeIdentity(IdentityPtr identity) { self()->mIdentityList.removeOne(identity); }
 
 void Preferences::clearIdentityList()
 {
@@ -495,8 +492,8 @@ void Preferences::setAwayMessage(const QString &newMessage) { self()->mIdentityL
 const QString Preferences::unAwayMessage() { return self()->mIdentityList[0]->getReturnMessage(); }
 void Preferences::setUnAwayMessage(const QString &newMessage) { self()->mIdentityList[0]->setReturnMessage(newMessage); }
 
-void Preferences::clearIgnoreList() { self()->mIgnoreList.clear(); }
-const Q3PtrList<Ignore> Preferences::ignoreList() { return self()->mIgnoreList; }
+void Preferences::clearIgnoreList() { qDeleteAll(self()->mIgnoreList); self()->mIgnoreList.clear(); }
+const QList<Ignore*> Preferences::ignoreList() { return self()->mIgnoreList; }
 
 const QString Preferences::nickname(int index) { return self()->mIdentityList[0]->getNickname(index); }
 const QStringList Preferences::nicknameList() { return self()->mIdentityList[0]->getNicknameList(); }
