@@ -146,8 +146,6 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : QPlainTextEdit(parent)
         setFont(KGlobalSettings::generalFont());
 
     if (Preferences::self()->useParagraphSpacing()) enableParagraphSpacing();
-
-    connect(this, SIGNAL(highlighted(const QString&)), this, SLOT(highlightedSlot(const QString&)));
 }
 
 IRCView::~IRCView()
