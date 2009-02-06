@@ -142,11 +142,11 @@ void DccTransferPanel::initGUI()
     m_popup->insertItem(                         i18n("S&elect All Completed Items"), Popup::SelectAllCompleted);
     m_popup->addSeparator();                           // -----
     m_popup->insertItem(KIcon("media-playback-start"), i18n("&Accept"),                     Popup::Accept);
-    m_popup->insertItem(KIcon("stop"),            i18n("A&bort"),                      Popup::Abort);
+    m_popup->insertItem(KIcon("process-stop"),            i18n("A&bort"),                      Popup::Abort);
     m_popup->addSeparator();                           // -----
     // FIXME: make it neat
     m_popup->insertItem(KIcon("edit-redo"),           i18n("Resend"),                      Popup::Resend);
-    m_popup->insertItem(KIcon("editdelete"),      i18n("&Clear"),                      Popup::Clear);
+    m_popup->insertItem(KIcon("edit-delete"),      i18n("&Clear"),                      Popup::Clear);
     m_popup->addSeparator();                           // -----
     m_popup->insertItem(KIcon("system-run"),          i18n("&Open File"),                  Popup::Open);
     m_popup->insertItem(KIcon("dialog-information"),  i18n("File &Information"),           Popup::Info);
