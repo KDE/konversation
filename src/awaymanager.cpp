@@ -104,7 +104,7 @@ AwayManager::~AwayManager()
 
 void AwayManager::identitiesChanged()
 {
-    Q3ValueList<int> newIdentityList;
+    QList<int> newIdentityList;
 
     const QList<Server*> serverList = m_connectionManager->getServerList();
 
@@ -260,8 +260,8 @@ void AwayManager::implementIdleAutoAway(bool activity)
     {
         long int idleTime = m_idleTime.elapsed() / 1000;
 
-        Q3ValueList<int> identitiesIdleTimeExceeded;
-        Q3ValueList<int>::ConstIterator it;
+        QList<int> identitiesIdleTimeExceeded;
+        QList<int>::ConstIterator it;
 
         for (it = m_identitiesOnAutoAway.begin(); it != m_identitiesOnAutoAway.end(); ++it)
         {

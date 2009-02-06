@@ -139,7 +139,7 @@ class Preferences : public PreferencesBase
         static const QString channelEncoding(int serverGroupId,const QString& channel);
         static void setChannelEncoding(const QString& server,const QString& channel,const QString& encoding);
         static void setChannelEncoding(int serverGroupId,const QString& channel,const QString& encoding);
-        static const Q3ValueList<int> channelEncodingsServerGroupIdList();
+        static const QList<int> channelEncodingsServerGroupIdList();
         static const QStringList channelEncodingsChannelList(int serverGroupId);
 
         static void setShowTrayIcon(bool state);
@@ -158,7 +158,7 @@ class Preferences : public PreferencesBase
         IdentityPtr mIdentity;
         Konversation::ServerGroupList mServerGroupList;
         Q3PtrList<Ignore> mIgnoreList;
-        Q3ValueList<IdentityPtr> mIdentityList;
+        QList<IdentityPtr> mIdentityList;
         Q3PtrList<Highlight> mHighlightList;
         QMap<int, QStringList> mNotifyList;  // network id, list of nicks
         QMap< int,QMap<QString,QString> > mChannelEncodingsMap;  // mChannelEncodingsMap[serverGroupdId][channelName]

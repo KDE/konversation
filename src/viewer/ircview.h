@@ -25,7 +25,7 @@
 
 #include <qmap.h>
 #include <qfontdatabase.h>
-#include <Q3ValueList>
+#include <QList>
 
 //#include <ktextbrowser.h>
 #include <QPlainTextEdit>
@@ -209,7 +209,7 @@ class IRCView : public QPlainTextEdit
         void wipeLineParagraphs();
         int m_rememberLineParagraph;
         bool m_rememberLineDirtyBit;
-        Q3ValueList<int> m_markerLineParagraphs;
+        QList<int> m_markerLineParagraphs;
 
 
         QString m_lastStatusText; //last sent status text to the statusbar. Is empty after clearStatusBarTempText()

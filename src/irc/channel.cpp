@@ -1003,7 +1003,7 @@ QString Channel::getPassword()
 
     if (password.isEmpty() && m_server->getServerGroup())
     {
-        //Q3ValueList<ChannelSettings>
+        //QList<ChannelSettings>
         Konversation::ChannelList channelSettingsList = m_server->getServerGroup()->channelList();
         Konversation::ChannelSettings channelSettings(getName());
         Konversation::ChannelList::iterator it = channelSettingsList.find(channelSettings);

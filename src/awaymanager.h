@@ -15,7 +15,7 @@
 
 #include <qobject.h>
 #include <qdatetime.h>
-#include <Q3ValueList>
+#include <QList>
 
 
 class ConnectionManager;
@@ -66,7 +66,7 @@ class AwayManager : public QObject
         QTime m_idleTime;
         QTimer* m_activityTimer;
 
-        Q3ValueList<int> m_identitiesOnAutoAway;
+        QList<int> m_identitiesOnAutoAway;
 
         ConnectionManager* m_connectionManager;
 };

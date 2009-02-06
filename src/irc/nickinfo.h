@@ -18,7 +18,7 @@
 #include <qstringlist.h>
 #include <qdatetime.h>
 #include <Q3TextStream>
-#include <Q3ValueList>
+#include <QList>
 
 #include <ksharedptr.h>
 
@@ -184,5 +184,5 @@ typedef KSharedPtr<NickInfo> NickInfoPtr;
  */
 typedef QMap<QString,NickInfoPtr> NickInfoMap;
 
-typedef Q3ValueList<NickInfoPtr> NickInfoList;
+typedef QList<NickInfoPtr> NickInfoList;
 #endif

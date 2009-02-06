@@ -86,7 +86,7 @@ typedef KSharedPtr<ChannelNick> ChannelNickPtr;
  */
 typedef QMap<QString,ChannelNickPtr> ChannelNickMap;
 
-typedef Q3ValueList<ChannelNickPtr> ChannelNickList;
+typedef QList<ChannelNickPtr> ChannelNickList;
 
 /** A ChannelMembershipMap is a list of ChannelNickMap pointers, indexed and
  *  sorted by lowercase channel name.

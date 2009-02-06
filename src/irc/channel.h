@@ -348,7 +348,7 @@ class Channel : public ChatWindow
         QTimer m_whoTimer; ///< For continuous auto /WHO
         QTimer m_fadeActivityTimer; ///< For the smoothing function used in activity sorting
 
-        Q3ValueList<QStringList> m_pendingChannelNickLists;
+        QList<QStringList> m_pendingChannelNickLists;
         int m_opsToAdd;
         int m_currentIndex;
 

@@ -408,8 +408,8 @@ void Preferences::setIdentityList(const IdentityList& list)
 
 const IdentityPtr Preferences::identityByName(const QString& name)
 {
-    Q3ValueList<IdentityPtr> identities = identityList();
-    Q3ValueList<IdentityPtr>::iterator it = identities.begin();
+    QList<IdentityPtr> identities = identityList();
+    QList<IdentityPtr>::iterator it = identities.begin();
 
     while(it != identities.end())
     {
@@ -427,8 +427,8 @@ const IdentityPtr Preferences::identityByName(const QString& name)
 
 const IdentityPtr Preferences::identityById(int id)
 {
-    Q3ValueList<IdentityPtr> identList = identityList();
-    for(Q3ValueList<IdentityPtr>::iterator it = identList.begin(); it != identList.end(); ++it)
+    QList<IdentityPtr> identList = identityList();
+    for(QList<IdentityPtr>::iterator it = identList.begin(); it != identList.end(); ++it)
     {
         if((*it)->id() == id)
         {
@@ -573,7 +573,7 @@ void Preferences::setChannelEncoding(int serverGroupId,const QString& channel,co
     self()->mChannelEncodingsMap[serverGroupId][channel.toLower()]=encoding;
 }
 
-const Q3ValueList<int> Preferences::channelEncodingsServerGroupIdList()
+const QList<int> Preferences::channelEncodingsServerGroupIdList()
 {
     return self()->mChannelEncodingsMap.keys();
 }
