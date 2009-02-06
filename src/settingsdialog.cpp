@@ -128,7 +128,7 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
 
   //Behaviour/Auto Replace
   m_confAutoreplaceWdg = new Autoreplace_Config( this, "Autoreplace" );
-  addPage ( m_confAutoreplaceWdg, behaviorGroup, "kview", i18n("Auto Replace") );
+  addPage ( m_confAutoreplaceWdg, behaviorGroup, "edit-rename", i18n("Auto Replace") );
   m_pages.append(m_confAutoreplaceWdg);
   connect(m_confAutoreplaceWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
 
@@ -142,7 +142,7 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   Ui::Log_Config confLog;
   w = new QWidget();
   confLog.setupUi(w);
-  addPage(w, behaviorGroup, "log", i18n("Logging"));
+  addPage(w, behaviorGroup, "text-plain", i18n("Logging"));
 
   m_confDCCWdg = new DCC_Config( this, "DCC" );
   addPage ( m_confDCCWdg, behaviorGroup, "arrow-right-double", i18n("DCC") );
@@ -155,7 +155,7 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
 
   //Notification/Highlighting
   m_confHighlightWdg = new Highlight_Config( this, "Highlight" );
-  addPage ( m_confHighlightWdg, notificationGroup, "paintbrush", i18n("Highlight") );
+  addPage ( m_confHighlightWdg, notificationGroup, "flag-red", i18n("Highlight") );
   connect(m_confHighlightWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
   m_pages.append(m_confHighlightWdg);
 

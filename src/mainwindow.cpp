@@ -181,7 +181,7 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0)
     //new KToggleAction(i18n("&Watched Nicks Online"), "kontact_contacts", KShortcut("F4"), m_viewContainer, SLOT(openNicksOnlinePanel()), actionCollection(), "open_nicksonline_window");
     action=new KToggleAction(this);
     action->setText(i18n("&Watched Nicks Online"));
-    action->setIcon(KIcon("kontact_contacts"));
+    action->setIcon(KIcon("im-user"));
     action->setShortcut(KShortcut("F4"));
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(openNicksOnlinePanel()));
     actionCollection()->addAction("open_nicksonline_window", action);
@@ -229,7 +229,7 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0)
     //action = new KToggleAction(i18n("&URL Catcher"), "enhanced_browsing", KShortcut("F6"), m_viewContainer, SLOT(addUrlCatcher()), actionCollection(), "open_url_catcher");
     action=new KToggleAction(this);
     action->setText(i18n("&URL Catcher"));
-    action->setIcon(KIcon("enhanced_browsing"));
+    action->setIcon(KIcon("text-html"));
     action->setShortcut(KShortcut("F6"));
     action->setStatusTip(i18n("List all URLs that have been mentioned recently in a new tab"));
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(addUrlCatcher()));

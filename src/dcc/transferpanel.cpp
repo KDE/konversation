@@ -24,8 +24,6 @@
 #include <q3header.h>
 #include <qpushbutton.h>
 
-#include <Q3PtrList>
-
 #include <kdebug.h>
 #include <kdeversion.h>
 #include <kdialog.h>
@@ -111,14 +109,11 @@ void DccTransferPanel::initGUI()
     KHBox* buttonsBox=new KHBox(this);
     buttonsBox->setSpacing(spacing());
 
-    // convenience, undeffed below again to avoid name clashes
-    #define icon(s) KIconLoader::global()->loadIconSet( s,KIconLoader::Small )
-
     m_buttonAccept = new QPushButton(KIcon("media-playback-start"), i18n("Accept"),    buttonsBox);
     m_buttonAccept->setObjectName("start_dcc");
-    m_buttonAbort  = new QPushButton(icon("stop"),                  i18n("Abort"),     buttonsBox);
+    m_buttonAbort  = new QPushButton(KIcon("process-stop"),                  i18n("Abort"),     buttonsBox);
     m_buttonAbort->setObjectName("abort_dcc");
-    m_buttonClear  = new QPushButton(icon("editdelete"),            i18n("Clear"),     buttonsBox);
+    m_buttonClear  = new QPushButton(KIcon("edit-delete"),            i18n("Clear"),     buttonsBox);
     m_buttonClear->setObjectName("clear_dcc");
     m_buttonOpen   = new QPushButton(KIcon("system-run"),           i18n("Open File"), buttonsBox);
     m_buttonOpen->setObjectName("open_dcc_file");
@@ -155,8 +150,6 @@ void DccTransferPanel::initGUI()
     m_popup->addSeparator();                           // -----
     m_popup->insertItem(KIcon("system-run"),          i18n("&Open File"),                  Popup::Open);
     m_popup->insertItem(KIcon("dialog-information"),  i18n("File &Information"),           Popup::Info);
-
-    #undef icon
 
     connect(m_listView, SIGNAL(contextMenuRequested(Q3ListViewItem*,const QPoint&,int)), this, SLOT(popupRequested(Q3ListViewItem*,const QPoint&,int)));
     connect(m_popup, SIGNAL(activated(int)), this, SLOT(popupActivated(int)));
