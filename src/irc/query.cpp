@@ -69,7 +69,7 @@ Query::Query(QWidget* parent, QString _name) : ChatWindow(parent)
     queryHostmask=new QLabel(box);
     queryHostmask->setObjectName("query_hostmask");
 
-    QString whatsthis = i18n("<qt>Some details of the person you are talking to in this query is shown in this bar.  The full name and hostmask is shown, along with any image or logo this person has associated with them in the KDE Addressbook.<p>See the <i>Konversation Handbook</i> for information on associating a nick with a contact in the Addressbook, and for an explanation of what the hostmask is.</qt>");
+    QString whatsthis = i18n("<qt><p>Some details of the person you are talking to in this query is shown in this bar.  The full name and hostmask is shown, along with any image or logo this person has associated with them in the KDE Addressbook.</p><p>See the <i>Konversation Handbook</i> for information on associating a nick with a contact in the Addressbook, and for an explanation of what the hostmask is.</p></qt>");
     addresseeimage->setWhatsThis(whatsthis);
     addresseelogoimage->setWhatsThis(whatsthis);
     queryHostmask->setWhatsThis(whatsthis);
@@ -82,7 +82,7 @@ Query::Query(QWidget* parent, QString _name) : ChatWindow(parent)
 
     // link "Whois", "Ignore" ... menu items into ircview popup
     m_actionGroup = new QActionGroup(this);
-    connect(m_actionGroup, SIGNAL(triggered(KAction*)), this, SLOT(slotActionTriggered(KAction*)));
+    connect(m_actionGroup, SIGNAL(triggered(QAction*)), this, SLOT(slotActionTriggered(QAction*)));
 
     KMenu* popup=textView->getPopup();
     popup->addSeparator();
@@ -706,7 +706,7 @@ KAction* Query::createAction(QMenu* menu, const QString& text, Konversation::Pop
     return action;
 }
 
-void Query::slotActionTriggered(KAction* action)
+void Query::slotActionTriggered(QAction* action)
 {
     popup(action->data().value<Konversation::PopupIDs>());
 }

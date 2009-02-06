@@ -99,7 +99,7 @@ class IRCView : public QPlainTextEdit
         void textPasted(bool useSelection); ///< middle button with no m_copyUrlMenu
         void popupCommand(int); ///< wired to all of the popup menus
         void filesDropped(const QStringList&); ///< Q3UriDrag::decode valid in contentsDropEvent
-        void doSearch(); ///< this is a 
+        void doSearch(); ///< this is a
 
         void setStatusBarTempText(const QString&); //! these two look like mixins to me
         void clearStatusBarTempText();//! these two look like mixins to me
@@ -170,7 +170,7 @@ class IRCView : public QPlainTextEdit
         virtual void mouseReleaseEvent(QMouseEvent* ev);
         virtual void mousePressEvent(QMouseEvent* ev);
         virtual void mouseMoveEvent(QMouseEvent* ev);
-        //virtual void contentsContextMenuEvent(QContextMenuEvent* ev);
+        virtual void contextMenuEvent(QContextMenuEvent* ev);
 
         //virtual void keyPressEvent(QKeyEvent* e);
         //virtual void resizeEvent(QResizeEvent* e);

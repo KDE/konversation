@@ -952,7 +952,7 @@ void IRCView::openLink(const QString& url, bool)
         m_server->sendJoinCommand(channel);
     }
     //FIXME: Don't do user links in DCC Chats to begin with since they don't have a server.
-    else if (url.startsWith("#") && m_server && m_server->isConnected()) 
+    else if (url.startsWith("#") && m_server && m_server->isConnected())
     {
         QString recipient(url);
         recipient.remove("#");
@@ -985,7 +985,7 @@ void IRCView::highlightedSlot(const QString& _link)
 
     if (link.isEmpty())
     {
-        if (!m_lastStatusText.isEmpty()) 
+        if (!m_lastStatusText.isEmpty())
         {
             emit clearStatusBarTempText();
             m_lastStatusText = QString();
@@ -1050,6 +1050,12 @@ void IRCView::highlightedSlot(const QString& _link)
     }
 }
 
+void IRCView::contextMenuEvent(QContextMenuEvent* ev)
+{
+    m_popup->exec(ev->globalPos());
+}
+
 // **WARNING** the selectionChange signal comes BEFORE the selection has actually been changed, hook cursorPositionChanged too
+
 //void IRCView::mouseDoubleClickEvent(QEvent *e, Qt::MouseButton button, const QPointF &pos)
 

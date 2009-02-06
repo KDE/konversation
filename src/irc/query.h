@@ -95,7 +95,7 @@ class Query : public ChatWindow
         void nickInfoChanged();
         void closeWithoutAsking();
         virtual void serverOnline(bool online);
-        void slotActionTriggered(KAction* action);
+        void slotActionTriggered(QAction* action);
 
     protected:
         void setName(const QString& newName);
