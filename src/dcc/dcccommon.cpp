@@ -19,7 +19,6 @@
 #include <qhostaddress.h>
 
 #include <klocale.h>
-#include <k3resolver.h>
 #include <k3serversocket.h>
 
 using namespace KNetwork;

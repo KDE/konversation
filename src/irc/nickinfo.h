@@ -17,9 +17,9 @@
 
 #include <qstringlist.h>
 #include <qdatetime.h>
-//Added by qt3to4:
 #include <Q3TextStream>
 #include <Q3ValueList>
+
 #include <ksharedptr.h>
 
 #include <kabc/addressbook.h>

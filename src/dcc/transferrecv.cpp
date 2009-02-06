@@ -32,13 +32,11 @@
 #include <k3streamsocket.h>
 #include <kdirselectdialog.h>
 #include <kuser.h>
+#include <kauthorized.h>
 
 #include <kio/job.h>
 #include <kio/jobclasses.h>
 #include <kio/netaccess.h>
-//Added by qt3to4:
-#include <QPixmap>
-#include <kauthorized.h>
 
 
 class DccResumeDialog;

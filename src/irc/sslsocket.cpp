@@ -26,8 +26,6 @@
 #include <ksslcertificatecache.h>
 #include <kmessagebox.h>
 #include <ksocketdevice.h>
-//Added by qt3to4:
-#include <Q3PtrList>
 
 
 struct SSLSocketPrivate

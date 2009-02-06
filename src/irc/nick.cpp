@@ -14,10 +14,6 @@
 #include "nick.h"
 //#include "addressbook.h"
 
-#include <q3textstream.h>
-//Added by qt3to4:
-#include <QPixmap>
-
 #include <kdebug.h>
 #include <k3listview.h>
 #include <klocale.h>

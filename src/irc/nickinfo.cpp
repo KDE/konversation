@@ -26,10 +26,6 @@
 #include "viewcontainer.h"
 #include "server.h"
 
-//Added by qt3to4:
-#include <Q3MimeSourceFactory>
-#include <Q3TextStream>
-
 #include <klocale.h>
 
 

@@ -19,8 +19,6 @@
 #include "transfer.h" ////// header renamed
 
 #include <qdatetime.h>
-//Added by qt3to4:
-#include <QPixmap>
 
 #include <k3listview.h>
 #include <kurl.h>

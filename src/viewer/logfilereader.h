@@ -18,8 +18,6 @@
 #include "chatwindow.h"
 
 #include <kio/job.h>
-//Added by qt3to4:
-#include <QEvent>
 
 
 class KToolBar;

@@ -17,8 +17,6 @@
 
 #include "chatwindow.h"
 #include "transferpanelitem.h" ////// header renamed
-//Added by qt3to4:
-#include <QContextMenuEvent>
 
 
 class QContextMenuEvent;

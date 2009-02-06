@@ -21,8 +21,6 @@
 #include <qdatetime.h>
 #include <qobject.h>
 #include <qtimer.h>
-//Added by qt3to4:
-#include <Q3ValueList>
 
 #include <kurl.h>
 #include <kio/global.h>
@@ -177,8 +175,8 @@ class DccTransfer : public QObject
 
         QTimer m_loggerTimer;
         QTime m_loggerBaseTime;  // for calculating CPS
-        Q3ValueList<int> m_transferLogTime;
-        Q3ValueList<KIO::fileoffset_t> m_transferLogPosition;
+        QList<int> m_transferLogTime;
+        QList<KIO::fileoffset_t> m_transferLogPosition;
 
         transferspeed_t m_averageSpeed;
         transferspeed_t m_currentSpeed;

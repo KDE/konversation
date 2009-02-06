@@ -16,8 +16,6 @@
 #define SERVERLISTVIEW_H
 
 #include <k3listview.h>
-//Added by qt3to4:
-#include <Q3PtrList>
 
 
 class Q3DragObject;

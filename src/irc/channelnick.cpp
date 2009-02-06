@@ -21,8 +21,6 @@
 #include "server.h"
 
 #include <klocale.h>
-//Added by qt3to4:
-#include <Q3TextStream>
 
 
 ChannelNick::ChannelNick(const NickInfoPtr& nickInfo, const bool& isop, const bool& isadmin,

@@ -20,14 +20,16 @@
 #include <kmenu.h>
 #include <klocale.h>
 #include <kdebug.h>
-#include <qtimer.h>
 #include <kiconloader.h>
-#include <q3whatsthis.h>
-#include <q3dragobject.h>
-#include <kauthorized.h>
-#include <Q3MimeSourceFactory>
-#include <qactiongroup.h>
 #include <kaction.h>
+#include <kauthorized.h>
+
+#include <q3whatsthis.h>
+#include <Q3MimeSourceFactory>
+#include <QContextMenuEvent>
+#include <QDropEvent>
+#include <qtimer.h>
+#include <qactiongroup.h>
 
 NickListView::NickListView(QWidget* parent, Channel *chan) :
 K3ListView(parent),

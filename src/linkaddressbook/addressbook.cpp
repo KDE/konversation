@@ -20,9 +20,6 @@
 #include "application.h"
 
 #include <qstringlist.h>
-#include "qwidget.h"
-//Added by qt3to4:
-#include <QPixmap>
 
 #include <klocale.h>
 #include <kmessagebox.h>

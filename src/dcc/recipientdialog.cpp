@@ -15,9 +15,7 @@
 #include "recipientdialog.h"
 #include <k3listbox.h>
 
-#include <qlayout.h>
-//Added by qt3to4:
-#include <Q3VBoxLayout>
+#include <QVBoxLayout>
 
 #include <klineedit.h>
 #include <klocale.h>
@@ -37,7 +35,7 @@ DccRecipientDialog::DccRecipientDialog(QWidget* parent, const QStringList &list,
     setModal( true );
     setCaption( i18n("Select Recipient") );
     // Add the layout to the widget
-    Q3VBoxLayout* dialogLayout=new Q3VBoxLayout(page);
+    QVBoxLayout* dialogLayout=new QVBoxLayout(page);
     dialogLayout->setSpacing(spacingHint());
     // Add the nickname list widget
     K3ListBox* nicknameList=new K3ListBox(page,"recipient_list");

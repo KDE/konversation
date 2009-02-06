@@ -18,8 +18,6 @@
 #include <klocale.h>
 #include <qlineedit.h>
 #include <qheaderview.h>
-//Added by qt3to4:
-#include <Q3PtrList>
 
 #include <kapplication.h>
 #include <kconfig.h>

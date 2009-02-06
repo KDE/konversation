@@ -17,10 +17,6 @@
 #include <qlabel.h>
 #include <qlayout.h>
 
-//Added by qt3to4:
-#include <Q3HBoxLayout>
-#include <Q3VBoxLayout>
-
 #include <kdebug.h>
 #include <klocale.h>
 #include <kurl.h>
@@ -87,7 +83,7 @@ DccResumeDialog::DccResumeDialog(DccTransferRecv* item, const QString& caption, 
     if(m_enabledActions & RA_Rename)
     {
         QFrame* filePathToolsFrame = new QFrame(page);
-        Q3HBoxLayout* filePathToolsLayout = new Q3HBoxLayout(filePathToolsFrame);
+        QHBoxLayout* filePathToolsLayout = new QHBoxLayout(filePathToolsFrame);
         filePathToolsLayout->setSpacing(spacingHint());
 
         QPushButton* btnDefaultName = new QPushButton(i18n("O&riginal Filename"),filePathToolsFrame);

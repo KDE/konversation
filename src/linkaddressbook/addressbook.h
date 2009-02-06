@@ -20,8 +20,6 @@
 
 #include <qobject.h>
 #include <qregexp.h>
-//Added by qt3to4:
-#include <QPixmap>
 
 #include "../viewer/images.h"
 #include "../irc/nickinfo.h"

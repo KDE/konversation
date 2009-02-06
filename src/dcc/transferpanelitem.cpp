@@ -22,9 +22,6 @@
 #include <qhostaddress.h>
 #include <qstyle.h>
 #include <qtimer.h>
-//Added by qt3to4:
-#include <QPixmap>
-#include <QProgressBar>
 
 #include <kdebug.h>
 #include <kfilemetainfo.h>

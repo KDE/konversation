@@ -17,8 +17,6 @@
 #include <qbitmap.h>
 #include <qpainter.h>
 #include <qstringlist.h>
-//Added by qt3to4:
-#include <QPixmap>
 
 #include <kdebug.h>
 #include <kiconloader.h>
