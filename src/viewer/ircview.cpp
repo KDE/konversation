@@ -481,11 +481,6 @@ QString IRCView::createNickLine(const QString& nick, bool encapsulateNick, bool 
         else
             nickColor =  Preferences::self()->nickColor(8).name();
 
-        if(nickColor == "#000000")
-        {
-            nickColor = "#000001";                    // HACK Working around QTextBrowser's auto link coloring
-        }
-
         nickLine = "<font color=\"" + nickColor + "\">"+nickLine+"</font>";
     }
     //FIXME: Another last-minute hack to get DCC Chat colored nicknames
@@ -509,11 +504,6 @@ QString IRCView::createNickLine(const QString& nick, bool encapsulateNick, bool 
         }
         else
             nickColor =  Preferences::self()->nickColor(8).name();
-
-        if(nickColor == "#000000")
-        {
-            nickColor = "#000001";                    // HACK Working around QTextBrowser's auto link coloring
-        }
 
         nickLine = "<font color=\"" + nickColor + "\">"+nickLine+"</font>";
     }
