@@ -544,9 +544,6 @@ void Channel::popupCommand(int id)
             Konversation::Addressbook::self()->sendEmail(getSelectedChannelNicks());
             break;
         }
-        case Konversation::AddressbookSub:
-            kDebug() << "sub called";
-            break;
         case Konversation::GiveOp:
             pattern="MODE %c +o %u";
             raw=true;

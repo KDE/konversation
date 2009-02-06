@@ -94,7 +94,6 @@ class NickListView : public K3ListView
         KAction* m_takeHalfOpAction;
         KAction* m_giveVoiceAction;
         KAction* m_takeVoiceAction;
-        KAction* m_modeAction;
         KAction* m_ignoreAction;
         KAction* m_unIgnoreAction;
         KAction* m_kickAction;
@@ -108,9 +107,7 @@ class NickListView : public K3ListView
         KAction* m_kickBanDomainAction;
         KAction* m_kickBanUserHostAction;
         KAction* m_kickBanUserDomainAction;
-        KAction* m_kickBanSubAction;
         KAction* m_addNotifyAction;
-        KAction* m_addressbookSubAction;
         KAction* m_sendMailAction;
         KAction* m_AddressbookNewAction;
         KAction* m_AddressbookChangeAction;

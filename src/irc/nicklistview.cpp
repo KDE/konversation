@@ -34,7 +34,7 @@
 NickListView::NickListView(QWidget* parent, Channel *chan) :
 K3ListView(parent),
     m_whoisAction(0),
-    m_versionAction(0), 
+    m_versionAction(0),
     m_pingAction(0),
     m_giveOpAction(0),
     m_takeOpAction(0),
@@ -42,7 +42,6 @@ K3ListView(parent),
     m_takeHalfOpAction(0),
     m_giveVoiceAction(0),
     m_takeVoiceAction(0),
-    m_modeAction(0),
     m_ignoreAction(0),
     m_unIgnoreAction(0),
     m_kickAction(0),
@@ -56,9 +55,7 @@ K3ListView(parent),
     m_kickBanDomainAction(0),
     m_kickBanUserHostAction(0),
     m_kickBanUserDomainAction(0),
-    m_kickBanSubAction(0),
     m_addNotifyAction(0),
-    m_addressbookSubAction(0),
     m_sendMailAction(0),
     m_AddressbookNewAction(0),
     m_AddressbookChangeAction(0),
@@ -102,7 +99,9 @@ K3ListView(parent),
             m_takeHalfOpAction = createAction(modes,i18n("Take HalfOp"),Konversation::TakeHalfOp);
             m_giveVoiceAction = createAction(modes,i18n("Give Voice"),Konversation::GiveVoice);
             m_takeVoiceAction = createAction(modes,i18n("Take Voice"),Konversation::TakeVoice);
-            m_modeAction = createAction(modes,i18n("Modes"),Konversation::ModesSub);
+            KAction* modeAction = new KAction(i18n("Modes"), popup);
+            popup->addAction(modeAction);
+            modeAction->setMenu(modes);
         }
 
         if (kickban)
@@ -120,7 +119,9 @@ K3ListView(parent),
             m_kickBanDomainAction = createAction(kickban,i18n("Kickban *!*@domain"),Konversation::KickBanDomain);
             m_kickBanUserHostAction = createAction(kickban,i18n("Kickban *!user@*.host"),Konversation::KickBanUserHost);
             m_kickBanUserDomainAction = createAction(kickban,i18n("Kickban *!user@domain"),Konversation::KickBanUserDomain);
-            m_kickBanSubAction = createAction(kickban,i18n("Kick / Ban"),Konversation::KickBanSub);
+            KAction* kickBanSubAction = new KAction(i18n("Kick / Ban"), popup);
+            popup->addAction(kickBanSubAction);
+            kickBanSubAction->setMenu(kickban);
         }
 
         m_ignoreAction = createAction(popup,i18n("Ignore"),Konversation::IgnoreNick);
@@ -138,15 +139,18 @@ K3ListView(parent),
             m_dccSendAction->setIcon(KIcon("arrow-right-double"));
             m_dccSendAction->setWhatsThis("<qt>Send a file to this person.  If you are having problem sending files, or they are sending slowly, see the Konversation Handbook and DCC preferences page.</qt>");
         }
-        m_sendMailAction = createAction(kickban,i18n("&Send Email..."),Konversation::SendEmail);
+        m_sendMailAction = createAction(popup,i18n("&Send Email..."),Konversation::SendEmail);
         m_sendMailAction->setIcon(KIcon("mail-send"));
 
         popup->addSeparator();
-        
-        if (addressbook)
-            m_addressbookSubAction = createAction(kickban,i18n("Addressbook Associations"),Konversation::AddressbookSub);
 
-        m_addNotifyAction = createAction(kickban,i18n("Add to Watched Nicks"),Konversation::AddNotify);
+        if (addressbook) {
+            KAction* addressbookSubAction = new KAction(i18n("Addressbook Associations"), popup);
+            popup->addAction(addressbookSubAction);
+            addressbookSubAction->setMenu(addressbook);
+        }
+
+        m_addNotifyAction = createAction(popup,i18n("Add to Watched Nicks"),Konversation::AddNotify);
 
         connect (popup, SIGNAL(activated(int)), this, SIGNAL(popupCommand(int)));
         connect (modes, SIGNAL(activated(int)), this, SIGNAL(popupCommand(int)));
