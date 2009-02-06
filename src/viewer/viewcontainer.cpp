@@ -177,7 +177,7 @@ void ViewContainer::setupTabWidget()
 void ViewContainer::setupViewTree()
 {
     m_viewTree = new ViewTree(m_viewTreeSplitter);
-    m_viewTreeSplitter->setResizeMode(m_viewTree, QSplitter::KeepSize);
+    m_viewTreeSplitter->setStretchFactor(m_viewTreeSplitter->indexOf(m_viewTree), 0);
     m_viewTree->hide();
 
     connect(KonversationApplication::instance(), SIGNAL(appearanceChanged()), m_viewTree, SLOT(updateAppearance()));

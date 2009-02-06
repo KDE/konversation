@@ -692,7 +692,7 @@ void NicksOnline::doCommand(int id)
             }
             else
             {
-                LinkAddressbookUI *linkaddressbookui = new LinkAddressbookUI(server->getViewContainer()->getWindow(), NULL, nickname, server->getServerName(), server->getDisplayName(), addressee.realName());
+                LinkAddressbookUI *linkaddressbookui = new LinkAddressbookUI(server->getViewContainer()->getWindow(), nickname, server->getServerName(), server->getDisplayName(), addressee.realName());
                 linkaddressbookui->show();
             }
             break;

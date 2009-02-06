@@ -24,9 +24,6 @@ Kopete    (c) 2002-2004 by the Kopete developers  <kopete-devel@kde.org>
 #ifndef LINKADDRESSBOOKUI_H
 #define LINKADDRESSBOOKUI_H
 
-#include <Q3ListViewItem>
-#include <q3ptrlist.h>
-#include <q3valuelist.h>
 #include <qmap.h>
 
 #include <kdialog.h>
@@ -42,7 +39,7 @@ class LinkAddressbookUI : public KDialog
     Q_OBJECT
 
         public:
-        LinkAddressbookUI( QWidget *parent, const char *name, const QString &ircnick, const QString &servername, const QString &servergroup, const QString &suggested_realname);
+        LinkAddressbookUI( QWidget *parent, const QString &ircnick, const QString &servername, const QString &servergroup, const QString &suggested_realname);
         ~LinkAddressbookUI();
 
     private:

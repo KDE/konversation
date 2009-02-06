@@ -22,7 +22,7 @@
 #include <kcombobox.h>
 
 
-IRCColorChooser::IRCColorChooser(QWidget* parent, const char* name)
+IRCColorChooser::IRCColorChooser(QWidget* parent)
 : KDialog(parent)
 {
     setButtons( KDialog::Ok|KDialog::Cancel );

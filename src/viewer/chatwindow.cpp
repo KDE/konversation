@@ -22,10 +22,6 @@
 #include <qregexp.h>
 #include <qtextcodec.h>
 #include <qlayout.h>
-//Added by qt3to4:
-#include <Q3TextStream>
-#include <QKeyEvent>
-#include <QEvent>
 
 #include <klocale.h>
 #include <kdialog.h>
@@ -444,7 +440,7 @@ bool ChatWindow::eventFilter(QObject* watched, QEvent* e)
     {
         QKeyEvent* ke = static_cast<QKeyEvent*>(e);
 
-        bool scrollMod = (Preferences::self()->useMultiRowInputBox() ? false : (ke->state() == Qt::ShiftModifier));
+        bool scrollMod = (Preferences::self()->useMultiRowInputBox() ? false : (ke->modifiers() == Qt::ShiftModifier));
 
         if(ke->key() == Qt::Key_Up && scrollMod)
         {

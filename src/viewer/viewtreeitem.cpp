@@ -385,9 +385,9 @@ void ViewTreeItem::paintCell(QPainter* p, const QColorGroup& /* cg */, int /* co
                 pBuffer.drawEllipse(0, 0, wRound * 2, hRound * 2);
 
             pBuffer.end();
-            QImage imageToScale = buffer.convertToImage();
+            QImage imageToScale = buffer.toImage();
             QPixmap pmScaled;
-            pmScaled.convertFromImage(imageToScale.smoothScale(wRound, hRound));
+            pmScaled = QPixmap::fromImage(imageToScale.scaled(wRound, hRound, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
             painter.drawPixmap(xRound, yRound, pmScaled);
             textWidth -= hRound/2;
         }

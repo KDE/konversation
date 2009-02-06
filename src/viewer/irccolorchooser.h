@@ -27,7 +27,7 @@ class IRCColorChooser : public KDialog
 {
     Q_OBJECT
         public:
-        explicit IRCColorChooser(QWidget* parent, const char* name = 0);
+        explicit IRCColorChooser(QWidget* parent);
         QString color();
 
     protected slots:

@@ -136,7 +136,7 @@ Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
 
 
     QWidget* topicWidget = new QWidget(m_vertSplitter);
-    m_vertSplitter->setResizeMode(topicWidget,QSplitter::KeepSize);
+    m_vertSplitter->setStretchFactor(m_vertSplitter->indexOf(topicWidget), 0);
 
     QGridLayout* topicLayout = new QGridLayout(topicWidget);
     topicLayout->setMargin (0);
@@ -210,7 +210,7 @@ Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
 
     // The box that holds the Nick List and the quick action buttons
     nickListButtons = new KVBox(m_horizSplitter);
-    m_horizSplitter->setResizeMode(nickListButtons,QSplitter::KeepSize);
+    m_horizSplitter->setStretchFactor(m_horizSplitter->indexOf(nickListButtons), 0);
     nickListButtons->setSpacing(spacing());
 
     nicknameListView=new NickListView(nickListButtons, this);
@@ -363,6 +363,7 @@ void Channel::connectionStateChanged(Server* server, Konversation::ConnectionSta
 
 void Channel::setEncryptedOutput(bool e)
 {
+    Q_UNUSED(e);
     /*if (e) {
         blowfishLabel->show();
         //scan the channel topic and decrypt it if necessary

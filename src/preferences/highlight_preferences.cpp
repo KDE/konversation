@@ -20,8 +20,6 @@
 #include <qlabel.h>
 #include <q3header.h>
 #include <qtoolbutton.h>
-//Added by qt3to4:
-#include <Q3PtrList>
 
 #include <kglobal.h>
 #include <kstandarddirs.h>
@@ -39,7 +37,7 @@
 Highlight_Config::Highlight_Config(QWidget* parent, const char* name)
  : QWidget(parent)
 {
-  setObjectName(QString::fromLatin1(name));
+  setObjectName(name);
   setupUi(this);
 
   // reset flag to defined state (used to block signals when just selecting a new item)
@@ -52,7 +50,7 @@ Highlight_Config::Highlight_Config(QWidget* parent, const char* name)
   highlightListView->header()->setMovingEnabled(false);
 
   soundPlayBtn->setIcon(KIcon("media-playback-start"));
-  soundURL->setCaption(i18n("Select Sound File"));
+  soundURL->setWhatsThis(i18n("Select Sound File"));
 
   // This code was copied from KNotifyWidget::openSoundDialog() (knotifydialog.cpp) [it's under LGPL v2]
   // find the first "sound"-resource that contains files
@@ -169,9 +167,9 @@ void Highlight_Config::updateButtons()
   bool enabled = highlightListView->selectedItem() != NULL;
   // is the kregexpeditor installed?
   bool installed = false;
-#ifndef Q_CC_MSVC
-#warning "kde4 port"
-#endif
+// it does not make sense to port / enable this since KRegExpEditor is in a very bad shape. just keep this
+// code here because it will probably help at a later point to port it when KRegExpEditor is again usable.
+// 2009-02-06, uwolfer
 #if 0
        !KTrader::self()->query("KRegExpEditor/KRegExpEditor").isEmpty();
 #endif
@@ -193,6 +191,7 @@ void Highlight_Config::updateButtons()
   }
   else
   {
+      patternButton->setVisible(false);
       patternButton->setStatusTip(i18n("The Regular Expression Editor (KRegExpEditor) is not installed"));
   }
 }
@@ -210,9 +209,7 @@ void Highlight_Config::highlightTextChanged(const QString& newPattern)
 
 void Highlight_Config::highlightTextEditButtonClicked()
 {
-#ifndef Q_CC_MSVC
-#warning "kde4 port"
-#endif
+// see note above about KRegExpEditor
 #if 0
   QDialog *editorDialog =
       KParts::ComponentFactory::createInstanceFromQuery<QDialog>( "KRegExpEditor/KRegExpEditor" );

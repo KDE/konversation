@@ -416,7 +416,7 @@ void NickInfo::tooltipTableData(Q3TextStream &tooltip) const
 
 void NickInfo::showLinkAddressbookUI()
 {
-    LinkAddressbookUI *linkaddressbookui = new LinkAddressbookUI(m_owningServer->getViewContainer()->getWindow(), NULL, m_nickname, m_owningServer->getServerName(), m_owningServer->getDisplayName(), m_realName);
+    LinkAddressbookUI *linkaddressbookui = new LinkAddressbookUI(m_owningServer->getViewContainer()->getWindow(), m_nickname, m_owningServer->getServerName(), m_owningServer->getDisplayName(), m_realName);
     linkaddressbookui->show();
 
 }

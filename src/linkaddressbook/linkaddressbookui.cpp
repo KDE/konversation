@@ -45,7 +45,7 @@ Kopete    (c) 2002-2004 by the Kopete developers  <kopete-devel@kde.org>
 #include <kabc/stdaddressbook.h>
 
 
-LinkAddressbookUI::LinkAddressbookUI( QWidget *parent, const char *name, const QString &ircnick, const QString &servername, const QString &servergroup, const QString &suggested_realname )
+LinkAddressbookUI::LinkAddressbookUI( QWidget *parent, const QString &ircnick, const QString &servername, const QString &servergroup, const QString &suggested_realname )
 : KDialog(parent)
 {
     setCaption( i18n("Link IRC Nick to Addressbook Contact") );
