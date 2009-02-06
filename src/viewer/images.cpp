@@ -15,6 +15,7 @@
 #include "application.h" ////// header renamed
 
 #include <qbitmap.h>
+#include <qiconengine.h>
 #include <qpainter.h>
 #include <qstringlist.h>
 
@@ -24,6 +25,103 @@
 
 
 using namespace Konversation;
+
+
+class LedIconEngine : public QIconEngine
+{
+    public:
+        LedIconEngine(const QColor &color, bool state)
+            : QIconEngine(), m_color(color), m_state(state)
+        {
+        }
+
+        // QIconEngine
+        virtual void paint(QPainter *painter, const QRect &rect, QIcon::Mode mode, QIcon::State state);
+        virtual QPixmap pixmap(const QSize &size, QIcon::Mode mode, QIcon::State state);
+
+    private:
+        const QColor m_color;
+        const bool m_state;
+};
+
+void LedIconEngine::paint(QPainter *painter, const QRect &rect, QIcon::Mode mode, QIcon::State state)
+{
+    Q_UNUSED(mode);
+    Q_UNUSED(state);
+    QColor color;
+    QBrush brush;
+    QPen pen;
+
+    if (!m_state)
+        color = m_color.dark(180);
+    else
+        color = m_color;
+
+    int scale = rect.width() / 12;
+    int width = rect.width();
+
+    // Set the brush to Qt::SolidPattern, this fills the entire area
+    // of the ellipse which is drawn first
+    brush.setStyle( Qt::SolidPattern );
+    brush.setColor( color );
+    painter->setBrush( brush );
+
+    // Draw a "flat" LED with the given color
+    painter->drawEllipse( scale, scale, width - scale*2, width - scale*2 );
+
+    // Setting the new width of the pen is essential to avoid "pixelized"
+    // shadow like it can be observed with the old LED code
+    pen.setWidth( rect.width() / 12 );
+
+    // shrink the light on the LED to a size about 2/3 of the complete LED
+    int pos = width/5 + 1;
+    int light_width = width;
+    light_width *= 2;
+    light_width /= 3;
+
+    // Calculate the LEDs "light factor"
+    int light_quote = (130*2/(light_width?light_width:1))+100;
+
+    // Draw the bright spot on the LED
+    while (light_width)
+    {
+        color = color.light( light_quote ); // make color lighter
+        pen.setColor( color );              // set color as pen color
+        painter->setPen( pen );                // select the pen for drawing
+        painter->drawEllipse( pos, pos, light_width, light_width ); // draw the ellipse (circle)
+        light_width--;
+        if (!light_width)
+            break;
+        painter->drawEllipse( pos, pos, light_width, light_width );
+        light_width--;
+        if (!light_width)
+            break;
+        painter->drawEllipse( pos, pos, light_width, light_width );
+        pos++; light_width--;
+    }
+
+    // Draw border
+    pen.setWidth( rect.width() / 12 + 1 );
+    color = QColor("#7D7D7D");
+    pen.setColor( color );             // Set the pen accordingly
+    painter->setPen( pen );               // Select pen for drawing
+    brush.setStyle( Qt::NoBrush ); // Switch off the brush
+    painter->setBrush( brush );           // This avoids filling of the ellipse
+    painter->drawEllipse( 2, 2, rect.width() - 4, rect.width() - 4 );
+}
+
+QPixmap LedIconEngine::pixmap(const QSize &size, QIcon::Mode mode, QIcon::State state)
+{
+    QPixmap pix(size);
+    {
+        pix.fill(Qt::transparent);
+        QPainter p(&pix);
+        p.setRenderHint(QPainter::Antialiasing);
+        paint(&p, QRect(QPoint(0, 0), size), mode, state);
+    }
+    return pix;
+}
+
 
 Images::Images()
 {
@@ -144,86 +242,7 @@ void Images::updateIcons()
 
 QIcon Images::getLed(QColor col,bool state)
 {
-    QColor color;
-    QPainter paint;
-    QBrush brush;
-    QPen pen;
-
-    if (state==false)
-        color = col.dark(180);
-    else
-        color = col;
-
-    int scale = 3;
-    int width = 12 * scale;
-
-    QPixmap *tmpMap = 0;
-
-    tmpMap = new QPixmap(width + 6, width + 6);
-    QWidget tmpWidget;
-    tmpMap->fill(tmpWidget.paletteBackgroundColor());
-    paint.begin(tmpMap);
-
-    // Set the brush to Qt::SolidPattern, this fills the entire area
-    // of the ellipse which is drawn first
-    brush.setStyle( Qt::SolidPattern );
-    brush.setColor( color );
-    paint.setBrush( brush );
-
-    // Draw a "flat" LED with the given color
-    paint.drawEllipse( scale, scale, width - scale*2, width - scale*2 );
-
-    // Setting the new width of the pen is essential to avoid "pixelized"
-    // shadow like it can be observed with the old LED code
-    pen.setWidth( 2 * scale );
-
-    // shrink the light on the LED to a size about 2/3 of the complete LED
-    int pos = width/5 + 1;
-    int light_width = width;
-    light_width *= 2;
-    light_width /= 3;
-
-    // Calculate the LEDs "light factor"
-    int light_quote = (130*2/(light_width?light_width:1))+100;
-
-    // Draw the bright spot on the LED
-    while (light_width)
-    {
-        color = color.light( light_quote ); // make color lighter
-        pen.setColor( color );              // set color as pen color
-        paint.setPen( pen );                // select the pen for drawing
-        paint.drawEllipse( pos, pos, light_width, light_width ); // draw the ellipse (circle)
-        light_width--;
-        if (!light_width)
-            break;
-        paint.drawEllipse( pos, pos, light_width, light_width );
-        light_width--;
-        if (!light_width)
-            break;
-        paint.drawEllipse( pos, pos, light_width, light_width );
-        pos++; light_width--;
-    }
-
-    // Draw border
-    pen.setWidth( scale + 1 );
-    color = QColor("#7D7D7D");
-    pen.setColor( color );             // Set the pen accordingly
-    paint.setPen( pen );               // Select pen for drawing
-    brush.setStyle( Qt::NoBrush ); // Switch off the brush
-    paint.setBrush( brush );           // This avoids filling of the ellipse
-    paint.drawEllipse( 2, 2, width, width );
-    paint.end();
-
-    tmpMap->setMask(tmpMap->createHeuristicMask(true));
-
-    // painting done
-
-    width /= 3;
-
-    QIcon result(tmpMap->scaled(width, width, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
-    delete tmpMap;
-
-    return result; // TODO FIXME why did this return dest?
+    return QIcon(new LedIconEngine(col, state));
 }
 
 QIcon Images::getServerLed(bool state)
