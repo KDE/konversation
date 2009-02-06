@@ -234,7 +234,12 @@ bool IRCView::hasLines() { return false; }
 */
 
 void IRCView::enableParagraphSpacing() {}
-void IRCView::setViewBackground(QColor const&, QString const&) {}
+void IRCView::setViewBackground(QColor const& bgcolor, QString const&)
+{
+    QPalette pal = palette();
+    pal.setColor(QPalette::Base, bgcolor);
+    setPalette(pal);
+}
 
 // Data insertion
 
