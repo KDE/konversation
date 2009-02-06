@@ -22,7 +22,6 @@
 
 #include <ktoolbar.h>
 #include <kstandarddirs.h>
-#include <k3staticdeleter.h>
 #include <kdebug.h>
 #include <kapplication.h>
 #include <kconfig.h>
@@ -35,27 +34,29 @@
 #include <qfileinfo.h>
 
 
-Preferences *Preferences::mSelf = 0;
-static K3StaticDeleter<Preferences> staticPreferencesDeleter;
+struct PreferencesSingleton
+{
+    Preferences prefs;
+};
+
+K_GLOBAL_STATIC(PreferencesSingleton, s_prefs)
 
 Preferences *Preferences::self()
 {
-  if ( !mSelf ) {
-    staticPreferencesDeleter.setObject( mSelf, new Preferences() );
-    mSelf->readConfig();
+  if ( !s_prefs.exists() ) {
+    s_prefs->prefs.readConfig();
   }
 
-  return mSelf;
+  return &s_prefs->prefs;
 }
 
 
 Preferences::Preferences()
 {
-    mSelf = this;
     // create default identity
     mIdentity=new Identity();
     mIdentity->setName(i18n("Default Identity"));
-    addIdentity(mIdentity);
+    mIdentityList.append(mIdentity);
     mIgnoreList.setAutoDelete(true);
 
     KUser user(KUser::UseRealUserID);
@@ -79,17 +80,14 @@ Preferences::Preferences()
     channel.setName("#konversation");
     serverGroup->addChannel(channel);
     serverGroup->setExpanded(false);
-    addServerGroup(serverGroup);
-    setQuickButtonList(defaultQuickButtonList());
-    setAutoreplaceList(defaultAutoreplaceList());
+    mServerGroupList.append(serverGroup);
+    mQuickButtonList = defaultQuickButtonList();
+    mAutoreplaceList = defaultAutoreplaceList();
 }
 
 Preferences::~Preferences()
 {
     mIdentityList.clear();
-
-    if ( mSelf == this )
-        staticPreferencesDeleter.setObject( mSelf, 0, false );
 }
 const Konversation::ServerGroupList Preferences::serverGroupList()
 {

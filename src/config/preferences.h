@@ -43,14 +43,16 @@ NoRightsColor (int)
 
 class Ignore;
 class Highlight;
+struct PreferencesSingleton;
 
 class Preferences : public PreferencesBase
 {
     Q_OBJECT
 
+    friend struct PreferencesSingleton;
+
     protected:
         Preferences();
-        static Preferences *mSelf;
 
     public:
 
