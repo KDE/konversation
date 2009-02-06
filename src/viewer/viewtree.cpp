@@ -159,7 +159,7 @@ void ViewTree::addView(const QString& name, ChatWindow* view, const QIcon &icons
     {
         if (item->sortLast()) ++m_specialViewCount;
 
-        item->setIcon(iconset.pixmap());
+        item->setIcon(iconset.pixmap(16, QIcon::Normal, QIcon::Off));
 
         if (select || m_selectFirstView)
         {
@@ -278,7 +278,7 @@ void ViewTree::setViewIcon(ChatWindow* view, const QIcon &iconset)
 {
     ViewTreeItem* item = getItemForView(view);
 
-    if (item) item->setIcon(iconset.pixmap());
+    if (item) item->setIcon(iconset.pixmap(16, QIcon::Normal, QIcon::Off));
 }
 
 void ViewTree::announceSelection(Q3ListViewItem* item)
