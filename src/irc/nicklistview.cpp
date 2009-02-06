@@ -337,8 +337,10 @@ void NickListView::insertAssociationSubMenu()
         m_AddressbookNewAction = createAction(addressbook,i18n("Create New Contact..."),Konversation::AddressbookNew);
 
     if(existingAssociation)
+    {
         m_AddressbookDeleteAction = createAction(addressbook,i18n("Delete Association"),Konversation::AddressbookDelete);
         m_AddressbookDeleteAction->setIcon(KIcon("edit-delete"));
+    }
 
     if(!emailAddress)
         m_sendMailAction->setEnabled(false);
