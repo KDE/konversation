@@ -44,10 +44,8 @@ class SearchBar : public QWidget, private Ui::SearchBarBase
 
     protected:
         virtual void showEvent(QShowEvent* e);
+        virtual void hideEvent(QHideEvent* e);
         bool focusedChild();
-
-    public slots:
-        virtual void hide();
 
     private slots:
         void slotTextChanged();
@@ -55,10 +53,10 @@ class SearchBar : public QWidget, private Ui::SearchBarBase
         void slotFindNext();
         void slotFindPrevious();
 
-        void toggleSearchFoward();
-        void toggleMatchCase();
-        void toggleWholeWords();
-        void toggleFromCursor();
+        void toggleSearchFoward(bool value);
+        void toggleMatchCase(bool value);
+        void toggleWholeWords(bool value);
+        void toggleFromCursor(bool value);
 
         void showOptionsMenu();
 

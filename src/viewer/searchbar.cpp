@@ -15,10 +15,10 @@
 #include <qcheckbox.h>
 #include <qtimer.h>
 #include <qpalette.h>
-#include <q3accel.h>
 #include <qlabel.h>
 #include <qpixmap.h>
 #include <qobject.h>
+#include <qshortcut.h>
 #include <qtoolbutton.h>
 
 #include <kdebug.h>
@@ -28,11 +28,6 @@
 #include <kmenu.h>
 #include <kpushbutton.h>
 #include <klocale.h>
-
-#define SEARCH_FORWARD_MENU 1
-#define MATCH_CASE_MENU 2
-#define WHOLE_WORDS_ONLY_MENU 3
-#define FROM_CURSOR_MENU 4
 
 
 SearchBar::SearchBar(QWidget* parent)
@@ -55,8 +50,7 @@ SearchBar::SearchBar(QWidget* parent)
     m_timer = new QTimer(this);
     m_timer->setSingleShot(true);
 
-    Q3Accel* accel = new Q3Accel(this);
-    accel->connectItem( accel->insertItem(Qt::Key_Escape), this, SLOT(hide()));
+    new QShortcut(QKeySequence(Qt::Key_Escape), this, SLOT(hide()));
 
     connect(m_timer, SIGNAL(timeout()), SLOT(slotFind()));
     connect(m_searchEdit, SIGNAL(textChanged(const QString&)), SLOT(slotTextChanged()));
@@ -66,12 +60,20 @@ SearchBar::SearchBar(QWidget* parent)
     connect(m_closeButton, SIGNAL(clicked()), SLOT(hide()));
     connect(m_optionsButton, SIGNAL(clicked()), this, SLOT(showOptionsMenu()));
 
+    QAction *action = 0;
     m_optionsMenu = new KMenu(m_optionsButton);
-    m_optionsMenu->setCheckable(true);
-    m_optionsMenu->insertItem(i18n("Find Forward"), this, SLOT(toggleSearchFoward()), 0, SEARCH_FORWARD_MENU);
-    m_optionsMenu->insertItem(i18n("Case Sensitive"), this, SLOT(toggleMatchCase()), 0, MATCH_CASE_MENU);
-    m_optionsMenu->insertItem(i18n("Whole Words Only"), this, SLOT(toggleWholeWords()), 0, WHOLE_WORDS_ONLY_MENU);
-    m_optionsMenu->insertItem(i18n("From Cursor"), this, SLOT(toggleFromCursor()), 0, FROM_CURSOR_MENU);
+    action = m_optionsMenu->addAction(i18n("Find Forward"));
+    action->setCheckable(true);
+    connect(action, SIGNAL(toggled(bool)), this, SLOT(toggleSearchFoward(bool)));
+    action = m_optionsMenu->addAction(i18n("Case Sensitive"));
+    action->setCheckable(true);
+    connect(action, SIGNAL(toggled(bool)), this, SLOT(toggleMatchCase(bool)));
+    action = m_optionsMenu->addAction(i18n("Whole Words Only"));
+    action->setCheckable(true);
+    connect(action, SIGNAL(toggled(bool)), this, SLOT(toggleWholeWords(bool)));
+    action = m_optionsMenu->addAction(i18n("From Cursor"));
+    action->setCheckable(true);
+    connect(action, SIGNAL(toggled(bool)), this, SLOT(toggleFromCursor(bool)));
 
     m_optionsButton->setMenu(m_optionsMenu);
 }
@@ -96,10 +98,10 @@ bool SearchBar::focusedChild()
     return false;
 }
 
-void SearchBar::hide()
+void SearchBar::hideEvent(QHideEvent* e)
 {
     m_timer->stop();
-    QWidget::hide();
+    QWidget::hideEvent(e);
 
     if (focusedChild())
         emit hidden();
@@ -200,31 +202,27 @@ bool SearchBar::fromCursor() const
     return m_fromCursor;
 }
 
-void SearchBar::toggleSearchFoward()
+void SearchBar::toggleSearchFoward(bool value)
 {
-    m_searchFoward = !m_searchFoward;
-    m_optionsMenu->setItemChecked(SEARCH_FORWARD_MENU, m_searchFoward);
+    m_searchFoward = value;
     slotTextChanged();
 }
 
-void SearchBar::toggleMatchCase()
+void SearchBar::toggleMatchCase(bool value)
 {
-    m_matchCase = !m_matchCase;
-    m_optionsMenu->setItemChecked(MATCH_CASE_MENU, m_matchCase);
+    m_matchCase = value;
     slotTextChanged();
 }
 
-void SearchBar::toggleWholeWords()
+void SearchBar::toggleWholeWords(bool value)
 {
-    m_wholeWords = !m_wholeWords;
-    m_optionsMenu->setItemChecked(WHOLE_WORDS_ONLY_MENU, m_wholeWords);
+    m_wholeWords = value;
     slotTextChanged();
 }
 
-void SearchBar::toggleFromCursor()
+void SearchBar::toggleFromCursor(bool value)
 {
-    m_fromCursor = !m_fromCursor;
-    m_optionsMenu->setItemChecked(FROM_CURSOR_MENU, m_fromCursor);
+    m_fromCursor = value;
     slotTextChanged();
 }
 
