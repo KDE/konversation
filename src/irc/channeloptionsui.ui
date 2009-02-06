@@ -243,47 +243,13 @@ the Free Software Foundation; either version 2 of the License, or
         </layout>
        </item>
        <item>
-        <widget class="K3ListView" name="otherModesList" >
-         <property name="selectionMode" >
-          <enum>Q3ListView::Single</enum>
-         </property>
+        <widget class="QTreeView" name="otherModesList" >
          <property name="allColumnsShowFocus" >
           <bool>true</bool>
          </property>
-         <property name="resizeMode" >
-          <enum>Q3ListView::LastColumn</enum>
-         </property>
-         <property name="defaultRenameAction" >
-          <enum>Q3ListView::Accept</enum>
-         </property>
-         <property name="itemsMovable" >
+         <property name="rootIsDecorated" >
           <bool>false</bool>
          </property>
-         <property name="itemsRenameable" >
-          <bool>true</bool>
-         </property>
-         <column>
-          <property name="text" >
-           <string>Mode</string>
-          </property>
-          <property name="clickable" >
-           <bool>true</bool>
-          </property>
-          <property name="resizable" >
-           <bool>true</bool>
-          </property>
-         </column>
-         <column>
-          <property name="text" >
-           <string>Parameter</string>
-          </property>
-          <property name="clickable" >
-           <bool>true</bool>
-          </property>
-          <property name="resizable" >
-           <bool>true</bool>
-          </property>
-         </column>
         </widget>
        </item>
        <item>

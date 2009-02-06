@@ -18,6 +18,7 @@
 #include <qcheckbox.h>
 #include <qpushbutton.h>
 #include <qregexp.h>
+#include <qstandarditemmodel.h>
 #include <q3header.h>
 #include <qtoolbutton.h>
 
@@ -43,8 +44,10 @@ namespace Konversation
         Q_ASSERT(channel);
         m_ui.setupUi(mainWidget());
 
-        m_ui.otherModesList->setRenameable(0, false);
-        m_ui.otherModesList->setRenameable(1, true);
+        QStandardItemModel *modesModel = new QStandardItemModel(m_ui.otherModesList);
+        modesModel->setHorizontalHeaderLabels(
+            QStringList() << i18n("Mode") << i18n("Parameter"));
+        m_ui.otherModesList->setModel(modesModel);
         m_ui.otherModesList->hide();
 
         // don't allow sorting. most recent topic is always first
@@ -243,9 +246,19 @@ namespace Konversation
         modeString.remove('o');
         modeString.remove('v');
 
+        QStandardItemModel *modesModel = qobject_cast<QStandardItemModel *>(m_ui.otherModesList->model());
         for(int i = 0; i < modeString.length(); i++)
         {
-            new Q3CheckListItem(m_ui.otherModesList, QString(modeString[i]), Q3CheckListItem::CheckBox);
+            QList<QStandardItem *> newRow;
+            QStandardItem *item = 0;
+            item = new QStandardItem(QString(modeString[i]));
+            item->setCheckable(true);
+            item->setEditable(false);
+            newRow.append(item);
+            item = new QStandardItem();
+            item->setEditable(true);
+            newRow.append(item);
+            modesModel->invisibleRootItem()->appendRow(newRow);
         }
     }
 
@@ -263,12 +276,10 @@ namespace Konversation
         m_ui.keyModeChBox->setChecked(false);
         m_ui.keyModeEdit->setText("");
 
-        Q3ListViewItem* item = m_ui.otherModesList->firstChild();
-
-        while(item)
+        QStandardItemModel *modesModel = qobject_cast<QStandardItemModel *>(m_ui.otherModesList->model());
+        for (int i = 0; i < modesModel->rowCount(); ++i)
         {
-            static_cast<Q3CheckListItem*>(item)->setOn(false);
-            item = item->nextSibling();
+            modesModel->item(i, 0)->setCheckState(Qt::Unchecked);
         }
 
         char mode;
@@ -304,21 +315,17 @@ namespace Konversation
                 default:
                 {
                     bool found = false;
-                    item = m_ui.otherModesList->firstChild();
                     QString modeString;
                     modeString = mode;
 
-                    while(item && !found)
+                    for (int i = 0; !found && i < modesModel->rowCount(); ++i)
                     {
-                        if(item->text(0) == modeString)
+                        QStandardItem *item = modesModel->item(i, 0);
+                        if (item->text() == modeString)
                         {
                             found = true;
-                            static_cast<Q3CheckListItem*>(item)->setOn(true);
-                            item->setText(1, currentMode.mid(1));
-                        }
-                        else
-                        {
-                            item = item->nextSibling();
+                            item->setCheckState(Qt::Checked);
+                            modesModel->item(i, 1)->setText(currentMode.mid(1));
                         }
                     }
 
@@ -367,14 +374,12 @@ namespace Konversation
             modes.append(mode);
         }
 
-        Q3ListViewItem* item = m_ui.otherModesList->firstChild();
-
-        while(item)
+        QStandardItemModel *modesModel = qobject_cast<QStandardItemModel *>(m_ui.otherModesList->model());
+        for (int i = 0; i < modesModel->rowCount(); ++i)
         {
-            mode = (static_cast<Q3CheckListItem*>(item)->isOn() ? "+" : "-");
-            mode += item->text(0) + item->text(1);
+            mode = (modesModel->item(i, 0)->checkState() == Qt::Checked ? "+" : "-");
+            mode += modesModel->item(i, 0)->text() + modesModel->item(i, 1)->text();
             modes.append(mode);
-            item = item->nextSibling();
         }
 
         return modes;
