@@ -12,6 +12,7 @@
 
 #include <qglobal.h>
 #include <qregexp.h>
+#include <qlocale.h>
 #include <qtextcodec.h>
 #include <kcharsets.h>
 #include <kdebug.h>
