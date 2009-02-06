@@ -184,13 +184,13 @@ void NickListView::setWhatsThis()
     }
     else
     {
-        Q3MimeSourceFactory::defaultFactory()->setImage( "admin", images->getNickIcon( Images::Admin, false ).convertToImage() );
-        Q3MimeSourceFactory::defaultFactory()->setImage( "owner", images->getNickIcon( Images::Owner, false ).convertToImage());
-        Q3MimeSourceFactory::defaultFactory()->setImage( "op", images->getNickIcon( Images::Op, false ).convertToImage() );
-        Q3MimeSourceFactory::defaultFactory()->setImage( "halfop", images->getNickIcon( Images::HalfOp, false ).convertToImage() );
-        Q3MimeSourceFactory::defaultFactory()->setImage( "voice", images->getNickIcon( Images::Voice, false ).convertToImage() );
-        Q3MimeSourceFactory::defaultFactory()->setImage( "normal", images->getNickIcon( Images::Normal, false ).convertToImage() );
-        Q3MimeSourceFactory::defaultFactory()->setImage( "normalaway", images->getNickIcon( Images::Normal, true).convertToImage() );
+        Q3MimeSourceFactory::defaultFactory()->setImage( "admin", images->getNickIcon( Images::Admin, false ).toImage() );
+        Q3MimeSourceFactory::defaultFactory()->setImage( "owner", images->getNickIcon( Images::Owner, false ).toImage());
+        Q3MimeSourceFactory::defaultFactory()->setImage( "op", images->getNickIcon( Images::Op, false ).toImage() );
+        Q3MimeSourceFactory::defaultFactory()->setImage( "halfop", images->getNickIcon( Images::HalfOp, false ).toImage() );
+        Q3MimeSourceFactory::defaultFactory()->setImage( "voice", images->getNickIcon( Images::Voice, false ).toImage() );
+        Q3MimeSourceFactory::defaultFactory()->setImage( "normal", images->getNickIcon( Images::Normal, false ).toImage() );
+        Q3MimeSourceFactory::defaultFactory()->setImage( "normalaway", images->getNickIcon( Images::Normal, true).toImage() );
 
         Q3WhatsThis::add(this, i18n("<qt><p>This shows all the people in the channel.  The nick for each person is shown, with a picture showing their status.</p>"
             "<table>"
