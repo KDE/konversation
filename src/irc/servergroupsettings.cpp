@@ -94,17 +94,7 @@ namespace Konversation
 
     void ServerGroupSettings::removeServer(const ServerSettings settings)
     {
-        Konversation::ServerList::iterator it;
-
-        for (it = m_serverList.begin(); it != m_serverList.end(); ++it)
-        {
-            if ((*it)==settings)
-            {
-                m_serverList.remove((*it));
-
-                return;
-            }
-        }
+        m_serverList.removeOne(settings);
     }
 
     ServerSettings ServerGroupSettings::serverByIndex(int index) const

@@ -207,7 +207,7 @@ namespace Konversation
         // Track the server the Server List dialog told us to edit
         // and find out which server to select in the listbox
         m_editedServer = true;
-        m_editedServerIndex = m_serverList.findIndex(server);
+        m_editedServerIndex = m_serverList.indexOf(server);
         m_mainWidget->m_serverLBox->setCurrentRow(m_editedServerIndex);
 
         editServer();
@@ -219,7 +219,7 @@ namespace Konversation
 
         if (current < m_serverList.count())
         {
-            m_serverList.remove(m_serverList.at(current));
+            m_serverList.removeAt(current);
             delete m_mainWidget->m_serverLBox->takeItem(current);
 
             // Track the server the Server List dialog told us to edit

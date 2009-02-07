@@ -191,7 +191,7 @@ void ConnectionManager::handleReconnect(Server* server)
         {
             Konversation::ServerList serverList = settings.serverGroup()->serverList();
 
-            int index = serverList.findIndex(settings.server());
+            int index = serverList.indexOf(settings.server());
             int size = serverList.size();
 
             if (index == size - 1 || index == -1)

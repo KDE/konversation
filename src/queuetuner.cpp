@@ -242,7 +242,7 @@ void QueueTuner::fastIntervalChanged(int v)
 void QueueTuner::contextMenuEvent(QContextMenuEvent* e)
 {
     KMenu p(this);
-    p.insertItem(i18n("Reset..."), 1);
+    p.addAction(i18n("Reset..."));
     QAction *action = p.exec(e->globalPos());
     if (action)
     {

@@ -262,7 +262,7 @@ namespace Konversation
             KGuiItem(i18n("Delete"), "editdelete")) == KMessageBox::Continue)
         {
             m_identityCBox->removeItem(current);
-            m_identityList.removeAll(m_currentIdentity);
+            m_identityList.removeOne(m_currentIdentity);
             m_currentIdentity = 0;
             updateIdentity(m_identityCBox->currentIndex());
         }

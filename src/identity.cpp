@@ -110,10 +110,7 @@ void Identity::setNickname(uint index,const QString& newName) { nicknameList[ind
 
 QString Identity::getNickname(int index) const
 {
-  if(index < nicknameList.count())
-    return nicknameList[index];
-  else
-    return QString();
+  return nicknameList.value(index);
 }
 
 void Identity::setBot(const QString& newBot)            { bot=newBot; }

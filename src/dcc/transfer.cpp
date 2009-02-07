@@ -160,8 +160,8 @@ void DccTransfer::updateTransferMeters()
         QList<KIO::fileoffset_t>::iterator itPos = m_transferLogPosition.begin();
         while ( itTime != m_transferLogTime.end() && ( m_transferLogTime.last() - (*itTime) > timeToCalc * 1000 ) )
         {
-            itTime = m_transferLogTime.remove( itTime );
-            itPos = m_transferLogPosition.remove( itPos );
+            itTime = m_transferLogTime.erase( itTime );
+            itPos = m_transferLogPosition.erase( itPos );
         }
 
         // shift the base of the time (m_transferLoggerBaseTime)
