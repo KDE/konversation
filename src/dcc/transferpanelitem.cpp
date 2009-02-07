@@ -191,40 +191,25 @@ void DccTransferPanelItem::openFileInfoDialog()
         QString path=m_transfer->getFileURL().path();
 
         // get meta info object
-        KFileMetaInfo fileInfo(path,QString(),KFileMetaInfo::Everything);
-#ifndef Q_CC_MSVC
-#warning "port kde4"
-#endif
-#if 0
+        KFileMetaInfo fileMetaInfo(path,QString(),KFileMetaInfo::Everything);
+
         // is there any info for this file?
-        if(!fileInfo.isValid())
+        if (fileMetaInfo.isValid())
         {
-            // get list of meta information groups
-            KFileMetaInfoGroupList groupList=fileInfo.groups();
-            // look inside for keys
-            for(int index=0;index<groupList.count();index++)
+            const QHash<QString, KFileMetaInfoItem>& items = fileMetaInfo.items();
+            QHash<QString, KFileMetaInfoItem>::const_iterator it = items.constBegin();
+            const QHash<QString, KFileMetaInfoItem>::const_iterator end = items.constEnd();
+            while (it != end)
             {
-                // get next group
-                KFileMetaInfoGroup group=fileInfo.group(groupList[index]);
-                // check if there are keys in this group at all
-                if(!group.isEmpty())
+                const KFileMetaInfoItem& metaInfoItem = it.value();
+                const QVariant& value = metaInfoItem.value();
+                if (value.isValid())
                 {
-                    // append group name to list
-                    infoList.append(groupList[index]);
-                    // get list of keys in this group
-                    QStringList keys=group.keys();
-                    for(unsigned keyIndex=0;keyIndex<keys.count();keyIndex++)
-                    {
-                        // get meta information item for this key
-                        KFileMetaInfoItem item=group.item(keys[keyIndex]);
-                        if(item.isValid())
-                        {
-                            // append item information to list
-                            infoList.append("- "+item.translatedKey()+' '+item.string());
-                        }
-                    } // endfor
+                    // append item information to list
+                    infoList.append("- "+metaInfoItem.name()+' '+value.toString());
                 }
-            } // endfor
+                ++it;
+            }
 
             // display information list if any available
             if(infoList.count())
@@ -249,7 +234,6 @@ void DccTransferPanelItem::openFileInfoDialog()
         {
             KMessageBox::sorry(listView(),i18n("No detailed information for this file found."),i18n("File Information"));
         }
-#endif
     }
 }
 
@@ -290,17 +274,17 @@ QPixmap DccTransferPanelItem::getStatusIcon() const
         case DccTransfer::Preparing:
         case DccTransfer::WaitingRemote:
         case DccTransfer::Connecting:
-            icon = "goto";
+            icon = "network-disconnect";
             break;
         case DccTransfer::Transferring:
             icon = "media-playback-start";
             break;
         case DccTransfer::Done:
-            icon = "ok";
+            icon = "dialog-ok";
             break;
         case DccTransfer::Aborted:
         case DccTransfer::Failed:
-            icon = "stop";
+            icon = "process-stop";
             break;
         default:
 	    break;
