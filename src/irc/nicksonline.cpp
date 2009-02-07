@@ -385,7 +385,7 @@ void NicksOnline::updateServerOnlineList(Server* servr)
             while (child)
             {
                 Q3ListViewItem* nextChild = child->nextSibling();
-                if (channelList.indexOf(child->text(nlvcNick)) == -1)
+                if (!channelList.contains(child->text(nlvcNick)))
                     delete child;
                 child = nextChild;
             }
@@ -423,8 +423,8 @@ void NicksOnline::updateServerOnlineList(Server* servr)
         if (static_cast<NicksOnlineItem*>(item)->type() != NicksOnlineItem::OfflineItem)
         {
             QString nickname = item->text(nlvcNick);
-            if ((watchList.indexOf(nickname) == -1) &&
-                (serverName == item->text(nlvcServerName))) delete item;
+            if (!watchList.contains(nickname) && serverName == item->text(nlvcServerName))
+                delete item;
         }
         item = nextItem;
     }
@@ -435,8 +435,8 @@ void NicksOnline::updateServerOnlineList(Server* servr)
         {
             Q3ListViewItem* nextItem = item->nextSibling();
             QString nickname = item->text(nlvcNick);
-            if ((watchList.indexOf(nickname) == -1) &&
-                (serverName == item->text(nlvcServerName))) delete item;
+            if (!watchList.contains(nickname) && serverName == item->text(nlvcServerName))
+                delete item;
             item = nextItem;
         }
     }

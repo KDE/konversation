@@ -930,10 +930,7 @@ bool Channel::autoJoin()
 
     Konversation::ChannelList channelList = m_server->getServerGroup()->channelList();
 
-    if (!channelList.empty())
-        return channelList.indexOf(channelSettings()) != -1;
-    else
-        return false;
+    return channelList.contains(channelSettings());
 }
 
 void Channel::setAutoJoin(bool autojoin)
@@ -1000,13 +997,11 @@ QString Channel::getPassword()
 
     if (password.isEmpty() && m_server->getServerGroup())
     {
-        //QList<ChannelSettings>
         Konversation::ChannelList channelSettingsList = m_server->getServerGroup()->channelList();
         Konversation::ChannelSettings channelSettings(getName());
-        Konversation::ChannelList::iterator it = channelSettingsList.find(channelSettings);
-
-        if (it != channelSettingsList.end())
-            password = (*it).password();
+        int index = channelSettingsList.indexOf(channelSettings);
+        if(index >= 0)
+           password = channelSettingsList.at(index).password();
     }
 
     return password;
@@ -2087,10 +2082,9 @@ void Channel::updateModeWidgets(char mode, bool plus, const QString &parameter)
     else
     {
         QStringList removable = m_modeList.filter(QRegExp(QString("^%1.*").arg(mode)));
-
-        for(QStringList::iterator it = removable.begin(); it != removable.end(); ++it)
+        foreach(const QString mode, removable)
         {
-            m_modeList.remove(m_modeList.find((*it)));
+            m_modeList.removeOne(mode);
         }
     }
     emit modesChanged();
