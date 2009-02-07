@@ -271,7 +271,7 @@ When the nickname watcher is turned on, you will be notified when the nicknames 
            <string>Click to add a nickname to the list.</string>
           </property>
           <property name="text" >
-           <string>&amp;New...</string>
+           <string>&amp;New</string>
           </property>
          </widget>
         </item>
