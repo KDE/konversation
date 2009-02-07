@@ -2534,19 +2534,16 @@ bool Channel::searchView()
 
 void Channel::appendInputText(const QString& s, bool fromCursor)
 {
-    if(1) // !fromCursor) //TODO FIXME port this fucking shit
+    if(!fromCursor)
     {
         channelInput->append(s);
     }
-#if 0
     else
     {
-        int para = 0, index = 0;
-        channelInput->getCursorPosition(&para, &index);
-        channelInput->insertAt(s, para, index);
-        channelInput->setCursorPosition(para, index + s.length());
+        const int position = channelInput->textCursor().position();
+        channelInput->textCursor().insertText(s);
+        channelInput->textCursor().setPosition(position + s.length());
     }
-#endif
 }
 
 bool Channel::closeYourself(bool confirm)

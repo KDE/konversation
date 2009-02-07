@@ -584,19 +584,16 @@ bool Query::searchView()       { return true; }
 
 void Query::appendInputText(const QString& s, bool fromCursor)
 {
-    if(1)// !fromCursor) //TODO FIXME someday we'll be able to fix this
+    if(!fromCursor)
     {
         queryInput->append(s);
     }
-#if 0
     else
     {
-        int para = 0, index = 0;
-        queryInput->getCursorPosition(&para, &index);
-        queryInput->insertAt(s, para, index);
-        queryInput->setCursorPosition(para, index + s.length());
+        const int position = queryInput->textCursor().position();
+        queryInput->textCursor().insertText(s);
+        queryInput->textCursor().setPosition(position + s.length());
     }
-#endif
 }
 
                                                   // virtual

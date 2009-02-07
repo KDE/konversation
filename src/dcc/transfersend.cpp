@@ -372,7 +372,7 @@ void DccTransferSend::startSending()
         startTransferLogger();                      // initialize CPS counter, ETA counter, etc...
     }
     else
-        failed( i18n( "Could not open the file: %1" , getQFileErrorString( m_file.status() ) ) );
+        failed( i18n( "Could not open the file: %1" , getQFileErrorString( m_file.error() ) ) );
 }
 
 void DccTransferSend::writeData()                 // slot
@@ -475,19 +475,19 @@ QString DccTransferSend::getQFileErrorString( int code )
 
     switch(code)
     {
-        case IO_Ok:
+        case QFile::NoError:
             errorString=i18n("The operation was successful. Should never happen in an error dialog.");
             break;
-        case IO_ReadError:
+        case QFile::ReadError:
             errorString=i18n("Could not read from file \"%1\".",m_fileName );
             break;
-        case IO_WriteError:
+        case QFile::WriteError:
             errorString=i18n("Could not write to file \"%1\".", m_fileName );
             break;
-        case IO_FatalError:
+        case QFile::FatalError:
             errorString=i18n("A fatal unrecoverable error occurred.");
             break;
-        case IO_OpenError:
+        case QFile::OpenError:
             errorString=i18n("Could not open file \"%1\".", m_fileName );
             break;
 
@@ -496,13 +496,13 @@ QString DccTransferSend::getQFileErrorString( int code )
             //          errorString="Could not connect to the device.";
             //        break;
 
-        case IO_AbortError:
+        case QFile::AbortError:
             errorString=i18n("The operation was unexpectedly aborted.");
             break;
-        case IO_TimeOutError:
+        case QFile::TimeOutError:
             errorString=i18n("The operation timed out.");
             break;
-        case IO_UnspecifiedError:
+        case QFile::UnspecifiedError:
             errorString=i18n("An unspecified error happened on close.");
             break;
         default:
