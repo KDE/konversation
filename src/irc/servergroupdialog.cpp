@@ -251,9 +251,7 @@ namespace Konversation
             delete m_mainWidget->m_serverLBox->takeItem(current);
             m_mainWidget->m_serverLBox->insertItem(current - 1, server.host());
             m_mainWidget->m_serverLBox->setCurrentRow(current - 1);
-            ServerList::iterator it = m_serverList.remove(m_serverList.at(current));
-            --it;
-            m_serverList.insert(it, server);
+            m_serverList.move(current, current - 1);
 
             // Track the server the Server List dialog told us to edit
             if (m_editedServer && m_editedServerIndex==current)
@@ -273,9 +271,7 @@ namespace Konversation
             delete m_mainWidget->m_serverLBox->takeItem(current);
             m_mainWidget->m_serverLBox->insertItem(current + 1, server.host());
             m_mainWidget->m_serverLBox->setCurrentRow(current + 1);
-            ServerList::iterator it = m_serverList.remove(m_serverList.at(current));
-            ++it;
-            m_serverList.insert(it, server);
+            m_serverList.move(current, current + 1);
 
             // Track the server the Server List dialog told us to edit
             if (m_editedServer && m_editedServerIndex==current)
