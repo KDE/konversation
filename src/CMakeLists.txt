@@ -3,10 +3,6 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/config)
 
 include_directories(blowfish config dcc irc preferences viewer)
 
-remove_definitions(-DKDE_DEPRECATED_WARNINGS)
-
-########### next target ###############
-
 set(core_SRCS
     #====================================
     #=== Application
@@ -20,8 +16,8 @@ set(core_SRCS
     ssllabel.cpp
     statusbar.cpp
     bookmarkhandler.cpp
-   configdialog.cpp
-   settingsdialog.cpp
+    configdialog.cpp
+    settingsdialog.cpp
     scriptlauncher.cpp
     konsolepanel.cpp
     notificationhandler.cpp
@@ -72,8 +68,6 @@ set (irc_SRCS
     irc/serverlistdialog.cpp
     irc/serverlistview.cpp
     irc/serversettings.cpp
-
-
 )
 
 kde4_add_ui_files(irc_SRCS
@@ -212,4 +206,3 @@ if (X11_Xscreensaver_FOUND)
 endif (X11_Xscreensaver_FOUND)
 
 install(TARGETS konvi ${INSTALL_TARGETS_DEFAULT_ARGS})
-
