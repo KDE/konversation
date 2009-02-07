@@ -1,7 +1,8 @@
-<ui version="4.0" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
  <class>Theme_ConfigUI</class>
- <widget class="QWidget" name="Theme_ConfigUI" >
-  <property name="geometry" >
+ <widget class="QWidget" name="Theme_ConfigUI">
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
@@ -9,46 +10,46 @@
     <height>338</height>
    </rect>
   </property>
-  <property name="windowTitle" >
+  <property name="windowTitle">
    <string>Theme_Config</string>
   </property>
-  <layout class="QGridLayout" >
-   <property name="margin" >
+  <layout class="QGridLayout">
+   <property name="margin">
     <number>0</number>
    </property>
-   <item row="0" column="0" colspan="3" >
-    <widget class="K3ListBox" name="iconThemeIndex" />
+   <item row="0" column="0" colspan="3">
+    <widget class="QListWidget" name="iconThemeIndex"/>
    </item>
-   <item row="2" column="0" colspan="3" >
-    <layout class="QHBoxLayout" >
+   <item row="2" column="0" colspan="3">
+    <layout class="QHBoxLayout">
      <item>
-      <widget class="QPushButton" name="installButton" >
-       <property name="text" >
+      <widget class="QPushButton" name="installButton">
+       <property name="text">
         <string>I&amp;nstall Theme...</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="removeButton" >
-       <property name="enabled" >
+      <widget class="QPushButton" name="removeButton">
+       <property name="enabled">
         <bool>false</bool>
        </property>
-       <property name="text" >
+       <property name="text">
         <string>&amp;Remove Theme</string>
        </property>
       </widget>
      </item>
     </layout>
    </item>
-   <item row="1" column="2" >
-    <spacer name="spacer172" >
-     <property name="orientation" >
+   <item row="1" column="2">
+    <spacer name="spacer172">
+     <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
-     <property name="sizeType" >
+     <property name="sizeType">
       <enum>QSizePolicy::Expanding</enum>
      </property>
-     <property name="sizeHint" stdset="0" >
+     <property name="sizeHint" stdset="0">
       <size>
        <width>131</width>
        <height>20</height>
@@ -56,132 +57,132 @@
      </property>
     </spacer>
    </item>
-   <item row="1" column="1" >
-    <widget class="QFrame" name="frame3_2" >
-     <property name="minimumSize" >
+   <item row="1" column="1">
+    <widget class="QFrame" name="frame3_2">
+     <property name="minimumSize">
       <size>
        <width>0</width>
        <height>0</height>
       </size>
      </property>
-     <property name="frameShape" >
+     <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>
-     <property name="frameShadow" >
+     <property name="frameShadow">
       <enum>QFrame::Plain</enum>
      </property>
-     <layout class="QGridLayout" >
-      <item row="0" column="0" >
-       <widget class="QLabel" name="previewLabel1" >
-        <property name="toolTip" >
+     <layout class="QGridLayout">
+      <item row="0" column="0">
+       <widget class="QLabel" name="previewLabel1">
+        <property name="toolTip">
          <string>Icon for normal users</string>
         </property>
-        <property name="frameShape" >
+        <property name="frameShape">
          <enum>QFrame::NoFrame</enum>
         </property>
-        <property name="text" >
+        <property name="text">
          <string/>
         </property>
-        <property name="alignment" >
+        <property name="alignment">
          <set>Qt::AlignCenter</set>
         </property>
-        <property name="wordWrap" >
+        <property name="wordWrap">
          <bool>false</bool>
         </property>
        </widget>
       </item>
-      <item row="0" column="1" >
-       <widget class="QLabel" name="previewLabel2" >
-        <property name="toolTip" >
+      <item row="0" column="1">
+       <widget class="QLabel" name="previewLabel2">
+        <property name="toolTip">
          <string>Icon for away users</string>
         </property>
-        <property name="text" >
+        <property name="text">
          <string/>
         </property>
-        <property name="alignment" >
+        <property name="alignment">
          <set>Qt::AlignCenter</set>
         </property>
-        <property name="wordWrap" >
+        <property name="wordWrap">
          <bool>false</bool>
         </property>
        </widget>
       </item>
-      <item row="0" column="2" >
-       <widget class="QLabel" name="previewLabel3" >
-        <property name="toolTip" >
+      <item row="0" column="2">
+       <widget class="QLabel" name="previewLabel3">
+        <property name="toolTip">
          <string>Icon for users with voice</string>
         </property>
-        <property name="text" >
+        <property name="text">
          <string/>
         </property>
-        <property name="alignment" >
+        <property name="alignment">
          <set>Qt::AlignCenter</set>
         </property>
-        <property name="wordWrap" >
+        <property name="wordWrap">
          <bool>false</bool>
         </property>
        </widget>
       </item>
-      <item row="0" column="3" >
-       <widget class="QLabel" name="previewLabel4" >
-        <property name="toolTip" >
+      <item row="0" column="3">
+       <widget class="QLabel" name="previewLabel4">
+        <property name="toolTip">
          <string>Icon for users with half-operator privileges</string>
         </property>
-        <property name="text" >
+        <property name="text">
          <string/>
         </property>
-        <property name="alignment" >
+        <property name="alignment">
          <set>Qt::AlignCenter</set>
         </property>
-        <property name="wordWrap" >
+        <property name="wordWrap">
          <bool>false</bool>
         </property>
        </widget>
       </item>
-      <item row="0" column="4" >
-       <widget class="QLabel" name="previewLabel5" >
-        <property name="toolTip" >
+      <item row="0" column="4">
+       <widget class="QLabel" name="previewLabel5">
+        <property name="toolTip">
          <string>Icon for users with operator privileges</string>
         </property>
-        <property name="text" >
+        <property name="text">
          <string/>
         </property>
-        <property name="alignment" >
+        <property name="alignment">
          <set>Qt::AlignCenter</set>
         </property>
-        <property name="wordWrap" >
+        <property name="wordWrap">
          <bool>false</bool>
         </property>
        </widget>
       </item>
-      <item row="0" column="5" >
-       <widget class="QLabel" name="previewLabel6" >
-        <property name="toolTip" >
+      <item row="0" column="5">
+       <widget class="QLabel" name="previewLabel6">
+        <property name="toolTip">
          <string>Icon for users with admin privileges</string>
         </property>
-        <property name="text" >
+        <property name="text">
          <string/>
         </property>
-        <property name="alignment" >
+        <property name="alignment">
          <set>Qt::AlignCenter</set>
         </property>
-        <property name="wordWrap" >
+        <property name="wordWrap">
          <bool>false</bool>
         </property>
        </widget>
       </item>
-      <item row="0" column="6" >
-       <widget class="QLabel" name="previewLabel7" >
-        <property name="toolTip" >
+      <item row="0" column="6">
+       <widget class="QLabel" name="previewLabel7">
+        <property name="toolTip">
          <string>Icon for users with owner privileges</string>
         </property>
-        <property name="text" >
+        <property name="text">
          <string/>
         </property>
-        <property name="alignment" >
+        <property name="alignment">
          <set>Qt::AlignCenter</set>
         </property>
-        <property name="wordWrap" >
+        <property name="wordWrap">
          <bool>false</bool>
         </property>
        </widget>
@@ -189,37 +190,27 @@
      </layout>
     </widget>
    </item>
-   <item row="1" column="0" >
-    <widget class="QLabel" name="textLabel2" >
-     <property name="sizePolicy" >
-      <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
+   <item row="1" column="0">
+    <widget class="QLabel" name="textLabel2">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <property name="text" >
+     <property name="text">
       <string>Preview:</string>
      </property>
-     <property name="wordWrap" >
+     <property name="wordWrap">
       <bool>false</bool>
      </property>
     </widget>
    </item>
   </layout>
  </widget>
- <layoutdefault spacing="6" margin="11" />
- <layoutfunction spacing="KDialog::spacingHint" margin="KDialog::marginHint" />
+ <layoutdefault spacing="6" margin="11"/>
+ <layoutfunction spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
- <customwidgets>
-  <customwidget>
-   <class>K3ListBox</class>
-   <extends>Q3ListBox</extends>
-   <header location="global" >k3listbox.h</header>
-  </customwidget>
- </customwidgets>
- <includes>
-  <include location="local" >k3listbox.h</include>
- </includes>
  <resources/>
  <connections/>
 </ui>

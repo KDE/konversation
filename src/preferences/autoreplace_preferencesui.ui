@@ -1,8 +1,9 @@
-<ui version="4.0" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
  <author>Dario Abatianni</author>
  <class>Autoreplace_ConfigUI</class>
- <widget class="QWidget" name="Autoreplace_ConfigUI" >
-  <property name="geometry" >
+ <widget class="QWidget" name="Autoreplace_ConfigUI">
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
@@ -10,35 +11,80 @@
     <height>576</height>
    </rect>
   </property>
-  <layout class="QGridLayout" >
-   <property name="margin" >
-    <number>0</number>
-   </property>
-   <item rowspan="2" row="0" column="1" >
-    <layout class="QVBoxLayout" >
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <widget class="QTreeWidget" name="patternListView">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>1</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="acceptDrops">
+      <bool>true</bool>
+     </property>
+     <property name="dragEnabled">
+      <bool>true</bool>
+     </property>
+     <property name="dragDropMode">
+      <enum>QAbstractItemView::InternalMove</enum>
+     </property>
+     <property name="rootIsDecorated">
+      <bool>false</bool>
+     </property>
+     <property name="allColumnsShowFocus">
+      <bool>true</bool>
+     </property>
+     <attribute name="headerShowSortIndicator" stdset="0">
+      <bool>true</bool>
+     </attribute>
+     <column>
+      <property name="text">
+       <string>RegEx</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Replace In</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Find</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Replace With</string>
+      </property>
+     </column>
+    </widget>
+   </item>
+   <item row="0" column="1" rowspan="2">
+    <layout class="QVBoxLayout">
      <item>
-      <widget class="QPushButton" name="newButton" >
-       <property name="text" >
+      <widget class="QPushButton" name="newButton">
+       <property name="text">
         <string>Ne&amp;w</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="removeButton" >
-       <property name="text" >
+      <widget class="QPushButton" name="removeButton">
+       <property name="text">
         <string>R&amp;emove</string>
        </property>
       </widget>
      </item>
      <item>
-      <spacer name="spacer1" >
-       <property name="orientation" >
+      <spacer name="spacer1">
+       <property name="orientation">
         <enum>Qt::Vertical</enum>
        </property>
-       <property name="sizeType" >
+       <property name="sizeType">
         <enum>QSizePolicy::Expanding</enum>
        </property>
-       <property name="sizeHint" stdset="0" >
+       <property name="sizeHint" stdset="0">
         <size>
          <width>20</width>
          <height>506</height>
@@ -48,187 +94,122 @@
      </item>
     </layout>
    </item>
-   <item row="0" column="0" >
-    <widget class="K3ListView" name="patternListView" >
-     <property name="sizePolicy" >
-      <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
-       <horstretch>0</horstretch>
-       <verstretch>1</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="acceptDrops" >
-      <bool>true</bool>
-     </property>
-     <property name="allColumnsShowFocus" >
-      <bool>true</bool>
-     </property>
-     <property name="fullWidth" >
-      <bool>true</bool>
-     </property>
-     <property name="itemsRenameable" >
-      <bool>false</bool>
-     </property>
-     <property name="dragEnabled" >
-      <bool>true</bool>
-     </property>
-     <column>
-      <property name="text" >
-       <string>RegEx</string>
-      </property>
-      <property name="clickable" >
-       <bool>true</bool>
-      </property>
-      <property name="resizable" >
-       <bool>true</bool>
-      </property>
-     </column>
-     <column>
-      <property name="text" >
-       <string>Replace In</string>
-      </property>
-      <property name="clickable" >
-       <bool>true</bool>
-      </property>
-      <property name="resizable" >
-       <bool>true</bool>
-      </property>
-     </column>
-     <column>
-      <property name="text" >
-       <string>Find</string>
-      </property>
-      <property name="clickable" >
-       <bool>true</bool>
-      </property>
-      <property name="resizable" >
-       <bool>true</bool>
-      </property>
-     </column>
-     <column>
-      <property name="text" >
-       <string>Replace With</string>
-      </property>
-      <property name="clickable" >
-       <bool>true</bool>
-      </property>
-      <property name="resizable" >
-       <bool>true</bool>
-      </property>
-     </column>
-    </widget>
-   </item>
-   <item row="1" column="0" >
-    <layout class="QGridLayout" >
-     <item row="1" column="2" >
-      <widget class="QPushButton" name="regExpEditorButton" >
-       <property name="enabled" >
+   <item row="1" column="0">
+    <layout class="QFormLayout" name="formLayout">
+     <item row="0" column="0">
+      <widget class="QLabel" name="directionLabel">
+       <property name="enabled">
         <bool>false</bool>
        </property>
-       <property name="sizePolicy" >
-        <sizepolicy vsizetype="Fixed" hsizetype="Fixed" >
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
-       <property name="text" >
-        <string>...</string>
-       </property>
-       <property name="shortcut" >
-        <string/>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="0" >
-      <widget class="QLabel" name="directionLabel" >
-       <property name="enabled" >
-        <bool>false</bool>
-       </property>
-       <property name="sizePolicy" >
-        <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="text" >
+       <property name="text">
         <string>Replace in:</string>
        </property>
-       <property name="wordWrap" >
+       <property name="wordWrap">
         <bool>false</bool>
        </property>
       </widget>
      </item>
-     <item row="1" column="1" >
-      <widget class="KLineEdit" name="patternInput" >
-       <property name="enabled" >
+     <item row="0" column="1">
+      <widget class="QComboBox" name="directionCombo">
+       <property name="enabled">
         <bool>false</bool>
        </property>
-       <property name="sizePolicy" >
-        <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
-         <horstretch>0</horstretch>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <horstretch>1</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
       </widget>
      </item>
-     <item row="2" column="1" colspan="2" >
-      <widget class="KLineEdit" name="replacementInput" >
-       <property name="enabled" >
+     <item row="1" column="0">
+      <widget class="QLabel" name="patternLabel">
+       <property name="enabled">
         <bool>false</bool>
        </property>
-       <property name="sizePolicy" >
-        <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
-      </widget>
-     </item>
-     <item row="1" column="0" >
-      <widget class="QLabel" name="patternLabel" >
-       <property name="enabled" >
-        <bool>false</bool>
-       </property>
-       <property name="sizePolicy" >
-        <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="text" >
+       <property name="text">
         <string>Find:</string>
        </property>
-       <property name="wordWrap" >
+       <property name="wordWrap">
         <bool>false</bool>
        </property>
       </widget>
      </item>
-     <item row="2" column="0" >
-      <widget class="QLabel" name="replacementLabel" >
-       <property name="enabled" >
+     <item row="1" column="1">
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="KLineEdit" name="patternInput">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="regExpEditorButton">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>...</string>
+         </property>
+         <property name="shortcut">
+          <string/>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="replacementLabel">
+       <property name="enabled">
         <bool>false</bool>
        </property>
-       <property name="sizePolicy" >
-        <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
-       <property name="text" >
+       <property name="text">
         <string>Replace with:</string>
        </property>
-       <property name="wordWrap" >
+       <property name="wordWrap">
         <bool>false</bool>
        </property>
       </widget>
      </item>
-     <item row="0" column="1" colspan="2" >
-      <widget class="QComboBox" name="directionCombo" >
-       <property name="enabled" >
+     <item row="2" column="1">
+      <widget class="KLineEdit" name="replacementInput">
+       <property name="enabled">
         <bool>false</bool>
        </property>
-       <property name="sizePolicy" >
-        <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
-         <horstretch>1</horstretch>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
@@ -238,14 +219,9 @@
    </item>
   </layout>
  </widget>
- <layoutdefault spacing="6" margin="11" />
+ <layoutdefault spacing="6" margin="11"/>
  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
  <customwidgets>
-  <customwidget>
-   <class>K3ListView</class>
-   <extends>Q3ListView</extends>
-   <header>k3listview.h</header>
-  </customwidget>
   <customwidget>
    <class>KLineEdit</class>
    <extends>QLineEdit</extends>
@@ -262,9 +238,7 @@
   <tabstop>removeButton</tabstop>
  </tabstops>
  <includes>
-  <include location="local" >k3listview.h</include>
-  <include location="local" >klineedit.h</include>
-  <include location="local" >klineedit.h</include>
+  <include location="local">klineedit.h</include>
  </includes>
  <resources/>
  <connections/>

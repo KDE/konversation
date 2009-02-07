@@ -15,14 +15,12 @@
 
 #include <qlabel.h>
 #include <qpushbutton.h>
-#include <q3header.h>
 
 #include <kapplication.h>
 #include <kdebug.h>
 #include <kconfig.h>
 #include <klocale.h>
 #include <klineedit.h>
-#include <k3listview.h>
 
 
 Alias_Config::Alias_Config(QWidget* parent, const char* name)
@@ -37,13 +35,7 @@ Alias_Config::Alias_Config(QWidget* parent, const char* name)
   // populate listview
   loadSettings();
 
-  // make items react to drag & drop
-  aliasListView->setSorting(-1,false);
-  aliasListView->header()->setMovingEnabled(false);
-
-  connect(aliasListView, SIGNAL(selectionChanged(Q3ListViewItem*)), this, SLOT(entrySelected(Q3ListViewItem*)));
-  connect(aliasListView, SIGNAL(clicked(Q3ListViewItem*)), this, SLOT(entrySelected(Q3ListViewItem*)) );
-  connect(aliasListView, SIGNAL(moved()), this, SIGNAL(modified()));
+  connect(aliasListView, SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)), this, SLOT(entrySelected(QTreeWidgetItem*)));
 
   connect(aliasInput, SIGNAL(textChanged(const QString&)), this, SLOT(nameChanged(const QString&)));
   connect(replacementInput, SIGNAL(textChanged(const QString&)), this, SLOT(actionChanged(const QString&)));
@@ -89,10 +81,11 @@ void Alias_Config::setAliasListView(const QStringList& aliasList)
     for(int index=aliasList.count(); index!=0; index--)
     {
         QString item=aliasList[index-1];
-        new K3ListViewItem(aliasListView,item.section(' ',0,0),item.section(' ',1));
+        QTreeWidgetItem *treeWidgetItem = new QTreeWidgetItem(aliasListView, QStringList() << item.section(' ',0,0) << item.section(' ',1));
+        treeWidgetItem->setFlags(treeWidgetItem->flags() &~ Qt::ItemIsDropEnabled);
     }
 
-    aliasListView->setSelected(aliasListView->firstChild(), true);
+    aliasListView->setCurrentItem(aliasListView->topLevelItem(0));
     // remember alias list
     m_oldAliasList=aliasList;
 }
@@ -101,17 +94,17 @@ QStringList Alias_Config::currentAliasList()
 {
     QStringList newList;
 
-    Q3ListViewItem* item=aliasListView->itemAtIndex(0);
+    QTreeWidgetItem* item=aliasListView->topLevelItem(0);
     while(item)
         {
         newList.append(item->text(0)+' '+item->text(1));
-        item=item->itemBelow();
+        item=aliasListView->itemBelow(item);
         }
     return newList;
 }
 
 // what to do when the user selects an item
-void Alias_Config::entrySelected(Q3ListViewItem* aliasEntry)
+void Alias_Config::entrySelected(QTreeWidgetItem* aliasEntry)
 {
     // play it safe, assume disabling all widgets first
     bool enabled = false;
@@ -141,7 +134,7 @@ void Alias_Config::entrySelected(Q3ListViewItem* aliasEntry)
 void Alias_Config::nameChanged(const QString& newName)
 {
     // get possible first selected item
-    Q3ListViewItem* item = aliasListView->selectedItem();
+    QTreeWidgetItem* item = aliasListView->currentItem();
 
     // sanity check
     if (item)
@@ -157,7 +150,7 @@ void Alias_Config::nameChanged(const QString& newName)
 void Alias_Config::actionChanged(const QString& newAction)
 {
     // get possible first selected item
-    Q3ListViewItem* item = aliasListView->selectedItem();
+    QTreeWidgetItem* item = aliasListView->currentItem();
 
     // sanity check
     if (item)
@@ -173,12 +166,13 @@ void Alias_Config::actionChanged(const QString& newAction)
 void Alias_Config::addEntry()
 {
     // add new item at the bottom of list view
-    K3ListViewItem* newItem = new K3ListViewItem(aliasListView,aliasListView->lastChild(),i18n("New"),QString());
+    QTreeWidgetItem* newItem = new QTreeWidgetItem(aliasListView, aliasListView->topLevelItemCount());
+    newItem->setFlags(newItem->flags() &~ Qt::ItemIsDropEnabled);
+    newItem->setText(0, i18n("New"));
     // if successful ...
     if (newItem)
     {
         // select new item and make it the current one
-        aliasListView->setSelected(newItem,true);
         aliasListView->setCurrentItem(newItem);
         // set input focus on item name edit
         aliasInput->setFocus();
@@ -193,15 +187,15 @@ void Alias_Config::addEntry()
 void Alias_Config::removeEntry()
 {
     // get possible first selected item
-    Q3ListViewItem* item = aliasListView->selectedItem();
+    QTreeWidgetItem* item = aliasListView->currentItem();
 
     // sanity check
     if (item)
     {
         // get item below the current one
-        Q3ListViewItem* nextItem = item->itemBelow();
+        QTreeWidgetItem* nextItem = aliasListView->itemBelow(item);
         // if there was none, get the one above
-        if(!nextItem) nextItem = item->itemAbove();
+        if(!nextItem) nextItem = aliasListView->itemAbove(item);
 
         // remove the item from the list
         delete item;
@@ -209,8 +203,7 @@ void Alias_Config::removeEntry()
         // check if we found the next item
         if (nextItem)
         {
-            // select the item and make it the current ite,
-            aliasListView->setSelected(nextItem,true);
+            // select the item and make it the current item
             aliasListView->setCurrentItem(nextItem);
         }
         else

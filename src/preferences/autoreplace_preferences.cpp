@@ -16,7 +16,6 @@
 #include <qlabel.h>
 #include <qpushbutton.h>
 #include <qcombobox.h>
-#include <q3header.h>
 #include <qdialog.h>
 
 #include <kapplication.h>
@@ -24,10 +23,10 @@
 #include <kconfig.h>
 #include <klocale.h>
 #include <klineedit.h>
-#include <k3listview.h>
 #include <kparts/componentfactory.h>
 #include <kregexpeditorinterface.h>
 #include <kglobal.h>
+
 #define DIRECTION_OUTPUT 0
 #define DIRECTION_INPUT  1
 #define DIRECTION_BOTH   2
@@ -42,7 +41,11 @@ Autoreplace_Config::Autoreplace_Config(QWidget* parent, const char* name)
   // reset flag to defined state (used to block signals when just selecting a new item)
   m_newItemSelected=false;
   //Check if the regexp editor is installed
-  bool installed = ( KServiceTypeTrader::createInstanceFromQuery<QDialog>( "KRegExpEditor/KRegExpEditor", QString(), this )!= 0 );
+// it does not make sense to port / enable this since KRegExpEditor is in a very bad shape. just keep this
+// code here because it will probably help at a later point to port it when KRegExpEditor is again usable.
+// 2009-02-06, uwolfer
+  bool installed = false;//( KServiceTypeTrader::createInstanceFromQuery<QDialog>( "KRegExpEditor/KRegExpEditor", QString(), this )!= 0 );
+  regExpEditorButton->setVisible(false);
 
   if(installed)
   {
@@ -55,25 +58,14 @@ Autoreplace_Config::Autoreplace_Config(QWidget* parent, const char* name)
       regExpEditorButton->setStatusTip(i18n("The Regular Expression Editor (KRegExpEditor) is not installed"));
   }
   // populate combobox
-  directionCombo->insertItem(i18n("Outgoing"),DIRECTION_OUTPUT);
-  directionCombo->insertItem(i18n("Incoming"),DIRECTION_INPUT);
-  directionCombo->insertItem(i18n("Both"),DIRECTION_BOTH);
-
-  // make items react to drag & drop
-  patternListView->setSorting(-1,false);
-  patternListView->setShowSortIndicator(true);
-  patternListView->setShadeSortColumn(true);
-  patternListView->header()->setMovingEnabled(false);
+  directionCombo->insertItem(DIRECTION_OUTPUT, i18n("Outgoing"));
+  directionCombo->insertItem(DIRECTION_INPUT, i18n("Incoming"));
+  directionCombo->insertItem(DIRECTION_BOTH, i18n("Both"));
 
   // populate listview
   loadSettings();
 
-  connect(patternListView, SIGNAL(selectionChanged(Q3ListViewItem*)), this, SLOT(entrySelected(Q3ListViewItem*)));
-  connect(patternListView, SIGNAL(clicked(Q3ListViewItem*)), this, SLOT(entrySelected(Q3ListViewItem*)));
-  connect(patternListView, SIGNAL(moved()), SIGNAL(modified()));
-
-  connect(patternListView, SIGNAL(aboutToMove()), SLOT(disableSort()));
-  connect(patternListView->header(), SIGNAL(clicked(int)), SLOT(sort(int)));
+  connect(patternListView, SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)), this, SLOT(entrySelected(QTreeWidgetItem*)));
 
   connect(directionCombo, SIGNAL(activated(int)), this, SLOT(directionChanged(int)));
 
@@ -108,9 +100,11 @@ void Autoreplace_Config::setAutoreplaceListView(const QStringList &autoreplaceLi
     // get autoreplace definition
     QString definition=autoreplaceList[index-1];
     // cut definition apart in name and action, and create a new listview item
-    Q3CheckListItem* newItem=new Q3CheckListItem(patternListView,QString(),Q3CheckListItem::CheckBox);
+    QTreeWidgetItem* newItem=new QTreeWidgetItem(patternListView);
+    newItem->setFlags(newItem->flags() &~ Qt::ItemIsDropEnabled);
+    newItem->setCheckState(0, Qt::Checked);
     // Regular expression?
-    if(definition.section(',',0,0)=="1") newItem->setOn(true);
+    if(definition.section(',',0,0)=="1") newItem->setCheckState(0, Qt::Checked);
     // direction input/output/both
     if(definition.section(',',1,1)=="i") newItem->setText(1,directionCombo->itemText(DIRECTION_INPUT));
     else if(definition.section(',',1,1)=="o") newItem->setText(1,directionCombo->itemText(DIRECTION_OUTPUT));
@@ -122,7 +116,7 @@ void Autoreplace_Config::setAutoreplaceListView(const QStringList &autoreplaceLi
     // hidden column, so we are independent of the i18n()ed display string
     newItem->setText(4,definition.section(',',1,1));
   } // for
-  patternListView->setSelected(patternListView->firstChild(), true);
+  patternListView->setCurrentItem(patternListView->topLevelItem(0));
 }
 
 // save autoreplace entries to configuration
@@ -170,7 +164,7 @@ void Autoreplace_Config::restorePageToDefaults()
 QStringList Autoreplace_Config::currentAutoreplaceList()
 {
   // get first item of the autoreplace listview
-  Q3ListViewItem* item=patternListView->firstChild();
+  QTreeWidgetItem* item=patternListView->topLevelItem(0);
   // create empty list
   QStringList newList;
 
@@ -178,12 +172,12 @@ QStringList Autoreplace_Config::currentAutoreplaceList()
   while(item)
   {
     QString checked="0";
-    if(static_cast<Q3CheckListItem*>(item)->isOn()) checked="1";
+    if(static_cast<QTreeWidgetItem*>(item)->checkState(0) == Qt::Checked) checked="1";
 
     // remember entry in internal list (col 4 is hidden for input/output)
     newList.append(checked+','+item->text(4)+','+item->text(2)+','+item->text(3));
     // get next item in the listview
-    item=item->itemBelow();
+    item=patternListView->itemBelow(item);
   } // while
 
   // return list
@@ -198,7 +192,7 @@ bool Autoreplace_Config::hasChanged()
 // slots
 
 // what to do when the user selects an item
-void Autoreplace_Config::entrySelected(Q3ListViewItem* autoreplaceEntry)
+void Autoreplace_Config::entrySelected(QTreeWidgetItem* autoreplaceEntry)
 {
   // play it safe, assume disabling all widgets first
   bool enabled=false;
@@ -233,9 +227,8 @@ void Autoreplace_Config::entrySelected(Q3ListViewItem* autoreplaceEntry)
   patternInput->setEnabled(enabled);
   replacementLabel->setEnabled(enabled);
   replacementInput->setEnabled(enabled);
-#ifndef Q_CC_MSVC
-#warning "kde4 por it"
-#endif
+
+// see note above about KRegExpEditor
 #if 0
   if(!KTrader::self()->query("KRegExpEditor/KRegExpEditor").isEmpty())
   {
@@ -250,7 +243,7 @@ void Autoreplace_Config::entrySelected(Q3ListViewItem* autoreplaceEntry)
 void Autoreplace_Config::directionChanged(int newDirection)
 {
   // get possible selected item
-  Q3ListViewItem* item=patternListView->selectedItem();
+  QTreeWidgetItem* item=patternListView->currentItem();
 
   // sanity check
   if(item)
@@ -273,7 +266,7 @@ void Autoreplace_Config::directionChanged(int newDirection)
 void Autoreplace_Config::patternChanged(const QString& newPattern)
 {
   // get possible selected item
-  Q3ListViewItem* item=patternListView->selectedItem();
+  QTreeWidgetItem* item=patternListView->currentItem();
 
   // sanity check
   if(item)
@@ -289,7 +282,7 @@ void Autoreplace_Config::patternChanged(const QString& newPattern)
 void Autoreplace_Config::replacementChanged(const QString& newReplacement)
 {
   // get possible selected item
-  Q3ListViewItem* item=patternListView->selectedItem();
+  QTreeWidgetItem* item=patternListView->currentItem();
 
   // sanity check
   if(item)
@@ -304,10 +297,10 @@ void Autoreplace_Config::replacementChanged(const QString& newReplacement)
 // add button pressed
 void Autoreplace_Config::addEntry()
 {
-  disableSort();
-
   // add new item at the bottom of list view
-  Q3CheckListItem* newItem=new Q3CheckListItem(patternListView,QString(),Q3CheckListItem::CheckBox);
+  QTreeWidgetItem* newItem=new QTreeWidgetItem(patternListView);
+  newItem->setFlags(newItem->flags() &~ Qt::ItemIsDropEnabled);
+  newItem->setCheckState(0, Qt::Unchecked);
   // if successful ...
   if(newItem)
   {
@@ -318,7 +311,6 @@ void Autoreplace_Config::addEntry()
     // set default direction
     newItem->setText(4,"o");
     // select new item and make it the current one
-    patternListView->setSelected(newItem,true);
     patternListView->setCurrentItem(newItem);
     // set input focus on item pattern edit
     patternInput->setFocus();
@@ -333,15 +325,15 @@ void Autoreplace_Config::addEntry()
 void Autoreplace_Config::removeEntry()
 {
   // get possible first selected item
-  Q3ListViewItem* item=patternListView->selectedItem();
+  QTreeWidgetItem* item=patternListView->currentItem();
 
   // sanity check
   if(item)
   {
     // get item below the current one
-    Q3ListViewItem* nextItem=item->itemBelow();
+    QTreeWidgetItem* nextItem=patternListView->itemBelow(item);
     // if there was none, get the one above
-    if(!nextItem) nextItem=item->itemAbove();
+    if(!nextItem) nextItem=patternListView->itemAbove(item);
 
     // remove the item from the list
     delete item;
@@ -350,7 +342,6 @@ void Autoreplace_Config::removeEntry()
     if(nextItem)
     {
       // select the item and make it the current item
-      patternListView->setSelected(nextItem,true);
       patternListView->setCurrentItem(nextItem);
     }
     else
@@ -361,23 +352,6 @@ void Autoreplace_Config::removeEntry()
     // tell the config system that somethig has changed
     emit modified();
   }
-}
-
-void Autoreplace_Config::sort(int column)
-{
-    bool ascending = true;
-
-    if (patternListView->sortColumn() != -1)
-        ascending  = (patternListView->sortOrder() == Qt::Ascending);
-
-    patternListView->setSorting(column, ascending);
-
-    emit modified();
-}
-
-void Autoreplace_Config::disableSort()
-{
-    patternListView->setSorting(-1);
 }
 
 void Autoreplace_Config::showRegExpEditor()

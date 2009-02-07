@@ -15,14 +15,12 @@
 
 #include <qlabel.h>
 #include <qpushbutton.h>
-#include <q3header.h>
 
 #include <kapplication.h>
 #include <kdebug.h>
 #include <kconfig.h>
 #include <klocale.h>
 #include <klineedit.h>
-#include <k3listview.h>
 #include <kglobal.h>
 
 
@@ -38,13 +36,7 @@ QuickButtons_Config::QuickButtons_Config(QWidget* parent, const char* name)
   // populate listview
   loadSettings();
 
-  // make items react to drag & drop
-  buttonListView->setSorting(-1,false);
-  buttonListView->header()->setMovingEnabled(false);
-
-  connect(buttonListView,SIGNAL (selectionChanged(Q3ListViewItem*)),this,SLOT (entrySelected(Q3ListViewItem*)) );
-  connect(buttonListView,SIGNAL (clicked(Q3ListViewItem*)),this,SLOT (entrySelected(Q3ListViewItem*)) );
-  connect(buttonListView,SIGNAL (moved()),this,SIGNAL (modified()) );
+  connect(buttonListView,SIGNAL (currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)),this,SLOT (entrySelected(QTreeWidgetItem*)) );
 
   connect(nameInput,SIGNAL (textChanged(const QString&)),this,SLOT (nameChanged(const QString&)) );
   connect(actionInput,SIGNAL (textChanged(const QString&)),this,SLOT (actionChanged(const QString&)) );
@@ -76,9 +68,10 @@ void QuickButtons_Config::setButtonsListView(const QStringList &buttonList)
     // get button definition
     QString definition=buttonList[index-1];
     // cut definition apart in name and action, and create a new listview item
-    new K3ListViewItem(buttonListView,definition.section(',',0,0),definition.section(',',1));
+    QTreeWidgetItem *item = new QTreeWidgetItem(buttonListView, QStringList() << definition.section(',',0,0) << definition.section(',',1));
+    item->setFlags(item->flags() &~ Qt::ItemIsDropEnabled);
   } // for
-  buttonListView->setSelected(buttonListView->firstChild(), true);
+  buttonListView->setCurrentItem(buttonListView->topLevelItem(0));
 }
 
 // save quick buttons to configuration
@@ -125,7 +118,7 @@ void QuickButtons_Config::restorePageToDefaults()
 QStringList QuickButtons_Config::currentButtonList()
 {
   // get first item of the button listview
-  Q3ListViewItem* item=buttonListView->firstChild();
+  QTreeWidgetItem* item=buttonListView->topLevelItem(0);
   // create empty list
   QStringList newList;
 
@@ -135,7 +128,7 @@ QStringList QuickButtons_Config::currentButtonList()
     // remember button in internal list
     newList.append(item->text(0)+','+item->text(1));
     // get next item in the listview
-    item=item->itemBelow();
+    item=buttonListView->itemBelow(item);
   } // while
 
   // return list
@@ -150,7 +143,7 @@ bool QuickButtons_Config::hasChanged()
 // slots
 
 // what to do when the user selects an item
-void QuickButtons_Config::entrySelected(Q3ListViewItem* quickButtonEntry)
+void QuickButtons_Config::entrySelected(QTreeWidgetItem* quickButtonEntry)
 {
   // play it safe, assume disabling all widgets first
   bool enabled=false;
@@ -181,7 +174,7 @@ void QuickButtons_Config::entrySelected(Q3ListViewItem* quickButtonEntry)
 void QuickButtons_Config::nameChanged(const QString& newName)
 {
   // get possible first selected item
-  Q3ListViewItem* item=buttonListView->selectedItem();
+  QTreeWidgetItem* item=buttonListView->currentItem();
 
   // sanity check
   if(item)
@@ -197,7 +190,7 @@ void QuickButtons_Config::nameChanged(const QString& newName)
 void QuickButtons_Config::actionChanged(const QString& newAction)
 {
   // get possible first selected item
-  Q3ListViewItem* item=buttonListView->selectedItem();
+  QTreeWidgetItem* item=buttonListView->currentItem();
 
   // sanity check
   if(item)
@@ -213,12 +206,13 @@ void QuickButtons_Config::actionChanged(const QString& newAction)
 void QuickButtons_Config::addEntry()
 {
   // add new item at the bottom of list view
-  K3ListViewItem* newItem=new K3ListViewItem(buttonListView,buttonListView->lastChild(),i18n("New"),QString());
+  QTreeWidgetItem* newItem = new QTreeWidgetItem(buttonListView, buttonListView->topLevelItemCount());
+  newItem->setFlags(newItem->flags() &~ Qt::ItemIsDropEnabled);
+  newItem->setText(0, i18n("New"));
   // if successful ...
   if(newItem)
   {
     // select new item and make it the current one
-    buttonListView->setSelected(newItem,true);
     buttonListView->setCurrentItem(newItem);
     // set input focus on item name edit
     nameInput->setFocus();
@@ -233,15 +227,15 @@ void QuickButtons_Config::addEntry()
 void QuickButtons_Config::removeEntry()
 {
   // get possible first selected item
-  Q3ListViewItem* item=buttonListView->selectedItem();
+  QTreeWidgetItem* item=buttonListView->currentItem();
 
   // sanity check
   if(item)
   {
     // get item below the current one
-    Q3ListViewItem* nextItem=item->itemBelow();
+    QTreeWidgetItem* nextItem=buttonListView->itemBelow(item);
     // if there was none, get the one above
-    if(!nextItem) nextItem=item->itemAbove();
+    if(!nextItem) nextItem=buttonListView->itemAbove(item);
 
     // remove the item from the list
     delete item;
@@ -249,8 +243,7 @@ void QuickButtons_Config::removeEntry()
     // check if we found the next item
     if(nextItem)
     {
-      // select the item and make it the current ite,
-      buttonListView->setSelected(nextItem,true);
+      // select the item and make it the current item
       buttonListView->setCurrentItem(nextItem);
     }
     else

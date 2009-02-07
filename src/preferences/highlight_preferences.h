@@ -38,7 +38,7 @@ class Highlight_Config : public QWidget, public KonviSettingsPage, private Ui::H
         void modified();
 
     protected slots:
-        void highlightSelected(Q3ListViewItem* item);
+        void highlightSelected(QTreeWidgetItem* item);
         void highlightTextChanged(const QString& newPattern);
         void highlightTextEditButtonClicked();
         void highlightColorChanged(const QColor& newColor);

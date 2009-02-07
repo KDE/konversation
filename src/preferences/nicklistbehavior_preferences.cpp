@@ -15,8 +15,6 @@
 #include "valuelistviewitem.h"
 #include "config/preferences.h"
 
-#include <q3header.h>
-
 #include <kapplication.h>
 #include <klocale.h>
 
@@ -29,12 +27,6 @@ NicklistBehavior_Config::NicklistBehavior_Config(QWidget *parent, const char *na
 
   // get page widget and populate listview
   loadSettings();
-
-  // make items react to drag & drop
-  sortOrder->setSorting(-1,false);
-  sortOrder->header()->setMovingEnabled(false);
-
-  connect(sortOrder,SIGNAL (moved()),this,SIGNAL (modified()) );
 }
 
 NicklistBehavior_Config::~NicklistBehavior_Config()
@@ -62,20 +54,22 @@ void NicklistBehavior_Config::setNickList(const QString &sortingOrder)
   {
     // get next mode char
     QChar mode=sortingOrder[index-1];
+    QTreeWidgetItem *item = 0;
     // find appropriate description
-    if(mode=='-') new K3ListViewItem(sortOrder,mode,i18n("Normal Users"));
-    if(mode=='v') new K3ListViewItem(sortOrder,mode,i18n("Voice (+v)"));
-    if(mode=='h') new K3ListViewItem(sortOrder,mode,i18n("Halfops (+h)"));
-    if(mode=='o') new K3ListViewItem(sortOrder,mode,i18n("Operators (+o)"));
-    if(mode=='p') new K3ListViewItem(sortOrder,mode,i18n("Channel Admins (+p)"));
-    if(mode=='q') new K3ListViewItem(sortOrder,mode,i18n("Channel Owners (+q)"));
+    if(mode=='-') item = new QTreeWidgetItem(sortOrder, QStringList() << mode << i18n("Normal Users"));
+    if(mode=='v') item = new QTreeWidgetItem(sortOrder, QStringList() << mode << i18n("Voice (+v)"));
+    if(mode=='h') item = new QTreeWidgetItem(sortOrder, QStringList() << mode << i18n("Halfops (+h)"));
+    if(mode=='o') item = new QTreeWidgetItem(sortOrder, QStringList() << mode << i18n("Operators (+o)"));
+    if(mode=='p') item = new QTreeWidgetItem(sortOrder, QStringList() << mode << i18n("Channel Admins (+p)"));
+    if(mode=='q') item = new QTreeWidgetItem(sortOrder, QStringList() << mode << i18n("Channel Owners (+q)"));
+    item->setFlags(item->flags() &~ Qt::ItemIsDropEnabled);
   }
 }
 
 QString NicklistBehavior_Config::currentSortingOrder()
 {
   // get the uppermost entry of the sorting list
-  Q3ListViewItem* item=sortOrder->firstChild();
+  QTreeWidgetItem* item=sortOrder->topLevelItem(0);
   // prepare the new sorting order string
   QString currentSortingOrder;
   // iterate through all items of the listview
@@ -84,7 +78,7 @@ QString NicklistBehavior_Config::currentSortingOrder()
     // add mode char to the sorting order string
     currentSortingOrder+=item->text(0);
     // go to next item in the listview
-    item=item->itemBelow();
+    item=sortOrder->itemBelow(item);
   } // while
 
   return currentSortingOrder;

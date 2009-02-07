@@ -45,7 +45,7 @@ class Theme_Config : public QWidget, public KonviSettingsPage, private Ui::Theme
         void updateButtons();
         void installTheme();
         void removeTheme();
-        void postRemoveTheme(KIO::Job* delete_job);
+        void postRemoveTheme(KJob* delete_job);
 
     private:
         QStringList m_dirs;

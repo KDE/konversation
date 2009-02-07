@@ -16,9 +16,8 @@
 #include "servergroupsettings.h"
 #include "ui_watchednicknames_preferencesui.h"
 
-
-class Q3ListView;
-class Q3ListViewItem;
+class QTreeWidgetItem;
+class QTreeWidget;
 
 class WatchedNicknames_Config : public QWidget, public KonviSettingsPage, private Ui::WatchedNicknames_ConfigUI
 {
@@ -41,7 +40,7 @@ class WatchedNicknames_Config : public QWidget, public KonviSettingsPage, privat
         void checkIfEmptyListview(bool state);
         void newNotify();
         void removeNotify();
-        void entrySelected(Q3ListViewItem* notifyEntry);
+        void entrySelected(QTreeWidgetItem* notifyEntry);
         void networkChanged(const QString& newNetwork);
         void nicknameChanged(const QString& newNickname);
         void updateNetworkNames();
@@ -50,7 +49,7 @@ class WatchedNicknames_Config : public QWidget, public KonviSettingsPage, privat
         void enableEditWidgets(bool enabled);
         QStringList currentNotifyList();       // for hasChanged()
         void addNetworkBranch(Konversation::ServerGroupSettingsPtr group);
-        Q3ListViewItem* getItemById(Q3ListView* listView,int id);
+        QTreeWidgetItem* getItemById(QTreeWidget* listView,int id);
 
         bool newItemSelected;
         QStringList m_oldNotifyList;

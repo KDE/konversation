@@ -18,16 +18,15 @@
 
 #include "highlight.h"
 
-#include <q3listview.h>
+#include <QTreeWidget>
 
 
 class KUrl;
-class K3ListView;
 
-class HighlightViewItem : public Q3CheckListItem
+class HighlightViewItem : public QTreeWidgetItem
 {
     public:
-        HighlightViewItem(K3ListView* parent, Highlight* passed_Highlight);
+        HighlightViewItem(QTreeWidget* parent, Highlight* passed_Highlight);
         ~HighlightViewItem();
 
         QString getPattern();
@@ -39,34 +38,17 @@ class HighlightViewItem : public Q3CheckListItem
 
         void setPattern(const QString& newPattern);
         void setAutoText(const QString& newAutoText);
-        void setColor(QColor passed_itemColor) { itemColor = passed_itemColor; }
+        void setColor(QColor passed_itemColor) { itemColor = passed_itemColor; updateRowColor(); }
         void setID(int passed_itemID) { itemID = passed_itemID; }
         void setSoundURL(const KUrl& url);
 
-        /** checks if the checkbox has been changed by the user
-         *  stored internally by m_changed
-         *
-         * @return true when the checkbox has been changed
-         */
-        bool hasChanged();
-
-        /** reset the change state of the listview item
-         * call this when you have seen the change and acted upon it properly
-         */
-        void changeAcknowledged();
-
-        HighlightViewItem* itemBelow();
 
     protected:
         QColor itemColor;
-        QColorGroup itemColorGroup;
         int itemID;
         KUrl soundURL;
         QString autoText;
 
-        bool m_changed;  // true if the checkbox has been changed
-
-        void stateChange(bool newState);  // reimplemented to store changed value
-        void paintCell(QPainter* p, const QColorGroup &cg, int column, int width, int alignment);
+        void updateRowColor();
 };
 #endif

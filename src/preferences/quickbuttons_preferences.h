@@ -35,7 +35,7 @@ class QuickButtons_Config : public QWidget, public KonviSettingsPage, private Ui
     void modified();
 
   protected slots:
-    void entrySelected(Q3ListViewItem* quickButtonEntry);
+    void entrySelected(QTreeWidgetItem* quickButtonEntry);
     void nameChanged(const QString& newName);
     void actionChanged(const QString& newAction);
     void addEntry();

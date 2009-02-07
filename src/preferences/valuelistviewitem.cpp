@@ -16,18 +16,19 @@
 #include "valuelistviewitem.h"
 
 
-ValueListViewItem::ValueListViewItem(int newValue, K3ListView* parent, const QString& label)
-: K3ListViewItem(parent,label)
+ValueListViewItem::ValueListViewItem(int newValue, QTreeWidget* parent, const QString& label)
+: QTreeWidgetItem(parent, QStringList() << label)
 {
     m_value=newValue;
-    enforceSortOrder();
+//     enforceSortOrder();
 }
 
-ValueListViewItem::ValueListViewItem(int newValue, K3ListView* parent, Q3ListViewItem* after, const QString& label)
-: K3ListViewItem(parent,after,label)
+ValueListViewItem::ValueListViewItem(int newValue, QTreeWidget* parent, QTreeWidgetItem* after, const QString& label)
+: QTreeWidgetItem(parent,after)
 {
+    setText(0, label);
     m_value=newValue;
-    enforceSortOrder();
+//     enforceSortOrder();
 }
 
 ValueListViewItem::~ValueListViewItem()

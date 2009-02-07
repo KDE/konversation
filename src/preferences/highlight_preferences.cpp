@@ -18,14 +18,12 @@
 
 #include <qdir.h>
 #include <qlabel.h>
-#include <q3header.h>
 #include <qtoolbutton.h>
 
 #include <kglobal.h>
 #include <kstandarddirs.h>
 #include <kurlrequester.h>
 #include <kfiledialog.h>
-#include <k3listview.h>
 #include <klineedit.h>
 #include <kcolorbutton.h>
 #include <klocale.h>
@@ -44,10 +42,6 @@ Highlight_Config::Highlight_Config(QWidget* parent, const char* name)
   newItemSelected=false;
 
   loadSettings();
-
-  // make list accept drag & drop
-  highlightListView->setSorting(-1);
-  highlightListView->header()->setMovingEnabled(false);
 
   soundPlayBtn->setIcon(KIcon("media-playback-start"));
   soundURL->setWhatsThis(i18n("Select Sound File"));
@@ -74,11 +68,7 @@ Highlight_Config::Highlight_Config(QWidget* parent, const char* name)
   }
   // End copy
 
-  connect(highlightListView,SIGNAL (selectionChanged(Q3ListViewItem*)),this,SLOT (highlightSelected(Q3ListViewItem*)) );
-  connect(highlightListView,SIGNAL (clicked(Q3ListViewItem*)),this,SLOT (highlightSelected(Q3ListViewItem*)) );
-  connect(highlightListView,SIGNAL (spacePressed(Q3ListViewItem*)),this,SLOT (highlightSelected(Q3ListViewItem*)) );
-
-  connect(highlightListView,SIGNAL (moved()),this,SIGNAL (modified()) );
+  connect(highlightListView,SIGNAL (currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)),this,SLOT (highlightSelected(QTreeWidgetItem*)) );
 
   connect(patternInput,SIGNAL (textChanged(const QString&)),this,SLOT (highlightTextChanged(const QString&)) );
   connect(patternButton,SIGNAL (clicked()),this,SLOT(highlightTextEditButtonClicked()));
@@ -101,7 +91,7 @@ Highlight_Config::~Highlight_Config()
 
 void Highlight_Config::restorePageToDefaults()
 {
-  if(highlightListView->childCount() != 0) {
+  if(highlightListView->topLevelItemCount() != 0) {
     highlightListView->clear();
     emit modified();
   }
@@ -112,10 +102,11 @@ void Highlight_Config::loadSettings()
   highlightListView->clear();
   foreach (Highlight* currentHighlight, Preferences::highlightList())
   {
-    new HighlightViewItem(highlightListView,currentHighlight);
+    HighlightViewItem *item = new HighlightViewItem(highlightListView,currentHighlight);
+    item->setFlags(item->flags() &~ Qt::ItemIsDropEnabled);
   }
 
-  highlightListView->setSelected(highlightListView->firstChild(), true);
+  highlightListView->setCurrentItem(highlightListView->topLevelItem(0));
 
   // remember current list for hasChanged()
   m_oldHighlightList=currentHighlightList();
@@ -128,21 +119,13 @@ bool Highlight_Config::hasChanged()
 
 // Slots:
 
-void Highlight_Config::highlightSelected(Q3ListViewItem* item)
+void Highlight_Config::highlightSelected(QTreeWidgetItem* item)
 {
   // check if there was a widget selected at all
   if(item)
   {
     // make a highlight item out of the generic qlistviewitem
     HighlightViewItem* highlightItem=static_cast<HighlightViewItem*>(item);
-
-    // check if the checkbox on the item has changed
-    if(highlightItem->hasChanged())
-    {
-      // tell the prefs system it was changed and acknowledge the change to the listview item
-      emit modified();
-      highlightItem->changeAcknowledged();
-    }
 
     // tell all now emitted signals that we just clicked on a new item, so they should
     // not emit the modified() signal.
@@ -161,7 +144,7 @@ void Highlight_Config::highlightSelected(Q3ListViewItem* item)
 
 void Highlight_Config::updateButtons()
 {
-  bool enabled = highlightListView->selectedItem() != NULL;
+  bool enabled = highlightListView->currentItem() != NULL;
   // is the kregexpeditor installed?
   bool installed = false;
 // it does not make sense to port / enable this since KRegExpEditor is in a very bad shape. just keep this
@@ -195,7 +178,7 @@ void Highlight_Config::updateButtons()
 
 void Highlight_Config::highlightTextChanged(const QString& newPattern)
 {
-  HighlightViewItem* item=static_cast<HighlightViewItem*>(highlightListView->selectedItem());
+  HighlightViewItem* item=static_cast<HighlightViewItem*>(highlightListView->currentItem());
 
   if(!newItemSelected && item)
   {
@@ -222,7 +205,7 @@ void Highlight_Config::highlightTextEditButtonClicked()
     {
       QString re = reEditor->regExp();
       patternInput->setText(re);
-      HighlightViewItem* item=static_cast<HighlightViewItem*>(highlightListView->selectedItem());
+      HighlightViewItem* item=static_cast<HighlightViewItem*>(highlightListView->currentItem());
       if(item) item->setPattern(re);
     }
     delete editorDialog;
@@ -232,19 +215,18 @@ void Highlight_Config::highlightTextEditButtonClicked()
 
 void Highlight_Config::highlightColorChanged(const QColor& newColor)
 {
-  HighlightViewItem* item=static_cast<HighlightViewItem*>(highlightListView->selectedItem());
+  HighlightViewItem* item=static_cast<HighlightViewItem*>(highlightListView->currentItem());
 
   if(!newItemSelected && item)
   {
     item->setColor(newColor);
-    item->repaint();
     emit modified();
   }
 }
 
 void Highlight_Config::soundURLChanged(const QString& newURL)
 {
-  HighlightViewItem* item=static_cast<HighlightViewItem*>(highlightListView->selectedItem());
+  HighlightViewItem* item=static_cast<HighlightViewItem*>(highlightListView->currentItem());
 
   if(!newItemSelected && item)
   {
@@ -255,7 +237,7 @@ void Highlight_Config::soundURLChanged(const QString& newURL)
 
 void Highlight_Config::autoTextChanged(const QString& newText)
 {
-  HighlightViewItem* item=static_cast<HighlightViewItem*>(highlightListView->selectedItem());
+  HighlightViewItem* item=static_cast<HighlightViewItem*>(highlightListView->currentItem());
 
   if(!newItemSelected && item)
   {
@@ -269,7 +251,8 @@ void Highlight_Config::addHighlight()
   Highlight* newHighlight=new Highlight(i18n("New"),false,QColor("#ff0000"),KUrl(),QString());
 
   HighlightViewItem* item=new HighlightViewItem(highlightListView,newHighlight);
-  highlightListView->setSelected(item,true);
+  item->setFlags(item->flags() &~ Qt::ItemIsDropEnabled);
+  highlightListView->setCurrentItem(item);
   patternInput->setFocus();
   patternInput->selectAll();
   emit modified();
@@ -277,7 +260,7 @@ void Highlight_Config::addHighlight()
 
 void Highlight_Config::removeHighlight()
 {
-  HighlightViewItem* item=static_cast<HighlightViewItem*>(highlightListView->selectedItem());
+  HighlightViewItem* item=static_cast<HighlightViewItem*>(highlightListView->currentItem());
 
   if(item)
   {
@@ -286,7 +269,7 @@ void Highlight_Config::removeHighlight()
     item=static_cast<HighlightViewItem*>(highlightListView->currentItem());
 
     if(item)
-      highlightListView->setSelected(item,true);
+      highlightListView->setCurrentItem(item);
 
     emit modified();
   }
@@ -297,11 +280,11 @@ QList<Highlight*> Highlight_Config::getHighlightList()
 {
   QList<Highlight*> newList;
 
-  HighlightViewItem* item=static_cast<HighlightViewItem*>(highlightListView->firstChild());
+  HighlightViewItem* item=static_cast<HighlightViewItem*>(highlightListView->topLevelItem(0));
   while(item)
   {
     newList.append(new Highlight(item->getPattern(),item->getRegExp(),item->getColor(),item->getSoundURL(),item->getAutoText()));
-    item=item->itemBelow();
+    item = static_cast<HighlightViewItem*>(highlightListView->itemBelow(item));
   }
 
   return newList;
@@ -311,11 +294,11 @@ QStringList Highlight_Config::currentHighlightList()
 {
   QStringList newList;
 
-  HighlightViewItem* item=static_cast<HighlightViewItem*>(highlightListView->firstChild());
+  HighlightViewItem* item=static_cast<HighlightViewItem*>(highlightListView->topLevelItem(0));
   while(item)
   {
     newList.append(item->getPattern()+item->getRegExp()+item->getColor().name()+item->getSoundURL().url()+item->getAutoText());
-    item=item->itemBelow();
+    item = static_cast<HighlightViewItem*>(highlightListView->itemBelow(item));
   }
 
   return newList;

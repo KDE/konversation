@@ -28,7 +28,6 @@
 #include <qbitmap.h>
 #include <qpainter.h>
 
-#include <k3listbox.h>
 #include <kurl.h>
 #include <kdebug.h>
 #include <kmessagebox.h>
@@ -36,6 +35,7 @@
 #include <klocale.h>
 #include <kio/job.h>
 #include <kio/netaccess.h>
+#include <kio/deletejob.h>
 #include <kfiledialog.h>
 #include <ktar.h>
 #include <kdesktopfile.h>
@@ -59,9 +59,9 @@ Theme_Config::Theme_Config(QWidget* parent, const char* name)
     // load the current settings
     loadSettings();
 
-    connect(iconThemeIndex,SIGNAL(highlighted(int)),this,SLOT(updatePreview(int)));
-    connect(iconThemeIndex,SIGNAL(selectionChanged()),this,SLOT(updateButtons()));
-    connect(iconThemeIndex,SIGNAL(selectionChanged()),this,SIGNAL(modified()));
+    connect(iconThemeIndex,SIGNAL(currentRowChanged(int)),this,SLOT(updatePreview(int)));
+    connect(iconThemeIndex,SIGNAL(itemSelectionChanged()),this,SLOT(updateButtons()));
+    connect(iconThemeIndex,SIGNAL(itemSelectionChanged()),this,SIGNAL(modified()));
     connect(installButton,SIGNAL(clicked()),this,SLOT(installTheme()));
     connect(removeButton,SIGNAL(clicked()),this,SLOT(removeTheme()));
 }
@@ -115,14 +115,13 @@ void Theme_Config::loadSettings()
                 themeName = themeName+" ("+themeComment+')';
 
             // insert entry into the listview
-            iconThemeIndex->insertItem(themeName);
+            iconThemeIndex->addItem(themeName);
 
             // increment index counter
             ++i;
         }
         // highlight currently active theme and update preview box
-        iconThemeIndex->setSelected(currentThemeIndex, true);
-        updatePreview(currentThemeIndex);
+        iconThemeIndex->setCurrentRow(currentThemeIndex);
     }
 
     // if there was no currently used theme found, use the default theme
@@ -166,7 +165,7 @@ void Theme_Config::saveSettings()
 void Theme_Config::restorePageToDefaults()
 {
     if (m_defaultThemeIndex != -1)
-        iconThemeIndex->setSelected(m_defaultThemeIndex, true);
+        iconThemeIndex->setCurrentRow(m_defaultThemeIndex);
 }
 
 void Theme_Config::installTheme()
@@ -244,9 +243,9 @@ void Theme_Config::installTheme()
 void Theme_Config::removeTheme()
 {
     QString dir;
-    QString themeName = iconThemeIndex->currentText();
+    QString themeName = iconThemeIndex->currentItem() ? iconThemeIndex->currentItem()->text() : QString();
 
-    dir = m_dirs[iconThemeIndex->currentItem()];
+    dir = m_dirs[iconThemeIndex->currentRow()];
 
     int remove = KMessageBox::warningContinueCancel(0L,
         i18n("Do you want to remove %1 ?", themeName),
@@ -257,24 +256,22 @@ void Theme_Config::removeTheme()
 
     if(remove == KMessageBox::Continue)
     {
-#ifndef Q_CC_MSVC
-#warning "kde4 port it"
-#endif
-#if 0
+
         unlink(QFile::encodeName(dir));
         KIO::DeleteJob* job = KIO::del(KUrl(dir.remove("index.desktop")));
-        connect(job, SIGNAL(result(KIO::Job*)), this, SLOT(postRemoveTheme(KIO::Job*)));
-#endif
+        connect(job, SIGNAL(result(KJob*)), this, SLOT(postRemoveTheme(KJob*)));
     }
 }
 
-void Theme_Config::postRemoveTheme(KIO::Job* /* delete_job */)
+void Theme_Config::postRemoveTheme(KJob* /* delete_job */)
 {
     loadSettings();
 }
 
 void Theme_Config::updatePreview(int id)
 {
+    if (id < 1)
+        return;
     QString dir;
     dir = m_dirs[id];
     dir.remove("/index.desktop");
@@ -292,14 +289,14 @@ void Theme_Config::updatePreview(int id)
 void Theme_Config::updateButtons()
 {
     // don't allow clicking "remove" if there is only one or even no theme installed
-    if(iconThemeIndex->count() < 2)
+    if(iconThemeIndex->count() < 2 || m_dirs.count() - 1 < iconThemeIndex->currentRow())
     {
         removeButton->setEnabled(false);
         return;
     }
 
     // get directory of current theme
-    QString dir = m_dirs[iconThemeIndex->currentItem()];
+    QString dir = m_dirs[iconThemeIndex->currentRow()];
     QFile themeRC(dir);
     // get name for directory
     m_currentTheme = dir.section('/',-2,-2);

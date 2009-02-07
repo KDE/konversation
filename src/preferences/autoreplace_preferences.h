@@ -35,14 +35,12 @@ class Autoreplace_Config : public QWidget, public KonviSettingsPage, private Ui:
     void modified();
 
   protected slots:
-    void entrySelected(Q3ListViewItem* autoreplaceEntry);
+    void entrySelected(QTreeWidgetItem* autoreplaceEntry);
     void directionChanged(int newDirection);
     void patternChanged(const QString& newPattern);
     void replacementChanged(const QString& newReplacement);
     void addEntry();
     void removeEntry();
-    void sort(int column);
-    void disableSort();
     void showRegExpEditor();
 
   protected:
