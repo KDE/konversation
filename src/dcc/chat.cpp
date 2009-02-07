@@ -66,11 +66,9 @@ DccChat::DccChat(QWidget* parent, bool listen, Server* server, const QString& ow
     setChannelEncodingSupported(true);
 
     m_headerSplitter = new QSplitter(Qt::Vertical, this);
-#ifndef Q_CC_MSVC
-#warning "port kde4"
-#endif
+
     m_sourceLine = 0;
-    //m_sourceLine = new Konversation::TopicLabel(m_headerSplitter);
+    m_sourceLine = new Konversation::TopicLabel(m_headerSplitter);
 
     IRCViewBox* ircViewBox = new IRCViewBox(m_headerSplitter, NULL);
     setTextView(ircViewBox->ircView());
@@ -151,10 +149,8 @@ void DccChat::listenForPartner()
     kDebug() << "using port: " << m_ownPort ;
 
     getTextView()->appendServerMessage(i18n("DCC"), i18n("Offering DCC Chat connection to %1 on port %2...", m_partnerNick, m_ownPort));
-#ifndef Q_CC_MSVC
-#warning "port kde4"
-#endif
-    //m_sourceLine->setText(i18n("DCC chat with %1 on port %2.", m_partnerNick, m_ownPort));
+
+    m_sourceLine->setText(i18n("DCC chat with %1 on port %2.", m_partnerNick, m_ownPort));
     kDebug() << "[END]"; 
 }
 
@@ -167,10 +163,8 @@ void DccChat::connectToPartner()
 
     getTextView()->appendServerMessage( i18n( "DCC" ), i18nc("%1 = nickname, %2 = IP, %3 = port",
         "Establishing DCC Chat connection to %1 (%2:%3)...", m_partnerNick, m_partnerHost, m_partnerPort));
-#ifndef Q_CC_MSVC
-#warning "port kde4"
-#endif
-    //m_sourceLine->setText(i18nc("%1 = nickname, %2 = IP, %3 = port", "DCC chat with %1 on %2:%3.", m_partnerNick, host, m_partnerPort));
+
+    m_sourceLine->setText(i18nc("%1 = nickname, %2 = IP, %3 = port", "DCC chat with %1 on %2:%3.", m_partnerNick, host, m_partnerPort));
 
     m_dccSocket = new KNetwork::KStreamSocket( m_partnerHost, QString::number( m_partnerPort ), this );
 
@@ -189,19 +183,13 @@ void DccChat::connectToPartner()
 
     m_dccSocket->connect();
 
-#if 0
-    //getTextView()->appendServerMessage(i18n("DCC"), i18n("Looking for host %1...", host));
-#endif
 
+    getTextView()->appendServerMessage(i18n("DCC"), i18n("Looking for host %1...", host));
 }
 
 void DccChat::lookupFinished()
 {
-
-#if 0
-	//getTextView()->appendServerMessage(i18n("DCC"),i18n("Host found, connecting..."));
-#endif
-
+    getTextView()->appendServerMessage(i18n("DCC"),i18n("Host found, connecting..."));
 }
 
 void DccChat::dccChatConnectionSuccess()
@@ -395,15 +383,9 @@ void DccChat::appendInputText( const QString& s, bool fromCursor )
     }
     else
     {
-        int para = 0, index = 0;
-#ifndef Q_CC_MSVC
-#warning "port it"
-#endif
-#if 0
-        m_dccChatInput->getCursorPosition(&para, &index);
-        m_dccChatInput->insertAt(s, para, index);
-        m_dccChatInput->setCursorPosition(para, index + s.length());
-#endif
+        const int position = m_dccChatInput->textCursor().position();
+        m_dccChatInput->textCursor().insertText(s);
+        m_dccChatInput->textCursor().setPosition(position + s.length());
     }
 }
 
