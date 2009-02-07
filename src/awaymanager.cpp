@@ -138,7 +138,7 @@ void AwayManager::identityOffline(int identityId)
 {
     if (m_identitiesOnAutoAway.contains(identityId))
     {
-        m_identitiesOnAutoAway.remove(identityId);
+        m_identitiesOnAutoAway.removeAll(identityId);
 
         toggleTimer();
     }
