@@ -138,8 +138,8 @@ namespace Konversation
             if (!m_currentChannel.isEmpty())
             {
                 menu->addAction(i18n("&Join"), this, SLOT(joinChannel()));
-                menu->addAction(i18n("Get &User List"), this, SLOT (getChannelUserList()));
-                menu->addAction(i18n("Get &Topic"), this, SLOT(getChannelTopic()));
+                menu->addAction(i18n("Get &user list"), this, SLOT (getChannelUserList()));
+                menu->addAction(i18n("Get &topic"), this, SLOT(getChannelTopic()));
                 actionsAdded = true;
             }
         }
@@ -204,14 +204,14 @@ namespace Konversation
         updateSqueezedText();
     }
 
-    QString TopicLabel::rPixelSqueeze(const QString& text, uint maxPixels)
+    QString TopicLabel::rPixelSqueeze(const QString& text, int maxPixels)
     {
-        uint tw = textWidth(text);
+        int tw = textWidth(text);
 
         if(tw > maxPixels)
         {
             QString tmp = text;
-            const uint em = fontMetrics().maxWidth();
+            int em = fontMetrics().maxWidth();
             maxPixels -= fontMetrics().width("...");
             int len, delta;
 
@@ -231,13 +231,13 @@ namespace Konversation
         return text;
     }
 
-    uint TopicLabel::textWidth(const QString& text)
+    int TopicLabel::textWidth(const QString& text)
     {
-        QTextDocument document("<qt>" + text + "</qt>", this);
+        QTextDocument document(this);
         document.setDefaultFont(font());
-        document.setTextWidth(fontMetrics().width(text));
+        document.setHtml("<qt>" + text + "</qt>");
 
-        return document.size().width();
+        return document.size().toSize().width();
     }
 
     void TopicLabel::highlightedSlot(const QString& link)
