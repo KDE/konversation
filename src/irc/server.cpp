@@ -871,16 +871,18 @@ QString Server::getNextNickname()
     if (m_referenceNicklist != getIdentity()->getNicknameList())
         resetNickSelection();
 
-    QString newNick = getIdentity()->getNickname(m_nickIndices.front());
-    m_nickIndices.pop_front();
-
-    if (newNick.isNull())
+    QString newNick;
+    
+    if (!m_nickIndices.isEmpty())
+    {
+        newNick = getIdentity()->getNickname(m_nickIndices.takeFirst());
+    }
+    else
     {
         QString inputText = i18n("No nicknames from the \"%1\" identity were accepted by the connection \"%2\".\nPlease enter a new one or press Cancel to disconnect:", getIdentity()->getName(), getDisplayName());
         newNick = KInputDialog::getText(i18n("Nickname error"), inputText,
                                         QString(), 0, getStatusView()); // TODO FIXME hope we don't need the name... "NickChangeDialog"
     }
-
     return newNick;
 }
 
