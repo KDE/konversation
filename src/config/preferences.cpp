@@ -246,7 +246,7 @@ void Preferences::removeServerGroup(int id)
     {
         if ((*it)->id() == id)
         {
-            self()->mServerGroupList.remove(it);
+            self()->mServerGroupList.erase(it);
 
             return;
         }
