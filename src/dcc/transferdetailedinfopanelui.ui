@@ -184,7 +184,7 @@
        <item row="1" column="0" >
         <widget class="QLabel" name="textLabel21" >
          <property name="text" >
-          <string>File Size:</string>
+          <string>File size:</string>
          </property>
          <property name="wordWrap" >
           <bool>false</bool>
@@ -238,7 +238,7 @@
        <item row="4" column="0" >
         <widget class="QLabel" name="textLabel1" >
          <property name="text" >
-          <string>Average Speed:</string>
+          <string>Average speed:</string>
          </property>
          <property name="wordWrap" >
           <bool>false</bool>
@@ -280,7 +280,7 @@
        <item row="3" column="0" >
         <widget class="QLabel" name="textLabel1_2" >
          <property name="text" >
-          <string>Current Speed:</string>
+          <string>Current speed:</string>
          </property>
          <property name="wordWrap" >
           <bool>false</bool>
@@ -290,7 +290,7 @@
        <item row="0" column="0" >
         <widget class="QLabel" name="textLabel19" >
          <property name="text" >
-          <string>Current Position:</string>
+          <string>Current position:</string>
          </property>
          <property name="wordWrap" >
           <bool>false</bool>
@@ -336,7 +336,7 @@
        <item row="1" column="0" >
         <widget class="QLabel" name="textLabel8" >
          <property name="text" >
-          <string>Estimated Time Left:</string>
+          <string>Estimated time left:</string>
          </property>
          <property name="wordWrap" >
           <bool>false</bool>
@@ -440,7 +440,7 @@
        <item row="0" column="0" >
         <widget class="QLabel" name="textLabel6" >
          <property name="text" >
-          <string>Transferring Time:</string>
+          <string>Transferring time:</string>
          </property>
          <property name="wordWrap" >
           <bool>false</bool>

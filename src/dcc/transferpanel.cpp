@@ -75,7 +75,7 @@ void DccTransferPanel::initGUI()
         m_listView->addColumn("");
 
     //m_listView->setColumnText(Column::TypeIcon,      "");
-    m_listView->setColumnText(Column::OfferDate,     i18n("Started at"));
+    m_listView->setColumnText(Column::OfferDate,     i18n("Started At"));
     m_listView->setColumnText(Column::Status,        i18n("Status"));
     m_listView->setColumnText(Column::FileName,      i18n("File"));
     m_listView->setColumnText(Column::PartnerNick,   i18n("Partner"));

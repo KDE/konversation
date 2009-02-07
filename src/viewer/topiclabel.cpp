@@ -138,8 +138,8 @@ namespace Konversation
             if (!m_currentChannel.isEmpty())
             {
                 menu->addAction(i18n("&Join"), this, SLOT(joinChannel()));
-                menu->addAction(i18n("Get &user list"), this, SLOT (getChannelUserList()));
-                menu->addAction(i18n("Get &topic"), this, SLOT(getChannelTopic()));
+                menu->addAction(i18n("Get &User List"), this, SLOT (getChannelUserList()));
+                menu->addAction(i18n("Get &Topic"), this, SLOT(getChannelTopic()));
                 actionsAdded = true;
             }
         }

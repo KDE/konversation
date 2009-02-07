@@ -203,7 +203,7 @@ Since nicknames must be unique across an entire IRC network, your desired name m
        <item>
         <widget class="QGroupBox" name="autoIdentifyGroup">
          <property name="title">
-          <string>Auto identify</string>
+          <string>Auto Identify</string>
          </property>
          <layout class="QGridLayout" name="gridLayout">
           <item row="0" column="0">
@@ -284,7 +284,7 @@ Since nicknames must be unique across an entire IRC network, your desired name m
           <string>If you check this box, Konversation will automatically set all connections using this Identity away when the screensaver starts or after a period of user inactivity configured below.</string>
          </property>
          <property name="title">
-          <string>Automatic away</string>
+          <string>Automatic Away</string>
          </property>
          <property name="checkable">
           <bool>true</bool>
@@ -354,7 +354,7 @@ Since nicknames must be unique across an entire IRC network, your desired name m
           <string>If you check this box, Konversation will automatically send the Away message to all channels joined with this Identity. &lt;b&gt;%s&lt;/b&gt; is replaced with &lt;b&gt;msg&lt;/b&gt;. Whenever you perform an &lt;b&gt;/away&lt;/b&gt; command, the Return message will be displayed in all channels joined with this Identity.</string>
          </property>
          <property name="title">
-          <string>Away messages</string>
+          <string>Away Messages</string>
          </property>
          <property name="checkable">
           <bool>true</bool>
