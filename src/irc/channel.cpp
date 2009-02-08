@@ -2268,22 +2268,17 @@ void Channel::updateAppearance()
     {
         fg = palette().windowText().color();
         bg = palette().base().color();
-        //I really fucking wonder if anyone who designs these APIs actually uses them
-        //old code:        abg=KGlobalSettings::alternateBackgroundColor();
-        //new code:
-        KColorScheme stupidfuckingthing(QPalette::Normal, KColorScheme::View); //TODO FIXME fix the fucking palette parameter
-        QBrush stupidfuckingreturnvalue(stupidfuckingthing.background(KColorScheme::AlternateBackground));
-        abg=stupidfuckingreturnvalue.color();
+        abg = palette().alternateBase().color();
     }
 
     QPalette channelInputPalette;
-    channelInputPalette.setColor(channelInput->foregroundRole(), fg);
-    channelInputPalette.setColor(channelInput->backgroundRole(), bg);
+    channelInputPalette.setColor(QPalette::WindowText, fg);
+    channelInputPalette.setColor(QPalette::Base, bg);
     channelInput->setPalette(channelInputPalette);
 
     QPalette limitPalette;
-    limitPalette.setColor(limit->foregroundRole(), fg);
-    limitPalette.setColor(limit->backgroundRole(), bg);
+    limitPalette.setColor(QPalette::WindowText, fg);
+    limitPalette.setColor(QPalette::Base, bg);
     limit->setPalette(limitPalette);
 
     getTextView()->setPalette(QPalette());
@@ -2317,8 +2312,9 @@ void Channel::updateAppearance()
     }
 
     QPalette nicknameListViewPalette;
-    nicknameListViewPalette.setColor(nicknameListView->foregroundRole(), fg);
-    nicknameListViewPalette.setColor(nicknameListView->backgroundRole(), bg);
+    nicknameListViewPalette.setColor(QPalette::WindowText, fg);
+    nicknameListViewPalette.setColor(QPalette::Base, bg);
+    nicknameListViewPalette.setColor(QPalette::AlternateBase, abg);
     nicknameListView->resort();
     nicknameListView->setPalette(nicknameListViewPalette);
     nicknameListView->setAlternateBackground(abg);

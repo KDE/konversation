@@ -170,8 +170,8 @@ void StatusPanel::updateAppearance()
     }
     
     QPalette statusInputPalette(statusInput->palette());
-    statusInputPalette.setColor(statusInput->foregroundRole(), fg);
-    statusInputPalette.setColor(statusInput->backgroundRole(), bg);
+    statusInputPalette.setColor(QPalette::WindowText, fg);
+    statusInputPalette.setColor(QPalette::Base, bg);
     statusInput->setPalette(statusInputPalette);
     
     getTextView()->setPalette(QPalette()); 
