@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="konversation" version="51">
+<kpartgui name="konversation" version="52">
 
   <MenuBar>
     <Menu name="file">
@@ -20,13 +20,13 @@
       <Action name="clear_tabs" />
     </Menu>
     <Menu name="insert">
-      <Text>&amp;Insert</Text>
+      <text>&amp;Insert</text>
       <Action name="irc_colors" />
       <Action name="insert_marker_line" />
       <Action name="insert_character" />
     </Menu>
     <Menu name="bookmarks">
-      <Text>&amp;Bookmarks</Text>
+      <text>&amp;Bookmarks</text>
     </Menu>
     <Menu name="settings">
       <Action name="hide_nicknamelist" />
@@ -34,7 +34,7 @@
       <Action name="identities_dialog" append="save_merge" />
     </Menu>
     <Menu name="windows" append="settings_merge">
-      <Text>&amp;Window</Text>
+      <text>&amp;Window</text>
       <Action name="previous_tab" />
       <Action name="next_tab" />
       <Action name="next_active_tab" />

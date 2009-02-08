@@ -85,7 +85,7 @@ QString DccTransferRecv::getTypeText() const
 
 QPixmap DccTransferRecv::getTypeIcon() const
 {
-    return KIconLoader::global()->loadIcon( "down",KIconLoader::Small );
+    return KIconLoader::global()->loadIcon( "arrow-down",KIconLoader::Small );
 }
 
 void DccTransferRecv::cleanUp()

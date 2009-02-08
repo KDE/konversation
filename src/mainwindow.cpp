@@ -646,7 +646,7 @@ bool KonversationMainWindow::queryClose()
             return false;
     }
 
-    // Moved here instead of being executed on QApplication::aboutToQuit... the signal was emited after the mainwindow had been destroyed.
+    // Moved here instead of being executed on QApplication::aboutToQuit... the signal was emitted after the mainwindow had been destroyed.
     getViewContainer()->prepareShutdown();
     KonversationApplication::instance()->prepareShutdown();
 

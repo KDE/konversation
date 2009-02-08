@@ -172,7 +172,7 @@ namespace Konversation
                 lastNickInfo = nickInfo;
             }
         }
-        //Use a nick that's either away, or non-existant.
+        //Use a nick that's either away, or non-existent.
         return lastNickInfo;
     }
 

@@ -42,7 +42,7 @@ class LogfileReader : public ChatWindow
         void clearLog();
         void saveLog();
         void closeLog();
-        void copyResult(KIO::Job* job);
+        void copyResult(KJob* job);
 
 
     protected:

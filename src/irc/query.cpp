@@ -111,7 +111,7 @@ Query::Query(QWidget* parent, QString _name) : ChatWindow(parent)
     awayLabel->hide();
     blowfishLabel = new QLabel(inputBox);
     blowfishLabel->hide();
-    blowfishLabel->setPixmap(KIconLoader::global()->loadIcon("encrypted", KIconLoader::Toolbar));
+    blowfishLabel->setPixmap(KIconLoader::global()->loadIcon("document-encrypt", KIconLoader::Toolbar));
     queryInput=new IRCInput(inputBox);
 
     getTextView()->installEventFilter(queryInput);

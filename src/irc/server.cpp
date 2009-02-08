@@ -3083,7 +3083,7 @@ void Server::reconnect()
     // Use asynchronous invocation so that the broken() that the above
     // quitServer might cause is delivered before connectToIRCServer
     // sets SSConnecting and broken() announces a deliberate disconnect
-    // due to the failure allegedly occuring during SSConnecting.
+    // due to the failure allegedly occurring during SSConnecting.
     QTimer::singleShot(0, this, SLOT(connectToIRCServer()));
 }
 

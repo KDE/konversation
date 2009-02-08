@@ -25,7 +25,6 @@
 #include <qlabel.h>
 #include <qregexp.h>
 #include <qspinbox.h>
-#include <q3stylesheet.h>
 
 #include <kdialog.h>
 #include <ktoolbar.h>
@@ -35,6 +34,7 @@
 #include <kdebug.h>
 #include <kio/copyjob.h>
 #include <kio/jobclasses.h>
+#include <KJobUiDelegate>
 #include <QTextDocument>
 
 
@@ -164,13 +164,13 @@ void LogfileReader::saveLog()
         KIO::Job* job=KIO::copy(KUrl(fileName.replace("#","%23")),
             KUrl(destination));
 
-        connect(job,SIGNAL(result(KIO::Job*)),this,SLOT(copyResult(KIO::Job*)));
+        connect(job,SIGNAL(result(KJob*)),this,SLOT(copyResult(KJob*)));
     }
 }
 
-void LogfileReader::copyResult(KIO::Job* job)
+void LogfileReader::copyResult(KJob* job)
 {
-    if(job->error()) job->showErrorDialog(this);
+    if(job->error()) job->uiDelegate()->showErrorMessage();
 
     job->deleteLater();
 }

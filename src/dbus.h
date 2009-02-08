@@ -60,7 +60,7 @@ class DBus : public QObject
         void debug(const QString& string);
         void error(const QString& string);
         void insertMarkerLine();
-        void connectToServer(const QString& adress, int port, const QString& channel, const QString& password);
+        void connectToServer(const QString& address, int port, const QString& channel, const QString& password);
         QStringList listServers();
         QStringList listConnectedServers();
 

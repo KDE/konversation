@@ -1009,9 +1009,9 @@ void IRCView::highlightedSlot(const QString& _link)
         else if (!link.isEmpty() && !m_copyUrlMenu)
         {
             m_popup->setItemVisible(copyUrlMenuSeparator, true);
-            m_popup->insertItem(SmallIcon("editcopy"), i18n("Copy URL to Clipboard"), CopyUrl, 1);
-            m_popup->insertItem(SmallIcon("bookmark"), i18n("Add to Bookmarks"), Bookmark, 2);
-            m_popup->insertItem(SmallIcon("filesaveas"), i18n("Save Link As..."), SaveAs, 3);
+            m_popup->insertItem(KIcon("edit-copy"), i18n("Copy URL to Clipboard"), CopyUrl, 1);
+            m_popup->insertItem(KIcon("bookmark-new"), i18n("Add to Bookmarks"), Bookmark, 2);
+            m_popup->insertItem(KIcon("document-save"), i18n("Save Link As..."), SaveAs, 3);
             m_copyUrlMenu = true;
             m_urlToCopy = link;
         }

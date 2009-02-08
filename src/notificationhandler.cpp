@@ -19,8 +19,6 @@
 #include "trayicon.h"
 #include "server.h"
 
-#include <q3stylesheet.h>
-
 #include <knotification.h>
 #include <kstringhandler.h>
 #include <klocale.h>
