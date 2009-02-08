@@ -26,6 +26,7 @@ class RawLog : public ChatWindow
         explicit RawLog(QWidget* parent);
         ~RawLog();
 
+        using ChatWindow::closeYourself;
         virtual bool closeYourself();
         virtual bool searchView();
 

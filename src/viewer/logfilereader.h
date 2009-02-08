@@ -31,6 +31,7 @@ class LogfileReader : public ChatWindow
         LogfileReader(QWidget* parent, const QString& log);
         ~LogfileReader();
 
+        using ChatWindow::closeYourself;
         virtual bool closeYourself() { closeLog(); return true; }
         virtual bool searchView();
 

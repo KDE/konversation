@@ -39,6 +39,7 @@ class ChannelListPanel : public ChatWindow
         explicit ChannelListPanel(QWidget* parent);
         ~ChannelListPanel();
 
+        using ChatWindow::closeYourself;
         virtual bool closeYourself();
         virtual void emitUpdateInfo();
 
