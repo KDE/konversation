@@ -32,12 +32,15 @@ IRCColorChooser::IRCColorChooser(QWidget* parent)
     m_ui.setupUi(mainWidget());
     initColors(m_ui.m_fgColorCBox);
     initColors(m_ui.m_bgColorCBox);
-    m_ui.m_bgColorCBox->insertItem(i18n("None"), 0);
+    m_ui.m_bgColorCBox->insertItem(0, i18n("None"));
 
     connect(m_ui.m_fgColorCBox, SIGNAL(activated(int)), this, SLOT(updatePreview()));
     connect(m_ui.m_bgColorCBox, SIGNAL(activated(int)), this, SLOT(updatePreview()));
     m_ui.m_fgColorCBox->setCurrentIndex(1);
     m_ui.m_bgColorCBox->setCurrentIndex(0);
+
+    m_ui.m_previewLbl->setAutoFillBackground(true);
+
     updatePreview();
 }
 
@@ -67,18 +70,22 @@ void IRCColorChooser::updatePreview()
         bgc = Preferences::self()->color(Preferences::TextViewBackground);
     }
 
-    m_ui.m_previewLbl->setBackgroundColor(bgc);
-    m_ui.m_previewLbl->setPaletteForegroundColor(Preferences::self()->ircColorCode(m_ui.m_fgColorCBox->currentIndex()));
+    QPalette p = m_ui.m_previewLbl->palette();
+    p.setColor(backgroundRole(), bgc);
+    p.setColor(foregroundRole(), Preferences::self()->ircColorCode(m_ui.m_fgColorCBox->currentIndex()));
+    m_ui.m_previewLbl->setPalette(p);
 }
 
 void IRCColorChooser::initColors(KComboBox* combo)
 {
-    QPixmap pix(width(), combo->fontMetrics().height() + 4);
+    combo->setIconSize(QSize(combo->width(), combo->fontMetrics().height()));
+
+    QPixmap pix(combo->width(), combo->fontMetrics().height());
 
     for (int i =0; i < 15; i++)
     {
         pix.fill(Preferences::self()->ircColorCode(i));
-        combo->insertItem(pix, i);
+        combo->insertItem(i, QIcon(pix), QString());
     }
 }
 
