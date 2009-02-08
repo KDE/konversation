@@ -19,8 +19,6 @@
 
 #include <qlayout.h>
 #include <qfile.h>
-#include <q3textstream.h>
-#include <q3dockarea.h>
 #include <qpushbutton.h>
 #include <qlabel.h>
 #include <qregexp.h>
@@ -43,12 +41,14 @@ LogfileReader::LogfileReader(QWidget* parent, const QString& log) : ChatWindow(p
     setType(ChatWindow::LogFileReader);
 
     fileName = log;
-    Q3DockArea* toolBarDock = new Q3DockArea(Qt::Horizontal,Q3DockArea::Normal,this,"logfile_toolbar_dock");
-    toolBar = new KToolBar(toolBarDock, true, true);
+
+    toolBar = new KToolBar(this, true, true);
     toolBar->setObjectName("logfile_toolbar");
     toolBar->addAction(KIcon("document-save-as"), i18n("Save As..."), this, SLOT(saveLog()));
+    toolBar->addAction(KIcon("view-refresh"), i18n("Reload"), this, SLOT(updateView()));
+    toolBar->addAction(KIcon("edit-delete"), i18n("Clear Logfile"), this, SLOT(clearLog()));
 
-    new QLabel(i18n("Show last:"),toolBar);
+    toolBar->addWidget(new QLabel(i18n("Show last:"),toolBar));
     sizeSpin = new QSpinBox(toolBar);
     sizeSpin->setMinimum(10);
     sizeSpin->setMaximum(1000);
@@ -58,9 +58,7 @@ LogfileReader::LogfileReader(QWidget* parent, const QString& log) : ChatWindow(p
     sizeSpin->setValue(Preferences::self()->logfileBufferSize());
     sizeSpin->setSuffix(i18n(" KB"));
     sizeSpin->installEventFilter(this);
-
-    toolBar->addAction(KIcon("view-refresh"), i18n("Reload"), this, SLOT(updateView()));
-    toolBar->addAction(KIcon("edit-delete"), i18n("Clear Logfile"), this, SLOT(clearLog()));
+    toolBar->addWidget(sizeSpin);
 
     IRCViewBox* ircBox = new IRCViewBox(this, 0);
     setTextView(ircBox->ircView());
@@ -112,8 +110,9 @@ void LogfileReader::updateView()
 
     if(file.open(QIODevice::ReadOnly))
     {
-        Q3TextStream stream(&file);
-        stream.setEncoding(Q3TextStream::UnicodeUTF8);
+        QTextStream stream(&file);
+        stream.setCodec(QTextCodec::codecForName("UTF-8"));
+        stream.setAutoDetectUnicode(true);
 
         // Set file pointer to <pos> bytes from the end
         if(stream.device()->size()>pos)
@@ -122,13 +121,13 @@ void LogfileReader::updateView()
         stream.readLine();
         QString str;
 
-        while(!stream.eof())
+        while(!stream.atEnd())
         {
             str = Qt::escape(stream.readLine());
             getTextView()->appendRaw(str, true);
         }
 
-        stream.unsetDevice();
+        stream.setDevice(0);
         file.close();
     }
 }
@@ -160,8 +159,7 @@ void LogfileReader::saveLog()
         i18n("Choose Destination Folder"));
     if(!destination.isEmpty())
     {
-        // replace # with %25 to make it URL conforming
-        KIO::Job* job=KIO::copy(KUrl(fileName.replace("#","%23")),
+        KIO::Job* job=KIO::copy(KUrl(fileName),
             KUrl(destination));
 
         connect(job,SIGNAL(result(KJob*)),this,SLOT(copyResult(KJob*)));
