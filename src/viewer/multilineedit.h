@@ -16,7 +16,7 @@
 
 
 class QWidget;
-class MultilineTextEdit;
+class KTextEdit;
 
 class MultilineEdit : public KDialog
 {
@@ -32,9 +32,13 @@ class MultilineEdit : public KDialog
         void slotOk();
         void slotCancel();
         void slotUser1();
+        void dislayNonprintingChars();
 
     protected:
-        MultilineTextEdit* textEditor;
+        KTextEdit* textEditor;
         static QString returnText;
+
+    private:
+        void removeNonprintingChars();
 };
 #endif

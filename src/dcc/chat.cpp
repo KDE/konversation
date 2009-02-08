@@ -385,7 +385,9 @@ void DccChat::appendInputText( const QString& s, bool fromCursor )
     {
         const int position = m_dccChatInput->textCursor().position();
         m_dccChatInput->textCursor().insertText(s);
-        m_dccChatInput->textCursor().setPosition(position + s.length());
+        QTextCursor cursor = m_dccChatInput->textCursor();
+        cursor.setPosition(position + s.length());
+        m_dccChatInput->setTextCursor(cursor);
     }
 }
 

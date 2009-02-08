@@ -2538,7 +2538,9 @@ void Channel::appendInputText(const QString& s, bool fromCursor)
     {
         const int position = channelInput->textCursor().position();
         channelInput->textCursor().insertText(s);
-        channelInput->textCursor().setPosition(position + s.length());
+        QTextCursor cursor = channelInput->textCursor();
+        cursor.setPosition(position + s.length());
+        channelInput->setTextCursor(cursor);
     }
 }
 

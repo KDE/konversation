@@ -10,34 +10,31 @@
 */
 
 #include "multilineedit.h"
-#include "multilinetextedit.h"
 #include "application.h"
 
-#include <QVBoxLayout>
+#include <KTextEdit>
 
-#include <klocale.h>
+#include <QVBoxLayout>
 
 
 QString MultilineEdit::returnText;                // static
 
 MultilineEdit::MultilineEdit(QWidget* parent, const QString& text) :
 KDialog(parent )
-                            //KGuiItem(i18n("Add &Quotation Indicators")))
 {
     setButtons( KDialog::User1 | KDialog::Ok | KDialog::Cancel );
+    setButtonText( KDialog::User1, i18n("Add &Quotation Indicators") );
     setDefaultButton( KDialog::Ok );
     setCaption( i18n("Edit Multiline Paste") );
     setModal( true );
-    // Create the top level widget
-    QWidget* page=new QWidget(this);
-    setMainWidget(page);
-    // Add the layout to the widget
-    QVBoxLayout* dialogLayout=new QVBoxLayout(page);
+
+    QVBoxLayout* dialogLayout=new QVBoxLayout(mainWidget());
     dialogLayout->setSpacing(spacingHint());
     // add the text editor
-    textEditor=new MultilineTextEdit(page,"multiline_text_editor");
-    textEditor->setTextFormat(Qt::PlainText);
-    textEditor->setText(text);
+    textEditor=new KTextEdit(mainWidget());
+    connect(textEditor, SIGNAL(textChanged()), this, SLOT(dislayNonprintingChars()));
+    textEditor->setPlainText(text);
+
     returnText=text;
 
     dialogLayout->addWidget(textEditor);
@@ -62,13 +59,14 @@ void MultilineEdit::slotCancel()
 
 void MultilineEdit::slotOk()
 {
-    returnText=textEditor->text();
+    removeNonprintingChars();
+    returnText=textEditor->toPlainText();
     accept();
 }
 
 void MultilineEdit::slotUser1()
 {
-    QStringList lines=textEditor->text().split('\n', QString::KeepEmptyParts);
+    QStringList lines=textEditor->toPlainText().split('\n', QString::KeepEmptyParts);
     for( QStringList::iterator it=lines.begin() ; it!=lines.end() ; ++it )
         (*it) = "> " + (*it);
     textEditor->setText(lines.join("\n"));
@@ -77,9 +75,43 @@ void MultilineEdit::slotUser1()
 QString MultilineEdit::edit(QWidget* parent, const QString& text)
 {
     MultilineEdit dlg(parent,text);
-    dlg.exec();
+    return dlg.exec() ? returnText : QString();
+}
 
-    return returnText;
+void MultilineEdit::dislayNonprintingChars()
+{
+    textEditor->blockSignals(true);
+
+    const int position = textEditor->textCursor().position();
+
+    removeNonprintingChars();
+
+    const QString html = QString("<html>" + Qt::escape(textEditor->toPlainText()) + "</html>")
+        .replace(' ', QString::fromUtf8("<span style=\"color:blue\">·</span>"))
+        .replace('\n', QString::fromUtf8("<span style=\"color:blue\">¶</span><br/>"))
+        .replace('\t', QString::fromUtf8("<span style=\"color:blue\">»</span>"))
+        ;
+    textEditor->setHtml(html);
+
+    QTextCursor cursor = textEditor->textCursor();
+    cursor.setPosition(position);
+    textEditor->setTextCursor(cursor);
+
+    textEditor->blockSignals(false);
+}
+
+void MultilineEdit::removeNonprintingChars()
+{
+    const bool blockSignals = textEditor->signalsBlocked();
+    textEditor->blockSignals(true);
+    QString text = textEditor->toPlainText();
+    text
+        .remove(QString::fromUtf8("¶"))
+        .replace(QString::fromUtf8("»"), "\t")
+        .replace(QString::fromUtf8("·"), " ")
+        ;
+    textEditor->setPlainText(text);
+    textEditor->blockSignals(blockSignals);
 }
 
 #include "multilineedit.moc"

@@ -127,7 +127,6 @@ set(viewer_SRCS
     statuspanel.cpp
 
     viewer/multilineedit.cpp
-    viewer/multilinetextedit.cpp
     viewer/ircviewbox.cpp
     viewer/viewcontainer.cpp
     viewer/viewtree.cpp
