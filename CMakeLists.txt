@@ -29,4 +29,4 @@ configure_file(config-konvi.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-konvi.h )
 
 add_subdirectory(src)
 add_subdirectory(data)
-
+add_subdirectory(doc)

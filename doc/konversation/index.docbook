@@ -1,0 +1,3483 @@
+<?xml version="1.0" ?>
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN" "dtd/kdex.dtd" [
+  <!-- Define an entity for your application if it is not part of KDE
+       CVS -->
+  <!ENTITY kappname "&konversation;">
+  <!ENTITY package "kdeextragear-2">
+  <!ENTITY irc "<acronym>IRC</acronym>">
+  <!ENTITY CTCP "<acronym>CTCP</acronym>">
+  <!ENTITY nickname "<acronym>nickname</acronym>">
+  <!ENTITY Nickname "<acronym>Nickname</acronym>">
+  <!ENTITY led "<acronym>LED</acronym>">
+  <!ENTITY osd "<acronym>OSD</acronym>">
+  <!ENTITY url "<acronym>URL</acronym>">
+  <!ENTITY mime "<acronym>MIME</acronym>">
+  <!ENTITY konviwebsite "http://konversation.kde.org">
+  <!ENTITY % imageobjectco.module "INCLUDE">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % English "INCLUDE"> <!-- ONLY If you are writing non-English
+                                     original documentation, change
+                                     the language here -->
+
+  <!-- Do not define any other entities; instead, use the entities
+       from entities/general.entities and $LANG/user.entities. -->
+]>
+
+
+<!-- ................................................................ -->
+
+<!-- The language must NOT be changed here. -->
+<!-- If you are writing original documentation in a language other -->
+<!-- than English, change the language above ONLY, not here -->
+<book lang="&language;">
+
+<!-- This header contains all of the meta-information for the document such
+as Authors, publish date, the abstract, and Keywords -->
+
+<bookinfo>
+<title>The &konversation; Handbook</title>
+
+<authorgroup>
+<author>
+<!-- This is just put in as an example.  For real documentation, please
+     define a general entity in entities/contributor.entities, e.g.
+<!ENTITY George.N.Ugnacious "<personname><firstname>George</firstname><othername>N.</othername><surname>Ugnacious</surname></personname>">
+<!ENTITY George.N.Ugnacious.mail "<email>gnu@kde.org</email>">
+and use `&George.N.Ugnacious; &George.N.Ugnacious.mail;' in the author element.
+ -->
+<personname>
+<firstname>Gary</firstname>
+<othername>R.</othername>
+<surname>Cramblitt</surname>
+</personname>
+<email>garycramblitt@comcast.net</email>
+</author>
+<!-- TRANS:ROLES_OF_TRANSLATORS -->
+</authorgroup>
+
+<!-- Note to Translators:
+	This document contains a number of screen images with callouts.  Because the stylesheets do not currently
+	support merging callout images with screen images, the "areaspec" elements herein are dummy entries
+	used to satisfy the "callout" elements.
+
+	-grc
+-->
+
+<copyright>
+<year>2003-2005</year>
+<holder>Gary R. Cramblitt</holder>
+</copyright>
+
+<!-- Translators: put here the copyright notice of the translation -->
+<!-- Put here the FDL notice.  Read the explanation in fdl-notice.docbook
+     and in the FDL itself on how to use it. -->
+<legalnotice>&FDLNotice;</legalnotice>
+
+<!-- Date and version information of the documentation
+Don't forget to include this last date and this last revision number, we
+need them for translation coordination !
+Please respect the format of the date (YYYY-MM-DD) and of the version
+(V.MM.LL), it could be used by automation scripts.
+Do NOT change these in the translation. -->
+
+<date>2005-05-23</date>
+<releaseinfo>0.18</releaseinfo>
+
+<!-- Abstract about this handbook -->
+
+<abstract>
+<para>
+&konversation; is a user-friendly &irc; client for the K Desktop Environment.
+</para>
+</abstract>
+
+<!-- This is a set of Keywords for indexing by search engines.
+Please at least include KDE, the KDE package it is in, the name
+ of your application, and a few relevant keywords. -->
+
+<keywordset>
+<keyword>KDE</keyword>
+<keyword>kdeextragear-2</keyword>
+<keyword>Konversation</keyword>
+<keyword>irc</keyword>
+<keyword>internet relay chat</keyword>
+<keyword>chat</keyword>
+<keyword>communications</keyword>
+</keywordset>
+
+</bookinfo>
+
+<!-- The contents of the documentation begin here.  Label
+each chapter so with the id attribute. This is necessary for two reasons: it
+allows you to easily reference the chapter from other chapters of your
+document, and if there is no ID, the name of the generated HTML files will vary
+from time to time making it hard to manage for maintainers and for the CVS
+system. Any chapter labelled (OPTIONAL) may be left out at the author's
+discretion. Other chapters should not be left out in order to maintain a
+consistent documentation style across all KDE apps. -->
+
+<!-- CODE SNIPPETS
+The following are useful snippets for cross-referencing to sections of this document.
+If using the snippets plugin, copy them to your snippets.
+Please keep synced with id attributes.
+
+See <link linkend="irc-basics">If you haven't used &irc; before...</link> for more information
+See <link linkend="identity">Setting your identity</link> for more information
+See <link linkend="identity-away">Setting your identity</link> for more information
+See <link linkend="identity-advanced">Setting your identity</link> for more information
+See <link linkend="serverlist">Defining new networks, servers and auto join channels</link> for more information
+See <link linkend="serverlist-addnetwork">Defining new networks, servers and auto join channels</link> for more information
+See <link linkend="serverlist-addserver">Defining new networks, servers and auto join channels</link> for more information
+See <link linkend="serverlist-addchannel">Defining new networks, servers and auto join channels</link> for more information
+See <link linkend="list-channels">Listing available channels</link> for more information
+See <link linkend="channel-screen-tour">A tour of the main screen</link> for more information
+See <link linkend="quickconnect">Quick Connect</link> for more information
+See <link linkend="irc-cmds">Frequently-used &irc; commands</link> for more information
+See <link linkend="query">Private conversations (queries)</link> for more information
+See <link linkend="cfg-notifications">Setting notifications</link> for more information
+See <link linkend="nicksonline">Monitoring who is online</link> for more information
+See <link linkend="highlighting">Message highlighting</link> for more information
+See <link linkend="cfg-osd">Configuring On Screen Display (&osd;)</link> for more information
+See <link linkend="color-msgs">Sending colorful messages</link> for more information
+See <link linkend="nickthemes">Configuring &nickname; themes</link> for more information.
+See <link linkend="quick-buttons">Configuring Quick Buttons</link> for more information
+See <link linkend="dcc">Sending and receiving files</link> for more information
+See <link linkend="linkaddressbook">Integrating with &kaddressbook;</link> for more information
+See <link linkend="urlcatcher">Capturing &URL;s from messages.</link> for more information
+See <link linkend="webbrowser">Setting your preferred web browser.</link> for more information
+See <link linkend="rememberlines">Marking Channel and Query Logs</link> for more information
+See <link linkend="logging">Logging</link> for more information
+See <link linkend="konvi-cmds">&konversation; commands</link> for more information
+See <link linkend="scripting">Scripting</link> for more information
+See <link linkend="kapp-mainwindow">The main &konversation; window</link> for more information
+See <link linkend="getting-kapp">How to obtain &konversation;</link> for more information
+See <link linkend="requirements">Requirements</link> for more information
+
+-->
+
+<chapter id="introduction">
+<title>Introduction</title>
+
+<!-- The introduction chapter contains a brief introduction for the
+application that explains what it does and where to report
+problems. Basically a long version of the abstract.  Don't include a
+revision history. (see installation appendix comment) -->
+
+<para>
+&konversation; is an &irc; client for &kde; 3.2 or later.  It offers the following features:
+</para>
+
+<para>
+<itemizedlist>
+<listitem><para>SSL support.</para></listitem>
+<listitem><para>User-friendly tabbed interface.</para></listitem>
+<listitem><para>Customizable Quick Buttons for often-used commands</para></listitem>
+<listitem><para>Automatic reconnect and rejoin.</para></listitem>
+<listitem><para>DCC send and receive.</para></listitem>
+<listitem><para>&Nickname; watch list.</para></listitem>
+<listitem><para>Visual and auditory notifications for a wide variety of events, such as messages containing
+ your &nickname;, or &nickname;s on your watch list going online or offline.
+</para></listitem>
+<listitem><para>Customizable highlighting of messages by &nickname; or
+regular expression pattern.</para></listitem>
+<listitem><para>&Nickname; completion.</para></listitem>
+<listitem><para>Capture and save all &URL;s appearing in messages.</para></listitem>
+<listitem><para>On-screen display of messages, even when minimized.</para></listitem>
+<listitem><para>&Nickname; ignore list.</para></listitem>
+<listitem><para>Automatic logging and log management.</para></listitem>
+<listitem><para>Marking of lines in logs.</para></listitem>
+<listitem><para>Scripting.</para></listitem>
+<listitem><para>Integration with &kaddressbook;.</para></listitem>
+</itemizedlist>
+</para>
+
+<para>The &konversation; website is
+<ulink url="&konviwebsite;">&konviwebsite;</ulink>.
+ Questions and answers for &konversation; can be discussed on the
+ <ulink url="http://lists.sourceforge.net/mailman/listinfo/konversation-users">&konversation;-Users</ulink> mailing list. Please subscribe to learn about new features, bug reports and the like. To stay informed of new releases, you can join our
+ <ulink url="http://lists.sourceforge.net/mailman/listinfo/konversation-announce">&konversation;-Announce</ulink> mailing list. This is a low volume mailing list only used to announce new releases or patches.
+</para>
+
+<para>Developers for &konversation; can often be contacted via &irc; at  <ulink url="irc://irc.kde.org/%23konversation">irc.kde.org channel #konversation</ulink>.
+</para>
+
+</chapter>
+
+<chapter id="using-kapp">
+<title>Using &konversation;</title>
+
+<!-- =================================================================== -->
+
+<sect1 id="irc-basics">
+<title>If you haven't used &irc; before...</title>
+
+<para>Simply put, &irc; is a chat protocol, defined by official Internet
+standards, and capable of stealing many hours of your life. To use
+&irc;, you must connect to a server, and then join a channel (equivalent
+to a chat room) or just engage in private conversations.</para>
+
+<para>To connect to a server and channel, open &konversation;.  The <guilabel>Server List</guilabel> screen appears.</para>
+
+<para>
+<screenshot>
+<screeninfo>Server List</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-first-serverlist-1" coords="1 1"/>
+				<area id="pt-first-serverlist-2" coords="1 1"/>
+				<area id="pt-first-serverlist-3" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="first_serverlist_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase>Server List</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-first-serverlist-1"><para>The list of configured &irc;
+<guilabel>Networks</guilabel> are listed here.  An &irc; network is a collection of cooperating servers.  You need
+only connect to one of the servers in the network to be connected to the entire
+&irc; network.  Once connected, &konversation; will automatically join the
+<guilabel>Channels</guilabel> shown.  When &konversation; is started for the first time, the
+<userinput><replaceable>Freenode</replaceable></userinput> network
+and <userinput><replaceable>#kde</replaceable></userinput> channel are already entered for you.  Click on a network to select it.</para></callout>
+<callout arearefs="pt-first-serverlist-2"><para>Click here to define a new <guilabel>Network</guilabel>, including the server
+to connect to, and the <guilabel>Channels</guilabel> to automatically join once connected.  See <link  linkend="serverlist">Defining new networks, servers, and auto join channels</link> for more information.</para></callout>
+<callout arearefs="pt-first-serverlist-3"><para>Click here to connect to the selected &irc; network and channel.</para></callout>
+</calloutlist>
+</para>
+
+<note>
+<para>When you click the <guibutton>Connect</guibutton> button the first time you open
+&konversation;, you may see the following message, telling you that your
+default <guilabel>identity</guilabel> is not set up correctly.</para>
+
+<para>
+<screenshot>
+	<screeninfo>Check Identities</screeninfo>
+	<mediaobject>
+		<imageobject>
+			<imagedata fileref="checkidentities.png" format="PNG"/>
+		</imageobject>
+		<textobject>
+			<phrase>Check Identities</phrase>
+		</textobject>
+	</mediaobject>
+</screenshot>
+</para>
+
+<para>The first time you open &konversation; it obtains information
+about the current user from the operating system and fills in defaults
+for the Identity.  If the operating system user information is not
+complete, for example, no Full Name is defined, you may see the message
+above.  To correct this problem, click <guibutton>OK</guibutton> and
+see <link linkend="identity">Setting your identity</link> for more
+information.</para>
+</note>
+
+<para>
+The <interface>Main</interface> screen will be displayed showing the messages sent by the server to the client.
+(If &konversation; will not connect to the server, see <link linkend="faq">Questions and Answers</link>.)  When the server messages have finished scrolling past, &konversation; will join the channel or channels chosen.
+</para>
+
+<para>
+<screenshot>
+<screeninfo>Channel.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-first-channel-1" coords="1 1"/>
+				<area id="pt-first-channel-2" coords="1 1"/>
+				<area id="pt-first-channel-3" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="first_channel_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase>Channel</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-first-channel-1"><para>This is called the <interface>Input Line</interface>.  To send a message to everyone in the channel, type the message here and press &Enter;.
+ Your message, as well as everyone else's messages appear in the channel scroll above.
+ Each message is preceded by the time and user's &nickname;.</para></callout>
+
+<callout arearefs="pt-first-channel-2"><para>You may join additional servers and channels.  Each server, channel, channel list, and other screen gets a separate tab here.
+To display a list of available channels, see <link linkend="list-channels">Listing available channels</link>.
+To join a channel,
+type: <userinput><command>/join</command> <replaceable>#channelname</replaceable></userinput> in
+the Input Line.  (The <userinput>#</userinput> is required.) You may also type <userinput><command>/j</command></userinput> as a shorthand to <userinput><command>/join</command></userinput>. To leave a channel, just type <userinput><command>/part</command></userinput>.  To switch the display to a different server or channel, click the corresponding tab.
+</para></callout>
+
+<callout arearefs="pt-first-channel-3"><para>This is called the <interface>Nick Panel</interface>.  It lists the &nickname;s of all the users who have joined the channel, including yourself.</para></callout>
+
+</calloutlist>
+</para>
+
+<para>That's the basics, for more detailed information, read on...</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="identity">
+<title>Setting your identity</title>
+
+<para>Before you start using &konversation; regularly, you should set how you will be identified on the network.</para>
+
+<para>Click
+<menuchoice>
+	<guisubmenu>Settings</guisubmenu>
+	<guisubmenu>Identities</guisubmenu>
+</menuchoice>
+ on the main menu.  <action>The <guilabel>Identities</guilabel> screen will appear.  You can also display the <guilabel>Identities</guilabel> screen by clicking the <guibutton>Edit</guibutton> button on the
+ <guilabel>Add Network</guilabel> screen.</action>
+</para>
+
+<para>
+<screenshot>
+<screeninfo>Identities (General tab)</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-identity-gen-1" coords="1 1"/>
+				<area id="pt-identity-gen-2" coords="1 1"/>
+				<area id="pt-identity-gen-3" coords="1 1"/>
+				<area id="pt-identity-gen-4" coords="1 1"/>
+				<area id="pt-identity-gen-5" coords="1 1"/>
+				<area id="pt-identity-gen-6" coords="1 1"/>
+				<area id="pt-identity-gen-7" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="identities_gen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase>Identities (General tab)</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-identity-gen-1"><para>Click here to select an <guilabel>Identity</guilabel> to edit.</para></callout>
+<callout arearefs="pt-identity-gen-2"><para>Use these buttons to add,
+duplicate, rename, or remove an <guilabel>Identity</guilabel>.</para></callout>
+<callout arearefs="pt-identity-gen-3"><para>Enter your real name here.  &irc; is not intended to keep you hidden from your friends or enemies. Keep this in mind if you are tempted to behave maliciously. A fake "real name" can be a good way to mask your gender from all the nerds out there, but the PC you use can always be traced so you will never be truly anonymous.</para></callout>
+<callout arearefs="pt-identity-gen-4"><para>Use these buttons to
+<guibutton>Add</guibutton>, <guilabel>Edit</guilabel>, or <guilabel>Delete</guilabel> a &nickname;.</para></callout>
+<callout arearefs="pt-identity-gen-5"><para>This is your list of &nickname;s.
+A &nickname; is the name that other users will know you by.
+You may use any name you desire.  The first character must be a letter.  Other characters may be letters, numbers, or the special characters <literal>-[]\`_^{}|</literal>.</para>
+
+<para>Since &nickname;s must be unique across an entire &irc; network, your desired name may be rejected by the server because someone else is already using that &nickname;.  Enter alternate &nickname;s for yourself.  If your first choice is rejected by the server, &konversation; will try the alternate &nickname;s.
+</para>
+
+<para>
+According to RFC 2812, the maximum &nickname; length is 9, but
+this is actually determined by the server.  To determine the maximum for a server, connect to the server.  In the
+<interface>Server Messages</interface> tab, look for a <computeroutput>[Support]</computeroutput> message.
+For example</para>
+
+<para>
+<computeroutput>
+[18:51] *Eisfuchs* [21:45] [Support] Eisfuchs MODES=4 MAXCHANNELS=20 NICKLEN=16 USERLEN=10 HOSTLEN=63 TOPICLEN=450 KICKLEN=450 CHANNELLEN=30 KEYLEN=23 CHANTYPES=# PREFIX=@+ CASEMAPPING=ascii CAPAB IRCD=dancer
+</computeroutput>
+</para>
+
+<para>
+The <computeroutput>NICKLEN</computeroutput> parameter specifies the maximum &nickname; length.
+</para>
+</callout>
+
+<callout arearefs="pt-identity-gen-6"><para>Use these buttons to change the
+order of the &nickname;s.  The top &nickname; is tried first, then the next
+&nickname;, and so on.</para></callout>
+<callout arearefs="pt-identity-gen-7"><para>If you have registered your &nickname; with the &irc; network, enter the service and password to authenticate your &nickname;.
+When &konversation; connects, it will automatically send
+<userinput><command>/msg</command> <replaceable>service</replaceable> <command>IDENTIFY</command> <replaceable>password</replaceable></userinput> to the server.
+If you don't know what this is, leave these boxes blank.</para></callout>
+</calloutlist>
+</para>
+
+<anchor id="identity-away"/>
+
+<para>Click the <guilabel>Away</guilabel> tab.</para>
+
+<para>
+	<screenshot>
+		<screeninfo>Identities (Away tab)</screeninfo>
+		<mediaobjectco>
+			<imageobjectco>
+				<areaspec units="calspair">
+					<area id="pt-identity-away-1" coords="1 1"/>
+					<area id="pt-identity-away-2" coords="1 1"/>
+					<area id="pt-identity-away-3" coords="1 1"/>
+				</areaspec>
+				<imageobject>
+					<imagedata fileref="identities_away_co.png" format="PNG"/>
+				</imageobject>
+			</imageobjectco>
+			<textobject>
+				<phrase>Identities (Away tab)</phrase>
+			</textobject>
+		</mediaobjectco>
+	</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-identity-away-1"><para>
+Enter a &nickname; that indicates you are away.  Whenever you perform an
+<userinput><command>/away </command><replaceable>msg</replaceable></userinput> command in
+any channel joined with this <guilabel>Identity</guilabel>,
+&konversation; will automatically change your &nickname; to the <guilabel>Away nickname</guilabel>.  Other users will be able to tell you are away
+from your computer.
+Whenever you perform an <userinput><command>/away</command></userinput> command
+in any channel in which
+you are away, &konversation; will automatically change your &nickname; back
+to the original.  If you do not wish to automatically change your
+&nickname; when going away, leave blank.</para></callout>
+<callout arearefs="pt-identity-away-2"><para>If you check this box,
+whenever you perform an <userinput><command>/away</command></userinput> command, a horizontal line will appear in the channel, marking the point where you
+went away.  Other &irc; users do not see this horizontal line.
+</para></callout>
+<callout arearefs="pt-identity-away-3"><para>If you check this box,
+&konversation; will automatically send the <guilabel>Away message</guilabel> to all channels joined with this <guilabel>Identity</guilabel>.
+<userinput><replaceable>%s</replaceable></userinput> is replaced with
+<userinput><replaceable>msg</replaceable></userinput>.
+Whenever you perform an
+<userinput><command>/away</command></userinput> command, the <guilabel>Return message</guilabel> will be displayed in all channels joined with this <guilabel>Identity</guilabel>.</para>
+
+<note><para>Away messages are often considered annoying by other users.
+Use this option carefully, with consideration for your fellow &irc; users.
+</para></note>
+</callout>
+</calloutlist>
+</para>
+
+<anchor id="identity-advanced"/>
+
+<para>Click the <guilabel>Advanced</guilabel> tab.</para>
+
+<para>
+	<screenshot>
+		<screeninfo>Identities (Advanced tab)</screeninfo>
+		<mediaobjectco>
+			<imageobjectco>
+				<areaspec units="calspair">
+					<area id="pt-identity-adv-1" coords="1 1"/>
+					<area id="pt-identity-adv-2" coords="1 1"/>
+					<area id="pt-identity-adv-3" coords="1 1"/>
+					<area id="pt-identity-adv-4" coords="1 1"/>
+					<area id="pt-identity-adv-5" coords="1 1"/>
+					<area id="pt-identity-adv-6" coords="1 1"/>
+				</areaspec>
+				<imageobject>
+					<imagedata fileref="identities_adv_co.png" format="PNG"/>
+				</imageobject>
+			</imageobjectco>
+			<textobject>
+				<phrase>Identities (Advanced tab)</phrase>
+			</textobject>
+		</mediaobjectco>
+	</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-identity-adv-1"><para>You can enter a command
+here that will be executed before connecting to the server.  If this identity
+is used for more than one server, the command will be executed for
+each server.</para></callout>
+<callout arearefs="pt-identity-adv-2"><para>This setting affects how
+characters you type are encoded for sending to the server.  It also affects
+how messages are displayed.  When you first open &konversation;, it
+automatically retrieves this setting from the operating system.  If you
+seem to be having trouble seeing other user's messages correctly, try
+changing this setting.</para></callout>
+<callout arearefs="pt-identity-adv-3"><para>When you connect, many servers
+query your computer for an IDENT response.  If you computer is not running
+an IDENT server, this response is sent by &konversation;.  No spaces
+are allowed.  Your first name is suggested.</para></callout>
+<callout arearefs="pt-identity-adv-4"><para>Whenever you leave a channel,
+this message is sent to the channel.</para></callout>
+<callout arearefs="pt-identity-adv-5"><para>Whenever you are kicked from
+a channel (usually by an &irc; operator), this message is sent to the
+channel.</para></callout>
+<callout arearefs="pt-identity-adv-6"><para>Click to apply your changes.  In order for all the changes to take effect, you must disconnect from the server and re-connect.  The easiest way to do that is to quit &konversation; and restart.</para></callout>
+</calloutlist>
+</para>
+
+<!--
+<para>TODO:
+<itemizedlist>
+
+<listitem><para>
+The characters allowed in a nick given above comes from RFC 2812.  Any special Konversation considerations?
+</para></listitem>
+
+<listitem><para>
+Limits on Real Name and Ident?
+</para></listitem>
+
+</itemizedlist>
+</para>
+-->
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="serverlist">
+<title>Defining new networks, servers and auto join channels</title>
+
+<para>The <guilabel>Server List</guilabel> screen appears when you open the
+&konversation; program.  It also appears when you choose
+<menuchoice>
+<guisubmenu>File</guisubmenu>
+<guisubmenu>Server List</guisubmenu>
+</menuchoice>
+on the main menu.  <action>The <guilabel>Server List</guilabel></action> screen
+lists your existing defined &irc; <guilabel>Network</guilabel>s, listed by group.
+An &irc; network is a collection of cooperating servers.  When you connect
+to any server in a network, you have access to all the channels of the network.
+Examples of &irc; networks are
+<userinput><replaceable>Freenode</replaceable></userinput> and
+<userinput><replaceable>Undernet</replaceable></userinput>.
+</para>
+
+<para>
+<screenshot>
+	<screeninfo>Server List</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-serverlist-1" coords="1 1"/>
+				<area id="pt-serverlist-2" coords="1 1"/>
+				<area id="pt-serverlist-3" coords="1 1"/>
+				<area id="pt-serverlist-4" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="serverlist_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase>Server List</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-serverlist-1"><para>Your existing defined
+<guilabel>Network</guilabel>s are listed here along with
+the <guilabel>Identity</guilabel> used to connect to the network,
+and the <guilabel>Channels</guilabel> automatically joined when connected.
+If you have specified a group for your networks, networks are listed
+indented under the group.  Click on a network to select it.
+</para></callout>
+<callout arearefs="pt-serverlist-2"><para>Use these buttons to
+<guibutton>Add</guibutton> a new network, <guibutton>Edit</guibutton>
+a highlighted network, or <guibutton>Delete</guibutton> a highlighted network.
+</para></callout>
+<callout arearefs="pt-serverlist-3"><para>Click this button to connect
+to the highlighted <guilabel>Network</guilabel> and close the
+<guilabel>Server List</guilabel> screen.  You may highlight
+more than one network if you wish, which will connect to all the
+highlighted networks.</para></callout>
+<callout arearefs="pt-serverlist-4"><para>Clicking this button does not
+discard the changes you have made.  It merely means you do not wish to
+connect to any networks at this time.</para></callout>
+</calloutlist>
+</para>
+
+<anchor id="serverlist-addnetwork" />
+
+<para>When you click the <guibutton>Add</guibutton> button,
+the <guilabel>Add Network</guilabel> screen appears.</para>
+
+<para>
+<screenshot>
+	<screeninfo>Add Network</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-addnetwork-1" coords="1 1"/>
+				<area id="pt-addnetwork-2" coords="1 1"/>
+				<area id="pt-addnetwork-3" coords="1 1"/>
+				<area id="pt-addnetwork-4" coords="1 1"/>
+				<area id="pt-addnetwork-5" coords="1 1"/>
+				<area id="pt-addnetwork-6" coords="1 1"/>
+				<area id="pt-addnetwork-7" coords="1 1"/>
+				<area id="pt-addnetwork-8" coords="1 1"/>
+				<area id="pt-addnetwork-9" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="addnetwork_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase>Add Network</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-addnetwork-1"><para>Enter the name of the
+<guilabel>Network</guilabel> here.  You may create as many entries
+in the <guilabel>Server List</guilabel> screen with the same
+<guilabel>Network</guilabel> as you like.</para></callout>
+<callout arearefs="pt-addnetwork-2"><para>Optional.  If you enter something
+here, all the <guilabel>Network</guilabel>s with the same
+<guilabel>Group</guilabel> will be listed together in the
+<guilabel>Server List</guilabel> screen.</para></callout>
+<callout arearefs="pt-addnetwork-3"><para>Choose an existing
+<guilabel>Identity</guilabel> or click the <guibutton>Edit</guibutton>
+button to add a new Identity or edit an existing one.  The
+<guilabel>Identity</guilabel> will identify you and determine
+your &nickname; when you connect to the network.</para></callout>
+<callout arearefs="pt-addnetwork-4"><para>Optional.  This command will be sent to the server after connecting.  Example: <userinput>/msg NickServ IDENTIFY
+<replaceable>konvirocks</replaceable></userinput>.  This example is for the freenode network, which requires users to register their &nickname;
+with a password and login when connecting.  <userinput><replaceable>konvirocks</replaceable></userinput>
+is the password for the &nickname; given in <guilabel>Identity</guilabel>.
+You may enter more than one command by separating them with semicolons.</para></callout>
+<callout arearefs="pt-addnetwork-5"><para>Check here if you want
+&konversation; to automatically connect to this network whenever
+you open &konversation;.</para></callout>
+<callout arearefs="pt-addnetwork-6"><para>This is a list of &irc;
+<guilabel>Servers</guilabel> in the network.  When connecting to the network,
+&konversation; will
+attempt to connect to the top server first.  If this fails,
+it will attempt the second server.  If this fails, it will attempt
+the third, and so on.  At least one server must be specified.
+Click a server to highlight it.</para></callout>
+<callout arearefs="pt-addnetwork-7"><para>Use these buttons to
+<guibutton>Add</guibutton> a server, <guibutton>Edit</guibutton> a
+highlighted server, or <guibutton>Delete</guibutton> a highlighted
+server.  You can also adjust the order of the server list and therefore
+the order of connection attempts.</para></callout>
+<callout arearefs="pt-addnetwork-8"><para>Optional.  This is a list of the
+channels that will be automatically joined once &konversation;
+has connected to a server.  You may leave this blank if you
+wish to not automatically join any channels.</para></callout>
+<callout arearefs="pt-addnetwork-9"><para>Use these buttons to
+<guibutton>Add</guibutton> a channel, <guibutton>Edit</guibutton> a
+highlighted channel, or <guibutton>Delete</guibutton> a highlighted
+channel.  You may also change the order the channels are joined.
+</para></callout>
+</calloutlist>
+</para>
+
+<note><para>Avoid mixing servers on different &irc; networks under the same
+<guilabel>Network</guilabel>.  Avoid entering the same server under
+two different <guilabel>Network</guilabel>s.  Otherwise, &konversation;
+<link linkend="linkaddressbook">integration with your address book</link> and
+<link linkend="nicksonline">monitoring of online &nickname;s</link> will not function
+correctly.</para>
+</note>
+
+<anchor id="serverlist-addserver" />
+
+<para>When you click the <guibutton>Add</guibutton> button in the <guilabel>Servers</guilabel> frame, the Add Server screen appears.</para>
+
+<para>
+<screenshot>
+	<screeninfo>Add Server</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-addserver-1" coords="1 1"/>
+				<area id="pt-addserver-2" coords="1 1"/>
+				<area id="pt-addserver-3" coords="1 1"/>
+				<area id="pt-addserver-4" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="addserver_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase>Add Server</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-addserver-1"><para>The name or IP number of the server.  irchelp.org maintains a
+<ulink url="http://www.irchelp.org/irchelp/networks/">list</ulink> of servers.</para></callout>
+<callout arearefs="pt-addserver-2"><para>Enter the port number required to connect to the server.  For most servers, this should be <userinput>6667</userinput>.</para></callout>
+<callout arearefs="pt-addserver-3"><para>If the server requires a password
+in order to connect, enter it here, otherwise leave blank.</para></callout>
+<callout arearefs="pt-addserver-4"><para>Check if you want to use
+Secure Socket Layer (SSL) protocol to communicate with the server.
+This protects the privacy of your communications between your computer
+and the &irc; server.  The server must
+support SSL protocol for this to work.  In most cases, if the server
+does not support SSL, the connection will fail.</para></callout>
+</calloutlist>
+</para>
+
+<anchor id="serverlist-addchannel" />
+
+<para>When you click the <guibutton>Add</guibutton> button in the
+<guilabel>Auto Join Channels</guilabel> frame, the <guilabel>Add Channel</guilabel>
+screen appears.</para>
+
+<para>
+<screenshot>
+	<screeninfo>Add Channel</screeninfo>
+	<mediaobject>
+		<imageobject>
+			<imagedata fileref="addchannel.png" format="PNG"/>
+		</imageobject>
+		<textobject>
+			<phrase>Add Channel</phrase>
+		</textobject>
+	</mediaobject>
+</screenshot>
+</para>
+
+<para>Enter a channel name.  Do not forget leading <userinput><replaceable>#</replaceable></userinput>.  If the channel requires
+a password in order to join, enter it, otherwise leave blank.
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="list-channels">
+<title>Listing available channels</title>
+
+<para>To display a list of available channels, choose
+<menuchoice>
+ <guisubmenu>Windows</guisubmenu>
+ <guisubmenu>Channel List</guisubmenu>
+</menuchoice> on the main menu.
+  <action>After a warning screen, a new tab is created called the <guilabel>Channel List</guilabel>.</action>
+</para>
+
+<para>
+<screenshot>
+<screeninfo>The Channel List tab.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-channellist-1" coords="1 1"/>
+				<area id="pt-channellist-2" coords="1 1"/>
+				<area id="pt-channellist-3" coords="1 1"/>
+				<area id="pt-channellist-4" coords="1 1"/>
+				<area id="pt-channellist-5" coords="1 1"/>
+				<area id="pt-channellist-6" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="channellist_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase>The Channel List tab.</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-channellist-1"><para>Enter a filter string here.</para></callout>
+
+<callout arearefs="pt-channellist-2"><para>You can limit the channel list to those channels with a minimum or maximum number of users here. Choosing 0 disables the respective criteria.</para></callout>
+
+<callout arearefs="pt-channellist-3"><para>Click here to retrieve the list of channels from the server and apply the filter.</para></callout>
+
+<callout arearefs="pt-channellist-4"><para>The filtered list of channels is displayed here.  Notice that if you don't use regular expressions, &konversation; lists any channel whose name contains the filter string you entered.  The channel name does not have to start with the string you entered.</para></callout>
+
+<callout arearefs="pt-channellist-5"><para>Select a channel you want to join by clicking on it. Right click on the channel to get a list of all web addresses mentioned in the channel's topic.</para></callout>
+
+<callout arearefs="pt-channellist-6"><para>Click here to join the channel.  A new tab is created for the channel.</para></callout>
+
+</calloutlist>
+</para>
+
+<para>You should avoid clicking the <guibutton>Refresh List</guibutton> button.  Most servers have thousands
+of channels, and performing this puts a high load on the server.  Besides, it can require several minutes to complete,
+depending upon your network bandwidth.  If your client is too slow, the server may even disconnect you.
+</para>
+
+<para>Sometimes there are "secret" channels on servers.  Such channels are not listed in the <guilabel>Channel List</guilabel>.
+You can still join these channels if you know their name.  In any <interface>Input Line</interface>, type: <userinput><command>/join</command>
+<replaceable>#channelname</replaceable></userinput>.  (The <userinput>#</userinput> is required.)  A new tab is created for the channel.  If you join a channel and the Nick Panel lists only your &nickname;, it means that the channel did not exist before.  The server created the channel and you are the operator.  In this case, you probably want to close the channel by typing: <userinput><command>/part</command></userinput>.
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="channel-screen-tour">
+<title>A tour of the main screen</title>
+
+<para>Let's learn more about the <interface>Main</interface> screen.
+The screen is shown below with a channel tab selected.</para>
+
+<para>
+<screenshot>
+<screeninfo>The Main screen.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-channeltour-1" coords="1 1"/>
+				<area id="pt-channeltour-2" coords="1 1"/>
+				<area id="pt-channeltour-3" coords="1 1"/>
+				<area id="pt-channeltour-4" coords="1 1"/>
+				<area id="pt-channeltour-5" coords="1 1"/>
+				<area id="pt-channeltour-6" coords="1 1"/>
+				<area id="pt-channeltour-7" coords="1 1"/>
+				<area id="pt-channeltour-8" coords="1 1"/>
+				<area id="pt-channeltour-9" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="channel_screen_tour_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase>The Main screen</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-channeltour-1"><para>This is called the <interface>Input Line</interface>.
+It appears only when the current tab is a channel.
+To send a message to everyone in the channel, type the message here and press &Enter;.
+ Your message, as well as everyone else's messages appear in the channel scroll above.
+ Each message is preceded by the time and user's &nickname;.</para>
+
+ <para>You can also paste text from the clipboard.  If the pasted text has more than one line (newlines),
+ a dialog box appears.  Edit the text as desired and click <guibutton>OK</guibutton>.
+ </para>
+
+ <para>If the pasted text is longer than 256 characters, or it contains more than one line, a warning message
+ appears advising you that large postings can cause connection resets and flooding.  You can still proceed with
+ the input, but doing so is a bad idea, as flooding will annoy other users in the channel, or you may
+ be disconnected from the server.  It is better to send the message in shorter chunks.</para>
+
+ <!-- Uncomment when this is implemented.
+ &konversation; will automatically split messages that exceed the 510 character RFC limit into multiple messages.
+ -->
+
+ <para>
+ A convention used in many channels is to precede messages directed at one user with their &nickname;.  &konversation;
+ provides a convenient &nickname; completion feature.  Start typing the user's &nickname;, then press <keycap>Tab</keycap>.  &konversation; will complete the rest of the user's &nickname; followed by a colon.  To customize the completion feature, choose
+<menuchoice>
+	<guisubmenu>Settings</guisubmenu>
+	<guisubmenu>Configure Konversation</guisubmenu>
+</menuchoice> from the main menu, expand <guilabel>Behavior</guilabel>,
+click on <guilabel>General</guilabel>, and click the
+<guilabel>Completion mode</guilabel> box.
+ </para>
+
+ <para>
+ You can also enter an &irc; command here by first typing <userinput><command>/</command></userinput>
+ followed by a valid &irc; command.   See <link linkend="irc-cmds">Frequently-used &irc; commands</link>.  On some servers, you can type <userinput><command>/help</command></userinput> for a list of available commands, or type <userinput><command>/help </command><replaceable>command</replaceable></userinput> for help
+ on a specific command.
+ </para></callout>
+
+<callout arearefs="pt-channeltour-2">
+
+<para>You may join additional servers and channels.  Each server and each channel gets a separate tab here.
+To display a list of available channels, see <link linkend="list-channels">Listing available channels</link>.
+To join a channel, type: <userinput><command>/join</command>
+<replaceable>#channelname</replaceable></userinput> in the Input Line.  (The <userinput>#</userinput> is required.)  To leave a channel, just type <userinput><command>/part</command></userinput>.
+Tabs also appear here if you open a <link linkend="list-channels">Channel List</link>, participate in a <link linkend="query">private conversation (query)</link>, open the <link linkend="urlcatcher">&URL; Catcher</link>, or open one or more <guilabel>Konsole</guilabel>s.  To switch the display to a different screen, click the corresponding tab,
+or use the mouse wheel to cycle through the tabs.
+</para>
+
+<para>  To set other options for tabs, choose
+<menuchoice>
+	<guisubmenu>Settings</guisubmenu>
+	<guisubmenu>Configure Konversation</guisubmenu>
+</menuchoice> from the main menu, expand <guilabel>Behavior</guilabel>,
+click on <guilabel>General</guilabel>.
+</para>
+
+</callout>
+
+<callout arearefs="pt-channeltour-3"><para>These &led;s will blink when there is something you haven't seen in that tab.
+The &led; will blink slower when the only unseen messages are <command>join</command>, <command>part</command>,  <command>quit</command>, or &nickname; changes.  They blink faster if there are unseen regular messages.
+  The colors are as follows:
+<itemizedlist>
+<listitem>
+<para><inlinemediaobject><imageobject><imagedata fileref="led_green_on.png" format="PNG"  /></imageobject></inlinemediaobject>
+Channel
+</para>
+</listitem>
+<listitem>
+<para><inlinemediaobject><imageobject><imagedata fileref="led_blue_on.png" format="PNG"  /></imageobject></inlinemediaobject>
+<interface>Server Messages</interface>, <link linkend="list-channels">Channel List</link>, or
+<link linkend="urlcatcher">&URL; catcher</link>
+</para>
+</listitem>
+<listitem>
+<para><inlinemediaobject><imageobject><imagedata fileref="led_yellow_on.png" format="PNG"  /></imageobject></inlinemediaobject>
+<guilabel>Konsole</guilabel> or <link linkend="dcc">DCC Status</link>.
+</para>
+</listitem>
+<listitem>
+<para><inlinemediaobject><imageobject><imagedata fileref="led_red_on.png" format="PNG"  /></imageobject></inlinemediaobject>
+<link linkend="query">Private Message (Query)</link>.
+</para>
+</listitem>
+</itemizedlist>
+</para></callout>
+
+<callout arearefs="pt-channeltour-4"><para>Click here to close the current tab.  Closing a <interface>Channel</interface> tab will leave the channel.  Closing a <interface>Server Messages</interface> tab will leave all channels you've joined, close all open queries at that server and disconnect from the server.</para></callout>
+
+<callout arearefs="pt-channeltour-5"><para>Click this button to change your own &nickname;. It appears only when the current tab is a channel.  To hide this button, choose
+<menuchoice>
+	<guisubmenu>Settings</guisubmenu>
+	<guisubmenu>Configure Konversation</guisubmenu>
+</menuchoice> from the main menu, expand <guilabel>Appearance</guilabel>,
+click on <guilabel>Chat Window</guilabel>, and uncheck the
+<guilabel>Show box to change own nickname</guilabel> box.
+</para></callout>
+
+<callout arearefs="pt-channeltour-6"><para>The channel topic is displayed here.
+Hover the mouse over the topic to see long topics.  You can change the topic by
+clicking the button to the left of the topic.  To hide channel topics, choose
+<menuchoice>
+	<guisubmenu>Settings</guisubmenu>
+	<guisubmenu>Configure Konversation</guisubmenu>
+</menuchoice> from the main menu, expand <guilabel>Appearance</guilabel>,
+click on <guilabel>Chat Window</guilabel>, and uncheck the
+<guilabel>Show channel topic</guilabel> box.
+</para></callout>
+
+<callout arearefs="pt-channeltour-7"><para>These buttons display the current state of channel modes.  A button is down if that mode is on.  If you have the correct privileges, you can also change channel modes by clicking on these buttons, or click the button to the
+left of the topic.  To hide channel mode buttons, choose
+<menuchoice>
+	<guisubmenu>Settings</guisubmenu>
+	<guisubmenu>Configure Konversation</guisubmenu>
+</menuchoice> from the main menu, expand <guilabel>Appearance</guilabel>,
+click on <guilabel>Chat Window</guilabel>, and uncheck the
+<guilabel>Show channel mode buttons</guilabel> box.
+</para></callout>
+
+<callout arearefs="pt-channeltour-8">
+<para>
+This is called the <interface>Nick Panel</interface>.  It is displayed whenever the current tab is a channel.  It lists the &nickname;s of all the users who have joined the channel, including yourself.  Hover the mouse pointer over a &nickname; to display additional information
+about the user.  You may change how the icons are displayed next to each &nickname; by changing
+the &nickname; icon theme.  See <link linkend="nickthemes">Configuring &nickname; themes</link>
+ for more information.
+The <guilabel>Big Bullets</guilabel> theme, as shown in the screen above, uses the following icons:
+<itemizedlist>
+
+<listitem>
+<para><inlinemediaobject><imageobject><imagedata fileref="irc_normal.png" format="PNG"  /></imageobject></inlinemediaobject>
+normal user
+</para>
+</listitem>
+
+<listitem>
+<para><inlinemediaobject><imageobject><imagedata fileref="irc_voice.png" format="PNG"  /></imageobject></inlinemediaobject>
+voiced user.  User may talk in a moderated channel.<!-- (see TODO) -->
+</para>
+</listitem>
+
+<listitem>
+<para><inlinemediaobject><imageobject><imagedata fileref="irc_halfop.png" format="PNG"  /></imageobject></inlinemediaobject>
+channel halfop <!-- (see TODO) -->
+</para>
+</listitem>
+
+<listitem>
+<para><inlinemediaobject><imageobject><imagedata fileref="irc_op.png" format="PNG"  /></imageobject></inlinemediaobject>
+channel operator
+</para>
+</listitem>
+
+<listitem>
+<para><inlinemediaobject><imageobject><imagedata fileref="irc_owner.png" format="PNG"  /></imageobject></inlinemediaobject>
+channel owner <!-- (see TODO) -->
+</para>
+</listitem>
+
+<listitem>
+<para><inlinemediaobject><imageobject><imagedata fileref="irc_admin.png" format="PNG"  /></imageobject></inlinemediaobject>
+channel admin <!-- (see TODO) -->
+</para>
+</listitem>
+
+</itemizedlist>
+</para>
+
+<para>In addition, if a user is away, a small red cross will be drawn in the corner of the icon.
+<inlinemediaobject><imageobject><imagedata fileref="irc_away.png" format="PNG"  /></imageobject></inlinemediaobject></para>
+
+<para>
+Click with the &RMB; on any &nickname; to display a context menu of operations you can perform with that &nickname;.
+For example, you can <link linkend="dcc">send a file</link> to the &nickname;.
+This is also the place where you can <link linkend="linkaddressbook">associate a &nickname; to a contact in your address book.</link>
+</para>
+
+<para>To hide the <interface>Nick Panel</interface>, choose
+<menuchoice>
+	<guisubmenu>Window</guisubmenu>
+	<guisubmenu>Hide Nicklist</guisubmenu>
+</menuchoice> from the main menu.
+</para>
+
+</callout>
+
+<callout arearefs="pt-channeltour-9"><para>These are called the <interface>Quick Buttons</interface>.
+By default, they are not shown.  To display them, see
+<link linkend="quick-buttons">Configuring Quick Buttons</link>.
+You can customize their definitions to whatever commands you wish.</para></callout>
+
+</calloutlist>
+</para>
+
+<para><emphasis>Note </emphasis>You can control how messages are displayed in the
+message scroll of channel and query tabs.  For example, you can change the color
+of messages, play a sound when a message containing a string
+is received, or automatically reply to messages.
+See <link linkend="highlighting">
+Message highlighting</link> for more information.
+</para>
+
+<para><emphasis>Note: </emphasis>Channel names sometimes begin with <userinput>&amp;</userinput>, <userinput>&plus;</userinput>,
+or <userinput>!</userinput>.  The first character of a channel name determines the type of channel (RFC 2811) as follows:
+<itemizedlist>
+<listitem><para>
+<userinput>#</userinput>  - Regular channels.
+</para></listitem>
+<listitem><para>
+<userinput>!</userinput>  - Regular channels.
+</para></listitem>
+<listitem><para>
+<userinput>&amp;</userinput>  - Local.  Channels that can only be joined from the server hosting the channel.
+  All other channels can be joined from any server in the network.
+</para></listitem>
+<listitem><para>
+<userinput>&plus;</userinput>  - Channels that do not support channel modes.  This means
+   that all the modes are unset, with the exception of the 't' channel flag which is set.
+</para></listitem>
+</itemizedlist>
+Channel names are up to 50 characters long and may contain any characters except for space, comma, and Ctrl-G.
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="quickconnect">
+<title>Quick Connect</title>
+
+<para>Sometimes you want to connect to a server without going through the trouble
+of creating a new server in the <link linkend="serverlist">Server List</link>.
+</para>
+
+<para>Choose
+<menuchoice>
+	<guisubmenu>File</guisubmenu>
+	<guisubmenu>Quick Connect</guisubmenu>
+</menuchoice>
+ on the main menu.  <action>The <guilabel>Quick Connect</guilabel> screen will appear.</action>
+</para>
+
+<para>
+<screenshot>
+<screeninfo>The Quick Connect screen.</screeninfo>
+	<mediaobject>
+		<imageobject>
+			<imagedata fileref="quickconnect_screen.png" format="PNG"/>
+		</imageobject>
+		<textobject>
+			<phrase>The Quick Connect screen</phrase>
+		</textobject>
+	</mediaobject>
+</screenshot>
+</para>
+
+<para>Enter the server address in the <guilabel>Server host</guilabel> box, your desired
+&nickname; in the <guilabel>Nick</guilabel> box, and click the <guibutton>Connect</guibutton> button.
+When &konversation; has connected to the server, enter command
+<userinput><command>/join</command> <replaceable>#channelname</replaceable></userinput> to
+join a channel.
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="irc-cmds">
+<title>Frequently-used &irc; commands</title>
+
+<para>The following is a short list of frequently-used &irc; commands.  See <ulink url="http://www.faqs.org/rfcs/rfc2812.html">RFC 2812</ulink> for a complete list of all commands, or
+visit <ulink url="http://www.irchelp.org/">irchelp.org</ulink>.  For a list of commands
+treated specially by &konversation;, see <link linkend="konvi-cmds">&konversation; commands</link>
+</para>
+
+<para>
+<variablelist>
+
+<varlistentry>
+<term><userinput><command>/help</command></userinput></term>
+<listitem><para>Lists commands available on the current server.  Not supported by all servers.</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><userinput><command>/help </command><replaceable>cmd</replaceable></userinput></term>
+<listitem><para>Provides help for <userinput><replaceable>cmd</replaceable></userinput>.  Not supported by all servers.</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><userinput><command>/join <replaceable>#channel</replaceable></command></userinput></term>
+<listitem><para>Joins <userinput><replaceable>#channel</replaceable></userinput>.  If the channel does not already exist, it is created and you are the channel operator.</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><userinput><command>/part</command></userinput></term>
+<listitem><para>Leaves the current channel and closes the <interface>channel</interface> tab.</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><userinput><command>/part </command> <replaceable>#channel</replaceable></userinput></term>
+<listitem><para>Leaves <userinput><replaceable>#channel</replaceable></userinput> and closes the corresponding <interface>channel</interface> tab.
+Synonym for <userinput><command>/leave</command></userinput></para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><userinput><command>/me </command><replaceable>msg</replaceable></userinput></term>
+<listitem><para>Sends <userinput><replaceable>msg</replaceable></userinput> to the channel preceded by your &nickname;.  For example, if
+your &nickname; were <userinput><replaceable>Tux</replaceable></userinput>, typing <userinput><replaceable>/me brews a cup a tea.</replaceable></userinput> displays the message <interface>Tux brews a cup of tea.</interface>  Unless they've filtered against these types of messages, all users see it.  This kind of message is typically used to convey non-verbal information, such as your current emotional state, or what you are physically doing.  If you are leaving your workstation for a short time, use the /away command instead.</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><userinput><command>/away </command> <replaceable>msg</replaceable></userinput></term>
+<listitem><para>If anyone tries to send you a private message or invite you to a channel, they will be told that you are
+away from your workstation with <userinput><replaceable>msg</replaceable></userinput>.</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><userinput><command>/away</command></userinput></term>
+<listitem><para>Cancels an <userinput><command>/away </command> <replaceable>msg</replaceable></userinput> command.</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><userinput><command>/query </command><replaceable>nick</replaceable></userinput></term>
+<listitem><para>Creates a new tab with the user's <userinput><replaceable>nick</replaceable></userinput> for private conversation, commonly known on &irc; as a <link linkend="query">Query</link>. Everything written here is only visible to you and your query partner.</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><userinput><command>/msg </command><replaceable>nick</replaceable>  <replaceable>msg</replaceable></userinput></term>
+<listitem><para>Sends <userinput><replaceable>msg</replaceable></userinput> to the user with &nickname;  <userinput><replaceable>nick</replaceable></userinput>.
+Only <userinput><replaceable>nick</replaceable></userinput> sees the message.
+Use <userinput><command>/query</command></userinput> for longer conversations.</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><userinput><command>/invite </command><replaceable>nick</replaceable></userinput></term>
+<listitem><para>Invites the user with &nickname; <userinput><replaceable>nick</replaceable></userinput> to join a channel.  This command is especially useful if the channel is invite-only.</para></listitem>
+</varlistentry>
+
+</variablelist>
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="query">
+<title>Private conversations (queries)</title>
+
+<para>
+A private conversation is one that only you and one other person can see.  Private conversations are called "queries" in &konversation;.  To initiate a private conversation,
+type <userinput><command>/query </command><replaceable>nick</replaceable></userinput> in any input line,
+where <replaceable>nick</replaceable> is the &nickname; of the person you want to talk with.  You can also
+click with the &RMB; on the person's &nickname; in the <guilabel>Nick Panel</guilabel> and choose
+<menuchoice>
+	<guisubmenu>Open Query</guisubmenu>
+</menuchoice>
+<action>A new tab will be created</action>.  Announce yourself by sending a message.
+</para>
+
+<para>
+Queries are just like channels, except that only you and the other person can participate in the channel.</para>
+
+<para>
+To leave the query, just close the tab.  Note however, that if the other person sends you another message in the query, the tab will open again.</para>
+
+<para>To leave all queries, choose
+<menuchoice>
+	<guisubmenu>Window</guisubmenu>
+	<guisubmenu>Close All Open Queries</guisubmenu>
+</menuchoice> on the main menu, or press
+press <keycap>F11</keycap>.</para>
+
+<para>
+When someone else initiates a query with you, &konversation; creates a new tab with their
+&nickname;.  If you don't wish to talk with the person, close the tab.
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="cfg-notifications">
+<title>Setting notifications</title>
+
+<para>
+<guilabel>Notifications</guilabel> are actions that &konversation; will perform whenever an event occurs.  Suppose you have &konversation; running, but minimized or hidden behind other application windows on your desktop.  If someone wants to communicate with you, or your buddy joins a channel, you'd like to be alerted.  Notifications will accomplish this.
+</para>
+
+<para>
+To configure notifications, choose
+<menuchoice>
+	<guisubmenu>Settings</guisubmenu>
+	<guisubmenu>Configure Notifications</guisubmenu>
+</menuchoice>
+ on the main menu.  <action>The <guilabel>Notification Settings</guilabel> screen will appear.</action>
+ </para>
+
+<para>Immediately click the <guibutton>More Options</guibutton> button.</para>
+
+<para>
+<screenshot>
+<screeninfo>The Notification Settings screen.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-notification-1" coords="1 1"/>
+				<area id="pt-notification-2" coords="1 1"/>
+				<area id="pt-notification-3" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="notification_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase>The Notification Settings screen</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-notification-1"><para>Click here to select an event.</para></callout>
+
+<callout arearefs="pt-notification-2"><para>Check the types of notifications you'd like to happen when the event occurs.  (<guilabel>Mark taskbar entry</guilabel> causes the entry in the taskbar to flash when the event occurs.)</para></callout>
+
+</calloutlist>
+</para>
+
+<para>Repeat by selecting another event and checking the notifications desired.  When you've configured all the desired notifications, click the <guibutton>Apply</guibutton> button.</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-notification-3"><para>Once you've set up your notifications, you can enable or disable all notification actions here.  For example, you can choose to play a sound whenever your &nickname; is mentioned in a message.  When you are at your workstation, you can disable the sounds, but while you are away from your workstation but nearby, you can enable the sounds in order to get your attention.</para></callout>
+
+</calloutlist>
+</para>
+
+<tip><para>You can also alert yourself when someone mentions your &nickname;
+in a message using &konversation;'s
+<link linkend="highlighting">highlighting feature</link>.</para></tip>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="nicksonline">
+<title>Monitoring who is online</title>
+
+<para>
+&konversation; will keep you informed when your buddies are connected to the &irc; network
+or not.
+</para>
+
+<para>You can associate online &nickname;s with contact entries in your address book.
+When you do this, the &nickname; and &irc; network where the &nickname; is online are
+entered into the contact in the address book.  The &irc; network is recorded because &nickname;s
+are unique across a single &irc; network.  The &nickname; in two different &irc; networks
+is not necessarily the same person, but the same &nickname; on two different servers
+within the same &irc; network generally is the same person.</para>
+
+<note><para>This is why it is important to use the same <guilabel>Network</guilabel>
+for all servers in the same &irc; network, when <link linkend="serverlist">
+defining networks, servers, and auto join channels</link>.</para></note>
+
+<para>You can also define &nickname;s you want watched that are not in your address book.
+In this case also, each &nickname; has an associated &irc; network.  See below.</para>
+
+<para>To activate the &nickname; watching feature, choose
+<menuchoice>
+	<guisubmenu>Windows</guisubmenu>
+	<guisubmenu>Watched Nicks Online</guisubmenu>
+</menuchoice>
+ on the main menu.  <action>The <guilabel>Watched Nicks Online</guilabel> screen will appear.</action>
+</para>
+
+<para>
+<screenshot>
+	<screeninfo>Watched Nicks Online.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-nicksonline-1" coords="1 1"/>
+				<area id="pt-nicksonline-2" coords="1 1"/>
+				<area id="pt-nicksonline-3" coords="1 1"/>
+				<area id="pt-nicksonline-4" coords="1 1"/>
+				<area id="pt-nicksonline-5" coords="1 1"/>
+				<area id="pt-nicksonline-6" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="nicksonline_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase>Watched Nicks Online</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-nicksonline-1"><para>The &nickname;s in your watch list and
+also the &nickname;s associated with entries in your address book are listed here.
+They are listed under their associated &irc; network.  If no &nickname;s are listed,
+either you haven't specified any &nickname;s to watch, or you need to activate
+the &nickname; watching feature (see below).  Expand each online &nickname; to see a list
+of channels the &nickname; has joined.  The icons next to each channel are the same as
+the icons that appear in the <interface>Nick Panel</interface> in the
+<link linkend="channel-screen-tour">channel</link> screens.
+</para></callout>
+<callout arearefs="pt-nicksonline-2"><para>The information known about the &nickname;
+is displayed here.  When the <guilabel>Watched Nicks Online</guilabel> screen is first
+displayed, this information is sparse.  Every 8 seconds,
+one <userinput><command>WHOIS</command></userinput> command is automatically sent to the server
+to request information for &nickname;s that do not have any information.  This continues until
+all &nickname;s have information.
+</para></callout>
+<callout arearefs="pt-nicksonline-3"><para>Nicknames that are not connected to any
+of the &irc; networks you are connected to are listed in the <guilabel>Offline</guilabel>
+part of the listing.
+</para></callout>
+<callout arearefs="pt-nicksonline-4"><para>Nicknames that are associated with
+a contact entry in your address book have this icon
+(<inlinemediaobject><imageobject><imagedata fileref="kaddressbook.png" format="PNG"  /></imageobject></inlinemediaobject>) next to their information.
+</para></callout>
+<callout arearefs="pt-nicksonline-5"><para>Use these buttons to associate a &nickname;
+with a contact in your address book, remove an association, or open the address book
+to edit the contact information.  See the
+<ulink url="help:kaddressbook">&kaddressbook; Handbook</ulink> for additional instructions
+on using the &kde; address book.
+</para></callout>
+</calloutlist>
+</para>
+
+<para>
+To add additional &nickname;s to watch, click the <guilabel>Edit Watch List</guilabel> button.
+The <guilabel>Watched Nicknames</guilabel> screen appears.
+</para>
+
+<para>
+<screenshot>
+<screeninfo>Watched Nicknames</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-notifylist-1" coords="1 1"/>
+				<area id="pt-notifylist-2" coords="1 1"/>
+				<area id="pt-notifylist-3" coords="1 1"/>
+				<area id="pt-notifylist-4" coords="1 1"/>
+				<area id="pt-notifylist-5" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="notifylist_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase>Watched Nicknames</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-notifylist-1"><para>Check this box to activate the <guilabel>nickname watcher</guilabel> feature.</para></callout>
+
+<callout arearefs="pt-notifylist-2"><para>If you want the
+<guilabel>Watched Nicks Online</guilabel> screen to automatically display when you
+open &konversation;, check this box.</para></callout>
+
+<callout arearefs="pt-notifylist-3"><para>The &nickname;s of the users you want to monitor are listed here.  Each &nickname; has an associated &irc; network.</para></callout>
+
+<callout arearefs="pt-notifylist-4"><para>Click these buttons to add or remove &nickname;s from the list.</para></callout>
+
+<callout arearefs="pt-notifylist-5"><para>The <guilabel>Watched Nicks Online</guilabel> feature works by periodically polling the server.  This box sets how often that occurs.  Avoid numbers less than 20 seconds because it places excessive load on the server.</para></callout>
+
+<callout arearefs="pt-notifylist-5"><para>In the <guilabel>Watched Nicks Online</guilabel>
+screen above, you may double click on any &nickname; and this command will be sent to the
+server.  <userinput><command>%u</command></userinput> will be replaced with the
+&nickname;.  The <userinput><command>%n</command></userinput> is required at the
+end of the command.</para></callout>
+
+</calloutlist>
+</para>
+
+<para>Click the <guibutton>OK</guibutton> button when you have finished adding or removing &nickname;s.</para>
+
+<para><emphasis>Note: </emphasis>Whenever you display the <guilabel>Watched Nicks Online</guilabel> screen, it may take a while before any &nickname;s are displayed until &konversation; has polled the server.  Normally, you leave the <guilabel>Watched Nicks Online</guilabel> screen running.
+</para>
+
+<para>&konversation; also displays a message in all the <link linkend="channel-screen-tour">channels</link> whenever a user in
+your <guilabel>Watched Nicknames</guilabel> list connects or disconnects from the server.  The message looks like this:
+</para>
+
+<para><computeroutput>[17:52] [Notify] psn is online (irc.kde.org).</computeroutput></para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="highlighting">
+<title>Message highlighting</title>
+
+<para>You can control how messages are displayed in channel and query screens.</para>
+
+<para>To activate the highlighting feature, choose
+<menuchoice>
+	<guisubmenu>Settings</guisubmenu>
+	<guisubmenu>Configure &konversation;</guisubmenu>
+</menuchoice>
+ on the main menu.  <action>The <guilabel>Edit Preferences</guilabel> screen will appear.</action>
+ </para>
+
+<para>
+<screenshot>
+<screeninfo>The Highlighting screen.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-highlight-1" coords="1 1"/>
+				<area id="pt-highlight-2" coords="1 1"/>
+				<area id="pt-highlight-3" coords="1 1"/>
+				<area id="pt-highlight-4" coords="1 1"/>
+				<area id="pt-highlight-5" coords="1 1"/>
+				<area id="pt-highlight-6" coords="1 1"/>
+				<area id="pt-highlight-7" coords="1 1"/>
+				<area id="pt-highlight-8" coords="1 1"/>
+				<area id="pt-highlight-9" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="highlighting_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase>The Highlighting screen</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-highlight-1"><para>Click here to select the <guilabel>Highlighting</guilabel> screen.</para></callout>
+<callout arearefs="pt-highlight-2"><para>Click here to add a new item
+to the <guilabel>Highlight list</guilabel>.
+When an item in the list is selected, you may edit it in the panel below.</para></callout>
+<callout arearefs="pt-highlight-3"><para>Enter a string pattern here.
+Any message received that matches this pattern, anywhere in the message, will activate
+the highlighting for the message.  If you have the &kde; Regular Expression Editor
+utility installed on your system, the button to the right of the pattern will
+be enabled.  Click to display the editor, which will assist you
+in preparing more complex patterns.  (The &kde; Regular Expression Editor
+is part of the <command>kdeutils</command> package.)
+</para></callout>
+<callout arearefs="pt-highlight-4"><para>If the pattern is found
+in a message, the entire message will be displayed
+in the color you select here.</para></callout>
+<callout arearefs="pt-highlight-5"><para>If you wish, &konversation; will
+play a sound when the pattern is matched.  Click the button to choose
+an audio file to be played.  Click the test button to hear the sound.</para></callout>
+<callout arearefs="pt-highlight-6"><para>If you'd like for &konversation; to
+automatically send a reply message when the pattern is matched, enter the
+message here.  Use this feature with caution, as you may annoy &irc; users
+with too much chatter if not careful.  You can also enter
+&irc; or &konversation; commands here.</para></callout>
+<callout arearefs="pt-highlight-7"><para>If you have configured sounds
+for any of your highlights, you can disable all of them by unchecking
+this box.</para></callout>
+<callout arearefs="pt-highlight-8"><para>If you check this box,
+whenever someone mentions your &nickname; in a message, the message
+will be displayed in the color you choose at the right.</para></callout>
+<callout arearefs="pt-highlight-9"><para>Normally, highlighting
+does not apply to messages you type.  If you wish to highlight the
+messages you type, check this box and choose a color at the right.</para></callout>
+
+</calloutlist>
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="cfg-osd">
+<title>Configuring On Screen Display (&osd;)</title>
+
+<para><acronym>On Screen Display</acronym> (&osd;) is a unique feature of &konversation;.  With &osd; turned on,
+ channel messages will appear on your desktop screen, even if &konversation; is minimized.  Here's an example of &osd; in
+  action.  The message in the upper lefthand part of the screen is from &konversation;, which is running
+minimized in the system tray.</para>
+
+<para>
+<screenshot>
+<screeninfo>Example of On Screen Display</screeninfo>
+	<mediaobject>
+		<imageobject>
+			<imagedata fileref="osd_demo.png" format="PNG"/>
+		</imageobject>
+		<textobject>
+			<phrase>Example of On Screen Display</phrase>
+		</textobject>
+	</mediaobject>
+</screenshot>
+</para>
+
+<para>To activate &osd;, choose
+<menuchoice>
+	<guisubmenu>Settings</guisubmenu>
+	<guisubmenu>Configure &konversation;</guisubmenu>
+</menuchoice>
+ on the main menu.  <action>The <guilabel>Edit Preferences</guilabel> screen will appear.</action>
+ </para>
+
+<para>
+<screenshot>
+<screeninfo>The On Screen Display screen.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-osd-1" coords="1 1"/>
+				<area id="pt-osd-2" coords="1 1"/>
+				<area id="pt-osd-3" coords="1 1"/>
+				<area id="pt-osd-4" coords="1 1"/>
+				<area id="pt-osd-5" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="osd_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase>The On Screen Display screen</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-osd-1"><para>Click here to expand the <guilabel>Notification</guilabel> item.</para></callout>
+
+<callout arearefs="pt-osd-2"><para>Click here to select the <guilabel>On Screen Display</guilabel> screen.</para></callout>
+
+<callout arearefs="pt-osd-3"><para>Check this box to activate &osd;.</para></callout>
+
+<callout arearefs="pt-osd-4"><para>Click this button to choose a font for &osd;.  (<emphasis>Note: </emphasis> Not all fonts work.  Luxi Sans 22 and Impact 22 are known to work.)</para></callout>
+
+<callout arearefs="pt-osd-5"><para>Check the boxes here to select the types of messages you'd like to appear on screen, then click the <guibutton>Apply</guibutton> button.</para></callout>
+
+</calloutlist>
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="color-msgs">
+<title>Sending colorful messages</title>
+
+<para>
+You can add color to the messages you send in any channel.  In the <interface>Input Line</interface> of any channel, start typing your message.  Click the
+<inlinemediaobject>
+	<imageobject>
+		<imagedata fileref="colorize.png" format="PNG" />
+	</imageobject>
+	<textobject>
+		<phrase>Insert &irc; Color Button</phrase>
+	</textobject>
+</inlinemediaobject>
+Insert &irc; Color button or choose
+<menuchoice>
+	<guisubmenu>Insert</guisubmenu>
+	<guisubmenu>&irc; Color</guisubmenu>
+</menuchoice>
+ on the main menu.  <action>The <guilabel>&irc; Color Chooser</guilabel> screen will appear.</action>
+</para>
+
+<para>
+<screenshot>
+<screeninfo>The &irc; Color Chooser screen.</screeninfo>
+	<mediaobject>
+		<imageobject>
+			<imagedata fileref="colorchooser_screen.png" format="PNG"/>
+		</imageobject>
+		<textobject>
+			<phrase>The &irc; Color Chooser screen</phrase>
+		</textobject>
+	</mediaobject>
+</screenshot>
+</para>
+
+<para>
+Choose a color and click <guibutton>OK</guibutton>.  Continue typing your message in the <interface>Input Line</interface>.
+To change the color again, click the <guibutton>Insert &irc; Color</guibutton>  button.  Choose a different color
+and click <guibutton>OK</guibutton>.
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="nickthemes">
+<title>Configuring &nickname; themes</title>
+
+<para>You can change the icons displayed next to &nickname;s in the
+<interface>Nick Panel</interface> of channel tabs.
+To change the &nickname; theme, choose
+<menuchoice>
+	<guisubmenu>Settings</guisubmenu>
+	<guisubmenu>Configure Konversation</guisubmenu>
+</menuchoice>
+ on the main menu.  <action>The <guilabel>Edit Preferences</guilabel> screen will appear.</action>
+ Click <guilabel>Appearance</guilabel> to expand it, then click <guilabel>Themes</guilabel>
+ to display the <guilabel>Themes</guilabel> screen.
+ </para>
+
+<para>
+<screenshot>
+<screeninfo>The Themes screen.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-themes-1" coords="1 1"/>
+				<area id="pt-themes-2" coords="1 1"/>
+				<area id="pt-themes-3" coords="1 1"/>
+				<area id="pt-themes-4" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="nickthemes_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase>The Themes screen</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-themes-1"><para>Click to select the nick <guilabel>Themes</guilabel> screen.</para></callout>
+<callout arearefs="pt-themes-2"><para>Select a theme.</para></callout>
+<callout arearefs="pt-themes-3"><para>Sample icons are displayed here in the chosen theme.</para></callout>
+<callout arearefs="pt-themes-4"><para>If you have downloaded a nick theme
+from elsewhere, click to install it.</para></callout>
+
+</calloutlist>
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="quick-buttons">
+<title>Configuring Quick Buttons</title>
+
+<para>You can enable a feature to display <interface>Quick Buttons</interface> on the <link linkend="channel-screen-tour">Main</link> screen, eight <interface>Quick Buttons</interface> appear.  To display the Quick Buttons, choose
+<menuchoice>
+    <guisubmenu>Settings</guisubmenu>
+    <guisubmenu>Configure Konversation</guisubmenu>
+</menuchoice>
+on the main menu.  <action>The <guilabel>Edit Preferences</guilabel> screen will appear.</action>
+Click <guilabel>Appearance</guilabel> to expand it, then click <guilabel>Chat Window</guilabel>.
+Check the <guilabel>Show quick buttons</guilabel> box and click <guibutton>OK</guibutton>.
+</para>
+
+<para>The buttons may be customized to your liking for performing often-used &irc;
+commands.
+To customize the <interface>Quick Buttons</interface>, choose
+<menuchoice>
+	<guisubmenu>Settings</guisubmenu>
+	<guisubmenu>Configure Konversation</guisubmenu>
+</menuchoice>
+ on the main menu.  <action>The <guilabel>Edit Preferences</guilabel> screen will appear.</action>
+ Click <guilabel>Behavior</guilabel> to expand it, then click <guilabel>Quick Buttons</guilabel>
+ to display the <guilabel>Quick Buttons</guilabel> screen.
+ </para>
+
+<para>
+<screenshot>
+<screeninfo>The Quick Buttons screen</screeninfo>
+	<mediaobject>
+		<imageobject>
+			<imagedata fileref="quickbuttons_screen.png" format="PNG"/>
+		</imageobject>
+		<textobject>
+			<phrase>The Quick Buttons screen</phrase>
+		</textobject>
+	</mediaobject>
+</screenshot>
+</para>
+
+<para>
+There are 8 <interface>Quick Button</interface>s.  Click on an entry to change it.
+The <guilabel>Button name</guilabel> column is the name that
+will appear on the button in the <link linkend="channel-screen-tour">Main</link> screen.  Keep the names short.
+The <guilabel>Button Action</guilabel> column is the action that will be performed when you click the
+<interface>Quick Button</interface>.  Tips for creating actions are given on the screen.
+</para>
+
+<para>
+Click <guibutton>OK</guibutton> to complete the changes.
+</para>
+
+<para>Example:</para>
+
+<para>
+<variablelist>
+	<varlistentry>
+		<term>
+			<guilabel>Button Name</guilabel>: <userinput><replaceable>Msg</replaceable></userinput>
+		</term>
+		<listitem>
+			<para>
+				<guilabel>Button Action</guilabel>: <userinput><replaceable>Msg %u </replaceable></userinput> (there is a space after <userinput><replaceable>%u</replaceable></userinput>)
+			</para>
+		</listitem>
+	</varlistentry>
+</variablelist>
+</para>
+
+<para>
+To use this button in the <link linkend="channel-screen-tour">Main</link> screen,
+click on a &nickname; in the <interface>Nick Panel</interface>, then click the button.
+<computeroutput>/MSG </computeroutput> will appear in the <interface>Input Line</interface>
+followed by the chosen &nickname;.  Type a message you want to send to that person and press
+&Enter;.  The message will be sent to the user.  Only that user will see the message.
+</para>
+
+<para>
+<emphasis>Note: </emphasis>You cannot add or delete <interface>Quick Buttons</interface>.
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="dcc">
+<title>Sending and receiving files</title>
+
+<para>
+You may send files via &irc; to other users online, or they may send you files.
+</para>
+
+<para>
+<emphasis>WARNING: Never open a file someone sends you unless they are a trusted source.  It could be a virus.</emphasis>
+</para>
+
+<para>
+To send a file to someone in a channel, click with the &RMB; on the &nickname; of the person in the
+<interface>Nick Panel</interface> of the <link linkend="channel-screen-tour">Main</link> screen.
+Choose
+<menuchoice>
+	<guisubmenu>Send File</guisubmenu>
+</menuchoice>
+<action>A dialog appears for you to choose a file to send.</action>  Next, a new <guilabel>DCC Status</guilabel> tab appears.
+</para>
+
+<para>
+<screenshot>
+<screeninfo>DCC Status tab</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-dccstatus-1" coords="1 1"/>
+				<area id="pt-dccstatus-2" coords="1 1"/>
+				<area id="pt-dccstatus-3" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="dccstatus_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase>DCC Status tab</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-dccstatus-1"><para>The &nickname; of the recipient and file name appear here.</para></callout>
+
+<callout arearefs="pt-dccstatus-2">
+<para>The <guilabel>Status</guilabel> column indicates the status of the file send or receive as follows:</para>
+
+<para>
+<variablelist>
+	<varlistentry>
+		<term>
+			<guilabel>Offering</guilabel>
+		</term>
+		<listitem>
+			<para>You are trying to send a file to the recipient.  &konversation; is waiting for the recipient to accept the file.
+			</para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel>Connecting</guilabel>
+		</term>
+		<listitem>
+			<para>&konversation; is trying to establish a connection with the other end.
+			</para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel>Sending</guilabel>
+		</term>
+		<listitem>
+			<para>&konversation; is sending the file to the other end.
+			</para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel>Receiving</guilabel>
+		</term>
+		<listitem>
+			<para>&konversation; is receiving the file from the other end.
+			</para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel>Done</guilabel>
+		</term>
+		<listitem>
+			<para>The file has been successfully transfered.
+			</para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel>Stalled</guilabel>
+		</term>
+		<listitem>
+			<para>The transfer was started but is not currently progressing.
+			</para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel>Aborted</guilabel>
+		</term>
+		<listitem>
+			<para>Either you clicked the <guibutton>Abort</guibutton> button, or the other person aborted the transfer.
+			</para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel>Failed</guilabel>
+		</term>
+		<listitem>
+			<para>An error occurred and the transfer was not successful..
+			</para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel>Queued</guilabel>
+		</term>
+		<listitem>
+			<para>The transfer has been accepted and will begin when the software on the receiving end acknowledges.
+			</para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel>Lookup</guilabel>
+		</term>
+		<listitem>
+			<para>&konversation; is trying to get the IP number of the sender.
+			</para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>
+			<guilabel>Resuming</guilabel>
+		</term>
+		<listitem>
+			<para>When a transfer begins but the file already exists on the user's system, the user will be prompted <interface>File already exists.  Resume transfer?</interface> This status indicates the user resumed the transfer.
+			</para>
+		</listitem>
+	</varlistentry>
+</variablelist>
+</para>
+
+</callout>
+
+<callout arearefs="pt-dccstatus-3">
+<para>When someone wants to send you a file, the <guilabel>DCC Status</guilabel> tab will be created (if not already created).  Click the <guilabel>DCC Status</guilabel> tab to display it.  Click the file to select it, then click this button to accept the file and the transfer will begin.  <emphasis>Note: </emphasis>You may configure &konversation; to automatically accept sends from other
+people by choosing
+<menuchoice>
+	<guisubmenu>Settings</guisubmenu>
+	<guisubmenu>Configure Konversation</guisubmenu>
+	<guisubmenu>DCC Settings</guisubmenu>
+</menuchoice> on the main menu.
+</para>
+</callout>
+
+</calloutlist>
+</para>
+
+<para>
+If you have trouble sending or receiving files, your firewall or router may be blocking DCC ports.
+See <link linkend="faq">Questions and Answers</link>.
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="linkaddressbook">
+<title>Integrating with &kaddressbook;</title>
+
+<para>You can associate any &nickname; with a contact in &kaddressbook;.
+Once you've done this, &konversation; will display the contact real name
+in parenthesis after the &nickname; in the <interface>Nick Panel</interface>.
+</para>
+
+<para>
+To associate a &nickname; with a contact in &kaddressbook;,
+click with the &RMB; on the &nickname; of the person in the
+<interface>Nick Panel</interface> of the <link linkend="channel-screen-tour">Main</link> screen.  Choose
+<menuchoice>
+	<guisubmenu>Whois</guisubmenu>
+</menuchoice>
+to <action>display information to help you determine the user's real name</action>.
+Next, click with the &RMB; on the &nickname; of the person again and choose
+<menuchoice>
+	<guisubmenu>Addressbook associations</guisubmenu>
+</menuchoice>.
+  <action>A submenu appears</action>.  If the &nickname; is not already associated with a contact,
+choose
+<menuchoice>
+	<guisubmenu>Create new contact</guisubmenu>
+</menuchoice>.
+  <action>The <guilabel>Edit Contact</guilabel> screen appears</action>.
+</para>
+
+<para>
+<screenshot>
+<screeninfo>The Edit Contact screen.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-kimproxy-create-1" coords="1 1"/>
+				<area id="pt-kimproxy-create-2" coords="1 1"/>
+				<area id="pt-kimproxy-create-3" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="kimproxy_create_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase>The Edit Contact screen.</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-kimproxy-create-1"><para>The &nickname; is automatically filled in here.
+If you know the person's real name, replace the &nickname; with the real name.
+</para></callout>
+
+<callout arearefs="pt-kimproxy-create-2">
+<para>Notice that the &nickname; does <emphasis>not</emphasis> appear here.  Instead, ..</para>
+</callout>
+
+<callout arearefs="pt-kimproxy-create-3">
+<para>Click here.  The <guilabel>IM Addresses</guilabel> window appears.</para></callout>
+
+</calloutlist>
+</para>
+
+<para>
+<screenshot>
+	<screeninfo>The IM Addresses Window.</screeninfo>
+	<mediaobject>
+		<imageobject>
+			<imagedata fileref="kimproxy_create_screen2.png" format="PNG"/>
+		</imageobject>
+		<textobject>
+			<phrase>The IM Addresses Window.</phrase>
+		</textobject>
+	</mediaobject>
+</screenshot>
+</para>
+
+<para>Notice that &konversation; fills in the &nickname; for you with protocol
+<guilabel>IRC</guilabel>.
+</para>
+
+<para>See the
+<ulink url="help:kaddressbook">&kaddressbook; Handbook</ulink> for additional instructions
+on using the &kde; address book.</para>
+
+<para>Fill in any additional information about the &nickname; you know and click
+<guilabel>OK</guilabel>.  The real name of the person will appear inside
+parenthesis next to the &nickname; in the <guilabel>Nick Panel</guilabel>
+of &konversation;.  The real name also appears when the mouse hovers over
+the &nickname;.</para>
+
+<para>Once a &nickname; has been associated with a contact in &kaddressbook;,
+you can click with the &RMB; on the &nickname; of the person in the
+<interface>Nick Panel</interface> and edit the associated contact, associate
+the &nickname; with a different contact, or delete the association.
+</para>
+
+<para>If you have associated a &nickname; with a contact, and the user changes their &nickname; while you are running &konversation;,
+it will automatically associate the new &nickname; with the contact, keeping the
+original association as well.</para>
+
+<para>If you associate an &irc; &nickname; with a contact in
+<ulink url="help:kopete">&kopete;</ulink>,
+the association will also appear in &konversation;, and vice versa.</para>
+
+<para>Note: It is possible to highlight more than one &nickname; in the
+<interface>Nick Panel</interface>, click with the mouse &RMB;, and perform
+multiple associations.
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="urlcatcher">
+<title>Capturing &URL;s from messages</title>
+
+<para>In any <link linkend="channel-screen-tour">channel</link>, users sometimes post the &URL;s of interesting
+websites or other resources on the web.  You can double-click any such &URL; and &konversation; will launch
+the application associated with the &URL;.
+The application launched depends upon the &MIME; type of the &URL;.
+For example, a &URL; beginning with
+<interface>http:</interface> will activate your default &kde; web browser and display the web page.
+(You can also specify the <link linkend="webbrowser">web browser</link> to use.)
+If the &URL; scrolls off the screen, you might have trouble finding it
+again.  &konversation; can keep a convenient list of all &URL;s for you.  To activate this feature, choose
+<menuchoice>
+	<guisubmenu>Windows</guisubmenu>
+	<guisubmenu>&url; Catcher</guisubmenu>
+</menuchoice> on the main menu.
+<action>A new tab called <guilabel>&url; Catcher</guilabel> is created.</action>
+</para>
+
+<para>
+<screenshot>
+<screeninfo>The &url; Catcher tab.</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-urlcatcher-1" coords="1 1"/>
+				<area id="pt-urlcatcher-2" coords="1 1"/>
+				<area id="pt-urlcatcher-3" coords="1 1"/>
+				<area id="pt-urlcatcher-4" coords="1 1"/>
+				<area id="pt-urlcatcher-5" coords="1 1"/>
+				<area id="pt-urlcatcher-6" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="urlcatcher_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase>The &url; Catcher tab.</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-urlcatcher-1"><para>This is the list of &URL;s seen since you started &konversation;.  The <guilabel>Nick</guilabel> column is the &nickname; of the person who posted the &URL;.  If the &nickname; is blank, the &url; appeared in a <interface>Server Messages</interface> tab.  (&URL;s appearing in join and leave messages
+are not listed.)  Click on a &URL; to select it.</para></callout>
+
+<callout arearefs="pt-urlcatcher-2"><para>Click here to activate the application associated with the selected &URL;.
+The application launched depends upon the &MIME; type of the &URL;.  For example, a &URL; beginning with
+<interface>http:</interface> will activate your default web browser and display the web page.  For web pages, you can
+also specify the <link linkend="webbrowser">web browser</link> to use.</para></callout>
+
+<callout arearefs="pt-urlcatcher-3"><para>Click here to copy the selected &URL; to the &kde; clipboard..</para></callout>
+
+<callout arearefs="pt-urlcatcher-4"><para>Click here to delete the selected  &URL; from the list.</para></callout>
+
+<callout arearefs="pt-urlcatcher-5"><para>Click here to save the list of &URL;s to a file.</para></callout>
+
+<callout arearefs="pt-urlcatcher-6"><para>Click here to clear the list.</para></callout>
+
+</calloutlist>
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="webbrowser">
+<title>Setting your preferred web browser</title>
+
+<para>When you click on a highlighted &URL; anywhere in &konversation;, it will launch the default
+&kde; application associated with the &MIME; type of the &URL;.  For example, when clicking on
+a &URL; beginning with <interface>http</interface>, &konqueror; is launched to display the
+web page.  You can specify an application different from the &kde; default.  For example, you can
+use Mozilla instead.
+</para>
+
+<para>To choose a different web browser, choose
+<menuchoice>
+	<guisubmenu>Settings</guisubmenu>
+	<guisubmenu>Configure &konversation;</guisubmenu>
+</menuchoice>
+ on the main menu.  <action>The <guilabel>Edit Preferences</guilabel> screen will appear.</action>
+ </para>
+
+ <para>
+<screenshot>
+<screeninfo>The Web Browser screen</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-webbrowser-1" coords="1 1"/>
+				<area id="pt-webbrowser-2" coords="1 1"/>
+				<area id="pt-webbrowser-3" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="webbrowser_screen_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase>The Web Browser screen</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+
+<callout arearefs="pt-webbrowser-1"><para>Click here to display the <guilabel>Web Browser</guilabel> screen.</para></callout>
+
+<callout arearefs="pt-webbrowser-2"><para>Click here to specify that you want to use a custom web browser.</para></callout>
+
+<callout arearefs="pt-webbrowser-3"><para>Enter the command to launch your desired web browser.
+When you click on a &URL; <userinput><replaceable>%u</replaceable></userinput> will be replaced with the &URL;.</para></callout>
+
+</calloutlist>
+</para>
+
+<para><emphasis>Tip: </emphasis>(&UNIX; systems only) The default command is <userinput>mozilla '%u'</userinput>, which will
+start a new instance of Mozilla each time you click on a &URL;.  If you prefer that Mozilla display the web page
+in a new tab of an already-running instance, create a file containing the following:
+</para>
+
+<para>
+<literallayout>
+#!/bin/sh
+mozilla -remote "openURL($@, new-tab)" || exec mozilla "$@";
+</literallayout>
+</para>
+
+<para>Name the file <userinput><replaceable>moz</replaceable></userinput>, place it in the PATH, and
+make it executable (<userinput>chmod a+x moz</userinput>).  Then enter <userinput>
+<replaceable>moz '%u'</replaceable></userinput> for the web browser command in the screen above.
+</para>
+
+<para><emphasis>Note: </emphasis>The <guilabel>Web Browser</guilabel> setting does not apply to
+<interface>mailto:</interface> &URL;s.  <interface>mailto:</interface> &URL;s always launch the default
+&kde; mailer.
+</para>
+
+<para>Click <guibutton>Apply</guibutton> to save your changes.  You must reconnect to each server and
+channel for the changes to take effect.  The easiest way to do this is to quit and restart &konversation;.
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="rememberlines">
+<title>Marking Channel and Query Logs</title>
+
+<para>You can insert a marker into <link linkend="channel-screen-tour">channel</link>
+and <link linkend="query">query</link> screens
+to help you quickly locate information.  To do this, choose
+<menuchoice>
+	<guisubmenu>Insert</guisubmenu>
+	<guisubmenu>Remember Line</guisubmenu>
+</menuchoice>
+on the main menu, or press <keycombo action="simul">&Ctrl;<keycap>R</keycap></keycombo>.
+  <action>A line will appear at the bottom of the text on the screen.
+ The line will scroll with the rest of the text in the screen.</action>
+</para>
+
+<para>To make the <interface>Remember Line</interface>
+be inserted in all channels and queries at once, choose
+<menuchoice>
+	<guisubmenu>Settings</guisubmenu>
+	<guisubmenu>Configure Konversation</guisubmenu>
+</menuchoice> from the main menu, expand <guilabel>Behavior</guilabel>,
+click on <guilabel>Chat Window</guilabel>, and check the
+<guilabel>Show remember line in all channels/queries</guilabel> box.
+</para>
+
+<para>To make &konversation; automatically insert a
+<interface>Remember Line</interface> whenever you do an
+<userinput><command>/away</command> <replaceable>msg</replaceable></userinput>
+command, see <link linkend="identity-away">Setting your identity</link>.
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="logging">
+<title>Logging</title>
+
+<para>If logging is enabled, &konversation; keeps a log of each <interface>Server</interface>,
+<link linkend="channel-screen-tour">Channel</link>, and
+<link linkend="query">Private conversation (query)</link> session.
+Each session is stored in a log file on disk.
+When you open the same session again, &konversation; appends to the log.
+The log grows to a limit you can set (see below).  When the limit is reached, the oldest
+messages are discarded.
+</para>
+
+<para>Whenever you open a session again, approximately the last 1024 characters
+of the previous session are read from the tail of the log and shown on the screen.
+</para>
+
+<para>As your session continues, messages scroll off the top of the display.
+You can scroll backwards to view these messages.  Eventually, in order to conserve
+memory, the oldest messages are discarded from the scroll.  This is called
+the <guilabel>Scrollback limit</guilabel>.  Messages that disappear from the display
+because of the <guilabel>Scrollback limit</guilabel> are still available in the log
+file, if logging is enabled.</para>
+
+<para>To view the logfile for a session, click the tab for the session to make it the
+current session and choose
+<menuchoice>
+	<guisubmenu>Window</guisubmenu>
+	<guisubmenu>Open Logfile</guisubmenu>
+</menuchoice> from the main menu.  <action>A new tab appears</action> displaying
+the log file.
+</para>
+
+<para>
+<screenshot>
+<screeninfo>Logfile</screeninfo>
+	<mediaobjectco>
+		<imageobjectco>
+			<areaspec units="calspair">
+				<area id="pt-logviewer-1" coords="1 1"/>
+				<area id="pt-logviewer-2" coords="1 1"/>
+				<area id="pt-logviewer-3" coords="1 1"/>
+				<area id="pt-logviewer-4" coords="1 1"/>
+				<area id="pt-logviewer-5" coords="1 1"/>
+			</areaspec>
+			<imageobject>
+				<imagedata fileref="logviewer_co.png" format="PNG"/>
+			</imageobject>
+		</imageobjectco>
+		<textobject>
+			<phrase>Logfile</phrase>
+		</textobject>
+	</mediaobjectco>
+</screenshot>
+</para>
+
+<para>
+<calloutlist>
+<callout arearefs="pt-logviewer-1"><para>The messages in the log file are displayed here.
+The oldest messages are at the top and the most recent are at the bottom.</para></callout>
+<callout arearefs="pt-logviewer-2"><para>Click this button to save the log file to another file.</para></callout>
+<callout arearefs="pt-logviewer-3"><para>Click to refresh the log file display.
+While you are viewing a log file, newer messages in the corresponding
+session are <emphasis>not</emphasis> automatically added to the log file
+display.  Use this button to view the most recent messages.</para></callout>
+<callout arearefs="pt-logviewer-4"><para>Click to erase the log file display
+and the log file on disk.</para></callout>
+<callout arearefs="pt-logviewer-5"><para>Use this box to set the maximum size
+of the log file.  This setting does not take effect until you restart
+&konversation;.  Each log file may have a separate setting.</para></callout>
+</calloutlist>
+</para>
+
+<para>The <guilabel>Scrollback limit</guilabel> can be changed by choosing
+<menuchoice>
+	<guisubmenu>Settings</guisubmenu>
+	<guisubmenu>Configure &konversation;</guisubmenu>
+</menuchoice> on the main menu, then expand <guilabel>Behavior</guilabel> and
+click on <guilabel>Chat Window</guilabel>.  The <guilabel>Scrollback limit</guilabel>
+box appears on this screen.  If you set it to <guilabel>Unlimited</guilabel>,
+messages are not discarded from the scroll.
+</para>
+
+<para>You can enable or disable logging and set other logging options, by choosing
+<menuchoice>
+	<guisubmenu>Settings</guisubmenu>
+	<guisubmenu>Configure &konversation;</guisubmenu>
+</menuchoice> on the main menu, then expand <guilabel>Behavior</guilabel> and
+click on <guilabel>Logging</guilabel>.
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="konvi-cmds">
+<title>&konversation; commands</title>
+
+<para>The following commands are interpreted by &konversation; and may differ from standard
+&irc; commands.  Items inside square brackets are optional.  Items separated by bar (|) are
+alternate forms of the command.  Commands not listed here are sent to the server as entered.
+</para>
+
+<para>
+<variablelist>
+
+<varlistentry>
+<term><userinput><command>/me</command> <replaceable>msg</replaceable></userinput></term>
+<listitem><para>Sends <userinput><replaceable>msg</replaceable></userinput> to the channel preceded by your &nickname;.  For example, if
+your &nickname; were <userinput><replaceable>Tux</replaceable></userinput>, typing <userinput><replaceable>/me brews a cup a tea.</replaceable></userinput> displays the message <interface>Tux brews a cup of tea.</interface>  Unless they've filtered against these types of messages, all users see it.  This kind of message is typically used to convey non-verbal information, such as your current emotional state, or what you are physically doing.  If you are leaving your workstation for a short time, use the /away command instead.</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><userinput><command>/ame</command> <replaceable>msg</replaceable></userinput></term>
+<listitem><para>Like the <userinput><command>/me</command></userinput> command above except that
+the message is sent to all the channels and queries you have open on all the servers you have connected in &konversation;.</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><userinput><command>/join</command> <replaceable>channel</replaceable> <replaceable>[pwd]</replaceable></userinput></term>
+<listitem><para>Joins <userinput><replaceable>channel</replaceable></userinput>.  If the server permits it,
+and if the channel does not already exist, it is created and you are the channel operator.  If the channel requires a password in order to join, specify as <userinput><replaceable>pwd</replaceable></userinput>.  Most channel names begin with <userinput><replaceable>#</replaceable></userinput></para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><userinput><command>/j</command> <replaceable>channel</replaceable> <replaceable>[pwd]</replaceable></userinput></term>
+<listitem><para>Same as <userinput><command>/join</command></userinput> above.</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><userinput><command>/part</command> <replaceable>[channel]</replaceable> <replaceable>[reason]</replaceable></userinput></term>
+<listitem><para>Leaves <userinput><replaceable>channel</replaceable></userinput> with <userinput><replaceable>reason</replaceable></userinput> and closes the corresponding <interface>channel</interface> tab.
+Within a &konversation; channel or query tab, you can just enter  <userinput><command>/part</command></userinput> which closes that channel or query with your default reason
+as given in the <link linkend="identity">Settings</link>.</para></listitem>
+</varlistentry>
+
+<varlistentry><term><userinput><command>/leave</command> <replaceable>[channel]</replaceable> <replaceable>[reason]</replaceable></userinput></term>
+<listitem><para>Same as <userinput><command>/part</command></userinput> above.</para></listitem>
+</varlistentry>
+
+<varlistentry><term><userinput><command>/quit</command></userinput></term>
+<listitem><para>When entered in any channel, query, or DCC tab, disconnects from the corresponding server
+and closes all channel, query, or DCC tabs open on that server.</para></listitem>
+</varlistentry>
+
+<varlistentry><term><userinput><command>/notice</command> <replaceable>nick|channel</replaceable> <replaceable>msg</replaceable></userinput></term>
+<listitem><para>Sends <userinput><replaceable>msg</replaceable></userinput> to the user with &nickname; <userinput><replaceable>nick</replaceable></userinput> or to everyone in <userinput><replaceable>channel</replaceable></userinput>.  The following is an example
+of what appears to you in the channel tab</para>
+
+<para><computeroutput>[17:14] [Notice] Sending notice "I think I understand" to #konversation</computeroutput></para>
+
+<para>And this is what the recipients see</para>
+
+<para><computeroutput>[17:15] [Notice] -Eisfuchs- I think I understand</computeroutput></para>
+
+</listitem></varlistentry>
+
+<varlistentry>
+<term><userinput><command>/query </command><replaceable>nick</replaceable></userinput></term>
+<listitem><para>Creates a new tab with the user's <userinput><replaceable>nick</replaceable></userinput> for private conversation, commonly known on &irc; as a <link linkend="query">Query</link>. Everything written here is only visible to you and your query partner.  You may enter more than one &nickname; separated by spaces and a query tab will be opened for each &nickname;.  Each such query tab will be private between you and the query partner.</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><userinput><command>/msg </command><replaceable>nick|channel</replaceable></userinput>
+ <userinput><replaceable>message</replaceable></userinput></term>
+<listitem><para>Sends a private message to the user with &nickname; <userinput><replaceable>nick</replaceable></userinput> or to all users in <userinput><replaceable>channel</replaceable></userinput>.  Unlike <userinput><command>/query</command></userinput>,
+does not open a new tab.  If <userinput><replaceable>message</replaceable></userinput> begins with <userinput><command>/me </command></userinput>, the message is formatted in the same manner as a
+<userinput><command>/me</command></userinput> command.</para>
+
+<para>Examples</para>
+
+<para><userinput><replaceable>/msg Eisfuchs I need some help with the msg command</replaceable></userinput></para>
+
+<para><userinput><replaceable>/msg #konversation New version of Konvi is online!</replaceable></userinput></para>
+
+<para><userinput><replaceable>/msg Eisfuchs /me is compiling the Handbook right now.</replaceable></userinput></para>
+
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term><userinput><command>/smsg </command><replaceable>nick|channel</replaceable></userinput>
+<userinput><replaceable>message</replaceable></userinput></term>
+<listitem><para>Same as <userinput><command>/msg</command></userinput> except the message is not
+displayed on your screen.  This is useful for preventing passwords and other sensitive information from remaining exposed on your screen or being logged.</para>
+</listitem></varlistentry>
+
+<varlistentry>
+<term><userinput><command>/amsg </command><replaceable>nick|channel</replaceable></userinput>
+ <userinput><replaceable>message</replaceable></userinput></term>
+<listitem><para>Like the <userinput><command>/msg</command></userinput> command above except that
+the message is sent to all the channels and queries you have open on all the servers you have connected in &konversation;.</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><userinput><command>/op </command> <replaceable>nick</replaceable></userinput></term>
+<listitem><para>When entered into a channel tab, attempts to give
+ <userinput><replaceable>nick</replaceable></userinput> operator privilege for the
+channel.  May not work if you lack sufficient privilege in the channel (you must be a
+channel operator yourself).  You may enter more than one &nickname; separated by spaces.</para>
+</listitem></varlistentry>
+
+<varlistentry>
+<term><userinput><command>/deop </command><replaceable>nick</replaceable></userinput></term>
+<listitem><para>When entered into a channel tab, takes away channel operator privilege from
+<userinput><replaceable>nick</replaceable></userinput>.  You may enter more than one &nickname; separated by spaces.</para>
+</listitem></varlistentry>
+
+<varlistentry>
+<term><userinput><command>/oper </command><replaceable>[nick]</replaceable></userinput></term>
+<listitem><para>Grants the user with &nickname; <userinput><replaceable>nick</replaceable></userinput> &irc;-Op (Administrator) privilege.  This only works if the &nickname; is listed in the server's O: line.  &irc;-Ops
+have the privilege to <userinput><command>/kill</command></userinput> &nickname;s,
+<userinput><command>/connect</command></userinput> servers to the &irc; network, and more.
+If <userinput><replaceable>nick</replaceable></userinput> is not entered,
+attempts to grant yourself &irc;-Op privilege.  You will be prompted for your &irc;-Op user name and password in either case.</para>
+</listitem></varlistentry>
+
+<varlistentry>
+<term><userinput><command>/voice </command> <replaceable>nick</replaceable></userinput></term>
+<listitem><para>In certain channels (with +m flag), users cannot send messages unless they have voice privilege.
+This command attempts to give <userinput><replaceable>nick</replaceable></userinput> voice privilege.
+You must have channel operator privilege to execute this command.  This command is mostly used
+when you are an operator for a moderated channel.</para>
+</listitem></varlistentry>
+
+<varlistentry>
+<term><userinput><command>/unvoice </command> <replaceable>nick</replaceable></userinput></term>
+<listitem><para>Takes away voice privilege from <userinput><replaceable>nick</replaceable></userinput> in the channel.</para>
+</listitem></varlistentry>
+
+<varlistentry>
+<term><userinput><command>/topic </command><replaceable>[channel]</replaceable> <replaceable>[message]</replaceable></userinput></term>
+<listitem><para>Attempts to set the topic of <userinput><replaceable>channel</replaceable></userinput> to
+<userinput><replaceable>message</replaceable></userinput>.  When entered in a channel tab,  <userinput><replaceable>channel</replaceable></userinput> may be omitted and defaults to the channel active in the tab.  If <userinput><replaceable>message</replaceable></userinput> is omitted, displays the current
+topic of the channel.  Changing a channel topic may fail if you lack sufficient privilege.</para>
+</listitem></varlistentry>
+
+<varlistentry>
+<term><userinput><command>/away </command> <replaceable>reason</replaceable></userinput></term>
+<listitem><para>If anyone tries to send you a private message or invite you to a channel, they will be told that you are
+away from your workstation for <userinput><replaceable>reason</replaceable></userinput>.  To change your state back to normal, enter <userinput><command>/away</command></userinput> without a reason.</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><userinput><command>/aaway </command> <replaceable>reason</replaceable></userinput></term>
+<listitem><para>Like the <userinput><command>/away</command></userinput> command above except that
+the command is sent to all the servers you have connected in &konversation;.</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><userinput><command>/invite </command><replaceable>nick</replaceable> <replaceable>[channel]</replaceable></userinput></term>
+<listitem><para>Invites the user with &nickname; <userinput><replaceable>nick</replaceable></userinput> to join <userinput><replaceable>channel</replaceable></userinput>.  This command is especially useful if the channel is invite-only.  When entered in a channel tab, <userinput><replaceable>channel</replaceable></userinput> may be omitted.</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><userinput><command>/exec </command><replaceable>script</replaceable> <replaceable>[parameters]</replaceable></userinput></term>
+<listitem><para>Executes the &konversation;-compatible shell script named
+<userinput><replaceable>script</replaceable></userinput>, passing it
+<userinput><replaceable>parameters</replaceable></userinput>.  See
+<link linkend="scripting">Scripting</link> for more information on using and writing
+scripts.</para>
+<para>Examples:</para>
+
+<para><userinput><replaceable>/exec kdeversion</replaceable></userinput></para>
+
+<para>Sends your system's &kde; and &Qt; version numbers to the channel.</para>
+
+<para><userinput><replaceable>/exec cmd uname -a</replaceable></userinput></para>
+
+<para>Sends your &Linux; version string to the channel.</para>
+
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term><userinput><command>/notify </command><replaceable>[nick]</replaceable></userinput></term>
+<listitem><para>Adds or removes <userinput><replaceable>nick</replaceable></userinput> from
+your <link linkend="nicksonline">Watched Nicks Online</link> list.  If the &nickname; is already
+in the list, it is removed.  If it is not in the list, it is added.  If <userinput><replaceable>nick</replaceable></userinput> is omitted, displays the current list
+of watched &nickname;s.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term><userinput><command>/prefs </command>[<command>list</command>|<replaceable>group</replaceable>]  [<command>list</command>|<replaceable>option</replaceable>]  [<replaceable>value</replaceable>]</userinput></term>
+<listitem><para>Displays or sets &konversation; settings without using the Settings screen.
+If a parameter contains spaces, surround it with quotes.</para>
+
+<para>Examples:</para>
+
+<para><userinput><replaceable>/prefs list</replaceable></userinput></para>
+
+<para>lists the available option groups.</para>
+
+<para><userinput><replaceable>/prefs "General Options" list</replaceable></userinput></para>
+
+<para>lists the options available in group <userinput><replaceable>General Options</replaceable></userinput> along with their current values</para>
+
+<para><userinput><replaceable>/prefs "General Options" ShowTrayIcon</replaceable></userinput></para>
+
+<para>Displays the current value of the setting for displaying the &konversation; icon in the system tray.</para>
+
+<para><userinput><replaceable>/prefs "General Options" ShowTrayIcon false</replaceable></userinput></para>
+
+<para>Turns off the &konversation; icon in the system tray.</para>
+
+</listitem></varlistentry>
+
+<varlistentry>
+<term><userinput><command>/kick </command><replaceable>nick</replaceable> <replaceable>reason</replaceable></userinput></term>
+<listitem><para>When entered in a channel tab, attempts to kick the user with &nickname;
+<userinput><replaceable>nick</replaceable></userinput> from the channel with
+<userinput><replaceable>reason</replaceable></userinput>.  If <userinput><replaceable>reason</replaceable></userinput> is not entered, defaults to the
+reason in the <link linkend="identity">Settings</link>.  This command may only be used in
+a channel tab.</para>
+</listitem></varlistentry>
+
+<varlistentry>
+<term><userinput><command>/ban </command> [<command>-host</command>|<command>-domain</command>|
+<command>-userhost</command>|<command>-userdomain</command>] <replaceable>[channel]</replaceable> <replaceable>user</replaceable>|<replaceable>mask</replaceable></userinput></term>
+<listitem><para>Attempts to ban the <userinput><replaceable>user</replaceable></userinput> or <userinput><replaceable>mask</replaceable></userinput> from <userinput><replaceable>channel</replaceable></userinput>.  When entered in a channel tab,
+<userinput><replaceable>channel</replaceable></userinput> may be omitted.  For more information
+on hosts, domains, and masks, see the documents at <ulink url="http://www.irchelp.org/">irchelp.org</ulink>.
+Too get the current ban list for a channel, enter
+<userinput><command>/mode </command><replaceable>channel</replaceable> <command>b</command></userinput>.
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><userinput><command>/unban </command> <replaceable>[channel]</replaceable> <replaceable>pattern</replaceable></userinput></term>
+<listitem><para>Reverts a previous banning from a channel.  When entered in a channel tab,
+<userinput><replaceable>channel</replaceable></userinput> may be omitted.
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><userinput><command>/ignore </command> [<command>-all</command>] <replaceable>nick</replaceable> </userinput></term>
+<listitem><para>Adds <userinput><replaceable>nick</replaceable></userinput> to your Ignore list.
+You may specify more than one &nickname; separated by spaces.  Channel messages from users on your Ignore
+list are not displayed.  In addition, if you enter <userinput><command>-all</command></userinput>, all message types
+(queries, notices, &CTCP;, DCC, and Exceptions) from the user are ignored as well as channel messages.
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><userinput><command>/quote </command> <replaceable>cmd</replaceable></userinput></term>
+<listitem><para>Sends <userinput><replaceable>cmd</replaceable></userinput> to the server.
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><userinput><command>/say </command> <replaceable>msg</replaceable></userinput></term>
+<listitem><para>When entered in a channel tab, sends <userinput><replaceable>msg</replaceable></userinput> to the channel.  This is the same as entering <userinput><replaceable>msg</replaceable></userinput>
+in the channel <interface>Input Line</interface>.  Useful for sending &irc; commands when you don't want
+to execute the command.  Two command characters (//) in a row does the same thing as
+<userinput><command>/say</command></userinput>.  Also used by <link linkend="scripting">scripts</link> to send messages.
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><userinput><command>/raw </command> [<command>open</command>|<command>close</command>]</userinput></term>
+<listitem><para>Places the server log in raw mode (<command>open</command>) or stops raw mode (<command>close</command>).  If neither <command>open</command> or <command>close</command> is entered, defaults to <command>open</command>.  In raw mode, the log displays every message received from the server in native &irc; format.
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><userinput><command>/konsole </command></userinput></term>
+<listitem><para>Opens a new tab running a &kde; &konsole;.
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><userinput><command>/server </command> <replaceable>[url]</replaceable> <replaceable>[pwd]</replaceable></userinput></term>
+<listitem><para>Connects to the server at address <userinput><replaceable>url</replaceable></userinput>.  If
+<userinput><replaceable>url</replaceable></userinput> is omitted, connects to the server associated
+with the tab where you enter the command.  This is useful for re-connecting to a server when
+disconnected.  If the server
+requires a password in order to connect to it, enter it for <userinput><replaceable>pwd</replaceable></userinput>.  If
+the server requires a port number other than the default (6667), enter the <userinput><replaceable>url</replaceable></userinput> like this: <replaceable>irc.kde.org:6665</replaceable>.
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><userinput><command>/dcc </command> <command>SEND </command><replaceable>nick</replaceable>
+<replaceable>[filename]</replaceable></userinput></term>
+<listitem><para>Sends <userinput><replaceable>filename</replaceable></userinput> to the user with
+&nickname; <userinput><replaceable>nick</replaceable></userinput>.
+If <userinput><replaceable>filename</replaceable></userinput> is omitted, a dialog appears for you to select
+a file.
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><userinput><command>/dcc </command></userinput></term>
+<listitem><para>Opens a DCC Status tab.
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><userinput><command>/ctcp </command><replaceable>nick|channel</replaceable> <command>ping</command></userinput></term>
+<listitem><para>Sends a PING message to <userinput><replaceable>nick</replaceable></userinput>
+or <userinput><replaceable>channel</replaceable></userinput>.  This is useful for
+determining if someone you are talking with has a high network lag, or (when sent to
+a channel) if your system has a high lag.
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term><userinput><command>/ctcp </command><replaceable>nick|channel</replaceable> <replaceable>msg</replaceable></userinput></term>
+<listitem><para>Sends a message to <userinput><replaceable>nick</replaceable></userinput>
+or all users in <userinput><replaceable>channel</replaceable></userinput>.  This
+is similar to the <userinput><command>/msg</command></userinput> command above, except that
+the message is sent using the &CTCP; protocol.  The response on the other end
+depends on the &irc; client program the user is running.  For example, when
+conversing with another &konversation; user,
+<userinput><replaceable>/ctcp Eisfuchs TIME</replaceable></userinput> will return
+the system time on Eisfuch's computer.  <userinput><replaceable>/ctcp Eisfuchs VERSION</replaceable></userinput> will return the &konversation; version number
+from Eisfuch's computer.
+</para></listitem>
+</varlistentry>
+
+</variablelist>
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="scripting">
+<title>Scripting</title>
+
+<para>&konversation; comes with some handy scripts you can run from the program.  To
+run a script, in a channel, query, DCC, or server tab, type a command of the form</para>
+
+<para><userinput><command>/exec </command> <replaceable>script</replaceable>
+ [<replaceable>parameters</replaceable>]</userinput></para>
+
+<para>which executes the script named <userinput><replaceable>script</replaceable></userinput>
+passing it (optional) <userinput><replaceable>parameters</replaceable></userinput>.</para>
+
+<para>For example, type the following command in a channel tab</para>
+
+<para><userinput><replaceable>/exec kdeversion</replaceable></userinput></para>
+
+<para>to send your &kde; and &Qt; version numbers to the channel.</para>
+
+<para><userinput><replaceable>/exec cmd uname -a</replaceable></userinput></para>
+
+<para>executes the <userinput><replaceable>cmd</replaceable></userinput> script,
+passing it <userinput><replaceable>uname -a</replaceable></userinput>.  This sends your
+&Linux; version string to the channel.</para>
+
+<para>To get a list of all available scripts, type the following command in a
+&konsole; screen.</para>
+
+<para><userinput><replaceable>ls $KDEDIR/share/apps/konversation/scripts</replaceable></userinput></para>
+
+<para>You can write your own scripts.  Scripts are shell scripts and can be written in
+any shell language, such as bash, perl, or python.  When &konversation; runs a script, the
+first three parameters sent to the script are:</para>
+
+<itemizedlist>
+
+<listitem><para>The port number for the &irc; server of the tab where the
+<userinput><command>/exec</command></userinput> command was entered.</para>
+</listitem>
+
+<listitem><para>The address of the server.</para></listitem>
+
+<listitem><para>The channel name.</para></listitem>
+
+</itemizedlist>
+
+<para>Here is a sample shell script (cmd).</para>
+
+<para>
+<programlisting>
+#!/bin/sh
+
+# Executes a command and prints the output into Konversation.
+
+PORT=$1;
+SERVER=$2;
+TARGET=$3;
+shift;shift;shift;
+
+$@ | while read line; do dcop $PORT Konversation say $SERVER "$TARGET" "$@: $line"; done
+</programlisting>
+</para>
+
+<para>Notice that the script uses &DCOP; to communicate with &konversation;.  The <computeroutput>say</computeroutput> command causes
+the output to be sent to the channel as a normal message.  To display something
+in the tab without sending it to other users, use <computeroutput>info</computeroutput>
+instead.  Look at the existing script files for more examples of writing scripts.</para>
+
+<para>To be able to run a script you have written, you must install it by copying
+it to $KDEDIR/share/apps/konversation/scripts or to $HOME/.kde/share/apps/konversation/scripts.  You must also give the file execute
+privilege, for example <userinput><replaceable>chmod a+x myscript</replaceable></userinput>.</para>
+
+</sect1>
+
+</chapter>
+
+<!-- =================================================================== -->
+
+<chapter id="commands">
+<title>Command Reference</title>
+
+<!-- (OPTIONAL, BUT RECOMMENDED) This chapter should list all of the
+application windows and their menubar and toolbar commands for easy reference.
+Also include any keys that have a special function but have no equivalent in the
+menus or toolbars. This may not be necessary for small apps or apps with no tool
+or menu bars. -->
+
+<!-- =================================================================== -->
+
+<sect1 id="kapp-mainwindow">
+<title>The main &konversation; window</title>
+
+<sect2>
+<title>The File Menu</title>
+<para>
+<variablelist>
+	<varlistentry>
+		<term><menuchoice>
+				<shortcut>
+					<keycap>F2</keycap>
+				</shortcut>
+			<guimenu>File</guimenu>
+			<guimenuitem>Server List</guimenuitem>
+		</menuchoice></term>
+		<listitem><para><action>Displays the <link linkend="irc-basics">list of servers and channels</link>.
+		</action></para></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term><menuchoice>
+				<shortcut>
+					<keycap>F7</keycap>
+				</shortcut>
+			<guimenu>File</guimenu>
+			<guimenuitem>Quick Connect</guimenuitem>
+		</menuchoice></term>
+		<listitem><para><action>Displays the <link linkend="quickconnect">Quick Connect</link> screen for connecting to a server.
+		</action></para></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term><menuchoice>
+			<guimenu>File</guimenu>
+			<guimenuitem>Reconnect</guimenuitem>
+		</menuchoice></term>
+		<listitem><para><action>Reconnects to all servers that were disconnected
+        by a network error or other problem.
+		</action></para></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term><menuchoice>
+			<shortcut>
+				<keycombo action="simul">&Ctrl;<keycap>J</keycap></keycombo>
+			</shortcut>
+			<guimenu>File</guimenu>
+			<guimenuitem>Join Channel</guimenuitem>
+		</menuchoice></term>
+		<listitem><para><action>Displays a dialog for you to enter the name
+        of a channel to join.  Does the same thing as entering
+        <command>/join <userinput>#channelname</userinput></command> in a channel
+        or server tab.</action></para></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term><menuchoice>
+			<shortcut>
+				<keycombo action="simul">&Alt; &Ctrl;<keycap>Q</keycap></keycombo>
+			</shortcut>
+			<guimenu>File</guimenu>
+			<guimenuitem>Set Away Globally</guimenuitem>
+		</menuchoice></term>
+		<listitem><para><action>Changes your &nickname; status to away in all channels.
+		</action></para></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term><menuchoice>
+			<shortcut>
+				<keycombo action="simul">&Ctrl;<keycap>Q</keycap></keycombo>
+			</shortcut>
+			<guimenu>File</guimenu>
+			<guimenuitem>Quit</guimenuitem>
+		</menuchoice></term>
+		<listitem><para><action>Quits</action> &konversation;</para></listitem>
+	</varlistentry>
+</variablelist>
+</para>
+</sect2>
+
+<sect2>
+<title>The <guimenu>Edit</guimenu> Menu</title>
+<para>
+<variablelist>
+	<varlistentry>
+		<term><menuchoice>
+				<shortcut>
+					<keycombo action="simul">&Ctrl;<keycap>F</keycap></keycombo>
+				</shortcut>
+				<guimenu>Edit</guimenu>
+				<guimenuitem>Find</guimenuitem>
+			</menuchoice></term>
+		<listitem><para>
+				<action>Searches for text strings in the current screen.</action>
+			</para></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term><menuchoice>
+				<shortcut>
+					<keycap>F3</keycap>
+				</shortcut>
+				<guimenu>Edit</guimenu>
+				<guimenuitem>Find Next</guimenuitem>
+			</menuchoice></term>
+		<listitem><para>
+				<action>Searches again for text strings in the current screen
+				using the previous search string.</action>
+			</para></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term><menuchoice>
+				<shortcut>
+					<keycombo action="simul">&Ctrl;<keycap>L</keycap></keycombo>
+				</shortcut>
+				<guimenu>Edit</guimenu>
+				<guimenuitem>Clear Window</guimenuitem>
+			</menuchoice></term>
+		<listitem><para>
+				<action>Clears the current screen.</action>
+			</para></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term><menuchoice>
+				<shortcut>
+					<keycombo action="simul">&Ctrl; &Shift;<keycap>L</keycap></keycombo>
+				</shortcut>
+				<guimenu>Edit</guimenu>
+				<guimenuitem>Clear All Windows</guimenuitem>
+			</menuchoice></term>
+		<listitem><para>
+				<action>Clears all screens.</action>
+			</para></listitem>
+	</varlistentry>
+</variablelist>
+</para>
+</sect2>
+
+<sect2>
+<title>The <guimenu>Insert</guimenu> Menu</title>
+<para>
+<variablelist>
+	<varlistentry>
+		<term><menuchoice>
+			<shortcut>
+				<keycombo action="simul">&Ctrl;<keycap>K</keycap></keycombo>
+			</shortcut>
+			<guimenu>Insert</guimenu>
+			<guimenuitem>&irc; Color</guimenuitem>
+		</menuchoice></term>
+		<listitem><para>
+			<action>See <link linkend="color-msgs">Sending colorful messages</link>.</action>
+		</para></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term><menuchoice>
+				<shortcut>
+					<keycombo action="simul">&Ctrl;<keycap>R</keycap></keycombo>
+				</shortcut>
+				<guimenu>Insert</guimenu>
+				<guimenuitem>Remember Line</guimenuitem>
+			</menuchoice></term>
+		<listitem><para>
+				<action>See <link linkend="rememberlines">Marking Channel and Query Logs</link>.</action>
+			</para></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term><menuchoice>
+				<shortcut>
+					<keycombo action="simul">&Alt; &Shift;<keycap>C</keycap></keycombo>
+				</shortcut>
+			<guimenu>Insert</guimenu>
+			<guimenuitem>Special Character</guimenuitem>
+			</menuchoice></term>
+		<listitem><para>
+				<action>Used to enter special characters, such as foreign
+				characters.</action>
+			</para></listitem>
+	</varlistentry>
+</variablelist>
+</para>
+</sect2>
+
+<sect2>
+<title>The <guimenu>Bookmarks</guimenu> Menu</title>
+<para>
+<variablelist>
+	<varlistentry>
+		<term><menuchoice>
+			<shortcut>
+				<keycombo action="simul">&Ctrl;<keycap>B</keycap></keycombo>
+			</shortcut>
+			<guimenu>Bookmarks</guimenu>
+			<guimenuitem>Add Bookmark</guimenuitem>
+		</menuchoice></term>
+		<listitem><para>
+		    <action>Bookmarks current network &amp; channel</action>
+		</para></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term><menuchoice>
+				<guimenu>Bookmarks</guimenu>
+				<guimenuitem>Edit Bookmarks</guimenuitem>
+			</menuchoice></term>
+		<listitem><para>
+				<action>Opens bookmark editor</action>
+			</para></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term><menuchoice>
+			<guimenu>Bookmarks</guimenu>
+			<guimenuitem>New Bookmark Folder</guimenuitem>
+			</menuchoice></term>
+		<listitem><para>
+				<action>Creates a new bookmark folder</action>
+			</para></listitem>
+	</varlistentry>
+</variablelist>
+</para>
+</sect2>
+
+<sect2>
+<title>The <guimenu>Settings</guimenu> Menu</title>
+<para>
+<variablelist>
+	<varlistentry>
+		<term><menuchoice>
+			<shortcut>
+				<keycombo action="simul">&Ctrl;<keycap>M</keycap></keycombo>
+			</shortcut>
+			<guimenu>Settings</guimenu>
+			<guimenuitem>Hide Menubar</guimenuitem>
+		</menuchoice></term>
+		<listitem><para>
+			<action>Hides the main menu.  Hit
+				<keycombo action="simul">&Ctrl;<keycap>M</keycap></keycombo>
+		to display it again.</action>
+		</para></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term><menuchoice>
+			<guimenu>Settings</guimenu>
+			<guimenuitem>Hide Toolbar</guimenuitem>
+		</menuchoice></term>
+		<listitem><para>
+			<action>Hides the toolbar.</action>
+		</para></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term><menuchoice>
+			<guimenu>Settings</guimenu>
+			<guimenuitem>Hide Statusbar</guimenuitem>
+		</menuchoice></term>
+		<listitem><para>
+			<action>Hides the status bar at the bottom of the main screen.</action>
+		</para></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term><menuchoice>
+				<guimenu>Settings</guimenu>
+				<guimenuitem>Identities</guimenuitem>
+			</menuchoice></term>
+		<listitem><para><action>Displays the <link linkend="identity">Identities</link> screen
+		for setting your identification information.
+		</action></para></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term><menuchoice>
+			<guimenu>Settings</guimenu>
+			<guimenuitem>Configure Shortcuts</guimenuitem>
+		</menuchoice></term>
+		<listitem><para>
+			<action>Allows you to change keyboard shortcuts for &konversation;.</action>
+		</para></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term><menuchoice>
+			<guimenu>Settings</guimenu>
+			<guimenuitem>Configure Toolbars</guimenuitem>
+		</menuchoice></term>
+		<listitem><para>
+			<action>Allows you to add or remove buttons from the &konversation; toolbar.</action>
+		</para></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term><menuchoice>
+			<guimenu>Settings</guimenu>
+			<guimenuitem>Configure Notifications</guimenuitem>
+		</menuchoice></term>
+		<listitem><para>
+			<action>Displays the <link linkend="cfg-notifications">Notifications Settings</link> screen.</action>
+		</para></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term><menuchoice>
+			<guimenu>Settings</guimenu>
+			<guimenuitem>Configure &konversation;</guimenuitem>
+		</menuchoice></term>
+		<listitem><para>
+			<action>Displays the <guilabel>Edit Preferences</guilabel> screen.</action>
+		</para></listitem>
+	</varlistentry>
+</variablelist>
+</para>
+</sect2>
+
+<sect2>
+<title>The <guimenu>Window</guimenu> Menu</title>
+<para>
+<variablelist>
+	<varlistentry>
+		<term><menuchoice>
+				<shortcut>
+					<keycombo action="simul">&Ctrl;<keycap>.</keycap></keycombo>
+				</shortcut>
+				<guimenu>Window</guimenu>
+				<guimenuitem>Previous Tab</guimenuitem>
+			</menuchoice></term>
+		<listitem><para>
+				<action>Displays the screen corresponding to the previous tab.</action>
+			</para></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term><menuchoice>
+				<shortcut>
+					<keycombo action="simul">&Ctrl;<keycap>,</keycap></keycombo>
+				</shortcut>
+				<guimenu>Window</guimenu>
+				<guimenuitem>Next Tab</guimenuitem>
+			</menuchoice></term>
+		<listitem><para>
+				<action>Displays the screen corresponding to the next tab.</action>
+			</para></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term><menuchoice>
+				<shortcut>
+					<keycombo action="simul">&Ctrl;<keycap>W</keycap></keycombo>
+				</shortcut>
+				<guimenu>Window</guimenu>
+				<guimenuitem>Close Tab</guimenuitem>
+			</menuchoice></term>
+		<listitem><para>
+				<action>Closes the current screen.  If closing a channel, leaves the channel.  If closing a
+					<interface>Server Messages</interface> tab, closes all open channels on that server
+					and disconnects from the server.
+				</action>
+			</para></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term><menuchoice>
+				<shortcut>
+					<keycap>F11</keycap>
+				</shortcut>
+				<guimenu>Window</guimenu>
+				<guimenuitem>Close All Open Queries</guimenuitem>
+			</menuchoice></term>
+		<listitem><para>
+				<action>Closes all <link linkend="query">Private conversations (queries)</link>.
+				</action>
+			</para></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term><menuchoice>
+				<shortcut>
+					<keycombo action="simul">&Ctrl;<keycap>H</keycap></keycombo>
+				</shortcut>
+				<guimenu>Window</guimenu>
+				<guimenuitem>Hide Nicklist</guimenuitem>
+			</menuchoice></term>
+		<listitem><para>
+				<action>Hides (or displays) the panel of &nickname;s in channel tabs.
+				</action>
+			</para></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term><menuchoice>
+				<shortcut>
+					<keycap>F4</keycap>
+				</shortcut>
+			<guimenu>Window</guimenu>
+			<guimenuitem>Watched Nicks Online</guimenuitem>
+		</menuchoice></term>
+		<listitem><para>
+			<action>Displays the <guilabel>Watched Nicks Online</guilabel> screen.   See <link linkend="nicksonline">Monitoring who is online</link>.</action>
+		</para></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term><menuchoice>
+				<shortcut>
+					<keycap>F5</keycap>
+				</shortcut>
+			<guimenu>Window</guimenu>
+			<guimenuitem>Channel List</guimenuitem>
+		</menuchoice></term>
+		<listitem><para>
+			<action>Displays a <link linkend="list-channels">list of channels</link> available on the server.</action>
+		</para></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term><menuchoice>
+				<shortcut>
+					<keycap>F6</keycap>
+				</shortcut>
+			<guimenu>Window</guimenu>
+			<guimenuitem>&url; Catcher</guimenuitem>
+		</menuchoice></term>
+		<listitem><para>
+			<action>Displays the <link linkend="urlcatcher">&url; Catcher</link> screen.</action>
+		</para></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term><menuchoice>
+			<guimenu>Window</guimenu>
+			<guimenuitem>New Konsole</guimenuitem>
+		</menuchoice></term>
+		<listitem><para>
+			<action>Displays a terminal screen.  You may open as many <guilabel>Konsole</guilabel> tabs as you like.</action>
+		</para></listitem>
+	</varlistentry>
+	<varlistentry>
+		<term><menuchoice>
+				<shortcut>
+					<keycombo action="simul">&Ctrl;<keycap>O</keycap></keycombo>
+				</shortcut>
+			<guimenu>Window</guimenu>
+			<guimenuitem>Open Logfile</guimenuitem>
+		</menuchoice></term>
+		<listitem><para>
+			<action>Displays a screen with the log of messages from the current tab.  Only works for
+				<interface>Channel</interface>, <interface>Server Messages</interface>,
+				and <interface>Query</interface> tabs.  Logging must be enabled in
+				<menuchoice>
+					<guisubmenu>Settings</guisubmenu>
+					<guisubmenu>Configure Konversation</guisubmenu>
+					<guisubmenu>Behavior</guisubmenu>
+					<guisubmenu>Logging</guisubmenu>
+				</menuchoice> on the main menu.
+			</action>
+		</para></listitem>
+	</varlistentry>
+</variablelist>
+</para>
+</sect2>
+
+<sect2>
+<title>The <guimenu>Help</guimenu> Menu</title>
+
+<!-- Assuming you have a standard help menu (help, what's this, about -->
+<!-- &konversation;, about KDE) then the documentation is already written. -->
+<!-- The following entity is valid anywhere that a variablelist is -->
+<!-- valid.  -->
+
+&help.menu.documentation;
+
+</sect2>
+
+</sect1>
+</chapter>
+
+<!-- =================================================================== -->
+
+<chapter id="faq">
+<title>Questions and Answers</title>
+
+<!-- (OPTIONAL but recommended) This chapter should include all of the silly
+(and not-so-silly) newbie questions that fill up your mailbox. This chapter
+should be reserved for BRIEF questions and answers! If one question uses more
+than a page or so then it should probably be part of the
+"Using this Application" chapter instead. You should use links to
+cross-reference questions to the parts of your documentation that answer them.
+This is also a great place to provide pointers to other FAQ's if your users
+must do some complicated configuration on other programs in order for your
+application work. -->
+
+&reporting.bugs;
+&updating.documentation;
+
+<qandaset id="faqlist">
+
+<qandaentry>
+<question>
+<para>When I start &konversation;, I'd like to connect to a server without joining any channels.   How do I do that?</para>
+</question>
+<answer>
+<para>In the <link linkend="serverlist-addnetwork">Edit Server</link> screen, leave the <guilabel>Channels</guilabel> frame empty.</para>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question>
+<para>&konversation; won't connect to any servers.  What is wrong.?</para>
+</question>
+<answer>
+<para>There are several things that could be wrong.</para>
+<orderedlist>
+<listitem>
+<para>
+Make sure that you have entered the correct <guilabel>Server name</guilabel> and the correct <guilabel>Port</guilabel> in the <link linkend="serverlist-addserver">Add Server</link> screen.
+</para>
+</listitem>
+<listitem>
+<para>
+Check the output in the <link linkend="channel-screen-tour">Server Messages</link> screen for any error messages.  Did the server reject the connection because of a bad password?  Did the server reject the connection because it requires <acronym>IDENTD</acronym> and
+your computer did not respond to the <acronym>IDENT</acronym> request?  Did you check
+the SSL protocol box but the server does not support SSL?
+</para>
+</listitem>
+<listitem>
+<para>
+If you are behind a firewall, make sure the correct ports are enabled.  &konversation; needs the following ports enabled:
+</para>
+
+<para>
+<itemizedlist>
+<listitem><para>Outgoing TCP 6667 (or the port of the server you connect to)</para></listitem>
+<listitem><para>Incoming TCP 113 (if the server requires IDENTD)</para></listitem>
+<!-- <listitem><para>TODO (Incoming port numbers?)</para></listitem> -->
+</itemizedlist>
+</para>
+
+<para>For more information on &irc; connection problems, see <ulink url="http://www.irchelp.org/irchelp/networks/connectprob.html">irchelp.org</ulink>.
+</para>
+
+</listitem>
+
+</orderedlist>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question>
+<para>When I go to
+<menuchoice>
+<guisubmenu>Window</guisubmenu>
+<guisubmenu>Channel List</guisubmenu>
+</menuchoice>, I cannot select it. Why is that?</para>
+</question>
+<answer>
+<para>
+The
+<menuchoice>
+<guisubmenu>Windows</guisubmenu>
+<guisubmenu>Channel List</guisubmenu>
+</menuchoice>  menu entry will be greyed-out if a non-channel tab, &eg; <guilabel>Watched Nicks Online</guilabel>, is currently being viewed.
+To make it selectable again go back to a channel tab or the server tab.
+</para>
+</answer>
+</qandaentry>
+
+</qandaset>
+</chapter>
+
+<chapter id="credits">
+
+<!-- Include credits for the programmers, documentation writers, and
+contributors here. The license for your software should then be included below
+the credits with a reference to the appropriate license file included in the KDE
+distribution. -->
+
+<title>Credits and License</title>
+
+<para>
+&konversation;
+</para>
+<para>
+Program copyright 2002-2005 by the &konversation; team.
+</para>
+<para><ulink url="&konviwebsite;">&konviwebsite;</ulink>
+</para>
+<para>
+Contributors:
+<itemizedlist>
+<listitem><para>Dario Abatianni <email>eisfuchs@tigress.com</email></para></listitem>
+<listitem><para>Peter Simonsson <email>psn@linux.se</email></para></listitem>
+<listitem><para>Christian Muehlhaeuser <email>chris@chris.de</email></para></listitem>
+<listitem><para>John Tapsel <email>john@geola.geo.uk</email></para></listitem>
+<listitem><para>Ismail Donmez <email>ismail.donmez@boun.edu.tr</email></para></listitem>
+<listitem><para>Shintaro Matsuoka <email>shin@shoegazed.org</email></para></listitem>
+<listitem><para>Gary Cramblitt <email>garycramblitt@comcast.net</email></para></listitem>
+<listitem><para>Matthias Gierlings <email>gismore@users.sourceforge.net</email></para></listitem>
+<listitem><para>&Alex.Zepeda; <email>garbanzo@hooked.net</email></para></listitem>
+<listitem><para>Stanislav Karchebny <email>berkus@users.sourceforge.net</email></para></listitem>
+<listitem><para>Mickael Marchand <email>marchand@kde.org</email></para></listitem>
+</itemizedlist>
+</para>
+
+<para>
+Thanks to:
+<itemizedlist>
+<listitem><para>Michael Goettsche <email>michael.goettsche@kdemail.net</email></para></listitem>
+<listitem><para>Benjamin Meyer <email>ben+konversation@kdemail.net</email></para></listitem>
+<listitem><para>Jacub Stachowski <email>qbast@go2.pl</email></para></listitem>
+<listitem><para>Sabastian Sariego <email>segfault@kde.cl</email></para></listitem>
+<listitem><para>Olivier Bedard <email>www.konversation.org hosting</email></para></listitem>
+<listitem><para>Frauke Oster <email>frauke@frsv.de</email></para></listitem>
+<listitem><para>Lucijan Busch <email>lucijan@kde.org</email></para></listitem>
+<listitem><para>Sascha Cunz <email>mail@sacu.de</email></para></listitem>
+<listitem><para>Steve Wollkind <email>steve@njord.org</email></para></listitem>
+<listitem><para>Thomas Nagy <email>thomas.nagy@eleve.emn.fr</email></para></listitem>
+<listitem><para>Tobias Olry <email>tobias.olry@web.de</email></para></listitem>
+<listitem><para>Ruud Nabben <email>r.nabben@gawab.com</email></para></listitem>
+</itemizedlist>
+</para>
+
+<para>
+Documentation Copyright &copy; 2003-2005 Gary R. Cramblitt <email>garycramblitt@comcast.net</email>
+</para>
+
+<!-- TRANS:CREDIT_FOR_TRANSLATORS -->
+
+&underFDL;               <!-- FDL: do not remove -->
+
+<!-- Determine which license your application is licensed under,
+     and delete all the remaining licenses below:
+
+     (NOTE:  All documentation are licensed under the FDL,
+     regardless of what license the application uses) -->
+
+&underGPL;        	 <!-- GPL License -->
+
+</chapter>
+
+<appendix id="installation">
+<title>Installation</title>
+
+<!-- =================================================================== -->
+
+<sect1 id="getting-kapp">
+<title>How to obtain &konversation;</title>
+
+<!-- This first entity contains boiler plate for applications that are
+part of KDE CVS.  You should remove it if you are releasing your
+application -->
+
+&install.intro.documentation;
+
+<para>
+The latest versions of &konversation;, including source code and build instructions
+can also be obtained from the
+<ulink url="&konviwebsite;">&konviwebsite; website</ulink>.
+</para>
+
+</sect1>
+
+<!-- =================================================================== -->
+
+<sect1 id="requirements">
+<title>Requirements</title>
+
+<!--
+List any special requirements for your application here. This should include:
+.Libraries or other software that is not included in kdesupport,
+kdelibs, or kdebase.
+.Hardware requirements like amount of RAM, disk space, graphics card
+capabilities, screen resolution, special expansion cards, etc.
+.Operating systems the app will run on. If your app is designed only for a
+specific OS, (you wrote a graphical LILO configurator for example) put this
+information here.
+-->
+
+<para>
+In order to successfully use &konversation;, you need &kde; 3.2 or later and a network connection.
+On earlier &kde; versions some features may be missing.
+If you will be running &konversation; from behind a firewall, see <link linkend="faq">Questions and Answers</link>.  If you wish to use SSL protocol, you may need OpenSSL.
+</para>
+
+</sect1>
+</appendix>
+
+&documentation.index;
+</book>
+
+<!--
+Local Variables:
+mode: xml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+vim:tabstop=2:shiftwidth=2:expandtab
+-->
