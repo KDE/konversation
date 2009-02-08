@@ -418,7 +418,7 @@ void Server::connectToIRCServer()
         setPrefixes(m_serverNickPrefixModes, m_serverNickPrefixes);
         getStatusView()->appendServerMessage(i18n("Info"),i18n("Looking for server %1:%2...",
             getConnectionSettings().server().host(),
-            getConnectionSettings().server().port()));
+            QString::number(getConnectionSettings().server().port())));
         // reset InputFilter (auto request info, /WHO request info)
         m_inputFilter.reset();
     }
