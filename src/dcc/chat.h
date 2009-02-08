@@ -19,7 +19,6 @@
 class QSplitter;
 
 class IRCInput;
-class KLineEdit;
 class Server;
 
 namespace KNetwork

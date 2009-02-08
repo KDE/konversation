@@ -20,9 +20,7 @@
 #include <kdialog.h>
 
 class ConnectionSettings;
-class Preferences;
 class QPushButton;
-class QStringList;
 
 namespace Konversation
 {

@@ -25,14 +25,12 @@
 #include <kio/global.h>
 
 
-class QStringList;
 class QTimer;
 class QProgressBar;
 
 namespace KIO
 {
-    class Job;
-}
+    }
 
 class DccTransferPanel;
 

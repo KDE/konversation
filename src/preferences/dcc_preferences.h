@@ -16,7 +16,6 @@
 #include "ui_dcc_preferencesui.h"
 
 
-class QComboBox;
 
 class DCC_Config : public QWidget, private Ui::DCC_ConfigUI
 {

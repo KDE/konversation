@@ -21,7 +21,6 @@
 
 
 class KCompletionBox;
-class QMouseEvent;
 
 class IRCInput : public KTextEdit
 {

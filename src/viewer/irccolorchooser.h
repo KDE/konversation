@@ -21,7 +21,6 @@
 
 class IRCColorChooserUI;
 class KComboBox;
-class Preferences;
 
 class IRCColorChooser : public KDialog
 {

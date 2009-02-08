@@ -30,16 +30,12 @@
 //#include <ktextbrowser.h>
 #include <QPlainTextEdit>
 
-class QPixmap;
 class QDropEvent;
-class QDragEnterEvent;
-class QEvent;
 
 class KMenu;
 
 class Server;
 class ChatWindow;
-class SearchBar;
 
 class IRCView : public QPlainTextEdit
 {

@@ -18,10 +18,6 @@
 #include <kdialog.h>
 
 
-class QLineEdit;
-class QComboBox;
-class QCheckBox;
-class QToolButton;
 namespace Ui
 {
 class ServerGroupDialogUI;

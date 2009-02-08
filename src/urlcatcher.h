@@ -21,7 +21,6 @@
 class K3ListView;
 class Q3ListViewItem;
 class QPushButton;
-class ViewContainer;
 class K3ListViewSearchLineWidget;
 
 class UrlCatcher : public ChatWindow

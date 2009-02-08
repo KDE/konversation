@@ -22,7 +22,6 @@
 #include "resumedialog.h" ////// header renamed
 
 
-class QFile;
 class QTimer;
 
 namespace KIO

@@ -15,8 +15,6 @@
 #include <q3textedit.h>
 
 
-class QPaintEvent;
-class QWheelEvent;
 
 class MultilineTextEdit : public Q3TextEdit
 {

@@ -29,7 +29,6 @@ class QPushButton;
 
 class K3ListView;
 class KLineEdit;
-class ChannelListViewItem;
 
 class ChannelListPanel : public ChatWindow
 {

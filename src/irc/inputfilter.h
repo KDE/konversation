@@ -21,7 +21,6 @@
 #include <QMap>
 
 class Server;
-class QWidget;
 class Query;
 class QDateTime;
 

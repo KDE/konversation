@@ -32,7 +32,6 @@ Kopete    (c) 2002-2004 by the Kopete developers  <kopete-devel@kde.org>
 
 #include "ui_linkaddressbookui_base.h"
 
-class Q3CheckListItem;
 
 class LinkAddressbookUI : public KDialog
 {

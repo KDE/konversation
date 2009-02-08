@@ -23,8 +23,6 @@
 #include <qstring.h>
 
 
-class QPushButton;
-class QCheckBox;
 class QLabel;
 class QTimer;
 class Q3ListViewItem;

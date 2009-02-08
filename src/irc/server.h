@@ -39,7 +39,6 @@
 
 class Channel;
 class DccTransfer;
-class DccTransferPanelItem;
 class Query;
 //class StatusPanel;
 class Identity;

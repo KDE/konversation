@@ -22,7 +22,6 @@
 
 
 class QTimer;
-class Server;
 
 namespace Konversation
 {

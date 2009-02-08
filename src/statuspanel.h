@@ -18,13 +18,11 @@
 #include <qstring.h>
 
 
-class QPushButton;
 class QCheckBox;
 class QLabel;
 class QComboBox;
 
 class IRCInput;
-class NickChangeDialog;
 
 class StatusPanel : public ChatWindow
 {

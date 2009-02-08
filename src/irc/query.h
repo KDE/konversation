@@ -25,16 +25,13 @@
 class QActionGroup;
 class QMenu;
 class KAction;
-class QLineEdit;
-class QCheckBox;
 class QLabel;
 class QSplitter;
 
 class IRCInput;
 
 namespace Konversation {
-  class TopicLabel;
-}
+  }
 
 class Query : public ChatWindow
 {

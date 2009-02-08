@@ -29,12 +29,8 @@
 
 
 class KToggleAction;
-class KScriptManager;
 
 class KonviBookmarkHandler;
-class Ignore;
-class NicksOnline;
-class QuickButtonsDialog;
 class KonviSettingsDialog;
 class ViewContainer;
 class KonversationStatusBar;

@@ -19,7 +19,6 @@
 #include "transferpanelitem.h" ////// header renamed
 
 
-class QContextMenuEvent;
 class QPushButton;
 class K3ListView;
 class KMenu;
