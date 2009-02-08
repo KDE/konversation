@@ -17,7 +17,6 @@
 #include "common.h"
 
 #include <KApplication>
-#include <KIcon>
 #include <KDebug>
 #include <klocalizedstring.h>
 

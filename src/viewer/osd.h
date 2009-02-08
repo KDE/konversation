@@ -16,9 +16,6 @@
 #define OSD_H
 
 #include <QHash>
-#include <QImage>
-#include <QList>
-#include <QPixmap>
 #include <QString>
 #include <QWidget> //baseclass
 

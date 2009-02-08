@@ -41,15 +41,15 @@
 #include <KDebug>
 #include <KLocale>
 #include <KTabWidget>
-#include <KIconLoader>
 #include <KMessageBox>
 #include <KGlobalSettings>
 #include <KVBox>
+#include <KXMLGUIFactory>
+
 
 #include <KActionCollection>
 #include <KToggleAction>
 #include <KSelectAction>
-#include <KXMLGUIFactory>
 
 ViewContainer::ViewContainer(KonversationMainWindow* window):
         m_window(window)

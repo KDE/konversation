@@ -33,7 +33,6 @@
 #include <kio/copyjob.h>
 #include <kio/jobclasses.h>
 #include <KJobUiDelegate>
-#include <QTextDocument>
 
 
 LogfileReader::LogfileReader(QWidget* parent, const QString& log) : ChatWindow(parent)

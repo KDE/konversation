@@ -60,7 +60,6 @@
 #include <kglobal.h>
 #include <kauthorized.h>
 #include <KActionCollection>
-#include <KToggleAction>
 #include <KToolInvocation>
 #include <kio/copyjob.h>
 
