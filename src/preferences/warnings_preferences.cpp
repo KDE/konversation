@@ -14,7 +14,7 @@
 
 #include "warnings_preferences.h"
 
-
+#include <QHeaderView>
 #include <kdebug.h>
 #include <kconfig.h>
 #include <klocale.h>
