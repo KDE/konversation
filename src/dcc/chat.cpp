@@ -31,7 +31,7 @@
 #include <qhostaddress.h>
 #include <qtextcodec.h>
 #include <qsplitter.h>
-#include <Q3TextStream>
+#include <QTextStream>
 #include <QShowEvent>
 
 #include <klineedit.h>
@@ -276,7 +276,7 @@ void DccChat::sendDccChatText(const QString& sendLine)
     {
         QStringList lines = output.split('\n', QString::SkipEmptyParts);
         // wrap socket into a stream
-        Q3TextStream stream(m_dccSocket);
+        QTextStream stream(m_dccSocket);
         // init stream props
         stream.setCodec(Konversation::IRCCharsets::self()->codecForName(m_encoding.isEmpty() ? Konversation::IRCCharsets::self()->encodingForLocale() : m_encoding));
 

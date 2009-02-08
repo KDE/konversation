@@ -219,7 +219,7 @@ void UrlCatcher::saveListClicked()
         QFile listFile(fileName);
         listFile.open(QIODevice::WriteOnly);
         // wrap the file into a stream
-        Q3TextStream stream(&listFile);
+        QTextStream stream(&listFile);
         Q3ListViewItem* item=urlListView->itemAtIndex(0);
         while(item)
         {

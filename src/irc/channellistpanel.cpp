@@ -233,7 +233,7 @@ void ChannelListPanel::saveList()
         QFile listFile(fileName);
         listFile.open(QIODevice::WriteOnly);
         // wrap the file into a stream
-        Q3TextStream stream(&listFile);
+        QTextStream stream(&listFile);
 
         QString header(i18n("Konversation Channel List: %1 - %2\n\n",
             m_server->getServerName(),

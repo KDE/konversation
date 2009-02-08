@@ -17,7 +17,7 @@
 
 #include <qstringlist.h>
 #include <qdatetime.h>
-#include <Q3TextStream>
+#include <QTextStream>
 #include <QList>
 
 #include <ksharedptr.h>
@@ -113,7 +113,7 @@ class NickInfo : public QObject, public KShared
         /** Returns just the <tr><td>..   data for a tooltip.
          *  Used so that channelNick->tooltip()  can call this, then append on its own information.
          */
-        void tooltipTableData(Q3TextStream &tooltip) const;
+        void tooltipTableData(QTextStream &tooltip) const;
 
         /** Returns a full name for this contact. Tries to use the name out of addressbook.
          *  If that is empty, uses the real name from whois.  If that fails, use nickname.

@@ -240,8 +240,9 @@ void ChatWindow::setLogfileName(const QString& name)
                 qint64 filePosition;
 
                 QString backlogLine;
-                Q3TextStream backlog(&logfile);
-                backlog.setEncoding(Q3TextStream::UnicodeUTF8);
+                QTextStream backlog(&logfile);
+                backlog.setCodec(QTextCodec::codecForName("UTF-8"));
+                backlog.setAutoDetectUnicode(true);
 
                 QStringList firstColumns;
                 QStringList messages;
@@ -336,9 +337,10 @@ void ChatWindow::logText(const QString& text)
         if(logfile.open(QIODevice::WriteOnly | QIODevice::Append))
         {
             // wrap the file into a stream
-            Q3TextStream logStream(&logfile);
+            QTextStream logStream(&logfile);
             // write log in utf8 to help i18n
-            logStream.setEncoding(Q3TextStream::UnicodeUTF8);
+            logStream.setCodec(QTextCodec::codecForName("UTF-8"));
+            logStream.setAutoDetectUnicode(true);
 
             if(firstLog)
             {

@@ -31,7 +31,7 @@ namespace Konversation
         m_charTable = new KCharSelect(this,0, KCharSelect::CharacterTable|KCharSelect::FontCombo|KCharSelect::BlockCombos);
         m_charTable->setCurrentFont( QFont( font ) );
         setMainWidget(m_charTable);
-        connect( this, SIGNAL( okClicked() ), this, SLOT( slotOk ) );
+        connect( this, SIGNAL( okClicked() ), this, SLOT( slotOk() ) );
     }
 
     InsertCharDialog::~InsertCharDialog()

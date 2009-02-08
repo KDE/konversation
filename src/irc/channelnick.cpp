@@ -200,7 +200,7 @@ QString ChannelNick::tooltip()
     //  if(addressee.isEmpty()) return QString();
     //KABC::Addressee addressee = nickInfo->getAddressee();
     QString strTooltip;
-    Q3TextStream tooltip( &strTooltip, QIODevice::WriteOnly );
+    QTextStream tooltip( &strTooltip, QIODevice::WriteOnly );
 
     tooltip << "<qt>";
 

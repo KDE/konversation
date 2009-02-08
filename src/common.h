@@ -13,7 +13,8 @@
 #ifndef COMMON_H
 #define COMMON_H
 
-class Q3CString;
+#include <q3cstring.h>
+
 class QString;
 class QBitmap;
 class QPixmap;

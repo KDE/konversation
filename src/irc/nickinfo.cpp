@@ -261,7 +261,7 @@ QString NickInfo::tooltip() const
 {
 
     QString strTooltip;
-    Q3TextStream tooltip( &strTooltip, QIODevice::WriteOnly );
+    QTextStream tooltip( &strTooltip, QIODevice::WriteOnly );
     tooltip << "<qt>";
 
     tooltip << "<table cellspacing=\"0\" cellpadding=\"0\">";
@@ -291,7 +291,7 @@ QString NickInfo::getBestAddresseeName()
     }
 }
 
-void NickInfo::tooltipTableData(Q3TextStream &tooltip) const
+void NickInfo::tooltipTableData(QTextStream &tooltip) const
 {
     tooltip << "<tr><td colspan=\"2\" valign=\"top\">";
 

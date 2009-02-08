@@ -28,8 +28,8 @@
 #include <qfileinfo.h>
 #include <qregexp.h>
 #include <qmap.h>
-#include <q3valuelist.h>
 #include <qtextcodec.h>
+#include <q3cstring.h>
 
 #include <klocale.h>
 #include <kdebug.h>

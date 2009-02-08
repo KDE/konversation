@@ -27,7 +27,7 @@
 #include <qlabel.h>
 #include <qlineedit.h>
 #include <qtextcodec.h>
-#include <q3textstream.h>
+#include <qtextstream.h>
 #include <qsplitter.h>
 
 #include <klocale.h>
@@ -548,7 +548,7 @@ void Query::nickInfoChanged()
         }
 
         QString strTooltip;
-        Q3TextStream tooltip( &strTooltip, QIODevice::WriteOnly );
+        QTextStream tooltip( &strTooltip, QIODevice::WriteOnly );
 
         tooltip << "<qt>";
 
