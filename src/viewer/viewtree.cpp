@@ -115,6 +115,7 @@ void ViewTree::updateAppearance()
         setFont(KGlobalSettings::generalFont());
 
     QColor fg, bg;
+    QPalette palette;
 
     if (Preferences::self()->inputFieldsBackgroundColor())
     {
@@ -123,13 +124,14 @@ void ViewTree::updateAppearance()
     }
     else
     {
-        bg = palette().color(QPalette::Active, QPalette::Base); //KGlobalSettings::baseColor();
-        fg = palette().color(QPalette::Active, QPalette::Text); //KGlobalSettings::textColor();
+        fg = palette.windowText().color();
+        bg = palette.base().color();
     }
 
-    setPalette(KApplication::palette());
-    setPaletteForegroundColor(fg);
-    setPaletteBackgroundColor(bg);
+    palette.setColor(QPalette::WindowText, fg);
+    palette.setColor(QPalette::Base, bg);
+    palette.setColor(QPalette::Window, bg);
+    setPalette(palette);
 }
 
 void ViewTree::addView(const QString& name, ChatWindow* view, const QIcon &iconset, bool select, ChatWindow* afterView)
@@ -956,7 +958,7 @@ void ViewTree::paintEmptyArea(QPainter* p, const QRect& rect)
         if (!rect.contains(x-1, y+2))
             return;
 
-        QColor bgColor  = paletteBackgroundColor();
+        QColor bgColor  = palette().color(backgroundRole());
         QColor selColor = palette().color(QPalette::Active, QPalette::Highlight);  //KGlobalSettings::highlightColor();
         QColor midColor = last->mixColor(bgColor, selColor);
 
