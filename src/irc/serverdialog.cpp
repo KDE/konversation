@@ -62,8 +62,8 @@ namespace Konversation
         mainLayout->addWidget(portLbl, 0, 2);
         mainLayout->addWidget(m_portSBox, 0, 3);
         mainLayout->addWidget(passwordLbl, 1, 0);
-        mainLayout->addMultiCellWidget(m_passwordEdit, 1, 1, 1, 3);
-        mainLayout->addMultiCellWidget(m_sslChBox, 2, 2, 0, 3);
+        mainLayout->addWidget(m_passwordEdit, 1, 1, 1, 3);
+        mainLayout->addWidget(m_sslChBox, 2, 0, 1, 4);
 
         m_serverEdit->setFocus();
 

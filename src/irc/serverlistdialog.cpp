@@ -138,11 +138,11 @@ namespace Konversation
         layout->setSpacing(spacingHint());
         layout->setMargin(0);
 
-        layout->addMultiCellWidget(m_serverList, 0, 3, 0, 0);
+        layout->addWidget(m_serverList, 0, 0, 4, 1); 
         layout->addWidget(m_addButton, 0, 1);
         layout->addWidget(m_editButton, 1, 1);
         layout->addWidget(m_delButton, 2, 1);
-        layout->addMultiCellWidget(showAtStartup, 4, 4, 0, 1);
+        layout->addWidget(showAtStartup, 4, 0, 1, 2);
         layout->setRowStretch(3, 10);
 
         m_serverList->setFocus();
