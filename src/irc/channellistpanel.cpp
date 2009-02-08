@@ -571,8 +571,7 @@ void ChannelListPanel::contextMenu (K3ListView* /* l */, Q3ListViewItem* i, cons
 
     if (showURLmenu->actions().count()==1)
     {
-        showURLmenu->insertItem(i18n("<<No URL found>>"),5);
-        showURLmenu->setItemEnabled(5,false);
+        showURLmenu->addAction(i18n("<<No URL found>>"))->setEnabled(false);
     }
 
     showURLmenu->exec(p);

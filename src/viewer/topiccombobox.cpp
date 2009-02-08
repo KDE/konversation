@@ -40,7 +40,7 @@ void TopicComboBox::topicActivated(int index)
 
 void TopicComboBox::insertStringList(const QStringList& list)
 {
-    KComboBox::insertStringList(list);
+    KComboBox::insertItems(count(), list);
 
     setEditText(list[0].section(' ',1));
 }

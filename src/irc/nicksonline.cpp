@@ -33,8 +33,6 @@
 
 #include <qpushbutton.h>
 #include <qlabel.h>
-#include <q3popupmenu.h>
-#include <q3ptrlist.h>
 
 
 #include <kdebug.h>
