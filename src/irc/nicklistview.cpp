@@ -24,7 +24,6 @@
 #include <kaction.h>
 #include <kauthorized.h>
 
-#include <q3whatsthis.h>
 #include <Q3MimeSourceFactory>
 #include <QContextMenuEvent>
 #include <QDropEvent>
@@ -186,7 +185,7 @@ void NickListView::setWhatsThis()
 
     if(images->getNickIcon( Images::Normal, false).isNull())
     {
-        Q3WhatsThis::add(this, i18n("<qt><p>This shows all the people in the channel.  The nick for each person is shown.<br />Usually an icon is shown showing the status of each person, but you do not seem to have any icon theme installed.  See the Konversation settings - <i>Configure Konversation</i> under the <i>Settings</i> menu.  Then view the page for <i>Themes</i> under <i>Appearance</i>.</p></qt>"));
+        K3ListView::setWhatsThis(i18n("<qt><p>This shows all the people in the channel.  The nick for each person is shown.<br />Usually an icon is shown showing the status of each person, but you do not seem to have any icon theme installed.  See the Konversation settings - <i>Configure Konversation</i> under the <i>Settings</i> menu.  Then view the page for <i>Themes</i> under <i>Appearance</i>.</p></qt>"));
     }
     else
     {
@@ -198,7 +197,7 @@ void NickListView::setWhatsThis()
         Q3MimeSourceFactory::defaultFactory()->setImage( "normal", images->getNickIcon( Images::Normal, false ).toImage() );
         Q3MimeSourceFactory::defaultFactory()->setImage( "normalaway", images->getNickIcon( Images::Normal, true).toImage() );
 
-        Q3WhatsThis::add(this, i18n("<qt><p>This shows all the people in the channel.  The nick for each person is shown, with a picture showing their status.</p>"
+        K3ListView::setWhatsThis(i18n("<qt><p>This shows all the people in the channel.  The nick for each person is shown, with a picture showing their status.</p>"
             "<table>"
 
             "<tr><th><img src=\"admin\"/></th><td>This person has administrator privileges.</td></tr>"
