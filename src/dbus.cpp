@@ -155,7 +155,7 @@ QString DBus::getNickname(const QString& serverName)
 
     if (!server)
     {
-        error( i18n( "getNickname: Server %1 is not found." ).arg( serverName ) );
+        error( i18n( "getNickname: Server %1 is not found.",  serverName ) );
         return QString();
     }
 
