@@ -59,16 +59,15 @@ DccTransferRecv* DccTransferManager::resumeDownload( int connectionId, const QSt
     DccTransferRecv* transfer = 0;
 
     // find applicable one
-    Q3ValueListConstIterator< DccTransferRecv* > it;
-    for ( it = m_recvItems.begin() ; it != m_recvItems.end() ; ++it )
+    foreach (DccTransferRecv* it, m_recvItems )
     {
-        if ( ( (*it)->getStatus() == DccTransfer::Queued || (*it)->getStatus() == DccTransfer::WaitingRemote ) &&
-             (*it)->getConnectionId() == connectionId &&
-             (*it)->getPartnerNick() == partnerNick &&
-             (*it)->getFileName() == fileName &&
-             (*it)->isResumed() )
+        if ( ( it->getStatus() == DccTransfer::Queued || it->getStatus() == DccTransfer::WaitingRemote ) &&
+            it->getConnectionId() == connectionId &&
+            it->getPartnerNick() == partnerNick &&
+            it->getFileName() == fileName &&
+            it->isResumed() )
         {
-            transfer = (*it);
+            transfer = it;
             kDebug() << "Filename match: " << fileName << ", claimed port: " << ownPort << ", item port: " << transfer->getOwnPort();
             // the port number can be changed behind NAT, so we pick an item which only the filename is correspondent in that case.
             if ( transfer->getOwnPort() == ownPort )
@@ -89,16 +88,15 @@ DccTransferSend* DccTransferManager::resumeUpload( int connectionId, const QStri
     DccTransferSend* transfer = 0;
 
     // find applicable one
-    Q3ValueListConstIterator< DccTransferSend* > it;
-    for ( it = m_sendItems.begin() ; it != m_sendItems.end() ; ++it )
+    foreach ( DccTransferSend* it, m_sendItems )
     {
-        if ( ( (*it)->getStatus() == DccTransfer::Queued || (*it)->getStatus() == DccTransfer::WaitingRemote ) &&
-             (*it)->getConnectionId() == connectionId &&
-             (*it)->getPartnerNick() == partnerNick &&
-             (*it)->getFileName() == fileName &&
-             !(*it)->isResumed() )
+        if ( ( it->getStatus() == DccTransfer::Queued || it->getStatus() == DccTransfer::WaitingRemote ) &&
+            it->getConnectionId() == connectionId &&
+            it->getPartnerNick() == partnerNick &&
+            it->getFileName() == fileName &&
+            !it->isResumed() )
         {
-            transfer = (*it);
+            transfer = it;
             kDebug() << "Filename match: " << fileName << ", claimed port: " << ownPort << ", item port: " << transfer->getOwnPort();
             // the port number can be changed behind NAT, so we pick an item which only the filename is correspondent in that case.
             if ( transfer->getOwnPort() == ownPort )
@@ -120,19 +118,18 @@ DccTransferSend* DccTransferManager::startReverseSending( int connectionId, cons
     DccTransferSend* transfer = 0;
 
     // find applicable one
-    Q3ValueListConstIterator< DccTransferSend* > it;
-    for ( it = m_sendItems.begin() ; it != m_sendItems.end() ; ++it )
+    foreach ( DccTransferSend* it, m_sendItems )
     {
         if (
-            (*it)->getStatus() == DccTransfer::WaitingRemote &&
-            (*it)->getConnectionId() == connectionId &&
-            (*it)->getPartnerNick() == partnerNick &&
-            (*it)->getFileName() == fileName &&
-            (*it)->getFileSize() == fileSize &&
-            (*it)->getReverseToken() == token
+            it->getStatus() == DccTransfer::WaitingRemote &&
+            it->getConnectionId() == connectionId &&
+            it->getPartnerNick() == partnerNick &&
+            it->getFileName() == fileName &&
+            it->getFileSize() == fileSize &&
+            it->getReverseToken() == token
         )
         {
-            transfer = (*it);
+            transfer = it;
             break;
         }
     }
@@ -152,12 +149,11 @@ void DccTransferManager::initTransfer( DccTransfer* transfer )
 
 bool DccTransferManager::isLocalFileInWritingProcess( const KUrl& url ) const
 {
-    Q3ValueListConstIterator< DccTransferRecv* > it;
-    for ( it = m_recvItems.begin() ; it != m_recvItems.end() ; ++it )
+    foreach ( DccTransferRecv* it, m_recvItems )
     {
-        if ( ( (*it)->getStatus() == DccTransfer::Connecting ||
-               (*it)->getStatus() == DccTransfer::Transferring ) &&
-             (*it)->getFileURL() == url )
+        if ( ( it->getStatus() == DccTransfer::Connecting ||
+               it->getStatus() == DccTransfer::Transferring ) &&
+            it->getFileURL() == url )
         {
             return true;
         }
@@ -172,17 +168,15 @@ int DccTransferManager::generateReverseTokenNumber()
 
 bool DccTransferManager::hasActiveTransfers()
 {
-    Q3ValueListConstIterator< DccTransferSend* > it;
-    for ( it = m_sendItems.begin() ; it != m_sendItems.end() ; ++it )
+    foreach ( DccTransferSend* it, m_sendItems )
     {
-        if ((*it)->getStatus() == DccTransfer::Transferring)
+        if (it->getStatus() == DccTransfer::Transferring)
             return true;
     }
 
-    Q3ValueListConstIterator< DccTransferRecv* > it2;
-    for ( it2 = m_recvItems.begin() ; it2 != m_recvItems.end() ; ++it2 )
+    foreach ( DccTransferRecv* it, m_recvItems )
     {
-        if ((*it2)->getStatus() == DccTransfer::Transferring)
+        if (it->getStatus() == DccTransfer::Transferring)
             return true;
     }
 
@@ -202,18 +196,17 @@ void DccTransferManager::slotSettingsChanged()
     // update the default incoming directory for already existed DCCRECV items
     if ( Preferences::self()->dccPath() != m_defaultIncomingFolder )
     {
-        Q3ValueListConstIterator< DccTransferRecv* > it;
-        for ( it = m_recvItems.begin() ; it != m_recvItems.end() ; ++it )
+        foreach ( DccTransferRecv* it, m_recvItems )
         {
-            if ( (*it)->getStatus() == DccTransfer::Queued &&
-                 (*it)->getFileURL().directory() == m_defaultIncomingFolder )
+            if ( it->getStatus() == DccTransfer::Queued &&
+                 it->getFileURL().directory() == m_defaultIncomingFolder )
             {
                 KUrl url;
                 url.setDirectory( Preferences::self()->dccPath() );
-                url.setFileName( (*it)->getFileURL().fileName() );
-                (*it)->setFileURL( url );
+                url.setFileName( it->getFileURL().fileName() );
+                it->setFileURL( url );
 
-                emit fileURLChanged( *it );
+                emit fileURLChanged( it );
             }
         }
 
@@ -224,14 +217,14 @@ void DccTransferManager::slotSettingsChanged()
 void DccTransferManager::removeSendItem( DccTransfer* item_ )
 {
     DccTransferSend* item = static_cast< DccTransferSend* > ( item_ );
-    m_sendItems.remove( item );
+    m_sendItems.removeOne( item );
     item->deleteLater();
 }
 
 void DccTransferManager::removeRecvItem( DccTransfer* item_ )
 {
     DccTransferRecv* item = static_cast< DccTransferRecv* > ( item_ );
-    m_recvItems.remove( item );
+    m_recvItems.removeOne( item );
     item->deleteLater();
 }
 

@@ -18,10 +18,9 @@
 #ifndef DCCTRANSFERMANAGER_H
 #define DCCTRANSFERMANAGER_H
 
-#include "transfer.h" ////// header renamed
+#include "transfer.h"
 
 #include <qobject.h>
-#include <q3valuelist.h>
 
 
 class KUrl;
@@ -85,8 +84,8 @@ class DccTransferManager : public QObject
         void slotSettingsChanged();
 
     private:
-        Q3ValueList< DccTransferSend* > m_sendItems;
-        Q3ValueList< DccTransferRecv* > m_recvItems;
+        QList< DccTransferSend* > m_sendItems;
+        QList< DccTransferRecv* > m_recvItems;
 
         int m_nextReverseTokenNumber;
         QString m_defaultIncomingFolder;  // store here to know if this settings is changed
