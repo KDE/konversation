@@ -95,4 +95,4 @@ namespace Konversation
     }
 }
 
-// #include "./viewer/trayicon.moc"
+#include "trayicon.moc"

@@ -972,4 +972,4 @@ void ViewTree::paintEmptyArea(QPainter* p, const QRect& rect)
     }
 }
 
-// #include "./viewer/viewtree.moc"
+#include "viewtree.moc"

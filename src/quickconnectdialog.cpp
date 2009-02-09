@@ -111,4 +111,4 @@ void QuickConnectDialog::slotOk()
     }
 }
 
-// #include "./quickconnectdialog.moc"
+#include "quickconnectdialog.moc"

@@ -401,4 +401,4 @@ void StatusPanel::popupCommand(int command)
     }
 }
 
-// #include "./statuspanel.moc"
+#include "statuspanel.moc"

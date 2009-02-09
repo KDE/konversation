@@ -881,4 +881,4 @@ QString KonversationMainWindow::currentTitle()
     return m_viewContainer->currentViewTitle();
 }
 
-// // #include "./mainwindow.moc"
+#include "mainwindow.moc"

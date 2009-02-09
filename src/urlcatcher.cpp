@@ -233,4 +233,4 @@ void UrlCatcher::childAdjustFocus()
 {
 }
 
-// #include "./urlcatcher.moc"
+#include "urlcatcher.moc"

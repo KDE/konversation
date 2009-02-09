@@ -231,4 +231,4 @@ void SearchBar::showOptionsMenu()
   m_optionsButton->showMenu();
 }
 
-// #include "./viewer/searchbar.moc"
+#include "searchbar.moc"

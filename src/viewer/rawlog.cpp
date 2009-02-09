@@ -76,4 +76,4 @@ bool RawLog::closeYourself()
 
 bool RawLog::searchView() { return true; }
 
-// #include "./viewer/rawlog.moc"
+#include "rawlog.moc"
