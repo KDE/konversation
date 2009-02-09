@@ -135,9 +135,9 @@ void resetNickSelection();
 
         int getPreLength(const QString& command, const QString& dest);
 
-        void dcopRaw(const QString& command);
-        void dcopSay(const QString& target,const QString& command);
-        void dcopInfo(const QString& string);
+        void dbusRaw(const QString& command);
+        void dbusSay(const QString& target,const QString& command);
+        void dbusInfo(const QString& string);
         void ctcpReply(const QString& receiver, const QString& text);
 
         void setChannelTopic(const QString& channel, const QString& topic);

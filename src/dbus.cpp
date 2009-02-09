@@ -40,7 +40,7 @@ void DBus::raw(const QString& server,const QString& command)
 {
     kDebug();
     // send raw IRC protocol data
-    emit dcopRaw(server,command);
+    emit dbusRaw(server,command);
 }
 
 QStringList DBus::listServers()
@@ -91,12 +91,12 @@ void DBus::setScreenSaverStopped()
 
 void DBus::sayToAll(const QString &message)
 {
-    emit dcopMultiServerRaw("msg " + message);
+    emit dbusMultiServerRaw("msg " + message);
 }
 
 void DBus::actionToAll(const QString &message)
 {
-    emit dcopMultiServerRaw("me " + message);
+    emit dbusMultiServerRaw("me " + message);
 }
 
 void DBus::say(const QString& _server,const QString& _target,const QString& _command)
@@ -117,31 +117,31 @@ void DBus::say(const QString& _server,const QString& _target,const QString& _com
         server.remove('\n');
         server.remove('\r');
         // Act as if the user typed it
-        emit dcopSay(server,target,command);
+        emit dbusSay(server,target,command);
     }
 }
 
 void DBus::info(const QString& string)
 {
     kDebug();
-    emit dcopInfo(string);
+    emit dbusInfo(string);
 }
 
 void DBus::debug(const QString& string)
 {
     kDebug();
-    emit dcopInfo(QString("Debug: %1").arg(string));
+    emit dbusInfo(QString("Debug: %1").arg(string));
 }
 
 void DBus::error(const QString& string)
 {
     kDebug();
-    emit dcopInfo(QString("Error: %1").arg(string));
+    emit dbusInfo(QString("Error: %1").arg(string));
 }
 
 void DBus::insertMarkerLine()
 {
-    emit dcopInsertMarkerLine();
+    emit dbusInsertMarkerLine();
 }
 
 void DBus::connectToServer(const QString& address, int port, const QString& channel, const QString& password)

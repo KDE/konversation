@@ -872,7 +872,7 @@ QString Server::getNextNickname()
         resetNickSelection();
 
     QString newNick;
-    
+
     if (!m_nickIndices.isEmpty())
     {
         newNick = getIdentity()->getNickname(m_nickIndices.takeFirst());
@@ -1221,7 +1221,7 @@ void Server::closed()
     broken(m_socket->error());
 }
 
-void Server::dcopRaw(const QString& command)
+void Server::dbusRaw(const QString& command)
 {
     if(command.startsWith(Preferences::self()->commandChar()))
     {
@@ -1231,7 +1231,7 @@ void Server::dcopRaw(const QString& command)
         queue(command);
 }
 
-void Server::dcopSay(const QString& target,const QString& command)
+void Server::dbusSay(const QString& target,const QString& command)
 {
     if(isAChannel(target))
     {
@@ -1261,7 +1261,7 @@ void Server::dcopSay(const QString& target,const QString& command)
     }
 }
 
-void Server::dcopInfo(const QString& string)
+void Server::dbusInfo(const QString& string)
 {
     appendMessageToFrontmost(i18n("D-Bus"),string);
 }

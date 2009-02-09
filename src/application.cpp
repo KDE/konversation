@@ -177,15 +177,15 @@ int KonversationApplication::newInstance()
 
         if (dbusObject)
         {
-            connect(dbusObject,SIGNAL (dcopMultiServerRaw(const QString&)),
-                this,SLOT (dcopMultiServerRaw(const QString&)) );
-            connect(dbusObject,SIGNAL (dcopRaw(const QString&,const QString&)),
-                this,SLOT (dcopRaw(const QString&,const QString&)) );
-            connect(dbusObject,SIGNAL (dcopSay(const QString&,const QString&,const QString&)),
-                this,SLOT (dcopSay(const QString&,const QString&,const QString&)) );
-            connect(dbusObject,SIGNAL (dcopInfo(const QString&)),
-                this,SLOT (dcopInfo(const QString&)) );
-            connect(dbusObject,SIGNAL (dcopInsertMarkerLine()),
+            connect(dbusObject,SIGNAL (dbusMultiServerRaw(const QString&)),
+                this,SLOT (dbusMultiServerRaw(const QString&)) );
+            connect(dbusObject,SIGNAL (dbusRaw(const QString&,const QString&)),
+                this,SLOT (dbusRaw(const QString&,const QString&)) );
+            connect(dbusObject,SIGNAL (dbusSay(const QString&,const QString&,const QString&)),
+                this,SLOT (dbusSay(const QString&,const QString&,const QString&)) );
+            connect(dbusObject,SIGNAL (dbusInfo(const QString&)),
+                this,SLOT (dbusInfo(const QString&)) );
+            connect(dbusObject,SIGNAL (dbusInsertMarkerLine()),
                 mainWindow,SIGNAL(insertMarkerLine()));
             connect(dbusObject, SIGNAL(connectTo(Konversation::ConnectionFlag, const QString&, const QString&, const QString&, const QString&, const QString&, bool)),
                 m_connectionManager, SLOT(connectTo(Konversation::ConnectionFlag, const QString&, const QString&, const QString&, const QString&, const QString&, bool)));
@@ -230,12 +230,12 @@ void KonversationApplication::showQueueTuner(bool p)
     getMainWindow()->getViewContainer()->showQueueTuner(p);
 }
 
-void KonversationApplication::dcopMultiServerRaw(const QString &command)
+void KonversationApplication::dbusMultiServerRaw(const QString &command)
 {
     sendMultiServerCommand(command.section(' ', 0,0), command.section(' ', 1));
 }
 
-void KonversationApplication::dcopRaw(const QString& connection, const QString &command)
+void KonversationApplication::dbusRaw(const QString& connection, const QString &command)
 {
     Server* server = 0;
 
@@ -246,11 +246,11 @@ void KonversationApplication::dcopRaw(const QString& connection, const QString &
 
     if (!server) server = getConnectionManager()->getServerByName(connection);
 
-    if (server) server->dcopRaw(command);
+    if (server) server->dbusRaw(command);
 }
 
 
-void KonversationApplication::dcopSay(const QString& connection, const QString& target, const QString& command)
+void KonversationApplication::dbusSay(const QString& connection, const QString& target, const QString& command)
 {
     Server* server = 0;
 
@@ -261,10 +261,10 @@ void KonversationApplication::dcopSay(const QString& connection, const QString& 
 
     if (!server) server = getConnectionManager()->getServerByName(connection);
 
-    if (server) server->dcopSay(target, command);
+    if (server) server->dbusSay(target, command);
 }
 
-void KonversationApplication::dcopInfo(const QString& string)
+void KonversationApplication::dbusInfo(const QString& string)
 {
     mainWindow->getViewContainer()->appendToFrontmost(i18n("D-Bus"), string, 0);
 }

@@ -135,10 +135,10 @@ class KonversationApplication : public KUniqueApplication
     protected slots:
         void openQuickConnectDialog();
 
-        void dcopMultiServerRaw(const QString &command);
-        void dcopRaw(const QString& connection, const QString &command);
-        void dcopSay(const QString& connection, const QString& target, const QString& command);
-        void dcopInfo(const QString& string);
+        void dbusMultiServerRaw(const QString &command);
+        void dbusRaw(const QString& connection, const QString &command);
+        void dbusSay(const QString& connection, const QString& target, const QString& command);
+        void dbusInfo(const QString& string);
         void sendMultiServerCommand(const QString& command, const QString& parameter);
 
 

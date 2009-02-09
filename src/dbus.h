@@ -35,11 +35,11 @@ class DBus : public QObject
         QString getChannelEncoding(const QString& server, const QString& channel);
 
     signals:
-        void dcopSay(const QString& server,const QString& target,const QString& command);
-        void dcopInfo(const QString& string);
-        void dcopInsertMarkerLine();
-        void dcopRaw(const QString& server, const QString& command);
-        void dcopMultiServerRaw(const QString& command);
+        void dbusSay(const QString& server,const QString& target,const QString& command);
+        void dbusInfo(const QString& string);
+        void dbusInsertMarkerLine();
+        void dbusRaw(const QString& server, const QString& command);
+        void dbusMultiServerRaw(const QString& command);
 
         void connectTo(Konversation::ConnectionFlag flag,
                        const QString& hostName,

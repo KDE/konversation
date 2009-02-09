@@ -232,7 +232,7 @@ namespace Konversation
             return;
         }
 
-        nickInfo->getServer()->dcopSay(nickInfo->getNickname(), message);
+        nickInfo->getServer()->dbusSay(nickInfo->getNickname(), message);
     }
 
     /**
