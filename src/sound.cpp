@@ -16,9 +16,7 @@
 #include <config-konvi.h>
 #include <kurl.h>
 
-#ifdef USE_KNOTIFY
 #include <knotification.h>
-#endif
 
 
 namespace Konversation
@@ -32,9 +30,10 @@ namespace Konversation
 
     void Sound::play(const KUrl& url)
     {
-        #ifdef USE_KNOTIFY
-        KNotifyClient::userEvent(0,QString(),1,1,url.path());
-        #endif
+#warning "Port to kde4: knotification API"
+#if 0
+        KNotification::userEvent(0,QString(),1,1,url.path());
+#endif
     }
 }
 
