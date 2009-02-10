@@ -419,7 +419,7 @@ void IRCView::doAppend(const QString& newLine, bool self)
 
     line.remove('\n'); // TODO why have newlines? we get <p>, so the \n are unnecessary...
 
-    line.remove(0,3);//remove <p> for qtextbrowser
+    line.remove("<p>");//remove <p> for qtextbrowser
     QTextBrowser::append(line);
 
     //appendHtml(line);
