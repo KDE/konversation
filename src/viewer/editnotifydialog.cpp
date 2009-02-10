@@ -72,7 +72,7 @@ const QString& nickname):
 
     networkNames.sort();
     // Add network names to network combobox and select the one corresponding to argument.
-    for (QStringList::ConstIterator it = networkNames.begin(); it != networkNames.end(); ++it)
+    for (QStringList::ConstIterator it = networkNames.constBegin(); it != networkNames.constEnd(); ++it)
     {
         m_networkNameCombo->addItem(*it);
         if(*it == network) m_networkNameCombo->setCurrentIndex(m_networkNameCombo->count()-1);

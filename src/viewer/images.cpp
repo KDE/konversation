@@ -189,7 +189,7 @@ void Images::initializeNickIcons()
     if ( icons.count() < 7 ) // Sanity
         return;
     icons.sort();
-    QStringList::ConstIterator it = icons.begin();
+    QStringList::ConstIterator it = icons.constBegin();
 
     /* The list is sorted alphabetically. */
 

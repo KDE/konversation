@@ -2442,7 +2442,7 @@ void ViewContainer::showNextActiveView()
 
         QList<ChatWindow*>::ConstIterator it;
 
-        for (it = m_activeViewOrderList.begin(); it != m_activeViewOrderList.end(); ++it)
+        for (it = m_activeViewOrderList.constBegin(); it != m_activeViewOrderList.constEnd(); ++it)
         {
             if ((*it)->currentTabNotification() < prev->currentTabNotification())
                 view = (*it);

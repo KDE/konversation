@@ -492,7 +492,7 @@ void Channel::popupCommand(int id)
         case Konversation::AddressbookEdit:
         {
             ChannelNickList nickList=getSelectedChannelNicks();
-            for(ChannelNickList::ConstIterator it=nickList.begin();it!=nickList.end();++it)
+            for(ChannelNickList::ConstIterator it=nickList.constBegin();it!=nickList.constEnd();++it)
             {
                 if(!(*it)->getNickInfo()->editAddressee()) break;;
             }
@@ -506,7 +506,7 @@ void Channel::popupCommand(int id)
             //Handle all the selected nicks in one go.  Either they all save, or none do.
             if(addressbook->getAndCheckTicket())
             {
-                for(ChannelNickList::ConstIterator it=nickList.begin();it!=nickList.end();++it)
+                for(ChannelNickList::ConstIterator it=nickList.constBegin();it!=nickList.constEnd();++it)
                 {
                     if(id == Konversation::AddressbookDelete)
                     {
@@ -533,7 +533,7 @@ void Channel::popupCommand(int id)
         case Konversation::AddressbookChange:
         {
             ChannelNickList nickList=getSelectedChannelNicks();
-            for(ChannelNickList::ConstIterator it=nickList.begin();it!=nickList.end();++it)
+            for(ChannelNickList::ConstIterator it=nickList.constBegin();it!=nickList.constEnd();++it)
             {
                 (*it)->getNickInfo()->showLinkAddressbookUI();
             }
@@ -990,7 +990,7 @@ QString Channel::getPassword()
 {
     QString password;
 
-    for (QStringList::const_iterator it = m_modeList.begin(); it != m_modeList.end(); ++it)
+    for (QStringList::const_iterator it = m_modeList.constBegin(); it != m_modeList.constEnd(); ++it)
     {
         if ((*it)[0] == 'k') password = (*it).mid(1);
     }
@@ -2017,7 +2017,7 @@ void Channel::clearModeList()
     QString k;
 
     // Keep channel password in the backing store, for rejoins.
-    for (QStringList::const_iterator it = m_modeList.begin(); it != m_modeList.end(); ++it)
+    for (QStringList::const_iterator it = m_modeList.constBegin(); it != m_modeList.constEnd(); ++it)
     {
         if ((*it)[0] == 'k') k = (*it);
     }

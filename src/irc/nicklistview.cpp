@@ -270,7 +270,7 @@ void NickListView::updateActions()
     ChannelNickList nickList=channel->getSelectedChannelNicks();
     ChannelNickList::ConstIterator it;
 
-    for (it = nickList.begin(); it != nickList.end(); ++it)
+    for (it = nickList.constBegin(); it != nickList.constEnd(); ++it)
     {
         if (Preferences::isIgnored((*it)->getNickname()))
             ++unignoreCounter;
@@ -307,7 +307,7 @@ void NickListView::insertAssociationSubMenu()
     addressbook->clear();
 
     ChannelNickList nickList=channel->getSelectedChannelNicks();
-    for(ChannelNickList::ConstIterator it=nickList.begin();it!=nickList.end();++it)
+    for(ChannelNickList::ConstIterator it=nickList.constBegin();it!=nickList.constEnd();++it)
     {
         KABC::Addressee addr = (*it)->getNickInfo()->getAddressee();
         if(addr.isEmpty())

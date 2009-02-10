@@ -170,11 +170,11 @@ Server::~Server()
 
     ChannelMembershipMap::ConstIterator it;
 
-    for ( it = m_joinedChannels.begin(); it != m_joinedChannels.end(); ++it )
+    for ( it = m_joinedChannels.constBegin(); it != m_joinedChannels.constEnd(); ++it )
         delete it.value();
     m_joinedChannels.clear();
 
-    for ( it = m_unjoinedChannels.begin(); it != m_unjoinedChannels.end(); ++it )
+    for ( it = m_unjoinedChannels.constBegin(); it != m_unjoinedChannels.constEnd(); ++it )
         delete it.value();
     m_unjoinedChannels.clear();
 
@@ -1389,7 +1389,7 @@ QStringList Server::getNickJoinedChannels(const QString& nickname)
     QString lcNickname = nickname.toLower();
     QStringList channellist;
     ChannelMembershipMap::ConstIterator channel;
-    for( channel = m_joinedChannels.begin(); channel != m_joinedChannels.end(); ++channel )
+    for( channel = m_joinedChannels.constBegin(); channel != m_joinedChannels.constEnd(); ++channel )
     {
         if (channel.value()->contains(lcNickname)) channellist.append(channel.key());
     }
@@ -1402,11 +1402,11 @@ QStringList Server::getNickChannels(const QString& nickname)
     QString lcNickname = nickname.toLower();
     QStringList channellist;
     ChannelMembershipMap::ConstIterator channel;
-    for( channel = m_joinedChannels.begin(); channel != m_joinedChannels.end(); ++channel )
+    for( channel = m_joinedChannels.constBegin(); channel != m_joinedChannels.constEnd(); ++channel )
     {
         if (channel.value()->contains(lcNickname)) channellist.append(channel.key());
     }
-    for( channel = m_unjoinedChannels.begin(); channel != m_unjoinedChannels.end(); ++channel )
+    for( channel = m_unjoinedChannels.constBegin(); channel != m_unjoinedChannels.constEnd(); ++channel )
     {
         if (channel.value()->contains(lcNickname)) channellist.append(channel.key());
     }
@@ -1511,8 +1511,8 @@ void Server::requestWho(const QString& channel)
 
 void Server::requestUserhost(const QString& nicks)
 {
-    QStringList nicksList = nicks.split(" ", QString::SkipEmptyParts);
-    for(QStringList::ConstIterator it=nicksList.begin() ; it!=nicksList.end() ; ++it)
+    const QStringList nicksList = nicks.split(" ", QString::SkipEmptyParts);
+    for(QStringList::ConstIterator it=nicksList.constBegin() ; it!=nicksList.constEnd() ; ++it)
         m_inputFilter.setAutomaticRequest("USERHOST", *it, true);
     queue("USERHOST "+nicks, LowPriority);
 }

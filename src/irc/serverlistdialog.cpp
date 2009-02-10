@@ -469,7 +469,7 @@ namespace Konversation
 
         Q3ListViewItem* networkItem = 0;
 
-        for(it = serverGroups.begin(); it != serverGroups.end(); ++it)
+        for(it = serverGroups.constBegin(); it != serverGroups.constEnd(); ++it)
         {
             networkItem = insertServerGroup((*it));
 
@@ -529,7 +529,7 @@ namespace Konversation
         Konversation::ServerList::const_iterator serverIt;
 
         int i = 0;
-        for (serverIt = serverList.begin(); serverIt != serverList.end(); ++serverIt)
+        for (serverIt = serverList.constBegin(); serverIt != serverList.constEnd(); ++serverIt)
         {
             // Produce a string representation of the server object
             QString name = (*serverIt).host();
