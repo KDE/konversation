@@ -224,7 +224,6 @@ class IRCView : public QPlainTextEdit
 
         //// Popup menus
         KMenu* m_popup; ///< text area context menu
-        int toggleMenuBarSeparator; ///< stores the ID of the separator
         int copyUrlMenuSeparator; ///< stores the ID of the separator
         bool m_copyUrlMenu; ///<the menu we're popping up, is it for copying URI?
         QString m_highlightedURL;   // the URL we're currently hovering on with the mouse

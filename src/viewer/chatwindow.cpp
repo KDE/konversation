@@ -303,7 +303,7 @@ void ChatWindow::setLogfileName(const QString& name)
                     firstColumns = firstColumnsInPacket + firstColumns;
                     messages = messagesInPacket + messages;
                 }
-                backlog.unsetDevice();
+                backlog.setDevice(0);
                 logfile.close();
 
                 // trim
@@ -356,7 +356,7 @@ void ChatWindow::logText(const QString& text)
             logStream << logLine;
 
             // detach stream from file
-            logStream.unsetDevice();
+            logStream.setDevice(0);
 
             // close file
             logfile.close();

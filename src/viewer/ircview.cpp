@@ -128,8 +128,8 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : QPlainTextEdit(parent)
 
     m_popup = new KMenu(this);
     m_popup->setObjectName("ircview_context_menu");
-    toggleMenuBarSeparator = m_popup->insertSeparator();
-    m_popup->setItemVisible(toggleMenuBarSeparator, false);
+    QAction * toggleMenuBarSeparator = m_popup->addSeparator();
+    toggleMenuBarSeparator->setVisible(false);
     copyUrlMenuSeparator = m_popup->insertSeparator();
     m_popup->setItemVisible(copyUrlMenuSeparator, false);
     m_popup->insertItem(KIcon("edit-copy"),i18n("&Copy"),Copy);
