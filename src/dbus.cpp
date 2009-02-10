@@ -188,7 +188,7 @@ QStringList IdentDBus::listIdentities()
 {
     QStringList identities;
     IdentityList ids = Preferences::identityList();
-    for(IdentityList::ConstIterator it = ids.begin(); it != ids.end(); ++it)
+    for(IdentityList::ConstIterator it = ids.constBegin(); it != ids.constEnd(); ++it)
     {
         identities.append((*it)->getName());
     }
@@ -214,7 +214,7 @@ QString IdentDBus::getrealName(const QString &id_name)
 {
     IdentityList ids = Preferences::identityList();
 
-    for(IdentityList::ConstIterator it = ids.begin(); it != ids.end(); ++it)
+    for(IdentityList::ConstIterator it = ids.constBegin(); it != ids.constEnd(); ++it)
     {
         if ((*it)->getName() == id_name)
         {

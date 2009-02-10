@@ -261,7 +261,7 @@ void AwayManager::implementIdleAutoAway(bool activity)
         QList<int> identitiesIdleTimeExceeded;
         QList<int>::ConstIterator it;
 
-        for (it = m_identitiesOnAutoAway.begin(); it != m_identitiesOnAutoAway.end(); ++it)
+        for (it = m_identitiesOnAutoAway.constBegin(); it != m_identitiesOnAutoAway.constEnd(); ++it)
         {
             if (idleTime >= Preferences::identityById((*it))->getAwayInactivity() * 60)
                 identitiesIdleTimeExceeded.append((*it));

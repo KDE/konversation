@@ -437,12 +437,12 @@ const IdentityPtr Preferences::identityById(int id)
 QStringList Preferences::defaultAliasList()
 {
     // Auto-alias scripts
-    QStringList scripts = KGlobal::dirs()->findAllResources("data","konversation/scripts/*");
+    const QStringList scripts = KGlobal::dirs()->findAllResources("data","konversation/scripts/*");
     QFileInfo* fileInfo = new QFileInfo();
     QStringList aliasList;
     QString newAlias;
 
-    for (QStringList::ConstIterator it = scripts.begin(); it != scripts.end(); ++it)
+    for (QStringList::ConstIterator it = scripts.constBegin(); it != scripts.constEnd(); ++it)
     {
         fileInfo->setFile(*it);
         if (fileInfo->isExecutable())

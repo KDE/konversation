@@ -114,9 +114,9 @@ int KonversationApplication::newInstance()
 
         // Auto-alias scripts.  This adds any missing aliases
         QStringList aliasList(Preferences::self()->aliasList());
-        QStringList scripts(Preferences::defaultAliasList());
+        const QStringList scripts(Preferences::defaultAliasList());
         bool changed = false;
-        for ( QStringList::ConstIterator it = scripts.begin(); it != scripts.end(); ++it )
+        for ( QStringList::ConstIterator it = scripts.constBegin(); it != scripts.constEnd(); ++it )
         {
             if(!aliasList.contains(*it)) {
                 changed = true;
@@ -570,7 +570,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
     IdentityList identityList = Preferences::identityList();
     int index = 0;
 
-    for (IdentityList::ConstIterator it = identityList.begin(); it != identityList.end(); ++it)
+    for (IdentityList::ConstIterator it = identityList.constBegin(); it != identityList.constEnd(); ++it)
     {
         IdentityPtr identity = (*it);
         KConfigGroup cgIdentity(KGlobal::config()->group(QString("Identity %1").arg(index)));

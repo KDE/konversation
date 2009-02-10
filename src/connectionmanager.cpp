@@ -226,7 +226,7 @@ void ConnectionManager::quitServers()
 {
     QMap<int, Server*>::ConstIterator it;
 
-    for (it = m_connectionList.begin(); it != m_connectionList.end(); ++it)
+    for (it = m_connectionList.constBegin(); it != m_connectionList.constEnd(); ++it)
         it.value()->quitServer();
 }
 
@@ -406,7 +406,7 @@ bool ConnectionManager::reuseExistingConnection(ConnectionSettings& settings, bo
 
     QMap<int, Server*>::ConstIterator it;
 
-    for (it = m_connectionList.begin(); it != m_connectionList.end(); ++it)
+    for (it = m_connectionList.constBegin(); it != m_connectionList.constEnd(); ++it)
     {
         if (it.value()->getServerGroup() && settings.serverGroup()
             && it.value()->getServerGroup() == settings.serverGroup())
@@ -420,7 +420,7 @@ bool ConnectionManager::reuseExistingConnection(ConnectionSettings& settings, bo
 
     if (!dupe)
     {
-        for (it = m_connectionList.begin(); it != m_connectionList.end(); ++it)
+        for (it = m_connectionList.constBegin(); it != m_connectionList.constEnd(); ++it)
         {
             if (it.value()->getConnectionSettings().server() == settings.server())
             {
@@ -545,7 +545,7 @@ QList<Server*> ConnectionManager::getServerList() const
 
     QMap<int, Server*>::ConstIterator it;
 
-    for (it = m_connectionList.begin(); it != m_connectionList.end(); ++it)
+    for (it = m_connectionList.constBegin(); it != m_connectionList.constEnd(); ++it)
         serverList.append(it.value());
 
     return serverList;
@@ -563,7 +563,7 @@ Server* ConnectionManager::getServerByName(const QString& name)
 {
     QMap<int, Server*>::ConstIterator it;
 
-    for (it = m_connectionList.begin(); it != m_connectionList.end(); ++it)
+    for (it = m_connectionList.constBegin(); it != m_connectionList.constEnd(); ++it)
     {
         if (it.value()->getDisplayName() == name || it.value()->getServerName() == name)
             return it.value();
