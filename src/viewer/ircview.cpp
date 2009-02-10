@@ -89,7 +89,7 @@ IRCView::clear()
 //IRCView::setupChannelPopupMenu()
 #endif
 
-IRCView::IRCView(QWidget* parent, Server* newServer) : QPlainTextEdit(parent)
+IRCView::IRCView(QWidget* parent, Server* newServer) : QTextBrowser(parent)
 {
 
     m_copyUrlMenu = false;
@@ -108,6 +108,8 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : QPlainTextEdit(parent)
     //m_disableEnsureCursorVisible = false;
     //m_wasPainted = false;
 
+    connect(this, SIGNAL(anchorClicked(QUrl)), this, SLOT(anchorClicked(QUrl)));
+    setOpenLinks(false);
     setUndoRedoEnabled(0);
     //setLinkUnderline(false);
     document()->setDefaultStyleSheet("a.nick:link {text-decoration: none}");
@@ -411,10 +413,14 @@ void IRCView::doAppend(const QString& newLine, bool self)
     if (scrollMax != 0) {
         //don't remove lines if the user has scrolled up to read old lines
         bool atBottom = (verticalScrollBar()->value() == verticalScrollBar()->maximum());
-        setMaximumBlockCount(atBottom ? scrollMax : maximumBlockCount() + 1);
+        document()->setMaximumBlockCount(atBottom ? scrollMax : document()->maximumBlockCount() + 1);
+        //setMaximumBlockCount(atBottom ? scrollMax : maximumBlockCount() + 1);
     }
 
     line.remove('\n'); // TODO why have newlines? we get <p>, so the \n are unnecessary...
+
+    line.remove(0,3);//remove <p> for qtextbrowser
+    QTextBrowser::append(line);
 
     appendHtml(line);
 
@@ -825,7 +831,7 @@ void IRCView::contentsMouseMoveEvent(QMouseEvent* ev)
 }
 */
 void IRCView::mouseMoveEvent(QMouseEvent *e)
-{
+{/*
     const QPoint pos = e->pos();
     QTextCharFormat fmt=cursorForPosition(pos).charFormat();
     if (m_fmtUnderMouse != fmt)
@@ -840,13 +846,13 @@ void IRCView::mouseMoveEvent(QMouseEvent *e)
             viewport()->setCursor(Qt::ArrowCursor);
         }
     }
-    highlightedSlot(m_highlightedURL);
+    highlightedSlot(m_highlightedURL);*/
     //it doesn't seem to do anything we're overly concerned about
-    QPlainTextEdit::mouseMoveEvent(e);
+    QTextBrowser::mouseMoveEvent(e);
 }
 
 void IRCView::mousePressEvent(QMouseEvent* ev)
-{
+{/*
     if (ev->button() == Qt::LeftButton)
     {
         m_urlToDrag = m_highlightedURL;
@@ -857,13 +863,13 @@ void IRCView::mousePressEvent(QMouseEvent* ev)
             m_pressPosition = ev->pos();
             return;
         }
-    }
+    }*/
 
-    QPlainTextEdit::mousePressEvent(ev);
+    QTextBrowser::mousePressEvent(ev);
 }
 
 void IRCView::mouseReleaseEvent(QMouseEvent *ev)
-{
+{/*
     if (ev->button() == Qt::MidButton)
     {
         if (m_copyUrlMenu)
@@ -890,8 +896,13 @@ void IRCView::mouseReleaseEvent(QMouseEvent *ev)
             return;
         }
     }
+*/
+    QTextBrowser::mouseReleaseEvent(ev);
+}
 
-    QPlainTextEdit::mouseReleaseEvent(ev);
+void IRCView::anchorClicked(const QUrl& url)
+{
+    openLink(url.toString());
 }
 
 // FIXME do we still care about newtab? looks like konqi has lots of config now..

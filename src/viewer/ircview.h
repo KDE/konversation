@@ -29,6 +29,7 @@
 
 //#include <ktextbrowser.h>
 #include <QPlainTextEdit>
+#include <QTextBrowser>
 
 class QDropEvent;
 
@@ -37,7 +38,7 @@ class KMenu;
 class Server;
 class ChatWindow;
 
-class IRCView : public QPlainTextEdit
+class IRCView : public QTextBrowser
 {
     Q_OBJECT
 
@@ -153,6 +154,7 @@ class IRCView : public QPlainTextEdit
     protected slots:
         void highlightedSlot(const QString& link);
         void saveLinkAs(const QString& url);
+        void anchorClicked(const QUrl& url);
 
     protected:
         void openLink(const QString &url, bool newTab=false);
