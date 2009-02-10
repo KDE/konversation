@@ -296,7 +296,7 @@ namespace Konversation
             {
                 result.output=QString();
                 result.outputList=outputList;
-                for ( QStringList::Iterator it = outputList.begin(); it != outputList.end(); ++it )
+                for ( QStringList::ConstIterator it = outputList.constBegin(); it != outputList.constEnd(); ++it )
                 {
                     result.toServerList += "PRIVMSG " + destination + " :" + *it;
                 }
@@ -1364,7 +1364,7 @@ namespace Konversation
             QStringList failed;
 
             // Iterate over potential unignores
-            for (QStringList::Iterator it = unignoreList.begin(); it != unignoreList.end(); ++it)
+            for (QStringList::ConstIterator it = unignoreList.constBegin(); it != unignoreList.constEnd(); ++it)
             {
                 // If pattern looks incomplete, try to complete it
                 if (!(*it).contains('!'))

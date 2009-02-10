@@ -264,7 +264,7 @@ void Query::sendQueryText(const QString& sendLine)
         else if (result.outputList.count())
         {
             Q_ASSERT(result.type==Konversation::Message);
-            for ( QStringList::Iterator it = result.outputList.begin(); it != result.outputList.end(); ++it )
+            for ( QStringList::ConstIterator it = result.outputList.constBegin(); it != result.outputList.constEnd(); ++it )
             {
                 append(m_server->getNickname(), *it);
             }
