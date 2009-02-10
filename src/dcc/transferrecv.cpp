@@ -335,7 +335,7 @@ bool DccTransferRecv::createDirs( const KUrl& dirURL ) const
     //Now we create the directories
 
     QStringList::ConstIterator it;
-    for ( it=dirList.begin() ; it!=dirList.end() ; ++it )
+    for ( it=dirList.constBegin() ; it!=dirList.constEnd() ; ++it )
         if ( !KIO::NetAccess::exists( *it, true, NULL ) )
             if ( !KIO::NetAccess::mkdir( *it, NULL, -1 ) )
                 return false;

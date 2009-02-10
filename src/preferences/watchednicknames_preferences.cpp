@@ -95,7 +95,7 @@ void WatchedNicknames_Config::addNetworkBranch(Konversation::ServerGroupSettings
   ValueListViewItem* groupItem = new ValueListViewItem(serverGroupList->id(), notifyListView, notifyListView->topLevelItem(notifyListView->topLevelItemCount()), serverGroupList->name());
 
   // get the group iterator to find all servers in the group
-  QMap<int, QStringList>::const_iterator groupIt=notifyList.find(serverGroupList->id());
+  QMap<int, QStringList>::const_iterator groupIt=notifyList.constFind(serverGroupList->id());
 
   // get list of nicks for the current group
   QStringList nicks=groupIt.value();

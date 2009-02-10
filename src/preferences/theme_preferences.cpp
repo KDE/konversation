@@ -89,7 +89,7 @@ void Theme_Config::loadSettings()
         // initialize index counter
         int i = 0;
         // iterate through all found theme directories
-        for(QStringList::ConstIterator it = m_dirs.begin(); it != m_dirs.end(); ++it)
+        for(QStringList::ConstIterator it = m_dirs.constBegin(); it != m_dirs.constEnd(); ++it)
         {
             KDesktopFile themeRC(*it);
             // get the name and comment from the theme
@@ -217,7 +217,7 @@ void Theme_Config::installTheme()
         const KArchiveDirectory* themeDir = themeArchive.directory();;
         QStringList allEntries = themeDir->entries();
 
-        for(QStringList::ConstIterator it=allEntries.begin(); it != allEntries.end(); ++it)
+        for(QStringList::ConstIterator it=allEntries.constBegin(); it != allEntries.constEnd(); ++it)
         {
             if(themeDir->entry(*it+"/index.desktop") == NULL)
             {
