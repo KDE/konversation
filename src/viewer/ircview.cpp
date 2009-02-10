@@ -111,8 +111,6 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : QPlainTextEdit(parent)
     setUndoRedoEnabled(0);
     //setLinkUnderline(false);
     document()->setDefaultStyleSheet("a.nick:link {text-decoration: none}");
-    //setVScrollBarMode(AlwaysOn);
-    //setHScrollBarMode(AlwaysOff);
     setWordWrapMode(QTextOption::WrapAtWordBoundaryOrAnywhere);
     //setNotifyClick(true); // TODO FIXME import the rest of the link handling
     setFocusPolicy(Qt::ClickFocus);

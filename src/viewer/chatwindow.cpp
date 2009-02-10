@@ -61,13 +61,7 @@ void ChatWindow::updateAppearance()
     setFont(KGlobalSettings::generalFont());
 
     if (textView)
-    { /* TODO FIXME
-        if (Preferences::showIRCViewScrollBar())
-            textView->setVScrollBarMode(Q3ScrollView::AlwaysOn);
-        else
-            textView->setVScrollBarMode(Q3ScrollView::AlwaysOff);
-        */
-    }
+        textView->setVerticalScrollBarPolicy(Preferences::self()->showIRCViewScrollBar() ? Qt::ScrollBarAlwaysOn : Qt::ScrollBarAlwaysOff);
 }
 
 void ChatWindow::setName(const QString& newName)
@@ -132,14 +126,7 @@ void ChatWindow::setTextView(IRCView* newView)
         return;
     }
 
-    if(Preferences::self()->showIRCViewScrollBar())
-    { // TODO FIXME
-        //textView->setVScrollBarMode(Q3ScrollView::Auto);
-    }
-    else
-    { // TODO FIXME
-        //textView->setVScrollBarMode(Q3ScrollView::AlwaysOff);
-    }
+    textView->setVerticalScrollBarPolicy(Preferences::self()->showIRCViewScrollBar() ? Qt::ScrollBarAlwaysOn : Qt::ScrollBarAlwaysOff);
 
     textView->setChatWin(this);
     connect(textView,SIGNAL(textToLog(const QString&)), this,SLOT(logText(const QString&)));
