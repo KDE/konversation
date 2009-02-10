@@ -422,7 +422,7 @@ void IRCView::doAppend(const QString& newLine, bool self)
     line.remove(0,3);//remove <p> for qtextbrowser
     QTextBrowser::append(line);
 
-    appendHtml(line);
+    //appendHtml(line);
 
     //FIXME: Disable auto-text for DCC Chats since we don't have a server to parse wildcards.
     if (!m_autoTextToSend.isEmpty() && m_server)
