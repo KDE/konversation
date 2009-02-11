@@ -30,7 +30,9 @@ namespace Konversation
 
     void Sound::play(const KUrl& url)
     {
+#ifdef __GNUC__
 #warning "Port to kde4: knotification API"
+#endif
 #if 0
         KNotification::userEvent(0,QString(),1,1,url.path());
 #endif
