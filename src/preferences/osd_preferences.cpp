@@ -36,7 +36,7 @@ OSD_Config::OSD_Config( QWidget* parent, const char* name, Qt::WFlags fl )
     QRect screenRect;
 
     for(int i = 0; i < QApplication::desktop()->numScreens(); ++i) {
-        kcfg_OSDScreen->insertItem(QString::number(i));
+        kcfg_OSDScreen->addItem(QString::number(i));
         screenRect = QApplication::desktop()->screenGeometry(i);
 
         //Check if we're using xinerama or not
