@@ -869,7 +869,7 @@ void IRCView::mousePressEvent(QMouseEvent* ev)
 }
 
 void IRCView::mouseReleaseEvent(QMouseEvent *ev)
-{/*
+{
     if (ev->button() == Qt::MidButton)
     {
         if (m_copyUrlMenu)
@@ -882,7 +882,7 @@ void IRCView::mouseReleaseEvent(QMouseEvent *ev)
             emit textPasted(true);
             return;
         }
-    }
+    }/*
     if (ev->button() == Qt::LeftButton)
     {
         if (m_mousePressed && !m_highlightedURL.isNull())
