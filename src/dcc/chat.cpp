@@ -308,7 +308,7 @@ void DccChat::sendDccChatText(const QString& sendLine)
         }                                         // endfor
 
         // detach stream
-        stream.unsetDevice();
+        stream.setDevice(0);
     }
     kDebug() << "END" ;
 }
