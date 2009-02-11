@@ -4,13 +4,13 @@ install(PROGRAMS
     fortune
     gauge
     kdeversion
-    mail
-    media
+    #mail
+    #media
     sayclip
     sysinfo
     tinyurl
     uptime
-    weather
+    #weather
     DESTINATION ${DATA_INSTALL_DIR}/konversation/scripts)
 
 install(FILES
