@@ -63,10 +63,7 @@ class IRCView : public QTextBrowser
 
         enum PopupIDs
         {
-            Copy,
             CopyUrl,
-            SelectAll,
-            Search,
             SendFile,
             Bookmark,
             SaveAs

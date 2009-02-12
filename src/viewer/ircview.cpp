@@ -132,8 +132,8 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : QTextBrowser(parent)
     toggleMenuBarSeparator->setVisible(false);
     copyUrlMenuSeparator = m_popup->addSeparator();
     copyUrlMenuSeparator->setVisible( false );
-    m_popup->insertItem(KIcon("edit-copy"),i18n("&Copy"),Copy);
-    m_popup->insertItem(i18n("Select All"),SelectAll);
+    m_popup->addAction(KIcon("edit-copy"),i18n("&Copy"),this, SLOT( copy()) );
+    m_popup->addAction(i18n("Select All"),this, SLOT(selectAll()) );
     m_popup->addAction(KIcon("edit-find"),i18n("Find Text..."),this, SLOT( search() ) );
 
     setServer(newServer);
