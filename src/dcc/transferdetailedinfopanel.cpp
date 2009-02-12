@@ -39,7 +39,7 @@ DccTransferDetailedInfoPanel::DccTransferDetailedInfoPanel( QWidget* parent )
     m_autoViewUpdateTimer = new QTimer( this );
 
     connect( m_urlreqLocation, SIGNAL( textChanged( const QString& ) ), this, SLOT( slotLocationChanged( const QString& ) ) );
-    connect( m_buttonOpenFolder, SIGNAL( clicked() ), this, SLOT( slotOpenFolderButtonClicked() ) );
+    connect( m_urlreqLocation, SIGNAL( urlSelected(const KUrl &) ), this, SLOT( slotOpenFolderButtonClicked() ) );
     connect( KonversationApplication::instance()->getDccTransferManager(), SIGNAL( fileURLChanged( DccTransferRecv* ) ),
              this, SLOT( updateView() ) );  // it's a little rough..
 }
@@ -90,7 +90,6 @@ void DccTransferDetailedInfoPanel::updateView()
     m_urlreqLocation->lineEdit()->setReadOnly( transfer->getStatus() != DccTransfer::Queued );
     m_urlreqLocation->lineEdit()->setFrame( transfer->getStatus() == DccTransfer::Queued );
     m_urlreqLocation->button()->setEnabled( transfer->getStatus() == DccTransfer::Queued );
-    m_buttonOpenFolder->setEnabled( !m_urlreqLocation->lineEdit()->text().isEmpty() );
 
     // Partner:
     QString partnerInfoServerName;

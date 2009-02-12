@@ -124,16 +124,6 @@
        <item>
         <widget class="KUrlRequester" name="m_urlreqLocation" />
        </item>
-       <item>
-        <widget class="QPushButton" name="m_buttonOpenFolder" >
-         <property name="text" >
-          <string>Open Folder</string>
-         </property>
-         <property name="shortcut" >
-          <string/>
-         </property>
-        </widget>
-       </item>
       </layout>
      </item>
      <item row="3" column="1" >
