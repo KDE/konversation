@@ -130,11 +130,11 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : QTextBrowser(parent)
     m_popup->setObjectName("ircview_context_menu");
     QAction * toggleMenuBarSeparator = m_popup->addSeparator();
     toggleMenuBarSeparator->setVisible(false);
-    copyUrlMenuSeparator = m_popup->insertSeparator();
-    m_popup->setItemVisible(copyUrlMenuSeparator, false);
+    copyUrlMenuSeparator = m_popup->addSeparator();
+    copyUrlMenuSeparator->setVisible( false );
     m_popup->insertItem(KIcon("edit-copy"),i18n("&Copy"),Copy);
     m_popup->insertItem(i18n("Select All"),SelectAll);
-    m_popup->insertItem(KIcon("edit-find"),i18n("Find Text..."),Search);
+    m_popup->addAction(KIcon("edit-find"),i18n("Find Text..."),this, SLOT( search() ) );
 
     setServer(newServer);
 
@@ -1010,13 +1010,13 @@ void IRCView::highlightedSlot(const QString& _link)
             m_popup->removeItem(CopyUrl);
             m_popup->removeItem(Bookmark);
             m_popup->removeItem(SaveAs);
-            m_popup->setItemVisible(copyUrlMenuSeparator, false);
+            copyUrlMenuSeparator->setVisible( false );
             m_copyUrlMenu = false;
 
         }
         else if (!link.isEmpty() && !m_copyUrlMenu)
         {
-            m_popup->setItemVisible(copyUrlMenuSeparator, true);
+                copyUrlMenuSeparator->setVisible( true );
             m_popup->insertItem(KIcon("edit-copy"), i18n("Copy URL to Clipboard"), CopyUrl, 1);
             m_popup->insertItem(KIcon("bookmark-new"), i18n("Add to Bookmarks"), Bookmark, 2);
             m_popup->insertItem(KIcon("document-save"), i18n("Save Link As..."), SaveAs, 3);
@@ -1053,6 +1053,7 @@ void IRCView::highlightedSlot(const QString& _link)
 
 void IRCView::contextMenuEvent(QContextMenuEvent* ev)
 {
+        kDebug()<<" void IRCView::contextMenuEvent(QContextMenuEvent* ev)";
     m_popup->exec(ev->globalPos());
 }
 
