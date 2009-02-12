@@ -962,12 +962,12 @@ void IRCView::openLink(const QString& url, bool)
     }
 }
 
-void IRCView::saveLinkAs(const QString& url)
+void IRCView::saveLinkAs()
 {
-    if(url.isEmpty())
+    if(m_urlToCopy.isEmpty())
         return;
 
-    KUrl srcUrl (url);
+    KUrl srcUrl (m_urlToCopy);
     KUrl saveUrl = KFileDialog::getSaveUrl(srcUrl.fileName(KUrl::ObeyTrailingSlash), QString(), this, i18n("Save link as"));
 
     if (saveUrl.isEmpty() || !saveUrl.isValid())
