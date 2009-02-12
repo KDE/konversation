@@ -157,7 +157,7 @@ void SearchBar::slotFindPrevious()
 void SearchBar::setHasMatch(bool value)
 {
     QPalette pal = m_searchEdit->palette();
-    pal.setColor(QPalette::Active, QColorGroup::Base, value ? Qt::green : Qt::red);
+    pal.setColor(QPalette::Active, QPalette::Base, value ? Qt::green : Qt::red);
     m_searchEdit->setPalette(pal);
     m_findNextButton->setEnabled(value);
     m_findPreviousButton->setEnabled(value);

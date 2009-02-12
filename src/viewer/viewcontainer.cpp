@@ -166,7 +166,7 @@ void ViewContainer::setupTabWidget()
     m_tabWidget->setCornerWidget(closeBtn);
     connect(closeBtn, SIGNAL(clicked()), this, SLOT(closeCurrentView()));
 
-    connect(m_tabWidget, SIGNAL(currentChanged(QWidget*)), this, SLOT (switchView(QWidget*)));
+    connect(m_tabWidget, SIGNAL(currentChanged(int)), this, SLOT (switchView(int)));
     connect(m_tabWidget, SIGNAL(closeRequest(QWidget*)), this, SLOT(closeView(QWidget*)));
     connect(m_tabWidget, SIGNAL(contextMenu(QWidget*, const QPoint&)), this, SLOT(showViewContextMenu(QWidget*, const QPoint&)));
     connect(m_tabWidget, SIGNAL(mouseMiddleClick(QWidget*)), this, SLOT(closeViewMiddleClick(QWidget*)));
@@ -387,7 +387,7 @@ void ViewContainer::updateTabWidgetAppearance()
         m_tabWidget->setFont(KGlobalSettings::generalFont());
 
     m_tabWidget->setTabPosition((Preferences::self()->tabPlacement()==Preferences::Top) ?
-        QTabWidget::Top : QTabWidget::Bottom);
+        QTabWidget::North : QTabWidget::South);
 
     if (Preferences::self()->showTabBarCloseButton() && !(Preferences::self()->tabPlacement()==Preferences::Left))
         m_tabWidget->cornerWidget()->show();
@@ -1374,9 +1374,9 @@ void ViewContainer::addView(ChatWindow* view, const QString& label, bool weiniti
     updateViewActions(m_tabWidget->currentIndex());
 }
 
-void ViewContainer::switchView(QWidget* newView)
+void ViewContainer::switchView(int newIndex)
 {
-    ChatWindow* view = static_cast<ChatWindow*>(newView);
+    ChatWindow* view = static_cast<ChatWindow*>(m_tabWidget->widget(newIndex));
 
     emit viewChanged(view);
 

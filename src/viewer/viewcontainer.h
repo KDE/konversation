@@ -83,7 +83,7 @@ class ViewContainer : public QObject
         void toggleViewNotifications();
         void toggleAutoJoin();
 
-        void switchView(QWidget* newView);
+        void switchView(int newIndex);
         void showView(ChatWindow* view);
 
         void goToView(int page);
