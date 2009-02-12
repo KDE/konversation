@@ -1059,9 +1059,24 @@ void IRCView::highlightedSlot(const QString& _link)
     }
 }
 
+void IRCView::copyUrl()
+{
+        if ( !m_urlToCopy.isEmpty() )
+        {
+                QClipboard *cb = qApp->clipboard();
+                cb->setText(m_urlToCopy,QClipboard::Selection);
+                cb->setText(m_urlToCopy,QClipboard::Clipboard);
+        }
+
+}
+
+void IRCView::slotBookmark()
+{
+        //TODO
+}
+
 void IRCView::contextMenuEvent(QContextMenuEvent* ev)
 {
-        kDebug()<<" void IRCView::contextMenuEvent(QContextMenuEvent* ev)";
     m_popup->exec(ev->globalPos());
 }
 

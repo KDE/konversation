@@ -144,7 +144,8 @@ class IRCView : public QTextBrowser
         void highlightedSlot(const QString& link);
         void saveLinkAs();
         void anchorClicked(const QUrl& url);
-
+    void copyUrl();
+    void slotBookmark();
     protected:
         void openLink(const QString &url, bool newTab=false);
 
