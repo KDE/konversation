@@ -195,7 +195,7 @@ void DccTransferDetailedInfoPanel::slotTransferStatusChanged( DccTransfer* /* tr
 
 void DccTransferDetailedInfoPanel::slotLocationChanged( const QString& url )
 {
-    if ( m_item->transfer()->getType() == DccTransfer::Receive )
+    if ( m_item &&  m_item->transfer() && m_item->transfer()->getType() == DccTransfer::Receive )
     {
         DccTransferRecv* transfer = static_cast< DccTransferRecv* >( m_item->transfer() );
         transfer->setFileURL( KUrl::fromPathOrUrl( url ) );
