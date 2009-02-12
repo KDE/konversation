@@ -2093,14 +2093,8 @@ void Channel::updateModeWidgets(char mode, bool plus, const QString &parameter)
 void Channel::updateQuickButtons(const QStringList &newButtonList)
 {
     // remove quick buttons from memory and GUI
-    while(buttonList.count())
-    {
-      QuickButton* button=buttonList.at(0);
-      // remove tool tips as well
-      button->setToolTip(QString());
-      buttonList.remove(button);
-      delete button;
-    }
+    qDeleteAll(buttonList);
+    buttonList.clear();
 
     if(buttonsGrid)delete buttonsGrid;
 

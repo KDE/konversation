@@ -331,7 +331,7 @@ class Channel : public ChatWindow
         IRCInput* channelInput;
 
         NickChangeDialog* nickChangeDialog;
-        Q3PtrList<QuickButton> buttonList;
+        QList<QuickButton*> buttonList;
 
 //Members from here to end are not GUI
         bool m_joined;
