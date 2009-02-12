@@ -35,13 +35,13 @@ namespace Konversation
 
         newBtn->setIcon(KIcon("list-add"));
         connect(newBtn, SIGNAL(clicked()), this, SLOT(newIdentity()));
-        
+
         copyBtn->setIcon(KIcon("edit-copy"));
         connect(copyBtn, SIGNAL(clicked()), this, SLOT(copyIdentity()));
-        
+
         m_editBtn->setIcon(KIcon("edit-rename"));
         connect(m_editBtn, SIGNAL(clicked()), this, SLOT(renameIdentity()));
-        
+
         m_delBtn->setIcon(KIcon("edit-delete"));
         connect(m_delBtn, SIGNAL(clicked()), this, SLOT(deleteIdentity()));
 
@@ -49,7 +49,7 @@ namespace Konversation
             m_identityCBox->addItem(id->getName());
             m_identityList.append( IdentityPtr( id ) );
         }
-        
+
         // add encodings to combo box
         m_codecCBox->insertItems(0, Konversation::IRCCharsets::self()->availableEncodingDescriptiveNames());
 
@@ -121,7 +121,7 @@ namespace Konversation
             m_delBtn->setEnabled(true);
         }
     }
-    
+
     void IdentityDialog::refreshCurrentIdentity()
     {
         if(!m_currentIdentity)
@@ -160,7 +160,7 @@ namespace Konversation
 
     void IdentityDialog::slotOk()
     {
-        
+
         if(m_nicknameLBox->count() == 0)
         {
             KMessageBox::error(this, i18n("You must add at least one nick to the identity."));
@@ -259,7 +259,7 @@ namespace Konversation
         }
 
         if(KMessageBox::warningContinueCancel(this, warningTxt, i18n("Delete Identity"),
-            KGuiItem(i18n("Delete"), "editdelete")) == KMessageBox::Continue)
+            KGuiItem(i18n("Delete"), "edit-delete")) == KMessageBox::Continue)
         {
             m_identityCBox->removeItem(current);
             m_identityList.removeOne(m_currentIdentity);
