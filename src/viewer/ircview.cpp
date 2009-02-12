@@ -129,6 +129,13 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : QTextBrowser(parent)
 
     m_popup = new KMenu(this);
     m_popup->setObjectName("ircview_context_menu");
+    m_copyUrlClipBoard =m_popup->addAction(KIcon("edit-copy"), i18n("Copy URL to Clipboard"), this, SLOT( copyUrl() )) ;
+    m_copyUrlClipBoard->setVisible( false );
+
+    m_bookmark = m_popup->addAction(KIcon("bookmark-new"), i18n("Add to Bookmarks"), this, SLOT( slotBookmark() ) );
+    m_bookmark->setVisible( false );
+    m_saveUrl = m_popup->addAction(KIcon("document-save"), i18n("Save Link As..."), this, SLOT( saveLinkAs() ));
+    m_saveUrl->setVisible( false );
     QAction * toggleMenuBarSeparator = m_popup->addSeparator();
     toggleMenuBarSeparator->setVisible(false);
     copyUrlMenuSeparator = m_popup->addSeparator();
@@ -1008,9 +1015,9 @@ void IRCView::highlightedSlot(const QString& _link)
         }
         if (link.isEmpty() && m_copyUrlMenu)
         {
-            m_popup->removeItem(CopyUrl);
-            m_popup->removeItem(Bookmark);
-            m_popup->removeItem(SaveAs);
+                m_copyUrlClipBoard->setVisible( false );
+                m_bookmark->setVisible( false );
+                m_saveUrl->setVisible( false );
             copyUrlMenuSeparator->setVisible( false );
             m_copyUrlMenu = false;
 
@@ -1018,9 +1025,9 @@ void IRCView::highlightedSlot(const QString& _link)
         else if (!link.isEmpty() && !m_copyUrlMenu)
         {
                 copyUrlMenuSeparator->setVisible( true );
-            m_popup->insertItem(KIcon("edit-copy"), i18n("Copy URL to Clipboard"), CopyUrl, 1);
-            m_popup->insertItem(KIcon("bookmark-new"), i18n("Add to Bookmarks"), Bookmark, 2);
-            m_popup->insertItem(KIcon("document-save"), i18n("Save Link As..."), SaveAs, 3);
+                m_copyUrlClipBoard->setVisible( true );
+                m_bookmark->setVisible( true );
+                m_saveUrl->setVisible( true );
             m_copyUrlMenu = true;
             m_urlToCopy = link;
         }

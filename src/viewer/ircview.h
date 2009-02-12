@@ -61,14 +61,6 @@ class IRCView : public QTextBrowser
         //!Obtain the context menu popup in order to add things to it
         KMenu* getPopup() const;
 
-        enum PopupIDs
-        {
-            CopyUrl,
-            SendFile,
-            Bookmark,
-            SaveAs
-        };
-
 
         bool search(const QString& pattern, bool caseSensitive, bool wholeWords, bool forward, bool fromCursor);
         bool searchNext(bool reversed = false);
@@ -223,7 +215,10 @@ class IRCView : public QTextBrowser
 
         //// Popup menus
         KMenu* m_popup; ///< text area context menu
-        QAction* copyUrlMenuSeparator; ///< stores the ID of the separator
+        QAction* copyUrlMenuSeparator;
+    QAction * m_copyUrlClipBoard;
+    QAction * m_bookmark;
+    QAction * m_saveUrl;
         bool m_copyUrlMenu; ///<the menu we're popping up, is it for copying URI?
         QString m_highlightedURL;   // the URL we're currently hovering on with the mouse
         QTextCharFormat m_fmtUnderMouse;
