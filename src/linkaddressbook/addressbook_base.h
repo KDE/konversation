@@ -19,7 +19,6 @@
 #include "../irc/nickinfo.h"
 #include "../irc/channelnick.h"
 
-#include <k3staticdeleter.h>
 #include <qobject.h>
 #include <qregexp.h>
 

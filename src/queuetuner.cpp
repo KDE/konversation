@@ -28,7 +28,6 @@
 #include <kiconloader.h>
 #include <kmenu.h>
 #include <kmessagebox.h>
-#include <kstdguiitem.h>
 #include <klocale.h>
 
 

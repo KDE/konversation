@@ -26,6 +26,8 @@
 #include "viewcontainer.h"
 #include "server.h"
 
+#include <Q3MimeSourceFactory>
+
 #include <klocale.h>
 
 

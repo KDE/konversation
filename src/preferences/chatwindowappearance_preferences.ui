@@ -307,7 +307,6 @@ the Free Software Foundation; either version 2 of the License, or
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11" />
- <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
  <customwidgets>
   <customwidget>
    <class>KIntSpinBox</class>

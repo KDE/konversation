@@ -57,7 +57,6 @@
 #include <kstringhandler.h>
 #include <kdeversion.h>
 #include <kwindowsystem.h>
-#include <config-konvi.h>
 
 
 int Server::m_availableConnectionId = 0;

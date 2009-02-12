@@ -60,7 +60,6 @@
 #include <KShortcutsDialog>
 #include <kstandardshortcut.h>
 
-#include <config-konvi.h>
 #include <knotifyconfigwidget.h>
 
 

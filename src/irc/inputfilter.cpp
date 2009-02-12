@@ -32,7 +32,6 @@
 #include <klocale.h>
 #include <kdeversion.h>
 #include <kstringhandler.h>
-#include <config-konvi.h>
 #include <kdebug.h>
 
 InputFilter::InputFilter()

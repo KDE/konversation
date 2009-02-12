@@ -13,7 +13,6 @@
 
 #include "sound.h" ////// header renamed
 
-#include <config-konvi.h>
 #include <kurl.h>
 
 #include <knotification.h>
