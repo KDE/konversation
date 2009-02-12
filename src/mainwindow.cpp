@@ -186,7 +186,6 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0)
     actionCollection()->addAction("open_nicksonline_window", action);
 
 
-    //new KToggleAction(i18n("&DCC Status"), "2rightarrow", KShortcut("F9"), m_viewContainer, SLOT(toggleDccPanel()), actionCollection(), "open_dccstatus_window");
     action=new KToggleAction(this);
     action->setText(i18n("&DCC Status"));
     action->setIcon(KIcon("arrow-right-double"));
@@ -196,7 +195,6 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0)
 
 
 
-    //action = new KAction(i18n("&Open Logfile"), "history", KShortcut("Ctrl+O"), m_viewContainer, SLOT(openLogFile()), actionCollection(), "open_logfile");
     action=new KAction(this);
     action->setText(i18n("&Open Logfile"));
     action->setIcon(KIcon("view-history"));
@@ -206,7 +204,6 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0)
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(openLogFile()));
     actionCollection()->addAction("open_logfile", action);
 
-    //action = new KAction(i18n("&Channel Settings..."), "edit", m_viewContainer, SLOT(openChannelSettings()), actionCollection(), "channel_settings");
     action=new KAction(this);
     action->setText(i18n("&Channel Settings..."));
     action->setIcon(KIcon("configure"));
@@ -215,7 +212,6 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0)
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(openChannelSettings()));
     actionCollection()->addAction("channel_settings", action);
 
-    //KToggleAction* channelListAction = new KToggleAction(i18n("Channel &List"), "view_text", KShortcut("F5"), m_viewContainer, SLOT(openChannelList()), actionCollection(), "open_channel_list");
     action=new KToggleAction(this);
     action->setText(i18n("Channel &List"));
     action->setIcon(KIcon("view-list-text"));
@@ -225,7 +221,6 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0)
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(openChannelList()));
     actionCollection()->addAction("open_channel_list", action);
 
-    //action = new KToggleAction(i18n("&URL Catcher"), "enhanced_browsing", KShortcut("F6"), m_viewContainer, SLOT(addUrlCatcher()), actionCollection(), "open_url_catcher");
     action=new KToggleAction(this);
     action->setText(i18n("&URL Catcher"));
     action->setIcon(KIcon("text-html"));
@@ -236,7 +231,6 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0)
 
     if (KAuthorized::authorizeKAction("shell_access"))
     {
-        //action = new KAction(i18n("New &Konsole"), "openterm", 0, m_viewContainer, SLOT(addKonsolePanel()), actionCollection(), "open_konsole");
         action=new KAction(this);
         action->setText(i18n("New &Konsole"));
         action->setIcon(KIcon("utilities-terminal"));
@@ -265,7 +259,6 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0)
         prevIcon="go-previous-view";
     }
 
-    //action = new KAction(i18n("&Next Tab"), QApplication::isRightToLeft() ? "previous" : "next", QApplication::isRightToLeft() ? prevShortcut : nextShortcut, m_viewContainer, SLOT(showNextView()), actionCollection(), "next_tab");
     action=new KAction(this);
     action->setText(i18n("&Next Tab"));
     action->setIcon(KIcon(nextIcon));
@@ -274,7 +267,6 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0)
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(showNextView()));
     actionCollection()->addAction("next_tab", action);
 
-    //action = new KAction(i18n("&Previous Tab"), QApplication::isRightToLeft() ? "next" : "previous", QApplication::isRightToLeft() ? nextShortcut : prevShortcut, m_viewContainer, SLOT(showPreviousView()),actionCollection(),"previous_tab");
     action=new KAction(this);
     action->setText(i18n("&Previous Tab"));
     action->setIcon(KIcon(prevIcon));
@@ -283,7 +275,6 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0)
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(showPreviousView()));
     actionCollection()->addAction("previous_tab", action);
 
-    //action = new KAction(i18n("Close &Tab"),"tab_remove",KShortcut("Ctrl+w"), m_viewContainer, SLOT(closeCurrentView()),actionCollection(),"close_tab");
     action=new KAction(this);
     action->setText(i18n("Close &Tab"));
     action->setIcon(KIcon("tab-close-other"));
@@ -292,7 +283,6 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0)
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(closeCurrentView()));
     actionCollection()->addAction("close_tab", action);
 
-    //action = new KAction(i18n("Next Active Tab"), 0, KShortcut("Ctrl+Alt+Space"), m_viewContainer, SLOT(showNextActiveView()), actionCollection(), "next_active_tab");
     action=new KAction(this);
     action->setText(i18n("Next Active Tab"));
     action->setShortcut(KShortcut("Ctrl+Alt+Space"));
@@ -302,7 +292,6 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0)
 
     if (Preferences::self()->tabPlacement()==Preferences::Left)
     {
-        //action = new KAction(i18n("Move Tab Up"), "1uparrow", KShortcut("Alt+Shift+Left"), m_viewContainer, SLOT(moveViewLeft()), actionCollection(), "move_tab_left");
         action=new KAction(this);
         action->setText(i18n("Move Tab Up"));
         action->setIcon(KIcon("arrow-up"));
@@ -312,7 +301,6 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0)
         connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(moveViewLeft()));
         actionCollection()->addAction("move_tab_left", action);
 
-        //action = new KAction(i18n("Move Tab Down"), "1downarrow", KShortcut("Alt+Shift+Right"), m_viewContainer, SLOT(moveViewRight()), actionCollection(), "move_tab_right");
         action->setEnabled(false);
         action->setStatusTip("Move this tab");
         action=new KAction(this);
@@ -326,7 +314,6 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0)
     {
         if (QApplication::isRightToLeft())
         {
-            //action = new KAction(i18n("Move Tab Right"), "1rightarrow", KShortcut("Alt+Shift+Right"), m_viewContainer, SLOT(moveViewLeft()), actionCollection(), "move_tab_left");
             action=new KAction(this);
             action->setText(i18n("Move Tab Right"));
             action->setIcon(KIcon("arrow-right"));
@@ -336,7 +323,6 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0)
             connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(moveViewLeft()));
             actionCollection()->addAction("move_tab_left", action);
 
-            //action  = new KAction(i18n("Move Tab Left"), "1leftarrow", KShortcut("Alt+Shift+Left"), m_viewContainer, SLOT(moveViewRight()), actionCollection(), "move_tab_right");
             action=new KAction(this);
             action->setText(i18n("Move Tab Left"));
             action->setIcon(KIcon("arrow-left"));
@@ -349,7 +335,6 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0)
         }
         else
         {
-            //action  = new KAction(i18n("Move Tab Left"), "1leftarrow", KShortcut("Alt+Shift+Left"), m_viewContainer, SLOT(moveViewLeft()), actionCollection(), "move_tab_left");
             action=new KAction(this);
             action->setText(i18n("Move Tab Left"));
             action->setIcon(KIcon("arrow-left"));
@@ -359,7 +344,6 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0)
             connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(moveViewLeft()));
             actionCollection()->addAction("move_tab_left", action);
 
-            //action = new KAction(i18n("Move Tab Right"), "1rightarrow", KShortcut("Alt+Shift+Right"), m_viewContainer, SLOT(moveViewRight()), actionCollection(), "move_tab_right");
             action=new KAction(this);
             action->setText(i18n("Move Tab Right"));
             action->setIcon(KIcon("arrow-right"));
@@ -373,21 +357,18 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0)
 
     }
 
-    //action = new KAction(i18n("Rejoin Channel"), 0, m_viewContainer, SLOT(rejoinChannel()), actionCollection(), "rejoin_channel");
     action->setEnabled(false);
     action=new KAction(this);
     action->setText(i18n("Rejoin Channel"));
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(rejoinChannel()));
     actionCollection()->addAction("rejoin_channel", action);
 
-    //action = new KToggleAction(i18n("Enable Notifications"), 0, 0, m_viewContainer, SLOT(toggleViewNotifications()), actionCollection(), "tab_notifications");
     action->setEnabled(false);
     action=new KToggleAction(this);
     action->setText(i18n("Enable Notifications"));
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(toggleViewNotifications()));
     actionCollection()->addAction("tab_notifications", action);
 
-    //action = new KToggleAction(i18n("Join on Connect"), 0, 0, m_viewContainer, SLOT(toggleAutoJoin()), actionCollection(), "tab_autojoin");
     action->setEnabled(false);
     action=new KToggleAction(this);
     action->setText(i18n("Join on Connect"));
@@ -396,7 +377,6 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0)
 
     QStringList encodingDescs = Konversation::IRCCharsets::self()->availableEncodingDescriptiveNames();
     encodingDescs.prepend(i18n("Default"));
-    //KSelectAction* selectAction = new KSelectAction(i18n("Set Encoding"), "charset", 0, actionCollection(), "tab_encoding");
     KSelectAction* selectAction = new KSelectAction(this);
     selectAction->setEditable(false);
     selectAction->setItems(encodingDescs);
@@ -411,7 +391,6 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0)
 
     for (uint i = 1; i <= 10; ++i)
     {
-        //KAction* tabSelectionAction = new KAction(i18n("Go to Tab %1",i), 0, KShortcut(QString("Alt+%1").arg(i%10)), tabSelectionMapper, SLOT(map()), actionCollection(), QString("go_to_tab_%1").arg(i).local8Bit());
 
         action=new KAction(this);
         action->setText(i18n("Go to Tab %1",i));
@@ -422,7 +401,6 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0)
         tabSelectionMapper->setMapping(action, i-1);
     }
 
-    //action = new KAction(i18n("Clear &Marker Lines"), 0, KShortcut("Qt::CTRL+Qt::SHIFT+R"), m_viewContainer, SLOT(clearViewLines()),actionCollection(),"clear_lines");
     action=new KAction(this);
     action->setText(i18n("Clear &Marker Lines"));
     action->setShortcut(KShortcut("Ctrl+Shift+R"));
@@ -431,7 +409,6 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0)
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(clearViewLines()));
     actionCollection()->addAction("clear_lines", action);
 
-    //action = new KAction(i18n("&Clear Window"), 0, KShortcut("Ctrl+L"), m_viewContainer, SLOT(clearView()),actionCollection(),"clear_window");
     action=new KAction(this);
     action->setText(i18n("&Clear Window"));
     action->setShortcut(KShortcut("Ctrl+L"));
@@ -440,7 +417,6 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0)
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(clearView()));
     actionCollection()->addAction("clear_window", action);
 
-    //action = new KAction(i18n("Clear &All Windows"),0,KShortcut("Qt::CTRL+Qt::SHIFT+L"), m_viewContainer, SLOT(clearAllViews()),actionCollection(),"clear_tabs");
     action=new KAction(this);
     action->setText(i18n("Clear &All Windows"));
     action->setShortcut(KShortcut("Ctrl+Shift+L"));
@@ -456,7 +432,6 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0)
     connect(awayAction, SIGNAL(toggled(bool)), KonversationApplication::instance()->getAwayManager(), SLOT(toggleGlobalAway(bool)));
     actionCollection()->addAction("toggle_away", awayAction);
 
-    //action = new KAction(i18n("&Join Channel..."), "add", KShortcut("Ctrl+J"), m_viewContainer, SLOT(showJoinChannelDialog()), actionCollection(), "join_channel");
     action=new KAction(this);
     action->setText(i18n("&Join Channel..."));
     action->setIcon(KIcon("list-add"));
@@ -473,7 +448,6 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0)
     action = KStandardAction::findPrev(m_viewContainer, SLOT(findPrevText()), actionCollection());
     action->setEnabled(false);
 
-    //action = new KAction(i18n("&IRC Color..."), "colorize", Qt::CTRL+Qt::Key_K, m_viewContainer, SLOT(insertIRCColor()), actionCollection(), "irc_colors");
     action=new KAction(this);
     action->setText(i18n("&IRC Color..."));
     action->setIcon(KIcon("format-text-color"));
@@ -483,7 +457,6 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0)
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(insertIRCColor()));
     actionCollection()->addAction("irc_colors", action);
 
-    //action = new KAction(i18n("&Marker Line"), 0,  KShortcut("Ctrl+R") , m_viewContainer, SLOT(insertMarkerLine()), actionCollection(), "insert_marker_line");
     action=new KAction(this);
     action->setText(i18n("&Marker Line"));
     action->setShortcut(KShortcut("Ctrl+R"));
@@ -492,7 +465,6 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0)
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(insertMarkerLine()));
     actionCollection()->addAction("insert_marker_line", action);
 
-    //action = new KAction(i18n("Special &Character..."), "char", KShortcut("Alt+Shift+C"), m_viewContainer, SLOT(insertCharacter()), actionCollection(), "insert_character");
     action=new KAction(this);
     action->setText(i18n("Special &Character..."));
     action->setIcon(KIcon("character-set"));
@@ -502,7 +474,6 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0)
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(insertCharacter()));
     actionCollection()->addAction("insert_character", action);
 
-    //action = new KAction(i18n("Close &All Open Queries"), 0, KShortcut("F11"), m_viewContainer, SLOT(closeQueries()), actionCollection(), "close_queries");
     action=new KAction(this);
     action->setText(i18n("Close &All Open Queries"));
     action->setShortcut(KShortcut("F11"));
@@ -510,17 +481,6 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0)
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(closeQueries()));
     actionCollection()->addAction("close_queries", action);
 
-#if 1==0
-    action=new KAction(this);
-    action->setText();
-    action->setIcon(KIcon());
-    action->setShortcut();
-    action->setStatusTip();
-    connect(action, SIGNAL(triggered()), SLOT());
-    actionCollection()->addAction(, action);
-#endif
-
-    //KToggleAction* toggleChannelNickListsAction = new KToggleAction(i18n("Hide Nicklist"), 0, KShortcut("Ctrl+H"), m_viewContainer, SLOT(toggleChannelNicklists()), actionCollection(), "hide_nicknamelist");
     KToggleAction* toggleChannelNickListsAction = new KToggleAction(this);
     if (!Preferences::self()->showNickList())
         toggleChannelNickListsAction->setChecked(true);
