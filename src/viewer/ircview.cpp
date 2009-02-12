@@ -109,6 +109,7 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : QTextBrowser(parent)
     //m_wasPainted = false;
 
     connect(this, SIGNAL(anchorClicked(QUrl)), this, SLOT(anchorClicked(QUrl)));
+    connect( this, SIGNAL( highlighted ( const QString &) ), this, SLOT( highlightedSlot( const QString &) ) );
     setOpenLinks(false);
     setUndoRedoEnabled(0);
     //setLinkUnderline(false);
