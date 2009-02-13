@@ -242,7 +242,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                     else
                     {
                         // Do not internationalize the below version string
-                        reply = QString("Konversation %1 Build %2 (C) 2002-2008 by the Konversation team")
+                        reply = QString("Konversation %1 Build %2 (C) 2002-2009 by the Konversation team")
                             .arg(QString(KONVI_VERSION))
                             .arg(QString::number(COMMIT));
 
@@ -1967,7 +1967,7 @@ void InputFilter::parsePrivMsg(const QString& prefix,
     }
 }
 
-// #include "./irc/inputfilter.moc"
+#include "inputfilter.moc"
 
 // kate: space-indent on; tab-width 4; indent-width 4; mixed-indent off; replace-tabs on;
 // vim: set et sw=4 ts=4 cino=l1,cs,U1:

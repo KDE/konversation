@@ -511,4 +511,4 @@ void ChatWindow::resetTabNotification()
     m_currentTabNotify = Konversation::tnfNone;
 }
 
-// #include "./viewer/chatwindow.moc"
+#include "chatwindow.moc"

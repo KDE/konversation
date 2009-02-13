@@ -207,4 +207,4 @@ void IRCQueue::serverOnline(bool on)
     }
 }
 
-// #include "./irc/ircqueue.moc"
+#include "ircqueue.moc"

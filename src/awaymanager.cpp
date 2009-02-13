@@ -355,7 +355,7 @@ void AwayManager::updateGlobalAwayAction(bool away)
         if (awayCount == serverList.count())
         {
             awayAction->setChecked(true);
-            awayAction->setIcon(KIcon("konversationaway"));
+            awayAction->setIcon(KIcon("irc_away"));
         }
     }
     else

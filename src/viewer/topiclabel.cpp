@@ -330,4 +330,4 @@ namespace Konversation
     }
 }
 
-// #include "./viewer/topiclabel.moc"
+#include "topiclabel.moc"

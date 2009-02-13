@@ -331,4 +331,4 @@ QIcon Images::getHighlightsLed()
         return m_highlightsLedOn;
 }
 
-// #include "./viewer/images.moc"
+#include "images.moc"
