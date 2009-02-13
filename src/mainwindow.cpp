@@ -33,7 +33,6 @@
 #include <qsignalmapper.h>
 #include <QSplitter>
 
-//#include <kaccel.h>
 #include <KActionCollection>
 #include <KAction>
 #include <KToggleAction>
@@ -46,15 +45,12 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kmenubar.h>
-//#include <kkeydialog.h>
 #include <kdeversion.h>
 #include <kedittoolbar.h>
 #include <kmenu.h>
 #include <kwindowsystem.h>
 #include <kglobal.h>
 #include <kstandarddirs.h>
-//#include <dcopclient.h>
-//#include <scriptmanager.h>
 #include <kabc/addressbook.h>
 #include <kabc/errorhandler.h>
 #include <KShortcutsDialog>
@@ -131,7 +127,6 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0)
     // NOTE: once kdelibs-4.3 is required, please replace setStatusTip with setHelpText everywhere.
     // It will make toolbar-button tooltips work again (while keeping menuitem statustips working too)
 
-    //(new KAction(i18n("&Server List..."), "server", KShortcut("F2"), this, SLOT(openServerList()),actionCollection(), "open_server_list"))->setStatusTip(i18n("Manage networks and servers"));
     action=new KAction(this);
     action->setText(i18n("&Server List..."));
     action->setIcon(KIcon("network-server"));
@@ -140,7 +135,6 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0)
     connect(action, SIGNAL(triggered()), SLOT(openServerList()));
     actionCollection()->addAction("open_server_list", action);
 
-    //(new KAction(i18n("Quick &Connect..."), "connect_creating", KShortcut("F7"), this, SLOT(openQuickConnectDialog()), actionCollection(), "quick_connect_dialog"))->setStatusTip(i18n("Type in the address of a new IRC server to connect to"));
     action=new KAction(this);
     action->setText(i18n("Quick &Connect..."));
     action->setIcon(KIcon("network-connect"));
@@ -149,7 +143,6 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0)
     connect(action, SIGNAL(triggered()), SLOT(openQuickConnectDialog()));
     actionCollection()->addAction("quick_connect_dialog", action);
 
-    //action = new KAction(i18n("&Reconnect"), "connect_creating", 0, m_viewContainer, SLOT(reconnectFrontServer()), actionCollection(), "reconnect_server");
     action=new KAction(this);
     action->setText(i18n("&Reconnect"));
     action->setIcon(KIcon("view-refresh"));
@@ -159,7 +152,6 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0)
     actionCollection()->addAction("reconnect_server", action);
 
 
-    //action = new KAction(i18n("&Disconnect"), "connect_no", 0, m_viewContainer, SLOT(disconnectFrontServer()), actionCollection(), "disconnect_server");
     action=new KAction(this);
     action->setText(i18n("&Disconnect"));
     action->setIcon(KIcon("network-disconnect"));
@@ -168,7 +160,6 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0)
     connect(action, SIGNAL(triggered()), m_viewContainer, SLOT(disconnectFrontServer()));
     actionCollection()->addAction("disconnect_server", action);
 
-    //(new KAction(i18n("&Identities..."), "identity", KShortcut("F8"), this, SLOT(openIdentitiesDialog()), actionCollection(), "identities_dialog"))->setStatusTip(i18n("Manage your nick, away and other identity settings"));
     action=new KAction(this);
     action->setText(i18n("&Identities..."));
     action->setIcon(KIcon("user-identity"));
@@ -177,7 +168,6 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0)
     connect(action, SIGNAL(triggered()), SLOT(openIdentitiesDialog()));
     actionCollection()->addAction("identities_dialog", action);
 
-    //new KToggleAction(i18n("&Watched Nicks Online"), "kontact_contacts", KShortcut("F4"), m_viewContainer, SLOT(openNicksOnlinePanel()), actionCollection(), "open_nicksonline_window");
     action=new KToggleAction(this);
     action->setText(i18n("&Watched Nicks Online"));
     action->setIcon(KIcon("im-user"));
