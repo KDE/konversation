@@ -21,6 +21,7 @@
 #include <qstandarditemmodel.h>
 #include <q3header.h>
 #include <qtoolbutton.h>
+#include <QKeyEvent>
 
 #include <klocale.h>
 #include <k3listview.h>

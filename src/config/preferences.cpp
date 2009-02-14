@@ -60,7 +60,7 @@ Preferences::Preferences()
 
     KUser user(KUser::UseRealUserID);
     mIdentity->setIdent(user.loginName());
-    mIdentity->setRealName(user.fullName());
+    mIdentity->setRealName(user.property(KUser::FullName).toString());
 
     QStringList nickList;
     nickList.append(user.loginName());

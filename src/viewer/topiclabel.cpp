@@ -102,12 +102,12 @@ namespace Konversation
             // Always use KDE default mailer.
             else if (!Preferences::self()->useCustomBrowser() || link.toLower().startsWith("mailto:"))
             {
-                new KRun(KUrl::fromPathOrUrl(link), this);
+                new KRun(KUrl(link), this);
             }
             else
             {
                 QString cmd = Preferences::webBrowserCmd();
-                cmd.replace("%u",KUrl::fromPathOrUrl(link).url());
+                cmd.replace("%u",KUrl(link).url());
                 KProcess *proc = new KProcess;
                 QStringList cmdAndArgs = KShell::splitArgs(cmd);
                 *proc << cmdAndArgs;

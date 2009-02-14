@@ -198,7 +198,7 @@ void DccTransferDetailedInfoPanel::slotLocationChanged( const QString& url )
     if ( m_item &&  m_item->transfer() && m_item->transfer()->getType() == DccTransfer::Receive )
     {
         DccTransferRecv* transfer = static_cast< DccTransferRecv* >( m_item->transfer() );
-        transfer->setFileURL( KUrl::fromPathOrUrl( url ) );
+        transfer->setFileURL( KUrl( url ) );
     }
 }
 
@@ -207,7 +207,7 @@ void DccTransferDetailedInfoPanel::slotOpenFolderButtonClicked()
     QString urlString = m_urlreqLocation->lineEdit()->text();
     if ( !urlString.isEmpty() )
     {
-        KUrl url = KUrl::fromPathOrUrl( urlString );
+        KUrl url( urlString );
         url.setFileName( QString() );
         new KRun( url, 0, true, true );
     }

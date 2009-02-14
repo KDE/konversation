@@ -16,8 +16,6 @@ include(CheckIncludeFile)
 add_definitions (-DQT3_SUPPORT -DQT3_SUPPORT_WARNINGS)
 add_definitions (${QT_DEFINITIONS} ${KDE4_DEFINITIONS})
 
-remove_definitions(-DKDE_DEPRECATED_WARNINGS)
-
 include_directories(${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR} ${KDE4_INCLUDES} ${KDE4_INCLUDE_DIR} ${QT_INCLUDES})
 
 #looks like the original test is from Kopete, their port doesn't use Xext so neither shall ours

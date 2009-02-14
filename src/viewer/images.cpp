@@ -130,7 +130,7 @@ Images::Images()
     initializeKimifaceIcons();
 
     m_closeIcon = KIconLoader::global()->loadIcon("document-close",KIconLoader::Small);
-    m_disabledCloseIcon = KIcon("document-close").pixmap(QIcon::Small, false);
+    m_disabledCloseIcon = KIcon("document-close").pixmap(KIconLoader::Small, false);
 }
 
 Images::~Images()
@@ -248,7 +248,7 @@ void Images::initializeNickIcons()
 void Images::updateIcons()
 {
     m_closeIcon = KIconLoader::global()->loadIcon("document-close",KIconLoader::Small);
-    m_disabledCloseIcon = KIcon("document-close").pixmap(QIcon::Small, false);
+    m_disabledCloseIcon = KIcon("document-close").pixmap(KIconLoader::Small, false);
 }
 
 QIcon Images::getLed(QColor col,bool state)

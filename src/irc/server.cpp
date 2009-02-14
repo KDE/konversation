@@ -1128,7 +1128,7 @@ int Server::_send_internal(QString outputLine)
     }
     */
     encoded += '\n';
-    Q_LONG sout = m_socket->write(encoded, encoded.length());
+    qint64 sout = m_socket->write(encoded, encoded.length());
 
     if (m_rawLog)
         m_rawLog->appendRaw("&lt;&lt; " + outputLine.replace("&","&amp;").replace("<","&lt;").replace(">","&gt;"));

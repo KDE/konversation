@@ -67,7 +67,7 @@ ViewTree::ViewTree(QWidget *parent)
 
     addColumn(i18n("Tabs"));
     setSortColumn(0);
-    setSortOrder(Qt::Ascending);
+    setSortOrder(Qt::AscendingOrder);
 
     setResizeMode(Q3ListView::AllColumns);
     setSelectionModeExt(K3ListView::Single);

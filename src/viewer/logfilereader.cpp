@@ -23,6 +23,7 @@
 #include <qlabel.h>
 #include <qregexp.h>
 #include <qspinbox.h>
+#include <QTextCodec>
 
 #include <kdialog.h>
 #include <ktoolbar.h>

@@ -335,10 +335,10 @@ void NicksOnline::updateServerOnlineList(Server* servr)
             // Set Kabc icon if the nick is associated with an addressbook entry.
             if (!addressee.isEmpty())
                 nickRoot->setPixmap(nlvcKabc, m_kabcIconSet.pixmap(
-                    QIcon::Small, QIcon::Normal, QIcon::On));
+                    KIconLoader::Small, QIcon::Normal, QIcon::On));
             else
                 nickRoot->setPixmap(nlvcKabc, m_kabcIconSet.pixmap(
-                    QIcon::Small, QIcon::Disabled, QIcon::Off));
+                    KIconLoader::Small, QIcon::Disabled, QIcon::Off));
 
             QStringList channelList = server->getNickChannels(nickname);
             QStringList::iterator itEnd2 = channelList.end();
@@ -407,10 +407,10 @@ void NicksOnline::updateServerOnlineList(Server* servr)
             // Set Kabc icon if the nick is associated with an addressbook entry.
             if (!addressee.isEmpty())
                 nickRoot->setPixmap(nlvcKabc, m_kabcIconSet.pixmap(
-                    QIcon::Small, QIcon::Normal, QIcon::On));
+                    KIconLoader::Small, QIcon::Normal, QIcon::On));
             else
                 nickRoot->setPixmap(nlvcKabc, m_kabcIconSet.pixmap(
-                    QIcon::Small, QIcon::Disabled, QIcon::Off));
+                    KIconLoader::Small, QIcon::Disabled, QIcon::Off));
         }
     }
     // Erase nicks no longer being watched.
@@ -952,13 +952,13 @@ void NicksOnline::refreshItem(Q3ListViewItem* item)
                 case nsNoAddress:
                 {
                     item->setPixmap(nlvcKabc, m_kabcIconSet.pixmap(
-                        QIcon::Small, QIcon::Disabled, QIcon::Off));
+                        KIconLoader::Small, QIcon::Disabled, QIcon::Off));
                     break;
                 }
                 case nsHasAddress:
                 {
                     item->setPixmap(nlvcKabc, m_kabcIconSet.pixmap(
-                        QIcon::Small, QIcon::Normal, QIcon::On)); break;
+                        KIconLoader::Small, QIcon::Normal, QIcon::On)); break;
                 }
             }
             QString nickAdditionalInfo;
