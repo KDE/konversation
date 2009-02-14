@@ -142,6 +142,7 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   Ui::Log_Config confLog;
   w = new QWidget();
   confLog.setupUi(w);
+  confLog.kcfg_LogfilePath->setMode(KFile::Directory | KFile::ExistingOnly | KFile::LocalOnly);
   addPage(w, behaviorGroup, "text-plain", i18n("Logging"));
 
   m_confDCCWdg = new DCC_Config( this, "DCC" );

@@ -17,6 +17,7 @@
 #include <KDialog>
 #include <KMessageBox>
 #include <KInputDialog>
+#include <KUser>
 
 namespace Konversation
 {

@@ -199,10 +199,10 @@ void DccTransferManager::slotSettingsChanged()
         foreach ( DccTransferRecv* it, m_recvItems )
         {
             if ( it->getStatus() == DccTransfer::Queued &&
-                 it->getFileURL().directory() == m_defaultIncomingFolder )
+                 it->getFileURL().directory() == m_defaultIncomingFolder.pathOrUrl() )
             {
                 KUrl url;
-                url.setDirectory( Preferences::self()->dccPath() );
+                url.setDirectory( Preferences::self()->dccPath().pathOrUrl() );
                 url.setFileName( it->getFileURL().fileName() );
                 it->setFileURL( url );
 

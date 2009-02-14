@@ -23,6 +23,8 @@ DCC_Config::DCC_Config(QWidget *parent, const char* name) :
     setObjectName(QString::fromLatin1(name));
     setupUi(this);
 
+    kcfg_DccPath->setMode(KFile::Directory | KFile::ExistingOnly | KFile::LocalOnly);
+
     languageChange();
     connect(kcfg_DccMethodToGetOwnIp, SIGNAL(activated(int)), this, SLOT(dccMethodChanged(int)));
     dccMethodChanged(kcfg_DccMethodToGetOwnIp->currentIndex()); 

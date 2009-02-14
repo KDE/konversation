@@ -184,14 +184,14 @@ void ChatWindow::cdIntoLogPath()
 {
     QDir logPath=QDir::home();
     // Try to "cd" into the logfile path
-    if(!logPath.cd(Preferences::self()->logfilePath()))
+    if(!logPath.cd(Preferences::self()->logfilePath().pathOrUrl()))
     {
         // Only create log path if logging is enabled
         if(log)
         {
             // Try to create the logfile path and "cd" into it again
-            logPath.mkpath(Preferences::self()->logfilePath());
-            logPath.cd(Preferences::self()->logfilePath());
+            logPath.mkpath(Preferences::self()->logfilePath().pathOrUrl());
+            logPath.cd(Preferences::self()->logfilePath().pathOrUrl());
         }
     }
 

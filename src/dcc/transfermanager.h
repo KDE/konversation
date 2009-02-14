@@ -88,7 +88,7 @@ class DccTransferManager : public QObject
         QList< DccTransferRecv* > m_recvItems;
 
         int m_nextReverseTokenNumber;
-        QString m_defaultIncomingFolder;  // store here to know if this settings is changed
+        KUrl m_defaultIncomingFolder;  // store here to know if this settings is changed
 };
 
 #endif  // DCCTRANSFERMANAGER_H
