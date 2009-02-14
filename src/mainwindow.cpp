@@ -15,7 +15,7 @@
 
 #include "mainwindow.h" ////// header renamed
 #include "application.h" ////// header renamed
-//#include "linkaddressbook/addressbook.h"
+#include "linkaddressbook/addressbook.h"
 #include "settingsdialog.h" ////// header renamed
 #include "viewcontainer.h"
 #include "statusbar.h" ////// header renamed
@@ -508,7 +508,7 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0)
     KABC::GuiErrorHandler *m_guiErrorHandler = new KABC::GuiErrorHandler(this);
     Q_UNUSED(m_guiErrorHandler);
     //kapp->dcopClient()->setAcceptCalls( false );
-    //Konversation::Addressbook::self()->getAddressBook()->setErrorHandler(m_guiErrorHandler);
+    Konversation::Addressbook::self()->getAddressBook()->setErrorHandler(m_guiErrorHandler);
     //kapp->dcopClient()->setAcceptCalls( true );
 
     if (Preferences::self()->useNotify() && Preferences::self()->openWatchedNicksAtStartup())
@@ -534,7 +534,6 @@ int KonversationMainWindow::confirmQuit()
 
     int result = KMessageBox::Cancel;
 
-    /*
     if (!KMessageBox::shouldBeShownContinue("systemtrayquitKonversation")
          && konvApp->getDccTransferManager()->hasActiveTransfers())
     {
@@ -548,7 +547,6 @@ int KonversationMainWindow::confirmQuit()
     }
     else
     {
-    */
         result = KMessageBox::warningContinueCancel(
             this,
             i18n("<qt>Are you sure you want to quit <b>Konversation</b>?</qt>"),
@@ -556,7 +554,7 @@ int KonversationMainWindow::confirmQuit()
             KStandardGuiItem::quit(),
             KStandardGuiItem::cancel(),
             "systemtrayquitKonversation");
-    //}
+    }
 
     return result;
 }
@@ -769,9 +767,9 @@ void KonversationMainWindow::openQuickConnectDialog()
 
 // open the preferences dialog and show the watched nicknames page
 void KonversationMainWindow::openNotify()
-{/*
+{
     openPrefsDialog();
-    if (m_settingsDialog) m_settingsDialog->openWatchedNicknamesPage();*/
+    if (m_settingsDialog) m_settingsDialog->openWatchedNicknamesPage();
 }
 
 void KonversationMainWindow::openIdentitiesDialog()
