@@ -22,7 +22,7 @@
 #include "images.h"
 #include "query.h"
 #include "linkaddressbook/linkaddressbookui.h"
-//#include "linkaddressbook/addressbook.h"
+#include "linkaddressbook/addressbook.h"
 #include "linkaddressbook/nicksonlinetooltip.h"
 #include "mainwindow.h" ////// header renamed
 #include "viewcontainer.h"
@@ -974,7 +974,7 @@ void NicksOnline::refreshItem(Q3ListViewItem* item)
 
 void NicksOnline::childAdjustFocus() {}
 
-// #include "./irc/nicksonline.moc"
+#include "./irc/nicksonline.moc"
 
 // kate: space-indent on; tab-width 4; indent-width 4; mixed-indent off; replace-tabs on;
 // vim: set et sw=4 ts=4 cino=l1,cs,U1:

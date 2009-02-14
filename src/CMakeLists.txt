@@ -1,7 +1,7 @@
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/config)
 
-include_directories(blowfish config dcc irc preferences viewer)
+include_directories(blowfish config dcc irc preferences viewer linkaddressbook)
 
 set(core_SRCS
     #====================================

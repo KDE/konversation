@@ -17,7 +17,7 @@
 
 #include "serverison.h"
 #include "server.h"
-//#include "addressbook.h"
+#include "addressbook.h"
 #include "application.h" ////// header renamed
 #include "nickinfo.h"
 #include "viewcontainer.h"
@@ -25,8 +25,8 @@
 #include <qmap.h>
 #include <qstring.h>
 #include <qstringlist.h>
-//#include <kabc/addressbook.h>
-//#include <kabc/stdaddressbook.h>
+#include <kabc/addressbook.h>
+#include <kabc/stdaddressbook.h>
 
 
 ServerISON::ServerISON(Server* server) : m_server(server)
@@ -34,12 +34,12 @@ ServerISON::ServerISON(Server* server) : m_server(server)
     m_ISONList_invalid = true;
     //We need to know when the addressbook changes because if the info for an offline nick changes,
     //we won't get a nickInfoChanged signal.
-    /*
+
     connect( Konversation::Addressbook::self()->getAddressBook(), SIGNAL( addressBookChanged( AddressBook * ) ),
         this, SLOT( addressbookChanged() ) );
     connect( Konversation::Addressbook::self(), SIGNAL(addresseesChanged()),
         this, SLOT(addressbookChanged()));
-    */
+
     connect( m_server, SIGNAL(nickInfoChanged(Server*, const NickInfoPtr)),
         this, SLOT(nickInfoChanged(Server*, const NickInfoPtr)));
     connect( m_server,
@@ -87,9 +87,9 @@ KABC::Addressee ServerISON::getOfflineNickAddressee(QString& nickname)
 }
 
 void ServerISON::recalculateAddressees()
-{/*
+{
     // If not watching nicks, no need to build notify list.
-    if (Preferences::useNotify())
+    if (Preferences::self()->useNotify())
     {
         // Get all nicks known to be online.
         const NickInfoMap* allNicks = m_server->getAllNicks();
@@ -101,7 +101,7 @@ void ServerISON::recalculateAddressees()
         for(NickInfoMap::ConstIterator nickInfoIt=allNicks->constBegin();
             nickInfoIt != nickInfoItEnd; ++nickInfoIt)
         {
-            NickInfoPtr nickInfo = nickInfoIt.data();
+            NickInfoPtr nickInfo = (*nickInfoIt);
             KABC::Addressee addressee = nickInfo->getAddressee();
             if (!addressee.isEmpty())
             {
@@ -137,7 +137,7 @@ void ServerISON::recalculateAddressees()
 
                     for(QStringList::iterator it = nicknames.begin(); it != itEnd; ++it)
                     {
-                        ISONMap.insert((*it).toLower(), (*it), true);
+                        ISONMap.insert((*it).toLower(), (*it));
                     }
                 }
                 else
@@ -147,8 +147,7 @@ void ServerISON::recalculateAddressees()
                     // to the notify list.
                     // Simultaneously, build a map of all offline nicks and corresponding
                     // KABC::Addressee, indexed by lowercase nickname.
-                    QStringList nicks = QStringList::split( QChar( 0xE000 ),
-                        (*it).custom("messaging/irc", "All") );
+                    QStringList nicks = (*it).custom("messaging/irc", "All").split( QChar( 0xE000 ) );
                     QStringList::ConstIterator nicksItEnd = nicks.constEnd();
                     for( QStringList::ConstIterator nicksIt = nicks.constBegin();
                         nicksIt != nicksItEnd; ++nicksIt )
@@ -159,8 +158,8 @@ void ServerISON::recalculateAddressees()
                         {
                             QString nickname = (*nicksIt).section(QChar(0xE120),0,0);
                             QString lcNickname = nickname.toLower();
-                            ISONMap.insert(lcNickname, nickname, true);
-                            m_offlineNickToAddresseeMap.insert(lcNickname, *it, true);
+                            ISONMap.insert(lcNickname, nickname);
+                            m_offlineNickToAddresseeMap.insert(lcNickname, *it);
                         }
                     }
                 }
@@ -177,7 +176,7 @@ void ServerISON::recalculateAddressees()
 
         for(QStringList::iterator it = prefsWatchList.begin(); it != itEnd; ++it)
         {
-            ISONMap.insert((*it).toLower(), (*it), true);
+            ISONMap.insert((*it).toLower(), (*it));
         }
 
         // Build final watch list.
@@ -195,7 +194,6 @@ void ServerISON::recalculateAddressees()
             }
         }
     }
-    else */
     {
         m_addresseesISON.clear();
         m_ISONList.clear();
@@ -242,4 +240,4 @@ const QString& /*channelName*/, bool /*joined*/)
     m_ISONList_invalid = true;
 }
 
-// #include "./irc/serverison.moc"
+#include "./irc/serverison.moc"

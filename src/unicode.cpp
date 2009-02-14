@@ -37,7 +37,7 @@
 #define UTF8_ValidTrialByte(c) ( kTrialByte == ((c) & kLeft2BitsMask))
 
 
-bool isUtf8(const Q3CString& text)
+bool isUtf8(const QByteArray& text)
 {
     int i;
     int j;

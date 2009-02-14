@@ -12,7 +12,7 @@
 */
 
 #include "nick.h"
-//#include "addressbook.h"
+#include "addressbook.h"
 
 #include <kdebug.h>
 #include <k3listview.h>

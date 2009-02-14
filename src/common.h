@@ -13,7 +13,7 @@
 #ifndef COMMON_H
 #define COMMON_H
 
-#include <q3cstring.h>
+#include <QByteArray>
 
 class QString;
 class QBitmap;
@@ -25,7 +25,7 @@ namespace Konversation
     QString tagURLs(const QString& text, const QString& fromNick, bool useCustomColor = true);
 //    QBitmap overlayMasks( const QBitmap *under, const QBitmap *over );
     QPixmap overlayPixmaps(const QPixmap &under, const QPixmap &over);
-    bool isUtf8(const Q3CString& text);
+    bool isUtf8(const QByteArray& text);
 
     enum TabNotifyType
     {

@@ -23,7 +23,7 @@
 #define KHTMLDECODER_H
 
 #include <qstring.h>
-#include <Q3CString>
+#include <QByteArray>
 
 class QTextCodec;
 class QTextDecoder;
@@ -84,23 +84,23 @@ public:
 
 
 private:
-    Q3CString automaticDetectionForArabic( const unsigned char* str, int size );
-    Q3CString automaticDetectionForBaltic( const unsigned char* str, int size );
-    Q3CString automaticDetectionForCentralEuropean( const unsigned char* str, int size );
-    Q3CString automaticDetectionForCyrillic( const unsigned char* str, int size, AutoDetectLanguage _language );
-    Q3CString automaticDetectionForGreek( const unsigned char* str, int size );
-    Q3CString automaticDetectionForHebrew( const unsigned char* str, int size );
-    Q3CString automaticDetectionForJapanese( const unsigned char* str, int size );
-    Q3CString automaticDetectionForTurkish( const unsigned char* str, int size );
-    Q3CString automaticDetectionForWesternEuropean( const unsigned char* str, int size );
+    QByteArray automaticDetectionForArabic( const unsigned char* str, int size );
+    QByteArray automaticDetectionForBaltic( const unsigned char* str, int size );
+    QByteArray automaticDetectionForCentralEuropean( const unsigned char* str, int size );
+    QByteArray automaticDetectionForCyrillic( const unsigned char* str, int size, AutoDetectLanguage _language );
+    QByteArray automaticDetectionForGreek( const unsigned char* str, int size );
+    QByteArray automaticDetectionForHebrew( const unsigned char* str, int size );
+    QByteArray automaticDetectionForJapanese( const unsigned char* str, int size );
+    QByteArray automaticDetectionForTurkish( const unsigned char* str, int size );
+    QByteArray automaticDetectionForWesternEuropean( const unsigned char* str, int size );
 
     // codec used for decoding. default is Latin1.
     QTextCodec *m_codec;
     QTextDecoder *m_decoder; // only used for utf16
-    Q3CString enc;
+    QByteArray enc;
     EncodingType m_type;
 
-    Q3CString buffer;
+    QByteArray buffer;
 
     bool body;
     bool beginning;

@@ -20,7 +20,7 @@
 #include "ignore.h"
 #include "server.h"
 #include "irccharsets.h"
-//#include "linkaddressbook/addressbook.h"
+#include "linkaddressbook/addressbook.h"
 #include "query.h"
 
 #include <qstringlist.h>
@@ -29,7 +29,7 @@
 #include <qregexp.h>
 #include <qmap.h>
 #include <qtextcodec.h>
-#include <q3cstring.h>
+#include <QByteArray>
 
 #include <klocale.h>
 #include <kdebug.h>
@@ -124,7 +124,7 @@ namespace Konversation
         while(text.length() > max)
         {
             // The most important bit - turn the current char into a QCString so we can measure it
-            Q3CString ch = codec->fromUnicode(QString(text[index]));
+            QByteArray ch = codec->fromUnicode(QString(text[index]));
             charLength = ch.length();
 
             // If adding this char puts us over the limit:
@@ -1101,15 +1101,15 @@ namespace Konversation
 
         // show (new) notify list to user
         //TODO FIXME uh, wtf? my brain has no room in it for this kind of fucking shit
-        /*
+
         QString list = Preferences::notifyStringByGroupName(groupName) + ' ' + Konversation::Addressbook::self()->allContactsNicksForServer(m_server->getServerName(), m_server->getDisplayName()).join(" ");
-*/
+
         result.typeString = i18n("Notify");
 
-        if(1)//list.isEmpty())
+        if(list.isEmpty())
             result.output = i18n("Current notify list is empty.");
-        //else
-        //    result.output = i18n("Current notify list: %1", list);
+        else
+           result.output = i18n("Current notify list: %1", list);
 
         result.type = Program;
         return result;

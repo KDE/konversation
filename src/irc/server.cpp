@@ -36,7 +36,7 @@
 #include "channellistpanel.h"
 #include "scriptlauncher.h"
 #include "servergroupsettings.h"
-//#include "addressbook.h"
+#include "addressbook.h"
 #include "serverison.h"
 #include "common.h"
 #include "notificationhandler.h"
@@ -2258,8 +2258,8 @@ NickInfoPtr Server::setWatchedNickOnline(const QString& nickname)
     }
 
     emit watchedNickChanged(this, nickname, true);
-    //KABC::Addressee addressee = nickInfo->getAddressee();
-    //if (!addressee.isEmpty()) Konversation::Addressbook::self()->emitContactPresenceChanged(addressee.uid());
+    KABC::Addressee addressee = nickInfo->getAddressee();
+    if (!addressee.isEmpty()) Konversation::Addressbook::self()->emitContactPresenceChanged(addressee.uid());
 
     appendMessageToFrontmost(i18n("Notify"),"<a href=\"#"+nickname+"\">"+
         i18n("%1 is online (%2).", nickname, getServerName())+"</a>", getStatusView());
@@ -2272,11 +2272,11 @@ NickInfoPtr Server::setWatchedNickOnline(const QString& nickname)
 
 void Server::setWatchedNickOffline(const QString& nickname, const NickInfoPtr nickInfo)
 {
-/*    if (nickInfo) {
+   if (nickInfo) {
         KABC::Addressee addressee = nickInfo->getAddressee();
         if (!addressee.isEmpty()) Konversation::Addressbook::self()->emitContactPresenceChanged(addressee.uid(), 1);
     }
-*/
+
     emit watchedNickChanged(this, nickname, false);
 
     appendMessageToFrontmost(i18n("Notify"), i18n("%1 went offline (%2).", nickname, getServerName()), getStatusView());
