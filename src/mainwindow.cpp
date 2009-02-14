@@ -419,7 +419,7 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0)
     awayAction->setText(i18n("Global Away"));
     awayAction->setShortcut(KShortcut("Ctrl+Shift+A"));
     awayAction->setEnabled(false);
-    awayAction->setIcon(KIcon("konversationavailable"));
+    awayAction->setIcon(KIcon("im-user-away"));
     connect(awayAction, SIGNAL(toggled(bool)), KonversationApplication::instance()->getAwayManager(), SLOT(toggleGlobalAway(bool)));
     actionCollection()->addAction("toggle_away", awayAction);
 
