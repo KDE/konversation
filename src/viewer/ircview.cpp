@@ -570,39 +570,6 @@ bool doHighlight, bool parseURL, bool self)
     // Replace all > with &gt;
     filteredLine.replace(">", "\x0bgt;");
 
-    if(!Preferences::self()->disableExpansion())
-    {
-        QRegExp boldRe("\\*\\*([a-zA-Z0-9]+)\\*\\*");
-        QRegExp underRe("\\_\\_([a-zA-Z0-9]+)\\_\\_");
-        int position = 0;
-        QString replacement;
-
-        while( position >= 0)
-        {
-            position = boldRe.indexIn(filteredLine, position);
-            if( position > -1)
-            {
-                replacement = boldRe.cap(1);
-                replacement = "\x02"+replacement+"\x02";
-                filteredLine.replace(position,replacement.length()+2,replacement);
-            }
-            position += boldRe.matchedLength();
-        }
-
-        position = 0;
-        while( position >= 0)
-        {
-            position = underRe.indexIn(filteredLine, position);
-            if( position > -1)
-            {
-                replacement = underRe.cap(1);
-                replacement = "\x1f"+replacement+"\x1f";
-                filteredLine.replace(position,replacement.length()+2,replacement);
-            }
-            position += underRe.matchedLength();
-        }
-    }
-
     if(filteredLine.contains('\x07'))
     {
         if(Preferences::self()->beep())
