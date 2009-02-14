@@ -50,7 +50,7 @@
 
 #include <klineedit.h>
 #include <kinputdialog.h>
-#include <k3passworddialog.h>
+#include <kpassworddialog.h>
 #include <klocale.h>
 #include <kdebug.h>
 #include <kglobalsettings.h>
@@ -1171,11 +1171,10 @@ void Channel::modeButtonClicked(int id, bool on)
     {
         if (args.isEmpty())
         {
-            QByteArray newPassword;
-
-            int result = K3PasswordDialog::getPassword(this, newPassword, i18n("Channel Password"));
-            if (result == K3PasswordDialog::Accepted && !newPassword.isEmpty())
-                args = newPassword;
+            KPasswordDialog dlg(this);
+            dlg.setPrompt(i18n("Channel Password"));
+            if (dlg.exec() && !dlg.password().isEmpty())
+                args = dlg.password();
         }
 
     }
