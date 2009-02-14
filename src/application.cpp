@@ -329,25 +329,25 @@ void KonversationApplication::readOptions()
         }
 
     }
-/*
-    osd->setEnabled(Preferences::useOSD());
+
+    osd->setEnabled(Preferences::self()->useOSD());
 
     //How to load the font from the text?
-    osd->setFont(Preferences::oSDFont());
+    osd->setFont(Preferences::self()->oSDFont());
 
-    osd->setDuration(Preferences::oSDDuration());
-    osd->setScreen(Preferences::oSDScreen());
-    osd->setShadow(Preferences::oSDDrawShadow());
+    osd->setDuration(Preferences::self()->oSDDuration());
+    osd->setScreen(Preferences::self()->oSDScreen());
+    osd->setShadow(Preferences::self()->oSDDrawShadow());
 
-    osd->setOffset(Preferences::oSDOffsetX(), Preferences::oSDOffsetY());
-    osd->setAlignment((OSDWidget::Alignment)Preferences::oSDAlignment());
+    osd->setOffset(Preferences::self()->oSDOffsetX(), Preferences::self()->oSDOffsetY());
+    osd->setAlignment((OSDWidget::Alignment)Preferences::self()->oSDAlignment());
 
-    if(Preferences::oSDUseCustomColors())
+    if(Preferences::self()->oSDUseCustomColors())
     {
-        osd->setTextColor(Preferences::oSDTextColor());
-        osd->setBackgroundColor(Preferences::oSDBackgroundColor());
+        osd->setTextColor(Preferences::self()->oSDTextColor());
+        osd->setBackgroundColor(Preferences::self()->oSDBackgroundColor());
     }
-*/
+
     // Check if there is old server list config //TODO FIXME why are we doing this here?
     KConfigGroup cgServerList(KGlobal::config()->group("Server List"));
 
