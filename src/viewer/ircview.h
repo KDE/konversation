@@ -27,9 +27,7 @@
 #include <qfontdatabase.h>
 #include <QList>
 
-//#include <ktextbrowser.h>
-#include <QPlainTextEdit>
-#include <QTextBrowser>
+#include <KTextBrowser>
 
 class QDropEvent;
 
@@ -38,7 +36,7 @@ class KMenu;
 class Server;
 class ChatWindow;
 
-class IRCView : public QTextBrowser
+class IRCView : public KTextBrowser
 {
     Q_OBJECT
 

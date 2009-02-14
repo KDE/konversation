@@ -506,7 +506,6 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0)
 
     // set up KABC with a nice gui error dialog
     KABC::GuiErrorHandler *m_guiErrorHandler = new KABC::GuiErrorHandler(this);
-    Q_UNUSED(m_guiErrorHandler);
     //kapp->dcopClient()->setAcceptCalls( false );
     Konversation::Addressbook::self()->getAddressBook()->setErrorHandler(m_guiErrorHandler);
     //kapp->dcopClient()->setAcceptCalls( true );

@@ -89,7 +89,7 @@ IRCView::clear()
 //IRCView::setupChannelPopupMenu()
 #endif
 
-IRCView::IRCView(QWidget* parent, Server* newServer) : QTextBrowser(parent)
+IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent)
 {
 
     m_copyUrlMenu = false;
@@ -428,7 +428,7 @@ void IRCView::doAppend(const QString& newLine, bool self)
     line.remove('\n'); // TODO why have newlines? we get <p>, so the \n are unnecessary...
 
     line.remove("<p>");//remove <p> for qtextbrowser
-    QTextBrowser::append(line);
+    KTextBrowser::append(line);
 
     //appendHtml(line);
 
@@ -570,8 +570,7 @@ bool doHighlight, bool parseURL, bool self)
     // Replace all > with &gt;
     filteredLine.replace(">", "\x0bgt;");
 
-    #if 0
-    if(!Preferences::disableExpansion())
+    if(!Preferences::self()->disableExpansion())
     {
         QRegExp boldRe("\\*\\*([a-zA-Z0-9]+)\\*\\*");
         QRegExp underRe("\\_\\_([a-zA-Z0-9]+)\\_\\_");
@@ -580,7 +579,7 @@ bool doHighlight, bool parseURL, bool self)
 
         while( position >= 0)
         {
-            position = boldRe.search(filteredLine, position);
+            position = boldRe.indexIn(filteredLine, position);
             if( position > -1)
             {
                 replacement = boldRe.cap(1);
@@ -593,7 +592,7 @@ bool doHighlight, bool parseURL, bool self)
         position = 0;
         while( position >= 0)
         {
-            position = underRe.search(filteredLine, position);
+            position = underRe.indexIn(filteredLine, position);
             if( position > -1)
             {
                 replacement = underRe.cap(1);
@@ -603,7 +602,6 @@ bool doHighlight, bool parseURL, bool self)
             position += underRe.matchedLength();
         }
     }
-    #endif
 
     if(filteredLine.contains('\x07'))
     {
@@ -856,7 +854,7 @@ void IRCView::mouseMoveEvent(QMouseEvent *e)
     }
     highlightedSlot(m_highlightedURL);*/
     //it doesn't seem to do anything we're overly concerned about
-    QTextBrowser::mouseMoveEvent(e);
+    KTextBrowser::mouseMoveEvent(e);
 }
 
 void IRCView::mousePressEvent(QMouseEvent* ev)
@@ -873,7 +871,7 @@ void IRCView::mousePressEvent(QMouseEvent* ev)
         }
     }*/
 
-    QTextBrowser::mousePressEvent(ev);
+    KTextBrowser::mousePressEvent(ev);
 }
 
 void IRCView::mouseReleaseEvent(QMouseEvent *ev)
@@ -905,7 +903,7 @@ void IRCView::mouseReleaseEvent(QMouseEvent *ev)
         }
     }
 */
-    QTextBrowser::mouseReleaseEvent(ev);
+    KTextBrowser::mouseReleaseEvent(ev);
 }
 
 void IRCView::anchorClicked(const QUrl& url)
@@ -989,7 +987,7 @@ void IRCView::highlightedSlot(const QString& _link)
     if (link == m_lastStatusText && !link.isEmpty())
         return;
 
-    // remember current URL to overcome link clicking problems in QTextBrowser
+    // remember current URL to overcome link clicking problems in KTextBrowser
     //m_highlightedURL = link;
 
     if (link.isEmpty())
