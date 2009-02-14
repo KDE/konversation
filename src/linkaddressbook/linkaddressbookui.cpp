@@ -78,7 +78,7 @@ LinkAddressbookUI::LinkAddressbookUI( QWidget *parent, const QString &ircnick, c
     m_servergroup = servergroup;
     m_suggested_realname = suggested_realname;
 
-    m_ui.addresseeListView->setColumnText(2, SmallIconSet("mail-message"), i18n("Email") );
+    m_ui.addresseeListView->setColumnText(2, KIcon("mail-message"), i18n("Email") );
 
     if(m_suggested_realname.isEmpty()) m_suggested_realname = suggested_realname;
     Q_ASSERT(!ircnick.isEmpty());

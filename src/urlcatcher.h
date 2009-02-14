@@ -18,10 +18,10 @@
 #include "chatwindow.h"
 
 
-class K3ListView;
-class Q3ListViewItem;
+class QTreeWidget;
+class QTreeWidgetItem;
 class QPushButton;
-class K3ListViewSearchLineWidget;
+class KTreeWidgetSearchLineWidget;
 
 class UrlCatcher : public ChatWindow
 {
@@ -42,7 +42,7 @@ class UrlCatcher : public ChatWindow
 
     protected slots:
         void urlSelected();
-        void openUrl(Q3ListViewItem* item);
+        void openUrl(QTreeWidgetItem* item);
 
         void openUrlClicked();
         void copyUrlClicked();
@@ -51,8 +51,8 @@ class UrlCatcher : public ChatWindow
         void clearListClicked();
 
     protected:
-        K3ListView* urlListView;
-        K3ListViewSearchLineWidget* searchWidget;
+        QTreeWidget* urlListView;
+        KTreeWidgetSearchLineWidget* searchWidget;
 
         /** Called from ChatWindow adjustFocus */
         virtual void childAdjustFocus();

@@ -175,7 +175,7 @@ bool DccTransferSend::queue()
     kDebug() << "Fast DCC send: " << m_fastSend;
 
     //Check the file exists
-    if ( !KIO::NetAccess::exists( m_fileURL, true, NULL ) )
+    if ( !KIO::NetAccess::exists( m_fileURL, KIO::NetAccess::SourceSide, NULL ) )
     {
         failed( i18n( "The url \"%1\" does not exist", m_fileURL.prettyUrl() ) );
         return false;

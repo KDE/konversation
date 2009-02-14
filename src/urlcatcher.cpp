@@ -19,20 +19,15 @@
 #include "viewcontainer.h"
 
 #include <qpushbutton.h>
-#include <qregexp.h>
 #include <qclipboard.h>
 #include <qlayout.h>
+#include <QTreeWidget>
 
-#include <klocale.h>
 #include <kdebug.h>
-#include <k3listview.h>
 #include <krun.h>
 #include <kfiledialog.h>
-#include <kprocess.h>
-#include <kdeversion.h>
 #include <kshell.h>
-#include <k3listviewsearchline.h>
-#include <kvbox.h>
+#include <ktreewidgetsearchline.h>
 
 
 UrlCatcher::UrlCatcher(QWidget* parent) : ChatWindow(parent)
@@ -40,18 +35,17 @@ UrlCatcher::UrlCatcher(QWidget* parent) : ChatWindow(parent)
     setName(i18n("URL Catcher"));
     setType(ChatWindow::UrlCatcher);
 
-    urlListView=new K3ListView(this);
+    urlListView=new QTreeWidget(this);
     urlListView->setObjectName("url_list_view");
-    urlListView->addColumn(i18n("Nick"));
-    urlListView->addColumn(i18n("URL"));
-    urlListView->setFullWidth(true);
+    urlListView->setRootIsDecorated(false);
+    urlListView->setHeaderLabels(QStringList() << i18n("Nick") << i18n("URL"));
     urlListView->setAllColumnsShowFocus(true);
     QString urlListViewWT = i18n(
         "List of Uniform Resource Locators mentioned in any of the Konversation windows "
         "during this session.");
     urlListView->setWhatsThis(urlListViewWT);
 
-    searchWidget = new K3ListViewSearchLineWidget(urlListView, this);
+    searchWidget = new KTreeWidgetSearchLineWidget(this, urlListView);
     searchWidget->setObjectName("search_line");
     searchWidget->setEnabled(false);
 
@@ -87,8 +81,8 @@ UrlCatcher::UrlCatcher(QWidget* parent) : ChatWindow(parent)
         "Click to erase the entire list.");
     clearListButton->setWhatsThis(clearListButtonWT);
 
-    connect(urlListView,SIGNAL (executed(Q3ListViewItem*)),this,SLOT (openUrl(Q3ListViewItem*)) );
-    connect(urlListView,SIGNAL (selectionChanged()),this,SLOT (urlSelected()) );
+    connect(urlListView,SIGNAL (itemDoubleClicked(QTreeWidgetItem*,int)),this,SLOT (openUrl(QTreeWidgetItem*)) );
+    connect(urlListView,SIGNAL (itemSelectionChanged()),this,SLOT (urlSelected()) );
 
     connect(openUrlButton,SIGNAL (clicked()),this,SLOT (openUrlClicked()) );
     connect(copyUrlButton,SIGNAL (clicked()),this,SLOT (copyUrlClicked()) );
@@ -113,7 +107,7 @@ UrlCatcher::~UrlCatcher()
 
 void UrlCatcher::urlSelected()
 {
-    Q3ListViewItem* item=urlListView->selectedItem();
+    QTreeWidgetItem* item=urlListView->currentItem();
     if(item)
     {
         openUrlButton->setEnabled(true);
@@ -130,13 +124,13 @@ void UrlCatcher::urlSelected()
 
 void UrlCatcher::addUrl(const QString& who,const QString& url)
 {
-    new K3ListViewItem(urlListView,who,url);
+    new QTreeWidgetItem(urlListView, QStringList() << who << url);
     clearListButton->setEnabled(true);
     saveListButton->setEnabled(true);
     searchWidget->setEnabled(true);
 }
 
-void UrlCatcher::openUrl(Q3ListViewItem* item)
+void UrlCatcher::openUrl(QTreeWidgetItem* item)
 {
     QString url = item->text(1);
     if (!Preferences::self()->useCustomBrowser() || url.toLower().startsWith("mailto:") )
@@ -161,13 +155,13 @@ void UrlCatcher::openUrl(Q3ListViewItem* item)
 
 void UrlCatcher::openUrlClicked()
 {
-    Q3ListViewItem* item=urlListView->selectedItem();
+    QTreeWidgetItem* item=urlListView->currentItem();
     if(item) openUrl(item);
 }
 
 void UrlCatcher::copyUrlClicked()
 {
-    Q3ListViewItem* item=urlListView->selectedItem();
+    QTreeWidgetItem* item=urlListView->currentItem();
     if(item)
     {
         QClipboard *cb = qApp->clipboard();
@@ -178,14 +172,14 @@ void UrlCatcher::copyUrlClicked()
 
 void UrlCatcher::deleteUrlClicked()
 {
-    Q3ListViewItem* item=urlListView->selectedItem();
+    QTreeWidgetItem* item=urlListView->currentItem();
     if(item)
     {
         emit deleteUrl(item->text(0),item->text(1));
         delete item;
         // select next item
         item=urlListView->currentItem();
-        if(item) urlListView->setSelected(item,true);
+        if(item) urlListView->setCurrentItem(item);
         else
         {
             saveListButton->setEnabled(false);
@@ -220,11 +214,11 @@ void UrlCatcher::saveListClicked()
         listFile.open(QIODevice::WriteOnly);
         // wrap the file into a stream
         QTextStream stream(&listFile);
-        Q3ListViewItem* item=urlListView->itemAtIndex(0);
+        QTreeWidgetItem* item=urlListView->topLevelItem(0);
         while(item)
         {
             stream << item->text(0) << ": " << item->text(1) << endl;
-            item=item->itemBelow();
+            item=urlListView->itemBelow(item);
         }                                         // while
     }
 }
