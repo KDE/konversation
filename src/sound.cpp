@@ -15,7 +15,8 @@
 
 #include <kurl.h>
 
-#include <knotification.h>
+#include <Phonon/AudioOutput>
+#include <Phonon/MediaObject>
 
 
 namespace Konversation
@@ -29,13 +30,13 @@ namespace Konversation
 
     void Sound::play(const KUrl& url)
     {
-#ifdef __GNUC__
-#warning "Port to kde4: knotification API"
-#endif
-#if 0
-        KNotification::userEvent(0,QString(),1,1,url.path());
-#endif
+        // consider porting highlight settings to knotify (uwolfer)
+        Phonon::MediaObject *mediaObject = new Phonon::MediaObject(this);
+        mediaObject->setCurrentSource(Phonon::MediaSource(url));
+        Phonon::AudioOutput *audioOutput = new Phonon::AudioOutput(Phonon::NotificationCategory, this);
+        Phonon::Path path = Phonon::createPath(mediaObject, audioOutput);
+        mediaObject->play();
     }
 }
 
-// #include "./sound.moc"
+#include "./sound.moc"
