@@ -146,6 +146,11 @@ QPixmap Images::getNickIcon(NickPrivilege privilege,bool isAway) const
     return nickIcons[privilege][isAway?1:0];
 }
 
+QString Images::getNickIconPath(NickPrivilege privilege) const
+{
+    return nickIconPaths[privilege];
+}
+
 void Images::initializeLeds()
 {
     m_serverColor = "steelblue";
@@ -194,18 +199,24 @@ void Images::initializeNickIcons()
     /* The list is sorted alphabetically. */
 
     QPixmap elementAdmin(*it);
+    nickIconPaths[Admin] = *it;
     ++it;
     QPixmap elementAway(*it);
     ++it;
     QPixmap elementHalfOp(*it);
+    nickIconPaths[HalfOp] = *it;
     ++it;
     QPixmap elementNormal(*it);
+    nickIconPaths[Normal] = *it;
     ++it;
     QPixmap elementOp(*it);
+    nickIconPaths[Op] = *it;
     ++it;
     QPixmap elementOwner(*it);
+    nickIconPaths[Owner] = *it;
     ++it;
     QPixmap elementVoice(*it);
+    nickIconPaths[Voice] = *it;
 
     nickIcons[Normal][0] = elementNormal;
     nickIcons[Normal][1] = overlayPixmaps( nickIcons[Normal][0], elementAway );

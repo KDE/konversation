@@ -17,18 +17,11 @@
 #include "images.h"
 #include "linkaddressbook/addressbook.h"
 
-#include <kmenu.h>
-#include <klocale.h>
-#include <kdebug.h>
-#include <kiconloader.h>
 #include <kaction.h>
 #include <kauthorized.h>
 
-#include <Q3MimeSourceFactory>
 #include <QContextMenuEvent>
 #include <QDropEvent>
-#include <qtimer.h>
-#include <qactiongroup.h>
 
 NickListView::NickListView(QWidget* parent, Channel *chan) :
 K3ListView(parent),
@@ -189,14 +182,6 @@ void NickListView::setWhatsThis()
     }
     else
     {
-        Q3MimeSourceFactory::defaultFactory()->setImage( "admin", images->getNickIcon( Images::Admin, false ).toImage() );
-        Q3MimeSourceFactory::defaultFactory()->setImage( "owner", images->getNickIcon( Images::Owner, false ).toImage());
-        Q3MimeSourceFactory::defaultFactory()->setImage( "op", images->getNickIcon( Images::Op, false ).toImage() );
-        Q3MimeSourceFactory::defaultFactory()->setImage( "halfop", images->getNickIcon( Images::HalfOp, false ).toImage() );
-        Q3MimeSourceFactory::defaultFactory()->setImage( "voice", images->getNickIcon( Images::Voice, false ).toImage() );
-        Q3MimeSourceFactory::defaultFactory()->setImage( "normal", images->getNickIcon( Images::Normal, false ).toImage() );
-        Q3MimeSourceFactory::defaultFactory()->setImage( "normalaway", images->getNickIcon( Images::Normal, true).toImage() );
-
         K3ListView::setWhatsThis(i18n("<qt><p>This shows all the people in the channel.  The nick for each person is shown, with a picture showing their status.</p>"
             "<table>"
 
@@ -213,7 +198,15 @@ void NickListView::setWhatsThis()
                     //", as well as any information in the addressbook for this person"
                     ". See the Konversation Handbook for more information."
             "</p></qt>"
-            ));
+            )
+            .replace("'admin'", images->getNickIconPath(Images::Admin))
+            .replace("'owner'", images->getNickIconPath(Images::Owner))
+            .replace("'op'", images->getNickIconPath(Images::Op))
+            .replace("'halfop'", images->getNickIconPath(Images::HalfOp))
+            .replace("'voice'", images->getNickIconPath(Images::Voice))
+            .replace("'normal'", images->getNickIconPath(Images::Normal))
+            .replace("'normalaway'", images->getNickIconPath(Images::Normal))
+            );
     }
 
 }

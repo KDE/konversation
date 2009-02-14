@@ -62,6 +62,7 @@ class Images : public QObject
         QIcon getKimproxyOffline() const;
 
         QPixmap getNickIcon(NickPrivilege privilege,bool isAway=false) const;
+        QString getNickIconPath(NickPrivilege privilege) const;
         void initializeNickIcons();
 
     public slots:
@@ -100,5 +101,6 @@ class Images : public QObject
 
                                                   // [privilege][away]
         QPixmap nickIcons[_NickPrivilege_COUNT][2];
+        QString nickIconPaths[_NickPrivilege_COUNT];
 };
 #endif
