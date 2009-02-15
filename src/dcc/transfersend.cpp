@@ -38,7 +38,6 @@
 #include <kdebug.h>
 #include <klocale.h>
 #include <k3serversocket.h>
-#include <k3socketaddress.h>
 #include <k3streamsocket.h>
 #include <kio/netaccess.h>
 #include <kfileitem.h>

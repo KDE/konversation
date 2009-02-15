@@ -29,7 +29,6 @@
 #include <kmessagebox.h>
 #include <k3serversocket.h>
 #include <kstandarddirs.h>
-#include <k3streamsocket.h>
 #include <kdirselectdialog.h>
 #include <kuser.h>
 #include <kauthorized.h>

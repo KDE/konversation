@@ -874,12 +874,12 @@ void NicksOnline::slotNickListView_RightButtonClicked(Q3ListViewItem* item, cons
         }
         case nsHasAddress:
         {
-            m_sendMail = m_popupMenu->addAction(SmallIcon("mail-send"), i18n("&Send Email..."));
+            m_sendMail = m_popupMenu->addAction(KIcon("mail-send"), i18n("&Send Email..."));
             m_popupMenu->addSeparator();
-            m_editContact = m_popupMenu->addAction(SmallIcon("document-edit"), i18n("Edit C&ontact..."));
+            m_editContact = m_popupMenu->addAction(KIcon("document-edit"), i18n("Edit C&ontact..."));
             m_popupMenu->addSeparator();
             m_addressBookChange = m_popupMenu->addAction(i18n("&Change Association..."));
-            m_deleteAssociation =  m_popupMenu->addAction(SmallIconSet("edit-delete"), i18n("&Delete Association"));
+            m_deleteAssociation =  m_popupMenu->addAction(KIcon("edit-delete"), i18n("&Delete Association"));
             m_popupMenu->addSeparator();
             m_whois = m_popupMenu->addAction(i18n("&Whois"));
             m_openQuery = m_popupMenu->addAction(i18n("Open &Query"));

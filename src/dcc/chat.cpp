@@ -39,7 +39,6 @@
 #include <kmessagebox.h>
 #include <kdebug.h>
 #include <k3serversocket.h>
-#include <k3socketaddress.h>
 #include <k3streamsocket.h>
 #include <KActionCollection>
 #include <kaction.h>
