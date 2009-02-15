@@ -18,6 +18,7 @@
 #include <kdebug.h>
 #include <klibloader.h>
 #include <klocale.h>
+#include <kde_terminal_interface.h>
 
 
 KonsolePanel::KonsolePanel(QWidget *p) : ChatWindow( p ), k_part (0)
@@ -37,8 +38,13 @@ KonsolePanel::KonsolePanel(QWidget *p) : ChatWindow( p ), k_part (0)
     setFocusProxy(k_part->widget());
     k_part->widget()->setFocus();
 
+    TerminalInterface *terminal = qobject_cast<TerminalInterface *>(k_part);
+    if (!terminal) return;
+    terminal->showShellInDir(QDir::homePath());
+
     connect(k_part, SIGNAL(destroyed()), this, SLOT(partDestroyed()));
 #if 0
+// TODO find the correct signal
     connect(k_part, SIGNAL(receivedData(const QString&)), this, SLOT(konsoleChanged(const QString&)));
 #endif
 }
