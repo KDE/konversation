@@ -24,6 +24,7 @@
 #include <qregexp.h>
 #include <qspinbox.h>
 #include <QTextCodec>
+#include <QKeyEvent>
 
 #include <kdialog.h>
 #include <ktoolbar.h>

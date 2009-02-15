@@ -22,6 +22,7 @@
 #include <qregexp.h>
 #include <qtextcodec.h>
 #include <qlayout.h>
+#include <QKeyEvent>
 
 #include <klocale.h>
 #include <kdialog.h>

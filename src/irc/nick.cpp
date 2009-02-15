@@ -11,6 +11,8 @@
   email:     eisfuchs@tigress.com
 */
 
+#define QT3_SUPPORT //TODO remove when porting away from K3ListView
+
 #include "nick.h"
 #include "addressbook.h"
 

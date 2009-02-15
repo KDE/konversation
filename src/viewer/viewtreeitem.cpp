@@ -9,6 +9,8 @@
   Copyright (C) 2006 Eike Hein <hein@kde.org>
 */
 
+#define QT3_SUPPORT //TODO remove when porting away from K3ListView
+
 #include "viewtreeitem.h"
 #include "application.h" ////// header renamed
 #include "chatwindow.h"
