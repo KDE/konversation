@@ -355,4 +355,4 @@ QDateTime DccTransfer::getTimeTransferFinished() const
     return m_timeTransferFinished;
 }
 
-// #include "./dcc/transfer.moc"
+#include "transfer.moc"

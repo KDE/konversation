@@ -2460,4 +2460,4 @@ void ViewContainer::showNextActiveView()
     If the server is being removed this will fire with a null pointer.
 */
 
-// #include "./viewer/viewcontainer.moc"
+#include "viewcontainer.moc"

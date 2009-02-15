@@ -56,5 +56,5 @@ void DCC_Config::languageChange()
 DCC_Config::~DCC_Config()
 {
 }
-// #include "./preferences/dcc_preferences.moc"
+#include "dcc_preferences.moc"
 

@@ -3290,7 +3290,7 @@ void Server::updateEncoding()
         getViewContainer()->updateViewEncoding(getViewContainer()->getFrontView());
 }
 
-// #include "./irc/server.moc"
+#include "server.moc"
 
 // kate: space-indent on; tab-width 4; indent-width 4; mixed-indent off; replace-tabs on;
 // vim: set et sw=4 ts=4 cino=l1,cs,U1:

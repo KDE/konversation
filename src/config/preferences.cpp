@@ -593,4 +593,4 @@ QString Preferences::webBrowserCmd()
   return cmd;
 }
 
-// #include "./config/preferences.moc"
+#include "preferences.moc"

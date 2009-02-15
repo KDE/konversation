@@ -344,4 +344,4 @@ namespace Konversation
 
 }
 
-// #include "./notificationhandler.moc"
+#include "notificationhandler.moc"

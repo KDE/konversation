@@ -113,4 +113,4 @@ Q3DragObject* ServerListView::dragObject()
     return new Q3StoredDrag("application/x-qlistviewitem", viewport());
 }
 
-// #include "./irc/serverlistview.moc"
+#include "serverlistview.moc"

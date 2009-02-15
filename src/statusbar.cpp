@@ -237,4 +237,4 @@ void KonversationStatusBar::removeSSLLabel()
     m_sslLabel->hide();
 }
 
-// #include "./statusbar.moc"
+#include "statusbar.moc"

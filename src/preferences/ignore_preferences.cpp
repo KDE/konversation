@@ -214,4 +214,4 @@ void Ignore_Config::languageChange()
   loadSettings();
 }
 
-// #include "./preferences/ignore_preferences.moc"
+#include "ignore_preferences.moc"

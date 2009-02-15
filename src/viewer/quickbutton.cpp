@@ -35,4 +35,4 @@ void QuickButton::setDefinition(const QString &newDefinition)
     definition=newDefinition;
 }
 
-// #include "./viewer/quickbutton.moc"
+#include "quickbutton.moc"

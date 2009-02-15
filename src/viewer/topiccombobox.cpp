@@ -50,4 +50,4 @@ void TopicComboBox::wheelEvent(QWheelEvent *ev)
     ev->ignore();
 }
 
-// #include "./viewer/topiccombobox.moc"
+#include "topiccombobox.moc"

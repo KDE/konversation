@@ -388,4 +388,4 @@ QString DccTransferPanelItem::secToHMS( long sec )
             .arg( QString::number( remSec ).rightJustified( 2, '0' ) );
 }
 
-// #include "./dcc/transferpanelitem.moc"
+#include "transferpanelitem.moc"

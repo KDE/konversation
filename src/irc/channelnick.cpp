@@ -256,4 +256,4 @@ void ChannelNick::setTimeStamp(uint stamp)
   m_timeStamp = stamp;
 }
 
-// #include "./irc/channelnick.moc"
+#include "channelnick.moc"

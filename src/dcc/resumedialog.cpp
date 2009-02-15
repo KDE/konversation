@@ -196,4 +196,4 @@ void DccResumeDialog::setDefaultName() // slot
     m_urlreqFileURL->setUrl(m_item->getFileURL().prettyUrl());
 }
 
-// #include "./dcc/resumedialog.moc"
+#include "resumedialog.moc"

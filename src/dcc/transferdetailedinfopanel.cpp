@@ -213,4 +213,4 @@ void DccTransferDetailedInfoPanel::slotOpenFolderButtonClicked()
     }
 }
 
-// #include "./dcc/transferdetailedinfopanel.moc"
+#include "transferdetailedinfopanel.moc"

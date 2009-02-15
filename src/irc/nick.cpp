@@ -257,4 +257,4 @@ int Nick::getSortingValue() const
     return flags;
 }
 
-// #include "./irc/nick.moc"
+#include "nick.moc"

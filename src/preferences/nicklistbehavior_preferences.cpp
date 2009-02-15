@@ -102,4 +102,4 @@ bool NicklistBehavior_Config::hasChanged()
   return(m_oldSortingOrder!=currentSortingOrder());
 }
 
-// #include "./preferences/nicklistbehavior_preferences.moc"
+#include "nicklistbehavior_preferences.moc"

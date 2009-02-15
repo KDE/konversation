@@ -84,4 +84,4 @@ bool KonviBookmarkHandler::enableOption(BookmarkOption option) const
     return false;
 }
 
-// #include "./bookmarkhandler.moc"
+#include "bookmarkhandler.moc"

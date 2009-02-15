@@ -445,4 +445,4 @@ bool NickInfo::getPrintedOnline()
         return false;
 }
 
-// #include "./irc/nickinfo.moc"
+#include "nickinfo.moc"

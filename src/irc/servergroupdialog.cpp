@@ -407,4 +407,4 @@ namespace Konversation
 
 }
 
-// #include "./irc/servergroupdialog.moc"
+#include "servergroupdialog.moc"

@@ -803,4 +803,4 @@ void DccTransferRecvWriteCacheHandler::slotKIOResult( KJob* job )
     }
 }
 
-// #include "./dcc/transferrecv.moc"
+#include "transferrecv.moc"

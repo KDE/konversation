@@ -613,4 +613,4 @@ void ChannelListPanel::setFilter(const QString& filter)
     filterInput->setText(filter);
 }
 
-// #include "./irc/channellistpanel.moc"
+#include "channellistpanel.moc"

@@ -388,4 +388,4 @@ void NickListView::slotActionTriggered(QAction* action)
     popupCommand(action->data().value<Konversation::PopupIDs>());
 }
 
-// #include "./irc/nicklistview.moc"
+#include "nicklistview.moc"

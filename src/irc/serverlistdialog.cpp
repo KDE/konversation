@@ -566,4 +566,4 @@ namespace Konversation
     }
 }
 
-// #include "./irc/serverlistdialog.moc"
+#include "serverlistdialog.moc"

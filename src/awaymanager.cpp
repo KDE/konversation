@@ -365,4 +365,4 @@ void AwayManager::updateGlobalAwayAction(bool away)
     }
 }
 
-// #include "./awaymanager.moc"
+#include "awaymanager.moc"

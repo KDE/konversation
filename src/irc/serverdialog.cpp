@@ -106,4 +106,4 @@ namespace Konversation
     }
 }
 
-// #include "./irc/serverdialog.moc"
+#include "serverdialog.moc"

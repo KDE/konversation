@@ -228,4 +228,4 @@ void DccTransferManager::removeRecvItem( DccTransfer* item_ )
     item->deleteLater();
 }
 
-// #include "./dcc/transfermanager.moc"
+#include "transfermanager.moc"

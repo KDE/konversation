@@ -580,4 +580,4 @@ Server* ConnectionManager::getAnyServer()
     return 0;
 }
 
-// #include "./connectionmanager.moc"
+#include "connectionmanager.moc"
