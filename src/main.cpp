@@ -16,8 +16,6 @@
 #include <kcmdlineargs.h>
 #include <kaboutdata.h>
 #include <klocale.h>
-//#include <dcopclient.h>
-//#include <dcopref.h>
 #include <kdebug.h>
 
 #include "application.h" ////// header renamed
@@ -40,7 +38,7 @@ int main(int argc, char* argv[])
         KONVI_VERSION " #" STRHACK(COMMIT),
         ki18n("A user friendly IRC client"),
         KAboutData::License_GPL,
-        ki18n("(C) 2002-2008 by the Konversation team"),
+        ki18n("(C) 2002-2009 by the Konversation team"),
         ki18n("Konversation is a client for the Internet Relay Chat (IRC) protocol.\n"
         "Meet friends on the net, make new acquaintances and lose yourself in\n"
         "talk about your favorite subject."),
