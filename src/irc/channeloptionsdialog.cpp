@@ -19,16 +19,13 @@
 #include <qpushbutton.h>
 #include <qregexp.h>
 #include <qstandarditemmodel.h>
-#include <q3header.h>
 #include <qtoolbutton.h>
 #include <QKeyEvent>
 
 #include <klocale.h>
-#include <k3listview.h>
 #include <ktextedit.h>
 #include <klineedit.h>
 #include <knuminput.h>
-#include <k3listviewsearchline.h>
 #include <kiconloader.h>
 
 
@@ -51,20 +48,15 @@ namespace Konversation
         m_ui.otherModesList->setModel(modesModel);
         m_ui.otherModesList->hide();
 
-        // don't allow sorting. most recent topic is always first
-        m_ui.topicHistoryList->setSortColumn(-1);
         m_ui.banList->setDefaultRenameAction(Q3ListView::Accept);
         m_ui.banListSearchLine->setListView(m_ui.banList);
         // hide column where the complete topic will be put in for convenience
         m_ui.topicHistoryList->hideColumn(2);
-        // do not allow the user to resize the hidden column back into view
-        m_ui.topicHistoryList->header()->setResizeEnabled(false,2);
 
         m_channel = channel;
         m_editingTopic = false;
 
-        connect(m_ui.topicHistoryList, SIGNAL(clicked(Q3ListViewItem*)), this, SLOT(topicHistoryItemClicked(Q3ListViewItem*)));
-        connect(m_ui.topicHistoryList, SIGNAL(selectionChanged(Q3ListViewItem*)), this, SLOT(topicHistoryItemClicked(Q3ListViewItem*)));
+        connect(m_ui.topicHistoryList, SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)), this, SLOT(topicHistoryItemClicked(QTreeWidgetItem*)));
         connect(m_ui.toggleAdvancedModes, SIGNAL(clicked()), this, SLOT(toggleAdvancedModes()));
         connect(m_ui.topicEdit, SIGNAL(textChanged()), this, SLOT(topicBeingEdited()));
 
@@ -187,17 +179,17 @@ namespace Konversation
         {
             QDateTime date;
             date.setTime_t((*it).section(' ', 0 ,0).toUInt());
-            new K3ListViewItem(m_ui.topicHistoryList, (*it).section(' ', 1, 1), date.toString(Qt::LocalDate), (*it).section(' ', 2));
+            new QTreeWidgetItem(m_ui.topicHistoryList, QStringList() << (*it).section(' ', 1, 1) << date.toString(Qt::LocalDate) << (*it).section(' ', 2));
         }
 
         // update topic preview
-        topicHistoryItemClicked(m_ui.topicHistoryList->selectedItem());
+        topicHistoryItemClicked(m_ui.topicHistoryList->currentItem());
         // don't destroy the user's edit box if they started editing
         if(!m_editingTopic && !history.isEmpty())
             m_ui.topicEdit->setText(history.first().section(' ', 2));
     }
 
-    void ChannelOptionsDialog::topicHistoryItemClicked(Q3ListViewItem* item)
+    void ChannelOptionsDialog::topicHistoryItemClicked(QTreeWidgetItem* item)
     {
         // if they didn't click on anything, item is null
         if(item)

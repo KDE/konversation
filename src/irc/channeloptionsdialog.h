@@ -17,7 +17,6 @@
 #include <qstringlist.h>
 
 #include <kdialog.h>
-#include <k3listview.h>
 
 #include "ui_channeloptionsui.h"
 
@@ -60,7 +59,7 @@ namespace Konversation
 
 
         protected slots:
-            void topicHistoryItemClicked(Q3ListViewItem* item);
+            void topicHistoryItemClicked(QTreeWidgetItem* item);
             void topicBeingEdited();
 
             void cancelClicked();
