@@ -134,11 +134,12 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
 
     // Create context menu.  Individual menu entries are created in rightButtonClicked slot.
     m_popupMenu = new KMenu(this);
+
     m_popupMenu->setObjectName("nicksonline_context_menu");
     connect(m_nickListView, SIGNAL(rightButtonClicked(Q3ListViewItem *, const QPoint &, int )),
         this, SLOT(slotNickListView_RightButtonClicked(Q3ListViewItem*, const QPoint &)));
-    connect(m_popupMenu, SIGNAL(activated(int)),
-        this, SLOT(slotPopupMenu_Activated(int)));
+    connect(m_popupMenu, SIGNAL(triggered ( QAction *)),
+        this, SLOT(slotPopupMenu_Activated(QAction*)));
 
     // Display info for all currently-connected servers.
     refreshAllServerOnlineLists();
@@ -641,12 +642,10 @@ const QString& nickname)
  * Also refreshes the nicklistview display to reflect the new addressbook state
  * for the nick.
  */
-void NicksOnline::doCommand(int id)
+void NicksOnline::doCommand(QAction* id)
 {
-    if(id < 0)
-    {
+    if(id == 0)
         return;
-    }
 
     QString serverName;
     QString nickname;
@@ -675,15 +674,12 @@ void NicksOnline::doCommand(int id)
     {
         addressee = server->getOfflineNickAddressee(nickname);
     }
-    switch(id)
-    {
-        case ciSendEmail:
+    if ( id == m_sendMail )
             Konversation::Addressbook::self()->sendEmail(addressee);
-            return;                               //no need to refresh item
-        case ciAddressbookEdit:
+    else if (  id == m_editContact )
             Konversation::Addressbook::self()->editAddressee(addressee.uid());
-            return;                               //no need to refresh item - nickinfo changed will be called anyway.
-        case ciAddressbookChange:
+    else if ( id == m_addressBookChange )
+    {
             if(nickInfo)
             {
                 nickInfo->showLinkAddressbookUI();
@@ -693,15 +689,14 @@ void NicksOnline::doCommand(int id)
                 LinkAddressbookUI *linkaddressbookui = new LinkAddressbookUI(server->getViewContainer()->getWindow(), nickname, server->getServerName(), server->getDisplayName(), addressee.realName());
                 linkaddressbookui->show();
             }
-            break;
-        case ciAddressbookNew:
-        case ciAddressbookDelete:
-        {
+    }
+    else if ( id == m_chooseAssociation || id == m_deleteAssociation )
+    {
             Konversation::Addressbook *addressbook = Konversation::Addressbook::self();
 
             if(addressbook && addressbook->getAndCheckTicket())
             {
-                if(id == ciAddressbookDelete)
+                if(id == m_deleteAssociation)
                 {
                     if (addressee.isEmpty())
                     {
@@ -719,35 +714,34 @@ void NicksOnline::doCommand(int id)
                 if(addressbook->saveTicket())
                 {
                     //saveTicket will refresh the addressees for us.
-                    if(id == ciAddressbookNew)
+                    if(id == m_newContact)
                     {
                         Konversation::Addressbook::self()->editAddressee(addressee.uid());
                     }
                 }
             }
-            break;
-        }
-        case ciJoinChannel:
-        {
+    }
+    else if ( id == m_joinChannel )
+    {
             // only join real channels
             if (static_cast<NicksOnlineItem*>(m_nickListView->selectedItem())->type() == NicksOnlineItem::ChannelItem)
             {
                 QString contactChannel = m_nickListView->selectedItem()->text(nlvcChannel);
                 server->queue( "JOIN "+contactChannel );
             }
-            break;
-        }
-        case ciWhois:
+    }
+    else if ( id == m_whois )
+    {
             server->queue("WHOIS "+nickname);
-            return;
-        case ciOpenQuery:
+    }
+    else if ( id == m_openQuery )
+    {
             NickInfoPtr nickInfo = server->obtainNickInfo(nickname);
             class Query* query = server->addQuery(nickInfo, true /*we initiated*/);
             emit showView(query);
-            return;
     }
-
-    refreshItem(item);
+    else
+            refreshItem(item);
 }
 
 /**
@@ -830,19 +824,19 @@ void NicksOnline::slotEditContactButton_Clicked()
     switch (getNickAddressbookState(m_nickListView->selectedItem()))
     {
         case nsNotANick:    break;
-        case nsNoAddress:   { doCommand(ciAddressbookNew); break; }
-        case nsHasAddress:  { doCommand(ciAddressbookEdit); break; }
+        case nsNoAddress:   { doCommand(m_newContact); break; }
+        case nsHasAddress:  { doCommand(m_editContact); break; }
     }
 }
 
 /**
  * Received when user clicks the Change Association button.
  */
-void NicksOnline::slotChangeAssociationButton_Clicked() { doCommand(ciAddressbookChange); }
+void NicksOnline::slotChangeAssociationButton_Clicked() { doCommand(m_addressBookChange); }
 /**
  * Received when user clicks the Delete Association button.
  */
-void NicksOnline::slotDeleteAssociationButton_Clicked() { doCommand(ciAddressbookDelete); }
+void NicksOnline::slotDeleteAssociationButton_Clicked() { doCommand(m_deleteAssociation); }
 /**
  * Received when user selects a different item in the nicklistview.
  */
@@ -869,28 +863,28 @@ void NicksOnline::slotNickListView_RightButtonClicked(Q3ListViewItem* item, cons
         }
         case nsNoAddress:
         {
-            m_popupMenu->insertItem(i18n("&Choose Association..."), ciAddressbookChange);
-            m_popupMenu->insertItem(i18n("Create New C&ontact..."), ciAddressbookNew);
+            m_chooseAssociation =  m_popupMenu->addAction(i18n("&Choose Association..."));
+            m_newContact = m_popupMenu->addAction(i18n("Create New C&ontact..."));
             m_popupMenu->addSeparator();
-            m_popupMenu->insertItem(i18n("&Whois"), ciWhois);
-            m_popupMenu->insertItem(i18n("Open &Query"), ciOpenQuery);
+            m_whois = m_popupMenu->addAction(i18n("&Whois"));
+            m_openQuery = m_popupMenu->addAction(i18n("Open &Query"));
             if (item->text(nlvcServerName).isEmpty())
-                m_popupMenu->insertItem(i18n("&Join Channel"), ciJoinChannel);
+                m_joinChannel = m_popupMenu->addAction(i18n("&Join Channel"));
             break;
         }
         case nsHasAddress:
         {
-            m_popupMenu->insertItem(SmallIcon("mail-send"), i18n("&Send Email..."), ciSendEmail);
+            m_sendMail = m_popupMenu->addAction(SmallIcon("mail-send"), i18n("&Send Email..."));
             m_popupMenu->addSeparator();
-            m_popupMenu->insertItem(SmallIcon("document-edit"), i18n("Edit C&ontact..."), ciAddressbookEdit);
+            m_editContact = m_popupMenu->addAction(SmallIcon("document-edit"), i18n("Edit C&ontact..."));
             m_popupMenu->addSeparator();
-            m_popupMenu->insertItem(i18n("&Change Association..."), ciAddressbookChange);
-            m_popupMenu->insertItem(SmallIconSet("edit-delete"), i18n("&Delete Association"), ciAddressbookDelete);
+            m_addressBookChange = m_popupMenu->addAction(i18n("&Change Association..."));
+            m_deleteAssociation =  m_popupMenu->addAction(SmallIconSet("edit-delete"), i18n("&Delete Association"));
             m_popupMenu->addSeparator();
-            m_popupMenu->insertItem(i18n("&Whois"), ciWhois);
-            m_popupMenu->insertItem(i18n("Open &Query"), ciOpenQuery);
+            m_whois = m_popupMenu->addAction(i18n("&Whois"));
+            m_openQuery = m_popupMenu->addAction(i18n("Open &Query"));
             if (item->text(nlvcServerName).isEmpty())
-                m_popupMenu->insertItem(i18n("&Join Channel"), ciJoinChannel);
+                m_joinChannel = m_popupMenu->addAction(i18n("&Join Channel"));
             break;
         }
     }
@@ -901,7 +895,7 @@ void NicksOnline::slotNickListView_RightButtonClicked(Q3ListViewItem* item, cons
 /**
  * Received from popup menu when user chooses something.
  */
-void NicksOnline::slotPopupMenu_Activated(int id)
+void NicksOnline::slotPopupMenu_Activated(QAction* id)
 {
     doCommand(id);
 }

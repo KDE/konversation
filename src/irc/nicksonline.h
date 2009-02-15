@@ -47,12 +47,6 @@ class NicksOnline : public ChatWindow
             nlvcAdditionalInfo = 1,
             nlvcServerName = 2                     // hidden
         };
-        // Ids associated with menu/button commands.
-        enum CommandIDs
-        {
-            ciAddressbookChange, ciAddressbookNew, ciAddressbookDelete, ciAddressbookEdit,
-            ciSendEmail, ciWhois, ciJoinChannel, ciOpenQuery
-        };
         enum NickState
         {
             nsNotANick = 0,                       // User didn't click on a nickname.
@@ -126,7 +120,7 @@ class NicksOnline : public ChatWindow
         /**
          * Received from popup menu when user chooses something.
          */
-        void slotPopupMenu_Activated(int id);
+        void slotPopupMenu_Activated(QAction* id);
 
     protected:
         /** Called from ChatWindow adjustFocus */
@@ -207,7 +201,7 @@ class NicksOnline : public ChatWindow
          * Also refreshes the nicklistview display to reflect the new addressbook state
          * for the nick.
          */
-        void doCommand(int id);
+        void doCommand(QAction* id);
         /**
          * Get the addressbook state of the nickname at the specified nicklistview item.
          * @param item              Item of the nicklistview.
@@ -257,5 +251,18 @@ class NicksOnline : public ChatWindow
         /* Set to False every 8 seconds so that we generate a WHOIS on watch nicks that
            lack information.*/
         bool m_whoisRequested;
+
+
+
+    QAction* m_chooseAssociation;
+    QAction* m_newContact;
+    QAction* m_whois;
+    QAction* m_openQuery;
+    QAction* m_joinChannel;
+    QAction* m_sendMail;
+    QAction* m_editContact;
+    QAction* m_addressBookChange;
+    QAction* m_deleteAssociation;
+
 };
 #endif
