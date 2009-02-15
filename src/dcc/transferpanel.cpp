@@ -138,21 +138,21 @@ void DccTransferPanel::initGUI()
     // popup menu
 
     m_popup = new KMenu(this);
-    m_popup->insertItem(                         i18n("&Select All Items"),           Popup::SelectAll);
-    m_popup->insertItem(                         i18n("S&elect All Completed Items"), Popup::SelectAllCompleted);
+    m_selectAll =  m_popup->addAction(i18n("&Select All Items"));
+    m_selectAllCompleted = m_popup->addAction(i18n("S&elect All Completed Items"));
     m_popup->addSeparator();                           // -----
-    m_popup->insertItem(KIcon("media-playback-start"), i18n("&Accept"),                     Popup::Accept);
-    m_popup->insertItem(KIcon("process-stop"),            i18n("A&bort"),                      Popup::Abort);
+    m_accept =  m_popup->addAction(KIcon("media-playback-start"), i18n("&Accept"));
+    m_abort = m_popup->addAction(KIcon("process-stop"),i18n("A&bort"));
     m_popup->addSeparator();                           // -----
     // FIXME: make it neat
-    m_popup->insertItem(KIcon("edit-redo"),           i18n("Resend"),                      Popup::Resend);
-    m_popup->insertItem(KIcon("edit-delete"),      i18n("&Clear"),                      Popup::Clear);
+    m_resend = m_popup->addAction(KIcon("edit-redo"),i18n("Resend"));
+    m_clear = m_popup->addAction(KIcon("edit-delete"),i18n("&Clear"));
     m_popup->addSeparator();                           // -----
-    m_popup->insertItem(KIcon("system-run"),          i18n("&Open File"),                  Popup::Open);
-    m_popup->insertItem(KIcon("dialog-information"),  i18n("File &Information"),           Popup::Info);
+    m_open = m_popup->addAction(KIcon("system-run"),i18n("&Open File"));
+    m_info = m_popup->addAction(KIcon("dialog-information"),i18n("File &Information"));
 
     connect(m_listView, SIGNAL(contextMenuRequested(Q3ListViewItem*,const QPoint&,int)), this, SLOT(popupRequested(Q3ListViewItem*,const QPoint&,int)));
-    connect(m_popup, SIGNAL(activated(int)), this, SLOT(popupActivated(int)));
+    connect(m_popup, SIGNAL(triggered ( QAction *)), this, SLOT(popupActivated(QAction*)));
 
     // misc.
     connect(m_listView, SIGNAL(doubleClicked(Q3ListViewItem*,const QPoint&,int)), this, SLOT(doubleClicked(Q3ListViewItem*,const QPoint&,int)));
@@ -248,14 +248,14 @@ void DccTransferPanel::updateButton()
     m_buttonClear->setEnabled( clear );
     m_buttonOpen->setEnabled( open );
 
-    m_popup->setItemEnabled( Popup::SelectAll,          selectAll );
-    m_popup->setItemEnabled( Popup::SelectAllCompleted, selectAllCompleted );
-    m_popup->setItemEnabled( Popup::Accept,             accept );
-    m_popup->setItemEnabled( Popup::Abort,              abort );
-    m_popup->setItemEnabled( Popup::Clear,              clear );
-    m_popup->setItemEnabled( Popup::Open,               open );
-    m_popup->setItemEnabled( Popup::Resend,             resend );
-    m_popup->setItemEnabled( Popup::Info,               info );
+    m_selectAll->setEnabled( selectAll );
+    m_selectAllCompleted->setEnabled(selectAllCompleted );
+    m_accept->setEnabled(accept );
+    m_abort->setEnabled( abort );
+    m_clear->setEnabled(clear );
+    m_open->setEnabled( open );
+    m_resend->setEnabled(resend );
+    m_info->setEnabled(info );
 }
 
 void DccTransferPanel::setDetailPanelItem(Q3ListViewItem* item_)
@@ -428,16 +428,24 @@ void DccTransferPanel::popupRequested(Q3ListViewItem* /* item */, const QPoint& 
     m_popup->popup(pos);
 }
 
-void DccTransferPanel::popupActivated( int id ) // slot
+void DccTransferPanel::popupActivated( QAction * act ) // slot
 {
-    if ( id == Popup::Abort )                    abortDcc();
-    else if ( id == Popup::Accept )              acceptDcc();
-    else if ( id == Popup::Clear )               clearDcc();
-    else if ( id == Popup::Info )                showFileInfo();
-    else if ( id == Popup::Open )                runDcc();
-    else if ( id == Popup::SelectAll )           selectAll();
-    else if ( id == Popup::SelectAllCompleted )  selectAllCompleted();
-    else if ( id == Popup::Resend )              resendFile();
+    if ( act == m_abort )
+        abortDcc();
+    else if ( act == m_accept )
+        acceptDcc();
+    else if ( act == m_clear )
+        clearDcc();
+    else if ( act == m_info )
+        showFileInfo();
+    else if ( act == m_open )
+        runDcc();
+    else if ( act == m_selectAll )
+        selectAll();
+    else if ( act == m_selectAllCompleted )
+        selectAllCompleted();
+    else if ( act == m_resend )
+        resendFile();
 }
 
 void DccTransferPanel::doubleClicked(Q3ListViewItem* _item, const QPoint& /* _pos */, int /* _col */)

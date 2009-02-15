@@ -49,22 +49,6 @@ class DccTransferPanel : public ChatWindow
                 };
         };
 
-        class Popup
-        {
-            public:
-                enum Object
-                {
-                    SelectAll,
-                    SelectAllCompleted,
-                    Accept,
-                    Abort,
-                    Clear,
-                    Open,
-                    Info,
-                    Resend
-                };
-        };
-
         DccTransferPanel(QWidget* parent);
         ~DccTransferPanel();
 
@@ -84,7 +68,7 @@ class DccTransferPanel : public ChatWindow
         void selectAllCompleted();
 
         void popupRequested(Q3ListViewItem* item,const QPoint& pos,int col);
-        void popupActivated(int id);
+        void popupActivated( QAction *);
 
         void doubleClicked(Q3ListViewItem* _item,const QPoint& _pos,int _col);
 
@@ -108,5 +92,13 @@ class DccTransferPanel : public ChatWindow
         QPushButton* m_buttonClear;
         QPushButton* m_buttonOpen;
         QPushButton* m_buttonDetail;
+    QAction *m_abort;
+    QAction *m_accept;
+    QAction *m_clear;
+    QAction *m_info;
+    QAction *m_open;
+    QAction *m_selectAll;
+    QAction *m_selectAllCompleted;
+    QAction *m_resend;
 };
 #endif
