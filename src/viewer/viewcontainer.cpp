@@ -1377,6 +1377,7 @@ void ViewContainer::addView(ChatWindow* view, const QString& label, bool weiniti
 void ViewContainer::switchView(int newIndex)
 {
     ChatWindow* view = static_cast<ChatWindow*>(m_tabWidget->widget(newIndex));
+    if (!view) return;
 
     emit viewChanged(view);
 
