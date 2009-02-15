@@ -342,14 +342,14 @@ void ViewTreeItem::paintCell(QPainter* p, const QColorGroup& /* cg */, int /* co
     QPainter painter(&buffer);
 
     QColor textColor = isSelected() ? listView()->palette().color(QPalette::HighlightedText) /* KGlobalSettings::highlightedTextColor() */ : getColor();
-    QColor background = isSelected() ? listView()->palette().color(QPalette::Highlight) /* KGlobalSettings::highlightColor() */ : listView()->paletteBackgroundColor();
+    QColor background = isSelected() ? listView()->palette().color(QPalette::Highlight) /* KGlobalSettings::highlightColor() */ : listView()->palette().color(listView()->backgroundRole());
     if (m_isHighlighted) background = Preferences::self()->inputFieldsBackgroundColor()
         ? Preferences::self()->color(Preferences::AlternateBackground) : listView()->palette().color(QPalette::AlternateBase); // KGlobalSettings::alternateBackgroundColor()
 
     // Fill in background.
     painter.fillRect(0, 0, width, height(), background);
 
-    QColor bgColor  = listView()->paletteBackgroundColor();
+    QColor bgColor  = listView()->palette().color(listView()->backgroundRole());
     QColor selColor = m_isHighlighted ? background : listView()->palette().color(QPalette::Highlight);// KGlobalSettings::highlightColor();
     QColor midColor = mixColor(bgColor, selColor);
 

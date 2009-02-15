@@ -1112,7 +1112,11 @@ void Channel::sendChannelText(const QString& sendLine)
 
 void Channel::setNickname(const QString& newNickname)
 {
-    nicknameCombobox->setCurrentText(newNickname);
+    const int i = nicknameCombobox->findText(newNickname);
+    if (i != -1)
+        nicknameCombobox->setCurrentIndex(i);
+    else
+        nicknameCombobox->setEditText(newNickname);
 }
 
 QStringList Channel::getSelectedNickList()

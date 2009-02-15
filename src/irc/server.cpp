@@ -362,7 +362,7 @@ void Server::setAutoJoin(bool on)
 
 void Server::preShellCommandExited(int exitCode, QProcess::ExitStatus exitStatus)
 {
-
+    Q_UNUSED(exitCode);
     if (exitStatus == QProcess::NormalExit)
         getStatusView()->appendServerMessage(i18n("Info"),"Process executed successfully!");
     else
@@ -565,6 +565,7 @@ void Server::ircServerConnectionSuccess()
 
 void Server::broken(QAbstractSocket::SocketError state)
 {
+    Q_UNUSED(state);
     kDebug() << "Connection broken " << m_socket->errorString() << "!";
 
     m_socket->blockSignals(true);

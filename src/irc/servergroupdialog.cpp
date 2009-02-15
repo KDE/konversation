@@ -114,7 +114,13 @@ namespace Konversation
         m_expanded = settings->expanded();
         m_enableNotifications = settings->enableNotifications();
         m_mainWidget->m_nameEdit->setText(settings->name());
-        m_mainWidget->m_identityCBox->setCurrentText(settings->identity()->getName());
+
+        const int i = m_mainWidget->m_identityCBox->findText(settings->identity()->getName());
+        if (i != -1)
+            m_mainWidget->m_identityCBox->setCurrentIndex(i);
+        else
+            m_mainWidget->m_identityCBox->setItemText(m_mainWidget->m_identityCBox->currentIndex(), settings->identity()->getName());
+
         m_mainWidget->m_commandEdit->setText(settings->connectCommands());
         m_mainWidget->m_autoConnectCBox->setChecked(settings->autoConnectEnabled());
         m_serverList = settings->serverList();
@@ -382,7 +388,12 @@ namespace Konversation
                 m_mainWidget->m_identityCBox->addItem((*it)->getName());
             }
 
-            m_mainWidget->m_identityCBox->setCurrentText(dlg.currentIdentity()->getName());
+            const int i = m_mainWidget->m_identityCBox->findText(dlg.currentIdentity()->getName());
+            if (i != -1)
+                m_mainWidget->m_identityCBox->setCurrentIndex(i);
+            else
+                m_mainWidget->m_identityCBox->setItemText(m_mainWidget->m_identityCBox->currentIndex(), dlg.currentIdentity()->getName());
+
             m_identitiesNeedsUpdate = true; // and what's this for?
             ViewContainer* vc = KonversationApplication::instance()->getMainWindow()->getViewContainer();
             vc->updateViewEncoding(vc->getFrontView());

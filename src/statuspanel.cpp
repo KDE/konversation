@@ -91,7 +91,11 @@ void StatusPanel::serverSaysClose()
 
 void StatusPanel::setNickname(const QString& newNickname)
 {
-    nicknameCombobox->setCurrentText(newNickname);
+    const int i = nicknameCombobox->findText(newNickname);
+    if (i != -1)
+        nicknameCombobox->setCurrentIndex(i);
+    else
+        nicknameCombobox->setEditText(newNickname);
 }
 
 void StatusPanel::childAdjustFocus()
@@ -309,8 +313,13 @@ void StatusPanel::nicknameComboboxChanged()
     oldNick=m_server->getNickname();
     if(oldNick!=newNick)
     {
-      nicknameCombobox->setCurrentText(oldNick);
-      m_server->queue("NICK "+newNick);
+        const int i = nicknameCombobox->findText(oldNick);
+        if (i != -1)
+            nicknameCombobox->setCurrentIndex(i);
+        else
+            nicknameCombobox->setEditText(oldNick);
+
+        m_server->queue("NICK "+newNick);
     }
     // return focus to input line
     statusInput->setFocus();

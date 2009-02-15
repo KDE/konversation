@@ -59,6 +59,8 @@ KonviBookmarkHandler::~KonviBookmarkHandler()
 
 void KonviBookmarkHandler::openBookmark(const KBookmark &bm, Qt::MouseButtons mb, Qt::KeyboardModifiers km)
 {
+    Q_UNUSED(mb);
+    Q_UNUSED(km);
     KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
     konvApp->getConnectionManager()->connectTo(Konversation::SilentlyReuseConnection, bm.url().url());
 }

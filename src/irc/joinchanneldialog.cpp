@@ -62,7 +62,12 @@ namespace Konversation
             }
         }
 
-        m_ui.channelCombo->setCurrentText("");
+        const int i = m_ui.channelCombo->findText("");
+        if (i != -1)
+            m_ui.channelCombo->setCurrentIndex(i);
+        else
+            m_ui.channelCombo->setEditText("");
+
         connect( this, SIGNAL( okClicked() ), this, SLOT( slotOk() ) );
     }
 

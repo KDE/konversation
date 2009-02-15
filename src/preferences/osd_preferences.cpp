@@ -96,7 +96,9 @@ void OSD_Config::saveSettings()
         if(kcfg_OSDUseCustomColors->isChecked())
         {
             konvApp->osd->setTextColor(kcfg_OSDTextColor->color());
-            konvApp->osd->setBackgroundColor(kcfg_OSDBackgroundColor->color());
+            QPalette p = konvApp->osd->palette();
+            p.setColor(konvApp->osd->backgroundRole(), kcfg_OSDBackgroundColor->color());
+            konvApp->osd->setPalette(p);
         }
         else
         {
@@ -155,7 +157,9 @@ void OSD_Config::slotCustomColorsChanged(bool on)
     if(on)
     {
         m_pOSDPreview->setTextColor(kcfg_OSDTextColor->color());
-        m_pOSDPreview->setBackgroundColor(kcfg_OSDBackgroundColor->color());
+        QPalette p = m_pOSDPreview->palette();
+        p.setColor(m_pOSDPreview->backgroundRole(), kcfg_OSDBackgroundColor->color());
+        m_pOSDPreview->setPalette(p);
     }
     else
         m_pOSDPreview->unsetColors();
@@ -168,8 +172,11 @@ void OSD_Config::slotTextColorChanged(const QColor& color)
 
 void OSD_Config::slotBackgroundColorChanged(const QColor& color)
 {
-    if(kcfg_OSDUseCustomColors->isChecked())
-        m_pOSDPreview->setBackgroundColor(color);
+    if(kcfg_OSDUseCustomColors->isChecked()) {
+        QPalette p = m_pOSDPreview->palette();
+        p.setColor(m_pOSDPreview->backgroundRole(), color);
+        m_pOSDPreview->setPalette(p);
+    }
 }
 
 void OSD_Config::slotScreenChanged(int index)

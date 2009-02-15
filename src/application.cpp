@@ -345,7 +345,9 @@ void KonversationApplication::readOptions()
     if(Preferences::self()->oSDUseCustomColors())
     {
         osd->setTextColor(Preferences::self()->oSDTextColor());
-        osd->setBackgroundColor(Preferences::self()->oSDBackgroundColor());
+        QPalette p = osd->palette();
+        p.setColor(osd->backgroundRole(), Preferences::self()->oSDBackgroundColor());
+        osd->setPalette(p);
     }
 
     // Check if there is old server list config //TODO FIXME why are we doing this here?
