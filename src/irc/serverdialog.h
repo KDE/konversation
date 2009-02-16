@@ -36,7 +36,7 @@ namespace Konversation
 
         protected slots:
             void slotOk();
-
+        void slotServerNameChanged( const QString& );
         private:
             QLineEdit* m_serverEdit;
             QSpinBox* m_portSBox;

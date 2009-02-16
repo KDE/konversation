@@ -68,10 +68,17 @@ namespace Konversation
         m_serverEdit->setFocus();
 
         connect(this, SIGNAL(okClicked()), this, SLOT(slotOk()));
+        connect( m_serverEdit, SIGNAL(textChanged(const QString &)),this,SLOT( slotServerNameChanged( const QString& ) ) );
+        slotServerNameChanged( m_serverEdit->text() );
     }
 
     ServerDialog::~ServerDialog()
     {
+    }
+
+    void ServerDialog::slotServerNameChanged( const QString &text )
+    {
+        enableButtonOk( !text.isEmpty() );
     }
 
     void ServerDialog::setServerSettings(const ServerSettings& server)
