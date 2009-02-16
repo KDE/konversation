@@ -131,7 +131,7 @@ void DccTransferPanel::initGUI()
     connect( m_buttonClear,  SIGNAL(clicked()), this, SLOT(clearDcc()) );
     connect( m_buttonOpen,   SIGNAL(clicked()), this, SLOT(runDcc()) );
     //connect( m_buttonDetail, SIGNAL(clicked()), this, SLOT(openDetail()) );
-    connect( m_buttonDetail, SIGNAL(toggled(bool)), m_detailPanel, SLOT(setShown(bool)) );
+    connect( m_buttonDetail, SIGNAL(toggled(bool)), m_detailPanel, SLOT(setVisible(bool)) );
     m_buttonDetail->setChecked(true);
 
 
