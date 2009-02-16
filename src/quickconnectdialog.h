@@ -43,7 +43,7 @@ class QuickConnectDialog : public KDialog
 
     protected slots:
         void slotOk();
-
+    void slotServerNameChanged( const QString& );
     protected:
         KLineEdit*      hostNameInput;
         KLineEdit*      portInput;
