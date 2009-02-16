@@ -136,16 +136,16 @@ void Nick::refresh()
 QString Nick::calculateLabel1()
 {
     NickInfoPtr nickinfo = getChannelNick()->getNickInfo();
-    /*KABC::Addressee addressee = nickinfo->getAddressee();
+    KABC::Addressee addressee = nickinfo->getAddressee();
 
     if(!addressee.realName().isEmpty())           //if no addressee, realName will be empty
     {
         return nickinfo->getNickname() + " (" + addressee.realName() + ')';
     }
-    else if(Preferences::showRealNames() && !nickinfo->getRealName().isEmpty())
-    {*/
+    else if(Preferences::self()->showRealNames() && !nickinfo->getRealName().isEmpty())
+    {
         return nickinfo->getNickname() + " (" + nickinfo->getRealName() + ')';
-    //}
+    }
 
     return nickinfo->getNickname();
 }
