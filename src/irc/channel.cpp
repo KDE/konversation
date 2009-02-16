@@ -190,7 +190,7 @@ Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
     limit->setToolTip(i18n("Maximum users allowed in channel"));
     limit->setWhatsThis(i18n("<qt><p>This is the channel user limit - the maximum number of users that can be in the channel at a time.  If you are an operator, you can set this.  The channel mode <b>T</b>opic (button to left) will automatically be set if set this.</p></qt>"));
     connect(limit,SIGNAL (returnPressed()),this,SLOT (channelLimitChanged()) );
-    connect(limit,SIGNAL (lostFocus()), this, SLOT(channelLimitChanged()) );
+    connect(limit,SIGNAL (editingFinished()), this, SLOT(channelLimitChanged()) );
 
     topicLayout->addWidget(modeBox, 0, 2);
     topicLayout->setRowStretch(1, 10);
@@ -304,7 +304,7 @@ Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
     connect(nicknameCombobox,SIGNAL (activated(int)),this,SLOT(nicknameComboboxChanged()));
 
     if(nicknameCombobox->lineEdit())
-        connect(nicknameCombobox->lineEdit(), SIGNAL (lostFocus()),this,SLOT(nicknameComboboxChanged()));
+        connect(nicknameCombobox->lineEdit(), SIGNAL (editingFinished()),this,SLOT(nicknameComboboxChanged()));
 
 
     setLog(Preferences::self()->log());
