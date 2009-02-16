@@ -13,6 +13,7 @@
 */
 
 #include "channellistpanel.h"
+#include <QGridLayout>
 #include "channel.h"
 #include "channellistviewitem.h"
 #include "server.h"
@@ -60,18 +61,22 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
 
     filterTextChanged(QString());
 
-    Q3HGroupBox* filterGroup=new Q3HGroupBox(i18n("Filter Settings"),this);
-    Q3Grid* mainGrid=new Q3Grid(2,Qt::Vertical,filterGroup);
+    QGroupBox* filterGroup=new QGroupBox(i18n("Filter Settings"),this);
+    QGridLayout* mainGrid=new QGridLayout( filterGroup );
     mainGrid->setSpacing(spacing());
 
-    QLabel* minLabel=new QLabel(i18n("Minimum users:"), mainGrid);
-    QLabel* maxLabel=new QLabel(i18n("Maximum users:"), mainGrid);
-    QSpinBox* minUsersSpin = new QSpinBox(mainGrid);
+    QLabel* minLabel=new QLabel(i18n("Minimum users:"));
+    mainGrid->addWidget(minLabel,  0, 0 );
+    QLabel* maxLabel=new QLabel(i18n("Maximum users:"));
+    mainGrid->addWidget( maxLabel, 1, 0 );
+    QSpinBox* minUsersSpin = new QSpinBox;
     minUsersSpin->setMinimum(0);
     minUsersSpin->setMaximum(9999);
     minUsersSpin->setObjectName("min_users_spin");
     minUsersSpin->setWhatsThis(i18n("You can limit the channel list to those channels with a minimum number of users here. Choosing 0 disables this criterion."));
-    QSpinBox* maxUsersSpin = new QSpinBox(mainGrid);
+    mainGrid->addWidget( minUsersSpin, 0, 1 );
+    QSpinBox* maxUsersSpin = new QSpinBox;
+    mainGrid->addWidget( maxUsersSpin, 1, 1 );
     maxUsersSpin->setMinimum(0);
     maxUsersSpin->setMaximum(9999);
     maxUsersSpin->setObjectName("max_users_spin");
@@ -81,17 +86,17 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
     minLabel->setBuddy(minUsersSpin);
     maxLabel->setBuddy(maxUsersSpin);
 
-    QLabel* patternLabel=new QLabel(i18n("Filter pattern:"), mainGrid);
-    new QLabel(i18n("Filter target:"),mainGrid);
-
-    filterInput=new KLineEdit(mainGrid);
+    QLabel* patternLabel=new QLabel(i18n("Filter pattern:"));
+    new QLabel(i18n("Filter target:" ));
+    mainGrid->addWidget( patternLabel, 0, 2 );
+    filterInput=new KLineEdit;
     filterInput->setObjectName("channel_list_filter_input");
     filterInput->setWhatsThis(i18n("Enter a filter string here."));
     filterInput->setText(getFilterText());
+    mainGrid->addWidget( filterInput, 0, 3 );
 
-    patternLabel->setBuddy(filterInput);
 
-    KHBox* targetBox=new KHBox(mainGrid);
+    KHBox* targetBox=new KHBox;
     targetBox->setSpacing(spacing());
 
     channelFilter = new QCheckBox(i18n("Channel"), targetBox);
@@ -103,7 +108,7 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
     applyFilter = new QPushButton(i18n("Apply Filter"), targetBox);
     applyFilter->setObjectName("apply_filter_button");
     applyFilter->setWhatsThis(i18n("Click here to retrieve the list of channels from the server and apply the filter."));
-
+    mainGrid->addWidget( targetBox, 1, 3 );
     channelFilter->setChecked(getChannelTarget());
     topicFilter->setChecked(getTopicTarget());
     regexpCheck->setChecked(getRegExp());
@@ -112,7 +117,7 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
 
     channelListView=new K3ListView(this);
     channelListView->setObjectName("channel_list_view");
-    
+
     channelListView->setWhatsThis(i18n("The filtered list of channels is displayed here. Notice that if you do not use regular expressions, Konversation lists any channel whose name contains the filter string you entered. The channel name does not have to start with the string you entered.\n\nSelect a channel you want to join by clicking on it. Right click on the channel to get a list of all web addresses mentioned in the channel's topic."));
     channelListView->addColumn(i18n("Channel Name"));
     channelListView->addColumn(i18n("Users"));
@@ -331,72 +336,72 @@ void ChannelListPanel::filterTextChanged(const QString& newText)
 
 int ChannelListPanel::getNumChannels()
 {
-  return numChannels; 
+  return numChannels;
 }
 
 int ChannelListPanel::getNumUsers()
 {
-  return numUsers; 
+  return numUsers;
 }
 
 void ChannelListPanel::setNumChannels(int num)
 {
-  numChannels=num; 
+  numChannels=num;
 }
 
 void ChannelListPanel::setNumUsers(int num)
-{ 
-  numUsers=num; 
-}
-
-int ChannelListPanel::getVisibleChannels() 
 {
-  return visibleChannels; 
+  numUsers=num;
 }
 
-int ChannelListPanel::getVisibleUsers()    
-{ 
-  return visibleUsers; 
+int ChannelListPanel::getVisibleChannels()
+{
+  return visibleChannels;
 }
 
-void ChannelListPanel::setVisibleChannels(int num) 
-{ 
-  visibleChannels=num; 
+int ChannelListPanel::getVisibleUsers()
+{
+  return visibleUsers;
 }
 
-void ChannelListPanel::setVisibleUsers(int num)    
-{ 
-  visibleUsers=num; 
+void ChannelListPanel::setVisibleChannels(int num)
+{
+  visibleChannels=num;
 }
 
-int ChannelListPanel::getMinUsers()    
-{ 
-  return minUsers; 
+void ChannelListPanel::setVisibleUsers(int num)
+{
+  visibleUsers=num;
 }
 
-int ChannelListPanel::getMaxUsers()    
-{ 
-  return maxUsers; 
+int ChannelListPanel::getMinUsers()
+{
+  return minUsers;
 }
 
-bool ChannelListPanel::getChannelTarget() 
-{ 
-  return channelTarget; 
+int ChannelListPanel::getMaxUsers()
+{
+  return maxUsers;
 }
 
-bool ChannelListPanel::getTopicTarget()   
-{ 
-  return topicTarget; 
+bool ChannelListPanel::getChannelTarget()
+{
+  return channelTarget;
 }
 
-bool ChannelListPanel::getRegExp()        
-{ 
-  return regExp; 
+bool ChannelListPanel::getTopicTarget()
+{
+  return topicTarget;
 }
 
-const QString& ChannelListPanel::getFilterText() 
-{ 
-  return filterText; 
+bool ChannelListPanel::getRegExp()
+{
+  return regExp;
+}
+
+const QString& ChannelListPanel::getFilterText()
+{
+  return filterText;
 }
 
 void ChannelListPanel::setMinUsers(int num)
@@ -409,34 +414,34 @@ void ChannelListPanel::setMaxUsers(int num)
     maxUsers=num;
 }
 
-void ChannelListPanel::setChannelTarget(bool state)  
-{ 
-  channelTarget=state; 
+void ChannelListPanel::setChannelTarget(bool state)
+{
+  channelTarget=state;
 }
 
-void ChannelListPanel::setTopicTarget(bool state)    
-{ 
-  topicTarget=state; 
+void ChannelListPanel::setTopicTarget(bool state)
+{
+  topicTarget=state;
 }
 
-void ChannelListPanel::setRegExp(bool state)         
-{ 
-  regExp=state; 
+void ChannelListPanel::setRegExp(bool state)
+{
+  regExp=state;
 }
 
-void ChannelListPanel::channelTargetClicked()        
-{ 
-  setChannelTarget(channelFilter->checkState()==Qt::Checked); 
+void ChannelListPanel::channelTargetClicked()
+{
+  setChannelTarget(channelFilter->checkState()==Qt::Checked);
 }
 
-void ChannelListPanel::topicTargetClicked()          
-{ 
-  setTopicTarget(topicFilter->checkState()==Qt::Checked); 
+void ChannelListPanel::topicTargetClicked()
+{
+  setTopicTarget(topicFilter->checkState()==Qt::Checked);
 }
 
-void ChannelListPanel::regExpClicked()               
-{ 
-  setRegExp(regexpCheck->checkState()==Qt::Checked); 
+void ChannelListPanel::regExpClicked()
+{
+  setRegExp(regexpCheck->checkState()==Qt::Checked);
 }
 
 void ChannelListPanel::applyFilterToItem(Q3ListViewItem* item)
