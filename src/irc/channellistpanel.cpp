@@ -566,7 +566,7 @@ void ChannelListPanel::contextMenu (K3ListView* /* l */, Q3ListViewItem* i, cons
             QAction* action = new QAction(showURLmenu);
             action->setText(href);
             showURLmenu->addAction(action);
-            connect(action, SIGNAL(activated()), this, SLOT(openURL()));
+            connect(action, SIGNAL(triggered()), this, SLOT(openURL()));
         }
         else
         {
