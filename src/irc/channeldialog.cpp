@@ -49,12 +49,18 @@ namespace Konversation
 
         m_channelEdit->setFocus();
         connect(this,SIGNAL(okClicked()),this,SLOT(slotOk()));
+        connect( m_channelEdit, SIGNAL(textChanged(const QString &)),this,SLOT( slotServerNameChanged( const QString& ) ) );
+        slotServerNameChanged( m_channelEdit->text() );
     }
 
     ChannelDialog::~ChannelDialog()
     {
     }
 
+    void ChannelDialog::slotServerNameChanged( const QString &text )
+    {
+        enableButtonOk( !text.isEmpty() );
+    }
     void ChannelDialog::setChannelSettings(const ChannelSettings& channel)
     {
         m_channelEdit->setText(channel.name());
