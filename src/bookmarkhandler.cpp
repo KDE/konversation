@@ -25,31 +25,23 @@ Copyright (C) 2002 Carsten Pfeiffer <pfeiffer@kde.org>
 #include <kbookmarkmenu.h>
 
 
-KonviBookmarkHandler::KonviBookmarkHandler(KonversationMainWindow* mainWindow)
+KonviBookmarkHandler::KonviBookmarkHandler(KActionCollection *collection, KMenu *menu, KonversationMainWindow* mainWindow)
 : QObject(mainWindow),
 KBookmarkOwner(),
 m_mainWindow(mainWindow)
 {
     setObjectName("KonviBookmarkHandler");
 
-    m_menu = static_cast<KMenu*>(mainWindow->factory()->container("bookmarks", mainWindow));
-
     m_file = KStandardDirs::locate( "data", "konversation/bookmarks.xml" );
 
     if ( m_file.isEmpty() )
         m_file = KStandardDirs::locateLocal( "data", "konversation/bookmarks.xml" );
 
-    if(!m_menu)
-    {
-        m_bookmarkMenu = 0;
-        return;
-    }
-
     KBookmarkManager *manager = KBookmarkManager::managerForFile( m_file, "konversation");
     manager->setEditorOptions(i18n("Konversation Bookmarks Editor"), false);
     manager->setUpdate( true );
 
-    m_bookmarkMenu = new KBookmarkMenu(manager, this, m_menu, m_mainWindow->actionCollection());
+    m_bookmarkMenu = new KBookmarkMenu(manager, this, menu, m_mainWindow->actionCollection());
 }
 
 KonviBookmarkHandler::~KonviBookmarkHandler()

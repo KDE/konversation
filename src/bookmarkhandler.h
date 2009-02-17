@@ -25,13 +25,15 @@ class QString;
 class KMenu;
 class KonversationMainWindow;
 class KBookmarkMenu;
+class KActionCollection;
+class KMenu;
 
 class KonviBookmarkHandler : public QObject, public KBookmarkOwner
 {
     Q_OBJECT
 
         public:
-        explicit KonviBookmarkHandler(KonversationMainWindow *mainWindow);
+        explicit KonviBookmarkHandler(KActionCollection *collection, KMenu *menu, KonversationMainWindow* mainWindow);
         ~KonviBookmarkHandler();
 
         // KBookmarkOwner interface:
@@ -42,7 +44,6 @@ class KonviBookmarkHandler : public QObject, public KBookmarkOwner
 
     private:
         KonversationMainWindow* m_mainWindow;
-        KMenu *m_menu;
         KBookmarkMenu *m_bookmarkMenu;
         QString m_file;
 };

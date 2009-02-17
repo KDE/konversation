@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="konversation" version="52">
+<kpartgui name="konversation" version="53">
 
   <MenuBar>
     <Menu name="file">
@@ -25,9 +25,7 @@
       <Action name="insert_marker_line" />
       <Action name="insert_character" />
     </Menu>
-    <Menu name="bookmarks">
-      <text>&amp;Bookmarks</text>
-    </Menu>
+    <Action name="bookmarks" />
     <Menu name="settings">
       <Action name="hide_nicknamelist" />
       <Separator />
