@@ -240,4 +240,4 @@ const QString& /*channelName*/, bool /*joined*/)
     m_ISONList_invalid = true;
 }
 
-#include "./irc/serverison.moc"
+#include "serverison.moc"
