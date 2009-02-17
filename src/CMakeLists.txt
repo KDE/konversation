@@ -140,7 +140,6 @@ set(viewer_SRCS
     viewer/logfilereader.cpp
     viewer/insertchardialog.cpp
     viewer/osd.cpp
-    viewer/topiccombobox.cpp
     viewer/topiclabel.cpp
     viewer/trayicon.cpp
     viewer/editnotifydialog.cpp
