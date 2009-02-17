@@ -490,6 +490,13 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0)
     trayMenu->addAction(preferencesAction);
     trayMenu->addAction(awayAction);
 
+
+    // Bookmarks
+    KActionMenu *bookmarkMenu = new KActionMenu(i18n("Bookmarks"), actionCollection());
+    m_bookmarkHandler = new KonviBookmarkHandler(actionCollection(), bookmarkMenu->menu(), this);
+    actionCollection()->addAction("bookmarks" , bookmarkMenu);
+
+
     // decide whether to show the tray icon or not
     updateTrayIcon();
 
@@ -501,12 +508,6 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0)
     hideMenuBarAction->setChecked(Preferences::self()->showMenuBar());
     toggleMenubar(true);
 
-    // Bookmarks
-    KActionMenu *bookmarkMenu = new KActionMenu(i18n("Bookmarks"), actionCollection());
-    m_bookmarkHandler = new KonviBookmarkHandler(actionCollection(), bookmarkMenu->menu(), this);
-    actionCollection()->addAction("bookmarks" , bookmarkMenu);
- 
-
 
     // set up KABC with a nice gui error dialog
     KABC::GuiErrorHandler *m_guiErrorHandler = new KABC::GuiErrorHandler(this);
@@ -516,7 +517,7 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0)
 
     if (Preferences::self()->useNotify() && Preferences::self()->openWatchedNicksAtStartup())
         m_viewContainer->openNicksOnlinePanel();
-
+    
 }
 
 KonversationMainWindow::~KonversationMainWindow()
