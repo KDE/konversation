@@ -36,12 +36,12 @@ class Highlight
             const KUrl& soundURL,
             const QString& autoText);
 
-        QString getPattern();
-        QString getAutoText();
-        QColor getColor();
-        int getID();
-        bool getRegExp();
-        KUrl getSoundURL();
+        QString getPattern() const ;
+        QString getAutoText() const;
+        QColor getColor() const;
+        int getID() const;
+        bool getRegExp() const;
+        KUrl getSoundURL() const;
 
         void setPattern(const QString& itemPattern);
         void setColor(const QColor& itemColor);
