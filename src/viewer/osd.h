@@ -9,7 +9,7 @@
   osd.h   -  Provides an interface to a plain QWidget, which is independent of KDE (bypassed to X11)
   begin:     Fre Sep 26 2003
   copyright: (C) 2003 by Christian Muehlhaeuser <chris@chris.de>
-  copyright: (C) 2008 by Mark Kretschmann <kretschmann@kde.org> 
+  copyright: (C) 2008 by Mark Kretschmann <kretschmann@kde.org>
 */
 
 #ifndef OSD_H
@@ -33,7 +33,7 @@ class OSDWidget : public QWidget
 
         /** resets the colours to defaults */
         void unsetColors();
-        
+
         void setShadow( bool shadow ) { m_drawShadow = shadow; }
         void setOffset( int x, int y );
 
@@ -107,9 +107,9 @@ class OSDPreviewWidget : public OSDWidget
 public:
     OSDPreviewWidget( const QString &appName, QWidget *parent = 0, const char *name = "osdpreview" );
 
-    int screen()    { return m_screen; }
-    int alignment() { return m_alignment; }
-    int y()         { return m_y; }
+    int screen() const     { return m_screen; }
+    int alignment() const { return m_alignment; }
+    int y() const        { return m_y; }
 
 public slots:
     void setTextColor( const QColor &color ) { OSDWidget::setTextColor( color ); doUpdate(); }

@@ -493,7 +493,7 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0)
 
     // Bookmarks
     KActionMenu *bookmarkMenu = new KActionMenu(i18n("Bookmarks"), actionCollection());
-    m_bookmarkHandler = new KonviBookmarkHandler(actionCollection(), bookmarkMenu->menu(), this);
+    new KonviBookmarkHandler(bookmarkMenu->menu(), this);
     actionCollection()->addAction("bookmarks" , bookmarkMenu);
 
 
@@ -517,7 +517,7 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0)
 
     if (Preferences::self()->useNotify() && Preferences::self()->openWatchedNicksAtStartup())
         m_viewContainer->openNicksOnlinePanel();
-    
+
 }
 
 KonversationMainWindow::~KonversationMainWindow()

@@ -108,7 +108,7 @@ void OSDWidget::show() //virtual
         }
     }
     else
-        kWarning() << "Attempted to make an invalid sized OSD\n";
+        kWarning() << "Attempted to make an invalid sized OSD";
 
     update();
 }
@@ -153,7 +153,7 @@ QRect OSDWidget::determineMetrics( const int M )
     QRect titleRect = titleFm.boundingRect( 0, 0, max.width() - M, titleFm.height(), Qt::AlignLeft, m_appName );
     QRect textRect = fontMetrics().boundingRect( 0, 0, max.width(), max.height(), Qt::AlignCenter | Qt::TextWordWrap, m_currentText );
     textRect.setHeight( textRect.height() + M + M );
-    
+
     if ( textRect.width() < titleRect.width() )
         textRect.setWidth( titleRect.width() );
 
@@ -255,7 +255,7 @@ void OSDWidget::paintEvent( QPaintEvent *e )
         p2.end();
 
         p.drawImage( rect.topLeft() - QPoint( 5, 5 ), ShadowEngine::makeShadow( pixmap, shadowColor ) );
-        
+
         pixmap.fill( Qt::black );
         pixmap.scaled( QSize(e->rect().width()-1, e->rect().height()-1) + QSize( 10, 10 ) );
 

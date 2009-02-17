@@ -115,7 +115,7 @@ class KonversationMainWindow : public KXmlGuiWindow
         void showEvent(QShowEvent* e);
         void hideEvent(QHideEvent* e);
         void leaveEvent(QEvent* e);
-        
+
 
     protected:
         virtual QSize sizeHint() const;
@@ -130,8 +130,6 @@ class KonversationMainWindow : public KXmlGuiWindow
 
         KToggleAction* hideMenuBarAction;
 
-        KMenu* m_bookmarks;
-        KonviBookmarkHandler* m_bookmarkHandler;
         KonviSettingsDialog *m_settingsDialog;
         Konversation::ServerListDialog* m_serverListDialog;
 

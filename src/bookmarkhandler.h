@@ -33,7 +33,7 @@ class KonviBookmarkHandler : public QObject, public KBookmarkOwner
     Q_OBJECT
 
         public:
-        explicit KonviBookmarkHandler(KActionCollection *collection, KMenu *menu, KonversationMainWindow* mainWindow);
+        explicit KonviBookmarkHandler(KMenu *menu, KonversationMainWindow* mainWindow);
         ~KonviBookmarkHandler();
 
         // KBookmarkOwner interface:
