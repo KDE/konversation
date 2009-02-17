@@ -502,12 +502,9 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0)
     toggleMenubar(true);
 
     // Bookmarks
-    //m_bookmarkHandler = new KonviBookmarkHandler(this);
-    
     KActionMenu *bookmarkMenu = new KActionMenu(i18n("Bookmarks"), actionCollection());
     m_bookmarkHandler = new KonviBookmarkHandler(actionCollection(), bookmarkMenu->menu(), this);
     actionCollection()->addAction("bookmarks" , bookmarkMenu);
-    connect(m_bookmarkHandler, SIGNAL(openUrl(KUrl)), SLOT(newConnection(KUrl)));
  
 
 
