@@ -113,7 +113,7 @@ namespace Konversation
             case 4:
                 return i18n("Online");
         }
-        return QString("Error");
+        return i18n("Error");
     }
     int Addressbook::presenceStatus(const QString &uid)
     {
