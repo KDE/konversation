@@ -270,7 +270,7 @@ void Theme_Config::postRemoveTheme(KJob* /* delete_job */)
 
 void Theme_Config::updatePreview(int id)
 {
-    if (id < 1)
+    if (id < 0)
         return;
     QString dir;
     dir = m_dirs[id];

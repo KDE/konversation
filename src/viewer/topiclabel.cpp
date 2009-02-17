@@ -46,7 +46,7 @@ namespace Konversation
         setObjectName(name);
         setWordWrap(true);
         setFocusPolicy(Qt::ClickFocus);
-        setAlignment(Qt::AlignTop | Qt::AlignLeft);
+        setAlignment(Qt::AlignVCenter | Qt::AlignLeft);
         setTextInteractionFlags(Qt::TextBrowserInteraction);
 
         m_isOnChannel = false;
