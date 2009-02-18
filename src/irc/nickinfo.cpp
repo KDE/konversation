@@ -63,19 +63,65 @@ NickInfo::~NickInfo()
 }
 
 // Get properties of NickInfo object.
-QString NickInfo::getNickname() const { return m_nickname; }
-QString NickInfo::loweredNickname() const { return m_loweredNickname; }
-QString NickInfo::getHostmask() const { return m_hostmask; }
+QString NickInfo::getNickname() const
+{
+    return m_nickname;
+}
 
-bool NickInfo::isAway() const { return m_away; }
-QString NickInfo::getAwayMessage() const { return m_awayMessage; }
-QString NickInfo::getIdentdInfo() const { return m_identdInfo; }
-QString NickInfo::getVersionInfo() const { return m_versionInfo; }
-bool NickInfo::isNotified() const { return m_notified; }
-QString NickInfo::getRealName() const { return m_realName; }
-QString NickInfo::getNetServer() const { return m_netServer; }
-QString NickInfo::getNetServerInfo() const { return m_netServerInfo; }
-QDateTime NickInfo::getOnlineSince() const { return m_onlineSince; }
+QString NickInfo::loweredNickname() const
+{
+    return m_loweredNickname;
+}
+
+QString NickInfo::getHostmask() const
+{
+    return m_hostmask;
+}
+
+bool NickInfo::isAway() const
+{
+    return m_away;
+}
+
+QString NickInfo::getAwayMessage() const
+{
+    return m_awayMessage;
+}
+
+QString NickInfo::getIdentdInfo() const
+{
+    return m_identdInfo;
+}
+
+QString NickInfo::getVersionInfo() const
+{
+    return m_versionInfo;
+}
+
+bool NickInfo::isNotified() const
+{
+    return m_notified;
+}
+
+QString NickInfo::getRealName() const
+{
+    return m_realName;
+}
+
+QString NickInfo::getNetServer() const
+{
+    return m_netServer;
+}
+
+QString NickInfo::getNetServerInfo() const
+{
+    return m_netServerInfo;
+}
+
+QDateTime NickInfo::getOnlineSince() const
+{
+    return m_onlineSince;
+}
 
 uint NickInfo::getNickColor()
 {
@@ -95,7 +141,10 @@ uint NickInfo::getNickColor()
     return m_nickColor-1;
 }
 
-bool NickInfo::isIdentified() const { return m_identified; }
+bool NickInfo::isIdentified() const
+{
+    return m_identified;
+}
 
 QString NickInfo::getPrettyOnlineSince() const
 {
@@ -111,7 +160,10 @@ QString NickInfo::getPrettyOnlineSince() const
 }
 
 // Return the Server object that owns this NickInfo object.
-Server* NickInfo::getServer() const { return m_owningServer; }
+Server* NickInfo::getServer() const
+{
+    return m_owningServer;
+}
 
 // Set properties of NickInfo object.
 void NickInfo::setNickname(const QString& newNickname)
@@ -240,7 +292,10 @@ void NickInfo::setOnlineSince(const QDateTime& datetime)
 }
 
 
-KABC::Addressee NickInfo::getAddressee() const { return m_addressee;}
+KABC::Addressee NickInfo::getAddressee() const
+{
+    return m_addressee;
+}
 
 void NickInfo::refreshAddressee()
 {

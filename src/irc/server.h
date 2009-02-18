@@ -21,7 +21,6 @@
 #include "inputfilter.h"
 #include "outputfilter.h"
 #include "nickinfo.h"
-//#include "sslsocket.h"
 #include "serversettings.h"
 #include "servergroupsettings.h"
 #include "connectionsettings.h"
@@ -455,7 +454,7 @@ void resetNickSelection();
         void executeMultiServerCommand(const QString& command, const QString& parameter);
         void reconnect();
         void disconnect(); //FIXME is this overriding a qobject method? do we care?
-        //void showSSLDialog();
+        void showSSLDialog();
         void sendToAllChannels(const QString& text);
         void notifyTimeout();
 

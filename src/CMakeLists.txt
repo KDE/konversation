@@ -59,7 +59,6 @@ set (irc_SRCS
     #=== Server
     irc/inputfilter.cpp
     irc/outputfilter.cpp
-#    irc/sslsocket.cpp
     irc/ircqueue.cpp
     irc/serverdialog.cpp
     irc/servergroupdialog.cpp

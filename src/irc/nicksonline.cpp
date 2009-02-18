@@ -176,7 +176,8 @@ bool NicksOnline::eventFilter(QObject*obj, QEvent* event )
                else
                        QToolTip::hideText();
             }
-
+            else
+	        QToolTip::hideText();
         }
         else
                 QToolTip::hideText();

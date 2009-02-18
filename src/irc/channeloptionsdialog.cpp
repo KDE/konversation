@@ -124,7 +124,7 @@ namespace Konversation
         bool plus;
         QString command("MODE %1 %2%3 %4");
 
-        for(QStringList::iterator it = newModeList.begin(); it != newModeList.end(); ++it)
+        for(QStringList::ConstIterator it = newModeList.constBegin(); it != newModeList.constEnd(); ++it)
         {
             modeString = (*it).mid(1);
             plus = ((*it)[0] == '+');

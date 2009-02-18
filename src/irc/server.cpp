@@ -279,19 +279,16 @@ void Server::connectSignals()
                 const QString&, const QString&, const QString&, const QString&, bool)),
             konvApp->getConnectionManager(), SLOT(connectTo(Konversation::ConnectionFlag,
                 const QString&, const QString&, const QString&, const QString&, const QString&, bool)));
-#ifdef USE_DCC
     connect(konvApp->getDccTransferManager(), SIGNAL(newTransferQueued(DccTransfer*)),
             this, SLOT(slotNewDccTransferItemQueued(DccTransfer*)));
-#endif
+
     connect(konvApp, SIGNAL(appearanceChanged()), this, SLOT(startNotifyTimer()));
 
    // ViewContainer
     connect(this, SIGNAL(showView(ChatWindow*)), getViewContainer(), SLOT(showView(ChatWindow*)));
-#ifdef USE_DCC
     connect(this, SIGNAL(addDccPanel()), getViewContainer(), SLOT(addDccPanel()));
     connect(this, SIGNAL(addDccChat(const QString&,const QString&,const QStringList&,bool)),
         getViewContainer(), SLOT(addDccChat(const QString&,const QString&,const QStringList&,bool)) );
-#endif
     connect(this, SIGNAL(serverLag(Server*, int)), getViewContainer(), SIGNAL(updateStatusBarLagLabel(Server*, int)));
     connect(this, SIGNAL(tooLongLag(Server*, int)), getViewContainer(), SIGNAL(setStatusBarLagLabelTooLongLag(Server*, int)));
     connect(this, SIGNAL(resetLag()), getViewContainer(), SIGNAL(resetStatusBarLagLabel()));
@@ -406,7 +403,6 @@ void Server::connectToIRCServer()
         else
         {
             connect(m_socket, SIGNAL(encrypted()), SLOT (ircServerConnectionSuccess()));
-            //connect(m_socket, SIGNAL(sslErrors(const QList<QSslError>&)), SIGNAL(sslInitFailure()));
             connect(m_socket, SIGNAL(peerVerifyError(const QSslError&)), SLOT(sslVerifyError(const QSslError&)));
             connect(m_socket, SIGNAL(sslErrors(const QList<QSslError>&)), SLOT(sslError(const QList<QSslError>&)));
 
@@ -425,14 +421,15 @@ void Server::connectToIRCServer()
         kDebug() << "connectToIRCServer() called while already connected: This should never happen.";
 }
 
-/*
 void Server::showSSLDialog()
 {
-    SSLSocket* sslsocket = dynamic_cast<SSLSocket*>(m_socket);
+        //TODO
+        /*
+          SSLSocket* sslsocket = dynamic_cast<SSLSocket*>(m_socket);
 
-    if (sslsocket) sslsocket->showInfoDialog();
+          if (sslsocket) sslsocket->showInfoDialog();
+        */
 }
-*/
 
 // set available channel types according to 005 RPL_ISUPPORT
 void Server::setChannelTypes(const QString &pre)
@@ -539,6 +536,7 @@ void Server::hostFound()
 
 void Server::ircServerConnectionSuccess()
 {
+        emit sslConnected(this);
     getConnectionSettings().setReconnectCount(0);
 
     Konversation::ServerSettings serverSettings = getConnectionSettings().server();
@@ -621,6 +619,7 @@ void Server::sslError( const QList<QSslError>&  errors)
         QString::number(getConnectionSettings().server().port()),
         reason);
     getStatusView()->appendServerMessage(i18n("SSL Connection Error"),error);
+    emit sslInitFailure();
 }
 
 void Server::sslVerifyError( const QSslError&  error)
@@ -3008,10 +3007,10 @@ ViewContainer* Server::getViewContainer() const
 
 bool Server::getUseSSL() const
 {
-    //SSLSocket* sslsocket = dynamic_cast<SSLSocket*>(m_socket);
-
-    //return (sslsocket != 0);
-    return false;
+        if ( m_socket )
+                return m_socket->isEncrypted();
+        else
+                return false;
 }
 
 
