@@ -41,7 +41,6 @@
 #include <kmessagebox.h>
 #include <klocale.h>
 #include <kurl.h>
-//#include <kurldrag.h>
 #include <kbookmark.h>
 #include <kbookmarkmanager.h>
 #include <kdeversion.h>
@@ -165,15 +164,14 @@ void IRCView::setServer(Server* newServer)
 {
     m_server = newServer;
 
-/*    if (newServer)
+    if (newServer)
     {
-        KAction *action = newServer->getViewContainer()->actionCollection()->action("open_logfile");
-        Q_ASSERT(action);
+        QAction *action = newServer->getViewContainer()->actionCollection()->action("open_logfile");
         if(!action) return;
         m_popup->addSeparator();
-        action->plug(m_popup);
+        m_popup->addAction( action );
     }
-*/
+
 }
 
 void IRCView::setChatWin(ChatWindow* chatWin)
