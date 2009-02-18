@@ -13,6 +13,7 @@
 */
 
 #include "nicklistview.h"
+#include <QToolTip>
 #include "application.h" ////// header renamed
 #include "images.h"
 #include "linkaddressbook/addressbook.h"
@@ -153,7 +154,6 @@ K3ListView(parent),
 
     // We have our own tooltips, don't use the default QListView ones
     setShowToolTips(false);
-    //m_tooltip = new Konversation::KonversationNickListViewToolTip(viewport(), this);
 
     m_resortTimer = new QTimer(this);
     m_resortTimer->setSingleShot(true);
@@ -162,8 +162,32 @@ K3ListView(parent),
 
 NickListView::~NickListView()
 {
-    //delete m_tooltip;
-    //m_tooltip = 0;
+}
+
+bool NickListView::event(QEvent *event)
+{
+    if(( event->type() == QEvent::ToolTip ) )
+    {
+        QHelpEvent* helpEvent = static_cast<QHelpEvent*>( event );
+
+        Q3ListViewItem *item = itemAt( helpEvent->pos() );
+        if( item )
+        {
+            Nick *nick = dynamic_cast<Nick*>( item );
+            if( nick )
+            {
+               QString text =  Konversation::removeIrcMarkup(nick->getChannelNick()->tooltip());
+               if( !text.isEmpty() )
+                       QToolTip::showText( helpEvent->globalPos(), text );
+               else
+                       QToolTip::hideText();
+            }
+
+        }
+        else
+                QToolTip::hideText();
+    }
+    return K3ListView::event( event );
 }
 
 void NickListView::setWhatsThis()

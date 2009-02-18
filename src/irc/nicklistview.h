@@ -16,7 +16,6 @@
 #define NICKLISTVIEW_H
 
 #include "channel.h"
-#include "../linkaddressbook/nicklisttooltip.h"
 #include "images.h"
 #include "common.h"
 #include "application.h" // for PopupIDs...
@@ -65,11 +64,12 @@ class NickListView : public K3ListView
         void slotActionTriggered(QAction* action);
 
     protected:
-        void contextMenuEvent(QContextMenuEvent* ce);
+    //! Reimplemented for dynamic tooltips
+    virtual bool event(QEvent *ev);
+    void contextMenuEvent(QContextMenuEvent* ce);
         virtual bool acceptDrag (QDropEvent* event) const;
         void insertAssociationSubMenu();
         void updateActions();
-        //Konversation::KonversationNickListViewToolTip *m_tooltip;
         KMenu* popup;
         KMenu* modes;
         KMenu* kickban;

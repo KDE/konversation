@@ -176,7 +176,6 @@ set(linkaddressbook_SRCS
     linkaddressbook/linkaddressbookui.cpp
     linkaddressbook/addressbook_base.cpp
     linkaddressbook/addressbook.cpp
-    #linkaddressbook/nicklisttooltip.cpp
     linkaddressbook/addresseeitem.cpp
 )
 
