@@ -131,6 +131,7 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent)
     m_copyUrlClipBoard =m_popup->addAction(KIcon("edit-copy"), i18n("Copy URL to Clipboard"), this, SLOT( copyUrl() )) ;
     m_copyUrlClipBoard->setVisible( false );
 
+
     m_bookmark = m_popup->addAction(KIcon("bookmark-new"), i18n("Add to Bookmarks"), this, SLOT( slotBookmark() ) );
     m_bookmark->setVisible( false );
     m_saveUrl = m_popup->addAction(KIcon("document-save"), i18n("Save Link As..."), this, SLOT( saveLinkAs() ));
@@ -139,7 +140,9 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent)
     toggleMenuBarSeparator->setVisible(false);
     copyUrlMenuSeparator = m_popup->addSeparator();
     copyUrlMenuSeparator->setVisible( false );
-    m_popup->addAction(KIcon("edit-copy"),i18n("&Copy"),this, SLOT( copy()) );
+    QAction *act = m_popup->addAction(KIcon("edit-copy"),i18n("&Copy"),this, SLOT( copy()) );
+    connect( this, SIGNAL(copyAvailable(bool)),act,SLOT( setEnabled( bool ) ) );
+    act->setEnabled( false );
     m_popup->addAction(i18n("Select All"),this, SLOT(selectAll()) );
     m_popup->addAction(KIcon("edit-find"),i18n("Find Text..."),this, SLOT( search() ) );
 
@@ -167,9 +170,14 @@ void IRCView::setServer(Server* newServer)
     if (newServer)
     {
         QAction *action = newServer->getViewContainer()->actionCollection()->action("open_logfile");
-        if(!action) return;
-        m_popup->addSeparator();
-        m_popup->addAction( action );
+        if(action)
+        {
+                m_popup->addSeparator();
+                m_popup->addAction( action );
+                action = newServer->getViewContainer()->actionCollection()->action("channel_settings");
+                if ( action )
+                        m_popup->addAction( action );
+        }
     }
 
 }
