@@ -15,6 +15,7 @@
 */
 
 #include "nicksonline.h"
+#include <QHelpEvent>
 #include "channel.h"
 #include "server.h"
 #include "application.h" ////// header renamed
@@ -23,7 +24,6 @@
 #include "query.h"
 #include "linkaddressbook/linkaddressbookui.h"
 #include "linkaddressbook/addressbook.h"
-#include "linkaddressbook/nicksonlinetooltip.h"
 #include "mainwindow.h" ////// header renamed
 #include "viewcontainer.h"
 #include "nicksonlineitem.h"
@@ -33,7 +33,7 @@
 
 #include <qpushbutton.h>
 #include <qlabel.h>
-
+#include <QToolTip>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -75,9 +75,7 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
         "servers in the network.</p>"
         "<p>Right-click with the mouse on a nickname to perform additional functions.</p>");
     m_nickListView->setWhatsThis(nickListViewWT);
-
-    //m_tooltip = new Konversation::KonversationNicksOnlineToolTip(m_nickListView->viewport(), this);
-
+    m_nickListView->installEventFilter(this);
     setMargin(margin());
     setSpacing(spacing());
 
@@ -157,6 +155,35 @@ NicksOnline::~NicksOnline()
     m_timer->stop();
     delete m_timer;
     delete m_nickListView;
+}
+
+bool NicksOnline::eventFilter(QObject*obj, QEvent* event )
+{
+    if( ( obj == m_nickListView ) && ( event->type() == QEvent::ToolTip ) )
+    {
+        QHelpEvent* helpEvent = static_cast<QHelpEvent*>( event );
+
+
+        Q3ListViewItem *item = m_nickListView->itemAt( helpEvent->pos() );
+        if( item )
+        {
+            NickInfoPtr nickInfo = getNickInfo(item);
+            if ( nickInfo )
+            {
+               QString text =  nickInfo->tooltip();
+               if( !text.isEmpty() )
+                       QToolTip::showText( helpEvent->globalPos(), text );
+               else
+                       QToolTip::hideText();
+            }
+
+        }
+        else
+                QToolTip::hideText();
+    }
+
+
+    return ChatWindow::eventFilter( obj, event );
 }
 
 K3ListView* NicksOnline::getNickListView()

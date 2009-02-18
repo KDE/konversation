@@ -18,7 +18,6 @@
 #include "nickinfo.h"
 #include "nicksonlineitem.h"
 #include "chatwindow.h"
-#include "linkaddressbook/nicksonlinetooltip.h"
 
 
 #include <qicon.h>
@@ -125,7 +124,8 @@ class NicksOnline : public ChatWindow
     protected:
         /** Called from ChatWindow adjustFocus */
         virtual void childAdjustFocus();
-
+    //! Reimplemented for dynamic tooltips
+    virtual bool eventFilter(QObject*obj, QEvent *ev);
     private:
         /**
         * Returns the named child of parent item in a NicksOnlineItem
@@ -240,8 +240,6 @@ class NicksOnline : public ChatWindow
         QPushButton* m_deleteAssociationButton;
         // Context menu when right-clicking a nick.
         KMenu* m_popupMenu;
-        // Helper to display tooltip information for nicks.
-        //Konversation::KonversationNicksOnlineToolTip *m_tooltip;
         // A string containing the identifier for the "Offline" listview item
         QString c_offline;
         // Timer for refreshing display and generating WHOISes.
