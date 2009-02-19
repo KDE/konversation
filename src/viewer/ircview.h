@@ -117,6 +117,7 @@ class IRCView : public KTextBrowser
         void appendLine(const QString& color);
         void appendRememberLine();
 
+
     public slots:
         void search(); ///! TODO FIXME this is a dangerous overload
         void searchAgain();
