@@ -231,10 +231,33 @@ bool IRCView::searchNext(bool reversed)
 }
 
 void IRCView::searchAgain(){}
-void IRCView::insertRememberLine(){}
-void IRCView::cancelRememberLine(){}
+
 void IRCView::clearLines(){}
-bool IRCView::hasLines() { return false; }
+
+bool IRCView::hasLines()
+{
+        if (m_rememberLineParagraph > -1 || m_markerLineParagraphs.count() > 0)
+                return true;
+        return false;
+}
+
+void IRCView::insertRememberLine()
+{
+    m_rememberLineDirtyBit = true;
+
+    if (!Preferences::self()->automaticRememberLineOnlyOnTextChange())
+        appendRememberLine();
+}
+
+void IRCView::cancelRememberLine()
+{
+    m_rememberLineDirtyBit = false;
+}
+
+void IRCView::appendRememberLine()
+{
+        //TODO
+}
 
 void IRCView::insertMarkerLine()
 {
