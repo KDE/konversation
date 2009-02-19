@@ -13,7 +13,7 @@
   Copyright (C) 2006-2008 Eike Hein <hein@kde.org>
   Copyright (C) 2004-2009 Eli Mackenzie <argonel@gmail.com>
 */
-
+#include <q3tl.h>
 #include "ircview.h"
 #include "channel.h"
 #include "dcc/chat.h"
@@ -111,7 +111,6 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent)
     connect( this, SIGNAL( highlighted ( const QString &) ), this, SLOT( highlightedSlot( const QString &) ) );
     setOpenLinks(false);
     setUndoRedoEnabled(0);
-    //setLinkUnderline(false);
     document()->setDefaultStyleSheet("a.nick:link {text-decoration: none}");
     setWordWrapMode(QTextOption::WrapAtWordBoundaryOrAnywhere);
     //setNotifyClick(true); // TODO FIXME import the rest of the link handling
@@ -234,9 +233,32 @@ bool IRCView::searchNext(bool reversed)
 void IRCView::searchAgain(){}
 void IRCView::insertRememberLine(){}
 void IRCView::cancelRememberLine(){}
-void IRCView::insertMarkerLine(){}
 void IRCView::clearLines(){}
 bool IRCView::hasLines() { return false; }
+
+void IRCView::insertMarkerLine()
+{
+    qHeapSort(m_markerLineParagraphs);
+
+    if (m_markerLineParagraphs.last() == textCursor().blockNumber() - 1)
+        return;
+
+    bool rememberLineDirtyBit = m_rememberLineDirtyBit;
+    m_rememberLineDirtyBit = false;
+
+    appendLine(Preferences::self()->color(Preferences::ActionMessage).name());
+
+    m_rememberLineDirtyBit = rememberLineDirtyBit;
+    m_markerLineParagraphs.append(textCursor().blockNumber() - 1);
+}
+
+void IRCView::appendLine(const QString& color)
+{
+
+    QString line = "<p><font style=\"font-size:1pt;\"><br><br><hr color=\""+color+"\" noshade></font></p>\n";
+
+    doAppend(line, true);
+}
 
 // TODO FIXME can't do this anymore, need to find another way
 /* void IRCView::clear()
