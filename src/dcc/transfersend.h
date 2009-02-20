@@ -20,15 +20,11 @@
 #include "transfer.h" ////// header renamed
 
 #include <qfile.h>
-
+#include <QAbstractSocket>
 
 class QTimer;
-
-namespace KNetwork
-{
-    class KServerSocket;
-    class KStreamSocket;
-}
+class QTcpServer;
+class QTcpSocket;
 
 class DccTransferSend : public DccTransfer
 {
@@ -58,7 +54,7 @@ class DccTransferSend : public DccTransfer
         virtual void abort();
 
         // invoked when the receiver accepts the offer (Reverse DCC)
-        void connectToReceiver( const QString& partnerHost, const QString& partnerPort );
+        void connectToReceiver( const QString& partnerHost, uint partnerPort );
 
     protected slots:
         void acceptClient();
@@ -68,7 +64,7 @@ class DccTransferSend : public DccTransfer
         void getAck();
         void slotGotSocketError( int errorCode );
         void slotConnectionTimeout();
-        void slotConnectionFailed( int errorCode );
+        void slotConnectionFailed( QAbstractSocket::SocketError errorCode );
         void slotSendSocketClosed();
         void slotServerSocketClosed();
 
@@ -88,8 +84,8 @@ class DccTransferSend : public DccTransfer
          */
         QString m_tmpFile;
 
-        KNetwork::KServerSocket* m_serverSocket;
-        KNetwork::KStreamSocket* m_sendSocket;
+        QTcpServer *m_serverSocket;
+        QTcpSocket *m_sendSocket;
         bool m_fastSend;
 
         QTimer* m_connectionTimer;

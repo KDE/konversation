@@ -276,9 +276,9 @@ void Server::connectSignals()
 
     KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
     connect(getOutputFilter(), SIGNAL(connectTo(Konversation::ConnectionFlag, const QString&,
-                const QString&, const QString&, const QString&, const QString&, bool)),
+                uint, const QString&, const QString&, const QString&, bool)),
             konvApp->getConnectionManager(), SLOT(connectTo(Konversation::ConnectionFlag,
-                const QString&, const QString&, const QString&, const QString&, const QString&, bool)));
+                const QString&, uint, const QString&, const QString&, const QString&, bool)));
     connect(konvApp->getDccTransferManager(), SIGNAL(newTransferQueued(DccTransfer*)),
             this, SLOT(slotNewDccTransferItemQueued(DccTransfer*)));
 
@@ -1682,7 +1682,7 @@ void Server::addDccGet(const QString &sourceNick, const QStringList &dccArgument
 
     newDcc->setPartnerNick( sourceNick );
     newDcc->setPartnerIp( DccCommon::numericalIpToTextIp( dccArguments[1] ) );
-    newDcc->setPartnerPort( dccArguments[2] );
+    newDcc->setPartnerPort( dccArguments[2].toUInt() );
     if ( dccArguments[2] == "0" && dccArguments.count() == 5)  // Reverse DCC
         newDcc->setReverse( true, dccArguments[4] );
 
@@ -1712,12 +1712,12 @@ void Server::openDccChat(const QString& nickname)
     emit addDccChat(getNickname(),nickname,QStringList(),true);
 }
 
-void Server::requestDccChat(const QString& partnerNick, const QString& numericalOwnIp, const QString& ownPort)
+void Server::requestDccChat(const QString& partnerNick, const QString& numericalOwnIp, uint ownPort)
 {
-    queue(QString("PRIVMSG %1 :\001DCC CHAT chat %2 %3\001").arg(partnerNick).arg(numericalOwnIp).arg(ownPort));
+    queue(QString("PRIVMSG %1 :\001DCC CHAT chat %2 %3\001").arg(partnerNick).arg(numericalOwnIp).arg(QString::number(ownPort)));
 }
 
-void Server::dccSendRequest(const QString &partner, const QString &fileName, const QString &address, const QString &port, unsigned long size)
+void Server::dccSendRequest(const QString &partner, const QString &fileName, const QString &address, uint port, unsigned long size)
 {
     Konversation::OutputFilterResult result = getOutputFilter()->sendRequest(partner,fileName,address,port,size);
     queue(result.toServer);
@@ -1740,7 +1740,7 @@ void Server::dccPassiveSendRequest(const QString& recipient,const QString& fileN
     queue(result.toServer);
 }
 
-void Server::dccResumeGetRequest(const QString &sender, const QString &fileName, const QString &port, KIO::filesize_t startAt)
+void Server::dccResumeGetRequest(const QString &sender, const QString &fileName, uint port, KIO::filesize_t startAt)
 {
     Konversation::OutputFilterResult result;
 
@@ -1752,7 +1752,7 @@ void Server::dccResumeGetRequest(const QString &sender, const QString &fileName,
     queue(result.toServer);
 }
 
-void Server::dccReverseSendAck(const QString& partnerNick,const QString& fileName,const QString& ownAddress,const QString& ownPort,unsigned long size,const QString& reverseToken)
+void Server::dccReverseSendAck(const QString& partnerNick,const QString& fileName,const QString& ownAddress,uint ownPort,unsigned long size,const QString& reverseToken)
 {
     Konversation::OutputFilterResult result = getOutputFilter()->acceptPassiveSendRequest(partnerNick,fileName,ownAddress,ownPort,size,reverseToken);
     queue(result.toServer);
@@ -1760,13 +1760,14 @@ void Server::dccReverseSendAck(const QString& partnerNick,const QString& fileNam
 
 void Server::startReverseDccSendTransfer(const QString& sourceNick,const QStringList& dccArguments)
 {
+    kDebug();
     DccTransferManager* dtm = KonversationApplication::instance()->getDccTransferManager();
 
     if ( dtm->startReverseSending( connectionId(), sourceNick,
                                    dccArguments[0],  // filename
                                    DccCommon::numericalIpToTextIp( dccArguments[1] ),  // partner IP
-                                   dccArguments[2],  // partner port
-                                   dccArguments[3].toInt(),  // filesize
+                                   dccArguments[2].toUInt(),  // partner port
+                                   dccArguments[3].toULong(),  // filesize
                                    dccArguments[4]  // Reverse DCC token
          ) == 0 )
     {
@@ -1790,7 +1791,7 @@ void Server::resumeDccGetTransfer(const QString &sourceNick, const QStringList &
     DccTransferManager* dtm = KonversationApplication::instance()->getDccTransferManager();
 
     QString fileName( dccArguments[0] );
-    QString ownPort( dccArguments[1] );
+    uint ownPort = dccArguments[1].toUInt();
     unsigned long position = dccArguments[2].toULong();
 
     DccTransferRecv* dccTransfer = dtm->resumeDownload( connectionId(), sourceNick, fileName, ownPort, position );
@@ -1825,7 +1826,7 @@ void Server::resumeDccSendTransfer(const QString &sourceNick, const QStringList 
     DccTransferManager* dtm = KonversationApplication::instance()->getDccTransferManager();
 
     QString fileName( dccArguments[0] );
-    QString ownPort( dccArguments[1] );
+    uint ownPort = dccArguments[1].toUInt();
     unsigned long position = dccArguments[2].toULong();
 
     DccTransferSend* dccTransfer = dtm->resumeUpload( connectionId(), sourceNick, fileName, ownPort, position );

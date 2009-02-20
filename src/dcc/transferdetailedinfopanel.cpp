@@ -103,14 +103,14 @@ void DccTransferDetailedInfoPanel::updateView()
         transfer->getPartnerNick().isEmpty() ? "?" : transfer->getPartnerNick(),
         partnerInfoServerName ) );
     if ( !transfer->getPartnerIp().isEmpty() )
-        partnerInfo += i18n( ", %1 (port %2)", transfer->getPartnerIp(), transfer->getPartnerPort() );
+        partnerInfo += i18n( ", %1 (port %2)", transfer->getPartnerIp(), QString::number( transfer->getPartnerPort() ) );
     m_labelPartner->setText( partnerInfo );
 
     // Self:
     if ( transfer->getOwnIp().isEmpty() )
         m_labelSelf->setText( "" );
     else
-        m_labelSelf->setText( i18n( "%1 (port %2)", transfer->getOwnIp(), transfer->getOwnPort() ) );
+        m_labelSelf->setText( i18n( "%1 (port %2)", transfer->getOwnIp(), QString::number( transfer->getOwnPort() ) ) );
 
     // Status:
     if ( transfer->getStatus() == DccTransfer::Transferring )

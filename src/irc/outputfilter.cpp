@@ -900,7 +900,7 @@ namespace Konversation
         return result;
     }
 
-    OutputFilterResult OutputFilter::sendRequest(const QString &recipient,const QString &fileName,const QString &address,const QString &port,unsigned long size)
+    OutputFilterResult OutputFilter::sendRequest(const QString &recipient,const QString &fileName,const QString &address,uint port,unsigned long size)
     {
         OutputFilterResult result;
         QString niftyFileName(fileName);
@@ -909,11 +909,11 @@ namespace Konversation
 
         result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + "DCC SEND "
             + fileName
-            + ' ' + address + ' ' + port + ' ' + QString::number(size) + '\x01';
-
-        // Dirty hack to avoid printing ""name with spaces.ext"" instead of "name with spaces.ext"
-        if ((fileName.startsWith("\"")) && (fileName.endsWith("\"")))
-            niftyFileName = fileName.mid(1, fileName.length()-2);
+            + ' ' + address + ' ' + QString::number(port) + ' ' + QString::number(size) + '\x01';
+//used?
+//         // Dirty hack to avoid printing ""name with spaces.ext"" instead of "name with spaces.ext"
+//         if ((fileName.startsWith("\"")) && (fileName.endsWith("\"")))
+//             niftyFileName = fileName.mid(1, fileName.length()-2);
 
         return result;
     }
@@ -926,48 +926,48 @@ namespace Konversation
         result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + "DCC SEND "
             + fileName
             + ' ' + address + " 0 " + QString::number(size) + ' ' + token + '\x01';
-
-        // Dirty hack to avoid printing ""name with spaces.ext"" instead of "name with spaces.ext"
-        if ((fileName.startsWith("\"")) && (fileName.endsWith("\"")))
-            niftyFileName = fileName.mid(1, fileName.length()-2);
+//used?
+//         // Dirty hack to avoid printing ""name with spaces.ext"" instead of "name with spaces.ext"
+//         if ((fileName.startsWith("\"")) && (fileName.endsWith("\"")))
+//             niftyFileName = fileName.mid(1, fileName.length()-2);
 
         return result;
     }
 
     // Accepting Resume Request
-    OutputFilterResult OutputFilter::acceptResumeRequest(const QString &recipient,const QString &fileName,const QString &port,int startAt)
+    OutputFilterResult OutputFilter::acceptResumeRequest(const QString &recipient,const QString &fileName,uint port,int startAt)
     {
         QString niftyFileName(fileName);
 
         OutputFilterResult result;
-        result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + "DCC ACCEPT " + fileName + ' ' + port
+        result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + "DCC ACCEPT " + fileName + ' ' + QString::number(port)
             + ' ' + QString::number(startAt) + '\x01';
-
-        // Dirty hack to avoid printing ""name with spaces.ext"" instead of "name with spaces.ext"
-        if ((fileName.startsWith("\"")) && (fileName.endsWith("\"")))
-            niftyFileName = fileName.mid(1, fileName.length()-2);
+//used?
+//         // Dirty hack to avoid printing ""name with spaces.ext"" instead of "name with spaces.ext"
+//         if ((fileName.startsWith("\"")) && (fileName.endsWith("\"")))
+//             niftyFileName = fileName.mid(1, fileName.length()-2);
 
         return result;
     }
 
-    OutputFilterResult OutputFilter::resumeRequest(const QString &sender,const QString &fileName,const QString &port,KIO::filesize_t startAt)
+    OutputFilterResult OutputFilter::resumeRequest(const QString &sender,const QString &fileName,uint port,KIO::filesize_t startAt)
     {
         QString niftyFileName(fileName);
 
         OutputFilterResult result;
         /*QString newFileName(fileName);
         newFileName.replace(" ", "_");*/
-        result.toServer = "PRIVMSG " + sender + " :" + '\x01' + "DCC RESUME " + fileName + ' ' + port + ' '
+        result.toServer = "PRIVMSG " + sender + " :" + '\x01' + "DCC RESUME " + fileName + ' ' + QString::number(port) + ' '
             + QString::number(startAt) + '\x01';
-
-        // Dirty hack to avoid printing ""name with spaces.ext"" instead of "name with spaces.ext"
-        if ((fileName.startsWith("\"")) && (fileName.endsWith("\"")))
-            niftyFileName = fileName.mid(1, fileName.length()-2);
+//used?
+//         // Dirty hack to avoid printing ""name with spaces.ext"" instead of "name with spaces.ext"
+//         if ((fileName.startsWith("\"")) && (fileName.endsWith("\"")))
+//             niftyFileName = fileName.mid(1, fileName.length()-2);
 
         return result;
     }
 
-    OutputFilterResult OutputFilter::acceptPassiveSendRequest(const QString& recipient,const QString &fileName,const QString &address,const QString &port,unsigned long size,const QString &token)
+    OutputFilterResult OutputFilter::acceptPassiveSendRequest(const QString& recipient,const QString &fileName,const QString &address,uint port,unsigned long size,const QString &token)
     {
         OutputFilterResult result;
         QString niftyFileName(fileName);
@@ -975,7 +975,7 @@ namespace Konversation
         // "DCC SEND" to receive a file sounds weird, but it's ok.
         result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + "DCC SEND "
             + fileName
-            + ' ' + address + ' ' + port + ' ' + QString::number(size) + ' ' + token + '\x01';
+            + ' ' + address + ' ' + QString::number(port) + ' ' + QString::number(size) + ' ' + token + '\x01';
 
         // Dirty hack to avoid printing ""name with spaces.ext"" instead of "name with spaces.ext"
         if ((fileName.startsWith("\"")) && (fileName.endsWith("\"")))
@@ -1538,13 +1538,13 @@ namespace Konversation
             QString password;
 
             if (splitted.count() == 3)
-                emit connectTo(Konversation::CreateNewConnection, splitted[0], splitted[1], splitted[2]);
+                emit connectTo(Konversation::CreateNewConnection, splitted[0], splitted[1].toUInt(), splitted[2]);
             else if (splitted.count() == 2)
             {
                 if (splitted[0].contains(QRegExp(":[0-9]+$")))
-                    emit connectTo(Konversation::CreateNewConnection, splitted[0], "", splitted[1]);
+                    emit connectTo(Konversation::CreateNewConnection, splitted[0], 0, splitted[1]);
                 else
-                    emit connectTo(Konversation::CreateNewConnection, splitted[0], splitted[1]);
+                    emit connectTo(Konversation::CreateNewConnection, splitted[0], splitted[1].toUInt());
             }
             else
                 emit connectTo(Konversation::CreateNewConnection, splitted[0]);

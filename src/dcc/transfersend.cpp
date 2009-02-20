@@ -34,11 +34,12 @@
 
 #include <qfile.h>
 #include <qtimer.h>
+#include <QTcpSocket>
+#include <QTcpServer>
 
 #include <kdebug.h>
 #include <klocale.h>
-#include <k3serversocket.h>
-#include <k3streamsocket.h>
+#include <k3socketaddress.h>
 #include <kio/netaccess.h>
 #include <kfileitem.h>
 
@@ -155,7 +156,7 @@ bool DccTransferSend::queue()
         KIpAddress ip( m_ownIp );
         if ( ip.isIPv6Addr() )
         {
-#ifndef Q_WS_WIN        
+#ifndef Q_WS_WIN
             /* This is fucking ugly but there is no KDE way to do this yet :| -cartman */
             struct ifreq ifr;
             const QByteArray addressBa = Preferences::self()->dccIPv4FallbackIface().toAscii();
@@ -211,10 +212,16 @@ bool DccTransferSend::queue()
             m_fileName = "\"" + m_fileName + "\"";
     }
 
+    kDebug() << "m_tmpFile: " << m_tmpFile;
     m_file.setFileName( m_tmpFile );
 
     if ( m_fileSize == 0 )
+    {
         m_fileSize = m_file.size();
+        kDebug() << "filesize 0, new filesize: " << m_fileSize;
+        if ( m_fileSize == 0 )
+            failed( i18n( "Unabled to send 0 byte file" ) );
+    }
 
     return DccTransfer::queue();
 }
@@ -256,18 +263,19 @@ void DccTransferSend::start()                     // public slot
             m_serverSocket = DccCommon::createServerSocketAndListen( this, &failedReason, Preferences::self()->dccSendPortsFirst(), Preferences::self()->dccSendPortsLast() );
         else
             m_serverSocket = DccCommon::createServerSocketAndListen( this, &failedReason );
+
         if ( !m_serverSocket )
         {
             failed( failedReason );
             return;
         }
 
-        connect( m_serverSocket, SIGNAL( readyAccept() ),   this, SLOT( acceptClient() ) );
-        connect( m_serverSocket, SIGNAL( gotError( int ) ), this, SLOT( slotGotSocketError( int ) ) );
-        connect( m_serverSocket, SIGNAL( closed() ),        this, SLOT( slotServerSocketClosed() ) );
+        connect( m_serverSocket, SIGNAL( newConnection() ),   this, SLOT( acceptClient() ) );
+        //connect( m_serverSocket, SIGNAL( gotError( int ) ), this, SLOT( slotGotSocketError( int ) ) );
+        //connect( m_serverSocket, SIGNAL( closed() ),        this, SLOT( slotServerSocketClosed() ) );
 
         // Get own port number
-        m_ownPort = QString::number( DccCommon::getServerSocketPort( m_serverSocket ) );
+        m_ownPort = m_serverSocket->serverPort();
 
         kDebug() << "Own Address=" << m_ownIp << ":" << m_ownPort;
 
@@ -292,23 +300,22 @@ void DccTransferSend::start()                     // public slot
     setStatus( WaitingRemote, i18n( "Waiting remote user's acceptance" ) );
 }
 
-void DccTransferSend::connectToReceiver( const QString& partnerHost, const QString& partnerPort )
+void DccTransferSend::connectToReceiver( const QString& partnerHost, uint partnerPort )
 {
+    kDebug();
     // Reverse DCC
 
     m_partnerIp = partnerHost;
     m_partnerPort = partnerPort;
 
-    m_sendSocket = new KNetwork::KStreamSocket( partnerHost, partnerPort, this );
+    m_sendSocket = new QTcpSocket( this );
 
-    m_sendSocket->setBlocking( false );
-
-    connect( m_sendSocket, SIGNAL( connected( const KResolverEntry& ) ), this, SLOT( startSending() ) );
-    connect( m_sendSocket, SIGNAL( gotError( int ) ), this, SLOT( slotConnectionFailed( int ) ) );
+    connect( m_sendSocket, SIGNAL( connected( ) ), this, SLOT( startSending() ) );
+    connect( m_sendSocket, SIGNAL( error( QAbstractSocket::SocketError ) ), this, SLOT( slotConnectionFailed( QAbstractSocket::SocketError ) ) );
 
     setStatus( Connecting );
 
-    m_sendSocket->connect();
+    m_sendSocket->connectToHost( partnerHost, partnerPort );
 }
                                                   // public
 bool DccTransferSend::setResume( unsigned long position )
@@ -334,7 +341,7 @@ void DccTransferSend::acceptClient()                     // slot
 
     stopConnectionTimer();
 
-    m_sendSocket = static_cast<KNetwork::KStreamSocket*>( m_serverSocket->accept() );
+    m_sendSocket = m_serverSocket->nextPendingConnection();
     if ( !m_sendSocket )
     {
         failed( i18n( "Could not accept the connection. (Socket Error)" ) );
@@ -349,15 +356,13 @@ void DccTransferSend::acceptClient()                     // slot
 
 void DccTransferSend::startSending()
 {
-    connect( m_sendSocket, SIGNAL( readyWrite() ), this, SLOT( writeData() )            );
-    connect( m_sendSocket, SIGNAL( readyRead() ),  this, SLOT( getAck() )               );
-    connect( m_sendSocket, SIGNAL( closed() ),     this, SLOT( slotSendSocketClosed() ) );
+    if ( !m_reverse )
+        connect( this, SIGNAL( bytesWritten( qint64 ) ), this, SLOT( writeData() ) );
+    connect( m_sendSocket, SIGNAL( readyRead() ),  this, SLOT( getAck() ) );
+    connect( m_sendSocket, SIGNAL( disconnected() ), this, SLOT( slotSendSocketClosed() ) );
 
-    if ( m_sendSocket->peerAddress().asInet().ipAddress().isV4Mapped() )
-        m_partnerIp = KNetwork::KIpAddress( m_sendSocket->peerAddress().asInet().ipAddress().IPv4Addr() ).toString();
-    else
-        m_partnerIp = m_sendSocket->peerAddress().asInet().ipAddress().toString();
-    m_partnerPort = m_sendSocket->peerAddress().serviceName();
+    m_partnerIp = m_sendSocket->peerAddress().toString();
+    m_partnerPort = m_sendSocket->peerPort();
 
     if ( m_file.open( QIODevice::ReadOnly ) )
     {
@@ -366,22 +371,17 @@ void DccTransferSend::startSending()
         m_transferStartPosition = m_transferringPosition;
 
         setStatus( Transferring );
-        m_sendSocket->enableWrite( true );
-        m_sendSocket->enableRead( m_fastSend );
+        writeData();
         startTransferLogger();                      // initialize CPS counter, ETA counter, etc...
     }
     else
-        failed( i18n( "Could not open the file: %1" , getQFileErrorString( m_file.error() ) ) );
+        failed( getQFileErrorString( m_file.error() ) );
 }
 
 void DccTransferSend::writeData()                 // slot
 {
     //kDebug();
-    if ( !m_fastSend )
-    {
-        m_sendSocket->enableWrite( false );
-        m_sendSocket->enableRead( true );
-    }
+
     int actual = m_file.read( m_buffer, m_bufferSize );
     if ( actual > 0 )
     {
@@ -391,7 +391,6 @@ void DccTransferSend::writeData()                 // slot
         {
             Q_ASSERT( (KIO::fileoffset_t)m_fileSize == m_transferringPosition );
             kDebug() << "Done.";
-            m_sendSocket->enableWrite( false );   // there is no need to call this function anymore
         }
     }
 }
@@ -399,10 +398,9 @@ void DccTransferSend::writeData()                 // slot
 void DccTransferSend::getAck()                    // slot
 {
     //kDebug();
-    if ( !m_fastSend && m_transferringPosition < (KIO::fileoffset_t)m_fileSize )
+    if ( /*!m_fastSend &&*/ m_transferringPosition < (KIO::fileoffset_t)m_fileSize )
     {
-        m_sendSocket->enableWrite( true );
-        m_sendSocket->enableRead( false );
+        writeData();
     }
     unsigned long pos;
     while ( m_sendSocket->bytesAvailable() >= 4 )
@@ -449,7 +447,7 @@ void DccTransferSend::slotConnectionTimeout()         // slot
     failed( i18n( "Timed out" ) );
 }
 
-void DccTransferSend::slotConnectionFailed( int /* errorCode */ )
+void DccTransferSend::slotConnectionFailed( QAbstractSocket::SocketError /* errorCode */ )
 {
     failed( i18n( "Connection failure: %1", m_sendSocket->errorString() ) );
 }

@@ -55,14 +55,14 @@ class DccTransferManager : public QObject
         /**
          * @return a DccTransferRecv item if applicable one found, otherwise 0.
          */
-        DccTransferRecv* resumeDownload(int connectionId, const QString& partnerNick, const QString& fileName, const QString& ownPort, unsigned long position );
+        DccTransferRecv* resumeDownload(int connectionId, const QString& partnerNick, const QString& fileName, uint ownPort, unsigned long position );
 
         /**
          * @return a DccTransferSend item if applicable one found, otherwise 0.
          */
-        DccTransferSend* resumeUpload(int connectionId, const QString& partnerNick, const QString& fileName, const QString& ownPort, unsigned long position );
+        DccTransferSend* resumeUpload(int connectionId, const QString& partnerNick, const QString& fileName, uint ownPort, unsigned long position );
 
-        DccTransferSend* startReverseSending(int connectionId, const QString& partnerNick, const QString& fileName, const QString& partnerHost, const QString& partnerPort, unsigned long fileSize, const QString& token );
+        DccTransferSend* startReverseSending(int connectionId, const QString& partnerNick, const QString& fileName, const QString& partnerHost, uint partnerPort, unsigned long fileSize, const QString& token );
 
         bool isLocalFileInWritingProcess( const KUrl& localUrl ) const;
 

@@ -44,7 +44,7 @@ class ConnectionManager : public QObject
     public slots:
         void connectTo(Konversation::ConnectionFlag flag,
                        const QString& target,
-                       const QString& port = "",
+                       uint port = 0,
                        const QString& password = "",
                        const QString& nick = "",
                        const QString& channel = "",

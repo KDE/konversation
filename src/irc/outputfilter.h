@@ -61,13 +61,13 @@ namespace Konversation
             OutputFilterResult parse(const QString& myNick,const QString& line,const QString& name);
 
             // dcc send
-            OutputFilterResult sendRequest(const QString &recipient,const QString &fileName,const QString &address,const QString &port,unsigned long size);
+            OutputFilterResult sendRequest(const QString &recipient,const QString &fileName,const QString &address,uint port,unsigned long size);
             OutputFilterResult passiveSendRequest(const QString& recipient,const QString &fileName,const QString &address,unsigned long size,const QString &token);
-            OutputFilterResult acceptResumeRequest(const QString &recipient,const QString &fileName,const QString &port,int startAt);
+            OutputFilterResult acceptResumeRequest(const QString &recipient,const QString &fileName,uint port,int startAt);
 
             // dcc recv
-            OutputFilterResult resumeRequest(const QString &sender,const QString &fileName,const QString &port,KIO::filesize_t startAt);
-            OutputFilterResult acceptPassiveSendRequest(const QString& recipient,const QString &fileName,const QString &address,const QString &port,unsigned long size,const QString &token);
+            OutputFilterResult resumeRequest(const QString &sender,const QString &fileName,uint port,KIO::filesize_t startAt);
+            OutputFilterResult acceptPassiveSendRequest(const QString& recipient,const QString &fileName,const QString &address,uint port,unsigned long size,const QString &token);
 
             bool replaceAliases(QString& line);
 
@@ -93,7 +93,7 @@ namespace Konversation
 
             void connectTo(Konversation::ConnectionFlag flag,
                            const QString& hostName,
-                           const QString& port = "",
+                           uint port = 0,
                            const QString& password = "",
                            const QString& nick = "",
                            const QString& channel = "",

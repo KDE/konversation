@@ -19,9 +19,6 @@
 #include <qhostaddress.h>
 
 #include <klocale.h>
-#include <k3serversocket.h>
-
-using namespace KNetwork;
 
 QString DccCommon::textIpToNumericalIp( const QString& ipString )
 {
@@ -52,10 +49,10 @@ QString DccCommon::getOwnIp( Server* server )
     else if ( methodId == 2 && !Preferences::self()->dccSpecificOwnIp().isEmpty() )
     {
         // manual
-        KNetwork::KResolverResults res = KNetwork::KResolver::resolve(Preferences::self()->dccSpecificOwnIp(), "");
-        if(res.error() == KResolver::NoError && res.size() > 0)
+        QHostInfo res = QHostInfo::fromName(Preferences::self()->dccSpecificOwnIp());
+        if(res.error() == QHostInfo::NoError && !res.addresses().isEmpty())
         {
-            ownIp = res.first().address().nodeName();
+            ownIp = res.addresses().first().toString();
         }
     }
 
@@ -69,10 +66,9 @@ QString DccCommon::getOwnIp( Server* server )
     return ownIp;
 }
 
-KNetwork::KServerSocket* DccCommon::createServerSocketAndListen( QObject* parent, QString* failedReason, int minPort, int maxPort )
+QTcpServer* DccCommon::createServerSocketAndListen( QObject* parent, QString* failedReason, int minPort, int maxPort )
 {
-    KNetwork::KServerSocket* socket = new KNetwork::KServerSocket( parent );
-    socket->setFamily( KNetwork::KResolver::InetFamily );
+    QTcpServer* socket = new QTcpServer( parent );
 
     if ( minPort > 0 && maxPort >= minPort )  // ports are configured manually
     {
@@ -80,9 +76,8 @@ KNetwork::KServerSocket* DccCommon::createServerSocketAndListen( QObject* parent
         bool found = false;                       // whether succeeded to set port
         for ( int port = minPort; port <= maxPort ; ++port )
         {
-            socket->setAddress( QString::number( port ) );
-            bool success = socket->listen();
-            if ( ( found = ( success && socket->error() == KNetwork::KSocketBase::NoError ) ) )
+            bool success = socket->listen( QHostAddress::Any, port );
+            if ( ( found = ( success && socket->isListening() ) ) )
                 break;
             socket->close();
         }
@@ -97,7 +92,6 @@ KNetwork::KServerSocket* DccCommon::createServerSocketAndListen( QObject* parent
     else
     {
         // Let the operating system choose a port
-        socket->setAddress( "0" );
         if ( !socket->listen() )
         {
             if ( failedReason )
@@ -108,11 +102,4 @@ KNetwork::KServerSocket* DccCommon::createServerSocketAndListen( QObject* parent
     }
 
     return socket;
-}
-
-int DccCommon::getServerSocketPort( KNetwork::KServerSocket* serverSocket )
-{
-    KNetwork::KSocketAddress ipAddr = serverSocket->localAddress();
-    const struct sockaddr_in* socketAddress = (sockaddr_in*)ipAddr.address();
-    return ntohs( socketAddress->sin_port );
 }

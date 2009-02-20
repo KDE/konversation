@@ -22,12 +22,14 @@
 #include "connectionmanager.h"
 #include "server.h"
 
+#include <QTcpServer>
+#include <QTcpSocket>
+
 #include <kdebug.h>
 #include <kfileitem.h>
 #include <kiconloader.h>
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <k3serversocket.h>
 #include <kstandarddirs.h>
 #include <kdirselectdialog.h>
 #include <kuser.h>
@@ -125,7 +127,7 @@ void DccTransferRecv::setPartnerIp( const QString& ip )
         m_partnerIp = ip;
 }
 
-void DccTransferRecv::setPartnerPort( const QString& port )
+void DccTransferRecv::setPartnerPort( uint port )
 {
     if ( getStatus() == Configuring )
         m_partnerPort = port;
@@ -156,7 +158,7 @@ void DccTransferRecv::setReverse( bool reverse, const QString& reverseToken )
         m_reverse = reverse;
         if ( reverse )
         {
-            m_partnerPort = QString::number( 0 );
+            m_partnerPort = 0;
             m_reverseToken = reverseToken;
         }
     }
@@ -169,7 +171,7 @@ bool DccTransferRecv::queue()
     if ( getStatus() != Configuring )
         return false;
 
-    if ( m_partnerIp.isEmpty() || m_partnerPort.isEmpty() )
+    if ( m_partnerIp.isEmpty() || !m_partnerPort )
         return false;
 
     if (!KAuthorized::authorizeKAction("allow_downloading"))
@@ -260,9 +262,9 @@ void DccTransferRecv::start()                     // public slot
 void DccTransferRecv::prepareLocalKio( bool overwrite, bool resume, KIO::fileoffset_t startPosition /* = 0 */ )
 {
     kDebug()
-        << "DccTransferRecv::prepareLocalKio(): URL: " << m_fileURL << endl
-        << "DccTransferRecv::prepareLocalKio(): Overwrite: " << overwrite << endl
-        << "DccTransferRecv::prepareLocalKio(): Resume: " << resume << " (Position: " << QString::number( startPosition ) << ")";
+        << "URL: " << m_fileURL << endl
+        << "Overwrite: " << overwrite << endl
+        << "Resume: " << resume << " (Position: " << QString::number( startPosition ) << ")";
 
     m_resumed = resume;
     m_transferringPosition = startPosition;
@@ -279,9 +281,11 @@ void DccTransferRecv::prepareLocalKio( bool overwrite, bool resume, KIO::fileoff
 
     KIO::JobFlags flags;
     if(overwrite)
-       flags |= KIO::Overwrite;
+        flags |= KIO::Overwrite;
     if(m_resumed)
-       flags |= KIO::HideProgressInfo;
+        flags |= KIO::Resume;
+    //for now, maybe later
+    flags |= KIO::HideProgressInfo;
     KIO::TransferJob* transferJob = KIO::put( m_fileURL, -1, flags );
 
     if ( !transferJob )
@@ -448,7 +452,7 @@ void DccTransferRecv::connectWithSender()
         }
 
         m_ownIp = DccCommon::getOwnIp( server );
-        m_ownPort = QString::number( DccCommon::getServerSocketPort( m_serverSocket ) );
+        m_ownPort = m_serverSocket->serverPort();
 
         setStatus( WaitingRemote, i18n( "Waiting for connection" ) );
 
@@ -511,22 +515,17 @@ void DccTransferRecv::connectToSendServer()
 
     setStatus( Connecting );
 
-    m_recvSocket = new KNetwork::KStreamSocket( m_partnerIp, m_partnerPort, this);
+    m_recvSocket = new QTcpSocket( this);
 
-    m_recvSocket->setBlocking( false );           // asynchronous mode
-    m_recvSocket->setFamily( KNetwork::KResolver::InetFamily );
-    m_recvSocket->setResolutionEnabled( false );
-    m_recvSocket->setTimeout( 30000 );
+    //m_recvSocket->setResolutionEnabled( false );
+    //m_recvSocket->setTimeout( 30000 );
 
-    m_recvSocket->enableRead( false );
-    m_recvSocket->enableWrite( false );
-
-    connect( m_recvSocket, SIGNAL( connected( const KNetwork::KResolverEntry& ) ), this, SLOT( startReceiving() )     );
-    connect( m_recvSocket, SIGNAL( gotError( int ) ),                              this, SLOT( connectionFailed( int ) ) );
+    connect( m_recvSocket, SIGNAL( connected( ) ), this, SLOT( startReceiving() )     );
+    connect( m_recvSocket, SIGNAL( error( QAbstractSocket::SocketError ) ), this, SLOT( connectionFailed( QAbstractSocket::SocketError ) ) );
 
     kDebug() << "Attempting to connect to " << m_partnerIp << ":" << m_partnerPort;
 
-    m_recvSocket->connect();
+    m_recvSocket->connectToHost(m_partnerIp, m_partnerPort);
 }
 
 bool DccTransferRecv::startListeningForSender()
@@ -543,8 +542,8 @@ bool DccTransferRecv::startListeningForSender()
         return false;
     }
 
-   connect( m_serverSocket, SIGNAL( readyAccept() ),   this, SLOT( slotServerSocketReadyAccept() ) );
-   connect( m_serverSocket, SIGNAL( gotError( int ) ), this, SLOT( slotServerSocketGotError( int ) ) );
+   connect( m_serverSocket, SIGNAL( newConnection() ),   this, SLOT( slotServerSocketReadyAccept() ) );
+   //connect( m_serverSocket, SIGNAL( gotError( int ) ), this, SLOT( slotServerSocketGotError( int ) ) );
 
     return true;
 }
@@ -553,14 +552,14 @@ void DccTransferRecv::slotServerSocketReadyAccept()
 {
     //stopConnectionTimer()
 
-    m_recvSocket = static_cast<KNetwork::KStreamSocket*>( m_serverSocket->accept() );
+    m_recvSocket = m_serverSocket->nextPendingConnection();
     if ( !m_recvSocket )
     {
         failed( i18n( "Could not accept the connection. (Socket Error)" ) );
         return;
     }
 
-    connect( m_recvSocket, SIGNAL( gotError( int ) ), this, SLOT( connectionFailed( int ) ) );
+    connect( m_recvSocket, SIGNAL( error( QAbstractSocket::SocketError ) ), this, SLOT( connectionFailed( QAbstractSocket::SocketError ) ) );
 
     // we don't need ServerSocket anymore
     m_serverSocket->close();
@@ -577,24 +576,19 @@ void DccTransferRecv::startReceiving()
 {
     kDebug();
 
-    m_recvSocket->setBlocking( false );           // asynchronous mode
-
     connect( m_recvSocket, SIGNAL( readyRead() ),                        this, SLOT( readData() )              );
-    connect( m_recvSocket, SIGNAL( readyWrite() ),                       this, SLOT( sendAck() )               );
-    connect( m_recvSocket, SIGNAL( closed() ),                           this, SLOT( slotSocketClosed() )      );
+    //connect( m_recvSocket, SIGNAL( readyWrite() ),                       this, SLOT( sendAck() )               );
+    connect( m_recvSocket, SIGNAL( disconnected() ),                           this, SLOT( slotSocketClosed() )      );
 
     setStatus( Transferring );
 
     m_transferStartPosition = m_transferringPosition;
 
-    m_recvSocket->enableRead( true );
-    m_recvSocket->enableWrite( false );
-
     startTransferLogger();                          // initialize CPS counter, ETA counter, etc...
 }
 
                                                   // slot
-void DccTransferRecv::connectionFailed( int errorCode )
+void DccTransferRecv::connectionFailed( QAbstractSocket::SocketError errorCode )
 {
     kDebug() << "Code = " << errorCode << ", string = " << m_recvSocket->errorString();
     failed( i18n( "Connection failure: %1", m_recvSocket->errorString() ) );
@@ -610,7 +604,7 @@ void DccTransferRecv::readData()                  // slot
         m_transferringPosition += actual;
         m_writeCacheHandler->append( m_buffer, actual );
         m_writeCacheHandler->write( false );
-        m_recvSocket->enableWrite( true );
+        sendAck();
     }
 }
 
@@ -619,12 +613,10 @@ void DccTransferRecv::sendAck()                   // slot
     //kDebug() << "sendAck()";
     KIO::fileoffset_t pos = intel( m_transferringPosition );
 
-    m_recvSocket->enableWrite( false );
     m_recvSocket->write( (char*)&pos, 4 );
     if ( m_transferringPosition == (KIO::fileoffset_t)m_fileSize )
     {
         kDebug() << "Sent final ACK.";
-        m_recvSocket->enableRead( false );
         disconnect( m_recvSocket, 0, 0, 0 );
         finishTransferLogger();
         m_writeCacheHandler->close();             // WriteCacheHandler will send the signal done()

@@ -187,8 +187,8 @@ int KonversationApplication::newInstance()
                 this,SLOT (dbusInfo(const QString&)) );
             connect(dbusObject,SIGNAL (dbusInsertMarkerLine()),
                 mainWindow,SIGNAL(insertMarkerLine()));
-            connect(dbusObject, SIGNAL(connectTo(Konversation::ConnectionFlag, const QString&, const QString&, const QString&, const QString&, const QString&, bool)),
-                m_connectionManager, SLOT(connectTo(Konversation::ConnectionFlag, const QString&, const QString&, const QString&, const QString&, const QString&, bool)));
+            connect(dbusObject, SIGNAL(connectTo(Konversation::ConnectionFlag, const QString&, uint, const QString&, const QString&, const QString&, bool)),
+                m_connectionManager, SLOT(connectTo(Konversation::ConnectionFlag, const QString&, uint, const QString&, const QString&, const QString&, bool)));
         }
 
         m_notificationHandler = new Konversation::NotificationHandler(this);
@@ -200,7 +200,7 @@ int KonversationApplication::newInstance()
     {
         getConnectionManager()->connectTo(Konversation::SilentlyReuseConnection,
                                           args->getOption("server"),
-                                          args->getOption("port"),
+                                          args->getOption("port").toUInt(),
                                           args->getOption("password"),
                                           args->getOption("nick"),
                                           args->getOption("channel"),

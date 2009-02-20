@@ -329,11 +329,11 @@ void resetNickSelection();
         ChannelListPanel* addChannelListPanel();
 
         // invoked by DccTransferSend
-        void dccSendRequest(const QString& recipient,const QString& fileName,const QString& address,const QString& port,unsigned long size);
+        void dccSendRequest(const QString& recipient,const QString& fileName,const QString& address,uint port,unsigned long size);
         void dccPassiveSendRequest(const QString& recipient,const QString& fileName,const QString& address,unsigned long size,const QString& token);
         // invoked by DccTransferRecv
-        void dccResumeGetRequest(const QString& sender,const QString& fileName,const QString& port,KIO::filesize_t startAt);
-        void dccReverseSendAck(const QString& partnerNick,const QString& fileName,const QString& ownAddress,const QString& ownPort,unsigned long size,const QString& reverseToken);
+        void dccResumeGetRequest(const QString& sender,const QString& fileName,uint port,KIO::filesize_t startAt);
+        void dccReverseSendAck(const QString& partnerNick,const QString& fileName,const QString& ownAddress,uint ownPort,unsigned long size,const QString& reverseToken);
 
     // IRCQueueManager
         bool validQueue(QueuePriority priority); ///< is this queue index valid?
@@ -431,7 +431,7 @@ void resetNickSelection();
         void closeChannel(const QString &name);
         void quitServer();
         void openDccChat(const QString& nickname);
-        void requestDccChat(const QString& partnerNick, const QString& numericalOwnIp, const QString& ownPort);
+        void requestDccChat(const QString& partnerNick, const QString& numericalOwnIp, uint ownPort);
         void requestBan(const QStringList& users,const QString& channel,const QString& option);
         void requestUnban(const QString& mask,const QString& channel);
 

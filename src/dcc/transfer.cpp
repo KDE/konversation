@@ -265,7 +265,7 @@ QString DccTransfer::getOwnIp() const
     return m_ownIp;
 }
 
-QString DccTransfer::getOwnPort() const
+uint DccTransfer::getOwnPort() const
 {
     return m_ownPort;
 }
@@ -280,7 +280,7 @@ QString DccTransfer::getPartnerIp() const
     return m_partnerIp;
 }
 
-QString DccTransfer::getPartnerPort() const
+uint DccTransfer::getPartnerPort() const
 {
     return m_partnerPort;
 }

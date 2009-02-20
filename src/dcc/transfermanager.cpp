@@ -54,7 +54,7 @@ DccTransferSend* DccTransferManager::newUpload()
     return transfer;
 }
 
-DccTransferRecv* DccTransferManager::resumeDownload( int connectionId, const QString& partnerNick, const QString& fileName, const QString& ownPort, unsigned long position )
+DccTransferRecv* DccTransferManager::resumeDownload( int connectionId, const QString& partnerNick, const QString& fileName, uint ownPort, unsigned long position )
 {
     DccTransferRecv* transfer = 0;
 
@@ -83,7 +83,7 @@ DccTransferRecv* DccTransferManager::resumeDownload( int connectionId, const QSt
     return transfer;
 }
 
-DccTransferSend* DccTransferManager::resumeUpload( int connectionId, const QString& partnerNick, const QString& fileName, const QString& ownPort, unsigned long position )
+DccTransferSend* DccTransferManager::resumeUpload( int connectionId, const QString& partnerNick, const QString& fileName, uint ownPort, unsigned long position )
 {
     DccTransferSend* transfer = 0;
 
@@ -112,7 +112,7 @@ DccTransferSend* DccTransferManager::resumeUpload( int connectionId, const QStri
     return transfer;
 }
 
-DccTransferSend* DccTransferManager::startReverseSending( int connectionId, const QString& partnerNick, const QString& fileName, const QString& partnerHost, const QString& partnerPort, unsigned long fileSize, const QString& token )
+DccTransferSend* DccTransferManager::startReverseSending( int connectionId, const QString& partnerNick, const QString& fileName, const QString& partnerHost, uint partnerPort, unsigned long fileSize, const QString& token )
 {
     kDebug() << "Server group ID: " << connectionId << ", partner: " << partnerNick << ", filename: " << fileName << ", partner IP: " << partnerHost << ", parnter port: " << partnerPort << ", filesize: " << fileSize << ", token: " << token;
     DccTransferSend* transfer = 0;

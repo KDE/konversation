@@ -33,13 +33,13 @@
 #include <qsplitter.h>
 #include <QTextStream>
 #include <QShowEvent>
+#include <QTcpSocket>
+#include <QTcpServer>
 
 #include <klineedit.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kdebug.h>
-#include <k3serversocket.h>
-#include <k3streamsocket.h>
 #include <KActionCollection>
 #include <kaction.h>
 #include <kmenu.h>
@@ -104,7 +104,7 @@ DccChat::DccChat(QWidget* parent, bool listen, Server* server, const QString& ow
     {
         listenForPartner();
         QString ownNumericalIp = DccCommon::textIpToNumericalIp( DccCommon::getOwnIp( server ) );
-        server->requestDccChat( m_partnerNick, ownNumericalIp, QString::number( m_ownPort ) );
+        server->requestDccChat( m_partnerNick, ownNumericalIp, m_ownPort );
     }
     else
     {
@@ -118,7 +118,7 @@ DccChat::DccChat(QWidget* parent, bool listen, Server* server, const QString& ow
 
 DccChat::~DccChat()
 {
-    kDebug() ;
+    kDebug();
     if(m_dccSocket)
         m_dccSocket->close();
     if(m_listenSocket)
@@ -141,15 +141,15 @@ void DccChat::listenForPartner()
         return;
     }
 
-    connect( m_listenSocket, SIGNAL(readyAccept()), this, SLOT(heardPartner()) );
+    connect( m_listenSocket, SIGNAL(newConnection()), this, SLOT(heardPartner()) );
 
     // Get our own port number
-    m_ownPort = DccCommon::getServerSocketPort( m_listenSocket );
+    m_ownPort = m_listenSocket->serverPort();
     kDebug() << "using port: " << m_ownPort ;
 
-    getTextView()->appendServerMessage(i18n("DCC"), i18n("Offering DCC Chat connection to %1 on port %2...", m_partnerNick, m_ownPort));
+    getTextView()->appendServerMessage(i18n("DCC"), i18n("Offering DCC Chat connection to %1 on port %2...", m_partnerNick, QString::number(m_ownPort)));
 
-    m_sourceLine->setText(i18n("DCC chat with %1 on port %2.", m_partnerNick, m_ownPort));
+    m_sourceLine->setText(i18n("DCC chat with %1 on port %2.", m_partnerNick, QString::number(m_ownPort)));
     kDebug() << "[END]"; 
 }
 
@@ -161,26 +161,21 @@ void DccChat::connectToPartner()
     m_partnerHost=ip.toString();
 
     getTextView()->appendServerMessage( i18n( "DCC" ), i18nc("%1 = nickname, %2 = IP, %3 = port",
-        "Establishing DCC Chat connection to %1 (%2:%3)...", m_partnerNick, m_partnerHost, m_partnerPort));
+        "Establishing DCC Chat connection to %1 (%2:%3)...", m_partnerNick, m_partnerHost, QString::number(m_partnerPort)));
 
     m_sourceLine->setText(i18nc("%1 = nickname, %2 = IP, %3 = port", "DCC chat with %1 on %2:%3.", m_partnerNick, host, m_partnerPort));
 
-    m_dccSocket = new KNetwork::KStreamSocket( m_partnerHost, QString::number( m_partnerPort ), this );
+    m_dccSocket = new QTcpSocket( this );
 
-    m_dccSocket->setBlocking(false);
-    m_dccSocket->setFamily(KNetwork::KResolver::InetFamily);
-    m_dccSocket->enableRead(false);
-    m_dccSocket->enableWrite(false);
-    m_dccSocket->setTimeout(10000);
-    m_dccSocket->blockSignals(false);
+    //m_dccSocket->setTimeout(10000);
 
-    connect( m_dccSocket, SIGNAL( hostFound() ),                        this, SLOT( lookupFinished() )           );
-    connect( m_dccSocket, SIGNAL( connected( const KNetwork::KResolverEntry& ) ), this, SLOT( dccChatConnectionSuccess() ) );
-    connect( m_dccSocket, SIGNAL( gotError( int ) ),                    this, SLOT( dccChatBroken( int ) )       );
-    connect( m_dccSocket, SIGNAL( readyRead() ),                        this, SLOT( readData() )                 );
-    connect( m_dccSocket, SIGNAL( closed() ),                           this, SLOT( socketClosed() )             );
+    connect( m_dccSocket, SIGNAL( hostFound() ), this, SLOT( lookupFinished() ) );
+    connect( m_dccSocket, SIGNAL( connected() ), this, SLOT( dccChatConnectionSuccess() ) );
+    connect( m_dccSocket, SIGNAL( error( QAbstractSocket::SocketError ) ), this, SLOT( dccChatBroken( QAbstractSocket::SocketError ) ) );
+    connect( m_dccSocket, SIGNAL( readyRead() ), this, SLOT( readData() ) );
+    connect( m_dccSocket, SIGNAL( disconnected() ), this, SLOT( socketClosed() ) );
 
-    m_dccSocket->connect();
+    m_dccSocket->connectToHost( m_partnerHost, m_partnerPort );
 
 
     getTextView()->appendServerMessage(i18n("DCC"), i18n("Looking for host %1...", host));
@@ -194,14 +189,12 @@ void DccChat::lookupFinished()
 void DccChat::dccChatConnectionSuccess()
 {
     getTextView()->appendServerMessage(i18n("DCC"), i18n("Established DCC Chat connection to %1.", m_partnerNick));
-    m_dccSocket->enableRead(true);
     m_dccChatInput->setEnabled(true);
 }
 
-void DccChat::dccChatBroken(int error)
+void DccChat::dccChatBroken(QAbstractSocket::SocketError error)
 {
-    getTextView()->appendServerMessage(i18n("Error"), i18n("Connection broken, error code %1.", error));
-    m_dccSocket->enableRead(false);
+    getTextView()->appendServerMessage(i18n("Error"), i18n("Connection broken, error (%1) %2.", error, m_dccSocket->errorString()));
     m_dccSocket->blockSignals(true);
     m_dccSocket->close();
 }
@@ -314,7 +307,7 @@ void DccChat::sendDccChatText(const QString& sendLine)
 
 void DccChat::heardPartner()
 {
-    m_dccSocket = static_cast<KNetwork::KStreamSocket*>( m_listenSocket->accept() );
+    m_dccSocket = m_listenSocket->nextPendingConnection();
 
     if( !m_dccSocket )
     {
@@ -323,15 +316,14 @@ void DccChat::heardPartner()
     }
 
     connect( m_dccSocket, SIGNAL( readyRead() ),     this, SLOT( readData() )           );
-    connect( m_dccSocket, SIGNAL( closed() ),        this, SLOT( socketClosed() )       );
-    connect( m_dccSocket, SIGNAL( gotError( int ) ), this, SLOT( dccChatBroken( int ) ) );
+    connect( m_dccSocket, SIGNAL( disconnected() ),        this, SLOT( socketClosed() )       );
+    connect( m_dccSocket, SIGNAL( error( QAbstractSocket::SocketError ) ), this, SLOT( dccChatBroken( QAbstractSocket::SocketError ) ) );
 
     // the listen socket isn't needed anymore
     disconnect( m_listenSocket, 0, 0, 0 );
     m_listenSocket->close();
     m_listenSocket = 0;
 
-    m_dccSocket->enableRead(true);
     m_dccChatInput->setEnabled(true);
 
     getTextView()->appendServerMessage(i18n("DCC"), i18n("Established DCC Chat connection to %1.", m_partnerNick));

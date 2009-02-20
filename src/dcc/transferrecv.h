@@ -21,19 +21,16 @@
 // TODO: remove the dependence
 #include "resumedialog.h" ////// header renamed
 
+#include <QAbstractSocket>
 
 class QTimer;
+class QTcpServer;
+class QTcpSocket;
 
 namespace KIO
 {
     class Job;
     class TransferJob;
-}
-
-namespace KNetwork
-{
-    class KServerSocket;
-    class KStreamSocket;
 }
 
 class DccTransferRecvWriteCacheHandler;
@@ -49,7 +46,7 @@ class DccTransferRecv : public DccTransfer
         // REQUIRED
         void setPartnerIp( const QString& ip );
         // REQUIRED
-        void setPartnerPort( const QString& port );
+        void setPartnerPort( uint port );
         // REQUIRED
         void setFileSize( unsigned long fileSize );
         // OPTIONAL, if not specified, "unnamed_file"
@@ -87,7 +84,7 @@ class DccTransferRecv : public DccTransfer
         // Remote DCC
         void connectWithSender();
         void startReceiving();
-        void connectionFailed( int errorCode );
+        void connectionFailed( QAbstractSocket::SocketError errorCode );
         void readData();
         void sendAck();
         void connectionTimeout();
@@ -137,8 +134,8 @@ class DccTransferRecv : public DccTransfer
         bool m_partialFileExists;
         QTimer* m_connectionTimer;
 
-        KNetwork::KServerSocket* m_serverSocket;
-        KNetwork::KStreamSocket* m_recvSocket;
+        QTcpServer* m_serverSocket;
+        QTcpSocket* m_recvSocket;
 
     private:
         virtual QString getTypeText() const;

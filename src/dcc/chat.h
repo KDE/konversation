@@ -15,17 +15,14 @@
 
 #include "chatwindow.h"
 
+#include <QAbstractSocket>
 
 class QSplitter;
+class QTcpSocket;
+class QTcpServer;
 
 class IRCInput;
 class Server;
-
-namespace KNetwork
-{
-    class KServerSocket;
-    class KStreamSocket;
-}
 
 namespace Konversation
 {
@@ -62,7 +59,7 @@ class DccChat : public ChatWindow
     protected slots:
         void lookupFinished();
         void dccChatConnectionSuccess();
-        void dccChatBroken(int error);
+        void dccChatBroken(QAbstractSocket::SocketError error);
         void readData();
         void dccChatTextEntered();
         void sendDccChatText(const QString& sendLine);
@@ -86,13 +83,13 @@ class DccChat : public ChatWindow
         QString host;
 
         //QString m_ip;
-        int m_ownPort;
+        uint m_ownPort;
 
         QSplitter* m_headerSplitter;
         Konversation::TopicLabel* m_sourceLine;
         IRCInput* m_dccChatInput;
-        KNetwork::KStreamSocket* m_dccSocket;
-        KNetwork::KServerSocket* m_listenSocket;
+        QTcpSocket* m_dccSocket;
+        QTcpServer* m_listenSocket;
 
         QString m_encoding;
 

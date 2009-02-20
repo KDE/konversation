@@ -68,12 +68,12 @@ class DccTransfer : public QObject
         DccStatus          getStatus()                const;
         const QString&     getStatusDetail()          const;
         QDateTime          getTimeOffer()             const;
-        int                getConnectionId()         const;
+        int                getConnectionId()          const;
         QString            getOwnIp()                 const;
-        QString            getOwnPort()               const;
+        uint               getOwnPort()               const;
         QString            getPartnerNick()           const;
         QString            getPartnerIp()             const;
-        QString            getPartnerPort()           const;
+        uint               getPartnerPort()           const;
         QString            getFileName()              const;
         KIO::filesize_t    getFileSize()              const;
         KIO::fileoffset_t  getTransferringPosition()  const;
@@ -138,9 +138,9 @@ class DccTransfer : public QObject
         int m_connectionId;
         QString m_partnerNick;
         QString m_partnerIp;                      // null when unknown
-        QString m_partnerPort;
+        uint m_partnerPort;
         QString m_ownIp;
-        QString m_ownPort;
+        uint m_ownPort;
 
         unsigned long m_bufferSize;
         char* m_buffer;
