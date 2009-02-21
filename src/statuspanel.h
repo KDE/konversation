@@ -44,7 +44,7 @@ class StatusPanel : public ChatWindow
         virtual QString getChannelEncodingDefaultDesc();
         virtual void emitUpdateInfo();
 
-        void setIdentity(const IdentityPtr identity);
+        virtual void setServer(Server* newServer);
 
         virtual bool isInsertSupported() { return true; }
 

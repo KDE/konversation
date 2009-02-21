@@ -35,7 +35,8 @@
 #include <ksharedptr.h>
 #include <kprocess.h>
 
-
+class QAbstractItemModel;
+class QStringListModel;
 class Channel;
 class DccTransfer;
 class Query;
@@ -97,6 +98,7 @@ void resetNickSelection();
 
         void updateAutoJoin(Konversation::ChannelSettings channel = Konversation::ChannelSettings());
 
+        QAbstractItemModel* nickListModel() const;
         void resetNickList(const QString& channelName);
         void addPendingNickList(const QString& channelName,const QStringList& nickList);
         void addHostmaskToNick(const QString &sourceNick, const QString &sourceHostmask);
@@ -613,6 +615,7 @@ void resetNickSelection();
         unsigned int m_completeQueryPosition;
         QList<int> m_nickIndices;
         QStringList m_referenceNicklist;
+        QStringListModel* m_nickListModel;
 
         // TODO roll these into a QMap.
         QString m_serverNickPrefixes;               // Prefixes used by the server to indicate a mode

@@ -2104,7 +2104,6 @@ StatusPanel* ViewContainer::addStatusView(Server* server)
     StatusPanel* statusView = new StatusPanel(m_tabWidget);
 
     statusView->setServer(server);
-    statusView->setIdentity(server->getIdentity());
 
     if (server->getServerGroup()) statusView->setNotificationsEnabled(server->getServerGroup()->enableNotifications());
 

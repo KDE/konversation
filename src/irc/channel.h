@@ -86,7 +86,6 @@ class Channel : public ChatWindow
         QString getPassword() const;
 
         virtual void setServer(Server* newServer);
-        void setIdentity(const IdentityPtr identity);
 
         void setEncryptedOutput(bool);
 

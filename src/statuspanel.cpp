@@ -50,8 +50,8 @@ StatusPanel::StatusPanel(QWidget* parent) : ChatWindow(parent)
 
     nicknameCombobox=new QComboBox(commandLineBox);
     nicknameCombobox->setEditable(true);
-    nicknameCombobox->addItems(Preferences::nicknameList());
-    oldNick=nicknameCombobox->currentText();
+    nicknameCombobox->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+    nicknameCombobox->setWhatsThis(i18n("<qt><p>This shows your current nick, and any alternatives you have set up.  If you select or type in a different nickname, then a request will be sent to the IRC server to change your nick.  If the server allows it, the new nickname will be selected.  If you type in a new nickname, you need to press 'Enter' at the end.</p><p>You can add change the alternative nicknames from the <em>Identities</em> option in the <em>File</em> menu.</p></qt>"));
 
     awayLabel=new QLabel(i18n("(away)"), commandLineBox);
     awayLabel->hide();
@@ -91,11 +91,7 @@ void StatusPanel::serverSaysClose()
 
 void StatusPanel::setNickname(const QString& newNickname)
 {
-    const int i = nicknameCombobox->findText(newNickname);
-    if (i != -1)
-        nicknameCombobox->setCurrentIndex(i);
-    else
-        nicknameCombobox->setEditText(newNickname);
+    nicknameCombobox->setCurrentIndex(nicknameCombobox->findText(newNickname));
 }
 
 void StatusPanel::childAdjustFocus()
@@ -311,14 +307,9 @@ void StatusPanel::nicknameComboboxChanged()
 {
     QString newNick=nicknameCombobox->currentText();
     oldNick=m_server->getNickname();
-    if(oldNick!=newNick)
+    if (oldNick != newNick)
     {
-        const int i = nicknameCombobox->findText(oldNick);
-        if (i != -1)
-            nicknameCombobox->setCurrentIndex(i);
-        else
-            nicknameCombobox->setEditText(oldNick);
-
+        nicknameCombobox->setCurrentIndex(nicknameCombobox->findText(oldNick));
         m_server->queue("NICK "+newNick);
     }
     // return focus to input line
@@ -385,13 +376,10 @@ void StatusPanel::showNicknameBox(bool show)
     }
 }
 
-void StatusPanel::setIdentity(const IdentityPtr identity)
+void StatusPanel::setServer(Server* server)
 {
-    if (identity)
-    {
-        nicknameCombobox->clear();
-        nicknameCombobox->addItems(identity->getNicknameList());
-    }
+    ChatWindow::setServer(server);
+    nicknameCombobox->setModel(m_server->nickListModel());
 }
 
 void StatusPanel::popupCommand(int command)

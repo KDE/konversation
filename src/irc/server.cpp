@@ -46,6 +46,7 @@
 #include <qhostaddress.h>
 #include <qtextcodec.h>
 #include <qdatetime.h>
+#include <QStringListModel>
 
 #include <kapplication.h>
 #include <klocale.h>
@@ -84,6 +85,8 @@ Server::Server(QObject* parent, ConnectionSettings& settings) : QObject(parent)
 
     m_nickIndices.clear();
     m_nickIndices.append(0);
+
+    m_nickListModel = new QStringListModel(this);
 
     m_currentLag = -1;
     m_rawLog = 0;
@@ -383,6 +386,8 @@ void Server::connectToIRCServer()
         // This is needed to support server groups with mixed SSL and nonSSL servers
         delete m_socket;
         m_socket = 0;
+        if (m_referenceNicklist != getIdentity()->getNicknameList())
+            m_nickListModel->setStringList(getIdentity()->getNicknameList());
         resetNickSelection();
 
         m_socket = new QSslSocket();
@@ -557,8 +562,7 @@ void Server::ircServerConnectionSuccess()
     ql << connectString;
     queueList(ql, HighPriority);
 
-    emit nicknameChanged(getNickname());
-
+    setNickname(getNickname());
 }
 
 void Server::broken(QAbstractSocket::SocketError state)
@@ -860,8 +864,6 @@ void Server::resetNickSelection()
     //now, from the beginning of the list, to the item before start
     for (int i=0; i<start; i++)
         m_nickIndices.append(i);
-    //cause it to try to get an invalid nick number
-    m_nickIndices.append(len);
 }
 
 QString Server::getNextNickname()
@@ -1951,7 +1953,6 @@ void Server::joinChannel(const QString& name, const QString& hostmask)
     {
         channel=getViewContainer()->addChannel(this,name);
         Q_ASSERT(channel);
-        channel->setIdentity(getIdentity());
         channel->setNickname(getNickname());
         channel->indicateAway(m_away);
 
@@ -2705,6 +2706,10 @@ void Server::setNickname(const QString &newNickname)
 {
     m_nickname = newNickname;
     m_loweredNickname = newNickname.toLower();
+    if (!m_nickListModel->stringList().contains(newNickname)) {
+        m_nickListModel->insertRows(m_nickListModel->rowCount(), 1);
+        m_nickListModel->setData(m_nickListModel->index(m_nickListModel->rowCount() -1 , 0), newNickname, Qt::DisplayRole);
+    }
     emit nicknameChanged(newNickname);
 }
 
@@ -3289,6 +3294,11 @@ void Server::updateEncoding()
 {
     if(getViewContainer() && getViewContainer()->getFrontView())
         getViewContainer()->updateViewEncoding(getViewContainer()->getFrontView());
+}
+
+QAbstractItemModel* Server::nickListModel() const
+{
+    return m_nickListModel;
 }
 
 #include "server.moc"

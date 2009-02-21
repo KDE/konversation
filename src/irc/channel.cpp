@@ -242,9 +242,7 @@ Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
     nicknameCombobox = new QComboBox(commandLineBox);
     nicknameCombobox->setEditable(true);
     nicknameCombobox->setSizeAdjustPolicy(QComboBox::AdjustToContents);
-    nicknameCombobox->addItems(Preferences::nicknameList());
     nicknameCombobox->setWhatsThis(i18n("<qt><p>This shows your current nick, and any alternatives you have set up.  If you select or type in a different nickname, then a request will be sent to the IRC server to change your nick.  If the server allows it, the new nickname will be selected.  If you type in a new nickname, you need to press 'Enter' at the end.</p><p>You can add change the alternative nicknames from the <em>Identities</em> option in the <em>File</em> menu.</p></qt>"));
-    oldNick = nicknameCombobox->currentText();
 
     awayLabel = new QLabel(i18n("(away)"), commandLineBox);
     awayLabel->hide();
@@ -342,7 +340,7 @@ void Channel::setServer(Server* server)
         blowfishLabel->show();
     topicLine->setServer(server);
     refreshModeButtons();
-    setIdentity(server->getIdentity());
+    nicknameCombobox->setModel(m_server->nickListModel());
 }
 
 void Channel::connectionStateChanged(Server* server, Konversation::ConnectionState state)
@@ -1111,11 +1109,7 @@ void Channel::sendChannelText(const QString& sendLine)
 
 void Channel::setNickname(const QString& newNickname)
 {
-    const int i = nicknameCombobox->findText(newNickname);
-    if (i != -1)
-        nicknameCombobox->setCurrentIndex(i);
-    else
-        nicknameCombobox->setEditText(newNickname);
+    nicknameCombobox->setCurrentIndex(nicknameCombobox->findText(newNickname));
 }
 
 QStringList Channel::getSelectedNickList()
@@ -2337,12 +2331,12 @@ void Channel::nicknameComboboxChanged()
 {
     QString newNick=nicknameCombobox->currentText();
     oldNick=m_server->getNickname();
-    if(oldNick!=newNick)
+    if (oldNick != newNick)
     {
-      nicknameCombobox->setItemText(nicknameCombobox->currentIndex(), oldNick);
-      changeNickname(newNick);
-      // return focus to input line
-      channelInput->setFocus();
+        nicknameCombobox->setCurrentIndex(nicknameCombobox->findText(oldNick));
+        changeNickname(newNick);
+        // return focus to input line
+        channelInput->setFocus();
     }
 }
 
@@ -2730,15 +2724,6 @@ void Channel::sortNickList()
     if(m_delayedSortTimer)
     {
         m_delayedSortTimer->stop();
-    }
-}
-
-void Channel::setIdentity(const IdentityPtr identity)
-{
-    if (identity)
-    {
-        nicknameCombobox->clear();
-        nicknameCombobox->addItems(identity->getNicknameList());
     }
 }
 
