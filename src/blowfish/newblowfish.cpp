@@ -116,15 +116,15 @@ char *encrypt_string_new(char *key, char *str)
 	dest2=(char*)(spc_base64_encode((unsigned char*)dest,len,0));
 	if (dest2==0)
 	    {
-		delete s;
+		delete [] s;
 	    return dest;
 		}
 
 	// now prefix a * to it while copying to dest and delete s
 	strcpy(dest,"*");
 	strcat(dest,dest2);
-	delete dest2;
-	delete s;
+	delete [] dest2;
+	delete [] s;
 
 	// return the dest (user will free)
 	return dest;
@@ -159,14 +159,14 @@ char *decrypt_string_new(char *key, char *str)
 	dest2=(char*)(spc_base64_decode((unsigned char*)s,&len,0,&err));
 	if (dest2==0)
 	    {
-		delete dest;
+		delete [] dest;
 		return s;
 		}
 	if (err)
 	    {
 		// FOR TESTING:
 		// printf("ERROR IN BASE 64 decode!\n");
-		delete dest;
+		delete [] dest;
 		return s;
 		}
 
@@ -184,7 +184,7 @@ char *decrypt_string_new(char *key, char *str)
 			dest3[len]='\0';
 			}
 		}
-	delete dest2;
+	delete [] dest2;
 
 	// decrypt from dest3 (length len) to dest
 	CBlowFish oBlowFish((unsigned char*)key, strlen(key));
@@ -199,8 +199,8 @@ char *decrypt_string_new(char *key, char *str)
 	strcpy(dest,&dest[8]);
 
 	// delete s and dest3
-	delete s;
-        delete dest3;
+	delete [] s;
+        delete [] dest3;
 	
 	// return dest
 	return dest;

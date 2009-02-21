@@ -14,17 +14,16 @@
 #include "server.h"
 #include "channel.h"
 
-#include <qcstring.h>
 #include <qstringlist.h>
 
 
 namespace Konversation
 {
     // Find n'th occurrence of separator in input and return the index
-    int findOccurrence(const QCString& input, const QCString& separator, int nth)
+    int findOccurrence(const QByteArray& input, const QByteArray& separator, int nth)
     {
         int j=1;
-        uint i;
+        int i;
 
         for(i=0; i < input.length(); ++i)
         {
@@ -39,15 +38,15 @@ namespace Konversation
         return i;
     }
 
-    void decrypt(const QString& recipient, QCString& cipher, Server* server)
+    void decrypt(const QString& recipient, QByteArray& cipher, Server* server)
     {
-        QCString key = server->getKeyForRecipient(recipient);
+        QByteArray key = server->getKeyForRecipient(recipient);
 
         if(!key.isEmpty())
         {
             int index = findOccurrence(cipher, ":", 2);
-            QCString backup = cipher.mid(0,index+1);
-            QCString tmp = cipher.mid(index+1);
+            QByteArray backup = cipher.mid(0,index+1);
+            QByteArray tmp = cipher.mid(index+1);
             char* tmp2;
 
             if(server->identifyMsgEnabled()) // Workaround braindead Freenode prefixing messages with +
@@ -63,8 +62,10 @@ namespace Konversation
             else
                 cipher = cipher.mid(4);
 
-            QCString ckey( key.length()+2 );
-            QCString result( cipher.length()+1 );
+            QByteArray ckey;
+            ckey.reserve(key.length() + 2);
+            QByteArray result;
+            result.reserve(cipher.length() + 1);
             qstrncpy(result.data(), cipher.data(), cipher.length());
             qstrncpy(ckey.data(), key.data(), key.length()+1);
             tmp2 = decrypt_string(ckey.data(),result.data());
@@ -72,20 +73,20 @@ namespace Konversation
             // If it's a CTCP we don't want to have the (e) interfering with the processing
             if (tmp2[0] == 1)
                 pfx = "\x0";
-            cipher = backup+pfx+tmp2+' '+'\n'; // FIXME(??) why is there an added space here?
-            free(tmp2);
+            cipher = backup+pfx+QByteArray(tmp2)+' '+'\n'; // FIXME(??) why is there an added space here?
+            delete [] tmp2;
         }
     }
 
-    void decryptTopic(const QString& recipient, QCString& cipher, Server* server)
+    void decryptTopic(const QString& recipient, QByteArray& cipher, Server* server)
     {
-        QCString key = server->getKeyForRecipient(recipient);
+        QByteArray key = server->getKeyForRecipient(recipient);
 
         if(!key.isEmpty())
         {
             int index = findOccurrence(cipher, ":", 2);
-            QCString backup = cipher.mid(0,index+1);
-            QCString tmp = cipher.mid(index+1);
+            QByteArray backup = cipher.mid(0,index+1);
+            QByteArray tmp = cipher.mid(index+1);
             char* tmp2;
 
             if(tmp.mid(0,4) == "+OK ")            // FiSH style topic
@@ -95,8 +96,10 @@ namespace Konversation
             else
                 return;
 
-            QCString result( cipher.length()+1 );
-            QCString ckey( key.length()+2 );
+            QByteArray result;
+            QByteArray ckey;
+            result.reserve(cipher.length() + 1);
+            ckey.reserve(key.length() + 2);
             qstrncpy(ckey.data(), key.data(), key.length()+1);
             qstrncpy(result.data(), cipher.data(), cipher.length());
             tmp2 = decrypt_string(ckey.data(),result.data());
@@ -105,11 +108,11 @@ namespace Konversation
                 cipher = cipher.mid(2);
 
             cipher = backup+"(e) "+cipher;
-            free(tmp2);
+            delete [] tmp2;
         }
     }
 
-    bool encrypt(const QString& key, QCString& cipher)
+    bool encrypt(const QString& key, QByteArray& cipher)
     {
         if(key.isEmpty())
             return false;
@@ -118,11 +121,11 @@ namespace Konversation
             cipher = cipher.mid(3);
         else
         {
-            QCString ckey(key.local8Bit());
+            QByteArray ckey(key.toLocal8Bit());
 
             char *tmp = encrypt_string(ckey.data(), cipher.data());
-            cipher = QCString("+OK ") + tmp;
-            free(tmp);
+            cipher = QByteArray("+OK ") + QByteArray(tmp);
+            delete [] tmp;
         }
         return true;
     }

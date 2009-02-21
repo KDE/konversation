@@ -920,7 +920,11 @@ void Server::incoming()
     // split buffer to lines
     QList<QByteArray> bufferLines;
     while (m_socket->canReadLine())
-        bufferLines.append(m_socket->readLine());
+    {
+        QByteArray line(m_socket->readLine());
+        line.chop(1);//remove \n blowfish doesnt like it
+        bufferLines.append(line);
+    }
 
     while(!bufferLines.isEmpty())
     {
@@ -984,14 +988,12 @@ void Server::incoming()
         }
         // END pre-parse to know where the message belongs to
         // Decrypt if necessary
-        /*
         if(command == "privmsg")
-            Konversation::decrypt(channelKey,front,this);
+            Konversation::decrypt(channelKey, first, this);
         else if(command == "332" || command == "topic")
         {
-            Konversation::decryptTopic(channelKey,front,this);
+            Konversation::decryptTopic(channelKey, first, this);
         }
-        */
 
         bool isUtf8 = Konversation::isUtf8(first);
 
@@ -1091,22 +1093,22 @@ int Server::_send_internal(QString outputLine)
 
     //leaving this done twice for now, i'm uncertain of the implications of not encoding other commands
     QByteArray encoded = codec->fromUnicode(outputLine);
-    /*
-    QString blowfishKey=getKeyForRecipient(outputLineSplit[1]);
-    if (!blowfishKey.isEmpty() && outboundCommand >1)
+
+    QString blowfishKey;
+    if (outboundCommand > 1)
+        blowfishKey = getKeyForRecipient(outputLineSplit.at(1));
+    if (!blowfishKey.isEmpty())
     {
-        int colon = outputLine.find(':');
+        int colon = outputLine.indexOf(':');
         if (colon > -1)
         {
             colon++;
 
             QString pay(outputLine.mid(colon));
-            int len=pay.length();
             //only encode the actual user text, IRCD *should* desire only ASCII 31 < x < 127 for protocol elements
-            Q3CString payload=codec->fromUnicode(pay, len);
+            QByteArray payload=codec->fromUnicode(pay);
             //apparently channel name isn't a protocol element...
-            len=outputLineSplit[1].length();
-            Q3CString dest=codec->fromUnicode(outputLineSplit[1], len);
+            QByteArray dest = codec->fromUnicode(outputLineSplit.at(1));
 
             if (outboundCommand == 2 || outboundCommand == 6) // outboundCommand == 3
             {
@@ -1115,20 +1117,20 @@ int Server::_send_internal(QString outputLine)
                 {
                     //if its a privmsg and a ctcp but not an action, don't encrypt
                     //not interpreting `payload` in case encoding bollixed it
-                    if (outputLineSplit[2].startsWith(":\x01") && outputLineSplit[2] != ":\x01""ACTION")
+                    if (outputLineSplit.at(2).startsWith(":\x01") && outputLineSplit.at(2) != ":\x01""ACTION")
                         doit = false;
                 }
                 if (doit)
                 {
                     Konversation::encrypt(blowfishKey, payload);
-                    encoded = outputLineSplit[0].ascii();
+                    encoded = outputLineSplit.at(0).toAscii();
                     //two lines because the compiler insists on using the wrong operator+
                     encoded += ' ' + dest + " :" + payload;
                 }
             }
         }
     }
-    */
+
     encoded += '\n';
     qint64 sout = m_socket->write(encoded, encoded.length());
 

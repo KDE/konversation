@@ -33,7 +33,7 @@
 
 #include <klocale.h>
 #include <kdebug.h>
-#include <passdlg.h>
+#include <KIO/PasswordDialog>
 #include <kconfig.h>
 #include <kdeversion.h>
 #include <kshell.h>
@@ -1616,12 +1616,12 @@ namespace Konversation
     OutputFilterResult OutputFilter::parseSetKey(const QString& parameter)
     {
 
-        QStringList parms = parameter.split(' ');
+        QStringList parms = parameter.split(' ', QString::SkipEmptyParts);
 
-        if (parms.count() == (0 >> parms.count() > 2))
-            return usage(i18n("Usage: %1setkey [<nick|channel>] <key> sets the encryption key for nick or channel. %2setkey <key> when in a channel or query tab to set the key for it.", commandChar, commandChar) );
-        else if (parms.count() == 1)
+        if (parms.count() == 1 && !destination.isEmpty())
             parms.prepend(destination);
+        else if (parms.count() != 2)
+            return usage(i18n("Usage: %1setkey [<nick|channel>] <key> sets the encryption key for nick or channel. %2setkey <key> when in a channel or query tab to set the key for it.", commandChar, commandChar) );
 
         m_server->setKeyForRecipient(parms[0], parms[1].toLocal8Bit());
 

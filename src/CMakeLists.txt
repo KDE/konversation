@@ -182,7 +182,16 @@ kde4_add_ui_files(linkaddressbook_SRCS
     linkaddressbook/linkaddressbookui_base.ui
 )
 
-set (completed_SRCS ${core_SRCS}  ${irc_SRCS} ${viewer_SRCS} ${prefs_SRCS} ${dcc_SRCS} ${linkaddressbook_SRCS})
+set(blowfish_SRCS
+    blowfish/b64stuff.cpp
+    blowfish/BlowfishCbc.cpp
+    blowfish/blowfish.cpp
+    blowfish/mc_blowfish.cpp
+    blowfish/newblowfish.cpp
+    blowfish/oldblowfish.cpp
+)
+                                                                                                                         
+set (completed_SRCS ${core_SRCS}  ${irc_SRCS} ${viewer_SRCS} ${prefs_SRCS} ${dcc_SRCS} ${linkaddressbook_SRCS} ${blowfish_SRCS})
 set (konvi_SRCS ${completed_SRCS})
 
 kde4_add_ui_files(konvi_SRCS

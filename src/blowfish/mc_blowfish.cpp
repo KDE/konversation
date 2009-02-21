@@ -54,7 +54,7 @@ char *decrypt_string(char *key, char *str)
 		char *cp2 = new char[strlen(cp)+15];
 		strcpy(cp2,"ERROR_NONCBC:");
 		strcat(cp2,cp);
-		delete cp;
+		delete [] cp;
 		return cp2;
 		}
 	// invoke old ecb method

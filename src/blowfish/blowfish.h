@@ -16,15 +16,15 @@
 class Server;
 
 class QString;
-class Q3CString;
+class QByteArray;
 
 
 namespace Konversation
 {
 
-    int findOccurrence(const Q3CString& input, const Q3CString& separator, int nth);
-    void decrypt(const QString& recipient, Q3CString& cipher, Server* server);
-    void decryptTopic(const QString& recipient, Q3CString& cipher, Server* server);
-    bool encrypt(const QString& key, Q3CString& cipher);
+    int findOccurrence(const QByteArray& input, const QByteArray& separator, int nth);
+    void decrypt(const QString& recipient, QByteArray& cipher, Server* server);
+    void decryptTopic(const QString& recipient, QByteArray& cipher, Server* server);
+    bool encrypt(const QString& key, QByteArray& cipher);
 }
 #endif

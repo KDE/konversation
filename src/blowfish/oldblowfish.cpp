@@ -37,7 +37,7 @@ oldCBlowFish::oldCBlowFish ()
 
 oldCBlowFish::~oldCBlowFish ()
 {
-	delete PArray ;
+	delete [] PArray ;
 	delete [] SBoxes ;
 }
 
@@ -378,7 +378,7 @@ char *encrypt_string_oldecb(char *key, char *str)
 		}
 	}
 	*d = 0;
-	delete s;
+	delete [] s;
 	return dest;
 }
 
@@ -419,7 +419,7 @@ char *decrypt_string_oldecb(char *key, char *str)
 			*d++ = (char) ((right & (0xff << ((3 - i) * 8))) >> ((3 - i) * 8));
 	}
 	*d = 0;
-	delete s;
+	delete [] s;
 	return dest;
 }
 //---------------------------------------------------------------------------

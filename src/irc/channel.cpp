@@ -360,23 +360,24 @@ void Channel::connectionStateChanged(Server* server, Konversation::ConnectionSta
 
 void Channel::setEncryptedOutput(bool e)
 {
-    Q_UNUSED(e);
-    /*if (e) {
+    if (e) {
         blowfishLabel->show();
         //scan the channel topic and decrypt it if necessary
-        QString topic(m_topicHistory[0].section(' ',2));
+        if (m_topicHistory.isEmpty())
+            return;
+        QString topic(m_topicHistory.at(0).section(' ',2));
 
         //prepend two colons to make it appear to be an irc message for decryption,
         // \r because it won't decrypt without it, even though the message did not have a \r
         // when encrypted. Bring on the QCA!
-        Q3CString cipher="::"+topic.utf8()+'\x0d';
+        QByteArray cipher = "::" + topic.toUtf8() + '\x0d';
         Konversation::decryptTopic(getName(), cipher, m_server);
         topic=QString::fromUtf8(cipher.data()+2, cipher.length()-2);
         m_topicHistory[0] = m_topicHistory[0].section(' ', 0, 1) + ' ' + topic;
         topicLine->setText(topic);
         emit topicHistoryChanged();
     }
-    else */
+    else
         blowfishLabel->hide();
 }
 
