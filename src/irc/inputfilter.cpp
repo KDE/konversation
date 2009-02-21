@@ -1509,7 +1509,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     else
                     {
                         server->appendMessageToFrontmost(i18n("Whois"),
-                            i18np("%2 has been idle for 1 second.", "%2 has been idle for %1 seconds.", parameterList[1], seconds)
+                            i18np("%1 has been idle for 1 second.", "%1 has been idle for %2 seconds.", parameterList[1], seconds)
                             );
                     }
                 }
