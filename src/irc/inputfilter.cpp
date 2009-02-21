@@ -1487,7 +1487,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     }
                     else if(hours)
                     {
-                        const QString hoursString = i18np("1 hour", "% hours", hours);
+                        const QString hoursString = i18np("1 hour", "%1 hours", hours);
                         const QString minutesString = i18np("1 minute", "%1 minutes", (minutes % 60));
                         const QString secondsString = i18np("1 second", "%1 seconds", (seconds % 60));
                         server->appendMessageToFrontmost(i18n("Whois"),
