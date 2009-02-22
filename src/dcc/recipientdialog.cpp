@@ -13,8 +13,10 @@
 */
 
 #include "recipientdialog.h"
-#include <k3listbox.h>
+#include "preferences.h"
 
+#include <QListView>
+#include <QSortFilterProxyModel>
 #include <QVBoxLayout>
 
 #include <klineedit.h>
@@ -24,7 +26,7 @@
 
 QString DccRecipientDialog::selectedNickname;     // static
 
-DccRecipientDialog::DccRecipientDialog(QWidget* parent, const QStringList &list,const QSize &size) :
+DccRecipientDialog::DccRecipientDialog(QWidget* parent, QAbstractListModel* model, const QSize &size) :
   KDialog(parent)
 {
     // Create the top level widget
@@ -38,21 +40,24 @@ DccRecipientDialog::DccRecipientDialog(QWidget* parent, const QStringList &list,
     QVBoxLayout* dialogLayout=new QVBoxLayout(page);
     dialogLayout->setSpacing(spacingHint());
     // Add the nickname list widget
-    K3ListBox* nicknameList=new K3ListBox(page,"recipient_list");
-
-    nicknameList->insertStringList(list);
-    nicknameList->sort(true);
+    QSortFilterProxyModel *sortModel = new QSortFilterProxyModel(this);
+    sortModel->setSortCaseSensitivity(Preferences::self()->sortCaseInsensitive() ? Qt::CaseInsensitive : Qt::CaseSensitive);
+    sortModel->setSourceModel(model);
+    sortModel->sort(0, Qt::AscendingOrder);
+    QListView* nicknameList = new QListView(page);
+    nicknameList->setUniformItemSizes(true);
+    nicknameList->setModel(sortModel);
 
     nicknameInput=new KLineEdit(page);
 
     dialogLayout->addWidget(nicknameList);
     dialogLayout->addWidget(nicknameInput);
 
-    connect(nicknameList,SIGNAL (highlighted(Q3ListBoxItem*)),this,SLOT (newNicknameSelected(Q3ListBoxItem*)) );
-    connect(nicknameList,SIGNAL (doubleClicked(Q3ListBoxItem*)),this,SLOT (newNicknameSelectedQuit(Q3ListBoxItem*)) );
+    connect(nicknameList, SIGNAL(clicked(QModelIndex)), this, SLOT(newNicknameSelected(QModelIndex)));
+    connect(nicknameList, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(newNicknameSelectedQuit(QModelIndex)));
 
-    setButtonGuiItem(KDialog::Ok, KGuiItem(i18n("&OK"),"button_ok",i18n("Select nickname and close the window")));
-    setButtonGuiItem(KDialog::Cancel, KGuiItem(i18n("&Cancel"),"button_cancel",i18n("Close the window without changes")));
+    setButtonGuiItem(KDialog::Ok, KGuiItem(i18n("&OK"), "dialog-ok", i18n("Select nickname and close the window")));
+    setButtonGuiItem(KDialog::Cancel, KGuiItem(i18n("&Cancel"), "dialog-cancel", i18n("Close the window without changes")));
 
     setInitialSize(size);
     show();
@@ -69,22 +74,22 @@ QString DccRecipientDialog::getSelectedNickname()
     return selectedNickname;
 }
 
-void DccRecipientDialog::newNicknameSelected(Q3ListBoxItem* item)
+void DccRecipientDialog::newNicknameSelected(const QModelIndex& index)
 {
-    nicknameInput->setText(item->text());
+    nicknameInput->setText(index.data().toString());
 }
 
-void DccRecipientDialog::newNicknameSelectedQuit(Q3ListBoxItem* item)
+void DccRecipientDialog::newNicknameSelectedQuit(const QModelIndex& index)
 {
-    newNicknameSelected(item);
-    selectedNickname=nicknameInput->text();
+    newNicknameSelected(index);
+    selectedNickname = nicknameInput->text();
 
     delayedDestruct();
 }
 
 void DccRecipientDialog::slotCancel()
 {
-    selectedNickname=QString();
+    selectedNickname.clear();
     reject();
 }
 
@@ -94,10 +99,10 @@ void DccRecipientDialog::slotOk()
     accept();
 }
 
-QString DccRecipientDialog::getNickname(QWidget* parent, const QStringList& list)
+QString DccRecipientDialog::getNickname(QWidget* parent, QAbstractListModel* model)
 {
     QSize size;                                   // TODO: get it from Preferences
-    DccRecipientDialog dlg(parent,list,size);
+    DccRecipientDialog dlg(parent, model, size);
     dlg.exec();
 
     return dlg.getSelectedNickname();

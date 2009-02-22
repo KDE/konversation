@@ -15,10 +15,11 @@
 #ifndef DCCRECIPIENTDIALOG_H
 #define DCCRECIPIENTDIALOG_H
 
+#include <QModelIndex>
+
 #include <klineedit.h>
 #include <kdialog.h>
 
-class Q3ListBoxItem;
 class KLineEdit;
 
 class DccRecipientDialog : public KDialog
@@ -26,15 +27,15 @@ class DccRecipientDialog : public KDialog
     Q_OBJECT
 
         public:
-        DccRecipientDialog(QWidget* parent, const QStringList &list, const QSize &size);
+        DccRecipientDialog(QWidget* parent, QAbstractListModel* model, const QSize &size);
         ~DccRecipientDialog();
 
-        static QString getNickname(QWidget* parent, const QStringList& list);
+        static QString getNickname(QWidget* parent, QAbstractListModel* model);
 
     protected slots:
-        void newNicknameSelected(Q3ListBoxItem* item);
+        void newNicknameSelected(const QModelIndex& index);
                                                   // KDE double click
-        void newNicknameSelectedQuit(Q3ListBoxItem* item);
+        void newNicknameSelectedQuit(const QModelIndex& index);
 
         void slotOk();
         void slotCancel();

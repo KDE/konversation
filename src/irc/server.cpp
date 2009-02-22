@@ -1616,14 +1616,15 @@ void Server::requestDccSend(const QString &a_recipient)
         {
             if(!nickList.contains(lookQuery->getName())) nickList.append(lookQuery->getName());
         }
-
-        recipient=DccRecipientDialog::getNickname(getViewContainer()->getWindow(),nickList);
+        QStringListModel model;
+        model.setStringList(nickList);
+        recipient = DccRecipientDialog::getNickname(getViewContainer()->getWindow(), &model);
     }
     // do we have a recipient *now*?
     if(!recipient.isEmpty())
     {
         KUrl::List fileURLs=KFileDialog::getOpenUrls(
-            KUrl(":lastDccDir"),
+            KUrl(),
             QString(),
             getViewContainer()->getWindow(),
             i18n("Select File(s) to Send to %1", recipient)
