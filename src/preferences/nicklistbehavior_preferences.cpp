@@ -48,12 +48,10 @@ void NicklistBehavior_Config::loadSettings()
 void NicklistBehavior_Config::setNickList(const QString &sortingOrder)
 {
   sortOrder->clear();
-  // loop through the sorting order string, insert the matching descriptions in reverse order
-  // to keep the correct sorting
-  for(unsigned int index=sortingOrder.length();index!=0;index--)
+  for(int index = 0; index < sortingOrder.length() ; ++index)
   {
     // get next mode char
-    QChar mode=sortingOrder[index-1];
+    QChar mode=sortingOrder[index];
     QTreeWidgetItem *item = 0;
     // find appropriate description
     if(mode=='-') item = new QTreeWidgetItem(sortOrder, QStringList() << mode << i18n("Normal Users"));
