@@ -713,10 +713,10 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             {
                 server->appendStatusMessage(i18n("Welcome"),
                     i18n("Server %1 (Version %2), User modes: %3, Channel modes: %4",
-                         parameterList[1],
-                         parameterList[2],
-                         parameterList[3],
-                         parameterList[4])
+                         parameterList.value(1),
+                         parameterList.value(2),
+                         parameterList.value(3),
+                         parameterList.value(4))
                     );
                 server->setAllowedChannelModes(parameterList[4]);
                 break;
