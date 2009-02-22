@@ -718,7 +718,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                          parameterList.value(3),
                          parameterList.value(4))
                     );
-                server->setAllowedChannelModes(parameterList[4]);
+                server->setAllowedChannelModes(parameterList.value(4));
                 break;
             }
             //case RPL_BOUNCE:   // RFC 1459 name, now seems to be obsoleted by ...
