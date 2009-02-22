@@ -55,7 +55,6 @@
 #include <kmenubar.h>
 #include <kfiledialog.h>
 #include <kio/job.h>
-#include <kstdaccel.h>
 #include <kglobal.h>
 #include <kauthorized.h>
 #include <KActionCollection>
@@ -248,10 +247,16 @@ bool IRCView::hasLines() { return false; }
 */
 
 void IRCView::enableParagraphSpacing() {}
-void IRCView::setViewBackground(QColor const& bgcolor, QString const&)
+void IRCView::setViewBackground(const QColor& backgroundColor, const KUrl& url)
 {
     QPalette pal = palette();
-    pal.setColor(QPalette::Base, bgcolor);
+    pal.setColor(QPalette::Base, backgroundColor);
+    if (!url.isEmpty())
+    {
+        QBrush brush;
+        brush.setTexture(QPixmap(url.path()));
+        pal.setBrush(QPalette::Base, brush);
+    }
     setPalette(pal);
 }
 

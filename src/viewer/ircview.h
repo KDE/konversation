@@ -30,6 +30,7 @@
 #include <KTextBrowser>
 
 class QDropEvent;
+class KUrl;
 
 class KMenu;
 
@@ -65,7 +66,7 @@ class IRCView : public KTextBrowser
 
         //! FIXME maybe we should create some sort of palette of our own?
         QColor highlightColor() { return m_highlightColor; }
-        void setViewBackground(const QColor& backgroundColor, const QString& pixmapName);
+        void setViewBackground(const QColor& backgroundColor, const KUrl& url);
 
         QString currentChannel() { return m_currentChannel; }
 

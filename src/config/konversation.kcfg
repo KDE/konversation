@@ -145,7 +145,7 @@
       <label></label>
       <whatsthis></whatsthis>
     </entry>
-    <entry key="BackgroundImage" type="String">
+    <entry key="BackgroundImage" type="Url">
       <default></default>
       <label></label>
       <whatsthis></whatsthis>
