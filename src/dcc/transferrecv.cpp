@@ -171,7 +171,7 @@ bool DccTransferRecv::queue()
     if ( getStatus() != Configuring )
         return false;
 
-    if ( m_partnerIp.isEmpty() || !m_partnerPort )
+    if ( m_partnerIp.isEmpty() /*|| !m_partnerPort*/ ) //port can be 0, for passive dcc send
         return false;
 
     if (!KAuthorized::authorizeKAction("allow_downloading"))

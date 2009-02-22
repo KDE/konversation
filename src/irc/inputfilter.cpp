@@ -281,9 +281,9 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                             konv_app->notificationHandler()->dccIncoming(server->getStatusView(), sourceNick);
                             emit addDccGet(sourceNick,dccArgumentList);
                         }
-                        else if(dccArgumentList.count()==5)
+                        else if(dccArgumentList.count()>=5)
                         {
-                            if(dccArgumentList[2]=="0")
+                            if(dccArgumentList[dccArgumentList.size() - 3] == "0")
                             {
                                 // incoming file (Reverse DCC)
                                 konv_app->notificationHandler()->dccIncoming(server->getStatusView(), sourceNick);

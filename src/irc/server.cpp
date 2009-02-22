@@ -1678,26 +1678,49 @@ void Server::addDccSend(const QString &recipient,KUrl fileURL, const QString &al
 
 void Server::addDccGet(const QString &sourceNick, const QStringList &dccArguments)
 {
-    emit addDccPanel();
-
     DccTransferRecv* newDcc = KonversationApplication::instance()->getDccTransferManager()->newDownload();
 
     newDcc->setConnectionId( connectionId() );
 
     newDcc->setPartnerNick( sourceNick );
-    newDcc->setPartnerIp( DccCommon::numericalIpToTextIp( dccArguments[1] ) );
-    newDcc->setPartnerPort( dccArguments[2].toUInt() );
-    if ( dccArguments[2] == "0" && dccArguments.count() == 5)  // Reverse DCC
-        newDcc->setReverse( true, dccArguments[4] );
+    //watch out for missing '"' around the filename
+    newDcc->setPartnerIp( DccCommon::numericalIpToTextIp( dccArguments.at(dccArguments.size() - 4) ) ); //-1 index, -1 token, -1 port, -1 filesize
+    bool parsePort = false;
+    uint port = dccArguments.at(dccArguments.size() - 3).toUInt(&parsePort);
+    newDcc->setPartnerPort( port );
+    if( dccArguments.count() >= 5 && parsePort && port == 0) // Reverse DCC
+        newDcc->setReverse( true, dccArguments.at(dccArguments.size() - 1) );
 
-    newDcc->setFileName( dccArguments[0] );
-    newDcc->setFileSize( dccArguments[3].isEmpty() ? 0 : dccArguments[3].toULong() );
+    QString fileName;
+    if( dccArguments.count() > 5)
+    {
+        kDebug() << "recover filename";
+        for (int i = 0; i < dccArguments.size() - 4 ; ++i) //-1 index, -1 token, -1 port, -1 ip
+        {
+            fileName += dccArguments.at(i);
+            if (i < dccArguments.size() - 5)
+                fileName += ' ';
+        }
+    } else {
+        fileName = dccArguments.at(0);
+    }
+    kDebug() << "ip: " << DccCommon::numericalIpToTextIp( dccArguments.at(dccArguments.size() - 4) );
+    kDebug() << "port: " << port;
+    kDebug() << "filename: " << fileName;
+    kDebug() << "filesize: " << dccArguments.at(dccArguments.size() - 2).toULong();
+    kDebug() << "token: " << dccArguments.at(dccArguments.size() - 1);
+
+    newDcc->setFileName( fileName );
+    newDcc->setFileSize( dccArguments.at(dccArguments.size() - 2).toULong() ); /*dccArguments[3].isEmpty() ? 0 : dccArguments[3].toULong() );*/ //-1 index, -1 magic number
+
+    //emit after data was set
+    emit addDccPanel();
 
     if ( newDcc->queue() )
     {
         QString showfile = newDcc->getFileName();
 
-        if(showfile.startsWith("\"") && showfile.endsWith("\""))
+        if(showfile.startsWith('\"') && showfile.endsWith('\"'))
             showfile = showfile.mid(1, showfile.length() - 2);
 
         appendMessageToFrontmost( i18n( "DCC" ),
@@ -1728,7 +1751,7 @@ void Server::dccSendRequest(const QString &partner, const QString &fileName, con
 
     QString showfile = fileName;
 
-    if(showfile.startsWith("\"") && showfile.endsWith("\""))
+    if(showfile.startsWith('\"') && showfile.endsWith('\"'))
         showfile = showfile.mid(1, showfile.length() - 2);
 
     appendMessageToFrontmost( i18n( "DCC" ),
@@ -1749,7 +1772,7 @@ void Server::dccResumeGetRequest(const QString &sender, const QString &fileName,
     Konversation::OutputFilterResult result;
 
     if (fileName.contains(" ") > 0)
-        result = getOutputFilter()->resumeRequest(sender,"\""+fileName+"\"",port,startAt);
+        result = getOutputFilter()->resumeRequest(sender,'\"'+fileName+'\"',port,startAt);
     else
         result = getOutputFilter()->resumeRequest(sender,fileName,port,startAt);
 
@@ -1767,17 +1790,45 @@ void Server::startReverseDccSendTransfer(const QString& sourceNick,const QString
     kDebug();
     DccTransferManager* dtm = KonversationApplication::instance()->getDccTransferManager();
 
+    QString partnerIP = DccCommon::numericalIpToTextIp( dccArguments.at(dccArguments.size() - 4) ); //dccArguments[1] ) );
+    uint port = dccArguments.at(dccArguments.size() - 3).toUInt();
+    QString token = dccArguments.at(dccArguments.size() - 1);
+    unsigned long fileSize = dccArguments.at(dccArguments.size() - 2).toULong();
+
+    QString fileName;
+    if( dccArguments.count() > 5)
+    {
+        kDebug() << "recover filename";
+        for (int i = 0; i < dccArguments.size() - 4 ; ++i) //-1 index, -1 token, -1 port, -1 ip
+        {
+            fileName += dccArguments.at(i);
+            if (i < dccArguments.size() - 5)
+                fileName += ' ';
+        }
+    } else {
+        fileName = dccArguments.at(0);
+    }
+
+    if (fileName.contains(' '))
+        fileName = '\"' + fileName + '\"';
+
+    kDebug() << "ip: " << partnerIP;
+    kDebug() << "port: " << port;
+    kDebug() << "filename: " << fileName;
+    kDebug() << "filesize: " << fileSize;
+    kDebug() << "token: " << token;
+
     if ( dtm->startReverseSending( connectionId(), sourceNick,
-                                   dccArguments[0],  // filename
-                                   DccCommon::numericalIpToTextIp( dccArguments[1] ),  // partner IP
-                                   dccArguments[2].toUInt(),  // partner port
-                                   dccArguments[3].toULong(),  // filesize
-                                   dccArguments[4]  // Reverse DCC token
+                                   fileName,  // filename
+                                   partnerIP,  // partner IP
+                                   port,  // partner port
+                                   fileSize,  // filesize
+                                   token  // Reverse DCC token
          ) == 0 )
     {
-        QString showfile = dccArguments[0];
+        QString showfile = fileName;
 
-        if(showfile.startsWith("\"") && showfile.endsWith("\""))
+        if(showfile.startsWith('\"') && showfile.endsWith('\"'))
             showfile = showfile.mid(1, showfile.length() - 2);
 
         // DTM could not find a matched item
@@ -1802,7 +1853,7 @@ void Server::resumeDccGetTransfer(const QString &sourceNick, const QStringList &
 
     QString showfile = fileName;
 
-    if(showfile.startsWith("\"") && showfile.endsWith("\""))
+    if(showfile.startsWith('\"') && showfile.endsWith('\"'))
         showfile = showfile.mid(1, showfile.length() - 2);
 
     if ( dccTransfer )
@@ -1837,7 +1888,7 @@ void Server::resumeDccSendTransfer(const QString &sourceNick, const QStringList 
 
     QString showfile = fileName;
 
-    if(showfile.startsWith("\"") && showfile.endsWith("\""))
+    if(showfile.startsWith('\"') && showfile.endsWith('\"'))
         showfile = showfile.mid(1, showfile.length() - 2);
 
     if ( dccTransfer )
@@ -1872,7 +1923,7 @@ void Server::dccGetDone(DccTransfer* item)
 
     QString showfile = item->getFileName();
 
-    if(showfile.startsWith("\"") && showfile.endsWith("\""))
+    if(showfile.startsWith('\"') && showfile.endsWith('\"'))
         showfile = showfile.mid(1, showfile.length() - 2);
 
     if(item->getStatus()==DccTransfer::Done)
@@ -1891,7 +1942,7 @@ void Server::dccSendDone(DccTransfer* item)
 
     QString showfile = item->getFileName();
 
-    if(showfile.startsWith("\"") && showfile.endsWith("\""))
+    if(showfile.startsWith('\"') && showfile.endsWith('\"'))
         showfile = showfile.mid(1, showfile.length() - 2);
 
     if(item->getStatus()==DccTransfer::Done)
@@ -1910,7 +1961,7 @@ void Server::dccStatusChanged(DccTransfer *item, int newStatus, int oldStatus)
 
     QString showfile = item->getFileName();
 
-    if(showfile.startsWith("\"") && showfile.endsWith("\""))
+    if(showfile.startsWith('\"') && showfile.endsWith('\"'))
         showfile = showfile.mid(1, showfile.length() - 2);
 
     if ( item->getType() == DccTransfer::Send )

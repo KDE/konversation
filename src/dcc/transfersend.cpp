@@ -204,12 +204,12 @@ bool DccTransferSend::queue()
     }
 
     //FIXME: if "\\\"" works well on other IRC clients, replace "\"" with "\\\""
-    m_fileName.replace( "\"", "_" );
+    m_fileName.replace( '\"', '_' );
     if (Preferences::self()->dccSpaceToUnderscore())
-        m_fileName.replace( " ", "_" );
+        m_fileName.replace( ' ', '_' );
     else {
-        if (m_fileName.contains(" ") > 0)
-            m_fileName = "\"" + m_fileName + "\"";
+        if (m_fileName.contains(' '))
+            m_fileName = '\"' + m_fileName + '\"';
     }
 
     kDebug() << "m_tmpFile: " << m_tmpFile;
@@ -356,8 +356,8 @@ void DccTransferSend::acceptClient()                     // slot
 
 void DccTransferSend::startSending()
 {
-    if ( !m_reverse )
-        connect( this, SIGNAL( bytesWritten( qint64 ) ), this, SLOT( writeData() ) );
+    if ( m_fastSend )
+        connect( m_sendSocket, SIGNAL( bytesWritten( qint64 ) ), this, SLOT( writeData() ) );
     connect( m_sendSocket, SIGNAL( readyRead() ),  this, SLOT( getAck() ) );
     connect( m_sendSocket, SIGNAL( disconnected() ), this, SLOT( slotSendSocketClosed() ) );
 
@@ -398,7 +398,7 @@ void DccTransferSend::writeData()                 // slot
 void DccTransferSend::getAck()                    // slot
 {
     //kDebug();
-    if ( /*!m_fastSend &&*/ m_transferringPosition < (KIO::fileoffset_t)m_fileSize )
+    if ( m_transferringPosition < (KIO::fileoffset_t)m_fileSize )
     {
         writeData();
     }
