@@ -669,6 +669,8 @@ void resetNickSelection();
         KProcess m_preShellCommand;
 
     private:
+        inline QString recoverDccFileName(const QStringList& dccArguments, int offset) const;
+
         /// Helper object to construct ISON (notify) list and map offline nicks to
         /// addressbook.
         ServerISON* m_serverISON;
