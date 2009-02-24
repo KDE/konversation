@@ -771,11 +771,8 @@ void ViewContainer::updateViews(const Konversation::ServerGroupSettingsPtr serve
         else if (m_tabWidget)
         {
             const int idx = m_tabWidget->indexOf(view);
-            if (!Preferences::self()->tabNotificationsLeds() && !Preferences::self()->closeButtons())
+            if (!Preferences::self()->tabNotificationsLeds())
                 m_tabWidget->setTabIcon(idx, QIcon());
-
-            if (Preferences::self()->closeButtons() && !Preferences::self()->tabNotificationsLeds())
-                m_tabWidget->setTabIcon(idx, images->getCloseIcon());
 
             if (!Preferences::self()->tabNotificationsText())
                 m_tabWidget->setTabTextColor(idx, m_window->palette().foreground().color());
@@ -816,9 +813,7 @@ void ViewContainer::updateViewIcons()
         if (Preferences::self()->closeButtons() && !Preferences::self()->tabNotificationsLeds())
         {
             if (m_viewTree)
-                m_tabWidget->setTabIcon(m_tabWidget->indexOf(view), images->getCloseIcon());
-            else if (m_tabWidget)
-                m_tabWidget->setTabIcon(m_tabWidget->indexOf(view), images->getCloseIcon());
+                m_viewTree->setViewIcon(view, images->getCloseIcon());
         }
     }
 }
@@ -1193,8 +1188,6 @@ void ViewContainer::addView(ChatWindow* view, const QString& label, bool weiniti
         case ChatWindow::Channel:
             if (Preferences::self()->tabNotificationsLeds())
                 iconSet = images->getMsgsLed(false);
-            else if (Preferences::self()->closeButtons())
-                iconSet = images->getCloseIcon();
 
             for (int sindex = 0; sindex < m_tabWidget->count(); sindex++)
             {
@@ -1223,8 +1216,6 @@ void ViewContainer::addView(ChatWindow* view, const QString& label, bool weiniti
         case ChatWindow::RawLog:
             if (Preferences::self()->tabNotificationsLeds())
                 iconSet = images->getSystemLed(false);
-            else if (Preferences::self()->closeButtons())
-                iconSet = images->getCloseIcon();
 
             for (int sindex = 0; sindex < m_tabWidget->count(); sindex++)
             {
@@ -1242,8 +1233,6 @@ void ViewContainer::addView(ChatWindow* view, const QString& label, bool weiniti
         case ChatWindow::Query:
             if (Preferences::self()->tabNotificationsLeds())
                 iconSet = images->getPrivateLed(false);
-            else if (Preferences::self()->closeButtons())
-                iconSet = images->getCloseIcon();
 
             for (int sindex = 0; sindex < m_tabWidget->count(); sindex++)
             {
@@ -1272,8 +1261,6 @@ void ViewContainer::addView(ChatWindow* view, const QString& label, bool weiniti
         case ChatWindow::DccChat:
             if (Preferences::self()->tabNotificationsLeds())
                 iconSet = images->getMsgsLed(false);
-            else if (Preferences::self()->closeButtons())
-                iconSet = images->getCloseIcon();
 
             for (int sindex = 0; sindex < m_tabWidget->count(); sindex++)
             {
@@ -1293,8 +1280,6 @@ void ViewContainer::addView(ChatWindow* view, const QString& label, bool weiniti
         case ChatWindow::Status:
             if (Preferences::self()->tabNotificationsLeds())
                 iconSet = images->getServerLed(false);
-            else if (Preferences::self()->closeButtons())
-                iconSet = images->getCloseIcon();
 
             if (m_viewTree)
             {
@@ -1318,8 +1303,6 @@ void ViewContainer::addView(ChatWindow* view, const QString& label, bool weiniti
         case ChatWindow::ChannelList:
             if (Preferences::self()->tabNotificationsLeds())
                 iconSet = images->getSystemLed(false);
-            else if (Preferences::self()->closeButtons())
-                iconSet = images->getCloseIcon();
 
             for (int sindex = 0; sindex < m_tabWidget->count(); sindex++)
             {
@@ -1334,8 +1317,6 @@ void ViewContainer::addView(ChatWindow* view, const QString& label, bool weiniti
         default:
             if (Preferences::self()->tabNotificationsLeds())
                 iconSet = images->getSystemLed(false);
-            else if (Preferences::self()->closeButtons())
-                iconSet = images->getCloseIcon();
             break;
     }
 
