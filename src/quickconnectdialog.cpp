@@ -109,7 +109,7 @@ void QuickConnectDialog::slotOk()
 
         emit connectClicked(Konversation::PromptToReuseConnection,
                             hostNameInput->text().trimmed(),
-                            portInput->text(),
+                            portInput->text().toUInt(),
                             passwordInput->text(),
                             nickInput->text(),
                             "",
