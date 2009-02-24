@@ -112,7 +112,7 @@ void IRCViewBox::searchNext(bool reversed)
     }
 
     m_searchBar->setHasMatch(true);
-    m_searchBar->setStatus(getIcon("dialog-info"),
+    m_searchBar->setStatus(getIcon("dialog-information"),
                           i18n("Wrapped search"));
 }
 
