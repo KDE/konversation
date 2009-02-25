@@ -485,7 +485,18 @@ void DccTransferRecv::requestResume()
         return;
     }
 
-    server->dccResumeGetRequest( m_partnerNick, m_fileName, m_partnerPort, m_transferringPosition );
+    //TODO to keep old behavior, remove me when possible
+    QString sendfile;
+    if (m_fileName.contains(' '))
+        sendfile = '\"'+m_fileName+'\"';
+    else
+        sendfile = m_fileName;
+
+
+    if (m_reverse)
+        server->dccPassiveResumeGetRequest( m_partnerNick, sendfile, m_partnerPort, m_transferringPosition, m_reverseToken );
+    else
+        server->dccResumeGetRequest( m_partnerNick, sendfile, m_partnerPort, m_transferringPosition );
 }
 
                                                   // public slot

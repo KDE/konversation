@@ -64,9 +64,11 @@ namespace Konversation
             OutputFilterResult sendRequest(const QString &recipient,const QString &fileName,const QString &address,uint port,unsigned long size);
             OutputFilterResult passiveSendRequest(const QString& recipient,const QString &fileName,const QString &address,unsigned long size,const QString &token);
             OutputFilterResult acceptResumeRequest(const QString &recipient,const QString &fileName,uint port,int startAt);
+            OutputFilterResult acceptPassiveResumeRequest(const QString &recipient,const QString &fileName,uint port,int startAt,const QString &token);
 
             // dcc recv
             OutputFilterResult resumeRequest(const QString &sender,const QString &fileName,uint port,KIO::filesize_t startAt);
+            OutputFilterResult resumePassiveRequest(const QString &sender,const QString &fileName,uint port,KIO::filesize_t startAt,const QString &token);
             OutputFilterResult acceptPassiveSendRequest(const QString& recipient,const QString &fileName,const QString &address,uint port,unsigned long size,const QString &token);
 
             bool replaceAliases(QString& line);

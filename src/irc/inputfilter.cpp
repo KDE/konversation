@@ -306,7 +306,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                     else if(dccType=="accept")
                     {
                         // resume request was accepted
-                        if(dccArgumentList.count()==3)
+                        if(dccArgumentList.count()>=3)
                         {
                             emit resumeDccGetTransfer(sourceNick,dccArgumentList);
                         }
@@ -321,7 +321,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                     // Remote client wants our sent file resumed
                     else if(dccType=="resume")
                     {
-                        if(dccArgumentList.count()==3)
+                        if(dccArgumentList.count()>=3)
                         {
                             emit resumeDccSendTransfer(sourceNick,dccArgumentList);
                         }

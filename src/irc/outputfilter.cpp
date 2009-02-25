@@ -903,17 +903,9 @@ namespace Konversation
     OutputFilterResult OutputFilter::sendRequest(const QString &recipient,const QString &fileName,const QString &address,uint port,unsigned long size)
     {
         OutputFilterResult result;
-        QString niftyFileName(fileName);
-        /*QFile file(fileName);
-        QFileInfo info(file);*/
-
         result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + "DCC SEND "
             + fileName
             + ' ' + address + ' ' + QString::number(port) + ' ' + QString::number(size) + '\x01';
-//used?
-//         // Dirty hack to avoid printing ""name with spaces.ext"" instead of "name with spaces.ext"
-//         if ((fileName.startsWith("\"")) && (fileName.endsWith("\"")))
-//             niftyFileName = fileName.mid(1, fileName.length()-2);
 
         return result;
     }
@@ -921,15 +913,9 @@ namespace Konversation
     OutputFilterResult OutputFilter::passiveSendRequest(const QString& recipient,const QString &fileName,const QString &address,unsigned long size,const QString &token)
     {
         OutputFilterResult result;
-        QString niftyFileName(fileName);
-
         result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + "DCC SEND "
             + fileName
             + ' ' + address + " 0 " + QString::number(size) + ' ' + token + '\x01';
-//used?
-//         // Dirty hack to avoid printing ""name with spaces.ext"" instead of "name with spaces.ext"
-//         if ((fileName.startsWith("\"")) && (fileName.endsWith("\"")))
-//             niftyFileName = fileName.mid(1, fileName.length()-2);
 
         return result;
     }
@@ -937,49 +923,50 @@ namespace Konversation
     // Accepting Resume Request
     OutputFilterResult OutputFilter::acceptResumeRequest(const QString &recipient,const QString &fileName,uint port,int startAt)
     {
-        QString niftyFileName(fileName);
-
         OutputFilterResult result;
         result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + "DCC ACCEPT " + fileName + ' ' + QString::number(port)
             + ' ' + QString::number(startAt) + '\x01';
-//used?
-//         // Dirty hack to avoid printing ""name with spaces.ext"" instead of "name with spaces.ext"
-//         if ((fileName.startsWith("\"")) && (fileName.endsWith("\"")))
-//             niftyFileName = fileName.mid(1, fileName.length()-2);
 
         return result;
     }
 
+    // Accepting Passive Resume Request
+    OutputFilterResult OutputFilter::acceptPassiveResumeRequest(const QString &recipient,const QString &fileName,uint port,int startAt,const QString &token)
+    {
+        OutputFilterResult result;
+        result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + "DCC ACCEPT " + fileName + ' ' + QString::number(port)
+            + ' ' + QString::number(startAt) + ' ' + token +'\x01';
+
+        return result;
+    }
+
+    // Requesting Resume Request
     OutputFilterResult OutputFilter::resumeRequest(const QString &sender,const QString &fileName,uint port,KIO::filesize_t startAt)
     {
-        QString niftyFileName(fileName);
-
         OutputFilterResult result;
-        /*QString newFileName(fileName);
-        newFileName.replace(" ", "_");*/
         result.toServer = "PRIVMSG " + sender + " :" + '\x01' + "DCC RESUME " + fileName + ' ' + QString::number(port) + ' '
             + QString::number(startAt) + '\x01';
-//used?
-//         // Dirty hack to avoid printing ""name with spaces.ext"" instead of "name with spaces.ext"
-//         if ((fileName.startsWith("\"")) && (fileName.endsWith("\"")))
-//             niftyFileName = fileName.mid(1, fileName.length()-2);
 
         return result;
     }
 
+    // Requesting Passive Resume Request
+    OutputFilterResult OutputFilter::resumePassiveRequest(const QString &sender,const QString &fileName,uint port,KIO::filesize_t startAt,const QString &token)
+    {
+        OutputFilterResult result;
+        result.toServer = "PRIVMSG " + sender + " :" + '\x01' + "DCC RESUME " + fileName + ' ' + QString::number(port) + ' '
+            + QString::number(startAt) + ' ' + token + '\x01';
+
+        return result;
+    }
+
+    // Appect Passive Send Request, there aktive doesnt need that
     OutputFilterResult OutputFilter::acceptPassiveSendRequest(const QString& recipient,const QString &fileName,const QString &address,uint port,unsigned long size,const QString &token)
     {
         OutputFilterResult result;
-        QString niftyFileName(fileName);
-
-        // "DCC SEND" to receive a file sounds weird, but it's ok.
         result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + "DCC SEND "
             + fileName
             + ' ' + address + ' ' + QString::number(port) + ' ' + QString::number(size) + ' ' + token + '\x01';
-
-        // Dirty hack to avoid printing ""name with spaces.ext"" instead of "name with spaces.ext"
-        if ((fileName.startsWith("\"")) && (fileName.endsWith("\"")))
-            niftyFileName = fileName.mid(1, fileName.length()-2);
 
         return result;
     }

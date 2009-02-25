@@ -334,6 +334,7 @@ void resetNickSelection();
         void dccSendRequest(const QString& recipient,const QString& fileName,const QString& address,uint port,unsigned long size);
         void dccPassiveSendRequest(const QString& recipient,const QString& fileName,const QString& address,unsigned long size,const QString& token);
         // invoked by DccTransferRecv
+        void dccPassiveResumeGetRequest(const QString& sender,const QString& fileName,uint port,KIO::filesize_t startAt,const QString &token);
         void dccResumeGetRequest(const QString& sender,const QString& fileName,uint port,KIO::filesize_t startAt);
         void dccReverseSendAck(const QString& partnerNick,const QString& fileName,const QString& ownAddress,uint ownPort,unsigned long size,const QString& reverseToken);
 

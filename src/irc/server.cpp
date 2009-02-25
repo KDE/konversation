@@ -1807,15 +1807,15 @@ void Server::dccPassiveSendRequest(const QString& recipient,const QString& fileN
     queue(result.toServer);
 }
 
+void Server::dccPassiveResumeGetRequest(const QString& sender,const QString& fileName,uint port,KIO::filesize_t startAt,const QString &token)
+{
+    Konversation::OutputFilterResult result = getOutputFilter()->resumePassiveRequest(sender,fileName,port,startAt,token);;
+    queue(result.toServer);
+}
+
 void Server::dccResumeGetRequest(const QString &sender, const QString &fileName, uint port, KIO::filesize_t startAt)
 {
-    Konversation::OutputFilterResult result;
-
-    if (fileName.contains(" ") > 0)
-        result = getOutputFilter()->resumeRequest(sender,'\"'+fileName+'\"',port,startAt);
-    else
-        result = getOutputFilter()->resumeRequest(sender,fileName,port,startAt);
-
+    Konversation::OutputFilterResult result = getOutputFilter()->resumeRequest(sender,fileName,port,startAt);;
     queue(result.toServer);
 }
 
@@ -1873,9 +1873,20 @@ void Server::resumeDccGetTransfer(const QString &sourceNick, const QStringList &
 {
     DccTransferManager* dtm = KonversationApplication::instance()->getDccTransferManager();
 
-    QString fileName( dccArguments[0] );
-    uint ownPort = dccArguments[1].toUInt();
-    unsigned long position = dccArguments[2].toULong();
+    //filename port position [token]
+    QString fileName;
+    unsigned long position;;
+    bool parsePort = false;
+    uint ownPort = dccArguments.at(dccArguments.size()-3).toUInt(&parsePort); //-1 index, -1 token, -1 pos
+    if (parsePort && ownPort == 0)
+    {
+        fileName = recoverDccFileName(dccArguments, 3);
+        position = dccArguments.at(dccArguments.size()-2).toULong(); //-1 index, -1 token
+    } else {
+        fileName = recoverDccFileName(dccArguments, 2);
+        position = dccArguments.at(dccArguments.size()-1).toULong(); //-1 index
+    }
+    //do we need the token here?
 
     DccTransferRecv* dccTransfer = dtm->resumeDownload( connectionId(), sourceNick, fileName, ownPort, position );
 
@@ -1908,9 +1919,30 @@ void Server::resumeDccSendTransfer(const QString &sourceNick, const QStringList 
 {
     DccTransferManager* dtm = KonversationApplication::instance()->getDccTransferManager();
 
-    QString fileName( dccArguments[0] );
-    uint ownPort = dccArguments[1].toUInt();
-    unsigned long position = dccArguments[2].toULong();
+    bool passiv = false;
+    bool parsePort = false;
+    QString fileName;
+    unsigned long position;
+    QString token = "";
+
+    //filename port filepos [token]
+    uint ownPort = dccArguments.at( dccArguments.size() - 3).toUInt(&parsePort); //-1 index, -1 token, -1 filesize
+    if (parsePort && ownPort == 0)
+    {
+        //filename port filepos token
+        passiv = true;
+        token = dccArguments.at( dccArguments.size() - 1); // -1 index
+        position = dccArguments.at( dccArguments.size() - 2).toULong(); // -1 index, -1 token
+        fileName = recoverDccFileName(dccArguments, 3);
+    } else {
+        //filename port filepos
+        ownPort = dccArguments.at( dccArguments.size() - 2).toUInt(&parsePort); //-1 index, -1 filesize
+        position = dccArguments.at( dccArguments.size() - 1).toULong(); // -1 index
+        fileName = recoverDccFileName(dccArguments, 2);
+    }
+
+    if (fileName.contains(' '))
+        fileName = '\"'+fileName+'\"';
 
     DccTransferSend* dccTransfer = dtm->resumeUpload( connectionId(), sourceNick, fileName, ownPort, position );
 
@@ -1930,7 +1962,11 @@ void Server::resumeDccSendTransfer(const QString &sourceNick, const QStringList 
                                         ( dccTransfer->getFileSize() == 0 ) ? i18n( "unknown size" ) : KIO::convertSize( dccTransfer->getFileSize() ) ) );
 
         // FIXME: this operation should be done by DccTransferManager
-        Konversation::OutputFilterResult result = getOutputFilter()->acceptResumeRequest( sourceNick, fileName, ownPort, position );
+        Konversation::OutputFilterResult result;
+        if (passiv)
+            result = getOutputFilter()->acceptPassiveResumeRequest( sourceNick, fileName, ownPort, position, token );
+        else
+            result = getOutputFilter()->acceptResumeRequest( sourceNick, fileName, ownPort, position );
         queue( result.toServer );
 
     }
