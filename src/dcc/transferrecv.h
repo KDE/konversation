@@ -151,7 +151,7 @@ class DccTransferRecvWriteCacheHandler : public QObject
         virtual ~DccTransferRecvWriteCacheHandler();
 
         void append( char* data, int size );
-        bool write( bool force );
+        bool write( bool force = false );
         void close();
         void closeNow();
 

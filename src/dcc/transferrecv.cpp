@@ -724,9 +724,12 @@ bool DccTransferRecvWriteCacheHandler::write( bool force )
     // do write
 
     m_writeReady = false;
-    m_transferJob->sendAsyncData( m_cacheList.front() );
-    //kDebug() << "wrote " << m_cacheList.front().size() << " bytes.";
-    m_cacheList.pop_front();
+    while (!m_cacheList.isEmpty())
+    {
+        m_transferJob->sendAsyncData( m_cacheList.front() );
+        //kDebug() << "wrote " << m_cacheList.front().size() << " bytes.";
+        m_cacheList.pop_front();
+    }
 
     return true;
 }
