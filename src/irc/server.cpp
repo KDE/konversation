@@ -1686,7 +1686,7 @@ QString Server::recoverDccFileName(const QStringList & dccArguments, int offset)
         for (int i = 0; i < dccArguments.size() - offset ; ++i) //-1 index, -1 token, -1 port, -1 ip
         {
             fileName += dccArguments.at(i);
-            if (i < dccArguments.size() - offset+1)
+            if (i < dccArguments.size() - (offset+1))
                 fileName += ' ';
         }
     } else {
