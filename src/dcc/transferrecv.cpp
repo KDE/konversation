@@ -733,16 +733,25 @@ bool DccTransferRecvWriteCacheHandler::write( bool force )
         return false;
 
     // do write
-
     m_writeReady = false;
-    while (!m_cacheList.isEmpty())
-    {
-        m_transferJob->sendAsyncData( m_cacheList.front() );
-        //kDebug() << "wrote " << m_cacheList.front().size() << " bytes.";
-        m_cacheList.pop_front();
-    }
+
+    m_transferJob->sendAsyncData( m_cacheList.front() );
+    //kDebug() << "wrote " << m_cacheList.front().size() << " bytes.";
+    m_cacheList.pop_front();
+
+    if (!m_cacheList.isEmpty())
+        connect( m_transferJob, SIGNAL(data( KIO::Job*, const QByteArray& )), this, SLOT(slotKIOData( KIO::Job*, const QByteArray& )));
 
     return true;
+}
+
+void DccTransferRecvWriteCacheHandler::slotKIOData(KIO::Job*, const QByteArray&)
+{
+    m_transferJob->sendAsyncData( m_cacheList.front() );
+    m_cacheList.pop_front();
+
+    if (m_cacheList.isEmpty())
+        disconnect(m_transferJob, 0, 0, 0);
 }
 
 void DccTransferRecvWriteCacheHandler::close()    // public
