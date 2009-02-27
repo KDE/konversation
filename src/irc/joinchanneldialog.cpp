@@ -33,7 +33,7 @@ namespace Konversation
         setModal( true );
         m_server = server;
         m_ui.setupUi(mainWidget());
-
+        m_ui.channelCombo->setFocus();
         m_ui.serverLbl->setText(server->getDisplayName());
 
         if (m_server->getServerGroup())
