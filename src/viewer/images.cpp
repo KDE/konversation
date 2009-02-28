@@ -14,13 +14,10 @@
 #include "common.h"
 #include "application.h" ////// header renamed
 
-#include <qbitmap.h>
 #include <qiconengine.h>
 #include <qpainter.h>
-#include <qstringlist.h>
-
+// 
 #include <kdebug.h>
-#include <kiconloader.h>
 #include <kstandarddirs.h>
 
 
@@ -128,9 +125,6 @@ Images::Images()
     initializeLeds();
     initializeNickIcons();
     initializeKimifaceIcons();
-
-    m_closeIcon = KIconLoader::global()->loadIcon("dialog-close", KIconLoader::Small);
-    m_disabledCloseIcon = KIcon("dialog-close").pixmap(KIconLoader::SizeSmall, QIcon::Disabled);
 }
 
 Images::~Images()
@@ -243,12 +237,6 @@ void Images::initializeNickIcons()
     nickIcons[Op][1] = nickIcons[Op][0];
     bitBlt( &nickIcons[Op][1], 0, 0, &elementAway, 0, 0, -1, -1, Qt::CopyROP );
     */
-}
-
-void Images::updateIcons()
-{
-    m_closeIcon = KIconLoader::global()->loadIcon("dialog-close",KIconLoader::Small);
-    m_disabledCloseIcon = KIcon("dialog-close").pixmap(KIconLoader::SizeSmall, QIcon::Disabled);
 }
 
 QIcon Images::getLed(QColor col,bool state)

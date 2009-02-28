@@ -217,7 +217,7 @@ void ViewTreeItem::setCloseButtonShown(bool show)
 
     if (show && !m_closeButtonShown)
     {
-        setPixmap(0, images->getDisabledCloseIcon());
+        setPixmap(0, KIcon("dialog-close").pixmap(KIconLoader::SizeSmall, QIcon::Disabled));
         m_closeButtonShown = true;
         m_closeButtonEnabled = false;
     }
@@ -235,7 +235,7 @@ void ViewTreeItem::setCloseButtonEnabled()
     if (m_closeButtonShown)
     {
         m_closeButtonEnabled = true;
-        setPixmap(0, images->getCloseIcon());
+        setPixmap(0, KIcon("dialog-close").pixmap(KIconLoader::SizeSmall));
     }
 }
 

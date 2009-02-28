@@ -44,9 +44,6 @@ class Images : public QObject
         Images();
         virtual ~Images();
 
-        QPixmap getCloseIcon() { return m_closeIcon; }
-        QPixmap getDisabledCloseIcon() { return m_disabledCloseIcon; }
-
         QIcon getLed(QColor col,bool state = true);
 
         QIcon getServerLed(bool state);
@@ -65,15 +62,9 @@ class Images : public QObject
         QString getNickIconPath(NickPrivilege privilege) const;
         void initializeNickIcons();
 
-    public slots:
-        void updateIcons();
-
     protected:
         void initializeLeds();
         void initializeKimifaceIcons();
-
-        QPixmap m_closeIcon;
-        QPixmap m_disabledCloseIcon;
 
         QIcon m_serverLedOn;
         QIcon m_serverLedOff;
