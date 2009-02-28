@@ -762,7 +762,7 @@ void ViewContainer::updateViews(const Konversation::ServerGroupSettingsPtr serve
                 m_viewTree->setViewIcon(view, QIcon());
 
             if (Preferences::self()->closeButtons() && !Preferences::self()->tabNotificationsLeds())
-                 m_viewTree->setViewIcon(view, images->getCloseIcon());
+                 m_viewTree->setViewIcon(view, KIcon("dialog-close").pixmap(KIconLoader::SizeSmall));
 
 
             if (!Preferences::self()->tabNotificationsText())
@@ -813,7 +813,7 @@ void ViewContainer::updateViewIcons()
         if (Preferences::self()->closeButtons() && !Preferences::self()->tabNotificationsLeds())
         {
             if (m_viewTree)
-                m_viewTree->setViewIcon(view, images->getCloseIcon());
+                m_viewTree->setViewIcon(view, KIcon("dialog-close").pixmap(KIconLoader::SizeSmall));
         }
     }
 }

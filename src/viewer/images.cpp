@@ -16,7 +16,7 @@
 
 #include <qiconengine.h>
 #include <qpainter.h>
-// 
+
 #include <kdebug.h>
 #include <kstandarddirs.h>
 
