@@ -671,6 +671,7 @@ void resetNickSelection();
 
     private:
         inline QString recoverDccFileName(const QStringList& dccArguments, int offset) const;
+        inline QString cleanDccFileName(const QString& filename) const;
 
         /// Helper object to construct ISON (notify) list and map offline nicks to
         /// addressbook.

@@ -207,10 +207,6 @@ bool DccTransferSend::queue()
     m_fileName.replace( '\"', '_' );
     if (Preferences::self()->dccSpaceToUnderscore())
         m_fileName.replace( ' ', '_' );
-    else {
-        if (m_fileName.contains(' '))
-            m_fileName = '\"' + m_fileName + '\"';
-    }
 
     kDebug() << "m_tmpFile: " << m_tmpFile;
     m_file.setFileName( m_tmpFile );
@@ -281,7 +277,7 @@ void DccTransferSend::start()                     // public slot
 
         startConnectionTimer( Preferences::self()->dccSendTimeout() );
 
-        server->dccSendRequest( m_partnerNick, m_fileName, getNumericalIpText( m_ownIp ), m_ownPort, m_fileSize );
+        server->dccSendRequest( m_partnerNick, transferFileName(m_fileName), getNumericalIpText( m_ownIp ), m_ownPort, m_fileSize );
     }
     else
     {
@@ -294,7 +290,7 @@ void DccTransferSend::start()                     // public slot
 
         kDebug() << "Passive DCC key(token): " << m_reverseToken;
 
-        server->dccPassiveSendRequest( m_partnerNick, m_fileName, getNumericalIpText( m_ownIp ), m_fileSize, m_reverseToken );
+        server->dccPassiveSendRequest( m_partnerNick, transferFileName(m_fileName), getNumericalIpText( m_ownIp ), m_fileSize, m_reverseToken );
     }
 
     setStatus( WaitingRemote, i18n( "Waiting remote user's acceptance" ) );

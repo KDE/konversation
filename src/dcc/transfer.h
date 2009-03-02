@@ -25,7 +25,7 @@
 #include <kurl.h>
 #include <kio/global.h>
 
-typedef double transferspeed_t;
+typedef qreal transferspeed_t;
 
 class DccTransfer : public QObject
 {
@@ -111,6 +111,7 @@ class DccTransfer : public QObject
         void startTransferLogger();
         void finishTransferLogger();
 
+        static QString transferFileName( const QString& fileName );
         static QString sanitizeFileName( const QString& fileName );
         static QString getNumericalIpText( const QString& ipString );
         static unsigned long intel( unsigned long value );
@@ -146,14 +147,12 @@ class DccTransfer : public QObject
         char* m_buffer;
 
         /**
-         * The filename.
-         * For receiving, it holds the filename as the sender said.
-         * So be careful, it can contain "../" and so on.
+         * The filename. Clean filename without any "../" or extra "
          */
         QString m_fileName;
 
         /** The file size of the complete file sending/recieving. */
-        KIO::filesize_t  m_fileSize;
+        KIO::filesize_t m_fileSize;
 
         /**
          * If we are sending a file, this is the url of the file we are sending.

@@ -165,7 +165,6 @@ class DccTransferRecvWriteCacheHandler : public QObject
                                                   // <-  m_transferJob->dataReq()
         void slotKIODataReq( KIO::Job* job, QByteArray& data );
         void slotKIOResult( KJob* job );          // <-  m_transferJob->result()
-        void slotKIOData( KIO::Job* job, const QByteArray& data );
 
     protected:
         KIO::TransferJob* m_transferJob;

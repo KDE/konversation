@@ -209,7 +209,7 @@ void DccTransfer::updateTransferMeters()
 QString DccTransfer::sanitizeFileName( const QString& fileName )
 {
     QString fileNameTmp = QFileInfo( fileName ).fileName();
-    if ( fileNameTmp.startsWith( "." ) )
+    if ( fileNameTmp.startsWith( '.' ) )
         fileNameTmp.replace( 0, 1, '_' );         // Don't create hidden files
     if ( fileNameTmp.isEmpty() )
         fileNameTmp = "unnamed";
@@ -353,6 +353,14 @@ QDateTime DccTransfer::getTimeTransferStarted() const
 QDateTime DccTransfer::getTimeTransferFinished() const
 {
     return m_timeTransferFinished;
+}
+
+QString DccTransfer::transferFileName(const QString & fileName)
+{
+    if (fileName.contains(' ') && !(fileName.startsWith('\"') && fileName.endsWith('\"')))
+        return '\"'+fileName+'\"';
+
+    return fileName;
 }
 
 #include "transfer.moc"

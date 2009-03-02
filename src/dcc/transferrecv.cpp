@@ -456,7 +456,7 @@ void DccTransferRecv::connectWithSender()
 
         setStatus( WaitingRemote, i18n( "Waiting for connection" ) );
 
-        server->dccReverseSendAck( m_partnerNick, m_fileName, DccCommon::textIpToNumericalIp( m_ownIp ), m_ownPort, m_fileSize, m_reverseToken );
+        server->dccReverseSendAck( m_partnerNick, transferFileName(m_fileName), DccCommon::textIpToNumericalIp( m_ownIp ), m_ownPort, m_fileSize, m_reverseToken );
 
         //FIXME: add connection timer here
     }
@@ -485,18 +485,10 @@ void DccTransferRecv::requestResume()
         return;
     }
 
-    //TODO to keep old behavior, remove me when possible
-    QString sendfile;
-    if (m_fileName.contains(' '))
-        sendfile = '\"'+m_fileName+'\"';
-    else
-        sendfile = m_fileName;
-
-
     if (m_reverse)
-        server->dccPassiveResumeGetRequest( m_partnerNick, sendfile, m_partnerPort, m_transferringPosition, m_reverseToken );
+        server->dccPassiveResumeGetRequest( m_partnerNick, transferFileName(m_fileName), m_partnerPort, m_transferringPosition, m_reverseToken );
     else
-        server->dccResumeGetRequest( m_partnerNick, sendfile, m_partnerPort, m_transferringPosition );
+        server->dccResumeGetRequest( m_partnerNick, transferFileName(m_fileName), m_partnerPort, m_transferringPosition );
 }
 
                                                   // public slot
@@ -691,7 +683,8 @@ DccTransferRecvWriteCacheHandler::DccTransferRecvWriteCacheHandler( KIO::Transfe
     m_writeReady = true;
     m_cacheStream = 0;
 
-    connect( this,          SIGNAL( dataFinished() ),                    m_transferJob, SLOT( slotFinished() )                           );
+    //never emitted?
+    //connect( this,          SIGNAL( dataFinished() ),                    m_transferJob, SLOT( slotFinished() )                           );
     connect( m_transferJob, SIGNAL( dataReq( KIO::Job*, QByteArray& ) ), this,          SLOT( slotKIODataReq( KIO::Job*, QByteArray& ) ) );
     connect( m_transferJob, SIGNAL( result(KJob* ) ),                    this,          SLOT( slotKIOResult( KJob* ) )                   );
 
@@ -734,24 +727,13 @@ bool DccTransferRecvWriteCacheHandler::write( bool force )
 
     // do write
     m_writeReady = false;
+    kDebug() << "writing with cachecount: " << m_cacheList.size();
 
     m_transferJob->sendAsyncData( m_cacheList.front() );
     //kDebug() << "wrote " << m_cacheList.front().size() << " bytes.";
     m_cacheList.pop_front();
 
-    if (!m_cacheList.isEmpty())
-        connect( m_transferJob, SIGNAL(data( KIO::Job*, const QByteArray& )), this, SLOT(slotKIOData( KIO::Job*, const QByteArray& )));
-
     return true;
-}
-
-void DccTransferRecvWriteCacheHandler::slotKIOData(KIO::Job*, const QByteArray&)
-{
-    m_transferJob->sendAsyncData( m_cacheList.front() );
-    m_cacheList.pop_front();
-
-    if (m_cacheList.isEmpty())
-        disconnect(m_transferJob, 0, 0, 0);
 }
 
 void DccTransferRecvWriteCacheHandler::close()    // public
