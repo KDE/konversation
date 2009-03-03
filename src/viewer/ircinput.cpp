@@ -375,6 +375,7 @@ void IRCInput::insertFromMimeData(const QMimeData * source)
         else
         {
             insertPlainText(pasteText);
+            ensureCursorVisible();
             return;
         }
 
