@@ -495,16 +495,14 @@ QString IRCView::createNickLine(const QString& nick, bool encapsulateNick, bool 
 {
     QString nickLine = "%2";
 
+    QString nickColor = Preferences::self()->color(Preferences::ChannelMessage).name();
+
     if(Preferences::self()->useColoredNicks() && m_server)
     {
-        QString nickColor;
-
         if (nick != m_server->getNickname())
             nickColor = Preferences::self()->nickColor(m_server->obtainNickInfo(nick)->getNickColor()).name();
         else
             nickColor =  Preferences::self()->nickColor(8).name();
-
-        nickLine = "<font color=\"" + nickColor + "\">"+nickLine+"</font>";
     }
     //FIXME: Another last-minute hack to get DCC Chat colored nicknames
     // working. We can't use NickInfo::getNickColor() because we don't
@@ -512,7 +510,6 @@ QString IRCView::createNickLine(const QString& nick, bool encapsulateNick, bool 
     else if (Preferences::self()->useColoredNicks() && m_chatWin->getType() == ChatWindow::DccChat)
     {
         QString ownNick = static_cast<DccChat*>(m_chatWin)->getOwnNick();
-        QString nickColor;
 
         if (nick != ownNick)
         {
@@ -527,9 +524,10 @@ QString IRCView::createNickLine(const QString& nick, bool encapsulateNick, bool 
         }
         else
             nickColor =  Preferences::self()->nickColor(8).name();
-
-        nickLine = "<font color=\"" + nickColor + "\">"+nickLine+"</font>";
     }
+
+    nickLine = "<font color=\"" + nickColor + "\">"+nickLine+"</font>";
+
 
     if(Preferences::self()->useClickableNicks())
     {

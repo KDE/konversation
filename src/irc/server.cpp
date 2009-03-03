@@ -2351,7 +2351,7 @@ NickInfoPtr Server::setWatchedNickOnline(const QString& nickname)
     KABC::Addressee addressee = nickInfo->getAddressee();
     if (!addressee.isEmpty()) Konversation::Addressbook::self()->emitContactPresenceChanged(addressee.uid());
 
-    appendMessageToFrontmost(i18n("Notify"),"<a href=\"#"+nickname+"\">"+
+    appendMessageToFrontmost(i18n("Notify"),"<a class=\"nick\" href=\"#"+nickname+"\">"+
         i18n("%1 is online (%2).", nickname, getServerName())+"</a>", getStatusView());
 
     static_cast<KonversationApplication*>(kapp)->notificationHandler()->nickOnline(getStatusView(), nickname);
