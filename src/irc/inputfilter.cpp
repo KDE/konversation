@@ -422,7 +422,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
             else
             {
                 // Was this a CTCP reply?
-                if(trailing.at(0)==QChar(0x01))
+                if(!trailing.isEmpty() && trailing.at(0)==QChar(0x01))
                 {
                     // cut 0x01 bytes from trailing string
                     QString ctcp(trailing.mid(1,trailing.length()-2));
