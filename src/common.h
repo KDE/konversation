@@ -26,6 +26,7 @@ namespace Konversation
 //    QBitmap overlayMasks( const QBitmap *under, const QBitmap *over );
     QPixmap overlayPixmaps(const QPixmap &under, const QPixmap &over);
     bool isUtf8(const QByteArray& text);
+    uint colorForNick(const QString& nickname);
 
     enum TabNotifyType
     {

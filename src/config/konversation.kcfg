@@ -184,7 +184,7 @@
       <default param="5">#9E54B3</default>
       <default param="6">#B39875</default>
       <default param="7">#3176B3</default>
-      <default param="8">#000001</default>
+      <default param="8">#000000</default>
     </entry>
     <entry key="UseColoredNicks" type="Bool">
       <default>true</default>

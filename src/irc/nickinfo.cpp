@@ -126,17 +126,8 @@ QDateTime NickInfo::getOnlineSince() const
 uint NickInfo::getNickColor()
 {
     // do we already have a color?
-    if(!m_nickColor)
-    {
-        int nickvalue = 0;
+    if (!m_nickColor) m_nickColor = Konversation::colorForNick(m_nickname) + 1;
 
-        for (int index = 0; index < m_nickname.length(); index++)
-        {
-            nickvalue += m_nickname[index].unicode();
-        }
-
-        m_nickColor = (nickvalue % 8) + 1;
-    }
     // return color offset -1 (since we store it +1 for 0 checking)
     return m_nickColor-1;
 }

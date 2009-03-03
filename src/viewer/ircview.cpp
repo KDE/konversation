@@ -494,50 +494,37 @@ QString IRCView::timeStamp()
 QString IRCView::createNickLine(const QString& nick, bool encapsulateNick, bool privMsg)
 {
     QString nickLine = "%2";
+    QString nickColor;
 
-    QString nickColor = Preferences::self()->color(Preferences::ChannelMessage).name();
-
-    if(Preferences::self()->useColoredNicks() && m_server)
+    if (Preferences::self()->useColoredNicks())
     {
-        if (nick != m_server->getNickname())
-            nickColor = Preferences::self()->nickColor(m_server->obtainNickInfo(nick)->getNickColor()).name();
-        else
-            nickColor =  Preferences::self()->nickColor(8).name();
-    }
-    //FIXME: Another last-minute hack to get DCC Chat colored nicknames
-    // working. We can't use NickInfo::getNickColor() because we don't
-    // have a server.
-    else if (Preferences::self()->useColoredNicks() && m_chatWin->getType() == ChatWindow::DccChat)
-    {
-        QString ownNick = static_cast<DccChat*>(m_chatWin)->getOwnNick();
-
-        if (nick != ownNick)
+        if (m_server)
         {
-            int nickvalue = 0;
-
-            for (int index = 0; index < nick.length(); index++)
-            {
-                nickvalue += nick[index].unicode();
-            }
-
-            nickColor = Preferences::self()->nickColor((nickvalue % 8)).name();
+            if (nick != m_server->getNickname())
+                nickColor = Preferences::self()->nickColor(m_server->obtainNickInfo(nick)->getNickColor()).name();
+            else
+                nickColor =  Preferences::self()->nickColor(8).name();
         }
-        else
-            nickColor =  Preferences::self()->nickColor(8).name();
+        else if (m_chatWin->getType() == ChatWindow::DccChat)
+        {
+            QString ownNick = static_cast<DccChat*>(m_chatWin)->getOwnNick();
+
+            if (nick != ownNick)
+                nickColor = Preferences::self()->nickColor(Konversation::colorForNick(ownNick)).name();
+            else
+                nickColor = Preferences::self()->nickColor(8).name();
+        }
     }
+    else
+        nickColor = Preferences::self()->color(Preferences::ChannelMessage).name();
 
     nickLine = "<font color=\"" + nickColor + "\">"+nickLine+"</font>";
 
-
-    if(Preferences::self()->useClickableNicks())
-    {
+    if (Preferences::self()->useClickableNicks())
         nickLine = "<a class=\"nick\" href=\"#" + nick + "\">" + nickLine + "</a>";
-    }
 
-    if(privMsg)
-    {
+    if (privMsg)
         nickLine.prepend ("-&gt; ");
-    }
 
     if(encapsulateNick)
         nickLine = "&lt;" + nickLine + "&gt;";

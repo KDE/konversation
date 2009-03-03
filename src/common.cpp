@@ -197,4 +197,15 @@ namespace Konversation
         return result;
     }
 
+    uint colorForNick(const QString& nickname)
+    {
+        int nickvalue = 0;
+
+        for (int index = 0; index < nickname.length(); index++)
+        {
+            nickvalue += nickname[index].unicode();
+        }
+
+        return (nickvalue % 8);
+    }
 }
