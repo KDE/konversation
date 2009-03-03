@@ -1455,6 +1455,8 @@ namespace Konversation
     // supports + and ! channels, I think thats broken behaviour on their part - not ours.
     bool OutputFilter::isAChannel(const QString &check)
     {
+        if (check.isEmpty())
+            return false;
         Q_ASSERT(m_server);
                                                   // XXX if we ever see the assert, we need the ternary
         return m_server? m_server->isAChannel(check) : QString("#&").contains(check.at(0));
