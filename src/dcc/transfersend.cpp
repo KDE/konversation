@@ -277,7 +277,7 @@ void DccTransferSend::start()                     // public slot
 
         startConnectionTimer( Preferences::self()->dccSendTimeout() );
 
-        server->dccSendRequest( m_partnerNick, transferFileName(m_fileName), getNumericalIpText( m_ownIp ), m_ownPort, m_fileSize );
+        server->dccSendRequest( m_partnerNick, transferFileName(m_fileName), DccCommon::textIpToNumericalIp( m_ownIp ), m_ownPort, m_fileSize );
     }
     else
     {
@@ -290,7 +290,7 @@ void DccTransferSend::start()                     // public slot
 
         kDebug() << "Passive DCC key(token): " << m_reverseToken;
 
-        server->dccPassiveSendRequest( m_partnerNick, transferFileName(m_fileName), getNumericalIpText( m_ownIp ), m_fileSize, m_reverseToken );
+        server->dccPassiveSendRequest( m_partnerNick, transferFileName(m_fileName), DccCommon::textIpToNumericalIp( m_ownIp ), m_fileSize, m_reverseToken );
     }
 
     setStatus( WaitingRemote, i18n( "Waiting remote user's acceptance" ) );

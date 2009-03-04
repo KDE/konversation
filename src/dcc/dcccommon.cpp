@@ -20,12 +20,24 @@
 
 #include <klocale.h>
 
+//TODO: IPv6 support
 QString DccCommon::textIpToNumericalIp( const QString& ipString )
 {
     QHostAddress ip;
     ip.setAddress( ipString );
+    switch (ip.protocol())
+    {
+    case QAbstractSocket::IPv4Protocol:
+        return QString::number( ip.toIPv4Address() );
 
-    return QString::number( ip.toIPv4Address() );
+    case QAbstractSocket::IPv6Protocol:
+        kDebug() << "TODO: implement me for ipv6";
+        return "";
+
+    default:
+        kDebug() << "unspported protocol: " << ipString;
+        return "";
+    }
 }
 
 QString DccCommon::numericalIpToTextIp( const QString& numericalIp )

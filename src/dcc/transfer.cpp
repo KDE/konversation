@@ -216,15 +216,6 @@ QString DccTransfer::sanitizeFileName( const QString& fileName )
     return fileNameTmp;
 }
 
-//FIXME: IPv6 support
-QString DccTransfer::getNumericalIpText( const QString& ipString )
-{
-    QHostAddress ip;
-    ip.setAddress( ipString );
-
-    return QString::number( ip.toIPv4Address() );
-}
-
 unsigned long DccTransfer::intel( unsigned long value )
 {
     value = ( (value & 0xff000000) >> 24 ) +

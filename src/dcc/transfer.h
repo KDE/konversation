@@ -113,7 +113,6 @@ class DccTransfer : public QObject
 
         static QString transferFileName( const QString& fileName );
         static QString sanitizeFileName( const QString& fileName );
-        static QString getNumericalIpText( const QString& ipString );
         static unsigned long intel( unsigned long value );
 
     protected slots:
