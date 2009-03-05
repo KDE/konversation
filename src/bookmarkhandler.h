@@ -25,7 +25,6 @@ class QString;
 class KMenu;
 class KonversationMainWindow;
 class KBookmarkMenu;
-class KActionCollection;
 class KMenu;
 
 class KonviBookmarkHandler : public QObject, public KBookmarkOwner

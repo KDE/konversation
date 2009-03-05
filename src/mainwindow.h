@@ -30,7 +30,6 @@
 
 class KToggleAction;
 
-class KonviBookmarkHandler;
 class KonviSettingsDialog;
 class ViewContainer;
 class KonversationStatusBar;
