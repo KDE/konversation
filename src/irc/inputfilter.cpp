@@ -726,15 +726,15 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             {
                 server->appendStatusMessage(i18n("Support"),parameterList.join(" "));
 
-                // The following behavoiur is neither documented in RFC 1459 nor in 2810-2813
+                // The following behaviour is neither documented in RFC 1459 nor in 2810-2813
                 // Nowadays, most ircds send server capabilities out via 005 (BOUNCE).
                 // refer to http://www.irc.org/tech_docs/005.html for a kind of documentation.
                 // More on http://www.irc.org/tech_docs/draft-brocklesby-irc-isupport-03.txt
 
-                QStringList::const_iterator it = parameterList.begin();
+                QStringList::const_iterator it = parameterList.constBegin();
                 // don't want the user name
                 ++it;
-                for (; it != parameterList.end(); ++it )
+                for (; it != parameterList.constEnd(); ++it )
                 {
                     QString property, value;
                     int pos;
