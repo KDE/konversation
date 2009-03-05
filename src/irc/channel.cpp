@@ -325,8 +325,8 @@ Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
     updateAppearance();
 
     //FIXME JOHNFLUX
-     connect( Konversation::Addressbook::self()->getAddressBook(), SIGNAL( addressBookChanged( AddressBook * ) ), this, SLOT( slotLoadAddressees() ) );
-     connect( Konversation::Addressbook::self(), SIGNAL(addresseesChanged()), this, SLOT(slotLoadAddressees()));
+    // connect( Konversation::Addressbook::self()->getAddressBook(), SIGNAL( addressBookChanged( AddressBook * ) ), this, SLOT( slotLoadAddressees() ) );
+    // connect( Konversation::Addressbook::self(), SIGNAL(addresseesChanged()), this, SLOT(slotLoadAddressees()));
 }
 
 //FIXME there is some logic in setLogfileName that needs to be split out and called here if the server display name gets changed
