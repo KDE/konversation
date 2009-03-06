@@ -606,7 +606,7 @@ void DccTransferRecv::readData()                  // slot
         //actual is the size we read in, and is guaranteed to be less than m_bufferSize
         m_transferringPosition += actual;
         m_writeCacheHandler->append( m_buffer, actual );
-        m_writeCacheHandler->write( m_transferringPosition < (KIO::fileoffset_t)m_fileSize ? false : true );
+        m_writeCacheHandler->write( false );
         //in case we could not read all the data, leftover data could get lost
         if (m_recvSocket->bytesAvailable() > 0)
             readData();
@@ -707,7 +707,7 @@ void DccTransferRecvWriteCacheHandler::append( char* data, int size )
 
     static const int maxWritePacketSize = 1 * 1024 * 1024; // 1meg
 
-    if ( !m_cacheStream || m_cacheList.isEmpty() || m_cacheList.back().size() + size > maxWritePacketSize )
+    if ( m_cacheList.isEmpty() || m_cacheList.back().size() + size > maxWritePacketSize )
     {
         m_cacheList.append( QByteArray() );
         if (m_cacheStream) delete m_cacheStream;
