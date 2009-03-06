@@ -710,7 +710,7 @@ void DccTransferRecvWriteCacheHandler::append( char* data, int size )
     if ( m_cacheList.isEmpty() || m_cacheList.back().size() + size > maxWritePacketSize )
     {
         m_cacheList.append( QByteArray() );
-        if (m_cacheStream) delete m_cacheStream;
+        delete m_cacheStream;
         m_cacheStream = new QDataStream( &m_cacheList.back(), QIODevice::WriteOnly );
     }
 
