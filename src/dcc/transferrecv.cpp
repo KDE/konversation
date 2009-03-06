@@ -599,21 +599,25 @@ void DccTransferRecv::connectionFailed( QAbstractSocket::SocketError errorCode )
 
 void DccTransferRecv::readData()                  // slot
 {
-    //kDebug() << "readData()";
+    //kDebug();
     int actual = m_recvSocket->read( m_buffer, m_bufferSize );
     if ( actual > 0 )
     {
         //actual is the size we read in, and is guaranteed to be less than m_bufferSize
         m_transferringPosition += actual;
         m_writeCacheHandler->append( m_buffer, actual );
-        m_writeCacheHandler->write( false );
-        sendAck();
+        m_writeCacheHandler->write( m_transferringPosition < (KIO::fileoffset_t)m_fileSize ? false : true );
+        //in case we could not read all the data, leftover data could get lost
+        if (m_recvSocket->bytesAvailable() > 0)
+            readData();
+        else
+            sendAck();
     }
 }
 
 void DccTransferRecv::sendAck()                   // slot
 {
-    //kDebug() << "sendAck()";
+    //kDebug() << m_transferringPosition << "/" << (KIO::fileoffset_t)m_fileSize;
     KIO::fileoffset_t pos = intel( m_transferringPosition );
 
     m_recvSocket->write( (char*)&pos, 4 );
@@ -701,13 +705,12 @@ void DccTransferRecvWriteCacheHandler::append( char* data, int size )
 {
     // sendAsyncData() and dataReq() cost a lot of time, so we should pack some caches.
 
-                                                  // 1meg
-    static const int maxWritePacketSize = 1 * 1024 * 1024;
+    static const int maxWritePacketSize = 1 * 1024 * 1024; // 1meg
 
-    if ( m_cacheList.isEmpty() || m_cacheList.back().size() + size > maxWritePacketSize )
+    if ( !m_cacheStream || m_cacheList.isEmpty() || m_cacheList.back().size() + size > maxWritePacketSize )
     {
         m_cacheList.append( QByteArray() );
-        delete m_cacheStream;
+        if (m_cacheStream) delete m_cacheStream;
         m_cacheStream = new QDataStream( &m_cacheList.back(), QIODevice::WriteOnly );
     }
 
