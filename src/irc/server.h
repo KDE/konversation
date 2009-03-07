@@ -337,6 +337,9 @@ void resetNickSelection();
         void dccPassiveResumeGetRequest(const QString& sender,const QString& fileName,uint port,KIO::filesize_t startAt,const QString &token);
         void dccResumeGetRequest(const QString& sender,const QString& fileName,uint port,KIO::filesize_t startAt);
         void dccReverseSendAck(const QString& partnerNick,const QString& fileName,const QString& ownAddress,uint ownPort,unsigned long size,const QString& reverseToken);
+        void dccRejectSend(const QString& partnerNick, const QString& fileName);
+        // invoked by DccChat
+        void dccRejectChat(const QString& partnerNick);
 
     // IRCQueueManager
         bool validQueue(QueuePriority priority); ///< is this queue index valid?

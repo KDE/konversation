@@ -1822,6 +1822,18 @@ void Server::dccReverseSendAck(const QString& partnerNick,const QString& fileNam
     queue(result.toServer);
 }
 
+void Server::dccRejectSend(const QString& partnerNick, const QString& fileName)
+{
+    Konversation::OutputFilterResult result = getOutputFilter()->rejectDccSend(partnerNick,fileName);
+    queue(result.toServer);
+}
+
+void Server::dccRejectChat(const QString& partnerNick)
+{
+    Konversation::OutputFilterResult result = getOutputFilter()->rejectDccChat(partnerNick);
+    queue(result.toServer);
+}
+
 void Server::startReverseDccSendTransfer(const QString& sourceNick,const QStringList& dccArguments)
 {
     kDebug();

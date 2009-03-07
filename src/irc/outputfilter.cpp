@@ -971,6 +971,25 @@ namespace Konversation
         return result;
     }
 
+    // Rejecting quened dcc receive, is not send when abort an active send
+    OutputFilterResult OutputFilter::rejectDccSend(const QString& partnerNick, const QString & fileName)
+    {
+        OutputFilterResult result;
+        result.toServer = "NOTICE " + partnerNick + " :" + '\x01' + "DCC REJECT SEND "
+                          + fileName + '\x01';
+
+        return result;
+    }
+
+    OutputFilterResult OutputFilter::rejectDccChat(const QString & partnerNick)
+    {
+        OutputFilterResult result;
+        result.toServer = "NOTICE " + partnerNick + " :" + '\x01' + "DCC REJECT CHAT chat" + '\x01';
+
+        return result;
+    }
+
+
     OutputFilterResult OutputFilter::parseInvite(const QString &parameter)
     {
         OutputFilterResult result;

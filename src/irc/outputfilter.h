@@ -70,6 +70,10 @@ namespace Konversation
             OutputFilterResult resumeRequest(const QString &sender,const QString &fileName,uint port,KIO::filesize_t startAt);
             OutputFilterResult resumePassiveRequest(const QString &sender,const QString &fileName,uint port,KIO::filesize_t startAt,const QString &token);
             OutputFilterResult acceptPassiveSendRequest(const QString& recipient,const QString &fileName,const QString &address,uint port,unsigned long size,const QString &token);
+            OutputFilterResult rejectDccSend(const QString& partnerNick, const QString& fileName);
+
+            // dcc chat
+            OutputFilterResult rejectDccChat(const QString& partnerNick);
 
             bool replaceAliases(QString& line);
 

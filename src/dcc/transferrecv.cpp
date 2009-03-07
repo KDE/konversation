@@ -235,6 +235,16 @@ void DccTransferRecv::abort()                     // public slot
 {
     kDebug();
 
+    if (getStatus() == DccTransfer::Queued)
+    {
+        Server* server = KonversationApplication::instance()->getConnectionManager()->getServerByConnectionId( m_connectionId );
+        if ( !server )
+        {
+            failed( i18n( "Could not send DCC REJECT SEND acknowledgement to the partner via the IRC server." ) );
+        }
+        server->dccRejectSend( m_partnerNick, transferFileName(m_fileName) );
+    }
+
     if(m_writeCacheHandler)
     {
         m_writeCacheHandler->write( true );       // flush
@@ -730,7 +740,6 @@ bool DccTransferRecvWriteCacheHandler::write( bool force )
 
     // do write
     m_writeReady = false;
-    kDebug() << "writing with cachecount: " << m_cacheList.size();
 
     m_transferJob->sendAsyncData( m_cacheList.front() );
     //kDebug() << "wrote " << m_cacheList.front().size() << " bytes.";

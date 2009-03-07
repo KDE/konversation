@@ -163,7 +163,7 @@ void DccChat::connectToPartner()
     getTextView()->appendServerMessage( i18n( "DCC" ), i18nc("%1 = nickname, %2 = IP, %3 = port",
         "Establishing DCC Chat connection to %1 (%2:%3)...", m_partnerNick, m_partnerHost, QString::number(m_partnerPort)));
 
-    m_sourceLine->setText(i18nc("%1 = nickname, %2 = IP, %3 = port", "DCC chat with %1 on %2:%3.", m_partnerNick, host, m_partnerPort));
+    m_sourceLine->setText(i18nc("%1 = nickname, %2 = IP, %3 = port", "DCC chat with %1 on %2:%3.", m_partnerNick, host, QString::number(m_partnerPort)));
 
     m_dccSocket = new QTcpSocket( this );
 
