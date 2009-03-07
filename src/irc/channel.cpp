@@ -2752,20 +2752,22 @@ bool Channel::eventFilter(QObject* watched, QEvent* e)
 
 void Channel::addBan(const QString& ban)
 {
-  for ( QStringList::Iterator it = m_BanList.begin(); it != m_BanList.end(); ++it )
-  {
-    if ((*it).section(' ', 0, 0) == ban.section(' ', 0, 0))
+    for ( QStringList::iterator it = m_BanList.begin(); it != m_BanList.end(); ++it )
     {
-			// Ban is already in list.
-      it = m_BanList.erase(it);
+        if ((*it).section(' ', 0, 0) == ban.section(' ', 0, 0))
+        {
+            // Ban is already in list.
+            it = m_BanList.erase(it);
 
-      emit banRemoved(ban.section(' ', 0, 0));
+            emit banRemoved(ban.section(' ', 0, 0));
+            if (it == m_BanList.end())
+                break;
+        }
     }
-  }
 
-  m_BanList.prepend(ban);
+    m_BanList.prepend(ban);
 
-  emit banAdded(ban);
+    emit banAdded(ban);
 }
 
 void Channel::removeBan(const QString& ban)
