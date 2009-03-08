@@ -37,7 +37,7 @@ namespace Konversation
     QString Emoticons::parseEmoticons(const QString &text, KEmoticonsTheme::ParseMode mode, const QStringList &exclude)
     {
         // Disable emoticons support until IRCView supports them
-        if (/*Preferences::enableEmotIcons()*/ false)
+        if (Preferences::self()->enableEmotIcons())
         {
             return Konversation::Emoticons::self()->theme().parseEmoticons(text, mode, exclude);
         }
