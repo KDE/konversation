@@ -190,7 +190,7 @@ set(blowfish_SRCS
     blowfish/newblowfish.cpp
     blowfish/oldblowfish.cpp
 )
-                                                                                                                         
+
 set (completed_SRCS ${core_SRCS}  ${irc_SRCS} ${viewer_SRCS} ${prefs_SRCS} ${dcc_SRCS} ${linkaddressbook_SRCS} ${blowfish_SRCS})
 set (konvi_SRCS ${completed_SRCS})
 
