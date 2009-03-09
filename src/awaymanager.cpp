@@ -16,6 +16,7 @@
 #include "connectionmanager.h"
 #include "server.h"
 #include "preferences.h"
+#include "config-konvi.h"
 
 #include <qvariant.h>
 #include <qtimer.h>
@@ -28,10 +29,15 @@
 #include <kdebug.h>
 
 #ifdef Q_WS_X11
+
+#if defined(HAVE_X11) && defined(HAVE_XUTIL)
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
 #include <X11/Xresource.h>
 #include <X11/Xutil.h>
+#define HasXHeaders
+#endif
+
 #ifdef HAVE_XSCREENSAVER
 #define HasScreenSaver
 #include <X11/extensions/scrnsaver.h>
@@ -50,7 +56,7 @@ struct AwayManagerPrivate
     int mouseX;
     int mouseY;
     unsigned int mouseMask;
-#ifdef Q_WS_X11
+#ifdef HasXHeaders
     Window root;
     Screen* screen;
     Time xIdleTime;
@@ -73,7 +79,7 @@ AwayManager::AwayManager(QObject* parent) : QObject(parent)
 
     m_connectionManager = static_cast<KonversationApplication*>(kapp)->getConnectionManager();
 
-#ifdef Q_WS_X11
+#ifdef HasXHeaders
     Display* display = QX11Info::display();
     d->root = DefaultRootWindow(display);
     d->screen = ScreenOfDisplay(display, DefaultScreen (display));
@@ -175,7 +181,7 @@ bool AwayManager::Xactivity()
 {
     bool activity = false;
 
-#ifdef Q_WS_X11
+#ifdef HasXHeaders
     Display* display = QX11Info::display();
     Window dummyW;
     int dummyC;

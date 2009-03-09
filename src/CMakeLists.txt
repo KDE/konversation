@@ -207,8 +207,12 @@ kde4_add_executable(konvi ${konvi_SRCS})
 target_link_libraries(konvi ${KDE4_KIO_LIBS} ${KDE4_KUTILS_LIBS} ${KDE4_KPARTS_LIBS}
                             ${KDE4_KDE3SUPPORT_LIBS} ${KDEPIMLIBS_KABC_LIBS}
                             ${KDE4_KNOTIFYCONFIG_LIBRARY} ${PHONON_LIBRARY})
+if (X11_FOUND AND X11_Xutil_FOUND)
+    target_link_libraries(konvi ${X11_X11_LIB})
+endif (X11_FOUND AND X11_Xutil_FOUND)
+
 if (X11_Xscreensaver_FOUND)
-    target_link_libraries(konvi ${X11_Xscreensaver_LIB} ${X11_X11_LIB})
+    target_link_libraries(konvi ${X11_Xscreensaver_LIB})
 endif (X11_Xscreensaver_FOUND)
 
 install(TARGETS konvi ${INSTALL_TARGETS_DEFAULT_ARGS})

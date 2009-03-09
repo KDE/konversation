@@ -18,12 +18,21 @@ add_definitions (${QT_DEFINITIONS} ${KDE4_DEFINITIONS} -DQT_STRICT_ITERATORS)
 include_directories(${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR} ${KDE4_INCLUDES} ${KDE4_INCLUDE_DIR} ${QT_INCLUDES})
 
 #looks like the original test is from Kopete, their port doesn't use Xext so neither shall ours
-if (X11_Xscreensaver_FOUND)
-    set(HAVE_XSCREENSAVER 1)
-endif (X11_Xscreensaver_FOUND)
+if (Q_WS_X11)
+    macro_bool_to_01(X11_Xscreensaver_FOUND HAVE_XSCREENSAVER)
+    macro_log_feature(HAVE_XSCREENSAVER "libXss" "X ScreenSaver Library" "http://www.x.org/" FALSE "" "Screensaver detection support for Away Manager")
+
+    macro_bool_to_01(X11_FOUND HAVE_X11)
+    macro_log_feature(HAVE_X11 "libx11" "X Window System Client Library" "http://www.x.org/" FALSE "" "User inactivity detection support for Away Manager")
+
+    macro_bool_to_01(X11_Xutil_FOUND HAVE_XUTIL)
+    macro_log_feature(HAVE_XUTIL "X11 Xutil.h header" "X11 Xutil header" "http://www.x.org/" FALSE "" "User inactivity detection support for Away Manager")
+endif (Q_WS_X11)
 
 configure_file(config-konvi.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-konvi.h )
 
 add_subdirectory(src)
 add_subdirectory(data)
 macro_optional_add_subdirectory(doc)
+
+macro_display_feature_log()
