@@ -117,6 +117,8 @@ void DccTransferPanel::initGUI()
     m_buttonClear->setObjectName("clear_dcc");
     m_buttonOpen   = new QPushButton(KIcon("system-run"),           i18n("Open File"), buttonsBox);
     m_buttonOpen->setObjectName("open_dcc_file");
+    m_buttonOpenLocation = new QPushButton(KIcon("document-open-folder"), i18n("Open Location"), buttonsBox);
+    m_buttonOpenLocation->setObjectName("open_dcc_file_location");
     m_buttonDetail = new QPushButton(KIcon("dialog-information"),   i18n("Details"),   buttonsBox);
     m_buttonDetail->setObjectName("detail_dcc");
     m_buttonDetail->setCheckable(true);
@@ -124,12 +126,14 @@ void DccTransferPanel::initGUI()
     m_buttonAccept->setStatusTip(i18n("Start receiving"));
     m_buttonAbort->setStatusTip(i18n("Abort the transfer(s)"));
     m_buttonOpen->setStatusTip(i18n("Run the file"));
+    m_buttonOpenLocation->setStatusTip(i18n("Open the file location"));
     m_buttonDetail->setStatusTip(i18n("View DCC transfer details"));
 
     connect( m_buttonAccept, SIGNAL(clicked()), this, SLOT(acceptDcc()) );
     connect( m_buttonAbort,  SIGNAL(clicked()), this, SLOT(abortDcc()) );
     connect( m_buttonClear,  SIGNAL(clicked()), this, SLOT(clearDcc()) );
     connect( m_buttonOpen,   SIGNAL(clicked()), this, SLOT(runDcc()) );
+    connect( m_buttonOpenLocation, SIGNAL(clicked()), this, SLOT(openLocation()));
     //connect( m_buttonDetail, SIGNAL(clicked()), this, SLOT(openDetail()) );
     connect( m_buttonDetail, SIGNAL(toggled(bool)), m_detailPanel, SLOT(setVisible(bool)) );
     m_buttonDetail->setChecked(true);
@@ -189,6 +193,7 @@ void DccTransferPanel::updateButton()
          clear              = false,
          info               = true,
          open               = true,
+         openLocation       = false,
          resend             = false,
          selectAll          = false,
          selectAllCompleted = false;
@@ -222,6 +227,8 @@ void DccTransferPanel::updateButton()
             open   &= ( type == DccTransfer::Send ||
                 status == DccTransfer::Done );
 
+            openLocation = true;
+
             resend |= ( type == DccTransfer::Send &&
                 status >= DccTransfer::Done );
         }
@@ -247,6 +254,7 @@ void DccTransferPanel::updateButton()
     m_buttonAbort->setEnabled( abort );
     m_buttonClear->setEnabled( clear );
     m_buttonOpen->setEnabled( open );
+    m_buttonOpenLocation->setEnabled( openLocation );
 
     m_selectAll->setEnabled( selectAll );
     m_selectAllCompleted->setEnabled(selectAllCompleted );
@@ -379,6 +387,20 @@ void DccTransferPanel::runDcc()
             DccTransfer* transfer = item->transfer();
             if( transfer->getType() == DccTransfer::Send || transfer->getStatus() == DccTransfer::Done )
                 item->runFile();
+        }
+        ++it;
+    }
+}
+
+void DccTransferPanel::openLocation()
+{
+    Q3ListViewItemIterator it( m_listView );
+    while( it.current() )
+    {
+        if( it.current()->isSelected() )
+        {
+            DccTransferPanelItem* item=static_cast<DccTransferPanelItem*>( it.current() );
+            item->openLocation();
         }
         ++it;
     }

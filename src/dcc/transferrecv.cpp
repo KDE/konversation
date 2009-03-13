@@ -148,7 +148,10 @@ void DccTransferRecv::setFileName( const QString& fileName )
 void DccTransferRecv::setFileURL( const KUrl& url )
 {
     if ( getStatus() == Preparing || getStatus() == Configuring || getStatus() == Queued )
+    {
         m_fileURL = url;
+        m_fileName = url.fileName();
+    }
 }
 
 void DccTransferRecv::setReverse( bool reverse, const QString& reverseToken )

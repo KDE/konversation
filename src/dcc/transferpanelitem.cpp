@@ -182,6 +182,20 @@ void DccTransferPanelItem::runFile()
         new KRun( m_transfer->getFileURL(), listView() );
 }
 
+void DccTransferPanelItem::openLocation()
+{
+    if ( m_transfer->getType() == DccTransfer::Send || m_transfer->getStatus() == DccTransfer::Done )
+    {
+        QString urlString = m_transfer->getFileURL().path();
+        if ( !urlString.isEmpty() )
+        {
+            KUrl url( urlString );
+            url.setFileName( QString() );
+            new KRun( url, 0, 0, true, true );
+        }
+    }
+}
+
 void DccTransferPanelItem::openFileInfoDialog()
 {
     if ( m_transfer->getType() == DccTransfer::Send || m_transfer->getStatus() == DccTransfer::Done )

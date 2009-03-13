@@ -33,7 +33,6 @@ class DccTransferDetailedInfoPanel : public QWidget, private Ui::DccTransferDeta
         void updateView();
         void slotTransferStatusChanged( DccTransfer* transfer, int newStatus, int oldStatus );
         void slotLocationChanged( const QString& url );
-        void slotOpenFolderButtonClicked();
 
     private:
         DccTransferPanelItem* m_item;

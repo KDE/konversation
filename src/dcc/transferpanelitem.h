@@ -47,6 +47,7 @@ class DccTransferPanelItem : public QObject, public K3ListViewItem
         virtual int compare( Q3ListViewItem* i, int col, bool ascending ) const;
 
         void runFile();
+        void openLocation();
         void openFileInfoDialog();
 
         DccTransfer* transfer() const { return m_transfer; }

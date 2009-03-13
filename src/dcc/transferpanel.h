@@ -63,6 +63,7 @@ class DccTransferPanel : public ChatWindow
         void resendFile();
         void clearDcc();
         void runDcc();
+        void openLocation();
         void showFileInfo();
         void selectAll();
         void selectAllCompleted();
@@ -91,6 +92,7 @@ class DccTransferPanel : public ChatWindow
         QPushButton* m_buttonAbort;
         QPushButton* m_buttonClear;
         QPushButton* m_buttonOpen;
+        QPushButton* m_buttonOpenLocation;
         QPushButton* m_buttonDetail;
     QAction *m_abort;
     QAction *m_accept;
