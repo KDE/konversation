@@ -45,6 +45,7 @@ DccTransferDetailedInfoPanel::DccTransferDetailedInfoPanel( QWidget* parent )
     //only enable when needed
     m_urlreqLocation->lineEdit()->setReadOnly( true );
     m_urlreqLocation->button()->setEnabled( false );
+    m_urlreqLocation->setMode(KFile::File | KFile::LocalOnly);
 }
 
 DccTransferDetailedInfoPanel::~DccTransferDetailedInfoPanel()
