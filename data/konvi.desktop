@@ -44,3 +44,4 @@ Name[xx]=xxKonversationxx
 Categories=Qt;KDE;Network;IRCClient;
 X-KDE-ServiceTypes=DBUS/InstantMessenger
 X-DBUS-StartupType=Unique
+X-DBUS-ServiceName=org.kde.konversation
