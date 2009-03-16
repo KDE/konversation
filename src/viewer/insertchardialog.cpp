@@ -14,6 +14,7 @@
 #include <kcharselect.h>
 #include <klocale.h>
 #include <kguiitem.h>
+#include <kdeversion.h>
 #include <KCharSelect>
 
 namespace Konversation
@@ -28,7 +29,11 @@ namespace Konversation
         setCaption(  i18n("Insert Character") );
         setButtonGuiItem(KDialog::Ok, KGuiItem(i18n("&Insert"), "dialog-ok", i18n("Insert a character")));
 
+#if KDE_IS_VERSION(4, 1, 90)
         m_charTable = new KCharSelect(this,0, KCharSelect::CharacterTable|KCharSelect::FontCombo|KCharSelect::BlockCombos);
+#else
+        m_charTable = new KCharSelect(this, KCharSelect::CharacterTable|KCharSelect::FontCombo|KCharSelect::BlockCombos);
+#endif
         m_charTable->setCurrentFont( QFont( font ) );
         setMainWidget(m_charTable);
         connect( this, SIGNAL( okClicked() ), this, SLOT( slotOk() ) );
