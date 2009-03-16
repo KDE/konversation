@@ -202,17 +202,17 @@ kde4_add_ui_files(konvi_SRCS
 
 kde4_add_kcfg_files(konvi_SRCS config/preferences_base.kcfgc)
 
-kde4_add_executable(konvi ${konvi_SRCS})
+kde4_add_executable(konversation ${konvi_SRCS})
 
-target_link_libraries(konvi ${KDE4_KIO_LIBS} ${KDE4_KUTILS_LIBS} ${KDE4_KPARTS_LIBS}
+target_link_libraries(konversation ${KDE4_KIO_LIBS} ${KDE4_KUTILS_LIBS} ${KDE4_KPARTS_LIBS}
                             ${KDE4_KDE3SUPPORT_LIBS} ${KDEPIMLIBS_KABC_LIBS}
                             ${KDE4_KNOTIFYCONFIG_LIBRARY} ${PHONON_LIBRARY})
 if (X11_FOUND AND X11_Xutil_FOUND)
-    target_link_libraries(konvi ${X11_X11_LIB})
+    target_link_libraries(konversation ${X11_X11_LIB})
 endif (X11_FOUND AND X11_Xutil_FOUND)
 
 if (X11_Xscreensaver_FOUND)
-    target_link_libraries(konvi ${X11_Xscreensaver_LIB})
+    target_link_libraries(konversation ${X11_Xscreensaver_LIB})
 endif (X11_Xscreensaver_FOUND)
 
-install(TARGETS konvi ${INSTALL_TARGETS_DEFAULT_ARGS})
+install(TARGETS konversation ${INSTALL_TARGETS_DEFAULT_ARGS})

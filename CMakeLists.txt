@@ -1,5 +1,5 @@
 #This isn't Konversation until it works.
-project(konvi)
+project(konversation)
 
 #paranoid?
 cmake_minimum_required(VERSION 2.6.0)
@@ -29,7 +29,7 @@ if (Q_WS_X11)
     macro_log_feature(HAVE_XUTIL "X11 Xutil.h header" "X11 Xutil header" "http://www.x.org/" FALSE "" "User inactivity detection support for Away Manager")
 endif (Q_WS_X11)
 
-configure_file(config-konvi.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-konvi.h )
+configure_file(config-konversation.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-konversation.h )
 
 add_subdirectory(src)
 add_subdirectory(data)

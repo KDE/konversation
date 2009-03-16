@@ -5,7 +5,7 @@ add_subdirectory(scripts)
 
 ########### install files ###############
 
-install(FILES   konvi.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
+install(FILES   konversation.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
 install(FILES   konversationui.rc konversation.notifyrc DESTINATION
 	${DATA_INSTALL_DIR}/konversation)
 #install(FILES   updaters/konvi.upd

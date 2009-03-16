@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
-Exec=konvi -caption "%c" %i
+Exec=konversation -caption "%c" %i
 Icon=konversation
 X-DocPath=konversation/index.html
 GenericName=IRC Client
