@@ -381,10 +381,7 @@ void Query::showEvent(QShowEvent*)
 
 void Query::popup(int id)
 {
-    // get the nickname to the context menu popup
-    QString name = textView->getContextNick();
-    // if there was none (right click into the text view) assume query partner
-    if (name.isEmpty()) name = getName();
+    QString name = getName();
 
     switch (id)
     {
