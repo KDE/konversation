@@ -192,17 +192,17 @@ set(blowfish_SRCS
 )
 
 set (completed_SRCS ${core_SRCS}  ${irc_SRCS} ${viewer_SRCS} ${prefs_SRCS} ${dcc_SRCS} ${linkaddressbook_SRCS} ${blowfish_SRCS})
-set (konvi_SRCS ${completed_SRCS})
+set (konversation_SRCS ${completed_SRCS})
 
-kde4_add_ui_files(konvi_SRCS
+kde4_add_ui_files(konversation_SRCS
     identitydialog.ui
     queuetunerbase.ui
     viewer/searchbarbase.ui
 )
 
-kde4_add_kcfg_files(konvi_SRCS config/preferences_base.kcfgc)
+kde4_add_kcfg_files(konversation_SRCS config/preferences_base.kcfgc)
 
-kde4_add_executable(konversation ${konvi_SRCS})
+kde4_add_executable(konversation ${konversation_SRCS})
 
 target_link_libraries(konversation ${KDE4_KIO_LIBS} ${KDE4_KUTILS_LIBS} ${KDE4_KPARTS_LIBS}
                             ${KDE4_KDE3SUPPORT_LIBS} ${KDEPIMLIBS_KABC_LIBS}
