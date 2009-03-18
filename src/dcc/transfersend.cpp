@@ -290,6 +290,8 @@ void DccTransferSend::start()                     // public slot
 
         kDebug() << "Passive DCC key(token): " << m_reverseToken;
 
+        startConnectionTimer( Preferences::self()->dccSendTimeout() );
+
         server->dccPassiveSendRequest( m_partnerNick, transferFileName(m_fileName), DccCommon::textIpToNumericalIp( m_ownIp ), m_fileSize, m_reverseToken );
     }
 
@@ -300,6 +302,8 @@ void DccTransferSend::connectToReceiver( const QString& partnerHost, uint partne
 {
     kDebug();
     // Reverse DCC
+
+    startConnectionTimer( Preferences::self()->dccSendTimeout() );
 
     m_partnerIp = partnerHost;
     m_partnerPort = partnerPort;
@@ -352,6 +356,8 @@ void DccTransferSend::acceptClient()                     // slot
 
 void DccTransferSend::startSending()
 {
+    stopConnectionTimer();
+
     if ( m_fastSend )
         connect( m_sendSocket, SIGNAL( bytesWritten( qint64 ) ), this, SLOT( writeData() ) );
     connect( m_sendSocket, SIGNAL( readyRead() ),  this, SLOT( getAck() ) );
@@ -417,6 +423,7 @@ void DccTransferSend::getAck()                    // slot
 
 void DccTransferSend::slotGotSocketError( int errorCode )
 {
+    stopConnectionTimer();
     kDebug() << "code =  " << errorCode << " string = " << m_serverSocket->errorString();
     failed( i18n( "Socket error: %1", m_serverSocket->errorString() ) );
 }
@@ -424,7 +431,7 @@ void DccTransferSend::slotGotSocketError( int errorCode )
 void DccTransferSend::startConnectionTimer( int sec )
 {
     kDebug();
-    stopConnectionTimer();
+    //start also restarts, no need for us to double check it
     m_connectionTimer->start(sec*1000);
 }
 
