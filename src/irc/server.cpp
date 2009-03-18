@@ -1802,6 +1802,12 @@ void Server::dccPassiveSendRequest(const QString& recipient,const QString& fileN
 {
     Konversation::OutputFilterResult result = getOutputFilter()->passiveSendRequest(recipient,fileName,address,size,token);
     queue(result.toServer);
+
+    appendMessageToFrontmost( i18n( "DCC" ),
+                              i18n( "Asking %1 to accept passive upload of \"%2\" (%3)...",
+                                    recipient,
+                                    cleanDccFileName(fileName),
+                                    ( size == 0 ) ? i18n( "unknown size" ) : KIO::convertSize( size ) ) );
 }
 
 void Server::dccPassiveResumeGetRequest(const QString& sender,const QString& fileName,uint port,KIO::filesize_t startAt,const QString &token)
