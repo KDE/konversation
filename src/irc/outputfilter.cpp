@@ -447,7 +447,7 @@ namespace Konversation
             else if(m_server->getQueryByName(destination))
                 m_server->closeQuery(destination);
             else
-                result = error(i18n("%1PART without parameters only works from within a channel or a query.", commandChar));
+                result = error(i18n("%1PART and %1LEAVE without parameters only work from within a channel or a query.", commandChar));
         }
         else
         {
