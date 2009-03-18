@@ -20,6 +20,8 @@ Changes since 1.1:
   ver List, don't also try to connect to the hidden server sub-items selected
   by implication, avoiding unwanted connection duplicates.
 * Mask the password field in the Quick Connect dialog.
+* Fixed a bug causing passive DCC file transfers to stall at 99%.
+* Fixed "/leave" command in queries.
 
 
 Changes from 1.0.1 to 1.1:

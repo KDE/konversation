@@ -443,13 +443,11 @@ namespace Konversation
         {
             // But only if we actually are in a channel
             if(isAChannel(destination))
-            {
                 result.toServer = "PART " + destination + " :" + m_server->getIdentity()->getPartReason();
-            }
+            else if(m_server->getQueryByName(destination))
+                m_server->closeQuery(destination);
             else
-            {
                 result = error(i18n("%1PART without parameters only works from within a channel or a query.", commandChar));
-            }
         }
         else
         {

@@ -206,10 +206,6 @@ void Query::queryTextEntered()
     {
         textView->clear();
     }
-    else if(line.toLower()==Preferences::self()->commandChar()+"part")
-    {
-        m_server->closeQuery(getName());
-    }
     else if(line.length())
     {
          sendQueryText(line);
