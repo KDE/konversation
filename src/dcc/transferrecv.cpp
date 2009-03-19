@@ -244,8 +244,9 @@ void DccTransferRecv::abort()                     // public slot
         if ( !server )
         {
             failed( i18n( "Could not send DCC REJECT SEND acknowledgement to the partner via the IRC server." ) );
+        } else {
+            server->dccRejectSend( m_partnerNick, transferFileName(m_fileName) );
         }
-        server->dccRejectSend( m_partnerNick, transferFileName(m_fileName) );
     }
 
     if(m_writeCacheHandler)
@@ -462,6 +463,7 @@ void DccTransferRecv::connectWithSender()
         if ( !server )
         {
             failed( i18n( "Could not send Reverse DCC SEND acknowledgement to the partner via the IRC server." ) );
+            return;
         }
 
         m_ownIp = DccCommon::getOwnIp( server );
