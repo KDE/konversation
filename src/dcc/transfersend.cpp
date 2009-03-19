@@ -347,6 +347,7 @@ void DccTransferSend::acceptClient()                     // slot
         failed( i18n( "Could not accept the connection. (Socket Error)" ) );
         return;
     }
+    connect( m_sendSocket, SIGNAL( error ( QAbstractSocket::SocketError ) ), this, SLOT( slotGotSocketError(int) ));
 
     // we don't need ServerSocket anymore
     m_serverSocket->close();
@@ -387,8 +388,22 @@ void DccTransferSend::writeData()                 // slot
     int actual = m_file.read( m_buffer, m_bufferSize );
     if ( actual > 0 )
     {
-        m_sendSocket->write( m_buffer, actual );
-        m_transferringPosition += actual;
+        qint64 byteWritten = m_sendSocket->write( m_buffer, actual );
+        if (byteWritten == -1)
+        {
+            failed ( m_sendSocket->errorString() );
+            return;
+        }
+        //this "can" happen when resources are temporary unavailable
+        //NOTE: this is not fatal
+        if (byteWritten < actual)
+        {
+            kWarning() << "byteWritten < actual : " << byteWritten << " < " << actual;
+            kWarning() << "try to correct it with byteWritten += " << m_sendSocket->bytesToWrite();
+            byteWritten += m_sendSocket->bytesToWrite();
+        }
+        m_transferringPosition += byteWritten;
+        //m_transferringPosition += actual;
         if ( (KIO::fileoffset_t)m_fileSize <= m_transferringPosition )
         {
             Q_ASSERT( (KIO::fileoffset_t)m_fileSize == m_transferringPosition );
