@@ -1321,6 +1321,13 @@ void ViewContainer::addView(ChatWindow* view, const QString& label, bool weiniti
     }
 
     m_tabWidget->insertTab(placement, view, iconSet, label);
+    // HACK Seems like automatic resize isn't all that automatic currently.
+    // Work around it by unsetting it and setting it again.
+    if (Preferences::self()->useMaxSizedTabs())
+    {
+        m_tabWidget->setAutomaticResizeTabs(false);
+        m_tabWidget->setAutomaticResizeTabs(true);
+    }
     m_vbox->show();//m_tabWidget->show();
 
     if (m_viewTree)
