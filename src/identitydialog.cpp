@@ -52,7 +52,7 @@ namespace Konversation
         }
 
         // add encodings to combo box
-        m_codecCBox->insertItems(0, Konversation::IRCCharsets::self()->availableEncodingDescriptiveNames());
+        m_codecCBox->addItems(Konversation::IRCCharsets::self()->availableEncodingDescriptiveNames());
 
         // set values for the widgets
         updateIdentity(0);
@@ -152,7 +152,8 @@ namespace Konversation
         m_currentIdentity->setAutomaticUnaway(m_automaticUnawayChBox->isChecked());
 
         m_currentIdentity->setShellCommand(m_sCommandEdit->text());
-        m_currentIdentity->setCodecName(Konversation::IRCCharsets::self()->availableEncodingShortNames()[m_codecCBox->currentIndex()]);
+        if(m_codecCBox->currentIndex() >= 0 && m_codecCBox->currentIndex() < Konversation::IRCCharsets::self()->availableEncodingShortNames().count())
+            m_currentIdentity->setCodecName(Konversation::IRCCharsets::self()->availableEncodingShortNames()[m_codecCBox->currentIndex()]);
         m_currentIdentity->setIdent(m_loginEdit->text());
         m_currentIdentity->setQuitReason(m_quitEdit->text());
         m_currentIdentity->setPartReason(m_partEdit->text());
