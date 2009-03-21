@@ -142,7 +142,10 @@ void DccTransferRecv::setFileSize( unsigned long fileSize )
 void DccTransferRecv::setFileName( const QString& fileName )
 {
     if ( getStatus() == Configuring )
+    {
         m_fileName = fileName;
+        m_saveFileName = m_fileName;
+    }
 }
 
 void DccTransferRecv::setFileURL( const KUrl& url )
@@ -150,7 +153,7 @@ void DccTransferRecv::setFileURL( const KUrl& url )
     if ( getStatus() == Preparing || getStatus() == Configuring || getStatus() == Queued )
     {
         m_fileURL = url;
-        m_fileName = url.fileName();
+        m_saveFileName = url.fileName();
     }
 }
 
@@ -172,10 +175,14 @@ bool DccTransferRecv::queue()
     kDebug();
 
     if ( getStatus() != Configuring )
+    {
         return false;
+    }
 
-    if ( m_partnerIp.isEmpty() /*|| !m_partnerPort*/ ) //port can be 0, for passive dcc send
+    if ( m_partnerIp.isEmpty())
+    {
         return false;
+    }
 
     if (!KAuthorized::authorizeKAction("allow_downloading"))
     {
@@ -202,6 +209,7 @@ bool DccTransferRecv::queue()
     if ( m_fileName.isEmpty() )
     {
         m_fileName = "unnamed_file";
+        m_saveFileName = m_fileName;
     }
 
     if ( m_fileURL.isEmpty() )
@@ -210,25 +218,35 @@ bool DccTransferRecv::queue()
 
         // set default folder
         if ( !Preferences::self()->dccPath().isEmpty() )
+        {
             m_fileURL = KUrl( Preferences::self()->dccPath() );
+        }
         else
+        {
             m_fileURL.setPath( KUser( KUser::UseRealUserID ).homeDir() );  // default folder is *not* specified
+        }
 
         // add a slash if there is none
         m_fileURL.adjustPath( KUrl::AddTrailingSlash );
 
         // Append folder with partner's name if wanted
         if ( Preferences::self()->dccCreateFolder() )
+        {
             m_fileURL.addPath( m_partnerNick + '/' );
+        }
 
         // Just incase anyone tries to do anything nasty
-        QString fileNameSanitized = sanitizeFileName( m_fileName );
+        QString fileNameSanitized = sanitizeFileName( m_saveFileName );
 
         // Append partner's name to file name if wanted
         if ( Preferences::self()->dccAddPartner() )
+        {
             m_fileURL.addPath( m_partnerNick + '.' + fileNameSanitized );
+        }
         else
+        {
             m_fileURL.addPath( fileNameSanitized );
+        }
     }
 
     return DccTransfer::queue();
@@ -241,10 +259,8 @@ void DccTransferRecv::abort()                     // public slot
     if (getStatus() == DccTransfer::Queued)
     {
         Server* server = KonversationApplication::instance()->getConnectionManager()->getServerByConnectionId( m_connectionId );
-        if ( !server )
+        if ( server )
         {
-            failed( i18n( "Could not send DCC REJECT SEND acknowledgement to the partner via the IRC server." ) );
-        } else {
             server->dccRejectSend( m_partnerNick, transferFileName(m_fileName) );
         }
     }
@@ -472,8 +488,6 @@ void DccTransferRecv::connectWithSender()
         setStatus( WaitingRemote, i18n( "Waiting for connection" ) );
 
         server->dccReverseSendAck( m_partnerNick, transferFileName(m_fileName), DccCommon::textIpToNumericalIp( m_ownIp ), m_ownPort, m_fileSize, m_reverseToken );
-
-        //FIXME: add connection timer here
     }
     else
     {
@@ -491,7 +505,6 @@ void DccTransferRecv::requestResume()
 
     kDebug() << "Requesting resume for " << m_partnerNick << " file " << m_fileName << " partner " << m_partnerPort;
 
-    //TODO   m_filename could have been sanitized - will this effect this?
     Server* server = KonversationApplication::instance()->getConnectionManager()->getServerByConnectionId( m_connectionId );
     if ( !server )
     {
@@ -533,10 +546,9 @@ void DccTransferRecv::connectToSendServer()
 
     setStatus( Connecting );
 
-    m_recvSocket = new QTcpSocket( this);
+    startConnectionTimer( 30 );
 
-    //m_recvSocket->setResolutionEnabled( false );
-    //m_recvSocket->setTimeout( 30000 );
+    m_recvSocket = new QTcpSocket( this);
 
     connect( m_recvSocket, SIGNAL( connected( ) ), this, SLOT( startReceiving() )     );
     connect( m_recvSocket, SIGNAL( error( QAbstractSocket::SocketError ) ), this, SLOT( connectionFailed( QAbstractSocket::SocketError ) ) );
@@ -560,15 +572,16 @@ bool DccTransferRecv::startListeningForSender()
         return false;
     }
 
-   connect( m_serverSocket, SIGNAL( newConnection() ),   this, SLOT( slotServerSocketReadyAccept() ) );
-   //connect( m_serverSocket, SIGNAL( gotError( int ) ), this, SLOT( slotServerSocketGotError( int ) ) );
+    connect( m_serverSocket, SIGNAL( newConnection() ),   this, SLOT( slotServerSocketReadyAccept() ) );
+
+    startConnectionTimer( 30 );
 
     return true;
 }
 
 void DccTransferRecv::slotServerSocketReadyAccept()
 {
-    //stopConnectionTimer()
+    //reverse dcc
 
     m_recvSocket = m_serverSocket->nextPendingConnection();
     if ( !m_recvSocket )
@@ -593,6 +606,7 @@ void DccTransferRecv::slotServerSocketGotError( int /* errorCode*/ )
 void DccTransferRecv::startReceiving()
 {
     kDebug();
+    stopConnectionTimer();
 
     connect( m_recvSocket, SIGNAL( readyRead() ),                        this, SLOT( readData() )              );
     //connect( m_recvSocket, SIGNAL( readyWrite() ),                       this, SLOT( sendAck() )               );
@@ -601,6 +615,9 @@ void DccTransferRecv::startReceiving()
     setStatus( Transferring );
 
     m_transferStartPosition = m_transferringPosition;
+
+    //we don't need the original filename anymore, overwrite it to display the correct one in transfermanager/panel
+    m_fileName = m_saveFileName;
 
     startTransferLogger();                          // initialize CPS counter, ETA counter, etc...
 }
@@ -667,7 +684,6 @@ void DccTransferRecv::slotLocalGotWriteError( const QString& errorString )
 
 void DccTransferRecv::startConnectionTimer( int sec )
 {
-    stopConnectionTimer();
     kDebug();
     m_connectionTimer->start( sec*1000 );
 }

@@ -137,6 +137,9 @@ class DccTransferRecv : public DccTransfer
         QTcpServer* m_serverSocket;
         QTcpSocket* m_recvSocket;
 
+        ///We need the original name for resume communication, as sender depends on it
+        QString m_saveFileName;
+
     private:
         virtual QString getTypeText() const;
         virtual QPixmap getTypeIcon() const;
