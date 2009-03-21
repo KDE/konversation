@@ -119,6 +119,7 @@ void DccResumeDialog::slotButtonClicked(int button)
             break;
         case KDialog::User1:
             m_selectedAction = RA_Resume;
+            accept();
             break;
         case KDialog::Cancel:
             m_selectedAction = RA_Cancel;
