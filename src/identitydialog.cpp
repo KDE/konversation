@@ -91,7 +91,7 @@ namespace Konversation
 
         m_realNameEdit->setText(m_currentIdentity->getRealName());
         m_nicknameLBox->clear();
-        m_nicknameLBox->insertStringList(m_currentIdentity->getNicknameList());
+        m_nicknameLBox->insertStringList(m_currentIdentity->getNicknameList(), 0);//0 is workaround for kdelibs < 4.2.2 bug
         m_botEdit->setText(m_currentIdentity->getBot());
         m_passwordEdit->setText(m_currentIdentity->getPassword());
 
