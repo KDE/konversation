@@ -118,12 +118,12 @@ namespace Konversation
             if ( QTextCodec::codecForName( (*it).toAscii() ) == QTextCodec::codecForLocale() )
                 return *it;
 
-        return "utf8";
+        return "UTF-8";
     }
 
     QTextCodec* IRCCharsets::codecForName( const QString& shortName )
     {
-        if(shortName == "iso-2022-jp")
+        if(shortName == "ISO 2022-JP")
             return QTextCodec::codecForName( "jis7" );
         else
             return QTextCodec::codecForName( shortName.toAscii() );
@@ -133,8 +133,8 @@ namespace Konversation
     {
         // setup m_shortNameAliases
         // use only [a-z0-9] for keys!
-        m_shortNameAliases["unicode"] = "utf8";
-        m_shortNameAliases["latin1"] = "iso-8859-1";
+        m_shortNameAliases["unicode"] = "UTF-8";
+        m_shortNameAliases["latin1"] = "ISO 8859-1";
 
         // setup m_shortNames, m_descriptiveNames, m_simplifiedShortNames
         QRegExp reSimplify( "[^a-zA-Z0-9]" );
@@ -144,9 +144,8 @@ namespace Konversation
         {
             QString encodingName = KGlobal::charsets()->encodingForName( *it );
             // exclude encodings which are not supported on IRC
-            if ( encodingName == "iso-10646-ucs-2" ||
-                 encodingName == "utf16" ||
-                 encodingName == "utf16" ||
+            if ( encodingName == "ISO 10646-UCS-2" ||
+                 encodingName == "UTF-16" ||
                  encodingName == "utf7" )
             {
                 it = m_descriptiveNames.erase( it );
@@ -158,9 +157,9 @@ namespace Konversation
 
                 if(encodingName == "jis7")        // Add iso-2022-jp which is same as jis7 but not in Qt
                 {
-                    it = m_descriptiveNames.insert(it, "Japanese ( iso-2022-jp )");
-                    m_shortNames.append( "iso-2022-jp" );
-                    m_simplifiedShortNames.append( "ISO-2022-JP" );
+                    it = m_descriptiveNames.insert(it, "Japanese ( ISO 2022-JP )");
+                    m_shortNames.append( "ISO 2022-JP" );
+                    m_simplifiedShortNames.append( "ISO2022JP" );
                     ++it;
                 }
                 ++it;
