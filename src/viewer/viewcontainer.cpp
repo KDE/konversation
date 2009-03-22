@@ -2402,7 +2402,7 @@ void ViewContainer::openNicksOnlinePanel()
         m_nicksOnlinePanel=new NicksOnline(m_window);
         addView(m_nicksOnlinePanel, i18n("Watched Nicks Online"));
         connect(m_nicksOnlinePanel, SIGNAL(editClicked()), m_window, SLOT(openNotify()));
-        connect(m_nicksOnlinePanel, SIGNAL(doubleClicked(const QString&,const QString&)), m_window, SLOT(notifyAction(const QString&,const QString&)));
+        connect(m_nicksOnlinePanel, SIGNAL(doubleClicked(int,const QString&)), m_window, SLOT(notifyAction(int,const QString&)));
         connect(m_nicksOnlinePanel, SIGNAL(showView(ChatWindow*)), this, SLOT(showView(ChatWindow*)));
         connect(m_window, SIGNAL(nicksNowOnline(Server*)), m_nicksOnlinePanel, SLOT(updateServerOnlineList(Server*)));
         (dynamic_cast<KToggleAction*>(actionCollection()->action("open_nicksonline_window")))->setChecked(true);

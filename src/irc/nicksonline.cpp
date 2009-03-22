@@ -349,7 +349,10 @@ void NicksOnline::updateServerOnlineList(Server* servr)
             // Add to network if not already added.
             Q3ListViewItem* nickRoot = findItemChild(networkRoot, nickname, NicksOnlineItem::NicknameItem);
             if (!nickRoot)
+            {
                 nickRoot = new NicksOnlineItem(NicksOnlineItem::NicknameItem, networkRoot, nickname, nickAdditionalInfo);
+                static_cast<NicksOnlineItem*>(nickRoot)->setConnectionId(server->connectionId ());
+            }
             nickRoot->setText(nlvcAdditionalInfo, nickAdditionalInfo);
             nickRoot->setText(nlvcServerName, serverName);
             // If no additional info available, request a WHOIS on the nick.
@@ -425,7 +428,11 @@ void NicksOnline::updateServerOnlineList(Server* servr)
             if (item) delete item;
             // Add to offline list if not already listed.
             Q3ListViewItem* nickRoot = findItemChild(offlineRoot, nickname, NicksOnlineItem::NicknameItem);
-            if (!nickRoot) nickRoot = new NicksOnlineItem(NicksOnlineItem::NicknameItem,offlineRoot, nickname);
+            if (!nickRoot) 
+            {
+                nickRoot = new NicksOnlineItem(NicksOnlineItem::NicknameItem,offlineRoot, nickname);
+                static_cast<NicksOnlineItem*>(nickRoot)->setConnectionId(servr->connectionId ());
+            }
             nickRoot->setText(nlvcServerName, serverName);
             // Get addressbook entry for the nick.
             KABC::Addressee addressee = servr->getOfflineNickAddressee(nickname);
@@ -585,12 +592,17 @@ void NicksOnline::timerFired()
  */
 void NicksOnline::processDoubleClick(Q3ListViewItem* item)
 {
+    NicksOnlineItem* nickitem = dynamic_cast<NicksOnlineItem*>(item);
+    
+    if (!nickitem)
+        return;
+
     // Only emit signal when the user double clicked a nickname rather than
     // a server name or channel name.
     QString serverName;
     QString nickname;
     if (getItemServerAndNick(item, serverName, nickname))
-        emit doubleClicked(serverName, nickname);
+        emit doubleClicked(nickitem->connectionId(), nickname);
 }
 
 /**
@@ -678,14 +690,15 @@ void NicksOnline::doCommand(QAction* id)
     QString serverName;
     QString nickname;
     Q3ListViewItem* item = m_nickListView->selectedItem();
+    NicksOnlineItem* nickitem = dynamic_cast<NicksOnlineItem*>(item);
 
-    if(!getItemServerAndNick(item, serverName, nickname))
+    if(!nickitem || !getItemServerAndNick(item, serverName, nickname))
     {
         return;
     }
 
-    // Get the server object corresponding to the server name.
-    Server* server = KonversationApplication::instance()->getConnectionManager()->getServerByName(serverName);
+    // Get the server object corresponding to the connection id.
+    Server* server = KonversationApplication::instance()->getConnectionManager()->getServerByConnectionId(nickitem->connectionId());
 
     if (!server) return;
 

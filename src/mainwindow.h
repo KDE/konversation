@@ -108,7 +108,7 @@ class KonversationMainWindow : public KXmlGuiWindow
         // it seems that moc does not honor #ifs in compile so we create an
         // empty slot in our .cpp file rather than #if this slot out
         void openNotifications();
-        void notifyAction(const QString& serverName,const QString& nick);
+        void notifyAction(int connectionId,const QString& nick);
 
         void quitProgram();
         void showEvent(QShowEvent* e);

@@ -809,10 +809,10 @@ void KonversationMainWindow::openNotifications()
     (void) KNotifyConfigWidget::configure(this);
 }
 
-void KonversationMainWindow::notifyAction(const QString& serverName, const QString& nick)
+void KonversationMainWindow::notifyAction(int connectionId, const QString& nick)
 {
     KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
-    Server* server = konvApp->getConnectionManager()->getServerByName(serverName);
+    Server* server = konvApp->getConnectionManager()->getServerByConnectionId(connectionId);
     if (server) server->notifyAction(nick);
 }
 

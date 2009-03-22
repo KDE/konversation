@@ -50,9 +50,15 @@ class NicksOnlineItem : public K3ListViewItem
         * @return                  One of the enum NickListViewColumn
         */
         int type() const;
+        
+        /// Set the connection ID this item is associated with to @p id.
+        void setConnectionId(int id) { m_connectionId = id; }
+        /// Returns the connection ID this item is associated with.
+        int connectionId() const { return m_connectionId; }
 
     protected:
         int m_type;
+        int m_connectionId;
 };
 
 #endif

@@ -62,7 +62,7 @@ class NicksOnline : public ChatWindow
 
         virtual bool canBeFrontView()   { return true; }
 
-        signals:
+    signals:
         /**
          * Emitted when user clicks Edit Watch List button.
          */
@@ -70,7 +70,7 @@ class NicksOnline : public ChatWindow
         /**
          * Emitted whenever user double-clicks a nick in the Nicks Online tab.
          */
-        void doubleClicked(const QString& server,const QString& nick);
+        void doubleClicked(int connectionId,const QString& nick);
 
         void showView(ChatWindow* view);
 

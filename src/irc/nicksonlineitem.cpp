@@ -16,12 +16,14 @@ NicksOnlineItem::NicksOnlineItem(int type, Q3ListView* parent, const QString& na
                  K3ListViewItem(parent, name, col2)
 {
   m_type=type;
+  m_connectionId = 0;
 }
 
 NicksOnlineItem::NicksOnlineItem(int type, Q3ListViewItem* parent, const QString& name, const QString& col2) :
                  K3ListViewItem(parent, name, col2)
 {
   m_type=type;
+  m_connectionId = 0;
 }
 
 /**
