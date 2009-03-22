@@ -10,6 +10,9 @@
    </rect>
   </property>
   <layout class="QGridLayout" name="gridLayout_3" >
+   <property name="margin" >
+    <number>0</number>
+   </property>
    <item row="0" column="0" >
     <widget class="QLabel" name="m_networkLabel" >
      <property name="sizePolicy" >
@@ -99,6 +102,9 @@
      <property name="title" >
       <string>Servers</string>
      </property>
+     <property name="flat" >
+      <bool>true</bool>
+     </property>
      <layout class="QGridLayout" name="gridLayout" >
       <item row="0" column="0" colspan="6" >
        <widget class="KListWidget" name="m_serverLBox" />
@@ -180,6 +186,9 @@
      <property name="title" >
       <string>Auto Join Channels</string>
      </property>
+     <property name="flat" >
+      <bool>true</bool>
+     </property>
      <layout class="QGridLayout" name="gridLayout_2" >
       <item row="0" column="0" colspan="6" >
        <widget class="KListWidget" name="m_channelLBox" />
@@ -258,6 +267,7 @@
    </item>
   </layout>
  </widget>
+ <layoutfunction spacing="KDialog::spacingHint" margin="KDialog::marginHint" />
  <customwidgets>
   <customwidget>
    <class>KListWidget</class>
@@ -270,6 +280,7 @@
    <header>kpushbutton.h</header>
   </customwidget>
  </customwidgets>
+ <includes/>
  <resources/>
  <connections/>
 </ui>
