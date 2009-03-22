@@ -17,6 +17,7 @@ NicksOnlineItem::NicksOnlineItem(int type, Q3ListView* parent, const QString& na
 {
   m_type=type;
   m_connectionId = 0;
+  m_offline = false;
 }
 
 NicksOnlineItem::NicksOnlineItem(int type, Q3ListViewItem* parent, const QString& name, const QString& col2) :
@@ -24,6 +25,7 @@ NicksOnlineItem::NicksOnlineItem(int type, Q3ListViewItem* parent, const QString
 {
   m_type=type;
   m_connectionId = 0;
+  m_offline = false;
 }
 
 /**

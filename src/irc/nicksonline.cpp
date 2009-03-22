@@ -351,7 +351,9 @@ void NicksOnline::updateServerOnlineList(Server* servr)
             if (!nickRoot)
             {
                 nickRoot = new NicksOnlineItem(NicksOnlineItem::NicknameItem, networkRoot, nickname, nickAdditionalInfo);
-                static_cast<NicksOnlineItem*>(nickRoot)->setConnectionId(server->connectionId ());
+                NicksOnlineItem* nickitem = static_cast<NicksOnlineItem*>(nickRoot);
+                nickitem->setConnectionId(server->connectionId ());
+                nickitem->setOffline (false);
             }
             nickRoot->setText(nlvcAdditionalInfo, nickAdditionalInfo);
             nickRoot->setText(nlvcServerName, serverName);
@@ -431,7 +433,9 @@ void NicksOnline::updateServerOnlineList(Server* servr)
             if (!nickRoot) 
             {
                 nickRoot = new NicksOnlineItem(NicksOnlineItem::NicknameItem,offlineRoot, nickname);
-                static_cast<NicksOnlineItem*>(nickRoot)->setConnectionId(servr->connectionId ());
+                NicksOnlineItem* nickitem = static_cast<NicksOnlineItem*>(nickRoot);
+                nickitem->setConnectionId(servr->connectionId ());
+                nickitem->setOffline (true);
             }
             nickRoot->setText(nlvcServerName, serverName);
             // Get addressbook entry for the nick.
@@ -594,7 +598,7 @@ void NicksOnline::processDoubleClick(Q3ListViewItem* item)
 {
     NicksOnlineItem* nickitem = dynamic_cast<NicksOnlineItem*>(item);
     
-    if (!nickitem)
+    if (!nickitem || nickitem->isOffline())
         return;
 
     // Only emit signal when the user double clicked a nickname rather than
@@ -893,7 +897,9 @@ void NicksOnline::slotNickListView_SelectionChanged()
  */
 void NicksOnline::slotNickListView_RightButtonClicked(Q3ListViewItem* item, const QPoint& pt)
 {
-    if (!item) return;
+    NicksOnlineItem* nickitem = dynamic_cast<NicksOnlineItem*>(item);
+
+    if (!nickitem) return;
     m_popupMenu->clear();
     int nickState = getNickAddressbookState(item);
     switch (nickState)
@@ -906,11 +912,14 @@ void NicksOnline::slotNickListView_RightButtonClicked(Q3ListViewItem* item, cons
         {
             m_chooseAssociation =  m_popupMenu->addAction(i18n("&Choose Association..."));
             m_newContact = m_popupMenu->addAction(i18n("Create New C&ontact..."));
-            m_popupMenu->addSeparator();
-            m_whois = m_popupMenu->addAction(i18n("&Whois"));
-            m_openQuery = m_popupMenu->addAction(i18n("Open &Query"));
-            if (item->text(nlvcServerName).isEmpty())
-                m_joinChannel = m_popupMenu->addAction(i18n("&Join Channel"));
+            if (!nickitem->isOffline())
+            {
+                m_popupMenu->addSeparator();
+                m_whois = m_popupMenu->addAction(i18n("&Whois"));
+                m_openQuery = m_popupMenu->addAction(i18n("Open &Query"));
+                if (item->text(nlvcServerName).isEmpty())
+                    m_joinChannel = m_popupMenu->addAction(i18n("&Join Channel"));
+            }
             break;
         }
         case nsHasAddress:
@@ -921,11 +930,14 @@ void NicksOnline::slotNickListView_RightButtonClicked(Q3ListViewItem* item, cons
             m_popupMenu->addSeparator();
             m_addressBookChange = m_popupMenu->addAction(i18n("&Change Association..."));
             m_deleteAssociation =  m_popupMenu->addAction(KIcon("edit-delete"), i18n("&Delete Association"));
-            m_popupMenu->addSeparator();
-            m_whois = m_popupMenu->addAction(i18n("&Whois"));
-            m_openQuery = m_popupMenu->addAction(i18n("Open &Query"));
-            if (item->text(nlvcServerName).isEmpty())
-                m_joinChannel = m_popupMenu->addAction(i18n("&Join Channel"));
+            if (!nickitem->isOffline())
+            {
+                m_popupMenu->addSeparator();
+                m_whois = m_popupMenu->addAction(i18n("&Whois"));
+                m_openQuery = m_popupMenu->addAction(i18n("Open &Query"));
+                if (item->text(nlvcServerName).isEmpty())
+                    m_joinChannel = m_popupMenu->addAction(i18n("&Join Channel"));
+            }
             break;
         }
     }
