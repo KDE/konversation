@@ -425,7 +425,10 @@ def run(kind):
 #the command line tools. One could consider `dcop` the bash dcop language binding,
 #but of course when using shell you don't need to be efficient at all, right?
 
-DCOP_ITEMS=subprocess.Popen(['dcop'], stdout=subprocess.PIPE).communicate()[0]  #re.findall("^amarok(?:-\\d*)?$",l,re.M)
+try:
+    DCOP_ITEMS=subprocess.Popen(['dcop'], stdout=subprocess.PIPE).communicate()[0]  #re.findall("^amarok(?:-\\d*)?$",l,re.M)
+except OSError:
+    DCOP_ITEMS=""
 
 # Add your new players here. No more faulty logic due to copy+paste.
 

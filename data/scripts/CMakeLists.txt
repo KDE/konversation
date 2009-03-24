@@ -5,7 +5,7 @@ install(PROGRAMS
     gauge
     kdeversion
     #mail
-    #media
+    media
     sayclip
     sysinfo
     tinyurl
