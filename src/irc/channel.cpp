@@ -2264,11 +2264,13 @@ void Channel::updateAppearance()
 
     QPalette channelInputPalette;
     channelInputPalette.setColor(QPalette::WindowText, fg);
+    channelInputPalette.setColor(QPalette::Text, fg);
     channelInputPalette.setColor(QPalette::Base, bg);
     channelInput->setPalette(channelInputPalette);
 
     QPalette limitPalette;
     limitPalette.setColor(QPalette::WindowText, fg);
+    limitPalette.setColor(QPalette::Text, fg);
     limitPalette.setColor(QPalette::Base, bg);
     limit->setPalette(limitPalette);
 
@@ -2304,6 +2306,7 @@ void Channel::updateAppearance()
 
     QPalette nicknameListViewPalette;
     nicknameListViewPalette.setColor(QPalette::WindowText, fg);
+    nicknameListViewPalette.setColor(QPalette::Text, fg);
     nicknameListViewPalette.setColor(QPalette::Base, bg);
     nicknameListViewPalette.setColor(QPalette::AlternateBase, abg);
     nicknameListView->resort();

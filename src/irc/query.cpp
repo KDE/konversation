@@ -294,6 +294,7 @@ void Query::updateAppearance()
     }
     QPalette queryInputPalette(queryInput->palette());
     queryInputPalette.setColor(QPalette::WindowText, fg);
+    queryInputPalette.setColor(QPalette::Text, fg);
     queryInputPalette.setColor(QPalette::Base, bg);
     queryInput->setPalette(queryInputPalette);
 

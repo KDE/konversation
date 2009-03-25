@@ -129,6 +129,7 @@ void ViewTree::updateAppearance()
     }
 
     palette.setColor(QPalette::WindowText, fg);
+    palette.setColor(QPalette::Text, fg);
     palette.setColor(QPalette::Base, bg);
     palette.setColor(QPalette::Window, bg);
     setPalette(palette);

@@ -129,6 +129,8 @@ int KonversationApplication::newInstance()
         // TODO: check if this works now as intended
         //    QTextCodec::setCodecForCStrings(QTextCodec::codecForLocale());
 
+        connect(KGlobalSettings::self(), SIGNAL(appearanceChanged()), this, SIGNAL(appearanceChanged()));
+
         // open main window
         mainWindow = new KonversationMainWindow();
         //setMainWidget(mainWindow); //TODO FIXME do we need any of the other semantics this use to gain us?

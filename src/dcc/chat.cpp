@@ -431,9 +431,10 @@ void DccChat::updateAppearance()
     }
     QPalette dccChatInputPalette(m_dccChatInput->palette());
     dccChatInputPalette.setColor(QPalette::WindowText, fg);
+    dccChatInputPalette.setColor(QPalette::Text, fg);
     dccChatInputPalette.setColor(QPalette::Base, bg);
     m_dccChatInput->setPalette(dccChatInputPalette);
-    
+
     getTextView()->setPalette(QPalette()); 
 
     if(Preferences::self()->showBackgroundImage())
