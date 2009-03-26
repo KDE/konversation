@@ -116,8 +116,8 @@ void DccTransferRecv::cleanUp()
 // just for convenience
 void DccTransferRecv::failed( const QString& errorMessage )
 {
-    setStatus( Failed, errorMessage );
     cleanUp();
+    setStatus( Failed, errorMessage );
     emit done( this );
 }
 
@@ -270,8 +270,8 @@ void DccTransferRecv::abort()                     // public slot
         m_writeCacheHandler->write( true );       // flush
     }
 
-    setStatus( Aborted );
     cleanUp();
+    setStatus( Aborted );
     emit done( this );
 }
 
@@ -612,14 +612,14 @@ void DccTransferRecv::startReceiving()
     //connect( m_recvSocket, SIGNAL( readyWrite() ),                       this, SLOT( sendAck() )               );
     connect( m_recvSocket, SIGNAL( disconnected() ),                           this, SLOT( slotSocketClosed() )      );
 
-    setStatus( Transferring );
-
     m_transferStartPosition = m_transferringPosition;
 
     //we don't need the original filename anymore, overwrite it to display the correct one in transfermanager/panel
     m_fileName = m_saveFileName;
 
     startTransferLogger();                          // initialize CPS counter, ETA counter, etc...
+
+    setStatus( Transferring );
 }
 
                                                   // slot
@@ -670,8 +670,8 @@ void DccTransferRecv::sendAck()                   // slot
 void DccTransferRecv::slotLocalWriteDone()        // <-WriteCacheHandler::done()
 {
     kDebug();
-    setStatus( Done );
     cleanUp();
+    setStatus( Done );
     emit done( this );
 }
 
