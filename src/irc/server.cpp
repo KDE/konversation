@@ -1882,14 +1882,16 @@ void Server::resumeDccGetTransfer(const QString &sourceNick, const QStringList &
 
     //filename port position [token]
     QString fileName;
-    unsigned long position;;
+    unsigned long position;
     uint ownPort;
     if (dccArguments.at(dccArguments.size()-3) == "0") //-1 index, -1 token, -1 pos
     {
         fileName = recoverDccFileName(dccArguments, 3);
         ownPort = 0;
         position = dccArguments.at(dccArguments.size()-2).toULong(); //-1 index, -1 token
-    } else {
+    }
+    else
+    {
         fileName = recoverDccFileName(dccArguments, 2);
         ownPort = dccArguments.at(dccArguments.size()-1).toUInt(); //-1 index, -1 pos
         position = dccArguments.at(dccArguments.size()-1).toULong(); //-1 index
@@ -1937,7 +1939,9 @@ void Server::resumeDccSendTransfer(const QString &sourceNick, const QStringList 
         token = dccArguments.at( dccArguments.size() - 1); // -1 index
         position = dccArguments.at( dccArguments.size() - 2).toULong(); // -1 index, -1 token
         fileName = recoverDccFileName(dccArguments, 3);
-    } else {
+    }
+    else
+    {
         //filename port filepos
         ownPort = dccArguments.at( dccArguments.size() - 2).toUInt(); //-1 index, -1 filesize
         position = dccArguments.at( dccArguments.size() - 1).toULong(); // -1 index
