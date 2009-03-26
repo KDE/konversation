@@ -95,8 +95,8 @@ void DccTransferSend::cleanUp()
 // just for convenience
 void DccTransferSend::failed( const QString& errorMessage )
 {
-    setStatus( Failed, errorMessage );
     cleanUp();
+    setStatus( Failed, errorMessage );
     emit done( this );
 }
 
@@ -226,8 +226,8 @@ void DccTransferSend::abort()                     // public slot
 {
     kDebug();
 
-    setStatus( Aborted );
     cleanUp();
+    setStatus( Aborted );
     emit done( this );
 }
 
@@ -373,9 +373,9 @@ void DccTransferSend::startSending()
         m_file.seek( m_transferringPosition );
         m_transferStartPosition = m_transferringPosition;
 
-        setStatus( Transferring );
         writeData();
         startTransferLogger();                      // initialize CPS counter, ETA counter, etc...
+        setStatus( Transferring );
     }
     else
         failed( getQFileErrorString( m_file.error() ) );
@@ -428,8 +428,8 @@ void DccTransferSend::getAck()                    // slot
         {
             kDebug() << "Received final ACK.";
             finishTransferLogger();
-            setStatus( Done );
             cleanUp();
+            setStatus( Done );
             emit done( this );
             break;                                // for safe
         }
