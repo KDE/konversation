@@ -107,6 +107,14 @@ class DccTransfer : public QObject
         virtual void abort() {};
 
     protected:
+        /**
+         * setStatus behavior changed:
+         * Now make sure to run functions that change transfer informations before setStatus.
+         * For example cleanUp();
+         *
+         * If you call setStatus(..) and change the "Started at:"-time afterwards,
+         * the transferpanel won't notice it
+         */
         void setStatus( DccStatus status, const QString& statusDetail = QString() );
         void startTransferLogger();
         void finishTransferLogger();
