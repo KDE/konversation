@@ -62,7 +62,7 @@ void DccTransferDetailedInfoPanel::setItem( DccTransferPanelItem* item )
     // because m_item can have been deleted already.
 
     // set up the auto view-update timer
-    connect( m_autoViewUpdateTimer, SIGNAL( timeout() ), this, SLOT( updateView() ) );
+    connect( m_autoViewUpdateTimer, SIGNAL( timeout() ), this, SLOT( updateChangeableView() ) );
 
     m_item = item;
 
@@ -112,30 +112,12 @@ void DccTransferDetailedInfoPanel::updateView()
 
     // Self:
     if ( transfer->getOwnIp().isEmpty() )
-        m_labelSelf->setText( "" );
+        m_labelSelf->clear();
     else
         m_labelSelf->setText( i18n( "%1 (port %2)", transfer->getOwnIp(), QString::number( transfer->getOwnPort() ) ) );
 
-    // Status:
-    if ( transfer->getStatus() == DccTransfer::Transferring )
-        m_labelStatus->setText( m_item->getStatusText() + " ( " + m_item->getCurrentSpeedPrettyText() + " )" );
-    else
-        m_labelStatus->setText( transfer->getStatusDetail().isEmpty() ? m_item->getStatusText() : m_item->getStatusText() + " (" + transfer->getStatusDetail() + ')' );
-
-    // Progress:
-    m_progress->setValue( transfer->getProgress() );
-
-    // Current Position:
-    m_labelCurrentPosition->setText( KGlobal::locale()->formatNumber( transfer->getTransferringPosition(), 0 ) );
-
     // File Size:
     m_labelFileSize->setText( KGlobal::locale()->formatNumber( transfer->getFileSize(), 0 ) );
-
-    // Current Speed:
-    m_labelCurrentSpeed->setText( m_item->getCurrentSpeedPrettyText() );
-
-    // Average Speed:
-    m_labelAverageSpeed->setText( m_item->getAverageSpeedPrettyText() );
 
     // Resumed:
     if ( transfer->isResumed() )
@@ -143,9 +125,59 @@ void DccTransferDetailedInfoPanel::updateView()
     else
         m_labelIsResumed->setText( i18n( "No" ) );
 
+    // Offered at:
+    m_labelTimeOffered->setText( transfer->getTimeOffer().toString( "hh:mm:ss" ) );
+
+    // Started at:
+    if ( !transfer->getTimeTransferStarted().isNull() )
+        m_labelTimeStarted->setText( transfer->getTimeTransferStarted().toString( "hh:mm:ss" ) );
+    else
+        m_labelTimeStarted->clear();
+
+    // Finished at:
+    if ( !transfer->getTimeTransferFinished().isNull() )
+    {
+        m_labelTimeFinished->setText( transfer->getTimeTransferFinished().toString( "hh:mm:ss" ) );
+    }
+    else
+    {
+        m_labelTimeFinished->clear();
+    }
+
+    updateChangeableView();
+}
+
+void DccTransferDetailedInfoPanel::updateChangeableView()
+{
+    DccTransfer* transfer = m_item->transfer();
+
+    // Status:
+    if ( transfer->getStatus() == DccTransfer::Transferring )
+    {
+        m_labelStatus->setText( m_item->getStatusText() + " ( " + m_item->getCurrentSpeedPrettyText() + " )" );
+    }
+    else
+    {
+        m_labelStatus->setText( transfer->getStatusDetail().isEmpty() ? m_item->getStatusText() : m_item->getStatusText() + " (" + transfer->getStatusDetail() + ')' );
+    }
+
+    // Progress:
+    m_progress->setValue( transfer->getProgress() );
+
+    // Current Position:
+    m_labelCurrentPosition->setText( KGlobal::locale()->formatNumber( transfer->getTransferringPosition(), 0 ) );
+
+    // Current Speed:
+    m_labelCurrentSpeed->setText( m_item->getCurrentSpeedPrettyText() );
+
+    // Average Speed:
+    m_labelAverageSpeed->setText( m_item->getAverageSpeedPrettyText() );
+
     // Transferring Time:
     if ( transfer->getTimeTransferStarted().isNull() )
-        m_labelTransferringTime->setText( "" );
+    {
+        m_labelTransferringTime->clear();
+    }
     else
     {
         int transferringTime;
@@ -165,21 +197,6 @@ void DccTransferDetailedInfoPanel::updateView()
 
     // Estimated Time Left:
     m_labelTimeLeft->setText( m_item->getTimeLeftPrettyText() );
-
-    // Offered at:
-    m_labelTimeOffered->setText( transfer->getTimeOffer().toString( "hh:mm:ss" ) );
-
-    // Started at:
-    if ( !transfer->getTimeTransferStarted().isNull() )
-        m_labelTimeStarted->setText( transfer->getTimeTransferStarted().toString( "hh:mm:ss" ) );
-    else
-        m_labelTimeStarted->setText( "" );
-
-    // Finished at:
-    if ( !transfer->getTimeTransferFinished().isNull() )
-        m_labelTimeFinished->setText( transfer->getTimeTransferFinished().toString( "hh:mm:ss" ) );
-    else
-        m_labelTimeFinished->setText( "" );
 }
 
 void DccTransferDetailedInfoPanel::slotTransferStatusChanged( DccTransfer* /* transfer */, int newStatus, int oldStatus )
@@ -203,6 +220,7 @@ void DccTransferDetailedInfoPanel::slotLocationChanged( const QString& url )
     {
         DccTransferRecv* transfer = static_cast< DccTransferRecv* >( m_item->transfer() );
         transfer->setFileURL( KUrl( url ) );
+        updateView();
     }
 }
 

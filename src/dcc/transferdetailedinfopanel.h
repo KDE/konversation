@@ -31,6 +31,8 @@ class DccTransferDetailedInfoPanel : public QWidget, private Ui::DccTransferDeta
 
     private slots:
         void updateView();
+        // Only updates labels that can change during transfer
+        void updateChangeableView();
         void slotTransferStatusChanged( DccTransfer* transfer, int newStatus, int oldStatus );
         void slotLocationChanged( const QString& url );
 
