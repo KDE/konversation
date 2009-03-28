@@ -29,6 +29,7 @@
 #ifndef Q_CC_MSVC
 #include <net/if.h>
 #include <sys/ioctl.h>
+#include <stropts.h>
 #endif
 #include <arpa/inet.h>
 
