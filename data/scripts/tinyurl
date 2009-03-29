@@ -20,11 +20,11 @@ else qdbus org.kde.konversation /irc error "No url given: usage is \"/tinyurl UR
 fi
 
 if test -z $TINYURL; then
-    qdbus $PORT org.kde.konversation /irc error "Unable run tinyurl script, please make sure you have curl or wget installed"
+    qdbus org.kde.konversation /irc error "Unable run tinyurl script, please make sure you have curl or wget installed"
 else
     if test ! -z $NICK; then
-        qdbus $PORT org.kde.konversation /irc say $SERVER "$TARGET" "${NICK}: $TINYURL"
+        qdbus org.kde.konversation /irc say $SERVER "$TARGET" "${NICK}: $TINYURL"
     else
-        qdbus $PORT org.kde.konversation /irc say $SERVER "$TARGET" "$TINYURL"
+        qdbus org.kde.konversation /irc say $SERVER "$TARGET" "$TINYURL"
     fi
 fi
