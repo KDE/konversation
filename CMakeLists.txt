@@ -1,4 +1,3 @@
-#This isn't Konversation until it works.
 project(konversation)
 
 #paranoid?
