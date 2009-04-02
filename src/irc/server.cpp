@@ -1243,7 +1243,7 @@ void Server::dbusSay(const QString& target,const QString& command)
     }
     else
     {
-        class Query* query=getQueryByName(target);
+        Query* query = getQueryByName(target);
         if(query==0)
         {
             NickInfoPtr nickinfo = obtainNickInfo(target);
@@ -1437,11 +1437,11 @@ QString Server::getOwnIpByServerMessage()
         return QString();
 }
 
-class Query* Server::addQuery(const NickInfoPtr & nickInfo, bool weinitiated)
+Query* Server::addQuery(const NickInfoPtr & nickInfo, bool weinitiated)
 {
     QString nickname = nickInfo->getNickname();
     // Only create new query object if there isn't already one with the same name
-    class Query* query=getQueryByName(nickname);
+    Query* query = getQueryByName(nickname);
 
     if (!query)
     {
@@ -1470,7 +1470,7 @@ class Query* Server::addQuery(const NickInfoPtr & nickInfo, bool weinitiated)
 
 void Server::closeQuery(const QString &name)
 {
-    class Query* query = getQueryByName(name);
+    Query* query = getQueryByName(name);
     removeQuery(query);
 
     // Update NickInfo.  If no longer on any lists, delete it altogether, but
@@ -2036,7 +2036,7 @@ void Server::dccStatusChanged(DccTransfer *item, int newStatus, int oldStatus)
     }
 }
 
-void Server::removeQuery(class Query* query)
+void Server::removeQuery(Query* query)
 {
     m_queryList.removeOne(query);
     query->deleteLater();
@@ -2182,7 +2182,7 @@ Channel* Server::getChannelByName(const QString& name)
     return 0;
 }
 
-class Query* Server::getQueryByName(const QString& name)
+Query* Server::getQueryByName(const QString& name)
 {
     // Convert wanted query name to lowercase
     QString wanted = name.toLower();
@@ -2698,7 +2698,7 @@ void Server::removeNickFromServer(const QString &nickname,const QString &reason)
             removeNickFromChannel(channel->getName(),nickname,reason,true);
     }
 
-    Query* query=getQueryByName(nickname);
+    Query* query = getQueryByName(nickname);
     if (query) query->quitNick(reason);
 
     // Delete the nick from all channels and then delete the nickinfo,
