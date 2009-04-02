@@ -493,7 +493,7 @@ void Query::setNickInfo(const NickInfoPtr & nickInfo)
 
 void Query::nickInfoChanged()
 {
-    /*if(m_nickInfo)
+    if (m_nickInfo)
     {
         setName(m_nickInfo->getNickname());
         QString text = m_nickInfo->getBestAddresseeName();
@@ -507,7 +507,7 @@ void Query::nickInfoChanged()
         KABC::Picture pic = m_nickInfo->getAddressee().photo();
         if(pic.isIntern())
         {
-            QPixmap qpixmap(pic.data().scaleHeight(queryHostmask->height()));
+            QPixmap qpixmap = QPixmap::fromImage(pic.data().scaledToHeight(queryHostmask->height()));
             if(!qpixmap.isNull())
             {
                 addresseeimage->setPixmap(qpixmap);
@@ -525,7 +525,7 @@ void Query::nickInfoChanged()
         KABC::Picture logo = m_nickInfo->getAddressee().logo();
         if(logo.isIntern())
         {
-            QPixmap qpixmap(logo.data().scaleHeight(queryHostmask->height()));
+            QPixmap qpixmap = QPixmap::fromImage(logo.data().scaledToHeight(queryHostmask->height()));
             if(!qpixmap.isNull())
             {
                 addresseelogoimage->setPixmap(qpixmap);
@@ -553,14 +553,14 @@ void Query::nickInfoChanged()
         tooltip << "</table></qt>";
         queryHostmask->setStatusTip(strTooltip);
         addresseeimage->setStatusTip(strTooltip);
-        addresseelogoimage->ToolTip(strTooltip);
+        addresseelogoimage->setToolTip(strTooltip);
 
     }
     else
-    {*/
+    {
         addresseeimage->hide();
         addresseelogoimage->hide();
-    //}
+    }
 
     emit updateQueryChrome(this,getName());
     emitUpdateInfo();
