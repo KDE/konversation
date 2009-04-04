@@ -144,7 +144,9 @@ void DccTransfer::setStatus( DccStatus status, const QString& statusDetail )
     m_status = status;
     m_statusDetail = statusDetail;
     if ( changed )
+    {
         emit statusChanged( this, m_status, oldStatus );
+    }
 }
 
 void DccTransfer::updateTransferMeters()
@@ -184,10 +186,18 @@ void DccTransfer::updateTransferMeters()
         }
 
         // update the remaining time
-        if ( m_currentSpeed <= 0 )
+        if  (m_transferringPosition == (KIO::fileoffset_t)m_fileSize)
+        {
+            m_timeLeft = 0;
+        }
+        else if ( m_currentSpeed <= 0 )
+        {
             m_timeLeft = DccTransfer::InfiniteValue;
+        }
         else
+        {
             m_timeLeft = (int)( (double)( m_fileSize - m_transferringPosition ) / m_currentSpeed );
+        }
     }
     else if ( m_status >= Done )
     {
@@ -196,7 +206,14 @@ void DccTransfer::updateTransferMeters()
         else
             m_averageSpeed = DccTransfer::InfiniteValue;
         m_currentSpeed = 0;
-        m_timeLeft = DccTransfer::NotInTransfer;
+        if (m_status == Done)
+        {
+            m_timeLeft = 0;
+        }
+        else
+        {
+            m_timeLeft = DccTransfer::NotInTransfer;
+        }
     }
     else
     {
