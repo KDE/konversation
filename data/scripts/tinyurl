@@ -11,9 +11,9 @@ NICK="$4"
 
 if test ! -z $URL; then
   if test $(which curl); then
-    TINYURL="$(curl -s -i http://tinyurl.com/create.php?url=$URL|grep "The following URL" -A4|tail -1|awk -F\> '{print $3}'|sed 's,</b,,')"
+    TINYURL="$(curl -s -i http://tinyurl.com/api-create.php?url=$URL|tail -1)"
   else
-    TINYURL="$(wget -T10 -t2 -qO- http://tinyurl.com/create.php?url=$URL|grep "The following URL" -A4|tail -1|awk -F\> '{print $3}'|sed 's,</b,,')"
+    TINYURL="$(wget -T10 -t2 -qO- http://tinyurl.com/api-create.php?url=$URL|tail -1)"
   fi
 else qdbus org.kde.konversation /irc error "No url given: usage is \"/tinyurl URL [NickName]\""
     exit 1
