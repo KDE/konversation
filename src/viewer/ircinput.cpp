@@ -267,13 +267,11 @@ void IRCInput::wheelEvent(QWheelEvent* e)
 {
     if (e->delta() > 0)
     {
-        if (!m_multiRow || !textCursor().movePosition(QTextCursor::Up))
-            emit history(true);
+        emit history(true);
     }
     else if (e->delta() < 0)
     {
-        if (!m_multiRow || !textCursor().movePosition(QTextCursor::Down))
-            emit history(false);
+        emit history(false);
     }
 
     KTextEdit::wheelEvent(e);
