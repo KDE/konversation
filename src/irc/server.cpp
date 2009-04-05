@@ -2715,7 +2715,7 @@ void Server::renameNick(const QString &nickname, const QString &newNick)
 {
     if(nickname.isEmpty() || newNick.isEmpty())
     {
-        kDebug() << "server::renameNick called with empty strings!  Trying to rename '" << nickname << "' to '" << newNick << "'";
+        kDebug() << "called with empty strings!  Trying to rename '" << nickname << "' to '" << newNick << "'";
         return;
     }
 
@@ -2733,7 +2733,7 @@ void Server::renameNick(const QString &nickname, const QString &newNick)
 
     if(!nickInfo)
     {
-        kDebug() << "server::renameNick called for nickname '" << nickname << "' to '" << newNick << "' but getNickInfo('" << nickname << "') returned no results.";
+        kDebug() << "called for nickname '" << nickname << "' to '" << newNick << "' but getNickInfo('" << nickname << "') returned no results.";
     }
     else
     {
