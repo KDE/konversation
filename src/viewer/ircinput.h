@@ -67,6 +67,7 @@ class IRCInput : public KTextEdit
 
         virtual void insertFromMimeData(const QMimeData *source);
         virtual void keyPressEvent(QKeyEvent* e);
+        virtual void wheelEvent(QWheelEvent* e);
         //virtual Q3PopupMenu *createPopupMenu( const QPoint& pos );
         virtual void showEvent(QShowEvent* e);
         virtual void hideEvent(QHideEvent* e);
