@@ -27,9 +27,11 @@
 #include <netinet/in.h>
 #include <sys/socket.h>
 #ifndef Q_CC_MSVC
-#include <net/if.h>
-#include <sys/ioctl.h>
-#include <stropts.h>
+#   include <net/if.h>
+#   include <sys/ioctl.h>
+#   ifdef HAVE_STROPTS_H
+#       include <stropts.h>
+#   endif
 #endif
 #include <arpa/inet.h>
 

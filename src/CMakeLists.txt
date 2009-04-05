@@ -215,4 +215,11 @@ if (X11_Xscreensaver_FOUND)
     target_link_libraries(konversation ${X11_Xscreensaver_LIB})
 endif (X11_Xscreensaver_FOUND)
 
+CHECK_INCLUDE_FILE(
+  "stropts.h" HAVE_STROPTS_H)
+IF(HAVE_STROPTS_H)
+  ADD_DEFINITIONS(-DHAVE_STROPTS_H)
+ENDIF(HAVE_STROPTS_H)
+
+
 install(TARGETS konversation ${INSTALL_TARGETS_DEFAULT_ARGS})
