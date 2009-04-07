@@ -90,14 +90,13 @@ namespace Konversation
         QString protocol;
 
         // FIXME this should probably go away with the text control upgrade
-        // HACK 0x200B is a unicode Zero Width Space to prevent the QTextChar format from leaking around as part of the anchorAt hack
         if(useCustomColor)
         {
-            link = QString("<font color=\"" + linkColor + "\"><u><a href=\"%1%2\">%3</a>") + QChar(0x200B) + QString("</u></font>");
+            link = QString("<font color=\"" + linkColor + "\"><u><a href=\"%1%2\">%3</a></u></font>");
         }
         else
         {
-            link = QString("<u><a href=\"%1%2\">%3</a>")+ QChar(0x200B)+QString("</u>");
+            link = QString("<u><a href=\"%1%2\">%3</a></u>");
         }
 
         while ((pos = urlPattern.indexIn(filteredLine, pos)) >= 0)
