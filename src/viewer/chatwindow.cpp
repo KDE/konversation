@@ -141,6 +141,12 @@ void ChatWindow::appendRaw(const QString& message, bool suppressTimestamps)
     textView->appendRaw(message, suppressTimestamps);
 }
 
+void ChatWindow::appendLog(const QString& message)
+{
+    if(!textView) return;
+    textView->appendLog(message);
+}
+
 void ChatWindow::append(const QString& nickname,const QString& message)
 {
     if(!textView) return ;

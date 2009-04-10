@@ -125,7 +125,7 @@ void LogfileReader::updateView()
         while(!stream.atEnd())
         {
             str = Qt::escape(stream.readLine());
-            getTextView()->appendRaw(str, true);
+            getTextView()->appendLog(str);
         }
 
         stream.setDevice(0);

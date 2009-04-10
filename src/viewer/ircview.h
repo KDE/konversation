@@ -99,6 +99,7 @@ class IRCView : public KTextBrowser
         //! FIXME enum { Raw, Query, Query+Action, Channel+Action, Server Message, Command Message, Backlog message } this looks more like a tuple
         void append(const QString& nick, const QString& message);
         void appendRaw(const QString& message, bool suppressTimestamps=false, bool self = false);
+        void appendLog(const QString& message);
 
         void appendQuery(const QString& nick, const QString& message, bool inChannel = false);
         void appendQueryAction(const QString& nick, const QString& message);
@@ -115,6 +116,11 @@ class IRCView : public KTextBrowser
 
     protected:
         void doAppend(const QString& line, bool self=false);
+        /**
+         * Appends a newLine without any scrollback or notification checks
+         * @param newLine 
+         */
+        void doRawAppend(const QString& newLine);
         void appendLine(const QString& color);
         void appendRememberLine();
 

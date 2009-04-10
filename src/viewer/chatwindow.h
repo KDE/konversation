@@ -74,6 +74,7 @@ class ChatWindow : public KVBox
 
         virtual void append(const QString& nickname,const QString& message);
         virtual void appendRaw(const QString& message, bool suppressTimestamps=false);
+        virtual void appendLog(const QString& message);
         virtual void appendQuery(const QString& nickname,const QString& message, bool inChannel = false);
         virtual void appendAction(const QString& nickname,const QString& message);
         virtual void appendServerMessage(const QString& type,const QString& message, bool parseURL = true);
