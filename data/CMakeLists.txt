@@ -9,8 +9,7 @@ install(FILES   konversation.desktop DESTINATION ${XDG_APPS_INSTALL_DIR})
 install(FILES   konversationui.rc konversation.notifyrc DESTINATION
 	${DATA_INSTALL_DIR}/konversation)
 install(FILES   updaters/konversation.upd DESTINATION ${DATA_INSTALL_DIR}/kconf_update)
-install(PROGRAMS updaters/konversation.upd
-                updaters/konversation-0.19-colors.pl
+install(PROGRAMS updaters/konversation-0.19-colors.pl
                 updaters/konversation-0.19-sortorder.pl
                 updaters/konversation-0.19-appearance.pl
                 updaters/konversation-0.19-tabplacement.pl
