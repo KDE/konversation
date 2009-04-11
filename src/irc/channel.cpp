@@ -2578,7 +2578,7 @@ void Channel::setActive(bool active)
         purgeNicks();
         getTextView()->setNickAndChannelContextMenusEnabled(false);
         nicknameCombobox->setEnabled(false);
-        topicLine->setText(QString::null);
+        topicLine->clear();
         clearModeList();
         clearBanList();
     }

@@ -1553,7 +1553,7 @@ void ViewContainer::cleanupAfterClose(ChatWindow* view)
             m_saveSplitterSizesLock = true;
             m_vbox->hide();
             emit resetStatusBar();
-            emit setWindowCaption(QString::null);
+            emit setWindowCaption(QString());
         }
     }
 

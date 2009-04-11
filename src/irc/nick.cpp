@@ -27,7 +27,7 @@
 
 Nick::Nick(K3ListView *listView, const ChannelNickPtr& channelnick)
     : QObject (),
-    K3ListViewItem (listView, listView->lastItem(), QString::null,
+    K3ListViewItem (listView, listView->lastItem(), QString(),
                    channelnick->getNickname(), channelnick->getHostmask())
 {
     m_channelnickptr = channelnick;
