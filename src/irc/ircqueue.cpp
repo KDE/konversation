@@ -9,11 +9,12 @@
   Copyright (C) 2008 Eli J. MacKenzie <argonel at gmail.com>
 */
 
+#include "ircqueue.h"
+
 #include <qdatetime.h>
 #include <qtimer.h>
 #include <qstring.h>
 
-#include "ircqueue.h"
 #include "server.h"
 
 //#include "/home/ejm/argnl.h"

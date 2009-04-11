@@ -16,7 +16,7 @@
 #include "connectionmanager.h"
 #include "server.h"
 #include "preferences.h"
-#include "config-konversation.h"
+#include <config-konversation.h>
 
 #include <qvariant.h>
 #include <qtimer.h>

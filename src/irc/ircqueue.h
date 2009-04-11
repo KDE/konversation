@@ -13,8 +13,11 @@
 #ifndef IRCQUEUE_H
 #define IRCQUEUE_H
 
+#include <QObject>
 #include <QList>
+#include <QTime>
 
+class QTimer;
 class Server;
 
 //channel.cpp, outputfilter.cpp, query.cpp, server.cpp, statuspanel.cpp
