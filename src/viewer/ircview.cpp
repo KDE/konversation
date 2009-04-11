@@ -414,7 +414,7 @@ void IRCView::appendBacklogMessage(const QString& firstColumn,const QString& raw
     time = nick.section(' ', 0, 4);
     nick = nick.section(' ', 5);
 
-    if(!nick.isEmpty() && !nick.startsWith("<") && !nick.startsWith("*"))
+    if(!nick.isEmpty() && !nick.startsWith('<') && !nick.startsWith('*'))
     {
         nick = '|' + nick + '|';
     }
@@ -893,7 +893,7 @@ void IRCView::anchorClicked(const QUrl& url)
 // FIXME do we still care about newtab? looks like konqi has lots of config now..
 void IRCView::openLink(const QString& url, bool)
 {
-    if (!url.isEmpty() && !url.startsWith("#"))
+    if (!url.isEmpty() && !url.startsWith('#'))
     {
         if (url.startsWith("irc://"))
         {
@@ -930,7 +930,7 @@ void IRCView::openLink(const QString& url, bool)
         m_server->sendJoinCommand(channel);
     }
     //FIXME: Don't do user links in DCC Chats to begin with since they don't have a server.
-    else if (url.startsWith("#") && m_server && m_server->isConnected())
+    else if (url.startsWith('#') && m_server && m_server->isConnected())
     {
         QString recipient(url);
         recipient.remove("#");
@@ -981,7 +981,7 @@ void IRCView::highlightedSlot(const QString& _link)
         m_lastStatusText = link;
     }
 
-    if(!link.startsWith("#"))
+    if(!link.startsWith('#'))
     {
         m_isOnNick = false;
         m_isOnChannel = false;
@@ -1009,7 +1009,7 @@ void IRCView::highlightedSlot(const QString& _link)
             m_urlToCopy = link;
         }
     }
-    else if (link.startsWith("#") && !link.startsWith("##"))
+    else if (link.startsWith('#') && !link.startsWith("##"))
     {
         m_currentNick = link.mid(1);
         //FIXME how are menu titles done now? /me is too tired

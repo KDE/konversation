@@ -636,7 +636,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 text = prefix + " :" + text;
             }
 
-            if(!text.startsWith(" "))
+            if(!text.startsWith(' '))
             {
                 text.prepend(' ');
             }
@@ -1246,7 +1246,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
             {
                 NickInfoPtr nickInfo = server->getNickInfo(parameterList.value(5));
                                                   // G=away G@=away,op G+=away,voice
-                bool bAway = parameterList.value(6).toUpper().startsWith("G");
+                bool bAway = parameterList.value(6).toUpper().startsWith('G');
                 if(nickInfo)
                 {
                     nickInfo->setHostmask(i18n("%1@%2", parameterList.value(2), parameterList.value(3)));
@@ -1331,7 +1331,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                         server->setChannelNick(lookChannel.mid(1), parameterList.value(1), 16);
                     }
                                                   // See bug #97354 part 2
-                    else if((lookChannel.startsWith("!") || lookChannel.startsWith("~")) && server->isAChannel(lookChannel.mid(1)))
+                    else if((lookChannel.startsWith('!') || lookChannel.startsWith('~')) && server->isAChannel(lookChannel.mid(1)))
                     {
                         ownerChannels.append(lookChannel.mid(1));
                         server->setChannelNick(lookChannel.mid(1), parameterList.value(1), 8);
@@ -1342,17 +1342,17 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                         opChannels.append(lookChannel.mid(2));
                         server->setChannelNick(lookChannel.mid(2), parameterList.value(1), 4);
                     }
-                    else if(lookChannel.startsWith("@"))
+                    else if(lookChannel.startsWith('@'))
                     {
                         opChannels.append(lookChannel.mid(1));
                         server->setChannelNick(lookChannel.mid(1), parameterList.value(1), 4);
                     }
-                    else if(lookChannel.startsWith("%"))
+                    else if(lookChannel.startsWith('%'))
                     {
                         halfopChannels.append(lookChannel.mid(1));
                         server->setChannelNick(lookChannel.mid(1), parameterList.value(1), 2);
                     }
-                    else if(lookChannel.startsWith("+"))
+                    else if(lookChannel.startsWith('+'))
                     {
                         voiceChannels.append(lookChannel.mid(1));
                         server->setChannelNick(lookChannel.mid(1), parameterList.value(1), 1);

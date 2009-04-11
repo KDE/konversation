@@ -381,7 +381,7 @@ namespace Konversation
             channelName=destination;
         }
         else if (!isAChannel(channelName))
-            channelName = "#" + channelName.trimmed();
+            channelName = '#' + channelName.trimmed();
 
         Channel* channel = m_server->getChannelByName(channelName);
 

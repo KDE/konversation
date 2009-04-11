@@ -614,7 +614,7 @@ void Server::sslError( const QList<QSslError>&  errors)
     QString reason;
     for(int i = 0; i < errors.size(); ++i)
     {
-        reason += errors.at(i).errorString() + " ";
+        reason += errors.at(i).errorString() + ' ';
     }
 
     //this message should be changed since sslError is called even after calling ignoreSslErrors()
@@ -2477,6 +2477,10 @@ void Server::removeChannelNick(const QString& channelName, const QString& nickna
             // Note: Channel should not be empty because user's own nick should still be
             // in it, so do not need to delete empty channel here.
         }
+        else
+        {
+            kDebug() << "Error: Tried to remove nickname=" << nickname << " from joined channel=" << channelName;
+        }
     }
     else
     {
@@ -2491,6 +2495,10 @@ void Server::removeChannelNick(const QString& channelName, const QString& nickna
                 // If channel is now empty, delete it.
                 // Caution: Any iterators across unjoinedChannels will be come invalid here.
                 if (channel->isEmpty()) m_unjoinedChannels.remove(lcChannelName);
+            }
+            else
+            {
+                kDebug() << "Error: Tried to remove nickname=" << nickname << " from unjoined channel=" << channelName;
             }
         }
     }
@@ -3044,7 +3052,7 @@ void Server::updateAutoJoin(Konversation::ChannelSettings channel)
     {
         setAutoJoin(true);
 
-        setAutoJoinCommands(QStringList("JOIN " + channel.name() + " " + channel.password()));
+        setAutoJoinCommands(QStringList("JOIN " + channel.name() + ' ' + channel.password()));
 
         return;
     }
@@ -3089,7 +3097,7 @@ void Server::updateAutoJoin(Konversation::ChannelSettings channel)
             {
                 if (passwords.last() == ".") passwords.pop_back();
 
-                joinCommands << "JOIN " + channels.join(",") + " " + passwords.join(",");
+                joinCommands << "JOIN " + channels.join(",") + ' ' + passwords.join(",");
 
                 channels.clear();
                 passwords.clear();
@@ -3106,7 +3114,7 @@ void Server::updateAutoJoin(Konversation::ChannelSettings channel)
 
         if (passwords.last() == ".") passwords.pop_back();
 
-        joinCommands << "JOIN " + channels.join(",") + " " + passwords.join(",");
+        joinCommands << "JOIN " + channels.join(",") + ' ' + passwords.join(",");
 
         setAutoJoinCommands(joinCommands);
     }

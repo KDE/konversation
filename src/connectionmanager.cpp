@@ -335,7 +335,7 @@ void ConnectionManager::decodeAddress(const QString& address, ConnectionSettings
         // Last segment does not end with ], but the next to last does;
         // Assume not-full-length IPv6 address with port
         // Example: [2001:0DB8::1428:57ab]:6666
-        if (address.section(':',0,-2).endsWith("]") && !address.section(':',-1).endsWith("]"))
+        if (address.section(':',0,-2).endsWith(']') && !address.section(':',-1).endsWith(']'))
         {
             host = address.section(':',0,-2).remove("[").remove("]");
             port = address.section(':',-1);
