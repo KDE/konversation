@@ -105,7 +105,7 @@ class OSDPreviewWidget : public OSDWidget
     Q_OBJECT
 
 public:
-    OSDPreviewWidget( const QString &appName, QWidget *parent = 0, const char *name = "osdpreview" );
+    explicit OSDPreviewWidget( const QString &appName, QWidget *parent = 0, const char *name = "osdpreview" );
 
     int screen() const     { return m_screen; }
     int alignment() const { return m_alignment; }
