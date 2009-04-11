@@ -922,7 +922,7 @@ void Server::incoming()
     while (m_socket->canReadLine())
     {
         QByteArray line(m_socket->readLine());
-        line.chop(1);//remove \n blowfish doesnt like it
+        line.chop(1);//remove \n blowfish doesn't like it
         bufferLines.append(line);
     }
 
@@ -1091,7 +1091,7 @@ int Server::_send_internal(QString outputLine)
     // ex.: JIS7, eucJP, SJIS
     //int outlen=-1;
 
-    //leaving this done twice for now, i'm uncertain of the implications of not encoding other commands
+    //leaving this done twice for now, I'm uncertain of the implications of not encoding other commands
     QByteArray encoded = codec->fromUnicode(outputLine);
 
     QString blowfishKey;
@@ -1707,7 +1707,7 @@ QString Server::cleanDccFileName(const QString& filename) const
 
     //we want a clean filename to get rid of the mass """filename"""
     //NOTE: if a filename starts really with a ", it is escaped -> \" (2 chars)
-    //      but most clients doesnt support that and just replace it with a _
+    //      but most clients doen't support that and just replace it with a _
     while (cleanFileName.startsWith('\"') && cleanFileName.endsWith('\"'))
     {
         cleanFileName = cleanFileName.mid(1, cleanFileName.length() - 2);

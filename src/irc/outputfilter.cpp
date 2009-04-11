@@ -958,7 +958,7 @@ namespace Konversation
         return result;
     }
 
-    // Appect Passive Send Request, there aktive doesnt need that
+    // Accept Passive Send Request, there active doesn't need that
     OutputFilterResult OutputFilter::acceptPassiveSendRequest(const QString& recipient,const QString &fileName,const QString &address,uint port,unsigned long size,const QString &token)
     {
         OutputFilterResult result;
