@@ -105,7 +105,7 @@ void KonversationStatusBar::setMainLabelTempText(const QString& text)
 void KonversationStatusBar::clearMainLabelTempText()
 {
     // Unset the temp text so the next setMainLabelText won't fail.
-    m_tempMainLabelText = QString();
+    m_tempMainLabelText.clear();
 
     m_mainLabel->setText(m_oldMainLabelText);
 }

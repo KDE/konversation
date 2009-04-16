@@ -379,7 +379,7 @@ void Server::connectToIRCServer()
         updateConnectionState(Konversation::SSConnecting);
 
         m_autoIdentifyLock = false;
-        m_ownIpByUserhost = QString();
+        m_ownIpByUserhost.clear();
 
         resetQueues();
 
@@ -3265,7 +3265,7 @@ void Server::setAway(bool away)
     }
     else
     {
-        m_awayReason = QString();
+        m_awayReason.clear();
 
         emit awayState(false);
 

@@ -81,7 +81,7 @@ void DccTransferSend::cleanUp()
     finishTransferLogger();
     if ( !m_tmpFile.isEmpty() )
         KIO::NetAccess::removeTempFile( m_tmpFile );
-    m_tmpFile = QString();
+    m_tmpFile.clear();
     m_file.close();
     if ( m_sendSocket )
     {

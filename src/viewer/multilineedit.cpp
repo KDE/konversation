@@ -53,7 +53,7 @@ MultilineEdit::~MultilineEdit()
 
 void MultilineEdit::slotCancel()
 {
-    returnText=QString();
+    returnText.clear();
     reject();
 }
 

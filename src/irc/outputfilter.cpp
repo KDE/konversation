@@ -294,7 +294,7 @@ namespace Konversation
             QStringList outputList=splitForEncoding(inputLine, m_server->getPreLength("PRIVMSG", destination));
             if (outputList.count() > 1)
             {
-                result.output=QString();
+                result.output.clear();
                 result.outputList=outputList;
                 for ( QStringList::ConstIterator it = outputList.constBegin(); it != outputList.constEnd(); ++it )
                 {

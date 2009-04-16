@@ -80,7 +80,7 @@ namespace Konversation
     void TopicLabel::leaveEvent(QEvent* e)
     {
        emit clearStatusBarTempText();
-       m_lastStatusText = QString();
+       m_lastStatusText.clear();
        QLabel::leaveEvent(e);
     }
 
@@ -252,7 +252,7 @@ namespace Konversation
             if (!m_lastStatusText.isEmpty())
             {
                 emit clearStatusBarTempText();
-                m_lastStatusText = QString();
+                m_lastStatusText.clear();
             }
         } else {
             m_lastStatusText = link;

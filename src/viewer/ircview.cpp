@@ -603,7 +603,7 @@ bool doHighlight, bool parseURL, bool self)
     {
         if(!allowColors)
         {
-            colorString = QString();
+            colorString.clear();
         }
         else
         {
@@ -769,7 +769,7 @@ const QString& IRCView::getContextNick() const
 
 void IRCView::clearContextNick()
 {
-    m_currentNick = QString();
+    m_currentNick.clear();
 }
 
 KMenu* IRCView::getPopup() const
@@ -974,7 +974,7 @@ void IRCView::highlightedSlot(const QString& _link)
         if (!m_lastStatusText.isEmpty())
         {
             emit clearStatusBarTempText();
-            m_lastStatusText = QString();
+            m_lastStatusText.clear();
         }
     } else
     {
