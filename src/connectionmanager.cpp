@@ -501,13 +501,13 @@ bool ConnectionManager::validateIdentity(IdentityPtr identity, bool interactive)
     QString errors;
 
     if (identity->getIdent().isEmpty())
-        errors+=i18n("Please fill in your <b>Ident</b>.<br>");
+        errors+=i18n("Please fill in your <b>Ident</b>.<br/>");
 
     if (identity->getRealName().isEmpty())
-        errors+=i18n("Please fill in your <b>Real name</b>.<br>");
+        errors+=i18n("Please fill in your <b>Real name</b>.<br/>");
 
     if (identity->getNickname(0).isEmpty())
-        errors+=i18n("Please provide at least one <b>Nickname</b>.<br>");
+        errors+=i18n("Please provide at least one <b>Nickname</b>.<br/>");
 
     if (!errors.isEmpty())
     {
@@ -515,7 +515,7 @@ bool ConnectionManager::validateIdentity(IdentityPtr identity, bool interactive)
         {
             int result = KMessageBox::warningContinueCancel(
                     mainWindow,
-                    i18n("<qt>Your identity \"%1\" is not set up correctly:<br>%2</qt>", identity->getName(), errors),
+                    i18n("<qt>Your identity \"%1\" is not set up correctly:<br/>%2</qt>", identity->getName(), errors),
                     i18n("Identity Settings"),
                     KGuiItem(i18n("Edit Identity...")),
                     KStandardGuiItem::cancel());

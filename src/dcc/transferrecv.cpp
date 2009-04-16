@@ -402,9 +402,9 @@ void DccTransferRecv::slotLocalCanResume( KIO::Job* job, KIO::filesize_t size )
         }
         else
         {
-            askAndPrepareLocalKio( i18n( "<b>A partial file exists.</b><br>"
-                "%1<br>"
-                "Size of the partial file: %2 bytes<br>",
+            askAndPrepareLocalKio( i18n( "<b>A partial file exists.</b><br/>"
+                "%1<br/>"
+                "Size of the partial file: %2 bytes<br/>",
                 m_fileURL.prettyUrl(),
                 KGlobal::locale()->formatNumber( size, 0 ) ),
                 DccResumeDialog::RA_Resume | DccResumeDialog::RA_Overwrite | DccResumeDialog::RA_Rename | DccResumeDialog::RA_Cancel,
