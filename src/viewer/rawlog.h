@@ -12,8 +12,8 @@
   email:     eisfuchs@tigress.com
 */
 
-#ifndef _RAWLOG_H_
-#define _RAWLOG_H_
+#ifndef RAWLOG_H
+#define RAWLOG_H
 
 #include "chatwindow.h"
 
@@ -38,4 +38,5 @@ class RawLog : public ChatWindow
         /** Called from ChatWindow adjustFocus */
         virtual void childAdjustFocus();
 };
-#endif
+
+#endif /* RAWLOG_H */

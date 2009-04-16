@@ -55,4 +55,4 @@ class WatchedNicknames_Config : public QWidget, public KonviSettingsPage, privat
         QStringList m_oldNotifyList;
 };
 
-#endif
+#endif /* WATCHEDNICKNAMES_CONFIG_H */

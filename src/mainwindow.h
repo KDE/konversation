@@ -13,8 +13,8 @@
   Copyright (C) 2005-2008 Eike Hein <hein@kde.org>
 */
 
-#ifndef _KONVERSATIONMAINWINDOW_H_
-#define _KONVERSATIONMAINWINDOW_H_
+#ifndef KONVERSATIONMAINWINDOW_H
+#define KONVERSATIONMAINWINDOW_H
 
 #include "channel.h"
 #include "preferences.h"
@@ -137,4 +137,4 @@ class KonversationMainWindow : public KXmlGuiWindow
         bool m_closeApp;
 };
 
-#endif
+#endif /* KONVERSATIONMAINWINDOW_H */

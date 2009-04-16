@@ -17,8 +17,8 @@ License along with this library; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#ifndef KABC_ADDRESSEEDIALOG_H
-#define KABC_ADDRESSEEDIALOG_H
+#ifndef ADDRESSEEITEM_H
+#define ADDRESSEEITEM_H
 
 #include <q3dict.h>
 
@@ -62,4 +62,5 @@ class AddresseeItem : public K3ListViewItem
     private:
         KABC::Addressee mAddressee;
 };
-#endif
+
+#endif /* ADDRESSEEITEM_H */
