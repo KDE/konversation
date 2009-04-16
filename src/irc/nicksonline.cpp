@@ -311,7 +311,7 @@ void NicksOnline::updateServerOnlineList(Server* servr)
     // watch list.
     networkRoot->setText(nlvcServerName, serverName);
     // Update list of servers in the network that are connected.
-    QStringList serverList = networkRoot->text(nlvcAdditionalInfo).split(",", QString::SkipEmptyParts);
+    QStringList serverList = networkRoot->text(nlvcAdditionalInfo).split(',', QString::SkipEmptyParts);
     if (!serverList.contains(serverName)) serverList.append(serverName);
     networkRoot->setText(nlvcAdditionalInfo, serverList.join(","));
     // Get item in nicklistview for the Offline branch.
@@ -548,7 +548,7 @@ void NicksOnline::refreshAllServerOnlineLists()
     {
         Q3ListViewItem* nextChild = child->nextSibling();
         QString networkName = child->text(nlvcNetwork);
-        QStringList serverNameList = child->text(nlvcAdditionalInfo).split(",", QString::SkipEmptyParts);
+        QStringList serverNameList = child->text(nlvcAdditionalInfo).split(',', QString::SkipEmptyParts);
         QStringList::Iterator itEnd = serverNameList.end();
         QStringList::Iterator it = serverNameList.begin();
         while (it != itEnd)

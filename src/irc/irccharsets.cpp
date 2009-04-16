@@ -68,7 +68,7 @@ namespace Konversation
     {
         // simplify ambiguousName
         QString simplifiedAmbiguousName( ambiguousName.toLower() );
-        simplifiedAmbiguousName.replace( QRegExp( "[^a-z0-9]" ), "" );
+        simplifiedAmbiguousName.remove( QRegExp( "[^a-z0-9]" ));
 
         // search m_simplifiedShortNames
         int index = 0;
@@ -153,7 +153,7 @@ namespace Konversation
             else
             {
                 m_shortNames.append( encodingName );
-                m_simplifiedShortNames.append( encodingName.replace( reSimplify, "" ) );
+                m_simplifiedShortNames.append( encodingName.remove( reSimplify ));
 
                 if(encodingName == "jis7")        // Add iso-2022-jp which is same as jis7 but not in Qt
                 {

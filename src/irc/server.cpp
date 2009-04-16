@@ -822,7 +822,7 @@ void Server::autoCommandsAndChannels()
         if (!getNickname().isEmpty())
             connectCommands.replace("%nick", getNickname());
 
-        QStringList connectCommandsList = connectCommands.split(";", QString::SkipEmptyParts);
+        QStringList connectCommandsList = connectCommands.split(';', QString::SkipEmptyParts);
         QStringList::iterator iter;
 
         for (iter = connectCommandsList.begin(); iter != connectCommandsList.end(); ++iter)
@@ -899,7 +899,7 @@ void Server::processIncomingData()
         if (m_rawLog)
         {
             QString toRaw = front;
-            m_rawLog->appendRaw("&gt;&gt; " + toRaw.replace("&","&amp;").replace("<","&lt;").replace(">","&gt;").replace(QRegExp("\\s"), "&nbsp;"));
+            m_rawLog->appendRaw("&gt;&gt; " + toRaw.replace('&',"&amp;").replace('<',"&lt;").replace('>',"&gt;").replace(QRegExp("\\s"), "&nbsp;"));
         }
         m_inputFilter.parseLine(front);
         m_processingIncoming = false;
@@ -1135,7 +1135,7 @@ int Server::_send_internal(QString outputLine)
     qint64 sout = m_socket->write(encoded, encoded.length());
 
     if (m_rawLog)
-        m_rawLog->appendRaw("&lt;&lt; " + outputLine.replace("&","&amp;").replace("<","&lt;").replace(">","&gt;"));
+        m_rawLog->appendRaw("&lt;&lt; " + outputLine.replace('&',"&amp;").replace('<',"&lt;").replace('>',"&gt;"));
 
     return sout;
 }
@@ -1514,7 +1514,7 @@ void Server::requestWho(const QString& channel)
 
 void Server::requestUserhost(const QString& nicks)
 {
-    const QStringList nicksList = nicks.split(" ", QString::SkipEmptyParts);
+    const QStringList nicksList = nicks.split(' ', QString::SkipEmptyParts);
     for(QStringList::ConstIterator it=nicksList.constBegin() ; it!=nicksList.constEnd() ; ++it)
         m_inputFilter.setAutomaticRequest("USERHOST", *it, true);
     queue("USERHOST "+nicks, LowPriority);
@@ -2222,7 +2222,7 @@ ChannelNickPtr Server::addNickToJoinedChannelsList(const QString& channelName, c
     bool doChannelJoinedSignal = false;
     bool doWatchedNickChangedSignal = false;
     bool doChannelMembersChangedSignal = false;
-    QString lcNickname = nickname.toLower();
+    QString lcNickname(nickname.toLower());
     // Create NickInfo if not already created.
     NickInfoPtr nickInfo = getNickInfo(nickname);
     if (!nickInfo)
@@ -2305,7 +2305,7 @@ ChannelNickPtr Server::addNickToUnjoinedChannelsList(const QString& channelName,
     bool doChannelUnjoinedSignal = false;
     bool doWatchedNickChangedSignal = false;
     bool doChannelMembersChangedSignal = false;
-    QString lcNickname = nickname.toLower();
+    QString lcNickname(nickname.toLower());
     // Create NickInfo if not already created.
     NickInfoPtr nickInfo = getNickInfo(nickname);
     if (!nickInfo)
@@ -2364,7 +2364,7 @@ NickInfoPtr Server::setWatchedNickOnline(const QString& nickname)
     NickInfoPtr nickInfo = getNickInfo(nickname);
     if (!nickInfo)
     {
-        QString lcNickname = nickname.toLower();
+        QString lcNickname(nickname.toLower());
         nickInfo = new NickInfo(nickname, this);
         m_allNicks.insert(lcNickname, nickInfo);
     }
@@ -2399,7 +2399,7 @@ void Server::setWatchedNickOffline(const QString& nickname, const NickInfoPtr ni
 
 bool Server::setNickOffline(const QString& nickname)
 {
-    QString lcNickname = nickname.toLower();
+    QString lcNickname(nickname.toLower());
     NickInfoPtr nickInfo = getNickInfo(lcNickname);
 
     bool wasOnline = nickInfo ? nickInfo->getPrintedOnline() : false;
@@ -2438,7 +2438,7 @@ bool Server::setNickOffline(const QString& nickname)
  */
 bool Server::deleteNickIfUnlisted(const QString &nickname)
 {
-    QString lcNickname = nickname.toLower();
+    QString lcNickname(nickname.toLower());
     // Don't delete our own nickinfo.
     if (lcNickname == loweredNickname()) return false;
 
@@ -2598,10 +2598,10 @@ void Server::renameNickInfo(NickInfoPtr nickInfo, const QString& newname)
     if (nickInfo)
     {
         // Get existing lowercase nickname and rename nickname in the NickInfo object.
-        QString lcNickname = nickInfo->loweredNickname();
+        QString lcNickname(nickInfo->loweredNickname());
         nickInfo->setNickname(newname);
         nickInfo->setIdentified(false);
-        QString lcNewname = newname.toLower();
+        QString lcNewname(newname.toLower());
         // Rename the key in m_allNicks list.
         m_allNicks.remove(lcNickname);
         m_allNicks.insert(lcNewname, nickInfo);
@@ -2628,7 +2628,7 @@ void Server::renameNickInfo(NickInfoPtr nickInfo, const QString& newname)
     }
     else
     {
-        kDebug() << "server::renameNickInfo() was called for newname='" << newname << "' but nickInfo is null";
+        kDebug() << "was called for newname='" << newname << "' but nickInfo is null";
     }
 }
 

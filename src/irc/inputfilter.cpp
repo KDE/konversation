@@ -696,7 +696,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     QString host;
 
                     if(trailing.contains("@"))
-                        host = trailing.section("@",1);
+                        host = trailing.section('@',1);
 
                     // re-set nickname, since the server may have truncated it
                     if(parameterList.value(0)!=server->getNickname())
@@ -1180,7 +1180,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 {
                     // escape html tags
                     QString escapedRealName(trailing);
-                    escapedRealName.replace("<","&lt;").replace(">","&gt;");
+                    escapedRealName.replace('<',"&lt;").replace('>',"&gt;");
                     server->appendMessageToFrontmost(i18n("Whois"),
                         i18n("%1 is %2@%3 (%4)",
                              parameterList.value(1),
@@ -1251,7 +1251,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 {
                     nickInfo->setHostmask(i18n("%1@%2", parameterList.value(2), parameterList.value(3)));
                                                   //Strip off the "0 "
-                    nickInfo->setRealName(trailing.section(" ", 1));
+                    nickInfo->setRealName(trailing.section(' ', 1));
                     nickInfo->setAway(bAway);
                     if(!bAway)
                     {
@@ -1267,7 +1267,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                             i18n("%1 is %2@%3 (%4)%5",parameterList.value(5),
                             parameterList.value(2),
                             parameterList.value(3),
-                            trailing.section(" ", 1),
+                            trailing.section(' ', 1),
                             bAway?i18n(" (Away)"):QString())
                             , false); // Don't parse as url
                     }

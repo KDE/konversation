@@ -349,7 +349,7 @@ void IRCInput::insertFromMimeData(const QMimeData * source)
         bool signal=false;
 
         // replace \r with \n to make xterm pastes happy
-        pasteText.replace("\r","\n");
+        pasteText.replace('\r','\n');
         // remove blank lines
         while(pasteText.contains("\n\n"))
             pasteText.replace("\n\n","\n");

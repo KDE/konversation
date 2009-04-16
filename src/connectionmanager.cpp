@@ -323,7 +323,7 @@ void ConnectionManager::decodeAddress(const QString& address, ConnectionSettings
     // Example: Non-RFC 2732 notation: 2001:0DB8:0000:0000:0000:0000:1428:57ab:6666
     if (address.contains(':')==8)
     {
-        host = address.section(':',0,-2).remove("[").remove("]");
+        host = address.section(':',0,-2).remove('[').remove(']');
         port = address.section(':',-1);
     }
     // Full-length IPv6 address without port or not-full-length IPv6 address with port
@@ -337,13 +337,13 @@ void ConnectionManager::decodeAddress(const QString& address, ConnectionSettings
         // Example: [2001:0DB8::1428:57ab]:6666
         if (address.section(':',0,-2).endsWith(']') && !address.section(':',-1).endsWith(']'))
         {
-            host = address.section(':',0,-2).remove("[").remove("]");
+            host = address.section(':',0,-2).remove('[').remove(']');
             port = address.section(':',-1);
         }
         else
         {
             QString addressCopy = address;
-            host = addressCopy.remove("[").remove("]");
+            host = addressCopy.remove('[').remove(']');
         }
     }
     // IPv4 address or ordinary hostname with port

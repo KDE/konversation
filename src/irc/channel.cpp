@@ -2118,9 +2118,9 @@ void Channel::updateQuickButtons(const QStringList &newButtonList)
         quickButton->setDefinition(buttonText);
 
         // Add tool tips
-        QString toolTip=buttonText.replace("&","&amp;").
-            replace("<","&lt;").
-            replace(">","&gt;");
+        QString toolTip=buttonText.replace('&',"&amp;").
+            replace('<',"&lt;").
+            replace('>',"&gt;");
 
         quickButton->setToolTip(toolTip);
 

@@ -420,8 +420,8 @@ void IRCView::appendBacklogMessage(const QString& firstColumn,const QString& raw
     }
 
     // Nicks are in "<nick>" format so replace the "<>"
-    nick.replace("<","&lt;");
-    nick.replace(">","&gt;");
+    nick.replace('<',"&lt;");
+    nick.replace('>',"&gt;");
 
     QString line;
 
@@ -578,9 +578,9 @@ bool doHighlight, bool parseURL, bool self)
 
     // TODO: Use QStyleSheet::escape() here
     // Replace all < with &lt;
-    filteredLine.replace("<","\x0blt;");
+    filteredLine.replace('<',"\x0blt;");
     // Replace all > with &gt;
-    filteredLine.replace(">", "\x0bgt;");
+    filteredLine.replace('>', "\x0bgt;");
 
     if(filteredLine.contains('\x07'))
     {
@@ -737,7 +737,7 @@ bool doHighlight, bool parseURL, bool self)
                 {
                   m_autoTextToSend.replace(QString("%%1").arg(capture),captures[capture]);
                 }
-                m_autoTextToSend.replace(QRegExp("%[0-9]"),QString());
+                m_autoTextToSend.remove(QRegExp("%[0-9]"));
             }
         }
 
@@ -933,7 +933,7 @@ void IRCView::openLink(const QString& url, bool)
     else if (url.startsWith('#') && m_server && m_server->isConnected())
     {
         QString recipient(url);
-        recipient.remove("#");
+        recipient.remove('#');
         NickInfoPtr nickInfo = m_server->obtainNickInfo(recipient);
         m_server->addQuery(nickInfo, true /*we initiated*/);
     }

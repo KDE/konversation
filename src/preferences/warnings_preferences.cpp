@@ -131,7 +131,7 @@ void Warnings_Config::loadSettings()
     item = new QTreeWidgetItem(dialogListView);
     item->setText(0, dialogDefinitions[i]);
     item->setFlags(item->flags() | Qt::ItemIsUserCheckable);
-    flagName = flagNames.section(",",i,i);
+    flagName = flagNames.section(',',i,i);
     item->setData(0, WarningNameRole, flagName);
 
     if (flagName == "LargePaste" || flagName == "Invitation")

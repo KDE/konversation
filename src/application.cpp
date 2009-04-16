@@ -802,8 +802,8 @@ void KonversationApplication::splitNick_Server(const QString& nick_server, QStri
     //kaddresbook uses the utf separator 0xE120, so treat that as a separator as well
     QString nickServer = nick_server;
     nickServer.replace(QChar(0xE120), "@");
-    ircnick = nickServer.section("@",0,0);
-    serverOrGroup = nickServer.section("@",1);
+    ircnick = nickServer.section('@',0,0);
+    serverOrGroup = nickServer.section('@',1);
 }
 
 NickInfoPtr KonversationApplication::getNickInfo(const QString &ircnick, const QString &serverOrGroup)
@@ -873,7 +873,7 @@ QString KonversationApplication::doAutoreplace(const QString& text,bool output)
                         {
                             replacement.replace(QString("%%1").arg(capture),captures[capture]);
                         }
-                        replacement.replace(QRegExp("%[0-9]"),QString());
+                        replacement.remove(QRegExp("%[0-9]"));
                         // replace input with replacement
                         line.replace(index, captures[0].length(), replacement);
                         index += replacement.length();
