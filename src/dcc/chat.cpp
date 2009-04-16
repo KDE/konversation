@@ -219,7 +219,7 @@ void DccChat::readData()
 
         QStringList lines = line.split('\n', QString::SkipEmptyParts);
 
-        for( QStringList::iterator itLine = lines.begin() ; itLine != lines.end() ; itLine++ )
+        for( QStringList::iterator itLine = lines.begin() ; itLine != lines.end() ; ++itLine )
         {
             if( (*itLine).startsWith( "\x01" ) )
             {
@@ -272,7 +272,7 @@ void DccChat::sendDccChatText(const QString& sendLine)
         // init stream props
         stream.setCodec(Konversation::IRCCharsets::self()->codecForName(m_encoding.isEmpty() ? Konversation::IRCCharsets::self()->encodingForLocale() : m_encoding));
 
-        for( QStringList::iterator itLine = lines.begin() ; itLine != lines.end() ; itLine++ )
+        for( QStringList::iterator itLine = lines.begin() ; itLine != lines.end() ; ++itLine )
         {
             QString line( *itLine );
 
