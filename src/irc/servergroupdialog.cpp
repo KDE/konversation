@@ -33,7 +33,6 @@
 #include <kcombobox.h>
 #include <kpushbutton.h>
 #include <klineedit.h>
-#include <kcombobox.h>
 
 
 namespace Konversation

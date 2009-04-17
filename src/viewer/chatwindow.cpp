@@ -355,7 +355,7 @@ void ChatWindow::logText(const QString& text)
             // close file
             logfile.close();
         }
-        else kWarning() << "ChatWindow::logText(): open(QIODevice::Append) for " << logfile.fileName() << " failed!" << endl;
+        else kWarning() << "open(QIODevice::Append) for " << logfile.fileName() << " failed!";
     }
 }
 
