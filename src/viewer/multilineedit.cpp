@@ -22,8 +22,9 @@ QString MultilineEdit::returnText;                // static
 MultilineEdit::MultilineEdit(QWidget* parent, const QString& text) :
 KDialog(parent )
 {
-    setButtons( KDialog::User1 | KDialog::Ok | KDialog::Cancel );
+    setButtons( KDialog::User1 | KDialog::User2 | KDialog::Ok | KDialog::Cancel );
     setButtonText( KDialog::User1, i18n("Add &Quotation Indicators") );
+    setButtonText( KDialog::User2, i18n("Remove Newlines") );
     setDefaultButton( KDialog::Ok );
     setCaption( i18n("Edit Multiline Paste") );
     setModal( true );
@@ -44,6 +45,7 @@ KDialog(parent )
     connect( this, SIGNAL( okClicked() ), this, SLOT( slotOk() ) );
     connect( this, SIGNAL( cancelClicked() ), this, SLOT( slotCancel() ) );
     connect( this, SIGNAL( user1Clicked() ), this, SLOT( slotUser1() ) );
+    connect( this, SIGNAL( user2Clicked() ), this, SLOT( slotUser2() ) );   
 }
 
 MultilineEdit::~MultilineEdit()
@@ -70,6 +72,40 @@ void MultilineEdit::slotUser1()
     for( QStringList::iterator it=lines.begin() ; it!=lines.end() ; ++it )
         (*it) = "> " + (*it);
     textEditor->setText(lines.join("\n"));
+}
+
+void MultilineEdit::slotUser2()
+{
+    QString pattern("\n");
+    QRegExp searchFor(pattern);
+    searchFor.setPatternSyntax(QRegExp::FixedString);
+    removeNonprintingChars();
+    QString line=textEditor->toPlainText();
+    int index=line.indexOf(searchFor);
+    int patLen = pattern.length();
+    while (index>=0)
+    {
+        QChar before,after;
+        int length,nextLength;
+        length=index;
+        length+=patLen;
+        if (index!=0) before = line.at(index-1);
+        if (line.length() > length) after = line.at(length);
+    
+        if (before.isSpace() || after.isSpace())
+        {
+            line.replace(index, patLen, QString());
+            nextLength = index;
+        }
+        else
+        {
+            line.replace(index, patLen, " ");
+            nextLength = index+1;
+        }
+        index=line.indexOf(searchFor,nextLength);
+    }
+    textEditor->setText(line);
+    dislayNonprintingChars();
 }
 
 QString MultilineEdit::edit(QWidget* parent, const QString& text)

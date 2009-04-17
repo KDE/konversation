@@ -32,6 +32,7 @@ class MultilineEdit : public KDialog
         void slotOk();
         void slotCancel();
         void slotUser1();
+        void slotUser2();
         void dislayNonprintingChars();
 
     protected:
