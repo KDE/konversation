@@ -612,7 +612,7 @@
   </group>
   <group name="DCC Settings">
     <entry key="BufferSize" type="Int" name="DccBufferSize">
-      <default>8192</default>
+      <default>16384</default>
       <label></label>
       <whatsthis></whatsthis>
     </entry>
@@ -669,7 +669,7 @@
     <entry key="SpaceToUnderscore" type="Bool" name="DccSpaceToUnderscore">
       <default>true</default>
       <label></label>
-      <whatis></whatis>
+      <whatsthis></whatsthis>
     </entry>
     <entry key="AutoGet" type="Bool" name="DccAutoGet">
       <default>false</default>
