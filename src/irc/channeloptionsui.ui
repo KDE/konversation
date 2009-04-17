@@ -21,7 +21,7 @@ the Free Software Foundation; either version 2 of the License, or
     <number>0</number>
    </property>
    <item>
-    <widget class="QTabWidget" name="channelTabWidget">
+    <widget class="KTabWidget" name="channelTabWidget">
      <property name="currentIndex">
       <number>0</number>
      </property>
@@ -54,9 +54,6 @@ the Free Software Foundation; either version 2 of the License, or
           <property name="allColumnsShowFocus">
            <bool>true</bool>
           </property>
-          <attribute name="headerShowSortIndicator" stdset="0">
-           <bool>false</bool>
-          </attribute>
           <attribute name="headerShowSortIndicator" stdset="0">
            <bool>false</bool>
           </attribute>
@@ -374,6 +371,12 @@ the Free Software Foundation; either version 2 of the License, or
    <class>KLineEdit</class>
    <extends>QLineEdit</extends>
    <header>klineedit.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KTabWidget</class>
+   <extends>QTabWidget</extends>
+   <header>ktabwidget.h</header>
+   <container>1</container>
   </customwidget>
   <customwidget>
    <class>KTextEdit</class>

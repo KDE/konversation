@@ -19,7 +19,6 @@
 #include "server.h"
 
 #include <qpushbutton.h>
-#include <qcombobox.h>
 #include <qlabel.h>
 
 #include <qtextcodec.h>
@@ -29,6 +28,7 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kvbox.h>
+#include <kcombobox.h>
 
 
 StatusPanel::StatusPanel(QWidget* parent) : ChatWindow(parent)
@@ -48,9 +48,9 @@ StatusPanel::StatusPanel(QWidget* parent) : ChatWindow(parent)
     commandLineBox->setSpacing(spacing());
     commandLineBox->setMargin(0);
 
-    nicknameCombobox=new QComboBox(commandLineBox);
+    nicknameCombobox=new KComboBox(commandLineBox);
     nicknameCombobox->setEditable(true);
-    nicknameCombobox->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+    nicknameCombobox->setSizeAdjustPolicy(KComboBox::AdjustToContents);
     nicknameCombobox->setWhatsThis(i18n("<qt><p>This shows your current nick, and any alternatives you have set up.  If you select or type in a different nickname, then a request will be sent to the IRC server to change your nick.  If the server allows it, the new nickname will be selected.  If you type in a new nickname, you need to press 'Enter' at the end.</p><p>You can add change the alternative nicknames from the <em>Identities</em> option in the <em>File</em> menu.</p></qt>"));
 
     awayLabel=new QLabel(i18n("(away)"), commandLineBox);

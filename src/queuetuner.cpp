@@ -29,6 +29,7 @@
 #include <kmenu.h>
 #include <kmessagebox.h>
 #include <klocale.h>
+#include <kcombobox.h>
 
 
 QueueTuner::QueueTuner(QWidget* parent, ViewContainer *container)
@@ -62,7 +63,7 @@ QueueTuner::~QueueTuner()
 }
 
 //lps, lpm, bps, kbps
-static void rateToWidget(IRCQueue::EmptyingRate& rate, QSpinBox *r, QComboBox* t, QSpinBox *i)
+static void rateToWidget(IRCQueue::EmptyingRate& rate, QSpinBox *r, KComboBox* t, QSpinBox *i)
 {
     r->setValue(rate.m_rate);
     t->setCurrentIndex(rate.m_type);

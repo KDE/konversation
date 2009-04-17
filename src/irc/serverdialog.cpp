@@ -14,12 +14,12 @@
 
 #include <qlayout.h>
 #include <qlabel.h>
-#include <qlineedit.h>
 #include <qspinbox.h>
 #include <qcheckbox.h>
 
 #include <klocale.h>
 #include <kmessagebox.h>
+#include <klineedit.h>
 
 
 namespace Konversation
@@ -36,7 +36,7 @@ namespace Konversation
         mainLayout->setMargin(0);
 
         QLabel* serverLbl = new QLabel(i18n("&Server:"), mainWidget());
-        m_serverEdit = new QLineEdit(mainWidget());
+        m_serverEdit = new KLineEdit(mainWidget());
         m_serverEdit->setWhatsThis(i18n("The name or IP number of the server. irchelp.org maintains a list of servers."));
         serverLbl->setBuddy(m_serverEdit);
 
@@ -50,8 +50,8 @@ namespace Konversation
         portLbl->setBuddy(m_portSBox);
 
         QLabel* passwordLbl = new QLabel(i18n("Pass&word:"), mainWidget());
-        m_passwordEdit = new QLineEdit(mainWidget());
-        m_passwordEdit->setEchoMode(QLineEdit::Password);
+        m_passwordEdit = new KLineEdit(mainWidget());
+        m_passwordEdit->setEchoMode(KLineEdit::Password);
         passwordLbl->setBuddy(m_passwordEdit);
 
         m_sslChBox = new QCheckBox(i18n("S&ecure connection (SSL)"), mainWidget());

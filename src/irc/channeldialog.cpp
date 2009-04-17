@@ -13,10 +13,10 @@
 
 #include <qlayout.h>
 #include <qlabel.h>
-#include <qlineedit.h>
 
 #include <klocale.h>
 #include <kmessagebox.h>
+#include <klineedit.h>
 
 
 namespace Konversation
@@ -33,13 +33,13 @@ namespace Konversation
         mainLayout->setMargin(0);
 
         QLabel* channelLbl = new QLabel(i18n("C&hannel:"), mainWidget());
-        m_channelEdit = new QLineEdit(mainWidget());
+        m_channelEdit = new KLineEdit(mainWidget());
         m_channelEdit->setMaxLength(50);
         channelLbl->setBuddy(m_channelEdit);
 
         QLabel* passwordLbl = new QLabel(i18n("Pass&word:"), mainWidget());
-        m_passwordEdit = new QLineEdit(mainWidget());
-        m_passwordEdit->setEchoMode(QLineEdit::Password);
+        m_passwordEdit = new KLineEdit(mainWidget());
+        m_passwordEdit->setEchoMode(KLineEdit::Password);
         passwordLbl->setBuddy(m_passwordEdit);
 
         mainLayout->addWidget(channelLbl, 0, 0);

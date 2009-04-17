@@ -15,7 +15,7 @@
 #include <kdialog.h>
 
 
-class QLineEdit;
+class KLineEdit;
 
 namespace Konversation
 {
@@ -37,8 +37,8 @@ namespace Konversation
             void slotOk();
         void slotServerNameChanged( const QString& );
         private:
-            QLineEdit* m_channelEdit;
-            QLineEdit* m_passwordEdit;
+            KLineEdit* m_channelEdit;
+            KLineEdit* m_passwordEdit;
 
     };
 

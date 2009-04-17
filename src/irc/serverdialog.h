@@ -14,7 +14,8 @@
 
 #include <kdialog.h>
 
-class QLineEdit;
+class KLineEdit;
+
 class QSpinBox;
 class QCheckBox;
 
@@ -38,9 +39,9 @@ namespace Konversation
             void slotOk();
         void slotServerNameChanged( const QString& );
         private:
-            QLineEdit* m_serverEdit;
+            KLineEdit* m_serverEdit;
             QSpinBox* m_portSBox;
-            QLineEdit* m_passwordEdit;
+            KLineEdit* m_passwordEdit;
             QCheckBox* m_sslChBox;
     };
 

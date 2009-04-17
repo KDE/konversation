@@ -20,7 +20,7 @@
 
 class QCheckBox;
 class QLabel;
-class QComboBox;
+class KComboBox;
 
 class IRCInput;
 
@@ -85,7 +85,7 @@ class StatusPanel : public ChatWindow
 
         void showEvent(QShowEvent* event);
 
-        QComboBox* nicknameCombobox;
+        KComboBox* nicknameCombobox;
         QLabel* awayLabel;
         IRCInput* statusInput;
         QCheckBox* logCheckBox;

@@ -42,7 +42,6 @@
 #include <qsplitter.h>
 #include <qcheckbox.h>
 #include <qtimer.h>
-#include <qcombobox.h>
 #include <qtextcodec.h>
 #include <qtoolbutton.h>
 #include <qlayout.h>
@@ -61,6 +60,7 @@
 #include <KColorScheme>
 #include <kvbox.h>
 #include <khbox.h>
+#include <kcombobox.h>
 
 bool nickTimestampLessThan(const Nick* nick1, const Nick* nick2)
 {
@@ -239,9 +239,9 @@ Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
     commandLineBox = new KHBox(this);
     commandLineBox->setSpacing(spacing());
 
-    nicknameCombobox = new QComboBox(commandLineBox);
+    nicknameCombobox = new KComboBox(commandLineBox);
     nicknameCombobox->setEditable(true);
-    nicknameCombobox->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+    nicknameCombobox->setSizeAdjustPolicy(KComboBox::AdjustToContents);
     nicknameCombobox->setWhatsThis(i18n("<qt><p>This shows your current nick, and any alternatives you have set up.  If you select or type in a different nickname, then a request will be sent to the IRC server to change your nick.  If the server allows it, the new nickname will be selected.  If you type in a new nickname, you need to press 'Enter' at the end.</p><p>You can add change the alternative nicknames from the <em>Identities</em> option in the <em>File</em> menu.</p></qt>"));
 
     awayLabel = new QLabel(i18n("(away)"), commandLineBox);
