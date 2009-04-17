@@ -463,21 +463,56 @@ void KonversationApplication::readOptions()
 
     KConfigGroup cgAutoreplace(KGlobal::config()->group("Autoreplace List"));
     // Read all default entries
-    QStringList autoreplaceList(Preferences::autoreplaceList());
+    QList<QStringList> autoreplaceList(Preferences::autoreplaceList());
     // Read all entries
     index=0;
-    while (cgAutoreplace.hasKey(QString("Autoreplace%1").arg(index)))
+    // legacy code for old autoreplace format 4/6/09
+    QString autoReplaceString("Autoreplace");
+    while (cgAutoreplace.hasKey(autoReplaceString + QString::number(index)))
     {
   // read entry and get length of the string
-        QString entry=cgAutoreplace.readEntry(QString("Autoreplace%1").arg(index++));
-        unsigned int length=entry.length()-1;
+        QString entry=cgAutoreplace.readEntry(autoReplaceString + QString::number(index++));
+        int length=entry.length()-1;
         // if there's a "#" in the end, strip it (used to preserve blanks at the end of the replacement text)
         // there should always be one, but older versions did not do it, so we check first
         if (entry.at(length)=='#')
             entry=entry.left(length);
+        QString regex = entry.section(',',0,0);
+        QString direction = entry.section(',',1,1);
+        QString pattern = entry.section(',',2,2);
+        QString replace = entry.section(',',3);
         // add entry to internal list
-        autoreplaceList.append(entry);
+        autoreplaceList.append(QStringList() << regex << direction << pattern << replace);
     } // while
+    //end legacy code for old autoreplace format
+    index=0; //new code for autoreplace config
+    QString indexString(QString::number(index));
+    QString regexString("Regex");
+    QString directString("Direction");
+    QString patternString("Pattern");
+    QString replaceString("Replace");
+    while (cgAutoreplace.hasKey(patternString + indexString))
+    {
+        QString pattern = cgAutoreplace.readEntry(patternString + indexString);
+        QString regex = cgAutoreplace.readEntry(regexString + indexString, QString("0"));
+        QString direction = cgAutoreplace.readEntry(directString + indexString, QString("o"));
+        QString replace = cgAutoreplace.readEntry(replaceString + indexString, QString());
+        if (replace.length()>0)
+        {
+            int repLen=replace.length()-1;
+            if (replace.at(repLen)=='#')
+                replace=replace.left(repLen);
+        }
+        if (pattern.length()>0)
+        {
+            int patLen=pattern.length()-1;
+            if (pattern.at(patLen)=='#')
+                pattern=pattern.left(patLen);
+        }
+        index++;
+        indexString = QString::number(index);
+        autoreplaceList.append(QStringList() << regex << direction << pattern << replace);
+    }
     // Put back the changed autoreplace list
     Preferences::setAutoreplaceList(autoreplaceList);
 
@@ -829,7 +864,7 @@ NickInfoPtr KonversationApplication::getNickInfo(const QString &ircnick, const Q
 QString KonversationApplication::doAutoreplace(const QString& text,bool output)
 {
     // get autoreplace list
-    QStringList autoreplaceList=Preferences::autoreplaceList();
+    QList<QStringList> autoreplaceList=Preferences::autoreplaceList();
     // working copy
     QString line=text;
 
@@ -837,12 +872,12 @@ QString KonversationApplication::doAutoreplace(const QString& text,bool output)
     for (int index=0;index<autoreplaceList.count();index++)
     {
         // get autoreplace definition
-        QString definition=autoreplaceList[index];
+        QStringList definition=autoreplaceList[index];
         // split definition in parts
-        QString regex=definition.section(',',0,0);
-        QString direction=definition.section(',',1,1);
-        QString pattern=definition.section(',',2,2);
-        QString replacement=definition.section(',',3);
+        QString regex=definition.at(0);
+        QString direction=definition.at(1);
+        QString pattern=definition.at(2);
+        QString replacement=definition.at(3);
 
         QString isDirection=output ? "o" : "i";
 
@@ -859,7 +894,6 @@ QString KonversationApplication::doAutoreplace(const QString& text,bool output)
                 int index = 0;
 
                 do {
-                    replacement = definition.section(',',3);
                     // find matches
                     index = line.indexOf(needleReg, index);
 
@@ -882,9 +916,32 @@ QString KonversationApplication::doAutoreplace(const QString& text,bool output)
             }
             else
             {
-                QRegExp needleReg("\\b" + QRegExp::escape(pattern) + "\\b");
-                needleReg.setCaseSensitivity(Qt::CaseInsensitive);
-                line.replace(needleReg,replacement);
+                QRegExp needleReg(pattern);
+                needleReg.setPatternSyntax(QRegExp::FixedString);
+                int index=line.indexOf(needleReg);
+                while (index>=0)
+                {   
+                    int length,nextLength,patLen,repLen;
+                    patLen=pattern.length();
+                    repLen=replacement.length();
+                    length=index;
+                    length+=patLen;
+                    nextLength=length;
+                    //nextlength is used to account for the replacement taking up less space
+                    QChar before,after;
+                    if (index!=0) before = line.at(index-1);
+                    if (line.length() > length) after = line.at(length);
+
+                    if (index==0 || before.isSpace() || before.isPunct())
+                    {
+                        if (line.length() == length || after.isSpace() || after.isPunct())
+                        {
+                            line.replace(index,patLen,replacement);
+                            nextLength = index+repLen;
+                        }
+                    }
+                    index=line.indexOf(needleReg,nextLength);
+                }
             }
         }
     }

@@ -100,9 +100,9 @@ class Preferences : public PreferencesBase
         static void setQuickButtonList(const QStringList newList);
         static void clearQuickButtonList();
 
-        static const QStringList autoreplaceList();
-        static const QStringList defaultAutoreplaceList();
-        static void setAutoreplaceList(const QStringList newList);
+        static const QList<QStringList> autoreplaceList();
+        static const QList<QStringList> defaultAutoreplaceList();
+        static void setAutoreplaceList(const QList<QStringList> newList);
         static void clearAutoreplaceList();
 
         static void addIdentity(IdentityPtr identity);
@@ -163,7 +163,7 @@ class Preferences : public PreferencesBase
         QMap<int, QStringList> mNotifyList;  // network id, list of nicks
         QMap< int,QMap<QString,QString> > mChannelEncodingsMap;  // mChannelEncodingsMap[serverGroupdId][channelName]
         QStringList mQuickButtonList;
-        QStringList mAutoreplaceList;
+        QList<QStringList> mAutoreplaceList;
         QString mSortingOrder;
 };
 #endif

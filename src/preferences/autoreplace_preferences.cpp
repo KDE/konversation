@@ -90,31 +90,40 @@ void Autoreplace_Config::loadSettings()
 }
 
 // fill listview with autoreplace definitions
-void Autoreplace_Config::setAutoreplaceListView(const QStringList &autoreplaceList)
+void Autoreplace_Config::setAutoreplaceListView(const QList<QStringList> &autoreplaceList)
 {
   // clear listView
   patternListView->clear();
   // go through the list
-  for(unsigned int index=autoreplaceList.count();index!=0;index--)
+  for (int index=0;index<autoreplaceList.count();index++)
   {
     // get autoreplace definition
-    QString definition=autoreplaceList[index-1];
+    QStringList definition=autoreplaceList[index];
     // cut definition apart in name and action, and create a new listview item
     QTreeWidgetItem* newItem=new QTreeWidgetItem(patternListView);
     newItem->setFlags(newItem->flags() &~ Qt::ItemIsDropEnabled);
-    newItem->setCheckState(0, Qt::Checked);
+    newItem->setCheckState(0, Qt::Unchecked);
     // Regular expression?
-    if(definition.section(',',0,0)=="1") newItem->setCheckState(0, Qt::Checked);
+    if (definition.at(0)=="1") newItem->setCheckState(0, Qt::Checked);
     // direction input/output/both
-    if(definition.section(',',1,1)=="i") newItem->setText(1,directionCombo->itemText(DIRECTION_INPUT));
-    else if(definition.section(',',1,1)=="o") newItem->setText(1,directionCombo->itemText(DIRECTION_OUTPUT));
-    else if(definition.section(',',1,1)=="io") newItem->setText(1,directionCombo->itemText(DIRECTION_BOTH));
+    if (definition.at(1)=="i") 
+    {
+        newItem->setText(1,directionCombo->itemText(DIRECTION_INPUT));
+    }
+    else if (definition.at(1)=="o")
+    {
+        newItem->setText(1,directionCombo->itemText(DIRECTION_OUTPUT));
+    }
+    else if (definition.at(1)=="io")
+    {
+        newItem->setText(1,directionCombo->itemText(DIRECTION_BOTH));
+    }
     // pattern
-    newItem->setText(2,definition.section(',',2,2));
+    newItem->setText(2,definition.at(2));
     // replacement
-    newItem->setText(3,definition.section(',',3));
+    newItem->setText(3,definition.at(3));
     // hidden column, so we are independent of the i18n()ed display string
-    newItem->setText(4,definition.section(',',1,1));
+    newItem->setText(4,definition.at(1));
   } // for
   patternListView->setCurrentItem(patternListView->topLevelItem(0));
 }
@@ -132,16 +141,26 @@ void Autoreplace_Config::saveSettings()
   KConfigGroup grp = config->group("Autoreplace List");
 
   // create empty list
-  QStringList newList=currentAutoreplaceList();
+  QList<QStringList> newList=currentAutoreplaceList();
 
   // check if there are any patterns in the list view
   if(newList.count())
   {
     // go through all patterns and save them into the configuration
+    QString regexString("Regex");
+    QString directString("Direction");
+    QString patternString("Pattern");
+    QString replaceString("Replace");
     for(int index=0;index<newList.count();index++)
     {
-      // write the current entry's pattern and replacement (adds a "#" to preserve blanks at the end of the line)
-     grp.writeEntry(QString("Autoreplace%1").arg(index),newList[index]+'#');
+        // write the current entry's pattern and replacement (adds a "#" to preserve blanks at the end of the line)
+        QString indexString(QString::number(index));
+        QStringList definition = newList[index];
+        grp.writeEntry(regexString + indexString,definition.at(0)); //regex status
+        grp.writeEntry(directString + indexString,definition.at(1)); //direction
+        grp.writeEntry(patternString + indexString,definition.at(2)+'#'); //pattern
+        grp.writeEntry(replaceString + indexString,definition.at(3)+'#'); //replace
+        
     } // for
   }
   // if there were no entries at all, write a dummy entry to prevent KConfigXT from "optimizing"
@@ -161,21 +180,21 @@ void Autoreplace_Config::restorePageToDefaults()
   setAutoreplaceListView(Preferences::defaultAutoreplaceList());
 }
 
-QStringList Autoreplace_Config::currentAutoreplaceList()
+QList<QStringList> Autoreplace_Config::currentAutoreplaceList()
 {
   // get first item of the autoreplace listview
   QTreeWidgetItem* item=patternListView->topLevelItem(0);
   // create empty list
-  QStringList newList;
+  QList<QStringList> newList;
 
   // go through all items and save them into the configuration
   while(item)
   {
-    QString checked="0";
-    if(static_cast<QTreeWidgetItem*>(item)->checkState(0) == Qt::Checked) checked="1";
+    QString regex="0";
+    if (static_cast<QTreeWidgetItem*>(item)->checkState(0) == Qt::Checked) regex="1";
 
     // remember entry in internal list (col 4 is hidden for input/output)
-    newList.append(checked+','+item->text(4)+','+item->text(2)+','+item->text(3));
+    newList.append(QStringList() << regex << item->text(4) << item->text(2) << item->text(3));
     // get next item in the listview
     item=patternListView->itemBelow(item);
   } // while
@@ -272,7 +291,14 @@ void Autoreplace_Config::patternChanged(const QString& newPattern)
   if(item)
   {
     // rename pattern
-    item->setText(2,newPattern);
+    if (newPattern.length()>0)
+    {
+        item->setText(2,newPattern);
+    }
+    else
+    {
+        item->setText(2,QString("New"));
+    }
     // tell the config system that something has changed
     if(!m_newItemSelected) emit modified();
   }
