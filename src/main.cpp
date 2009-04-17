@@ -78,6 +78,7 @@ int main(int argc, char* argv[])
     aboutData.addCredit(ki18n("Emil Obermayr"),ki18n("Sysinfo script"),"nobs@tigress.com");
     aboutData.addCredit(ki18n("Stanislav Nikolov"),ki18n("Bug fixes"),"valsinats@gmail.com");
     aboutData.addCredit(ki18n("Juan Carlos Torres"),ki18n("Auto-join context menu"),"carlosdgtorres@gmail.com");
+    aboutData.addCredit(ki18n("Travis McHenry"),ki18n("Newlines remove button in multi-line paste editor, auto-replace fixes"),"tmchenryaz@cox.net");
 
     KCmdLineArgs::init(argc, argv, &aboutData);
     KCmdLineOptions options;
