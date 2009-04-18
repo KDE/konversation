@@ -254,29 +254,38 @@ void ChatWindow::setLogfileName(const QString& name)
                     if(backlog.device()->size() > packetSize * ( offset + 1 ))
                     {
                         // Set file pointer to the packet size above the offset
-                        backlog.device()->seek(backlog.device()->size() - packetSize * ( offset + 1 ));
+                        backlog.seek(backlog.device()->size() - packetSize * ( offset + 1 ));
                         // Skip first line, since it may be incomplete
                         backlog.readLine();
                     }
                     else
                     {
                         // Set file pointer to the head
-                        backlog.device()->reset();
+
+                        // Qt 4.5 Doc: Note that when using a QTextStream on a
+                        // QFile, calling reset() on the QFile will not have the
+                        // expected result because QTextStream buffers the  file.
+                        // Use the QTextStream::seek() function instead.
+                        // backlog.device()->reset();
+                        backlog.seek( 0 );
                     }
 
-                    qint64 currentPacketHeadPosition = backlog.device()->pos();
+                    qint64 currentPacketHeadPosition = backlog.pos();
 
                     // Loop until end of file reached
-                    while(!backlog.atEnd() && backlog.device()->pos() < lastPacketHeadPosition)
+                    while(!backlog.atEnd() && backlog.pos() < lastPacketHeadPosition)
                     {
                         // remember actual file position to check for deadlocks
-                        filePosition = backlog.device()->pos();
+                        filePosition = backlog.pos();
                         backlogLine = backlog.readLine();
 
                         // check for deadlocks
-                        if(backlog.device()->pos() == filePosition) backlog.device()->seek(filePosition + 1);
+                        if(backlog.pos() == filePosition)
+                        {
+                            backlog.seek(filePosition + 1);
+                        }
 
-                        // if a tab character is present in the line
+                        // if a tab character is present in the line, meaning it is a valid chatline
                         if (backlogLine.contains('\t'))
                         {
                             // extract first column from log
@@ -315,7 +324,9 @@ void ChatWindow::setLogfileName(const QString& name)
                 QStringList::Iterator itFirstColumn = firstColumns.begin();
                 QStringList::Iterator itMessage = messages.begin();
                 for( ; itFirstColumn != firstColumns.end() ; ++itFirstColumn, ++itMessage )
+                {
                     appendBacklogMessage(*itFirstColumn, *itMessage);
+                }
             }
         } // if(Preferences::showBacklog())
     }
