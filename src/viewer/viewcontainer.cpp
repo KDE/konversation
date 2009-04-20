@@ -45,6 +45,8 @@
 #include <KGlobalSettings>
 #include <KVBox>
 #include <KXMLGUIFactory>
+#include <KRun>
+#include <KUrl>
 
 
 #include <KActionCollection>
@@ -1967,9 +1969,16 @@ void ViewContainer::openLogFile(const QString& caption, const QString& file)
 {
     if (!file.isEmpty())
     {
-        LogfileReader* logReader = new LogfileReader(m_tabWidget, file);
-        addView(logReader, i18n("Logfile of %1",caption));
-        logReader->setServer(0);
+        if(Preferences::self()->useExternalLogViewer())
+        {
+            new KRun(KUrl(file), m_window, 0, false, false, "");
+        }
+        else
+        {
+            LogfileReader* logReader = new LogfileReader(m_tabWidget, file);
+            addView(logReader, i18n("Logfile of %1",caption));
+            logReader->setServer(0);
+        }
     }
 }
 

@@ -63,6 +63,13 @@ the Free Software Foundation; either version 2 of the License, or
         </property>
        </widget>
       </item>
+      <item row ="4" column="0">
+       <widget class="QCheckBox" name="kcfg_UseExternalLogViewer" >
+        <property name="text">
+         <string>Use system text editor to open logs</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>
@@ -97,6 +104,7 @@ the Free Software Foundation; either version 2 of the License, or
   <tabstop>kcfg_LowerLog</tabstop>
   <tabstop>kcfg_AddHostnameToLog</tabstop>
   <tabstop>kcfg_LogfilePath</tabstop>
+  <tabstop>kcfg_UseExternalLogViewer</tabstop>
  </tabstops>
  <includes>
   <include location="local" >kurlrequester.h</include>

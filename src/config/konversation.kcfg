@@ -809,6 +809,13 @@
       <whatsthis></whatsthis>
     </entry>
   </group>
+  <group name="External Log Viewer">
+    <entry key="UseExternalLogViewer" type="Bool">
+	<default>false</default>
+	<label></label>
+	<whatsthis></whatsthis>
+    </entry>
+  </group>
   <group name="Themes">
     <entry key="IconTheme" type="String">
       <default>oxygen</default>
