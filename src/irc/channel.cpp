@@ -2369,7 +2369,7 @@ void Channel::addPendingNickList(const QStringList& pendingChannelNickList)
         connect(m_processingTimer, SIGNAL(timeout()), this, SLOT(processPendingNicks()));
     }
 
-    m_pendingChannelNickLists.append(pendingChannelNickList);
+    m_pendingChannelNickLists << pendingChannelNickList;
 
     if (!m_processingTimer->isActive())
         m_processingTimer->start(0);
