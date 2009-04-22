@@ -123,14 +123,14 @@ K3ListView(parent),
         popup->addSeparator();
 
         m_openQueryAction = createAction(popup,i18n("Open &Query"),Konversation::OpenQuery);
-        m_openQueryAction->setWhatsThis("<qt><p>Start a private chat between you and this person.</p><p><em>Technical note:</em><br />The conversation between you and this person will be sent via the server.  This means that the conversation will be affected by server lag, server stability, and will be terminated when you disconnect from the server.</p></qt>");
+        m_openQueryAction->setWhatsThis(i18n("<qt><p>Start a private chat between you and this person.</p><p><em>Technical note:</em><br />The conversation between you and this person will be sent via the server.  This means that the conversation will be affected by server lag, server stability, and will be terminated when you disconnect from the server.</p></qt>"));
         m_startDccChatAction = createAction(popup,i18n("Open DCC &Chat"),Konversation::StartDccChat);
-        m_startDccChatAction->setWhatsThis("<qt><p>Start a private <em>D</em>irect <em>C</em>lient <em>C</em>onnection chat between you and this person.</p><p><em>Technical note:</em><br />The conversation between you and this person will be sent directly.  This means it is independent from the server - so if the server connection fails, or use disconnect, your DCC Chat will be unaffected.  It also means that no irc server admin can view or spy on this chat.</p></qt>");
+        m_startDccChatAction->setWhatsThis(i18n("<qt><p>Start a private <em>D</em>irect <em>C</em>lient <em>C</em>onnection chat between you and this person.</p><p><em>Technical note:</em><br />The conversation between you and this person will be sent directly.  This means it is independent from the server - so if the server connection fails, or use disconnect, your DCC Chat will be unaffected.  It also means that no irc server admin can view or spy on this chat.</p></qt>"));
         if (KAuthorized::authorizeKAction("allow_downloading"))
         {
             m_dccSendAction = createAction(popup,i18n("Send &File..."),Konversation::DccSend);
             m_dccSendAction->setIcon(KIcon("arrow-right-double"));
-            m_dccSendAction->setWhatsThis("<qt>Send a file to this person.  If you are having problem sending files, or they are sending slowly, see the Konversation Handbook and DCC preferences page.</qt>");
+            m_dccSendAction->setWhatsThis(i18n("<qt>Send a file to this person.  If you are having problem sending files, or they are sending slowly, see the Konversation Handbook and DCC preferences page.</qt>"));
         }
         m_sendMailAction = createAction(popup,i18n("&Send Email..."),Konversation::SendEmail);
         m_sendMailAction->setIcon(KIcon("mail-send"));
