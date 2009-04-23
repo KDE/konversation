@@ -119,6 +119,8 @@ class Channel : public ChatWindow
 
 //Nicklist
     public:
+        void flushPendingNicks();
+
         ChannelNickPtr getOwnChannelNick();
         ChannelNickPtr getChannelNick(const QString &ircnick);
 

@@ -1373,8 +1373,21 @@ void Channel::removeNick(ChannelNickPtr channelNick, const QString &reason, bool
         }
         else
         {
-            kWarning() << "Channel::removeNick(): Nickname " << channelNick->getNickname() << " not found!"<< endl;
+            kWarning() << "Nickname " << channelNick->getNickname() << " not found!"<< endl;
         }
+    }
+}
+
+void Channel::flushPendingNicks()
+{
+    if (m_processingTimer)
+    {
+        m_processingTimer->stop();
+    }
+
+    while (!m_pendingChannelNickLists.isEmpty())
+    {
+        processPendingNicks();
     }
 }
 
@@ -1456,7 +1469,7 @@ void Channel::kickNick(ChannelNickPtr channelNick, const QString &kicker, const 
 
         if(nick == 0)
         {
-            kWarning() << "Channel::kickNick(): Nickname " << channelNick->getNickname() << " not found!"<< endl;
+            kWarning() << "Nickname " << channelNick->getNickname() << " not found!"<< endl;
         }
         else
         {
