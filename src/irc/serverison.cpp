@@ -120,7 +120,7 @@ void ServerISON::recalculateAddressees()
         QMap<QString,QString> ISONMap;
         m_offlineNickToAddresseeMap.clear();
 
-        for( KABC::AddressBook::ConstIterator it =
+        for( KABC::AddressBook::Iterator it =
             Konversation::Addressbook::self()->getAddressBook()->begin();
             it != Konversation::Addressbook::self()->getAddressBook()->end(); ++it )
         {
