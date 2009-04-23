@@ -121,8 +121,8 @@ void ServerISON::recalculateAddressees()
         m_offlineNickToAddresseeMap.clear();
 
         for( KABC::AddressBook::ConstIterator it =
-            Konversation::Addressbook::self()->getAddressBook()->constBegin();
-            it != Konversation::Addressbook::self()->getAddressBook()->constEnd(); ++it )
+            Konversation::Addressbook::self()->getAddressBook()->begin();
+            it != Konversation::Addressbook::self()->getAddressBook()->end(); ++it )
         {
             if(Konversation::Addressbook::self()->hasAnyNicks(*it))
             {
