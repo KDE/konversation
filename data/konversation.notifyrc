@@ -159,6 +159,11 @@ Comment[zh_CN]=有人在消息中输入了你的昵称
 Comment[zh_TW]=有人在訊息中提到您的暱稱
 Action=None
 
+[Event/highlight]
+Name=Highlight triggered
+Comment=Someone triggered a highlight
+Action=None
+
 [Event/queryMessage]
 Name=Private message
 Name[bg]=Лично съобщение
