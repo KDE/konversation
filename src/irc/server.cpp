@@ -922,7 +922,7 @@ void Server::incoming()
     while (m_socket->canReadLine())
     {
         QByteArray line(m_socket->readLine());
-        line.chop(1);//remove \n blowfish doesn't like it
+        line.chop(2);//remove \n blowfish doesn't like it
         bufferLines.append(line);
     }
 
