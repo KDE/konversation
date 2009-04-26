@@ -69,10 +69,10 @@ class InputFilter : public QObject
         void addDccChat(const QString& myNick,const QString& nick,const QStringList& arguments,bool listen);
 
     protected:
-        void parseClientCommand(const QString &prefix, const QString &command, const QStringList &parameterList, const QString &trailing);
-        void parseServerCommand(const QString &prefix, const QString &command, const QStringList &parameterList, const QString &trailing);
+        void parseClientCommand(const QString &prefix, const QString &command, QStringList &parameterList);
+        void parseServerCommand(const QString &prefix, const QString &command, QStringList &parameterList);
         void parseModes(const QString &sourceNick, const QStringList &parameterList);
-        void parsePrivMsg(const QString& prefix, const QStringList& parameterList, const QString& trailing);
+        void parsePrivMsg(const QString& prefix, QStringList& parameterList);
 
         bool isAChannel(const QString &check);
         bool isIgnore(const QString &pattern, Ignore::Type type);
