@@ -73,6 +73,7 @@ kde4_add_ui_files(irc_SRCS
     irc/channeloptionsui.ui
     irc/joinchannelui.ui
     irc/servergroupdialogui.ui
+    irc/serverlistdialogui.ui
 )
 
     #=== Preferences

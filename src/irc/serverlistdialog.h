@@ -13,37 +13,38 @@
 #ifndef KONVERSATIONSERVERLISTDIALOG_H
 #define KONVERSATIONSERVERLISTDIALOG_H
 
-#include "serverlistview.h"
 #include "common.h"
 #include "servergroupsettings.h"
-
+#include "serverlistview.h"
 #include <kdialog.h>
 
 class ConnectionSettings;
-class QPushButton;
-
+class QTreeWidgetItem;
+class QCheckBox;
+namespace Ui
+{
+class ServerListDialogUI;
+}
 namespace Konversation
 {
-    class ServerListItem : public K3ListViewItem
+    class ServerListItem : public QTreeWidgetItem
     {
         public:
-            ServerListItem(K3ListView* parent, int serverGroupId, int sortIndex,
+            ServerListItem(QTreeWidget* parent, int serverGroupId, int sortIndex,
                 const QString& serverGroup, const QString& identity, const QString& channels);
-            ServerListItem(Q3ListViewItem* parent, int serverGroupId, int sortIndex, 
+            ServerListItem(QTreeWidgetItem* parent, int serverGroupId, int sortIndex, 
                 const QString& name, const ServerSettings& server);
-
+            
             int serverGroupId() const { return m_serverGroupId; }
-
             void setSortIndex(int id) { m_sortIndex = id; }
             int sortIndex() const { return m_sortIndex; }
 
             ServerSettings server() const { return m_server; }
             QString name() const { return m_name; }
             bool isServer() const { return m_isServer; }
-
             int selectedChildrenCount();
-
-            int compare(Q3ListViewItem *i, int col, bool ascending) const;
+            bool operator<(const QTreeWidgetItem &other) const;
+            void sortItems(int column, Qt::SortOrder order);
 
         private:
             int m_serverGroupId;
@@ -58,7 +59,7 @@ namespace Konversation
         Q_OBJECT
 
         public:
-            explicit ServerListDialog(QWidget *parent = 0);
+            explicit ServerListDialog(const QString& title, QWidget *parent = 0);
             ~ServerListDialog();
 
         public slots:
@@ -76,8 +77,8 @@ namespace Konversation
             void slotEdit();
             void slotDelete();
 
-            void slotSetGroupExpanded(Q3ListViewItem* item);
-            void slotSetGroupCollapsed(Q3ListViewItem* item);
+            void slotSetGroupExpanded(QTreeWidgetItem* item);
+            void slotSetGroupCollapsed(QTreeWidgetItem* item);
 
             void slotAboutToMove();
             void slotMoved();
@@ -87,19 +88,21 @@ namespace Konversation
             void setShowAtStartup(bool show);
 
         protected:
-            Q3ListViewItem* insertServerGroup(ServerGroupSettingsPtr serverGroup);
+            QTreeWidgetItem* insertServerGroup(ServerGroupSettingsPtr serverGroup);
             void addServerGroup(ServerGroupSettingsPtr serverGroup);
 
         private:
-            ServerListView* m_serverList;
+            Ui::ServerListDialogUI* m_mainWidget;
             QPushButton* m_addButton;
-            QPushButton* m_editButton;
             QPushButton* m_delButton;
+            QPushButton* m_editButton;
+            QCheckBox* m_showAtStartup;
+            ServerListView* m_serverList;
 
             bool m_selectedItem;
             int m_selectedServerGroupId;
             ServerSettings m_selectedServer;
-            Q3ListViewItem* m_selectedItemPtr;
+            QTreeWidgetItem* m_selectedItemPtr;
 
             int m_lastSortColumn;
             Qt::SortOrder m_lastSortOrder;
