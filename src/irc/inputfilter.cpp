@@ -863,12 +863,6 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     i18n("This channel was created on %1.",
                          when.toString(Qt::LocalDate))
                     );
-
-                if(Preferences::self()->autoWhoContinuousEnabled())
-                {
-                    emit endOfWho(parameterList.value(1));
-                }
-
                 break;
             }
             case RPL_WHOISACCOUNT:
@@ -916,6 +910,11 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     // This code path was taken for the automatic NAMES input on JOIN, upcoming
                     // NAMES input for this channel will be manual invocations of /names
                     setAutomaticRequest("NAMES",parameterList.value(1),false);
+
+                    if(Preferences::self()->autoWhoContinuousEnabled())
+                    {
+                        emit endOfWho(parameterList.value(1));
+                    }
                 }
                 else
                 {
