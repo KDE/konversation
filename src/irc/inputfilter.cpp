@@ -188,7 +188,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
         return;
 
     //PRIVMSG #channel :message
-    if (command == "privmsg" && plHas(2) && trailing.length() >2) // ok, maybe someone thinks ^A^A is a valid CTCP, but i don't.
+    if (command == "privmsg" && plHas(2))
     {
         bool isChan = isAChannel(parameterList.value(0));
         // CTCP message?
