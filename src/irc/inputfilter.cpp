@@ -597,14 +597,14 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
     {
         server->nickWasKickedFromChannel(parameterList.value(0),parameterList.value(1),sourceNick,trailing);
     }
-    else if (command=="part" && plHas(2))
+    else if (command=="part" && plHas(1))
     {
         // A version of the PART line encountered on ircu: ":Nick!user@host PART :#channel"
 
         QString channel(parameterList.value(0));
-        QString reason(parameterList[1]);
+        QString reason(parameterList.value(1));
 
-        Channel* channelPtr = server->removeNickFromChannel(channel,sourceNick,reason);
+        Channel* channelPtr = server->removeNickFromChannel(channel, sourceNick, reason);
 
         if (sourceNick != server->getNickname())
         {
