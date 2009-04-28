@@ -72,38 +72,50 @@ void ServerListView::dragMoveEvent(QDragMoveEvent *e)
     e->ignore();         //by default because
     m_dropRect= QRect(); // we're cynics dur
     QModelIndex index = indexAt(e->pos());
-    QRect rect = visualRect(index);
     if (!this->droppingOnItself(e, index)) 
     {
         if (index.isValid())
         {
+            QRect rect = visualItemRect(item);
             m_dropPosition = position(e->pos(), rect);
+            int width = this->width();
             if (indexOfTopLevelItem(sItem) >= 0 && indexOfTopLevelItem(item) >= 0) //this means it is a top level item ie server group
             {
                 switch (m_dropPosition)
                 {
                     case 0:
-                        m_dropRect = QRect(rect.left(), rect.top(), rect.width(), 0);
+                        m_dropRect = QRect(0, rect.top(), width, 0);
                         e->accept();  
                         break;
                     case 1:
                         if (!item->isExpanded()) //don't give the impression we're dropping parents on children <- lol
                         {
-                            m_dropRect = QRect(rect.left(), rect.bottom(), rect.width(), 0);
+                            m_dropRect = QRect(0, rect.bottom(), width, 0);
                             e->accept();
                         }
                         break;
                         //we ignore case 2 because it gets sent a null qrect and that's default
                     case 3:
-                        m_dropRect= QRect(rect.left(), rect.bottom(), rect.width(), 0);
+                        m_dropRect= QRect(0, rect.bottom(), width, 0);
                         e->accept();
                         break;
                 }      
-            }
+            }            
         }
-        else // we hate viewports also now 
+        else //viewports...bleh
         {
+            QTreeWidgetItem* lastTop = topLevelItem(topLevelItemCount()-1);
+            QRect rect = QRect();
+            if(!lastTop->isExpanded())
+                rect = visualItemRect(lastTop); // dishes out the last top item
+            else
+            {
+                rect = visualItemRect(lastTop->child(lastTop->childCount()-1));
+            }
             m_dropPosition= 3;
+            int width = this->width();
+            m_dropRect= QRect(0, rect.bottom(), width, 0);
+            e->accept();
         }
         
     }
@@ -136,6 +148,8 @@ int ServerListView::position(const QPoint &pos, const QRect &rect)
 //I dont want to talk about it
 void ServerListView::paintDropIndicator(QPainter *painter)
 {
+    if(m_dropRect.isNull())
+        return;
     QStyleOption opt;
     opt.init(this);
     opt.rect = m_dropRect;
