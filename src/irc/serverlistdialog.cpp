@@ -76,7 +76,7 @@ namespace Konversation
             {
                 return false; // to keep sorting of servers consistent
             }
-            if (sortIndex() >= item->sortIndex())
+            else if (sortIndex() >= item->sortIndex())
             {
                 return false;
             }
@@ -280,46 +280,27 @@ namespace Konversation
             return;
         }
 
-        QTreeWidgetItem* itemBelow = 0;
-        QTreeWidgetItem* itemAbove = 0;
-        int belowIndex=0;
-        int aboveIndex=0;
         // Have fun deleting
         foreach (QTreeWidgetItem* itemWidget, selectedItems)
         {
             item = static_cast<ServerListItem*>(itemWidget);
-            aboveIndex=item->parent()->indexOfChild(item)-1;
-            belowIndex=item->parent()->indexOfChild(item)+1;
-            if (belowIndex < 0) belowIndex=0;
-            if (aboveIndex < 0) aboveIndex=0;
-            itemBelow = item->parent()->child(belowIndex); //cry
-            itemAbove = item->parent()->child(aboveIndex);
             
             if (item == m_selectedItemPtr)
                 m_selectedItemPtr = 0;
 
             if (item->isServer())
             {
+                item->parent()->takeChild(item->parent()->indexOfChild(item));
                 Konversation::ServerGroupSettingsPtr serverGroup = Preferences::serverGroupById(item->serverGroupId());
                 serverGroup->removeServer(item->server());
                 delete item;
             }
             else
             {
+                item->treeWidget()->takeTopLevelItem(item->treeWidget()->indexOfTopLevelItem(item));
                 Preferences::removeServerGroup(item->serverGroupId());
                 delete item;
             }
-        }
-
-        if (itemBelow)
-        {
-            itemBelow->setSelected(true);
-            m_serverList->setCurrentItem(itemBelow);
-        }
-        else
-        {
-            itemAbove->setSelected(true);
-            m_serverList->setCurrentItem(itemAbove);
         }
 
         emit serverGroupsChanged();
