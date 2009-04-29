@@ -47,18 +47,14 @@ QList<QTreeWidgetItem*> ServerListView::selectedServerListItems()
 
 void ServerListView::dragEnterEvent(QDragEnterEvent *e)
 {
-    QTreeWidgetItem* item = this->itemAt(e->pos());
-    ServerListView* source = qobject_cast<ServerListView*>(e->source());
-    e->ignore(); //ignore by default because we're cynics
-    QTreeWidgetItem* sItem= source->currentItem();
     QModelIndex index = indexAt(e->pos());
     if (index.isValid())
     {
-        if (indexOfTopLevelItem(sItem) >= 0 && indexOfTopLevelItem(item) >=0) //this means both are top level items ie server groups
-        {
-            e->accept();
-            //setState(DraggingState);
-        }
+        e->accept();
+    }
+    else
+    {
+        e->ignore();
     }
 }
 

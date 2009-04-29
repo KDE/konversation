@@ -138,7 +138,10 @@ namespace Konversation
         QSize newSize = size();
         newSize = config.readEntry("Size", newSize);
         resize(newSize);
-
+        m_serverList->sortItems(0, Qt::AscendingOrder);
+        m_serverList->sortItems(-1, Qt::DescendingOrder);
+        //because it sorts the first column in ascending order by default
+        //causing problems and such.
         m_serverList->topLevelItem(0)->setSelected(true);
     }
 
@@ -338,8 +341,6 @@ namespace Konversation
 
     void ServerListDialog::slotAboutToMove()
     {
-        m_lastSortColumn = m_serverList->sortColumn();
-        //FIXME: m_lastSortOrder = m_serverList->sortOrder();
         m_serverList->sortItems(-1, Qt::DescendingOrder); //set it to sort a null column in descending order BUT CAN IT RUN CRYSIS?
     }
 
@@ -362,7 +363,6 @@ namespace Konversation
 
         Preferences::setServerGroupList(newServerGroupList);
 
-        m_serverList->sortItems(m_lastSortColumn, m_lastSortOrder);
 
         emit serverGroupsChanged();
     }

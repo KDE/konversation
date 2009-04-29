@@ -104,8 +104,6 @@ namespace Konversation
             ServerSettings m_selectedServer;
             QTreeWidgetItem* m_selectedItemPtr;
 
-            int m_lastSortColumn;
-            Qt::SortOrder m_lastSortOrder;
     };
 }
 #endif
