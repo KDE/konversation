@@ -177,7 +177,7 @@ void ServerListView::dropEvent(QDropEvent *event)
         {
             QList<QModelIndex> idxs = selectedIndexes();
             QList<QPersistentModelIndex> indexes;
-            for (int i = 0; i < idxs.count(); i++)
+            for (int i = idxs.count()-1; i >= 0; --i) 
                 indexes.append(idxs.at(i));
             
             if (indexes.contains(topIndex))
@@ -188,7 +188,7 @@ void ServerListView::dropEvent(QDropEvent *event)
             
             // Remove the items
             QList<QTreeWidgetItem *> taken;
-            for (int i = indexes.count() - 1; i >= 0; --i) 
+            for (int i = indexes.count() - 1; i >= 0; --i) //lol at unescessary complexity causing bugs
             {
                 QTreeWidgetItem *parent = itemFromIndex(indexes.at(i));
                 if (!parent || !parent->parent()) 
@@ -204,11 +204,15 @@ void ServerListView::dropEvent(QDropEvent *event)
                 if (row == -1) 
                 {
                     insertTopLevelItem(topLevelItemCount(), taken.takeFirst());
+                    if (i==0) setCurrentItem(topLevelItem(topLevelItemCount()-1));
+                    else topLevelItem(topLevelItemCount()-1)->setSelected(true);
                 } 
                 else 
                 {
                     int r = dropRow.row() >= 0 ? dropRow.row() : row;
                     insertTopLevelItem(qMin(r, topLevelItemCount()), taken.takeFirst());
+                    if (i==0) setCurrentItem(topLevelItem(qMin(r, topLevelItemCount()-1)));
+                    else topLevelItem(qMin(r, topLevelItemCount()-1))->setSelected(true);
                 }
             }
             
