@@ -100,18 +100,21 @@ void ServerListView::dragMoveEvent(QDragMoveEvent *e)
         }
         else //viewports...bleh
         {
-            QTreeWidgetItem* lastTop = topLevelItem(topLevelItemCount()-1);
-            QRect rect = QRect();
-            if(!lastTop->isExpanded())
-                rect = visualItemRect(lastTop); // dishes out the last top item
-            else
+            if(indexOfTopLevelItem(sItem) >= 0) // in case of children break glass
             {
-                rect = visualItemRect(lastTop->child(lastTop->childCount()-1));
+                QTreeWidgetItem* lastTop = topLevelItem(topLevelItemCount()-1);
+                QRect rect = QRect();
+                if(!lastTop->isExpanded())
+                rect = visualItemRect(lastTop); // dishes out the last top item
+                else
+                {
+                    rect = visualItemRect(lastTop->child(lastTop->childCount()-1));
+                }
+                m_dropPosition= 3;
+                int width = this->width();
+                m_dropRect= QRect(0, rect.bottom(), width, 0);
+                e->accept();
             }
-            m_dropPosition= 3;
-            int width = this->width();
-            m_dropRect= QRect(0, rect.bottom(), width, 0);
-            e->accept();
         }
         
     }
