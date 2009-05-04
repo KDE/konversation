@@ -77,8 +77,7 @@ namespace Konversation
         QString cleanedMessage = Qt::escape(Konversation::removeIrcMarkup(message));
         QString cutup = addLineBreaks(cleanedMessage);
 
-        if (!m_mainWindow->isActiveWindow() || (chatWin != m_mainWindow->getViewContainer()->getFrontView()))
-            KNotification::event(QString::fromLatin1("nick"), QString("<qt>&lt;%1&gt; %2</qt>").arg(fromNick).arg(cutup), QPixmap(), m_mainWindow);
+        KNotification::event(QString::fromLatin1("nick"), QString("<qt>&lt;%1&gt; %2</qt>").arg(fromNick).arg(cutup), QPixmap(), m_mainWindow);
 
         startTrayNotification(chatWin);
 
@@ -297,13 +296,10 @@ namespace Konversation
         QString cleanedMessage = Qt::escape(Konversation::removeIrcMarkup(message));
         QString cutup = addLineBreaks(cleanedMessage);
         
-        if (!m_mainWindow->isActiveWindow() || (chatWin != m_mainWindow->getViewContainer()->getFrontView()))
-        {
-            if(fromNick.isEmpty())
-                KNotification::event(QString::fromLatin1("highlight"), QString("<qt>(%1) *** %2</qt>").arg(chatWin->getName()).arg(cutup), QPixmap(), m_mainWindow);
-            else
-                KNotification::event(QString::fromLatin1("highlight"), QString("<qt>(%1) &lt;%2&gt; %3</qt>").arg(chatWin->getName()).arg(fromNick).arg(cutup), QPixmap(), m_mainWindow);
-        }
+        if(fromNick.isEmpty())
+            KNotification::event(QString::fromLatin1("highlight"), QString("<qt>(%1) *** %2</qt>").arg(chatWin->getName()).arg(cutup), QPixmap(), m_mainWindow);
+        else
+            KNotification::event(QString::fromLatin1("highlight"), QString("<qt>(%1) &lt;%2&gt; %3</qt>").arg(chatWin->getName()).arg(fromNick).arg(cutup), QPixmap(), m_mainWindow);
         
         if(Preferences::self()->oSDShowOwnNick() &&
             (!m_mainWindow->isActiveWindow() || (chatWin != m_mainWindow->getViewContainer()->getFrontView())))
