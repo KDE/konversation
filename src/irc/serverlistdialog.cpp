@@ -139,7 +139,7 @@ namespace Konversation
         newSize = config.readEntry("Size", newSize);
         resize(newSize);
         m_serverList->sortItems(0, Qt::AscendingOrder);
-        m_serverList->sortItems(-1, Qt::DescendingOrder);
+        // huh? m_serverList->sortItems(-1, Qt::DescendingOrder);
         //because it sorts the first column in ascending order by default
         //causing problems and such.
         m_serverList->topLevelItem(0)->setSelected(true);
