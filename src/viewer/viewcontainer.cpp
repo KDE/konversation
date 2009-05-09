@@ -1322,7 +1322,7 @@ void ViewContainer::addView(ChatWindow* view, const QString& label, bool weiniti
             break;
     }
 
-    m_tabWidget->insertTab(placement, view, iconSet, label);
+    m_tabWidget->insertTab(placement, view, iconSet, QString(label).replace('&', "&&"));
     // HACK Seems like automatic resize isn't all that automatic currently.
     // Work around it by unsetting it and setting it again.
     if (Preferences::self()->useMaxSizedTabs())
