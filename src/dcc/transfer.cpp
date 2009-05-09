@@ -169,6 +169,17 @@ void DccTransfer::setStatus( DccStatus status, const QString& statusDetail )
     {
         emit statusChanged( this, m_status, oldStatus );
     }
+
+    if (m_status == Done)
+    {
+        KonversationApplication* konv_app = KonversationApplication::instance();
+        Server* server = konv_app->getConnectionManager()->getServerByConnectionId( m_connectionId );
+        if (server)
+        {
+            kDebug() << "notification:" << m_fileName;
+            konv_app->notificationHandler()->dccTransferDone(server->getStatusView(), m_fileName);
+        }
+    }
 }
 
 void DccTransfer::updateTransferMeters()

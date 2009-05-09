@@ -362,9 +362,12 @@ Action=None
 
 [Event/dcc_error]
 Name=DCC transfer error
-Name[de]=DCC-Transfer Fehler
 Comment=An error occurred in a DCC transfer
-Comment[de]=Es trat ein Fehler in einem DCC-Transfer auf
+Action=None
+
+[Event/dcctransfer_done]
+Name=DCC transfer complete
+Comment=A DCC transfer successfully completed
 Action=None
 
 [Event/join]
