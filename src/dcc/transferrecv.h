@@ -88,7 +88,7 @@ class DccTransferRecv : public DccTransfer
         void readData();
         void sendAck();
         void connectionTimeout();
-        void slotSocketClosed();
+        //void slotSocketClosed(); //same as connectionFailed
 
         // Reverse DCC
         void slotServerSocketReadyAccept();
@@ -96,7 +96,6 @@ class DccTransferRecv : public DccTransfer
 
     protected:
         void cleanUp();
-        void failed(const QString& errorMessage = QString() );
 
                                                   // (startPosition == 0) means "don't resume"
         void prepareLocalKio( bool overwrite, bool resume, KIO::fileoffset_t startPosition = 0 );

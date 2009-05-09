@@ -200,6 +200,17 @@ namespace Konversation
         KNotification::event(QString::fromLatin1("dcc_incoming"), i18n("%1 wants to send a file to you",fromNick), QPixmap(), m_mainWindow);
     }
 
+    void NotificationHandler::dccError(ChatWindow* chatWin, const QString& error)
+    {
+        if (!chatWin || !chatWin->notificationsEnabled())
+            return;
+
+        if (Preferences::self()->disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
+            return;
+
+        KNotification::event(QString::fromLatin1("dcc_error"), i18n("An Error has occurred in a DCC transfer: %1",error), QPixmap(), m_mainWindow);
+    }
+
     void NotificationHandler::mode(ChatWindow* chatWin, const QString& /*nick*/)
     {
         if (!chatWin || !chatWin->notificationsEnabled())

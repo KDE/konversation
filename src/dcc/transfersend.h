@@ -70,7 +70,6 @@ class DccTransferSend : public DccTransfer
 
     protected:
         void cleanUp();
-        void failed(const QString& errorMessage = QString() );
 
         void startConnectionTimer( int sec );
         void stopConnectionTimer();

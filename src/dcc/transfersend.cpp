@@ -95,14 +95,6 @@ void DccTransferSend::cleanUp()
     }
 }
 
-// just for convenience
-void DccTransferSend::failed( const QString& errorMessage )
-{
-    cleanUp();
-    setStatus( Failed, errorMessage );
-    emit done( this );
-}
-
 void DccTransferSend::setFileURL( const KUrl& url )
 {
     if ( getStatus() == Configuring )

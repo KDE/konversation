@@ -38,6 +38,7 @@ namespace Konversation
             void quit(ChatWindow* chatWin, const QString& nick);
             void nickChange(ChatWindow* chatWin, const QString& oldNick, const QString& newNick);
             void dccIncoming(ChatWindow* chatWin, const QString& fromNick);
+            void dccError(ChatWindow* chatWin, const QString& error);
             void mode(ChatWindow* chatWin, const QString& nick);
             void query(ChatWindow* chatWin, const QString& fromNick);
             void queryMessage(ChatWindow* chatWin, const QString& fromNick, const QString& message);

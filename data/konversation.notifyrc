@@ -360,6 +360,13 @@ Comment[zh_CN]=有人希望通过 DCC 向你传输文件
 Comment[zh_TW]=有人要透過 DCC 傳送檔案給您
 Action=None
 
+[Event/dcc_error]
+Name=DCC transfer error
+Name[de]=DCC-Transfer Fehler
+Comment=An error occurred in a DCC transfer
+Comment[de]=Es trat ein Fehler in einem DCC-Transfer auf
+Action=None
+
 [Event/join]
 Name=Nick joined channel
 Name[ar]=الإسم المستعار إنضمّ إلى القناة
