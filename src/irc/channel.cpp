@@ -1481,7 +1481,7 @@ void Channel::kickNick(ChannelNickPtr channelNick, const QString &kicker, const 
 
 Nick* Channel::getNickByName(const QString &lookname)
 {
-    QString lcLookname = lookname.toLower();
+    QString lcLookname(lookname.toLower());
 
     foreach (Nick* nick, nicknameList)
     {
@@ -2641,24 +2641,16 @@ void Channel::processPendingNicks()
                         (halfop ?  2 : 0) +
                         (voice  ?  1 : 0);
 
-    // Check if nick is already in the nicklist
-    if (!getNickByName(nickname))
-    {
-        ChannelNickPtr nick = m_server->addNickToJoinedChannelsList(getName(), nickname);
-        Q_ASSERT(nick);
-        nick->setMode(mode);
+    ChannelNickPtr nick = m_server->addNickToJoinedChannelsList(getName(), nickname);
+    Q_ASSERT(nick);
+    nick->setMode(mode);
 
-        fastAddNickname(nick);
+    fastAddNickname(nick);
 
-        if (nick->isAdmin() || nick->isOwner() || nick->isOp() || nick->isHalfOp())
-            m_opsToAdd++;
+    if (nick->isAdmin() || nick->isOwner() || nick->isOp() || nick->isHalfOp())
+        m_opsToAdd++;
 
-        m_currentIndex++;
-    }
-    else
-    {
-        m_pendingChannelNickLists.first().pop_front();
-    }
+    m_currentIndex++;
 
     if (m_pendingChannelNickLists.first().count() <= m_currentIndex)
     {
