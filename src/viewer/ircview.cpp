@@ -893,24 +893,30 @@ void IRCView::anchorClicked(const QUrl& url)
 // FIXME do we still care about newtab? looks like konqi has lots of config now..
 void IRCView::openLink(const QString& url, bool)
 {
-    if (!url.isEmpty() && !url.startsWith('#'))
+    QString link(url);
+    // HACK Replace \x03 with % in the url to keep Qt from doing stupid things
+    link = link.replace ('\x03', '%');
+    // HACK Replace " " with %20 for channelnames, NOTE there can't be 2 channelnames in one link
+    link = link.replace (" ", "%20");
+
+    if (!link.isEmpty() && !link.startsWith('#'))
     {
-        if (url.startsWith("irc://"))
+        if (link.startsWith("irc://"))
         {
             KonversationApplication* konvApp = KonversationApplication::instance();
-            konvApp->getConnectionManager()->connectTo(Konversation::SilentlyReuseConnection, url);
+            konvApp->getConnectionManager()->connectTo(Konversation::SilentlyReuseConnection, link);
         }
-        else if (!Preferences::self()->useCustomBrowser() || url.startsWith("mailto:"))
+        else if (!Preferences::self()->useCustomBrowser() || link.startsWith("mailto:"))
         {
-            if (url.startsWith("mailto:"))
-                KToolInvocation::invokeMailer(KUrl(url));
+            if (link.startsWith("mailto:"))
+                KToolInvocation::invokeMailer(KUrl(link));
             else
-                KToolInvocation::invokeBrowser(url);
+                KToolInvocation::invokeBrowser(link);
         }
         else
         {
             QString cmd = Preferences::self()->webBrowserCmd();
-            cmd.replace("%u", url);
+            cmd.replace("%u", link);
             KProcess *proc = new KProcess;
             QStringList cmdAndArgs = KShell::splitArgs(cmd);
             *proc << cmdAndArgs;
@@ -923,16 +929,16 @@ void IRCView::openLink(const QString& url, bool)
         }
     }
     //FIXME: Don't do channel links in DCC Chats to begin with since they don't have a server.
-    else if (url.startsWith("##") && m_server && m_server->isConnected())
+    else if (link.startsWith("##") && m_server && m_server->isConnected())
     {
-        QString channel(url);
+        QString channel(link);
         channel.replace("##", "#");
         m_server->sendJoinCommand(channel);
     }
     //FIXME: Don't do user links in DCC Chats to begin with since they don't have a server.
-    else if (url.startsWith('#') && m_server && m_server->isConnected())
+    else if (link.startsWith('#') && m_server && m_server->isConnected())
     {
-        QString recipient(url);
+        QString recipient(link);
         recipient.remove('#');
         NickInfoPtr nickInfo = m_server->obtainNickInfo(recipient);
         m_server->addQuery(nickInfo, true /*we initiated*/);
@@ -956,8 +962,8 @@ void IRCView::saveLinkAs()
 void IRCView::highlightedSlot(const QString& _link)
 {
     QString link = _link;
-    // HACK Replace % with \x03 in the url to keep Qt from doing stupid things
-    link = link.replace ('\x03', "%");
+    // HACK Replace \x03 with % in the url to keep Qt from doing stupid things
+    link = link.replace ('\x03', '%');
     //Hack to handle the fact that we get a decoded url
     //FIXME someone who knows what it looks like when we get a decoded url can reenable this if necessary...
     //link = KUrl(link).url();
