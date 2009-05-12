@@ -618,7 +618,7 @@ void Server::sslError( const QList<QSslError>&  errors)
     }
 
     //this message should be changed since sslError is called even after calling ignoreSslErrors()
-    QString error = i18n("Could not connect to %1:%2 using SSL encryption.Maybe the server does not support SSL, or perhaps you have the wrong port? %3",
+    QString error = i18n("Could not connect to %1:%2 using SSL encryption. Maybe the server does not support SSL, or perhaps you have the wrong port? %3",
         getConnectionSettings().server().host(),
         QString::number(getConnectionSettings().server().port()),
         reason);
