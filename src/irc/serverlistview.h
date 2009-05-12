@@ -28,9 +28,11 @@ class ServerListView : public QTreeWidget
         ~ServerListView();
         
         QList<QTreeWidgetItem*> selectedServerListItems();
+        
     signals:
         void moved();
         void aboutToMove();
+        
     private:
         int m_dropPosition;
         QRect m_dropRect;
@@ -38,6 +40,7 @@ class ServerListView : public QTreeWidget
     protected:        
         void dragEnterEvent(QDragEnterEvent *e);
         void dragMoveEvent(QDragMoveEvent *e);
+        void dragLeaveEvent(QDragLeaveEvent *);
         int position(const QPoint &pos, const QRect &rect);
         void paintDropIndicator(QPainter *painter);
         void paintEvent(QPaintEvent *event);

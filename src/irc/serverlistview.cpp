@@ -51,6 +51,7 @@ void ServerListView::dragEnterEvent(QDragEnterEvent *e)
     if (index.isValid())
     {
         e->accept();
+        setState(DraggingState);
     }
     else
     {
@@ -121,7 +122,15 @@ void ServerListView::dragMoveEvent(QDragMoveEvent *e)
     
     emit aboutToMove();
     viewport()->update();
-}   
+}
+void ServerListView::dragLeaveEvent(QDragLeaveEvent *)
+{
+    //stopAutoScroll();
+    setState(NoState);
+    viewport()->update();
+    //restart sorting
+    emit moved();
+}
 //implemented so we can find the position, also means we can nix OnItem -YAY'
 //For reference: AboveItem=0 BelowItem=1 (OnItem=2) OnViewport=3 
 //(Onitem) is basically completely nixed in the rest of the code, keeping it here in case somebody likes it later
@@ -159,11 +168,11 @@ void ServerListView::paintEvent(QPaintEvent *event)
 {
     #ifndef QT_NO_CURSOR
     if (viewport()->cursor().shape() != Qt::ForbiddenCursor) {
-        #endif
+    #endif
         QPainter painter(viewport());
         drawTree(&painter, event->region());
         this->paintDropIndicator(&painter);
-        #ifndef QT_NO_CURSOR
+    #ifndef QT_NO_CURSOR
     }
     #endif
 }

@@ -90,6 +90,9 @@ namespace Konversation
         protected:
             QTreeWidgetItem* insertServerGroup(ServerGroupSettingsPtr serverGroup);
             void addServerGroup(ServerGroupSettingsPtr serverGroup);
+            
+            int m_lastSortColumn;
+            Qt::SortOrder m_lastSortOrder;
 
         private:
             Ui::ServerListDialogUI* m_mainWidget;
