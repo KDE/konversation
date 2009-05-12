@@ -126,6 +126,7 @@ void ServerListView::dragMoveEvent(QDragMoveEvent *e)
 void ServerListView::dragLeaveEvent(QDragLeaveEvent *)
 {
     //stopAutoScroll();
+    m_dropRect = QRect();
     setState(NoState);
     viewport()->update();
     //restart sorting
