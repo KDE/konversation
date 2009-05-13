@@ -19,6 +19,7 @@
 
 #include <qpushbutton.h>
 #include <qcheckbox.h>
+#include <QHeaderView>
 
 #include <klocale.h>
 #include <kdebug.h>
