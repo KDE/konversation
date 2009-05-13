@@ -86,7 +86,11 @@
     </widget>
    </item>
    <item row="3" column="1" colspan="2">
-    <widget class="KLineEdit" name="m_commandEdit"/>
+    <widget class="KLineEdit" name="m_commandEdit">
+     <property name="whatsThis">
+      <string>Optional. This command will be sent to the server after connecting. Example: &lt;b&gt;/msg NickServ IDENTIFY &lt;i&gt;konvirocks&lt;/i&gt;&lt;/b&gt;. This example is for the freenode network, which requires users to register their nickname with a password and login when connecting. &lt;i&gt;konvirocks&lt;/i&gt; is the password for the nickname given in Identity. You may enter more than one command by separating them with semicolons.</string>
+     </property>
+    </widget>
    </item>
    <item row="4" column="0" colspan="3">
     <widget class="QCheckBox" name="m_autoConnectCBox">
