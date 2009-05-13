@@ -14,7 +14,7 @@
    <item row="4" column="0">
     <widget class="QCheckBox" name="m_showAtStartup">
      <property name="text">
-      <string> &amp;Show at application startup</string>
+      <string>&amp;Show at application startup</string>
      </property>
     </widget>
    </item>
@@ -31,6 +31,9 @@
      </property>
      <property name="acceptDrops">
       <bool>true</bool>
+     </property>
+     <property name="whatsThis">
+      <string>This shows the list of configured IRC networks. An IRC network is a collection of cooperating servers. You need only connect to one of the servers in the network to be connected to the entire IRC network. Once connected, Konversation will automatically join the channels shown. When Konversation is started for the first time, the Freenode network and the &lt;i&gt;#kde&lt;/i&gt; channel are already entered for you.</string>
      </property>
      <property name="verticalScrollBarPolicy">
       <enum>Qt::ScrollBarAsNeeded</enum>
