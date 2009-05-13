@@ -635,7 +635,7 @@ bool doHighlight, bool parseURL, bool self)
         filteredLine+="</font>";
 
     // Replace all text decorations
-    // TODO: \017 should reset all textt decorations to plain text
+    // TODO: \017 should reset all text decorations to plain text
     replaceDecoration(filteredLine,'\x02','b');
     replaceDecoration(filteredLine,'\x09','i');
     replaceDecoration(filteredLine,'\x13','s');
@@ -894,8 +894,6 @@ void IRCView::anchorClicked(const QUrl& url)
 void IRCView::openLink(const QString& url, bool)
 {
     QString link(url);
-    // HACK Replace \x03 with % in the url to keep Qt from doing stupid things
-    link = link.replace ('\x03', '%');
     // HACK Replace " " with %20 for channelnames, NOTE there can't be 2 channelnames in one link
     link = link.replace (" ", "%20");
 
@@ -962,8 +960,9 @@ void IRCView::saveLinkAs()
 void IRCView::highlightedSlot(const QString& _link)
 {
     QString link = _link;
-    // HACK Replace \x03 with % in the url to keep Qt from doing stupid things
-    link = link.replace ('\x03', '%');
+    // HACK Replace " " with %20 for channelnames, NOTE there can't be 2 channelnames in one link
+    link = link.replace (" ", "%20");
+
     //Hack to handle the fact that we get a decoded url
     //FIXME someone who knows what it looks like when we get a decoded url can reenable this if necessary...
     //link = KUrl(link).url();

@@ -76,8 +76,7 @@ namespace Konversation
                 urlLen = href.length();
                 pos += chanExp.cap(1).length();
 
-                // HACK:Use space as a placeholder for \ as Qt tries to be clever and does a replace to / in urls in QTextEdit
-                insertText = link.arg(QString(href).replace('\\', " "), href);
+                insertText = link.arg(href, href);
                 filteredLine.replace(pos, urlLen, insertText);
                 pos += insertText.length();
             }
@@ -149,9 +148,8 @@ namespace Konversation
             else if (urlPattern.cap(1).isEmpty())
                 protocol = "mailto:";
 
-            // Use \x0b as a placeholder for & so we can readd them after changing all & in the normal text to &amp;
-            // HACK Replace % with \x03 in the url to keep Qt from doing stupid things
-            insertText = link.arg(protocol, QString(href).replace('&', "\x0b").replace('%', "\x03"), href) + append;
+            // Use \x0b as a placeholder for & so we can read them after changing all & in the normal text to &amp;
+            insertText = link.arg(protocol, QString(href).replace('&', "\x0b"), href) + append;
             filteredLine.replace(pos, urlLen, insertText);
             pos += insertText.length();
             KonversationApplication::instance()->storeUrl(fromNick, href);
