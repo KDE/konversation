@@ -818,7 +818,7 @@
   </group>
   <group name="Themes">
     <entry key="IconTheme" type="String">
-      <default>oxygen</default>
+      <default>default</default>
       <label></label>
       <whatsthis></whatsthis>
     </entry>
