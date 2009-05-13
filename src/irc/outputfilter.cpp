@@ -1540,17 +1540,16 @@ namespace Konversation
         {
             QStringList splitted = parameter.split(' ');
             QString host = splitted[0];
-            QString port = "6667";
             QString password;
 
             if (splitted.count() == 3)
-                emit connectTo(Konversation::CreateNewConnection, splitted[0], splitted[1].toUInt(), splitted[2]);
+                emit connectTo(Konversation::CreateNewConnection, splitted[0], splitted[1], splitted[2]);
             else if (splitted.count() == 2)
             {
                 if (splitted[0].contains(QRegExp(":[0-9]+$")))
                     emit connectTo(Konversation::CreateNewConnection, splitted[0], 0, splitted[1]);
                 else
-                    emit connectTo(Konversation::CreateNewConnection, splitted[0], splitted[1].toUInt());
+                    emit connectTo(Konversation::CreateNewConnection, splitted[0], splitted[1]);
             }
             else
                 emit connectTo(Konversation::CreateNewConnection, splitted[0]);

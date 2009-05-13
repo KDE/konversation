@@ -279,9 +279,9 @@ void Server::connectSignals()
 
     KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
     connect(getOutputFilter(), SIGNAL(connectTo(Konversation::ConnectionFlag, const QString&,
-                uint, const QString&, const QString&, const QString&, bool)),
+                const QString&, const QString&, const QString&, const QString&, bool)),
             konvApp->getConnectionManager(), SLOT(connectTo(Konversation::ConnectionFlag,
-                const QString&, uint, const QString&, const QString&, const QString&, bool)));
+                const QString&, const QString&, const QString&, const QString&, const QString&, bool)));
     connect(konvApp->getDccTransferManager(), SIGNAL(newTransferQueued(DccTransfer*)),
             this, SLOT(slotNewDccTransferItemQueued(DccTransfer*)));
 

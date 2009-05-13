@@ -34,7 +34,7 @@ ConnectionManager::~ConnectionManager()
 }
 
 void ConnectionManager::connectTo(Konversation::ConnectionFlag flag, const QString& target,
-    uint port, const QString& password, const QString& nick, const QString& channel,
+    const QString& port, const QString& password, const QString& nick, const QString& channel,
     bool useSSL)
 {
     ConnectionSettings settings;
@@ -47,7 +47,7 @@ void ConnectionManager::connectTo(Konversation::ConnectionFlag flag, const QStri
 
         Konversation::ServerSettings server = settings.server();
 
-        server.setPort(port);
+        if (!port.isEmpty()) server.setPort(port.toInt());
 
         if (!password.isEmpty()) server.setPassword(password);
 

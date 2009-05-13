@@ -43,6 +43,7 @@ void ScriptLauncher::launchScript(const QString& target, const QString &paramete
     QString scriptPath(KStandardDirs::locate("data", "konversation/scripts/" + script));
     parameterList.prepend(target);
     parameterList.prepend(QString::number(m_server->connectionId()));
+    kDebug() << parameterList;
     QFileInfo fileInfo(scriptPath);
     if (!QProcess::startDetached(scriptPath, parameterList, fileInfo.path()))
     {

@@ -34,7 +34,7 @@ class QuickConnectDialog : public KDialog
     signals:
         void connectClicked(Konversation::ConnectionFlag flag,
                             const QString& hostName,
-                            uint port,
+                            const QString& port,
                             const QString& password,
                             const QString& nick,
                             const QString& channel,

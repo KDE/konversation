@@ -43,7 +43,7 @@ class DBus : public QObject
 
         void connectTo(Konversation::ConnectionFlag flag,
                        const QString& hostName,
-                       uint port = 0,
+                       const QString& port = "",
                        const QString& password = "",
                        const QString& nick = "",
                        const QString& channel = "",
