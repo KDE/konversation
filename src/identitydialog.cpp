@@ -54,6 +54,13 @@ namespace Konversation
         // add encodings to combo box
         m_codecCBox->addItems(Konversation::IRCCharsets::self()->availableEncodingDescriptiveNames());
 
+        // set the suffix for the inactivity time spinbox
+#if KDE_IS_VERSION(4, 2, 80)
+        m_awayInactivitySpin->setSuffix(ki18np(" minute", " minutes"));
+#else
+        m_awayInactivitySpin->setSuffix(i18n(" minutes"));
+#endif
+
         // set values for the widgets
         updateIdentity(0);
 
