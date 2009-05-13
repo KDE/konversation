@@ -10,7 +10,6 @@ install(PROGRAMS
     sysinfo
     tinyurl
     uptime
-    #weather
     DESTINATION ${DATA_INSTALL_DIR}/konversation/scripts)
 
 install(FILES
