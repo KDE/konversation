@@ -817,9 +817,9 @@ void KonversationApplication::clearUrlList()
 void KonversationApplication::openQuickConnectDialog()
 {
     quickConnectDialog = new QuickConnectDialog(mainWindow);
-    connect(quickConnectDialog, SIGNAL(connectClicked(Konversation::ConnectionFlag, const QString&, uint,
-        const QString&, const QString&, const QString&, bool)),
-        m_connectionManager, SLOT(connectTo(Konversation::ConnectionFlag, const QString&, uint,
+    connect(quickConnectDialog, SIGNAL(connectClicked(Konversation::ConnectionFlag, const QString&,
+        const QString&, const QString&, const QString&, const QString&, bool)),
+        m_connectionManager, SLOT(connectTo(Konversation::ConnectionFlag, const QString&, const QString&,
         const QString&, const QString&, const QString&, bool)));
     quickConnectDialog->show();
 }
