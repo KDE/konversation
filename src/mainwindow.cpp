@@ -747,7 +747,7 @@ void KonversationMainWindow::openServerList()
 {
     if (!m_serverListDialog)
     {
-        m_serverListDialog = new Konversation::ServerListDialog("Server List", this);
+        m_serverListDialog = new Konversation::ServerListDialog(i18n("Server List"), this);
         KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
 
         connect(m_serverListDialog, SIGNAL(serverGroupsChanged(const Konversation::ServerGroupSettingsPtr)),
