@@ -29,8 +29,24 @@ Changes since 1.1:
 * Improved performance of non-regex mode auto-replace rules.
 * Added option to open log files with the system text editor instead of the
   built-in log viewer.
-* Added button to intelligently replace newlines with spaces to the multi-
+* Added button to intelligently replace line breaks with spaces to the multi-
   line paste editor.
+* Made the Oxygen nicklist icon theme the default nicklist icon theme.
+* Removed the bundled 'wheather' script (it relied on a KDE 3 service no lon-
+  ger present in KDE 4; a replacement will need to adopt a new approach).
+* Various reliability and correctness improvements and optimizations to DCC.
+* Increased default DCC buffer size to 16384 to reduce CPU load while sending
+  or receiving files.
+* Added KNotify events for "Highlight triggered", "DCC transfer complete"
+  and "DCC transfer error".
+* Fixed Automatic User Information Look Up not being started upon channel
+  join on some IRC servers (namely those that don't send RPL_CHANNELCREATED
+  afte joining a channel).
+* Updated the server hostname for the pre-configured Freenode network to the
+  one given on their website these days, 'chat.freenode.net'.
+* Added support for browsing the input line history by using the mouse wheel.
+* Fixed problems the bundled 'tinyurl' script had with certain URLs by conver-
+  ting it to use the TinyURL API rather than screen scraping.
 
 
 Changes from 1.0.1 to 1.1:
