@@ -105,10 +105,6 @@ namespace Konversation
 
         setButtonGuiItem(Ok, KGuiItem(i18n("C&onnect"), "network-connect", i18n("Connect to the server"), i18n("Click here to connect to the selected IRC network and channel.")));
 
-        
-
-        m_addButton->setWhatsThis(i18n("Click here to define a new Network, including the server to connect to, and the Channels to automatically join once connected."));
-
         m_showAtStartup->setChecked(Preferences::self()->showServerList());
         connect(m_showAtStartup, SIGNAL(toggled(bool)), this, SLOT(setShowAtStartup(bool)));
 

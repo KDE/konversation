@@ -117,6 +117,9 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="whatsThis">
+      <string>Click here to define a new Network, including the server to connect to, and the Channels to automatically join once connected.</string>
+     </property>
      <property name="text">
       <string>&amp;New...</string>
      </property>
