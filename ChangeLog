@@ -41,7 +41,7 @@ Changes since 1.1:
   and "DCC transfer error".
 * Fixed Automatic User Information Look Up not being started upon channel
   join on some IRC servers (namely those that don't send RPL_CHANNELCREATED
-  afte joining a channel).
+  after joining a channel, such at those used by IRCnet).
 * Updated the server hostname for the pre-configured Freenode network to the
   one given on their website these days, 'chat.freenode.net'.
 * Added support for browsing the input line history by using the mouse wheel.
