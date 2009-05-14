@@ -60,7 +60,7 @@ namespace Konversation
 
         if(useCustomColor)
         {
-            link = "<font color=\""+linkColor+"\"><a href=\"#%1\">%2</a></font>";
+            link = "<a href=\"#%1\" style=\"color:" + linkColor + "\">%2</a>";
         }
         else
         {
@@ -91,11 +91,11 @@ namespace Konversation
         // FIXME this should probably go away with the text control upgrade
         if(useCustomColor)
         {
-            link = QString("<font color=\"" + linkColor + "\"><u><a href=\"%1%2\">%3</a></u></font>");
+            link = "<u><a href=\"%1%2\" style=\"color:" + linkColor + "\">%3</a></u>";
         }
         else
         {
-            link = QString("<u><a href=\"%1%2\">%3</a></u>");
+            link = "<u><a href=\"%1%2\">%3</a></u>";
         }
 
         while ((pos = urlPattern.indexIn(filteredLine, pos)) >= 0)
