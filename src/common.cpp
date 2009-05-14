@@ -91,11 +91,11 @@ namespace Konversation
         // FIXME this should probably go away with the text control upgrade
         if(useCustomColor)
         {
-            link = "<u><a href=\"%1%2\" style=\"color:" + linkColor + "\">%3</a></u>";
+            link = "<a href=\"%1%2\" style=\"color:" + linkColor + "\">%3</a>";
         }
         else
         {
-            link = "<u><a href=\"%1%2\">%3</a></u>";
+            link = "<a href=\"%1%2\">%3</a>";
         }
 
         while ((pos = urlPattern.indexIn(filteredLine, pos)) >= 0)

@@ -110,7 +110,6 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent)
     connect( this, SIGNAL( highlighted ( const QString &) ), this, SLOT( highlightedSlot( const QString &) ) );
     setOpenLinks(false);
     setUndoRedoEnabled(0);
-    //setLinkUnderline(false);
     document()->setDefaultStyleSheet("a.nick:link {text-decoration: none}");
     setWordWrapMode(QTextOption::WrapAtWordBoundaryOrAnywhere);
     //setNotifyClick(true); // TODO FIXME import the rest of the link handling
