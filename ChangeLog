@@ -22,6 +22,15 @@ Changes since 1.1:
 * Mask the password field in the Quick Connect dialog.
 * Fixed a bug causing passive DCC file transfers to stall at 99%.
 * Fixed "/leave" command in queries.
+* Fixed auto-replace rules containing commas in the pattern not being loaded
+  correctly from the config file.
+* Fixed non-regex mode auto-replace rules containing regex special characters
+  and character sequences not working correctly.
+* Improved performance of non-regex mode auto-replace rules.
+* Added option to open log files with the system text editor instead of the
+  built-in log viewer.
+* Added button to intelligently replace newlines with spaces to the multi-
+  line paste editor.
 
 
 Changes from 1.0.1 to 1.1:
