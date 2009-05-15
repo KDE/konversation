@@ -485,6 +485,7 @@ void Channel::popupCommand(int id)
     QString args;
     QString question;
     bool raw=false;
+    QString mode;
     QStringList nickList = getSelectedNickList();
 
     switch(id)
@@ -545,27 +546,33 @@ void Channel::popupCommand(int id)
             break;
         }
         case Konversation::GiveOp:
-            pattern="MODE %c +o %u";
+            pattern="MODE %c +%m %l";
+            mode="o";
             raw=true;
             break;
         case Konversation::TakeOp:
-            pattern="MODE %c -o %u";
+            pattern="MODE %c -%m %l";
+            mode="o";
             raw=true;
             break;
         case Konversation::GiveHalfOp:
-            pattern="MODE %c +h %u";
+            pattern="MODE %c +%m %l";
+            mode="h";
             raw=true;
             break;
         case Konversation::TakeHalfOp:
-            pattern="MODE %c -h %u";
+            pattern="MODE %c -%m %l";
+            mode="h";
             raw=true;
             break;
         case Konversation::GiveVoice:
-            pattern="MODE %c +v %u";
+            pattern="MODE %c +%m %l";
+            mode="v";
             raw=true;
             break;
         case Konversation::TakeVoice:
-            pattern="MODE %c -v %u";
+            pattern="MODE %c -%m %l";
+            mode="v";
             raw=true;
             break;
         case Konversation::Version:
@@ -698,17 +705,24 @@ void Channel::popupCommand(int id)
 
         if (pattern.contains("%l"))
         {
-            QStringList list;
+            QStringList list, partialList;
+            int modesCount = m_server->getModesCount();
 
             for (QStringList::Iterator it=nickList.begin(); it!=nickList.end(); ++it)
                 list.append((*it));
 
-            command = pattern.replace("%l", list.join(" "));
+            for (int index = 0; index<list.count(); index+=modesCount)
+            {
+                command = pattern;
+                partialList = list.mid(index, modesCount);
+                command = command.replace("%l", partialList.join(" "));
+                command = command.replace("%m", mode.repeated(partialList.count()));
+                if (raw)
+                    m_server->queue(command);
+                else
+                    sendChannelText(command);                
+            }
 
-            if (raw)
-                m_server->queue(command);
-            else
-                sendChannelText(command);
         }
         else
         {

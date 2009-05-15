@@ -822,6 +822,16 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                         {
                             server->setChannelTypes(value);
                         }
+                        else if (property=="MODES")
+                        {
+                            if (!value.isEmpty())
+                            {
+                                bool ok = false;
+                                // If a value is given, it must be numeric.
+                                int modesCount = value.toInt(&ok, 10);
+                                if(ok) server->setModesCount(modesCount);
+                            }
+                        }
                         else if (property == "CAPAB")
                         {
                             // Disable as we don't use this for anything yet

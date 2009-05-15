@@ -103,6 +103,7 @@ Server::Server(QObject* parent, ConnectionSettings& settings) : QObject(parent)
     m_serverNickPrefixModes = "ovh";
     m_serverNickPrefixes = "@+%";
     m_channelPrefixes = "#&";
+    m_modesCount = 3;
     m_showSSLConfirmation = true;
 
     setObjectName(QString::fromLatin1("server_") + settings.name());
@@ -445,6 +446,17 @@ void Server::setChannelTypes(const QString &pre)
 QString Server::getChannelTypes() const
 {
     return m_channelPrefixes;
+}
+
+// set max number of channel modes with parameter according to 005 RPL_ISUPPORT
+void Server::setModesCount(int count)
+{
+    m_modesCount = count;
+}
+
+int Server::getModesCount()
+{
+    return m_modesCount;
 }
 
 // set user mode prefixes according to non-standard 005-Reply (see inputfilter.cpp)

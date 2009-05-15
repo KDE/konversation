@@ -111,6 +111,9 @@ void resetNickSelection();
         void setChannelTypes(const QString &types);
         QString getChannelTypes() const;
 
+        void setModesCount(int count);
+        int getModesCount();
+
         // extended user modes support
         void setPrefixes(const QString &modes, const QString& prefixes);
         void mangleNicknameWithModes(QString &nickname,bool& isAdmin,bool& isOwner,bool &isOp,
@@ -625,6 +628,7 @@ void resetNickSelection();
         QString m_serverNickPrefixes;               // Prefixes used by the server to indicate a mode
         QString m_serverNickPrefixModes;            // if supplied: modes related to those prefixes
         QString m_channelPrefixes;                  // prefixes that indicate channel names. defaults to RFC1459 "#&"
+        int m_modesCount;                           // Maximum number of channel modes with parameter allowed per MODE command.
 
         bool m_autoJoin;
 

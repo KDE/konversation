@@ -47,6 +47,14 @@ Changes since 1.1:
 * Added support for browsing the input line history by using the mouse wheel.
 * Fixed problems the bundled 'tinyurl' script had with certain URLs by conver-
   ting it to use the TinyURL API rather than screen scraping.
+* Added initial support for the MODES parameter of RPL_ISUPPORT. When giving
+  or taking op, half-of or voice to/from multiple people at once, Konversa-
+  tion will now combine as many of them into a single MODE command as the
+  server advertises it supports (as long as it advertises an actual value;
+  the value-less unlimited MODES case is not supported yet as it requires
+  more work on limiting MODE commands to the 512 byte IRC message buffer
+  limit for extreme cases). If MODES is not given at all by the server, the
+  fallback is an RFC1459-compliant value of 3.
 
 
 Changes from 1.0.1 to 1.1:
