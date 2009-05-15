@@ -126,7 +126,13 @@ Action=None
 
 [Event/highlight]
 Name=Highlight triggered
+Name[pt]=Foi despoletado o realce
+Name[pt_BR]=Foi despoletado o realce
+Name[uk]=Увімкнено підсвічування
 Comment=Someone triggered a highlight
+Comment[pt]=Alguém despoletou um realce
+Comment[pt_BR]=Alguém despoletou um realce
+Comment[uk]=Хтось увімкнув підсвічування
 Action=None
 
 [Event/queryMessage]
@@ -302,12 +308,24 @@ Action=None
 
 [Event/dcc_error]
 Name=DCC transfer error
+Name[pt]=Erro de transferência DCC
+Name[pt_BR]=Erro de transferência DCC
+Name[uk]=Помилка передавання DCC
 Comment=An error occurred in a DCC transfer
+Comment[pt]=Ocorreu um erro numa transferência DCC
+Comment[pt_BR]=Ocorreu um erro numa transferência DCC
+Comment[uk]=Сталася помилка у передаванні DCC
 Action=None
 
 [Event/dcctransfer_done]
 Name=DCC transfer complete
+Name[pt]=Transferência DCC completa
+Name[pt_BR]=Transferência DCC completa
+Name[uk]=Передавання DCC завершено
 Comment=A DCC transfer successfully completed
+Comment[pt]=Foi terminada com sucesso uma transferência DCC
+Comment[pt_BR]=Foi terminada com sucesso uma transferência DCC
+Comment[uk]=Передавання DCC успішно завершено
 Action=None
 
 [Event/join]
