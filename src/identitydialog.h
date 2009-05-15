@@ -29,6 +29,9 @@ namespace Konversation
             void setCurrentIdentity(int index);
             IdentityPtr setCurrentIdentity(IdentityPtr identity);
             IdentityPtr currentIdentity() const;
+            
+        public slots:
+            virtual void accept();
 
         signals:
             void identitiesChanged();
@@ -37,8 +40,6 @@ namespace Konversation
             void updateIdentity(int index);
 
             void refreshCurrentIdentity();
-
-            void slotOk();
 
             void newIdentity();
             void renameIdentity();

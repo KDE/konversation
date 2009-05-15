@@ -73,7 +73,6 @@ namespace Konversation
         AwayManager* awayManager = static_cast<KonversationApplication*>(kapp)->getAwayManager();
         connect(m_identityCBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateIdentity(int)));
         connect(this, SIGNAL(identitiesChanged()), awayManager, SLOT(identitiesChanged()));
-        connect(this, SIGNAL( okClicked() ), this, SLOT( slotOk() ) );
     }
 
     void IdentityDialog::updateIdentity(int index)
@@ -167,7 +166,7 @@ namespace Konversation
         m_currentIdentity->setKickReason(m_kickEdit->text());
     }
 
-    void IdentityDialog::slotOk()
+    void IdentityDialog::accept()
     {
 
         if(m_nicknameLBox->count() == 0)
@@ -188,7 +187,7 @@ namespace Konversation
         Preferences::setIdentityList(m_identityList);
         static_cast<KonversationApplication*>(kapp)->saveOptions(true);
         emit identitiesChanged();
-        accept();
+        KDialog::accept();
     }
 
     void IdentityDialog::newIdentity()
