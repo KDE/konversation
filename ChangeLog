@@ -48,7 +48,7 @@ Changes since 1.1:
 * Fixed problems the bundled 'tinyurl' script had with certain URLs by conver-
   ting it to use the TinyURL API rather than screen scraping.
 * Added initial support for the MODES parameter of RPL_ISUPPORT. When giving
-  or taking op, half-of or voice to/from multiple people at once, Konversa-
+  or taking op, half-op or voice to/from multiple people at once, Konversa-
   tion will now combine as many of them into a single MODE command as the
   server advertises it supports (as long as it advertises an actual value;
   the value-less unlimited MODES case is not supported yet as it requires
