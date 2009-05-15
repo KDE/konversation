@@ -908,6 +908,8 @@ QString KonversationApplication::doAutoreplace(const QString& text,bool output)
                             replacement.replace(QString("%%1").arg(capture),captures[capture]);
                         }
                         replacement.remove(QRegExp("%[0-9]"));
+                        // allow for var expansion in autoreplace
+                        replacement = Konversation::doVarExpansion(replacement); 
                         // replace input with replacement
                         line.replace(index, captures[0].length(), replacement);
                         index += replacement.length();
@@ -936,6 +938,8 @@ QString KonversationApplication::doAutoreplace(const QString& text,bool output)
                     {
                         if (line.length() == length || after.isSpace() || after.isPunct())
                         {
+                            // allow for var expansion in autoreplace
+                            replacement = Konversation::doVarExpansion(replacement);
                             line.replace(index,patLen,replacement);
                             nextLength = index+repLen;
                         }

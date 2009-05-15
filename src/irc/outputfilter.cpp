@@ -184,22 +184,9 @@ namespace Konversation
                     inputLine = testNickServ;
             }
         }
-
-        if(!Preferences::self()->disableExpansion())
-        {
-            // replace placeholders
-            inputLine.replace("%%","%\x01");      // make sure to protect double %%
-            inputLine.replace("%B","\x02");       // replace %B with bold char
-            inputLine.replace("%C","\x03");       // replace %C with color char
-            inputLine.replace("%G","\x07");       // replace %G with ASCII BEL 0x07
-            inputLine.replace("%I","\x09");       // replace %I with italics char
-            inputLine.replace("%O","\x0f");       // replace %O with reset to default char
-            inputLine.replace("%S","\x13");       // replace %S with strikethru char
-            //  inputLine.replace(QRegExp("%?"),"\x15");
-            inputLine.replace("%R","\x16");       // replace %R with reverse char
-            inputLine.replace("%U","\x1f");       // replace %U with underline char
-            inputLine.replace("%\x01","%");       // restore double %% as single %
-        }
+        
+        //perform variable expansion according to prefs
+        inputLine = Konversation::doVarExpansion(inputLine); 
 
         QString line=inputLine.toLower();
 

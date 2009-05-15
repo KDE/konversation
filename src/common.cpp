@@ -45,6 +45,29 @@ namespace Konversation
         return escaped;
     }
 
+    QString doVarExpansion(const QString& text)
+    {
+        QString line = text;
+        if(Preferences::self()->disableExpansion())
+            return line;
+        else
+        {
+            // replace placeholders
+            line.replace("%%","%\x01");      // make sure to protect double %%
+            line.replace("%B","\x02");       // replace %B with bold char
+            line.replace("%C","\x03");       // replace %C with color char
+            line.replace("%G","\x07");       // replace %G with ASCII BEL 0x07
+            line.replace("%I","\x09");       // replace %I with italics char
+            line.replace("%O","\x0f");       // replace %O with reset to default char
+            line.replace("%S","\x13");       // replace %S with strikethru char
+            //  line.replace(QRegExp("%?"),"\x15");
+            line.replace("%R","\x16");       // replace %R with reverse char
+            line.replace("%U","\x1f");       // replace %U with underline char
+            line.replace("%\x01","%");       // restore double %% as single %
+        }
+        return line;
+    }
+    
     QString tagURLs(const QString& text, const QString& fromNick, bool useCustomColor)
     {
         // QTime timer;
