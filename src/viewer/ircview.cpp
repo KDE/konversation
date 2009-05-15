@@ -914,15 +914,12 @@ void IRCView::openLink(const QString& url, bool)
         {
             QString cmd = Preferences::self()->webBrowserCmd();
             cmd.replace("%u", link);
-            KProcess *proc = new KProcess;
             QStringList cmdAndArgs = KShell::splitArgs(cmd);
-            *proc << cmdAndArgs;
             //      This code will also work, but starts an extra shell process.
             //      kdDebug() << "cmd = " << cmd;
             //      *proc << cmd;
             //      proc->setUseShell(true);
-            proc->startDetached();
-            delete proc;
+            KProcess::startDetached(cmdAndArgs);
         }
     }
     //FIXME: Don't do channel links in DCC Chats to begin with since they don't have a server.
