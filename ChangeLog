@@ -34,7 +34,13 @@ Changes since 1.1:
 * Made the Oxygen nicklist icon theme the default nicklist icon theme.
 * Removed the bundled 'wheather' script (it relied on a KDE 3 service no lon-
   ger present in KDE 4; a replacement will need to adopt a new approach).
-* Various reliability and correctness improvements and optimizations to DCC.
+* Fix sending and receiving of files with names containing spaces
+* DCC Protocol adjustment to proper handle passive DCC resume/accept requests.
+  (this breaks passive-resume compatibly with <konversation-1.2)
+* Send proper DCC reject commands when rejecting a queued receive.
+* Improved error recovery during dcc send.
+* Fix time left for transfers that finished in under 1 sec displaying infinite
+  time left.
 * Increased default DCC buffer size to 16384 to reduce CPU load while sending
   or receiving files.
 * Added KNotify events for "Highlight triggered", "DCC transfer complete"
