@@ -54,6 +54,9 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="whatsThis">
+      <string>Choose an existing Identity or click the Edit button to add a new Identity or edit an existing one. The Identity will identify you and determine your nickname when you connect to the network.</string>
+     </property>
     </widget>
    </item>
    <item row="2" column="2">
@@ -88,12 +91,15 @@
    <item row="3" column="1" colspan="2">
     <widget class="KLineEdit" name="m_commandEdit">
      <property name="whatsThis">
-      <string>Optional. This command will be sent to the server after connecting. Example: &lt;b&gt;/msg NickServ IDENTIFY &lt;i&gt;konvirocks&lt;/i&gt;&lt;/b&gt;. This example is for the freenode network, which requires users to register their nickname with a password and login when connecting. &lt;i&gt;konvirocks&lt;/i&gt; is the password for the nickname given in Identity. You may enter more than one command by separating them with semicolons.</string>
+      <string>&lt;qt&gt;Optional. This command will be sent to the server after connecting. Example: &lt;b&gt;/msg NickServ IDENTIFY &lt;i&gt;konvirocks&lt;/i&gt;&lt;/b&gt;. This example is for the freenode network, which requires users to register their nickname with a password and login when connecting. &lt;i&gt;konvirocks&lt;/i&gt; is the password for the nickname given in Identity. You may enter more than one command by separating them with semicolons.&lt;/qt&gt;</string>
      </property>
     </widget>
    </item>
    <item row="4" column="0" colspan="3">
     <widget class="QCheckBox" name="m_autoConnectCBox">
+     <property name="whatsThis">
+      <string>Check here if you want Konversation to automatically connect to this network whenever you open Konversation.</string>
+     </property>
      <property name="text">
       <string>Co&amp;nnect on application start up</string>
      </property>
@@ -109,7 +115,11 @@
      </property>
      <layout class="QGridLayout" name="gridLayout">
       <item row="0" column="0" colspan="6">
-       <widget class="KListWidget" name="m_serverLBox"/>
+       <widget class="KListWidget" name="m_serverLBox">
+        <property name="whatsThis">
+         <string>This is a list of IRC Servers in the network. When connecting to the network, Konversation will attempt to connect to the top server first. If this fails, it will attempt the second server. If this fails, it will attempt the third, and so on. At least one server must be specified. Click a server to highlight it.</string>
+        </property>
+       </widget>
       </item>
       <item row="1" column="0">
        <widget class="KPushButton" name="m_addServerButton">
@@ -132,6 +142,9 @@
        <widget class="QToolButton" name="m_removeServerButton">
         <property name="enabled">
          <bool>false</bool>
+        </property>
+        <property name="toolTip">
+         <string>Delete</string>
         </property>
         <property name="text">
          <string/>
@@ -193,7 +206,11 @@
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
       <item row="0" column="0" colspan="6">
-       <widget class="KListWidget" name="m_channelLBox"/>
+       <widget class="KListWidget" name="m_channelLBox">
+        <property name="whatsThis">
+         <string>Optional. This is a list of the channels that will be automatically joined once Konversation has connected to a server. You may leave this blank if you wish to not automatically join any channels.</string>
+        </property>
+       </widget>
       </item>
       <item row="1" column="0">
        <widget class="KPushButton" name="m_addChannelButton">
@@ -216,6 +233,9 @@
        <widget class="QToolButton" name="m_removeChannelButton">
         <property name="enabled">
          <bool>false</bool>
+        </property>
+        <property name="toolTip">
+         <string>Delete</string>
         </property>
         <property name="text">
          <string/>
@@ -268,7 +288,11 @@
     </widget>
    </item>
    <item row="0" column="1" colspan="2">
-    <widget class="KLineEdit" name="m_nameEdit"/>
+    <widget class="KLineEdit" name="m_nameEdit">
+     <property name="whatsThis">
+      <string>Enter the name of the Network here. You may create as many entries in the Server List screen with the same Network as you like.</string>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
