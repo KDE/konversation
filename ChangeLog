@@ -61,6 +61,8 @@ Changes since 1.1:
   more work on limiting MODE commands to the 512 byte IRC message buffer
   limit for extreme cases). If MODES is not given at all by the server, the
   fallback is an RFC1459-compliant value of 3.
+* Added support for formatting variable expansion in the replacement part of
+  auto-replace rules.
 
 
 Changes from 1.0.1 to 1.1:
