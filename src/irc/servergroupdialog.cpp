@@ -98,8 +98,6 @@ namespace Konversation
         setButtonGuiItem(Cancel, KGuiItem(i18n("&Cancel"), "dialog-cancel", i18n("Discards all changes made")));
 
         m_mainWidget->m_nameEdit->setFocus();
-
-        connect(this, SIGNAL(okClicked()), this, SLOT(slotOk()));
     }
 
     ServerGroupDialog::~ServerGroupDialog()
@@ -399,7 +397,7 @@ namespace Konversation
         }
     }
 
-    void ServerGroupDialog::slotOk()
+    void ServerGroupDialog::accept()
     {
         if (m_mainWidget->m_nameEdit->text().isEmpty())
         {
@@ -411,7 +409,7 @@ namespace Konversation
         }
         else
         {
-            accept();
+            KDialog::accept();
         }
     }
 

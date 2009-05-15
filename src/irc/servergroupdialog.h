@@ -41,10 +41,11 @@ namespace Konversation
             int execAndEditServer(ServerSettings server);
 
             bool identitiesNeedsUpdate() const { return m_identitiesNeedsUpdate; }
-
+            
+        public slots:
+            virtual void accept();
+            
         protected slots:
-            virtual void slotOk();
-
             void addServer();
             void editServer();
             void editServer(ServerSettings server);
