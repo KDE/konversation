@@ -126,9 +126,6 @@
          <property name="toolTip">
           <string>Rename</string>
          </property>
-         <property name="text">
-          <string comment="Edit"/>
-         </property>
          <property name="iconSize">
           <size>
            <width>16</width>
