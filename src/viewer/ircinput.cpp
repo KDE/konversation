@@ -28,6 +28,7 @@
 #include <kmessagebox.h>
 #include <klocale.h>
 #include <kcompletionbox.h>
+#include <KStandardShortcut>
 
 #define MAXHISTORY 100
 #define RICHTEXT 0
@@ -35,6 +36,7 @@
 
 IRCInput::IRCInput(QWidget* parent) : KTextEdit(parent)
 {
+    enableFindReplace(false);
     setAcceptRichText(false);
     //I am not terribly interested in finding out where this value comes from
     //nor in compensating for it if my guess is incorrect. so, cache it.
@@ -262,6 +264,30 @@ void IRCInput::keyPressEvent(QKeyEvent* e)
 
     KTextEdit::keyPressEvent(e);
 }
+
+bool IRCInput::event(QEvent* e)
+{
+    if (e->type() == QEvent::ShortcutOverride)
+    {
+        // Make sure KTextEdit doesn't eat the find shortcuts
+        QKeyEvent* event = static_cast<QKeyEvent*>(e);
+        const int key = event->key() | event->modifiers();
+
+        if(KStandardShortcut::find().contains(key))
+        {
+            event->ignore();
+            return false;
+        }
+        else if(KStandardShortcut::findNext().contains(key))
+        {
+            event->ignore();
+            return false;
+        }
+    }
+
+    return KTextEdit::event(e);
+}
+
 
 void IRCInput::wheelEvent(QWheelEvent* e)
 {

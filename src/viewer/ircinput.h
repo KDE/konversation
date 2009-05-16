@@ -36,6 +36,8 @@ class IRCInput : public KTextEdit
         int getOldCursorPosition();
         QString lastCompletion() const { return m_lastCompletion; }
 
+        virtual bool event(QEvent* e);
+
     signals:
         void nickCompletion();
         void endCompletion();                     // tell channel that completion phase is over
