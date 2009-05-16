@@ -23,6 +23,7 @@
 #include <QTextDocument>
 #include <QTextCursor>
 #include <QTextOption>
+#include <QPointer>
 
 PasteEditor::PasteEditor(QWidget* parent)
     : KDialog(parent), Ui::PasteEditor()
@@ -105,12 +106,16 @@ QString PasteEditor::text() const
 
 QString PasteEditor::edit(QWidget* parent, const QString& text)
 {
-    PasteEditor dialog(parent);
-    dialog.setText(text);
+    QPointer<PasteEditor> dialog = new PasteEditor(parent);
+    dialog->setText(text);
 
-    if(dialog.exec())
-        return dialog.text();
-
+    if(dialog->exec())
+    {
+        const QString text = dialog->text();
+        delete dialog;
+        return text;
+    }
+    delete dialog;
     return QString();
 }
 
