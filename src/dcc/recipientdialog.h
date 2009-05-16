@@ -27,7 +27,7 @@ class DccRecipientDialog : public KDialog
     Q_OBJECT
 
         public:
-        DccRecipientDialog(QWidget* parent, QAbstractListModel* model, const QSize &size);
+        DccRecipientDialog(QWidget* parent, QAbstractListModel* model);
         ~DccRecipientDialog();
 
         static QString getNickname(QWidget* parent, QAbstractListModel* model);
