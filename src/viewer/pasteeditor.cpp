@@ -67,7 +67,7 @@ void PasteEditor::addQuotationIndicators()
 
 void PasteEditor::removeNewlines()
 {
-    QTextCursor cursor = m_textEditor->cursorForPosition(QPoint(0, 0));
+    QTextCursor cursor(m_textEditor->document());
     cursor.beginEditBlock();
 
     while(cursor.movePosition(QTextCursor::NextBlock, QTextCursor::MoveAnchor))
