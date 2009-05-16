@@ -59,10 +59,7 @@ DccRecipientDialog::DccRecipientDialog(QWidget* parent, QAbstractListModel* mode
     setButtonGuiItem(KDialog::Ok, KGuiItem(i18n("&OK"), "dialog-ok", i18n("Select nickname and close the window")));
     setButtonGuiItem(KDialog::Cancel, KGuiItem(i18n("&Cancel"), "dialog-cancel", i18n("Close the window without changes")));
 
-    KConfigGroup config(KGlobal::config(), "DCCRecipientDialog");
-    QSize newSize = size();
-    newSize = config.readEntry("Size", newSize);
-    resize(newSize);
+    restoreDialogSize(KConfigGroup(KGlobal::config(), "DCCRecipientDialog"));
 
     connect( this, SIGNAL( okClicked() ), this, SLOT( slotOk() ) );
     connect( this, SIGNAL( cancelClicked() ), this, SLOT( slotCancel() ) );
@@ -71,7 +68,7 @@ DccRecipientDialog::DccRecipientDialog(QWidget* parent, QAbstractListModel* mode
 DccRecipientDialog::~DccRecipientDialog()
 {
     KConfigGroup config(KGlobal::config(), "DCCRecipientDialog");
-    config.writeEntry("Size", size());
+    saveDialogSize(config);
 }
 
 QString DccRecipientDialog::getSelectedNickname()
