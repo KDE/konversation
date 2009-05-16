@@ -394,11 +394,15 @@ void DccTransferRecv::slotLocalCanResume( KIO::Job* job, KIO::filesize_t size )
         }
         else
         {
-            askAndPrepareLocalKio( i18n( "<b>A partial file exists.</b><br/>"
-                "%1<br/>"
-                "Size of the partial file: %2 bytes<br/>",
-                m_fileURL.prettyUrl(),
-                KGlobal::locale()->formatNumber( size, 0 ) ),
+            askAndPrepareLocalKio( i18np(
+                "<b>A partial file exists:</b><br/>"
+                "%2<br/>"
+                "Size of the partial file: 1 byte.<br/>",
+                "<b>A partial file exists:</b><br/>"
+                "%2<br/>"
+                "Size of the partial file: %1 bytes.<br/>",
+                size,
+                m_fileURL.prettyUrl()),
                 DccResumeDialog::RA_Resume | DccResumeDialog::RA_Overwrite | DccResumeDialog::RA_Rename | DccResumeDialog::RA_Cancel,
                 DccResumeDialog::RA_Resume,
                 size );
@@ -578,7 +582,7 @@ void DccTransferRecv::slotServerSocketReadyAccept()
     m_recvSocket = m_serverSocket->nextPendingConnection();
     if ( !m_recvSocket )
     {
-        failed( i18n( "Could not accept the connection. (Socket Error)" ) );
+        failed( i18n( "Could not accept the connection (socket error.)" ) );
         return;
     }
 
@@ -660,7 +664,7 @@ void DccTransferRecv::sendAck()                   // slot
     else if ( m_transferringPosition > (KIO::fileoffset_t)m_fileSize )
     {
         kDebug() << "The remote host sent larger data than expected: " << QString::number( m_transferringPosition );
-        failed( i18n( "Transferring error" ) );
+        failed( i18n( "Transfer error" ) );
     }
 }
 

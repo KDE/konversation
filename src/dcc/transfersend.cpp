@@ -211,7 +211,7 @@ bool DccTransferSend::queue()
         m_fileSize = m_file.size();
         kDebug() << "filesize 0, new filesize: " << m_fileSize;
         if ( m_fileSize == 0 )
-            failed( i18n( "Unabled to send 0 byte file" ) );
+            failed( i18n( "Unable to send a 0 byte file." ) );
     }
 
     return DccTransfer::queue();
@@ -290,7 +290,7 @@ void DccTransferSend::start()                     // public slot
         server->dccPassiveSendRequest( m_partnerNick, transferFileName(m_fileName), DccCommon::textIpToNumericalIp( m_ownIp ), m_fileSize, m_reverseToken );
     }
 
-    setStatus( WaitingRemote, i18n( "Waiting remote user's acceptance" ) );
+    setStatus( WaitingRemote, i18n( "Awaiting remote user's acceptance" ) );
 }
 
 void DccTransferSend::connectToReceiver( const QString& partnerHost, uint partnerPort )
@@ -339,7 +339,7 @@ void DccTransferSend::acceptClient()                     // slot
     m_sendSocket = m_serverSocket->nextPendingConnection();
     if ( !m_sendSocket )
     {
-        failed( i18n( "Could not accept the connection. (Socket Error)" ) );
+        failed( i18n( "Could not accept the connection (socket error.)" ) );
         return;
     }
     connect( m_sendSocket, SIGNAL( error ( QAbstractSocket::SocketError ) ), this, SLOT( slotGotSocketError(int) ));

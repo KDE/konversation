@@ -138,7 +138,7 @@ K3ListView(parent),
         popup->addSeparator();
 
         if (addressbook) {
-            KAction* addressbookSubAction = new KAction(i18n("Addressbook Associations"), popup);
+            KAction* addressbookSubAction = new KAction(i18n("Address Book Associations"), popup);
             popup->addAction(addressbookSubAction);
             addressbookSubAction->setMenu(addressbook);
         }

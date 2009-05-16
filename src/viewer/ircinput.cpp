@@ -427,11 +427,16 @@ bool IRCInput::checkPaste(QString& text)
 
     if(text.length()>256 || lines)
     {
+        QString bytesString = i18np("1 byte", "%1 bytes", text.length());
+        QString linesString = i18np("1 line", "%1 lines", lines+1);
+
         doPaste=KMessageBox::warningYesNoCancel
             (this,
-            i18n("<qt>You are attempting to paste a large portion of text (%1 bytes or %2 lines) into "
+            i18nc(
+            "%1 is, for instance, '200 bytes'.  %2 is, for instance, '7 lines'.  Both are localised (see the two previous messages).",
+            "<qt>You are attempting to paste a large portion of text (%1 or %2) into "
             "the chat. This can cause connection resets or flood kills. "
-            "Do you really want to continue?</qt>", text.length(), lines+1),
+            "Do you really want to continue?</qt>", bytesString, linesString),
             i18n("Large Paste Warning"),
             KGuiItem(i18n("Paste")),
             KGuiItem(i18n("&Edit...")),

@@ -201,7 +201,7 @@ void KonversationStatusBar::setTooLongLag(Server* lagServer, int msec)
         }
         else
         {
-            lagString = i18np("No answer from server %1 for more than 1 second.", "No answer from server %1 for more than %2 seconds.", lagServer->getServerName(), seconds);
+            lagString = i18np("No answer from server %2 for more than 1 second.", "No answer from server %2 for more than %1 seconds.", seconds, lagServer->getServerName());
         }
 
         setMainLabelText(lagString);

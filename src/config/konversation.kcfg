@@ -18,7 +18,7 @@
     </entry>
     <entry key="UseMaxSizedTabs" type="Bool">
     <default>true</default>
-    <label>Limit the size of the tab labels to fit all on screen</label>
+    <label>Limit the size of the tab labels to fit them all on screen</label>
     </entry>
     <entry key="TreeSplitterSizes" type="IntList">
       <default></default>
@@ -272,7 +272,7 @@
     </entry>
     <entry key="HideToTrayOnStartup" type="Bool">
       <default>false</default>
-      <label>Start with hidden mainwindow</label>
+      <label>Start with hidden main window</label>
     </entry>
     <entry key="ShowBackgroundImage" type="Bool">
       <default>false</default>

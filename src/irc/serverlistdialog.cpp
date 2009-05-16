@@ -259,7 +259,10 @@ namespace Konversation
                 }
                 else if (parent && parent->childCount() == parent->selectedChildrenCount())
                 {
-                    KMessageBox::error(this, i18n("You cannot delete the selected servers.\n\nThe network %1 needs to have at least one server.",parent->name()));
+                    KMessageBox::error(this, i18np("You cannot delete the selected server.\n\nThe network %2 needs to have at least one server.",
+                                                   "You cannot delete the selected servers.\n\nThe network %2 needs to have at least one server.",
+                                                   parent->selectedChildrenCount(),
+                                                   parent->name()));
                     return;
                 }
             }

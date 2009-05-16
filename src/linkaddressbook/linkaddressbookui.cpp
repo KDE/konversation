@@ -48,7 +48,7 @@ Kopete    (c) 2002-2004 by the Kopete developers  <kopete-devel@kde.org>
 LinkAddressbookUI::LinkAddressbookUI( QWidget *parent, const QString &ircnick, const QString &servername, const QString &servergroup, const QString &suggested_realname )
 : KDialog(parent)
 {
-    setCaption( i18n("Link IRC Nick to Addressbook Contact") );
+    setCaption( i18n("Link IRC Nick to Address Book Contact") );
     setButtons( KDialog::Ok|KDialog::Cancel|KDialog::Help );
     setDefaultButton( KDialog::Ok );
 

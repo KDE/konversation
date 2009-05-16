@@ -2395,9 +2395,9 @@ void ViewContainer::openChannelList(const QString& filter, bool getList)
     {
         KMessageBox::information(m_window,
             i18n(
-            "The channel list can only be opened from a "
-            "query, channel or status window to find out, "
-            "which server this list belongs to."
+            "To know which server to display the channel list "
+            "for, the list can only be opened from a "
+            "query, channel or status window."
             ),
             i18n("Channel List"),
             "ChannelListNoServerSelected");

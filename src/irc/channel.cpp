@@ -1818,7 +1818,7 @@ void Channel::updateMode(const QString& sourceNick, char mode, bool plus, const 
                 if(fromMe)
                 {
                     if(toMe) message=i18n("You give yourself permission to talk.");
-                    else     message=i18n("You give %1  permission to talk.", parameter);
+                    else     message=i18n("You give %1 permission to talk.", parameter);
                 }
                 else
                 {
@@ -1964,8 +1964,8 @@ void Channel::updateMode(const QString& sourceNick, char mode, bool plus, const 
         case 'l':
             if(plus)
             {
-                if(fromMe) message=i18n("You set the channel limit to %1 nicks.", parameter);
-                else message=i18n("%1 sets the channel limit to %2 nicks.", sourceNick, parameter);
+                if(fromMe) message=i18np("You set the channel limit to 1 nick.", "You set the channel limit to %1 nicks.", parameter);
+                else message=i18np("%2 sets the channel limit to 1 nick.", "%2 sets the channel limit to %1 nicks.", parameter, sourceNick);
             }
             else
             {

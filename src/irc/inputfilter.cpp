@@ -1678,7 +1678,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                         else
                         {
                             server->appendMessageToFrontmost(i18n("Whois"),
-                            i18np("%1 has been idle for 1 second.", "%1 has been idle for %2 seconds.", parameterList.value(1), seconds)
+                            i18np("%2 has been idle for 1 second.", "%2 has been idle for %1 seconds.", seconds, parameterList.value(1))
                                 );
                         }
                     }
@@ -1999,11 +1999,11 @@ void InputFilter::parseModes(const QString &sourceNick, const QStringList &param
         {
             if (sourceNick == server->getNickname())
             { //XXX someone might care about the potentially unnecessary plural here
-                message = i18n("You have set personal modes: ") + modestring;
+                message = i18n("You have set personal modes: %1", modestring);
             }
             else
             { //XXX someone might care about the potentially unnecessary plural here
-                message = QString("%1 %2 %3").arg(sourceNick).arg(i18n("has changed your personal modes:")).arg(modestring);
+                message = i18n("%1 has changed your personal modes: %2", sourceNick, modestring);
             }
         }
         if (!message.isEmpty())
@@ -2017,7 +2017,7 @@ void InputFilter::parseModes(const QString &sourceNick, const QStringList &param
     // Mode q is quiet on freenode and acts like b... if this is a channel mode on other
     //  networks then more logic is needed here. --MrGrim
     QString parameterModes = "aAoOvhkbleIq";
-    QString message = sourceNick + i18n(" sets mode: ") + modestring;
+    QString message = i18n("%1 sets mode: %2", sourceNick, modestring);
 
     for (int index=0;index<modestring.length();index++)
     {

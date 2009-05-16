@@ -55,7 +55,7 @@ namespace Konversation
         passwordLbl->setBuddy(m_passwordEdit);
 
         m_sslChBox = new QCheckBox(i18n("S&ecure connection (SSL)"), mainWidget());
-        m_sslChBox->setWhatsThis(i18n("Check if you want to use Secure Socket Layer (SSL) protocol to communicate with the server. This protects the privacy of your communications between your computer and the IRC server. The server must support SSL protocol for this to work. In most cases, if the server does not support SSL, the connection will fail."));
+        m_sslChBox->setWhatsThis(i18n("Check if you want to use the Secure Socket Layer (SSL) protocol to communicate with the server. This protects the privacy of your communications between your computer and the IRC server. The server must support SSL protocol for this to work. In most cases, if the server does not support SSL, the connection will fail."));
 
         mainLayout->addWidget(serverLbl, 0, 0);
         mainLayout->addWidget(m_serverEdit, 0, 1);

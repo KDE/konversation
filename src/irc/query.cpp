@@ -69,7 +69,7 @@ Query::Query(QWidget* parent, QString _name) : ChatWindow(parent)
     queryHostmask=new QLabel(box);
     queryHostmask->setObjectName("query_hostmask");
 
-    QString whatsthis = i18n("<qt><p>Some details of the person you are talking to in this query is shown in this bar.  The full name and hostmask is shown, along with any image or logo this person has associated with them in the KDE Addressbook.</p><p>See the <i>Konversation Handbook</i> for information on associating a nick with a contact in the Addressbook, and for an explanation of what the hostmask is.</p></qt>");
+    QString whatsthis = i18n("<qt><p>Some details of the person you are talking to in this query is shown in this bar.  The full name and hostmask is shown, along with any image or logo this person has associated with them in the KDE Address Book.</p><p>See the <i>Konversation Handbook</i> for information on associating a nick with a contact in the address book, and for an explanation of what the hostmask is.</p></qt>");
     addresseeimage->setWhatsThis(whatsthis);
     addresseelogoimage->setWhatsThis(whatsthis);
     queryHostmask->setWhatsThis(whatsthis);

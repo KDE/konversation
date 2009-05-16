@@ -248,7 +248,7 @@ void Theme_Config::removeTheme()
     dir = m_dirs[iconThemeIndex->currentRow()];
 
     int remove = KMessageBox::warningContinueCancel(0L,
-        i18n("Do you want to remove %1 ?", themeName),
+        i18n("Do you want to remove %1?", themeName),
         i18n("Remove Theme"),
         KStandardGuiItem::del(),KStandardGuiItem::cancel(),
         "warningRemoveTheme"

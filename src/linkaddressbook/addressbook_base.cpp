@@ -391,7 +391,7 @@ namespace Konversation
         kDebug() << "running kaddressbook --editor-only --uid " << uid;
         if(!proc->startDetached())
         {
-            KMessageBox::error(0, i18n("Could not run your addressbook program (kaddressbook).  This is most likely because it is not installed.  Please install the 'kdepim' packages."));
+            KMessageBox::error(0, i18n("Could not run the address book program (kaddressbook) - this is most likely because it is not installed.  Please install the 'kdepim' packages."));
             return false;
         }
         return true;
@@ -457,41 +457,41 @@ namespace Konversation
                 if(nicksWithEmails.isEmpty())
                 {
                     if(nicksWithoutAddressee.count() > 1)
-                        message = i18n("None of the contacts that you have selected were associated with an addressbook contacts. ");
+                        message = i18n("None of the selected contacts are associated with address book entries. ");
                     else
-                        message = i18n("The contact that you have selected is not associated with an addressbook contact. ");
+                        message = i18n("The selected contact is not associated with an address book entry. ");
                 }
                 else
                 {
                     if(nicksWithoutAddressee.count() > 1)
-                        message = i18n("Some of the contacts (%1) that you have selected are not associated with addressbook contacts. ",nicksWithoutAddressee.join(", "));
+                        message = i18n("Some of the contacts (%1) that you have selected are not associated with address book entries. ",nicksWithoutAddressee.join(", "));
                     else
-                        message = i18n("One of the contacts (%1) that you have selected is not associated with an addressbook contact. ",nicksWithoutAddressee.join(", "));
+                        message = i18n("One of the contacts (%1) that you have selected is not associated with an address book entry. ",nicksWithoutAddressee.join(", "));
                 }
-                message += i18n("You can right click on a contact, and choose to edit the Addressbook Associations to link them to a contact in your addressbook.");
+                message += i18n("You can right click on a contact and choose to edit the Address Book Associations to link them to a contact in your address book.");
             }
             else if(nicksWithoutAddressee.isEmpty())
             {
                 if(nicksWithEmails.isEmpty())
                 {
                     if(nicksWithoutEmails.count() > 1)
-                        message = i18n("None of the contacts that you have selected have an email address associated with them. ");
+                        message = i18n("None of the selected contacts have an email address associated with them. ");
                     else
-                        message = i18n("The contact that you have selected does not have an email address associated with them. ");
+                        message = i18n("The selected contact does not have an associated email address. ");
                 }
                 else
                 {
                     if(nicksWithoutEmails.count() > 1)
-                        message = i18n("Some of the contacts (%1) that you have selected do not have an email address associated with them. ",nicksWithoutEmails.join(", "));
+                        message = i18n("Some of the contacts (%1) that you have selected do not have email addresses associated with them. ",nicksWithoutEmails.join(", "));
                     else
                         message = i18n("One of the contacts (%1) that you have selected does not have an email address associated with them. ",nicksWithoutEmails.join(", "));
                 }
-                message += i18n("You can right click on a contact, and choose to edit the addressbook contact, adding an email for them.");
+                message += i18n("You can right click on a contact and edit the corresponding address book entry to add an email address for them.");
             }
             else
             {
-                message = i18n("Some of the contacts (%1) that you have selected are not associated with addressbook contacts, and some of the contacts (%2) do not have an email address associated with them.  ",nicksWithoutAddressee.join(", "),nicksWithoutEmails.join(", "));
-                message += i18n("You can right click on a contact, and choose to edit the Addressbook Associations to link them to a contact in your addressbook, and choose to edit the addressbook contact, adding an email for them.");
+                message = i18n("Some of the contacts (%1) that you have selected are not associated with address book entries, and some of the contacts (%2) do not have email addresses associated with them.  ",nicksWithoutAddressee.join(", "),nicksWithoutEmails.join(", "));
+                message += i18n("For the former contacts, this can be resolved by right clicking on a contact and choosing to edit the Address Book Associations, thereby linking them to a contact in your address book.  For the latter, by choosing to editing the corresponding address book contact you can specify an email address for them.");
             }
             if(nicksWithEmails.isEmpty())
             {
@@ -500,7 +500,7 @@ namespace Konversation
             }
             else
             {
-                message += i18n("\nDo you want to send an email anyway to the nicks that do have an email address?");
+                message += i18n("\nDo you want to send an email anyway to the nicks that do have email addresses?");
                 int result = KMessageBox::questionYesNo(0, message, i18n("Send Email"), KGuiItem(i18n("&Send Email...")), KGuiItem(i18n("&Cancel")));
                 if(result == KMessageBox::No)
                 {
