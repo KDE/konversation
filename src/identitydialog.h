@@ -6,8 +6,8 @@
 */
 
 /*
-  copyright: (C) 2004 by Peter Simonsson
-  email:     psn@linux.se
+  copyright: (C) 2004, 2009 by Peter Simonsson
+  email:     peter.simonsson@gmail.com
 */
 #ifndef KONVERSATIONIDENTITYDIALOG_H
 #define KONVERSATIONIDENTITYDIALOG_H
@@ -35,6 +35,9 @@ namespace Konversation
 
         signals:
             void identitiesChanged();
+            
+        protected:
+            bool checkCurrentIdentity();
 
         protected slots:
             void updateIdentity(int index);

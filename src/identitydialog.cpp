@@ -6,8 +6,8 @@
 */
 
 /*
-  copyright: (C) 2004 by Peter Simonsson
-  email:     psn@linux.se
+  copyright: (C) 2004, 2009 by Peter Simonsson
+  email:     peter.simonsson@gmail.com
 */
 #include "identitydialog.h"
 #include "application.h"
@@ -77,17 +77,8 @@ namespace Konversation
 
     void IdentityDialog::updateIdentity(int index)
     {
-        if(m_currentIdentity && (m_nicknameLBox->count() == 0))
+        if (m_currentIdentity && !checkCurrentIdentity())
         {
-            KMessageBox::error(this, i18n("You must add at least one nick to the identity."));
-            m_identityCBox->setItemText(0, m_currentIdentity->getName());
-            return;
-        }
-
-        if (isVisible() && m_currentIdentity && m_realNameEdit->text().isEmpty())
-        {
-            KMessageBox::error(this, i18n("Please enter a real name."));
-            m_identityCBox->setItemText(0, m_currentIdentity->getName());
             return;
         }
 
@@ -168,18 +159,8 @@ namespace Konversation
 
     void IdentityDialog::accept()
     {
-
-        if(m_nicknameLBox->count() == 0)
+        if (!checkCurrentIdentity())
         {
-            KMessageBox::error(this, i18n("You must add at least one nick to the identity."));
-            m_identityCBox->setItemText(0, m_currentIdentity->getName());
-            return;
-        }
-
-        if(m_realNameEdit->text().isEmpty())
-        {
-            KMessageBox::error(this, i18n("Please enter a real name."));
-            m_identityCBox->setItemText(0, m_currentIdentity->getName());
             return;
         }
 
@@ -204,7 +185,6 @@ namespace Konversation
             m_identityList.append(identity);
             m_identityCBox->addItem(txt);
             m_identityCBox->setCurrentIndex(m_identityCBox->count() - 1);
-            updateIdentity(m_identityCBox->currentIndex());
         }
         else if(ok && txt.isEmpty())
         {
@@ -269,10 +249,9 @@ namespace Konversation
         if(KMessageBox::warningContinueCancel(this, warningTxt, i18n("Delete Identity"),
             KGuiItem(i18n("Delete"), "edit-delete")) == KMessageBox::Continue)
         {
-            m_identityCBox->removeItem(current);
             m_identityList.removeOne(m_currentIdentity);
             m_currentIdentity = 0;
-            updateIdentity(m_identityCBox->currentIndex());
+            m_identityCBox->removeItem(current);
         }
     }
 
@@ -290,7 +269,6 @@ namespace Konversation
             m_identityList.append(identity);
             m_identityCBox->addItem(txt);
             m_identityCBox->setCurrentIndex(m_identityCBox->count() - 1);
-            updateIdentity(m_identityCBox->currentIndex());
         }
         else if(ok && txt.isEmpty())
         {
@@ -305,7 +283,6 @@ namespace Konversation
             index = 0;
 
         m_identityCBox->setCurrentIndex(index);
-        updateIdentity(index);
     }
 
     IdentityPtr IdentityDialog::setCurrentIdentity(IdentityPtr identity)
@@ -319,5 +296,28 @@ namespace Konversation
     IdentityPtr IdentityDialog::currentIdentity() const
     {
         return m_currentIdentity;
+    }
+
+    bool IdentityDialog::checkCurrentIdentity()
+    {
+        if(m_nicknameLBox->count() == 0)
+        {
+            KMessageBox::error(this, i18n("You must add at least one nick to the identity."));
+            bool block = m_identityCBox->blockSignals(true);
+            m_identityCBox->setCurrentIndex(m_identityCBox->findText(m_currentIdentity->getName()));
+            m_identityCBox->blockSignals(block);
+            return false;
+        }
+        
+        if(m_realNameEdit->text().isEmpty())
+        {
+            KMessageBox::error(this, i18n("Please enter a real name."));
+            bool block = m_identityCBox->blockSignals(true);
+            m_identityCBox->setCurrentIndex(m_identityCBox->findText(m_currentIdentity->getName()));
+            m_identityCBox->blockSignals(block);
+            return false;
+        }
+        
+        return true;
     }
 }
