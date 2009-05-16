@@ -126,11 +126,11 @@ set(viewer_SRCS
 
     statuspanel.cpp
 
-    viewer/multilineedit.cpp
     viewer/ircviewbox.cpp
     viewer/viewcontainer.cpp
     viewer/viewtree.cpp
     viewer/viewtreeitem.cpp
+    viewer/pasteeditor.cpp
 
     viewer/highlight.cpp
     viewer/highlightviewitem.cpp
@@ -151,6 +151,7 @@ set(viewer_SRCS
 
 kde4_add_ui_files(viewer_SRCS
     viewer/irccolorchooserui.ui
+    viewer/pasteeditor.ui
 )
 
     #=== DCC

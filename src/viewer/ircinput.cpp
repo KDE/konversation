@@ -14,9 +14,9 @@
 
 #include "ircinput.h"
 #include "application.h"
-#include "multilineedit.h"
 #include "chatwindow.h"
 #include "ircview.h"
+#include "pasteeditor.h"
 
 #include <qclipboard.h>
 #include <qregexp.h>
@@ -447,7 +447,7 @@ bool IRCInput::checkPaste(QString& text)
 
     if (doPaste==KMessageBox::No)
     {
-        QString ret(MultilineEdit::edit(this,text));
+        QString ret(PasteEditor::edit(this,text));
         if (ret.isEmpty())
             return false;
         text=ret;
