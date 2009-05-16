@@ -547,32 +547,32 @@ void Channel::popupCommand(int id)
         }
         case Konversation::GiveOp:
             pattern="MODE %c +%m %l";
-            mode="o";
+            mode='o';
             raw=true;
             break;
         case Konversation::TakeOp:
             pattern="MODE %c -%m %l";
-            mode="o";
+            mode='o';
             raw=true;
             break;
         case Konversation::GiveHalfOp:
             pattern="MODE %c +%m %l";
-            mode="h";
+            mode='h';
             raw=true;
             break;
         case Konversation::TakeHalfOp:
             pattern="MODE %c -%m %l";
-            mode="h";
+            mode='h';
             raw=true;
             break;
         case Konversation::GiveVoice:
             pattern="MODE %c +%m %l";
-            mode="v";
+            mode='v';
             raw=true;
             break;
         case Konversation::TakeVoice:
             pattern="MODE %c -%m %l";
-            mode="v";
+            mode='v';
             raw=true;
             break;
         case Konversation::Version:

@@ -351,7 +351,7 @@ QString DccTransferPanelItem::getTimeLeftPrettyText() const
     if ( m_transfer->getTimeLeft() == DccTransfer::NotInTransfer )
         ;
     else if ( m_transfer->getTimeLeft() == DccTransfer::InfiniteValue )
-        text = "?";
+        text = '?';
     else
         text = secToHMS( m_transfer->getTimeLeft() );
 

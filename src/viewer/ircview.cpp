@@ -894,7 +894,7 @@ void IRCView::openLink(const QString& url, bool)
 {
     QString link(url);
     // HACK Replace " " with %20 for channelnames, NOTE there can't be 2 channelnames in one link
-    link = link.replace (" ", "%20");
+    link = link.replace (' ', "%20");
 
     if (!link.isEmpty() && !link.startsWith('#'))
     {
@@ -957,7 +957,7 @@ void IRCView::highlightedSlot(const QString& _link)
 {
     QString link = _link;
     // HACK Replace " " with %20 for channelnames, NOTE there can't be 2 channelnames in one link
-    link = link.replace (" ", "%20");
+    link = link.replace (' ', "%20");
 
     //Hack to handle the fact that we get a decoded url
     //FIXME someone who knows what it looks like when we get a decoded url can reenable this if necessary...

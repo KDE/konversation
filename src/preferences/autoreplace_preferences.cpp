@@ -191,7 +191,7 @@ QList<QStringList> Autoreplace_Config::currentAutoreplaceList()
   while(item)
   {
     QString regex="0";
-    if (static_cast<QTreeWidgetItem*>(item)->checkState(0) == Qt::Checked) regex="1";
+    if (static_cast<QTreeWidgetItem*>(item)->checkState(0) == Qt::Checked) regex='1';
 
     // remember entry in internal list (col 4 is hidden for input/output)
     newList.append(QStringList() << regex << item->text(4) << item->text(2) << item->text(3));
@@ -270,8 +270,8 @@ void Autoreplace_Config::directionChanged(int newDirection)
     // prepare hidden identifier string
     QString id;
     // find the direction strings to set up in the item
-    if(newDirection==DIRECTION_INPUT)       id="i";
-    else if(newDirection==DIRECTION_OUTPUT) id="o";
+    if(newDirection==DIRECTION_INPUT)       id='i';
+    else if(newDirection==DIRECTION_OUTPUT) id='o';
     else if(newDirection==DIRECTION_BOTH)   id="io";
     // rename direction
     item->setText(1,directionCombo->itemText(newDirection));
