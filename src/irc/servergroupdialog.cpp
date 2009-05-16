@@ -167,15 +167,16 @@ namespace Konversation
 
     void ServerGroupDialog::addServer()
     {
-        ServerDialog dlg(i18n("Add Server"), this);
+        QPointer<ServerDialog> dlg = new ServerDialog(i18n("Add Server"), this);
 
-        if(dlg.exec() == KDialog::Accepted)
+        if(dlg->exec() == KDialog::Accepted)
         {
-            ServerSettings server = dlg.serverSettings();
+            ServerSettings server = dlg->serverSettings();
             m_mainWidget->m_serverLBox->addItem(server.host());
             m_serverList.append(server);
             updateServerArrows();
         }
+        delete dlg;
     }
 
     void ServerGroupDialog::editServer()
@@ -184,15 +185,16 @@ namespace Konversation
 
         if(current < m_serverList.count())
         {
-            ServerDialog dlg(i18n("Edit Server"), this);
-            dlg.setServerSettings(m_serverList[current]);
+            QPointer <ServerDialog> dlg = new ServerDialog(i18n("Edit Server"), this);
+            dlg->setServerSettings(m_serverList[current]);
 
-            if(dlg.exec() == KDialog::Accepted)
+            if(dlg->exec() == KDialog::Accepted)
             {
-                ServerSettings server = dlg.serverSettings();
+                ServerSettings server = dlg->serverSettings();
                 m_mainWidget->m_serverLBox->item(current)->setText(server.host());
                 m_serverList[current] = server;
             }
+            delete dlg;
         }
     }
 
@@ -277,15 +279,16 @@ namespace Konversation
 
     void ServerGroupDialog::addChannel()
     {
-        ChannelDialog dlg(i18n("Add Channel"), this);
+        QPointer<ChannelDialog> dlg = new ChannelDialog(i18n("Add Channel"), this);
 
-        if(dlg.exec() == KDialog::Accepted)
+        if(dlg->exec() == KDialog::Accepted)
         {
-            ChannelSettings channel = dlg.channelSettings();
+            ChannelSettings channel = dlg->channelSettings();
             m_mainWidget->m_channelLBox->addItem(channel.name());
             m_channelList.append(channel);
             updateChannelArrows();
         }
+        delete dlg;
     }
 
     void ServerGroupDialog::editChannel()
@@ -294,15 +297,16 @@ namespace Konversation
 
         if(current < m_channelList.count())
         {
-            ChannelDialog dlg(i18n("Edit Channel"), this);
-            dlg.setChannelSettings(m_channelList[current]);
+            QPointer<ChannelDialog> dlg = new ChannelDialog(i18n("Edit Channel"), this);
+            dlg->setChannelSettings(m_channelList[current]);
 
-            if(dlg.exec() == KDialog::Accepted)
+            if(dlg->exec() == KDialog::Accepted)
             {
-                ChannelSettings channel = dlg.channelSettings();
+                ChannelSettings channel = dlg->channelSettings();
                 m_mainWidget->m_channelLBox->item(current)->setText(channel.name());
                 m_channelList[current] = channel;
             }
+            delete dlg;
         }
     }
 
@@ -363,10 +367,10 @@ namespace Konversation
 
     void ServerGroupDialog::editIdentity()
     {
-        IdentityDialog dlg(this);
-        dlg.setCurrentIdentity(m_mainWidget->m_identityCBox->currentIndex());
+        QPointer<IdentityDialog> dlg = new IdentityDialog(this);
+        dlg->setCurrentIdentity(m_mainWidget->m_identityCBox->currentIndex());
 
-        if(dlg.exec() == KDialog::Accepted)
+        if(dlg->exec() == KDialog::Accepted)
         {
             IdentityList identities = Preferences::identityList();
             m_mainWidget->m_identityCBox->clear();
@@ -376,16 +380,21 @@ namespace Konversation
                 m_mainWidget->m_identityCBox->addItem((*it)->getName());
             }
 
-            const int i = m_mainWidget->m_identityCBox->findText(dlg.currentIdentity()->getName());
+            const int i = m_mainWidget->m_identityCBox->findText(dlg->currentIdentity()->getName());
             if (i != -1)
+            {
                 m_mainWidget->m_identityCBox->setCurrentIndex(i);
+            }
             else
-                m_mainWidget->m_identityCBox->setItemText(m_mainWidget->m_identityCBox->currentIndex(), dlg.currentIdentity()->getName());
+            {
+                m_mainWidget->m_identityCBox->setItemText(m_mainWidget->m_identityCBox->currentIndex(), dlg->currentIdentity()->getName());
+            }
 
             m_identitiesNeedsUpdate = true; // and what's this for?
             ViewContainer* vc = KonversationApplication::instance()->getMainWindow()->getViewContainer();
             vc->updateViewEncoding(vc->getFrontView());
         }
+        delete dlg;
     }
 
     void ServerGroupDialog::accept()

@@ -1877,9 +1877,13 @@ void ViewContainer::insertChar(const QChar& chr)
 void ViewContainer::insertIRCColor()
 {
     // TODO FIXME
-    IRCColorChooser dlg(m_window);
+    QPointer<IRCColorChooser> dlg = new IRCColorChooser(m_window);
 
-    if (dlg.exec() == KDialog::Accepted) m_frontView->appendInputText(dlg.color(), true/*fromCursor*/);
+    if (dlg->exec() == KDialog::Accepted)
+    {
+        m_frontView->appendInputText(dlg->color(), true/*fromCursor*/);
+    }
+    delete dlg;
 }
 
 void ViewContainer::clearViewLines()
@@ -2179,10 +2183,13 @@ void ViewContainer::showJoinChannelDialog()
     if (!server)
         return;
 
-    Konversation::JoinChannelDialog dlg(server, m_window);
+    QPointer<Konversation::JoinChannelDialog> dlg = new Konversation::JoinChannelDialog(server, m_window);
 
-    if (dlg.exec() == QDialog::Accepted)
-        server->sendJoinCommand(dlg.channel(), dlg.password());
+    if (dlg->exec() == QDialog::Accepted)
+    {
+        server->sendJoinCommand(dlg->channel(), dlg->password());
+    }
+    delete dlg;
 }
 
 void ViewContainer::connectionStateChanged(Server* server, Konversation::ConnectionState state)

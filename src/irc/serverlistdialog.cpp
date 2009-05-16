@@ -177,14 +177,15 @@ namespace Konversation
 
     void ServerListDialog::slotAdd()
     {
-        ServerGroupDialog dlg(i18n("New Network"), this);
+        QPointer<ServerGroupDialog> dlg = new ServerGroupDialog(i18n("New Network"), this);
 
-        if(dlg.exec() == KDialog::Accepted)
+        if(dlg->exec() == KDialog::Accepted)
         {
-            addServerGroup(dlg.serverGroupSettings());
+            addServerGroup(dlg->serverGroupSettings());
 
-            emit serverGroupsChanged(dlg.serverGroupSettings());
+            emit serverGroupsChanged(dlg->serverGroupSettings());
         }
+        delete dlg;
     }
 
     void ServerListDialog::slotEdit()
@@ -197,28 +198,28 @@ namespace Konversation
 
             if (serverGroup)
             {
-                ServerGroupDialog dlg(i18n("Edit Network"), this);
+                QPointer<ServerGroupDialog> dlg = new ServerGroupDialog(i18n("Edit Network"), this);
 
-                dlg.setServerGroupSettings(serverGroup);
+                dlg->setServerGroupSettings(serverGroup);
 
                 if (item->isServer())
                 {
-                    if(dlg.execAndEditServer(item->server()) == KDialog::Accepted)
+                    if(dlg->execAndEditServer(item->server()) == KDialog::Accepted)
                     {
                         delete item;
 
                         m_selectedItem = true;
                         m_selectedServerGroupId = serverGroup->id();
-                        m_selectedServer = dlg.editedServer();
+                        m_selectedServer = dlg->editedServer();
 
-                        *serverGroup = *dlg.serverGroupSettings();
+                        *serverGroup = *dlg->serverGroupSettings();
 
                         emit serverGroupsChanged(serverGroup); // will call updateServerList
                     }
                 }
                 else
                 {
-                    if(dlg.exec() == KDialog::Accepted)
+                    if(dlg->exec() == KDialog::Accepted)
                     {
                         delete item;
 
@@ -226,11 +227,12 @@ namespace Konversation
                         m_selectedServerGroupId = serverGroup->id();
                         m_selectedServer = ServerSettings("");
 
-                        *serverGroup = *dlg.serverGroupSettings();
+                        *serverGroup = *dlg->serverGroupSettings();
 
                         emit serverGroupsChanged(serverGroup); // will call updateServerList
                     }
                 }
+                delete dlg;
             }
         }
     }

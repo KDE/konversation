@@ -1192,10 +1192,13 @@ void Channel::modeButtonClicked(int id, bool on)
     {
         if (args.isEmpty())
         {
-            KPasswordDialog dlg(this);
-            dlg.setPrompt(i18n("Channel Password"));
-            if (dlg.exec() && !dlg.password().isEmpty())
-                args = dlg.password();
+            QPointer<KPasswordDialog> dlg = new KPasswordDialog(this);
+            dlg->setPrompt(i18n("Channel Password"));
+            if (dlg->exec() && !dlg->password().isEmpty())
+            {
+                args = dlg->password();
+            }
+            delete dlg;
         }
 
     }

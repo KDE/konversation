@@ -16,6 +16,7 @@
 
 #include <qlabel.h>
 #include <qlayout.h>
+#include <QPointer>
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -43,13 +44,15 @@ DccResumeDialog::ReceiveAction DccResumeDialog::ask(DccTransferRecv* item, const
     else if(defaultAction == RA_Cancel)
         defaultButtonCode = KDialog::Cancel;
 
-    DccResumeDialog dlg(item, i18n("DCC Receive Question"), message, enabledActions, enabledButtonCodes, defaultButtonCode);
-    dlg.exec();
+    QPointer<DccResumeDialog> dlg = new DccResumeDialog(item, i18n("DCC Receive Question"), message, enabledActions, enabledButtonCodes, defaultButtonCode);
+    dlg->exec();
 
-    ReceiveAction ra = dlg.m_selectedAction;
+    ReceiveAction ra = dlg->m_selectedAction;
 
     if(ra == RA_Rename)
-        item->setFileURL( dlg.m_urlreqFileURL->url() );
+        item->setFileURL( dlg->m_urlreqFileURL->url() );
+
+    delete dlg;
 
     return ra;
 }
