@@ -328,7 +328,7 @@ void ChatWindow::setLogfileName(const QString& name)
                     // Qt uses 0xFDD0 and 0xFDD1 to mark the beginning and end of text frames. Remove
                     // these here to avoid fatal errors encountered in QText* and the event loop pro-
                     // cessing.
-                    (*itMessage).remove(QChar(0xFDD0)).remove(QChar(0xFDD1));
+                    itMessage->remove(QChar(0xFDD0)).remove(QChar(0xFDD1));
 
                     appendBacklogMessage(*itFirstColumn, *itMessage);
                 }
