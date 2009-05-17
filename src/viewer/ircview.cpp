@@ -41,7 +41,7 @@
 #include <kmessagebox.h>
 #include <klocale.h>
 #include <kurl.h>
-#include <kbookmark.h>
+#include <kbookmarkdialog.h>
 #include <kbookmarkmanager.h>
 #include <kdeversion.h>
 #include <kstandarddirs.h>
@@ -1050,7 +1050,13 @@ void IRCView::copyUrl()
 
 void IRCView::slotBookmark()
 {
-        //TODO
+    if (m_urlToCopy.isEmpty())
+        return;
+
+    KBookmarkManager* bm = KBookmarkManager::userBookmarksManager();
+    KBookmarkDialog* dialog = new KBookmarkDialog(bm, this);
+    dialog->addBookmark(m_urlToCopy, m_urlToCopy);
+    delete dialog;
 }
 
 void IRCView::contextMenuEvent(QContextMenuEvent* ev)
