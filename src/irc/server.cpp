@@ -1037,8 +1037,16 @@ void Server::incoming()
 
             m_inputBuffer << codec->toUnicode(first);
         }
+
         bufferLines.removeFirst();
-        m_bytesReceived+=m_inputBuffer.back().length();
+
+        // Qt uses 0xFDD0 and 0xFDD1 to mark the beginning and end of text frames. Remove
+        // these here to avoid fatal errors encountered in QText* and the event loop pro-
+        // cessing.
+        m_inputBuffer.back().remove(QChar(0xFDD0)).remove(QChar(0xFDD1));
+
+        //FIXME: This has nothing to do with bytes, and it's not raw received bytes either. Bogus number.
+        //m_bytesReceived+=m_inputBuffer.back().length();
     }
 
     if( !m_incomingTimer.isActive() && !m_processingIncoming )
