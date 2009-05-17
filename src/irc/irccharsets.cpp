@@ -71,17 +71,8 @@ namespace Konversation
         simplifiedAmbiguousName.remove( QRegExp( "[^a-z0-9]" ));
 
         // search m_simplifiedShortNames
-        int index = 0;
-        for ( QStringList::iterator it = m_simplifiedShortNames.begin() ; it != m_simplifiedShortNames.end() ; ++it )
-        {
-            if ( (*it) == simplifiedAmbiguousName )
-                return m_shortNames[index];
-            ++index;
-        }
-
-        // search m_shortNameAliases
-        if ( m_shortNameAliases.contains( simplifiedAmbiguousName ) )
-            return m_shortNameAliases[ simplifiedAmbiguousName ];
+        if(m_simplifiedShortNames.contains(simplifiedAmbiguousName))
+            return m_simplifiedShortNames[simplifiedAmbiguousName];
 
         // failed
         return QString();
@@ -131,10 +122,10 @@ namespace Konversation
 
     IRCCharsets::IRCCharsets()
     {
-        // setup m_shortNameAliases
+        // Add some aliases
         // use only [a-z0-9] for keys!
-        m_shortNameAliases["unicode"] = "UTF-8";
-        m_shortNameAliases["latin1"] = "ISO 8859-1";
+        m_simplifiedShortNames["unicode"] = "UTF-8";
+        m_simplifiedShortNames["latin1"] = "ISO 8859-1";
 
         // setup m_shortNames, m_descriptiveNames, m_simplifiedShortNames
         QRegExp reSimplify( "[^a-zA-Z0-9]" );
@@ -153,13 +144,13 @@ namespace Konversation
             else
             {
                 m_shortNames.append( encodingName );
-                m_simplifiedShortNames.append( encodingName.remove( reSimplify ));
+                m_simplifiedShortNames.insert( encodingName.remove( reSimplify ).toLower(), m_shortNames.last() );
 
                 if(encodingName == "jis7")        // Add iso-2022-jp which is same as jis7 but not in Qt
                 {
                     it = m_descriptiveNames.insert(it, "Japanese ( ISO 2022-JP )");
                     m_shortNames.append( "ISO 2022-JP" );
-                    m_simplifiedShortNames.append( "ISO2022JP" );
+                    m_simplifiedShortNames.insert( "iso2022jp", "ISO 2022-JP" );
                     ++it;
                 }
                 ++it;

@@ -11,7 +11,7 @@
 #ifndef KONVERSATION_IRCCHARSETS_H
 #define KONVERSATION_IRCCHARSETS_H
 
-#include <qmap.h>
+#include <QHash>
 #include <qstringlist.h>
 
 
@@ -79,8 +79,6 @@ namespace Konversation
             QTextCodec* codecForName( const QString& shortName );
 
         private:
-            QMap<QString,QString> m_shortNameAliases;
-
             /**
              * short names list
              * you can get this list with @ref availableEncodingShortNames()
@@ -100,7 +98,7 @@ namespace Konversation
              * e.g. iso88591
              * used in @ref ambiguousNameToShortName()
              */
-            QStringList m_simplifiedShortNames;
+            QHash<QString, QString> m_simplifiedShortNames;
     };
 
 }
