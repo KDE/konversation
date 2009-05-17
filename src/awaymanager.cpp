@@ -20,6 +20,8 @@
 
 #include <qvariant.h>
 #include <qtimer.h>
+#include <QDBusInterface>
+#include <QDBusReply>
 
 #include <kaction.h>
 #include <kselectaction.h>
@@ -166,14 +168,11 @@ void AwayManager::checkActivity()
     if (rentrencyProtection) return;
 
     rentrencyProtection = true;
-/*
-    DCOPRef screenSaver("kdesktop", "KScreensaverIface");
-    DCOPReply isBlanked = screenSaver.callExt("isBlanked", DCOPRef::UseEventLoop, 10);
-*/
+    QDBusInterface screenSaver("org.freedesktop.ScreenSaver", "/ScreenSaver", "org.freedesktop.ScreenSaver");
+    QDBusReply<bool> isBlanked = screenSaver.call("GetActive");
     rentrencyProtection = false;
 
-    QVariant isBlanked(false);
-    if (!(isBlanked.isValid() && isBlanked.type() == QVariant::Bool && (isBlanked.toBool())))
+    if (!isBlanked.isValid() || !isBlanked.value())
          implementIdleAutoAway(Xactivity());
 }
 
