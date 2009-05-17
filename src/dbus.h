@@ -64,8 +64,7 @@ class DBus : public QObject
         QStringList listServers();
         QStringList listConnectedServers();
 
-        void setScreenSaverStarted();
-        void setScreenSaverStopped();
+        void changeAwayStatus(bool away);
 };
 
 class IdentDBus : public QObject

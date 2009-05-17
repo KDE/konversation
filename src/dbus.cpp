@@ -23,17 +23,14 @@
 #include <kdebug.h>
 #include <klocale.h>
 
+#include <QDBusConnection>
+
 using namespace Konversation;
 
 DBus::DBus(QObject *parent) : QObject(parent)
 {
-#ifdef __GNUC__
-#warning connect to the correct D-Bus signals for the screensaver
-#endif
-#if 0
-    connectDCOPSignal("kdesktop", "KScreensaverIface", "KDE_start_screensaver()", "setScreenSaverStarted()", false);
-    connectDCOPSignal("kdesktop", "KScreensaverIface", "KDE_stop_screensaver()", "setScreenSaverStopped()", false);
-#endif
+    QDBusConnection bus = QDBusConnection::sessionBus();
+    bus.connect("org.freedesktop.ScreenSaver", "/ScreenSaver", "org.freedesktop.ScreenSaver", "ActiveChanged", this, SLOT(changeAwayStatus(bool)));
 }
 
 void DBus::raw(const QString& server,const QString& command)
@@ -77,16 +74,6 @@ void DBus::setAway(const QString& awaymessage)
 void DBus::setBack()
 {
     static_cast<KonversationApplication*>(kapp)->getAwayManager()->requestAllUnaway();
-}
-
-void DBus::setScreenSaverStarted()
-{
-    static_cast<KonversationApplication*>(kapp)->getAwayManager()->setManagedIdentitiesAway();
-}
-
-void DBus::setScreenSaverStopped()
-{
-    static_cast<KonversationApplication*>(kapp)->getAwayManager()->setManagedIdentitiesUnaway();
 }
 
 void DBus::sayToAll(const QString &message)
@@ -177,6 +164,19 @@ QString DBus::getChannelEncoding(const QString& server, const QString& channel)
 {
     return Preferences::channelEncoding(server,channel);
 }
+
+void DBus::changeAwayStatus(bool away)
+{
+    if(away)
+    {
+        static_cast<KonversationApplication*>(kapp)->getAwayManager()->setManagedIdentitiesAway();
+    }
+    else
+    {
+        static_cast<KonversationApplication*>(kapp)->getAwayManager()->setManagedIdentitiesUnaway();
+    }
+}
+
 
 // Identity stuff
 IdentDBus::IdentDBus(QObject *parent)
