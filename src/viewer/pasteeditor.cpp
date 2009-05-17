@@ -53,7 +53,7 @@ PasteEditor::~PasteEditor()
 
 void PasteEditor::addQuotationIndicators()
 {
-    QTextCursor cursor = m_textEditor->cursorForPosition(QPoint(0, 0));
+    QTextCursor cursor(m_textEditor->document());
     cursor.beginEditBlock();
     cursor.insertText("> ");
 
