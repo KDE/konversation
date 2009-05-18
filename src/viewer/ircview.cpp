@@ -270,7 +270,7 @@ void IRCView::append(const QString& nick, const QString& message)
     QString nickLine = createNickLine(nick);
 
     QString line;
-    line = "<p><font color=\"" + channelColor + "\">%1" + nickLine + " %3</font></p>";
+    line = "<font color=\"" + channelColor + "\">%1" + nickLine + " %3</font>";
     line = line.arg(timeStamp(), nick, filter(message, channelColor, nick, true));
 
     emit textToLog(QString("<%1>\t%2").arg(nick).arg(message));
@@ -285,9 +285,9 @@ void IRCView::appendRaw(const QString& message, bool suppressTimestamps, bool se
 
     QString line;
     if (suppressTimestamps)
-        line = QString("<p><font color=\"" + channelColor.name() + "\">" + message + "</font></p>");
+        line = QString("<font color=\"" + channelColor.name() + "\">" + message + "</font>");
     else
-        line = QString("<p>" + timeStamp() + " <font color=\"" + channelColor.name() + "\">" + message + "</font></p>");
+        line = QString(timeStamp() + " <font color=\"" + channelColor.name() + "\">" + message + "</font>");
 
     doAppend(line, self);
 }
@@ -297,7 +297,7 @@ void IRCView::appendLog(const QString & message)
     QColor channelColor = Preferences::self()->color(Preferences::ChannelMessage);
     m_tabNotification = Konversation::tnfNone;
 
-    QString line("<p><font color=\"" + channelColor.name() + "\">" + message + "</font></p>");
+    QString line("<font color=\"" + channelColor.name() + "\">" + message + "</font>");
 
     doRawAppend(line);
 }
@@ -311,7 +311,7 @@ void IRCView::appendQuery(const QString& nick, const QString& message, bool inCh
     QString nickLine = createNickLine(nick, true, inChannel);
 
     QString line;
-    line = "<p><font color=\"" + queryColor + "\">%1 " + nickLine + " %3</font></p>";
+    line = "<font color=\"" + queryColor + "\">%1 " + nickLine + " %3</font>";
     line = line.arg(timeStamp(), nick, filter(message, queryColor, nick, true));
 
     emit textToLog(QString("<%1>\t%2").arg(nick).arg(message));
@@ -338,7 +338,7 @@ void IRCView::appendAction(const QString& nick, const QString& message)
     QString nickLine = createNickLine(nick, false);
 
     QString line;
-    line = "<p><font color=\"" + actionColor + "\">%1 * " + nickLine + " %3</font></p>";
+    line = "<font color=\"" + actionColor + "\">%1 * " + nickLine + " %3</font>";
     line = line.arg(timeStamp(), nick, filter(message, actionColor, nick, true));
 
     emit textToLog(QString("\t * %1 %2").arg(nick).arg(message));
@@ -360,7 +360,7 @@ void IRCView::appendServerMessage(const QString& type, const QString& message, b
     }
 
     QString line;
-    line = "<p><font color=\"" + serverColor + "\"" + fixed + ">%1 <b>[</b>%2<b>]</b> %3</font></p>";
+    line = "<font color=\"" + serverColor + "\"" + fixed + ">%1 <b>[</b>%2<b>]</b> %3</font>";
     if(type != i18n("Notify"))
         line = line.arg(timeStamp(), type, filter(message, serverColor, 0 , true, parseURL));
     else
@@ -393,7 +393,7 @@ void IRCView::appendCommandMessage(const QString& type,const QString& message, b
     prefix=Qt::escape(prefix);
 
     QString line;
-    line = "<p><font color=\"" + commandColor + "\">%1 %2 %3</font></p>";
+    line = "<font color=\"" + commandColor + "\">%1 %2 %3</font>";
 
     line = line.arg(timeStamp(), prefix, filter(message, commandColor, 0, true, parseURL, self));
 
@@ -424,7 +424,7 @@ void IRCView::appendBacklogMessage(const QString& firstColumn,const QString& raw
 
     QString line;
 
-    line = "<p><font color=\"" + backlogColor + "\">%1 %2 %3</font></p>";
+    line = "<font color=\"" + backlogColor + "\">%1 %2 %3</font>";
     line = line.arg(time, nick, filter(message, backlogColor, NULL, false, false));
 
     doAppend(line);
@@ -472,8 +472,7 @@ void IRCView::doRawAppend(const QString& newLine)
 {
     QString line(newLine);
 
-    line.remove('\n'); // TODO why have newlines? we get <p>, so the \n are unnecessary...
-    line.remove("<p>");//remove <p> for qtextbrowser
+    line.remove('\n');
 
     KTextBrowser::append(line);
 }
