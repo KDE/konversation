@@ -6,8 +6,8 @@ the Free Software Foundation; either version 2 of the License, or
 */
 
 /*
-ServerListView is derived from K3ListView and implements custom
-drag'n'drop behavior needed in ServerListDialog.
+ServerListView is derived from QTreeWidget and implements overly
+complex custom drag'n'drop behavior needed in ServerListDialog.
 
 Copyright (C) 2006 Eike Hein <hein@kde.org>
 */
@@ -27,8 +27,6 @@ class ServerListView : public QTreeWidget
         explicit ServerListView(QWidget *parent);
         ~ServerListView();
         
-        QList<QTreeWidgetItem*> selectedServerListItems();
-        
     signals:
         void moved();
         void aboutToMove();
@@ -38,7 +36,6 @@ class ServerListView : public QTreeWidget
         QRect m_dropRect;
         
     protected:        
-        void dragEnterEvent(QDragEnterEvent *e);
         void dragMoveEvent(QDragMoveEvent *e);
         void dragLeaveEvent(QDragLeaveEvent *);
         int position(const QPoint &pos, const QRect &rect);

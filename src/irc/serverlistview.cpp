@@ -6,8 +6,8 @@ the Free Software Foundation; either version 2 of the License, or
 */
 
 /*
-ServerListView is derived from K3ListView and implements custom
-drag'n'drop behavior needed in ServerListDialog.
+ServerListView is derived from QTreeWidget and implements overly
+complex custom drag'n'drop behavior needed in ServerListDialog.
 
 Copyright (C) 2006 Eike Hein <hein@kde.org>
 */
@@ -25,40 +25,6 @@ ServerListView::ServerListView(QWidget *parent)
 ServerListView::~ServerListView()
 {
 }
-QList<QTreeWidgetItem*> ServerListView::selectedServerListItems()
-{
-    QList<QTreeWidgetItem*> selectedItems = this->selectedItems();
-    QList<QTreeWidgetItem*> selectedServerListItems;
-    
-    foreach (QTreeWidgetItem* item, selectedItems)
-    {
-        if (item->parent())
-        {
-            if (!item->parent()->isSelected())
-                selectedServerListItems.append(item);
-        }
-        else
-        {
-            selectedServerListItems.append(item);
-        }
-    }
-    return selectedServerListItems;
-}
-
-void ServerListView::dragEnterEvent(QDragEnterEvent *e)
-{
-    QModelIndex index = indexAt(e->pos());
-    if (index.isValid())
-    {
-        e->accept();
-        setState(DraggingState);
-    }
-    else
-    {
-        e->ignore();
-    }
-}
-
 void ServerListView::dragMoveEvent(QDragMoveEvent *e)
 {
     
@@ -154,7 +120,7 @@ int ServerListView::position(const QPoint &pos, const QRect &rect)
     
     return r; 
 }
-//I dont want to talk about it
+//I don't want to talk about it
 void ServerListView::paintDropIndicator(QPainter *painter)
 {
     if(m_dropRect.isNull())
