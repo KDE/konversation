@@ -219,7 +219,7 @@ namespace Konversation
         if (Preferences::self()->disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
             return;
 
-        KNotification::event(QString::fromLatin1("dcctransfer_done"), i18nc("%1 File Transfer is complete","%1 - filename",file), QPixmap(), m_mainWindow);
+        KNotification::event(QString::fromLatin1("dcctransfer_done"), i18nc("%1 - filename","%1 File Transfer is complete",file), QPixmap(), m_mainWindow);
     }
 
     void NotificationHandler::mode(ChatWindow* chatWin, const QString& /*nick*/)
