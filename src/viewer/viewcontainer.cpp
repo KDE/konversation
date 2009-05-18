@@ -1803,7 +1803,7 @@ void ViewContainer::findText()
 
 void ViewContainer::findNextText()
 {
-    if (m_searchView) m_searchView->getTextView()->searchAgain();
+    if (m_searchView) m_searchView->getTextView()->searchNext();
 }
 
 void ViewContainer::findPrevText()

@@ -127,7 +127,6 @@ class IRCView : public KTextBrowser
 
     public slots:
         void search(); ///! TODO FIXME this is a dangerous overload
-        void searchAgain();
 
         //! FIXME eh? what is this?
         void setCurrentChannel(const QString& channel) { m_currentChannel = channel; }

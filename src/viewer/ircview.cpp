@@ -229,7 +229,6 @@ bool IRCView::searchNext(bool reversed)
     return find(m_pattern, m_searchFlags);
 }
 
-void IRCView::searchAgain(){}
 void IRCView::insertRememberLine(){}
 void IRCView::cancelRememberLine(){}
 void IRCView::insertMarkerLine(){}
