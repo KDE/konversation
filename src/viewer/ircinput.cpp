@@ -388,12 +388,6 @@ void IRCInput::insertFromMimeData(const QMimeData * source)
         while(pasteText.contains(reBottomSpace))
             pasteText.remove(reBottomSpace);
 
-        // Escape % when var expansion is enabled
-        if (!Preferences::self()->disableExpansion())
-        {
-            pasteText.replace ('%', "%%");
-        }
-
         // does the text contain at least one newline character?
         if(pasteText.contains('\n'))
         {
