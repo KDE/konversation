@@ -26,24 +26,17 @@ class ServerListView : public QTreeWidget
     public:
         explicit ServerListView(QWidget *parent);
         ~ServerListView();
-        
+
+    private:
+        bool badDropSelection();
     signals:
         void moved();
         void aboutToMove();
         
-    private:
-        int m_dropPosition;
-        QRect m_dropRect;
-        
     protected:        
         void dragMoveEvent(QDragMoveEvent *e);
         void dragLeaveEvent(QDragLeaveEvent *);
-        int position(const QPoint &pos, const QRect &rect);
-        void paintDropIndicator(QPainter *painter);
-        void paintEvent(QPaintEvent *event);
         void dropEvent(QDropEvent *event);
-        bool dropOn(QDropEvent *event, int *dropRow, int *dropCol, QModelIndex *dropIndex);
-        bool droppingOnItself(QDropEvent *event, const QModelIndex &index);
 };
 
 #endif

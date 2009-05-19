@@ -73,11 +73,7 @@ namespace Konversation
         const ServerListItem* item = static_cast<const ServerListItem*>(&other);
         if (column==0)
         {
-            if (item->isServer())
-            {
-                return false; // to keep sorting of servers consistent
-            }
-            else if (sortIndex() >= item->sortIndex())
+            if (sortIndex() >= item->sortIndex())
             {
                 return false;
             }
@@ -338,15 +334,18 @@ namespace Konversation
         Konversation::ServerGroupList newServerGroupList;
 
         ServerListItem* item;
+        int sort=0;
         for (int i=0; i < m_serverList->topLevelItemCount(); i++ )
         {
             item = static_cast<ServerListItem*>(m_serverList->topLevelItem(i));
             Konversation::ServerGroupSettingsPtr serverGroup = Preferences::serverGroupById(item->serverGroupId());
-            serverGroup->setSortIndex(i);
+            serverGroup->setSortIndex(sort);
 
             newServerGroupList.append(serverGroup);
 
-            item->setSortIndex(i);
+            item->setSortIndex(sort++);
+            for(int j=0; j < item->childCount(); j++)
+                static_cast<ServerListItem*>(item->child(j))->setSortIndex(sort++);
 
         }
         if(Preferences::serverGroupList() != newServerGroupList)
