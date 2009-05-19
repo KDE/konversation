@@ -50,25 +50,25 @@ void ServerListView::dragLeaveEvent(QDragLeaveEvent *e)
 bool ServerListView::badDropSelection()
 {
     QList<QTreeWidgetItem*> items = selectedItems();
-    QList<QTreeWidgetItem*> childs;
+    QList<QTreeWidgetItem*> children;
     QTreeWidgetItem* parent = new QTreeWidgetItem();;
     int t=0; //top item count
     foreach (QTreeWidgetItem* item, items)
     {
         if (indexOfTopLevelItem(item)<0) // is a child
         {
-                childs.append(item);
-                parent = childs.at(0)->parent();
+                children.append(item);
+                parent = children.at(0)->parent();
                 // make sure all the children have the same parent
-                for (int i=0; i < childs.count(); i++)
+                for (int i=0; i < children.count(); i++)
                 {
-                    if (childs.at(i)->parent() != parent)
+                    if (children.at(i)->parent() != parent)
                         return true;
                 }
         }
         else    t++;
         
-        if (t > 0 && childs.count() > 0) //make sure we dont have a top and a child selected
+        if (t > 0 && children.count() > 0) //make sure we don't have a top and a child selected
             return true;
     }
     return false;
@@ -84,7 +84,7 @@ void ServerListView::dropEvent(QDropEvent *event)
     QTreeWidgetItem* sourceItem = currentItem();
     QTreeWidget::dropEvent(event);
     //clean up after dropEvent, flatten the list
-    QList<QTreeWidgetItem*> childs;
+    QList<QTreeWidgetItem*> children;
     int childIndex;
     QTreeWidgetItem* sItem;
     QTreeWidgetItem* item;
@@ -96,12 +96,12 @@ void ServerListView::dropEvent(QDropEvent *event)
             if(topLevelItem(i)->child(j)->childCount() > 0)
             {
                 sItem = topLevelItem(i)->child(j);
-                if(sItem->text(1) == QString()) // if the second column has no text it's a server
+                if(sItem->text(1).isEmpty()) // if the second column has no text it's a server
                 {
                     childIndex = j;
-                    childs = topLevelItem(i)->child(j)->takeChildren();
-                    if (!childs.isEmpty())
-                        topLevelItem(i)->insertChildren(childIndex++, childs);
+                    children = topLevelItem(i)->child(j)->takeChildren();
+                    if (!children.isEmpty())
+                        topLevelItem(i)->insertChildren(childIndex++, children);
                     
                 }
                 else

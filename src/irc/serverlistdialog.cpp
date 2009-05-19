@@ -345,7 +345,7 @@ namespace Konversation
 
             item->setSortIndex(sort++);
             for(int j=0; j < item->childCount(); j++)
-                static_cast<ServerListItem*>(item->child(j))->setSortIndex(sort++);
+                static_cast<ServerListItem*>(item->child(j))->setSortIndex(++sort);
 
         }
         if(Preferences::serverGroupList() != newServerGroupList)
