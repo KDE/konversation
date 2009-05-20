@@ -1,4 +1,5 @@
-Changes since 1.1:
+Changes in 1.2-alpha1:
+* Ported to KDE 4 (KDE 4.1 or higher is required).
 * Enabled the (experimental, hackish) Amarok 2 support in the 'media' script.
 * Fixed a bug that could cause channel notifications to be lost across recon-
   nects.
@@ -29,8 +30,6 @@ Changes since 1.1:
 * Improved performance of non-regex mode auto-replace rules.
 * Added option to open log files with the system text editor instead of the
   built-in log viewer.
-* Added button to intelligently replace line breaks with spaces to the multi-
-  line paste editor.
 * Made the Oxygen nicklist icon theme the default nicklist icon theme.
 * Removed the bundled 'wheather' script (it relied on a KDE 3 service no lon-
   ger present in KDE 4; a replacement will need to adopt a new approach).
@@ -63,6 +62,9 @@ Changes since 1.1:
   fallback is an RFC1459-compliant value of 3.
 * Added support for formatting variable expansion in the replacement part of
   auto-replace rules.
+* Rewrote multi-line paste editor, improving handling and appearance.
+* Added button to intelligently replace line breaks with spaces to the multi-
+  line paste editor.
 
 
 Changes from 1.0.1 to 1.1:
