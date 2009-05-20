@@ -380,7 +380,7 @@ void Autoreplace_Config::removeEntry()
 
 void Autoreplace_Config::showRegExpEditor()
 {
-    KDialog *editorDialog = KServiceTypeTrader::createInstanceFromQuery<KDialog>( "KRegExpEditor/KRegExpEditor", QString(), this );
+    QDialog *editorDialog = KServiceTypeTrader::createInstanceFromQuery<QDialog>( "KRegExpEditor/KRegExpEditor", QString(), this );
 
     if(editorDialog)
     {
