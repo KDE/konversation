@@ -51,7 +51,7 @@ int main(int argc, char* argv[])
     aboutData.addAuthor(ki18n("Eli MacKenzie"),ki18n("Protocol handling, Input line"),"argonel@gmail.com");
     aboutData.addAuthor(ki18n("İsmail Dönmez"),ki18n("Blowfish, SSL support, KNetwork port, Colored nicks, Nicklist themes"),"ismail@kde.org");
     aboutData.addAuthor(ki18n("John Tapsell"),ki18n("Refactoring, KAddressBook/Kontact integration"), "john@geola.co.uk");
-    aboutData.addAuthor(ki18n("Bernd Buschinski"),ki18n("DCC Port"), "b.buschinski@web.de");
+    aboutData.addAuthor(ki18n("Bernd Buschinski"),ki18n("DCC port to KDE 4, various DCC improvements"), "b.buschinski@web.de");
 
     aboutData.addCredit(ki18n("Olivier Bédard"),ki18n("Website hosting"));
     aboutData.addCredit(ki18n("Jędrzej Lisowski"),ki18n("Website maintenance"),"yesoos@gmail.com");
