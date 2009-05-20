@@ -1,4 +1,4 @@
-Changes in 1.2-alpha1:
+Changes from 1.1 to 1.2-alpha1:
 * Ported to KDE 4 (KDE 4.1 or higher is required).
 * Enabled the (experimental, hackish) Amarok 2 support in the 'media' script.
 * Fixed a bug that could cause channel notifications to be lost across recon-
