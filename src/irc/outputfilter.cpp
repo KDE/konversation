@@ -607,7 +607,7 @@ namespace Konversation
         {
             result.typeString = i18n("Notice");
             result.toServer = "NOTICE " + recipient + " :" + message;
-            result.output=i18nc("%1 is the message, %2 the recipient nickname","Sending notice \"%2\" to %1.", recipient, message);
+            result.output=i18nc("%1 is the message, %2 the recipient nickname","Sending notice \"%1\" to %2.", message, recipient);
             result.type = Program;
         }
 
