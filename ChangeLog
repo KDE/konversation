@@ -4,7 +4,7 @@ Konversation.
 
 Despite the "alpha" moniker we've settled on for this one, mostly due to
 not yet being feature-complete (see below), this port has already been
-used productively by a fair number of people for some time, and should be
+used productively by a fair number of people for some time and should be
 stable enough for general usage. In fact, certain features, notably DCC
 file transfers and auto-replace, are expected to be more robust than in
 Konversation 1.1.
