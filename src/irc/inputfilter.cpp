@@ -15,7 +15,6 @@
 #include "server.h"
 #include "replycodes.h"
 #include "application.h" ////// header renamed
-#include "commit.h"
 #include "version.h"
 #include "query.h"
 
@@ -313,9 +312,8 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                     else
                     {
                         // Do not internationalize the below version string
-                        reply = QString("Konversation %1 Build %2 (C) 2002-2009 by the Konversation team")
-                            .arg(QString(KONVI_VERSION))
-                            .arg(QString::number(COMMIT));
+                        reply = QString("Konversation %1 (C) 2002-2009 by the Konversation team")
+                            .arg(QString(KONVI_VERSION));
 
                     }
                     server->ctcpReply(sourceNick,"VERSION "+reply);
