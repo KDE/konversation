@@ -186,13 +186,11 @@ QList<QStringList> Autoreplace_Config::currentAutoreplaceList()
   QTreeWidgetItem* item=patternListView->topLevelItem(0);
   // create empty list
   QList<QStringList> newList;
-
+  QChar regex;
   // go through all items and save them into the configuration
   while(item)
   {
-    QString regex="0";
-    if (static_cast<QTreeWidgetItem*>(item)->checkState(0) == Qt::Checked) regex='1';
-
+    regex = (item->checkState(0) == Qt::Checked) ? '1' : '0';
     // remember entry in internal list (col 4 is hidden for input/output)
     newList.append(QStringList() << regex << item->text(4) << item->text(2) << item->text(3));
     // get next item in the listview
@@ -382,7 +380,7 @@ void Autoreplace_Config::removeEntry()
 
 void Autoreplace_Config::showRegExpEditor()
 {
-    QDialog *editorDialog = KServiceTypeTrader::createInstanceFromQuery<QDialog>( "KRegExpEditor/KRegExpEditor", QString(), this );
+    KDialog *editorDialog = KServiceTypeTrader::createInstanceFromQuery<KDialog>( "KRegExpEditor/KRegExpEditor", QString(), this );
 
     if(editorDialog)
     {
