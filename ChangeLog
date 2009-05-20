@@ -31,7 +31,7 @@ Changes in 1.2-alpha1:
 * Added option to open log files with the system text editor instead of the
   built-in log viewer.
 * Made the Oxygen nicklist icon theme the default nicklist icon theme.
-* Removed the bundled 'wheather' script (it relied on a KDE 3 service no lon-
+* Removed the bundled 'weather' script (it relied on a KDE 3 service no lon-
   ger present in KDE 4; a replacement will need to adopt a new approach).
 * Fix sending and receiving of files with names containing spaces
 * DCC Protocol adjustment to proper handle passive DCC resume/accept requests.
