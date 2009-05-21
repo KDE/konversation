@@ -1,3 +1,11 @@
+Changes since 1.2-alpha1:
+* Fixed nicknames in action messages using the message text color when
+  nick coloring is disabled rather than the correct action text color
+  as the rest of the message.
+* Added back the context menus for nicknames and channel links in the
+  chat view.
+
+
 Changes from 1.1 to 1.2-alpha1:
 We're happy to bring you this first public release of the KDE 4 version of
 Konversation.
