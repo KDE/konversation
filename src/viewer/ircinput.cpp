@@ -68,10 +68,44 @@ IRCInput::IRCInput(QWidget* parent) : KTextEdit(parent)
 
     m_disableSpellCheckTimer = new QTimer(this);
     connect(m_disableSpellCheckTimer, SIGNAL(timeout()), this, SLOT(disableSpellChecking()));
+
+    document()->adjustSize();
+
+#if QT_VERSION >= 0x040500
+    document()->setDocumentMargin(2);
+#endif
 }
 
 IRCInput::~IRCInput()
 {
+}
+
+QSize IRCInput::sizeHint() const
+{
+    QFontMetrics fm(font());
+
+    int h = document()->size().toSize().height() - fm.descent() + 2 * frameWidth();
+
+    QStyleOptionFrameV2 opt;
+    opt.initFrom(this);
+    opt.rect = QRect(0, 0, 100, h);
+    opt.lineWidth = lineWidth();
+    opt.midLineWidth = 0;
+    opt.state |= QStyle::State_Sunken;
+
+    QSize s = style()->sizeFromContents(QStyle::CT_LineEdit, &opt, QSize(100, h).expandedTo(QApplication::globalStrut()), this);
+
+    return s;
+}
+
+QSize IRCInput::minimumSizeHint() const
+{
+   return sizeHint();
+}
+
+void IRCInput::maybeResize()
+{
+    updateGeometry();
 }
 
 void IRCInput::showEvent(QShowEvent* /* e */)
@@ -128,12 +162,6 @@ void IRCInput::updateAppearance()
 
     maybeResize();
     ensureCursorVisible(); //appears to trigger updateGeometry
-}
-
-void IRCInput::maybeResize()
-{
-    int h = qMax(fontMetrics().lineSpacing() + m_qtBoxPadding, document()->size().toSize().height());
-    setFixedHeight(h + 2 * frameWidth());
 }
 
 // TODO FIXME - ok, wtf are we removing here? this is exactly the kind of shit i don't want to see any more
