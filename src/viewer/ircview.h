@@ -31,6 +31,7 @@
 
 class QDropEvent;
 class KUrl;
+class KToggleAction;
 
 class KMenu;
 
@@ -124,6 +125,8 @@ class IRCView : public KTextBrowser
         void appendLine(const QString& color);
         void appendRememberLine();
 
+        void updateNickMenuEntries(const QString& nickname);
+
 
     public slots:
         void search(); ///! TODO FIXME this is a dangerous overload
@@ -148,8 +151,10 @@ class IRCView : public KTextBrowser
         void highlightedSlot(const QString& link);
         void saveLinkAs();
         void anchorClicked(const QUrl& url);
-    void copyUrl();
-    void slotBookmark();
+        void copyUrl();
+        void slotBookmark();
+        void handleContextActions();
+
     protected:
         void openLink(const QString &url, bool newTab=false);
 
@@ -172,9 +177,8 @@ class IRCView : public KTextBrowser
 
         bool contextMenu(QContextMenuEvent* ce);
 
-        void setupNickPopupMenu();
+        void setupNickPopupMenu(bool isQuery);
         void updateNickMenuEntries(KMenu* popup, const QString& nickname);
-        void setupQueryPopupMenu();
         void setupChannelPopupMenu();
 
         QChar::Direction basicDirection(const QString &string);
@@ -222,18 +226,16 @@ class IRCView : public KTextBrowser
         //// Popup menus
         KMenu* m_popup; ///< text area context menu
         QAction* copyUrlMenuSeparator;
-    QAction * m_copyUrlClipBoard;
-    QAction * m_bookmark;
-    QAction * m_saveUrl;
+        QAction* m_copyUrlClipBoard;
+        QAction* m_bookmark;
+        QAction* m_saveUrl;
+        KToggleAction* m_ignoreAction;
+        QAction* m_addNotifyAction;
         bool m_copyUrlMenu; ///<the menu we're popping up, is it for copying URI?
         QString m_highlightedURL;   // the URL we're currently hovering on with the mouse
         QTextCharFormat m_fmtUnderMouse;
         KMenu* m_nickPopup; ///<menu to show when context-click on a nickname
         KMenu* m_channelPopup; ///<menu to show when context-click on a channel
-        KMenu* m_modes; ///< the submenu for mode changes on a nickname menu
-        KMenu* m_kickban; ///< the submenu for kicks/bans on a nickname menu
-        int m_nickPopupId; ///< context menu
-        int m_channelPopupId; ///< context menu
 
 
         QString m_urlToCopy; ///< the URL we might be about to copy
