@@ -306,6 +306,8 @@ namespace Konversation
             bool block = m_identityCBox->blockSignals(true);
             m_identityCBox->setCurrentIndex(m_identityCBox->findText(m_currentIdentity->getName()));
             m_identityCBox->blockSignals(block);
+            tabWidget->setCurrentIndex(0);
+            m_nicknameLBox->lineEdit()->setFocus();
             return false;
         }
         
@@ -315,6 +317,8 @@ namespace Konversation
             bool block = m_identityCBox->blockSignals(true);
             m_identityCBox->setCurrentIndex(m_identityCBox->findText(m_currentIdentity->getName()));
             m_identityCBox->blockSignals(block);
+            tabWidget->setCurrentIndex(0);
+            m_realNameEdit->setFocus();
             return false;
         }
         
