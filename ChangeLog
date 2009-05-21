@@ -13,6 +13,8 @@ Changes since 1.2-alpha1:
   menu item (back under "Enable Notifications" as in v1.1).
 * Added the use of some of the new irc-* icons found in recent updates
   to the Oxygen icon theme.
+* Fix crash when joining a channel after having been blocked from getting
+  the topic for the channel.
 
 
 Changes from 1.1 to 1.2-alpha1:
