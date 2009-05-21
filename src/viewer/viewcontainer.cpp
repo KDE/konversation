@@ -382,7 +382,11 @@ void ViewContainer::updateTabWidgetAppearance()
 {
     if (!m_tabWidget) return;
 
-    m_tabWidget->setTabBarHidden((Preferences::self()->tabPlacement()==Preferences::Left));
+    bool noTabBar = (Preferences::self()->tabPlacement()==Preferences::Left);
+    m_tabWidget->setTabBarHidden(noTabBar);
+#if QT_VERSION >= 0x040500
+    m_tabWidget->setDocumentMode(noTabBar);
+#endif
 
     if (Preferences::self()->customTabFont())
         m_tabWidget->setFont(Preferences::self()->tabFont());
