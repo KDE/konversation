@@ -56,6 +56,8 @@ IRCInput::IRCInput(QWidget* parent) : KTextEdit(parent)
     completionBox = new KCompletionBox(this);
     connect(completionBox, SIGNAL(activated(const QString&)), this, SLOT(insertCompletion(const QString&)));
 
+    document()->adjustSize();
+
     // widget may not be resized vertically
     setSizePolicy(QSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::Fixed));
 
@@ -68,10 +70,49 @@ IRCInput::IRCInput(QWidget* parent) : KTextEdit(parent)
 
     m_disableSpellCheckTimer = new QTimer(this);
     connect(m_disableSpellCheckTimer, SIGNAL(timeout()), this, SLOT(disableSpellChecking()));
+
+#if QT_VERSION >= 0x040500
+    document()->setDocumentMargin(0);
+#endif
 }
 
 IRCInput::~IRCInput()
 {
+}
+
+QSize IRCInput::sizeHint() const
+{
+    QFontMetrics fm(font());
+
+    int h;
+
+#if QT_VERSION >= 0x040500
+    if (!m_multiRow)
+        h = fm.lineSpacing() - fm.lineWidth() + 2 * frameWidth();
+    else
+#endif
+        h = document()->size().toSize().height() - fm.lineWidth() + 2 * frameWidth();
+
+    QStyleOptionFrameV2 opt;
+    opt.initFrom(this);
+    opt.rect = QRect(0, 0, 100, h);
+    opt.lineWidth = lineWidth();
+    opt.midLineWidth = 0;
+    opt.state |= QStyle::State_Sunken;
+
+    QSize s = style()->sizeFromContents(QStyle::CT_LineEdit, &opt, QSize(100, h).expandedTo(QApplication::globalStrut()), this);
+
+    return s;
+}
+
+QSize IRCInput::minimumSizeHint() const
+{
+   return sizeHint();
+}
+
+void IRCInput::maybeResize()
+{
+    updateGeometry();
 }
 
 void IRCInput::showEvent(QShowEvent* /* e */)
@@ -128,12 +169,6 @@ void IRCInput::updateAppearance()
 
     maybeResize();
     ensureCursorVisible(); //appears to trigger updateGeometry
-}
-
-void IRCInput::maybeResize()
-{
-    int h = qMax(fontMetrics().lineSpacing() + m_qtBoxPadding, document()->size().toSize().height());
-    setFixedHeight(h + 2 * frameWidth());
 }
 
 // TODO FIXME - ok, wtf are we removing here? this is exactly the kind of shit i don't want to see any more

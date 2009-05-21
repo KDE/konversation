@@ -40,7 +40,7 @@
 #include <kauthorized.h>
 #include <kvbox.h>
 #include <qactiongroup.h>
-
+#include <kcombobox.h>
 
 Query::Query(QWidget* parent, QString _name) : ChatWindow(parent)
 {
@@ -105,7 +105,6 @@ Query::Query(QWidget* parent, QString _name) : ChatWindow(parent)
     // This box holds the input line
     KHBox* inputBox=new KHBox(this);
     inputBox->setObjectName("input_log_box");
-    inputBox->setSpacing(spacing());
 
     awayLabel=new QLabel(i18n("(away)"), inputBox);
     awayLabel->hide();

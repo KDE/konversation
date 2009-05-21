@@ -36,6 +36,9 @@ class IRCInput : public KTextEdit
         int getOldCursorPosition();
         QString lastCompletion() const { return m_lastCompletion; }
 
+        virtual QSize sizeHint() const;
+        virtual QSize minimumSizeHint() const;
+
         virtual bool event(QEvent* e);
 
     signals:

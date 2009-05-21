@@ -138,8 +138,8 @@ Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
     m_vertSplitter->setStretchFactor(m_vertSplitter->indexOf(topicWidget), 0);
 
     QGridLayout* topicLayout = new QGridLayout(topicWidget);
-    topicLayout->setMargin (0);
-    topicLayout->setSpacing (0);
+    topicLayout->setMargin(0);
+    topicLayout->setSpacing(0);
 
     m_topicButton = new QToolButton(topicWidget);
     m_topicButton->setIcon(KIcon("document-edit"));
