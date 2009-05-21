@@ -850,7 +850,7 @@ void IRCView::setupNickPopupMenu(bool isQuery)
 
     if(config.readEntry<bool>("allow_downloading", true))
     {
-        action = m_nickPopup->addAction(SmallIcon("2rightarrow"),i18n("Send &File..."), this, SLOT(handleContextActions()));
+        action = m_nickPopup->addAction(SmallIcon("arrow-right-double"),i18n("Send &File..."), this, SLOT(handleContextActions()));
         action->setData(Konversation::DccSend);
     }
 
@@ -1123,8 +1123,12 @@ void IRCView::highlightedSlot(const QString& _link)
     else if (link.startsWith('#') && !link.startsWith("##"))
     {
         m_currentNick = link.mid(1);
-        //FIXME how are menu titles done now? /me is too tired
-        //m_nickPopup->changeTitle(m_nickPopupId,m_currentNick);
+
+        if(m_nickPopup)
+        {
+            m_nickPopup->setTitle(m_currentNick);
+        }
+
         m_isOnNick = true;
         emit setStatusBarTempText(i18n("Open a query with %1", m_currentNick));
     }
@@ -1133,15 +1137,19 @@ void IRCView::highlightedSlot(const QString& _link)
         // link.startsWith("##")
         m_currentChannel = link.mid(1);
 
-        QString prettyId = m_currentChannel;
-
-        if (prettyId.length()>15)
+        if(m_channelPopup)
         {
-            prettyId.truncate(15);
-            prettyId.append("...");
+            QString prettyId = m_currentChannel;
+
+            if (prettyId.length()>15)
+            {
+                prettyId.truncate(15);
+                prettyId.append("...");
+            }
+
+            m_channelPopup->setTitle(prettyId);
         }
 
-        //m_channelPopup->changeTitle(m_channelPopupId,prettyId);
         m_isOnChannel = true;
         emit setStatusBarTempText(i18n("Join the channel %1", m_currentChannel));
     }
