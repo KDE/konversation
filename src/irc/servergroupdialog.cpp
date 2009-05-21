@@ -89,6 +89,8 @@ namespace Konversation
         setButtonGuiItem(Cancel, KGuiItem(i18n("&Cancel"), "dialog-cancel", i18n("Discards all changes made")));
 
         m_mainWidget->m_nameEdit->setFocus();
+
+        setInitialSize(QSize(320, 400));
     }
 
     ServerGroupDialog::~ServerGroupDialog()
