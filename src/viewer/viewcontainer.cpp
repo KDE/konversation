@@ -52,6 +52,7 @@
 #include <KActionCollection>
 #include <KToggleAction>
 #include <KSelectAction>
+#include <KXMLGUIClient>
 
 ViewContainer::ViewContainer(KonversationMainWindow* window):
         m_window(window)
@@ -1657,7 +1658,6 @@ void ViewContainer::showViewContextMenu(QWidget* tab, const QPoint& pos)
     KToggleAction* autoJoinAction = qobject_cast<KToggleAction*>(actionCollection()->action("tab_autojoin"));
     QAction* rejoinAction = actionCollection()->action("rejoin_channel");
 
-    QList<QAction *> serverActions;
     if (view)
     {
         ChatWindow::WindowType viewType = view->getType();
@@ -1666,8 +1666,8 @@ void ViewContainer::showViewContextMenu(QWidget* tab, const QPoint& pos)
 
         if (viewType == ChatWindow::Channel)
         {
-            // TODO FIXME this used to be added at index 1, which we can't do anymore
-            menu->addAction(autoJoinAction);
+            QAction* action = actionCollection()->action("tab_encoding");
+            menu->insertAction(action, autoJoinAction);
 
             Channel *channel = static_cast<Channel*>(view);
             if (channel->rejoinable() && rejoinAction)
@@ -1679,6 +1679,8 @@ void ViewContainer::showViewContextMenu(QWidget* tab, const QPoint& pos)
 
         if (viewType == ChatWindow::Status)
         {
+            QList<QAction *> serverActions;
+
             QAction* action = actionCollection()->action("disconnect_server");
             if (action) serverActions.append(action);
             action = actionCollection()->action("reconnect_server");
@@ -1689,7 +1691,7 @@ void ViewContainer::showViewContextMenu(QWidget* tab, const QPoint& pos)
             action = new QAction(this);
             action->setSeparator(true);
             if (action) serverActions.append(action);
-            m_window->addActions(serverActions);
+            m_window->plugActionList("server_actions", serverActions);
             m_contextServer = view->getServer();
         }
         else
@@ -1706,11 +1708,7 @@ void ViewContainer::showViewContextMenu(QWidget* tab, const QPoint& pos)
 
     menu->removeAction(autoJoinAction);
     menu->removeAction(rejoinAction);
-
-    // TODO FIXME does this work?
-    QAction* action;
-    foreach(action, serverActions)
-        m_window->removeAction(action);
+    m_window->unplugActionList("server_actions");
 
     emit contextMenuClosed();
 
