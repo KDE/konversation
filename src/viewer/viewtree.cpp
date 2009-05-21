@@ -552,8 +552,17 @@ void ViewTree::contentsMousePressEvent(QMouseEvent* e)
         else
         {
             m_pressedAboveCloseButton = false;
-            K3ListView::contentsMousePressEvent(e);
+
+            if (e->button() == Qt::MidButton)
+            {
+                QMouseEvent fakeEvent(e->type(), e->pos(), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+
+                K3ListView::contentsMousePressEvent(&fakeEvent);
+            }
+            else
+                K3ListView::contentsMousePressEvent(e);
         }
+
         m_middleClickItem = (Preferences::self()->middleClickClose() && e->button() == Qt::MidButton) ? item : 0;
     }
 }
@@ -600,9 +609,9 @@ void ViewTree::contentsMouseMoveEvent(QMouseEvent* e)
 
     // Allow dragging only with the middle mouse button, just
     // like for the tab bar.
-    if ((e->modifiers() & Qt::MidButton) == Qt::MidButton)
+    if ((e->buttons() & Qt::MidButton) == Qt::MidButton)
         K3ListView::contentsMouseMoveEvent(e);
-    else if ((e->modifiers() & Qt::LeftButton) == Qt::LeftButton)
+    else if ((e->buttons() & Qt::LeftButton) == Qt::LeftButton)
     {
         if (item && (item != selectedItem()) && !item->isSeparator())
             setSelected(item, true);
@@ -610,7 +619,7 @@ void ViewTree::contentsMouseMoveEvent(QMouseEvent* e)
 
     if (Preferences::self()->closeButtons())
     {
-        if (!(e->modifiers() & Qt::LeftButton) && !(e->modifiers() & Qt::MidButton) && !(e->modifiers() & Qt::RightButton))
+        if (!(e->buttons() & Qt::LeftButton) && !(e->buttons() & Qt::MidButton) && !(e->buttons() & Qt::RightButton))
         {
             if (item)
             {

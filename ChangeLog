@@ -16,6 +16,14 @@ Changes since 1.2-alpha1:
 * Fixed crash when joining a channel after having been blocked from get-
   ting the topic for the channel.
 * Made the initial size of the "Edit Network" dialog more reasonable.
+* Improved vertical size of and text alignment inside the input line.
+* Added back support for drag and drop reordering of views to the list-
+  view version of the tab bar.
+* Added back support for "surfing" in the listview version of the tab
+  bar by pressing and holding the left mouse button on a view and moving
+  the mouse up and down in the list view.
+* Fixed mouse handling for close buttons in the listview version of the
+  tab bar.
 
 
 Changes from 1.1 to 1.2-alpha1:
