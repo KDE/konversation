@@ -151,6 +151,7 @@ void ViewContainer::setupTabWidget()
     m_popupViewIndex = -1;
 
     m_vbox = new KVBox(m_viewTreeSplitter);
+    m_viewTreeSplitter->setStretchFactor(m_viewTreeSplitter->indexOf(m_vbox), 1);
     m_vbox->setObjectName("main_window_right_side");
     m_tabWidget = new KTabWidget(m_vbox);
     m_tabWidget->setObjectName("main_window_tab_widget");

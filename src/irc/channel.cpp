@@ -200,10 +200,12 @@ Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
 
     // (this) The main Box, holding the channel view/topic and the input line
     m_horizSplitter = new QSplitter(m_vertSplitter);
+    m_vertSplitter->setStretchFactor(m_vertSplitter->indexOf(m_horizSplitter), 1);
     m_horizSplitter->setOpaqueResize( KGlobalSettings::opaqueResize() );
 
     // Server will be set later in setServer()
     IRCViewBox* ircViewBox = new IRCViewBox(m_horizSplitter, NULL);
+    m_horizSplitter->setStretchFactor(m_horizSplitter->indexOf(ircViewBox), 1);
     setTextView(ircViewBox->ircView());
     connect(textView,SIGNAL(popupCommand(int)),this,SLOT(popupChannelCommand(int)));
 

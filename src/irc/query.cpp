@@ -56,7 +56,8 @@ Query::Query(QWidget* parent, QString _name) : ChatWindow(parent)
     m_initialShow = true;
     awayChanged=false;
     awayState=false;
-    KHBox *box = new KHBox(m_headerSplitter);
+    KHBox* box = new KHBox(m_headerSplitter);
+    m_headerSplitter->setStretchFactor(m_headerSplitter->indexOf(box), 0);
     addresseeimage = new QLabel(box);
     addresseeimage->setObjectName("query_image");
     addresseeimage->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
@@ -75,6 +76,7 @@ Query::Query(QWidget* parent, QString _name) : ChatWindow(parent)
     queryHostmask->setWhatsThis(whatsthis);
 
     IRCViewBox* ircBox = new IRCViewBox(m_headerSplitter,0);
+    m_headerSplitter->setStretchFactor(m_headerSplitter->indexOf(ircBox), 1);
     setTextView(ircBox->ircView());               // Server will be set later in setServer();
     textView->setAcceptDrops(true);
     connect(textView,SIGNAL(filesDropped(const QStringList&)),this,SLOT(filesDropped(const QStringList&)));

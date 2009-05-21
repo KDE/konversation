@@ -68,8 +68,10 @@ DccChat::DccChat(QWidget* parent, bool listen, Server* server, const QString& ow
 
     m_sourceLine = 0;
     m_sourceLine = new Konversation::TopicLabel(m_headerSplitter);
+    m_headerSplitter->setStretchFactor(m_headerSplitter->indexOf(m_sourceLine), 0);
 
     IRCViewBox* ircViewBox = new IRCViewBox(m_headerSplitter, NULL);
+    m_headerSplitter->setStretchFactor(m_headerSplitter->indexOf(ircViewBox), 1);
     setTextView(ircViewBox->ircView());
 
     m_dccChatInput = new IRCInput(this);

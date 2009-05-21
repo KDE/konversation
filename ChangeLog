@@ -4,6 +4,15 @@ Changes since 1.2-alpha1:
   as the rest of the message.
 * Added back the context menus for nicknames and channel links in the
   chat view.
+* Fixed the topic/info area in channels, queries and DCC chats, the nick-
+  name list in channels and the listview variant of the tab bar not keep-
+  ing their sizes when the window is resized.
+* Added missing actions ("Reconnect", "Disconnect", "Join channel ...")
+  back to the context menu for server status tabs.
+* Improved the placement of the "Join on connect" channel tab context
+  menu item (back under "Enable Notifications" as in v1.1).
+* Added the use of some of the new irc-* icons found in recent updates
+  to the Oxygen icon theme.
 
 
 Changes from 1.1 to 1.2-alpha1:
