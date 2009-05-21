@@ -164,10 +164,9 @@ void ViewContainer::setupTabWidget()
     m_vbox->hide();    //m_tabWidget->hide();
 
     QToolButton* closeBtn = new QToolButton(m_tabWidget);
-    closeBtn->setIcon(KIcon("tab-close"));
-    closeBtn->resize(22, 22);
-    closeBtn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    m_tabWidget->setCornerWidget(closeBtn);
+    closeBtn->setIcon(SmallIcon("tab-close"));
+    closeBtn->adjustSize();
+    m_tabWidget->setCornerWidget(closeBtn, Qt::BottomRightCorner);
     connect(closeBtn, SIGNAL(clicked()), this, SLOT(closeCurrentView()));
 
     connect(m_tabWidget, SIGNAL(currentChanged(int)), this, SLOT (switchView(int)));
