@@ -15,6 +15,7 @@ Changes since 1.2-alpha1:
   to the Oxygen icon theme.
 * Fixed crash when joining a channel after having been blocked from get-
   ting the topic for the channel.
+* Made the initial size of the "Edit Network" dialog more reasonable.
 
 
 Changes from 1.1 to 1.2-alpha1:

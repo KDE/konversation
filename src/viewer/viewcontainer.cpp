@@ -397,6 +397,7 @@ void ViewContainer::updateTabWidgetAppearance()
     else
         m_tabWidget->cornerWidget()->hide();
 
+    //FIXME: Change to QTabBar::setTabsClosable() once we depend on Qt 4.5+
     m_tabWidget->setCloseButtonEnabled(Preferences::self()->closeButtons());
 
     m_tabWidget->setAutomaticResizeTabs(Preferences::self()->useMaxSizedTabs());
