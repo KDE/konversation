@@ -87,11 +87,23 @@ K3ListView(parent),
         if (modes)
         {
             m_giveOpAction = createAction(modes,i18n("Give Op"),Konversation::GiveOp);
+#if KDE_IS_VERSION(4, 2, 85)
+            m_giveOpAction->setIcon(KIcon("irc-operator"));
+#endif
             m_takeOpAction = createAction(modes,i18n("Take Op"),Konversation::TakeOp);
+#if KDE_IS_VERSION(4, 2, 85)
+            m_takeOpAction->setIcon(KIcon("irc-remove-operator"));
+#endif
             m_giveHalfOpAction = createAction(modes,i18n("Give HalfOp"),Konversation::GiveHalfOp);
             m_takeHalfOpAction = createAction(modes,i18n("Take HalfOp"),Konversation::TakeHalfOp);
             m_giveVoiceAction = createAction(modes,i18n("Give Voice"),Konversation::GiveVoice);
+#if KDE_IS_VERSION(4, 2, 85)
+            m_giveVoiceAction->setIcon(KIcon("irc-voice"));
+#endif
             m_takeVoiceAction = createAction(modes,i18n("Take Voice"),Konversation::TakeVoice);
+#if KDE_IS_VERSION(4, 2, 85)
+            m_takeVoiceAction->setIcon(KIcon("irc-unvoice"));
+#endif
             KAction* modeAction = new KAction(i18n("Modes"), popup);
             popup->addAction(modeAction);
             modeAction->setMenu(modes);

@@ -801,12 +801,24 @@ void IRCView::setupNickPopupMenu(bool isQuery)
         QMenu* modes = m_nickPopup->addMenu(i18n("Modes"));
         action = modes->addAction(i18n("Give Op"), this, SLOT(handleContextActions()));
         action->setData(Konversation::GiveOp);
+#if KDE_IS_VERSION(4, 2, 85)
+        action->setIcon(KIcon("irc-operator"));
+#endif
         action = modes->addAction(i18n("Take Op"), this, SLOT(handleContextActions()));
         action->setData(Konversation::TakeOp);
+#if KDE_IS_VERSION(4, 2, 85)
+        action->setIcon(KIcon("irc-remove-operator"));
+#endif
         action = modes->addAction(i18n("Give Voice"), this, SLOT(handleContextActions()));
         action->setData(Konversation::GiveVoice);
+#if KDE_IS_VERSION(4, 2, 85)
+        action->setIcon(KIcon("irc-voice"));
+#endif
         action = modes->addAction(i18n("Take Voice"), this, SLOT(handleContextActions()));
         action->setData(Konversation::TakeVoice);
+#if KDE_IS_VERSION(4, 2, 85)
+        action->setIcon(KIcon("irc-unvoice"));
+#endif
 
         QMenu* kickban = m_nickPopup->addMenu(i18n("Kick / Ban"));
         action = kickban->addAction(i18n("Kick"), this, SLOT(handleContextActions()));
