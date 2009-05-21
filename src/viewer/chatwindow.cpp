@@ -41,6 +41,9 @@ ChatWindow::ChatWindow(QWidget* parent) : KVBox(parent)
     m_channelEncodingSupported = false;
     m_currentTabNotify = Konversation::tnfNone;
 
+    setMargin(margin());
+    setSpacing(spacing());
+
     // The font size of the KTabWidget container may be inappropriately
     // small due to the "Tab bar" font size setting.
     setFont(KGlobalSettings::generalFont());
