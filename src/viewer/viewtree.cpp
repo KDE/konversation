@@ -26,7 +26,6 @@
 #include <qpainter.h>
 #include <qtooltip.h>
 
-#include <kdebug.h>
 #include <klocale.h>
 #include <kglobalsettings.h>
 #include <kapplication.h>
@@ -49,9 +48,6 @@ ViewTree::ViewTree(QWidget *parent)
     setDragEnabled(true);
     setAcceptDrops(true);
     setDropVisualizer(true);
-
-    setShowToolTips(false);
-    //m_toolTip = new ViewTree::ToolTip(viewport(), this);
 
     // Controls whether or not to select the first view added
     // to the tree. Don't do so by default; only when told to
