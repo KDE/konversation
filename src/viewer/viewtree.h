@@ -6,7 +6,7 @@
 */
 
 /*
-  Copyright (C) 2006 Eike Hein <hein@kde.org>
+  Copyright (C) 2006-2009 Eike Hein <hein@kde.org>
 */
 
 #ifndef VIEWTREE_H
@@ -59,6 +59,7 @@ class ViewTree : public K3ListView
         void syncTabBarToTree();
 
     protected:
+        bool event(QEvent* e);
         void contentsMousePressEvent(QMouseEvent* e);
         void contentsMouseReleaseEvent(QMouseEvent* e);
         void contentsMouseMoveEvent(QMouseEvent* e);
@@ -80,9 +81,6 @@ class ViewTree : public K3ListView
         void enableCloseButton();
 
     private:
-        //class ToolTip;
-        //ViewTree::ToolTip* m_toolTip;
-
         void toggleSeparator();
         void selectUpper(bool wrap = false);
         void selectLower(bool wrap = false);

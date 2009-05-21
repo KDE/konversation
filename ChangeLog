@@ -24,6 +24,8 @@ Changes since 1.2-alpha1:
   the mouse up and down in the list view.
 * Fixed mouse handling for close buttons in the listview version of the
   tab bar.
+* Added back support for showing tooltips for truncated view items in
+  the listview version of the tab bar.
 
 
 Changes from 1.1 to 1.2-alpha1:

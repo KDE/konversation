@@ -6,7 +6,7 @@
 */
 
 /*
-  Copyright (C) 2006 Eike Hein <hein@kde.org>
+  Copyright (C) 2006-2009 Eike Hein <hein@kde.org>
 */
 
 #include "viewtree.h"
@@ -24,40 +24,13 @@
 #include <q3ptrlist.h>
 #include <qpoint.h>
 #include <qpainter.h>
+#include <qtooltip.h>
 
 #include <kdebug.h>
 #include <klocale.h>
 #include <kglobalsettings.h>
 #include <kapplication.h>
 
-/*
-class ViewTree::ToolTip : public QToolTip
-{
-    public:
-        ToolTip(QWidget *parent, K3ListView *viewTree);
-        virtual ~ToolTip() {}
-
-    protected:
-        virtual void maybeTip(const QPoint &pos);
-
-    private:
-        K3ListView* viewTree;
-};
-
-ViewTree::ToolTip::ToolTip(QWidget *parent, K3ListView *viewTree)
-    : QToolTip(parent), viewTree(viewTree)
-{
-}
-
-void ViewTree::ToolTip::maybeTip (const QPoint &pos)
-{
-    if (!parentWidget() || !viewTree) return;
-
-    ViewTreeItem* view = static_cast<ViewTreeItem*>(viewTree->itemAt(pos));
-
-    if (view && view->isTruncated()) tip(viewTree->itemRect(view), view->getName());
-}
-*/
 
 ViewTree::ViewTree(QWidget *parent)
     : K3ListView(parent)
@@ -102,8 +75,6 @@ ViewTree::ViewTree(QWidget *parent)
 
 ViewTree::~ViewTree()
 {
-    //delete m_toolTip;
-    //m_toolTip = 0;
     emit setViewTreeShown(false);
 }
 
@@ -521,6 +492,29 @@ bool ViewTree::isAboveIcon(QPoint point, ViewTreeItem* item)
     }
     else
         return false;
+}
+
+bool ViewTree::event(QEvent* e)
+{
+    if (e->type() == QEvent::ToolTip)
+    {
+        QHelpEvent* helpEvent = static_cast<QHelpEvent*>(e);
+
+        QPoint vp = contentsToViewport(helpEvent->pos());
+        ViewTreeItem* item = static_cast<ViewTreeItem*>(itemAt(vp));
+
+        if (item && item->isTruncated())
+            QToolTip::showText(helpEvent->globalPos(), item->getName());
+        else
+        {
+            QToolTip::hideText();
+            e->ignore();
+        }
+
+        return true;
+    }
+
+    return QWidget::event(e);
 }
 
 void ViewTree::contentsMousePressEvent(QMouseEvent* e)
