@@ -1182,6 +1182,8 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 if (plHas(2))
                 {
                     server->appendMessageToFrontmost(i18n("Error"), i18n("You are not on %1.", parameterList.value(1)));
+                    setAutomaticRequest("TOPIC",parameterList.value(1), false);
+
                 }
                 break;
             }

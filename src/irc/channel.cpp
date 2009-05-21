@@ -1609,7 +1609,7 @@ void Channel::setTopicAuthor(const QString& newAuthor, QDateTime time)
     if (time.isNull() || !time.isValid())
         time=QDateTime::currentDateTime();
 
-    if(topicAuthorUnknown)
+    if(topicAuthorUnknown && !m_topicHistory.isEmpty())
     {
         m_topicHistory[0] =  QString("%1").arg(time.toTime_t()) + ' ' + newAuthor + ' ' + m_topicHistory[0].section(' ', 2);
         topicAuthorUnknown = false;
