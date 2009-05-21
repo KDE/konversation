@@ -479,6 +479,8 @@ void IRCView::doRawAppend(const QString& newLine)
     int selectionEnd = cursor.selectionEnd();
     KTextBrowser::append(line);
 
+    // HACK Work around for the fact that if the last character is selected when
+    // a new line is appended the selection will be extended to include the new line.
     if (cursor.hasSelection())
     {
         cursor.setPosition(selectionStart);
