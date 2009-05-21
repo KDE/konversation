@@ -266,7 +266,7 @@ void IRCView::append(const QString& nick, const QString& message)
 
     m_tabNotification = Konversation::tnfNormal;
 
-    QString nickLine = createNickLine(nick);
+    QString nickLine = createNickLine(nick, channelColor);
 
     QString line;
     line = "<font color=\"" + channelColor + "\">%1" + nickLine + " %3</font>";
@@ -307,7 +307,7 @@ void IRCView::appendQuery(const QString& nick, const QString& message, bool inCh
 
     m_tabNotification = Konversation::tnfPrivate;
 
-    QString nickLine = createNickLine(nick, true, inChannel);
+    QString nickLine = createNickLine(nick, queryColor, true, inChannel);
 
     QString line;
     line = "<font color=\"" + queryColor + "\">%1 " + nickLine + " %3</font>";
@@ -334,7 +334,7 @@ void IRCView::appendAction(const QString& nick, const QString& message)
 {
     QString actionColor=Preferences::self()->color(Preferences::ActionMessage).name();
 
-    QString nickLine = createNickLine(nick, false);
+    QString nickLine = createNickLine(nick, actionColor, false);
 
     QString line;
     line = "<font color=\"" + actionColor + "\">%1 * " + nickLine + " %3</font>";
@@ -504,7 +504,7 @@ QString IRCView::timeStamp()
     return QString();
 }
 
-QString IRCView::createNickLine(const QString& nick, bool encapsulateNick, bool privMsg)
+QString IRCView::createNickLine(const QString& nick, const QString& defaultColor, bool encapsulateNick, bool privMsg)
 {
     QString nickLine = "%2";
     QString nickColor;
@@ -529,7 +529,7 @@ QString IRCView::createNickLine(const QString& nick, bool encapsulateNick, bool 
         }
     }
     else
-        nickColor = Preferences::self()->color(Preferences::ChannelMessage).name();
+        nickColor = defaultColor;
 
     nickLine = "<font color=\"" + nickColor + "\">"+nickLine+"</font>";
 

@@ -184,7 +184,8 @@ class IRCView : public KTextBrowser
 
         /// Returns a formated nick string
         //! FIXME formatted in what way?
-        QString createNickLine(const QString& nick, bool encapsulateNick = true, bool privMsg = false);
+        QString createNickLine(const QString& nick, const QString& defaultColor,
+            bool encapsulateNick = true, bool privMsg = false);
 
 
 
