@@ -327,6 +327,7 @@ namespace Konversation
         m_lastSortColumn = m_serverList->sortColumn();
         m_lastSortOrder = m_serverList->header()->sortIndicatorOrder();
         m_serverList->setSortingEnabled(false);
+        m_serverList->header()->setSortIndicatorShown(true);
     }
 
     void ServerListDialog::slotMoved()

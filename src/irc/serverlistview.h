@@ -36,6 +36,7 @@ class ServerListView : public QTreeWidget
     protected:        
         void dragMoveEvent(QDragMoveEvent *e);
         void dragLeaveEvent(QDragLeaveEvent *);
+        void dragEnterEvent(QDragEnterEvent *);
         void dropEvent(QDropEvent *event);
 };
 

@@ -28,23 +28,34 @@ void ServerListView::dragMoveEvent(QDragMoveEvent *e)
 {
     QTreeWidgetItem* item = this->itemAt(e->pos());
     QTreeWidgetItem* sItem = this->currentItem();
-    e->ignore();
-    emit aboutToMove();
-    
-    if (badDropSelection())
-        return;
-    
-    if (!item && indexOfTopLevelItem(sItem)<0) //dropping on viewport must be a toplevelitem
-        return;
-    else if (item && item->parent() != sItem->parent()) //children of the same parent (or lack thereof)
-        return;
-    
+    bool bad;
+    //  bad selection || dropping on viewport must be a toplevelitem || children of the same parent (or lack thereof)
+    if (badDropSelection() || (!item && indexOfTopLevelItem(sItem)<0) || (item && item->parent() != sItem->parent()))
+    {
+        bad=true;
+        setDropIndicatorShown(false);
+    }
+    else
+    {
+        bad=false;
+        setDropIndicatorShown(true);
+    }
     QTreeView::dragMoveEvent(e);
+    
+    if(bad)
+        e->ignore();
+    
 }
 void ServerListView::dragLeaveEvent(QDragLeaveEvent *e)
 {
     QAbstractItemView::dragLeaveEvent(e);
     emit moved();
+}
+
+void ServerListView::dragEnterEvent(QDragEnterEvent *e)
+{
+    emit aboutToMove();
+    QAbstractItemView::dragEnterEvent(e);
 }
 
 bool ServerListView::badDropSelection()
