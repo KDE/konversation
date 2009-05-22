@@ -739,8 +739,6 @@ void Server::quitServer()
 
     flushQueues();
 
-    m_socket->close();
-
     getStatusView()->appendServerMessage(i18n("Info"), i18n("Disconnected from %1.", getConnectionSettings().server().host()));
 }
 
