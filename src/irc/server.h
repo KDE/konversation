@@ -677,7 +677,19 @@ void resetNickSelection();
         KProcess m_preShellCommand;
 
     private:
+        /// Recovers the filename from the dccArguments list from pos 0 to size-offset-1
+        /// joining with a space and cleans the filename using cleanDccFileName.
+        /// The filename only needs to be recovered if it contains a space, in case
+        /// it does not, the cleaned string at pos 0 is returned.
+        /// "offset" states how many fixed arguments the dcc command has, where the
+        /// filename is variable. For example "filename ip port filesize", offset is 3.
         inline QString recoverDccFileName(const QStringList& dccArguments, int offset) const;
+
+        /// Cleans the filename from extra '"'. We just remove '"' if it is the first
+        /// and last char, if the filename really contains a '"' it comes as two chars,
+        /// escaped "\"", and is not affected.
+        /// Some clients return the filename with multiple '"' around the filename
+        /// but all we want is the plain filename.
         inline QString cleanDccFileName(const QString& filename) const;
 
         /// Helper object to construct ISON (notify) list and map offline nicks to

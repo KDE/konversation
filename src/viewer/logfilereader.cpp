@@ -116,9 +116,13 @@ void LogfileReader::updateView()
         stream.setAutoDetectUnicode(true);
 
         // Set file pointer to <pos> bytes from the end
-        if(stream.device()->size()>pos)
-            stream.device()->seek(stream.device()->size()-pos);
+        if(stream.device()->size() > pos)
+        {
+            stream.device()->seek(stream.device()->size() - pos);
+        }
         // Skip first line, since it may be incomplete
+        // NOTE: we always skip the first line(in the log), but the
+        //       first line is just a '\n', so it's ok
         stream.readLine();
         QString str;
 

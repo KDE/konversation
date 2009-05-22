@@ -1710,9 +1710,10 @@ QString Server::recoverDccFileName(const QStringList & dccArguments, int offset)
     {
         kDebug() << "recover filename";
         const int argumentOffsetSize = dccArguments.size() - offset;
-        for (int i = 0; i < argumentOffsetSize; ++i) //-1 index, -1 token, -1 port, -1 ip
+        for (int i = 0; i < argumentOffsetSize; ++i)
         {
             fileName += dccArguments.at(i);
+            //if not last element, append a space
             if (i < (argumentOffsetSize - 1))
             {
                 fileName += ' ';
@@ -1733,7 +1734,7 @@ QString Server::cleanDccFileName(const QString& filename) const
 
     //we want a clean filename to get rid of the mass """filename"""
     //NOTE: if a filename starts really with a ", it is escaped -> \" (2 chars)
-    //      but most clients doen't support that and just replace it with a _
+    //      but most clients don't support that and just replace it with a _
     while (cleanFileName.startsWith('\"') && cleanFileName.endsWith('\"'))
     {
         cleanFileName = cleanFileName.mid(1, cleanFileName.length() - 2);
@@ -1758,10 +1759,10 @@ void Server::addDccGet(const QString &sourceNick, const QStringList &dccArgument
     QString token = "";
     const int argumentSize = dccArguments.count();
 
-    if (dccArguments.at(argumentSize - 3) == "0") //port==0, for passive send, filesize cant be 0
+    if (dccArguments.at(argumentSize - 3) == "0") //port==0, for passive send, filesize can't be 0
     {
         //filename ip port(0) filesize token
-        fileName = recoverDccFileName(dccArguments, 4);
+        fileName = recoverDccFileName(dccArguments, 4); //ip port filesize token
         ip = DccCommon::numericalIpToTextIp( dccArguments.at(argumentSize - 4) ); //-1 index, -1 token, -1 port, -1 filesize
         port = 0;
         fileSize = dccArguments.at(argumentSize - 2).toULong(); //-1 index, -1 token
@@ -1772,7 +1773,7 @@ void Server::addDccGet(const QString &sourceNick, const QStringList &dccArgument
     } else {
         //filename ip port filesize
         ip = DccCommon::numericalIpToTextIp( dccArguments.at(argumentSize - 3) ); //-1 index, -1 filesize
-        fileName = recoverDccFileName(dccArguments, 3);
+        fileName = recoverDccFileName(dccArguments, 3); //ip port filesize
         fileSize = dccArguments.at(argumentSize - 1).toULong(); //-1 index
         port = dccArguments.at(argumentSize - 2).toUInt(); //-1 index, -1 filesize
     }
@@ -1879,7 +1880,7 @@ void Server::startReverseDccSendTransfer(const QString& sourceNick,const QString
     QString token = dccArguments.at(argumentSize - 1);
     unsigned long fileSize = dccArguments.at(argumentSize - 2).toULong();
 
-    QString fileName = recoverDccFileName(dccArguments, 4);
+    QString fileName = recoverDccFileName(dccArguments, 4); //ip port filesize token
 
     kDebug() << "ip: " << partnerIP;
     kDebug() << "port: " << port;
@@ -1916,13 +1917,13 @@ void Server::resumeDccGetTransfer(const QString &sourceNick, const QStringList &
     const int argumentSize = dccArguments.count();
     if (dccArguments.at(argumentSize - 3) == "0") //-1 index, -1 token, -1 pos
     {
-        fileName = recoverDccFileName(dccArguments, 3);
+        fileName = recoverDccFileName(dccArguments, 3); //port position token
         ownPort = 0;
         position = dccArguments.at(argumentSize - 2).toULong(); //-1 index, -1 token
     }
     else
     {
-        fileName = recoverDccFileName(dccArguments, 2);
+        fileName = recoverDccFileName(dccArguments, 2); //port position
         ownPort = dccArguments.at(argumentSize - 1).toUInt(); //-1 index, -1 pos
         position = dccArguments.at(argumentSize - 1).toULong(); //-1 index
     }
@@ -1969,14 +1970,14 @@ void Server::resumeDccSendTransfer(const QString &sourceNick, const QStringList 
         ownPort = 0;
         token = dccArguments.at( argumentSize - 1); // -1 index
         position = dccArguments.at( argumentSize - 2).toULong(); // -1 index, -1 token
-        fileName = recoverDccFileName(dccArguments, 3);
+        fileName = recoverDccFileName(dccArguments, 3); //port filepos token
     }
     else
     {
         //filename port filepos
         ownPort = dccArguments.at( argumentSize - 2).toUInt(); //-1 index, -1 filesize
         position = dccArguments.at( argumentSize - 1).toULong(); // -1 index
-        fileName = recoverDccFileName(dccArguments, 2);
+        fileName = recoverDccFileName(dccArguments, 2); //port filepos
     }
 
     DccTransferSend* dccTransfer = dtm->resumeUpload( connectionId(), sourceNick, fileName, ownPort, position );
