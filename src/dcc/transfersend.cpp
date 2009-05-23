@@ -223,7 +223,7 @@ void DccTransferSend::reject()
 {
     kDebug();
 
-    failed( i18n( "DCC SEND request was rejected." ) );
+    failed( i18n( "DCC SEND request was rejected" ) );
 }
 
 void DccTransferSend::abort()                     // public slot
