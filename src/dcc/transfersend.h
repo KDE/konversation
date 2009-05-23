@@ -64,7 +64,7 @@ class DccTransferSend : public DccTransfer
         void startSending();
         void writeData();
         void getAck();
-        void slotGotSocketError( int errorCode );
+        void slotGotSocketError( QAbstractSocket::SocketError errorCode );
         void slotConnectionTimeout();
         void slotConnectionFailed( QAbstractSocket::SocketError errorCode );
         void slotSendSocketClosed();

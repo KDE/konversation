@@ -599,7 +599,7 @@ void DccTransferRecv::slotServerSocketReadyAccept()
     startReceiving();
 }
 
-void DccTransferRecv::slotServerSocketGotError( int /* errorCode*/ )
+void DccTransferRecv::slotServerSocketGotError( QAbstractSocket::SocketError /* errorCode*/ )
 {
     failed( i18n( "Socket error: %1", m_serverSocket->errorString() ) );
 }

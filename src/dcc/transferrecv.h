@@ -92,7 +92,7 @@ class DccTransferRecv : public DccTransfer
 
         // Reverse DCC
         void slotServerSocketReadyAccept();
-        void slotServerSocketGotError( int errorCode );
+        void slotServerSocketGotError( QAbstractSocket::SocketError errorCode );
 
     protected:
         void cleanUp();

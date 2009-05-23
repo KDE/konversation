@@ -351,7 +351,7 @@ void DccTransferSend::acceptClient()                     // slot
         failed( i18n( "Could not accept the connection (socket error.)" ) );
         return;
     }
-    connect( m_sendSocket, SIGNAL( error ( QAbstractSocket::SocketError ) ), this, SLOT( slotGotSocketError(int) ));
+    connect( m_sendSocket, SIGNAL( error ( QAbstractSocket::SocketError ) ), this, SLOT( slotGotSocketError( QAbstractSocket::SocketError ) ));
 
     // we don't need ServerSocket anymore
     m_serverSocket->close();
@@ -440,7 +440,7 @@ void DccTransferSend::getAck()                    // slot
     }
 }
 
-void DccTransferSend::slotGotSocketError( int errorCode )
+void DccTransferSend::slotGotSocketError( QAbstractSocket::SocketError errorCode )
 {
     stopConnectionTimer();
     kDebug() << "code =  " << errorCode << " string = " << m_serverSocket->errorString();
