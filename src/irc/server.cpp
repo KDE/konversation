@@ -937,12 +937,14 @@ void Server::incoming()
         QByteArray line(m_socket->readLine());
         //remove \n blowfish doesn't like it
         int i = line.size()-1;
-        while (line[i]=='\n' || line[i]=='\r') // since euIRC gets away with sending just \r, bet someone sends \n\r?
+        while (i >= 0 && (line[i]=='\n' || line[i]=='\r')) // since euIRC gets away with sending just \r, bet someone sends \n\r?
         {
             i--;
         }
         line.truncate(i+1);
-        bufferLines.append(line);
+
+        if (line.size() > 0)
+            bufferLines.append(line);
     }
 
     while(!bufferLines.isEmpty())
