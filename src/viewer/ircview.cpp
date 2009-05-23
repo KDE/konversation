@@ -474,7 +474,27 @@ void IRCView::doRawAppend(const QString& newLine)
 
     line.remove('\n');
 
+    // HACK Work around for the problem that the if the last character is selected when
+    // a new line is appended the selection will grow to include the new line.
+    // We store the length of the selection and redo the selection after the line was appended.
+    int selectionLength = 0;
+    QTextCursor cursor = textCursor();
+    bool checkSelection = false;
+
+    if(cursor.hasSelection() && cursor.atEnd())
+    {
+        selectionLength = cursor.selectionEnd() - cursor.selectionStart();
+        checkSelection = true;
+    }
+
     KTextBrowser::append(line);
+
+    if (checkSelection && selectionLength < (cursor.selectionEnd() - cursor.selectionStart()))
+    {
+        cursor.setPosition(cursor.selectionStart());
+        cursor.movePosition(QTextCursor::NextCharacter, QTextCursor::KeepAnchor, selectionLength);
+        setTextCursor(cursor);
+    }
 }
 
 QString IRCView::timeStamp()
