@@ -176,6 +176,11 @@ bool DccTransferRecv::queue()
         return false;
     }
 
+    if ( m_ownIp.isEmpty() )
+    {
+        m_ownIp = DccCommon::getOwnIp( KonversationApplication::instance()->getConnectionManager()->getServerByConnectionId( m_connectionId ) );
+    }
+
     if (!KAuthorized::authorizeKAction("allow_downloading"))
     {
         //note we have this after the initialisations so that item looks okay

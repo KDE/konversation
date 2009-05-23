@@ -38,8 +38,7 @@ class DccTransferSend : public DccTransfer
         void setFileURL( const KUrl& url );
         // OPTIONAL
         void setFileName( const QString& fileName );
-        // REQUIED
-        // FIXME: this setting should be an optional one or be removed: make DccTransferSend itself read the configuration
+        // OPTIONAL
         void setOwnIp( const QString& ownIp );
         // OPTIONAL
         void setFileSize( KIO::filesize_t fileSize );

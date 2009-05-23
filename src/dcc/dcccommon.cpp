@@ -68,7 +68,7 @@ QString DccCommon::getOwnIp( Server* server )
         }
     }
 
-    // fallback or methodId == 3 (network interface)
+    // fallback or methodId == 0 (network interface)
     if ( ownIp.isEmpty() && server )
     {
         ownIp = server->getOwnIpByNetworkInterface();

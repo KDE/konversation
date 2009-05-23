@@ -324,8 +324,6 @@ void DccTransferPanel::resendFile()
                 newTransfer->setPartnerNick( transfer->getPartnerNick() );
                 newTransfer->setFileURL( transfer->getFileURL() );
                 newTransfer->setFileName( transfer->getFileName() );
-                // FIXME
-                newTransfer->setOwnIp( transfer->getOwnIp() );
 
                 if ( newTransfer->queue() )
                     newTransfer->start();
