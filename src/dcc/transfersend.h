@@ -48,6 +48,9 @@ class DccTransferSend : public DccTransfer
 
         bool setResume( unsigned long position );
 
+        // send got rejected
+        void reject();
+
     public slots:
         virtual bool queue();
         virtual void start();

@@ -52,6 +52,8 @@ class DccTransferManager : public QObject
         DccTransferRecv* newDownload();
         DccTransferSend* newUpload();
 
+        DccTransferSend* rejectSend(int connectionId, const QString& partnerNick, const QString& fileName);
+
         /**
          * @return a DccTransferRecv item if applicable one found, otherwise 0.
          */

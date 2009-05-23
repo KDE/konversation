@@ -54,6 +54,30 @@ DccTransferSend* DccTransferManager::newUpload()
     return transfer;
 }
 
+DccTransferSend* DccTransferManager::rejectSend(int connectionId, const QString& partnerNick, const QString& fileName)
+{
+    DccTransferSend* transfer = 0;
+
+    // find applicable one
+    foreach (DccTransferSend* it, m_sendItems )
+    {
+        if ( ( it->getStatus() == DccTransfer::Queued || it->getStatus() == DccTransfer::WaitingRemote ) &&
+            it->getConnectionId() == connectionId &&
+            it->getPartnerNick() == partnerNick &&
+            it->getFileName() == fileName )
+        {
+            transfer = it;
+            kDebug() << "Filename match: " << fileName;
+            break;
+        }
+    }
+
+    if ( transfer )
+        transfer->reject();
+
+    return transfer;
+}
+
 DccTransferRecv* DccTransferManager::resumeDownload( int connectionId, const QString& partnerNick, const QString& fileName, uint ownPort, unsigned long position )
 {
     DccTransferRecv* transfer = 0;

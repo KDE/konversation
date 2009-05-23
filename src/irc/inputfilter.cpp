@@ -515,6 +515,26 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                                  sourceNick, time, unit)
                             );
                     }
+                    else if (replyReason.toLower() == "dcc")
+                    {
+                        kDebug() << reply;
+                        QStringList dccList = reply.split(' ');
+
+                        //all dcc notices we receive are rejects
+                        if (dccList.first().toLower() == "reject")
+                        {
+                            dccList.removeFirst();
+                            if (dccList.first().toLower() == "send")
+                            {
+                                dccList.removeFirst();
+                                emit rejectDccSendTransfer(sourceNick,dccList);
+                            }
+                            else if (dccList.first().toLower() == "chat")
+                            {
+                                //TODO dcc chat currently lacks accept/reject-structure
+                            }
+                        }
+                    }
                     // all other ctcp replies get a general message
                     else
                     {

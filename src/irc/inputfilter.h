@@ -57,6 +57,8 @@ class InputFilter : public QObject
         void resumeDccGetTransfer(const QString &sourceNick, const QStringList &dccArgument);
                                                   // will be connected to Server::resumeDccSendTransfer()
         void resumeDccSendTransfer(const QString &sourceNick, const QStringList &dccArgument);
+                                                  // will be connected to Server::rejectDccSendTransfer()
+        void rejectDccSendTransfer(const QString &sourceNick, const QStringList &dccArgument);
                                                   // will be connected to Server::userhost()
         void userhost(const QString& nick,const QString& hostmask,bool away,bool ircOp);
                                                   // will be connected to Server::setTopicAuthor()

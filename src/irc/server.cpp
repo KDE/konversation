@@ -315,6 +315,8 @@ void Server::connectSignals()
         this, SLOT(resumeDccGetTransfer(const QString&, const QStringList&)));
     connect(&m_inputFilter, SIGNAL(resumeDccSendTransfer(const QString&, const QStringList&)),
         this, SLOT(resumeDccSendTransfer(const QString&, const QStringList&)));
+    connect(&m_inputFilter, SIGNAL(rejectDccSendTransfer(const QString&, const QStringList&)),
+        this, SLOT(rejectDccSendTransfer(const QString&, const QStringList&)));
     connect(&m_inputFilter, SIGNAL(userhost(const QString&,const QString&,bool,bool)),
         this, SLOT(userhost(const QString&,const QString&,bool,bool)) );
     connect(&m_inputFilter, SIGNAL(topicAuthor(const QString&,const QString&,QDateTime)),
@@ -2013,6 +2015,25 @@ void Server::resumeDccSendTransfer(const QString &sourceNick, const QStringList 
         appendMessageToFrontmost( i18n( "Error" ),
                                   i18nc( "%1 = file name, %2 = nickname",
                                         "Received invalid resume request for \"%1\" from %2.",
+                                        fileName,
+                                        sourceNick ) );
+    }
+}
+
+void Server::rejectDccSendTransfer(const QString &sourceNick, const QStringList &dccArguments)
+{
+    DccTransferManager* dtm = KonversationApplication::instance()->getDccTransferManager();
+
+    //filename
+    QString fileName = recoverDccFileName(dccArguments,0);
+
+    DccTransferSend* dccTransfer = dtm->rejectSend( connectionId(), sourceNick, fileName );
+
+    if ( !dccTransfer )
+    {
+        appendMessageToFrontmost( i18n( "Error" ),
+                                  i18nc( "%1 = file name, %2 = nickname",
+                                        "Received invalid reject request for \"%1\" from %2.",
                                         fileName,
                                         sourceNick ) );
     }

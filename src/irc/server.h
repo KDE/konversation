@@ -504,6 +504,7 @@ void resetNickSelection();
         void resumeDccGetTransfer(const QString& sourceNick,const QStringList& dccArguments);
                                                   // -> to inputFilter
         void resumeDccSendTransfer(const QString& sourceNick,const QStringList& dccArguments);
+        void rejectDccSendTransfer(const QString& sourceNick,const QStringList& dccArguments);
         void dccGetDone(DccTransfer* item);
         void dccSendDone(DccTransfer* item);
         void dccStatusChanged(DccTransfer* item, int newStatus, int oldStatus);
