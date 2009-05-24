@@ -59,6 +59,7 @@ namespace Konversation
 
             void copyUrl();
             void bookmarkUrl();
+            void saveLinkAs();
 
         private:
             Server* m_server;
