@@ -44,10 +44,10 @@ Changes since 1.2-alpha1:
 * Improved handling in the Identity editor dialog: When Konversation com-
   plains about one or more required fields not being filled in, the dialog
   will now put focus on the field when it opens.
-* Always display your own IP for DCC Receives
-* Handle DCC Rejects. A DCC Send now gets automatically aborted if the
+* Fixed the 'Self' IP field of the DCC transfer details panel not showing
+  a value when on the receiving end of a DCC file transfer.
+* Handle DCC REJECTs. A DCC SEND is now automatically aborted when the
   partner rejects it.
-
 
 Changes from 1.1 to 1.2-alpha1:
 We're happy to bring you this first public release of the KDE 4 version of
@@ -109,7 +109,7 @@ Enjoy, and don't forget to report any bugs you encounter!
 * Fix sending and receiving of files with names containing spaces
 * DCC Protocol adjustment to proper handle passive DCC resume/accept requests.
   (this breaks passive-resume compatibly with <konversation-1.2)
-* Send proper DCC reject commands when rejecting a queued receive.
+* Send proper DCC REJECT commands when rejecting a queued receive.
 * Improved error recovery during dcc send.
 * Fix time left for transfers that finished in under 1 sec displaying infinite
   time left.
