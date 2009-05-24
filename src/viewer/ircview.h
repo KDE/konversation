@@ -85,7 +85,9 @@ class IRCView : public KTextBrowser
         void textPasted(bool useSelection); ///< middle button with no m_copyUrlMenu
         void popupCommand(int); ///< wired to all of the popup menus
         void filesDropped(const QStringList&); ///< Q3UriDrag::decode valid in contentsDropEvent
-        void doSearch(); ///< this is a
+        void doSearch(); /// Emited when a search should be started
+        void doSearchNext(); /// Emited when there's a request to go to the next search result.
+        void doSearchPrevious(); /// Emited when there's a request to go to the previous search result.
 
         void setStatusBarTempText(const QString&); //! these two look like mixins to me
         void clearStatusBarTempText();//! these two look like mixins to me
@@ -129,7 +131,12 @@ class IRCView : public KTextBrowser
 
 
     public slots:
-        void search(); ///! TODO FIXME this is a dangerous overload
+        /// Emits the doSeach signal.
+        void findText();
+        /// Emits the doSeachNext signal.
+        void findNextText();
+        /// Emits the doSeachPrevious signal.
+        void findPreviousText();
 
         //! FIXME eh? what is this?
         void setCurrentChannel(const QString& channel) { m_currentChannel = channel; }

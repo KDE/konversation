@@ -193,9 +193,19 @@ void IRCView::setChatWin(ChatWindow* chatWin)
     setupChannelPopupMenu();
 }
 
-void IRCView::search()
+void IRCView::findText()
 {
     emit doSearch();
+}
+
+void IRCView::findNextText()
+{
+    emit doSearchNext();
+}
+
+void IRCView::findPreviousText()
+{
+    emit doSearchPrevious();
 }
 
 bool IRCView::search(const QString& pattern, bool caseSensitive, bool wholeWords, bool forward, bool fromCursor)
@@ -220,11 +230,9 @@ bool IRCView::searchNext(bool reversed)
 {
     bool fwd = (reversed ? !m_forward : m_forward);
     if (fwd) {
-        moveCursor(QTextCursor::EndOfWord);
         m_searchFlags &= ~QTextDocument::FindBackward;
     }
     else {
-        moveCursor(QTextCursor::StartOfWord);
         m_searchFlags |= QTextDocument::FindBackward;
     }
     return find(m_pattern, m_searchFlags);

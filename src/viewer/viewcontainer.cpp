@@ -33,6 +33,7 @@
 #include "irccolorchooser.h"
 #include "joinchanneldialog.h"
 #include "servergroupsettings.h"
+#include "ircviewbox.h"
 
 #include <QList>
 #include <QSplitter>
@@ -539,7 +540,7 @@ void ViewContainer::updateViewActions(int index)
             action = actionCollection()->action("edit_find_next");
             if (action) action->setEnabled(view->searchView());
 
-            action = actionCollection()->action("edit_find_last");
+            action = actionCollection()->action("edit_find_prev");
             if (action) action->setEnabled(view->searchView());
 
             KToggleAction* channelListAction = static_cast<KToggleAction*>(actionCollection()->action("open_channel_list"));
@@ -644,7 +645,7 @@ void ViewContainer::updateViewActions(int index)
         action = actionCollection()->action("edit_find_next");
         if (action) action->setEnabled(false);
 
-        action = actionCollection()->action("edit_find_last");
+        action = actionCollection()->action("edit_find_prev");
         if (action) action->setEnabled(false);
 
         action = actionCollection()->action("open_channel_list");
@@ -1797,18 +1798,24 @@ void ViewContainer::findText()
     }
     else
     {
-        m_searchView->getTextView()->search();
+        m_searchView->getTextView()->findText();
     }
 }
 
 void ViewContainer::findNextText()
 {
-    if (m_searchView) m_searchView->getTextView()->searchNext();
+    if (m_searchView)
+    {
+        m_searchView->getTextView()->findNextText();
+    }
 }
 
 void ViewContainer::findPrevText()
 {
-    if (m_searchView) m_searchView->getTextView()->searchNext(true);
+    if (m_searchView)
+    {
+        m_searchView->getTextView()->findPreviousText();
+    }
 }
 
 void ViewContainer::appendToFrontmost(const QString& type,const QString& message,ChatWindow* serverView, bool parseURL)

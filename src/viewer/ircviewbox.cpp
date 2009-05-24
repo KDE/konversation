@@ -42,6 +42,8 @@ IRCViewBox::IRCViewBox(QWidget* parent, Server* newServer)
             this, SLOT(slotSearchPrevious()));
     connect(m_ircView, SIGNAL(doSearch()),
         SLOT(slotSearch()));
+    connect(m_ircView, SIGNAL(doSearchNext()), this, SLOT(slotSearchNext()));
+    connect(m_ircView, SIGNAL(doSearchPrevious()), this, SLOT(slotSearchPrevious()));
     connect(m_searchBar, SIGNAL(hidden()), m_ircView, SIGNAL(gotFocus()));
 }
 
@@ -70,12 +72,12 @@ void IRCViewBox::slotSearch()
 
 void IRCViewBox::slotSearchNext()
 {
-  searchNext(false);
+    searchNext(false);
 }
 
 void IRCViewBox::slotSearchPrevious()
 {
-  searchNext(true);
+    searchNext(true);
 }
 
 void IRCViewBox::searchNext(bool reversed)
@@ -97,11 +99,16 @@ void IRCViewBox::searchNext(bool reversed)
         return;
     }
 
-    match = m_ircView->search(m_searchBar->pattern(),
-                              m_searchBar->caseSensitive(),
-                              m_searchBar->wholeWords(),
-                              m_searchBar->searchForward(),
-                              false);
+    if((m_searchBar->searchForward() && !reversed) || (!m_searchBar->searchForward() && reversed))
+    {
+        m_ircView->moveCursor(QTextCursor::Start);
+    }
+    else
+    {
+        m_ircView->moveCursor(QTextCursor::End);
+    }
+
+    match = m_ircView->searchNext(reversed);
 
     if (!match)
     {
