@@ -109,7 +109,7 @@ Enjoy, and don't forget to report any bugs you encounter!
 * Fix sending and receiving of files with names containing spaces
 * DCC Protocol adjustment to proper handle passive DCC resume/accept requests.
   (this breaks passive-resume compatibly with <konversation-1.2)
-* Send proper DCC REJECT commands when rejecting a queued receive.
+* Send proper DCC reject commands when rejecting a queued receive.
 * Improved error recovery during dcc send.
 * Fix time left for transfers that finished in under 1 sec displaying infinite
   time left.
