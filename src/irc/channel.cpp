@@ -144,6 +144,7 @@ Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
     m_topicButton = new QToolButton(topicWidget);
     m_topicButton->setIcon(KIcon("document-edit"));
     m_topicButton->setToolTip(i18n("Edit Channel Settings"));
+    m_topicButton->setAutoRaise(true);
     connect(m_topicButton, SIGNAL(clicked()), this, SLOT(showOptionsDialog()));
 
     topicLine = new Konversation::TopicLabel(topicWidget);
