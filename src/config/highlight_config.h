@@ -10,10 +10,10 @@
   Copyright (C) 2006 John Tapsell <johnflux@gmail.com>
 */
 
-#ifndef KONVERSATIONHIGHLIGHT_CONFIG_H
-#define KONVERSATIONHIGHLIGHT_CONFIG_H
+#ifndef HIGHLIGHT_CONFIG_H
+#define HIGHLIGHT_CONFIG_H
 
-#include "ui_highlight_preferencesui.h"
+#include "ui_highlight_configui.h"
 #include "settingspage.h"
 
 class Highlight_Config;
@@ -57,4 +57,3 @@ class Highlight_Config : public QWidget, public KonviSettingsPage, private Ui::H
 };
 
 #endif
-

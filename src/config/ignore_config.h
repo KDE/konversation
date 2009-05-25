@@ -13,7 +13,7 @@
 #ifndef IGNORE_CONFIG_H
 #define IGNORE_CONFIG_H
 
-#include "ui_ignore_preferencesui.h"
+#include "ui_ignore_configui.h"
 #include "settingspage.h"
 
 class Ignore;

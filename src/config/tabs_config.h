@@ -9,10 +9,10 @@
   Copyright (C) 2006 Eike Hein <hein@kde.org>
 */
 
-#ifndef TABS_PREFERENCES_H
-#define TABS_PREFERENCES_H
+#ifndef TABS_CONFIG_H
+#define TABS_CONFIG_H
 
-#include "ui_tabs_preferencesui.h"
+#include "ui_tabs_configui.h"
 
 
 class Tabs_Config : public QWidget, private Ui::Tabs_PreferencesUI

@@ -14,7 +14,7 @@
 
 #include "settingspage.h" ////// header renamed
 #include "servergroupsettings.h"
-#include "ui_watchednicknames_preferencesui.h"
+#include "ui_watchednicknames_configui.h"
 
 class QTreeWidgetItem;
 class QTreeWidget;

@@ -11,9 +11,9 @@
   Copyright (C) 2006 Eike Hein <hein@kde.org>
 */
 
-#include "nicklistbehavior_preferences.h"
+#include "nicklistbehavior_config.h"
 #include "valuelistviewitem.h"
-#include "config/preferences.h"
+#include "preferences.h"
 
 #include <kapplication.h>
 #include <klocale.h>
@@ -100,4 +100,4 @@ bool NicklistBehavior_Config::hasChanged()
   return(m_oldSortingOrder!=currentSortingOrder());
 }
 
-#include "nicklistbehavior_preferences.moc"
+#include "nicklistbehavior_config.moc"

@@ -9,8 +9,8 @@
   Copyright (C) 2006 Dario Abatianni <eisfuchs@tigress.com>
 */
 
-#include "watchednicknames_preferences.h"
-#include "config/preferences.h"
+#include "watchednicknames_config.h"
+#include "preferences.h"
 #include "application.h"
 #include "mainwindow.h"
 #include "valuelistviewitem.h"
@@ -426,4 +426,4 @@ void WatchedNicknames_Config::nicknameChanged(const QString& newNickname)
   }
 }
 
-#include "watchednicknames_preferences.moc"
+#include "watchednicknames_config.moc"

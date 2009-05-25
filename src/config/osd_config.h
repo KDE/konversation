@@ -13,10 +13,10 @@
   Copyright (C) 2006 Peter Simonsson <psn@linux.se>
 */
 
-#ifndef EXOSDPREFERENCES_H
-#define EXOSDPREFERENCES_H
+#ifndef OSD_CONFIG_H
+#define OSD_CONFIG_H
 
-#include "ui_osd_preferencesui.h"
+#include "ui_osd_configui.h"
 #include "settingspage.h" ////// header renamed
 
 
@@ -54,4 +54,4 @@ class OSD_Config : public QWidget, public KonviSettingsPage, private Ui::OSD_Con
         OSDPreviewWidget* m_pOSDPreview;
 };
 
-#endif // EXOSDPREFERENCES_H
+#endif // OSD_CONFIG_H

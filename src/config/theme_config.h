@@ -12,10 +12,10 @@
   Copyright (C) 2007 Eike Hein <hein@kde.org>
 */
 
-#ifndef PREFSPAGETHEMES_H
-#define PREFSPAGETHEMES_H
+#ifndef THEME_CONFIG_H
+#define THEME_CONFIG_H
 
-#include "ui_theme_preferencesui.h"
+#include "ui_theme_configui.h"
 #include "settingspage.h" ////// header renamed
 
 #include <kio/job.h>
@@ -53,4 +53,5 @@ class Theme_Config : public QWidget, public KonviSettingsPage, private Ui::Theme
         QString m_currentTheme;
         int m_defaultThemeIndex;
 };
+
 #endif

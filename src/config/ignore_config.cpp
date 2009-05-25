@@ -10,7 +10,7 @@
   Copyright (C) 2006 John Tapsell <johnflux@gmail.com>
 */
 
-#include "ignore_preferences.h"
+#include "ignore_config.h"
 #include "ignorelistviewitem.h"
 #include "ignore.h"
 #include "preferences.h"
@@ -214,4 +214,4 @@ void Ignore_Config::languageChange()
   loadSettings();
 }
 
-#include "ignore_preferences.moc"
+#include "ignore_config.moc"

@@ -9,7 +9,7 @@
   Copyright (C) 2006 Eike Hein <hein@kde.org>
 */
 
-#include "tabs_preferences.h"
+#include "tabs_config.h"
 
 #include <qcombobox.h>
 #include <qcheckbox.h>
@@ -58,4 +58,4 @@ void Tabs_Config::toggleCheckBoxes(int activated)
     }
 }
 
-#include "tabs_preferences.moc"
+#include "tabs_config.moc"

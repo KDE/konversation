@@ -10,10 +10,10 @@
   Copyright (C) 2006 John Tapsell <johnflux@gmail.com>
 */
 
-#ifndef QUICKBUTTONSCONFIG_H
-#define QUICKBUTTONSCONFIG_H
+#ifndef QUICKBUTTONS_CONFIG_H
+#define QUICKBUTTONS_CONFIG_H
 
-#include "ui_quickbuttons_preferencesui.h"
+#include "ui_quickbuttons_configui.h"
 #include "settingspage.h" ////// header renamed
 
 

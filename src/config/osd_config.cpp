@@ -13,8 +13,8 @@
   Copyright (C) 2006 Peter Simonsson <psn@linux.se>
 */
 
-#include "osd_preferences.h"
-#include "config/preferences.h"
+#include "osd_config.h"
+#include "preferences.h"
 #include "osd.h"
 #include "application.h"
 
@@ -194,5 +194,4 @@ void OSD_Config::slotUpdateFont(const QFont& font)
     m_pOSDPreview->setFont(font);
 }
 
-#include "osd_preferences.moc"
-
+#include "osd_config.moc"

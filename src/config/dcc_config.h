@@ -10,11 +10,10 @@
   Copyright (C) 2006 John Tapsell <johnflux@gmail.com>
 */
 
-#ifndef EXDCCPREFERENCES_H
-#define EXDCCPREFERENCES_H
+#ifndef DCC_CONFIG_H
+#define DCC_CONFIG_H
 
-#include "ui_dcc_preferencesui.h"
-
+#include "ui_dcc_configui.h"
 
 
 class DCC_Config : public QWidget, private Ui::DCC_ConfigUI

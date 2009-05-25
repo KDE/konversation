@@ -1,7 +1,7 @@
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/config)
 
-include_directories(blowfish config dcc irc preferences viewer linkaddressbook)
+include_directories(blowfish config dcc irc viewer linkaddressbook)
 
 set(core_SRCS
     #====================================
@@ -16,12 +16,9 @@ set(core_SRCS
     ssllabel.cpp
     statusbar.cpp
     bookmarkhandler.cpp
-    configdialog.cpp
-    settingsdialog.cpp
     scriptlauncher.cpp
     konsolepanel.cpp
     notificationhandler.cpp
-
     awaymanager.cpp
     connectionmanager.cpp
     connectionsettings.cpp
@@ -76,45 +73,46 @@ kde4_add_ui_files(irc_SRCS
     irc/serverlistdialogui.ui
 )
 
-    #=== Preferences
-set(prefs_SRCS
-    preferences/alias_preferences.cpp
-    preferences/autoreplace_preferences.cpp
-    preferences/dcc_preferences.cpp
-    preferences/highlight_preferences.cpp
-    preferences/ignore_preferences.cpp
-    preferences/nicklistbehavior_preferences.cpp
-    preferences/osd_preferences.cpp
-    preferences/tabs_preferences.cpp
-    preferences/theme_preferences.cpp
-    preferences/quickbuttons_preferences.cpp
-    preferences/warnings_preferences.cpp
-
-    preferences/watchednicknames_preferences.cpp
-    preferences/valuelistviewitem.cpp
+    #=== Configuration dialog pages
+set(config_SRCS
+    config/configdialog.cpp
+    config/settingsdialog.cpp
+    config/alias_config.cpp
+    config/autoreplace_config.cpp
+    config/dcc_config.cpp
+    config/highlight_config.cpp
+    config/ignore_config.cpp
+    config/nicklistbehavior_config.cpp
+    config/osd_config.cpp
+    config/tabs_config.cpp
+    config/theme_config.cpp
+    config/quickbuttons_config.cpp
+    config/warnings_config.cpp
+    config/watchednicknames_config.cpp
+    config/valuelistviewitem.cpp
 )
 
-kde4_add_ui_files(prefs_SRCS
-    preferences/alias_preferencesui.ui
-    preferences/autoreplace_preferencesui.ui
-    preferences/chatwindowappearance_preferences.ui
-    preferences/chatwindowbehaviour_preferences.ui
-    preferences/colorsappearance_preferences.ui
-    preferences/connectionbehavior_preferences.ui
-    preferences/dcc_preferencesui.ui
-    preferences/fontappearance_preferences.ui
-    preferences/generalbehavior_preferences.ui
-    preferences/highlight_preferencesui.ui
-    preferences/ignore_preferencesui.ui
-    preferences/log_preferences.ui
-    preferences/nicklistbehavior_preferencesui.ui
-    preferences/osd_preferencesui.ui
-    preferences/quickbuttons_preferencesui.ui
-    preferences/tabnotifications_preferences.ui
-    preferences/tabs_preferencesui.ui
-    preferences/theme_preferencesui.ui
-    preferences/warnings_preferencesui.ui
-    preferences/watchednicknames_preferencesui.ui
+kde4_add_ui_files(config_SRCS
+    config/alias_configui.ui
+    config/autoreplace_configui.ui
+    config/chatwindowappearance_config.ui
+    config/chatwindowbehaviour_config.ui
+    config/colorsappearance_config.ui
+    config/connectionbehavior_config.ui
+    config/dcc_configui.ui
+    config/fontappearance_config.ui
+    config/generalbehavior_config.ui
+    config/highlight_configui.ui
+    config/ignore_configui.ui
+    config/log_config.ui
+    config/nicklistbehavior_configui.ui
+    config/osd_configui.ui
+    config/quickbuttons_configui.ui
+    config/tabnotifications_config.ui
+    config/tabs_configui.ui
+    config/theme_configui.ui
+    config/warnings_configui.ui
+    config/watchednicknames_configui.ui
 )
 
     #=== Viewer
@@ -193,7 +191,7 @@ set(blowfish_SRCS
     blowfish/oldblowfish.cpp
 )
 
-set (completed_SRCS ${core_SRCS}  ${irc_SRCS} ${viewer_SRCS} ${prefs_SRCS} ${dcc_SRCS} ${linkaddressbook_SRCS} ${blowfish_SRCS})
+set (completed_SRCS ${core_SRCS}  ${irc_SRCS} ${viewer_SRCS} ${config_SRCS} ${dcc_SRCS} ${linkaddressbook_SRCS} ${blowfish_SRCS})
 set (konversation_SRCS ${completed_SRCS})
 
 kde4_add_ui_files(konversation_SRCS

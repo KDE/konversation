@@ -12,7 +12,7 @@
 */
 
 
-#include "warnings_preferences.h"
+#include "warnings_config.h"
 
 #include <QHeaderView>
 #include <kdebug.h>
@@ -182,4 +182,4 @@ void Warnings_Config::languageChange()
   loadSettings();
 }
 
-#include "warnings_preferences.moc"
+#include "warnings_config.moc"

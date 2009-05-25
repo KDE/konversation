@@ -10,10 +10,10 @@
   Copyright (C) 2006 Eike Hein <hein@kde.org>
 */
 
-#ifndef AUTOREPLACECONFIG_H
-#define AUTOREPLACECONFIG_H
+#ifndef AUTOREPLACE_CONFIG_H
+#define AUTOREPLACE_CONFIG_H
 
-#include "ui_autoreplace_preferencesui.h"
+#include "ui_autoreplace_configui.h"
 #include "settingspage.h"
 
 

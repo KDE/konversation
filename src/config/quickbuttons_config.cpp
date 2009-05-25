@@ -10,8 +10,8 @@
   Copyright (C) 2006 John Tapsell <johnflux@gmail.com>
 */
 
-#include "quickbuttons_preferences.h"
-#include "config/preferences.h"
+#include "quickbuttons_config.h"
+#include "preferences.h"
 
 #include <qlabel.h>
 #include <qpushbutton.h>
@@ -256,4 +256,4 @@ void QuickButtons_Config::removeEntry()
   }
 }
 
-#include "quickbuttons_preferences.moc"
+#include "quickbuttons_config.moc"

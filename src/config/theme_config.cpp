@@ -12,7 +12,7 @@
   Copyright (C) 2007 Eike Hein <hein@kde.org>
 */
 
-#include "theme_preferences.h"
+#include "theme_config.h"
 #include "preferences_base.h"
 #include "images.h"
 #include "common.h"
@@ -310,4 +310,4 @@ void Theme_Config::updateButtons()
     themeRC.close();
 }
 
-#include "theme_preferences.moc"
+#include "theme_config.moc"

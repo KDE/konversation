@@ -10,37 +10,36 @@
   Copyright (C) 2006 John Tapsell <johnflux@gmail.com>
 */
 
-#ifndef NICKLISTBEHAVIOR_Config_H
-#define NICKLISTBEHAVIOR_Config_H
+#ifndef WARNINGS_CONFIG_H
+#define WARNINGS_CONFIG_H
 
+#include "ui_warnings_configui.h"
 #include "settingspage.h" ////// header renamed
-#include "ui_nicklistbehavior_preferencesui.h"
 
-#include <qobject.h>
-
-
-class NicklistBehavior_Config : public QWidget, public KonviSettingsPage, private Ui::NicklistBehavior_ConfigUI
+class Warnings_Config : public QWidget, public KonviSettingsPage, private Ui::Warnings_ConfigUI
 {
     Q_OBJECT
 
     public:
-        explicit NicklistBehavior_Config(QWidget *parent = 0, const char *name = 0);
-        ~NicklistBehavior_Config();
+        explicit Warnings_Config( QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0 );
+        ~Warnings_Config();
 
+        virtual void restorePageToDefaults();
         virtual void saveSettings();
         virtual void loadSettings();
-        virtual void restorePageToDefaults();
 
         virtual bool hasChanged();
 
-    private:
-        void setNickList(const QString &sortingOrder);
-        QString currentSortingOrder();
+    public slots:
+        virtual void languageChange();
 
-        QString m_oldSortingOrder;
+    protected:
+        QString currentWarningsChecked(); // for hasChanged()
+
+        QString m_oldWarningsChecked;     // for hasChanged()
 
     signals:
         void modified();
 };
 
-#endif
+#endif // WARNINGS_CONFIG_H

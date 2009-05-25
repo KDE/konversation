@@ -10,8 +10,8 @@
   Copyright (C) 2006 Eike Hein <hein@kde.org>
 */
 
-#include "autoreplace_preferences.h"
-#include "config/preferences.h"
+#include "autoreplace_config.h"
+#include "preferences.h"
 
 #include <qlabel.h>
 #include <qpushbutton.h>
@@ -400,4 +400,4 @@ void Autoreplace_Config::showRegExpEditor()
     }
 }
 
-#include "autoreplace_preferences.moc"
+#include "autoreplace_config.moc"

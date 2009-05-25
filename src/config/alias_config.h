@@ -10,10 +10,10 @@
   Copyright (C) 2006 John Tapsell <johnflux@gmail.com>
 */
 
-#ifndef EXALIASPREFERENCES_H
-#define EXALIASPREFERENCES_H
+#ifndef ALIAS_CONFIG_H
+#define ALIAS_CONFIG_H
 
-#include "ui_alias_preferencesui.h"
+#include "ui_alias_configui.h"
 #include "settingspage.h" ////// header renamed
 
 class Alias_Config : public QWidget, public KonviSettingsPage, private Ui::Alias_ConfigUI

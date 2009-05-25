@@ -10,8 +10,8 @@
   Copyright (C) 2006 John Tapsell <johnflux@gmail.com>
 */
 
-#include "alias_preferences.h"
-#include "config/preferences.h"
+#include "alias_config.h"
+#include "preferences.h"
 
 #include <qlabel.h>
 #include <qpushbutton.h>
@@ -216,4 +216,4 @@ void Alias_Config::removeEntry()
     }
 }
 
-#include "alias_preferences.moc"
+#include "alias_config.moc"

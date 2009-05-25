@@ -10,7 +10,7 @@
   Copyright (C) 2006 John Tapsell <johnflux@gmail.com>
 */
 
-#include "dcc_preferences.h"
+#include "dcc_config.h"
 
 #include <qcombobox.h>
 #include <qlineedit.h>
@@ -56,5 +56,5 @@ void DCC_Config::languageChange()
 DCC_Config::~DCC_Config()
 {
 }
-#include "dcc_preferences.moc"
 
+#include "dcc_config.moc"

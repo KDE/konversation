@@ -10,11 +10,11 @@
   Copyright (C) 2006 John Tapsell <johnflux@gmail.com>
 */
 
-#include "highlight_preferences.h"
+#include "highlight_config.h"
 #include "highlightviewitem.h"
 #include "application.h"
 #include "sound.h"
-#include "config/preferences.h"
+#include "preferences.h"
 
 #include <qdir.h>
 #include <qlabel.h>
@@ -341,4 +341,4 @@ void Highlight_Config::saveSettings()
   m_oldHighlightList=currentHighlightList();
 }
 
-#include "highlight_preferences.moc"
+#include "highlight_config.moc"
