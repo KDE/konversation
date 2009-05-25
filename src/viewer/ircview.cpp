@@ -143,7 +143,7 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent)
     connect( this, SIGNAL(copyAvailable(bool)),act,SLOT( setEnabled( bool ) ) );
     act->setEnabled( false );
     m_popup->addAction(i18n("Select All"),this, SLOT(selectAll()) );
-    m_popup->addAction(KIcon("edit-find"),i18n("Find Text..."),this, SLOT( search() ) );
+    m_popup->addAction(KIcon("edit-find"),i18n("Find Text..."),this, SLOT( findText() ) );
 
     setServer(newServer);
 
