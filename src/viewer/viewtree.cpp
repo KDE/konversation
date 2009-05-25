@@ -876,14 +876,13 @@ Q3DragObject* ViewTree::dragObject()
 QList<ChatWindow*> ViewTree::getSortedViewList()
 {
     QList<ChatWindow*> viewList;
-
-    ViewTreeItem* item = static_cast<ViewTreeItem*>(firstChild());
-
-    while (item)
+    Q3ListViewItemIterator it(this);
+    ViewTreeItem* item;
+    while (it.current())
     {
+        item = static_cast<ViewTreeItem*>(it.current());
         if (!item->isSeparator()) viewList.append(item->getView());
-
-        item = static_cast<ViewTreeItem*>(item->itemBelow());
+        ++it;
     }
 
     return viewList;
