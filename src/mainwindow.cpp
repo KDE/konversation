@@ -57,7 +57,6 @@
 #include <kstandardshortcut.h>
 #include <KActionMenu>
 #include <knotifyconfigwidget.h>
-#include <kdeversion.h>
 
 
 KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0)
