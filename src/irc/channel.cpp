@@ -2877,7 +2877,7 @@ QString NickList::completeNick(const QString& pattern, bool& complete, QStringLi
 			       bool skipNonAlfaNum, bool caseSensitive)
 {
     found.clear();
-    QString prefix = "^";
+    QString prefix('^');
     QString newNick;
     QString prefixCharacter = Preferences::self()->prefixCharacter();
     NickList foundNicks;
