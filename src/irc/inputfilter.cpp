@@ -521,10 +521,10 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                         QStringList dccList = reply.split(' ');
 
                         //all dcc notices we receive are rejects
-                        if (dccList.first().toLower() == "reject")
+                        if (dccList.count() >= 2 && dccList.first().toLower() == "reject")
                         {
                             dccList.removeFirst();
-                            if (dccList.first().toLower() == "send")
+                            if (dccList.count() >= 2 && dccList.first().toLower() == "send")
                             {
                                 dccList.removeFirst();
                                 emit rejectDccSendTransfer(sourceNick,dccList);
