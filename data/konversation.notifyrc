@@ -138,6 +138,7 @@ Name[pt]=Foi despoletado o realce
 Name[pt_BR]=Realce acionado
 Name[sv]=Markering orsakad
 Name[uk]=Увімкнено підсвічування
+Name[zh_TW]=觸發突顯
 Comment=Someone triggered a highlight
 Comment[da]=Nogen udløste et highlight
 Comment[de]=Jemand hat eine Hervorhebung ausgelöst
@@ -147,6 +148,7 @@ Comment[pt]=Alguém despoletou um realce
 Comment[pt_BR]=Alguém acionou um realce
 Comment[sv]=Någon orsakade en markering
 Comment[uk]=Хтось увімкнув підсвічування
+Comment[zh_TW]=某人觸發了突顯
 Action=None
 
 [Event/queryMessage]
@@ -336,6 +338,7 @@ Name[pt]=Erro de transferência DCC
 Name[pt_BR]=Erro de transferência DCC
 Name[sv]=Överföringsfel vid direktkommunikation
 Name[uk]=Помилка передавання DCC
+Name[zh_TW]=DCC 傳輸錯誤
 Comment=An error occurred in a DCC transfer
 Comment[da]=En fejl opstod i en DCC-overførsel
 Comment[de]=Bei der DCC-Übertragung ist ein Fehler aufgetreten
@@ -345,6 +348,7 @@ Comment[pt]=Ocorreu um erro numa transferência DCC
 Comment[pt_BR]=Ocorreu um erro na transferência DCC
 Comment[sv]=Ett fel uppstod vid en överföring via direktkommunikation
 Comment[uk]=Сталася помилка у передаванні DCC
+Comment[zh_TW]=DCC 傳輸時發生錯誤
 Action=None
 
 [Event/dcctransfer_done]
@@ -357,6 +361,7 @@ Name[pt]=Transferência DCC completa
 Name[pt_BR]=Transferência DCC concluída
 Name[sv]=Överföring via direktkommunikation färdig
 Name[uk]=Передавання DCC завершено
+Name[zh_TW]=DCC 傳輸完成
 Comment=A DCC transfer successfully completed
 Comment[da]=En DCC-overførsel er blevet gennemført
 Comment[de]=Eine DCC-Übertragung wurde erfolgreich abgeschlossen
@@ -366,6 +371,7 @@ Comment[pt]=Foi terminada com sucesso uma transferência DCC
 Comment[pt_BR]=Uma transferência DCC concluída com sucesso
 Comment[sv]=En överföring via direktkommunikation avslutades med lyckat resultat
 Comment[uk]=Передавання DCC успішно завершено
+Comment[zh_TW]=DCC 傳輸已成功完成
 Action=None
 
 [Event/join]
