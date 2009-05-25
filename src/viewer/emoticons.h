@@ -11,15 +11,11 @@
 /*
   Based on kopeteemoticons.cpp (as of KDE 4.2) - Kopete Preferences Container-Class
 
-  Original copyright by:
-
-  Copyright (c) 2002      by Stefan Gehn            <metz@gehn.net>
-  Copyright (c) 2002-2006 by Olivier Goffart        <ogoffart@kde.org>
-  Copyright (c) 2005      by Engin AYDOGAN          <engin@bzzzt.biz>
-
-  Kopete    (c) 2002-2005 by the Kopete developers  <kopete-devel@kde.org>
+  Copyright (C) 2002-2005 by the Kopete developers <kopete-devel@kde.org>
+  Copyright (C) 2002 Stefan Gehn <metz@gehn.net>
+  Copyright (C) 2002-2006 Olivier Goffart <ogoffart@kde.org>
+  Copyright (C) 2005 Engin Aydogan <engin@bzzzt.biz>
 */
-
 
 #ifndef KONVERSATIONEMOTICONS_H
 #define KONVERSATIONEMOTICONS_H

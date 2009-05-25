@@ -6,10 +6,8 @@
 */
 
 /*
-  osd.h   -  Provides an interface to a plain QWidget, which is independent of KDE (bypassed to X11)
-  begin:     Fre Sep 26 2003
-  copyright: (C) 2003 by Christian Muehlhaeuser <chris@chris.de>
-  copyright: (C) 2008 by Mark Kretschmann <kretschmann@kde.org>
+  Copyright (C) 2003 Christian Muehlhaeuser <chris@chris.de>
+  Copyright (C) 2008 Mark Kretschmann <kretschmann@kde.org>
 */
 
 #ifndef OSD_H
