@@ -548,7 +548,7 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                 else
                 {
                     // Nickserv
-                    if (trailing.startsWith("If this is your nick"))
+                    if (trailing.startsWith(QLatin1String("If this is your nick")))
                     {
                         // Identify command if specified
                         server->registerWithServices();
@@ -717,7 +717,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
         {
             // double check if we are in lag measuring mode since some servers fail to send
             // the LAG cookie back in PONG
-            if (trailing.startsWith("LAG") || getLagMeasuring())
+            if (trailing.startsWith(QLatin1String("LAG")) || getLagMeasuring())
             {
                 server->pongReceived();
             }
@@ -1638,7 +1638,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     // Display message only if this was not an automatic request.
                     if (getAutomaticRequest("WHOIS", parameterList.value(1)) == 0)
                     {
-                        if (trailing.toLower().simplified().startsWith("is an irc operator"))
+                        if (trailing.toLower().simplified().startsWith(QLatin1String("is an irc operator")))
                             server->appendMessageToFrontmost(i18n("Whois"), i18n("%1 is an IRC Operator.", parameterList.value(1)));
                         else
                             server->appendMessageToFrontmost(i18n("Whois"),QString("%1 %2").arg(parameterList.value(1)).arg(trailing));

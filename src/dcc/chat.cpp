@@ -223,7 +223,7 @@ void DccChat::readData()
 
         for( QStringList::iterator itLine = lines.begin() ; itLine != lines.end() ; ++itLine )
         {
-            if( (*itLine).startsWith( "\x01" ) )
+            if( (*itLine).startsWith( QLatin1String("\x01") ) )
             {
                 // cut out the CTCP command
                 QString ctcp = (*itLine).mid( 1, (*itLine).indexOf( 1, 1 ) - 1 );

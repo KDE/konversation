@@ -552,8 +552,8 @@ void ChannelListPanel::contextMenu (K3ListView* /* l */, Q3ListViewItem* i, cons
             QString href(url);
 
             // clean up href for browser
-            if(href.startsWith("www.")) href="http://"+href;
-            else if(href.startsWith("ftp.")) href="ftp://"+href;
+            if(href.startsWith(QLatin1String("www."))) href="http://"+href;
+            else if(href.startsWith(QLatin1String("ftp."))) href="ftp://"+href;
 
             // Replace all spaces with %20 in href
             href.replace(' ', "%20");

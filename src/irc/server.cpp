@@ -1148,7 +1148,7 @@ int Server::_send_internal(QString outputLine)
                 {
                     //if its a privmsg and a ctcp but not an action, don't encrypt
                     //not interpreting `payload` in case encoding bollixed it
-                    if (outputLineSplit.at(2).startsWith(":\x01") && outputLineSplit.at(2) != ":\x01""ACTION")
+                    if (outputLineSplit.at(2).startsWith(QLatin1String(":\x01")) && outputLineSplit.at(2) != ":\x01""ACTION")
                         doit = false;
                 }
                 if (doit)

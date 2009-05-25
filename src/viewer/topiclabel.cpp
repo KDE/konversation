@@ -91,7 +91,7 @@ namespace Konversation
     {
         if (!link.isEmpty())
         {
-            if (link.startsWith("irc://"))
+            if (link.startsWith(QLatin1String("irc://")))
             {
                 KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
                 konvApp->getConnectionManager()->connectTo(Konversation::SilentlyReuseConnection, link);
@@ -103,7 +103,7 @@ namespace Konversation
                 m_server->sendJoinCommand(channel);
             }
             // Always use KDE default mailer.
-            else if (!Preferences::self()->useCustomBrowser() || link.toLower().startsWith("mailto:"))
+            else if (!Preferences::self()->useCustomBrowser() || link.toLower().startsWith(QLatin1String("mailto:")))
             {
                 new KRun(KUrl(link), this);
             }
@@ -280,7 +280,7 @@ namespace Konversation
                 m_urlToCopy = link;
             }
         }
-        else if (link.startsWith("##"))
+        else if (link.startsWith(QLatin1String("##")))
         {
             m_currentChannel = link.mid(1);
             m_isOnChannel = true;

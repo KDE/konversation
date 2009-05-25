@@ -1048,14 +1048,14 @@ void IRCView::openLink(const QString& url, bool)
 
     if (!link.isEmpty() && !link.startsWith('#'))
     {
-        if (link.startsWith("irc://"))
+        if (link.startsWith(QLatin1String("irc://")))
         {
             KonversationApplication* konvApp = KonversationApplication::instance();
             konvApp->getConnectionManager()->connectTo(Konversation::SilentlyReuseConnection, link);
         }
-        else if (!Preferences::self()->useCustomBrowser() || link.startsWith("mailto:"))
+        else if (!Preferences::self()->useCustomBrowser() || link.startsWith(QLatin1String("mailto:")))
         {
-            if (link.startsWith("mailto:"))
+            if (link.startsWith(QLatin1String("mailto:")))
                 KToolInvocation::invokeMailer(KUrl(link));
             else
                 KToolInvocation::invokeBrowser(link);
@@ -1073,7 +1073,7 @@ void IRCView::openLink(const QString& url, bool)
         }
     }
     //FIXME: Don't do channel links in DCC Chats to begin with since they don't have a server.
-    else if (link.startsWith("##") && m_server && m_server->isConnected())
+    else if (link.startsWith(QLatin1String("##")) && m_server && m_server->isConnected())
     {
         QString channel(link);
         channel.replace("##", "#");
@@ -1160,7 +1160,7 @@ void IRCView::highlightedSlot(const QString& _link)
             m_urlToCopy = link;
         }
     }
-    else if (link.startsWith('#') && !link.startsWith("##"))
+    else if (link.startsWith('#') && !link.startsWith(QLatin1String("##")))
     {
         m_currentNick = link.mid(1);
 

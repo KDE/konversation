@@ -39,7 +39,7 @@ void ConnectionManager::connectTo(Konversation::ConnectionFlag flag, const QStri
 {
     ConnectionSettings settings;
 
-    if (target.startsWith("irc://"))
+    if (target.startsWith(QLatin1String("irc://")))
         decodeIrcUrl(target, settings);
     else
     {
@@ -236,7 +236,7 @@ void ConnectionManager::quitServers()
 
 void ConnectionManager::decodeIrcUrl(const QString& url, ConnectionSettings& settings)
 {
-    if (!url.startsWith("irc://")) return;
+    if (!url.startsWith(QLatin1String("irc://"))) return;
 
     QString mangledUrl = url;
 
