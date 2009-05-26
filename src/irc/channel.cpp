@@ -2668,16 +2668,24 @@ void Channel::processPendingNicks()
                         (halfop ?  2 : 0) +
                         (voice  ?  1 : 0);
 
-    ChannelNickPtr nick = m_server->addNickToJoinedChannelsList(getName(), nickname);
-    Q_ASSERT(nick);
-    nick->setMode(mode);
+    // Check if nick is already in the nicklist
+    if (!getNickByName(nickname))
+    {
+        ChannelNickPtr nick = m_server->addNickToJoinedChannelsList(getName(), nickname);
+        Q_ASSERT(nick);
+        nick->setMode(mode);
 
-    fastAddNickname(nick);
+        fastAddNickname(nick);
 
-    if (nick->isAdmin() || nick->isOwner() || nick->isOp() || nick->isHalfOp())
-        m_opsToAdd++;
+        if (nick->isAdmin() || nick->isOwner() || nick->isOp() || nick->isHalfOp())
+            m_opsToAdd++;
 
-    m_currentIndex++;
+        m_currentIndex++;
+    }
+    else
+    {
+        m_pendingChannelNickLists.first().pop_front();
+    }
 
     if (m_pendingChannelNickLists.first().count() <= m_currentIndex)
     {
