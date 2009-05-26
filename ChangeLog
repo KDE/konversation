@@ -1,4 +1,4 @@
-Changes since 1.2-alpha1:
+Changes from 1.2-alpha1 to 1.2-alpha2:
 * Fixed nicknames in action messages using the message text color when
   nick coloring is disabled rather than the correct action text color
   as the rest of the message.
@@ -48,6 +48,14 @@ Changes since 1.2-alpha1:
   a value when on the receiving end of a DCC file transfer.
 * Handle DCC REJECTs. A DCC SEND is now automatically aborted when the
   partner rejects it.
+* Fixed a bug causing the ordering of views to be partially reversed when
+  switching from the listview version of the tab bar to the regular tab bar.
+* Improved consistency of the context menu for links between the topic area
+  and the chat view.
+* Fixed repeated searches for the same search pattern (i.e. "Find Next")
+  sometimes not working reliably with the chat view search bar.
+* Minor code cleanups and performance improvements.
+
 
 Changes from 1.1 to 1.2-alpha1:
 We're happy to bring you this first public release of the KDE 4 version of
