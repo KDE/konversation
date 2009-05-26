@@ -489,7 +489,7 @@ void IRCView::doRawAppend(const QString& newLine)
     QTextCursor cursor = textCursor();
     bool checkSelection = false;
 
-    if(cursor.hasSelection() && cursor.atEnd())
+    if(cursor.hasSelection())
     {
         selectionLength = cursor.selectionEnd() - cursor.selectionStart();
         checkSelection = true;
