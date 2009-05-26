@@ -85,9 +85,9 @@ class IRCView : public KTextBrowser
         void textPasted(bool useSelection); ///< middle button with no m_copyUrlMenu
         void popupCommand(int); ///< wired to all of the popup menus
         void filesDropped(const QStringList&); ///< Q3UriDrag::decode valid in contentsDropEvent
-        void doSearch(); /// Emited when a search should be started
-        void doSearchNext(); /// Emited when there's a request to go to the next search result.
-        void doSearchPrevious(); /// Emited when there's a request to go to the previous search result.
+        void doSearch(); /// Emitted when a search should be started
+        void doSearchNext(); /// Emitted when there's a request to go to the next search result.
+        void doSearchPrevious(); /// Emitted when there's a request to go to the previous search result.
 
         void setStatusBarTempText(const QString&); //! these two look like mixins to me
         void clearStatusBarTempText();//! these two look like mixins to me
