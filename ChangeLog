@@ -2,6 +2,8 @@ Changes since 1.2-alpha2:
 * Worked around a Qt bug that has a text selection in the chat view that
   includes the last line in the view grow to include the new text when
   new text is appended to the view.
+* Fixed Konversation exposing various signals on D-Bus that it shouldn't
+  have.
 
 
 Changes from 1.2-alpha1 to 1.2-alpha2:

@@ -171,9 +171,9 @@ int KonversationApplication::newInstance()
 
         // prepare dcop interface
         dbusObject = new Konversation::DBus(this);
-        QDBusConnection::sessionBus().registerObject("/irc", dbusObject, QDBusConnection::ExportNonScriptableSlots | QDBusConnection::ExportNonScriptableSignals);
+        QDBusConnection::sessionBus().registerObject("/irc", dbusObject, QDBusConnection::ExportNonScriptableSlots);
         identDBus = new Konversation::IdentDBus(this);
-        QDBusConnection::sessionBus().registerObject("/identity", identDBus, QDBusConnection::ExportNonScriptableSlots | QDBusConnection::ExportNonScriptableSignals);
+        QDBusConnection::sessionBus().registerObject("/identity", identDBus, QDBusConnection::ExportNonScriptableSlots);
         QDBusConnection::sessionBus().registerObject("/KIMIface", Konversation::Addressbook::self(), QDBusConnection::ExportNonScriptableSlots | QDBusConnection::ExportNonScriptableSignals);
 
         if (dbusObject)
