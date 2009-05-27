@@ -4,6 +4,8 @@ Changes since 1.2-alpha2:
   new text is appended to the view.
 * Fixed Konversation exposing various signals on D-Bus that it shouldn't
   have.
+* Fixed a regression causing '/names #channel' to end up duplicating the
+  nickname list contents when already attending '#channel'.
 
 
 Changes from 1.2-alpha1 to 1.2-alpha2:
