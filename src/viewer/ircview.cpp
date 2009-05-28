@@ -1235,7 +1235,20 @@ void IRCView::contextMenuEvent(QContextMenuEvent* ev)
     }
     else
     {
+        KActionCollection* actionCollection = KonversationApplication::instance()->getMainWindow()->actionCollection();
+        KToggleAction* toggleMenuBarAction = static_cast<KToggleAction*>(actionCollection->action("options_show_menubar"));
+
+        if(toggleMenuBarAction && !toggleMenuBarAction->isChecked())
+        {
+            m_popup->insertAction(m_copyUrlClipBoard, toggleMenuBarAction);
+        }
+
         m_popup->exec(ev->globalPos());
+
+        if(toggleMenuBarAction && !toggleMenuBarAction->isChecked())
+        {
+            m_popup->removeAction(toggleMenuBarAction);
+        }
     }
 }
 
