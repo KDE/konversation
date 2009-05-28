@@ -2044,13 +2044,17 @@ void Server::dccGetDone(DccTransfer* item)
     if (!item)
         return;
 
-    if(item->getStatus()==DccTransfer::Done)
+    if(item->getStatus() == DccTransfer::Done)
+    {
         appendMessageToFrontmost(i18n("DCC"), i18nc("%1 = file name, %2 = nickname of sender",
             "Download of \"%1\" from %2 finished.", item->getFileName(), item->getPartnerNick()));
-    else if(item->getStatus()==DccTransfer::Failed)
+    }
+    else if(item->getStatus() == DccTransfer::Failed)
+    {
         appendMessageToFrontmost(i18n("DCC"), i18nc("%1 = file name, %2 = nickname of sender",
             "Download of \"%1\" from %2 failed. Reason: %3.", item->getFileName(),
             item->getPartnerNick(), item->getStatusDetail()));
+    }
 }
 
 void Server::dccSendDone(DccTransfer* item)

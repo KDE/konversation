@@ -39,9 +39,6 @@
 #include <kio/jobclasses.h>
 #include <kio/netaccess.h>
 
-
-class DccResumeDialog;
-
 /*
  *flow chart*
 
@@ -631,8 +628,6 @@ void DccTransferRecv::connectionFailed( QAbstractSocket::SocketError errorCode )
     finishTransferLogger();
     kDebug() << "Code = " << errorCode << ", string = " << m_recvSocket->errorString();
     failed( m_recvSocket->errorString() );
-    setStatus( Failed );
-    emit done( this );
 }
 
 void DccTransferRecv::readData()                  // slot
