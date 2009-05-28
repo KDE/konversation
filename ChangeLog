@@ -9,6 +9,9 @@ Changes since 1.2-alpha2:
 * When using Qt 4.5, Konversation no longer paints a frame around the UI
   elements of a view (e.g. a channel) when using the listview version of
   the tab bar. Feedback on this change is appreciated!
+* Fixed duplicated messages about DCC transfer failures in the chat view.
+* When the menu bar is hidden, the top-most item in the chat view context
+  menu is now the option to unhide it again.
 
 
 Changes from 1.2-alpha1 to 1.2-alpha2:
