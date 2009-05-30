@@ -12,6 +12,6 @@ else
   then
     qdbus org.kde.konversation /irc error "You forgot the bug number!"
   else
-    kfmclient openURL http://bugs.kde.org/show_bug.cgi?id=$3
+    kfmclient openURL http://bugs.kde.org/buglist.cgi?quicksearch=$3
   fi
 fi

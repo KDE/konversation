@@ -22,6 +22,10 @@ Changes since 1.2-alpha2:
   list, with the rest of the list sorted alphabetically.
 * The default tab completion mode has been changed to "Cycle Nicklist".
   Feedback on this change is appreciated!
+* Changed the bundled 'bug' script to perform a quick search with the
+  given parameter, rather than try to use it as a bug ID directly. The
+  resulting behavior is unchanged for a numerical parameter, but with
+  a string, much more useful.
 
 
 Changes from 1.2-alpha1 to 1.2-alpha2:
