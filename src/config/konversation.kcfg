@@ -585,7 +585,7 @@
   </group>
   <group name="Nick Completion">
     <entry key="Mode" type="Int" name="NickCompletionMode">
-      <default>2</default>
+      <default>0</default>
       <label></label>
       <whatsthis></whatsthis>
     </entry>
