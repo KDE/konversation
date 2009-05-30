@@ -302,11 +302,6 @@ void OSDWidget::mousePressEvent( QMouseEvent* )
     hide();
 }
 
-void OSDWidget::hideEvent( QHideEvent * )
-{
-    emit hidden();
-}
-
 void OSDWidget::unsetColors()
 {
     QPalette p = QApplication::palette();

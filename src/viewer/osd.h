@@ -62,9 +62,6 @@ class OSDWidget : public QWidget
         void setText( const QString &text ) { m_currentText = text; }
         void setTranslucent( bool enabled ) { setWindowOpacity( enabled ? OSD_WINDOW_OPACITY : 1.0 ); }
 
-    signals:
-        void hidden();
-
     protected slots:
         void minReached();
 
@@ -76,7 +73,6 @@ class OSDWidget : public QWidget
         // Reimplemented from QWidget
         virtual void paintEvent( QPaintEvent* );
         virtual void mousePressEvent( QMouseEvent* );
-        virtual void hideEvent( QHideEvent * );
         void resizeEvent( QResizeEvent *e );
         virtual bool event( QEvent* );
 
