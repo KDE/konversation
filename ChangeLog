@@ -15,6 +15,11 @@ Changes since 1.2-alpha2:
 * Fixed the OSD disappearing also cancelling the system tray blinking no-
   tification.
 * Fixed a crash on quit by D-Bus / by KDE session logout.
+* Fixed the tab completion nickname list sorting behavior for the "Shell-
+  like" completion modes. The behavior now matches the "Cycle Nicklist"
+  mode and the "Shell-like" modes of previous Konversation 1.x versions
+  again: The last active nick for the given prefix is at the top of the
+  list, with the rest of the list sorted alphabetically.
 
 
 Changes from 1.2-alpha1 to 1.2-alpha2:
