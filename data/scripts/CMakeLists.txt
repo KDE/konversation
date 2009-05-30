@@ -4,7 +4,7 @@ install(PROGRAMS
     fortune
     gauge
     kdeversion
-    #mail
+    mail
     media
     sayclip
     sysinfo
