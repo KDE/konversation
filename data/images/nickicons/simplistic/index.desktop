@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Theme
 Name=KDE 3 Default Theme
+Name[bg]=Стандартна тема за KDE 3
 Name[da]=KDE 3 standardtema
 Name[de]=Standard-Design aus KDE 3
 Name[es]=Tema predeterminado de KDE 3
@@ -10,6 +11,7 @@ Name[nl]=KDE 3 standaardthema
 Name[pt]=Tema Predefinido do KDE 3
 Name[pt_BR]=Tema padrão KDE3
 Name[sv]=KDE 3 standardtema
+Name[tr]=KDE3 Öntanımlı Teması
 Name[uk]=Типова тема KDE 3
 Name[zh_CN]=KDE 3 默认主题
 Name[zh_TW]=KDE 3 預設主題
