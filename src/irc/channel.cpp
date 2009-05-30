@@ -66,11 +66,11 @@ bool nickTimestampLessThan(const Nick* nick1, const Nick* nick2)
 {
     int returnValue = nick2->getChannelNick()->timeStamp() - nick1->getChannelNick()->timeStamp();
     if( returnValue == 0) {
-        returnValue = QString::compare(nick2->getChannelNick()->loweredNickname(),
-                                       nick1->getChannelNick()->loweredNickname());
+        returnValue = QString::compare(nick1->getChannelNick()->loweredNickname(),
+                                       nick2->getChannelNick()->loweredNickname());
     }
 
-    return (returnValue > 0);
+    return (returnValue < 0);
 }
 
 bool nickLessThan(const Nick* nick1, const Nick* nick2)
