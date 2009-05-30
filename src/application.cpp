@@ -14,7 +14,6 @@
 */
 
 #include "application.h" ////// header renamed
-#include "mainwindow.h" ////// header renamed
 #include "connectionmanager.h"
 #include "awaymanager.h"
 #include "transfermanager.h" ////// header renamed
@@ -84,6 +83,8 @@ int KonversationApplication::newInstance()
 
     if (!mainWindow)
     {
+        connect(this, SIGNAL(aboutToQuit()), this, SLOT(prepareShutdown()));
+
         m_connectionManager = new ConnectionManager(this);
 
         m_awayManager = new AwayManager(this);
@@ -218,12 +219,23 @@ KonversationApplication* KonversationApplication::instance()
 
 void KonversationApplication::prepareShutdown()
 {
-    m_awayManager->blockSignals(true);
-    delete m_awayManager;
+    if (mainWindow)
+        mainWindow->getViewContainer()->prepareShutdown();
 
-    m_connectionManager->quitServers();
-    m_connectionManager->blockSignals(true);
-    delete m_connectionManager;
+    if (m_awayManager)
+    {
+        m_awayManager->blockSignals(true);
+        delete m_awayManager;
+        m_awayManager = 0;
+    }
+
+    if (m_connectionManager)
+    {
+        m_connectionManager->quitServers();
+        m_connectionManager->blockSignals(true);
+        delete m_connectionManager;
+        m_connectionManager = 0;
+    }
 }
 
 void KonversationApplication::showQueueTuner(bool p)

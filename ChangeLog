@@ -12,6 +12,9 @@ Changes since 1.2-alpha2:
 * Fixed duplicated messages about DCC transfer failures in the chat view.
 * When the menu bar is hidden, the top-most item in the chat view context
   menu is now the option to unhide it again.
+* Fixed the OSD disappearing also cancelling the system tray blinking no-
+  tification.
+* Fixed a crash on quit by D-Bus / by KDE session logout.
 
 
 Changes from 1.2-alpha1 to 1.2-alpha2:

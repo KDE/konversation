@@ -17,6 +17,7 @@
 #define KONVERSATIONAPPLICATION_H
 
 #include "preferences.h"
+#include "mainwindow.h"
 #include "osd.h"
 #include "identity.h"
 #include "nickinfo.h"
@@ -26,7 +27,6 @@
 class ConnectionManager;
 class AwayManager;
 class DccTransferManager;
-class KonversationMainWindow;
 class Server;
 class QuickConnectDialog;
 class Images;
@@ -149,7 +149,7 @@ class KonversationApplication : public KUniqueApplication
         QStringList urlList;
         Konversation::DBus* dbusObject;
         Konversation::IdentDBus* identDBus;
-        KonversationMainWindow* mainWindow;
+        QPointer<KonversationMainWindow> mainWindow;
         Konversation::Sound* m_sound;
         QuickConnectDialog* quickConnectDialog;
         Images* m_images;
