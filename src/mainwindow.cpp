@@ -373,7 +373,7 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0)
     selectAction->setEnabled(false);
     selectAction->setText(i18n("Set Encoding"));
     selectAction->setIcon(KIcon("character-set"));
-    connect(selectAction, SIGNAL(activated(int)), m_viewContainer, SLOT(changeViewCharset(int)));
+    connect(selectAction, SIGNAL(triggered(int)), m_viewContainer, SLOT(changeViewCharset(int)));
     actionCollection()->addAction("tab_encoding", selectAction);
 
     QSignalMapper* tabSelectionMapper = new QSignalMapper(this);
