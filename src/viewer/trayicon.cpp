@@ -90,6 +90,7 @@ namespace Konversation
     void TrayIcon::updateAppearance()
     {
         m_nomessagePix = loadIcon("konversation");
+        //krazy:exclude=iconnames
         m_messagePix = loadIcon("konv_message");
         setIcon(m_nomessagePix);
     }

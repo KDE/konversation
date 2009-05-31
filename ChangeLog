@@ -26,6 +26,9 @@ Changes since 1.2-alpha2:
   given parameter, rather than try to use it as a bug ID directly. The
   resulting behavior is unchanged for a numerical parameter, but with
   a string, much more useful.
+* The 'mail' script, which was disabled in the build system up until now,
+  is now getting installed again.
+* Fixed a bug causing the "Set Encoding" menu not to work.
 
 
 Changes from 1.2-alpha1 to 1.2-alpha2:
