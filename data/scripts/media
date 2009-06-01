@@ -251,13 +251,19 @@ class Amarok2Player(Player):
     def getData(self):
         playing=os.popen("qdbus org.mpris.amarok /Player PositionGet").readline().strip() != "0"
         if playing and self.isRunning():
+            title = ''
+            artist = ''
+            album = ''
             for line in os.popen("qdbus org.mpris.amarok /Player GetMetadata").readlines():
-                if re.match("^title", line):
-                    title=self.reEncodeString(line.strip().split(None,1)[1])
-                if re.match("^artist", line):
-                    artist=self.reEncodeString(line.strip().split(None,1)[1])
-                if re.match("^album", line):
-                    album=self.reEncodeString(line.strip().split(None,1)[1])
+                m = re.match("^title:\s(.+)", line)
+                if m is not None:
+                    title = m.group(1)
+                m = re.match("^artist:\s(.+)", line)
+                if m is not None:
+                    artist = m.group(1)
+                m = re.match("^album:\s(.+)", line)
+                if m is not None:
+                    album = m.group(1)
             return (title, artist, album)
         else:
             return ''

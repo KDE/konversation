@@ -29,6 +29,9 @@ Changes since 1.2-alpha2:
 * The 'mail' script, which was disabled in the build system up until now,
   is now getting installed again.
 * Fixed a bug causing the "Set Encoding" menu not to work.
+* Fixed a bug causing the bundled 'media' script not to work when used
+  to retrieve song information from Amarok 2 for a song which has any
+  of the following meta data fields not set: title, artist or album.
 
 
 Changes from 1.2-alpha1 to 1.2-alpha2:
