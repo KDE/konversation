@@ -128,7 +128,7 @@ const QList<QStringList> Preferences::defaultAutoreplaceList()
 {
     QList<QStringList> defaultList;
     defaultList.append(QStringList() << "1" << "o" << "\\[\\[([^\\s]+)\\]\\]" << "http://en.wikipedia.org/wiki/Special:Search?go=Go&search=%1");
-    defaultList.append(QStringList() << "1" << "o" << "(BUG:|bug:)([0-9]+)" << "http://bugs.kde.org/show_bug.cgi?id=%2");
+    defaultList.append(QStringList() << "1" << "o" << "(BUG:|bug:)([0-9]+)" << "https://bugs.kde.org/show_bug.cgi?id=%2");
     return defaultList;
 }
 
