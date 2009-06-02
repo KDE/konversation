@@ -617,6 +617,8 @@ void DccTransferRecv::startReceiving()
     //we don't need the original filename anymore, overwrite it to display the correct one in transfermanager/panel
     m_fileName = m_saveFileName;
 
+    m_ownPort = m_recvSocket->localPort();
+
     startTransferLogger();                          // initialize CPS counter, ETA counter, etc...
 
     setStatus( Transferring );
@@ -625,7 +627,6 @@ void DccTransferRecv::startReceiving()
                                                   // slot
 void DccTransferRecv::connectionFailed( QAbstractSocket::SocketError errorCode )
 {
-    finishTransferLogger();
     kDebug() << "Code = " << errorCode << ", string = " << m_recvSocket->errorString();
     failed( m_recvSocket->errorString() );
 }
@@ -642,9 +643,13 @@ void DccTransferRecv::readData()                  // slot
         m_writeCacheHandler->write( false );
         //in case we could not read all the data, leftover data could get lost
         if (m_recvSocket->bytesAvailable() > 0)
+        {
             readData();
+        }
         else
+        {
             sendAck();
+        }
     }
 }
 
@@ -658,7 +663,6 @@ void DccTransferRecv::sendAck()                   // slot
     {
         kDebug() << "Sent final ACK.";
         disconnect( m_recvSocket, 0, 0, 0 );
-        finishTransferLogger();
         m_writeCacheHandler->close();             // WriteCacheHandler will send the signal done()
     }
     else if ( m_transferringPosition > (KIO::fileoffset_t)m_fileSize )

@@ -366,10 +366,12 @@ void DccTransferSend::startSending()
     if ( m_fastSend )
         connect( m_sendSocket, SIGNAL( bytesWritten( qint64 ) ), this, SLOT( writeData() ) );
     connect( m_sendSocket, SIGNAL( readyRead() ),  this, SLOT( getAck() ) );
-    connect( m_sendSocket, SIGNAL( disconnected() ), this, SLOT( slotSendSocketClosed() ) );
+    //not needed, also covered by error signal
+    //connect( m_sendSocket, SIGNAL( disconnected() ), this, SLOT( slotSendSocketClosed() ) );
 
     m_partnerIp = m_sendSocket->peerAddress().toString();
     m_partnerPort = m_sendSocket->peerPort();
+    m_ownPort = m_sendSocket->localPort();
 
     if ( m_file.open( QIODevice::ReadOnly ) )
     {
@@ -382,7 +384,9 @@ void DccTransferSend::startSending()
         setStatus( Transferring );
     }
     else
+    {
         failed( getQFileErrorString( m_file.error() ) );
+    }
 }
 
 void DccTransferSend::writeData()                 // slot
@@ -431,7 +435,6 @@ void DccTransferSend::getAck()                    // slot
         if ( pos == m_fileSize )
         {
             kDebug() << "Received final ACK.";
-            finishTransferLogger();
             cleanUp();
             setStatus( Done );
             emit done( this );
@@ -444,7 +447,15 @@ void DccTransferSend::slotGotSocketError( QAbstractSocket::SocketError errorCode
 {
     stopConnectionTimer();
     kDebug() << "code =  " << errorCode << " string = " << m_serverSocket->errorString();
-    failed( i18n( "Socket error: %1", m_serverSocket->errorString() ) );
+    if (errorCode == QAbstractSocket::RemoteHostClosedError)
+    {
+        //it has no Qt errorString (with Qt 4.5.1)
+        failed( i18n( "Remote user disconnected" ) );
+    }
+    else
+    {
+        failed( i18n( "Socket error: %1", m_serverSocket->errorString() ) );
+    }
 }
 
 void DccTransferSend::startConnectionTimer( int sec )
@@ -484,7 +495,9 @@ void DccTransferSend::slotSendSocketClosed()
     kDebug();
     finishTransferLogger();
     if ( getStatus() == Transferring && m_transferringPosition < (KIO::fileoffset_t)m_fileSize )
+    {
         failed( i18n( "Remote user disconnected" ) );
+    }
 }
 
                                                   // protected, static

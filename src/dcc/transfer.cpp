@@ -31,6 +31,7 @@ DccTransfer::DccTransfer( DccType dccType, QObject* parent ) : QObject(parent)
 
     m_status = Configuring;
 
+    m_ownPort = 0;
     m_fileSize = 0;
     m_resumed = false;
     m_reverse = false;
@@ -235,9 +236,14 @@ void DccTransfer::updateTransferMeters()
     else if ( m_status >= Done )
     {
         if ( m_timeTransferStarted.secsTo( m_timeTransferFinished ) > 1 )
+        {
             m_averageSpeed = (double)( m_transferringPosition - m_transferStartPosition ) / (double)m_timeTransferStarted.secsTo( m_timeTransferFinished );
+        }
         else
+        {
             m_averageSpeed = DccTransfer::InfiniteValue;
+        }
+
         m_currentSpeed = 0;
         if (m_status == Done)
         {
