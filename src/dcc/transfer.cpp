@@ -207,7 +207,8 @@ void DccTransfer::updateTransferMeters()
         for ( ; itTime != m_transferLogTime.end() ; ++itTime )
             (*itTime) = (*itTime) - shiftOffset;
 
-        if ( m_transferLogTime.count() >= 2 )
+        // The logTimer is 100ms, as 200ms is below 1sec we get "undefined" speed
+        if ( m_transferLogTime.count() >= 2 && m_timeTransferStarted.secsTo( QDateTime::currentDateTime()) > 0)
         {
             // FIXME: precision of average speed is too bad
             m_averageSpeed = (double)( m_transferringPosition - m_transferStartPosition ) / (double)m_timeTransferStarted.secsTo( QDateTime::currentDateTime() );
