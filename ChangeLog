@@ -1,3 +1,8 @@
+Changes since 1.2-alpha3:
+* Changed links to KDE's bug tracker throughout the codebase to use
+  https://bugs.kde.org/ rather than http://bugs.kde.org/
+
+
 Changes from 1.2-alpha2 to 1.2-alpha3:
 This third alpha fixes a fair amount of annoying bugs encountered in
 day-to-day usage, as well as a serious bug in handling NAMES messages
