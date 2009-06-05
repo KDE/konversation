@@ -21,6 +21,7 @@
 #include <qstandarditemmodel.h>
 #include <qtoolbutton.h>
 #include <QKeyEvent>
+#include <QItemSelectionModel>
 
 #include <klocale.h>
 #include <ktextedit.h>
@@ -31,7 +32,6 @@
 
 namespace Konversation
 {
-
     ChannelOptionsDialog::ChannelOptionsDialog(Channel *channel)
         : KDialog(channel)
     {
@@ -50,13 +50,16 @@ namespace Konversation
 
         m_ui.banList->setDefaultRenameAction(Q3ListView::Accept);
         m_ui.banListSearchLine->setListView(m_ui.banList);
-        // hide column where the complete topic will be put in for convenience
-        m_ui.topicHistoryList->hideColumn(2);
+
+        m_topicModel = new TopicListModel(m_ui.topicHistoryView);
+        m_ui.topicHistoryView->setModel(m_topicModel);
+        m_ui.topicHistoryView->sortByColumn(0, Qt::DescendingOrder);
 
         m_channel = channel;
         m_editingTopic = false;
 
-        connect(m_ui.topicHistoryList, SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)), this, SLOT(topicHistoryItemClicked(QTreeWidgetItem*)));
+        connect(m_ui.topicHistoryView->selectionModel(), SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection&)),
+                this, SLOT(topicHistoryItemClicked(const QItemSelection&)));
         connect(m_ui.toggleAdvancedModes, SIGNAL(clicked()), this, SLOT(toggleAdvancedModes()));
         connect(m_ui.topicEdit, SIGNAL(textChanged()), this, SLOT(topicBeingEdited()));
 
@@ -92,6 +95,8 @@ namespace Konversation
         refreshBanList();
         refreshAllowedChannelModes();
         refreshModes();
+
+        setInitialSize(QSize(450, 380));
     }
 
     ChannelOptionsDialog::~ChannelOptionsDialog()
@@ -174,30 +179,41 @@ namespace Konversation
     void ChannelOptionsDialog::refreshTopicHistory()
     {
         QStringList history = m_channel->getTopicHistory();
-        m_ui.topicHistoryList->clear();
+        QList<TopicItem> topicList;
+
         for(QStringList::ConstIterator it = --history.constEnd(); it != --history.constBegin(); --it)
         {
-            QDateTime date;
-            date.setTime_t((*it).section(' ', 0 ,0).toUInt());
-            new QTreeWidgetItem(m_ui.topicHistoryList, QStringList() << (*it).section(' ', 1, 1) << KGlobal::locale()->formatDateTime(date, KLocale::ShortDate, true) << (*it).section(' ', 2));
+            TopicItem item;
+            item.author = (*it).section(' ', 1, 1);
+            item.timestamp.setTime_t((*it).section(' ', 0 ,0).toUInt());
+            item.topic = (*it).section(' ', 2);
+            topicList.append(item);
         }
 
+        m_topicModel->setTopicList(topicList);
+        m_topicModel->sort(m_ui.topicHistoryView->header()->sortIndicatorSection(),
+                           m_ui.topicHistoryView->header()->sortIndicatorOrder());
+
         // update topic preview
-        topicHistoryItemClicked(m_ui.topicHistoryList->currentItem());
+        QItemSelection selection(m_topicModel->index(0, 0, QModelIndex()), m_topicModel->index(0, 1, QModelIndex()));
+        m_ui.topicHistoryView->selectionModel()->select(selection, QItemSelectionModel::ClearAndSelect);
         // don't destroy the user's edit box if they started editing
         if(!m_editingTopic && !history.isEmpty())
             m_ui.topicEdit->setText(history.first().section(' ', 2));
     }
 
-    void ChannelOptionsDialog::topicHistoryItemClicked(QTreeWidgetItem* item)
+    void ChannelOptionsDialog::topicHistoryItemClicked(const QItemSelection& selection)
     {
-        // if they didn't click on anything, item is null
-        if(item)
+        if(!selection.isEmpty())
+        {
             // update topic preview
-            m_ui.topicPreview->setText(item->text(2));
+            m_ui.topicPreview->setText(m_topicModel->data(selection.indexes().first(), Qt::UserRole).toString());
+        }
         else
+        {
             // clear topic preview
-            m_ui.topicPreview->setText("");
+            m_ui.topicPreview->clear();
+        }
     }
 
     void ChannelOptionsDialog::refreshEnableModes()
@@ -537,6 +553,121 @@ namespace Konversation
             delete this;
         else
             K3ListViewItem::cancelRename(col);
+    }
+
+
+    TopicListModel::TopicListModel(QObject* parent)
+        : QAbstractListModel(parent)
+    {
+    }
+
+    void TopicListModel::setTopicList(const QList<TopicItem>& list)
+    {
+        m_topicList = list;
+        reset();
+    }
+
+    int TopicListModel::columnCount(const QModelIndex& /*parent*/) const
+    {
+        return 2;
+    }
+
+    int TopicListModel::rowCount(const QModelIndex& /*parent*/) const
+    {
+        return m_topicList.count();
+    }
+
+    QVariant TopicListModel::data(const QModelIndex& index, int role) const
+    {
+        if(!index.isValid() || index.row() >= m_topicList.count ())
+            return QVariant();
+
+        const TopicItem& item = m_topicList[index.row()];
+
+        if(role == Qt::DisplayRole)
+        {
+            switch(index.column())
+            {
+                case 0:
+                    return KGlobal::locale()->formatDateTime(item.timestamp, KLocale::ShortDate, true);
+                case 1:
+                    return item.author;
+                default:
+                    return QVariant();
+            }
+        }
+        else if(role == Qt::UserRole)
+        {
+            return item.topic;
+        }
+
+        return QVariant();
+    }
+
+    QVariant TopicListModel::headerData (int section, Qt::Orientation orientation, int role) const
+    {
+        if(orientation == Qt::Vertical || role != Qt::DisplayRole)
+            return QVariant();
+
+        switch(section)
+        {
+            case 0:
+                return i18n("Timestamp");
+            case 1:
+                return i18n("Author");
+            default:
+                return QVariant();
+        }
+    }
+
+    bool lessThanTimestamp(const TopicItem& item1, const TopicItem& item2)
+    {
+        return item1.timestamp < item2.timestamp;
+    }
+
+    bool moreThanTimestamp(const TopicItem& item1, const TopicItem& item2)
+    {
+        return item1.timestamp > item2.timestamp;
+    }
+
+    bool lessThanAuthor(const TopicItem& item1, const TopicItem& item2)
+    {
+        return item1.author.toLower() < item2.author.toLower();
+    }
+
+    bool moreThanAuthor(const TopicItem& item1, const TopicItem& item2)
+    {
+        return item1.author.toLower() > item2.author.toLower();
+    }
+
+    void TopicListModel::sort(int column, Qt::SortOrder order)
+    {
+        if(order == Qt::AscendingOrder)
+        {
+            switch(column)
+            {
+                case 0:
+                    qStableSort(m_topicList.begin(), m_topicList.end(), lessThanTimestamp);
+                    break;
+                case 1:
+                    qStableSort(m_topicList.begin(), m_topicList.end(), lessThanAuthor);
+                    break;
+            }
+        }
+        else
+        {
+            switch(column)
+            {
+                case 0:
+                    qStableSort(m_topicList.begin(), m_topicList.end(), moreThanTimestamp);
+                    break;
+                case 1:
+                    qStableSort(m_topicList.begin(), m_topicList.end(), moreThanAuthor);
+                    break;
+            }
+        }
+
+        reset();
     }
 }
 

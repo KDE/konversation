@@ -15,6 +15,7 @@
 #include "channel.h"
 
 #include <qstringlist.h>
+#include <QAbstractListModel>
 
 #include <kdialog.h>
 
@@ -22,7 +23,7 @@
 
 namespace Konversation
 {
-    class ChannelOptionsUI;
+    class TopicListModel;
 
     class ChannelOptionsDialog : public KDialog
     {
@@ -59,7 +60,7 @@ namespace Konversation
 
 
         protected slots:
-            void topicHistoryItemClicked(QTreeWidgetItem* item);
+            void topicHistoryItemClicked(const QItemSelection& selection);
             void topicBeingEdited();
 
             void cancelClicked();
@@ -74,6 +75,8 @@ namespace Konversation
         private:
             Ui::ChannelOptionsUI m_ui;
             Channel *m_channel;
+
+            TopicListModel* m_topicModel;
     };
 
 
@@ -104,5 +107,31 @@ namespace Konversation
             QDateTime m_timestamp;
     };
 
+    struct TopicItem
+    {
+        QString author;
+        QString topic;
+        QDateTime timestamp;
+    };
+
+    class TopicListModel : public QAbstractListModel
+    {
+        Q_OBJECT
+        public:
+            TopicListModel(QObject* parent);
+
+            void setTopicList(const QList<TopicItem>& list);
+
+            int columnCount(const QModelIndex& parent = QModelIndex()) const;
+            int rowCount(const QModelIndex& parent = QModelIndex()) const;
+
+            QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const;
+            QVariant headerData (int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
+
+            void sort(int column, Qt::SortOrder order = Qt::AscendingOrder);
+
+        private:
+            QList<TopicItem> m_topicList;
+    };
 }
 #endif

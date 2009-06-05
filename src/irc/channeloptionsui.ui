@@ -12,14 +12,11 @@ the Free Software Foundation; either version 2 of the License, or
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>502</width>
-    <height>421</height>
+    <width>429</width>
+    <height>352</height>
    </rect>
   </property>
-  <layout class="QVBoxLayout">
-   <property name="margin">
-    <number>0</number>
-   </property>
+  <layout class="QVBoxLayout" name="verticalLayout_3">
    <item>
     <widget class="KTabWidget" name="channelTabWidget">
      <property name="currentIndex">
@@ -29,24 +26,18 @@ the Free Software Foundation; either version 2 of the License, or
       <attribute name="title">
        <string>Topi&amp;c</string>
       </attribute>
-      <layout class="QVBoxLayout">
+      <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
-        <widget class="QSplitter" name="splitter4">
+        <widget class="QSplitter" name="splitter">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
-         <widget class="QTreeWidget" name="topicHistoryList">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-            <horstretch>0</horstretch>
-            <verstretch>1</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="selectionMode">
-           <enum>QAbstractItemView::SingleSelection</enum>
-          </property>
+         <widget class="QTreeView" name="topicHistoryView">
           <property name="rootIsDecorated">
            <bool>false</bool>
+          </property>
+          <property name="uniformRowHeights">
+           <bool>true</bool>
           </property>
           <property name="sortingEnabled">
            <bool>true</bool>
@@ -54,24 +45,12 @@ the Free Software Foundation; either version 2 of the License, or
           <property name="allColumnsShowFocus">
            <bool>true</bool>
           </property>
-          <attribute name="headerShowSortIndicator" stdset="0">
-           <bool>false</bool>
+          <attribute name="headerDefaultSectionSize">
+           <number>150</number>
           </attribute>
-          <column>
-           <property name="text">
-            <string>Nickname</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Date</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Topic</string>
-           </property>
-          </column>
+          <attribute name="headerDefaultSectionSize">
+           <number>150</number>
+          </attribute>
          </widget>
          <widget class="KTextEdit" name="topicPreview">
           <property name="enabled">
@@ -81,16 +60,14 @@ the Free Software Foundation; either version 2 of the License, or
            <bool>true</bool>
           </property>
          </widget>
-        </widget>
-       </item>
-       <item>
-        <widget class="KTextEdit" name="topicEdit">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>2</verstretch>
-          </sizepolicy>
-         </property>
+         <widget class="KTextEdit" name="topicEdit">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>2</verstretch>
+           </sizepolicy>
+          </property>
+         </widget>
         </widget>
        </item>
       </layout>
@@ -358,14 +335,20 @@ the Free Software Foundation; either version 2 of the License, or
  <layoutfunction spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
  <customwidgets>
   <customwidget>
+   <class>Q3Frame</class>
+   <extends>QFrame</extends>
+   <header>Qt3Support/Q3Frame</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Q3ListView</class>
+   <extends>Q3Frame</extends>
+   <header>q3listview.h</header>
+  </customwidget>
+  <customwidget>
    <class>K3ListView</class>
    <extends>Q3ListView</extends>
    <header>k3listview.h</header>
-  </customwidget>
-  <customwidget>
-   <class>KIntNumInput</class>
-   <extends>QWidget</extends>
-   <header>knuminput.h</header>
   </customwidget>
   <customwidget>
    <class>KLineEdit</class>
@@ -377,6 +360,11 @@ the Free Software Foundation; either version 2 of the License, or
    <extends>QTabWidget</extends>
    <header>ktabwidget.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>KIntNumInput</class>
+   <extends>QWidget</extends>
+   <header>knuminput.h</header>
   </customwidget>
   <customwidget>
    <class>KTextEdit</class>
