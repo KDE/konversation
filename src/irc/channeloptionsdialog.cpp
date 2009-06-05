@@ -179,7 +179,7 @@ namespace Konversation
         {
             QDateTime date;
             date.setTime_t((*it).section(' ', 0 ,0).toUInt());
-            new QTreeWidgetItem(m_ui.topicHistoryList, QStringList() << (*it).section(' ', 1, 1) << date.toString(Qt::LocalDate) << (*it).section(' ', 2));
+            new QTreeWidgetItem(m_ui.topicHistoryList, QStringList() << (*it).section(' ', 1, 1) << KGlobal::locale()->formatDateTime(date, KLocale::ShortDate, true) << (*it).section(' ', 2));
         }
 
         // update topic preview

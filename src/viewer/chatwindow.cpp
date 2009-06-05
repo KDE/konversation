@@ -359,9 +359,9 @@ void ChatWindow::logText(const QString& text)
                 firstLog=false;
             }
 
-            QTime time=QTime::currentTime();
-            QString logLine(QString("[%1] [%2] %3\n").arg(QDate::currentDate().toString()).
-                arg(time.toString("hh:mm:ss")).arg(text));
+            QDateTime dateTime = QDateTime::currentDateTime();
+            QString logLine(QString("[%1] [%2] %3\n").arg(KGlobal::locale()->formatDate(dateTime.date(), KLocale::LongDate)).
+                arg(KGlobal::locale()->formatTime(dateTime.time(), true)).arg(text));
 
             logStream << logLine;
 

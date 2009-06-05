@@ -127,6 +127,9 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent)
 
     m_popup = new KMenu(this);
     m_popup->setObjectName("ircview_context_menu");
+
+    m_popup->addSeparator();
+
     m_copyUrlClipBoard =m_popup->addAction(KIcon("edit-copy"), i18n("Copy Link Address"), this, SLOT( copyUrl() )) ;
     m_copyUrlClipBoard->setVisible( false );
 

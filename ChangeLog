@@ -1,6 +1,15 @@
 Changes since 1.2-alpha3:
 * Changed links to KDE's (and hence our) bug tracker throughout the code-
   base to use https://bugs.kde.org/ rather than http://bugs.kde.org/
+* Fixed the "Show Menubar" item not getting removed from the chat view
+  context view after showing the menubar again. Also added a separator
+  after the item (only visible when it is present).
+* Switched the timestamps in log files to use KDE's locale settings for
+  formatting the date and time, as the equivalent Qt API used previously
+  seems to look at the value of LC_NUMERIC to detemine the format in Qt
+  4, which doesn't meet user expectations.
+* Fixed the "Date" column in the topic history of the Channel Options
+  Dialog not using KDE's locale settings to format the value.
 
 
 Changes from 1.2-alpha2 to 1.2-alpha3:
