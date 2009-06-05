@@ -270,7 +270,7 @@ class Amarok2Player(Player):
 
     def isRunning(self):
         qdbus_items=subprocess.Popen(['qdbus'], stdout=subprocess.PIPE).communicate()[0]
-        running=re.findall('^ org.mpris.amarok$', qdbus_items, re.M)
+        running=re.findall(r'^ org.mpris.amarok\r?$', qdbus_items, re.M)
         if type(running) is list:
             try:
                 running=running[0]
@@ -423,6 +423,7 @@ def run(kind):
                 sys.exit(0)
 
     if not playing(play, kind):
+        print play
         handleErrors(play, kind)
 
 
