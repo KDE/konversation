@@ -960,7 +960,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     when.setTime_t(parameterList.value(2).toUInt());
                     server->appendCommandMessageToChannel(parameterList.value(1), i18n("Created"),
                         i18n("This channel was created on %1.",
-                            when.toString(Qt::LocalDate))
+                            KGlobal::locale()->formatDateTime(when, KLocale::ShortDate))
                         );
                 }
                 break;
@@ -1077,7 +1077,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     {
                         server->appendCommandMessageToChannel(parameterList.value(1), i18n("Topic"),
                             i18n("The topic was set by %1 on %2.",
-                                parameterList.value(2), when.toString(Qt::LocalDate)),
+                            parameterList.value(2), KGlobal::locale()->formatDateTime(when, KLocale::ShortDate)),
                             false);
                     }
                     else

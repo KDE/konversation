@@ -19,6 +19,9 @@ Changes since 1.2-alpha3:
   the topic to move down to stay in the vertical center anymore -- Qt 4.5
   is needed because a method to retrieve the document margin from the chat
   view to use as the top margin for the topic label is new in that version).
+* Fixed the chat view messages for the time and date a topic was set and
+  the time and date a channel was created not using KDE's locale settings
+  to format the time and date values.
 
 
 Changes from 1.2-alpha2 to 1.2-alpha3:
