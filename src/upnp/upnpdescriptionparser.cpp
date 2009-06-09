@@ -25,6 +25,7 @@
 
 #include <qxml.h>
 #include <qstack.h>
+
 #include <kdebug.h>
 
 
