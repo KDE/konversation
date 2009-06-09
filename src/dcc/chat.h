@@ -66,6 +66,7 @@ class DccChat : public ChatWindow
         void textPasted(const QString& text);
         void heardPartner();
         void socketClosed();
+        void sendRequest(bool error, quint16 port);
 
     protected:
         void listenForPartner();

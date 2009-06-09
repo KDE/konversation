@@ -66,6 +66,10 @@ KonversationApplication::~KonversationApplication()
     Preferences::self()->writeConfig();
     saveOptions(false);
 
+    // Delete m_dccTransferManager here as its destructor depends on the main loop being in tact which it
+    // won't be if if we wait till Qt starts deleting parent pointers.
+    delete m_dccTransferManager;
+
     delete m_images;
     //delete dbusObject;
     //delete prefsDCOP;

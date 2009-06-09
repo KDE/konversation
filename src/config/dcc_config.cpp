@@ -8,6 +8,7 @@
 /*
   Copyright (C) 2005 Ismail Donmez <ismail@kde.org>
   Copyright (C) 2006 John Tapsell <johnflux@gmail.com>
+  Copyright (C) 2009 Michael Kreitzer <mrgrim@gr1m.org>
 */
 
 #include "dcc_config.h"
@@ -15,6 +16,9 @@
 #include <qcombobox.h>
 #include <qlineedit.h>
 #include <klocale.h>
+#include <kdebug.h>
+#include "application.h"
+#include "transfermanager.h"
 
 
 DCC_Config::DCC_Config(QWidget *parent, const char* name) :
@@ -27,9 +31,8 @@ DCC_Config::DCC_Config(QWidget *parent, const char* name) :
 
     languageChange();
     connect(kcfg_DccMethodToGetOwnIp, SIGNAL(activated(int)), this, SLOT(dccMethodChanged(int)));
+    connect(kcfg_DccUPnP, SIGNAL(stateChanged( int )), this, SLOT (dccUPnPChanged( int )));
     dccMethodChanged(kcfg_DccMethodToGetOwnIp->currentIndex()); 
-
-
 }
 
 void DCC_Config::showEvent(QShowEvent *event)
@@ -42,6 +45,20 @@ void DCC_Config::showEvent(QShowEvent *event)
 void DCC_Config::dccMethodChanged(int index)
 {
     kcfg_DccSpecificOwnIp->setEnabled( index == 2 ); 
+}
+
+void DCC_Config::dccUPnPChanged(int state)
+{
+    DccTransferManager *transferManager = KonversationApplication::instance()->getDccTransferManager();
+
+    if (state == Qt::Checked && transferManager->getUPnPRouter() == NULL)
+    {
+        transferManager->startupUPnP();
+    }
+    else if (state == Qt::Unchecked && transferManager->getUPnPRouter() != NULL)
+    {
+        transferManager->shutdownUPnP();
+    }
 }
 
 void DCC_Config::languageChange()

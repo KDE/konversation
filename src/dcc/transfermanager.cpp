@@ -7,6 +7,7 @@
 
 /*
   Copyright (C) 2007 Shintaro Matsuoka <shin@shoegazed.org>
+  Copyright (C) 2009 Michael Kreitzer <mrgrim@gr1m.org>
 */
 
 #include "transfermanager.h" ////// header renamed
@@ -14,9 +15,12 @@
 #include "transfersend.h" ////// header renamed
 #include "application.h"
 #include "preferences.h"
+#include "upnpmcastsocket.h"
+#include "upnprouter.h"
 
 #include <kdebug.h>
 
+using namespace Konversation::UPnP;
 
 DccTransferManager::DccTransferManager( QObject* parent )
     : QObject( parent )
@@ -28,12 +32,37 @@ DccTransferManager::DccTransferManager( QObject* parent )
 
     connect( KonversationApplication::instance(), SIGNAL( appearanceChanged() ),
              this, SLOT( slotSettingsChanged() ) );
+
+    m_upnpRouter = NULL;
+
+    if (Preferences::self()->dccUPnP())
+        startupUPnP();
 }
 
 DccTransferManager::~DccTransferManager()
 {
     m_sendItems.clear();
     m_recvItems.clear();
+
+    shutdownUPnP();
+}
+
+void DccTransferManager::startupUPnP(void)
+{
+    m_upnpSocket = new UPnPMCastSocket();
+
+    connect(m_upnpSocket, SIGNAL( discovered(UPnPRouter *) ),
+            this, SLOT( upnpRouterDiscovered(UPnPRouter *) ) );
+
+    m_upnpSocket->discover();
+}
+
+void DccTransferManager::shutdownUPnP(void)
+{
+    // This deletes the router too.
+    if (m_upnpSocket) delete m_upnpSocket;
+    m_upnpSocket = NULL;
+    m_upnpRouter = NULL;
 }
 
 DccTransferRecv* DccTransferManager::newDownload()
@@ -252,4 +281,11 @@ void DccTransferManager::removeRecvItem( DccTransfer* item_ )
     item->deleteLater();
 }
 
+void DccTransferManager::upnpRouterDiscovered(UPnPRouter *router)
+{
+    kDebug() << "Router discovered!" << endl;
+
+    // Assuming only 1 router for now
+    m_upnpRouter = router;
+}
 #include "transfermanager.moc"

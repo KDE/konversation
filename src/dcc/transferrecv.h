@@ -6,6 +6,7 @@
 */
 // Copyright (C) 2004-2007 Shintaro Matsuoka <shin@shoegazed.org>
 // Copyright (C) 2004,2005 John Tapsell <john@geola.co.uk>
+// Copyright (C) 2009 Michael Kreitzer <mrgrim@gr1m.org>
 
 /*
   This program is free software; you can redistribute it and/or modify
@@ -93,6 +94,8 @@ class DccTransferRecv : public DccTransfer
         // Reverse DCC
         void slotServerSocketReadyAccept();
         void slotServerSocketGotError( QAbstractSocket::SocketError errorCode );
+
+        void sendReverseAck(bool error, quint16 port);
 
     protected:
         void cleanUp();

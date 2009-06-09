@@ -8,13 +8,13 @@
 /*
   Copyright (C) 2005 Ismail Donmez <ismail@kde.org>
   Copyright (C) 2006 John Tapsell <johnflux@gmail.com>
+  Copyright (C) 2009 Michael Kreitzer <mrgrim@gr1m.org>
 */
 
 #ifndef DCC_CONFIG_H
 #define DCC_CONFIG_H
 
 #include "ui_dcc_configui.h"
-
 
 class DCC_Config : public QWidget, private Ui::DCC_ConfigUI
 {
@@ -27,6 +27,7 @@ class DCC_Config : public QWidget, private Ui::DCC_ConfigUI
     protected slots:
         virtual void languageChange();
         void dccMethodChanged(int index);
+        void dccUPnPChanged(int state);
 
     protected:
         virtual void showEvent(QShowEvent *event);

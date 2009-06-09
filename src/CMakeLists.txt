@@ -1,7 +1,7 @@
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/config)
 
-include_directories(blowfish config dcc irc viewer linkaddressbook)
+include_directories(blowfish config dcc irc viewer linkaddressbook upnp)
 
 set(core_SRCS
     #====================================
@@ -191,7 +191,14 @@ set(blowfish_SRCS
     blowfish/oldblowfish.cpp
 )
 
-set (completed_SRCS ${core_SRCS}  ${irc_SRCS} ${viewer_SRCS} ${config_SRCS} ${dcc_SRCS} ${linkaddressbook_SRCS} ${blowfish_SRCS})
+set(upnp_SRCS
+    upnp/soap.cpp
+    upnp/upnpdescriptionparser.cpp
+    upnp/upnpmcastsocket.cpp
+    upnp/upnprouter.cpp
+)
+
+set (completed_SRCS ${core_SRCS}  ${irc_SRCS} ${viewer_SRCS} ${config_SRCS} ${dcc_SRCS} ${linkaddressbook_SRCS} ${blowfish_SRCS} ${upnp_SRCS})
 set (konversation_SRCS ${completed_SRCS})
 
 kde4_add_ui_files(konversation_SRCS

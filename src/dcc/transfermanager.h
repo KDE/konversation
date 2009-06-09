@@ -13,15 +13,18 @@
 
 /*
   Copyright (C) 2007 Shintaro Matsuoka <shin@shoegazed.org>
+  Copyright (C) 2009 Michael Kreitzer <mrgrim@gr1m.org>
 */
 
 #ifndef DCCTRANSFERMANAGER_H
 #define DCCTRANSFERMANAGER_H
 
 #include "transfer.h"
+#include "upnpmcastsocket.h"
 
 #include <qobject.h>
 
+using namespace Konversation::UPnP;
 
 class KUrl;
 
@@ -72,6 +75,10 @@ class DccTransferManager : public QObject
 
         bool hasActiveTransfers();
 
+        UPnPRouter *getUPnPRouter() { return m_upnpRouter; }
+        void startupUPnP(void);
+        void shutdownUPnP(void);
+
     private:
         /*
          * initTransfer() does the common jobs for newDownload() and newUpload()
@@ -85,9 +92,14 @@ class DccTransferManager : public QObject
 
         void slotSettingsChanged();
 
+        void upnpRouterDiscovered(UPnPRouter *router);
+
     private:
         QList< DccTransferSend* > m_sendItems;
         QList< DccTransferRecv* > m_recvItems;
+
+        UPnPMCastSocket *m_upnpSocket;
+        UPnPRouter *m_upnpRouter;
 
         int m_nextReverseTokenNumber;
         KUrl m_defaultIncomingFolder;  // store here to know if this settings is changed

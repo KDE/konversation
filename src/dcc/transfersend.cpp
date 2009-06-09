@@ -6,6 +6,7 @@
 */
 // Copyright (C) 2004-2007 Shintaro Matsuoka <shin@shoegazed.org>
 // Copyright (C) 2004,2005 John Tapsell <john@geola.co.uk>
+// Copyright (C) 2009 Michael Kreitzer <mrgrim@gr1m.org>
 
 /*
   This program is free software; you can redistribute it and/or modify
@@ -21,6 +22,7 @@
 #include "application.h"
 #include "connectionmanager.h"
 #include "server.h"
+#include "upnprouter.h"
 
 #include <stdlib.h>
 #include <sys/types.h>
@@ -52,6 +54,7 @@
 
 
 using namespace KNetwork;
+using namespace Konversation::UPnP;
 
 DccTransferSend::DccTransferSend(QObject* parent)
     : DccTransfer( DccTransfer::Send, parent )
@@ -92,6 +95,12 @@ void DccTransferSend::cleanUp()
     {
         m_serverSocket->close();
         m_serverSocket = 0;                       // the instance will be deleted automatically by its parent
+
+        if (Preferences::self()->dccUPnP())
+        {
+            UPnPRouter *router = KonversationApplication::instance()->getDccTransferManager()->getUPnPRouter();
+            if (router) router->undoForward(m_ownPort, QAbstractSocket::TcpSocket);
+        }
     }
 }
 
@@ -279,9 +288,19 @@ void DccTransferSend::start()                     // public slot
 
         kDebug() << "Own Address=" << m_ownIp << ":" << m_ownPort;
 
-        startConnectionTimer( Preferences::self()->dccSendTimeout() );
+        if (Preferences::self()->dccUPnP())
+        {
+            UPnPRouter *router = KonversationApplication::instance()->getDccTransferManager()->getUPnPRouter();
 
-        server->dccSendRequest( m_partnerNick, transferFileName(m_fileName), DccCommon::textIpToNumericalIp( m_ownIp ), m_ownPort, m_fileSize );
+            if (router && router->forward(QHostAddress(server->getOwnIpByNetworkInterface()), m_ownPort, QAbstractSocket::TcpSocket))
+                connect(router, SIGNAL( forwardComplete(bool, quint16 ) ), this, SLOT ( sendRequest(bool, quint16) ) );
+            else
+                sendRequest(true, 0); // Just try w/o UPnP on failure
+        }
+        else
+        {
+            sendRequest(false, 0);
+        }
     }
     else
     {
@@ -300,6 +319,28 @@ void DccTransferSend::start()                     // public slot
     }
 
     setStatus( WaitingRemote, i18n( "Awaiting remote user's acceptance" ) );
+}
+
+void DccTransferSend::sendRequest(bool error, quint16 port)
+{
+    Server* server = KonversationApplication::instance()->getConnectionManager()->getServerByConnectionId( m_connectionId );
+    if ( !server )
+    {
+        kDebug() << "could not retrieve the instance of Server. Connection id: " << m_connectionId;
+        failed( i18n( "Could not send a DCC SEND request to the partner via the IRC server." ) );
+        return;
+    }
+
+    if (Preferences::self()->dccUPnP() && this->sender())
+    {
+        if (port != m_ownPort) return; // Somebody elses forward succeeded
+
+        disconnect (this->sender(), SIGNAL( forwardComplete(bool, quint16 ) ), this, SLOT ( sendRequest(bool, quint16) ) );
+    }
+
+    startConnectionTimer( Preferences::self()->dccSendTimeout() );
+
+    server->dccSendRequest( m_partnerNick, transferFileName(m_fileName), DccCommon::textIpToNumericalIp( m_ownIp ), m_ownPort, m_fileSize );
 }
 
 void DccTransferSend::connectToReceiver( const QString& partnerHost, uint partnerPort )
@@ -355,6 +396,13 @@ void DccTransferSend::acceptClient()                     // slot
 
     // we don't need ServerSocket anymore
     m_serverSocket->close();
+    m_serverSocket = 0; // the instance will be deleted automatically by its parent
+
+    if (Preferences::self()->dccUPnP())
+    {
+        UPnPRouter *router = KonversationApplication::instance()->getDccTransferManager()->getUPnPRouter();
+        if (router) router->undoForward(m_ownPort, QAbstractSocket::TcpSocket);
+    }
 
     startSending();
 }

@@ -6,6 +6,7 @@
 */
 // Copyright (C) 2004-2007 Shintaro Matsuoka <shin@shoegazed.org>
 // Copyright (C) 2004,2005 John Tapsell <john@geola.co.uk>
+// Copyright (C) 2009 Michael Kreitzer <mrgrim@gr1m.org>
 
 /*
   This program is free software; you can redistribute it and/or modify
@@ -21,6 +22,7 @@
 #include "application.h" ////// header renamed
 #include "connectionmanager.h"
 #include "server.h"
+#include "upnprouter.h"
 
 #include <QTcpServer>
 #include <QTcpSocket>
@@ -96,6 +98,12 @@ void DccTransferRecv::cleanUp()
     {
         m_serverSocket->close();
         m_serverSocket = 0;
+
+        if (m_reverse && Preferences::self()->dccUPnP())
+        {
+            UPnPRouter *router = KonversationApplication::instance()->getDccTransferManager()->getUPnPRouter();
+            if (router) router->undoForward(m_ownPort, QAbstractSocket::TcpSocket);
+        }
     }
     if ( m_recvSocket )
     {
@@ -483,14 +491,47 @@ void DccTransferRecv::connectWithSender()
         m_ownIp = DccCommon::getOwnIp( server );
         m_ownPort = m_serverSocket->serverPort();
 
-        setStatus( WaitingRemote, i18n( "Waiting for connection" ) );
+        if (Preferences::self()->dccUPnP())
+        {
+            UPnPRouter *router = KonversationApplication::instance()->getDccTransferManager()->getUPnPRouter();
 
-        server->dccReverseSendAck( m_partnerNick, transferFileName(m_fileName), DccCommon::textIpToNumericalIp( m_ownIp ), m_ownPort, m_fileSize, m_reverseToken );
+            if (router && router->forward(QHostAddress(server->getOwnIpByNetworkInterface()), m_ownPort, QAbstractSocket::TcpSocket))
+                connect(router, SIGNAL( forwardComplete(bool, quint16 ) ), this, SLOT ( sendReverseAck(bool, quint16 ) ) );
+            else
+                   sendReverseAck(true, 0); // Try anyways on error
+        }
+        else
+        {
+            sendReverseAck(false, 0);
+        }
     }
     else
     {
         connectToSendServer();
     }
+}
+
+void DccTransferRecv::sendReverseAck(bool error, quint16 port)
+{
+    Server* server = KonversationApplication::instance()->getConnectionManager()->getServerByConnectionId( m_connectionId );
+    if ( !server )
+    {
+        failed( i18n( "Could not send Reverse DCC SEND acknowledgement to the partner via the IRC server." ) );
+        return;
+    }
+
+    kDebug() << "sendReverseAck()" << endl;
+
+    if (Preferences::self()->dccUPnP() && this->sender())
+    {
+        if (port != m_ownPort) return; // Somebody elses forward succeeded
+
+        disconnect (this->sender(), SIGNAL( forwardComplete(bool, quint16 ) ), this, SLOT ( sendRequest(bool, quint16) ) );
+    }
+
+    setStatus( WaitingRemote, i18n( "Waiting for connection" ) );
+
+    server->dccReverseSendAck( m_partnerNick, transferFileName(m_fileName), DccCommon::textIpToNumericalIp( m_ownIp ), m_ownPort, m_fileSize, m_reverseToken );
 }
 
 void DccTransferRecv::requestResume()
@@ -592,6 +633,13 @@ void DccTransferRecv::slotServerSocketReadyAccept()
 
     // we don't need ServerSocket anymore
     m_serverSocket->close();
+    m_serverSocket = 0; // Will be deleted by parent
+
+    if (Preferences::self()->dccUPnP())
+    {
+        UPnPRouter *router = KonversationApplication::instance()->getDccTransferManager()->getUPnPRouter();
+        if (router) router->undoForward(m_ownPort, QAbstractSocket::TcpSocket);
+    }
 
     startReceiving();
 }

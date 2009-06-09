@@ -9,6 +9,7 @@
   Copyright (C) 2002 Dario Abatianni <eisfuchs@tigress.com>
   Copyright (C) 2006 Eike Hein <hein@kde.org>
   Copyright (C) 2004,2007 Shintaro Matsuoka <shin@shoegazed.org>
+  Copyright (C) 2009 Michael Kreitzer <mrgrim@gr1m.org>
 */
 
 #include "chat.h"
@@ -22,6 +23,8 @@
 #include "topiclabel.h"
 #include "server.h"
 #include "channel.h"
+#include "upnprouter.h"
+#include "transfermanager.h"
 
 #include <stdlib.h>
 #include <sys/types.h>
@@ -46,6 +49,7 @@
 #include <kvbox.h>
 #define DCCCHAT_BUFFER_SIZE 1024
 
+using namespace Konversation::UPnP;
 
 DccChat::DccChat(QWidget* parent, bool listen, Server* server, const QString& ownNick, const QString& partnerNick, const QString& partnerHost, int partnerPort)
     : ChatWindow(parent)
@@ -69,6 +73,8 @@ DccChat::DccChat(QWidget* parent, bool listen, Server* server, const QString& ow
     m_sourceLine = 0;
     m_sourceLine = new Konversation::TopicLabel(m_headerSplitter);
     m_headerSplitter->setStretchFactor(m_headerSplitter->indexOf(m_sourceLine), 0);
+
+    m_server = server;
 
     IRCViewBox* ircViewBox = new IRCViewBox(m_headerSplitter, NULL);
     m_headerSplitter->setStretchFactor(m_headerSplitter->indexOf(ircViewBox), 1);
@@ -105,8 +111,20 @@ DccChat::DccChat(QWidget* parent, bool listen, Server* server, const QString& ow
     if (listen)
     {
         listenForPartner();
-        QString ownNumericalIp = DccCommon::textIpToNumericalIp( DccCommon::getOwnIp( server ) );
-        server->requestDccChat( m_partnerNick, ownNumericalIp, m_ownPort );
+
+        if (Preferences::self()->dccUPnP())
+        {
+            UPnPRouter *router = KonversationApplication::instance()->getDccTransferManager()->getUPnPRouter();
+
+            if (router && router->forward(QHostAddress(server->getOwnIpByNetworkInterface()), m_ownPort, QAbstractSocket::TcpSocket))
+                connect(router, SIGNAL( forwardComplete(bool ) ), this, SLOT ( sendRequest(bool, quint16 ) ) );
+            else
+                sendRequest(true, 0); // On error try anyways
+        }
+        else
+        {
+            sendRequest(false, 0);
+        }
     }
     else
     {
@@ -124,7 +142,28 @@ DccChat::~DccChat()
     if(m_dccSocket)
         m_dccSocket->close();
     if(m_listenSocket)
+    {
         m_listenSocket->close();
+
+        if (Preferences::self()->dccUPnP())
+        {
+            UPnPRouter *router = KonversationApplication::instance()->getDccTransferManager()->getUPnPRouter();
+            if (router) router->undoForward(m_ownPort, QAbstractSocket::TcpSocket);
+        }
+    }
+}
+
+void DccChat::sendRequest(bool error, quint16 port)
+{
+    if (Preferences::self()->dccUPnP() && this->sender())
+    {
+        if (port != m_ownPort) return; // Somebody elses forward succeeded
+
+        disconnect (this->sender(), SIGNAL( forwardComplete(bool, quint16 ) ), this, SLOT ( sendRequest(bool, quint16) ) );
+    }
+
+    QString ownNumericalIp = DccCommon::textIpToNumericalIp( DccCommon::getOwnIp( m_server ) );
+    m_server->requestDccChat( m_partnerNick, ownNumericalIp, m_ownPort );
 }
 
 void DccChat::listenForPartner()
@@ -325,6 +364,12 @@ void DccChat::heardPartner()
     disconnect( m_listenSocket, 0, 0, 0 );
     m_listenSocket->close();
     m_listenSocket = 0;
+
+    if (Preferences::self()->dccUPnP())
+    {
+        UPnPRouter *router = KonversationApplication::instance()->getDccTransferManager()->getUPnPRouter();
+        if (router) router->undoForward(m_ownPort, QAbstractSocket::TcpSocket);
+    }
 
     m_dccChatInput->setEnabled(true);
 
