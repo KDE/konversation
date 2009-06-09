@@ -19,12 +19,15 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.             *
  ***************************************************************************/
+
 #ifndef KTUPNPMCASTSOCKET_H
 #define KTUPNPMCASTSOCKET_H
 
+#include "upnprouter.h"
+
 #include <QSet>
 #include <QUdpSocket>
-#include "upnprouter.h"
+
 
 namespace Konversation
 {

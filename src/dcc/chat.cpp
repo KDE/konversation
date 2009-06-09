@@ -153,7 +153,7 @@ DccChat::~DccChat()
     }
 }
 
-void DccChat::sendRequest(bool error, quint16 port)
+void DccChat::sendRequest(bool /* error */, quint16 port)
 {
     if (Preferences::self()->dccUPnP() && this->sender())
     {
@@ -191,7 +191,7 @@ void DccChat::listenForPartner()
     getTextView()->appendServerMessage(i18n("DCC"), i18n("Offering DCC Chat connection to %1 on port %2...", m_partnerNick, QString::number(m_ownPort)));
 
     m_sourceLine->setText(i18n("DCC chat with %1 on port %2.", m_partnerNick, QString::number(m_ownPort)));
-    kDebug() << "[END]"; 
+    kDebug() << "[END]";
 }
 
 void DccChat::connectToPartner()
@@ -242,7 +242,7 @@ void DccChat::dccChatBroken(QAbstractSocket::SocketError error)
 
 void DccChat::readData()
 {
-    kDebug() << ( m_listenSocket == 0 ) << " BEGIN"; 
+    kDebug() << ( m_listenSocket == 0 ) << " BEGIN";
     int available=0;
     int actual=0;
     char* buffer=0;
@@ -482,7 +482,7 @@ void DccChat::updateAppearance()
     dccChatInputPalette.setColor(QPalette::Base, bg);
     m_dccChatInput->setPalette(dccChatInputPalette);
 
-    getTextView()->setPalette(QPalette()); 
+    getTextView()->setPalette(QPalette());
 
     if(Preferences::self()->showBackgroundImage())
     {

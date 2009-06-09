@@ -19,11 +19,14 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
+
+#include "upnprouter.h"
+#include "upnpdescriptionparser.h"
+
 #include <qxml.h>
 #include <qstack.h>
 #include <kdebug.h>
-#include "upnprouter.h"
-#include "upnpdescriptionparser.h"
+
 
 namespace Konversation
 {

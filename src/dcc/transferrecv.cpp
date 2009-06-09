@@ -381,7 +381,7 @@ bool DccTransferRecv::createDirs( const KUrl& dirURL ) const
 void DccTransferRecv::slotLocalCanResume( KIO::Job* job, KIO::filesize_t size )
 {
     kDebug() << "[BEGIN]" << endl
-        << "size: " << QString::number( size ); 
+        << "size: " << QString::number( size );
 
     if ( size != 0 )
     {
@@ -511,7 +511,7 @@ void DccTransferRecv::connectWithSender()
     }
 }
 
-void DccTransferRecv::sendReverseAck(bool error, quint16 port)
+void DccTransferRecv::sendReverseAck(bool /* error */, quint16 port)
 {
     Server* server = KonversationApplication::instance()->getConnectionManager()->getServerByConnectionId( m_connectionId );
     if ( !server )

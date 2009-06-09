@@ -19,19 +19,23 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
-#include <stdlib.h>
-#include <QDir>
-#include <klocale.h>
-#include <kglobal.h>
-#include <kstandarddirs.h>
-#include <qstringlist.h>
-#include <kio/netaccess.h>
-#include <kio/job.h>
-#include <QtNetwork>
-#include <kdebug.h>
+
 #include "upnprouter.h"
 #include "upnpdescriptionparser.h"
 #include "soap.h"
+
+#include <QDir>
+#include <QtNetwork>
+
+#include <klocale.h>
+#include <kglobal.h>
+#include <kstandarddirs.h>
+#include <kio/netaccess.h>
+#include <kio/job.h>
+#include <kdebug.h>
+
+#include <stdlib.h>
+
 
 namespace Konversation
 {

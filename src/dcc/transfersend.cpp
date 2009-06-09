@@ -321,7 +321,7 @@ void DccTransferSend::start()                     // public slot
     setStatus( WaitingRemote, i18n( "Awaiting remote user's acceptance" ) );
 }
 
-void DccTransferSend::sendRequest(bool error, quint16 port)
+void DccTransferSend::sendRequest(bool /* error */, quint16 port)
 {
     Server* server = KonversationApplication::instance()->getConnectionManager()->getServerByConnectionId( m_connectionId );
     if ( !server )

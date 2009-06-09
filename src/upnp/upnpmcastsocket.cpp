@@ -20,7 +20,14 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
  ***************************************************************************/
 
+#include "upnpmcastsocket.h"
+
+#include <qfile.h>
+#include <qtextstream.h>
+
 #include <kurl.h>
+#include <kdebug.h>
+
 #include <unistd.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -33,11 +40,7 @@
 #ifndef Q_WS_WIN
 #include <netinet/ip.h>
 #endif
-#include <qstringlist.h>
-#include <qfile.h>
-#include <qtextstream.h>
-#include <kdebug.h>
-#include "upnpmcastsocket.h"
+
 
 namespace Konversation
 {
