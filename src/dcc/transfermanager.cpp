@@ -34,6 +34,7 @@ DccTransferManager::DccTransferManager( QObject* parent )
              this, SLOT( slotSettingsChanged() ) );
 
     m_upnpRouter = NULL;
+    m_upnpSocket = NULL;
 
     if (Preferences::self()->dccUPnP())
         startupUPnP();

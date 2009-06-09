@@ -22,6 +22,11 @@ Changes since 1.2-alpha3:
 * Fixed various chat view messages containing date/time values (channel
   created, topic set, online since, ban info) not using KDE's locale set-
   tings for their display format.
+* Added support for using UPnP for NAT traversal for DCC file transfers
+  (both active send and passive receive) and DCC chat. When UPnP is ena-
+  bled in both Konversation and your router, Konversation now knows how
+  to ask your router to set up the necessary port forward, and also how
+  to to ask it to remove it later.
 
 
 Changes from 1.2-alpha2 to 1.2-alpha3:
