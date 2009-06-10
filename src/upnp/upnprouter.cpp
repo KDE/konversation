@@ -1,31 +1,23 @@
-/***************************************************************************
- *   Copyright (C) 2005-2007 by Joris Guisson                              *
- *   Copyright (C) 2009 by Michael Kreitzer                                *
- *   joris.guisson@gmail.com                                               *
- *   mrgrim@gr1m.org                                                       *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
- ***************************************************************************/
+/*
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; either version 2 of the License, or
+  (at your option) any later version.
+*/
+
+/*
+  Copyright (C) 2005-2007 Joris Guisson <joris.guisson@gmail.com>
+  Copyright (C) 2009 Michael Kreitzer <mrgrim@gr1m.org>
+*/
 
 #include "upnprouter.h"
 #include "upnpdescriptionparser.h"
 #include "soap.h"
 
 #include <QDir>
-#include <QtNetwork>
+#include <QCoreApplication>
+#include <QNetworkRequest>
+#include <QNetworkReply>
 
 #include <klocale.h>
 #include <kglobal.h>
@@ -163,7 +155,7 @@ namespace Konversation
 
         void UPnPRouter::downloadXMLFile()
         {
-            error = QString();
+            error.clear();
             // downlaod XML description into a temporary file in /tmp
             kDebug() << "Downloading XML file " << location << endl;
             KIO::Job* job = KIO::storedGet(location,KIO::NoReload, KIO::Overwrite | KIO::HideProgressInfo);
@@ -177,7 +169,7 @@ namespace Konversation
             QString action = "GetStatusInfo";
             QString comm = SOAP::createCommand(action,s.servicetype);
 
-            return sendSoapQuery(comm,s.servicetype + "#" + action,s.controlurl);
+            return sendSoapQuery(comm,s.servicetype + '#' + action,s.controlurl);
         }
 
         bool UPnPRouter::forward(const QHostAddress & host, quint16 port, QAbstractSocket::SocketType proto)
@@ -213,7 +205,7 @@ namespace Konversation
                 args.append(a);
 
                 a.element = "NewEnabled";
-                a.value = "1";
+                a.value = '1';
                 args.append(a);
 
                 a.element = "NewPortMappingDescription";
@@ -221,7 +213,7 @@ namespace Konversation
                 args.append(a);
 
                 a.element = "NewLeaseDuration";
-                a.value = "0";
+                a.value = '0';
                 args.append(a);
 
                 QString action = "AddPortMapping";
@@ -233,7 +225,7 @@ namespace Konversation
                 forward->host = host;
                 forward->proto = proto;
 
-                if (QNetworkReply *req = sendSoapQuery(comm,service.servicetype + "#" + action,service.controlurl))
+                if (QNetworkReply *req = sendSoapQuery(comm,service.servicetype + '#' + action,service.controlurl))
                 {
                     // erase old forwarding if one exists
                     // The UPnP spec states if an IGD receives a forward request that matches an existing request that it must accept it.
@@ -301,7 +293,7 @@ namespace Konversation
                 QString action = "DeletePortMapping";
                 QString comm = SOAP::createCommand(action,service.servicetype,args);
 
-                if (QNetworkReply *req = sendSoapQuery(comm,service.servicetype + "#" + action,service.controlurl))
+                if (QNetworkReply *req = sendSoapQuery(comm,service.servicetype + '#' + action,service.controlurl))
                 {
                     pending_unforwards[req] = forward;
 
