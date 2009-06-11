@@ -184,9 +184,9 @@ namespace Konversation
                     inputLine = testNickServ;
             }
         }
-        
+
         //perform variable expansion according to prefs
-        inputLine = Konversation::doVarExpansion(inputLine); 
+        inputLine = Konversation::doVarExpansion(inputLine);
 
         QString line=inputLine.toLower();
 
@@ -632,20 +632,24 @@ namespace Konversation
         return result;
     }
 
-    OutputFilterResult OutputFilter::parseMsg(const QString &myNick, const QString &parameter, bool isQuery)
+    OutputFilterResult OutputFilter::parseMsg(const QString &myNick, const QString &parameter, bool commandIsQuery)
     {
         OutputFilterResult result;
         QString recipient = parameter.section(' ', 0, 0, QString::SectionSkipEmpty);
         QString message = parameter.section(' ', 1);
         QString output;
 
+        bool recipientIsAChannel = false;
+
         if (recipient.isEmpty())
         {
             result = error("Error: You need to specify a recipient.");
             return result;
         }
+        else
+            recipientIsAChannel = m_server->isAChannel(recipient);
 
-        if (isQuery && m_server->isAChannel(recipient))
+        if (commandIsQuery && recipientIsAChannel)
         {
             result = error("Error: You cannot open queries to channels.");
             return result;
@@ -653,10 +657,10 @@ namespace Konversation
 
         if (message.trimmed().isEmpty())
         {
-            //empty result - we don't want to send any message to the server
-            if (!isQuery)
+            // Empty result - we don't want to send any message to the server.
+            if (!commandIsQuery)
             {
-                 result = error("Error: You need to specify a message.");
+                result = error("Error: You need to specify a message.");
                 return result;
             }
         }
@@ -671,39 +675,50 @@ namespace Konversation
             output = message;
         }
 
-        ::Query *query;
+        ::Query* query = 0;
 
-        if (isQuery || output.isEmpty())
+        // If this is a /query, always open a query window.
+        // Treat "/msg nick" as "/query nick".
+        if (commandIsQuery || output.isEmpty())
         {
-            //if this is a /query, always open a query window.
-            //treat "/msg nick" as "/query nick"
-
-            //Note we have to be a bit careful here.
-            //We only want to create ('obtain') a new nickinfo if we have done /query
-            //or "/msg nick".  Not "/msg nick message".
+            // Note we have to be a bit careful here.
+            // We only want to create ('obtain') a new nickinfo if we have done /query
+            // or "/msg nick".  Not "/msg nick message".
             NickInfoPtr nickInfo = m_server->obtainNickInfo(recipient);
             query = m_server->addQuery(nickInfo, true /*we initiated*/);
-            //force focus if the user did not specify any message
+
+            // Force focus if the user did not specify any message.
             if (output.isEmpty()) emit showView(query);
         }
-        else
-        {
-            //We have  "/msg nick message"
+        else // We have "/msg nick message".
             query = m_server->getQueryByName(recipient);
-        }
 
+        // Log if and only if the query open.
         if (query && !output.isEmpty())
         {
-            if (message.startsWith(commandChar+"me"))
-                                                  //log if and only if the query open
-                query->appendAction(m_server->getNickname(), message.mid(4));
+            if (message.startsWith(commandChar + "me"))
+                query->appendAction(myNick, message.mid(4));
             else
-                                                  //log if and only if the query open
-                query->appendQuery(m_server->getNickname(), output);
+                query->appendQuery(myNick, output);
         }
 
-        if (output.isEmpty()) return result;       //result should be completely empty;
-        //FIXME - don't do below line if query is focused
+        if (recipientIsAChannel && !output.isEmpty())
+        {
+            Channel* channel = m_server->getChannelByName(recipient);
+
+            if (channel)
+            {
+                if (message.startsWith(commandChar + "me"))
+                    channel->appendAction(myNick, message.mid(4));
+                else
+                    channel->append(myNick, output);
+            }
+        }
+
+        // Result should be completely empty;
+        if (output.isEmpty()) return result;
+
+        //FIXME: Don't do below line if query is focused.
         result.output = output;
         result.typeString= recipient;
         result.type = PrivateMessage;

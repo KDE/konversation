@@ -123,7 +123,8 @@ void StatusPanel::sendStatusText(const QString& sendLine)
 
         if(!result.output.isEmpty())
         {
-            appendServerMessage(result.typeString, result.output);
+            if(result.type == Konversation::PrivateMessage) appendQuery(result.typeString, result.output, true);
+            else appendServerMessage(result.typeString, result.output);
         }
         m_server->queue(result.toServer);
     } // for
@@ -178,7 +179,7 @@ void StatusPanel::updateAppearance()
     statusInputPalette.setColor(QPalette::Base, bg);
     statusInput->setPalette(statusInputPalette);
 
-    getTextView()->setPalette(QPalette()); 
+    getTextView()->setPalette(QPalette());
 
     if(Preferences::self()->showBackgroundImage())
     {

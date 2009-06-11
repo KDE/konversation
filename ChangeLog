@@ -28,6 +28,12 @@ Changes since 1.2-alpha3:
   to ask your router to set up the necessary port forward, and also how
   to to ask it to remove it later.
 * Added support for the KDE 4 version of JuK to the bundled 'media' script.
+* Fixed '/msg <channel> <message>' not displaying the resulting message in
+  the target channel when the user is attending that channel.
+* Made the appearance of the line informing about the message being sent
+  with '/msg <nick|channel> <message>' consistent between channel, query
+  and status tabs (it now looks like in the former in the latter two as
+  well).
 
 
 Changes from 1.2-alpha2 to 1.2-alpha3:
