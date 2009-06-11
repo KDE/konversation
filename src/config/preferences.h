@@ -61,12 +61,12 @@ class Preferences : public PreferencesBase
             NotifyPage,
             ChatWinAppearancePage
         };
-        static const Konversation::ServerGroupList serverGroupList();
-        static void setServerGroupList(const Konversation::ServerGroupList& list);
+        static const Konversation::ServerGroupHash serverGroupHash();
+        static void setServerGroupHash(const Konversation::ServerGroupHash& hash);
         static void addServerGroup(Konversation::ServerGroupSettingsPtr serverGroup);
         static const Konversation::ServerGroupSettingsPtr serverGroupById(int id);
-        static const Konversation::ServerGroupSettingsPtr serverGroupByServer(const QString& server);
-        static int serverGroupIdByName(const QString& serverGroup);
+        static const QList<Konversation::ServerGroupSettingsPtr> serverGroupsByServer(const QString& server);
+        static QList<int> serverGroupIdsByName(const QString& serverGroup);
         static bool isServerGroup(const QString& server);
         static void removeServerGroup(int id);
 
@@ -75,11 +75,11 @@ class Preferences : public PreferencesBase
 
         //notifylist is in kconfigxt - FIXME
         static const QMap<int, QStringList> notifyList();
-        static const QStringList notifyListByGroupName(const QString& groupName);
-        static const QString notifyStringByGroupName(const QString& groupName);
+        static const QStringList notifyListByGroupId(int serverGroupId);
+        static const QString notifyStringByGroupId(int serverGroupId);
         static void setNotifyList(const QMap<int, QStringList>& newList);
         static bool addNotify(int serverGroupId, const QString& newPattern);
-        static bool removeNotify(const QString& groupName, const QString& pattern);
+        static bool removeNotify(int serverGroupId, const QString& pattern);
         static bool isNotify(int serverGroupId, const QString& pattern);
         static bool hasNotifyList(int serverGroupId);
 
@@ -156,7 +156,7 @@ class Preferences : public PreferencesBase
 
     protected:
         IdentityPtr mIdentity;
-        Konversation::ServerGroupList mServerGroupList;
+        Konversation::ServerGroupHash mServerGroupHash;
         QList<Ignore*> mIgnoreList;
         QList<IdentityPtr> mIdentityList;
         QList<Highlight*> mHighlightList;

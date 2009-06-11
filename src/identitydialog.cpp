@@ -220,19 +220,12 @@ namespace Konversation
             return;
         }
 
-        ServerGroupList serverGroups = Preferences::serverGroupList();
-        ServerGroupList::iterator it = serverGroups.begin();
+        ServerGroupHash serverGroups = Preferences::serverGroupHash();
+        QHashIterator<int, ServerGroupSettingsPtr> it(serverGroups);
         bool found = false;
 
-        while((it != serverGroups.end()) && !found)
-        {
-            if((*it)->identityId() == m_currentIdentity->id())
-            {
-                found = true;
-            }
-
-            ++it;
-        }
+        while (it.hasNext() && !found)
+            if (it.next().value()->identityId() == m_currentIdentity->id()) found = true;
 
         QString warningTxt;
 

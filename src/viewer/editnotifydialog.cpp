@@ -25,7 +25,7 @@
 
 
 EditNotifyDialog::EditNotifyDialog(QWidget* parent,
-const QString& network,
+int serverGroupId,
 const QString& nickname):
     KDialog(parent)
 
@@ -54,29 +54,14 @@ const QString& nickname):
     m_nicknameInput->setWhatsThis(nicknameWT);
     nicknameLabel->setBuddy(m_nicknameInput);
 
-    // Build a list of unique server network names.
-    // TODO: The "ServerGroupList type is a misnomer (it is actually networks), which
-    // should be fixed at some point.
-    Konversation::ServerGroupList serverNetworks = Preferences::serverGroupList();
-    QStringList networkNames;
-
-    for(Konversation::ServerGroupList::iterator it = serverNetworks.begin(); it != serverNetworks.end(); ++it)
-    {
-        QString name = (*it)->name();
-
-        if (!networkNames.contains(name))
-        {
-            networkNames.append(name);
-        }
-    }
-
-    networkNames.sort();
     // Add network names to network combobox and select the one corresponding to argument.
-    for (QStringList::ConstIterator it = networkNames.constBegin(); it != networkNames.constEnd(); ++it)
+    Konversation::ServerGroupHash serverNetworks = Preferences::serverGroupHash();
+    QHashIterator<int, Konversation::ServerGroupSettingsPtr> it(serverNetworks);
+    while(it.hasNext())
     {
-        m_networkNameCombo->addItem(*it);
-        if(*it == network) m_networkNameCombo->setCurrentIndex(m_networkNameCombo->count()-1);
+        m_networkNameCombo->addItem(it.value()->name(),it.key());
     }
+    m_networkNameCombo->setCurrentIndex(m_networkNameCombo->findData(serverGroupId, Qt::UserRole));
     layout->addWidget(networkNameLabel);
     layout->addWidget(m_networkNameCombo);
     layout->addWidget(nicknameLabel);
@@ -94,7 +79,7 @@ EditNotifyDialog::~EditNotifyDialog()
 
 void EditNotifyDialog::slotOk()
 {
-    emit notifyChanged(m_networkNameCombo->currentText(),
+    emit notifyChanged(m_networkNameCombo->itemData(m_networkNameCombo->currentIndex()).toInt(),
         m_nicknameInput->text());
     delayedDestruct();
 }

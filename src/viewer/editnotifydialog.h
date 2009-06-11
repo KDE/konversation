@@ -33,12 +33,12 @@ class EditNotifyDialog : public KDialog
     Q_OBJECT
 
     public:
-        explicit EditNotifyDialog(QWidget* parent=0,const QString& network=QString(),
+        explicit EditNotifyDialog(QWidget* parent=0, int serverGroupId=0,
             const QString& nickname=QString());
         ~EditNotifyDialog();
 
         signals:
-        void notifyChanged(const QString& network,
+        void notifyChanged(int serverGroupId,
             const QString& nickname);
     protected slots:
         void slotOk();

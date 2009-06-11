@@ -30,29 +30,29 @@ class WatchedNicknames_Config : public QWidget, public KonviSettingsPage, privat
         virtual void saveSettings();
         virtual void loadSettings();
         virtual void restorePageToDefaults();
-
         virtual bool hasChanged();
 
     signals:
         void modified();
 
     protected slots:
+        void reloadSettings();
         void checkIfEmptyListview(bool state);
         void newNotify();
         void removeNotify();
         void entrySelected(QTreeWidgetItem* notifyEntry);
-        void networkChanged(const QString& newNetwork);
+        void networkChanged(int index);
         void nicknameChanged(const QString& newNickname);
-        void updateNetworkNames();
+        void updateNotifyListView();
 
     protected:
         void enableEditWidgets(bool enabled);
-        QStringList currentNotifyList();       // for hasChanged()
+        QMap<int, QString> currentNotifyList();       // for hasChanged()
         void addNetworkBranch(Konversation::ServerGroupSettingsPtr group);
         QTreeWidgetItem* getItemById(QTreeWidget* listView,int id);
 
         bool newItemSelected;
-        QStringList m_oldNotifyList;
+        QMap<int, QString> m_oldNotifyList;
 };
 
 #endif /* WATCHEDNICKNAMES_CONFIG_H */

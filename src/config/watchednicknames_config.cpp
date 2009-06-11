@@ -13,7 +13,6 @@
 #include "preferences.h"
 #include "application.h"
 #include "mainwindow.h"
-#include "valuelistviewitem.h"
 
 #include <qlabel.h>
 #include <qcombobox.h>
@@ -36,18 +35,18 @@ WatchedNicknames_Config::WatchedNicknames_Config(QWidget *parent, const char *na
   // reset flag to defined state (used to block signals when just selecting a new item)
   newItemSelected=false;
 
-  loadSettings();
+  reloadSettings();
 
   connect(kcfg_UseNotify,SIGNAL (toggled(bool)),this,SLOT (checkIfEmptyListview(bool)) );
   connect(newButton,SIGNAL (clicked()),this,SLOT (newNotify()) );
   connect(removeButton,SIGNAL (clicked()),this,SLOT (removeNotify()) );
   connect(notifyListView,SIGNAL (currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)),this,SLOT (entrySelected(QTreeWidgetItem*)) );
 
-  connect(networkDropdown,SIGNAL (activated(const QString&)),this,SLOT (networkChanged(const QString&)) );
+  connect(networkDropdown,SIGNAL (activated(int)),this,SLOT (networkChanged(int)) );
   connect(nicknameInput,SIGNAL (textChanged(const QString&)),this,SLOT (nicknameChanged(const QString&)) );
 
   connect(KonversationApplication::instance(), SIGNAL(serverGroupsChanged(const Konversation::ServerGroupSettingsPtr)),
-      this, SLOT(updateNetworkNames()));
+      this, SLOT(reloadSettings()));
 }
 
 WatchedNicknames_Config::~WatchedNicknames_Config()
@@ -61,28 +60,34 @@ void WatchedNicknames_Config::restorePageToDefaults()
 // fill in the notify listview with groups and nicknames
 void WatchedNicknames_Config::loadSettings()
 {
+    // cleanup, so we won't add duplicate items
+    notifyListView->clear();
+    networkDropdown->clear();
+    // make sure all widgets are disabled
+    notifyListView->clearSelection();
+    enableEditWidgets(false);
+    updateNotifyListView();
+    
+    // remember current list for hasChanged()
+    m_oldNotifyList=currentNotifyList();
+}
+
+void WatchedNicknames_Config::reloadSettings()
+{
   // cleanup, so we won't add duplicate items
   notifyListView->clear();
   networkDropdown->clear();
   // make sure all widgets are disabled
   notifyListView->clearSelection();
   enableEditWidgets(false);
+  updateNotifyListView();
 
-  // get list of server networks
-  Konversation::ServerGroupList serverGroupList = Preferences::serverGroupList();
-
-  // iterate through all networks in the server group list
-  for(int gIndex=0;gIndex<serverGroupList.count();gIndex++)
-  {
-    // add server group branch to the notify listview so we can add notify items
-    addNetworkBranch(serverGroupList[gIndex]);
-  }
   // remember current list for hasChanged()
   m_oldNotifyList=currentNotifyList();
 }
 
 // adds a new network branch to the listview
-void WatchedNicknames_Config::addNetworkBranch(Konversation::ServerGroupSettingsPtr serverGroupList)
+void WatchedNicknames_Config::addNetworkBranch(Konversation::ServerGroupSettingsPtr serverGroup)
 {
   // get the current notify list and an iterator
   QMap<int, QStringList> notifyList = Preferences::notifyList();
@@ -93,21 +98,21 @@ void WatchedNicknames_Config::addNetworkBranch(Konversation::ServerGroupSettings
   }
 
   // get the group iterator to find all servers in the group
-  QMap<int, QStringList>::const_iterator groupIt=notifyList.constFind(serverGroupList->id());
+  QMap<int, QStringList>::const_iterator groupIt=notifyList.constFind(serverGroup->id());
 
   if(groupIt == notifyList.constEnd())
     return;
 
-  ValueListViewItem* groupItem = new ValueListViewItem(serverGroupList->id(), notifyListView, notifyListView->topLevelItem(notifyListView->topLevelItemCount()), serverGroupList->name());
-
+  QTreeWidgetItem* groupItem = new QTreeWidgetItem(notifyListView, QStringList() << serverGroup->name());
+  groupItem->setData(0, Qt::UserRole, serverGroup->id());
   // get list of nicks for the current group
   QStringList nicks=groupIt.value();
   // add group to dropdown list
-  networkDropdown->insertItem(0, serverGroupList->name());
+  networkDropdown->addItem(serverGroup->name(), serverGroup->id());
   // add nicknames to group branch (reverse order again)
-  for(int index=nicks.count();index;index--)
+  for(int i=0; i < nicks.count(); i++)
   {
-    new QTreeWidgetItem(groupItem, QStringList() << nicks[index-1]);
+    new QTreeWidgetItem(groupItem, QStringList() << nicks.at(i));
   } // for
   // unfold group branch
   groupItem->setExpanded(true);
@@ -126,7 +131,7 @@ void WatchedNicknames_Config::saveSettings()
   // loop as long as there are more groups in the listview
   while(group)
   {
-    int groupId=static_cast<ValueListViewItem*>(group)->getValue();
+    int groupId=group->data(0,Qt::UserRole).toInt();
 
     // later contains all nicks separated by blanks
     QString nicks;
@@ -157,23 +162,19 @@ void WatchedNicknames_Config::saveSettings()
 }
 
 // returns the currently edited notify list
-QStringList WatchedNicknames_Config::currentNotifyList()
+QMap<int, QString> WatchedNicknames_Config::currentNotifyList()
 {
   // prepare list
-  QStringList newList;
+  QMap<int, QString> newList;
 
-  // get first item
   QTreeWidget* listView=notifyListView;
-  QTreeWidgetItem* item=listView->topLevelItem(0);
-
-  // loop as long as there are more groups in the listview
-  while(item)
+  QTreeWidgetItemIterator it(listView);
+  while(*it)
   {
-    newList.append(item->text(0));
-    item=listView->itemBelow(item);
-  } // while
+    newList.insert((*it)->data(0,Qt::UserRole).toInt(),(*it)->text(0));
+    ++it;
+  }
 
-  // return list
   return newList;
 }
 
@@ -185,85 +186,16 @@ bool WatchedNicknames_Config::hasChanged()
 
 // slots
 
-void WatchedNicknames_Config::updateNetworkNames()
+void WatchedNicknames_Config::updateNotifyListView()
 {
-  // get first notify group
-  QTreeWidget* listView=notifyListView;
-  QTreeWidgetItem* group=listView->topLevelItem(0);
-
-  // make sure all widgets are disabled
-  listView->clearSelection();
-  enableEditWidgets(false);
-
-  // kill dropdown list, the networks might have been renamed
-  networkDropdown->clear();
-
-  // loop as long as there are more groups in the listview
-  while(group)
-  {
-    // get the group id from the listview item
-    int groupId=static_cast<ValueListViewItem*>(group)->getValue();
-    // get the name of the group by having a look at the serverGroupSettings
-    Konversation::ServerGroupSettingsPtr serverGroup=Preferences::serverGroupById(groupId);
-
-    // check if the server group still exists
-    if(serverGroup)
+    // get list of server networks
+    Konversation::ServerGroupHash serverGroupHash = Preferences::serverGroupHash();
+    QHashIterator<int, Konversation::ServerGroupSettingsPtr> it(serverGroupHash);
+    // iterate through all networks in the server group list
+    while(it.hasNext())
     {
-      // get the new name of the server group
-      QString serverGroupName=serverGroup->name();
-
-      // update the name of the group in the listview
-      group->setText(0,serverGroupName);
-
-      // re-add group to dropdown list
-      networkDropdown->insertItem(-1, serverGroupName);
-      // get next group
-      group=listView->itemBelow(group);
+        addNetworkBranch(it.next().value());
     }
-    else
-    {
-      // get the next group from the listview
-      QTreeWidgetItem* tmp=listView->itemBelow(group);
-      // remove the group
-      delete group;
-      // set the current group
-      group=tmp;
-    }
-  } // while
-
-  // get list of server networks
-  Konversation::ServerGroupList serverGroupList = Preferences::serverGroupList();
-
-  // iterate through all networks in the server group list in reverse order
-  // to find if any new networks have been added
-  for(unsigned int gIndex=serverGroupList.count();gIndex;gIndex--)
-  {
-    // try to find the network id in the listview
-    if(!getItemById(listView,serverGroupList[gIndex-1]->id()))
-      // add new server group branch to the notify listview
-      addNetworkBranch(serverGroupList[gIndex-1]);
-  }
-  // remember current list for hasChanged()
-  m_oldNotifyList=currentNotifyList();
-
-}
-
-// check if an item with the given id exists in the listview
-QTreeWidgetItem* WatchedNicknames_Config::getItemById(QTreeWidget* listView,int id)
-{
-  // get the first item in the listview
-  QTreeWidgetItem* lookItem=listView->topLevelItem(0);
-  // look for an item with the given id
-  while(lookItem)
-  {
-    // return item if it matches
-    if(static_cast<ValueListViewItem*>(lookItem)->getValue()==id) return lookItem;
-    // otherwise jump to the next group
-    lookItem=listView->itemBelow(lookItem);
-  } // while
-
-  // not found, return 0
-  return 0;
 }
 
 // helper function to disable "New" button on empty listview
@@ -354,7 +286,7 @@ void WatchedNicknames_Config::entrySelected(QTreeWidgetItem* notifyEntry)
       newItemSelected=true;
       // copy network name and nickname to edit widgets
       nicknameInput->setText(notifyEntry->text(0));
-      networkDropdown->setCurrentIndex(networkDropdown->findText(group->text(0)));
+      networkDropdown->setCurrentIndex(networkDropdown->findData(group->data(0,Qt::UserRole).toInt()));
       // all signals will now emit the modified() signal again
       newItemSelected=false;
     }
@@ -373,29 +305,30 @@ void WatchedNicknames_Config::enableEditWidgets(bool enabled)
 }
 
 // user changed the network this nickname is on
-void WatchedNicknames_Config::networkChanged(const QString& newNetwork)
+void WatchedNicknames_Config::networkChanged(int index)
 {
   // get listview pointer and selected entry
   QTreeWidget* listView=notifyListView;
   QTreeWidgetItem* item=listView->currentItem();
-
+  //actually an int but we keep it as a QVariant for comparisons
+  QVariant newGroupId = networkDropdown->itemData(index);
   // sanity check
   if(item)
   {
     // get group the nickname is presently associated to
     QTreeWidgetItem* group=item->parent();
     // did the user actually change anything?
-    if(group && group->text(0)!=newNetwork)
+    if(group && group->data(0,Qt::UserRole)!=newGroupId)
     {
       // find the branch the new network is in
       QTreeWidgetItem* lookGroup=listView->topLevelItem(0);
-      while(lookGroup && (lookGroup->text(0)!=newNetwork)) lookGroup=listView->itemBelow(lookGroup);
+      while(lookGroup && (lookGroup->data(0,Qt::UserRole)!=newGroupId)) lookGroup=listView->itemBelow(lookGroup);
       // if it was found (should never fail)
       if(lookGroup)
       {
         // deselect nickname, unlink it and relink it to the new network
         item->setSelected(false);
-        group->takeChild(group->indexOfChild(item));
+        group->removeChild(item);
         lookGroup->insertChild(0, item);
         // make the moved nickname current and selected item
         item->setSelected(true);

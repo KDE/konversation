@@ -366,7 +366,7 @@ void ConnectionManager::decodeAddress(const QString& address, ConnectionSettings
     {
         // If host is found to be the name of a server group.
 
-        int serverGroupId = Preferences::serverGroupIdByName(host);
+        int serverGroupId = Preferences::serverGroupIdsByName(host).first();
 
         Konversation::ServerGroupSettingsPtr serverGroup;
 
@@ -379,13 +379,12 @@ void ConnectionManager::decodeAddress(const QString& address, ConnectionSettings
     }
     else
     {
-        if (Preferences::serverGroupByServer(host))
+        QList<Konversation::ServerGroupSettingsPtr> groups = Preferences::serverGroupsByServer(host);
+        if (!groups.isEmpty())
         {
             // If the host is found to be part of a server group's server list.
 
-            Konversation::ServerGroupSettingsPtr serverGroup;
-
-            serverGroup = Preferences::serverGroupByServer(host);
+            Konversation::ServerGroupSettingsPtr serverGroup = groups.first();
 
             settings.setServerGroup(serverGroup);
         }

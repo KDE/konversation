@@ -30,28 +30,13 @@ namespace Konversation
     class ServerListItem : public QTreeWidgetItem
     {
         public:
-            ServerListItem(QTreeWidget* parent, int serverGroupId, int sortIndex,
-                const QString& serverGroup, const QString& identity, const QString& channels);
-            ServerListItem(QTreeWidgetItem* parent, int serverGroupId, int sortIndex, 
-                const QString& name, const ServerSettings& server);
-            
-            int serverGroupId() const { return m_serverGroupId; }
-            void setSortIndex(int id) { m_sortIndex = id; }
-            int sortIndex() const { return m_sortIndex; }
-
-            ServerSettings server() const { return m_server; }
-            QString name() const { return m_name; }
-            bool isServer() const { return m_isServer; }
-            int selectedChildrenCount();
+            ServerListItem(QTreeWidget* tree, QStringList & strings);
+            ServerListItem(QTreeWidgetItem* parent, QStringList & strings);
             bool operator<(const QTreeWidgetItem &other) const;
-            void sortItems(int column, Qt::SortOrder order);
-
-        private:
-            int m_serverGroupId;
-            int m_sortIndex;
-            QString m_name;
-            ServerSettings m_server;
-            bool m_isServer;
+            enum DataRole
+            {
+                SortIndex = Qt::UserRole + 2
+            };
     };
 
     class ServerListDialog : public KDialog
@@ -61,6 +46,13 @@ namespace Konversation
         public:
             explicit ServerListDialog(const QString& title, QWidget *parent = 0);
             ~ServerListDialog();
+            enum DataRole
+            {
+                ServerGroupId = Qt::UserRole + 1,
+                SortIndex = Qt::UserRole + 2,
+                IsServer = Qt::UserRole + 3,
+                ServerId = Qt::UserRole + 4
+            };
 
         public slots:
             void updateServerList();
@@ -95,6 +87,7 @@ namespace Konversation
             Qt::SortOrder m_lastSortOrder;
 
         private:
+            int selectedChildrenCount(QTreeWidgetItem* item);
             Ui::ServerListDialogUI* m_mainWidget;
             QPushButton* m_addButton;
             QPushButton* m_delButton;

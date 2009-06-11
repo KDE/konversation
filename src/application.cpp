@@ -156,16 +156,18 @@ int KonversationApplication::newInstance()
         bool openServerList = Preferences::self()->showServerList();
 
         // handle autoconnect on startup
-        Konversation::ServerGroupList serverGroups = Preferences::serverGroupList();
+        Konversation::ServerGroupHash serverGroups = Preferences::serverGroupHash();
 
         if (url.isEmpty() && !args->isSet("server"))
         {
-            for (Konversation::ServerGroupList::iterator it = serverGroups.begin(); it != serverGroups.end(); ++it)
+            QHashIterator<int, Konversation::ServerGroupSettingsPtr> it(serverGroups);
+            while(it.hasNext())
             {
-                if ((*it)->autoConnectEnabled())
+                it.next();
+                if (it.value()->autoConnectEnabled())
                 {
                     openServerList = false;
-                    m_connectionManager->connectTo(Konversation::CreateNewConnection, (*it)->id());
+                    m_connectionManager->connectTo(Konversation::CreateNewConnection, it.key());
                 }
             }
         }
@@ -376,7 +378,7 @@ void KonversationApplication::readOptions()
 
     if(!groups.isEmpty())
     {
-        Konversation::ServerGroupList serverGroups;
+        Konversation::ServerGroupHash serverGroups;
         QStringList::iterator it;
         QStringList tmp1;
         QStringList::iterator it2;
@@ -442,10 +444,10 @@ void KonversationApplication::readOptions()
 
             serverGroup->setChannelHistory(channelHistory);
 
-            serverGroups.append(serverGroup);
+            serverGroups.insert(serverGroup->id(), serverGroup);
         }
 
-        Preferences::setServerGroupList(serverGroups);
+        Preferences::setServerGroupHash(serverGroups);
     }
 
     // Notify Settings and lists.  Must follow Server List.
@@ -593,9 +595,7 @@ void KonversationApplication::readOptions()
     {
         if(re.indexIn(*itStr) > -1)
         {
-            int serverGroupId = Preferences::serverGroupIdByName(re.cap(1));
-            if(serverGroupId != -1)
-                Preferences::setChannelEncoding(serverGroupId,re.cap(2),channelEncodingEntries[*itStr]);
+                Preferences::setChannelEncoding(re.cap(1),re.cap(2),channelEncodingEntries[*itStr]);
         }
     }
 
@@ -685,12 +685,16 @@ void KonversationApplication::saveOptions(bool updateGUI)
     }
 
     // Add the new servergroups to the config
-    Konversation::ServerGroupList serverGroupList = Preferences::serverGroupList();
-    Konversation::ServerGroupList::iterator it;
+    Konversation::ServerGroupHash serverGroupHash = Preferences::serverGroupHash();
+    QHashIterator<int, Konversation::ServerGroupSettingsPtr> it(serverGroupHash);
     index = 0;
     int index2 = 0;
     int index3 = 0;
-    int width = QString::number(serverGroupList.count()).length();
+    int width=0;
+    QList<int> keys = serverGroupHash.keys();
+    for(int i=0; i<keys.count(); i++)
+        if(width < keys.at(i)) width = keys.at(i);
+    width = QString(width).length();
     QString groupName;
     QStringList servers;
     Konversation::ServerList::iterator it2;
@@ -700,9 +704,10 @@ void KonversationApplication::saveOptions(bool updateGUI)
     QStringList channels;
     QStringList channelHistory;
 
-    for(it = serverGroupList.begin(); it != serverGroupList.end(); ++it)
+    while(it.hasNext())
     {
-        serverlist = (*it)->serverList();
+        it.next();
+        serverlist = (it.value())->serverList();
         servers.clear();
 
         for(it2 = serverlist.begin(); it2 != serverlist.end(); ++it2)
@@ -717,7 +722,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
             index2++;
         }
 
-        channelList = (*it)->channelList();
+        channelList = it.value()->channelList();
         channels.clear();
 
         for(it3 = channelList.begin(); it3 != channelList.end(); ++it3)
@@ -730,7 +735,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
             index3++;
         }
 
-        channelList = (*it)->channelHistory();
+        channelList = it.value()->channelHistory();
         channelHistory.clear();
 
         for(it3 = channelList.begin(); it3 != channelList.end(); ++it3)
@@ -746,16 +751,16 @@ void KonversationApplication::saveOptions(bool updateGUI)
 
         QString sgn = QString("ServerGroup %1").arg(QString::number(index).rightJustified(width,'0'));
         KConfigGroup cgServerGroup(KGlobal::config()->group(sgn));
-        cgServerGroup.writeEntry("Name", (*it)->name());
-        cgServerGroup.writeEntry("Identity", (*it)->identity()->getName());
+        cgServerGroup.writeEntry("Name", it.value()->name());
+        cgServerGroup.writeEntry("Identity", it.value()->identity()->getName());
         cgServerGroup.writeEntry("ServerList", servers);
         cgServerGroup.writeEntry("AutoJoinChannels", channels);
-        cgServerGroup.writeEntry("ConnectCommands", (*it)->connectCommands());
-        cgServerGroup.writeEntry("AutoConnect", (*it)->autoConnectEnabled());
+        cgServerGroup.writeEntry("ConnectCommands", it.value()->connectCommands());
+        cgServerGroup.writeEntry("AutoConnect", it.value()->autoConnectEnabled());
         cgServerGroup.writeEntry("ChannelHistory", channelHistory);
-        cgServerGroup.writeEntry("EnableNotifications", (*it)->enableNotifications());
-        cgServerGroup.writeEntry("Expanded", (*it)->expanded());
-        cgServerGroup.writeEntry("NotifyList",Preferences::notifyStringByGroupName((*it)->name()));
+        cgServerGroup.writeEntry("EnableNotifications", it.value()->enableNotifications());
+        cgServerGroup.writeEntry("Expanded", it.value()->expanded());
+        cgServerGroup.writeEntry("NotifyList",Preferences::notifyStringByGroupId(it.key()));
         index++;
     }
 

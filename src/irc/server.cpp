@@ -1028,7 +1028,10 @@ void Server::incoming()
             QString channelEncoding;
             if( !channelKey.isEmpty() )
             {
-                channelEncoding = Preferences::channelEncoding(getDisplayName(), channelKey);
+                if(getServerGroup())
+                    channelEncoding = Preferences::channelEncoding(getServerGroup()->id(), channelKey);
+                else
+                    channelEncoding = Preferences::channelEncoding(getDisplayName(), channelKey);
             }
             // END set channel encoding if specified
 
@@ -1110,8 +1113,12 @@ int Server::_send_internal(QString outputLine)
 
     //[ PRIVMSG | NOTICE | KICK | PART | TOPIC ] target :message
     if (outputLineSplit.count() > 2 && outboundCommand > 1)
-        channelCodecName=Preferences::channelEncoding(getDisplayName(), outputLineSplit[1]);
-
+    {
+        if(getServerGroup()) // if we're connecting via a servergroup
+            channelCodecName=Preferences::channelEncoding(getServerGroup()->id(), outputLineSplit[1]);
+        else //if we're connecting to a server manually
+            channelCodecName=Preferences::channelEncoding(getDisplayName(), outputLineSplit[1]);
+    }
     QTextCodec* codec;
     if (channelCodecName.isEmpty())
         codec = getIdentity()->getCodec();
@@ -1154,6 +1161,7 @@ int Server::_send_internal(QString outputLine)
                 if (doit)
                 {
                     Konversation::encrypt(blowfishKey, payload);
+
                     encoded = outputLineSplit.at(0).toAscii();
                     //two lines because the compiler insists on using the wrong operator+
                     encoded += ' ' + dest + " :" + payload;
@@ -2563,7 +2571,11 @@ void Server::removeChannelNick(const QString& channelName, const QString& nickna
 QStringList Server::getWatchList()
 {
     // no nickinfo ISON for the time being
-    return Preferences::notifyListByGroupName(getDisplayName());
+    if(getServerGroup())
+        return Preferences::notifyListByGroupId(getServerGroup()->id());
+    else
+        return QStringList();
+
     if (m_serverISON)
         return m_serverISON->getWatchList();
     else
@@ -2575,7 +2587,11 @@ QString Server::getWatchListString() { return getWatchList().join(" "); }
 QStringList Server::getISONList()
 {
     // no nickinfo ISON for the time being
-    return Preferences::notifyListByGroupName(getDisplayName());
+    if(getServerGroup())
+        return Preferences::notifyListByGroupId(getServerGroup()->id());
+    else
+        return QStringList();
+    
     if (m_serverISON)
         return m_serverISON->getISONList();
     else

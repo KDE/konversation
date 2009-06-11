@@ -32,7 +32,7 @@
 #include <qpalette.h>
 #include <qregexp.h>
 #include <qfileinfo.h>
-
+#include <QHashIterator>
 
 struct PreferencesSingleton
 {
@@ -79,7 +79,7 @@ Preferences::Preferences()
     channel.setName("#konversation");
     serverGroup->addChannel(channel);
     serverGroup->setExpanded(false);
-    mServerGroupList.append(serverGroup);
+    mServerGroupHash.insert(0, serverGroup);
     mQuickButtonList = defaultQuickButtonList();
     mAutoreplaceList = defaultAutoreplaceList();
 }
@@ -90,9 +90,9 @@ Preferences::~Preferences()
     qDeleteAll(mIgnoreList);
     qDeleteAll(mHighlightList);
 }
-const Konversation::ServerGroupList Preferences::serverGroupList()
+const Konversation::ServerGroupHash Preferences::serverGroupHash()
 {
-    return self()->mServerGroupList;
+    return self()->mServerGroupHash;
 }
 
 const QStringList Preferences::defaultQuickButtonList()
@@ -149,110 +149,66 @@ void Preferences::clearAutoreplaceList()
 
 // --------------------------- AutoReplace ---------------------------
 
-void Preferences::setServerGroupList(const Konversation::ServerGroupList& list)
+void Preferences::setServerGroupHash(const Konversation::ServerGroupHash& hash)
 {
-    self()->mServerGroupList.clear();
-    self()->mServerGroupList = list;
-
-    Konversation::ServerGroupList::iterator it;
+    self()->mServerGroupHash.clear();
+    self()->mServerGroupHash = hash;
 }
 
 void Preferences::addServerGroup(Konversation::ServerGroupSettingsPtr serverGroup)
 {
-    self()->mServerGroupList.append(serverGroup);
+    Konversation::ServerGroupHash hash = self()->mServerGroupHash;
+    hash.insert(serverGroup->id(), serverGroup);
+    self()->mServerGroupHash = hash;
 }
 
 const Konversation::ServerGroupSettingsPtr Preferences::serverGroupById(int id)
 {
-    if (!self()->mServerGroupList.count())
-    {
-        return Konversation::ServerGroupSettingsPtr();
-    }
-
-    Konversation::ServerGroupList::iterator it;
-
-    for (it = self()->mServerGroupList.begin(); it != self()->mServerGroupList.end(); ++it)
-    {
-        if ((*it)->id() == id)
-        {
-            return (*it);
-        }
-    }
-
-    return  Konversation::ServerGroupSettingsPtr();
+    return  self()->mServerGroupHash.value(id);
 }
 
-const Konversation::ServerGroupSettingsPtr Preferences::serverGroupByServer(const QString& server)
+const QList<Konversation::ServerGroupSettingsPtr> Preferences::serverGroupsByServer(const QString& server)
 {
-    if (!self()->mServerGroupList.count())
+    QList<Konversation::ServerGroupSettingsPtr> serverGroups;
+    QHashIterator<int, Konversation::ServerGroupSettingsPtr> it(self()->mServerGroupHash);
+    while(it.hasNext())
     {
-        return Konversation::ServerGroupSettingsPtr();
-    }
-
-    Konversation::ServerGroupList::iterator it;
-
-    for (it = self()->mServerGroupList.begin(); it != self()->mServerGroupList.end(); ++it)
-    {
-        for (int i = 0; i != (*it)->serverList().count(); i++)
+        it.next();
+        for (int i=0; i != it.value()->serverList().count(); i++)
         {
-            if ((*it)->serverByIndex(i).host().toLower() == server)
-            {
-                return (*it);
-            }
+            if(it.value()->serverByIndex(i).host().toLower() == server)
+                serverGroups.append(it.value());
         }
     }
-
-    return Konversation::ServerGroupSettingsPtr();
+    return serverGroups;
 }
 
-int Preferences::serverGroupIdByName(const QString& serverGroup)
+QList<int> Preferences::serverGroupIdsByName(const QString& serverGroup)
 {
-    Konversation::ServerGroupList::iterator it;
-
-    for (it = self()->mServerGroupList.begin(); it != self()->mServerGroupList.end(); ++it)
+    QList<int> serverIds;
+    QHashIterator<int, Konversation::ServerGroupSettingsPtr> it(self()->mServerGroupHash);
+    while(it.hasNext())
     {
-        if((*it)->name().toLower() == serverGroup.toLower())
-        {
-            return (*it)->id();
-        }
+        if(it.next().value()->name().toLower() == serverGroup.toLower())
+            serverIds.append(it.key());
     }
-
-    return -1;
+    return serverIds;
 }
 
 bool Preferences::isServerGroup(const QString& server)
 {
-    Konversation::ServerGroupList::iterator it;
-
-    for(it = self()->mServerGroupList.begin(); it != self()->mServerGroupList.end(); ++it)
+    QHashIterator<int, Konversation::ServerGroupSettingsPtr> it(self()->mServerGroupHash);
+    while(it.hasNext())
     {
-        if((*it)->name().toLower() == server.toLower())
-        {
+        if(it.next().value()->name().toLower() == server.toLower())
             return true;
-        }
     }
-
     return false;
 }
 
 void Preferences::removeServerGroup(int id)
 {
-    if (!self()->mServerGroupList.count())
-    {
-        return;
-    }
-
-    Konversation::ServerGroupList::iterator it;
-
-    for (it = self()->mServerGroupList.begin(); it != self()->mServerGroupList.end(); ++it)
-    {
-        if ((*it)->id() == id)
-        {
-            self()->mServerGroupList.erase(it);
-
-            return;
-        }
-    }
+    self()->mServerGroupHash.remove(id);
 }
 
 
@@ -323,18 +279,17 @@ void Preferences::setNotifyList(const QMap<int, QStringList> &newList)
 
 const QMap<int, QStringList> Preferences::notifyList() { return self()->mNotifyList; }
 
-const QStringList Preferences::notifyListByGroupName(const QString& groupName)
+const QStringList Preferences::notifyListByGroupId(int serverGroupId)
 {
-  int id=serverGroupIdByName(groupName);
-  if (id && self()->mNotifyList.find(id) != self()->mNotifyList.end())
-        return self()->mNotifyList[id];
-    else
+  if (serverGroupId && self()->mNotifyList.find(serverGroupId) != self()->mNotifyList.end())
+        return self()->mNotifyList.value(serverGroupId);
+  else
         return QStringList();
 }
 
-const QString Preferences::notifyStringByGroupName(const QString& groupName)
+const QString Preferences::notifyStringByGroupId(int serverGroupId)
 {
-    return notifyListByGroupName(groupName).join(" ");
+    return notifyListByGroupId(serverGroupId).join(" ");
 }
 
 bool Preferences::addNotify(int serverGroupId, const QString& newPattern)
@@ -349,19 +304,16 @@ bool Preferences::addNotify(int serverGroupId, const QString& newPattern)
     return false;
 }
 
-bool Preferences::removeNotify(const QString& groupName, const QString& pattern)
+bool Preferences::removeNotify(int serverGroupId, const QString& pattern)
 {
-  int id=serverGroupIdByName(groupName);
-  if(!id) return false;
-
-  if (self()->mNotifyList.find(id) != self()->mNotifyList.end())
+    if (self()->mNotifyList.find(serverGroupId) != self()->mNotifyList.end())
     {
-        QStringList nicknameList = self()->mNotifyList[id];
+        QStringList nicknameList = self()->mNotifyList[serverGroupId];
         nicknameList.removeAll(pattern); //FIXME: what semantics do you really want here?
         if (nicknameList.isEmpty())
-            self()->mNotifyList.remove(id);
+            self()->mNotifyList.remove(serverGroupId);
         else
-            self()->mNotifyList[id] = nicknameList;
+            self()->mNotifyList[serverGroupId] = nicknameList;
         return true;
     }
     return false;
@@ -549,7 +501,23 @@ void Preferences::setDialogFlag(const QString& flagName,bool state)
 // Channel Encodings
 const QString Preferences::channelEncoding(const QString& server,const QString& channel)
 {
-    return channelEncoding(serverGroupIdByName(server),channel);
+    //check all matching server's encodings
+    //TODO when we rewrite dbus, allow for multiple encodings to be returned
+    //for true 'duplicity compatibility'
+    QList<int> serverIds = serverGroupIdsByName(server);
+    QString codec;
+    if(serverIds.count() > 1)
+    {
+        for (int i=0; i < serverIds.count(); i++)
+        {
+            codec = channelEncoding(serverIds.at(i),channel);
+            if(codec != QString())
+                return codec;
+        }
+        return QString();
+    }
+    else
+        return channelEncoding(serverIds.first(),channel);
 }
 
 const QString Preferences::channelEncoding(int serverGroupId,const QString& channel)
@@ -562,7 +530,15 @@ const QString Preferences::channelEncoding(int serverGroupId,const QString& chan
 
 void Preferences::setChannelEncoding(const QString& server,const QString& channel,const QString& encoding)
 {
-    setChannelEncoding(serverGroupIdByName(server),channel,encoding);
+    //set channel encoding for ALL matching servergroups
+    QList<int> serverIds = serverGroupIdsByName(server);
+    if(serverIds.count() > 1)
+    {
+        for(int i=0; i < serverIds.count(); i++)
+            setChannelEncoding(serverIds.at(i),channel,encoding);
+    }
+    else
+        setChannelEncoding(serverIds.first(),channel,encoding);
 }
 
 void Preferences::setChannelEncoding(int serverGroupId,const QString& channel,const QString& encoding)

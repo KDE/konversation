@@ -21,11 +21,12 @@
 namespace Ui
 {
 class ServerGroupDialogUI;
+class ChannelDialogUI;
+class ServerDialogUI;
 }
 
 namespace Konversation
 {
-
     class ServerGroupDialog : public KDialog
     {
         Q_OBJECT
@@ -41,10 +42,10 @@ namespace Konversation
             int execAndEditServer(ServerSettings server);
 
             bool identitiesNeedsUpdate() const { return m_identitiesNeedsUpdate; }
-            
+
         public slots:
             virtual void accept();
-            
+
         protected slots:
             void addServer();
             void editServer();
@@ -80,5 +81,40 @@ namespace Konversation
             ChannelList m_channelHistory;
     };
 
+    class ServerDialog : public KDialog
+    {
+        Q_OBJECT
+        public:
+            explicit ServerDialog(const QString& title, QWidget *parent = 0);
+            ~ServerDialog();
+
+            void setServerSettings(const ServerSettings& server);
+            ServerSettings serverSettings();
+
+        protected slots:
+            void slotOk();
+            void slotServerNameChanged( const QString& );
+        private:
+            Ui::ServerDialogUI* m_mainWidget;
+    };
+
+    class ChannelSettings;
+    class ChannelDialog : public KDialog
+    {
+        Q_OBJECT
+        public:
+            explicit ChannelDialog(const QString& title, QWidget *parent = 0);
+            ~ChannelDialog();
+
+            void setChannelSettings(const ChannelSettings& channel);
+            ChannelSettings channelSettings();
+
+        protected slots:
+            void slotOk();
+            void slotServerNameChanged( const QString& );
+
+        private:
+            Ui::ChannelDialogUI* m_mainWidget;
+    };
 }
 #endif

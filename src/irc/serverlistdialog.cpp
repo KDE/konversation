@@ -17,7 +17,6 @@
 #include "connectionsettings.h"
 #include "ui_serverlistdialogui.h"
 
-#include <qpushbutton.h>
 #include <qcheckbox.h>
 #include <QHeaderView>
 
@@ -33,47 +32,20 @@ namespace Konversation
     //
     // ServerListItem
     //
-
-    ServerListItem::ServerListItem(QTreeWidget* parent, int serverGroupId, int sortIndex,
-        const QString& serverGroup, const QString& identity, const QString& channels)
-        : QTreeWidgetItem(parent, QStringList() << serverGroup << identity << channels)
+    ServerListItem::ServerListItem( QTreeWidget * tree, QStringList & strings) : QTreeWidgetItem (tree,strings)
     {
-        m_serverGroupId = serverGroupId;
-        m_sortIndex = sortIndex;
-        m_name = serverGroup;
-        m_isServer = false;
     }
 
-    ServerListItem::ServerListItem(QTreeWidgetItem* parent, int serverGroupId, int sortIndex,
-        const QString& name, const ServerSettings& server)
-        : QTreeWidgetItem(parent, QStringList() << name)
+    ServerListItem::ServerListItem( QTreeWidgetItem * parent, QStringList & strings) : QTreeWidgetItem (parent,strings)
     {
-        m_serverGroupId = serverGroupId;
-        m_sortIndex = sortIndex;
-        m_name = name;
-        m_server = server;
-        m_isServer = true;
     }
-    
-    int ServerListItem::selectedChildrenCount()
-    {
-        int count = 0;
-        for(int i=0; i<childCount(); i++)
-        {
-            if (child(i)->isSelected())
-                ++count;
-        }
 
-        return count;
-    }
-    
     bool ServerListItem::operator<(const QTreeWidgetItem &other) const
     {
         int column = treeWidget()->sortColumn();
-        const ServerListItem* item = static_cast<const ServerListItem*>(&other);
         if (column==0)
         {
-            if (sortIndex() >= item->sortIndex())
+            if (data(0,SortIndex).toInt() >= other.data(0,SortIndex).toInt())
             {
                 return false;
             }
@@ -93,7 +65,7 @@ namespace Konversation
 
         m_mainWidget = new Ui::ServerListDialogUI();
         m_mainWidget->setupUi(mainWidget());
-        m_serverList = static_cast<ServerListView*>(m_mainWidget->m_serverList);
+        m_serverList = m_mainWidget->m_serverList;
         m_addButton = m_mainWidget->m_addButton;
         m_delButton = m_mainWidget->m_delButton;
         m_editButton = m_mainWidget->m_editButton;
@@ -153,21 +125,20 @@ namespace Konversation
     void ServerListDialog::slotOk()
     {
         QList<QTreeWidgetItem*> selected = m_serverList->selectedItems();
-        foreach (QTreeWidgetItem* i, selected)
+        foreach (QTreeWidgetItem* item, selected)
         {
-            ServerListItem * item = static_cast<ServerListItem*>(i);
-            if (item->isServer())
+            if (item->data(0,IsServer).toBool())
             {
                 ConnectionSettings settings;
+                ServerGroupSettingsPtr serverGroup = Preferences::serverGroupById(item->data(0,ServerGroupId).toInt());
+                settings.setServerGroup(serverGroup);
 
-                settings.setServerGroup(Preferences::serverGroupById(item->serverGroupId()));
-
-                settings.setServer(item->server());
+                settings.setServer(serverGroup->serverByIndex(item->data(0,ServerId).toInt()));
 
                 emit connectTo(Konversation::PromptToReuseConnection, settings);
             }
             else
-                emit connectTo(Konversation::PromptToReuseConnection, item->serverGroupId());
+                emit connectTo(Konversation::PromptToReuseConnection, item->data(0,ServerGroupId).toInt());
         }
     }
 
@@ -186,11 +157,11 @@ namespace Konversation
 
     void ServerListDialog::slotEdit()
     {
-        ServerListItem* item = static_cast<ServerListItem*>(m_serverList->selectedItems().first());
+        QTreeWidgetItem* item = m_serverList->selectedItems().first();
 
         if (item)
         {
-            Konversation::ServerGroupSettingsPtr serverGroup = Preferences::serverGroupById(item->serverGroupId());
+            Konversation::ServerGroupSettingsPtr serverGroup = Preferences::serverGroupById(item->data(0,ServerGroupId).toInt());
 
             if (serverGroup)
             {
@@ -198,9 +169,9 @@ namespace Konversation
 
                 dlg->setServerGroupSettings(serverGroup);
 
-                if (item->isServer())
+                if (item->data(0,IsServer).toBool())
                 {
-                    if(dlg->execAndEditServer(item->server()) == KDialog::Accepted)
+                    if(dlg->execAndEditServer(serverGroup->serverByIndex(item->data(0,ServerId).toInt())) == KDialog::Accepted)
                     {
                         delete item;
 
@@ -237,34 +208,32 @@ namespace Konversation
     {
         QList<QTreeWidgetItem*> selectedItems;   
         // Make sure we're not deleting a network's only servers
-        ServerListItem* parent = 0;
-        ServerListItem* item;
+        QTreeWidgetItem* parent = 0;
         QTreeWidgetItemIterator it(m_serverList, QTreeWidgetItemIterator::Selected);
         while (*it)
         {
             //if it has a parent that's also selected it'll be deleted anyway so no need to worry
             if (!(*it)->parent() || !(*it)->parent()->isSelected())
             {
-                item = static_cast<ServerListItem*>(*it);
-                if (item->isServer())
+                if ((*it)->data(0,IsServer).toBool())
                 {
-                    parent = static_cast<ServerListItem*>(item->parent());
+                    parent = (*it)->parent();
                     
                     if (parent && parent->childCount() == 1)
                     {
-                        KMessageBox::error(this, i18n("You cannot delete %1.\n\nThe network %2 needs to have at least one server.",item->name(),parent->name()));
+                        KMessageBox::error(this, i18n("You cannot delete %1.\n\nThe network %2 needs to have at least one server.",(*it)->text(0),parent->text(0)));
                         return;
                     }
-                    else if (parent && parent->childCount() == parent->selectedChildrenCount())
+                    else if (parent && parent->childCount() == selectedChildrenCount(parent))
                     {
                         KMessageBox::error(this, i18np("You cannot delete the selected server.\n\nThe network %2 needs to have at least one server.",
                                             "You cannot delete the selected servers.\n\nThe network %2 needs to have at least one server.",
-                                            parent->selectedChildrenCount(),
-                                            parent->name()));
+                                            selectedChildrenCount(parent),
+                                            parent->text(0)));
                                             return;
                     }
                 }
-                selectedItems.append(item); // if it hasn't returned by now it's good to go
+                selectedItems.append(*it); // if it hasn't returned by now it's good to go
             }
             ++it;
         }
@@ -272,11 +241,10 @@ namespace Konversation
             return;
         // Ask the user if he really wants to delete what he selected
         QString question;
-        item = static_cast<ServerListItem*>(selectedItems.first());
         if (selectedItems.count()>1)
             question = i18n("Do you really want to delete the selected entries?");
         else
-            question = i18n("Do you really want to delete %1?",item->name());
+            question = i18n("Do you really want to delete %1?",selectedItems.first()->text(0));
 
         if (KMessageBox::warningContinueCancel(this,question) == KMessageBox::Cancel)
         {
@@ -285,22 +253,20 @@ namespace Konversation
 
         // Have fun deleting
         QTreeWidgetItem* rootItem = m_serverList->invisibleRootItem();
-        foreach (QTreeWidgetItem* itemWidget, selectedItems)
+        foreach (QTreeWidgetItem* item, selectedItems)
         {
-            item = static_cast<ServerListItem*>(itemWidget);
-            
             if (item == m_selectedItemPtr)
                 m_selectedItemPtr = 0;
             
             rootItem->removeChild(item);
-            if (item->isServer())
+            if (item->data(0,IsServer).toBool())
             {
-                Konversation::ServerGroupSettingsPtr serverGroup = Preferences::serverGroupById(item->serverGroupId());
-                serverGroup->removeServer(item->server());
+                Konversation::ServerGroupSettingsPtr serverGroup = Preferences::serverGroupById(item->data(0,ServerGroupId).toInt());
+                serverGroup->removeServer(serverGroup->serverByIndex(item->data(0,ServerId).toInt()));
             }
             else
             {
-                Preferences::removeServerGroup(item->serverGroupId());
+                Preferences::removeServerGroup(item->data(0,ServerGroupId).toInt());
             }
             delete item;
         }
@@ -310,15 +276,13 @@ namespace Konversation
 
     void ServerListDialog::slotSetGroupExpanded(QTreeWidgetItem* item)
     {
-        ServerListItem* listItem = static_cast<ServerListItem*>(item);
-        Konversation::ServerGroupSettingsPtr serverGroup = Preferences::serverGroupById(listItem->serverGroupId());
+        Konversation::ServerGroupSettingsPtr serverGroup = Preferences::serverGroupById(item->data(0,ServerGroupId).toInt());
         serverGroup->setExpanded(true);
     }
 
     void ServerListDialog::slotSetGroupCollapsed(QTreeWidgetItem* item)
     {
-        ServerListItem* listItem = static_cast<ServerListItem*>(item);
-        Konversation::ServerGroupSettingsPtr serverGroup = Preferences::serverGroupById(listItem->serverGroupId());
+        Konversation::ServerGroupSettingsPtr serverGroup = Preferences::serverGroupById(item->data(0,ServerGroupId).toInt());
         serverGroup->setExpanded(false);
     }
 
@@ -332,26 +296,26 @@ namespace Konversation
 
     void ServerListDialog::slotMoved()
     {
-        Konversation::ServerGroupList newServerGroupList;
+        Konversation::ServerGroupHash newServerGroupHash;
 
-        ServerListItem* item;
+        QTreeWidgetItem* item;
         int sort=0;
         for (int i=0; i < m_serverList->topLevelItemCount(); i++ )
         {
-            item = static_cast<ServerListItem*>(m_serverList->topLevelItem(i));
-            Konversation::ServerGroupSettingsPtr serverGroup = Preferences::serverGroupById(item->serverGroupId());
+            item = m_serverList->topLevelItem(i);
+            Konversation::ServerGroupSettingsPtr serverGroup = Preferences::serverGroupById(item->data(0,ServerGroupId).toInt());
             serverGroup->setSortIndex(sort);
 
-            newServerGroupList.append(serverGroup);
+            newServerGroupHash.insert(item->data(0,ServerGroupId).toInt(),serverGroup);
 
-            item->setSortIndex(sort++);
+            item->setData(0,SortIndex,sort++);
             for(int j=0; j < item->childCount(); j++)
-                static_cast<ServerListItem*>(item->child(j))->setSortIndex(++sort);
+                item->child(j)->setData(0,SortIndex,++sort);
 
         }
-        if(Preferences::serverGroupList() != newServerGroupList)
+        if(Preferences::serverGroupHash() != newServerGroupHash)
         {
-            Preferences::setServerGroupList(newServerGroupList);
+            Preferences::setServerGroupHash(newServerGroupHash);
 
             emit serverGroupsChanged();
         }
@@ -375,7 +339,6 @@ namespace Konversation
     {
         int sortTotal = m_serverList->topLevelItemCount();
         serverGroup->setSortIndex(sortTotal + 1);
-        
 
         Preferences::addServerGroup(serverGroup);
         QTreeWidgetItem* item = insertServerGroup(serverGroup);
@@ -388,13 +351,13 @@ namespace Konversation
     {
         if (!m_selectedItem && m_serverList->currentItem())
         {
-            ServerListItem* item = static_cast<ServerListItem*>(m_serverList->currentItem());
+            QTreeWidgetItem* item = m_serverList->currentItem();
 
             m_selectedItem = true;
-            m_selectedServerGroupId = item->serverGroupId();
+            m_selectedServerGroupId = item->data(0,ServerGroupId).toInt();
 
-            if (item->isServer())
-                m_selectedServer = item->server();
+            if (item->data(0,IsServer).toBool())
+                m_selectedServer = Preferences::serverGroupById(m_selectedServerGroupId)->serverByIndex(item->data(0,ServerId).toInt());
             else
                 m_selectedServer = ServerSettings("");
         }
@@ -402,21 +365,16 @@ namespace Konversation
         m_serverList->setUpdatesEnabled(false);
         m_serverList->clear();
 
-        Konversation::ServerGroupList serverGroups = Preferences::serverGroupList();
-        Konversation::ServerGroupList::const_iterator it;
+        Konversation::ServerGroupHash serverGroups = Preferences::serverGroupHash();
+        QHashIterator<int, ServerGroupSettingsPtr> it(serverGroups);
 
         QTreeWidgetItem* networkItem = 0;
-
-        for(it = serverGroups.constBegin(); it != serverGroups.constEnd(); ++it)
+        while(it.hasNext())
         {
-            networkItem = insertServerGroup((*it));
-
-            // The method was called by slotEdit() ... initialize a pointer to the new
-            // location of the edited server group
-            if (m_selectedItem && m_selectedServer.host().isEmpty() && (*it)->id()==m_selectedServerGroupId)
-            {
+            it.next();
+            networkItem = insertServerGroup((it.value()));
+            if(m_selectedItem && m_selectedServer.host().isEmpty() && it.key()==m_selectedServerGroupId)
                 m_selectedItemPtr = networkItem;
-            }
         }
 
         // Highlight the last edited item
@@ -448,15 +406,13 @@ namespace Konversation
             channels += (*channelIt).name();
         }
 
-        QTreeWidgetItem* networkItem = 0;
-
         // Insert the server group into the list
-        networkItem = new ServerListItem(m_serverList,
-                                  serverGroup->id(),
-                                  serverGroup->sortIndex(),
-                                  serverGroup->name(),
-                                  serverGroup->identity()->getName(),
-                                  channels);
+        QTreeWidgetItem* networkItem = new ServerListItem(m_serverList, QStringList() << serverGroup->name()
+                                                                        << serverGroup->identity()->getName()
+                                                                        << channels);
+        networkItem->setData(0,ServerGroupId,serverGroup->id());
+        networkItem->setData(0,SortIndex,serverGroup->sortIndex());
+        networkItem->setData(0,IsServer,false);
 
         // Recreate expanded/collapsed state
         if (serverGroup->expanded())
@@ -479,13 +435,11 @@ namespace Konversation
                 name += + " (SSL)";
 
             // Insert the server into the list, as child of the server group list item
-            QTreeWidgetItem* serverItem = new ServerListItem(networkItem,
-                                            serverGroup->id(),
-                                            i,
-                                            name,
-                                            (*serverIt));
-
-
+            QTreeWidgetItem* serverItem = new ServerListItem(networkItem, QStringList() << name);
+            serverItem->setData(0,ServerGroupId,serverGroup->id());
+            serverItem->setData(0,SortIndex,i);
+            serverItem->setData(0,IsServer,true);
+            serverItem->setData(0,ServerId,i);
             // Initialize a pointer to the new location of the last edited server
             if (m_selectedItem && m_selectedServer==(*serverIt))
                 m_selectedItemPtr = serverItem;
@@ -499,6 +453,16 @@ namespace Konversation
     void ServerListDialog::setShowAtStartup(bool show)
     {
         Preferences::self()->setShowServerList(show);
+    }
+
+    int ServerListDialog::selectedChildrenCount(QTreeWidgetItem* item)
+    {
+        int count=0;
+        for(int i=0; i< item->childCount(); i++)
+        {
+            if(item->child(i)) count++;
+        }
+        return count;
     }
 }
 

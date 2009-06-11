@@ -1080,8 +1080,6 @@ namespace Konversation
     {
         OutputFilterResult result;
 
-        QString groupName = m_server->getDisplayName();
-
         int serverGroupId = -1;
 
         if (m_server->getServerGroup())
@@ -1094,7 +1092,7 @@ namespace Konversation
             for(int index = 0; index < list.count(); index++)
             {
                 // Try to remove current pattern
-                if(!Preferences::removeNotify(groupName, list[index]))
+                if(!Preferences::removeNotify(serverGroupId, list[index]))
                 {
                     // If remove failed, try to add it instead
                     if(!Preferences::addNotify(serverGroupId, list[index]))
@@ -1108,7 +1106,7 @@ namespace Konversation
         // show (new) notify list to user
         //TODO FIXME uh, wtf? my brain has no room in it for this kind of fucking shit
 
-        QString list = Preferences::notifyStringByGroupName(groupName) + ' ' + Konversation::Addressbook::self()->allContactsNicksForServer(m_server->getServerName(), m_server->getDisplayName()).join(" ");
+        QString list = Preferences::notifyStringByGroupId(serverGroupId) + ' ' + Konversation::Addressbook::self()->allContactsNicksForServer(m_server->getServerName(), m_server->getDisplayName()).join(" ");
 
         result.typeString = i18n("Notify");
 

@@ -780,30 +780,31 @@ void KonversationMainWindow::openNotify()
 
 void KonversationMainWindow::openIdentitiesDialog()
 {
-    Konversation::IdentityDialog dlg(this);
-
-    if (dlg.exec() == KDialog::Accepted)
+    QPointer<Konversation::IdentityDialog> dlg = new Konversation::IdentityDialog(this);
+    if (dlg->exec() == KDialog::Accepted)
     {
         if (m_serverListDialog)
             m_serverListDialog->updateServerList();
         m_viewContainer->updateViewEncoding(m_viewContainer->getFrontView());
     }
+    delete dlg;
 }
 
 IdentityPtr KonversationMainWindow::editIdentity(IdentityPtr identity)
 {
     IdentityPtr newIdentity;
 
-    Konversation::IdentityDialog dlg(this);
-    newIdentity = dlg.setCurrentIdentity(identity);
+    QPointer<Konversation::IdentityDialog> dlg = new Konversation::IdentityDialog(this);
+    newIdentity = dlg->setCurrentIdentity(identity);
 
-    if ((dlg.exec() == KDialog::Accepted) && m_serverListDialog)
+    if ((dlg->exec() == KDialog::Accepted) && m_serverListDialog)
     {
         m_serverListDialog->updateServerList();
         return newIdentity;
     }
     else
         return IdentityPtr();
+    delete dlg;
 }
 
 void KonversationMainWindow::openNotifications()

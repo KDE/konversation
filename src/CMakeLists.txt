@@ -37,7 +37,6 @@ set (irc_SRCS
 
     irc/query.cpp
     irc/channel.cpp
-    irc/channeldialog.cpp
     irc/channellistpanel.cpp
     irc/channellistviewitem.cpp
     irc/channeloptionsdialog.cpp
@@ -57,7 +56,6 @@ set (irc_SRCS
     irc/inputfilter.cpp
     irc/outputfilter.cpp
     irc/ircqueue.cpp
-    irc/serverdialog.cpp
     irc/servergroupdialog.cpp
     irc/servergroupsettings.cpp
     irc/serverison.cpp
@@ -67,8 +65,10 @@ set (irc_SRCS
 )
 
 kde4_add_ui_files(irc_SRCS
+    irc/channeldialogui.ui
     irc/channeloptionsui.ui
     irc/joinchannelui.ui
+    irc/serverdialogui.ui
     irc/servergroupdialogui.ui
     irc/serverlistdialogui.ui
 )
@@ -89,7 +89,6 @@ set(config_SRCS
     config/quickbuttons_config.cpp
     config/warnings_config.cpp
     config/watchednicknames_config.cpp
-    config/valuelistviewitem.cpp
 )
 
 kde4_add_ui_files(config_SRCS
