@@ -27,6 +27,7 @@ Changes since 1.2-alpha3:
   bled in both Konversation and your router, Konversation now knows how
   to ask your router to set up the necessary port forward, and also how
   to to ask it to remove it later.
+* Added support for the KDE 4 version of JuK to the bundled 'media' script.
 
 
 Changes from 1.2-alpha2 to 1.2-alpha3:
