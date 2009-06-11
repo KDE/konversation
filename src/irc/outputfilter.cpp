@@ -664,18 +664,15 @@ namespace Konversation
                 return result;
             }
         }
-        else if (message.startsWith(commandChar+"me"))
-        {
-            result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + "ACTION " + message.mid(4) + '\x01';
-            output = QString("* %1 %2").arg(myNick).arg(message.mid(4));
-        }
         else
         {
-            result.toServer = "PRIVMSG " + recipient + " :" + message;
             output = message;
-        }
 
-        ::Query* query = 0;
+            if (message.startsWith(commandChar+"me"))
+                result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + "ACTION " + message.mid(4) + '\x01';
+            else
+                result.toServer = "PRIVMSG " + recipient + " :" + message;
+        }
 
         // If this is a /query, always open a query window.
         // Treat "/msg nick" as "/query nick".
@@ -685,34 +682,10 @@ namespace Konversation
             // We only want to create ('obtain') a new nickinfo if we have done /query
             // or "/msg nick".  Not "/msg nick message".
             NickInfoPtr nickInfo = m_server->obtainNickInfo(recipient);
-            query = m_server->addQuery(nickInfo, true /*we initiated*/);
+            ::Query* query = m_server->addQuery(nickInfo, true /*we initiated*/);
 
             // Force focus if the user did not specify any message.
             if (output.isEmpty()) emit showView(query);
-        }
-        else // We have "/msg nick message".
-            query = m_server->getQueryByName(recipient);
-
-        // Log if and only if the query open.
-        if (query && !output.isEmpty())
-        {
-            if (message.startsWith(commandChar + "me"))
-                query->appendAction(myNick, message.mid(4));
-            else
-                query->appendQuery(myNick, output);
-        }
-
-        if (recipientIsAChannel && !output.isEmpty())
-        {
-            Channel* channel = m_server->getChannelByName(recipient);
-
-            if (channel)
-            {
-                if (message.startsWith(commandChar + "me"))
-                    channel->appendAction(myNick, message.mid(4));
-                else
-                    channel->append(myNick, output);
-            }
         }
 
         // Result should be completely empty;

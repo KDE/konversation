@@ -34,6 +34,10 @@ Changes since 1.2-alpha3:
   with '/msg <nick|channel> <message>' consistent between channel, query
   and status tabs (it now looks like in the former in the latter two as
   well).
+* Fixed the visualization of '/msg <nick|channel> <message>' (i.e. the
+  '<-> target> message' line) being shown only after adding the resul-
+  ting message to the target chat view (if present), causing an odd-look-
+  ing order if the origin view and the target view are the same.
 
 
 Changes from 1.2-alpha2 to 1.2-alpha3:

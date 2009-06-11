@@ -256,7 +256,7 @@ void Query::sendQueryText(const QString& sendLine)
             if(result.type == Konversation::Action) appendAction(m_server->getNickname(), result.output);
             else if(result.type == Konversation::Command) appendCommandMessage(result.typeString, result.output);
             else if(result.type == Konversation::Program) appendServerMessage(result.typeString, result.output);
-            else if(result.type == Konversation::PrivateMessage) appendQuery(result.typeString, result.output, true);
+            else if(result.type == Konversation::PrivateMessage) msgHelper(result.typeString, result.output);
             else if(!result.typeString.isEmpty()) appendQuery(result.typeString, result.output);
             else appendQuery(m_server->getNickname(), result.output);
         }

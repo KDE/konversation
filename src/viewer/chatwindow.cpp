@@ -12,6 +12,7 @@
 
 #include "chatwindow.h"
 #include "channel.h"
+#include "query.h"
 #include "ircview.h"
 #include "server.h"
 #include "application.h" ////// header renamed
@@ -532,6 +533,68 @@ void ChatWindow::activateTabNotification(Konversation::TabNotifyType type)
 void ChatWindow::resetTabNotification()
 {
     m_currentTabNotify = Konversation::tnfNone;
+}
+
+void ChatWindow::msgHelper(const QString& recipient, const QString& message)
+{
+    // FIXME: This method merely exists as a stop-gap measure to
+    // work around a design problem when it comes to handling the
+    // 'msg' (and 'query' with a message payload) commands. When
+    // the user uses either of these, we show a visualization of
+    // what he/she has done in the form of '<-> target> message>'
+    // in the chat view. This visualization should be shown before
+    // the resulting message when the origin view is the same as
+    // the target view. Since the visualization is appended by the
+    // ChatWindow object after OutputFilter has been used to iden-
+    // tify the command, appending the resulting message needs to
+    // be done here as well rather than in OutputFilter so it can
+    // be done after the visualization has been appended. This is
+    // ugly, and a future redesign of OutputFilter should be able
+    // to handle both the visualization and the resulting message.
+
+    if (recipient.isEmpty() || message.isEmpty())
+        return;
+
+    bool isAction = false;
+    QString result = message;
+    QString visualization;
+
+    if (result.startsWith(Preferences::self()->commandChar() + "me"))
+    {
+        isAction = true;
+
+        result = result.mid(4);
+        visualization = QString("* %1 %2").arg(m_server->getNickname()).arg(result);
+    }
+    else
+        visualization = result;
+
+    appendQuery(recipient, visualization, true);
+
+    if (!getServer())
+        return;
+
+    ::Query* query = m_server->getQueryByName(recipient);
+
+    if (query)
+    {
+        if (isAction)
+            query->appendAction(m_server->getNickname(), result);
+        else
+            query->appendQuery(m_server->getNickname(), result);
+
+        return;
+    }
+
+    ::Channel* channel = m_server->getChannelByName(recipient);
+
+    if (channel)
+    {
+        if (isAction)
+            channel->appendAction(m_server->getNickname(), result);
+        else
+            channel->append(m_server->getNickname(), result);
+    }
 }
 
 #include "chatwindow.moc"

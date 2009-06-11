@@ -123,7 +123,7 @@ void StatusPanel::sendStatusText(const QString& sendLine)
 
         if(!result.output.isEmpty())
         {
-            if(result.type == Konversation::PrivateMessage) appendQuery(result.typeString, result.output, true);
+            if(result.type == Konversation::PrivateMessage) msgHelper(result.typeString, result.output);
             else appendServerMessage(result.typeString, result.output);
         }
         m_server->queue(result.toServer);
