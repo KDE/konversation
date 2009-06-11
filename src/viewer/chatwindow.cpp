@@ -536,21 +536,15 @@ void ChatWindow::resetTabNotification()
 }
 
 void ChatWindow::msgHelper(const QString& recipient, const QString& message)
-{
-    // FIXME: This method merely exists as a stop-gap measure to
-    // work around a design problem when it comes to handling the
-    // 'msg' (and 'query' with a message payload) commands. When
-    // the user uses either of these, we show a visualization of
-    // what he/she has done in the form of '<-> target> message>'
-    // in the chat view. This visualization should be shown before
-    // the resulting message when the origin view is the same as
-    // the target view. Since the visualization is appended by the
-    // ChatWindow object after OutputFilter has been used to iden-
-    // tify the command, appending the resulting message needs to
-    // be done here as well rather than in OutputFilter so it can
-    // be done after the visualization has been appended. This is
-    // ugly, and a future redesign of OutputFilter should be able
-    // to handle both the visualization and the resulting message.
+    {
+    // A helper method for handling the 'msg' and 'query' (with a message
+    // payload) commands. When the user uses either, we show a visualiza-
+    // tion of what he/she has sent in the form of '<-> target> message>'
+    // in the chat view of the tab the command was issued in, as well as
+    // add the resulting message to the target view (if present), in that
+    // order. The order is especially important as the origin and target
+    // views may be the same, and the two messages may thus appear toge-
+    // ther and should be sensibly ordered.
 
     if (recipient.isEmpty() || message.isEmpty())
         return;
