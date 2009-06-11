@@ -14,11 +14,11 @@
 #include "application.h" ////// header renamed
 #include "config/preferences.h"
 
-#include <qstring.h>
-#include <qregexp.h>
-#include <qpixmap.h>
-#include <qbitmap.h>
-#include <qpainter.h>
+#include <QString>
+#include <QRegExp>
+#include <QPixmap>
+#include <QBitmap>
+#include <QPainter>
 #include <klocale.h>
 
 

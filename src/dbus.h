@@ -17,7 +17,7 @@
 
 #include "common.h"
 
-#include <qobject.h>
+#include <QObject>
 
 namespace Konversation
 {

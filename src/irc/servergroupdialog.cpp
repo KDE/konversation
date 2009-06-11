@@ -21,11 +21,11 @@
 #include "ui_serverdialogui.h"
 #include "ui_channeldialogui.h"
 
-#include <qlayout.h>
-#include <qlabel.h>
-#include <qpushbutton.h>
-#include <qtoolbutton.h>
-#include <qcheckbox.h>
+#include <QLayout>
+#include <QLabel>
+#include <QPushButton>
+#include <QToolButton>
+#include <QCheckBox>
 
 #include <klocale.h>
 #include <kiconloader.h>

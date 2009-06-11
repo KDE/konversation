@@ -18,8 +18,8 @@
 #ifndef HIGHLIGHT_H
 #define HIGHLIGHT_H
 
-#include <qstring.h>
-#include <qcolor.h>
+#include <QString>
+#include <QColor>
 
 #include <kurl.h>
 

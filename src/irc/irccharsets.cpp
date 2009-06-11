@@ -11,9 +11,9 @@
 #include "irccharsets.h"
 
 #include <qglobal.h>
-#include <qregexp.h>
+#include <QRegExp>
 #include <qlocale.h>
-#include <qtextcodec.h>
+#include <QTextCodec>
 #include <kcharsets.h>
 #include <kdebug.h>
 #include <kglobal.h>

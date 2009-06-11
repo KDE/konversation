@@ -29,9 +29,9 @@
 #include <kurl.h>
 #include <kuser.h>
 
-#include <qpalette.h>
-#include <qregexp.h>
-#include <qfileinfo.h>
+#include <QPalette>
+#include <QRegExp>
+#include <QFileInfo>
 #include <QHashIterator>
 
 struct PreferencesSingleton

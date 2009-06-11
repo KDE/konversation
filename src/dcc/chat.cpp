@@ -32,8 +32,8 @@
 
 
 #include <qhostaddress.h>
-#include <qtextcodec.h>
-#include <qsplitter.h>
+#include <QTextCodec>
+#include <QSplitter>
 #include <QTextStream>
 #include <QShowEvent>
 #include <QTcpSocket>

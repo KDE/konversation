@@ -14,7 +14,7 @@
 #include "server.h"
 #include "channel.h"
 
-#include <qstringlist.h>
+#include <QStringList>
 
 
 namespace Konversation

@@ -20,7 +20,7 @@
 
 #include "transfer.h" ////// header renamed
 
-#include <qfile.h>
+#include <QFile>
 #include <QAbstractSocket>
 
 class QTimer;

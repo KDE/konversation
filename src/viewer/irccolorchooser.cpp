@@ -15,8 +15,8 @@
 #include "irccolorchooser.h"
 #include "config/preferences.h"
 
-#include <qlabel.h>
-#include <qpixmap.h>
+#include <QLabel>
+#include <QPixmap>
 
 #include <klocale.h>
 #include <kcombobox.h>

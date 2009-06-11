@@ -18,8 +18,8 @@
 #include <kabc/addressbook.h>
 #include <kabc/stdaddressbook.h>
 
-#include <qobject.h>
-#include <qregexp.h>
+#include <QObject>
+#include <QRegExp>
 
 #include "../viewer/images.h"
 #include "../irc/nickinfo.h"

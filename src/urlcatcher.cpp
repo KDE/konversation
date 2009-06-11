@@ -18,9 +18,9 @@
 #include "application.h" ////// header renamed
 #include "viewcontainer.h"
 
-#include <qpushbutton.h>
-#include <qclipboard.h>
-#include <qlayout.h>
+#include <QPushButton>
+#include <QClipboard>
+#include <QLayout>
 #include <QTreeWidget>
 
 #include <kdebug.h>

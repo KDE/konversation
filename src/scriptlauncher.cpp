@@ -15,9 +15,9 @@
 #include "application.h"
 #include "server.h"
 
-#include <qstringlist.h>
-#include <qfileinfo.h>
-#include <qprocess.h>
+#include <QStringList>
+#include <QFileInfo>
+#include <QProcess>
 
 #include <kdebug.h>
 #include <kstandarddirs.h>

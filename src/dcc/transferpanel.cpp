@@ -22,7 +22,7 @@
 
 
 #include <q3header.h>
-#include <qpushbutton.h>
+#include <QPushButton>
 
 #include <kdebug.h>
 #include <kdeversion.h>

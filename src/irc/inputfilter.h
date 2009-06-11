@@ -16,8 +16,8 @@
 
 #include "ignore.h"
 
-#include <qobject.h>
-#include <qstringlist.h>
+#include <QObject>
+#include <QStringList>
 #include <QMap>
 
 class Server;

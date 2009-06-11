@@ -21,11 +21,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #ifndef KIMIFACE_H
 #define KIMIFACE_H
 
-#include <qpixmap.h>
+#include <QPixmap>
 //Added by qt3to4:
 #include <Q3CString>
 #include <dcopobject.h>
-#include <qstringlist.h>
+#include <QStringList>
 #include <kurl.h>
 
 /**

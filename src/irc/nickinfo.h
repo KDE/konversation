@@ -15,8 +15,8 @@
 #ifndef NICKINFO_H
 #define NICKINFO_H
 
-#include <qstringlist.h>
-#include <qdatetime.h>
+#include <QStringList>
+#include <QDateTime>
 #include <QTextStream>
 #include <QList>
 

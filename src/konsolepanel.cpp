@@ -13,7 +13,7 @@
 #include "common.h"
 #include "viewcontainer.h"
 
-#include <qlayout.h>
+#include <QLayout>
 
 #include <kdebug.h>
 #include <klibloader.h>

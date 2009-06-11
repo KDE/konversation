@@ -16,7 +16,7 @@
 #include <klocale.h>
 #include <kapplication.h>
 #include <kiconloader.h>
-#include <qpixmap.h>
+#include <QPixmap>
 #include <kvbox.h>
 
 

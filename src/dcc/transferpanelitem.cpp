@@ -20,8 +20,8 @@
 
 #include <q3header.h>
 #include <qhostaddress.h>
-#include <qstyle.h>
-#include <qtimer.h>
+#include <QStyle>
+#include <QTimer>
 
 #include <kdebug.h>
 #include <kfilemetainfo.h>

@@ -18,8 +18,8 @@
 #include "preferences.h"
 #include <config-konversation.h>
 
-#include <qvariant.h>
-#include <qtimer.h>
+#include <QVariant>
+#include <QTimer>
 #include <QDBusInterface>
 #include <QDBusReply>
 

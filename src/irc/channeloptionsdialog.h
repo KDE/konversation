@@ -14,7 +14,7 @@
 
 #include "channel.h"
 
-#include <qstringlist.h>
+#include <QStringList>
 #include <QAbstractListModel>
 
 #include <kdialog.h>

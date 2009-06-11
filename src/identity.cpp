@@ -15,7 +15,7 @@
 #include "identity.h"
 #include "irccharsets.h"
 
-#include <qtextcodec.h>
+#include <QTextCodec>
 
 #include <kdebug.h>
 #include <kglobal.h>

@@ -16,9 +16,9 @@
 
 #include "application.h" ////// header renamed
 
-#include <qlayout.h>
-#include <qlabel.h>
-#include <qcheckbox.h>
+#include <QLayout>
+#include <QLabel>
+#include <QCheckBox>
 
 #include <klineedit.h>
 #include <klocale.h>

@@ -17,7 +17,7 @@
 
 #include "chatwindow.h"
 
-#include <qtimer.h>
+#include <QTimer>
 
 
 class QCheckBox;

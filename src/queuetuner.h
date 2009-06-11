@@ -22,7 +22,7 @@ class Server;
 class ViewContainer;
 class QTimer;
 
-#include <qtimer.h>
+#include <QTimer>
 
 class QueueTuner: public QWidget, private Ui::QueueTunerBase
 {

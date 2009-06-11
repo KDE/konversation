@@ -20,13 +20,13 @@
 #include "common.h"
 
 #include <q3grid.h>
-#include <qlabel.h>
+#include <QLabel>
 #include <qspinbox.h>
-#include <qpushbutton.h>
+#include <QPushButton>
 #include <q3hgroupbox.h>
-#include <qregexp.h>
-#include <qcheckbox.h>
-#include <qtimer.h>
+#include <QRegExp>
+#include <QCheckBox>
+#include <QTimer>
 
 #include <krun.h>
 #include <k3listview.h>

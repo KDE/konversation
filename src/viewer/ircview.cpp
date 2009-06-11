@@ -28,15 +28,15 @@
 #include "emoticons.h"
 #include "notificationhandler.h"
 
-#include <qstringlist.h>
-#include <qregexp.h>
-#include <qclipboard.h>
-#include <qbrush.h>
-#include <qevent.h>
+#include <QStringList>
+#include <QRegExp>
+#include <QClipboard>
+#include <QBrush>
+#include <QEvent>
 #include <qmap.h>
-#include <qcolor.h>
+#include <QColor>
 #include <qscrollbar.h>
-#include <qcursor.h>
+#include <QCursor>
 
 #include <kmessagebox.h>
 #include <klocale.h>

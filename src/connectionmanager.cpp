@@ -18,7 +18,7 @@
 #include "mainwindow.h" ////// header renamed
 #include "statuspanel.h"
 
-#include <qregexp.h>
+#include <QRegExp>
 
 #include <klocale.h>
 #include <kmessagebox.h>

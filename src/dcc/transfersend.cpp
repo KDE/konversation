@@ -37,8 +37,8 @@
 #endif
 #include <arpa/inet.h>
 
-#include <qfile.h>
-#include <qtimer.h>
+#include <QFile>
+#include <QTimer>
 #include <QTcpSocket>
 #include <QTcpServer>
 

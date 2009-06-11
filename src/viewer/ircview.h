@@ -24,7 +24,7 @@
 #include "common.h"
 
 #include <qmap.h>
-#include <qfontdatabase.h>
+#include <QFontDatabase>
 #include <QList>
 
 #include <KTextBrowser>

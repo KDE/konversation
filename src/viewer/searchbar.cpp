@@ -12,14 +12,14 @@
 
 #include "searchbar.h"
 
-#include <qcheckbox.h>
-#include <qtimer.h>
-#include <qpalette.h>
-#include <qlabel.h>
-#include <qpixmap.h>
-#include <qobject.h>
+#include <QCheckBox>
+#include <QTimer>
+#include <QPalette>
+#include <QLabel>
+#include <QPixmap>
+#include <QObject>
 #include <qshortcut.h>
-#include <qtoolbutton.h>
+#include <QToolButton>
 
 #include <kdebug.h>
 #include <kapplication.h>

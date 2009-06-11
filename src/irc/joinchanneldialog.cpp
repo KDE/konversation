@@ -14,7 +14,7 @@
 #include "channel.h"
 #include "servergroupsettings.h"
 
-#include <qlabel.h>
+#include <QLabel>
 
 #include <klocale.h>
 #include <kcombobox.h>

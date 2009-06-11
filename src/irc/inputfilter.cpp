@@ -25,9 +25,9 @@
 #include "notificationhandler.h"
 
 #include <qdatastream.h>
-#include <qstringlist.h>
-#include <qdatetime.h>
-#include <qregexp.h>
+#include <QStringList>
+#include <QDateTime>
+#include <QRegExp>
 
 #include <klocale.h>
 #include <kdeversion.h>

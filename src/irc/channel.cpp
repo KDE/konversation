@@ -32,19 +32,19 @@
 #include "linkaddressbook/linkaddressbookui.h"
 #include "linkaddressbook/addressbook.h"
 
-#include <qlabel.h>
-#include <qevent.h>
+#include <QLabel>
+#include <QEvent>
 #include <q3grid.h>
 #include <q3dragobject.h>
-#include <qsizepolicy.h>
+#include <QSizePolicy>
 #include <q3header.h>
-#include <qregexp.h>
-#include <qsplitter.h>
-#include <qcheckbox.h>
-#include <qtimer.h>
-#include <qtextcodec.h>
-#include <qtoolbutton.h>
-#include <qlayout.h>
+#include <QRegExp>
+#include <QSplitter>
+#include <QCheckBox>
+#include <QTimer>
+#include <QTextCodec>
+#include <QToolButton>
+#include <QLayout>
 
 
 #include <klineedit.h>

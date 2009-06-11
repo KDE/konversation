@@ -23,8 +23,8 @@
 #include "viewcontainer.h"
 
 #include <qmap.h>
-#include <qstring.h>
-#include <qstringlist.h>
+#include <QString>
+#include <QStringList>
 #include <kabc/addressbook.h>
 #include <kabc/stdaddressbook.h>
 

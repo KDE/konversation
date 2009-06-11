@@ -13,8 +13,8 @@
 
 #include "dcc_config.h"
 
-#include <qcombobox.h>
-#include <qlineedit.h>
+#include <QComboBox>
+#include <QLineEdit>
 #include <klocale.h>
 #include <kdebug.h>
 #include "application.h"

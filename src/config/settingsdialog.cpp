@@ -34,8 +34,8 @@
 #include "watchednicknames_config.h"
 #include "ui_tabnotifications_config.h"
 
-#include <qsplitter.h>
-#include <qcombobox.h>
+#include <QSplitter>
+#include <QComboBox>
 
 #include <klocale.h>
 #include <kdebug.h>

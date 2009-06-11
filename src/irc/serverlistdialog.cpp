@@ -17,7 +17,7 @@
 #include "connectionsettings.h"
 #include "ui_serverlistdialogui.h"
 
-#include <qcheckbox.h>
+#include <QCheckBox>
 #include <QHeaderView>
 
 #include <klocale.h>

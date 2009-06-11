@@ -13,10 +13,10 @@
 #include "autoreplace_config.h"
 #include "preferences.h"
 
-#include <qlabel.h>
-#include <qpushbutton.h>
-#include <qcombobox.h>
-#include <qdialog.h>
+#include <QLabel>
+#include <QPushButton>
+#include <QComboBox>
+#include <QDialog>
 
 #include <kapplication.h>
 #include <kdebug.h>

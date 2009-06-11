@@ -18,10 +18,10 @@
 #include "ircview.h"
 #include "pasteeditor.h"
 
-#include <qclipboard.h>
-#include <qregexp.h>
+#include <QClipboard>
+#include <QRegExp>
 #include <qdom.h>
-#include <qevent.h>
+#include <QEvent>
 #include <QTimer>
 
 #include <kapplication.h>

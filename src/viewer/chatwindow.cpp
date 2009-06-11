@@ -18,11 +18,11 @@
 #include "application.h" ////// header renamed
 #include "logfilereader.h"
 
-#include <qdatetime.h>
-#include <qdir.h>
-#include <qregexp.h>
-#include <qtextcodec.h>
-#include <qlayout.h>
+#include <QDateTime>
+#include <QDir>
+#include <QRegExp>
+#include <QTextCodec>
+#include <QLayout>
 #include <QKeyEvent>
 
 #include <klocale.h>

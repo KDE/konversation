@@ -14,7 +14,7 @@
 #ifndef QUICKBUTTON_H
 #define QUICKBUTTON_H
 
-#include <qpushbutton.h>
+#include <QPushButton>
 
 
 class QuickButton : public QPushButton

@@ -18,7 +18,7 @@
 
 #include "transfer.h" ////// header renamed
 
-#include <qdatetime.h>
+#include <QDateTime>
 
 #include <k3listview.h>
 #include <kurl.h>

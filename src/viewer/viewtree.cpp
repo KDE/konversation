@@ -23,8 +23,8 @@
 #include <q3listview.h>
 #include <q3ptrlist.h>
 #include <qpoint.h>
-#include <qpainter.h>
-#include <qtooltip.h>
+#include <QPainter>
+#include <QToolTip>
 
 #include <klocale.h>
 #include <kglobalsettings.h>

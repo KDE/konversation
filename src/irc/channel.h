@@ -19,8 +19,8 @@
 #include "channelnick.h"
 #include "nick.h"
 
-#include <qtimer.h>
-#include <qstring.h>
+#include <QTimer>
+#include <QString>
 
 
 class QLabel;

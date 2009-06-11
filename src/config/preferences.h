@@ -20,11 +20,11 @@
 #include "identity.h"
 #include "preferences_base.h"
 
-#include <qobject.h>
-#include <qsize.h>
-#include <qstringlist.h>
+#include <QObject>
+#include <QSize>
+#include <QStringList>
 #include <qfont.h>
-#include <qcolor.h>
+#include <QColor>
 #include <qmap.h>
 
 #include <kdeversion.h>

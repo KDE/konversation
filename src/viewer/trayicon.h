@@ -15,7 +15,7 @@
 #ifndef TRAYICON_H
 #define TRAYICON_H
 
-#include <qpixmap.h>
+#include <QPixmap>
 
 #include <ksystemtrayicon.h>
 

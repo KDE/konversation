@@ -16,7 +16,7 @@
 #include "serversettings.h"
 #include "identity.h"
 
-#include <qstringlist.h>
+#include <QStringList>
 
 #include <ksharedptr.h>
 

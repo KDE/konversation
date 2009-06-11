@@ -18,9 +18,9 @@
 #ifndef DCCTRANSFER_H
 #define DCCTRANSFER_H
 
-#include <qdatetime.h>
-#include <qobject.h>
-#include <qtimer.h>
+#include <QDateTime>
+#include <QObject>
+#include <QTimer>
 
 #include <kurl.h>
 #include <kio/global.h>

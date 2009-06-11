@@ -17,11 +17,11 @@
 #include "ircview.h"
 #include "ircviewbox.h"
 
-#include <qlayout.h>
-#include <qfile.h>
-#include <qpushbutton.h>
-#include <qlabel.h>
-#include <qregexp.h>
+#include <QLayout>
+#include <QFile>
+#include <QPushButton>
+#include <QLabel>
+#include <QRegExp>
 #include <qspinbox.h>
 #include <QTextCodec>
 #include <QKeyEvent>

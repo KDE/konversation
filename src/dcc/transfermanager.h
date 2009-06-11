@@ -22,7 +22,7 @@
 #include "transfer.h"
 #include "upnpmcastsocket.h"
 
-#include <qobject.h>
+#include <QObject>
 
 using namespace Konversation::UPnP;
 

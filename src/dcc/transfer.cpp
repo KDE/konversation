@@ -17,7 +17,7 @@
 #include "notificationhandler.h"
 #include "preferences.h"
 
-#include <qfileinfo.h>
+#include <QFileInfo>
 #include <qhostaddress.h>
 
 #include <kdebug.h>

@@ -14,7 +14,7 @@
 #ifndef IGNORE_H
 #define IGNORE_H
 
-#include <qstring.h>
+#include <QString>
 
 
 class Ignore

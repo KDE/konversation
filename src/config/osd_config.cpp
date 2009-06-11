@@ -20,7 +20,7 @@
 
 #include <kcombobox.h>
 #include <kcolorbutton.h>
-#include <qcheckbox.h>
+#include <QCheckBox>
 #include <kfontrequester.h>
 #include <QDesktopWidget>
 #include <kconfigdialog.h>

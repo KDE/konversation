@@ -22,9 +22,9 @@
 #include "viewcontainer.h"
 #include "application.h" ////// header renamed
 
-#include <qtoolbutton.h>
+#include <QToolButton>
 #include <qspinbox.h>
-#include <qevent.h>
+#include <QEvent>
 
 #include <kdebug.h>
 #include <kapplication.h>

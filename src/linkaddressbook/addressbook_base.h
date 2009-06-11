@@ -19,8 +19,8 @@
 #include "../irc/nickinfo.h"
 #include "../irc/channelnick.h"
 
-#include <qobject.h>
-#include <qregexp.h>
+#include <QObject>
+#include <QRegExp>
 
 
 #include <kabc/addressbook.h>

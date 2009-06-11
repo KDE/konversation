@@ -42,10 +42,10 @@
 #include "notificationhandler.h"
 #include "blowfish.h"
 
-#include <qregexp.h>
+#include <QRegExp>
 #include <qhostaddress.h>
-#include <qtextcodec.h>
-#include <qdatetime.h>
+#include <QTextCodec>
+#include <QDateTime>
 #include <QStringListModel>
 
 #include <kapplication.h>

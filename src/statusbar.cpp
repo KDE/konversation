@@ -14,7 +14,7 @@
 #include "viewcontainer.h"
 #include "ssllabel.h"
 
-#include <qlabel.h>
+#include <QLabel>
 
 #include <kstatusbar.h>
 #include <klocale.h>

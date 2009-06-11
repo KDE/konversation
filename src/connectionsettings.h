@@ -15,7 +15,7 @@
 #include "servergroupsettings.h"
 #include "serversettings.h"
 
-#include <qstring.h>
+#include <QString>
 
 
 class ConnectionSettings

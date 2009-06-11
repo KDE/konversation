@@ -15,7 +15,7 @@
 
  */
 
-#include <qlabel.h>
+#include <QLabel>
 
 class SSLLabel : public QLabel
 {

@@ -30,7 +30,7 @@
 #include "transfermanager.h" ////// header renamed
 
 #include <qnamespace.h>
-#include <qsignalmapper.h>
+#include <QSignalMapper>
 #include <QSplitter>
 
 #include <KActionCollection>

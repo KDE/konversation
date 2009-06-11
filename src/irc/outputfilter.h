@@ -19,8 +19,8 @@
 #include "identity.h"
 #include "common.h"
 
-#include <qobject.h>
-#include <qstring.h>
+#include <QObject>
+#include <QString>
 #include <kurl.h>
 #include <kio/global.h>
 

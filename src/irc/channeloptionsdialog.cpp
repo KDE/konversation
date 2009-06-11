@@ -15,11 +15,11 @@
 #include "application.h"
 #include "channel.h"
 
-#include <qcheckbox.h>
-#include <qpushbutton.h>
-#include <qregexp.h>
+#include <QCheckBox>
+#include <QPushButton>
+#include <QRegExp>
 #include <qstandarditemmodel.h>
-#include <qtoolbutton.h>
+#include <QToolButton>
 #include <QKeyEvent>
 #include <QItemSelectionModel>
 

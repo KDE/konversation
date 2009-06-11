@@ -12,7 +12,7 @@
 #ifndef DCCCOMMON_H
 #define DCCCOMMON_H
 
-#include <qstring.h>
+#include <QString>
 #include <QTcpServer>
 
 class QObject;

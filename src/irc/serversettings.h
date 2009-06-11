@@ -13,7 +13,7 @@
 #ifndef KONVERSATIONSERVERSETTINGS_H
 #define KONVERSATIONSERVERSETTINGS_H
 
-#include <qstring.h>
+#include <QString>
 
 namespace Konversation
 {

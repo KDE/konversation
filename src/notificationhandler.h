@@ -12,7 +12,7 @@
 #ifndef KONVERSATIONNOTIFICATIONHANDLER_H
 #define KONVERSATIONNOTIFICATIONHANDLER_H
 
-#include <qobject.h>
+#include <QObject>
 
 
 class ChatWindow;

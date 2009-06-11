@@ -13,9 +13,9 @@
 #ifndef IMAGES_H
 #define IMAGES_H
 
-#include <qicon.h>
-#include <qpixmap.h>
-#include <qobject.h>
+#include <QIcon>
+#include <QPixmap>
+#include <QObject>
 
 
 /**

@@ -16,7 +16,7 @@
 #define IDENTITY_H
 
 #include <ksharedptr.h>
-#include <qstringlist.h>
+#include <QStringList>
 
 
 class QTextCodec;

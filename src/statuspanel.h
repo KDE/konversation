@@ -15,7 +15,7 @@
 
 #include "chatwindow.h"
 
-#include <qstring.h>
+#include <QString>
 
 
 class QCheckBox;

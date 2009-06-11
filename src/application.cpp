@@ -33,9 +33,9 @@
 #include "commit.h"
 #include "version.h"
 
-#include <qtextcodec.h>
-#include <qregexp.h>
-#include <qfileinfo.h>
+#include <QTextCodec>
+#include <QRegExp>
+#include <QFileInfo>
 #include <QtDBus/QDBusConnection>
 
 #include <kdebug.h>

@@ -17,7 +17,7 @@
 #include "nickinfo.h"
 #include "application.h" // for PopupIDs...
 
-#include <qstring.h>
+#include <QString>
 
 /* TODO: Idle counter to close query after XXX minutes of inactivity */
 /* TODO: Use /USERHOST to check if queries are still valid */

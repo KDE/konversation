@@ -10,7 +10,7 @@
   Copyright (C) 2004 Peter Simonsson <psn@linux.se>
 */
 
-#include <qobject.h>
+#include <QObject>
 
 #ifndef SCRIPTLAUNCHER_H
 #define SCRIPTLAUNCHER_H

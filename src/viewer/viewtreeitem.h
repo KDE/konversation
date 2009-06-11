@@ -14,10 +14,10 @@
 
 #include "chatwindow.h"
 
-#include <qobject.h>
+#include <QObject>
 #include <q3listview.h>
-#include <qpointer.h>
-#include <qpixmap.h>
+#include <QPointer>
+#include <QPixmap>
 
 
 class ChatWindow;

@@ -13,7 +13,7 @@
 #include "upnpdescriptionparser.h"
 #include "upnprouter.h"
 
-#include <qxml.h>
+#include <QtXml>
 #include <qstack.h>
 
 #include <kdebug.h>

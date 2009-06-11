@@ -45,7 +45,7 @@
 #include <kdebug.h>
 #include <kvbox.h>
 
-#include <qlayout.h>
+#include <QLayout>
 #include <qmap.h>
 #include <Q3CString>
 

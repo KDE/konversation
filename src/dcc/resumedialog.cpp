@@ -14,8 +14,8 @@
 #include "transferrecv.h" ////// header renamed
 
 
-#include <qlabel.h>
-#include <qlayout.h>
+#include <QLabel>
+#include <QLayout>
 #include <QPointer>
 
 #include <kdebug.h>

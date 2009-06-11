@@ -12,7 +12,7 @@
 #define KONVERSATION_IRCCHARSETS_H
 
 #include <QHash>
-#include <qstringlist.h>
+#include <QStringList>
 
 
 namespace Konversation

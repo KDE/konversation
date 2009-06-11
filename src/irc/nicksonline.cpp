@@ -28,11 +28,11 @@
 #include "viewcontainer.h"
 #include "nicksonlineitem.h"
 
-#include <qlayout.h>
-#include <qstringlist.h>
+#include <QLayout>
+#include <QStringList>
 
-#include <qpushbutton.h>
-#include <qlabel.h>
+#include <QPushButton>
+#include <QLabel>
 #include <QToolTip>
 
 #include <kdebug.h>

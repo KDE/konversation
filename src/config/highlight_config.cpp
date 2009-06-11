@@ -16,9 +16,9 @@
 #include "sound.h"
 #include "preferences.h"
 
-#include <qdir.h>
-#include <qlabel.h>
-#include <qtoolbutton.h>
+#include <QDir>
+#include <QLabel>
+#include <QToolButton>
 
 #include <kglobal.h>
 #include <kstandarddirs.h>

@@ -18,7 +18,7 @@
 
 #include <kvbox.h>
 
-#include <qfile.h>
+#include <QFile>
 
 
 class IRCView;

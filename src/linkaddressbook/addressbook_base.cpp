@@ -18,7 +18,7 @@
 #include "../mainwindow.h"
 #include "../irc/channel.h"
 
-#include <qstringlist.h>
+#include <QStringList>
 
 #include <klocale.h>
 #include <kstringhandler.h>

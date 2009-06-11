@@ -16,7 +16,7 @@
 #include "settingspage.h" ////// header renamed
 #include "ui_nicklistbehavior_configui.h"
 
-#include <qobject.h>
+#include <QObject>
 
 
 class NicklistBehavior_Config : public QWidget, public KonviSettingsPage, private Ui::NicklistBehavior_ConfigUI

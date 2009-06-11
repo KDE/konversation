@@ -15,7 +15,7 @@
 #include "application.h" ////// header renamed
 
 #include <qiconengine.h>
-#include <qpainter.h>
+#include <QPainter>
 
 #include <kdebug.h>
 #include <kstandarddirs.h>

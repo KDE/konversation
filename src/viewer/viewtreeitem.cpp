@@ -18,10 +18,10 @@
 #include "images.h"
 
 
-#include <qpainter.h>
-#include <qpixmap.h>
-#include <qimage.h>
-#include <qtimer.h>
+#include <QPainter>
+#include <QPixmap>
+#include <QImage>
+#include <QTimer>
 
 #include <kdebug.h>
 #include <kglobalsettings.h>

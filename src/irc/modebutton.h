@@ -14,7 +14,7 @@
 #ifndef MODEBUTTON_H
 #define MODEBUTTON_H
 
-#include <qpushbutton.h>
+#include <QPushButton>
 
 
 class ModeButton : public QPushButton

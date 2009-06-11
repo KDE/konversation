@@ -16,14 +16,14 @@
 #include "preferences.h"
 
 #include <klocale.h>
-#include <qlineedit.h>
+#include <QLineEdit>
 #include <qheaderview.h>
 
 #include <kapplication.h>
 #include <kconfig.h>
 #include <kdebug.h>
 #include <kpushbutton.h>
-#include <qcheckbox.h>
+#include <QCheckBox>
 
 
 Ignore_Config::Ignore_Config( QWidget* parent, const char* name, Qt::WFlags fl )

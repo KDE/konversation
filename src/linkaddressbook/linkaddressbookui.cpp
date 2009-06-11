@@ -25,10 +25,10 @@ Kopete    (c) 2002-2004 by the Kopete developers  <kopete-devel@kde.org>
 #include "addressbook.h"
 #include "addresseeitem.h"
 
-#include <qcheckbox.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qtooltip.h>
+#include <QCheckBox>
+#include <QLabel>
+#include <QLayout>
+#include <QToolTip>
 
 #include <kapplication.h>
 #include <kconfig.h>

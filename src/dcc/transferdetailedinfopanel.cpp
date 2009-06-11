@@ -20,8 +20,8 @@
 #include "connectionmanager.h"
 #include "server.h"
 
-#include <qlabel.h>
-#include <qtimer.h>
+#include <QLabel>
+#include <QTimer>
 
 #include <klineedit.h>
 #include <klocale.h>

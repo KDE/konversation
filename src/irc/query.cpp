@@ -23,12 +23,12 @@
 #include "common.h"
 #include "topiclabel.h"
 
-#include <qcheckbox.h>
-#include <qlabel.h>
-#include <qlineedit.h>
-#include <qtextcodec.h>
-#include <qtextstream.h>
-#include <qsplitter.h>
+#include <QCheckBox>
+#include <QLabel>
+#include <QLineEdit>
+#include <QTextCodec>
+#include <QTextStream>
+#include <QSplitter>
 
 #include <klocale.h>
 #include <kstandarddirs.h>

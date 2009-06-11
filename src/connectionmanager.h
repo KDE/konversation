@@ -15,7 +15,7 @@
 #include "server.h"
 #include "identity.h"
 
-#include <qobject.h>
+#include <QObject>
 #include <QSet>
 
 

@@ -19,7 +19,7 @@
 #include "chatwindow.h"
 #include "config/preferences.h"
 
-#include <qtimer.h>
+#include <QTimer>
 
 #include <kglobal.h>
 #include <kiconloader.h>

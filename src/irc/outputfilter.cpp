@@ -23,12 +23,12 @@
 #include "linkaddressbook/addressbook.h"
 #include "query.h"
 
-#include <qstringlist.h>
-#include <qfile.h>
-#include <qfileinfo.h>
-#include <qregexp.h>
+#include <QStringList>
+#include <QFile>
+#include <QFileInfo>
+#include <QRegExp>
 #include <qmap.h>
-#include <qtextcodec.h>
+#include <QTextCodec>
 #include <QByteArray>
 
 #include <klocale.h>

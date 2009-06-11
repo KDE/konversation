@@ -14,9 +14,9 @@
 #include "application.h"
 #include "mainwindow.h"
 
-#include <qlabel.h>
-#include <qcombobox.h>
-#include <qcheckbox.h>
+#include <QLabel>
+#include <QComboBox>
+#include <QCheckBox>
 
 #include <kapplication.h>
 #include <kconfig.h>

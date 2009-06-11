@@ -22,7 +22,7 @@
 #include "nickinfo.h"
 #include "server.h"
 
-#include <qstringlist.h>
+#include <QStringList>
 
 #include <kxmlguiwindow.h>
 #include <kaction.h>

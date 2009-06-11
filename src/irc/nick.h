@@ -15,7 +15,7 @@
 #ifndef NICK_H
 #define NICK_H
 
-#include <qobject.h>
+#include <QObject>
 #include <k3listview.h>
 
 #include "channelnick.h"

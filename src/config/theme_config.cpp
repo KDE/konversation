@@ -18,15 +18,15 @@
 #include "common.h"
 #include "application.h"
 
-#include <qlabel.h>
-#include <qlayout.h>
+#include <QLabel>
+#include <QLayout>
 
-#include <qpushbutton.h>
+#include <QPushButton>
 
-#include <qfileinfo.h>
-#include <qstringlist.h>
-#include <qbitmap.h>
-#include <qpainter.h>
+#include <QFileInfo>
+#include <QStringList>
+#include <QBitmap>
+#include <QPainter>
 
 #include <kurl.h>
 #include <kdebug.h>

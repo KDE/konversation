@@ -15,7 +15,7 @@
 #ifndef IRCINPUT_H
 #define IRCINPUT_H
 
-#include <qstringlist.h>
+#include <QStringList>
 
 #include <ktextedit.h>
 

@@ -19,7 +19,7 @@
 #include "channel.h"
 #include "application.h"
 
-#include <qstringlist.h>
+#include <QStringList>
 
 #include <klocale.h>
 #include <kmessagebox.h>

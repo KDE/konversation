@@ -12,7 +12,7 @@
 #ifndef KONVERSATIONSTATUSBAR_H
 #define KONVERSATIONSTATUSBAR_H
 
-#include <qobject.h>
+#include <QObject>
 
 
 class QLabel;

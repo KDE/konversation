@@ -14,7 +14,7 @@
 #ifndef IGNORELISTVIEWITEM_H
 #define IGNORELISTVIEWITEM_H
 
-#include <qstring.h>
+#include <QString>
 
 #include <qtreewidget.h>
 

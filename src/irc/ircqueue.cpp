@@ -14,9 +14,9 @@
 
 #include "ircqueue.h"
 
-#include <qdatetime.h>
-#include <qtimer.h>
-#include <qstring.h>
+#include <QDateTime>
+#include <QTimer>
+#include <QString>
 
 #include "server.h"
 

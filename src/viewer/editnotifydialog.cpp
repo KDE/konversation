@@ -15,8 +15,8 @@
 #include "application.h"
 #include "servergroupsettings.h"
 
-#include <qlayout.h>
-#include <qlabel.h>
+#include <QLayout>
+#include <QLabel>
 
 #include <klineedit.h>
 #include <kcombobox.h>

@@ -18,11 +18,11 @@
 #include "ircviewbox.h"
 #include "server.h"
 
-#include <qpushbutton.h>
-#include <qlabel.h>
+#include <QPushButton>
+#include <QLabel>
 
-#include <qtextcodec.h>
-#include <qlineedit.h>
+#include <QTextCodec>
+#include <QLineEdit>
 
 #include <kdebug.h>
 #include <klocale.h>
