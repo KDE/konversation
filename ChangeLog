@@ -38,6 +38,9 @@ Changes since 1.2-alpha3:
   '<-> target> message' line) being shown only after adding the resul-
   ting message to the target chat view (if present), causing an odd-look-
   ing order if the origin view and the target view are the same.
+* Watched Nicknames Online now generally operates on networks by ther in-
+  ternal unique IDs rather than names, enabling it to handle multile con-
+  figured networks with identical names properly.
 
 
 Changes from 1.2-alpha2 to 1.2-alpha3:
