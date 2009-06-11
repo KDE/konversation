@@ -12,7 +12,6 @@
 */
 
 #include "nicklistbehavior_config.h"
-#include "valuelistviewitem.h"
 #include "preferences.h"
 
 #include <kapplication.h>
