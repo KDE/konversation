@@ -19,7 +19,7 @@ if(CMAKE_BUILD_TYPE_TOLOWER MATCHES debugfull)
 add_definitions (-DQT_STRICT_ITERATORS)
 endif()
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${KDE4_INCLUDES} ${KDE4_INCLUDE_DIR} ${QT_INCLUDES})
+include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${KDE4_INCLUDES} ${KDE4_INCLUDE_DIR} ${QT_INCLUDES} ${QCA2_INCLUDE_DIR})
 
 #looks like the original test is from Kopete, their port doesn't use Xext so neither shall ours
 if (Q_WS_X11)
