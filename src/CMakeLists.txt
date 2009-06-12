@@ -123,15 +123,12 @@ set(viewer_SRCS
     viewer/ircview.cpp
     viewer/chatwindow.cpp
     viewer/rawlog.cpp
-
-    statuspanel.cpp
-
+    viewer/statuspanel.cpp
     viewer/ircviewbox.cpp
     viewer/viewcontainer.cpp
     viewer/viewtree.cpp
     viewer/viewtreeitem.cpp
     viewer/pasteeditor.cpp
-
     viewer/highlight.cpp
     viewer/highlightviewitem.cpp
     viewer/ignore.cpp
