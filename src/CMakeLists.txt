@@ -4,6 +4,7 @@ include_directories(config dcc irc viewer linkaddressbook upnp)
 
 if (QCA2_FOUND)
     include_directories(${QCA2_INCLUDE_DIR})
+    add_definitions( -DQCA2 )
 endif (QCA2_FOUND)
 
 set(core_SRCS
