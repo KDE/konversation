@@ -42,7 +42,7 @@ DccTransferPanel::DccTransferPanel(QWidget* parent) : ChatWindow(parent)
 
     initGUI();
 
-    connect( KonversationApplication::instance()->getDccTransferManager(), SIGNAL( newTransferAdded( DccTransfer* ) ), this, SLOT( slotNewTransferAdded( DccTransfer* ) ) );
+    connect( Application::instance()->getDccTransferManager(), SIGNAL( newTransferAdded( DccTransfer* ) ), this, SLOT( slotNewTransferAdded( DccTransfer* ) ) );
 }
 
 DccTransferPanel::~DccTransferPanel()
@@ -313,7 +313,7 @@ void DccTransferPanel::resendFile()
             DccTransfer* transfer = item->transfer();
             if( transfer->getType() == DccTransfer::Send && transfer->getStatus() >= DccTransfer::Done )
             {
-                DccTransferSend* newTransfer = KonversationApplication::instance()->getDccTransferManager()->newUpload();
+                DccTransferSend* newTransfer = Application::instance()->getDccTransferManager()->newUpload();
 
                 newTransfer->setConnectionId( transfer->getConnectionId() );
                 newTransfer->setPartnerNick( transfer->getPartnerNick() );

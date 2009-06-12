@@ -35,7 +35,7 @@ DccTransferDetailedInfoPanel::DccTransferDetailedInfoPanel( QWidget* parent )
     m_autoViewUpdateTimer = new QTimer( this );
 
     connect( m_urlreqLocation, SIGNAL( textChanged( const QString& ) ), this, SLOT( slotLocationChanged( const QString& ) ) );
-    connect( KonversationApplication::instance()->getDccTransferManager(), SIGNAL( fileURLChanged( DccTransferRecv* ) ),
+    connect( Application::instance()->getDccTransferManager(), SIGNAL( fileURLChanged( DccTransferRecv* ) ),
              this, SLOT( updateView() ) );  // it's a little rough..
 
     //only enable when needed
@@ -95,8 +95,8 @@ void DccTransferDetailedInfoPanel::updateView()
     QString partnerInfoServerName;
     if ( transfer->getConnectionId() == -1 )
         partnerInfoServerName = i18n( "Unknown server" );
-    else if ( KonversationApplication::instance()->getConnectionManager()->getServerByConnectionId( transfer->getConnectionId() ) )
-        partnerInfoServerName = KonversationApplication::instance()->getConnectionManager()->getServerByConnectionId( transfer->getConnectionId() )->getServerName();
+    else if ( Application::instance()->getConnectionManager()->getServerByConnectionId( transfer->getConnectionId() ) )
+        partnerInfoServerName = Application::instance()->getConnectionManager()->getServerByConnectionId( transfer->getConnectionId() )->getServerName();
     else
         partnerInfoServerName = i18n( "Unknown server" );
     QString partnerInfo( i18n( "%1 on %2",

@@ -65,7 +65,7 @@ void Nick::refresh()
     if(away)
         flags=1;
 
-    Images* images = KonversationApplication::instance()->images();
+    Images* images = Application::instance()->images();
     QPixmap icon;
 
     if ( getChannelNick()->isOwner() )

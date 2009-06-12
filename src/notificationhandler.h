@@ -16,7 +16,7 @@
 
 
 class ChatWindow;
-class KonversationApplication;
+class Application;
 class KonversationMainWindow;
 
 namespace Konversation
@@ -27,7 +27,7 @@ namespace Konversation
         Q_OBJECT
 
         public:
-            explicit NotificationHandler(KonversationApplication* parent = 0);
+            explicit NotificationHandler(Application* parent = 0);
             ~NotificationHandler();
 
         public slots:

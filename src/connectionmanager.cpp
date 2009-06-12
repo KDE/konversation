@@ -102,7 +102,7 @@ void ConnectionManager::connectTo(Konversation::ConnectionFlag flag, ConnectionS
 
     if (!identity || !validateIdentity(identity)) return;
 
-    KonversationApplication* konvApp = static_cast<KonversationApplication *>(kapp);
+    Application* konvApp = static_cast<Application *>(kapp);
     KonversationMainWindow* mainWindow = konvApp->getMainWindow();
 
     Server* server = new Server(this, settings);
@@ -403,7 +403,7 @@ bool ConnectionManager::reuseExistingConnection(ConnectionSettings& settings, bo
     ConnectionDupe dupeType;
     bool doReuse = true;
 
-    KonversationApplication* konvApp = static_cast<KonversationApplication *>(kapp);
+    Application* konvApp = static_cast<Application *>(kapp);
     KonversationMainWindow* mainWindow = konvApp->getMainWindow();
 
     QMap<int, Server*>::ConstIterator it;
@@ -497,7 +497,7 @@ bool ConnectionManager::reuseExistingConnection(ConnectionSettings& settings, bo
 
 bool ConnectionManager::validateIdentity(IdentityPtr identity, bool interactive)
 {
-    KonversationApplication* konvApp = static_cast<KonversationApplication *>(kapp);
+    Application* konvApp = static_cast<Application *>(kapp);
     KonversationMainWindow* mainWindow = konvApp->getMainWindow();
 
     QString errors;

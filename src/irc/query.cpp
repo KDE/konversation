@@ -149,13 +149,13 @@ void Query::connectionStateChanged(Server* server, Konversation::ConnectionState
         {
             //HACK the way the notification priorities work sucks, this forces the tab text color to ungray right now.
             if (m_currentTabNotify == Konversation::tnfNone || !Preferences::self()->tabNotificationsEvents())
-                KonversationApplication::instance()->getMainWindow()->getViewContainer()->unsetViewNotification(this);
+                Application::instance()->getMainWindow()->getViewContainer()->unsetViewNotification(this);
         }
         else
         {
             //HACK the way the notification priorities work sucks, this forces the tab text color to gray right now.
             if (m_currentTabNotify == Konversation::tnfNone || (!Preferences::self()->tabNotificationsEvents() && m_currentTabNotify == Konversation::tnfControl))
-                KonversationApplication::instance()->getMainWindow()->getViewContainer()->unsetViewNotification(this);
+                Application::instance()->getMainWindow()->getViewContainer()->unsetViewNotification(this);
         }
     }
 }

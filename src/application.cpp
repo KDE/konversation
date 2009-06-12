@@ -44,7 +44,7 @@
 #include <KIconLoader>
 
 
-KonversationApplication::KonversationApplication()
+Application::Application()
 : KUniqueApplication(true, true)
 {
     mainWindow = 0;
@@ -54,7 +54,7 @@ KonversationApplication::KonversationApplication()
     osd = 0;
 }
 
-KonversationApplication::~KonversationApplication()
+Application::~Application()
 {
     kDebug();
     Server::_stashRates();
@@ -73,7 +73,7 @@ KonversationApplication::~KonversationApplication()
     osd = 0;
 }
 
-int KonversationApplication::newInstance()
+int Application::newInstance()
 {
     KCmdLineArgs* args = KCmdLineArgs::parsedArgs();
     QString url; //TODO FIXME: does this really have to be a QCString?
@@ -213,12 +213,12 @@ int KonversationApplication::newInstance()
     return KUniqueApplication::newInstance();
 }
 
-KonversationApplication* KonversationApplication::instance()
+Application* Application::instance()
 {
-    return static_cast<KonversationApplication*>(KApplication::kApplication());
+    return static_cast<Application*>(KApplication::kApplication());
 }
 
-void KonversationApplication::prepareShutdown()
+void Application::prepareShutdown()
 {
     if (mainWindow)
         mainWindow->getViewContainer()->prepareShutdown();
@@ -239,17 +239,17 @@ void KonversationApplication::prepareShutdown()
     }
 }
 
-void KonversationApplication::showQueueTuner(bool p)
+void Application::showQueueTuner(bool p)
 {
     getMainWindow()->getViewContainer()->showQueueTuner(p);
 }
 
-void KonversationApplication::dbusMultiServerRaw(const QString &command)
+void Application::dbusMultiServerRaw(const QString &command)
 {
     sendMultiServerCommand(command.section(' ', 0,0), command.section(' ', 1));
 }
 
-void KonversationApplication::dbusRaw(const QString& connection, const QString &command)
+void Application::dbusRaw(const QString& connection, const QString &command)
 {
     Server* server = 0;
 
@@ -264,7 +264,7 @@ void KonversationApplication::dbusRaw(const QString& connection, const QString &
 }
 
 
-void KonversationApplication::dbusSay(const QString& connection, const QString& target, const QString& command)
+void Application::dbusSay(const QString& connection, const QString& target, const QString& command)
 {
     Server* server = 0;
 
@@ -278,12 +278,12 @@ void KonversationApplication::dbusSay(const QString& connection, const QString& 
     if (server) server->dbusSay(target, command);
 }
 
-void KonversationApplication::dbusInfo(const QString& string)
+void Application::dbusInfo(const QString& string)
 {
     mainWindow->getViewContainer()->appendToFrontmost(i18n("D-Bus"), string, 0);
 }
 
-void KonversationApplication::readOptions()
+void Application::readOptions()
 {
     // get standard config file
 
@@ -598,7 +598,7 @@ void KonversationApplication::readOptions()
     Server::_fetchRates();
 }
 
-void KonversationApplication::saveOptions(bool updateGUI)
+void Application::saveOptions(bool updateGUI)
 {
     // template:    KConfigGroup  (KGlobal::config()->group( ));
 
@@ -800,7 +800,7 @@ void KonversationApplication::saveOptions(bool updateGUI)
 }
 
 // FIXME: use KUrl maybe?
-void KonversationApplication::storeUrl(const QString& who,const QString& newUrl)
+void Application::storeUrl(const QString& who,const QString& newUrl)
 {
     QString url(newUrl);
     // clean up URL to help KRun() in URL catcher interface
@@ -815,22 +815,22 @@ void KonversationApplication::storeUrl(const QString& who,const QString& newUrl)
     emit catchUrl(who,url);
 }
 
-const QStringList& KonversationApplication::getUrlList()
+const QStringList& Application::getUrlList()
 {
     return urlList;
 }
 
-void KonversationApplication::deleteUrl(const QString& who,const QString& url)
+void Application::deleteUrl(const QString& who,const QString& url)
 {
     urlList.removeOne(who+' '+url);
 }
 
-void KonversationApplication::clearUrlList()
+void Application::clearUrlList()
 {
     urlList.clear();
 }
 
-void KonversationApplication::openQuickConnectDialog()
+void Application::openQuickConnectDialog()
 {
     quickConnectDialog = new QuickConnectDialog(mainWindow);
     connect(quickConnectDialog, SIGNAL(connectClicked(Konversation::ConnectionFlag, const QString&,
@@ -840,7 +840,7 @@ void KonversationApplication::openQuickConnectDialog()
     quickConnectDialog->show();
 }
 
-void KonversationApplication::sendMultiServerCommand(const QString& command, const QString& parameter)
+void Application::sendMultiServerCommand(const QString& command, const QString& parameter)
 {
     const QList<Server*> serverList = getConnectionManager()->getServerList();
 
@@ -848,7 +848,7 @@ void KonversationApplication::sendMultiServerCommand(const QString& command, con
         server->executeMultiServerCommand(command, parameter);
 }
 
-void KonversationApplication::splitNick_Server(const QString& nick_server, QString &ircnick, QString &serverOrGroup)
+void Application::splitNick_Server(const QString& nick_server, QString &ircnick, QString &serverOrGroup)
 {
     //kaddresbook uses the utf separator 0xE120, so treat that as a separator as well
     QString nickServer = nick_server;
@@ -857,7 +857,7 @@ void KonversationApplication::splitNick_Server(const QString& nick_server, QStri
     serverOrGroup = nickServer.section('@',1);
 }
 
-NickInfoPtr KonversationApplication::getNickInfo(const QString &ircnick, const QString &serverOrGroup)
+NickInfoPtr Application::getNickInfo(const QString &ircnick, const QString &serverOrGroup)
 {
     const QList<Server*> serverList = getConnectionManager()->getServerList();
     NickInfoPtr nickInfo;
@@ -877,7 +877,7 @@ NickInfoPtr KonversationApplication::getNickInfo(const QString &ircnick, const Q
 }
 
 // auto replace on input/output
-QString KonversationApplication::doAutoreplace(const QString& text,bool output)
+QString Application::doAutoreplace(const QString& text,bool output)
 {
     // get autoreplace list
     QList<QStringList> autoreplaceList=Preferences::autoreplaceList();

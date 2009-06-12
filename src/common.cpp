@@ -174,7 +174,7 @@ namespace Konversation
             insertText = link.arg(protocol, QString(href).replace('&', "\x0b"), href) + append;
             filteredLine.replace(pos, urlLen, insertText);
             pos += insertText.length();
-            KonversationApplication::instance()->storeUrl(fromNick, href);
+            Application::instance()->storeUrl(fromNick, href);
         }
 
         // Change & to &amp; to prevent html entities to do strange things to the text

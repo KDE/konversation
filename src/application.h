@@ -53,7 +53,7 @@ namespace Konversation
 
 }
 
-class KonversationApplication : public KUniqueApplication
+class Application : public KUniqueApplication
 {
     Q_OBJECT
 
@@ -79,10 +79,10 @@ class KonversationApplication : public KUniqueApplication
         void storeUrl(const QString& who,const QString& url);
         const QStringList& getUrlList();
 
-        KonversationApplication();
-        ~KonversationApplication();
+        Application();
+        ~Application();
 
-        static KonversationApplication* instance();
+        static Application* instance();
 
         /** For dcop and addressbook, a user can be specified as user@irc.server.net
          *  or user\@servergroup or using the unicode separator symbol 0xE120 instead

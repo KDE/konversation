@@ -99,7 +99,7 @@ void DccTransferRecv::cleanUp()
 
         if (m_reverse && Preferences::self()->dccUPnP())
         {
-            UPnPRouter *router = KonversationApplication::instance()->getDccTransferManager()->getUPnPRouter();
+            UPnPRouter *router = Application::instance()->getDccTransferManager()->getUPnPRouter();
             if (router) router->undoForward(m_ownPort, QAbstractSocket::TcpSocket);
         }
     }
@@ -181,7 +181,7 @@ bool DccTransferRecv::queue()
 
     if ( m_ownIp.isEmpty() )
     {
-        m_ownIp = DccCommon::getOwnIp( KonversationApplication::instance()->getConnectionManager()->getServerByConnectionId( m_connectionId ) );
+        m_ownIp = DccCommon::getOwnIp( Application::instance()->getConnectionManager()->getServerByConnectionId( m_connectionId ) );
     }
 
     if (!KAuthorized::authorizeKAction("allow_downloading"))
@@ -258,7 +258,7 @@ void DccTransferRecv::abort()                     // public slot
 
     if (getStatus() == DccTransfer::Queued)
     {
-        Server* server = KonversationApplication::instance()->getConnectionManager()->getServerByConnectionId( m_connectionId );
+        Server* server = Application::instance()->getConnectionManager()->getServerByConnectionId( m_connectionId );
         if ( server )
         {
             server->dccRejectSend( m_partnerNick, transferFileName(m_fileName) );
@@ -388,7 +388,7 @@ void DccTransferRecv::slotLocalCanResume( KIO::Job* job, KIO::filesize_t size )
         disconnect( transferJob, 0, 0, 0 );
         transferJob->kill();
 
-        if ( KonversationApplication::instance()->getDccTransferManager()->isLocalFileInWritingProcess( m_fileURL ) )
+        if ( Application::instance()->getDccTransferManager()->isLocalFileInWritingProcess( m_fileURL ) )
         {
             askAndPrepareLocalKio( i18n( "<b>The file is used by another transfer.</b><br>"
                 "%1<br>",
@@ -479,7 +479,7 @@ void DccTransferRecv::connectWithSender()
         if ( !startListeningForSender() )
             return;
 
-        Server* server = KonversationApplication::instance()->getConnectionManager()->getServerByConnectionId( m_connectionId );
+        Server* server = Application::instance()->getConnectionManager()->getServerByConnectionId( m_connectionId );
         if ( !server )
         {
             failed( i18n( "Could not send Reverse DCC SEND acknowledgement to the partner via the IRC server." ) );
@@ -491,7 +491,7 @@ void DccTransferRecv::connectWithSender()
 
         if (Preferences::self()->dccUPnP())
         {
-            UPnPRouter *router = KonversationApplication::instance()->getDccTransferManager()->getUPnPRouter();
+            UPnPRouter *router = Application::instance()->getDccTransferManager()->getUPnPRouter();
 
             if (router && router->forward(QHostAddress(server->getOwnIpByNetworkInterface()), m_ownPort, QAbstractSocket::TcpSocket))
                 connect(router, SIGNAL( forwardComplete(bool, quint16 ) ), this, SLOT ( sendReverseAck(bool, quint16 ) ) );
@@ -511,7 +511,7 @@ void DccTransferRecv::connectWithSender()
 
 void DccTransferRecv::sendReverseAck(bool /* error */, quint16 port)
 {
-    Server* server = KonversationApplication::instance()->getConnectionManager()->getServerByConnectionId( m_connectionId );
+    Server* server = Application::instance()->getConnectionManager()->getServerByConnectionId( m_connectionId );
     if ( !server )
     {
         failed( i18n( "Could not send Reverse DCC SEND acknowledgement to the partner via the IRC server." ) );
@@ -542,7 +542,7 @@ void DccTransferRecv::requestResume()
 
     kDebug() << "Requesting resume for " << m_partnerNick << " file " << m_fileName << " partner " << m_partnerPort;
 
-    Server* server = KonversationApplication::instance()->getConnectionManager()->getServerByConnectionId( m_connectionId );
+    Server* server = Application::instance()->getConnectionManager()->getServerByConnectionId( m_connectionId );
     if ( !server )
     {
         kDebug() << "Could not retrieve the instance of Server. Connection id: " << m_connectionId;
@@ -635,7 +635,7 @@ void DccTransferRecv::slotServerSocketReadyAccept()
 
     if (Preferences::self()->dccUPnP())
     {
-        UPnPRouter *router = KonversationApplication::instance()->getDccTransferManager()->getUPnPRouter();
+        UPnPRouter *router = Application::instance()->getDccTransferManager()->getUPnPRouter();
         if (router) router->undoForward(m_ownPort, QAbstractSocket::TcpSocket);
     }
 

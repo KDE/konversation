@@ -365,7 +365,7 @@ void Channel::connectionStateChanged(Server* server, Konversation::ConnectionSta
 
             //HACK the way the notification priorities work sucks, this forces the tab text color to gray right now.
             if (m_currentTabNotify == Konversation::tnfNone || (!Preferences::self()->tabNotificationsEvents() && m_currentTabNotify == Konversation::tnfControl))
-                KonversationApplication::instance()->getMainWindow()->getViewContainer()->unsetViewNotification(this);
+                Application::instance()->getMainWindow()->getViewContainer()->unsetViewNotification(this);
         }
     }
 }
@@ -1334,9 +1334,9 @@ void Channel::joinNickname(ChannelNickPtr channelNick)
 
         //HACK the way the notification priorities work sucks, this forces the tab text color to ungray right now.
         if (m_currentTabNotify == Konversation::tnfNone || (!Preferences::self()->tabNotificationsEvents() && m_currentTabNotify == Konversation::tnfControl))
-            KonversationApplication::instance()->getMainWindow()->getViewContainer()->unsetViewNotification(this);
+            Application::instance()->getMainWindow()->getViewContainer()->unsetViewNotification(this);
 
-        KonversationApplication::instance()->notificationHandler()->channelJoin(this,getName());
+        Application::instance()->notificationHandler()->channelJoin(this,getName());
     }
     else
     {
@@ -1467,7 +1467,7 @@ void Channel::kickNick(ChannelNickPtr channelNick, const QString &kicker, const 
                                               "You have been kicked from channel %1 by %2 (%3).", getName(), kicker, displayReason), true);
             }
 
-            KonversationApplication::instance()->notificationHandler()->kick(this,getName(), kicker);
+            Application::instance()->notificationHandler()->kick(this,getName(), kicker);
         }
 
         m_joined=false;
@@ -1475,7 +1475,7 @@ void Channel::kickNick(ChannelNickPtr channelNick, const QString &kicker, const 
 
         //HACK the way the notification priorities work sucks, this forces the tab text color to gray right now.
         if (m_currentTabNotify == Konversation::tnfNone || (!Preferences::self()->tabNotificationsEvents() && m_currentTabNotify == Konversation::tnfControl))
-            KonversationApplication::instance()->getMainWindow()->getViewContainer()->unsetViewNotification(this);
+            Application::instance()->getMainWindow()->getViewContainer()->unsetViewNotification(this);
 
         return;
     }

@@ -158,9 +158,9 @@ namespace Konversation
         {
             QString ircnick;
             QString serverOrGroup;
-            KonversationApplication::splitNick_Server(*it, ircnick, serverOrGroup);
+            Application::splitNick_Server(*it, ircnick, serverOrGroup);
             NickInfoPtr nickInfo =
-                dynamic_cast<KonversationApplication*>(kapp)->getNickInfo(ircnick, serverOrGroup);
+                dynamic_cast<Application*>(kapp)->getNickInfo(ircnick, serverOrGroup);
             if(nickInfo)
             {
                 if(!nickInfo->isAway())
@@ -233,7 +233,7 @@ namespace Konversation
     }
     void AddressbookBase::focusAndShowErrorMessage(const QString &errorMsg)
     {
-        static_cast<KonversationApplication *>(kapp)->getMainWindow()->focusAndShowErrorMessage(errorMsg);
+        static_cast<Application *>(kapp)->getMainWindow()->focusAndShowErrorMessage(errorMsg);
     }
     /**For a given contact, adds the ircnick if they don't already have it.  If you pass an addressBook, the contact is inserted
      * if it has changed. */

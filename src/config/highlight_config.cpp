@@ -301,7 +301,7 @@ QStringList Highlight_Config::currentHighlightList()
 
 void Highlight_Config::playSound()
 {
-  KonversationApplication *konvApp=static_cast<KonversationApplication *>(KApplication::kApplication());
+  Application *konvApp=static_cast<Application *>(KApplication::kApplication());
   konvApp->sound()->play(KUrl(soundURL->url()));
 }
 

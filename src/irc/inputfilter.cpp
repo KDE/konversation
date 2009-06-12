@@ -171,7 +171,7 @@ bool _plHas(int count, int x)
 
 void InputFilter::parseClientCommand(const QString &prefix, const QString &command, QStringList &parameterList)
 {
-    KonversationApplication* konv_app = KonversationApplication::instance();
+    Application* konv_app = Application::instance();
     Q_ASSERT(konv_app);
     Q_ASSERT(server);
 
@@ -2155,7 +2155,7 @@ void InputFilter::parsePrivMsg(const QString& prefix, QStringList& parameterList
         source = prefix;
     }
 
-    KonversationApplication* konv_app = static_cast<KonversationApplication*>(kapp);
+    Application* konv_app = static_cast<Application*>(kapp);
     message = konv_app->doAutoreplace(message, false);
 
     if(isAChannel(parameterList.value(0)))

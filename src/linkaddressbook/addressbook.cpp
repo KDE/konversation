@@ -156,7 +156,7 @@ namespace Konversation
     QPixmap Addressbook::icon(const QString &uid)
     {
 
-        Images* icons = KonversationApplication::instance()->images();
+        Images* icons = Application::instance()->images();
         QIcon currentIcon;
         if(!isPresent(uid))
             return QPixmap();

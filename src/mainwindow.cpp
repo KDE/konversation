@@ -67,19 +67,19 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0)
     setCentralWidget(m_viewContainer->getWidget());
 
     //used for event compression. See header file for resetHasDirtySettings()
-    connect(KonversationApplication::instance(), SIGNAL(appearanceChanged()), this, SLOT(resetHasDirtySettings()));
-    connect(KonversationApplication::instance(), SIGNAL(appearanceChanged()), this, SLOT(updateTrayIcon()));
+    connect(Application::instance(), SIGNAL(appearanceChanged()), this, SLOT(resetHasDirtySettings()));
+    connect(Application::instance(), SIGNAL(appearanceChanged()), this, SLOT(updateTrayIcon()));
 
 
     // Set up view container
-    connect(KonversationApplication::instance(), SIGNAL(appearanceChanged()), m_viewContainer, SLOT(updateAppearance()));
+    connect(Application::instance(), SIGNAL(appearanceChanged()), m_viewContainer, SLOT(updateAppearance()));
     connect(KGlobalSettings::self(), SIGNAL(iconChanged(int)), m_viewContainer, SLOT(updateViewIcons()));
-    connect(KonversationApplication::instance(), SIGNAL(serverGroupsChanged(const Konversation::ServerGroupSettingsPtr)),
+    connect(Application::instance(), SIGNAL(serverGroupsChanged(const Konversation::ServerGroupSettingsPtr)),
             m_viewContainer, SLOT(updateViews(const Konversation::ServerGroupSettingsPtr)));
     connect(m_viewContainer, SIGNAL(autoJoinToggled(const Konversation::ServerGroupSettingsPtr)),
-            KonversationApplication::instance(), SIGNAL(serverGroupsChanged(const Konversation::ServerGroupSettingsPtr)));
+            Application::instance(), SIGNAL(serverGroupsChanged(const Konversation::ServerGroupSettingsPtr)));
     connect(m_viewContainer, SIGNAL(setWindowCaption(const QString&)), this, SLOT(setCaption(const QString&)));
-    connect(KonversationApplication::instance()->getConnectionManager(),
+    connect(Application::instance()->getConnectionManager(),
             SIGNAL(connectionChangedState(Server*, Konversation::ConnectionState)),
             m_viewContainer, SLOT(connectionStateChanged(Server*, Konversation::ConnectionState)));
     connect(this, SIGNAL(triggerRememberLine()), m_viewContainer, SLOT(insertRememberLine()));
@@ -89,7 +89,7 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0)
 
     // Set up status bar
     m_statusBar = new KonversationStatusBar(this);
-    connect(KonversationApplication::instance(), SIGNAL(appearanceChanged()), m_statusBar, SLOT(updateAppearance()));
+    connect(Application::instance(), SIGNAL(appearanceChanged()), m_statusBar, SLOT(updateAppearance()));
 
     createStandardStatusBarAction();
 
@@ -417,7 +417,7 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0)
     awayAction->setShortcut(KShortcut("Ctrl+Shift+A"));
     awayAction->setEnabled(false);
     awayAction->setIcon(KIcon("im-user-away"));
-    connect(awayAction, SIGNAL(triggered(bool)), KonversationApplication::instance()->getAwayManager(), SLOT(toggleGlobalAway(bool)));
+    connect(awayAction, SIGNAL(triggered(bool)), Application::instance()->getAwayManager(), SLOT(toggleGlobalAway(bool)));
     actionCollection()->addAction("toggle_away", awayAction);
 
     action=new KAction(this);
@@ -532,7 +532,7 @@ QSize KonversationMainWindow::sizeHint() const
 
 int KonversationMainWindow::confirmQuit()
 {
-    KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
+    Application* konvApp = static_cast<Application*>(kapp);
 
     if (konvApp->getConnectionManager()->connectionCount() == 0)
         return KMessageBox::Continue;
@@ -577,7 +577,7 @@ void KonversationMainWindow::quitProgram()
 
 bool KonversationMainWindow::queryClose()
 {
-    KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
+    Application* konvApp = static_cast<Application*>(kapp);
 
     if (!konvApp->sessionSaving())
     {
@@ -654,7 +654,7 @@ void KonversationMainWindow::settingsChangedSlot()
     // The appearanceChanged signal is connected to resetHasDirtySettings to reset this bool
     if (!m_hasDirtySettings)
     {
-        QTimer::singleShot(0, KonversationApplication::instance(), SIGNAL(appearanceChanged()));
+        QTimer::singleShot(0, Application::instance(), SIGNAL(appearanceChanged()));
         m_hasDirtySettings = true;
     }
 }
@@ -747,7 +747,7 @@ void KonversationMainWindow::openServerList()
     if (!m_serverListDialog)
     {
         m_serverListDialog = new Konversation::ServerListDialog(i18n("Server List"), this);
-        KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
+        Application* konvApp = static_cast<Application*>(kapp);
 
         connect(m_serverListDialog, SIGNAL(serverGroupsChanged(const Konversation::ServerGroupSettingsPtr)),
                 konvApp, SIGNAL(serverGroupsChanged(const Konversation::ServerGroupSettingsPtr)));
@@ -814,7 +814,7 @@ void KonversationMainWindow::openNotifications()
 
 void KonversationMainWindow::notifyAction(int connectionId, const QString& nick)
 {
-    KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
+    Application* konvApp = static_cast<Application*>(kapp);
     Server* server = konvApp->getConnectionManager()->getServerByConnectionId(connectionId);
     if (server) server->notifyAction(nick);
 }

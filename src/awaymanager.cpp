@@ -76,7 +76,7 @@ AwayManager::AwayManager(QObject* parent) : QObject(parent)
     d->useXidle = false;
     d->useMit = false;
 
-    m_connectionManager = static_cast<KonversationApplication*>(kapp)->getConnectionManager();
+    m_connectionManager = static_cast<Application*>(kapp)->getConnectionManager();
 
 #ifdef HasXHeaders
     Display* display = QX11Info::display();
@@ -338,7 +338,7 @@ void AwayManager::toggleGlobalAway(bool away)
 
 void AwayManager::updateGlobalAwayAction(bool away)
 {
-    KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
+    Application* konvApp = static_cast<Application*>(kapp);
     KToggleAction* awayAction = qobject_cast<KToggleAction*>(konvApp->getMainWindow()->actionCollection()->action("toggle_away"));
 
     if (!awayAction) return;

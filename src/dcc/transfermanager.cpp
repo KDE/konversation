@@ -29,7 +29,7 @@ DccTransferManager::DccTransferManager( QObject* parent )
 
     m_defaultIncomingFolder = Preferences::self()->dccPath();
 
-    connect( KonversationApplication::instance(), SIGNAL( appearanceChanged() ),
+    connect( Application::instance(), SIGNAL( appearanceChanged() ),
              this, SLOT( slotSettingsChanged() ) );
 
     m_upnpRouter = NULL;

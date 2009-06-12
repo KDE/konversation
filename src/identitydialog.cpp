@@ -70,7 +70,7 @@ namespace Konversation
         setButtonGuiItem(KDialog::Ok, KGuiItem(i18n("&OK"), "dialog-ok", i18n("Change identity information")));
         setButtonGuiItem(KDialog::Cancel, KGuiItem(i18n("&Cancel"), "dialog-cancel", i18n("Discards all changes made")));
 
-        AwayManager* awayManager = static_cast<KonversationApplication*>(kapp)->getAwayManager();
+        AwayManager* awayManager = static_cast<Application*>(kapp)->getAwayManager();
         connect(m_identityCBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateIdentity(int)));
         connect(this, SIGNAL(identitiesChanged()), awayManager, SLOT(identitiesChanged()));
     }
@@ -166,7 +166,7 @@ namespace Konversation
 
         refreshCurrentIdentity();
         Preferences::setIdentityList(m_identityList);
-        static_cast<KonversationApplication*>(kapp)->saveOptions(true);
+        static_cast<Application*>(kapp)->saveOptions(true);
         emit identitiesChanged();
         KDialog::accept();
     }
@@ -303,7 +303,7 @@ namespace Konversation
             m_nicknameLBox->lineEdit()->setFocus();
             return false;
         }
-        
+
         if(m_realNameEdit->text().isEmpty())
         {
             KMessageBox::error(this, i18n("Please enter a real name."));
@@ -314,7 +314,7 @@ namespace Konversation
             m_realNameEdit->setFocus();
             return false;
         }
-        
+
         return true;
     }
 }

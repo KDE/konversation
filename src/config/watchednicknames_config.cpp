@@ -34,7 +34,7 @@ WatchedNicknames_Config::WatchedNicknames_Config(QWidget *parent, const char *na
   connect(networkDropdown,SIGNAL (activated(int)),this,SLOT (networkChanged(int)) );
   connect(nicknameInput,SIGNAL (textChanged(const QString&)),this,SLOT (nicknameChanged(const QString&)) );
 
-  connect(KonversationApplication::instance(), SIGNAL(serverGroupsChanged(const Konversation::ServerGroupSettingsPtr)),
+  connect(Application::instance(), SIGNAL(serverGroupsChanged(const Konversation::ServerGroupSettingsPtr)),
       this, SLOT(reloadSettings()));
 }
 
@@ -144,7 +144,7 @@ void WatchedNicknames_Config::saveSettings()
 
   // update in-memory notify list
   Preferences::setNotifyList(notifyList);
-  static_cast<KonversationApplication*>(kapp)->saveOptions(false);
+  static_cast<Application*>(kapp)->saveOptions(false);
 
   // remember current list for hasChanged()
   m_oldNotifyList=currentNotifyList();

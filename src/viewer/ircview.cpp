@@ -589,7 +589,7 @@ QString IRCView::filter(const QString& line, const QString& defaultColor, const 
 bool doHighlight, bool parseURL, bool self)
 {
     QString filteredLine(line);
-    KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
+    Application* konvApp = static_cast<Application*>(kapp);
 
     //Since we can't turn off whitespace simplification withouteliminating text wrapping,
     //  if the line starts with a space turn it into a non-breaking space.
@@ -1046,7 +1046,7 @@ void IRCView::openLink(const QString& url, bool)
     {
         if (link.startsWith(QLatin1String("irc://")))
         {
-            KonversationApplication* konvApp = KonversationApplication::instance();
+            Application* konvApp = Application::instance();
             konvApp->getConnectionManager()->connectTo(Konversation::SilentlyReuseConnection, link);
         }
         else if (!Preferences::self()->useCustomBrowser() || link.startsWith(QLatin1String("mailto:")))
@@ -1231,7 +1231,7 @@ void IRCView::contextMenuEvent(QContextMenuEvent* ev)
     }
     else
     {
-        KActionCollection* actionCollection = KonversationApplication::instance()->getMainWindow()->actionCollection();
+        KActionCollection* actionCollection = Application::instance()->getMainWindow()->actionCollection();
         KToggleAction* toggleMenuBarAction = static_cast<KToggleAction*>(actionCollection->action("options_show_menubar"));
         QAction* separator = NULL;
 

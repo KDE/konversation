@@ -241,9 +241,9 @@ namespace Konversation
             else if(command == "raw")      result = parseRaw(parameter);
             else if(command == "dcc")      result = parseDcc(parameter);
             else if(command == "konsole")  parseKonsole();
-            else if(command == "aaway")    KonversationApplication::instance()->getAwayManager()->requestAllAway(parameter);
-            else if(command == "aunaway")    KonversationApplication::instance()->getAwayManager()->requestAllUnaway();
-            else if(command == "aback")    KonversationApplication::instance()->getAwayManager()->requestAllUnaway();
+            else if(command == "aaway")    Application::instance()->getAwayManager()->requestAllAway(parameter);
+            else if(command == "aunaway")    Application::instance()->getAwayManager()->requestAllUnaway();
+            else if(command == "aback")    Application::instance()->getAwayManager()->requestAllUnaway();
             else if(command == "ame")      result = parseAme(parameter);
             else if(command == "amsg")     result = parseAmsg(parameter);
             else if(command == "omsg")     result = parseOmsg(parameter);
@@ -304,7 +304,7 @@ namespace Konversation
 
     OutputFilterResult OutputFilter::parseShowTuner(const QString &parameter)
     {
-        KonversationApplication *konvApp = static_cast<KonversationApplication*>(KApplication::kApplication());
+        Application *konvApp = static_cast<Application*>(KApplication::kApplication());
         OutputFilterResult result;
 
         if(parameter.isEmpty() || parameter == "on")
@@ -1620,7 +1620,7 @@ namespace Konversation
     {
         QString parameter(prametr.isEmpty()?destination:prametr);
         QString key(m_server->getKeyForRecipient(parameter));
-        QWidget *mw=KonversationApplication::instance()->getMainWindow();
+        QWidget *mw=Application::instance()->getMainWindow();
         if (!key.isEmpty())
             KMessageBox::information(mw, i18n("The key for %1 is \"%2\".", parameter, key), i18n("Blowfish"));
         else

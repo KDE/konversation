@@ -96,7 +96,7 @@ void DccTransferSend::cleanUp()
 
         if (Preferences::self()->dccUPnP())
         {
-            UPnPRouter *router = KonversationApplication::instance()->getDccTransferManager()->getUPnPRouter();
+            UPnPRouter *router = Application::instance()->getDccTransferManager()->getUPnPRouter();
             if (router) router->undoForward(m_ownPort, QAbstractSocket::TcpSocket);
         }
     }
@@ -141,7 +141,7 @@ bool DccTransferSend::queue()
 
     if ( m_ownIp.isEmpty() )
     {
-        m_ownIp = DccCommon::getOwnIp( KonversationApplication::instance()->getConnectionManager()->getServerByConnectionId( m_connectionId ) );
+        m_ownIp = DccCommon::getOwnIp( Application::instance()->getConnectionManager()->getServerByConnectionId( m_connectionId ) );
     }
 
     if ( !KAuthorized::authorizeKAction( "allow_downloading" ) )
@@ -251,7 +251,7 @@ void DccTransferSend::start()                     // public slot
 
     // common procedure
 
-    Server* server = KonversationApplication::instance()->getConnectionManager()->getServerByConnectionId( m_connectionId );
+    Server* server = Application::instance()->getConnectionManager()->getServerByConnectionId( m_connectionId );
     if ( !server )
     {
         kDebug() << "could not retrieve the instance of Server. Connection id: " << m_connectionId;
@@ -288,7 +288,7 @@ void DccTransferSend::start()                     // public slot
 
         if (Preferences::self()->dccUPnP())
         {
-            UPnPRouter *router = KonversationApplication::instance()->getDccTransferManager()->getUPnPRouter();
+            UPnPRouter *router = Application::instance()->getDccTransferManager()->getUPnPRouter();
 
             if (router && router->forward(QHostAddress(server->getOwnIpByNetworkInterface()), m_ownPort, QAbstractSocket::TcpSocket))
                 connect(router, SIGNAL( forwardComplete(bool, quint16 ) ), this, SLOT ( sendRequest(bool, quint16) ) );
@@ -305,7 +305,7 @@ void DccTransferSend::start()                     // public slot
         // Passive DCC SEND
         kDebug() << "Passive DCC SEND";
 
-        int tokenNumber = KonversationApplication::instance()->getDccTransferManager()->generateReverseTokenNumber();
+        int tokenNumber = Application::instance()->getDccTransferManager()->generateReverseTokenNumber();
         // TODO: should we append a letter "T" to this token?
         m_reverseToken = QString::number( tokenNumber );
 
@@ -321,7 +321,7 @@ void DccTransferSend::start()                     // public slot
 
 void DccTransferSend::sendRequest(bool /* error */, quint16 port)
 {
-    Server* server = KonversationApplication::instance()->getConnectionManager()->getServerByConnectionId( m_connectionId );
+    Server* server = Application::instance()->getConnectionManager()->getServerByConnectionId( m_connectionId );
     if ( !server )
     {
         kDebug() << "could not retrieve the instance of Server. Connection id: " << m_connectionId;
@@ -398,7 +398,7 @@ void DccTransferSend::acceptClient()                     // slot
 
     if (Preferences::self()->dccUPnP())
     {
-        UPnPRouter *router = KonversationApplication::instance()->getDccTransferManager()->getUPnPRouter();
+        UPnPRouter *router = Application::instance()->getDccTransferManager()->getUPnPRouter();
         if (router) router->undoForward(m_ownPort, QAbstractSocket::TcpSocket);
     }
 

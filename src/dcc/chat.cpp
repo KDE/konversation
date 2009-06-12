@@ -89,7 +89,7 @@ DccChat::DccChat(QWidget* parent, bool listen, Server* server, const QString& ow
 
     if (popup)
     {
-        QAction* action = KonversationApplication::instance()->getMainWindow()->actionCollection()->action("open_logfile");
+        QAction* action = Application::instance()->getMainWindow()->actionCollection()->action("open_logfile");
 
         if (action)
         {
@@ -112,7 +112,7 @@ DccChat::DccChat(QWidget* parent, bool listen, Server* server, const QString& ow
 
         if (Preferences::self()->dccUPnP())
         {
-            UPnPRouter *router = KonversationApplication::instance()->getDccTransferManager()->getUPnPRouter();
+            UPnPRouter *router = Application::instance()->getDccTransferManager()->getUPnPRouter();
 
             if (router && router->forward(QHostAddress(server->getOwnIpByNetworkInterface()), m_ownPort, QAbstractSocket::TcpSocket))
                 connect(router, SIGNAL( forwardComplete(bool ) ), this, SLOT ( sendRequest(bool, quint16 ) ) );
@@ -145,7 +145,7 @@ DccChat::~DccChat()
 
         if (Preferences::self()->dccUPnP())
         {
-            UPnPRouter *router = KonversationApplication::instance()->getDccTransferManager()->getUPnPRouter();
+            UPnPRouter *router = Application::instance()->getDccTransferManager()->getUPnPRouter();
             if (router) router->undoForward(m_ownPort, QAbstractSocket::TcpSocket);
         }
     }
@@ -365,7 +365,7 @@ void DccChat::heardPartner()
 
     if (Preferences::self()->dccUPnP())
     {
-        UPnPRouter *router = KonversationApplication::instance()->getDccTransferManager()->getUPnPRouter();
+        UPnPRouter *router = Application::instance()->getDccTransferManager()->getUPnPRouter();
         if (router) router->undoForward(m_ownPort, QAbstractSocket::TcpSocket);
     }
 

@@ -91,7 +91,7 @@ namespace Konversation
         {
             if (link.startsWith(QLatin1String("irc://")))
             {
-                KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
+                Application* konvApp = static_cast<Application*>(kapp);
                 konvApp->getConnectionManager()->connectTo(Konversation::SilentlyReuseConnection, link);
             }
             else if (link.startsWith('#') && m_server && m_server->isConnected())

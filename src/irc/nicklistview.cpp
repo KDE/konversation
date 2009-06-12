@@ -204,7 +204,7 @@ bool NickListView::event(QEvent *event)
 
 void NickListView::setWhatsThis()
 {
-    Images* images = KonversationApplication::instance()->images();
+    Images* images = Application::instance()->images();
 
     if(images->getNickIcon( Images::Normal, false).isNull())
     {

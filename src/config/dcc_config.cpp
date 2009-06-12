@@ -44,7 +44,7 @@ void DCC_Config::dccMethodChanged(int index)
 
 void DCC_Config::dccUPnPChanged(int state)
 {
-    DccTransferManager *transferManager = KonversationApplication::instance()->getDccTransferManager();
+    DccTransferManager *transferManager = Application::instance()->getDccTransferManager();
 
     if (state == Qt::Checked && transferManager->getUPnPRouter() == NULL)
     {

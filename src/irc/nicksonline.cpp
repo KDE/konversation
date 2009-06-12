@@ -400,10 +400,10 @@ void NicksOnline::updateServerOnlineList(Server* servr)
                 if (channelNick->isAdmin()) nickPrivilege = Images::Admin;
                 if (server->getJoinedChannelMembers(channelName) != 0)
                     channelItem->setPixmap(nlvcChannel,
-                        KonversationApplication::instance()->images()->getNickIcon(nickPrivilege, false));
+                        Application::instance()->images()->getNickIcon(nickPrivilege, false));
                 else
                     channelItem->setPixmap(nlvcChannel,
-                        KonversationApplication::instance()->images()->getNickIcon(nickPrivilege, true));
+                        Application::instance()->images()->getNickIcon(nickPrivilege, true));
             }
             // Remove channel if nick no longer in it.
             Q3ListViewItem* child = nickRoot->firstChild();
@@ -495,7 +495,7 @@ void NicksOnline::updateServerOnlineList(Server* servr)
 NickInfoPtr NicksOnline::getOnlineNickInfo(QString& networkName, QString& nickname)
 {
     // Get list of pointers to all servers.
-    KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
+    Application* konvApp = static_cast<Application*>(kapp);
     const QList<Server*> serverList = konvApp->getConnectionManager()->getServerList();
     foreach (Server* server, serverList)
     {
@@ -516,7 +516,7 @@ NickInfoPtr NicksOnline::getOnlineNickInfo(QString& networkName, QString& nickna
  */
 void NicksOnline::requestWhois(QString& networkName, QString& nickname)
 {
-    KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
+    Application* konvApp = static_cast<Application*>(kapp);
     const QList<Server*> serverList = konvApp->getConnectionManager()->getServerList();
     foreach (Server* server, serverList)
     {
@@ -533,7 +533,7 @@ void NicksOnline::requestWhois(QString& networkName, QString& nickname)
  */
 void NicksOnline::refreshAllServerOnlineLists()
 {
-    KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
+    Application* konvApp = static_cast<Application*>(kapp);
     const QList<Server*> serverList = konvApp->getConnectionManager()->getServerList();
     // Remove servers no longer connected.
     Q3ListViewItem* child = m_nickListView->firstChild();
@@ -639,7 +639,7 @@ NickInfoPtr NicksOnline::getNickInfo(const Q3ListViewItem* item)
     if (serverName.isEmpty() || nickname.isEmpty())
         return NickInfoPtr(); //TODO FIXME NULL NULL NULL
 
-    Server* server = KonversationApplication::instance()->getConnectionManager()->getServerByName(serverName);
+    Server* server = Application::instance()->getConnectionManager()->getServerByName(serverName);
 
     if (server)
         return server->getNickInfo(nickname);
@@ -659,7 +659,7 @@ NickInfoPtr NicksOnline::getNickInfo(const Q3ListViewItem* item)
 Q3ListViewItem* NicksOnline::getServerAndNickItem(const QString& serverName,
 const QString& nickname)
 {
-    Server* server = KonversationApplication::instance()->getConnectionManager()->getServerByName(serverName);
+    Server* server = Application::instance()->getConnectionManager()->getServerByName(serverName);
     if (!server) return 0;
     QString networkName = server->getDisplayName();
     Q3ListViewItem* networkRoot = m_nickListView->findItem(networkName, nlvcNetwork);
@@ -695,7 +695,7 @@ void NicksOnline::doCommand(QAction* id)
     }
 
     // Get the server object corresponding to the connection id.
-    Server* server = KonversationApplication::instance()->getConnectionManager()->getServerByConnectionId(nickitem->connectionId());
+    Server* server = Application::instance()->getConnectionManager()->getServerByConnectionId(nickitem->connectionId());
 
     if (!server) return;
 
@@ -795,7 +795,7 @@ int NicksOnline::getNickAddressbookState(Q3ListViewItem* item)
     QString nickname;
     if (getItemServerAndNick(item, serverName, nickname))
     {
-        Server *server = KonversationApplication::instance()->getConnectionManager()->getServerByName(serverName);
+        Server *server = Application::instance()->getConnectionManager()->getServerByName(serverName);
         if (!server) return nsNotANick;
         NickInfoPtr nickInfo = server->getNickInfo(nickname);
         if (nickInfo)
@@ -972,7 +972,7 @@ void NicksOnline::refreshItem(Q3ListViewItem* item)
     QString nickname;
     if (getItemServerAndNick(item, serverName, nickname))
     {
-        Server *server = KonversationApplication::instance()->getConnectionManager()->getServerByName(serverName);
+        Server *server = Application::instance()->getConnectionManager()->getServerByName(serverName);
         if (server)
         {
             NickInfoPtr nickInfo = server->getNickInfo(nickname);

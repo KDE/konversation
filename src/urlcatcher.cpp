@@ -134,7 +134,7 @@ void UrlCatcher::openUrl(QTreeWidgetItem* item)
     QString url = item->text(1);
     if (!Preferences::self()->useCustomBrowser() || url.toLower().startsWith(QLatin1String("mailto:")) )
     {
-        new KRun(KUrl(url), KonversationApplication::instance()->getMainWindow());
+        new KRun(KUrl(url), Application::instance()->getMainWindow());
     }
     else
     {

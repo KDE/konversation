@@ -279,7 +279,7 @@ void Server::connectSignals()
     connect(getOutputFilter(), SIGNAL(closeRawLog()), this, SLOT(closeRawLog()));
     connect(getOutputFilter(), SIGNAL(encodingChanged()), this, SLOT(updateEncoding()));
 
-    KonversationApplication* konvApp = static_cast<KonversationApplication*>(kapp);
+    Application* konvApp = static_cast<Application*>(kapp);
     connect(getOutputFilter(), SIGNAL(connectTo(Konversation::ConnectionFlag, const QString&,
                 const QString&, const QString&, const QString&, const QString&, bool)),
             konvApp->getConnectionManager(), SLOT(connectTo(Konversation::ConnectionFlag,
@@ -611,7 +611,7 @@ void Server::broken(QAbstractSocket::SocketError state)
 
     if (getConnectionState() != Konversation::SSDeliberatelyDisconnected)
     {
-        static_cast<KonversationApplication*>(kapp)->notificationHandler()->connectionFailure(getStatusView(), getServerName());
+        static_cast<Application*>(kapp)->notificationHandler()->connectionFailure(getStatusView(), getServerName());
 
         QString error = i18n("Connection to Server %1 lost: %2.",
             getConnectionSettings().server().host(),
@@ -648,7 +648,7 @@ void Server::sslVerifyError( const QSslError&  error)
 
     QString msg = i18n("The server (%1) certificate failed the authenticity test. %2", getConnectionSettings().server().host(), error.errorString());
 
-    KonversationApplication* konvApp = static_cast<KonversationApplication *>(kapp);
+    Application* konvApp = static_cast<Application *>(kapp);
 
     int result = KMessageBox::warningYesNo( konvApp->getMainWindow(),
                                             msg,
@@ -1518,7 +1518,7 @@ Query* Server::addQuery(const NickInfoPtr & nickInfo, bool weinitiated)
         m_queryNicks.insert(lcNickname, nickInfo);
 
         if (!weinitiated)
-            static_cast<KonversationApplication*>(kapp)->notificationHandler()->query(query, nickname);
+            static_cast<Application*>(kapp)->notificationHandler()->query(query, nickname);
     }
 
     // try to get hostmask if there's none yet
@@ -1723,7 +1723,7 @@ void Server::addDccSend(const QString &recipient,KUrl fileURL, const QString &al
     emit addDccPanel();
 
     // We already checked that the file exists in output filter / requestDccSend() resp.
-    DccTransferSend* newDcc = KonversationApplication::instance()->getDccTransferManager()->newUpload();
+    DccTransferSend* newDcc = Application::instance()->getDccTransferManager()->newUpload();
 
     newDcc->setConnectionId( connectionId() );
 
@@ -1780,7 +1780,7 @@ QString Server::cleanDccFileName(const QString& filename) const
 
 void Server::addDccGet(const QString &sourceNick, const QStringList &dccArguments)
 {
-    DccTransferRecv* newDcc = KonversationApplication::instance()->getDccTransferManager()->newDownload();
+    DccTransferRecv* newDcc = Application::instance()->getDccTransferManager()->newDownload();
 
     newDcc->setConnectionId( connectionId() );
     newDcc->setPartnerNick( sourceNick );
@@ -1907,7 +1907,7 @@ void Server::dccRejectChat(const QString& partnerNick)
 void Server::startReverseDccSendTransfer(const QString& sourceNick,const QStringList& dccArguments)
 {
     kDebug();
-    DccTransferManager* dtm = KonversationApplication::instance()->getDccTransferManager();
+    DccTransferManager* dtm = Application::instance()->getDccTransferManager();
 
     const int argumentSize = dccArguments.size();
     QString partnerIP = DccCommon::numericalIpToTextIp( dccArguments.at(argumentSize - 4) ); //dccArguments[1] ) );
@@ -1943,7 +1943,7 @@ void Server::startReverseDccSendTransfer(const QString& sourceNick,const QString
 
 void Server::resumeDccGetTransfer(const QString &sourceNick, const QStringList &dccArguments)
 {
-    DccTransferManager* dtm = KonversationApplication::instance()->getDccTransferManager();
+    DccTransferManager* dtm = Application::instance()->getDccTransferManager();
 
     //filename port position [token]
     QString fileName;
@@ -1988,7 +1988,7 @@ void Server::resumeDccGetTransfer(const QString &sourceNick, const QStringList &
 
 void Server::resumeDccSendTransfer(const QString &sourceNick, const QStringList &dccArguments)
 {
-    DccTransferManager* dtm = KonversationApplication::instance()->getDccTransferManager();
+    DccTransferManager* dtm = Application::instance()->getDccTransferManager();
 
     bool passiv = false;
     QString fileName;
@@ -2052,7 +2052,7 @@ void Server::resumeDccSendTransfer(const QString &sourceNick, const QStringList 
 
 void Server::rejectDccSendTransfer(const QString &sourceNick, const QStringList &dccArguments)
 {
-    DccTransferManager* dtm = KonversationApplication::instance()->getDccTransferManager();
+    DccTransferManager* dtm = Application::instance()->getDccTransferManager();
 
     //filename
     QString fileName = recoverDccFileName(dccArguments,0);
@@ -2461,7 +2461,7 @@ NickInfoPtr Server::setWatchedNickOnline(const QString& nickname)
     appendMessageToFrontmost(i18n("Notify"),"<a class=\"nick\" href=\"#"+nickname+"\">"+
         i18n("%1 is online (%2).", nickname, getServerName())+"</a>", getStatusView());
 
-    static_cast<KonversationApplication*>(kapp)->notificationHandler()->nickOnline(getStatusView(), nickname);
+    static_cast<Application*>(kapp)->notificationHandler()->nickOnline(getStatusView(), nickname);
 
     nickInfo->setPrintedOnline(true);
     return nickInfo;
@@ -2478,7 +2478,7 @@ void Server::setWatchedNickOffline(const QString& nickname, const NickInfoPtr ni
 
     appendMessageToFrontmost(i18n("Notify"), i18n("%1 went offline (%2).", nickname, getServerName()), getStatusView());
 
-    static_cast<KonversationApplication*>(kapp)->notificationHandler()->nickOffline(getStatusView(), nickname);
+    static_cast<Application*>(kapp)->notificationHandler()->nickOffline(getStatusView(), nickname);
 
 }
 
@@ -3225,7 +3225,7 @@ void Server::updateAutoJoin(Konversation::ChannelSettings channel)
 
 ViewContainer* Server::getViewContainer() const
 {
-    KonversationApplication* konvApp = static_cast<KonversationApplication *>(kapp);
+    Application* konvApp = static_cast<Application *>(kapp);
     return konvApp->getMainWindow()->getViewContainer();
 }
 

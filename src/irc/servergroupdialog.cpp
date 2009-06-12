@@ -387,7 +387,7 @@ namespace Konversation
             }
 
             m_identitiesNeedsUpdate = true; // and what's this for?
-            ViewContainer* vc = KonversationApplication::instance()->getMainWindow()->getViewContainer();
+            ViewContainer* vc = Application::instance()->getMainWindow()->getViewContainer();
             vc->updateViewEncoding(vc->getFrontView());
         }
         delete dlg;

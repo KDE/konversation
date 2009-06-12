@@ -147,7 +147,7 @@ void DccTransfer::cleanUp()
 void DccTransfer::failed( const QString& errorMessage )
 {
     cleanUp();
-    KonversationApplication* konv_app = KonversationApplication::instance();
+    Application* konv_app = Application::instance();
     Server* server = konv_app->getConnectionManager()->getServerByConnectionId( m_connectionId );
     if (server)
     {
@@ -171,7 +171,7 @@ void DccTransfer::setStatus( DccStatus status, const QString& statusDetail )
 
     if (m_status == Done)
     {
-        KonversationApplication* konv_app = KonversationApplication::instance();
+        Application* konv_app = Application::instance();
         Server* server = konv_app->getConnectionManager()->getServerByConnectionId( m_connectionId );
         if (server)
         {

@@ -146,7 +146,7 @@ void Theme_Config::saveSettings()
             // set in-memory theme to the saved theme
             Preferences::self()->setIconTheme(m_currentTheme);
             // update theme on runtime
-            KonversationApplication::instance()->images()->initializeNickIcons();
+            Application::instance()->images()->initializeNickIcons();
 
             // remember current theme for hasChanged()
             m_oldTheme = m_currentTheme;

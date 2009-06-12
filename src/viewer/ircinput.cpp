@@ -200,7 +200,7 @@ bool IRCInput::eventFilter(QObject *object,QEvent *event)
             if (!ke->text().isEmpty() && ((ke->modifiers() & (Qt::ShiftModifier|Qt::KeypadModifier)) || ke->modifiers() == 0))
             {
                 setFocus();
-                KonversationApplication::sendEvent(this,event);
+                Application::sendEvent(this,event);
                 return true;
             }
         }
@@ -249,7 +249,7 @@ void IRCInput::keyPressEvent(QKeyEvent* e)
                 }
                 else
                 {
-                    setText(static_cast<KonversationApplication*>(kapp)->doAutoreplace(toPlainText(),true));
+                    setText(static_cast<Application*>(kapp)->doAutoreplace(toPlainText(),true));
                     emit submit();
                 }
             }
