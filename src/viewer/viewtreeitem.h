@@ -15,7 +15,7 @@
 #include "chatwindow.h"
 
 #include <QObject>
-#include <q3listview.h>
+#include <Q3ListView>
 #include <QPointer>
 #include <QPixmap>
 

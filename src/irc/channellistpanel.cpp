@@ -19,11 +19,11 @@
 #include "server.h"
 #include "common.h"
 
-#include <q3grid.h>
+#include <Q3Grid>
 #include <QLabel>
-#include <qspinbox.h>
+#include <QSpinBox>
 #include <QPushButton>
-#include <q3hgroupbox.h>
+#include <Q3HGroupBox>
 #include <QRegExp>
 #include <QCheckBox>
 #include <QTimer>

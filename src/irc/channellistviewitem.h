@@ -17,7 +17,7 @@
 
 #include <QString>
 
-#include <k3listview.h>
+#include <K3ListView>
 
 
 class ChannelListViewItem : public K3ListViewItem

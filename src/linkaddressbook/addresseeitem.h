@@ -20,12 +20,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #ifndef ADDRESSEEITEM_H
 #define ADDRESSEEITEM_H
 
-#include <q3dict.h>
+#include <Q3Dict>
 
-#include <klineedit.h>
-#include <k3listview.h>
+#include <KLineEdit>
+#include <K3ListView>
 
 #include <kabc/addressbook.h>
+
 
 /**
   @short Special ListViewItem

@@ -38,10 +38,10 @@
 #include "linkaddressbook/addressbook.h"
 
 #include <QEvent>
-#include <q3grid.h>
-#include <q3dragobject.h>
+#include <Q3Grid>
+#include <Q3DragObject>
 #include <QSizePolicy>
-#include <q3header.h>
+#include <Q3Header>
 #include <QRegExp>
 #include <QSplitter>
 #include <QCheckBox>

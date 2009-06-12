@@ -18,7 +18,7 @@
 #include <QCheckBox>
 #include <QPushButton>
 #include <QRegExp>
-#include <qstandarditemmodel.h>
+#include <QStandardItemModel>
 #include <QToolButton>
 #include <QKeyEvent>
 #include <QItemSelectionModel>

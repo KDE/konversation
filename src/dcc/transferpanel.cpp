@@ -20,7 +20,7 @@
 #include "transfersend.h"
 #include "preferences.h"
 
-#include <q3header.h>
+#include <Q3Header>
 #include <QPushButton>
 
 #include <KDialog>

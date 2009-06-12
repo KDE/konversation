@@ -16,7 +16,8 @@
 
 #include <QString>
 
-#include <qtreewidget.h>
+#include <QTreeWidget>
+
 
 class IgnoreListViewItem : public QTreeWidgetItem
 {
@@ -26,12 +27,13 @@ class IgnoreListViewItem : public QTreeWidgetItem
 
         void setFlag(int flag,bool active);
         bool getFlag(int flag) { return m_flags & flag; };
-	QString getName() { return text(0); };
-	void setName(QString name) { setText(0, name); };
+        QString getName() { return text(0); };
+        void setName(QString name) { setText(0, name); };
         int getFlags() { return m_flags; };
 
         void setFlags(int flags);
     protected:
         int m_flags;
 };
+
 #endif

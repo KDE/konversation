@@ -13,8 +13,8 @@
   Copyright (C) 2005-2008 Eike Hein <hein@kde.org>
 */
 
-#ifndef KONVERSATIONAPPLICATION_H
-#define KONVERSATIONAPPLICATION_H
+#ifndef APPLICATION_H
+#define APPLICATION_H
 
 #include "preferences.h"
 #include "mainwindow.h"

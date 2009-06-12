@@ -39,14 +39,14 @@
 #ifndef KONVICONFIGDIALOG_H
 #define KONVICONFIGDIALOG_H
 
-#include <q3asciidict.h>
+#include <Q3AsciiDict>
 
-#include <kpagedialog.h>
-
+#include <KPageDialog>
 
 class KConfig;
 class KConfigSkeleton;
 class KConfigDialogManager;
+
 
 class KonviConfigDialog : public KPageDialog
 {
