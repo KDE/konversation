@@ -800,11 +800,14 @@ IdentityPtr KonversationMainWindow::editIdentity(IdentityPtr identity)
     if ((dlg->exec() == KDialog::Accepted) && m_serverListDialog)
     {
         m_serverListDialog->updateServerList();
+        delete dlg;
         return newIdentity;
     }
     else
+    {
+        delete dlg;
         return IdentityPtr();
-    delete dlg;
+    }
 }
 
 void KonversationMainWindow::openNotifications()
