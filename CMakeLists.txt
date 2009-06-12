@@ -35,7 +35,7 @@ endif (Q_WS_X11)
 
 macro_optional_find_package(QCA2)
 macro_bool_to_01(QCA2_FOUND HAVE_QCA2)
-macro_log_feature(QCA2_FOUND "QCA" "Qt Cryptographic Architecture" "http://delta.affinix.com/qca" FALSE "2.0" "Required for encrypted OpenDocument files support (available as a module in kdesupport)")
+macro_log_feature(QCA2_FOUND "QCA" "Qt Cryptographic Architecture" "http://delta.affinix.com/qca" FALSE "2.0" "Required for using encryption in IRC")
 
 configure_file(config-konversation.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-konversation.h )
 
