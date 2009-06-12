@@ -15,13 +15,14 @@
 #include "chatwindow.h"
 
 #include <QObject>
-#include <Q3ListView>
 #include <QPointer>
 #include <QPixmap>
 
+#include <Q3ListView>
 
 class ChatWindow;
 class Images;
+
 
 class ViewTreeItem : public Q3ListViewItem
 {

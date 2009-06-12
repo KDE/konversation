@@ -19,8 +19,9 @@
 #include "images.h"
 #include "preferences.h"
 
-#include <K3ListView>
 #include <kabc/phonenumber.h>
+
+#include <K3ListView>
 
 
 Nick::Nick(K3ListView *listView, const ChannelNickPtr& channelnick)

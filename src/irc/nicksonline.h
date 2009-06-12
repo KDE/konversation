@@ -19,16 +19,17 @@
 #include "nicksonlineitem.h"
 #include "chatwindow.h"
 
-
 #include <QIcon>
 #include <QPair>
+
 #include <KMenu>
 
+class ChatWindow;
 
-class K3ListView;
 class QPushButton;
 
-class ChatWindow;
+class K3ListView;
+
 
 class NicksOnline : public ChatWindow
 {

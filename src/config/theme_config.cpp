@@ -27,13 +27,12 @@
 #include <KUrl>
 #include <KMessageBox>
 #include <KStandardDirs>
-#include <kio/job.h>
-#include <kio/netaccess.h>
-#include <kio/deletejob.h>
 #include <KFileDialog>
 #include <KTar>
 #include <KDesktopFile>
 #include <KVBox>
+#include <KIO/DeleteJob>
+#include <KIO/NetAccess>
 
 #include <unistd.h> // unlink()
 

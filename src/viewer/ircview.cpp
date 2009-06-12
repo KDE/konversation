@@ -48,12 +48,11 @@
 #include <KMenu>
 #include <KGlobalSettings>
 #include <KFileDialog>
-#include <kio/job.h>
 #include <KAuthorized>
 #include <KActionCollection>
 #include <KToolInvocation>
-#include <kio/copyjob.h>
 #include <KToggleAction>
+#include <KIO/CopyJob>
 
 class QPixmap;
 class QDropEvent;

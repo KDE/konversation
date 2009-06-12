@@ -21,12 +21,13 @@
 
 #include <QObject>
 #include <QString>
-#include <kurl.h>
-#include <kio/global.h>
 
+#include <KUrl>
+#include <kio/global.h>
 
 class Server;
 class ChatWindow;
+
 
 namespace Konversation
 {

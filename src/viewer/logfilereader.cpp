@@ -31,9 +31,8 @@
 #include <KMessageBox>
 #include <KFileDialog>
 #include <KLocale>
-#include <kio/copyjob.h>
-#include <kio/jobclasses.h>
 #include <KJobUiDelegate>
+#include <KIO/CopyJob>
 
 
 LogfileReader::LogfileReader(QWidget* parent, const QString& log) : ChatWindow(parent)

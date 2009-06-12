@@ -18,18 +18,19 @@
 #include "application.h"
 #include "config/preferences.h"
 
-#include <Q3Header>
 #include <QHostAddress>
 #include <QStyle>
 #include <QTimer>
 
+#include <Q3Header>
+
 #include <KFileMetaInfo>
 #include <KGlobal>
 #include <KIconLoader>
-#include <kio/job.h>
 #include <KMessageBox>
 #include <KProgressDialog>
 #include <KRun>
+#include <KIO/Job>
 
 
 DccTransferPanelItem::DccTransferPanelItem( DccTransferPanel* panel, DccTransfer* transfer )

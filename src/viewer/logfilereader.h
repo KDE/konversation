@@ -17,11 +17,12 @@
 
 #include "chatwindow.h"
 
-#include <kio/job.h>
+#include <KIO/Job>
 
+class QSpinBox;
 
 class KToolBar;
-class QSpinBox;
+
 
 class LogfileReader : public ChatWindow
 {

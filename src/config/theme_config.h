@@ -18,7 +18,7 @@
 #include "ui_theme_configui.h"
 #include "settingspage.h"
 
-#include <kio/job.h>
+#include <KIO/Job>
 
 
 class Theme_Config : public QWidget, public KonviSettingsPage, private Ui::Theme_ConfigUI

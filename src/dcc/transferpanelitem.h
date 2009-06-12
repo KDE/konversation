@@ -20,19 +20,16 @@
 
 #include <QDateTime>
 
-#include <K3ListView>
 #include <KUrl>
 #include <kio/global.h>
 
+#include <K3ListView>
+
+class DccTransferPanel;
 
 class QTimer;
 class QProgressBar;
 
-namespace KIO
-{
-    }
-
-class DccTransferPanel;
 
 class DccTransferPanelItem : public QObject, public K3ListViewItem
 {

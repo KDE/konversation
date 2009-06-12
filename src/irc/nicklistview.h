@@ -20,15 +20,17 @@
 #include "common.h"
 #include "application.h" // for PopupIDs...
 
-#include <K3ListView>
 #include <KMenu>
 
+#include <K3ListView>
 
 class QActionGroup;
 class QMenu;
-class KAction;
 class QContextMenuEvent;
 class QTimer;
+
+class KAction;
+
 
 class NickListView : public K3ListView
 {

@@ -23,8 +23,8 @@
 #include <KStandardDirs>
 #include <KDebug>
 #include <KLocale>
-#include <kio/netaccess.h>
-#include <kio/job.h>
+#include <KIO/Job>
+#include <KIO/NetAccess>
 
 #include <stdlib.h>
 

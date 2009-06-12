@@ -34,10 +34,8 @@
 #include <KDirSelectDialog>
 #include <KUser>
 #include <KAuthorized>
-
-#include <kio/job.h>
-#include <kio/jobclasses.h>
-#include <kio/netaccess.h>
+#include <KIO/Job>
+#include <KIO/NetAccess>
 
 /*
  *flow chart*

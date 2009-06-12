@@ -30,8 +30,8 @@
 #include <QTcpServer>
 
 #include <k3socketaddress.h>
-#include <kio/netaccess.h>
 #include <KFileItem>
+#include <KIO/NetAccess>
 
 // TODO: remove the dependence
 #include <KInputDialog>

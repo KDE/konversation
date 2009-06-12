@@ -38,14 +38,15 @@
 
 #include "configdialog.h"
 
-#include <QLayout>
-#include <Q3CString>
-
 #include <KConfigSkeleton>
 #include <KConfigDialogManager>
 #include <KIconLoader>
 #include <KVBox>
 #include <KLocale>
+
+#include <QLayout>
+
+#include <Q3CString>
 
 
 Q3AsciiDict<KonviConfigDialog> KonviConfigDialog::openDialogs;

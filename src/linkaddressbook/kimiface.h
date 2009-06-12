@@ -22,11 +22,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #define KIMIFACE_H
 
 #include <QPixmap>
-//Added by qt3to4:
+
 #include <Q3CString>
-#include <dcopobject.h>
-#include <QStringList>
-#include <kurl.h>
+
+#include <KUrl>
 
 /**
  * Generic DCOP interface for KDE instant messenger applications

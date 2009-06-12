@@ -18,13 +18,14 @@
 #include "ircview.h"
 #include "konsolepanel.h"
 
+#include <QPoint>
+#include <QPainter>
+#include <QToolTip>
+
 #include <Q3Header>
 #include <Q3DragObject>
 #include <Q3ListView>
 #include <Q3PtrList>
-#include <QPoint>
-#include <QPainter>
-#include <QToolTip>
 
 #include <KApplication>
 

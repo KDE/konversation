@@ -34,8 +34,8 @@
 #include <kbookmarkdialog.h>
 #include <KShell>
 #include <KUrl>
-#include <kio/copyjob.h>
 #include <KFileDialog>
+#include <KIO/CopyJob>
 
 
 namespace Konversation

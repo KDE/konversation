@@ -31,10 +31,11 @@
 #include <QToolTip>
 
 #include <KDialog>
-#include <K3ListView>
 #include <KIconLoader>
 #include <KMessageBox>
 #include <KVBox>
+
+#include <K3ListView>
 
 
 NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
