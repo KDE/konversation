@@ -41,6 +41,13 @@ Changes since 1.2-alpha3:
 * Watched Nicknames Online now generally operates on networks by their
   internal unique IDs rather than names, enabling it to handle multiple
   configured networks with identical names properly.
+* Konversation's custom implementation of Blowfish encryption has been
+  replaced with an optional dependency on the Qt Cryptographic Architec-
+  ture (QCA) library version 2.
+* The '/setkey <channel|query> <key>' command now recognizes 'cbc:' (ci-
+  pher-block chaining) and 'ecb:' (electronic codebook) prefixes in the
+  key field to set a particular Blowfish block cipher mode of operation,
+  defaulting to cipher-block chaining if no prefix is given.
 
 
 Changes from 1.2-alpha2 to 1.2-alpha3:
