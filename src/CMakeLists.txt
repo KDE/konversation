@@ -2,6 +2,10 @@
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/config)
 include_directories(config dcc irc viewer linkaddressbook upnp)
 
+if (QCA2_FOUND)
+    include_directories(${QCA2_INCLUDE_DIR})
+endif (QCA2_FOUND)
+
 set(core_SRCS
     #====================================
     #=== Application
