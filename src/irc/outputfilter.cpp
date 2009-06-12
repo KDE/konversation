@@ -213,10 +213,10 @@ namespace Konversation
             else if(command == "notice")   result = parseNotice(parameter);
             else if(command == "j")        result = parseJoin(parameter);
             else if(command == "me")       result = parseMe(parameter, destination);
-            else if(command == "msg")      result = parseMsg(myNick,parameter, false);
-            else if(command == "m")        result = parseMsg(myNick,parameter, false);
+            else if(command == "msg")      result = parseMsg(parameter, false);
+            else if(command == "m")        result = parseMsg(parameter, false);
             else if(command == "smsg")     result = parseSMsg(parameter);
-            else if(command == "query")    result = parseMsg(myNick,parameter, true);
+            else if(command == "query")    result = parseMsg(parameter, true);
             else if(command == "op")       result = parseOp(parameter);
             else if(command == "deop")     result = parseDeop(myNick,parameter);
             else if(command == "hop")      result = parseHop(parameter);
@@ -632,7 +632,7 @@ namespace Konversation
         return result;
     }
 
-    OutputFilterResult OutputFilter::parseMsg(const QString &myNick, const QString &parameter, bool commandIsQuery)
+    OutputFilterResult OutputFilter::parseMsg(const QString &parameter, bool commandIsQuery)
     {
         OutputFilterResult result;
         QString recipient = parameter.section(' ', 0, 0, QString::SectionSkipEmpty);

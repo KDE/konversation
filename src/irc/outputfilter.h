@@ -116,7 +116,7 @@ namespace Konversation
             OutputFilterResult execUnban(const QString& mask,const QString& channels);
 
         protected:
-            OutputFilterResult parseMsg(const QString& myNick,const QString& parameter, bool commandIsQuery);
+            OutputFilterResult parseMsg(const QString& parameter, bool commandIsQuery);
             OutputFilterResult parseSMsg(const QString& parameter);
             OutputFilterResult parseMe(const QString &parameter, const QString &destination);
             OutputFilterResult parseDescribe(const QString& parameter);
