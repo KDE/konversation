@@ -21,7 +21,7 @@
 #include <KSqueezedTextLabel>
 
 
-KonversationStatusBar::KonversationStatusBar(KonversationMainWindow* window)
+KonversationStatusBar::KonversationStatusBar(MainWindow* window)
 {
     m_window = window;
 

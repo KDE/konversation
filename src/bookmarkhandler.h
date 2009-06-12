@@ -23,7 +23,7 @@ Copyright (C) 2002 Carsten Pfeiffer <pfeiffer@kde.org>
 
 class QString;
 class KMenu;
-class KonversationMainWindow;
+class MainWindow;
 class KBookmarkMenu;
 class KMenu;
 
@@ -32,7 +32,7 @@ class KonviBookmarkHandler : public QObject, public KBookmarkOwner
     Q_OBJECT
 
         public:
-        explicit KonviBookmarkHandler(KMenu *menu, KonversationMainWindow* mainWindow);
+        explicit KonviBookmarkHandler(KMenu *menu, MainWindow* mainWindow);
         ~KonviBookmarkHandler();
 
         // KBookmarkOwner interface:
@@ -42,7 +42,7 @@ class KonviBookmarkHandler : public QObject, public KBookmarkOwner
         virtual bool enableOption(BookmarkOption option) const;
 
     private:
-        KonversationMainWindow* m_mainWindow;
+        MainWindow* m_mainWindow;
         KBookmarkMenu *m_bookmarkMenu;
         QString m_file;
 };

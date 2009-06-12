@@ -17,7 +17,7 @@
 
 class QLabel;
 
-class KonversationMainWindow;
+class MainWindow;
 class KSqueezedTextLabel;
 class SSLLabel;
 class Server;
@@ -27,7 +27,7 @@ class KonversationStatusBar : public QObject
     Q_OBJECT
 
     public:
-        explicit KonversationStatusBar(KonversationMainWindow* parent);
+        explicit KonversationStatusBar(MainWindow* parent);
         ~KonversationStatusBar();
 
     public slots:
@@ -53,7 +53,7 @@ class KonversationStatusBar : public QObject
         void removeSSLLabel();
 
     private:
-        KonversationMainWindow* m_window;
+        MainWindow* m_window;
 
         KSqueezedTextLabel* m_mainLabel;
         QLabel* m_infoLabel;

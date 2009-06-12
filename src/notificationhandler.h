@@ -17,7 +17,7 @@
 
 class ChatWindow;
 class Application;
-class KonversationMainWindow;
+class MainWindow;
 
 namespace Konversation
 {
@@ -56,7 +56,7 @@ namespace Konversation
             QString addLineBreaks(const QString& string);
 
         private:
-            KonversationMainWindow* m_mainWindow;
+            MainWindow* m_mainWindow;
     };
 
 }

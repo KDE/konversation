@@ -66,7 +66,7 @@ class Application : public KUniqueApplication
          *  Note to any MDI developer - get this to return any of the windows, or some
          *  'main' one.
          */
-        KonversationMainWindow* getMainWindow() { return mainWindow; }
+        MainWindow* getMainWindow() { return mainWindow; }
 
         ConnectionManager* getConnectionManager() { return m_connectionManager; }
         AwayManager* getAwayManager() { return m_awayManager; }
@@ -149,7 +149,7 @@ class Application : public KUniqueApplication
         QStringList urlList;
         Konversation::DBus* dbusObject;
         Konversation::IdentDBus* identDBus;
-        QPointer<KonversationMainWindow> mainWindow;
+        QPointer<MainWindow> mainWindow;
         Konversation::Sound* m_sound;
         QuickConnectDialog* quickConnectDialog;
         Images* m_images;

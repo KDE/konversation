@@ -25,7 +25,7 @@ Copyright (C) 2002 Carsten Pfeiffer <pfeiffer@kde.org>
 #include <KBookmarkMenu>
 
 
-KonviBookmarkHandler::KonviBookmarkHandler(KMenu *menu, KonversationMainWindow* mainWindow)
+KonviBookmarkHandler::KonviBookmarkHandler(KMenu *menu, MainWindow* mainWindow)
 : QObject(mainWindow),
 KBookmarkOwner(),
 m_mainWindow(mainWindow)

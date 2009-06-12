@@ -132,7 +132,7 @@ int Application::newInstance()
         connect(KGlobalSettings::self(), SIGNAL(appearanceChanged()), this, SIGNAL(appearanceChanged()));
 
         // open main window
-        mainWindow = new KonversationMainWindow();
+        mainWindow = new MainWindow();
         //setMainWidget(mainWindow); //TODO FIXME do we need any of the other semantics this use to gain us?
 
         connect(mainWindow, SIGNAL(showQuickConnectDialog()), this, SLOT(openQuickConnectDialog()) );

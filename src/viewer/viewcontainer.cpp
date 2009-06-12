@@ -53,7 +53,7 @@
 #include <KXMLGUIClient>
 
 
-ViewContainer::ViewContainer(KonversationMainWindow* window):
+ViewContainer::ViewContainer(MainWindow* window):
         m_window(window)
         , m_tabWidget(0)
         , m_viewTree(0)

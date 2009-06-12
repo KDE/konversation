@@ -40,13 +40,13 @@ namespace Konversation
     class TrayIcon;
 }
 
-class KonversationMainWindow : public KXmlGuiWindow
+class MainWindow : public KXmlGuiWindow
 {
     Q_OBJECT
 
     public:
-        KonversationMainWindow();
-        ~KonversationMainWindow();
+        MainWindow();
+        ~MainWindow();
 
         ViewContainer* getViewContainer() { return m_viewContainer; }
         Konversation::TrayIcon* systemTrayIcon() const { return m_trayIcon; }

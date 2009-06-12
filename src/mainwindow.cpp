@@ -56,7 +56,7 @@
 #include <KNotifyConfigWidget>
 
 
-KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0)
+MainWindow::MainWindow() : KXmlGuiWindow(0)
 {
     m_hasDirtySettings = false;
     m_closeApp = false;
@@ -521,16 +521,16 @@ KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0)
 
 }
 
-KonversationMainWindow::~KonversationMainWindow()
+MainWindow::~MainWindow()
 {
 }
 
-QSize KonversationMainWindow::sizeHint() const
+QSize MainWindow::sizeHint() const
 {
     return QSize(700, 500); // Give the app a sane default size
 }
 
-int KonversationMainWindow::confirmQuit()
+int MainWindow::confirmQuit()
 {
     Application* konvApp = static_cast<Application*>(kapp);
 
@@ -564,7 +564,7 @@ int KonversationMainWindow::confirmQuit()
     return result;
 }
 
-void KonversationMainWindow::quitProgram()
+void MainWindow::quitProgram()
 {
     if (Preferences::self()->showTrayIcon() &&
         sender() != m_trayIcon &&
@@ -575,7 +575,7 @@ void KonversationMainWindow::quitProgram()
     close();
 }
 
-bool KonversationMainWindow::queryClose()
+bool MainWindow::queryClose()
 {
     Application* konvApp = static_cast<Application*>(kapp);
 
@@ -604,7 +604,7 @@ bool KonversationMainWindow::queryClose()
     return true;
 }
 
-void KonversationMainWindow::hideEvent(QHideEvent *e)
+void MainWindow::hideEvent(QHideEvent *e)
 {
     emit triggerRememberLine();
 
@@ -613,21 +613,21 @@ void KonversationMainWindow::hideEvent(QHideEvent *e)
     KXmlGuiWindow::hideEvent(e);
 }
 
-void KonversationMainWindow::showEvent(QShowEvent *e)
+void MainWindow::showEvent(QShowEvent *e)
 {
     emit cancelRememberLine();
 
     KXmlGuiWindow::showEvent(e);
 }
 
-void KonversationMainWindow::leaveEvent(QEvent* e)
+void MainWindow::leaveEvent(QEvent* e)
 {
     m_statusBar->clearMainLabelTempText();
 
     KXmlGuiWindow::leaveEvent(e);
 }
 
-bool KonversationMainWindow::event(QEvent* e)
+bool MainWindow::event(QEvent* e)
 {
     if (e->type() == QEvent::WindowActivate)
     {
@@ -645,7 +645,7 @@ bool KonversationMainWindow::event(QEvent* e)
     return KXmlGuiWindow::event(e);
 }
 
-void KonversationMainWindow::settingsChangedSlot()
+void MainWindow::settingsChangedSlot()
 {
     // This is for compressing the events. m_hasDirtySettings is set to true
     // when the settings have changed, then set to false when the app reacts to it
@@ -659,12 +659,12 @@ void KonversationMainWindow::settingsChangedSlot()
     }
 }
 
-void KonversationMainWindow::resetHasDirtySettings()
+void MainWindow::resetHasDirtySettings()
 {
     m_hasDirtySettings = false;
 }
 
-void KonversationMainWindow::updateTrayIcon()
+void MainWindow::updateTrayIcon()
 {
     m_trayIcon->setNotificationEnabled(Preferences::self()->trayNotify());
 
@@ -674,7 +674,7 @@ void KonversationMainWindow::updateTrayIcon()
         m_trayIcon->hide();
 }
 
-void KonversationMainWindow::toggleMenubar(bool dontShowWarning)
+void MainWindow::toggleMenubar(bool dontShowWarning)
 {
     if (hideMenuBarAction->isChecked())
         menuBar()->show();
@@ -693,7 +693,7 @@ void KonversationMainWindow::toggleMenubar(bool dontShowWarning)
     Preferences::self()->setShowMenuBar(hideMenuBarAction->isChecked());
 }
 
-void KonversationMainWindow::focusAndShowErrorMessage(const QString &errorMsg)
+void MainWindow::focusAndShowErrorMessage(const QString &errorMsg)
 {
     show();
     KWindowSystem::demandAttention(winId());
@@ -701,7 +701,7 @@ void KonversationMainWindow::focusAndShowErrorMessage(const QString &errorMsg)
     KMessageBox::error(this, errorMsg);
 }
 
-void KonversationMainWindow::openPrefsDialog()
+void MainWindow::openPrefsDialog()
 {
     //An instance of your dialog could be already created and could be cached,
     //in which case you want to display the cached dialog instead of creating
@@ -716,7 +716,7 @@ void KonversationMainWindow::openPrefsDialog()
     m_settingsDialog->show();
 }
 
-void KonversationMainWindow::openKeyBindings()
+void MainWindow::openKeyBindings()
 {
     // Change a number of action names to make them friendlier for the shortcut list.
     actionCollection()->action("tab_notifications")->setText(i18n("Toggle Notifications"));
@@ -742,7 +742,7 @@ void KonversationMainWindow::openKeyBindings()
     actionCollection()->action("open_logfile")->setText(openLogFileString);
 }
 
-void KonversationMainWindow::openServerList()
+void MainWindow::openServerList()
 {
     if (!m_serverListDialog)
     {
@@ -763,19 +763,19 @@ void KonversationMainWindow::openServerList()
     m_serverListDialog->show();
 }
 
-void KonversationMainWindow::openQuickConnectDialog()
+void MainWindow::openQuickConnectDialog()
 {
     emit showQuickConnectDialog();
 }
 
 // open the preferences dialog and show the watched nicknames page
-void KonversationMainWindow::openNotify()
+void MainWindow::openNotify()
 {
     openPrefsDialog();
     if (m_settingsDialog) m_settingsDialog->openWatchedNicknamesPage();
 }
 
-void KonversationMainWindow::openIdentitiesDialog()
+void MainWindow::openIdentitiesDialog()
 {
     QPointer<Konversation::IdentityDialog> dlg = new Konversation::IdentityDialog(this);
     if (dlg->exec() == KDialog::Accepted)
@@ -787,7 +787,7 @@ void KonversationMainWindow::openIdentitiesDialog()
     delete dlg;
 }
 
-IdentityPtr KonversationMainWindow::editIdentity(IdentityPtr identity)
+IdentityPtr MainWindow::editIdentity(IdentityPtr identity)
 {
     IdentityPtr newIdentity;
 
@@ -807,12 +807,12 @@ IdentityPtr KonversationMainWindow::editIdentity(IdentityPtr identity)
     }
 }
 
-void KonversationMainWindow::openNotifications()
+void MainWindow::openNotifications()
 {
     (void) KNotifyConfigWidget::configure(this);
 }
 
-void KonversationMainWindow::notifyAction(int connectionId, const QString& nick)
+void MainWindow::notifyAction(int connectionId, const QString& nick)
 {
     Application* konvApp = static_cast<Application*>(kapp);
     Server* server = konvApp->getConnectionManager()->getServerByConnectionId(connectionId);
@@ -820,18 +820,18 @@ void KonversationMainWindow::notifyAction(int connectionId, const QString& nick)
 }
 
 // TODO: Let an own class handle notify things
-void KonversationMainWindow::setOnlineList(Server* notifyServer,const QStringList& /*list*/, bool /*changed*/)
+void MainWindow::setOnlineList(Server* notifyServer,const QStringList& /*list*/, bool /*changed*/)
 {
     emit nicksNowOnline(notifyServer);
     // FIXME  if (changed && nicksOnlinePanel) newText(nicksOnlinePanel, QString::null, true);
 }
 
-QString KonversationMainWindow::currentURL(bool passNetwork)
+QString MainWindow::currentURL(bool passNetwork)
 {
     return m_viewContainer->currentViewURL(passNetwork);
 }
 
-QString KonversationMainWindow::currentTitle()
+QString MainWindow::currentTitle()
 {
     return m_viewContainer->currentViewTitle();
 }

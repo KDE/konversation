@@ -27,7 +27,7 @@ class KTabWidget;
 class KActionCollection;
 class KVBox;
 
-class KonversationMainWindow;
+class MainWindow;
 class ViewTree;
 class ChatWindow;
 class Server;
@@ -48,11 +48,11 @@ class ViewContainer : public QObject
     Q_OBJECT
 
     public:
-        explicit ViewContainer(KonversationMainWindow* window);
+        explicit ViewContainer(MainWindow* window);
         ~ViewContainer();
 
         QSplitter* getWidget() { return m_viewTreeSplitter; }
-        KonversationMainWindow* getWindow() { return m_window; }
+        MainWindow* getWindow() { return m_window; }
         KActionCollection* actionCollection() { return m_window->actionCollection(); }
 
         QPointer<ChatWindow> getFrontView() { return m_frontView; }
@@ -199,7 +199,7 @@ class ViewContainer : public QObject
         void initializeSplitterSizes();
         bool m_saveSplitterSizesLock;
 
-        KonversationMainWindow* m_window;
+        MainWindow* m_window;
 
         QSplitter* m_viewTreeSplitter;
         KTabWidget* m_tabWidget;
