@@ -37,6 +37,7 @@
 #include <QColor>
 #include <qscrollbar.h>
 #include <QCursor>
+#include <QMouseEvent>
 
 #include <kmessagebox.h>
 #include <klocale.h>

@@ -45,6 +45,7 @@
 #include <QTextCodec>
 #include <QToolButton>
 #include <QLayout>
+#include <QDropEvent>
 
 
 #include <klineedit.h>

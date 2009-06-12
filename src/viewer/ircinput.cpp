@@ -23,6 +23,7 @@
 #include <qdom.h>
 #include <QEvent>
 #include <QTimer>
+#include <QKeyEvent>
 
 #include <kapplication.h>
 #include <kmessagebox.h>
