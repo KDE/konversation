@@ -511,7 +511,7 @@ const QString Preferences::channelEncoding(const QString& server,const QString& 
         for (int i=0; i < serverIds.count(); i++)
         {
             codec = channelEncoding(serverIds.at(i),channel);
-            if(codec != QString())
+            if(!codec.isEmpty())
                 return codec;
         }
         return QString();
