@@ -13,16 +13,10 @@
 #include "autoreplace_config.h"
 #include "preferences.h"
 
-#include <QLabel>
-#include <QPushButton>
-#include <QComboBox>
-#include <QDialog>
-
 #include <kapplication.h>
 #include <kdebug.h>
 #include <kconfig.h>
 #include <klocale.h>
-#include <klineedit.h>
 #include <kparts/componentfactory.h>
 #include <kregexpeditorinterface.h>
 #include <kglobal.h>
@@ -106,7 +100,7 @@ void Autoreplace_Config::setAutoreplaceListView(const QList<QStringList> &autore
     // Regular expression?
     if (definition.at(0)=="1") newItem->setCheckState(0, Qt::Checked);
     // direction input/output/both
-    if (definition.at(1)=="i") 
+    if (definition.at(1)=="i")
     {
         newItem->setText(1,directionCombo->itemText(DIRECTION_INPUT));
     }
@@ -160,7 +154,7 @@ void Autoreplace_Config::saveSettings()
         grp.writeEntry(directString + indexString,definition.at(1)); //direction
         grp.writeEntry(patternString + indexString,definition.at(2)+'#'); //pattern
         grp.writeEntry(replaceString + indexString,definition.at(3)+'#'); //replace
-        
+
     } // for
   }
   // if there were no entries at all, write a dummy entry to prevent KConfigXT from "optimizing"

@@ -166,7 +166,7 @@ command is placed in the &lt;b&gt;Input Line&lt;/b&gt; on the server window.&lt;
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="QComboBox" name="networkDropdown">
+       <widget class="KComboBox" name="networkDropdown">
         <property name="enabled">
          <bool>false</bool>
         </property>
@@ -297,6 +297,11 @@ When the nickname watcher is turned on, you will be notified when the nicknames 
  <layoutdefault spacing="6" margin="11"/>
  <layoutfunction spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
  <customwidgets>
+  <customwidget>
+   <class>KComboBox</class>
+   <extends>QComboBox</extends>
+   <header>kcombobox.h</header>
+  </customwidget>
   <customwidget>
    <class>KLineEdit</class>
    <extends>QLineEdit</extends>

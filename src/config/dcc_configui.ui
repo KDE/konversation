@@ -226,7 +226,7 @@ the Free Software Foundation; either version 2 of the License, or
      </property>
      <layout class="QGridLayout">
       <item row="1" column="1">
-       <widget class="QLineEdit" name="kcfg_DccSpecificOwnIp"/>
+       <widget class="KLineEdit" name="kcfg_DccSpecificOwnIp"/>
       </item>
       <item row="0" column="0">
        <widget class="QLabel" name="textLabel4">
@@ -255,7 +255,7 @@ the Free Software Foundation; either version 2 of the License, or
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QComboBox" name="kcfg_DccMethodToGetOwnIp"/>
+       <widget class="KComboBox" name="kcfg_DccMethodToGetOwnIp"/>
       </item>
      </layout>
     </widget>
@@ -426,6 +426,11 @@ the Free Software Foundation; either version 2 of the License, or
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
+  <customwidget>
+   <class>KComboBox</class>
+   <extends>QComboBox</extends>
+   <header>kcombobox.h</header>
+  </customwidget>
   <customwidget>
    <class>KLineEdit</class>
    <extends>QLineEdit</extends>

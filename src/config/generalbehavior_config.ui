@@ -125,7 +125,7 @@ the Free Software Foundation; either version 2 of the License, or
        </widget>
       </item>
       <item row="0" column="1" colspan="3" >
-       <widget class="QComboBox" name="kcfg_NickCompletionMode" >
+       <widget class="KComboBox" name="kcfg_NickCompletionMode" >
         <item>
          <property name="text" >
           <string>Cycle NickList</string>
@@ -289,6 +289,11 @@ the Free Software Foundation; either version 2 of the License, or
  <layoutdefault spacing="6" margin="11" />
  <layoutfunction spacing="KDialog::spacingHint" margin="KDialog::marginHint" />
  <customwidgets>
+  <customwidget>
+   <class>KComboBox</class>
+   <extends>QComboBox</extends>
+   <header>kcombobox.h</header>
+  </customwidget>
   <customwidget>
    <class>KLineEdit</class>
    <extends>QLineEdit</extends>

@@ -11,9 +11,6 @@
 
 #include "tabs_config.h"
 
-#include <QComboBox>
-#include <QCheckBox>
-
 
 Tabs_Config::Tabs_Config(QWidget *parent, const char *name)
  : QWidget(parent)

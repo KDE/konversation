@@ -12,13 +12,11 @@
 */
 
 #include "dcc_config.h"
-
-#include <QComboBox>
-#include <QLineEdit>
-#include <klocale.h>
-#include <kdebug.h>
 #include "application.h"
 #include "transfermanager.h"
+
+#include <klocale.h>
+#include <kdebug.h>
 
 
 DCC_Config::DCC_Config(QWidget *parent, const char* name) :
@@ -32,7 +30,7 @@ DCC_Config::DCC_Config(QWidget *parent, const char* name) :
     languageChange();
     connect(kcfg_DccMethodToGetOwnIp, SIGNAL(activated(int)), this, SLOT(dccMethodChanged(int)));
     connect(kcfg_DccUPnP, SIGNAL(stateChanged( int )), this, SLOT (dccUPnPChanged( int )));
-    dccMethodChanged(kcfg_DccMethodToGetOwnIp->currentIndex()); 
+    dccMethodChanged(kcfg_DccMethodToGetOwnIp->currentIndex());
 }
 
 void DCC_Config::showEvent(QShowEvent *event)
@@ -44,7 +42,7 @@ void DCC_Config::showEvent(QShowEvent *event)
 
 void DCC_Config::dccMethodChanged(int index)
 {
-    kcfg_DccSpecificOwnIp->setEnabled( index == 2 ); 
+    kcfg_DccSpecificOwnIp->setEnabled( index == 2 );
 }
 
 void DCC_Config::dccUPnPChanged(int state)
