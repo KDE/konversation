@@ -12,16 +12,17 @@
 #ifndef VIEWTREE_H
 #define VIEWTREE_H
 
-#include <k3listview.h>
 #include <QResizeEvent>
 #include <QWheelEvent>
 #include <QMouseEvent>
 #include <QContextMenuEvent>
 #include <QKeyEvent>
 
+#include <K3ListView>
 
 class ViewTreeItem;
 class ChatWindow;
+
 
 class ViewTree : public K3ListView
 {

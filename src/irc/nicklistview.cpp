@@ -13,16 +13,16 @@
 */
 
 #include "nicklistview.h"
-#include <QToolTip>
-#include "application.h" ////// header renamed
+#include "application.h"
 #include "images.h"
 #include "linkaddressbook/addressbook.h"
 
-#include <kaction.h>
-#include <kauthorized.h>
-
 #include <QContextMenuEvent>
 #include <QDropEvent>
+#include <QToolTip>
+
+#include <KAuthorized>
+
 
 NickListView::NickListView(QWidget* parent, Channel *chan) :
 K3ListView(parent),

@@ -10,13 +10,11 @@
 
 #include "irccharsets.h"
 
-#include <qglobal.h>
-#include <QRegExp>
-#include <qlocale.h>
+#include <QLocale>
 #include <QTextCodec>
-#include <kcharsets.h>
-#include <kdebug.h>
-#include <kglobal.h>
+
+#include <KCharsets>
+#include <KGlobal>
 
 
 namespace Konversation

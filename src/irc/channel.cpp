@@ -12,7 +12,7 @@
 */
 
 #include "channel.h"
-#include "application.h" ////// header renamed
+#include "application.h"
 #include "server.h"
 #include <config-konversation.h>
 
@@ -37,7 +37,6 @@
 #include "linkaddressbook/linkaddressbookui.h"
 #include "linkaddressbook/addressbook.h"
 
-#include <QLabel>
 #include <QEvent>
 #include <q3grid.h>
 #include <q3dragobject.h>
@@ -49,24 +48,20 @@
 #include <QTimer>
 #include <QTextCodec>
 #include <QToolButton>
-#include <QLayout>
 #include <QDropEvent>
 
-
-#include <klineedit.h>
-#include <kinputdialog.h>
-#include <kpassworddialog.h>
-#include <klocale.h>
-#include <kdebug.h>
-#include <kglobalsettings.h>
-#include <kdeversion.h>
-#include <kmessagebox.h>
-#include <kiconloader.h>
-#include <kwindowsystem.h>
+#include <KLineEdit>
+#include <KInputDialog>
+#include <KPasswordDialog>
+#include <KGlobalSettings>
+#include <KMessageBox>
+#include <KIconLoader>
+#include <KWindowSystem>
 #include <KColorScheme>
-#include <kvbox.h>
-#include <khbox.h>
-#include <kcombobox.h>
+#include <KVBox>
+#include <KHBox>
+#include <KComboBox>
+
 
 bool nickTimestampLessThan(const Nick* nick1, const Nick* nick2)
 {
@@ -377,7 +372,7 @@ void Channel::connectionStateChanged(Server* server, Konversation::ConnectionSta
 
 void Channel::setEncryptedOutput(bool e)
 {
-    
+
     if (e) {
     #ifdef HAVE_QCA2
         cipherLabel->show();

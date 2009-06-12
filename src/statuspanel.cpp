@@ -12,24 +12,19 @@
 
 #include "statuspanel.h"
 #include "channel.h"
-#include "application.h" ////// header renamed
+#include "application.h"
 #include "ircinput.h"
 #include "ircview.h"
 #include "ircviewbox.h"
 #include "server.h"
 
-#include <QPushButton>
-#include <QLabel>
-
 #include <QTextCodec>
 #include <QLineEdit>
 
-#include <kdebug.h>
-#include <klocale.h>
-#include <kmessagebox.h>
-#include <kvbox.h>
-#include <kcombobox.h>
-#include <klineedit.h>
+#include <KMessageBox>
+#include <KVBox>
+#include <KComboBox>
+#include <KLineEdit>
 
 
 StatusPanel::StatusPanel(QWidget* parent) : ChatWindow(parent)

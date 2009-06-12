@@ -13,11 +13,11 @@
 #include "upnpmcastsocket.h"
 
 #include <QFile>
-#include <QTextStream>
 #include <QStringList>
+#include <QTextStream>
 
-#include <kurl.h>
-#include <kdebug.h>
+#include <KUrl>
+#include <KDebug>
 
 #include <unistd.h>
 #include <sys/socket.h>
@@ -28,6 +28,7 @@
 #include <netinet/in_systm.h>
 #include <netinet/ip.h>
 #endif
+
 
 namespace Konversation
 {

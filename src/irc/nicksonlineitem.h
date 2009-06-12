@@ -12,7 +12,7 @@
 #ifndef NICKSONLINEITEM_H
 #define NICKSONLINEITEM_H
 
-#include <k3listview.h>
+#include <K3ListView>
 
 
 class NicksOnlineItem : public K3ListViewItem
@@ -50,7 +50,7 @@ class NicksOnlineItem : public K3ListViewItem
         * @return                  One of the enum NickListViewColumn
         */
         int type() const;
-        
+
         /// Set the connection ID this item is associated with to @p id.
         void setConnectionId(int id) { m_connectionId = id; }
         /// Returns the connection ID this item is associated with.

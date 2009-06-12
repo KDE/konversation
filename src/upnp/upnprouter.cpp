@@ -19,12 +19,12 @@
 #include <QNetworkRequest>
 #include <QNetworkReply>
 
-#include <klocale.h>
-#include <kglobal.h>
-#include <kstandarddirs.h>
+#include <KGlobal>
+#include <KStandardDirs>
+#include <KDebug>
+#include <KLocale>
 #include <kio/netaccess.h>
 #include <kio/job.h>
-#include <kdebug.h>
 
 #include <stdlib.h>
 

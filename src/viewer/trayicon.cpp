@@ -13,7 +13,7 @@
 */
 
 #include "trayicon.h"
-#include "application.h" ////// header renamed
+#include "application.h"
 #include "channel.h"
 #include "server.h"
 #include "chatwindow.h"
@@ -21,9 +21,8 @@
 
 #include <QTimer>
 
-#include <kglobal.h>
-#include <kiconloader.h>
-#include <klocale.h>
+#include <KGlobal>
+#include <KIconLoader>
 
 
 namespace Konversation

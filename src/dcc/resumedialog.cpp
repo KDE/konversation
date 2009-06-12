@@ -10,19 +10,17 @@
   Copyright (C) 2004 Shintaro Matsuoka <shin@shoegazed.org>
 */
 
-#include "resumedialog.h" ////// header renamed
-#include "transferrecv.h" ////// header renamed
-
+#include "resumedialog.h"
+#include "transferrecv.h"
 
 #include <QLabel>
 #include <QLayout>
 #include <QPointer>
 
-#include <kdebug.h>
-#include <klocale.h>
-#include <kurl.h>
-#include <kurlrequester.h>
-#include <kvbox.h>
+#include <KLocale>
+#include <KUrl>
+#include <KUrlRequester>
+#include <KVBox>
 
 
 DccResumeDialog::ReceiveAction DccResumeDialog::ask(DccTransferRecv* item, const QString& message, int enabledActions, ReceiveAction defaultAction)
@@ -57,9 +55,9 @@ DccResumeDialog::ReceiveAction DccResumeDialog::ask(DccTransferRecv* item, const
     return ra;
 }
 
-DccResumeDialog::DccResumeDialog(DccTransferRecv* item, const QString& caption, const QString& message, int enabledActions, QFlags<KDialog::ButtonCode> enabledButtonCodes, 
+DccResumeDialog::DccResumeDialog(DccTransferRecv* item, const QString& caption, const QString& message, int enabledActions, QFlags<KDialog::ButtonCode> enabledButtonCodes,
 				 KDialog::ButtonCode defaultButtonCode)
-: KDialog(0) 
+: KDialog(0)
 , m_item(item)
 , m_enabledActions(enabledActions)
 , m_selectedAction(RA_Cancel)

@@ -20,15 +20,6 @@
 #include "identity.h"
 #include "preferences_base.h"
 
-#include <QObject>
-#include <QSize>
-#include <QStringList>
-#include <qfont.h>
-#include <QColor>
-#include <qmap.h>
-
-#include <kdeversion.h>
-
 
 /*
 Options still to be GUIfied:

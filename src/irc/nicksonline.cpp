@@ -18,30 +18,23 @@
 #include <QHelpEvent>
 #include "channel.h"
 #include "server.h"
-#include "application.h" ////// header renamed
+#include "application.h"
 #include "connectionmanager.h"
 #include "images.h"
 #include "query.h"
 #include "linkaddressbook/linkaddressbookui.h"
 #include "linkaddressbook/addressbook.h"
-#include "mainwindow.h" ////// header renamed
+#include "mainwindow.h"
 #include "viewcontainer.h"
 #include "nicksonlineitem.h"
 
-#include <QLayout>
-#include <QStringList>
-
-#include <QPushButton>
-#include <QLabel>
 #include <QToolTip>
 
-#include <kdebug.h>
-#include <klocale.h>
-#include <kdialog.h>
-#include <k3listview.h>
-#include <kiconloader.h>
-#include <kmessagebox.h>
-#include <kvbox.h>
+#include <KDialog>
+#include <K3ListView>
+#include <KIconLoader>
+#include <KMessageBox>
+#include <KVBox>
 
 
 NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
@@ -430,7 +423,7 @@ void NicksOnline::updateServerOnlineList(Server* servr)
             if (item) delete item;
             // Add to offline list if not already listed.
             Q3ListViewItem* nickRoot = findItemChild(offlineRoot, nickname, NicksOnlineItem::NicknameItem);
-            if (!nickRoot) 
+            if (!nickRoot)
             {
                 nickRoot = new NicksOnlineItem(NicksOnlineItem::NicknameItem,offlineRoot, nickname);
                 NicksOnlineItem* nickitem = static_cast<NicksOnlineItem*>(nickRoot);
@@ -597,7 +590,7 @@ void NicksOnline::timerFired()
 void NicksOnline::processDoubleClick(Q3ListViewItem* item)
 {
     NicksOnlineItem* nickitem = dynamic_cast<NicksOnlineItem*>(item);
-    
+
     if (!nickitem || nickitem->isOffline())
         return;
 

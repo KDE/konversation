@@ -15,19 +15,18 @@
 #include "urlcatcher.h"
 #include "channel.h"
 #include "server.h"
-#include "application.h" ////// header renamed
+#include "application.h"
 #include "viewcontainer.h"
 
 #include <QPushButton>
 #include <QClipboard>
-#include <QLayout>
 #include <QTreeWidget>
+#include <QLayout>
 
-#include <kdebug.h>
-#include <krun.h>
-#include <kfiledialog.h>
-#include <kshell.h>
-#include <ktreewidgetsearchline.h>
+#include <KRun>
+#include <KShell>
+#include <KFileDialog>
+#include <KTreeWidgetSearchLine>
 
 
 UrlCatcher::UrlCatcher(QWidget* parent) : ChatWindow(parent)

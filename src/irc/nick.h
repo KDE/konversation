@@ -15,10 +15,10 @@
 #ifndef NICK_H
 #define NICK_H
 
-#include <QObject>
-#include <k3listview.h>
-
 #include "channelnick.h"
+
+#include <K3ListView>
+
 
 class Nick : public QObject, public K3ListViewItem
 {

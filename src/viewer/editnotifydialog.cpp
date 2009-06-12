@@ -18,10 +18,8 @@
 #include <QLayout>
 #include <QLabel>
 
-#include <klineedit.h>
-#include <kcombobox.h>
-#include <kdebug.h>
-#include <klocale.h>
+#include <KLineEdit>
+#include <KComboBox>
 
 
 EditNotifyDialog::EditNotifyDialog(QWidget* parent,

@@ -13,18 +13,17 @@
   Copyright (C) 2005-2008 Eike Hein <hein@kde.org>
 */
 
-#include "application.h" ////// header renamed
+#include "application.h"
 #include "connectionmanager.h"
 #include "awaymanager.h"
-#include "transfermanager.h" ////// header renamed
+#include "transfermanager.h"
 #include "viewcontainer.h"
 #include "highlight.h"
 #include "server.h"
-#include "sound.h" ////// header renamed
+#include "sound.h"
 #include "quickconnectdialog.h"
 #include "dbus.h"
 #include "linkaddressbook/addressbook.h"
-
 #include "servergroupsettings.h"
 #include "serversettings.h"
 #include "channel.h"
@@ -38,15 +37,11 @@
 #include <QFileInfo>
 #include <QtDBus/QDBusConnection>
 
-#include <kdebug.h>
-#include <kcmdlineargs.h>
-#include <kconfig.h>
-#include <kdeversion.h>
-#include <kstandarddirs.h>
-#include <klocale.h>
-#include <kmessagebox.h>
-#include <kiconloader.h>
-#include <kglobal.h>
+#include <KCmdLineArgs>
+#include <KConfig>
+#include <KStandardDirs>
+#include <KMessageBox>
+#include <KIconLoader>
 
 
 KonversationApplication::KonversationApplication()
@@ -930,7 +925,7 @@ QString KonversationApplication::doAutoreplace(const QString& text,bool output)
                         }
                         replacement.remove(QRegExp("%[0-9]"));
                         // allow for var expansion in autoreplace
-                        replacement = Konversation::doVarExpansion(replacement); 
+                        replacement = Konversation::doVarExpansion(replacement);
                         // replace input with replacement
                         line.replace(index, captures[0].length(), replacement);
                         index += replacement.length();
@@ -943,7 +938,7 @@ QString KonversationApplication::doAutoreplace(const QString& text,bool output)
                 needleReg.setPatternSyntax(QRegExp::FixedString);
                 int index=line.indexOf(needleReg);
                 while (index>=0)
-                {   
+                {
                     int length,nextLength,patLen,repLen;
                     patLen=pattern.length();
                     repLen=replacement.length();

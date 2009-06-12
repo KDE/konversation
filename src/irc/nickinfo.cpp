@@ -19,16 +19,14 @@
 */
 
 #include "nickinfo.h"
-#include "application.h" ////// header renamed
+#include "application.h"
 #include "linkaddressbook/addressbook.h"
 #include "linkaddressbook/linkaddressbookui.h"
-#include "mainwindow.h" ////// header renamed
+#include "mainwindow.h"
 #include "viewcontainer.h"
 #include "server.h"
 
 #include <Q3MimeSourceFactory>
-
-#include <klocale.h>
 
 
 NickInfo::NickInfo(const QString& nick, Server* server): KShared()

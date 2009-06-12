@@ -21,10 +21,8 @@
 
 #include <QStringList>
 
-#include <klocale.h>
-#include <kmessagebox.h>
-#include <kapplication.h>
-#include <kwindowsystem.h>
+#include <KMessageBox>
+#include <KWindowSystem>
 
 
 namespace Konversation

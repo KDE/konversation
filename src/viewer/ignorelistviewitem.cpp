@@ -14,8 +14,7 @@
 #include "ignorelistviewitem.h"
 #include "ignore.h"
 
-#include <klocale.h>
-#include <kdebug.h>
+#include <KLocale>
 
 
 IgnoreListViewItem::IgnoreListViewItem(QTreeWidget* parent,const QString& name,int newFlags):

@@ -14,7 +14,8 @@
 #define WARNINGS_CONFIG_H
 
 #include "ui_warnings_configui.h"
-#include "settingspage.h" ////// header renamed
+#include "settingspage.h"
+
 
 class Warnings_Config : public QWidget, public KonviSettingsPage, private Ui::Warnings_ConfigUI
 {

@@ -1,6 +1,3 @@
-#ifndef IRCVIEW_H
-#define IRCVIEW_H
-
 /*
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -14,29 +11,25 @@
   Copyright (C) 2006-2008 Eike Hein <hein@kde.org>
 */
 
-/** New IRCViewer.
-
-    Sadly, the k3 and q3 controls are useless for porting. I've chosen to use QPlainTextEdit for now,
-    as it's API fairly close to what we'll end up with.
- */
-
+#ifndef IRCVIEW_H
+#define IRCVIEW_H
 
 #include "common.h"
 
-#include <qmap.h>
 #include <QFontDatabase>
 #include <QList>
 
 #include <KTextBrowser>
 
-class QDropEvent;
-class KUrl;
-class KToggleAction;
-
-class KMenu;
-
 class Server;
 class ChatWindow;
+
+class QDropEvent;
+
+class KUrl;
+class KToggleAction;
+class KMenu;
+
 
 class IRCView : public KTextBrowser
 {
@@ -121,7 +114,7 @@ class IRCView : public KTextBrowser
         void doAppend(const QString& line, bool self=false);
         /**
          * Appends a newLine without any scrollback or notification checks
-         * @param newLine 
+         * @param newLine
          */
         void doRawAppend(const QString& newLine);
         void appendLine(const QString& color);

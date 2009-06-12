@@ -12,7 +12,7 @@
 #include "viewcontainer.h"
 #include "queuetuner.h"
 #include "viewtree.h"
-#include "application.h" ////// header renamed
+#include "application.h"
 #include "notificationhandler.h"
 #include "images.h"
 #include "irccharsets.h"
@@ -20,8 +20,8 @@
 #include "logfilereader.h"
 #include "konsolepanel.h"
 #include "urlcatcher.h"
-#include "transferpanel.h" ////// header renamed
-#include "transfermanager.h" ////// header renamed
+#include "transferpanel.h"
+#include "transfermanager.h"
 #include "chat.h"
 #include "statuspanel.h"
 #include "channel.h"
@@ -39,8 +39,6 @@
 #include <QSplitter>
 #include <QToolButton>
 
-#include <KDebug>
-#include <KLocale>
 #include <KTabWidget>
 #include <KMessageBox>
 #include <KGlobalSettings>
@@ -49,11 +47,11 @@
 #include <KRun>
 #include <KUrl>
 
-
 #include <KActionCollection>
 #include <KToggleAction>
 #include <KSelectAction>
 #include <KXMLGUIClient>
+
 
 ViewContainer::ViewContainer(KonversationMainWindow* window):
         m_window(window)

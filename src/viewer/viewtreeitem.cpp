@@ -12,20 +12,18 @@
 #define QT3_SUPPORT //TODO remove when porting away from K3ListView
 
 #include "viewtreeitem.h"
-#include "application.h" ////// header renamed
+#include "application.h"
 #include "chatwindow.h"
 #include "preferences.h"
 #include "images.h"
-
 
 #include <QPainter>
 #include <QPixmap>
 #include <QImage>
 #include <QTimer>
 
-#include <kdebug.h>
-#include <kglobalsettings.h>
-#include <kstringhandler.h>
+#include <KGlobalSettings>
+#include <KStringHandler>
 
 
 int ViewTreeItem::s_availableSortIndex = 0;

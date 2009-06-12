@@ -14,8 +14,8 @@
 
 #include "channel.h"
 #include "server.h"
-#include "application.h" ////// header renamed
-#include "mainwindow.h" ////// header renamed
+#include "application.h"
+#include "mainwindow.h"
 #include "viewcontainer.h"
 #include "ircinput.h"
 #include "ircview.h"
@@ -23,24 +23,14 @@
 #include "common.h"
 #include "topiclabel.h"
 
-#include <QCheckBox>
-#include <QLabel>
-#include <QLineEdit>
-#include <QTextCodec>
-#include <QTextStream>
 #include <QSplitter>
 
-#include <klocale.h>
-#include <kstandarddirs.h>
-#include <kdebug.h>
-#include <kmessagebox.h>
-#include <kiconloader.h>
-#include <kstringhandler.h>
-#include <kmenu.h>
-#include <kauthorized.h>
-#include <kvbox.h>
-#include <qactiongroup.h>
-
+#include <KMessageBox>
+#include <KStringHandler>
+#include <KStandardGuiItem>
+#include <KMenu>
+#include <KHBox>
+#include <KAuthorized>
 
 Query::Query(QWidget* parent, QString _name) : ChatWindow(parent)
 {

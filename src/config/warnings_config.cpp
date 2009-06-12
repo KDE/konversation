@@ -15,10 +15,7 @@
 #include "warnings_config.h"
 
 #include <QHeaderView>
-#include <kdebug.h>
-#include <kconfig.h>
-#include <klocale.h>
-#include <kglobal.h>
+
 
 static const int WarningNameRole = Qt::UserRole + 100;
 

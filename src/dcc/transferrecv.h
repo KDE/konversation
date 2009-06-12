@@ -18,11 +18,13 @@
 #ifndef DCCTRANSFERRECV_H
 #define DCCTRANSFERRECV_H
 
-#include "transfer.h" ////// header renamed
+#include "transfer.h"
 // TODO: remove the dependence
-#include "resumedialog.h" ////// header renamed
+#include "resumedialog.h"
 
 #include <QAbstractSocket>
+
+class DccTransferRecvWriteCacheHandler;
 
 class QTimer;
 class QTcpServer;
@@ -34,7 +36,6 @@ namespace KIO
     class TransferJob;
 }
 
-class DccTransferRecvWriteCacheHandler;
 
 class DccTransferRecv : public DccTransfer
 {

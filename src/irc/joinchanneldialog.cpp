@@ -16,10 +16,6 @@
 
 #include <QLabel>
 
-#include <klocale.h>
-#include <kcombobox.h>
-#include <klineedit.h>
-
 
 namespace Konversation
 {

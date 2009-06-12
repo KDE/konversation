@@ -13,15 +13,14 @@
 #include "notificationhandler.h"
 #include "common.h"
 #include "chatwindow.h"
-#include "application.h" ////// header renamed
-#include "mainwindow.h" ////// header renamed
+#include "application.h"
+#include "mainwindow.h"
 #include "viewcontainer.h"
 #include "trayicon.h"
 #include "server.h"
 
-#include <knotification.h>
-#include <kstringhandler.h>
-#include <klocale.h>
+#include <KNotification>
+#include <KStringHandler>
 #include <QTextDocument>
 
 
@@ -314,15 +313,15 @@ namespace Konversation
             return;
 
         startTrayNotification(chatWin);
-        
+
         QString cleanedMessage = Qt::escape(Konversation::removeIrcMarkup(message));
         QString cutup = addLineBreaks(cleanedMessage);
-        
+
         if(fromNick.isEmpty())
             KNotification::event(QString::fromLatin1("highlight"), QString("<qt>(%1) *** %2</qt>").arg(chatWin->getName()).arg(cutup), QPixmap(), m_mainWindow);
         else
             KNotification::event(QString::fromLatin1("highlight"), QString("<qt>(%1) &lt;%2&gt; %3</qt>").arg(chatWin->getName()).arg(fromNick).arg(cutup), QPixmap(), m_mainWindow);
-        
+
         if(Preferences::self()->oSDShowOwnNick() &&
             (!m_mainWindow->isActiveWindow() || (chatWin != m_mainWindow->getViewContainer()->getFrontView())))
         {

@@ -20,20 +20,14 @@
 #include "ircqueue.h"
 #include "channel.h"
 #include "viewcontainer.h"
-#include "application.h" ////// header renamed
+#include "application.h"
 
-#include <QToolButton>
-#include <QSpinBox>
 #include <QEvent>
 #include <QContextMenuEvent>
 
-#include <kdebug.h>
-#include <kapplication.h>
-#include <kiconloader.h>
-#include <kmenu.h>
-#include <kmessagebox.h>
-#include <klocale.h>
-#include <kcombobox.h>
+#include <KIconLoader>
+#include <KMenu>
+#include <KMessageBox>
 
 
 QueueTuner::QueueTuner(QWidget* parent, ViewContainer *container)

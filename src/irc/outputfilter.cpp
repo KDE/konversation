@@ -14,8 +14,8 @@
 */
 
 #include "outputfilter.h"
-#include "application.h" ////// header renamed
-#include "mainwindow.h" ////// header renamed
+#include "application.h"
+#include "mainwindow.h"
 #include "awaymanager.h"
 #include "ignore.h"
 #include "server.h"
@@ -27,17 +27,11 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QRegExp>
-#include <qmap.h>
 #include <QTextCodec>
 #include <QByteArray>
 
-#include <klocale.h>
-#include <kdebug.h>
 #include <KIO/PasswordDialog>
-#include <kconfig.h>
-#include <kdeversion.h>
-#include <kshell.h>
-#include <kmessagebox.h>
+#include <KMessageBox>
 
 
 namespace Konversation

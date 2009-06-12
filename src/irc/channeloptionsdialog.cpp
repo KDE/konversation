@@ -23,11 +23,10 @@
 #include <QKeyEvent>
 #include <QItemSelectionModel>
 
-#include <klocale.h>
-#include <ktextedit.h>
-#include <klineedit.h>
-#include <knuminput.h>
-#include <kiconloader.h>
+#include <KTextEdit>
+#include <KLineEdit>
+#include <KNumInput>
+#include <KIconLoader>
 
 
 namespace Konversation

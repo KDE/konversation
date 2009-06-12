@@ -9,13 +9,13 @@
   Copyright (C) 2007 Shintaro Matsuoka <shin@shoegazed.org>
 */
 
-#include "transferdetailedinfopanel.h" ////// header renamed
+#include "transferdetailedinfopanel.h"
 #include "channel.h"
-#include "transfer.h" ////// header renamed
-#include "transferrecv.h" ////// header renamed
+#include "transfer.h"
+#include "transferrecv.h"
 #include "transfermanager.h"
-#include "transferpanelitem.h" ////// header renamed
-#include "application.h" ////// header renamed
+#include "transferpanelitem.h"
+#include "application.h"
 
 #include "connectionmanager.h"
 #include "server.h"
@@ -23,12 +23,8 @@
 #include <QLabel>
 #include <QTimer>
 
-#include <klineedit.h>
-#include <klocale.h>
-#include <kprogressdialog.h>
-#include <krun.h>
-#include <kurlrequester.h>
-#include <ksqueezedtextlabel.h>
+#include <KProgressDialog>
+#include <KRun>
 
 
 DccTransferDetailedInfoPanel::DccTransferDetailedInfoPanel( QWidget* parent )

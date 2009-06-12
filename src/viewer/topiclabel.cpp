@@ -11,7 +11,7 @@
 */
 
 #include "topiclabel.h"
-#include "application.h" ////// header renamed
+#include "application.h"
 #include "connectionmanager.h"
 #include "server.h"
 #include "common.h"
@@ -24,17 +24,15 @@
 #include <QEvent>
 #include <QTextDocument>
 
-#include <krun.h>
-#include <kprocess.h>
-#include <kshell.h>
-#include <kstringhandler.h>
-#include <kglobal.h>
-#include <kdebug.h>
-#include <kmenu.h>
-#include <kiconloader.h>
-#include <kbookmarkmanager.h>
+#include <KRun>
+#include <KProcess>
+#include <KStringHandler>
+#include <KGlobal>
+#include <KMenu>
+#include <KIconLoader>
+#include <KBookmarkManager>
 #include <kbookmarkdialog.h>
-#include <klocale.h>
+#include <KShell>
 #include <KUrl>
 #include <kio/copyjob.h>
 #include <KFileDialog>

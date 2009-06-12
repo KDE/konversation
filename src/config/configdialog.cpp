@@ -36,18 +36,16 @@
  *  email:     hein@kde.org
  */
 
-#include "configdialog.h" ////// header renamed
-
-#include <kconfigskeleton.h>
-#include <kconfigdialogmanager.h>
-#include <klocale.h>
-#include <kiconloader.h>
-#include <kdebug.h>
-#include <kvbox.h>
+#include "configdialog.h"
 
 #include <QLayout>
-#include <qmap.h>
 #include <Q3CString>
+
+#include <KConfigSkeleton>
+#include <KConfigDialogManager>
+#include <KIconLoader>
+#include <KVBox>
+#include <KLocale>
 
 
 Q3AsciiDict<KonviConfigDialog> KonviConfigDialog::openDialogs;

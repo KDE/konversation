@@ -17,10 +17,10 @@
 #define OSD_CONFIG_H
 
 #include "ui_osd_configui.h"
-#include "settingspage.h" ////// header renamed
-
+#include "settingspage.h"
 
 class OSDPreviewWidget;
+
 
 class OSD_Config : public QWidget, public KonviSettingsPage, private Ui::OSD_ConfigUI
 {

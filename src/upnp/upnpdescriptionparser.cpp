@@ -14,9 +14,9 @@
 #include "upnprouter.h"
 
 #include <QtXml>
-#include <qstack.h>
+#include <QStack>
 
-#include <kdebug.h>
+#include <KDebug>
 
 
 namespace Konversation

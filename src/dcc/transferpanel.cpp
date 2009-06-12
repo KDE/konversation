@@ -20,24 +20,19 @@
 #include "transfersend.h"
 #include "preferences.h"
 
-
 #include <q3header.h>
 #include <QPushButton>
 
-#include <kdebug.h>
-#include <kdeversion.h>
-#include <kdialog.h>
-#include <kglobal.h>
-#include <kglobalsettings.h>
-#include <kiconloader.h>
-#include <k3listview.h>
-#include <klocale.h>
-#include <kmessagebox.h>
-#include <kmenu.h>
-#include <krun.h>
-#include <kapplication.h>
-#include <kauthorized.h>
-#include <kvbox.h>
+#include <KDialog>
+#include <KGlobal>
+#include <KGlobalSettings>
+#include <KIconLoader>
+#include <K3ListView>
+#include <KMessageBox>
+#include <KMenu>
+#include <KRun>
+#include <KAuthorized>
+#include <KVBox>
 
 
 DccTransferPanel::DccTransferPanel(QWidget* parent) : ChatWindow(parent)

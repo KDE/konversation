@@ -47,21 +47,18 @@
 #endif
 
 #include <QRegExp>
-#include <qhostaddress.h>
+#include <QHostAddress>
 #include <QTextCodec>
 #include <QDateTime>
 #include <QStringListModel>
 
-#include <kapplication.h>
-#include <klocale.h>
-#include <kdebug.h>
-#include <kfiledialog.h>
-#include <kinputdialog.h>
-#include <kmessagebox.h>
-#include <kaction.h>
-#include <kstringhandler.h>
-#include <kdeversion.h>
-#include <kwindowsystem.h>
+#include <KLocale>
+#include <KFileDialog>
+#include <KInputDialog>
+#include <KMessageBox>
+#include <KAction>
+#include <KStringHandler>
+#include <KWindowSystem>
 
 
 int Server::m_availableConnectionId = 0;
@@ -2616,7 +2613,7 @@ QStringList Server::getISONList()
         return Preferences::notifyListByGroupId(getServerGroup()->id());
     else
         return QStringList();
-    
+
     if (m_serverISON)
         return m_serverISON->getISONList();
     else

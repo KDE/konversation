@@ -12,7 +12,7 @@
 
 #include "servergroupdialog.h"
 #include "identity.h"
-#include "application.h" ////// header renamed
+#include "application.h"
 #include "viewcontainer.h"
 #include "preferences.h"
 #include "serversettings.h"
@@ -27,12 +27,11 @@
 #include <QToolButton>
 #include <QCheckBox>
 
-#include <klocale.h>
-#include <kiconloader.h>
-#include <kmessagebox.h>
-#include <kcombobox.h>
-#include <kpushbutton.h>
-#include <klineedit.h>
+#include <KIconLoader>
+#include <KMessageBox>
+#include <KComboBox>
+#include <KPushButton>
+#include <KLineEdit>
 
 
 namespace Konversation
@@ -470,7 +469,7 @@ namespace Konversation
     {
         setCaption(title);
         setButtons(Ok|Cancel);
-        
+
         m_mainWidget = new Ui::ChannelDialogUI();
         m_mainWidget->setupUi(mainWidget());
 

@@ -16,9 +16,8 @@
 
 #include <arpa/inet.h>
 
-#include <qhostaddress.h>
+#include <QHostAddress>
 
-#include <klocale.h>
 
 //TODO: IPv6 support
 QString DccCommon::textIpToNumericalIp( const QString& ipString )

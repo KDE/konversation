@@ -16,12 +16,10 @@
 #define THEME_CONFIG_H
 
 #include "ui_theme_configui.h"
-#include "settingspage.h" ////// header renamed
+#include "settingspage.h"
 
 #include <kio/job.h>
 
-
-class QStringList;
 
 class Theme_Config : public QWidget, public KonviSettingsPage, private Ui::Theme_ConfigUI
 {

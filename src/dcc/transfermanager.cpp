@@ -10,17 +10,16 @@
   Copyright (C) 2009 Michael Kreitzer <mrgrim@gr1m.org>
 */
 
-#include "transfermanager.h" ////// header renamed
-#include "transferrecv.h" ////// header renamed
-#include "transfersend.h" ////// header renamed
+#include "transfermanager.h"
+#include "transferrecv.h"
+#include "transfersend.h"
 #include "application.h"
 #include "preferences.h"
 #include "upnpmcastsocket.h"
 #include "upnprouter.h"
 
-#include <kdebug.h>
-
 using namespace Konversation::UPnP;
+
 
 DccTransferManager::DccTransferManager( QObject* parent )
     : QObject( parent )

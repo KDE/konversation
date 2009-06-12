@@ -15,9 +15,6 @@
 #include "application.h"
 #include "transfermanager.h"
 
-#include <klocale.h>
-#include <kdebug.h>
-
 
 DCC_Config::DCC_Config(QWidget *parent, const char* name) :
   QWidget(parent)

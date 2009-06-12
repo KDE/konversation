@@ -11,16 +11,14 @@
   Copyright (C) 2004,2005 John Tapsell <john@geola.co.uk>
 */
 
-#include "transfer.h" ////// header renamed
-#include "application.h" ////// header renamed
+#include "transfer.h"
+#include "application.h"
 #include "connectionmanager.h"
 #include "notificationhandler.h"
 #include "preferences.h"
 
 #include <QFileInfo>
-#include <qhostaddress.h>
-
-#include <kdebug.h>
+#include <QHostAddress>
 
 
 DccTransfer::DccTransfer( DccType dccType, QObject* parent ) : QObject(parent)

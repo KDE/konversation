@@ -15,16 +15,6 @@
 #include "ignore.h"
 #include "preferences.h"
 
-#include <klocale.h>
-#include <QLineEdit>
-#include <qheaderview.h>
-
-#include <kapplication.h>
-#include <kconfig.h>
-#include <kdebug.h>
-#include <kpushbutton.h>
-#include <QCheckBox>
-
 
 Ignore_Config::Ignore_Config( QWidget* parent, const char* name, Qt::WFlags fl )
     : QWidget( parent, fl )
@@ -69,7 +59,7 @@ void Ignore_Config::newIgnore()
     ignoreListView->setCurrentItem(item);
     txtPattern->setFocus();
     txtPattern->selectAll();
-     
+
     updateEnabledness();
     emit modified();
 }
@@ -195,7 +185,7 @@ void Ignore_Config::flagCheckboxChanged()
     if(chkNotice->isChecked()) flags |= Ignore::Notice;
     if(chkCTCP->isChecked()) flags |= Ignore::CTCP;
     if(chkDCC->isChecked()) flags |= Ignore::DCC;
-    
+
 //    if(chkExceptions->isChecked()) flags |= Ignore::Exceptions;
     IgnoreListViewItem* selectedItem=static_cast<IgnoreListViewItem*>(ignoreListView->currentItem());
     if(selectedItem) {

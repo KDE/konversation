@@ -17,19 +17,14 @@
 #include "preferences.h"
 
 #include <QDir>
-#include <QLabel>
-#include <QToolButton>
 
-#include <kglobal.h>
-#include <kstandarddirs.h>
-#include <kurlrequester.h>
-#include <kfiledialog.h>
-#include <klineedit.h>
-#include <kcolorbutton.h>
-#include <klocale.h>
+#include <KGlobal>
+#include <KStandardDirs>
+#include <KUrlRequester>
+#include <KFileDialog>
 #include <kparts/componentfactory.h>
 #include <kregexpeditorinterface.h>
-#include <kiconloader.h>
+#include <KIconLoader>
 
 
 Highlight_Config::Highlight_Config(QWidget* parent, const char* name)

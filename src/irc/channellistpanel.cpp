@@ -28,17 +28,14 @@
 #include <QCheckBox>
 #include <QTimer>
 
-#include <krun.h>
-#include <k3listview.h>
-#include <klineedit.h>
-#include <klocale.h>
-#include <kdebug.h>
-#include <kfiledialog.h>
-#include <kmessagebox.h>
-#include <kmenu.h>
-#include <kdeversion.h>
+#include <KRun>
+#include <K3ListView>
+#include <KLineEdit>
+#include <KFileDialog>
+#include <KMessageBox>
 #include <KMenu>
-#include <kvbox.h>
+#include <KVBox>
+
 
 ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
 {

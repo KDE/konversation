@@ -14,7 +14,8 @@
 #define ALIAS_CONFIG_H
 
 #include "ui_alias_configui.h"
-#include "settingspage.h" ////// header renamed
+#include "settingspage.h"
+
 
 class Alias_Config : public QWidget, public KonviSettingsPage, private Ui::Alias_ConfigUI
 {

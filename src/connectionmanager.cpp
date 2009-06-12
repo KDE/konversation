@@ -14,14 +14,13 @@
 #include "serversettings.h"
 #include "servergroupsettings.h"
 #include "config/preferences.h"
-#include "application.h" ////// header renamed
-#include "mainwindow.h" ////// header renamed
+#include "application.h"
+#include "mainwindow.h"
 #include "statuspanel.h"
 
 #include <QRegExp>
 
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <KMessageBox>
 
 
 ConnectionManager::ConnectionManager(QObject* parent) : QObject(parent)

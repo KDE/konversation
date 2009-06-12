@@ -13,15 +13,6 @@
 #include "alias_config.h"
 #include "preferences.h"
 
-#include <QLabel>
-#include <QPushButton>
-
-#include <kapplication.h>
-#include <kdebug.h>
-#include <kconfig.h>
-#include <klocale.h>
-#include <klineedit.h>
-
 
 Alias_Config::Alias_Config(QWidget* parent, const char* name)
  : QWidget(parent)

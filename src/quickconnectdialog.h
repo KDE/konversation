@@ -17,7 +17,7 @@
 
 #include "common.h"
 
-#include <kdialog.h>
+#include <KDialog>
 
 
 class QCheckBox;

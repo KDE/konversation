@@ -24,10 +24,8 @@ Kopete    (c) 2002-2004 by the Kopete developers  <kopete-devel@kde.org>
 #ifndef LINKADDRESSBOOKUI_H
 #define LINKADDRESSBOOKUI_H
 
-#include <qmap.h>
 
 #include <kdialog.h>
-#include <kdebug.h>
 #include <kabc/addressbook.h>
 
 #include "ui_linkaddressbookui_base.h"

@@ -18,15 +18,12 @@
 #include "../mainwindow.h"
 #include "../irc/channel.h"
 
-#include <QStringList>
 
-#include <klocale.h>
-#include <kstringhandler.h>
-#include <krun.h>
-#include <kapplication.h>
-#include <kmessagebox.h>
-#include <ktoolinvocation.h>
-#include <kprocess.h>
+#include <KStringHandler>
+#include <KRun>
+#include <KMessageBox>
+#include <KToolInvocation>
+#include <KProcess>
 
 namespace Konversation
 {

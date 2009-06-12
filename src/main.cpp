@@ -12,15 +12,13 @@
   email:     eisfuchs@tigress.com
 */
 
-#include <kapplication.h>
-#include <kcmdlineargs.h>
-#include <kaboutdata.h>
-#include <klocale.h>
-#include <kdebug.h>
 
-#include "application.h" ////// header renamed
+#include "application.h"
 #include "version.h"
 #include "commit.h"
+
+#include <KCmdLineArgs>
+#include <KAboutData>
 
 #define HACKSTR(x) #x
 #define STRHACK(x) HACKSTR(x)

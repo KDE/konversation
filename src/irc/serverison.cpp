@@ -18,13 +18,10 @@
 #include "serverison.h"
 #include "server.h"
 #include "addressbook.h"
-#include "application.h" ////// header renamed
+#include "application.h"
 #include "nickinfo.h"
 #include "viewcontainer.h"
 
-#include <qmap.h>
-#include <QString>
-#include <QStringList>
 #include <kabc/addressbook.h>
 #include <kabc/stdaddressbook.h>
 

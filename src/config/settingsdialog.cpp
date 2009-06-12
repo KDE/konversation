@@ -10,8 +10,8 @@
   Copyright (C) 2006 Eike Hein <hein@kde.org>
 */
 
-#include "settingsdialog.h" ////// header renamed
-#include "configdialog.h" ////// header renamed
+#include "settingsdialog.h"
+#include "configdialog.h"
 #include "preferences.h"
 #include "ui_chatwindowappearance_config.h"
 #include "ui_connectionbehavior_config.h"
@@ -34,12 +34,8 @@
 #include "watchednicknames_config.h"
 #include "ui_tabnotifications_config.h"
 
-#include <QSplitter>
-#include <QComboBox>
+#include <KIconLoader>
 
-#include <klocale.h>
-#include <kdebug.h>
-#include <kiconloader.h>
 
 KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
     KonviConfigDialog( parent, "settings", Preferences::self(), KPageDialog::Tree)

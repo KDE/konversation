@@ -24,6 +24,19 @@
 #include "server.h"
 #include "upnprouter.h"
 
+#include <QFile>
+#include <QTimer>
+#include <QTcpSocket>
+#include <QTcpServer>
+
+#include <k3socketaddress.h>
+#include <kio/netaccess.h>
+#include <KFileItem>
+
+// TODO: remove the dependence
+#include <KInputDialog>
+#include <KAuthorized>
+
 #include <stdlib.h>
 #include <sys/types.h>
 #include <netinet/in.h>
@@ -37,24 +50,9 @@
 #endif
 #include <arpa/inet.h>
 
-#include <QFile>
-#include <QTimer>
-#include <QTcpSocket>
-#include <QTcpServer>
-
-#include <kdebug.h>
-#include <klocale.h>
-#include <k3socketaddress.h>
-#include <kio/netaccess.h>
-#include <kfileitem.h>
-
-// TODO: remove the dependence
-#include <kinputdialog.h>
-#include <kauthorized.h>
-
-
 using namespace KNetwork;
 using namespace Konversation::UPnP;
+
 
 DccTransferSend::DccTransferSend(QObject* parent)
     : DccTransfer( DccTransfer::Send, parent )

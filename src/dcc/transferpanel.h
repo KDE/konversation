@@ -16,14 +16,15 @@
 #define DCCTRANSFERPANEL_H
 
 #include "chatwindow.h"
-#include "transferpanelitem.h" ////// header renamed
+#include "transferpanelitem.h"
 
+class DccTransferDetailedInfoPanel;
 
 class QPushButton;
+
 class K3ListView;
 class KMenu;
 
-class DccTransferDetailedInfoPanel;
 
 class DccTransferPanel : public ChatWindow
 {

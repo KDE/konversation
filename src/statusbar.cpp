@@ -9,17 +9,16 @@
   Copyright (C) 2006 Eike Hein <hein@kde.org>
 */
 
-#include "statusbar.h" ////// header renamed
-#include "mainwindow.h" ////// header renamed
+#include "statusbar.h"
+#include "mainwindow.h"
 #include "viewcontainer.h"
 #include "ssllabel.h"
 
 #include <QLabel>
 
-#include <kstatusbar.h>
-#include <klocale.h>
-#include <kiconloader.h>
-#include <ksqueezedtextlabel.h>
+#include <KStatusBar>
+#include <KIconLoader>
+#include <KSqueezedTextLabel>
 
 
 KonversationStatusBar::KonversationStatusBar(KonversationMainWindow* window)

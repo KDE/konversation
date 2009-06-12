@@ -13,7 +13,6 @@ Copyright (C) 2006 Eike Hein <hein@kde.org>
 */
 
 #include "serverlistview.h"
-#include <kdebug.h>
 
 
 ServerListView::ServerListView(QWidget *parent)
@@ -41,10 +40,10 @@ void ServerListView::dragMoveEvent(QDragMoveEvent *e)
         setDropIndicatorShown(true);
     }
     QTreeView::dragMoveEvent(e);
-    
+
     if(bad)
         e->ignore();
-    
+
 }
 void ServerListView::dragLeaveEvent(QDragLeaveEvent *e)
 {
@@ -78,14 +77,14 @@ bool ServerListView::badDropSelection()
                 }
         }
         else    t++;
-        
+
         if (t > 0 && children.count() > 0) //make sure we don't have a top and a child selected
             return true;
     }
     return false;
 }
 
-void ServerListView::dropEvent(QDropEvent *event) 
+void ServerListView::dropEvent(QDropEvent *event)
 {
     if(badDropSelection())
     {
@@ -113,7 +112,7 @@ void ServerListView::dropEvent(QDropEvent *event)
                     children = topLevelItem(i)->child(j)->takeChildren();
                     if (!children.isEmpty())
                         topLevelItem(i)->insertChildren(childIndex++, children);
-                    
+
                 }
                 else
                 {

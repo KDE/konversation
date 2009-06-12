@@ -22,9 +22,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #include <QPushButton>
 #include <QRegExp>
 
-#include <klocale.h>
-#include <kdebug.h>
-
 
 AddresseeItem::AddresseeItem( Q3ListView *parent, const KABC::Addressee &addressee) :
 K3ListViewItem( parent ),

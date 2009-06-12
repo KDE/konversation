@@ -12,22 +12,10 @@
 
 #include "searchbar.h"
 
-#include <QCheckBox>
 #include <QTimer>
-#include <QPalette>
-#include <QLabel>
-#include <QPixmap>
-#include <QObject>
-#include <qshortcut.h>
-#include <QToolButton>
+#include <QShortcut>
 
-#include <kdebug.h>
-#include <kapplication.h>
-#include <kiconloader.h>
-#include <klineedit.h>
-#include <kmenu.h>
-#include <kpushbutton.h>
-#include <klocale.h>
+#include <KMenu>
 
 
 SearchBar::SearchBar(QWidget* parent)
@@ -130,7 +118,7 @@ void SearchBar::slotFindNext()
 {
     if (m_searchEdit->text().isEmpty())
     {
-        m_searchEdit->setPalette(QPalette()); 
+        m_searchEdit->setPalette(QPalette());
         m_findNextButton->setEnabled(false);
         m_findPreviousButton->setEnabled(false);
         setStatus(QPixmap(), "");

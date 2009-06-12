@@ -15,21 +15,17 @@
 #include "query.h"
 #include "ircview.h"
 #include "server.h"
-#include "application.h" ////// header renamed
+#include "application.h"
 #include "logfilereader.h"
 
 #include <QDateTime>
 #include <QDir>
 #include <QRegExp>
 #include <QTextCodec>
-#include <QLayout>
 #include <QKeyEvent>
 
-#include <klocale.h>
-#include <kdialog.h>
-#include <kdebug.h>
-#include <kactioncollection.h>
-#include <kaction.h>
+#include <KDialog>
+#include <KActionCollection>
 
 
 ChatWindow::ChatWindow(QWidget* parent) : KVBox(parent)

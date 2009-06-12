@@ -17,10 +17,7 @@
 #include "ircview.h"
 #include "ircviewbox.h"
 #include "server.h"
-#include "application.h" ////// header renamed
-
-#include <klocale.h>
-#include <kdebug.h>
+#include "application.h"
 
 
 RawLog::RawLog(QWidget* parent) : ChatWindow(parent)

@@ -13,13 +13,8 @@
 #include "autoreplace_config.h"
 #include "preferences.h"
 
-#include <kapplication.h>
-#include <kdebug.h>
-#include <kconfig.h>
-#include <klocale.h>
 #include <kparts/componentfactory.h>
 #include <kregexpeditorinterface.h>
-#include <kglobal.h>
 
 #define DIRECTION_OUTPUT 0
 #define DIRECTION_INPUT  1

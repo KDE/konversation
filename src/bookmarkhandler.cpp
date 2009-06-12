@@ -15,14 +15,14 @@ Copyright (C) 2002 Carsten Pfeiffer <pfeiffer@kde.org>
 
 */
 
-#include "bookmarkhandler.h" ////// header renamed
-#include "application.h" ////// header renamed
-#include "mainwindow.h" ////// header renamed
+#include "bookmarkhandler.h"
+#include "application.h"
+#include "mainwindow.h"
 #include "connectionmanager.h"
 
-#include <kstandarddirs.h>
+#include <KStandardDirs>
 #include <KXMLGUIFactory>
-#include <kbookmarkmenu.h>
+#include <KBookmarkMenu>
 
 
 KonviBookmarkHandler::KonviBookmarkHandler(KMenu *menu, KonversationMainWindow* mainWindow)

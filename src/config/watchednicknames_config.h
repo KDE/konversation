@@ -12,12 +12,13 @@
 #ifndef WATCHEDNICKNAMES_CONFIG_H
 #define WATCHEDNICKNAMES_CONFIG_H
 
-#include "settingspage.h" ////// header renamed
+#include "settingspage.h"
 #include "servergroupsettings.h"
 #include "ui_watchednicknames_configui.h"
 
 class QTreeWidgetItem;
 class QTreeWidget;
+
 
 class WatchedNicknames_Config : public QWidget, public KonviSettingsPage, private Ui::WatchedNicknames_ConfigUI
 {

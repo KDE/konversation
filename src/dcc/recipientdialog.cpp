@@ -19,9 +19,8 @@
 #include <QSortFilterProxyModel>
 #include <QVBoxLayout>
 
-#include <klineedit.h>
-#include <klocale.h>
-#include <kdebug.h>
+#include <KLocale>
+#include <KLineEdit>
 
 
 QString DccRecipientDialog::selectedNickname;     // static

@@ -13,16 +13,15 @@
 #include "ircview.h"
 #include "searchbar.h"
 
-#include <klocale.h>
-#include <kapplication.h>
-#include <kiconloader.h>
+#include <KApplication>
+#include <KIconLoader>
 #include <QPixmap>
-#include <kvbox.h>
+#include <KVBox>
 
 
 // TODO FIXME and this needs its own function because...?
 static QPixmap getIcon(const QString& name)
-{ 
+{
     return KIconLoader::global()->loadIcon(name, KIconLoader::Toolbar, 16);
 }
 
@@ -65,7 +64,7 @@ void IRCViewBox::slotSearch()
         m_searchBar->hide();
         return;
     }
-    
+
     m_searchBar->show();
     m_searchBar->setFocus();
 }

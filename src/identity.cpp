@@ -17,9 +17,6 @@
 
 #include <QTextCodec>
 
-#include <kdebug.h>
-#include <kglobal.h>
-
 
 int Identity::s_availableId = 0;
 

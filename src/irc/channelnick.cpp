@@ -20,8 +20,6 @@
 #include "channel.h"
 #include "server.h"
 
-#include <klocale.h>
-
 
 ChannelNick::ChannelNick(const NickInfoPtr& nickInfo, const bool& isop, const bool& isadmin,
 			 const bool& isowner, const bool& ishalfop, const bool& hasvoice)

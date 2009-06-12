@@ -14,25 +14,18 @@
 */
 
 #include "config/preferences.h"
-#include "identity.h"
 #include "ignore.h"
 #include "highlight.h"
-#include "commit.h"
-#include "version.h"
-
-#include <ktoolbar.h>
-#include <kstandarddirs.h>
-#include <kdebug.h>
-#include <kapplication.h>
-#include <kconfig.h>
-#include <klocale.h>
-#include <kurl.h>
-#include <kuser.h>
 
 #include <QPalette>
 #include <QRegExp>
 #include <QFileInfo>
 #include <QHashIterator>
+
+#include <KLocale>
+#include <KUser>
+#include <KStandardDirs>
+
 
 struct PreferencesSingleton
 {

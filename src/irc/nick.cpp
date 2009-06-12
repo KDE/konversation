@@ -15,15 +15,13 @@
 
 #include "nick.h"
 #include "addressbook.h"
-
-#include <kdebug.h>
-#include <k3listview.h>
-#include <klocale.h>
-#include <kabc/phonenumber.h>
-
-#include "application.h" ////// header renamed
+#include "application.h"
 #include "images.h"
 #include "preferences.h"
+
+#include <K3ListView>
+#include <kabc/phonenumber.h>
+
 
 Nick::Nick(K3ListView *listView, const ChannelNickPtr& channelnick)
     : QObject (),

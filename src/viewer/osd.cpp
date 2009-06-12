@@ -16,10 +16,6 @@
 #include "osd.h"
 #include "common.h"
 
-#include <KApplication>
-#include <KDebug>
-#include <klocalizedstring.h>
-
 #include <QDesktopWidget>
 #include <QMouseEvent>
 #include <QPainter>
@@ -27,6 +23,11 @@
 #include <QBitmap>
 #include <QRegExp>
 #include <QTimer>
+
+#include <KApplication>
+#include <KLocale>
+#include <KDebug>
+
 
 namespace ShadowEngine
 {

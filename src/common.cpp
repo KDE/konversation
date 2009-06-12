@@ -11,7 +11,7 @@
 */
 
 #include "common.h"
-#include "application.h" ////// header renamed
+#include "application.h"
 #include "config/preferences.h"
 
 #include <QString>
@@ -19,7 +19,6 @@
 #include <QPixmap>
 #include <QBitmap>
 #include <QPainter>
-#include <klocale.h>
 
 
 namespace Konversation
@@ -67,7 +66,7 @@ namespace Konversation
         }
         return line;
     }
-    
+
     QString tagURLs(const QString& text, const QString& fromNick, bool useCustomColor)
     {
         // QTime timer;

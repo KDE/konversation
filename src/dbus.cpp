@@ -13,19 +13,17 @@
 */
 
 #include "dbus.h"
-#include "application.h" ////// header renamed
+#include "application.h"
 #include "connectionmanager.h"
 #include "awaymanager.h"
 #include "channel.h"
 #include "identity.h"
 #include "server.h"
 
-#include <kdebug.h>
-#include <klocale.h>
-
 #include <QDBusConnection>
 
 using namespace Konversation;
+
 
 DBus::DBus(QObject *parent) : QObject(parent)
 {

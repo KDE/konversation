@@ -13,15 +13,12 @@
 */
 
 #include "quickconnectdialog.h"
+#include "application.h"
 
-#include "application.h" ////// header renamed
-
-#include <QLayout>
-#include <QLabel>
 #include <QCheckBox>
+#include <QLayout>
 
-#include <klineedit.h>
-#include <klocale.h>
+#include <KLineEdit>
 
 
 QuickConnectDialog::QuickConnectDialog(QWidget *parent)

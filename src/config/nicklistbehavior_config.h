@@ -13,10 +13,8 @@
 #ifndef NICKLISTBEHAVIOR_CONFIG_H
 #define NICKLISTBEHAVIOR_CONFIG_H
 
-#include "settingspage.h" ////// header renamed
+#include "settingspage.h"
 #include "ui_nicklistbehavior_configui.h"
-
-#include <QObject>
 
 
 class NicklistBehavior_Config : public QWidget, public KonviSettingsPage, private Ui::NicklistBehavior_ConfigUI

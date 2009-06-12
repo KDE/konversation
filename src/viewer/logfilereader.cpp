@@ -13,7 +13,7 @@
 */
 
 #include "logfilereader.h"
-#include "application.h" ////// header renamed
+#include "application.h"
 #include "ircview.h"
 #include "ircviewbox.h"
 
@@ -22,16 +22,15 @@
 #include <QPushButton>
 #include <QLabel>
 #include <QRegExp>
-#include <qspinbox.h>
+#include <QSpinBox>
 #include <QTextCodec>
 #include <QKeyEvent>
 
-#include <kdialog.h>
-#include <ktoolbar.h>
-#include <kmessagebox.h>
-#include <kfiledialog.h>
-#include <klocale.h>
-#include <kdebug.h>
+#include <KDialog>
+#include <KToolBar>
+#include <KMessageBox>
+#include <KFileDialog>
+#include <KLocale>
 #include <kio/copyjob.h>
 #include <kio/jobclasses.h>
 #include <KJobUiDelegate>

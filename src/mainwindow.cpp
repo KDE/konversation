@@ -13,13 +13,13 @@
   Copyright (C) 2005-2008 Eike Hein <hein@kde.org>
 */
 
-#include "mainwindow.h" ////// header renamed
-#include "application.h" ////// header renamed
+#include "mainwindow.h"
+#include "application.h"
 #include "linkaddressbook/addressbook.h"
-#include "settingsdialog.h" ////// header renamed
+#include "settingsdialog.h"
 #include "viewcontainer.h"
-#include "statusbar.h" ////// header renamed
-#include "bookmarkhandler.h" ////// header renamed
+#include "statusbar.h"
+#include "bookmarkhandler.h"
 #include "trayicon.h"
 #include "serverlistdialog.h"
 #include "identitydialog.h"
@@ -27,9 +27,9 @@
 #include "irccharsets.h"
 #include "connectionmanager.h"
 #include "awaymanager.h"
-#include "transfermanager.h" ////// header renamed
+#include "transfermanager.h"
 
-#include <qnamespace.h>
+
 #include <QSignalMapper>
 #include <QSplitter>
 
@@ -38,25 +38,22 @@
 #include <KToggleAction>
 #include <KSelectAction>
 #include <KAuthorized>
-#include <kacceleratormanager.h>
-#include <kstandardaction.h>
-#include <kaction.h>
-#include <kdebug.h>
-#include <klocale.h>
-#include <kmessagebox.h>
-#include <kmenubar.h>
+#include <KAcceleratorManager>
+#include <KStandardAction>
+#include <KMessageBox>
+#include <KMenuBar>
 #include <kdeversion.h>
-#include <kedittoolbar.h>
-#include <kmenu.h>
-#include <kwindowsystem.h>
-#include <kglobal.h>
-#include <kstandarddirs.h>
+#include <KEditToolBar>
+#include <KMenu>
+#include <KWindowSystem>
+#include <KGlobal>
+#include <KStandardDirs>
 #include <kabc/addressbook.h>
 #include <kabc/errorhandler.h>
 #include <KShortcutsDialog>
-#include <kstandardshortcut.h>
+#include <KStandardShortcut>
 #include <KActionMenu>
-#include <knotifyconfigwidget.h>
+#include <KNotifyConfigWidget>
 
 
 KonversationMainWindow::KonversationMainWindow() : KXmlGuiWindow(0)

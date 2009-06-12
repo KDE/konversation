@@ -13,25 +13,23 @@
   (at your option) any later version.
 */
 
-#include "transferpanelitem.h" ////// header renamed
-#include "transferpanel.h" ////// header renamed
-#include "application.h" ////// header renamed
+#include "transferpanelitem.h"
+#include "transferpanel.h"
+#include "application.h"
 #include "config/preferences.h"
 
-#include <q3header.h>
-#include <qhostaddress.h>
+#include <Q3Header>
+#include <QHostAddress>
 #include <QStyle>
 #include <QTimer>
 
-#include <kdebug.h>
-#include <kfilemetainfo.h>
-#include <kglobal.h>
-#include <kiconloader.h>
+#include <KFileMetaInfo>
+#include <KGlobal>
+#include <KIconLoader>
 #include <kio/job.h>
-#include <klocale.h>
-#include <kmessagebox.h>
-#include <kprogressdialog.h>
-#include <krun.h>
+#include <KMessageBox>
+#include <KProgressDialog>
+#include <KRun>
 
 
 DccTransferPanelItem::DccTransferPanelItem( DccTransferPanel* panel, DccTransfer* transfer )
@@ -389,8 +387,8 @@ QString DccTransferPanelItem::getSpeedPrettyText( transferspeed_t speed )
 QString DccTransferPanelItem::secToHMS( long sec )
 {
         int remSec = sec;
-        int remHour = remSec / 3600; remSec -= remHour * 3600; 
-        int remMin = remSec / 60; remSec -= remMin * 60; 
+        int remHour = remSec / 3600; remSec -= remHour * 3600;
+        int remMin = remSec / 60; remSec -= remMin * 60;
 
         // remHour can be more than 25, so we can't use QTime here.
         return QString( "%1:%2:%3" )

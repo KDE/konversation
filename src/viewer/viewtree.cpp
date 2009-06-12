@@ -26,9 +26,7 @@
 #include <QPainter>
 #include <QToolTip>
 
-#include <klocale.h>
-#include <kglobalsettings.h>
-#include <kapplication.h>
+#include <KApplication>
 
 
 ViewTree::ViewTree(QWidget *parent)

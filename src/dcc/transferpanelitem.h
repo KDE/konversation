@@ -16,12 +16,12 @@
 #ifndef DCCTRANSFERPANELITEM_H
 #define DCCTRANSFERPANELITEM_H
 
-#include "transfer.h" ////// header renamed
+#include "transfer.h"
 
 #include <QDateTime>
 
-#include <k3listview.h>
-#include <kurl.h>
+#include <K3ListView>
+#include <KUrl>
 #include <kio/global.h>
 
 

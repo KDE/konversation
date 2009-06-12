@@ -14,7 +14,7 @@
 #define QUICKBUTTONS_CONFIG_H
 
 #include "ui_quickbuttons_configui.h"
-#include "settingspage.h" ////// header renamed
+#include "settingspage.h"
 
 
 class QuickButtons_Config : public QWidget, public KonviSettingsPage, private Ui::QuickButtons_ConfigUI

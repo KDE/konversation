@@ -14,25 +14,23 @@
 #include "inputfilter.h"
 #include "server.h"
 #include "replycodes.h"
-#include "application.h" ////// header renamed
+#include "application.h"
 #include "commit.h"
 #include "version.h"
 #include "query.h"
-
 #include "channel.h"
 #include "statuspanel.h"
 #include "common.h"
 #include "notificationhandler.h"
 
-#include <qdatastream.h>
+#include <QDataStream>
 #include <QStringList>
 #include <QDateTime>
 #include <QRegExp>
 
-#include <klocale.h>
-#include <kdeversion.h>
-#include <kstringhandler.h>
-#include <kdebug.h>
+#include <KLocale>
+#include <KStringHandler>
+
 
 InputFilter::InputFilter()
 {
@@ -144,7 +142,7 @@ void InputFilter::parseLine(const QString& line)
 
     Q_ASSERT(server); //how could we have gotten a line without a server?
 
-    
+
     // Server command, if no "!" was found in prefix
     if ((!prefix.contains('!')) && (prefix != server->getNickname()))
     {

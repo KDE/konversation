@@ -14,8 +14,8 @@
 
 #include "chat.h"
 #include "dcccommon.h"
-#include "application.h" ////// header renamed
-#include "mainwindow.h" ////// header renamed
+#include "application.h"
+#include "mainwindow.h"
 #include "irccharsets.h"
 #include "ircview.h"
 #include "ircviewbox.h"
@@ -30,8 +30,7 @@
 #include <sys/types.h>
 #include <netinet/in.h>
 
-
-#include <qhostaddress.h>
+#include <QHostAddress>
 #include <QTextCodec>
 #include <QSplitter>
 #include <QTextStream>
@@ -39,17 +38,16 @@
 #include <QTcpSocket>
 #include <QTcpServer>
 
-#include <klineedit.h>
-#include <klocale.h>
-#include <kmessagebox.h>
-#include <kdebug.h>
+#include <KLineEdit>
+#include <KMessageBox>
 #include <KActionCollection>
-#include <kaction.h>
-#include <kmenu.h>
-#include <kvbox.h>
+#include <KMenu>
+#include <KVBox>
+
 #define DCCCHAT_BUFFER_SIZE 1024
 
 using namespace Konversation::UPnP;
+
 
 DccChat::DccChat(QWidget* parent, bool listen, Server* server, const QString& ownNick, const QString& partnerNick, const QString& partnerHost, int partnerPort)
     : ChatWindow(parent)

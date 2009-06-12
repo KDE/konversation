@@ -13,11 +13,10 @@
 #ifndef KONVISETTINGSDIALOG_H
 #define KONVISETTINGSDIALOG_H
 
-#include "configdialog.h" ////// header renamed
-#include "settingspage.h" ////// header renamed
+#include "configdialog.h"
+#include "settingspage.h"
 
 #include <QList>
-
 
 class Warnings_Config;
 class Theme_Config;
@@ -32,25 +31,10 @@ class Highlight_Config;
 class OSD_Config;
 class Ignore_Config;
 
+
 class KonviSettingsDialog : public KonviConfigDialog
 {
     Q_OBJECT
-
-    protected:
-	Warnings_Config* m_confWarningsWdg;
-	Theme_Config* m_confThemeWdg;
-	NicklistBehavior_Config* m_confNicklistBehaviorWdg;
-	Tabs_Config* m_confTabBarWdg;
-	Alias_Config* m_confAliasWdg;
-	QuickButtons_Config* m_confQuickButtonsWdg;
-	Autoreplace_Config* m_confAutoreplaceWdg;
-	DCC_Config* m_confDCCWdg;
-	WatchedNicknames_Config* m_confWatchedNicknamesWdg;
-	Highlight_Config* m_confHighlightWdg;
-	OSD_Config* m_confOSDWdg;
-	Ignore_Config* m_confIgnoreWdg;
-
-	bool m_modified;
 
     public:
         explicit KonviSettingsDialog(QWidget *parent);
@@ -67,6 +51,21 @@ class KonviSettingsDialog : public KonviConfigDialog
     protected:
         virtual bool hasChanged();
         virtual bool isDefault();
+
+        Warnings_Config* m_confWarningsWdg;
+        Theme_Config* m_confThemeWdg;
+        NicklistBehavior_Config* m_confNicklistBehaviorWdg;
+        Tabs_Config* m_confTabBarWdg;
+        Alias_Config* m_confAliasWdg;
+        QuickButtons_Config* m_confQuickButtonsWdg;
+        Autoreplace_Config* m_confAutoreplaceWdg;
+        DCC_Config* m_confDCCWdg;
+        WatchedNicknames_Config* m_confWatchedNicknamesWdg;
+        Highlight_Config* m_confHighlightWdg;
+        OSD_Config* m_confOSDWdg;
+        Ignore_Config* m_confIgnoreWdg;
+
+        bool m_modified;
 
         // remember page index
         KPageWidgetItem *m_watchedNicknamesPage;

@@ -15,11 +15,11 @@
   (at your option) any later version.
 */
 
-#include "transferrecv.h" ////// header renamed
+#include "transferrecv.h"
 #include "dcccommon.h"
 #include "channel.h"
-#include "transfermanager.h" ////// header renamed
-#include "application.h" ////// header renamed
+#include "transfermanager.h"
+#include "application.h"
 #include "connectionmanager.h"
 #include "server.h"
 #include "upnprouter.h"
@@ -27,15 +27,13 @@
 #include <QTcpServer>
 #include <QTcpSocket>
 
-#include <kdebug.h>
-#include <kfileitem.h>
-#include <kiconloader.h>
-#include <klocale.h>
-#include <kmessagebox.h>
-#include <kstandarddirs.h>
-#include <kdirselectdialog.h>
-#include <kuser.h>
-#include <kauthorized.h>
+#include <KFileDialog>
+#include <KIconLoader>
+#include <KMessageBox>
+#include <KStandardDirs>
+#include <KDirSelectDialog>
+#include <KUser>
+#include <KAuthorized>
 
 #include <kio/job.h>
 #include <kio/jobclasses.h>

@@ -14,17 +14,6 @@
 #include "application.h"
 #include "mainwindow.h"
 
-#include <QLabel>
-#include <QComboBox>
-#include <QCheckBox>
-
-#include <kapplication.h>
-#include <kconfig.h>
-#include <kpushbutton.h>
-#include <klineedit.h>
-#include <klocale.h>
-#include <kdebug.h>
-
 
 WatchedNicknames_Config::WatchedNicknames_Config(QWidget *parent, const char *name)
  : QWidget(parent)
@@ -67,7 +56,7 @@ void WatchedNicknames_Config::loadSettings()
     notifyListView->clearSelection();
     enableEditWidgets(false);
     updateNotifyListView();
-    
+
     // remember current list for hasChanged()
     m_oldNotifyList=currentNotifyList();
 }

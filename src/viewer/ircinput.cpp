@@ -19,20 +19,13 @@
 #include "pasteeditor.h"
 
 #include <QClipboard>
-#include <QRegExp>
-#include <qdom.h>
-#include <QEvent>
-#include <QTimer>
 #include <QKeyEvent>
 
-#include <kapplication.h>
-#include <kmessagebox.h>
-#include <klocale.h>
-#include <kcompletionbox.h>
+#include <KMessageBox>
+#include <KCompletionBox>
 #include <KStandardShortcut>
 
 #define MAXHISTORY 100
-#define RICHTEXT 0
 
 
 IRCInput::IRCInput(QWidget* parent) : KTextEdit(parent)

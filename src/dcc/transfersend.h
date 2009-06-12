@@ -18,7 +18,7 @@
 #ifndef DCCTRANSFERSEND_H
 #define DCCTRANSFERSEND_H
 
-#include "transfer.h" ////// header renamed
+#include "transfer.h"
 
 #include <QFile>
 #include <QAbstractSocket>
@@ -26,6 +26,7 @@
 class QTimer;
 class QTcpServer;
 class QTcpSocket;
+
 
 class DccTransferSend : public DccTransfer
 {

@@ -12,7 +12,7 @@
 
 #include "serverlistdialog.h"
 #include "preferences.h"
-#include "application.h" ////// header renamed
+#include "application.h"
 #include "servergroupdialog.h"
 #include "connectionsettings.h"
 #include "ui_serverlistdialogui.h"
@@ -20,11 +20,8 @@
 #include <QCheckBox>
 #include <QHeaderView>
 
-#include <klocale.h>
-#include <kdebug.h>
-#include <kguiitem.h>
-#include <kmessagebox.h>
-#include <kglobal.h>
+#include <KGuiItem>
+#include <KMessageBox>
 
 
 namespace Konversation
@@ -54,7 +51,7 @@ namespace Konversation
                 return true;
             }
         }
-        return text(column) < other.text(column);    
+        return text(column) < other.text(column);
     }
 
     ServerListDialog::ServerListDialog(const QString& title, QWidget *parent)
@@ -206,7 +203,7 @@ namespace Konversation
 
     void ServerListDialog::slotDelete()
     {
-        QList<QTreeWidgetItem*> selectedItems;   
+        QList<QTreeWidgetItem*> selectedItems;
         // Make sure we're not deleting a network's only servers
         QTreeWidgetItem* parent = 0;
         QTreeWidgetItemIterator it(m_serverList, QTreeWidgetItemIterator::Selected);
@@ -218,7 +215,7 @@ namespace Konversation
                 if ((*it)->data(0,IsServer).toBool())
                 {
                     parent = (*it)->parent();
-                    
+
                     if (parent && parent->childCount() == 1)
                     {
                         KMessageBox::error(this, i18n("You cannot delete %1.\n\nThe network %2 needs to have at least one server.",(*it)->text(0),parent->text(0)));
@@ -257,7 +254,7 @@ namespace Konversation
         {
             if (item == m_selectedItemPtr)
                 m_selectedItemPtr = 0;
-            
+
             rootItem->removeChild(item);
             if (item->data(0,IsServer).toBool())
             {

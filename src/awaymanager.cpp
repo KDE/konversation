@@ -11,24 +11,20 @@
 */
 
 #include "awaymanager.h"
-#include "application.h" ////// header renamed
-#include "mainwindow.h" ////// header renamed
+#include "application.h"
+#include "mainwindow.h"
 #include "connectionmanager.h"
 #include "server.h"
 #include "preferences.h"
-#include <config-konversation.h>
 
 #include <QVariant>
 #include <QTimer>
 #include <QDBusInterface>
 #include <QDBusReply>
 
-#include <kaction.h>
-#include <kselectaction.h>
-#include <klocale.h>
+#include <KSelectAction>
 #include <KActionCollection>
 #include <KToggleAction>
-#include <kdebug.h>
 
 #ifdef Q_WS_X11
 
@@ -52,6 +48,7 @@
 
 #include <fixx11h.h>
 #endif
+
 
 struct AwayManagerPrivate
 {

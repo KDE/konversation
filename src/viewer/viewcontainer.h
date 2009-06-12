@@ -12,7 +12,7 @@
 #ifndef VIEWCONTAINER_H
 #define VIEWCONTAINER_H
 
-#include "mainwindow.h" ////// header renamed
+#include "mainwindow.h"
 #include "common.h"
 #include "server.h"
 

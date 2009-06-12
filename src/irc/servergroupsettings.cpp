@@ -11,7 +11,7 @@
 */
 
 #include "servergroupsettings.h"
-#include "application.h" ////// header renamed
+#include "application.h"
 
 
 namespace Konversation

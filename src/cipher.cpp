@@ -12,7 +12,9 @@
 */
 
 #include "cipher.h"
-#include <kdebug.h>
+
+#include <KDebug>
+
 
 namespace Konversation
 {
@@ -45,7 +47,7 @@ namespace Konversation
     {
         QByteArray pfx = "(e) ";
         bool error = false; // used to flag non cbc, seems like good practice not to parse w/o regard for set encryption type
-        
+
         //if we get cbc
         if(cipherText.mid(0,5) == "+OK *")
         {
@@ -85,7 +87,7 @@ namespace Konversation
 
         QByteArray temp;
         // (if cbc and no error we parse cbc) || (if ecb and error we parse cbc)
-        if((m_cbc && !error) || (!m_cbc && error)) 
+        if((m_cbc && !error) || (!m_cbc && error))
         {
             cipherText = cipherText;
             temp = blowfishCBC(cipherText, false);
@@ -231,7 +233,7 @@ namespace Konversation
     {
         QByteArray temp = cipherText;
 
-        //do padding ourselves 
+        //do padding ourselves
         if(direction)
         {
             int length = temp.length();

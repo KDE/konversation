@@ -25,24 +25,7 @@ Kopete    (c) 2002-2004 by the Kopete developers  <kopete-devel@kde.org>
 #include "addressbook.h"
 #include "addresseeitem.h"
 
-#include <QCheckBox>
-#include <QLabel>
-#include <QLayout>
-#include <QToolTip>
-
-#include <kapplication.h>
-#include <kconfig.h>
-#include <klocale.h>
-#include <kiconloader.h>
-#include <kdeversion.h>
-#include <kinputdialog.h>
-#include <kpushbutton.h>
-#include <k3activelabel.h>
-#include <kdebug.h>
-#include <k3listview.h>
-#include <k3listviewsearchline.h>
-#include <kabc/addressbook.h>
-#include <kabc/stdaddressbook.h>
+#include <KInputDialog>
 
 
 LinkAddressbookUI::LinkAddressbookUI( QWidget *parent, const QString &ircnick, const QString &servername, const QString &servergroup, const QString &suggested_realname )

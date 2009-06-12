@@ -12,13 +12,12 @@
 
 #include "images.h"
 #include "common.h"
-#include "application.h" ////// header renamed
+#include "application.h"
 
-#include <qiconengine.h>
+#include <QIconEngine>
 #include <QPainter>
 
-#include <kdebug.h>
-#include <kstandarddirs.h>
+#include <KStandardDirs>
 
 
 using namespace Konversation;

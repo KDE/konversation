@@ -11,11 +11,11 @@
 */
 #include "insertchardialog.h"
 
-#include <kcharselect.h>
-#include <klocale.h>
-#include <kguiitem.h>
-#include <kdeversion.h>
 #include <KCharSelect>
+#include <KGuiItem>
+#include <KLocale>
+#include <kdeversion.h>
+
 
 namespace Konversation
 {

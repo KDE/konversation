@@ -19,31 +19,23 @@
 #include "application.h"
 
 #include <QLabel>
-#include <QLayout>
-
-#include <QPushButton>
-
 #include <QFileInfo>
 #include <QStringList>
 #include <QBitmap>
 #include <QPainter>
 
-#include <kurl.h>
-#include <kdebug.h>
-#include <kmessagebox.h>
-#include <kstandarddirs.h>
-#include <klocale.h>
+#include <KUrl>
+#include <KMessageBox>
+#include <KStandardDirs>
 #include <kio/job.h>
 #include <kio/netaccess.h>
 #include <kio/deletejob.h>
-#include <kfiledialog.h>
-#include <ktar.h>
-#include <kdesktopfile.h>
-#include <kconfigdialog.h>
+#include <KFileDialog>
+#include <KTar>
+#include <KDesktopFile>
+#include <KVBox>
 
 #include <unistd.h> // unlink()
-#include <kglobal.h>
-#include <kvbox.h>
 
 
 using namespace Konversation;

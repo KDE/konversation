@@ -16,13 +16,6 @@
 #include <QLabel>
 #include <QPushButton>
 
-#include <kapplication.h>
-#include <kdebug.h>
-#include <kconfig.h>
-#include <klocale.h>
-#include <klineedit.h>
-#include <kglobal.h>
-
 
 QuickButtons_Config::QuickButtons_Config(QWidget* parent, const char* name)
  : QWidget(parent)
