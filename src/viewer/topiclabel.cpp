@@ -21,7 +21,6 @@
 #include <QContextMenuEvent>
 #include <QResizeEvent>
 #include <QMenu>
-#include <QEvent>
 #include <QTextDocument>
 
 #include <KRun>

@@ -15,14 +15,13 @@
 
 #include "chatwindow.h"
 
-#include <QString>
-
+class IRCInput;
 
 class QCheckBox;
 class QLabel;
+
 class KComboBox;
 
-class IRCInput;
 
 class StatusPanel : public ChatWindow
 {
