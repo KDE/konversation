@@ -21,7 +21,7 @@ namespace Konversation
     class Cipher
     {
         public:
-            Cipher(QByteArray key, QString cipherType=QString("blowfish"));
+            explicit Cipher(QByteArray key, QString cipherType=QString("blowfish"));
             ~Cipher();
             QByteArray decrypt(QByteArray cipher);
             QByteArray decryptTopic(QByteArray cipher);
