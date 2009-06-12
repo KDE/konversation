@@ -643,7 +643,7 @@ namespace Konversation
 
         if (recipient.isEmpty())
         {
-            result = error("Error: You need to specify a recipient.");
+            result = error(i18n("Error: You need to specify a recipient."));
             return result;
         }
         else
@@ -651,7 +651,7 @@ namespace Konversation
 
         if (commandIsQuery && recipientIsAChannel)
         {
-            result = error("Error: You cannot open queries to channels.");
+            result = error(i18n("Error: You cannot open queries to channels."));
             return result;
         }
 
@@ -660,7 +660,7 @@ namespace Konversation
             // Empty result - we don't want to send any message to the server.
             if (!commandIsQuery)
             {
-                result = error("Error: You need to specify a message.");
+                result = error(i18n("Error: You need to specify a message."));
                 return result;
             }
         }
