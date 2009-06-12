@@ -9,8 +9,8 @@
   Copyright (C) 2006 Eike Hein <hein@kde.org>
 */
 
-#ifndef KONVERSATIONSTATUSBAR_H
-#define KONVERSATIONSTATUSBAR_H
+#ifndef STATUSBAR_H
+#define STATUSBAR_H
 
 #include <QObject>
 
@@ -22,46 +22,51 @@ class KSqueezedTextLabel;
 class SSLLabel;
 class Server;
 
-class KonversationStatusBar : public QObject
+namespace Konversation
 {
-    Q_OBJECT
 
-    public:
-        explicit KonversationStatusBar(MainWindow* parent);
-        ~KonversationStatusBar();
+    class StatusBar : public QObject
+    {
+        Q_OBJECT
 
-    public slots:
-        void updateAppearance();
+        public:
+            explicit StatusBar(MainWindow* parent);
+            ~StatusBar();
 
-        void resetStatusBar();
+        public slots:
+            void updateAppearance();
 
-        void setMainLabelText(const QString& text);
+            void resetStatusBar();
 
-        void setMainLabelTempText(const QString& text);
-        void clearMainLabelTempText();
+            void setMainLabelText(const QString& text);
 
-        void setInfoLabelShown(bool shown);
-        void updateInfoLabel(const QString& text);
-        void clearInfoLabel();
+            void setMainLabelTempText(const QString& text);
+            void clearMainLabelTempText();
 
-        void setLagLabelShown(bool shown);
-        void updateLagLabel(Server* lagServer, int msec);
-        void resetLagLabel();
-        void setTooLongLag(Server* lagServer, int msec);
+            void setInfoLabelShown(bool shown);
+            void updateInfoLabel(const QString& text);
+            void clearInfoLabel();
 
-        void updateSSLLabel(Server* server);
-        void removeSSLLabel();
+            void setLagLabelShown(bool shown);
+            void updateLagLabel(Server* lagServer, int msec);
+            void resetLagLabel();
+            void setTooLongLag(Server* lagServer, int msec);
 
-    private:
-        MainWindow* m_window;
+            void updateSSLLabel(Server* server);
+            void removeSSLLabel();
 
-        KSqueezedTextLabel* m_mainLabel;
-        QLabel* m_infoLabel;
-        QLabel* m_lagLabel;
-        SSLLabel* m_sslLabel;
+        private:
+            MainWindow* m_window;
 
-        QString m_oldMainLabelText;
-        QString m_tempMainLabelText;
-};
+            KSqueezedTextLabel* m_mainLabel;
+            QLabel* m_infoLabel;
+            QLabel* m_lagLabel;
+            SSLLabel* m_sslLabel;
+
+            QString m_oldMainLabelText;
+            QString m_tempMainLabelText;
+    };
+
+}
 
 #endif

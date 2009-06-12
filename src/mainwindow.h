@@ -32,12 +32,12 @@ class KToggleAction;
 
 class KonviSettingsDialog;
 class ViewContainer;
-class KonversationStatusBar;
 
 namespace Konversation
 {
     class ServerListDialog;
     class TrayIcon;
+    class StatusBar;
 }
 
 class MainWindow : public KXmlGuiWindow
@@ -124,7 +124,7 @@ class MainWindow : public KXmlGuiWindow
         virtual bool event(QEvent* e);
 
         ViewContainer* m_viewContainer;
-        KonversationStatusBar* m_statusBar;
+        Konversation::StatusBar* m_statusBar;
         Konversation::TrayIcon* m_trayIcon;
 
         KToggleAction* hideMenuBarAction;

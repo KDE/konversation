@@ -88,22 +88,22 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     connect(this, SIGNAL(insertMarkerLine()), m_viewContainer, SLOT(insertMarkerLine()));
 
     // Set up status bar
-    m_statusBar = new KonversationStatusBar(this);
+    m_statusBar = new Konversation::StatusBar(this);
     connect(Application::instance(), SIGNAL(appearanceChanged()), m_statusBar, SLOT(updateAppearance()));
 
     createStandardStatusBarAction();
 
-    connect(m_viewContainer, SIGNAL(resetStatusBar()), m_statusBar, SLOT(resetStatusBar()));
-    connect(m_viewContainer, SIGNAL(setStatusBarTempText(const QString&)), m_statusBar, SLOT(setMainLabelTempText(const QString&)));
-    connect(m_viewContainer, SIGNAL(clearStatusBarTempText()), m_statusBar, SLOT(clearMainLabelTempText()));
-    connect(m_viewContainer, SIGNAL(setStatusBarInfoLabel(const QString&)), m_statusBar, SLOT(updateInfoLabel(const QString&)));
-    connect(m_viewContainer, SIGNAL(clearStatusBarInfoLabel()), m_statusBar, SLOT(clearInfoLabel()));
-    connect(m_viewContainer, SIGNAL(setStatusBarLagLabelShown(bool)), m_statusBar, SLOT(setLagLabelShown(bool)));
-    connect(m_viewContainer, SIGNAL(updateStatusBarLagLabel(Server*, int)), m_statusBar, SLOT(updateLagLabel(Server*, int)));
-    connect(m_viewContainer, SIGNAL(resetStatusBarLagLabel()), m_statusBar, SLOT(resetLagLabel()));
-    connect(m_viewContainer, SIGNAL(setStatusBarLagLabelTooLongLag(Server*, int)), m_statusBar, SLOT(setTooLongLag(Server*, int)));
-    connect(m_viewContainer, SIGNAL(updateStatusBarSSLLabel(Server*)), m_statusBar, SLOT(updateSSLLabel(Server*)));
-    connect(m_viewContainer, SIGNAL(removeStatusBarSSLLabel()), m_statusBar, SLOT(removeSSLLabel()));
+    connect(m_viewContainer, SIGNAL(resetKonversation::StatusBar()), m_statusBar, SLOT(resetKonversation::StatusBar()));
+    connect(m_viewContainer, SIGNAL(setKonversation::StatusBarTempText(const QString&)), m_statusBar, SLOT(setMainLabelTempText(const QString&)));
+    connect(m_viewContainer, SIGNAL(clearKonversation::StatusBarTempText()), m_statusBar, SLOT(clearMainLabelTempText()));
+    connect(m_viewContainer, SIGNAL(setKonversation::StatusBarInfoLabel(const QString&)), m_statusBar, SLOT(updateInfoLabel(const QString&)));
+    connect(m_viewContainer, SIGNAL(clearKonversation::StatusBarInfoLabel()), m_statusBar, SLOT(clearInfoLabel()));
+    connect(m_viewContainer, SIGNAL(setKonversation::StatusBarLagLabelShown(bool)), m_statusBar, SLOT(setLagLabelShown(bool)));
+    connect(m_viewContainer, SIGNAL(updateKonversation::StatusBarLagLabel(Server*, int)), m_statusBar, SLOT(updateLagLabel(Server*, int)));
+    connect(m_viewContainer, SIGNAL(resetKonversation::StatusBarLagLabel()), m_statusBar, SLOT(resetLagLabel()));
+    connect(m_viewContainer, SIGNAL(setKonversation::StatusBarLagLabelTooLongLag(Server*, int)), m_statusBar, SLOT(setTooLongLag(Server*, int)));
+    connect(m_viewContainer, SIGNAL(updateKonversation::StatusBarSSLLabel(Server*)), m_statusBar, SLOT(updateSSLLabel(Server*)));
+    connect(m_viewContainer, SIGNAL(removeKonversation::StatusBarSSLLabel()), m_statusBar, SLOT(removeSSLLabel()));
 
 
     // Actions
