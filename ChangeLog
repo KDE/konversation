@@ -39,7 +39,7 @@ Changes since 1.2-alpha3:
   ting message to the target chat view (if present), causing an odd-look-
   ing order if the origin view and the target view are the same.
 * Watched Nicknames Online now generally operates on networks by their
-  internal unique IDs rather than names, enabling it to handle multile
+  internal unique IDs rather than names, enabling it to handle multiple
   configured networks with identical names properly.
 
 
