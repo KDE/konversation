@@ -40,7 +40,11 @@
 #include "serverison.h"
 #include "common.h"
 #include "notificationhandler.h"
-#include "blowfish.h"
+#include <config-konversation.h>
+
+#ifdef HAVE_QCA2
+#include "cipher.h"
+#endif
 
 #include <QRegExp>
 #include <qhostaddress.h>
@@ -1011,13 +1015,31 @@ void Server::incoming()
         }
         // END pre-parse to know where the message belongs to
         // Decrypt if necessary
-        if(command == "privmsg")
-            Konversation::decrypt(channelKey, first, this);
-        else if(command == "332" || command == "topic")
+        #ifdef HAVE_QCA2
+        QByteArray cKey = getKeyForRecipient(channelKey);
+        if(!cKey.isEmpty())
         {
-            Konversation::decryptTopic(channelKey, first, this);
+            Konversation::Cipher* cipher = new Konversation::Cipher(cKey);
+            if(command == "privmsg")
+            {
+                //only send encrypted text to decrypter
+                int index = first.indexOf(":",first.indexOf(":")+1);
+                if(this->identifyMsgEnabled()) // Workaround braindead Freenode prefixing messages with +
+                    ++index;
+                QByteArray backup = first.mid(0,index+1);
+                first = cipher->decrypt(first.mid(index+1));
+                first = backup+first;
+            }
+            else if(command == "332" || command == "topic")
+            {
+                //only send encrypted text to decrypter
+                int index = first.indexOf(":",first.indexOf(":")+1);
+                QByteArray backup = first.mid(0,index+1);
+                first = cipher->decryptTopic(first.mid(index+1));
+                first = backup+first;
+            }
         }
-
+        #endif
         bool isUtf8 = Konversation::isUtf8(first);
 
         if( isUtf8 )
@@ -1131,11 +1153,11 @@ int Server::_send_internal(QString outputLine)
 
     //leaving this done twice for now, I'm uncertain of the implications of not encoding other commands
     QByteArray encoded = codec->fromUnicode(outputLine);
-
-    QString blowfishKey;
+    #ifdef HAVE_QCA2
+    QString cipherKey;
     if (outboundCommand > 1)
-        blowfishKey = getKeyForRecipient(outputLineSplit.at(1));
-    if (!blowfishKey.isEmpty())
+        cipherKey = getKeyForRecipient(outputLineSplit.at(1));
+    if (!cipherKey.isEmpty())
     {
         int colon = outputLine.indexOf(':');
         if (colon > -1)
@@ -1160,16 +1182,19 @@ int Server::_send_internal(QString outputLine)
                 }
                 if (doit)
                 {
-                    Konversation::encrypt(blowfishKey, payload);
+                    Konversation::Cipher* cipher = new Konversation::Cipher(cipherKey.toLocal8Bit());
+                    cipher->encrypt(payload);
+
 
                     encoded = outputLineSplit.at(0).toAscii();
+                    kDebug() << payload << "\n" << payload.data();
                     //two lines because the compiler insists on using the wrong operator+
                     encoded += ' ' + dest + " :" + payload;
                 }
             }
         }
     }
-
+    #endif
     encoded += '\n';
     qint64 sout = m_socket->write(encoded, encoded.length());
 

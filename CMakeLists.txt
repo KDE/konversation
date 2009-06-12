@@ -33,6 +33,10 @@ if (Q_WS_X11)
     macro_log_feature(HAVE_XUTIL "X11 Xutil.h header" "X11 Xutil header" "http://www.x.org/" FALSE "" "User inactivity detection support for Away Manager")
 endif (Q_WS_X11)
 
+macro_optional_find_package(QCA2)
+macro_bool_to_01(QCA2_FOUND HAVE_QCA2)
+macro_log_feature(QCA2_FOUND "QCA" "Qt Cryptographic Architecture" "http://delta.affinix.com/qca" FALSE "2.0" "Required for encrypted OpenDocument files support (available as a module in kdesupport)")
+
 configure_file(config-konversation.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-konversation.h )
 
 add_subdirectory(src)

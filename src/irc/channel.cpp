@@ -14,7 +14,12 @@
 #include "channel.h"
 #include "application.h" ////// header renamed
 #include "server.h"
-#include "blowfish.h"
+#include <config-konversation.h>
+
+#ifdef HAVE_QCA2
+#include "cipher.h"
+#endif
+
 #include "nick.h"
 #include "nicklistview.h"
 #include "quickbutton.h"
@@ -258,9 +263,9 @@ Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
 
     awayLabel = new QLabel(i18n("(away)"), commandLineBox);
     awayLabel->hide();
-    blowfishLabel = new QLabel(commandLineBox);
-    blowfishLabel->hide();
-    blowfishLabel->setPixmap(KIconLoader::global()->loadIcon("document-encrypt", KIconLoader::Toolbar));
+    cipherLabel = new QLabel(commandLineBox);
+    cipherLabel->hide();
+    cipherLabel->setPixmap(KIconLoader::global()->loadIcon("document-encrypt", KIconLoader::Toolbar));
     channelInput = new IRCInput(commandLineBox);
 
     getTextView()->installEventFilter(channelInput);
@@ -349,7 +354,7 @@ void Channel::setServer(Server* server)
                 SLOT(connectionStateChanged(Server*, Konversation::ConnectionState)));
     ChatWindow::setServer(server);
     if (!server->getKeyForRecipient(getName()).isEmpty())
-        blowfishLabel->show();
+        cipherLabel->show();
     topicLine->setServer(server);
     refreshModeButtons();
     nicknameCombobox->setModel(m_server->nickListModel());
@@ -372,8 +377,10 @@ void Channel::connectionStateChanged(Server* server, Konversation::ConnectionSta
 
 void Channel::setEncryptedOutput(bool e)
 {
+    
     if (e) {
-        blowfishLabel->show();
+    #ifdef HAVE_QCA2
+        cipherLabel->show();
         //scan the channel topic and decrypt it if necessary
         if (m_topicHistory.isEmpty())
             return;
@@ -382,15 +389,21 @@ void Channel::setEncryptedOutput(bool e)
         //prepend two colons to make it appear to be an irc message for decryption,
         // \r because it won't decrypt without it, even though the message did not have a \r
         // when encrypted. Bring on the QCA!
-        QByteArray cipher = "::" + topic.toUtf8() + '\x0d';
-        Konversation::decryptTopic(getName(), cipher, m_server);
-        topic=QString::fromUtf8(cipher.data()+2, cipher.length()-2);
+        //QByteArray cipher = "::" + topic.toUtf8() + '\x0d';
+        QByteArray cipherText = topic.toUtf8();
+        QByteArray key = m_server->getKeyForRecipient(getName());
+
+        Konversation::Cipher* cipher = new Konversation::Cipher(key);
+        cipherText = cipher->decryptTopic(cipherText);
+
+        topic=QString::fromUtf8(cipherText.data()+2, cipherText.length()-2);
         m_topicHistory[0] = m_topicHistory[0].section(' ', 0, 1) + ' ' + topic;
         topicLine->setText(topic);
         emit topicHistoryChanged();
+    #endif
     }
     else
-        blowfishLabel->hide();
+        cipherLabel->hide();
 }
 
 Channel::~Channel()

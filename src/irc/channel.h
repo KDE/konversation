@@ -328,7 +328,7 @@ class Channel : public ChatWindow
         KComboBox* nicknameCombobox;
         QString oldNick; ///< GUI
         QLabel* awayLabel;
-        QLabel* blowfishLabel;
+        QLabel* cipherLabel;
         IRCInput* channelInput;
 
         NickChangeDialog* nickChangeDialog;
