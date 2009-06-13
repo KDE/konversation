@@ -686,7 +686,7 @@ QString Konversation::ChannelOptionsDialog::whatsThisForMode(char mode)
     case 'M':
         return i18n("<qt><p>These control the <em>mode</em> of the channel.  Only an operator can change these.</p><p>A <b>M</b>oderated channel is one where only operators, half-operators and those with voice can talk.</p></qt>");
     case 'K':
-        return i18n("<qt><p>These control the <em>mode</em> of the channel.  Only an operator can change these.</p><p>A <b>P</b>rotected channel requires users to enter a password in order to join.</p></qt>");
+        return i18n("<qt><p>These control the <em>mode</em> of the channel.  Only an operator can change these.</p><p>A Protected channel requires users to enter a password in order to join.</p></qt>");
     case 'L':
         return i18n("<qt><p>These control the <em>mode</em> of the channel.  Only an operator can change these.</p><p>A channel that has a user <b>L</b>imit means that only that many users can be in the channel at any one time.  Some channels have a bot that sits in the channel and changes this automatically depending on how busy the channel is.</p></qt>");
     default:
