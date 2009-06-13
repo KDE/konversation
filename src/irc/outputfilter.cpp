@@ -22,6 +22,7 @@
 #include "irccharsets.h"
 #include "linkaddressbook/addressbook.h"
 #include "query.h"
+#include <config-konversation.h>
 
 #include <QStringList>
 #include <QFile>
@@ -1581,9 +1582,9 @@ namespace Konversation
 
     OutputFilterResult OutputFilter::parseSetKey(const QString& parameter)
     {
-
         QStringList parms = parameter.split(' ', QString::SkipEmptyParts);
 
+        #ifdef HAVE_QCA2
         if (parms.count() == 1 && !destination.isEmpty())
             parms.prepend(destination);
         else if (parms.count() != 2)
@@ -1597,23 +1598,30 @@ namespace Konversation
             m_server->getQueryByName(parms[0])->setEncryptedOutput(true);
 
         return info(i18n("The key for %1 has been set.", parms[0]));
+        #else
+        return error(i18n("Setting an encryption key requires Konversation to have been built with support for the Qt Cryptographic Architecture (QCA) library. Contact your distributor about a Konversation package with QCA support, or rebuild Konversation with QCA present."));
+        #endif
     }
 
     OutputFilterResult OutputFilter::parseDelKey(const QString& prametr)
     {
         QString parameter(prametr.isEmpty()?destination:prametr);
-
         if(parameter.isEmpty() || parameter.contains(' '))
             return usage(i18n("Usage: %1delkey <nick> or <channel> deletes the encryption key for nick or channel", commandChar));
 
-        m_server->setKeyForRecipient(parameter, "");
+        if(!m_server->getKeyForRecipient(parameter).isEmpty())
+        {
+            m_server->setKeyForRecipient(parameter, "");
 
-        if (isAChannel(parameter) && m_server->getChannelByName(parameter))
-            m_server->getChannelByName(parameter)->setEncryptedOutput(false);
-        else if (m_server->getQueryByName(parameter))
-            m_server->getQueryByName(parameter)->setEncryptedOutput(false);
+            if (isAChannel(parameter) && m_server->getChannelByName(parameter))
+                m_server->getChannelByName(parameter)->setEncryptedOutput(false);
+            else if (m_server->getQueryByName(parameter))
+                m_server->getQueryByName(parameter)->setEncryptedOutput(false);
 
-        return info(i18n("The key for %1 has been deleted.", parameter));
+            return info(i18n("The key for %1 has been deleted.", parameter));
+        }
+        else
+            return error(i18n("No key has been set for %1.", parameter));
     }
 
     OutputFilterResult OutputFilter::parseShowKey(const QString& prametr)

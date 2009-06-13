@@ -100,17 +100,6 @@ namespace Konversation
 
         void UPnPMCastSocket::onReadyRead()
         {
-            if (pendingDatagramSize() == 0)
-            {
-                kDebug() << "0 byte UDP packet " << endl;
-                // KDatagramSocket wrongly handles UDP packets with no payload
-                // so we need to deal with it oursleves
-                int fd = socketDescriptor();
-                char tmp;
-                ::read(fd,&tmp,1);
-                return;
-            }
-
             QByteArray data(pendingDatagramSize(),0);
             if (readDatagram(data.data(),pendingDatagramSize()) == -1)
                 return;
