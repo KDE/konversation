@@ -15,8 +15,8 @@
   (at your option) any later version.
 */
 
-#ifndef DCCTRANSFERSEND_H
-#define DCCTRANSFERSEND_H
+#ifndef TRANSFERSEND_H
+#define TRANSFERSEND_H
 
 #include "transfer.h"
 
@@ -27,72 +27,77 @@ class QTimer;
 class QTcpServer;
 class QTcpSocket;
 
-
-class DccTransferSend : public DccTransfer
+namespace Konversation
 {
-    Q_OBJECT
+    namespace DCC
+    {
+        class TransferSend : public Transfer
+        {
+            Q_OBJECT
 
-        public:
-        DccTransferSend(QObject* parent);
-        virtual ~DccTransferSend();
+                public:
+                TransferSend(QObject* parent);
+                virtual ~TransferSend();
 
-        // REQUIRED
-        void setFileURL( const KUrl& url );
-        // OPTIONAL
-        void setFileName( const QString& fileName );
-        // OPTIONAL
-        void setOwnIp( const QString& ownIp );
-        // OPTIONAL
-        void setFileSize( KIO::filesize_t fileSize );
-        // OPTIONAL
-        void setReverse( bool reverse );
+                // REQUIRED
+                void setFileURL( const KUrl& url );
+                // OPTIONAL
+                void setFileName( const QString& fileName );
+                // OPTIONAL
+                void setOwnIp( const QString& ownIp );
+                // OPTIONAL
+                void setFileSize( KIO::filesize_t fileSize );
+                // OPTIONAL
+                void setReverse( bool reverse );
 
-        bool setResume( unsigned long position );
+                bool setResume( unsigned long position );
 
-        // send got rejected
-        void reject();
+                // send got rejected
+                void reject();
 
-    public slots:
-        virtual bool queue();
-        virtual void start();
-        virtual void abort();
+            public slots:
+                virtual bool queue();
+                virtual void start();
+                virtual void abort();
 
-        // invoked when the receiver accepts the offer (Reverse DCC)
-        void connectToReceiver( const QString& partnerHost, uint partnerPort );
+                // invoked when the receiver accepts the offer (Reverse DCC)
+                void connectToReceiver( const QString& partnerHost, uint partnerPort );
 
-    protected slots:
-        void acceptClient();
-        // it must be invoked when m_sendSocket is ready
-        void startSending();
-        void writeData();
-        void getAck();
-        void slotGotSocketError( QAbstractSocket::SocketError errorCode );
-        void slotConnectionTimeout();
-        void slotConnectionFailed( QAbstractSocket::SocketError errorCode );
-        void slotSendSocketClosed();
-        void slotServerSocketClosed();
-        void sendRequest(bool error, quint16 port);
+            protected slots:
+                void acceptClient();
+                // it must be invoked when m_sendSocket is ready
+                void startSending();
+                void writeData();
+                void getAck();
+                void slotGotSocketError( QAbstractSocket::SocketError errorCode );
+                void slotConnectionTimeout();
+                void slotConnectionFailed( QAbstractSocket::SocketError errorCode );
+                void slotSendSocketClosed();
+                void slotServerSocketClosed();
+                void sendRequest(bool error, quint16 port);
 
-    protected:
-        void cleanUp();
+            protected:
+                void cleanUp();
 
-        void startConnectionTimer( int sec );
-        void stopConnectionTimer();
+                void startConnectionTimer( int sec );
+                void stopConnectionTimer();
 
-        QString getQFileErrorString( int code );
+                QString getQFileErrorString( int code );
 
-        QFile m_file;
+                QFile m_file;
 
-        /*The filename of the temporary file that we downloaded.  So if send a file ftp://somewhere/file.txt
-         * Then this will be downloaded to /tmp.
-         */
-        QString m_tmpFile;
+                /*The filename of the temporary file that we downloaded.  So if send a file ftp://somewhere/file.txt
+                 * Then this will be downloaded to /tmp.
+                 */
+                QString m_tmpFile;
 
-        QTcpServer *m_serverSocket;
-        QTcpSocket *m_sendSocket;
-        bool m_fastSend;
+                QTcpServer *m_serverSocket;
+                QTcpSocket *m_sendSocket;
+                bool m_fastSend;
 
-        QTimer* m_connectionTimer;
-};
+                QTimer* m_connectionTimer;
+        };
+    }
+}
 
-#endif  // DCCTRANSFERSEND_H
+#endif  // TRANSFERSEND_H

@@ -12,38 +12,44 @@
   email:     eisfuchs@tigress.com
 */
 
-#ifndef DCCRECIPIENTDIALOG_H
-#define DCCRECIPIENTDIALOG_H
+#ifndef RECIPIENTDIALOG_H
+#define RECIPIENTDIALOG_H
 
 #include <QModelIndex>
 
-#include <klineedit.h>
 #include <kdialog.h>
 
 class KLineEdit;
 
-class DccRecipientDialog : public KDialog
+namespace Konversation
 {
-    Q_OBJECT
+    namespace DCC
+    {
+        class RecipientDialog : public KDialog
+        {
+            Q_OBJECT
 
-        public:
-        DccRecipientDialog(QWidget* parent, QAbstractListModel* model);
-        ~DccRecipientDialog();
+                public:
+                RecipientDialog(QWidget* parent, QAbstractListModel* model);
+                ~RecipientDialog();
 
-        static QString getNickname(QWidget* parent, QAbstractListModel* model);
+                static QString getNickname(QWidget* parent, QAbstractListModel* model);
 
-    protected slots:
-        void newNicknameSelected(const QModelIndex& index);
-                                                  // KDE double click
-        void newNicknameSelectedQuit(const QModelIndex& index);
+            protected slots:
+                void newNicknameSelected(const QModelIndex& index);
+                                                          // KDE double click
+                void newNicknameSelectedQuit(const QModelIndex& index);
 
-        void slotOk();
-        void slotCancel();
+                void slotOk();
+                void slotCancel();
 
-    protected:
-        QString getSelectedNickname();
-        static QString selectedNickname;
+            protected:
+                QString getSelectedNickname();
+                static QString selectedNickname;
 
-        KLineEdit* nicknameInput;
-};
+                KLineEdit* nicknameInput;
+        };
+    }
+}
+
 #endif

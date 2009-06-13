@@ -43,6 +43,7 @@
 #include <KMessageBox>
 #include <KIconLoader>
 
+using namespace Konversation;
 
 Application::Application()
 : KUniqueApplication(true, true)
@@ -94,7 +95,7 @@ int Application::newInstance()
         connect(m_connectionManager, SIGNAL(connectionChangedAwayState(bool)), m_awayManager, SLOT(updateGlobalAwayAction(bool)));
 
         // an instance of DccTransferManager needs to be created before GUI class instances' creation.
-        m_dccTransferManager = new DccTransferManager(this);
+        m_dccTransferManager = new DCC::TransferManager(this);
 
         // make sure all vars are initialized properly
         quickConnectDialog = 0;

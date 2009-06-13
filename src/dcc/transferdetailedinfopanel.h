@@ -9,36 +9,42 @@
   Copyright (C) 2007 Shintaro Matsuoka <shin@shoegazed.org>
 */
 
-#ifndef DCCTRANSFERDETAILEDINFOPANEL_H
-#define DCCTRANSFERDETAILEDINFOPANEL_H
+#ifndef TRANSFERDETAILEDINFOPANEL_H
+#define TRANSFERDETAILEDINFOPANEL_H
 
 #include "ui_transferdetailedinfopanelui.h"
 
 class QTimer;
 
-class DccTransfer;
-class DccTransferPanelItem;
-
-class DccTransferDetailedInfoPanel : public QWidget, private Ui::DccTransferDetailedInfoPanelUI
+namespace Konversation
 {
-    Q_OBJECT
+    namespace DCC
+    {
+        class Transfer;
+        class TransferPanelItem;
 
-    public:
-        explicit DccTransferDetailedInfoPanel( QWidget* parent = 0 );
-        virtual ~DccTransferDetailedInfoPanel();
+        class TransferDetailedInfoPanel : public QWidget, private Ui::DccTransferDetailedInfoPanelUI
+        {
+            Q_OBJECT
 
-        void setItem( DccTransferPanelItem* item );
+            public:
+                explicit TransferDetailedInfoPanel( QWidget* parent = 0 );
+                virtual ~TransferDetailedInfoPanel();
 
-    private slots:
-        void updateView();
-        // Only updates labels that can change during transfer
-        void updateChangeableView();
-        void slotTransferStatusChanged( DccTransfer* transfer, int newStatus, int oldStatus );
-        void slotLocationChanged( const QString& url );
+                void setItem( TransferPanelItem* item );
 
-    private:
-        DccTransferPanelItem* m_item;
-        QTimer* m_autoViewUpdateTimer;
-};
+            private slots:
+                void updateView();
+                // Only updates labels that can change during transfer
+                void updateChangeableView();
+                void slotTransferStatusChanged( Transfer* transfer, int newStatus, int oldStatus );
+                void slotLocationChanged( const QString& url );
 
-#endif  // DCCTRANSFERDETAILEDINFOPANEL_H
+            private:
+                TransferPanelItem* m_item;
+                QTimer* m_autoViewUpdateTimer;
+        };
+    }
+}
+
+#endif  // TRANSFERDETAILEDINFOPANEL_H

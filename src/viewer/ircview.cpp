@@ -80,6 +80,8 @@ IRCView::clear()
 //IRCView::setupChannelPopupMenu()
 #endif
 
+using namespace Konversation;
+
 IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent)
 {
 
@@ -544,7 +546,7 @@ QString IRCView::createNickLine(const QString& nick, const QString& defaultColor
         }
         else if (m_chatWin->getType() == ChatWindow::DccChat)
         {
-            QString ownNick = static_cast<DccChat*>(m_chatWin)->getOwnNick();
+            QString ownNick = static_cast<DCC::Chat*>(m_chatWin)->getOwnNick();
 
             if (nick != ownNick)
                 nickColor = Preferences::self()->nickColor(Konversation::colorForNick(ownNick)).name();
@@ -686,7 +688,7 @@ bool doHighlight, bool parseURL, bool self)
     }
     else if (m_chatWin->getType() == ChatWindow::DccChat)
     {
-        ownNick = static_cast<DccChat*>(m_chatWin)->getOwnNick();
+        ownNick = static_cast<DCC::Chat*>(m_chatWin)->getOwnNick();
     }
 
     if(doHighlight && (whoSent != ownNick) && !self)

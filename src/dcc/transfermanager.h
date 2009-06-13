@@ -16,8 +16,8 @@
   Copyright (C) 2009 Michael Kreitzer <mrgrim@gr1m.org>
 */
 
-#ifndef DCCTRANSFERMANAGER_H
-#define DCCTRANSFERMANAGER_H
+#ifndef TRANSFERMANAGER_H
+#define TRANSFERMANAGER_H
 
 #include "transfer.h"
 #include "upnpmcastsocket.h"
@@ -28,81 +28,87 @@ using namespace Konversation::UPnP;
 
 class KUrl;
 
-class DccTransferRecv;
-class DccTransferSend;
-
-class DccTransferManager : public QObject
+namespace Konversation
 {
-    Q_OBJECT
+    namespace DCC
+    {
+        class TransferRecv;
+        class TransferSend;
 
-    public:
-        DccTransferManager( QObject* parent = 0 );
-        ~DccTransferManager();
+        class TransferManager : public QObject
+        {
+            Q_OBJECT
 
-    signals:
-        /*
-         * The status of the item is DccTransfer::Configuring when this signal is emitted.
-         */
-        void newTransferAdded( DccTransfer* transfer );
-        /*
-         * The status of the item is DccTransfer::Queued when this signal is emitted.
-         */
-        void newTransferQueued( DccTransfer* transfer );
+            public:
+                TransferManager( QObject* parent = 0 );
+                ~TransferManager();
 
-        void fileURLChanged( DccTransferRecv* transfer );
+            signals:
+                /*
+                 * The status of the item is DccTransfer::Configuring when this signal is emitted.
+                 */
+                void newTransferAdded( Transfer* transfer );
+                /*
+                 * The status of the item is DccTransfer::Queued when this signal is emitted.
+                 */
+                void newTransferQueued( Transfer* transfer );
 
-    public:
-        DccTransferRecv* newDownload();
-        DccTransferSend* newUpload();
+                void fileURLChanged( TransferRecv* transfer );
 
-        DccTransferSend* rejectSend(int connectionId, const QString& partnerNick, const QString& fileName);
+            public:
+                TransferRecv* newDownload();
+                TransferSend* newUpload();
 
-        /**
-         * @return a DccTransferRecv item if applicable one found, otherwise 0.
-         */
-        DccTransferRecv* resumeDownload(int connectionId, const QString& partnerNick, const QString& fileName, uint ownPort, unsigned long position );
+                TransferSend* rejectSend(int connectionId, const QString& partnerNick, const QString& fileName);
 
-        /**
-         * @return a DccTransferSend item if applicable one found, otherwise 0.
-         */
-        DccTransferSend* resumeUpload(int connectionId, const QString& partnerNick, const QString& fileName, uint ownPort, unsigned long position );
+                /**
+                 * @return a DccTransferRecv item if applicable one found, otherwise 0.
+                 */
+                TransferRecv* resumeDownload(int connectionId, const QString& partnerNick, const QString& fileName, uint ownPort, unsigned long position );
 
-        DccTransferSend* startReverseSending(int connectionId, const QString& partnerNick, const QString& fileName, const QString& partnerHost, uint partnerPort, unsigned long fileSize, const QString& token );
+                /**
+                 * @return a DccTransferSend item if applicable one found, otherwise 0.
+                 */
+                TransferSend* resumeUpload(int connectionId, const QString& partnerNick, const QString& fileName, uint ownPort, unsigned long position );
 
-        bool isLocalFileInWritingProcess( const KUrl& localUrl ) const;
+                TransferSend* startReverseSending(int connectionId, const QString& partnerNick, const QString& fileName, const QString& partnerHost, uint partnerPort, unsigned long fileSize, const QString& token );
 
-        int generateReverseTokenNumber();
+                bool isLocalFileInWritingProcess( const KUrl& localUrl ) const;
 
-        bool hasActiveTransfers();
+                int generateReverseTokenNumber();
 
-        UPnPRouter *getUPnPRouter() { return m_upnpRouter; }
-        void startupUPnP(void);
-        void shutdownUPnP(void);
+                bool hasActiveTransfers();
 
-    private:
-        /*
-         * initTransfer() does the common jobs for newDownload() and newUpload()
-         */
-        void initTransfer( DccTransfer* transfer );
+                UPnPRouter *getUPnPRouter() { return m_upnpRouter; }
+                void startupUPnP(void);
+                void shutdownUPnP(void);
 
-    private slots:
-        void slotTransferStatusChanged( DccTransfer* item, int newStatus, int oldStatus );
-        void removeSendItem( DccTransfer* item );
-        void removeRecvItem( DccTransfer* item );
+            private:
+                /*
+                 * initTransfer() does the common jobs for newDownload() and newUpload()
+                 */
+                void initTransfer( Transfer* transfer );
 
-        void slotSettingsChanged();
+            private slots:
+                void slotTransferStatusChanged( Transfer* item, int newStatus, int oldStatus );
+                void removeSendItem( Transfer* item );
+                void removeRecvItem( Transfer* item );
 
-        void upnpRouterDiscovered(UPnPRouter *router);
+                void slotSettingsChanged();
 
-    private:
-        QList< DccTransferSend* > m_sendItems;
-        QList< DccTransferRecv* > m_recvItems;
+                void upnpRouterDiscovered(UPnPRouter *router);
 
-        UPnPMCastSocket *m_upnpSocket;
-        UPnPRouter *m_upnpRouter;
+            private:
+                QList< TransferSend* > m_sendItems;
+                QList< TransferRecv* > m_recvItems;
 
-        int m_nextReverseTokenNumber;
-        KUrl m_defaultIncomingFolder;  // store here to know if this settings is changed
-};
+                UPnPMCastSocket *m_upnpSocket;
+                UPnPRouter *m_upnpRouter;
 
-#endif  // DCCTRANSFERMANAGER_H
+                int m_nextReverseTokenNumber;
+                KUrl m_defaultIncomingFolder;  // store here to know if this settings is changed
+        };
+    }
+}
+
+#endif  // TRANSFERMANAGER_H

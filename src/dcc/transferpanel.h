@@ -12,96 +12,102 @@
 */
 // Copyright (C) 2004-2007 Shintaro Matsuoka <shin@shoegazed.org>
 
-#ifndef DCCTRANSFERPANEL_H
-#define DCCTRANSFERPANEL_H
+#ifndef TRANSFERPANEL_H
+#define TRANSFERPANEL_H
 
 #include "chatwindow.h"
 #include "transferpanelitem.h"
-
-class DccTransferDetailedInfoPanel;
 
 class QPushButton;
 
 class K3ListView;
 class KMenu;
 
-
-class DccTransferPanel : public ChatWindow
+namespace Konversation
 {
-    Q_OBJECT
+    namespace DCC
+    {
+        class TransferDetailedInfoPanel;
 
-        public:
-        class Column
+        class TransferPanel : public ChatWindow
         {
+            Q_OBJECT
+
             public:
-                enum Object
+                class Column
                 {
-                    TypeIcon,
-                    OfferDate,
-                    Status,
-                    FileName,
-                    PartnerNick,
-                    Progress,
-                    Position,
-                    TimeLeft,
-                    CurrentSpeed,
-                    SenderAddress,
-                    COUNT
+                    public:
+                        enum Object
+                        {
+                            TypeIcon,
+                            OfferDate,
+                            Status,
+                            FileName,
+                            PartnerNick,
+                            Progress,
+                            Position,
+                            TimeLeft,
+                            CurrentSpeed,
+                            SenderAddress,
+                            COUNT
+                        };
                 };
+
+                TransferPanel(QWidget* parent);
+                ~TransferPanel();
+
+                K3ListView* getListView();
+
+            protected slots:
+                void slotNewTransferAdded( Transfer* transfer );
+                void slotTransferStatusChanged();
+
+                void acceptDcc();
+                void abortDcc();
+                void resendFile();
+                void clearDcc();
+                void runDcc();
+                void openLocation();
+                void showFileInfo();
+                void selectAll();
+                void selectAllCompleted();
+
+                void popupRequested(Q3ListViewItem* item,const QPoint& pos,int col);
+                void popupActivated( QAction *);
+
+                void doubleClicked(Q3ListViewItem* _item,const QPoint& _pos,int _col);
+
+                void updateButton();
+
+                void setDetailPanelItem(Q3ListViewItem* item_);
+
+            protected:
+                /** Called from ChatWindow adjustFocus */
+                virtual void childAdjustFocus();
+
+                void initGUI();
+
+                K3ListView* m_listView;
+                KMenu* m_popup;
+
+                TransferDetailedInfoPanel* m_detailPanel;
+
+                QPushButton* m_buttonAccept;
+                QPushButton* m_buttonAbort;
+                QPushButton* m_buttonClear;
+                QPushButton* m_buttonOpen;
+                QPushButton* m_buttonOpenLocation;
+                QPushButton* m_buttonDetail;
+                QAction *m_abort;
+                QAction *m_accept;
+                QAction *m_clear;
+                QAction *m_info;
+                QAction *m_open;
+                QAction *m_selectAll;
+                QAction *m_selectAllCompleted;
+                QAction *m_resend;
         };
+    }
+}
 
-        DccTransferPanel(QWidget* parent);
-        ~DccTransferPanel();
-
-        K3ListView* getListView();
-
-    protected slots:
-        void slotNewTransferAdded( DccTransfer* transfer );
-        void slotTransferStatusChanged();
-
-        void acceptDcc();
-        void abortDcc();
-        void resendFile();
-        void clearDcc();
-        void runDcc();
-        void openLocation();
-        void showFileInfo();
-        void selectAll();
-        void selectAllCompleted();
-
-        void popupRequested(Q3ListViewItem* item,const QPoint& pos,int col);
-        void popupActivated( QAction *);
-
-        void doubleClicked(Q3ListViewItem* _item,const QPoint& _pos,int _col);
-
-        void updateButton();
-
-        void setDetailPanelItem(Q3ListViewItem* item_);
-
-    protected:
-        /** Called from ChatWindow adjustFocus */
-        virtual void childAdjustFocus();
-
-        void initGUI();
-
-        K3ListView* m_listView;
-        KMenu* m_popup;
-
-        DccTransferDetailedInfoPanel* m_detailPanel;
-
-        QPushButton* m_buttonAccept;
-        QPushButton* m_buttonAbort;
-        QPushButton* m_buttonClear;
-        QPushButton* m_buttonOpen;
-        QPushButton* m_buttonOpenLocation;
-        QPushButton* m_buttonDetail;
-    QAction *m_abort;
-    QAction *m_accept;
-    QAction *m_clear;
-    QAction *m_info;
-    QAction *m_open;
-    QAction *m_selectAll;
-    QAction *m_selectAllCompleted;
-    QAction *m_resend;
-};
 #endif

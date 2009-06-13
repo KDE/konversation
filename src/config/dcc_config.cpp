@@ -15,6 +15,7 @@
 #include "application.h"
 #include "transfermanager.h"
 
+using namespace Konversation;
 
 DCC_Config::DCC_Config(QWidget *parent, const char* name) :
   QWidget(parent)
@@ -44,7 +45,7 @@ void DCC_Config::dccMethodChanged(int index)
 
 void DCC_Config::dccUPnPChanged(int state)
 {
-    DccTransferManager *transferManager = Application::instance()->getDccTransferManager();
+    DCC::TransferManager *transferManager = Application::instance()->getDccTransferManager();
 
     if (state == Qt::Checked && transferManager->getUPnPRouter() == NULL)
     {

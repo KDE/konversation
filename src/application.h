@@ -26,7 +26,6 @@
 
 class ConnectionManager;
 class AwayManager;
-class DccTransferManager;
 class Server;
 class QuickConnectDialog;
 class Images;
@@ -38,6 +37,11 @@ namespace Konversation
     class IdentDBus;
     class Sound;
     class NotificationHandler;
+
+    namespace DCC
+    {
+        class TransferManager;
+    }
 
     // Shared between NickListView and IRCView
     enum PopupIDs
@@ -70,7 +74,7 @@ class Application : public KUniqueApplication
 
         ConnectionManager* getConnectionManager() { return m_connectionManager; }
         AwayManager* getAwayManager() { return m_awayManager; }
-        DccTransferManager* getDccTransferManager() { return m_dccTransferManager; }
+        Konversation::DCC::TransferManager* getDccTransferManager() { return m_dccTransferManager; }
 
         // HACK
         void showQueueTuner(bool);
@@ -145,7 +149,7 @@ class Application : public KUniqueApplication
     private:
         ConnectionManager* m_connectionManager;
         AwayManager* m_awayManager;
-        DccTransferManager* m_dccTransferManager;
+        Konversation::DCC::TransferManager* m_dccTransferManager;
         QStringList urlList;
         Konversation::DBus* dbusObject;
         Konversation::IdentDBus* identDBus;

@@ -15,16 +15,14 @@
   (at your option) any later version.
 */
 
-#ifndef DCCTRANSFERRECV_H
-#define DCCTRANSFERRECV_H
+#ifndef TRANSFERRECV_H
+#define TRANSFERRECV_H
 
 #include "transfer.h"
 // TODO: remove the dependence
 #include "resumedialog.h"
 
 #include <QAbstractSocket>
-
-class DccTransferRecvWriteCacheHandler;
 
 class QTimer;
 class QTcpServer;
@@ -36,149 +34,156 @@ namespace KIO
     class TransferJob;
 }
 
-
-class DccTransferRecv : public DccTransfer
+namespace Konversation
 {
-    Q_OBJECT
+    namespace DCC
+    {
+        class TransferRecvWriteCacheHandler;
 
-    public:
-        DccTransferRecv(QObject* parent);
-        virtual ~DccTransferRecv();
+        class TransferRecv : public Transfer
+        {
+            Q_OBJECT
 
-        // REQUIRED
-        void setPartnerIp( const QString& ip );
-        // REQUIRED
-        void setPartnerPort( uint port );
-        // REQUIRED
-        void setFileSize( unsigned long fileSize );
-        // OPTIONAL, if not specified, "unnamed_file"
-        // TODO: "$sendername-$receiveddate" is better
-        void setFileName( const QString& fileName );
-        // OPTIONAL, if not specified, default folder + the file name
-        void setFileURL( const KUrl& url );
-        // OPTIONAL
-        void setReverse( bool reverse, const QString& reverseToken );
+            public:
+                TransferRecv(QObject* parent);
+                virtual ~TransferRecv();
 
-    public slots:
-        virtual bool queue();
+                // REQUIRED
+                void setPartnerIp( const QString& ip );
+                // REQUIRED
+                void setPartnerPort( uint port );
+                // REQUIRED
+                void setFileSize( unsigned long fileSize );
+                // OPTIONAL, if not specified, "unnamed_file"
+                // TODO: "$sendername-$receiveddate" is better
+                void setFileName( const QString& fileName );
+                // OPTIONAL, if not specified, default folder + the file name
+                void setFileURL( const KUrl& url );
+                // OPTIONAL
+                void setReverse( bool reverse, const QString& reverseToken );
 
-        /** The user has accepted the download.
-         *  Check we are saving it somewhere valid, create any directories needed, and
-         *  connect to remote host.
-         */
-        virtual void start();
-        /** The user has chosen to abort.
-         *  Either by chosen to abort directly, or by choosing cancel when
-         *  prompted for information on where to save etc.
-         *  Not called when it fails due to another problem.
-         */
-        virtual void abort();
-        void startResume( unsigned long position );
+            public slots:
+                virtual bool queue();
 
-    protected slots:
-        // Local KIO
-        void slotLocalCanResume( KIO::Job* job, KIO::filesize_t size );
-        void slotLocalGotResult( KJob* job );
-        void slotLocalReady( KIO::Job* job );
-        void slotLocalWriteDone();
-        void slotLocalGotWriteError( const QString& errorString );
+                /** The user has accepted the download.
+                 *  Check we are saving it somewhere valid, create any directories needed, and
+                 *  connect to remote host.
+                 */
+                virtual void start();
+                /** The user has chosen to abort.
+                 *  Either by chosen to abort directly, or by choosing cancel when
+                 *  prompted for information on where to save etc.
+                 *  Not called when it fails due to another problem.
+                 */
+                virtual void abort();
+                void startResume( unsigned long position );
 
-        // Remote DCC
-        void connectWithSender();
-        void startReceiving();
-        void connectionFailed( QAbstractSocket::SocketError errorCode );
-        void readData();
-        void sendAck();
-        void connectionTimeout();
-        //void slotSocketClosed(); //same as connectionFailed
+            protected slots:
+                // Local KIO
+                void slotLocalCanResume( KIO::Job* job, KIO::filesize_t size );
+                void slotLocalGotResult( KJob* job );
+                void slotLocalReady( KIO::Job* job );
+                void slotLocalWriteDone();
+                void slotLocalGotWriteError( const QString& errorString );
 
-        // Reverse DCC
-        void slotServerSocketReadyAccept();
-        void slotServerSocketGotError( QAbstractSocket::SocketError errorCode );
+                // Remote DCC
+                void connectWithSender();
+                void startReceiving();
+                void connectionFailed( QAbstractSocket::SocketError errorCode );
+                void readData();
+                void sendAck();
+                void connectionTimeout();
+                //void slotSocketClosed(); //same as connectionFailed
 
-        void sendReverseAck(bool error, quint16 port);
+                // Reverse DCC
+                void slotServerSocketReadyAccept();
+                void slotServerSocketGotError( QAbstractSocket::SocketError errorCode );
 
-    protected:
-        void cleanUp();
+                void sendReverseAck(bool error, quint16 port);
 
-                                                  // (startPosition == 0) means "don't resume"
-        void prepareLocalKio( bool overwrite, bool resume, KIO::fileoffset_t startPosition = 0 );
-        void askAndPrepareLocalKio( const QString& message, int enabledActions, DccResumeDialog::ReceiveAction defaultAction, KIO::fileoffset_t startPosition = 0 );
+            protected:
+                void cleanUp();
 
-        /**
-         * This calls KIO::NetAccess::mkdir on all the subdirectories of dirURL, to
-         * create the given directory.  Note that a url like  file:/foo/bar  will
-         * make sure both foo and bar are created.  It assumes everything in the path is
-         * a directory.
-         * Note: If the directory already exists, returns true.
-         *
-         * @param dirURL A url for the directory to create.
-         * @return True if the directory now exists.  False if there was a problem and the directory doesn't exist.
-         */
-        bool createDirs(const KUrl &dirURL) const;
+                                                          // (startPosition == 0) means "don't resume"
+                void prepareLocalKio( bool overwrite, bool resume, KIO::fileoffset_t startPosition = 0 );
+                void askAndPrepareLocalKio( const QString& message, int enabledActions, ResumeDialog::ReceiveAction defaultAction, KIO::fileoffset_t startPosition = 0 );
 
-        void requestResume();
-        // for non-reverse DCC
-        void connectToSendServer();
-        // for reverse DCC
-        bool startListeningForSender();
+                /**
+                 * This calls KIO::NetAccess::mkdir on all the subdirectories of dirURL, to
+                 * create the given directory.  Note that a url like  file:/foo/bar  will
+                 * make sure both foo and bar are created.  It assumes everything in the path is
+                 * a directory.
+                 * Note: If the directory already exists, returns true.
+                 *
+                 * @param dirURL A url for the directory to create.
+                 * @return True if the directory now exists.  False if there was a problem and the directory doesn't exist.
+                 */
+                bool createDirs(const KUrl &dirURL) const;
 
-        void startConnectionTimer( int sec );
-        void stopConnectionTimer();
+                void requestResume();
+                // for non-reverse DCC
+                void connectToSendServer();
+                // for reverse DCC
+                bool startListeningForSender();
 
-    protected:
-        KUrl m_saveToTmpFileURL;
-        ///Current filesize of the file saved on the disk.
-        KIO::filesize_t m_saveToFileSize;
-        ///Current filesize of the file+".part" saved on the disk.
-        KIO::filesize_t m_partialFileSize;
-        DccTransferRecvWriteCacheHandler* m_writeCacheHandler;
-        bool m_saveToFileExists;
-        bool m_partialFileExists;
-        QTimer* m_connectionTimer;
+                void startConnectionTimer( int sec );
+                void stopConnectionTimer();
 
-        QTcpServer* m_serverSocket;
-        QTcpSocket* m_recvSocket;
+            protected:
+                KUrl m_saveToTmpFileURL;
+                ///Current filesize of the file saved on the disk.
+                KIO::filesize_t m_saveToFileSize;
+                ///Current filesize of the file+".part" saved on the disk.
+                KIO::filesize_t m_partialFileSize;
+                TransferRecvWriteCacheHandler* m_writeCacheHandler;
+                bool m_saveToFileExists;
+                bool m_partialFileExists;
+                QTimer* m_connectionTimer;
 
-        ///We need the original name for resume communication, as sender depends on it
-        QString m_saveFileName;
+                QTcpServer* m_serverSocket;
+                QTcpSocket* m_recvSocket;
 
-    private:
-        virtual QString getTypeText() const;
-        virtual QPixmap getTypeIcon() const;
-};
+                ///We need the original name for resume communication, as sender depends on it
+                QString m_saveFileName;
 
-class DccTransferRecvWriteCacheHandler : public QObject
-{
-    Q_OBJECT
+            private:
+                virtual QString getTypeText() const;
+                virtual QPixmap getTypeIcon() const;
+        };
 
-        public:
-        explicit DccTransferRecvWriteCacheHandler( KIO::TransferJob* transferJob );
-        virtual ~DccTransferRecvWriteCacheHandler();
+        class TransferRecvWriteCacheHandler : public QObject
+        {
+            Q_OBJECT
 
-        void append( char* data, int size );
-        bool write( bool force = false );
-        void close();
-        void closeNow();
+                public:
+                explicit TransferRecvWriteCacheHandler( KIO::TransferJob* transferJob );
+                virtual ~TransferRecvWriteCacheHandler();
 
-        signals:
-        void dataFinished();                      // ->  m_transferJob->slotFinished()
-        void done();                              // ->  DccTransferRecv::writeDone()
-                                                  // ->  DccTransferRecv::slotWriteError()
-        void gotError( const QString& errorString );
+                void append( char* data, int size );
+                bool write( bool force = false );
+                void close();
+                void closeNow();
 
-    protected slots:
-                                                  // <-  m_transferJob->dataReq()
-        void slotKIODataReq( KIO::Job* job, QByteArray& data );
-        void slotKIOResult( KJob* job );          // <-  m_transferJob->result()
+                signals:
+                void dataFinished();                      // ->  m_transferJob->slotFinished()
+                void done();                              // ->  DccTransferRecv::writeDone()
+                                                          // ->  DccTransferRecv::slotWriteError()
+                void gotError( const QString& errorString );
 
-    protected:
-        KIO::TransferJob* m_transferJob;
-        bool m_writeAsyncMode;
-        bool m_writeReady;
+            protected slots:
+                                                          // <-  m_transferJob->dataReq()
+                void slotKIODataReq( KIO::Job* job, QByteArray& data );
+                void slotKIOResult( KJob* job );          // <-  m_transferJob->result()
 
-        QList<QByteArray> m_cacheList;
-        QDataStream* m_cacheStream;
-};
+            protected:
+                KIO::TransferJob* m_transferJob;
+                bool m_writeAsyncMode;
+                bool m_writeReady;
 
-#endif  // DCCTRANSFERRECV_H
+                QList<QByteArray> m_cacheList;
+                QDataStream* m_cacheStream;
+        };
+    }
+}
+
+#endif  // TRANSFERRECV_H

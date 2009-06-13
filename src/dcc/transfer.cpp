@@ -20,393 +20,399 @@
 #include <QFileInfo>
 #include <QHostAddress>
 
-
-DccTransfer::DccTransfer( DccType dccType, QObject* parent ) : QObject(parent)
+namespace Konversation
 {
-    kDebug();
-
-    m_type = dccType;
-
-    m_status = Configuring;
-
-    m_ownPort = 0;
-    m_fileSize = 0;
-    m_resumed = false;
-    m_reverse = false;
-    m_connectionId = -1;  // Not configured
-    m_timeLeft = DccTransfer::NotInTransfer;
-    m_transferringPosition = 0;
-    m_transferStartPosition = 0;
-    m_averageSpeed = 0.0;
-    m_currentSpeed = 0.0;
-
-    m_bufferSize = Preferences::self()->dccBufferSize();
-    m_buffer = new char[ m_bufferSize ];
-
-    connect( &m_loggerTimer, SIGNAL( timeout() ), this, SLOT( logTransfer() ) );
-
-    m_timeOffer = QDateTime::currentDateTime();
-}
-
-DccTransfer::~DccTransfer()
-{
-    kDebug();
-    delete[] m_buffer;
-    m_loggerTimer.stop();
-}
-
-DccTransfer::DccTransfer( const DccTransfer& obj )
-    : QObject()
-{
-    m_buffer = 0;
-    m_bufferSize = 0;
-    m_averageSpeed = obj.getAverageSpeed();
-    m_currentSpeed = obj.getCurrentSpeed();
-    m_status = obj.getStatus();
-    m_statusDetail = obj.getStatusDetail();
-    m_type = obj.getType();
-    m_fileName = obj.getFileName();
-    m_fileSize = obj.getFileSize();
-    m_fileURL = obj.getFileURL();
-    // m_loggerBaseTime
-    // m_loggerTimer
-    m_ownIp = obj.getOwnIp();
-    m_ownPort = obj.getOwnPort();
-    m_partnerIp = obj.getPartnerIp();
-    m_partnerNick = obj.getPartnerNick();
-    m_partnerPort = obj.getPartnerPort();
-    m_resumed = obj.isResumed();
-    m_reverse = obj.isReverse();
-    m_connectionId = obj.getConnectionId();
-    m_timeLeft = obj.getTimeLeft();
-    m_timeOffer = obj.getTimeOffer();
-    m_timeTransferFinished = obj.getTimeTransferFinished();
-    m_timeTransferStarted = obj.getTimeTransferStarted();
-    // m_transferLogPosition
-    // m_transferLogTime
-    m_transferringPosition = obj.getTransferringPosition();
-    m_transferStartPosition = obj.getTransferStartPosition();
-}
-
-void DccTransfer::setConnectionId( int id )
-{
-    if ( getStatus() == Configuring || getStatus() == Queued )
-        m_connectionId = id;
-}
-
-void DccTransfer::setPartnerNick( const QString& nick )
-{
-    if ( getStatus() == Configuring || getStatus() == Queued )
-        m_partnerNick = nick;
-}
-
-bool DccTransfer::queue()
-{
-    kDebug();
-    if ( getStatus() != Configuring )
-        return false;
-
-    if ( m_fileName.isEmpty() )
-        return false;
-
-    if ( m_connectionId == -1 || m_partnerNick.isEmpty() )
-        return false;
-
-    setStatus( Queued );
-    return true;
-}
-
-void DccTransfer::startTransferLogger()
-{
-    m_timeTransferStarted = QDateTime::currentDateTime();
-    m_loggerBaseTime.start();
-    m_loggerTimer.start( 100 );
-}
-
-void DccTransfer::finishTransferLogger()
-{
-    if ( m_timeTransferFinished.isNull() )
-        m_timeTransferFinished = QDateTime::currentDateTime();
-    m_loggerTimer.stop();
-    updateTransferMeters();
-}
-
-// called by m_loggerTimer
-void DccTransfer::logTransfer()
-{
-    m_transferLogTime.append( m_loggerBaseTime.elapsed() );
-    m_transferLogPosition.append( m_transferringPosition );
-    updateTransferMeters();
-}
-
-void DccTransfer::cleanUp()
-{
-}
-
-// just for convenience
-void DccTransfer::failed( const QString& errorMessage )
-{
-    cleanUp();
-    Application* konv_app = Application::instance();
-    Server* server = konv_app->getConnectionManager()->getServerByConnectionId( m_connectionId );
-    if (server)
+    namespace DCC
     {
-        kDebug() << "notification:" << errorMessage;
-        konv_app->notificationHandler()->dccError(server->getStatusView(), errorMessage);
+        Transfer::Transfer( Type dccType, QObject* parent ) : QObject(parent)
+        {
+            kDebug();
+
+            m_type = dccType;
+
+            m_status = Configuring;
+
+            m_ownPort = 0;
+            m_fileSize = 0;
+            m_resumed = false;
+            m_reverse = false;
+            m_connectionId = -1;  // Not configured
+            m_timeLeft = Transfer::NotInTransfer;
+            m_transferringPosition = 0;
+            m_transferStartPosition = 0;
+            m_averageSpeed = 0.0;
+            m_currentSpeed = 0.0;
+
+            m_bufferSize = Preferences::self()->dccBufferSize();
+            m_buffer = new char[ m_bufferSize ];
+
+            connect( &m_loggerTimer, SIGNAL( timeout() ), this, SLOT( logTransfer() ) );
+
+            m_timeOffer = QDateTime::currentDateTime();
+        }
+
+        Transfer::~Transfer()
+        {
+            kDebug();
+            delete[] m_buffer;
+            m_loggerTimer.stop();
+        }
+
+        Transfer::Transfer( const Transfer& obj )
+            : QObject()
+        {
+            m_buffer = 0;
+            m_bufferSize = 0;
+            m_averageSpeed = obj.getAverageSpeed();
+            m_currentSpeed = obj.getCurrentSpeed();
+            m_status = obj.getStatus();
+            m_statusDetail = obj.getStatusDetail();
+            m_type = obj.getType();
+            m_fileName = obj.getFileName();
+            m_fileSize = obj.getFileSize();
+            m_fileURL = obj.getFileURL();
+            // m_loggerBaseTime
+            // m_loggerTimer
+            m_ownIp = obj.getOwnIp();
+            m_ownPort = obj.getOwnPort();
+            m_partnerIp = obj.getPartnerIp();
+            m_partnerNick = obj.getPartnerNick();
+            m_partnerPort = obj.getPartnerPort();
+            m_resumed = obj.isResumed();
+            m_reverse = obj.isReverse();
+            m_connectionId = obj.getConnectionId();
+            m_timeLeft = obj.getTimeLeft();
+            m_timeOffer = obj.getTimeOffer();
+            m_timeTransferFinished = obj.getTimeTransferFinished();
+            m_timeTransferStarted = obj.getTimeTransferStarted();
+            // m_transferLogPosition
+            // m_transferLogTime
+            m_transferringPosition = obj.getTransferringPosition();
+            m_transferStartPosition = obj.getTransferStartPosition();
+        }
+
+        void Transfer::setConnectionId( int id )
+        {
+            if ( getStatus() == Configuring || getStatus() == Queued )
+                m_connectionId = id;
+        }
+
+        void Transfer::setPartnerNick( const QString& nick )
+        {
+            if ( getStatus() == Configuring || getStatus() == Queued )
+                m_partnerNick = nick;
+        }
+
+        bool Transfer::queue()
+        {
+            kDebug();
+            if ( getStatus() != Configuring )
+                return false;
+
+            if ( m_fileName.isEmpty() )
+                return false;
+
+            if ( m_connectionId == -1 || m_partnerNick.isEmpty() )
+                return false;
+
+            setStatus( Queued );
+            return true;
+        }
+
+        void Transfer::startTransferLogger()
+        {
+            m_timeTransferStarted = QDateTime::currentDateTime();
+            m_loggerBaseTime.start();
+            m_loggerTimer.start( 100 );
+        }
+
+        void Transfer::finishTransferLogger()
+        {
+            if ( m_timeTransferFinished.isNull() )
+                m_timeTransferFinished = QDateTime::currentDateTime();
+            m_loggerTimer.stop();
+            updateTransferMeters();
+        }
+
+        // called by m_loggerTimer
+        void Transfer::logTransfer()
+        {
+            m_transferLogTime.append( m_loggerBaseTime.elapsed() );
+            m_transferLogPosition.append( m_transferringPosition );
+            updateTransferMeters();
+        }
+
+        void Transfer::cleanUp()
+        {
+        }
+
+        // just for convenience
+        void Transfer::failed( const QString& errorMessage )
+        {
+            cleanUp();
+            Application* konv_app = Application::instance();
+            Server* server = konv_app->getConnectionManager()->getServerByConnectionId( m_connectionId );
+            if (server)
+            {
+                kDebug() << "notification:" << errorMessage;
+                konv_app->notificationHandler()->dccError(server->getStatusView(), errorMessage);
+            }
+            setStatus( Failed, errorMessage );
+            emit done( this );
+        }
+
+        void Transfer::setStatus( Status status, const QString& statusDetail )
+        {
+            bool changed = ( status != m_status );
+            Status oldStatus = m_status;
+            m_status = status;
+            m_statusDetail = statusDetail;
+            if ( changed )
+            {
+                emit statusChanged( this, m_status, oldStatus );
+            }
+
+            if (m_status == Done)
+            {
+                Application* konv_app = Application::instance();
+                Server* server = konv_app->getConnectionManager()->getServerByConnectionId( m_connectionId );
+                if (server)
+                {
+                    kDebug() << "notification:" << m_fileName;
+                    konv_app->notificationHandler()->dccTransferDone(server->getStatusView(), m_fileName);
+                }
+            }
+        }
+
+        void Transfer::updateTransferMeters()
+        {
+            const int timeToCalc = 5;
+
+            if ( getStatus() == Transferring )
+            {
+                // update CurrentSpeed
+
+                // remove too old data
+                QList<int>::iterator itTime = m_transferLogTime.begin();
+                QList<KIO::fileoffset_t>::iterator itPos = m_transferLogPosition.begin();
+                while ( itTime != m_transferLogTime.end() && ( m_transferLogTime.last() - (*itTime) > timeToCalc * 1000 ) )
+                {
+                    itTime = m_transferLogTime.erase( itTime );
+                    itPos = m_transferLogPosition.erase( itPos );
+                }
+
+                // shift the base of the time (m_transferLoggerBaseTime)
+                // reason: QTime can't handle a time longer than 24 hours
+                int shiftOffset = m_loggerBaseTime.restart();
+                itTime = m_transferLogTime.begin();
+                for ( ; itTime != m_transferLogTime.end() ; ++itTime )
+                    (*itTime) = (*itTime) - shiftOffset;
+
+                // The logTimer is 100ms, as 200ms is below 1sec we get "undefined" speed
+                if ( m_transferLogTime.count() >= 2 && m_timeTransferStarted.secsTo( QDateTime::currentDateTime()) > 0)
+                {
+                    // FIXME: precision of average speed is too bad
+                    m_averageSpeed = (double)( m_transferringPosition - m_transferStartPosition ) / (double)m_timeTransferStarted.secsTo( QDateTime::currentDateTime() );
+                    m_currentSpeed = (double)( m_transferLogPosition.last() - m_transferLogPosition.front() ) / (double)( m_transferLogTime.last() - m_transferLogTime.front() ) * 1000;
+                }
+                else // avoid zero devision
+                {
+                    m_averageSpeed = Transfer::Calculating;
+                    m_currentSpeed = Transfer::Calculating;
+                }
+
+                // update the remaining time
+                if  (m_transferringPosition == (KIO::fileoffset_t)m_fileSize)
+                {
+                    m_timeLeft = 0;
+                }
+                else if ( m_currentSpeed <= 0 )
+                {
+                    m_timeLeft = Transfer::InfiniteValue;
+                }
+                else
+                {
+                    m_timeLeft = (int)( (double)( m_fileSize - m_transferringPosition ) / m_currentSpeed );
+                }
+            }
+            else if ( m_status >= Done )
+            {
+                if ( m_timeTransferStarted.secsTo( m_timeTransferFinished ) > 1 )
+                {
+                    m_averageSpeed = (double)( m_transferringPosition - m_transferStartPosition ) / (double)m_timeTransferStarted.secsTo( m_timeTransferFinished );
+                }
+                else
+                {
+                    m_averageSpeed = Transfer::InfiniteValue;
+                }
+
+                m_currentSpeed = 0;
+                if (m_status == Done)
+                {
+                    m_timeLeft = 0;
+                }
+                else
+                {
+                    m_timeLeft = Transfer::NotInTransfer;
+                }
+            }
+            else
+            {
+                m_averageSpeed = 0;
+                m_currentSpeed = 0;
+                m_timeLeft = Transfer::NotInTransfer;
+            }
+        }
+
+        QString Transfer::sanitizeFileName( const QString& fileName )
+        {
+            QString fileNameTmp = QFileInfo( fileName ).fileName();
+            if ( fileNameTmp.startsWith( '.' ) )
+                fileNameTmp.replace( 0, 1, '_' );         // Don't create hidden files
+            if ( fileNameTmp.isEmpty() )
+                fileNameTmp = "unnamed";
+            return fileNameTmp;
+        }
+
+        unsigned long Transfer::intel( unsigned long value )
+        {
+            value = ( (value & 0xff000000) >> 24 ) +
+                ( (value & 0xff0000) >> 8 ) +
+                ( (value & 0xff00) << 8 ) +
+                ( (value & 0xff) << 24 );
+
+            return value;
+        }
+
+        Transfer::Type Transfer::getType() const
+        {
+            return m_type;
+        }
+
+        Transfer::Status Transfer::getStatus() const
+        {
+            return m_status;
+        }
+
+        const QString& Transfer::getStatusDetail() const
+        {
+            return m_statusDetail;
+        }
+
+        QDateTime Transfer::getTimeOffer() const
+        {
+            return m_timeOffer;
+        }
+
+        int Transfer::getConnectionId() const
+        {
+            return m_connectionId;
+        }
+
+        QString Transfer::getOwnIp() const
+        {
+            return m_ownIp;
+        }
+
+        uint Transfer::getOwnPort() const
+        {
+            return m_ownPort;
+        }
+
+        QString Transfer::getPartnerNick() const
+        {
+            return m_partnerNick;
+        }
+
+        QString Transfer::getPartnerIp() const
+        {
+            return m_partnerIp;
+        }
+
+        uint Transfer::getPartnerPort() const
+        {
+            return m_partnerPort;
+        }
+
+        QString Transfer::getFileName() const
+        {
+            return m_fileName;
+        }
+
+        KIO::filesize_t Transfer::getFileSize() const
+        {
+            return m_fileSize;
+        }
+
+        KIO::fileoffset_t Transfer::getTransferringPosition() const
+        {
+            return m_transferringPosition;
+        }
+
+        KIO::fileoffset_t Transfer::getTransferStartPosition() const
+        {
+            return m_transferStartPosition;
+        }
+
+        KUrl Transfer::getFileURL() const
+        {
+            return m_fileURL;
+        }
+
+        bool Transfer::isResumed() const
+        {
+            return m_resumed;
+        }
+
+        bool Transfer::isReverse() const
+        {
+            return m_reverse;
+        }
+
+        QString Transfer::getReverseToken() const
+        {
+            return m_reverseToken;
+        }
+
+        transferspeed_t Transfer::getAverageSpeed() const
+        {
+            return m_averageSpeed;
+        }
+
+        transferspeed_t Transfer::getCurrentSpeed() const
+        {
+            return m_currentSpeed;
+        }
+
+        int Transfer::getTimeLeft() const
+        {
+            return m_timeLeft;
+        }
+
+        int Transfer::getProgress() const
+        {
+            return (int)( ( (double)getTransferringPosition() / (double)getFileSize() ) * 100 );
+        }
+
+        QDateTime Transfer::getTimeTransferStarted() const
+        {
+            return m_timeTransferStarted;
+        }
+
+        QDateTime Transfer::getTimeTransferFinished() const
+        {
+            return m_timeTransferFinished;
+        }
+
+        QString Transfer::transferFileName(const QString & fileName)
+        {
+            if (fileName.contains(' ') && !(fileName.startsWith('\"') && fileName.endsWith('\"')))
+                return '\"'+fileName+'\"';
+
+            return fileName;
+        }
+
     }
-    setStatus( Failed, errorMessage );
-    emit done( this );
-}
-
-void DccTransfer::setStatus( DccStatus status, const QString& statusDetail )
-{
-    bool changed = ( status != m_status );
-    DccStatus oldStatus = m_status;
-    m_status = status;
-    m_statusDetail = statusDetail;
-    if ( changed )
-    {
-        emit statusChanged( this, m_status, oldStatus );
-    }
-
-    if (m_status == Done)
-    {
-        Application* konv_app = Application::instance();
-        Server* server = konv_app->getConnectionManager()->getServerByConnectionId( m_connectionId );
-        if (server)
-        {
-            kDebug() << "notification:" << m_fileName;
-            konv_app->notificationHandler()->dccTransferDone(server->getStatusView(), m_fileName);
-        }
-    }
-}
-
-void DccTransfer::updateTransferMeters()
-{
-    const int timeToCalc = 5;
-
-    if ( getStatus() == Transferring )
-    {
-        // update CurrentSpeed
-
-        // remove too old data
-        QList<int>::iterator itTime = m_transferLogTime.begin();
-        QList<KIO::fileoffset_t>::iterator itPos = m_transferLogPosition.begin();
-        while ( itTime != m_transferLogTime.end() && ( m_transferLogTime.last() - (*itTime) > timeToCalc * 1000 ) )
-        {
-            itTime = m_transferLogTime.erase( itTime );
-            itPos = m_transferLogPosition.erase( itPos );
-        }
-
-        // shift the base of the time (m_transferLoggerBaseTime)
-        // reason: QTime can't handle a time longer than 24 hours
-        int shiftOffset = m_loggerBaseTime.restart();
-        itTime = m_transferLogTime.begin();
-        for ( ; itTime != m_transferLogTime.end() ; ++itTime )
-            (*itTime) = (*itTime) - shiftOffset;
-
-        // The logTimer is 100ms, as 200ms is below 1sec we get "undefined" speed
-        if ( m_transferLogTime.count() >= 2 && m_timeTransferStarted.secsTo( QDateTime::currentDateTime()) > 0)
-        {
-            // FIXME: precision of average speed is too bad
-            m_averageSpeed = (double)( m_transferringPosition - m_transferStartPosition ) / (double)m_timeTransferStarted.secsTo( QDateTime::currentDateTime() );
-            m_currentSpeed = (double)( m_transferLogPosition.last() - m_transferLogPosition.front() ) / (double)( m_transferLogTime.last() - m_transferLogTime.front() ) * 1000;
-        }
-        else // avoid zero devision
-        {
-            m_averageSpeed = DccTransfer::Calculating;
-            m_currentSpeed = DccTransfer::Calculating;
-        }
-
-        // update the remaining time
-        if  (m_transferringPosition == (KIO::fileoffset_t)m_fileSize)
-        {
-            m_timeLeft = 0;
-        }
-        else if ( m_currentSpeed <= 0 )
-        {
-            m_timeLeft = DccTransfer::InfiniteValue;
-        }
-        else
-        {
-            m_timeLeft = (int)( (double)( m_fileSize - m_transferringPosition ) / m_currentSpeed );
-        }
-    }
-    else if ( m_status >= Done )
-    {
-        if ( m_timeTransferStarted.secsTo( m_timeTransferFinished ) > 1 )
-        {
-            m_averageSpeed = (double)( m_transferringPosition - m_transferStartPosition ) / (double)m_timeTransferStarted.secsTo( m_timeTransferFinished );
-        }
-        else
-        {
-            m_averageSpeed = DccTransfer::InfiniteValue;
-        }
-
-        m_currentSpeed = 0;
-        if (m_status == Done)
-        {
-            m_timeLeft = 0;
-        }
-        else
-        {
-            m_timeLeft = DccTransfer::NotInTransfer;
-        }
-    }
-    else
-    {
-        m_averageSpeed = 0;
-        m_currentSpeed = 0;
-        m_timeLeft = DccTransfer::NotInTransfer;
-    }
-}
-
-QString DccTransfer::sanitizeFileName( const QString& fileName )
-{
-    QString fileNameTmp = QFileInfo( fileName ).fileName();
-    if ( fileNameTmp.startsWith( '.' ) )
-        fileNameTmp.replace( 0, 1, '_' );         // Don't create hidden files
-    if ( fileNameTmp.isEmpty() )
-        fileNameTmp = "unnamed";
-    return fileNameTmp;
-}
-
-unsigned long DccTransfer::intel( unsigned long value )
-{
-    value = ( (value & 0xff000000) >> 24 ) +
-        ( (value & 0xff0000) >> 8 ) +
-        ( (value & 0xff00) << 8 ) +
-        ( (value & 0xff) << 24 );
-
-    return value;
-}
-
-DccTransfer::DccType DccTransfer::getType() const
-{
-    return m_type;
-}
-
-DccTransfer::DccStatus DccTransfer::getStatus() const
-{
-    return m_status;
-}
-
-const QString& DccTransfer::getStatusDetail() const
-{
-    return m_statusDetail;
-}
-
-QDateTime DccTransfer::getTimeOffer() const
-{
-    return m_timeOffer;
-}
-
-int DccTransfer::getConnectionId() const
-{
-    return m_connectionId;
-}
-
-QString DccTransfer::getOwnIp() const
-{
-    return m_ownIp;
-}
-
-uint DccTransfer::getOwnPort() const
-{
-    return m_ownPort;
-}
-
-QString DccTransfer::getPartnerNick() const
-{
-    return m_partnerNick;
-}
-
-QString DccTransfer::getPartnerIp() const
-{
-    return m_partnerIp;
-}
-
-uint DccTransfer::getPartnerPort() const
-{
-    return m_partnerPort;
-}
-
-QString DccTransfer::getFileName() const
-{
-    return m_fileName;
-}
-
-KIO::filesize_t DccTransfer::getFileSize() const
-{
-    return m_fileSize;
-}
-
-KIO::fileoffset_t DccTransfer::getTransferringPosition() const
-{
-    return m_transferringPosition;
-}
-
-KIO::fileoffset_t DccTransfer::getTransferStartPosition() const
-{
-    return m_transferStartPosition;
-}
-
-KUrl DccTransfer::getFileURL() const
-{
-    return m_fileURL;
-}
-
-bool DccTransfer::isResumed() const
-{
-    return m_resumed;
-}
-
-bool DccTransfer::isReverse() const
-{
-    return m_reverse;
-}
-
-QString DccTransfer::getReverseToken() const
-{
-    return m_reverseToken;
-}
-
-transferspeed_t DccTransfer::getAverageSpeed() const
-{
-    return m_averageSpeed;
-}
-
-transferspeed_t DccTransfer::getCurrentSpeed() const
-{
-    return m_currentSpeed;
-}
-
-int DccTransfer::getTimeLeft() const
-{
-    return m_timeLeft;
-}
-
-int DccTransfer::getProgress() const
-{
-    return (int)( ( (double)getTransferringPosition() / (double)getFileSize() ) * 100 );
-}
-
-QDateTime DccTransfer::getTimeTransferStarted() const
-{
-    return m_timeTransferStarted;
-}
-
-QDateTime DccTransfer::getTimeTransferFinished() const
-{
-    return m_timeTransferFinished;
-}
-
-QString DccTransfer::transferFileName(const QString & fileName)
-{
-    if (fileName.contains(' ') && !(fileName.startsWith('\"') && fileName.endsWith('\"')))
-        return '\"'+fileName+'\"';
-
-    return fileName;
 }
 
 #include "transfer.moc"

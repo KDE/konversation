@@ -13,8 +13,8 @@
   (at your option) any later version.
 */
 
-#ifndef DCCTRANSFERPANELITEM_H
-#define DCCTRANSFERPANELITEM_H
+#ifndef TRANSFERPANELITEM_H
+#define TRANSFERPANELITEM_H
 
 #include "transfer.h"
 
@@ -25,69 +25,74 @@
 
 #include <K3ListView>
 
-class DccTransferPanel;
-
 class QTimer;
 class QProgressBar;
 
-
-class DccTransferPanelItem : public QObject, public K3ListViewItem
+namespace Konversation
 {
-    Q_OBJECT
+    namespace DCC
+    {
+        class TransferPanel;
 
-    public:
-        DccTransferPanelItem( DccTransferPanel* panel, DccTransfer* transfer );
-        virtual ~DccTransferPanelItem();
+        class TransferPanelItem : public QObject, public K3ListViewItem
+        {
+            Q_OBJECT
 
-        virtual void paintCell( QPainter* painter, const QColorGroup& colorgroup, int column, int width, int alignment );
+            public:
+                TransferPanelItem( TransferPanel* panel, Transfer* transfer );
+                virtual ~TransferPanelItem();
 
-        virtual int compare( Q3ListViewItem* i, int col, bool ascending ) const;
+                virtual void paintCell( QPainter* painter, const QColorGroup& colorgroup, int column, int width, int alignment );
 
-        void runFile();
-        void openLocation();
-        void openFileInfoDialog();
+                virtual int compare( Q3ListViewItem* i, int col, bool ascending ) const;
 
-        DccTransfer* transfer() const { return m_transfer; }
+                void runFile();
+                void openLocation();
+                void openFileInfoDialog();
 
-        // called from updateView()
-        QString getTypeText()                                  const;
-        QPixmap getTypeIcon()                                  const;
-        QPixmap getStatusIcon()                                const;
-        QString getStatusText()                                const;
-        QString getFileSizePrettyText()                        const;
-        QString getPositionPrettyText( bool detailed = false ) const;
-        QString getTimeLeftPrettyText()                        const;
-        QString getAverageSpeedPrettyText()                    const;
-        QString getCurrentSpeedPrettyText()                    const;
-        QString getSenderAddressPrettyText()                   const;
+                Transfer* transfer() const { return m_transfer; }
 
-        static QString getSpeedPrettyText( transferspeed_t speed );
-        static QString secToHMS( long sec );
+                // called from updateView()
+                QString getTypeText()                                  const;
+                QPixmap getTypeIcon()                                  const;
+                QPixmap getStatusIcon()                                const;
+                QString getStatusText()                                const;
+                QString getFileSizePrettyText()                        const;
+                QString getPositionPrettyText( bool detailed = false ) const;
+                QString getTimeLeftPrettyText()                        const;
+                QString getAverageSpeedPrettyText()                    const;
+                QString getCurrentSpeedPrettyText()                    const;
+                QString getSenderAddressPrettyText()                   const;
 
-    private slots:
-        void slotStatusChanged( DccTransfer* transfer, int newStatus, int oldStatus );
-        void updateView();
+                static QString getSpeedPrettyText( transferspeed_t speed );
+                static QString secToHMS( long sec );
 
-    private:
-        DccTransferPanel* m_panel;
-        DccTransfer* m_transfer;
-        bool m_isTransferInstanceBackup;
+            private slots:
+                void slotStatusChanged( Transfer* transfer, int newStatus, int oldStatus );
+                void updateView();
 
-    private slots:
-        void startAutoViewUpdate();
-        void stopAutoViewUpdate();
+            private:
+                TransferPanel* m_panel;
+                Transfer* m_transfer;
+                bool m_isTransferInstanceBackup;
 
-        void backupTransferInfo( DccTransfer* transfer );
+            private slots:
+                void startAutoViewUpdate();
+                void stopAutoViewUpdate();
 
-    private:
-        void updateTransferInfo();
-        void updateTransferMeters();
+                void backupTransferInfo( Transfer* transfer );
 
-        void showProgressBar();                   // called from printCell()
+            private:
+                void updateTransferInfo();
+                void updateTransferMeters();
 
-        // UI
-        QTimer* m_autoUpdateViewTimer;
-        QProgressBar* m_progressBar;
-};
+                void showProgressBar();                   // called from printCell()
 
-#endif  // DCCTRANSFERPANELITEM_H
+                // UI
+                QTimer* m_autoUpdateViewTimer;
+                QProgressBar* m_progressBar;
+        };
+    }
+}
+
+#endif  // TRANSFERPANELITEM_H

@@ -38,7 +38,6 @@
 class QAbstractItemModel;
 class QStringListModel;
 class Channel;
-class DccTransfer;
 class Query;
 //class StatusPanel;
 class Identity;
@@ -50,6 +49,14 @@ class ChatWindow;
 class ViewContainer;
 
 class IRCQueue;
+
+namespace Konversation
+{
+    namespace DCC
+    {
+        class Transfer;
+    }
+}
 
 class Server : public QObject
 {
@@ -333,10 +340,10 @@ void resetNickSelection();
 
         ChannelListPanel* addChannelListPanel();
 
-        // invoked by DccTransferSend
+        // invoked by DCC::TransferSend
         void dccSendRequest(const QString& recipient,const QString& fileName,const QString& address,uint port,unsigned long size);
         void dccPassiveSendRequest(const QString& recipient,const QString& fileName,const QString& address,unsigned long size,const QString& token);
-        // invoked by DccTransferRecv
+        // invoked by DCC::TransferRecv
         void dccPassiveResumeGetRequest(const QString& sender,const QString& fileName,uint port,KIO::filesize_t startAt,const QString &token);
         void dccResumeGetRequest(const QString& sender,const QString& fileName,uint port,KIO::filesize_t startAt);
         void dccReverseSendAck(const QString& partnerNick,const QString& fileName,const QString& ownAddress,uint ownPort,unsigned long size,const QString& reverseToken);
@@ -494,7 +501,7 @@ void resetNickSelection();
         void sslVerifyError(const QSslError& error);
         void connectionEstablished(const QString& ownHost);
         void notifyResponse(const QString& nicksOnline);
-        void slotNewDccTransferItemQueued(DccTransfer* transfer);
+        void slotNewDccTransferItemQueued(Konversation::DCC::Transfer* transfer);
         void startReverseDccSendTransfer(const QString& sourceNick,const QStringList& dccArguments);
         void addDccGet(const QString& sourceNick,const QStringList& dccArguments);
         void requestDccSend();                    // -> to outputFilter, dccPanel
@@ -505,9 +512,9 @@ void resetNickSelection();
                                                   // -> to inputFilter
         void resumeDccSendTransfer(const QString& sourceNick,const QStringList& dccArguments);
         void rejectDccSendTransfer(const QString& sourceNick,const QStringList& dccArguments);
-        void dccGetDone(DccTransfer* item);
-        void dccSendDone(DccTransfer* item);
-        void dccStatusChanged(DccTransfer* item, int newStatus, int oldStatus);
+        void dccGetDone(Konversation::DCC::Transfer* item);
+        void dccSendDone(Konversation::DCC::Transfer* item);
+        void dccStatusChanged(Konversation::DCC::Transfer* item, int newStatus, int oldStatus);
         void scriptNotFound(const QString& name);
         void scriptExecutionError(const QString& name);
         void userhost(const QString& nick,const QString& hostmask,bool away,bool ircOp);

@@ -52,6 +52,7 @@
 #include <KSelectAction>
 #include <KXMLGUIClient>
 
+using namespace Konversation;
 
 ViewContainer::ViewContainer(MainWindow* window):
         m_window(window)
@@ -80,7 +81,7 @@ ViewContainer::ViewContainer(MainWindow* window):
 
     initializeSplitterSizes();
 
-    m_dccPanel = new DccTransferPanel(m_tabWidget);
+    m_dccPanel = new DCC::TransferPanel(m_tabWidget);
     m_dccPanel->hide();
     m_dccPanelOpen = false;
     connect(m_dccPanel, SIGNAL(updateTabNotification(ChatWindow*,const Konversation::TabNotifyType&)), this, SLOT(setViewNotification(ChatWindow*,const Konversation::TabNotifyType&)));
@@ -2089,7 +2090,7 @@ void ViewContainer::deleteDccPanel()
     }
 }
 
-DccTransferPanel* ViewContainer::getDccPanel()
+DCC::TransferPanel* ViewContainer::getDccPanel()
 {
     return m_dccPanel;
 }
@@ -2104,9 +2105,9 @@ void ViewContainer::addDccChat(const QString& myNick,const QString& nick,const Q
 
     if (m_frontServer)
     {
-        DccChat* dccChatPanel=listen
-            ? new DccChat(m_tabWidget, listen, m_frontServer, myNick, nick )
-            : new DccChat(m_tabWidget, listen, m_frontServer, myNick, nick, arguments[1], arguments[2].toInt() );
+        DCC::Chat* dccChatPanel=listen
+            ? new DCC::Chat(m_tabWidget, listen, m_frontServer, myNick, nick )
+            : new DCC::Chat(m_tabWidget, listen, m_frontServer, myNick, nick, arguments[1], arguments[2].toInt() );
 
         connect(dccChatPanel, SIGNAL(updateTabNotification(ChatWindow*,const Konversation::TabNotifyType&)), this, SLOT(setViewNotification(ChatWindow*,const Konversation::TabNotifyType&)));
 

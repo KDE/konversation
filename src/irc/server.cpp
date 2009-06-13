@@ -60,6 +60,7 @@
 #include <KStringHandler>
 #include <KWindowSystem>
 
+using namespace Konversation;
 
 int Server::m_availableConnectionId = 0;
 
@@ -284,8 +285,8 @@ void Server::connectSignals()
                 const QString&, const QString&, const QString&, const QString&, bool)),
             konvApp->getConnectionManager(), SLOT(connectTo(Konversation::ConnectionFlag,
                 const QString&, const QString&, const QString&, const QString&, const QString&, bool)));
-    connect(konvApp->getDccTransferManager(), SIGNAL(newTransferQueued(DccTransfer*)),
-            this, SLOT(slotNewDccTransferItemQueued(DccTransfer*)));
+    connect(konvApp->getDccTransferManager(), SIGNAL(newTransferQueued(Transfer*)),
+            this, SLOT(slotNewTransferItemQueued(Transfer*)));
 
     connect(konvApp, SIGNAL(appearanceChanged()), this, SLOT(startNotifyTimer()));
 
@@ -1679,7 +1680,7 @@ void Server::requestDccSend(const QString &a_recipient)
         }
         QStringListModel model;
         model.setStringList(nickList);
-        recipient = DccRecipientDialog::getNickname(getViewContainer()->getWindow(), &model);
+        recipient = DCC::RecipientDialog::getNickname(getViewContainer()->getWindow(), &model);
     }
     // do we have a recipient *now*?
     if(!recipient.isEmpty())
@@ -1698,20 +1699,20 @@ void Server::requestDccSend(const QString &a_recipient)
     }
 }
 
-void Server::slotNewDccTransferItemQueued(DccTransfer* transfer)
+void Server::slotNewDccTransferItemQueued(DCC::Transfer* transfer)
 {
     if (transfer->getConnectionId() == connectionId() )
     {
         kDebug() << "connecting slots for " << transfer->getFileName() << " [" << transfer->getType() << "]";
-        if ( transfer->getType() == DccTransfer::Receive )
+        if ( transfer->getType() == DCC::Transfer::Receive )
         {
-            connect( transfer, SIGNAL( done( DccTransfer* ) ), this, SLOT( dccGetDone( DccTransfer* ) ) );
-            connect( transfer, SIGNAL( statusChanged( DccTransfer*, int, int ) ), this, SLOT( dccStatusChanged( DccTransfer*, int, int ) ) );
+            connect( transfer, SIGNAL( done( DCC::Transfer* ) ), this, SLOT( dccGetDone( DCC::Transfer* ) ) );
+            connect( transfer, SIGNAL( statusChanged( DCC::Transfer*, int, int ) ), this, SLOT( dccStatusChanged( DCC::Transfer*, int, int ) ) );
         }
         else
         {
-            connect( transfer, SIGNAL( done( DccTransfer* ) ), this, SLOT( dccSendDone( DccTransfer* ) ) );
-            connect( transfer, SIGNAL( statusChanged( DccTransfer*, int, int ) ), this, SLOT( dccStatusChanged( DccTransfer*, int, int ) ) );
+            connect( transfer, SIGNAL( done( Transfer* ) ), this, SLOT( dccSendDone( Transfer* ) ) );
+            connect( transfer, SIGNAL( statusChanged( Transfer*, int, int ) ), this, SLOT( dccStatusChanged( Transfer*, int, int ) ) );
         }
     }
 }
@@ -1723,7 +1724,7 @@ void Server::addDccSend(const QString &recipient,KUrl fileURL, const QString &al
     emit addDccPanel();
 
     // We already checked that the file exists in output filter / requestDccSend() resp.
-    DccTransferSend* newDcc = Application::instance()->getDccTransferManager()->newUpload();
+    DCC::TransferSend* newDcc = Application::instance()->getDccTransferManager()->newUpload();
 
     newDcc->setConnectionId( connectionId() );
 
@@ -1780,7 +1781,7 @@ QString Server::cleanDccFileName(const QString& filename) const
 
 void Server::addDccGet(const QString &sourceNick, const QStringList &dccArguments)
 {
-    DccTransferRecv* newDcc = Application::instance()->getDccTransferManager()->newDownload();
+    DCC::TransferRecv* newDcc = Application::instance()->getDccTransferManager()->newDownload();
 
     newDcc->setConnectionId( connectionId() );
     newDcc->setPartnerNick( sourceNick );
@@ -1798,7 +1799,7 @@ void Server::addDccGet(const QString &sourceNick, const QStringList &dccArgument
     {
         //filename ip port(0) filesize token
         fileName = recoverDccFileName(dccArguments, 4); //ip port filesize token
-        ip = DccCommon::numericalIpToTextIp( dccArguments.at(argumentSize - 4) ); //-1 index, -1 token, -1 port, -1 filesize
+        ip = DCC::DccCommon::numericalIpToTextIp( dccArguments.at(argumentSize - 4) ); //-1 index, -1 token, -1 port, -1 filesize
         port = 0;
         fileSize = dccArguments.at(argumentSize - 2).toULong(); //-1 index, -1 token
         token = dccArguments.at(argumentSize - 1); //-1 index
@@ -1807,7 +1808,7 @@ void Server::addDccGet(const QString &sourceNick, const QStringList &dccArgument
         newDcc->setReverse( true, token );
     } else {
         //filename ip port filesize
-        ip = DccCommon::numericalIpToTextIp( dccArguments.at(argumentSize - 3) ); //-1 index, -1 filesize
+        ip = DCC::DccCommon::numericalIpToTextIp( dccArguments.at(argumentSize - 3) ); //-1 index, -1 filesize
         fileName = recoverDccFileName(dccArguments, 3); //ip port filesize
         fileSize = dccArguments.at(argumentSize - 1).toULong(); //-1 index
         port = dccArguments.at(argumentSize - 2).toUInt(); //-1 index, -1 filesize
@@ -1907,10 +1908,10 @@ void Server::dccRejectChat(const QString& partnerNick)
 void Server::startReverseDccSendTransfer(const QString& sourceNick,const QStringList& dccArguments)
 {
     kDebug();
-    DccTransferManager* dtm = Application::instance()->getDccTransferManager();
+    DCC::TransferManager* dtm = Application::instance()->getDccTransferManager();
 
     const int argumentSize = dccArguments.size();
-    QString partnerIP = DccCommon::numericalIpToTextIp( dccArguments.at(argumentSize - 4) ); //dccArguments[1] ) );
+    QString partnerIP = DCC::DccCommon::numericalIpToTextIp( dccArguments.at(argumentSize - 4) ); //dccArguments[1] ) );
     uint port = dccArguments.at(argumentSize - 3).toUInt();
     QString token = dccArguments.at(argumentSize - 1);
     unsigned long fileSize = dccArguments.at(argumentSize - 2).toULong();
@@ -1943,7 +1944,7 @@ void Server::startReverseDccSendTransfer(const QString& sourceNick,const QString
 
 void Server::resumeDccGetTransfer(const QString &sourceNick, const QStringList &dccArguments)
 {
-    DccTransferManager* dtm = Application::instance()->getDccTransferManager();
+    DCC::TransferManager* dtm = Application::instance()->getDccTransferManager();
 
     //filename port position [token]
     QString fileName;
@@ -1964,7 +1965,7 @@ void Server::resumeDccGetTransfer(const QString &sourceNick, const QStringList &
     }
     //do we need the token here?
 
-    DccTransferRecv* dccTransfer = dtm->resumeDownload( connectionId(), sourceNick, fileName, ownPort, position );
+    DCC::TransferRecv* dccTransfer = dtm->resumeDownload( connectionId(), sourceNick, fileName, ownPort, position );
 
     if ( dccTransfer )
     {
@@ -1988,7 +1989,7 @@ void Server::resumeDccGetTransfer(const QString &sourceNick, const QStringList &
 
 void Server::resumeDccSendTransfer(const QString &sourceNick, const QStringList &dccArguments)
 {
-    DccTransferManager* dtm = Application::instance()->getDccTransferManager();
+    DCC::TransferManager* dtm = Application::instance()->getDccTransferManager();
 
     bool passiv = false;
     QString fileName;
@@ -2015,7 +2016,7 @@ void Server::resumeDccSendTransfer(const QString &sourceNick, const QStringList 
         fileName = recoverDccFileName(dccArguments, 2); //port filepos
     }
 
-    DccTransferSend* dccTransfer = dtm->resumeUpload( connectionId(), sourceNick, fileName, ownPort, position );
+    DCC::TransferSend* dccTransfer = dtm->resumeUpload( connectionId(), sourceNick, fileName, ownPort, position );
 
     if ( dccTransfer )
     {
@@ -2031,7 +2032,7 @@ void Server::resumeDccSendTransfer(const QString &sourceNick, const QStringList 
         if (fileName.contains(' '))
             fileName = '\"'+fileName+'\"';
 
-        // FIXME: this operation should be done by DccTransferManager
+        // FIXME: this operation should be done by TransferManager
         Konversation::OutputFilterResult result;
         if (passiv)
             result = getOutputFilter()->acceptPassiveResumeRequest( sourceNick, fileName, ownPort, position, token );
@@ -2052,12 +2053,12 @@ void Server::resumeDccSendTransfer(const QString &sourceNick, const QStringList 
 
 void Server::rejectDccSendTransfer(const QString &sourceNick, const QStringList &dccArguments)
 {
-    DccTransferManager* dtm = Application::instance()->getDccTransferManager();
+    DCC::TransferManager* dtm = Application::instance()->getDccTransferManager();
 
     //filename
     QString fileName = recoverDccFileName(dccArguments,0);
 
-    DccTransferSend* dccTransfer = dtm->rejectSend( connectionId(), sourceNick, fileName );
+    DCC::TransferSend* dccTransfer = dtm->rejectSend( connectionId(), sourceNick, fileName );
 
     if ( !dccTransfer )
     {
@@ -2069,17 +2070,17 @@ void Server::rejectDccSendTransfer(const QString &sourceNick, const QStringList 
     }
 }
 
-void Server::dccGetDone(DccTransfer* item)
+void Server::dccGetDone(DCC::Transfer* item)
 {
     if (!item)
         return;
 
-    if(item->getStatus() == DccTransfer::Done)
+    if(item->getStatus() == DCC::Transfer::Done)
     {
         appendMessageToFrontmost(i18n("DCC"), i18nc("%1 = file name, %2 = nickname of sender",
             "Download of \"%1\" from %2 finished.", item->getFileName(), item->getPartnerNick()));
     }
-    else if(item->getStatus() == DccTransfer::Failed)
+    else if(item->getStatus() == DCC::Transfer::Failed)
     {
         appendMessageToFrontmost(i18n("DCC"), i18nc("%1 = file name, %2 = nickname of sender",
             "Download of \"%1\" from %2 failed. Reason: %3.", item->getFileName(),
@@ -2087,35 +2088,35 @@ void Server::dccGetDone(DccTransfer* item)
     }
 }
 
-void Server::dccSendDone(DccTransfer* item)
+void Server::dccSendDone(DCC::Transfer* item)
 {
     if (!item)
         return;
 
-    if(item->getStatus()==DccTransfer::Done)
+    if(item->getStatus() == DCC::Transfer::Done)
         appendMessageToFrontmost(i18n("DCC"), i18nc("%1 = file name, %2 = nickname of recipient",
             "Upload of \"%1\" to %2 finished.", item->getFileName(), item->getPartnerNick()));
-    else if(item->getStatus()==DccTransfer::Failed)
+    else if(item->getStatus() == DCC::Transfer::Failed)
         appendMessageToFrontmost(i18n("DCC"), i18nc("%1 = file name, %2 = nickname of recipient",
             "Upload of \"%1\" to %2 failed. Reason: %3.", item->getFileName(), item->getPartnerNick(),
             item->getStatusDetail()));
 }
 
-void Server::dccStatusChanged(DccTransfer *item, int newStatus, int oldStatus)
+void Server::dccStatusChanged(DCC::Transfer *item, int newStatus, int oldStatus)
 {
     if(!item)
         return;
 
-    if ( item->getType() == DccTransfer::Send )
+    if ( item->getType() == DCC::Transfer::Send )
     {
         // when resuming, a message about the receiver's acceptance has been shown already, so suppress this message
-        if ( newStatus == DccTransfer::Transferring && oldStatus == DccTransfer::WaitingRemote && !item->isResumed() )
+        if ( newStatus == DCC::Transfer::Transferring && oldStatus == DCC::Transfer::WaitingRemote && !item->isResumed() )
             appendMessageToFrontmost( i18n( "DCC" ), i18nc( "%1 = file name, %2 nickname of recipient",
                 "Sending \"%1\" to %2...", item->getFileName(), item->getPartnerNick() ) );
     }
     else  // type == Receive
     {
-        if ( newStatus == DccTransfer::Transferring && !item->isResumed() )
+        if ( newStatus == DCC::Transfer::Transferring && !item->isResumed() )
         {
             appendMessageToFrontmost( i18n( "DCC" ),
                                         i18nc( "%1 = file name, %2 = file size, %3 = nickname of sender", "Downloading \"%1\" (%2) from %3...",

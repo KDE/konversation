@@ -15,8 +15,8 @@
   Copyright (C) 2004,2005 John Tapsell <john@geola.co.uk>
 */
 
-#ifndef DCCTRANSFER_H
-#define DCCTRANSFER_H
+#ifndef TRANSFER_H
+#define TRANSFER_H
 
 #include <QDateTime>
 #include <QObject>
@@ -25,171 +25,177 @@
 #include <kurl.h>
 #include <kio/global.h>
 
-typedef qreal transferspeed_t;
-
-class DccTransfer : public QObject
+namespace Konversation
 {
-    Q_OBJECT
+    namespace DCC
+    {
+        typedef qreal transferspeed_t;
 
-    public:
-        enum DccType
+        class Transfer : public QObject
         {
-            Receive,
-            Send
+            Q_OBJECT
+
+            public:
+                enum Type
+                {
+                    Receive,
+                    Send
+                };
+
+                enum Status
+                {
+                    Configuring = 0,                      // Not queud yet (this means that user can't see the item at this time)
+                    Queued,                               // Newly added DCC, waiting user's response
+                    Preparing,                            // Opening KIO to write received data
+                    WaitingRemote,                        // Waiting for remote host's response
+                    Connecting,                           // RECV: trying to connect to the server
+                    Transferring,
+                    Done,
+                    Failed,
+                    Aborted
+                };
+
+                enum UnavailableStatus
+                {
+                    Calculating = -1,
+                    NotInTransfer = -2,
+                    InfiniteValue = -3
+                };
+
+                Transfer( Type dccType, QObject* parent );
+                virtual ~Transfer();
+
+                // info of DccTransfer can be copied with this constructor.
+                Transfer( const Transfer& obj );
+
+                Type               getType()                  const;
+                Status             getStatus()                const;
+                const QString&     getStatusDetail()          const;
+                QDateTime          getTimeOffer()             const;
+                int                getConnectionId()          const;
+                QString            getOwnIp()                 const;
+                uint               getOwnPort()               const;
+                QString            getPartnerNick()           const;
+                QString            getPartnerIp()             const;
+                uint               getPartnerPort()           const;
+                QString            getFileName()              const;
+                KIO::filesize_t    getFileSize()              const;
+                KIO::fileoffset_t  getTransferringPosition()  const;
+                KIO::fileoffset_t  getTransferStartPosition() const;
+                KUrl               getFileURL()               const;
+                bool               isResumed()                const;
+                bool               isReverse()                const;
+                QString            getReverseToken()          const;
+                transferspeed_t    getAverageSpeed()          const;
+                transferspeed_t    getCurrentSpeed()          const;
+                int                getTimeLeft()              const;
+                int                getProgress()              const;
+                QDateTime          getTimeTransferStarted()   const;
+                QDateTime          getTimeTransferFinished()  const;
+
+                // common settings for DccTransferRecv / DccTransferSend
+
+                // REQUIRED
+                void setConnectionId( int connectionId );
+                // REQUIRED
+                void setPartnerNick( const QString& nick );
+
+            signals:
+                void transferStarted( Transfer* item );
+                void done( Transfer* item );
+                void statusChanged( Transfer* item, int newStatus, int oldStatus );
+
+            public slots:
+                virtual bool queue();
+                virtual void start() {};
+                virtual void abort() {};
+
+            protected:
+                virtual void cleanUp();
+                void failed(const QString& errorMessage = QString() );
+
+                /**
+                 * setStatus behavior changed:
+                 * Now make sure to run functions that change transfer information before setStatus.
+                 * For example cleanUp();
+                 *
+                 * If you call setStatus(..) and change the "Started at:"-time afterwards,
+                 * the transferpanel won't notice it
+                 */
+                void setStatus( Status status, const QString& statusDetail = QString() );
+                void startTransferLogger();
+                void finishTransferLogger();
+
+                static QString transferFileName( const QString& fileName );
+                static QString sanitizeFileName( const QString& fileName );
+                static unsigned long intel( unsigned long value );
+
+            protected slots:
+                void logTransfer();
+
+            protected:
+                // transfer information
+                Type m_type;
+                Status m_status;
+                QString m_statusDetail;
+                bool m_resumed;
+                bool m_reverse;
+                QString m_reverseToken;
+                KIO::fileoffset_t m_transferringPosition;
+                KIO::fileoffset_t m_transferStartPosition;
+
+                /*
+                QValueList<QDateTime> m_transferTimeLog;  // write per packet to calc CPS
+                QValueList<KIO::fileoffset_t> m_transferPositionLog;  // write per packet to calc CPS
+                */
+
+                // we'll communicate with the partner via this server
+                int m_connectionId;
+                QString m_partnerNick;
+                QString m_partnerIp;                      // null when unknown
+                uint m_partnerPort;
+                QString m_ownIp;
+                uint m_ownPort;
+
+                unsigned long m_bufferSize;
+                char* m_buffer;
+
+                /**
+                 * The filename. Clean filename without any "../" or extra "
+                 */
+                QString m_fileName;
+
+                /** The file size of the complete file sending/recieving. */
+                KIO::filesize_t m_fileSize;
+
+                /**
+                 * If we are sending a file, this is the url of the file we are sending.
+                 * If we are recieving a file, this is the url of the file we are saving
+                 * to in the end (Temporararily it will be filename+".part" ).
+                 */
+                KUrl m_fileURL;
+
+            private:
+                Transfer& operator = ( const Transfer& obj );
+
+                void updateTransferMeters();
+
+            private:
+                QDateTime m_timeOffer;
+                QDateTime m_timeTransferStarted;
+                //QDateTime m_timeLastActive;
+                QDateTime m_timeTransferFinished;
+
+                QTimer m_loggerTimer;
+                QTime m_loggerBaseTime;  // for calculating CPS
+                QList<int> m_transferLogTime;
+                QList<KIO::fileoffset_t> m_transferLogPosition;
+
+                transferspeed_t m_averageSpeed;
+                transferspeed_t m_currentSpeed;
+                int m_timeLeft;
         };
+    }
+}
 
-        enum DccStatus
-        {
-            Configuring = 0,                      // Not queud yet (this means that user can't see the item at this time)
-            Queued,                               // Newly added DCC, waiting user's response
-            Preparing,                            // Opening KIO to write received data
-            WaitingRemote,                        // Waiting for remote host's response
-            Connecting,                           // RECV: trying to connect to the server
-            Transferring,
-            Done,
-            Failed,
-            Aborted
-        };
-
-        enum UnavailableStatus
-        {
-            Calculating = -1,
-            NotInTransfer = -2,
-            InfiniteValue = -3
-        };
-
-        DccTransfer( DccType dccType, QObject* parent );
-        virtual ~DccTransfer();
-
-        // info of DccTransfer can be copied with this constructor.
-        DccTransfer( const DccTransfer& obj );
-
-        DccType            getType()                  const;
-        DccStatus          getStatus()                const;
-        const QString&     getStatusDetail()          const;
-        QDateTime          getTimeOffer()             const;
-        int                getConnectionId()          const;
-        QString            getOwnIp()                 const;
-        uint               getOwnPort()               const;
-        QString            getPartnerNick()           const;
-        QString            getPartnerIp()             const;
-        uint               getPartnerPort()           const;
-        QString            getFileName()              const;
-        KIO::filesize_t    getFileSize()              const;
-        KIO::fileoffset_t  getTransferringPosition()  const;
-        KIO::fileoffset_t  getTransferStartPosition() const;
-        KUrl               getFileURL()               const;
-        bool               isResumed()                const;
-        bool               isReverse()                const;
-        QString            getReverseToken()          const;
-        transferspeed_t    getAverageSpeed()          const;
-        transferspeed_t    getCurrentSpeed()          const;
-        int                getTimeLeft()              const;
-        int                getProgress()              const;
-        QDateTime          getTimeTransferStarted()   const;
-        QDateTime          getTimeTransferFinished()  const;
-
-        // common settings for DccTransferRecv / DccTransferSend
-
-        // REQUIRED
-        void setConnectionId( int connectionId );
-        // REQUIRED
-        void setPartnerNick( const QString& nick );
-
-    signals:
-        void transferStarted( DccTransfer* item );
-        void done( DccTransfer* item );
-        void statusChanged( DccTransfer* item, int newStatus, int oldStatus );
-
-    public slots:
-        virtual bool queue();
-        virtual void start() {};
-        virtual void abort() {};
-
-    protected:
-        virtual void cleanUp();
-        void failed(const QString& errorMessage = QString() );
-
-        /**
-         * setStatus behavior changed:
-         * Now make sure to run functions that change transfer information before setStatus.
-         * For example cleanUp();
-         *
-         * If you call setStatus(..) and change the "Started at:"-time afterwards,
-         * the transferpanel won't notice it
-         */
-        void setStatus( DccStatus status, const QString& statusDetail = QString() );
-        void startTransferLogger();
-        void finishTransferLogger();
-
-        static QString transferFileName( const QString& fileName );
-        static QString sanitizeFileName( const QString& fileName );
-        static unsigned long intel( unsigned long value );
-
-    protected slots:
-        void logTransfer();
-
-    protected:
-        // transfer information
-        DccType m_type;
-        DccStatus m_status;
-        QString m_statusDetail;
-        bool m_resumed;
-        bool m_reverse;
-        QString m_reverseToken;
-        KIO::fileoffset_t m_transferringPosition;
-        KIO::fileoffset_t m_transferStartPosition;
-
-        /*
-        QValueList<QDateTime> m_transferTimeLog;  // write per packet to calc CPS
-        QValueList<KIO::fileoffset_t> m_transferPositionLog;  // write per packet to calc CPS
-        */
-
-        // we'll communicate with the partner via this server
-        int m_connectionId;
-        QString m_partnerNick;
-        QString m_partnerIp;                      // null when unknown
-        uint m_partnerPort;
-        QString m_ownIp;
-        uint m_ownPort;
-
-        unsigned long m_bufferSize;
-        char* m_buffer;
-
-        /**
-         * The filename. Clean filename without any "../" or extra "
-         */
-        QString m_fileName;
-
-        /** The file size of the complete file sending/recieving. */
-        KIO::filesize_t m_fileSize;
-
-        /**
-         * If we are sending a file, this is the url of the file we are sending.
-         * If we are recieving a file, this is the url of the file we are saving
-         * to in the end (Temporararily it will be filename+".part" ).
-         */
-        KUrl m_fileURL;
-
-    private:
-        DccTransfer& operator = ( const DccTransfer& obj );
-
-        void updateTransferMeters();
-
-    private:
-        QDateTime m_timeOffer;
-        QDateTime m_timeTransferStarted;
-        //QDateTime m_timeLastActive;
-        QDateTime m_timeTransferFinished;
-
-        QTimer m_loggerTimer;
-        QTime m_loggerBaseTime;  // for calculating CPS
-        QList<int> m_transferLogTime;
-        QList<KIO::fileoffset_t> m_transferLogPosition;
-
-        transferspeed_t m_averageSpeed;
-        transferspeed_t m_currentSpeed;
-        int m_timeLeft;
-};
-
-#endif  // DCCTRANSFER_H
+#endif  // TRANSFER_H
