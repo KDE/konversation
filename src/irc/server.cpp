@@ -285,8 +285,8 @@ void Server::connectSignals()
                 const QString&, const QString&, const QString&, const QString&, bool)),
             konvApp->getConnectionManager(), SLOT(connectTo(Konversation::ConnectionFlag,
                 const QString&, const QString&, const QString&, const QString&, const QString&, bool)));
-    connect(konvApp->getDccTransferManager(), SIGNAL(newTransferQueued(Transfer*)),
-            this, SLOT(slotNewTransferItemQueued(Transfer*)));
+    connect(konvApp->getDccTransferManager(), SIGNAL(newTransferQueued(DCC::Transfer*)),
+            this, SLOT(slotNewDccTransferItemQueued(DCC::Transfer*)));
 
     connect(konvApp, SIGNAL(appearanceChanged()), this, SLOT(startNotifyTimer()));
 
@@ -1711,8 +1711,8 @@ void Server::slotNewDccTransferItemQueued(DCC::Transfer* transfer)
         }
         else
         {
-            connect( transfer, SIGNAL( done( Transfer* ) ), this, SLOT( dccSendDone( Transfer* ) ) );
-            connect( transfer, SIGNAL( statusChanged( Transfer*, int, int ) ), this, SLOT( dccStatusChanged( Transfer*, int, int ) ) );
+            connect( transfer, SIGNAL( done( DCC::Transfer* ) ), this, SLOT( dccSendDone( DCC::Transfer* ) ) );
+            connect( transfer, SIGNAL( statusChanged( DCC::Transfer*, int, int ) ), this, SLOT( dccStatusChanged( DCC::Transfer*, int, int ) ) );
         }
     }
 }
