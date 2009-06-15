@@ -245,7 +245,7 @@ namespace Konversation
             kDebug() << oldStatus << " -> " << newStatus << " " << item->getFileName() << " (" << item->getType() << ")";
 
             if ( newStatus == Transfer::Queued )
-                emit newTransferQueued( item );
+                emit newDccTransferQueued( item );
         }
 
         void TransferManager::slotSettingsChanged()

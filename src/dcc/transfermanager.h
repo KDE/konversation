@@ -51,7 +51,7 @@ namespace Konversation
                 /*
                  * The status of the item is DccTransfer::Queued when this signal is emitted.
                  */
-                void newTransferQueued( Transfer* transfer );
+                void newDccTransferQueued( Transfer* transfer );
 
                 void fileURLChanged( TransferRecv* transfer );
 
