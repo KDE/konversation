@@ -254,6 +254,12 @@ Enjoy, and don't forget to report any bugs you encounter!
 * Rewrote multi-line paste editor, improving handling and appearance.
 * Added button to intelligently replace line breaks with spaces to the multi-
   line paste editor.
+* Fixed crash when opening links with ' in them when the "Custom Browser" pre-
+  ference is enabled in Konversation's config dialog.
+* Improved consistency of link opening behavior between the chat view, the to-
+  pic label and the URL catcher (all three now use the new-in-KDE-4 KToolInvo-
+  cation API to invoke the KDE default browser, whereas the topic label and
+  the URL catcher were still using KRun until now).
 
 
 Changes from 1.0.1 to 1.1:
