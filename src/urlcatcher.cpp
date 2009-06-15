@@ -23,8 +23,6 @@
 #include <QTreeWidget>
 #include <QLayout>
 
-#include <KRun>
-#include <KShell>
 #include <KFileDialog>
 #include <KTreeWidgetSearchLine>
 
@@ -132,24 +130,8 @@ void UrlCatcher::addUrl(const QString& who,const QString& url)
 void UrlCatcher::openUrl(QTreeWidgetItem* item)
 {
     QString url = item->text(1);
-    if (!Preferences::self()->useCustomBrowser() || url.toLower().startsWith(QLatin1String("mailto:")) )
-    {
-        new KRun(KUrl(url), Application::instance()->getMainWindow());
-    }
-    else
-    {
-        QString cmd = Preferences::webBrowserCmd();
-        cmd.replace("%u", url);
-        KProcess *proc = new KProcess;
-        QStringList cmdAndArgs = KShell::splitArgs(cmd);
-        *proc << cmdAndArgs;
-        //    This code will also work, but starts an extra shell process.
-        //    kDebug() "cmd = " << cmd;
-        //    *proc << cmd;
-        //    proc->setUseShell(true);
-        proc->startDetached();
-        delete proc;
-    }
+
+    Application::openUrl(url);
 }
 
 void UrlCatcher::openUrlClicked()

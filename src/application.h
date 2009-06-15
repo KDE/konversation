@@ -121,6 +121,7 @@ class Application : public KUniqueApplication
 
         int newInstance();
 
+        static void openUrl(const QString& url);
 
     signals:
         void catchUrl(const QString& who,const QString& url);

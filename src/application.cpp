@@ -42,6 +42,10 @@
 #include <KStandardDirs>
 #include <KMessageBox>
 #include <KIconLoader>
+#include <KShell>
+#include <KToolInvocation>
+#include <KCharMacroExpander>
+
 
 using namespace Konversation;
 
@@ -968,6 +972,30 @@ QString Application::doAutoreplace(const QString& text,bool output)
     }
 
   return line;
+}
+
+void Application::openUrl(const QString& url)
+{
+    if (!Preferences::self()->useCustomBrowser() || url.startsWith(QLatin1String("mailto:")))
+    {
+        if (url.startsWith(QLatin1String("mailto:")))
+            KToolInvocation::invokeMailer(KUrl(url));
+        else
+            KToolInvocation::invokeBrowser(url);
+    }
+    else
+    {
+        QHash<QChar,QString> map;
+        map.insert('u', url);
+        const QString cmd = KMacroExpander::expandMacrosShellQuote(Preferences::self()->webBrowserCmd(), map);
+        const QStringList args = KShell::splitArgs(cmd);
+
+        if (!args.isEmpty())
+        {
+            KProcess::startDetached(args);
+            return;
+        }
+    }
 }
 
 #include "application.moc"

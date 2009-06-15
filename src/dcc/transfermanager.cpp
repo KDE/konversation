@@ -18,6 +18,7 @@
 #include "upnpmcastsocket.h"
 #include "upnprouter.h"
 
+
 using namespace Konversation::UPnP;
 
 namespace Konversation

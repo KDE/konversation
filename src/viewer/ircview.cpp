@@ -42,15 +42,12 @@
 #include <KUrl>
 #include <KBookmarkManager>
 #include <kbookmarkdialog.h>
-#include <KRun>
-#include <KShell>
 #include <KIconLoader>
 #include <KMenu>
 #include <KGlobalSettings>
 #include <KFileDialog>
 #include <KAuthorized>
 #include <KActionCollection>
-#include <KToolInvocation>
 #include <KToggleAction>
 #include <KIO/CopyJob>
 
@@ -1050,24 +1047,8 @@ void IRCView::openLink(const QString& url, bool)
             Application* konvApp = Application::instance();
             konvApp->getConnectionManager()->connectTo(Konversation::SilentlyReuseConnection, link);
         }
-        else if (!Preferences::self()->useCustomBrowser() || link.startsWith(QLatin1String("mailto:")))
-        {
-            if (link.startsWith(QLatin1String("mailto:")))
-                KToolInvocation::invokeMailer(KUrl(link));
-            else
-                KToolInvocation::invokeBrowser(link);
-        }
         else
-        {
-            QString cmd = Preferences::self()->webBrowserCmd();
-            cmd.replace("%u", link);
-            QStringList cmdAndArgs = KShell::splitArgs(cmd);
-            //      This code will also work, but starts an extra shell process.
-            //      kdDebug() << "cmd = " << cmd;
-            //      *proc << cmd;
-            //      proc->setUseShell(true);
-            KProcess::startDetached(cmdAndArgs);
-        }
+            Application::openUrl(link);
     }
     //FIXME: Don't do channel links in DCC Chats to begin with since they don't have a server.
     else if (link.startsWith(QLatin1String("##")) && m_server && m_server->isConnected())

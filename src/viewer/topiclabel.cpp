@@ -23,8 +23,6 @@
 #include <QMenu>
 #include <QTextDocument>
 
-#include <KRun>
-#include <KProcess>
 #include <KStringHandler>
 #include <KGlobal>
 #include <KMenu>
@@ -100,20 +98,8 @@ namespace Konversation
                 m_server->sendJoinCommand(channel);
             }
             // Always use KDE default mailer.
-            else if (!Preferences::self()->useCustomBrowser() || link.toLower().startsWith(QLatin1String("mailto:")))
-            {
-                new KRun(KUrl(link), this);
-            }
             else
-            {
-                QString cmd = Preferences::webBrowserCmd();
-                cmd.replace("%u",KUrl(link).url());
-                KProcess *proc = new KProcess;
-                QStringList cmdAndArgs = KShell::splitArgs(cmd);
-                *proc << cmdAndArgs;
-                proc->startDetached();
-                delete proc;
-            }
+                Application::openUrl(link);
         }
     }
 
