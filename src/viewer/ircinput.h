@@ -62,6 +62,7 @@ class IRCInput : public KTextEdit
         void insertCompletion(const QString& nick);
         void disableSpellChecking();
         virtual void slotSpellCheckDone(const QString& s);
+        void setSpellChecking(bool set);
 
         void maybeResize();
 

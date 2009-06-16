@@ -106,12 +106,11 @@ void IRCInput::showEvent(QShowEvent* /* e */)
 {
     m_disableSpellCheckTimer->stop();
     setCheckSpellingEnabled(Preferences::self()->spellChecking());
+    connect(this, SIGNAL(checkSpellingChanged(bool)), this, SLOT(setSpellChecking(bool)));
 }
 
 void IRCInput::hideEvent(QHideEvent* /* event */)
 {
-    Preferences::self()->setSpellChecking(checkSpellingEnabled());
-
     // If we disable spell-checking here immediately, tab switching will
     // be very slow. If we delay it by five seconds, a user would have to
     // need more than five seconds to switch between all his tabs before
@@ -122,6 +121,11 @@ void IRCInput::hideEvent(QHideEvent* /* event */)
     // the problem on the surface. In the KDE 4 version, we want to look
     // into having only one spell-checker instance instead of starting and
     // stopping at all.
+
+    //TODO FIXME when we get to require 4.2 the above is possible with
+    //KTextEditSpellInterface and is actually quite easy to do.
+
+    disconnect(SIGNAL(checkSpellingChanged(bool)));
     m_disableSpellCheckTimer->setSingleShot(true);
     m_disableSpellCheckTimer->start(5000);
 }
@@ -130,6 +134,12 @@ void IRCInput::disableSpellChecking()
 {
     setCheckSpellingEnabled(false);
 }
+
+void IRCInput::setSpellChecking(bool set)
+{
+    Preferences::self()->setSpellChecking(set);
+}
+
 void IRCInput::slotSpellCheckDone(const QString& s)
 {
     // NOTE: kdelibs 3.5's KSpell stupidly adds newlines to its
