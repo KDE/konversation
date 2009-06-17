@@ -54,6 +54,9 @@ Changes since 1.2-alpha3:
   pic label and the URL catcher (all three now use the new-in-KDE-4 KToolInvo-
   cation API to invoke the KDE default browser, whereas the topic label and
   the URL catcher were still using KRun until now).
+* Fixed a bug that could cause the state of the spell-checking setting for
+  the input line to be lost across application restarts.
+* Added support for considering square brackets ([]) part of URLs.
 
 
 Changes from 1.2-alpha2 to 1.2-alpha3:
