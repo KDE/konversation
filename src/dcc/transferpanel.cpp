@@ -47,7 +47,7 @@ namespace Konversation
 
             initGUI();
 
-            connect( Application::instance()->getDccTransferManager(), SIGNAL( newTransferAdded( Transfer* ) ), this, SLOT( slotNewTransferAdded( Transfer* ) ) );
+            connect( Application::instance()->getDccTransferManager(), SIGNAL( newTransferAdded( Konversation::DCC::Transfer* ) ), this, SLOT( slotNewTransferAdded( Konversation::DCC::Transfer* ) ) );
         }
 
         TransferPanel::~TransferPanel()
@@ -169,7 +169,7 @@ namespace Konversation
         void TransferPanel::slotNewTransferAdded( Transfer* transfer )
         {
             TransferPanelItem* item = new TransferPanelItem( this, transfer );
-            connect( transfer, SIGNAL( statusChanged( Transfer*, int, int ) ), this, SLOT( slotTransferStatusChanged() ) );
+            connect( transfer, SIGNAL( statusChanged( Konversation::DCC::Transfer*, int, int ) ), this, SLOT( slotTransferStatusChanged() ) );
             if ( m_listView->childCount() == 1 )
             {
                 m_listView->clearSelection();

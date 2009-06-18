@@ -37,7 +37,7 @@ namespace Konversation
                 void updateView();
                 // Only updates labels that can change during transfer
                 void updateChangeableView();
-                void slotTransferStatusChanged( Transfer* transfer, int newStatus, int oldStatus );
+                void slotTransferStatusChanged( Konversation::DCC::Transfer* transfer, int newStatus, int oldStatus );
                 void slotLocationChanged( const QString& url );
 
             private:

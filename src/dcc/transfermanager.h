@@ -20,16 +20,19 @@
 #define TRANSFERMANAGER_H
 
 #include "transfer.h"
-#include "upnpmcastsocket.h"
 
 #include <QObject>
-
-using namespace Konversation::UPnP;
 
 class KUrl;
 
 namespace Konversation
 {
+    namespace UPnP
+    {
+        class UPnPMCastSocket;
+        class UPnPRouter;
+    }
+
     namespace DCC
     {
         class TransferRecv;
@@ -47,13 +50,13 @@ namespace Konversation
                 /*
                  * The status of the item is DccTransfer::Configuring when this signal is emitted.
                  */
-                void newTransferAdded( Transfer* transfer );
+                void newTransferAdded( Konversation::DCC::Transfer* transfer );
                 /*
                  * The status of the item is DccTransfer::Queued when this signal is emitted.
                  */
-                void newDccTransferQueued( Transfer* transfer );
+                void newDccTransferQueued( Konversation::DCC::Transfer* transfer );
 
-                void fileURLChanged( TransferRecv* transfer );
+                void fileURLChanged( Konversation::DCC::TransferRecv* transfer );
 
             public:
                 TransferRecv* newDownload();
@@ -79,7 +82,7 @@ namespace Konversation
 
                 bool hasActiveTransfers();
 
-                UPnPRouter *getUPnPRouter() { return m_upnpRouter; }
+                UPnP::UPnPRouter *getUPnPRouter() { return m_upnpRouter; }
                 void startupUPnP(void);
                 void shutdownUPnP(void);
 
@@ -90,20 +93,20 @@ namespace Konversation
                 void initTransfer( Transfer* transfer );
 
             private slots:
-                void slotTransferStatusChanged( Transfer* item, int newStatus, int oldStatus );
-                void removeSendItem( Transfer* item );
-                void removeRecvItem( Transfer* item );
+                void slotTransferStatusChanged( Konversation::DCC::Transfer* item, int newStatus, int oldStatus );
+                void removeSendItem( Konversation::DCC::Transfer* item );
+                void removeRecvItem( Konversation::DCC::Transfer* item );
 
                 void slotSettingsChanged();
 
-                void upnpRouterDiscovered(UPnPRouter *router);
+                void upnpRouterDiscovered(Konversation::UPnP::UPnPRouter *router);
 
             private:
                 QList< TransferSend* > m_sendItems;
                 QList< TransferRecv* > m_recvItems;
 
-                UPnPMCastSocket *m_upnpSocket;
-                UPnPRouter *m_upnpRouter;
+                UPnP::UPnPMCastSocket *m_upnpSocket;
+                UPnP::UPnPRouter *m_upnpRouter;
 
                 int m_nextReverseTokenNumber;
                 KUrl m_defaultIncomingFolder;  // store here to know if this settings is changed

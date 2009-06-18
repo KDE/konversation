@@ -48,11 +48,11 @@ namespace Konversation
             m_progressBar->setMaximum(100);
             m_progressBar->setTextVisible( true );
 
-            connect( m_transfer, SIGNAL( transferStarted( Transfer* ) ), this, SLOT( startAutoViewUpdate() ) );
-            connect( m_transfer, SIGNAL( done( Transfer* ) ), this, SLOT( stopAutoViewUpdate() ) );
-            connect( m_transfer, SIGNAL( done( Transfer* ) ), this, SLOT( backupTransferInfo( Transfer* ) ) );
+            connect( m_transfer, SIGNAL( transferStarted( Konversation::DCC::Transfer* ) ), this, SLOT( startAutoViewUpdate() ) );
+            connect( m_transfer, SIGNAL( done( Konversation::DCC::Transfer* ) ), this, SLOT( stopAutoViewUpdate() ) );
+            connect( m_transfer, SIGNAL( done( Konversation::DCC::Transfer* ) ), this, SLOT( backupTransferInfo( Konversation::DCC::Transfer* ) ) );
 
-            connect( m_transfer, SIGNAL( statusChanged( Transfer*, int, int ) ), this, SLOT( slotStatusChanged( Transfer*, int, int ) ) );
+            connect( m_transfer, SIGNAL( statusChanged( Konversation::DCC::Transfer*, int, int ) ), this, SLOT( slotStatusChanged( Konversation::DCC::Transfer*, int, int ) ) );
 
             updateView();
         }

@@ -64,7 +64,7 @@ namespace Konversation
             * Emitted when a router or internet gateway device is detected.
             * @param router The router
             */
-            void discovered(UPnPRouter* router);
+            void discovered(Konversation::UPnP::UPnPRouter* router);
 
         public:
             UPnPRouter* parseResponse(const QByteArray & arr);

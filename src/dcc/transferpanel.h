@@ -59,7 +59,7 @@ namespace Konversation
                 K3ListView* getListView();
 
             protected slots:
-                void slotNewTransferAdded( Transfer* transfer );
+                void slotNewTransferAdded( Konversation::DCC::Transfer* transfer );
                 void slotTransferStatusChanged();
 
                 void acceptDcc();

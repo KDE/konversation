@@ -38,7 +38,7 @@ namespace Konversation
             m_autoViewUpdateTimer = new QTimer( this );
 
             connect( m_urlreqLocation, SIGNAL( textChanged( const QString& ) ), this, SLOT( slotLocationChanged( const QString& ) ) );
-            connect( Application::instance()->getDccTransferManager(), SIGNAL( fileURLChanged( TransferRecv* ) ),
+            connect( Application::instance()->getDccTransferManager(), SIGNAL( fileURLChanged( Konversation::DCC::TransferRecv* ) ),
                      this, SLOT( updateView() ) );  // it's a little rough..
 
             //only enable when needed
@@ -69,7 +69,7 @@ namespace Konversation
             // otherwise the information will not be updated every 0.5sec
             if (m_item->transfer()->getStatus() == Transfer::Transferring)
                 m_autoViewUpdateTimer->start( 500 );
-            connect( m_item->transfer(), SIGNAL( statusChanged( Transfer*, int, int ) ), this, SLOT( slotTransferStatusChanged( Transfer*, int, int ) ) );
+            connect( m_item->transfer(), SIGNAL( statusChanged( Konversation::DCC::Transfer*, int, int ) ), this, SLOT( slotTransferStatusChanged( Konversation::DCC::Transfer*, int, int ) ) );
 
             updateView();
         }

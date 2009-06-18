@@ -285,8 +285,8 @@ void Server::connectSignals()
                 const QString&, const QString&, const QString&, const QString&, bool)),
             konvApp->getConnectionManager(), SLOT(connectTo(Konversation::ConnectionFlag,
                 const QString&, const QString&, const QString&, const QString&, const QString&, bool)));
-    connect(konvApp->getDccTransferManager(), SIGNAL(newDccTransferQueued(Transfer*)),
-            this, SLOT(slotNewDccTransferItemQueued(DCC::Transfer*)));
+                connect(konvApp->getDccTransferManager(), SIGNAL(newDccTransferQueued(Konversation::DCC::Transfer*)),
+                        this, SLOT(slotNewDccTransferItemQueued(Konversation::DCC::Transfer*)));
 
     connect(konvApp, SIGNAL(appearanceChanged()), this, SLOT(startNotifyTimer()));
 
@@ -1706,13 +1706,13 @@ void Server::slotNewDccTransferItemQueued(DCC::Transfer* transfer)
         kDebug() << "connecting slots for " << transfer->getFileName() << " [" << transfer->getType() << "]";
         if ( transfer->getType() == DCC::Transfer::Receive )
         {
-            connect( transfer, SIGNAL( done( Transfer* ) ), this, SLOT( dccGetDone( DCC::Transfer* ) ) );
-            connect( transfer, SIGNAL( statusChanged( Transfer*, int, int ) ), this, SLOT( dccStatusChanged( DCC::Transfer*, int, int ) ) );
+            connect( transfer, SIGNAL( done( Konversation::DCC::Transfer* ) ), this, SLOT( dccGetDone( Konversation::DCC::Transfer* ) ) );
+            connect( transfer, SIGNAL( statusChanged( Konversation::DCC::Transfer*, int, int ) ), this, SLOT( dccStatusChanged( Konversation::DCC::Transfer*, int, int ) ) );
         }
         else
         {
-            connect( transfer, SIGNAL( done( Transfer* ) ), this, SLOT( dccSendDone( DCC::Transfer* ) ) );
-            connect( transfer, SIGNAL( statusChanged( Transfer*, int, int ) ), this, SLOT( dccStatusChanged( DCC::Transfer*, int, int ) ) );
+            connect( transfer, SIGNAL( done( Konversation::DCC::Transfer* ) ), this, SLOT( dccSendDone( Konversation::DCC::Transfer* ) ) );
+            connect( transfer, SIGNAL( statusChanged( Konversation::DCC::Transfer*, int, int ) ), this, SLOT( dccStatusChanged( Konversation::DCC::Transfer*, int, int ) ) );
         }
     }
 }

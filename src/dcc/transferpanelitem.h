@@ -68,7 +68,7 @@ namespace Konversation
                 static QString secToHMS( long sec );
 
             private slots:
-                void slotStatusChanged( Transfer* transfer, int newStatus, int oldStatus );
+                void slotStatusChanged( Konversation::DCC::Transfer* transfer, int newStatus, int oldStatus );
                 void updateView();
 
             private:
@@ -80,7 +80,7 @@ namespace Konversation
                 void startAutoViewUpdate();
                 void stopAutoViewUpdate();
 
-                void backupTransferInfo( Transfer* transfer );
+                void backupTransferInfo( Konversation::DCC::Transfer* transfer );
 
             private:
                 void updateTransferInfo();

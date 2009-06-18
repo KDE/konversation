@@ -53,6 +53,7 @@ connectToSender()
 connectionSuccess()  : called by recvSocket
 
 */
+
 namespace Konversation
 {
     namespace DCC
@@ -100,7 +101,7 @@ namespace Konversation
 
                 if (m_reverse && Preferences::self()->dccUPnP())
                 {
-                    UPnPRouter *router = Application::instance()->getDccTransferManager()->getUPnPRouter();
+                    UPnP::UPnPRouter *router = Application::instance()->getDccTransferManager()->getUPnPRouter();
                     if (router) router->undoForward(m_ownPort, QAbstractSocket::TcpSocket);
                 }
             }
@@ -492,7 +493,7 @@ namespace Konversation
 
                 if (Preferences::self()->dccUPnP())
                 {
-                    UPnPRouter *router = Application::instance()->getDccTransferManager()->getUPnPRouter();
+                    UPnP::UPnPRouter *router = Application::instance()->getDccTransferManager()->getUPnPRouter();
 
                     if (router && router->forward(QHostAddress(server->getOwnIpByNetworkInterface()), m_ownPort, QAbstractSocket::TcpSocket))
                         connect(router, SIGNAL( forwardComplete(bool, quint16 ) ), this, SLOT ( sendReverseAck(bool, quint16 ) ) );
@@ -636,7 +637,7 @@ namespace Konversation
 
             if (Preferences::self()->dccUPnP())
             {
-                UPnPRouter *router = Application::instance()->getDccTransferManager()->getUPnPRouter();
+                UPnP::UPnPRouter *router = Application::instance()->getDccTransferManager()->getUPnPRouter();
                 if (router) router->undoForward(m_ownPort, QAbstractSocket::TcpSocket);
             }
 

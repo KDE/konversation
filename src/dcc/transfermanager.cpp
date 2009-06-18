@@ -55,8 +55,8 @@ namespace Konversation
         {
             m_upnpSocket = new UPnPMCastSocket();
 
-            connect(m_upnpSocket, SIGNAL( discovered(UPnPRouter *) ),
-                    this, SLOT( upnpRouterDiscovered(UPnPRouter *) ) );
+            connect(m_upnpSocket, SIGNAL( discovered(Konversation::UPnP::UPnPRouter *) ),
+                    this, SLOT( upnpRouterDiscovered(Konversation::UPnP::UPnPRouter *) ) );
 
             m_upnpSocket->discover();
         }
@@ -73,7 +73,7 @@ namespace Konversation
         {
             TransferRecv* transfer = new TransferRecv(this);
             m_recvItems.push_back( transfer );
-            connect( transfer, SIGNAL( done( Transfer* ) ), this, SLOT( removeRecvItem( Transfer* ) ) );
+            connect( transfer, SIGNAL( done( Konversation::DCC::Transfer* ) ), this, SLOT( removeRecvItem( Konversation::DCC::Transfer* ) ) );
             initTransfer( transfer );
             return transfer;
         }
@@ -82,7 +82,7 @@ namespace Konversation
         {
             TransferSend* transfer = new TransferSend(this);
             m_sendItems.push_back( transfer );
-            connect( transfer, SIGNAL( done( Transfer* ) ), this, SLOT( removeSendItem( Transfer* ) ) );
+            connect( transfer, SIGNAL( done( Konversation::DCC::Transfer* ) ), this, SLOT( removeSendItem( Konversation::DCC::Transfer* ) ) );
             initTransfer( transfer );
             return transfer;
         }
@@ -199,7 +199,7 @@ namespace Konversation
 
         void TransferManager::initTransfer( Transfer* transfer )
         {
-            connect( transfer, SIGNAL( statusChanged( Transfer*, int, int ) ), this, SLOT( slotTransferStatusChanged( Transfer*, int, int ) ) );
+            connect( transfer, SIGNAL( statusChanged( Konversation::DCC::Transfer*, int, int ) ), this, SLOT( slotTransferStatusChanged( Konversation::DCC::Transfer*, int, int ) ) );
 
             emit newTransferAdded( transfer );
         }

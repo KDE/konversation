@@ -101,9 +101,9 @@ namespace Konversation
                 void setPartnerNick( const QString& nick );
 
             signals:
-                void transferStarted( Transfer* item );
-                void done( Transfer* item );
-                void statusChanged( Transfer* item, int newStatus, int oldStatus );
+                void transferStarted( Konversation::DCC::Transfer* item );
+                void done( Konversation::DCC::Transfer* item );
+                void statusChanged( Konversation::DCC::Transfer* item, int newStatus, int oldStatus );
 
             public slots:
                 virtual bool queue();
