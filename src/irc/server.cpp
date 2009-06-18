@@ -3193,7 +3193,7 @@ void Server::updateAutoJoin(Konversation::ChannelSettings channel)
             //channels.count() and passwords.count() account for the commas
             if (length + currentLength + 6 + channels.count() + passwords.count() >= 512) // 6: "JOIN " plus separating space between chans and pws.
             {
-                if (passwords.last() == ".") passwords.pop_back();
+                while (passwords.last() == ".") passwords.pop_back();
 
                 joinCommands << "JOIN " + channels.join(",") + ' ' + passwords.join(",");
 
