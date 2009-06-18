@@ -421,7 +421,6 @@ namespace Konversation
             m_partnerIp = m_sendSocket->peerAddress().toString();
             m_partnerPort = m_sendSocket->peerPort();
             m_ownPort = m_sendSocket->localPort();
-            m_ownIp = m_sendSocket->localAddress().toString();
 
             if ( m_file.open( QIODevice::ReadOnly ) )
             {
