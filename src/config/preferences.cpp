@@ -185,6 +185,9 @@ QList<int> Preferences::serverGroupIdsByName(const QString& serverGroup)
         if(it.next().value()->name().toLower() == serverGroup.toLower())
             serverIds.append(it.key());
     }
+    if (serverIds.isEmpty())
+        serverIds.append(-1);
+
     return serverIds;
 }
 
