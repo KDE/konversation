@@ -3184,18 +3184,14 @@ void Server::updateAutoJoin(Konversation::ChannelSettings channel)
 
         for (it = tmpList.begin(); it != tmpList.end(); ++it)
         {
-            QString channel = (*it).name();;
+            QString channel = (*it).name();
             QString password = ((*it).password().isEmpty() ? "." : (*it).password());
 
-            length += getIdentity()->getCodec()->fromUnicode(channel).length();
-            length += getIdentity()->getCodec()->fromUnicode(password).length();
+            uint currentLength = getIdentity()->getCodec()->fromUnicode(channel).length();
+            currentLength += getIdentity()->getCodec()->fromUnicode(password).length();
 
-            if (length + 6 < 512) // 6: "JOIN " plus separating space between chans and pws.
-            {
-                channels << channel;
-                passwords << password;
-            }
-            else
+            //channels.count() and passwords.count() account for the commas
+            if (length + currentLength + 6 + channels.count() + passwords.count() >= 512) // 6: "JOIN " plus separating space between chans and pws.
             {
                 if (passwords.last() == ".") passwords.pop_back();
 
@@ -3204,17 +3200,14 @@ void Server::updateAutoJoin(Konversation::ChannelSettings channel)
                 channels.clear();
                 passwords.clear();
 
-                channels << channel;
-                passwords << password;
-
                 length = 0;
-
-                length += getIdentity()->getCodec()->fromUnicode(channel).length();
-                length += getIdentity()->getCodec()->fromUnicode(password).length();
             }
-        }
 
-        if (passwords.last() == ".") passwords.pop_back();
+            length += currentLength;
+
+            channels << channel;
+            passwords << password;
+        }
 
         joinCommands << "JOIN " + channels.join(",") + ' ' + passwords.join(",");
 

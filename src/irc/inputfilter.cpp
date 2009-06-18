@@ -881,11 +881,10 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     // This is the string the user will see
                     QString modesAre;
                     QString message = i18n("Channel modes: ") + modeString;
-
+                    int parameterCount=3;
                     for (int index=0;index<modeString.length();index++)
                     {
                         QString parameter;
-                        int parameterCount=3;
                         char mode(modeString[index].toAscii());
                         if(mode!='+')
                         {
