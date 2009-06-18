@@ -666,6 +666,7 @@ namespace Konversation
             m_fileName = m_saveFileName;
 
             m_ownPort = m_recvSocket->localPort();
+            m_ownIp = m_recvSocket->localAddress().toString();
 
             startTransferLogger();                          // initialize CPS counter, ETA counter, etc...
 
