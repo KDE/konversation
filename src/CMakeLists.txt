@@ -203,6 +203,8 @@ kde4_add_ui_files(konversation_SRCS
 
 kde4_add_kcfg_files(konversation_SRCS config/preferences_base.kcfgc)
 
+kde4_add_app_icon(konversation_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/../data/images/icons/hi*-app-konversation.png")
+
 kde4_add_executable(konversation ${konversation_SRCS})
 
 target_link_libraries(konversation ${KDE4_KIO_LIBS} ${KDE4_KUTILS_LIBS} ${KDE4_KPARTS_LIBS}
