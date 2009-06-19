@@ -57,6 +57,14 @@ Changes since 1.2-alpha3:
 * Fixed a bug that could cause the state of the spell-checking setting for
   the input line to be lost across application restarts.
 * Added support for considering square brackets ([]) part of URLs.
+* Fixed the code producing multiple JOIN commands for auto-join as neces-
+  sary to stay under the 512 byte limit for a single command to take the
+  length of the commas in the commands into account when calculating the
+  distribution of the channels among the multiple lines, as well as not
+  to list channels falling at the boundary twice, once in the current and
+  once in the following line.
+* Fixed a bug causing re-joining of password-protected channels to fail
+  on reconnects when those channels also had a user limit set.
 
 
 Changes from 1.2-alpha2 to 1.2-alpha3:
