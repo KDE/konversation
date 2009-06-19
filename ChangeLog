@@ -62,9 +62,11 @@ Changes since 1.2-alpha3:
   length of the commas in the commands into account when calculating the
   distribution of the channels among the multiple lines, as well as not
   to list channels falling at the boundary twice, once in the current and
-  once in the following line.
+  once in the following line. In English: Fixed auto-join with a massive
+  amount of channels possibly not joining all channels correctly.
 * Fixed a bug causing re-joining of password-protected channels to fail
-  on reconnects when those channels also had a user limit set.
+  on reconnects when those channels also had another mode with a parame-
+  ter said.
 
 
 Changes from 1.2-alpha2 to 1.2-alpha3:
