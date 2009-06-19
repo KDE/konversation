@@ -66,7 +66,7 @@ Changes since 1.2-alpha3:
   amount of channels possibly not joining all channels correctly.
 * Fixed a bug causing re-joining of password-protected channels to fail
   on reconnects when those channels also had another mode with a parame-
-  ter said.
+  ter set.
 
 
 Changes from 1.2-alpha2 to 1.2-alpha3:
