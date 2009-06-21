@@ -544,8 +544,8 @@ void Query::nickInfoChanged()
         m_nickInfo->tooltipTableData(tooltip);
 
         tooltip << "</table></qt>";
-        queryHostmask->setStatusTip(strTooltip);
-        addresseeimage->setStatusTip(strTooltip);
+        queryHostmask->setToolTip(strTooltip);
+        addresseeimage->setToolTip(strTooltip);
         addresseelogoimage->setToolTip(strTooltip);
 
     }

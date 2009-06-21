@@ -73,6 +73,10 @@ Changes since 1.2-alpha3:
 * Fixed a bug causing query lines written by the user that are so long they
   need to be split up into multiple messages for sending not to be displayed
   in the configured query text color.
+* Fixed the status bar showing HTML data when hovering the contents of the
+  info label area at the top of query tabs. The data was actually supposed
+  to be displayed as a tooltip (just like the nickname list item tooltips
+  in channel tabs), and is now.
 
 
 Changes from 1.2-alpha2 to 1.2-alpha3:
