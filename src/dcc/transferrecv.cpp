@@ -568,7 +568,7 @@ namespace Konversation
             if ( (unsigned long)m_transferringPosition != position )
             {
                 kDebug() << "TransferRecv::startResume(): remote responsed an unexpected position"<< endl
-                    << "TransferRecv::startResume(): expected: " << QString::number( m_transferringPosition ) << endl
+                    << "TransferRecv::startResume(): expected: " << m_transferringPosition << endl
                     << "TransferRecv::startResume(): remote response: " << position;
                 failed( i18n( "Unexpected response from remote host" ) );
                 return;
@@ -715,7 +715,7 @@ namespace Konversation
             }
             else if ( m_transferringPosition > (KIO::fileoffset_t)m_fileSize )
             {
-                kDebug() << "The remote host sent larger data than expected: " << QString::number( m_transferringPosition );
+                kDebug() << "The remote host sent larger data than expected: " << m_transferringPosition;
                 failed( i18n( "Transfer error" ) );
             }
         }

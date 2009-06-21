@@ -84,7 +84,10 @@ namespace Konversation
             stopConnectionTimer();
             finishTransferLogger();
             if ( !m_tmpFile.isEmpty() )
+            {
                 KIO::NetAccess::removeTempFile( m_tmpFile );
+            }
+
             m_tmpFile.clear();
             m_file.close();
             if ( m_sendSocket )
@@ -451,6 +454,7 @@ namespace Konversation
                     failed ( m_sendSocket->errorString() );
                     return;
                 }
+
                 //this "can" happen when resources are temporary unavailable
                 //NOTE: this is not fatal
                 if (byteWritten < actual)
@@ -459,6 +463,7 @@ namespace Konversation
                     kWarning() << "try to correct it with byteWritten += " << m_sendSocket->bytesToWrite();
                     byteWritten += m_sendSocket->bytesToWrite();
                 }
+
                 m_transferringPosition += byteWritten;
                 //m_transferringPosition += actual;
                 if ( (KIO::fileoffset_t)m_fileSize <= m_transferringPosition )
@@ -476,11 +481,14 @@ namespace Konversation
             {
                 writeData();
             }
+
             unsigned long pos;
             while ( m_sendSocket->bytesAvailable() >= 4 )
             {
                 m_sendSocket->read( (char*)&pos, 4 );
                 pos = intel( pos );
+
+                //kDebug() << pos  << "/" << m_fileSize;
                 if ( pos == m_fileSize )
                 {
                     kDebug() << "Received final ACK.";
@@ -495,16 +503,8 @@ namespace Konversation
         void TransferSend::slotGotSocketError( QAbstractSocket::SocketError errorCode )
         {
             stopConnectionTimer();
-            kDebug() << "code =  " << errorCode << " string = " << m_serverSocket->errorString();
-            if (errorCode == QAbstractSocket::RemoteHostClosedError)
-            {
-                //it has no Qt errorString (with Qt 4.5.1)
-                failed( i18n( "Remote user disconnected" ) );
-            }
-            else
-            {
-                failed( i18n( "Socket error: %1", m_serverSocket->errorString() ) );
-            }
+            kDebug() << "code =  " << errorCode << " string = " << m_sendSocket->errorString();
+            failed( i18n( "Socket error: %1", m_sendSocket->errorString() ) );
         }
 
         void TransferSend::startConnectionTimer( int sec )
