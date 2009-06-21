@@ -255,7 +255,7 @@ void Query::sendQueryText(const QString& sendLine)
             Q_ASSERT(result.type==Konversation::Message);
             for ( QStringList::ConstIterator it = result.outputList.constBegin(); it != result.outputList.constEnd(); ++it )
             {
-                append(m_server->getNickname(), *it);
+                appendQuery(m_server->getNickname(), *it);
             }
         }
 

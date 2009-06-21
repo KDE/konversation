@@ -67,6 +67,12 @@ Changes since 1.2-alpha3:
 * Fixed a bug causing re-joining of password-protected channels to fail
   on reconnects when those channels also had another mode with a parame-
   ter set.
+* Fixed a bug that caused query lines written by the user that are so long
+  that they need to be split up into multiple messages not to display in the
+  query text color.
+* Fixed a bug causing query lines written by the user that are so long they
+  need to be split up into multiple messages for sending not to be displayed
+  in the configured query text color.
 
 
 Changes from 1.2-alpha2 to 1.2-alpha3:
