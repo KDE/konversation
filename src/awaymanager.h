@@ -33,7 +33,7 @@ class AwayManager : public QObject
     public:
         explicit AwayManager(QObject* parent = 0);
         ~AwayManager();
-
+        void resetIdle();
 
     public slots:
         void identitiesChanged();

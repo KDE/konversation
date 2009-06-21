@@ -108,6 +108,11 @@ AwayManager::~AwayManager()
     delete d;
 }
 
+void AwayManager::resetIdle()
+{
+    m_idleTime.start();
+}
+
 void AwayManager::identitiesChanged()
 {
     QList<int> newIdentityList;

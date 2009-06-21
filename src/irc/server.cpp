@@ -40,6 +40,7 @@
 #include "serverison.h"
 #include "common.h"
 #include "notificationhandler.h"
+#include "awaymanager.h"
 #include <config-konversation.h>
 
 #ifdef HAVE_QCA2
@@ -3379,6 +3380,8 @@ void Server::setAway(bool away)
                 QString message = identity->getReturnMessage();
                 sendToAllChannels(message.replace(QRegExp("%t", Qt::CaseInsensitive), awayTime()));
             }
+            //reset idle timer
+            Application::instance()->getAwayManager()->resetIdle();
         }
         else
             appendMessageToFrontmost(i18n("Away"), i18n("You are not marked as being away."));
