@@ -93,11 +93,9 @@ namespace Konversation
                 void readData();
                 void sendAck();
                 void connectionTimeout();
-                //void slotSocketClosed(); //same as connectionFailed
 
                 // Reverse DCC
                 void slotServerSocketReadyAccept();
-                void slotServerSocketGotError( QAbstractSocket::SocketError errorCode );
 
                 void sendReverseAck(bool error, quint16 port);
 
@@ -145,10 +143,6 @@ namespace Konversation
 
                 ///We need the original name for resume communication, as sender depends on it
                 QString m_saveFileName;
-
-            private:
-                virtual QString getTypeText() const;
-                virtual QPixmap getTypeIcon() const;
         };
 
         class TransferRecvWriteCacheHandler : public QObject

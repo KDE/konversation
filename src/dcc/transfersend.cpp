@@ -284,8 +284,6 @@ namespace Konversation
                 }
 
                 connect( m_serverSocket, SIGNAL( newConnection() ),   this, SLOT( acceptClient() ) );
-                //connect( m_serverSocket, SIGNAL( gotError( int ) ), this, SLOT( slotGotSocketError( int ) ) );
-                //connect( m_serverSocket, SIGNAL( closed() ),        this, SLOT( slotServerSocketClosed() ) );
 
                 // Get own port number
                 m_ownPort = m_serverSocket->serverPort();
@@ -360,7 +358,7 @@ namespace Konversation
             m_sendSocket = new QTcpSocket( this );
 
             connect( m_sendSocket, SIGNAL( connected( ) ), this, SLOT( startSending() ) );
-            connect( m_sendSocket, SIGNAL( error( QAbstractSocket::SocketError ) ), this, SLOT( slotConnectionFailed( QAbstractSocket::SocketError ) ) );
+            connect( m_sendSocket, SIGNAL( error( QAbstractSocket::SocketError ) ), this, SLOT( slotGotSocketError( QAbstractSocket::SocketError ) ) );
 
             setStatus( Connecting );
 
@@ -418,8 +416,6 @@ namespace Konversation
             if ( m_fastSend )
                 connect( m_sendSocket, SIGNAL( bytesWritten( qint64 ) ), this, SLOT( writeData() ) );
             connect( m_sendSocket, SIGNAL( readyRead() ),  this, SLOT( getAck() ) );
-            //not needed, also covered by error signal
-            //connect( m_sendSocket, SIGNAL( disconnected() ), this, SLOT( slotSendSocketClosed() ) );
 
             m_partnerIp = m_sendSocket->peerAddress().toString();
             m_partnerPort = m_sendSocket->peerPort();
@@ -528,27 +524,6 @@ namespace Konversation
             kDebug();
             failed( i18n( "Timed out" ) );
         }
-
-        void TransferSend::slotConnectionFailed( QAbstractSocket::SocketError /* errorCode */ )
-        {
-            failed( i18n( "Connection failure: %1", m_sendSocket->errorString() ) );
-        }
-
-        void TransferSend::slotServerSocketClosed()
-        {
-            kDebug();
-        }
-
-        void TransferSend::slotSendSocketClosed()
-        {
-            kDebug();
-            finishTransferLogger();
-            if ( getStatus() == Transferring && m_transferringPosition < (KIO::fileoffset_t)m_fileSize )
-            {
-                failed( i18n( "Remote user disconnected" ) );
-            }
-        }
-
                                                           // protected, static
         QString TransferSend::getQFileErrorString( int code )
         {

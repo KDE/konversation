@@ -71,9 +71,6 @@ namespace Konversation
                 void getAck();
                 void slotGotSocketError( QAbstractSocket::SocketError errorCode );
                 void slotConnectionTimeout();
-                void slotConnectionFailed( QAbstractSocket::SocketError errorCode );
-                void slotSendSocketClosed();
-                void slotServerSocketClosed();
                 void sendRequest(bool error, quint16 port);
 
             protected:

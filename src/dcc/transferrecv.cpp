@@ -78,16 +78,6 @@ namespace Konversation
             cleanUp();
         }
 
-        QString TransferRecv::getTypeText() const
-        {
-            return i18n( "Receive" );
-        }
-
-        QPixmap TransferRecv::getTypeIcon() const
-        {
-            return KIconLoader::global()->loadIcon( "arrow-down",KIconLoader::Small );
-        }
-
         void TransferRecv::cleanUp()
         {
             kDebug();
@@ -644,21 +634,12 @@ namespace Konversation
             startReceiving();
         }
 
-        void TransferRecv::slotServerSocketGotError( QAbstractSocket::SocketError /* errorCode*/ )
-        {
-            failed( i18n( "Socket error: %1", m_serverSocket->errorString() ) );
-        }
-
         void TransferRecv::startReceiving()
         {
             kDebug();
             stopConnectionTimer();
 
             connect( m_recvSocket, SIGNAL( readyRead() ),                        this, SLOT( readData() )              );
-            //connect( m_recvSocket, SIGNAL( readyWrite() ),                       this, SLOT( sendAck() )               );
-
-            //Not needed, error is also emitted when this happens + covers more cases
-            //connect( m_recvSocket, SIGNAL( disconnected() ),                           this, SLOT( slotSocketClosed() )      );
 
             m_transferStartPosition = m_transferringPosition;
 
@@ -755,15 +736,6 @@ namespace Konversation
             kDebug();
             failed( i18n( "Timed out" ) );
         }
-
-        /*
-        void TransferRecv::slotSocketClosed()
-        {
-            finishTransferLogger();
-            if ( getStatus() == Transferring )
-                failed( i18n( "Remote user disconnected" ) );
-        }
-        */
 
         // WriteCacheHandler
 
