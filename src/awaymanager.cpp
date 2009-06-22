@@ -100,7 +100,7 @@ AwayManager::AwayManager(QObject* parent) : QObject(parent)
     m_activityTimer->setObjectName("AwayTimer");
     connect(m_activityTimer, SIGNAL(timeout()), this, SLOT(checkActivity()));
 
-    m_idleTime.start();
+    resetIdle();
 }
 
 AwayManager::~AwayManager()
@@ -247,7 +247,7 @@ void AwayManager::implementIdleAutoAway(bool activity)
 {
     if (activity)
     {
-        m_idleTime.start();
+        resetIdle();
 
         const QList<Server*> serverList = m_connectionManager->getServerList();
 
@@ -344,6 +344,20 @@ void AwayManager::toggleGlobalAway(bool away)
 
 void AwayManager::updateGlobalAwayAction(bool away)
 {
+    // FIXME: For now, our only triggers for resetting the idle time
+    // are mouse movement and the screensaver getting disabled. This
+    // means that typing '/unaway' or '/back' does not reset the idle
+    // time and won't prevent AwayManager from setting a connection
+    // away again shortly after when its identity's maximum auto-away
+    // idle time, counted from the last mouse movement or screensaver
+    // deactivation rather than the actual last user activity (the key
+    // presses), has been exceeded. We work around this here by reset-
+    // ting the idle time whenever any connection changes its state to
+    // unaway in response to the server until we find a better solu-
+    // tion (i.e. a reliable way to let keyboard activity in the sys-
+    // tem reset the idle time).
+    if(!away) resetIdle();
+
     Application* konvApp = static_cast<Application*>(kapp);
     KToggleAction* awayAction = qobject_cast<KToggleAction*>(konvApp->getMainWindow()->actionCollection()->action("toggle_away"));
 

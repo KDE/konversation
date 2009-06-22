@@ -33,7 +33,8 @@ class AwayManager : public QObject
     public:
         explicit AwayManager(QObject* parent = 0);
         ~AwayManager();
-        void resetIdle();
+
+        void screensaverDisabled() { resetIdle(); }
 
     public slots:
         void identitiesChanged();
@@ -56,6 +57,7 @@ class AwayManager : public QObject
 
 
     private:
+        void resetIdle();
         void toggleTimer();
         bool Xactivity();
 

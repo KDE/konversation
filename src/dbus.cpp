@@ -165,13 +165,16 @@ QString DBus::getChannelEncoding(const QString& server, const QString& channel)
 
 void DBus::changeAwayStatus(bool away)
 {
-    if(away)
+    Application* konvApp = static_cast<Application*>(kapp);
+    
+    if (away)
     {
-        static_cast<Application*>(kapp)->getAwayManager()->setManagedIdentitiesAway();
+        konvApp->getAwayManager()->setManagedIdentitiesAway();
     }
     else
     {
-        static_cast<Application*>(kapp)->getAwayManager()->setManagedIdentitiesUnaway();
+        konvApp->getAwayManager()->screensaverDisabled();
+        konvApp->getAwayManager()->setManagedIdentitiesUnaway();
     }
 }
 
