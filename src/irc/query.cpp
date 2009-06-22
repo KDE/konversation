@@ -252,21 +252,30 @@ void Query::sendQueryText(const QString& sendLine)
         }
         else if (result.outputList.count())
         {
-            Q_ASSERT(result.type==Konversation::Message);
-            for ( QStringList::ConstIterator it = result.outputList.constBegin(); it != result.outputList.constEnd(); ++it )
+            if (result.type == Konversation::Message)
             {
-                appendQuery(m_server->getNickname(), *it);
+                QStringListIterator it(result.outputList);
+
+                while (it.hasNext())
+                    appendQuery(m_server->getNickname(), it.next());
+            }
+            else if (result.type == Konversation::Action)
+            {
+                for (int i = 0; i < result.outputList.count(); ++i)
+                {
+                    if (i == 0)
+                        appendAction(m_server->getNickname(), result.outputList.at(i));
+                    else
+                        appendQuery(m_server->getNickname(), result.outputList.at(i));
+                }
             }
         }
 
+        // Send anything else to the server
         if (!result.toServerList.empty())
-        {
             m_server->queueList(result.toServerList);
-        }
         else
-        {
             m_server->queue(result.toServer);
-        }
     } // for
 }
 

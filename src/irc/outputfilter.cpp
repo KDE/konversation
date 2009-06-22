@@ -89,7 +89,7 @@ namespace Konversation
         return false;
     }
 
-    QStringList OutputFilter::splitForEncoding(const QString& inputLine, int max)
+    QStringList OutputFilter::splitForEncoding(const QString& inputLine, int max, int segments)
     {
         int sublen = 0; //The encoded length since the last split
         int charLength = 0; //the length of this char
@@ -116,7 +116,7 @@ namespace Konversation
         Q_ASSERT(codec);
         int index = 0;
 
-        while(text.length() > max)
+        while(text.length() > max && (segments == -1 || finals.size() < segments-1))
         {
             // The most important bit - turn the current char into a QCString so we can measure it
             QByteArray ch = codec->fromUnicode(QString(text[index]));
@@ -613,16 +613,43 @@ namespace Konversation
     {
         OutputFilterResult result;
 
-        if (!destination.isEmpty() && !parameter.isEmpty())
+        if (destination.isEmpty() || parameter.isEmpty())
         {
-            result.toServer = "PRIVMSG " + destination + " :" + '\x01' + "ACTION " + parameter + '\x01';
-            result.output = parameter;
-            result.type = Action;
+            result = usage(i18n("Usage: %1ME text", commandChar));
+
+            return result;
+        }
+
+        QString command("PRIVMSGACTION \x01\x01");
+
+        QStringList outputList = splitForEncoding(parameter, m_server->getPreLength(command, destination), 2);
+
+        if (outputList.count() > 1)
+        {
+            command = "PRIVMSG";
+
+            outputList += splitForEncoding(outputList.at(1), m_server->getPreLength(command, destination));
+
+            outputList.removeAt(1);
+
+            result.output.clear();
+            result.outputList = outputList;
+
+            for (int i = 0; i < outputList.count(); ++i)
+            {
+                if (i == 0)
+                    result.toServerList += "PRIVMSG " + destination + " :" + '\x01' + "ACTION " + outputList.at(i) + '\x01';
+                else
+                    result.toServerList += "PRIVMSG " + destination + " :" + outputList.at(i);
+            }
         }
         else
         {
-            result = usage(i18n("Usage: %1ME text", commandChar));
+            result.output = parameter;
+            result.toServer = "PRIVMSG " + destination + " :" + '\x01' + "ACTION " + parameter + '\x01';
         }
+
+        result.type = Action;
 
         return result;
     }

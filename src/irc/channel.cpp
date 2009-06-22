@@ -1132,22 +1132,31 @@ void Channel::sendChannelText(const QString& sendLine)
         }
         else if (result.outputList.count())
         {
-            Q_ASSERT(result.type==Konversation::Message);
-            for ( QStringList::Iterator it = result.outputList.begin(); it != result.outputList.end(); ++it )
+            if (result.type == Konversation::Message)
             {
-                append(m_server->getNickname(), *it);
+                QStringListIterator it(result.outputList);
+
+                while (it.hasNext())
+                    append(m_server->getNickname(), it.next());
+            }
+            else if (result.type == Konversation::Action)
+            {
+                for (int i = 0; i < result.outputList.count(); ++i)
+                {
+                    if (i == 0)
+                        appendAction(m_server->getNickname(), result.outputList.at(i));
+                    else
+                        append(m_server->getNickname(), result.outputList.at(i));
+                }
             }
         }
+
         // Send anything else to the server
-        if(!result.toServerList.empty())
-        {
+        if (!result.toServerList.empty())
             m_server->queueList(result.toServerList);
-        }
         else
-        {
             m_server->queue(result.toServer);
-        }
-    } // for
+    }
 }
 
 void Channel::setNickname(const QString& newNickname)
