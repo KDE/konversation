@@ -34,7 +34,7 @@ namespace Konversation
         {
             Q_OBJECT
 
-                public:
+            public:
                 Chat(QWidget* parent, bool listen, Server* server, const QString& ownNick, const QString& partnerNick, const QString& partnerHost = QString(), int partnerPort = 0);
                 ~Chat();
 

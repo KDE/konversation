@@ -19,11 +19,9 @@
 #ifndef TRANSFERMANAGER_H
 #define TRANSFERMANAGER_H
 
-#include "transfer.h"
-
 #include <QObject>
 
-class KUrl;
+#include <KUrl>
 
 namespace Konversation
 {
@@ -35,6 +33,7 @@ namespace Konversation
 
     namespace DCC
     {
+        class Transfer;
         class TransferRecv;
         class TransferSend;
 

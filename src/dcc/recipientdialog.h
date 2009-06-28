@@ -29,7 +29,7 @@ namespace Konversation
         {
             Q_OBJECT
 
-                public:
+            public:
                 RecipientDialog(QWidget* parent, QAbstractListModel* model);
                 ~RecipientDialog();
 

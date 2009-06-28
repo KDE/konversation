@@ -10,7 +10,6 @@
 */
 
 #include "dcccommon.h"
-#include "channel.h"
 #include "preferences.h"
 #include "server.h"
 

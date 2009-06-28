@@ -17,7 +17,6 @@
 
 #include "transferrecv.h"
 #include "dcccommon.h"
-#include "channel.h"
 #include "transfermanager.h"
 #include "application.h"
 #include "connectionmanager.h"

@@ -17,7 +17,7 @@
 #include "preferences.h"
 #include "upnpmcastsocket.h"
 #include "upnprouter.h"
-
+#include "transfer.h"
 
 using namespace Konversation::UPnP;
 

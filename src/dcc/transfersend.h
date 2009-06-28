@@ -35,7 +35,7 @@ namespace Konversation
         {
             Q_OBJECT
 
-                public:
+            public:
                 TransferSend(QObject* parent);
                 virtual ~TransferSend();
 

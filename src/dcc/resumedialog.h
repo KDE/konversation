@@ -27,7 +27,7 @@ namespace Konversation
         {
             Q_OBJECT
 
-                public:
+            public:
                 enum ReceiveAction
                 {
                     RA_Rename    = 0x01,

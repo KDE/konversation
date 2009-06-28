@@ -22,7 +22,6 @@
 #include "ircinput.h"
 #include "topiclabel.h"
 #include "server.h"
-#include "channel.h"
 #include "upnprouter.h"
 #include "transfermanager.h"
 

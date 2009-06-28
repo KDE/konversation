@@ -10,7 +10,6 @@
 */
 
 #include "transferdetailedinfopanel.h"
-#include "channel.h"
 #include "transfer.h"
 #include "transferrecv.h"
 #include "transfermanager.h"

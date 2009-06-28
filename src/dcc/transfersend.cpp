@@ -16,7 +16,6 @@
 */
 
 #include "transfersend.h"
-#include "channel.h"
 #include "dcccommon.h"
 #include "transfermanager.h"
 #include "application.h"
