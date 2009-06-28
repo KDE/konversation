@@ -3077,16 +3077,17 @@ void Server::sendToAllChannels(const QString &text)
 
 void Server::invitation(const QString& nick,const QString& channel)
 {
-    if(KMessageBox::questionYesNo(getViewContainer()->getWindow(),
-        i18n("You were invited by %1 to join channel %2. "
-        "Do you accept the invitation?", nick, channel),
-        i18n("Invitation"),
-        KGuiItem(i18n("Join")),
-        KGuiItem(i18n("Ignore")),
-        "Invitation")==KMessageBox::Yes)
+    if(!m_inviteDialog)
     {
-        sendJoinCommand(channel);
+        m_inviteDialog = new InviteDialog (getViewContainer()->getWindow());
+        connect(m_inviteDialog, SIGNAL(joinChannelsRequested(const QString&)),
+                this, SLOT(sendJoinCommand(const QString&)));
     }
+
+    m_inviteDialog->show();
+    m_inviteDialog->raise();
+
+    m_inviteDialog->addInvite(nick, channel);
 }
 
 void Server::scriptNotFound(const QString& name)

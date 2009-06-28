@@ -25,6 +25,7 @@
 #include "servergroupsettings.h"
 #include "connectionsettings.h"
 #include "statuspanel.h"
+#include "invitedialog.h"
 
 #include <QTimer>
 #include <QPointer>
@@ -743,6 +744,8 @@ void resetNickSelection();
         int m_connectionId;
 
         bool m_showSSLConfirmation;
+
+        QPointer<InviteDialog> m_inviteDialog;
 };
 
 #endif

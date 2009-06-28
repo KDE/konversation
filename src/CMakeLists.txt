@@ -46,6 +46,7 @@ set (irc_SRCS
     irc/channelnick.cpp
     irc/modebutton.cpp
     irc/joinchanneldialog.cpp
+    irc/invitedialog.cpp
 
     irc/irccharsets.cpp
 
@@ -74,6 +75,7 @@ kde4_add_ui_files(irc_SRCS
     irc/serverdialogui.ui
     irc/servergroupdialogui.ui
     irc/serverlistdialogui.ui
+    irc/invitedialog.ui
 )
 
     #=== Configuration dialog pages
