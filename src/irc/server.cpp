@@ -909,11 +909,6 @@ void Server::processIncomingData()
         m_processingIncoming = true;
         QString front(m_inputBuffer.front());
         m_inputBuffer.pop_front();
-        if (m_rawLog)
-        {
-            QString toRaw = front;
-            m_rawLog->appendRaw("&gt;&gt; " + toRaw.replace('&',"&amp;").replace('<',"&lt;").replace('>',"&gt;").replace(QRegExp("\\s"), "&nbsp;"));
-        }
         m_inputFilter.parseLine(front);
         m_processingIncoming = false;
 
@@ -1009,6 +1004,11 @@ void Server::incoming()
         }
         // END pre-parse to know where the message belongs to
         // Decrypt if necessary
+
+        //send to raw log before decryption
+        if(m_rawLog)
+            m_rawLog->appendRaw("&gt;&gt; " + QString(first).remove(QChar(0xFDD0)).remove(QChar(0xFDD1)).replace('&',"&amp;").replace('<',"&lt;").replace('>',"&gt;").replace(QRegExp("\\s"), "&nbsp;"));
+
         #ifdef HAVE_QCA2
         QByteArray cKey = getKeyForRecipient(channelKey);
         if(!cKey.isEmpty())
@@ -1205,7 +1205,7 @@ int Server::_send_internal(QString outputLine)
     qint64 sout = m_socket->write(encoded, encoded.length());
 
     if (m_rawLog)
-        m_rawLog->appendRaw("&lt;&lt; " + outputLine.replace('&',"&amp;").replace('<',"&lt;").replace('>',"&gt;"));
+        m_rawLog->appendRaw("&lt;&lt; " + encoded.replace('&',"&amp;").replace('<',"&lt;").replace('>',"&gt;"));
 
     return sout;
 }
