@@ -1,4 +1,5 @@
-<ui version="4.0" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
  <author>Copyright (C) 2005 Peter Simonsson</author>
  <comment>This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -6,50 +7,50 @@ the Free Software Foundation; either version 2 of the License, or
 (at your option) any later version.
 </comment>
  <class>ConnectionBehavior_Config</class>
- <widget class="QWidget" name="ConnectionBehavior_Config" >
-  <property name="geometry" >
+ <widget class="QWidget" name="ConnectionBehavior_Config">
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>421</width>
-    <height>183</height>
+    <width>435</width>
+    <height>257</height>
    </rect>
   </property>
-  <layout class="QGridLayout" >
-   <property name="margin" >
+  <layout class="QGridLayout">
+   <property name="margin">
     <number>0</number>
    </property>
-   <item row="0" column="0" >
-    <widget class="QGroupBox" name="kcfg_AutoReconnect" >
-     <property name="title" >
+   <item row="0" column="0">
+    <widget class="QGroupBox" name="kcfg_AutoReconnect">
+     <property name="title">
       <string>Enable Automatic Reconnect</string>
      </property>
-     <property name="checkable" >
+     <property name="checkable">
       <bool>true</bool>
      </property>
-     <layout class="QGridLayout" >
-      <item row="0" column="0" >
-       <widget class="QLabel" name="reconnectDelayLabel" >
-        <property name="text" >
+     <layout class="QGridLayout">
+      <item row="0" column="0">
+       <widget class="QLabel" name="reconnectDelayLabel">
+        <property name="text">
          <string>Reconnect delay:</string>
         </property>
-        <property name="wordWrap" >
+        <property name="wordWrap">
          <bool>false</bool>
         </property>
-        <property name="buddy" >
+        <property name="buddy">
          <cstring>reconnectDelaySpin</cstring>
         </property>
        </widget>
       </item>
-      <item row="0" column="2" >
-       <spacer name="spacer53" >
-        <property name="orientation" >
+      <item row="0" column="2">
+       <spacer name="spacer53">
+        <property name="orientation">
          <enum>Qt::Horizontal</enum>
         </property>
-        <property name="sizeType" >
+        <property name="sizeType">
          <enum>QSizePolicy::Expanding</enum>
         </property>
-        <property name="sizeHint" stdset="0" >
+        <property name="sizeHint" stdset="0">
          <size>
           <width>278</width>
           <height>20</height>
@@ -57,57 +58,57 @@ the Free Software Foundation; either version 2 of the License, or
         </property>
        </spacer>
       </item>
-      <item row="1" column="0" >
-       <widget class="QLabel" name="textLabel1" >
-        <property name="text" >
+      <item row="1" column="0">
+       <widget class="QLabel" name="textLabel1">
+        <property name="text">
          <string>Reconnection attempts:</string>
         </property>
-        <property name="wordWrap" >
+        <property name="wordWrap">
          <bool>false</bool>
         </property>
        </widget>
       </item>
-      <item row="0" column="1" >
-       <widget class="KIntNumInput" name="kcfg_ReconnectDelay" >
-        <property name="label" >
+      <item row="0" column="1">
+       <widget class="KIntNumInput" name="kcfg_ReconnectDelay">
+        <property name="label">
          <string/>
         </property>
-        <property name="value" >
+        <property name="value">
          <number>120</number>
         </property>
-        <property name="minimum" >
+        <property name="minimum">
          <number>1</number>
         </property>
-        <property name="maximum" >
+        <property name="maximum">
          <number>9999</number>
         </property>
-        <property name="suffix" >
+        <property name="suffix">
          <string> seconds</string>
         </property>
        </widget>
       </item>
-      <item row="1" column="1" >
-       <widget class="KIntNumInput" name="kcfg_ReconnectCount" >
-        <property name="value" >
+      <item row="1" column="1">
+       <widget class="KIntNumInput" name="kcfg_ReconnectCount">
+        <property name="value">
          <number>100</number>
         </property>
-        <property name="minimum" >
+        <property name="minimum">
          <number>0</number>
         </property>
-        <property name="specialValueText" >
+        <property name="specialValueText">
          <string>Unlimited</string>
         </property>
        </widget>
       </item>
-      <item row="1" column="2" >
-       <spacer name="spacer53_3" >
-        <property name="orientation" >
+      <item row="1" column="2">
+       <spacer name="spacer53_3">
+        <property name="orientation">
          <enum>Qt::Horizontal</enum>
         </property>
-        <property name="sizeType" >
+        <property name="sizeType">
          <enum>QSizePolicy::Expanding</enum>
         </property>
-        <property name="sizeHint" stdset="0" >
+        <property name="sizeHint" stdset="0">
          <size>
           <width>280</width>
           <height>20</height>
@@ -118,31 +119,15 @@ the Free Software Foundation; either version 2 of the License, or
      </layout>
     </widget>
    </item>
-   <item row="2" column="0" >
-    <spacer name="spacer54" >
-     <property name="orientation" >
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeType" >
-      <enum>QSizePolicy::Expanding</enum>
-     </property>
-     <property name="sizeHint" stdset="0" >
-      <size>
-       <width>21</width>
-       <height>60</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="1" column="0" >
-    <widget class="QGroupBox" name="debugGBox" >
-     <property name="title" >
+   <item row="1" column="0">
+    <widget class="QGroupBox" name="debugGBox">
+     <property name="title">
       <string>Debug</string>
      </property>
-     <layout class="QGridLayout" >
-      <item row="0" column="0" >
-       <widget class="QCheckBox" name="kcfg_RawLog" >
-        <property name="text" >
+     <layout class="QGridLayout">
+      <item row="0" column="0">
+       <widget class="QCheckBox" name="kcfg_RawLog">
+        <property name="text">
          <string>Show raw &amp;log window when connecting</string>
         </property>
        </widget>
@@ -150,10 +135,71 @@ the Free Software Foundation; either version 2 of the License, or
      </layout>
     </widget>
    </item>
+   <item row="2" column="0">
+    <widget class="QGroupBox" name="encryptionGBox">
+     <property name="title">
+      <string>Encryption</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="0">
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>Default Encryption Type:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QComboBox" name="kcfg_EncryptionType">
+        <property name="whatsThis">
+         <string>ECB or Electronic Codebook mode is supported by many encryption clients like FiSH and Mircryption however it is generally considered to be insecure.
+
+CBC or Cipher Block Chaining mode is not supported by FiSH but is supported by Mircryption. If you are going to use key exchange it is best to first find out if your peer has a client that can use CBC otherwise you will be able to see what they're saying, but they won't be able to read what you're saying.</string>
+        </property>
+        <item>
+         <property name="text">
+          <string>ECB</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>CBC</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="1" column="1">
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </widget>
+   </item>
   </layout>
  </widget>
- <layoutdefault spacing="6" margin="11" />
- <layoutfunction spacing="KDialog::spacingHint" margin="KDialog::marginHint" />
+ <layoutdefault spacing="6" margin="11"/>
+ <layoutfunction spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
  <customwidgets>
   <customwidget>
    <class>KIntNumInput</class>
@@ -168,10 +214,10 @@ the Free Software Foundation; either version 2 of the License, or
   <tabstop>kcfg_RawLog</tabstop>
  </tabstops>
  <includes>
-  <include location="local" >knuminput.h</include>
-  <include location="local" >knuminput.h</include>
-  <include location="local" >knuminput.h</include>
-  <include location="local" >knuminput.h</include>
+  <include location="local">knuminput.h</include>
+  <include location="local">knuminput.h</include>
+  <include location="local">knuminput.h</include>
+  <include location="local">knuminput.h</include>
  </includes>
  <resources/>
  <connections/>

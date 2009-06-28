@@ -33,6 +33,7 @@
 #include "ignore_config.h"
 #include "watchednicknames_config.h"
 #include "ui_tabnotifications_config.h"
+#include <config-konversation.h>
 
 #include <KIconLoader>
 
@@ -102,6 +103,9 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   Ui::ConnectionBehavior_Config confConnectionBehavior;
   w = new QWidget();
   confConnectionBehavior.setupUi(w);
+  #ifndef HAVE_QCA2
+  confConnectionBehavior.kcfg_EncryptionType->setDisabled(true);
+  #endif
   addPage(w, behaviorGroup, "network-connect", i18n("Connection"));
 
   //Behaviour/Chat Window

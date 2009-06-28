@@ -21,11 +21,19 @@ namespace Konversation
     class Cipher
     {
         public:
+            Cipher();
             explicit Cipher(QByteArray key, QString cipherType=QString("blowfish"));
             ~Cipher();
             QByteArray decrypt(QByteArray cipher);
             QByteArray decryptTopic(QByteArray cipher);
             bool encrypt(QByteArray& cipher);
+            QByteArray initKeyExchange();
+            QByteArray parseInitKeyX(QByteArray key);
+            bool parseFinishKeyX(QByteArray key);
+            bool setKey(QByteArray key);
+            QByteArray key() { return m_key; }
+            bool setType(const QString &type);
+            QString type() { return m_type; }
 
         private:
             //direction is true for encrypt, false for decrypt
@@ -34,9 +42,11 @@ namespace Konversation
             QByteArray b64ToByte(QByteArray text);
             QByteArray byteToB64(QByteArray text);
 
-        protected:
+            QCA::Initializer init;
             QByteArray m_key;
-            QString m_cipher;
+            QCA::DHPrivateKey m_tempKey;
+            QCA::BigInteger m_primeNum;
+            QString m_type;
             bool m_cbc;
     };
 }

@@ -41,11 +41,6 @@
 #include "common.h"
 #include "notificationhandler.h"
 #include "awaymanager.h"
-#include <config-konversation.h>
-
-#ifdef HAVE_QCA2
-#include "cipher.h"
-#endif
 
 #include <QRegExp>
 #include <QHostAddress>
@@ -1018,7 +1013,6 @@ void Server::incoming()
         QByteArray cKey = getKeyForRecipient(channelKey);
         if(!cKey.isEmpty())
         {
-            Konversation::Cipher* cipher = new Konversation::Cipher(cKey);
             if(command == "privmsg")
             {
                 //only send encrypted text to decrypter
@@ -1026,16 +1020,26 @@ void Server::incoming()
                 if(this->identifyMsgEnabled()) // Workaround braindead Freenode prefixing messages with +
                     ++index;
                 QByteArray backup = first.mid(0,index+1);
-                first = cipher->decrypt(first.mid(index+1));
-                first = backup+first;
+
+                if(getChannelByName(channelKey) && getChannelByName(channelKey)->getCipher()->setKey(cKey))
+                    first = getChannelByName(channelKey)->getCipher()->decrypt(first.mid(index+1));
+                else if(getQueryByName(channelKey) && getQueryByName(channelKey)->getCipher()->setKey(cKey))
+                    first = getQueryByName(channelKey)->getCipher()->decrypt(first.mid(index+1));
+
+                first.prepend(backup);
             }
             else if(command == "332" || command == "topic")
             {
                 //only send encrypted text to decrypter
                 int index = first.indexOf(":",first.indexOf(":")+1);
                 QByteArray backup = first.mid(0,index+1);
-                first = cipher->decryptTopic(first.mid(index+1));
-                first = backup+first;
+
+                if(getChannelByName(channelKey) && getChannelByName(channelKey)->getCipher()->setKey(cKey))
+                    first = getChannelByName(channelKey)->getCipher()->decryptTopic(first.mid(index+1));
+                else if(getQueryByName(channelKey) && getQueryByName(channelKey)->getCipher()->setKey(cKey))
+                    first = getQueryByName(channelKey)->getCipher()->decryptTopic(first.mid(index+1));
+
+                first.prepend(backup);
             }
         }
         #endif
@@ -1181,9 +1185,12 @@ int Server::_send_internal(QString outputLine)
                 }
                 if (doit)
                 {
-                    Konversation::Cipher* cipher = new Konversation::Cipher(cipherKey.toLocal8Bit());
-                    cipher->encrypt(payload);
+                    QString target = outputLineSplit.at(1);
 
+                    if(getChannelByName(target) && getChannelByName(target)->getCipher()->setKey(cipherKey.toLocal8Bit()))
+                        getChannelByName(target)->getCipher()->encrypt(payload);
+                    else if(getQueryByName(target) && getQueryByName(target)->getCipher()->setKey(cipherKey.toLocal8Bit()))
+                        getQueryByName(target)->getCipher()->encrypt(payload);
 
                     encoded = outputLineSplit.at(0).toAscii();
                     kDebug() << payload << "\n" << payload.data();
@@ -3510,6 +3517,98 @@ void Server::updateEncoding()
     if(getViewContainer() && getViewContainer()->getFrontView())
         getViewContainer()->updateViewEncoding(getViewContainer()->getFrontView());
 }
+
+#ifdef HAVE_QCA2
+void Server::initKeyExchange(const QString &receiver)
+{
+    Konversation::Cipher* cipher;
+    if (getChannelByName(receiver))
+    {
+        cipher = getChannelByName(receiver)->getCipher();
+    }
+    else if (getQueryByName(receiver))
+    {
+        cipher = getQueryByName(receiver)->getCipher();
+    }
+    else
+        return;
+
+    QByteArray pubKey = cipher->initKeyExchange();
+    if(pubKey.isEmpty())
+    {
+        appendMessageToFrontmost(i18n("Error"), i18n("Failed to initiate key exchange with %1.", receiver));
+    }
+    else
+    {
+        queue("NOTICE "+receiver+" :DH1080_INIT "+pubKey);
+    }
+}
+
+void Server::parseInitKeyX(const QString &sender, const QString &remoteKey)
+{
+    //TODO ask the user to accept without blocking
+    bool chanQueryFlag;
+    Konversation::Cipher* cipher;
+    if (getChannelByName(sender))
+    {
+        chanQueryFlag = false;
+        cipher = getChannelByName(sender)->getCipher();
+    }
+    else if (getQueryByName(sender))
+    {
+        chanQueryFlag = true;
+        cipher = getQueryByName(sender)->getCipher();
+    }
+    else
+        return;
+
+    QByteArray pubKey = cipher->parseInitKeyX(remoteKey.toLocal8Bit());
+
+    if(pubKey.isEmpty())
+    {
+        appendMessageToFrontmost(i18n("Error"), i18n("Failed to parse the DH1080_INIT of %1. Key exchange failed.",sender));
+    }
+    else
+    {
+        setKeyForRecipient(sender, cipher->key());
+        if(chanQueryFlag) getQueryByName(sender)->setEncryptedOutput(true);
+        else getChannelByName(sender)->setEncryptedOutput(true);
+        appendMessageToFrontmost(i18n("Notice"), i18n("Your key is set and your messages will now be encrypted, sending DH1080_FINISH to %1.", sender));
+        queue("NOTICE "+sender+" :DH1080_FINISH "+pubKey);
+    }
+}
+
+void Server::parseFinishKeyX(const QString &sender, const QString &remoteKey)
+{
+    Konversation::Cipher* cipher;
+    bool chanQueryFlag;
+    if (getChannelByName(sender))
+    {
+        chanQueryFlag = false;
+        cipher = getChannelByName(sender)->getCipher();
+    }
+    else if (getQueryByName(sender))
+    {
+        chanQueryFlag = true;
+        cipher = getQueryByName(sender)->getCipher();
+    }
+    else
+        return;
+
+    bool success = cipher->parseFinishKeyX(remoteKey.toLocal8Bit());
+    if(success)
+    {
+        setKeyForRecipient(sender,cipher->key());
+        if(chanQueryFlag) getQueryByName(sender)->setEncryptedOutput(true);
+        else getChannelByName(sender)->setEncryptedOutput(true);
+        appendMessageToFrontmost(i18n("Notice"), i18n("Successfully parsed DH1080_FINISH sent by %1. Your key is set and your messages will now be encrypted.", sender));
+    }
+    else
+    {
+        appendMessageToFrontmost(i18n("Error"), i18n("Failed to parse DH1080_FINISH sent by %1. Key exchange failed.", sender));
+    }
+}
+#endif
 
 QAbstractItemModel* Server::nickListModel() const
 {

@@ -17,6 +17,12 @@
 #include "nickinfo.h"
 #include "application.h" // for PopupIDs...
 
+#include <config-konversation.h>
+
+#ifdef HAVE_QCA2
+#include "cipher.h"
+#endif
+
 #include <QString>
 
 /* TODO: Idle counter to close query after XXX minutes of inactivity */
@@ -69,6 +75,10 @@ class Query : public ChatWindow
          */
         void quitNick(const QString& reason);
 
+        #ifdef HAVE_QCA2
+        Konversation::Cipher* getCipher() { return m_cipher; }
+        #endif
+        
     signals:
         void sendFile(const QString& recipient);
         void updateQueryChrome(ChatWindow*, const QString&);
@@ -130,5 +140,9 @@ class Query : public ChatWindow
         NickInfoPtr m_nickInfo;
 
         bool m_initialShow;
+
+        #ifdef HAVE_QCA2
+        Konversation::Cipher *m_cipher;
+        #endif
 };
 #endif

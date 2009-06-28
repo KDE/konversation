@@ -260,6 +260,7 @@ namespace Konversation
             else if(command == "dns")      result = parseDNS(parameter);
             else if(command == "kill")     result = parseKill(parameter);
             else if(command == "queuetuner") result = parseShowTuner(parameter);
+            else if(command == "keyx")     result = parseKeyX(parameter);
 
             // Forward unknown commands to server
             else
@@ -1615,7 +1616,7 @@ namespace Konversation
         if (parms.count() == 1 && !destination.isEmpty())
             parms.prepend(destination);
         else if (parms.count() != 2)
-            return usage(i18n("Usage: %1setkey <nick|channel> <key> sets the encryption key for nick or channel. %1setkey <key> when in a channel or query tab sets the key for it. The key field recognizes \"cbc:\" and \"ecb:\" prefixes to set the block cipher mode of operation to either cipher-block chaining or electronic codebook. It defaults to cipher-block chaining when no prefix is given.", commandChar) );
+            return usage(i18n("Usage: %1setkey <nick|channel> <key> sets the encryption key for nick or channel. %1setkey <key> when in a channel or query tab sets the key for it. The key field recognizes \"cbc:\" and \"ecb:\" prefixes to set the block cipher mode of operation to either cipher-block chaining or electronic codebook. It defaults to electronic codebook when no prefix is given. To change this go to Settings->Configure Konversation->Behavior->Connection->Encryption", commandChar) );
 
         m_server->setKeyForRecipient(parms[0], parms[1].toLocal8Bit());
 
@@ -1625,6 +1626,24 @@ namespace Konversation
             m_server->getQueryByName(parms[0])->setEncryptedOutput(true);
 
         return info(i18n("The key for %1 has been set.", parms[0]));
+        #else
+        return error(i18n("Setting an encryption key requires Konversation to have been built with support for the Qt Cryptographic Architecture (QCA) library. Contact your distributor about a Konversation package with QCA support, or rebuild Konversation with QCA present."));
+        #endif
+    }
+
+    OutputFilterResult OutputFilter::parseKeyX(const QString& parameter)
+    {
+        QStringList parms = parameter.split(' ', QString::SkipEmptyParts);
+        
+        #ifdef HAVE_QCA2
+        if (parms.count() == 0 && !destination.isEmpty())
+            parms.prepend(destination);
+        else if (parms.count() !=1)
+            return usage(i18n("Usage: %1keyx <nick|channel> triggers DH1080 key exchange with the target.", commandChar));
+
+        m_server->initKeyExchange(parms[0]);
+
+        return info(i18n("Beginning DH1080 key exchange with %1.", parms[0]));
         #else
         return error(i18n("Setting an encryption key requires Konversation to have been built with support for the Qt Cryptographic Architecture (QCA) library. Contact your distributor about a Konversation package with QCA support, or rebuild Konversation with QCA present."));
         #endif

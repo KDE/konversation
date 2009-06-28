@@ -12,14 +12,35 @@
 */
 
 #include "cipher.h"
+#include "preferences.h"
 
 #include <KDebug>
 
 
 namespace Konversation
 {
+    Cipher::Cipher()
+    {
+        m_primeNum = QCA::BigInteger("12745216229761186769575009943944198619149164746831579719941140425076456621824834322853258804883232842877311723249782818608677050956745409379781245497526069657222703636504651898833151008222772087491045206203033063108075098874712912417029101508315117935752962862335062591404043092163187352352197487303798807791605274487594646923");
+        setType("blowfish");
+    }
+
     Cipher::Cipher(QByteArray key, QString cipherType)
     {
+        m_primeNum = QCA::BigInteger("12745216229761186769575009943944198619149164746831579719941140425076456621824834322853258804883232842877311723249782818608677050956745409379781245497526069657222703636504651898833151008222772087491045206203033063108075098874712912417029101508315117935752962862335062591404043092163187352352197487303798807791605274487594646923");
+        setKey(key);
+        setType(cipherType);
+    }
+
+    Cipher::~Cipher()
+    {
+    }
+
+    bool Cipher::setKey(QByteArray key)
+    {
+        if(key.isEmpty())
+            return false;
+
         if(key.mid(0,4).toLower() == "ecb:")
         {
             m_cbc = false;
@@ -33,14 +54,20 @@ namespace Konversation
         }
         else
         {
-            m_cbc = true;
+            if(Preferences::self()->encryptionType())
+                m_cbc = false;
+            else
+                m_cbc = true;
             m_key = key;
         }
-        m_cipher = cipherType;
+        return true;
     }
 
-    Cipher::~Cipher()
+    bool Cipher::setType(const QString &type)
     {
+        //TODO check QCA::isSupported()
+        m_type = type;
+        return true;
     }
 
     QByteArray Cipher::decrypt(QByteArray cipherText)
@@ -121,6 +148,91 @@ namespace Konversation
         return cipherText;
     }
 
+    QByteArray Cipher::initKeyExchange()
+    {
+        QCA::Initializer init;
+        m_tempKey = QCA::KeyGenerator().createDH(QCA::DLGroup(m_primeNum, QCA::BigInteger(2))).toDH();
+
+        if(m_tempKey.isNull())
+            return QByteArray();
+
+        QByteArray publicKey = m_tempKey.toPublicKey().toDH().y().toArray().toByteArray();
+
+        //remove leading 0
+        if(publicKey.length() > 135 && publicKey.at(0) == '\0')
+            publicKey = publicKey.mid(1);
+
+        return publicKey.toBase64().append('A');
+    }
+
+    QByteArray Cipher::parseInitKeyX(QByteArray key)
+    {
+        QCA::Initializer init;
+
+        if(key.length() != 181)
+            return QByteArray();
+
+        QCA::SecureArray remoteKey = QByteArray::fromBase64(key.left(180));
+        QCA::DLGroup group(m_primeNum, QCA::BigInteger(2));
+        QCA::DHPrivateKey privateKey = QCA::KeyGenerator().createDH(group).toDH();
+
+        if(privateKey.isNull())
+            return QByteArray();
+
+        QByteArray publicKey = privateKey.y().toArray().toByteArray();
+
+        //remove leading 0 
+        if(publicKey.length() > 135 && publicKey.at(0) == '\0')
+            publicKey = publicKey.mid(1);
+
+        QCA::DHPublicKey remotePub(group, remoteKey);
+
+        if(remotePub.isNull())
+            return QByteArray();
+
+        QByteArray sharedKey = privateKey.deriveKey(remotePub).toByteArray();
+        sharedKey = QCA::Hash("sha256").hash(sharedKey).toByteArray().toBase64();
+
+        //remove trailing = because mircryption and fish think it's a swell idea.
+        while(sharedKey.endsWith('=')) sharedKey.chop(1);
+
+        bool success = setKey(sharedKey);
+
+        if(!success)
+            return QByteArray();
+
+        return publicKey.toBase64().append('A');
+    }
+
+    bool Cipher::parseFinishKeyX(QByteArray key)
+    {
+        QCA::Initializer init;
+
+        if(key.length() != 181)
+            return false;
+
+        QCA::SecureArray remoteKey = QByteArray::fromBase64(key.left(180));
+        QCA::DLGroup group(m_primeNum, QCA::BigInteger(2));
+
+        QCA::DHPublicKey remotePub(group, remoteKey);
+
+        if(remotePub.isNull())
+            return false;
+
+        if(m_tempKey.isNull())
+            return false;
+
+        QByteArray sharedKey = m_tempKey.deriveKey(remotePub).toByteArray();
+        sharedKey = QCA::Hash("sha256").hash(sharedKey).toByteArray().toBase64();
+
+        //remove trailng = because mircryption and fish think it's a swell idea.
+        while(sharedKey.endsWith('=')) sharedKey.chop(1);
+
+        bool success = setKey(sharedKey);
+
+        return success;
+    }
+
     QByteArray Cipher::decryptTopic(QByteArray cipherText)
     {
         if(cipherText.mid(0,4) == "+OK ")// FiSH style topic
@@ -188,16 +300,13 @@ namespace Konversation
     //THE BELOW WORKS AKA DO NOT TOUCH UNLESS YOU KNOW WHAT YOU'RE DOING
     QByteArray Cipher::blowfishCBC(QByteArray cipherText, bool direction)
     {
-        QByteArray temp = cipherText;
         QCA::Initializer init;
+        QByteArray temp = cipherText;
         if(direction)
         {
             // make sure cipherText is an interval of 8 bits. We do this before so that we
             // know there's at least 8 bytes to en/decryption this ensures QCA doesn't fail
-            int length = temp.length();
-            if ((length % 8) != 0)
-                length += 8 - (length % 8);
-            temp.resize(length);
+            while((temp.length() % 8) != 0) temp.append('\0');
 
             QCA::InitializationVector iv(8);
             temp.prepend(iv.toByteArray()); // prefix with 8bits of IV for mircryptions *CUSTOM* cbc implementation
@@ -207,14 +316,11 @@ namespace Konversation
             temp = QByteArray::fromBase64(temp);
             //supposedly nescessary if we get a truncated message also allows for decryption of 'crazy'
             //en/decoding clients that use STANDARDIZED PADDING TECHNIQUES
-            int length = temp.length();
-            if ((length % 8) != 0)
-                length += 8 - (length % 8);
-            temp.resize(length);
+            while((temp.length() % 8) != 0) temp.append('\0');
         }
 
         QCA::Direction dir = (direction) ? QCA::Encode : QCA::Decode;
-        QCA::Cipher cipher(m_cipher, QCA::Cipher::CBC, QCA::Cipher::NoPadding, dir, QCA::SymmetricKey(m_key), QCA::InitializationVector(QByteArray("0")));
+        QCA::Cipher cipher(m_type, QCA::Cipher::CBC, QCA::Cipher::NoPadding, dir, m_key, QCA::InitializationVector(QByteArray("0")));
         QByteArray temp2 = cipher.update(QCA::MemoryRegion(temp)).toByteArray();
         temp2 += cipher.final().toByteArray();
 
@@ -231,28 +337,22 @@ namespace Konversation
 
     QByteArray Cipher::blowfishECB(QByteArray cipherText, bool direction)
     {
+        QCA::Initializer init;
         QByteArray temp = cipherText;
 
         //do padding ourselves
         if(direction)
         {
-            int length = temp.length();
-            if ((length % 8) != 0)
-                length += 8 - (length % 8);
-            temp.resize(length);
+            while((temp.length() % 8) != 0) temp.append('\0');
         }
         else
         {
             temp = b64ToByte(temp);
-            int length = temp.length();
-            if ((length % 8) != 0)
-                length += 8 - (length % 8);
-            temp.resize(length);
+            while((temp.length() % 8) != 0) temp.append('\0');
         }
 
         QCA::Direction dir = (direction) ? QCA::Encode : QCA::Decode;
-        QCA::Initializer init;
-        QCA::Cipher cipher(m_cipher, QCA::Cipher::ECB, QCA::Cipher::NoPadding, dir, QCA::SymmetricKey(m_key));
+        QCA::Cipher cipher(m_type, QCA::Cipher::ECB, QCA::Cipher::NoPadding, dir, m_key);
         QByteArray temp2 = cipher.update(QCA::MemoryRegion(temp)).toByteArray();
         temp2 += cipher.final().toByteArray();
 

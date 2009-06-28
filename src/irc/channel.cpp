@@ -14,12 +14,6 @@
 #include "channel.h"
 #include "application.h"
 #include "server.h"
-#include <config-konversation.h>
-
-#ifdef HAVE_QCA2
-#include "cipher.h"
-#endif
-
 #include "nick.h"
 #include "nicklistview.h"
 #include "quickbutton.h"
@@ -337,6 +331,9 @@ Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
 
     updateAppearance();
 
+    #ifdef HAVE_QCA2
+    m_cipher = new Konversation::Cipher();
+    #endif
     //FIXME JOHNFLUX
     // connect( Konversation::Addressbook::self()->getAddressBook(), SIGNAL( addressBookChanged( AddressBook * ) ), this, SLOT( slotLoadAddressees() ) );
     // connect( Konversation::Addressbook::self(), SIGNAL(addresseesChanged()), this, SLOT(slotLoadAddressees()));
@@ -389,8 +386,8 @@ void Channel::setEncryptedOutput(bool e)
         QByteArray cipherText = topic.toUtf8();
         QByteArray key = m_server->getKeyForRecipient(getName());
 
-        Konversation::Cipher* cipher = new Konversation::Cipher(key);
-        cipherText = cipher->decryptTopic(cipherText);
+        if(m_cipher->setKey(key))
+            cipherText = m_cipher->decryptTopic(cipherText);
 
         topic=QString::fromUtf8(cipherText.data()+2, cipherText.length()-2);
         m_topicHistory[0] = m_topicHistory[0].section(' ', 0, 1) + ' ' + topic;

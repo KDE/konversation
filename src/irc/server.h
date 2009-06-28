@@ -26,6 +26,11 @@
 #include "connectionsettings.h"
 #include "statuspanel.h"
 #include "invitedialog.h"
+#include <config-konversation.h>
+
+#ifdef HAVE_QCA2
+#include "cipher.h"
+#endif
 
 #include <QTimer>
 #include <QPointer>
@@ -483,6 +488,11 @@ void resetNickSelection();
         /// Called when we received a PONG from the server
         void pongReceived();
 
+        #ifdef HAVE_QCA2
+        void initKeyExchange(const QString &receiver);
+        void parseInitKeyX(const QString &sender, const QString &pubKey);
+        void parseFinishKeyX(const QString &sender, const QString &pubKey);
+        #endif
     protected slots:
         void hostFound();
         void preShellCommandExited(int exitCode, QProcess::ExitStatus exitStatus);

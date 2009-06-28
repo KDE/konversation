@@ -22,6 +22,7 @@
 #include "statuspanel.h"
 #include "common.h"
 #include "notificationhandler.h"
+#include <config-konversation.h>
 
 #include <QDataStream>
 #include <QStringList>
@@ -545,23 +546,43 @@ void InputFilter::parseClientCommand(const QString &prefix, const QString &comma
                 // No, so it was a normal notice
                 else
                 {
-                    // Nickserv
-                    if (trailing.startsWith(QLatin1String("If this is your nick")))
-                    {
-                        // Identify command if specified
-                        server->registerWithServices();
-                    }
-                    else if (server->identifyMsg())
-                        trailing = trailing.mid(1);
 
-                    if (trailing.toLower() == "password accepted - you are now recognized"
-                        || trailing.toLower() == "you have already identified")
+                    #ifdef HAVE_QCA2
+                    //Key exchange
+                    if (trailing.startsWith(QLatin1String("DH1080_INIT ")))
                     {
-                        NickInfoPtr nickInfo = server->getNickInfo(server->getNickname());
-                        if(nickInfo)
-                            nickInfo->setIdentified(true);
+                        server->appendMessageToFrontmost(i18n("Notice"), i18n("Received DH1080_INIT from %1", sourceNick));
+                        server->parseInitKeyX(sourceNick, trailing.mid(12));
                     }
-                    server->appendMessageToFrontmost(i18n("Notice"), i18n("-%1- %2", sourceNick, trailing));
+                    else if (trailing.startsWith(QLatin1String("DH1080_FINISH ")))
+                    {
+                        server->appendMessageToFrontmost(i18n("Notice"), i18n("Received DH1080_FINISH from %1", sourceNick));
+                        server->parseFinishKeyX(sourceNick, trailing.mid(14));
+                    }
+                    
+                    else
+                    {
+                    #endif
+                        // Nickserv
+                        if (trailing.startsWith(QLatin1String("If this is your nick")))
+                        {
+                            // Identify command if specified
+                            server->registerWithServices();
+                        }
+                        else if (server->identifyMsg())
+                            trailing = trailing.mid(1);
+
+                        if (trailing.toLower() == "password accepted - you are now recognized"
+                            || trailing.toLower() == "you have already identified")
+                        {
+                            NickInfoPtr nickInfo = server->getNickInfo(server->getNickname());
+                            if(nickInfo)
+                                nickInfo->setIdentified(true);
+                        }
+                        server->appendMessageToFrontmost(i18n("Notice"), i18n("-%1- %2", sourceNick, trailing));
+                    #ifdef HAVE_QCA2
+                    }
+                    #endif
                 }
             }
         }

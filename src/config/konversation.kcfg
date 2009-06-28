@@ -779,6 +779,11 @@
       <label></label>
       <whatsthis></whatsthis>
     </entry>
+    <entry key="EncryptionType" type="UInt">
+        <default>0</default>
+        <label></label>
+        <whatsthis></whatsthis>
+    </entry>
     <entry key="FixedMOTD" type="Bool">
       <default>true</default>
       <label></label>
