@@ -1722,8 +1722,6 @@ void Server::addDccSend(const QString &recipient,KUrl fileURL, const QString &al
 {
     if (!fileURL.isValid()) return;
 
-    emit addDccPanel();
-
     // We already checked that the file exists in output filter / requestDccSend() resp.
     DCC::TransferSend* newDcc = Application::instance()->getDccTransferManager()->newUpload();
 
@@ -1735,6 +1733,8 @@ void Server::addDccSend(const QString &recipient,KUrl fileURL, const QString &al
         newDcc->setFileName( altFileName );
     if ( fileSize != 0 )
         newDcc->setFileSize( fileSize );
+
+    emit addDccPanel();
 
     if ( newDcc->queue() )
         newDcc->start();

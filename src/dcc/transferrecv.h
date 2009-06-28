@@ -159,7 +159,6 @@ namespace Konversation
                 void closeNow();
 
                 signals:
-                void dataFinished();                      // ->  m_transferJob->slotFinished()
                 void done();                              // ->  DccTransferRecv::writeDone()
                                                           // ->  DccTransferRecv::slotWriteError()
                 void gotError( const QString& errorString );

@@ -745,8 +745,6 @@ namespace Konversation
             m_writeReady = true;
             m_cacheStream = 0;
 
-            //never emitted?
-            //connect( this,          SIGNAL( dataFinished() ),                    m_transferJob, SLOT( slotFinished() )                           );
             connect( m_transferJob, SIGNAL( dataReq( KIO::Job*, QByteArray& ) ), this,          SLOT( slotKIODataReq( KIO::Job*, QByteArray& ) ) );
             connect( m_transferJob, SIGNAL( result(KJob* ) ),                    this,          SLOT( slotKIOResult( KJob* ) )                   );
 
