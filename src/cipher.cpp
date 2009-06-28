@@ -55,9 +55,9 @@ namespace Konversation
         else
         {
             if(Preferences::self()->encryptionType())
-                m_cbc = false;
-            else
                 m_cbc = true;
+            else
+                m_cbc = false;
             m_key = key;
         }
         return true;
