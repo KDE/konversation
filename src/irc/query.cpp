@@ -125,7 +125,7 @@ Query::Query(QWidget* parent, QString _name) : ChatWindow(parent)
     setLog(Preferences::self()->log());
 
     #ifdef HAVE_QCA2
-    m_cipher = new Konversation::Cipher();
+    m_cipher = 0;
     #endif
 }
 
@@ -707,3 +707,12 @@ void Query::slotActionTriggered(QAction* action)
 {
     popup(action->data().value<Konversation::PopupIDs>());
 }
+
+#ifdef HAVE_QCA2
+Konversation::Cipher* Query::getCipher()
+{
+    if(!m_cipher)
+        m_cipher = new Konversation::Cipher();
+    return m_cipher;
+}
+#endif

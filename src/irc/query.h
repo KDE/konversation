@@ -76,7 +76,7 @@ class Query : public ChatWindow
         void quitNick(const QString& reason);
 
         #ifdef HAVE_QCA2
-        Konversation::Cipher* getCipher() { return m_cipher; }
+        Konversation::Cipher* getCipher();
         #endif
         
     signals:

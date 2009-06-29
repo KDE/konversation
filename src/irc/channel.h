@@ -83,7 +83,7 @@ class Channel : public ChatWindow
         virtual void appendAction(const QString& nickname,const QString& message);
         void nickActive(const QString& nickname);
         #ifdef HAVE_QCA2
-        Konversation::Cipher* getCipher() { return m_cipher; }
+        Konversation::Cipher* getCipher();
         #endif
 //General administrative stuff
     public:

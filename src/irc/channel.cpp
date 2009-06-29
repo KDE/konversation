@@ -332,7 +332,7 @@ Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
     updateAppearance();
 
     #ifdef HAVE_QCA2
-    m_cipher = new Konversation::Cipher();
+    m_cipher = 0;
     #endif
     //FIXME JOHNFLUX
     // connect( Konversation::Addressbook::self()->getAddressBook(), SIGNAL( addressBookChanged( AddressBook * ) ), this, SLOT( slotLoadAddressees() ) );
@@ -2894,6 +2894,15 @@ void Channel::nickActive(const QString& nickname) //FIXME reported to crash, can
         sortNickList(); //FIXME: no need to completely resort, we can just see if this particular nick should move
     }
 }
+
+#ifdef HAVE_QCA2
+Konversation::Cipher* Channel::getCipher()
+{
+    if(!m_cipher)
+        m_cipher = new Konversation::Cipher();
+    return m_cipher;
+}
+#endif
 
 //
 // NickList
