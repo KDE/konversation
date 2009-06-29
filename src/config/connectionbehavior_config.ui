@@ -202,6 +202,11 @@ CBC or Cipher Block Chaining mode is not supported by FiSH but is supported by M
  <layoutfunction spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
  <customwidgets>
   <customwidget>
+   <class>KComboBox</class>
+   <extends>QComboBox</extends>
+   <header>kcombobox.h</header>
+  </customwidget>
+  <customwidget>
    <class>KIntNumInput</class>
    <extends>QWidget</extends>
    <header>knuminput.h</header>
