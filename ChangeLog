@@ -48,8 +48,8 @@ Changes since 1.2-alpha3:
   pher-block chaining) and 'ecb:' (electronic codebook) prefixes in the
   key field to set a particular Blowfish block cipher mode of operation,
   defaulting to the value of a config dialog preference (Behavior -> Co-
-  nnection-> Encryption -> Default Encryption Type, the default is ECB -
-  electronic codebook) when no prefix is given.
+  nnection-> Encryption -> Default Encryption Type, the default is Elec-
+  tronic Codebook (ECB)) when no prefix is given.
 * Fixed crash when opening links with ' in them when the "Custom Browser" pre-
   ference is enabled in Konversation's config dialog.
 * Improved consistency of link opening behavior between the chat view, the to-

@@ -144,7 +144,7 @@ the Free Software Foundation; either version 2 of the License, or
       <item row="0" column="0">
        <widget class="QLabel" name="label">
         <property name="text">
-         <string>Default Encryption Type:</string>
+         <string>Default encryption type:</string>
         </property>
        </widget>
       </item>
@@ -157,12 +157,12 @@ CBC or Cipher Block Chaining mode is not supported by FiSH but is supported by M
         </property>
         <item>
          <property name="text">
-          <string>ECB</string>
+          <string>Electronic Codebook (ECB)</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>CBC</string>
+          <string>Cipher-Block Chaining (CBC)</string>
          </property>
         </item>
        </widget>
