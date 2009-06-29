@@ -103,6 +103,9 @@ Changes since 1.2-alpha3:
   shown, and outgoing messages were being shown before encryption took place,
   thus not capturing what was actually coming from or going to the network so-
   cket as is the intent of the raw log.
+* Fixed a bug causing unrecognized channel mode characters being shown as their
+  decimal value in the chat view messages announcing them having been set or
+  removed.
 
 
 Changes from 1.2-alpha2 to 1.2-alpha3:

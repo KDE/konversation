@@ -2046,13 +2046,13 @@ void Channel::updateMode(const QString& sourceNick, char mode, bool plus, const 
         default:
 	    if(plus)
 	    {
-	        if(fromMe) message=i18n("You set channel mode +%1", mode);
-		else message=i18n("%1 sets channel mode +%2", sourceNick, mode);
+	        if(fromMe) message=i18n("You set channel mode +%1", QString(mode));
+		else message=i18n("%1 sets channel mode +%2", sourceNick, QString(mode));
 	    }
 	    else
 	    {
-	        if (fromMe) message=i18n("You set channel mode -%1", mode);
-		else message= i18n("%1 sets channel mode -%2", sourceNick, mode);
+	        if (fromMe) message=i18n("You set channel mode -%1", QString(mode));
+		else message= i18n("%1 sets channel mode -%2", sourceNick, QString(mode));
 	    }
     }
 
