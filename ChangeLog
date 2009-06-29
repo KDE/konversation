@@ -88,6 +88,19 @@ Changes since 1.2-alpha3:
   factor into the matter. Note that only the first message is actually sent as
   an action, the other messages are sent as normal messages - intentionally,
   as this seemed to make the most sense formatting-wise.
+* Fixed the dialog box appearing upon receiving an invitation to join a chan-
+  nel causing a disconnect by timeout when not being dealt with by the user
+  swiftly enough.
+* Multiple invitations to join channels are now being handled by a single dia-
+  log box per connection, so that receiving many invitations in short order no
+  longer means getting flooded with dialog boxes.
+* Implemented DH1080 key exchange support for Blowfish encryption. You can use
+  the '/keyx' command to initiate a key exchange.
+* The raw log now shows encrypted incoming and outgoing messages in their en-
+  crypted form. Previously, incoming messages were being decrypted before being
+  shown, and outgoing messages were being shown before encryption took place,
+  thus not capturing what was actually coming from or going to the network so-
+  cket as is the intent of the raw log.
 
 
 Changes from 1.2-alpha2 to 1.2-alpha3:
