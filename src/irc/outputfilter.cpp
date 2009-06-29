@@ -1616,7 +1616,7 @@ namespace Konversation
         if (parms.count() == 1 && !destination.isEmpty())
             parms.prepend(destination);
         else if (parms.count() != 2)
-            return usage(i18n("Usage: %1setkey <nick|channel> <key> sets the encryption key for nick or channel. %1setkey <key> when in a channel or query tab sets the key for it. The key field recognizes \"cbc:\" and \"ecb:\" prefixes to set the block cipher mode of operation to either cipher-block chaining or electronic codebook. It defaults to electronic codebook when no prefix is given. To change this go to Settings->Configure Konversation->Behavior->Connection->Encryption", commandChar) );
+            return usage(i18n("Usage: %1setkey <nick|channel> <key> sets the encryption key for nick or channel. %1setkey <key> when in a channel or query tab sets the key for it. The key field recognizes \"cbc:\" and \"ecb:\" prefixes to set the block cipher mode of operation to either cipher-block chaining or electronic codebook. The mode it defaults to when no prefix is given can be changed in the config dialog under Behavior -> Connection -> Encryption -> Default Encryption Type, with the default for that setting being ECB (electronic codebook).", commandChar) );
 
         m_server->setKeyForRecipient(parms[0], parms[1].toLocal8Bit());
 
@@ -1634,7 +1634,7 @@ namespace Konversation
     OutputFilterResult OutputFilter::parseKeyX(const QString& parameter)
     {
         QStringList parms = parameter.split(' ', QString::SkipEmptyParts);
-        
+
         #ifdef HAVE_QCA2
         if (parms.count() == 0 && !destination.isEmpty())
             parms.prepend(destination);
