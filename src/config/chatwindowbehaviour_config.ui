@@ -91,7 +91,7 @@
          <string>Keep channel mode string as a combination of characters instead of translating them into human readable words. E.g. '*** Channel modes: no messages from outside' will become '*** Channel modes: n'</string>
         </property>
         <property name="text" >
-         <string>&amp;Use raw modes for mode changes</string>
+         <string>Show raw mode characters</string>
         </property>
        </widget>
       </item>
