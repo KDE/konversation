@@ -110,7 +110,7 @@ namespace Konversation
         }
         //all other cases we fail
         else
-            return "ERROR: "+cipherText;
+            return cipherText;
 
         QByteArray temp;
         // (if cbc and no error we parse cbc) || (if ecb and error we parse cbc)
