@@ -113,7 +113,8 @@ Changes since 1.2-alpha3:
   networks. Encoding config file entries for tabs belonging to connections to
   servers that are not part of a configured network continue to reference the
   server hostnames.
-
+* Fixed the "(away)" label in front of the input line, indicating away status,
+  not showing up in query tabs.
 
 Changes from 1.2-alpha2 to 1.2-alpha3:
 This third alpha fixes a fair amount of annoying bugs encountered in
