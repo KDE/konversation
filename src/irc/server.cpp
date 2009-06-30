@@ -1518,6 +1518,8 @@ Query* Server::addQuery(const NickInfoPtr & nickInfo, bool weinitiated)
         QString lcNickname = nickname.toLower();
         query = getViewContainer()->addQuery(this, nickInfo, weinitiated);
 
+        query->indicateAway(m_away);
+
         connect(query, SIGNAL(sendFile(const QString&)),this, SLOT(requestDccSend(const QString&)));
         connect(this, SIGNAL(serverOnline(bool)), query, SLOT(serverOnline(bool)));
 
