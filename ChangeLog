@@ -106,6 +106,13 @@ Changes since 1.2-alpha3:
 * Fixed a bug causing unrecognized channel mode characters being shown as their
   decimal value in the chat view messages announcing them having been set or
   removed.
+* Per-tab encoding settings for tabs belonging to a connection to a configured
+  network (i.e. one found in the Server List dialog) now reference the unique
+  ID rather than the name of the network in the config file, making things
+  work reliably across restarts even when there are multiple identically named
+  networks. Encoding config file entries for tabs belonging to connections to
+  servers that are not part of a configured network continue to reference the
+  server hostnames.
 
 
 Changes from 1.2-alpha2 to 1.2-alpha3:
