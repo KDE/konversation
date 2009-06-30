@@ -342,11 +342,16 @@ void StatusPanel::appendInputText(const QString& text, bool fromCursor)
                                                   // virtual
 void StatusPanel::setChannelEncoding(const QString& encoding)
 {
-    Preferences::setChannelEncoding(m_server->getDisplayName(), ":server", encoding);
+    if(m_server->getServerGroup())
+        Preferences::setChannelEncoding(m_server->getServerGroup()->id(), ":server", encoding);
+    else
+        Preferences::setChannelEncoding(m_server->getDisplayName(), ":server", encoding);
 }
 
 QString StatusPanel::getChannelEncoding()         // virtual
 {
+    if(m_server->getServerGroup())
+        return Preferences::channelEncoding(m_server->getServerGroup()->id(), ":server");
     return Preferences::channelEncoding(m_server->getDisplayName(), ":server");
 }
 

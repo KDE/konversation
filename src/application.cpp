@@ -375,6 +375,7 @@ void Application::readOptions()
     // Read the new server settings
     QStringList groups = KGlobal::config()->groupList().filter(QRegExp("ServerGroup [0-9]+"));
     QMap<int,QStringList> notifyList;
+    QList<int> sgKeys;
 
     if(!groups.isEmpty())
     {
@@ -445,6 +446,7 @@ void Application::readOptions()
             serverGroup->setChannelHistory(channelHistory);
 
             serverGroups.insert(serverGroup->id(), serverGroup);
+            sgKeys.append(serverGroup->id());
         }
 
         Preferences::setServerGroupHash(serverGroups);
@@ -586,6 +588,8 @@ void Application::readOptions()
         Preferences::self()->setAliasList(newList);
 
     // Channel Encodings
+
+    //Legacy channel encodings read in Jun. 29, 2009
     KConfigGroup cgChannelEncodings(KGlobal::config()->group("Channel Encodings"));
     QMap<QString,QString> channelEncodingEntries=cgChannelEncodings.entryMap();
     QRegExp re("^(.+) ([^\\s]+)$");
@@ -596,6 +600,23 @@ void Application::readOptions()
         if(re.indexIn(*itStr) > -1)
         {
                 Preferences::setChannelEncoding(re.cap(1),re.cap(2),channelEncodingEntries[*itStr]);
+        }
+    }
+    //End legacy channel encodings read in Jun 29, 2009
+
+    KConfigGroup cgEncodings(KGlobal::config()->group("Encodings"));
+    QMap<QString,QString> encodingEntries=cgEncodings.entryMap();
+    QList<QString> encodingEntryKeys=encodingEntries.keys();
+    
+    QRegExp reg("^(.+) ([^\\s]+) ([^\\s]+)$");
+    for(QList<QString>::iterator itStr=encodingEntryKeys.begin(); itStr != encodingEntryKeys.end(); ++itStr)
+    {
+        if(reg.indexIn(*itStr) > -1)
+        {
+            if(reg.cap(1) == "ServerGroup" && reg.numCaptures() == 3)
+                Preferences::setChannelEncoding(sgKeys.at(reg.cap(2).toInt()), reg.cap(3), encodingEntries[*itStr]);
+            else
+                Preferences::setChannelEncoding(reg.cap(1), reg.cap(2), encodingEntries[*itStr]);
         }
     }
 
@@ -703,12 +724,15 @@ void Application::saveOptions(bool updateGUI)
     Konversation::ChannelList::iterator it3;
     QStringList channels;
     QStringList channelHistory;
+    QList<int> sgKeys;
 
     while(it.hasNext())
     {
         it.next();
         serverlist = (it.value())->serverList();
         servers.clear();
+
+        sgKeys.append(it.key());
 
         for(it2 = serverlist.begin(); it2 != serverlist.end(); ++it2)
         {
@@ -776,14 +800,16 @@ void Application::saveOptions(bool updateGUI)
 
     // Channel Encodings
     // remove all entries once
-    KGlobal::config()->deleteGroup("Channel Encodings");
-    KConfigGroup cgChanEncoding(KGlobal::config()->group("Channel Encodings"));
+    KGlobal::config()->deleteGroup("Channel Encodings"); // legacy Jun 29, 2009
+    KGlobal::config()->deleteGroup("Encodings");
+    KConfigGroup cgEncoding(KGlobal::config()->group("Encodings"));
     QList<int> encServers=Preferences::channelEncodingsServerGroupIdList();
     //i have no idea these would need to be sorted //encServers.sort();
     QList<int>::iterator encServer;
     for ( encServer = encServers.begin(); encServer != encServers.end(); ++encServer )
     {
         Konversation::ServerGroupSettingsPtr sgsp = Preferences::serverGroupById(*encServer);
+
         if ( sgsp )  // sgsp == 0 when the entry is of QuickConnect or something?
         {
             QStringList encChannels=Preferences::channelEncodingsChannelList(*encServer);
@@ -792,8 +818,12 @@ void Application::saveOptions(bool updateGUI)
             for ( encChannel = encChannels.begin(); encChannel != encChannels.end(); ++encChannel )
             {
                 QString enc = Preferences::channelEncoding(*encServer, *encChannel);
-                QString key = sgsp->name() + ' ' + (*encChannel);
-                cgChanEncoding.writeEntry(key, enc);
+                QString key = ' ' + (*encChannel);
+                if(sgKeys.contains(*encServer))
+                    key.prepend("ServerGroup "+QString::number(sgKeys.indexOf(*encServer)));
+                else
+                    key.prepend(sgsp->name());
+                cgEncoding.writeEntry(key, enc);
             }
         }
     }

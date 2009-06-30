@@ -1054,9 +1054,15 @@ void Server::incoming()
             if( !channelKey.isEmpty() )
             {
                 if(getServerGroup())
+                {
+                    qWarning() << "Server group gotten";
                     channelEncoding = Preferences::channelEncoding(getServerGroup()->id(), channelKey);
+                }
                 else
+                {
+                    qWarning() << "Server group not gotten";
                     channelEncoding = Preferences::channelEncoding(getDisplayName(), channelKey);
+                }
             }
             // END set channel encoding if specified
 

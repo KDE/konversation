@@ -2730,11 +2730,16 @@ void Channel::processPendingNicks()
 
 void Channel::setChannelEncoding(const QString& encoding) // virtual
 {
-    Preferences::setChannelEncoding(m_server->getDisplayName(), getName(), encoding);
+    if(m_server->getServerGroup())
+        Preferences::setChannelEncoding(m_server->getServerGroup()->id(), getName(), encoding);
+    else
+        Preferences::setChannelEncoding(m_server->getDisplayName(), getName(), encoding);
 }
 
 QString Channel::getChannelEncoding() // virtual
 {
+    if(m_server->getServerGroup())
+        return Preferences::channelEncoding(m_server->getServerGroup()->id(), getName());
     return Preferences::channelEncoding(m_server->getDisplayName(), getName());
 }
 
