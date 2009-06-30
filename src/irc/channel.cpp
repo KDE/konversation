@@ -386,8 +386,8 @@ void Channel::setEncryptedOutput(bool e)
         QByteArray cipherText = topic.toUtf8();
         QByteArray key = m_server->getKeyForRecipient(getName());
 
-        if(m_cipher->setKey(key))
-            cipherText = m_cipher->decryptTopic(cipherText);
+        if(getCipher()->setKey(key))
+            cipherText = getCipher()->decryptTopic(cipherText);
 
         topic=QString::fromUtf8(cipherText.data()+2, cipherText.length()-2);
         m_topicHistory[0] = m_topicHistory[0].section(' ', 0, 1) + ' ' + topic;
