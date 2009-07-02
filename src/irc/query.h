@@ -78,7 +78,7 @@ class Query : public ChatWindow
         #ifdef HAVE_QCA2
         Konversation::Cipher* getCipher();
         #endif
-        
+
     signals:
         void sendFile(const QString& recipient);
         void updateQueryChrome(ChatWindow*, const QString&);
@@ -142,6 +142,7 @@ class Query : public ChatWindow
         bool m_initialShow;
 
         #ifdef HAVE_QCA2
+        //FIXME: We might want to put this into the attendee object (i.e. NickInfo).
         Konversation::Cipher *m_cipher;
         #endif
 };
