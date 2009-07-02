@@ -3523,17 +3523,18 @@ void Server::updateEncoding()
 #ifdef HAVE_QCA2
 void Server::initKeyExchange(const QString &receiver)
 {
-    Konversation::Cipher* cipher;
-    if (getChannelByName(receiver))
+    Query* query;
+    if (getQueryByName(receiver))
     {
-        cipher = getChannelByName(receiver)->getCipher();
-    }
-    else if (getQueryByName(receiver))
-    {
-        cipher = getQueryByName(receiver)->getCipher();
+        query = getQueryByName(receiver);
     }
     else
-        return;
+    {
+        NickInfoPtr nickinfo = obtainNickInfo(receiver);
+        query = addQuery(nickinfo, true);
+    }
+
+    Konversation::Cipher* cipher = query->getCipher();
 
     QByteArray pubKey = cipher->initKeyExchange();
     if(pubKey.isEmpty())
@@ -3549,32 +3550,29 @@ void Server::initKeyExchange(const QString &receiver)
 void Server::parseInitKeyX(const QString &sender, const QString &remoteKey)
 {
     //TODO ask the user to accept without blocking
-    bool chanQueryFlag;
-    Konversation::Cipher* cipher;
-    if (getChannelByName(sender))
+    Query* query;
+    if (getQueryByName(sender))
     {
-        chanQueryFlag = false;
-        cipher = getChannelByName(sender)->getCipher();
-    }
-    else if (getQueryByName(sender))
-    {
-        chanQueryFlag = true;
-        cipher = getQueryByName(sender)->getCipher();
+        query = getQueryByName(sender);
     }
     else
-        return;
+    {
+        NickInfoPtr nickinfo = obtainNickInfo(sender);
+        query = addQuery(nickinfo, false);
+    }
+
+    Konversation::Cipher* cipher = query->getCipher();
 
     QByteArray pubKey = cipher->parseInitKeyX(remoteKey.toLocal8Bit());
 
-    if(pubKey.isEmpty())
+    if (pubKey.isEmpty())
     {
         appendMessageToFrontmost(i18n("Error"), i18n("Failed to parse the DH1080_INIT of %1. Key exchange failed.",sender));
     }
     else
     {
         setKeyForRecipient(sender, cipher->key());
-        if(chanQueryFlag) getQueryByName(sender)->setEncryptedOutput(true);
-        else getChannelByName(sender)->setEncryptedOutput(true);
+        query->setEncryptedOutput(true);
         appendMessageToFrontmost(i18n("Notice"), i18n("Your key is set and your messages will now be encrypted, sending DH1080_FINISH to %1.", sender));
         queue("NOTICE "+sender+" :DH1080_FINISH "+pubKey);
     }
@@ -3582,27 +3580,20 @@ void Server::parseInitKeyX(const QString &sender, const QString &remoteKey)
 
 void Server::parseFinishKeyX(const QString &sender, const QString &remoteKey)
 {
-    Konversation::Cipher* cipher;
-    bool chanQueryFlag;
-    if (getChannelByName(sender))
+    Query* query;
+    if (getQueryByName(sender))
     {
-        chanQueryFlag = false;
-        cipher = getChannelByName(sender)->getCipher();
-    }
-    else if (getQueryByName(sender))
-    {
-        chanQueryFlag = true;
-        cipher = getQueryByName(sender)->getCipher();
+        query = getQueryByName(sender);
     }
     else
         return;
 
-    bool success = cipher->parseFinishKeyX(remoteKey.toLocal8Bit());
-    if(success)
+    Konversation::Cipher* cipher = query->getCipher();
+
+    if (cipher->parseFinishKeyX(remoteKey.toLocal8Bit()))
     {
         setKeyForRecipient(sender,cipher->key());
-        if(chanQueryFlag) getQueryByName(sender)->setEncryptedOutput(true);
-        else getChannelByName(sender)->setEncryptedOutput(true);
+        query->setEncryptedOutput(true);
         appendMessageToFrontmost(i18n("Notice"), i18n("Successfully parsed DH1080_FINISH sent by %1. Your key is set and your messages will now be encrypted.", sender));
     }
     else
