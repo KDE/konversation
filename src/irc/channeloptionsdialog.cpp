@@ -22,6 +22,7 @@
 #include <QToolButton>
 #include <QKeyEvent>
 #include <QItemSelectionModel>
+#include <QHeaderView>
 
 #include <KTextEdit>
 #include <KLineEdit>

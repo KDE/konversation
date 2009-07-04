@@ -10,6 +10,8 @@
   Copyright (C) 2006 John Tapsell <johnflux@gmail.com>
 */
 
+#include <QHeaderView>
+
 #include "ignore_config.h"
 #include "ignorelistviewitem.h"
 #include "ignore.h"
