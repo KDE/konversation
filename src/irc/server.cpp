@@ -412,6 +412,9 @@ void Server::connectToIRCServer()
             connect(m_socket, SIGNAL(peerVerifyError(const QSslError&)), SLOT(sslVerifyError(const QSslError&)));
             connect(m_socket, SIGNAL(sslErrors(const QList<QSslError>&)), SLOT(sslError(const QList<QSslError>&)));
 
+            // Ensure that the SSL confirmation dialog is shown if needed on reconnect
+            m_showSSLConfirmation = true;
+
             m_socket->connectToHostEncrypted(getConnectionSettings().server().host(), getConnectionSettings().server().port());
         }
 
