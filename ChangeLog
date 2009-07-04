@@ -1,4 +1,29 @@
-Changes since 1.2-alpha3:
+Changes from 1.2-alpha3 to 1.2-alpha4:
+Alpha 4 marks a significant milestone on the way to feature completeness
+for the v1.2 release of Konversation. New features in this release inclu-
+de UPnP NAT traversal support for DCC file transfers and chats, DH1080
+key exchange support for Blowfish encryption and the ability to automati-
+cally split very long actions (i.e. usage of the '/me' command) into mul-
+tiple messages conforming to the maximum length of an IRC message (this
+was already supported for regular messages for some time).
+
+Many bugs have also been addressed, including an important fix for invita-
+tion dialogs causing disconnects by timeout if they were not dealt with
+quickly enough - and not only is the rewritten dialog non-blocking, it also
+allows for handling multiple outstanding invitations in a single dialog,
+rather than a new dialog being displayed for every additional invitation
+received. Other fixes include further interface polish and robustness and
+correctness improvements to Blowfish encryption, the Watched Nicks Online
+system and the storage of per-tab encoding preferences in the configuration
+file.
+
+A closing note for packagers: In this release we have replaced our cus-
+tom implementation of the Blowfish encryption algorithm with an optional
+dependency on the Qt Cryptographic Architecture (QCA) library in version
+2 or higher. By implication, Blowfish encryption support is now optional:
+A QCA2-enabled build will have it; a build not using QCA2 will not.
+
+
 * Changed links to KDE's (and hence our) bug tracker throughout the code-
   base to use https://bugs.kde.org/ rather than http://bugs.kde.org/
 * Fixed the "Show Menubar" item not getting removed from the chat view
@@ -50,12 +75,12 @@ Changes since 1.2-alpha3:
   defaulting to the value of a config dialog preference (Behavior -> Co-
   nnection-> Encryption -> Default Encryption Type, the default is Elec-
   tronic Codebook (ECB)) when no prefix is given.
-* Fixed crash when opening links with ' in them when the "Custom Browser" pre-
-  ference is enabled in Konversation's config dialog.
-* Improved consistency of link opening behavior between the chat view, the to-
-  pic label and the URL catcher (all three now use the new-in-KDE-4 KToolInvo-
-  cation API to invoke the KDE default browser, whereas the topic label and
-  the URL catcher were still using KRun until now).
+* Fixed crash when opening links with ' in them when the "Custom Browser"
+  preference is enabled in Konversation's config dialog.
+* Improved consistency of link opening behavior between the chat view, the
+  topic label and the URL catcher (all three now use the new-in-KDE-4 KTool-
+  Invocation API to invoke the KDE default browser, whereas the topic label
+  and the URL catcher were still using KRun until now).
 * Fixed a bug that could cause the state of the spell-checking setting for
   the input line to be lost across application restarts.
 * Added support for considering square brackets ([]) part of URLs.
@@ -70,8 +95,8 @@ Changes since 1.2-alpha3:
   on reconnects when those channels also had another mode with a parame-
   ter set.
 * Fixed a bug that caused query lines written by the user that are so long
-  that they need to be split up into multiple messages not to display in the
-  query text color.
+  that they need to be split up into multiple messages not to display in
+  the query text color.
 * Fixed a bug causing query lines written by the user that are so long they
   need to be split up into multiple messages for sending not to be displayed
   in the configured query text color.
@@ -80,41 +105,42 @@ Changes since 1.2-alpha3:
   to be displayed as a tooltip (just like the nickname list item tooltips
   in channel tabs), and is now.
 * Fixed a bug causing the automatic away system to set the user away again
-  on the next periodic activity check when no further mouse/keyboard activity
-  occurs after unlocking the screen/ending the screensaver.
-* Implemented splitting up of overly long actions (i.e. usage of the the '/me'
-  command) into multiple messages to stay under the 512 byte message length
-  limit (in raw format) imposed by the IRC protocol. As with the normal message
-  splitting, this is aware of how multi-byte/variable-width text encodings and
-  sender hostmask length (which is part of the message on the receiving end)
-  factor into the matter. Note that only the first message is actually sent as
-  an action, the other messages are sent as normal messages - intentionally,
-  as this seemed to make the most sense formatting-wise.
+  on the next periodic activity check when no further mouse/keyboard acti-
+  vity occurs after unlocking the screen/ending the screensaver.
+* Implemented splitting up of overly long actions (i.e. usage of the the
+  '/me' command) into multiple messages to stay under the 512 byte message
+  length limit (in raw format) imposed by the IRC protocol. As with the
+  normal message splitting, this is aware of how multi-byte/variable-width
+  text encodings and sender hostmask length (which is part of the message on
+  the receiving end) factor into the matter. Note that only the first message
+  is actually sent as an action, the other messages are sent as normal messa-
+  ges - intentionally, as this seemed to make the most sense formatting-wise.
 * Fixed the dialog box appearing upon receiving an invitation to join a chan-
   nel causing a disconnect by timeout when not being dealt with by the user
   swiftly enough.
-* Multiple invitations to join channels are now being handled by a single dia-
-  log box per connection, so that receiving many invitations in short order no
-  longer means getting flooded with dialog boxes.
-* Implemented DH1080 key exchange support for Blowfish encryption. You can use
-  the '/keyx' command to initiate a key exchange.
-* The raw log now shows encrypted incoming and outgoing messages in their en-
-  crypted form. Previously, incoming messages were being decrypted before being
-  shown, and outgoing messages were being shown before encryption took place,
-  thus not capturing what was actually coming from or going to the network so-
-  cket as is the intent of the raw log.
-* Fixed a bug causing unrecognized channel mode characters being shown as their
-  decimal value in the chat view messages announcing them having been set or
-  removed.
-* Per-tab encoding settings for tabs belonging to a connection to a configured
-  network (i.e. one found in the Server List dialog) now reference the unique
-  ID rather than the name of the network in the config file, making things
-  work reliably across restarts even when there are multiple identically named
-  networks. Encoding config file entries for tabs belonging to connections to
-  servers that are not part of a configured network continue to reference the
-  server hostnames.
-* Fixed the "(away)" label in front of the input line, indicating away status,
-  not showing up in query tabs.
+* Multiple invitations to join channels are now being handled by a single
+  dialog box per connection, so that receiving many invitations in short
+  order no longer means getting flooded with dialog boxes.
+* Implemented DH1080 key exchange support for Blowfish encryption. You can
+  use the '/keyx' command to initiate a key exchange.
+* The raw log now shows encrypted incoming and outgoing messages in their
+  encrypted form. Previously, incoming messages were being decrypted before
+  being shown, and outgoing messages were being shown before encryption
+  took place, thus not capturing what was actually coming from or going to
+  the network socket as is the intent of the raw log.
+* Fixed a bug causing unrecognized channel mode characters being shown as
+  their decimal value in the chat view messages announcing them having been
+  set or removed.
+* Per-tab encoding settings for tabs belonging to a connection to a configu-
+  red network (i.e. one found in the Server List dialog) now reference the
+  unique ID rather than the name of the network in the config file, making
+  things work reliably across restarts even when there are multiple identi-
+  cally named networks. Encoding config file entries for tabs belonging to
+  connections to servers that are not part of a configured network continue
+  to reference the server hostnames.
+* Fixed the "(away)" label in front of the input line, indicating away sta-
+  tus, not showing up in query tabs.
+
 
 Changes from 1.2-alpha2 to 1.2-alpha3:
 This third alpha fixes a fair amount of annoying bugs encountered in
