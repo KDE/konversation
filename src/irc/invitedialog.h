@@ -63,8 +63,11 @@ class InviteDialog : public KDialog, protected Ui::InviteDialog
 
         void addInvite(const QString& nickname, const QString& channel);
 
+        static bool shouldBeShown(KDialog::ButtonCode& buttonCode);
+
     protected slots:
         void slotOk();
+        void saveShowAgainSetting(KDialog::ButtonCode);
 
     private:
         InviteChannelListModel* m_channelModel;

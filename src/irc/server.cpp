@@ -3088,6 +3088,16 @@ void Server::invitation(const QString& nick,const QString& channel)
 {
     if(!m_inviteDialog)
     {
+        KDialog::ButtonCode buttonCode = KDialog::Cancel;
+
+        if(!InviteDialog::shouldBeShown(buttonCode))
+        {
+            if (buttonCode == KDialog::Ok)
+                sendJoinCommand(channel);
+
+            return;
+        }
+
         m_inviteDialog = new InviteDialog (getViewContainer()->getWindow());
         connect(m_inviteDialog, SIGNAL(joinChannelsRequested(const QString&)),
                 this, SLOT(sendJoinCommand(const QString&)));

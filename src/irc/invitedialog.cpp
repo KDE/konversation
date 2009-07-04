@@ -20,6 +20,7 @@
 
 #include <KLocale>
 #include <KIcon>
+#include <KConfigGroup>
 
 #include <QLabel>
 #include <QTreeView>
@@ -43,6 +44,8 @@ InviteDialog::InviteDialog(QWidget* parent)
     m_channelView->setRootIsDecorated(false);
 
     connect(this, SIGNAL(okClicked()), this, SLOT(slotOk()));
+    connect(this, SIGNAL(buttonClicked(KDialog::ButtonCode)),
+            this, SLOT (saveShowAgainSetting(KDialog::ButtonCode)));
 }
 
 void InviteDialog::addInvite(const QString& nickname, const QString& channel)
@@ -56,6 +59,37 @@ void InviteDialog::slotOk()
 
     if(!channels.isEmpty())
         emit joinChannelsRequested(channels);
+}
+
+void InviteDialog::saveShowAgainSetting(KDialog::ButtonCode buttonCode)
+{
+    if (m_showAgainCheck->isChecked())
+    {
+        KConfigGroup::WriteConfigFlags flags = KConfig::Persistent;
+        KConfigGroup cg(KGlobal::config().data(), "Notification Messages");
+        cg.writeEntry("Invitation", buttonCode == KDialog::Ok, flags);
+        cg.sync();
+    }
+}
+
+bool InviteDialog::shouldBeShown(KDialog::ButtonCode& buttonCode)
+{
+    KConfigGroup cg(KGlobal::config().data(), "Notification Messages");
+    cg.sync();
+    const QString dontAsk = cg.readEntry("Invitation", QString()).toLower();
+
+    if (dontAsk == "yes" || dontAsk == "true")
+    {
+        buttonCode = KDialog::Ok;
+        return false;
+    }
+    else if (dontAsk == "no" || dontAsk == "false")
+    {
+        buttonCode = KDialog::Cancel;
+        return false;
+    }
+
+    return true;
 }
 
 
