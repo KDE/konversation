@@ -10,12 +10,12 @@
   Copyright (C) 2006 John Tapsell <johnflux@gmail.com>
 */
 
-#include <QHeaderView>
-
 #include "ignore_config.h"
 #include "ignorelistviewitem.h"
 #include "ignore.h"
 #include "preferences.h"
+
+#include <QHeaderView>
 
 
 Ignore_Config::Ignore_Config( QWidget* parent, const char* name, Qt::WFlags fl )
