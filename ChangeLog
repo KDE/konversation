@@ -1,3 +1,13 @@
+Changes since 1.2-alpha4:
+* Added back "Do not ask again" checkbox missing in the rewritten invita-
+  tion dialog that appeared in v1.2-alpha3. By implication, the dialog now
+  also observes the "Automatically join channel on invite" option from the
+  "Warning Dialogs" page in the configuration dialog again.
+* Fixed problems reconnecting an SSL-enabled connection using a self-sign-
+  ed certificate.
+* Fixed a build problem with KDE trunk (i.e. what will end up as KDE 4.4).
+
+
 Changes from 1.2-alpha3 to 1.2-alpha4:
 Alpha 4 marks a significant milestone on the way to feature completeness
 for the v1.2 release of Konversation. New features in this release inclu-

@@ -993,12 +993,9 @@
   defaultRateInit.append( 1 );
   defaultRateInit.append( 0 );
   defaultRate.append( defaultRateInit );
-
-  if (0) //kconfig_compiler generates invalid code for int lists</code>
+        </code>
         <parameter name="QueueIndex" type="Int" max="2"/>
-        <default param="0" code="true">defaultRate[0]</default>
-        <default param="1" code="true">defaultRate[1]</default>
-        <default param="2" code="true">defaultRate[2]</default>
+        <default code="true">defaultRate[$(QueueIndex)]</default>
     </entry>
     <entry key="ShowQueueTuner" type="Bool">
         <default>false</default>
