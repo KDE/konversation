@@ -74,16 +74,17 @@ void Warnings_Config::saveSettings()
     {
         if (checked)
         {
-            grp.writeEntry(warningName, 1);
+            grp.deleteEntry(warningName);
         }
         else
         {
+            // Let's keep the old state if we got one.
             QString state = grp.readEntry(warningName, QString());
 
-            if (!state.isEmpty() && (state == "yes" || state == "no"))
+            if (!state.isEmpty() && (state == "true" || state == "false"))
                 grp.writeEntry(warningName, state);
             else
-                grp.writeEntry(warningName, "yes");
+                grp.writeEntry(warningName, "true");
         }
     }
     else
@@ -100,7 +101,7 @@ void Warnings_Config::loadSettings()
 {
   QStringList dialogDefinitions;
   QString flagNames = "Invitation,SaveLogfileNote,ClearLogfileQuestion,CloseQueryAfterIgnore,ReconnectWithDifferentServer,ReuseExistingConnection,QuitServerTab,QuitChannelTab,QuitQueryTab,ChannelListNoServerSelected,HideMenuBarWarning,ChannelListWarning,LargePaste,systemtrayquitKonversation,IgnoreNick,UnignoreNick,QuitWithActiveDccTransfers";
-  dialogDefinitions.append(i18n("Automatically join channel on invite"));
+  dialogDefinitions.append(i18n("Show channel invitation dialog"));
   dialogDefinitions.append(i18n("Notice that saving logfiles will save whole file"));
   dialogDefinitions.append(i18n("Ask before deleting logfile contents"));
   dialogDefinitions.append(i18n("Ask about closing queries after ignoring the nickname"));
@@ -133,12 +134,7 @@ void Warnings_Config::loadSettings()
 
     if (flagName == "LargePaste" || flagName == "Invitation")
     {
-        QString state = grp.readEntry(flagName, QString());
-
-        if (state == "yes" || state == "no")
-            item->setCheckState(0, Qt::Unchecked);
-        else
-            item->setCheckState(0, Qt::Checked);
+        item->setCheckState(0, grp.readEntry(flagName, QString()).isEmpty() ? Qt::Checked : Qt::Unchecked);
     }
     else
     {
