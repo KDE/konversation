@@ -719,15 +719,18 @@ void NicksOnline::doCommand(QAction* id)
             Konversation::Addressbook::self()->editAddressee(addressee.uid());
     else if ( id == m_addressBookChange )
     {
-            if(nickInfo)
-            {
-                nickInfo->showLinkAddressbookUI();
-            }
-            else
-            {
-                LinkAddressbookUI *linkaddressbookui = new LinkAddressbookUI(server->getViewContainer()->getWindow(), nickname, server->getServerName(), server->getDisplayName(), addressee.realName());
-                linkaddressbookui->show();
-            }
+        LinkAddressbookUI *linkaddressbookui = NULL;
+
+        if(nickInfo)
+        {
+            linkaddressbookui = new LinkAddressbookUI(server->getViewContainer()->getWindow(), nickInfo->getNickname(), server->getServerName(), server->getDisplayName(), nickInfo->getRealName());
+        }
+        else
+        {
+            linkaddressbookui = new LinkAddressbookUI(server->getViewContainer()->getWindow(), nickname, server->getServerName(), server->getDisplayName(), addressee.realName());
+        }
+
+        linkaddressbookui->show();
     }
     else if ( id == m_chooseAssociation || id == m_deleteAssociation )
     {

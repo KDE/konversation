@@ -122,16 +122,6 @@ class NickInfo : public QObject, public KShared
          */
         QString getBestAddresseeName();
 
-        /** Open this contact up in a "edit addresee association" window
-         */
-        void showLinkAddressbookUI();
-        /** Edit the contact in kaddressbook
-         */
-        bool editAddressee() const;
-        /** Run kmail for this contact
-         */
-        bool sendEmail() const;
-
         void setPrintedOnline(bool printed);
         bool getPrintedOnline();
 

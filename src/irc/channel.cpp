@@ -511,7 +511,10 @@ void Channel::popupCommand(int id)
             ChannelNickList nickList=getSelectedChannelNicks();
             for(ChannelNickList::ConstIterator it=nickList.constBegin();it!=nickList.constEnd();++it)
             {
-                if(!(*it)->getNickInfo()->editAddressee()) break;;
+                KABC::Addressee addressee = (*it)->getNickInfo()->getAddressee();
+                if(addressee.isEmpty()) break;
+
+                Konversation::Addressbook::self()->editAddressee(addressee.uid());
             }
             break;
         }
@@ -552,7 +555,9 @@ void Channel::popupCommand(int id)
             ChannelNickList nickList=getSelectedChannelNicks();
             for(ChannelNickList::ConstIterator it=nickList.constBegin();it!=nickList.constEnd();++it)
             {
-                (*it)->getNickInfo()->showLinkAddressbookUI();
+                LinkAddressbookUI *linkaddressbookui = new LinkAddressbookUI(this, (*it)->getNickInfo()->getNickname(), m_server->getServerName(),
+                                                                             m_server->getDisplayName(), (*it)->getNickInfo()->getRealName());
+                linkaddressbookui->show();
             }
             break;
         }

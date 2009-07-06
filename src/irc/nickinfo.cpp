@@ -23,7 +23,6 @@
 #include "linkaddressbook/addressbook.h"
 #include "linkaddressbook/linkaddressbookui.h"
 #include "mainwindow.h"
-#include "viewcontainer.h"
 #include "server.h"
 
 #include <Q3MimeSourceFactory>
@@ -137,15 +136,7 @@ bool NickInfo::isIdentified() const
 
 QString NickInfo::getPrettyOnlineSince() const
 {
-    QString prettyOnlineSince;
-    int daysto = m_onlineSince.date().daysTo( QDate::currentDate());
-    if(daysto == 0) prettyOnlineSince = i18n("Today");
-    else if(daysto == 1) prettyOnlineSince = i18n("Yesterday");
-    else prettyOnlineSince = m_onlineSince.toString("ddd d MMMM yyyy");
-    //TODO - we should use KLocale for this
-    prettyOnlineSince += ", " + m_onlineSince.toString("h:mm ap");
-
-    return prettyOnlineSince;
+    return KGlobal::locale()->formatDateTime(m_onlineSince, KLocale::FancyLongDate, false);
 }
 
 // Return the Server object that owns this NickInfo object.
@@ -456,26 +447,6 @@ void NickInfo::tooltipTableData(QTextStream &tooltip) const
 
 }
 
-void NickInfo::showLinkAddressbookUI()
-{
-    LinkAddressbookUI *linkaddressbookui = new LinkAddressbookUI(m_owningServer->getViewContainer()->getWindow(), m_nickname, m_owningServer->getServerName(), m_owningServer->getDisplayName(), m_realName);
-    linkaddressbookui->show();
-
-}
-
-bool NickInfo::editAddressee() const
-{
-    if(m_addressee.isEmpty()) return false;
-
-    Konversation::Addressbook::self()->editAddressee(m_addressee.uid());
-    return true;
-}
-
-bool NickInfo::sendEmail() const
-{
-    return Konversation::Addressbook::self()->sendEmail(m_addressee);
-}
-
 void NickInfo::setPrintedOnline(bool printed)
 {
     m_printedOnline=printed;
@@ -483,10 +454,7 @@ void NickInfo::setPrintedOnline(bool printed)
 
 bool NickInfo::getPrintedOnline()
 {
-    if(this)
-        return m_printedOnline;
-    else
-        return false;
+    return m_printedOnline;
 }
 
 #include "nickinfo.moc"
