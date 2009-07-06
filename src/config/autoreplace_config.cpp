@@ -284,7 +284,7 @@ void Autoreplace_Config::patternChanged(const QString& newPattern)
     }
     else
     {
-        item->setText(2,i18n("New"));
+        item->setText(2,i18nc("Fallback content for the \"Find:\" field of an auto-replace rule that gets set when the user leaves the field empty and e.g. switches to another rule in the list. It's identical to the default content of the field after adding a new auto-replace rule.", "New"));
     }
     // tell the config system that something has changed
     if(!m_newItemSelected) emit modified();
@@ -320,7 +320,7 @@ void Autoreplace_Config::addEntry()
     // set default direction
     newItem->setText(1,directionCombo->itemText(DIRECTION_OUTPUT));
     // set default pattern name
-    newItem->setText(2,i18n("New"));
+    newItem->setText(2,i18nc("Default content of the \"Find:\" field of a newly-added auto-replace rule.", "New"));
     // set default direction
     newItem->setText(4,"o");
     // select new item and make it the current one
