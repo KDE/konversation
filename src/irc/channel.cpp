@@ -343,8 +343,13 @@ Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
 void Channel::setServer(Server* server)
 {
     if (m_server != server)
+    {
         connect(server, SIGNAL(connectionStateChanged(Server*, Konversation::ConnectionState)),
                 SLOT(connectionStateChanged(Server*, Konversation::ConnectionState)));
+        connect(server, SIGNAL(nickInfoChanged(Server*, NickInfoPtr)),
+                this, SLOT(updateNickList(Server*, NickInfoPtr)));
+    }
+
     ChatWindow::setServer(server);
     if (!server->getKeyForRecipient(getName()).isEmpty())
         cipherLabel->show();
@@ -2913,6 +2918,18 @@ Konversation::Cipher* Channel::getCipher()
     return m_cipher;
 }
 #endif
+
+void Channel::updateNickList(Server*, NickInfoPtr nickInfo)
+{
+    foreach(Nick* nick, nicknameList)
+    {
+        if(nick->getChannelNick()->getNickInfo() == nickInfo)
+        {
+            nick->refresh();
+            break;
+        }
+    }
+}
 
 //
 // NickList

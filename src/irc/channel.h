@@ -151,6 +151,8 @@ class Channel : public ChatWindow
         void purgeNicks();
         void processPendingNicks();
 
+        void updateNickList(Server* server, NickInfoPtr nickInfo);
+
 //Topic
     public:
         /** Get the current channel topic.

@@ -42,13 +42,6 @@ NickInfo::NickInfo(const QString& nick, Server* server): KShared()
     if(!m_addressee.isEmpty())
         Konversation::Addressbook::self()->emitContactPresenceChanged(m_addressee.uid(), 4);
 
-    connect( Konversation::Addressbook::self()->getAddressBook(), SIGNAL( addressBookChanged( AddressBook * ) ), this, SLOT( refreshAddressee() ) );
-    connect( Konversation::Addressbook::self(), SIGNAL(addresseesChanged()), this, SLOT(refreshAddressee()));
-
-    m_changedTimer = new QTimer( this);
-    m_changedTimer->setSingleShot( true );
-    connect(m_changedTimer, SIGNAL( timeout()), SLOT(emitNickInfoChanged()));
-
     // reset nick color
     m_nickColor = 0;
 }
@@ -174,16 +167,10 @@ void NickInfo::setNickname(const QString& newNickname)
     startNickInfoChangedTimer();
 }
 
-void NickInfo::emitNickInfoChanged()
-{
-    //m_owningServer->emitNickInfoChanged(this); //TODO FIXME can't use self anymore, have to have the item which is of course allocated externally and so we can't fucking know it inside this code
-    emit nickInfoChanged();
-}
-
 void NickInfo::startNickInfoChangedTimer()
 {
-    if(!m_changedTimer->isActive())
-    m_changedTimer->start(3000);
+    setChanged(true);
+    m_owningServer->startNickInfoChangedTimer();
 }
 
 void NickInfo::setHostmask(const QString& newMask)
@@ -456,5 +443,3 @@ bool NickInfo::getPrintedOnline()
 {
     return m_printedOnline;
 }
-
-#include "nickinfo.moc"

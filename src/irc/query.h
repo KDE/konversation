@@ -100,6 +100,7 @@ class Query : public ChatWindow
         void textPasted(const QString& text);
         void popup(int id);
         void nickInfoChanged();
+        void updateNickInfo(Server* server, NickInfoPtr nickInfo);
         void closeWithoutAsking();
         virtual void serverOnline(bool online);
         void slotActionTriggered(QAction* action);

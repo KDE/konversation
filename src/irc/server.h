@@ -493,6 +493,10 @@ void resetNickSelection();
         void parseInitKeyX(const QString &sender, const QString &pubKey);
         void parseFinishKeyX(const QString &sender, const QString &pubKey);
         #endif
+
+        /// Start the NickInfo changed timer if it isn't started already
+        void startNickInfoChangedTimer();
+
     protected slots:
         void hostFound();
         void preShellCommandExited(int exitCode, QProcess::ExitStatus exitStatus);
@@ -543,6 +547,14 @@ void resetNickSelection();
 
         /// Update the encoding shown in the mainwindow's actions
         void updateEncoding();
+
+        /// Update the NickInfos from the address book
+        void updateNickInfoAddressees();
+
+        /** Called when the NickInfo changed timer times out.
+          * Emits the nickInfoChanged() signal for all changed NickInfos
+          */
+        void sendNickInfoChangedSignals();
 
     private slots:
         void collectStats(int bytes, int encodedBytes);
@@ -756,6 +768,8 @@ void resetNickSelection();
         bool m_showSSLConfirmation;
 
         QPointer<InviteDialog> m_inviteDialog;
+
+        QTimer* m_nickInfoChangedTimer;
 };
 
 #endif

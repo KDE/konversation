@@ -136,8 +136,12 @@ Query::~Query()
 void Query::setServer(Server* newServer)
 {
     if (m_server != newServer)
+    {
         connect(newServer, SIGNAL(connectionStateChanged(Server*, Konversation::ConnectionState)),
                 SLOT(connectionStateChanged(Server*, Konversation::ConnectionState)));
+        connect(newServer, SIGNAL(nickInfoChanged(Server*, NickInfoPtr)),
+                this, SLOT(updateNickInfo(Server*, NickInfoPtr)));
+    }
 
     ChatWindow::setServer(newServer);
 
@@ -487,13 +491,17 @@ void Query::childAdjustFocus()
 
 void Query::setNickInfo(const NickInfoPtr & nickInfo)
 {
-    if(m_nickInfo)
-        disconnect(m_nickInfo.data(), SIGNAL(nickInfoChanged()),  this,  SLOT(nickInfoChanged()));
-
     m_nickInfo = nickInfo;
     Q_ASSERT(m_nickInfo); if(!m_nickInfo) return;
     setName(m_nickInfo->getNickname());
-    connect(m_nickInfo.data(), SIGNAL(nickInfoChanged()), this, SLOT(nickInfoChanged()));
+    nickInfoChanged();
+}
+
+void Query::updateNickInfo(Server* server, NickInfoPtr nickInfo)
+{
+    if (!m_nickInfo || server != m_server || nickInfo != m_nickInfo)
+        return;
+
     nickInfoChanged();
 }
 

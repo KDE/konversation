@@ -134,6 +134,14 @@ Server::Server(QObject* parent, ConnectionSettings& settings) : QObject(parent)
         connectSignals();
     // TODO FIXME this disappeared in a merge, ensure it should have
     updateConnectionState(Konversation::SSNeverConnected);
+
+    connect(Konversation::Addressbook::self()->getAddressBook(), SIGNAL(addressBookChanged(AddressBook *)), this, SLOT(updateNickInfoAddressees()));
+    connect(Konversation::Addressbook::self(), SIGNAL(addresseesChanged()), this, SLOT(updateNickInfoAddressees()));
+
+    m_nickInfoChangedTimer = new QTimer(this);
+    m_nickInfoChangedTimer->setSingleShot(true);
+    m_nickInfoChangedTimer->setInterval(3000);
+    connect(m_nickInfoChangedTimer, SIGNAL(timeout()), this, SLOT(sendNickInfoChangedSignals()));
 }
 
 Server::~Server()
@@ -3619,6 +3627,32 @@ void Server::parseFinishKeyX(const QString &sender, const QString &remoteKey)
 QAbstractItemModel* Server::nickListModel() const
 {
     return m_nickListModel;
+}
+
+void Server::updateNickInfoAddressees()
+{
+    foreach(NickInfoPtr nickInfo, m_allNicks)
+    {
+        nickInfo->refreshAddressee();
+    }
+}
+
+void Server::startNickInfoChangedTimer()
+{
+    if(!m_nickInfoChangedTimer->isActive())
+        m_nickInfoChangedTimer->start();
+}
+
+void Server::sendNickInfoChangedSignals()
+{
+    foreach(NickInfoPtr nickInfo, m_allNicks)
+    {
+        if(nickInfo->isChanged())
+        {
+            emit nickInfoChanged(this, nickInfo);
+            nickInfo->setChanged(false);
+        }
+    }
 }
 
 #include "server.moc"

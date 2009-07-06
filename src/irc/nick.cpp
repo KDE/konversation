@@ -41,7 +41,6 @@ Nick::Nick(K3ListView *listView, const ChannelNickPtr& channelnick)
 
     connect(this, SIGNAL(refreshed()), listView, SLOT(startResortTimer()));
     connect(getChannelNick().data(), SIGNAL(channelNickChanged()), SLOT(refresh()));
-    connect(getChannelNick()->getNickInfo().data(), SIGNAL(nickInfoChanged()), SLOT(refresh()));
 }
 
 Nick::~Nick()
