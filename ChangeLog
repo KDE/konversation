@@ -6,6 +6,9 @@ Changes since 1.2-alpha4:
 * Fixed problems reconnecting an SSL-enabled connection using a self-sign-
   ed certificate.
 * Fixed a build problem with KDE trunk (i.e. what will one day be KDE 4.4).
+* Fixed loading and saving of the settings toggling the invitation and mul-
+  ti-line paste warning dialogs in the "Warning Dialogs" page of the con-
+  figuration dialog.
 
 
 Changes from 1.2-alpha3 to 1.2-alpha4:
