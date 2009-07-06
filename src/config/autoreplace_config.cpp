@@ -284,7 +284,7 @@ void Autoreplace_Config::patternChanged(const QString& newPattern)
     }
     else
     {
-        item->setText(2,QString("New"));
+        item->setText(2,i18n("New"));
     }
     // tell the config system that something has changed
     if(!m_newItemSelected) emit modified();
