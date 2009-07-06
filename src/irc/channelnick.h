@@ -24,7 +24,7 @@ class ChannelNick :  public QObject, public KShared
 {
     Q_OBJECT
 
-        public:
+    public:
         ChannelNick(const NickInfoPtr& nickInfo, const bool& isop, const bool& isadmin,
             const bool& isowner, const bool& ishalfop, const bool& hasvoice);
         ~ChannelNick();
@@ -58,7 +58,8 @@ class ChannelNick :  public QObject, public KShared
         QString getNickname() const;
         QString loweredNickname() const;
         QString getHostmask() const;
-        QString tooltip();
+        QString tooltip() const;
+
     private:
         NickInfoPtr nickInfo;
         bool isop;

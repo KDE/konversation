@@ -179,21 +179,15 @@ bool ChannelNick::setOp(bool state)
 //Just calls nickInfo->getNickname() etc
 QString ChannelNick::getNickname() const
 {
-    if ( this )
-        return nickInfo->getNickname();
-    else
-        return QString();
+    return nickInfo->getNickname();
 }
 
 QString ChannelNick::getHostmask() const
 {
-    if ( this )
-        return nickInfo->getHostmask();
-    else
-        return QString();
+    return nickInfo->getHostmask();
 }
 
-QString ChannelNick::tooltip()
+QString ChannelNick::tooltip() const
 {
     //  if(addressee.isEmpty()) return QString();
     //KABC::Addressee addressee = nickInfo->getAddressee();
