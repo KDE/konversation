@@ -9,6 +9,12 @@ Changes since 1.2-alpha4:
 * Fixed loading and saving of the settings toggling the invitation and mul-
   ti-line paste warning dialogs in the "Warning Dialogs" page of the con-
   figuration dialog.
+* Improved wording of the description of the invitation dialog setting in
+  the "Warning Dialogs" page of the configuration dialog to reflect that
+  the dialog being disabled doesn't imply that the channel the user was
+  invited to will be joined automatically, as the user might have rejec-
+  ted the invitation when he got the dialog along with checking "Don't
+  ask again".
 
 
 Changes from 1.2-alpha3 to 1.2-alpha4:
