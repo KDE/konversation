@@ -684,7 +684,13 @@ namespace Konversation
         void TransferRecv::sendAck()                   // slot
         {
             //kDebug() << m_transferringPosition << "/" << (KIO::fileoffset_t)m_fileSize;
-            KIO::fileoffset_t pos = intel( m_transferringPosition );
+
+            //It is bound to be 32bit according to dcc specs, -> 4GB limit.
+            //But luckily no client ever reads this value,
+            //except for old mIRC versions, but they couldn't send or receive files over 4GB anyway.
+            //Note: The resume and filesize are set via dcc send command and can be over 4GB
+
+            quint32 pos = intel( (quint32)m_transferringPosition );
 
             m_recvSocket->write( (char*)&pos, 4 );
             if ( m_transferringPosition == (KIO::fileoffset_t)m_fileSize )

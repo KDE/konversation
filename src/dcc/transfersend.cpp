@@ -477,7 +477,7 @@ namespace Konversation
                 writeData();
             }
 
-            unsigned long pos;
+            quint32 pos;
             while ( m_sendSocket->bytesAvailable() >= 4 )
             {
                 m_sendSocket->read( (char*)&pos, 4 );

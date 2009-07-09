@@ -2049,7 +2049,7 @@ void Server::resumeDccSendTransfer(const QString &sourceNick, const QStringList 
                                         QString::number(dccTransfer->getProgress()),
                                         ( dccTransfer->getFileSize() == 0 ) ? i18n( "unknown size" ) : KIO::convertSize( dccTransfer->getFileSize() ) ) );
 
-        // fileName cant have " here
+        // fileName can't have " here
         if (fileName.contains(' '))
             fileName = '\"'+fileName+'\"';
 

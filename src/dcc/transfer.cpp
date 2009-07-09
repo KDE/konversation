@@ -24,7 +24,8 @@ namespace Konversation
 {
     namespace DCC
     {
-        Transfer::Transfer( Type dccType, QObject* parent ) : QObject(parent)
+        Transfer::Transfer( Type dccType, QObject* parent )
+            : QObject(parent)
         {
             kDebug();
 
@@ -274,12 +275,12 @@ namespace Konversation
             return fileNameTmp;
         }
 
-        unsigned long Transfer::intel( unsigned long value )
+        quint32 Transfer::intel( quint32 value )
         {
             value = ( (value & 0xff000000) >> 24 ) +
-                ( (value & 0xff0000) >> 8 ) +
-                ( (value & 0xff00) << 8 ) +
-                ( (value & 0xff) << 24 );
+                    ( (value & 0x00ff0000) >> 8  ) +
+                    ( (value & 0x0000ff00) << 8  ) +
+                    ( (value & 0x000000ff) << 24 );
 
             return value;
         }

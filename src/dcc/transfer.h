@@ -66,6 +66,7 @@ namespace Konversation
                 virtual ~Transfer();
 
                 // info of DccTransfer can be copied with this constructor.
+                // WARNING: it only copies the info, it does NOT have a buffer, it is NOT a valid transfer
                 Transfer( const Transfer& obj );
 
                 Type               getType()                  const;
@@ -128,7 +129,7 @@ namespace Konversation
 
                 static QString transferFileName( const QString& fileName );
                 static QString sanitizeFileName( const QString& fileName );
-                static unsigned long intel( unsigned long value );
+                static quint32 intel( quint32 value );
 
             protected slots:
                 void logTransfer();
