@@ -450,15 +450,6 @@ namespace Konversation
                     return;
                 }
 
-                //this "can" happen when resources are temporary unavailable
-                //NOTE: this is not fatal
-                if (byteWritten < actual)
-                {
-                    kWarning() << "byteWritten < actual : " << byteWritten << " < " << actual;
-                    kWarning() << "try to correct it with byteWritten += " << m_sendSocket->bytesToWrite();
-                    byteWritten += m_sendSocket->bytesToWrite();
-                }
-
                 m_transferringPosition += byteWritten;
                 //m_transferringPosition += actual;
                 if ( (KIO::fileoffset_t)m_fileSize <= m_transferringPosition )
