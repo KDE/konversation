@@ -15,6 +15,13 @@ Changes since 1.2-alpha4:
   invited to will be joined automatically, as the user might have rejec-
   ted the invitation when he got the dialog along with checking "Don't
   ask again".
+* Decreased memory usage.
+* Initializing Phonon is now delayed until it is actually needed, resulting
+  in less memory usage for those not using highlight sound notifications
+  and less work being done during application startup.
+* Fixed DCC file transfer problems with files larger than 4 GB on 32bit sys-
+  tems, along with some other correctness improvements to the file transfer
+  code.
 
 
 Changes from 1.2-alpha3 to 1.2-alpha4:
