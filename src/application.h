@@ -110,7 +110,7 @@ class Application : public KUniqueApplication
 
         OSDWidget* osd;
 
-        Konversation::Sound* sound() { return m_sound; }
+        Konversation::Sound* sound();
 
         Images* images() { return m_images; }
 

@@ -104,8 +104,8 @@ int Application::newInstance()
         // make sure all vars are initialized properly
         quickConnectDialog = 0;
 
-        // Sound object used to play sound...
-        m_sound = new Konversation::Sound(this);
+        // Sound object used to play sound is created when needed.
+        m_sound = NULL;
 
         // initialize OSD display here, so we can read the Preferences::properly
         osd = new OSDWidget( "Konversation" );
@@ -1026,6 +1026,14 @@ void Application::openUrl(const QString& url)
             return;
         }
     }
+}
+
+Konversation::Sound* Application::sound()
+{
+    if (!m_sound)
+        m_sound = new Konversation::Sound(this);
+
+    return m_sound;
 }
 
 #include "application.moc"
