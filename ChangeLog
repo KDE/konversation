@@ -15,7 +15,8 @@ Changes since 1.2-alpha4:
   invited to will be joined automatically, as the user might have rejec-
   ted the invitation when he got the dialog along with checking "Don't
   ask again".
-* Decreased memory usage.
+* Decreased memory usage (the NickInfo object created for every IRC user
+  encountered is lighter now).
 * Initializing Phonon is now delayed until it is actually needed, resulting
   in less memory usage for those not using highlight sound notifications
   and less work being done during application startup.
