@@ -119,7 +119,7 @@ namespace Konversation
                 m_partnerPort = port;
         }
 
-        void TransferRecv::setFileSize( unsigned long fileSize )
+        void TransferRecv::setFileSize( quint64 fileSize )
         {
             if ( getStatus() == Configuring )
                 m_fileSize = fileSize;
@@ -548,13 +548,13 @@ namespace Konversation
         }
 
                                                           // public slot
-        void TransferRecv::startResume( unsigned long position )
+        void TransferRecv::startResume( quint64 position )
         {
             kDebug() << "Position:" << position;
 
             stopConnectionTimer();
 
-            if ( (unsigned long)m_transferringPosition != position )
+            if ( (quint64)m_transferringPosition != position )
             {
                 kDebug() << "TransferRecv::startResume(): remote responsed an unexpected position"<< endl
                     << "TransferRecv::startResume(): expected: " << m_transferringPosition << endl

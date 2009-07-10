@@ -347,12 +347,12 @@ void resetNickSelection();
         ChannelListPanel* addChannelListPanel();
 
         // invoked by DCC::TransferSend
-        void dccSendRequest(const QString& recipient,const QString& fileName,const QString& address,uint port,unsigned long size);
-        void dccPassiveSendRequest(const QString& recipient,const QString& fileName,const QString& address,unsigned long size,const QString& token);
+        void dccSendRequest(const QString& recipient,const QString& fileName,const QString& address,uint port,quint64 size);
+        void dccPassiveSendRequest(const QString& recipient,const QString& fileName,const QString& address,quint64 size,const QString& token);
         // invoked by DCC::TransferRecv
         void dccPassiveResumeGetRequest(const QString& sender,const QString& fileName,uint port,KIO::filesize_t startAt,const QString &token);
         void dccResumeGetRequest(const QString& sender,const QString& fileName,uint port,KIO::filesize_t startAt);
-        void dccReverseSendAck(const QString& partnerNick,const QString& fileName,const QString& ownAddress,uint ownPort,unsigned long size,const QString& reverseToken);
+        void dccReverseSendAck(const QString& partnerNick,const QString& fileName,const QString& ownAddress,uint ownPort,quint64 size,const QString& reverseToken);
         void dccRejectSend(const QString& partnerNick, const QString& fileName);
         // invoked by DccChat
         void dccRejectChat(const QString& partnerNick);
@@ -457,7 +457,7 @@ void resetNickSelection();
         void requestBan(const QStringList& users,const QString& channel,const QString& option);
         void requestUnban(const QString& mask,const QString& channel);
 
-        void addDccSend(const QString &recipient,KUrl fileURL, const QString &altFileName = QString(), uint fileSize = 0);
+        void addDccSend(const QString &recipient,KUrl fileURL, const QString &altFileName = QString(), quint64 fileSize = 0);
         void removeQuery(Query *query);
         void startNotifyTimer(int msec=0);
         void sendJoinCommand(const QString& channelName, const QString& password = QString());

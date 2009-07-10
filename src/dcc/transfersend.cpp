@@ -364,7 +364,7 @@ namespace Konversation
             m_sendSocket->connectToHost( partnerHost, partnerPort );
         }
                                                           // public
-        bool TransferSend::setResume( unsigned long position )
+        bool TransferSend::setResume( quint64 position )
         {
             kDebug() << "Position=" << position;
 

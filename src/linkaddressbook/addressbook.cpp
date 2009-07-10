@@ -268,7 +268,7 @@ void Addressbook::chatWithContact( const QString &uid )
  * @param altFileName an alternate filename describing the file
  * @param fileSize file size in bytes
  */
-void Addressbook::sendFile(const QString &uid, const KUrl &sourceURL, const QString &altFileName, uint fileSize)
+void Addressbook::sendFile(const QString &uid, const KUrl &sourceURL, const QString &altFileName, quint64 fileSize)
 {
     if(uid.isEmpty())
     {

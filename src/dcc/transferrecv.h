@@ -53,7 +53,7 @@ namespace Konversation
                 // REQUIRED
                 void setPartnerPort( uint port );
                 // REQUIRED
-                void setFileSize( unsigned long fileSize );
+                void setFileSize( quint64 fileSize );
                 // OPTIONAL, if not specified, "unnamed_file"
                 // TODO: "$sendername-$receiveddate" is better
                 void setFileName( const QString& fileName );
@@ -76,7 +76,7 @@ namespace Konversation
                  *  Not called when it fails due to another problem.
                  */
                 virtual void abort();
-                void startResume( unsigned long position );
+                void startResume( quint64 position );
 
             protected slots:
                 // Local KIO

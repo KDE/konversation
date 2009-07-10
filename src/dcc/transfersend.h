@@ -50,7 +50,7 @@ namespace Konversation
                 // OPTIONAL
                 void setReverse( bool reverse );
 
-                bool setResume( unsigned long position );
+                bool setResume( quint64 position );
 
                 // send got rejected
                 void reject();

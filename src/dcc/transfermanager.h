@@ -66,14 +66,14 @@ namespace Konversation
                 /**
                  * @return a DccTransferRecv item if applicable one found, otherwise 0.
                  */
-                TransferRecv* resumeDownload(int connectionId, const QString& partnerNick, const QString& fileName, uint ownPort, unsigned long position );
+                TransferRecv* resumeDownload(int connectionId, const QString& partnerNick, const QString& fileName, uint ownPort, quint64 position );
 
                 /**
                  * @return a DccTransferSend item if applicable one found, otherwise 0.
                  */
-                TransferSend* resumeUpload(int connectionId, const QString& partnerNick, const QString& fileName, uint ownPort, unsigned long position );
+                TransferSend* resumeUpload(int connectionId, const QString& partnerNick, const QString& fileName, uint ownPort, quint64 position );
 
-                TransferSend* startReverseSending(int connectionId, const QString& partnerNick, const QString& fileName, const QString& partnerHost, uint partnerPort, unsigned long fileSize, const QString& token );
+                TransferSend* startReverseSending(int connectionId, const QString& partnerNick, const QString& fileName, const QString& partnerHost, uint partnerPort, quint64 fileSize, const QString& token );
 
                 bool isLocalFileInWritingProcess( const KUrl& localUrl ) const;
 

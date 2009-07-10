@@ -896,7 +896,7 @@ namespace Konversation
         return result;
     }
 
-    OutputFilterResult OutputFilter::sendRequest(const QString &recipient,const QString &fileName,const QString &address,uint port,unsigned long size)
+    OutputFilterResult OutputFilter::sendRequest(const QString &recipient,const QString &fileName,const QString &address,uint port,quint64 size)
     {
         OutputFilterResult result;
         result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + "DCC SEND "
@@ -906,7 +906,7 @@ namespace Konversation
         return result;
     }
 
-    OutputFilterResult OutputFilter::passiveSendRequest(const QString& recipient,const QString &fileName,const QString &address,unsigned long size,const QString &token)
+    OutputFilterResult OutputFilter::passiveSendRequest(const QString& recipient,const QString &fileName,const QString &address,quint64 size,const QString &token)
     {
         OutputFilterResult result;
         result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + "DCC SEND "
@@ -917,7 +917,7 @@ namespace Konversation
     }
 
     // Accepting Resume Request
-    OutputFilterResult OutputFilter::acceptResumeRequest(const QString &recipient,const QString &fileName,uint port,int startAt)
+    OutputFilterResult OutputFilter::acceptResumeRequest(const QString &recipient,const QString &fileName,uint port,quint64 startAt)
     {
         OutputFilterResult result;
         result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + "DCC ACCEPT " + fileName + ' ' + QString::number(port)
@@ -927,7 +927,7 @@ namespace Konversation
     }
 
     // Accepting Passive Resume Request
-    OutputFilterResult OutputFilter::acceptPassiveResumeRequest(const QString &recipient,const QString &fileName,uint port,int startAt,const QString &token)
+    OutputFilterResult OutputFilter::acceptPassiveResumeRequest(const QString &recipient,const QString &fileName,uint port,quint64 startAt,const QString &token)
     {
         OutputFilterResult result;
         result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + "DCC ACCEPT " + fileName + ' ' + QString::number(port)
@@ -957,7 +957,7 @@ namespace Konversation
     }
 
     // Accept Passive Send Request, there active doesn't need that
-    OutputFilterResult OutputFilter::acceptPassiveSendRequest(const QString& recipient,const QString &fileName,const QString &address,uint port,unsigned long size,const QString &token)
+    OutputFilterResult OutputFilter::acceptPassiveSendRequest(const QString& recipient,const QString &fileName,const QString &address,uint port,quint64 size,const QString &token)
     {
         OutputFilterResult result;
         result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + "DCC SEND "
