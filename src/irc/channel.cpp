@@ -865,7 +865,7 @@ void Channel::completeNick()
                     }
                 }
             } // Cycle completion
-            else if(Preferences::self()->nickCompletionMode() == 0)
+            else if(Preferences::self()->nickCompletionMode() == 0 && !nicknameList.isEmpty())
             {
                 if(mode == '\0') {
                     uint timeStamp = 0;
