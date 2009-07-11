@@ -267,13 +267,14 @@ void ChatWindow::setLogfileName(const QString& name)
                         backlog.seek( 0 );
                     }
 
-                    qint64 currentPacketHeadPosition = backlog.pos();
+                    // remember actual file position to check for deadlocks
+                    filePosition = backlog.pos();
+
+                    qint64 currentPacketHeadPosition = filePosition;
 
                     // Loop until end of file reached
-                    while(!backlog.atEnd() && backlog.pos() < lastPacketHeadPosition)
+                    while(!backlog.atEnd() && filePosition < lastPacketHeadPosition)
                     {
-                        // remember actual file position to check for deadlocks
-                        filePosition = backlog.pos();
                         backlogLine = backlog.readLine();
 
                         // check for deadlocks
@@ -294,6 +295,9 @@ void ChatWindow::setLogfileName(const QString& name)
                             firstColumnsInPacket << backlogFirst;
                             messagesInPacket << backlogLine;
                         }
+
+                        // remember actual file position to check for deadlocks
+                        filePosition = backlog.pos();
                     } // while
 
                     // remember the position not to read the same lines again
