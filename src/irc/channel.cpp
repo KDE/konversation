@@ -347,7 +347,9 @@ void Channel::setServer(Server* server)
         connect(server, SIGNAL(connectionStateChanged(Server*, Konversation::ConnectionState)),
                 SLOT(connectionStateChanged(Server*, Konversation::ConnectionState)));
         connect(server, SIGNAL(nickInfoChanged()),
-                this, SLOT(updateNickList()));
+                this, SLOT(updateNickInfos()));
+        connect(server, SIGNAL(channelNickChanged(const QString&)),
+                this, SLOT(updateChannelNicks(const QString&)));
     }
 
     ChatWindow::setServer(server);
@@ -1345,7 +1347,6 @@ void Channel::joinNickname(ChannelNickPtr channelNick)
         appendCommandMessage(i18n("Join"), i18nc("%1 is the channel and %2 is our hostmask",
                              "You have joined the channel %1 (%2).", getName(), channelNick->getHostmask()),false, false, true);
         m_ownChannelNick = channelNick;
-        connect(m_ownChannelNick.data(), SIGNAL(channelNickChanged()), SLOT(refreshModeButtons()));
         refreshModeButtons();
         setActive(true);
 
@@ -2919,13 +2920,32 @@ Konversation::Cipher* Channel::getCipher()
 }
 #endif
 
-void Channel::updateNickList()
+void Channel::updateNickInfos()
 {
     foreach(Nick* nick, nicknameList)
     {
         if(nick->getChannelNick()->getNickInfo()->isChanged())
         {
             nick->refresh();
+        }
+    }
+}
+
+void Channel::updateChannelNicks(const QString& channel)
+{
+    if(channel != name.toLower())
+        return;
+
+    foreach(Nick* nick, nicknameList)
+    {
+        if(nick->getChannelNick()->isChanged())
+        {
+            nick->refresh();
+
+            if(nick->getChannelNick() == m_ownChannelNick)
+            {
+                refreshModeButtons();
+            }
         }
     }
 }

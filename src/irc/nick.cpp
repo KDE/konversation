@@ -18,18 +18,16 @@
 #include "application.h"
 #include "images.h"
 #include "preferences.h"
+#include "nicklistview.h"
 
 #include <kabc/phonenumber.h>
 
-#include <K3ListView>
-
-
-Nick::Nick(K3ListView *listView, const ChannelNickPtr& channelnick)
-    : QObject (),
-    K3ListViewItem (listView, listView->lastItem(), QString(),
-                   channelnick->getNickname(), channelnick->getHostmask())
+Nick::Nick(NickListView *listView, const ChannelNickPtr& channelnick)
+    : K3ListViewItem (listView, listView->lastItem(), QString(),
+                      channelnick->getNickname(), channelnick->getHostmask())
 {
     m_channelnickptr = channelnick;
+    m_nickListView = listView;
 
     Q_ASSERT(channelnick);
     if(!channelnick) return;
@@ -38,9 +36,6 @@ Nick::Nick(K3ListView *listView, const ChannelNickPtr& channelnick)
 //    m_height = height();
 
     refresh();
-
-    connect(this, SIGNAL(refreshed()), listView, SLOT(startResortTimer()));
-    connect(getChannelNick().data(), SIGNAL(channelNickChanged()), SLOT(refresh()));
 }
 
 Nick::~Nick()
@@ -127,7 +122,7 @@ void Nick::refresh()
     if(m_flags != flags)
     {
         m_flags = flags;
-        emit refreshed();                         // Resort nick list
+        m_nickListView->startResortTimer(); // Resort nick list
     }
 }
 
@@ -256,5 +251,3 @@ int Nick::getSortingValue() const
 
     return flags;
 }
-
-#include "nick.moc"

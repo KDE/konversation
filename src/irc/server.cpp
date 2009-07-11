@@ -142,6 +142,11 @@ Server::Server(QObject* parent, ConnectionSettings& settings) : QObject(parent)
     m_nickInfoChangedTimer->setSingleShot(true);
     m_nickInfoChangedTimer->setInterval(3000);
     connect(m_nickInfoChangedTimer, SIGNAL(timeout()), this, SLOT(sendNickInfoChangedSignals()));
+
+    m_channelNickChangedTimer = new QTimer(this);
+    m_channelNickChangedTimer->setSingleShot(true);
+    m_channelNickChangedTimer->setInterval(3000);
+    connect(m_nickInfoChangedTimer, SIGNAL(timeout()), this, SLOT(sendChannelNickChangedSignals()));
 }
 
 Server::~Server()
@@ -2369,7 +2374,7 @@ ChannelNickPtr Server::addNickToJoinedChannelsList(const QString& channelName, c
     ChannelNickPtr channelNick;
     if (!channel->contains(lcNickname))
     {
-        channelNick = new ChannelNick(nickInfo, false, false, false, false, false);
+        channelNick = new ChannelNick(nickInfo, lcChannelName);
         Q_ASSERT(channelNick);
         channel->insert(lcNickname, channelNick);
         doChannelMembersChangedSignal = true;
@@ -2380,26 +2385,6 @@ ChannelNickPtr Server::addNickToJoinedChannelsList(const QString& channelName, c
     if (doChannelJoinedSignal) emit channelJoinedOrUnjoined(this, channelName, true);
     if (doChannelMembersChangedSignal) emit channelMembersChanged(this, channelName, true, false, nickname);
     return channelNick;
-}
-
-/** This function should _only_ be called from the ChannelNick class.
- *  This function should also be the only one to emit this signal.
- *  In this class, when channelNick is changed, it emits its own signal, and
- *  calls this function itself.
- */
-void Server::emitChannelNickChanged(const ChannelNickPtr channelNick)
-{
-    emit channelNickChanged(this, channelNick);
-}
-
-/** This function should _only_ be called from the NickInfo class.
- *  This function should also be the only one to emit this signal.
- *  In this class, when nickInfo is changed, it emits its own signal, and
- *  calls this function itself.
- */
-void Server::emitNickInfoChanged(const NickInfoPtr nickInfo)
-{
-    emit nickInfoChanged(this, nickInfo);
 }
 
 // Adds a nickname to the unjoinedChannels list.
@@ -2447,7 +2432,7 @@ ChannelNickPtr Server::addNickToUnjoinedChannelsList(const QString& channelName,
     ChannelNickPtr channelNick;
     if (!channel->contains(lcNickname))
     {
-        channelNick = new ChannelNick(nickInfo, false, false, false, false, false);
+        channelNick = new ChannelNick(nickInfo, lcChannelName);
         channel->insert(lcNickname, channelNick);
         doChannelMembersChangedSignal = true;
     }
@@ -3655,6 +3640,32 @@ void Server::sendNickInfoChangedSignals()
             nickInfo->setChanged(false);
         }
     }
+}
+
+void Server::startChannelNickChangedTimer(const QString& channel)
+{
+    if(!m_channelNickChangedTimer->isActive())
+        m_channelNickChangedTimer->start();
+
+    m_changedChannels.append(channel);
+}
+
+void Server::sendChannelNickChangedSignals()
+{
+    foreach(const QString& channel, m_changedChannels)
+    {
+        emit channelNickChanged(channel);
+
+        foreach(ChannelNickPtr nick, (*m_joinedChannels[channel]))
+        {
+            if(nick->isChanged())
+            {
+                nick->setChanged(false);
+            }
+        }
+    }
+
+    m_changedChannels.clear();
 }
 
 #include "server.moc"

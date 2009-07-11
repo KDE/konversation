@@ -301,9 +301,6 @@ void resetNickSelection();
          */
         const QList<Channel *>& getChannelList() const { return m_channelList; }
 
-        void emitChannelNickChanged(const ChannelNickPtr channelNick);
-        void emitNickInfoChanged(const NickInfoPtr nickInfo);
-
         /**
          * Returns a list of all the nicks on the user watch list plus nicks in the addressbook.
          */
@@ -408,9 +405,8 @@ void resetNickSelection();
         void nickInfoChanged(Server* server, const NickInfoPtr nickInfo);
         /// Emited once if one or more NickInfo has been changed.
         void nickInfoChanged();
-
-        /// Fires when the mode of a nick in a channel changes.
-        void channelNickChanged(Server* server, const ChannelNickPtr channelNick);
+        /// Emited once if one or more ChannelNick has been changed in @p channel.
+        void channelNickChanged(const QString& channel);
 
         /// Fires when a nick leaves or joins a channel.  Based on joined flag, receiver could
         /// call getJoinedChannelMembers or getUnjoinedChannelMembers, or just
@@ -498,6 +494,8 @@ void resetNickSelection();
 
         /// Start the NickInfo changed timer if it isn't started already
         void startNickInfoChangedTimer();
+        /// Start the ChannelNick changed timer if it isn't started already
+        void startChannelNickChangedTimer(const QString& channel);
 
     protected slots:
         void hostFound();
@@ -557,6 +555,10 @@ void resetNickSelection();
           * Emits the nickInfoChanged() signal for all changed NickInfos
           */
         void sendNickInfoChangedSignals();
+        /** Called when the ChannelNick changed timer times out.
+          * Emits the channelNickChanged() signal for each channel with changed nicks.
+          */
+        void sendChannelNickChangedSignals();
 
     private slots:
         void collectStats(int bytes, int encodedBytes);
@@ -772,6 +774,8 @@ void resetNickSelection();
         QPointer<InviteDialog> m_inviteDialog;
 
         QTimer* m_nickInfoChangedTimer;
+        QTimer* m_channelNickChangedTimer;
+        QStringList m_changedChannels;
 };
 
 #endif

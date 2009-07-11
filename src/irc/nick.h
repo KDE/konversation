@@ -19,12 +19,12 @@
 
 #include <K3ListView>
 
+class NickListView;
 
-class Nick : public QObject, public K3ListViewItem
+class Nick : public K3ListViewItem
 {
-    Q_OBJECT
     public:
-        Nick(K3ListView *listView,
+        Nick(NickListView *listView,
             const ChannelNickPtr& channelnick);
         ~Nick();
 
@@ -33,7 +33,6 @@ class Nick : public QObject, public K3ListViewItem
         virtual void paintCell(QPainter * p, const QColorGroup & cg, int column, int width, int align);
         virtual int compare(Q3ListViewItem* item,int col,bool ascending) const;
 
-    public slots:
         void refresh();
 
     signals:
@@ -47,6 +46,7 @@ class Nick : public QObject, public K3ListViewItem
 
     protected:
         ChannelNickPtr m_channelnickptr;
+        NickListView* m_nickListView;
 
 //        int m_height;
         int m_flags;

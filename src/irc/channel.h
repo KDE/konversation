@@ -151,8 +151,8 @@ class Channel : public ChatWindow
         void purgeNicks();
         void processPendingNicks();
 
-        void updateNickList();
-
+        void updateNickInfos();
+        void updateChannelNicks(const QString& channel);
 //Topic
     public:
         /** Get the current channel topic.

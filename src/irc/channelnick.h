@@ -20,13 +20,10 @@
 #include <ksharedptr.h>
 
 
-class ChannelNick :  public QObject, public KShared
+class ChannelNick : public KShared
 {
-    Q_OBJECT
-
     public:
-        ChannelNick(const NickInfoPtr& nickInfo, const bool& isop, const bool& isadmin,
-            const bool& isowner, const bool& ishalfop, const bool& hasvoice);
+        ChannelNick(const NickInfoPtr& nickInfo, const QString& channel);
         ~ChannelNick();
         bool isOp() const;
         bool isAdmin() const;
@@ -41,6 +38,7 @@ class ChannelNick :  public QObject, public KShared
         uint timeStamp() const;
         uint recentActivity() const;
         void moreActive();
+        void lessActive();
 
         bool setVoice(bool state);
         bool setOp(bool state);
@@ -60,21 +58,27 @@ class ChannelNick :  public QObject, public KShared
         QString getHostmask() const;
         QString tooltip() const;
 
+        void setChanged(bool changed) { m_isChanged = changed; }
+        bool isChanged () const { return m_isChanged; }
+
+    protected:
+        void markAsChanged();
+
     private:
-        NickInfoPtr nickInfo;
-        bool isop;
-        bool isadmin;
-        bool isowner;
-        bool ishalfop;
-        bool hasvoice;
+        NickInfoPtr m_nickInfo;
+        bool m_isop;
+        bool m_isadmin;
+        bool m_isowner;
+        bool m_ishalfop;
+        bool m_hasvoice;
         uint m_timeStamp;
         uint m_recentActivity;
+        QString m_channel;
+
+        bool m_isChanged;
 
     signals:
         void channelNickChanged();
-
-    public slots:
-        void lessActive();
 };
 
 /** A ChannelNickPtr is a pointer to a ChannelNick.  Since it is a KSharedPtr,

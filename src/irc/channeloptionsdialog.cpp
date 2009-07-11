@@ -66,7 +66,7 @@ namespace Konversation
         connect(m_channel, SIGNAL(topicHistoryChanged()), this, SLOT(refreshTopicHistory()));
 
         connect(m_channel, SIGNAL(modesChanged()), this, SLOT(refreshModes()));
-        connect(m_channel->getOwnChannelNick().data(), SIGNAL(channelNickChanged()), this, SLOT(refreshEnableModes()));
+        connect(m_channel->getServer(), SIGNAL(channelNickChanged(const QString&)), this, SLOT(refreshEnableModes()));
 
         connect(this, SIGNAL(cancelClicked()), this, SLOT(cancelClicked()));
         connect(this, SIGNAL(okClicked()), this, SLOT(changeOptions()));
@@ -218,23 +218,26 @@ namespace Konversation
 
     void ChannelOptionsDialog::refreshEnableModes()
     {
-        bool enable = m_channel->getOwnChannelNick()->isAnyTypeOfOp();
-        m_ui.otherModesList->setEnabled(enable);
-        m_ui.topicEdit->setReadOnly(!enable && m_ui.topicModeChBox->isChecked());
+        if(m_channel->getOwnChannelNick()->isChanged())
+        {
+            bool enable = m_channel->getOwnChannelNick()->isAnyTypeOfOp();
+            m_ui.otherModesList->setEnabled(enable);
+            m_ui.topicEdit->setReadOnly(!enable && m_ui.topicModeChBox->isChecked());
 
-        m_ui.topicModeChBox->setEnabled(enable);
-        m_ui.messageModeChBox->setEnabled(enable);
-        m_ui.userLimitChBox->setEnabled(enable);
-        m_ui.userLimitEdit->setEnabled(enable);
-        m_ui.inviteModeChBox->setEnabled(enable);
-        m_ui.moderatedModeChBox->setEnabled(enable);
-        m_ui.secretModeChBox->setEnabled(enable);
-        m_ui.keyModeChBox->setEnabled(enable);
-        m_ui.keyModeEdit->setEnabled(enable);
+            m_ui.topicModeChBox->setEnabled(enable);
+            m_ui.messageModeChBox->setEnabled(enable);
+            m_ui.userLimitChBox->setEnabled(enable);
+            m_ui.userLimitEdit->setEnabled(enable);
+            m_ui.inviteModeChBox->setEnabled(enable);
+            m_ui.moderatedModeChBox->setEnabled(enable);
+            m_ui.secretModeChBox->setEnabled(enable);
+            m_ui.keyModeChBox->setEnabled(enable);
+            m_ui.keyModeEdit->setEnabled(enable);
 
-        m_ui.banList->setItemsRenameable(enable);
-        m_ui.addBan->setEnabled(enable);
-        m_ui.removeBan->setEnabled(enable);
+            m_ui.banList->setItemsRenameable(enable);
+            m_ui.addBan->setEnabled(enable);
+            m_ui.removeBan->setEnabled(enable);
+        }
     }
 
     void ChannelOptionsDialog::refreshAllowedChannelModes()
