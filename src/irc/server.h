@@ -406,6 +406,8 @@ void resetNickSelection();
         //Note that these signals haven't been implemented yet.
         /// Fires when the information in a NickInfo object changes.
         void nickInfoChanged(Server* server, const NickInfoPtr nickInfo);
+        /// Emited once if one or more NickInfo has been changed.
+        void nickInfoChanged();
 
         /// Fires when the mode of a nick in a channel changes.
         void channelNickChanged(Server* server, const ChannelNickPtr channelNick);

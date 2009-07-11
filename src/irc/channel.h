@@ -151,7 +151,7 @@ class Channel : public ChatWindow
         void purgeNicks();
         void processPendingNicks();
 
-        void updateNickList(Server* server, NickInfoPtr nickInfo);
+        void updateNickList();
 
 //Topic
     public:

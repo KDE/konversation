@@ -346,8 +346,8 @@ void Channel::setServer(Server* server)
     {
         connect(server, SIGNAL(connectionStateChanged(Server*, Konversation::ConnectionState)),
                 SLOT(connectionStateChanged(Server*, Konversation::ConnectionState)));
-        connect(server, SIGNAL(nickInfoChanged(Server*, NickInfoPtr)),
-                this, SLOT(updateNickList(Server*, NickInfoPtr)));
+        connect(server, SIGNAL(nickInfoChanged()),
+                this, SLOT(updateNickList()));
     }
 
     ChatWindow::setServer(server);
@@ -2919,14 +2919,13 @@ Konversation::Cipher* Channel::getCipher()
 }
 #endif
 
-void Channel::updateNickList(Server*, NickInfoPtr nickInfo)
+void Channel::updateNickList()
 {
     foreach(Nick* nick, nicknameList)
     {
-        if(nick->getChannelNick()->getNickInfo() == nickInfo)
+        if(nick->getChannelNick()->getNickInfo()->isChanged())
         {
             nick->refresh();
-            break;
         }
     }
 }

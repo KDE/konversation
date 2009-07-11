@@ -3645,6 +3645,8 @@ void Server::startNickInfoChangedTimer()
 
 void Server::sendNickInfoChangedSignals()
 {
+    emit nickInfoChanged();
+
     foreach(NickInfoPtr nickInfo, m_allNicks)
     {
         if(nickInfo->isChanged())
