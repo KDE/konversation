@@ -35,7 +35,7 @@ Nick::Nick(K3ListView *listView, const ChannelNickPtr& channelnick)
     if(!channelnick) return;
 
     m_flags = 0;
-    m_height = height();
+//    m_height = height();
 
     refresh();
 

@@ -47,9 +47,7 @@ class Nick : public QObject, public K3ListViewItem
     protected:
         ChannelNickPtr m_channelnickptr;
 
-        QString label;
-        int m_height;
+//        int m_height;
         int m_flags;
-        bool m_away;
 };
 #endif
