@@ -29,7 +29,6 @@ class Nick : public QObject, public K3ListViewItem
         ~Nick();
 
         ChannelNickPtr getChannelNick() const;
-        int getSortingValue() const;
 
         virtual void paintCell(QPainter * p, const QColorGroup & cg, int column, int width, int align);
         virtual int compare(Q3ListViewItem* item,int col,bool ascending) const;
@@ -43,6 +42,8 @@ class Nick : public QObject, public K3ListViewItem
     protected:
         QString calculateLabel1();
         QString calculateLabel2();
+
+        int getSortingValue() const;
 
     protected:
         ChannelNickPtr m_channelnickptr;
