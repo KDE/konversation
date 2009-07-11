@@ -44,7 +44,7 @@ int main(int argc, char* argv[])
 
     aboutData.addAuthor(ki18n("Dario Abatianni"),ki18n("Original Author, Project Founder"),"eisfuchs@tigress.com");
     aboutData.addAuthor(ki18n("Peter Simonsson"),ki18n("Maintainer"),"psn@linux.se");
-    aboutData.addAuthor(ki18n("Eike Hein"),ki18n("Maintainer, Release Manager, User interface, Protocol handling"),"hein@kde.org");
+    aboutData.addAuthor(ki18n("Eike Hein"),ki18n("Maintainer, Release Manager, User interface, Connection management, Protocol handling"),"hein@kde.org");
     aboutData.addAuthor(ki18n("Shintaro Matsuoka"),ki18n("DCC, Encoding handling, OSD positioning"),"shin@shoegazed.org");
     aboutData.addAuthor(ki18n("Eli MacKenzie"),ki18n("Protocol handling, Input line"),"argonel@gmail.com");
     aboutData.addAuthor(ki18n("İsmail Dönmez"),ki18n("Blowfish, SSL support, KNetwork port, Colored nicks, Nicklist themes"),"ismail@kde.org");
