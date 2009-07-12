@@ -51,6 +51,9 @@ Changes since 1.2-alpha4:
   occurs, as this is believed to be more efficient in situations of very high
   activity (such as merges after netsplits). Thus the new scheme described
   above should be seen as an additional optimization for the common case.
+* In addition to the broad strokes optimization described above, other minor
+  optimization work has been done on the nickname list updating code, impro-
+  ving the efficiency of updates further.
 
 
 Changes from 1.2-alpha3 to 1.2-alpha4:
