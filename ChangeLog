@@ -24,13 +24,33 @@ Changes since 1.2-alpha4:
   tems, along with some other correctness improvements to the file transfer
   code.
 * Backlog loading is now more efficient.
-* Channel nicklist updating is now more efficient.
 * Added IPv6 support for DCC file transfers.
 * The fallback default file name for unnamed files received via DCC now con-
   tains the date of when the file was received in ISO format.
 * Fixed a crash when trying to perform a tab completion with an empty nick-
   list (i.e. shortly after joining a big channel, before its nicklist has
   been filled in).
+* Channel nickname list updating is now more efficient and pleasant to look
+  at. Rather than resorting the entire list after the addition of a new nick-
+  name, the nickname is now inserted directly at the correct position (using
+  a binary search), avoiding a lot of CPU-intensive comparisons between nick-
+  names. The same optimization is also done for nickname and user status (as
+  relevant in case "Sort by status" is enabled) changes - rather than trigger-
+  ing full resorts, items are moved directly to new positions as necessary.
+  Resorting after both new additions and changes was previously done only
+  after a delay of one second (as part of a scheme to throttle the update rate
+  to a maximum of once per second given how CPU-intensive it was), which meant
+  that new nicknames would initially appear at the end of the list and move to
+  the correct position only after one second, and that nickname and status
+  changes were similarly reflected in the sorting only after one second - this
+  delay has now been eliminated, making the nickname list much snappier in re-
+  acting to what's going on.
+  Note however that when more than ten events requiring an update to sorting
+  occur within one second, a fallback to the old scheme of doing a full resort
+  at a maximum rate of once per second, after an initial delay of one second,
+  occurs, as this is believed to be more efficient in situations of very high
+  activity (such as merges after netsplits). Thus the new scheme described
+  above should be seen as an additional optimization for the common case.
 
 
 Changes from 1.2-alpha3 to 1.2-alpha4:
