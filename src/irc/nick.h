@@ -48,5 +48,11 @@ class Nick : public QTreeWidgetItem
         Channel* m_channel;
 
         int m_flags;
+
+    public:
+        enum Columns {
+            NicknameColumn = 0,
+            HostmaskColumn = 1,
+        };
 };
 #endif

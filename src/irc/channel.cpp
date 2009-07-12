@@ -228,9 +228,6 @@ Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
 
     nicknameListView->header()->hide();
 
-    // separate LED from Text a little more
-    nicknameListView->setColumnWidth(0, 20);
-
     nicknameListView->header()->setStretchLastSection(false);
 
     nicknameListView->installEventFilter(this);
@@ -1322,7 +1319,7 @@ void Channel::fastAddNickname(ChannelNickPtr channelnick, Nick *nick)
     else
     {
         nick = new Nick(nicknameListView, this, channelnick);
-        m_nicknameListViewTextChanged |= 3; // new nick, text changed.
+        m_nicknameListViewTextChanged |= 0xFF; // new nick, text changed.
     }
 
     if (!m_delayedSortTimer->isActive()) {
@@ -2560,32 +2557,32 @@ void Channel::autoUserhost()
     }
 
     // Resize columns if needed (on regular basis)
-    if (m_nicknameListViewTextChanged & 1)
-        nicknameListView->resizeColumnToContents(1);
-    if (m_nicknameListViewTextChanged & 2)
-        nicknameListView->resizeColumnToContents(2);
+    if (m_nicknameListViewTextChanged & (1 << Nick::NicknameColumn))
+        nicknameListView->resizeColumnToContents(Nick::NicknameColumn);
+    if (m_nicknameListViewTextChanged & (1 << Nick::HostmaskColumn))
+        nicknameListView->resizeColumnToContents(Nick::HostmaskColumn);
     m_nicknameListViewTextChanged = 0;
 }
 
 void Channel::setAutoUserhost(bool state)
 {
-    nicknameListView->setColumnHidden(2, !state);
+    nicknameListView->setColumnHidden(Nick::HostmaskColumn, !state);
     if (state)
     {
         nicknameListView->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
         // Cannot use QHeaderView::ResizeToContents here because it is slow
         // and it gets triggered by setSortingEnabled(). Using timed resize
         // instead, see Channel::autoUserhost() above.
-        nicknameListView->header()->setResizeMode(1, QHeaderView::Fixed);
-        nicknameListView->header()->setResizeMode(2, QHeaderView::Fixed);
+        nicknameListView->header()->setResizeMode(Nick::NicknameColumn, QHeaderView::Fixed);
+        nicknameListView->header()->setResizeMode(Nick::HostmaskColumn, QHeaderView::Fixed);
         userhostTimer.start(10000);
-        m_nicknameListViewTextChanged |= 3; // ResizeColumnsToContents
+        m_nicknameListViewTextChanged |= 0xFF; // ResizeColumnsToContents
         QTimer::singleShot(0, this, SLOT(autoUserhost())); // resize columns ASAP
     }
     else
     {
         nicknameListView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-        nicknameListView->header()->setResizeMode(1, QHeaderView::Stretch);
+        nicknameListView->header()->setResizeMode(Nick::NicknameColumn, QHeaderView::Stretch);
         userhostTimer.stop();
     }
 }

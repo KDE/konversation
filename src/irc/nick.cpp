@@ -33,8 +33,6 @@ Nick::Nick(NickListView *listView, Channel* channel, const ChannelNickPtr& chann
 
     refresh();
 
-    setTextAlignment(0, Qt::AlignHCenter);
-
     setFlags((flags() & ~Qt::ItemIsDragEnabled) | Qt::ItemIsDropEnabled);
 }
 
@@ -65,7 +63,7 @@ void Nick::refresh()
             flags=1;
 
         // Brush of the first column will be used for all columns
-        setForeground(0, qApp->palette(treeWidget()).brush(
+        setForeground(NicknameColumn, qApp->palette(treeWidget()).brush(
                     (away) ? QPalette::Disabled : QPalette::Normal, QPalette::WindowText));
 
         Images* images = Application::instance()->images();
@@ -102,20 +100,20 @@ void Nick::refresh()
             icon = images->getNickIcon( Images::Normal, away );
         }
 
-        setIcon( 0, icon );
+        setIcon( NicknameColumn, icon );
 
         QString newtext = calculateLabel1();
-        if(newtext != text(1))
+        if(newtext != text(NicknameColumn))
         {
-            setText(1, newtext);
-            textChangedFlags += 1;
+            setText(NicknameColumn, newtext);
+            textChangedFlags |= 1 << NicknameColumn;
         }
 
         newtext = calculateLabel2();
-        if(newtext != text(2))
+        if(newtext != text(HostmaskColumn))
         {
-            setText(2, newtext);
-            textChangedFlags += 2;
+            setText(HostmaskColumn, newtext);
+            textChangedFlags |= 1 << HostmaskColumn;
         }
     }
 
@@ -206,12 +204,12 @@ bool Nick::operator<(const QTreeWidgetItem& other) const
     QString otherKey;
     int col = treeWidget()->sortColumn();
 
-    if(col > 1) //the reason we need this: enabling hostnames adds another column
+    if(col == NicknameColumn)
     {
         if(Preferences::self()->sortCaseInsensitive())
         {
-            thisKey = text(col).toLower();
-            otherKey = otherNick.text(col).toLower();
+            thisKey = getChannelNick()->loweredNickname();
+            otherKey = otherNick.getChannelNick()->loweredNickname();
         }
         else
         {
@@ -219,12 +217,12 @@ bool Nick::operator<(const QTreeWidgetItem& other) const
             otherKey = otherNick.text(col);
         }
     }
-    else if(col == 1)
+    else if (col > 0) //the reason we need this: enabling hostnames adds another column
     {
         if(Preferences::self()->sortCaseInsensitive())
         {
-            thisKey = getChannelNick()->loweredNickname();
-            otherKey = otherNick.getChannelNick()->loweredNickname();
+            thisKey = text(col).toLower();
+            otherKey = otherNick.text(col).toLower();
         }
         else
         {
@@ -240,7 +238,7 @@ QVariant Nick::data(int column, int role) const
 {
     if (role == Qt::ForegroundRole && column > 0) {
         // Use brush of the first column for all columns
-        return data(0, role);
+        return data(NicknameColumn, role);
     }
     return QTreeWidgetItem::data(column, role);
 }

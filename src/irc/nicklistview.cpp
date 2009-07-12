@@ -165,10 +165,10 @@ QTreeWidget(parent),
 
     // General layout
     setRootIsDecorated(false); // single level view
-    setColumnCount(3);
+    setColumnCount(2);
 
     // These two below must be called after setColumnCount().
-    header()->setSortIndicator(1, Qt::AscendingOrder);
+    header()->setSortIndicator(Nick::NicknameColumn, Qt::AscendingOrder);
     setSortingEnabled(true);
 }
 
