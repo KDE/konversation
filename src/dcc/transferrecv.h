@@ -55,7 +55,6 @@ namespace Konversation
                 // REQUIRED
                 void setFileSize( quint64 fileSize );
                 // OPTIONAL, if not specified, "unnamed_file"
-                // TODO: "$sendername-$receiveddate" is better
                 void setFileName( const QString& fileName );
                 // OPTIONAL, if not specified, default folder + the file name
                 void setFileURL( const KUrl& url );

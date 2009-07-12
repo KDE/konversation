@@ -200,7 +200,7 @@ namespace Konversation
 
             if ( m_fileName.isEmpty() )
             {
-                m_fileName = "unnamed_file_" + m_partnerNick + "_" + QDateTime::currentDateTime().toString( Qt::ISODate );
+                m_fileName = "unnamed_file_" + QDateTime::currentDateTime().toString( Qt::ISODate ).remove(':');
                 m_saveFileName = m_fileName;
             }
 
