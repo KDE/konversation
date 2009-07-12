@@ -108,7 +108,6 @@ void Nick::refresh()
         if(newtext != text(1))
         {
             setText(1, newtext);
-            flags += 2;
             textChangedFlags += 1;
         }
 
