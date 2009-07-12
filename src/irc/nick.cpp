@@ -55,79 +55,79 @@ void Nick::refresh()
     bool away = false;
     int textChangedFlags = 0;
 
-    // Disable auto-sorting while updating data
-    NickListView::NoSorting noSorting(qobject_cast<NickListView*>(treeWidget()));
+    { // NOTE: this scoping is for NoSorting below. Do not remove it
+        // Disable auto-sorting while updating data
+        NickListView::NoSorting noSorting(qobject_cast<NickListView*>(treeWidget()));
+        if ( nickInfo )
+            away = nickInfo->isAway();
 
-    if ( nickInfo )
-        away = nickInfo->isAway();
+        if(away)
+            flags=1;
 
-    if(away)
-        flags=1;
+        // Brush of the first column will be used for all columns
+        setForeground(0, qApp->palette(treeWidget()).brush(
+                    (away) ? QPalette::Disabled : QPalette::Normal, QPalette::WindowText));
 
-    // Brush of the first column will be used for all columns
-    setForeground(0, qApp->palette(treeWidget()).brush(
-                (away) ? QPalette::Disabled : QPalette::Normal, QPalette::WindowText));
+        Images* images = Application::instance()->images();
+        QPixmap icon;
 
-    Images* images = Application::instance()->images();
-    QPixmap icon;
+        if ( getChannelNick()->isOwner() )
+        {
+            flags += 64;
+            icon = images->getNickIcon( Images::Owner, away );
+        }
+        else if ( getChannelNick()->isAdmin() )
+        {
+            flags += 128;
+            icon = images->getNickIcon( Images::Admin, away );
+        }
+        else if ( getChannelNick()->isOp() )
+        {
+            flags += 32;
+            icon = images->getNickIcon( Images::Op, away );
+        }
+        else if ( getChannelNick()->isHalfOp() )
+        {
+            flags += 16;
+            icon = images->getNickIcon( Images::HalfOp, away );
+        }
+        else if ( getChannelNick()->hasVoice() )
+        {
+            flags += 8;
+            icon = images->getNickIcon( Images::Voice, away );
+        }
+        else
+        {
+            flags += 4;
+            icon = images->getNickIcon( Images::Normal, away );
+        }
 
-    if ( getChannelNick()->isOwner() )
-    {
-        flags += 64;
-        icon = images->getNickIcon( Images::Owner, away );
+        setIcon( 0, icon );
+
+        QString newtext = calculateLabel1();
+        if(newtext != text(1))
+        {
+            setText(1, newtext);
+            flags += 2;
+            textChangedFlags += 1;
+        }
+
+        newtext = calculateLabel2();
+        if(newtext != text(2))
+        {
+            setText(2, newtext);
+            textChangedFlags += 2;
+        }
     }
-    else if ( getChannelNick()->isAdmin() )
-    {
-        flags += 128;
-        icon = images->getNickIcon( Images::Admin, away );
-    }
-    else if ( getChannelNick()->isOp() )
-    {
-        flags += 32;
-        icon = images->getNickIcon( Images::Op, away );
-    }
-    else if ( getChannelNick()->isHalfOp() )
-    {
-        flags += 16;
-        icon = images->getNickIcon( Images::HalfOp, away );
-    }
-    else if ( getChannelNick()->hasVoice() )
-    {
-        flags += 8;
-        icon = images->getNickIcon( Images::Voice, away );
-    }
-    else
-    {
-        flags += 4;
-        icon = images->getNickIcon( Images::Normal, away );
-    }
-
-    setIcon( 0, icon );
-
-    QString newtext = calculateLabel1();
-    if(newtext != text(1))
-    {
-        setText(1, newtext);
-        flags += 2;
-        textChangedFlags += 1;
-    }
-
-    newtext = calculateLabel2();
-    if(newtext != text(2))
-    {
-        setText(2, newtext);
-        textChangedFlags += 2;
-    }
-
-    treeWidget()->repaint();
 
     if(m_flags != flags || textChangedFlags)
     {
         m_flags = flags;
         // Announce about nick update (and reposition the nick in the nick list as needed).
         emitDataChanged();
-        m_channel->requestNickListSort();
         m_channel->nicknameListViewTextChanged(textChangedFlags);
+
+        treeWidget()->repaint();
     }
 }
 
