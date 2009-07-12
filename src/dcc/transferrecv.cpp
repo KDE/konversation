@@ -23,6 +23,7 @@
 #include "server.h"
 #include "upnprouter.h"
 
+#include <QDateTime>
 #include <QTcpServer>
 #include <QTcpSocket>
 
@@ -199,7 +200,7 @@ namespace Konversation
 
             if ( m_fileName.isEmpty() )
             {
-                m_fileName = "unnamed_file";
+                m_fileName = "unnamed_file_" + m_partnerNick + "_" + QDateTime::currentDateTime().toString( Qt::ISODate );
                 m_saveFileName = m_fileName;
             }
 
