@@ -337,6 +337,7 @@ Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
 
     // Setup delayed sort timer
     m_delayedSortTimer = new QTimer(this);
+    m_delayedSortTimer->setSingleShot(true);
     connect(m_delayedSortTimer, SIGNAL(timeout()), this, SLOT(delayedSortNickList()));
 }
 
