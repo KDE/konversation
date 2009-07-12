@@ -33,6 +33,7 @@ ChannelNick::ChannelNick(const NickInfoPtr& nickInfo, const QString& channel)
     m_timeStamp = 0;
     m_recentActivity = 0;
     m_channel = channel;
+    m_isChanged = false;
 }
 
 ChannelNick::~ChannelNick()

@@ -145,8 +145,8 @@ Server::Server(QObject* parent, ConnectionSettings& settings) : QObject(parent)
 
     m_channelNickChangedTimer = new QTimer(this);
     m_channelNickChangedTimer->setSingleShot(true);
-    m_channelNickChangedTimer->setInterval(3000);
-    connect(m_nickInfoChangedTimer, SIGNAL(timeout()), this, SLOT(sendChannelNickChangedSignals()));
+    m_channelNickChangedTimer->setInterval(1000);
+    connect(m_channelNickChangedTimer, SIGNAL(timeout()), this, SLOT(sendChannelNickChangedSignals()));
 }
 
 Server::~Server()
