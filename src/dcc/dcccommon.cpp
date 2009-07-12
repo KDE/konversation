@@ -22,7 +22,7 @@ namespace Konversation
 {
     namespace DCC
     {
-        //TODO: IPv6 support
+        //TODO: IPv6 support, CHECK ME
         QString DccCommon::textIpToNumericalIp( const QString& ipString )
         {
             QHostAddress ip;
@@ -33,8 +33,8 @@ namespace Konversation
                 return QString::number( ip.toIPv4Address() );
 
             case QAbstractSocket::IPv6Protocol:
-                kDebug() << "TODO: implement me for ipv6";
-                return "";
+            //ipv6 is not numerical, it is just normal text, "0:c00:0:0:1f::" for example
+                return ip.toString();
 
             default:
                 kDebug() << "unspported protocol: " << ipString;
@@ -45,7 +45,17 @@ namespace Konversation
         QString DccCommon::numericalIpToTextIp( const QString& numericalIp )
         {
             QHostAddress ip;
-            ip.setAddress( numericalIp.toULong() );
+
+            //Only IPV6 can contain ':'
+            if (numericalIp.contains(':'))
+            {
+                return numericalIp;
+            }
+            //ipv4 comes as numericalip
+            else
+            {
+                ip.setAddress( numericalIp.toULong() );
+            }
 
             return ip.toString();
         }
