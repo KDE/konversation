@@ -15,14 +15,22 @@ Changes since 1.2-alpha4:
   invited to will be joined automatically, as the user might have rejec-
   ted the invitation when he got the dialog along with checking "Don't
   ask again".
-* Decreased memory usage (the NickInfo object created for every IRC user
-  encountered is lighter now).
+* Decreased memory usage (the objects created for every IRC user encounter-
+  ed are lighter now).
 * Initializing Phonon is now delayed until it is actually needed, resulting
   in less memory usage for those not using highlight sound notifications
   and less work being done during application startup.
 * Fixed DCC file transfer problems with files larger than 4 GB on 32bit sys-
   tems, along with some other correctness improvements to the file transfer
   code.
+* Backlog loading is now more efficient.
+* Channel nicklist updating is now more efficient.
+* Added IPv6 support for DCC file transfers.
+* The fallback default file name for unnamed files received via DCC now con-
+  tains the date of when the file was received in ISO format.
+* Fixed a crash when trying to perform a tab completion with an empty nick-
+  list (i.e. shortly after joining a big channel, before its nicklist has
+  been filled in).
 
 
 Changes from 1.2-alpha3 to 1.2-alpha4:
