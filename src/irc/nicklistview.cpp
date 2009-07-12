@@ -25,7 +25,7 @@
 
 
 NickListView::NickListView(QWidget* parent, Channel *chan) :
-K3ListView(parent),
+QTreeWidget(parent),
     m_whoisAction(0),
     m_versionAction(0),
     m_pingAction(0),
@@ -58,7 +58,6 @@ K3ListView(parent),
     m_startDccChatAction(0),
     m_dccSendAction(0)
 {
-    K3ListView::setSorting(-1);
     setWhatsThis();
     channel=chan;
     popup=new KMenu(this);
@@ -69,9 +68,11 @@ K3ListView(parent),
     kickban->setObjectName("nicklist_kick_ban_context_submenu");
     addressbook= new KMenu(this);
     addressbook->setObjectName("nicklist_addressbook_context_submenu");
-    setAcceptDrops(true);
-    setDropHighlighter(true);
-    setDropVisualizer(false);
+
+    // Enable Drag & Drop
+    viewport()->setAcceptDrops(true);
+    setDropIndicatorShown(false);
+    setDragDropMode(QAbstractItemView::DropOnly);
 
     m_actionGroup = new QActionGroup(this);
     connect(m_actionGroup, SIGNAL(triggered(QAction*)), this, SLOT(slotActionTriggered(QAction*)));
@@ -162,14 +163,13 @@ K3ListView(parent),
         kWarning() << "Could not create popup!" ;
     }
 
-    setShadeSortColumn(false);
+    // General layout
+    setRootIsDecorated(false); // single level view
+    setColumnCount(3);
 
-    // We have our own tooltips, don't use the default QListView ones
-    setShowToolTips(false);
-
-    m_resortTimer = new QTimer(this);
-    m_resortTimer->setSingleShot(true);
-    connect(m_resortTimer, SIGNAL(timeout()), SLOT(resort()));
+    // These two below must be called after setColumnCount().
+    header()->setSortIndicator(1, Qt::AscendingOrder);
+    setSortingEnabled(true);
 }
 
 NickListView::~NickListView()
@@ -182,7 +182,7 @@ bool NickListView::event(QEvent *event)
     {
         QHelpEvent* helpEvent = static_cast<QHelpEvent*>( event );
 
-        Q3ListViewItem *item = itemAt( helpEvent->pos() );
+        QTreeWidgetItem *item = itemAt( helpEvent->pos() );
         if( item )
         {
             Nick *nick = dynamic_cast<Nick*>( item );
@@ -199,7 +199,13 @@ bool NickListView::event(QEvent *event)
         else
                 QToolTip::hideText();
     }
-    return K3ListView::event( event );
+    return QTreeWidget::event( event );
+}
+
+// Make this public
+void NickListView::executeDelayedItemsLayout()
+{
+    QTreeWidget::executeDelayedItemsLayout();
 }
 
 void NickListView::setWhatsThis()
@@ -208,11 +214,11 @@ void NickListView::setWhatsThis()
 
     if(images->getNickIcon( Images::Normal, false).isNull())
     {
-        K3ListView::setWhatsThis(i18n("<qt><p>This shows all the people in the channel.  The nick for each person is shown.<br />Usually an icon is shown showing the status of each person, but you do not seem to have any icon theme installed.  See the Konversation settings - <i>Configure Konversation</i> under the <i>Settings</i> menu.  Then view the page for <i>Themes</i> under <i>Appearance</i>.</p></qt>"));
+        QTreeWidget::setWhatsThis(i18n("<qt><p>This shows all the people in the channel.  The nick for each person is shown.<br />Usually an icon is shown showing the status of each person, but you do not seem to have any icon theme installed.  See the Konversation settings - <i>Configure Konversation</i> under the <i>Settings</i> menu.  Then view the page for <i>Themes</i> under <i>Appearance</i>.</p></qt>"));
     }
     else
     {
-        K3ListView::setWhatsThis(i18n("<qt><p>This shows all the people in the channel.  The nick for each person is shown, with a picture showing their status.</p>"
+        QTreeWidget::setWhatsThis(i18n("<qt><p>This shows all the people in the channel.  The nick for each person is shown, with a picture showing their status.</p>"
             "<table>"
 
             "<tr><th><img src=\"admin\"/></th><td>This person has administrator privileges.</td></tr>"
@@ -243,28 +249,85 @@ void NickListView::setWhatsThis()
 
 void NickListView::refresh()
 {
-    Q3ListViewItemIterator it(this);
+    QTreeWidgetItemIterator it(this);
 
-    while (it.current())
+    while (*it)
     {
-        static_cast<Nick*>(it.current())->refresh();
+        static_cast<Nick*>(*it)->refresh();
         ++it;
     }
 
     setWhatsThis();
 }
 
-void NickListView::startResortTimer()
+void NickListView::setSortingEnabled(bool enable)
 {
-    if(!m_resortTimer->isActive())
-        m_resortTimer->start(3000);
+    QTreeWidget::setSortingEnabled(enable);
+    // We want to decouple header and this object with regard to sorting
+    // (for performance reasons). By default there is no way to reenable
+    // sorting without full resort (which is necessary for us) since both 
+    // header indicator change and setSortingEnabled(false/true) trigger
+    // full resort of QTreeView. However, after disconnect, it is possible
+    // to use header()->setSortIndicator() for this.
+    // This could probably be done in a better way if nick list was model
+    // based. NOTE: QTreeView::sortByColumn() won't work after this change
+    // if sorting is enabled.
+    if (enable && header()) {
+        disconnect(header(), SIGNAL(sortIndicatorChanged(int,Qt::SortOrder)),
+                this, 0);
+    }
+}
+
+void NickListView::fastSetSortingEnabled(bool value)
+{
+    if (value)
+    {
+        int sortCol = header()->sortIndicatorSection();
+        if (sortCol > -1)
+        {
+            header()->setSortIndicator(-1, header()->sortIndicatorOrder());
+            // since indicator section is -1, this basically sets the flag only
+            // while setSortIndicator() is decoupled from triggerring resort.
+            setSortingEnabled(true);
+            // NOTE:: ResizeToContents mode on sortCol would be performance killer
+            header()->setSortIndicator(sortCol, header()->sortIndicatorOrder());
+        }
+    }
+    else
+    {
+        setSortingEnabled(false);
+    }
+}
+
+void NickListView::sortByColumn(int column, Qt::SortOrder order)
+{
+    if (isSortingEnabled())
+    {
+        // original implementation relies on sortIndicatorChanged signal
+        model()->sort(column, order);
+    }
+    else
+        QTreeWidget::sortByColumn(column, order);
 }
 
 void NickListView::resort()
 {
-    K3ListView::setSorting(m_column, m_ascending);
-    sort();
-    K3ListView::setSorting(-1);
+    sortByColumn(header()->sortIndicatorSection(), header()->sortIndicatorOrder());
+}
+
+int NickListView::findLowerBound(const QTreeWidgetItem& item) const
+{
+    int start = 0, end = topLevelItemCount();
+    int mid;
+
+    while (start < end) {
+        mid = start + (end-start)/2;
+        if ((*topLevelItem(mid)) < item)
+            start = mid + 1;
+        else
+            end = mid;
+    }
+    return start;
 }
 
 void NickListView::contextMenuEvent(QContextMenuEvent* ce)
@@ -377,14 +440,13 @@ void NickListView::insertAssociationSubMenu()
 
 }
 
-void NickListView::setSorting(int column, bool ascending)
+QStringList NickListView::mimeTypes () const
 {
-    m_column = column;
-    m_ascending = ascending;
+    return KUrl::List::mimeDataTypes();
 }
 
-bool NickListView::acceptDrag (QDropEvent* event) const
-{
+bool NickListView::canDecodeMime(QDropEvent const *event) const {
+    // Verify if the URL is not irc://
     if (KUrl::List::canDecode(event->mimeData()))
     {
         const KUrl::List uris = KUrl::List::fromMimeData(event->mimeData());
@@ -395,11 +457,45 @@ bool NickListView::acceptDrag (QDropEvent* event) const
             if ((first.protocol() == QLatin1String("irc")) || channel->getNickList().containsNick(first.url()))
                 return false;
         }
-
         return true;
     }
+    return false;
+}
+
+void NickListView::dragEnterEvent(QDragEnterEvent *event)
+{
+    if (canDecodeMime(event)) {
+        QTreeWidget::dragEnterEvent(event);
+        return;
+    }
     else
-        return false;
+    {
+        event->ignore();
+    }
+}
+
+void NickListView::dragMoveEvent(QDragMoveEvent *event)
+{
+    QTreeWidget::dragMoveEvent(event);
+
+    if (!indexAt(event->pos()).isValid())
+    {
+        event->ignore();
+        return;
+    }
+}
+
+bool NickListView::dropMimeData(QTreeWidgetItem *parent, int index, const QMimeData *data, Qt::DropAction action)
+{
+    Q_UNUSED(index);
+    Q_UNUSED(action);
+    Nick* nick = dynamic_cast<Nick*>(parent);
+    if (nick) {
+        const KUrl::List uris = KUrl::List::fromMimeData(data);
+        channel->getServer()->sendURIs(uris, nick->getChannelNick()->getNickname());
+        return true;
+    }
+    return false;
 }
 
 Q_DECLARE_METATYPE(Konversation::PopupIDs)

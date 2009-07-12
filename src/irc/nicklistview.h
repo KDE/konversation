@@ -22,7 +22,7 @@
 
 #include <KMenu>
 
-#include <K3ListView>
+#include <QTreeWidget>
 
 class QActionGroup;
 class QMenu;
@@ -32,7 +32,7 @@ class QTimer;
 class KAction;
 
 
-class NickListView : public K3ListView
+class NickListView : public QTreeWidget
 {
     Q_OBJECT
 
@@ -45,17 +45,14 @@ class NickListView : public K3ListView
         void refresh();
         void setWhatsThis();
 
-        virtual void setSorting(int column, bool ascending);
+        void setSortingEnabled(bool enable); // WARNING: originally non-virtual
+        void sortByColumn(int column, Qt::SortOrder order); // WARNING: originally non-virtual
+        void fastSetSortingEnabled(bool value);
+        int findLowerBound(const QTreeWidgetItem& item) const;
+        void executeDelayedItemsLayout();
 
     public slots:
-        /** When this is called, resort is guaranteed to be called within a hard-coded time (a few seconds).
-         *  This prevents lots of calls to resort.
-         */
-        void startResortTimer();
-
-        /** Resort the listview.
-         *  It is better to call startResortTimer() which will resort with a minimum of a
-         *  1 second delay.
+        /** Resort the listview. CAUTION: this might be CPU intensive
          */
         void resort();
 
@@ -66,11 +63,36 @@ class NickListView : public K3ListView
         protected slots:
         void slotActionTriggered(QAction* action);
 
+    public:
+        // A helper class to disable sorting while in scope
+        class NoSorting
+        {
+            private:
+                NickListView *w;
+                bool enabled;
+            public:
+                NoSorting(NickListView *w) : w(w), enabled(w->isSortingEnabled())
+                {
+                    if (enabled) w->fastSetSortingEnabled(false);
+                };
+                ~NoSorting()
+                {
+                    if (enabled) w->fastSetSortingEnabled(true);
+                }
+        };
+
     protected:
-    //! Reimplemented for dynamic tooltips
-    virtual bool event(QEvent *ev);
-    void contextMenuEvent(QContextMenuEvent* ce);
-        virtual bool acceptDrag (QDropEvent* event) const;
+        //! Reimplemented for dynamic tooltips
+        virtual bool event(QEvent *ev);
+        void contextMenuEvent(QContextMenuEvent* ce);
+
+        // Drag & Drop support
+        virtual QStringList mimeTypes () const;
+        bool canDecodeMime(QDropEvent const *event) const;
+        virtual bool dropMimeData(QTreeWidgetItem *parent, int index, const QMimeData *data, Qt::DropAction action);
+        virtual void dragEnterEvent(QDragEnterEvent *event);
+        virtual void dragMoveEvent(QDragMoveEvent *event);
+
         void insertAssociationSubMenu();
         void updateActions();
         KMenu* popup;
@@ -80,10 +102,7 @@ class NickListView : public K3ListView
         Channel *channel;
         QTimer *m_resortTimer;
 
-        int m_column;
-        bool m_ascending;
-
-        private:
+    private:
         // TODO use a more specific enum for just our actions?
         KAction* createAction(QMenu* menu, const QString& text, Konversation::PopupIDs);
 

@@ -12,6 +12,8 @@
 #ifndef KONVERSATIONCHANNELOPTIONSDIALOG_H
 #define KONVERSATIONCHANNELOPTIONSDIALOG_H
 
+#define QT3_SUPPORT //TODO remove when porting away from K3ListView
+
 #include "channel.h"
 
 #include <QStringList>

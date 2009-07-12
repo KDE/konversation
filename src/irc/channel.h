@@ -32,7 +32,7 @@
 
 class QLabel;
 class QTimer;
-class Q3ListViewItem;
+class QTreeWidgetItem;
 class QStringList;
 class QSplitter;
 class Q3Grid;
@@ -72,6 +72,8 @@ class Channel : public ChatWindow
 {
     Q_OBJECT
 
+    friend class Nick;
+
     public:
         explicit Channel(QWidget* parent, QString name);
         ~Channel();
@@ -110,8 +112,9 @@ class Channel : public ChatWindow
 
     protected:
         // use with caution! does not check for duplicates
-        void fastAddNickname(ChannelNickPtr channelnick);
+        void fastAddNickname(ChannelNickPtr channelnick, Nick *nick=0);
         void setActive(bool active);
+        void repositionNick(Nick *nick);
 
     public slots:
         void setNickname(const QString& newNickname);
@@ -124,6 +127,7 @@ class Channel : public ChatWindow
         void autoWho();
         void fadeActivity();
         virtual void serverOnline(bool online);
+        void delayedSortNickList();
 
 
 //Nicklist
@@ -266,14 +270,13 @@ class Channel : public ChatWindow
     protected slots:
         void completeNick(); ///< I guess this is a GUI function, might be nice to have at DCOP level though --argonel
         void endCompleteNick();
-        void filesDropped(QDropEvent* e);
         void quickButtonClicked(const QString& definition);
         void modeButtonClicked(int id,bool on);
         void channelLimitChanged();
 
         void popupChannelCommand(int id);         ///< Connected to IRCView::popupCommand()
         void popupCommand(int id);                ///< Connected to NickListView::popupCommand()
-        void doubleClickCommand(Q3ListViewItem*);  ///< Connected to NickListView::doubleClicked()
+        void doubleClickCommand(QTreeWidgetItem *item,int column);  ///< Connected to NickListView::itemDoubleClicked()
         // Dialogs
         void changeNickname(const QString& newNickname);
 
@@ -288,8 +291,9 @@ class Channel : public ChatWindow
         ///Request a delayed nicklist sorting
         void requestNickListSort();
         ///Sort the nicklist
-        void sortNickList();
+        void sortNickList(bool delayed=false);
 
+        void nicknameListViewTextChanged(int textChangedFlags);
     protected:
         void showEvent(QShowEvent* event);
         void syncSplitters();
@@ -349,6 +353,7 @@ class Channel : public ChatWindow
         bool m_joined;
         NickList nicknameList;
         QTimer userhostTimer;
+        int m_nicknameListViewTextChanged;
 
         QStringList m_topicHistory;
         QStringList m_BanList;
@@ -363,7 +368,9 @@ class Channel : public ChatWindow
         int m_currentIndex;
 
         QTimer* m_processingTimer;
+
         QTimer* m_delayedSortTimer;
+        int m_delayedSortTrigger;
 
         QStringList m_modeList;
         ChannelNickPtr m_ownChannelNick;

@@ -11,8 +11,6 @@
   email:     eisfuchs@tigress.com
 */
 
-#define QT3_SUPPORT //TODO remove when porting away from K3ListView
-
 #include "nick.h"
 #include "addressbook.h"
 #include "application.h"
@@ -22,20 +20,22 @@
 
 #include <kabc/phonenumber.h>
 
-Nick::Nick(NickListView *listView, const ChannelNickPtr& channelnick)
-    : K3ListViewItem (listView, listView->lastItem(), QString(),
-                      channelnick->getNickname(), channelnick->getHostmask())
+Nick::Nick(NickListView *listView, Channel* channel, const ChannelNickPtr& channelnick)
+    : QTreeWidgetItem (listView)
 {
     m_channelnickptr = channelnick;
-    m_nickListView = listView;
+    m_channel = channel;
 
     Q_ASSERT(channelnick);
-    if(!channelnick) return;
+    Q_ASSERT(m_channel);
 
     m_flags = 0;
-//    m_height = height();
 
     refresh();
+
+    setTextAlignment(0, Qt::AlignHCenter);
+
+    setFlags((flags() & ~Qt::ItemIsDragEnabled) | Qt::ItemIsDropEnabled);
 }
 
 Nick::~Nick()
@@ -53,12 +53,20 @@ void Nick::refresh()
     int flags = 0;
     NickInfoPtr nickInfo(getChannelNick()->getNickInfo());
     bool away = false;
+    int textChangedFlags = 0;
+
+    // Disable auto-sorting while updating data
+    NickListView::NoSorting noSorting(qobject_cast<NickListView*>(treeWidget()));
 
     if ( nickInfo )
         away = nickInfo->isAway();
 
     if(away)
         flags=1;
+
+    // Brush of the first column will be used for all columns
+    setForeground(0, qApp->palette(treeWidget()).brush(
+                (away) ? QPalette::Disabled : QPalette::Normal, QPalette::WindowText));
 
     Images* images = Application::instance()->images();
     QPixmap icon;
@@ -94,36 +102,40 @@ void Nick::refresh()
         icon = images->getNickIcon( Images::Normal, away );
     }
 
-    setPixmap( 0, icon );
+    setIcon( 0, icon );
 
-    /*KABC::Picture pic = nickInfo->getAddressee().photo();
-
-    if(!pic.isIntern())
+    QString newtext = calculateLabel1();
+    if(newtext != text(1))
     {
-        pic = nickInfo->getAddressee().logo();
-    }
-
-    if(pic.isIntern())
-    {
-        QPixmap qpixmap(pic.data().scaleHeight(m_height));
-        setPixmap(1,qpixmap);
-    }*/
-
-    QString newtext1 = calculateLabel1();
-    if(newtext1 != text(1))
-    {
-        setText(1, newtext1);
+        setText(1, newtext);
         flags += 2;
+        textChangedFlags += 1;
     }
 
-    setText(2, calculateLabel2());
-    repaint();
+    newtext = calculateLabel2();
+    if(newtext != text(2))
+    {
+        setText(2, newtext);
+        textChangedFlags += 2;
+    }
 
-    if(m_flags != flags)
+    treeWidget()->repaint();
+
+    if(m_flags != flags || textChangedFlags)
     {
         m_flags = flags;
-        m_nickListView->startResortTimer(); // Resort nick list
+        // Announce about nick update (and reposition the nick in the nick list as needed).
+        emitDataChanged();
+        m_channel->requestNickListSort();
+        m_channel->nicknameListViewTextChanged(textChangedFlags);
     }
+}
+
+// Triggers reposition of this nick (QTreeWidgetItem) in the nick list
+void Nick::repositionMe()
+{
+    if (treeWidget()->isSortingEnabled())
+        emitDataChanged();
 }
 
 QString Nick::calculateLabel1()
@@ -148,63 +160,64 @@ QString Nick::calculateLabel2()
     return getChannelNick()->getNickInfo()->getHostmask();
 }
 
-int Nick::compare(Q3ListViewItem* item,int col,bool ascending) const
+bool Nick::operator<(const QTreeWidgetItem& other) const
 {
-    Nick* otherItem = static_cast<Nick*>(item);
+    const Nick& otherNick = static_cast<const Nick&>(other);
 
     if(Preferences::self()->sortByActivity())
     {
         uint thisRecentActivity = getChannelNick()->recentActivity();
-        uint otherRecentActivity = otherItem->getChannelNick()->recentActivity();
+        uint otherRecentActivity = otherNick.getChannelNick()->recentActivity();
         if(thisRecentActivity > otherRecentActivity)
         {
-            return -1;
+            return true;
         }
         if(thisRecentActivity < otherRecentActivity)
         {
-            return 1;
+            return false;
         }
         uint thisTimestamp = getChannelNick()->timeStamp();
-        uint otherTimestamp = otherItem->getChannelNick()->timeStamp();
+        uint otherTimestamp = otherNick.getChannelNick()->timeStamp();
         if(thisTimestamp > otherTimestamp)
         {
-            return -1;
+            return true;
         }
         if(thisTimestamp < otherTimestamp)
         {
-            return 1;
+            return false;
         }
     }
 
     if(Preferences::self()->sortByStatus())
     {
         int thisFlags = getSortingValue();
-        int otherFlags = otherItem->getSortingValue();
+        int otherFlags = otherNick.getSortingValue();
 
         if(thisFlags > otherFlags)
         {
-            return 1;
+            return false;
         }
         if(thisFlags < otherFlags)
         {
-            return -1;
+            return true;
         }
     }
 
     QString thisKey;
     QString otherKey;
+    int col = treeWidget()->sortColumn();
 
     if(col > 1) //the reason we need this: enabling hostnames adds another column
     {
         if(Preferences::self()->sortCaseInsensitive())
         {
-            thisKey = thisKey.toLower();
-            otherKey = otherKey.toLower();
+            thisKey = text(col).toLower();
+            otherKey = otherNick.text(col).toLower();
         }
         else
         {
-            thisKey = key(col, ascending);
-            otherKey = otherItem->key(col, ascending);
+            thisKey = text(col);
+            otherKey = otherNick.text(col);
         }
     }
     else if(col == 1)
@@ -212,29 +225,25 @@ int Nick::compare(Q3ListViewItem* item,int col,bool ascending) const
         if(Preferences::self()->sortCaseInsensitive())
         {
             thisKey = getChannelNick()->loweredNickname();
-            otherKey = otherItem->getChannelNick()->loweredNickname();
+            otherKey = otherNick.getChannelNick()->loweredNickname();
         }
         else
         {
-            thisKey = key(col, ascending);
-            otherKey = otherItem->key(col, ascending);
+            thisKey = text(col);
+            otherKey = otherNick.text(col);
         }
     }
 
-    return thisKey.compare(otherKey);
+    return thisKey < otherKey;
 }
 
-void Nick::paintCell(QPainter * p, const QColorGroup & cg, int column, int width, int align )
+QVariant Nick::data(int column, int role) const
 {
-    QColorGroup cg2 = cg;
-    NickInfoPtr nickInfo(getChannelNick()->getNickInfo());
-
-    if(nickInfo->isAway())
-    {
-        cg2.setColor(QPalette::Text, qApp->palette(listView()).color(QPalette::Disabled, QPalette::Text));
+    if (role == Qt::ForegroundRole && column > 0) {
+        // Use brush of the first column for all columns
+        return data(0, role);
     }
-
-    K3ListViewItem::paintCell(p,cg2,column,width,align);
+    return QTreeWidgetItem::data(column, role);
 }
 
 int Nick::getSortingValue() const

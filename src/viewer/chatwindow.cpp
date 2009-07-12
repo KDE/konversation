@@ -23,6 +23,7 @@
 #include <QRegExp>
 #include <QTextCodec>
 #include <QKeyEvent>
+#include <QScrollBar>
 
 #include <KDialog>
 #include <KActionCollection>

@@ -38,6 +38,7 @@ NickInfo::NickInfo(const QString& nick, Server* server): KShared()
     m_notified = false;
     m_identified = false;
     m_printedOnline = true;
+    m_changed = false;
 
     if(!m_addressee.isEmpty())
         Konversation::Addressbook::self()->emitContactPresenceChanged(m_addressee.uid(), 4);

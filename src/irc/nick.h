@@ -17,26 +17,25 @@
 
 #include "channelnick.h"
 
-#include <K3ListView>
+#include <QTreeWidgetItem>
 
 class NickListView;
+class Channel;
 
-class Nick : public K3ListViewItem
+class Nick : public QTreeWidgetItem
 {
     public:
-        Nick(NickListView *listView,
+        Nick(NickListView *listView, Channel* channel,
             const ChannelNickPtr& channelnick);
         ~Nick();
 
         ChannelNickPtr getChannelNick() const;
 
-        virtual void paintCell(QPainter * p, const QColorGroup & cg, int column, int width, int align);
-        virtual int compare(Q3ListViewItem* item,int col,bool ascending) const;
+        virtual QVariant data(int column, int role) const;
+        virtual bool operator<(const QTreeWidgetItem& other) const;
 
         void refresh();
-
-    signals:
-        void refreshed();
+        void repositionMe();
 
     protected:
         QString calculateLabel1();
@@ -46,9 +45,8 @@ class Nick : public K3ListViewItem
 
     protected:
         ChannelNickPtr m_channelnickptr;
-        NickListView* m_nickListView;
+        Channel* m_channel;
 
-//        int m_height;
         int m_flags;
 };
 #endif
