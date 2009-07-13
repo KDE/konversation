@@ -52,7 +52,7 @@ class Nick : public QTreeWidgetItem
     public:
         enum Columns {
             NicknameColumn = 0,
-            HostmaskColumn = 1,
+            HostmaskColumn = 1
         };
 };
 #endif
