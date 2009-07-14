@@ -1461,6 +1461,8 @@ void Channel::removeNick(ChannelNickPtr channelNick, const QString &reason, bool
         {
             nicknameList.removeOne(nick);
             delete nick;
+            // Execute this otherwise it may crash trying to access deleted nick
+            nicknameListView->executeDelayedItemsLayout();
         }
         else
         {
