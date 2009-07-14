@@ -59,8 +59,20 @@ void Nick::refresh()
         if ( nickInfo )
             away = nickInfo->isAway();
 
-        if(away)
-            flags=1;
+        if (away)
+        {
+            // Brush of the first column will be used for all columns
+            setForeground(NicknameColumn,
+                qApp->palette(treeWidget()).brush(QPalette::Disabled, QPalette::WindowText));
+
+            flags = 1;
+        }
+        else
+        {
+            // Brush of the first column will be used for all columns
+            setForeground(NicknameColumn,
+                treeWidget()->palette().brush(QPalette::Normal, QPalette::WindowText));
+        }
 
         Images* images = Application::instance()->images();
         QPixmap icon;
