@@ -54,7 +54,7 @@ Changes since 1.2-alpha4:
 * In addition to the broad strokes optimization described above, other minor
   optimization work has been done on the nickname list updating code, impro-
   ving the efficiency of updates further.
-
+* Fixed topic label text color not reacting to system color scheme changes.
 
 Changes from 1.2-alpha3 to 1.2-alpha4:
 Alpha 4 marks a significant milestone on the way to feature completeness
