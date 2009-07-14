@@ -62,10 +62,6 @@ void Nick::refresh()
         if(away)
             flags=1;
 
-        // Brush of the first column will be used for all columns
-        setForeground(NicknameColumn, qApp->palette(treeWidget()).brush(
-                    (away) ? QPalette::Disabled : QPalette::Normal, QPalette::WindowText));
-
         Images* images = Application::instance()->images();
         QPixmap icon;
 

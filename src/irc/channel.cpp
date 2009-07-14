@@ -2366,19 +2366,17 @@ void Channel::updateAppearance()
         abg = palette().alternateBase().color();
     }
 
-    QPalette channelInputPalette;
-    channelInputPalette.setColor(QPalette::WindowText, fg);
-    channelInputPalette.setColor(QPalette::Text, fg);
-    channelInputPalette.setColor(QPalette::Base, bg);
-    channelInput->setPalette(channelInputPalette);
+    QPalette newPalette;
+    newPalette.setColor(QPalette::WindowText, fg);
+    newPalette.setColor(QPalette::Text, fg);
+    newPalette.setColor(QPalette::Base, bg);
+    newPalette.setColor(QPalette::AlternateBase, abg);
 
-    QPalette limitPalette;
-    limitPalette.setColor(QPalette::WindowText, fg);
-    limitPalette.setColor(QPalette::Text, fg);
-    limitPalette.setColor(QPalette::Base, bg);
-    limit->setPalette(limitPalette);
+    channelInput->setPalette(newPalette);
+    limit->setPalette(newPalette);
 
     getTextView()->setPalette(QPalette());
+    topicLine->setPalette(QPalette());
 
     if(Preferences::self()->showBackgroundImage())
     {
@@ -2408,13 +2406,8 @@ void Channel::updateAppearance()
         limit->setFont(KGlobalSettings::generalFont());
     }
 
-    QPalette nicknameListViewPalette;
-    nicknameListViewPalette.setColor(QPalette::WindowText, fg);
-    nicknameListViewPalette.setColor(QPalette::Text, fg);
-    nicknameListViewPalette.setColor(QPalette::Base, bg);
-    nicknameListViewPalette.setColor(QPalette::AlternateBase, abg);
     nicknameListView->resort();
-    nicknameListView->setPalette(nicknameListViewPalette);
+    nicknameListView->setPalette(newPalette);
 
     if (Preferences::self()->customListFont())
         nicknameListView->setFont(Preferences::self()->listFont());
