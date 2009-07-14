@@ -1284,7 +1284,7 @@ void Channel::addNickname(ChannelNickPtr channelnick)
         }
     }
 
-    if(nick == 0)
+    if (nick == 0)
     {
         fastAddNickname(channelnick);
 
@@ -1297,9 +1297,7 @@ void Channel::addNickname(ChannelNickPtr channelnick)
         requestNickListSort();
     }
     else
-    {
-        Q_ASSERT(false); // We shouldn't be adding someone that is already in the channel.
-    }
+        kWarning() << "Nickname " << channelnick->getNickname() << " has not been added as it is already in the nickname list."<< endl;
 }
 
 // Use with caution! Does not check for duplicates or may not
