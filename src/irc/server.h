@@ -403,9 +403,9 @@ void resetNickSelection();
         //Note that these signals haven't been implemented yet.
         /// Fires when the information in a NickInfo object changes.
         void nickInfoChanged(Server* server, const NickInfoPtr nickInfo);
-        /// Emited once if one or more NickInfo has been changed.
+        /// Emitted once if one or more NickInfo has been changed.
         void nickInfoChanged();
-        /// Emited once if one or more ChannelNick has been changed in @p channel.
+        /// Emitted once if one or more ChannelNick has been changed in @p channel.
         void channelNickChanged(const QString& channel);
 
         /// Fires when a nick leaves or joins a channel.  Based on joined flag, receiver could

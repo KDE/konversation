@@ -9,11 +9,13 @@
   copyright: (C) 2004 by Peter Simonsson
   email:     psn@linux.se
 */
+
 #ifndef KONVERSATIONCHANNELOPTIONSDIALOG_H
 #define KONVERSATIONCHANNELOPTIONSDIALOG_H
 
 #define QT3_SUPPORT //TODO remove when porting away from K3ListView
 
+#include "ui_channeloptionsui.h"
 #include "channel.h"
 
 #include <QStringList>
@@ -21,7 +23,6 @@
 
 #include <kdialog.h>
 
-#include "ui_channeloptionsui.h"
 
 namespace Konversation
 {

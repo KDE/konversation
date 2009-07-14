@@ -11,8 +11,10 @@
   Copyright (C) 2006-2008 Eike Hein <hein@kde.org>
 */
 
-#include "channeloptionsdialog.h"
+#define QT3_SUPPORT //TODO remove when porting away from Q3*
+
 #include "channel.h"
+#include "channeloptionsdialog.h"
 #include "application.h"
 #include "server.h"
 #include "nick.h"
@@ -2848,7 +2850,7 @@ void Channel::repositionNick(Nick *nick)
 {
     int index;
     bool existed;
-    
+
     // Remove nick from the lists
     existed = nicknameList.removeOne(nick);
     index = nicknameListView->indexOfTopLevelItem(nick);

@@ -14,17 +14,16 @@
 #ifndef CHANNEL_H
 #define CHANNEL_H
 
+#include <config-konversation.h>
+
 #include "server.h"
 #include "chatwindow.h"
 #include "channelnick.h"
 #include "nick.h"
 
-#include <config-konversation.h>
-
 #ifdef HAVE_QCA2
 #include "cipher.h"
 #endif
-
 
 #include <QTimer>
 #include <QString>
