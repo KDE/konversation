@@ -37,9 +37,7 @@
 
 namespace Konversation
 {
-
     QSet<QString> OutputFilter::m_commands;
-
 
     void OutputFilter::fillCommandList()
     {
