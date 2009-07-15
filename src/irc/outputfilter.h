@@ -21,6 +21,7 @@
 
 #include <QObject>
 #include <QString>
+#include <QSet>
 
 #include <KUrl>
 #include <kio/global.h>
@@ -57,6 +58,8 @@ namespace Konversation
         public:
             explicit OutputFilter(Server* server);
             ~OutputFilter();
+
+            static const QSet<QString>& supportedCommands() { return m_commands; }
 
             QStringList splitForEncoding(const QString& inputLine, int max, int segments = -1);
             OutputFilterResult parse(const QString& myNick,const QString& line,const QString& name);
@@ -110,79 +113,94 @@ namespace Konversation
             void showView(ChatWindow* view);
             void encodingChanged ();
 
-
         public slots:
-            void setCommandChar();
             OutputFilterResult execBan(const QString& mask,const QString& channels);
             OutputFilterResult execUnban(const QString& mask,const QString& channels);
 
-        protected:
-            OutputFilterResult parseMsg(const QString& parameter, bool commandIsQuery);
-            OutputFilterResult parseSMsg(const QString& parameter);
-            OutputFilterResult parseMe(const QString &parameter, const QString &destination);
-            OutputFilterResult parseDescribe(const QString& parameter);
-            OutputFilterResult parseNotice(const QString& parameter);
-            OutputFilterResult parseJoin(QString& parameter);
-            OutputFilterResult parsePart(const QString& parameter);
-            OutputFilterResult parseQuit(const QString& parameter);
-            OutputFilterResult parseClose(QString parameter);
-            OutputFilterResult parseKick(const QString& parameter);
-            OutputFilterResult parseKickBan(const QString& parameter);
-            OutputFilterResult parseBan(const QString& parameter, bool kick = false);
-            OutputFilterResult parseUnban(const QString& parameter);
-            OutputFilterResult parseNames(const QString& parameter);
-            OutputFilterResult parseList(const QString& parameter);
-            OutputFilterResult parseOp(const QString& parameter);
-            OutputFilterResult parseDeop(const QString& ownNick, const QString& parameter);
-            OutputFilterResult parseHop(const QString& parameter);
-            OutputFilterResult parseDehop(const QString& ownNick, const QString& parameter);
-            OutputFilterResult parseVoice(const QString& parameter);
-            OutputFilterResult parseUnvoice(const QString& ownNick, const QString& parameter);
-            OutputFilterResult parseTopic(const QString& parameter);
-            void parseAway(QString& parameter);
-            void parseBack();
-            OutputFilterResult parseCtcp(const QString& parameter);
-            OutputFilterResult parsePing(const QString& parameter);
-            OutputFilterResult parseVersion(const QString& parameter);
-            void parseServer(const QString& parameter);
-            void parseReconnect();
-            OutputFilterResult parseConnect(const QString& parameter);
-            OutputFilterResult parseInvite(const QString& parameter);
-            OutputFilterResult parseExec(const QString& parameter);
-            OutputFilterResult parseNotify(const QString& parameter);
-            OutputFilterResult parseOper(const QString& myNick,const QString& parameter);
-            OutputFilterResult parseDcc(const QString& parameter);
-            OutputFilterResult parseRaw(const QString& parameter);
-            OutputFilterResult parseIgnore(const QString& parameter);
-            OutputFilterResult parseUnignore(const QString& parameter);
-            OutputFilterResult parseQuote(const QString& parameter);
-            OutputFilterResult parseSay(const QString& parameter);
-            void parseKonsole();
-            OutputFilterResult parseAme(const QString& parameter);
-            OutputFilterResult parseAmsg(const QString& parameter);
-            OutputFilterResult parseOmsg(const QString& parameter);
-            OutputFilterResult parseOnotice(const QString& parameter);
-            OutputFilterResult parseCharset(const QString& charset);
-            void parseCycle();
-            OutputFilterResult parseSetKey(const QString& parameter);
-            OutputFilterResult parseKeyX(const QString& parameter);
-            OutputFilterResult parseDelKey(const QString& parameter);
-            OutputFilterResult parseShowKey(const QString& parameter);
-            OutputFilterResult parseDNS(const QString& parameter);
-            OutputFilterResult parseKill(const QString& parameter);
-            OutputFilterResult parseShowTuner(const QString &p);
+        private slots:
+            void command_join();
+            void command_part();
+            void command_leave();
+            void command_quit();
+            void command_close();
+            void command_notice();
+            void command_j();
+            void command_me();
+            void command_msg();
+            void command_m();
+            void command_smsg();
+            void command_query();
+            void command_ame();
+            void command_amsg();
+            void command_omsg();
+            void command_onotice();
+            void command_quote();
+            void command_say();
+            void command_op();
+            void command_deop();
+            void command_hop();
+            void command_dehop();
+            void command_voice();
+            void command_devoice();
+            void command_unvoice();
+            void command_ctcp();
+            void command_ping();
+            void command_kick();
+            void command_topic();
+            void command_away();
+            void command_unaway();
+            void command_back();
+            void command_invite();
+            void command_exec();
+            void command_notify();
+            void command_oper();
+            void command_ban();
+            void command_unban();
+            void command_kickban();
+            void command_ignore();
+            void command_unignore();
+            void command_list();
+            void command_names();
+            void command_raw();
+            void command_dcc();
+            void command_konsole();
+            void command_aaway();
+            void command_aunaway();
+            void command_aback();
+            void command_server();
+            void command_reconnect();
+            void command_disconnect();
+            void command_charset();
+            void command_encoding();
+            void command_setkey();
+            void command_keyx();
+            void command_delkey();
+            void command_showkey();
+            void command_dns();
+            void command_kill();
+            void command_queuetuner();
+
+        private:
+            static void fillCommandList();
+            static QSet<QString> m_commands;
+
+            void handleMsg(bool commandIsQuery);
+            void handleCtcp(const QString& parameter);
+            void handleBan(bool kick);
 
             OutputFilterResult changeMode(const QString& parameter,char mode,char giveTake);
             bool isAChannel(const QString& check);
             OutputFilterResult usage(const QString& check);
             OutputFilterResult info(const QString& check);
             OutputFilterResult error(const QString& check);
-
             QString addNickToEmptyNickList(const QString& nick, const QString& parameter);
 
-        private:
-            QString destination;
-            QString commandChar;
+            QString m_commandChar;
+            QString m_myNick;
+            QString m_destination;
+            QString m_parameter;
+
+            OutputFilterResult m_result;
 
             Server* m_server;
     };
