@@ -279,16 +279,6 @@
       <label></label>
       <whatsthis></whatsthis>
     </entry>
-    <entry key="NicksOnlineGeometry" type="Size" name="NicksOnlineSize">
-      <default></default>
-      <label></label>
-      <whatsthis></whatsthis>
-    </entry>
-    <entry key="NicknameGeometry" type="Size" name="NicknameSize">
-      <default></default>
-      <label></label>
-      <whatsthis></whatsthis>
-    </entry>
     <entry key="LogfileReaderGeometry" type="Size" name="LogfileReaderSize">
       <default code="true">QSize(400, 200)</default>
       <label></label>
