@@ -197,6 +197,27 @@ namespace Konversation
             return transfer;
         }
 
+        void TransferManager::acceptDccGet(int connectionId, const QString& partnerNick, const QString& fileName)
+        {
+            kDebug() << "Server group ID: " << connectionId << ", partner: " << partnerNick << ", filename: " << fileName;
+
+            bool nickEmpty = partnerNick.isEmpty();
+            bool fileEmpty = fileName.isEmpty();
+
+            foreach ( TransferRecv* it, m_recvItems )
+            {
+                if (
+                    it->getStatus() == Transfer::Queued &&
+                    it->getConnectionId() == connectionId &&
+                    (nickEmpty || it->getPartnerNick() == partnerNick) &&
+                    (fileEmpty || it->getFileName() == fileName)
+                )
+                {
+                    it->start();
+                }
+            }
+        }
+
         void TransferManager::initTransfer( Transfer* transfer )
         {
             connect( transfer, SIGNAL( statusChanged( Konversation::DCC::Transfer*, int, int ) ), this, SLOT( slotTransferStatusChanged( Konversation::DCC::Transfer*, int, int ) ) );

@@ -280,6 +280,8 @@ void Server::connectSignals()
     connect(getOutputFilter(), SIGNAL(disconnectServer()), this, SLOT(disconnect()));
     connect(getOutputFilter(), SIGNAL(openDccSend(const QString &, KUrl)), this, SLOT(addDccSend(const QString &, KUrl)));
     connect(getOutputFilter(), SIGNAL(openDccChat(const QString &)), this, SLOT(openDccChat(const QString &)));
+    connect(getOutputFilter(), SIGNAL(acceptDccGet(const QString&, const QString&)),
+        this, SLOT(acceptDccGet(const QString&, const QString&)));
     connect(getOutputFilter(), SIGNAL(sendToAllChannels(const QString&)), this, SLOT(sendToAllChannels(const QString&)));
     connect(getOutputFilter(), SIGNAL(banUsers(const QStringList&,const QString&,const QString&)),
         this, SLOT(requestBan(const QStringList&,const QString&,const QString&)));
@@ -1812,16 +1814,15 @@ void Server::addDccGet(const QString &sourceNick, const QStringList &dccArgument
     newDcc->setConnectionId( connectionId() );
     newDcc->setPartnerNick( sourceNick );
 
-    //watch out for missing '"' around the filenames with spaces
     //filename ip port filesize [token]
     QString ip;
     uint port;
     QString fileName;
     quint64 fileSize;
-    QString token = "";
+    QString token;
     const int argumentSize = dccArguments.count();
 
-    if (dccArguments.at(argumentSize - 3) == "0") //port==0, for passive send, filesize can't be 0
+    if (dccArguments.at(argumentSize - 3) == "0") //port==0, for passive send, ip can't be 0
     {
         //filename ip port(0) filesize token
         fileName = recoverDccFileName(dccArguments, 4); //ip port filesize token
@@ -1832,7 +1833,9 @@ void Server::addDccGet(const QString &sourceNick, const QStringList &dccArgument
 
         // Reverse DCC
         newDcc->setReverse( true, token );
-    } else {
+    }
+    else
+    {
         //filename ip port filesize
         ip = DCC::DccCommon::numericalIpToTextIp( dccArguments.at(argumentSize - 3) ); //-1 index, -1 filesize
         fileName = recoverDccFileName(dccArguments, 3); //ip port filesize
@@ -1875,6 +1878,11 @@ void Server::openDccChat(const QString& nickname)
 void Server::requestDccChat(const QString& partnerNick, const QString& numericalOwnIp, uint ownPort)
 {
     queue(QString("PRIVMSG %1 :\001DCC CHAT chat %2 %3\001").arg(partnerNick).arg(numericalOwnIp).arg(QString::number(ownPort)));
+}
+
+void Server::acceptDccGet(const QString& nick, const QString& file)
+{
+    Application::instance()->getDccTransferManager()->acceptDccGet(m_connectionId, nick, file);
 }
 
 void Server::dccSendRequest(const QString &partner, const QString &fileName, const QString &address, uint port, quint64 size)
@@ -1964,7 +1972,6 @@ void Server::startReverseDccSendTransfer(const QString& sourceNick,const QString
                                         "Received invalid passive DCC send acceptance message for \"%1\" from %2.",
                                         fileName,
                                         sourceNick ) );
-
     }
 }
 
@@ -2020,7 +2027,7 @@ void Server::resumeDccSendTransfer(const QString &sourceNick, const QStringList 
     bool passiv = false;
     QString fileName;
     quint64 position;
-    QString token = "";
+    QString token;
     uint ownPort;
     const int argumentSize = dccArguments.count();
 

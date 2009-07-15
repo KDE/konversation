@@ -779,17 +779,23 @@ namespace Konversation
 
     void OutputFilter::command_dcc()
     {
+        kDebug() << m_parameter;
         // No parameter, just open DCC panel
         if (m_parameter.isEmpty())
+        {
             emit addDccPanel();
+        }
         else
         {
             QStringList parameterList = m_parameter.replace("\\ ", "%20").split(' ');
 
             QString dccType = parameterList[0].toLower();
 
+            //TODO close should not just refer to the gui-panel, let it close connections
             if (dccType == "close")
+            {
                 emit closeDccPanel();
+            }
             else if (dccType == "send")
             {
                 if (parameterList.count() == 1) // DCC SEND
@@ -799,7 +805,7 @@ namespace Konversation
                 else if (parameterList.count() > 2) // DCC SEND <nickname> <file> [file] ...
                 {
                     // TODO: make sure this will work:
-                    //output=i18n("Usage: %1DCC SEND nickname [fi6lename] [filename] ...").arg(commandChar);
+                    //output=i18n("Usage: %1DCC SEND nickname [filename] [filename] ...").arg(commandChar);
                     KUrl fileURL(parameterList[2]);
 
                     //We could easily check if the remote file exists, but then we might
@@ -811,6 +817,24 @@ namespace Konversation
                 }
                 else                              // Don't know how this should happen, but ...
                     m_result = usage(i18n("Usage: %1DCC [SEND nickname filename]", m_commandChar));
+            }
+            else if (dccType == "get")
+            {
+                //dcc get [nick [file]]
+                switch (parameterList.count())
+                {
+                    case 1:
+                        emit acceptDccGet("","");
+                        break;
+                    case 2:
+                        emit acceptDccGet(parameterList.at(1),"");
+                        break;
+                    case 3:
+                        emit acceptDccGet(parameterList.at(1),parameterList.at(2));
+                        break;
+                    default:
+                        m_result = usage(i18n("Usage: %1DCC [GET [nickname [filename]]]", m_commandChar));
+                }
             }
             // TODO: DCC Chat etc. comes here
             else if (dccType == "chat")

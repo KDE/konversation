@@ -89,6 +89,7 @@ namespace Konversation
             void openDccChat(const QString& nick);
             void addDccPanel();
             void closeDccPanel();
+            void acceptDccGet(const QString& nick, const QString& file);
             void openRawLog(bool show);
             void closeRawLog();
             void openKonsolePanel();

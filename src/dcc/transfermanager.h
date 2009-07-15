@@ -75,6 +75,8 @@ namespace Konversation
 
                 TransferSend* startReverseSending(int connectionId, const QString& partnerNick, const QString& fileName, const QString& partnerHost, uint partnerPort, quint64 fileSize, const QString& token );
 
+                void acceptDccGet(int connectionId, const QString& partnerNick, const QString& fileName);
+
                 bool isLocalFileInWritingProcess( const KUrl& localUrl ) const;
 
                 int generateReverseTokenNumber();
