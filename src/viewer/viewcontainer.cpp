@@ -1897,7 +1897,8 @@ void ViewContainer::insertIRCColor()
 
     if (dlg->exec() == KDialog::Accepted)
     {
-        m_frontView->appendInputText(dlg->color(), true/*fromCursor*/);
+        if(m_frontView)
+            m_frontView->appendInputText(dlg->color(), true/*fromCursor*/);
     }
     delete dlg;
 }
