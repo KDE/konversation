@@ -2109,7 +2109,7 @@ bool InputFilter::isAChannel(const QString &check)
         return false;
     Q_ASSERT(server);
     // if we ever see the assert, we need the ternary
-    return server? server->isAChannel(check) : QString("#&").contains(check.at(0));
+    return server? server->isAChannel(check) : bool(QString("#&").contains(check.at(0)));
 }
 
 bool InputFilter::isIgnore(const QString &sender, Ignore::Type type)

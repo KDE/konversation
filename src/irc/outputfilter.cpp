@@ -1657,7 +1657,7 @@ namespace Konversation
             return false;
         Q_ASSERT(m_server);
                                                   // XXX if we ever see the assert, we need the ternary
-        return m_server? m_server->isAChannel(check) : QString("#&").contains(check.at(0));
+        return m_server? m_server->isAChannel(check) : bool(QString("#&").contains(check.at(0)));
     }
 }
 #include "outputfilter.moc"
