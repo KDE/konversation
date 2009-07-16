@@ -172,6 +172,13 @@ void Query::setName(const QString& newName)
 {
     //if(ChatWindow::getName() == newName) return;  // no change, so return
 
+
+    if(ChatWindow::getName() != newName)
+    {
+        appendCommandMessage(i18n("Nick"),i18n("%1 is now known as %2.", getName(), newName),false);
+    }
+
+
     ChatWindow::setName(newName);
 
     // don't change logfile name if query name changes
@@ -493,7 +500,6 @@ void Query::setNickInfo(const NickInfoPtr & nickInfo)
 {
     m_nickInfo = nickInfo;
     Q_ASSERT(m_nickInfo); if(!m_nickInfo) return;
-    setName(m_nickInfo->getNickname());
     nickInfoChanged();
 }
 
