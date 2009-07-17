@@ -6,10 +6,6 @@ if (QCA2_FOUND)
     include_directories(${QCA2_INCLUDE_DIR})
 endif (QCA2_FOUND)
 
-if (LIBKNOTIFICATIONITEM-1_FOUND)
-    include_directories(${KNOTIFICATIONITEM_INCLUDE_DIR})
-endif (LIBKNOTIFICATIONITEM-1_FOUND)
-
 set(core_SRCS
     #====================================
     #=== Application
@@ -227,10 +223,6 @@ endif (X11_Xscreensaver_FOUND)
 if (QCA2_FOUND)
     target_link_libraries(konversation ${QCA2_LIBRARIES})
 endif (QCA2_FOUND)
-
-if (LIBKNOTIFICATIONITEM-1_FOUND)
-    target_link_libraries(konversation ${KNOTIFICATIONITEM_LIBRARIES})
-endif (LIBKNOTIFICATIONITEM-1_FOUND)
 
 CHECK_INCLUDE_FILE(
   "stropts.h" HAVE_STROPTS_H)
