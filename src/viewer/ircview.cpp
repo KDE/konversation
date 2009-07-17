@@ -924,8 +924,13 @@ void IRCView::setupChannelPopupMenu()
     m_channelPopup->setObjectName("channel_context_menu");
     m_channelPopup->setTitle(m_currentChannel);
 
-    QAction* action = m_channelPopup->addAction(i18n("&Join"), this, SLOT(handleContextActions()));
+    QAction* action = m_channelPopup->addAction(i18n("&Join Channel..."), this, SLOT(handleContextActions()));
     action->setData(Konversation::Join);
+    #if KDE_IS_VERSION(4,2,85)
+    action->setIcon(KIcon("irc-join-channel"));
+    #else
+    action->setIcon(KIcon("list-add"));
+    #endif
     action = m_channelPopup->addAction(i18n("Get &user list"), this, SLOT(handleContextActions()));
     action->setData(Konversation::Names);
     action = m_channelPopup->addAction(i18n("Get &topic"), this, SLOT(handleContextActions()));
