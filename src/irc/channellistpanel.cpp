@@ -76,7 +76,7 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
     connect(m_joinChanBtn, SIGNAL(clicked()), this, SLOT(joinChannelClicked()) );
 
     connect(m_channelListView, SIGNAL(customContextMenuRequested(const QPoint&)),
-            this, SLOT(contextMenu()) );
+            this, SLOT(contextMenu(const QPoint&)) );
 
     updateUsersChannels();
 }
@@ -272,6 +272,9 @@ void ChannelListPanel::applyFilterToItem(QTreeWidgetItem* item)
 
 void ChannelListPanel::applyFilterClicked()
 {
+    //Don't run if they pressed return when the button was disabled
+    if(!m_applyBtn->isEnabled()) return;
+
     if(!m_numChannels)
     {
         refreshList();
@@ -307,9 +310,9 @@ bool ChannelListPanel::closeYourself()
     return true;
 }
 
-void ChannelListPanel::contextMenu()
+void ChannelListPanel::contextMenu(const QPoint& p)
 {
-    QTreeWidgetItem* item = m_channelListView->currentItem();
+    QTreeWidgetItem* item = m_channelListView->itemAt(p);
 
     if(!item) return;
 

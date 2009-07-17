@@ -57,7 +57,7 @@ class ChannelListPanel : public ChatWindow, private Ui::ChannelListWidgetUI
         void updateDisplay();                     // will be called by a timer to update regularly
         void saveList();
         void joinChannelClicked();
-        void contextMenu();
+        void contextMenu(const QPoint& pos);
         void openURL();
 
         //Used to disable functions when not connected
