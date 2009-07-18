@@ -55,6 +55,20 @@ Changes since 1.2-alpha4:
   optimization work has been done on the nickname list updating code, impro-
   ving the efficiency of updates further.
 * Fixed topic label text color not reacting to system color scheme changes.
+* Added a '/dcc get [nick [file]]' command to accept an incoming DCC file
+  transfer request.
+* Fixed a crash when using the 'Insert -> IRC Color...' menu item without
+  there being any tabs.
+* Nickname changes of the discussion partner are now announced in query tabs,
+  provided the information is available (i.e. when one shares a channel with
+  the discussion parther, so the server informs Konversation of the nickname
+  change).
+* Fixed building on OpenSolaris.
+* The channel item context menu in Channel List tabs now has a "Join Channel"
+  action, and the list of URLs extracted from the channel topic has been mo-
+  ved to a sub-menu.
+* Increased use of the IRC icons found in recent versions of the Oxygen icon
+  set.
 
 Changes from 1.2-alpha3 to 1.2-alpha4:
 Alpha 4 marks a significant milestone on the way to feature completeness
