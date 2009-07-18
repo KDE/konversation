@@ -1680,7 +1680,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     QDateTime signonTime;
                     uint signonTimestamp = parameterList.value(3).toUInt(&ok);
 
-                    if (ok && parameterList.count() == 4)
+                    if (ok && parameterList.count() == 5)
                         signonTime.setTime_t(signonTimestamp);
 
                     if (!signonTime.isNull())
