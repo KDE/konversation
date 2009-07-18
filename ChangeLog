@@ -69,6 +69,8 @@ Changes since 1.2-alpha4:
   ved to a sub-menu.
 * Increased use of the IRC icons found in recent versions of the Oxygen icon
   set.
+* Fixed a bug causing the time a user went online not to be displayed in
+  WHOIS information (provided the server reports it).
 
 Changes from 1.2-alpha3 to 1.2-alpha4:
 Alpha 4 marks a significant milestone on the way to feature completeness

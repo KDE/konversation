@@ -1669,10 +1669,27 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 if (plHas(3))
                 {
                     // get idle time in seconds
-                    long seconds = parameterList.value(2).toLong();
+                    bool ok = false;
+                    long seconds = parameterList.value(2).toLong(&ok);
+                    if (!ok) break;
+
                     long minutes = seconds/60;
                     long hours   = minutes/60;
                     long days    = hours/24;
+
+                    QDateTime signonTime;
+                    uint signonTimestamp = parameterList.value(3).toUInt(&ok);
+
+                    if (ok && parameterList.count() == 4)
+                        signonTime.setTime_t(signonTimestamp);
+
+                    if (!signonTime.isNull())
+                    {
+                        NickInfoPtr nickInfo = server->getNickInfo(parameterList.value(1));
+
+                        if (nickInfo)
+                            nickInfo->setOnlineSince(signonTime);
+                    }
 
                     // if idle time is longer than a day
                     // Display message only if this was not an automatic request.
@@ -1689,20 +1706,18 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                                 i18nc("%1 = name of person, %2 = (x days), %3 = (x hours), %4 = (x minutes), %5 = (x seconds)",
                                     "%1 has been idle for %2, %3, %4, and %5.",
                                     parameterList.value(1),
-                                    daysString, hoursString, minutesString, secondsString)
-                                );
+                                    daysString, hoursString, minutesString, secondsString));
                             // or longer than an hour
                         }
                         else if (hours)
                         {
-                        const QString hoursString = i18np("1 hour", "%1 hours", hours);
+                            const QString hoursString = i18np("1 hour", "%1 hours", hours);
                             const QString minutesString = i18np("1 minute", "%1 minutes", (minutes % 60));
                             const QString secondsString = i18np("1 second", "%1 seconds", (seconds % 60));
                             server->appendMessageToFrontmost(i18n("Whois"),
                                 i18nc("%1 = name of person, %2 = (x hours), %3 = (x minutes), %4 = (x seconds)",
                                     "%1 has been idle for %2, %3, and %4.", parameterList.value(1), hoursString,
-                                    minutesString, secondsString)
-                                );
+                                    minutesString, secondsString));
                             // or longer than a minute
                         }
                         else if (minutes)
@@ -1711,35 +1726,20 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                             const QString secondsString = i18np("1 second", "%1 seconds", (seconds % 60));
                             server->appendMessageToFrontmost(i18n("Whois"),
                                 i18nc("%1 = name of person, %2 = (x minutes), %3 = (x seconds)",
-                                    "%1 has been idle for %2 and %3.", parameterList.value(1), minutesString, secondsString)
-                                );
+                                    "%1 has been idle for %2 and %3.", parameterList.value(1), minutesString, secondsString));
                             // or just some seconds
                         }
                         else
                         {
                             server->appendMessageToFrontmost(i18n("Whois"),
-                            i18np("%2 has been idle for 1 second.", "%2 has been idle for %1 seconds.", seconds, parameterList.value(1))
-                                );
+                            i18np("%2 has been idle for 1 second.", "%2 has been idle for %1 seconds.", seconds, parameterList.value(1)));
                         }
-                    }
 
-                    // FIXME this one will fail if we pop the nick off
-                    if (parameterList.count()==4)
-                    {
-                        QDateTime when;
-                        when.setTime_t(parameterList.value(3).toUInt());
-                        NickInfoPtr nickInfo = server->getNickInfo(parameterList.value(1));
-                        if (nickInfo)
-                        {
-                            nickInfo->setOnlineSince(when);
-                        }
-                        // Display message only if this was not an automatic request.
-                        if (getAutomaticRequest("WHOIS", parameterList.value(1)) == 0)
+                        if (!signonTime.isNull())
                         {
                             server->appendMessageToFrontmost(i18n("Whois"),
                                 i18n("%1 has been online since %2.",
-                                    parameterList.value(1), KGlobal::locale()->formatDateTime(when, KLocale::ShortDate))
-                                );
+                                parameterList.value(1), KGlobal::locale()->formatDateTime(signonTime, KLocale::ShortDate, true)));
                         }
                     }
                 }
