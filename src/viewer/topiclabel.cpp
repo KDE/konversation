@@ -124,7 +124,12 @@ namespace Konversation
 
             if (!m_currentChannel.isEmpty())
             {
-                menu->addAction(i18n("&Join"), this, SLOT(joinChannel()));
+                QAction* action = menu->addAction(i18n("&Join Channel..."), this, SLOT(joinChannel()));
+                #if KDE_IS_VERSION(4,2,85)
+                action->setIcon(KIcon("irc-join-channel"));
+                #else
+                action->setIcon(KIcon("list-add"));
+                #endif
                 menu->addAction(i18n("Get &user list"), this, SLOT (getChannelUserList()));
                 menu->addAction(i18n("Get &topic"), this, SLOT(getChannelTopic()));
                 actionsAdded = true;

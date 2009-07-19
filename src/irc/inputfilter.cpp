@@ -1851,6 +1851,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     }
                     else
                     {
+                        emit endOfChannelList();
                         setAutomaticRequest("LIST",QString(),false);
                     }
                 }

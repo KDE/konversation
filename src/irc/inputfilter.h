@@ -66,6 +66,8 @@ class InputFilter : public QObject
         void endOfWho(const QString& target);     // for scheduling auto /WHO
         void addChannelListPanel();
         void addToChannelList(const QString& channel,int users,const QString& topic);
+        void endOfChannelList();
+
         void invitation(const QString& nick,const QString& channel);
 
         void addDccChat(const QString& myNick,const QString& nick,const QStringList& arguments,bool listen);

@@ -18,14 +18,63 @@
 #include "chatwindow.h"
 #include "ui_channellistpanelui.h"
 
-#include <QTimer>
+#include <QAbstractListModel>
+#include <QSortFilterProxyModel>
 
-class ChannelListItem : public QTreeWidgetItem
+struct ChannelItem
 {
+    QString name;
+    int users;
+    QString topic;
+};
+
+class ChannelListProxyModel : public QSortFilterProxyModel
+{
+    Q_OBJECT
+
     public:
-        ChannelListItem(QTreeWidget* tree, QStringList & strings);
-        ChannelListItem(QTreeWidgetItem* parent, QStringList & strings);
-        bool operator<(const QTreeWidgetItem &other) const;
+        ChannelListProxyModel(QObject *parent = 0);
+
+        int filterMinimumUsers() { return m_minUsers; }
+        int filterMaximumUsers() { return m_maxUsers; }
+        bool filterTopic() { return m_filterTopic; }
+        bool filterChannel() { return m_filterChannel; }
+
+    public slots:
+        void setFilterMinimumUsers(int users);
+        void setFilterMaximumUsers(int users);
+
+        void setFilterTopic(bool filter);
+        void setFilterChannel(bool filter);
+
+    protected:
+        bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const;
+
+    private:
+        bool usersInRange(int users) const;
+        int m_minUsers;
+        int m_maxUsers;
+        bool m_filterTopic;
+        bool m_filterChannel;
+};
+
+class ChannelListModel : public QAbstractListModel
+{
+    Q_OBJECT
+
+    public:
+        ChannelListModel(QObject* parent);
+
+        void append(const ChannelItem& item);
+
+        int columnCount(const QModelIndex& parent = QModelIndex()) const;
+        int rowCount(const QModelIndex& parent = QModelIndex()) const;
+
+        QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const;
+        QVariant headerData (int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
+
+    private:
+        QList<ChannelItem> m_channelList;
 };
 
 class ChannelListPanel : public ChatWindow, private Ui::ChannelListWidgetUI
@@ -46,20 +95,27 @@ class ChannelListPanel : public ChatWindow, private Ui::ChannelListWidgetUI
 
     public slots:
         void addToChannelList(const QString& channel,int users,const QString& topic);
+        void endOfChannelList();
+        void applyFilterClicked();
 
         virtual void appendInputText(const QString&, bool fromCursor);
         void setFilter(const QString& filter);
 
-        void applyFilterClicked();
-
     protected slots:
         void refreshList();
-        void updateDisplay();                     // will be called by a timer to update regularly
         void saveList();
+
+        void regexChanged(int regex);
+        void filterChanged();
+        void updateFilter();
+
+        void updateUsersChannels();
+
+        void setProgress();
+
         void joinChannelClicked();
         void contextMenu(const QPoint& pos);
         void openURL();
-
         //Used to disable functions when not connected
         virtual void serverOnline(bool online);
 
@@ -67,24 +123,23 @@ class ChannelListPanel : public ChatWindow, private Ui::ChannelListWidgetUI
 
         /** Called from ChatWindow adjustFocus */
         virtual void childAdjustFocus(){};
-
         virtual bool isInsertCharacterSupported() { return true; }
 
-        void  applyFilterToItem(QTreeWidgetItem* item);
-
-        void updateUsersChannels();
+        void countUsers(const QModelIndex& index, int pos);
 
         int m_numChannels;
         int m_numUsers;
         int m_visibleChannels;
         int m_visibleUsers;
+        bool m_firstRun;
+        bool m_regexState;
 
-        // store channels to be inserted in ListView here first
-        QList<QStringList> m_pendingChannels;
-        QTimer m_updateTimer;
+        QTimer* m_progressTimer;
+        QTimer* m_filterTimer;
+        QTimer* m_tempTimer;
 
-        int m_oldSortColumn;
-        Qt::SortOrder m_oldSortOrder;
+        ChannelListModel* m_channelListModel;
+        ChannelListProxyModel* m_proxyModel;
 };
 
 #endif

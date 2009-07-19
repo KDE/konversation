@@ -3148,6 +3148,7 @@ ChannelListPanel* Server::addChannelListPanel()
     {
         m_channelListPanel = getViewContainer()->addChannelListPanel(this);
 
+        connect(&m_inputFilter, SIGNAL(endOfChannelList()), m_channelListPanel, SLOT(endOfChannelList()));
         connect(m_channelListPanel, SIGNAL(refreshChannelList()), this, SLOT(requestChannelList()));
         connect(m_channelListPanel, SIGNAL(joinChannel(const QString&)), this, SLOT(sendJoinCommand(const QString&)));
         connect(this, SIGNAL(serverOnline(bool)), m_channelListPanel, SLOT(serverOnline(bool)));
