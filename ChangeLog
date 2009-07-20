@@ -71,6 +71,9 @@ Changes since 1.2-alpha4:
   set.
 * Fixed a bug causing the time a user went online not to be displayed in
   WHOIS information (provided the server reports it).
+* Fixed close button icons not immediately appearing on newly-added tabs when
+  enabled (a preferences change would cause them to appear).
+
 
 Changes from 1.2-alpha3 to 1.2-alpha4:
 Alpha 4 marks a significant milestone on the way to feature completeness

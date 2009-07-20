@@ -1187,6 +1187,9 @@ void ViewContainer::addView(ChatWindow* view, const QString& label, bool weiniti
     ChatWindow::WindowType wtype;
     QIcon iconSet;
 
+    if (Preferences::self()->closeButtons())
+        iconSet = KIcon("dialog-close");
+
     connect(Application::instance(), SIGNAL(appearanceChanged()), view, SLOT(updateAppearance()));
     connect(view, SIGNAL(setStatusBarTempText(const QString&)), this, SIGNAL(setStatusBarTempText(const QString&)));
     connect(view, SIGNAL(clearStatusBarTempText()), this, SIGNAL(clearStatusBarTempText()));
