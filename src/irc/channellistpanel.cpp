@@ -168,7 +168,7 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
     connect(m_channelListView, SIGNAL(customContextMenuRequested(const QPoint&)),
             this, SLOT(contextMenu(const QPoint&)) );
 
-    connect(m_regexBox, SIGNAL(stateChanged(int)), this, SLOT(regexChanged(int)));
+    connect(m_regexBox, SIGNAL(stateChanged(int)), this, SLOT(filterChanged()));
     connect(m_topicBox, SIGNAL(stateChanged(int)), this, SLOT(filterChanged()));
     connect(m_channelBox, SIGNAL(stateChanged(int)), this, SLOT(filterChanged()));
     connect(m_minUser, SIGNAL(valueChanged(int)), this, SLOT(filterChanged()));
@@ -244,12 +244,6 @@ void ChannelListPanel::endOfChannelList()
     updateUsersChannels();
 }
 
-void ChannelListPanel::regexChanged(int regex)
-{
-    m_regexState = (regex) ? true : false;
-    filterChanged();
-}
-
 void ChannelListPanel::filterChanged()
 {
     m_filterTimer->start(300);
@@ -262,8 +256,12 @@ void ChannelListPanel::updateFilter()
     int min = m_minUser->value();
     bool topic = (m_topicBox->checkState()) ? true : false;
     bool channel = (m_channelBox->checkState()) ? true : false;
+    bool regex = (m_regexBox->checkState()) ? true : false;
+    bool regexChanged = (regex != m_regexState);
 
-    if(m_proxyModel->filterRegExp().pattern() != text)
+    if(regexChanged) m_regexState = regex;
+
+    if(m_proxyModel->filterRegExp().pattern() != text || regexChanged)
     {
         if(m_regexState)
             m_proxyModel->setFilterRegExp(text);

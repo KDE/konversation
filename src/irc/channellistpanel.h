@@ -105,7 +105,6 @@ class ChannelListPanel : public ChatWindow, private Ui::ChannelListWidgetUI
         void refreshList();
         void saveList();
 
-        void regexChanged(int regex);
         void filterChanged();
         void updateFilter();
 
