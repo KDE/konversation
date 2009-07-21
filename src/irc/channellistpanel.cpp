@@ -114,25 +114,21 @@ bool ChannelListProxyModel::usersInRange(int users) const
 void ChannelListProxyModel::setFilterMinimumUsers(int users)
 {
     m_minUsers = users;
-    invalidateFilter();
 }
 
 void ChannelListProxyModel::setFilterMaximumUsers(int users)
 {
     m_maxUsers = users;
-    invalidateFilter();
 }
 
 void ChannelListProxyModel::setFilterTopic(bool filter)
 {
     m_filterTopic = filter;
-    invalidateFilter();
 }
 
 void ChannelListProxyModel::setFilterChannel(bool filter)
 {
     m_filterChannel = filter;
-    invalidateFilter();
 }
 
 ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
@@ -258,10 +254,12 @@ void ChannelListPanel::updateFilter()
     bool channel = (m_channelBox->checkState()) ? true : false;
     bool regex = (m_regexBox->checkState()) ? true : false;
     bool regexChanged = (regex != m_regexState);
+    if (regexChanged) m_regexState = regex;
 
-    if(regexChanged) m_regexState = regex;
+    bool change = false;
 
-    if(m_proxyModel->filterRegExp().pattern() != text || regexChanged)
+    //this invalidates the filter on it's own so no need to set change=true;
+    if (m_proxyModel->filterRegExp().pattern() != text || regexChanged)
     {
         if(m_regexState)
             m_proxyModel->setFilterRegExp(text);
@@ -269,14 +267,32 @@ void ChannelListPanel::updateFilter()
             m_proxyModel->setFilterWildcard(text);
     }
 
-    if(m_proxyModel->filterMinimumUsers() != min)
+    if (m_proxyModel->filterMinimumUsers() != min)
+    {
+        change = true;
         m_proxyModel->setFilterMinimumUsers(min);
-    if(m_proxyModel->filterMaximumUsers() != max)
+    }
+
+    if (m_proxyModel->filterMaximumUsers() != max)
+    {
+        change = true;
         m_proxyModel->setFilterMaximumUsers(max);
-    if(m_proxyModel->filterTopic() != topic)
+    }
+
+    if (m_proxyModel->filterTopic() != topic)
+    {
+        change = true;
         m_proxyModel->setFilterTopic(topic);
-    if(m_proxyModel->filterChannel() != channel)
+    }
+
+    if (m_proxyModel->filterChannel() != channel)
+    {
+        change = true;
         m_proxyModel->setFilterChannel(channel);
+    }
+
+    if (change)
+        m_proxyModel->invalidate();
 
     updateUsersChannels();
 }

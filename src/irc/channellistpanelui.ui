@@ -159,6 +159,9 @@
       <property name="text">
        <string>&amp;Channel</string>
       </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
      </widget>
     </item>
     <item row="2" column="4">
@@ -171,6 +174,9 @@
       </property>
       <property name="text">
        <string>&amp;Topic</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
       </property>
      </widget>
     </item>
