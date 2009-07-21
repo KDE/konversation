@@ -73,12 +73,15 @@ Changes since 1.2-alpha4:
   WHOIS information (provided the server reports it).
 * Fixed close button icons not immediately appearing on newly-added tabs when
   enabled (a preferences change would cause them to appear).
-* The Channel List window has been ported to a .ui and a model/view approach.
-  Before the channel list would have a blocking effect and could result in a
-  disconnect and/or slowdowns of the app itself. Now, the refresh is done sep-
-  arate from the UI and happens much faster. The filter's behavior has also
-  changed. The 'Apply Filter' button has been removed in favor of a 300ms timer
-  to trigger the refiltering process.
+* A significant revamp of the Channel List code, especially around the way the
+  list data received from the server is being moved into the UI, has brought
+  about significantly improved behavior. The application should now no longer
+  be bogged down for extended periods of time while the list is being process-
+  ed - in extreme cases, this could even lead to disconnects by timeout.
+* The "Apply Filter" button has been removed from the Channel List interface.
+  Instead, the filter is (re)applied automatically as its settings are chang-
+  ed, i.e. briefly after stopping to type into the "Filter pattern" field or
+  after changing one of the spin- or checkboxes.
 
 
 Changes from 1.2-alpha3 to 1.2-alpha4:
