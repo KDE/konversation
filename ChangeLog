@@ -82,6 +82,19 @@ Changes since 1.2-alpha4:
   Instead, the filter is (re)applied automatically as its settings are chang-
   ed, i.e. briefly after stopping to type into the "Filter pattern" field or
   after changing one of the spin- or checkboxes.
+* Fixed the display of human-readable mode descriptions in place of traditio-
+  nal mode characters (toggled by the "Show raw mode characters" preference
+  and only applicable when Konversation knows a description for a given mode
+  char) being inconsistent between '/mode <channel> and '/mode <channel>/<user>
+  +/-<mode>' - separate, unequal lists of mode descriptions were being used;
+  this has been unified now.
+* Fixed the "Modes" tab of the Channel Settings dialog not using human-readable
+  mode descriptions in place of traditional mode characters when the "Show raw
+  mode characters" preference is disabled (as it is by default) and a descrip-
+  tion for a given mode char is available.
+* Fixed the mode list shown by "Show Advanced Modes" in the "Modes" tab of the
+  Channel Settings dialog not showing all modes announced as supported by the
+  server.
 
 
 Changes from 1.2-alpha3 to 1.2-alpha4:
