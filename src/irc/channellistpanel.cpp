@@ -64,6 +64,16 @@ QVariant ChannelListModel::data(const QModelIndex& index, int role) const
                 return QVariant();
         }
     }
+    else if(role == Qt::ToolTipRole)
+    {
+        switch(index.column())
+        {
+            case 2:
+                return "<qt>" + item.topic + "</qt>";
+            default:
+                return QVariant();
+        }
+    }
     return QVariant();
 }
 
@@ -155,8 +165,8 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
 
     m_proxyModel = new ChannelListProxyModel(this);
     m_proxyModel->setSourceModel(m_channelListModel);
-    m_channelListView->sortByColumn(0, Qt::AscendingOrder);
     m_channelListView->setModel(m_proxyModel);
+    m_channelListView->header()->resizeSection(1,75); // resize users section to be smaller
 
     // double click on channel entry joins the channel
     connect(m_channelListView, SIGNAL(doubleClicked(const QModelIndex&)),
