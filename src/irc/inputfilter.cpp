@@ -810,7 +810,18 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                          parameterList.value(3),
                          parameterList.value(4))
                         );
-                server->setAllowedChannelModes(parameterList.value(4));
+
+                    QString allowed = server->allowedChannelModes();
+                    QString newModes = parameterList.value(4);
+                    if(!allowed.isEmpty()) //attempt to merge the two
+                    {
+                        for(int i=0; i < allowed.length(); i++)
+                        {
+                            if(!newModes.contains(allowed.at(i)))
+                                newModes.append(allowed.at(i));
+                        }
+                    }
+                    server->setAllowedChannelModes(newModes);
                 }
                 break;
             }
@@ -876,6 +887,23 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                             // Disable as we don't use this for anything yet
                             //server->queue("CAPAB IDENTIFY-MSG");
                         }
+                        else if (property == "CHANMODES")
+                        {
+                            if(!value.isEmpty())
+                            {
+                                QString allowed = server->allowedChannelModes();
+                                QString newModes = value.remove(',');
+                                if(!allowed.isEmpty()) //attempt to merge the two
+                                {
+                                    for(int i=0; i < allowed.length(); i++)
+                                    {
+                                        if(!newModes.contains(allowed.at(i)))
+                                            newModes.append(allowed.at(i));
+                                    }
+                                }
+                                server->setAllowedChannelModes(newModes);
+                            }
+                        }
                         else
                         {
                             //kDebug() << "Ignored server-capability: " << property << " with value '" << value << "'";
@@ -911,35 +939,23 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                         {
                             if(!modesAre.isEmpty())
                                 modesAre+=", ";
-                            if(mode=='t')
-                                modesAre+=i18n("topic protection");
-                            else if(mode=='n')
-                                modesAre+=i18n("no messages from outside");
-                            else if(mode=='s')
-                                modesAre+=i18n("secret");
-                            else if(mode=='i')
-                                modesAre+=i18n("invite only");
-                            else if(mode=='p')
-                                modesAre+=i18n("private");
-                            else if(mode=='m')
-                                modesAre+=i18n("moderated");
-                            else if(mode=='k')
+
+                            QHash<QChar,QString> channelModesHash = Konversation::getChannelModesHash();
+                            if(mode=='k')
                             {
                                 parameter=parameterList.value(parameterCount++);
                                 message += ' ' + parameter;
                                 modesAre+=i18n("password protected");
                             }
-                            else if(mode=='a')
-                                modesAre+=i18n("anonymous");
-                            else if(mode=='r')
-                                modesAre+=i18n("server reop");
-                            else if(mode=='c')
-                                modesAre+=i18n("no colors allowed");
                             else if(mode=='l')
                             {
                                 parameter=parameterList.value(parameterCount++);
                                 message += ' ' + parameter;
                                 modesAre+=i18np("limited to %1 user", "limited to %1 users", parameter.toInt());
+                            }
+                            else if(channelModesHash.contains(mode))
+                            {
+                                modesAre+=channelModesHash.value(mode);
                             }
                             else
                             {

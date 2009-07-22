@@ -14,6 +14,7 @@
 #define COMMON_H
 
 #include <QByteArray>
+#include <QHash>
 
 class QString;
 class QBitmap;
@@ -28,6 +29,13 @@ namespace Konversation
     QPixmap overlayPixmaps(const QPixmap &under, const QPixmap &over);
     bool isUtf8(const QByteArray& text);
     uint colorForNick(const QString& nickname);
+
+    QHash<QChar,QString> getChannelModesHash();
+
+    struct ChanModes
+    {
+        static const QHash<QChar,QString> m_hash;
+    };
 
     enum TabNotifyType
     {

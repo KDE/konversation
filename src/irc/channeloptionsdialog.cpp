@@ -263,7 +263,13 @@ namespace Konversation
         {
             QList<QStandardItem *> newRow;
             QStandardItem *item = 0;
-            item = new QStandardItem(QString(modeString[i]));
+
+            if(!Preferences::self()->useLiteralModes() && getChannelModesHash().contains(modeString[i]))
+                item = new QStandardItem(getChannelModesHash().value(modeString[i]));
+            else
+                item = new QStandardItem(QString(modeString[i]));
+
+            item->setData(QString(modeString[i]));
             item->setCheckable(true);
             item->setEditable(false);
             newRow.append(item);
@@ -333,7 +339,7 @@ namespace Konversation
                     for (int i = 0; !found && i < modesModel->rowCount(); ++i)
                     {
                         QStandardItem *item = modesModel->item(i, 0);
-                        if (item->text() == modeString)
+                        if (item->data().toString() == modeString)
                         {
                             found = true;
                             item->setCheckState(Qt::Checked);
@@ -390,7 +396,7 @@ namespace Konversation
         for (int i = 0; i < modesModel->rowCount(); ++i)
         {
             mode = (modesModel->item(i, 0)->checkState() == Qt::Checked ? "+" : "-");
-            mode += modesModel->item(i, 0)->text() + modesModel->item(i, 1)->text();
+            mode += modesModel->item(i, 0)->data().toString() + modesModel->item(i, 1)->text();
             modes.append(mode);
         }
 

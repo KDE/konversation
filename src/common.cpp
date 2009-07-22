@@ -32,6 +32,32 @@ namespace Konversation
         "([-.\\d\\w]+@[-.\\d\\w]{2,}\\.[\\w]{2,})");
     static QRegExp tdlPattern("(.*)\\.(\\w+),$");
 
+    QHash<QChar,QString> initChanModesHash()
+    {
+        QHash<QChar,QString> myHash;
+
+        myHash.insert('t', i18n("topic protection"));
+        myHash.insert('n', i18n("no messages from outside"));
+        myHash.insert('s', i18n("secret"));
+        myHash.insert('i', i18n("invite only"));
+        myHash.insert('p', i18n("private"));
+        myHash.insert('m', i18n("moderated"));
+        myHash.insert('k', i18n("password protected"));
+        myHash.insert('a', i18n("anonymous"));
+        myHash.insert('r', i18n("server reop"));
+        myHash.insert('c', i18n("no colors allowed"));
+        myHash.insert('l', i18n("user throttling"));
+
+        return myHash;
+    }
+
+    const QHash<QChar,QString> ChanModes::m_hash = initChanModesHash();
+
+    QHash<QChar,QString> getChannelModesHash()
+    {
+        return ChanModes::m_hash;
+    }
+
     QString removeIrcMarkup(const QString& text)
     {
         QString escaped = text;
