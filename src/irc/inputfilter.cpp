@@ -931,6 +931,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     QString modesAre;
                     QString message = i18n("Channel modes: ") + modeString;
                     int parameterCount=3;
+                    QHash<QChar,QString> channelModesHash = Konversation::getChannelModesHash();
                     for (int index=0;index<modeString.length();index++)
                     {
                         QString parameter;
@@ -940,7 +941,6 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                             if(!modesAre.isEmpty())
                                 modesAre+=", ";
 
-                            QHash<QChar,QString> channelModesHash = Konversation::getChannelModesHash();
                             if(mode=='k')
                             {
                                 parameter=parameterList.value(parameterCount++);

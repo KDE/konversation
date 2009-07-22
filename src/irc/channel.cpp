@@ -2086,15 +2086,31 @@ void Channel::updateMode(const QString& sourceNick, char mode, bool plus, const 
             }
             break;
         default:
-	    if(plus)
-	    {
-	        if(fromMe) message=i18n("You set channel mode +%1", QString(mode));
-		else message=i18n("%1 sets channel mode +%2", sourceNick, QString(mode));
+        if(plus)
+        {
+            if(Konversation::getChannelModesHash().contains(mode))
+            {
+                if (fromMe) message=i18n("You set the channel mode '%1'.", Konversation::getChannelModesHash().value(mode));
+                else message= i18n("%1 sets the channel mode '%2'.", sourceNick, Konversation::getChannelModesHash().value(mode));
+            }
+            else
+            {
+                if(fromMe) message=i18n("You set channel mode +%1", QString(mode));
+		        else message=i18n("%1 sets channel mode +%2", sourceNick, QString(mode));
+            }
 	    }
 	    else
-	    {
-	        if (fromMe) message=i18n("You set channel mode -%1", QString(mode));
-		else message= i18n("%1 sets channel mode -%2", sourceNick, QString(mode));
+        {
+            if(Konversation::getChannelModesHash().contains(mode))
+            {
+                if (fromMe) message=i18n("You remove the channel mode '%1'.", Konversation::getChannelModesHash().value(mode));
+                else message= i18n("%1 removes the channel mode '%2'.", sourceNick, Konversation::getChannelModesHash().value(mode));
+            }
+            else
+            {
+	            if (fromMe) message=i18n("You set channel mode -%1", QString(mode));
+		        else message= i18n("%1 sets channel mode -%2", sourceNick, QString(mode));
+            }
 	    }
     }
 
@@ -2656,7 +2672,6 @@ bool Channel::closeYourself(bool confirm)
     {
         m_server->closeChannel(getName());
         m_server->removeChannel(this);
-        Preferences::self()->setSpellChecking(channelInput->checkSpellingEnabled());
         deleteLater();
         return true;
     }
