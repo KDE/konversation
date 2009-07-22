@@ -81,7 +81,7 @@ void Warnings_Config::saveSettings()
             // Let's keep the old state if we got one.
             QString state = grp.readEntry(warningName, QString());
 
-            if (!state.isEmpty() && (state == "true" || state == "false"))
+            if (!state.isEmpty())
                 grp.writeEntry(warningName, state);
             else
                 grp.writeEntry(warningName, "true");
