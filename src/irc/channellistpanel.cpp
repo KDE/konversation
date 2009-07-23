@@ -17,6 +17,8 @@
 #include "server.h"
 #include "common.h"
 
+#include <QTextDocument>
+
 #include <KRun>
 #include <KFileDialog>
 #include <KMessageBox>
@@ -66,13 +68,7 @@ QVariant ChannelListModel::data(const QModelIndex& index, int role) const
     }
     else if(role == Qt::ToolTipRole)
     {
-        switch(index.column())
-        {
-            case 2:
-                return "<qt>" + item.topic + "</qt>";
-            default:
-                return QVariant();
-        }
+        return "<qt>" + Qt::escape(item.topic) + "</qt>";
     }
     return QVariant();
 }
@@ -99,7 +95,7 @@ ChannelListProxyModel::ChannelListProxyModel(QObject* parent) : QSortFilterProxy
 {
     m_minUsers = 0;
     m_maxUsers = 0;
-    m_filterChannel = false;
+    m_filterChannel = true;
     m_filterTopic = false;
 }
 
@@ -167,7 +163,6 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
     m_proxyModel->setSourceModel(m_channelListModel);
     m_channelListView->setModel(m_proxyModel);
     m_channelListView->header()->resizeSection(1,75); // resize users section to be smaller
-
     // double click on channel entry joins the channel
     connect(m_channelListView, SIGNAL(doubleClicked(const QModelIndex&)),
             this, SLOT(joinChannelClicked()) );
@@ -245,6 +240,7 @@ void ChannelListPanel::endOfChannelList()
     m_progressTimer->stop();
 
     m_proxyModel->setSourceModel(m_channelListModel);
+    m_proxyModel->invalidate();
     m_refreshListBtn->setEnabled(true);
     m_firstRun = true;
     updateUsersChannels();
