@@ -1307,35 +1307,39 @@ void Channel::fastAddNickname(ChannelNickPtr channelnick, Nick *nick)
     Q_ASSERT(channelnick);
     if(!channelnick) return;
 
-    // Deal with nicknameListView now (creating nick if necessary)
-    NickListView::NoSorting noSorting(nicknameListView);
-    int index = nicknameListView->topLevelItemCount();
-
-    // Append nick to the lists
-    if (nick)
+    if (!nick || !nick->treeWidget())
     {
-        nicknameListView->addTopLevelItem(nick);
-    }
-    else
-    {
-        nick = new Nick(nicknameListView, this, channelnick);
-        m_nicknameListViewTextChanged |= 0xFF; // new nick, text changed.
-    }
+        // Deal with nicknameListView now (creating nick if necessary)
+        NickListView::NoSorting noSorting(nicknameListView);
+        int index = nicknameListView->topLevelItemCount();
 
-    if (!m_delayedSortTimer->isActive()) {
-        // Find its right place and insert where it belongs
-        int newindex = nicknameListView->findLowerBound(*nick);
-        if (newindex != index) {
-            if (newindex >= index)
-                newindex--;
-            nicknameListView->takeTopLevelItem(index);
-            nicknameListView->insertTopLevelItem(newindex, nick);
+        // Append nick to the lists
+        if (nick)
+        {
+            nicknameListView->addTopLevelItem(nick);
         }
+        else
+        {
+            nick = new Nick(nicknameListView, this, channelnick);
+            m_nicknameListViewTextChanged |= 0xFF; // new nick, text changed.
+        }
+
+        if (!m_delayedSortTimer->isActive()) {
+            // Find its right place and insert where it belongs
+            int newindex = nicknameListView->findLowerBound(*nick);
+            if (newindex != index) {
+                if (newindex >= index)
+                    newindex--;
+                nicknameListView->takeTopLevelItem(index);
+                nicknameListView->insertTopLevelItem(newindex, nick);
+            }
+        }
+        // Otherwise it will be sorted by delayed sort.
     }
-    // Otherwise it will be sorted by delayed sort.
 
     // Now deal with nicknameList
-    if (m_delayedSortTimer->isActive()) {
+    if (m_delayedSortTimer->isActive())
+    {
         // nicks get sorted later
         nicknameList.append(nick);
     } else {
@@ -2856,17 +2860,14 @@ void Channel::sortNickList(bool delayed)
 
 void Channel::repositionNick(Nick *nick)
 {
-    int index;
-    bool existed;
+    int index = nicknameList.indexOf(nick);
 
-    // Remove nick from the lists
-    existed = nicknameList.removeOne(nick);
-    index = nicknameListView->indexOfTopLevelItem(nick);
     if (index > -1) {
-        nicknameListView->takeTopLevelItem(index);
-    }
-    if (existed) {
-        // Readd it to the lists
+        // Trigger nick reposition in the nicklist including
+        // field updates
+        nick->refresh();
+        // Readd nick to the nicknameList
+        nicknameList.removeAt(index);
         fastAddNickname(nick->getChannelNick(), nick);
     } else {
         kWarning() << "Nickname " << nick->getChannelNick()->getNickname() << " not found!"<< endl;
