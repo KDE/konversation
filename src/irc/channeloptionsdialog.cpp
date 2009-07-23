@@ -43,8 +43,6 @@ namespace Konversation
         m_ui.setupUi(mainWidget());
 
         QStandardItemModel *modesModel = new QStandardItemModel(m_ui.otherModesList);
-        modesModel->setHorizontalHeaderLabels(
-            QStringList() << i18n("Mode") << i18n("Parameter"));
         m_ui.otherModesList->setModel(modesModel);
         m_ui.otherModesList->hide();
 
@@ -259,6 +257,10 @@ namespace Konversation
         modeString.remove('v');
 
         QStandardItemModel *modesModel = qobject_cast<QStandardItemModel *>(m_ui.otherModesList->model());
+
+        modesModel->clear();
+        modesModel->setHorizontalHeaderLabels(QStringList() << i18n("Mode") << i18n("Parameter"));
+
         for(int i = 0; i < modeString.length(); i++)
         {
             QList<QStandardItem *> newRow;
