@@ -22,6 +22,7 @@
 #include "irccharsets.h"
 #include "linkaddressbook/addressbook.h"
 #include "query.h"
+#include "viewcontainer.h"
 #include <config-konversation.h>
 
 #include <QStringList>
@@ -178,6 +179,44 @@ namespace Konversation
         return finals;
     }
 
+    bool OutputFilter::checkForEncodingConflict(QString *line, const QString& target)
+    {
+        QTextCodec* codec;
+        QString encoding;
+        QString oldLine(*line);
+        if(m_server->getServerGroup())
+            encoding = Preferences::channelEncoding(m_server->getServerGroup()->id(), target);
+        else
+            encoding = Preferences::channelEncoding(m_server->getDisplayName(), target);
+
+        if(encoding.isEmpty())
+            codec = m_server->getIdentity()->getCodec();
+        else
+            codec = Konversation::IRCCharsets::self()->codecForName(encoding);
+
+        QTextCodec::ConverterState state;
+        QString newLine = codec->fromUnicode(oldLine.constData(),oldLine.length(),&state);
+        if(state.invalidChars)
+        {
+            int ret = KMessageBox::Continue;
+
+            ret = KMessageBox::warningContinueCancel(m_server->getViewContainer()->getWindow(),
+            i18n("The message you're sending includes characters "
+            "that do not exist in your current encoding. If "
+            "you choose to continue anyway those characters "
+            "will be replaced by a '?'."),
+            i18n("Encoding Conflict Warning"),
+            KStandardGuiItem::cont(),
+            KStandardGuiItem::cancel(),
+            "WarnEncodingConflict");
+
+            *line = newLine; //set so we show it as it's sent
+            if (ret != KMessageBox::Continue) return true;
+        }
+
+        return false;
+    }
+
     OutputFilterResult OutputFilter::parse(const QString& myNick, const QString& originalLine, const QString& name)
     {
         m_result = OutputFilterResult();
@@ -189,7 +228,7 @@ namespace Konversation
 
         QString inputLine(originalLine);
 
-        if (inputLine.isEmpty() || inputLine == "\n")
+        if (inputLine.isEmpty() || inputLine == "\n" || checkForEncodingConflict(&inputLine,name))
             return m_result;
 
         //Protect against nickserv auth being sent as a message on the off chance

@@ -195,6 +195,7 @@ namespace Konversation
             OutputFilterResult info(const QString& check);
             OutputFilterResult error(const QString& check);
             QString addNickToEmptyNickList(const QString& nick, const QString& parameter);
+            bool checkForEncodingConflict(QString *line, const QString& target);
 
             QString m_commandChar;
             QString m_myNick;
