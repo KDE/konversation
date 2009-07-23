@@ -3662,13 +3662,16 @@ void Server::sendChannelNickChangedSignals()
 {
     foreach(const QString& channel, m_changedChannels)
     {
-        emit channelNickChanged(channel);
-
-        foreach(ChannelNickPtr nick, (*m_joinedChannels[channel]))
+        if (m_joinedChannels.contains (channel))
         {
-            if(nick->isChanged())
+            emit channelNickChanged(channel);
+
+            foreach(ChannelNickPtr nick, (*m_joinedChannels[channel]))
             {
-                nick->setChanged(false);
+                if(nick->isChanged())
+                {
+                    nick->setChanged(false);
+                }
             }
         }
     }
