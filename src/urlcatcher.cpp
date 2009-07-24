@@ -22,7 +22,6 @@
 #include <QItemSelectionModel>
 #include <QClipboard>
 
-#include <KFileDialog>
 #include <KMenu>
 #include <KBookmarkManager>
 #include <kbookmarkdialog.h>

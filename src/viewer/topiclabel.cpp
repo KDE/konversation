@@ -50,7 +50,6 @@ namespace Konversation
         m_isOnChannel = false;
         m_copyUrlMenu = false;
         m_server = NULL;
-        m_channel = NULL;
 
         connect(this, SIGNAL(linkActivated(const QString&)), this, SLOT(openLink (const QString&)));
         connect(this, SIGNAL(linkHovered(const QString&)), this, SLOT(highlightedSlot(const QString&)));
@@ -76,9 +75,9 @@ namespace Konversation
         m_server = server;
     }
 
-    void TopicLabel::setChannel(Channel* channel)
+    void TopicLabel::setChannelName(const QString& channel)
     {
-        m_channel = channel;
+        m_channelName = channel;
     }
 
     void TopicLabel::leaveEvent(QEvent* e)
@@ -181,10 +180,8 @@ namespace Konversation
         // text.replace("&", "&amp;"). Not needed as we do it in tagURLs
         text.replace('<', "\x0blt;"). // tagUrls will replace \x0b with &
             replace('>', "\x0bgt;");
-        QString from;
-        if(m_channel)
-            from = m_channel->getName();
-        text = tagURLs(text, from, false);
+
+        text = tagURLs(text, m_channelName, false);
 
         if(height() < (fontMetrics().lineSpacing() * 2))
         {
