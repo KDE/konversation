@@ -19,7 +19,6 @@
 #include "server.h"
 #include "chatwindow.h"
 #include "channelnick.h"
-#include "nick.h"
 
 #ifdef HAVE_QCA2
 #include "cipher.h"
@@ -44,6 +43,7 @@ class KHBox;
 class KComboBox;
 
 class NickListView;
+class Nick;
 class QuickButton;
 class ModeButton;
 class IRCInput;

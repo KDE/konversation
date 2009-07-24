@@ -13,6 +13,7 @@
 */
 
 #include "nicklistview.h"
+#include "nick.h"
 #include "application.h"
 #include "images.h"
 #include "linkaddressbook/addressbook.h"
