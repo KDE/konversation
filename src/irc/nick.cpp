@@ -147,7 +147,8 @@ void Nick::emitDataChanged()
 {
 #if (QT_VERSION < QT_VERSION_CHECK(4, 5, 0))
     m_emitDataChanged = !m_emitDataChanged;
-    setData(0, Qt::UserRole, emitDataChangedQVariants[m_emitDataChanged]);
+    int sortCol = treeWidget()->getSortIndicatorColumn();
+    setData((sortCol > 0) ? sortCol : 0, Qt::UserRole, emitDataChangedQVariants[m_emitDataChanged]);
 #else
     QTreeWidgetItem::emitDataChanged();
 #endif
