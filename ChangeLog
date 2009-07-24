@@ -95,6 +95,28 @@ Changes since 1.2-alpha4:
 * Fixed the mode list shown by "Show Advanced Modes" in the "Modes" tab of the
   Channel Settings dialog not showing all modes announced as supported by the
   server.
+* The Channel List, when hovering a list item with the mouse pointer, now shows
+  a tooltip with the entire topic of the channel when it doesn't fit the topic
+  column's width.
+* Konversation will now display a warning dialog box when the user is trying
+  to send a character not supported by the chosen encoding.
+* When a message containing characters not supported by the chosen encoding
+  is sent, the chat view will now display the '?' replacements for those cha-
+  racters that are sent to the IRC server and thus seen by other users. Pre-
+  viously, the chat view would display the version of the message before
+  this encoding step, and thus usually show the characters, as the Unicode
+  character set normally used by KDE/Qt is considerably broader than many
+  of the encodings that can be selected in Konversation. In other words, the
+  chat view now accurately portrays what is sent to other users when a mes-
+  sage contains characters not supported by the active encoding.
+* The URL Catcher should now open considerably faster with long lists of
+  caught URLs and mail addresses.
+* The list items in the URL Catcher now have the same context menu as links
+  in the chat view. Previously there was no context menu.
+* Caught mails and mail addresses not coming from an IRC user (an example
+  would be links contained in a server's Message of the Day text) now have
+  their "From" field filled in with the tab name instead of it being left
+  blank in the URL Catcher.
 
 
 Changes from 1.2-alpha3 to 1.2-alpha4:
