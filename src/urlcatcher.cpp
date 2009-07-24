@@ -6,10 +6,10 @@
 */
 
 /*
-  shows all URLs found by the client
-  begin:     Die Mai 27 2003
-  copyright: (C) 2003 by Dario Abatianni
-  email:     eisfuchs@tigress.com
+  Shows all URLs found by the client
+
+  Copyright (C) 2003 Dario Abatianni <eisfuchs@tigress.com>
+  Copyright (C) 2009 Travis McHenry <wordsizzle@gmail.com>
 */
 
 #include "urlcatcher.h"
@@ -18,83 +18,147 @@
 #include "application.h"
 #include "viewcontainer.h"
 
-#include <QPushButton>
+#include <QSortFilterProxyModel>
+#include <QItemSelectionModel>
 #include <QClipboard>
-#include <QTreeWidget>
-#include <QLayout>
 
 #include <KFileDialog>
-#include <KTreeWidgetSearchLine>
+#include <KMenu>
+#include <KBookmarkManager>
+#include <kbookmarkdialog.h>
+#include <KUrl>
+#include <KFileDialog>
+#include <KIO/CopyJob>
 
+UrlCatcherModel::UrlCatcherModel(QObject* parent) : QAbstractListModel(parent)
+{
+}
+
+bool operator==(const UrlItem& item, const UrlItem& item2)
+{
+    return (item.nick == item2.nick && item.url == item2.url);
+}
+
+void UrlCatcherModel::append(const UrlItem& item)
+{
+    if(!m_urlList.contains(item))
+        m_urlList.append(item);
+    reset();
+}
+
+bool UrlCatcherModel::removeRows(int row, int count, const QModelIndex& parent)
+{
+    int last = row+count;
+    beginRemoveRows(parent, row, last);
+
+    QModelIndex topLeft = parent.sibling(row,0);
+    QModelIndex bottomRight = parent.sibling(last,1);
+
+    bool success = true;
+    for(int i=row; i <= last; i++)
+    {
+        UrlItem item;
+        item.nick = parent.sibling(i,0).data().toString();
+        item.url = parent.sibling(i,1).data().toString();
+        if (success)
+            success = m_urlList.removeOne(item);
+    }
+
+    emit dataChanged(topLeft, bottomRight);
+    endRemoveRows();
+
+    return success;
+}
+
+void UrlCatcherModel::setUrlList(const QList<UrlItem>& list)
+{
+    m_urlList = list;
+    reset();
+}
+
+int UrlCatcherModel::columnCount(const QModelIndex& /*parent*/) const
+{
+    return 2;
+}
+
+int UrlCatcherModel::rowCount(const QModelIndex& /*parent*/) const
+{
+    return m_urlList.count();
+}
+
+QVariant UrlCatcherModel::data(const QModelIndex& index, int role) const
+{
+    if (!index.isValid() || index.row() >= m_urlList.count ())
+        return QVariant();
+
+    const UrlItem& item = m_urlList[index.row()];
+
+    if (role == Qt::DisplayRole)
+    {
+        switch(index.column())
+        {
+            case 0:
+                return item.nick;
+            case 1:
+                return item.url;
+            default:
+                return QVariant();
+        }
+    }
+    return QVariant();
+}
+
+QVariant UrlCatcherModel::headerData (int section, Qt::Orientation orientation, int role) const
+{
+    if (orientation == Qt::Vertical || role != Qt::DisplayRole)
+        return QVariant();
+
+    switch (section)
+    {
+        case 0:
+            return i18n("From");
+        case 1:
+            return i18n("URL");
+        default:
+            return QVariant();
+    }
+}
 
 UrlCatcher::UrlCatcher(QWidget* parent) : ChatWindow(parent)
 {
     setName(i18n("URL Catcher"));
     setType(ChatWindow::UrlCatcher);
 
-    urlListView=new QTreeWidget(this);
-    urlListView->setObjectName("url_list_view");
-    urlListView->setRootIsDecorated(false);
-    urlListView->setHeaderLabels(QStringList() << i18n("Nick") << i18n("URL"));
-    urlListView->setAllColumnsShowFocus(true);
-    QString urlListViewWT = i18n(
-        "List of Uniform Resource Locators mentioned in any of the Konversation windows "
-        "during this session.");
-    urlListView->setWhatsThis(urlListViewWT);
+    setupUi(this);
 
-    searchWidget = new KTreeWidgetSearchLineWidget(this, urlListView);
-    searchWidget->setObjectName("search_line");
-    searchWidget->setEnabled(false);
+    m_urlListModel = new UrlCatcherModel(this);
 
-    KHBox* buttonBox=new KHBox(this);
-    buttonBox->setSpacing(spacing());
+    m_proxyModel = new QSortFilterProxyModel(this);
+    m_proxyModel->setSourceModel(m_urlListModel);
+    m_urlListView->setModel(m_proxyModel);
 
-    openUrlButton = new QPushButton(i18n("&Open URL"), buttonBox);
-    openUrlButton->setObjectName("open_url_button");
-    QString openUrlButtonWT = i18n(
-        "<p>Select a <b>URL</b> above, then click this button to launch the "
-        "application associated with the mimetype of the URL.</p>"
-        "<p>In the <b>Settings</b>, under <b>Behavior</b> | <b>General</b>, "
-        "you can specify a custom web browser for web URLs.</p>");
-    openUrlButton->setWhatsThis(openUrlButtonWT);
-    copyUrlButton = new QPushButton(i18n("&Copy URL"), buttonBox);
-    copyUrlButton->setObjectName("copy_url_button");
-    QString copyUrlButtonWT = i18n(
-        "Select a <b>URL</b> above, then click this button to copy the URL to the clipboard.");
-    copyUrlButton->setWhatsThis(copyUrlButtonWT);
-    deleteUrlButton = new QPushButton(i18n("&Delete URL"), buttonBox);
-    deleteUrlButton->setObjectName("delete_url_button");
-    QString deleteUrlButtonWT = i18n(
-        "Select a <b>URL</b> above, then click this button to delete the URL from the list.");
-    deleteUrlButton->setWhatsThis(deleteUrlButtonWT);
-    saveListButton = new QPushButton(i18n("Sa&ve List..."), buttonBox);
-    saveListButton->setObjectName("save_list_button");
-    QString saveListButtonWT = i18n(
-        "Click to save the entire list to a file.");
-    saveListButton->setWhatsThis(saveListButtonWT);
-    clearListButton = new QPushButton(i18n("C&lear List"), buttonBox);
-    clearListButton->setObjectName("clear_list_button");
-    QString clearListButtonWT = i18n(
-        "Click to erase the entire list.");
-    clearListButton->setWhatsThis(clearListButtonWT);
+    m_proxyModel->setDynamicSortFilter(true);
+    m_proxyModel->setFilterKeyColumn(-1);
 
-    connect(urlListView,SIGNAL (itemDoubleClicked(QTreeWidgetItem*,int)),this,SLOT (openUrl(QTreeWidgetItem*)) );
-    connect(urlListView,SIGNAL (itemSelectionChanged()),this,SLOT (urlSelected()) );
+    m_filterTimer = new QTimer(this);
+    m_filterTimer->setSingleShot(true);
 
-    connect(openUrlButton,SIGNAL (clicked()),this,SLOT (openUrlClicked()) );
-    connect(copyUrlButton,SIGNAL (clicked()),this,SLOT (copyUrlClicked()) );
-    connect(deleteUrlButton,SIGNAL (clicked()),this,SLOT (deleteUrlClicked()) );
-    connect(saveListButton,SIGNAL (clicked()),this,SLOT (saveListClicked()) );
-    connect(clearListButton,SIGNAL (clicked()),this,SLOT (clearListClicked()) );
+    connect(m_urlListView->selectionModel(), SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection&)),
+            this, SLOT(urlSelected(const QItemSelection&)));
+    connect(m_urlListView, SIGNAL(doubleClicked(const QModelIndex&)),
+            this, SLOT(openUrl(const QModelIndex&)) );
+    connect(m_urlListView, SIGNAL(customContextMenuRequested(const QPoint&)),
+            this, SLOT(contextMenu(const QPoint&)) );
 
-    saveListButton->setEnabled(false);
-    clearListButton->setEnabled(false);
+    connect(m_openBtn, SIGNAL(clicked()), this, SLOT(openUrlClicked()));
+    connect(m_copyBtn, SIGNAL(clicked()), this, SLOT(copyUrlClicked()));
+    connect(m_deleteBtn, SIGNAL(clicked()), this, SLOT(deleteUrlClicked()));
+    connect(m_saveBtn, SIGNAL(clicked()), this, SLOT(saveListClicked()));
+    connect(m_clearBtn, SIGNAL(clicked()), this, SLOT(clearListClicked()));
 
-    layout()->addWidget(searchWidget);
-    layout()->addWidget(urlListView);
-    layout()->addWidget(buttonBox);
-
-    urlSelected();
+    //TODO remove this by turning the klineedit into a kfilterproxysearchline when we req. 4.2
+    connect(m_filterLine, SIGNAL(textChanged(const QString&)), this, SLOT(filterChanged()));
+    connect(m_filterTimer, SIGNAL(timeout()), this, SLOT(updateFilter()));
 }
 
 
@@ -102,80 +166,157 @@ UrlCatcher::~UrlCatcher()
 {
 }
 
-void UrlCatcher::urlSelected()
+void UrlCatcher::filterChanged()
 {
-    QTreeWidgetItem* item=urlListView->currentItem();
-    if(item)
+    m_filterTimer->start(300);
+}
+
+void UrlCatcher::updateFilter()
+{
+    m_proxyModel->setFilterWildcard(m_filterLine->text());
+    if(!m_proxyModel->rowCount())
     {
-        openUrlButton->setEnabled(true);
-        copyUrlButton->setEnabled(true);
-        deleteUrlButton->setEnabled(true);
+        m_clearBtn->setEnabled(false);
+        m_saveBtn->setEnabled(false);
     }
     else
     {
-        openUrlButton->setEnabled(false);
-        copyUrlButton->setEnabled(false);
-        deleteUrlButton->setEnabled(false);
+        m_clearBtn->setEnabled(true);
+        m_saveBtn->setEnabled(true);
     }
+
+}
+
+void UrlCatcher::setUrlList(const QStringList& list)
+{
+    m_urlListModel = new UrlCatcherModel(this);
+
+    if(!list.isEmpty())
+    {
+
+        QList<UrlItem> urlList;
+        for (int i=0; i < list.count(); i++)
+        {
+            UrlItem item;
+            item.nick = list.at(i).section(' ',0,0);
+            item.url = list.at(i).section(' ',1,1);
+            urlList.append(item);
+        }
+
+        m_urlListModel->setUrlList(urlList);
+
+        m_clearBtn->setEnabled(true);
+        m_saveBtn->setEnabled(true);
+    }
+
+    m_proxyModel->setSourceModel(m_urlListModel);
+
 }
 
 void UrlCatcher::addUrl(const QString& who,const QString& url)
 {
-    new QTreeWidgetItem(urlListView, QStringList() << who << url);
-    clearListButton->setEnabled(true);
-    saveListButton->setEnabled(true);
-    searchWidget->setEnabled(true);
+    UrlItem item;
+    item.nick = who;
+    item.url = url;
+    m_urlListModel->append(item);
+
+    m_clearBtn->setEnabled(true);
+    m_saveBtn->setEnabled(true);
 }
 
-void UrlCatcher::openUrl(QTreeWidgetItem* item)
+void UrlCatcher::urlSelected(const QItemSelection& selected)
 {
-    QString url = item->text(1);
+    if(!selected.isEmpty())
+    {
+        m_openBtn->setEnabled(true);
+        m_copyBtn->setEnabled(true);
+        m_deleteBtn->setEnabled(true);
+    }
+    else
+    {
+        m_openBtn->setEnabled(false);
+        m_copyBtn->setEnabled(false);
+        m_deleteBtn->setEnabled(false);
+    }
+}
+
+void UrlCatcher::openUrl(const QModelIndex& index)
+{
+    QString url = index.sibling(index.row(), 1).data().toString();
 
     Application::openUrl(url);
 }
 
 void UrlCatcher::openUrlClicked()
 {
-    QTreeWidgetItem* item=urlListView->currentItem();
-    if(item) openUrl(item);
+    QModelIndex index = m_urlListView->selectionModel()->selectedIndexes().first();
+    if (index.isValid()) openUrl(index);
 }
 
 void UrlCatcher::copyUrlClicked()
 {
-    QTreeWidgetItem* item=urlListView->currentItem();
-    if(item)
+    QModelIndex index = m_urlListView->selectionModel()->selectedIndexes().first();
+    if (index.isValid())
     {
+        QString url = index.sibling(index.row(), 1).data().toString();
         QClipboard *cb = qApp->clipboard();
-        cb->setText(item->text(1),QClipboard::Selection);
-        cb->setText(item->text(1),QClipboard::Clipboard);
+        cb->setText(url, QClipboard::Selection);
+        cb->setText(url, QClipboard::Clipboard);
     }
 }
 
 void UrlCatcher::deleteUrlClicked()
 {
-    QTreeWidgetItem* item=urlListView->currentItem();
-    if(item)
+    QModelIndex index = m_urlListView->selectionModel()->selectedIndexes().first();
+    if (index.isValid())
     {
-        emit deleteUrl(item->text(0),item->text(1));
-        delete item;
-        // select next item
-        item=urlListView->currentItem();
-        if(item) urlListView->setCurrentItem(item);
-        else
+        QModelIndex indexAbove;
+        QModelIndex indexBelow;
+        if(index.row()-1 >= 0)
+            indexAbove = index.sibling(index.row()-1, 0);
+        if(index.row()+1 < m_proxyModel->rowCount())
+            indexBelow = index.sibling(index.row()+1, 0);
+
+        if (indexAbove.isValid())
         {
-            saveListButton->setEnabled(false);
-            clearListButton->setEnabled(false);
-            searchWidget->setEnabled(false);
+            QItemSelection selection(indexAbove, indexAbove.sibling(indexAbove.row(),1));
+            if(!selection.isEmpty())
+                m_urlListView->selectionModel()->select(selection, QItemSelectionModel::ClearAndSelect);
         }
+        else if (indexBelow.isValid())
+        {
+            QItemSelection selection(index, index.sibling(index.row(),1));
+            if(!selection.isEmpty())
+                m_urlListView->selectionModel()->select(selection, QItemSelectionModel::ClearAndSelect);
+        }
+        else
+            urlSelected(QItemSelection());
+
+        UrlItem item;
+        item.nick = index.sibling(index.row(), 0).data().toString();
+        item.url = index.sibling(index.row(), 1).data().toString();
+
+        m_urlListModel->removeRows(index.row(), 0, index);
+        if(!m_urlListModel->rowCount())
+        {
+            urlSelected(QItemSelection());
+            m_clearBtn->setEnabled(false);
+            m_saveBtn->setEnabled(false);
+        }
+
+        emit deleteUrl(item.nick, item.url);
     }
 }
 
 void UrlCatcher::clearListClicked()
 {
-    urlListView->clear();
-    saveListButton->setEnabled(false);
-    clearListButton->setEnabled(false);
-    urlSelected();
+    m_urlListModel = new UrlCatcherModel(this);
+    m_proxyModel->setSourceModel(m_urlListModel);
+
+    m_saveBtn->setEnabled(false);
+    m_clearBtn->setEnabled(false);
+    urlSelected(QItemSelection());
+
     emit clearUrlList();
 }
 
@@ -188,20 +329,93 @@ void UrlCatcher::saveListClicked()
         this,
         i18n("Save URL List"));
 
-    if(!fileName.isEmpty())
+    if (!fileName.isEmpty())
     {
+        int maxNickWidth=0;
+
+        int rows = m_proxyModel->rowCount();
+        QModelIndex index = m_proxyModel->index(0,0,QModelIndex());
+        for (int r = 0; r < rows; r++)
+        {
+            QString nick = index.sibling(r,0).data().toString();
+
+            if (nick.length()>maxNickWidth)
+            {
+                maxNickWidth = nick.length();
+            }
+        }
+
         // now save the list to disk
         QFile listFile(fileName);
         listFile.open(QIODevice::WriteOnly);
         // wrap the file into a stream
         QTextStream stream(&listFile);
-        QTreeWidgetItem* item=urlListView->topLevelItem(0);
-        while(item)
+
+        QString header(i18n("Konversation URL List: %1\n\n",
+                            QDateTime::currentDateTime().toString()));
+        stream << header;
+
+        for (int r = 0; r < rows; r++)
         {
-            stream << item->text(0) << ": " << item->text(1) << endl;
-            item=urlListView->itemBelow(item);
-        }                                         // while
+            QString nick = index.sibling(r,0).data().toString();
+            QString url = index.sibling(r,1).data().toString();
+
+            QString nickPad;
+            nickPad.fill(' ', maxNickWidth);
+            nickPad.replace(0, nick.length(), nick);
+
+            QString line(nickPad+' '+url+'\n');
+            stream << line;
+        }
+
+        listFile.close();
     }
+}
+
+void UrlCatcher::contextMenu(const QPoint& p)
+{
+    QModelIndex item = m_urlListView->indexAt(p);
+    if (!item.isValid()) return;
+
+    KMenu* menu = new KMenu(this);
+
+    menu->addAction(KIcon("edit-copy"), i18n("Copy Link Address"), this, SLOT (copyUrlClicked()));
+    menu->addAction(KIcon("bookmark-new"), i18n("Add to Bookmarks"), this, SLOT (bookmarkUrl()));
+    menu->addAction(KIcon("document-save"), i18n("Save Link As..."), this, SLOT(saveLinkAs()));
+    //TODO maybe a delete action?
+
+    menu->exec(QCursor::pos());
+
+    delete menu;
+}
+
+void UrlCatcher::bookmarkUrl()
+{
+    QModelIndex index = m_urlListView->selectionModel()->selectedIndexes().first();
+    if (!index.isValid()) return;
+
+    QString url = index.sibling(index.row(), 1).data().toString();
+
+    KBookmarkManager* bm = KBookmarkManager::userBookmarksManager();
+    KBookmarkDialog* dialog = new KBookmarkDialog(bm, this);
+    dialog->addBookmark(url, url);
+    delete dialog;
+}
+
+void UrlCatcher::saveLinkAs()
+{
+    QModelIndex index = m_urlListView->selectionModel()->selectedIndexes().first();
+    if (!index.isValid()) return;
+
+    QString url = index.sibling(index.row(), 1).data().toString();
+
+    KUrl srcUrl (url);
+    KUrl saveUrl = KFileDialog::getSaveUrl(srcUrl.fileName(KUrl::ObeyTrailingSlash), QString(), this, i18n("Save link as"));
+
+    if (saveUrl.isEmpty() || !saveUrl.isValid())
+        return;
+
+    KIO::copy(srcUrl, saveUrl);
 }
 
 void UrlCatcher::childAdjustFocus()

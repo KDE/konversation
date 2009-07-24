@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>URLCatcherUI</class>
+ <widget class="QWidget" name="URLCatcherUI">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>541</width>
+    <height>344</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>URL Catcher</string>
+  </property>
+  <widget class="QWidget" name="gridLayoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>10</y>
+     <width>541</width>
+     <height>331</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="1" colspan="2">
+     <widget class="KLineEdit" name="m_filterLine">
+      <property name="showClearButton" stdset="0">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QLabel" name="m_searchLbl">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="text">
+       <string>Search:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0" colspan="3">
+     <widget class="QTreeView" name="m_urlListView">
+      <property name="contextMenuPolicy">
+       <enum>Qt::CustomContextMenu</enum>
+      </property>
+      <property name="whatsThis">
+       <string>List of Uniform Resource Locators mentioned in any of the Konversation windows during this session.</string>
+      </property>
+      <property name="indentation">
+       <number>0</number>
+      </property>
+      <property name="allColumnsShowFocus">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0" colspan="3">
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QPushButton" name="m_openBtn">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="whatsThis">
+         <string>&lt;p&gt;Select a &lt;b&gt;URL&lt;/b&gt; above, then click this button to launch the application associated with the mimetype of the URL.&lt;/p&gt;
+&lt;p&gt;In the &lt;b&gt;Settings&lt;/b&gt;, under &lt;b&gt;Behavior&lt;/b&gt; | &lt;b&gt;General&lt;/b&gt;, you can specify a custom web browser for web URLs.&lt;/p&gt;</string>
+        </property>
+        <property name="text">
+         <string>&amp;Open URL</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="m_copyBtn">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="whatsThis">
+         <string>Select a &lt;b&gt;URL&lt;/b&gt; above, then click this button to copy the URL to the clipboard.</string>
+        </property>
+        <property name="text">
+         <string>&amp;Copy URL</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="m_deleteBtn">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="whatsThis">
+         <string>Select a &lt;b&gt;URL&lt;/b&gt; above, then click this button to delete the URL from the list.</string>
+        </property>
+        <property name="text">
+         <string>&amp;Delete URL</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="m_saveBtn">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="whatsThis">
+         <string>Click to save the entire list to a file.</string>
+        </property>
+        <property name="text">
+         <string>Sa&amp;ve List...</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="m_clearBtn">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="whatsThis">
+         <string>Click to erase the entire list.</string>
+        </property>
+        <property name="text">
+         <string>C&amp;lear List</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>KLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>klineedit.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

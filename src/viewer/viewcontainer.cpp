@@ -2030,12 +2030,8 @@ void ViewContainer::addUrlCatcher()
         connect(m_urlCatcherPanel, SIGNAL(clearUrlList()),
             konvApp, SLOT(clearUrlList()));
 
-        QStringList urlList=konvApp->getUrlList();
-        for(int index=0;index<urlList.count();index++)
-        {
-            QString urlItem=urlList[index];
-            m_urlCatcherPanel->addUrl(urlItem.section(' ',0,0),urlItem.section(' ',1,1));
-        }                                         // for
+        m_urlCatcherPanel->setUrlList(konvApp->getUrlList());
+
         (dynamic_cast<KToggleAction*>(actionCollection()->action("open_url_catcher")))->setChecked(true);
     }
     else

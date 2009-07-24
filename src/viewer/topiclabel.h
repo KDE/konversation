@@ -17,6 +17,7 @@
 
 
 class Server;
+class Channel;
 
 namespace Konversation
 {
@@ -32,6 +33,7 @@ namespace Konversation
             QSize minimumSizeHint() const;
             QSize sizeHint() const;
             void setServer(Server* server);
+            void setChannel(Channel* channel);
 
         public slots:
             virtual void openLink(const QString& link);
@@ -63,6 +65,7 @@ namespace Konversation
 
         private:
             Server* m_server;
+            Channel* m_channel;
 
             QString m_fullText;
             QString m_lastStatusText;
