@@ -42,6 +42,7 @@
 #include <QTextCodec>
 #include <QToolButton>
 #include <QDropEvent>
+#include <QHeaderView>
 
 #include <Q3Grid>
 #include <Q3DragObject>

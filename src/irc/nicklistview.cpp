@@ -21,6 +21,7 @@
 #include <QContextMenuEvent>
 #include <QDropEvent>
 #include <QToolTip>
+#include <QHeaderView>
 
 #include <KAuthorized>
 

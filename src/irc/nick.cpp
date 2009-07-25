@@ -11,6 +11,8 @@
   email:     eisfuchs@tigress.com
 */
 
+#include <QHeaderView>
+
 #include "nick.h"
 #include "addressbook.h"
 #include "application.h"

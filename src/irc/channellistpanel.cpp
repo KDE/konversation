@@ -18,6 +18,7 @@
 #include "common.h"
 
 #include <QTextDocument>
+#include <QHeaderView>
 
 #include <KRun>
 #include <KFileDialog>
