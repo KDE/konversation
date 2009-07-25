@@ -1153,7 +1153,7 @@ namespace Konversation
                     showUsage = false;
                 }
                 // signal server to ban this user if all went fine
-                if (!channel.isEmpty())
+                if (!channel.isEmpty() && !parameterList.isEmpty())
                 {
                     if (kick)
                     {
