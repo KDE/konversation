@@ -11,14 +11,14 @@
   email:     eisfuchs@tigress.com
 */
 
-#include <QHeaderView>
-
 #include "nick.h"
 #include "addressbook.h"
 #include "application.h"
 #include "images.h"
 #include "preferences.h"
 #include "nicklistview.h"
+
+#include <QHeaderView>
 
 #include <kabc/phonenumber.h>
 
