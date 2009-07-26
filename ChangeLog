@@ -117,6 +117,11 @@ Changes since 1.2-alpha4:
   would be links contained in a server's Message of the Day text) now have
   their "From" field filled in with the tab name instead of it being left
   blank in the URL Catcher.
+* Fixed log viewer tabs not observing the chat window background image setting.
+* Fixed log viewer tabs not reacting to changes to the chat window background
+  color or font settings.
+* Fixed raw log tabs only applying the chat view background image setting on
+  configuration changes, not when initially being opened.
 
 
 Changes from 1.2-alpha3 to 1.2-alpha4:

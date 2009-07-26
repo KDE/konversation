@@ -2399,24 +2399,10 @@ void Channel::updateAppearance()
 
     channelInput->setPalette(newPalette);
     limit->setPalette(newPalette);
-
-    getTextView()->setPalette(QPalette());
     topicLine->setPalette(QPalette());
-
-    if(Preferences::self()->showBackgroundImage())
-    {
-        getTextView()->setViewBackground(Preferences::self()->color(Preferences::TextViewBackground),
-            Preferences::self()->backgroundImage());
-    }
-    else
-    {
-        getTextView()->setViewBackground(Preferences::self()->color(Preferences::TextViewBackground),
-            QString());
-    }
 
     if (Preferences::self()->customTextFont())
     {
-        getTextView()->setFont(Preferences::self()->textFont());
         topicLine->setFont(Preferences::self()->textFont());
         channelInput->setFont(Preferences::self()->textFont());
         nicknameCombobox->setFont(Preferences::self()->textFont());
@@ -2424,7 +2410,6 @@ void Channel::updateAppearance()
     }
     else
     {
-        getTextView()->setFont(KGlobalSettings::generalFont());
         topicLine->setFont(KGlobalSettings::generalFont());
         channelInput->setFont(KGlobalSettings::generalFont());
         nicknameCombobox->setFont(KGlobalSettings::generalFont());

@@ -141,13 +141,6 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent)
 
     setServer(newServer);
 
-    setViewBackground(Preferences::self()->color(Preferences::TextViewBackground),QString());
-
-    if (Preferences::self()->customTextFont())
-        setFont(Preferences::self()->textFont());
-    else
-        setFont(KGlobalSettings::generalFont());
-
     if (Preferences::self()->useParagraphSpacing()) enableParagraphSpacing();
 }
 
@@ -248,17 +241,35 @@ bool IRCView::hasLines() { return false; }
 */
 
 void IRCView::enableParagraphSpacing() {}
-void IRCView::setViewBackground(const QColor& backgroundColor, const KUrl& url)
+
+void IRCView::updateAppearance()
 {
-    QPalette pal = palette();
-    pal.setColor(QPalette::Base, backgroundColor);
-    if (!url.isEmpty())
+    if (Preferences::self()->customTextFont())
+        setFont(Preferences::self()->textFont());
+    else
+        setFont(KGlobalSettings::generalFont());
+
+    setVerticalScrollBarPolicy(Preferences::self()->showIRCViewScrollBar() ? Qt::ScrollBarAlwaysOn : Qt::ScrollBarAlwaysOff);
+
+    QPalette palette;
+
+    palette.setColor(QPalette::Base, Preferences::self()->color(Preferences::TextViewBackground));
+
+    if (Preferences::self()->showBackgroundImage())
     {
-        QBrush brush;
-        brush.setTexture(QPixmap(url.path()));
-        pal.setBrush(QPalette::Base, brush);
+        KUrl url = Preferences::self()->backgroundImage();
+
+        if (!url.isEmpty())
+        {
+            QBrush brush;
+
+            brush.setTexture(QPixmap(url.path()));
+
+            palette.setBrush(QPalette::Base, brush);
+        }
     }
-    setPalette(pal);
+
+    setPalette(palette);
 }
 
 // Data insertion

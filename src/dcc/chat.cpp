@@ -463,48 +463,31 @@ namespace Konversation
 
         void Chat::updateAppearance()
         {
-            QColor fg;
-            QColor bg;
+            QColor fg, bg;
 
-            if(Preferences::self()->inputFieldsBackgroundColor())
+            if (Preferences::self()->inputFieldsBackgroundColor())
             {
-                fg=Preferences::self()->color(Preferences::ChannelMessage);
-                bg=Preferences::self()->color(Preferences::TextViewBackground);
+                fg = Preferences::self()->color(Preferences::ChannelMessage);
+                bg = Preferences::self()->color(Preferences::TextViewBackground);
             }
             else
             {
                 fg = palette().windowText().color();
                 bg = palette().base().color();
             }
+
             QPalette dccChatInputPalette(m_dccChatInput->palette());
             dccChatInputPalette.setColor(QPalette::WindowText, fg);
             dccChatInputPalette.setColor(QPalette::Text, fg);
             dccChatInputPalette.setColor(QPalette::Base, bg);
+
             m_dccChatInput->setPalette(dccChatInputPalette);
 
-            getTextView()->setPalette(QPalette());
-
-            if(Preferences::self()->showBackgroundImage())
-            {
-                getTextView()->setViewBackground(Preferences::self()->color(Preferences::TextViewBackground),
-                Preferences::self()->backgroundImage());
-            }
-            else
-            {
-                getTextView()->setViewBackground(Preferences::self()->color(Preferences::TextViewBackground),
-                QString());
-            }
 
             if (Preferences::self()->customTextFont())
-            {
-                getTextView()->setFont(Preferences::self()->textFont());
                 m_dccChatInput->setFont(Preferences::self()->textFont());
-            }
             else
-            {
                 getTextView()->setFont(KGlobalSettings::generalFont());
-                m_dccChatInput->setFont(KGlobalSettings::generalFont());
-            }
 
             ChatWindow::updateAppearance();
         }
