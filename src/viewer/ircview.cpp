@@ -244,13 +244,6 @@ void IRCView::enableParagraphSpacing() {}
 
 void IRCView::updateAppearance()
 {
-    if (Preferences::self()->customTextFont())
-        setFont(Preferences::self()->textFont());
-    else
-        setFont(KGlobalSettings::generalFont());
-
-    setVerticalScrollBarPolicy(Preferences::self()->showIRCViewScrollBar() ? Qt::ScrollBarAlwaysOn : Qt::ScrollBarAlwaysOff);
-
     QPalette p = palette();
 
     p.setColor(QPalette::Base, Preferences::self()->color(Preferences::TextViewBackground));
@@ -270,6 +263,13 @@ void IRCView::updateAppearance()
     }
 
     setPalette(p);
+
+    if (Preferences::self()->customTextFont())
+        setFont(Preferences::self()->textFont());
+    else
+        setFont(KGlobalSettings::generalFont());
+
+    setVerticalScrollBarPolicy(Preferences::self()->showIRCViewScrollBar() ? Qt::ScrollBarAlwaysOn : Qt::ScrollBarAlwaysOff);
 }
 
 // Data insertion
