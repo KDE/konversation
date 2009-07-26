@@ -244,8 +244,6 @@ void IRCView::enableParagraphSpacing() {}
 
 void IRCView::updateAppearance()
 {
-    setPalette(QPalette());
-
     QPalette p = palette();
 
     p.setColor(QPalette::Base, Preferences::self()->color(Preferences::TextViewBackground));
