@@ -22,8 +22,30 @@
 #include <QDropEvent>
 #include <QToolTip>
 #include <QHeaderView>
+#include <QStyledItemDelegate>
 
 #include <KAuthorized>
+
+class NickItemDelegate : public QStyledItemDelegate
+{
+    public:
+        NickItemDelegate(QObject *parent = 0);
+
+        virtual QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const;
+};
+
+NickItemDelegate::NickItemDelegate(QObject *parent)
+    : QStyledItemDelegate(parent)
+{
+}
+
+QSize NickItemDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
+{
+    const QSize& size = QStyledItemDelegate::sizeHint(option, index);
+    return QSize(size.width(), qMax(NickListView::getMinimumRowHeight(), size.height()));
+}
+
+int NickListView::s_minimumRowHeight = 0;
 
 
 NickListView::NickListView(QWidget* parent, Channel *chan) :
@@ -75,6 +97,14 @@ QTreeWidget(parent),
     viewport()->setAcceptDrops(true);
     setDropIndicatorShown(false);
     setDragDropMode(QAbstractItemView::DropOnly);
+
+    // Make the minimum height of nicklist items the height of their
+    // icons plus two pixels.
+    setUniformRowHeights(true);
+    QAbstractItemDelegate *prevDelegate = itemDelegate();
+    setItemDelegate(new NickItemDelegate(this));
+    delete prevDelegate;
+    updateMinimumRowHeight();
 
     m_actionGroup = new QActionGroup(this);
     connect(m_actionGroup, SIGNAL(triggered(QAction*)), this, SLOT(slotActionTriggered(QAction*)));
@@ -178,6 +208,17 @@ NickListView::~NickListView()
 {
 }
 
+int NickListView::getMinimumRowHeight()
+{
+    return s_minimumRowHeight;
+}
+
+void NickListView::updateMinimumRowHeight()
+{
+    Images* images = Application::instance()->images();
+    s_minimumRowHeight = images->getNickIcon(Images::Normal, false).height() + 2;
+}
+
 bool NickListView::event(QEvent *event)
 {
     if(( event->type() == QEvent::ToolTip ) )
@@ -251,6 +292,8 @@ void NickListView::setWhatsThis()
 
 void NickListView::refresh()
 {
+    updateMinimumRowHeight();
+
     QTreeWidgetItemIterator it(this);
 
     while (*it)
@@ -267,7 +310,7 @@ void NickListView::setSortingEnabled(bool enable)
     QTreeWidget::setSortingEnabled(enable);
     // We want to decouple header and this object with regard to sorting
     // (for performance reasons). By default there is no way to reenable
-    // sorting without full resort (which is necessary for us) since both 
+    // sorting without full resort (which is necessary for us) since both
     // header indicator change and setSortingEnabled(false/true) trigger
     // full resort of QTreeView. However, after disconnect, it is possible
     // to use header()->setSortIndicator() for this.

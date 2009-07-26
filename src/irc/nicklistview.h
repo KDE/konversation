@@ -51,19 +51,8 @@ class NickListView : public QTreeWidget
         int findLowerBound(const QTreeWidgetItem& item) const;
         void executeDelayedItemsLayout();
 
-    public slots:
-        /** Resort the listview. CAUTION: this might be CPU intensive
-         */
-        void resort();
+        static int getMinimumRowHeight();
 
-        signals:
-        /* Will be connected to Channel::popupCommand(int) */
-        void popupCommand(int id);
-
-        protected slots:
-        void slotActionTriggered(QAction* action);
-
-    public:
         // A helper class to disable sorting while in scope
         class NoSorting
         {
@@ -81,10 +70,22 @@ class NickListView : public QTreeWidget
                 }
         };
 
+    public slots:
+        /** Resort the listview. CAUTION: this might be CPU intensive
+         */
+        void resort();
+
+        signals:
+        /* Will be connected to Channel::popupCommand(int) */
+        void popupCommand(int id);
+
+        protected slots:
+        void slotActionTriggered(QAction* action);
+
     protected:
         //! Reimplemented for dynamic tooltips
         virtual bool event(QEvent *ev);
-        void contextMenuEvent(QContextMenuEvent* ce);
+        virtual void contextMenuEvent(QContextMenuEvent* ce);
 
         // Drag & Drop support
         virtual QStringList mimeTypes () const;
@@ -103,6 +104,9 @@ class NickListView : public QTreeWidget
         QTimer *m_resortTimer;
 
     private:
+        static int s_minimumRowHeight;
+        static void updateMinimumRowHeight();
+
         // TODO use a more specific enum for just our actions?
         KAction* createAction(QMenu* menu, const QString& text, Konversation::PopupIDs);
 
