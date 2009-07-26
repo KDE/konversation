@@ -141,6 +141,13 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent)
 
     setServer(newServer);
 
+    setViewBackground(Preferences::self()->color(Preferences::TextViewBackground),QString());
+
+    if (Preferences::self()->customTextFont())
+        setFont(Preferences::self()->textFont());
+    else
+        setFont(KGlobalSettings::generalFont());
+
     if (Preferences::self()->useParagraphSpacing()) enableParagraphSpacing();
 }
 
@@ -241,35 +248,17 @@ bool IRCView::hasLines() { return false; }
 */
 
 void IRCView::enableParagraphSpacing() {}
-
-void IRCView::updateAppearance()
+void IRCView::setViewBackground(const QColor& backgroundColor, const KUrl& url)
 {
-    QPalette p = palette();
-
-    p.setColor(QPalette::Base, Preferences::self()->color(Preferences::TextViewBackground));
-
-    if (Preferences::self()->showBackgroundImage())
+    QPalette pal = palette();
+    pal.setColor(QPalette::Base, backgroundColor);
+    if (!url.isEmpty())
     {
-        KUrl url = Preferences::self()->backgroundImage();
-
-        if (!url.isEmpty())
-        {
-            QBrush brush;
-
-            brush.setTexture(QPixmap(url.path()));
-
-            p.setBrush(QPalette::Base, brush);
-        }
+        QBrush brush;
+        brush.setTexture(QPixmap(url.path()));
+        pal.setBrush(QPalette::Base, brush);
     }
-
-    setPalette(p);
-
-    if (Preferences::self()->customTextFont())
-        setFont(Preferences::self()->textFont());
-    else
-        setFont(KGlobalSettings::generalFont());
-
-    setVerticalScrollBarPolicy(Preferences::self()->showIRCViewScrollBar() ? Qt::ScrollBarAlwaysOn : Qt::ScrollBarAlwaysOff);
+    setPalette(pal);
 }
 
 // Data insertion

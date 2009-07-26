@@ -296,31 +296,48 @@ void Query::sendQueryText(const QString& sendLine)
 
 void Query::updateAppearance()
 {
-    QColor fg, bg;
+    QColor fg;
+    QColor bg;
 
-    if (Preferences::self()->inputFieldsBackgroundColor())
+    if(Preferences::self()->inputFieldsBackgroundColor())
     {
-        fg = Preferences::self()->color(Preferences::ChannelMessage);
-        bg = Preferences::self()->color(Preferences::TextViewBackground);
+        fg=Preferences::self()->color(Preferences::ChannelMessage);
+        bg=Preferences::self()->color(Preferences::TextViewBackground);
     }
     else
     {
         fg = palette().windowText().color();
         bg = palette().base().color();
     }
-
     QPalette queryInputPalette(queryInput->palette());
     queryInputPalette.setColor(QPalette::WindowText, fg);
     queryInputPalette.setColor(QPalette::Text, fg);
     queryInputPalette.setColor(QPalette::Base, bg);
-
     queryInput->setPalette(queryInputPalette);
 
+    getTextView()->setPalette(QPalette());
+
+    if (Preferences::self()->showBackgroundImage())
+    {
+        getTextView()->setViewBackground(Preferences::self()->color(Preferences::TextViewBackground),
+            Preferences::self()->backgroundImage());
+    }
+    else
+    {
+        getTextView()->setViewBackground(Preferences::self()->color(Preferences::TextViewBackground),
+            QString());
+    }
 
     if (Preferences::self()->customTextFont())
+    {
+        getTextView()->setFont(Preferences::self()->textFont());
         queryInput->setFont(Preferences::self()->textFont());
+    }
     else
+    {
+        getTextView()->setFont(KGlobalSettings::generalFont());
         queryInput->setFont(KGlobalSettings::generalFont());
+    }
 
     ChatWindow::updateAppearance();
 }

@@ -41,6 +41,10 @@ ChatWindow::ChatWindow(QWidget* parent) : KVBox(parent)
 
     setMargin(margin());
     setSpacing(spacing());
+
+    // The font size of the KTabWidget container may be inappropriately
+    // small due to the "Tab bar" font size setting.
+    setFont(KGlobalSettings::generalFont());
 }
 
 ChatWindow::~ChatWindow()
@@ -51,11 +55,12 @@ ChatWindow::~ChatWindow()
 
 void ChatWindow::updateAppearance()
 {
-    if (getTextView()) getTextView()->updateAppearance();
-
     // The font size of the KTabWidget container may be inappropriately
     // small due to the "Tab bar" font size setting.
     setFont(KGlobalSettings::generalFont());
+
+    if (textView)
+        textView->setVerticalScrollBarPolicy(Preferences::self()->showIRCViewScrollBar() ? Qt::ScrollBarAlwaysOn : Qt::ScrollBarAlwaysOff);
 }
 
 void ChatWindow::setName(const QString& newName)

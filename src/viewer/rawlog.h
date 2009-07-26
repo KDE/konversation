@@ -31,6 +31,7 @@ class RawLog : public ChatWindow
         virtual bool searchView();
 
     public slots:
+        void updateAppearance();
         void morphNotification();
 
     protected:

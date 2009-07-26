@@ -69,8 +69,6 @@ LogfileReader::LogfileReader(QWidget* parent, const QString& log) : ChatWindow(p
     setFocusPolicy(Qt::StrongFocus);
     setFocusProxy(ircBox->ircView());
 
-    updateAppearance();
-
     connect(getTextView(), SIGNAL(gotFocus()), getTextView(), SLOT(setFocus()));
 }
 
