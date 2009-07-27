@@ -440,22 +440,20 @@ namespace Konversation
         {
             //kDebug();
 
-            int actual = m_file.read( m_buffer, m_bufferSize );
+            qint64 actual = m_file.read( m_buffer, m_bufferSize );
             if ( actual > 0 )
             {
                 qint64 byteWritten = m_sendSocket->write( m_buffer, actual );
-                if (byteWritten == -1)
-                {
-                    failed ( m_sendSocket->errorString() );
-                    return;
-                }
 
-                m_transferringPosition += byteWritten;
-                //m_transferringPosition += actual;
-                if ( (KIO::fileoffset_t)m_fileSize <= m_transferringPosition )
+                if (byteWritten > 0)
                 {
-                    Q_ASSERT( (KIO::fileoffset_t)m_fileSize == m_transferringPosition );
-                    kDebug() << "Done.";
+                    m_transferringPosition += byteWritten;
+                    //m_transferringPosition += actual;
+                    if ( (KIO::fileoffset_t)m_fileSize <= m_transferringPosition )
+                    {
+                        Q_ASSERT( (KIO::fileoffset_t)m_fileSize == m_transferringPosition );
+                        kDebug() << "Done.";
+                    }
                 }
             }
         }

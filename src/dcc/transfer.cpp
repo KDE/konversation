@@ -392,7 +392,7 @@ namespace Konversation
 
         int Transfer::getProgress() const
         {
-            return (int)( ( (double)getTransferringPosition() / (double)getFileSize() ) * 100 );
+            return (int)( ( (double)getTransferringPosition() / (double)getFileSize() ) * 100.0 );
         }
 
         QDateTime Transfer::getTimeTransferStarted() const

@@ -663,7 +663,7 @@ namespace Konversation
         void TransferRecv::readData()                  // slot
         {
             //kDebug();
-            int actual = m_recvSocket->read( m_buffer, m_bufferSize );
+            qint64 actual = m_recvSocket->read( m_buffer, m_bufferSize );
             if ( actual > 0 )
             {
                 //actual is the size we read in, and is guaranteed to be less than m_bufferSize
