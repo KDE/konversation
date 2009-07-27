@@ -413,7 +413,7 @@ namespace Konversation
             stopConnectionTimer();
 
             if ( m_fastSend )
-                connect( m_sendSocket, SIGNAL( bytesWritten( qint64 ) ), this, SLOT( writeData() ) );
+                connect( m_sendSocket, SIGNAL( bytesWritten( qint64 ) ), this, SLOT( bytesWritten( qint64 ) ) );
             connect( m_sendSocket, SIGNAL( readyRead() ),  this, SLOT( getAck() ) );
 
             m_partnerIp = m_sendSocket->peerAddress().toString();
@@ -433,6 +433,15 @@ namespace Konversation
             else
             {
                 failed( getQFileErrorString( m_file.error() ) );
+            }
+        }
+
+        void TransferSend::bytesWritten(qint64 bytes)
+        {
+            //wait for all remaining bytes to be written
+            if (m_sendSocket->bytesToWrite() <= m_bufferSize)
+            {
+                writeData();
             }
         }
 

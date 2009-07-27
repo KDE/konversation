@@ -68,6 +68,7 @@ namespace Konversation
                 // it must be invoked when m_sendSocket is ready
                 void startSending();
                 void writeData();
+                void bytesWritten(qint64 bytes);
                 void getAck();
                 void slotGotSocketError( QAbstractSocket::SocketError errorCode );
                 void slotConnectionTimeout();
