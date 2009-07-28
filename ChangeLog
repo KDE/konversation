@@ -117,6 +117,10 @@ Changes since 1.2-alpha4:
   would be links contained in a server's Message of the Day text) now have
   their "From" field filled in with the tab name instead of it being left
   blank in the URL Catcher.
+* Fixed a bug causing the DCC Status tab to sometimes prematurely claim a
+  transfer status of 100%, as well as an unrealistic transfer speed, when
+  sending a file to another user. The transfer would go on until actually
+  finished; merely the information shown in the interface was defective.
 
 
 Changes from 1.2-alpha3 to 1.2-alpha4:
