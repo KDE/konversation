@@ -21,7 +21,6 @@
 #include <QAbstractListModel>
 
 class QSortFilterProxyModel;
-class QItemSelectionModel;
 
 struct UrlItem
 {

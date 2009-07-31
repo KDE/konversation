@@ -34,7 +34,6 @@ class QTreeWidgetItem;
 class QStringList;
 class QSplitter;
 class Q3Grid;
-class QDropEvent;
 class QToolButton;
 
 class KLineEdit;

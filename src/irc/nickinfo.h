@@ -26,7 +26,6 @@
 
 
 class Server;
-class QTimer;
 
 /**
   The NickInfo object is a data container for information about a single nickname.
