@@ -439,7 +439,7 @@ namespace Konversation
         void TransferSend::bytesWritten(qint64 /*bytes*/)
         {
             //wait for all remaining bytes to be written
-            if (m_sendSocket->bytesToWrite() <= m_bufferSize)
+            if (m_sendSocket && m_sendSocket->bytesToWrite() <= m_bufferSize)
             {
                 writeData();
             }
