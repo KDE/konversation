@@ -155,12 +155,12 @@ void StatusPanel::textPasted(const QString& text)
 
 void StatusPanel::updateAppearance()
 {
-    QColor fg;
-    QColor bg;
-    if(Preferences::self()->inputFieldsBackgroundColor())
+    QColor fg, bg;
+
+    if (Preferences::self()->inputFieldsBackgroundColor())
     {
-        fg=Preferences::self()->color(Preferences::ChannelMessage);
-        bg=Preferences::self()->color(Preferences::TextViewBackground);
+        fg = Preferences::self()->color(Preferences::ChannelMessage);
+        bg = Preferences::self()->color(Preferences::TextViewBackground);
     }
     else
     {
@@ -174,28 +174,14 @@ void StatusPanel::updateAppearance()
     statusInputPalette.setColor(QPalette::Base, bg);
     statusInput->setPalette(statusInputPalette);
 
-    getTextView()->setPalette(QPalette());
-
-    if(Preferences::self()->showBackgroundImage())
-    {
-        getTextView()->setViewBackground(Preferences::self()->color(Preferences::TextViewBackground),
-            Preferences::self()->backgroundImage());
-    }
-    else
-    {
-        getTextView()->setViewBackground(Preferences::self()->color(Preferences::TextViewBackground),
-            QString());
-    }
 
     if (Preferences::self()->customTextFont())
     {
-        getTextView()->setFont(Preferences::self()->textFont());
         statusInput->setFont(Preferences::self()->textFont());
         nicknameCombobox->setFont(Preferences::self()->textFont());
     }
     else
     {
-        getTextView()->setFont(KGlobalSettings::generalFont());
         statusInput->setFont(KGlobalSettings::generalFont());
         nicknameCombobox->setFont(KGlobalSettings::generalFont());
     }

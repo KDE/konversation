@@ -385,14 +385,8 @@ void ViewContainer::updateTabWidgetAppearance()
     bool noTabBar = (Preferences::self()->tabPlacement()==Preferences::Left);
     m_tabWidget->setTabBarHidden(noTabBar);
 
-#if QT_VERSION >= 0x040500
+#if KDE_IS_VERSION(4, 2, 85)
     m_tabWidget->setDocumentMode(noTabBar);
-#if !KDE_IS_VERSION(4, 2, 85)
-    if (noTabBar)
-        m_tabWidget->setStyleSheet("QTabWidget::pane { border:none; }");
-    else
-        m_tabWidget->setStyleSheet(QString());
-#endif
 #endif
 
     if (Preferences::self()->customTabFont())

@@ -60,7 +60,8 @@ class IRCView : public KTextBrowser
 
         //! FIXME maybe we should create some sort of palette of our own?
         QColor highlightColor() { return m_highlightColor; }
-        void setViewBackground(const QColor& backgroundColor, const KUrl& url);
+
+        void updateAppearance();
 
         QString currentChannel() { return m_currentChannel; }
 

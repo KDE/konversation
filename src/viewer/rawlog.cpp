@@ -26,6 +26,8 @@ RawLog::RawLog(QWidget* parent) : ChatWindow(parent)
     setType(ChatWindow::RawLog);
     IRCViewBox* ircBox = new IRCViewBox(this, 0);
     setTextView(ircBox->ircView());               // Server will be set later in setServer()
+
+    updateAppearance();
 }
 
 RawLog::~RawLog()
@@ -34,29 +36,6 @@ RawLog::~RawLog()
 
 void RawLog::childAdjustFocus()
 {
-}
-
-void RawLog::updateAppearance()
-{
-    getTextView()->setPalette(QPalette());
-
-    if(Preferences::self()->showBackgroundImage())
-    {
-        getTextView()->setViewBackground(Preferences::self()->color(Preferences::TextViewBackground),
-            Preferences::self()->backgroundImage());
-    }
-    else
-    {
-        getTextView()->setViewBackground(Preferences::self()->color(Preferences::TextViewBackground),
-            QString());
-    }
-
-    if (Preferences::self()->customTextFont())
-        getTextView()->setFont(Preferences::self()->textFont());
-    else
-        getTextView()->setFont(KGlobalSettings::generalFont());
-
-    ChatWindow::updateAppearance();
 }
 
 void RawLog::morphNotification()
