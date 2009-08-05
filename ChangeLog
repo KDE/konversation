@@ -1,6 +1,16 @@
-Changes since 1.2-alpha4:
+Changes from 1.2-alpha4 to 1.2-alpha5:
+Konversation 1.2-alpha5 features significant performance and memory usage
+improvements in several areas of the application, such as channel nickname
+lists, backlog loading, Channel List tabs and the URL Catcher - the latter
+two have also seen a fair number of interface refinements, making them much
+more enjoyable to use. The DCC subsystem has seen the addition of IPv6 sup-
+port and a '/dcc get' command to accept an incoming file transfer from the
+input line. Various smaller additions and improvements have been made as
+well, including the usual share of bug fixes.
+
+
 * Added back "Do not ask again" checkbox missing in the rewritten invita-
-  tion dialog that appeared in v1.2-alpha3. By implication, the dialog now
+  tion dialog that appeared in v1.2-alpha4. By implication, the dialog now
   also observes the "Automatically join channel on invite" option from the
   "Warning Dialogs" page in the configuration dialog again.
 * Fixed problems reconnecting an SSL-enabled connection using a self-sign-
