@@ -13,6 +13,7 @@
   Copyright (C) 2002-2004 Dario Abatianni <eisfuchs@tigress.com>
   Copyright (C) 2004-2007 Shintaro Matsuoka <shin@shoegazed.org>
   Copyright (C) 2004,2005 John Tapsell <john@geola.co.uk>
+  Copyright (C) 2009 Bernd Buschinski <b.buschinski@web.de>
 */
 
 #ifndef TRANSFER_H
@@ -38,8 +39,8 @@ namespace Konversation
             public:
                 enum Type
                 {
-                    Receive,
-                    Send
+                    Receive = 1,
+                    Send    = 1 << 1
                 };
 
                 enum Status
@@ -64,10 +65,6 @@ namespace Konversation
 
                 Transfer( Type dccType, QObject* parent );
                 virtual ~Transfer();
-
-                // info of DccTransfer can be copied with this constructor.
-                // WARNING: it only copies the info, it does NOT have a buffer, it is NOT a valid transfer
-                Transfer( const Transfer& obj );
 
                 Type               getType()                  const;
                 Status             getStatus()                const;
@@ -101,10 +98,15 @@ namespace Konversation
                 // REQUIRED
                 void setPartnerNick( const QString& nick );
 
+                void removedFromView();
+
             signals:
                 void transferStarted( Konversation::DCC::Transfer* item );
+                //done is when the transfer is done, it will not get deleted after emiting this signal
                 void done( Konversation::DCC::Transfer* item );
                 void statusChanged( Konversation::DCC::Transfer* item, int newStatus, int oldStatus );
+                //removed is when the transfer is removed from all visible views and ready to get deleted
+                void removed( Konversation::DCC::Transfer* item );
 
             public slots:
                 virtual bool queue();
@@ -177,8 +179,6 @@ namespace Konversation
                 KUrl m_fileURL;
 
             private:
-                Transfer& operator = ( const Transfer& obj );
-
                 void updateTransferMeters();
 
             private:

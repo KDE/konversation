@@ -9,6 +9,7 @@
   Copyright (C) 2002-2004 Dario Abatianni <eisfuchs@tigress.com>
   Copyright (C) 2004-2007 Shintaro Matsuoka <shin@shoegazed.org>
   Copyright (C) 2004,2005 John Tapsell <john@geola.co.uk>
+  Copyright (C) 2009 Bernd Buschinski <b.buschinski@web.de>
 */
 
 #include "transfer.h"
@@ -55,41 +56,6 @@ namespace Konversation
         Transfer::~Transfer()
         {
             kDebug();
-            delete[] m_buffer;
-            m_loggerTimer.stop();
-        }
-
-        Transfer::Transfer( const Transfer& obj )
-            : QObject()
-        {
-            m_buffer = 0;
-            m_bufferSize = 0;
-            m_averageSpeed = obj.getAverageSpeed();
-            m_currentSpeed = obj.getCurrentSpeed();
-            m_status = obj.getStatus();
-            m_statusDetail = obj.getStatusDetail();
-            m_type = obj.getType();
-            m_fileName = obj.getFileName();
-            m_fileSize = obj.getFileSize();
-            m_fileURL = obj.getFileURL();
-            // m_loggerBaseTime
-            // m_loggerTimer
-            m_ownIp = obj.getOwnIp();
-            m_ownPort = obj.getOwnPort();
-            m_partnerIp = obj.getPartnerIp();
-            m_partnerNick = obj.getPartnerNick();
-            m_partnerPort = obj.getPartnerPort();
-            m_resumed = obj.isResumed();
-            m_reverse = obj.isReverse();
-            m_connectionId = obj.getConnectionId();
-            m_timeLeft = obj.getTimeLeft();
-            m_timeOffer = obj.getTimeOffer();
-            m_timeTransferFinished = obj.getTimeTransferFinished();
-            m_timeTransferStarted = obj.getTimeTransferStarted();
-            // m_transferLogPosition
-            // m_transferLogTime
-            m_transferringPosition = obj.getTransferringPosition();
-            m_transferStartPosition = obj.getTransferStartPosition();
         }
 
         void Transfer::setConnectionId( int id )
@@ -145,6 +111,15 @@ namespace Konversation
 
         void Transfer::cleanUp()
         {
+            kDebug();
+            delete[] m_buffer;
+            m_buffer = 0;
+            m_loggerTimer.stop();
+        }
+
+        void Transfer::removedFromView()
+        {
+            emit removed(this);
         }
 
         // just for convenience
@@ -392,7 +367,14 @@ namespace Konversation
 
         int Transfer::getProgress() const
         {
-            return (int)( ( (double)getTransferringPosition() / (double)getFileSize() ) * 100.0 );
+            if (getFileSize() == 0)
+            {
+                return 0;
+            }
+            else
+            {
+                return (int)( ( (double)getTransferringPosition() / (double)getFileSize() ) * 100.0 );
+            }
         }
 
         QDateTime Transfer::getTimeTransferStarted() const

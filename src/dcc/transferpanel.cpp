@@ -10,19 +10,21 @@
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com
 */
-// Copyright (C) 2004-2008 Shintaro Matsuoka <shin@shoegazed.org>
+/*
+  Copyright (C) 2004-2008 Shintaro Matsuoka <shin@shoegazed.org>
+  Copyright (C) 2009 Bernd Buschinski <b.buschinski@web.de>
+*/
 
 #include "transferpanel.h"
 #include "application.h"
 #include "transferdetailedinfopanel.h"
 #include "transfermanager.h"
-#include "transferpanelitem.h"
 #include "transfersend.h"
 #include "preferences.h"
+#include "transferview.h"
+#include "transferlistmodel.h"
 
 #include <QPushButton>
-
-#include <Q3Header>
 
 #include <KDialog>
 #include <KGlobal>
@@ -33,93 +35,56 @@
 #include <KRun>
 #include <KAuthorized>
 #include <KVBox>
-
-#include <K3ListView>
+#include <KFileMetaInfo>
 
 namespace Konversation
 {
     namespace DCC
     {
-        TransferPanel::TransferPanel(QWidget* parent) : ChatWindow(parent)
+        TransferPanel::TransferPanel(QWidget *parent)
+            : ChatWindow(parent)
         {
             setType(ChatWindow::DccTransferPanel);
             setName(i18n("DCC Status"));
 
             initGUI();
 
-            connect( Application::instance()->getDccTransferManager(), SIGNAL( newTransferAdded( Konversation::DCC::Transfer* ) ), this, SLOT( slotNewTransferAdded( Konversation::DCC::Transfer* ) ) );
+            connect(Application::instance()->getDccTransferManager(), SIGNAL(newTransferAdded(Konversation::DCC::Transfer*)),
+                    this, SLOT(slotNewTransferAdded(Konversation::DCC::Transfer*)));
         }
 
         TransferPanel::~TransferPanel()
         {
-            // remember column widths
-            QList<int> columnWidths;
-            for ( uint i = 0 ; i < Column::COUNT ; ++i )
-                columnWidths.push_back( m_listView->columnWidth( i ) );
-            Preferences::self()->setDccColumnWidths( columnWidths );
         }
 
         void TransferPanel::initGUI()
         {
-            setSpacing( 0 );
+            setSpacing(0);
 
-            m_listView = new K3ListView(this);
+            m_transferView = new TransferView(this);
 
-            m_listView->setSelectionMode(Q3ListView::Extended);
-            m_listView->setDragEnabled(true);
-            m_listView->setAcceptDrops(true);
-            m_listView->setSorting(-1,false);
-            m_listView->setAllColumnsShowFocus(true);
-
-            for(unsigned int i=0 ; i < Column::COUNT ; ++i)
-                m_listView->addColumn("");
-
-            //m_listView->setColumnText(Column::TypeIcon,      "");
-            m_listView->setColumnText(Column::OfferDate,     i18n("Started At"));
-            m_listView->setColumnText(Column::Status,        i18n("Status"));
-            m_listView->setColumnText(Column::FileName,      i18n("File"));
-            m_listView->setColumnText(Column::PartnerNick,   i18n("Partner"));
-            m_listView->setColumnText(Column::Progress,      i18n("Progress"));
-            m_listView->setColumnText(Column::Position,      i18n("Position"));
-            m_listView->setColumnText(Column::TimeLeft,      i18n("Remaining"));
-            m_listView->setColumnText(Column::CurrentSpeed,  i18n("Speed"));
-            m_listView->setColumnText(Column::SenderAddress, i18n("Sender Address"));
-
-            QList<int> columnWidths = Preferences::self()->dccColumnWidths();
-            for ( int i = 0 ; i < Column::COUNT && i < columnWidths.count() ; ++i )
-                m_listView->setColumnWidth( i, columnWidths[i] );
-
-            m_listView->setColumnWidthMode(Column::FileName, Q3ListView::Manual);
-
-            m_listView->setColumnAlignment(Column::OfferDate,     Qt::AlignHCenter);
-            m_listView->setColumnAlignment(Column::Progress,      Qt::AlignHCenter);
-            m_listView->setColumnAlignment(Column::Position,      Qt::AlignHCenter);
-            m_listView->setColumnAlignment(Column::TimeLeft,      Qt::AlignHCenter);
-            m_listView->setColumnAlignment(Column::CurrentSpeed,  Qt::AlignHCenter);
-
-            m_listView->setSorting(Column::OfferDate, false);
-
-            connect(m_listView,SIGNAL (selectionChanged()),this,SLOT (updateButton()) );
+            connect(m_transferView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
+                    this, SLOT(updateButton()));
 
             // detailed info panel
             m_detailPanel = new TransferDetailedInfoPanel(this);
 
             // button
 
-            KHBox* buttonsBox=new KHBox(this);
+            KHBox *buttonsBox = new KHBox(this);
             buttonsBox->setSpacing(spacing());
 
-            m_buttonAccept = new QPushButton(KIcon("media-playback-start"), i18n("Accept"),    buttonsBox);
+            m_buttonAccept = new QPushButton(KIcon("media-playback-start"), i18n("Accept"), buttonsBox);
             m_buttonAccept->setObjectName("start_dcc");
-            m_buttonAbort  = new QPushButton(KIcon("process-stop"),                  i18n("Abort"),     buttonsBox);
+            m_buttonAbort  = new QPushButton(KIcon("process-stop"), i18n("Abort"), buttonsBox);
             m_buttonAbort->setObjectName("abort_dcc");
-            m_buttonClear  = new QPushButton(KIcon("edit-delete"),            i18n("Clear"),     buttonsBox);
+            m_buttonClear  = new QPushButton(KIcon("edit-delete"), i18n("Clear"), buttonsBox);
             m_buttonClear->setObjectName("clear_dcc");
-            m_buttonOpen   = new QPushButton(KIcon("system-run"),           i18n("Open File"), buttonsBox);
+            m_buttonOpen   = new QPushButton(KIcon("system-run"), i18n("Open File"), buttonsBox);
             m_buttonOpen->setObjectName("open_dcc_file");
             m_buttonOpenLocation = new QPushButton(KIcon("document-open-folder"), i18n("Open Location"), buttonsBox);
             m_buttonOpenLocation->setObjectName("open_dcc_file_location");
-            m_buttonDetail = new QPushButton(KIcon("dialog-information"),   i18n("Details"),   buttonsBox);
+            m_buttonDetail = new QPushButton(KIcon("dialog-information"), i18n("Details"), buttonsBox);
             m_buttonDetail->setObjectName("detail_dcc");
             m_buttonDetail->setCheckable(true);
 
@@ -129,18 +94,15 @@ namespace Konversation
             m_buttonOpenLocation->setStatusTip(i18n("Open the file location"));
             m_buttonDetail->setStatusTip(i18n("View DCC transfer details"));
 
-            connect( m_buttonAccept, SIGNAL(clicked()), this, SLOT(acceptDcc()) );
-            connect( m_buttonAbort,  SIGNAL(clicked()), this, SLOT(abortDcc()) );
-            connect( m_buttonClear,  SIGNAL(clicked()), this, SLOT(clearDcc()) );
-            connect( m_buttonOpen,   SIGNAL(clicked()), this, SLOT(runDcc()) );
-            connect( m_buttonOpenLocation, SIGNAL(clicked()), this, SLOT(openLocation()));
-            //connect( m_buttonDetail, SIGNAL(clicked()), this, SLOT(openDetail()) );
-            connect( m_buttonDetail, SIGNAL(toggled(bool)), m_detailPanel, SLOT(setVisible(bool)) );
+            connect(m_buttonAccept, SIGNAL(clicked()), this, SLOT(acceptDcc()));
+            connect(m_buttonAbort, SIGNAL(clicked()), this, SLOT(abortDcc()));
+            connect(m_buttonClear, SIGNAL(clicked()), this, SLOT(clearDcc()));
+            connect(m_buttonOpen, SIGNAL(clicked()), this, SLOT(runDcc()));
+            connect(m_buttonOpenLocation, SIGNAL(clicked()), this, SLOT(openLocation()));
+            connect(m_buttonDetail, SIGNAL(toggled(bool)), m_detailPanel, SLOT(setVisible(bool)));
             m_buttonDetail->setChecked(true);
 
-
             // popup menu
-
             m_popup = new KMenu(this);
             m_selectAll =  m_popup->addAction(i18n("&Select All Items"));
             m_selectAllCompleted = m_popup->addAction(i18n("S&elect All Completed Items"));
@@ -153,30 +115,30 @@ namespace Konversation
             m_clear = m_popup->addAction(KIcon("edit-delete"),i18n("&Clear"));
             m_popup->addSeparator();                           // -----
             m_open = m_popup->addAction(KIcon("system-run"),i18n("&Open File"));
+            m_openLocation = m_popup->addAction(KIcon("document-open-folder"), i18n("Open Location"));
             m_info = m_popup->addAction(KIcon("dialog-information"),i18n("File &Information"));
 
-            connect(m_listView, SIGNAL(contextMenuRequested(Q3ListViewItem*,const QPoint&,int)), this, SLOT(popupRequested(Q3ListViewItem*,const QPoint&,int)));
-            connect(m_popup, SIGNAL(triggered ( QAction *)), this, SLOT(popupActivated(QAction*)));
+            m_transferView->setContextMenuPolicy(Qt::CustomContextMenu);
+            connect(m_transferView, SIGNAL(customContextMenuRequested (const QPoint&)), this, SLOT(popupRequested (const QPoint&)));
+            connect(m_popup, SIGNAL(triggered (QAction*)), this, SLOT(popupActivated(QAction*)));
 
             // misc.
-            connect(m_listView, SIGNAL(doubleClicked(Q3ListViewItem*,const QPoint&,int)), this, SLOT(doubleClicked(Q3ListViewItem*,const QPoint&,int)));
-
-            connect(m_listView, SIGNAL(currentChanged(Q3ListViewItem*)), this, SLOT(setDetailPanelItem(Q3ListViewItem*)));
+            connect(m_transferView, SIGNAL(doubleClicked(const QModelIndex&)), this, SLOT(doubleClicked(const QModelIndex&)));
+            connect(m_transferView->selectionModel(), SIGNAL(currentChanged(const QModelIndex&, const QModelIndex&)),
+                    this, SLOT(setDetailPanelItem (const QModelIndex&, const QModelIndex&)));
 
             updateButton();
         }
 
-        void TransferPanel::slotNewTransferAdded( Transfer* transfer )
+        void TransferPanel::slotNewTransferAdded(Transfer *transfer)
         {
-            TransferPanelItem* item = new TransferPanelItem( this, transfer );
-            connect( transfer, SIGNAL( statusChanged( Konversation::DCC::Transfer*, int, int ) ), this, SLOT( slotTransferStatusChanged() ) );
-            if ( m_listView->childCount() == 1 )
+            connect(transfer, SIGNAL(statusChanged(Konversation::DCC::Transfer*, int, int)), this, SLOT(slotTransferStatusChanged()));
+            m_transferView->addTransfer(transfer);
+            if (m_transferView->itemCount() == 1)
             {
-                m_listView->clearSelection();
-                m_listView->setSelected( item, true );
-                m_listView->setCurrentItem( item );
+                m_transferView->selectAll();
+                m_detailPanel->setTransfer(transfer);
                 updateButton();
-                setDetailPanelItem( item );
             }
         }
 
@@ -199,43 +161,39 @@ namespace Konversation
                  selectAllCompleted = false;
 
             int selectedItems = 0;
-            Q3ListViewItemIterator it( m_listView );
-
-            while( it.current() )
+            QItemSelectionModel *selectionModel = m_transferView->selectionModel();
+            foreach (const QModelIndex &index, m_transferView->rowIndexes())
             {
-                TransferPanelItem* item = static_cast<TransferPanelItem*>( it.current() );
-
-                Transfer::Type type = item->transfer()->getType();
-                Transfer::Status status = item->transfer()->getStatus();
+                Transfer::Type type = (Transfer::Type)index.data(TransferListModel::TransferType).toInt();
+                Transfer::Status status = (Transfer::Status)index.data(TransferListModel::TransferStatus).toInt();
 
                 selectAll = true;
-                selectAllCompleted |= ( status >= Transfer::Done );
+                selectAllCompleted |= (status >= Transfer::Done);
 
-                if( it.current()->isSelected() )
+                if (selectionModel->isRowSelected(index.row(), QModelIndex()))
                 {
                     ++selectedItems;
 
-                    accept &= ( status == Transfer::Queued );
+                    accept &= (status == Transfer::Queued);
 
-                    abort  |= ( status < Transfer::Done );
+                    abort  |= (status < Transfer::Done);
 
-                    clear  |= ( status >= Transfer::Done );
+                    clear  |= (status >= Transfer::Done);
 
-                    info   &= ( type == Transfer::Send ||
-                        status == Transfer::Done );
+                    info   &= (type == Transfer::Send ||
+                        status == Transfer::Done);
 
-                    open   &= ( type == Transfer::Send ||
-                        status == Transfer::Done );
+                    open   &= (type == Transfer::Send ||
+                        status == Transfer::Done);
 
                     openLocation = true;
 
-                    resend |= ( type == Transfer::Send &&
-                        status >= Transfer::Done );
+                    resend |= (type == Transfer::Send &&
+                        status >= Transfer::Done);
                 }
-                ++it;
             }
 
-            if( !selectedItems )
+            if(!selectedItems)
             {
                 accept = false;
                 abort = false;
@@ -250,228 +208,259 @@ namespace Konversation
                 accept = false;
             }
 
-            m_buttonAccept->setEnabled( accept );
-            m_buttonAbort->setEnabled( abort );
-            m_buttonClear->setEnabled( clear );
-            m_buttonOpen->setEnabled( open );
-            m_buttonOpenLocation->setEnabled( openLocation );
+            m_buttonAccept->setEnabled(accept);
+            m_buttonAbort->setEnabled(abort);
+            m_buttonClear->setEnabled(clear);
+            m_buttonOpen->setEnabled(open);
+            m_buttonOpenLocation->setEnabled(openLocation);
 
-            m_selectAll->setEnabled( selectAll );
-            m_selectAllCompleted->setEnabled(selectAllCompleted );
-            m_accept->setEnabled(accept );
-            m_abort->setEnabled( abort );
-            m_clear->setEnabled(clear );
-            m_open->setEnabled( open );
-            m_resend->setEnabled(resend );
-            m_info->setEnabled(info );
+            m_selectAll->setEnabled(selectAll);
+            m_selectAllCompleted->setEnabled(selectAllCompleted);
+            m_accept->setEnabled(accept);
+            m_abort->setEnabled(abort);
+            m_clear->setEnabled(clear);
+            m_open->setEnabled(open);
+            m_openLocation->setEnabled(openLocation);
+            m_resend->setEnabled(resend);
+            m_info->setEnabled(info);
         }
 
-        void TransferPanel::setDetailPanelItem(Q3ListViewItem* item_)
+        void TransferPanel::setDetailPanelItem (const QModelIndex &newindex, const QModelIndex &/*oldindex*/)
         {
-            if ( item_ )
+            Transfer *transfer = static_cast<Transfer*>(qVariantValue<QObject*>(newindex.data(TransferListModel::TransferPointer)));
+            if (transfer)
             {
-                TransferPanelItem* item = static_cast< TransferPanelItem* >( item_ );
-                m_detailPanel->setItem( item );
+                m_detailPanel->setTransfer(transfer);
             }
         }
 
         void TransferPanel::acceptDcc()
         {
-            Q3ListViewItemIterator it( m_listView );
-            while( it.current() )
+            foreach (const QModelIndex &index, m_transferView->selectedRows())
             {
-                if( it.current()->isSelected() )
+                if (index.data(TransferListModel::TransferType).toInt() == Transfer::Receive &&
+                    index.data(TransferListModel::TransferStatus).toInt() == Transfer::Queued)
                 {
-                    TransferPanelItem* item=static_cast<TransferPanelItem*>( it.current() );
-                    Transfer* transfer = item->transfer();
-                    if( transfer->getType() == Transfer::Receive && transfer->getStatus() == Transfer::Queued )
+                    Transfer *transfer = static_cast<Transfer*>(qVariantValue<QObject*>(index.data(TransferListModel::TransferPointer)));
+                    if (transfer)
+                    {
                         transfer->start();
+                    }
                 }
-                ++it;
             }
+            updateButton();
         }
 
         void TransferPanel::abortDcc()
         {
-            Q3ListViewItemIterator it( m_listView );
-            while( it.current() )
+            foreach (const QModelIndex &index, m_transferView->selectedRows())
             {
-                if( it.current()->isSelected() )
+                if (index.data(TransferListModel::TransferStatus).toInt() < Transfer::Done)
                 {
-                    TransferPanelItem* item=static_cast<TransferPanelItem*>( it.current() );
-                    Transfer* transfer = item->transfer();
-                    if( transfer->getStatus() < Transfer::Done )
+                    Transfer *transfer = static_cast<Transfer*>(qVariantValue<QObject*>(index.data(TransferListModel::TransferPointer)));
+                    if (transfer)
+                    {
                         transfer->abort();
+                    }
                 }
-                ++it;
             }
+            updateButton();
         }
 
         void TransferPanel::resendFile()
         {
-            Q3ListViewItemIterator it( m_listView );
-            while( it.current() )
+            foreach (const QModelIndex &index, m_transferView->selectedRows())
             {
-                if( it.current()->isSelected() )
+                if (index.data(TransferListModel::TransferType).toInt() == Transfer::Send &&
+                    index.data(TransferListModel::TransferStatus).toInt() >= Transfer::Done)
                 {
-                    TransferPanelItem* item=static_cast<TransferPanelItem*>( it.current() );
-                    Transfer* transfer = item->transfer();
-                    if( transfer->getType() == Transfer::Send && transfer->getStatus() >= Transfer::Done )
+                    Transfer *transfer = static_cast<Transfer*>(qVariantValue<QObject*>(index.data(TransferListModel::TransferPointer)));
+                    if (!transfer)
                     {
-                        TransferSend* newTransfer = Application::instance()->getDccTransferManager()->newUpload();
+                        continue;
+                    }
 
-                        newTransfer->setConnectionId( transfer->getConnectionId() );
-                        newTransfer->setPartnerNick( transfer->getPartnerNick() );
-                        newTransfer->setFileURL( transfer->getFileURL() );
-                        newTransfer->setFileName( transfer->getFileName() );
+                    TransferSend *newTransfer = Application::instance()->getDccTransferManager()->newUpload();
 
-                        if ( newTransfer->queue() )
-                            newTransfer->start();
+                    newTransfer->setConnectionId(transfer->getConnectionId());
+                    newTransfer->setPartnerNick(transfer->getPartnerNick());
+                    newTransfer->setFileURL(transfer->getFileURL());
+                    newTransfer->setFileName(transfer->getFileName());
+
+                    if (newTransfer->queue())
+                    {
+                        newTransfer->start();
                     }
                 }
-                ++it;
             }
+        }
+
+        //sort QModelIndexList descending
+        bool rowGreaterThan(const QModelIndex &index1, const QModelIndex &index2)
+        {
+            return index1.row() >= index2.row();
         }
 
         void TransferPanel::clearDcc()
         {
-            Q3PtrList<Q3ListViewItem> lst;
-            Q3ListViewItemIterator it( m_listView );
-            while( it.current() )
-            {
-                TransferPanelItem* item = static_cast<TransferPanelItem*>( it.current() );
-                // should we check that [item] is not null?
-                if( it.current()->isSelected() && item->transfer()->getStatus() >= Transfer::Done )
-                    lst.append( it.current() );
-                ++it;
-            }
+            QModelIndexList indexes = m_transferView->selectedRows();
+            QModelIndexList indexesToRemove;
 
-            // Figure out the first 'gap' in the selection and select that item,
-            // or, if there are no gaps, select first item below the selection
-            Q3PtrListIterator<Q3ListViewItem> selected( lst );
-            bool itemSelected = false;
-            while( selected.current() )
+            foreach (const QModelIndex &index, indexes)
             {
-                if (selected.current()->itemBelow() && !lst.containsRef(selected.current()->itemBelow()))
+                if (index.data(TransferListModel::TransferStatus).toInt() >= Transfer::Done)
                 {
-                    m_listView->setSelected(selected.current()->itemBelow(),true);
-                    m_listView->setCurrentItem(selected.current()->itemBelow());
-                    itemSelected = true;
-                    break;
+                    indexesToRemove.append(index);
                 }
-                ++selected;
             }
 
-            // When there are neither gaps in nor items below the selection, select the first item
-            if (!itemSelected)
+            //sort QModelIndexList descending
+            //NOTE: selectedRows() returned an unsorted list
+            qSort(indexesToRemove.begin(), indexesToRemove.end(), rowGreaterThan);
+
+            //remove from last to first item, to keep a valid row
+            foreach (const QModelIndex &index, indexesToRemove)
             {
-                m_listView->setSelected(m_listView->firstChild(),true);
-                m_listView->setCurrentItem(m_listView->firstChild());
+                m_transferView->model()->removeRow(index.row(), QModelIndex());
+                //needed, otherwise valid rows "can be treated" as invalid,
+                //proxymodel does not keep up with changes
+                m_transferView->updateModel();
             }
 
-            lst.setAutoDelete( true );
-            while( lst.remove() ) ;
+            //remove all gone items
+            foreach (const QModelIndex &index, indexesToRemove)
+            {
+                indexes.removeOne(index);
+            }
+
+            m_transferView->clearSelection();
+            //select everything that got not removed
+            foreach (const QModelIndex &index, indexes)
+            {
+                int offset = 0;
+                foreach (const QModelIndex &removedIndex, indexesToRemove)
+                {
+                    if (removedIndex.row() < index.row())
+                    {
+                        ++offset;
+                    }
+                }
+                m_transferView->selectRow(index.row() - offset);
+            }
+
+            if (m_transferView->itemCount() == 0 || m_transferView->selectedIndexes().count() == 0)
+            {
+                m_detailPanel->clear();
+            }
+
             updateButton();
         }
 
         void TransferPanel::runDcc()
         {
-            Q3ListViewItemIterator it( m_listView );
-            while( it.current() )
+            foreach (const QModelIndex &index, m_transferView->selectedRows())
             {
-                if( it.current()->isSelected() )
+                if (index.data(TransferListModel::TransferType).toInt() == Transfer::Send &&
+                    index.data(TransferListModel::TransferStatus).toInt() == Transfer::Done)
                 {
-                    TransferPanelItem* item=static_cast<TransferPanelItem*>( it.current() );
-                    Transfer* transfer = item->transfer();
-                    if( transfer->getType() == Transfer::Send || transfer->getStatus() == Transfer::Done )
-                        item->runFile();
+                    Transfer *transfer = static_cast<Transfer*>(qVariantValue<QObject*>(index.data(TransferListModel::TransferPointer)));
+                    if (transfer)
+                    {
+                        runFile(transfer);
+                    }
                 }
-                ++it;
             }
         }
 
         void TransferPanel::openLocation()
         {
-            Q3ListViewItemIterator it( m_listView );
-            while( it.current() )
+            foreach (const QModelIndex &index, m_transferView->selectedRows())
             {
-                if( it.current()->isSelected() )
+                Transfer *transfer = static_cast<Transfer*>(qVariantValue<QObject*>(index.data(TransferListModel::TransferPointer)));
+                if (transfer)
                 {
-                    TransferPanelItem* item=static_cast<TransferPanelItem*>( it.current() );
-                    item->openLocation();
+                    openLocation(transfer);
                 }
-                ++it;
             }
         }
 
         void TransferPanel::showFileInfo()
         {
-            Q3ListViewItemIterator it( m_listView );
-            while( it.current() )
+            foreach (const QModelIndex &index, m_transferView->selectedRows())
             {
-                if( it.current()->isSelected() )
+                Transfer *transfer = static_cast<Transfer*>(qVariantValue<QObject*>(index.data(TransferListModel::TransferPointer)));
+                if (transfer)
                 {
-                    TransferPanelItem* item=static_cast<TransferPanelItem*>( it.current() );
-                    if( item->transfer()->getType() == Transfer::Send || item->transfer()->getStatus() == Transfer::Done )
-                        item->openFileInfoDialog();
+                    openFileInfoDialog(transfer);
                 }
-                ++it;
             }
         }
 
         void TransferPanel::selectAll()
         {
-            Q3ListViewItemIterator it( m_listView );
-            while ( it.current() )
-            {
-                m_listView->setSelected( *it, true );
-                ++it;
-            }
+            m_transferView->selectAll();
             updateButton();
         }
 
         void TransferPanel::selectAllCompleted()
         {
-            Q3ListViewItemIterator it( m_listView );
-            while ( it.current() )
+            m_transferView->selectAllCompleted();
+            updateButton();
+        }
+
+        void TransferPanel::popupRequested(const QPoint &pos)
+        {
+            updateButton();
+            m_popup->popup(QWidget::mapToGlobal(pos));
+        }
+
+        void TransferPanel::popupActivated(QAction *act)
+        {
+            if (act == m_abort)
             {
-                TransferPanelItem* item=static_cast<TransferPanelItem*>( it.current() );
-                m_listView->setSelected( *it, item->transfer()->getStatus() >= Transfer::Done );
-                ++it;
-            }
-            updateButton();
-        }
-
-        void TransferPanel::popupRequested(Q3ListViewItem* /* item */, const QPoint& pos, int /* col */)  // slot
-        {
-            updateButton();
-            m_popup->popup(pos);
-        }
-
-        void TransferPanel::popupActivated( QAction * act ) // slot
-        {
-            if ( act == m_abort )
                 abortDcc();
-            else if ( act == m_accept )
+            }
+            else if (act == m_accept)
+            {
                 acceptDcc();
-            else if ( act == m_clear )
+            }
+            else if (act == m_clear)
+            {
                 clearDcc();
-            else if ( act == m_info )
+            }
+            else if (act == m_info)
+            {
                 showFileInfo();
-            else if ( act == m_open )
+            }
+            else if (act == m_open)
+            {
                 runDcc();
-            else if ( act == m_selectAll )
+            }
+            else if (act == m_openLocation)
+            {
+                openLocation();
+            }
+            else if (act == m_selectAll)
+            {
                 selectAll();
-            else if ( act == m_selectAllCompleted )
+            }
+            else if (act == m_selectAllCompleted)
+            {
                 selectAllCompleted();
-            else if ( act == m_resend )
+            }
+            else if (act == m_resend)
+            {
                 resendFile();
+            }
         }
 
-        void TransferPanel::doubleClicked(Q3ListViewItem* _item, const QPoint& /* _pos */, int /* _col */)
+        void TransferPanel::doubleClicked(const QModelIndex &index)
         {
-            TransferPanelItem* item = static_cast<TransferPanelItem*>(_item);
-            item->runFile();
+            Transfer *transfer = static_cast<Transfer*>(qVariantValue<QObject*>(index.data(TransferListModel::TransferPointer)));
+            if (transfer)
+            {
+                runFile(transfer);
+            }
         }
 
         // virtual
@@ -479,9 +468,83 @@ namespace Konversation
         {
         }
 
-        K3ListView* TransferPanel::getListView()
+        TransferView *TransferPanel::getTransferView()
         {
-          return m_listView;
+            return m_transferView;
+        }
+
+        void TransferPanel::runFile(Transfer *transfer)
+        {
+            if (transfer->getType() == Transfer::Send || transfer->getStatus() == Transfer::Done)
+            {
+                new KRun(transfer->getFileURL(), getTransferView());
+            }
+        }
+
+        void TransferPanel::openLocation(Transfer *transfer)
+        {
+            QString urlString = transfer->getFileURL().path();
+            if (!urlString.isEmpty())
+            {
+                KUrl url(urlString);
+                url.setFileName(QString());
+                new KRun(url, 0, 0, true, true);
+            }
+        }
+
+        void TransferPanel::openFileInfoDialog(Transfer *transfer)
+        {
+            if (transfer->getType() == Transfer::Send || transfer->getStatus() == Transfer::Done)
+            {
+                QStringList infoList;
+
+                QString path = transfer->getFileURL().path();
+
+                // get meta info object
+                KFileMetaInfo fileMetaInfo(path, QString(), KFileMetaInfo::Everything);
+
+                // is there any info for this file?
+                if (fileMetaInfo.isValid())
+                {
+                    const QHash<QString, KFileMetaInfoItem>& items = fileMetaInfo.items();
+                    QHash<QString, KFileMetaInfoItem>::const_iterator it = items.constBegin();
+                    const QHash<QString, KFileMetaInfoItem>::const_iterator end = items.constEnd();
+                    while (it != end)
+                    {
+                        const KFileMetaInfoItem &metaInfoItem = it.value();
+                        const QVariant &value = metaInfoItem.value();
+                        if (value.isValid())
+                        {
+                            // append item information to list
+                            infoList.append("- " + metaInfoItem.name() + ' ' + value.toString());
+                        }
+                        ++it;
+                    }
+
+                    // display information list if any available
+                    if(infoList.count())
+                    {
+                        #ifdef USE_INFOLIST
+                        KMessageBox::informationList(
+                            listView(),
+                            i18n("Available information for file %1:", path),
+                            infoList,
+                            i18n("File Information")
+                            );
+                        #else
+                        KMessageBox::information(
+                            getTransferView(),
+                            "<qt>"+infoList.join("<br>")+"</qt>",
+                            i18n("File Information")
+                            );
+                        #endif
+                    }
+                }
+                else
+                {
+                    KMessageBox::sorry(getTransferView(), i18n("No detailed information for this file found."), i18n("File Information"));
+                }
+            }
         }
 
     }

@@ -23,8 +23,6 @@
 #include "connectionmanager.h"
 #include "dcccommon.h"
 #include "transfermanager.h"
-#include "transferpanel.h"
-#include "transferpanelitem.h"
 #include "transfersend.h"
 #include "transferrecv.h"
 #include "recipientdialog.h"

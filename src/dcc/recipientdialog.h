@@ -11,6 +11,9 @@
   copyright: (C) 2002 by Dario Abatianni
   email:     eisfuchs@tigress.com
 */
+/*
+  Copyright (C) 2009 Bernd Buschinski <b.buschinski@web.de>
+*/
 
 #ifndef RECIPIENTDIALOG_H
 #define RECIPIENTDIALOG_H

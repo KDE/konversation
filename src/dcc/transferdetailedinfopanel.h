@@ -7,6 +7,7 @@
 
 /*
   Copyright (C) 2007 Shintaro Matsuoka <shin@shoegazed.org>
+  Copyright (C) 2009 Bernd Buschinski <b.buschinski@web.de>
 */
 
 #ifndef TRANSFERDETAILEDINFOPANEL_H
@@ -21,28 +22,28 @@ namespace Konversation
     namespace DCC
     {
         class Transfer;
-        class TransferPanelItem;
 
         class TransferDetailedInfoPanel : public QWidget, private Ui::DccTransferDetailedInfoPanelUI
         {
             Q_OBJECT
 
             public:
-                explicit TransferDetailedInfoPanel( QWidget* parent = 0 );
+                explicit TransferDetailedInfoPanel(QWidget *parent = 0);
                 virtual ~TransferDetailedInfoPanel();
 
-                void setItem( TransferPanelItem* item );
+                void setTransfer(Transfer *item);
+                void clear();
 
             private slots:
                 void updateView();
                 // Only updates labels that can change during transfer
                 void updateChangeableView();
-                void slotTransferStatusChanged( Konversation::DCC::Transfer* transfer, int newStatus, int oldStatus );
-                void slotLocationChanged( const QString& url );
+                void slotTransferStatusChanged(Konversation::DCC::Transfer *transfer, int newStatus, int oldStatus);
+                void slotLocationChanged(const QString& url);
 
             private:
-                TransferPanelItem* m_item;
-                QTimer* m_autoViewUpdateTimer;
+                Transfer *m_transfer;
+                QTimer *m_autoViewUpdateTimer;
         };
     }
 }

@@ -7,17 +7,17 @@
 
 /*
   Copyright (C) 2007 Shintaro Matsuoka <shin@shoegazed.org>
+  Copyright (C) 2009 Bernd Buschinski <b.buschinski@web.de>
 */
 
 #include "transferdetailedinfopanel.h"
 #include "transfer.h"
 #include "transferrecv.h"
 #include "transfermanager.h"
-#include "transferpanelitem.h"
 #include "application.h"
-
 #include "connectionmanager.h"
 #include "server.h"
+#include "transferlistmodel.h"
 
 #include <QLabel>
 #include <QTimer>
@@ -29,20 +29,20 @@ namespace Konversation
 {
     namespace DCC
     {
-        TransferDetailedInfoPanel::TransferDetailedInfoPanel( QWidget* parent )
-            : QWidget( parent )
+        TransferDetailedInfoPanel::TransferDetailedInfoPanel(QWidget * parent)
+            : QWidget(parent)
         {
-            setupUi( this );
+            setupUi(this);
 
-            m_autoViewUpdateTimer = new QTimer( this );
+            m_autoViewUpdateTimer = new QTimer(this);
 
-            connect( m_urlreqLocation, SIGNAL( textChanged( const QString& ) ), this, SLOT( slotLocationChanged( const QString& ) ) );
-            connect( Application::instance()->getDccTransferManager(), SIGNAL( fileURLChanged( Konversation::DCC::TransferRecv* ) ),
-                     this, SLOT( updateView() ) );  // it's a little rough..
+            connect(m_urlreqLocation, SIGNAL(textChanged(const QString&)), this, SLOT(slotLocationChanged(const QString&)));
+            connect(Application::instance()->getDccTransferManager(), SIGNAL(fileURLChanged(Konversation::DCC::TransferRecv*)),
+                    this, SLOT(updateView()));  // it's a little rough..
 
             //only enable when needed
-            m_urlreqLocation->lineEdit()->setReadOnly( true );
-            m_urlreqLocation->button()->setEnabled( false );
+            m_urlreqLocation->lineEdit()->setReadOnly(true);
+            m_urlreqLocation->button()->setEnabled(false);
             m_urlreqLocation->setMode(KFile::File | KFile::LocalOnly);
         }
 
@@ -50,96 +50,129 @@ namespace Konversation
         {
         }
 
-        void TransferDetailedInfoPanel::setItem( TransferPanelItem* item )
+        void TransferDetailedInfoPanel::setTransfer(Transfer *item)
         {
-            m_autoViewUpdateTimer->stop();
+            if (item == m_transfer)
+            {
+                return;
+            }
 
-            // disconnect all slots once
-            disconnect( this );
-            // we can't do disconnect( m_item->transfer(), 0, this, 0 ) here
-            // because m_item can have been deleted already.
+            clear();
+            m_transfer = item;
 
             // set up the auto view-update timer
-            connect( m_autoViewUpdateTimer, SIGNAL( timeout() ), this, SLOT( updateChangeableView() ) );
-
-            m_item = item;
+            connect(m_autoViewUpdateTimer, SIGNAL(timeout()), this, SLOT(updateChangeableView()));
 
             // If the file is already being transferred, the timer must be started here,
             // otherwise the information will not be updated every 0.5sec
-            if (m_item->transfer()->getStatus() == Transfer::Transferring)
-                m_autoViewUpdateTimer->start( 500 );
-            connect( m_item->transfer(), SIGNAL( statusChanged( Konversation::DCC::Transfer*, int, int ) ), this, SLOT( slotTransferStatusChanged( Konversation::DCC::Transfer*, int, int ) ) );
+            if (m_transfer->getStatus() == Transfer::Transferring)
+                m_autoViewUpdateTimer->start(500);
+
+            connect(item, SIGNAL(statusChanged(Konversation::DCC::Transfer*, int, int)),
+                    this, SLOT(slotTransferStatusChanged(Konversation::DCC::Transfer*, int, int)));
 
             updateView();
         }
 
+        void TransferDetailedInfoPanel::clear()
+        {
+            m_autoViewUpdateTimer->stop();
+
+            // disconnect all slots once
+            disconnect(this);
+            // we can't do disconnect( m_item->transfer(), 0, this, 0 ) here
+            // because m_item can have been deleted already.
+
+            m_transfer = 0;
+
+            m_urlreqLocation->lineEdit()->setReadOnly(true);
+            m_urlreqLocation->lineEdit()->setFrame(false);
+            m_urlreqLocation->button()->setEnabled(false);
+
+            m_labelDccType->clear();
+            m_labelFilename->clear();
+            m_urlreqLocation->clear();
+            m_labelPartner->clear();
+            m_labelSelf->clear();
+            m_labelFileSize->clear();
+            m_labelIsResumed->clear();
+            m_labelTimeOffered->clear();
+            m_labelTimeStarted->clear();
+            m_labelTimeFinished->clear();
+
+            m_labelStatus->clear();
+            m_progress->setValue(0);
+            m_labelCurrentPosition->clear();
+            m_labelCurrentSpeed->clear();
+            m_labelAverageSpeed->clear();
+            m_labelTransferringTime->clear();
+            m_labelTimeLeft->clear();
+        }
+
         void TransferDetailedInfoPanel::updateView()
         {
-            Transfer* transfer = m_item->transfer();
+            if (!m_transfer)
+            {
+                return;
+            }
 
             // Type:
-            QString type( transfer->getType() == Transfer::Send ? i18n( "DCC Send" ) : i18n( "DCC Receive" ) );
-            if ( transfer->isReverse() )
-                type += i18n( " (Reverse DCC)" );
-            m_labelDccType->setText( type );
+            QString type(m_transfer->getType() == Transfer::Send ? i18n("DCC Send") : i18n("DCC Receive"));
+            if (m_transfer->isReverse())
+            {
+                type += i18n(" (Reverse DCC)");
+            }
+            m_labelDccType->setText(type);
 
             // Filename:
-            m_labelFilename->setText( transfer->getFileName() );
+            m_labelFilename->setText(m_transfer->getFileName());
 
             // Location:
-            m_urlreqLocation->setUrl( transfer->getFileURL().prettyUrl() );
-            //m_urlreqLocation->lineEdit()->setFocusPolicy( transfer->getStatus() == Transfer::Queued ? Qt::StrongFocus : ClickFocus );
-            m_urlreqLocation->lineEdit()->setReadOnly( transfer->getStatus() != Transfer::Queued );
-            m_urlreqLocation->lineEdit()->setFrame( transfer->getStatus() == Transfer::Queued );
-            m_urlreqLocation->button()->setEnabled( transfer->getStatus() == Transfer::Queued );
+            m_urlreqLocation->setUrl(m_transfer->getFileURL().prettyUrl());
+            //m_urlreqLocation->lineEdit()->setFocusPolicy( m_item->getStatus() == Transfer::Queued ? Qt::StrongFocus : ClickFocus );
+            m_urlreqLocation->lineEdit()->setReadOnly(m_transfer->getStatus() != Transfer::Queued);
+            m_urlreqLocation->lineEdit()->setFrame(m_transfer->getStatus() == Transfer::Queued);
+            m_urlreqLocation->button()->setEnabled(m_transfer->getStatus() == Transfer::Queued);
 
             // Partner:
             QString partnerInfoServerName;
-            if ( transfer->getConnectionId() == -1 )
-                partnerInfoServerName = i18n( "Unknown server" );
-            else if ( Application::instance()->getConnectionManager()->getServerByConnectionId( transfer->getConnectionId() ) )
-                partnerInfoServerName = Application::instance()->getConnectionManager()->getServerByConnectionId( transfer->getConnectionId() )->getServerName();
+            if (m_transfer->getConnectionId() == -1)
+                partnerInfoServerName = i18n("Unknown server");
+            else if (Application::instance()->getConnectionManager()->getServerByConnectionId(m_transfer->getConnectionId()))
+                partnerInfoServerName = Application::instance()->getConnectionManager()->getServerByConnectionId(m_transfer->getConnectionId())->getServerName();
             else
-                partnerInfoServerName = i18n( "Unknown server" );
-            QString partnerInfo( i18n( "%1 on %2",
-                transfer->getPartnerNick().isEmpty() ? "?" : transfer->getPartnerNick(),
-                partnerInfoServerName ) );
-            if ( !transfer->getPartnerIp().isEmpty() )
-                partnerInfo += i18n( ", %1 (port %2)", transfer->getPartnerIp(), QString::number( transfer->getPartnerPort() ) );
-            m_labelPartner->setText( partnerInfo );
+                partnerInfoServerName = i18n("Unknown server");
+            QString partnerInfo(i18n("%1 on %2",
+                m_transfer->getPartnerNick().isEmpty() ? "?" : m_transfer->getPartnerNick(),
+                partnerInfoServerName));
+            if (!m_transfer->getPartnerIp().isEmpty())
+                partnerInfo += i18n(", %1 (port %2)", m_transfer->getPartnerIp(), QString::number(m_transfer->getPartnerPort()));
+            m_labelPartner->setText(partnerInfo);
 
             // Self:
-            if ( transfer->getOwnIp().isEmpty() )
-                m_labelSelf->clear();
-            else
-                m_labelSelf->setText( i18n( "%1 (port %2)", transfer->getOwnIp(), QString::number( transfer->getOwnPort() ) ) );
+            if (!m_transfer->getOwnIp().isEmpty())
+                m_labelSelf->setText(i18n("%1 (port %2)", m_transfer->getOwnIp(), QString::number(m_transfer->getOwnPort())));
 
             // File Size:
-            m_labelFileSize->setText( KGlobal::locale()->formatNumber( transfer->getFileSize(), 0 ) );
+            m_labelFileSize->setText(KGlobal::locale()->formatNumber(m_transfer->getFileSize(), 0));
 
             // Resumed:
-            if ( transfer->isResumed() )
-                m_labelIsResumed->setText( i18n( "Yes, %1", KGlobal::locale()->formatNumber( transfer->getTransferStartPosition(), 0 ) ) );
+            if (m_transfer->isResumed())
+                m_labelIsResumed->setText(i18n("Yes, %1", KGlobal::locale()->formatNumber(m_transfer->getTransferStartPosition(), 0)));
             else
-                m_labelIsResumed->setText( i18n( "No" ) );
+                m_labelIsResumed->setText(i18n("No"));
 
             // Offered at:
-            m_labelTimeOffered->setText( transfer->getTimeOffer().toString( "hh:mm:ss" ) );
+            m_labelTimeOffered->setText(m_transfer->getTimeOffer().toString("hh:mm:ss"));
 
             // Started at:
-            if ( !transfer->getTimeTransferStarted().isNull() )
-                m_labelTimeStarted->setText( transfer->getTimeTransferStarted().toString( "hh:mm:ss" ) );
-            else
-                m_labelTimeStarted->clear();
+            if (!m_transfer->getTimeTransferStarted().isNull())
+                m_labelTimeStarted->setText(m_transfer->getTimeTransferStarted().toString("hh:mm:ss"));
 
             // Finished at:
-            if ( !transfer->getTimeTransferFinished().isNull() )
+            if (!m_transfer->getTimeTransferFinished().isNull())
             {
-                m_labelTimeFinished->setText( transfer->getTimeTransferFinished().toString( "hh:mm:ss" ) );
-            }
-            else
-            {
-                m_labelTimeFinished->clear();
+                m_labelTimeFinished->setText(m_transfer->getTimeTransferFinished().toString("hh:mm:ss"));
             }
 
             updateChangeableView();
@@ -147,77 +180,80 @@ namespace Konversation
 
         void TransferDetailedInfoPanel::updateChangeableView()
         {
-            Transfer* transfer = m_item->transfer();
+            if (!m_transfer)
+            {
+                return;
+            }
 
             // Status:
-            if ( transfer->getStatus() == Transfer::Transferring )
+            if (m_transfer->getStatus() == Transfer::Transferring)
             {
-                m_labelStatus->setText( m_item->getStatusText() + " ( " + m_item->getCurrentSpeedPrettyText() + " )" );
+                m_labelStatus->setText(TransferListModel::getStatusText(m_transfer->getStatus(),
+                                       m_transfer->getType()) + " ( " +
+                                       TransferListModel::getSpeedPrettyText(m_transfer->getCurrentSpeed()) + " )");
             }
             else
             {
-                m_labelStatus->setText( transfer->getStatusDetail().isEmpty() ? m_item->getStatusText() : m_item->getStatusText() + " (" + transfer->getStatusDetail() + ')' );
+                m_labelStatus->setText(m_transfer->getStatusDetail().isEmpty() ?
+                                       TransferListModel::getStatusText(m_transfer->getStatus(), m_transfer->getType()) :
+                                       TransferListModel::getStatusText(m_transfer->getStatus(), m_transfer->getType()) + " (" + m_transfer->getStatusDetail() + ')');
             }
 
             // Progress:
-            m_progress->setValue( transfer->getProgress() );
+            m_progress->setValue(m_transfer->getProgress());
 
             // Current Position:
-            m_labelCurrentPosition->setText( KGlobal::locale()->formatNumber( transfer->getTransferringPosition(), 0 ) );
+            m_labelCurrentPosition->setText(KGlobal::locale()->formatNumber(m_transfer->getTransferringPosition(), 0));
 
             // Current Speed:
-            m_labelCurrentSpeed->setText( m_item->getCurrentSpeedPrettyText() );
+            m_labelCurrentSpeed->setText(TransferListModel::getSpeedPrettyText(m_transfer->getCurrentSpeed()));
 
             // Average Speed:
-            m_labelAverageSpeed->setText( m_item->getAverageSpeedPrettyText() );
+            m_labelAverageSpeed->setText(TransferListModel::getSpeedPrettyText(m_transfer->getAverageSpeed()));
 
             // Transferring Time:
-            if ( transfer->getTimeTransferStarted().isNull() )
+            if (!m_transfer->getTimeTransferStarted().isNull())
             {
-                m_labelTransferringTime->clear();
-            }
-            else
-            {
-                int transferringTime;
+                int m_itemringTime;
 
-                // The transfer is still in progress
-                if ( transfer->getTimeTransferFinished().isNull() )
-                    transferringTime = transfer->getTimeTransferStarted().secsTo( QDateTime::currentDateTime() );
-                // The transfer has finished
+                // The m_item is still in progress
+                if (m_transfer->getTimeTransferFinished().isNull())
+                    m_itemringTime = m_transfer->getTimeTransferStarted().secsTo(QDateTime::currentDateTime());
+                // The m_item has finished
                 else
-                    transferringTime = transfer->getTimeTransferStarted().secsTo( transfer->getTimeTransferFinished() );
+                    m_itemringTime = m_transfer->getTimeTransferStarted().secsTo(m_transfer->getTimeTransferFinished());
 
-                if ( transferringTime >= 1 )
-                    m_labelTransferringTime->setText( TransferPanelItem::secToHMS( transferringTime ) );
+                if (m_itemringTime >= 1)
+                    m_labelTransferringTime->setText(TransferListModel::secToHMS(m_itemringTime));
                 else
-                    m_labelTransferringTime->setText( i18n( "< 1sec" ) );
+                    m_labelTransferringTime->setText(i18n("< 1sec"));
             }
 
             // Estimated Time Left:
-            m_labelTimeLeft->setText( m_item->getTimeLeftPrettyText() );
+            m_labelTimeLeft->setText(TransferListModel::getTimeLeftPrettyText(m_transfer->getTimeLeft()));
         }
 
-        void TransferDetailedInfoPanel::slotTransferStatusChanged( Transfer* /* transfer */, int newStatus, int oldStatus )
+        void TransferDetailedInfoPanel::slotTransferStatusChanged(Transfer */* transfer */, int newStatus, int oldStatus)
         {
             updateView();
-            if ( newStatus == Transfer::Transferring )
+            if (newStatus == Transfer::Transferring)
             {
                 // start auto view-update timer
-                m_autoViewUpdateTimer->start( 500 );
+                m_autoViewUpdateTimer->start(500);
             }
-            else if ( oldStatus == Transfer::Transferring )
+            else if (oldStatus == Transfer::Transferring)
             {
                 // stop auto view-update timer
                 m_autoViewUpdateTimer->stop();
             }
         }
 
-        void TransferDetailedInfoPanel::slotLocationChanged( const QString& url )
+        void TransferDetailedInfoPanel::slotLocationChanged(const QString &url)
         {
-            if ( m_item &&  m_item->transfer() && m_item->transfer()->getType() == Transfer::Receive )
+            if (m_transfer &&  m_transfer->getType() == Transfer::Receive)
             {
-                TransferRecv* transfer = static_cast< TransferRecv* >( m_item->transfer() );
-                transfer->setFileURL( KUrl( url ) );
+                TransferRecv *transfer = static_cast<TransferRecv*>(m_transfer);
+                transfer->setFileURL(KUrl(url));
                 updateView();
             }
         }

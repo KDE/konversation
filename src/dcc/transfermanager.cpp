@@ -8,6 +8,7 @@
 /*
   Copyright (C) 2007 Shintaro Matsuoka <shin@shoegazed.org>
   Copyright (C) 2009 Michael Kreitzer <mrgrim@gr1m.org>
+  Copyright (C) 2009 Bernd Buschinski <b.buschinski@web.de>
 */
 
 #include "transfermanager.h"
@@ -73,7 +74,7 @@ namespace Konversation
         {
             TransferRecv* transfer = new TransferRecv(this);
             m_recvItems.push_back( transfer );
-            connect( transfer, SIGNAL( done( Konversation::DCC::Transfer* ) ), this, SLOT( removeRecvItem( Konversation::DCC::Transfer* ) ) );
+            connect( transfer, SIGNAL( removed( Konversation::DCC::Transfer* ) ), this, SLOT( removeRecvItem( Konversation::DCC::Transfer* ) ) );
             initTransfer( transfer );
             return transfer;
         }
@@ -82,7 +83,7 @@ namespace Konversation
         {
             TransferSend* transfer = new TransferSend(this);
             m_sendItems.push_back( transfer );
-            connect( transfer, SIGNAL( done( Konversation::DCC::Transfer* ) ), this, SLOT( removeSendItem( Konversation::DCC::Transfer* ) ) );
+            connect( transfer, SIGNAL( removed( Konversation::DCC::Transfer* ) ), this, SLOT( removeSendItem( Konversation::DCC::Transfer* ) ) );
             initTransfer( transfer );
             return transfer;
         }

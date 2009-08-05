@@ -167,9 +167,10 @@ set(dcc_SRCS
     dcc/transferdetailedinfopanel.cpp
     dcc/transfermanager.cpp
     dcc/transferpanel.cpp
-    dcc/transferpanelitem.cpp
     dcc/transferrecv.cpp
     dcc/transfersend.cpp
+    dcc/transferlistmodel.cpp
+    dcc/transferview.cpp
 )
 
 kde4_add_ui_files(dcc_SRCS

@@ -8,6 +8,7 @@
 /*
   Copyright (C) 2004 Dario Abatianni <eisfuchs@tigress.com>
   Copyright (C) 2004 Shintaro Matsuoka <shin@shoegazed.org>
+  Copyright (C) 2009 Bernd Buschinski <b.buschinski@web.de>
 */
 
 #include "resumedialog.h"

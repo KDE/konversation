@@ -14,6 +14,7 @@
 /*
   Copyright (C) 2007 Shintaro Matsuoka <shin@shoegazed.org>
   Copyright (C) 2009 Michael Kreitzer <mrgrim@gr1m.org>
+  Copyright (C) 2009 Bernd Buschinski <b.buschinski@web.de>
 */
 
 #ifndef TRANSFERMANAGER_H
