@@ -2073,11 +2073,11 @@ void InputFilter::parseModes(const QString &sourceNick, const QStringList &param
     // List of modes that need a parameter (note exception with -k and -l)
     // Mode q is quiet on freenode and acts like b... if this is a channel mode on other
     //  networks then more logic is needed here. --MrGrim
-    //FIXME: The assumptions being made here about which modes have parameters
-    //and which don't strike me as very wrong, as some of these mode chars are
-    //used both as user and channel modes and whether they use a parameter can
-    //vary between those cases. This would seem to lead to trouble with the
-    //list indices down there. --hein, Thu Aug 6 19:48:02 CEST 2009 / r1008015
+    //FIXME: The assumptions being made here about which modes have parameters and
+    // which don't strike me as very wrong, as some of these mode chars are used
+    // both as user and channel modes (e.g. A and O) and whether they use a para-
+    // meter can vary between those cases. This would seem to lead to trouble with
+    // the list indices down there. --hein, Thu Aug 6 19:48:02 CEST 2009 / r1008015
     QString parameterModes = "aAoOvhkbleIq";
     QString message = i18n("%1 sets mode: %2", sourceNick, modestring);
 
