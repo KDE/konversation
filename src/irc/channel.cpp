@@ -44,10 +44,6 @@
 #include <QDropEvent>
 #include <QHeaderView>
 
-#include <Q3Grid>
-#include <Q3DragObject>
-#include <Q3Header>
-
 #include <KLineEdit>
 #include <KInputDialog>
 #include <KPasswordDialog>
@@ -237,7 +233,7 @@ Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
     nicknameListView->installEventFilter(this);
 
     // initialize buttons grid, will be set up in updateQuickButtons
-    buttonsGrid=0;
+    m_buttonsGrid = 0;
 
     // The box holding the Nickname button and Channel input
     commandLineBox = new KHBox(this);
@@ -2222,16 +2218,23 @@ void Channel::updateQuickButtons(const QStringList &newButtonList)
     qDeleteAll(buttonList);
     buttonList.clear();
 
-    if(buttonsGrid)delete buttonsGrid;
+    if(m_buttonsGrid) delete m_buttonsGrid;
 
     // the grid that holds the quick action buttons
-    buttonsGrid = new Q3Grid(2, nickListButtons);
+    m_buttonsGrid = new QWidget (nickListButtons); //Q3Grid(2, nickListButtons);
+    QGridLayout* layout = new QGridLayout (m_buttonsGrid);
+    layout->setMargin(0);
 
+    int col = 0;
+    int row = 0;
     // add new quick buttons
     for(int index=0;index<newButtonList.count();index++)
     {
         // generate empty buttons first, text will be added later
-        QuickButton* quickButton = new QuickButton(QString(), QString(), buttonsGrid);
+        QuickButton* quickButton = new QuickButton(QString(), QString(), m_buttonsGrid);
+        col = index % 2;
+        layout->addWidget (quickButton, row, col);
+        row += col;
         buttonList.append(quickButton);
 
         connect(quickButton, SIGNAL(clicked(const QString &)), this, SLOT(quickButtonClicked(const QString &)));
@@ -2264,7 +2267,7 @@ void Channel::showQuickButtons(bool show)
 {
     // Qt does not redraw the buttons properly when they are not on screen
     // while getting hidden, so we remember the "soon to be" state here.
-    if(isHidden() || !buttonsGrid)
+    if(isHidden() || !m_buttonsGrid)
     {
         quickButtonsChanged=true;
         quickButtonsState=show;
@@ -2272,9 +2275,9 @@ void Channel::showQuickButtons(bool show)
     else
     {
         if(show)
-            buttonsGrid->show();
+            m_buttonsGrid->show();
         else
-            buttonsGrid->hide();
+            m_buttonsGrid->hide();
     }
 }
 

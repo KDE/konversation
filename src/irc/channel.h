@@ -337,7 +337,7 @@ class Channel : public ChatWindow
         NickListView* nicknameListView;
         KHBox* commandLineBox;
         KVBox* nickListButtons;
-        Q3Grid* buttonsGrid;
+        QWidget* m_buttonsGrid;
         KComboBox* nicknameCombobox;
         QString oldNick; ///< GUI
         QLabel* awayLabel;
