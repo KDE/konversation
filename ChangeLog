@@ -10,6 +10,8 @@ Changes since 1.2-alpha5:
   is now remembered across application restarts when using Qt 4.5 or higher.
 * A "Rename Tab..." action has been added to the context menu of Konsole
   tabs.
+* Fixed a crash when the client observes channel modes being modified that
+  carry a parameter when used as user modes.
 
 
 Changes from 1.2-alpha4 to 1.2-alpha5:
