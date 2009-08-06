@@ -33,7 +33,6 @@ class QTimer;
 class QTreeWidgetItem;
 class QStringList;
 class QSplitter;
-class Q3Grid;
 class QToolButton;
 
 class KLineEdit;
