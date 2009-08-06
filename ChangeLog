@@ -1,3 +1,17 @@
+Changes since 1.2-alpha5:
+* The transfer list in the DCC Status tab now separates items into "Inco-
+  ming Transfers" and "Outgoing Transfers" categories, using the same ca-
+  tegory headers employed in System Settings and other places throughout
+  KDE 4.
+* It's now possible to enable/disable the display of individual columns of
+  the transfer list in the DCC Status tab. This is remembered across app-
+  lication restarts.
+* The sort column and direction of the transfer list in the DCC Status tab
+  is now remembered across application restarts when using Qt 4.5 or higher.
+* A "Rename Tab..." action has been added to the context menu of Konsole
+  tabs.
+
+
 Changes from 1.2-alpha4 to 1.2-alpha5:
 Konversation 1.2-alpha5 features significant performance and memory usage
 improvements in several areas of the application, such as channel nickname

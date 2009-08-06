@@ -100,6 +100,7 @@ class ViewContainer : public QObject
         void closeView(ChatWindow* view);
         void closeViewMiddleClick(QWidget* view);
         void closeCurrentView();
+        void renameKonsole();
         void cleanupAfterClose(ChatWindow* view);
 
         void changeViewCharset(int index);

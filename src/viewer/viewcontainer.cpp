@@ -39,6 +39,7 @@
 #include <QSplitter>
 #include <QToolButton>
 
+#include <KInputDialog>
 #include <KTabWidget>
 #include <KMessageBox>
 #include <KGlobalSettings>
@@ -1588,6 +1589,38 @@ void ViewContainer::closeViewMiddleClick(QWidget* view)
         closeView(view);
 }
 
+void ViewContainer::renameKonsole()
+{
+    bool ok = false;
+    int popup = m_popupViewIndex ? m_popupViewIndex : m_tabWidget->currentIndex();
+
+    QString label = KInputDialog::getText(i18n("Rename Tab"),
+                                          i18n("Enter new tab name:"),
+                                          m_tabWidget->tabText(popup),
+                                          &ok, m_tabWidget->widget(popup));
+
+    if (!m_tabWidget)
+        return;
+
+    if (ok)
+    {
+        KonsolePanel* view = static_cast<KonsolePanel*>(m_tabWidget->widget(popup));
+
+        if (!view) return;
+
+        view->setName(label);
+
+        m_tabWidget->setTabText(popup, label);
+        if (m_viewTree) m_viewTree->setViewName(view, label);
+
+        if (popup == m_tabWidget->currentIndex())
+        {
+            emit setStatusBarInfoLabel(label);
+            emit setWindowCaption(label);
+        }
+    }
+}
+
 void ViewContainer::closeCurrentView()
 {
     if (m_popupViewIndex == -1)
@@ -1667,6 +1700,11 @@ void ViewContainer::showViewContextMenu(QWidget* tab, const QPoint& pos)
     KToggleAction* autoJoinAction = qobject_cast<KToggleAction*>(actionCollection()->action("tab_autojoin"));
     QAction* rejoinAction = actionCollection()->action("rejoin_channel");
 
+    QAction* renameAct = new QAction(this);
+    renameAct->setText(i18n("&Rename Tab..."));
+    connect(renameAct, SIGNAL(triggered()), this, SLOT(renameKonsole()));
+
+
     if (view)
     {
         ChatWindow::WindowType viewType = view->getType();
@@ -1684,6 +1722,12 @@ void ViewContainer::showViewContextMenu(QWidget* tab, const QPoint& pos)
                 menu->addAction(rejoinAction);
                 rejoinAction->setEnabled(true);
             }
+        }
+
+        if (viewType == ChatWindow::Konsole)
+        {
+            QAction* action = actionCollection()->action("tab_encoding");
+            menu->insertAction(action, renameAct);
         }
 
         if (viewType == ChatWindow::Status)
@@ -1717,6 +1761,7 @@ void ViewContainer::showViewContextMenu(QWidget* tab, const QPoint& pos)
 
     menu->removeAction(autoJoinAction);
     menu->removeAction(rejoinAction);
+    menu->removeAction(renameAct);
     m_window->unplugActionList("server_actions");
 
     emit contextMenuClosed();
