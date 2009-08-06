@@ -30,7 +30,6 @@
 #include <QTcpSocket>
 #include <QTcpServer>
 
-#include <k3socketaddress.h> //TODO remove me
 #include <KFileItem>
 #include <KIO/NetAccess>
 
@@ -51,7 +50,6 @@
 #endif
 #include <arpa/inet.h>
 
-using namespace KNetwork;
 using namespace Konversation::UPnP;
 
 namespace Konversation
@@ -165,8 +163,8 @@ namespace Konversation
 
             if ( Preferences::self()->dccIPv4Fallback() )
             {
-                KIpAddress ip( m_ownIp );
-                if ( ip.isIPv6Addr() )
+                QHostAddress ip(m_ownIp);
+                if (ip.protocol() == QAbstractSocket::IPv6Protocol)
                 {
         #ifndef Q_WS_WIN
                     /* This is fucking ugly but there is no KDE way to do this yet :| -cartman */
