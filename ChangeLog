@@ -1,3 +1,13 @@
+Changes from 1.2-alpha5 to 1.2-alpha6:
+Konversation 1.2-alpha6 is primarily a hotfix release addressing a serious
+DCC crash that we unfortunately only discovered after releasing alpha5. To
+sweeten the offer, however, it also includes a nicer DCC tranfer list that
+separates incoming and outgoing transfers into distinct categories, allows
+you to enable/disable individual columns and saves the sort column and di-
+rection across application restarts. Furthermore, Konsole tabs may now be
+renamed and there's also a fix for the handling of certain rare mode cha-
+racters.
+
 Changes since 1.2-alpha5:
 * The transfer list in the DCC Status tab now separates items into "Inco-
   ming Transfers" and "Outgoing Transfers" categories, using the same ca-
@@ -14,6 +24,7 @@ Changes since 1.2-alpha5:
   carry a parameter when used as user modes.
 * Fixed a crash when an incoming active or outgoing passive DCC file trans-
   fer either timed out or was manually aborted while in "Connecting" state."
+
 
 Changes from 1.2-alpha4 to 1.2-alpha5:
 Konversation 1.2-alpha5 features significant performance and memory usage
