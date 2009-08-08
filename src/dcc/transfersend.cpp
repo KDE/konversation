@@ -80,7 +80,10 @@ namespace Konversation
         void TransferSend::cleanUp()
         {
             kDebug();
+
             stopConnectionTimer();
+            disconnect(m_connectionTimer, 0, 0, 0);
+
             finishTransferLogger();
             if ( !m_tmpFile.isEmpty() )
             {
@@ -91,6 +94,7 @@ namespace Konversation
             m_file.close();
             if ( m_sendSocket )
             {
+                disconnect(m_sendSocket, 0, 0, 0);
                 m_sendSocket->close();
                 m_sendSocket = 0;                         // the instance will be deleted automatically by its parent
             }

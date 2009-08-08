@@ -86,6 +86,8 @@ namespace Konversation
             kDebug();
 
             stopConnectionTimer();
+            disconnect(m_connectionTimer, 0, 0, 0);
+
             finishTransferLogger();
             if ( m_serverSocket )
             {
@@ -100,6 +102,7 @@ namespace Konversation
             }
             if ( m_recvSocket )
             {
+                disconnect(m_recvSocket, 0, 0, 0);
                 m_recvSocket->close();
                 m_recvSocket = 0;                         // the instance will be deleted automatically by its parent
             }
