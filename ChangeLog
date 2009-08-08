@@ -8,6 +8,7 @@ rection across application restarts. Furthermore, Konsole tabs may now be
 renamed and there's also a fix for the handling of certain rare mode cha-
 racters.
 
+
 Changes since 1.2-alpha5:
 * The transfer list in the DCC Status tab now separates items into "Inco-
   ming Transfers" and "Outgoing Transfers" categories, using the same ca-
