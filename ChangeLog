@@ -1,3 +1,9 @@
+Changes since 1.2-alpha6:
+
+* Added a topic widget for Konsole windows and hooked it up to
+  the KPart's setWindowCaption signal
+
+
 Changes from 1.2-alpha5 to 1.2-alpha6:
 Konversation 1.2-alpha6 is primarily a hotfix release addressing a serious
 DCC crash that we unfortunately only discovered after releasing alpha5. To

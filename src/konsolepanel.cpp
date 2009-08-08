@@ -14,6 +14,8 @@
 #include "viewcontainer.h"
 
 #include <QLayout>
+#include <QSplitter>
+#include <QLabel>
 
 #include <KLibLoader>
 #include <kde_terminal_interface.h>
@@ -26,15 +28,23 @@ KonsolePanel::KonsolePanel(QWidget *p) : ChatWindow( p ), k_part (0)
 
     setMargin(0);
 
+    m_headerSplitter = new QSplitter(Qt::Vertical, this);
+
+    m_konsoleLabel = new QLabel(m_headerSplitter);
+    m_headerSplitter->setStretchFactor(m_headerSplitter->indexOf(m_konsoleLabel), 0);
+
     KPluginFactory* fact = KPluginLoader("libkonsolepart").factory();
     if (!fact) return;
 
-    k_part = fact->create<KParts::ReadOnlyPart>(this);
+    k_part = fact->create<KParts::ReadOnlyPart>(m_headerSplitter);
     if (!k_part) return;
 
+    m_headerSplitter->setStretchFactor(m_headerSplitter->indexOf(k_part->widget()), 1);
     k_part->widget()->setFocusPolicy(Qt::WheelFocus);
     setFocusProxy(k_part->widget());
     k_part->widget()->setFocus();
+
+    connect(k_part, SIGNAL(setWindowCaption(QString)), m_konsoleLabel, SLOT(setText(QString)));
 
     TerminalInterface *terminal = qobject_cast<TerminalInterface *>(k_part);
     if (!terminal) return;
