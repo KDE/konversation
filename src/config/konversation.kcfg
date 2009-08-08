@@ -694,7 +694,7 @@
       <default>false</default>
     </entry>
     <entry key="ColumnWidths" type="IntList" name="DccColumnWidths">
-      <default>25,90,80,150,70,90,120,80,70,120</default>
+      <default>47,90,103,173,70,87,157,87,96,165</default>
     </entry>
     <entry key="ColumnOrder" type="IntList" name="DccColumnOrders">
       <default>0,1,2,3,4,5,6,7,8,9</default>
