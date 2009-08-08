@@ -63,7 +63,7 @@ namespace Konversation
                 SendCategory,
                 SpaceRow,
                 ReceiveItem,
-                ReceiveCategory,
+                ReceiveCategory
             };
 
             int displayType;
