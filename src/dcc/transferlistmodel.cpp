@@ -121,8 +121,12 @@ namespace Konversation
         void TransferListModel::append(const TransferItemData &item)
         {
             m_transferList.append(item);
-            connect (item.transfer, SIGNAL(statusChanged(Konversation::DCC::Transfer*,int,int)),
-                     this, SLOT(transferStatusChanged(Konversation::DCC::Transfer*,int,int)));
+
+            if (item.transfer)
+            {
+                connect (item.transfer, SIGNAL(statusChanged(Konversation::DCC::Transfer*,int,int)),
+                         this, SLOT(transferStatusChanged(Konversation::DCC::Transfer*,int,int)));
+            }
         }
 
         Qt::ItemFlags TransferListModel::flags (const QModelIndex &index) const
