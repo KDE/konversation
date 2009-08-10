@@ -61,7 +61,7 @@ namespace Konversation
 
         signals:
             /**
-            * Emitted when a router or internet gateway device is detected.
+            * Emitted when a router or Internet gateway device is detected.
             * @param router The router
             */
             void discovered(Konversation::UPnP::UPnPRouter* router);
