@@ -1717,8 +1717,8 @@ void Server::requestDccSend(const QString &a_recipient)
             getViewContainer()->getWindow(),
             i18n("Select File(s) to Send to %1", recipient)
         );
-        KUrl::List::iterator it;
-        for ( it = fileURLs.begin() ; it != fileURLs.end() ; ++it )
+        KUrl::List::const_iterator it;
+        for ( it = fileURLs.constBegin() ; it != fileURLs.constEnd() ; ++it )
         {
             addDccSend( recipient, *it );
         }

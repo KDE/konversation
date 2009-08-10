@@ -595,7 +595,7 @@ void Application::readOptions()
     QRegExp re("^(.+) ([^\\s]+)$");
     QList<QString> channelEncodingEntryKeys=channelEncodingEntries.keys();
 
-    for(QList<QString>::iterator itStr=channelEncodingEntryKeys.begin(); itStr != channelEncodingEntryKeys.end(); ++itStr)
+    for(QList<QString>::const_iterator itStr=channelEncodingEntryKeys.constBegin(); itStr != channelEncodingEntryKeys.constEnd(); ++itStr)
     {
         if(re.indexIn(*itStr) > -1)
         {
@@ -609,7 +609,7 @@ void Application::readOptions()
     QList<QString> encodingEntryKeys=encodingEntries.keys();
     
     QRegExp reg("^(.+) ([^\\s]+) ([^\\s]+)$");
-    for(QList<QString>::iterator itStr=encodingEntryKeys.begin(); itStr != encodingEntryKeys.end(); ++itStr)
+    for(QList<QString>::const_iterator itStr=encodingEntryKeys.constBegin(); itStr != encodingEntryKeys.constEnd(); ++itStr)
     {
         if(reg.indexIn(*itStr) > -1)
         {
