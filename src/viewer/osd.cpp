@@ -50,7 +50,7 @@ OSDWidget::OSDWidget(const QString &appName, QWidget *parent, const char *name )
     // The best of both worlds.  On Windows, setting the widget as a popup avoids a task manager entry.  On linux, a popup steals focus.
     // Therefore we go need to do it platform specific :(
     #ifdef Q_OS_WIN
-    flags |= Qt::Popup;
+    flags |= Qt::Tool;
     #else
     flags |= Qt::Window | Qt::X11BypassWindowManagerHint;
     #endif
