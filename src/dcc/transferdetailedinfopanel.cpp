@@ -34,6 +34,7 @@ namespace Konversation
         {
             setupUi(this);
 
+            m_transfer = 0;
             m_autoViewUpdateTimer = new QTimer(this);
 
             connect(m_urlreqLocation, SIGNAL(textChanged(const QString&)), this, SLOT(slotLocationChanged(const QString&)));

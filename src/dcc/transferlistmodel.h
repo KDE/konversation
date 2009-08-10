@@ -74,6 +74,8 @@ namespace Konversation
         class TransferProgressBarDelete : public QStyledItemDelegate
         {
         public:
+            TransferProgressBarDelete(QObject *parent = 0);
+
             virtual void paint (QPainter *painter, const QStyleOptionViewItem & option,
                                 const QModelIndex &index) const;
         };
