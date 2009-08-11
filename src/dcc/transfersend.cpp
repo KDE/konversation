@@ -418,7 +418,9 @@ namespace Konversation
             stopConnectionTimer();
 
             if ( m_fastSend )
+            {
                 connect( m_sendSocket, SIGNAL( bytesWritten( qint64 ) ), this, SLOT( bytesWritten( qint64 ) ) );
+            }
             connect( m_sendSocket, SIGNAL( readyRead() ),  this, SLOT( getAck() ) );
 
             m_partnerIp = m_sendSocket->peerAddress().toString();
@@ -441,8 +443,12 @@ namespace Konversation
             }
         }
 
-        void TransferSend::bytesWritten(qint64 /*bytes*/)
+        void TransferSend::bytesWritten(qint64 bytes)
         {
+            Q_UNUSED(bytes);
+
+//             kDebug() << "bytes written:" << bytes;
+//             kDebug() << "m_sendSocket->bytesToWrite():" << m_sendSocket->bytesToWrite() << "<= m_bufferSize:" << m_bufferSize;
             //wait for all remaining bytes to be written
             if (m_sendSocket && m_sendSocket->bytesToWrite() <= (qint64)m_bufferSize)
             {
@@ -477,7 +483,8 @@ namespace Konversation
             //kDebug();
             if ( m_transferringPosition < (KIO::fileoffset_t)m_fileSize )
             {
-                writeData();
+                //don't write data directly, in case we get spammed with ACK we try so send too fast
+                bytesWritten(0);
             }
 
             quint32 pos;
