@@ -133,7 +133,9 @@ namespace Konversation
         {
             QString encodingName = KGlobal::charsets()->encodingForName( *it );
             // exclude encodings which are not supported on IRC
+            // 10646-UCS-2 & ucs2 are both UTF-16
             if ( encodingName == "ISO 10646-UCS-2" ||
+                 encodingName == "ucs2" ||
                  encodingName == "UTF-16" ||
                  encodingName == "utf7" )
             {

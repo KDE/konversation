@@ -1160,7 +1160,7 @@ int Server::_send_internal(QString outputLine)
         else //if we're connecting to a server manually
             channelCodecName=Preferences::channelEncoding(getDisplayName(), outputLineSplit[1]);
     }
-    QTextCodec* codec;
+    QTextCodec* codec = 0;
     if (channelCodecName.isEmpty())
         codec = getIdentity()->getCodec();
     else
@@ -1171,7 +1171,10 @@ int Server::_send_internal(QString outputLine)
     //int outlen=-1;
 
     //leaving this done twice for now, I'm uncertain of the implications of not encoding other commands
-    QByteArray encoded = codec->fromUnicode(outputLine);
+    QByteArray encoded = outputLine.toUtf8();
+    if(codec)
+        encoded = codec->fromUnicode(outputLine);
+
     #ifdef HAVE_QCA2
     QString cipherKey;
     if (outboundCommand > 1)
@@ -1185,7 +1188,10 @@ int Server::_send_internal(QString outputLine)
 
             QString pay(outputLine.mid(colon));
             //only encode the actual user text, IRCD *should* desire only ASCII 31 < x < 127 for protocol elements
-            QByteArray payload=codec->fromUnicode(pay);
+            QByteArray payload = pay.toUtf8();
+
+            if(codec)
+                payload=codec->fromUnicode(pay);
             //apparently channel name isn't a protocol element...
             QByteArray dest = codec->fromUnicode(outputLineSplit.at(1));
 

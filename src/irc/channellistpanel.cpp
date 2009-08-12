@@ -257,9 +257,9 @@ void ChannelListPanel::updateFilter()
     QString text = m_filterLine->text();
     int max = m_maxUser->value();
     int min = m_minUser->value();
-    bool topic = (m_topicBox->checkState()) ? true : false;
-    bool channel = (m_channelBox->checkState()) ? true : false;
-    bool regex = (m_regexBox->checkState()) ? true : false;
+    bool topic = m_topicBox->isChecked();
+    bool channel = m_channelBox->isChecked();
+    bool regex = m_regexBox->isChecked();
     bool regexChanged = (regex != m_regexState);
     if (regexChanged) m_regexState = regex;
 

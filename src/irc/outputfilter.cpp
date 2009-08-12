@@ -181,7 +181,7 @@ namespace Konversation
 
     bool OutputFilter::checkForEncodingConflict(QString *line, const QString& target)
     {
-        QTextCodec* codec;
+        QTextCodec* codec = 0;
         QString encoding;
         QString oldLine(*line);
         if(m_server->getServerGroup())
@@ -195,8 +195,12 @@ namespace Konversation
             codec = Konversation::IRCCharsets::self()->codecForName(encoding);
 
         QTextCodec::ConverterState state;
-        QString newLine = codec->fromUnicode(oldLine.constData(),oldLine.length(),&state);
-        if(state.invalidChars)
+
+        QString newLine;
+        if(codec)
+            newLine = codec->fromUnicode(oldLine.constData(),oldLine.length(),&state);
+
+        if(!newLine.isEmpty() && state.invalidChars)
         {
             int ret = KMessageBox::Continue;
 
