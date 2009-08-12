@@ -46,6 +46,15 @@ namespace Konversation
 
         TransferManager::~TransferManager()
         {
+            kDebug();
+            foreach (TransferSend* sendItem, m_sendItems)
+            {
+                sendItem->abort();
+            }
+            foreach (TransferRecv* recvItem, m_recvItems)
+            {
+                recvItem->abort();
+            }
             m_sendItems.clear();
             m_recvItems.clear();
 

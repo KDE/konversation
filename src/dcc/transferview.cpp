@@ -71,11 +71,22 @@ namespace Konversation
 
         TransferView::~TransferView()
         {
+            kDebug();
             disconnect(m_updateTimer, 0, 0, 0);
 
             saveColumns();
+            clear();
 
             delete m_categoryDrawer;
+        }
+
+        void TransferView::clear()
+        {
+            if (rowCount() > 0)
+            {
+                removeItems(TransferItemData::SendItem);
+                removeItems(TransferItemData::ReceiveItem);
+            }
         }
 
         void TransferView::drawRow (QPainter *painter, const QStyleOptionViewItem &option,

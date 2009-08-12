@@ -50,6 +50,8 @@ namespace Konversation
             void selectRow(int row);
 
         public slots:
+            void clear();
+
             void headerCustomContextMenuRequested(const QPoint &pos);
 
             void toggleFilenameColumn(bool visible);
