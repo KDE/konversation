@@ -1129,8 +1129,12 @@ static QStringList outcmds = QString("WHO QUIT PRIVMSG NOTICE KICK PART TOPIC").
 int Server::_send_internal(QString outputLine)
 {
     QStringList outputLineSplit = outputLine.split(' ', QString::SkipEmptyParts);
-    //Lets cache the uppercase command so we don't miss or reiterate too much
-    int outboundCommand = outcmds.indexOf(outputLineSplit[0].toUpper());
+
+    int outboundCommand = -1;
+    if (!outputLineSplit.isEmpty()) {
+        //Lets cache the uppercase command so we don't miss or reiterate too much
+        outboundCommand = outcmds.indexOf(outputLineSplit[0].toUpper());
+    }
 
     if (outputLine.at(outputLine.length()-1) == '\n')
     {
