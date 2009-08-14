@@ -19,6 +19,7 @@
 #include "linkaddressbook/addressbook.h"
 
 #include <QContextMenuEvent>
+#include <QHeaderView>
 #include <QDropEvent>
 #include <QToolTip>
 #include <QStyledItemDelegate>

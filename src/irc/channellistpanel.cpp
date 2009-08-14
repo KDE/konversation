@@ -17,6 +17,7 @@
 #include "server.h"
 #include "common.h"
 
+#include <QHeaderView>
 #include <QTextDocument>
 
 #include <KRun>

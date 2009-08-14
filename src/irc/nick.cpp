@@ -18,6 +18,7 @@
 #include "preferences.h"
 #include "nicklistview.h"
 
+#include <QHeaderView>
 
 #include <kabc/phonenumber.h>
 

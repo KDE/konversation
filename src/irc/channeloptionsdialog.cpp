@@ -16,6 +16,7 @@
 #include "channel.h"
 
 #include <QCheckBox>
+#include <QHeaderView>
 #include <QPushButton>
 #include <QRegExp>
 #include <QStandardItemModel>
