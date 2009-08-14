@@ -13,10 +13,12 @@
 #include "common.h"
 #include "viewcontainer.h"
 
-#include <QLayout>
 #include <QSplitter>
+#include <QToolButton>
 #include <QLabel>
 
+#include <KApplication>
+#include <KHBox>
 #include <KLibLoader>
 #include <kde_terminal_interface.h>
 
@@ -30,8 +32,18 @@ KonsolePanel::KonsolePanel(QWidget *p) : ChatWindow( p ), k_part (0)
 
     m_headerSplitter = new QSplitter(Qt::Vertical, this);
 
-    m_konsoleLabel = new QLabel(m_headerSplitter);
-    m_headerSplitter->setStretchFactor(m_headerSplitter->indexOf(m_konsoleLabel), 0);
+    KHBox* headerWidget = new KHBox(m_headerSplitter);
+    m_headerSplitter->setStretchFactor(m_headerSplitter->indexOf(headerWidget), 0);
+
+    m_profileButton = new QToolButton(headerWidget);
+    m_profileButton->setIcon(KIcon("configure"));
+    m_profileButton->setToolTip(i18n("Manage Konsole Profiles"));
+    m_profileButton->setAutoRaise(true);
+    m_profileButton->setSizePolicy(QSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed));
+    connect(m_profileButton, SIGNAL(clicked()), this, SLOT(manageKonsoleProfiles()));
+
+    m_konsoleLabel = new QLabel(headerWidget);
+    m_konsoleLabel->setSizePolicy(QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum));
 
     KPluginFactory* fact = KPluginLoader("libkonsolepart").factory();
     if (!fact) return;
@@ -86,6 +98,12 @@ void KonsolePanel::partDestroyed()
     k_part = 0;
 
     emit closeView(this);
+}
+
+void KonsolePanel::manageKonsoleProfiles()
+{
+    QMetaObject::invokeMethod(k_part, "showManageProfilesDialog",
+        Qt::QueuedConnection, Q_ARG(QWidget*, KApplication::activeWindow()));
 }
 
 void KonsolePanel::konsoleChanged(const QString& /* data */)

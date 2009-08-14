@@ -1,7 +1,17 @@
 Changes since 1.2-alpha6:
-
-* Added a topic widget for Konsole windows and hooked it up to
-  the KPart's setWindowCaption signal
+* Added a topic widget for Konsole windows and hooked it up to the KPart's
+  setWindowCaption signal
+* Added tooltips to items in the new DCC transfer lists that describe the
+  transfer's status more verbosely.
+* Fixed the OSD stealing focus when it appears on Windows.
+* Running DCC file transfers are now properly aborted on application quit.
+* Removed the 'ucs2' encoding from the encoding list, as it is is not sup-
+  ported on IRC. This also resolves a crash when sending messages after
+  selecting it (however the crashing codepath has been independently made
+  more robust as well).
+* Fixed a crash when sending a message containing only spaces.
+* Added a "Manage Profiles" button to the information area above the ter-
+  minal area in Konsole tabs.
 
 
 Changes from 1.2-alpha5 to 1.2-alpha6:
