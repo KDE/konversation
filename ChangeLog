@@ -12,7 +12,7 @@ Changes since 1.2-alpha6:
 * Fixed a crash when sending a message containing only spaces.
 * Added a "Manage Profiles" button to the information area above the ter-
   minal area in Konsole tabs.
-
+* Added proxy support.
 
 Changes from 1.2-alpha5 to 1.2-alpha6:
 Konversation 1.2-alpha6 is primarily a hotfix release addressing a serious

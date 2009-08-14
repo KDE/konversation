@@ -146,6 +146,7 @@ class Application : public KUniqueApplication
         void dbusInfo(const QString& string);
         void sendMultiServerCommand(const QString& command, const QString& parameter);
 
+        void updateProxySettings();
 
     private:
         ConnectionManager* m_connectionManager;

@@ -1001,4 +1001,34 @@
         <default>false</default>
     </entry>
   </group>
+  <group name="Proxy">
+    <entry key="ProxyEnabled" type="Bool">
+        <default>false</default>
+        <label></label>
+    </entry>
+    <entry key="ProxyType" type="Enum">
+        <choices>
+            <choice name="Socksv5Proxy" />
+            <choice name="HTTPProxy" />
+        </choices>
+        <default>Socksv5Proxy</default>
+        <label></label>
+    </entry>
+    <entry key="ProxyAddress" type="String">
+        <default></default>
+        <label></label>
+    </entry>
+    <entry key="ProxyPort" type="Int">
+        <default>8080</default>
+        <label></label>
+    </entry>
+    <entry key="ProxyUsername" type="String">
+        <default></default>
+        <label></label>
+    </entry>
+    <entry key="ProxyPassword" type="String">
+        <default></default>
+        <label></label>
+    </entry>
+  </group>
 </kcfg>

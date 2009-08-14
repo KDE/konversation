@@ -35,6 +35,7 @@
 #include <QTextCodec>
 #include <QRegExp>
 #include <QtDBus/QDBusConnection>
+#include <QNetworkProxy>
 
 #include <KCmdLineArgs>
 #include <KConfig>
@@ -196,6 +197,8 @@ int Application::newInstance()
         }
 
         m_notificationHandler = new Konversation::NotificationHandler(this);
+
+        connect(this, SIGNAL(appearanceChanged()), this, SLOT(updateProxySettings()));
     }
 
     if (!url.isEmpty())
@@ -618,6 +621,8 @@ void Application::readOptions()
 
     // O, what a tangled web
     Server::_fetchRates();
+
+    updateProxySettings();
 }
 
 void Application::saveOptions(bool updateGUI)
@@ -1030,6 +1035,33 @@ Konversation::Sound* Application::sound()
         m_sound = new Konversation::Sound(this);
 
     return m_sound;
+}
+
+void Application::updateProxySettings()
+{
+    if (Preferences::self()->proxyEnabled())
+    {
+        QNetworkProxy proxy;
+
+        if (Preferences::self()->proxyType() == Preferences::Socksv5Proxy)
+        {
+            proxy.setType(QNetworkProxy::Socks5Proxy);
+        }
+        else
+        {
+            proxy.setType(QNetworkProxy::HttpProxy);
+        }
+
+        proxy.setHostName(Preferences::self()->proxyAddress());
+        proxy.setPort(Preferences::self()->proxyPort());
+        proxy.setUser(Preferences::self()->proxyUsername());
+        proxy.setPassword(Preferences::self()->proxyPassword());
+        QNetworkProxy::setApplicationProxy(proxy);
+    }
+    else
+    {
+        QNetworkProxy::setApplicationProxy(QNetworkProxy::DefaultProxy);
+    }
 }
 
 #include "application.moc"

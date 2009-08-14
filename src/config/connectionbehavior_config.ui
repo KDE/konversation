@@ -13,14 +13,11 @@ the Free Software Foundation; either version 2 of the License, or
     <x>0</x>
     <y>0</y>
     <width>435</width>
-    <height>257</height>
+    <height>404</height>
    </rect>
   </property>
-  <layout class="QGridLayout">
-   <property name="margin">
-    <number>0</number>
-   </property>
-   <item row="0" column="0">
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
     <widget class="QGroupBox" name="kcfg_AutoReconnect">
      <property name="title">
       <string>Enable Automatic Reconnect</string>
@@ -119,7 +116,7 @@ the Free Software Foundation; either version 2 of the License, or
      </layout>
     </widget>
    </item>
-   <item row="1" column="0">
+   <item>
     <widget class="QGroupBox" name="debugGBox">
      <property name="title">
       <string>Debug</string>
@@ -135,7 +132,7 @@ the Free Software Foundation; either version 2 of the License, or
      </layout>
     </widget>
    </item>
-   <item row="2" column="0">
+   <item>
     <widget class="QGroupBox" name="encryptionGBox">
      <property name="title">
       <string>Encryption</string>
@@ -180,27 +177,133 @@ CBC or Cipher Block Chaining mode is not supported by FiSH but is supported by M
         </property>
        </spacer>
       </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="kcfg_ProxyEnabled">
+     <property name="title">
+      <string>Proxy</string>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+     <layout class="QFormLayout" name="proxyLayout">
+      <item row="1" column="0">
+       <widget class="QLabel" name="addressLabel">
+        <property name="text">
+         <string>Address:</string>
+        </property>
+       </widget>
+      </item>
       <item row="1" column="1">
-       <spacer name="verticalSpacer">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
+       <widget class="KLineEdit" name="kcfg_ProxyAddress">
+        <property name="enabled">
+         <bool>true</bool>
         </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>40</height>
-         </size>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="portLabel">
+        <property name="text">
+         <string>Port:</string>
         </property>
-       </spacer>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="KIntNumInput" name="kcfg_ProxyPort">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="usernameLabel">
+        <property name="text">
+         <string>Username:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="KLineEdit" name="kcfg_ProxyUsername">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="passwordLabel">
+        <property name="text">
+         <string>Password:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="KLineEdit" name="kcfg_ProxyPassword">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="echoMode">
+         <enum>QLineEdit::Password</enum>
+        </property>
+        <property name="urlDropsEnabled">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="typeLabel">
+        <property name="text">
+         <string>Type:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="KComboBox" name="kcfg_ProxyType">
+        <property name="sizeAdjustPolicy">
+         <enum>QComboBox::AdjustToContents</enum>
+        </property>
+        <item>
+         <property name="text">
+          <string>Socks v5</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>HTTP</string>
+         </property>
+        </item>
+       </widget>
       </item>
      </layout>
     </widget>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
    </item>
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <layoutfunction spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
  <customwidgets>
+  <customwidget>
+   <class>KLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>klineedit.h</header>
+  </customwidget>
   <customwidget>
    <class>KComboBox</class>
    <extends>QComboBox</extends>
