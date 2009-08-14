@@ -20,13 +20,11 @@
 
 #include <QDateTime>
 #include <QDir>
-#include <QRegExp>
 #include <QTextCodec>
 #include <QKeyEvent>
 #include <QScrollBar>
 
 #include <KDialog>
-#include <KActionCollection>
 
 
 ChatWindow::ChatWindow(QWidget* parent) : KVBox(parent)

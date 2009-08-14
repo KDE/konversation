@@ -21,8 +21,6 @@
 
 #include <QTimer>
 
-#include <KGlobal>
-#include <KIconLoader>
 
 
 namespace Konversation

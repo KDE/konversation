@@ -44,14 +44,13 @@
 #include <KMessageBox>
 #include <KGlobalSettings>
 #include <KVBox>
-#include <KXMLGUIFactory>
 #include <KRun>
 #include <KUrl>
+#include <KXMLGUIFactory>
 
 #include <KActionCollection>
 #include <KToggleAction>
 #include <KSelectAction>
-#include <KXMLGUIClient>
 
 using namespace Konversation;
 

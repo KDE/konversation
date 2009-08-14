@@ -34,14 +34,10 @@
 
 #include <QTextCodec>
 #include <QRegExp>
-#include <QFileInfo>
 #include <QtDBus/QDBusConnection>
 
 #include <KCmdLineArgs>
 #include <KConfig>
-#include <KStandardDirs>
-#include <KMessageBox>
-#include <KIconLoader>
 #include <KShell>
 #include <KToolInvocation>
 #include <KCharMacroExpander>

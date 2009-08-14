@@ -17,11 +17,9 @@
 #include "ircview.h"
 #include "ircviewbox.h"
 
-#include <QLayout>
 #include <QFile>
 #include <QPushButton>
 #include <QLabel>
-#include <QRegExp>
 #include <QSpinBox>
 #include <QTextCodec>
 #include <QKeyEvent>
@@ -31,8 +29,8 @@
 #include <KMessageBox>
 #include <KFileDialog>
 #include <KLocale>
-#include <KJobUiDelegate>
 #include <KIO/CopyJob>
+#include <KJobUiDelegate>
 
 
 LogfileReader::LogfileReader(QWidget* parent, const QString& log) : ChatWindow(parent)

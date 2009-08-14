@@ -17,10 +17,8 @@
 #include "preferences.h"
 
 #include <KPushButton>
-#include <KTextEdit>
 #include <KLocale>
 
-#include <QTextDocument>
 #include <QTextCursor>
 #include <QTextOption>
 #include <QPointer>

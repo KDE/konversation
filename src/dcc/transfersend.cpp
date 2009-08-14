@@ -30,7 +30,6 @@
 #include <QTcpSocket>
 #include <QTcpServer>
 
-#include <KFileItem>
 #include <KIO/NetAccess>
 
 // TODO: remove the dependence

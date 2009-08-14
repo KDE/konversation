@@ -14,7 +14,6 @@
 
 #include "ircqueue.h"
 
-#include <QDateTime>
 #include <QTimer>
 #include <QString>
 

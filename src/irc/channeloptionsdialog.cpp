@@ -19,15 +19,9 @@
 #include <QPushButton>
 #include <QRegExp>
 #include <QStandardItemModel>
-#include <QToolButton>
 #include <QKeyEvent>
 #include <QItemSelectionModel>
-#include <QHeaderView>
 
-#include <KTextEdit>
-#include <KLineEdit>
-#include <KNumInput>
-#include <KIconLoader>
 
 
 namespace Konversation

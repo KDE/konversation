@@ -21,7 +21,6 @@
 
 #include <QStringList>
 
-#include <KMessageBox>
 #include <KWindowSystem>
 
 

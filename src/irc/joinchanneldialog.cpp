@@ -14,7 +14,6 @@
 #include "channel.h"
 #include "servergroupsettings.h"
 
-#include <QLabel>
 
 
 namespace Konversation

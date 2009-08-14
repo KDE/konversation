@@ -21,17 +21,11 @@
 #include "ui_serverdialogui.h"
 #include "ui_channeldialogui.h"
 
-#include <QLayout>
-#include <QLabel>
 #include <QPushButton>
-#include <QToolButton>
 #include <QCheckBox>
 
-#include <KIconLoader>
 #include <KMessageBox>
-#include <KComboBox>
 #include <KPushButton>
-#include <KLineEdit>
 
 
 namespace Konversation

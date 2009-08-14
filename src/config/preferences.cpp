@@ -17,15 +17,12 @@
 #include "ignore.h"
 #include "highlight.h"
 
-#include <QPalette>
-#include <QRegExp>
 #include <QFileInfo>
 #include <QHashIterator>
 
 #include <KLocale>
 #include <KUser>
 #include <KStandardDirs>
-
 
 struct PreferencesSingleton
 {

@@ -15,7 +15,6 @@
 #include "application.h"
 #include "servergroupsettings.h"
 
-#include <QLayout>
 #include <QLabel>
 
 #include <KLineEdit>

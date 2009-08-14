@@ -20,10 +20,8 @@
 #include <QPainter>
 #include <QPixmap>
 #include <QImage>
-#include <QTimer>
 
 #include <KGlobalSettings>
-#include <KStringHandler>
 
 
 int ViewTreeItem::s_availableSortIndex = 0;

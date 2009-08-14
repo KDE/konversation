@@ -19,9 +19,9 @@
 #include "trayicon.h"
 #include "server.h"
 
-#include <KNotification>
-#include <KStringHandler>
 #include <QTextDocument>
+
+#include <KNotification>
 
 
 namespace Konversation

@@ -17,14 +17,14 @@
 #include "preferences.h"
 
 #include <QDir>
+#include <KStandardDirs>
+#include <KFileDialog>
+
+
 
 #include <KGlobal>
-#include <KStandardDirs>
-#include <KUrlRequester>
-#include <KFileDialog>
 #include <kparts/componentfactory.h>
 #include <kregexpeditorinterface.h>
-#include <KIconLoader>
 
 
 Highlight_Config::Highlight_Config(QWidget* parent, const char* name)

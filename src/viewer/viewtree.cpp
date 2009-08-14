@@ -25,7 +25,6 @@
 #include <Q3Header>
 #include <Q3DragObject>
 #include <Q3ListView>
-#include <Q3PtrList>
 
 #include <KApplication>
 

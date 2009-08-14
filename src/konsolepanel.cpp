@@ -19,7 +19,6 @@
 
 #include <KApplication>
 #include <KHBox>
-#include <KLibLoader>
 #include <kde_terminal_interface.h>
 
 

@@ -26,15 +26,11 @@
 
 #include <QPushButton>
 
-#include <KDialog>
 #include <KGlobal>
-#include <KGlobalSettings>
-#include <KIconLoader>
 #include <KMessageBox>
 #include <KMenu>
 #include <KRun>
 #include <KAuthorized>
-#include <KVBox>
 #include <KFileMetaInfo>
 
 namespace Konversation

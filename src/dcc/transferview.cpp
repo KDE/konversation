@@ -15,12 +15,13 @@
 
 #include "transferview.h"
 
-#include <QHeaderView>
 
 #include <KDebug>
 #include <KMenu>
 #include <KCategoryDrawer>
 #include <klocalizedstring.h>
+
+#include <QHeaderView>
 
 #include <preferences.h>
 

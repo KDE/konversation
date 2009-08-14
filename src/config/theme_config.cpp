@@ -18,11 +18,7 @@
 #include "common.h"
 #include "application.h"
 
-#include <QLabel>
-#include <QFileInfo>
 #include <QStringList>
-#include <QBitmap>
-#include <QPainter>
 
 #include <KUrl>
 #include <KMessageBox>
@@ -30,7 +26,6 @@
 #include <KFileDialog>
 #include <KTar>
 #include <KDesktopFile>
-#include <KVBox>
 #include <KIO/DeleteJob>
 #include <KIO/NetAccess>
 

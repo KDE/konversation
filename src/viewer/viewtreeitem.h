@@ -14,7 +14,6 @@
 
 #include "chatwindow.h"
 
-#include <QObject>
 #include <QPointer>
 #include <QPixmap>
 

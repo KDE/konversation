@@ -18,11 +18,8 @@
 #include "ircviewbox.h"
 #include "server.h"
 
-#include <QTextCodec>
-#include <QLineEdit>
 
 #include <KMessageBox>
-#include <KVBox>
 #include <KComboBox>
 #include <KLineEdit>
 

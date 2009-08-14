@@ -12,9 +12,7 @@
 
 #include "upnpmcastsocket.h"
 
-#include <QFile>
 #include <QStringList>
-#include <QTextStream>
 
 #include <KUrl>
 #include <KDebug>

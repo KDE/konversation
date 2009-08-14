@@ -37,11 +37,8 @@
 #include <QTcpSocket>
 #include <QTcpServer>
 
-#include <KLineEdit>
-#include <KMessageBox>
 #include <KActionCollection>
 #include <KMenu>
-#include <KVBox>
 
 #define DCCCHAT_BUFFER_SIZE 1024
 

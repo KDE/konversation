@@ -22,8 +22,6 @@
 #include <KIcon>
 #include <KConfigGroup>
 
-#include <QLabel>
-#include <QTreeView>
 #include <QStringList>
 
 InviteDialog::InviteDialog(QWidget* parent)

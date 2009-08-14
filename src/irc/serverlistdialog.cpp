@@ -18,7 +18,6 @@
 #include "ui_serverlistdialogui.h"
 
 #include <QCheckBox>
-#include <QHeaderView>
 
 #include <KGuiItem>
 #include <KMessageBox>

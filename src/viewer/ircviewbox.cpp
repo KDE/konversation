@@ -13,7 +13,6 @@
 #include "ircview.h"
 #include "searchbar.h"
 
-#include <KApplication>
 #include <KIconLoader>
 #include <QPixmap>
 #include <KVBox>

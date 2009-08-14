@@ -27,7 +27,6 @@
 
 #include <QStringList>
 #include <QFile>
-#include <QFileInfo>
 #include <QRegExp>
 #include <QTextCodec>
 #include <QByteArray>

@@ -19,7 +19,6 @@
 #include "preferences.h"
 
 #include <QFileInfo>
-#include <QHostAddress>
 
 namespace Konversation
 {

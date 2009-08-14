@@ -21,7 +21,6 @@ Copyright (C) 2002 Carsten Pfeiffer <pfeiffer@kde.org>
 #include "connectionmanager.h"
 
 #include <KStandardDirs>
-#include <KXMLGUIFactory>
 #include <KBookmarkMenu>
 
 

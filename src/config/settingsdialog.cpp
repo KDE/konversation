@@ -35,7 +35,6 @@
 #include "ui_tabnotifications_config.h"
 #include <config-konversation.h>
 
-#include <KIconLoader>
 
 
 KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :

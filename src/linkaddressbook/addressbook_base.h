@@ -20,7 +20,6 @@
 #include "../irc/channelnick.h"
 
 #include <QObject>
-#include <QRegExp>
 
 
 #include <kabc/addressbook.h>

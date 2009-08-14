@@ -20,7 +20,6 @@
 #include "chatwindow.h"
 
 #include <QIcon>
-#include <QPair>
 
 #include <KMenu>
 

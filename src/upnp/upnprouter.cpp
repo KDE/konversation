@@ -14,13 +14,10 @@
 #include "upnpdescriptionparser.h"
 #include "soap.h"
 
-#include <QDir>
 #include <QCoreApplication>
 #include <QNetworkRequest>
 #include <QNetworkReply>
 
-#include <KGlobal>
-#include <KStandardDirs>
 #include <KDebug>
 #include <KLocale>
 #include <KIO/Job>

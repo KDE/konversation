@@ -14,10 +14,9 @@
 #include "viewcontainer.h"
 #include "ssllabel.h"
 
+#include <KStatusBar>
 #include <QLabel>
 
-#include <KStatusBar>
-#include <KIconLoader>
 #include <KSqueezedTextLabel>
 
 

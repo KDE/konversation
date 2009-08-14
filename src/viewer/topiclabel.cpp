@@ -23,10 +23,6 @@
 #include <QMenu>
 #include <QTextDocument>
 
-#include <KStringHandler>
-#include <KGlobal>
-#include <KMenu>
-#include <KIconLoader>
 #include <KBookmarkManager>
 #include <kbookmarkdialog.h>
 #include <KShell>

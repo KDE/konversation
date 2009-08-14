@@ -13,7 +13,6 @@
 #include "quickbuttons_config.h"
 #include "preferences.h"
 
-#include <QLabel>
 #include <QPushButton>
 
 

@@ -16,7 +16,6 @@
 #include "application.h"
 
 #include <QCheckBox>
-#include <QLayout>
 
 #include <KLineEdit>
 

@@ -26,14 +26,9 @@
 #include "upnprouter.h"
 
 #include <QDateTime>
-#include <QTcpServer>
 #include <QTcpSocket>
+#include <QTcpServer>
 
-#include <KFileDialog>
-#include <KIconLoader>
-#include <KMessageBox>
-#include <KStandardDirs>
-#include <KDirSelectDialog>
 #include <KUser>
 #include <KAuthorized>
 #include <KIO/Job>

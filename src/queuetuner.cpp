@@ -22,10 +22,8 @@
 #include "viewcontainer.h"
 #include "application.h"
 
-#include <QEvent>
 #include <QContextMenuEvent>
 
-#include <KIconLoader>
 #include <KMenu>
 #include <KMessageBox>
 

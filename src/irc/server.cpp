@@ -41,7 +41,6 @@
 #include "awaymanager.h"
 
 #include <QRegExp>
-#include <QHostAddress>
 #include <QTextCodec>
 #include <QDateTime>
 #include <QStringListModel>
@@ -50,8 +49,6 @@
 #include <KFileDialog>
 #include <KInputDialog>
 #include <KMessageBox>
-#include <KAction>
-#include <KStringHandler>
 #include <KWindowSystem>
 
 using namespace Konversation;

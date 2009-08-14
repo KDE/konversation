@@ -39,9 +39,7 @@
 #include <QSplitter>
 #include <QCheckBox>
 #include <QTimer>
-#include <QTextCodec>
 #include <QToolButton>
-#include <QDropEvent>
 #include <QHeaderView>
 
 #include <KLineEdit>
@@ -50,7 +48,6 @@
 #include <KGlobalSettings>
 #include <KMessageBox>
 #include <KIconLoader>
-#include <KWindowSystem>
 #include <KColorScheme>
 #include <KVBox>
 #include <KHBox>

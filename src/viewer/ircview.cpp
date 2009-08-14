@@ -34,15 +34,12 @@
 #include <QBrush>
 #include <QEvent>
 #include <QColor>
-#include <QScrollBar>
-#include <QCursor>
 #include <QMouseEvent>
+#include <QScrollBar>
 
-#include <KMessageBox>
 #include <KUrl>
 #include <KBookmarkManager>
 #include <kbookmarkdialog.h>
-#include <KIconLoader>
 #include <KMenu>
 #include <KGlobalSettings>
 #include <KFileDialog>

@@ -14,13 +14,11 @@
 
 
 #include <QObject>
-#include <QDateTime>
 #include <QList>
-
+#include <QTimer>
+#include <QTime>
 
 class ConnectionManager;
-
-class QTimer;
 
 
 struct AwayManagerPrivate;

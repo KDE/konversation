@@ -33,21 +33,18 @@
 #include <QSignalMapper>
 #include <QSplitter>
 
+#include <KMenuBar>
 #include <KActionCollection>
 #include <KAction>
 #include <KToggleAction>
 #include <KSelectAction>
 #include <KAuthorized>
-#include <KAcceleratorManager>
 #include <KStandardAction>
 #include <KMessageBox>
-#include <KMenuBar>
 #include <kdeversion.h>
-#include <KEditToolBar>
 #include <KMenu>
 #include <KWindowSystem>
 #include <KGlobal>
-#include <KStandardDirs>
 #include <kabc/addressbook.h>
 #include <kabc/errorhandler.h>
 #include <KShortcutsDialog>

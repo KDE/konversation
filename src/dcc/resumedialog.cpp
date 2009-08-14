@@ -15,13 +15,13 @@
 #include "transferrecv.h"
 
 #include <QLabel>
-#include <QLayout>
 #include <QPointer>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
 
 #include <KLocale>
 #include <KUrl>
 #include <KUrlRequester>
-#include <KVBox>
 
 namespace Konversation
 {

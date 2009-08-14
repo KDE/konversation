@@ -18,12 +18,10 @@
 #include "preferences.h"
 #include <config-konversation.h>
 
-#include <QVariant>
 #include <QTimer>
 #include <QDBusInterface>
 #include <QDBusReply>
 
-#include <KSelectAction>
 #include <KActionCollection>
 #include <KToggleAction>
 

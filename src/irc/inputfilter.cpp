@@ -24,13 +24,11 @@
 #include "notificationhandler.h"
 #include <config-konversation.h>
 
-#include <QDataStream>
 #include <QStringList>
 #include <QDateTime>
 #include <QRegExp>
 
 #include <KLocale>
-#include <KStringHandler>
 
 
 InputFilter::InputFilter()

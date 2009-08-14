@@ -30,10 +30,7 @@
 
 #include <QToolTip>
 
-#include <KDialog>
 #include <KIconLoader>
-#include <KMessageBox>
-#include <KVBox>
 
 #include <K3ListView>
 

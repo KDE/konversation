@@ -19,11 +19,8 @@
 #include "server.h"
 #include "transferlistmodel.h"
 
-#include <QLabel>
 #include <QTimer>
 
-#include <KProgressDialog>
-#include <KRun>
 
 namespace Konversation
 {
