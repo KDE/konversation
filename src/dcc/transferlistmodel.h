@@ -107,7 +107,8 @@ namespace Konversation
                 TransferType,
                 TransferStatus,
                 TransferPointer,
-                TransferProgress
+                TransferProgress,
+                TransferOfferDate //to get the QDateTime, not just a time string
             };
 
             TransferListModel(QObject *parent);

@@ -105,6 +105,11 @@ namespace Konversation
                     return (left.data(TransferListModel::TransferProgress).toInt() <
                             right.data(TransferListModel::TransferProgress).toInt());
                 }
+                else if (left.data(TransferListModel::HeaderType) == TransferHeaderData::OfferDate)
+                {
+                    return (left.data(TransferListModel::TransferOfferDate).toDateTime() <
+                            right.data(TransferListModel::TransferOfferDate).toDateTime());
+                }
                 return QSortFilterProxyModel::lessThan (left, right);
             }
 
@@ -251,6 +256,8 @@ namespace Konversation
                     return qVariantFromValue<QObject*>(transfer);
                 case TransferProgress:
                     return transfer->getProgress();
+                case TransferOfferDate:
+                    return transfer->getTimeOffer();
                 case Qt::DecorationRole:
                 {
                     int type = columnToHeaderType(index.column());
