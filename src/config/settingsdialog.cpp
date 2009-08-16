@@ -14,7 +14,7 @@
 #include "configdialog.h"
 #include "preferences.h"
 #include "ui_chatwindowappearance_config.h"
-#include "ui_connectionbehavior_config.h"
+#include "connectionbehavior_config.h"
 #include "highlight_config.h"
 #include "warnings_config.h"
 #include "ui_log_config.h"
@@ -33,8 +33,6 @@
 #include "ignore_config.h"
 #include "watchednicknames_config.h"
 #include "ui_tabnotifications_config.h"
-#include <config-konversation.h>
-
 
 
 KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
@@ -99,13 +97,10 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   addPage(w, behaviorGroup, "configure", i18n("General"));
 
   //Behavior/Connection
-  Ui::ConnectionBehavior_Config confConnectionBehavior;
-  w = new QWidget();
-  confConnectionBehavior.setupUi(w);
-  #ifndef HAVE_QCA2
-  confConnectionBehavior.kcfg_EncryptionType->setDisabled(true);
-  #endif
-  addPage(w, behaviorGroup, "network-connect", i18n("Connection"));
+  ConnectionBehavior_Config* confConnectionBehavior = new ConnectionBehavior_Config(this);
+  confConnectionBehavior->setObjectName("ConnectionBehavior");
+  addPage(confConnectionBehavior, behaviorGroup, "network-connect", i18n("Connection"));
+  m_pages.append(confConnectionBehavior);
 
   //Behaviour/Chat Window
   Ui::ChatwindowBehaviour_Config confChatwindowBehaviour;

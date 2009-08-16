@@ -42,6 +42,7 @@
 #include <KShell>
 #include <KToolInvocation>
 #include <KCharMacroExpander>
+#include <kwallet.h>
 
 
 using namespace Konversation;
@@ -54,6 +55,7 @@ Application::Application()
     m_awayManager = 0;
     quickConnectDialog = 0;
     osd = 0;
+    m_wallet = NULL;
 }
 
 Application::~Application()
@@ -73,6 +75,7 @@ Application::~Application()
     //delete identDBus;
     delete osd;
     osd = 0;
+    closeWallet();
 }
 
 int Application::newInstance()
@@ -1055,13 +1058,68 @@ void Application::updateProxySettings()
         proxy.setHostName(Preferences::self()->proxyAddress());
         proxy.setPort(Preferences::self()->proxyPort());
         proxy.setUser(Preferences::self()->proxyUsername());
-        proxy.setPassword(Preferences::self()->proxyPassword());
+        QString password;
+
+        if(wallet())
+        {
+            int ret = wallet()->readPassword("ProxyPassword", password);
+
+            if(ret != 0)
+            {
+                kError() << "Failed to read the proxy password from the wallet, error code:" << ret;
+            }
+        }
+
+        proxy.setPassword(password);
         QNetworkProxy::setApplicationProxy(proxy);
     }
     else
     {
         QNetworkProxy::setApplicationProxy(QNetworkProxy::DefaultProxy);
     }
+}
+
+KWallet::Wallet* Application::wallet()
+{
+    if(!m_wallet)
+    {
+        WId winid = 0;
+
+        if(mainWindow)
+            winid = mainWindow->winId();
+
+        m_wallet = KWallet::Wallet::openWallet(KWallet::Wallet::NetworkWallet(), winid);
+
+        if(!m_wallet)
+            return NULL;
+
+        connect(m_wallet, SIGNAL(walletClosed()), this, SLOT(closeWallet()));
+
+        if(!m_wallet->hasFolder("Konversation"))
+        {
+            if(!m_wallet->createFolder("Konversation"))
+            {
+                kError() << "Failed to create folder Konversation in the network wallet.";
+                closeWallet();
+                return NULL;
+            }
+        }
+
+        if(!m_wallet->setFolder("Konversation"))
+        {
+            kError() << "Failed to set active folder to Konversation in the network wallet.";
+            closeWallet();
+            return NULL;
+        }
+    }
+
+    return m_wallet;
+}
+
+void Application::closeWallet()
+{
+    delete m_wallet;
+    m_wallet = NULL;
 }
 
 #include "application.moc"

@@ -13,7 +13,7 @@ the Free Software Foundation; either version 2 of the License, or
     <x>0</x>
     <y>0</y>
     <width>435</width>
-    <height>404</height>
+    <height>432</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -242,7 +242,7 @@ CBC or Cipher Block Chaining mode is not supported by FiSH but is supported by M
        </widget>
       </item>
       <item row="4" column="1">
-       <widget class="KLineEdit" name="kcfg_ProxyPassword">
+       <widget class="KLineEdit" name="m_ProxyPassword">
         <property name="enabled">
          <bool>true</bool>
         </property>

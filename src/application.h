@@ -57,6 +57,12 @@ namespace Konversation
 
 }
 
+namespace KWallet
+{
+    class Wallet;
+}
+
+
 class Application : public KUniqueApplication
 {
     Q_OBJECT
@@ -123,6 +129,9 @@ class Application : public KUniqueApplication
 
         static void openUrl(const QString& url);
 
+        /// The wallet used to store passwords. Opens the wallet if it's closed.
+        KWallet::Wallet* wallet();
+
     signals:
         void catchUrl(const QString& who,const QString& url);
         void serverGroupsChanged(const Konversation::ServerGroupSettingsPtr serverGroup);
@@ -148,6 +157,8 @@ class Application : public KUniqueApplication
 
         void updateProxySettings();
 
+        void closeWallet();
+
     private:
         ConnectionManager* m_connectionManager;
         AwayManager* m_awayManager;
@@ -163,6 +174,8 @@ class Application : public KUniqueApplication
         Konversation::NotificationHandler* m_notificationHandler;
 
         QStringList colorList;
+
+        KWallet::Wallet* m_wallet;
 };
 
 #endif
