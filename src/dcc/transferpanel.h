@@ -21,8 +21,10 @@
 #include "chatwindow.h"
 #include <QModelIndex>
 
+class QSplitter;
 class QPushButton;
 class KMenu;
+class KToolBar;
 
 namespace Konversation
 {
@@ -61,7 +63,6 @@ namespace Konversation
                 void selectAllCompleted();
 
                 void popupRequested (const QPoint &pos);
-                void popupActivated(QAction *action);
 
                 void doubleClicked(const QModelIndex &index);
 
@@ -78,15 +79,11 @@ namespace Konversation
 
                 TransferView *m_transferView;
                 KMenu *m_popup;
+                KToolBar *m_toolBar;
 
                 TransferDetailedInfoPanel *m_detailPanel;
+                QSplitter* m_splitter;
 
-                QPushButton *m_buttonAccept;
-                QPushButton *m_buttonAbort;
-                QPushButton *m_buttonClear;
-                QPushButton *m_buttonOpen;
-                QPushButton *m_buttonOpenLocation;
-                QPushButton *m_buttonDetail;
                 QAction *m_abort;
                 QAction *m_accept;
                 QAction *m_clear;

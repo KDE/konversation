@@ -708,6 +708,8 @@
     <entry key="ColumnSortDescending" type="Bool" name="DccColumnSortDescending">
       <default>true</default>
     </entry>
+    <entry key="PanelSplitter" type="IntList" name="DccPanelSplitter">
+    </entry>
   </group>
   <group name="Path Settings">
     <entry key="LogfilePath" type="Url">

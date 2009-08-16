@@ -176,6 +176,7 @@ set(dcc_SRCS
 
 kde4_add_ui_files(dcc_SRCS
     dcc/transferdetailedinfopanelui.ui
+    dcc/transferdetailedtimeinfopanelui.ui
 )
 
 set(linkaddressbook_SRCS
