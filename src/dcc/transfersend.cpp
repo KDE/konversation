@@ -444,7 +444,15 @@ namespace Konversation
 
         void TransferSend::bytesWritten(qint64 bytes)
         {
-            Q_UNUSED(bytes);
+            if (bytes > 0)
+            {
+                m_transferringPosition += bytes;
+                if ( (KIO::fileoffset_t)m_fileSize <= m_transferringPosition )
+                {
+                    Q_ASSERT( (KIO::fileoffset_t)m_fileSize == m_transferringPosition );
+                    kDebug() << "Done.";
+                }
+            }
 
 //             kDebug() << "bytes written:" << bytes;
 //             kDebug() << "m_sendSocket->bytesToWrite():" << m_sendSocket->bytesToWrite() << "<= m_bufferSize:" << m_bufferSize;
@@ -462,18 +470,7 @@ namespace Konversation
             qint64 actual = m_file.read( m_buffer, m_bufferSize );
             if ( actual > 0 )
             {
-                qint64 byteWritten = m_sendSocket->write( m_buffer, actual );
-
-                if (byteWritten > 0)
-                {
-                    m_transferringPosition += byteWritten;
-                    //m_transferringPosition += actual;
-                    if ( (KIO::fileoffset_t)m_fileSize <= m_transferringPosition )
-                    {
-                        Q_ASSERT( (KIO::fileoffset_t)m_fileSize == m_transferringPosition );
-                        kDebug() << "Done.";
-                    }
-                }
+                m_sendSocket->write(m_buffer, actual);
             }
         }
 
