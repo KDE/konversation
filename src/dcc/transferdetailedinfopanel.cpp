@@ -77,6 +77,11 @@ namespace Konversation
             updateView();
         }
 
+        Transfer *TransferDetailedInfoPanel::transfer() const
+        {
+            return m_transfer;
+        }
+
         void TransferDetailedInfoPanel::clear()
         {
             m_autoViewUpdateTimer->stop();

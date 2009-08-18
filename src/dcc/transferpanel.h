@@ -56,6 +56,7 @@ namespace Konversation
                 void abortDcc();
                 void resendFile();
                 void clearDcc();
+                void clearCompletedDcc();
                 void runDcc();
                 void openLocation();
                 void showFileInfo();
@@ -87,6 +88,7 @@ namespace Konversation
                 QAction *m_abort;
                 QAction *m_accept;
                 QAction *m_clear;
+                QAction *m_clearCompleted;
                 QAction *m_info;
                 QAction *m_open;
                 QAction *m_openLocation;

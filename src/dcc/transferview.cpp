@@ -523,6 +523,23 @@ namespace Konversation
             selectionModel()->select(m_proxyModel->index(row, 0), QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
         }
 
+        void TransferView::selectRows(QList<int> rows)
+        {
+            QItemSelection selection;
+            foreach (const QModelIndex &index, rowIndexes())
+            {
+                foreach (int row, rows)
+                {
+                    if (row == index.row())
+                    {
+                        selection.append(QItemSelectionRange(index));
+                        break;
+                    }
+                }
+            }
+            selectionModel()->select(selection, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
+        }
+
         void TransferView::update()
         {
             //force an update, but be careful, it makes QItemSelection indexes invalid

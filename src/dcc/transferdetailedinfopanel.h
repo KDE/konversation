@@ -35,6 +35,7 @@ namespace Konversation
                 virtual ~TransferDetailedInfoPanel();
 
                 void setTransfer(Transfer *item);
+                Transfer *transfer() const;
                 void clear();
 
             private slots:

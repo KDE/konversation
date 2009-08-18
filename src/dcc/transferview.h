@@ -48,6 +48,7 @@ namespace Konversation
 
             void selectAllCompleted();
             void selectRow(int row);
+            void selectRows(QList<int> rows);
 
         public slots:
             void clear();

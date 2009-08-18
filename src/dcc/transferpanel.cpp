@@ -85,6 +85,9 @@ namespace Konversation
             m_popup->addSeparator();                           // -----
             m_resend = m_popup->addAction(KIcon("edit-redo"),i18n("Resend"), this, SLOT(resendFile()));
             m_clear = m_popup->addAction(KIcon("edit-delete"),i18n("&Clear"), this, SLOT(clearDcc()));
+            m_clear->setStatusTip(i18n("Clear all selected Items"));
+            m_clearCompleted = m_popup->addAction(KIcon("edit-clear-list"),i18n("Clear Completed"), this, SLOT(clearCompletedDcc()));
+            m_clearCompleted->setStatusTip(i18n("Clear Completed Items"));
             m_popup->addSeparator();                           // -----
             m_open = m_popup->addAction(KIcon("system-run"), i18n("&Open File"), this, SLOT(runDcc()));
             m_open->setStatusTip(i18n("Run the file"));
@@ -103,6 +106,7 @@ namespace Konversation
             m_toolBar->addAction(m_accept);
             m_toolBar->addAction(m_abort);
             m_toolBar->addAction(m_clear);
+            m_toolBar->addAction(m_clearCompleted);
             m_toolBar->addAction(m_open);
             m_toolBar->addAction(m_openLocation);
 
@@ -184,6 +188,7 @@ namespace Konversation
             m_accept->setEnabled(accept);
             m_abort->setEnabled(abort);
             m_clear->setEnabled(clear);
+            m_clearCompleted->setEnabled(selectAllCompleted);
             m_open->setEnabled(open);
             m_openLocation->setEnabled(openLocation);
             m_resend->setEnabled(resend);
@@ -299,6 +304,7 @@ namespace Konversation
             }
 
             m_transferView->clearSelection();
+            QList<int> toSelectList;
             //select everything that got not removed
             foreach (const QModelIndex &index, indexes)
             {
@@ -310,10 +316,80 @@ namespace Konversation
                         ++offset;
                     }
                 }
-                m_transferView->selectRow(index.row() - offset);
+                toSelectList.append(index.row() - offset);
             }
+            m_transferView->selectRows(toSelectList);
 
             if (m_transferView->itemCount() == 0 || m_transferView->selectedIndexes().count() == 0)
+            {
+                m_detailPanel->clear();
+            }
+
+            updateButton();
+        }
+
+        void TransferPanel::clearCompletedDcc()
+        {
+            //save selected item
+            Transfer *transfer = m_detailPanel->transfer();
+            if (transfer->getStatus() >= Transfer::Done)
+            {
+                //item will be gone
+                transfer = 0;
+            }
+
+            QModelIndexList indexesToRemove;
+            QModelIndexList selectedIndexes = m_transferView->selectedRows();
+
+            foreach (const QModelIndex &index, m_transferView->rowIndexes())
+            {
+                if (index.data(TransferListModel::TransferStatus).toInt() >= Transfer::Done)
+                {
+                    indexesToRemove.append(index);
+                }
+            }
+
+            //sort QModelIndexList descending
+            //NOTE: selectedRows() returned an unsorted list
+            qSort(indexesToRemove.begin(), indexesToRemove.end(), rowGreaterThan);
+
+            //remove from last to first item, to keep a valid row
+            foreach (const QModelIndex &index, indexesToRemove)
+            {
+                m_transferView->model()->removeRow(index.row(), QModelIndex());
+                //needed, otherwise valid rows "can be treated" as invalid,
+                //proxymodel does not keep up with changes
+                m_transferView->updateModel();
+            }
+
+            //remove all gone items
+            foreach (const QModelIndex &index, indexesToRemove)
+            {
+                selectedIndexes.removeOne(index);
+            }
+
+            m_transferView->clearSelection();
+            QList<int> toSelectList;
+            //select everything that got not removed
+            foreach (const QModelIndex &index, selectedIndexes)
+            {
+                int offset = 0;
+                foreach (const QModelIndex &removedIndex, indexesToRemove)
+                {
+                    if (removedIndex.row() < index.row())
+                    {
+                        ++offset;
+                    }
+                }
+                toSelectList.append(index.row() - offset);
+            }
+            m_transferView->selectRows(toSelectList);
+
+            if (transfer)
+            {
+                m_detailPanel->setTransfer(transfer);
+            }
+            else if (m_transferView->itemCount() == 0 || m_transferView->selectedIndexes().count() == 0)
             {
                 m_detailPanel->clear();
             }
