@@ -20,6 +20,7 @@ Changes since 1.2-alpha6:
   smaller minimum size. This should mean that less people will see their
   window size increase when a DCC transfer is initiated, as it reduces
   the minimum size of the window with the DCC Status tab open.
+* Added a "Clear Completed" item to the DCC Status tab's toolbar.
 
 
 Changes from 1.2-alpha5 to 1.2-alpha6:
