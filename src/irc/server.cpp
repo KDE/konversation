@@ -983,6 +983,7 @@ void Server::incoming()
         {
             // The line contained only spaces (other than CRLF, removed above)
             // and thus there's nothing more we can do with it.
+            bufferLines.removeFirst();
             continue;
         }
 
