@@ -178,7 +178,11 @@ namespace Konversation
                     strncpy( ifr.ifr_name, address, IF_NAMESIZE );
                     ifr.ifr_addr.sa_family = AF_INET;
                     if ( ioctl( sock, SIOCGIFADDR, &ifr ) >= 0 )
-                        m_ownIp =  inet_ntoa( ( (struct sockaddr_in *)&ifr.ifr_addr )->sin_addr );
+                    {
+                        struct sockaddr_in sock;
+                        memcpy(&sock, &ifr.ifr_addr, sizeof(ifr.ifr_addr));
+                        m_ownIp = inet_ntoa(sock.sin_addr);
+                    }
                     kDebug() << "Falling back to IPv4 address " << m_ownIp;
         #endif
                 }
