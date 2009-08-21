@@ -979,6 +979,12 @@ void Server::incoming()
                 lineSplit.removeFirst();          // remove prefix
             }
         }
+        else
+        {
+            // The line contained only spaces (other than CRLF, removed above)
+            // and thus there's nothing more we can do with it.
+            continue;
+        }
 
         // BEGIN pre-parse to know where the message belongs to
         QString command = lineSplit[0].toLower();
