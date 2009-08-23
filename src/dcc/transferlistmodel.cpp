@@ -200,6 +200,10 @@ namespace Konversation
             {
                 return displayTypeToString(m_transferList[index.row()].displayType);
             }
+            else if (role == HeaderType)
+            {
+                return headerData(index.column(), Qt::Horizontal, role);
+            }
 
             Transfer *transfer = 0;
             if (m_transferList[index.row()].displayType == TransferItemData::ReceiveItem ||
