@@ -49,7 +49,7 @@ namespace Konversation
             void refreshTopicHistory();
             void refreshAllowedChannelModes();
             void refreshModes();
-            void refreshEnableModes();
+            void refreshEnableModes(bool forceUpdate = false);
             void toggleAdvancedModes();
 
             void refreshBanList();

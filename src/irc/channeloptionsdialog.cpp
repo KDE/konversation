@@ -209,9 +209,9 @@ namespace Konversation
         }
     }
 
-    void ChannelOptionsDialog::refreshEnableModes()
+    void ChannelOptionsDialog::refreshEnableModes(bool forceUpdate)
     {
-        if(m_channel->getOwnChannelNick()->isChanged())
+        if(m_channel->getOwnChannelNick()->isChanged() || forceUpdate)
         {
             bool enable = m_channel->getOwnChannelNick()->isAnyTypeOfOp();
             m_ui.otherModesList->setEnabled(enable);
@@ -349,7 +349,7 @@ namespace Konversation
             }
         }
 
-        refreshEnableModes();
+        refreshEnableModes(true);
     }
 
     QStringList ChannelOptionsDialog::modes()
