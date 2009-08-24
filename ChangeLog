@@ -23,6 +23,13 @@ Changes since 1.2-alpha6:
 * Added a "Clear Completed" item to the DCC Status tab's toolbar.
 * Fixed a crash on the processing of illegal lines sent by the server that
   contain only spaces (as sent by the buggy lidegw lide.cz gateway script).
+* Made DCC transfer speed reporting more reliable.
+* Fixed sorting the transfer list in the DCC Status tab by its "Started At"
+  column. Previously, sorting by that column would sort alphabetically by
+  the string value of the fields rather than properly by date.
+* Fixed the Channel Settings no longer disabling interface elements allow-
+  ing the manipulation of channel properties when the user lacks the ne-
+  cessary operator privileges in the channel.
 
 
 Changes from 1.2-alpha5 to 1.2-alpha6:
