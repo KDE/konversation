@@ -22,7 +22,6 @@
 #include <QModelIndex>
 
 class QSplitter;
-class QPushButton;
 class KMenu;
 class KToolBar;
 

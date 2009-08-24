@@ -24,8 +24,6 @@
 #include "transferview.h"
 #include "transferlistmodel.h"
 
-#include <QPushButton>
-
 #include <KGlobal>
 #include <KMessageBox>
 #include <KMenu>
@@ -53,7 +51,9 @@ namespace Konversation
 
         TransferPanel::~TransferPanel()
         {
-            Preferences::self()->setDccPanelSplitter(m_splitter->sizes());
+            KConfigGroup config(KGlobal::config(), "DCC Settings");
+            const QByteArray state = m_splitter->saveState();
+            config.writeEntry(QString("PanelSplitter"), state.toBase64());
         }
 
         void TransferPanel::initGUI()
@@ -72,6 +72,8 @@ namespace Konversation
 
             // detailed info panel
             m_detailPanel = new TransferDetailedInfoPanel(m_splitter);
+
+            m_splitter->setStretchFactor(0, QSizePolicy::Expanding);
 
             // popup menu
             m_popup = new KMenu(this);
@@ -110,9 +112,13 @@ namespace Konversation
             m_toolBar->addAction(m_open);
             m_toolBar->addAction(m_openLocation);
 
-            if (!Preferences::self()->dccPanelSplitter().isEmpty())
+            KConfigGroup config(KGlobal::config(), "DCC Settings");
+            QByteArray state;
+            if (config.hasKey("PanelSplitter"))
             {
-                m_splitter->setSizes(Preferences::self()->dccPanelSplitter());
+                state = config.readEntry("PanelSplitter", state);
+                state = QByteArray::fromBase64(state);
+                m_splitter->restoreState(state);
             }
 
             updateButton();
