@@ -373,7 +373,7 @@ void ViewContainer::updateAppearance()
             font = Preferences::self()->textFont();
         else
             font = KGlobalSettings::generalFont();
-        Q_ASSERT(0);
+
         m_insertCharDialog->setFont(font);
     }
 }
