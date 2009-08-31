@@ -330,7 +330,7 @@ namespace Konversation
             setStatus( WaitingRemote, i18n( "Awaiting remote user's acceptance" ) );
         }
 
-        void TransferSend::sendRequest(bool /* error */, quint16 port)
+        void TransferSend::sendRequest(bool error, quint16 port)
         {
             Server* server = Application::instance()->getConnectionManager()->getServerByConnectionId( m_connectionId );
             if ( !server )
@@ -345,6 +345,9 @@ namespace Konversation
                 if (port != m_ownPort) return; // Somebody elses forward succeeded
 
                 disconnect (this->sender(), SIGNAL( forwardComplete(bool, quint16 ) ), this, SLOT ( sendRequest(bool, quint16) ) );
+
+                if (error)
+                    server->appendMessageToFrontmost(i18nc("Universal Plug and Play", "UPnP"), i18n("Failed to forward port %1. Sending DCC request to remote user regardless.", QString::number(m_ownPort)), false);
             }
 
             startConnectionTimer( Preferences::self()->dccSendTimeout() );

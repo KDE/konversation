@@ -96,6 +96,8 @@ namespace Konversation
                 QString m_encoding;
 
                 bool m_initialShow;
+
+                int m_connectionId;
         };
     }
 }
