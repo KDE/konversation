@@ -30,6 +30,13 @@ Changes since 1.2-alpha6:
 * Fixed the Channel Settings no longer disabling interface elements allow-
   ing the manipulation of channel properties when the user lacks the ne-
   cessary operator privileges in the channel.
+* The position of the splitter handle determining the size of the info pa-
+  nel in the DCC Status tab is now saved across application restarts.
+* Fixed a crash when changing settings after the "Insert Character" dialog
+  had been used.
+* When an attempt to set up a port forward via UPnP fails, an error message
+  stating as much will now be shown in the currently active or last active
+  tab for the associated IRC server connection.
 
 
 Changes from 1.2-alpha5 to 1.2-alpha6:
