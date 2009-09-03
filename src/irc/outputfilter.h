@@ -41,6 +41,13 @@ namespace Konversation
         PrivateMessage
     };
 
+    struct OutputFilterInput
+    {
+        QString parameter;
+        QString destination;
+        QString myNick;
+    };
+
     struct OutputFilterResult
     {
         QString output;
@@ -61,8 +68,8 @@ namespace Konversation
 
             static const QSet<QString>& supportedCommands() { return m_commands; }
 
-            QStringList splitForEncoding(const QString& inputLine, int max, int segments = -1);
-            OutputFilterResult parse(const QString& myNick,const QString& line,const QString& name);
+            QStringList splitForEncoding(const QString& destination, const QString& inputLine, int max, int segments = -1);
+            OutputFilterResult parse(const QString& myNick,const QString& line,const QString& destination);
 
             // dcc send
             OutputFilterResult sendRequest(const QString &recipient,const QString &fileName,const QString &address,uint port,quint64 size);
@@ -119,77 +126,77 @@ namespace Konversation
             OutputFilterResult execUnban(const QString& mask,const QString& channels);
 
         private slots:
-            void command_join();
-            void command_part();
-            void command_leave();
-            void command_quit();
-            void command_close();
-            void command_notice();
-            void command_j();
-            void command_me();
-            void command_msg();
-            void command_m();
-            void command_smsg();
-            void command_query();
-            void command_ame();
-            void command_amsg();
-            void command_omsg();
-            void command_onotice();
-            void command_quote();
-            void command_say();
-            void command_op();
-            void command_deop();
-            void command_hop();
-            void command_dehop();
-            void command_voice();
-            void command_devoice();
-            void command_unvoice();
-            void command_ctcp();
-            void command_ping();
-            void command_kick();
-            void command_topic();
-            void command_away();
-            void command_unaway();
-            void command_back();
-            void command_invite();
-            void command_exec();
-            void command_notify();
-            void command_oper();
-            void command_ban();
-            void command_unban();
-            void command_kickban();
-            void command_ignore();
-            void command_unignore();
-            void command_list();
-            void command_names();
-            void command_raw();
-            void command_dcc();
-            void command_konsole();
-            void command_aaway();
-            void command_aunaway();
-            void command_aback();
-            void command_server();
-            void command_reconnect();
-            void command_disconnect();
-            void command_charset();
-            void command_encoding();
-            void command_setkey();
-            void command_keyx();
-            void command_delkey();
-            void command_showkey();
-            void command_dns();
-            void command_kill();
-            void command_queuetuner();
+            OutputFilterResult command_op(const OutputFilterInput& input);
+            OutputFilterResult command_deop(const OutputFilterInput& input);
+            OutputFilterResult command_hop(const OutputFilterInput& input);
+            OutputFilterResult command_dehop(const OutputFilterInput& input);
+            OutputFilterResult command_voice(const OutputFilterInput& input);
+            OutputFilterResult command_unvoice(const OutputFilterInput& input);
+            OutputFilterResult command_devoice(const OutputFilterInput& input);
+            OutputFilterResult command_join(OutputFilterInput& input);
+            OutputFilterResult command_j(OutputFilterInput& input);
+            OutputFilterResult command_kick(const OutputFilterInput& input);
+            OutputFilterResult command_part(const OutputFilterInput& input);
+            OutputFilterResult command_leave(const OutputFilterInput& input);
+            OutputFilterResult command_topic(const OutputFilterInput& input);
+            OutputFilterResult command_away(const OutputFilterInput& input);
+            OutputFilterResult command_unaway(const OutputFilterInput& input);
+            OutputFilterResult command_back(const OutputFilterInput& input);
+            OutputFilterResult command_aaway(const OutputFilterInput& input);
+            OutputFilterResult command_aunaway(const OutputFilterInput& input);
+            OutputFilterResult command_aback(const OutputFilterInput& input);
+            OutputFilterResult command_names(const OutputFilterInput& input);
+            OutputFilterResult command_close(OutputFilterInput& input);
+            OutputFilterResult command_quit(const OutputFilterInput& input);
+            OutputFilterResult command_notice(const OutputFilterInput& input);
+            OutputFilterResult command_me(const OutputFilterInput& input);
+            OutputFilterResult command_msg(const OutputFilterInput& input);
+            OutputFilterResult command_m(const OutputFilterInput& input);
+            OutputFilterResult command_query(const OutputFilterInput& input);
+            OutputFilterResult command_smsg(const OutputFilterInput& input);
+            OutputFilterResult command_ping(const OutputFilterInput& input);
+            OutputFilterResult command_ctcp(const OutputFilterInput& input);
+            OutputFilterResult command_ame(const OutputFilterInput& input);
+            OutputFilterResult command_amsg(const OutputFilterInput& input);
+            OutputFilterResult command_omsg(const OutputFilterInput& input);
+            OutputFilterResult command_onotice(const OutputFilterInput& input);
+            OutputFilterResult command_quote(const OutputFilterInput& input);
+            OutputFilterResult command_say(const OutputFilterInput& input);
+            OutputFilterResult command_dcc(OutputFilterInput& input);
+            OutputFilterResult command_invite(const OutputFilterInput& input);
+            OutputFilterResult command_exec(const OutputFilterInput& input);
+            OutputFilterResult command_raw(const OutputFilterInput& input);
+            OutputFilterResult command_notify(const OutputFilterInput& input);
+            OutputFilterResult command_oper(const OutputFilterInput& input);
+            OutputFilterResult command_ban(const OutputFilterInput& input);
+            OutputFilterResult command_kickban(const OutputFilterInput& input);
+            OutputFilterResult command_unban(const OutputFilterInput& input);
+            OutputFilterResult command_ignore(const OutputFilterInput& input);
+            OutputFilterResult command_unignore(const OutputFilterInput& input);
+            OutputFilterResult command_server(const OutputFilterInput& input);
+            OutputFilterResult command_reconnect(const OutputFilterInput& input);
+            OutputFilterResult command_disconnect(const OutputFilterInput& input);
+            OutputFilterResult command_charset(const OutputFilterInput& input);
+            OutputFilterResult command_encoding(const OutputFilterInput& input);
+            OutputFilterResult command_setkey(const OutputFilterInput& input);
+            OutputFilterResult command_keyx(const OutputFilterInput& input);
+            OutputFilterResult command_delkey(OutputFilterInput& input);
+            OutputFilterResult command_showkey(OutputFilterInput& input);
+            OutputFilterResult command_kill(const OutputFilterInput& input);
+            OutputFilterResult command_dns(const OutputFilterInput& input);
+            OutputFilterResult command_list(const OutputFilterInput& input);
+            OutputFilterResult command_konsole(const OutputFilterInput& input);
+            OutputFilterResult command_queuetuner(const OutputFilterInput& input);
 
         private:
             static void fillCommandList();
             static QSet<QString> m_commands;
 
-            void handleMsg(bool commandIsQuery);
-            void handleCtcp(const QString& parameter);
-            void handleBan(bool kick);
+            OutputFilterResult handleMsg(const QString& parameter, bool commandIsQuery);
+            OutputFilterResult handleCtcp(const QString& parameter);
+            OutputFilterResult handleBan(const OutputFilterInput& input, bool kick);
 
-            OutputFilterResult changeMode(const QString& parameter,char mode,char giveTake);
+            OutputFilterResult changeMode(const QString& parameter, const QString& destination, char mode, char giveTake);
             bool isAChannel(const QString& check);
             OutputFilterResult usage(const QString& check);
             OutputFilterResult info(const QString& check);
@@ -197,14 +204,8 @@ namespace Konversation
             QString addNickToEmptyNickList(const QString& nick, const QString& parameter);
             bool checkForEncodingConflict(QString *line, const QString& target);
 
-            QString m_commandChar;
-            QString m_myNick;
-            QString m_destination;
-            QString m_parameter;
-
-            OutputFilterResult m_result;
-
             Server* m_server;
     };
 }
+
 #endif

@@ -37,6 +37,7 @@ Changes since 1.2-alpha6:
 * When an attempt to set up a port forward via UPnP fails, an error message
   stating as much will now be shown in the currently active or last active
   tab for the associated IRC server connection.
+* Made the '/amsg' command work properly again.
 
 
 Changes from 1.2-alpha5 to 1.2-alpha6:
