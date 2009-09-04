@@ -242,9 +242,9 @@ namespace Konversation
             m_dccChatInput->setEnabled(true);
         }
 
-        void Chat::dccChatBroken(QAbstractSocket::SocketError error)
+        void Chat::dccChatBroken(QAbstractSocket::SocketError /*error*/)
         {
-            getTextView()->appendServerMessage(i18n("Error"), i18n("Connection broken, error (%1) %2.", error, m_dccSocket->errorString()));
+            getTextView()->appendServerMessage(i18n("Error"), i18n("Socket error: %1", m_dccSocket->errorString()));
             m_dccSocket->blockSignals(true);
             m_dccSocket->close();
         }
