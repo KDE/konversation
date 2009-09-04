@@ -352,8 +352,9 @@ namespace Konversation
         return command_unvoice(input);
     }
 
-    OutputFilterResult OutputFilter::command_join(OutputFilterInput& input)
+    OutputFilterResult OutputFilter::command_join(const OutputFilterInput& _input)
     {
+        OutputFilterInput input(_input);
         OutputFilterResult result;
 
         if (input.parameter.contains(",")) // Protect against #foo,0 tricks
@@ -386,7 +387,7 @@ namespace Konversation
         return result;
     }
 
-    OutputFilterResult OutputFilter::command_j(OutputFilterInput& input)
+    OutputFilterResult OutputFilter::command_j(const OutputFilterInput& input)
     {
         return command_join(input);
     }
@@ -580,8 +581,9 @@ namespace Konversation
         return result;
     }
 
-    OutputFilterResult OutputFilter::command_close(OutputFilterInput& input)
+    OutputFilterResult OutputFilter::command_close(const OutputFilterInput& _input)
     {
+        OutputFilterInput input(_input);
         OutputFilterResult result;
 
         if (input.parameter.isEmpty())
@@ -882,8 +884,9 @@ namespace Konversation
         return result;
     }
 
-    OutputFilterResult OutputFilter::command_dcc(OutputFilterInput& input)
+    OutputFilterResult OutputFilter::command_dcc(const OutputFilterInput& _input)
     {
+        OutputFilterInput input(_input);
         OutputFilterResult result;
 
         kDebug() << input.parameter;
@@ -1568,8 +1571,9 @@ namespace Konversation
         return result;
     }
 
-    OutputFilterResult OutputFilter::command_delkey(OutputFilterInput& input)
+    OutputFilterResult OutputFilter::command_delkey(const OutputFilterInput& _input)
     {
+        OutputFilterInput input(_input);
         OutputFilterResult result;
 
         if (input.parameter.isEmpty())
@@ -1595,8 +1599,10 @@ namespace Konversation
         return result;
     }
 
-    OutputFilterResult OutputFilter::command_showkey(OutputFilterInput& input)
+    OutputFilterResult OutputFilter::command_showkey(const OutputFilterInput& _input)
     {
+        OutputFilterInput input(_input);
+
         if (input.parameter.isEmpty())
             input.parameter = input.destination;
 

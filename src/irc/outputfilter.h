@@ -133,8 +133,8 @@ namespace Konversation
             OutputFilterResult command_voice(const OutputFilterInput& input);
             OutputFilterResult command_unvoice(const OutputFilterInput& input);
             OutputFilterResult command_devoice(const OutputFilterInput& input);
-            OutputFilterResult command_join(OutputFilterInput& input);
-            OutputFilterResult command_j(OutputFilterInput& input);
+            OutputFilterResult command_join(const OutputFilterInput& _input);
+            OutputFilterResult command_j(const OutputFilterInput& input);
             OutputFilterResult command_kick(const OutputFilterInput& input);
             OutputFilterResult command_part(const OutputFilterInput& input);
             OutputFilterResult command_leave(const OutputFilterInput& input);
@@ -146,7 +146,7 @@ namespace Konversation
             OutputFilterResult command_aunaway(const OutputFilterInput& input);
             OutputFilterResult command_aback(const OutputFilterInput& input);
             OutputFilterResult command_names(const OutputFilterInput& input);
-            OutputFilterResult command_close(OutputFilterInput& input);
+            OutputFilterResult command_close(const OutputFilterInput& _input);
             OutputFilterResult command_quit(const OutputFilterInput& input);
             OutputFilterResult command_notice(const OutputFilterInput& input);
             OutputFilterResult command_me(const OutputFilterInput& input);
@@ -162,7 +162,7 @@ namespace Konversation
             OutputFilterResult command_onotice(const OutputFilterInput& input);
             OutputFilterResult command_quote(const OutputFilterInput& input);
             OutputFilterResult command_say(const OutputFilterInput& input);
-            OutputFilterResult command_dcc(OutputFilterInput& input);
+            OutputFilterResult command_dcc(const OutputFilterInput& _input);
             OutputFilterResult command_invite(const OutputFilterInput& input);
             OutputFilterResult command_exec(const OutputFilterInput& input);
             OutputFilterResult command_raw(const OutputFilterInput& input);
@@ -180,8 +180,8 @@ namespace Konversation
             OutputFilterResult command_encoding(const OutputFilterInput& input);
             OutputFilterResult command_setkey(const OutputFilterInput& input);
             OutputFilterResult command_keyx(const OutputFilterInput& input);
-            OutputFilterResult command_delkey(OutputFilterInput& input);
-            OutputFilterResult command_showkey(OutputFilterInput& input);
+            OutputFilterResult command_delkey(const OutputFilterInput& _input);
+            OutputFilterResult command_showkey(const OutputFilterInput& _input);
             OutputFilterResult command_kill(const OutputFilterInput& input);
             OutputFilterResult command_dns(const OutputFilterInput& input);
             OutputFilterResult command_list(const OutputFilterInput& input);
