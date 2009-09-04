@@ -110,7 +110,8 @@ namespace Konversation
         return false;
     }
 
-    QStringList OutputFilter::splitForEncoding(const QString& destination, const QString& inputLine, int max, int segments)
+    QStringList OutputFilter::splitForEncoding(const QString& destination, const QString& inputLine,
+                                               int max, int segments)
     {
         int sublen = 0; //The encoded length since the last split
         int charLength = 0; //the length of this char
@@ -205,9 +206,9 @@ namespace Konversation
 
             ret = KMessageBox::warningContinueCancel(m_server->getViewContainer()->getWindow(),
             i18n("The message you're sending includes characters "
-            "that do not exist in your current encoding. If "
-            "you choose to continue anyway those characters "
-            "will be replaced by a '?'."),
+                 "that do not exist in your current encoding. If "
+                 "you choose to continue anyway those characters "
+                 "will be replaced by a '?'."),
             i18n("Encoding Conflict Warning"),
             KStandardGuiItem::cont(),
             KStandardGuiItem::cancel(),
@@ -220,7 +221,8 @@ namespace Konversation
         return false;
     }
 
-    OutputFilterResult OutputFilter::parse(const QString& myNick, const QString& originalLine, const QString& destination)
+    OutputFilterResult OutputFilter::parse(const QString& myNick, const QString& originalLine,
+                                           const QString& destination)
     {
         OutputFilterInput input;
         input.myNick = myNick;
@@ -286,7 +288,8 @@ namespace Konversation
         {
             BYPASS_COMMAND_PARSING:
 
-            QStringList outputList = splitForEncoding(destination, inputLine, m_server->getPreLength("PRIVMSG", destination));
+            QStringList outputList = splitForEncoding(destination, inputLine,
+                                                      m_server->getPreLength("PRIVMSG", destination));
 
             if (outputList.count() > 1)
             {
@@ -324,7 +327,8 @@ namespace Konversation
 
     OutputFilterResult OutputFilter::command_deop(const OutputFilterInput& input)
     {
-        return changeMode(addNickToEmptyNickList(input.myNick, input.parameter), input.destination, 'o', '-');
+        return changeMode(addNickToEmptyNickList(input.myNick, input.parameter),
+                          input.destination, 'o', '-');
     }
 
     OutputFilterResult OutputFilter::command_hop(const OutputFilterInput& input)
@@ -334,7 +338,8 @@ namespace Konversation
 
     OutputFilterResult OutputFilter::command_dehop(const OutputFilterInput& input)
     {
-        return changeMode(addNickToEmptyNickList(input.myNick, input.parameter), input.destination, 'h', '-');
+        return changeMode(addNickToEmptyNickList(input.myNick, input.parameter), input.destination,
+                          'h', '-');
     }
 
     OutputFilterResult OutputFilter::command_voice(const OutputFilterInput& input)
@@ -344,7 +349,8 @@ namespace Konversation
 
     OutputFilterResult OutputFilter::command_unvoice(const OutputFilterInput& input)
     {
-        return changeMode(addNickToEmptyNickList(input.myNick, input.parameter), input.destination, 'v', '-');
+        return changeMode(addNickToEmptyNickList(input.myNick, input.parameter), input.destination,
+                          'v', '-');
     }
 
     OutputFilterResult OutputFilter::command_devoice(const OutputFilterInput& input)
@@ -364,7 +370,8 @@ namespace Konversation
         if (input.parameter.isEmpty())
         {
             if (input.destination.isEmpty() || !isAChannel(input.destination))
-                return usage(i18n("Usage: %1JOIN <channel> [password]", Preferences::self()->commandChar()));
+                return usage(i18n("Usage: %1JOIN <channel> [password]",
+                                  Preferences::self()->commandChar()));
 
             input.parameter = input.destination;
         }
@@ -416,7 +423,8 @@ namespace Konversation
             }
         }
         else
-            result = error(i18n("%1KICK only works from within channels.", Preferences::self()->commandChar()));
+            result = error(i18n("%1KICK only works from within channels.",
+                                Preferences::self()->commandChar()));
 
         return result;
     }
@@ -430,11 +438,13 @@ namespace Konversation
         {
             // But only if we actually are in a channel
             if (isAChannel(input.destination))
-                result.toServer = "PART " + input.destination + " :" + m_server->getIdentity()->getPartReason();
+                result.toServer = "PART " + input.destination + " :" +
+                                  m_server->getIdentity()->getPartReason();
             else if (m_server->getQueryByName(input.destination))
                 m_server->closeQuery(input.destination);
             else
-                result = error(i18n("%1PART and %1LEAVE without parameters only work from within a channel or a query.", Preferences::self()->commandChar()));
+                result = error(i18n("%1PART and %1LEAVE without parameters only work from within a "
+                                    "channel or a query.", Preferences::self()->commandChar()));
         }
         else
         {
@@ -458,7 +468,8 @@ namespace Konversation
                 if (isAChannel(input.destination))
                     result.toServer = "PART " + input.destination + " :" + input.parameter;
                 else
-                    result = error(i18n("%1PART without channel name only works from within a channel.", Preferences::self()->commandChar()));
+                    result = error(i18n("%1PART without channel name only works from within a channel.",
+                                        Preferences::self()->commandChar()));
             }
         }
 
@@ -481,7 +492,8 @@ namespace Konversation
             if (isAChannel(input.destination))
                 result.toServer = "TOPIC " + input.destination;
             else
-                result = error(i18n("%1TOPIC without parameters only works from within a channel.", Preferences::self()->commandChar()));
+                result = error(i18n("%1TOPIC without parameters only works from within a channel.",
+                                    Preferences::self()->commandChar()));
         }
         else
         {
@@ -517,7 +529,8 @@ namespace Konversation
                 if (isAChannel(input.destination))
                     result.toServer = "TOPIC " + input.destination + " :" + input.parameter;
                 else
-                    result = error(i18n("%1TOPIC without channel name only works from within a channel.", Preferences::self()->commandChar()));
+                    result = error(i18n("%1TOPIC without channel name only works from within a channel.",
+                                        Preferences::self()->commandChar()));
             }
         }
 
@@ -574,7 +587,8 @@ namespace Konversation
         result.toServer = "NAMES ";
 
         if (input.parameter.isNull())
-            result = error(i18n("%1NAMES with no target may disconnect you from the server. Specify '*' if you really want this.", Preferences::self()->commandChar()));
+            result = error(i18n("%1NAMES with no target may disconnect you from the server. Specify "
+                                "'*' if you really want this.", Preferences::self()->commandChar()));
         else if (input.parameter != QChar('*'))
             result.toServer.append(input.parameter);
 
@@ -596,7 +610,9 @@ namespace Konversation
         else if (input.parameter.isEmpty()) // this can only mean one thing.. we're in the Server tab
             m_server->closeYourself(false);
         else
-            result = usage(i18n("Usage: %1close [window] closes the named channel or query tab, or the current tab if none specified.", Preferences::self()->commandChar()));
+            result = usage(i18n("Usage: %1close [window] closes the named channel or query tab, "
+                                "or the current tab if none specified.",
+                                Preferences::self()->commandChar()));
 
         return result;
     }
@@ -623,12 +639,14 @@ namespace Konversation
         QString message = input.parameter.mid(recipient.length()+1);
 
         if (input.parameter.isEmpty() || message.isEmpty())
-            result = usage(i18n("Usage: %1NOTICE <recipient> <message>", Preferences::self()->commandChar()));
+            result = usage(i18n("Usage: %1NOTICE <recipient> <message>",
+                                Preferences::self()->commandChar()));
         else
         {
             result.typeString = i18n("Notice");
             result.toServer = "NOTICE " + recipient + " :" + message;
-            result.output=i18nc("%1 is the message, %2 the recipient nickname","Sending notice \"%1\" to %2.", message, recipient);
+            result.output=i18nc("%1 is the message, %2 the recipient nickname",
+                                "Sending notice \"%1\" to %2.", message, recipient);
             result.type = Program;
         }
 
@@ -644,13 +662,15 @@ namespace Konversation
 
         QString command("PRIVMSGACTION \x01\x01");
 
-        QStringList outputList = splitForEncoding(input.destination, input.parameter, m_server->getPreLength(command, input.destination), 2);
+        QStringList outputList = splitForEncoding(input.destination, input.parameter,
+                                                  m_server->getPreLength(command, input.destination), 2);
 
         if (outputList.count() > 1)
         {
             command = "PRIVMSG";
 
-            outputList += splitForEncoding(input.destination, outputList.at(1), m_server->getPreLength(command, input.destination));
+            outputList += splitForEncoding(input.destination, outputList.at(1),
+                                           m_server->getPreLength(command, input.destination));
 
             outputList.removeAt(1);
 
@@ -660,7 +680,8 @@ namespace Konversation
             for (int i = 0; i < outputList.count(); ++i)
             {
                 if (i == 0)
-                    result.toServerList += "PRIVMSG " + input.destination + " :" + '\x01' + "ACTION " + outputList.at(i) + '\x01';
+                    result.toServerList += "PRIVMSG " + input.destination + " :" + '\x01' +
+                                           "ACTION " + outputList.at(i) + '\x01';
                 else
                     result.toServerList += "PRIVMSG " + input.destination + " :" + outputList.at(i);
             }
@@ -668,7 +689,8 @@ namespace Konversation
         else
         {
             result.output = input.parameter;
-            result.toServer = "PRIVMSG " + input.destination + " :" + '\x01' + "ACTION " + input.parameter + '\x01';
+            result.toServer = "PRIVMSG " + input.destination + " :" + '\x01' + "ACTION " +
+                              input.parameter + '\x01';
         }
 
         result.type = Action;
@@ -720,7 +742,8 @@ namespace Konversation
             output = message;
 
             if (message.startsWith(Preferences::self()->commandChar() + "me"))
-                result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + "ACTION " + message.mid(4) + '\x01';
+                result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + "ACTION " +
+                                   message.mid(4) + '\x01';
             else
                 result.toServer = "PRIVMSG " + recipient + " :" + message;
         }
@@ -758,7 +781,8 @@ namespace Konversation
         QString message = input.parameter.mid(recipient.length() + 1);
 
         if (message.startsWith(Preferences::self()->commandChar() + "me"))
-            result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + "ACTION " + message.mid(4) + '\x01';
+            result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + "ACTION " +
+                              message.mid(4) + '\x01';
         else
             result.toServer = "PRIVMSG " + recipient + " :" + message;
 
@@ -922,7 +946,8 @@ namespace Konversation
                         result = error(i18n("File \"%1\" does not exist.", parameterList[2]));
                 }
                 else                              // Don't know how this should happen, but ...
-                    result = usage(i18n("Usage: %1DCC [SEND nickname filename]", Preferences::self()->commandChar()));
+                    result = usage(i18n("Usage: %1DCC [SEND nickname filename]",
+                                        Preferences::self()->commandChar()));
             }
             else if (dccType == "get")
             {
@@ -939,7 +964,8 @@ namespace Konversation
                         emit acceptDccGet(parameterList.at(1),parameterList.at(2));
                         break;
                     default:
-                        result = usage(i18n("Usage: %1DCC [GET [nickname [filename]]]", Preferences::self()->commandChar()));
+                        result = usage(i18n("Usage: %1DCC [GET [nickname [filename]]]",
+                                            Preferences::self()->commandChar()));
                 }
             }
             // TODO: DCC Chat etc. comes here
@@ -948,16 +974,20 @@ namespace Konversation
                 if (parameterList.count() == 2)
                     emit openDccChat(parameterList[1]);
                 else
-                    result = usage(i18n("Usage: %1DCC [CHAT nickname]", Preferences::self()->commandChar()));
+                    result = usage(i18n("Usage: %1DCC [CHAT nickname]",
+                                        Preferences::self()->commandChar()));
             }
             else
-                result = error(i18n("Unrecognized command %1DCC %2. Possible commands are SEND, CHAT, CLOSE.", Preferences::self()->commandChar(), parameterList[0]));
+                result = error(i18n("Unrecognized command %1DCC %2. Possible commands are SEND, "
+                                    "CHAT, CLOSE.",
+                                    Preferences::self()->commandChar(), parameterList[0]));
         }
 
         return result;
     }
 
-    OutputFilterResult OutputFilter::sendRequest(const QString &recipient,const QString &fileName,const QString &address,uint port,quint64 size)
+    OutputFilterResult OutputFilter::sendRequest(const QString &recipient, const QString &fileName,
+                                                 const QString &address, uint port, quint64 size)
     {
         OutputFilterResult result;
         result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + "DCC SEND "
@@ -967,7 +997,10 @@ namespace Konversation
         return result;
     }
 
-    OutputFilterResult OutputFilter::passiveSendRequest(const QString& recipient,const QString &fileName,const QString &address,quint64 size,const QString &token)
+    OutputFilterResult OutputFilter::passiveSendRequest(const QString& recipient,
+                                                        const QString &fileName,
+                                                        const QString &address,
+                                                        quint64 size, const QString &token)
     {
         OutputFilterResult result;
         result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + "DCC SEND "
@@ -978,47 +1011,60 @@ namespace Konversation
     }
 
     // Accepting Resume Request
-    OutputFilterResult OutputFilter::acceptResumeRequest(const QString &recipient,const QString &fileName,uint port,quint64 startAt)
+    OutputFilterResult OutputFilter::acceptResumeRequest(const QString &recipient,
+                                                         const QString &fileName,
+                                                         uint port, quint64 startAt)
     {
         OutputFilterResult result;
-        result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + "DCC ACCEPT " + fileName + ' ' + QString::number(port)
-            + ' ' + QString::number(startAt) + '\x01';
+        result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + "DCC ACCEPT " + fileName + ' ' +
+                          QString::number(port) + ' ' + QString::number(startAt) + '\x01';
 
         return result;
     }
 
     // Accepting Passive Resume Request
-    OutputFilterResult OutputFilter::acceptPassiveResumeRequest(const QString &recipient,const QString &fileName,uint port,quint64 startAt,const QString &token)
+    OutputFilterResult OutputFilter::acceptPassiveResumeRequest(const QString &recipient,
+                                                                const QString &fileName,
+                                                                uint port, quint64 startAt,
+                                                                const QString &token)
     {
         OutputFilterResult result;
-        result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + "DCC ACCEPT " + fileName + ' ' + QString::number(port)
-            + ' ' + QString::number(startAt) + ' ' + token +'\x01';
+        result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + "DCC ACCEPT " + fileName + ' ' +
+                          QString::number(port) + ' ' + QString::number(startAt) + ' ' + token +'\x01';
 
         return result;
     }
 
     // Requesting Resume Request
-    OutputFilterResult OutputFilter::resumeRequest(const QString &sender,const QString &fileName,uint port,KIO::filesize_t startAt)
+    OutputFilterResult OutputFilter::resumeRequest(const QString &sender, const QString &fileName,
+                                                   uint port, KIO::filesize_t startAt)
     {
         OutputFilterResult result;
-        result.toServer = "PRIVMSG " + sender + " :" + '\x01' + "DCC RESUME " + fileName + ' ' + QString::number(port) + ' '
-            + QString::number(startAt) + '\x01';
+        result.toServer = "PRIVMSG " + sender + " :" + '\x01' + "DCC RESUME " + fileName + ' ' +
+                          QString::number(port) + ' ' + QString::number(startAt) + '\x01';
 
         return result;
     }
 
     // Requesting Passive Resume Request
-    OutputFilterResult OutputFilter::resumePassiveRequest(const QString &sender,const QString &fileName,uint port,KIO::filesize_t startAt,const QString &token)
+    OutputFilterResult OutputFilter::resumePassiveRequest(const QString &sender,
+                                                          const QString &fileName,
+                                                          uint port, KIO::filesize_t startAt,
+                                                          const QString &token)
     {
         OutputFilterResult result;
-        result.toServer = "PRIVMSG " + sender + " :" + '\x01' + "DCC RESUME " + fileName + ' ' + QString::number(port) + ' '
-            + QString::number(startAt) + ' ' + token + '\x01';
+        result.toServer = "PRIVMSG " + sender + " :" + '\x01' + "DCC RESUME " + fileName + ' ' +
+                          QString::number(port) + ' ' + QString::number(startAt) + ' ' + token + '\x01';
 
         return result;
     }
 
     // Accept Passive Send Request, there active doesn't need that
-    OutputFilterResult OutputFilter::acceptPassiveSendRequest(const QString& recipient,const QString &fileName,const QString &address,uint port,quint64 size,const QString &token)
+    OutputFilterResult OutputFilter::acceptPassiveSendRequest(const QString& recipient,
+                                                              const QString &fileName,
+                                                              const QString &address,
+                                                              uint port, quint64 size,
+                                                              const QString &token)
     {
         OutputFilterResult result;
         result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + "DCC SEND "
@@ -1063,7 +1109,8 @@ namespace Konversation
                 if (isAChannel(input.destination))
                     channel = input.destination;
                 else
-                    result = error(i18n("%1INVITE without channel name works only from within channels.", Preferences::self()->commandChar()));
+                    result = error(i18n("%1INVITE without channel name works only from within channels.",
+                                        Preferences::self()->commandChar()));
             }
 
             if (!channel.isEmpty())
@@ -1083,7 +1130,8 @@ namespace Konversation
         OutputFilterResult result;
 
         if (input.parameter.isEmpty())
-            result = usage(i18n("Usage: %1EXEC <script> [parameter list]", Preferences::self()->commandChar()));
+            result = usage(i18n("Usage: %1EXEC <script> [parameter list]",
+                                Preferences::self()->commandChar()));
         else
         {
             QStringList parameterList = input.parameter.split(' ');
@@ -1139,7 +1187,10 @@ namespace Konversation
         // show (new) notify list to user
         //TODO FIXME uh, wtf? my brain has no room in it for this kind of fucking shit
 
-        QString list = Preferences::notifyStringByGroupId(serverGroupId) + ' ' + Konversation::Addressbook::self()->allContactsNicksForServer(m_server->getServerName(), m_server->getDisplayName()).join(" ");
+        QString list = Preferences::notifyStringByGroupId(serverGroupId) + ' ' +
+                       Konversation::Addressbook::self()->
+                           allContactsNicksForServer(m_server->getServerName(),
+                                                     m_server->getDisplayName()).join(" ");
 
         result.typeString = i18n("Notify");
 
@@ -1236,9 +1287,11 @@ namespace Konversation
                 {
                     // destination is no channel => error
                     if (!kick)
-                        result = error(i18n("%1BAN without channel name works only from inside a channel.", Preferences::self()->commandChar()));
+                        result = error(i18n("%1BAN without channel name works only from inside a channel.",
+                                            Preferences::self()->commandChar()));
                     else
-                        result = error(i18n("%1KICKBAN without channel name works only from inside a channel.", Preferences::self()->commandChar()));
+                        result = error(i18n("%1KICKBAN without channel name works only from inside a channel.",
+                                            Preferences::self()->commandChar()));
 
                     // no usage information after error
                     showUsage = false;
@@ -1269,9 +1322,12 @@ namespace Konversation
         if (showUsage)
         {
             if (!kick)
-                result = usage(i18n("Usage: %1BAN [-HOST | -DOMAIN | -USERHOST | -USERDOMAIN] [channel] <user|mask>", Preferences::self()->commandChar()));
+                result = usage(i18n("Usage: %1BAN [-HOST | -DOMAIN | -USERHOST | -USERDOMAIN] "
+                                    "[channel] <user|mask>", Preferences::self()->commandChar()));
             else
-                result = usage(i18n("Usage: %1KICKBAN [-HOST | -DOMAIN | -USERHOST | -USERDOMAIN] [channel] <user|mask> [reason]", Preferences::self()->commandChar()));
+                result = usage(i18n("Usage: %1KICKBAN [-HOST | -DOMAIN | -USERHOST | -USERDOMAIN] "
+                                    "[channel] <user|mask> [reason]",
+                                    Preferences::self()->commandChar()));
         }
 
         return result;
@@ -1312,7 +1368,8 @@ namespace Konversation
             else
             {
                 // destination is no channel => error
-                result = error(i18n("%1UNBAN without channel name works only from inside a channel.", Preferences::self()->commandChar()));
+                result = error(i18n("%1UNBAN without channel name works only from inside a channel.",
+                                    Preferences::self()->commandChar()));
                 // no usage information after error
                 showUsage = false;
             }
@@ -1382,7 +1439,8 @@ namespace Konversation
         }
 
         if (showUsage)
-            result = usage(i18n("Usage: %1IGNORE [ -ALL ] <user 1> <user 2> ... <user n>", Preferences::self()->commandChar()));
+            result = usage(i18n("Usage: %1IGNORE [ -ALL ] <user 1> <user 2> ... <user n>",
+                                Preferences::self()->commandChar()));
 
         return result;
     }
@@ -1392,7 +1450,8 @@ namespace Konversation
         OutputFilterResult result;
 
         if (input.parameter.isEmpty())
-            result = usage(i18n("Usage: %1UNIGNORE <user 1> <user 2> ... <user n>", Preferences::self()->commandChar()));
+            result = usage(i18n("Usage: %1UNIGNORE <user 1> <user 2> ... <user n>",
+                                Preferences::self()->commandChar()));
         else
         {
             QString unignore = input.parameter.simplified();
@@ -1402,12 +1461,12 @@ namespace Konversation
             QStringList failed;
 
             // Iterate over potential unignores
-            for (QStringList::ConstIterator it = unignoreList.constBegin(); it != unignoreList.constEnd(); ++it)
+            foreach (const QString &uign, unignoreList)
             {
                 // If pattern looks incomplete, try to complete it
-                if (!(*it).contains('!'))
+                if (!uign.contains('!'))
                 {
-                    QString fixedPattern = (*it);
+                    QString fixedPattern = uign;
                     fixedPattern += "!*";
 
                     bool success = false;
@@ -1421,35 +1480,38 @@ namespace Konversation
 
                     // Try to remove the incomplete version too, in case it was added via the GUI ...
                     // FIXME: Validate patterns in GUI?
-                    if (Preferences::removeIgnore((*it)))
+                    if (Preferences::removeIgnore(uign))
                     {
-                        succeeded.append((*it));
+                        succeeded.append(uign);
                         success = true;
                     }
 
                     if (!success)
-                        failed.append((*it) + "[!*]");
+                        failed.append(uign + "[!*]");
                 }
                 // Try to remove seemingly complete pattern
-                else if (Preferences::removeIgnore((*it)))
-                    succeeded.append((*it));
+                else if (Preferences::removeIgnore(uign))
+                    succeeded.append(uign);
                 // Failed to remove given complete pattern
                 else
-                    failed.append((*it));
+                    failed.append(uign);
             }
 
             // Print all successful unignores, in case there were any
             if (succeeded.count() >= 1)
             {
                 //FIXME Why is this not just using the OutputFilterResult?
-                m_server->appendMessageToFrontmost(i18n("Ignore"),i18n("Removed %1 from your ignore list.", succeeded.join(", ")));
+                m_server->appendMessageToFrontmost(i18n("Ignore"),i18n("Removed %1 from your ignore list.",
+                                                                       succeeded.join(", ")));
             }
 
             // Any failed unignores
             if (failed.count() >= 1)
             {
                 //FIXME Why is this not just using the OutputFilterResult?
-                m_server->appendMessageToFrontmost(i18n("Error"),i18np("No such ignore: %2", "No such ignores: %2", failed.count(), failed.join(", ")));
+                m_server->appendMessageToFrontmost(i18n("Error"),i18np("No such ignore: %2",
+                                                                       "No such ignores: %2",
+                                                                       failed.count(), failed.join(", ")));
             }
         }
 
@@ -1499,7 +1561,8 @@ namespace Konversation
     OutputFilterResult OutputFilter::command_charset(const OutputFilterInput& input)
     {
         if (input.parameter.isEmpty())
-            return info(i18n("Current encoding is: %1", QString(m_server->getIdentity()->getCodec()->name())));
+            return info(i18n("Current encoding is: %1",
+                             QString(m_server->getIdentity()->getCodec()->name())));
 
         OutputFilterResult result;
 
@@ -1532,7 +1595,16 @@ namespace Konversation
         if (parms.count() == 1 && !input.destination.isEmpty())
             parms.prepend(input.destination);
         else if (parms.count() != 2)
-            return usage(i18n("Usage: %1setkey <nick|channel> <key> sets the encryption key for nick or channel. %1setkey <key> when in a channel or query tab sets the key for it. The key field recognizes \"cbc:\" and \"ecb:\" prefixes to set the block cipher mode of operation to either Cipher-Block Chaining or Electronic Codebook. The mode it defaults to when no prefix is given can be changed in the configuration dialog under Behavior -> Connection -> Encryption -> Default Encryption Type, with the default for that setting being Electronic Codebook (ECB).", Preferences::self()->commandChar()));
+            return usage(i18n("Usage: %1setkey <nick|channel> <key> sets the encryption key "
+                              "for nick or channel. %1setkey <key> when in a channel or query "
+                              "tab sets the key for it. The key field recognizes \"cbc:\" and "
+                              "\"ecb:\" prefixes to set the block cipher mode of operation to "
+                              "either Cipher-Block Chaining or Electronic Codebook. The mode it "
+                              "defaults to when no prefix is given can be changed in the "
+                              "configuration dialog under Behavior -> Connection -> Encryption "
+                              "-> Default Encryption Type, with the default for that setting being "
+                              "Electronic Codebook (ECB).",
+                              Preferences::self()->commandChar()));
 
         m_server->setKeyForRecipient(parms[0], parms[1].toLocal8Bit());
 
@@ -1543,7 +1615,10 @@ namespace Konversation
 
         result = info(i18n("The key for %1 has been set.", parms[0]));
         #else
-        result = error(i18n("Setting an encryption key requires Konversation to have been built with support for the Qt Cryptographic Architecture (QCA) library. Contact your distributor about a Konversation package with QCA support, or rebuild Konversation with QCA present."));
+        result = error(i18n("Setting an encryption key requires Konversation to have been built "
+                            "with support for the Qt Cryptographic Architecture (QCA) library. "
+                            "Contact your distributor about a Konversation package with QCA "
+                            "support, or rebuild Konversation with QCA present."));
         #endif
 
         return result;
@@ -1559,13 +1634,17 @@ namespace Konversation
         if (parms.count() == 0 && !input.destination.isEmpty())
             parms.prepend(input.destination);
         else if (parms.count() !=1)
-            return usage(i18n("Usage: %1keyx <nick|channel> triggers DH1080 key exchange with the target.", Preferences::self()->commandChar()));
+            return usage(i18n("Usage: %1keyx <nick|channel> triggers DH1080 key exchange with the target.",
+                              Preferences::self()->commandChar()));
 
         m_server->initKeyExchange(parms[0]);
 
         result = info(i18n("Beginning DH1080 key exchange with %1.", parms[0]));
         #else
-        result = error(i18n("Setting an encryption key requires Konversation to have been built with support for the Qt Cryptographic Architecture (QCA) library. Contact your distributor about a Konversation package with QCA support, or rebuild Konversation with QCA present."));
+        result = error(i18n("Setting an encryption key requires Konversation to have been built "
+                            "with support for the Qt Cryptographic Architecture (QCA) library. "
+                            "Contact your distributor about a Konversation package with QCA "
+                            "support, or rebuild Konversation with QCA present."));
         #endif
 
         return result;
@@ -1580,7 +1659,8 @@ namespace Konversation
             input.parameter = input.destination;
 
         if (input.parameter.isEmpty() || input.parameter.contains(' '))
-            return usage(i18n("Usage: %1delkey <nick> or <channel> deletes the encryption key for nick or channel", Preferences::self()->commandChar()));
+            return usage(i18n("Usage: %1delkey <nick> or <channel> deletes the encryption key for "
+                              "nick or channel", Preferences::self()->commandChar()));
 
         if (!m_server->getKeyForRecipient(input.parameter).isEmpty())
         {
@@ -1611,7 +1691,8 @@ namespace Konversation
         QWidget* mw = Application::instance()->getMainWindow();
 
         if (!key.isEmpty())
-            KMessageBox::information(mw, i18n("The key for %1 is \"%2\".", input.parameter, key), i18n("Blowfish"));
+            KMessageBox::information(mw, i18n("The key for %1 is \"%2\".", input.parameter, key),
+                                     i18n("Blowfish"));
         else
             KMessageBox::information(mw, i18n("No key has been set for %1.", input.parameter));
 
@@ -1717,7 +1798,8 @@ namespace Konversation
         return OutputFilterResult();
     }
 
-    OutputFilterResult OutputFilter::changeMode(const QString &parameter, const QString& destination, char mode, char giveTake)
+    OutputFilterResult OutputFilter::changeMode(const QString &parameter, const QString& destination,
+                                                char mode, char giveTake)
     {
         OutputFilterResult result;
         // TODO: Make sure this works with +l <limit> and +k <password> also!
@@ -1820,8 +1902,9 @@ namespace Konversation
         return newNickList;
     }
 
-    // # & + and ! are *often*, but not necessarily, channel identifiers. + and ! are non-RFC, so if a server doesn't offer 005 and
-    // supports + and ! channels, I think thats broken behaviour on their part - not ours.
+    // # & + and ! are *often*, but not necessarily, channel identifiers. + and ! are non-RFC,
+    // so if a server doesn't offer 005 and supports + and ! channels, I think thats broken
+    // behaviour on their part - not ours.
     bool OutputFilter::isAChannel(const QString &check)
     {
         if (check.isEmpty())
