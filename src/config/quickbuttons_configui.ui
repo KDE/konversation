@@ -152,6 +152,9 @@
 %s&amp;lt;term&gt;%: term used to separate nicknames in %u
 %n: Send command directly to the server instead of your input line</string>
         </property>
+        <property name="textFormat">
+         <enum>Qt::PlainText</enum>
+        </property>
         <property name="wordWrap">
          <bool>false</bool>
         </property>
