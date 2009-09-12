@@ -38,6 +38,9 @@ Changes since 1.2-alpha6:
   stating as much will now be shown in the currently active or last active
   tab for the associated IRC server connection.
 * Made the '/amsg' command work properly again.
+* Fixed two close icons (one on the left, one on the right) being shown on
+  tabs when close buttons were enabled and the tabs were in top or bottom
+  position.
 
 
 Changes from 1.2-alpha5 to 1.2-alpha6:
