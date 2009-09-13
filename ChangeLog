@@ -41,6 +41,8 @@ Changes since 1.2-alpha6:
 * Fixed two close icons (one on the left, one on the right) being shown on
   tabs when close buttons were enabled and the tabs were in top or bottom
   position.
+* Fixed incorrect colors in the listview version of the tab bar when ini-
+  tially switching to it within a session.
 
 
 Changes from 1.2-alpha5 to 1.2-alpha6:

@@ -339,16 +339,17 @@ void ViewTreeItem::paintCell(QPainter* p, const QColorGroup& /* cg */, int /* co
     QPixmap buffer(width, height());
     QPainter painter(&buffer);
 
-    QColor textColor = isSelected() ? listView()->palette().color(QPalette::HighlightedText) /* KGlobalSettings::highlightedTextColor() */ : getColor();
-    QColor background = isSelected() ? listView()->palette().color(QPalette::Highlight) /* KGlobalSettings::highlightColor() */ : listView()->palette().color(listView()->backgroundRole());
+    QColor textColor = isSelected() ? listView()->palette().color(QPalette::HighlightedText) : getColor();
+    QColor background = isSelected() ? listView()->palette().color(QPalette::Highlight) : listView()->palette().color(QPalette::Base);
+
     if (m_isHighlighted) background = Preferences::self()->inputFieldsBackgroundColor()
-        ? Preferences::self()->color(Preferences::AlternateBackground) : listView()->palette().color(QPalette::AlternateBase); // KGlobalSettings::alternateBackgroundColor()
+        ? Preferences::self()->color(Preferences::AlternateBackground) : listView()->palette().color(QPalette::AlternateBase);
 
     // Fill in background.
     painter.fillRect(0, 0, width, height(), background);
 
     QColor bgColor  = listView()->palette().color(listView()->backgroundRole());
-    QColor selColor = m_isHighlighted ? background : listView()->palette().color(QPalette::Highlight);// KGlobalSettings::highlightColor();
+    QColor selColor = m_isHighlighted ? background : listView()->palette().color(QPalette::Highlight);
     QColor midColor = mixColor(bgColor, selColor);
 
     int iconWidth = pixmap(0) ? LED_ICON_SIZE : 0;
@@ -409,7 +410,7 @@ void ViewTreeItem::paintCell(QPainter* p, const QColorGroup& /* cg */, int /* co
 
     if (m_isHighlighted)
     {
-        selColor = listView()->palette().color(QPalette::Highlight); // KGlobalSettings::highlightColor();
+        selColor = listView()->palette().color(QPalette::Highlight);
         midColor = mixColor(bgColor, selColor);
     }
 
@@ -478,7 +479,7 @@ void ViewTreeItem::paintCell(QPainter* p, const QColorGroup& /* cg */, int /* co
     else
     {
         QColor lineColor = Preferences::self()->inputFieldsBackgroundColor()
-            ? Preferences::self()->color(Preferences::AlternateBackground) : listView()->palette().color(QPalette::AlternateBase); //KGlobalSettings::alternateBackgroundColor();
+            ? Preferences::self()->color(Preferences::AlternateBackground) : listView()->palette().color(QPalette::AlternateBase);
         painter.setPen(lineColor);
         painter.drawLine(0, 5, width, 5);
     }
