@@ -53,6 +53,7 @@ Changes since 1.2-alpha6:
 * Updated the scripting documentation to talk about D-Bus rather than DCOP.
 * The initial width of the nickname lists in channel tabs is now more sen-
   sible.
+* Added back the ability to drag links out of the chat view.
 
 
 Changes from 1.2-alpha5 to 1.2-alpha6:

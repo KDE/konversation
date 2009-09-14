@@ -212,6 +212,11 @@ namespace Konversation
         return filteredLine;
     }
 
+    bool isUrl(const QString& text)
+    {
+        return urlPattern.exactMatch(text);
+    }
+
     //TODO: there's room for optimization as pahlibar said. (strm)
 
     // the below two functions were taken from kopeteonlinestatus.cpp.

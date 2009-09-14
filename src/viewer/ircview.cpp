@@ -975,28 +975,43 @@ void IRCView::contentsMouseMoveEvent(QMouseEvent* ev)
 }
 */
 void IRCView::mouseMoveEvent(QMouseEvent *e)
-{/*
+{
     const QPoint pos = e->pos();
+
     QTextCharFormat fmt=cursorForPosition(pos).charFormat();
+
     if (m_fmtUnderMouse != fmt)
     {
         m_fmtUnderMouse = fmt;
-        if (fmt.isAnchor()) {
-            viewport()->setCursor(Qt::PointingHandCursor);
+
+        if (fmt.isAnchor() && Konversation::isUrl(fmt.anchorHref()))
             m_highlightedURL = fmt.anchorHref();
-        }
-        else {
+        else
             m_highlightedURL.clear();
-            viewport()->setCursor(Qt::ArrowCursor);
-        }
     }
-    highlightedSlot(m_highlightedURL);*/
+
+    if (m_mousePressed && (m_pressPosition - e->pos()).manhattanLength() > KApplication::startDragDistance())
+    {
+        m_mousePressed = false;
+
+        QDrag* drag = new QDrag(this);
+        QMimeData* mimeData = new QMimeData;
+
+        QList<QUrl> urlList;
+        urlList << QUrl(m_urlToDrag);
+        mimeData->setUrls(urlList);
+
+        drag->setMimeData(mimeData);
+
+        drag->exec();
+    }
+
     //it doesn't seem to do anything we're overly concerned about
     KTextBrowser::mouseMoveEvent(e);
 }
 
 void IRCView::mousePressEvent(QMouseEvent* ev)
-{/*
+{
     if (ev->button() == Qt::LeftButton)
     {
         m_urlToDrag = m_highlightedURL;
@@ -1005,9 +1020,8 @@ void IRCView::mousePressEvent(QMouseEvent* ev)
         {
             m_mousePressed = true;
             m_pressPosition = ev->pos();
-            return;
         }
-    }*/
+    }
 
     KTextBrowser::mousePressEvent(ev);
 }
