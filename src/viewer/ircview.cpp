@@ -990,7 +990,6 @@ void IRCView::mouseMoveEvent(QMouseEvent *e)
         return;
     }
 
-    //it doesn't seem to do anything we're overly concerned about
     KTextBrowser::mouseMoveEvent(e);
 }
 
