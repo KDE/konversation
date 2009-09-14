@@ -948,32 +948,6 @@ void IRCView::setupChannelPopupMenu()
     action->setData(Konversation::Topic);
 }
 
-
-// Mouse tracking
-
-// HACK -- QPlainTextEdit doesn't provide an implementation of hitTest that QAbstractTextDocumentLayout::anchorAt can call, nor does it override QTextControl::mouseMoveEvent in a useful way, so lets track the mouse cursor
-
-/* //Version from konvi3 for reference
-void IRCView::contentsMouseMoveEvent(QMouseEvent* ev)
-{
-    if (m_mousePressed && (m_pressPosition - ev->pos()).manhattanLength() > QApplication::startDragDistance()) {
-        m_mousePressed = false;
-        removeSelection();
-        KURL ux = KURL::fromPathOrURL(m_urlToDrag);
-
-        if (m_server && m_urlToDrag.startsWith("##")) {
-            //FIXME consistent IRC URL serialization
-            ux = QString("irc://%1:%2/%3").arg(m_server->getServerName()).arg(m_server->getPort()).arg(m_urlToDrag.mid(2));
-        }
-        else if (m_urlToDrag.startsWith("#"))
-            ux = m_urlToDrag.mid(1);
-        KURLDrag* u = new KURLDrag(ux, viewport());
-        u->drag();
-        return;
-    }
-    KTextBrowser::contentsMouseMoveEvent(ev);
-}
-*/
 void IRCView::mouseMoveEvent(QMouseEvent *e)
 {
     const QPoint pos = e->pos();
@@ -994,6 +968,10 @@ void IRCView::mouseMoveEvent(QMouseEvent *e)
     {
         m_mousePressed = false;
 
+        QTextCursor textCursor = this->textCursor();
+        textCursor.clearSelection();
+        setTextCursor(textCursor);
+
         QDrag* drag = new QDrag(this);
         QMimeData* mimeData = new QMimeData;
 
@@ -1008,6 +986,8 @@ void IRCView::mouseMoveEvent(QMouseEvent *e)
         drag->setPixmap(pixmap);
 
         drag->exec();
+
+        return;
     }
 
     //it doesn't seem to do anything we're overly concerned about
