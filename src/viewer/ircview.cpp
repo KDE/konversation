@@ -1036,8 +1036,7 @@ void IRCView::mouseReleaseEvent(QMouseEvent *ev)
     {
         m_mousePressed = false;
     }
-
-    if (ev->button() == Qt::MidButton)
+    else if (ev->button() == Qt::MidButton)
     {
         if (m_copyUrlMenu)
         {
