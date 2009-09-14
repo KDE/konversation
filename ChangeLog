@@ -50,6 +50,9 @@ Changes since 1.2-alpha6:
   related chat view messages more consistent and IPv6-friendly (with the
   '<ip>:<port>' forward previously used, it could be hard to tell where the
   IP ended and the port began -- now it's '<ip> (port <port>)').
+* Updated the scripting documentation to talk about D-Bus rather than DCOP.
+* The initial width of the nickname lists in channel tabs is now more sen-
+  sible.
 
 
 Changes from 1.2-alpha5 to 1.2-alpha6:

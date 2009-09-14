@@ -2363,7 +2363,9 @@ void Channel::syncSplitters()
 
     if (horizSizes.isEmpty())
     {
-        int listWidth = nicknameListView->columnWidth(0) + nicknameListView->columnWidth(1);
+        // An approximation of a common NICKLEN plus the width of the icon,
+        // tested with 8pt and 10pt DejaVu Sans and Droid Sans.
+        int listWidth = fontMetrics().averageCharWidth() * 17 + 20;
         horizSizes << (width() - listWidth) << listWidth;
         Preferences::self()->setChannelSplitterSizes(horizSizes);
     }
