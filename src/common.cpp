@@ -93,7 +93,7 @@ namespace Konversation
         return line;
     }
 
-    QString tagURLs(const QString& text, const QString& fromNick, bool useCustomColor)
+    QString tagUrls(const QString& text, const QString& fromNick, bool useCustomColor)
     {
         // QTime timer;
         // timer.start();

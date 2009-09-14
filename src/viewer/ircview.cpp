@@ -674,9 +674,9 @@ bool doHighlight, bool parseURL, bool self)
     if(parseURL)
     {
         if(whoSent.isEmpty())
-            filteredLine = Konversation::tagURLs(filteredLine, m_chatWin->getName());
+            filteredLine = Konversation::tagUrls(filteredLine, m_chatWin->getName());
         else
-            filteredLine = Konversation::tagURLs(filteredLine, whoSent);
+            filteredLine = Konversation::tagUrls(filteredLine, whoSent);
     }
     else
     {

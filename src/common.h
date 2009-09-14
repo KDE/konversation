@@ -24,7 +24,7 @@ namespace Konversation
 {
     QString removeIrcMarkup(const QString& text);
     QString doVarExpansion(const QString& text);
-    QString tagURLs(const QString& text, const QString& fromNick, bool useCustomColor = true);
+    QString tagUrls(const QString& text, const QString& fromNick, bool useCustomColor = true);
     bool isUrl(const QString& text);
 //    QBitmap overlayMasks( const QBitmap *under, const QBitmap *over );
     QPixmap overlayPixmaps(const QPixmap &under, const QPixmap &over);
