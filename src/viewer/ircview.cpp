@@ -998,10 +998,14 @@ void IRCView::mouseMoveEvent(QMouseEvent *e)
         QMimeData* mimeData = new QMimeData;
 
         QList<QUrl> urlList;
-        urlList << QUrl(m_urlToDrag);
+        QUrl url(m_urlToDrag);
+        urlList << url;
         mimeData->setUrls(urlList);
 
         drag->setMimeData(mimeData);
+
+        QPixmap pixmap = KIO::pixmapForUrl(url, 0, KIconLoader::Desktop, KIconLoader::SizeMedium);
+        drag->setPixmap(pixmap);
 
         drag->exec();
     }
