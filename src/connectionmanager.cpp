@@ -202,19 +202,21 @@ void ConnectionManager::handleReconnect(Server* server)
 
             server->getStatusView()->appendServerMessage(i18n("Info"),
                 i18np(
-                 "Trying to connect to %2 in 1 second.",
-                 "Trying to connect to %2 in %1 seconds.",
+                 "Trying to connect to %2 (port %3) in 1 second.",
+                 "Trying to connect to %2 (port %3) in %1 seconds.",
                  Preferences::self()->reconnectDelay(),
-                 settings.server().host()));
+                 settings.server().host(),
+                 QString::number(settings.server().port())));
         }
         else
         {
             server->getStatusView()->appendServerMessage(i18n("Info"),
                 i18np(
-                 "Trying to reconnect to %2 in 1 second.",
-                 "Trying to reconnect to %2 in %1 seconds.",
+                 "Trying to reconnect to %2 (port %3) in 1 second.",
+                 "Trying to reconnect to %2 (port %3) in %1 seconds.",
                  Preferences::self()->reconnectDelay(),
-                 settings.server().host()));
+                 settings.server().host(),
+                 QString::number(settings.server().port())));
         }
 
         server->getConnectionSettings().incrementReconnectCount();
@@ -324,7 +326,7 @@ void ConnectionManager::decodeAddress(const QString& address, ConnectionSettings
     // Full-length IPv6 address with port
     // Example: RFC 2732 notation:     [2001:0DB8:0000:0000:0000:0000:1428:57ab]:6666
     // Example: Non-RFC 2732 notation: 2001:0DB8:0000:0000:0000:0000:1428:57ab:6666
-    if (address.contains(':')==8)
+    if (address.count(':')==8)
     {
         host = address.section(':',0,-2).remove('[').remove(']');
         port = address.section(':',-1);
@@ -333,7 +335,7 @@ void ConnectionManager::decodeAddress(const QString& address, ConnectionSettings
     // Example: Without port, RFC 2732 notation:     [2001:0DB8:0000:0000:0000:0000:1428:57ab]
     // Example: Without port, Non-RFC 2732 notation: 2001:0DB8:0000:0000:0000:0000:1428:57ab
     // Example: With port, RFC 2732 notation:        [2001:0DB8::1428:57ab]:6666
-    else if (address.count(QChar(':'))>=4)
+    else if (address.count(':')>=4)
     {
         // Last segment does not end with ], but the next to last does;
         // Assume not-full-length IPv6 address with port

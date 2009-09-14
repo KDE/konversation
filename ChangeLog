@@ -43,6 +43,13 @@ Changes since 1.2-alpha6:
   position.
 * Fixed incorrect colors in the listview version of the tab bar when ini-
   tially switching to it within a session.
+* Fixed a regression vs. the KDE 3 version that caused a failure to correct-
+  ly parse shortened IPv6 addresses except when using RFC 2732-style bracket
+  notation and explicitly stating a port to connect to.
+* Made the display of server address and port number in various connection-
+  related chat view messages more consistent and IPv6-friendly (with the
+  '<ip>:<port>' forward previously used, it could be hard to tell where the
+  IP ended and the port began -- now it's '<ip> (port <port>)').
 
 
 Changes from 1.2-alpha5 to 1.2-alpha6:
