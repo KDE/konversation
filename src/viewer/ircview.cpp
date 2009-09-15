@@ -1024,11 +1024,9 @@ void IRCView::setupChannelPopupMenu()
     action->setData(Konversation::Topic);
 }
 
-void IRCView::mouseMoveEvent(QMouseEvent *e)
+void IRCView::mouseMoveEvent(QMouseEvent* ev)
 {
-    m_highlightedURL = anchorAt(e->pos());
-
-    if (m_mousePressed && (m_pressPosition - e->pos()).manhattanLength() > KApplication::startDragDistance())
+    if (m_mousePressed && (m_pressPosition - ev->pos()).manhattanLength() > KApplication::startDragDistance())
     {
         m_mousePressed = false;
 
@@ -1054,16 +1052,16 @@ void IRCView::mouseMoveEvent(QMouseEvent *e)
         return;
     }
 
-    KTextBrowser::mouseMoveEvent(e);
+    KTextBrowser::mouseMoveEvent(ev);
 }
 
 void IRCView::mousePressEvent(QMouseEvent* ev)
 {
     if (ev->button() == Qt::LeftButton)
     {
-        m_urlToDrag = m_highlightedURL;
+        m_urlToDrag = anchorAt(ev->pos());
 
-        if (!m_urlToDrag.isNull())
+        if (!m_urlToDrag.isEmpty())
         {
             m_mousePressed = true;
             m_pressPosition = ev->pos();
