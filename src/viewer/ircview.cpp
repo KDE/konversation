@@ -1061,7 +1061,7 @@ void IRCView::mousePressEvent(QMouseEvent* ev)
     {
         m_urlToDrag = anchorAt(ev->pos());
 
-        if (!m_urlToDrag.isEmpty())
+        if (!m_urlToDrag.isEmpty() && Konversation::isUrl(m_urlToDrag))
         {
             m_mousePressed = true;
             m_pressPosition = ev->pos();
