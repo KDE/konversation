@@ -180,21 +180,25 @@ void ChatWindow::appendBacklogMessage(const QString& firstColumn,const QString& 
 
 void ChatWindow::cdIntoLogPath()
 {
-    QDir logPath=QDir::home();
-    // Try to "cd" into the logfile path
-    if(!logPath.cd(Preferences::self()->logfilePath().pathOrUrl()))
+    QString home = KUser(KUser::UseRealUserID).homeDir();
+    QString logPath = Preferences::self()->logfilePath().pathOrUrl().replace("$HOME", home);
+
+    QDir logDir(home);
+
+    // Try to "cd" into the logfile path.
+    if (!logDir.cd(logPath))
     {
-        // Only create log path if logging is enabled
-        if(log)
+        // Only create log path if logging is enabled.
+        if (log)
         {
-            // Try to create the logfile path and "cd" into it again
-            logPath.mkpath(Preferences::self()->logfilePath().pathOrUrl());
-            logPath.cd(Preferences::self()->logfilePath().pathOrUrl());
+            // Try to create the logfile path and "cd" into it again.
+            logDir.mkpath(logPath);
+            logDir.cd(logPath);
         }
     }
 
-    // add the logfile name to the path
-    logfile.setFileName(logPath.path()+'/'+logName);
+    // Add the logfile name to the path.
+    logfile.setFileName(logDir.path() + '/' + logName);
 }
 
 void ChatWindow::setLogfileName(const QString& name)

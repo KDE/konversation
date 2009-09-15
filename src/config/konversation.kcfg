@@ -8,6 +8,7 @@
   <include>kdialog.h</include>
   <include>QDir</include>
   <include>kglobalsettings.h</include>
+  <include>kuser.h</include>
   <kcfgfile name="konversationrc" />
 
   <group name="Appearance">
@@ -711,10 +712,10 @@
   </group>
   <group name="Path Settings">
     <entry key="LogfilePath" type="Url">
-      <default code="true">QDir::homePath()+"/logs"</default>
+      <default code="true">KUser(KUser::UseRealUserID).homeDir()+"/logs"</default>
     </entry>
     <entry key="DccPath" type="Url">
-      <default code="true">QDir::homePath()+"/dccrecv"</default>
+      <default code="true">KUser(KUser::UseRealUserID).homeDir()+"/logs"</default>
       <label></label>
       <whatsthis></whatsthis>
     </entry>
