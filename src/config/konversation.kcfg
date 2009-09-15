@@ -381,6 +381,10 @@
       <label></label>
       <whatsthis></whatsthis>
     </entry>
+    <entry key="UseKWallet" type="Bool">
+        <default>false</default>
+        <label>Use KWallet to store IRC passwords</label>
+    </entry>
   </group>
   <group name="Sort Nicknames">
 <!-- done outside of KConfigXT (Eisfuchs)

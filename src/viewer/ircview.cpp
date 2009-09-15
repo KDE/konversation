@@ -291,7 +291,10 @@ void IRCView::append(const QString& nick, const QString& message)
     }
     else
     {
-        line = "<font color=\"" + channelColor + "\">%1" + nickLine + " %3</font>";
+        if (!QApplication::isLeftToRight())
+            line += LRE;
+
+        line += "<font color=\"" + channelColor + "\">%1" + nickLine + " %3</font>";
     }
 
     line = line.arg(timeStamp(), nick, filter(message, channelColor, nick, true));
@@ -344,7 +347,10 @@ void IRCView::appendQuery(const QString& nick, const QString& message, bool inCh
     }
     else
     {
-        line = "<font color=\"" + queryColor + "\">%1 " + nickLine + " %3</font>";
+        if (!QApplication::isLeftToRight())
+            line += LRE;
+
+        line += "<font color=\"" + queryColor + "\">%1 " + nickLine + " %3</font>";
     }
 
     line = line.arg(timeStamp(), nick, filter(message, queryColor, nick, true));
@@ -383,7 +389,10 @@ void IRCView::appendAction(const QString& nick, const QString& message)
     }
     else
     {
-        line = "<font color=\"" + actionColor + "\">%1 * " + nickLine + " %3</font>";
+        if (!QApplication::isLeftToRight())
+            line += LRE;
+
+        line += "<font color=\"" + actionColor + "\">%1 * " + nickLine + " %3</font>";
     }
 
     line = line.arg(timeStamp(), nick, filter(message, actionColor, nick, true));
@@ -417,7 +426,10 @@ void IRCView::appendServerMessage(const QString& type, const QString& message, b
     }
     else
     {
-        line = "<font color=\"" + serverColor + "\"" + fixed + ">%1 <b>[</b>%2<b>]</b> %3</font>";
+        if (!QApplication::isLeftToRight())
+            line += LRE;
+
+        line += "<font color=\"" + serverColor + "\"" + fixed + ">%1 <b>[</b>%2<b>]</b> %3</font>";
     }
 
     if(type != i18n("Notify"))
@@ -462,7 +474,10 @@ void IRCView::appendCommandMessage(const QString& type,const QString& message, b
     }
     else
     {
-        line = "<font color=\"" + commandColor + "\">%1 %2 %3</font>";
+        if (!QApplication::isLeftToRight())
+            line += LRE;
+
+        line += "<font color=\"" + commandColor + "\">%1 %2 %3</font>";
     }
 
     line = line.arg(timeStamp(), prefix, filter(message, commandColor, 0, true, parseURL, self));
@@ -503,7 +518,10 @@ void IRCView::appendBacklogMessage(const QString& firstColumn,const QString& raw
     }
     else
     {
-        line = "<font color=\"" + backlogColor + "\">%1 %2 %3</font>";
+        if (!QApplication::isLeftToRight())
+            line += LRE;
+
+        line += "<font color=\"" + backlogColor + "\">%1 %2 %3</font>";
     }
 
     line = line.arg(time, nick, filter(message, backlogColor, NULL, false, false));
@@ -572,6 +590,10 @@ void IRCView::doRawAppend(const QString& newLine, bool rtl)
 
     QTextCursor formatCursor(document()->lastBlock());
     QTextBlockFormat format = formatCursor.blockFormat();
+
+    if(!QApplication::isLeftToRight())
+        rtl = !rtl;
+
     format.setAlignment(rtl ? Qt::AlignRight : Qt::AlignLeft);
     formatCursor.setBlockFormat(format);
 
