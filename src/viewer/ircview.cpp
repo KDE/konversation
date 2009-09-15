@@ -1354,7 +1354,7 @@ QChar::Direction IRCView::basicDirection(const QString& string)
     unsigned int str_len = string.length();
     unsigned int str_half_len = str_len/2;
 
-    for(pos=0; pos < str_len; pos++)
+    for(pos=0; pos < str_len; ++pos)
     {
         if (!(string[pos].isNumber() || string[pos].isSymbol() ||
             string[pos].isSpace()  || string[pos].isPunct()  ||
