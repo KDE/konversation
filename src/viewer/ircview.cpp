@@ -1056,7 +1056,8 @@ void IRCView::mouseMoveEvent(QMouseEvent* ev)
         textCursor.clearSelection();
         setTextCursor(textCursor);
 
-        QDrag* drag = new QDrag(this);
+
+        QPointer<QDrag> drag = new QDrag(this);
         QMimeData* mimeData = new QMimeData;
 
         QList<QUrl> urlList;
