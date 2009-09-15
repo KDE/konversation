@@ -112,17 +112,16 @@ class IRCView : public KTextBrowser
         void appendBacklogMessage(const QString& firstColumn, const QString& message);
 
     protected:
-        void doAppend(const QString& line, bool self=false);
+        void doAppend(const QString& line, bool rtl, bool self=false);
         /**
          * Appends a newLine without any scrollback or notification checks
          * @param newLine
          */
-        void doRawAppend(const QString& newLine);
+        void doRawAppend(const QString& newLine, bool rtl);
         void appendLine(const QString& color);
         void appendRememberLine();
 
         void updateNickMenuEntries(const QString& nickname);
-
 
     public slots:
         /// Emits the doSeach signal.

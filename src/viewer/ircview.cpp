@@ -36,6 +36,7 @@
 #include <QColor>
 #include <QMouseEvent>
 #include <QScrollBar>
+#include <QTextBlock>
 
 #include <KUrl>
 #include <KBookmarkManager>
@@ -280,12 +281,24 @@ void IRCView::append(const QString& nick, const QString& message)
     QString nickLine = createNickLine(nick, channelColor);
 
     QString line;
-    line = "<font color=\"" + channelColor + "\">%1" + nickLine + " %3</font>";
+    bool rtl = (basicDirection(message) == QChar::DirR);
+
+    if(rtl)
+    {
+        line = RLE;
+        line += LRE;
+        line += "<font color=\"" + channelColor + "\">" + nickLine +" %1" + PDF + RLM + " %3</font>";
+    }
+    else
+    {
+        line = "<font color=\"" + channelColor + "\">%1" + nickLine + " %3</font>";
+    }
+
     line = line.arg(timeStamp(), nick, filter(message, channelColor, nick, true));
 
     emit textToLog(QString("<%1>\t%2").arg(nick).arg(message));
 
-    doAppend(line);
+    doAppend(line, rtl);
 }
 
 void IRCView::appendRaw(const QString& message, bool suppressTimestamps, bool self)
@@ -299,7 +312,7 @@ void IRCView::appendRaw(const QString& message, bool suppressTimestamps, bool se
     else
         line = QString(timeStamp() + " <font color=\"" + channelColor.name() + "\">" + message + "</font>");
 
-    doAppend(line, self);
+    doAppend(line, false, self);
 }
 
 void IRCView::appendLog(const QString & message)
@@ -309,7 +322,7 @@ void IRCView::appendLog(const QString & message)
 
     QString line("<font color=\"" + channelColor.name() + "\">" + message + "</font>");
 
-    doRawAppend(line);
+    doRawAppend(line, !QApplication::isLeftToRight());
 }
 
 void IRCView::appendQuery(const QString& nick, const QString& message, bool inChannel)
@@ -321,12 +334,24 @@ void IRCView::appendQuery(const QString& nick, const QString& message, bool inCh
     QString nickLine = createNickLine(nick, queryColor, true, inChannel);
 
     QString line;
-    line = "<font color=\"" + queryColor + "\">%1 " + nickLine + " %3</font>";
+    bool rtl = (basicDirection(message) == QChar::DirR);
+
+    if(rtl)
+    {
+        line = RLE;
+        line += LRE;
+        line += "<font color=\"" + queryColor + "\">" + nickLine + " %1" + PDF + RLM + " %3</font>";
+    }
+    else
+    {
+        line = "<font color=\"" + queryColor + "\">%1 " + nickLine + " %3</font>";
+    }
+
     line = line.arg(timeStamp(), nick, filter(message, queryColor, nick, true));
 
     emit textToLog(QString("<%1>\t%2").arg(nick).arg(message));
 
-    doAppend(line);
+    doAppend(line, rtl);
 }
 
 void IRCView::appendChannelAction(const QString& nick, const QString& message)
@@ -348,12 +373,24 @@ void IRCView::appendAction(const QString& nick, const QString& message)
     QString nickLine = createNickLine(nick, actionColor, false);
 
     QString line;
-    line = "<font color=\"" + actionColor + "\">%1 * " + nickLine + " %3</font>";
+    bool rtl = (basicDirection(message) == QChar::DirR);
+
+    if(rtl)
+    {
+        line = RLE;
+        line += LRE;
+        line += "<font color=\"" + actionColor + "\">" + nickLine + " * %1" + PDF + " %3</font>";
+    }
+    else
+    {
+        line = "<font color=\"" + actionColor + "\">%1 * " + nickLine + " %3</font>";
+    }
+
     line = line.arg(timeStamp(), nick, filter(message, actionColor, nick, true));
 
     emit textToLog(QString("\t * %1 %2").arg(nick).arg(message));
 
-    doAppend(line);
+    doAppend(line, rtl);
 }
 
 void IRCView::appendServerMessage(const QString& type, const QString& message, bool parseURL)
@@ -370,7 +407,19 @@ void IRCView::appendServerMessage(const QString& type, const QString& message, b
     }
 
     QString line;
-    line = "<font color=\"" + serverColor + "\"" + fixed + ">%1 <b>[</b>%2<b>]</b> %3</font>";
+    bool rtl = (basicDirection(message) == QChar::DirR);
+
+    if(rtl)
+    {
+        line = RLE;
+        line += LRE;
+        line += "<font color=\"" + serverColor + "\"" + fixed + "><b>[</b>%2<b>]</b> %1" + PDF + " %3</font>";
+    }
+    else
+    {
+        line = "<font color=\"" + serverColor + "\"" + fixed + ">%1 <b>[</b>%2<b>]</b> %3</font>";
+    }
+
     if(type != i18n("Notify"))
         line = line.arg(timeStamp(), type, filter(message, serverColor, 0 , true, parseURL));
     else
@@ -378,7 +427,7 @@ void IRCView::appendServerMessage(const QString& type, const QString& message, b
 
     emit textToLog(QString("%1\t%2").arg(type).arg(message));
 
-    doAppend(line);
+    doAppend(line, rtl);
 }
 
 void IRCView::appendCommandMessage(const QString& type,const QString& message, bool important, bool parseURL, bool self)
@@ -403,13 +452,24 @@ void IRCView::appendCommandMessage(const QString& type,const QString& message, b
     prefix=Qt::escape(prefix);
 
     QString line;
-    line = "<font color=\"" + commandColor + "\">%1 %2 %3</font>";
+    bool rtl = (basicDirection(message) == QChar::DirR);
+
+    if(rtl)
+    {
+        line = RLE;
+        line += LRE;
+        line += "<font color=\"" + commandColor + "\">%2 %1" + PDF + " %3</font>";
+    }
+    else
+    {
+        line = "<font color=\"" + commandColor + "\">%1 %2 %3</font>";
+    }
 
     line = line.arg(timeStamp(), prefix, filter(message, commandColor, 0, true, parseURL, self));
 
     emit textToLog(QString("%1\t%2").arg(type).arg(message));
 
-    doAppend(line, self);
+    doAppend(line, rtl, self);
 }
 
 void IRCView::appendBacklogMessage(const QString& firstColumn,const QString& rawMessage)
@@ -433,14 +493,25 @@ void IRCView::appendBacklogMessage(const QString& firstColumn,const QString& raw
     nick.replace('>',"&gt;");
 
     QString line;
+    bool rtl = (basicDirection(message) == QChar::DirR);
 
-    line = "<font color=\"" + backlogColor + "\">%1 %2 %3</font>";
+    if(rtl)
+    {
+        line = RLE;
+        line += LRE;
+        line += "<font color=\"" + backlogColor + "\">%2 %1" + PDF + " %3</font>";
+    }
+    else
+    {
+        line = "<font color=\"" + backlogColor + "\">%1 %2 %3</font>";
+    }
+
     line = line.arg(time, nick, filter(message, backlogColor, NULL, false, false));
 
-    doAppend(line);
+    doAppend(line, rtl);
 }
 
-void IRCView::doAppend(const QString& newLine, bool self)
+void IRCView::doAppend(const QString& newLine, bool rtl, bool self)
 {
     if (!self && m_chatWin)
         m_chatWin->activateTabNotification(m_tabNotification);
@@ -454,7 +525,7 @@ void IRCView::doAppend(const QString& newLine, bool self)
         //setMaximumBlockCount(atBottom ? scrollMax : maximumBlockCount() + 1);
     }
 
-    doRawAppend(newLine);
+    doRawAppend(newLine, rtl);
 
     //appendHtml(line);
 
@@ -478,7 +549,7 @@ void IRCView::doAppend(const QString& newLine, bool self)
         emit clearStatusBarTempText();
 }
 
-void IRCView::doRawAppend(const QString& newLine)
+void IRCView::doRawAppend(const QString& newLine, bool rtl)
 {
     QString line(newLine);
 
@@ -498,6 +569,11 @@ void IRCView::doRawAppend(const QString& newLine)
     }
 
     KTextBrowser::append(line);
+
+    QTextCursor formatCursor(document()->lastBlock());
+    QTextBlockFormat format = formatCursor.blockFormat();
+    format.setAlignment(rtl ? Qt::AlignRight : Qt::AlignLeft);
+    formatCursor.setBlockFormat(format);
 
     if (checkSelection && selectionLength < (cursor.selectionEnd() - cursor.selectionStart()))
     {
@@ -1242,6 +1318,67 @@ void IRCView::handleContextActions()
     QAction* action = qobject_cast<QAction*>(sender());
 
     emit popupCommand(action->data().toInt());
+}
+
+// for more information about these RTFM
+//    http://www.unicode.org/reports/tr9/
+//    http://www.w3.org/TR/unicode-xml/
+QChar IRCView::LRM = (ushort)0x200e; // Right-to-Left Mark
+QChar IRCView::RLM = (ushort)0x200f; // Left-to-Right Mark
+QChar IRCView::LRE = (ushort)0x202a; // Left-to-Right Embedding
+QChar IRCView::RLE = (ushort)0x202b; // Right-to-Left Embedding
+QChar IRCView::RLO = (ushort)0x202e; // Right-to-Left Override
+QChar IRCView::LRO = (ushort)0x202d; // Left-to-Right Override
+QChar IRCView::PDF = (ushort)0x202c; // Previously Defined Format
+
+QChar::Direction IRCView::basicDirection(const QString& string)
+{
+    // The following code decides between LTR or RTL direction for
+    // a line based on the amount of each type of characters pre-
+    // sent. It does so by counting, but stops when one of the two
+    // counters becomes higher than half of the string length to
+    // avoid unnecessary work.
+
+    unsigned int pos = 0;
+    unsigned int rtl_chars = 0;
+    unsigned int ltr_chars = 0;
+    unsigned int str_len = string.length();
+    unsigned int str_half_len = str_len/2;
+
+    for(pos=0; pos < str_len; pos++)
+    {
+        if (!(string[pos].isNumber() || string[pos].isSymbol() ||
+            string[pos].isSpace()  || string[pos].isPunct()  ||
+            string[pos].isMark()))
+        {
+            switch(string[pos].direction())
+            {
+                case QChar::DirL:
+                case QChar::DirLRO:
+                case QChar::DirLRE:
+                    ltr_chars++;
+                    break;
+                case QChar::DirR:
+                case QChar::DirAL:
+                case QChar::DirRLO:
+                case QChar::DirRLE:
+                    rtl_chars++;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        if (ltr_chars > str_half_len)
+            return QChar::DirL;
+        else if (rtl_chars > str_half_len)
+            return QChar::DirR;
+    }
+
+    if (rtl_chars > ltr_chars)
+        return QChar::DirR;
+    else
+        return QChar::DirL;
 }
 
 // **WARNING** the selectionChange signal comes BEFORE the selection has actually been changed, hook cursorPositionChanged too
