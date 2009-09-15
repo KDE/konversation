@@ -1026,19 +1026,7 @@ void IRCView::setupChannelPopupMenu()
 
 void IRCView::mouseMoveEvent(QMouseEvent *e)
 {
-    const QPoint pos = e->pos();
-
-    QTextCharFormat fmt=cursorForPosition(pos).charFormat();
-
-    if (m_fmtUnderMouse != fmt)
-    {
-        m_fmtUnderMouse = fmt;
-
-        if (fmt.isAnchor() && Konversation::isUrl(fmt.anchorHref()))
-            m_highlightedURL = fmt.anchorHref();
-        else
-            m_highlightedURL.clear();
-    }
+    m_highlightedURL = anchorAt(e->pos());
 
     if (m_mousePressed && (m_pressPosition - e->pos()).manhattanLength() > KApplication::startDragDistance())
     {
