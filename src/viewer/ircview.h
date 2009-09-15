@@ -224,7 +224,6 @@ class IRCView : public KTextBrowser
         KToggleAction* m_ignoreAction;
         QAction* m_addNotifyAction;
         bool m_copyUrlMenu; ///<the menu we're popping up, is it for copying URI?
-        QTextCharFormat m_fmtUnderMouse;
         KMenu* m_nickPopup; ///<menu to show when context-click on a nickname
         KMenu* m_channelPopup; ///<menu to show when context-click on a channel
 
