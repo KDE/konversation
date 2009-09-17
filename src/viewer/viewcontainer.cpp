@@ -38,21 +38,28 @@
 #include <QList>
 #include <QSplitter>
 #include <QToolButton>
+#include <QTabBar>
 
 #include <KInputDialog>
-#include <KTabWidget>
 #include <KMessageBox>
 #include <KGlobalSettings>
 #include <KVBox>
 #include <KRun>
 #include <KUrl>
 #include <KXMLGUIFactory>
-
 #include <KActionCollection>
 #include <KToggleAction>
 #include <KSelectAction>
 
 using namespace Konversation;
+
+TabWidget::TabWidget(QWidget* parent) : KTabWidget(parent)
+{
+}
+
+TabWidget::~TabWidget()
+{
+}
 
 ViewContainer::ViewContainer(MainWindow* window):
         m_window(window)
@@ -153,13 +160,16 @@ void ViewContainer::setupTabWidget()
     m_vbox = new KVBox(m_viewTreeSplitter);
     m_viewTreeSplitter->setStretchFactor(m_viewTreeSplitter->indexOf(m_vbox), 1);
     m_vbox->setObjectName("main_window_right_side");
-    m_tabWidget = new KTabWidget(m_vbox);
+    m_tabWidget = new TabWidget(m_vbox);
     m_tabWidget->setObjectName("main_window_tab_widget");
     m_queueTuner = new QueueTuner(m_vbox, this);
     m_queueTuner->hide();
 
     m_tabWidget->setTabReorderingEnabled(true);
     m_tabWidget->setTabCloseActivatePrevious(true);
+#if QT_VERSION >= 0x040500
+    m_tabWidget->tabBar()->setSelectionBehaviorOnRemove(QTabBar::SelectPreviousTab);
+#endif
 
     m_vbox->hide();    //m_tabWidget->hide();
 
@@ -1378,6 +1388,8 @@ void ViewContainer::addView(ChatWindow* view, const QString& label, bool weiniti
 
 void ViewContainer::switchView(int newIndex)
 {
+    kDebug();
+
     ChatWindow* view = static_cast<ChatWindow*>(m_tabWidget->widget(newIndex));
     if (!view) return;
 
@@ -1429,6 +1441,8 @@ void ViewContainer::switchView(int newIndex)
 
 void ViewContainer::showView(ChatWindow* view)
 {
+    kDebug();
+
     // Don't bring Tab to front if TabWidget is hidden. Otherwise QT gets confused
     // and shows the Tab as active but will display the wrong pane
     if (m_tabWidget && m_tabWidget->isVisible())

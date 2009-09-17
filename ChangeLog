@@ -59,6 +59,11 @@ Changes since 1.2-alpha6:
   the expected way.
 * Various actions that operate on the active tab (e.g. those found in the
   "Insert" menu) are now properly disabled when the last tab is closed.
+* Fixed a bug with Qt 4.5 where after closing a tab a tab adjacent to it
+  would briefly be activated before subsequently activating the tab that
+  was active before the just closed one (i.e. only noticable when 'a tab
+  adjacent to the just closed tab' and 'the previously active tab' are not
+  the same).
 
 
 Changes from 1.2-alpha5 to 1.2-alpha6:

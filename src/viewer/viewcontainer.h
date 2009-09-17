@@ -20,10 +20,12 @@
 #include <QObject>
 #include <QPointer>
 
+#include <KTabWidget>
+
 
 class QSplitter;
+class QTabBar;
 
-class KTabWidget;
 class KActionCollection;
 class KVBox;
 
@@ -46,6 +48,17 @@ namespace Konversation
         class TransferPanel;
     }
 }
+
+class TabWidget : public KTabWidget
+{
+    Q_OBJECT
+
+    public:
+        TabWidget(QWidget* parent = 0);
+        ~TabWidget();
+
+    QTabBar* tabBar() { return KTabWidget::tabBar(); }
+};
 
 class ViewContainer : public QObject
 {
@@ -207,10 +220,10 @@ class ViewContainer : public QObject
         MainWindow* m_window;
 
         QSplitter* m_viewTreeSplitter;
-        KTabWidget* m_tabWidget;
+        TabWidget* m_tabWidget;
         ViewTree* m_viewTree;
-        KVBox *m_vbox;
-        QueueTuner *m_queueTuner;
+        KVBox* m_vbox;
+        QueueTuner* m_queueTuner;
 
         Images* images;
 
