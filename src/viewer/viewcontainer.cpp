@@ -413,8 +413,10 @@ void ViewContainer::updateViewActions(int index)
     if (!m_tabWidget) return;
 
     QAction* action;
+    ChatWindow* view = 0;
 
-    ChatWindow* view = static_cast<ChatWindow*>(m_tabWidget->widget(index));
+    if (index != -1)
+        view = static_cast<ChatWindow*>(m_tabWidget->widget(index));
 
     if (m_tabWidget->count() > 0 && view)
     {
@@ -1566,6 +1568,7 @@ void ViewContainer::cleanupAfterClose(ChatWindow* view)
             m_vbox->hide();
             emit resetStatusBar();
             emit setWindowCaption(QString());
+            updateViewActions(-1);
         }
     }
 

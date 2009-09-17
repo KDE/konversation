@@ -57,6 +57,8 @@ Changes since 1.2-alpha6:
 * Resurrected the RTL text support in the chat view.
 * Fixed a crash during UPnP discovery when the router doesn't respond in
   the expected way.
+* Various actions that operate on the active tab (e.g. those found in the
+  "Insert" menu) are now properly disabled when the last tab is closed.
 
 
 Changes from 1.2-alpha5 to 1.2-alpha6:
