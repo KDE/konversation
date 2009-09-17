@@ -14,13 +14,9 @@
 #define KTUPNPROUTER_H
 
 #include <QHostAddress>
-#include <QNetworkAccessManager>
 
 #include <kurl.h>
 #include <kjob.h>
-
-class QNetworkReply;
-
 
 namespace Konversation
 {
@@ -110,13 +106,12 @@ namespace Konversation
             UPnPService service;
             QList<Forwarding*> forwards;
 
-            QHash<QNetworkReply*, UPnPService> pending_services;
-            QHash<QNetworkReply*, Forwarding*> pending_forwards;
-            QHash<QNetworkReply*, Forwarding*> pending_unforwards;
+            QHash<KJob*, UPnPService> pending_services;
+            QHash<KJob*, Forwarding*> pending_forwards;
+            QHash<KJob*, Forwarding*> pending_unforwards;
 
             QString error;
-
-            QNetworkAccessManager http_service;
+            
         public:
             /**
             * Construct a router.
@@ -173,7 +168,7 @@ namespace Konversation
             QString getError() const {return error;}
 
         private slots:
-            void onRequestFinished(QNetworkReply *reply);
+            void onRequestFinished(KJob *reply);
             void downloadFinished(KJob* j);
 
 
@@ -191,8 +186,8 @@ namespace Konversation
 
         private:
 
-            QNetworkReply *sendSoapQuery(const QString & query,const QString & soapact,const QString & controlurl);
-            QNetworkReply *getStatusInfo(UPnPService s);
+            KJob *sendSoapQuery(const QString & query,const QString & soapact,const QString & controlurl);
+            KJob *getStatusInfo(UPnPService s);
         };
     }
 }
