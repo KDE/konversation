@@ -223,21 +223,6 @@ bool IRCView::searchNext(bool reversed)
     return find(m_pattern, m_searchFlags);
 }
 
-void IRCView::insertRememberLine(){}
-void IRCView::cancelRememberLine(){}
-void IRCView::insertMarkerLine(){}
-void IRCView::clearLines(){}
-bool IRCView::hasLines() { return false; }
-
-// TODO FIXME can't do this anymore, need to find another way
-/* void IRCView::clear()
-{
-    m_buffer = QString();
-    KTextBrowser::setText("");
-    wipeLineParagraphs();
-}
-*/
-
 void IRCView::enableParagraphSpacing() {}
 
 void IRCView::updateAppearance()
