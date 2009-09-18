@@ -38,6 +38,11 @@
 #include <QScrollBar>
 #include <QTextBlock>
 
+#include <QAbstractTextDocumentLayout>
+#include <QPainter>
+#include <QColor>
+#include <QTextObjectInterface>
+
 #include <KUrl>
 #include <KBookmarkManager>
 #include <kbookmarkdialog.h>
@@ -77,9 +82,8 @@ IRCView::clear()
 
 using namespace Konversation;
 
-IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent)
+IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent), m_nextCullIsMarker(false), m_rememberLinePosition(-1), m_rememberLineDirtyBit(false), markerFormatObject(this)
 {
-
     m_copyUrlMenu = false;
     m_resetScrollbar = true;
     m_offset = 0;
@@ -90,8 +94,20 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent)
     m_nickPopup = 0;
     m_channelPopup = 0;
 
-    m_rememberLineParagraph = -1;
-    m_rememberLineDirtyBit = false;
+
+    //// Marker lines
+    connect(document(), SIGNAL(contentsChange(int, int, int)), SLOT(cullMarkedLine(int, int, int)));
+
+    //This assert is here because a bad build environment can cause this to fail. There is a note
+    // in the Qt source that indicates an error should be output, but there is no such output.
+    QTextObjectInterface *iface = qobject_cast<QTextObjectInterface *>(&markerFormatObject);
+    Q_ASSERT(iface);
+
+    document()->documentLayout()->registerHandler(IRCView::MarkerLine, &markerFormatObject);
+    document()->documentLayout()->registerHandler(IRCView::RememberLine, &markerFormatObject);
+
+
+    //// Other Stuff
 
     //m_disableEnsureCursorVisible = false;
     //m_wasPainted = false;
@@ -222,6 +238,197 @@ bool IRCView::searchNext(bool reversed)
     }
     return find(m_pattern, m_searchFlags);
 }
+//// Marker lines
+void IrcViewMarkerLine::drawObject(QPainter *painter, const QRectF &r, QTextDocument *doc, int posInDocument, const QTextFormat &format)
+{
+    Q_UNUSED(format);
+
+    QTextBlock block=doc->findBlock(posInDocument);
+    QPen pen;
+    switch (block.userState())
+    {
+        case IRCView::BlockIsMarker:
+            pen.setColor(Preferences::self()->color(Preferences::ActionMessage));
+            break;
+
+        case IRCView::BlockIsRemember:
+            pen.setColor(Preferences::self()->color(Preferences::CommandMessage));
+            pen.setStyle(Qt::DashDotDotLine);
+            break;
+
+        default:
+            //nice color, eh?
+            pen.setColor(Qt::cyan);
+    }
+
+    pen.setWidth(2); // FIXME this is a hardcoded value...
+    painter->setPen(pen);
+
+    qreal y = (r.top() + r.height() / 2);
+    QLineF line(r.left(), y, r.right(), y);
+    painter->drawLine(line);
+}
+
+QSizeF IrcViewMarkerLine::intrinsicSize(QTextDocument *doc, int posInDocument, const QTextFormat &format)
+{
+    Q_UNUSED(posInDocument); Q_UNUSED(format);
+
+    QTextFrameFormat f=doc->rootFrame()->frameFormat();
+    qreal width = doc->pageSize().width()-(f.leftMargin()+f.rightMargin());
+    return QSizeF(width, 6); // FIXME this is a hardcoded value...
+}
+
+void IRCView::cullMarkedLine(int where, int rem, int add) //slot
+{
+    if (where == 0 && add == 0 && rem !=0)
+    {
+        if (document()->blockCount() == 1 && document()->firstBlock().length() == 1)
+        {
+            wipeLineParagraphs();
+        }
+        else
+        {
+            if (m_nextCullIsMarker)
+            {
+                //move the remember line up.. if the cull removed it, this will forget its position
+                if (m_rememberLinePosition >= 0)
+                    --m_rememberLinePosition;
+                m_markers.takeFirst();
+            }
+            int s = document()->firstBlock().userState();
+            m_nextCullIsMarker = (s == BlockIsMarker || s == BlockIsRemember);
+        }
+    }
+}
+
+void IRCView::insertMarkerLine() //slot
+{
+    //if the last line is already a marker of any kind, skip out
+    if (lastBlockIsLine())
+        return;
+
+    //the code used to preserve the dirty bit status, but that was never affected by appendLine...
+    //maybe i missed something
+    appendLine(IRCView::MarkerLine);
+}
+
+void IRCView::insertRememberLine() //slot
+{
+    m_rememberLineDirtyBit = true; // means we're going to append a remember line if some text gets inserted
+
+    if (!Preferences::self()->automaticRememberLineOnlyOnTextChange())
+        appendRememberLine();
+}
+
+void IRCView::cancelRememberLine() //slot
+{
+    m_rememberLineDirtyBit = false;
+}
+
+bool IRCView::lastBlockIsLine(int select)
+{
+    int state = document()->lastBlock().userState();
+
+    if (select == -1)
+        return (state == BlockIsRemember || state == BlockIsMarker);
+
+    return state == select;
+}
+
+void IRCView::appendRememberLine()
+{
+    //clear this now, so that doAppend doesn't double insert
+    m_rememberLineDirtyBit = false;
+
+    //if the last line is already the remember line, do nothing
+    if (lastBlockIsLine(BlockIsRemember))
+        return;
+
+    // if we already have a rememberline, remove the previous one
+    if (m_rememberLinePosition > -1)
+    {
+        //get the block that is the remember line
+        QTextBlock rem = m_markers[m_rememberLinePosition];
+        m_markers.removeAt(m_rememberLinePosition); //probably will be in there only once
+        m_rememberLinePosition=-1;
+        voidLineBlock(rem);
+    }
+
+    //tell the control we did stuff
+    //FIXME do we still do something like this?
+    //repaintChanged();
+
+    //actually insert a line
+    appendLine(IRCView::RememberLine);
+
+    //store the index of the remember line
+    m_rememberLinePosition = m_markers.count() - 1;
+}
+
+void IRCView::voidLineBlock(QTextBlock rem)
+{
+    if (rem.blockNumber() == 0)
+    {
+        Q_ASSERT(m_nextCullIsMarker);
+        m_nextCullIsMarker = false;
+    }
+    QTextCursor c(rem);
+    //FIXME make sure this doesn't flicker
+    c.select(QTextCursor::BlockUnderCursor);
+    c.removeSelectedText();
+}
+
+void IRCView::clearLines()
+{
+    //if we have a remember line, put it in the list
+        //its already in the list
+
+    //are there any markers?
+    if (hasLines() > 0)
+    {
+        for (int i=0; i < m_markers.count(); ++i)
+            voidLineBlock(m_markers[i]);
+
+        wipeLineParagraphs();
+
+        //FIXME do we have this? //repaintChanged();
+    }
+
+}
+
+void IRCView::wipeLineParagraphs()
+{
+    m_nextCullIsMarker = false;
+    m_rememberLinePosition = -1;
+    m_markers.clear();
+}
+
+bool IRCView::hasLines()
+{
+    return m_markers.count() > 0;
+}
+
+QTextCharFormat IRCView::getFormat(ObjectFormats x)
+{
+    QTextCharFormat f;
+    f.setObjectType(x);
+    return f;
+}
+
+void IRCView::appendLine(IRCView::ObjectFormats type)
+{
+    QTextCursor cursor(textCursor());
+
+    cursor.insertBlock();
+    cursor.insertText(QString(QChar::ObjectReplacementCharacter), getFormat(type));
+    cursor.block().setUserState(type == MarkerLine? BlockIsMarker : BlockIsRemember);
+    setTextCursor(cursor);
+
+    m_markers.append(cursor.block());
+}
+
+
+//// Other stuff
 
 void IRCView::enableParagraphSpacing() {}
 
@@ -516,6 +723,9 @@ void IRCView::appendBacklogMessage(const QString& firstColumn,const QString& raw
 
 void IRCView::doAppend(const QString& newLine, bool rtl, bool self)
 {
+    if (m_rememberLineDirtyBit)
+        appendRememberLine();
+
     if (!self && m_chatWin)
         m_chatWin->activateTabNotification(m_tabNotification);
 
