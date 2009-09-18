@@ -46,7 +46,7 @@ namespace Konversation
         m_delBtn->setIcon(KIcon("edit-delete"));
         connect(m_delBtn, SIGNAL(clicked()), this, SLOT(deleteIdentity()));
 
-        foreach(IdentityPtr id, Preferences::identityList()) {
+        foreach(const IdentityPtr &id, Preferences::identityList()) {
             m_identityCBox->addItem(id->getName());
             m_identityList.append( IdentityPtr( id ) );
         }
