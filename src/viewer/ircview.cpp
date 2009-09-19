@@ -449,13 +449,12 @@ void IRCView::appendLine(IRCView::ObjectFormats type)
     QScrollBar *vbar = verticalScrollBar();
     bool atBottom = (vbar->value() == vbar->maximum());
 
-    QTextCursor cursor(document()->lastBlock());
-    cursor.movePosition(QTextCursor::EndOfBlock);
+    QTextCursor cursor(document());
+    cursor.movePosition(QTextCursor::End);
 
     cursor.insertBlock();
     cursor.insertText(QString(QChar::ObjectReplacementCharacter), getFormat(type));
     cursor.block().setUserState(type == MarkerLine? BlockIsMarker : BlockIsRemember);
-    setTextCursor(cursor);
 
     m_markers.append(cursor.block());
 
