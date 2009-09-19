@@ -236,7 +236,35 @@ bool IRCView::searchNext(bool reversed)
     }
     return find(m_pattern, m_searchFlags);
 }
+
 //// Marker lines
+
+#define _S(x) #x << (x)
+void dump_doc(QTextDocument* document)
+{
+    QTextBlock b(document->firstBlock());
+    while (b.isValid())
+    {
+        kDebug()    << _S(b.position())
+                    << _S(b.length())
+                    << _S(b.userState())
+                    ;
+                    b=b.next();
+    };
+}
+
+QDebug operator<<(QDebug dbg, QList<QTextBlock> &l)
+{
+    dbg.space() << _S(l.count()) << endl;
+        for (int i=0; i< l.count(); ++i)
+        {
+            QTextBlock b=l[i];
+            dbg.space() << _S(i) << _S(b.blockNumber()) << _S(b.length()) << _S(b.userState()) << endl;
+        }
+
+    return dbg.space();
+}
+
 void IrcViewMarkerLine::drawObject(QPainter *painter, const QRectF &r, QTextDocument *doc, int posInDocument, const QTextFormat &format)
 {
     Q_UNUSED(format);
@@ -380,6 +408,9 @@ void IRCView::clearLines()
 {
     //if we have a remember line, put it in the list
         //its already in the list
+
+    kDebug() << _S(m_nextCullIsMarker) << _S(m_rememberLinePosition) << m_markers;
+    dump_doc(document());
 
     //are there any markers?
     if (hasLines() > 0)
