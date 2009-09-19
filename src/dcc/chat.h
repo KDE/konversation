@@ -23,7 +23,6 @@ class QTcpServer;
 
 class IRCInput;
 class Server;
-class ViewContainer;
 
 namespace Konversation
 {
@@ -36,7 +35,7 @@ namespace Konversation
             Q_OBJECT
 
             public:
-                Chat(QWidget* parent, ViewContainer* viewContainer, bool listen, Server* server, const QString& ownNick,
+                Chat(QWidget* parent, bool listen, Server* server, const QString& ownNick,
                      const QString& partnerNick, const QString& partnerHost = QString(), int partnerPort = 0);
                 ~Chat();
 

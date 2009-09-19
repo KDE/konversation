@@ -49,7 +49,7 @@ namespace Konversation
 {
     namespace DCC
     {
-        Chat::Chat(QWidget* parent, ViewContainer* viewContainer, bool listen, Server* server, const QString& ownNick,
+        Chat::Chat(QWidget* parent, bool listen, Server* server, const QString& ownNick,
                    const QString& partnerNick, const QString& partnerHost, int partnerPort)
             : ChatWindow(parent)
         {
@@ -80,7 +80,7 @@ namespace Konversation
             m_headerSplitter->setStretchFactor(m_headerSplitter->indexOf(ircViewBox), 1);
             setTextView(ircViewBox->ircView());
 
-            m_dccChatInput = new IRCInput(this, viewContainer);
+            m_dccChatInput = new IRCInput(this);
             getTextView()->installEventFilter(m_dccChatInput);
             m_dccChatInput->setEnabled( false );
 

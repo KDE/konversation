@@ -76,7 +76,7 @@ bool nickLessThan(const Nick* nick1, const Nick* nick2)
 
 using Konversation::ChannelOptionsDialog;
 
-Channel::Channel(QWidget* parent, ViewContainer* viewContainer, QString _name) : ChatWindow(parent)
+Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
 {
     // init variables
 
@@ -248,7 +248,7 @@ Channel::Channel(QWidget* parent, ViewContainer* viewContainer, QString _name) :
     cipherLabel = new QLabel(commandLineBox);
     cipherLabel->hide();
     cipherLabel->setPixmap(KIconLoader::global()->loadIcon("document-encrypt", KIconLoader::Toolbar));
-    channelInput = new IRCInput(commandLineBox, viewContainer);
+    channelInput = new IRCInput(commandLineBox);
 
     getTextView()->installEventFilter(channelInput);
     topicLine->installEventFilter(channelInput);

@@ -30,7 +30,7 @@
 #define MAXHISTORY 100
 
 
-IRCInput::IRCInput(QWidget* parent, ViewContainer* viewContainer) : KTextEdit(parent), m_viewContainer (viewContainer)
+IRCInput::IRCInput(QWidget* parent) : KTextEdit(parent)
 {
     enableFindReplace(false);
     setAcceptRichText(false);
@@ -301,13 +301,13 @@ void IRCInput::keyPressEvent(QKeyEvent* e)
 
 bool IRCInput::event(QEvent* e)
 {
-    if (m_viewContainer && e->type() == QEvent::ShortcutOverride)
+    if (e->type() == QEvent::ShortcutOverride)
     {
-        // Make sure KTextEdit doesn't eat the find shortcuts
+        // Make sure KTextEdit doesn't eat actionCollection shortcuts
         QKeyEvent* event = static_cast<QKeyEvent*>(e);
         const int key = event->key() | event->modifiers();
 
-        foreach(QAction* action, m_viewContainer->actionCollection()->actions())
+        foreach(QAction* action, Application::instance()->getMainWindow()->actionCollection()->actions())
         {
             KAction* kAction = qobject_cast<KAction*>(action);
 

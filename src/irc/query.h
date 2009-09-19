@@ -35,7 +35,6 @@ class QLabel;
 class QSplitter;
 
 class IRCInput;
-class ViewContainer;
 
 namespace Konversation {
   }
@@ -45,7 +44,7 @@ class Query : public ChatWindow
     Q_OBJECT
 
     public:
-        explicit Query(QWidget* parent, ViewContainer* viewContainer, QString name);
+        explicit Query(QWidget* parent, QString name);
         virtual void setServer(Server* newServer);
 
         ~Query();
