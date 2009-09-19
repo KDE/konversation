@@ -57,7 +57,8 @@ class TabWidget : public KTabWidget
         TabWidget(QWidget* parent = 0);
         ~TabWidget();
 
-    QTabBar* tabBar() { return KTabWidget::tabBar(); }
+    // Suppress krazy2 false positive (cf. kdelibs bug #207747).
+    QTabBar* tabBar() { return KTabWidget::tabBar(); } // krazy:exclude=qclasses
 };
 
 class ViewContainer : public QObject

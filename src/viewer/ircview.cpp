@@ -37,10 +37,8 @@
 #include <QMouseEvent>
 #include <QScrollBar>
 #include <QTextBlock>
-
 #include <QAbstractTextDocumentLayout>
 #include <QPainter>
-#include <QColor>
 #include <QTextObjectInterface>
 
 #include <KUrl>
