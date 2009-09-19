@@ -409,7 +409,7 @@ void IRCView::clearLines()
     //if we have a remember line, put it in the list
         //its already in the list
 
-    kDebug() << _S(m_nextCullIsMarker) << _S(m_rememberLinePosition) << m_markers;
+    kDebug() << _S(m_nextCullIsMarker) << _S(m_rememberLinePosition) << _S(textCursor().position()) << m_markers;
     dump_doc(document());
 
     //are there any markers?
