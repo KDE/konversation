@@ -446,6 +446,9 @@ QTextCharFormat IRCView::getFormat(ObjectFormats x)
 
 void IRCView::appendLine(IRCView::ObjectFormats type)
 {
+    QScrollBar *vbar = verticalScrollBar();
+    bool atBottom = (vbar->value() == vbar->maximum());
+
     QTextCursor cursor(document()->lastBlock());
     cursor.movePosition(QTextCursor::EndOfBlock);
 
@@ -455,6 +458,9 @@ void IRCView::appendLine(IRCView::ObjectFormats type)
     setTextCursor(cursor);
 
     m_markers.append(cursor.block());
+
+    if (atBottom)
+        vbar->setValue(vbar->maximum());
 }
 
 
