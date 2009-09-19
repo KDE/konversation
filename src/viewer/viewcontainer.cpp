@@ -1388,8 +1388,6 @@ void ViewContainer::addView(ChatWindow* view, const QString& label, bool weiniti
 
 void ViewContainer::switchView(int newIndex)
 {
-    kDebug();
-
     ChatWindow* view = static_cast<ChatWindow*>(m_tabWidget->widget(newIndex));
     if (!view) return;
 
@@ -1441,8 +1439,6 @@ void ViewContainer::switchView(int newIndex)
 
 void ViewContainer::showView(ChatWindow* view)
 {
-    kDebug();
-
     // Don't bring Tab to front if TabWidget is hidden. Otherwise QT gets confused
     // and shows the Tab as active but will display the wrong pane
     if (m_tabWidget && m_tabWidget->isVisible())
