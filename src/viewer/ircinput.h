@@ -21,13 +21,14 @@
 
 
 class KCompletionBox;
+class ViewContainer;
 
 class IRCInput : public KTextEdit
 {
     Q_OBJECT
 
     public:
-        explicit IRCInput(QWidget* parent);
+        explicit IRCInput(QWidget* parent, ViewContainer* viewContainer);
         ~IRCInput();
 
         void setCompletionMode(char mode);
@@ -88,5 +89,7 @@ class IRCInput : public KTextEdit
         int m_qtBoxPadding; //see comment in constructor
 
         QTimer* m_disableSpellCheckTimer;
+
+        ViewContainer* m_viewContainer;
 };
 #endif

@@ -17,6 +17,7 @@
 #include "chatwindow.h"
 #include "ircview.h"
 #include "pasteeditor.h"
+#include "viewcontainer.h"
 
 #include <QClipboard>
 #include <QKeyEvent>
@@ -24,11 +25,12 @@
 #include <KMessageBox>
 #include <KCompletionBox>
 #include <KStandardShortcut>
+#include <KActionCollection>
 
 #define MAXHISTORY 100
 
 
-IRCInput::IRCInput(QWidget* parent) : KTextEdit(parent)
+IRCInput::IRCInput(QWidget* parent, ViewContainer* viewContainer) : KTextEdit(parent), m_viewContainer (viewContainer)
 {
     enableFindReplace(false);
     setAcceptRichText(false);
@@ -299,21 +301,21 @@ void IRCInput::keyPressEvent(QKeyEvent* e)
 
 bool IRCInput::event(QEvent* e)
 {
-    if (e->type() == QEvent::ShortcutOverride)
+    if (m_viewContainer && e->type() == QEvent::ShortcutOverride)
     {
         // Make sure KTextEdit doesn't eat the find shortcuts
         QKeyEvent* event = static_cast<QKeyEvent*>(e);
         const int key = event->key() | event->modifiers();
 
-        if(KStandardShortcut::find().contains(key))
+        foreach(QAction* action, m_viewContainer->actionCollection()->actions())
         {
-            event->ignore();
-            return false;
-        }
-        else if(KStandardShortcut::findNext().contains(key))
-        {
-            event->ignore();
-            return false;
+            KAction* kAction = qobject_cast<KAction*>(action);
+
+            if(kAction->shortcut().contains(key))
+            {
+                event->ignore();
+                return false;
+            }
         }
     }
 

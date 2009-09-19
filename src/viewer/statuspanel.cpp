@@ -24,7 +24,7 @@
 #include <KLineEdit>
 
 
-StatusPanel::StatusPanel(QWidget* parent) : ChatWindow(parent)
+StatusPanel::StatusPanel(QWidget* parent, ViewContainer* viewContainer) : ChatWindow(parent)
 {
     setType(ChatWindow::Status);
 
@@ -50,7 +50,7 @@ StatusPanel::StatusPanel(QWidget* parent) : ChatWindow(parent)
 
     awayLabel=new QLabel(i18n("(away)"), commandLineBox);
     awayLabel->hide();
-    statusInput=new IRCInput(commandLineBox);
+    statusInput=new IRCInput(commandLineBox, viewContainer);
 
     getTextView()->installEventFilter(statusInput);
     statusInput->installEventFilter(this);

@@ -23,6 +23,7 @@ class QTcpServer;
 
 class IRCInput;
 class Server;
+class ViewContainer;
 
 namespace Konversation
 {
@@ -35,7 +36,8 @@ namespace Konversation
             Q_OBJECT
 
             public:
-                Chat(QWidget* parent, bool listen, Server* server, const QString& ownNick, const QString& partnerNick, const QString& partnerHost = QString(), int partnerPort = 0);
+                Chat(QWidget* parent, ViewContainer* viewContainer, bool listen, Server* server, const QString& ownNick,
+                     const QString& partnerNick, const QString& partnerHost = QString(), int partnerPort = 0);
                 ~Chat();
 
                 virtual QString getTextInLine();

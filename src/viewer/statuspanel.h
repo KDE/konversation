@@ -16,6 +16,7 @@
 #include "chatwindow.h"
 
 class IRCInput;
+class ViewContainer;
 
 class QCheckBox;
 class QLabel;
@@ -28,7 +29,7 @@ class StatusPanel : public ChatWindow
     Q_OBJECT
 
     public:
-        explicit StatusPanel(QWidget* parent);
+        explicit StatusPanel(QWidget* parent, ViewContainer* viewContainer);
         ~StatusPanel();
 
         virtual void setName(const QString& newName);

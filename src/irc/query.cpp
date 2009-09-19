@@ -32,7 +32,7 @@
 #include <KHBox>
 #include <KAuthorized>
 
-Query::Query(QWidget* parent, QString _name) : ChatWindow(parent)
+Query::Query(QWidget* parent, ViewContainer* viewContainer, QString _name) : ChatWindow(parent)
 {
     name=_name; // need the name a little bit earlier for setServer
     // don't setName here! It will break logfiles!
@@ -104,7 +104,7 @@ Query::Query(QWidget* parent, QString _name) : ChatWindow(parent)
     blowfishLabel = new QLabel(inputBox);
     blowfishLabel->hide();
     blowfishLabel->setPixmap(KIconLoader::global()->loadIcon("document-encrypt", KIconLoader::Toolbar));
-    queryInput=new IRCInput(inputBox);
+    queryInput=new IRCInput(inputBox, viewContainer);
 
     getTextView()->installEventFilter(queryInput);
     queryInput->installEventFilter(this);

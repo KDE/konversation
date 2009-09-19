@@ -2157,8 +2157,8 @@ void ViewContainer::addDccChat(const QString& myNick,const QString& nick,const Q
     if (m_frontServer)
     {
         DCC::Chat* dccChatPanel=listen
-            ? new DCC::Chat(m_tabWidget, listen, m_frontServer, myNick, nick )
-            : new DCC::Chat(m_tabWidget, listen, m_frontServer, myNick, nick, arguments[1], arguments[2].toInt() );
+            ? new DCC::Chat(m_tabWidget, this, listen, m_frontServer, myNick, nick )
+            : new DCC::Chat(m_tabWidget, this, listen, m_frontServer, myNick, nick, arguments[1], arguments[2].toInt() );
 
         connect(dccChatPanel, SIGNAL(updateTabNotification(ChatWindow*,const Konversation::TabNotifyType&)), this, SLOT(setViewNotification(ChatWindow*,const Konversation::TabNotifyType&)));
 
@@ -2169,7 +2169,7 @@ void ViewContainer::addDccChat(const QString& myNick,const QString& nick,const Q
 
 StatusPanel* ViewContainer::addStatusView(Server* server)
 {
-    StatusPanel* statusView = new StatusPanel(m_tabWidget);
+    StatusPanel* statusView = new StatusPanel(m_tabWidget, this);
 
     statusView->setServer(server);
 
@@ -2303,7 +2303,7 @@ void ViewContainer::channelJoined(Channel* channel)
 
 Channel* ViewContainer::addChannel(Server* server, const QString& name)
 {
-    Channel* channel=new Channel(m_tabWidget, name);
+    Channel* channel=new Channel(m_tabWidget, this, name);
     channel->setServer(server);
     channel->setName(name); //still have to do this for now
     addView(channel, name);
@@ -2354,7 +2354,7 @@ void ViewContainer::toggleChannelNicklists()
 Query* ViewContainer::addQuery(Server* server, const NickInfoPtr& nickInfo, bool weinitiated)
 {
     QString name = nickInfo->getNickname();
-    Query* query=new Query(m_tabWidget, name);
+    Query* query=new Query(m_tabWidget, this, name);
     query->setServer(server);
     query->setNickInfo(nickInfo); //still have to do this
     addView(query, name, weinitiated);
