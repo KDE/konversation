@@ -446,7 +446,8 @@ QTextCharFormat IRCView::getFormat(ObjectFormats x)
 
 void IRCView::appendLine(IRCView::ObjectFormats type)
 {
-    QTextCursor cursor(textCursor());
+    QTextCursor cursor(document()->lastBlock());
+    cursor.movePosition(QTextCursor::EndOfBlock);
 
     cursor.insertBlock();
     cursor.insertText(QString(QChar::ObjectReplacementCharacter), getFormat(type));
