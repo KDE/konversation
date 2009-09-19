@@ -279,7 +279,7 @@ void IrcViewMarkerLine::drawObject(QPainter *painter, const QRectF &r, QTextDocu
 
         case IRCView::BlockIsRemember:
             pen.setColor(Preferences::self()->color(Preferences::CommandMessage));
-            pen.setStyle(Qt::DashDotDotLine);
+            // pen.setStyle(Qt::DashDotDotLine);
             break;
 
         default:
