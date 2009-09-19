@@ -64,6 +64,7 @@ Changes since 1.2-alpha6:
   was active before the just closed one (i.e. only noticable when 'a tab
   adjacent to the just closed tab' and 'the previously active tab' are not
   the same).
+* Marker lines and the remember line are back.
 
 
 Changes from 1.2-alpha5 to 1.2-alpha6:
