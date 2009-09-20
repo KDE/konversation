@@ -21,6 +21,7 @@
 #include "osd.h"
 #include "identity.h"
 #include "nickinfo.h"
+#include "ircqueue.h"
 
 #include <kuniqueapplication.h>
 
@@ -118,6 +119,8 @@ class Application : public KUniqueApplication
 
         Konversation::Sound* sound();
 
+        IRCQueue::EmptyingRate staticrates[Server::_QueueListSize];
+
         Images* images() { return m_images; }
 
         Konversation::NotificationHandler* notificationHandler() const { return m_notificationHandler; }
@@ -140,6 +143,11 @@ class Application : public KUniqueApplication
     public slots:
         void readOptions();
         void saveOptions(bool updateGUI=true);
+
+        void fetchQueueRates(); ///< on Application::readOptions()
+        void stashQueueRates(); ///< on application exit
+        void resetQueueRates(); ///< when QueueTuner says to
+        int countOfQueues() { return Server::_QueueListSize-1; }
 
         void deleteUrl(const QString& who,const QString& url);
         void clearUrlList();

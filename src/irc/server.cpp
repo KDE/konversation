@@ -64,10 +64,10 @@ Server::Server(QObject* parent, ConnectionSettings& settings) : QObject(parent)
 
     m_connectionState = Konversation::SSNeverConnected;
 
-    for (int i=0;i<=_max_queue();i++)
+    for (int i=0; i <= Application::instance()->countOfQueues(); i++)
     {
         //QList<int> r=Preferences::queueRate(i);
-        IRCQueue *q=new IRCQueue(this, staticrates[i]); //FIXME these are supposed to be in the rc
+        IRCQueue *q=new IRCQueue(this, Application::instance()->staticrates[i]); //FIXME these are supposed to be in the rc
         m_queues.append(q);
     }
 
@@ -219,37 +219,6 @@ void Server::doPreShellCommand()
 
     m_preShellCommand.start();
     if (m_preShellCommand.state() == QProcess::NotRunning) preShellCommandExited(m_preShellCommand.exitCode(), m_preShellCommand.exitStatus());
-}
-
-void Server::_fetchRates()
-{
-    for (int i=0;i<=_max_queue();i++)
-    {
-        QList<int> r=Preferences::self()->queueRate(i);
-        staticrates[i]=IRCQueue::EmptyingRate(r[0], r[1]*1000,IRCQueue::EmptyingRate::RateType(r[2]));
-    }
-}
-
-void Server::_stashRates()
-{
-    for (int i=0;i<=_max_queue();i++)
-    {
-        QList<int> r;
-        r.append(staticrates[i].m_rate);
-        r.append(staticrates[i].m_interval/1000);
-        r.append(int(staticrates[i].m_type));
-        Preferences::self()->setQueueRate(i, r);
-    }
-}
-
-void Server::_resetRates()
-{
-    for (int i=0;i<=_max_queue();i++)
-    {
-        Preferences::self()->queueRateItem(i)->setDefault();
-        QList<int> r=Preferences::self()->queueRate(i);
-        staticrates[i]=IRCQueue::EmptyingRate(r[0], r[1]*1000,IRCQueue::EmptyingRate::RateType(r[2]));
-    }
 }
 
 void Server::initTimers()
@@ -1261,7 +1230,7 @@ void Server::collectStats(int bytes, int encodedBytes)
 
 bool Server::validQueue(QueuePriority priority)
 {
-   if (priority >=0 && priority <= _max_queue())
+   if (priority >=0 && priority <= Application::instance()->countOfQueues())
        return true;
    return false;
 }
@@ -1295,7 +1264,7 @@ bool Server::queueList(const QStringList& buffer, QueuePriority priority)
 
 void Server::resetQueues()
 {
-    for (int i=0;i<=_max_queue();i++)
+    for (int i=0; i <= Application::instance()->countOfQueues(); i++)
         m_queues[i]->reset();
 }
 
@@ -1307,7 +1276,7 @@ void Server::flushQueues()
     {
         cue=-1;
         int wait=0;
-        for (int i=1;i<=_max_queue();i++) //slow queue can rot
+        for (int i=1; i <= Application::instance()->countOfQueues(); i++) //slow queue can rot
         {
             IRCQueue *queue=m_queues[i];
             //higher queue indices have higher priorty, higher queue priority wins tie

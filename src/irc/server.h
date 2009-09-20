@@ -77,7 +77,7 @@ void resetNickSelection();
             StandardPriority, ///<regular queue, for chat and user initiated commands
             HighPriority,     ///<for pongs and quits
 
-            Howmanyqueuesdoweneedanywayquestionmark,
+            _QueueListSize,
 
             HiPriority=HighPriority,
             LoPriority=LowPriority,
@@ -357,7 +357,6 @@ void resetNickSelection();
     // IRCQueueManager
         bool validQueue(QueuePriority priority); ///< is this queue index valid?
         void resetQueues(); ///< Tell all of the queues to reset
-        static int _max_queue() { return Howmanyqueuesdoweneedanywayquestionmark-1; }
 
         /** Forces the queued data to be sent in sequence of age, without pause.
 
@@ -369,10 +368,6 @@ void resetNickSelection();
         void flushQueues();
 
         //These are really only here to limit where ircqueue.h is included
-        static void _fetchRates(); ///< on Application::readOptions()
-        static void _stashRates(); ///< on application exit
-        static void _resetRates(); ///< when QueueTuner says to
-
 
     signals:
         void destroyed(int connectionId);

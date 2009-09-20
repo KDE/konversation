@@ -4,7 +4,7 @@
     published by the Free Software Foundation; either version 2 of
     the License or (at your option) version 3 or any later version
     accepted by the membership of KDE e.V. (or its successor approved
-    by the membership of KDE e.V.), which shall act as a proxy 
+    by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 */
 
@@ -56,7 +56,7 @@ private:
 
     //FIXME wire this up
     //QTextCodec* codec;
-    //operator const char * () const { return codec->fromUnicode(text()); } 
+    //operator const char * () const { return codec->fromUnicode(text()); }
 
 };
 
@@ -78,7 +78,7 @@ public:
             Lines, ///< Lines per interval.
             Bytes  ///< Bytes per interval. Not implemented. FIXME
         };
-        EmptyingRate(int rate=6, int msec_interval=50000, RateType type=Lines):
+        EmptyingRate(int rate=39, int msec_interval=59000, RateType type=Lines):
                 m_rate(rate), m_interval(msec_interval), m_type(type)
         {
         }
@@ -89,6 +89,10 @@ public:
         int m_interval;
         RateType m_type;
         bool isValid()  { return m_rate > 0; }
+        bool operator==(const EmptyingRate& o)
+        {
+            return (m_rate == o.m_rate && m_interval == o.m_interval && m_type == o.m_type)? true : false;
+        }
     };
 
     IRCQueue(Server *server, EmptyingRate& rate, int myindex=0);
@@ -139,7 +143,5 @@ private:
     int m_lastWait;
     int m_myIndex;
 };
-
-extern IRCQueue::EmptyingRate staticrates[];
 
 #endif

@@ -61,7 +61,7 @@ Application::Application()
 Application::~Application()
 {
     kDebug();
-    Server::_stashRates();
+    stashQueueRates();
     Preferences::self()->writeConfig();
     saveOptions(false);
 
@@ -609,7 +609,7 @@ void Application::readOptions()
     KConfigGroup cgEncodings(KGlobal::config()->group("Encodings"));
     QMap<QString,QString> encodingEntries=cgEncodings.entryMap();
     QList<QString> encodingEntryKeys=encodingEntries.keys();
-    
+
     QRegExp reg("^(.+) ([^\\s]+) ([^\\s]+)$");
     for(QList<QString>::const_iterator itStr=encodingEntryKeys.constBegin(); itStr != encodingEntryKeys.constEnd(); ++itStr)
     {
@@ -622,8 +622,7 @@ void Application::readOptions()
         }
     }
 
-    // O, what a tangled web
-    Server::_fetchRates();
+    fetchQueueRates();
 
     updateProxySettings();
 }
@@ -836,6 +835,47 @@ void Application::saveOptions(bool updateGUI)
 
     if(updateGUI)
         emit appearanceChanged();
+}
+
+void Application::fetchQueueRates()
+{
+    //The following rate was found in the rc for all queues, which were deliberately bad numbers chosen for debugging.
+    //Its possible that the static array was constructed or deconstructed at the wrong time, and so those values saved
+    //in the rc. When reading the values out of the rc, we must check to see if they're this specific value,
+    //and if so, reset to defaults. --argonel
+    IRCQueue::EmptyingRate shit(6, 50000, IRCQueue::EmptyingRate::Lines);
+    int bad = 0;
+    for (int i=0; i <= countOfQueues(); i++)
+    {
+        QList<int> r = Preferences::self()->queueRate(i);
+        staticrates[i] = IRCQueue::EmptyingRate(r[0], r[1]*1000, IRCQueue::EmptyingRate::RateType(r[2]));
+        if (staticrates[i] == shit)
+            bad++;
+    }
+    if (bad == 3)
+        resetQueueRates();
+}
+
+void Application::stashQueueRates()
+{
+    for (int i=0; i <= countOfQueues(); i++)
+    {
+        QList<int> r;
+        r.append(staticrates[i].m_rate);
+        r.append(staticrates[i].m_interval / 1000);
+        r.append(int(staticrates[i].m_type));
+        Preferences::self()->setQueueRate(i, r);
+    }
+}
+
+void Application::resetQueueRates()
+{
+    for (int i=0; i <= countOfQueues(); i++)
+    {
+        Preferences::self()->queueRateItem(i)->setDefault();
+        QList<int> r=Preferences::self()->queueRate(i);
+        staticrates[i]=IRCQueue::EmptyingRate(r[0], r[1]*1000, IRCQueue::EmptyingRate::RateType(r[2]));
+    }
 }
 
 // FIXME: use KUrl maybe?

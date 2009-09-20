@@ -4,7 +4,7 @@
     published by the Free Software Foundation; either version 2 of
     the License or (at your option) version 3 or any later version
     accepted by the membership of KDE e.V. (or its successor approved
-    by the membership of KDE e.V.), which shall act as a proxy 
+    by the membership of KDE e.V.), which shall act as a proxy
     defined in Section 14 of version 3 of the license.
 */
 
@@ -18,16 +18,6 @@
 #include <QString>
 
 #include "server.h"
-
-//#include "/home/ejm/argnl.h"
-
-IRCQueue::EmptyingRate staticrates[Server::Howmanyqueuesdoweneedanywayquestionmark]; /*=
-    {
-        IRCQueue::EmptyingRate(6,60000)
-        ,IRCQueue::EmptyingRate(20,60000)
-        ,IRCQueue::EmptyingRate(1,1000)//,IRCQueue::EmptyingRate::Bytes)
-    };
-*/
 
 int IRCQueue::EmptyingRate::nextInterval(int, int elapsed)
 {

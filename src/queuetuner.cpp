@@ -247,7 +247,7 @@ void QueueTuner::contextMenuEvent(QContextMenuEvent* e)
         int x = KMessageBox::warningContinueCancel(this, question, i18n("Reset Values"), KStandardGuiItem::reset(), KGuiItem(), QString(), KMessageBox::Dangerous);
         if ( x == KMessageBox::Continue)
         {
-            Server::_resetRates();
+            Application::instance()->resetQueueRates();
             getRates();
         }
     }
