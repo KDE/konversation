@@ -17,6 +17,7 @@
 
 #include <kurl.h>
 #include <kjob.h>
+#include <kio/jobclasses.h>
 
 namespace Konversation
 {
@@ -110,6 +111,9 @@ namespace Konversation
             QHash<KJob*, Forwarding*> pending_forwards;
             QHash<KJob*, Forwarding*> pending_unforwards;
 
+            QHash<KJob*, QByteArray>  soap_data_in;
+            QHash<KJob*, QByteArray>  soap_data_out;
+
             QString error;
             
         public:
@@ -170,9 +174,10 @@ namespace Konversation
         private slots:
             void onRequestFinished(KJob *reply);
             void downloadFinished(KJob* j);
-
-
-
+            
+            void sendSoapData(KIO::Job *job, QByteArray &data);
+            void recvSoapData(KIO::Job *job, const QByteArray &data);
+            
         signals:
             /**
             * Signal which indicates that the XML was downloaded successfully or not.

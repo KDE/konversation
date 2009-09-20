@@ -21,6 +21,7 @@
 #include <KLocale>
 #include <KIO/Job>
 #include <KIO/NetAccess>
+#include <kio/jobclasses.h>
 
 #include <stdlib.h>
 
@@ -310,8 +311,6 @@ namespace Konversation
             if (location.port()<=0)
                 location.setPort(80);
 
-            QByteArray data = query.toAscii();
-
             KUrl address;
 
             address.setProtocol(QString("http"));
@@ -319,14 +318,32 @@ namespace Konversation
             address.setPort(location.port());
             address.setPath(controlurl);
 
-            KIO::TransferJob *req = KIO::storedHttpPost( data, address, KIO::HideProgressInfo );
+            KIO::TransferJob *req = KIO::http_post( address, query.toAscii(), KIO::HideProgressInfo );
+            
             req->addMetaData("content-type", QString("text/xml"));
             req->addMetaData("UserAgent", QString("Konversation UPnP"));
             req->addMetaData("customHTTPHeader", QString("SOAPAction: ") + soapact);
 
-            connect(req,SIGNAL(result(KJob *)),this,SLOT(onRequestFinished( KJob* )));
+            soap_data_out[req] = QByteArray();
+            soap_data_in[req]  = QByteArray();
+            
+            connect( req, SIGNAL(data( KIO::Job *, const QByteArray & )), this, SLOT(recvSoapData( KIO::Job*, const QByteArray & )) );
+            connect( req, SIGNAL(dataReq( KIO::Job *, QByteArray & )), this, SLOT(sendSoapData( KIO::Job*, QByteArray & )) );
+            
+            connect( req, SIGNAL(result(KJob *)), this, SLOT(onRequestFinished( KJob* )) );
             
             return req;
+        }
+
+        void UPnPRouter::sendSoapData(KIO::Job *job, QByteArray &data)
+        {
+            data.append(soap_data_out[job]);
+            soap_data_out[job].clear();
+        }
+
+        void UPnPRouter::recvSoapData(KIO::Job *job, const QByteArray &data)
+        {
+            soap_data_in[job].append(data);
         }
 
         void UPnPRouter::onRequestFinished(KJob *r)
@@ -356,8 +373,8 @@ namespace Konversation
             }
             else
             {
-                KIO::StoredTransferJob* st = (KIO::StoredTransferJob*)r;
-                QString reply(st->data());
+                QString reply(soap_data_in[r]);
+                soap_data_in[r].clear();
 
                 kDebug() << "UPnPRouter : OK:" << endl;
                 
@@ -388,6 +405,9 @@ namespace Konversation
                     pending_unforwards.remove(r);
                 }
             }
+            
+            soap_data_in.remove(r);
+            soap_data_out.remove(r);
         }
     }
 }
