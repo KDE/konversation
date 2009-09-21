@@ -1279,6 +1279,15 @@ void IRCView::setupChannelPopupMenu()
     action->setData(Konversation::Topic);
 }
 
+void IRCView::resizeEvent(QResizeEvent *event)
+{
+    QScrollBar *vbar = verticalScrollBar();
+    bool atBottom = (vbar->value() == vbar->maximum());
+    KTextBrowser::resizeEvent(event);
+    if (atBottom)
+        vbar->setValue(vbar->maximum());
+}
+
 void IRCView::mouseMoveEvent(QMouseEvent* ev)
 {
     if (m_mousePressed && (m_pressPosition - ev->pos()).manhattanLength() > KApplication::startDragDistance())

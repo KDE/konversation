@@ -229,6 +229,7 @@ class IRCView : public KTextBrowser
 
         void replaceDecoration(QString& line,char decoration,char replacement);
 
+        virtual void resizeEvent(QResizeEvent *event);
         virtual void mouseReleaseEvent(QMouseEvent* ev);
         virtual void mousePressEvent(QMouseEvent* ev);
         virtual void mouseMoveEvent(QMouseEvent* ev);
