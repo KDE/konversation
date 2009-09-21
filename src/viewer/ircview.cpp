@@ -80,6 +80,22 @@ IRCView::clear()
 
 using namespace Konversation;
 
+class ScrollBarPin
+{
+        QPointer<QScrollBar> m_bar;
+    public:
+        ScrollBarPin(QScrollBar *scrollBar) : m_bar(scrollBar)
+        {
+            if (m_bar)
+                m_bar = m_bar->value() == m_bar->maximum()? m_bar : 0;
+        }
+        ~ScrollBarPin()
+        {
+            if (m_bar)
+                m_bar->setValue(m_bar->maximum());
+        }
+};
+
 IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent), m_nextCullIsMarker(false), m_rememberLinePosition(-1), m_rememberLineDirtyBit(false), markerFormatObject(this)
 {
     m_copyUrlMenu = false;
@@ -449,8 +465,7 @@ QTextCharFormat IRCView::getFormat(ObjectFormats x)
 
 void IRCView::appendLine(IRCView::ObjectFormats type)
 {
-    QScrollBar *vbar = verticalScrollBar();
-    bool atBottom = (vbar->value() == vbar->maximum());
+    ScrollBarPin b(verticalScrollBar());
 
     QTextCursor cursor(document());
     cursor.movePosition(QTextCursor::End);
@@ -460,9 +475,6 @@ void IRCView::appendLine(IRCView::ObjectFormats type)
     cursor.block().setUserState(type == MarkerLine? BlockIsMarker : BlockIsRemember);
 
     m_markers.append(cursor.block());
-
-    if (atBottom)
-        vbar->setValue(vbar->maximum());
 }
 
 
@@ -1281,11 +1293,8 @@ void IRCView::setupChannelPopupMenu()
 
 void IRCView::resizeEvent(QResizeEvent *event)
 {
-    QScrollBar *vbar = verticalScrollBar();
-    bool atBottom = (vbar->value() == vbar->maximum());
+    ScrollBarPin b(verticalScrollBar());
     KTextBrowser::resizeEvent(event);
-    if (atBottom)
-        vbar->setValue(vbar->maximum());
 }
 
 void IRCView::mouseMoveEvent(QMouseEvent* ev)
