@@ -89,7 +89,7 @@ public:
         int m_interval;
         RateType m_type;
         bool isValid()  { return m_rate > 0; }
-        bool operator==(const EmptyingRate& o)
+        bool operator==(const EmptyingRate& o) const
         {
             return (m_rate == o.m_rate && m_interval == o.m_interval && m_type == o.m_type)? true : false;
         }
