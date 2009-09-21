@@ -60,10 +60,13 @@ Application::Application()
 
 Application::~Application()
 {
-    kDebug();
-    stashQueueRates();
-    Preferences::self()->writeConfig();
-    saveOptions(false);
+    kDebug() << bool(mainWindow != 0);
+    if (mainWindow) // only save the config of the instance which made the main window
+    {
+        stashQueueRates();
+        Preferences::self()->writeConfig(); // FIXME i can't figure out why this isn't in saveOptions --argonel
+        saveOptions(false);
+    }
 
     // Delete m_dccTransferManager here as its destructor depends on the main loop being in tact which it
     // won't be if if we wait till Qt starts deleting parent pointers.
@@ -81,7 +84,7 @@ Application::~Application()
 int Application::newInstance()
 {
     KCmdLineArgs* args = KCmdLineArgs::parsedArgs();
-    QString url; //TODO FIXME: does this really have to be a QCString?
+    QString url;
     if (args->count() > 0)
         url = args->arg(0);
 
