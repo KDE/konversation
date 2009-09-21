@@ -1,4 +1,16 @@
-Changes since 1.2-alpha6:
+Changes from 1.2-alpha6 to 1.2-beta1:
+Konversation 1.2-beta1 marks the departure from active feature development
+for Konversation 1.2 and the entrance into the much-vaunted halls of bug-
+fixing-until-the-final-release, which we expect to materialize in early
+October. Until then, you can enjoy what this beta has to offer: HTTP and
+SOCKS v5 proxy support, further redesign of the DCC Status tab (many of
+you will be happy to find the minimum window size with the DCC Status tab
+open much reduced now), the long-awaited return of marker and remember
+lines and the resurrection of link dragging from the text display widget
+are of particular note, but the changelog has the details on a variety of
+other additions, plus the usual assortment of bugfixes, as well.
+
+
 * Added a topic widget for Konsole windows and hooked it up to the KPart's
   setWindowCaption signal
 * Added tooltips to items in the new DCC transfer lists that describe the
@@ -12,7 +24,7 @@ Changes since 1.2-alpha6:
 * Fixed a crash when sending a message containing only spaces.
 * Added a "Manage Profiles" button to the information area above the ter-
   minal area in Konsole tabs.
-* Added SOCKS v4 and HTTP proxy support. Proxy credentials are stored in
+* Added SOCKS v5 and HTTP proxy support. Proxy credentials are stored in
   KWallet.
 * Moved the buttons in the DCC Status tab to a toolbar, similar to how
   things were already laid out in log viewer tabs.
@@ -65,6 +77,9 @@ Changes since 1.2-alpha6:
   adjacent to the just closed tab' and 'the previously active tab' are not
   the same).
 * Marker lines and the remember line are back.
+* Fixed a bug that could cause queue flushing rates to be entered into the
+  configuration that would prevent successfully connecting to Freenode and
+  potentially other IRC networks.
 
 
 Changes from 1.2-alpha5 to 1.2-alpha6:
