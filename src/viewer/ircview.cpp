@@ -99,7 +99,10 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent), m_n
     //This assert is here because a bad build environment can cause this to fail. There is a note
     // in the Qt source that indicates an error should be output, but there is no such output.
     QTextObjectInterface *iface = qobject_cast<QTextObjectInterface *>(&markerFormatObject);
-    Q_ASSERT(iface);
+    if (!iface)
+    {
+        Q_ASSERT(iface);
+    }
 
     document()->documentLayout()->registerHandler(IRCView::MarkerLine, &markerFormatObject);
     document()->documentLayout()->registerHandler(IRCView::RememberLine, &markerFormatObject);
