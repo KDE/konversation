@@ -56,11 +56,18 @@ Application::Application()
     quickConnectDialog = 0;
     osd = 0;
     m_wallet = NULL;
+    m_images = 0;
+    m_dccTransferManager = 0;
+    m_notificationHandler = 0;
 }
 
 Application::~Application()
 {
     kDebug();
+
+    if (!m_images)
+        return; // Nothing to do, newInstance() has never been called.
+
     stashQueueRates();
     Preferences::self()->writeConfig(); // FIXME i can't figure out why this isn't in saveOptions --argonel
     saveOptions(false);
