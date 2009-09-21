@@ -60,13 +60,10 @@ Application::Application()
 
 Application::~Application()
 {
-    kDebug() << bool(mainWindow != 0);
-    if (mainWindow) // only save the config of the instance which made the main window
-    {
-        stashQueueRates();
-        Preferences::self()->writeConfig(); // FIXME i can't figure out why this isn't in saveOptions --argonel
-        saveOptions(false);
-    }
+    kDebug();
+    stashQueueRates();
+    Preferences::self()->writeConfig(); // FIXME i can't figure out why this isn't in saveOptions --argonel
+    saveOptions(false);
 
     // Delete m_dccTransferManager here as its destructor depends on the main loop being in tact which it
     // won't be if if we wait till Qt starts deleting parent pointers.
