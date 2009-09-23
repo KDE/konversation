@@ -375,6 +375,9 @@ namespace Konversation
             kDebug() << "[BEGIN]" << endl
                 << "size: " << QString::number( size );
 
+            KIO::TransferJob* transferJob = static_cast<KIO::TransferJob*>( job );
+            disconnect( transferJob, 0, 0, 0 );
+
             if ( Application::instance()->getDccTransferManager()->isLocalFileInWritingProcess( m_fileURL ) )
             {
                 askAndPrepareLocalKio( i18n( "<b>The file is used by another transfer.</b><br>"
@@ -387,11 +390,6 @@ namespace Konversation
 
             if ( size != 0 )
             {
-                KIO::TransferJob* transferJob = static_cast<KIO::TransferJob*>( job );
-
-                disconnect( transferJob, 0, 0, 0 );
-                transferJob->kill();
-
                 if ( Preferences::self()->dccAutoResume() )
                 {
                     prepareLocalKio( false, true, size );

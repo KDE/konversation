@@ -423,10 +423,7 @@ namespace Konversation
         {
             stopConnectionTimer();
 
-            if ( m_fastSend )
-            {
-                connect( m_sendSocket, SIGNAL( bytesWritten( qint64 ) ), this, SLOT( bytesWritten( qint64 ) ) );
-            }
+            connect( m_sendSocket, SIGNAL( bytesWritten( qint64 ) ), this, SLOT( bytesWritten( qint64 ) ) );
             connect( m_sendSocket, SIGNAL( readyRead() ),  this, SLOT( getAck() ) );
 
             m_partnerIp = m_sendSocket->peerAddress().toString();
@@ -461,12 +458,16 @@ namespace Konversation
                 }
             }
 
-//             kDebug() << "bytes written:" << bytes;
-//             kDebug() << "m_sendSocket->bytesToWrite():" << m_sendSocket->bytesToWrite() << "<= m_bufferSize:" << m_bufferSize;
-            //wait for all remaining bytes to be written
-            if (m_sendSocket && m_sendSocket->bytesToWrite() <= (qint64)m_bufferSize)
+            if (m_sendSocket)
             {
-                writeData();
+                if (m_fastSend && m_sendSocket->bytesToWrite() <= (qint64)m_bufferSize)
+                {
+                    writeData();
+                }
+                else if (!m_fastSend && bytes == 0)
+                {
+                    writeData();
+                }
             }
         }
 
