@@ -375,7 +375,12 @@ namespace Konversation
             kDebug() << "[BEGIN]" << endl
                 << "size: " << QString::number( size );
 
-            KIO::TransferJob* transferJob = static_cast<KIO::TransferJob*>( job );
+            KIO::TransferJob* transferJob = dynamic_cast<KIO::TransferJob*>( job );
+            if (!transferJob)
+            {
+                kDebug() << "not a TransferJob? returning";
+                return;
+            }
 
             if ( Application::instance()->getDccTransferManager()->isLocalFileInWritingProcess( m_fileURL ) )
             {
@@ -385,6 +390,7 @@ namespace Konversation
                     m_fileURL.prettyUrl() ),
                     ResumeDialog::RA_Rename | ResumeDialog::RA_Cancel,
                     ResumeDialog::RA_Rename );
+                    transferJob->kill();
                 return;
             }
 
@@ -410,6 +416,7 @@ namespace Konversation
                         ResumeDialog::RA_Resume,
                         size );
                 }
+                transferJob->kill();
             }
 
             kDebug() << "[END]";
