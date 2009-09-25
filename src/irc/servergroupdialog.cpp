@@ -83,6 +83,7 @@ namespace Konversation
 
     ServerGroupDialog::~ServerGroupDialog()
     {
+        delete m_mainWidget;
     }
 
     void ServerGroupDialog::setServerGroupSettings(ServerGroupSettingsPtr settings)

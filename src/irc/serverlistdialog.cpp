@@ -111,6 +111,7 @@ namespace Konversation
     {
         KConfigGroup config(KGlobal::config(), "ServerListDialog");
         config.writeEntry("Size", size());
+        delete m_mainWidget;
     }
 
     void ServerListDialog::slotClose()
