@@ -209,7 +209,8 @@ bool IRCInput::eventFilter(QObject *object,QEvent *event)
             if (ke->key() == Qt::Key_Tab && (ke->modifiers() == 0 || ke->modifiers() == Qt::ShiftModifier))
                 return false;
 
-            if (!ke->text().isEmpty() && ((ke->modifiers() & (Qt::ShiftModifier|Qt::KeypadModifier)) || ke->modifiers() == 0))
+            if (!ke->text().isEmpty() && ((ke->modifiers() & (Qt::ShiftModifier|Qt::KeypadModifier|Qt::GroupSwitchModifier)) ||
+                                          ke->modifiers() == 0))
             {
                 setFocus();
                 Application::sendEvent(this,event);
