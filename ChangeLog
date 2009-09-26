@@ -8,9 +8,9 @@ Changes since 1.2-beta1:
 * Fixed a bug that could cause a crash when resuming an incoming DCC file
   transfer.
 * Fixed characters that require the Alt Gr modifier to be typed (such as
-  the '@' symbol in German keyboard layouts, for example) not being redi-
-  rected to and showing up in the input line when typed while the chat text
-  view has keyboard focus.
+  the '@' symbol in German keyboard layouts, for example) not causing key-
+  board focus to move to the input line when typed while the chat text view
+  has keyboard focus and thus not showing up in the input line.
 
 
 Changes from 1.2-alpha6 to 1.2-beta1:
