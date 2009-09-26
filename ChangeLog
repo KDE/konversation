@@ -3,8 +3,14 @@ Changes since 1.2-beta1:
   view is resized (such as when the window is resized or the input bar in-
   creases in height after typing more than one line with auto-expand mode
   enabled).
-* Fixed a bug that could cause the progress bar for DCC transfers not to be
-  updated when "Fast DCC send" was enabled.
+* Fixed a bug that could cause the progress bar for DCC filer transfers not
+  to be updated when "Fast DCC send" was enabled.
+* Fixed a bug that could cause a crash when resuming an incoming DCC file
+  transfer.
+* Fixed characters that require the Alt Gr modifier to be typed (such as
+  the '@' symbol in German keyboard layouts, for example) not being redi-
+  rected to and showing up in the input line when typed while the chat text
+  view has keyboard focus.
 
 
 Changes from 1.2-alpha6 to 1.2-beta1:
