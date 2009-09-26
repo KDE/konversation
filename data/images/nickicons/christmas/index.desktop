@@ -2,6 +2,7 @@
 Type=Theme
 Name=Christmas Theme
 Name[bg]=Коледна тема
+Name[ca]=Tema nadalenc
 Name[cs]=Vánoční téma
 Name[da]=Juletema
 Name[de]=Weihnachtsdesign
@@ -35,6 +36,7 @@ Name[zh_CN]=圣诞节主题
 Name[zh_TW]=聖誕節
 Comment="Christmas Theme" by Kenichiro Takahashi
 Comment[bg]="Коледна тема" от Kenichiro Takahashi
+Comment[ca]="Tema nadalenc" per Kenichiro Takahashi
 Comment[cs]="Vánoční téma" od Kenichiro Takahashi
 Comment[da]="Juletema" af Kenichiro Takahashi
 Comment[de]=„Weihnachtsdesign“ von Kenichiro Takahashi

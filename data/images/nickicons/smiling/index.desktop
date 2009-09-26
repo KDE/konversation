@@ -2,6 +2,7 @@
 Type=Theme
 Name=Smiling Theme
 Name[bg]=Тема "Усмивка"
+Name[ca]=Tema Smiling
 Name[cs]=Smajlíkové téma
 Name[da]=Smilende tema
 Name[de]=Smiley-Design
@@ -34,6 +35,7 @@ Name[zh_CN]=笑脸主题
 Name[zh_TW]=微笑
 Comment="Smiling" stolen from Kopete by John Tapsell
 Comment[bg]=Тема "Усмивка" е откраднато от Kopete от John Tapsell
+Comment[ca]="Smiling" robat del Kopete per John Tapsell
 Comment[cs]="Smajlíkové téma" od Johna Tapsella převzato z Kopete
 Comment[da]="Smilende" stjålet fra Kopete af John Tapsell
 Comment[de]=„Smiley“ geklaut bei Kopete von John Tapsell

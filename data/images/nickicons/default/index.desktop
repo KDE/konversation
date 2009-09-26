@@ -2,6 +2,7 @@
 Type=Theme
 Name=Default Theme
 Name[bg]=Стандартна тема
+Name[ca]=Tema per omissió
 Name[cs]=Výchozí téma
 Name[da]=Standardtema
 Name[de]=Standard-Design
@@ -34,6 +35,7 @@ Name[zh_CN]=默认主题
 Name[zh_TW]=預設主題
 Comment="Oxygen" by Nuno Pinheiro
 Comment[bg]="Oxygen" от Nuno Pinheiro
+Comment[ca]="Oxygen" per Nuno Pinheiro
 Comment[da]="Oxygen" af Nuno Pinheiro
 Comment[de]=„Oxygen“ von Nuno Pinheiro
 Comment[en_GB]="Oxygen" by Nuno Pinheiro

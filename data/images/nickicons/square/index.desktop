@@ -2,6 +2,7 @@
 Type=Theme
 Name=Square Theme
 Name[bg]=Тема "Квадрат"
+Name[ca]=Tema Square
 Name[cs]=Square téma
 Name[da]=Firkantet tema
 Name[de]=Rechteck-Design
@@ -33,6 +34,7 @@ Name[zh_CN]=方块主题
 Name[zh_TW]=方塊
 Comment="SQUARE" by Kenichiro Takahashi
 Comment[bg]=Тема "Квадрат" от Kenichiro Takahashi
+Comment[ca]="SQUARE" per Kenichiro Takahashi
 Comment[cs]="SQUARE" od Kenichiro Takahashi
 Comment[da]="Firkantet" af Kenichiro Takahashi
 Comment[de]=„Rechteck“ von Kenichiro Takahashi
