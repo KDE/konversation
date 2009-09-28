@@ -96,6 +96,36 @@ class ScrollBarPin
         }
 };
 
+// Scribe bug - if the cursor position or anchor points to the last character in the document,
+// the cursor becomes glued to the end of the document instead of retaining the actual position.
+// This causes the selection to expand when something is appended to the document.
+class SelectionPin
+{
+    int pos, anc;
+    QPointer<IRCView> d;
+    public:
+        SelectionPin(IRCView *doc) : pos(0), anc(0), d(doc)
+        {
+            int end = d->document()->rootFrame()->lastPosition();
+            pos = d->textCursor().position();
+            anc = d->textCursor().anchor();
+            if (pos != end && anc != end)
+                anc = pos = 0;
+        }
+
+        ~SelectionPin()
+        {
+            if (d && (pos || anc))
+            {
+                QTextCursor mv(d->textCursor());
+                mv.setPosition(anc);
+                mv.setPosition(pos, QTextCursor::KeepAnchor);
+                d->setTextCursor(mv);
+            }
+        }
+};
+
+
 IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent), m_nextCullIsMarker(false), m_rememberLinePosition(-1), m_rememberLineDirtyBit(false), markerFormatObject(this)
 {
     m_copyUrlMenu = false;
@@ -465,7 +495,8 @@ QTextCharFormat IRCView::getFormat(ObjectFormats x)
 
 void IRCView::appendLine(IRCView::ObjectFormats type)
 {
-    ScrollBarPin b(verticalScrollBar());
+    ScrollBarPin barpin(verticalScrollBar());
+    SelectionPin selpin(this);
 
     QTextCursor cursor(document());
     cursor.movePosition(QTextCursor::End);
@@ -814,40 +845,23 @@ void IRCView::doAppend(const QString& newLine, bool rtl, bool self)
 
 void IRCView::doRawAppend(const QString& newLine, bool rtl)
 {
+    SelectionPin selpin(this); // HACK stop selection at end from growing
     QString line(newLine);
 
     line.remove('\n');
 
-    // HACK Work around for the problem that the if the last character is selected when
-    // a new line is appended the selection will grow to include the new line.
-    // We store the length of the selection and redo the selection after the line was appended.
-    int selectionLength = 0;
-    QTextCursor cursor = textCursor();
-    bool checkSelection = false;
-
-    if(cursor.hasSelection())
-    {
-        selectionLength = cursor.selectionEnd() - cursor.selectionStart();
-        checkSelection = true;
-    }
-
     KTextBrowser::append(line);
+
+    Q_ASSERT(document()->rootFrame()->childFrames().count() == 0); // no child frames, see SelectionPin
 
     QTextCursor formatCursor(document()->lastBlock());
     QTextBlockFormat format = formatCursor.blockFormat();
 
-    if(!QApplication::isLeftToRight())
+    if (!QApplication::isLeftToRight())
         rtl = !rtl;
 
     format.setAlignment(rtl ? Qt::AlignRight : Qt::AlignLeft);
     formatCursor.setBlockFormat(format);
-
-    if (checkSelection && selectionLength < (cursor.selectionEnd() - cursor.selectionStart()))
-    {
-        cursor.setPosition(cursor.selectionStart());
-        cursor.movePosition(QTextCursor::NextCharacter, QTextCursor::KeepAnchor, selectionLength);
-        setTextCursor(cursor);
-    }
 }
 
 QString IRCView::timeStamp()
