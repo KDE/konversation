@@ -12,15 +12,15 @@ the Free Software Foundation; either version 2 of the License, or
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>429</width>
-    <height>352</height>
+    <width>491</width>
+    <height>390</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_3">
    <item>
     <widget class="KTabWidget" name="channelTabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="topicTab">
       <attribute name="title">
@@ -45,9 +45,6 @@ the Free Software Foundation; either version 2 of the License, or
           <property name="allColumnsShowFocus">
            <bool>true</bool>
           </property>
-          <attribute name="headerDefaultSectionSize">
-           <number>150</number>
-          </attribute>
           <attribute name="headerDefaultSectionSize">
            <number>150</number>
           </attribute>
@@ -76,7 +73,7 @@ the Free Software Foundation; either version 2 of the License, or
       <attribute name="title">
        <string>Mo&amp;des</string>
       </attribute>
-      <layout class="QVBoxLayout">
+      <layout class="QVBoxLayout" name="verticalLayout_4">
        <item>
         <widget class="QCheckBox" name="topicModeChBox">
          <property name="text">
@@ -205,22 +202,6 @@ the Free Software Foundation; either version 2 of the License, or
           <bool>true</bool>
          </property>
         </widget>
-       </item>
-       <item>
-        <spacer name="spacer4">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeType">
-          <enum>QSizePolicy::Expanding</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>16</height>
-          </size>
-         </property>
-        </spacer>
        </item>
       </layout>
      </widget>
