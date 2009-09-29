@@ -20,7 +20,7 @@ the Free Software Foundation; either version 2 of the License, or
    <item>
     <widget class="KTabWidget" name="channelTabWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="topicTab">
       <attribute name="title">
