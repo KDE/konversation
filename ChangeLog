@@ -3,7 +3,7 @@ Changes since 1.2-beta1:
   view is resized (such as when the window is resized or the input bar in-
   creases in height after typing more than one line with auto-expand mode
   enabled).
-* Fixed a bug that could cause the progress bar for DCC filer transfers not
+* Fixed a bug that could cause the progress bar for DCC file transfers not
   to be updated when "Fast DCC send" was enabled.
 * Fixed a bug that could cause a crash when resuming an incoming DCC file
   transfer.
