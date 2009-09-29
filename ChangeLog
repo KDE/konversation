@@ -11,6 +11,14 @@ Changes since 1.2-beta1:
   the '@' symbol in German keyboard layouts, for example) not causing key-
   board focus to move to the input line when typed while the chat text view
   has keyboard focus and thus not showing up in the input line.
+* Fixed a bug causing both the link and the marker or remember line to be
+  selected when a line is appended directly after a link that has just been
+  clicked.
+* Fixed a bug causing the automatic scroll-down not to work when more back-
+  log is replayed than the viewport can show at once at channel join.
+* The "Advanced Modes" listing in the "Modes" tab of the Channel Settings
+  dialog will now properly vertically expand as the dialog is resized even
+  to a very large height.
 
 
 Changes from 1.2-alpha6 to 1.2-beta1:
