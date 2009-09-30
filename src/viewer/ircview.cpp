@@ -106,11 +106,15 @@ class SelectionPin
     public:
         SelectionPin(IRCView *doc) : pos(0), anc(0), d(doc)
         {
-            int end = d->document()->rootFrame()->lastPosition();
-            pos = d->textCursor().position();
-            anc = d->textCursor().anchor();
-            if (pos != end && anc != end)
-                anc = pos = 0;
+            if (d->textCursor().hasSelection())
+            {
+                int end = d->document()->rootFrame()->lastPosition();
+                QTextBlock b = d->document()->lastBlock();
+                pos = d->textCursor().position();
+                anc = d->textCursor().anchor();
+                if (pos != end && anc != end)
+                    anc = pos = 0;
+            }
         }
 
         ~SelectionPin()
@@ -800,13 +804,6 @@ void IRCView::appendBacklogMessage(const QString& firstColumn,const QString& raw
     line = line.arg(time, nick, filter(message, backlogColor, NULL, false, false));
 
     doAppend(line, rtl);
-
-    // HACK if this view isn't visible, the cursor is stuck at the end of the first line (?!)
-    // Since we're getting called, the backlog is loading, and we can safely move the
-    // cursor as there has been no opportunity to move the selection.
-    QTextCursor c(textCursor());
-    c.movePosition(QTextCursor::End);
-    setTextCursor(c);
 }
 
 void IRCView::doAppend(const QString& newLine, bool rtl, bool self)
