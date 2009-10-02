@@ -533,7 +533,11 @@ namespace Konversation
     {
         if (col == 2)
         {
-            BanListViewItem* item = static_cast<BanListViewItem*>(i);
+            BanListViewItem* item = dynamic_cast<BanListViewItem*>(i);
+            if (!item)
+            {
+                return 0;
+            }
 
             if (m_timestamp == item->timestamp())
                 return 0;
