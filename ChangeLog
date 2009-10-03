@@ -1,4 +1,10 @@
-Changes since 1.2-beta1:
+Changes from 1.2-beta1 to 1.2-rc1:
+After a pleasantly uneventful two weeks with beta1, this release candida-
+te for our first KDE 4 stable release brings a handful of bugfixes that,
+while definitely worth having, are fortunately none too scary. We thus ex-
+pect the final Konversation 1.2 release to follow in the very near future.
+
+
 * Fixed the scrollbar thumb not remaining at the bottom when the chat text
   view is resized (such as when the window is resized or the input bar in-
   creases in height after typing more than one line with auto-expand mode
@@ -19,6 +25,8 @@ Changes since 1.2-beta1:
 * The "Advanced Modes" listing in the "Modes" tab of the Channel Settings
   dialog will now properly vertically expand as the dialog is resized even
   to a very large height.
+* Fixed a bug that could cause a crash while manipulating a channel's ban
+  list.
 
 
 Changes from 1.2-alpha6 to 1.2-beta1:
