@@ -27,6 +27,9 @@ pect the final Konversation 1.2 release to follow in the very near future.
   to a very large height.
 * Fixed a bug that could cause a crash while manipulating a channel's ban
   list.
+* Fixed a bug causing the moving of child tabs of a network tab in the
+  treelist version of the tab bar not to work using the keyboard shortcuts,
+  context menu actions or "Window" menu actions.
 
 
 Changes from 1.2-alpha6 to 1.2-beta1:

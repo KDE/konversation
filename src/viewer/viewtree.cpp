@@ -351,7 +351,10 @@ void ViewTree::moveViewUp(ChatWindow* view)
             item->setSortIndex(newSortIndex);
             itemAbove->setSortIndex(oldSortIndex);
 
-            sort();
+            if (item->parent())
+                item->parent()->sort();
+            else
+                sort();
         }
         else if (item->depth() < itemAbove->depth())
         {
@@ -387,7 +390,10 @@ void ViewTree::moveViewDown(ChatWindow* view)
             item->setSortIndex(newSortIndex);
             itemBelow->setSortIndex(oldSortIndex);
 
-            sort();
+            if (item->parent())
+                item->parent()->sort();
+            else
+                sort();
         }
         else if (item->depth() < itemBelow->depth())
         {
