@@ -856,8 +856,6 @@ void IRCView::doRawAppend(const QString& newLine, bool rtl)
 
     KTextBrowser::append(line);
 
-    Q_ASSERT(document()->rootFrame()->childFrames().count() == 0); // no child frames, see SelectionPin
-
     QTextCursor formatCursor(document()->lastBlock());
     QTextBlockFormat format = formatCursor.blockFormat();
 
