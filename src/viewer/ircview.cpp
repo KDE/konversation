@@ -1327,10 +1327,8 @@ void IRCView::mouseMoveEvent(QMouseEvent* ev)
         QPointer<QDrag> drag = new QDrag(this);
         QMimeData* mimeData = new QMimeData;
 
-        QList<QUrl> urlList;
-        QUrl url(m_urlToDrag);
-        urlList << url;
-        mimeData->setUrls(urlList);
+        KUrl url(m_urlToDrag);
+        url.populateMimeData(mimeData);
 
         drag->setMimeData(mimeData);
 
