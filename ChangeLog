@@ -1,4 +1,27 @@
-Changes since 1.2-rc1:
+Changes from 1.2-rc1 to 1.2:
+Konversation 1.2 is the first release of Konversation for the KDE 4 app-
+lication platform and desktop environment. In addition to preserving the
+full functionality of the KDE 3 version, this release offers a signifi-
+cant amount of new features and improvements to the user interface, per-
+formance, memory usage, energy efficiency, correctness and stability.
+Sum total, the changelog of all development releases since Konversation
+1.1 and of this final release combined once again make for the longest
+changelog in Konversation's release history.
+
+Some of the highlights compared to Konversation 1.1 include support for
+SOCKS v5 and HTTP proxies, a redesigned DCC file transfer user interface
+(and much improved DCC code under the hood with several new features,
+such as support for IPv6 and DCC REJECT), support for UPnP for NAT tra-
+versal, rewritten and much improved support for Blowfish encryption (now
+supporting DH1080 key exchange, for example), a significantly better per-
+forming channel list, a rewrite of the channel nickname lists for better
+performance and improved battery-friendlyness, a new channel join invita-
+tion user interface, an improved auto-replace feature, expanded media
+player support and many improvements to the IRC protocol implementation.
+
+Enjoy!
+
+
 * When dragging a link from the chat text view, the drag object will now
   contain a plain text version in addition to the URL version. This allows
   dragging a link to places that don't accept URL drops, such as Konsole,
