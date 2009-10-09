@@ -35,7 +35,7 @@ the Free Software Foundation; either version 2 of the License, or
          <bool>false</bool>
         </property>
         <property name="buddy">
-         <cstring>kcfg_ReconnectDelay</cstring>
+         <cstring>kcf_ReconnectDelaySpin</cstring>
         </property>
        </widget>
       </item>
@@ -137,7 +137,7 @@ the Free Software Foundation; either version 2 of the License, or
      <property name="title">
       <string>Encryption</string>
      </property>
-     <layout class="QGridLayout" name="gridLayout">
+     <layout class="QGridLayout" name="encryptionLayout">
       <item row="0" column="0">
        <widget class="QLabel" name="label">
         <property name="text">
