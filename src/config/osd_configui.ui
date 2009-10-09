@@ -70,7 +70,7 @@
          <bool>false</bool>
         </property>
         <property name="buddy" >
-         <cstring>kFontRequester1</cstring>
+         <cstring>kcfg_OSDFont</cstring>
         </property>
        </widget>
       </item>
