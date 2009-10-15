@@ -1237,8 +1237,8 @@ void Channel::modeButtonClicked(int id, bool on)
         {
             bool ok=false;
             // ask user how many nicks should be the limit
-            args=KInputDialog::getText(i18n("Nick Limit"),
-                i18n("Enter the new nick limit:"),
+            args=KInputDialog::getText(i18n("Channel User Limit"),
+                i18n("Enter the new user limit for the channel:"),
                 limit->text(),                    // will be always "" but what the hell ;)
                 &ok,
                 this);
