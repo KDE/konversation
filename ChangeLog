@@ -2,6 +2,16 @@ Changes since 1.2:
 * The default destination folder for incoming DCC file transfers was
   changed to $HOME/logs by mistake in v1.2. It's now back to the pre-
   vious default of $HOME/dccrecv.
+* Fixed a crash when cancelling the warning dialog that is shown upon
+  receiving two incoming DCC file transfer requests using the same file
+  name.
+* Fixed a crash when using the "Clear Completed" action in the DCC Sta-
+  tus tab after having previously used the "Clear" action to remove spe-
+  cific transfers from the transfer list.
+* Fixed a crash when using the "Clear" action in the DCC Status tab on
+  a mixed selection of removable (e.g. completed, or failed) and non-re-
+  movable (e.g. sending) transfers and the the last addition to the se-
+  lection was a removable transfer.
 
 
 Changes from 1.2-rc1 to 1.2:
