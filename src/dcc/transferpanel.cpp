@@ -86,7 +86,7 @@ namespace Konversation
             m_abort->setStatusTip(i18n("Abort the transfer(s)"));
             m_popup->addSeparator();                           // -----
             m_resend = m_popup->addAction(KIcon("edit-redo"),i18n("Resend"), this, SLOT(resendFile()));
-            m_clear = m_popup->addAction(KIcon("edit-delete"),i18n("&Clear"), this, SLOT(clearDcc()));
+            m_clear = m_popup->addAction(KIcon("edit-delete"),i18nc("clear selected dcctransfer","&Clear"), this, SLOT(clearDcc()));
             m_clear->setStatusTip(i18n("Clear all selected Items"));
             m_clearCompleted = m_popup->addAction(KIcon("edit-clear-list"),i18n("Clear Completed"), this, SLOT(clearCompletedDcc()));
             m_clearCompleted->setStatusTip(i18n("Clear Completed Items"));
@@ -338,7 +338,7 @@ namespace Konversation
         {
             //save selected item
             Transfer *transfer = m_detailPanel->transfer();
-            if (transfer->getStatus() >= Transfer::Done)
+            if (transfer && transfer->getStatus() >= Transfer::Done)
             {
                 //item will be gone
                 transfer = 0;
@@ -395,7 +395,7 @@ namespace Konversation
             {
                 m_detailPanel->setTransfer(transfer);
             }
-            else if (m_transferView->itemCount() == 0 || m_transferView->selectedIndexes().count() == 0)
+            else if (m_transferView->itemCount() == 0 || m_transferView->selectedIndexes().count() == 0 || !transfer)
             {
                 m_detailPanel->clear();
             }
