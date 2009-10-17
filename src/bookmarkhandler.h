@@ -40,6 +40,9 @@ class KonviBookmarkHandler : public QObject, public KBookmarkOwner
         virtual QString currentUrl() const;
         virtual QString currentTitle() const;
         virtual bool enableOption(BookmarkOption option) const;
+        virtual bool supportsTabs() const;
+        virtual QList<QPair<QString,QString> > currentBookmarkList() const;
+        virtual void openFolderinTabs(const KBookmarkGroup &group);
 
     private:
         MainWindow* m_mainWindow;

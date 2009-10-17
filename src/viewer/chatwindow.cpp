@@ -67,6 +67,50 @@ QString ChatWindow::getName()
     return name;
 }
 
+QString ChatWindow::getTitle()
+{
+    QString title;
+    if (getType() == Channel)
+    {
+       title = QString("%1 (%2)")
+             .arg(getName())
+             .arg(getServer()->getDisplayName());
+    }
+    else
+    {
+       title = getName();
+    }
+
+    return title;
+}
+
+QString ChatWindow::getURI(bool passNetwork)
+{
+    QString url;
+    QString port;
+    QString server;
+    QString channel;
+
+
+    if (getType() == Channel)
+        channel = getName();
+
+    if (passNetwork)
+        server = getServer()->getDisplayName();
+    else
+    {
+        server = getServer()->getServerName();
+        port = ':'+QString::number(getServer()->getPort());
+    }
+
+    if (server.contains(':')) // IPv6
+        server = '['+server+']';
+
+    url = "irc://"+server+port+'/'+channel;
+
+    return url;
+}
+
 void ChatWindow::setType(WindowType newType)
 {
     type=newType;

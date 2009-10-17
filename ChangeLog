@@ -12,6 +12,11 @@ Changes since 1.2:
   DCC Status tab after creating a mixed selection of removable (e.g. com-
   pleted, or failed) and non-removable (e.g. sending) transfers and the
   last addition to the selection was a removable transfer.
+* Added a "Bookmark Tabs as Folder" feature.
+* Added the ability to open the contents of an entire bookmark folder at
+  once (aka "Open Folder in Tabs").
+* Made the default generated bookmark titles more verbose: The Format is
+  now "Channel (Network-or-Server)".
 
 
 Changes from 1.2-rc1 to 1.2:

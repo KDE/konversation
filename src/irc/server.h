@@ -109,7 +109,9 @@ void resetNickSelection();
         int getPort();
         int getLag() const;
 
-        void updateAutoJoin(Konversation::ChannelSettings channel = Konversation::ChannelSettings());
+        void updateAutoJoin(Konversation::ChannelList channels = Konversation::ChannelList());
+
+        QStringList generateJoinCommand(const Konversation::ChannelList &tmpList);
 
         QAbstractItemModel* nickListModel() const;
         void resetNickList(const QString& channelName);

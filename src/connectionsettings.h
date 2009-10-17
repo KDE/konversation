@@ -39,8 +39,9 @@ class ConnectionSettings
         QString initialNick() const;
         void setInitialNick(const QString& nick) { m_initialNick = nick; }
 
-        Konversation::ChannelSettings initialChannel() const { return m_initialChannel; } 
-        void setInitialChannel(Konversation::ChannelSettings& channel) { m_initialChannel = channel; }
+         void setOneShotChannelList(const Konversation::ChannelList& list);
+         Konversation::ChannelList oneShotChannelList() const { return m_oneShotChannelList; }
+         void clearOneShotChannelList() { m_oneShotChannelList.clear(); };
 
         uint reconnectCount() const { return m_reconnectCount; }
         void incrementReconnectCount() { m_reconnectCount++; }
@@ -52,7 +53,8 @@ class ConnectionSettings
         Konversation::ServerGroupSettingsPtr m_serverGroup;
 
         QString m_initialNick;
-        Konversation::ChannelSettings m_initialChannel;
+
+        Konversation::ChannelList m_oneShotChannelList;
 
         uint m_reconnectCount;
 };

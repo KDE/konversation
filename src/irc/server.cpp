@@ -116,7 +116,7 @@ Server::Server(QObject* parent, ConnectionSettings& settings) : QObject(parent)
     // For /msg query completion
     m_completeQueryPosition = 0;
 
-    updateAutoJoin(settings.initialChannel());
+    updateAutoJoin(settings.oneShotChannelList());
 
     if (!getIdentity()->getShellCommand().isEmpty())
         QTimer::singleShot(0, this, SLOT(doPreShellCommand()));
@@ -837,6 +837,16 @@ void Server::autoCommandsAndChannels()
     {
         for ( QStringList::Iterator it = m_autoJoinCommands.begin(); it != m_autoJoinCommands.end(); ++it )
             queue((*it));
+    }
+
+    if (!m_connectionSettings.oneShotChannelList().isEmpty())
+    {
+        QStringList oneShotJoin = generateJoinCommand(m_connectionSettings.oneShotChannelList());
+        for ( QStringList::Iterator it = oneShotJoin.begin(); it != oneShotJoin.end(); ++it )
+        {
+            queue((*it));
+        }
+        m_connectionSettings.clearOneShotChannelList();
     }
 }
 
@@ -3157,20 +3167,18 @@ void Server::closeChannelListPanel()
     if (m_channelListPanel) delete m_channelListPanel;
 }
 
-void Server::updateAutoJoin(Konversation::ChannelSettings channel)
+void Server::updateAutoJoin(Konversation::ChannelList channels)
 {
-    if (!channel.name().isEmpty())
-    {
-        setAutoJoin(true);
-
-        setAutoJoinCommands(QStringList("JOIN " + channel.name() + ' ' + channel.password()));
-
-        return;
-    }
-
     Konversation::ChannelList tmpList;
 
-    if (m_channelList.isEmpty() && getServerGroup())
+    if (!channels.isEmpty())
+    {
+        foreach (const ChannelSettings& cs, channels)
+        {
+            tmpList << cs;
+        }
+    }
+    else if (m_channelList.isEmpty() && getServerGroup())
         tmpList = getServerGroup()->channelList();
     else
     {
@@ -3184,46 +3192,52 @@ void Server::updateAutoJoin(Konversation::ChannelSettings channel)
     {
         setAutoJoin(true);
 
-        QStringList channels;
-        QStringList passwords;
-        QStringList joinCommands;
-        uint length = 0;
-
-        Konversation::ChannelList::iterator it;
-
-        for (it = tmpList.begin(); it != tmpList.end(); ++it)
-        {
-            QString channel = (*it).name();
-            QString password = ((*it).password().isEmpty() ? "." : (*it).password());
-
-            uint currentLength = getIdentity()->getCodec()->fromUnicode(channel).length();
-            currentLength += getIdentity()->getCodec()->fromUnicode(password).length();
-
-            //channels.count() and passwords.count() account for the commas
-            if (length + currentLength + 6 + channels.count() + passwords.count() >= 512) // 6: "JOIN " plus separating space between chans and pws.
-            {
-                while (!passwords.isEmpty() && passwords.last() == ".") passwords.pop_back();
-
-                joinCommands << "JOIN " + channels.join(",") + ' ' + passwords.join(",");
-
-                channels.clear();
-                passwords.clear();
-
-                length = 0;
-            }
-
-            length += currentLength;
-
-            channels << channel;
-            passwords << password;
-        }
-
-        joinCommands << "JOIN " + channels.join(",") + ' ' + passwords.join(",");
-
-        setAutoJoinCommands(joinCommands);
+        setAutoJoinCommands(generateJoinCommand(tmpList));
     }
     else
         setAutoJoin(false);
+}
+
+
+QStringList Server::generateJoinCommand(const Konversation::ChannelList &tmpList)
+{
+    QStringList channels;
+    QStringList passwords;
+    QStringList joinCommands;
+    uint length = 0;
+
+    Konversation::ChannelList::const_iterator it;
+
+    for (it = tmpList.constBegin(); it != tmpList.constEnd(); ++it)
+    {
+        QString channel = (*it).name();
+        QString password = ((*it).password().isEmpty() ? "." : (*it).password());
+
+        uint currentLength = getIdentity()->getCodec()->fromUnicode(channel).length();
+        currentLength += getIdentity()->getCodec()->fromUnicode(password).length();
+
+        //channels.count() and passwords.count() account for the commas
+        if (length + currentLength + 6 + channels.count() + passwords.count() >= 512) // 6: "JOIN " plus separating space between chans and pws.
+        {
+            while (!passwords.isEmpty() && passwords.last() == ".") passwords.pop_back();
+
+            joinCommands << "JOIN " + channels.join(",") + ' ' + passwords.join(",");
+
+            channels.clear();
+            passwords.clear();
+
+            length = 0;
+        }
+
+        length += currentLength;
+
+        channels << channel;
+        passwords << password;
+    }
+
+    joinCommands << "JOIN " + channels.join(",") + ' ' + passwords.join(",");
+
+    return joinCommands;
 }
 
 ViewContainer* Server::getViewContainer() const

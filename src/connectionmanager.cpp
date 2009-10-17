@@ -59,8 +59,10 @@ void ConnectionManager::connectTo(Konversation::ConnectionFlag flag, const QStri
         if (!channel.isEmpty())
         {
             Konversation::ChannelSettings channelSettings(channel);
+            Konversation::ChannelList cl;
+            cl << channelSettings;
 
-            settings.setInitialChannel(channelSettings);
+            settings.setOneShotChannelList(cl);
         }
     }
 
@@ -84,6 +86,39 @@ void ConnectionManager::connectTo(Konversation::ConnectionFlag flag, int serverG
     }
 
     connectTo(flag, settings);
+}
+
+void ConnectionManager::connectTo(Konversation::ConnectionFlag flag, const QList<KUrl>& list)
+{
+    QMap<QString,Konversation::ChannelList> serverChannels;
+    QMap<QString,ConnectionSettings> serverConnections;
+
+    QList<KUrl>::ConstIterator it = list.constBegin();
+    QList<KUrl>::ConstIterator end = list.constEnd();
+    for (; it != end; ++it)
+    {
+        ConnectionSettings cs;
+        decodeIrcUrl(it->url(), cs);
+        kDebug() << cs.name() << " - "
+                 << cs.server().host() << cs.server().port() << cs.server().password()
+                 << " - " << (cs.serverGroup()?cs.serverGroup()->name():"");
+        QString sname = (cs.serverGroup()?
+                         cs.serverGroup()->name():
+                         (cs.server().host()+":"+cs.server().port()) );
+
+        serverChannels[sname] += cs.oneShotChannelList();
+        if (!serverChannels.contains(sname))
+        {
+            serverConnections[sname] = cs;
+        }
+    }
+
+    // Perform the connection
+    QMap<QString,Konversation::ChannelList>::ConstIterator s_i = serverChannels.constBegin();
+    for (; s_i != serverChannels.constEnd(); ++s_i) {
+        serverConnections[s_i.key()].setOneShotChannelList(s_i.value());
+        connectTo(flag, serverConnections[s_i.key()]);
+    }
 }
 
 void ConnectionManager::connectTo(Konversation::ConnectionFlag flag, ConnectionSettings& settings)
@@ -314,7 +349,12 @@ void ConnectionManager::decodeIrcUrl(const QString& url, ConnectionSettings& set
 
     // Assigning channel.
     if (!channelSettings.name().isEmpty())
-        settings.setInitialChannel(channelSettings);
+    {
+        Konversation::ChannelList cl;
+        cl << channelSettings;
+
+        settings.setOneShotChannelList(cl);
+    }
 }
 
 void ConnectionManager::decodeAddress(const QString& address, ConnectionSettings& settings,
@@ -478,18 +518,24 @@ bool ConnectionManager::reuseExistingConnection(ConnectionSettings& settings, bo
 
         if (!dupe->isConnected())
         {
-            if (!settings.initialChannel().name().isEmpty())
-                dupe->updateAutoJoin(settings.initialChannel());
+            if (!settings.oneShotChannelList().isEmpty())
+                dupe->updateAutoJoin(settings.oneShotChannelList());
 
             if (!dupe->isConnecting())
                 dupe->reconnect();
         }
         else
         {
-            if (!settings.initialChannel().name().isEmpty())
+            if (!settings.oneShotChannelList().isEmpty())
             {
-                dupe->sendJoinCommand(settings.initialChannel().name(),
-                                      settings.initialChannel().password());
+                Konversation::ChannelList::ConstIterator it = settings.oneShotChannelList().constBegin();
+                Konversation::ChannelList::ConstIterator itend = settings.oneShotChannelList().constEnd();
+
+                for ( ; it != itend; ++it )
+                {
+                    dupe->sendJoinCommand((*it).name(), (*it).password());
+                }
+                settings.clearOneShotChannelList();
             }
         }
     }

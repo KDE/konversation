@@ -79,7 +79,7 @@ class ViewContainer : public QObject
         void prepareShutdown();
 
         QString currentViewTitle();
-        QString currentViewURL(bool passNetwork);
+        QString currentViewURL(bool passNetwork = true);
 
         void appendToFrontmost(const QString& type,const QString& message,ChatWindow* serverView,
                                bool parseURL = true);
@@ -87,6 +87,8 @@ class ViewContainer : public QObject
         void showQueueTuner(bool);
 
         int getViewIndex(QWidget* widget);
+
+        QList<QPair<QString,QString> > getChannelsURI();
 
     public slots:
         void updateAppearance();

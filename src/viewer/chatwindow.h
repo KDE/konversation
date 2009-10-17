@@ -68,6 +68,8 @@ class ChatWindow : public KVBox
         void setLog(bool activate);
 
         QString getName();
+        QString getTitle();
+        QString getURI(bool passNetwork = true);
 
         void setType(WindowType newType);
         WindowType getType();

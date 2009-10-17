@@ -1786,7 +1786,7 @@ QString ViewContainer::currentViewTitle()
     if (m_frontServer)
     {
         if (m_frontView && m_frontView->getType() == ChatWindow::Channel)
-            return m_frontView->getName();
+            return m_frontView->getTitle();
         else
             return m_frontServer->getDisplayName();
     }
@@ -1807,21 +1807,7 @@ QString ViewContainer::currentViewURL(bool passNetwork)
     {
         updateFrontView();
 
-        if (m_frontView->getType() == ChatWindow::Channel)
-            channel = m_frontView->getName();
-
-        if (passNetwork)
-            server = m_frontServer->getDisplayName();
-        else
-        {
-            server = m_frontServer->getServerName();
-            port = ':'+QString::number(m_frontServer->getPort());
-        }
-
-        if (server.contains(':')) // IPv6
-            server = '['+server+']';
-
-        url = "irc://"+server+port+'/'+channel;
+        url = m_frontView->getURI(passNetwork);
     }
 
     return url;
@@ -1830,6 +1816,30 @@ QString ViewContainer::currentViewURL(bool passNetwork)
 int ViewContainer::getViewIndex(QWidget* widget)
 {
     return m_tabWidget->indexOf(widget);
+}
+
+QList<QPair<QString,QString> > ViewContainer::getChannelsURI()
+{
+    QList<QPair<QString,QString> > URIList;
+
+    if (!m_tabWidget)
+        return URIList;
+
+    for (int i = 0; i < m_tabWidget->count(); ++i)
+    {
+        ChatWindow* view = static_cast<ChatWindow*>(m_tabWidget->widget(i));
+
+        if (view->getType() == ChatWindow::Channel)
+        {
+            QString uri = view->getURI();
+            QString name = QString("%1 (%2)")
+                .arg(view->getName())
+                .arg(view->getServer()->getDisplayName());
+            URIList += QPair<QString,QString>(name,uri);
+        }
+    }
+
+    return URIList;
 }
 
 void ViewContainer::clearView()

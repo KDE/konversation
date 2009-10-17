@@ -51,6 +51,7 @@ class ConnectionManager : public QObject
                        bool useSSL = false);
 
         void connectTo(Konversation::ConnectionFlag flag, int serverGroupId);
+        void connectTo(Konversation::ConnectionFlag flag, const QList<KUrl>& list);
         void connectTo(Konversation::ConnectionFlag flag, ConnectionSettings& settings);
 
 

@@ -19,6 +19,7 @@ Copyright (C) 2002 Carsten Pfeiffer <pfeiffer@kde.org>
 #include "application.h"
 #include "mainwindow.h"
 #include "connectionmanager.h"
+#include "viewer/viewcontainer.h"
 
 #include <KStandardDirs>
 #include <KBookmarkMenu>
@@ -58,12 +59,12 @@ void KonviBookmarkHandler::openBookmark(const KBookmark &bm, Qt::MouseButtons mb
 
 QString KonviBookmarkHandler::currentUrl() const
 {
-    return m_mainWindow->currentURL(true);
+    return m_mainWindow->getViewContainer()->currentViewURL(true);
 }
 
 QString KonviBookmarkHandler::currentTitle() const
 {
-    return m_mainWindow->currentTitle();
+    return m_mainWindow->getViewContainer()->currentViewTitle();
 }
 
 bool KonviBookmarkHandler::enableOption(BookmarkOption option) const
@@ -75,6 +76,24 @@ bool KonviBookmarkHandler::enableOption(BookmarkOption option) const
             return true;
     }
     return false;
+}
+
+bool KonviBookmarkHandler::supportsTabs() const
+{
+    return true;
+}
+
+QList<QPair<QString,QString> > KonviBookmarkHandler::currentBookmarkList() const
+{
+    return m_mainWindow->getViewContainer()->getChannelsURI();
+}
+
+void KonviBookmarkHandler::openFolderinTabs(const KBookmarkGroup &group)
+{
+    const QList<KUrl> list = group.groupUrlList();
+
+    Application* konvApp = static_cast<Application*>(kapp);
+    konvApp->getConnectionManager()->connectTo(Konversation::SilentlyReuseConnection, list);
 }
 
 #include "bookmarkhandler.moc"

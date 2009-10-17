@@ -58,9 +58,6 @@ class MainWindow : public KXmlGuiWindow
          */
         void focusAndShowErrorMessage(const QString &errorMsg);
 
-        QString currentURL(bool passNetwork);
-        QString currentTitle();
-
     signals:
         void startNotifyTimer(int msec);
         void showQuickConnectDialog();

@@ -823,14 +823,4 @@ void MainWindow::setOnlineList(Server* notifyServer,const QStringList& /*list*/,
     // FIXME  if (changed && nicksOnlinePanel) newText(nicksOnlinePanel, QString::null, true);
 }
 
-QString MainWindow::currentURL(bool passNetwork)
-{
-    return m_viewContainer->currentViewURL(passNetwork);
-}
-
-QString MainWindow::currentTitle()
-{
-    return m_viewContainer->currentViewTitle();
-}
-
 #include "mainwindow.moc"

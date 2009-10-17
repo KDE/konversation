@@ -53,3 +53,9 @@ QString ConnectionSettings::initialNick() const
     return identity()->getNickname(0);
 }
 
+void ConnectionSettings::setOneShotChannelList(const Konversation::ChannelList& list)
+{
+    m_oneShotChannelList.clear();
+    m_oneShotChannelList = list;
+}
+
