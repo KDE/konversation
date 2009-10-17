@@ -8,10 +8,10 @@ Changes since 1.2:
 * Fixed a crash when using the "Clear Completed" action in the DCC Sta-
   tus tab after having previously used the "Clear" action to remove spe-
   cific transfers from the transfer list.
-* Fixed a crash when using the "Clear" action in the DCC Status tab on
-  a mixed selection of removable (e.g. completed, or failed) and non-re-
-  movable (e.g. sending) transfers and the the last addition to the se-
-  lection was a removable transfer.
+* Fixed a crash when using the "Clear" or "Clear Completed" action in the
+  DCC Status tab on a mixed selection of removable (e.g. completed, or
+  failed) and non-removable (e.g. sending) transfers and the last addition
+  to the selection was a removable transfer.
 
 
 Changes from 1.2-rc1 to 1.2:

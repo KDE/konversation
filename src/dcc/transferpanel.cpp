@@ -279,6 +279,14 @@ namespace Konversation
 
         void TransferPanel::clearDcc()
         {
+            //selected item
+            Transfer *transfer = m_detailPanel->transfer();
+            if (transfer && transfer->getStatus() >= Transfer::Done)
+            {
+                //item will be gone
+                transfer = 0;
+            }
+
             QModelIndexList indexes = m_transferView->selectedRows();
             QModelIndexList indexesToRemove;
 
@@ -326,7 +334,11 @@ namespace Konversation
             }
             m_transferView->selectRows(toSelectList);
 
-            if (m_transferView->itemCount() == 0 || m_transferView->selectedIndexes().count() == 0)
+            if (transfer)
+            {
+                m_detailPanel->setTransfer(transfer);
+            }
+            else if (!transfer || m_transferView->itemCount() == 0 || m_transferView->selectedIndexes().count() == 0)
             {
                 m_detailPanel->clear();
             }
