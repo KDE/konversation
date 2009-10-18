@@ -218,7 +218,7 @@ void ChannelListPanel::addToChannelList(const QString& channel,int users,const Q
 
         m_refreshListBtn->setEnabled(false);
 
-        m_statsLabel->setText("Refreshing.");
+        m_statsLabel->setText(i18n("Refreshing."));
         m_progressTimer->start(500);
 
         m_firstRun = false;
@@ -309,7 +309,7 @@ void ChannelListPanel::setProgress()
     if(text.length() < 13)
         m_statsLabel->setText(text + '.');
     else
-        m_statsLabel->setText("Refreshing.");
+        m_statsLabel->setText(i18n("Refreshing."));
 }
 
 
