@@ -150,7 +150,7 @@ the Free Software Foundation; either version 2 of the License, or
         <property name="whatsThis">
          <string>ECB or Electronic Codebook mode is supported by many encryption clients like FiSH and Mircryption however it is generally considered to be insecure.
 
-CBC or Cipher Block Chaining mode is not supported by FiSH but is supported by Mircryption. If you are going to use key exchange it is best to first find out if your peer has a client that can use CBC otherwise you will be able to see what they're saying, but they won't be able to read what you're saying.</string>
+CBC or Cipher Block Chaining mode is not supported by FiSH but is supported by Mircryption. If you are going to use key exchange it is best to first find out if your peer has a client that can use CBC otherwise you will be able to see what they are saying, but they will not be able to read what you are saying.</string>
         </property>
         <item>
          <property name="text">

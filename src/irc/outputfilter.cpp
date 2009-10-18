@@ -205,7 +205,7 @@ namespace Konversation
             int ret = KMessageBox::Continue;
 
             ret = KMessageBox::warningContinueCancel(m_server->getViewContainer()->getWindow(),
-            i18n("The message you're sending includes characters "
+            i18n("The message you are sending includes characters "
                  "that do not exist in your current encoding. If "
                  "you choose to continue anyway those characters "
                  "will be replaced by a '?'."),
