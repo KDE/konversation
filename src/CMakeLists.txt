@@ -218,7 +218,7 @@ kde4_add_executable(konversation ${konversation_SRCS})
 
 target_link_libraries(konversation ${KDE4_KIO_LIBS} ${KDE4_KUTILS_LIBS} ${KDE4_KPARTS_LIBS}
                             ${KDE4_KDE3SUPPORT_LIBS} ${KDE4_KABC_LIBS}
-                            ${KDE4_KNOTIFYCONFIG_LIBRARY} ${PHONON_LIBRARY})
+                            ${KDE4_KNOTIFYCONFIG_LIBRARY} ${PHONON_LIBRARY} ${KDE4_SOLID_LIBS})
 if (X11_FOUND AND X11_Xutil_FOUND)
     target_link_libraries(konversation ${X11_X11_LIB})
 endif (X11_FOUND AND X11_Xutil_FOUND)

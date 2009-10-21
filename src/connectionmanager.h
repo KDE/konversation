@@ -37,7 +37,6 @@ class ConnectionManager : public QObject
         Server* getServerByName(const QString& name);
         Server* getAnyServer();
 
-        void quitServers();
         void toggleGlobalAway();
 
 
@@ -53,6 +52,9 @@ class ConnectionManager : public QObject
         void connectTo(Konversation::ConnectionFlag flag, int serverGroupId);
         void connectTo(Konversation::ConnectionFlag flag, const QList<KUrl>& list);
         void connectTo(Konversation::ConnectionFlag flag, ConnectionSettings& settings);
+
+        void quitServers();
+        void reconnectServers();
 
 
     signals:

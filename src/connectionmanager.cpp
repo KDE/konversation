@@ -270,6 +270,14 @@ void ConnectionManager::quitServers()
         it.value()->quitServer();
 }
 
+void ConnectionManager::reconnectServers()
+{
+    QMap<int, Server*>::ConstIterator it;
+
+    for (it = m_connectionList.constBegin(); it != m_connectionList.constEnd(); ++it)
+        it.value()->reconnect();
+}
+
 void ConnectionManager::decodeIrcUrl(const QString& url, ConnectionSettings& settings)
 {
     if (!url.startsWith(QLatin1String("irc://"))) return;
