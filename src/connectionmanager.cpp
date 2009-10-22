@@ -23,7 +23,8 @@
 #include <KMessageBox>
 
 
-ConnectionManager::ConnectionManager(QObject* parent) : QObject(parent)
+ConnectionManager::ConnectionManager(QObject* parent)
+    : QObject(parent), m_overrideAutoReconnect (false)
 {
     connect(this, SIGNAL(requestReconnect(Server*)), this, SLOT(handleReconnect(Server*)));
 }
@@ -180,6 +181,8 @@ void ConnectionManager::handleConnectionStateChange(Server* server, Konversation
 
     if (state == Konversation::SSConnected)
     {
+        m_overrideAutoReconnect = false;
+
         if (!m_activeIdentities.contains(identityId))
         {
             m_activeIdentities.insert(identityId);
@@ -208,7 +211,7 @@ void ConnectionManager::handleConnectionStateChange(Server* server, Konversation
 
 void ConnectionManager::handleReconnect(Server* server)
 {
-    if (!Preferences::self()->autoReconnect()) return;
+    if (!Preferences::self()->autoReconnect() || m_overrideAutoReconnect) return;
 
     ConnectionSettings settings = server->getConnectionSettings();
 
@@ -636,6 +639,26 @@ Server* ConnectionManager::getAnyServer()
         return m_connectionList[0];
 
     return 0;
+}
+
+void ConnectionManager::involuntaryQuitServers()
+{
+    m_overrideAutoReconnect = true;
+
+    QMap<int, Server*>::ConstIterator it;
+
+    for (it = m_connectionList.constBegin(); it != m_connectionList.constEnd(); ++it)
+        it.value()->involuntaryQuit();
+}
+
+void ConnectionManager::reconnectInvoluntary()
+{
+    m_overrideAutoReconnect = false;
+
+    QMap<int, Server*>::ConstIterator it;
+
+    for (it = m_connectionList.constBegin(); it != m_connectionList.constEnd(); ++it)
+        it.value()->reconnectInvoluntary();
 }
 
 #include "connectionmanager.moc"

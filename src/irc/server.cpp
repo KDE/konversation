@@ -3677,6 +3677,21 @@ void Server::sendChannelNickChangedSignals()
     m_changedChannels.clear();
 }
 
+void Server::involuntaryQuit()
+{
+    if(m_connectionState == Konversation::SSConnected || m_connectionState == Konversation::SSConnecting)
+    {
+        quitServer();
+        updateConnectionState(Konversation::SSInvoluntarilyDisconnected);
+    }
+}
+
+void Server::reconnectInvoluntary()
+{
+    if(m_connectionState == Konversation::SSInvoluntarilyDisconnected)
+        reconnect();
+}
+
 #include "server.moc"
 
 // kate: space-indent on; tab-width 4; indent-width 4; mixed-indent off; replace-tabs on;

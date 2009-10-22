@@ -495,6 +495,11 @@ void resetNickSelection();
         /// Start the ChannelNick changed timer if it isn't started already
         void startChannelNickChangedTimer(const QString& channel);
 
+        /// Called when the system wants to close the connection due to network going down etc.
+        void involuntaryQuit();
+        /// Will only reconnect if the connection state is involuntary disconnected.
+        void reconnectInvoluntary();
+
     protected slots:
         void hostFound();
         void preShellCommandExited(int exitCode, QProcess::ExitStatus exitStatus);
@@ -651,6 +656,11 @@ void resetNickSelection();
 
         QStringList getAutoJoinCommands() const { return m_autoJoinCommands; }
         void setAutoJoinCommands(const QStringList& commands) { m_autoJoinCommands = commands; }
+
+        /** Quit the server connection with a given connection state
+         * @param state In what connection state was the quit done.
+         */
+        void quitConnection(Konversation::ConnectionState state);
 
         unsigned int m_completeQueryPosition;
         QList<int> m_nickIndices;

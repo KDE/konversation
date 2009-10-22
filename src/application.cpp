@@ -106,8 +106,8 @@ int Application::newInstance()
         connect(m_connectionManager, SIGNAL(identityOffline(int)), m_awayManager, SLOT(identityOffline(int)));
         connect(m_connectionManager, SIGNAL(connectionChangedAwayState(bool)), m_awayManager, SLOT(updateGlobalAwayAction(bool)));
 
-        connect(Solid::Networking::notifier(), SIGNAL(shouldDisconnect()), m_connectionManager, SLOT(quitServers()));
-        connect(Solid::Networking::notifier(), SIGNAL(shouldConnect()), m_connectionManager, SLOT(reconnectServers()));
+        connect(Solid::Networking::notifier(), SIGNAL(shouldDisconnect()), m_connectionManager, SLOT(involuntaryQuitServers()));
+        connect(Solid::Networking::notifier(), SIGNAL(shouldConnect()), m_connectionManager, SLOT(reconnectInvoluntary()));
 
         // an instance of DccTransferManager needs to be created before GUI class instances' creation.
         m_dccTransferManager = new DCC::TransferManager(this);

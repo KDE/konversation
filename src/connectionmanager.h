@@ -56,6 +56,9 @@ class ConnectionManager : public QObject
         void quitServers();
         void reconnectServers();
 
+        void involuntaryQuitServers();
+        void reconnectInvoluntary();
+
 
     signals:
         void connectionChangedState(Server* server, Konversation::ConnectionState state);
@@ -92,6 +95,7 @@ class ConnectionManager : public QObject
 
         QMap<int, Server*> m_connectionList;
         QSet<uint> m_activeIdentities;
+        bool m_overrideAutoReconnect;
 
         enum ConnectionDupe { SameServer, SameServerGroup };
 };
