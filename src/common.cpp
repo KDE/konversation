@@ -80,8 +80,6 @@ namespace Konversation
                 return replaceFormattingCodes(text);
             else
             {
-                kDebug() << urlRanges;
-
                 QString line;
 
                 QPair<int, int> pair = urlRanges[0];
@@ -210,7 +208,6 @@ namespace Konversation
 
             protocol.clear();
             href = data.htmlText.mid(pos, urlLen);
-            kDebug() << "href: " << href;
             append.clear();
 
             // Don't consider trailing comma part of link.
@@ -262,8 +259,6 @@ namespace Konversation
 
             if (doUrlRanges)
                 data.urlRanges << QPair<int, int>(pos, href.length());
-
-            kDebug() << doHyperlinks << "href:" << href << "| insertText:" << insertText;
 
             pos += insertText.length();
         }
