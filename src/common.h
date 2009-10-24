@@ -22,22 +22,6 @@ class QPixmap;
 
 namespace Konversation
 {
-    QString removeIrcMarkup(const QString& text);
-    QString doVarExpansion(const QString& text);
-    QString tagUrls(const QString& text, const QString& fromNick, bool useCustomColor = true);
-    bool isUrl(const QString& text);
-//    QBitmap overlayMasks( const QBitmap *under, const QBitmap *over );
-    QPixmap overlayPixmaps(const QPixmap &under, const QPixmap &over);
-    bool isUtf8(const QByteArray& text);
-    uint colorForNick(const QString& nickname);
-
-    QHash<QChar,QString> getChannelModesHash();
-
-    struct ChanModes
-    {
-        static const QHash<QChar,QString> m_hash;
-    };
-
     enum TabNotifyType
     {
         tnfNick,
@@ -64,5 +48,32 @@ namespace Konversation
         PromptToReuseConnection,
         CreateNewConnection
     };
+
+    struct ChanModes
+    {
+        static const QHash<QChar,QString> m_hash;
+    };
+
+    struct TextUrlData
+    {
+        QList<QPair<int, int> > urlRanges;
+        QString htmlText;
+    };
+
+    QString removeIrcMarkup(const QString& text);
+    QString doVarExpansion(const QString& text);
+    QString replaceFormattingCodes(const QString& text);
+
+    QList<QPair<int, int> > getUrlRanges(const QString& text);
+    QString tagUrls(const QString& text, const QString& fromNick, bool useCustomColor = true);
+    TextUrlData extractUrlData(const QString& text, const QString& fromNick, bool doUrlRanges,
+        bool doHyperlinks, bool useCustomHyperlinkColor);
+    bool isUrl(const QString& text);
+
+    QPixmap overlayPixmaps(const QPixmap &under, const QPixmap &over);
+    bool isUtf8(const QByteArray& text);
+    uint colorForNick(const QString& nickname);
+
+    QHash<QChar,QString> getChannelModesHash();
 }
 #endif

@@ -72,94 +72,146 @@ namespace Konversation
 
     QString doVarExpansion(const QString& text)
     {
-        QString line = text;
-        if(Preferences::self()->disableExpansion())
-            return line;
-        else
+        if (!Preferences::self()->disableExpansion())
         {
-            // replace placeholders
-            line.replace("%%","%\x01");      // make sure to protect double %%
-            line.replace("%B","\x02");       // replace %B with bold char
-            line.replace("%C","\x03");       // replace %C with color char
-            line.replace("%G","\x07");       // replace %G with ASCII BEL 0x07
-            line.replace("%I","\x09");       // replace %I with italics char
-            line.replace("%O","\x0f");       // replace %O with reset to default char
-            line.replace("%S","\x13");       // replace %S with strikethru char
-            //  line.replace(QRegExp("%?"),"\x15");
-            line.replace("%R","\x16");       // replace %R with reverse char
-            line.replace("%U","\x1f");       // replace %U with underline char
-            line.replace("%\x01","%");       // restore double %% as single %
+            QList<QPair<int, int> > urlRanges = getUrlRanges(text);
+
+            if (urlRanges.isEmpty())
+                return replaceFormattingCodes(text);
+            else
+            {
+                kDebug() << urlRanges;
+
+                QString line;
+
+                QPair<int, int> pair = urlRanges[0];
+                int startPos = 0;
+                int endPos = 0;
+
+                foreach (pair, urlRanges)
+                {
+                    endPos = pair.first;
+
+                    line += replaceFormattingCodes(text.mid(startPos, endPos));
+
+                    startPos = pair.first + pair.second;
+
+                    line += text.mid(pair.first, pair.second);
+                }
+
+                if (startPos < text.length() - 1)
+                    line += replaceFormattingCodes(text.mid(startPos));
+
+                return line;
+            }
         }
+
+        return text;
+    }
+
+    QString replaceFormattingCodes(const QString& text)
+    {
+        QString line = text;
+
+        // Replace placeholders.
+        line.replace("%%","%\x01");      // make sure to protect double %%
+        line.replace("%B","\x02");       // replace %B with bold char
+        line.replace("%C","\x03");       // replace %C with color char
+        line.replace("%G","\x07");       // replace %G with ASCII BEL 0x07
+        line.replace("%I","\x09");       // replace %I with italics char
+        line.replace("%O","\x0f");       // replace %O with reset to default char
+        line.replace("%S","\x13");       // replace %S with strikethru char
+        // line.replace(QRegExp("%?"),"\x15");
+        line.replace("%R","\x16");       // replace %R with reverse char
+        line.replace("%U","\x1f");       // replace %U with underline char
+        line.replace("%\x01","%");       // restore double %% as single %
+
         return line;
     }
 
     QString tagUrls(const QString& text, const QString& fromNick, bool useCustomColor)
     {
+        TextUrlData data = extractUrlData(text, fromNick, false, true, useCustomColor);
+
+        return data.htmlText;
+    }
+
+    QList<QPair<int, int> > getUrlRanges(const QString& text)
+    {
+        TextUrlData data = extractUrlData(text, QString::null, true, false, false);
+
+        return data.urlRanges;
+    }
+
+    TextUrlData extractUrlData(const QString& text, const QString& fromNick, bool doUrlRanges,
+        bool doHyperlinks, bool useCustomHyperlinkColor)
+    {
         // QTime timer;
         // timer.start();
 
-        QString filteredLine = text;
-        QString linkColor = Preferences::self()->color(Preferences::Hyperlink).name();
-        QString link;
-        QString insertText;
+        TextUrlData data;
+        data.htmlText = text;
+
         int pos = 0;
         int urlLen = 0;
+
+        QString link;
+        QString insertText;
+        QString protocol;
         QString href;
-
-        if(useCustomColor)
-        {
-            link = "<a href=\"#%1\" style=\"color:" + linkColor + "\">%2</a>";
-        }
-        else
-        {
-            link = "<a href=\"#%1\">%2</a>";
-        }
-
-        if(filteredLine.contains("#"))
-        {
-            QRegExp chanExp("(^|\\s|^\"|\\s\"|,|'|\\(|\\:|!|@|%|\\+)(#[^,\\s;\\)\\:\\/\\(\\<\\>]*[^.,\\s;\\)\\:\\/\\(\"\''\\<\\>])");
-            while ((pos = chanExp.indexIn(filteredLine, pos)) >= 0)
-            {
-                href = chanExp.cap(2);
-                urlLen = href.length();
-                pos += chanExp.cap(1).length();
-
-                insertText = link.arg(href, href);
-                filteredLine.replace(pos, urlLen, insertText);
-                pos += insertText.length();
-            }
-        }
-
-        pos = 0;
-        urlLen = 0;
+        QString append;
 
         urlPattern.setCaseSensitivity(Qt::CaseInsensitive);
-        QString protocol;
 
-        // FIXME this should probably go away with the text control upgrade
-        if(useCustomColor)
+        if (doHyperlinks)
         {
-            link = "<a href=\"%1%2\" style=\"color:" + linkColor + "\">%3</a>";
-        }
-        else
-        {
-            link = "<a href=\"%1%2\">%3</a>";
+            QString linkColor = Preferences::self()->color(Preferences::Hyperlink).name();
+
+            if (useCustomHyperlinkColor)
+                link = "<a href=\"#%1\" style=\"color:" + linkColor + "\">%2</a>";
+            else
+                link = "<a href=\"#%1\">%2</a>";
+
+            if (data.htmlText.contains("#"))
+            {
+                QRegExp chanExp("(^|\\s|^\"|\\s\"|,|'|\\(|\\:|!|@|%|\\+)(#[^,\\s;\\)\\:\\/\\(\\<\\>]*[^.,\\s;\\)\\:\\/\\(\"\''\\<\\>])");
+
+                while ((pos = chanExp.indexIn(data.htmlText, pos)) >= 0)
+                {
+                    href = chanExp.cap(2);
+                    urlLen = href.length();
+                    pos += chanExp.cap(1).length();
+
+                    insertText = link.arg(href, href);
+                    data.htmlText.replace(pos, urlLen, insertText);
+                    pos += insertText.length();
+                }
+            }
+
+            if (useCustomHyperlinkColor)
+                link = "<a href=\"%1%2\" style=\"color:" + linkColor + "\">%3</a>";
+            else
+                link = "<a href=\"%1%2\">%3</a>";
+
+            pos = 0;
+            urlLen = 0;
         }
 
-        while ((pos = urlPattern.indexIn(filteredLine, pos)) >= 0)
+        while ((pos = urlPattern.indexIn(data.htmlText, pos)) >= 0)
         {
-            QString append;
+            urlLen = urlPattern.matchedLength();
 
             // check if the matched text is already replaced as a channel
-            if ( filteredLine.lastIndexOf( "<a", pos ) > filteredLine.lastIndexOf( "</a>", pos ) )
+            if (doHyperlinks && data.htmlText.lastIndexOf("<a", pos ) > data.htmlText.lastIndexOf("</a>", pos))
             {
                 ++pos;
                 continue;
             }
 
-            protocol="";
-            urlLen = urlPattern.matchedLength();
-            href = filteredLine.mid( pos, urlLen );
+            protocol.clear();
+            href = data.htmlText.mid(pos, urlLen);
+            kDebug() << "href: " << href;
+            append.clear();
 
             // Don't consider trailing comma part of link.
             if (href.right(1) == ",")
@@ -178,38 +230,54 @@ namespace Konversation
             // Don't consider trailing closing parenthesis part of link when
             // there's an opening parenthesis preceding the beginning of the
             // URL or there is no opening parenthesis in the URL at all.
-            if (href.right(1) == ")" && (filteredLine.mid(pos-1,1) == "(" || !href.contains("(")))
+            if (href.right(1) == ")" && (data.htmlText.mid(pos-1, 1) == "(" || !href.contains("(")))
             {
                 href.truncate(href.length()-1);
                 append.prepend(")");
             }
 
-            // Qt doesn't support (?<=pattern) so we do it here
-            if((pos > 0) && filteredLine[pos-1].isLetterOrNumber())
+            if (doHyperlinks)
             {
-                pos++;
-                continue;
+                // Qt doesn't support (?<=pattern) so we do it here
+                if ((pos > 0) && data.htmlText[pos-1].isLetterOrNumber())
+                {
+                    pos++;
+                    continue;
+                }
+
+                if (urlPattern.cap(1).startsWith(QLatin1String("www."), Qt::CaseInsensitive))
+                    protocol = "http://";
+                else if (urlPattern.cap(1).isEmpty())
+                    protocol = "mailto:";
+
+                // Use \x0b as a placeholder for & so we can read them after changing all & in the normal text to &amp;
+                insertText = link.arg(protocol, QString(href).replace('&', "\x0b"), href) + append;
+
+                data.htmlText.replace(pos, urlLen, insertText);
+
+                Application::instance()->storeUrl(fromNick, href);
             }
+            else
+                insertText = href + append;
 
-            if (urlPattern.cap(1).startsWith(QLatin1String("www."), Qt::CaseInsensitive))
-                protocol = "http://";
-            else if (urlPattern.cap(1).isEmpty())
-                protocol = "mailto:";
+            if (doUrlRanges)
+                data.urlRanges << QPair<int, int>(pos, href.length());
 
-            // Use \x0b as a placeholder for & so we can read them after changing all & in the normal text to &amp;
-            insertText = link.arg(protocol, QString(href).replace('&', "\x0b"), href) + append;
-            filteredLine.replace(pos, urlLen, insertText);
+            kDebug() << doHyperlinks << "href:" << href << "| insertText:" << insertText;
+
             pos += insertText.length();
-            Application::instance()->storeUrl(fromNick, href);
         }
 
-        // Change & to &amp; to prevent html entities to do strange things to the text
-        filteredLine.replace('&', "&amp;");
-        filteredLine.replace("\x0b", "&");
+        if (doHyperlinks)
+        {
+            // Change & to &amp; to prevent html entities to do strange things to the text
+            data.htmlText.replace('&', "&amp;");
+            data.htmlText.replace("\x0b", "&");
+        }
 
-        // kDebug() << "Took (msecs) : " << timer.elapsed() << " for " << filteredLine;
+        // kDebug() << "Took (msecs) : " << timer.elapsed() << " for " << data.htmlText;
 
-        return filteredLine;
+        return data;
     }
 
     bool isUrl(const QString& text)
@@ -217,21 +285,6 @@ namespace Konversation
         return urlPattern.exactMatch(text);
     }
 
-    //TODO: there's room for optimization as pahlibar said. (strm)
-
-    // the below two functions were taken from kopeteonlinestatus.cpp.
-/*
-    QBitmap overlayMasks( const QBitmap *under, const QBitmap *over )
-    {
-        if ( !under && !over ) return QBitmap();
-        if ( !under ) return *over;
-        if ( !over ) return *under;
-
-        QBitmap result = *under;
-        bitBlt( &result, 0, 0, over, 0, 0, over->width(), over->height(), Qt::OrROP );
-        return result;
-    }
-*/
     QPixmap overlayPixmaps( const QPixmap &under, const QPixmap &over )
     {
         if (over.isNull() && under.isNull())

@@ -22,6 +22,9 @@ Changes since 1.2:
   tion will now no longer make futile attempts to reconnect the affect-
   ed connections. Instead, it will reconnect once the network comes back
   up.
+* Variable expansion (%B, %C, %I, etc.) is no longer done in text seg-
+  ments recognized as URLs to avoid clashes with percent-encoded char-
+  acters in URLs copied from web browsers, such as German umlauts.
 
 
 Changes from 1.2-rc1 to 1.2:
