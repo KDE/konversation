@@ -27,6 +27,8 @@ Changes since 1.2:
   acters in URLs copied from web browsers, such as German umlauts.
 * Made tooltips for truncated labels in the listview version of the tab
   bar work again with newer versions of Qt.
+* Fixed a bug that caused the Watched Nicknames Online list to show the
+  wrong or no tooltip when hovering a list item with the mouse pointer.
 
 
 Changes from 1.2-rc1 to 1.2:

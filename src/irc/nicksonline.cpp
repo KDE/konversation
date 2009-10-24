@@ -66,7 +66,7 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
         "servers in the network.</p>"
         "<p>Right-click with the mouse on a nickname to perform additional functions.</p>");
     m_nickListView->setWhatsThis(nickListViewWT);
-    m_nickListView->installEventFilter(this);
+    m_nickListView->viewport()->installEventFilter(this);
     setMargin(margin());
     setSpacing(spacing());
 
@@ -150,12 +150,12 @@ NicksOnline::~NicksOnline()
 
 bool NicksOnline::eventFilter(QObject*obj, QEvent* event )
 {
-    if( ( obj == m_nickListView ) && ( event->type() == QEvent::ToolTip ) )
+    if( ( obj == m_nickListView->viewport() ) && ( event->type() == QEvent::ToolTip ) )
     {
         QHelpEvent* helpEvent = static_cast<QHelpEvent*>( event );
 
-
         Q3ListViewItem *item = m_nickListView->itemAt( helpEvent->pos() );
+
         if( item )
         {
             NickInfoPtr nickInfo = getNickInfo(item);
