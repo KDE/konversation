@@ -47,6 +47,8 @@ ViewTree::ViewTree(QWidget *parent)
     setAcceptDrops(true);
     setDropVisualizer(true);
 
+    setShowToolTips(false);
+
     // Controls whether or not to select the first view added
     // to the tree. Don't do so by default; only when told to
     // by the ViewContainer.

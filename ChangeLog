@@ -25,6 +25,8 @@ Changes since 1.2:
 * Variable expansion (%B, %C, %I, etc.) is no longer done in text seg-
   ments recognized as URLs to avoid clashes with percent-encoded char-
   acters in URLs copied from web browsers, such as German umlauts.
+* Made tooltips for truncated labels in the listview version of the tab
+  bar work again with newer versions of Qt.
 
 
 Changes from 1.2-rc1 to 1.2:
