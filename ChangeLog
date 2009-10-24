@@ -17,8 +17,11 @@ Changes since 1.2:
   once (aka "Open Folder in Tabs").
 * Made the default generated bookmark titles more verbose: The Format is
   now "Channel (Network-or-Server)".
-* Use automatically connect/disconnect when the network state changes
-  as detected by Solid.
+* Added support for reacting to changes in network availability as re-
+  ported by KDE's Solid subsystem. If the network goes down, Konversa-
+  tion will now no longer make futile attempts to reconnect the affect-
+  ed connections. Instead, it will reconnect once the network comes back
+  up.
 
 
 Changes from 1.2-rc1 to 1.2:
