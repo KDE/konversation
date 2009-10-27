@@ -715,7 +715,7 @@
       <default code="true">KUser(KUser::UseRealUserID).homeDir()+"/logs"</default>
     </entry>
     <entry key="DccPath" type="Url">
-      <default code="true">KUser(KUser::UseRealUserID).homeDir()+"/dccrecv"</default>
+      <default code="true">KGlobalSettings::downloadPath()</default>
       <label></label>
       <whatsthis></whatsthis>
     </entry>
