@@ -84,7 +84,7 @@ namespace Konversation
 
                 QPair<int, int> pair;
                 int startPos = 0;
-                int endPos = 0;
+                int length = 0;
 
                 QListIterator<QPair<int, int> > i(urlRanges);
 
@@ -92,9 +92,9 @@ namespace Konversation
                 {
                     pair = i.next();
 
-                    endPos = pair.first;
+                    length = pair.first - startPos;
 
-                    line += replaceFormattingCodes(text.mid(startPos, endPos));
+                    line += replaceFormattingCodes(text.mid(startPos, length));
 
                     startPos = pair.first + pair.second;
 
