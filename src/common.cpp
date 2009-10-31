@@ -82,12 +82,16 @@ namespace Konversation
             {
                 QString line;
 
-                QPair<int, int> pair = urlRanges[0];
+                QPair<int, int> pair;
                 int startPos = 0;
                 int endPos = 0;
 
-                foreach (pair, urlRanges)
+                QListIterator<QPair<int, int> > i(urlRanges);
+
+                while (i.hasNext())
                 {
+                    pair = i.next();
+
                     endPos = pair.first;
 
                     line += replaceFormattingCodes(text.mid(startPos, endPos));
@@ -136,7 +140,7 @@ namespace Konversation
 
     QList<QPair<int, int> > getUrlRanges(const QString& text)
     {
-        TextUrlData data = extractUrlData(text, QString::null, true, false, false);
+        TextUrlData data = extractUrlData(text, QString(), true, false, false);
 
         return data.urlRanges;
     }

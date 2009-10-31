@@ -105,7 +105,7 @@ void ConnectionManager::connectTo(Konversation::ConnectionFlag flag, const QList
                  << " - " << (cs.serverGroup()?cs.serverGroup()->name():"");
         QString sname = (cs.serverGroup()?
                          cs.serverGroup()->name():
-                         (cs.server().host()+":"+cs.server().port()) );
+                         (cs.server().host()+':'+cs.server().port()) );
 
         serverChannels[sname] += cs.oneShotChannelList();
         if (!serverChannels.contains(sname))
