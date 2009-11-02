@@ -2466,7 +2466,12 @@ void ViewContainer::openChannelList(const QString& filter, bool getList)
                       "ChannelListWarning");
             }
 
-            if (ret != KMessageBox::Continue) return;
+            if (ret != KMessageBox::Continue)
+            {
+                KToggleAction* action = static_cast<KToggleAction*>(actionCollection()->action("open_channel_list"));
+                if (action) action->setChecked(false);
+                return;
+            }
 
             panel = m_frontServer->addChannelListPanel();
 
