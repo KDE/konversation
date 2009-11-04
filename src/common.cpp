@@ -101,7 +101,7 @@ namespace Konversation
                     line += text.mid(pair.first, pair.second);
                 }
 
-                if (startPos < text.length() - 1)
+                if (startPos <= text.length() - 1)
                     line += replaceFormattingCodes(text.mid(startPos));
 
                 return line;
