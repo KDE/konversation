@@ -54,7 +54,8 @@ namespace Konversation
         connect(m_ui.topicHistoryView->selectionModel(), SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection&)),
                 this, SLOT(topicHistoryItemClicked(const QItemSelection&)));
         connect(m_ui.toggleAdvancedModes, SIGNAL(clicked()), this, SLOT(toggleAdvancedModes()));
-        connect(m_ui.topicEdit, SIGNAL(textChanged()), this, SLOT(topicBeingEdited()));
+        connect(m_ui.topicEdit, SIGNAL(undoAvailable(bool)), this, SLOT(topicBeingEdited(bool)));
+        connect(this, SIGNAL(finished()), m_ui.topicEdit, SLOT(clear()));
 
         connect(m_channel, SIGNAL(topicHistoryChanged()), this, SLOT(refreshTopicHistory()));
 
@@ -159,9 +160,9 @@ namespace Konversation
         }
     }
 
-    void ChannelOptionsDialog::topicBeingEdited()
+    void ChannelOptionsDialog::topicBeingEdited(bool edited)
     {
-        m_editingTopic = true;
+        m_editingTopic = edited;
     }
 
     QString ChannelOptionsDialog::topic()
@@ -190,22 +191,25 @@ namespace Konversation
         // update topic preview
         QItemSelection selection(m_topicModel->index(0, 0, QModelIndex()), m_topicModel->index(0, 1, QModelIndex()));
         m_ui.topicHistoryView->selectionModel()->select(selection, QItemSelectionModel::ClearAndSelect);
-        // don't destroy the user's edit box if they started editing
-        if(!m_editingTopic && !history.isEmpty())
-            m_ui.topicEdit->setText(history.first().section(' ', 2));
     }
 
     void ChannelOptionsDialog::topicHistoryItemClicked(const QItemSelection& selection)
     {
-        if(!selection.isEmpty())
+        if (!selection.isEmpty())
         {
             // update topic preview
             m_ui.topicPreview->setText(m_topicModel->data(selection.indexes().first(), Qt::UserRole).toString());
+
+            if (!m_editingTopic)
+                m_ui.topicEdit->setText(m_topicModel->data(selection.indexes().first(), Qt::UserRole).toString());
         }
         else
         {
             // clear topic preview
             m_ui.topicPreview->clear();
+
+            if (!m_editingTopic)
+                m_ui.topicEdit->clear();
         }
     }
 
@@ -480,7 +484,6 @@ namespace Konversation
             QApplication::sendEvent(m_ui.banList->renameLineEdit(), &e);
         }
 
-        m_editingTopic = false;
         hide();
     }
 

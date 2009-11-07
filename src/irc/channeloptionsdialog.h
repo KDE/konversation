@@ -64,7 +64,7 @@ namespace Konversation
 
         protected slots:
             void topicHistoryItemClicked(const QItemSelection& selection);
-            void topicBeingEdited();
+            void topicBeingEdited(bool edited);
 
             void cancelClicked();
             void okClicked();

@@ -30,6 +30,15 @@ Changes since 1.2:
   the "Downloads paths" configured in System Settings or the equivalent
   in other desktop environments (under the hood, this is a shared XDG
   setting).
+* Making and then comitting unrelated changes in the Channel Settings
+  dialog could cause unintentionally setting the channel's topic to an
+  older version if someone else had changed the topic since the first
+  time the dialog was opened or while the dialog was open, due to a bug
+  in the code that avoids such external topic changes interfering with
+  concurrent local editing of the topic. This has been fixed.
+* The contents of the topic edit field in the Channel Settings dialog
+  will now reflect the selected item in the topic history list until
+  the user starts editing.
 
 
 Changes from 1.2-rc1 to 1.2:
