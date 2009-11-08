@@ -163,7 +163,7 @@ void Nick::repositionMe()
         emitDataChanged();
 }
 
-QString Nick::calculateLabel1()
+QString Nick::calculateLabel1() const
 {
     NickInfoPtr nickinfo = getChannelNick()->getNickInfo();
     KABC::Addressee addressee = nickinfo->getAddressee();
@@ -180,7 +180,7 @@ QString Nick::calculateLabel1()
     return nickinfo->getNickname();
 }
 
-QString Nick::calculateLabel2()
+QString Nick::calculateLabel2() const
 {
     return getChannelNick()->getNickInfo()->getHostmask();
 }

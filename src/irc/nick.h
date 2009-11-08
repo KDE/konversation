@@ -40,8 +40,8 @@ class Nick : public QTreeWidgetItem
         void emitDataChanged();
 
     protected:
-        QString calculateLabel1();
-        QString calculateLabel2();
+        QString calculateLabel1() const;
+        QString calculateLabel2() const;
 
         int getSortingValue() const;
 
