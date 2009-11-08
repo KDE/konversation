@@ -1715,7 +1715,10 @@ void Channel::updateMode(const QString& sourceNick, char mode, bool plus, const 
         // MES processing is in progress, we prevent this, as the NA-
         // MES processing code will ignore nicks already in the nick-
         // list.
-        if (m_processingTimer->isActive())
+        // We also add the nickname if the timer hasn't been instanci-
+        // ated yet, as this means addPendingNickList() has never run
+        // (yet) and thus NAMES hasn't been processed so far.
+        if (!m_processingTimer || m_processingTimer->isActive())
             addNickname(parameterChannelNick);
 
         wasAnyOp=parameterChannelNick->isAnyTypeOfOp();
