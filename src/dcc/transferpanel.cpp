@@ -419,7 +419,7 @@ namespace Konversation
         {
             foreach (const QModelIndex &index, m_transferView->selectedRows())
             {
-                if (index.data(TransferListModel::TransferType).toInt() == Transfer::Send &&
+                if (index.data(TransferListModel::TransferType).toInt() == Transfer::Send ||
                     index.data(TransferListModel::TransferStatus).toInt() == Transfer::Done)
                 {
                     Transfer *transfer = static_cast<Transfer*>(qVariantValue<QObject*>(index.data(TransferListModel::TransferPointer)));
