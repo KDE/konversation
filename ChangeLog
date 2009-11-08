@@ -39,6 +39,9 @@ Changes since 1.2:
 * The contents of the topic edit field in the Channel Settings dialog
   will now reflect the selected item in the topic history list until
   the user starts editing.
+* Fixed a bug that could cause user mode changes occurring directly af-
+  ter joining a channel not to be reflected by the channel's nickname
+  list.
 
 
 Changes from 1.2-rc1 to 1.2:

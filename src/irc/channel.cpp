@@ -1703,8 +1703,23 @@ void Channel::updateMode(const QString& sourceNick, char mode, bool plus, const 
 
     // remember if this nick had any type of op.
     bool wasAnyOp=false;
-    if(parameterChannelNick)
+    if (parameterChannelNick)
+    {
+        // If NAMES processing is in progress, we likely have received
+        // a NAMES just prior to the MODE that caused this method to
+        // be run. If this nick is not yet in the nicklist (e.g. be-
+        // cause it's just after JOIN and the nicklist is still empty
+        // prior to the initial NAMES processing), the NAMES process-
+        // ing can set the ChannelNick's mode data to outdated infor-
+        // mation. By adding the nickname to the nicklist here if NA-
+        // MES processing is in progress, we prevent this, as the NA-
+        // MES processing code will ignore nicks already in the nick-
+        // list.
+        if (m_processingTimer->isActive())
+            addNickname(parameterChannelNick);
+
         wasAnyOp=parameterChannelNick->isAnyTypeOfOp();
+    }
 
     if(sourceNick.toLower()==m_server->loweredNickname())
         fromMe=true;
