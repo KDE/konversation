@@ -2039,7 +2039,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 // All yet unknown messages go into the frontmost window without the
                 // preceding nickname
                 kDebug() << "unknown numeric" << parameterList.count() << _plHad << _plWanted << command << parameterList.join(" ");
-                server->appendMessageToFrontmost(command, parameterList.join(" ").section(' ',1) + ' '+trailing);
+                server->appendMessageToFrontmost(command, parameterList.join(" "));
             }
         } // end of numeric switch
         if (!_plHad)
