@@ -108,6 +108,7 @@
 #define RPL_USERS              393
 #define RPL_ENDOFUSERS         394
 #define RPL_NOUSERS            395
+#define RPL_HOSTHIDDEN         396
 
 #define ERR_NOSUCHNICK         401
 #define ERR_NOSUCHSERVER       402

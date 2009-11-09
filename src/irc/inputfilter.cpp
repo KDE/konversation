@@ -1290,6 +1290,14 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                 }
                 break;
             }
+            case RPL_HOSTHIDDEN:
+            {
+                if (plHas(2))
+                {
+                    server->appendStatusMessage(i18n("Info"), i18n("'%1' is now your hidden host (set by services).", parameterList.value(1)));
+                }
+                break;
+            }
             case RPL_GLOBALUSERS:                 // Current global users: 589 Max: 845
             {
                 if (plHas(2))
