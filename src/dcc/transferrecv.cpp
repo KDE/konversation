@@ -391,7 +391,6 @@ namespace Konversation
                     m_fileURL.prettyUrl() ),
                     ResumeDialog::RA_Rename | ResumeDialog::RA_Cancel,
                     ResumeDialog::RA_Rename );
-                transferJob->putOnHold();
                 return;
             }
 
