@@ -303,6 +303,16 @@ namespace Konversation
                 return;
             }
 
+            if (Application::instance()->getDccTransferManager()->isLocalFileInWritingProcess(m_fileURL))
+            {
+                askAndPrepareLocalKio(i18n("<b>The file is used by another transfer.</b><br>"
+                    "%1<br>",
+                    m_fileURL.prettyUrl()),
+                    ResumeDialog::RA_Rename | ResumeDialog::RA_Cancel,
+                    ResumeDialog::RA_Rename);
+                return;
+            }
+
             KIO::JobFlags flags;
             if(overwrite)
                 flags |= KIO::Overwrite;
@@ -380,17 +390,6 @@ namespace Konversation
             if (!transferJob)
             {
                 kDebug() << "not a TransferJob? returning";
-                return;
-            }
-
-            if ( Application::instance()->getDccTransferManager()->isLocalFileInWritingProcess( m_fileURL ) )
-            {
-                disconnect( transferJob, 0, 0, 0 );
-                askAndPrepareLocalKio( i18n( "<b>The file is used by another transfer.</b><br>"
-                    "%1<br>",
-                    m_fileURL.prettyUrl() ),
-                    ResumeDialog::RA_Rename | ResumeDialog::RA_Cancel,
-                    ResumeDialog::RA_Rename );
                 return;
             }
 
