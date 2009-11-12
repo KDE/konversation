@@ -208,12 +208,6 @@ Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
     setTextView(ircViewBox->ircView());
     connect(textView,SIGNAL(popupCommand(int)),this,SLOT(popupChannelCommand(int)));
 
-#if QT_VERSION >= 0x040500
-    topicLine->setAlignment(Qt::AlignTop);
-    QString stylesheet = QString("QLabel { margin-top:%1 }").arg(getTextView()->document()->documentMargin());
-    topicLine->setStyleSheet(stylesheet);
-#endif
-
     // The box that holds the Nick List and the quick action buttons
     nickListButtons = new KVBox(m_horizSplitter);
     m_horizSplitter->setStretchFactor(m_horizSplitter->indexOf(nickListButtons), 0);
