@@ -743,6 +743,9 @@ void resetNickSelection();
         /// but all we want is the plain filename.
         inline QString cleanDccFileName(const QString& filename) const;
 
+        /// Checks if the port is in a valid range
+        inline quint16 stringToPort(const QString &port, bool *ok = 0);
+
         /// Helper object to construct ISON (notify) list and map offline nicks to
         /// addressbook.
         ServerISON* m_serverISON;

@@ -1809,20 +1809,38 @@ QString Server::cleanDccFileName(const QString& filename) const
     return cleanFileName;
 }
 
+quint16 Server::stringToPort(const QString &port, bool *ok)
+{
+    bool toUintOk = false;
+    uint uPort32 = port.toUInt(&toUintOk);
+    // ports over 65535 are invalid, someone sends us bad data
+    if (!toUintOk || uPort32 > USHRT_MAX)
+    {
+        if (ok)
+        {
+            *ok = false;
+        }
+    }
+    else
+    {
+        if (ok)
+        {
+            *ok = true;
+        }
+    }
+    return (quint16)uPort32;
+}
+
 void Server::addDccGet(const QString &sourceNick, const QStringList &dccArguments)
 {
-    DCC::TransferRecv* newDcc = Application::instance()->getDccTransferManager()->newDownload();
-
-    newDcc->setConnectionId( connectionId() );
-    newDcc->setPartnerNick( sourceNick );
-
     //filename ip port filesize [token]
     QString ip;
-    uint port;
+    quint16 port;
     QString fileName;
     quint64 fileSize;
     QString token;
     const int argumentSize = dccArguments.count();
+    bool ok = true;
 
     if (dccArguments.at(argumentSize - 3) == "0") //port==0, for passive send, ip can't be 0
     {
@@ -1832,9 +1850,6 @@ void Server::addDccGet(const QString &sourceNick, const QStringList &dccArgument
         port = 0;
         fileSize = dccArguments.at(argumentSize - 2).toULongLong(); //-1 index, -1 token
         token = dccArguments.at(argumentSize - 1); //-1 index
-
-        // Reverse DCC
-        newDcc->setReverse( true, token );
     }
     else
     {
@@ -1842,13 +1857,31 @@ void Server::addDccGet(const QString &sourceNick, const QStringList &dccArgument
         ip = DCC::DccCommon::numericalIpToTextIp( dccArguments.at(argumentSize - 3) ); //-1 index, -1 filesize
         fileName = recoverDccFileName(dccArguments, 3); //ip port filesize
         fileSize = dccArguments.at(argumentSize - 1).toULongLong(); //-1 index
-        port = dccArguments.at(argumentSize - 2).toUInt(); //-1 index, -1 filesize
+        port = stringToPort(dccArguments.at(argumentSize - 2), &ok); //-1 index, -1 filesize
     }
 
-    newDcc->setPartnerIp( ip );
-    newDcc->setPartnerPort( port );
-    newDcc->setFileName( fileName );
-    newDcc->setFileSize( fileSize );
+    if (!ok)
+    {
+        appendMessageToFrontmost(i18n("Error"),
+                                 i18nc("%1=nickname","Received invalid DCC SEND request from %1.",
+                                       sourceNick));
+        return;
+    }
+
+    DCC::TransferRecv* newDcc = Application::instance()->getDccTransferManager()->newDownload();
+
+    newDcc->setConnectionId(connectionId());
+    newDcc->setPartnerNick(sourceNick);
+
+    newDcc->setPartnerIp(ip);
+    newDcc->setPartnerPort(port);
+    newDcc->setFileName(fileName);
+    newDcc->setFileSize(fileSize);
+    // Reverse DCC
+    if (!token.isEmpty())
+    {
+        newDcc->setReverse(true, token);
+    }
 
     kDebug() << "ip: " << ip;
     kDebug() << "port: " << port;
@@ -1874,24 +1907,19 @@ void Server::addDccGet(const QString &sourceNick, const QStringList &dccArgument
 
 void Server::addDccChat(const QString& sourceNick,const QStringList& dccArguments)
 {
-    DCC::Chat* newChat = Application::instance()->getDccTransferManager()->newChat();
-
-    newChat->setConnectionId(connectionId());
-    newChat->setPartnerNick(sourceNick);
-    newChat->setOwnNick(getNickname());
-
     //chat ip port [token]
     QString ip;
     quint16 port = 0;
     QString token;
     bool reverse = false;
     const int argumentSize = dccArguments.count();
+    bool ok = true;
 
     if (argumentSize == 3)
     {
         //CHAT ip port
         ip = DCC::DccCommon::numericalIpToTextIp(dccArguments.at(1));
-        port = dccArguments.at(2).toUInt();
+        port = stringToPort(dccArguments.at(2), &ok);
     }
     else if (argumentSize == 4)
     {
@@ -1900,6 +1928,20 @@ void Server::addDccChat(const QString& sourceNick,const QStringList& dccArgument
         token = dccArguments.at(3);
         reverse = true;
     }
+
+    if (!ok)
+    {
+        appendMessageToFrontmost(i18n("Error"),
+                                 i18nc("%1=nickname","Received invalid DCC CHAT request from %1.",
+                                       sourceNick));
+        return;
+    }
+
+    DCC::Chat* newChat = Application::instance()->getDccTransferManager()->newChat();
+
+    newChat->setConnectionId(connectionId());
+    newChat->setPartnerNick(sourceNick);
+    newChat->setOwnNick(getNickname());
 
     kDebug() << "ip: " << ip;
     kDebug() << "port: " << port;
@@ -2041,16 +2083,17 @@ void Server::startReverseDccChat(const QString &sourceNick, const QStringList &d
     kDebug();
     DCC::TransferManager* dtm = Application::instance()->getDccTransferManager();
 
+    bool ok = true;
     QString partnerIP = DCC::DccCommon::numericalIpToTextIp(dccArguments.at(1));
-    quint16 port = dccArguments.at(2).toUInt();
+    quint16 port = stringToPort(dccArguments.at(2), &ok);
     QString token = dccArguments.at(3);
 
     kDebug() << "ip: " << partnerIP;
     kDebug() << "port: " << port;
     kDebug() << "token: " << token;
 
-    if (dtm->startReverseChat(connectionId(), sourceNick,
-                              partnerIP, port, token) == 0)
+    if (ok || dtm->startReverseChat(connectionId(), sourceNick,
+                                    partnerIP, port, token) == 0)
     {
         // DTM could not find a matched item
         appendMessageToFrontmost(i18n("Error"),
@@ -2065,12 +2108,12 @@ void Server::startReverseDccSendTransfer(const QString& sourceNick,const QString
     kDebug();
     DCC::TransferManager* dtm = Application::instance()->getDccTransferManager();
 
+    bool ok = true;
     const int argumentSize = dccArguments.size();
     QString partnerIP = DCC::DccCommon::numericalIpToTextIp( dccArguments.at(argumentSize - 4) ); //dccArguments[1] ) );
-    uint port = dccArguments.at(argumentSize - 3).toUInt();
+    quint16 port = stringToPort(dccArguments.at(argumentSize - 3), &ok);
     QString token = dccArguments.at(argumentSize - 1);
     quint64 fileSize = dccArguments.at(argumentSize - 2).toULongLong();
-
     QString fileName = recoverDccFileName(dccArguments, 4); //ip port filesize token
 
     kDebug() << "ip: " << partnerIP;
@@ -2079,20 +2122,21 @@ void Server::startReverseDccSendTransfer(const QString& sourceNick,const QString
     kDebug() << "filesize: " << fileSize;
     kDebug() << "token: " << token;
 
-    if ( dtm->startReverseSending( connectionId(), sourceNick,
-                                   fileName,  // filename
-                                   partnerIP,  // partner IP
-                                   port,  // partner port
-                                   fileSize,  // filesize
-                                   token  // Reverse DCC token
-         ) == 0 )
+    if (ok ||
+        dtm->startReverseSending(connectionId(), sourceNick,
+                                 fileName,  // filename
+                                 partnerIP,  // partner IP
+                                 port,  // partner port
+                                 fileSize,  // filesize
+                                 token  // Reverse DCC token
+         ) == 0)
     {
         // DTM could not find a matched item
-        appendMessageToFrontmost( i18n( "Error" ),
-                                  i18nc( "%1 = file name, %2 = nickname",
-                                        "Received invalid passive DCC send acceptance message for \"%1\" from %2.",
-                                        fileName,
-                                        sourceNick ) );
+        appendMessageToFrontmost(i18n("Error"),
+                                 i18nc("%1 = file name, %2 = nickname",
+                                       "Received invalid passive DCC send acceptance message for \"%1\" from %2.",
+                                       fileName,
+                                       sourceNick));
     }
 }
 
@@ -2103,8 +2147,10 @@ void Server::resumeDccGetTransfer(const QString &sourceNick, const QStringList &
     //filename port position [token]
     QString fileName;
     quint64 position;
-    uint ownPort;
+    quint16 ownPort;
+    bool ok = true;
     const int argumentSize = dccArguments.count();
+
     if (dccArguments.at(argumentSize - 3) == "0") //-1 index, -1 token, -1 pos
     {
         fileName = recoverDccFileName(dccArguments, 3); //port position token
@@ -2114,30 +2160,34 @@ void Server::resumeDccGetTransfer(const QString &sourceNick, const QStringList &
     else
     {
         fileName = recoverDccFileName(dccArguments, 2); //port position
-        ownPort = dccArguments.at(argumentSize - 1).toUInt(); //-1 index, -1 pos
+        ownPort = stringToPort(dccArguments.at(argumentSize - 1), &ok); //-1 index, -1 pos
         position = dccArguments.at(argumentSize - 1).toULongLong(); //-1 index
     }
     //do we need the token here?
 
-    DCC::TransferRecv* dccTransfer = dtm->resumeDownload( connectionId(), sourceNick, fileName, ownPort, position );
-
-    if ( dccTransfer )
+    DCC::TransferRecv* dccTransfer = 0;
+    if (ok)
     {
-        appendMessageToFrontmost( i18n( "DCC" ),
-                                  i18nc( "%1 = file name, %2 = nickname of sender, %3 = percentage of file size, %4 = file size",
-                                        "Resuming download of \"%1\" from %2 starting at %3% of %4..." ,
-                                        fileName,
-                                        sourceNick,
-                                        QString::number( dccTransfer->getProgress() ),
-                                        ( dccTransfer->getFileSize() == 0 ) ? i18n( "unknown size" ) : KIO::convertSize( dccTransfer->getFileSize() ) ) );
+        dccTransfer = dtm->resumeDownload(connectionId(), sourceNick, fileName, ownPort, position);
+    }
+
+    if (dccTransfer)
+    {
+        appendMessageToFrontmost(i18n("DCC"),
+                                 i18nc("%1 = file name, %2 = nickname of sender, %3 = percentage of file size, %4 = file size",
+                                       "Resuming download of \"%1\" from %2 starting at %3% of %4...",
+                                       fileName,
+                                       sourceNick,
+                                       QString::number( dccTransfer->getProgress()),
+                                       (dccTransfer->getFileSize() == 0) ? i18n("unknown size") : KIO::convertSize(dccTransfer->getFileSize())));
     }
     else
     {
-        appendMessageToFrontmost( i18n( "Error" ),
-                                  i18nc( "%1 = file name, %2 = nickname",
-                                        "Received invalid resume acceptance message for \"%1\" from %2.",
-                                        fileName,
-                                        sourceNick ) );
+        appendMessageToFrontmost(i18n("Error"),
+                                 i18nc("%1 = file name, %2 = nickname",
+                                       "Received invalid resume acceptance message for \"%1\" from %2.",
+                                       fileName,
+                                       sourceNick));
     }
 }
 
@@ -2149,7 +2199,8 @@ void Server::resumeDccSendTransfer(const QString &sourceNick, const QStringList 
     QString fileName;
     quint64 position;
     QString token;
-    uint ownPort;
+    quint16 ownPort;
+    bool ok = true;
     const int argumentSize = dccArguments.count();
 
     //filename port filepos [token]
@@ -2165,22 +2216,26 @@ void Server::resumeDccSendTransfer(const QString &sourceNick, const QStringList 
     else
     {
         //filename port filepos
-        ownPort = dccArguments.at( argumentSize - 2).toUInt(); //-1 index, -1 filesize
+        ownPort = stringToPort(dccArguments.at(argumentSize - 2), &ok); //-1 index, -1 filesize
         position = dccArguments.at( argumentSize - 1).toULongLong(); // -1 index
         fileName = recoverDccFileName(dccArguments, 2); //port filepos
     }
 
-    DCC::TransferSend* dccTransfer = dtm->resumeUpload( connectionId(), sourceNick, fileName, ownPort, position );
-
-    if ( dccTransfer )
+    DCC::TransferSend* dccTransfer = 0;
+    if (ok)
     {
-        appendMessageToFrontmost( i18n( "DCC" ),
-                                  i18nc( "%1 = file name, %2 = nickname of recipient, %3 = percentage of file size, %4 = file size",
-                                        "Resuming upload of \"%1\" to %2 starting at %3% of %4...",
-                                        fileName,
-                                        sourceNick,
-                                        QString::number(dccTransfer->getProgress()),
-                                        ( dccTransfer->getFileSize() == 0 ) ? i18n( "unknown size" ) : KIO::convertSize( dccTransfer->getFileSize() ) ) );
+        dccTransfer = dtm->resumeUpload(connectionId(), sourceNick, fileName, ownPort, position);
+    }
+
+    if (dccTransfer)
+    {
+        appendMessageToFrontmost(i18n("DCC"),
+                                 i18nc("%1 = file name, %2 = nickname of recipient, %3 = percentage of file size, %4 = file size",
+                                       "Resuming upload of \"%1\" to %2 starting at %3% of %4...",
+                                       fileName,
+                                       sourceNick,
+                                       QString::number(dccTransfer->getProgress()),
+                                       (dccTransfer->getFileSize() == 0) ? i18n("unknown size") : KIO::convertSize(dccTransfer->getFileSize())));
 
         // fileName can't have " here
         if (fileName.contains(' '))
@@ -2196,11 +2251,11 @@ void Server::resumeDccSendTransfer(const QString &sourceNick, const QStringList 
     }
     else
     {
-        appendMessageToFrontmost( i18n( "Error" ),
-                                  i18nc( "%1 = file name, %2 = nickname",
-                                        "Received invalid resume request for \"%1\" from %2.",
-                                        fileName,
-                                        sourceNick ) );
+        appendMessageToFrontmost(i18n("Error"),
+                                 i18nc("%1 = file name, %2 = nickname",
+                                       "Received invalid resume request for \"%1\" from %2.",
+                                       fileName,
+                                       sourceNick));
     }
 }
 
@@ -2209,17 +2264,17 @@ void Server::rejectDccSendTransfer(const QString &sourceNick, const QStringList 
     DCC::TransferManager* dtm = Application::instance()->getDccTransferManager();
 
     //filename
-    QString fileName = recoverDccFileName(dccArguments,0);
+    QString fileName = recoverDccFileName(dccArguments, 0);
 
-    DCC::TransferSend* dccTransfer = dtm->rejectSend( connectionId(), sourceNick, fileName );
+    DCC::TransferSend* dccTransfer = dtm->rejectSend(connectionId(), sourceNick, fileName);
 
-    if ( !dccTransfer )
+    if (!dccTransfer)
     {
-        appendMessageToFrontmost( i18n( "Error" ),
-                                  i18nc( "%1 = file name, %2 = nickname",
-                                        "Received invalid reject request for \"%1\" from %2.",
-                                        fileName,
-                                        sourceNick ) );
+        appendMessageToFrontmost(i18n("Error"),
+                                 i18nc("%1 = file name, %2 = nickname",
+                                       "Received invalid reject request for \"%1\" from %2.",
+                                       fileName,
+                                       sourceNick));
     }
 }
 
