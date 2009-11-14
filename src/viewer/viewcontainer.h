@@ -46,6 +46,7 @@ namespace Konversation
     namespace DCC
     {
         class TransferPanel;
+        class Chat;
     }
 }
 
@@ -155,7 +156,7 @@ class ViewContainer : public QObject
         void deleteDccPanel();
         Konversation::DCC::TransferPanel* getDccPanel();
 
-        void addDccChat(const QString& myNick,const QString& nick,const QStringList& arguments,bool listen);
+        void addDccChat(Konversation::DCC::Chat* myNick);
 
         StatusPanel* addStatusView(Server* server);
         RawLog* addRawLog(Server* server);

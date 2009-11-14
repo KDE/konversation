@@ -51,6 +51,8 @@ class InputFilter : public QObject
         void notifyResponse(const QString &nicksOnline);
                                                   // will be connected to Server::startReverseDccSendTransfer()
         void startReverseDccSendTransfer(const QString &sourceNick, const QStringList &dccArgument);
+                                                  // will be connected to Server::startReverseDccChat()
+        void startReverseDccChat(const QString &sourceNick, const QStringList &dccArgument);
                                                   // will be connected to Server::addDccGet()
         void addDccGet(const QString &sourceNick, const QStringList &dccArgument);
                                                   // will be connected to Server::resumeDccGetTransfer()
@@ -59,6 +61,8 @@ class InputFilter : public QObject
         void resumeDccSendTransfer(const QString &sourceNick, const QStringList &dccArgument);
                                                   // will be connected to Server::rejectDccSendTransfer()
         void rejectDccSendTransfer(const QString &sourceNick, const QStringList &dccArgument);
+                                                  // will be connected to Server::rejectDccChat()
+        void rejectDccChat(const QString &sourceNick);
                                                   // will be connected to Server::userhost()
         void userhost(const QString& nick,const QString& hostmask,bool away,bool ircOp);
                                                   // will be connected to Server::setTopicAuthor()
@@ -70,7 +74,7 @@ class InputFilter : public QObject
 
         void invitation(const QString& nick,const QString& channel);
 
-        void addDccChat(const QString& myNick,const QString& nick,const QStringList& arguments,bool listen);
+        void addDccChat(const QString& nick,const QStringList& arguments);
 
     protected:
         void parseClientCommand(const QString &prefix, const QString &command, QStringList &parameterList);

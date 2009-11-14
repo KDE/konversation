@@ -150,25 +150,34 @@ namespace Konversation
                 partnerInfoServerName = Application::instance()->getConnectionManager()->getServerByConnectionId(m_transfer->getConnectionId())->getServerName();
             else
                 partnerInfoServerName = i18n("Unknown server");
-            QString partnerInfo(i18n("%1 on %2",
-                m_transfer->getPartnerNick().isEmpty() ? "?" : m_transfer->getPartnerNick(),
-                partnerInfoServerName));
+
             if (!m_transfer->getPartnerIp().isEmpty())
-                partnerInfo += i18n(", %1 (port %2)", m_transfer->getPartnerIp(), QString::number(m_transfer->getPartnerPort()));
-            m_locationInfo.m_labelPartner->setText(partnerInfo);
+            {
+                m_locationInfo.m_labelPartner->setText(i18nc("%1=partnerNick, %2=IRC Servername, %3=partnerIP, %4=partnerPort",
+                                                             "%1 on %2, %3 (port %4)",
+                                                             m_transfer->getPartnerNick().isEmpty() ? "?" : m_transfer->getPartnerNick(),
+                                                             partnerInfoServerName, m_transfer->getPartnerIp(), QString::number(m_transfer->getPartnerPort())));
+            }
+            else
+            {
+                m_locationInfo.m_labelPartner->setText(i18nc("%1 = PartnerNick, %2 = Partner IRC Servername","%1 on %2",
+                                                             m_transfer->getPartnerNick().isEmpty() ? "?" : m_transfer->getPartnerNick(),
+                                                             partnerInfoServerName));
+            }
 
             // Self:
             if (!m_transfer->getOwnIp().isEmpty())
-                m_locationInfo.m_labelSelf->setText(i18n("%1 (port %2)", m_transfer->getOwnIp(), QString::number(m_transfer->getOwnPort())));
+                m_locationInfo.m_labelSelf->setText(i18nc("%1=ownIP, %2=ownPort", "%1 (port %2)",
+                                                          m_transfer->getOwnIp(), QString::number(m_transfer->getOwnPort())));
 
             // File Size:
             m_timeInfo.m_labelFileSize->setText(KGlobal::locale()->formatNumber(m_transfer->getFileSize(), 0));
 
             // Resumed:
             if (m_transfer->isResumed())
-                m_timeInfo.m_labelIsResumed->setText(i18n("Yes, %1", KGlobal::locale()->formatNumber(m_transfer->getTransferStartPosition(), 0)));
+                m_timeInfo.m_labelIsResumed->setText(i18nc("%1=Transferstartposition","Yes, %1", KGlobal::locale()->formatNumber(m_transfer->getTransferStartPosition(), 0)));
             else
-                m_timeInfo.m_labelIsResumed->setText(i18n("No"));
+                m_timeInfo.m_labelIsResumed->setText(i18nc("no - not a resumed transfer","No"));
 
             // Offered at:
             m_timeInfo.m_labelTimeOffered->setText(m_transfer->getTimeOffer().toString("hh:mm:ss"));

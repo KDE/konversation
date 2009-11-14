@@ -100,7 +100,7 @@ void Warnings_Config::saveSettings()
 void Warnings_Config::loadSettings()
 {
   QStringList dialogDefinitions;
-  QString flagNames = "Invitation,SaveLogfileNote,ClearLogfileQuestion,CloseQueryAfterIgnore,ReconnectWithDifferentServer,ReuseExistingConnection,QuitServerTab,QuitChannelTab,QuitQueryTab,ChannelListNoServerSelected,HideMenuBarWarning,ChannelListWarning,LargePaste,systemtrayquitKonversation,IgnoreNick,UnignoreNick,QuitWithActiveDccTransfers,WarnEncodingConflict";
+  QString flagNames = "Invitation,SaveLogfileNote,ClearLogfileQuestion,CloseQueryAfterIgnore,ReconnectWithDifferentServer,ReuseExistingConnection,QuitServerTab,QuitChannelTab,QuitQueryTab,QuitDCCChatTab,ChannelListNoServerSelected,HideMenuBarWarning,ChannelListWarning,LargePaste,systemtrayquitKonversation,IgnoreNick,UnignoreNick,QuitWithActiveDccTransfers,WarnEncodingConflict";
   dialogDefinitions.append(i18n("Show channel invitation dialog"));
   dialogDefinitions.append(i18n("Notice that saving logfiles will save whole file"));
   dialogDefinitions.append(i18n("Ask before deleting logfile contents"));
@@ -110,6 +110,7 @@ void Warnings_Config::loadSettings()
   dialogDefinitions.append(i18n("Close server tab"));
   dialogDefinitions.append(i18n("Close channel tab"));
   dialogDefinitions.append(i18n("Close query tab"));
+  dialogDefinitions.append(i18n("Close DCC Chat tab"));
   dialogDefinitions.append(i18n("The channel list can only be opened from server-aware tabs"));
   dialogDefinitions.append(i18n("Warning on hiding the main window menu"));
   dialogDefinitions.append(i18n("Warning on high traffic with channel list"));

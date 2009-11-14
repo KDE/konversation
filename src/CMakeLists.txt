@@ -161,6 +161,7 @@ kde4_add_ui_files(viewer_SRCS
     #=== DCC
 set(dcc_SRCS
     dcc/chat.cpp
+    dcc/chatcontainer.cpp
     dcc/dcccommon.cpp
     dcc/recipientdialog.cpp
     dcc/resumedialog.cpp

@@ -36,6 +36,8 @@ namespace Konversation
                 // returns the self IP following the setting.
                 static QString getOwnIp( Server* server = 0 );
 
+                static QString ipv6FallbackAddress(const QString& address);
+
                 // creates an instance of QTcpServer following the DCC settings
                 static QTcpServer* createServerSocketAndListen( QObject* parent = 0, QString* failedReason = 0, int minPort = 0, int maxPort = 0 );
 

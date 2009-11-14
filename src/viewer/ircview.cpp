@@ -16,7 +16,7 @@
 
 #include "ircview.h"
 #include "channel.h"
-#include "dcc/chat.h"
+#include "dcc/chatcontainer.h"
 #include "application.h"
 #include "mainwindow.h"
 #include "viewcontainer.h"
@@ -910,7 +910,7 @@ QString IRCView::createNickLine(const QString& nick, const QString& defaultColor
         }
         else if (m_chatWin->getType() == ChatWindow::DccChat)
         {
-            QString ownNick = static_cast<DCC::Chat*>(m_chatWin)->getOwnNick();
+            QString ownNick = static_cast<DCC::ChatContainer*>(m_chatWin)->ownNick();
 
             if (nick != ownNick)
                 nickColor = Preferences::self()->nickColor(Konversation::colorForNick(ownNick)).name();
@@ -1055,7 +1055,7 @@ bool doHighlight, bool parseURL, bool self)
     }
     else if (m_chatWin->getType() == ChatWindow::DccChat)
     {
-        ownNick = static_cast<DCC::Chat*>(m_chatWin)->getOwnNick();
+        ownNick = static_cast<DCC::ChatContainer*>(m_chatWin)->ownNick();
     }
 
     if(doHighlight && (whoSent != ownNick) && !self)

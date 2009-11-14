@@ -672,6 +672,11 @@
       <label></label>
       <whatsthis></whatsthis>
     </entry>
+    <entry key="ChatAutoAccept" type="Bool" name="DccChatAutoAccept">
+      <default>false</default>
+      <label></label>
+      <whatsthis></whatsthis>
+    </entry>
     <entry key="FastSend" type="Bool" name="DccFastSend">
       <default>true</default>
       <label></label>

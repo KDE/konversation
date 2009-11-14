@@ -37,54 +37,59 @@ namespace Konversation
         class Transfer;
         class TransferRecv;
         class TransferSend;
+        class Chat;
 
         class TransferManager : public QObject
         {
             Q_OBJECT
 
             public:
-                TransferManager( QObject* parent = 0 );
+                TransferManager(QObject* parent = 0);
                 ~TransferManager();
 
             signals:
                 /*
                  * The status of the item is DccTransfer::Configuring when this signal is emitted.
                  */
-                void newTransferAdded( Konversation::DCC::Transfer* transfer );
+                void newTransferAdded(Konversation::DCC::Transfer* transfer);
                 /*
                  * The status of the item is DccTransfer::Queued when this signal is emitted.
                  */
-                void newDccTransferQueued( Konversation::DCC::Transfer* transfer );
+                void newDccTransferQueued(Konversation::DCC::Transfer* transfer);
 
-                void fileURLChanged( Konversation::DCC::TransferRecv* transfer );
+                void fileURLChanged(Konversation::DCC::TransferRecv* transfer);
 
             public:
                 TransferRecv* newDownload();
                 TransferSend* newUpload();
+                Chat* newChat();
 
                 TransferSend* rejectSend(int connectionId, const QString& partnerNick, const QString& fileName);
+                Chat* rejectChat(int connectionId, const QString& partnerNick);
 
                 /**
                  * @return a DccTransferRecv item if applicable one found, otherwise 0.
                  */
-                TransferRecv* resumeDownload(int connectionId, const QString& partnerNick, const QString& fileName, uint ownPort, quint64 position );
+                TransferRecv* resumeDownload(int connectionId, const QString& partnerNick, const QString& fileName, quint16 ownPort, quint64 position);
 
                 /**
                  * @return a DccTransferSend item if applicable one found, otherwise 0.
                  */
-                TransferSend* resumeUpload(int connectionId, const QString& partnerNick, const QString& fileName, uint ownPort, quint64 position );
+                TransferSend* resumeUpload(int connectionId, const QString& partnerNick, const QString& fileName, quint16 ownPort, quint64 position);
 
-                TransferSend* startReverseSending(int connectionId, const QString& partnerNick, const QString& fileName, const QString& partnerHost, uint partnerPort, quint64 fileSize, const QString& token );
+                TransferSend* startReverseSending(int connectionId, const QString& partnerNick, const QString& fileName, const QString& partnerHost, quint16 partnerPort, quint64 fileSize, const QString& token);
+
+                Chat* startReverseChat(int connectionId, const QString& partnerNick, const QString& partnerHost, quint16 partnerPort, const QString& token);
 
                 void acceptDccGet(int connectionId, const QString& partnerNick, const QString& fileName);
 
-                bool isLocalFileInWritingProcess( const KUrl& localUrl ) const;
+                bool isLocalFileInWritingProcess(const KUrl& localUrl) const;
 
                 int generateReverseTokenNumber();
 
                 bool hasActiveTransfers();
 
-                UPnP::UPnPRouter *getUPnPRouter() { return m_upnpRouter; }
+                UPnP::UPnPRouter *getUPnPRouter();
                 void startupUPnP(void);
                 void shutdownUPnP(void);
 
@@ -92,12 +97,13 @@ namespace Konversation
                 /*
                  * initTransfer() does the common jobs for newDownload() and newUpload()
                  */
-                void initTransfer( Transfer* transfer );
+                void initTransfer(Transfer* transfer);
 
             private slots:
-                void slotTransferStatusChanged( Konversation::DCC::Transfer* item, int newStatus, int oldStatus );
-                void removeSendItem( Konversation::DCC::Transfer* item );
-                void removeRecvItem( Konversation::DCC::Transfer* item );
+                void slotTransferStatusChanged(Konversation::DCC::Transfer* item, int newStatus, int oldStatus);
+                void removeSendItem(Konversation::DCC::Transfer* item);
+                void removeRecvItem(Konversation::DCC::Transfer* item);
+                void removeChatItem(Konversation::DCC::Chat* chat);
 
                 void slotSettingsChanged();
 
@@ -106,6 +112,7 @@ namespace Konversation
             private:
                 QList< TransferSend* > m_sendItems;
                 QList< TransferRecv* > m_recvItems;
+                QList< Chat* > m_chatItems;
 
                 UPnP::UPnPMCastSocket *m_upnpSocket;
                 UPnP::UPnPRouter *m_upnpRouter;

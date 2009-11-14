@@ -22,7 +22,7 @@
 #include "urlcatcher.h"
 #include "transferpanel.h"
 #include "transfermanager.h"
-#include "chat.h"
+#include "chatcontainer.h"
 #include "statuspanel.h"
 #include "channel.h"
 #include "query.h"
@@ -2156,25 +2156,19 @@ DCC::TransferPanel* ViewContainer::getDccPanel()
     return m_dccPanel;
 }
 
-void ViewContainer::addDccChat(const QString& myNick,const QString& nick,const QStringList& arguments,bool listen)
+void ViewContainer::addDccChat(DCC::Chat* chat)
 {
-    if (!listen) // Someone else initiated dcc chat
+    if (chat->selfOpened()) // Someone else initiated dcc chat
     {
         Application* konv_app=static_cast<Application*>(KApplication::kApplication());
-        konv_app->notificationHandler()->dccChat(m_frontView, nick);
+        konv_app->notificationHandler()->dccChat(m_frontView, chat->partnerNick());
     }
 
-    if (m_frontServer)
-    {
-        DCC::Chat* dccChatPanel=listen
-            ? new DCC::Chat(m_tabWidget, listen, m_frontServer, myNick, nick )
-            : new DCC::Chat(m_tabWidget, listen, m_frontServer, myNick, nick, arguments[1], arguments[2].toInt() );
+    DCC::ChatContainer *chatcontainer = new DCC::ChatContainer(m_tabWidget,chat);
+    connect(chatcontainer, SIGNAL(updateTabNotification(ChatWindow*,const Konversation::TabNotifyType&)),
+            this, SLOT(setViewNotification(ChatWindow*,const Konversation::TabNotifyType&)));
 
-        connect(dccChatPanel, SIGNAL(updateTabNotification(ChatWindow*,const Konversation::TabNotifyType&)), this, SLOT(setViewNotification(ChatWindow*,const Konversation::TabNotifyType&)));
-
-        // This needs to be here as addView will change m_frontServer if focus new tabs is enabled.
-        addView(dccChatPanel, dccChatPanel->getName());
-    }
+    addView(chatcontainer, chatcontainer->getName());
 }
 
 StatusPanel* ViewContainer::addStatusView(Server* server)

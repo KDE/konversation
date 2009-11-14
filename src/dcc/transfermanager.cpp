@@ -19,6 +19,7 @@
 #include "upnpmcastsocket.h"
 #include "upnprouter.h"
 #include "transfer.h"
+#include "chat.h"
 
 using namespace Konversation::UPnP;
 
@@ -37,8 +38,8 @@ namespace Konversation
             connect( Application::instance(), SIGNAL( appearanceChanged() ),
                      this, SLOT( slotSettingsChanged() ) );
 
-            m_upnpRouter = NULL;
-            m_upnpSocket = NULL;
+            m_upnpRouter = 0;
+            m_upnpSocket = 0;
 
             if (Preferences::self()->dccUPnP())
                 startupUPnP();
@@ -55,8 +56,25 @@ namespace Konversation
             {
                 recvItem->abort();
             }
-            m_sendItems.clear();
-            m_recvItems.clear();
+            foreach (Chat* chatItem, m_chatItems)
+            {
+                chatItem->close();
+            }
+
+            // give the sockets a minor break to close everything 100%
+            // yes I am aware of the fact that this is not really needed, theoretical
+            while (!m_sendItems.isEmpty())
+            {
+                delete m_sendItems.takeFirst();
+            }
+            while (!m_recvItems.isEmpty())
+            {
+                delete m_recvItems.takeFirst();
+            }
+            while (!m_chatItems.isEmpty())
+            {
+                delete m_chatItems.takeFirst();
+            }
 
             shutdownUPnP();
         }
@@ -75,15 +93,15 @@ namespace Konversation
         {
             // This deletes the router too.
             if (m_upnpSocket) delete m_upnpSocket;
-            m_upnpSocket = NULL;
-            m_upnpRouter = NULL;
+            m_upnpSocket = 0;
+            m_upnpRouter = 0;
         }
 
         TransferRecv* TransferManager::newDownload()
         {
             TransferRecv* transfer = new TransferRecv(this);
             m_recvItems.push_back( transfer );
-            connect( transfer, SIGNAL( removed( Konversation::DCC::Transfer* ) ), this, SLOT( removeRecvItem( Konversation::DCC::Transfer* ) ) );
+            connect( transfer, SIGNAL( removed( Konversation::DCC::Transfer* ) ), this, SLOT( removeRecvItem(Konversation::DCC::Transfer*)));
             initTransfer( transfer );
             return transfer;
         }
@@ -92,9 +110,17 @@ namespace Konversation
         {
             TransferSend* transfer = new TransferSend(this);
             m_sendItems.push_back( transfer );
-            connect( transfer, SIGNAL( removed( Konversation::DCC::Transfer* ) ), this, SLOT( removeSendItem( Konversation::DCC::Transfer* ) ) );
+            connect( transfer, SIGNAL( removed( Konversation::DCC::Transfer* ) ), this, SLOT( removeSendItem(Konversation::DCC::Transfer*)));
             initTransfer( transfer );
             return transfer;
+        }
+
+        Chat* TransferManager::newChat()
+        {
+            Chat* chat = new Chat(this);
+            m_chatItems.append(chat);
+            connect( chat, SIGNAL( removed( Konversation::DCC::Chat* ) ), this, SLOT( removeChatItem(Konversation::DCC::Chat*)));
+            return chat;
         }
 
         TransferSend* TransferManager::rejectSend(int connectionId, const QString& partnerNick, const QString& fileName)
@@ -121,7 +147,29 @@ namespace Konversation
             return transfer;
         }
 
-        TransferRecv* TransferManager::resumeDownload( int connectionId, const QString& partnerNick, const QString& fileName, uint ownPort, quint64 position )
+        Chat* TransferManager::rejectChat(int connectionId, const QString& partnerNick)
+        {
+            Chat* chat = 0;
+
+            // find applicable one
+            foreach (Chat* it, m_chatItems)
+            {
+                if (it->status() == Chat::WaitingRemote &&
+                    it->connectionId() == connectionId &&
+                    it->partnerNick() == partnerNick)
+                {
+                    chat = it;
+                    break;
+                }
+            }
+
+            if (chat)
+                chat->reject();
+
+            return chat;
+        }
+
+        TransferRecv* TransferManager::resumeDownload( int connectionId, const QString& partnerNick, const QString& fileName, quint16 ownPort, quint64 position )
         {
             TransferRecv* transfer = 0;
 
@@ -150,7 +198,7 @@ namespace Konversation
             return transfer;
         }
 
-        TransferSend* TransferManager::resumeUpload( int connectionId, const QString& partnerNick, const QString& fileName, uint ownPort, quint64 position )
+        TransferSend* TransferManager::resumeUpload( int connectionId, const QString& partnerNick, const QString& fileName, quint16 ownPort, quint64 position )
         {
             TransferSend* transfer = 0;
 
@@ -179,7 +227,7 @@ namespace Konversation
             return transfer;
         }
 
-        TransferSend* TransferManager::startReverseSending( int connectionId, const QString& partnerNick, const QString& fileName, const QString& partnerHost, uint partnerPort, quint64 fileSize, const QString& token )
+        TransferSend* TransferManager::startReverseSending( int connectionId, const QString& partnerNick, const QString& fileName, const QString& partnerHost, quint16 partnerPort, quint64 fileSize, const QString& token )
         {
             kDebug() << "Server group ID: " << connectionId << ", partner: " << partnerNick << ", filename: " << fileName << ", partner IP: " << partnerHost << ", parnter port: " << partnerPort << ", filesize: " << fileSize << ", token: " << token;
             TransferSend* transfer = 0;
@@ -205,6 +253,37 @@ namespace Konversation
                 transfer->connectToReceiver( partnerHost, partnerPort );
 
             return transfer;
+        }
+
+
+        Chat* TransferManager::startReverseChat(int connectionId, const QString& partnerNick, const QString& partnerHost, quint16 partnerPort, const QString& token)
+        {
+            kDebug() << "Server group ID: " << connectionId << ", partner: " << partnerNick << ", partner IP: " << partnerHost << ", parnter port: " << partnerPort << ", token: " << token;
+            Chat* chat = 0;
+
+            // find applicable one
+            foreach (Chat* it, m_chatItems)
+            {
+                if (
+                    it->status() == Chat::WaitingRemote &&
+                    it->connectionId() == connectionId &&
+                    it->partnerNick() == partnerNick &&
+                    it->reverseToken() == token
+                )
+                {
+                    chat = it;
+                    break;
+                }
+            }
+
+            if (chat)
+            {
+                chat->setPartnerIp(partnerHost);
+                chat->setPartnerPort(partnerPort);
+                chat->connectToPartner();
+            }
+
+            return chat;
         }
 
         void TransferManager::acceptDccGet(int connectionId, const QString& partnerNick, const QString& fileName)
@@ -302,28 +381,38 @@ namespace Konversation
             }
         }
 
-        void TransferManager::removeSendItem( Transfer* item_ )
+        void TransferManager::removeSendItem( Transfer* item )
         {
-            TransferSend* item = static_cast< TransferSend* > ( item_ );
-            m_sendItems.removeOne( item );
+            TransferSend* transfer = static_cast< TransferSend* > ( item );
+            m_sendItems.removeOne( transfer );
             item->deleteLater();
         }
 
-        void TransferManager::removeRecvItem( Transfer* item_ )
+        void TransferManager::removeRecvItem( Transfer* item )
         {
-            TransferRecv* item = static_cast< TransferRecv* > ( item_ );
-            m_recvItems.removeOne( item );
+            TransferRecv* transfer = static_cast< TransferRecv* > ( item );
+            m_recvItems.removeOne( transfer );
             item->deleteLater();
+        }
+
+        void TransferManager::removeChatItem(Konversation::DCC::Chat* chat)
+        {
+            m_chatItems.removeOne(chat);
+            chat->deleteLater();
         }
 
         void TransferManager::upnpRouterDiscovered(UPnPRouter *router)
         {
-            kDebug() << "Router discovered!" << endl;
+            kDebug() << "Router discovered!";
 
             // Assuming only 1 router for now
             m_upnpRouter = router;
         }
 
+        UPnPRouter* TransferManager::getUPnPRouter()
+        {
+            return m_upnpRouter;
+        }
     }
 }
 

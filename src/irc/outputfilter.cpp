@@ -916,7 +916,9 @@ namespace Konversation
         kDebug() << input.parameter;
         // No parameter, just open DCC panel
         if (input.parameter.isEmpty())
+        {
             emit addDccPanel();
+        }
         else
         {
             QStringList parameterList = input.parameter.replace("\\ ", "%20").split(' ');
@@ -925,13 +927,19 @@ namespace Konversation
 
             //TODO close should not just refer to the gui-panel, let it close connections
             if (dccType == "close")
+            {
                 emit closeDccPanel();
+            }
             else if (dccType == "send")
             {
                 if (parameterList.count() == 1) // DCC SEND
+                {
                     emit requestDccSend();
+                }
                 else if (parameterList.count() == 2) // DCC SEND <nickname>
+                {
                     emit requestDccSend(parameterList[1]);
+                }
                 else if (parameterList.count() > 2) // DCC SEND <nickname> <file> [file] ...
                 {
                     // TODO: make sure this will work:
@@ -941,12 +949,16 @@ namespace Konversation
                     //We could easily check if the remote file exists, but then we might
                     //end up asking for creditionals twice, so settle for only checking locally
                     if (!fileURL.isLocalFile() || QFile::exists(fileURL.path()))
+                    {
                         emit openDccSend(parameterList[1],fileURL);
+                    }
                     else
+                    {
                         result = error(i18n("File \"%1\" does not exist.", parameterList[2]));
+                    }
                 }
                 else                              // Don't know how this should happen, but ...
-                    result = usage(i18n("Usage: %1DCC [SEND nickname filename]",
+                    result = usage(i18n("Usage: %1DCC [SEND [nickname [filename]]]",
                                         Preferences::self()->commandChar()));
             }
             else if (dccType == "get")
@@ -968,18 +980,24 @@ namespace Konversation
                                             Preferences::self()->commandChar()));
                 }
             }
-            // TODO: DCC Chat etc. comes here
             else if (dccType == "chat")
             {
-                if (parameterList.count() == 2)
-                    emit openDccChat(parameterList[1]);
-                else
-                    result = usage(i18n("Usage: %1DCC [CHAT nickname]",
-                                        Preferences::self()->commandChar()));
+                switch (parameterList.count())
+                {
+                    case 1:
+                        emit openDccChat("");
+                        break;
+                    case 2:
+                        emit openDccChat(parameterList[1]);
+                        break;
+                    default:
+                        result = usage(i18n("Usage: %1DCC [CHAT [nickname]]",
+                                            Preferences::self()->commandChar()));
+                }
             }
             else
                 result = error(i18n("Unrecognized command %1DCC %2. Possible commands are SEND, "
-                                    "CHAT, CLOSE.",
+                                    "CHAT, CLOSE, GET.",
                                     Preferences::self()->commandChar(), parameterList[0]));
         }
 
@@ -987,7 +1005,7 @@ namespace Konversation
     }
 
     OutputFilterResult OutputFilter::sendRequest(const QString &recipient, const QString &fileName,
-                                                 const QString &address, uint port, quint64 size)
+                                                 const QString &address, quint16 port, quint64 size)
     {
         OutputFilterResult result;
         result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + "DCC SEND "
@@ -1013,7 +1031,7 @@ namespace Konversation
     // Accepting Resume Request
     OutputFilterResult OutputFilter::acceptResumeRequest(const QString &recipient,
                                                          const QString &fileName,
-                                                         uint port, quint64 startAt)
+                                                         quint16 port, quint64 startAt)
     {
         OutputFilterResult result;
         result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + "DCC ACCEPT " + fileName + ' ' +
@@ -1025,7 +1043,7 @@ namespace Konversation
     // Accepting Passive Resume Request
     OutputFilterResult OutputFilter::acceptPassiveResumeRequest(const QString &recipient,
                                                                 const QString &fileName,
-                                                                uint port, quint64 startAt,
+                                                                quint16 port, quint64 startAt,
                                                                 const QString &token)
     {
         OutputFilterResult result;
@@ -1037,7 +1055,7 @@ namespace Konversation
 
     // Requesting Resume Request
     OutputFilterResult OutputFilter::resumeRequest(const QString &sender, const QString &fileName,
-                                                   uint port, KIO::filesize_t startAt)
+                                                   quint16 port, KIO::filesize_t startAt)
     {
         OutputFilterResult result;
         result.toServer = "PRIVMSG " + sender + " :" + '\x01' + "DCC RESUME " + fileName + ' ' +
@@ -1049,7 +1067,7 @@ namespace Konversation
     // Requesting Passive Resume Request
     OutputFilterResult OutputFilter::resumePassiveRequest(const QString &sender,
                                                           const QString &fileName,
-                                                          uint port, KIO::filesize_t startAt,
+                                                          quint16 port, KIO::filesize_t startAt,
                                                           const QString &token)
     {
         OutputFilterResult result;
@@ -1063,7 +1081,7 @@ namespace Konversation
     OutputFilterResult OutputFilter::acceptPassiveSendRequest(const QString& recipient,
                                                               const QString &fileName,
                                                               const QString &address,
-                                                              uint port, quint64 size,
+                                                              quint16 port, quint64 size,
                                                               const QString &token)
     {
         OutputFilterResult result;
@@ -1087,11 +1105,34 @@ namespace Konversation
     OutputFilterResult OutputFilter::rejectDccChat(const QString & partnerNick)
     {
         OutputFilterResult result;
-        result.toServer = "NOTICE " + partnerNick + " :" + '\x01' + "DCC REJECT CHAT chat" + '\x01';
+        result.toServer = "NOTICE " + partnerNick + " :" + '\x01' + "DCC REJECT CHAT CHAT" + '\x01';
 
         return result;
     }
 
+    OutputFilterResult OutputFilter::requestDccChat(const QString& partnerNick, const QString& numericalOwnIp, quint16 ownPort)
+    {
+        OutputFilterResult result;
+        result.toServer = "PRIVMSG " + partnerNick + " :" + '\x01' + "DCC CHAT CHAT "
+                          + numericalOwnIp + ' ' + QString::number(ownPort) + '\x01';
+        return result;
+    }
+
+    OutputFilterResult OutputFilter::passiveChatRequest(const QString& recipient, const QString& address, const QString& token)
+    {
+        OutputFilterResult result;
+        result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + "DCC CHAT CHAT "
+                          + address + " 0 " + token + '\x01';
+        return result;
+    }
+
+    OutputFilterResult OutputFilter::acceptPassiveChatRequest(const QString& recipient, const QString& numericalOwnIp, quint16 ownPort, const QString& token)
+    {
+        OutputFilterResult result;
+        result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + "DCC CHAT CHAT "
+                          + numericalOwnIp + ' ' + QString::number(ownPort) + ' ' + token + '\x01';
+        return result;
+    }
 
     OutputFilterResult OutputFilter::command_invite(const OutputFilterInput& input)
     {

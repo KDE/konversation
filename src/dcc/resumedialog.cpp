@@ -182,7 +182,7 @@ namespace Konversation
                 }
             }
             else // no underscore yet
-                suggestedName = basename + "_1" + dotSuffix ;
+                suggestedName = basename + "_1" + dotSuffix;
 
             // Check if suggested name already exists
             bool exists = false;

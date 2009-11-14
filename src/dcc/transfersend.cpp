@@ -36,19 +36,6 @@
 #include <KInputDialog>
 #include <KAuthorized>
 
-#include <stdlib.h>
-#include <sys/types.h>
-#include <netinet/in.h>
-#include <sys/socket.h>
-#ifndef Q_CC_MSVC
-#   include <net/if.h>
-#   include <sys/ioctl.h>
-#   ifdef HAVE_STROPTS_H
-#       include <stropts.h>
-#   endif
-#endif
-#include <arpa/inet.h>
-
 using namespace Konversation::UPnP;
 
 namespace Konversation
@@ -166,26 +153,7 @@ namespace Konversation
 
             if ( Preferences::self()->dccIPv4Fallback() )
             {
-                QHostAddress ip(m_ownIp);
-                if (ip.protocol() == QAbstractSocket::IPv6Protocol)
-                {
-        #ifndef Q_WS_WIN
-                    /* This is fucking ugly but there is no KDE way to do this yet :| -cartman */
-                    struct ifreq ifr;
-                    const QByteArray addressBa = Preferences::self()->dccIPv4FallbackIface().toAscii();
-                    const char* address = addressBa.constData();
-                    int sock = socket(AF_INET, SOCK_DGRAM, 0);
-                    strncpy( ifr.ifr_name, address, IF_NAMESIZE );
-                    ifr.ifr_addr.sa_family = AF_INET;
-                    if ( ioctl( sock, SIOCGIFADDR, &ifr ) >= 0 )
-                    {
-                        struct sockaddr_in sock;
-                        memcpy(&sock, &ifr.ifr_addr, sizeof(ifr.ifr_addr));
-                        m_ownIp = inet_ntoa(sock.sin_addr);
-                    }
-                    kDebug() << "Falling back to IPv4 address " << m_ownIp;
-        #endif
-                }
+                m_ownIp = DCC::DccCommon::ipv6FallbackAddress(m_ownIp);
             }
 
             m_fastSend = Preferences::self()->dccFastSend();
@@ -401,7 +369,7 @@ namespace Konversation
             m_sendSocket = m_serverSocket->nextPendingConnection();
             if ( !m_sendSocket )
             {
-                failed( i18n( "Could not accept the connection (socket error.)" ) );
+                failed( i18n( "Could not accept the connection (socket error)." ) );
                 return;
             }
             connect( m_sendSocket, SIGNAL( error ( QAbstractSocket::SocketError ) ), this, SLOT( slotGotSocketError( QAbstractSocket::SocketError ) ));

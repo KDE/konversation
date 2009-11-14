@@ -14,6 +14,17 @@
 #include "preferences.h"
 #include "server.h"
 
+#include <stdlib.h>
+#include <sys/types.h>
+#include <netinet/in.h>
+#include <sys/socket.h>
+#ifndef Q_CC_MSVC
+#   include <net/if.h>
+#   include <sys/ioctl.h>
+#   ifdef HAVE_STROPTS_H
+#       include <stropts.h>
+#   endif
+#endif
 #include <arpa/inet.h>
 
 #include <QHostAddress>
@@ -89,6 +100,35 @@ namespace Konversation
 
             kDebug() << ownIp;
             return ownIp;
+        }
+
+        QString DccCommon::ipv6FallbackAddress(const QString& address)
+        {
+            QString fallbackIp = address;
+            QHostAddress ip(address);
+            if (ip.protocol() == QAbstractSocket::IPv6Protocol)
+            {
+#ifndef Q_WS_WIN
+                /* This is fucking ugly but there is no KDE way to do this yet :| -cartman */
+                struct ifreq ifr;
+                const QByteArray addressBa = Preferences::self()->dccIPv4FallbackIface().toAscii();
+                const char* address = addressBa.constData();
+                int sock = socket(AF_INET, SOCK_DGRAM, 0);
+                strncpy(ifr.ifr_name, address, IF_NAMESIZE);
+                ifr.ifr_addr.sa_family = AF_INET;
+
+                if (ioctl( sock, SIOCGIFADDR, &ifr ) >= 0)
+                {
+                    struct sockaddr_in sock;
+                    memcpy(&sock, &ifr.ifr_addr, sizeof(ifr.ifr_addr));
+                    const QString fallbackIp = inet_ntoa(sock.sin_addr);
+                }
+                kDebug() << "Falling back to IPv4 address " << fallbackIp;
+#else
+                kDebug() << "TODO: implement ipv6 fallback";
+#endif
+            }
+            return fallbackIp;
         }
 
         QTcpServer* DccCommon::createServerSocketAndListen( QObject* parent, QString* failedReason, int minPort, int maxPort )

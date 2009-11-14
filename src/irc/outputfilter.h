@@ -72,21 +72,24 @@ namespace Konversation
             OutputFilterResult parse(const QString& myNick,const QString& line,const QString& destination);
 
             // dcc send
-            OutputFilterResult sendRequest(const QString &recipient,const QString &fileName,const QString &address,uint port,quint64 size);
-            OutputFilterResult passiveSendRequest(const QString& recipient,const QString &fileName,const QString &address,quint64 size,const QString &token);
-            OutputFilterResult acceptResumeRequest(const QString &recipient,const QString &fileName,uint port,quint64 startAt);
-            OutputFilterResult acceptPassiveResumeRequest(const QString &recipient,const QString &fileName,uint port,quint64 startAt,const QString &token);
+            OutputFilterResult sendRequest(const QString &recipient, const QString &fileName, const QString &address, quint16 port,quint64 size);
+            OutputFilterResult passiveSendRequest(const QString& recipient, const QString &fileName, const QString &address, quint64 size, const QString &token);
+            OutputFilterResult acceptResumeRequest(const QString &recipient, const QString &fileName, quint16 port, quint64 startAt);
+            OutputFilterResult acceptPassiveResumeRequest(const QString &recipient, const QString &fileName, quint16 port, quint64 startAt, const QString &token);
 
             // dcc recv
-            OutputFilterResult resumeRequest(const QString &sender,const QString &fileName,uint port,KIO::filesize_t startAt);
-            OutputFilterResult resumePassiveRequest(const QString &sender,const QString &fileName,uint port,KIO::filesize_t startAt,const QString &token);
-            OutputFilterResult acceptPassiveSendRequest(const QString& recipient,const QString &fileName,const QString &address,uint port,quint64 size,const QString &token);
+            OutputFilterResult resumeRequest(const QString &sender, const QString &fileName, quint16 port, KIO::filesize_t startAt);
+            OutputFilterResult resumePassiveRequest(const QString &sender, const QString &fileName, quint16 port, KIO::filesize_t startAt, const QString &token);
+            OutputFilterResult acceptPassiveSendRequest(const QString& recipient, const QString &fileName, const QString &address, quint16 port, quint64 size, const QString &token);
             OutputFilterResult rejectDccSend(const QString& partnerNick, const QString& fileName);
 
             // dcc chat
             OutputFilterResult rejectDccChat(const QString& partnerNick);
+            OutputFilterResult requestDccChat(const QString& partnerNick, const QString& numericalOwnIp, quint16 ownPort);
+            OutputFilterResult passiveChatRequest(const QString& recipient, const QString &address, const QString &token);
+            OutputFilterResult acceptPassiveChatRequest(const QString& recipient, const QString& numericalOwnIp, quint16 ownPort, const QString& token);
 
-            bool replaceAliases(QString& line);
+            static bool replaceAliases(QString& line);
 
         signals:
             void openDccSend(const QString &recipient, KUrl kurl);

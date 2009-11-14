@@ -8,97 +8,138 @@
 /*
   Copyright (C) 2002 Dario Abatianni <eisfuchs@tigress.com>
   Copyright (C) 2006 Eike Hein <hein@kde.org>
+  Copyright (C) 2009 Bernd Buschinski <b.buschinski@web.de>
 */
 
 #ifndef CHAT_H
 #define CHAT_H
 
-#include "chatwindow.h"
-
 #include <QAbstractSocket>
 
-class QSplitter;
 class QTcpSocket;
 class QTcpServer;
-
-class IRCInput;
 class Server;
 
 namespace Konversation
 {
-    class TopicLabel;
-
     namespace DCC
     {
-        class Chat : public ChatWindow
+        class Chat : public QObject
         {
             Q_OBJECT
 
             public:
-                Chat(QWidget* parent, bool listen, Server* server, const QString& ownNick,
-                     const QString& partnerNick, const QString& partnerHost = QString(), int partnerPort = 0);
+
+                enum Status
+                {
+                    Configuring = 0,                      // Not queud yet (this means that user can't see the item at this time)
+                    Queued,                               // Newly added DCC, waiting user's response
+                    WaitingRemote,                        // Waiting for remote host's response
+                    Connecting,                           // RECV: trying to connect to the server
+                    Chatting,
+                    Closed,
+
+                    Aborted,
+                    Failed
+                };
+
+                Chat(QObject *parent);
                 ~Chat();
 
-                virtual QString getTextInLine();
-                virtual bool closeYourself(bool askForConfirmation=true);
-                virtual bool canBeFrontView();
-                virtual bool searchView();
+                quint16 ownPort() const;
+                QString ownNick() const;
+                QString partnerNick() const;
+                quint16 partnerPort() const;
+                QString partnerIp() const;
+                QString reverseToken() const;
 
-                int getOwnPort();
+                void setConnectionId(int connectionId);
+                void setSelfOpened(bool opened);
+                bool selfOpened() const;
 
-                virtual void setChannelEncoding(const QString& encoding);
-                virtual QString getChannelEncoding();
-                virtual QString getChannelEncodingDefaultDesc();
+                void setPartnerNick(const QString &partnerNick);
+                void setReverse(bool reverse, const QString &token);
+                void setPartnerIp(const QString &partnerIP);
+                void setPartnerPort(quint16 partnerPort);
+                void setOwnNick(const QString &ownNick);
 
-                virtual bool isInsertSupported() { return true; }
+                void start();
+                void reject();
+                void close();
 
-                QString getOwnNick() { return m_ownNick; }
+                bool setEncoding(const QString &encoding);
+                QString getEncoding() const;
 
-            public slots:
-                void appendInputText(const QString& s, bool fromCursor);
-                void updateAppearance();
+                Status status() const;
+                QString statusDetails() const;
 
-            protected slots:
-                void lookupFinished();
-                void dccChatConnectionSuccess();
-                void dccChatBroken(QAbstractSocket::SocketError error);
-                void readData();
-                void dccChatTextEntered();
-                void sendDccChatText(const QString& sendLine);
-                void textPasted(const QString& text);
-                void heardPartner();
-                void socketClosed();
-                void sendRequest(bool error, quint16 port);
+                int connectionId() const;
 
-            protected:
-                void listenForPartner();
+                void removedFromView();
+
+                // used public by transfermanager
                 void connectToPartner();
 
-                virtual void showEvent(QShowEvent* event);
+            public slots:
+                void sendText(const QString &text);
+                void sendAction(const QString &action);
+                void sendRawLine(const QString &text);
 
-                /** Called from ChatWindow adjustFocus */
-                virtual void childAdjustFocus();
+            signals:
+                void statusChanged(Konversation::DCC::Chat *chat, Konversation::DCC::Chat::Status newStatus, Konversation::DCC::Chat::Status oldStatus);
+                void removed(Konversation::DCC::Chat *chat);
+
+                void receivedRawLine(const QString &line);
+
+                void aboutToClose();
+                void closed();
+                void error(QAbstractSocket::SocketError errorCode, const QString &errorMessage);
+
+                void upnpError(const QString &errorMessage);
+
+            protected slots:
+                void connectionEstablished();
+                void connectionFailed(QAbstractSocket::SocketError errorCode);
+                void heardPartner();
+                void socketClosed();
+
+                void readData();
+
+                void sendRequest(bool error, quint16 port);
+                void sendReverseAck(bool error, quint16 port);
+
+            protected:
+                void setStatus(Status status, const QString &detailMessage = QString());
+
+                void listenForPartner();
+
+            private:
+                inline Server *serverByConnectionId();
+                inline void failed(const QString &description);
+                inline void failedUPnP(const QString &description);
 
                 QString m_ownNick;
+                quint16 m_ownPort;
+                QString m_ownIp;
+
                 QString m_partnerNick;
-                QString m_partnerHost;
-                int m_partnerPort;
-                QString host;
+                QString m_partnerIp;
+                quint16 m_partnerPort;
+                QString m_token;
+                bool m_reverse;
+                bool m_selfOpened;
 
-                //QString m_ip;
-                uint m_ownPort;
+                int m_connectionId;
 
-                QSplitter* m_headerSplitter;
-                Konversation::TopicLabel* m_sourceLine;
-                IRCInput* m_dccChatInput;
-                QTcpSocket* m_dccSocket;
-                QTcpServer* m_listenSocket;
+                QTextStream m_textStream;
+
+                QTcpSocket *m_dccSocket;
+                QTcpServer *m_dccServer;
 
                 QString m_encoding;
 
-                bool m_initialShow;
-
-                int m_connectionId;
+                Status m_chatStatus;
+                QString m_chatDetailedStatus;
         };
     }
 }
