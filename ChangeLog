@@ -1,3 +1,14 @@
+Changes since 1.2.1:
+* Added support for passive DCC chat.
+* Made it possible to accept/reject DCC chats like DCC file transfers.
+* Added an option to auto-accept DCC chats (previously it would always
+  auto-accept).
+* Added a confirmation dialog for closing DCC chats, consistent with
+  other conversation tabs.
+* Improved the sanity-checking code for the validity of ports used in
+  DCC operations.
+
+
 Changes from 1.2 to 1.2.1:
 This second release in the Konversation 1.2.x release series for KDE 4
 adds a number of new features to the bookmarks system and support for
