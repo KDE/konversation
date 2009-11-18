@@ -2092,7 +2092,7 @@ void Server::startReverseDccChat(const QString &sourceNick, const QStringList &d
     kDebug() << "port: " << port;
     kDebug() << "token: " << token;
 
-    if (ok || dtm->startReverseChat(connectionId(), sourceNick,
+    if (!ok || dtm->startReverseChat(connectionId(), sourceNick,
                                     partnerIP, port, token) == 0)
     {
         // DTM could not find a matched item
@@ -2122,7 +2122,7 @@ void Server::startReverseDccSendTransfer(const QString& sourceNick,const QString
     kDebug() << "filesize: " << fileSize;
     kDebug() << "token: " << token;
 
-    if (ok ||
+    if (!ok ||
         dtm->startReverseSending(connectionId(), sourceNick,
                                  fileName,  // filename
                                  partnerIP,  // partner IP
