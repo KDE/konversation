@@ -40,6 +40,7 @@ namespace Konversation
             setServer(0);
             setChannelEncodingSupported(true);
             setPartnerNick(m_chat->partnerNick());
+            setLog(Preferences::self()->log());
 
             m_headerSplitter = new QSplitter(Qt::Vertical, this);
             m_topicLabel = new Konversation::TopicLabel(m_headerSplitter);

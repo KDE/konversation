@@ -41,13 +41,13 @@ namespace Konversation
             : QObject(parent),
               m_selfOpened(true),
               m_dccSocket(0),
-              m_dccServer(0)
+              m_dccServer(0),
+              m_chatStatus(Configuring)
         {
             kDebug();
             // set default values
             m_reverse = Preferences::self()->dccPassiveSend();
 
-            setStatus(Chat::Configuring);
             setEncoding(Konversation::IRCCharsets::self()->encodingForLocale());
         }
 
