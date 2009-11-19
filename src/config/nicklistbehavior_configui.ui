@@ -119,6 +119,7 @@ the Free Software Foundation; either version 2 of the License, or
  <tabstops>
   <tabstop>kcfg_ChannelDoubleClickAction</tabstop>
   <tabstop>kcfg_SortCaseInsensitive</tabstop>
+  <tabstop>kcfg_SortByActivity</tabstop>
   <tabstop>kcfg_SortByStatus</tabstop>
   <tabstop>sortOrder</tabstop>
  </tabstops>
