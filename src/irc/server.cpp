@@ -2160,7 +2160,7 @@ void Server::resumeDccGetTransfer(const QString &sourceNick, const QStringList &
     else
     {
         fileName = recoverDccFileName(dccArguments, 2); //port position
-        ownPort = stringToPort(dccArguments.at(argumentSize - 1), &ok); //-1 index, -1 pos
+        ownPort = stringToPort(dccArguments.at(argumentSize - 2), &ok); //-1 index, -1 pos
         position = dccArguments.at(argumentSize - 1).toULongLong(); //-1 index
     }
     //do we need the token here?
