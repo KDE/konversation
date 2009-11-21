@@ -7,6 +7,11 @@ Changes since 1.2.1:
   other conversation tabs.
 * Improved the sanity-checking code for the validity of ports used in
   DCC operations.
+* Fixed connection attempts possibly stalling when there is a problem
+  with executing the associated identity's pre-shell command (provided
+  it has one set at all), and Konversation crashing when it is quit
+  while a connection attempt is stuck on trying to execute the pre-
+  shell command.
 
 
 Changes from 1.2 to 1.2.1:

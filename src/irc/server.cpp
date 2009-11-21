@@ -207,11 +207,11 @@ bool Server::closeYourself(bool)
 
 void Server::doPreShellCommand()
 {
-
     QString command = getIdentity()->getShellCommand();
     getStatusView()->appendServerMessage(i18n("Info"),"Running preconfigured command...");
 
     connect(&m_preShellCommand,SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(preShellCommandExited(int, QProcess::ExitStatus)));
+    connect(&m_preShellCommand,SIGNAL(error(QProcess::ProcessError)), this, SLOT(preShellCommandError(QProcess::ProcessError)));
 
     const QStringList commandList = command.split(' ');
 
@@ -352,6 +352,16 @@ void Server::preShellCommandExited(int exitCode, QProcess::ExitStatus exitStatus
         getStatusView()->appendServerMessage(i18n("Info"),"Process executed successfully!");
     else
         getStatusView()->appendServerMessage(i18n("Warning"),"There was a problem while executing the command!");
+
+    connectToIRCServer();
+    connectSignals();
+}
+
+void Server::preShellCommandError(QProcess::ProcessError error)
+{
+    Q_UNUSED(error);
+
+    getStatusView()->appendServerMessage(i18n("Warning"),"There was a problem while executing the command!");
 
     connectToIRCServer();
     connectSignals();
@@ -720,6 +730,8 @@ void Server::quitServer()
     // (i.e. this is not redundant with _send_internal()'s updateConnectionState() call for
     // a QUIT).
     updateConnectionState(Konversation::SSDeliberatelyDisconnected);
+
+    if (!m_socket) return;
 
     QString command(Preferences::self()->commandChar()+"QUIT");
     Konversation::OutputFilterResult result = getOutputFilter()->parse(getNickname(),command, QString());

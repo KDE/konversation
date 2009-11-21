@@ -506,6 +506,7 @@ void resetNickSelection();
     protected slots:
         void hostFound();
         void preShellCommandExited(int exitCode, QProcess::ExitStatus exitStatus);
+        void preShellCommandError(QProcess::ProcessError eror);
         void ircServerConnectionSuccess();
         void startAwayTimer();
         void incoming();
