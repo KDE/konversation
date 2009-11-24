@@ -304,6 +304,8 @@ the Free Software Foundation; either version 2 of the License, or
   <tabstop>kcfg_ShowTrayIcon</tabstop>
   <tabstop>kcfg_TrayNotify</tabstop>
   <tabstop>kcfg_TrayNotifyOnlyOwnNick</tabstop>
+  <tabstop>kcfg_TrayNotifyBlink</tabstop>
+  <tabstop>kcfg_HideToTrayOnStartup</tabstop>
   <tabstop>kcfg_NickCompletionMode</tabstop>
   <tabstop>kcfg_NickCompleteSuffixStart</tabstop>
   <tabstop>kcfg_NickCompleteSuffixMiddle</tabstop>
