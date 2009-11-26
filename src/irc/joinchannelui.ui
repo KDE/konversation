@@ -5,8 +5,8 @@ it under the terms of the GNU General Public License as published by
 the Free Software Foundation; either version 2 of the License, or
 (at your option) any later version.
 </comment>
- <class>Konversation::JoinChannelUI</class>
- <widget class="QWidget" name="Konversation::JoinChannelUI" >
+ <class>JoinChannelUI</class>
+ <widget class="QWidget" name="JoinChannelUI" >
   <property name="geometry" >
    <rect>
     <x>0</x>
