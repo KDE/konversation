@@ -34,7 +34,7 @@ int main(int argc, char* argv[])
         "",
         ki18n("Konversation"),
         KONVI_VERSION " #" STRHACK(COMMIT),
-        ki18n("A user friendly IRC client"),
+        ki18n("A user-friendly IRC client"),
         KAboutData::License_GPL,
         ki18n("(C) 2002-2009 by the Konversation team"),
         ki18n("Konversation is a client for the Internet Relay Chat (IRC) protocol.\n"
