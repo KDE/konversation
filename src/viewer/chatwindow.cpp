@@ -25,6 +25,7 @@
 #include <QScrollBar>
 
 #include <KDialog>
+#include <KUser>
 
 
 ChatWindow::ChatWindow(QWidget* parent) : KVBox(parent)
