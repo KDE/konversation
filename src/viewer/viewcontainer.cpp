@@ -2158,7 +2158,7 @@ DCC::TransferPanel* ViewContainer::getDccPanel()
 
 void ViewContainer::addDccChat(DCC::Chat* chat)
 {
-    if (chat->selfOpened()) // Someone else initiated dcc chat
+    if (!chat->selfOpened()) // Someone else initiated dcc chat
     {
         Application* konv_app=static_cast<Application*>(KApplication::kApplication());
         konv_app->notificationHandler()->dccChat(m_frontView, chat->partnerNick());
