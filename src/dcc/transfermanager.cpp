@@ -350,6 +350,16 @@ namespace Konversation
             return false;
         }
 
+        bool TransferManager::hasActiveChats()
+        {
+            foreach (Chat* chat, m_chatItems)
+            {
+                if (chat->status() == Chat::Chatting)
+                    return true;
+            }
+            return false;
+        }
+
         void TransferManager::slotTransferStatusChanged( Transfer* item, int newStatus, int oldStatus )
         {
             kDebug() << oldStatus << " -> " << newStatus << " " << item->getFileName() << " (" << item->getType() << ")";
