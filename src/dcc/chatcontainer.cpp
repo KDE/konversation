@@ -77,6 +77,7 @@ namespace Konversation
                     action->setMenu(popup);
                 }
             }
+            updateAppearance();
         }
 
         ChatContainer::~ChatContainer()
