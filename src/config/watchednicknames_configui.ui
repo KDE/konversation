@@ -155,7 +155,7 @@ command is placed in the &lt;b&gt;Input Line&lt;/b&gt; on the server window.&lt;
          <bool>false</bool>
         </property>
         <property name="whatsThis">
-         <string>The irc server network (such as 'freenode') that the selected user to watch is on.</string>
+         <string>The IRC server network (such as 'Freenode') that the selected user to watch is on.</string>
         </property>
         <property name="text">
          <string>Network:</string>
@@ -171,7 +171,7 @@ command is placed in the &lt;b&gt;Input Line&lt;/b&gt; on the server window.&lt;
          <bool>false</bool>
         </property>
         <property name="whatsThis">
-         <string>The irc server network (such as 'freenode') that the selected user to watch is on.</string>
+         <string>The IRC server network (such as 'Freenode') that the selected user to watch is on.</string>
         </property>
        </widget>
       </item>
