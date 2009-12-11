@@ -3077,6 +3077,17 @@ void Server::renameNick(const QString &nickname, const QString &newNick)
     }
     // If we had a query with this nick, change that name, too
 
+    // We had an encrypt conversation with the user that changed his nick, lets copy the key to the new nick and remove the old nick
+    #ifdef HAVE_QCA2
+    QByteArray userKey = getKeyForRecipient(nickname);
+    
+    if(!userKey.isEmpty())
+    {
+        setKeyForRecipient(newNick, userKey);
+        m_keyMap.remove(nickname.toLower());
+    }
+    #endif
+
 }
 
 void Server::userhost(const QString& nick,const QString& hostmask,bool away,bool /* ircOp */)
