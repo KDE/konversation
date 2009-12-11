@@ -708,12 +708,12 @@ void Server::registerWithServices()
 //FIXME operator[] inserts an empty T& so each destination might just as well have its own key storage
 QByteArray Server::getKeyForRecipient(const QString& recipient) const
 {
-    return m_keyMap[recipient];
+    return m_keyMap[recipient.toLower()];
 }
 
 void Server::setKeyForRecipient(const QString& recipient, const QByteArray& key)
 {
-    m_keyMap[recipient] = key;
+    m_keyMap[recipient.toLower()] = key;
 }
 
 void Server::gotOwnResolvedHostByWelcome(const QHostInfo& res)
