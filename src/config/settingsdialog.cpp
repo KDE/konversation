@@ -25,7 +25,7 @@
 #include "nicklistbehavior_config.h"
 #include "tabs_config.h"
 #include "ui_colorsappearance_config.h"
-#include "ui_generalbehavior_config.h"
+#include "generalbehavior_config.h"
 #include "dcc_config.h"
 #include "osd_config.h"
 #include "theme_config.h"
@@ -91,10 +91,10 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   addPage ( m_confTabBarWdg, interfaceGroup, "tab-new", i18n("Tabs") );
 
   //Behavior/General
-  Ui::GeneralBehavior_Config confGeneralBehavior;
-  w = new QWidget();
-  confGeneralBehavior.setupUi(w);
-  addPage(w, behaviorGroup, "configure", i18n("General"));
+  m_generalBehaviorWdg = new GeneralBehavior_Config( this, "GeneralBehavior" );
+  addPage( m_generalBehaviorWdg, behaviorGroup, "configure", i18n("General") );
+  connect(m_generalBehaviorWdg, SIGNAL(modified()), this, SLOT(modifiedSlot()));
+  m_pages.append(m_generalBehaviorWdg);
 
   //Behavior/Connection
   ConnectionBehavior_Config* confConnectionBehavior = new ConnectionBehavior_Config(this);

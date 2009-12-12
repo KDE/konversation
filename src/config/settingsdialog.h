@@ -30,6 +30,7 @@ class WatchedNicknames_Config;
 class Highlight_Config;
 class OSD_Config;
 class Ignore_Config;
+class GeneralBehavior_Config;
 
 
 class KonviSettingsDialog : public KonviConfigDialog
@@ -64,6 +65,7 @@ class KonviSettingsDialog : public KonviConfigDialog
         Highlight_Config* m_confHighlightWdg;
         OSD_Config* m_confOSDWdg;
         Ignore_Config* m_confIgnoreWdg;
+        GeneralBehavior_Config* m_generalBehaviorWdg;
 
         bool m_modified;
 
