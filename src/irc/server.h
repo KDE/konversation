@@ -747,6 +747,9 @@ void resetNickSelection();
         /// Checks if the port is in a valid range
         inline quint16 stringToPort(const QString &port, bool *ok = 0);
 
+        /// Creates a list of known users and returns the one chosen by the user
+        inline QString recipientNick() const;
+
         /// Helper object to construct ISON (notify) list and map offline nicks to
         /// addressbook.
         ServerISON* m_serverISON;

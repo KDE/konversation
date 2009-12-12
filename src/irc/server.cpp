@@ -1706,29 +1706,11 @@ void Server::requestDccSend(const QString &a_recipient)
 {
     QString recipient(a_recipient);
     // if we don't have a recipient yet, let the user select one
-    if(recipient.isEmpty())
+    if (recipient.isEmpty())
     {
-        QStringList nickList;
-
-        // fill nickList with all nicks we know about
-        foreach (Channel* lookChannel, m_channelList)
-        {
-            foreach (Nick* lookNick, lookChannel->getNickList())
-            {
-                if (!nickList.contains(lookNick->getChannelNick()->getNickname()))
-                    nickList.append(lookNick->getChannelNick()->getNickname());
-            }
-        }
-
-        // add Queries as well, but don't insert duplicates
-        foreach (Query* lookQuery, m_queryList)
-        {
-            if(!nickList.contains(lookQuery->getName())) nickList.append(lookQuery->getName());
-        }
-        QStringListModel model;
-        model.setStringList(nickList);
-        recipient = DCC::RecipientDialog::getNickname(getViewContainer()->getWindow(), &model);
+        recipient = recipientNick();
     }
+
     // do we have a recipient *now*?
     if(!recipient.isEmpty())
     {
@@ -1849,6 +1831,30 @@ quint16 Server::stringToPort(const QString &port, bool *ok)
         }
     }
     return (quint16)uPort32;
+}
+
+QString Server::recipientNick() const
+{
+    QStringList nickList;
+
+    // fill nickList with all nicks we know about
+    foreach (Channel* lookChannel, m_channelList)
+    {
+        foreach (Nick* lookNick, lookChannel->getNickList())
+        {
+            if (!nickList.contains(lookNick->getChannelNick()->getNickname()))
+                nickList.append(lookNick->getChannelNick()->getNickname());
+        }
+    }
+
+    // add Queries as well, but don't insert duplicates
+    foreach (Query* lookQuery, m_queryList)
+    {
+        if(!nickList.contains(lookQuery->getName())) nickList.append(lookQuery->getName());
+    }
+    QStringListModel model;
+    model.setStringList(nickList);
+    return DCC::RecipientDialog::getNickname(getViewContainer()->getWindow(), &model);
 }
 
 void Server::addDccGet(const QString &sourceNick, const QStringList &dccArguments)
@@ -1983,26 +1989,7 @@ void Server::openDccChat(const QString& nickname)
     // if we don't have a recipient yet, let the user select one
     if (recipient.isEmpty())
     {
-        QStringList nickList;
-
-        // fill nickList with all nicks we know about
-        foreach (Channel* lookChannel, m_channelList)
-        {
-            foreach (Nick* lookNick, lookChannel->getNickList())
-            {
-                if (!nickList.contains(lookNick->getChannelNick()->getNickname()))
-                    nickList.append(lookNick->getChannelNick()->getNickname());
-            }
-        }
-
-        // add Queries as well, but don't insert duplicates
-        foreach (Query* lookQuery, m_queryList)
-        {
-            if(!nickList.contains(lookQuery->getName())) nickList.append(lookQuery->getName());
-        }
-        QStringListModel model;
-        model.setStringList(nickList);
-        recipient = DCC::RecipientDialog::getNickname(getViewContainer()->getWindow(), &model);
+        recipient = recipientNick();
     }
 
     // do we have a recipient *now*?
