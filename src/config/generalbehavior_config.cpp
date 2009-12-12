@@ -17,7 +17,9 @@ GeneralBehavior_Config::GeneralBehavior_Config(QWidget* parent, const char* name
     setupUi(this);
     
 #ifdef HAVE_NOTIFICATIONITEM
-    kcfg_TrayNotifyBlink->setDisabled(true);
+    kcfg_TrayNotifyBlink->setVisible(false);
+    horizontalLayout_2->removeItem(spacer51_2);
+    horizontalLayout_2->setEnabled(false);
 #endif
 }
 
