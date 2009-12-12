@@ -708,12 +708,12 @@ void Server::registerWithServices()
 //FIXME operator[] inserts an empty T& so each destination might just as well have its own key storage
 QByteArray Server::getKeyForRecipient(const QString& recipient) const
 {
-    return m_keyMap[recipient.toLower()];
+    return m_keyHash[recipient.toLower()];
 }
 
 void Server::setKeyForRecipient(const QString& recipient, const QByteArray& key)
 {
-    m_keyMap[recipient.toLower()] = key;
+    m_keyHash[recipient.toLower()] = key;
 }
 
 void Server::gotOwnResolvedHostByWelcome(const QHostInfo& res)
@@ -3072,19 +3072,19 @@ void Server::renameNick(const QString &nickname, const QString &newNick)
             // Note that NickPanel has already updated, so pass new nick to getNickByName.
             if (channel->getNickByName(newNick)) channel->nickRenamed(nickname, *nickInfo);
         }
+
         //Watched nicknames stuff
         if (isWatchedNick(nickname)) setWatchedNickOffline(nickname, NickInfoPtr());
     }
-    // If we had a query with this nick, change that name, too
 
     // We had an encrypt conversation with the user that changed his nick, lets copy the key to the new nick and remove the old nick
     #ifdef HAVE_QCA2
     QByteArray userKey = getKeyForRecipient(nickname);
-    
-    if(!userKey.isEmpty())
+
+    if (!userKey.isEmpty())
     {
         setKeyForRecipient(newNick, userKey);
-        m_keyMap.remove(nickname.toLower());
+        m_keyHash.remove(nickname.toLower());
     }
     #endif
 

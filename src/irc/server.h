@@ -768,7 +768,7 @@ void resetNickSelection();
         QString m_allowedChannelModes;
 
         // Blowfish key map
-        QMap<QString, QByteArray> m_keyMap;
+        QHash<QString, QByteArray> m_keyHash;
 
         bool m_identifyMsg;
         bool m_autoIdentifyLock;
