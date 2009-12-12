@@ -1102,35 +1102,35 @@ namespace Konversation
         return result;
     }
 
-    OutputFilterResult OutputFilter::rejectDccChat(const QString & partnerNick)
+    OutputFilterResult OutputFilter::rejectDccChat(const QString & partnerNick, const QString& extension)
     {
         OutputFilterResult result;
-        result.toServer = "NOTICE " + partnerNick + " :" + '\x01' + "DCC REJECT CHAT CHAT" + '\x01';
+        result.toServer = "NOTICE " + partnerNick + " :" + '\x01' + "DCC REJECT CHAT " + extension.toUpper() + '\x01';
 
         return result;
     }
 
-    OutputFilterResult OutputFilter::requestDccChat(const QString& partnerNick, const QString& numericalOwnIp, quint16 ownPort)
+    OutputFilterResult OutputFilter::requestDccChat(const QString& partnerNick, const QString& extension, const QString& numericalOwnIp, quint16 ownPort)
     {
         OutputFilterResult result;
-        result.toServer = "PRIVMSG " + partnerNick + " :" + '\x01' + "DCC CHAT CHAT "
-                          + numericalOwnIp + ' ' + QString::number(ownPort) + '\x01';
+        result.toServer = "PRIVMSG " + partnerNick + " :" + '\x01' + "DCC CHAT " +
+                          extension.toUpper() + ' ' + numericalOwnIp + ' ' + QString::number(ownPort) + '\x01';
         return result;
     }
 
-    OutputFilterResult OutputFilter::passiveChatRequest(const QString& recipient, const QString& address, const QString& token)
+    OutputFilterResult OutputFilter::passiveChatRequest(const QString& recipient, const QString extension, const QString& address, const QString& token)
     {
         OutputFilterResult result;
-        result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + "DCC CHAT CHAT "
-                          + address + " 0 " + token + '\x01';
+        result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + "DCC CHAT " +
+                          extension.toUpper() + ' ' + address + " 0 " + token + '\x01';
         return result;
     }
 
-    OutputFilterResult OutputFilter::acceptPassiveChatRequest(const QString& recipient, const QString& numericalOwnIp, quint16 ownPort, const QString& token)
+    OutputFilterResult OutputFilter::acceptPassiveChatRequest(const QString& recipient, const QString& extension, const QString& numericalOwnIp, quint16 ownPort, const QString& token)
     {
         OutputFilterResult result;
-        result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + "DCC CHAT CHAT "
-                          + numericalOwnIp + ' ' + QString::number(ownPort) + ' ' + token + '\x01';
+        result.toServer = "PRIVMSG " + recipient + " :" + '\x01' + "DCC CHAT " +
+                          extension.toUpper() + ' ' + numericalOwnIp + ' ' + QString::number(ownPort) + ' ' + token + '\x01';
         return result;
     }
 

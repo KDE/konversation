@@ -116,7 +116,7 @@ namespace Konversation
                     int token = Application::instance()->getDccTransferManager()->generateReverseTokenNumber();
                     m_token = QString::number(token);
                     kDebug() << "token:" << m_token;
-                    server->dccPassiveChatRequest(m_partnerNick, DccCommon::textIpToNumericalIp(m_ownIp), m_token);
+                    server->dccPassiveChatRequest(m_partnerNick, extensionString(), DccCommon::textIpToNumericalIp(m_ownIp), m_token);
                     setStatus(WaitingRemote, i18n("Awaiting remote user's acceptance"));
                 }
                 else
@@ -146,16 +146,16 @@ namespace Konversation
                 if (!Preferences::self()->dccChatAutoAccept())
                 {
                     int ret = KMessageBox::questionYesNo(0,
-                                                         i18nc("%1=partnerNick, %2=Servername","%1 (on %2) offers to DCC Chat with you",m_partnerNick,server->getServerName()),
-                                                         i18nc("%1=partnerNick","DCC Chat offer from %1",m_partnerNick),
+                                                         i18nc("%1=partnerNick, %2=Servername, %3=dcc extension as chat or wboard","%1 (on %2) offers to DCC %3 with you",m_partnerNick,server->getServerName(), extensionString()),
+                                                         i18nc("%1=dcc extension as chat or wboard, %2=partnerNick","DCC %1 offer from %2", extensionString(), m_partnerNick),
                                                          KGuiItem(i18n("Accept")),
                                                          KGuiItem(i18n("Reject"))
                                                          );
 
                     if (ret == KMessageBox::No)
                     {
-                        setStatus(Aborted, i18n("You rejected the DCC Chat offer."));
-                        server->dccRejectChat(m_partnerNick);
+                        setStatus(Aborted, i18nc("%1=dcc extension, as chat or wboard","You rejected the DCC %1 offer.", extensionString()));
+                        server->dccRejectChat(m_partnerNick, extensionString());
                         return;
                     }
                 }
@@ -297,7 +297,7 @@ namespace Konversation
             }
 
             QString ownNumericalIp = DccCommon::textIpToNumericalIp(DccCommon::getOwnIp(server));
-            server->requestDccChat(m_partnerNick, ownNumericalIp, m_ownPort);
+            server->requestDccChat(m_partnerNick, extensionString(), ownNumericalIp, m_ownPort);
         }
 
         void Chat::sendReverseAck(bool error, quint16 port)
@@ -325,7 +325,7 @@ namespace Konversation
                 }
             }
 
-            server->dccReverseChatAck(m_partnerNick, DccCommon::textIpToNumericalIp(m_ownIp), m_ownPort, m_token);
+            server->dccReverseChatAck(m_partnerNick, extensionString(), DccCommon::textIpToNumericalIp(m_ownIp), m_ownPort, m_token);
         }
 
         void Chat::listenForPartner()
@@ -368,6 +368,41 @@ namespace Konversation
         QString Chat::statusDetails() const
         {
             return m_chatDetailedStatus;
+        }
+
+        void Chat::setExtension(const QString& extension)
+        {
+            QString ext = extension.toLower();
+            if (ext == "chat")
+            {
+                m_chatExtension = SimpleChat;
+                return;
+            }
+            else if (ext == "wboard")
+            {
+                m_chatExtension = Whiteboard;
+                return;
+            }
+            kDebug() << "unknown chat extension:" << extension;
+            m_chatExtension = Unknown;
+            return;
+        }
+
+        Chat::Extension Chat::extension() const
+        {
+            return m_chatExtension;
+        }
+
+        QString Chat::extensionString() const
+        {
+            switch (extension())
+            {
+                case Whiteboard:
+                    return "wboard";
+                case SimpleChat:
+                default:
+                    return "chat";
+            }
         }
 
         int Chat::connectionId() const

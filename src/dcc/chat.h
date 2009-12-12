@@ -43,6 +43,13 @@ namespace Konversation
                     Failed
                 };
 
+                enum Extension
+                {
+                    Unknown = 0,
+                    SimpleChat,
+                    Whiteboard
+                };
+
                 Chat(QObject *parent);
                 ~Chat();
 
@@ -72,6 +79,10 @@ namespace Konversation
 
                 Status status() const;
                 QString statusDetails() const;
+
+                void setExtension(const QString& extension);
+                Extension extension() const;
+                QString extensionString() const;
 
                 int connectionId() const;
 
@@ -140,6 +151,8 @@ namespace Konversation
 
                 Status m_chatStatus;
                 QString m_chatDetailedStatus;
+
+                Extension m_chatExtension;
         };
     }
 }
