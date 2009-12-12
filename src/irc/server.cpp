@@ -1931,7 +1931,7 @@ void Server::addDccGet(const QString &sourceNick, const QStringList &dccArgument
     }
 }
 
-void Server::addDccChat(const QString& sourceNick,const QStringList& dccArguments)
+void Server::addDccChat(const QString& sourceNick, const QStringList& dccArguments)
 {
     //chat ip port [token]
     QString ip;
@@ -1940,17 +1940,19 @@ void Server::addDccChat(const QString& sourceNick,const QStringList& dccArgument
     bool reverse = false;
     const int argumentSize = dccArguments.count();
     bool ok = true;
+    QString extension;
+
+    extension = dccArguments.at(0);
+    ip = DCC::DccCommon::numericalIpToTextIp(dccArguments.at(1));
 
     if (argumentSize == 3)
     {
-        //CHAT ip port
-        ip = DCC::DccCommon::numericalIpToTextIp(dccArguments.at(1));
+        //extension ip port
         port = stringToPort(dccArguments.at(2), &ok);
     }
     else if (argumentSize == 4)
     {
-        //CHAT ip port(0) token
-        ip = DCC::DccCommon::numericalIpToTextIp(dccArguments.at(1));
+        //extension ip port(0) token
         token = dccArguments.at(3);
         reverse = true;
     }
@@ -1972,11 +1974,13 @@ void Server::addDccChat(const QString& sourceNick,const QStringList& dccArgument
     kDebug() << "ip: " << ip;
     kDebug() << "port: " << port;
     kDebug() << "token: " << token;
+    kDebug() << "extension: " << extension;
 
     newChat->setPartnerIp(ip);
     newChat->setPartnerPort(port);
     newChat->setReverse(reverse, token);
     newChat->setSelfOpened(false);
+    newChat->setExtension(extension);
 
     emit addDccChat(newChat);
     newChat->start();
@@ -2005,9 +2009,9 @@ void Server::openDccChat(const QString& nickname)
     }
 }
 
-void Server::requestDccChat(const QString& partnerNick, const QString& numericalOwnIp, quint16 ownPort)
+void Server::requestDccChat(const QString& partnerNick, const QString& extension, const QString& numericalOwnIp, quint16 ownPort)
 {
-    Konversation::OutputFilterResult result = getOutputFilter()->requestDccChat(partnerNick,numericalOwnIp,ownPort);
+    Konversation::OutputFilterResult result = getOutputFilter()->requestDccChat(partnerNick, extension, numericalOwnIp,ownPort);
     queue(result.toServer);
 }
 
@@ -2040,13 +2044,13 @@ void Server::dccPassiveSendRequest(const QString& recipient,const QString& fileN
                                     ( size == 0 ) ? i18n( "unknown size" ) : KIO::convertSize( size ) ) );
 }
 
-void Server::dccPassiveChatRequest(const QString& recipient, const QString& address, const QString& token)
+void Server::dccPassiveChatRequest(const QString& recipient, const QString& extension, const QString& address, const QString& token)
 {
-    Konversation::OutputFilterResult result = getOutputFilter()->passiveChatRequest(recipient, address, token);
+    Konversation::OutputFilterResult result = getOutputFilter()->passiveChatRequest(recipient, extension, address, token);
     queue(result.toServer);
 
     appendMessageToFrontmost(i18n("DCC"),
-                             i18n("Asking %1 to accept chat...", recipient));
+                             i18nc("%1=name, %2=dcc extension, chat or wboard for example","Asking %1 to accept %2...", recipient, extension));
 }
 
 void Server::dccPassiveResumeGetRequest(const QString& sender,const QString& fileName,quint16 port,KIO::filesize_t startAt,const QString &token)
@@ -2067,9 +2071,9 @@ void Server::dccReverseSendAck(const QString& partnerNick,const QString& fileNam
     queue(result.toServer);
 }
 
-void Server::dccReverseChatAck(const QString& partnerNick,const QString& ownAddress,quint16 ownPort,const QString& reverseToken)
+void Server::dccReverseChatAck(const QString& partnerNick, const QString& extension, const QString& ownAddress, quint16 ownPort, const QString& reverseToken)
 {
-    Konversation::OutputFilterResult result = getOutputFilter()->acceptPassiveChatRequest(partnerNick,ownAddress,ownPort,reverseToken);
+    Konversation::OutputFilterResult result = getOutputFilter()->acceptPassiveChatRequest(partnerNick, extension, ownAddress, ownPort, reverseToken);
     queue(result.toServer);
 }
 
@@ -2079,9 +2083,9 @@ void Server::dccRejectSend(const QString& partnerNick, const QString& fileName)
     queue(result.toServer);
 }
 
-void Server::dccRejectChat(const QString& partnerNick)
+void Server::dccRejectChat(const QString& partnerNick, const QString& extension)
 {
-    Konversation::OutputFilterResult result = getOutputFilter()->rejectDccChat(partnerNick);
+    Konversation::OutputFilterResult result = getOutputFilter()->rejectDccChat(partnerNick, extension);
     queue(result.toServer);
 }
 

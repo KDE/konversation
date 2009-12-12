@@ -355,9 +355,9 @@ void resetNickSelection();
         void dccReverseSendAck(const QString& partnerNick,const QString& fileName,const QString& ownAddress,quint16 ownPort,quint64 size,const QString& reverseToken);
         void dccRejectSend(const QString& partnerNick, const QString& fileName);
         // invoked by DCC::Chat
-        void dccRejectChat(const QString& partnerNick);
-        void dccPassiveChatRequest(const QString& recipient, const QString& address, const QString& token);
-        void dccReverseChatAck(const QString& partnerNick,const QString& ownAddress,quint16 ownPort,const QString& reverseToken);
+        void dccRejectChat(const QString& partnerNick, const QString& extension);
+        void dccPassiveChatRequest(const QString& recipient, const QString& extension, const QString& address, const QString& token);
+        void dccReverseChatAck(const QString& partnerNick, const QString& extension, const QString& ownAddress, quint16 ownPort, const QString& reverseToken);
 
     // IRCQueueManager
         bool validQueue(QueuePriority priority); ///< is this queue index valid?
@@ -451,7 +451,7 @@ void resetNickSelection();
         void closeChannel(const QString &name);
         void quitServer();
         void openDccChat(const QString& nickname);
-        void requestDccChat(const QString& partnerNick, const QString& numericalOwnIp, quint16 ownPort);
+        void requestDccChat(const QString& partnerNick, const QString& extension, const QString& numericalOwnIp, quint16 ownPort);
         void acceptDccGet(const QString& nick, const QString& file);
         void requestBan(const QStringList& users,const QString& channel,const QString& option);
         void requestUnban(const QString& mask,const QString& channel);
