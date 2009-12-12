@@ -4,6 +4,7 @@ project(konversation)
 cmake_minimum_required(VERSION 2.6.0)
 
 set(KDE_MIN_VERSION "4.00.82")
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
 
 #atm this gets is FindQt4 and FindX11 (provided that the default cmake FindQt4 doesn't get used)
 find_package(KDE4 REQUIRED)
@@ -36,6 +37,10 @@ endif (Q_WS_X11)
 macro_optional_find_package(QCA2)
 macro_bool_to_01(QCA2_FOUND HAVE_QCA2)
 macro_log_feature(QCA2_FOUND "QCA" "Qt Cryptographic Architecture" "http://delta.affinix.com/qca" FALSE "2.0.0" "Required for using encryption in IRC")
+
+macro_optional_find_package(LibKNotificationItem-1)
+macro_bool_to_01(LIBKNOTIFICATIONITEM-1_FOUND HAVE_NOTIFICATIONITEM)
+macro_log_feature(LIBKNOTIFICATIONITEM-1_FOUND "LibKNotificationItem-1" "KDE enhanced system tray library" "http://kde.org/" FALSE "" "Needed to build enhanced systray support")
 
 configure_file(config-konversation.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-konversation.h )
 

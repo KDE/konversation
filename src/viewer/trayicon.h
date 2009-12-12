@@ -15,23 +15,33 @@
 #ifndef TRAYICON_H
 #define TRAYICON_H
 
+#include <config-konversation.h>
 
+#ifdef HAVE_NOTIFICATIONITEM
+#include <knotificationitem-1/knotificationitem.h>
+
+using namespace Experimental;
+#else
 #include <ksystemtrayicon.h>
 
-
 class QTimer;
+#endif
 
 namespace Konversation
 {
-
+#ifdef HAVE_NOTIFICATIONITEM
+    class TrayIcon : public KNotificationItem
+#else
     class TrayIcon : public KSystemTrayIcon
+#endif
     {
         Q_OBJECT
-
+        
         public:
             explicit TrayIcon(QWidget* parent = 0);
             ~TrayIcon();
 
+            void setVisibility(bool visible);
             bool notificationEnabled() { return m_notificationEnabled; }
 
         public slots:
@@ -40,18 +50,25 @@ namespace Konversation
             void setNotificationEnabled(bool notify) { m_notificationEnabled = notify; }
             void updateAppearance();
 
+        #ifndef HAVE_NOTIFICATIONITEM
         protected slots:
             void blinkTimeout();
+        #endif
 
         private:
+            bool m_notificationEnabled;
+
+        #ifdef HAVE_NOTIFICATIONITEM
+            QString m_nomessagePix;
+            QString m_messagePix;
+        #else
             QTimer* m_blinkTimer;
             bool m_blinkOn;
 
-            bool m_notificationEnabled;
-
             QIcon m_nomessagePix;
             QIcon m_messagePix;
+        #endif
     };
-
 }
+
 #endif

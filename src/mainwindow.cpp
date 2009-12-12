@@ -58,6 +58,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     m_hasDirtySettings = false;
     m_closeApp = false;
     m_serverListDialog = 0;
+    m_trayIcon = 0;
     m_settingsDialog = NULL;
 
     m_viewContainer = new ViewContainer(this);
@@ -112,9 +113,9 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     KStandardAction::configureToolbars(this, SLOT(configureToolbars()), actionCollection());
 
     KStandardAction::keyBindings(this, SLOT(openKeyBindings()), actionCollection());
-    KAction *preferencesAction = KStandardAction::preferences(this, SLOT(openPrefsDialog()), actionCollection());
+    KStandardAction::preferences(this, SLOT(openPrefsDialog()), actionCollection());
 
-    KAction *configureNotificationsAction = KStandardAction::configureNotifications(this,SLOT(openNotifications()), actionCollection());
+    KStandardAction::configureNotifications(this, SLOT(openNotifications()), actionCollection());
 
     KAction* action;
 
@@ -478,17 +479,6 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     connect(toggleChannelNickListsAction, SIGNAL(triggered()), m_viewContainer, SLOT(toggleChannelNicklists()));
     actionCollection()->addAction("hide_nicknamelist", toggleChannelNickListsAction);
 
-    // set up system tray
-    m_trayIcon = new Konversation::TrayIcon(this);
-    connect(this, SIGNAL(endNotification()), m_trayIcon, SLOT(endNotification()));
-    connect(KGlobalSettings::self(), SIGNAL(iconChanged(int)), m_trayIcon, SLOT(updateAppearance()));
-    connect(m_trayIcon, SIGNAL(quitSelected()), this, SLOT(quitProgram()));
-    KMenu *trayMenu = qobject_cast<KMenu*>(m_trayIcon->contextMenu());
-    trayMenu->addAction(configureNotificationsAction);
-    trayMenu->addAction(preferencesAction);
-    trayMenu->addAction(awayAction);
-
-
     // Bookmarks
     KActionMenu *bookmarkMenu = new KActionMenu(i18n("Bookmarks"), actionCollection());
     new KonviBookmarkHandler(bookmarkMenu->menu(), this);
@@ -663,12 +653,32 @@ void MainWindow::resetHasDirtySettings()
 
 void MainWindow::updateTrayIcon()
 {
-    m_trayIcon->setNotificationEnabled(Preferences::self()->trayNotify());
-
     if (Preferences::self()->showTrayIcon())
-        m_trayIcon->show();
+    {
+        if (!m_trayIcon)
+        {
+            // set up system tray
+            m_trayIcon = new Konversation::TrayIcon(this);
+            connect(this, SIGNAL(endNotification()), m_trayIcon, SLOT(endNotification()));
+            connect(KGlobalSettings::self(), SIGNAL(iconChanged(int)), m_trayIcon, SLOT(updateAppearance()));
+            connect(m_trayIcon, SIGNAL(quitSelected()), this, SLOT(quitProgram()));
+                      
+            KMenu *trayMenu = qobject_cast<KMenu*>(m_trayIcon->contextMenu());
+            trayMenu->addAction(actionCollection()->action(KStandardAction::name(KStandardAction::Preferences)));
+            trayMenu->addAction(actionCollection()->action(KStandardAction::name(KStandardAction::ConfigureNotifications)));
+            trayMenu->addAction(actionCollection()->action("toggle_away"));
+        }
+
+        m_trayIcon->setNotificationEnabled(Preferences::self()->trayNotify());    
+    }
     else
-        m_trayIcon->hide();
+    {
+        if (m_trayIcon)
+        {
+            delete m_trayIcon;
+            m_trayIcon = 0;
+        }
+    }
 }
 
 void MainWindow::toggleMenubar(bool dontShowWarning)

@@ -6,6 +6,10 @@ if (QCA2_FOUND)
     include_directories(${QCA2_INCLUDE_DIR})
 endif (QCA2_FOUND)
 
+if (LIBKNOTIFICATIONITEM-1_FOUND)
+    include_directories(${KNOTIFICATIONITEM_INCLUDE_DIR})
+endif (LIBKNOTIFICATIONITEM-1_FOUND)
+
 set(core_SRCS
     #====================================
     #=== Application
@@ -145,7 +149,6 @@ set(viewer_SRCS
     viewer/insertchardialog.cpp
     viewer/osd.cpp
     viewer/topiclabel.cpp
-    viewer/trayicon.cpp
     viewer/editnotifydialog.cpp
     viewer/emoticons.cpp
     viewer/images.cpp
@@ -202,7 +205,15 @@ set(upnp_SRCS
     upnp/upnprouter.cpp
 )
 
-set (completed_SRCS ${core_SRCS}  ${irc_SRCS} ${viewer_SRCS} ${config_SRCS} ${dcc_SRCS} ${linkaddressbook_SRCS} ${cipher_SRCS} ${upnp_SRCS})
+if (LIBKNOTIFICATIONITEM-1_FOUND)
+    set(trayicon_SRCS
+        viewer/trayiconknotificationitem.cpp)
+else (LIBKNOTIFICATIONITEM-1_FOUND)
+    set(trayicon_SRCS
+        viewer/trayiconksystemtray.cpp)
+endif (LIBKNOTIFICATIONITEM-1_FOUND)
+
+set (completed_SRCS ${core_SRCS}  ${irc_SRCS} ${viewer_SRCS} ${trayicon_SRCS} ${config_SRCS} ${dcc_SRCS} ${linkaddressbook_SRCS} ${cipher_SRCS} ${upnp_SRCS})
 set (konversation_SRCS ${completed_SRCS})
 
 kde4_add_ui_files(konversation_SRCS
@@ -220,6 +231,7 @@ kde4_add_executable(konversation ${konversation_SRCS})
 target_link_libraries(konversation ${KDE4_KIO_LIBS} ${KDE4_KUTILS_LIBS} ${KDE4_KPARTS_LIBS}
                             ${KDE4_KDE3SUPPORT_LIBS} ${KDE4_KABC_LIBS}
                             ${KDE4_KNOTIFYCONFIG_LIBRARY} ${PHONON_LIBRARY} ${KDE4_SOLID_LIBS})
+
 if (X11_FOUND AND X11_Xutil_FOUND)
     target_link_libraries(konversation ${X11_X11_LIB})
 endif (X11_FOUND AND X11_Xutil_FOUND)
@@ -231,6 +243,10 @@ endif (X11_Xscreensaver_FOUND)
 if (QCA2_FOUND)
     target_link_libraries(konversation ${QCA2_LIBRARIES})
 endif (QCA2_FOUND)
+
+if (LIBKNOTIFICATIONITEM-1_FOUND)
+    target_link_libraries(konversation ${KNOTIFICATIONITEM_LIBRARIES})
+endif (LIBKNOTIFICATIONITEM-1_FOUND)
 
 CHECK_INCLUDE_FILE(
   "stropts.h" HAVE_STROPTS_H)
