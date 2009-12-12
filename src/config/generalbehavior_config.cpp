@@ -39,7 +39,12 @@ void GeneralBehavior_Config::saveSettings()
 
 bool GeneralBehavior_Config::hasChanged()
 {
-    return true; // FIXME: is this OK?
+    // always return false because we do NOT know if
+    // something has changed...
+    // all changes should be handled by
+    // GeneralBehavior_ConfigUI's SIGNAL(modified())
+    // (which is handled in KonviSettingsDialog)
+    return false;
 }
 
 #include "generalbehavior_config.moc"
