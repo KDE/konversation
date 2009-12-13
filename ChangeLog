@@ -16,7 +16,8 @@ Changes since 1.2.1:
   (i.e. a channel or a query) case-sensitive.
 * Fixed the encryption key for a query getting lost if the other end
   changes their nickname.
-* Added support for KNotificationItem, the new system tray API in KDE.
+* Added support for KStatusNotifierItem, the new system tray API in
+  KDE.
 
 
 Changes from 1.2 to 1.2.1:
