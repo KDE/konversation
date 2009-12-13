@@ -6,6 +6,7 @@
 */
 
 #include "trayicon.h"
+#include "application.h"
 #include "config/preferences.h"
 
 namespace Konversation
