@@ -205,13 +205,13 @@ set(upnp_SRCS
     upnp/upnprouter.cpp
 )
 
-if (LIBKNOTIFICATIONITEM-1_FOUND)
+if (HAVE_KSTATUSNOTIFIERITEM)
     set(trayicon_SRCS
-        viewer/trayiconknotificationitem.cpp)
-else (LIBKNOTIFICATIONITEM-1_FOUND)
+        viewer/trayiconkstatusnotifieritem.cpp)
+else (HAVE_KSTATUSNOTIFIERITEM)
     set(trayicon_SRCS
         viewer/trayiconksystemtray.cpp)
-endif (LIBKNOTIFICATIONITEM-1_FOUND)
+endif (HAVE_KSTATUSNOTIFIERITEM)
 
 set (completed_SRCS ${core_SRCS}  ${irc_SRCS} ${viewer_SRCS} ${trayicon_SRCS} ${config_SRCS} ${dcc_SRCS} ${linkaddressbook_SRCS} ${cipher_SRCS} ${upnp_SRCS})
 set (konversation_SRCS ${completed_SRCS})
@@ -243,10 +243,6 @@ endif (X11_Xscreensaver_FOUND)
 if (QCA2_FOUND)
     target_link_libraries(konversation ${QCA2_LIBRARIES})
 endif (QCA2_FOUND)
-
-if (LIBKNOTIFICATIONITEM-1_FOUND)
-    target_link_libraries(konversation ${KNOTIFICATIONITEM_LIBRARIES})
-endif (LIBKNOTIFICATIONITEM-1_FOUND)
 
 CHECK_INCLUDE_FILE(
   "stropts.h" HAVE_STROPTS_H)

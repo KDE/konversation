@@ -38,9 +38,9 @@ macro_optional_find_package(QCA2)
 macro_bool_to_01(QCA2_FOUND HAVE_QCA2)
 macro_log_feature(QCA2_FOUND "QCA" "Qt Cryptographic Architecture" "http://delta.affinix.com/qca" FALSE "2.0.0" "Required for using encryption in IRC")
 
-macro_optional_find_package(LibKNotificationItem-1)
-macro_bool_to_01(LIBKNOTIFICATIONITEM-1_FOUND HAVE_NOTIFICATIONITEM)
-macro_log_feature(LIBKNOTIFICATIONITEM-1_FOUND "LibKNotificationItem-1" "KDE enhanced system tray library" "http://kde.org/" FALSE "" "Needed to build enhanced systray support")
+#check for greater than 4.3.80
+macro_ensure_version( "4.3.80" ${KDE_VERSION} HAVEKDE4_4 )
+macro_bool_to_01(HAVEKDE4_4 HAVE_KSTATUSNOTIFIERITEM)
 
 configure_file(config-konversation.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-konversation.h )
 

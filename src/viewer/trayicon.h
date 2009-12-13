@@ -17,10 +17,8 @@
 
 #include <config-konversation.h>
 
-#ifdef HAVE_NOTIFICATIONITEM
-#include <knotificationitem-1/knotificationitem.h>
-
-using namespace Experimental;
+#ifdef HAVE_KSTATUSNOTIFIERITEM
+#include <kstatusnotifieritem.h>
 #else
 #include <ksystemtrayicon.h>
 
@@ -29,8 +27,8 @@ class QTimer;
 
 namespace Konversation
 {
-#ifdef HAVE_NOTIFICATIONITEM
-    class TrayIcon : public KNotificationItem
+#ifdef HAVE_KSTATUSNOTIFIERITEM
+    class TrayIcon : public KStatusNotifierItem
 #else
     class TrayIcon : public KSystemTrayIcon
 #endif
@@ -50,7 +48,7 @@ namespace Konversation
             void setNotificationEnabled(bool notify) { m_notificationEnabled = notify; }
             void updateAppearance();
 
-        #ifndef HAVE_NOTIFICATIONITEM
+        #ifndef HAVE_KSTATUSNOTIFIERITEM
         protected slots:
             void blinkTimeout();
         #endif
@@ -58,7 +56,7 @@ namespace Konversation
         private:
             bool m_notificationEnabled;
 
-        #ifdef HAVE_NOTIFICATIONITEM
+        #ifdef HAVE_KSTATUSNOTIFIERITEM
             QString m_nomessagePix;
             QString m_messagePix;
         #else

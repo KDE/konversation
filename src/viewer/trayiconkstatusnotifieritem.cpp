@@ -12,7 +12,7 @@
 namespace Konversation
 {
 
-    TrayIcon::TrayIcon(QWidget* parent) : KNotificationItem(parent)
+    TrayIcon::TrayIcon(QWidget* parent) : KStatusNotifierItem(parent)
     {
         setCategory(Communications);
         setStatus(Active);
