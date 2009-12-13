@@ -4,9 +4,8 @@ project(konversation)
 cmake_minimum_required(VERSION 2.6.0)
 
 set(KDE_MIN_VERSION "4.00.82")
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH})
 
-#atm this gets is FindQt4 and FindX11 (provided that the default cmake FindQt4 doesn't get used)
+#atm this gets us FindQt4 and FindX11 (provided that the default cmake FindQt4 doesn't get used)
 find_package(KDE4 REQUIRED)
 find_package(KdepimLibs REQUIRED)
 include(KDE4Defaults)
