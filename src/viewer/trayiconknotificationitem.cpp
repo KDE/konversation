@@ -19,6 +19,8 @@ namespace Konversation
         m_notificationEnabled = false;
         
         updateAppearance();
+	
+	setToolTip("konversation", i18n("Konversation"), i18n("Konversation - IRC Client"));
     }
 
     TrayIcon::~TrayIcon()
