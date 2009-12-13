@@ -103,7 +103,6 @@ set(config_SRCS
     config/warnings_config.cpp
     config/watchednicknames_config.cpp
     config/connectionbehavior_config.cpp
-    config/generalbehavior_config.cpp
 )
 
 kde4_add_ui_files(config_SRCS
