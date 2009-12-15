@@ -18,6 +18,14 @@ Changes since 1.2.1:
   changes their nickname.
 * Added support for KStatusNotifierItem, the new system tray API in
   KDE.
+* Fixed a bug causing multiple auto-replacements in a single message
+  not to work.
+* Made it possible to include syntax normally used to refer to a sub-
+  group of the matching pattern as normal text in the replacement pat-
+  tern of a regular expression auto-replace, by escaping it like this:
+  %%1.
+* Fixed a bug causing an empty MODE message to be sent to the server
+  preceding the correct one when using /op, /deop and the like.
 
 
 Changes from 1.2 to 1.2.1:
