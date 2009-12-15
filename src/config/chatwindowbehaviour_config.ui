@@ -99,7 +99,7 @@
       <item row="6" column="1">
        <widget class="QSpinBox" name="kcfg_ScrollbackMax">
         <property name="toolTip">
-         <string>Maximum Scrollback Limit: 10000 lines.</string>
+         <string>Maximum scrollback limit: 10000 lines.</string>
         </property>
         <property name="whatsThis">
          <string>How many lines to keep in buffers, 0 = unlimited</string>
