@@ -26,6 +26,12 @@ Changes since 1.2.1:
   %%1.
 * Fixed a bug causing an empty MODE message to be sent to the server
   preceding the correct one when using /op, /deop and the like.
+* Fixed a bug causing as many mode chars as target nicknames given to
+  commands like /op, /deop etc. to be sent as part of every single re-
+  sultant MODE messages sent to the server, despite one MODE message
+  being generated for every group of three target nicknames. I.e. "/op
+  foo foo foo foo" would result in "MODE +oooo foo foo foo" and "MODE
+  +oooo foo", when it should only be "+ooo" and "+o", respectively.
 
 
 Changes from 1.2 to 1.2.1:
