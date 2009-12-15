@@ -1866,25 +1866,30 @@ namespace Konversation
             // Only continue if there was no error
             if(token.length())
             {
-                unsigned int modeCount = nickList.count();
-                QString modes;
-                modes.fill(mode, modeCount);
+                QString modeToken;
+                QString nickToken;
 
-                token += QString(" ") + QChar(giveTake) + modes;
+                modeToken = QString(" ") + QChar(giveTake);
+
                 tmpToken = token;
 
-                for(unsigned int index = 0; index < modeCount; index++)
+                for(int index = 0; index < nickList.count(); index++)
                 {
                     if(index != 0 && (index % 3) == 0)
                     {
+                        token += modeToken + nickToken;
                         result.toServerList.append(token);
                         token = tmpToken;
+                        nickToken = QString();
+                        modeToken = QString(" ") + QChar(giveTake);
                     }
-                    token += ' ' + nickList[index];
+                    nickToken += ' ' + nickList[index];
+                    modeToken += mode;
                 }
 
-                if(token != tmpToken)
+                if(!nickToken.isEmpty())
                 {
+                    token += modeToken + nickToken;
                     result.toServerList.append(token);
                 }
             }
