@@ -1875,7 +1875,7 @@ namespace Konversation
 
                 for(unsigned int index = 0; index < modeCount; index++)
                 {
-                    if((index % 3) == 0)
+                    if(index != 0 && (index % 3) == 0)
                     {
                         result.toServerList.append(token);
                         token = tmpToken;
