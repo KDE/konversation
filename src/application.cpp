@@ -37,6 +37,7 @@
 #include <QtDBus/QDBusConnection>
 #include <QNetworkProxy>
 
+#include <KRun>
 #include <KCmdLineArgs>
 #include <KConfig>
 #include <KShell>
@@ -1070,10 +1071,12 @@ QString Application::doAutoreplace(const QString& text,bool output)
 
 void Application::openUrl(const QString& url)
 {
-    if (!Preferences::self()->useCustomBrowser() || url.startsWith(QLatin1String("mailto:")))
+    if (!Preferences::self()->useCustomBrowser() || url.startsWith(QLatin1String("mailto:")) || url.startsWith(QLatin1String("amarok:")))
     {
         if (url.startsWith(QLatin1String("mailto:")))
             KToolInvocation::invokeMailer(KUrl(url));
+        if (url.startsWith(QLatin1String("amarok:")))
+            new KRun(KUrl(url), Application::instance()->getMainWindow());
         else
             KToolInvocation::invokeBrowser(url);
     }
