@@ -518,7 +518,7 @@ bool ChatWindow::eventFilter(QObject* watched, QEvent* e)
 
             return true;
         }
-        else if(ke->key() == Qt::Key_PageUp)
+        else if(ke->modifiers() == Qt::NoModifier && ke->key() == Qt::Key_PageUp)
         {
             if(textView)
             {
@@ -528,7 +528,7 @@ bool ChatWindow::eventFilter(QObject* watched, QEvent* e)
 
             return true;
         }
-        else if(ke->key() == Qt::Key_PageDown)
+        else if(ke->modifiers() == Qt::NoModifier && ke->key() == Qt::Key_PageDown)
         {
             if(textView)
             {
