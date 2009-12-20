@@ -46,7 +46,7 @@
 #include <Q3CString>
 
 
-Q3AsciiDict<KonviConfigDialog> KonviConfigDialog::openDialogs;
+QMultiHash<const char *, KonviConfigDialog *> KonviConfigDialog::openDialogs;
 
 // This class is here purly so we don't break binary compatibility down the road.
 class KonviConfigDialog::KConfigDialogPrivate
@@ -150,7 +150,7 @@ void KonviConfigDialog::setupManagerConnections(KConfigDialogManager *manager)
 
 KonviConfigDialog* KonviConfigDialog::exists(const char* name)
 {
-    return openDialogs.find(name);
+    return openDialogs.value(name);
 }
 
 bool KonviConfigDialog::showDialog(const char* name)
