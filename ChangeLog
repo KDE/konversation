@@ -34,6 +34,13 @@ Changes since 1.2.1:
   +oooo foo", when it should only be "+ooo" and "+o", respectively.
 * Added support for amarok:// URLs in chat text views and channel to-
   pics.
+* Fixed a bug causing Konversation to treat "Page Up" and "Page Down"
+  key events with any modifier (e.g. Ctrl) the same as without any mo-
+  difier, making such combinations unavailable as shortcuts for other
+  actions.
+* Fixed a bug causing the status bar to remain stuck displaying the
+  description of a menu action if subsequently hovering other actions
+  without a description set.
 
 
 Changes from 1.2 to 1.2.1:
