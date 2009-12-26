@@ -43,7 +43,7 @@
 #include <KLocale>
 
 
-#include <Q3CString>
+#include <QString>
 
 
 QMultiHash<const char *, KonviConfigDialog *> KonviConfigDialog::openDialogs;
@@ -80,9 +80,8 @@ KonviConfigDialog::KonviConfigDialog( QWidget *parent, const char *name,
     }
     else
     {
-        Q3CString genericName;
-        genericName.sprintf("SettingsDialog-%p", this);
-        openDialogs.insert(genericName, this);
+        QString genericName = QString("SettingsDialog-%1").arg((long)(this));
+        openDialogs.insert(genericName.toLatin1().data(), this);
         setObjectName(genericName);
     }
 
