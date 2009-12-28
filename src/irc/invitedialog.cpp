@@ -63,7 +63,7 @@ void InviteDialog::saveShowAgainSetting(KDialog::ButtonCode buttonCode)
 {
     KConfigGroup::WriteConfigFlags flags = KConfig::Persistent;
     KConfigGroup cg(KGlobal::config().data(), "Notification Messages");
-    cg.writeEntry("Invitation", buttonCode == KDialog::Ok, flags);
+    cg.writeEntry("Invitation", m_joinPreferences->currentIndex(), flags);
     cg.sync();
 }
 
