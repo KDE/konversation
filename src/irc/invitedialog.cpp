@@ -61,13 +61,10 @@ void InviteDialog::slotOk()
 
 void InviteDialog::saveShowAgainSetting(KDialog::ButtonCode buttonCode)
 {
-    if (m_showAgainCheck->isChecked())
-    {
-        KConfigGroup::WriteConfigFlags flags = KConfig::Persistent;
-        KConfigGroup cg(KGlobal::config().data(), "Notification Messages");
-        cg.writeEntry("Invitation", buttonCode == KDialog::Ok, flags);
-        cg.sync();
-    }
+    KConfigGroup::WriteConfigFlags flags = KConfig::Persistent;
+    KConfigGroup cg(KGlobal::config().data(), "Notification Messages");
+    cg.writeEntry("Invitation", buttonCode == KDialog::Ok, flags);
+    cg.sync();
 }
 
 bool InviteDialog::shouldBeShown(KDialog::ButtonCode& buttonCode)
