@@ -134,9 +134,13 @@ void Warnings_Config::loadSettings()
     flagName = flagNames.section(',',i,i);
     item->setData(0, WarningNameRole, flagName);
 
-    if (flagName == "LargePaste" || flagName == "Invitation")
+    if (flagName == "LargePaste" )
     {
         item->setCheckState(0, grp.readEntry(flagName, QString()).isEmpty() ? Qt::Checked : Qt::Unchecked);
+    }
+    else if (flagName == "Invitation")
+    {
+	item->setCheckState(0, grp.readEntry(flagName, QString()) == "0" ? Qt::Checked : Qt::Unchecked);
     }
     else
     {
