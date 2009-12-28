@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>556</width>
+    <width>696</width>
     <height>276</height>
    </rect>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0" rowspan="2">
+   <item row="0" column="0">
     <widget class="QLabel" name="m_iconLabel">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
@@ -27,22 +27,50 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="1">
+   <item row="0" column="1" colspan="2">
     <widget class="QLabel" name="m_textLabel">
      <property name="text">
       <string>You have received invites for the following channels. Select the channels you want to join:</string>
      </property>
     </widget>
    </item>
-   <item row="1" column="1">
+   <item row="1" column="1" colspan="2">
     <widget class="QTreeView" name="m_channelView"/>
    </item>
    <item row="2" column="1">
-    <widget class="QCheckBox" name="m_showAgainCheck">
-     <property name="text">
-      <string>Do not ask again</string>
-     </property>
+    <widget class="QComboBox" name="m_joinPreferences">
+     <item>
+      <property name="text">
+       <string>Always Ask</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Always Join</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Always Ignore</string>
+      </property>
+     </item>
     </widget>
+   </item>
+   <item row="2" column="2">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Preferred</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>521</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
    </item>
   </layout>
  </widget>
