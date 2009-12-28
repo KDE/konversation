@@ -70,7 +70,7 @@ void Warnings_Config::saveSettings()
     // save state of this item in hasChanged() list
     warningsChecked += checked ? "1" : "0";
 
-    if (warningName == "LargePaste" || warningName == "Invitation")
+    if (warningName == "LargePaste")
     {
         if (checked)
         {
@@ -86,6 +86,24 @@ void Warnings_Config::saveSettings()
             else
                 grp.writeEntry(warningName, "true");
         }
+    }
+    else if (warningName == "Invitation")
+    {
+	if (checked)
+	{
+	    grp.writeEntry(warningName, "0")
+	}
+	else
+	{
+	    // Let's keep the old state if we got one, or join if
+	    // there isn't an old state.
+	    QString state = grp.readEntry(warningName, QString());
+	    
+	    if (!state.isEmpty())
+		grp.writeEntry(warningName, state);
+	    else
+		grp.writeEntry(warningName, "1");
+	}
     }
     else
     {
