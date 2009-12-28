@@ -75,7 +75,7 @@ bool InviteDialog::shouldBeShown(KDialog::ButtonCode& buttonCode)
 
     if (dontAsk == "2")
     {
-	butotnCode = KDialog::Ok;
+	buttonCode = KDialog::Ok;
 	return false;
     }
     else if (dontAsk == "3")
