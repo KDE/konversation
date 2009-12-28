@@ -73,12 +73,12 @@ bool InviteDialog::shouldBeShown(KDialog::ButtonCode& buttonCode)
     cg.sync();
     const QString dontAsk = cg.readEntry("Invitation", QString()).toLower();
 
-    if (dontAsk == "2")
+    if (dontAsk == "1")
     {
 	buttonCode = KDialog::Ok;
 	return false;
     }
-    else if (dontAsk == "3")
+    else if (dontAsk == "2")
     {
 	buttonCode = KDialog::Cancel;
 	return false;
