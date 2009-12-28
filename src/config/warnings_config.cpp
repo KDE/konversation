@@ -91,7 +91,7 @@ void Warnings_Config::saveSettings()
     {
 	if (checked)
 	{
-	    grp.writeEntry(warningName, "0")
+	    grp.writeEntry(warningName, "0");
 	}
 	else
 	{
