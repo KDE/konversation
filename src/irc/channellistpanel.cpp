@@ -23,6 +23,7 @@
 #include <KRun>
 #include <KFileDialog>
 #include <KMenu>
+#include <KToolBar>
 
 
 ChannelListModel::ChannelListModel(QObject* parent) : QAbstractListModel(parent)
@@ -154,6 +155,15 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
     m_tempTimer = new QTimer(this);
     m_tempTimer->setSingleShot(true);
 
+    setSpacing(0);
+    m_toolBar = new KToolBar(this, true, true);
+    m_toolBar->setObjectName("channellistpanel_toolbar");
+    m_refreshList = m_toolBar->addAction(KIcon("view-refresh"), i18nc("refresh list", "&Refresh List"), this, SLOT(refreshList()));
+    m_refreshList->setWhatsThis("Click here to refresh the channel list.");
+    m_saveList = m_toolBar->addAction(KIcon("document-save"), i18nc("save list", "Save &List..."), this, SLOT(saveList()));
+    m_saveList->setWhatsThis("Click here to save the channel list.");
+    m_joinChannel = m_toolBar->addAction(KIcon("irc-join-channel"), i18nc("join channel", "&Join Channel"), this, SLOT(joinChannelClicked()));
+    m_joinChannel->setWhatsThis("Click here to join the channel. A new tab is created for the channel.");
     //UI Setup
     setupUi(this);
 
@@ -174,10 +184,6 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
     connect(m_channelBox, SIGNAL(stateChanged(int)), this, SLOT(filterChanged()));
     connect(m_minUser, SIGNAL(valueChanged(int)), this, SLOT(filterChanged()));
     connect(m_maxUser, SIGNAL(valueChanged(int)), this, SLOT(filterChanged()));
-
-    connect(m_refreshListBtn, SIGNAL(clicked()), this, SLOT(refreshList()) );
-    connect(m_saveListBtn, SIGNAL(clicked()), this, SLOT(saveList()) );
-    connect(m_joinChanBtn, SIGNAL(clicked()), this, SLOT(joinChannelClicked()) );
 
     connect(m_filterLine, SIGNAL(returnPressed()), this, SLOT(applyFilterClicked()) );
     connect(m_filterLine, SIGNAL(textChanged(const QString&)), this, SLOT(filterChanged()));
@@ -203,7 +209,7 @@ void ChannelListPanel::refreshList()
     //hide temporarily to prevent multiple refreshes, but renable if it doesn't start in
     //3 seconds in case we got a 'server busy' error. It doesn't matter if it's slower than
     //that because addToChannelList's first run handles this anyway
-    m_refreshListBtn->setEnabled(false);
+    m_refreshList->setEnabled(false);
     m_tempTimer->start(3000);
 
     emit refreshChannelList();
@@ -216,7 +222,7 @@ void ChannelListPanel::addToChannelList(const QString& channel,int users,const Q
         if(m_tempTimer->isActive())
             m_tempTimer->stop();
 
-        m_refreshListBtn->setEnabled(false);
+        m_refreshList->setEnabled(false);
 
         m_statsLabel->setText(i18n("Refreshing."));
         m_progressTimer->start(500);
@@ -241,7 +247,7 @@ void ChannelListPanel::endOfChannelList()
 
     m_proxyModel->setSourceModel(m_channelListModel);
     m_proxyModel->invalidate();
-    m_refreshListBtn->setEnabled(true);
+    m_refreshList->setEnabled(true);
     m_firstRun = true;
     updateUsersChannels();
 }
@@ -413,7 +419,7 @@ void ChannelListPanel::joinChannelClicked()
 void ChannelListPanel::applyFilterClicked()
 {
     //Don't run if they pressed return when the button was disabled
-    if (!m_refreshListBtn->isEnabled()) return;
+    if (!m_refreshList->isEnabled()) return;
 
     if (!m_numChannels)
     {
@@ -534,8 +540,8 @@ void ChannelListPanel::appendInputText(const QString& text, bool fromCursor)
 //Used to disable functions when not connected
 void ChannelListPanel::serverOnline(bool online)
 {
-    m_refreshListBtn->setEnabled(online);
-    m_joinChanBtn->setEnabled(online);
+    m_refreshList->setEnabled(online);
+    m_joinChannel->setEnabled(online);
 }
 
 void ChannelListPanel::emitUpdateInfo()

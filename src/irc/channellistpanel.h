@@ -21,6 +21,8 @@
 #include <QAbstractListModel>
 #include <QSortFilterProxyModel>
 
+class KToolBar;
+
 struct ChannelItem
 {
     QString name;
@@ -139,6 +141,11 @@ class ChannelListPanel : public ChatWindow, private Ui::ChannelListWidgetUI
 
         ChannelListModel* m_channelListModel;
         ChannelListProxyModel* m_proxyModel;
+
+        KToolBar *m_toolBar;
+        QAction *m_saveList;
+        QAction *m_refreshList;
+        QAction *m_joinChannel;
 };
 
 #endif
