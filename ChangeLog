@@ -48,6 +48,11 @@ Changes since 1.2.1:
   cing the minimum window width with any of these tabs open.
 * Further work on reducing the use of the qt3support/kde3support lib-
   raries throughout the codebase.
+* The design of the search bar has been made more consistent with the
+  search bars found in other KDE applications (e.g. Konqueror, Konso-
+  le and KWrite).
+* Added a "--noautoconnect" command line argument to disable auto-co-
+  nnecting to any IRC networks on application startup.
 
 
 Changes from 1.2 to 1.2.1:

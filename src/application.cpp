@@ -170,7 +170,7 @@ int Application::newInstance()
         // handle autoconnect on startup
         Konversation::ServerGroupHash serverGroups = Preferences::serverGroupHash();
 
-        if (url.isEmpty() && !args->isSet("server"))
+        if (args->isSet("autoconnect") && url.isEmpty() && !args->isSet("server"))
         {
             QHashIterator<int, Konversation::ServerGroupSettingsPtr> it(serverGroups);
             while(it.hasNext())
