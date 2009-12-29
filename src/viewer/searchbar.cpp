@@ -32,8 +32,6 @@ SearchBar::SearchBar(QWidget* parent)
     m_closeButton->setIcon(KIcon("dialog-close"));
     m_findNextButton->setIcon(KIcon("go-up-search"));
     m_findPreviousButton->setIcon(KIcon("go-down-search"));
-    m_statusPixLabel->hide();
-    m_statusTextLabel->hide();
 
     m_timer = new QTimer(this);
     m_timer->setSingleShot(true);
@@ -107,7 +105,6 @@ void SearchBar::slotFind()
         m_searchEdit->setPalette(QPalette());
         m_findNextButton->setEnabled(false);
         m_findPreviousButton->setEnabled(false);
-        setStatus(QPixmap(), "");
         return;
     }
 
@@ -121,7 +118,6 @@ void SearchBar::slotFindNext()
         m_searchEdit->setPalette(QPalette());
         m_findNextButton->setEnabled(false);
         m_findPreviousButton->setEnabled(false);
-        setStatus(QPixmap(), "");
         return;
     }
 
@@ -135,7 +131,6 @@ void SearchBar::slotFindPrevious()
         m_searchEdit->setPalette(QPalette());
         m_findNextButton->setEnabled(false);
         m_findPreviousButton->setEnabled(false);
-        setStatus(QPixmap(), "");
         return;
     }
 
@@ -145,24 +140,11 @@ void SearchBar::slotFindPrevious()
 void SearchBar::setHasMatch(bool value)
 {
     QPalette pal = m_searchEdit->palette();
-    pal.setColor(QPalette::Active, QPalette::Base, value ? Qt::green : Qt::red);
+    pal.setColor(QPalette::Active, QPalette::Base, value ? Qt::white : Qt::red);
     m_searchEdit->setPalette(pal);
+
     m_findNextButton->setEnabled(value);
     m_findPreviousButton->setEnabled(value);
-}
-
-void SearchBar::setStatus(const QPixmap& pix, const QString& text)
-{
-    if(!text.isEmpty()) {
-        m_statusPixLabel->show();
-        m_statusTextLabel->show();
-    } else {
-        m_statusPixLabel->hide();
-        m_statusTextLabel->hide();
-    }
-
-    m_statusPixLabel->setPixmap(pix);
-    m_statusTextLabel->setText(text);
 }
 
 QString SearchBar::pattern() const

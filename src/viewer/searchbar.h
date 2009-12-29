@@ -33,7 +33,6 @@ class SearchBar : public QWidget, private Ui::SearchBarBase
         ~SearchBar();
 
         void setHasMatch(bool value);
-        void setStatus(const QPixmap& pix, const QString& text);
 
         QString pattern() const;
 
