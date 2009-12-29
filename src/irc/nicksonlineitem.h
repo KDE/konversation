@@ -12,10 +12,10 @@
 #ifndef NICKSONLINEITEM_H
 #define NICKSONLINEITEM_H
 
-#include <K3ListView>
+#include <QTreeWidget>
 
 
-class NicksOnlineItem : public K3ListViewItem
+class NicksOnlineItem : public QTreeWidgetItem
 {
     public:
         enum NickListViewColumn
@@ -27,24 +27,21 @@ class NicksOnlineItem : public K3ListViewItem
         };
 
         NicksOnlineItem(int type,
-                        Q3ListView* parent,
+                        QTreeWidget* parent,
                         const QString& name,
                         const QString& col2 = QString());
 
         NicksOnlineItem(int type,
-                        Q3ListViewItem* parent,
+                        QTreeWidgetItem* parent,
                         const QString& name,
                         const QString& col2 = QString());
 
         /**
         * Reimplemented to make sure, "Offline" items always get sorted to the bottom of the list
-        * @param i                 Pointer to the QListViewItem to compare with.
-        * @param col               The column to compare
-        * @param ascending         Specify sorting direction
+        * @param item              Pointer to the QTreeWidgetItem to compare with.
         * @return                  -1 if this item's value is smaller than i, 0 if they are equal, 1 if it's greater
         */
-        virtual int compare(Q3ListViewItem* i,int col,bool ascending) const;
-
+        bool operator<(const QTreeWidgetItem &item) const;
         /**
         * Returns the type of the item.
         * @return                  One of the enum NickListViewColumn

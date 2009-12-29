@@ -27,7 +27,7 @@ class ChatWindow;
 
 class QPushButton;
 
-class K3ListView;
+class QTreeWidget;
 
 
 class NicksOnline : public ChatWindow
@@ -57,8 +57,8 @@ class NicksOnline : public ChatWindow
         ~NicksOnline();
 
         // These are here for the benefit of NicksOnlineTooltip.
-        K3ListView* getNickListView();
-        NickInfoPtr getNickInfo(const Q3ListViewItem* item);
+        QTreeWidget* getNickListView();
+        NickInfoPtr getNickInfo(const QTreeWidgetItem* item);
 
         virtual bool canBeFrontView()   { return true; }
 
@@ -87,7 +87,7 @@ class NicksOnline : public ChatWindow
          * When a user double-clicks a nickname in the nicklistview, let server know so that
          * it can perform the user's chosen default action for that.
          */
-        void processDoubleClick(Q3ListViewItem* item);
+        void processDoubleClick(QTreeWidgetItem* item, int column);
         /**
          * Timer used to refresh display.
          */
@@ -111,7 +111,7 @@ class NicksOnline : public ChatWindow
         /**
          * Received when right-clicking an item in the NickListView.
          */
-        void slotNickListView_RightButtonClicked(Q3ListViewItem* item, const QPoint& pt);
+        void slotCustomContextMenuRequested(QPoint point);
         /**
          * Received from server when a NickInfo changes its information.
          */
@@ -134,20 +134,20 @@ class NicksOnline : public ChatWindow
         * @param type              The type of entry to be found
         * @return                  Pointer to the child QListViewItem or 0 if not found.
         */
-        Q3ListViewItem* findItemChild(const Q3ListViewItem* parent, const QString& name, NicksOnlineItem::NickListViewColumn type);
+        QTreeWidgetItem* findItemChild(const QTreeWidgetItem* parent, const QString& name, NicksOnlineItem::NickListViewColumn type);
         /**
         * Returns the first occurrence of a child item of a given type in a NicksOnlineItem
         * @param parent            Pointer to a NicksOnlineItem.
         * @param type              The type of entry to be found
         * @return                  Pointer to the child QListViewItem or 0 if not found.
         */
-        Q3ListViewItem* findItemType(const Q3ListViewItem* parent, NicksOnlineItem::NickListViewColumn type);
+        QTreeWidgetItem* findItemType(const QTreeWidgetItem* parent, NicksOnlineItem::NickListViewColumn type);
         /**
          * Returns a pointer to the network QListViewItem with the given name.
          * @param name              The name of the network, assumed to be in column 0 of the item.
          * @return                  Pointer to the QListViewItem or 0 if not found.
          */
-        Q3ListViewItem* findNetworkRoot(const QString& name);
+        QTreeWidgetItem* findNetworkRoot(const QString& name);
         /**
          * Refresh the nicklistview for all servers.
          */
@@ -156,7 +156,7 @@ class NicksOnline : public ChatWindow
          * Refreshes the information for the given item in the list.
          * @param item               Pointer to listview item.
          */
-        void refreshItem(Q3ListViewItem* item);
+        void refreshItem(QTreeWidgetItem* item);
         /**
          * Return a string containing formatted additional information about a nick.
          * @param nickInfo          A pointer to NickInfo structure for the nick.
@@ -179,7 +179,7 @@ class NicksOnline : public ChatWindow
          * @return serverName       Name of the server for the nick at the item, or Null if not a nick.
          * @return nickname         The nickname at the item.
          */
-        bool getItemServerAndNick(const Q3ListViewItem* item, QString& serverName, QString& nickname);
+        bool getItemServerAndNick(const QTreeWidgetItem* item, QString& serverName, QString& nickname);
         /**
          * Given a server name and nickname, returns the item in the Nick List View displaying
          * the nick.
@@ -189,7 +189,7 @@ class NicksOnline : public ChatWindow
          *
          * @see getItemServerAndNick
          */
-        Q3ListViewItem* getServerAndNickItem(const QString& serverName, const QString& nickname);
+        QTreeWidgetItem* getServerAndNickItem(const QString& serverName, const QString& nickname);
         /**
          * Perform an addressbook command (edit contact, create new contact,
          * change/delete association.)
@@ -208,7 +208,7 @@ class NicksOnline : public ChatWindow
          * @return                  Addressbook state.
          * 0 = not a nick, 1 = nick has no addressbook association, 2 = nick has association
          */
-        int getNickAddressbookState(Q3ListViewItem* item);
+        int getNickAddressbookState(QTreeWidgetItem* item);
         /**
          * Sets the enabled/disabled state and labels of the addressbook buttons
          * based on the given nick addressbook state.
@@ -233,7 +233,7 @@ class NicksOnline : public ChatWindow
         void requestWhois(QString& networkName, QString& nickname);
 
         // The main display of networks, nicks, and channels.
-        K3ListView* m_nickListView;
+        QTreeWidget* m_nickListView;
         // Buttons on screen.
         QPushButton* m_editContactButton;
         QPushButton* m_changeAssociationButton;
