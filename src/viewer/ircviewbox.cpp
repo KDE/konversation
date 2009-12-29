@@ -17,13 +17,6 @@
 #include <QPixmap>
 #include <KVBox>
 
-
-// TODO FIXME and this needs its own function because...?
-static QPixmap getIcon(const QString& name)
-{
-    return KIconLoader::global()->loadIcon(name, KIconLoader::Toolbar, 16);
-}
-
 IRCViewBox::IRCViewBox(QWidget* parent, Server* newServer)
 : KVBox(parent)
 {
