@@ -23,6 +23,7 @@
  */
 
 class KMenu;
+class KIcon;
 
 class SearchBar : public QWidget, private Ui::SearchBarBase
 {
@@ -70,6 +71,8 @@ class SearchBar : public QWidget, private Ui::SearchBarBase
         QTimer* m_timer;
 
         KMenu* m_optionsMenu;
+        KIcon m_goUpSearch;
+        KIcon m_goDownSearch;
 
         bool m_searchFoward;
         bool m_matchCase;

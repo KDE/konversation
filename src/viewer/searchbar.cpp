@@ -19,7 +19,7 @@
 
 
 SearchBar::SearchBar(QWidget* parent)
-: QWidget(parent)
+: QWidget(parent), m_goUpSearch("go-up-search"), m_goDownSearch("go-down-search")
 {
     setupUi(this);
 
@@ -30,8 +30,8 @@ SearchBar::SearchBar(QWidget* parent)
 
     setFocusProxy(m_searchEdit);
     m_closeButton->setIcon(KIcon("dialog-close"));
-    m_findNextButton->setIcon(KIcon("go-up-search"));
-    m_findPreviousButton->setIcon(KIcon("go-down-search"));
+    m_findNextButton->setIcon(m_goUpSearch);
+    m_findPreviousButton->setIcon(m_goDownSearch);
 
     m_timer = new QTimer(this);
     m_timer->setSingleShot(true);
@@ -174,6 +174,15 @@ bool SearchBar::fromCursor() const
 
 void SearchBar::toggleSearchFoward(bool value)
 {
+    if (value) {
+      m_findNextButton->setIcon(m_goDownSearch);
+      m_findPreviousButton->setIcon(m_goUpSearch);
+    }
+    else
+    {
+      m_findNextButton->setIcon(m_goUpSearch);
+      m_findPreviousButton->setIcon(m_goDownSearch);
+    }
     m_searchFoward = value;
     slotTextChanged();
 }
