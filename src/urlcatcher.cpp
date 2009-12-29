@@ -28,6 +28,7 @@
 #include <KUrl>
 #include <KFileDialog>
 #include <KIO/CopyJob>
+#include <KToolBar>
 
 UrlCatcherModel::UrlCatcherModel(QObject* parent) : QAbstractListModel(parent)
 {
@@ -128,6 +129,30 @@ UrlCatcher::UrlCatcher(QWidget* parent) : ChatWindow(parent)
     setName(i18n("URL Catcher"));
     setType(ChatWindow::UrlCatcher);
 
+    setSpacing(0);
+    m_toolBar = new KToolBar(this, true, true);
+    m_toolBar->setObjectName("urlcatcher_toolbar");
+    m_open = m_toolBar->addAction(KIcon("document-open"), i18nc("open url", "&Open Url"), this, SLOT(openUrlClicked()));
+    m_open->setStatusTip(i18n("Open url"));
+    m_open->setWhatsThis("<p>Select a <b>URL</b> above, then click this button to launch the application associated with the mimetype of the URL.</p>-<p>In the <b>Settings</b>, under <b>Behavior</b> | <b>General</b>, you can specify a custom web browser for web URLs.</p>");
+    m_open->setEnabled(false);
+    m_copy = m_toolBar->addAction(KIcon("edit-copy"), i18nc("copy url","&Copy"), this, SLOT(copyListClicked()));
+    m_copy->setStatusTip(i18n("Copy url."));
+    m_copy->setWhatsThis("Select a <b>URL</b> above, then click this button to copy the URL to the clipboard.");
+    m_copy->setEnabled(false);
+    m_delete = m_toolBar->addAction(KIcon("edit-delete"), i18nc("delete url","&Delete"), this, SLOT(deleteUrlClicked()));
+    m_delete->setWhatsThis("Select a <b>URL</b> above, then click this button to delete the URL from the list.");
+    m_delete->setStatusTip(i18n("Delete selected url."));
+    m_delete->setEnabled(false);
+    m_save = m_toolBar->addAction(KIcon("document-save"), i18nc("save url list", "&Save List..."), this, SLOT(saveListClicked()));
+    m_save->setStatusTip(i18n("Save url list"));
+    m_save->setWhatsThis("Click to save the entire list to a file.");
+    m_save->setEnabled(false);
+    m_clear = m_toolBar->addAction(KIcon("edit-clear-list"), i18nc("clear url list","&Clear"), this, SLOT(clearListClicked()));
+    m_clear->setStatusTip(i18n("Clear url list."));
+    m_clear->setWhatsThis("Click to erase the entire list.");
+    m_clear->setEnabled(false);
+
     setupUi(this);
 
     m_urlListModel = new UrlCatcherModel(this);
@@ -149,12 +174,6 @@ UrlCatcher::UrlCatcher(QWidget* parent) : ChatWindow(parent)
     connect(m_urlListView, SIGNAL(customContextMenuRequested(const QPoint&)),
             this, SLOT(contextMenu(const QPoint&)) );
 
-    connect(m_openBtn, SIGNAL(clicked()), this, SLOT(openUrlClicked()));
-    connect(m_copyBtn, SIGNAL(clicked()), this, SLOT(copyUrlClicked()));
-    connect(m_deleteBtn, SIGNAL(clicked()), this, SLOT(deleteUrlClicked()));
-    connect(m_saveBtn, SIGNAL(clicked()), this, SLOT(saveListClicked()));
-    connect(m_clearBtn, SIGNAL(clicked()), this, SLOT(clearListClicked()));
-
     //TODO remove this by turning the klineedit into a kfilterproxysearchline when we req. 4.2
     connect(m_filterLine, SIGNAL(textChanged(const QString&)), this, SLOT(filterChanged()));
     connect(m_filterTimer, SIGNAL(timeout()), this, SLOT(updateFilter()));
@@ -175,13 +194,13 @@ void UrlCatcher::updateFilter()
     m_proxyModel->setFilterWildcard(m_filterLine->text());
     if(!m_proxyModel->rowCount())
     {
-        m_clearBtn->setEnabled(false);
-        m_saveBtn->setEnabled(false);
+        m_clear->setEnabled(false);
+        m_save->setEnabled(false);
     }
     else
     {
-        m_clearBtn->setEnabled(true);
-        m_saveBtn->setEnabled(true);
+        m_clear->setEnabled(true);
+        m_save->setEnabled(true);
     }
 
 }
@@ -204,8 +223,8 @@ void UrlCatcher::setUrlList(const QStringList& list)
 
         m_urlListModel->setUrlList(urlList);
 
-        m_clearBtn->setEnabled(true);
-        m_saveBtn->setEnabled(true);
+        m_clear->setEnabled(true);
+        m_save->setEnabled(true);
     }
 
     m_proxyModel->setSourceModel(m_urlListModel);
@@ -219,23 +238,23 @@ void UrlCatcher::addUrl(const QString& who,const QString& url)
     item.url = url;
     m_urlListModel->append(item);
 
-    m_clearBtn->setEnabled(true);
-    m_saveBtn->setEnabled(true);
+    m_clear->setEnabled(true);
+    m_save->setEnabled(true);
 }
 
 void UrlCatcher::urlSelected(const QItemSelection& selected)
 {
     if(!selected.isEmpty())
     {
-        m_openBtn->setEnabled(true);
-        m_copyBtn->setEnabled(true);
-        m_deleteBtn->setEnabled(true);
+        m_open->setEnabled(true);
+        m_copy->setEnabled(true);
+        m_delete->setEnabled(true);
     }
     else
     {
-        m_openBtn->setEnabled(false);
-        m_copyBtn->setEnabled(false);
-        m_deleteBtn->setEnabled(false);
+        m_open->setEnabled(false);
+        m_copy->setEnabled(false);
+        m_delete->setEnabled(false);
     }
 }
 
@@ -299,8 +318,8 @@ void UrlCatcher::deleteUrlClicked()
         if(!m_urlListModel->rowCount())
         {
             urlSelected(QItemSelection());
-            m_clearBtn->setEnabled(false);
-            m_saveBtn->setEnabled(false);
+            m_clear->setEnabled(false);
+            m_save->setEnabled(false);
         }
 
         emit deleteUrl(item.nick, item.url);
@@ -312,8 +331,8 @@ void UrlCatcher::clearListClicked()
     m_urlListModel = new UrlCatcherModel(this);
     m_proxyModel->setSourceModel(m_urlListModel);
 
-    m_saveBtn->setEnabled(false);
-    m_clearBtn->setEnabled(false);
+    m_save->setEnabled(false);
+    m_clear->setEnabled(false);
     urlSelected(QItemSelection());
 
     emit clearUrlList();
