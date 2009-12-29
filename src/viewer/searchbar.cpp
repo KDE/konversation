@@ -29,9 +29,9 @@ SearchBar::SearchBar(QWidget* parent)
     m_fromCursor = false;
 
     setFocusProxy(m_searchEdit);
-    m_closeButton->setIcon(KIcon("process-stop"));
-    m_findNextButton->setIcon(KIcon("arrow-up"));
-    m_findPreviousButton->setIcon(KIcon("arrow-down"));
+    m_closeButton->setIcon(KIcon("dialog-close"));
+    m_findNextButton->setIcon(KIcon("go-up-search"));
+    m_findPreviousButton->setIcon(KIcon("go-down-search"));
     m_statusPixLabel->hide();
     m_statusTextLabel->hide();
 
@@ -53,7 +53,7 @@ SearchBar::SearchBar(QWidget* parent)
     action = m_optionsMenu->addAction(i18n("Find Forward"));
     action->setCheckable(true);
     connect(action, SIGNAL(toggled(bool)), this, SLOT(toggleSearchFoward(bool)));
-    action = m_optionsMenu->addAction(i18n("Case Sensitive"));
+    action = m_optionsMenu->addAction(i18n("Match Case"));
     action->setCheckable(true);
     connect(action, SIGNAL(toggled(bool)), this, SLOT(toggleMatchCase(bool)));
     action = m_optionsMenu->addAction(i18n("Whole Words Only"));
