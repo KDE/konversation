@@ -1037,7 +1037,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     else if (parameterList.count() > 3)
                     {
                         for(int i = 3; i < parameterList.count(); i++) {
-                        nickList.append(parameterList.value(i));
+                            nickList.append(parameterList.value(i));
                         }
                     }
                     else
@@ -1066,10 +1066,10 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                         // NAMES input for this channel will be manual invocations of /names
                         setAutomaticRequest("NAMES", parameterList.value(1), false);
 
-                    if (Preferences::self()->autoWhoContinuousEnabled())
-                    {
-                        emit endOfWho(parameterList.value(1));
-                    }
+                        if (Preferences::self()->autoWhoContinuousEnabled())
+                        {
+                            emit endOfWho(parameterList.value(1));
+                        }
                     }
                     else
                     {
