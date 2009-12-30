@@ -31,6 +31,7 @@
 #include <QToolTip>
 
 #include <KIconLoader>
+#include <KToolBar>
 
 #include <QTreeWidget>
 
@@ -39,6 +40,29 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
 {
     setName(i18n("Watched Nicks Online"));
     setType(ChatWindow::NicksOnline);
+
+    setSpacing(0);
+    m_toolBar = new KToolBar(this, true, true);
+    m_editList = m_toolBar->addAction(KIcon("document-edit"), i18n("&Edit Watch List..."));
+    m_editList->setWhatsThis(i18n("Click to edit the list of nicknames that appear on this screen."));
+    connect(m_editList, SIGNAL(triggered()), SIGNAL(editClicked()));
+    m_toolBar->addSeparator();
+    m_newContact = m_toolBar->addAction(KIcon("contact-new"), i18n("Create New C&ontact..."));
+    m_editContact = m_toolBar->addAction(KIcon("document-edit"), i18n("Edit C&ontact..."));
+    m_editContact->setWhatsThis(i18n("Click to create, view, or edit the KAddressBook entry associated with the nickname selected above."));
+    m_toolBar->addSeparator();
+    m_chooseAssociation = m_toolBar->addAction(KIcon("office-address-book"), i18n("&Choose Association..."));
+    m_changeAssociation = m_toolBar->addAction(KIcon("office-address-book"), i18n("&Change Association..."));
+    m_changeAssociation->setWhatsThis(i18n("Click to associate the nickname selected above with an entry in KAddressBook."));
+    m_deleteAssociation = m_toolBar->addAction(KIcon("edit-delete"), i18n("&Delete Association"));
+    m_deleteAssociation->setWhatsThis(i18n("Click to remove the association between the nickname selected above and a KAddressBook entry."));
+    m_toolBar->addSeparator();
+    m_whois = m_toolBar->addAction(KIcon("office-address-book"), i18n("&Whois"));
+    m_openQuery = m_toolBar->addAction(KIcon("office-address-book"), i18n("Open &Query"));
+    m_sendMail = m_toolBar->addAction(KIcon("mail-send"), i18n("&Send Email..."));
+    m_toolBar->addSeparator();
+    m_joinChannel = m_toolBar->addAction(KIcon("irc-join-channel"), i18n("&Join Channel"));
+    connect(m_toolBar, SIGNAL(actionTriggered(QAction*)), this, SLOT(slotPopupMenu_Activated(QAction*)));
 
     m_nickListView=new QTreeWidget(this);
 
@@ -65,63 +89,14 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
         "<p>Right-click with the mouse on a nickname to perform additional functions.</p>");
     m_nickListView->setWhatsThis(nickListViewWT);
     m_nickListView->viewport()->installEventFilter(this);
-    setMargin(margin());
-    setSpacing(spacing());
 
-    KHBox* buttonBox=new KHBox(this);
-    buttonBox->setSpacing(spacing());
-    QPushButton* editButton = new QPushButton(i18n("&Edit Watch List..."), buttonBox);
-    editButton->setObjectName("edit_notify_button");
-    QString editButtonWT = i18n(
-        "Click to edit the list of nicknames that appear on this screen.");
-    editButton->setWhatsThis(editButtonWT);
-
-    connect(editButton, SIGNAL(clicked()), SIGNAL(editClicked()) );
     connect(m_nickListView, SIGNAL(itemDoubleClicked(QTreeWidgetItem*,int)),
         this,SLOT(processDoubleClick(QTreeWidgetItem*,int)));
 
-    QLabel* addressbookLabel = new QLabel(i18n("Address book:"), buttonBox);
-    addressbookLabel->setObjectName("nicksonline_addressbook_label");
-    QString addressbookLabelWT = i18n(
-        "When you select a nickname in the list above, the buttons here are used "
-        "to associate the nickname with an entry in KAddressBook.");
-    addressbookLabel->setWhatsThis(addressbookLabelWT);
-    addressbookLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
-    m_editContactButton = new QPushButton(i18n("Edit C&ontact..."), buttonBox);
-    m_editContactButton->setObjectName("nicksonline_editcontact_button");
-    QString editContactButtonWT = i18n(
-        "Click to create, view, or edit the KAddressBook entry associated with the nickname "
-        "selected above.");
-    m_editContactButton->setWhatsThis(editContactButtonWT);
-    m_editContactButton->setIcon(m_kabcIconSet);
-    m_changeAssociationButton = new QPushButton(i18n("&Change Association..."), buttonBox);
-    m_changeAssociationButton->setObjectName("nicksonline_changeassociation_button");
-    QString changeAssociationButtonWT = i18n(
-        "Click to associate the nickname selected above with an entry in KAddressBook.");
-    m_changeAssociationButton->setWhatsThis(changeAssociationButtonWT);
-    m_changeAssociationButton->setIcon(m_kabcIconSet);
-    m_deleteAssociationButton = new QPushButton(i18n("&Delete Association"), buttonBox);
-    m_deleteAssociationButton->setObjectName("nicksonline_deleteassociation_button");
-    QString deleteAssociationButtonWT = i18n(
-        "Click to remove the association between the nickname selected above and a "
-        "KAddressBook entry.");
-    m_deleteAssociationButton->setWhatsThis(deleteAssociationButtonWT);
-    m_deleteAssociationButton->setIcon(m_kabcIconSet);
-
-    connect(m_editContactButton, SIGNAL(clicked()),
-        this, SLOT(slotEditContactButton_Clicked()));
-    connect(m_changeAssociationButton, SIGNAL(clicked()),
-        this, SLOT(slotChangeAssociationButton_Clicked()));
-    connect(m_deleteAssociationButton, SIGNAL(clicked()),
-        this, SLOT(slotDeleteAssociationButton_Clicked()));
-    connect(m_nickListView, SIGNAL(selectionChanged()),
-        this, SLOT(slotNickListView_SelectionChanged()));
-
     setupAddressbookButtons(nsNotANick);
 
-    // Create context menu.  Individual menu entries are created in rightButtonClicked slot.
+    // Create context menu.
     m_popupMenu = new KMenu(this);
-
     m_popupMenu->setObjectName("nicksonline_context_menu");
     m_nickListView->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(m_nickListView, SIGNAL(customContextMenuRequested(QPoint)),
@@ -720,7 +695,7 @@ void NicksOnline::doCommand(QAction* id)
             Konversation::Addressbook::self()->sendEmail(addressee);
     else if (  id == m_editContact )
             Konversation::Addressbook::self()->editAddressee(addressee.uid());
-    else if ( id == m_addressBookChange )
+    else if ( id == m_changeAssociation )
     {
         LinkAddressbookUI *linkaddressbookui = NULL;
 
@@ -838,54 +813,43 @@ void NicksOnline::setupAddressbookButtons(int nickState)
     {
         case nsNotANick:
         {
-            m_editContactButton->setEnabled(false);
-            m_changeAssociationButton->setEnabled(false);
-            m_deleteAssociationButton->setEnabled(false);
+            m_newContact->setEnabled(false);
+            m_editContact->setEnabled(false);
+            m_chooseAssociation->setEnabled(false);
+            m_changeAssociation->setEnabled(false);
+            m_deleteAssociation->setEnabled(false);
+            m_whois->setEnabled(false);
+            m_openQuery->setEnabled(false);
+            m_sendMail->setEnabled(false);
             break;
         }
         case nsNoAddress:
         {
-            m_editContactButton->setText(i18n("Create New C&ontact..."));
-            m_editContactButton->setEnabled(true);
-            m_changeAssociationButton->setText(i18n("&Choose Association..."));
-            m_changeAssociationButton->setEnabled(true);
-            m_deleteAssociationButton->setEnabled(false);
+            m_newContact->setEnabled(true);
+            m_editContact->setEnabled(false);
+            m_chooseAssociation->setEnabled(true);
+            m_changeAssociation->setEnabled(false);
+            m_deleteAssociation->setEnabled(false);
+            m_whois->setEnabled(true);
+            m_openQuery->setEnabled(true);
+            m_sendMail->setEnabled(false);
             break;
         }
         case nsHasAddress:
         {
-            m_editContactButton->setText(i18n("Edit C&ontact..."));
-            m_editContactButton->setEnabled(true);
-            m_changeAssociationButton->setText(i18n("&Change Association..."));
-            m_changeAssociationButton->setEnabled(true);
-            m_deleteAssociationButton->setEnabled(true);
+            m_newContact->setEnabled(false);
+            m_editContact->setEnabled(true);
+            m_chooseAssociation->setEnabled(false);
+            m_changeAssociation->setEnabled(true);
+            m_deleteAssociation->setEnabled(true);
+            m_whois->setEnabled(true);
+            m_openQuery->setEnabled(true);
+            m_sendMail->setEnabled(true);
             break;
         }
     }
 }
 
-/**
- * Received when user clicks the Edit Contact (or New Contact) button.
- */
-void NicksOnline::slotEditContactButton_Clicked()
-{
-    if (m_nickListView->selectedItems().count() == 0) return;
-    switch (getNickAddressbookState(m_nickListView->selectedItems().at(0)))
-    {
-        case nsNotANick:    break;
-        case nsNoAddress:   { doCommand(m_newContact); break; }
-        case nsHasAddress:  { doCommand(m_editContact); break; }
-    }
-}
-
-/**
- * Received when user clicks the Change Association button.
- */
-void NicksOnline::slotChangeAssociationButton_Clicked() { doCommand(m_addressBookChange); }
-/**
- * Received when user clicks the Delete Association button.
- */
-void NicksOnline::slotDeleteAssociationButton_Clicked() { doCommand(m_deleteAssociation); }
 /**
  * Received when user selects a different item in the nicklistview.
  */
@@ -916,33 +880,33 @@ void NicksOnline::slotCustomContextMenuRequested(QPoint point)
         }
         case nsNoAddress:
         {
-            m_chooseAssociation =  m_popupMenu->addAction(i18n("&Choose Association..."));
-            m_newContact = m_popupMenu->addAction(i18n("Create New C&ontact..."));
+            m_popupMenu->insertAction(0, m_chooseAssociation);
+            m_popupMenu->insertAction(0, m_newContact);
             if (!nickitem->isOffline())
             {
                 m_popupMenu->addSeparator();
-                m_whois = m_popupMenu->addAction(i18n("&Whois"));
-                m_openQuery = m_popupMenu->addAction(i18n("Open &Query"));
+                m_popupMenu->insertAction(0, m_whois);
+                m_popupMenu->insertAction(0, m_openQuery);
                 if (item->text(nlvcServerName).isEmpty())
-                    m_joinChannel = m_popupMenu->addAction(i18n("&Join Channel"));
+                  m_popupMenu->insertAction(0, m_joinChannel);
             }
             break;
         }
         case nsHasAddress:
         {
-            m_sendMail = m_popupMenu->addAction(KIcon("mail-send"), i18n("&Send Email..."));
+            m_popupMenu->insertAction(0, m_sendMail);
             m_popupMenu->addSeparator();
-            m_editContact = m_popupMenu->addAction(KIcon("document-edit"), i18n("Edit C&ontact..."));
+            m_popupMenu->insertAction(0, m_editContact);
             m_popupMenu->addSeparator();
-            m_addressBookChange = m_popupMenu->addAction(i18n("&Change Association..."));
-            m_deleteAssociation =  m_popupMenu->addAction(KIcon("edit-delete"), i18n("&Delete Association"));
+            m_popupMenu->insertAction(0, m_changeAssociation);
+            m_popupMenu->insertAction(0, m_deleteAssociation);
             if (!nickitem->isOffline())
             {
                 m_popupMenu->addSeparator();
-                m_whois = m_popupMenu->addAction(i18n("&Whois"));
-                m_openQuery = m_popupMenu->addAction(i18n("Open &Query"));
+                m_popupMenu->insertAction(0, m_whois);
+                m_popupMenu->insertAction(0, m_openQuery);
                 if (item->text(nlvcServerName).isEmpty())
-                    m_joinChannel = m_popupMenu->addAction(i18n("&Join Channel"));
+                  m_popupMenu->insertAction(0, m_joinChannel);
             }
             break;
         }

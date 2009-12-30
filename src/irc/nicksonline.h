@@ -29,6 +29,7 @@ class QPushButton;
 
 class QTreeWidget;
 
+class KToolBar;
 
 class NicksOnline : public ChatWindow
 {
@@ -92,18 +93,6 @@ class NicksOnline : public ChatWindow
          * Timer used to refresh display.
          */
         void timerFired();
-        /**
-         * Received when user clicks the Edit Contact (or New Contact) button.
-         */
-        void slotEditContactButton_Clicked();
-        /**
-         * Received when user clicks the Change Association button.
-         */
-        void slotChangeAssociationButton_Clicked();
-        /**
-         * Received when user clicks the Delete Association button.
-         */
-        void slotDeleteAssociationButton_Clicked();
         /**
          * Received when user selects a different item in the nicklistview.
          */
@@ -234,12 +223,9 @@ class NicksOnline : public ChatWindow
 
         // The main display of networks, nicks, and channels.
         QTreeWidget* m_nickListView;
-        // Buttons on screen.
-        QPushButton* m_editContactButton;
-        QPushButton* m_changeAssociationButton;
-        QPushButton* m_deleteAssociationButton;
         // Context menu when right-clicking a nick.
         KMenu* m_popupMenu;
+        KToolBar *m_toolBar;
         // A string containing the identifier for the "Offline" listview item
         QString c_offline;
         // Timer for refreshing display and generating WHOISes.
@@ -251,16 +237,16 @@ class NicksOnline : public ChatWindow
         bool m_whoisRequested;
 
 
-
-    QAction* m_chooseAssociation;
+    QAction* m_editList;
     QAction* m_newContact;
+    QAction* m_editContact;
+    QAction* m_chooseAssociation;
+    QAction* m_changeAssociation;
+    QAction* m_deleteAssociation;
     QAction* m_whois;
     QAction* m_openQuery;
-    QAction* m_joinChannel;
     QAction* m_sendMail;
-    QAction* m_editContact;
-    QAction* m_addressBookChange;
-    QAction* m_deleteAssociation;
+    QAction* m_joinChannel;
 
 };
 #endif
