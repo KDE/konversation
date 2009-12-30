@@ -10,11 +10,14 @@
   Copyright (C) 2006 Peter Simonsson <psn@linux.se>
 */
 
+#include "application.h"
 #include "searchbar.h"
 
 #include <QTimer>
 #include <QShortcut>
 
+#include <KActionCollection>
+#include <KStandardAction>
 #include <KMenu>
 
 
@@ -32,6 +35,9 @@ SearchBar::SearchBar(QWidget* parent)
     m_closeButton->setIcon(KIcon("dialog-close"));
     m_findNextButton->setIcon(m_goUpSearch);
     m_findPreviousButton->setIcon(m_goDownSearch);
+    Application* konvApp = static_cast<Application*>(kapp);
+    konvApp->getMainWindow()->actionCollection()->action(KStandardAction::name(KStandardAction::FindNext))->setIcon(m_goUpSearch);
+    konvApp->getMainWindow()->actionCollection()->action(KStandardAction::name(KStandardAction::FindPrev))->setIcon(m_goDownSearch);
 
     m_timer = new QTimer(this);
     m_timer->setSingleShot(true);
@@ -174,14 +180,19 @@ bool SearchBar::fromCursor() const
 
 void SearchBar::toggleSearchFoward(bool value)
 {
+    Application* konvApp = static_cast<Application*>(kapp);
     if (value) {
       m_findNextButton->setIcon(m_goDownSearch);
       m_findPreviousButton->setIcon(m_goUpSearch);
+      konvApp->getMainWindow()->actionCollection()->action(KStandardAction::name(KStandardAction::FindNext))->setIcon(m_goDownSearch);
+      konvApp->getMainWindow()->actionCollection()->action(KStandardAction::name(KStandardAction::FindPrev))->setIcon(m_goUpSearch);
     }
     else
     {
       m_findNextButton->setIcon(m_goUpSearch);
       m_findPreviousButton->setIcon(m_goDownSearch);
+      konvApp->getMainWindow()->actionCollection()->action(KStandardAction::name(KStandardAction::FindNext))->setIcon(m_goUpSearch);
+      konvApp->getMainWindow()->actionCollection()->action(KStandardAction::name(KStandardAction::FindPrev))->setIcon(m_goDownSearch);
     }
     m_searchFoward = value;
     slotTextChanged();
