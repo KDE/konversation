@@ -41,11 +41,12 @@ Changes since 1.2.1:
 * Fixed a bug causing the status bar to remain stuck displaying the
   description of a menu action if subsequently hovering other actions
   without a description set.
-* The URL Catcher and Channel List tabs now use a toolbar at the top
-  rather than a row of buttons at the bottom for their various actions,
-  consistent with the Log Viewer and the (redesigned for 1.2) DCC Sta-
-  tus tabs. Aside from a nicer UI this has the side benefit of redu-
-  cing the minimum window width with any of these tabs open.
+* The Watched Nicknames Online, URL Catcher and Channel List tabs now
+  use a toolbar at the top rather than a row of buttons at the bottom
+  for their various actions, consistent with the Log Viewer and the
+  (redesigned for 1.2) DCC Status tabs. Aside from a nicer UI this has
+  the side benefit of reducing the minimum window width with any of
+  these tabs open.
 * Further work on reducing the use of the qt3support/kde3support lib-
   raries throughout the codebase.
 * The design of the search bar has been made more consistent with the
