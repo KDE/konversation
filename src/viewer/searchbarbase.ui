@@ -67,6 +67,9 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
      <property name="text">
       <string>&amp;Options</string>
      </property>
+     <property name="popupMode">
+      <enum>QToolButton::MenuButtonPopup</enum>
+     </property>
     </widget>
    </item>
   </layout>
