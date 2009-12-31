@@ -45,7 +45,7 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
       <bool>false</bool>
      </property>
      <property name="text">
-      <string>Ne&amp;xt</string>
+      <string>&amp;Next</string>
      </property>
     </widget>
    </item>
