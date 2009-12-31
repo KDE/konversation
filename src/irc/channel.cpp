@@ -296,8 +296,6 @@ Channel::Channel(QWidget* parent, QString _name) : ChatWindow(parent)
         connect(nicknameCombobox->lineEdit(), SIGNAL (editingFinished()),this,SLOT(nicknameComboboxChanged()));
 
 
-    setLog(Preferences::self()->log());
-
     connect(&userhostTimer,SIGNAL (timeout()),this,SLOT (autoUserhost()));
 
     // every few seconds try to get more userhosts

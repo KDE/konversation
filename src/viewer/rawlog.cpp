@@ -52,4 +52,6 @@ bool RawLog::closeYourself()
 
 bool RawLog::searchView() { return true; }
 
+bool RawLog::log() { return false; }
+
 #include "rawlog.moc"

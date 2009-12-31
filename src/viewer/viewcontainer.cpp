@@ -2205,7 +2205,6 @@ RawLog* ViewContainer::addRawLog(Server* server)
 {
     RawLog* rawLog = new RawLog(m_tabWidget);
     rawLog->setServer(server);
-    rawLog->setLog(false);
 
     if (server->getServerGroup()) rawLog->setNotificationsEnabled(server->getServerGroup()->enableNotifications());
 

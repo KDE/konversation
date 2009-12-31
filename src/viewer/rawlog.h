@@ -29,7 +29,7 @@ class RawLog : public ChatWindow
         using ChatWindow::closeYourself;
         virtual bool closeYourself();
         virtual bool searchView();
-
+        virtual bool log();
     public slots:
         void morphNotification();
 
