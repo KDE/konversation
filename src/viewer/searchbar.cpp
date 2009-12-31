@@ -17,6 +17,7 @@
 #include <QShortcut>
 
 #include <KActionCollection>
+#include <KColorScheme>
 #include <KStandardAction>
 #include <KMenu>
 
@@ -146,7 +147,7 @@ void SearchBar::slotFindPrevious()
 void SearchBar::setHasMatch(bool value)
 {
     QPalette pal = m_searchEdit->palette();
-    pal.setColor(QPalette::Active, QPalette::Base, value ? Qt::white : Qt::red);
+    KColorScheme::adjustBackground(pal, value ? KColorScheme::PositiveBackground : KColorScheme::NegativeBackground);
     m_searchEdit->setPalette(pal);
 
     m_findNextButton->setEnabled(value);
