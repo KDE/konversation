@@ -32,7 +32,10 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
    <item>
     <widget class="QLabel" name="m_findLabel">
      <property name="text">
-      <string>Find:</string>
+      <string>F&amp;ind:</string>
+     </property>
+     <property name="buddy">
+      <cstring>m_searchEdit</cstring>
      </property>
     </widget>
    </item>
