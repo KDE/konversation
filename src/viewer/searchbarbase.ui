@@ -55,7 +55,7 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
       <bool>false</bool>
      </property>
      <property name="text">
-      <string>Previous</string>
+      <string>&amp;Previous</string>
      </property>
      <property name="flat">
       <bool>false</bool>
@@ -65,7 +65,7 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
    <item>
     <widget class="QToolButton" name="m_optionsButton">
      <property name="text">
-      <string>Options</string>
+      <string>&amp;Options</string>
      </property>
     </widget>
    </item>
