@@ -47,12 +47,6 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
      <property name="enabled">
       <bool>false</bool>
      </property>
-     <property name="minimumSize">
-      <size>
-       <width>27</width>
-       <height>27</height>
-      </size>
-     </property>
      <property name="text">
       <string>&amp;Next</string>
      </property>
@@ -62,12 +56,6 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
     <widget class="KPushButton" name="m_findPreviousButton">
      <property name="enabled">
       <bool>false</bool>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>27</width>
-       <height>27</height>
-      </size>
      </property>
      <property name="text">
       <string>&amp;Previous</string>
@@ -79,12 +67,6 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
    </item>
    <item>
     <widget class="QToolButton" name="m_optionsButton">
-     <property name="minimumSize">
-      <size>
-       <width>27</width>
-       <height>27</height>
-      </size>
-     </property>
      <property name="text">
       <string>&amp;Options</string>
      </property>
