@@ -373,7 +373,7 @@ void ViewContainer::updateAppearance()
 
     KToggleAction* action = qobject_cast<KToggleAction*>(actionCollection()->action("hide_nicknamelist"));
     Q_ASSERT(action);
-    action->setChecked(!Preferences::self()->showNickList());
+    action->setChecked(Preferences::self()->showNickList());
 
     if(m_insertCharDialog)
     {
@@ -2347,7 +2347,7 @@ void ViewContainer::toggleChannelNicklists()
 
     if (action)
     {
-        Preferences::self()->setShowNickList(!action->isChecked());
+        Preferences::self()->setShowNickList(action->isChecked());
         Preferences::self()->writeConfig();
 
         emit updateChannelAppearance();
