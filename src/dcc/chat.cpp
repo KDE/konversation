@@ -504,11 +504,9 @@ namespace Konversation
             while (available > 1 && m_dccSocket->canReadLine())
             {
                 buffer = new char[available + 1];
-                //qint64 actual = m_dccSocket->read(buffer, available);
                 qint64 actual = m_dccSocket->readLine(buffer, available);
                 buffer[actual] = 0;
                 line = codec->toUnicode(buffer);
-                //line.remove('\n');
                 delete[] buffer;
 
                 const QStringList &lines = line.split('\n', QString::SkipEmptyParts);
