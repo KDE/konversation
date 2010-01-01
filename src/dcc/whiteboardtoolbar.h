@@ -9,13 +9,15 @@
   Copyright (C) 2009 Bernd Buschinski <b.buschinski@web.de>
 */
 
-#ifndef WBOARDTOOLBAR_H
-#define WBOARDTOOLBAR_H
+#ifndef WHITEBOARDTOOLBAR_H
+#define WHITEBOARDTOOLBAR_H
 
-#include <QFrame>
-#include <QList>
+#include <QWidget>
+#include <QHash> 
 
 #include "ui_whiteboardtoolbarui.h"
+
+#include "whiteboardglobals.h"
 
 class KPushButton;
 
@@ -23,7 +25,7 @@ namespace Konversation
 {
     namespace DCC
     {
-        class WhiteBoardToolBar : public QFrame, public Ui::WhiteBoardToolBarUi
+        class WhiteBoardToolBar : public QWidget, public Ui::WhiteBoardToolBarUi
         {
             Q_OBJECT
 
@@ -31,29 +33,74 @@ namespace Konversation
                 WhiteBoardToolBar(QWidget* parent);
                 ~WhiteBoardToolBar();
 
+                QColor foregroundColor() const;
+                QColor backgroundColor() const;
+
             public slots:
-                //void toolChanged();
+                void enableTool(Konversation::DCC::WhiteBoardGlobals::WhiteBoardTool tool);
+                void disableTool(Konversation::DCC::WhiteBoardGlobals::WhiteBoardTool tool);
+
+            signals:
+                void toolChanged(Konversation::DCC::WhiteBoardGlobals::WhiteBoardTool tool);
+
+            // colorchooser signals
+                void colorsSwapped (const QColor& newForegroundColor,
+                                    const QColor& newBackgroundColor);
+                void foregroundColorChanged(const QColor& color);
+                void backgroundColorChanged(const QColor& color);
+            // colorchooser signals end
+
+                void lineWidthChanged(int width);
+
+                void save(const QString& filename);
+                void clear();
 
             protected slots:
+                void clearClicked();
+                void saveClicked();
+
                 void pencilToggled(bool checked);
-                void lineToogled(bool checked);
-                void rectangleToogled(bool checked);
-                void ellipseToogled(bool checked);
-                void textToogled(bool checked);
-                void selectionToogled(bool checked);
-                void eraseToogled(bool checked);
-                void fillToogled(bool checked);
+                void lineToggled(bool checked);
+                void rectangleToggled(bool checked);
+                void ellipseToggled(bool checked);
+                void textToggled(bool checked);
+                void selectionToggled(bool checked);
+                void eraseToggled(bool checked);
+                void fillToggled(bool checked);
+                void arrowToggled(bool checked);
+
+                void updateLineWidthPixmap(int lineWidth);
+
+                void formSelectionChanged();
 
             private:
-                 inline void connectToogleButtons();
-                 inline void disconnectToogleButtons();
+                enum FormOption
+                {
+                    Rectangle,
+                    Ellipse
+                };
 
-                 inline void handleToogleButton(KPushButton* button, bool checked);
-                 inline void unCheckOtherButtons(KPushButton* button);
+                inline void connectToggleButtons();
+                inline void disconnectToggleButtons();
 
-                 QList<KPushButton*> m_toogleButtonList;
+                inline void handleToggleButton(KPushButton* button, bool checked, Konversation::DCC::WhiteBoardGlobals::WhiteBoardTool tool);
+                inline void unCheckOtherButtons(KPushButton* button);
+
+                inline void setLineWidthVisible(bool visible);
+                inline void setFormOptionVisible(bool visible);
+
+                inline void fillFormOptionList(FormOption form);
+
+                QHash<KPushButton*, Konversation::DCC::WhiteBoardGlobals::WhiteBoardTool> m_toggleButtonHash;
+                QPixmap m_lineWidthPixmap;
+
+                QPixmap m_rectanglePixmap;
+                QPixmap m_filledRectanglePixmap;
+
+                QPixmap m_ellipsePixmap;
+                QPixmap m_filledEllipsePixmap;
         };
     }
 }
 
-#endif // WBOARDTOOLBAR_H
+#endif // WHITEBOARDTOOLBAR_H

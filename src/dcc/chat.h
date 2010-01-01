@@ -81,8 +81,10 @@ namespace Konversation
                 QString statusDetails() const;
 
                 void setExtension(const QString& extension);
+                void setExtension(Extension extension);
                 Extension extension() const;
                 QString extensionString() const;
+                QString localizedExtentionString() const;
 
                 int connectionId() const;
 
@@ -107,6 +109,8 @@ namespace Konversation
                 void error(QAbstractSocket::SocketError errorCode, const QString &errorMessage);
 
                 void upnpError(const QString &errorMessage);
+
+                void connected();
 
             protected slots:
                 void connectionEstablished();

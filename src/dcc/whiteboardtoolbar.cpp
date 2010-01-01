@@ -10,153 +10,420 @@
 */
 
 #include "whiteboardtoolbar.h"
+
 #include <QHBoxLayout>
 #include <QLayout>
+#include <QDir>
+
+#include <QImageWriter>
 #include <KPushButton>
+#include <KUrl>
+#include <KFileDialog>
 #include <KIcon>
+#include <kdebug.h>
+#include <QPainter>
 
 namespace Konversation
 {
     namespace DCC
     {
         WhiteBoardToolBar::WhiteBoardToolBar(QWidget* parent)
-            : QFrame(parent)
+            : QWidget(parent),
+              m_lineWidthPixmap(20, 20)
         {
             setupUi(this);
 
-            m_newPushButton->setIcon(KIcon("document-edit"));
-            m_newPushButton->setToolTip(i18n("Clear"));
+            m_clearPushButton->setIcon(KIcon("document-edit"));
+            m_clearPushButton->setToolTip(i18n("Clear"));
             m_savePushButton->setIcon(KIcon("document-save"));
             m_savePushButton->setToolTip(i18n("Save As.."));
 
             m_pencilPushButton->setIcon(KIcon("draw-freehand"));
             m_pencilPushButton->setToolTip(i18n("Freehand Drawing"));
-            m_toogleButtonList.append(m_pencilPushButton);
+            m_pencilPushButton->setFlat(true);
+            m_toggleButtonHash.insert(m_pencilPushButton, WhiteBoardGlobals::Pencil);
+            m_pencilPushButton->setChecked(true);
 
             m_linePushButton->setIcon(KIcon("draw-line"));
             m_linePushButton->setToolTip(i18n("Draw a straight line"));
-            m_toogleButtonList.append(m_linePushButton);
+            m_linePushButton->setFlat(true);
+            m_toggleButtonHash.insert(m_linePushButton, WhiteBoardGlobals::Line);
 
             m_rectanglePushButton->setIcon(KIcon("draw-rectangle"));
             m_rectanglePushButton->setToolTip(i18n("Draw a rectangle"));
-            m_toogleButtonList.append(m_rectanglePushButton);
+            m_rectanglePushButton->setFlat(true);
+            m_toggleButtonHash.insert(m_rectanglePushButton, WhiteBoardGlobals::Rectangle);
+            m_toggleButtonHash.insert(m_rectanglePushButton, WhiteBoardGlobals::FilledRectangle);
 
             m_ellipsePushButton->setIcon(KIcon("draw-circle"));
             m_ellipsePushButton->setToolTip(i18n("Draw an ellipse"));
-            m_toogleButtonList.append(m_ellipsePushButton);
+            m_ellipsePushButton->setFlat(true);
+            m_toggleButtonHash.insert(m_ellipsePushButton, WhiteBoardGlobals::Ellipse);
+            m_toggleButtonHash.insert(m_ellipsePushButton, WhiteBoardGlobals::FilledEllipse);
 
             m_textPushButton->setIcon(KIcon("draw-text"));
             m_textPushButton->setToolTip(i18n("Draw text"));
-            m_toogleButtonList.append(m_textPushButton);
+            m_textPushButton->setFlat(true);
+            m_toggleButtonHash.insert(m_textPushButton, WhiteBoardGlobals::Text);
 
             m_selectionPushButton->setIcon(KIcon("select-rectangular"));
             m_selectionPushButton->setToolTip(i18n("Selection"));
-            m_toogleButtonList.append(m_selectionPushButton);
+            m_selectionPushButton->setFlat(true);
+            m_toggleButtonHash.insert(m_selectionPushButton, WhiteBoardGlobals::Selection);
 
             m_eraserPushButton->setIcon(KIcon("draw-eraser"));
             m_eraserPushButton->setToolTip(i18n("Eraser"));
-            m_toogleButtonList.append(m_eraserPushButton);
+            m_eraserPushButton->setFlat(true);
+            m_toggleButtonHash.insert(m_eraserPushButton, WhiteBoardGlobals::Eraser);
 
             m_fillPushButton->setIcon(KIcon("fill-color"));
             m_fillPushButton->setToolTip(i18n("Fill a contigours area of with a color"));
-            m_toogleButtonList.append(m_fillPushButton);
+            m_fillPushButton->setFlat(true);
+            m_toggleButtonHash.insert(m_fillPushButton, WhiteBoardGlobals::FloodFill);
 
-            m_optionFrame->setVisible(false);
+            m_arrowPushButton->setIcon(KIcon("draw-arrow-forward"));
+            m_arrowPushButton->setToolTip(i18n("Draw an arrow"));
+            m_arrowPushButton->setFlat(true);
+            m_toggleButtonHash.insert(m_arrowPushButton, WhiteBoardGlobals::Arrow);
+
+            m_lineWidthSlider->setMaximum(WhiteBoardGlobals::MaxPenWidth);
+
+            connectToggleButtons();
+
+            //foreward colorchooser signals
+            connect(m_colorChooser, SIGNAL(colorsSwapped(const QColor&,const QColor&)),
+                    this, SIGNAL(colorsSwapped(const QColor&,const QColor&)));
+            connect(m_colorChooser, SIGNAL(foregroundColorChanged(const QColor&)),
+                    this, SIGNAL(foregroundColorChanged(const QColor&)));
+            connect(m_colorChooser, SIGNAL(backgroundColorChanged(const QColor&)),
+                    this, SIGNAL(backgroundColorChanged(const QColor&)));
+
+            connect(m_lineWidthSlider, SIGNAL(valueChanged(int)),
+                    this, SIGNAL(lineWidthChanged(int)));
+            connect(m_lineWidthSlider, SIGNAL(valueChanged(int)),
+                    this, SLOT(updateLineWidthPixmap(int)));
+
+            connect(m_clearPushButton, SIGNAL(clicked()), this, SLOT(clearClicked()));
+            connect(m_savePushButton, SIGNAL(clicked()), this, SLOT(saveClicked()));
+
+            setFormOptionVisible(false);
+            setLineWidthVisible(true);
+            updateLineWidthPixmap(1);
         }
 
         WhiteBoardToolBar::~WhiteBoardToolBar()
         {
         }
 
-        void WhiteBoardToolBar::connectToogleButtons()
+        QColor WhiteBoardToolBar::foregroundColor() const
         {
-            connect(m_pencilPushButton, SIGNAL(toogled(bool)), this, SLOT(pencilToggled(bool)));
-            connect(m_linePushButton, SIGNAL(toogled(bool)), this, SLOT(lineToggled(bool)));
-            connect(m_rectanglePushButton, SIGNAL(toogled(bool)), this, SLOT(rectangleToogled(bool)));
-            connect(m_ellipsePushButton, SIGNAL(toogled(bool)), this, SLOT(ellipseToogled(bool)));
-            connect(m_textPushButton, SIGNAL(toogled(bool)), this, SLOT(textToogled(bool)));
-            connect(m_selectionPushButton, SIGNAL(toogled(bool)), this, SLOT(selectionToogled(bool)));
-            connect(m_eraserPushButton, SIGNAL(toogled(bool)), this, SLOT(eraseToogled(bool)));
-            connect(m_fillPushButton, SIGNAL(toogled(bool)), this, SLOT(fillToogled(bool)));
+            return m_colorChooser->foregroundColor();
         }
 
-        void WhiteBoardToolBar::disconnectToogleButtons()
+        QColor WhiteBoardToolBar::backgroundColor() const
         {
-            disconnect(m_pencilPushButton, SIGNAL(toogled(bool)), this, SLOT(pencilToggled(bool)));
-            disconnect(m_linePushButton, SIGNAL(toogled(bool)), this, SLOT(lineToggled(bool)));
-            disconnect(m_rectanglePushButton, SIGNAL(toogled(bool)), this, SLOT(rectangleToogled(bool)));
-            disconnect(m_ellipsePushButton, SIGNAL(toogled(bool)), this, SLOT(ellipseToogled(bool)));
-            disconnect(m_textPushButton, SIGNAL(toogled(bool)), this, SLOT(textToogled(bool)));
-            disconnect(m_selectionPushButton, SIGNAL(toogled(bool)), this, SLOT(selectionToogled(bool)));
-            disconnect(m_eraserPushButton, SIGNAL(toogled(bool)), this, SLOT(eraseToogled(bool)));
-            disconnect(m_fillPushButton, SIGNAL(toogled(bool)), this, SLOT(fillToogled(bool)));
+            return m_colorChooser->backgroundColor();
         }
 
-        void WhiteBoardToolBar::ellipseToogled(bool checked)
+        void WhiteBoardToolBar::disableTool(WhiteBoardGlobals::WhiteBoardTool tool)
         {
-            handleToogleButton(m_ellipsePushButton, checked);
+            KPushButton* button = m_toggleButtonHash.key(tool);
+            if (button)
+            {
+                button->setEnabled(false);
+            }
+            else
+            {
+                kDebug() << "unhandled tool:" << tool;
+            }
         }
 
-        void WhiteBoardToolBar::eraseToogled(bool checked)
+        void WhiteBoardToolBar::enableTool(WhiteBoardGlobals::WhiteBoardTool tool)
         {
-            handleToogleButton(m_eraserPushButton, checked);
+            KPushButton* button = m_toggleButtonHash.key(tool);
+            if (button)
+            {
+                button->setEnabled(true);
+            }
+            else
+            {
+                kDebug() << "unhandled tool:" << tool;
+            }
         }
 
-        void WhiteBoardToolBar::fillToogled(bool checked)
+        void WhiteBoardToolBar::connectToggleButtons()
         {
-            handleToogleButton(m_fillPushButton, checked);
+            kDebug();
+            connect(m_pencilPushButton, SIGNAL(toggled(bool)), this, SLOT(pencilToggled(bool)));
+            connect(m_linePushButton, SIGNAL(toggled(bool)), this, SLOT(lineToggled(bool)));
+            connect(m_rectanglePushButton, SIGNAL(toggled(bool)), this, SLOT(rectangleToggled(bool)));
+            connect(m_ellipsePushButton, SIGNAL(toggled(bool)), this, SLOT(ellipseToggled(bool)));
+            connect(m_textPushButton, SIGNAL(toggled(bool)), this, SLOT(textToggled(bool)));
+            connect(m_selectionPushButton, SIGNAL(toggled(bool)), this, SLOT(selectionToggled(bool)));
+            connect(m_eraserPushButton, SIGNAL(toggled(bool)), this, SLOT(eraseToggled(bool)));
+            connect(m_fillPushButton, SIGNAL(toggled(bool)), this, SLOT(fillToggled(bool)));
+            connect(m_arrowPushButton, SIGNAL(toggled(bool)), this, SLOT(arrowToggled(bool)));
         }
 
-        void WhiteBoardToolBar::lineToogled(bool checked)
+        void WhiteBoardToolBar::disconnectToggleButtons()
         {
-            handleToogleButton(m_linePushButton, checked);
+            kDebug();
+            disconnect(m_pencilPushButton, 0, 0, 0);
+            disconnect(m_linePushButton, 0, 0, 0);
+            disconnect(m_rectanglePushButton, 0, 0, 0);
+            disconnect(m_ellipsePushButton, 0, 0, 0);
+            disconnect(m_textPushButton, 0, 0, 0);
+            disconnect(m_selectionPushButton, 0, 0, 0);
+            disconnect(m_eraserPushButton, 0, 0, 0);
+            disconnect(m_fillPushButton, 0, 0, 0);
+            disconnect(m_arrowPushButton, 0, 0, 0);
+        }
+
+        void WhiteBoardToolBar::clearClicked()
+        {
+            //TODO ask for confirm
+            emit clear();
+        }
+
+        void WhiteBoardToolBar::saveClicked()
+        {
+            KFileDialog fileDialog(KUrl(QDir::homePath()), "*.png\n*.jpg", this);
+            fileDialog.setCaption(i18n("Save Image"));
+            fileDialog.setOperationMode(KFileDialog::Saving);
+            fileDialog.setMode(KFile::File);
+            int ret = fileDialog.exec();
+
+            if (ret == KDialog::Accepted)
+            {
+                kDebug() << fileDialog.selectedFile();
+                emit save(fileDialog.selectedFile());
+            }
+        }
+
+        void WhiteBoardToolBar::arrowToggled (bool checked)
+        {
+            handleToggleButton(m_arrowPushButton, checked, WhiteBoardGlobals::Arrow);
+            setLineWidthVisible(true);
+            setFormOptionVisible(false);
+        }
+
+        void WhiteBoardToolBar::ellipseToggled(bool checked)
+        {
+            handleToggleButton(m_ellipsePushButton, checked, WhiteBoardGlobals::Ellipse);
+            setLineWidthVisible(true);
+            setFormOptionVisible(true);
+            fillFormOptionList(Ellipse);
+        }
+
+        void WhiteBoardToolBar::eraseToggled(bool checked)
+        {
+            handleToggleButton(m_eraserPushButton, checked, WhiteBoardGlobals::Eraser);
+            setLineWidthVisible(true);
+            setFormOptionVisible(false);
+        }
+
+        void WhiteBoardToolBar::fillToggled(bool checked)
+        {
+            handleToggleButton(m_fillPushButton, checked, WhiteBoardGlobals::FloodFill);
+            setLineWidthVisible(false);
+            setFormOptionVisible(false);
+        }
+
+        void WhiteBoardToolBar::lineToggled(bool checked)
+        {
+            handleToggleButton(m_linePushButton, checked, WhiteBoardGlobals::Line);
+            setLineWidthVisible(true);
+            setFormOptionVisible(false);
         }
 
         void WhiteBoardToolBar::pencilToggled(bool checked)
         {
-            handleToogleButton(m_pencilPushButton, checked);
+            handleToggleButton(m_pencilPushButton, checked, WhiteBoardGlobals::Pencil);
+            setLineWidthVisible(true);
+            setFormOptionVisible(false);
         }
 
-        void WhiteBoardToolBar::rectangleToogled(bool checked)
+        void WhiteBoardToolBar::rectangleToggled(bool checked)
         {
-            handleToogleButton(m_rectanglePushButton, checked);
+            handleToggleButton(m_rectanglePushButton, checked, WhiteBoardGlobals::Rectangle);
+            setLineWidthVisible(true);
+            setFormOptionVisible(true);
+            fillFormOptionList(Rectangle);
         }
 
-        void WhiteBoardToolBar::selectionToogled(bool checked)
+        void WhiteBoardToolBar::selectionToggled(bool checked)
         {
-            handleToogleButton(m_selectionPushButton, checked);
+            handleToggleButton(m_selectionPushButton, checked, WhiteBoardGlobals::Selection);
+            setLineWidthVisible(false);
+            setFormOptionVisible(false);
         }
 
-        void WhiteBoardToolBar::textToogled(bool checked)
+        void WhiteBoardToolBar::textToggled(bool checked)
         {
-            handleToogleButton(m_textPushButton, checked);
+            handleToggleButton(m_textPushButton, checked, WhiteBoardGlobals::Text);
+            setLineWidthVisible(false);
+            setFormOptionVisible(false);
         }
 
-        void WhiteBoardToolBar::handleToogleButton(KPushButton* button, bool checked)
+        void WhiteBoardToolBar::handleToggleButton(KPushButton* button, bool checked, Konversation::DCC::WhiteBoardGlobals::WhiteBoardTool tool)
         {
-            disconnectToogleButtons();
+            disconnectToggleButtons();
+            kDebug() << "tool:" << tool << "checked:" << checked;
             if (checked)
             {
                 unCheckOtherButtons(button);
+                emit toolChanged(tool);
             }
             else
             {
-                button->setCheckable(true);
+                // don't uncheck the button
+                button->setChecked(true);
             }
-            connectToogleButtons();
+            connectToggleButtons();
         }
 
         void WhiteBoardToolBar::unCheckOtherButtons(KPushButton* button)
         {
-            foreach(KPushButton* pushButton, m_toogleButtonList)
+            foreach(KPushButton* pushButton, m_toggleButtonHash.keys())
             {
                 if (pushButton != button && pushButton->isChecked())
                 {
-                    pushButton->setCheckable(false);
+                    pushButton->setChecked(false);
                     return;
                 }
             }
         }
 
+        void WhiteBoardToolBar::updateLineWidthPixmap(int lineWidth)
+        {
+            if (m_lineWidthLabel->width() != m_lineWidthPixmap.width()-2 ||
+                m_lineWidthLabel->height() != m_lineWidthPixmap.height())
+            {
+                m_lineWidthPixmap = QPixmap(m_lineWidthLabel->width()-2, m_lineWidthLabel->height());
+            }
+            //hm.. really white? or is transparent better?
+            m_lineWidthPixmap.fill(Qt::white);
+
+            QPainter tPaint(&m_lineWidthPixmap);
+            tPaint.setPen(QPen(Qt::black, lineWidth));
+            tPaint.drawLine(0, m_lineWidthPixmap.height()/2, m_lineWidthPixmap.width(), m_lineWidthPixmap.height()/2);
+            tPaint.end();
+            m_lineWidthLabel->setPixmap(m_lineWidthPixmap);
+        }
+
+        void WhiteBoardToolBar::formSelectionChanged()
+        {
+            // kDebug();
+            QList<QListWidgetItem *> selectList = m_formOptionListWidget->selectedItems();
+            const int selectedRow = m_formOptionListWidget->row(selectList.first());
+            if (selectedRow == 0)
+            {
+                if (m_rectanglePushButton->isChecked())
+                {
+                    kDebug() << "emit rectangle";
+                    emit toolChanged(WhiteBoardGlobals::Rectangle);
+                }
+                else if (m_ellipsePushButton->isChecked())
+                {
+                    kDebug() << "emit ellipse";
+                    emit toolChanged(WhiteBoardGlobals::Ellipse);
+                }
+            }
+            else if (selectedRow == 1)
+            {
+                if (m_rectanglePushButton->isChecked())
+                {
+                    kDebug() << "emit filledrectangle";
+                    emit toolChanged(WhiteBoardGlobals::FilledRectangle);
+                }
+                else if (m_ellipsePushButton->isChecked())
+                {
+                    kDebug() << "emit filledellipse";
+                    emit toolChanged(WhiteBoardGlobals::FilledEllipse);
+                }
+            }
+        }
+
+        void WhiteBoardToolBar::setLineWidthVisible (bool visible)
+        {
+            m_lineWidthFrame->setVisible(visible);
+        }
+
+        void WhiteBoardToolBar::setFormOptionVisible(bool visible)
+        {
+            m_formOptionListWidget->setVisible(visible);
+        }
+
+        void WhiteBoardToolBar::fillFormOptionList(FormOption form)
+        {
+            disconnect(m_formOptionListWidget, 0, 0, 0);
+            m_formOptionListWidget->clear();
+            const int width = m_formOptionListWidget->contentsRect().width() - m_formOptionListWidget->lineWidth()*4 - 1;
+            const int drawHeight = 20 - 2;
+            const QSize sizeHint(width, 20);
+            kDebug() << "wanted width" << width;
+            kDebug() << "actual width" << m_formOptionListWidget->contentsRect().width();
+            switch (form)
+            {
+                case Rectangle:
+                {
+                    if (m_rectanglePixmap.width() != width ||
+                        m_rectanglePixmap.height() != 20)
+                    {
+                        m_rectanglePixmap = QPixmap(width, 20);
+                        m_rectanglePixmap.fill(Qt::transparent);
+                        m_filledRectanglePixmap = QPixmap(width, 20);
+                        m_filledRectanglePixmap.fill(Qt::transparent);
+                        QPainter tPaint(&m_rectanglePixmap);
+                        tPaint.drawRect(0, 0, width-1, drawHeight);
+                        tPaint.end();
+                        tPaint.begin(&m_filledRectanglePixmap);
+                        tPaint.setBrush(Qt::black);
+                        tPaint.drawRect(0, 0, width-1, drawHeight);
+                        tPaint.end();
+                    }
+                    QListWidgetItem *tRectangle = new QListWidgetItem("", m_formOptionListWidget, QListWidgetItem::UserType +1);
+                    tRectangle->setData(Qt::DecorationRole, QVariant(m_rectanglePixmap));
+                    tRectangle->setSizeHint(sizeHint);
+
+                    QListWidgetItem *tFilledRectangle = new QListWidgetItem("", m_formOptionListWidget, QListWidgetItem::UserType +1);
+                    tFilledRectangle->setData(Qt::DecorationRole, QVariant(m_filledRectanglePixmap));
+                    tFilledRectangle->setSizeHint(sizeHint);
+
+                    tRectangle->setSelected(true);
+                    break;
+                }
+                case Ellipse:
+                {
+                    if (m_ellipsePixmap.width() != width ||
+                        m_ellipsePixmap.height() != 20)
+                    {
+                        m_ellipsePixmap = QPixmap(width, 20);
+                        m_ellipsePixmap.fill(Qt::transparent);
+                        m_filledEllipsePixmap = QPixmap(width, 20);
+                        m_filledEllipsePixmap.fill(Qt::transparent);
+                        QPainter tPaint(&m_ellipsePixmap);
+                        tPaint.drawEllipse(0, 0, width-1, drawHeight);
+                        tPaint.end();
+                        tPaint.begin(&m_filledEllipsePixmap);
+                        tPaint.setBrush(Qt::black);
+                        tPaint.drawEllipse(0, 0, width-1, drawHeight);
+                        tPaint.end();
+                    }
+                    QListWidgetItem *tEllipse = new QListWidgetItem("", m_formOptionListWidget, QListWidgetItem::UserType +1);
+                    tEllipse->setData(Qt::DecorationRole, QVariant(m_ellipsePixmap));
+                    tEllipse->setSizeHint(sizeHint);
+
+                    QListWidgetItem *tFilledEllipse = new QListWidgetItem("", m_formOptionListWidget, QListWidgetItem::UserType +1);
+                    tFilledEllipse->setData(Qt::DecorationRole, QVariant(m_filledEllipsePixmap));
+                    tFilledEllipse->setSizeHint(sizeHint);
+
+                    tEllipse->setSelected(true);
+                    break;
+                }
+            }
+            connect(m_formOptionListWidget, SIGNAL(itemSelectionChanged()),
+                    this, SLOT(formSelectionChanged()));
+        }
     }
 }

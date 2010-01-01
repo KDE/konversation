@@ -97,6 +97,7 @@ namespace Konversation
                                                   // Choose File from requester
             void requestDccSend(const QString& recipient);
             void openDccChat(const QString& nick);
+            void openDccWBoard (const QString& nick);
             void addDccPanel();
             void closeDccPanel();
             void acceptDccGet(const QString& nick, const QString& file);
