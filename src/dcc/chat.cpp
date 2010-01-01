@@ -501,17 +501,22 @@ namespace Konversation
                 return;
             }
 
-            buffer = new char[available + 1];
-            qint64 actual = m_dccSocket->read(buffer, available);
-            buffer[actual] = 0;
-            line.append(codec->toUnicode(buffer));
-            delete[] buffer;
-
-            const QStringList &lines = line.split('\n', QString::SkipEmptyParts);
-
-            foreach (const QString &line, lines)
+            while (available > 1 && m_dccSocket->canReadLine())
             {
-                emit receivedRawLine(line);
+                buffer = new char[available + 1];
+                //qint64 actual = m_dccSocket->read(buffer, available);
+                qint64 actual = m_dccSocket->readLine(buffer, available);
+                buffer[actual] = 0;
+                line = codec->toUnicode(buffer);
+                //line.remove('\n');
+                delete[] buffer;
+
+                const QStringList &lines = line.split('\n', QString::SkipEmptyParts);
+                foreach (const QString &lin, lines)
+                {
+                    emit receivedRawLine(lin);
+                }
+                available = m_dccSocket->bytesAvailable();
             }
         }
 
@@ -521,7 +526,7 @@ namespace Konversation
             OutputFilter::replaceAliases(line);
             // this produces and invalid string, A gets lost
             //QString actionText = '\x01' + "ACTION " + line + '\x01';
-            QString actionText = QString("\x01%1 %2\x01").arg("ACTION").arg(line);
+            QString actionText = QString("\x01""ACTION %1\x01").arg(line);
             sendRawLine(actionText);
         }
 
