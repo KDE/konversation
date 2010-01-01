@@ -43,13 +43,7 @@ LinkAddressbookUI::LinkAddressbookUI( QWidget *parent, const QString &ircnick, c
 
     // Addressee validation connections
     connect( m_ui.addAddresseeButton, SIGNAL( clicked() ), SLOT( slotAddAddresseeClicked() ) );
-    connect( m_ui.addresseeListView, SIGNAL( clicked(Q3ListViewItem * ) ),
-        SLOT( slotAddresseeListClicked( Q3ListViewItem * ) ) );
-    connect( m_ui.addresseeListView, SIGNAL( selectionChanged( Q3ListViewItem * ) ),
-        SLOT( slotAddresseeListClicked( Q3ListViewItem * ) ) );
-    connect( m_ui.addresseeListView, SIGNAL( spacePressed( Q3ListViewItem * ) ),
-        SLOT( slotAddresseeListClicked( Q3ListViewItem * ) ) );
-
+    connect( m_ui.addresseeListView, SIGNAL( itemSelectionChanged() ), SLOT( slotAddresseeSelectionChanged() ) );
     connect( m_addressBook, SIGNAL( addressBookChanged( AddressBook * ) ), this, SLOT( slotLoadAddressees() ) );
     connect( Konversation::Addressbook::self(), SIGNAL(addresseesChanged()), this, SLOT(slotLoadAddressees()));
 
@@ -61,14 +55,14 @@ LinkAddressbookUI::LinkAddressbookUI( QWidget *parent, const QString &ircnick, c
     m_servergroup = servergroup;
     m_suggested_realname = suggested_realname;
 
-    m_ui.addresseeListView->setColumnText(2, KIcon("mail-message"), i18n("Email") );
+    m_ui.addresseeListView->headerItem()->setIcon(2, KIcon("mail-message"));
+    m_ui.addresseeListView->headerItem()->setText(2, i18n("Email") );
 
     if(m_suggested_realname.isEmpty()) m_suggested_realname = suggested_realname;
     Q_ASSERT(!ircnick.isEmpty());
-    m_ui.kListViewSearchLine->setListView(m_ui.addresseeListView);
+    m_ui.kListViewSearchLine->setTreeWidget(m_ui.addresseeListView);
     slotLoadAddressees();
 
-    m_ui.addresseeListView->setColumnWidthMode(0, Q3ListView::Manual);
                                                   //Photo is 60, and it's nice to have a small gap, imho
     m_ui.addresseeListView->setColumnWidth(0, 63);
     connect( this, SIGNAL( okClicked() ), this, SLOT( slotOk() ) );
@@ -130,17 +124,17 @@ void LinkAddressbookUI::slotAddAddresseeClicked()
     }
 }
 
-void LinkAddressbookUI::slotAddresseeListClicked( Q3ListViewItem *addressee )
+void LinkAddressbookUI::slotAddresseeSelectionChanged()
 {
-    // enable ok if a valid addressee is selected
-    enableButtonOk(addressee ? addressee->isSelected() : false);
+    enableButtonOk(m_ui.addresseeListView->selectedItems().count() != 0);
 }
 
 void LinkAddressbookUI::slotOk()
 {
     //// set the KABC uid in the metacontact
     AddresseeItem *item = 0L;
-    item = static_cast<AddresseeItem *>( m_ui.addresseeListView->selectedItem() );
+    QTreeWidgetItem *selectedItem = (m_ui.addresseeListView->selectedItems().count() != 0 ? m_ui.addresseeListView->selectedItems().at(0) : 0);
+    item = static_cast<AddresseeItem *>( selectedItem );
 
     KABC::Addressee addr;
     if ( item )

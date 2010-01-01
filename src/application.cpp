@@ -37,6 +37,7 @@
 #include <QtDBus/QDBusConnection>
 #include <QNetworkProxy>
 
+#include <KRun>
 #include <KCmdLineArgs>
 #include <KConfig>
 #include <KShell>
@@ -169,7 +170,7 @@ int Application::newInstance()
         // handle autoconnect on startup
         Konversation::ServerGroupHash serverGroups = Preferences::serverGroupHash();
 
-        if (url.isEmpty() && !args->isSet("server"))
+        if (args->isSet("autoconnect") && url.isEmpty() && !args->isSet("server"))
         {
             QHashIterator<int, Konversation::ServerGroupSettingsPtr> it(serverGroups);
             while(it.hasNext())
@@ -1007,18 +1008,27 @@ QString Application::doAutoreplace(const QString& text,bool output)
                     {
                         // remember captured patterns
                         QStringList captures = needleReg.capturedTexts();
+                        QString replaceWith = replacement;
 
-                        // replace %0 - %9 in regex groups
+                        replaceWith.replace("%%","%\x01"); // escape double %
+                        // replace %0-9 in regex groups
                         for (int capture=0;capture<captures.count();capture++)
                         {
-                            replacement.replace(QString("%%1").arg(capture),captures[capture]);
+                            QString search = QString("%%1").arg(capture);
+                            replaceWith.replace(search, captures[capture]);
                         }
-                        replacement.remove(QRegExp("%[0-9]"));
+                        //Explanation why this is important so we don't forget:
+                        //If somebody has a regex that say has a replacement of url.com/%1/%2 and the
+                        //regex can either match one or two patterns, if the 2nd pattern match is left,
+                        //the url is invalid (url.com/match/%2). This is expected regex behavior I'd assume.
+                        replaceWith.remove(QRegExp("%[0-9]"));
+
+                        replaceWith.replace("%\x01","%"); // return escaped % to normal
                         // allow for var expansion in autoreplace
-                        replacement = Konversation::doVarExpansion(replacement);
+                        replaceWith = Konversation::doVarExpansion(replaceWith);
                         // replace input with replacement
-                        line.replace(index, captures[0].length(), replacement);
-                        index += replacement.length();
+                        line.replace(index, captures[0].length(), replaceWith);
+                        index += replaceWith.length();
                     }
                 } while (index >= 0 && index < (int)line.length());
             }
@@ -1061,10 +1071,12 @@ QString Application::doAutoreplace(const QString& text,bool output)
 
 void Application::openUrl(const QString& url)
 {
-    if (!Preferences::self()->useCustomBrowser() || url.startsWith(QLatin1String("mailto:")))
+    if (!Preferences::self()->useCustomBrowser() || url.startsWith(QLatin1String("mailto:")) || url.startsWith(QLatin1String("amarok:")))
     {
         if (url.startsWith(QLatin1String("mailto:")))
             KToolInvocation::invokeMailer(KUrl(url));
+        if (url.startsWith(QLatin1String("amarok:")))
+            new KRun(KUrl(url), Application::instance()->getMainWindow());
         else
             KToolInvocation::invokeBrowser(url);
     }

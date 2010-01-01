@@ -186,24 +186,51 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent), m_n
 
     m_popup->addSeparator();
 
-    m_copyUrlClipBoard =m_popup->addAction(KIcon("edit-copy"), i18n("Copy Link Address"), this, SLOT( copyUrl() )) ;
+    m_copyUrlClipBoard = new KAction(this);
+    m_copyUrlClipBoard->setIcon(KIcon("edit-copy"));
+    m_copyUrlClipBoard->setText(i18n("Copy Link Address"));
+    connect(m_copyUrlClipBoard, SIGNAL(triggered()), SLOT(copyUrl()));
+    m_popup->addAction(m_copyUrlClipBoard);
     m_copyUrlClipBoard->setVisible( false );
 
-
-    m_bookmark = m_popup->addAction(KIcon("bookmark-new"), i18n("Add to Bookmarks"), this, SLOT( slotBookmark() ) );
+    m_bookmark = new KAction(this);
+    m_bookmark->setIcon(KIcon("bookmark-new"));
+    m_bookmark->setText(i18n("Add to Bookmarks"));
+    connect(m_bookmark, SIGNAL(triggered()), SLOT(slotBookmark()));
+    m_popup->addAction(m_bookmark);
     m_bookmark->setVisible( false );
-    m_saveUrl = m_popup->addAction(KIcon("document-save"), i18n("Save Link As..."), this, SLOT( saveLinkAs() ));
+    
+    m_saveUrl = new KAction(this);
+    m_saveUrl->setIcon(KIcon("document-save"));
+    m_saveUrl->setText(i18n("Save Link As..."));
+    connect(m_saveUrl, SIGNAL(triggered()), SLOT(saveLinkAs()));
+    m_popup->addAction(m_saveUrl);
     m_saveUrl->setVisible( false );
+    
     QAction * toggleMenuBarSeparator = m_popup->addSeparator();
     toggleMenuBarSeparator->setVisible(false);
     copyUrlMenuSeparator = m_popup->addSeparator();
     copyUrlMenuSeparator->setVisible( false );
-    QAction *act = m_popup->addAction(KIcon("edit-copy"),i18n("&Copy"),this, SLOT( copy()) );
-    connect( this, SIGNAL(copyAvailable(bool)),act,SLOT( setEnabled( bool ) ) );
-    act->setEnabled( false );
-    m_popup->addAction(i18n("Select All"),this, SLOT(selectAll()) );
-    m_popup->addAction(KIcon("edit-find"),i18n("Find Text..."),this, SLOT( findText() ) );
+    
+    QAction *copyAct = new KAction(this);
+    copyAct->setIcon(KIcon("edit-copy"));
+    copyAct->setText(i18n("&Copy"));
+    connect(copyAct, SIGNAL(triggered()), SLOT(copy()));
+    m_popup->addAction(copyAct);
+    connect(this, SIGNAL(copyAvailable(bool)), copyAct, SLOT( setEnabled( bool ) ));
+    copyAct->setEnabled( false );
+    
+    QAction *selectAllAct = new KAction(this);
+    selectAllAct->setText(i18n("Select All"));
+    connect(selectAllAct, SIGNAL(triggered()), SLOT(selectAll()));
+    m_popup->addAction(selectAllAct);
 
+    QAction *findTextAct = new KAction(this);
+    findTextAct->setIcon(KIcon("edit-find"));
+    findTextAct->setText(i18n("Find Text..."));
+    connect(findTextAct, SIGNAL(triggered()), SLOT(findText()));
+    m_popup->addAction(findTextAct);
+    
     setServer(newServer);
 
     if (Preferences::self()->useParagraphSpacing()) enableParagraphSpacing();

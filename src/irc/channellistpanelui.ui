@@ -55,35 +55,7 @@
       </property>
      </widget>
     </item>
-    <item row="14" column="0" colspan="9">
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
-      <item>
-       <widget class="QPushButton" name="m_refreshListBtn">
-        <property name="text">
-         <string>Refresh List</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="m_saveListBtn">
-        <property name="text">
-         <string>Save &amp;List...</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="m_joinChanBtn">
-        <property name="whatsThis">
-         <string>Click here to join the channel. A new tab is created for the channel.</string>
-        </property>
-        <property name="text">
-         <string>&amp;Join channel</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item row="5" column="0" colspan="9">
+    <item row="5" column="0" colspan="8">
      <widget class="QTreeView" name="m_channelListView">
       <property name="contextMenuPolicy">
        <enum>Qt::CustomContextMenu</enum>
@@ -150,7 +122,7 @@
       </property>
      </widget>
     </item>
-    <item row="1" column="3" colspan="6">
+    <item row="1" column="3" colspan="5">
      <widget class="KLineEdit" name="m_filterLine">
       <property name="contextMenuPolicy">
        <enum>Qt::CustomContextMenu</enum>
@@ -163,7 +135,7 @@
       </property>
      </widget>
     </item>
-    <item row="2" column="6">
+    <item row="2" column="5">
      <spacer name="horizontalSpacer">
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
@@ -176,7 +148,7 @@
       </property>
      </spacer>
     </item>
-    <item row="2" column="7">
+    <item row="2" column="6">
      <widget class="QCheckBox" name="m_regexBox">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
@@ -189,7 +161,7 @@
       </property>
      </widget>
     </item>
-    <item row="13" column="0" colspan="9">
+    <item row="13" column="0" colspan="8">
      <layout class="QHBoxLayout" name="horizontalLayout_3">
       <item>
        <widget class="QLabel" name="m_statsLabel">

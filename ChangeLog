@@ -16,6 +16,45 @@ Changes since 1.2.1:
   (i.e. a channel or a query) case-sensitive.
 * Fixed the encryption key for a query getting lost if the other end
   changes their nickname.
+* Added support for KStatusNotifierItem, the new system tray API in
+  KDE.
+* Fixed a bug causing multiple auto-replacements in a single message
+  not to work.
+* Made it possible to include syntax normally used to refer to a sub-
+  group of the matching pattern as normal text in the replacement pat-
+  tern of a regular expression auto-replace, by escaping it like this:
+  %%1.
+* Fixed a bug causing an empty MODE message to be sent to the server
+  preceding the correct one when using /op, /deop and the like.
+* Fixed a bug causing as many mode chars as target nicknames given to
+  commands like /op, /deop etc. to be sent as part of every single re-
+  sultant MODE messages sent to the server, despite one MODE message
+  being generated for every group of three target nicknames. I.e. "/op
+  foo foo foo foo" would result in "MODE +oooo foo foo foo" and "MODE
+  +oooo foo", when it should only be "+ooo" and "+o", respectively.
+* Added support for amarok:// URLs in chat text views and channel to-
+  pics.
+* Fixed a bug causing Konversation to treat "Page Up" and "Page Down"
+  key events with any modifier (e.g. Ctrl) the same as without any mo-
+  difier, making such combinations unavailable as shortcuts for other
+  actions.
+* Fixed a bug causing the status bar to remain stuck displaying the
+  description of a menu action if subsequently hovering other actions
+  without a description set.
+* The Watched Nicknames Online, URL Catcher and Channel List tabs now
+  use a toolbar at the top rather than a row of buttons at the bottom
+  for their various actions, consistent with the Log Viewer and the
+  (redesigned for 1.2) DCC Status tabs. Aside from a nicer UI this has
+  the side benefit of reducing the minimum window width with any of
+  these tabs open.
+* Further work on reducing the use of the qt3support/kde3support lib-
+  raries throughout the codebase.
+* The design of the search bar has been made more consistent with the
+  search bars found in other KDE applications (e.g. Konqueror, Konso-
+  le and KWrite).
+* Added a "--noautoconnect" command line argument to disable auto-co-
+  nnecting to any IRC networks on application startup.
+
 
 Changes from 1.2 to 1.2.1:
 This second release in the Konversation 1.2.x release series for KDE 4

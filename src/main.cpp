@@ -89,6 +89,7 @@ int main(int argc, char* argv[])
     options.add( "nick <nickname>", ki18n("Nickname to use"),"");
     options.add( "password <password>", ki18n("Password for connection"),"");
     options.add( "ssl", ki18n("Use SSL for connection"),"false");
+    options.add( "noautoconnect", ki18n("Disable auto-connecting to any IRC networks"));
 
 
     KCmdLineArgs::addCmdLineOptions(options);

@@ -122,8 +122,6 @@ Query::Query(QWidget* parent, QString _name) : ChatWindow(parent)
 
     updateAppearance();
 
-    setLog(Preferences::self()->log());
-
     #ifdef HAVE_QCA2
     m_cipher = 0;
     #endif

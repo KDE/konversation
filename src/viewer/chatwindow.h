@@ -65,7 +65,7 @@ class ChatWindow : public KVBox
         Server* getServer();
         void setTextView(IRCView* newView);
         IRCView* getTextView() const;
-        void setLog(bool activate);
+        virtual bool log();
 
         QString getName();
         QString getTitle();
@@ -184,7 +184,6 @@ class ChatWindow : public KVBox
         int spacing();
         int margin();
 
-        bool log;
         bool firstLog;
         QString name;
         QString logName;

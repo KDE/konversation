@@ -21,6 +21,7 @@
 #include <QAbstractListModel>
 
 class QSortFilterProxyModel;
+class KToolBar;
 
 struct UrlItem
 {
@@ -94,5 +95,11 @@ class UrlCatcher : public ChatWindow, private Ui::URLCatcherUI
 
         UrlCatcherModel* m_urlListModel;
         QSortFilterProxyModel* m_proxyModel;
+        KToolBar *m_toolBar;
+        QAction *m_open;
+        QAction *m_copy;
+        QAction *m_delete;
+        QAction *m_save;
+        QAction *m_clear;
 };
 #endif

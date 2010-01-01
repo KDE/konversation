@@ -52,7 +52,7 @@ class LinkAddressbookUI : public KDialog
         virtual void slotOk();
         virtual void slotCancel();
         void slotAddAddresseeClicked();
-        void slotAddresseeListClicked( Q3ListViewItem *addressee );
+        void slotAddresseeSelectionChanged();
         /**
          * Utility function, populates the addressee list
          */

@@ -55,8 +55,6 @@ StatusPanel::StatusPanel(QWidget* parent) : ChatWindow(parent)
     getTextView()->installEventFilter(statusInput);
     statusInput->installEventFilter(this);
 
-    setLog(Preferences::self()->log());
-
     connect(getTextView(),SIGNAL (gotFocus()),statusInput,SLOT (setFocus()) );
 
     connect(getTextView(),SIGNAL (sendFile()),this,SLOT (sendFileMenu()) );

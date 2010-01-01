@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Theme
 Name=Christmas Theme
+Name[ast]=Tema Christmes
 Name[bg]=Коледна тема
 Name[ca]=Tema nadalenc
 Name[cs]=Vánoční téma
@@ -36,6 +37,7 @@ Name[x-test]=xxChristmas Themexx
 Name[zh_CN]=圣诞节主题
 Name[zh_TW]=聖誕節
 Comment="Christmas Theme" by Kenichiro Takahashi
+Comment[ast]=Tema «Christmes» de Kenichiro Takahashi
 Comment[bg]="Коледна тема" от Kenichiro Takahashi
 Comment[ca]="Tema nadalenc" per Kenichiro Takahashi
 Comment[cs]="Vánoční téma" od Kenichiro Takahashi
@@ -64,7 +66,7 @@ Comment[ro]=„Tematică de Crăciun” de Kenichiro Takahashi
 Comment[ru]=Сделал Kenichiro Takahashi
 Comment[sv]="Jultema" av Kenichiro Takahashi
 Comment[tr]=Kenichiro Takahashi tarafından "Noel Teması"
-Comment[uk]="Різдвяна тема", автор — Kenichiro Takahashi
+Comment[uk]=«Різдвяна тема», автор — Kenichiro Takahashi
 Comment[x-test]=xx"Christmas Theme" by Kenichiro Takahashixx
 Comment[zh_CN]="Christmas Theme" by Kenichiro Takahashi
 Comment[zh_TW]=「聖誕節」，由 Kenichiro Takahashi 提供

@@ -23,13 +23,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include <kabc/addressbook.h>
 
-#include <K3ListView>
+#include <QTreeWidget>
 
 
 /**
   @short Special ListViewItem
 */
-class AddresseeItem : public K3ListViewItem
+class AddresseeItem : public QTreeWidgetItem
 {
     public:
 
@@ -46,7 +46,7 @@ class AddresseeItem : public K3ListViewItem
           @param parent    The parent listview.
           @param addressee The associated addressee.
         */
-        AddresseeItem( Q3ListView *parent, const KABC::Addressee &addressee );
+        AddresseeItem( QTreeWidget *parent, const KABC::Addressee &addressee );
 
         /**
           Returns the addressee.

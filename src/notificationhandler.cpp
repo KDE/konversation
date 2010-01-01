@@ -122,8 +122,8 @@ namespace Konversation
 
         if (!chatWin->getServer() || (Preferences::self()->disableNotifyWhileAway() && chatWin->getServer()->isAway()))
             return;
- //TODO FIXME port the tray icon
-        if (!m_mainWindow->isActiveWindow() && chatWin->getServer()->isConnected())
+
+        if (!m_mainWindow->isActiveWindow() && chatWin->getServer()->isConnected() && m_mainWindow->systemTrayIcon())
             m_mainWindow->systemTrayIcon()->startNotification();
 
     }

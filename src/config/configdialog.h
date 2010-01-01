@@ -39,7 +39,7 @@
 #ifndef KONVICONFIGDIALOG_H
 #define KONVICONFIGDIALOG_H
 
-#include <Q3AsciiDict>
+#include <QMultiHash>
 
 #include <KPageDialog>
 
@@ -113,7 +113,7 @@ class KonviConfigDialog : public KPageDialog
         void setupManagerConnections(KConfigDialogManager *manager);
 
     private:
-        static Q3AsciiDict<KonviConfigDialog> openDialogs;
+        static QMultiHash<const char *, KonviConfigDialog *> openDialogs;
 
         class KConfigDialogPrivate;
 

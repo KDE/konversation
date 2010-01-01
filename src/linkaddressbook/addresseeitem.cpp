@@ -22,8 +22,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #include <QRegExp>
 
 
-AddresseeItem::AddresseeItem( Q3ListView *parent, const KABC::Addressee &addressee) :
-K3ListViewItem( parent ),
+AddresseeItem::AddresseeItem( QTreeWidget *parent, const KABC::Addressee &addressee) :
+QTreeWidgetItem( parent ),
 mAddressee( addressee )
 {
     //We can't save showphoto because we don't have a d pointer
@@ -33,8 +33,8 @@ mAddressee( addressee )
     if(pic.isIntern())
     {
                                                   //60 pixels seems okay.. kmail uses 60 btw
-        QPixmap qpixmap = QPixmap::fromImage( pic.data().scaledToWidth(60) );
-        setPixmap( Photo,qpixmap );
+        QIcon icon( QPixmap::fromImage( pic.data().scaledToWidth(60) ) );
+        setIcon( Photo, icon );
     }
 
     setText( Name, addressee.realName() );

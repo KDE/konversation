@@ -43,10 +43,10 @@
 #include <KLocale>
 
 
-#include <Q3CString>
+#include <QString>
 
 
-Q3AsciiDict<KonviConfigDialog> KonviConfigDialog::openDialogs;
+QMultiHash<const char *, KonviConfigDialog *> KonviConfigDialog::openDialogs;
 
 // This class is here purly so we don't break binary compatibility down the road.
 class KonviConfigDialog::KConfigDialogPrivate
@@ -80,9 +80,8 @@ KonviConfigDialog::KonviConfigDialog( QWidget *parent, const char *name,
     }
     else
     {
-        Q3CString genericName;
-        genericName.sprintf("SettingsDialog-%p", this);
-        openDialogs.insert(genericName, this);
+        QString genericName = QString("SettingsDialog-%1").arg((long)(this));
+        openDialogs.insert(genericName.toLatin1().data(), this);
         setObjectName(genericName);
     }
 
@@ -150,7 +149,7 @@ void KonviConfigDialog::setupManagerConnections(KConfigDialogManager *manager)
 
 KonviConfigDialog* KonviConfigDialog::exists(const char* name)
 {
-    return openDialogs.find(name);
+    return openDialogs.value(name);
 }
 
 bool KonviConfigDialog::showDialog(const char* name)

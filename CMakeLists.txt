@@ -5,7 +5,7 @@ cmake_minimum_required(VERSION 2.6.0)
 
 set(KDE_MIN_VERSION "4.00.82")
 
-#atm this gets is FindQt4 and FindX11 (provided that the default cmake FindQt4 doesn't get used)
+#atm this gets us FindQt4 and FindX11 (provided that the default cmake FindQt4 doesn't get used)
 find_package(KDE4 REQUIRED)
 find_package(KdepimLibs REQUIRED)
 include(KDE4Defaults)
@@ -36,6 +36,10 @@ endif (Q_WS_X11)
 macro_optional_find_package(QCA2)
 macro_bool_to_01(QCA2_FOUND HAVE_QCA2)
 macro_log_feature(QCA2_FOUND "QCA" "Qt Cryptographic Architecture" "http://delta.affinix.com/qca" FALSE "2.0.0" "Required for using encryption in IRC")
+
+#check for greater than 4.3.80
+macro_ensure_version( "4.3.80" ${KDE_VERSION} HAVEKDE4_4 )
+macro_bool_to_01(HAVEKDE4_4 HAVE_KSTATUSNOTIFIERITEM)
 
 configure_file(config-konversation.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-konversation.h )
 

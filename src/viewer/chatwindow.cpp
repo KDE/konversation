@@ -234,7 +234,7 @@ void ChatWindow::cdIntoLogPath()
     if (!logDir.cd(logPath))
     {
         // Only create log path if logging is enabled.
-        if (log)
+        if (log())
         {
             // Try to create the logfile path and "cd" into it again.
             logDir.mkpath(logPath);
@@ -383,7 +383,7 @@ void ChatWindow::setLogfileName(const QString& name)
 
 void ChatWindow::logText(const QString& text)
 {
-    if(log)
+    if(log())
     {
         // "cd" into log path or create path, if it's not there
         cdIntoLogPath();
@@ -451,9 +451,9 @@ IRCView* ChatWindow::getTextView() const
   return textView;
 }
 
-void ChatWindow::setLog(bool activate)
+bool ChatWindow::log()
 {
-  log=activate;
+  return Preferences::self()->log();
 }
 
 // reimplement this in all panels that have user input
@@ -518,7 +518,7 @@ bool ChatWindow::eventFilter(QObject* watched, QEvent* e)
 
             return true;
         }
-        else if(ke->key() == Qt::Key_PageUp)
+        else if(ke->modifiers() == Qt::NoModifier && ke->key() == Qt::Key_PageUp)
         {
             if(textView)
             {
@@ -528,7 +528,7 @@ bool ChatWindow::eventFilter(QObject* watched, QEvent* e)
 
             return true;
         }
-        else if(ke->key() == Qt::Key_PageDown)
+        else if(ke->modifiers() == Qt::NoModifier && ke->key() == Qt::Key_PageDown)
         {
             if(textView)
             {

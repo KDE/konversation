@@ -17,13 +17,6 @@
 #include <QPixmap>
 #include <KVBox>
 
-
-// TODO FIXME and this needs its own function because...?
-static QPixmap getIcon(const QString& name)
-{
-    return KIconLoader::global()->loadIcon(name, KIconLoader::Toolbar, 16);
-}
-
 IRCViewBox::IRCViewBox(QWidget* parent, Server* newServer)
 : KVBox(parent)
 {
@@ -85,15 +78,12 @@ void IRCViewBox::searchNext(bool reversed)
     if (match)
     {
         m_searchBar->setHasMatch(true);
-        m_searchBar->setStatus(QPixmap(), "");
         return;
     }
 
     if (!m_matchedOnce)
     {
         m_searchBar->setHasMatch(false);
-        m_searchBar->setStatus(getIcon("dialog-warning"),
-                              i18n("Phrase not found"));
         return;
     }
 
@@ -111,14 +101,10 @@ void IRCViewBox::searchNext(bool reversed)
     if (!match)
     {
         m_searchBar->setHasMatch(false);
-        m_searchBar->setStatus(getIcon("dialog-warning"),
-                              i18n("Phrase not found"));
         return;
     }
 
     m_searchBar->setHasMatch(true);
-    m_searchBar->setStatus(getIcon("dialog-information"),
-                          i18n("Wrapped search"));
 }
 
 void IRCViewBox::slotSearchChanged(const QString& pattern)
@@ -132,13 +118,10 @@ void IRCViewBox::slotSearchChanged(const QString& pattern)
     if (match)
     {
         m_searchBar->setHasMatch(true);
-        m_searchBar->setStatus(QPixmap(), "");
     }
     else
     {
         m_searchBar->setHasMatch(false);
-        m_searchBar->setStatus(getIcon("dialog-warning"),
-            i18n("Phrase not found"));
     }
 
     m_matchedOnce = match;

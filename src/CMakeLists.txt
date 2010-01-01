@@ -6,6 +6,10 @@ if (QCA2_FOUND)
     include_directories(${QCA2_INCLUDE_DIR})
 endif (QCA2_FOUND)
 
+if (LIBKNOTIFICATIONITEM-1_FOUND)
+    include_directories(${KNOTIFICATIONITEM_INCLUDE_DIR})
+endif (LIBKNOTIFICATIONITEM-1_FOUND)
+
 set(core_SRCS
     #====================================
     #=== Application
@@ -110,7 +114,7 @@ kde4_add_ui_files(config_SRCS
     config/connectionbehavior_config.ui
     config/dcc_configui.ui
     config/fontappearance_config.ui
-    config/generalbehavior_config.ui
+    config/generalbehavior_configui.ui
     config/highlight_configui.ui
     config/ignore_configui.ui
     config/log_config.ui
@@ -145,7 +149,6 @@ set(viewer_SRCS
     viewer/insertchardialog.cpp
     viewer/osd.cpp
     viewer/topiclabel.cpp
-    viewer/trayicon.cpp
     viewer/editnotifydialog.cpp
     viewer/emoticons.cpp
     viewer/images.cpp
@@ -208,7 +211,15 @@ set(upnp_SRCS
     upnp/upnprouter.cpp
 )
 
-set (completed_SRCS ${core_SRCS}  ${irc_SRCS} ${viewer_SRCS} ${config_SRCS} ${dcc_SRCS} ${linkaddressbook_SRCS} ${cipher_SRCS} ${upnp_SRCS})
+if (HAVE_KSTATUSNOTIFIERITEM)
+    set(trayicon_SRCS
+        viewer/trayiconkstatusnotifieritem.cpp)
+else (HAVE_KSTATUSNOTIFIERITEM)
+    set(trayicon_SRCS
+        viewer/trayiconksystemtray.cpp)
+endif (HAVE_KSTATUSNOTIFIERITEM)
+
+set (completed_SRCS ${core_SRCS}  ${irc_SRCS} ${viewer_SRCS} ${trayicon_SRCS} ${config_SRCS} ${dcc_SRCS} ${linkaddressbook_SRCS} ${cipher_SRCS} ${upnp_SRCS})
 set (konversation_SRCS ${completed_SRCS})
 
 kde4_add_ui_files(konversation_SRCS
@@ -226,6 +237,7 @@ kde4_add_executable(konversation ${konversation_SRCS})
 target_link_libraries(konversation ${KDE4_KIO_LIBS} ${KDE4_KUTILS_LIBS} ${KDE4_KPARTS_LIBS}
                             ${KDE4_KDE3SUPPORT_LIBS} ${KDE4_KABC_LIBS}
                             ${KDE4_KNOTIFYCONFIG_LIBRARY} ${PHONON_LIBRARY} ${KDE4_SOLID_LIBS})
+
 if (X11_FOUND AND X11_Xutil_FOUND)
     target_link_libraries(konversation ${X11_X11_LIB})
 endif (X11_FOUND AND X11_Xutil_FOUND)
