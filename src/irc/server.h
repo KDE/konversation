@@ -451,6 +451,7 @@ void resetNickSelection();
         void closeChannel(const QString &name);
         void quitServer();
         void openDccChat(const QString& nickname);
+        void openDccWBoard(const QString& nickname);
         void requestDccChat(const QString& partnerNick, const QString& extension, const QString& numericalOwnIp, quint16 ownPort);
         void acceptDccGet(const QString& nick, const QString& file);
         void requestBan(const QStringList& users,const QString& channel,const QString& option);

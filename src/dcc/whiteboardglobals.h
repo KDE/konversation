@@ -12,8 +12,7 @@
 #ifndef WHITEBOARDGLOBALS_H
 #define WHITEBOARDGLOBALS_H
 
-#include <QWidget>
-#include <QLabel>
+#include <QHash>
 
 namespace Konversation
 {
@@ -41,7 +40,8 @@ namespace Konversation
                     /*User Internal, not sended*/
                     Selection       = 64,
                     Text,
-                    TextExtended
+                    TextExtended,
+                    Stamp
                 };
 
                 enum WhiteBoardCommand
@@ -63,8 +63,51 @@ namespace Konversation
                     SETTOOL, // Selects the tool identified
                     STAMP, // Draws the stamp image
                     TXT, // Writes text
-                    TXTEX, // Writes text using the specified font and style information
+                    TXTEX // Writes text using the specified font and style information
                 };
+
+                enum TextStyle
+                {
+                    Bold =      1 << 0,
+                    Italic =    1 << 1,
+                    Underline = 1 << 2,
+                    Strikeout = 1 << 3
+                };
+
+                static QHash<QString, WhiteBoardCommand> wboardCommandHash()
+                {
+                    static QHash<QString, WhiteBoardCommand> wboardCommands;
+                    if (!wboardCommands.isEmpty())
+                    {
+                        return wboardCommands;
+                    }
+                    wboardCommands.insert("BLT", BLT);
+                    wboardCommands.insert("CAN", CAN);
+                    wboardCommands.insert("CANT", CANT);
+                    wboardCommands.insert("CLIP", CLIP);
+                    wboardCommands.insert("CLS", CLS);
+                    wboardCommands.insert("DR", DR);
+                    wboardCommands.insert("DO", DO);
+                    wboardCommands.insert("DONT", DONT);
+                    wboardCommands.insert("ENTRY", ENTRY);
+                    wboardCommands.insert("IMG", IMG);
+                    wboardCommands.insert("IMGDATE", IMGDATA);
+                    wboardCommands.insert("MAKEIMG", MAKEIMG);
+                    wboardCommands.insert("NOCLIP", NOCLIP);
+                    wboardCommands.insert("SETSTAMP", SETSTAMP);
+                    wboardCommands.insert("SETTOOL", SETTOOL);
+                    wboardCommands.insert("STAMP", STAMP);
+                    wboardCommands.insert("TXT", TXT);
+                    wboardCommands.insert("TXTEX", TXTEX);
+                    return wboardCommands;
+                }
+
+                // no limit in specs, but vIRC 2.0 uses it as max value
+                static const int MaxPenWidth;
+
+                // there is limit in wboard specs, but we have enough
+                // "broken" driver who don't support bigger pixmaps
+                static const int MaxImageSize;
         };
     }
 }

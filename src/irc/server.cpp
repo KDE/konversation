@@ -246,6 +246,7 @@ void Server::connectSignals()
     connect(getOutputFilter(), SIGNAL(disconnectServer()), this, SLOT(disconnect()));
     connect(getOutputFilter(), SIGNAL(openDccSend(const QString &, KUrl)), this, SLOT(addDccSend(const QString &, KUrl)));
     connect(getOutputFilter(), SIGNAL(openDccChat(const QString &)), this, SLOT(openDccChat(const QString &)));
+    connect(getOutputFilter(), SIGNAL(openDccWBoard(const QString &)), this, SLOT(openDccWBoard(const QString &)));
     connect(getOutputFilter(), SIGNAL(acceptDccGet(const QString&, const QString&)),
         this, SLOT(acceptDccGet(const QString&, const QString&)));
     connect(getOutputFilter(), SIGNAL(sendToAllChannels(const QString&)), this, SLOT(sendToAllChannels(const QString&)));
@@ -2003,6 +2004,31 @@ void Server::openDccChat(const QString& nickname)
         newChat->setConnectionId(connectionId());
         newChat->setPartnerNick(recipient);
         newChat->setOwnNick(getNickname());
+        newChat->setSelfOpened(true);
+        emit addDccChat(newChat);
+        newChat->start();
+    }
+}
+
+void Server::openDccWBoard(const QString& nickname)
+{
+    kDebug();
+    QString recipient(nickname);
+    // if we don't have a recipient yet, let the user select one
+    if (recipient.isEmpty())
+    {
+        recipient = recipientNick();
+    }
+
+    // do we have a recipient *now*?
+    if (!recipient.isEmpty())
+    {
+        DCC::Chat* newChat = Application::instance()->getDccTransferManager()->newChat();
+        newChat->setConnectionId(connectionId());
+        newChat->setPartnerNick(recipient);
+        newChat->setOwnNick(getNickname());
+        // Set extension before emiting addDccChat
+        newChat->setExtension(DCC::Chat::Whiteboard);
         newChat->setSelfOpened(true);
         emit addDccChat(newChat);
         newChat->start();

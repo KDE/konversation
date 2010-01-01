@@ -982,6 +982,7 @@ namespace Konversation
             }
             else if (dccType == "chat")
             {
+                //dcc chat nick
                 switch (parameterList.count())
                 {
                     case 1:
@@ -995,9 +996,25 @@ namespace Konversation
                                             Preferences::self()->commandChar()));
                 }
             }
+            else if (dccType == "whiteboard")
+            {
+                //dcc whiteboard nick
+                switch (parameterList.count())
+                {
+                    case 1:
+                        emit openDccWBoard("");
+                        break;
+                    case 2:
+                        emit openDccWBoard(parameterList[1]);
+                        break;
+                    default:
+                        result = usage(i18n("Usage: %1DCC [WHITEBOARD [nickname]]",
+                                            Preferences::self()->commandChar()));
+                }
+            }
             else
                 result = error(i18n("Unrecognized command %1DCC %2. Possible commands are SEND, "
-                                    "CHAT, CLOSE, GET.",
+                                    "CHAT, CLOSE, GET, WHITEBOARD.",
                                     Preferences::self()->commandChar(), parameterList[0]));
         }
 

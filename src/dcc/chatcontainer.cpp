@@ -18,6 +18,7 @@
 #include <ircviewbox.h>
 #include <topiclabel.h>
 #include <ircview.h>
+#include "whiteboard.h"
 
 #include <QSplitter>
 
@@ -33,7 +34,8 @@ namespace Konversation
     {
         ChatContainer::ChatContainer(QWidget *parent, Chat *chat)
             : ChatWindow(parent),
-              m_chat(chat)
+              m_chat(chat),
+              m_whiteBoard(0)
         {
             setType(ChatWindow::DccChat);
             //dcc chat, not used here
@@ -45,9 +47,29 @@ namespace Konversation
             m_topicLabel = new Konversation::TopicLabel(m_headerSplitter);
             m_headerSplitter->setStretchFactor(m_headerSplitter->indexOf(m_topicLabel), 0);
 
-            IRCViewBox *ircViewBox = new IRCViewBox(m_headerSplitter, 0);
-            m_headerSplitter->setStretchFactor(m_headerSplitter->indexOf(ircViewBox), 1);
-            setTextView(ircViewBox->ircView());
+            // setup layout
+            if (m_chat->extension() == Chat::SimpleChat || m_chat->extension() == Chat::Unknown)
+            {
+                IRCViewBox *ircViewBox = new IRCViewBox(m_headerSplitter, 0);
+                m_headerSplitter->setStretchFactor(m_headerSplitter->indexOf(ircViewBox), 1);
+                setTextView(ircViewBox->ircView());
+            }
+            else if (m_chat->extension() == Chat::Whiteboard)
+            {
+                QSplitter* chatSplitter = new QSplitter(Qt::Vertical);
+
+                m_whiteBoard = new WhiteBoard(chatSplitter);
+                connect(m_whiteBoard, SIGNAL(rawWhiteBoardCommand(const QString&)),
+                        m_chat, SLOT(sendRawLine(const QString&)));
+                connect(m_chat, SIGNAL(connected()), m_whiteBoard, SLOT(connected()));
+                //chatSplitter->setStretchFactor(chatSplitter->indexOf(paintLabel), 1);
+
+                IRCViewBox *ircViewBox = new IRCViewBox(chatSplitter, 0);
+                //chatSplitter->setStretchFactor(chatSplitter->indexOf(ircViewBox), 1);
+                setTextView(ircViewBox->ircView());
+
+                m_headerSplitter->addWidget(chatSplitter);
+            }
 
             m_dccChatInput = new IRCInput(this);
             getTextView()->installEventFilter(m_dccChatInput);
@@ -102,13 +124,16 @@ namespace Konversation
             switch (newstatus)
             {
                 case Chat::WaitingRemote:
-                    m_topicLabel->setText(i18n("DCC chat with %1 on port %2.", m_chat->partnerNick(), QString::number(m_chat->ownPort())));
+                    m_topicLabel->setText(i18nc("%1=extension like Chat or Whiteboard, %2=partnerNick, %3=port",
+                                                "DCC %1 with %2 on port %3.",
+                                                m_chat->localizedExtentionString(), m_chat->partnerNick(), QString::number(m_chat->ownPort())));
                     getTextView()->appendServerMessage(i18n("DCC"), m_chat->statusDetails());
                     break;
 
                 case Chat::Connecting:
-                    m_topicLabel->setText(i18nc("%1 = nickname, %2 = IP, %3 = port", "DCC chat with %1 on %2:%3.",
-                                                m_chat->partnerNick(), m_chat->partnerIp(), QString::number(m_chat->partnerPort())));
+                    m_topicLabel->setText(i18nc("%1=extension like Chat or Whiteboard, %2 = nickname, %3 = IP, %4 = port",
+                                                "DCC %1 with %2 on %3:%4.",
+                                                m_chat->localizedExtentionString(), m_chat->partnerNick(), m_chat->partnerIp(), QString::number(m_chat->partnerPort())));
                     getTextView()->appendServerMessage(i18n("DCC"), m_chat->statusDetails());
                     break;
 
@@ -170,8 +195,11 @@ namespace Konversation
             if (askForConfirmation)
             {
                 result = KMessageBox::warningContinueCancel(this,
-                                                            i18nc("%1=partnerNick","Do you want to close your DCC Chat with %1?", m_chat->partnerNick()),
-                                                            i18n("Close DCC Chat"),
+                                                            i18nc("%1=extension like Chat or Whiteboard, %2=partnerNick",
+                                                                  "Do you want to close your DCC %1 with %2?",
+                                                                  m_chat->localizedExtentionString(), m_chat->partnerNick()),
+                                                            i18nc("%1=extension like Chat or Whiteboard",
+                                                                  "Close DCC %1", m_chat->localizedExtentionString()),
                                                             KStandardGuiItem::close(),
                                                             KStandardGuiItem::cancel(),
                                                             "QuitDCCChatTab");
@@ -187,7 +215,7 @@ namespace Konversation
 
         void ChatContainer::emitUpdateInfo()
         {
-            kDebug();
+            //kDebug();
             QString info;
             if (m_chat && m_chat->partnerNick() == m_chat->ownNick())
                 info = i18n("Talking to yourself");
@@ -325,6 +353,10 @@ namespace Konversation
                 if (ctcpCommand.toLower() == "action")
                 {
                     appendAction(m_chat->partnerNick(), ctcpArgument);
+                }
+                else if (m_chat->extension() == Chat::Whiteboard && m_whiteBoard && WhiteBoard::whiteboardCommands().contains(ctcpCommand.toUpper()))
+                {
+                    m_whiteBoard->receivedWhiteBoardLine(ctcp);
                 }
                 else
                 {

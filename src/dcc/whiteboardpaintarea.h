@@ -15,9 +15,11 @@
 #include <QWidget>
 #include <QPoint>
 #include <QColor>
+#include <QPen>
 
 #include "whiteboardglobals.h"
 
+class QPainter;
 class QPaintEvent;
 class QResizeEvent;
 class QMouseEvent;
@@ -35,20 +37,69 @@ namespace Konversation
             WhiteBoardPaintArea(QWidget* parent = 0);
 
         public slots:
-            void setTool(WhiteBoardGlobals::WhiteBoardTool tool);
+            void setTool(Konversation::DCC::WhiteBoardGlobals::WhiteBoardTool tool);
             void setForegroundColor(const QColor& color);
             void setBackgroundColor(const QColor& color);
-            void setPenWidth(qreal width);
+            void swapColors(const QColor& newForeground, const QColor& newBackground);
+            void setPenWidth(int width);
 
+            void clear();
+
+            void drawLine(int lineWidth, const QColor& penColor, const QColor& brushColor,
+                          int xFrom, int yFrom, int xTo, int yTo);
+            void drawRectangle(int lineWidth, const QColor& penColor,
+                               int xFrom, int yFrom, int xTo, int yTo);
+            void drawFilledRectangle(int lineWidth, const QColor& penColor, const QColor& brushColor,
+                                     int xFrom, int yFrom, int xTo, int yTo);
+            void drawEllipse(int lineWidth, const QColor& penColor,
+                             int xFrom, int yFrom, int xTo, int yTo);
+            void drawFilledEllipse(int lineWidth, const QColor& penColor, const QColor& brushColor,
+                                   int xFrom, int yFrom, int xTo, int yTo);
+            void drawArrow(int lineWidth, const QColor& penColor,
+                           int xFrom, int yFrom, int xTo, int yTo);
+            void useEraser(int lineWidth, int xFrom, int yFrom, int xTo, int yTo);
+            void useFloodFill(int x, int y, const QColor& color);
+            void useBlt(int x1src, int y1src, int x2src, int y2src, int xdest, int ydest);
+
+            void save(const QString& fileName);
+
+        signals:
+            void drawedPencil(int lineWidth, const QColor& penColor, const QColor& brushColor,
+                              int xFrom, int yFrom, int xTo, int yTo);
+            void drawedLine(int lineWidth, const QColor& penColor, const QColor& brushColor,
+                            int xFrom, int yFrom, int xTo, int yTo);
+            void drawedRectangle(int lineWidth, const QColor& penColor,
+                                 int xFrom, int yFrom, int xTo, int yTo);
+            void drawedFilledRectangle(int lineWidth, const QColor& penColor, const QColor& brushColor,
+                                       int xFrom, int yFrom, int xTo, int yTo);
+            void drawedEllipse(int lineWidth, const QColor& penColor,
+                               int xFrom, int yFrom, int xTo, int yTo);
+            void drawedFilledEllipse(int lineWidth, const QColor& penColor, const QColor& brushColor,
+                                     int xFrom, int yFrom, int xTo, int yTo);
+            void drawedArrow(int lineWidth, const QColor& penColor,
+                             int xFrom, int yFrom, int xTo, int yTo);
+            void usedEraser(int lineWidth, int xFrom, int yFrom, int xTo, int yTo);
+            void usedFloodFill(int x, int y, const QColor& color);
 
         protected:
             virtual void paintEvent(QPaintEvent * event);
             virtual void resizeEvent(QResizeEvent * event);
             virtual void mousePressEvent(QMouseEvent * event);
-            virtual void mouseReleaseEvent(QMouseEvent* event);
+            virtual void mouseReleaseEvent(QMouseEvent * event);
             virtual void mouseMoveEvent(QMouseEvent * event);
 
         private:
+            inline void makeLastPosInvalid();
+            inline bool isLastPosValid();
+            inline void checkImageSize(int x1, int y1, int x2, int y2, int penWidth = 1);
+            inline void resizeImage(int width, int height);
+
+            inline QPen getPen(const QColor& color, int lineWidth, WhiteBoardGlobals::WhiteBoardTool tool);
+
+            inline void floodfill(int x, int y, const QColor& fillColor);
+
+            inline void arrow(QPainter* painter, int x1, int y1, int x2, int y2);
+
             QPixmap* m_imagePixmap;
             QPixmap* m_overlayPixmap;
 
@@ -60,7 +111,7 @@ namespace Konversation
             QColor m_foregroundColor;
             QColor m_backgroundColor;
 
-            qreal m_penWidth;
+            int m_penWidth;
         };
     }
 }
