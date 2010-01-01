@@ -472,9 +472,9 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
     actionCollection()->addAction("close_queries", action);
 
     KToggleAction* toggleChannelNickListsAction = new KToggleAction(this);
-    if (!Preferences::self()->showNickList())
+    if (Preferences::self()->showNickList())
         toggleChannelNickListsAction->setChecked(true);
-    toggleChannelNickListsAction->setText(i18n("Hide Nicklist"));
+    toggleChannelNickListsAction->setText(i18n("Show Nicklist"));
     toggleChannelNickListsAction->setShortcut(KShortcut("Ctrl+H"));
     connect(toggleChannelNickListsAction, SIGNAL(triggered()), m_viewContainer, SLOT(toggleChannelNicklists()));
     actionCollection()->addAction("hide_nicknamelist", toggleChannelNickListsAction);
