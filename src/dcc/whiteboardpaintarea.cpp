@@ -257,6 +257,7 @@ namespace Konversation
                     floodfill(event->pos().x(), event->pos().y(), m_foregroundColor);
                     setCursor(oldCur);
                     emit usedFloodFill(event->pos().x(), event->pos().y(), m_foregroundColor);
+                    update();
                 }
                 else
                 {
