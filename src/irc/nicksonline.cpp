@@ -327,8 +327,7 @@ void NicksOnline::updateServerOnlineList(Server* servr)
             // If no additional info available, request a WHOIS on the nick.
             if (!m_whoisRequested)
             {
-                if (needWhois)+    connect(m_nickListView, SIGNAL(itemSelectionChanged()),
-+            this, SLOT(slotNickListView_SelectionChanged()));
+                if (needWhois)
                 {
                     requestWhois(networkName, nickname);
                     m_whoisRequested = true;
