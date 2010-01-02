@@ -34,7 +34,7 @@ namespace Konversation
             setupUi(this);
 
             m_clearPushButton->setIcon(KIcon("document-edit"));
-            m_clearPushButton->setToolTip(i18n("Clear"));
+            m_clearPushButton->setToolTip(i18n("Clear Image"));
             m_savePushButton->setIcon(KIcon("document-save"));
             m_savePushButton->setToolTip(i18n("Save As.."));
 
