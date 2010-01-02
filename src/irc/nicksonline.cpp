@@ -93,7 +93,7 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
     connect(m_nickListView, SIGNAL(itemDoubleClicked(QTreeWidgetItem*,int)),
         this,SLOT(processDoubleClick(QTreeWidgetItem*,int)));
 
-    setupAddressbookButtons(nsNotANick);
+    setupToolbarActions(0);
 
     // Create context menu.
     m_popupMenu = new KMenu(this);
@@ -807,52 +807,60 @@ int NicksOnline::getNickAddressbookState(QTreeWidgetItem* item)
 }
 
 /**
- * Sets the enabled/disabled state and labels of the addressbook buttons
- * based on the given nick addressbook state.
- * @param nickState         The state of the nick. 1 = not associated with addressbook,
- *                          2 = associated with addressbook.  @ref getNickAddressbookState.
+ * Sets up toolbar actions based on the given item.
+ * @param item              Item of the nicklistview.
  */
-void NicksOnline::setupAddressbookButtons(int nickState)
+void NicksOnline::setupToolbarActions(NicksOnlineItem *item)
 {
-    switch (nickState)
+  // disable all actions
+  m_editList->setEnabled(false);
+  m_newContact->setEnabled(false);
+  m_editContact->setEnabled(false);
+  m_chooseAssociation->setEnabled(false);
+  m_changeAssociation->setEnabled(false);
+  m_deleteAssociation->setEnabled(false);
+  m_whois->setEnabled(false);
+  m_openQuery->setEnabled(false);
+  m_sendMail->setEnabled(false);
+  m_joinChannel->setEnabled(false);
+  // check for null
+  if (item == 0)
+    return;
+  // add items depending on the item type
+  switch (item->type())
+  {
+  case NicksOnlineItem::NetworkRootItem:
+    m_editList->setEnabled(true);
+    break;
+  case NicksOnlineItem::OfflineItem:
+    m_editList->setEnabled(true);
+    break;
+  case NicksOnlineItem::ChannelItem:
+    m_editList->setEnabled(true);
+    m_joinChannel->setEnabled(true);
+    break;
+  case NicksOnlineItem::NicknameItem:
+    m_editList->setEnabled(true);
+    int nickState = getNickAddressbookState(item);
+    if (nickState == nsNoAddress)
     {
-        case nsNotANick:
-        {
-            m_newContact->setEnabled(false);
-            m_editContact->setEnabled(false);
-            m_chooseAssociation->setEnabled(false);
-            m_changeAssociation->setEnabled(false);
-            m_deleteAssociation->setEnabled(false);
-            m_whois->setEnabled(false);
-            m_openQuery->setEnabled(false);
-            m_sendMail->setEnabled(false);
-            break;
-        }
-        case nsNoAddress:
-        {
-            m_newContact->setEnabled(true);
-            m_editContact->setEnabled(false);
-            m_chooseAssociation->setEnabled(true);
-            m_changeAssociation->setEnabled(false);
-            m_deleteAssociation->setEnabled(false);
-            m_whois->setEnabled(true);
-            m_openQuery->setEnabled(true);
-            m_sendMail->setEnabled(false);
-            break;
-        }
-        case nsHasAddress:
-        {
-            m_newContact->setEnabled(false);
-            m_editContact->setEnabled(true);
-            m_chooseAssociation->setEnabled(false);
-            m_changeAssociation->setEnabled(true);
-            m_deleteAssociation->setEnabled(true);
-            m_whois->setEnabled(true);
-            m_openQuery->setEnabled(true);
-            m_sendMail->setEnabled(true);
-            break;
-        }
+      m_chooseAssociation->setEnabled(true);
+      m_newContact->setEnabled(true);
     }
+    else if (nickState == nsHasAddress)
+    {
+      m_changeAssociation->setEnabled(true);
+      m_deleteAssociation->setEnabled(true);
+      m_editContact->setEnabled(true);
+      m_sendMail->setEnabled(true);
+    }
+    if (!item->isOffline())
+    {
+      m_whois->setEnabled(true);
+      m_openQuery->setEnabled(true);
+    }
+    break;
+  }
 }
 
 /**
@@ -907,10 +915,9 @@ void NicksOnline::setupPopupMenuActions(NicksOnlineItem *item)
  */
 void NicksOnline::slotNickListView_SelectionChanged()
 {
-    if (m_nickListView->selectedItems().count() == 0) return;
-    QTreeWidgetItem* item = m_nickListView->selectedItems().at(0);
-    int nickState = getNickAddressbookState(item);
-    setupAddressbookButtons(nickState);
+    if (m_nickListView->selectedItems().count() == 0)
+      return;
+    setupToolbarActions(dynamic_cast<NicksOnlineItem*>(m_nickListView->selectedItems().at(0)));
 }
 
 /**
@@ -997,7 +1004,7 @@ void NicksOnline::refreshItem(QTreeWidgetItem* item)
                 nickAdditionalInfo = getNickAdditionalInfo(nickInfo, addressee, needWhois);
             item->setText(nlvcAdditionalInfo, nickAdditionalInfo);
             if (m_nickListView->selectedItems().count() != 0 && item == m_nickListView->selectedItems().at(0))
-                setupAddressbookButtons(nickState);
+                setupToolbarActions(dynamic_cast<NicksOnlineItem*>(m_nickListView->selectedItems().at(0)));
         }
     }
 }

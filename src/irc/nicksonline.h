@@ -199,12 +199,10 @@ class NicksOnline : public ChatWindow
          */
         int getNickAddressbookState(QTreeWidgetItem* item);
         /**
-         * Sets the enabled/disabled state and labels of the addressbook buttons
-         * based on the given nick addressbook state.
-         * @param nickState         The state of the nick. 1 = not associated with addressbook,
-         *                          2 = associated with addressbook.  @ref getNickAddressbookState.
+         * Sets up toolbar actions based on the given item.
+         * @param item              Item of the nicklistview.
          */
-        void setupAddressbookButtons(int nickState);
+        void setupToolbarActions(NicksOnlineItem *item);
         /**
          * Sets up popup menu actions based on the given item.
          * @param item              Item of the nicklistview.
