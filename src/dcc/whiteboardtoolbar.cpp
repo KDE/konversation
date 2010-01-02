@@ -187,17 +187,18 @@ namespace Konversation
 
         void WhiteBoardToolBar::saveClicked()
         {
-            KFileDialog fileDialog(KUrl(QDir::homePath()), "*.png\n*.jpg", this);
-            fileDialog.setCaption(i18n("Save Image"));
-            fileDialog.setOperationMode(KFileDialog::Saving);
-            fileDialog.setMode(KFile::File);
-            int ret = fileDialog.exec();
+            QPointer<KFileDialog> fileDialog = new KFileDialog(KUrl(QDir::homePath()), "*.png\n*.jpg", this);
+            fileDialog->setCaption(i18n("Save Image"));
+            fileDialog->setOperationMode(KFileDialog::Saving);
+            fileDialog->setMode(KFile::File);
+            int ret = fileDialog->exec();
 
-            if (ret == KDialog::Accepted)
+            if (ret == KDialog::Accepted && fileDialog)
             {
-                kDebug() << fileDialog.selectedFile();
-                emit save(fileDialog.selectedFile());
+                kDebug() << fileDialog->selectedFile();
+                emit save(fileDialog->selectedFile());
             }
+            delete fileDialog;
         }
 
         void WhiteBoardToolBar::arrowToggled (bool checked)
@@ -284,7 +285,7 @@ namespace Konversation
 
         void WhiteBoardToolBar::unCheckOtherButtons(KPushButton* button)
         {
-            foreach(KPushButton* pushButton, m_toggleButtonHash.keys())
+            foreach (KPushButton* pushButton, m_toggleButtonHash.keys())
             {
                 if (pushButton != button && pushButton->isChecked())
                 {
