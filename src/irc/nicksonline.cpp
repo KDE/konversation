@@ -101,6 +101,8 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
     m_nickListView->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(m_nickListView, SIGNAL(customContextMenuRequested(QPoint)),
         this, SLOT(slotCustomContextMenuRequested(QPoint)));
+    connect(m_nickListView, SIGNAL(itemSelectionChanged()),
+            this, SLOT(slotNickListView_SelectionChanged()));
     connect(m_popupMenu, SIGNAL(triggered ( QAction *)),
         this, SLOT(slotPopupMenu_Activated(QAction*)));
 
