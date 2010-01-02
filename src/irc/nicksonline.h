@@ -219,6 +219,10 @@ class NicksOnline : public ChatWindow
          * @param nickname           Nick name.
          */
         void requestWhois(QString& networkName, QString& nickname);
+        /**
+         * Updates the notify list based on the current state of the tree
+         */
+        void updateNotifyList();
 
         // The main display of networks, nicks, and channels.
         QTreeWidget* m_nickListView;

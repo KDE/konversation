@@ -28,12 +28,12 @@
 #include "viewcontainer.h"
 #include "nicksonlineitem.h"
 
+#include <QInputDialog>
 #include <QToolTip>
+#include <QTreeWidget>
 
 #include <KIconLoader>
 #include <KToolBar>
-
-#include <QTreeWidget>
 
 
 NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
@@ -508,6 +508,43 @@ void NicksOnline::requestWhois(QString& networkName, QString& nickname)
 }
 
 /**
+ * Updates the notify list based on the current state of the tree
+ */
+void NicksOnline::updateNotifyList()
+{
+  // notify list
+  QMap<int, QStringList> notifyList;
+  // fill in the notify list
+  for (int i = 0; i < m_nickListView->topLevelItemCount(); ++i)
+  {
+    QTreeWidgetItem* networkRoot = m_nickListView->topLevelItem(i);
+    // nick list for this network root
+    QStringList nicks;
+    for (int j = 0; j < networkRoot->childCount(); ++j)
+    {
+      NicksOnlineItem *item = dynamic_cast<NicksOnlineItem*>(networkRoot->child(j));
+      if (item->type() == NicksOnlineItem::NicknameItem)
+      {
+        // add the nick to the list
+        nicks << item->text(0);
+      }
+      else if (item->type() == NicksOnlineItem::OfflineItem)
+      {
+        // add offline nicks to the list
+        for (int k = 0; k < item->childCount(); ++k)
+          nicks << item->child(k)->text(0);
+      }
+    }
+    // insert nick list to the notify list
+    notifyList.insert(networkRoot->data(0, Qt::UserRole).toInt(), nicks);
+  }
+  // update notify list
+  Preferences::setNotifyList(notifyList);
+  // save notify list
+  static_cast<Application*>(kapp)->saveOptions(false);
+}
+
+/**
  * Refresh the nicklistview for all servers.
  */
 void NicksOnline::refreshAllServerOnlineLists()
@@ -674,10 +711,33 @@ void NicksOnline::doCommand(QAction* id)
     QTreeWidgetItem* item = m_nickListView->selectedItems().at(0);
     NicksOnlineItem* nickitem = dynamic_cast<NicksOnlineItem*>(item);
 
-    if(!nickitem || !getItemServerAndNick(item, serverName, nickname))
-    {
+    if(!nickitem)
         return;
+
+    if ( id == m_addWatch )
+    {
+      bool ok;
+      QString nick = QInputDialog::getText(this, tr("Enter nick to watch."), tr("Nick:"), QLineEdit::Normal, QString(), &ok);
+      if (ok && !nick.isEmpty())
+      {
+        // add the new nick
+        new NicksOnlineItem(NicksOnlineItem::NicknameItem, nickitem, nick, QString());
+        // update notify list
+        updateNotifyList();
+      }
+      return;
     }
+    else if ( id == m_removeWatch )
+    {
+      // remove watch from the tree widget
+      delete nickitem;
+      // update notify list
+      updateNotifyList();
+      return;
+    }
+
+    if (!getItemServerAndNick(item, serverName, nickname))
+      return;
 
     // Get the server object corresponding to the connection id.
     Server* server = Application::instance()->getConnectionManager()->getServerByConnectionId(nickitem->connectionId());
