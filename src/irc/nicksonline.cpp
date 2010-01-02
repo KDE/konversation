@@ -271,6 +271,7 @@ void NicksOnline::updateServerOnlineList(Server* servr)
     if (!networkRoot)
     {
         networkRoot = new NicksOnlineItem(NicksOnlineItem::NetworkRootItem,m_nickListView,networkName);
+        networkRoot->setData(0, Qt::UserRole, servr->getServerGroup()->id());
         newNetworkRoot = true;
     }
     // Store server name in hidden column.
