@@ -648,6 +648,9 @@ void Channel::popupCommand(int id)
         case Konversation::StartDccChat:
             pattern=cc+"DCC CHAT %u";
             break;
+        case Konversation::StartDccWhiteboard:
+            pattern=cc+"DCC WHITEBOARD %u";
+            break;
         case Konversation::DccSend:
             pattern=cc+"DCC SEND %u";
             break;

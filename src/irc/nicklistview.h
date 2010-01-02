@@ -141,6 +141,7 @@ class NickListView : public QTreeWidget
         KAction* m_AddressbookDeleteAction;
         KAction* m_openQueryAction;
         KAction* m_startDccChatAction;
+        KAction* m_startDccWBoardAction;
         KAction* m_dccSendAction;
 };
 #endif
