@@ -43,9 +43,10 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
 
     setSpacing(0);
     m_toolBar = new KToolBar(this, true, true);
-    m_editList = m_toolBar->addAction(KIcon("document-edit"), i18n("&Edit Watch List..."));
-    m_editList->setWhatsThis(i18n("Click to edit the list of nicknames that appear on this screen."));
-    connect(m_editList, SIGNAL(triggered()), SIGNAL(editClicked()));
+    m_addWatch = m_toolBar->addAction(KIcon("list-add-user"), i18n("&Add Watch..."));
+    m_addWatch->setWhatsThis(i18n("Click to add a new nick to the list of nicknames that appear on this screen."));
+    m_removeWatch = m_toolBar->addAction(KIcon("list-remove-user"), i18n("&Remove Watch"));
+    m_removeWatch->setWhatsThis(i18n("Click to remove a nick from the list of nicknames that appear on this screen."));
     m_toolBar->addSeparator();
     m_newContact = m_toolBar->addAction(KIcon("contact-new"), i18n("Create New C&ontact..."));
     m_editContact = m_toolBar->addAction(KIcon("document-edit"), i18n("Edit C&ontact..."));
@@ -812,7 +813,8 @@ int NicksOnline::getNickAddressbookState(QTreeWidgetItem* item)
 void NicksOnline::setupToolbarActions(NicksOnlineItem *item)
 {
   // disable all actions
-  m_editList->setEnabled(false);
+  m_addWatch->setEnabled(false);
+  m_removeWatch->setEnabled(false);
   m_newContact->setEnabled(false);
   m_editContact->setEnabled(false);
   m_chooseAssociation->setEnabled(false);
@@ -829,17 +831,15 @@ void NicksOnline::setupToolbarActions(NicksOnlineItem *item)
   switch (item->type())
   {
   case NicksOnlineItem::NetworkRootItem:
-    m_editList->setEnabled(true);
+    m_addWatch->setEnabled(true);
     break;
   case NicksOnlineItem::OfflineItem:
-    m_editList->setEnabled(true);
     break;
   case NicksOnlineItem::ChannelItem:
-    m_editList->setEnabled(true);
     m_joinChannel->setEnabled(true);
     break;
   case NicksOnlineItem::NicknameItem:
-    m_editList->setEnabled(true);
+    m_removeWatch->setEnabled(true);
     int nickState = getNickAddressbookState(item);
     if (nickState == nsNoAddress)
     {
@@ -877,6 +877,7 @@ void NicksOnline::setupPopupMenuActions(NicksOnlineItem *item)
   switch (item->type())
   {
   case NicksOnlineItem::NetworkRootItem:
+    m_popupMenu->insertAction(0, m_addWatch);
     break;
   case NicksOnlineItem::OfflineItem:
     break;
@@ -884,14 +885,18 @@ void NicksOnline::setupPopupMenuActions(NicksOnlineItem *item)
     m_popupMenu->insertAction(0, m_joinChannel);
     break;
   case NicksOnlineItem::NicknameItem:
+    m_popupMenu->insertAction(0, m_removeWatch);
     int nickState = getNickAddressbookState(item);
     if (nickState == nsNoAddress)
     {
-      m_popupMenu->insertAction(0, m_chooseAssociation);
+      m_popupMenu->addSeparator();
       m_popupMenu->insertAction(0, m_newContact);
+      m_popupMenu->addSeparator();
+      m_popupMenu->insertAction(0, m_chooseAssociation);
     }
     else if (nickState == nsHasAddress)
     {
+      m_popupMenu->addSeparator();
       m_popupMenu->insertAction(0, m_changeAssociation);
       m_popupMenu->insertAction(0, m_deleteAssociation);
       m_popupMenu->addSeparator();

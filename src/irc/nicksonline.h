@@ -240,7 +240,8 @@ class NicksOnline : public ChatWindow
         bool m_whoisRequested;
 
 
-    QAction* m_editList;
+    QAction* m_addWatch;
+    QAction* m_removeWatch;
     QAction* m_newContact;
     QAction* m_editContact;
     QAction* m_chooseAssociation;
