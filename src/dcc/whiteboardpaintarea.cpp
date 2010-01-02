@@ -234,11 +234,6 @@ namespace Konversation
             kDebug() << "newsize:" << event->size();
             kDebug() << "newcontent:" << contentsRect().width() << " " << contentsRect().height();
             resizeImage(contentsRect().width(), contentsRect().height());
-
-            kDebug() << "setminsize";
-            const int maxWidth = qMin(qMax(event->size().width(), minimumSize().width()), WhiteBoardGlobals::MaxImageSize);
-            const int maxHeight = qMin(qMax(event->size().height(), minimumSize().height()), WhiteBoardGlobals::MaxImageSize);
-            setMinimumSize(maxWidth, maxHeight);
         }
 
         void WhiteBoardPaintArea::mousePressEvent(QMouseEvent *event)
@@ -272,7 +267,7 @@ namespace Konversation
 
         void WhiteBoardPaintArea::mouseReleaseEvent(QMouseEvent *event)
         {
-            if (event->button() == Qt::LeftButton)
+            if (event->button() == Qt::LeftButton && m_mousePressed)
             {
                 m_mousePressed = false;
                 switch (m_tool)
@@ -472,7 +467,7 @@ namespace Konversation
 
         void WhiteBoardPaintArea::checkImageSize(int x1, int y1, int x2, int y2, int penWidth)
         {
-            kDebug();
+            // kDebug() << x1 << y1 << x2 << y2;
             if (width() == WhiteBoardGlobals::MaxImageSize && height() == WhiteBoardGlobals::MaxImageSize)
             {
                 return;
@@ -497,7 +492,7 @@ namespace Konversation
                 m_imagePixmap = new QPixmap(width, height);
                 m_imagePixmap->fill(Qt::white);
                 QPainter tPaint(m_imagePixmap);
-                tPaint.drawPixmap(0,0,*oldImg);
+                tPaint.drawPixmap(0, 0, *oldImg);
                 tPaint.end();
                 delete oldImg;
 
@@ -505,9 +500,13 @@ namespace Konversation
                 m_overlayPixmap = new QPixmap(width, height);
                 m_overlayPixmap->fill(Qt::transparent);
                 QPainter tPaintOverlay(m_overlayPixmap);
-                tPaintOverlay.drawPixmap(0,0,*oldOverlay);
+                tPaintOverlay.drawPixmap(0, 0, *oldOverlay);
                 tPaintOverlay.end();
                 delete oldOverlay;
+
+                const int maxWidth = qMin(qMax(width, minimumSize().width()), WhiteBoardGlobals::MaxImageSize);
+                const int maxHeight = qMin(qMax(height, minimumSize().height()), WhiteBoardGlobals::MaxImageSize);
+                setMinimumSize(maxWidth, maxHeight);
             }
         }
 
