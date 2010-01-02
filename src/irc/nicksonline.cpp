@@ -327,7 +327,8 @@ void NicksOnline::updateServerOnlineList(Server* servr)
             // If no additional info available, request a WHOIS on the nick.
             if (!m_whoisRequested)
             {
-                if (needWhois)
+                if (needWhois)+    connect(m_nickListView, SIGNAL(itemSelectionChanged()),
++            this, SLOT(slotNickListView_SelectionChanged()));
                 {
                     requestWhois(networkName, nickname);
                     m_whoisRequested = true;
@@ -855,6 +856,53 @@ void NicksOnline::setupAddressbookButtons(int nickState)
 }
 
 /**
+ * Sets up popup menu actions based on the given item.
+ * @param item              Item of the nicklistview.
+ */
+void NicksOnline::setupPopupMenuActions(NicksOnlineItem *item)
+{
+  // clear the popup menu
+  m_popupMenu->clear();
+  // check for null
+  if (item == 0)
+    return;
+  // add items depending on the item type
+  switch (item->type())
+  {
+  case NicksOnlineItem::NetworkRootItem:
+    break;
+  case NicksOnlineItem::OfflineItem:
+    break;
+  case NicksOnlineItem::ChannelItem:
+    m_popupMenu->insertAction(0, m_joinChannel);
+    break;
+  case NicksOnlineItem::NicknameItem:
+    int nickState = getNickAddressbookState(item);
+    if (nickState == nsNoAddress)
+    {
+      m_popupMenu->insertAction(0, m_chooseAssociation);
+      m_popupMenu->insertAction(0, m_newContact);
+    }
+    else if (nickState == nsHasAddress)
+    {
+      m_popupMenu->insertAction(0, m_changeAssociation);
+      m_popupMenu->insertAction(0, m_deleteAssociation);
+      m_popupMenu->addSeparator();
+      m_popupMenu->insertAction(0, m_editContact);
+      m_popupMenu->addSeparator();
+      m_popupMenu->insertAction(0, m_sendMail);
+    }
+    if (!item->isOffline())
+    {
+      m_popupMenu->addSeparator();
+      m_popupMenu->insertAction(0, m_whois);
+      m_popupMenu->insertAction(0, m_openQuery);
+    }
+    break;
+  }
+}
+
+/**
  * Received when user selects a different item in the nicklistview.
  */
 void NicksOnline::slotNickListView_SelectionChanged()
@@ -871,52 +919,13 @@ void NicksOnline::slotNickListView_SelectionChanged()
 void NicksOnline::slotCustomContextMenuRequested(QPoint point)
 {
     QTreeWidgetItem *item = m_nickListView->itemAt(point);
-    NicksOnlineItem* nickitem = dynamic_cast<NicksOnlineItem*>(item);
-
-    if (!nickitem) return;
-    m_popupMenu->clear();
-    int nickState = getNickAddressbookState(item);
-    switch (nickState)
-    {
-        case nsNotANick:
-        {
-            break;
-        }
-        case nsNoAddress:
-        {
-            m_popupMenu->insertAction(0, m_chooseAssociation);
-            m_popupMenu->insertAction(0, m_newContact);
-            if (!nickitem->isOffline())
-            {
-                m_popupMenu->addSeparator();
-                m_popupMenu->insertAction(0, m_whois);
-                m_popupMenu->insertAction(0, m_openQuery);
-                if (item->text(nlvcServerName).isEmpty())
-                  m_popupMenu->insertAction(0, m_joinChannel);
-            }
-            break;
-        }
-        case nsHasAddress:
-        {
-            m_popupMenu->insertAction(0, m_sendMail);
-            m_popupMenu->addSeparator();
-            m_popupMenu->insertAction(0, m_editContact);
-            m_popupMenu->addSeparator();
-            m_popupMenu->insertAction(0, m_changeAssociation);
-            m_popupMenu->insertAction(0, m_deleteAssociation);
-            if (!nickitem->isOffline())
-            {
-                m_popupMenu->addSeparator();
-                m_popupMenu->insertAction(0, m_whois);
-                m_popupMenu->insertAction(0, m_openQuery);
-                if (item->text(nlvcServerName).isEmpty())
-                  m_popupMenu->insertAction(0, m_joinChannel);
-            }
-            break;
-        }
-    }
-    if (nickState != nsNotANick)
-        m_popupMenu->popup(QCursor::pos());
+    // select the item
+    item->setSelected(true);
+    // set up actions
+    setupPopupMenuActions(dynamic_cast<NicksOnlineItem*>(item));
+    // show the popup menu
+    if (m_popupMenu->actions().count() > 0)
+      m_popupMenu->popup(QCursor::pos());
 }
 
 /**

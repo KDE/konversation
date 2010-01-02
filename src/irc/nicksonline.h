@@ -206,6 +206,11 @@ class NicksOnline : public ChatWindow
          */
         void setupAddressbookButtons(int nickState);
         /**
+         * Sets up popup menu actions based on the given item.
+         * @param item              Item of the nicklistview.
+         */
+        void setupPopupMenuActions(NicksOnlineItem *item);
+        /**
          * Determines if a nick is online in any of the servers in a network and returns
          * a NickInfo if found, otherwise 0.
          * @param networkName        Server network name.
