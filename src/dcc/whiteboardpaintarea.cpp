@@ -649,10 +649,10 @@ namespace Konversation
                 angle = (M_PI/2) - angle;
             }
 
-            const int length = 15;
+            const int length = 9;
 
             angle -= M_PI;
-            qreal radDiff = qreal(2)* M_PI / qreal(360) * 20;
+            qreal radDiff = qreal(2)* M_PI / qreal(360) * 22;
             qreal tRightAngle = angle + radDiff;
             const int x1Arrow = sin(tRightAngle)*length + x2;
             const int y1Arrow = cos(tRightAngle)*length + y2;
