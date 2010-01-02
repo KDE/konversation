@@ -65,10 +65,6 @@ class NicksOnline : public ChatWindow
 
     signals:
         /**
-         * Emitted when user clicks Edit Watch List button.
-         */
-        void editClicked();
-        /**
          * Emitted whenever user double-clicks a nick in the Nicks Online tab.
          */
         void doubleClicked(int connectionId,const QString& nick);
