@@ -630,36 +630,32 @@ namespace Konversation
             else
             {
                 angle = atan(qreal(yDiff)/qreal(xDiff));
+
+                if (xDiff > 0.0 && yDiff > 0.0)
+                {
+                    angle = (M_PI/2) - angle + M_PI;
+                }
+                else if (xDiff > 0.0 && yDiff < 0.0)
+                {
+                    angle = (2*M_PI/4*3) - angle;
+                }
+                else if (xDiff < 0.0)
+                {
+                    angle = (M_PI/2) - angle;
+                }
             }
 
-            if (xDiff > 0.0 && yDiff > 0.0)
-            {
-                angle = (M_PI/2) - angle + M_PI;
-            }
-            else if (xDiff > 0.0 && yDiff < 0.0)
-            {
-                angle = (2*M_PI/4*3) - angle;
-            }
-            else if (xDiff < 0.0 && yDiff < 0.0)
-            {
-                angle = (M_PI/2) - angle;
-            }
-            else if (xDiff < 0.0 && yDiff > 0.0)
-            {
-                angle = (M_PI/2) - angle;
-            }
-
-            const int length = 9;
+            static const int arrowLength = 9;
 
             angle -= M_PI;
-            qreal radDiff = qreal(2)* M_PI / qreal(360) * 22;
+            static const qreal radDiff = qreal(2)* M_PI / qreal(360) * 22;
             qreal tRightAngle = angle + radDiff;
-            const int x1Arrow = sin(tRightAngle)*length + x2;
-            const int y1Arrow = cos(tRightAngle)*length + y2;
+            const int x1Arrow = sin(tRightAngle) * arrowLength + x2;
+            const int y1Arrow = cos(tRightAngle) * arrowLength + y2;
 
             qreal tLeftAngle = angle - radDiff;
-            const int x2Arrow = sin(tLeftAngle)*length + x2;
-            const int y2Arrow = cos(tLeftAngle)*length + y2;
+            const int x2Arrow = sin(tLeftAngle) * arrowLength + x2;
+            const int y2Arrow = cos(tLeftAngle) * arrowLength + y2;
 
             painter->drawLine(x1, y1, x2, y2);
             painter->drawLine(x1Arrow, y1Arrow, x2, y2);
