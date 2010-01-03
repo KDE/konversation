@@ -227,6 +227,9 @@ namespace Konversation
             m_ui.secretModeChBox->setEnabled(enable);
             m_ui.keyModeChBox->setEnabled(enable);
             m_ui.keyModeEdit->setEnabled(enable);
+            m_ui.addBan->setEnabled(enable);
+            m_ui.updateBan->setEnabled(enable);
+            m_ui.removeBan->setEnabled(enable);
         }
     }
 
