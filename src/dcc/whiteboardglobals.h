@@ -105,7 +105,7 @@ namespace Konversation
                 // no limit in specs, but vIRC 2.0 uses it as max value
                 static const int MaxPenWidth;
 
-                // there is limit in wboard specs, but we have enough
+                // there is no limit in the wboard specs, but we have enough
                 // "broken" driver who don't support bigger pixmaps
                 static const int MaxImageSize;
         };
