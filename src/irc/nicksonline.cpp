@@ -104,8 +104,6 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
         this, SLOT(slotCustomContextMenuRequested(QPoint)));
     connect(m_nickListView, SIGNAL(itemSelectionChanged()),
             this, SLOT(slotNickListView_SelectionChanged()));
-    connect(m_popupMenu, SIGNAL(triggered ( QAction *)),
-        this, SLOT(slotPopupMenu_Activated(QAction*)));
 
     // Display info for all currently-connected servers.
     refreshAllServerOnlineLists();
