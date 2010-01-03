@@ -443,7 +443,13 @@ namespace Konversation
       QString newHostmask = QInputDialog::getText(this, tr("Update Ban"), tr("Hostmask:"), QLineEdit::Normal, oldHostmask, &ok);
       if (ok && !newHostmask.isEmpty() && newHostmask.compare(oldHostmask))
       {
+        // We delete the existing item because it's possible the server may
+        // Modify the ban causing us not to catch it. If that happens we'll be
+        // stuck with a stale item and a new item with the modified hostmask.
+        delete m_ui.banList->currentItem();
+        // request unban for the of the old hostmask
         m_channel->getServer()->requestUnban(oldHostmask, m_channel->getName());
+        // request ban for the of the old hostmask
         m_channel->getServer()->requestBan(QStringList(newHostmask), m_channel->getName(), QString());
       }
     }
