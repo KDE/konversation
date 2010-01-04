@@ -52,7 +52,7 @@ namespace Konversation
                     CLIP, // Sets the canvas's clipping region to the specified rectangle
                     CLS, // Clears the canvas to all white
                     DO, // Indicates that the sender supports the named option, and wants the recipient to use it
-                    DONT, // Indicates that the sender does not support the named option, and does not want the recipient to use it
+                    DONT, //krazy:exclude=spelling // Indicates that the sender does not support the named option, and does not want the recipient to use it
                     DR, // Draws with the specified tool
                     ENTRY, // Prompts the user to enter text
                     IMG, // IMG and IMGDATA will work together to transfer small bitmap images over the DCC Whiteboard connection
@@ -88,7 +88,7 @@ namespace Konversation
                     wboardCommands.insert("CLS", CLS);
                     wboardCommands.insert("DR", DR);
                     wboardCommands.insert("DO", DO);
-                    wboardCommands.insert("DONT", DONT);
+                    wboardCommands.insert("DONT", DONT); //krazy:exclude=spelling
                     wboardCommands.insert("ENTRY", ENTRY);
                     wboardCommands.insert("IMG", IMG);
                     wboardCommands.insert("IMGDATE", IMGDATA);
