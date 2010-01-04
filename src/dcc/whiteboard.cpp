@@ -394,8 +394,8 @@ namespace Konversation
 
         void WhiteBoard::emitDont(const QString& dontString)
         {
-            static const QString dont = QString("\x01""DONT %1\x01");
-            emit rawWhiteBoardCommand(dont.arg(dontString));
+            static const QString dont = QString("\x01""DONT %1\x01"); //krazy:exclude=spelling
+            emit rawWhiteBoardCommand(dont.arg(dontString)); //krazy:exclude=spelling
         }
 
     }
