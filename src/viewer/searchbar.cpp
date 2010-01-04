@@ -10,8 +10,9 @@
   Copyright (C) 2006 Peter Simonsson <psn@linux.se>
 */
 
-#include "application.h"
 #include "searchbar.h"
+
+#include "application.h"
 
 #include <QTimer>
 #include <QShortcut>
