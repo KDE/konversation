@@ -22,7 +22,6 @@
 #include <QStandardItemModel>
 #include <QKeyEvent>
 #include <QItemSelectionModel>
-#include <QInputDialog>
 #include <QTreeWidget>
 
 namespace Konversation
@@ -36,6 +35,10 @@ namespace Konversation
 
         Q_ASSERT(channel);
         m_ui.setupUi(mainWidget());
+
+        m_ui.addBan->setIcon(KIcon("list-add"));
+        m_ui.updateBan->setIcon(KIcon("edit-rename"));
+        m_ui.removeBan->setIcon(KIcon("list-remove"));
 
         QStandardItemModel *modesModel = new QStandardItemModel(m_ui.otherModesList);
         m_ui.otherModesList->setModel(modesModel);
@@ -227,6 +230,7 @@ namespace Konversation
             m_ui.secretModeChBox->setEnabled(enable);
             m_ui.keyModeChBox->setEnabled(enable);
             m_ui.keyModeEdit->setEnabled(enable);
+            m_ui.hostmask->setEnabled(enable);
             m_ui.addBan->setEnabled(enable);
             m_ui.updateBan->setEnabled(enable);
             m_ui.removeBan->setEnabled(enable);
@@ -425,9 +429,8 @@ namespace Konversation
 
     void ChannelOptionsDialog::addBanClicked()
     {
-      bool ok;
-      QString newHostmask = QInputDialog::getText(this, tr("Add Ban"), tr("Hostmask:"), QLineEdit::Normal, QString(), &ok);
-      if (ok && !newHostmask.isEmpty())
+      QString newHostmask = m_ui.hostmask->text();
+      if (!newHostmask.isEmpty())
         m_channel->getServer()->requestBan(QStringList(newHostmask), m_channel->getName(), QString());
     }
 
@@ -438,10 +441,9 @@ namespace Konversation
 
     void ChannelOptionsDialog::updateBanClicked()
     {
-      bool ok;
       QString oldHostmask = m_ui.banList->currentItem()->text(0);
-      QString newHostmask = QInputDialog::getText(this, tr("Update Ban"), tr("Hostmask:"), QLineEdit::Normal, oldHostmask, &ok);
-      if (ok && !newHostmask.isEmpty() && newHostmask.compare(oldHostmask))
+      QString newHostmask = m_ui.hostmask->text();
+      if (!newHostmask.isEmpty() && newHostmask.compare(oldHostmask))
       {
         // We delete the existing item because it's possible the server may
         // Modify the ban causing us not to catch it. If that happens we'll be
@@ -455,8 +457,18 @@ namespace Konversation
     }
     void ChannelOptionsDialog::refreshButtons()
     {
-      m_ui.updateBan->setEnabled(m_ui.banList->currentItem() != 0);
-      m_ui.removeBan->setEnabled(m_ui.banList->currentItem() != 0);
+      // update line edit content
+      if (m_ui.banList->currentItem())
+      {
+        m_ui.hostmask->setText(m_ui.banList->currentItem()->text(0));
+        // refresh button enable modes
+        refreshEnableModes(true);
+      }
+      else
+      {
+        m_ui.updateBan->setEnabled(false);
+        m_ui.removeBan->setEnabled(false);
+      }
     }
     // This is our implementation of BanListViewItem
 

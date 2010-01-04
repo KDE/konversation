@@ -261,7 +261,20 @@ the Free Software Foundation; either version 2 of the License, or
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <item>
+          <widget class="QLabel" name="hostmaskLabel">
+           <property name="text">
+            <string>Hostmask:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="hostmask"/>
+         </item>
+         <item>
           <widget class="QPushButton" name="addBan">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="sizePolicy">
             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
              <horstretch>0</horstretch>
@@ -269,7 +282,7 @@ the Free Software Foundation; either version 2 of the License, or
             </sizepolicy>
            </property>
            <property name="text">
-            <string>&amp;Add Ban...</string>
+            <string/>
            </property>
           </widget>
          </item>
@@ -279,7 +292,7 @@ the Free Software Foundation; either version 2 of the License, or
             <bool>false</bool>
            </property>
            <property name="text">
-            <string>&amp;Update Ban...</string>
+            <string/>
            </property>
           </widget>
          </item>
@@ -295,7 +308,7 @@ the Free Software Foundation; either version 2 of the License, or
             </sizepolicy>
            </property>
            <property name="text">
-            <string>&amp;Remove Ban</string>
+            <string/>
            </property>
           </widget>
          </item>
