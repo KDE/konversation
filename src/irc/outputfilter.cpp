@@ -1880,7 +1880,7 @@ namespace Konversation
                         token += modeToken + nickToken;
                         result.toServerList.append(token);
                         token = tmpToken;
-                        nickToken = QString();
+                        nickToken.clear();
                         modeToken = QString(" ") + QChar(giveTake);
                     }
                     nickToken += ' ' + nickList[index];
