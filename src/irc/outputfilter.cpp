@@ -1565,21 +1565,21 @@ namespace Konversation
             emit reconnectServer();
         else
         {
-            QStringList splitted = input.parameter.split(' ');
-            QString host = splitted[0];
+            QStringList splitString = input.parameter.split(' ');
+            QString host = splitString[0];
             QString password;
 
-            if (splitted.count() == 3)
-                emit connectTo(Konversation::CreateNewConnection, splitted[0], splitted[1], splitted[2]);
-            else if (splitted.count() == 2)
+            if (splitString.count() == 3)
+                emit connectTo(Konversation::CreateNewConnection, splitString[0], splitString[1], splitString[2]);
+            else if (splitString.count() == 2)
             {
-                if (splitted[0].contains(QRegExp(":[0-9]+$")))
-                    emit connectTo(Konversation::CreateNewConnection, splitted[0], 0, splitted[1]);
+                if (splitString[0].contains(QRegExp(":[0-9]+$")))
+                    emit connectTo(Konversation::CreateNewConnection, splitString[0], 0, splitString[1]);
                 else
-                    emit connectTo(Konversation::CreateNewConnection, splitted[0], splitted[1]);
+                    emit connectTo(Konversation::CreateNewConnection, splitString[0], splitString[1]);
             }
             else
-                emit connectTo(Konversation::CreateNewConnection, splitted[0]);
+                emit connectTo(Konversation::CreateNewConnection, splitString[0]);
         }
 
         return OutputFilterResult();
@@ -1764,8 +1764,8 @@ namespace Konversation
             result = usage(i18n("Usage: %1DNS <nick>", Preferences::self()->commandChar()));
         else
         {
-            QStringList splitted = input.parameter.split(' ');
-            QString target = splitted[0];
+            QStringList splitString = input.parameter.split(' ');
+            QString target = splitString[0];
 
             QHostAddress address(target);
 
