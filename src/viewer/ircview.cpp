@@ -1366,6 +1366,10 @@ void IRCView::mouseMoveEvent(QMouseEvent* ev)
 
         return;
     }
+    else
+    {
+        m_urlToCopy = anchorAt(ev->pos());
+    }
 
     KTextBrowser::mouseMoveEvent(ev);
 }
@@ -1411,7 +1415,7 @@ void IRCView::mouseReleaseEvent(QMouseEvent *ev)
 
 void IRCView::anchorClicked(const QUrl& url)
 {
-    openLink(url.toString());
+    openLink(url.toEncoded());
 }
 
 // FIXME do we still care about newtab? looks like konqi has lots of config now..
@@ -1516,7 +1520,7 @@ void IRCView::highlightedSlot(const QString& _link)
                 m_bookmark->setVisible( true );
                 m_saveUrl->setVisible( true );
             m_copyUrlMenu = true;
-            m_urlToCopy = link;
+//            m_urlToCopy = link;
         }
     }
     else if (link.startsWith('#') && !link.startsWith(QLatin1String("##")))
