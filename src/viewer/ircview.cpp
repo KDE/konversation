@@ -1368,6 +1368,7 @@ void IRCView::mouseMoveEvent(QMouseEvent* ev)
     }
     else
     {
+        // Store the url here instead of in highlightedSlot as the link given there is decoded.
         m_urlToCopy = anchorAt(ev->pos());
     }
 
