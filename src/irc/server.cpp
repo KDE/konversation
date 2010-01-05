@@ -51,6 +51,7 @@
 #include <KInputDialog>
 #include <KMessageBox>
 #include <KWindowSystem>
+#include <solid/networking.h>
 
 using namespace Konversation;
 
@@ -371,6 +372,12 @@ void Server::connectToIRCServer()
 {
     if (!isConnected())
     {
+        if(Solid::Networking::status() != Solid::Networking::Connected)
+        {
+            updateConnectionState(Konversation::SSInvoluntarilyDisconnected);
+            return;
+        }
+
         updateConnectionState(Konversation::SSConnecting);
 
         m_autoIdentifyLock = false;
