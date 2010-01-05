@@ -372,11 +372,12 @@ void Server::connectToIRCServer()
 {
     if (!isConnected())
     {
-        if(Solid::Networking::status() != Solid::Networking::Connected)
-        {
-            updateConnectionState(Konversation::SSInvoluntarilyDisconnected);
-            return;
-        }
+// Reenable check when it works reliably for all backends
+//         if(Solid::Networking::status() != Solid::Networking::Connected)
+//         {
+//             updateConnectionState(Konversation::SSInvoluntarilyDisconnected);
+//             return;
+//         }
 
         updateConnectionState(Konversation::SSConnecting);
 

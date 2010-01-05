@@ -27,8 +27,9 @@
 ConnectionManager::ConnectionManager(QObject* parent)
     : QObject(parent), m_overrideAutoReconnect (false)
 {
-    if (Solid::Networking::status() != Solid::Networking::Connected)
-        m_overrideAutoReconnect = true;
+// Reenable the check again when it works reliably for all backends
+//    if (Solid::Networking::status() != Solid::Networking::Connected)
+//        m_overrideAutoReconnect = true;
 
     connect(this, SIGNAL(requestReconnect(Server*)), this, SLOT(handleReconnect(Server*)));
 }
