@@ -58,9 +58,10 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
     m_deleteAssociation = m_toolBar->addAction(KIcon("edit-delete"), i18n("&Delete Association"));
     m_deleteAssociation->setWhatsThis(i18n("Click to remove the association between the nickname selected above and a KAddressBook entry."));
     m_toolBar->addSeparator();
+    m_sendMail = m_toolBar->addAction(KIcon("mail-send"), i18n("&Send Email..."));
+    m_toolBar->addSeparator();
     m_whois = m_toolBar->addAction(KIcon("office-address-book"), i18n("&Whois"));
     m_openQuery = m_toolBar->addAction(KIcon("office-address-book"), i18n("Open &Query"));
-    m_sendMail = m_toolBar->addAction(KIcon("mail-send"), i18n("&Send Email..."));
     m_toolBar->addSeparator();
     m_joinChannel = m_toolBar->addAction(KIcon("irc-join-channel"), i18n("&Join Channel"));
     connect(m_toolBar, SIGNAL(actionTriggered(QAction*)), this, SLOT(slotPopupMenu_Activated(QAction*)));
@@ -956,10 +957,10 @@ void NicksOnline::setupPopupMenuActions(NicksOnlineItem *item)
     else if (nickState == nsHasAddress)
     {
       m_popupMenu->addSeparator();
+      m_popupMenu->insertAction(0, m_editContact);
+      m_popupMenu->addSeparator();
       m_popupMenu->insertAction(0, m_changeAssociation);
       m_popupMenu->insertAction(0, m_deleteAssociation);
-      m_popupMenu->addSeparator();
-      m_popupMenu->insertAction(0, m_editContact);
       m_popupMenu->addSeparator();
       m_popupMenu->insertAction(0, m_sendMail);
     }
