@@ -54,6 +54,10 @@ Changes since 1.2.1:
   le and KWrite).
 * Added a "--noautoconnect" command line argument to disable auto-co-
   nnecting to any IRC networks on application startup.
+* The invite dialog now has a drop-down offering the options "Always
+  ask", "Always join" and "Always ignore" for future default behavior,
+  rather than just a "Don't ask again" checkbox that wasn't sufficient
+  to cover all scenarios.
 
 
 Changes from 1.2 to 1.2.1:
