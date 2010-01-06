@@ -989,6 +989,8 @@ void NicksOnline::slotNickListView_SelectionChanged()
 void NicksOnline::slotCustomContextMenuRequested(QPoint point)
 {
     QTreeWidgetItem *item = m_nickListView->itemAt(point);
+    if (item == 0)
+      return;
     // select the item
     item->setSelected(true);
     // set up actions
