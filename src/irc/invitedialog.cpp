@@ -61,32 +61,31 @@ void InviteDialog::slotOk()
 
 void InviteDialog::saveShowAgainSetting(KDialog::ButtonCode buttonCode)
 {
-    if (m_showAgainCheck->isChecked())
+    if (buttonCode == KDialog::Ok)
     {
-        KConfigGroup::WriteConfigFlags flags = KConfig::Persistent;
-        KConfigGroup cg(KGlobal::config().data(), "Notification Messages");
-        cg.writeEntry("Invitation", buttonCode == KDialog::Ok, flags);
-        cg.sync();
+	KConfigGroup::WriteConfigFlags flags = KConfig::Persistent;
+	KConfigGroup cg(KGlobal::config().data(), "Notification Messages");
+	cg.writeEntry("Invitation", m_joinPreferences->currentIndex(), flags);
+	cg.sync();
     }
 }
-
 bool InviteDialog::shouldBeShown(KDialog::ButtonCode& buttonCode)
 {
     KConfigGroup cg(KGlobal::config().data(), "Notification Messages");
     cg.sync();
     const QString dontAsk = cg.readEntry("Invitation", QString()).toLower();
 
-    if (dontAsk == "yes" || dontAsk == "true")
+    if (dontAsk == "1")
     {
-        buttonCode = KDialog::Ok;
-        return false;
+	buttonCode = KDialog::Ok;
+	return false;
     }
-    else if (dontAsk == "no" || dontAsk == "false")
+    else if (dontAsk == "2")
     {
-        buttonCode = KDialog::Cancel;
-        return false;
+	buttonCode = KDialog::Cancel;
+	return false;
     }
-
+    
     return true;
 }
 
