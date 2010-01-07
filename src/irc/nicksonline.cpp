@@ -760,7 +760,7 @@ void NicksOnline::doCommand(QAction* id)
             Konversation::Addressbook::self()->sendEmail(addressee);
     else if (  id == m_editContact )
             Konversation::Addressbook::self()->editAddressee(addressee.uid());
-    else if ( id == m_changeAssociation )
+    else if ( id == m_chooseAssociation || id == m_changeAssociation )
     {
         LinkAddressbookUI *linkaddressbookui = NULL;
 
@@ -775,7 +775,7 @@ void NicksOnline::doCommand(QAction* id)
 
         linkaddressbookui->show();
     }
-    else if ( id == m_chooseAssociation || id == m_deleteAssociation )
+    else if ( id == m_newContact || id == m_deleteAssociation )
     {
             Konversation::Addressbook *addressbook = Konversation::Addressbook::self();
 
