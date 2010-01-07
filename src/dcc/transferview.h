@@ -45,6 +45,7 @@ namespace Konversation
             QList<QModelIndex> selectedIndexes() const;
             QList<QModelIndex> selectedRows(int column = 0) const;
             QModelIndex index(int row, int column) const;
+            QModelIndex index(Transfer *transfer) const;
 
             void selectAllCompleted();
             void selectRow(int row);

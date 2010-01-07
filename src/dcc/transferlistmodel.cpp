@@ -430,17 +430,17 @@ namespace Konversation
 
         QString TransferListModel::secToHMS(long sec)
         {
-                int remSec = sec;
-                int remHour = remSec / 3600;
-                remSec -= remHour * 3600;
-                int remMin = remSec / 60;
-                remSec -= remMin * 60;
+            int remSec = sec;
+            int remHour = remSec / 3600;
+            remSec -= remHour * 3600;
+            int remMin = remSec / 60;
+            remSec -= remMin * 60;
 
-                // remHour can be more than 25, so we can't use QTime here.
-                return QString("%1:%2:%3")
-                    .arg(QString::number(remHour).rightJustified(2, '0', false))
-                    .arg(QString::number(remMin).rightJustified(2, '0'))
-                    .arg(QString::number(remSec).rightJustified(2, '0'));
+            // remHour can be more than 25, so we can't use QTime here.
+            return QString("%1:%2:%3")
+                .arg(QString::number(remHour).rightJustified(2, '0', false))
+                .arg(QString::number(remMin).rightJustified(2, '0'))
+                .arg(QString::number(remSec).rightJustified(2, '0'));
         }
 
         QString TransferListModel::getStatusText(Transfer::Status status, Transfer::Type type)

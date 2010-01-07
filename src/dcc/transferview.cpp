@@ -72,7 +72,6 @@ namespace Konversation
 
         TransferView::~TransferView()
         {
-            kDebug();
             disconnect(m_updateTimer, 0, 0, 0);
 
             saveColumns();
@@ -188,10 +187,16 @@ namespace Konversation
             m_dccModel->append(tD);
         }
 
-        void TransferView::transferStatusChanged(Transfer */*transfer*/,
+        void TransferView::transferStatusChanged(Transfer *transfer,
                                                  int newStatus, int oldStatus)
         {
             Q_ASSERT(newStatus != oldStatus);
+
+            QModelIndex rowIndex = index(transfer);
+            if (rowIndex.isValid())
+            {
+                dataChanged(rowIndex, index(rowIndex.row(), model()->columnCount()-1));
+            }
 
             if (newStatus == Transfer::Transferring)
             {
@@ -209,6 +214,7 @@ namespace Konversation
                     m_updateTimer->stop();
                 }
             }
+            update();
         }
 
         int TransferView::itemCount() const
@@ -264,9 +270,27 @@ namespace Konversation
             return selectionModel()->selectedRows(column);
         }
 
-        QModelIndex TransferView::index (int row, int column) const
+        QModelIndex TransferView::index(int row, int column) const
         {
             return model()->index(row, column);
+        }
+
+        QModelIndex TransferView::index(Transfer *transfer) const
+        {
+            if (!transfer)
+            {
+                return QModelIndex();
+            }
+
+            foreach (const QModelIndex& rowIndex, rowIndexes())
+            {
+                Transfer *rowTransfer = static_cast<Transfer*>(qVariantValue<QObject*>(rowIndex.data(TransferListModel::TransferPointer)));
+                if (rowTransfer == transfer)
+                {
+                    return rowIndex;
+                }
+            }
+            return QModelIndex();
         }
 
         void TransferView::headerCustomContextMenuRequested(const QPoint &pos)
@@ -542,8 +566,15 @@ namespace Konversation
 
         void TransferView::update()
         {
-            //force an update, but be careful, it makes QItemSelection indexes invalid
-            m_proxyModel->invalidate();
+            const int columnCount = model()->columnCount()-1;
+            foreach (const QModelIndex& rowIndex, rowIndexes(0))
+            {
+                int status = rowIndex.data(TransferListModel::TransferStatus).toInt();
+                if (status == Transfer::Transferring)
+                {
+                    dataChanged(rowIndex, index(rowIndex.row(), columnCount));
+                }
+            }
             QTreeView::update();
         }
 
