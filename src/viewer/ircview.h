@@ -223,7 +223,7 @@ class IRCView : public KTextBrowser
         void handleContextActions();
 
     protected:
-        void openLink(const QString &url, bool newTab=false);
+        void openLink(const QUrl &url);
 
         QString filter(const QString& line, const QString& defaultColor, const QString& who=NULL, bool doHighlight=true, bool parseURL=true, bool self=false);
 

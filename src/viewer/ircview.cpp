@@ -1401,7 +1401,7 @@ void IRCView::mouseReleaseEvent(QMouseEvent *ev)
     {
         if (m_copyUrlMenu)
         {
-            openLink(m_urlToCopy,true);
+            openLink(QUrl (m_urlToCopy));
             return;
         }
         else
@@ -1416,13 +1416,13 @@ void IRCView::mouseReleaseEvent(QMouseEvent *ev)
 
 void IRCView::anchorClicked(const QUrl& url)
 {
-    openLink(url.toEncoded());
+    openLink(url);
 }
 
 // FIXME do we still care about newtab? looks like konqi has lots of config now..
-void IRCView::openLink(const QString& url, bool)
+void IRCView::openLink(const QUrl& url)
 {
-    QString link(url);
+    QString link(url.toString());
     // HACK Replace " " with %20 for channelnames, NOTE there can't be 2 channelnames in one link
     link = link.replace (' ', "%20");
 
@@ -1434,7 +1434,7 @@ void IRCView::openLink(const QString& url, bool)
             konvApp->getConnectionManager()->connectTo(Konversation::SilentlyReuseConnection, link);
         }
         else
-            Application::openUrl(link);
+            Application::openUrl(url.toEncoded());
     }
     //FIXME: Don't do channel links in DCC Chats to begin with since they don't have a server.
     else if (link.startsWith(QLatin1String("##")) && m_server && m_server->isConnected())
