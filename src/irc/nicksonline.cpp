@@ -73,6 +73,8 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
     m_whoisRequested = true;
 
     m_kabcIconSet = KIcon("office-address-book");
+    m_onlineIcon = KIcon("im-user");
+    m_offlineIcon = KIcon("im-user-offline");
     m_nickListView->setColumnCount(2);
     m_nickListView->headerItem()->setText(0, i18n("Network/Nickname/Channel"));
     m_nickListView->headerItem()->setText(1, i18n("Additional Information"));
@@ -282,14 +284,6 @@ void NicksOnline::updateServerOnlineList(Server* servr)
     QStringList serverList = networkRoot->text(nlvcAdditionalInfo).split(',', QString::SkipEmptyParts);
     if (!serverList.contains(serverName)) serverList.append(serverName);
     networkRoot->setText(nlvcAdditionalInfo, serverList.join(","));
-    // Get item in nicklistview for the Offline branch.
-    QTreeWidgetItem* offlineRoot = findItemType(networkRoot, NicksOnlineItem::OfflineItem);
-    if (!offlineRoot)
-    {
-        offlineRoot = new NicksOnlineItem(NicksOnlineItem::OfflineItem,networkRoot,i18n("Offline"));
-        offlineRoot->setText(nlvcServerName, serverName);
-    }
-
     // Get watch list.
     QStringList watchList = servr->getWatchList();
     QStringList::iterator itEnd = watchList.end();
@@ -310,19 +304,16 @@ void NicksOnline::updateServerOnlineList(Server* servr)
             // Construct additional information string for nick.
             bool needWhois = false;
             QString nickAdditionalInfo = getNickAdditionalInfo(nickInfo, addressee, needWhois);
-            // Remove from offline branch if present.
-            QTreeWidgetItem* item = findItemChild(offlineRoot, nickname, NicksOnlineItem::NicknameItem);
-            if (item)
-                delete item;
             // Add to network if not already added.
             QTreeWidgetItem* nickRoot = findItemChild(networkRoot, nickname, NicksOnlineItem::NicknameItem);
             if (!nickRoot)
-            {
                 nickRoot = new NicksOnlineItem(NicksOnlineItem::NicknameItem, networkRoot, nickname, nickAdditionalInfo);
-                NicksOnlineItem* nickitem = static_cast<NicksOnlineItem*>(nickRoot);
-                nickitem->setConnectionId(server->connectionId ());
-                nickitem->setOffline (false);
-            }
+            NicksOnlineItem* nickitem = static_cast<NicksOnlineItem*>(nickRoot);
+            nickitem->setConnectionId(server->connectionId ());
+            // Mark nick as online
+            nickitem->setOffline(false);
+            // Update icon
+            nickitem->setIcon(nlvcNick, m_onlineIcon);
             nickRoot->setText(nlvcAdditionalInfo, nickAdditionalInfo);
             nickRoot->setText(nlvcServerName, serverName);
             // If no additional info available, request a WHOIS on the nick.
@@ -394,18 +385,15 @@ void NicksOnline::updateServerOnlineList(Server* servr)
         else
         {
             // Nick is offline.
-            // Remove from online nicks, if present.
-            QTreeWidgetItem* item = findItemChild(networkRoot, nickname, NicksOnlineItem::NicknameItem);
-            if (item) delete item;
-            // Add to offline list if not already listed.
-            QTreeWidgetItem* nickRoot = findItemChild(offlineRoot, nickname, NicksOnlineItem::NicknameItem);
+            QTreeWidgetItem* nickRoot = findItemChild(networkRoot, nickname, NicksOnlineItem::NicknameItem);
             if (!nickRoot)
-            {
-                nickRoot = new NicksOnlineItem(NicksOnlineItem::NicknameItem,offlineRoot, nickname);
-                NicksOnlineItem* nickitem = static_cast<NicksOnlineItem*>(nickRoot);
-                nickitem->setConnectionId(servr->connectionId ());
-                nickitem->setOffline (true);
-            }
+                nickRoot = new NicksOnlineItem(NicksOnlineItem::NicknameItem, networkRoot, nickname);
+            NicksOnlineItem* nickitem = static_cast<NicksOnlineItem*>(nickRoot);
+            nickitem->setConnectionId(servr->connectionId ());
+            // Mark nick as offline
+            nickitem->setOffline (true);
+            // Update icon
+            nickitem->setIcon(nlvcNick, m_offlineIcon);
             nickRoot->setText(nlvcServerName, serverName);
             // Get addressbook entry for the nick.
             KABC::Addressee addressee = servr->getOfflineNickAddressee(nickname);
@@ -426,32 +414,12 @@ void NicksOnline::updateServerOnlineList(Server* servr)
     for (int i = 0; i < networkRoot->childCount(); ++i)
     {
         QTreeWidgetItem* item = networkRoot->child(i);
-        if (static_cast<NicksOnlineItem*>(item)->type() != NicksOnlineItem::OfflineItem)
+        QString nickname = item->text(nlvcNick);
+        if (!watchList.contains(nickname) && serverName == item->text(nlvcServerName))
         {
-            QString nickname = item->text(nlvcNick);
-            if (!watchList.contains(nickname) && serverName == item->text(nlvcServerName))
-            {
-                delete networkRoot->takeChild(i);
-                i--;
-            }
+            delete networkRoot->takeChild(i);
+            i--;
         }
-    }
-
-    if(offlineRoot->childCount() > 0) {
-        for (int i = 0; i < offlineRoot->childCount(); ++i)
-        {
-            QTreeWidgetItem* item = offlineRoot->child(i);
-            QString nickname = item->text(nlvcNick);
-            if (!watchList.contains(nickname) && serverName == item->text(nlvcServerName))
-            {
-                delete offlineRoot->takeChild(i);
-                i--;
-            }
-        }
-    }
-    else
-    {
-        delete offlineRoot;
     }
     // Expand server if newly added to list.
     if (newNetworkRoot)
@@ -526,12 +494,6 @@ void NicksOnline::updateNotifyList()
       {
         // add the nick to the list
         nicks << item->text(0);
-      }
-      else if (item->type() == NicksOnlineItem::OfflineItem)
-      {
-        // add offline nicks to the list
-        for (int k = 0; k < item->childCount(); ++k)
-          nicks << item->child(k)->text(0);
       }
     }
     // insert nick list to the notify list
@@ -642,8 +604,6 @@ bool NicksOnline::getItemServerAndNick(const QTreeWidgetItem* item, QString& ser
         serverName = item->text(nlvcServerName);
     }
     nickname = item->text(nlvcNick);
-    // offline columns are not nick names
-    if (nlItem->type() == NicksOnlineItem::OfflineItem) return false;
     return true;
 }
 
@@ -720,7 +680,11 @@ void NicksOnline::doCommand(QAction* id)
       if (ok && !nick.isEmpty())
       {
         // add the new nick
-        new NicksOnlineItem(NicksOnlineItem::NicknameItem, nickitem, nick, QString());
+        NicksOnlineItem *item = new NicksOnlineItem(NicksOnlineItem::NicknameItem, nickitem, nick, QString());
+        // Mark nick as offline
+        item->setOffline(true);
+        // Update icon
+        item->setIcon(nlvcNick, m_offlineIcon);
         // update notify list
         updateNotifyList();
       }
@@ -893,8 +857,6 @@ void NicksOnline::setupToolbarActions(NicksOnlineItem *item)
   case NicksOnlineItem::NetworkRootItem:
     m_addWatch->setEnabled(true);
     break;
-  case NicksOnlineItem::OfflineItem:
-    break;
   case NicksOnlineItem::ChannelItem:
     m_joinChannel->setEnabled(true);
     break;
@@ -938,8 +900,6 @@ void NicksOnline::setupPopupMenuActions(NicksOnlineItem *item)
   {
   case NicksOnlineItem::NetworkRootItem:
     m_popupMenu->insertAction(0, m_addWatch);
-    break;
-  case NicksOnlineItem::OfflineItem:
     break;
   case NicksOnlineItem::ChannelItem:
     m_popupMenu->insertAction(0, m_joinChannel);

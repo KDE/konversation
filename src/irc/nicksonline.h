@@ -235,6 +235,10 @@ class NicksOnline : public ChatWindow
         QTimer* m_timer;
         // Addressbook icon.
         QIcon m_kabcIconSet;
+        // Online nick icon
+        QIcon m_onlineIcon;
+        // Offline nick icon
+        QIcon m_offlineIcon;
         /* Set to False every 8 seconds so that we generate a WHOIS on watch nicks that
            lack information.*/
         bool m_whoisRequested;
