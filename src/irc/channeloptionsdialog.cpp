@@ -235,6 +235,11 @@ namespace Konversation
             m_ui.updateBan->setEnabled(enable);
             m_ui.removeBan->setEnabled(enable);
         }
+        if (!m_ui.banList->currentItem())
+        {
+          m_ui.updateBan->setEnabled(false);
+          m_ui.removeBan->setEnabled(false);
+        }
     }
 
     void ChannelOptionsDialog::refreshAllowedChannelModes()
@@ -462,18 +467,11 @@ namespace Konversation
     }
     void ChannelOptionsDialog::refreshButtons()
     {
+      // refresh button enable modes
+      refreshEnableModes(true);
       // update line edit content
       if (m_ui.banList->currentItem())
-      {
         m_ui.hostmask->setText(m_ui.banList->currentItem()->text(0));
-        // refresh button enable modes
-        refreshEnableModes(true);
-      }
-      else
-      {
-        m_ui.updateBan->setEnabled(false);
-        m_ui.removeBan->setEnabled(false);
-      }
     }
     // This is our implementation of BanListViewItem
 
