@@ -441,12 +441,13 @@ namespace Konversation
 
     void ChannelOptionsDialog::removeBanClicked()
     {
+      QString oldHostmask = m_ui.banList->currentItem()->text(0);
       // We delete the existing item because it's possible the server may
       // Modify the ban causing us not to catch it. If that happens we'll be
       // stuck with a stale item and a new item with the modified hostmask.
       delete m_ui.banList->currentItem();
       // request unban
-      m_channel->getServer()->requestUnban(m_ui.banList->currentItem()->text(0), m_channel->getName());
+      m_channel->getServer()->requestUnban(oldHostmask, m_channel->getName());
     }
 
     void ChannelOptionsDialog::updateBanClicked()
