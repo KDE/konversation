@@ -574,13 +574,10 @@ void NicksOnline::processDoubleClick(QTreeWidgetItem* item, int column)
 
     if (!nickitem || nickitem->isOffline())
         return;
-
     // Only emit signal when the user double clicked a nickname rather than
     // a server name or channel name.
-    QString serverName;
-    QString nickname;
-    if (getItemServerAndNick(item, serverName, nickname))
-        emit doubleClicked(nickitem->connectionId(), nickname);
+    if (nickitem->type() == NicksOnlineItem::NicknameItem)
+        emit doubleClicked(nickitem->connectionId(), nickitem->text(0));
 }
 
 /**
