@@ -578,6 +578,12 @@ void NicksOnline::processDoubleClick(QTreeWidgetItem* item, int column)
     // a server name or channel name.
     if (nickitem->type() == NicksOnlineItem::NicknameItem)
         emit doubleClicked(nickitem->connectionId(), nickitem->text(0));
+    if (nickitem->type() == NicksOnlineItem::ChannelItem)
+    {
+        // Get the server object corresponding to the connection id.
+        Server* server = Application::instance()->getConnectionManager()->getServerByConnectionId(nickitem->connectionId());
+        server->queue( "JOIN "+ nickitem->text(0) );
+    }
 }
 
 /**
