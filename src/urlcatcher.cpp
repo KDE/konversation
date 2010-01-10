@@ -137,7 +137,7 @@ UrlCatcher::UrlCatcher(QWidget* parent) : ChatWindow(parent)
     m_open->setWhatsThis("<p>Select a <b>URL</b> above, then click this button to launch the application associated with the mimetype of the URL.</p>-<p>In the <b>Settings</b>, under <b>Behavior</b> | <b>General</b>, you can specify a custom web browser for web URLs.</p>");
     m_open->setEnabled(false);
     m_toolBar->addSeparator();
-    m_copy = m_toolBar->addAction(KIcon("edit-copy"), i18nc("copy url","&Copy"), this, SLOT(copyListClicked()));
+    m_copy = m_toolBar->addAction(KIcon("edit-copy"), i18nc("copy url","&Copy"), this, SLOT(copyUrlClicked()));
     m_copy->setStatusTip(i18n("Copy link address to the clipboard."));
     m_copy->setWhatsThis("Select a <b>URL</b> above, then click this button to copy the URL to the clipboard.");
     m_copy->setEnabled(false);
