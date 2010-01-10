@@ -54,6 +54,9 @@
       <property name="indentation">
        <number>0</number>
       </property>
+      <property name="sortingEnabled">
+       <bool>true</bool>
+      </property>
       <property name="allColumnsShowFocus">
        <bool>true</bool>
       </property>
