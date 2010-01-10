@@ -399,10 +399,13 @@ void UrlCatcher::contextMenu(const QPoint& p)
 
     KMenu* menu = new KMenu(this);
 
-    menu->addAction(KIcon("edit-copy"), i18n("Copy Link Address"), this, SLOT (copyUrlClicked()));
-    menu->addAction(KIcon("bookmark-new"), i18n("Add to Bookmarks"), this, SLOT (bookmarkUrl()));
+    menu->insertAction(0, m_open);
     menu->addAction(KIcon("document-save"), i18n("Save Link As..."), this, SLOT(saveLinkAs()));
-    //TODO maybe a delete action?
+    menu->addSeparator();
+    menu->insertAction(0, m_copy);
+    menu->insertAction(0, m_delete);
+    menu->addSeparator();
+    menu->addAction(KIcon("bookmark-new"), i18n("Add to Bookmarks"), this, SLOT (bookmarkUrl()));
 
     menu->exec(QCursor::pos());
 
