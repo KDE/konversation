@@ -58,6 +58,19 @@ Changes since 1.2.1:
   ask", "Always join" and "Always ignore" for future default behavior,
   rather than just a "Don't ask again" checkbox that wasn't sufficient
   to cover all scenarios.
+* The "Hide Nicklist" action has been renamed "Show Nicklist" to com-
+  ply with the KDE 4 HIG.
+* URLs are no longer decoded before being passed to the web browser,
+  fixing the opening of some links from the chat text view.
+* Fixed a bug causing the application to crash when pressing the left
+  or right arrow keys after selecting an active file transfer in the
+  DCC Status tab's transfer list when using Qt 4.6.
+* Improved performance of the DCC Status tab's transfer list.
+* It's now possible to add nicknames to the Watched Nicknames Online
+  list, as well as remove them, right from the tab rather than having
+  to go to the config dialog.
+* Fixed a bug that would cause the "Choose Association" KDE address
+  book integration action to create a new contact in the address book.
 
 
 Changes from 1.2 to 1.2.1:
