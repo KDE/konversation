@@ -13,8 +13,6 @@
 #ifndef KONVERSATIONCHANNELOPTIONSDIALOG_H
 #define KONVERSATIONCHANNELOPTIONSDIALOG_H
 
-#define QT3_SUPPORT //TODO remove when porting away from K3ListView
-
 #include "ui_channeloptionsui.h"
 #include "channel.h"
 
@@ -55,25 +53,19 @@ namespace Konversation
             void refreshBanList();
             void addBan(const QString& newban);
             void addBanClicked();
+            void updateBanClicked();
             void removeBan(const QString& ban);
             void removeBanClicked();
-            void banEdited(Q3ListViewItem *edited);
+            void refreshButtons();
 
             void changeOptions();
-
 
         protected slots:
             void topicHistoryItemClicked(const QItemSelection& selection);
             void topicBeingEdited(bool edited);
 
-            void cancelClicked();
-            void okClicked();
-
-
         protected:
             bool m_editingTopic;
-            Q3ListViewItem *m_NewBan;
-
 
         private:
             Ui::ChannelOptionsUI m_ui;
@@ -82,31 +74,15 @@ namespace Konversation
             TopicListModel* m_topicModel;
     };
 
-
-    // This is needed to overcome two deficiencies in K3ListViewItem
-    // First there is no signal emitted when a rename is canceled
-    // Second there is no way to get the old value of an item after a rename
-    class BanListViewItem : public K3ListViewItem
+    class BanListViewItem : public QTreeWidgetItem
     {
         public:
-            explicit BanListViewItem( Q3ListView *parent );
-            BanListViewItem(Q3ListView *parent, bool isNew);
-            BanListViewItem(Q3ListView *parent, const QString& label1, const QString& label2 = QString(), uint timestamp = 0);
-            BanListViewItem (Q3ListView *parent, bool isNew, const QString& label1, const QString& label2 = QString(), uint timestamp = 0);
+            explicit BanListViewItem( QTreeWidget *parent );
+            BanListViewItem(QTreeWidget *parent, const QString& label1, const QString& label2 = QString(), uint timestamp = 0);
 
-            QString getOldValue() { return m_oldValue; }
-            QDateTime timestamp() { return m_timestamp; }
-
-            virtual QString text(int column) const;
-            virtual int compare(Q3ListViewItem *i, int col, bool ascending) const;
-            virtual void startRename(int col);
-
+            bool operator<(const QTreeWidgetItem &item) const;
 
         protected:
-            virtual void cancelRename(int col);
-
-            QString m_oldValue;
-            bool m_isNewBan;
             QDateTime m_timestamp;
     };
 
