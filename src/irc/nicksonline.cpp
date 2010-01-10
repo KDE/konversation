@@ -43,10 +43,10 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
 
     setSpacing(0);
     m_toolBar = new KToolBar(this, true, true);
-    m_addWatch = m_toolBar->addAction(KIcon("list-add-user"), i18n("&Add Watch..."));
-    m_addWatch->setWhatsThis(i18n("Click to add a new nick to the list of nicknames that appear on this screen."));
-    m_removeWatch = m_toolBar->addAction(KIcon("list-remove-user"), i18n("&Remove Watch"));
-    m_removeWatch->setWhatsThis(i18n("Click to remove a nick from the list of nicknames that appear on this screen."));
+    m_addNickname = m_toolBar->addAction(KIcon("list-add-user"), i18n("&Add Nickname..."));
+    m_addNickname->setWhatsThis(i18n("Click to add a new nick to the list of nicknames that appear on this screen."));
+    m_removeNickname = m_toolBar->addAction(KIcon("list-remove-user"), i18n("&Remove Nickname"));
+    m_removeNickname->setWhatsThis(i18n("Click to remove a nick from the list of nicknames that appear on this screen."));
     m_toolBar->addSeparator();
     m_newContact = m_toolBar->addAction(KIcon("contact-new"), i18n("Create New C&ontact..."));
     m_editContact = m_toolBar->addAction(KIcon("document-edit"), i18n("Edit C&ontact..."));
@@ -684,7 +684,7 @@ void NicksOnline::doCommand(QAction* id)
     if(!nickitem)
         return;
 
-    if ( id == m_addWatch )
+    if ( id == m_addNickname )
     {
       bool ok;
       QString nick = QInputDialog::getText(this, tr("Enter nick to watch."), tr("Nick:"), QLineEdit::Normal, QString(), &ok);
@@ -701,7 +701,7 @@ void NicksOnline::doCommand(QAction* id)
       }
       return;
     }
-    else if ( id == m_removeWatch )
+    else if ( id == m_removeNickname )
     {
       // remove watch from the tree widget
       delete nickitem;
@@ -848,8 +848,8 @@ int NicksOnline::getNickAddressbookState(QTreeWidgetItem* item)
 void NicksOnline::setupToolbarActions(NicksOnlineItem *item)
 {
   // disable all actions
-  m_addWatch->setEnabled(false);
-  m_removeWatch->setEnabled(false);
+  m_addNickname->setEnabled(false);
+  m_removeNickname->setEnabled(false);
   m_newContact->setEnabled(false);
   m_editContact->setEnabled(false);
   m_chooseAssociation->setEnabled(false);
@@ -866,13 +866,13 @@ void NicksOnline::setupToolbarActions(NicksOnlineItem *item)
   switch (item->type())
   {
   case NicksOnlineItem::NetworkRootItem:
-    m_addWatch->setEnabled(true);
+    m_addNickname->setEnabled(true);
     break;
   case NicksOnlineItem::ChannelItem:
     m_joinChannel->setEnabled(true);
     break;
   case NicksOnlineItem::NicknameItem:
-    m_removeWatch->setEnabled(true);
+    m_removeNickname->setEnabled(true);
     int nickState = getNickAddressbookState(item);
     if (nickState == nsNoAddress)
     {
@@ -910,13 +910,13 @@ void NicksOnline::setupPopupMenuActions(NicksOnlineItem *item)
   switch (item->type())
   {
   case NicksOnlineItem::NetworkRootItem:
-    m_popupMenu->insertAction(0, m_addWatch);
+    m_popupMenu->insertAction(0, m_addNickname);
     break;
   case NicksOnlineItem::ChannelItem:
     m_popupMenu->insertAction(0, m_joinChannel);
     break;
   case NicksOnlineItem::NicknameItem:
-    m_popupMenu->insertAction(0, m_removeWatch);
+    m_popupMenu->insertAction(0, m_removeNickname);
     int nickState = getNickAddressbookState(item);
     if (nickState == nsNoAddress)
     {
