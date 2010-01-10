@@ -55,6 +55,7 @@ const QString& nickname):
     nicknameLabel->setBuddy(m_nicknameInput);
 
     // Add network names to network combobox and select the one corresponding to argument.
+    m_networkNameCombo->addItem(i18nc("all networks", "All Networks"), -1);
     QList<Server *> serverList = Application::instance()->getConnectionManager()->getServerList();
     for (int i = 0; i < serverList.count(); ++i)
     {
@@ -78,8 +79,15 @@ EditNotifyDialog::~EditNotifyDialog()
 
 void EditNotifyDialog::slotOk()
 {
-    emit notifyChanged(m_networkNameCombo->itemData(m_networkNameCombo->currentIndex()).toInt(),
-        m_nicknameInput->text());
+    int id = m_networkNameCombo->itemData(m_networkNameCombo->currentIndex()).toInt();
+    if (id == -1)
+    {
+      // add nickname to every server
+      for (int i = 1; i < m_networkNameCombo->count(); ++i)
+        emit notifyChanged(m_networkNameCombo->itemData(i).toInt(), m_nicknameInput->text());
+    }
+    else
+      emit notifyChanged(id, m_nicknameInput->text());
     delayedDestruct();
 }
 
