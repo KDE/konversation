@@ -400,7 +400,8 @@ void NicksOnline::updateServerOnlineList(Server* servr)
             // Format additional information for the nick.
             bool needWhois = false;
             QString nickAdditionalInfo = getNickAdditionalInfo(NickInfoPtr(), addressee, needWhois);
-            nickRoot->setText(nlvcAdditionalInfo, i18n("(Offline) ") + nickAdditionalInfo);
+            nickRoot->setText(nlvcAdditionalInfo, i18nc("(Offline) nickname details (e.g. real name from address book)",
+                "(Offline) %1", nickAdditionalInfo));
             // Set Kabc icon if the nick is associated with an addressbook entry.
             if (!addressee.isEmpty())
                 nickRoot->setIcon(nlvcKabc, QIcon(m_kabcIconSet.pixmap(
