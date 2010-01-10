@@ -55,8 +55,7 @@ const QString& nickname):
     nicknameLabel->setBuddy(m_nicknameInput);
 
     // Add network names to network combobox and select the one corresponding to argument.
-    Application* konvApp = dynamic_cast<Application*>(kapp);
-    QList<Server *> serverList = konvApp->getConnectionManager()->getServerList();
+    QList<Server *> serverList = Application::instance()->getConnectionManager()->getServerList();
     for (int i = 0; i < serverList.count(); ++i)
     {
       m_networkNameCombo->addItem(serverList.at(i)->getDisplayName(), serverList.at(i)->getServerGroup()->id());
