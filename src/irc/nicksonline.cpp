@@ -199,7 +199,7 @@ QTreeWidgetItem* NicksOnline::findItemType(const QTreeWidgetItem* parent, NicksO
 
 /**
  * Returns a pointer to the network QListViewItem with the given name.
- * @param name              The name of the network, assumed to be in column 0 of the item.
+ * @param name              The name of the network.
  * @return                  Pointer to the QListViewItem or 0 if not found.
  */
 QTreeWidgetItem* NicksOnline::findNetworkRoot(const QString& name)
@@ -207,7 +207,7 @@ QTreeWidgetItem* NicksOnline::findNetworkRoot(const QString& name)
     for (int i = 0; i < m_nickListView->invisibleRootItem()->childCount(); ++i)
     {
         QTreeWidgetItem* child = m_nickListView->invisibleRootItem()->child(i);
-        if (child->text(0) == name) return child;
+        if (child->text(nlvcNetwork) == name) return child;
     }
     return 0;
 }
@@ -495,7 +495,7 @@ void NicksOnline::updateNotifyList()
       if (item->type() == NicksOnlineItem::NicknameItem)
       {
         // add the nick to the list
-        nicks << item->text(0);
+        nicks << item->text(nlvcNick);
       }
     }
     // insert nick list to the notify list
@@ -578,19 +578,19 @@ void NicksOnline::processDoubleClick(QTreeWidgetItem* item, int column)
     // Only emit signal when the user double clicked a nickname rather than
     // a server name or channel name.
     if (nickitem->type() == NicksOnlineItem::NicknameItem)
-        emit doubleClicked(nickitem->connectionId(), nickitem->text(0));
+        emit doubleClicked(nickitem->connectionId(), nickitem->text(nlvcNick));
     if (nickitem->type() == NicksOnlineItem::ChannelItem)
     {
       NicksOnlineItem* nickRoot = dynamic_cast<NicksOnlineItem*>(nickitem->parent());
       Server* server = Application::instance()->getConnectionManager()->getServerByConnectionId(nickRoot->connectionId());
-      ChatWindow* channel = server->getChannelByName(nickitem->text(0));
+      ChatWindow* channel = server->getChannelByName(nickitem->text(nlvcChannel));
 
       if (channel)
         emit showView(channel);
       else
       {
         // Get the server object corresponding to the connection id.
-        server->queue( "JOIN "+ nickitem->text(0) );
+        server->queue( "JOIN "+ nickitem->text(nlvcChannel) );
       }
     }
 }
