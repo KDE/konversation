@@ -13,6 +13,7 @@
 
 #include "editnotifydialog.h"
 #include "application.h"
+#include "connectionmanager.h"
 #include "servergroupsettings.h"
 
 #include <QLabel>
@@ -33,12 +34,13 @@ const QString& nickname):
     setDefaultButton( KDialog::Ok );
     QWidget* page = mainWidget();
 
-    QHBoxLayout* layout = new QHBoxLayout(page);
+    QGridLayout* layout = new QGridLayout(page);
 
     QLabel* networkNameLabel=new QLabel(i18n("&Network name:"), page);
     QString networkNameWT = i18n(
         "Pick the server network you will connect to here.");
     networkNameLabel->setWhatsThis(networkNameWT);
+    networkNameLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
     m_networkNameCombo=new KComboBox(page);
     m_networkNameCombo->setWhatsThis(networkNameWT);
     networkNameLabel->setBuddy(m_networkNameCombo);
@@ -47,22 +49,23 @@ const QString& nickname):
     QString nicknameWT = i18n(
         "<qt>The nickname to watch for when connected to a server in the network.</qt>");
     nicknameLabel->setWhatsThis(nicknameWT);
+    nicknameLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
     m_nicknameInput = new KLineEdit(nickname, page);
     m_nicknameInput->setWhatsThis(nicknameWT);
     nicknameLabel->setBuddy(m_nicknameInput);
 
     // Add network names to network combobox and select the one corresponding to argument.
-    Konversation::ServerGroupHash serverNetworks = Preferences::serverGroupHash();
-    QHashIterator<int, Konversation::ServerGroupSettingsPtr> it(serverNetworks);
-    while(it.hasNext())
+    Application* konvApp = dynamic_cast<Application*>(kapp);
+    QList<Server *> serverList = konvApp->getConnectionManager()->getServerList();
+    for (int i = 0; i < serverList.count(); ++i)
     {
-        m_networkNameCombo->addItem(it.value()->name(),it.key());
+      m_networkNameCombo->addItem(serverList.at(i)->getDisplayName(), serverList.at(i)->getServerGroup()->id());
     }
     m_networkNameCombo->setCurrentIndex(m_networkNameCombo->findData(serverGroupId, Qt::UserRole));
-    layout->addWidget(networkNameLabel);
-    layout->addWidget(m_networkNameCombo);
-    layout->addWidget(nicknameLabel);
-    layout->addWidget(m_nicknameInput);
+    layout->addWidget(networkNameLabel, 0, 0);
+    layout->addWidget(m_networkNameCombo, 0, 1);
+    layout->addWidget(nicknameLabel, 1, 0);
+    layout->addWidget(m_nicknameInput, 1, 1);
 
     setButtonGuiItem( KDialog::Ok, KGuiItem(i18n("&OK"),"dialog-ok",i18n("Change notify information")));
     setButtonGuiItem( KDialog::Cancel, KGuiItem(i18n("&Cancel"),"dialog-cancel",i18n("Discards all changes made")));
