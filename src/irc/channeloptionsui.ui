@@ -271,6 +271,19 @@ the Free Software Foundation; either version 2 of the License, or
           <widget class="QLineEdit" name="hostmask"/>
          </item>
          <item>
+          <widget class="QPushButton" name="updateBan">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="toolTip">
+            <string>Update Ban</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item>
           <widget class="QPushButton" name="addBan">
            <property name="enabled">
             <bool>false</bool>
@@ -281,15 +294,8 @@ the Free Software Foundation; either version 2 of the License, or
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
-           <property name="text">
-            <string/>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="updateBan">
-           <property name="enabled">
-            <bool>false</bool>
+           <property name="toolTip">
+            <string>Add Ban</string>
            </property>
            <property name="text">
             <string/>
@@ -306,6 +312,9 @@ the Free Software Foundation; either version 2 of the License, or
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="toolTip">
+            <string>Remove Ban</string>
            </property>
            <property name="text">
             <string/>
