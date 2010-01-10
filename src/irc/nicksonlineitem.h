@@ -14,7 +14,6 @@
 
 #include <QTreeWidget>
 
-
 class NicksOnlineItem : public QTreeWidgetItem
 {
     public:
@@ -22,8 +21,7 @@ class NicksOnlineItem : public QTreeWidgetItem
         {
             NetworkRootItem=0,  // TODO: not used yet
             NicknameItem=1,     // TODO: not used yet
-            ChannelItem=2,      // TODO: not used yet
-            OfflineItem=3       // this item is the "Offline" item
+            ChannelItem=2      // TODO: not used yet
         };
 
         NicksOnlineItem(int type,
@@ -54,14 +52,13 @@ class NicksOnlineItem : public QTreeWidgetItem
         int connectionId() const { return m_connectionId; }
 
         /// Set the nick's offline state as @p state
-        void setOffline (bool state) { m_offline = state; }
+        void setOffline (bool state) { setData(0, Qt::UserRole, state); }
         /// Returns true if the nick is currently offline.
-        bool isOffline () const { return m_offline; }
+        bool isOffline () const { return data(0, Qt::UserRole).toBool(); }
 
     protected:
         int m_type;
         int m_connectionId;
-        bool m_offline;
 };
 
 #endif
