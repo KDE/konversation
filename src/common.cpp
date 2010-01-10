@@ -255,7 +255,7 @@ namespace Konversation
 
                 data.htmlText.replace(pos, urlLen, insertText);
 
-                Application::instance()->storeUrl(fromNick, href);
+                Application::instance()->storeUrl(fromNick, href, QDateTime::currentDateTime());
             }
             else
                 insertText = href + append;

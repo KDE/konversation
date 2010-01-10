@@ -36,7 +36,7 @@ UrlCatcherModel::UrlCatcherModel(QObject* parent) : QAbstractListModel(parent)
 
 bool operator==(const UrlItem& item, const UrlItem& item2)
 {
-    return (item.nick == item2.nick && item.url == item2.url);
+    return (item.nick == item2.nick && item.url == item2.url && item.datetime == item2.datetime);
 }
 
 void UrlCatcherModel::append(const UrlItem& item)
@@ -52,7 +52,7 @@ bool UrlCatcherModel::removeRows(int row, int count, const QModelIndex& parent)
     beginRemoveRows(parent, row, last);
 
     QModelIndex topLeft = parent.sibling(row,0);
-    QModelIndex bottomRight = parent.sibling(last,1);
+    QModelIndex bottomRight = parent.sibling(last,2);
 
     bool success = true;
     for(int i=row; i <= last; i++)
@@ -60,6 +60,7 @@ bool UrlCatcherModel::removeRows(int row, int count, const QModelIndex& parent)
         UrlItem item;
         item.nick = parent.sibling(i,0).data().toString();
         item.url = parent.sibling(i,1).data().toString();
+        item.datetime = parent.sibling(i,2).data().toDateTime();
         if (success)
             success = m_urlList.removeOne(item);
     }
@@ -78,7 +79,7 @@ void UrlCatcherModel::setUrlList(const QList<UrlItem>& list)
 
 int UrlCatcherModel::columnCount(const QModelIndex& /*parent*/) const
 {
-    return 2;
+    return 3;
 }
 
 int UrlCatcherModel::rowCount(const QModelIndex& /*parent*/) const
@@ -101,6 +102,8 @@ QVariant UrlCatcherModel::data(const QModelIndex& index, int role) const
                 return item.nick;
             case 1:
                 return item.url;
+            case 2:
+                return item.datetime;
             default:
                 return QVariant();
         }
@@ -119,6 +122,8 @@ QVariant UrlCatcherModel::headerData (int section, Qt::Orientation orientation, 
             return i18n("From");
         case 1:
             return i18n("URL");
+        case 2:
+            return i18n("Date");
         default:
             return QVariant();
     }
@@ -226,6 +231,7 @@ void UrlCatcher::setUrlList(const QStringList& list)
             UrlItem item;
             item.nick = list.at(i).section(' ',0,0);
             item.url = list.at(i).section(' ',1,1);
+            item.datetime = QDateTime::fromString(list.at(i).section(' ',2,2));
             urlList.append(item);
         }
 
@@ -239,11 +245,12 @@ void UrlCatcher::setUrlList(const QStringList& list)
 
 }
 
-void UrlCatcher::addUrl(const QString& who,const QString& url)
+void UrlCatcher::addUrl(const QString& who,const QString& url, const QDateTime &datetime)
 {
     UrlItem item;
     item.nick = who;
     item.url = url;
+    item.datetime = datetime;
     m_urlListModel->append(item);
 
     m_clear->setEnabled(true);
@@ -325,6 +332,7 @@ void UrlCatcher::deleteUrlClicked()
         UrlItem item;
         item.nick = index.sibling(index.row(), 0).data().toString();
         item.url = index.sibling(index.row(), 1).data().toString();
+        item.datetime = index.sibling(index.row(), 2).data().toDateTime();
 
         m_urlListModel->removeRows(index.row(), 0, index);
         if(!m_urlListModel->rowCount())
