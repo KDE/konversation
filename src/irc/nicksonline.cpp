@@ -581,7 +581,8 @@ void NicksOnline::processDoubleClick(QTreeWidgetItem* item, int column)
         emit doubleClicked(nickitem->connectionId(), nickitem->text(0));
     if (nickitem->type() == NicksOnlineItem::ChannelItem)
     {
-      Server* server = Application::instance()->getConnectionManager()->getServerByConnectionId(nickitem->connectionId());
+      NicksOnlineItem* nickRoot = dynamic_cast<NicksOnlineItem*>(nickitem->parent());
+      Server* server = Application::instance()->getConnectionManager()->getServerByConnectionId(nickRoot->connectionId());
       ChatWindow* channel = server->getChannelByName(nickitem->text(0));
 
       if (channel)
