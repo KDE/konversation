@@ -136,6 +136,9 @@ UrlCatcher::UrlCatcher(QWidget* parent) : ChatWindow(parent)
     m_open->setStatusTip(i18n("Open link in external browser."));
     m_open->setWhatsThis("<p>Select a <b>URL</b> above, then click this button to launch the application associated with the mimetype of the URL.</p>-<p>In the <b>Settings</b>, under <b>Behavior</b> | <b>General</b>, you can specify a custom web browser for web URLs.</p>");
     m_open->setEnabled(false);
+    m_saveLink = m_toolBar->addAction(KIcon("document-save"), i18n("&Save..."), this, SLOT(saveLinkAs()));
+    m_saveLink->setStatusTip(i18n("Save selected link to the disk."));
+    m_saveLink->setEnabled(false);
     m_toolBar->addSeparator();
     m_copy = m_toolBar->addAction(KIcon("edit-copy"), i18nc("copy url","&Copy"), this, SLOT(copyUrlClicked()));
     m_copy->setStatusTip(i18n("Copy link address to the clipboard."));
@@ -154,6 +157,9 @@ UrlCatcher::UrlCatcher(QWidget* parent) : ChatWindow(parent)
     m_clear->setStatusTip(i18n("Clear list."));
     m_clear->setWhatsThis("Click to erase the entire list.");
     m_clear->setEnabled(false);
+    m_toolBar->addSeparator();
+    m_bookmarkLink = m_toolBar->addAction(KIcon("bookmark-new"), i18n("Add Bookmark..."), this, SLOT (bookmarkUrl()));
+    m_bookmarkLink->setEnabled(false);
 
     setupUi(this);
 
@@ -249,14 +255,18 @@ void UrlCatcher::urlSelected(const QItemSelection& selected)
     if(!selected.isEmpty())
     {
         m_open->setEnabled(true);
+        m_saveLink->setEnabled(true);
         m_copy->setEnabled(true);
         m_delete->setEnabled(true);
+        m_bookmarkLink->setEnabled(true);
     }
     else
     {
         m_open->setEnabled(false);
+        m_saveLink->setEnabled(false);
         m_copy->setEnabled(false);
         m_delete->setEnabled(false);
+        m_bookmarkLink->setEnabled(false);
     }
 }
 
@@ -400,13 +410,15 @@ void UrlCatcher::contextMenu(const QPoint& p)
     KMenu* menu = new KMenu(this);
 
     menu->insertAction(0, m_open);
-    menu->addAction(KIcon("document-save"), i18n("Save Link As..."), this, SLOT(saveLinkAs()));
+    menu->insertAction(0, m_saveLink);
     menu->addSeparator();
     menu->insertAction(0, m_copy);
     menu->insertAction(0, m_delete);
     menu->addSeparator();
-    menu->addAction(KIcon("bookmark-new"), i18n("Add to Bookmarks"), this, SLOT (bookmarkUrl()));
-
+    menu->insertAction(0, m_save);
+    menu->insertAction(0, m_clear);
+    menu->addSeparator();
+    menu->insertAction(0, m_bookmarkLink);
     menu->exec(QCursor::pos());
 
     delete menu;

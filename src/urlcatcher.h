@@ -97,9 +97,11 @@ class UrlCatcher : public ChatWindow, private Ui::URLCatcherUI
         QSortFilterProxyModel* m_proxyModel;
         KToolBar *m_toolBar;
         QAction *m_open;
+        QAction *m_saveLink;
         QAction *m_copy;
         QAction *m_delete;
         QAction *m_save;
         QAction *m_clear;
+        QAction *m_bookmarkLink;
 };
 #endif
