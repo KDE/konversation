@@ -105,6 +105,10 @@ class NicksOnline : public ChatWindow
          * Received from popup menu when user chooses something.
          */
         void slotPopupMenu_Activated(QAction* id);
+        /**
+         * Received when user added a new nick to the watched nicks.
+         */
+        void slotAddNickname(int serverGroupId, QString nickname);
 
     protected:
         /** Called from ChatWindow adjustFocus */

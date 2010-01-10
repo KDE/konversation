@@ -20,6 +20,7 @@
 #include "server.h"
 #include "application.h"
 #include "connectionmanager.h"
+#include "editnotifydialog.h"
 #include "images.h"
 #include "query.h"
 #include "linkaddressbook/linkaddressbookui.h"
@@ -686,19 +687,13 @@ void NicksOnline::doCommand(QAction* id)
 
     if ( id == m_addNickname )
     {
-      bool ok;
-      QString nick = QInputDialog::getText(this, tr("Enter nick to watch."), tr("Nick:"), QLineEdit::Normal, QString(), &ok);
-      if (ok && !nick.isEmpty())
-      {
-        // add the new nick
-        NicksOnlineItem *item = new NicksOnlineItem(NicksOnlineItem::NicknameItem, nickitem, nick, QString());
-        // Mark nick as offline
-        item->setOffline(true);
-        // Update icon
-        item->setIcon(nlvcNick, m_offlineIcon);
-        // update notify list
-        updateNotifyList();
-      }
+      NicksOnlineItem *networkRoot = nickitem;
+      while (networkRoot->type() != NicksOnlineItem::NetworkRootItem)
+        networkRoot = dynamic_cast<NicksOnlineItem*>(networkRoot->parent());
+      int serverGroupId = networkRoot->data(0, Qt::UserRole).toInt();
+      EditNotifyDialog *end = new EditNotifyDialog(this, serverGroupId);
+      connect(end, SIGNAL(notifyChanged(int,QString)), this, SLOT(slotAddNickname(int,QString)));
+      end->show();
       return;
     }
     else if ( id == m_removeNickname )
@@ -869,9 +864,11 @@ void NicksOnline::setupToolbarActions(NicksOnlineItem *item)
     m_addNickname->setEnabled(true);
     break;
   case NicksOnlineItem::ChannelItem:
+    m_addNickname->setEnabled(true);
     m_joinChannel->setEnabled(true);
     break;
   case NicksOnlineItem::NicknameItem:
+    m_addNickname->setEnabled(true);
     m_removeNickname->setEnabled(true);
     int nickState = getNickAddressbookState(item);
     if (nickState == nsNoAddress)
@@ -992,6 +989,15 @@ void NicksOnline::slotNickInfoChanged(Server* server, const NickInfoPtr nickInfo
     QString serverName = server->getServerName();
     QTreeWidgetItem* item = getServerAndNickItem(serverName, nickname);
     refreshItem(item);
+}
+
+/**
+ * Received when user added a new nick to the watched nicks.
+ */
+void NicksOnline::slotAddNickname(int serverGroupId, QString nickname)
+{
+  Preferences::addNotify(serverGroupId, nickname);
+  static_cast<Application*>(kapp)->saveOptions(true);
 }
 
 /**
