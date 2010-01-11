@@ -16,11 +16,14 @@
     <verstretch>0</verstretch>
    </sizepolicy>
   </property>
-  <layout class="QFormLayout" name="formLayout">
+  <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
     <widget class="QLabel" name="textLabel12">
      <property name="text">
       <string>Type:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
      <property name="wordWrap">
       <bool>false</bool>
@@ -39,6 +42,9 @@
      <property name="text">
       <string>Filename:</string>
      </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
      <property name="wordWrap">
       <bool>false</bool>
      </property>
@@ -55,6 +61,9 @@
     <widget class="QLabel" name="textLabel23">
      <property name="text">
       <string>Partner:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
      <property name="wordWrap">
       <bool>false</bool>
@@ -73,6 +82,9 @@
      <property name="text">
       <string>Self:</string>
      </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
      <property name="wordWrap">
       <bool>false</bool>
      </property>
@@ -89,6 +101,9 @@
     <widget class="QLabel" name="textLabel10">
      <property name="text">
       <string>Status:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
      <property name="wordWrap">
       <bool>false</bool>
@@ -107,6 +122,9 @@
      <property name="text">
       <string>Progress:</string>
      </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
      <property name="wordWrap">
       <bool>false</bool>
      </property>
@@ -119,6 +137,9 @@
     <widget class="QLabel" name="textLabel3">
      <property name="text">
       <string>Location:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
      <property name="wordWrap">
       <bool>false</bool>
@@ -135,6 +156,19 @@
       </widget>
      </item>
     </layout>
+   </item>
+   <item row="7" column="1">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
    </item>
   </layout>
  </widget>
