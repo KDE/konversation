@@ -75,6 +75,10 @@ Changes since 1.2.1:
   works in the Watched Nicknames Online tab at once.
 * Fixed a bug causing the opening of all bookmarks in a bookmark fol-
   der at once not to work.
+* The ban list interface has seen a facelift. The new way of working
+  with the list makes it very easy to use an existing list entry as
+  a starting point, modify it and then decide between replacing the
+  original ban with the new version or adding it as an additional ban.
 
 
 Changes from 1.2 to 1.2.1:
