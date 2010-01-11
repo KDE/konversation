@@ -20,6 +20,7 @@
 #include "server.h"
 #include "application.h"
 #include "connectionmanager.h"
+#include "editnotifydialog.h"
 #include "images.h"
 #include "query.h"
 #include "linkaddressbook/linkaddressbookui.h"
@@ -43,10 +44,10 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
 
     setSpacing(0);
     m_toolBar = new KToolBar(this, true, true);
-    m_addWatch = m_toolBar->addAction(KIcon("list-add-user"), i18n("&Add Watch..."));
-    m_addWatch->setWhatsThis(i18n("Click to add a new nick to the list of nicknames that appear on this screen."));
-    m_removeWatch = m_toolBar->addAction(KIcon("list-remove-user"), i18n("&Remove Watch"));
-    m_removeWatch->setWhatsThis(i18n("Click to remove a nick from the list of nicknames that appear on this screen."));
+    m_addNickname = m_toolBar->addAction(KIcon("list-add-user"), i18n("&Add Nickname..."));
+    m_addNickname->setWhatsThis(i18n("Click to add a new nick to the list of nicknames that appear on this screen."));
+    m_removeNickname = m_toolBar->addAction(KIcon("list-remove-user"), i18n("&Remove Nickname"));
+    m_removeNickname->setWhatsThis(i18n("Click to remove a nick from the list of nicknames that appear on this screen."));
     m_toolBar->addSeparator();
     m_newContact = m_toolBar->addAction(KIcon("contact-new"), i18n("Create New C&ontact..."));
     m_editContact = m_toolBar->addAction(KIcon("document-edit"), i18n("Edit C&ontact..."));
@@ -198,7 +199,7 @@ QTreeWidgetItem* NicksOnline::findItemType(const QTreeWidgetItem* parent, NicksO
 
 /**
  * Returns a pointer to the network QListViewItem with the given name.
- * @param name              The name of the network, assumed to be in column 0 of the item.
+ * @param name              The name of the network.
  * @return                  Pointer to the QListViewItem or 0 if not found.
  */
 QTreeWidgetItem* NicksOnline::findNetworkRoot(const QString& name)
@@ -206,7 +207,7 @@ QTreeWidgetItem* NicksOnline::findNetworkRoot(const QString& name)
     for (int i = 0; i < m_nickListView->invisibleRootItem()->childCount(); ++i)
     {
         QTreeWidgetItem* child = m_nickListView->invisibleRootItem()->child(i);
-        if (child->text(0) == name) return child;
+        if (child->text(nlvcNetwork) == name) return child;
     }
     return 0;
 }
@@ -494,7 +495,7 @@ void NicksOnline::updateNotifyList()
       if (item->type() == NicksOnlineItem::NicknameItem)
       {
         // add the nick to the list
-        nicks << item->text(0);
+        nicks << item->text(nlvcNick);
       }
     }
     // insert nick list to the notify list
@@ -574,13 +575,24 @@ void NicksOnline::processDoubleClick(QTreeWidgetItem* item, int column)
 
     if (!nickitem || nickitem->isOffline())
         return;
-
     // Only emit signal when the user double clicked a nickname rather than
     // a server name or channel name.
-    QString serverName;
-    QString nickname;
-    if (getItemServerAndNick(item, serverName, nickname))
-        emit doubleClicked(nickitem->connectionId(), nickname);
+    if (nickitem->type() == NicksOnlineItem::NicknameItem)
+        emit doubleClicked(nickitem->connectionId(), nickitem->text(nlvcNick));
+    if (nickitem->type() == NicksOnlineItem::ChannelItem)
+    {
+      NicksOnlineItem* nickRoot = dynamic_cast<NicksOnlineItem*>(nickitem->parent());
+      Server* server = Application::instance()->getConnectionManager()->getServerByConnectionId(nickRoot->connectionId());
+      ChatWindow* channel = server->getChannelByName(nickitem->text(nlvcChannel));
+
+      if (channel)
+        emit showView(channel);
+      else
+      {
+        // Get the server object corresponding to the connection id.
+        server->queue( "JOIN "+ nickitem->text(nlvcChannel) );
+      }
+    }
 }
 
 /**
@@ -674,24 +686,18 @@ void NicksOnline::doCommand(QAction* id)
     if(!nickitem)
         return;
 
-    if ( id == m_addWatch )
+    if ( id == m_addNickname )
     {
-      bool ok;
-      QString nick = QInputDialog::getText(this, tr("Enter nick to watch."), tr("Nick:"), QLineEdit::Normal, QString(), &ok);
-      if (ok && !nick.isEmpty())
-      {
-        // add the new nick
-        NicksOnlineItem *item = new NicksOnlineItem(NicksOnlineItem::NicknameItem, nickitem, nick, QString());
-        // Mark nick as offline
-        item->setOffline(true);
-        // Update icon
-        item->setIcon(nlvcNick, m_offlineIcon);
-        // update notify list
-        updateNotifyList();
-      }
+      NicksOnlineItem *networkRoot = nickitem;
+      while (networkRoot->type() != NicksOnlineItem::NetworkRootItem)
+        networkRoot = dynamic_cast<NicksOnlineItem*>(networkRoot->parent());
+      int serverGroupId = networkRoot->data(0, Qt::UserRole).toInt();
+      EditNotifyDialog *end = new EditNotifyDialog(this, serverGroupId);
+      connect(end, SIGNAL(notifyChanged(int,QString)), this, SLOT(slotAddNickname(int,QString)));
+      end->show();
       return;
     }
-    else if ( id == m_removeWatch )
+    else if ( id == m_removeNickname )
     {
       // remove watch from the tree widget
       delete nickitem;
@@ -838,8 +844,8 @@ int NicksOnline::getNickAddressbookState(QTreeWidgetItem* item)
 void NicksOnline::setupToolbarActions(NicksOnlineItem *item)
 {
   // disable all actions
-  m_addWatch->setEnabled(false);
-  m_removeWatch->setEnabled(false);
+  m_addNickname->setEnabled(false);
+  m_removeNickname->setEnabled(false);
   m_newContact->setEnabled(false);
   m_editContact->setEnabled(false);
   m_chooseAssociation->setEnabled(false);
@@ -856,13 +862,15 @@ void NicksOnline::setupToolbarActions(NicksOnlineItem *item)
   switch (item->type())
   {
   case NicksOnlineItem::NetworkRootItem:
-    m_addWatch->setEnabled(true);
+    m_addNickname->setEnabled(true);
     break;
   case NicksOnlineItem::ChannelItem:
+    m_addNickname->setEnabled(true);
     m_joinChannel->setEnabled(true);
     break;
   case NicksOnlineItem::NicknameItem:
-    m_removeWatch->setEnabled(true);
+    m_addNickname->setEnabled(true);
+    m_removeNickname->setEnabled(true);
     int nickState = getNickAddressbookState(item);
     if (nickState == nsNoAddress)
     {
@@ -900,13 +908,13 @@ void NicksOnline::setupPopupMenuActions(NicksOnlineItem *item)
   switch (item->type())
   {
   case NicksOnlineItem::NetworkRootItem:
-    m_popupMenu->insertAction(0, m_addWatch);
+    m_popupMenu->insertAction(0, m_addNickname);
     break;
   case NicksOnlineItem::ChannelItem:
     m_popupMenu->insertAction(0, m_joinChannel);
     break;
   case NicksOnlineItem::NicknameItem:
-    m_popupMenu->insertAction(0, m_removeWatch);
+    m_popupMenu->insertAction(0, m_removeNickname);
     int nickState = getNickAddressbookState(item);
     if (nickState == nsNoAddress)
     {
@@ -982,6 +990,15 @@ void NicksOnline::slotNickInfoChanged(Server* server, const NickInfoPtr nickInfo
     QString serverName = server->getServerName();
     QTreeWidgetItem* item = getServerAndNickItem(serverName, nickname);
     refreshItem(item);
+}
+
+/**
+ * Received when user added a new nick to the watched nicks.
+ */
+void NicksOnline::slotAddNickname(int serverGroupId, QString nickname)
+{
+  Preferences::addNotify(serverGroupId, nickname);
+  static_cast<Application*>(kapp)->saveOptions(true);
 }
 
 /**
