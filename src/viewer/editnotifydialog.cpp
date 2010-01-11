@@ -55,7 +55,7 @@ const QString& nickname):
     nicknameLabel->setBuddy(m_nicknameInput);
 
     // Add network names to network combobox and select the one corresponding to argument.
-    m_networkNameCombo->addItem(i18nc("all networks", "All Networks"), -1);
+    m_networkNameCombo->addItem(i18n("All Networks"), -1);
     QList<Server *> serverList = Application::instance()->getConnectionManager()->getServerList();
     for (int i = 0; i < serverList.count(); ++i)
     {

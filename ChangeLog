@@ -71,6 +71,8 @@ Changes since 1.2.1:
   to go to the config dialog.
 * Fixed a bug that would cause the "Choose Association" KDE address
   book integration action to create a new contact in the address book.
+* It's now possible to add a nickname to the watch list of all net-
+  works in the Watched Nicknames Online tab at once.
 
 
 Changes from 1.2 to 1.2.1:
