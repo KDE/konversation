@@ -39,6 +39,7 @@ QuickConnectDialog::QuickConnectDialog(QWidget *parent)
     hostNameInput = new KLineEdit(page);
     hostNameInput->setWhatsThis(hostNameWT);
     hostNameLabel->setBuddy(hostNameInput);
+    hostNameLabel->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
     QLabel* portLabel = new QLabel(i18n("&Port:"), page);
     QString portWT = i18n("The port that the IRC server is using.");
@@ -46,6 +47,7 @@ QuickConnectDialog::QuickConnectDialog(QWidget *parent)
     portInput = new KLineEdit("6667", page );
     portInput->setWhatsThis(portWT);
     portLabel->setBuddy(portInput);
+    portLabel->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
     QLabel* nickLabel = new QLabel(i18n("&Nick:"), page);
     QString nickWT = i18n("The nick you want to use.");
@@ -53,6 +55,7 @@ QuickConnectDialog::QuickConnectDialog(QWidget *parent)
     nickInput = new KLineEdit(Preferences::nickname(0), page);
     nickInput->setWhatsThis(nickWT);
     nickLabel->setBuddy(nickInput);
+    nickLabel->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
     QLabel* passwordLabel = new QLabel(i18n("P&assword:"), page);
     QString passwordWT = i18n("If the IRC server requires a password, enter it here (most servers do not require a password.)");
@@ -61,6 +64,7 @@ QuickConnectDialog::QuickConnectDialog(QWidget *parent)
     passwordInput->setPasswordMode(true);
     passwordInput->setWhatsThis(passwordWT);
     passwordLabel->setBuddy(passwordInput);
+    passwordLabel->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
     sslCheckBox = new QCheckBox(page);
     sslCheckBox->setObjectName("sslCheckBox");
