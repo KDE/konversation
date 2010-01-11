@@ -425,6 +425,8 @@ namespace Konversation
         BanListViewItem *item = new BanListViewItem(m_ui.banList, newban.section(' ', 0, 0), newban.section(' ', 1, 1).section('!', 0, 0), newban.section(' ', 2 ,2).toUInt());
         // set item as current item
         m_ui.banList->setCurrentItem(item);
+        // update button states
+        hostmaskChanged(m_ui.hostmask->text());
     }
 
     void ChannelOptionsDialog::removeBan(const QString& ban)
