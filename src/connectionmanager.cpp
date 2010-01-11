@@ -112,11 +112,11 @@ void ConnectionManager::connectTo(Konversation::ConnectionFlag flag, const QList
                          cs.serverGroup()->name():
                          (cs.server().host()+':'+cs.server().port()) );
 
-        serverChannels[sname] += cs.oneShotChannelList();
         if (!serverChannels.contains(sname))
         {
             serverConnections[sname] = cs;
         }
+        serverChannels[sname] += cs.oneShotChannelList();
     }
 
     // Perform the connection
