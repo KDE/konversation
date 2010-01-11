@@ -73,7 +73,8 @@ namespace Konversation
         connect(m_ui.addBan, SIGNAL(clicked()), this, SLOT(addBanClicked()));
         connect(m_ui.updateBan, SIGNAL(clicked()), this, SLOT(updateBanClicked()));
         connect(m_ui.removeBan, SIGNAL(clicked()), this, SLOT(removeBanClicked()));
-        connect(m_ui.banList, SIGNAL(itemSelectionChanged()), this, SLOT(refreshButtons()));
+        connect(m_ui.banList, SIGNAL(itemSelectionChanged()), this, SLOT(banSelectionChanged()));
+        connect(m_ui.hostmask, SIGNAL(textChanged(QString)), this, SLOT(hostmaskChanged(QString)));
 
         m_ui.topicModeChBox->setWhatsThis(whatsThisForMode('T'));
         m_ui.messageModeChBox->setWhatsThis(whatsThisForMode('N'));
@@ -217,28 +218,27 @@ namespace Konversation
     {
         if(m_channel->getOwnChannelNick()->isChanged() || forceUpdate)
         {
-            bool enable = m_channel->getOwnChannelNick()->isAnyTypeOfOp();
-            m_ui.otherModesList->setEnabled(enable);
-            m_ui.topicEdit->setReadOnly(!enable && m_ui.topicModeChBox->isChecked());
+            // cache the value
+            m_isAnyTypeOfOp = m_channel->getOwnChannelNick()->isAnyTypeOfOp();
+            m_ui.otherModesList->setEnabled(m_isAnyTypeOfOp);
+            m_ui.topicEdit->setReadOnly(!m_isAnyTypeOfOp && m_ui.topicModeChBox->isChecked());
 
-            m_ui.topicModeChBox->setEnabled(enable);
-            m_ui.messageModeChBox->setEnabled(enable);
-            m_ui.userLimitChBox->setEnabled(enable);
-            m_ui.userLimitEdit->setEnabled(enable);
-            m_ui.inviteModeChBox->setEnabled(enable);
-            m_ui.moderatedModeChBox->setEnabled(enable);
-            m_ui.secretModeChBox->setEnabled(enable);
-            m_ui.keyModeChBox->setEnabled(enable);
-            m_ui.keyModeEdit->setEnabled(enable);
-            m_ui.hostmask->setEnabled(enable);
-            m_ui.addBan->setEnabled(enable);
-            m_ui.updateBan->setEnabled(enable);
-            m_ui.removeBan->setEnabled(enable);
-        }
-        if (!m_ui.banList->currentItem())
-        {
-          m_ui.updateBan->setEnabled(false);
-          m_ui.removeBan->setEnabled(false);
+            m_ui.topicModeChBox->setEnabled(m_isAnyTypeOfOp);
+            m_ui.messageModeChBox->setEnabled(m_isAnyTypeOfOp);
+            m_ui.userLimitChBox->setEnabled(m_isAnyTypeOfOp);
+            m_ui.userLimitEdit->setEnabled(m_isAnyTypeOfOp);
+            m_ui.inviteModeChBox->setEnabled(m_isAnyTypeOfOp);
+            m_ui.moderatedModeChBox->setEnabled(m_isAnyTypeOfOp);
+            m_ui.secretModeChBox->setEnabled(m_isAnyTypeOfOp);
+            m_ui.keyModeChBox->setEnabled(m_isAnyTypeOfOp);
+            m_ui.keyModeEdit->setEnabled(m_isAnyTypeOfOp);
+            m_ui.hostmask->setEnabled(m_isAnyTypeOfOp);
+            m_ui.addBan->setEnabled(m_isAnyTypeOfOp);
+            m_ui.updateBan->setEnabled(m_isAnyTypeOfOp);
+            m_ui.removeBan->setEnabled(m_isAnyTypeOfOp);
+
+            banSelectionChanged();
+            hostmaskChanged(m_ui.hostmask->text());
         }
     }
 
@@ -468,13 +468,39 @@ namespace Konversation
         m_channel->getServer()->requestBan(QStringList(newHostmask), m_channel->getName(), QString());
       }
     }
-    void ChannelOptionsDialog::refreshButtons()
+    /// Enables/disables updateBan and removeBan buttons depending on the currentItem of the banList
+    void ChannelOptionsDialog::banSelectionChanged()
     {
-      // refresh button enable modes
-      refreshEnableModes(true);
-      // update line edit content
       if (m_ui.banList->currentItem())
+      {
+        m_ui.updateBan->setEnabled(m_isAnyTypeOfOp);
+        m_ui.removeBan->setEnabled(m_isAnyTypeOfOp);
+        // update line edit content
         m_ui.hostmask->setText(m_ui.banList->currentItem()->text(0));
+      }
+      else
+      {
+        m_ui.updateBan->setEnabled(false);
+        m_ui.removeBan->setEnabled(false);
+      }
+    }
+    /// Enables/disables addBan and updateBan buttons depending on the value of @p text
+    void ChannelOptionsDialog::hostmaskChanged(QString text)
+    {
+      if (text.trimmed().length() != 0)
+      {
+        if (m_isAnyTypeOfOp)
+        {
+          QList<QTreeWidgetItem*> items = m_ui.banList->findItems(text, Qt::MatchExactly | Qt::MatchCaseSensitive, 0);
+          m_ui.addBan->setEnabled(items.count() == 0);
+          m_ui.updateBan->setEnabled(items.count() == 0 && m_ui.banList->currentItem());
+        }
+      }
+      else
+      {
+        m_ui.addBan->setEnabled(false);
+        m_ui.updateBan->setEnabled(false);
+      }
     }
     // This is our implementation of BanListViewItem
 

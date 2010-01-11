@@ -56,7 +56,8 @@ namespace Konversation
             void updateBanClicked();
             void removeBan(const QString& ban);
             void removeBanClicked();
-            void refreshButtons();
+            void banSelectionChanged();
+            void hostmaskChanged(QString);
 
             void changeOptions();
 
@@ -66,6 +67,7 @@ namespace Konversation
 
         protected:
             bool m_editingTopic;
+            bool m_isAnyTypeOfOp;
 
         private:
             Ui::ChannelOptionsUI m_ui;
