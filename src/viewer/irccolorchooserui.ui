@@ -1,7 +1,8 @@
-<ui version="4.0" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
  <class>IRCColorChooserUI</class>
- <widget class="QWidget" name="IRCColorChooserUI" >
-  <property name="geometry" >
+ <widget class="QWidget" name="IRCColorChooserUI">
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
@@ -9,130 +10,136 @@
     <height>126</height>
    </rect>
   </property>
-  <layout class="QGridLayout" >
-   <property name="margin" >
+  <layout class="QGridLayout">
+   <property name="margin">
     <number>0</number>
    </property>
-   <item row="2" column="0" colspan="2" >
-    <widget class="QLabel" name="m_previewLbl" >
-     <property name="toolTip" >
+   <item row="2" column="0" colspan="2">
+    <widget class="QLabel" name="m_previewLbl">
+     <property name="toolTip">
       <string>This is how your message will look with these colors</string>
      </property>
-     <property name="whatsThis" >
-      <string>&lt;qt>This is a preview of how your readers may see view your message if you select these colors.&lt;br>
-&lt;b>Note: Not all clients support this, and some users may have chosen to ignore your color changes.&lt;/b>
-&lt;/qt></string>
+     <property name="whatsThis">
+      <string>&lt;qt&gt;This is a preview of how your readers may see view your message if you select these colors.&lt;br&gt;
+&lt;b&gt;Note: Not all clients support this, and some users may have chosen to ignore your color changes.&lt;/b&gt;
+&lt;/qt&gt;</string>
      </property>
-     <property name="frameShape" >
+     <property name="frameShape">
       <enum>QFrame::Panel</enum>
      </property>
-     <property name="frameShadow" >
+     <property name="frameShadow">
       <enum>QFrame::Sunken</enum>
      </property>
-     <property name="text" >
+     <property name="text">
       <string>Preview</string>
      </property>
-     <property name="alignment" >
+     <property name="alignment">
       <set>Qt::AlignCenter</set>
      </property>
-     <property name="wordWrap" >
+     <property name="wordWrap">
       <bool>false</bool>
      </property>
     </widget>
    </item>
-   <item row="0" column="1" >
-    <widget class="KComboBox" name="m_fgColorCBox" >
-     <property name="sizePolicy" >
-      <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
+   <item row="0" column="1">
+    <widget class="KComboBox" name="m_fgColorCBox">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <property name="toolTip" >
+     <property name="toolTip">
       <string>The chosen text color is added to the input line.</string>
      </property>
-     <property name="whatsThis" >
-      <string>&lt;qt>Here you choose what color you want you the text in the next message you send to be.  If you choose a color and click Ok, the chosen color is added to the Input Line.  Any text written after this will be in the chosen color, until you change the color again.&lt;br>
-&lt;b>Note:  Not all users turn on the option to see this.&lt;/b>&lt;/qt></string>
+     <property name="whatsThis">
+      <string>&lt;qt&gt;Here you choose what color you want you the text in the next message you send to be.  If you choose a color and click Ok, the chosen color is added to the Input Line.  Any text written after this will be in the chosen color, until you change the color again.&lt;br&gt;
+&lt;b&gt;Note:  Not all users turn on the option to see this.&lt;/b&gt;&lt;/qt&gt;</string>
      </property>
     </widget>
    </item>
-   <item row="0" column="0" >
-    <widget class="QLabel" name="m_fgColorLbl" >
-     <property name="sizePolicy" >
-      <sizepolicy vsizetype="Preferred" hsizetype="Maximum" >
+   <item row="0" column="0">
+    <widget class="QLabel" name="m_fgColorLbl">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <property name="toolTip" >
+     <property name="toolTip">
       <string>The chosen text color is added to the input line.</string>
      </property>
-     <property name="whatsThis" >
-      <string>&lt;qt>Here you choose what color you want you the text in the next message you send to be.  If you choose a color and click Ok, the chosen color is added to the Input Line.  Any text written after this will be in the chosen color, until you change the color again.&lt;br>
-&lt;b>Note:  Not all users turn on the option to see this.&lt;/b>&lt;/qt></string>
+     <property name="whatsThis">
+      <string>&lt;qt&gt;Here you choose what color you want you the text in the next message you send to be.  If you choose a color and click Ok, the chosen color is added to the Input Line.  Any text written after this will be in the chosen color, until you change the color again.&lt;br&gt;
+&lt;b&gt;Note:  Not all users turn on the option to see this.&lt;/b&gt;&lt;/qt&gt;</string>
      </property>
-     <property name="text" >
+     <property name="text">
       <string>&amp;Foreground color:</string>
      </property>
-     <property name="wordWrap" >
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+     <property name="wordWrap">
       <bool>false</bool>
      </property>
-     <property name="buddy" >
+     <property name="buddy">
       <cstring>m_fgColorCBox</cstring>
      </property>
     </widget>
    </item>
-   <item row="1" column="1" >
-    <widget class="KComboBox" name="m_bgColorCBox" >
-     <property name="enabled" >
+   <item row="1" column="1">
+    <widget class="KComboBox" name="m_bgColorCBox">
+     <property name="enabled">
       <bool>true</bool>
      </property>
-     <property name="sizePolicy" >
-      <sizepolicy vsizetype="Fixed" hsizetype="Preferred" >
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <property name="toolTip" >
+     <property name="toolTip">
       <string>The chosen text-background color is added to the input line.</string>
      </property>
-     <property name="whatsThis" >
-      <string>&lt;qt>Here you choose what color you want you background for the text in the next message you send to be.
+     <property name="whatsThis">
+      <string>&lt;qt&gt;Here you choose what color you want you background for the text in the next message you send to be.
 If you choose a color and click Ok, the chosen color is added to the Input Line.
-Any text written after this will have the chosen color, until you change the color again.&lt;br>
-Choosing the default "&lt;i>None&lt;/i>" will not change the background color of your message, so your readers will view your message with their normal background text color.&lt;br>
-&lt;b>Note:  Not all clients support this, and not all users turn on the option to see this.&lt;/b>&lt;/qt></string>
+Any text written after this will have the chosen color, until you change the color again.&lt;br&gt;
+Choosing the default &quot;&lt;i&gt;None&lt;/i&gt;&quot; will not change the background color of your message, so your readers will view your message with their normal background text color.&lt;br&gt;
+&lt;b&gt;Note:  Not all clients support this, and not all users turn on the option to see this.&lt;/b&gt;&lt;/qt&gt;</string>
      </property>
     </widget>
    </item>
-   <item row="1" column="0" >
-    <widget class="QLabel" name="m_bgColorLbl" >
-     <property name="toolTip" >
+   <item row="1" column="0">
+    <widget class="QLabel" name="m_bgColorLbl">
+     <property name="toolTip">
       <string>The chosen text-background color is added to the input line.</string>
      </property>
-     <property name="whatsThis" >
-      <string>&lt;qt>Here you choose what color you want you background for the text in the next message you send to be.
+     <property name="whatsThis">
+      <string>&lt;qt&gt;Here you choose what color you want you background for the text in the next message you send to be.
 If you choose a color and click Ok, the chosen color is added to the Input Line.
-Any text written after this will have the chosen color, until you change the color again.&lt;br>
-Choosing the default "&lt;i>None&lt;/i>" will not change the background color of your message, so your readers will view your message with their normal background text color.&lt;br>
-&lt;b>Note:  Not all clients support this, and not all users turn on the option to see this.&lt;/b>&lt;/qt></string>
+Any text written after this will have the chosen color, until you change the color again.&lt;br&gt;
+Choosing the default &quot;&lt;i&gt;None&lt;/i&gt;&quot; will not change the background color of your message, so your readers will view your message with their normal background text color.&lt;br&gt;
+&lt;b&gt;Note:  Not all clients support this, and not all users turn on the option to see this.&lt;/b&gt;&lt;/qt&gt;</string>
      </property>
-     <property name="text" >
+     <property name="text">
       <string>&amp;Background color:</string>
      </property>
-     <property name="wordWrap" >
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+     <property name="wordWrap">
       <bool>false</bool>
      </property>
-     <property name="buddy" >
+     <property name="buddy">
       <cstring>m_bgColorCBox</cstring>
      </property>
     </widget>
    </item>
   </layout>
  </widget>
- <layoutdefault spacing="6" margin="11" />
- <layoutfunction spacing="KDialog::spacingHint" margin="KDialog::marginHint" />
+ <layoutdefault spacing="6" margin="11"/>
+ <layoutfunction spacing="KDialog::spacingHint" margin="KDialog::marginHint"/>
  <customwidgets>
   <customwidget>
    <class>KComboBox</class>
@@ -141,8 +148,8 @@ Choosing the default "&lt;i>None&lt;/i>" will not change the background color of
   </customwidget>
  </customwidgets>
  <includes>
-  <include location="local" >kcombobox.h</include>
-  <include location="local" >kcombobox.h</include>
+  <include location="local">kcombobox.h</include>
+  <include location="local">kcombobox.h</include>
  </includes>
  <resources/>
  <connections/>
