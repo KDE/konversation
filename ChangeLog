@@ -73,6 +73,8 @@ Changes since 1.2.1:
   book integration action to create a new contact in the address book.
 * It's now possible to add a nickname to the watch list of all net-
   works in the Watched Nicknames Online tab at once.
+* Fixed a bug causing the opening of all bookmarks in a bookmark fol-
+  der at once not to work.
 
 
 Changes from 1.2 to 1.2.1:
