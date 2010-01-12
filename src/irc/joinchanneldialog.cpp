@@ -33,8 +33,9 @@ namespace Konversation
         m_ui.networkNameCombo->setFocus();
         // Add network names to network combobox and select the one corresponding to argument.
         QList<Server *> serverList = Application::instance()->getConnectionManager()->getServerList();
-        for (int i = 0; i < serverList.count(); ++i)
-          m_ui.networkNameCombo->addItem(serverList.at(i)->getDisplayName(), serverList.at(i)->connectionId());
+        foreach (Server *server, serverList)
+          m_ui.networkNameCombo->addItem(i18nc("network (nickname)", "%1 (%2)", server->getDisplayName(), server->getNickname()),
+                                         server->connectionId());
         if (m_server->getServerGroup())
         {
             // Preselect the current network
