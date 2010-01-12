@@ -112,6 +112,11 @@ the Free Software Foundation; either version 2 of the License, or
    <header>khistorycombobox.h</header>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>networkNameCombo</tabstop>
+  <tabstop>channelCombo</tabstop>
+  <tabstop>passwordEdit</tabstop>
+ </tabstops>
  <includes>
   <include location="local">kcombobox.h</include>
   <include location="local">klineedit.h</include>
