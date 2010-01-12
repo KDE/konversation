@@ -34,8 +34,11 @@ namespace Konversation
         // Add network names to network combobox and select the one corresponding to argument.
         QList<Server *> serverList = Application::instance()->getConnectionManager()->getServerList();
         foreach (Server *server, serverList)
+        {
           m_ui.networkNameCombo->addItem(i18nc("network (nickname)", "%1 (%2)", server->getDisplayName(), server->getNickname()),
                                          server->connectionId());
+          connect(server, SIGNAL(nicknameChanged(QString)), this, SLOT(slotNicknameChanged(QString)));
+        }
         if (m_server->getServerGroup())
         {
             // Preselect the current network
@@ -106,6 +109,18 @@ namespace Konversation
             m_server->getServerGroup()->appendChannelHistory(ChannelSettings(channel(), password()));
 
         accept();
+    }
+
+    void JoinChannelDialog::slotNicknameChanged(QString nickname)
+    {
+      Q_UNUSED(nickname);
+      // Update all items
+      QList<Server *> serverList = Application::instance()->getConnectionManager()->getServerList();
+      foreach (Server *server, serverList)
+      {
+        int index = m_ui.networkNameCombo->findData(server->connectionId());
+        m_ui.networkNameCombo->setItemText(index, i18nc("network (nickname)", "%1 (%2)", server->getDisplayName(), server->getNickname()));
+      }
     }
 
 }

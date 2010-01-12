@@ -36,6 +36,7 @@ namespace Konversation
 
         protected slots:
             virtual void slotOk();
+            void slotNicknameChanged(QString nickname);
 
         private:
             Ui::JoinChannelUI m_ui;
