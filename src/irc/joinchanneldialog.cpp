@@ -10,6 +10,8 @@
 */
 
 #include "joinchanneldialog.h"
+#include "application.h"
+#include "connectionmanager.h"
 #include "server.h"
 #include "channel.h"
 #include "servergroupsettings.h"
@@ -28,11 +30,17 @@ namespace Konversation
         setModal( true );
         m_server = server;
         m_ui.setupUi(mainWidget());
-        m_ui.channelCombo->setFocus();
-        m_ui.serverLbl->setText(server->getDisplayName());
-
+        m_ui.networkNameCombo->setFocus();
+        // Add network names to network combobox and select the one corresponding to argument.
+        QList<Server *> serverList = Application::instance()->getConnectionManager()->getServerList();
+        for (int i = 0; i < serverList.count(); ++i)
+        {
+          m_ui.networkNameCombo->addItem(serverList.at(i)->getDisplayName(), serverList.at(i)->getServerGroup()->id());
+        }
         if (m_server->getServerGroup())
         {
+            // Preselect the current network
+            m_ui.networkNameCombo->setCurrentIndex(m_ui.networkNameCombo->findData(m_server->getServerGroup()->id(), Qt::UserRole));
             ChannelList history = server->getServerGroup()->channelHistory();
             ChannelList::iterator endIt = history.end();
             const QList<Channel *> &channels = server->getChannelList();
@@ -68,6 +76,11 @@ namespace Konversation
 
     JoinChannelDialog::~JoinChannelDialog()
     {
+    }
+
+    QString JoinChannelDialog::network() const
+    {
+      return m_ui.networkNameCombo->currentText();
     }
 
     QString JoinChannelDialog::channel() const

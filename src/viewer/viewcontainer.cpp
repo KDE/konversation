@@ -10,6 +10,7 @@
 */
 
 #include "viewcontainer.h"
+#include "connectionmanager.h"
 #include "queuetuner.h"
 #include "viewtree.h"
 #include "application.h"
@@ -2257,6 +2258,9 @@ void ViewContainer::showJoinChannelDialog()
 
     if (dlg->exec() == QDialog::Accepted)
     {
+        Server *server = Application::instance()->getConnectionManager()->getServerByName(dlg->network());
+        if (!server)
+          return;
         server->sendJoinCommand(dlg->channel(), dlg->password());
     }
     delete dlg;
