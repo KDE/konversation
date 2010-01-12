@@ -73,127 +73,119 @@ the Free Software Foundation; either version 2 of the License, or
       <attribute name="title">
        <string>Mo&amp;des</string>
       </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_4">
-       <item>
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="0" column="0" colspan="4">
         <widget class="QCheckBox" name="topicModeChBox">
          <property name="text">
           <string>&amp;Topic can only be changed by channel operators</string>
          </property>
         </widget>
        </item>
-       <item>
+       <item row="1" column="0" colspan="4">
         <widget class="QCheckBox" name="messageModeChBox">
          <property name="text">
           <string>&amp;No messages from outside the channel</string>
          </property>
         </widget>
        </item>
-       <item>
+       <item row="2" column="0" colspan="4">
         <widget class="QCheckBox" name="secretModeChBox">
          <property name="text">
           <string>&amp;Secret channel, the channel is not listed in the channel list</string>
          </property>
         </widget>
        </item>
-       <item>
+       <item row="3" column="0" colspan="4">
         <widget class="QCheckBox" name="inviteModeChBox">
          <property name="text">
           <string>Only &amp;invited are allowed to join the channel</string>
          </property>
         </widget>
        </item>
-       <item>
+       <item row="4" column="0" colspan="4">
         <widget class="QCheckBox" name="moderatedModeChBox">
          <property name="text">
           <string>&amp;Moderated channel, only people with voice can write to the channel</string>
          </property>
         </widget>
        </item>
-       <item>
-        <layout class="QGridLayout">
-         <item row="1" column="0">
-          <widget class="QCheckBox" name="keyModeChBox">
-           <property name="text">
-            <string>Channel &amp;password:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="KIntNumInput" name="userLimitEdit">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="minimum">
-            <number>0</number>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="0">
-          <widget class="QCheckBox" name="userLimitChBox">
-           <property name="text">
-            <string>User &amp;limit:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="2">
-          <spacer name="spacer10">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeType">
-            <enum>QSizePolicy::Expanding</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>211</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item row="1" column="1" colspan="2">
-          <widget class="KLineEdit" name="keyModeEdit">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-          </widget>
-         </item>
-        </layout>
+       <item row="5" column="0">
+        <widget class="QCheckBox" name="userLimitChBox">
+         <property name="text">
+          <string>User &amp;limit:</string>
+         </property>
+        </widget>
        </item>
-       <item>
-        <layout class="QHBoxLayout">
-         <item>
-          <widget class="QPushButton" name="toggleAdvancedModes">
-           <property name="text">
-            <string>Show &amp;Advanced Modes &gt;&gt;</string>
-           </property>
-           <property name="shortcut">
-            <string>Alt+A, Backspace, Tab, Backspace</string>
-           </property>
-           <property name="checkable">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="spacer3">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeType">
-            <enum>QSizePolicy::Expanding</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>301</width>
-             <height>31</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-        </layout>
+       <item row="5" column="1" colspan="2">
+        <widget class="KIntNumInput" name="userLimitEdit">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="minimum">
+          <number>0</number>
+         </property>
+        </widget>
        </item>
-       <item>
+       <item row="5" column="3">
+        <spacer name="spacer10">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Expanding</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>207</width>
+           <height>23</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="6" column="0">
+        <widget class="QCheckBox" name="keyModeChBox">
+         <property name="text">
+          <string>Channel &amp;password:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="1" colspan="3">
+        <widget class="KLineEdit" name="keyModeEdit">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="0" colspan="2">
+        <widget class="QPushButton" name="toggleAdvancedModes">
+         <property name="text">
+          <string>Show &amp;Advanced Modes &gt;&gt;</string>
+         </property>
+         <property name="shortcut">
+          <string>Alt+A, Backspace, Tab, Backspace</string>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="2" colspan="2">
+        <spacer name="spacer3">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Expanding</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>301</width>
+           <height>31</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="8" column="0" colspan="4">
         <widget class="QTreeView" name="otherModesList">
          <property name="rootIsDecorated">
           <bool>false</bool>
@@ -202,6 +194,19 @@ the Free Software Foundation; either version 2 of the License, or
           <bool>true</bool>
          </property>
         </widget>
+       </item>
+       <item row="8" column="4">
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>1</width>
+           <height>112</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </widget>
