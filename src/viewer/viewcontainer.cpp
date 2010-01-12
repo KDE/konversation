@@ -2084,8 +2084,8 @@ void ViewContainer::addUrlCatcher()
         m_urlCatcherPanel=new UrlCatcher(m_tabWidget);
         addView(m_urlCatcherPanel, i18n("URL Catcher"));
         Application *konvApp=static_cast<Application *>(KApplication::kApplication());
-        connect(konvApp,SIGNAL(catchUrl(const QString&,const QString&)),
-            m_urlCatcherPanel, SLOT(addUrl(const QString&,const QString&)) );
+        connect(konvApp,SIGNAL(catchUrl(const QString&,const QString&,const QDateTime&)),
+            m_urlCatcherPanel, SLOT(addUrl(const QString&,const QString&,const QDateTime&)) );
         connect(m_urlCatcherPanel, SIGNAL(deleteUrl(const QString&,const QString&)),
             konvApp, SLOT(deleteUrl(const QString&,const QString&)) );
         connect(m_urlCatcherPanel, SIGNAL(clearUrlList()),

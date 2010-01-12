@@ -36,7 +36,7 @@ UrlCatcherModel::UrlCatcherModel(QObject* parent) : QAbstractListModel(parent)
 
 bool operator==(const UrlItem& item, const UrlItem& item2)
 {
-    return (item.nick == item2.nick && item.url == item2.url);
+    return (item.nick == item2.nick && item.url == item2.url && item.datetime == item2.datetime);
 }
 
 void UrlCatcherModel::append(const UrlItem& item)
@@ -52,7 +52,7 @@ bool UrlCatcherModel::removeRows(int row, int count, const QModelIndex& parent)
     beginRemoveRows(parent, row, last);
 
     QModelIndex topLeft = parent.sibling(row,0);
-    QModelIndex bottomRight = parent.sibling(last,1);
+    QModelIndex bottomRight = parent.sibling(last,2);
 
     bool success = true;
     for(int i=row; i <= last; i++)
@@ -60,6 +60,7 @@ bool UrlCatcherModel::removeRows(int row, int count, const QModelIndex& parent)
         UrlItem item;
         item.nick = parent.sibling(i,0).data().toString();
         item.url = parent.sibling(i,1).data().toString();
+        item.datetime = parent.sibling(i,2).data().toDateTime();
         if (success)
             success = m_urlList.removeOne(item);
     }
@@ -78,7 +79,7 @@ void UrlCatcherModel::setUrlList(const QList<UrlItem>& list)
 
 int UrlCatcherModel::columnCount(const QModelIndex& /*parent*/) const
 {
-    return 2;
+    return 3;
 }
 
 int UrlCatcherModel::rowCount(const QModelIndex& /*parent*/) const
@@ -101,6 +102,8 @@ QVariant UrlCatcherModel::data(const QModelIndex& index, int role) const
                 return item.nick;
             case 1:
                 return item.url;
+            case 2:
+                return item.datetime;
             default:
                 return QVariant();
         }
@@ -119,6 +122,8 @@ QVariant UrlCatcherModel::headerData (int section, Qt::Orientation orientation, 
             return i18n("From");
         case 1:
             return i18n("URL");
+        case 2:
+            return i18n("Date");
         default:
             return QVariant();
     }
@@ -132,26 +137,34 @@ UrlCatcher::UrlCatcher(QWidget* parent) : ChatWindow(parent)
     setSpacing(0);
     m_toolBar = new KToolBar(this, true, true);
     m_toolBar->setObjectName("urlcatcher_toolbar");
-    m_open = m_toolBar->addAction(KIcon("document-open"), i18nc("open url", "&Open URL"), this, SLOT(openUrlClicked()));
-    m_open->setStatusTip(i18n("Open URL."));
+    m_open = m_toolBar->addAction(KIcon("window-new"), i18nc("open url", "&Open"), this, SLOT(openUrlClicked()));
+    m_open->setStatusTip(i18n("Open link in external browser."));
     m_open->setWhatsThis("<p>Select a <b>URL</b> above, then click this button to launch the application associated with the mimetype of the URL.</p>-<p>In the <b>Settings</b>, under <b>Behavior</b> | <b>General</b>, you can specify a custom web browser for web URLs.</p>");
     m_open->setEnabled(false);
-    m_copy = m_toolBar->addAction(KIcon("edit-copy"), i18nc("copy url","&Copy"), this, SLOT(copyListClicked()));
-    m_copy->setStatusTip(i18n("Copy URL."));
+    m_saveLink = m_toolBar->addAction(KIcon("document-save"), i18n("&Save..."), this, SLOT(saveLinkAs()));
+    m_saveLink->setStatusTip(i18n("Save selected link to the disk."));
+    m_saveLink->setEnabled(false);
+    m_toolBar->addSeparator();
+    m_copy = m_toolBar->addAction(KIcon("edit-copy"), i18nc("copy url","&Copy"), this, SLOT(copyUrlClicked()));
+    m_copy->setStatusTip(i18n("Copy link address to the clipboard."));
     m_copy->setWhatsThis("Select a <b>URL</b> above, then click this button to copy the URL to the clipboard.");
     m_copy->setEnabled(false);
     m_delete = m_toolBar->addAction(KIcon("edit-delete"), i18nc("delete url","&Delete"), this, SLOT(deleteUrlClicked()));
     m_delete->setWhatsThis("Select a <b>URL</b> above, then click this button to delete the URL from the list.");
-    m_delete->setStatusTip(i18n("Delete selected URL."));
+    m_delete->setStatusTip(i18n("Delete selected link."));
     m_delete->setEnabled(false);
+    m_toolBar->addSeparator();
     m_save = m_toolBar->addAction(KIcon("document-save"), i18nc("save url list", "&Save List..."), this, SLOT(saveListClicked()));
-    m_save->setStatusTip(i18n("Save URL list."));
+    m_save->setStatusTip(i18n("Save list."));
     m_save->setWhatsThis("Click to save the entire list to a file.");
     m_save->setEnabled(false);
-    m_clear = m_toolBar->addAction(KIcon("edit-clear-list"), i18nc("clear url list","&Clear"), this, SLOT(clearListClicked()));
-    m_clear->setStatusTip(i18n("Clear URL list."));
+    m_clear = m_toolBar->addAction(KIcon("edit-clear-list"), i18nc("clear url list","&Clear List"), this, SLOT(clearListClicked()));
+    m_clear->setStatusTip(i18n("Clear list."));
     m_clear->setWhatsThis("Click to erase the entire list.");
     m_clear->setEnabled(false);
+    m_toolBar->addSeparator();
+    m_bookmarkLink = m_toolBar->addAction(KIcon("bookmark-new"), i18n("Add Bookmark..."), this, SLOT (bookmarkUrl()));
+    m_bookmarkLink->setEnabled(false);
 
     setupUi(this);
 
@@ -218,6 +231,7 @@ void UrlCatcher::setUrlList(const QStringList& list)
             UrlItem item;
             item.nick = list.at(i).section(' ',0,0);
             item.url = list.at(i).section(' ',1,1);
+            item.datetime = QDateTime::fromString(list.at(i).section(' ',2,2));
             urlList.append(item);
         }
 
@@ -231,11 +245,12 @@ void UrlCatcher::setUrlList(const QStringList& list)
 
 }
 
-void UrlCatcher::addUrl(const QString& who,const QString& url)
+void UrlCatcher::addUrl(const QString& who,const QString& url, const QDateTime &datetime)
 {
     UrlItem item;
     item.nick = who;
     item.url = url;
+    item.datetime = datetime;
     m_urlListModel->append(item);
 
     m_clear->setEnabled(true);
@@ -247,14 +262,18 @@ void UrlCatcher::urlSelected(const QItemSelection& selected)
     if(!selected.isEmpty())
     {
         m_open->setEnabled(true);
+        m_saveLink->setEnabled(true);
         m_copy->setEnabled(true);
         m_delete->setEnabled(true);
+        m_bookmarkLink->setEnabled(true);
     }
     else
     {
         m_open->setEnabled(false);
+        m_saveLink->setEnabled(false);
         m_copy->setEnabled(false);
         m_delete->setEnabled(false);
+        m_bookmarkLink->setEnabled(false);
     }
 }
 
@@ -313,6 +332,7 @@ void UrlCatcher::deleteUrlClicked()
         UrlItem item;
         item.nick = index.sibling(index.row(), 0).data().toString();
         item.url = index.sibling(index.row(), 1).data().toString();
+        item.datetime = index.sibling(index.row(), 2).data().toDateTime();
 
         m_urlListModel->removeRows(index.row(), 0, index);
         if(!m_urlListModel->rowCount())
@@ -397,11 +417,16 @@ void UrlCatcher::contextMenu(const QPoint& p)
 
     KMenu* menu = new KMenu(this);
 
-    menu->addAction(KIcon("edit-copy"), i18n("Copy Link Address"), this, SLOT (copyUrlClicked()));
-    menu->addAction(KIcon("bookmark-new"), i18n("Add to Bookmarks"), this, SLOT (bookmarkUrl()));
-    menu->addAction(KIcon("document-save"), i18n("Save Link As..."), this, SLOT(saveLinkAs()));
-    //TODO maybe a delete action?
-
+    menu->insertAction(0, m_open);
+    menu->insertAction(0, m_saveLink);
+    menu->addSeparator();
+    menu->insertAction(0, m_copy);
+    menu->insertAction(0, m_delete);
+    menu->addSeparator();
+    menu->insertAction(0, m_save);
+    menu->insertAction(0, m_clear);
+    menu->addSeparator();
+    menu->insertAction(0, m_bookmarkLink);
     menu->exec(QCursor::pos());
 
     delete menu;

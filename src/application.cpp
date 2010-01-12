@@ -891,7 +891,7 @@ void Application::resetQueueRates()
 }
 
 // FIXME: use KUrl maybe?
-void Application::storeUrl(const QString& who,const QString& newUrl)
+void Application::storeUrl(const QString& who,const QString& newUrl, const QDateTime& datetime)
 {
     QString url(newUrl);
     // clean up URL to help KRun() in URL catcher interface
@@ -901,9 +901,10 @@ void Application::storeUrl(const QString& who,const QString& newUrl)
     url=url.replace("&amp;","&");
 
     // check that we don't add the same URL twice
-    deleteUrl(who,url);
-    urlList.append(who+' '+url);
-    emit catchUrl(who,url);
+    deleteUrl(who,url,datetime);
+    QDateTime date = QDateTime::currentDateTime();
+    urlList.append(who+' '+url+ ' ' + date.toString());
+    emit catchUrl(who,url,date);
 }
 
 const QStringList& Application::getUrlList()
@@ -911,9 +912,9 @@ const QStringList& Application::getUrlList()
     return urlList;
 }
 
-void Application::deleteUrl(const QString& who,const QString& url)
+void Application::deleteUrl(const QString& who,const QString& url, const QDateTime& datetime)
 {
-    urlList.removeOne(who+' '+url);
+    urlList.removeOne(who+' '+url + ' ' + datetime.toString());
 }
 
 void Application::clearUrlList()

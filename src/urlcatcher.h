@@ -27,6 +27,7 @@ struct UrlItem
 {
     QString nick;
     QString url;
+    QDateTime datetime;
 };
 
 bool operator==(const UrlItem& item, const UrlItem& item2);
@@ -67,7 +68,7 @@ class UrlCatcher : public ChatWindow, private Ui::URLCatcherUI
 
     public slots:
         void setUrlList(const QStringList& urlList);
-        void addUrl(const QString& who,const QString& url);
+        void addUrl(const QString& who,const QString& url,const QDateTime& datetime);
 
     protected slots:
         void urlSelected(const QItemSelection& selected);
@@ -97,9 +98,11 @@ class UrlCatcher : public ChatWindow, private Ui::URLCatcherUI
         QSortFilterProxyModel* m_proxyModel;
         KToolBar *m_toolBar;
         QAction *m_open;
+        QAction *m_saveLink;
         QAction *m_copy;
         QAction *m_delete;
         QAction *m_save;
         QAction *m_clear;
+        QAction *m_bookmarkLink;
 };
 #endif

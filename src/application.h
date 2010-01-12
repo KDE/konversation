@@ -87,7 +87,7 @@ class Application : public KUniqueApplication
         void showQueueTuner(bool);
 
         // URL-Catcher
-        void storeUrl(const QString& who,const QString& url);
+        void storeUrl(const QString& who,const QString& url,const QDateTime& datetime);
         const QStringList& getUrlList();
 
         Application();
@@ -136,7 +136,7 @@ class Application : public KUniqueApplication
         KWallet::Wallet* wallet();
 
     signals:
-        void catchUrl(const QString& who,const QString& url);
+        void catchUrl(const QString& who,const QString& url,const QDateTime &datetime);
         void serverGroupsChanged(const Konversation::ServerGroupSettingsPtr serverGroup);
         void appearanceChanged();
 
@@ -149,7 +149,7 @@ class Application : public KUniqueApplication
         void resetQueueRates(); ///< when QueueTuner says to
         int countOfQueues() { return Server::_QueueListSize-1; }
 
-        void deleteUrl(const QString& who,const QString& url);
+        void deleteUrl(const QString& who,const QString& url,const QDateTime& datetime);
         void clearUrlList();
 
         void prepareShutdown();
