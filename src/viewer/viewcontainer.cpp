@@ -2258,7 +2258,7 @@ void ViewContainer::showJoinChannelDialog()
 
     if (dlg->exec() == QDialog::Accepted)
     {
-        Server *server = Application::instance()->getConnectionManager()->getServerByName(dlg->network());
+        Server *server = Application::instance()->getConnectionManager()->getServerByConnectionId(dlg->connectionId());
         if (!server)
           return;
         server->sendJoinCommand(dlg->channel(), dlg->password());

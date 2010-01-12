@@ -30,7 +30,7 @@ namespace Konversation
             explicit JoinChannelDialog(Server* server, QWidget *parent = 0);
             ~JoinChannelDialog();
 
-            QString network() const;
+            int connectionId() const;
             QString channel() const;
             QString password() const;
 

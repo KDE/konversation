@@ -34,13 +34,11 @@ namespace Konversation
         // Add network names to network combobox and select the one corresponding to argument.
         QList<Server *> serverList = Application::instance()->getConnectionManager()->getServerList();
         for (int i = 0; i < serverList.count(); ++i)
-        {
-          m_ui.networkNameCombo->addItem(serverList.at(i)->getDisplayName(), serverList.at(i)->getServerGroup()->id());
-        }
+          m_ui.networkNameCombo->addItem(serverList.at(i)->getDisplayName(), serverList.at(i)->connectionId());
         if (m_server->getServerGroup())
         {
             // Preselect the current network
-            m_ui.networkNameCombo->setCurrentIndex(m_ui.networkNameCombo->findData(m_server->getServerGroup()->id(), Qt::UserRole));
+            m_ui.networkNameCombo->setCurrentIndex(m_ui.networkNameCombo->findData(m_server->connectionId(), Qt::UserRole));
             ChannelList history = server->getServerGroup()->channelHistory();
             ChannelList::iterator endIt = history.end();
             const QList<Channel *> &channels = server->getChannelList();
@@ -78,9 +76,9 @@ namespace Konversation
     {
     }
 
-    QString JoinChannelDialog::network() const
+    int JoinChannelDialog::connectionId() const
     {
-      return m_ui.networkNameCombo->currentText();
+      return m_ui.networkNameCombo->itemData(m_ui.networkNameCombo->currentIndex(), Qt::UserRole).toInt();
     }
 
     QString JoinChannelDialog::channel() const
