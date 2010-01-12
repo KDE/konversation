@@ -81,6 +81,8 @@ Changes since 1.2.1:
   original ban with the new version or adding it as an additional ban.
 * Updated various dialog layouts to better comply with the alignment
   rules of the KDE 4 HIG.
+* The URL list in the URL catcher tab now sports a new Date column
+  and can be sorted.
 
 
 Changes from 1.2 to 1.2.1:
