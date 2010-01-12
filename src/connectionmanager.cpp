@@ -171,11 +171,15 @@ void ConnectionManager::connectTo(Konversation::ConnectionFlag flag, ConnectionS
 void ConnectionManager::enlistConnection(int connectionId, Server* server)
 {
     m_connectionList.insert(connectionId, server);
+
+    emit connectionListChanged();
 }
 
 void ConnectionManager::delistConnection(int connectionId)
 {
     m_connectionList.remove(connectionId);
+
+    emit connectionListChanged();
 }
 
 void ConnectionManager::handleConnectionStateChange(Server* server, Konversation::ConnectionState state)

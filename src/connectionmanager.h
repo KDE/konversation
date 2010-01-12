@@ -61,6 +61,8 @@ class ConnectionManager : public QObject
 
 
     signals:
+        void connectionListChanged();
+
         void connectionChangedState(Server* server, Konversation::ConnectionState state);
 
         void connectionChangedAwayState(bool away);
