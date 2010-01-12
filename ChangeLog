@@ -79,6 +79,8 @@ Changes since 1.2.1:
   with the list makes it very easy to use an existing list entry as
   a starting point, modify it and then decide between replacing the
   original ban with the new version or adding it as an additional ban.
+* Updated various dialog layouts to better comply with the alignment
+  rules of the KDE 4 HIG.
 
 
 Changes from 1.2 to 1.2.1:
