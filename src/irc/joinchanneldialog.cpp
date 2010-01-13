@@ -138,6 +138,7 @@ namespace Konversation
         const QList<Channel *> &channels = server->getChannelList();
         bool joined = false;
 
+        m_ui.channelCombo->clear();
         for(ChannelList::iterator it = history.begin(); it != endIt; ++it)
         {
           joined = false;
