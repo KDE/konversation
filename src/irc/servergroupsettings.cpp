@@ -143,6 +143,11 @@ namespace Konversation
         return Preferences::identityById(m_identityId);
     }
 
+    void ServerGroupSettings::clearChannelHistory()
+    {
+      m_channelHistory.clear();
+    }
+
     void ServerGroupSettings::appendChannelHistory(const ChannelSettings& channel)
     {
         ChannelList::iterator endIt = m_channelHistory.end();
