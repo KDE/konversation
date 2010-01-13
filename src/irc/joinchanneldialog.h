@@ -38,10 +38,10 @@ namespace Konversation
             virtual void slotOk();
             void slotNicknameChanged(QString nickname);
             void slotConnectionListChanged();
+            void slotSelectedConnectionChanged(int);
 
         private:
             Ui::JoinChannelUI m_ui;
-            Server* m_server;
     };
 
 }

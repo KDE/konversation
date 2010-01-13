@@ -16,8 +16,6 @@
 #include "channel.h"
 #include "servergroupsettings.h"
 
-
-
 namespace Konversation
 {
 
@@ -28,7 +26,6 @@ namespace Konversation
         setButtons( KDialog::Ok|KDialog::Cancel );
         setDefaultButton( KDialog::Ok );
         setModal( true );
-        m_server = server;
         m_ui.setupUi(mainWidget());
         m_ui.networkNameCombo->setFocus();
         // Add network names to network combobox and select the one corresponding to argument.
@@ -39,39 +36,14 @@ namespace Konversation
                                          server->connectionId());
           connect(server, SIGNAL(nicknameChanged(QString)), this, SLOT(slotNicknameChanged(QString)));
         }
-        if (m_server->getServerGroup())
-        {
-            // Preselect the current network
-            m_ui.networkNameCombo->setCurrentIndex(m_ui.networkNameCombo->findData(m_server->connectionId(), Qt::UserRole));
-            ChannelList history = server->getServerGroup()->channelHistory();
-            ChannelList::iterator endIt = history.end();
-            const QList<Channel *> &channels = server->getChannelList();
-            bool joined = false;
-
-            for(ChannelList::iterator it = history.begin(); it != endIt; ++it)
-            {
-                joined = false;
-
-                foreach (Channel* chan, channels)
-                {
-                    if(chan->getName() == (*it).name())
-                    {
-                        joined = true;
-                    }
-                }
-
-                if(!joined)
-                {
-                    m_ui.channelCombo->addToHistory((*it).name());
-                }
-            }
-        }
-
-        const int i = m_ui.channelCombo->findText("");
-        if (i != -1)
-            m_ui.channelCombo->setCurrentIndex(i);
-        else
-            m_ui.channelCombo->setEditText("");
+        // Update channel history when selected connection changes
+        connect(m_ui.networkNameCombo, SIGNAL(currentIndexChanged(int)),
+                this, SLOT(slotSelectedConnectionChanged(int)));
+        // Preselect the current network
+        m_ui.networkNameCombo->setCurrentIndex(m_ui.networkNameCombo->findData(server->connectionId()));
+        // If the server is the first item, current index wont be changed
+        // So channel history combo wont be populated, so force it
+        slotSelectedConnectionChanged(m_ui.networkNameCombo->findData(server->connectionId()));
 
         connect( this, SIGNAL( okClicked() ), this, SLOT( slotOk() ) );
         connect(Application::instance()->getConnectionManager(), SIGNAL(connectionListChanged()),
@@ -84,14 +56,17 @@ namespace Konversation
 
     int JoinChannelDialog::connectionId() const
     {
-      return m_ui.networkNameCombo->itemData(m_ui.networkNameCombo->currentIndex(), Qt::UserRole).toInt();
+      return m_ui.networkNameCombo->itemData(m_ui.networkNameCombo->currentIndex()).toInt();
     }
 
     QString JoinChannelDialog::channel() const
     {
+        int connectionId = m_ui.networkNameCombo->itemData(m_ui.networkNameCombo->currentIndex()).toInt();
+        Server *server = Application::instance()->getConnectionManager()->getServerByConnectionId(connectionId);
+        
         QString channel = m_ui.channelCombo->currentText();
 
-        if(!m_server->isAChannel(channel))
+        if (server && !server->isAChannel(channel))
         {
             channel = '#' + channel;
         }
@@ -106,9 +81,12 @@ namespace Konversation
 
     void JoinChannelDialog::slotOk()
     {
+        int connectionId = m_ui.networkNameCombo->itemData(m_ui.networkNameCombo->currentIndex()).toInt();
+        Server *server = Application::instance()->getConnectionManager()->getServerByConnectionId(connectionId);
+
         // If the channel already exist in the history only the password will be updated.
-        if (m_server->getServerGroup())
-            m_server->getServerGroup()->appendChannelHistory(ChannelSettings(channel(), password()));
+        if (server && server->getServerGroup())
+            server->getServerGroup()->appendChannelHistory(ChannelSettings(channel(), password()));
 
         accept();
     }
@@ -124,6 +102,7 @@ namespace Konversation
         m_ui.networkNameCombo->setItemText(index, i18nc("network (nickname)", "%1 (%2)", server->getDisplayName(), server->getNickname()));
       }
     }
+
     void JoinChannelDialog::slotConnectionListChanged()
     {
       // Remove not-existing-anymore networks from the combobox
@@ -148,6 +127,40 @@ namespace Konversation
           connect(server, SIGNAL(nicknameChanged(QString)), this, SLOT(slotNicknameChanged(QString)));
         }
       }
+    }
+
+    void JoinChannelDialog::slotSelectedConnectionChanged(int index)
+    {
+      int connectionId = m_ui.networkNameCombo->itemData(index).toInt();
+      Server *server = Application::instance()->getConnectionManager()->getServerByConnectionId(connectionId);
+      if (server && server->getServerGroup())
+      {
+        ChannelList history = server->getServerGroup()->channelHistory();
+        ChannelList::iterator endIt = history.end();
+        const QList<Channel *> &channels = server->getChannelList();
+        bool joined = false;
+
+        m_ui.channelCombo->clear();
+        for(ChannelList::iterator it = history.begin(); it != endIt; ++it)
+        {
+          joined = false;
+
+          foreach (Channel* chan, channels)
+          {
+            if(chan->getName() == (*it).name())
+              joined = true;
+          }
+
+          if(!joined)
+            m_ui.channelCombo->addToHistory((*it).name());
+        }
+      }
+
+      const int i = m_ui.channelCombo->findText("");
+      if (i != -1)
+        m_ui.channelCombo->setCurrentIndex(i);
+      else
+        m_ui.channelCombo->setEditText("");
     }
 }
 #include "joinchanneldialog.moc"
