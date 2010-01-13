@@ -39,10 +39,10 @@ namespace Konversation
                                          server->connectionId());
           connect(server, SIGNAL(nicknameChanged(QString)), this, SLOT(slotNicknameChanged(QString)));
         }
+        // Preselect the current network
+        m_ui.networkNameCombo->setCurrentIndex(m_ui.networkNameCombo->findData(m_server->connectionId()));
         if (m_server->getServerGroup())
         {
-            // Preselect the current network
-            m_ui.networkNameCombo->setCurrentIndex(m_ui.networkNameCombo->findData(m_server->connectionId(), Qt::UserRole));
             ChannelList history = server->getServerGroup()->channelHistory();
             ChannelList::iterator endIt = history.end();
             const QList<Channel *> &channels = server->getChannelList();
