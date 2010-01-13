@@ -231,7 +231,7 @@ void UrlCatcher::setUrlList(const QStringList& list)
             UrlItem item;
             item.nick = list.at(i).section(' ',0,0);
             item.url = list.at(i).section(' ',1,1);
-            item.datetime = QDateTime::fromString(list.at(i).section(' ',2,2));
+            item.datetime = QDateTime::fromString(list.at(i).section(' ',2));
             urlList.append(item);
         }
 
