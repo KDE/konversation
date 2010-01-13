@@ -16,8 +16,6 @@
 #include "channel.h"
 #include "servergroupsettings.h"
 
-
-
 namespace Konversation
 {
 
@@ -43,6 +41,9 @@ namespace Konversation
                 this, SLOT(slotSelectedConnectionChanged(int)));
         // Preselect the current network
         m_ui.networkNameCombo->setCurrentIndex(m_ui.networkNameCombo->findData(server->connectionId()));
+        // If the server is the first item, current index wont be changed
+        // So channel history combo wont be populated, so force it
+        slotSelectedConnectionChanged(m_ui.networkNameCombo->findData(server->connectionId()));
 
         connect( this, SIGNAL( okClicked() ), this, SLOT( slotOk() ) );
         connect(Application::instance()->getConnectionManager(), SIGNAL(connectionListChanged()),
@@ -82,6 +83,7 @@ namespace Konversation
     {
         int connectionId = m_ui.networkNameCombo->itemData(m_ui.networkNameCombo->currentIndex()).toInt();
         Server *server = Application::instance()->getConnectionManager()->getServerByConnectionId(connectionId);
+
         // If the channel already exist in the history only the password will be updated.
         if (server && server->getServerGroup())
             server->getServerGroup()->appendChannelHistory(ChannelSettings(channel(), password()));
