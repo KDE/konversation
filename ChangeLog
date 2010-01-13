@@ -87,6 +87,15 @@ Changes since 1.2.1:
   checkboxen on the "Modes" tab of the Channel Settings dialog to
   change when the display of the advanced mode list was toggled or
   the dialog was resized.
+* The Join Channel dialog now sports a combo box listing all open co-
+  nnections (and the nicknames used on them, to be able to tell mul-
+  tiple connections to the same network apart), with the connection
+  owning the active tab automatically pre-selected. This allows one
+  to pick the connection to join the channel on regardless of the
+  active tab at the time the dialog is invoked (e.g. via the keyboard
+  shortcut). Previously, the dialog would only operate on the connec-
+  tion owning the active tab (and display it in a static label),
+  possibly requiring one to switch to a suitable tab first.
 
 
 Changes from 1.2 to 1.2.1:
