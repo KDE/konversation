@@ -103,7 +103,7 @@ QVariant UrlCatcherModel::data(const QModelIndex& index, int role) const
             case 1:
                 return item.url;
             case 2:
-                return item.datetime;
+                return KGlobal::locale()->formatDateTime(item.datetime, KLocale::ShortDate, true);
             default:
                 return QVariant();
         }
