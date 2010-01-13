@@ -42,7 +42,6 @@ namespace Konversation
 
         private:
             Ui::JoinChannelUI m_ui;
-            Server* m_server;
     };
 
 }
