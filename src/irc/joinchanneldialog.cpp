@@ -10,6 +10,8 @@
 */
 
 #include "joinchanneldialog.h"
+#include "application.h"
+#include "connectionmanager.h"
 #include "server.h"
 #include "channel.h"
 #include "servergroupsettings.h"
@@ -22,17 +24,25 @@ namespace Konversation
     JoinChannelDialog::JoinChannelDialog(Server* server, QWidget *parent)
         : KDialog(parent)
     {
-        setCaption(i18n("Join Channel on %1", server->getDisplayName()));
+        setCaption(i18n("Join Channel"));
         setButtons( KDialog::Ok|KDialog::Cancel );
         setDefaultButton( KDialog::Ok );
         setModal( true );
         m_server = server;
         m_ui.setupUi(mainWidget());
-        m_ui.channelCombo->setFocus();
-        m_ui.serverLbl->setText(server->getDisplayName());
-
+        m_ui.networkNameCombo->setFocus();
+        // Add network names to network combobox and select the one corresponding to argument.
+        QList<Server *> serverList = Application::instance()->getConnectionManager()->getServerList();
+        foreach (Server *server, serverList)
+        {
+          m_ui.networkNameCombo->addItem(i18nc("network (nickname)", "%1 (%2)", server->getDisplayName(), server->getNickname()),
+                                         server->connectionId());
+          connect(server, SIGNAL(nicknameChanged(QString)), this, SLOT(slotNicknameChanged(QString)));
+        }
         if (m_server->getServerGroup())
         {
+            // Preselect the current network
+            m_ui.networkNameCombo->setCurrentIndex(m_ui.networkNameCombo->findData(m_server->connectionId(), Qt::UserRole));
             ChannelList history = server->getServerGroup()->channelHistory();
             ChannelList::iterator endIt = history.end();
             const QList<Channel *> &channels = server->getChannelList();
@@ -64,10 +74,17 @@ namespace Konversation
             m_ui.channelCombo->setEditText("");
 
         connect( this, SIGNAL( okClicked() ), this, SLOT( slotOk() ) );
+        connect(Application::instance()->getConnectionManager(), SIGNAL(connectionListChanged()),
+                this, SLOT(slotConnectionListChanged()));
     }
 
     JoinChannelDialog::~JoinChannelDialog()
     {
+    }
+
+    int JoinChannelDialog::connectionId() const
+    {
+      return m_ui.networkNameCombo->itemData(m_ui.networkNameCombo->currentIndex(), Qt::UserRole).toInt();
     }
 
     QString JoinChannelDialog::channel() const
@@ -96,6 +113,41 @@ namespace Konversation
         accept();
     }
 
+    void JoinChannelDialog::slotNicknameChanged(QString nickname)
+    {
+      Q_UNUSED(nickname);
+      // Update all items
+      QList<Server *> serverList = Application::instance()->getConnectionManager()->getServerList();
+      foreach (Server *server, serverList)
+      {
+        int index = m_ui.networkNameCombo->findData(server->connectionId());
+        m_ui.networkNameCombo->setItemText(index, i18nc("network (nickname)", "%1 (%2)", server->getDisplayName(), server->getNickname()));
+      }
+    }
+    void JoinChannelDialog::slotConnectionListChanged()
+    {
+      // Remove not-existing-anymore networks from the combobox
+      for (int i = 0; i < m_ui.networkNameCombo->count(); i++)
+      {
+        int connectionId = m_ui.networkNameCombo->itemData(i).toInt();
+        Server *server = Application::instance()->getConnectionManager()->getServerByConnectionId(connectionId);
+        if (!server)
+        {
+          m_ui.networkNameCombo->removeItem(i);
+          i--;
+        }
+      }
+      // Add new network names to the combobox
+      QList<Server *> serverList = Application::instance()->getConnectionManager()->getServerList();
+      foreach (Server *server, serverList)
+      {
+        if (m_ui.networkNameCombo->findData(server->connectionId()) == -1)
+        {
+          m_ui.networkNameCombo->addItem(i18nc("network (nickname)", "%1 (%2)", server->getDisplayName(), server->getNickname()),
+                                         server->connectionId());
+          connect(server, SIGNAL(nicknameChanged(QString)), this, SLOT(slotNicknameChanged(QString)));
+        }
+      }
+    }
 }
-
 #include "joinchanneldialog.moc"

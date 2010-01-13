@@ -30,11 +30,14 @@ namespace Konversation
             explicit JoinChannelDialog(Server* server, QWidget *parent = 0);
             ~JoinChannelDialog();
 
+            int connectionId() const;
             QString channel() const;
             QString password() const;
 
         protected slots:
             virtual void slotOk();
+            void slotNicknameChanged(QString nickname);
+            void slotConnectionListChanged();
 
         private:
             Ui::JoinChannelUI m_ui;
