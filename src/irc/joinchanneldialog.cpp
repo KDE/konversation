@@ -39,6 +39,8 @@ namespace Konversation
         // Update channel history when selected connection changes
         connect(m_ui.networkNameCombo, SIGNAL(currentIndexChanged(int)),
                 this, SLOT(slotSelectedConnectionChanged(int)));
+        // Clear channel history when the history combo box is cleared
+        connect(m_ui.channelCombo, SIGNAL(cleared()), this, SLOT(slotChannelHistoryCleared()));
         // Preselect the current network
         m_ui.networkNameCombo->setCurrentIndex(m_ui.networkNameCombo->findData(server->connectionId()));
         // If the server is the first item, current index wont be changed
@@ -161,6 +163,15 @@ namespace Konversation
         m_ui.channelCombo->setCurrentIndex(i);
       else
         m_ui.channelCombo->setEditText("");
+    }
+
+    void JoinChannelDialog::slotChannelHistoryCleared()
+    {
+        int connectionId = m_ui.networkNameCombo->itemData(m_ui.networkNameCombo->currentIndex()).toInt();
+        Server *server = Application::instance()->getConnectionManager()->getServerByConnectionId(connectionId);
+
+        if (server && server->getServerGroup())
+          server->getServerGroup()->clearChannelHistory();
     }
 }
 #include "joinchanneldialog.moc"
