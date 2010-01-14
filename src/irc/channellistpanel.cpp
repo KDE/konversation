@@ -176,6 +176,8 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
     // double click on channel entry joins the channel
     connect(m_channelListView, SIGNAL(doubleClicked(const QModelIndex&)),
             this, SLOT(joinChannelClicked()) );
+    connect(m_channelListView->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)),
+            this, SLOT(currentChanged(QModelIndex,QModelIndex)));
     connect(m_channelListView, SIGNAL(customContextMenuRequested(const QPoint&)),
             this, SLOT(contextMenu(const QPoint&)) );
 
@@ -307,6 +309,12 @@ void ChannelListPanel::updateFilter()
         m_proxyModel->invalidate();
 
     updateUsersChannels();
+}
+
+void ChannelListPanel::currentChanged(QModelIndex current,QModelIndex previous)
+{
+    Q_UNUSED(previous);
+    m_joinChannel->setEnabled(m_online && current.isValid());
 }
 
 void ChannelListPanel::setProgress()
@@ -540,8 +548,9 @@ void ChannelListPanel::appendInputText(const QString& text, bool fromCursor)
 //Used to disable functions when not connected
 void ChannelListPanel::serverOnline(bool online)
 {
-    m_refreshList->setEnabled(online);
-    m_joinChannel->setEnabled(online);
+    m_online = online;
+    m_refreshList->setEnabled(m_online);
+    m_joinChannel->setEnabled(m_online && m_channelListView->currentIndex().isValid());
 }
 
 void ChannelListPanel::emitUpdateInfo()

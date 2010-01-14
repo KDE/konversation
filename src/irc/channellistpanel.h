@@ -111,7 +111,7 @@ class ChannelListPanel : public ChatWindow, private Ui::ChannelListWidgetUI
         void updateFilter();
 
         void updateUsersChannels();
-
+        void currentChanged(QModelIndex current,QModelIndex previous);
         void setProgress();
 
         void joinChannelClicked();
@@ -132,6 +132,7 @@ class ChannelListPanel : public ChatWindow, private Ui::ChannelListWidgetUI
         int m_numUsers;
         int m_visibleChannels;
         int m_visibleUsers;
+        bool m_online;
         bool m_firstRun;
         bool m_regexState;
 
