@@ -265,6 +265,10 @@ bool& needWhois)
  */
 void NicksOnline::updateServerOnlineList(Server* servr)
 {
+    // Return if connection is an ephemeral one, because
+    // we cant watch them anyway.
+    if (!servr->getServerGroup())
+      return;
     bool newNetworkRoot = false;
     QString serverName = servr->getServerName();
     QString networkName = servr->getDisplayName();

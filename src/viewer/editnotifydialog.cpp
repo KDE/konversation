@@ -59,7 +59,9 @@ const QString& nickname):
     QList<Server *> serverList = Application::instance()->getConnectionManager()->getServerList();
     for (int i = 0; i < serverList.count(); ++i)
     {
-      m_networkNameCombo->addItem(serverList.at(i)->getDisplayName(), serverList.at(i)->getServerGroup()->id());
+      Server *server = serverList.at(i);
+      if (server->getServerGroup())
+        m_networkNameCombo->addItem(server->getDisplayName(), server->getServerGroup()->id());
     }
     m_networkNameCombo->setCurrentIndex(m_networkNameCombo->findData(serverGroupId, Qt::UserRole));
     layout->addWidget(networkNameLabel, 0, 0);
