@@ -133,6 +133,7 @@ namespace Konversation
 
     void JoinChannelDialog::slotSelectedConnectionChanged(int index)
     {
+      m_ui.channelCombo->clear();
       int connectionId = m_ui.networkNameCombo->itemData(index).toInt();
       Server *server = Application::instance()->getConnectionManager()->getServerByConnectionId(connectionId);
       if (server && server->getServerGroup())
@@ -141,8 +142,6 @@ namespace Konversation
         ChannelList::iterator endIt = history.end();
         const QList<Channel *> &channels = server->getChannelList();
         bool joined = false;
-
-        m_ui.channelCombo->clear();
         // Append an empty string as first item
         QStringList channelHistory;
         channelHistory << "";
