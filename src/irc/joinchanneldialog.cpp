@@ -143,8 +143,15 @@ namespace Konversation
         bool joined = false;
 
         m_ui.channelCombo->clear();
+        // Append an empty string as first item
+        QStringList channelHistory;
+        channelHistory << "";
         for(ChannelList::iterator it = history.begin(); it != endIt; ++it)
         {
+          // Dont add empty items to the combobox
+          if ((*it).name().isEmpty())
+            continue;
+
           joined = false;
 
           foreach (Channel* chan, channels)
@@ -154,15 +161,10 @@ namespace Konversation
           }
 
           if(!joined)
-            m_ui.channelCombo->addToHistory((*it).name());
+            channelHistory << (*it).name();
         }
+        m_ui.channelCombo->setHistoryItems(channelHistory);
       }
-
-      const int i = m_ui.channelCombo->findText("");
-      if (i != -1)
-        m_ui.channelCombo->setCurrentIndex(i);
-      else
-        m_ui.channelCombo->setEditText("");
     }
 
     void JoinChannelDialog::slotChannelHistoryCleared()
