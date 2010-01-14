@@ -79,6 +79,7 @@ int main(int argc, char* argv[])
     aboutData.addCredit(ki18n("Juan Carlos Torres"),ki18n("Auto-join context menu"),"carlosdgtorres@gmail.com");
     aboutData.addCredit(ki18n("Travis McHenry"),ki18n("Various fixes, ported encryption to QCA2, added DH1080 key exchange support."),"tmchenryaz@cox.net");
     aboutData.addCredit(ki18n("Modestas Vainius"),ki18n("Bug fixes and enhancements."),"modestas@vainius.eu");
+    aboutData.addCredit(ki18n("Abdurrahman AVCI"),ki18n("Various bug fixes and enhancements."),"abdurrahmanavci@gmail.com");
 
     KCmdLineArgs::init(argc, argv, &aboutData);
     KCmdLineOptions options;
