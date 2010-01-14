@@ -96,6 +96,10 @@ Changes since 1.2.1:
   shortcut). Previously, the dialog would only operate on the connec-
   tion owning the active tab (and display it in a static label),
   possibly requiring one to switch to a suitable tab first.
+* Fixed a bug causing the "Clear History" item in the context menu of
+  the channel combobox in the "Join Channel" dialog not to clear the
+  history correctly; while it would be gone for as long as the dialog
+  was open, it would be back when closing and reopening the dialog.
 
 
 Changes from 1.2 to 1.2.1:
