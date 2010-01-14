@@ -162,6 +162,9 @@ namespace Konversation
           if(!joined)
             channelHistory << (*it).name();
         }
+        // Sort channel history for easier access
+        channelHistory.sort();
+        // Set history items
         m_ui.channelCombo->setHistoryItems(channelHistory);
       }
     }
