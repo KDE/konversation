@@ -184,13 +184,25 @@ namespace Konversation
             item.topic = (*it).section(' ', 2);
             topicList.append(item);
         }
-
+        // Save current topic
+        TopicItem topic = topicList.last();
         m_topicModel->setTopicList(topicList);
         m_topicModel->sort(m_ui.topicHistoryView->header()->sortIndicatorSection(),
                            m_ui.topicHistoryView->header()->sortIndicatorOrder());
-
-        // update topic preview
-        QItemSelection selection(m_topicModel->index(0, 0, QModelIndex()), m_topicModel->index(0, 1, QModelIndex()));
+        // Find current topic's row index
+        int row = 0;
+        for (int i = 0; i < topicList.count(); ++i)
+        {
+            if (m_topicModel->topicList().at(i).author == topic.author &&
+                m_topicModel->topicList().at(i).timestamp == topic.timestamp &&
+                m_topicModel->topicList().at(i).topic == topic.topic)
+            {
+                row = i;
+                break;
+            }
+        }
+        // Select current topic and update topic preview
+        QItemSelection selection(m_topicModel->index(row, 0, QModelIndex()), m_topicModel->index(row, 1, QModelIndex()));
         m_ui.topicHistoryView->selectionModel()->select(selection, QItemSelectionModel::ClearAndSelect);
     }
 
@@ -540,6 +552,11 @@ namespace Konversation
     TopicListModel::TopicListModel(QObject* parent)
         : QAbstractListModel(parent)
     {
+    }
+
+    QList<TopicItem> TopicListModel::topicList() const
+    {
+        return m_topicList;
     }
 
     void TopicListModel::setTopicList(const QList<TopicItem>& list)

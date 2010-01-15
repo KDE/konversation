@@ -101,6 +101,7 @@ namespace Konversation
         public:
             TopicListModel(QObject* parent);
 
+            QList<TopicItem> topicList() const;
             void setTopicList(const QList<TopicItem>& list);
 
             int columnCount(const QModelIndex& parent = QModelIndex()) const;
