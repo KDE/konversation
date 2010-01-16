@@ -110,8 +110,8 @@ namespace Konversation
 
             public slots:
                 virtual bool queue();
-                virtual void start() {};
-                virtual void abort() {};
+                virtual void start() {}
+                virtual void abort() {}
 
             protected:
                 virtual void cleanUp();

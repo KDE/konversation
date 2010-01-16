@@ -25,7 +25,7 @@ namespace Konversation
         Q_OBJECT
         public:
             IdentityDialog(QWidget *parent = 0);
-            ~IdentityDialog() {};
+            ~IdentityDialog() {}
             void setCurrentIdentity(int index);
             IdentityPtr setCurrentIdentity(IdentityPtr identity);
             IdentityPtr currentIdentity() const;

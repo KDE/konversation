@@ -123,7 +123,7 @@ class ChannelListPanel : public ChatWindow, private Ui::ChannelListWidgetUI
     protected:
 
         /** Called from ChatWindow adjustFocus */
-        virtual void childAdjustFocus(){};
+        virtual void childAdjustFocus(){}
         virtual bool isInsertCharacterSupported() { return true; }
 
         void countUsers(const QModelIndex& index, int pos);
