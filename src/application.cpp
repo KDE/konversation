@@ -104,7 +104,6 @@ int Application::newInstance()
 
         connect(m_connectionManager, SIGNAL(identityOnline(int)), m_awayManager, SLOT(identityOnline(int)));
         connect(m_connectionManager, SIGNAL(identityOffline(int)), m_awayManager, SLOT(identityOffline(int)));
-        connect(m_connectionManager, SIGNAL(identityOffline(int)), m_awayManager, SLOT(identityOffline(int)));
         connect(m_connectionManager, SIGNAL(connectionChangedAwayState(bool)), m_awayManager, SLOT(updateGlobalAwayAction(bool)));
 
         connect(Solid::Networking::notifier(), SIGNAL(shouldDisconnect()), m_connectionManager, SLOT(involuntaryQuitServers()));
