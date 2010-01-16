@@ -680,6 +680,24 @@ void NicksOnline::doCommand(QAction* id)
 {
     if(id == 0)
         return;
+    if ( id == m_addNickname )
+    {
+        int serverGroupId = -1;
+        if (m_nickListView->selectedItems().count())
+        {
+            NicksOnlineItem *networkRoot = dynamic_cast<NicksOnlineItem*>(m_nickListView->selectedItems().at(0));
+            if (networkRoot)
+            {
+                while (networkRoot->type() != NicksOnlineItem::NetworkRootItem)
+                    networkRoot = dynamic_cast<NicksOnlineItem*>(networkRoot->parent());
+                serverGroupId = networkRoot->data(0, Qt::UserRole).toInt();
+            }
+        }
+        EditNotifyDialog *end = new EditNotifyDialog(this, serverGroupId);
+        connect(end, SIGNAL(notifyChanged(int,QString)), this, SLOT(slotAddNickname(int,QString)));
+        end->show();
+        return;
+    }
 
     QString serverName;
     QString nickname;
@@ -690,18 +708,7 @@ void NicksOnline::doCommand(QAction* id)
     if(!nickitem)
         return;
 
-    if ( id == m_addNickname )
-    {
-      NicksOnlineItem *networkRoot = nickitem;
-      while (networkRoot->type() != NicksOnlineItem::NetworkRootItem)
-        networkRoot = dynamic_cast<NicksOnlineItem*>(networkRoot->parent());
-      int serverGroupId = networkRoot->data(0, Qt::UserRole).toInt();
-      EditNotifyDialog *end = new EditNotifyDialog(this, serverGroupId);
-      connect(end, SIGNAL(notifyChanged(int,QString)), this, SLOT(slotAddNickname(int,QString)));
-      end->show();
-      return;
-    }
-    else if ( id == m_removeNickname )
+    if ( id == m_removeNickname )
     {
       // remove watch from the tree widget
       delete nickitem;
@@ -848,7 +855,6 @@ int NicksOnline::getNickAddressbookState(QTreeWidgetItem* item)
 void NicksOnline::setupToolbarActions(NicksOnlineItem *item)
 {
   // disable all actions
-  m_addNickname->setEnabled(false);
   m_removeNickname->setEnabled(false);
   m_newContact->setEnabled(false);
   m_editContact->setEnabled(false);
@@ -865,15 +871,10 @@ void NicksOnline::setupToolbarActions(NicksOnlineItem *item)
   // add items depending on the item type
   switch (item->type())
   {
-  case NicksOnlineItem::NetworkRootItem:
-    m_addNickname->setEnabled(true);
-    break;
   case NicksOnlineItem::ChannelItem:
-    m_addNickname->setEnabled(true);
     m_joinChannel->setEnabled(true);
     break;
   case NicksOnlineItem::NicknameItem:
-    m_addNickname->setEnabled(true);
     m_removeNickname->setEnabled(true);
     int nickState = getNickAddressbookState(item);
     if (nickState == nsNoAddress)
