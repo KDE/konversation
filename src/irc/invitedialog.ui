@@ -38,7 +38,7 @@
     <widget class="QTreeView" name="m_channelView"/>
    </item>
    <item row="2" column="2">
-    <widget class="QComboBox" name="m_joinPreferences">
+    <widget class="KComboBox" name="m_joinPreferences">
      <item>
       <property name="text">
        <string>Always Ask</string>
@@ -81,6 +81,13 @@
    </item>
   </layout>
  </widget>
+  <customwidgets>
+  <customwidget>
+   <class>KComboBox</class>
+   <extends>QComboBox</extends>
+   <header>kcombobox.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

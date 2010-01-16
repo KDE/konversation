@@ -89,7 +89,7 @@ the Free Software Foundation; either version 2 of the License, or
     </widget>
    </item>
    <item row="0" column="1">
-    <widget class="QComboBox" name="networkNameCombo"/>
+    <widget class="KComboBox" name="networkNameCombo"/>
    </item>
   </layout>
  </widget>
