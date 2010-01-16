@@ -184,26 +184,30 @@ namespace Konversation
             item.topic = (*it).section(' ', 2);
             topicList.append(item);
         }
-        // Save current topic
-        TopicItem topic = topicList.last();
         m_topicModel->setTopicList(topicList);
         m_topicModel->sort(m_ui.topicHistoryView->header()->sortIndicatorSection(),
                            m_ui.topicHistoryView->header()->sortIndicatorOrder());
-        // Find current topic's row index
-        int row = 0;
-        for (int i = 0; i < topicList.count(); ++i)
+        if (topicList.count() > 0)
         {
-            if (m_topicModel->topicList().at(i).author == topic.author &&
-                m_topicModel->topicList().at(i).timestamp == topic.timestamp &&
-                m_topicModel->topicList().at(i).topic == topic.topic)
+            // Save current topic
+            TopicItem topic = topicList.last();
+            // Find current topic's row index
+            int row = 0;
+            QList<TopicItem> sortedList = m_topicModel->topicList();
+            for (int i = 0; i < sortedList.count(); ++i)
             {
-                row = i;
-                break;
+                if (sortedList.at(i).author == topic.author &&
+                    sortedList.at(i).timestamp == topic.timestamp &&
+                    sortedList.at(i).topic == topic.topic)
+                {
+                    row = i;
+                    break;
+                }
             }
+            // Select current topic and update topic preview
+            QItemSelection selection(m_topicModel->index(row, 0, QModelIndex()), m_topicModel->index(row, 1, QModelIndex()));
+            m_ui.topicHistoryView->selectionModel()->select(selection, QItemSelectionModel::ClearAndSelect);
         }
-        // Select current topic and update topic preview
-        QItemSelection selection(m_topicModel->index(row, 0, QModelIndex()), m_topicModel->index(row, 1, QModelIndex()));
-        m_ui.topicHistoryView->selectionModel()->select(selection, QItemSelectionModel::ClearAndSelect);
     }
 
     void ChannelOptionsDialog::topicHistoryItemClicked(const QItemSelection& selection)
