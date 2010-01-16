@@ -1900,7 +1900,7 @@ void ViewContainer::appendToFrontmost(const QString& type,const QString& message
     {
         if (m_frontView) // m_frontView == NULL if canBeFrontView() == false for active ChatWindow
             serverView = m_frontView->getServer()->getStatusView();
-        else if (m_frontServer) // m_fronView == NULL && m_frontServer != NULL if ChannelListPanel is active.
+        else if (m_frontServer) // m_frontView == NULL && m_frontServer != NULL if ChannelListPanel is active.
             serverView = m_frontServer->getStatusView();
     }
 
