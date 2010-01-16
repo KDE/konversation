@@ -207,6 +207,8 @@ namespace Konversation
             // Select current topic and update topic preview
             QItemSelection selection(m_topicModel->index(row, 0, QModelIndex()), m_topicModel->index(row, 1, QModelIndex()));
             m_ui.topicHistoryView->selectionModel()->select(selection, QItemSelectionModel::ClearAndSelect);
+            // Make sure that the item is visible
+            m_ui.topicHistoryView->scrollTo(m_topicModel->index(row, 0, QModelIndex()));
         }
     }
 
