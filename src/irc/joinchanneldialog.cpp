@@ -147,7 +147,7 @@ namespace Konversation
         channelHistory << "";
         for(ChannelList::iterator it = history.begin(); it != endIt; ++it)
         {
-          // Dont add empty items to the combobox
+          // Don't add empty items to the combobox
           if ((*it).name().isEmpty())
             continue;
 
