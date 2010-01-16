@@ -2683,7 +2683,7 @@ NickInfoPtr Server::setWatchedNickOnline(const QString& nickname)
     if (!addressee.isEmpty()) Konversation::Addressbook::self()->emitContactPresenceChanged(addressee.uid());
 
     appendMessageToFrontmost(i18n("Notify"),"<a class=\"nick\" href=\"#"+nickname+"\">"+
-        i18n("%1 is online (%2).", nickname, getServerName())+"</a>", getStatusView());
+        i18n("%1 is online (%2).", nickname, getServerName())+"</a>", false);
 
     static_cast<Application*>(kapp)->notificationHandler()->nickOnline(getStatusView(), nickname);
 
@@ -2700,7 +2700,7 @@ void Server::setWatchedNickOffline(const QString& nickname, const NickInfoPtr ni
 
     emit watchedNickChanged(this, nickname, false);
 
-    appendMessageToFrontmost(i18n("Notify"), i18n("%1 went offline (%2).", nickname, getServerName()), getStatusView());
+    appendMessageToFrontmost(i18n("Notify"), i18n("%1 went offline (%2).", nickname, getServerName()), false);
 
     static_cast<Application*>(kapp)->notificationHandler()->nickOffline(getStatusView(), nickname);
 
