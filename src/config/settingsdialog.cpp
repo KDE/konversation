@@ -113,6 +113,9 @@ KonviSettingsDialog::KonviSettingsDialog( QWidget *parent) :
   Ui::ChatwindowBehaviour_Config confChatwindowBehaviour;
   w = new QWidget();
   confChatwindowBehaviour.setupUi(w);
+  int maximumScrollbackLines = confChatwindowBehaviour.kcfg_ScrollbackMax->maximum();
+  QString formattedScrollbackLimit = KGlobal::locale()->formatNumber(maximumScrollbackLines, 0);
+  confChatwindowBehaviour.kcfg_ScrollbackMax->setToolTip(i18n("Maximum scrollback limit: %1 lines.", formattedScrollbackLimit));
   addPage(w, behaviorGroup, "view-list-text", i18n("Chat Window"));
 
   //Behaviour/Nickname List
