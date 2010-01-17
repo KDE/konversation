@@ -92,6 +92,9 @@ class UrlCatcher : public ChatWindow, private Ui::URLCatcherUI
         /** Called from ChatWindow adjustFocus */
         virtual void childAdjustFocus();
 
+        inline void saveColumns();
+        inline void restoreColumns();
+
         QTimer* m_filterTimer;
 
         UrlCatcherModel* m_urlListModel;

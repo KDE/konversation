@@ -177,6 +177,8 @@ UrlCatcher::UrlCatcher(QWidget* parent) : ChatWindow(parent)
     m_proxyModel->setDynamicSortFilter(true);
     m_proxyModel->setFilterKeyColumn(-1);
 
+    restoreColumns();
+
     m_filterTimer = new QTimer(this);
     m_filterTimer->setSingleShot(true);
 
@@ -195,6 +197,7 @@ UrlCatcher::UrlCatcher(QWidget* parent) : ChatWindow(parent)
 
 UrlCatcher::~UrlCatcher()
 {
+    saveColumns();
 }
 
 void UrlCatcher::filterChanged()
@@ -465,4 +468,33 @@ void UrlCatcher::childAdjustFocus()
 {
 }
 
+void UrlCatcher::saveColumns()
+{
+    QList<int> columnWidths;
+    for (int i = 0; i < m_urlListView->header()->count(); ++i)
+        columnWidths.append(m_urlListView->columnWidth(i));
+    // save column widths
+    Preferences::self()->setUcColumnWidths(columnWidths);
+#if (QT_VERSION >= QT_VERSION_CHECK(4, 5, 0))
+    Preferences::self()->setUcColumnSorted( m_proxyModel->sortColumn() );
+    Preferences::self()->setUcColumnSortDescending ( m_proxyModel->sortOrder() == Qt::DescendingOrder ? true : false );
+#endif
+}
+
+void UrlCatcher::restoreColumns()
+{
+    QList<int> columnWidths = Preferences::self()->ucColumnWidths();
+
+    if (columnWidths.count() == 3)
+    {
+        for (int i = 0; i < columnWidths.count(); ++i)
+            if (columnWidths.at(i))
+                m_urlListView->setColumnWidth(i, columnWidths.at(i));
+
+        if (Preferences::self()->ucColumnSortDescending())
+            m_urlListView->sortByColumn(Preferences::self()->ucColumnSorted(), Qt::DescendingOrder);
+        else
+            m_urlListView->sortByColumn(Preferences::self()->ucColumnSorted(), Qt::AscendingOrder);
+    }
+}
 #include "urlcatcher.moc"

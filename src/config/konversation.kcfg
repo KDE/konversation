@@ -715,6 +715,17 @@
       <default>true</default>
     </entry>
   </group>
+  <group name="UC Settings">
+      <entry key="ColumnWidths" type="IntList" name="UcColumnWidths">
+      <default>100,100,100</default>
+    </entry>
+    <entry key="ColumnSorted" type="Int" name="UcColumnSorted">
+      <default>2</default>
+    </entry>
+    <entry key="ColumnSortDescending" type="Bool" name="UcColumnSortDescending">
+      <default>false</default>
+    </entry>
+  </group>
   <group name="Path Settings">
     <entry key="LogfilePath" type="Url">
       <default code="true">KUser(KUser::UseRealUserID).homeDir()+"/logs"</default>
