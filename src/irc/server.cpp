@@ -3567,7 +3567,7 @@ void Server::requestAway(const QString& reason)
     IdentityPtr identity = getIdentity();
 
     if (awayReason.isEmpty() || !identity)
-        awayReason = i18n("Gone away for now");
+        awayReason = i18nc("Fallback default away reason", "Gone away for now");
 
     setAwayReason(awayReason);
 
