@@ -82,7 +82,8 @@ Changes since 1.2.1:
 * Updated various dialog layouts to better comply with the alignment
   rules of the KDE 4 HIG.
 * The URL list in the URL catcher tab now sports a new Date column
-  and can be sorted.
+  and can be sorted. The sorting settings are saved and restored
+  across sessions.
 * Fixed a bug causing the vertical spacing inbetween the regular mode
   checkboxen on the "Modes" tab of the Channel Settings dialog to
   change when the display of the advanced mode list was toggled or
