@@ -19,6 +19,8 @@
 
 #include <QFileInfo>
 #include <QHashIterator>
+#include <QHeaderView>
+#include <QTreeView>
 
 #include <KLocale>
 #include <KUser>
@@ -562,6 +564,36 @@ QString Preferences::webBrowserCmd()
   if (!cmd.contains("%u"))
       cmd += " %u";
   return cmd;
+}
+
+void Preferences::saveColumnState(QTreeView *treeView, QString name)
+{
+    KConfig config;
+    KConfigGroup group = config.group(name);
+
+    QList<int> columnWidths;
+    for (int i = 0; i < treeView->header()->count(); ++i)
+        columnWidths.append(treeView->columnWidth(i));
+    // save column widths
+    group.writeEntry("ColumnWidths", columnWidths);
+    group.writeEntry("ColumnSorted", treeView->header()->sortIndicatorSection());
+    group.writeEntry("ColumnSortDescending", treeView->header()->sortIndicatorOrder() == Qt::DescendingOrder ? true : false );
+}
+
+void Preferences::restoreColumnState(QTreeView *treeView, QString name)
+{
+    KConfig config;
+    KConfigGroup group = config.group(name);
+
+    QList<int> columnWidths = group.readEntry("ColumnWidths", QList<int>());
+    for (int i = 0; i < columnWidths.count(); ++i)
+        if (columnWidths.at(i))
+            treeView->setColumnWidth(i, columnWidths.at(i));
+
+    if (group.readEntry("ColumnSortDescending", false))
+        treeView->header()->setSortIndicator(group.readEntry("ColumnSorted", 0), Qt::DescendingOrder);
+    else
+        treeView->header()->setSortIndicator(group.readEntry("ColumnSorted", 0), Qt::AscendingOrder);
 }
 
 #include "preferences.moc"

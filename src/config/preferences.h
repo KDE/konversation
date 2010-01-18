@@ -34,6 +34,8 @@ class Ignore;
 class Highlight;
 struct PreferencesSingleton;
 
+class QTreeView;
+
 class Preferences : public PreferencesBase
 {
     Q_OBJECT
@@ -138,6 +140,9 @@ class Preferences : public PreferencesBase
         static void setAutoUserhost(bool state);
 
         static QString webBrowserCmd();
+
+        static void saveColumnState(QTreeView *treeView, QString name);
+        static void restoreColumnState(QTreeView *treeView, QString name);
 
     signals:
         void requestServerConnection(int number);
