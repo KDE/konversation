@@ -14,6 +14,7 @@
 
 #include "channellistpanel.h"
 #include "channel.h"
+#include "preferences.h"
 #include "server.h"
 #include "common.h"
 
@@ -174,6 +175,9 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
     m_proxyModel->setSourceModel(m_channelListModel);
     m_channelListView->setModel(m_proxyModel);
     m_channelListView->header()->resizeSection(1,75); // resize users section to be smaller
+
+    Preferences::restoreColumnState(m_channelListView, "ChannelList ViewSettings");
+
     // double click on channel entry joins the channel
     connect(m_channelListView, SIGNAL(doubleClicked(const QModelIndex&)),
             this, SLOT(joinChannelClicked()) );
@@ -200,6 +204,7 @@ ChannelListPanel::ChannelListPanel(QWidget* parent) : ChatWindow(parent)
 
 ChannelListPanel::~ChannelListPanel()
 {
+    Preferences::saveColumnState(m_channelListView, "ChannelList ViewSettings");
 }
 
 void ChannelListPanel::refreshList()
