@@ -108,6 +108,20 @@ QVariant UrlCatcherModel::data(const QModelIndex& index, int role) const
                 return QVariant();
         }
     }
+    if (role == Qt::UserRole)
+    {
+        switch(index.column())
+        {
+            case 0:
+                return item.nick;
+            case 1:
+                return item.url;
+            case 2:
+                return item.datetime;
+            default:
+                return QVariant();
+        }
+    }
     return QVariant();
 }
 
@@ -171,6 +185,7 @@ UrlCatcher::UrlCatcher(QWidget* parent) : ChatWindow(parent)
     m_urlListModel = new UrlCatcherModel(this);
 
     m_proxyModel = new QSortFilterProxyModel(this);
+    m_proxyModel->setSortRole(Qt::UserRole);
     m_proxyModel->setSourceModel(m_urlListModel);
     m_urlListView->setModel(m_proxyModel);
 
