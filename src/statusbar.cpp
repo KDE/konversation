@@ -31,14 +31,14 @@ namespace Konversation
         m_window->statusBar();
 
         m_mainLabel = new KSqueezedTextLabel(m_window->statusBar());
+
+        // this is the default size policy, taken from QLabel
+        // this ensures that height is calculated properly and that allignement is handled right
+        // in the status bar. Which KSqueezedTextLabel doesn't.
+        m_mainLabel->setSizePolicy(QSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred, QSizePolicy::Label ));
         m_mainLabel->setObjectName("mainLabel");
         setMainLabelText(i18n("Ready."));
-        m_mainLabel->setSizePolicy(QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed));
         m_mainLabel->setMinimumWidth(0);
-
-        // KSqueezedLabel calculates the wrong height. Popular workaround.
-        int height = m_window->fontMetrics().height()+2;
-        m_mainLabel->setFixedHeight(height);
 
         m_infoLabel = new QLabel(m_window->statusBar());
         m_infoLabel->setObjectName("infoLabel");
@@ -68,11 +68,7 @@ namespace Konversation
     }
 
     void StatusBar::updateAppearance()
-    {
-        // KSqueezedLabel calculates the wrong height. Popular workaround.
-        int height = m_window->fontMetrics().height()+2;
-        m_mainLabel->setFixedHeight(height);
-    }
+    {}
 
     void StatusBar::resetStatusBar()
     {
