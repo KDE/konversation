@@ -82,6 +82,8 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
     m_nickListView->setRootIsDecorated(true);
     m_nickListView->setSortingEnabled(true);
 
+    Preferences::restoreColumnState(m_nickListView, "NicksOnline ViewSettings");
+
     QString nickListViewWT = i18n(
         "<p>These are all the nicknames on your Nickname Watch list, listed under the "
         "server network they are connected to.  The list also includes the nicknames "
@@ -122,6 +124,8 @@ NicksOnline::NicksOnline(QWidget* parent): ChatWindow(parent)
 
 NicksOnline::~NicksOnline()
 {
+    Preferences::saveColumnState(m_nickListView, "NicksOnline ViewSettings");
+
     m_timer->stop();
     delete m_timer;
     delete m_nickListView;
