@@ -568,8 +568,7 @@ QString Preferences::webBrowserCmd()
 
 void Preferences::saveColumnState(QTreeView *treeView, QString name)
 {
-    KConfig config;
-    KConfigGroup group = config.group(name);
+    KConfigGroup group(KGlobal::config(), name);
 
     QList<int> columnWidths;
     for (int i = 0; i < treeView->header()->count(); ++i)
@@ -582,8 +581,7 @@ void Preferences::saveColumnState(QTreeView *treeView, QString name)
 
 void Preferences::restoreColumnState(QTreeView *treeView, QString name)
 {
-    KConfig config;
-    KConfigGroup group = config.group(name);
+    KConfigGroup group(KGlobal::config(), name);
 
     QList<int> columnWidths = group.readEntry("ColumnWidths", QList<int>());
     for (int i = 0; i < columnWidths.count(); ++i)
