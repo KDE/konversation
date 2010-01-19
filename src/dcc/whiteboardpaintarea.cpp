@@ -55,6 +55,12 @@ namespace Konversation
         void WhiteBoardPaintArea::setTool(WhiteBoardGlobals::WhiteBoardTool tool)
         {
             //kDebug() << "newtool" << tool;
+            if (tool != m_tool && (m_tool == WhiteBoardGlobals::Text || m_tool == WhiteBoardGlobals::TextExtended))
+            {
+                finishText();
+                makeLastPosInvalid();
+                update();
+            }
             m_tool = tool;
         }
 
@@ -77,6 +83,17 @@ namespace Konversation
         void WhiteBoardPaintArea::setPenWidth(int width)
         {
             m_penWidth = width;
+        }
+
+        void WhiteBoardPaintArea::setFont(const QFont& font)
+        {
+            m_font = font;
+            if (isLastPosValid() && m_tool == WhiteBoardGlobals::TextExtended)
+            {
+                m_overlayPixmap->fill(Qt::transparent);
+                text(m_overlayPixmap, m_font, m_foregroundColor, m_backgroundColor, m_lastPos.x(), m_lastPos.y(), m_writtenText, true, m_tool);
+                update();
+            }
         }
 
         void WhiteBoardPaintArea::clear()
@@ -184,6 +201,18 @@ namespace Konversation
             update();
         }
 
+        void WhiteBoardPaintArea::useText(int x1, int y1, const QString& textString)
+        {
+            text(m_imagePixmap, QFont(), Qt::black, Qt::white, x1, y1, textString, false, WhiteBoardGlobals::Text);
+            update();
+        }
+
+        void WhiteBoardPaintArea::useTextExtended(int x1, int y1, const QFont& font, const QColor& foreGround, const QColor& backGround, const QString& textString)
+        {
+            text(m_imagePixmap, font, foreGround, backGround, x1, y1, textString, false, WhiteBoardGlobals::TextExtended);
+            update();
+        }
+
         void WhiteBoardPaintArea::save(const QString& fileName)
         {
             m_imagePixmap->save(fileName);
@@ -231,8 +260,9 @@ namespace Konversation
 
         void WhiteBoardPaintArea::resizeEvent(QResizeEvent *event)
         {
-            kDebug() << "newsize:" << event->size();
-            kDebug() << "newcontent:" << contentsRect().width() << " " << contentsRect().height();
+            Q_UNUSED(event);
+            // kDebug() << "newsize:" << event->size();
+            // kDebug() << "newcontent:" << contentsRect().width() << " " << contentsRect().height();
             resizeImage(contentsRect().width(), contentsRect().height());
         }
 
@@ -243,15 +273,16 @@ namespace Konversation
             {
                 m_mousePressed = false;
                 m_overlayPixmap->fill(Qt::transparent);
+                m_writtenText.clear();
                 makeLastPosInvalid();
                 update();
             }
             else if (event->buttons() & Qt::LeftButton)
             {
-                makeLastPosInvalid();
                 m_mousePressed = true;
                 if (m_tool == WhiteBoardGlobals::FloodFill)
                 {
+                    makeLastPosInvalid();
                     QCursor oldCur = cursor();
                     setCursor(Qt::WaitCursor);
                     floodfill(event->pos().x(), event->pos().y(), m_foregroundColor);
@@ -259,8 +290,28 @@ namespace Konversation
                     emit usedFloodFill(event->pos().x(), event->pos().y(), m_foregroundColor);
                     update();
                 }
+                else if (m_tool == WhiteBoardGlobals::TextExtended || m_tool == WhiteBoardGlobals::Text)
+                {
+                    m_mousePressed = false;
+                    m_overlayPixmap->fill(Qt::transparent);
+                    if (isLastPosValid())
+                    {
+                        finishText();
+                        m_lastPos = event->pos();
+                        text(m_overlayPixmap, m_font, m_foregroundColor, m_backgroundColor, event->pos().x(), event->pos().y(), m_writtenText, true, m_tool);
+                        setFocus();
+                    }
+                    else
+                    {
+                        m_lastPos = event->pos();
+                        text(m_overlayPixmap, m_font, m_foregroundColor, m_backgroundColor, event->pos().x(), event->pos().y(), m_writtenText, true, m_tool);
+                        setFocus();
+                    }
+                    update();
+                }
                 else
                 {
+                    makeLastPosInvalid();
                     mouseMoveEvent(event);
                 }
             }
@@ -304,6 +355,10 @@ namespace Konversation
                     emit drawedArrow(m_penWidth, m_foregroundColor,
                                      m_lastPos.x(), m_lastPos.y(), event->pos().x(), event->pos().y());
                     break;
+                case WhiteBoardGlobals::Text:
+                case WhiteBoardGlobals::TextExtended:
+                    //don't finish writing here, finish it on tool change or when clicking somewhere else
+                    return;
                 }
 
                 QPainter tPainter(m_imagePixmap);
@@ -444,11 +499,49 @@ namespace Konversation
                     }
                     break;
 
+                case WhiteBoardGlobals::TextExtended:
+                case WhiteBoardGlobals::Text:
+                    //handle in mousePressEvent
+                    break;
                 }
                 tPainter.end();
 
                 update();
             }
+        }
+
+        void WhiteBoardPaintArea::keyPressEvent(QKeyEvent* event)
+        {
+            kDebug() << event->text() << event->text().length() << int(event->text()[0].toAscii());
+
+            if ((m_tool == WhiteBoardGlobals::Text || m_tool == WhiteBoardGlobals::TextExtended) && isLastPosValid())
+            {
+                if (event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return)
+                {
+                    finishText();
+                    update();
+                    return;
+                }
+
+                if (event->key() != Qt::Key_Backspace)
+                {
+                    QString eventText = event->text();
+                    //chars before 32(space) are not printable
+                    if (eventText.length() == 1 && !eventText.at(0).isPrint())
+                    {
+                        return;
+                    }
+                    m_writtenText += eventText;
+                }
+                else
+                {
+                    m_writtenText.chop(1);
+                }
+                m_overlayPixmap->fill(Qt::transparent);
+                text(m_overlayPixmap, m_font, m_foregroundColor, m_backgroundColor, m_lastPos.x(), m_lastPos.y(), m_writtenText, true, m_tool);
+                update();
+            }
+            QWidget::keyPressEvent(event);
         }
 
         void WhiteBoardPaintArea::makeLastPosInvalid()
@@ -661,5 +754,71 @@ namespace Konversation
             painter->drawLine(x1Arrow, y1Arrow, x2, y2);
             painter->drawLine(x2Arrow, y2Arrow, x2, y2);
         }
+
+        void WhiteBoardPaintArea::text(QPaintDevice* device, const QFont& font, const QColor& foreGround,
+                                       const QColor& backGround, int x1, int y1, const QString& textString,
+                                       bool drawSelection, Konversation::DCC::WhiteBoardGlobals::WhiteBoardTool tool)
+        {
+            QFontMetrics tMetrics(font);
+            QSize tSize = tMetrics.size(Qt::TextSingleLine, textString);
+
+            //HACK if size changes device is invalid
+            bool isOverlay = (device == m_overlayPixmap);
+            checkImageSize(x1,y1,x1+tSize.width(), y1+tSize.height());
+
+            if (isOverlay)
+            {
+                device = m_overlayPixmap;
+            }
+            else
+            {
+                device = m_imagePixmap;
+            }
+
+            QPainter tPaint(device);
+            tPaint.setFont(font);
+            if (tool == WhiteBoardGlobals::TextExtended)
+            {
+                tPaint.setBrush(backGround);
+
+                //paint background, but I don't like it
+//                 tPaint.setPen(getPen(backGround, 1, WhiteBoardGlobals::FilledRectangle));
+//                 tPaint.drawRect(x1, y1, tSize.width(), tSize.height());
+
+                tPaint.setPen(getPen(foreGround, 1, tool));
+            }
+
+            tPaint.drawText(x1, y1+tSize.height(), textString);
+            if (drawSelection)
+            {
+                tPaint.setBrush(Qt::transparent);
+                QPen tPen = getPen(Qt::blue, 1, tool);
+                tPen.setStyle(Qt::DashLine);
+                tPaint.setPen(tPen);
+                tPaint.drawRect(x1-1,y1-1, tSize.width()+1, tSize.height()+1);
+            }
+            tPaint.end();
+        }
+
+        void WhiteBoardPaintArea::finishText()
+        {
+            if (m_writtenText.isEmpty())
+            {
+                return;
+            }
+
+            m_overlayPixmap->fill(Qt::transparent);
+            text(m_imagePixmap, m_font, m_foregroundColor, m_backgroundColor, m_lastPos.x(), m_lastPos.y(), m_writtenText, false, m_tool);
+            if (m_tool == WhiteBoardGlobals::TextExtended)
+            {
+                emit usedTextExtended(m_lastPos.x(), m_lastPos.y(), m_font, m_foregroundColor, m_backgroundColor, m_writtenText);
+            }
+            else if (m_tool == WhiteBoardGlobals::Text)
+            {
+                emit usedText(m_lastPos.x(), m_lastPos.y(), m_writtenText);
+            }
+            m_writtenText.clear();
+        }
+
     }
 }

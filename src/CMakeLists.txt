@@ -178,6 +178,7 @@ set(dcc_SRCS
     dcc/transferview.cpp
     dcc/whiteboard.cpp
     dcc/whiteboardcolorchooser.cpp
+    dcc/whiteboardfontchooser.cpp
     dcc/whiteboardglobals.cpp
     dcc/whiteboardpaintarea.cpp
     dcc/whiteboardtoolbar.cpp
@@ -187,6 +188,7 @@ kde4_add_ui_files(dcc_SRCS
     dcc/transferdetailedinfopanelui.ui
     dcc/transferdetailedtimeinfopanelui.ui
     dcc/whiteboardtoolbarui.ui
+    dcc/whiteboardfontchooserui.ui
 )
 
 set(linkaddressbook_SRCS

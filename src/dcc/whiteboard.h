@@ -56,12 +56,16 @@ namespace Konversation
                 void usedEraser(int lineWidth, int xFrom, int yFrom, int xTo, int yTo);
                 void usedFloodFill(int x, int y, const QColor& color);
 
+                void usedText(int x, int y, const QString& text);
+                void usedTextExtended(int x, int y, const QFont& font, const QColor& textColor, const QColor& background, const QString& text);
+
             signals:
                 void rawWhiteBoardCommand(const QString& command);
 
             private:
                 inline QColor parseColor(const QString& colorString, bool* ok = 0);
                 inline QString colorToString(const QColor& color);
+                inline int fontToStyle(const QFont& font); 
 
                 inline void emitDRCommand(WhiteBoardGlobals::WhiteBoardTool tool, int lineWidth,
                                          const QColor& penColor, const QColor& brushColor,

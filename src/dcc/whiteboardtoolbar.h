@@ -25,11 +25,21 @@ namespace Konversation
 {
     namespace DCC
     {
+        class WhiteBoardFontChooser;
+
         class WhiteBoardToolBar : public QWidget, public Ui::WhiteBoardToolBarUi
         {
             Q_OBJECT
 
             public:
+
+                enum TextType
+                {
+                    None = 0,
+                    SimpleText,
+                    ExtentedText
+                };
+
                 WhiteBoardToolBar(QWidget* parent);
                 ~WhiteBoardToolBar();
 
@@ -40,6 +50,9 @@ namespace Konversation
                 void enableTool(Konversation::DCC::WhiteBoardGlobals::WhiteBoardTool tool);
                 void disableTool(Konversation::DCC::WhiteBoardGlobals::WhiteBoardTool tool);
 
+                void setSupportedTextType(Konversation::DCC::WhiteBoardToolBar::TextType textType);
+                Konversation::DCC::WhiteBoardToolBar::TextType textType() const;
+
             signals:
                 void toolChanged(Konversation::DCC::WhiteBoardGlobals::WhiteBoardTool tool);
 
@@ -49,6 +62,10 @@ namespace Konversation
                 void foregroundColorChanged(const QColor& color);
                 void backgroundColorChanged(const QColor& color);
             // colorchooser signals end
+
+            // fontchooser
+                void fontChanged(const QFont& font);
+            // fontchooser end
 
                 void lineWidthChanged(int width);
 
@@ -88,6 +105,7 @@ namespace Konversation
 
                 inline void setLineWidthVisible(bool visible);
                 inline void setFormOptionVisible(bool visible);
+                inline void setFontDialogVisible(bool visible);
 
                 inline void fillFormOptionList(FormOption form);
 
@@ -99,6 +117,9 @@ namespace Konversation
 
                 QPixmap m_ellipsePixmap;
                 QPixmap m_filledEllipsePixmap;
+
+                Konversation::DCC::WhiteBoardToolBar::TextType m_textType;
+                WhiteBoardFontChooser* m_fontDialog;
         };
     }
 }

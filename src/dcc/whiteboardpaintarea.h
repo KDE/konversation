@@ -24,6 +24,7 @@ class QPaintEvent;
 class QResizeEvent;
 class QMouseEvent;
 class QPixmap;
+class QKeyEvent;
 
 namespace Konversation
 {
@@ -42,6 +43,7 @@ namespace Konversation
             void setBackgroundColor(const QColor& color);
             void swapColors(const QColor& newForeground, const QColor& newBackground);
             void setPenWidth(int width);
+            void setFont(const QFont& font);
 
             void clear();
 
@@ -60,6 +62,8 @@ namespace Konversation
             void useEraser(int lineWidth, int xFrom, int yFrom, int xTo, int yTo);
             void useFloodFill(int x, int y, const QColor& color);
             void useBlt(int x1src, int y1src, int x2src, int y2src, int xdest, int ydest);
+            void useText(int x1, int y1, const QString& textString);
+            void useTextExtended(int x1, int y1, const QFont& font, const QColor& foreGround, const QColor& backGround, const QString& textString);
 
             void save(const QString& fileName);
 
@@ -80,6 +84,8 @@ namespace Konversation
                              int xFrom, int yFrom, int xTo, int yTo);
             void usedEraser(int lineWidth, int xFrom, int yFrom, int xTo, int yTo);
             void usedFloodFill(int x, int y, const QColor& color);
+            void usedText(int x, int y, const QString& text);
+            void usedTextExtended(int x, int y, const QFont& font, const QColor& textColor, const QColor& background, const QString& text);
 
         protected:
             virtual void paintEvent(QPaintEvent * event);
@@ -87,6 +93,7 @@ namespace Konversation
             virtual void mousePressEvent(QMouseEvent * event);
             virtual void mouseReleaseEvent(QMouseEvent * event);
             virtual void mouseMoveEvent(QMouseEvent * event);
+            virtual void keyPressEvent(QKeyEvent * event);
 
         private:
             inline void makeLastPosInvalid();
@@ -100,6 +107,11 @@ namespace Konversation
 
             inline void arrow(QPainter* painter, int x1, int y1, int x2, int y2);
 
+            inline void text(QPaintDevice* device, const QFont& font, const QColor& foreGround,
+                             const QColor& backGround, int x1, int y1, const QString& textString, bool drawSelection = true,
+                             Konversation::DCC::WhiteBoardGlobals::WhiteBoardTool tool = WhiteBoardGlobals::Text);
+            inline void finishText();
+
             QPixmap* m_imagePixmap;
             QPixmap* m_overlayPixmap;
 
@@ -112,6 +124,9 @@ namespace Konversation
             QColor m_backgroundColor;
 
             int m_penWidth;
+
+            QFont m_font;
+            QString m_writtenText;
         };
     }
 }

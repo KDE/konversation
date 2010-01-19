@@ -14,14 +14,16 @@
 #include <QHBoxLayout>
 #include <QLayout>
 #include <QDir>
-
 #include <QImageWriter>
+#include <QPainter>
+
 #include <KPushButton>
 #include <KUrl>
 #include <KFileDialog>
 #include <KIcon>
 #include <kdebug.h>
-#include <QPainter>
+
+#include "whiteboardfontchooser.h"
 
 namespace Konversation
 {
@@ -29,7 +31,9 @@ namespace Konversation
     {
         WhiteBoardToolBar::WhiteBoardToolBar(QWidget* parent)
             : QWidget(parent),
-              m_lineWidthPixmap(20, 20)
+              m_lineWidthPixmap(20, 20),
+              m_textType(SimpleText),
+              m_fontDialog(0)
         {
             setupUi(this);
 
@@ -113,6 +117,7 @@ namespace Konversation
 
         WhiteBoardToolBar::~WhiteBoardToolBar()
         {
+            delete m_fontDialog;
         }
 
         QColor WhiteBoardToolBar::foregroundColor() const
@@ -149,6 +154,35 @@ namespace Konversation
             {
                 kDebug() << "unhandled tool:" << tool;
             }
+        }
+
+        void WhiteBoardToolBar::setSupportedTextType(WhiteBoardToolBar::TextType textType)
+        {
+            m_textType = textType;
+            if (m_textType == WhiteBoardToolBar::ExtentedText)
+            {
+                if (m_fontDialog)
+                {
+                    return;
+                }
+                m_fontDialog = new WhiteBoardFontChooser(this);
+                connect(m_fontDialog, SIGNAL(fontChanged(const QFont&)),
+                        this, SIGNAL(fontChanged(QFont)));
+            }
+            else
+            {
+                if (m_fontDialog)
+                {
+                    disconnect(m_fontDialog, 0, 0, 0);
+                    delete m_fontDialog;
+                    m_fontDialog = 0;
+                }
+            }
+        }
+
+        WhiteBoardToolBar::TextType WhiteBoardToolBar::textType() const
+        {
+            return m_textType;
         }
 
         void WhiteBoardToolBar::connectToggleButtons()
@@ -206,6 +240,7 @@ namespace Konversation
             handleToggleButton(m_arrowPushButton, checked, WhiteBoardGlobals::Arrow);
             setLineWidthVisible(true);
             setFormOptionVisible(false);
+            setFontDialogVisible(false);
         }
 
         void WhiteBoardToolBar::ellipseToggled(bool checked)
@@ -214,6 +249,7 @@ namespace Konversation
             setLineWidthVisible(true);
             setFormOptionVisible(true);
             fillFormOptionList(Ellipse);
+            setFontDialogVisible(false);
         }
 
         void WhiteBoardToolBar::eraseToggled(bool checked)
@@ -221,6 +257,7 @@ namespace Konversation
             handleToggleButton(m_eraserPushButton, checked, WhiteBoardGlobals::Eraser);
             setLineWidthVisible(true);
             setFormOptionVisible(false);
+            setFontDialogVisible(false);
         }
 
         void WhiteBoardToolBar::fillToggled(bool checked)
@@ -228,6 +265,7 @@ namespace Konversation
             handleToggleButton(m_fillPushButton, checked, WhiteBoardGlobals::FloodFill);
             setLineWidthVisible(false);
             setFormOptionVisible(false);
+            setFontDialogVisible(false);
         }
 
         void WhiteBoardToolBar::lineToggled(bool checked)
@@ -235,6 +273,7 @@ namespace Konversation
             handleToggleButton(m_linePushButton, checked, WhiteBoardGlobals::Line);
             setLineWidthVisible(true);
             setFormOptionVisible(false);
+            setFontDialogVisible(false);
         }
 
         void WhiteBoardToolBar::pencilToggled(bool checked)
@@ -242,6 +281,7 @@ namespace Konversation
             handleToggleButton(m_pencilPushButton, checked, WhiteBoardGlobals::Pencil);
             setLineWidthVisible(true);
             setFormOptionVisible(false);
+            setFontDialogVisible(false);
         }
 
         void WhiteBoardToolBar::rectangleToggled(bool checked)
@@ -250,6 +290,7 @@ namespace Konversation
             setLineWidthVisible(true);
             setFormOptionVisible(true);
             fillFormOptionList(Rectangle);
+            setFontDialogVisible(false);
         }
 
         void WhiteBoardToolBar::selectionToggled(bool checked)
@@ -257,13 +298,22 @@ namespace Konversation
             handleToggleButton(m_selectionPushButton, checked, WhiteBoardGlobals::Selection);
             setLineWidthVisible(false);
             setFormOptionVisible(false);
+            setFontDialogVisible(false);
         }
 
         void WhiteBoardToolBar::textToggled(bool checked)
         {
-            handleToggleButton(m_textPushButton, checked, WhiteBoardGlobals::Text);
+            if (textType() == WhiteBoardToolBar::SimpleText)
+            {
+                handleToggleButton(m_textPushButton, checked, WhiteBoardGlobals::Text);
+            }
+            else
+            {
+                handleToggleButton(m_textPushButton, checked, WhiteBoardGlobals::TextExtended);
+            }
             setLineWidthVisible(false);
             setFormOptionVisible(false);
+            setFontDialogVisible(true);
         }
 
         void WhiteBoardToolBar::handleToggleButton(KPushButton* button, bool checked, Konversation::DCC::WhiteBoardGlobals::WhiteBoardTool tool)
@@ -355,6 +405,17 @@ namespace Konversation
             m_formOptionListWidget->setVisible(visible);
         }
 
+        void WhiteBoardToolBar::setFontDialogVisible(bool visible)
+        {
+            if (m_textType == WhiteBoardToolBar::ExtentedText && m_fontDialog)
+            {
+                if (visible)
+                    m_fontDialog->show();
+                else
+                    m_fontDialog->hide();
+            }
+        }
+
         void WhiteBoardToolBar::fillFormOptionList(FormOption form)
         {
             disconnect(m_formOptionListWidget, 0, 0, 0);
@@ -362,8 +423,8 @@ namespace Konversation
             const int width = m_formOptionListWidget->contentsRect().width() - m_formOptionListWidget->lineWidth()*4 - 1;
             const int drawHeight = 20 - 2;
             const QSize sizeHint(width, 20);
-            kDebug() << "wanted width" << width;
-            kDebug() << "actual width" << m_formOptionListWidget->contentsRect().width();
+            // kDebug() << "wanted width" << width;
+            // kDebug() << "actual width" << m_formOptionListWidget->contentsRect().width();
             switch (form)
             {
                 case Rectangle:

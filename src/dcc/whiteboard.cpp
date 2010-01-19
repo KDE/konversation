@@ -46,6 +46,8 @@ namespace Konversation
                     m_paintArea, SLOT(setBackgroundColor(const QColor&)));
             connect(m_toolbar, SIGNAL(colorsSwapped(const QColor&, const QColor&)),
                     m_paintArea, SLOT(swapColors(const QColor&, const QColor&)));
+            connect(m_toolbar, SIGNAL(fontChanged(const QFont&)),
+                    m_paintArea, SLOT(setFont(const QFont&)));
 
             connect(m_toolbar, SIGNAL(clear()), this, SLOT(clear()));
             connect(m_toolbar, SIGNAL(save(const QString&)), m_paintArea, SLOT(save(const QString&)));
@@ -69,6 +71,10 @@ namespace Konversation
                     this, SLOT(usedEraser(int, int, int, int, int)));
             connect(m_paintArea, SIGNAL(usedFloodFill(int, int, const QColor&)),
                     this, SLOT(usedFloodFill(int, int, const QColor&)));
+            connect(m_paintArea, SIGNAL(usedText(int, int, const QString&)),
+                    this, SLOT(usedText(int, int, const QString&)));
+            connect(m_paintArea, SIGNAL(usedTextExtended(int, int, const QFont&, const QColor&, const QColor&, const QString&)),
+                    this, SLOT(usedTextExtended(int, int, const QFont&, const QColor&, const QColor&, const QString&)));
         }
 
         WhiteBoard::~WhiteBoard()
@@ -84,10 +90,14 @@ namespace Konversation
         void WhiteBoard::receivedWhiteBoardLine(const QString& line)
         {
             // kDebug() << line;
-            if (line.isEmpty())
+            if (line.isEmpty() || !line.contains(' '))
                 return;
 
-            const QStringList firstSplit = line.split(' ', QString::SkipEmptyParts);
+            //fontname can have spaces, as well as text
+            QStringList firstSplit;
+            firstSplit.append(line.section(' ', 0 ,0));
+            firstSplit.append(line.section(' ', 1));
+
             if (firstSplit.isEmpty())
                 return;
 
@@ -132,7 +142,7 @@ namespace Konversation
                 QColor brushColor = parseColor(drArgsList.at(3), &ok);
                 if (!ok)
                 {
-                    kDebug() << "unabled to parse pencolor:" << drArgsList.at(3);
+                    kDebug() << "unabled to parse brush:" << drArgsList.at(3);
                     return;
                 }
 
@@ -211,6 +221,120 @@ namespace Konversation
                     break;
                 }
             }
+            else if (ctcpCommand == "TXT" && firstSplit.size() == 2)
+            {
+                QStringList txtArgsList = firstSplit.at(1).split(',', QString::KeepEmptyParts);
+                if (txtArgsList.size() < 3)
+                {
+                    kDebug() << "txt wrong size:" << txtArgsList.size();
+                    return;
+                }
+
+                QString tmp = txtArgsList.at(0);
+                bool ok;
+                int x1 = tmp.toInt(&ok);
+                if (!ok)
+                {
+                    kDebug() << "txt unabled to parse x1:" << tmp;
+                    return;
+                }
+
+                tmp = txtArgsList.at(1);
+                int y1 = tmp.toInt(&ok);
+                if (!ok)
+                {
+                    kDebug() << "txt unabled to parse y1:" << tmp;
+                    return;
+                }
+
+                txtArgsList.removeFirst();
+                txtArgsList.removeFirst();
+                QString text(txtArgsList.join(","));
+
+                m_paintArea->useText(x1,y1,text);
+            }
+            else if (ctcpCommand == "TXTEX" && firstSplit.size() == 2)
+            {
+                QStringList txtArgsList = firstSplit.at(1).split(',', QString::KeepEmptyParts);
+                if (txtArgsList.size() < 8)
+                {
+                    kDebug() << "txtex wrong size:" << txtArgsList.size();
+                    return;
+                }
+
+                QString tmp = txtArgsList.at(0);
+                bool ok;
+                int x1 = tmp.toInt(&ok);
+                if (!ok)
+                {
+                    kDebug() << "txtex unabled to parse x1:" << tmp;
+                    return;
+                }
+
+                tmp = txtArgsList.at(1);
+                int y1 = tmp.toInt(&ok);
+                if (!ok)
+                {
+                    kDebug() << "txtex unabled to parse y1:" << tmp;
+                    return;
+                }
+
+                QString fontName = txtArgsList.at(2);
+
+                tmp = txtArgsList.at(3);
+                int fontSize = tmp.toInt(&ok);
+                if (!ok)
+                {
+                    kDebug() << "txtex unabled to parse fontsize:" << tmp;
+                    return;
+                }
+
+                tmp = txtArgsList.at(4);
+                int fontStyle = tmp.toInt(&ok);
+                if (!ok)
+                {
+                    kDebug() << "txtex unabled to parse fontstyle:" << tmp;
+                    return;
+                }
+
+                QColor penColor = parseColor(txtArgsList.at(5), &ok);
+                if (!ok)
+                {
+                    kDebug() << "txtex unabled to parse pencolor:" << txtArgsList.at(5);
+                    return;
+                }
+
+                QColor brushColor = parseColor(txtArgsList.at(6), &ok);
+                if (!ok)
+                {
+                    kDebug() << "txtex unabled to parse brush:" << txtArgsList.at(6);
+                    return;
+                }
+
+                QFont tFont(fontName, fontSize);
+                if (fontStyle & WhiteBoardGlobals::Underline)
+                    tFont.setUnderline(true);
+
+                if (fontStyle & WhiteBoardGlobals::Strikeout)
+                    tFont.setStrikeOut(true);
+
+                if (fontStyle & WhiteBoardGlobals::Italic)
+                    tFont.setItalic(true);
+
+                if (fontStyle & WhiteBoardGlobals::Bold)
+                    tFont.setBold(true);
+
+                txtArgsList.removeFirst(); // x1
+                txtArgsList.removeFirst(); // y1
+                txtArgsList.removeFirst(); // fontname
+                txtArgsList.removeFirst(); // fontsize
+                txtArgsList.removeFirst(); // fontstyle
+                txtArgsList.removeFirst(); // textcolor
+                txtArgsList.removeFirst(); // bgcolor
+                QString text(txtArgsList.join(","));
+                // kDebug() << "TXTEX" << text << fontSize << fontName;
+                m_paintArea->useTextExtended(x1,y1,tFont,penColor,brushColor,text);
+            }
             else if (ctcpCommand == "CLS" && firstSplit.size() == 1)
             {
                 //CLS
@@ -219,11 +343,40 @@ namespace Konversation
             else if (ctcpCommand == "CAN" && firstSplit.size() == 2)
             {
                 //TODO implement me
-                const QString& can = firstSplit.at(1);
-                if (can == "can-wb2")
+                const QString& can = firstSplit.at(1).toLower();
+                if (can == "use-wb2")
                 {
                     //no we currently can't, I lied
-                    emitDo(can);
+                    emitDo("use-wb2");
+                    return;
+                }
+                else if (can == "txtex")
+                {
+                    emitDo("TXTEX");
+                    m_toolbar->setSupportedTextType(WhiteBoardToolBar::ExtentedText);
+                    return;
+                }
+                kDebug() << "unhandled CAN" << firstSplit.at(1);
+            }
+            else if (ctcpCommand == "CANT" && firstSplit.size() == 2)
+            {
+                //TODO implement me
+                const QString& cannot = firstSplit.at(1).toLower();
+                if (cannot == "txtex")
+                {
+                    m_toolbar->setSupportedTextType(WhiteBoardToolBar::SimpleText);
+                    return;
+                }
+                kDebug() << "unhandled CANT" << firstSplit.at(1);
+            }
+            else if (ctcpCommand == "DO" && firstSplit.size() == 2)
+            {
+                //TODO implement me
+                const QString& doString = firstSplit.at(1).toLower();
+                if (doString == "txtex")
+                {
+                    m_toolbar->setSupportedTextType(WhiteBoardToolBar::ExtentedText);
+                    return;
                 }
             }
             else if (ctcpCommand == "BLT" && firstSplit.size() == 2)
@@ -323,6 +476,28 @@ namespace Konversation
             emitDRCommand(WhiteBoardGlobals::FloodFill, 0, color, QColor(0,0,0), x, y, 0, 0);
         }
 
+        void WhiteBoard::usedText(int x, int y, const QString& text)
+        {
+            //TXT x,y,text
+            static const QString txtLineCommand("\x01""TXT %1,%2,%3\x01");
+
+            emit rawWhiteBoardCommand(txtLineCommand.arg(QString::number(x)).arg(QString::number(y)).arg(text));
+        }
+
+        void WhiteBoard::usedTextExtended(int x, int y, const QFont& font, const QColor& textColor, const QColor& background, const QString& text)
+        {
+            //TXTEX x,y,fontname,ptsize,style,textcolor,bgcolor,text
+            static const QString txtexLineCommand("\x01""TXTEX %1,%2,%3,%4,%5,%6,%7,%8\x01");
+
+            QString fontname = font.family();
+            QString fontSize = QString::number(font.pointSize());
+            QString fontStyle = QString::number(fontToStyle(font));
+
+            emit rawWhiteBoardCommand(txtexLineCommand.arg(QString::number(x)).arg(QString::number(y)).arg(
+                                                           fontname).arg(fontSize).arg(fontStyle).arg(colorToString(textColor)).arg(
+                                                           colorToString(background)).arg(text));
+        }
+
         QColor WhiteBoard::parseColor(const QString& colorString, bool* ok)
         {
             bool tOk = false;
@@ -352,9 +527,28 @@ namespace Konversation
             return QString::number((color.blue()<<16) | (color.green()<<8) | (color.red()));
         }
 
+        int WhiteBoard::fontToStyle(const QFont& font)
+        {
+            int style = 0;
+            if (font.underline())
+                style |= WhiteBoardGlobals::Underline;
+
+            if (font.bold())
+                style |= WhiteBoardGlobals::Bold;
+
+            if (font.strikeOut())
+                style |= WhiteBoardGlobals::Strikeout;
+
+            if (font.italic())
+                style |= WhiteBoardGlobals::Italic;
+
+            return style;
+        }
+
         void WhiteBoard::connected()
         {
             emitCan("use-wb2");
+            emitCan("TXTEX");
         }
 
         void WhiteBoard::emitDRCommand(WhiteBoardGlobals::WhiteBoardTool tool, int lineWidth,
