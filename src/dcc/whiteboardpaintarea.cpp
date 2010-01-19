@@ -819,6 +819,5 @@ namespace Konversation
             }
             m_writtenText.clear();
         }
-
     }
 }
