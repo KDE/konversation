@@ -393,6 +393,8 @@ void NicksOnline::updateServerOnlineList(Server* servr)
             QTreeWidgetItem* nickRoot = findItemChild(networkRoot, nickname, NicksOnlineItem::NicknameItem);
             if (!nickRoot)
                 nickRoot = new NicksOnlineItem(NicksOnlineItem::NicknameItem, networkRoot, nickname);
+            // remove channels from the nick
+            qDeleteAll(nickRoot->takeChildren());
             NicksOnlineItem* nickitem = static_cast<NicksOnlineItem*>(nickRoot);
             nickitem->setConnectionId(servr->connectionId ());
             // Mark nick as offline
