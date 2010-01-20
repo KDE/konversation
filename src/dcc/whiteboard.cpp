@@ -586,10 +586,10 @@ namespace Konversation
             emit rawWhiteBoardCommand(doCommand.arg(doString));
         }
 
-        void WhiteBoard::emitDont(const QString& dontString)
+        void WhiteBoard::emitDont(const QString& doNotString)
         {
-            static const QString dont = QString("\x01""DONT %1\x01"); //krazy:exclude=spelling
-            emit rawWhiteBoardCommand(dont.arg(dontString)); //krazy:exclude=spelling
+            static const QString doNot = QString("\x01""DONT %1\x01"); //krazy:exclude=spelling
+            emit rawWhiteBoardCommand(doNot.arg(doNotString));
         }
 
     }

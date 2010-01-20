@@ -74,7 +74,7 @@ namespace Konversation
                 inline void emitCan(const QString& canString);
                 inline void emitCant(const QString& cantString);
                 inline void emitDo(const QString& doString);
-                inline void emitDont(const QString& dontString);
+                inline void emitDont(const QString& doNotString);
 
                 WhiteBoardToolBar* m_toolbar;
                 WhiteBoardPaintArea* m_paintArea;
