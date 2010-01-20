@@ -1378,7 +1378,7 @@ void Server::dbusInfo(const QString& string)
 
 void Server::ctcpReply(const QString &receiver,const QString &text)
 {
-    queue("NOTICE "+receiver+" :"+'\x01'+text+'\x01');
+    queue("NOTICE "+receiver+" :"+'\x01'+text+'\x01', (isConnecting()? HighPriority : LowPriority));
 }
 
 // Given a nickname, returns NickInfo object.   0 if not found.
