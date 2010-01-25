@@ -101,6 +101,8 @@ Changes since 1.2.1:
   the channel combobox in the "Join Channel" dialog not to clear the
   history correctly; while it would be gone for as long as the dialog
   was open, it would be back when closing and reopening the dialog.
+* Fixed bug causing a crash on Windows when middle-clicking the chat
+  text view.
 
 
 Changes from 1.2 to 1.2.1:
