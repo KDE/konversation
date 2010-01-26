@@ -10,7 +10,7 @@
 */
 
 /*
-  Copyright (C) 2009 Bernd Buschinski <b.buschinski@web.de>
+  Copyright (C) 2009,2010 Bernd Buschinski <b.buschinski@web.de>
 */
 
 #ifndef TRANSFERLISTMODEL_H
@@ -19,10 +19,14 @@
 #include <QString>
 #include <QTreeWidget>
 #include <QStyledItemDelegate>
+#include <QItemDelegate>
 #include <QSortFilterProxyModel>
+
 #include <kio/global.h>
 
 #include "transfer.h"
+
+class KCategoryDrawer;
 
 namespace Konversation
 {
@@ -70,6 +74,16 @@ namespace Konversation
             Transfer *transfer;
         };
 
+
+        class TransferSizeDelegate : public QItemDelegate
+        {
+        public:
+            TransferSizeDelegate(KCategoryDrawer* categoryDrawer, QObject *parent = 0);
+
+            virtual QSize sizeHint(const QStyleOptionViewItem & option, const QModelIndex & index) const;
+        private:
+            KCategoryDrawer* m_categoryDrawer;
+        };
 
         class TransferProgressBarDelete : public QStyledItemDelegate
         {

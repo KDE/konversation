@@ -10,15 +10,17 @@
 */
 
 /*
-  Copyright (C) 2009 Bernd Buschinski <b.buschinski@web.de>
+  Copyright (C) 2009,2010 Bernd Buschinski <b.buschinski@web.de>
 */
 
 #include "transferlistmodel.h"
 
 #include <QApplication>
+
 #include <KCategorizedSortFilterProxyModel>
 #include <klocalizedstring.h>
 #include <KDebug>
+#include <KCategoryDrawer>
 
 namespace Konversation
 {
@@ -51,6 +53,32 @@ namespace Konversation
                 default:
                     return "";
             };
+        }
+
+
+        TransferSizeDelegate::TransferSizeDelegate(KCategoryDrawer* categoryDrawer, QObject* parent)
+            : QItemDelegate(parent)
+        {
+            m_categoryDrawer = categoryDrawer;
+        }
+
+        QSize TransferSizeDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
+        {
+            const int itemType = index.data(TransferListModel::TransferDisplayType).toInt();
+            int height;
+            QFontMetrics metrics(option.font);
+
+            if (itemType == TransferItemData::SendCategory || itemType == TransferItemData::ReceiveCategory)
+            {
+                height = m_categoryDrawer->categoryHeight(index, QStyleOption());
+            }
+            else
+            {
+                height = metrics.height();
+            }
+
+            int width = metrics.width(index.data(Qt::DisplayRole).toString());
+            return QSize(width, height);
         }
 
 
