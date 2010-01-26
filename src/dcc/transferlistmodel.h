@@ -85,10 +85,10 @@ namespace Konversation
             KCategoryDrawer* m_categoryDrawer;
         };
 
-        class TransferProgressBarDelete : public QStyledItemDelegate
+        class TransferProgressBarDelegate : public QStyledItemDelegate
         {
         public:
-            TransferProgressBarDelete(QObject *parent = 0);
+            TransferProgressBarDelegate(QObject *parent = 0);
 
             virtual void paint (QPainter *painter, const QStyleOptionViewItem & option,
                                 const QModelIndex &index) const;

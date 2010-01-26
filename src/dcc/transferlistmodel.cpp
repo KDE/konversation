@@ -82,14 +82,14 @@ namespace Konversation
         }
 
 
-        TransferProgressBarDelete::TransferProgressBarDelete (QObject *parent)
+        TransferProgressBarDelegate::TransferProgressBarDelegate(QObject *parent)
             : QStyledItemDelegate (parent)
         {
         }
 
-        void TransferProgressBarDelete::paint (QPainter *painter,
-                                               const QStyleOptionViewItem &option,
-                                               const QModelIndex &index) const
+        void TransferProgressBarDelegate::paint(QPainter *painter,
+                                                const QStyleOptionViewItem &option,
+                                                const QModelIndex &index) const
         {
             if (index.isValid())
             {

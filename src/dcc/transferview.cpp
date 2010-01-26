@@ -429,7 +429,7 @@ namespace Konversation
                 int headerType = m_dccModel->headerData(i, Qt::Horizontal, TransferListModel::HeaderType).toInt();
                 if (headerType == TransferHeaderData::Progress)
                 {
-                    setItemDelegateForColumn (i, new TransferProgressBarDelete(this));
+                    setItemDelegateForColumn (i, new TransferProgressBarDelegate(this));
                     return;
                 }
             }
