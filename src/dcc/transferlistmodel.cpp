@@ -68,6 +68,8 @@ namespace Konversation
             int height;
             QFontMetrics metrics(option.font);
 
+            int width = metrics.width(index.data(Qt::DisplayRole).toString());
+
             if (itemType == TransferItemData::SendCategory || itemType == TransferItemData::ReceiveCategory)
             {
                 height = m_categoryDrawer->categoryHeight(index, QStyleOption());
@@ -75,9 +77,15 @@ namespace Konversation
             else
             {
                 height = metrics.height();
+                QVariant pixmapVariant = index.data(Qt::DecorationRole);
+                if (!pixmapVariant.isNull())
+                {
+                    QPixmap tPix = pixmapVariant.value<QPixmap>();
+                    height = qMax(height, tPix.height());
+                    width = qMax(width, tPix.width());
+                }
             }
 
-            int width = metrics.width(index.data(Qt::DisplayRole).toString());
             return QSize(width, height);
         }
 
