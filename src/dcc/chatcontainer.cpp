@@ -274,10 +274,17 @@ namespace Konversation
                 }
                 else if (cmd == cc + "me")
                 {
-                    const QString &toSend = line.right(line.length() - (cc.length() + 3)); //2="me" + 1 space
-                    kDebug() << "toSend" << toSend;
-                    m_chat->sendAction(toSend);
-                    appendAction(m_chat->ownNick(), toSend);
+                    QString toSend = line.section(' ', 1);
+                    //kDebug() << "toSend" << toSend;
+                    if (toSend.isEmpty())
+                    {
+                        getTextView()->appendServerMessage(i18n("Usage"), i18n("Usage: %1ME text", Preferences::self()->commandChar()));
+                    }
+                    else
+                    {
+                        m_chat->sendAction(toSend);
+                        appendAction(m_chat->ownNick(), toSend);
+                    }
                 }
                 else if (cmd == cc + "close")
                 {
