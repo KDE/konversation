@@ -596,14 +596,14 @@ void Server::broken(QAbstractSocket::SocketError state)
     m_inputFilter.setLagMeasuring(false);
     m_currentLag = -1;
 
-    // HACK Only show one nick change dialog at connection time
+    // HACK Only show one nick change dialog at connection time.
+    // This hack is a bit nasty as it assumes that the only KDialog
+    // child of the statusview will be the nick change dialog.
     if (getStatusView())
     {
-        //! TODO FIXME uh, wtf. this should be a slot
-        //KDialogBase* nickChangeDialog = dynamic_cast<KDialogBase*>(
-        //        getStatusView()->child("NickChangeDialog", "KInputDialog"));
+        KDialog* nickChangeDialog = getStatusView()->findChild<KDialog*>();
 
-        //if (nickChangeDialog) nickChangeDialog->cancel();
+        if (nickChangeDialog) nickChangeDialog->reject();
     }
 
     emit resetLag();
@@ -915,7 +915,7 @@ QString Server::getNextNickname()
     {
         QString inputText = i18n("No nicknames from the \"%1\" identity were accepted by the connection \"%2\".\nPlease enter a new one or press Cancel to disconnect:", getIdentity()->getName(), getDisplayName());
         newNick = KInputDialog::getText(i18n("Nickname error"), inputText,
-                                        QString(), 0, getStatusView()); // TODO FIXME hope we don't need the name... "NickChangeDialog"
+                                        QString(), 0, getStatusView());
     }
     return newNick;
 }
@@ -1378,7 +1378,7 @@ void Server::dbusInfo(const QString& string)
 
 void Server::ctcpReply(const QString &receiver,const QString &text)
 {
-    queue("NOTICE "+receiver+" :"+'\x01'+text+'\x01', (isConnecting()? HighPriority : LowPriority));
+    queue("NOTICE "+receiver+" :"+'\x01'+text+'\x01');
 }
 
 // Given a nickname, returns NickInfo object.   0 if not found.
@@ -2683,7 +2683,7 @@ NickInfoPtr Server::setWatchedNickOnline(const QString& nickname)
     if (!addressee.isEmpty()) Konversation::Addressbook::self()->emitContactPresenceChanged(addressee.uid());
 
     appendMessageToFrontmost(i18n("Notify"),"<a class=\"nick\" href=\"#"+nickname+"\">"+
-        i18n("%1 is online (%2).", nickname, getServerName())+"</a>", false);
+        i18n("%1 is online (%2).", nickname, getServerName())+"</a>", getStatusView());
 
     static_cast<Application*>(kapp)->notificationHandler()->nickOnline(getStatusView(), nickname);
 
@@ -2700,7 +2700,7 @@ void Server::setWatchedNickOffline(const QString& nickname, const NickInfoPtr ni
 
     emit watchedNickChanged(this, nickname, false);
 
-    appendMessageToFrontmost(i18n("Notify"), i18n("%1 went offline (%2).", nickname, getServerName()), false);
+    appendMessageToFrontmost(i18n("Notify"), i18n("%1 went offline (%2).", nickname, getServerName()), getStatusView());
 
     static_cast<Application*>(kapp)->notificationHandler()->nickOffline(getStatusView(), nickname);
 
@@ -3567,7 +3567,7 @@ void Server::requestAway(const QString& reason)
     IdentityPtr identity = getIdentity();
 
     if (awayReason.isEmpty() || !identity)
-        awayReason = i18nc("Fallback default away reason", "Gone away for now");
+        awayReason = i18n("Gone away for now");
 
     setAwayReason(awayReason);
 
