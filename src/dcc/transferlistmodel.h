@@ -78,7 +78,7 @@ namespace Konversation
         class TransferSizeDelegate : public QItemDelegate
         {
         public:
-            TransferSizeDelegate(KCategoryDrawer* categoryDrawer, QObject *parent = 0);
+            explicit TransferSizeDelegate(KCategoryDrawer* categoryDrawer, QObject *parent = 0);
 
             virtual QSize sizeHint(const QStyleOptionViewItem & option, const QModelIndex & index) const;
         private:
