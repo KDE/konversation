@@ -131,6 +131,9 @@ void resetNickSelection();
         int getModesCount();
 
         // extended user modes support
+        void setChanModes(QString);                 //grab modes types from RPL_ISUPPORT CHANMODES
+        QString banAddressListModes() { return m_banAddressListModes; }     // aka "TYPE A" modes http://tools.ietf.org/html/draft-brocklesby-irc-isupport-03#section-3.3
+
         void setPrefixes(const QString &modes, const QString& prefixes);
         void mangleNicknameWithModes(QString &nickname,bool& isAdmin,bool& isOwner,bool &isOp,
             bool& isHalfop,bool &hasVoice);
@@ -679,6 +682,9 @@ void resetNickSelection();
         // TODO roll these into a QMap.
         QString m_serverNickPrefixes;               // Prefixes used by the server to indicate a mode
         QString m_serverNickPrefixModes;            // if supplied: modes related to those prefixes
+
+        QString m_banAddressListModes;              // "TYPE A" modes from RPL_ISUPPORT CHANMODES=A,B,C,D
+
         QString m_channelPrefixes;                  // prefixes that indicate channel names. defaults to RFC1459 "#&"
         int m_modesCount;                           // Maximum number of channel modes with parameter allowed per MODE command.
 
