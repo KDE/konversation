@@ -199,19 +199,19 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent), m_n
     connect(m_bookmark, SIGNAL(triggered()), SLOT(slotBookmark()));
     m_popup->addAction(m_bookmark);
     m_bookmark->setVisible( false );
-    
+
     m_saveUrl = new KAction(this);
     m_saveUrl->setIcon(KIcon("document-save"));
     m_saveUrl->setText(i18n("Save Link As..."));
     connect(m_saveUrl, SIGNAL(triggered()), SLOT(saveLinkAs()));
     m_popup->addAction(m_saveUrl);
     m_saveUrl->setVisible( false );
-    
+
     QAction * toggleMenuBarSeparator = m_popup->addSeparator();
     toggleMenuBarSeparator->setVisible(false);
     copyUrlMenuSeparator = m_popup->addSeparator();
     copyUrlMenuSeparator->setVisible( false );
-    
+
     QAction *copyAct = new KAction(this);
     copyAct->setIcon(KIcon("edit-copy"));
     copyAct->setText(i18n("&Copy"));
@@ -219,7 +219,7 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent), m_n
     m_popup->addAction(copyAct);
     connect(this, SIGNAL(copyAvailable(bool)), copyAct, SLOT( setEnabled( bool ) ));
     copyAct->setEnabled( false );
-    
+
     QAction *selectAllAct = new KAction(this);
     selectAllAct->setText(i18n("Select All"));
     connect(selectAllAct, SIGNAL(triggered()), SLOT(selectAll()));
@@ -230,7 +230,7 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent), m_n
     findTextAct->setText(i18n("Find Text..."));
     connect(findTextAct, SIGNAL(triggered()), SLOT(findText()));
     m_popup->addAction(findTextAct);
-    
+
     setServer(newServer);
 
     if (Preferences::self()->useParagraphSpacing()) enableParagraphSpacing();
@@ -1417,6 +1417,20 @@ void IRCView::mouseReleaseEvent(QMouseEvent *ev)
     }
 
     KTextBrowser::mouseReleaseEvent(ev);
+}
+
+void IRCView::keyPressEvent(QKeyEvent* ev)
+{
+    const int key = ev->key() | ev->modifiers();
+
+    if (KStandardShortcut::paste().contains(key))
+    {
+        emit textPasted(false);
+        ev->accept();
+        return;
+    }
+
+    KTextBrowser::keyPressEvent(ev);
 }
 
 void IRCView::anchorClicked(const QUrl& url)
