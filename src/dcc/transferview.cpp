@@ -10,7 +10,7 @@
 */
 
 /*
-  Copyright (C) 2009 Bernd Buschinski <b.buschinski@web.de>
+  Copyright (C) 2009,2010 Bernd Buschinski <b.buschinski@web.de>
 */
 
 #include "transferview.h"
@@ -37,12 +37,18 @@ namespace Konversation
             m_proxyModel = new TransferListProxyModel(this);
             m_proxyModel->setSourceModel(m_dccModel);
             setModel(m_proxyModel);
-            setUniformRowHeights(true); //doc says it improves performance
+
+            // doc says it improves performance
+            // but brings problems with KCategoryDrawer starting with kde4.4
+            setUniformRowHeights(false);
+
             setSortingEnabled(true);
             setRootIsDecorated(false); //not implemented for special items
             setSelectionMode(QAbstractItemView::ExtendedSelection);
 
             m_categoryDrawer = new KCategoryDrawer();
+
+            setItemDelegate(new TransferSizeDelegate(m_categoryDrawer, this));
 
             //only after model was set
             restoreColumns();
@@ -89,17 +95,17 @@ namespace Konversation
             }
         }
 
-        void TransferView::drawRow (QPainter *painter, const QStyleOptionViewItem &option,
-                                    const QModelIndex &index) const
+        void TransferView::drawRow(QPainter *painter, const QStyleOptionViewItem &option,
+                                   const QModelIndex &index) const
         {
             int type = index.data(TransferListModel::TransferDisplayType).toInt();
 
             if (type == TransferItemData::SendCategory || type == TransferItemData::ReceiveCategory)
             {
                 m_categoryDrawer->drawCategory(index,
-                                         0, //ignored anyway
-                                         option,
-                                         painter);
+                                               0, //ignored anyway
+                                               option,
+                                               painter);
             }
             else
             {
@@ -423,7 +429,7 @@ namespace Konversation
                 int headerType = m_dccModel->headerData(i, Qt::Horizontal, TransferListModel::HeaderType).toInt();
                 if (headerType == TransferHeaderData::Progress)
                 {
-                    setItemDelegateForColumn (i, new TransferProgressBarDelete(this));
+                    setItemDelegateForColumn (i, new TransferProgressBarDelegate(this));
                     return;
                 }
             }

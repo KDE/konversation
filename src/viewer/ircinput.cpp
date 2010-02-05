@@ -395,6 +395,9 @@ void IRCInput::paste(bool useSelection)
 
 void IRCInput::insertFromMimeData(const QMimeData * source)
 {
+    if(!source)
+        return;
+
     setFocus();
 
     // Copy text from the clipboard (paste)

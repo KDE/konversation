@@ -121,7 +121,7 @@ namespace Konversation
 
             if(temp == cipherText)
             {
-                kDebug("Decryption from CBC Failed");
+                kDebug() << "Decryption from CBC Failed";
                 return "ERROR: "+cipherText+' '+'\n';
             }
             else
@@ -133,7 +133,7 @@ namespace Konversation
 
             if(temp == cipherText)
             {
-                kDebug("Decryption from ECB Failed");
+                kDebug() << "Decryption from ECB Failed";
                 return "ERROR: "+cipherText+' '+'\n';
             }
             else
@@ -181,7 +181,7 @@ namespace Konversation
 
         QByteArray publicKey = privateKey.y().toArray().toByteArray();
 
-        //remove leading 0 
+        //remove leading 0
         if(publicKey.length() > 135 && publicKey.at(0) == '\0')
             publicKey = publicKey.mid(1);
 
@@ -276,7 +276,7 @@ namespace Konversation
 
                 if(temp == cipherText)
                 {
-                    kDebug("CBC Encoding Failed");
+                    kDebug() << "CBC Encoding Failed";
                     return false;
                 }
 
@@ -288,7 +288,7 @@ namespace Konversation
 
                 if(temp == cipherText)
                 {
-                    kDebug("ECB Encoding Failed");
+                    kDebug() << "ECB Encoding Failed";
                     return false;
                 }
 

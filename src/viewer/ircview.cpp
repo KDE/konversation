@@ -234,6 +234,11 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent), m_n
     setServer(newServer);
 
     if (Preferences::self()->useParagraphSpacing()) enableParagraphSpacing();
+
+    //HACK to workaround an issue with the QTextDocument
+    //doing a relayout/scrollbar over and over resulting in 100%
+    //proc usage. See bug 215256
+    setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 }
 
 IRCView::~IRCView()
