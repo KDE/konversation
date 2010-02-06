@@ -62,15 +62,16 @@ namespace Konversation
     }
 
     QString JoinChannelDialog::channel() const
-    {
-        int connectionId = m_ui.networkNameCombo->itemData(m_ui.networkNameCombo->currentIndex()).toInt();
-        Server *server = Application::instance()->getConnectionManager()->getServerByConnectionId(connectionId);
-        
+    {    
         QString channel = m_ui.channelCombo->currentText();
 
-        if (server && !server->isAChannel(channel))
+        if (!channel.isEmpty())
         {
-            channel = '#' + channel;
+            int connectionId = m_ui.networkNameCombo->itemData(m_ui.networkNameCombo->currentIndex()).toInt();
+            Server *server = Application::instance()->getConnectionManager()->getServerByConnectionId(connectionId);
+	 
+            if (server && !server->isAChannel(channel))
+                channel = '#' + channel;
         }
 
         return channel;
