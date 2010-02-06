@@ -179,7 +179,7 @@ namespace Konversation
 
     void JoinChannelDialog::slotChannelChanged(const QString& text)
     {
-        button(KDialog::Ok)->setEnabled(text.isEmpty());
+        button(KDialog::Ok)->setEnabled(!text.isEmpty());
     }
 
 
