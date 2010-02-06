@@ -16,6 +16,8 @@
 #include "channel.h"
 #include "servergroupsettings.h"
 
+#include <KPushButton>
+
 namespace Konversation
 {
 
@@ -28,6 +30,11 @@ namespace Konversation
         setModal( true );
         m_ui.setupUi(mainWidget());
         m_ui.networkNameCombo->setFocus();
+  
+        button(KDialog::Ok)->setEnabled(false);
+        connect(m_ui.channelCombo, SIGNAL(editTextChanged(const QString&)),
+        	this, SLOT(slotChannelChanged(const QString&)));
+
         // Add network names to network combobox and select the one corresponding to argument.
         QList<Server *> serverList = Application::instance()->getConnectionManager()->getServerList();
         foreach (Server *server, serverList)
@@ -169,6 +176,12 @@ namespace Konversation
         m_ui.channelCombo->setHistoryItems(channelHistory);
       }
     }
+
+    void JoinChannelDialog::slotChannelChanged(const QString& text)
+    {
+        button(KDialog::Ok)->setEnabled(text.isEmpty());
+    }
+
 
     void JoinChannelDialog::slotChannelHistoryCleared()
     {

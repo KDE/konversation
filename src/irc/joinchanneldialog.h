@@ -39,6 +39,7 @@ namespace Konversation
             void slotNicknameChanged(QString nickname);
             void slotConnectionListChanged();
             void slotSelectedConnectionChanged(int);
+            void slotChannelChanged(const QString& text);
             void slotChannelHistoryCleared();
 
         private:
