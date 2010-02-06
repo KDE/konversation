@@ -1692,6 +1692,15 @@ void Channel::updateMode(const QString& sourceNick, char mode, bool plus, const 
 
     bool fromMe=false;
     bool toMe=false;
+    bool banTypeThang = m_server->banAddressListModes().contains(QChar(mode));
+
+    // HACK to avoid changing strings for 1.2.2, we pretend any TYPE A mode is a
+    // ban except for e and I, as we have support for those
+    if (banTypeThang)
+    {
+        if (mode != 'b' && mode != 'e' && mode != 'I')
+            mode = 'b';
+    }
 
     // remember if this nick had any type of op.
     bool wasAnyOp=false;

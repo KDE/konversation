@@ -903,6 +903,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                         {
                             if(!value.isEmpty())
                             {
+                                server->setChanModes(value);
                                 QString allowed = server->allowedChannelModes();
                                 QString newModes = value.remove(',');
                                 if(!allowed.isEmpty()) //attempt to merge the two
