@@ -37,6 +37,12 @@ namespace Konversation
     {
     }
 
+    QString cleanMessage(QString message)
+    {
+        QString cleanedMessage = Qt::escape(Konversation::removeIrcMarkup(message));
+        return cleanedMessage.toAscii();
+    }
+
     void NotificationHandler::message(ChatWindow* chatWin, const QString& fromNick, const QString& message)
     {
         if (!chatWin || !chatWin->notificationsEnabled())
@@ -45,7 +51,7 @@ namespace Konversation
         if (Preferences::self()->disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
             return;
 
-        QString cleanedMessage = Qt::escape(Konversation::removeIrcMarkup(message));
+        QString cleanedMessage = cleanMessage(message);
         QString cutup = addLineBreaks(cleanedMessage);
 
         KNotification::event(QString::fromLatin1("message"), QString("<qt>&lt;%1&gt; %2</qt>").arg(fromNick).arg(cutup), QPixmap(), m_mainWindow);
@@ -73,7 +79,7 @@ namespace Konversation
         if (Preferences::self()->disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
             return;
 
-        QString cleanedMessage = Qt::escape(Konversation::removeIrcMarkup(message));
+        QString cleanedMessage = cleanMessage(message);
         QString cutup = addLineBreaks(cleanedMessage);
 
         KNotification::event(QString::fromLatin1("nick"), QString("<qt>&lt;%1&gt; %2</qt>").arg(fromNick).arg(cutup), QPixmap(), m_mainWindow);
@@ -99,7 +105,7 @@ namespace Konversation
         if (Preferences::self()->disableNotifyWhileAway() && chatWin->getServer() && chatWin->getServer()->isAway())
             return;
 
-        QString cleanedMessage = Qt::escape(Konversation::removeIrcMarkup(message));
+        QString cleanedMessage = cleanMessage(message);
         QString cutup = addLineBreaks(cleanedMessage);
 
         KNotification::event(QString::fromLatin1("queryMessage"), QString("<qt>&lt;%1&gt; %2</qt>").arg(fromNick).arg(cutup), QPixmap(), m_mainWindow);
@@ -314,7 +320,7 @@ namespace Konversation
 
         startTrayNotification(chatWin);
 
-        QString cleanedMessage = Qt::escape(Konversation::removeIrcMarkup(message));
+        QString cleanedMessage = cleanMessage(message);
         QString cutup = addLineBreaks(cleanedMessage);
 
         if(fromNick.isEmpty())
