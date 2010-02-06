@@ -3352,6 +3352,8 @@ void Server::scriptExecutionError(const QString& name)
 
 bool Server::isAChannel(const QString &channel) const
 {
+    if (channel.isEmpty()) return false;
+
     return (getChannelTypes().contains(channel.at(0)) > 0);
 }
 
