@@ -29,7 +29,7 @@ namespace Konversation
         setDefaultButton( KDialog::Ok );
         setModal( true );
         m_ui.setupUi(mainWidget());
-        m_ui.networkNameCombo->setFocus();
+        m_ui.channelCombo->setFocus();
   
         button(KDialog::Ok)->setEnabled(false);
         connect(m_ui.channelCombo, SIGNAL(editTextChanged(const QString&)),
