@@ -108,6 +108,9 @@ Changes since 1.2.1:
 * Fixed a bug causing the setting or removing of a 'q' channel mode to
   be mistakenly announced as giving or taking channel owner privileges
   on networks where it's actually a type of ban.
+* Fixed a bug causing a crash when pressing the "Ok" button in the
+  "Join Channel" dialog without entering anything in the dialog's
+  "Channel:" input field beforehand.
 
 
 Changes from 1.2 to 1.2.1:
