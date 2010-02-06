@@ -105,6 +105,9 @@ Changes since 1.2.1:
   text view.
 * Fixed a bug causing the pasting of clipboard contents using keyboard
   shortcuts not to work when the chat text has keyboard focus.
+* Fixed a bug causing the setting or removing of a 'q' channel mode to
+  be mistakenly announced as giving or taking channel owner privileges
+  on networks where it's actually a type of ban.
 
 
 Changes from 1.2 to 1.2.1:
