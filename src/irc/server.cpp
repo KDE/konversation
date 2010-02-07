@@ -97,7 +97,7 @@ Server::Server(QObject* parent, ConnectionSettings& settings) : QObject(parent)
     // TODO fold these into a QMAP, and these need to be reset to RFC values if this server object is reused.
     m_serverNickPrefixModes = "ovh";
     m_serverNickPrefixes = "@+%";
-    m_banAddressListModes = "b"; // {RFC-1459, draft-brocklesby-irc-isupport} -> pick one
+    m_banAddressListModes = 'b'; // {RFC-1459, draft-brocklesby-irc-isupport} -> pick one
     m_channelPrefixes = "#&";
     m_modesCount = 3;
     m_showSSLConfirmation = true;
@@ -476,7 +476,7 @@ void Server::setPrefixes(const QString &modes, const QString& prefixes)
 
 void Server::setChanModes(QString modes)
 {
-    QStringList abcd = modes.split(",");
+    QStringList abcd = modes.split(',');
     m_banAddressListModes = abcd.value(0);
 }
 
