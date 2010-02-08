@@ -82,7 +82,7 @@ namespace Konversation
                 KToolBar *m_toolBar;
 
                 TransferDetailedInfoPanel *m_detailPanel;
-                QSplitter* m_splitter;
+                QSplitter *m_splitter;
 
                 QAction *m_abort;
                 QAction *m_accept;

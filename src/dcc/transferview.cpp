@@ -21,6 +21,7 @@
 #include <klocalizedstring.h>
 
 #include <QHeaderView>
+#include <QKeyEvent>
 
 #include <preferences.h>
 
@@ -528,6 +529,15 @@ namespace Konversation
                 update();
             }
             QTreeView::scrollContentsBy(dx, dy);
+        }
+
+        void TransferView::keyPressEvent(QKeyEvent *event)
+        {
+            if (event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter)
+            {
+                emit runSelectedTransfers();
+            }
+            QTreeView::keyPressEvent(event);
         }
 
         void TransferView::selectAllCompleted()
