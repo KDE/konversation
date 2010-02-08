@@ -390,21 +390,7 @@ void IRCInput::getHistory(bool up)
 
 void IRCInput::paste(bool useSelection)
 {
-    // Rather than directly handing KApplication::clipboard->mimeData()
-    // to IRCInput::insertFromMimeData() we construct a new QMimeData
-    // object from KApplication::clipboard()->text(), because QClip-
-    // board::text() contains a fair amount of code to try and extract
-    // text from the various QMimeData::formats() that QMimeData::text()
-    // (which we use in IRCInput::insertFromMimeData() doesn't have and
-    // that we don't want to duplicate ourselves either. This ensures
-    // that paste behavior matches other KDE/Qt apps and makes e.g. pas-
-    // ting into a Konversation running in an NX session that is being
-    // accessed from a Windows NX client work in some circumstances in
-    // which it otherwise doesn't.
-
-    QMimeData clipboardText;
-    clipboardText.setText(KApplication::clipboard()->text(useSelection ? QClipboard::Selection : QClipboard::Clipboard));
-    insertFromMimeData(&clipboardText);
+    insertFromMimeData(KApplication::clipboard()->mimeData(useSelection ? QClipboard::Selection : QClipboard::Clipboard));
 }
 
 void IRCInput::insertFromMimeData(const QMimeData * source)

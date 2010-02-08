@@ -111,10 +111,6 @@ Changes since 1.2.1:
 * Fixed a bug causing a crash when pressing the "Ok" button in the
   "Join Channel" dialog without entering anything in the dialog's
   "Channel:" input field beforehand.
-* Made paste behavior more consistent with other KDE/Qt apps. This im-
-  proves behavior in edge cases like Konversation running inside an
-  NX session accessed by a Windows NX client, where the mapping of the
-  MIME data in the clipboard to plain text can be tricky.
 
 
 Changes from 1.2 to 1.2.1:
