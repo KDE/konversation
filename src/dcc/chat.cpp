@@ -292,7 +292,7 @@ namespace Konversation
 
                 if (error)
                 {
-                    failedUPnP(i18n("Failed to forward port %1. Sending DCC request to remote user regardless.", QString::number(m_ownPort)));
+                    failedUPnP(i18n("Failed to forward port <numid>%1</numid>. Sending DCC request to remote user regardless.", m_ownPort));
                 }
             }
 
@@ -321,7 +321,7 @@ namespace Konversation
 
                 if (error)
                 {
-                    failedUPnP(i18n("Failed to forward port %1. Sending DCC request to remote user regardless.", QString::number(m_ownPort)));
+                    failedUPnP(i18n("Failed to forward port <numid>%1</numid>. Sending DCC request to remote user regardless.", m_ownPort));
                 }
             }
 
@@ -355,7 +355,7 @@ namespace Konversation
             m_ownPort = m_dccServer->serverPort();
             kDebug() << "using port: " << m_ownPort ;
 
-            setStatus(Chat::WaitingRemote, i18nc("%1=partnerNick, %2=port","Offering DCC Chat connection to %1 on port %2...", m_partnerNick, QString::number(m_ownPort)));
+            setStatus(Chat::WaitingRemote, i18nc("%1=partnerNick, %2=port","Offering DCC Chat connection to %1 on port <numid>%2</numid>...", m_partnerNick, m_ownPort));
 
             kDebug() << "[END]";
         }
@@ -397,8 +397,8 @@ namespace Konversation
             kDebug() << "partnerIP: " << m_partnerIp << " partnerport: " << m_partnerPort  << " nick: " << m_partnerNick;
 
             setStatus(Chat::Connecting, i18nc("%1 = nickname, %2 = IP, %3 = port",
-                                              "Establishing DCC Chat connection to %1 (%2:%3)...",
-                                              m_partnerNick, m_partnerIp, QString::number(m_partnerPort)));
+                                              "Establishing DCC Chat connection to %1 (%2:<numid>%3</numid>)...",
+                                              m_partnerNick, m_partnerIp, m_partnerPort));
             m_dccSocket = new QTcpSocket(this);
 
             //connect(m_dccSocket, SIGNAL(hostFound()), this, SLOT(lookupFinished()));
