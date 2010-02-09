@@ -39,8 +39,8 @@ namespace Konversation
 
     QString cleanMessage(QString message)
     {
-        QString cleanedMessage = Qt::escape(Konversation::removeIrcMarkup(message));
-        return cleanedMessage.toAscii();
+        QString s = Qt::escape(Konversation::removeIrcMarkup(message));
+        return s;
     }
 
     void NotificationHandler::message(ChatWindow* chatWin, const QString& fromNick, const QString& message)

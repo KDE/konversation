@@ -32,6 +32,8 @@
 #include <KHBox>
 #include <KAuthorized>
 
+using namespace Konversation;
+
 Query::Query(QWidget* parent, QString _name) : ChatWindow(parent)
 {
     name=_name; // need the name a little bit earlier for setServer
@@ -213,7 +215,7 @@ void Query::queryTextEntered()
     }
     else if(line.length())
     {
-         sendQueryText(line);
+         sendQueryText(sterilizeUnicode(line));
     }
 }
 
@@ -231,7 +233,7 @@ void Query::queryPassthroughCommand()
         {
             line = commandChar + line;
         }
-        sendQueryText(line);
+        sendQueryText(sterilizeUnicode(line));
     }
 }
 

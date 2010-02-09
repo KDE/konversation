@@ -23,6 +23,7 @@
 #include <KComboBox>
 #include <KLineEdit>
 
+using namespace Konversation;
 
 StatusPanel::StatusPanel(QWidget* parent) : ChatWindow(parent)
 {
@@ -122,7 +123,7 @@ void StatusPanel::sendStatusText(const QString& sendLine)
 
 void StatusPanel::statusTextEntered()
 {
-    QString line=statusInput->toPlainText();
+    QString line=sterilizeUnicode(statusInput->toPlainText());
     statusInput->clear();
 
     if(line.toLower()==Preferences::self()->commandChar()+"clear") textView->clear();

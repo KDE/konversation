@@ -309,4 +309,64 @@ namespace Konversation
 
         return (nickvalue % 8);
     }
+
+    /// Replace invalid codepoints so the string can be converted to Utf8.
+    /// @param s a const reference to the QString to copy and change
+    /// @retval s new QString
+    QString sterilizeUnicode(const QString& s)
+    {
+        QString copy(s);
+        sterilizeUnicode(copy);
+        return s;
+    }
+
+    /// Replace invalid codepoints so the string can be converted to Utf8.
+    /// @param s a reference to the QString to change, a reference so it works with m_inputbuffer.back() in server.cpp
+    /// @retval s reference to the argument
+    QString& sterilizeUnicode(QString& s)
+    {
+        // HACK work around undocumented requirement to vet Unicode text sent over DBUS.
+        for (int i = 0; i < s.length(); ++i)
+        {
+            QChar c(s.at(i));
+            if (c.category() == QChar::Other_Surrogate)
+            {
+                if (!c.isHighSurrogate() || (!(i+1 < s.length()) && !s.at(i+1).isLowSurrogate()))
+                    Q_ASSERT("something let a bad surrogate pair through! send the backtrace, tell us how it happened");
+
+                QChar next = s.at(i+1);
+                if ((next.unicode()&0x3FE) == 0x3FE && (c.unicode()&0x3F) == 0x3F)
+                    s.replace(i, 2, QChar(0xFFFD)); //its one of the last two of the plane, replace it
+
+                ++i; // skip the high surrogate now, the loop takes care of the low
+            }
+            else if ((c.category() == QChar::Other_NotAssigned) //perhaps Qt will use QChar::Other_NotAssigned some day
+                || (c.unicode() >= 0xFDD0 && c.unicode() <= 0xFDEF) //Unicode class Cn on BMP only
+                || (c.unicode() == 0xFFFE || (c.unicode() == 0xFFFF)) //Unicode class Cn on all planes
+                )
+            {
+                s.replace(i, 1, QChar(0xFFFD));
+            }
+        }
+        return s;
+    }
+
+    /// Run a QStringList through sterilizeUnicode
+    /// @param list a reference to the list
+    /// @retval list
+    QStringList& sterilizeUnicode(QStringList& list)
+    {
+        for (int i = 0; i < list.count(); ++i)
+            sterilizeUnicode(list[i]);
+
+        return list;
+    }
+
+    /// Copy the list argument and return it, filtered
+    QStringList sterilizeUnicode(const QStringList& list)
+    {
+        QStringList out(list);
+        return sterilizeUnicode(out);
+    }
+
 }

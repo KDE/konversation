@@ -75,5 +75,10 @@ namespace Konversation
     uint colorForNick(const QString& nickname);
 
     QHash<QChar,QString> getChannelModesHash();
+
+    QString sterilizeUnicode(const QString& s);
+    QString& sterilizeUnicode(QString& s);
+    QStringList& sterilizeUnicode(QStringList& list);
+    QStringList sterilizeUnicode(const QStringList& inVal);
 }
 #endif

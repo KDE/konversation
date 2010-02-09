@@ -256,7 +256,7 @@ namespace Konversation
 
         void ChatContainer::textEntered()
         {
-            const QString &line = m_dccChatInput->toPlainText();
+            const QString &line = sterilizeUnicode(m_dccChatInput->toPlainText());
 
             if (line.isEmpty())
             {
@@ -309,7 +309,7 @@ namespace Konversation
                 return;
             }
 
-            const QStringList lines = text.split('\n', QString::SkipEmptyParts);
+            const QStringList lines = sterilizeUnicode(text.split('\n', QString::SkipEmptyParts));
 
             foreach (const QString &line, lines)
             {
@@ -318,8 +318,9 @@ namespace Konversation
             }
         }
 
-        void ChatContainer::receivedLine(const QString &line)
+        void ChatContainer::receivedLine(const QString &_line)
         {
+            const QString line(sterilizeUnicode(_line));
             if (line.startsWith('\x01'))
             {
                 // cut out the CTCP command

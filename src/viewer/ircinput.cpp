@@ -412,6 +412,9 @@ void IRCInput::insertFromMimeData(const QMimeData * source)
 
         bool signal=false;
 
+        //filter out crashy crap
+        Konversation::sterilizeUnicode(pasteText);
+
         // replace \r with \n to make xterm pastes happy
         pasteText.replace('\r','\n');
         // remove blank lines
@@ -463,6 +466,7 @@ void IRCInput::insertFromMimeData(const QMimeData * source)
             // ask the user on long pastes
             if(checkPaste(pasteText))
             {
+              Konversation::sterilizeUnicode(pasteText);
               // signal pasted text
               emit textPasted(pasteText);
               // remember old line, in case the user does not paste eventually

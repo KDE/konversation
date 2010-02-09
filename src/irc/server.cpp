@@ -1079,7 +1079,7 @@ void Server::incoming()
         #endif
         bool isUtf8 = Konversation::isUtf8(first);
 
-        if( isUtf8 )
+        if (isUtf8)
             m_inputBuffer << QString::fromUtf8(first);
         else
         {
@@ -1099,7 +1099,7 @@ void Server::incoming()
 
             // if channel encoding is utf-8 and the string is definitely not utf-8
             // then try latin-1
-            if ( !isUtf8 && codec->mibEnum() == 106 )
+            if (codec->mibEnum() == 106)
                 codec = QTextCodec::codecForMib( 4 /* iso-8859-1 */ );
 
             m_inputBuffer << codec->toUnicode(first);
@@ -1110,7 +1110,7 @@ void Server::incoming()
         // Qt uses 0xFDD0 and 0xFDD1 to mark the beginning and end of text frames. Remove
         // these here to avoid fatal errors encountered in QText* and the event loop pro-
         // cessing.
-        m_inputBuffer.back().remove(QChar(0xFDD0)).remove(QChar(0xFDD1));
+        sterilizeUnicode(m_inputBuffer.back());
 
         //FIXME: This has nothing to do with bytes, and it's not raw received bytes either. Bogus number.
         //m_bytesReceived+=m_inputBuffer.back().length();

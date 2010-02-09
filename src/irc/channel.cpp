@@ -56,6 +56,7 @@
 
 #define DELAYED_SORT_TRIGGER    10
 
+using namespace Konversation;
 
 bool nickTimestampLessThan(const Nick* nick1, const Nick* nick2)
 {
@@ -1072,7 +1073,7 @@ void Channel::channelTextEntered()
     else
     {
         if(!line.isEmpty())
-            sendChannelText(line);
+            sendChannelText(sterilizeUnicode(line));
     }
 }
 
@@ -1090,7 +1091,7 @@ void Channel::channelPassthroughCommand()
         {
             line = commandChar + line;
         }
-        sendChannelText(line);
+        sendChannelText(sterilizeUnicode(line));
     }
 }
 
