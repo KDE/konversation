@@ -317,7 +317,7 @@ namespace Konversation
     {
         QString copy(s);
         sterilizeUnicode(copy);
-        return s;
+        return copy;
     }
 
     /// Replace invalid codepoints so the string can be converted to Utf8.
