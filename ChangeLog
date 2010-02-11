@@ -122,6 +122,8 @@ ing the high CPU usage some users have experienced with Qt 4.6.
 * Fixed a bug causing a crash when pressing the "Ok" button in the
   "Join Channel" dialog without entering anything in the dialog's
   "Channel:" input field beforehand.
+* More robust Unicode handling to make interaction with the D-Bus dae-
+  mon more reliable.
 
 
 Changes from 1.2 to 1.2.1:
