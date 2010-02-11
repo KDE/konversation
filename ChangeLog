@@ -1,4 +1,13 @@
-Changes since 1.2.1:
+Changes from 1.2.1 to 1.2.2:
+Konversation 1.2.2 contains a number of new features, such as support
+for passive DCC chat and amarok:// URLs, and a large amount of user
+interface improvements to various tabs (e.g. Watched Nicknames Online
+and the URL Catcher) and dialogs (e.g. Join Channel). When used with
+KDE SC 4.4 it supports the new system tray icon API. A sizable list
+of bug fixes round things out; of particular note is a change address-
+ing the high CPU usage some users have experienced with Qt 4.6.
+
+
 * Added support for passive DCC chat.
 * Made it possible to accept/reject DCC chats like DCC file transfers.
 * Added an option to auto-accept DCC chats (previously it would always
@@ -79,6 +88,8 @@ Changes since 1.2.1:
   with the list makes it very easy to use an existing list entry as
   a starting point, modify it and then decide between replacing the
   original ban with the new version or adding it as an additional ban.
+* The topic history list in the Channel Settings dialog has seen a
+  number of behavioral and reliability improvements.
 * Updated various dialog layouts to better comply with the alignment
   rules of the KDE 4 HIG.
 * The URL list in the URL catcher tab now sports a new Date column
