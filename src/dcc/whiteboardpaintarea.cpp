@@ -110,7 +110,7 @@ namespace Konversation
         {
             checkImageSize(xFrom, yFrom, xTo, yTo, lineWidth);
             QPainter tPaint(m_imagePixmap);
-            tPaint.setPen(getPen(penColor, lineWidth, m_tool));
+            tPaint.setPen(getPen(penColor, lineWidth, WhiteBoardGlobals::Line));
             tPaint.setBrush(brushColor);
 
             // drawLine with lineWidth=1 creates a dot
@@ -133,7 +133,7 @@ namespace Konversation
         {
             checkImageSize(xFrom, yFrom, xTo, yTo, lineWidth);
             QPainter tPaint(m_imagePixmap);
-            tPaint.setPen(getPen(penColor, lineWidth, m_tool));
+            tPaint.setPen(getPen(penColor, lineWidth, WhiteBoardGlobals::Rectangle));
             tPaint.drawRect(xFrom, yFrom, xTo-xFrom, yTo-yFrom);
             tPaint.end();
             update();
@@ -144,7 +144,7 @@ namespace Konversation
         {
             checkImageSize(xFrom, yFrom, xTo, yTo, lineWidth);
             QPainter tPaint(m_imagePixmap);
-            tPaint.setPen(getPen(penColor, lineWidth, m_tool));
+            tPaint.setPen(getPen(penColor, lineWidth, WhiteBoardGlobals::FilledRectangle));
             tPaint.setBrush(brushColor);
             tPaint.drawRect(xFrom, yFrom, xTo-xFrom, yTo-yFrom);
             tPaint.end();
@@ -156,7 +156,7 @@ namespace Konversation
         {
             checkImageSize(xFrom, yFrom, xTo, yTo, lineWidth);
             QPainter tPaint(m_imagePixmap);
-            tPaint.setPen(getPen(penColor, lineWidth, m_tool));
+            tPaint.setPen(getPen(penColor, lineWidth, WhiteBoardGlobals::Ellipse));
             tPaint.drawEllipse(xFrom, yFrom, xTo-xFrom, yTo-yFrom);
             tPaint.end();
             update();
@@ -167,7 +167,7 @@ namespace Konversation
         {
             checkImageSize(xFrom, yFrom, xTo, yTo, lineWidth);
             QPainter tPaint(m_imagePixmap);
-            tPaint.setPen(getPen(penColor, lineWidth, m_tool));
+            tPaint.setPen(getPen(penColor, lineWidth, WhiteBoardGlobals::FilledEllipse));
             tPaint.setBrush(brushColor);
             tPaint.drawEllipse(xFrom, yFrom, xTo-xFrom, yTo-yFrom);
             tPaint.end();
@@ -178,7 +178,7 @@ namespace Konversation
         {
             checkImageSize(xFrom, yFrom, xTo, yTo, lineWidth);
             QPainter tPaint(m_imagePixmap);
-            tPaint.setPen(getPen(penColor, lineWidth, m_tool));
+            tPaint.setPen(getPen(penColor, lineWidth, WhiteBoardGlobals::Arrow));
             arrow(&tPaint, xFrom, yFrom, xTo, yTo);
             tPaint.end();
             update();
@@ -188,7 +188,7 @@ namespace Konversation
         {
             checkImageSize(xFrom, yFrom, xTo, yTo, lineWidth);
             QPainter tPaint(m_imagePixmap);
-            tPaint.setPen(getPen(Qt::white, lineWidth, m_tool));
+            tPaint.setPen(getPen(Qt::white, lineWidth, WhiteBoardGlobals::Eraser));
             tPaint.drawLine(xFrom, yFrom, xTo, yTo);
             tPaint.end();
             update();
@@ -205,7 +205,7 @@ namespace Konversation
         {
             //TODO optimize me
             checkImageSize(x2src, y2src, xdest, ydest, 1);
-            QPixmap copyPix = m_imagePixmap->copy(x1src, y1src, x2src-x1src, y2src-y1src);
+            QPixmap copyPix(m_imagePixmap->copy(x1src, y1src, x2src-x1src, y2src-y1src));
             QPainter tPaint(m_imagePixmap);
             tPaint.drawPixmap(xdest, ydest, copyPix);
             tPaint.end();
