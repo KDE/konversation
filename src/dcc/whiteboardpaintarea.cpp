@@ -112,7 +112,18 @@ namespace Konversation
             QPainter tPaint(m_imagePixmap);
             tPaint.setPen(getPen(penColor, lineWidth, m_tool));
             tPaint.setBrush(brushColor);
-            tPaint.drawLine(xFrom, yFrom, xTo, yTo);
+
+            // drawLine with lineWidth=1 creates a dot
+            // but drawLine with lineWith>1 creates nothing (with Qt 4.6.1, Bug?)
+            // check if start==endPos and use drawPoint in this case
+            if (xFrom == xTo && yFrom == yTo)
+            {
+                tPaint.drawPoint(xFrom, yFrom);
+            }
+            else
+            {
+                tPaint.drawLine(xFrom, yFrom, xTo, yTo);
+            }
             tPaint.end();
             update();
         }

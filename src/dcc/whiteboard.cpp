@@ -188,7 +188,7 @@ namespace Konversation
                 {
                 case WhiteBoardGlobals::Line:
                 case WhiteBoardGlobals::Pencil:
-                    // kDebug() << "drawing a line" << xFrom << yFrom << xTo << yTo;
+                    // kDebug() << "drawing a line" << lineWidth << xFrom << yFrom << xTo << yTo;
                     m_paintArea->drawLine(lineWidth, penColor, brushColor, xFrom, yFrom, xTo, yTo);
                     break;
                 case WhiteBoardGlobals::Rectangle:
