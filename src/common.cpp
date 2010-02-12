@@ -329,20 +329,10 @@ namespace Konversation
         for (int i = 0; i < s.length(); ++i)
         {
             QChar c(s.at(i));
-            if (c.category() == QChar::Other_Surrogate)
-            {
-                if (!c.isHighSurrogate() || (!(i+1 < s.length()) && !s.at(i+1).isLowSurrogate()))
-                    Q_ASSERT("something let a bad surrogate pair through! send the backtrace, tell us how it happened");
-
-                QChar next = s.at(i+1);
-                if ((next.unicode()&0x3FE) == 0x3FE && (c.unicode()&0x3F) == 0x3F)
-                    s.replace(i, 2, QChar(0xFFFD)); //its one of the last two of the plane, replace it
-
-                ++i; // skip the high surrogate now, the loop takes care of the low
-            }
-            else if ((c.category() == QChar::Other_NotAssigned) //perhaps Qt will use QChar::Other_NotAssigned some day
+            if ((c.category() == QChar::Other_NotAssigned) //perhaps Qt will use QChar::Other_NotAssigned some day
                 || (c.unicode() >= 0xFDD0 && c.unicode() <= 0xFDEF) //Unicode class Cn on BMP only
                 || (c.unicode() == 0xFFFE || (c.unicode() == 0xFFFF)) //Unicode class Cn on all planes
+                || (c.category() == QChar::Other_Surrogate)
                 )
             {
                 s.replace(i, 1, QChar(0xFFFD));
