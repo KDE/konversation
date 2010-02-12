@@ -488,9 +488,9 @@ namespace Konversation
                 case Transfer::Preparing:
                     return i18n("Preparing");
                 case Transfer::WaitingRemote:
-                    return i18n("Pending");
+                    return i18nc("Transfer is waiting for the partner to accept or reject it", "Pending");
                 case Transfer::Connecting:
-                    return i18n("Connecting");
+                    return i18nc("Transfer is connecting to the partner", "Connecting");
                 case Transfer::Transferring:
                     switch (type)
                     {
@@ -503,9 +503,9 @@ namespace Konversation
                             return QString();
                     }
                 case Transfer::Done:
-                    return i18n("Done");
+                    return i18nc("Transfer has completed successfully", "Done");
                 case Transfer::Failed:
-                    return i18n("Failed");
+                    return i18nc("Transfer failed", "Failed");
                 case Transfer::Aborted:
                     return i18n("Aborted");
                 default:

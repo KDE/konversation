@@ -102,13 +102,13 @@ namespace Konversation
             switch (newstatus)
             {
                 case Chat::WaitingRemote:
-                    m_topicLabel->setText(i18n("DCC chat with %1 on port %2.", m_chat->partnerNick(), QString::number(m_chat->ownPort())));
+                    m_topicLabel->setText(i18n("DCC chat with %1 on port <numid>%2</numid>.", m_chat->partnerNick(), m_chat->ownPort()));
                     getTextView()->appendServerMessage(i18n("DCC"), m_chat->statusDetails());
                     break;
 
                 case Chat::Connecting:
-                    m_topicLabel->setText(i18nc("%1 = nickname, %2 = IP, %3 = port", "DCC chat with %1 on %2:%3.",
-                                                m_chat->partnerNick(), m_chat->partnerIp(), QString::number(m_chat->partnerPort())));
+                    m_topicLabel->setText(i18nc("%1 = nickname, %2 = IP, %3 = port", "DCC chat with %1 on %2:<numid>%3</numid>.",
+                                                m_chat->partnerNick(), m_chat->partnerIp(), m_chat->partnerPort()));
                     getTextView()->appendServerMessage(i18n("DCC"), m_chat->statusDetails());
                     break;
 

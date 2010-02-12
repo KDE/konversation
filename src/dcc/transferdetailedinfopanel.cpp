@@ -154,9 +154,9 @@ namespace Konversation
             if (!m_transfer->getPartnerIp().isEmpty())
             {
                 m_locationInfo.m_labelPartner->setText(i18nc("%1=partnerNick, %2=IRC Servername, %3=partnerIP, %4=partnerPort",
-                                                             "%1 on %2, %3 (port %4)",
+                                                             "%1 on %2, %3 (port <numid>%4</numid>)",
                                                              m_transfer->getPartnerNick().isEmpty() ? "?" : m_transfer->getPartnerNick(),
-                                                             partnerInfoServerName, m_transfer->getPartnerIp(), QString::number(m_transfer->getPartnerPort())));
+                                                             partnerInfoServerName, m_transfer->getPartnerIp(), m_transfer->getPartnerPort()));
             }
             else
             {
@@ -167,15 +167,15 @@ namespace Konversation
 
             // Self:
             if (!m_transfer->getOwnIp().isEmpty())
-                m_locationInfo.m_labelSelf->setText(i18nc("%1=ownIP, %2=ownPort", "%1 (port %2)",
-                                                          m_transfer->getOwnIp(), QString::number(m_transfer->getOwnPort())));
+                m_locationInfo.m_labelSelf->setText(i18nc("%1=ownIP, %2=ownPort", "%1 (port <numid>%2</numid>)",
+                                                          m_transfer->getOwnIp(), m_transfer->getOwnPort()));
 
             // File Size:
             m_timeInfo.m_labelFileSize->setText(KGlobal::locale()->formatNumber(m_transfer->getFileSize(), 0));
 
             // Resumed:
             if (m_transfer->isResumed())
-                m_timeInfo.m_labelIsResumed->setText(i18nc("%1=Transferstartposition","Yes, %1", KGlobal::locale()->formatNumber(m_transfer->getTransferStartPosition(), 0)));
+                m_timeInfo.m_labelIsResumed->setText(ki18nc("%1=Transferstartposition","Yes, %1").subs(m_transfer->getTransferStartPosition()).toString());
             else
                 m_timeInfo.m_labelIsResumed->setText(i18nc("no - not a resumed transfer","No"));
 
@@ -243,7 +243,7 @@ namespace Konversation
                 if (m_itemringTime >= 1)
                     m_timeInfo.m_labelTransferringTime->setText(TransferListModel::secToHMS(m_itemringTime));
                 else
-                    m_timeInfo.m_labelTransferringTime->setText(i18n("< 1sec"));
+                    m_timeInfo.m_labelTransferringTime->setText(i18nc("less than 1 sec","&lt; 1sec"));
             }
 
             // Estimated Time Left:
