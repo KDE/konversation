@@ -28,7 +28,7 @@ namespace Konversation
               m_backgroundColor(Qt::white),
               m_swapPixmap(16,16)
         {
-            setFrameShadow(QFrame::Sunken);
+            setFrameStyle(QFrame::NoFrame | QFrame::Plain);
             setMinimumSize(40,40);
             drawSwapPixmap();
         }
@@ -91,10 +91,10 @@ namespace Konversation
 
         void WhiteBoardColorChooser::mouseReleaseEvent(QMouseEvent *e)
         {
-            kDebug() << "epos:"<< e->pos();
-            kDebug() << "foregroundrect" << foregroundRect();
-            kDebug() << "backgroundrect" << backgroundRect();
-            kDebug() << "swap" << swapPixmapRect();
+            // kDebug() << "epos:"<< e->pos();
+            // kDebug() << "foregroundrect" << foregroundRect();
+            // kDebug() << "backgroundrect" << backgroundRect();
+            // kDebug() << "swap" << swapPixmapRect();
 
             ColorLayer whichColor = None;
 
@@ -141,18 +141,18 @@ namespace Konversation
             QRect bgRect = backgroundRect();
             QRect bgRectInside = QRect(bgRect.x () + 2, bgRect.y () + 2,
                                        bgRect.width () - 4, bgRect.height () - 4);
-            tPaint.fillRect (bgRectInside, m_backgroundColor);
-            qDrawShadePanel (&tPaint, bgRect, palette(),
-                             false/*not sunken*/, 2/*lineWidth*/,
-                             0/*never fill*/);
+            tPaint.fillRect(bgRectInside, m_backgroundColor);
+            qDrawShadePanel(&tPaint, bgRect, palette(),
+                            false/*not sunken*/, 2/*lineWidth*/,
+                            0/*never fill*/);
 
             QRect fgRect = foregroundRect();
             QRect fgRectInside = QRect(fgRect.x () + 2, fgRect.y () + 2,
                                        fgRect.width () - 4, fgRect.height () - 4);
             tPaint.fillRect(fgRectInside, m_foregroundColor);
-            qDrawShadePanel (&tPaint, fgRect, palette (),
-                             false/*not sunken*/, 2/*lineWidth*/,
-                             0/*never fill*/);
+            qDrawShadePanel(&tPaint, fgRect, palette (),
+                            false/*not sunken*/, 2/*lineWidth*/,
+                            0/*never fill*/);
 
             tPaint.end();
         }

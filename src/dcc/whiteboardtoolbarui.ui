@@ -158,7 +158,7 @@
    <item>
     <widget class="QFrame" name="m_lineWidthFrame">
      <property name="frameShape">
-      <enum>QFrame::Panel</enum>
+      <enum>QFrame::StyledPanel</enum>
      </property>
      <property name="frameShadow">
       <enum>QFrame::Sunken</enum>
