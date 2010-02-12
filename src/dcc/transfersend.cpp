@@ -179,7 +179,7 @@ namespace Konversation
             if ( m_fileName.isEmpty() )
             {
                 bool pressedOk;
-                m_fileName = KInputDialog::getText( i18n( "Enter Filename" ), i18n( "<qt>The file that you are sending to <i>%1</i> does not have a filename.<br/>Please enter a filename to be presented to the receiver, or cancel the dcc transfer</qt>", getPartnerNick() ), "unknown", &pressedOk, NULL );
+                m_fileName = KInputDialog::getText( i18n( "Enter Filename" ), i18n( "<qt>The file that you are sending to <i>%1</i> does not have a filename.<br>Please enter a filename to be presented to the receiver, or cancel the dcc transfer</qt>", getPartnerNick() ), "unknown", &pressedOk, NULL );
 
                 if ( !pressedOk )
                 {
@@ -315,7 +315,7 @@ namespace Konversation
                 disconnect (this->sender(), SIGNAL( forwardComplete(bool, quint16 ) ), this, SLOT ( sendRequest(bool, quint16) ) );
 
                 if (error)
-                    server->appendMessageToFrontmost(i18nc("Universal Plug and Play", "UPnP"), i18n("Failed to forward port <numid>%1</numid>. Sending DCC request to remote user regardless.", m_ownPort), false);
+                    server->appendMessageToFrontmost(i18nc("Universal Plug and Play", "UPnP"), i18n("Failed to forward port %1. Sending DCC request to remote user regardless.", QString::number(m_ownPort)), false);
             }
 
             startConnectionTimer( Preferences::self()->dccSendTimeout() );

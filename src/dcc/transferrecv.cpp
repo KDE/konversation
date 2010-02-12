@@ -295,18 +295,18 @@ namespace Konversation
 
             if ( !createDirs( m_fileURL.upUrl() ) )
             {
-                askAndPrepareLocalKio(i18n("<b>Cannot create the folder.</b><br/>"
-                    "Folder: %1<br/>",
-                    m_fileURL.upUrl().prettyUrl()),
+                askAndPrepareLocalKio( i18n( "<b>Cannot create the folder.</b><br>"
+                    "Folder: %1<br>",
+                    m_fileURL.upUrl().prettyUrl() ),
                     ResumeDialog::RA_Rename | ResumeDialog::RA_Cancel,
-                    ResumeDialog::RA_Rename);
+                    ResumeDialog::RA_Rename );
                 return;
             }
 
             if (Application::instance()->getDccTransferManager()->isLocalFileInWritingProcess(m_fileURL))
             {
-                askAndPrepareLocalKio(i18n("<b>The file is used by another transfer.</b><br/>"
-                    "%1<br/>",
+                askAndPrepareLocalKio(i18n("<b>The file is used by another transfer.</b><br>"
+                    "%1<br>",
                     m_fileURL.prettyUrl()),
                     ResumeDialog::RA_Rename | ResumeDialog::RA_Cancel,
                     ResumeDialog::RA_Rename);
@@ -402,7 +402,7 @@ namespace Konversation
                 }
                 else
                 {
-                    askAndPrepareLocalKio(i18np(
+                    askAndPrepareLocalKio( i18np(
                         "<b>A partial file exists:</b><br/>"
                         "%2<br/>"
                         "Size of the partial file: 1 byte.<br/>",
@@ -435,16 +435,16 @@ namespace Konversation
                         << "TransferRecv::slotLocalGotResult(): Why was I called in spite of no error?";
                     break;
                 case KIO::ERR_FILE_ALREADY_EXIST:
-                    askAndPrepareLocalKio(i18n("<b>The file already exists.</b><br/>"
-                        "%1<br/>",
-                        m_fileURL.prettyUrl()),
+                    askAndPrepareLocalKio( i18n( "<b>The file already exists.</b><br>"
+                        "%1<br>",
+                        m_fileURL.prettyUrl() ),
                         ResumeDialog::RA_Overwrite | ResumeDialog::RA_Rename | ResumeDialog::RA_Cancel,
                         ResumeDialog::RA_Overwrite );
                     break;
                 default:
-                    askAndPrepareLocalKio( i18n( "<b>Could not open the file.<br/>"
-                        "Error: %1</b><br/>"
-                        "%2<br/>",
+                    askAndPrepareLocalKio( i18n( "<b>Could not open the file.<br>"
+                        "Error: %1</b><br>"
+                        "%2<br>",
                         transferJob->error(),
                         m_fileURL.prettyUrl() ),
                         ResumeDialog::RA_Rename | ResumeDialog::RA_Cancel,
@@ -529,7 +529,7 @@ namespace Konversation
 
                 if (error)
                 {
-                    server->appendMessageToFrontmost(i18nc("Universal Plug and Play", "UPnP"), i18n("Failed to forward port <numid>%1</numid>. Sending DCC request to remote user regardless.", m_ownPort), false);
+                    server->appendMessageToFrontmost(i18nc("Universal Plug and Play", "UPnP"), i18n("Failed to forward port %1. Sending DCC request to remote user regardless.", QString::number(m_ownPort)), false);
                 }
             }
 
