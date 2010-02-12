@@ -1,3 +1,13 @@
+Changes from 1.2.2 to 1.2.3:
+Konversation 1.2.3 is a hotfix release that improves upon an earlier
+fix, originally included in Konversation 1.2.2, that increases the re-
+liability of Konversation's interaction with the D-Bus inter-process
+communication daemon.
+
+* Increased reliability of interactions with the D-Bus inter-process
+  communication daemon.
+
+
 Changes from 1.2.1 to 1.2.2:
 Konversation 1.2.2 contains a number of new features, such as support
 for passive DCC chat and amarok:// URLs, and a large amount of user
