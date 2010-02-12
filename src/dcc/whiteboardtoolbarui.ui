@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>114</width>
-    <height>310</height>
+    <height>312</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -157,6 +157,12 @@
    </item>
    <item>
     <widget class="QFrame" name="m_lineWidthFrame">
+     <property name="maximumSize">
+      <size>
+       <width>110</width>
+       <height>16777215</height>
+      </size>
+     </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>
@@ -227,7 +233,7 @@
      </property>
      <property name="maximumSize">
       <size>
-       <width>16777215</width>
+       <width>110</width>
        <height>50</height>
       </size>
      </property>
@@ -274,7 +280,14 @@
     </spacer>
    </item>
    <item>
-    <widget class="Konversation::DCC::WhiteBoardColorChooser" name="m_colorChooser"/>
+    <widget class="Konversation::DCC::WhiteBoardColorChooser" name="m_colorChooser">
+     <property name="maximumSize">
+      <size>
+       <width>110</width>
+       <height>16777215</height>
+      </size>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
