@@ -452,10 +452,9 @@ namespace Konversation
         {
             QString line(action);
             OutputFilter::replaceAliases(line);
-            // this produces and invalid string, A gets lost
-            //QString actionText = '\x01' + "ACTION " + line + '\x01';
-            QString actionText = QString("\x01%1 %2\x01").arg("ACTION").arg(line);
-            sendRawLine(actionText);
+
+            static const QString actionText("\x01""ACTION %2\x01");
+            sendRawLine(actionText.arg(line));
         }
 
         void Chat::sendRawLine(const QString &text)
