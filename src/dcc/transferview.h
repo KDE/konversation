@@ -10,7 +10,7 @@
 */
 
 /*
-  Copyright (C) 2009 Bernd Buschinski <b.buschinski@web.de>
+  Copyright (C) 2009,2010 Bernd Buschinski <b.buschinski@web.de>
 */
 
 #ifndef TRANSFERVIEW_H
@@ -19,6 +19,7 @@
 #include <QTreeView>
 #include "transferlistmodel.h"
 
+class QKeyEvent;
 class KCategoryDrawer;
 
 namespace Konversation
@@ -51,6 +52,9 @@ namespace Konversation
             void selectRow(int row);
             void selectRows(QList<int> rows);
 
+        signals:
+            void runSelectedTransfers();
+
         public slots:
             void clear();
 
@@ -77,6 +81,7 @@ namespace Konversation
             virtual void drawRow(QPainter *painter, const QStyleOptionViewItem &option,
                                  const QModelIndex &index) const;
             virtual void scrollContentsBy(int dx, int dy);
+            virtual void keyPressEvent(QKeyEvent *event);
 
         protected slots:
             void rowsAboutToBeRemovedFromModel(const QModelIndex &parent,

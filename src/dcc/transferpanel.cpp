@@ -12,7 +12,7 @@
 */
 /*
   Copyright (C) 2004-2008 Shintaro Matsuoka <shin@shoegazed.org>
-  Copyright (C) 2009 Bernd Buschinski <b.buschinski@web.de>
+  Copyright (C) 2009,2010 Bernd Buschinski <b.buschinski@web.de>
 */
 
 #include "transferpanel.h"
@@ -24,6 +24,8 @@
 #include "transferview.h"
 #include "transferlistmodel.h"
 
+#include <QSplitter>
+
 #include <KGlobal>
 #include <KMessageBox>
 #include <KMenu>
@@ -31,7 +33,6 @@
 #include <KAuthorized>
 #include <KFileMetaInfo>
 #include <KToolBar>
-#include <QSplitter>
 
 namespace Konversation
 {
@@ -69,6 +70,8 @@ namespace Konversation
 
             connect(m_transferView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
                     this, SLOT(updateButton()));
+            connect(m_transferView, SIGNAL(runSelectedTransfers()),
+                    this, SLOT(runDcc()));
 
             // detailed info panel
             m_detailPanel = new TransferDetailedInfoPanel(m_splitter);
@@ -417,6 +420,24 @@ namespace Konversation
 
         void TransferPanel::runDcc()
         {
+            const int selectedRows = m_transferView->selectedRows().count();
+            if (selectedRows > 3)
+            {
+                int ret = KMessageBox::questionYesNo(this,
+                                                     i18np("You have selected %1 file to execute, are you sure you want to continue?",
+                                                           "You have selected %1 files to execute, are you sure you want to continue?",
+                                                           selectedRows),
+                                                     i18np("Execute %1 file",
+                                                           "Execute %1 files",
+                                                           selectedRows)
+                                                     );
+
+                if (ret == KMessageBox::No)
+                {
+                    return;
+                }
+            }
+
             foreach (const QModelIndex &index, m_transferView->selectedRows())
             {
                 if (index.data(TransferListModel::TransferType).toInt() == Transfer::Send ||
