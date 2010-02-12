@@ -1,3 +1,3 @@
 #ifndef KONVI_VERSION
-#define KONVI_VERSION "1.2.3"
+#define KONVI_VERSION "1.2.3+"
 #endif
