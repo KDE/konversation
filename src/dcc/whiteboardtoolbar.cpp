@@ -70,6 +70,7 @@ namespace Konversation
             m_textPushButton->setFlat(true);
             m_toggleButtonHash.insert(m_textPushButton, WhiteBoardGlobals::Text);
 
+            m_selectionPushButton->setEnabled(false); // it has no function in current whiteboard
             m_selectionPushButton->setIcon(KIcon("select-rectangular"));
             m_selectionPushButton->setToolTip(i18nc("dcc whiteboard selection tool", "Selection"));
             m_selectionPushButton->setFlat(true);
