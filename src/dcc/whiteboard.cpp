@@ -6,7 +6,7 @@
 */
 
 /*
-  Copyright (C) 2009 Bernd Buschinski <b.buschinski@web.de>
+  Copyright (C) 2009-2010 Bernd Buschinski <b.buschinski@web.de>
 */
 
 #include "whiteboard.h"
@@ -564,7 +564,7 @@ namespace Konversation
             drLineCommand = drLineCommand.arg(QString::number(tool)).arg(
                                           QString::number(lineWidth)).arg(colorToString(penColor)).arg(colorToString(brushColor)).arg(
                                           QString::number(xFrom)).arg(QString::number(yFrom)).arg(QString::number(xTo)).arg(QString::number(yTo));
-            kDebug() << drLineCommand;
+            // kDebug() << drLineCommand;
             emit rawWhiteBoardCommand(drLineCommand);
         }
 
