@@ -396,7 +396,7 @@ namespace Konversation
             }
         }
 
-        void WhiteBoardToolBar::setLineWidthVisible (bool visible)
+        void WhiteBoardToolBar::setLineWidthVisible(bool visible)
         {
             m_lineWidthFrame->setVisible(visible);
         }
@@ -421,8 +421,9 @@ namespace Konversation
         {
             disconnect(m_formOptionListWidget, 0, 0, 0);
             m_formOptionListWidget->clear();
-            const int width = m_formOptionListWidget->contentsRect().width() - m_formOptionListWidget->lineWidth()*4 - 1;
+            const int width = m_formOptionListWidget->contentsRect().width() - m_formOptionListWidget->lineWidth()*4 - 3;
             const int drawHeight = 20 - 2;
+            const int widthLayoutOffset = 2;
             const QSize sizeHint(width, 20);
             // kDebug() << "wanted width" << width;
             // kDebug() << "actual width" << m_formOptionListWidget->contentsRect().width();
@@ -438,11 +439,11 @@ namespace Konversation
                         m_filledRectanglePixmap = QPixmap(width, 20);
                         m_filledRectanglePixmap.fill(Qt::transparent);
                         QPainter tPaint(&m_rectanglePixmap);
-                        tPaint.drawRect(0, 0, width-1, drawHeight);
+                        tPaint.drawRect(0, 0, width-widthLayoutOffset, drawHeight);
                         tPaint.end();
                         tPaint.begin(&m_filledRectanglePixmap);
                         tPaint.setBrush(Qt::black);
-                        tPaint.drawRect(0, 0, width-1, drawHeight);
+                        tPaint.drawRect(0, 0, width-widthLayoutOffset, drawHeight);
                         tPaint.end();
                     }
                     QListWidgetItem *tRectangle = new QListWidgetItem("", m_formOptionListWidget, QListWidgetItem::UserType +1);
@@ -466,11 +467,11 @@ namespace Konversation
                         m_filledEllipsePixmap = QPixmap(width, 20);
                         m_filledEllipsePixmap.fill(Qt::transparent);
                         QPainter tPaint(&m_ellipsePixmap);
-                        tPaint.drawEllipse(0, 0, width-1, drawHeight);
+                        tPaint.drawEllipse(0, 0, width-widthLayoutOffset, drawHeight);
                         tPaint.end();
                         tPaint.begin(&m_filledEllipsePixmap);
                         tPaint.setBrush(Qt::black);
-                        tPaint.drawEllipse(0, 0, width-1, drawHeight);
+                        tPaint.drawEllipse(0, 0, width-widthLayoutOffset, drawHeight);
                         tPaint.end();
                     }
                     QListWidgetItem *tEllipse = new QListWidgetItem("", m_formOptionListWidget, QListWidgetItem::UserType +1);
