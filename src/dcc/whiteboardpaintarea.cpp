@@ -6,7 +6,7 @@
 */
 
 /*
-  Copyright (C) 2009 Bernd Buschinski <b.buschinski@web.de>
+  Copyright (C) 2009-2010 Bernd Buschinski <b.buschinski@web.de>
 */
 
 #include "whiteboardpaintarea.h"
@@ -370,6 +370,10 @@ namespace Konversation
                 case WhiteBoardGlobals::TextExtended:
                     //don't finish writing here, finish it on tool change or when clicking somewhere else
                     return;
+
+                case WhiteBoardGlobals::Selection:
+                    kDebug() << "TODO implement whiteboard Selection";
+                    return;
                 }
 
                 QPainter tPainter(m_imagePixmap);
@@ -513,6 +517,11 @@ namespace Konversation
                 case WhiteBoardGlobals::TextExtended:
                 case WhiteBoardGlobals::Text:
                     //handle in mousePressEvent
+                    break;
+
+                case WhiteBoardGlobals::Stamp:
+                case WhiteBoardGlobals::Selection:
+                    kDebug() << "TODO implement whiteboard Selection/Stamp";
                     break;
                 }
                 tPainter.end();
