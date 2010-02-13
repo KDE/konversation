@@ -24,6 +24,8 @@ namespace Konversation
 
     namespace DCC
     {
+        class WhiteBoard;
+
         class ChatContainer : public ChatWindow
         {
             Q_OBJECT
@@ -76,6 +78,7 @@ namespace Konversation
                 IRCInput *m_dccChatInput;
 
                 Chat *m_chat;
+                WhiteBoard *m_whiteBoard;
         };
     }
 }

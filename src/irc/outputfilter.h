@@ -84,10 +84,10 @@ namespace Konversation
             OutputFilterResult rejectDccSend(const QString& partnerNick, const QString& fileName);
 
             // dcc chat
-            OutputFilterResult rejectDccChat(const QString& partnerNick);
-            OutputFilterResult requestDccChat(const QString& partnerNick, const QString& numericalOwnIp, quint16 ownPort);
-            OutputFilterResult passiveChatRequest(const QString& recipient, const QString &address, const QString &token);
-            OutputFilterResult acceptPassiveChatRequest(const QString& recipient, const QString& numericalOwnIp, quint16 ownPort, const QString& token);
+            OutputFilterResult rejectDccChat(const QString& partnerNick, const QString& extension);
+            OutputFilterResult requestDccChat(const QString& partnerNick, const QString& extension, const QString& numericalOwnIp, quint16 ownPort);
+            OutputFilterResult passiveChatRequest(const QString& recipient, const QString extension, const QString& address, const QString& token);
+            OutputFilterResult acceptPassiveChatRequest(const QString& recipient, const QString& extension, const QString& numericalOwnIp, quint16 ownPort, const QString& token);
 
             static bool replaceAliases(QString& line);
 
@@ -97,6 +97,7 @@ namespace Konversation
                                                   // Choose File from requester
             void requestDccSend(const QString& recipient);
             void openDccChat(const QString& nick);
+            void openDccWBoard (const QString& nick);
             void addDccPanel();
             void closeDccPanel();
             void acceptDccGet(const QString& nick, const QString& file);

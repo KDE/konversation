@@ -43,6 +43,13 @@ namespace Konversation
                     Failed
                 };
 
+                enum Extension
+                {
+                    Unknown = 0,
+                    SimpleChat,
+                    Whiteboard
+                };
+
                 Chat(QObject *parent);
                 ~Chat();
 
@@ -73,6 +80,12 @@ namespace Konversation
                 Status status() const;
                 QString statusDetails() const;
 
+                void setExtension(const QString& extension);
+                void setExtension(Extension extension);
+                Extension extension() const;
+                QString extensionString() const;
+                QString localizedExtentionString() const;
+
                 int connectionId() const;
 
                 void removedFromView();
@@ -96,6 +109,8 @@ namespace Konversation
                 void error(QAbstractSocket::SocketError errorCode, const QString &errorMessage);
 
                 void upnpError(const QString &errorMessage);
+
+                void connected();
 
             protected slots:
                 void connectionEstablished();
@@ -140,6 +155,8 @@ namespace Konversation
 
                 Status m_chatStatus;
                 QString m_chatDetailedStatus;
+
+                Extension m_chatExtension;
         };
     }
 }

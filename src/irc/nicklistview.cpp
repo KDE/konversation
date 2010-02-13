@@ -80,6 +80,7 @@ QTreeWidget(parent),
     m_AddressbookDeleteAction(0),
     m_openQueryAction(0),
     m_startDccChatAction(0),
+    m_startDccWBoardAction(0),
     m_dccSendAction(0)
 {
     setWhatsThis();
@@ -171,6 +172,8 @@ QTreeWidget(parent),
         m_openQueryAction->setWhatsThis(i18n("<qt><p>Start a private chat between you and this person.</p><p><em>Technical note:</em><br />The conversation between you and this person will be sent via the server.  This means that the conversation will be affected by server lag, server stability, and will be terminated when you disconnect from the server.</p></qt>"));
         m_startDccChatAction = createAction(popup,i18n("Open DCC &Chat"),Konversation::StartDccChat);
         m_startDccChatAction->setWhatsThis(i18n("<qt><p>Start a private <em>D</em>irect <em>C</em>lient <em>C</em>onnection chat between you and this person.</p><p><em>Technical note:</em><br />The conversation between you and this person will be sent directly.  This means it is independent from the server - so if the server connection fails, or use disconnect, your DCC Chat will be unaffected.  It also means that no irc server admin can view or spy on this chat.</p></qt>"));
+        m_startDccWBoardAction = createAction(popup,i18n("Open DCC &Whiteboard"), Konversation::StartDccWhiteboard);
+        m_startDccWBoardAction->setWhatsThis(i18n("<qt><p>Start a private <em>D</em>irect <em>C</em>lient <em>C</em>onnection whiteboard between you and this person.</p><p><em>Technical note:</em><br />The conversation between you and this person will be sent directly. This means it is independent from the server - so if the server connection fails, or use disconnect, your DCC Whiteboard will be unaffected.  It also means that no irc server admin can view or spy on this chat.</p></qt>"));
         if (KAuthorized::authorizeKAction("allow_downloading"))
         {
             m_dccSendAction = createAction(popup,i18n("Send &File..."),Konversation::DccSend);
