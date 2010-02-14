@@ -28,6 +28,7 @@
 #include <QDateTime>
 #include <QTcpSocket>
 #include <QTcpServer>
+#include <QFileInfo>
 
 #include <KUser>
 #include <KAuthorized>
@@ -436,10 +437,12 @@ namespace Konversation
                     break;
                 case KIO::ERR_FILE_ALREADY_EXIST:
                     askAndPrepareLocalKio(i18n("<b>The file already exists.</b><br/>"
-                        "%1<br/>",
-                        m_fileURL.prettyUrl()),
-                        ResumeDialog::RA_Overwrite | ResumeDialog::RA_Rename | ResumeDialog::RA_Cancel,
-                        ResumeDialog::RA_Overwrite );
+                                               "%1 (%2)<br/>"
+                                               "Sender reports file size of %3<br/>",
+                                               m_fileURL.prettyUrl(), KIO::convertSize(QFileInfo(m_fileURL.path()).size()),
+                                               KIO::convertSize(m_fileSize)),
+                                          ResumeDialog::RA_Overwrite | ResumeDialog::RA_Rename | ResumeDialog::RA_Cancel,
+                                          ResumeDialog::RA_Overwrite);
                     break;
                 default:
                     askAndPrepareLocalKio( i18n( "<b>Could not open the file.<br/>"
