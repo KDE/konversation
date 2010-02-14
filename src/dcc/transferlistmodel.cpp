@@ -151,24 +151,12 @@ namespace Konversation
 
             //visible order should always be
             //DCCReceiveCategory > DCCReceiveItem > SpacerRow > DCCSendCategory > DCCSendItem
-#if (QT_VERSION < QT_VERSION_CHECK(4, 5, 0))
-            if (m_sortOrder == Qt::AscendingOrder)
-#else
             if (sortOrder() == Qt::AscendingOrder)
-#endif
             {
                 return !(leftType < rightType);
             }
             return (leftType < rightType);
         }
-
-#if (QT_VERSION < QT_VERSION_CHECK(4, 5, 0))
-        void TransferListProxyModel::sort(int column, Qt::SortOrder order)
-        {
-            m_sortOrder = order;
-            QSortFilterProxyModel::sort(column,order);
-        }
-#endif
 
         TransferListModel::TransferListModel(QObject *parent)
             : QAbstractListModel(parent)

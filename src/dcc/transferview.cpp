@@ -451,10 +451,8 @@ namespace Konversation
             Preferences::self()->setDccColumnWidths(columnWidths);
             Preferences::self()->setDccColumnOrders(columnOrder);
             Preferences::self()->setDccColumnVisibles(columnVisible);
-#if (QT_VERSION >= QT_VERSION_CHECK(4, 5, 0))
             Preferences::self()->setDccColumnSorted(m_proxyModel->sortColumn());
             Preferences::self()->setDccColumnSortDescending(m_proxyModel->sortOrder() == Qt::DescendingOrder ? true : false);
-#endif
         }
 
         void TransferView::restoreColumns()
@@ -486,7 +484,6 @@ namespace Konversation
                     setColumnHidden(column, (columnVisible.at(i) > 0) ? false : true);
                 }
 
-#if (QT_VERSION >= QT_VERSION_CHECK(4, 5, 0))
                 Qt::SortOrder order;
                 if (Preferences::self()->dccColumnSortDescending())
                 {
@@ -497,7 +494,6 @@ namespace Konversation
                     order = Qt::AscendingOrder;
                 }
                 sortByColumn(Preferences::self()->dccColumnSorted(), order);
-#endif
             }
             else
             {

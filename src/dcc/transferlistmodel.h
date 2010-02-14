@@ -101,12 +101,6 @@ namespace Konversation
             TransferListProxyModel(QObject *parent = 0);
 
             bool lessThan(const QModelIndex &left, const QModelIndex &right) const;
-
-#if (QT_VERSION < QT_VERSION_CHECK(4, 5, 0))
-            virtual void sort ( int column, Qt::SortOrder order = Qt::AscendingOrder );
-        private:
-            Qt::SortOrder m_sortOrder;
-#endif
         };
 
 
