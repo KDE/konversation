@@ -6,7 +6,7 @@
 */
 
 /*
-  Copyright (C) 2009 Bernd Buschinski <b.buschinski@web.de>
+  Copyright (C) 2009-2010 Bernd Buschinski <b.buschinski@web.de>
 */
 
 #include "whiteboardcolorchooser.h"
@@ -177,10 +177,10 @@ namespace Konversation
         QRect WhiteBoardColorChooser::foregroundBackgroundRect() const
         {
             QRect cr(contentsRect());
-            return QRect(cr.width() / 8,
-                         cr.height() / 8,
-                         cr.width() * 6 / 8,
-                         cr.height() * 6 / 8);
+            return QRect(cr.width() / 8.0f,
+                         cr.height() / 8.0f,
+                         cr.width() * 6.0f / 8.0f,
+                         cr.height() * 6.0f / 8.0f);
         }
 
         QRect WhiteBoardColorChooser::foregroundRect() const
@@ -188,23 +188,23 @@ namespace Konversation
             QRect fbr(foregroundBackgroundRect());
             return QRect(fbr.x(),
                          fbr.y(),
-                         fbr.width() * 3 / 4,
-                         fbr.height() * 3 / 4);
+                         fbr.width() * 3.0f / 4.0f,
+                         fbr.height() * 3.0f / 4.0f);
         }
 
         QRect WhiteBoardColorChooser::backgroundRect() const
         {
             QRect fbr(foregroundBackgroundRect());
-            return QRect(fbr.x() + fbr.width() / 4,
-                         fbr.y() + fbr.height() / 4,
-                         fbr.width() * 3 / 4,
-                         fbr.height() * 3 / 4);
+            return QRect(fbr.x() + fbr.width() / 4.0f,
+                         fbr.y() + fbr.height() / 4.0f,
+                         fbr.width() * 3.0f / 4.0f,
+                         fbr.height() * 3.0f / 4.0f);
         }
 
         void WhiteBoardColorChooser::drawSwapPixmap()
         {
-            const int arrowHeight = m_swapPixmap.height() / 4;
-            const int arrowWidth = m_swapPixmap.width() / 2;
+            const int arrowHeight = m_swapPixmap.height() / 4.0f;
+            const int arrowWidth = m_swapPixmap.width() / 2.0f;
             const int imageHeight = m_swapPixmap.height();
             const int imageWidth = m_swapPixmap.width();
 

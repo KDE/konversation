@@ -730,7 +730,7 @@ namespace Konversation
             }
             else if (xDiff > 0 && yDiff == 0)
             {
-                angle = 2*M_PI/4*3;
+                angle = 2.0*M_PI/4.0*3.0;
             }
             else if (xDiff == 0 && yDiff < 0)
             {
@@ -738,7 +738,7 @@ namespace Konversation
             }
             else if (xDiff < 0 && yDiff == 0)
             {
-                angle = M_PI/2;
+                angle = M_PI/2.0;
             }
             else
             {
@@ -746,15 +746,15 @@ namespace Konversation
 
                 if (xDiff > 0.0 && yDiff > 0.0)
                 {
-                    angle = (M_PI/2) - angle + M_PI;
+                    angle = (M_PI/2.0) - angle + M_PI;
                 }
                 else if (xDiff > 0.0 && yDiff < 0.0)
                 {
-                    angle = (2*M_PI/4*3) - angle;
+                    angle = (2.0*M_PI/4.0*3.0) - angle;
                 }
                 else if (xDiff < 0.0)
                 {
-                    angle = (M_PI/2) - angle;
+                    angle = (M_PI/2.0) - angle;
                 }
             }
 

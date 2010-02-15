@@ -307,6 +307,21 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>m_clearPushButton</tabstop>
+  <tabstop>m_savePushButton</tabstop>
+  <tabstop>m_pencilPushButton</tabstop>
+  <tabstop>m_linePushButton</tabstop>
+  <tabstop>m_rectanglePushButton</tabstop>
+  <tabstop>m_ellipsePushButton</tabstop>
+  <tabstop>m_textPushButton</tabstop>
+  <tabstop>m_selectionPushButton</tabstop>
+  <tabstop>m_eraserPushButton</tabstop>
+  <tabstop>m_fillPushButton</tabstop>
+  <tabstop>m_arrowPushButton</tabstop>
+  <tabstop>m_lineWidthSlider</tabstop>
+  <tabstop>m_formOptionListWidget</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
