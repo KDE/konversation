@@ -40,6 +40,8 @@
 #include <QAbstractTextDocumentLayout>
 #include <QPainter>
 #include <QTextObjectInterface>
+#include <QTextDocumentFragment>
+#include <QTextCodec>
 
 #include <KUrl>
 #include <KBookmarkManager>
@@ -348,6 +350,48 @@ QDebug operator<<(QDebug dbg, QList<QTextBlock> &l)
         }
 
     return dbg.space();
+}
+
+class IrcViewMimeData : public QMimeData
+{
+public:
+    IrcViewMimeData(const QTextDocumentFragment& _fragment): fragment(_fragment) {}
+    virtual QStringList formats() const;
+
+protected:
+    virtual QVariant retrieveData(const QString &mimeType, QVariant::Type type) const;
+
+private:
+    mutable QTextDocumentFragment fragment;
+};
+
+QStringList IrcViewMimeData::formats() const
+{
+    if (!fragment.isEmpty())
+        return QStringList() << QString::fromLatin1("text/plain");
+    else
+        return QMimeData::formats();
+}
+
+QVariant IrcViewMimeData::retrieveData(const QString &mimeType, QVariant::Type type) const
+{
+    if (!fragment.isEmpty())
+    {
+        IrcViewMimeData *that = const_cast<IrcViewMimeData *>(this);
+
+        //Copy the text, skipping any QChar::ObjectReplacementCharacter
+        QRegExp needle(QString("\\xFFFC\\n?"));
+
+        that->setText(fragment.toPlainText().remove(needle));
+        fragment = QTextDocumentFragment();
+    }
+    return QMimeData::retrieveData(mimeType, type);
+}
+
+QMimeData *IRCView::createMimeDataFromSelection() const
+{
+    const QTextDocumentFragment fragment(textCursor());
+    return new IrcViewMimeData(fragment);
 }
 
 void IrcViewMarkerLine::drawObject(QPainter *painter, const QRectF &r, QTextDocument *doc, int posInDocument, const QTextFormat &format)

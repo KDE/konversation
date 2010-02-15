@@ -128,6 +128,9 @@ class IRCView : public KTextBrowser
         /// Does not effect m_rememberLineDirtyBit.
         void clearLines();
 
+    protected:
+        virtual QMimeData* createMimeDataFromSelection() const;
+
     private:
         /// The internal mechanics of inserting a line.
         /// Clears m_rememberLineDirtyBit.
