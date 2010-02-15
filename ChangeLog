@@ -1,3 +1,16 @@
+Changes since 1.2.3:
+* Konversation now depends on Qt 4.5 and KDE 4.3.
+* Added support for DCC WHITEBOARD, bringing collaborative drawing to
+  IRC.
+* When showing the dialog informing the user about the local target
+  file for an incoming DCC file transfer already existing that dialog
+  now includes the sizes of the local file and the file the sender is
+  offering up.
+* Fixed a bug causing either an empty line or a few characters of gar-
+  bage to be placed in the clipboard in place of marker/remember lines
+  when copying chat text containing such lines.
+
+
 Changes from 1.2.2 to 1.2.3:
 Konversation 1.2.3 is a hotfix release that improves upon an earlier
 fix, originally included in Konversation 1.2.2, that increases the re-
