@@ -436,11 +436,12 @@ namespace Konversation
                         << "TransferRecv::slotLocalGotResult(): Why was I called in spite of no error?";
                     break;
                 case KIO::ERR_FILE_ALREADY_EXIST:
-                    askAndPrepareLocalKio(i18n("<b>The file already exists.</b><br/>"
-                                               "%1 (%2)<br/>"
-                                               "Sender reports file size of %3<br/>",
-                                               m_fileURL.prettyUrl(), KIO::convertSize(QFileInfo(m_fileURL.path()).size()),
-                                               KIO::convertSize(m_fileSize)),
+                    askAndPrepareLocalKio(i18nc("%1=fileName, %2=local filesize, %3=sender filesize",
+                                                "<b>The file already exists.</b><br/>"
+                                                "%1 (%2)<br/>"
+                                                "Sender reports file size of %3<br/>",
+                                                m_fileURL.prettyUrl(), KIO::convertSize(QFileInfo(m_fileURL.path()).size()),
+                                                KIO::convertSize(m_fileSize)),
                                           ResumeDialog::RA_Overwrite | ResumeDialog::RA_Rename | ResumeDialog::RA_Cancel,
                                           ResumeDialog::RA_Overwrite);
                     break;
