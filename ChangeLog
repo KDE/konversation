@@ -9,6 +9,8 @@ Changes since 1.2.3:
 * Fixed a bug causing either an empty line or a few characters of gar-
   bage to be placed in the clipboard in place of marker/remember lines
   when copying chat text containing such lines.
+* Fixed a bug causing quotation marks, ampersands and angle brackets
+  in chat messages to be displayed as HTML entities in the OSD.
 
 
 Changes from 1.2.2 to 1.2.3:
