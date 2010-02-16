@@ -11,6 +11,9 @@ Changes since 1.2.3:
   when copying chat text containing such lines.
 * Fixed a bug causing quotation marks, ampersands and angle brackets
   in chat messages to be displayed as HTML entities in the OSD.
+* The "Clear All Windows" action will now also resets the notification
+  state of all tabs (i.e. removes active new message or highlight no-
+  tifications from the tab bar).
 
 
 Changes from 1.2.2 to 1.2.3:
