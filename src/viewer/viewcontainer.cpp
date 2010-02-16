@@ -1857,8 +1857,11 @@ void ViewContainer::clearAllViews()
     {
         nextPage=static_cast<ChatWindow*>(m_tabWidget->widget(i));
 
-        if(nextPage && nextPage->getTextView())
+        if (nextPage && nextPage->getTextView())
+        {
             nextPage->getTextView()->clear();
+            unsetViewNotification(nextPage);
+        }
     }
 }
 
