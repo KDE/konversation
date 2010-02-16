@@ -38,21 +38,21 @@ namespace Konversation
             Q_OBJECT
 
             public:
-                TransferSend(QObject* parent);
+                TransferSend(QObject *parent);
                 virtual ~TransferSend();
 
                 // REQUIRED
-                void setFileURL( const KUrl& url );
+                void setFileURL(const KUrl &url);
                 // OPTIONAL
-                void setFileName( const QString& fileName );
+                void setFileName(const QString &fileName);
                 // OPTIONAL
-                void setOwnIp( const QString& ownIp );
+                void setOwnIp(const QString &ownIp);
                 // OPTIONAL
-                void setFileSize( KIO::filesize_t fileSize );
+                void setFileSize(KIO::filesize_t fileSize);
                 // OPTIONAL
-                void setReverse( bool reverse );
+                void setReverse(bool reverse);
 
-                bool setResume( quint64 position );
+                bool setResume(quint64 position);
 
                 // send got rejected
                 void reject();
@@ -63,7 +63,7 @@ namespace Konversation
                 virtual void abort();
 
                 // invoked when the receiver accepts the offer (Reverse DCC)
-                void connectToReceiver( const QString& partnerHost, uint partnerPort );
+                void connectToReceiver(const QString &partnerHost, quint16 partnerPort);
 
             protected slots:
                 void acceptClient();
@@ -72,17 +72,17 @@ namespace Konversation
                 void writeData();
                 void bytesWritten(qint64 bytes);
                 void getAck();
-                void slotGotSocketError( QAbstractSocket::SocketError errorCode );
+                void slotGotSocketError(QAbstractSocket::SocketError errorCode);
                 void slotConnectionTimeout();
                 void sendRequest(bool error, quint16 port);
 
             protected:
                 void cleanUp();
 
-                void startConnectionTimer( int sec );
+                void startConnectionTimer(int secs);
                 void stopConnectionTimer();
 
-                QString getQFileErrorString( int code );
+                QString getQFileErrorString(int code);
 
                 QFile m_file;
 
@@ -95,7 +95,7 @@ namespace Konversation
                 QTcpSocket *m_sendSocket;
                 bool m_fastSend;
 
-                QTimer* m_connectionTimer;
+                QTimer *m_connectionTimer;
         };
     }
 }

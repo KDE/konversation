@@ -47,21 +47,21 @@ namespace Konversation
             Q_OBJECT
 
             public:
-                TransferRecv(QObject* parent);
+                TransferRecv(QObject *parent);
                 virtual ~TransferRecv();
 
                 // REQUIRED
-                void setPartnerIp( const QString& ip );
+                void setPartnerIp(const QString &ip);
                 // REQUIRED
                 void setPartnerPort(quint16 port);
                 // REQUIRED
-                void setFileSize( quint64 fileSize );
+                void setFileSize(quint64 fileSize);
                 // OPTIONAL, if not specified, "unnamed_file"
-                void setFileName( const QString& fileName );
+                void setFileName(const QString &fileName);
                 // OPTIONAL, if not specified, default folder + the file name
-                void setFileURL( const KUrl& url );
+                void setFileURL(const KUrl &url);
                 // OPTIONAL
-                void setReverse( bool reverse, const QString& reverseToken );
+                void setReverse(bool reverse, const QString &reverseToken);
 
             public slots:
                 virtual bool queue();
@@ -77,20 +77,20 @@ namespace Konversation
                  *  Not called when it fails due to another problem.
                  */
                 virtual void abort();
-                void startResume( quint64 position );
+                void startResume(quint64 position);
 
             protected slots:
                 // Local KIO
-                void slotLocalCanResume( KIO::Job* job, KIO::filesize_t size );
-                void slotLocalGotResult( KJob* job );
-                void slotLocalReady( KIO::Job* job );
+                void slotLocalCanResume(KIO::Job *job, KIO::filesize_t size);
+                void slotLocalGotResult(KJob *job);
+                void slotLocalReady(KIO::Job *job);
                 void slotLocalWriteDone();
-                void slotLocalGotWriteError( const QString& errorString );
+                void slotLocalGotWriteError(const QString &errorString);
 
                 // Remote DCC
                 void connectWithSender();
                 void startReceiving();
-                void connectionFailed( QAbstractSocket::SocketError errorCode );
+                void connectionFailed(QAbstractSocket::SocketError errorCode);
                 void readData();
                 void sendAck();
                 void connectionTimeout();
@@ -104,8 +104,8 @@ namespace Konversation
                 void cleanUp();
 
                                                           // (startPosition == 0) means "don't resume"
-                void prepareLocalKio( bool overwrite, bool resume, KIO::fileoffset_t startPosition = 0 );
-                void askAndPrepareLocalKio( const QString& message, int enabledActions, ResumeDialog::ReceiveAction defaultAction, KIO::fileoffset_t startPosition = 0 );
+                void prepareLocalKio(bool overwrite, bool resume, KIO::fileoffset_t startPosition = 0);
+                void askAndPrepareLocalKio(const QString &message, int enabledActions, ResumeDialog::ReceiveAction defaultAction, KIO::fileoffset_t startPosition = 0);
 
                 /**
                  * This calls KIO::NetAccess::mkdir on all the subdirectories of dirURL, to
@@ -125,7 +125,7 @@ namespace Konversation
                 // for reverse DCC
                 bool startListeningForSender();
 
-                void startConnectionTimer( int sec );
+                void startConnectionTimer(int secs);
                 void stopConnectionTimer();
 
             protected:
@@ -134,13 +134,13 @@ namespace Konversation
                 KIO::filesize_t m_saveToFileSize;
                 ///Current filesize of the file+".part" saved on the disk.
                 KIO::filesize_t m_partialFileSize;
-                TransferRecvWriteCacheHandler* m_writeCacheHandler;
+                TransferRecvWriteCacheHandler *m_writeCacheHandler;
                 bool m_saveToFileExists;
                 bool m_partialFileExists;
-                QTimer* m_connectionTimer;
+                QTimer *m_connectionTimer;
 
-                QTcpServer* m_serverSocket;
-                QTcpSocket* m_recvSocket;
+                QTcpServer *m_serverSocket;
+                QTcpSocket *m_recvSocket;
 
                 ///We need the original name for resume communication, as sender depends on it
                 QString m_saveFileName;
@@ -150,32 +150,32 @@ namespace Konversation
         {
             Q_OBJECT
 
-                public:
-                explicit TransferRecvWriteCacheHandler( KIO::TransferJob* transferJob );
+            public:
+                explicit TransferRecvWriteCacheHandler(KIO::TransferJob *transferJob);
                 virtual ~TransferRecvWriteCacheHandler();
 
-                void append( char* data, int size );
-                bool write( bool force = false );
+                void append(char *data, int size);
+                bool write(bool force = false);
                 void close();
                 void closeNow();
 
                 signals:
                 void done();                              // ->  DccTransferRecv::writeDone()
                                                           // ->  DccTransferRecv::slotWriteError()
-                void gotError( const QString& errorString );
+                void gotError(const QString &errorString);
 
             protected slots:
                                                           // <-  m_transferJob->dataReq()
-                void slotKIODataReq( KIO::Job* job, QByteArray& data );
-                void slotKIOResult( KJob* job );          // <-  m_transferJob->result()
+                void slotKIODataReq(KIO::Job *job, QByteArray &data);
+                void slotKIOResult(KJob *job);          // <-  m_transferJob->result()
 
             protected:
-                KIO::TransferJob* m_transferJob;
+                KIO::TransferJob *m_transferJob;
                 bool m_writeAsyncMode;
                 bool m_writeReady;
 
                 QList<QByteArray> m_cacheList;
-                QDataStream* m_cacheStream;
+                QDataStream *m_cacheStream;
         };
     }
 }
