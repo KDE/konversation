@@ -72,10 +72,10 @@ namespace Konversation
                 QDateTime          getTimeOffer()             const;
                 int                getConnectionId()          const;
                 QString            getOwnIp()                 const;
-                uint               getOwnPort()               const;
+                quint16            getOwnPort()               const;
                 QString            getPartnerNick()           const;
                 QString            getPartnerIp()             const;
-                uint               getPartnerPort()           const;
+                quint16            getPartnerPort()           const;
                 QString            getFileName()              const;
                 KIO::filesize_t    getFileSize()              const;
                 KIO::fileoffset_t  getTransferringPosition()  const;
@@ -156,9 +156,9 @@ namespace Konversation
                 int m_connectionId;
                 QString m_partnerNick;
                 QString m_partnerIp;                      // null when unknown
-                uint m_partnerPort;
+                quint16 m_partnerPort;
                 QString m_ownIp;
-                uint m_ownPort;
+                quint16 m_ownPort;
 
                 unsigned long m_bufferSize;
                 char* m_buffer;

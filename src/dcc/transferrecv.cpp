@@ -117,9 +117,9 @@ namespace Konversation
                 m_partnerIp = ip;
         }
 
-        void TransferRecv::setPartnerPort( uint port )
+        void TransferRecv::setPartnerPort(quint16 port)
         {
-            if ( getStatus() == Configuring )
+            if (getStatus() == Configuring)
                 m_partnerPort = port;
         }
 

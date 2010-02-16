@@ -53,7 +53,7 @@ namespace Konversation
                 // REQUIRED
                 void setPartnerIp( const QString& ip );
                 // REQUIRED
-                void setPartnerPort( uint port );
+                void setPartnerPort(quint16 port);
                 // REQUIRED
                 void setFileSize( quint64 fileSize );
                 // OPTIONAL, if not specified, "unnamed_file"

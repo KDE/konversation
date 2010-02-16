@@ -289,7 +289,7 @@ namespace Konversation
             return m_ownIp;
         }
 
-        uint Transfer::getOwnPort() const
+        quint16 Transfer::getOwnPort() const
         {
             return m_ownPort;
         }
@@ -304,7 +304,7 @@ namespace Konversation
             return m_partnerIp;
         }
 
-        uint Transfer::getPartnerPort() const
+        quint16 Transfer::getPartnerPort() const
         {
             return m_partnerPort;
         }
