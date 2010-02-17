@@ -91,7 +91,7 @@ namespace Konversation
 
 
         TransferProgressBarDelegate::TransferProgressBarDelegate(QObject *parent)
-            : QStyledItemDelegate (parent)
+            : QStyledItemDelegate(parent)
         {
         }
 
@@ -123,30 +123,31 @@ namespace Konversation
         }
 
 
-        TransferListProxyModel::TransferListProxyModel (QObject *parent)
-            : QSortFilterProxyModel (parent)
+        TransferListProxyModel::TransferListProxyModel(QObject *parent)
+            : QSortFilterProxyModel(parent)
         {
         }
 
-        bool TransferListProxyModel::lessThan (const QModelIndex &left,
-                                               const QModelIndex &right) const
+        bool TransferListProxyModel::lessThan(const QModelIndex &left,
+                                              const QModelIndex &right) const
         {
             int leftType = left.data(TransferListModel::TransferDisplayType).toInt();
             int rightType = right.data(TransferListModel::TransferDisplayType).toInt();
 
             if (leftType == rightType)
             {
-                if (left.data(TransferListModel::HeaderType) == TransferHeaderData::Position)
+                const int headerType = left.data(TransferListModel::HeaderType).toInt();
+                if (headerType == TransferHeaderData::Position)
                 {
                     return (left.data(TransferListModel::TransferProgress).toInt() <
                             right.data(TransferListModel::TransferProgress).toInt());
                 }
-                else if (left.data(TransferListModel::HeaderType) == TransferHeaderData::OfferDate)
+                else if (headerType == TransferHeaderData::OfferDate)
                 {
                     return (left.data(TransferListModel::TransferOfferDate).toDateTime() <
                             right.data(TransferListModel::TransferOfferDate).toDateTime());
                 }
-                return QSortFilterProxyModel::lessThan (left, right);
+                return QSortFilterProxyModel::lessThan(left, right);
             }
 
             //visible order should always be
