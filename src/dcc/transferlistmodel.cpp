@@ -117,6 +117,7 @@ namespace Konversation
              progressBarOption.progress = index.data().toInt();
              progressBarOption.text = QString::number(progressBarOption.progress) + '%';
              progressBarOption.textVisible = true;
+             progressBarOption.state = option.state;
 
              QApplication::style()->drawControl(QStyle::CE_ProgressBar,
                                                 &progressBarOption, painter);
