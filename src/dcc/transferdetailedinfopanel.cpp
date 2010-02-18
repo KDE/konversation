@@ -250,8 +250,10 @@ namespace Konversation
             m_timeInfo.m_labelTimeLeft->setText(TransferListModel::getTimeLeftPrettyText(m_transfer->getTimeLeft()));
         }
 
-        void TransferDetailedInfoPanel::slotTransferStatusChanged(Transfer */* transfer */, int newStatus, int oldStatus)
+        void TransferDetailedInfoPanel::slotTransferStatusChanged(Transfer *transfer, int newStatus, int oldStatus)
         {
+            Q_UNUSED(transfer);
+
             updateView();
             if (newStatus == Transfer::Transferring)
             {
