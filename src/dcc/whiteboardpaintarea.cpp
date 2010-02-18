@@ -67,6 +67,15 @@ namespace Konversation
         void WhiteBoardPaintArea::setForegroundColor(const QColor& color)
         {
             m_foregroundColor = color;
+            if (m_tool == WhiteBoardGlobals::Text || m_tool == WhiteBoardGlobals::TextExtended)
+            {
+                if (isLastPosValid())
+                {
+                    m_overlayPixmap->fill(Qt::transparent);
+                    text(m_overlayPixmap, m_font, m_foregroundColor, m_backgroundColor, m_lastPos.x(), m_lastPos.y(), m_writtenText, true, m_tool);
+                    update();
+                }
+            }
         }
 
         void WhiteBoardPaintArea::setBackgroundColor(const QColor& color)
@@ -78,6 +87,15 @@ namespace Konversation
         {
             m_foregroundColor = newForeground;
             m_backgroundColor = newBackground;
+            if (m_tool == WhiteBoardGlobals::Text || m_tool == WhiteBoardGlobals::TextExtended)
+            {
+                if (isLastPosValid())
+                {
+                    m_overlayPixmap->fill(Qt::transparent);
+                    text(m_overlayPixmap, m_font, m_foregroundColor, m_backgroundColor, m_lastPos.x(), m_lastPos.y(), m_writtenText, true, m_tool);
+                    update();
+                }
+            }
         }
 
         void WhiteBoardPaintArea::setPenWidth(int width)
