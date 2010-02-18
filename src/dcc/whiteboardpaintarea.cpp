@@ -811,9 +811,22 @@ namespace Konversation
             tPaint.drawText(x1, y1+tSize.height(), textString);
             if (drawSelection)
             {
+                //draw white and blue dash to make it also visible on blue background
                 tPaint.setBrush(Qt::transparent);
                 QPen tPen = getPen(Qt::blue, 1, tool);
-                tPen.setStyle(Qt::DashLine);
+                tPen.setStyle(Qt::CustomDashLine);
+
+                static const qreal dashLength = 4;
+                QVector<qreal> dashes;
+                dashes << dashLength << dashLength;
+                tPen.setDashPattern(dashes);
+
+                tPaint.setPen(tPen);
+                tPaint.drawRect(x1-1,y1-1, tSize.width()+1, tSize.height()+1);
+
+                tPen.setDashOffset(dashLength);
+                tPen.setColor(Qt::white);
+
                 tPaint.setPen(tPen);
                 tPaint.drawRect(x1-1,y1-1, tSize.width()+1, tSize.height()+1);
             }
