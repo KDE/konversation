@@ -334,13 +334,13 @@ void UrlCatcher::deleteUrlClicked()
 
         if (indexAbove.isValid())
         {
-            QItemSelection selection(indexAbove, indexAbove.sibling(indexAbove.row(),1));
+            QItemSelection selection(indexAbove, indexAbove.sibling(indexAbove.row(),2));
             if(!selection.isEmpty())
                 m_urlListView->selectionModel()->select(selection, QItemSelectionModel::ClearAndSelect);
         }
         else if (indexBelow.isValid())
         {
-            QItemSelection selection(index, index.sibling(index.row(),1));
+            QItemSelection selection(index, index.sibling(index.row(),2));
             if(!selection.isEmpty())
                 m_urlListView->selectionModel()->select(selection, QItemSelectionModel::ClearAndSelect);
         }
@@ -360,7 +360,7 @@ void UrlCatcher::deleteUrlClicked()
             m_save->setEnabled(false);
         }
 
-        emit deleteUrl(item.nick, item.url);
+        emit deleteUrl(item.nick, item.url, item.datetime);
     }
 }
 

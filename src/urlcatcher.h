@@ -63,7 +63,7 @@ class UrlCatcher : public ChatWindow, private Ui::URLCatcherUI
         virtual bool canBeFrontView()   { return true; }
 
     signals:
-        void deleteUrl(const QString& who,const QString& url);
+        void deleteUrl(const QString& who, const QString& url, const QDateTime& datetime);
         void clearUrlList();
 
     public slots:
