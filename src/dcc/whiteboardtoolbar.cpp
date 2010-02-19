@@ -82,7 +82,7 @@ namespace Konversation
             m_toggleButtonHash.insert(m_eraserPushButton, WhiteBoardGlobals::Eraser);
 
             m_fillPushButton->setIcon(KIcon("fill-color"));
-            m_fillPushButton->setToolTip(i18n("Fill a contiguous area of with a color"));
+            m_fillPushButton->setToolTip(i18n("Fill a contiguous area with the foreground color"));
             m_fillPushButton->setFlat(true);
             m_toggleButtonHash.insert(m_fillPushButton, WhiteBoardGlobals::FloodFill);
 
