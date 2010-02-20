@@ -1162,13 +1162,8 @@ int Server::_send_internal(QString outputLine)
     }
 
     // remember the first arg of /WHO to identify responses
-    if (outboundCommand == 0) //"WHO"
-    {
-        if (outputLineSplit.count() >= 2)
-            m_inputFilter.addWhoRequest(outputLineSplit[1]);
-        else // no argument (servers recognize it as "*")
-            m_inputFilter.addWhoRequest("*");
-    }
+    if (outboundCommand == 0 && outputLineSplit.count() >= 2) //"WHO"
+        m_inputFilter.addWhoRequest(outputLineSplit[1]);
     else if (outboundCommand == 1) //"QUIT"
         updateConnectionState(Konversation::SSDeliberatelyDisconnected);
 
