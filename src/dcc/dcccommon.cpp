@@ -14,7 +14,7 @@
 #include "preferences.h"
 #include "server.h"
 
-#include <stdlib.h>
+#include <cstdlib>
 #include <sys/types.h>
 #include <netinet/in.h>
 #include <sys/socket.h>
