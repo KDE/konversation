@@ -453,8 +453,8 @@ namespace Konversation
             switch (transferJob->error())
             {
                 case 0:                                   // no error
-                    kDebug() << "TransferRecv::slotLocalGotResult(): job->error() returned 0." << endl
-                        << "TransferRecv::slotLocalGotResult(): Why was I called in spite of no error?";
+                    kDebug() << "job->error() returned 0." << endl
+                        << "Why was I called in spite of no error?";
                     break;
                 case KIO::ERR_FILE_ALREADY_EXIST:
                     askAndPrepareLocalKio(i18nc("%1=fileName, %2=local filesize, %3=sender filesize",
@@ -554,7 +554,7 @@ namespace Konversation
                 return;
             }
 
-            kDebug() << "sendReverseAck()" << endl;
+            kDebug();
 
             if (Preferences::self()->dccUPnP() && this->sender())
             {
@@ -610,9 +610,9 @@ namespace Konversation
 
             if ((quint64)m_transferringPosition != position)
             {
-                kDebug() << "TransferRecv::startResume(): remote responsed an unexpected position"<< endl
-                    << "TransferRecv::startResume(): expected: " << m_transferringPosition << endl
-                    << "TransferRecv::startResume(): remote response: " << position;
+                kDebug() << "remote responsed an unexpected position"<< endl
+                    << "expected: " << m_transferringPosition << endl
+                    << "remote response: " << position;
                 failed(i18n("Unexpected response from remote host"));
                 return;
             }
