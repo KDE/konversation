@@ -16,7 +16,7 @@
 #include <QPainter>
 
 #include <KColorDialog>
-#include <kdebug.h>
+#include <KDebug>
 
 namespace Konversation
 {

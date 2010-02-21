@@ -18,7 +18,7 @@
 #include <QApplication>
 
 #include <KCategorizedSortFilterProxyModel>
-#include <klocalizedstring.h>
+#include <KLocalizedString>
 #include <KDebug>
 #include <KCategoryDrawer>
 

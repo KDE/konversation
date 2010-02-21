@@ -22,7 +22,7 @@
 
 #include <QSplitter>
 
-#include <klocalizedstring.h>
+#include <KLocalizedString>
 #include <KMenu>
 #include <KActionCollection>
 #include <KMessageBox>

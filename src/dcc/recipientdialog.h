@@ -20,7 +20,7 @@
 
 #include <QModelIndex>
 
-#include <kdialog.h>
+#include <KDialog>
 
 class KLineEdit;
 

@@ -23,7 +23,7 @@
 #include <QObject>
 #include <QTimer>
 
-#include <kurl.h>
+#include <KUrl>
 #include <kio/global.h>
 
 namespace Konversation

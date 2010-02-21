@@ -21,7 +21,7 @@
 #include <KUrl>
 #include <KFileDialog>
 #include <KIcon>
-#include <kdebug.h>
+#include <KDebug>
 
 #include "whiteboardfontchooser.h"
 

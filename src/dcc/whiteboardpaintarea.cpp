@@ -24,7 +24,7 @@
 #include <QPen>
 #include <QStack>
 
-#include <kdebug.h>
+#include <KDebug>
 
 namespace Konversation
 {

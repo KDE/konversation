@@ -18,7 +18,7 @@
 #include <KDebug>
 #include <KMenu>
 #include <KCategoryDrawer>
-#include <klocalizedstring.h>
+#include <KLocalizedString>
 
 #include <QHeaderView>
 #include <QKeyEvent>
