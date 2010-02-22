@@ -1195,7 +1195,7 @@ int Server::_send_internal(QString outputLine)
 
     #ifdef HAVE_QCA2
     QString cipherKey;
-    if (outboundCommand > 1)
+    if (outputLineSplit.count() > 2 && outboundCommand > 1)
         cipherKey = getKeyForRecipient(outputLineSplit.at(1));
     if (!cipherKey.isEmpty())
     {
