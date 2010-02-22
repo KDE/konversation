@@ -21,6 +21,17 @@ Changes since 1.2.3:
   command without parameters.
 * Fixed a bug causing a crash when sending '/privmsg' without any pa-
   rameters (did not apply to '/msg').
+* In previous versions, channel tabs opened in the background (i.e.
+  while "Focus new tabs" is disabled, as it is by default) would con-
+  siderably increase the minimum width of the window due to particu-
+  larities of the Qt layout system. After raising every channel tab
+  at least once it would then be possible to make the window much
+  narrower. This unintuitive behavior resulted in confusion as to why
+  the minimum width of the Konversation window would sometimes vary
+  greatly. This has been fixed in this version, i.e. it is no longer
+  necessary to have raised every channel tab at least once to achieve
+  a reasonable minimum width of the window. This also means that
+  joining a new channel is now much less likely to resize the window.
 
 
 Changes from 1.2.2 to 1.2.3:
