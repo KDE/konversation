@@ -19,6 +19,8 @@ Changes since 1.2.3:
   as well as optionally channel user info) to be displayed in tabs as
   if the user had made the requests manually after sending a '/who'
   command without parameters.
+* Fixed a bug causing a crash when sending '/privmsg' without any pa-
+  rameters (did not apply to '/msg').
 
 
 Changes from 1.2.2 to 1.2.3:
