@@ -6,7 +6,7 @@
 */
 
 /*
-  Copyright (C) 2009 Bernd Buschinski <b.buschinski@web.de>
+  Copyright (C) 2009-2010 Bernd Buschinski <b.buschinski@web.de>
 */
 
 #ifndef WHITEBOARDPAINTAREA_H
@@ -36,6 +36,7 @@ namespace Konversation
 
         public:
             WhiteBoardPaintArea(QWidget* parent = 0);
+            ~WhiteBoardPaintArea();
 
         public slots:
             void setTool(Konversation::DCC::WhiteBoardGlobals::WhiteBoardTool tool);

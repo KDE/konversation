@@ -52,6 +52,12 @@ namespace Konversation
             setCursor(Qt::CrossCursor);
         }
 
+        WhiteBoardPaintArea::~WhiteBoardPaintArea()
+        {
+            delete m_imagePixmap;
+            delete m_overlayPixmap;
+        }
+
         void WhiteBoardPaintArea::setTool(WhiteBoardGlobals::WhiteBoardTool tool)
         {
             //kDebug() << "newtool" << tool;
