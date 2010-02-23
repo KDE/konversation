@@ -30,10 +30,11 @@
 #include <QRegExp>
 #include <QTextCodec>
 #include <QByteArray>
+#include <QTextStream>
 
 #include <KIO/PasswordDialog>
 #include <KMessageBox>
-
+#include <KAboutData>
 
 namespace Konversation
 {
@@ -1854,6 +1855,27 @@ namespace Konversation
             return usage(i18n("Usage: %1queuetuner [on | off]", Preferences::self()->commandChar()));
 
         return OutputFilterResult();
+    }
+
+    OutputFilterResult OutputFilter::command_sayversion(const OutputFilterInput& input)
+    {
+        OutputFilterResult result;
+        result.output = input.parameter;
+
+        QTextStream serverOut(&result.toServer);
+        QTextStream myOut(&result.output); //<--because seek is unimplemented in QTextStreamPrivate::write(const QString &data)
+        myOut
+            << "Konversation: " << KGlobal::mainComponent().aboutData()->version()
+            << ", Qt " << QString::fromLatin1(qVersion())
+            << ", KDE SC " << KDE::versionString()
+            ;
+        if (QString::fromLatin1(KDE_VERSION_STRING) != KDE::versionString())
+            myOut << ", KDE DP " << QString::fromLatin1(KDE_VERSION_STRING);
+        if (qgetenv("KDE_FULL_SESSION").isEmpty())
+            myOut << ", no KDE";
+
+        serverOut << "PRIVMSG " << input.destination << " :" << result.output;
+        return result;
     }
 
     OutputFilterResult OutputFilter::changeMode(const QString &parameter, const QString& destination,

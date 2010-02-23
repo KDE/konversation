@@ -191,6 +191,7 @@ namespace Konversation
             OutputFilterResult command_list(const OutputFilterInput& input);
             OutputFilterResult command_konsole(const OutputFilterInput& input);
             OutputFilterResult command_queuetuner(const OutputFilterInput& input);
+            OutputFilterResult command_sayversion(const OutputFilterInput& input);
 
         private:
             static void fillCommandList();
