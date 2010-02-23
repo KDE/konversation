@@ -859,12 +859,12 @@ namespace Konversation
 
         void WhiteBoardPaintArea::finishText()
         {
+            m_overlayPixmap->fill(Qt::transparent);
             if (m_writtenText.isEmpty())
             {
                 return;
             }
 
-            m_overlayPixmap->fill(Qt::transparent);
             text(m_imagePixmap, m_font, m_foregroundColor, m_backgroundColor, m_lastPos.x(), m_lastPos.y(), m_writtenText, false, m_tool);
             if (m_tool == WhiteBoardGlobals::TextExtended)
             {
