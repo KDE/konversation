@@ -876,7 +876,7 @@ namespace Konversation
         void WhiteBoardPaintArea::drawRect(QPainter* painter, int xFrom, int yFrom, int xTo, int yTo)
         {
             // if Length is smaller zero then the filled brush is too big by one pixel the left and top
-            // the border(pen) is correct though, is it a Qt bug? (Qt-4.6.1 + raster)
+            // the border(pen) is correct though, is it a Qt bug? (Qt-4.6.2 + raster)
             int xLength = xTo - xFrom;
             int yLength = yTo - yFrom;
             if (xLength < 0)
