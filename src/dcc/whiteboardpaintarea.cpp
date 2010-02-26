@@ -170,7 +170,7 @@ namespace Konversation
             QPainter tPaint(m_imagePixmap);
             tPaint.setPen(getPen(penColor, lineWidth, WhiteBoardGlobals::FilledRectangle));
             tPaint.setBrush(brushColor);
-            tPaint.drawRect(xFrom, yFrom, xTo-xFrom, yTo-yFrom);
+            drawRect(&tPaint, xFrom, yFrom, xTo, yTo);
             tPaint.end();
             update();
         }
@@ -473,11 +473,7 @@ namespace Konversation
                         if (isLastPosValid())
                         {
                             m_overlayPixmap->fill(Qt::transparent);
-                            const int xStart = m_lastPos.x();
-                            const int yStart = m_lastPos.y();
-                            const int xTo = event->pos().x() - xStart;
-                            const int yTo = event->pos().y() - yStart;
-                            tPainter.drawRect(xStart, yStart, xTo, yTo);
+                            drawRect(&tPainter, m_lastPos.x(), m_lastPos.y(), event->pos().x(), event->pos().y());
                         }
                         else
                         {
@@ -875,6 +871,23 @@ namespace Konversation
                 emit usedText(m_lastPos.x(), m_lastPos.y(), m_writtenText);
             }
             m_writtenText.clear();
+        }
+
+        void WhiteBoardPaintArea::drawRect(QPainter* painter, int xFrom, int yFrom, int xTo, int yTo)
+        {
+            // if Length is smaller zero then the filled brush is too big by one pixel the left and top
+            // the border(pen) is correct though, is it a Qt bug? (Qt-4.6.1 + raster)
+            int xLength = xTo - xFrom;
+            int yLength = yTo - yFrom;
+            if (xLength < 0)
+            {
+                xLength = -xLength;
+            }
+            if (yLength < 0)
+            {
+                yLength = -yLength;
+            }
+            painter->drawRect(qMin(xFrom, xTo), qMin(yFrom, yTo), xLength, yLength);
         }
     }
 }
