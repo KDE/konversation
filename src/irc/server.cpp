@@ -424,7 +424,7 @@ void Server::connectToIRCServer()
 
         // set up the connection details
         setPrefixes(m_serverNickPrefixModes, m_serverNickPrefixes);
-        getStatusView()->appendServerMessage(i18n("Info"),i18n("Looking for server %1 (port %2) ...",
+        getStatusView()->appendServerMessage(i18n("Info"),i18n("Looking for server %1 (port <numid>%2</numid>) ...",
             getConnectionSettings().server().host(),
             QString::number(getConnectionSettings().server().port())));
         // reset InputFilter (auto request info, /WHO request info)
@@ -623,7 +623,7 @@ void Server::broken(QAbstractSocket::SocketError state)
     {
         static_cast<Application*>(kapp)->notificationHandler()->connectionFailure(getStatusView(), getServerName());
 
-        QString error = i18n("Connection to server %1 (port %2) lost: %3.",
+        QString error = i18n("Connection to server %1 (port <numid>%2</numid>) lost: %3.",
             getConnectionSettings().server().host(),
             QString::number(getConnectionSettings().server().port()),
             m_socket->errorString());
@@ -644,7 +644,7 @@ void Server::sslError( const QList<QSslError>&  errors)
     }
 
     //this message should be changed since sslError is called even after calling ignoreSslErrors()
-    QString error = i18n("Could not connect to %1 (port %2) using SSL encryption. Maybe the server does not support SSL, or perhaps you have the wrong port? %3",
+    QString error = i18n("Could not connect to %1 (port <numid>%2</numid>) using SSL encryption. Maybe the server does not support SSL, or perhaps you have the wrong port? %3",
         getConnectionSettings().server().host(),
         QString::number(getConnectionSettings().server().port()),
         reason);
@@ -758,7 +758,7 @@ void Server::quitServer()
     // Close the socket to allow a dead connection to be reconnected before the socket timeout.
     m_socket->close();
 
-    getStatusView()->appendServerMessage(i18n("Info"), i18n("Disconnected from %1 (port %2).",
+    getStatusView()->appendServerMessage(i18n("Info"), i18n("Disconnected from %1 (port <numid>%2</numid>).",
         getConnectionSettings().server().host(),
         QString::number(getConnectionSettings().server().port())));
 }
