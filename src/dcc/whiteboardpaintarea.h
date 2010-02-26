@@ -113,6 +113,8 @@ namespace Konversation
                              Konversation::DCC::WhiteBoardGlobals::WhiteBoardTool tool = WhiteBoardGlobals::Text);
             inline void finishText();
 
+            inline void drawRect(QPainter* painter, int xFrom, int yFrom, int xTo, int yTo);
+
             QPixmap* m_imagePixmap;
             QPixmap* m_overlayPixmap;
 
