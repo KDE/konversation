@@ -32,6 +32,9 @@ Changes since 1.2.3:
   necessary to have raised every channel tab at least once to achieve
   a reasonable minimum width of the window. This also means that
   joining a new channel is now much less likely to resize the window.
+* Fixed a bug causing the status bar to become multiple lines in
+  height when hovering an URL containing percent-encoded line breaks
+  in the chat text view.
 
 
 Changes from 1.2.2 to 1.2.3:

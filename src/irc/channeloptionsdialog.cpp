@@ -238,7 +238,7 @@ namespace Konversation
         {
             // cache the value
             m_isAnyTypeOfOp = m_channel->getOwnChannelNick()->isAnyTypeOfOp();
-            m_ui.otherModesList->setEnabled(m_isAnyTypeOfOp);
+
             m_ui.topicEdit->setReadOnly(!m_isAnyTypeOfOp && m_ui.topicModeChBox->isChecked());
 
             m_ui.topicModeChBox->setEnabled(m_isAnyTypeOfOp);
@@ -250,12 +250,24 @@ namespace Konversation
             m_ui.secretModeChBox->setEnabled(m_isAnyTypeOfOp);
             m_ui.keyModeChBox->setEnabled(m_isAnyTypeOfOp);
             m_ui.keyModeEdit->setEnabled(m_isAnyTypeOfOp);
-            m_ui.hostmask->setEnabled(m_isAnyTypeOfOp);
+
+            QStandardItemModel* model = qobject_cast<QStandardItemModel*>(m_ui.otherModesList->model());
+
+            if (model)
+            {
+                QList<QStandardItem*> items = model->findItems("*", Qt::MatchWildcard, 0);
+                items += model->findItems("*", Qt::MatchWildcard, 1);
+
+                foreach (QStandardItem* item, items)
+                    item->setEnabled(m_isAnyTypeOfOp);
+            }
+
             m_ui.addBan->setEnabled(m_isAnyTypeOfOp);
             m_ui.updateBan->setEnabled(m_isAnyTypeOfOp);
             m_ui.removeBan->setEnabled(m_isAnyTypeOfOp);
-
             banSelectionChanged();
+
+            m_ui.hostmask->setEnabled(m_isAnyTypeOfOp);
             hostmaskChanged(m_ui.hostmask->text());
         }
     }
