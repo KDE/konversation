@@ -167,7 +167,9 @@ namespace Konversation
 
         void TransferListModel::append(const TransferItemData &item)
         {
+            beginInsertRows(QModelIndex(), rowCount(), rowCount());
             m_transferList.append(item);
+            endInsertRows();
 
             if (item.transfer)
             {

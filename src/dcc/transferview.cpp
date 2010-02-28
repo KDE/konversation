@@ -166,8 +166,6 @@ namespace Konversation
             connect (transfer, SIGNAL(statusChanged(Konversation::DCC::Transfer*,int,int)),
                      this, SLOT(transferStatusChanged(Konversation::DCC::Transfer*,int,int)));
 
-            updateModel();
-
             clearSelection();
             //restore selected
             foreach (const QModelIndex &index, rowIndexes())
