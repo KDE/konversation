@@ -1530,15 +1530,11 @@ void IRCView::saveLinkAs()
     KIO::copy(srcUrl, saveUrl);
 }
 
-void IRCView::highlightedSlot(const QString& _link)
+void IRCView::highlightedSlot(const QString& /*_link*/)
 {
-    QString link = _link;
+    QString link = m_urlToCopy;
     // HACK Replace " " with %20 for channelnames, NOTE there can't be 2 channelnames in one link
     link = link.replace (' ', "%20");
-
-    //Hack to handle the fact that we get a decoded url
-    //FIXME someone who knows what it looks like when we get a decoded url can reenable this if necessary...
-    //link = KUrl(link).url();
 
     //we just saw this a second ago.  no need to reemit.
     if (link == m_lastStatusText && !link.isEmpty())
