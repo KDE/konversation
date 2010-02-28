@@ -358,7 +358,7 @@ namespace Konversation
 
         void TransferSend::connectToReceiver(const QString &partnerHost, quint16 partnerPort)
         {
-            kDebug();
+            kDebug() << "host:" << partnerHost << "port:" << partnerPort;
             // Reverse DCC
 
             startConnectionTimer(Preferences::self()->dccSendTimeout());
