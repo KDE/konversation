@@ -248,6 +248,7 @@ namespace Konversation
 
         void TransferPanel::resendFile()
         {
+            QList<Transfer*> transferList;
             foreach (const QModelIndex &index, m_transferView->selectedRows())
             {
                 if (index.data(TransferListModel::TransferType).toInt() == Transfer::Send &&
@@ -258,18 +259,22 @@ namespace Konversation
                     {
                         continue;
                     }
+                    transferList.append(transfer);
+                }
+            }
 
-                    TransferSend *newTransfer = Application::instance()->getDccTransferManager()->newUpload();
+            foreach (Transfer* transfer, transferList)
+            {
+                TransferSend *newTransfer = Application::instance()->getDccTransferManager()->newUpload();
 
-                    newTransfer->setConnectionId(transfer->getConnectionId());
-                    newTransfer->setPartnerNick(transfer->getPartnerNick());
-                    newTransfer->setFileURL(transfer->getFileURL());
-                    newTransfer->setFileName(transfer->getFileName());
+                newTransfer->setConnectionId(transfer->getConnectionId());
+                newTransfer->setPartnerNick(transfer->getPartnerNick());
+                newTransfer->setFileURL(transfer->getFileURL());
+                newTransfer->setFileName(transfer->getFileName());
 
-                    if (newTransfer->queue())
-                    {
-                        newTransfer->start();
-                    }
+                if (newTransfer->queue())
+                {
+                    newTransfer->start();
                 }
             }
         }
