@@ -301,7 +301,7 @@ namespace Konversation
             QStandardItem *item = 0;
 
             if(!Preferences::self()->useLiteralModes() && getChannelModesHash().contains(modeString[i]))
-                item = new QStandardItem(QString(modeString[i] + " (" + getChannelModesHash().value(modeString[i]) + ")"));
+                item = new QStandardItem(i18nc("<mode character> (<mode description>)","%1 (%2)").arg(modeString[i]).arg(getChannelModesHash().value(modeString[i])));
             else
                 item = new QStandardItem(QString(modeString[i]));
 
