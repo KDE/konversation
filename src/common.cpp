@@ -31,7 +31,7 @@ namespace Konversation
         "([-.\\d\\w]+@[-.\\d\\w]{2,}\\.[\\w]{2,})");
     static QRegExp tdlPattern("(.*)\\.(\\w+),$");
 
-    QHash<QChar,QString> initChanModesHash()
+    void initChanModesHash()
     {
         QHash<QChar,QString> myHash;
 
@@ -47,14 +47,15 @@ namespace Konversation
         myHash.insert('c', i18n("no colors allowed"));
         myHash.insert('l', i18n("user throttling"));
 
-        return myHash;
+        m_modesHash = myHash;
     }
-
-    const QHash<QChar,QString> ChanModes::m_hash = initChanModesHash();
 
     QHash<QChar,QString> getChannelModesHash()
     {
-        return ChanModes::m_hash;
+        if(m_modesHash.isEmpty())
+            initChanModesHash();
+
+        return m_modesHash;
     }
 
     QString removeIrcMarkup(const QString& text)
