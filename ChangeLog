@@ -44,6 +44,12 @@ Changes since 1.2.3:
 * Fixed a bug causing the human-readable mode descriptions used by
   default in channel chat text views as well as the Channel Settings
  dialog's Advanced Modes list not to be translated.
+* When the display of human-readable mode descriptions is enabled
+  (as it is by default), the Advanced Mode list in the Channel Set-
+  tings dialog will now show the respective mode characters along-
+  side them. Previously, only the description was shown. This makes
+  the list useful as a utility to look up the meaning of obscure
+  mode characters.
 
 
 Changes from 1.2.2 to 1.2.3:
