@@ -38,7 +38,7 @@ Changes since 1.2.3:
 * Fixed a bug making it impossible to scroll the Advanced Modes list
   in the Channel Settings dialog when the user doesn't have operator
   status in the channel.
-* Fixed a crash when selecting more than one completed, failed or 
+* Fixed a crash when selecting more than one completed, failed or
   aborted outbound transfer in the "DCC Status" tab and clicking "Re-
   send" in ther context menu.
 * Fixed a bug causing the human-readable mode descriptions used by
@@ -50,6 +50,9 @@ Changes since 1.2.3:
   side them. Previously, only the description was shown. This makes
   the list useful as a utility to look up the meaning of obscure
   mode characters.
+* Fixed a bug causing both the default email client and the default
+  web browser to be invoked when clicking an email address link in
+  the chat text view.
 
 
 Changes from 1.2.2 to 1.2.3:
