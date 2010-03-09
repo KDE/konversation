@@ -43,7 +43,7 @@ Changes since 1.2.3:
   send" in ther context menu.
 * Fixed a bug causing the human-readable mode descriptions used by
   default in channel chat text views as well as the Channel Settings
- dialog's Advanced Modes list not to be translated.
+  dialog's Advanced Modes list not to be translated.
 * When the display of human-readable mode descriptions is enabled
   (as it is by default), the Advanced Mode list in the Channel Set-
   tings dialog will now show the respective mode characters along-

@@ -44,7 +44,7 @@ formatVariables={'audio': 'is listening to', 'video': 'is watching'}
 ## If you add a new player, you must add it here or it won't get checked when in audio-only or video-only modes.
 playerRankings= {
     'video' :['kaffeine','kmplayer', 'kplayer', 'noatun', 'kdetv'],
-    'audio' :['amarok', 'juk', 'noatun', 'kscd', 'kaffeine', 'kmplayer', 'amarok2', 'yammi', 'Audacious', 'xmms', 'MPD']
+    'audio' :['amarok', 'amarok1', 'juk', 'noatun', 'kscd', 'kaffeine', 'kmplayer', 'yammi', 'Audacious', 'xmms', 'MPD']
 }
 
 ## Title, album and artist fields to be quoted depending on contents
@@ -233,7 +233,7 @@ class DCOPPlayer(Player):
 
 class AmarokPlayer(DCOPPlayer):
     def __init__(self):
-        DCOPPlayer.__init__(self,'Amarok','amarok','player title','player artist','player album')
+        DCOPPlayer.__init__(self,'Amarok1','amarok','player title','player artist','player album')
 
     def getData(self):
         data=DCOPPlayer.getData(self)
@@ -245,7 +245,7 @@ class AmarokPlayer(DCOPPlayer):
 
 class Amarok2Player(Player):
     def __init__(self):
-        Player.__init__(self, 'Amarok2', 'audio')
+        Player.__init__(self, 'Amarok', 'audio')
         self.isRunning()
 
     def getData(self):
