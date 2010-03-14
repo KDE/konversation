@@ -119,7 +119,7 @@ namespace Konversation
                     m_token = QString::number(token);
                     kDebug() << "token:" << m_token;
                     server->dccPassiveChatRequest(m_partnerNick, extensionString(), DccCommon::textIpToNumericalIp(m_ownIp), m_token);
-                    setStatus(WaitingRemote, i18n("Awaiting remote user's acceptance"));
+                    setStatus(WaitingRemote, i18n("Awaiting acceptance by remote user..."));
                 }
                 else
                 {

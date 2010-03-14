@@ -326,7 +326,7 @@ namespace Konversation
                 server->dccPassiveSendRequest(m_partnerNick, transferFileName(m_fileName), DccCommon::textIpToNumericalIp(m_ownIp), m_fileSize, m_reverseToken);
             }
 
-            setStatus(WaitingRemote, i18n("Awaiting remote user's acceptance"));
+            setStatus(WaitingRemote, i18n("Awaiting acceptance by remote user..."));
         }
 
         void TransferSend::sendRequest(bool error, quint16 port)
