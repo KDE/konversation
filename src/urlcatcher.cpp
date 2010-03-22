@@ -153,7 +153,7 @@ UrlCatcher::UrlCatcher(QWidget* parent) : ChatWindow(parent)
     m_toolBar->setObjectName("urlcatcher_toolbar");
     m_open = m_toolBar->addAction(KIcon("window-new"), i18nc("open url", "&Open"), this, SLOT(openUrlClicked()));
     m_open->setStatusTip(i18n("Open link in external browser."));
-    m_open->setWhatsThis("<p>Select a <b>URL</b> above, then click this button to launch the application associated with the mimetype of the URL.</p>-<p>In the <b>Settings</b>, under <b>Behavior</b> | <b>General</b>, you can specify a custom web browser for web URLs.</p>");
+    m_open->setWhatsThis(i18n("<p>Select a <b>URL</b> above, then click this button to launch the application associated with the mimetype of the URL.</p>-<p>In the <b>Settings</b>, under <b>Behavior</b> | <b>General</b>, you can specify a custom web browser for web URLs.</p>"));
     m_open->setEnabled(false);
     m_saveLink = m_toolBar->addAction(KIcon("document-save"), i18n("&Save..."), this, SLOT(saveLinkAs()));
     m_saveLink->setStatusTip(i18n("Save selected link to the disk."));
