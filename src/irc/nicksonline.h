@@ -25,7 +25,6 @@
 
 class ChatWindow;
 
-class QPushButton;
 
 class QTreeWidget;
 

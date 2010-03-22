@@ -24,9 +24,7 @@
 class Server;
 class ChatWindow;
 
-class QDropEvent;
 
-class KUrl;
 class KToggleAction;
 class KMenu;
 

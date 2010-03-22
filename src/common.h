@@ -17,7 +17,6 @@
 #include <QHash>
 
 class QString;
-class QBitmap;
 class QPixmap;
 
 namespace Konversation
