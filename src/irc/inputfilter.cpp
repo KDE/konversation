@@ -1985,6 +1985,14 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                     {
                         server->pongReceived();
                     }
+                    else if (getAutomaticRequest("WHOIS", parameterList.value(1)) == 1) //Inhibit message if this was an automatic request
+                    {
+                        setAutomaticRequest("WHOIS", parameterList.value(1), false);
+                    }
+                    else
+                    {
+                        server->appendMessageToFrontmost(i18n("Error"), i18n("No such server: %1.", parameterList.value(1)));
+                    }
                 }
                 break;
             }
