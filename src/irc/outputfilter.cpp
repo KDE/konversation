@@ -139,7 +139,7 @@ namespace Konversation
         Q_ASSERT(codec);
         int index = 0;
 
-        while(text.length() && (segments == -1 || finals.size() < segments-1))
+        while (index < text.length() && (segments == -1 || finals.size() < segments-1))
         {
             // The most important bit - turn the current char into a QCString so we can measure it
             QByteArray ch = codec->fromUnicode(QString(text[index]));
@@ -148,7 +148,7 @@ namespace Konversation
             // If adding this char puts us over the limit:
             if (charLength + sublen > max)
             {
-                if(lastBreakPoint != 0)
+                if (lastBreakPoint != 0)
                 {
                     finals.append(text.left(lastBreakPoint + 1));
                     text = text.mid(lastBreakPoint + 1);
