@@ -139,7 +139,7 @@ namespace Konversation
         Q_ASSERT(codec);
         int index = 0;
 
-        while(text.length() > max && (segments == -1 || finals.size() < segments-1))
+        while(text.length() && (segments == -1 || finals.size() < segments-1))
         {
             // The most important bit - turn the current char into a QCString so we can measure it
             QByteArray ch = codec->fromUnicode(QString(text[index]));
