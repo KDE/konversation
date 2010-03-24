@@ -120,7 +120,7 @@ namespace Konversation
         line.replace("%B","\x02");       // replace %B with bold char
         line.replace("%C","\x03");       // replace %C with color char
         line.replace("%G","\x07");       // replace %G with ASCII BEL 0x07
-        line.replace("%I","\x09");       // replace %I with italics char
+        line.replace("%I","\x1d");       // replace %I with italics char
         line.replace("%O","\x0f");       // replace %O with reset to default char
         line.replace("%S","\x13");       // replace %S with strikethru char
         // line.replace(QRegExp("%?"),"\x15");

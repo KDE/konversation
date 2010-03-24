@@ -1100,7 +1100,7 @@ bool doHighlight, bool parseURL, bool self)
     // Replace all text decorations
     // TODO: \017 should reset all text decorations to plain text
     replaceDecoration(filteredLine,'\x02','b');
-    replaceDecoration(filteredLine,'\x09','i');
+    replaceDecoration(filteredLine,'\x1d','i');
     replaceDecoration(filteredLine,'\x13','s');
     replaceDecoration(filteredLine,'\x15','u');
     replaceDecoration(filteredLine,'\x16','b');   // should be inverse
