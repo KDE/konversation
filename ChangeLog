@@ -53,6 +53,23 @@ Changes since 1.2.3:
 * Fixed a bug causing both the default email client and the default
   web browser to be invoked when clicking an email address link in
   the chat text view.
+* Added a built-in '/sayversion' command that, as opposed to the
+  bundled '/kdeversion' script, can show the version of both the KDE
+  Konversation was built against and is running on. It also outputs
+  the information in a single message instead of several.
+* Fixed a bug that would cause the second and following segments of a
+  text so long that it has to be split into multiple messages when it
+  is sent to be encoded incorrectly.
+* The ASCII 0x1d character is now used to denote italic formatting of
+  text rather than 0x09, to avoid the conflict with the tab character
+  that is frequently pasted e.g. from websites with tables.
+* Fixed a bug causing the server response to '/whois <nick> <nick>'
+  not to be displayed on many IRC servers when the nick in questions
+  is not online at that time (this variant of the WHOIS command is
+  also used by the GUI actions).
+* Fixed a bug causing missing bans in the list in the Channel Settings
+  dialog on certain (mostly older) IRC servers.
+
 
 
 Changes from 1.2.2 to 1.2.3:
