@@ -18,6 +18,21 @@
 #include "notificationhandler.h"
 #include "preferences.h"
 
+#ifdef Q_CC_GNU
+#   include <byteswap.h>
+#elif defined(Q_OS_FREEBSD)
+#   include <sys/endian.h>
+#   define bswap_16(X) bswap16(X)
+#   define bswap_32(X) bswap32(X)
+#else
+#   if (defined(_MSC_VER) && (_MSC_VER > 1298))
+#       include <stdlib.h>
+#       define bswap_32(X) _byteswap_ulong(X)
+#   else
+#       define bswap_32(X) ( (((X)&0x000000FF)<<24) | (((X)&0xFF000000) >> 24) | (((X)&0x0000FF00) << 8) | (((X) &0x00FF0000) >> 8))
+#   endif
+#endif
+
 #include <QFileInfo>
 
 namespace Konversation
@@ -269,12 +284,7 @@ namespace Konversation
 
         quint32 Transfer::intel(quint32 value)
         {
-            value = ((value & 0xff000000) >> 24) +
-                    ((value & 0x00ff0000) >> 8) +
-                    ((value & 0x0000ff00) << 8) +
-                    ((value & 0x000000ff) << 24);
-
-            return value;
+            return bswap_32(value);
         }
 
         Transfer::Type Transfer::getType() const
