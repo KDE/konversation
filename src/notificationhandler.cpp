@@ -46,7 +46,7 @@ namespace Konversation
             return;
 
         QString cleanedMessage = removeIrcMarkup(message);
-        QString forKNotify = addLineBreaks(Qt::escape(cleanedMessage));
+        QString forKNotify = Qt::escape(cleanedMessage);
 
         KNotification::event(QString::fromLatin1("message"), QString("<qt>&lt;%1&gt; %2</qt>").arg(fromNick).arg(forKNotify), QPixmap(), m_mainWindow);
 
@@ -74,7 +74,7 @@ namespace Konversation
             return;
 
         QString cleanedMessage = removeIrcMarkup(message);
-        QString forKNotify = addLineBreaks(Qt::escape(cleanedMessage));
+        QString forKNotify = Qt::escape(cleanedMessage);
 
         KNotification::event(QString::fromLatin1("nick"), QString("<qt>&lt;%1&gt; %2</qt>").arg(fromNick).arg(forKNotify), QPixmap(), m_mainWindow);
 
@@ -100,7 +100,7 @@ namespace Konversation
             return;
 
         QString cleanedMessage = removeIrcMarkup(message);
-        QString forKNotify = addLineBreaks(Qt::escape(cleanedMessage));
+        QString forKNotify = Qt::escape(cleanedMessage);
 
         KNotification::event(QString::fromLatin1("queryMessage"), QString("<qt>&lt;%1&gt; %2</qt>").arg(fromNick).arg(forKNotify), QPixmap(), m_mainWindow);
 
@@ -315,7 +315,7 @@ namespace Konversation
         startTrayNotification(chatWin);
 
         QString cleanedMessage = removeIrcMarkup(message);
-        QString forKNotify = addLineBreaks(Qt::escape(cleanedMessage));
+        QString forKNotify = Qt::escape(cleanedMessage);
 
         if(fromNick.isEmpty())
             KNotification::event(QString::fromLatin1("highlight"), QString("<qt>(%1) *** %2</qt>").arg(chatWin->getName()).arg(forKNotify), QPixmap(), m_mainWindow);
@@ -356,20 +356,6 @@ namespace Konversation
             return;
 
         KNotification::event(QString::fromLatin1("channelJoin"), i18n("You have joined %1.",channel), QPixmap(), m_mainWindow);
-    }
-
-    QString NotificationHandler::addLineBreaks(const QString& string)
-    {
-        QString forKNotify = string;
-        int offset = 0;
-
-        for(int i = 0; i < string.length(); i += 50)
-        {
-            forKNotify.insert(i + (offset * 4), "<br>");
-            ++offset;
-        }
-
-        return forKNotify;
     }
 
 }
