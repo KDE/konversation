@@ -48,13 +48,7 @@ namespace Konversation
             m_headerSplitter->setStretchFactor(m_headerSplitter->indexOf(m_topicLabel), 0);
 
             // setup layout
-            if (m_chat->extension() == Chat::SimpleChat || m_chat->extension() == Chat::Unknown)
-            {
-                IRCViewBox *ircViewBox = new IRCViewBox(m_headerSplitter, 0);
-                m_headerSplitter->setStretchFactor(m_headerSplitter->indexOf(ircViewBox), 1);
-                setTextView(ircViewBox->ircView());
-            }
-            else if (m_chat->extension() == Chat::Whiteboard)
+            if (m_chat->extension() == Chat::Whiteboard)
             {
                 QSplitter* chatSplitter = new QSplitter(Qt::Vertical);
 
@@ -69,6 +63,12 @@ namespace Konversation
                 setTextView(ircViewBox->ircView());
 
                 m_headerSplitter->addWidget(chatSplitter);
+            }
+            else //(m_chat->extension() == Chat::SimpleChat || m_chat->extension() == Chat::Unknown)
+            {
+                IRCViewBox *ircViewBox = new IRCViewBox(m_headerSplitter, 0);
+                m_headerSplitter->setStretchFactor(m_headerSplitter->indexOf(ircViewBox), 1);
+                setTextView(ircViewBox->ircView());
             }
 
             m_dccChatInput = new IRCInput(this);

@@ -42,7 +42,8 @@ namespace Konversation
               m_selfOpened(true),
               m_dccSocket(0),
               m_dccServer(0),
-              m_chatStatus(Configuring)
+              m_chatStatus(Configuring),
+              m_chatExtension(Unknown)
         {
             kDebug();
             // set default values
