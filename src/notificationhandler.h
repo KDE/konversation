@@ -53,7 +53,6 @@ namespace Konversation
 
         protected:
             void startTrayNotification(ChatWindow* chatWin);
-            QString addLineBreaks(const QString& string);
 
         private:
             MainWindow* m_mainWindow;
