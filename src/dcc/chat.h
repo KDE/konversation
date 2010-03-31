@@ -84,7 +84,7 @@ namespace Konversation
                 void setExtension(Extension extension);
                 Extension extension() const;
                 QString extensionString() const;
-                QString localizedExtentionString() const;
+                QString localizedExtensionString() const;
 
                 int connectionId() const;
 

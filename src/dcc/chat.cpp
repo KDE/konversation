@@ -100,7 +100,7 @@ namespace Konversation
                 kDebug() << "could not retrieve the instance of Server. Connection id: " << m_connectionId;
                 failed(i18nc("%1=dcc extension like Chat or Whiteboard",
                              "Could not send a DCC %1 request to the partner via the IRC server.",
-                             localizedExtentionString()));
+                             localizedExtensionString()));
                 return;
             }
 
@@ -149,8 +149,8 @@ namespace Konversation
                 if (!Preferences::self()->dccChatAutoAccept())
                 {
                     int ret = KMessageBox::questionYesNo(0,
-                                                         i18nc("%1=partnerNick, %2=Servername, %3=dcc extension as chat or wboard", "%1 (on %2) offers to DCC %3 with you", m_partnerNick, server->getServerName(), localizedExtentionString()),
-                                                         i18nc("%1=dcc extension as Chat or Whiteboard, %2=partnerNick", "DCC %1 offer from %2", localizedExtentionString(), m_partnerNick),
+                                                         i18nc("%1=partnerNick, %2=Servername, %3=dcc extension as chat or wboard", "%1 (on %2) offers to DCC %3 with you", m_partnerNick, server->getServerName(), localizedExtensionString()),
+                                                         i18nc("%1=dcc extension as Chat or Whiteboard, %2=partnerNick", "DCC %1 offer from %2", localizedExtensionString(), m_partnerNick),
                                                          KGuiItem(i18n("Accept")),
                                                          KGuiItem(i18n("Reject"))
                                                          );
@@ -159,7 +159,7 @@ namespace Konversation
                     {
                         setStatus(Aborted, i18nc("%1=dcc extension like Chat or Whiteboard",
                                                  "You rejected the DCC %1 offer.",
-                                                 localizedExtentionString()));
+                                                 localizedExtensionString()));
                         server->dccRejectChat(m_partnerNick, extensionString());
                         return;
                     }
@@ -198,7 +198,7 @@ namespace Konversation
         {
             failed(i18nc("%1=dcc extension as Chat or Whiteboard",
                          "DCC %1 request was rejected",
-                         localizedExtentionString()));
+                         localizedExtensionString()));
         }
 
         void Chat::removedFromView()
@@ -285,7 +285,7 @@ namespace Konversation
             {
                 failed(i18nc("%1=dcc extension like Chat or Whiteboard",
                              "Could not send Reverse DCC %1 acknowledgement to the partner via the IRC server.",
-                             localizedExtentionString()));
+                             localizedExtensionString()));
                 return;
             }
 
@@ -316,7 +316,7 @@ namespace Konversation
             {
                 failed(i18nc("%1=extension like Chat or Whiteboard",
                              "Could not send Reverse DCC %1 acknowledgement to the partner via the IRC server.",
-                             localizedExtentionString()));
+                             localizedExtensionString()));
                 return;
             }
 
@@ -368,7 +368,7 @@ namespace Konversation
 
             setStatus(Chat::WaitingRemote, i18nc("%1=dcc extension like Chat or Whiteboard,%2=partnerNick, %3=port",
                                                  "Offering DCC %1 connection to %2 on port <numid>%3</numid>...",
-                                                 localizedExtentionString(), m_partnerNick, m_ownPort));
+                                                 localizedExtensionString(), m_partnerNick, m_ownPort));
 
             kDebug() << "[END]";
         }
@@ -423,7 +423,7 @@ namespace Konversation
             }
         }
 
-        QString Chat::localizedExtentionString() const
+        QString Chat::localizedExtensionString() const
         {
             switch (extension())
             {
@@ -462,7 +462,7 @@ namespace Konversation
             kDebug() << "partnerIP: " << m_partnerIp << " partnerport: " << m_partnerPort  << " nick: " << m_partnerNick;
 
             setStatus(Chat::Connecting, i18nc("%1=extension like Chat or Whiteboard ,%2 = nickname, %3 = IP, %4 = port",
-                                              "Establishing DCC %1 connection to %2 (%3:<numid>%4</numid>)...", localizedExtentionString(),
+                                              "Establishing DCC %1 connection to %2 (%3:<numid>%4</numid>)...", localizedExtensionString(),
                                               m_partnerNick, m_partnerIp, m_partnerPort));
 
             m_dccSocket = new QTcpSocket(this);
@@ -481,7 +481,7 @@ namespace Konversation
             m_textStream.setDevice(m_dccSocket);
             setStatus(Chat::Chatting, i18nc("%1=extension like Chat or Whiteboard, %2 = partnerNick",
                                             "Established DCC %1 connection to %2.",
-                                            localizedExtentionString(), m_partnerNick));
+                                            localizedExtensionString(), m_partnerNick));
             emit connected();
         }
 
@@ -575,7 +575,7 @@ namespace Konversation
             m_textStream.setDevice(m_dccSocket);
             setStatus(Chat::Chatting, i18nc("%1=dcc extension as Chat or Whiteboard, %2=partnerNick",
                                             "Established DCC %1 connection to %2.",
-                                            localizedExtentionString(), m_partnerNick));
+                                            localizedExtensionString(), m_partnerNick));
         }
 
         void Chat::socketClosed()

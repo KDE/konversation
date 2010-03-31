@@ -126,14 +126,14 @@ namespace Konversation
                 case Chat::WaitingRemote:
                     m_topicLabel->setText(i18nc("%1=extension like Chat or Whiteboard, %2=partnerNick, %3=port",
                                                 "DCC %1 with %2 on port <numid>%3</numid>.",
-                                                m_chat->localizedExtentionString(), m_chat->partnerNick(), m_chat->ownPort()));
+                                                m_chat->localizedExtensionString(), m_chat->partnerNick(), m_chat->ownPort()));
                     getTextView()->appendServerMessage(i18n("DCC"), m_chat->statusDetails());
                     break;
 
                 case Chat::Connecting:
                     m_topicLabel->setText(i18nc("%1=extension like Chat or Whiteboard, %2 = nickname, %3 = IP, %4 = port",
                                                 "DCC %1 with %2 on %3:<numid>%4</numid>.",
-                                                m_chat->localizedExtentionString(), m_chat->partnerNick(), m_chat->partnerIp(), m_chat->partnerPort()));
+                                                m_chat->localizedExtensionString(), m_chat->partnerNick(), m_chat->partnerIp(), m_chat->partnerPort()));
                     getTextView()->appendServerMessage(i18n("DCC"), m_chat->statusDetails());
                     break;
 
@@ -197,9 +197,9 @@ namespace Konversation
                 result = KMessageBox::warningContinueCancel(this,
                                                             i18nc("%1=extension like Chat or Whiteboard, %2=partnerNick",
                                                                   "Do you want to close your DCC %1 with %2?",
-                                                                  m_chat->localizedExtentionString(), m_chat->partnerNick()),
+                                                                  m_chat->localizedExtensionString(), m_chat->partnerNick()),
                                                             i18nc("%1=extension like Chat or Whiteboard",
-                                                                  "Close DCC %1", m_chat->localizedExtentionString()),
+                                                                  "Close DCC %1", m_chat->localizedExtensionString()),
                                                             KStandardGuiItem::close(),
                                                             KStandardGuiItem::cancel(),
                                                             "QuitDCCChatTab");
