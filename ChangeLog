@@ -69,7 +69,11 @@ Changes since 1.2.3:
   also used by the GUI actions).
 * Fixed a bug causing missing bans in the list in the Channel Settings
   dialog on certain (mostly older) IRC servers.
-
+* The text in notification messages used to be wrapped every 50 char-
+  acters, an old workaround for problems with KDE 3.x's bubble notifi-
+  cations. This has been removed now since it's no longer needed with
+  modern notification frontends such as Plasma's, and produces rather
+  ugly results there.
 
 
 Changes from 1.2.2 to 1.2.3:
