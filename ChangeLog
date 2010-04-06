@@ -74,6 +74,9 @@ Changes since 1.2.3:
   cations. This has been removed now since it's no longer needed with
   modern notification frontends such as Plasma's, and produces rather
   ugly results there.
+* Made it possible again to initate DCC file transfers to a query
+  partner by dragging files or URLs onto the chat text area of the
+  query.
 
 
 Changes from 1.2.2 to 1.2.3:

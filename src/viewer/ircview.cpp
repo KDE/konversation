@@ -144,6 +144,7 @@ IRCView::IRCView(QWidget* parent, Server* newServer) : KTextBrowser(parent), m_n
     m_nickPopup = 0;
     m_channelPopup = 0;
 
+    setAcceptDrops(false);
 
     //// Marker lines
     connect(document(), SIGNAL(contentsChange(int, int, int)), SLOT(cullMarkedLine(int, int, int)));
@@ -392,6 +393,28 @@ QMimeData *IRCView::createMimeDataFromSelection() const
 {
     const QTextDocumentFragment fragment(textCursor());
     return new IrcViewMimeData(fragment);
+}
+
+void IRCView::dragEnterEvent(QDragEnterEvent* e)
+{
+    if (e->mimeData()->hasUrls())
+        e->acceptProposedAction();
+    else
+        e->ignore();
+}
+
+void IRCView::dragMoveEvent(QDragMoveEvent* e)
+{
+    if (e->mimeData()->hasUrls())
+        e->accept();
+    else
+        e->ignore();
+}
+
+void IRCView::dropEvent(QDropEvent* e)
+{
+    if (e->mimeData() && e->mimeData()->hasUrls())
+        emit urlsDropped(KUrl::List::fromMimeData(e->mimeData(), KUrl::List::PreferLocalUrls));
 }
 
 void IrcViewMarkerLine::drawObject(QPainter *painter, const QRectF &r, QTextDocument *doc, int posInDocument, const QTextFormat &format)
