@@ -642,7 +642,7 @@ void Query::closeWithoutAsking()
 
 void Query::urlsDropped(const KUrl::List urls)
 {
-    m_server->sendURIs(KUrl::List(urls), getName());
+    m_server->sendURIs(urls, getName());
 }
 
 void Query::serverOnline(bool online)
