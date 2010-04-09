@@ -18,12 +18,13 @@
 #include "notificationhandler.h"
 #include "preferences.h"
 
-#ifdef Q_CC_GNU
-#   include <byteswap.h>
-#elif defined(Q_OS_FREEBSD)
+
+#ifdef Q_OS_FREEBSD
 #   include <sys/endian.h>
 #   define bswap_16(X) bswap16(X)
 #   define bswap_32(X) bswap32(X)
+#elif defined(Q_CC_GNU)
+#   include <byteswap.h>
 #else
 #   if (defined(_MSC_VER) && (_MSC_VER > 1298))
 #       include <stdlib.h>
