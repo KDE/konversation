@@ -14,6 +14,8 @@
 #include "preferences.h"
 #include "server.h"
 
+#include <config-konversation.h>
+
 #include <cstdlib>
 #include <sys/types.h>
 #include <netinet/in.h>

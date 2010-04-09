@@ -18,13 +18,13 @@
 #include "notificationhandler.h"
 #include "preferences.h"
 
+#include <config-konversation.h>
 
-#ifdef Q_OS_FREEBSD
-#   include <sys/endian.h>
-#   define bswap_16(X) bswap16(X)
-#   define bswap_32(X) bswap32(X)
-#elif defined(Q_CC_GNU)
+#ifdef HAVE_BYTESWAP_H
 #   include <byteswap.h>
+#elif defined(HAVE_SYS_ENDIAN_H)
+#   include <sys/endian.h>
+#   define bswap_32(X) bswap32(X)
 #else
 #   if (defined(_MSC_VER) && (_MSC_VER > 1298))
 #       include <stdlib.h>

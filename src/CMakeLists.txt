@@ -252,11 +252,4 @@ if (QCA2_FOUND)
     target_link_libraries(konversation ${QCA2_LIBRARIES})
 endif (QCA2_FOUND)
 
-CHECK_INCLUDE_FILE(
-  "stropts.h" HAVE_STROPTS_H)
-IF(HAVE_STROPTS_H)
-  ADD_DEFINITIONS(-DHAVE_STROPTS_H)
-ENDIF(HAVE_STROPTS_H)
-
-
 install(TARGETS konversation ${INSTALL_TARGETS_DEFAULT_ARGS})
