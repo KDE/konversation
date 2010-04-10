@@ -55,7 +55,7 @@ class AbstractAwayManager : public QObject
         /**
           * marks all identities which have auto-away enabled as "not away"
           */
-        void setManagedIdentitiesUnaway();
+        virtual void setManagedIdentitiesUnaway();
 
         /**
           * marks all given identities as away

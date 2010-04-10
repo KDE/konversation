@@ -115,6 +115,15 @@ void AwayManager::setManagedIdentitiesAway()
     AbstractAwayManager::setManagedIdentitiesAway();
 }
 
+void AwayManager::setManagedIdentitiesUnaway()
+{
+    // reset the idle status
+    resetIdle();
+    
+    // call the base implementation
+    AbstractAwayManager::setManagedIdentitiesUnaway();
+}
+
 void AwayManager::resetIdle()
 {
     m_idleTime.start();

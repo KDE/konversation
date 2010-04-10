@@ -174,7 +174,6 @@ void DBus::changeAwayStatus(bool away)
     }
     else
     {
-        konvApp->getAwayManager()->screensaverDisabled();
         konvApp->getAwayManager()->setManagedIdentitiesUnaway();
     }
 }

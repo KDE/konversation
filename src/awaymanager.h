@@ -26,10 +26,9 @@ class AwayManager : public AbstractAwayManager
         AwayManager(QObject* parent = 0);
         ~AwayManager();
         
-        void screensaverDisabled() { resetIdle(); }
-        
     public slots:
         virtual void setManagedIdentitiesAway();
+        virtual void setManagedIdentitiesUnaway();
 
     private slots:
         void checkActivity();
