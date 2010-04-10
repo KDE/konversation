@@ -23,17 +23,50 @@ class AwayManager : public AbstractAwayManager
         AwayManager(QObject* parent = 0);
 
     private slots:
+        /**
+          * called as soon as the user does some input (after he was away)
+          */
         void resumeFromIdle();
+
+        /**
+          * the timer with the given ID has reached it's timeout
+          *
+          * @param timerId the ID of the KIdleTimer
+          */
         void idleTimeoutReached(int timerId);
 
+        /**
+          * the list of identities which have auto-away enabled has changed
+          * this handles the registration/deregistration of KIdleTimers
+          */
         void autoAwayIdentitiesChanged();
 
     private:
+        /**
+          * removes an idle timeout
+          *
+          * @param timerId the ID of the KIdleTimer
+          * @param identityId the ID of the identity to which the idle timer belongs
+          */
         void removeIdleTimeout(int timerId, int identityId);
+
+        /**
+          * adds a KIdleTimer with the given timeout for the given identity
+          *
+          * @param timeout the timeout for the timer (milliseconds)
+          * @param identityId the ID of the identity to which the timer belongs
+          */
         void addIdleTimeout(int timeout, int identityId);
 
+        /**
+          * resets the idle status (simulates user activity)
+          */
         virtual void resetIdle();
 
+        /**
+          * a hashtable which contains identity IDs (key)
+          * and KIdleTimer timer IDs (value)
+          */
         QHash<int, int> m_identityIdTimerIdHash;
 };
 
