@@ -11,6 +11,7 @@ find_package(KdepimLibs REQUIRED)
 include(KDE4Defaults)
 include(MacroLibrary)
 include(CheckIncludeFile)
+include(CMakeDependentOption)
 
 add_definitions (${QT_DEFINITIONS} ${KDE4_DEFINITIONS})
 
@@ -21,8 +22,14 @@ endif()
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${KDE4_INCLUDES} ${KDE4_INCLUDE_DIR} ${QT_INCLUDES})
 
+# check if KIdleTime is available (and enabled)
+macro_ensure_version("4.3.60" ${KDE_VERSION} KIDLETIME_FOUND)
+cmake_dependent_option(USE_KIDLETIME "Use KIdleTime for user inactivity detection." ON "KIDLETIME_FOUND" OFF)
+macro_bool_to_01(USE_KIDLETIME HAVE_KIDLETIME)
+macro_log_feature(HAVE_KIDLETIME "KIdleTime" "KDE Idle Time" "http://www.kde.org/" FALSE "" "KIdleTime based user inactivity detection for Away Manager")
+
 #looks like the original test is from Kopete, their port doesn't use Xext so neither shall ours
-if (Q_WS_X11)
+if (Q_WS_X11 AND NOT HAVE_KIDLETIME)
     macro_bool_to_01(X11_Xscreensaver_FOUND HAVE_XSCREENSAVER)
     macro_log_feature(HAVE_XSCREENSAVER "libXss" "X ScreenSaver Library" "http://www.x.org/" FALSE "" "Screensaver detection support for Away Manager")
 
@@ -31,7 +38,7 @@ if (Q_WS_X11)
 
     macro_bool_to_01(X11_Xutil_FOUND HAVE_XUTIL)
     macro_log_feature(HAVE_XUTIL "X11 Xutil.h header" "X11 Xutil header" "http://www.x.org/" FALSE "" "User inactivity detection support for Away Manager")
-endif (Q_WS_X11)
+endif (Q_WS_X11 AND NOT HAVE_KIDLETIME)
 
 macro_optional_find_package(QCA2)
 macro_bool_to_01(QCA2_FOUND HAVE_QCA2)

@@ -27,7 +27,6 @@ set(core_SRCS
     konsolepanel.cpp
     notificationhandler.cpp
     abstractawaymanager.cpp
-    awaymanager.cpp
     connectionmanager.cpp
     connectionsettings.cpp
     identity.cpp
@@ -222,7 +221,15 @@ else (HAVE_KSTATUSNOTIFIERITEM)
         viewer/trayiconksystemtray.cpp)
 endif (HAVE_KSTATUSNOTIFIERITEM)
 
-set (completed_SRCS ${core_SRCS}  ${irc_SRCS} ${viewer_SRCS} ${trayicon_SRCS} ${config_SRCS} ${dcc_SRCS} ${linkaddressbook_SRCS} ${cipher_SRCS} ${upnp_SRCS})
+if (HAVE_KIDLETIME)
+    set(awaymanager_SRCS
+        awaymanagerkidletime.cpp)
+else (HAVE_KIDLETIME)
+    set(awaymanager_SRCS
+        awaymanager.cpp)
+endif (HAVE_KIDLETIME)
+
+set (completed_SRCS ${core_SRCS} ${awaymanager_SRCS} ${irc_SRCS} ${viewer_SRCS} ${trayicon_SRCS} ${config_SRCS} ${dcc_SRCS} ${linkaddressbook_SRCS} ${cipher_SRCS} ${upnp_SRCS})
 set (konversation_SRCS ${completed_SRCS})
 
 kde4_add_ui_files(konversation_SRCS
@@ -252,5 +259,9 @@ endif (X11_Xscreensaver_FOUND)
 if (QCA2_FOUND)
     target_link_libraries(konversation ${QCA2_LIBRARIES})
 endif (QCA2_FOUND)
+
+if (HAVE_KIDLETIME)
+    target_link_libraries(konversation ${KDE4_KUTILS_LIBS})
+endif (HAVE_KIDLETIME)
 
 install(TARGETS konversation ${INSTALL_TARGETS_DEFAULT_ARGS})
