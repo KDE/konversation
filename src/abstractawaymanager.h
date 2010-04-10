@@ -36,7 +36,7 @@ class AbstractAwayManager : public QObject
           * @param identityList a list of identity IDs for which the away status has changed
           * @param away the new away status
           */
-        void toggleAway(QList<int> identityList, bool away);
+        void toggleAway(const QList<int>& identityList, bool away);
 
     public slots:
         void identitiesChanged();
@@ -50,8 +50,8 @@ class AbstractAwayManager : public QObject
         virtual void setManagedIdentitiesAway();
         void setManagedIdentitiesUnaway();
 
-        void setIdentitiesAway(QList<int> identityList);
-        void setIdentitiesUnaway(QList<int> identityList);
+        void setIdentitiesAway(const QList<int>& identityList);
+        void setIdentitiesUnaway(const QList<int>& identityList);
 
         void toggleGlobalAway(bool away);
         void updateGlobalAwayAction(bool away);
@@ -63,7 +63,7 @@ class AbstractAwayManager : public QObject
           * @param identityList a list of identity IDs of which the away status should be changed
           * @param away the new away status of the identities
           */
-        void toggleIdentitiesAwayStatus(QList<int> identityList, bool away);
+        void toggleIdentitiesAwayStatus(const QList<int>& identityList, bool away);
 
     protected:
         /**

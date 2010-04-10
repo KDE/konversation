@@ -22,7 +22,7 @@ AbstractAwayManager::AbstractAwayManager(QObject* parent) : QObject(parent)
 {
     m_connectionManager = static_cast<Application*>(kapp)->getConnectionManager();
     
-    connect(this, SIGNAL(toggleAway(QList<int>, bool)), this, SLOT(toggleIdentitiesAwayStatus(QList<int>, bool)));
+    connect(this, SIGNAL(toggleAway(const QList<int>&, bool)), this, SLOT(toggleIdentitiesAwayStatus(const QList<int>&, bool)));
 }
 
 void AbstractAwayManager::identitiesChanged()
@@ -65,7 +65,7 @@ void AbstractAwayManager::identityOffline(int identityId)
     }
 }
 
-void AbstractAwayManager::setIdentitiesAway(QList<int> identityList)
+void AbstractAwayManager::setIdentitiesAway(const QList<int>& identityList)
 {
     const QList<Server*> serverList = m_connectionManager->getServerList();
     
@@ -81,7 +81,7 @@ void AbstractAwayManager::setManagedIdentitiesAway()
     setIdentitiesAway(m_identitiesOnAutoAway);
 }
 
-void AbstractAwayManager::setIdentitiesUnaway(QList<int> identityList)
+void AbstractAwayManager::setIdentitiesUnaway(const QList<int>& identityList)
 {
     const QList<Server*> serverList = m_connectionManager->getServerList();
     
@@ -128,7 +128,7 @@ void AbstractAwayManager::toggleGlobalAway(bool away)
         requestAllUnaway();
 }
 
-void AbstractAwayManager::toggleIdentitiesAwayStatus(QList<int> identityList, bool away)
+void AbstractAwayManager::toggleIdentitiesAwayStatus(const QList<int>& identityList, bool away)
 {
     if (away)
     {
