@@ -20,6 +20,8 @@
 
 AbstractAwayManager::AbstractAwayManager(QObject* parent) : QObject(parent)
 {
+    m_connectionManager = static_cast<Application*>(kapp)->getConnectionManager();
+    
     connect(this, SIGNAL(toggleAway(QList<int>, bool)), this, SLOT(toggleIdentitiesAwayStatus(QList<int>, bool)));
 }
 

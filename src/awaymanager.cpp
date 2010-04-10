@@ -74,8 +74,6 @@ AwayManager::AwayManager(QObject* parent) : AbstractAwayManager(parent)
     d->useXidle = false;
     d->useMit = false;
 
-    m_connectionManager = static_cast<Application*>(kapp)->getConnectionManager();
-
 #ifdef HasXHeaders
     Display* display = QX11Info::display();
     d->root = DefaultRootWindow(display);
