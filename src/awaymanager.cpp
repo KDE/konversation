@@ -214,46 +214,30 @@ bool AwayManager::Xactivity()
 
 void AwayManager::implementIdleAutoAway(bool activity)
 {
+    QList<int> identityList;
+    bool away = !activity;
+    
     if (activity)
     {
         resetIdle();
 
-        const QList<Server*> serverList = m_connectionManager->getServerList();
-
-        foreach (Server* server, serverList)
-        {
-            IdentityPtr identity = server->getIdentity();
-
-            if (m_identitiesOnAutoAway.contains(identity->id()) && identity->getAutomaticUnaway()
-                && server->isConnected() && server->isAway())
-            {
-                server->requestUnaway();
-            }
-        }
+        // there was some activity: un-away all identities which have auto-away enabled
+        identityList = m_identitiesOnAutoAway;
     }
     else
     {
         long int idleTime = m_idleTime.elapsed() / 1000;
 
-        QList<int> identitiesIdleTimeExceeded;
         QList<int>::ConstIterator it;
 
         for (it = m_identitiesOnAutoAway.constBegin(); it != m_identitiesOnAutoAway.constEnd(); ++it)
         {
             if (idleTime >= Preferences::identityById((*it))->getAwayInactivity() * 60)
-                identitiesIdleTimeExceeded.append((*it));
-        }
-
-        const QList<Server*> serverList = m_connectionManager->getServerList();
-
-        foreach (Server* server, serverList)
-        {
-            int identityId = server->getIdentity()->id();
-
-            if (identitiesIdleTimeExceeded.contains(identityId) && server->isConnected() && !server->isAway())
-                server->requestAway();
+                identityList.append((*it));
         }
     }
+    
+    emit toggleAway(identityList, away);
 }
 
 #include "awaymanager.moc"

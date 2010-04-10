@@ -25,6 +25,7 @@ class AbstractAwayManager : public QObject
 
     signals:
         void identitiesOnAutoAwayChanged();
+        void toggleAway(QList<int> identityList, bool away);
 
     public slots:
         void identitiesChanged();
@@ -38,8 +39,13 @@ class AbstractAwayManager : public QObject
         virtual void setManagedIdentitiesAway();
         void setManagedIdentitiesUnaway();
 
+        void setIdentitiesAway(QList<int> identityList);
+        void setIdentitiesUnaway(QList<int> identityList);
+
         void toggleGlobalAway(bool away);
         void updateGlobalAwayAction(bool away);
+
+        void toggleIdentitiesAwayStatus(QList<int> identityList, bool away);
 
     protected:
         virtual void resetIdle() = 0;

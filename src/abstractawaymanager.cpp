@@ -20,6 +20,7 @@
 
 AbstractAwayManager::AbstractAwayManager(QObject* parent) : QObject(parent)
 {
+    connect(this, SIGNAL(toggleAway(QList<int>, bool)), this, SLOT(toggleIdentitiesAwayStatus(QList<int>, bool)));
 }
 
 void AbstractAwayManager::identitiesChanged()
@@ -62,31 +63,43 @@ void AbstractAwayManager::identityOffline(int identityId)
     }
 }
 
-void AbstractAwayManager::setManagedIdentitiesAway()
+void AbstractAwayManager::setIdentitiesAway(QList<int> identityList)
 {
     const QList<Server*> serverList = m_connectionManager->getServerList();
-
+    
     foreach (Server* server, serverList)
     {
-        if (m_identitiesOnAutoAway.contains(server->getIdentity()->id()) && server->isConnected() && !server->isAway())
+        if (identityList.contains(server->getIdentity()->id()) && server->isConnected() && !server->isAway())
             server->requestAway();
     }
 }
 
-void AbstractAwayManager::setManagedIdentitiesUnaway()
+void AbstractAwayManager::setManagedIdentitiesAway()
+{
+    setIdentitiesAway(m_identitiesOnAutoAway);
+}
+
+void AbstractAwayManager::setIdentitiesUnaway(QList<int> identityList)
 {
     const QList<Server*> serverList = m_connectionManager->getServerList();
-
+    
     foreach (Server* server, serverList)
     {
         IdentityPtr identity = server->getIdentity();
-
-        if (m_identitiesOnAutoAway.contains(identity->id()) && identity->getAutomaticUnaway()
+        
+        if (identityList.contains(identity->id()) && identity->getAutomaticUnaway()
             && server->isConnected() && server->isAway())
         {
             server->requestUnaway();
         }
     }
+}
+
+void AbstractAwayManager::setManagedIdentitiesUnaway()
+{
+    // set the "not away" status for all identities which have
+    // auto-away enabled
+    setIdentitiesUnaway(m_identitiesOnAutoAway);
 }
 
 void AbstractAwayManager::requestAllAway(const QString& reason)
@@ -111,6 +124,18 @@ void AbstractAwayManager::toggleGlobalAway(bool away)
         requestAllAway();
     else
         requestAllUnaway();
+}
+
+void AbstractAwayManager::toggleIdentitiesAwayStatus(QList<int> identityList, bool away)
+{
+    if (away)
+    {
+        setIdentitiesAway(identityList);
+    }
+    else
+    {
+        setIdentitiesAway(identityList);
+    }
 }
 
 void AbstractAwayManager::updateGlobalAwayAction(bool away)
