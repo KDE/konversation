@@ -64,8 +64,6 @@ void AbstractAwayManager::identityOffline(int identityId)
 
 void AbstractAwayManager::setManagedIdentitiesAway()
 {
-    kDebug() << "AbstractAwayManager::setManagedIdentitiesAway()";
-
     const QList<Server*> serverList = m_connectionManager->getServerList();
 
     foreach (Server* server, serverList)

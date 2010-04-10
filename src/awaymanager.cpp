@@ -109,8 +109,6 @@ AwayManager::~AwayManager()
 
 void AwayManager::setManagedIdentitiesAway()
 {
-    kDebug() << "AwayManager::setManagedIdentitiesAway()";
-    
     // Used to skip X-based activity checking for one round, to avoid jumping
     // on residual mouse activity after manual screensaver activation.
     d->mouseX = -1;
