@@ -47,10 +47,28 @@ class AbstractAwayManager : public QObject
         void requestAllAway(const QString& reason = "");
         void requestAllUnaway();
 
+        /**
+          * marks all identities which have auto-away enabled as away
+          */
         virtual void setManagedIdentitiesAway();
+
+        /**
+          * marks all identities which have auto-away enabled as "not away"
+          */
         void setManagedIdentitiesUnaway();
 
+        /**
+          * marks all given identities as away
+          *
+          * @param identityList a list of identitiy IDs which will be marked as away
+          */
         void setIdentitiesAway(const QList<int>& identityList);
+
+        /**
+          * marks all given identities as "not away"
+          *
+          * @param identityList a list of identitiy IDs which will be marked as "not away"
+          */
         void setIdentitiesUnaway(const QList<int>& identityList);
 
         void toggleGlobalAway(bool away);
