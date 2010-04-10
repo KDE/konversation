@@ -26,6 +26,7 @@ set(core_SRCS
     scriptlauncher.cpp
     konsolepanel.cpp
     notificationhandler.cpp
+    abstractawaymanager.cpp
     awaymanager.cpp
     connectionmanager.cpp
     connectionsettings.cpp
