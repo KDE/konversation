@@ -136,7 +136,7 @@ void AbstractAwayManager::toggleIdentitiesAwayStatus(QList<int> identityList, bo
     }
     else
     {
-        setIdentitiesAway(identityList);
+        setIdentitiesUnaway(identityList);
     }
 }
 
