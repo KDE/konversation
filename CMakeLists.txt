@@ -41,9 +41,9 @@ macro_log_feature(QCA2_FOUND "QCA" "Qt Cryptographic Architecture" "http://delta
 macro_ensure_version( "4.3.80" ${KDE_VERSION} HAVEKDE4_4 )
 macro_bool_to_01(HAVEKDE4_4 HAVE_KSTATUSNOTIFIERITEM)
 
-check_include_files("stropts.h" HAVE_STROPTS_H)
-check_include_files("byteswap.h" HAVE_BYTESWAP_H)
-check_include_files("sys/endian.h" HAVE_SYS_ENDIAN_H)
+check_include_file("stropts.h" HAVE_STROPTS_H)
+check_include_file("byteswap.h" HAVE_BYTESWAP_H)
+check_include_file("sys/endian.h" HAVE_SYS_ENDIAN_H)
 
 configure_file(config-konversation.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-konversation.h )
 
