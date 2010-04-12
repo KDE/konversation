@@ -36,8 +36,6 @@ class Nick : public QTreeWidgetItem
 
         void refresh();
         void repositionMe();
-        // Compatibility with Qt 4.4 + make it public for >= Qt 4.5
-        void emitDataChanged();
 
     protected:
         QString calculateLabel1() const;
@@ -56,10 +54,5 @@ class Nick : public QTreeWidgetItem
             NicknameColumn = 0,
             HostmaskColumn = 1
         };
-
-    private:
-#if (QT_VERSION < QT_VERSION_CHECK(4, 5, 0))
-        bool m_emitDataChanged;
-#endif
 };
 #endif

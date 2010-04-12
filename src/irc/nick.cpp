@@ -32,9 +32,6 @@ Nick::Nick(NickListView *listView, Channel* channel, const ChannelNickPtr& chann
     Q_ASSERT(m_channel);
 
     m_flags = 0;
-#if (QT_VERSION < QT_VERSION_CHECK(4, 5, 0))
-    m_emitDataChanged = 0;
-#endif
 
     refresh();
 
@@ -139,21 +136,6 @@ void Nick::refresh()
 
         treeWidget()->repaint();
     }
-}
-
-#if (QT_VERSION < QT_VERSION_CHECK(4, 5, 0))
-static QVariant emitDataChangedQVariants[] = { QVariant(0), QVariant(1) };
-#endif
-
-void Nick::emitDataChanged()
-{
-#if (QT_VERSION < QT_VERSION_CHECK(4, 5, 0))
-    m_emitDataChanged = !m_emitDataChanged;
-    int sortCol = treeWidget()->header()->sortIndicatorSection();
-    setData((sortCol > 0) ? sortCol : 0, Qt::UserRole, emitDataChangedQVariants[m_emitDataChanged]);
-#else
-    QTreeWidgetItem::emitDataChanged();
-#endif
 }
 
 // Triggers reposition of this nick (QTreeWidgetItem) in the nick list
