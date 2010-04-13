@@ -49,9 +49,11 @@
 #include <KLocale>
 #include <KFileDialog>
 #include <KInputDialog>
-#include <KMessageBox>
 #include <KWindowSystem>
+
 #include <solid/networking.h>
+
+#include <kio/sslui.h>
 
 using namespace Konversation;
 
@@ -395,10 +397,10 @@ void Server::connectToIRCServer()
             m_nickListModel->setStringList(getIdentity()->getNicknameList());
         resetNickSelection();
 
-        m_socket = new QSslSocket();
+        m_socket = new KTcpSocket();
         m_socket->setObjectName("serverSocket");
 
-        connect(m_socket, SIGNAL(error(QAbstractSocket::SocketError)), SLOT(broken(QAbstractSocket::SocketError)) );
+        connect(m_socket, SIGNAL(error(KTcpSocket::Error)), SLOT(broken(KTcpSocket::Error)) );
         connect(m_socket, SIGNAL(readyRead()), SLOT(incoming()));
         connect(m_socket, SIGNAL(disconnected()), SLOT(closed()));
 
@@ -413,12 +415,8 @@ void Server::connectToIRCServer()
         else
         {
             connect(m_socket, SIGNAL(encrypted()), SLOT (ircServerConnectionSuccess()));
-            connect(m_socket, SIGNAL(peerVerifyError(const QSslError&)), SLOT(sslVerifyError(const QSslError&)));
-            connect(m_socket, SIGNAL(sslErrors(const QList<QSslError>&)), SLOT(sslError(const QList<QSslError>&)));
-
-            // Ensure that the SSL confirmation dialog is shown if needed on reconnect
-            m_showSSLConfirmation = true;
-
+            connect(m_socket, SIGNAL(sslErrors(const QList<KSslError>&)), SLOT(sslError(const QList<KSslError>&)));
+            
             m_socket->connectToHostEncrypted(getConnectionSettings().server().host(), getConnectionSettings().server().port());
         }
 
@@ -590,9 +588,9 @@ void Server::ircServerConnectionSuccess()
     setNickname(getNickname());
 }
 
-void Server::broken(QAbstractSocket::SocketError state)
+void Server::broken(KTcpSocket::Error error)
 {
-    Q_UNUSED(state);
+    Q_UNUSED(error);
     kDebug() << "Connection broken " << m_socket->errorString() << "!";
 
     m_socket->blockSignals(true);
@@ -634,47 +632,64 @@ void Server::broken(QAbstractSocket::SocketError state)
     }
 }
 
-
-void Server::sslError( const QList<QSslError>&  errors)
+bool Server::askUserToIgnoreSslErrors()
 {
-    QString reason;
-    for(int i = 0; i < errors.size(); ++i)
+    bool retVal = false;
+    
+    // we are called by sslError
+    // sslError is a slot, if it's signal is emitted multiple times
+    // then we only want to show the dialog once
+    if ( m_showSSLConfirmation )
     {
-        reason += errors.at(i).errorString() + ' ';
+        // we don't want to show any further SSL confirmation dialogs
+        m_showSSLConfirmation = false;
+        
+        // ask the user if he wants to ignore SSL errors
+        // in case the user wants to make the rule he chose (for example: always allow) persistent
+        // this will not show a dialog (but it will return "sslErrorsIgnored = true")
+        retVal = KIO::SslUi::askIgnoreSslErrors( m_socket, KIO::SslUi::RecallAndStoreRules );
+        
+        // as we're done now we can show further SSL dialogs
+        m_showSSLConfirmation = true;
     }
-
-    //this message should be changed since sslError is called even after calling ignoreSslErrors()
-    QString error = i18n("Could not connect to %1 (port <numid>%2</numid>) using SSL encryption. Maybe the server does not support SSL, or perhaps you have the wrong port? %3",
-        getConnectionSettings().server().host(),
-        QString::number(getConnectionSettings().server().port()),
-        reason);
-    getStatusView()->appendServerMessage(i18n("SSL Connection Error"),error);
-    emit sslInitFailure();
+    
+    return retVal;
 }
 
-void Server::sslVerifyError( const QSslError&  error)
+void Server::sslError( const QList<KSslError>& errors )
 {
-    if (!m_showSSLConfirmation)
-        return;
-
-    QString msg = i18n("The server (%1) certificate failed the authenticity test. %2", getConnectionSettings().server().host(), error.errorString());
-
-    Application* konvApp = static_cast<Application *>(kapp);
-
-    int result = KMessageBox::warningYesNo( konvApp->getMainWindow(),
-                                            msg,
-                                            i18n("Server Authentication"),
-                                            KStandardGuiItem::guiItem(KStandardGuiItem::Continue),
-                                            KStandardGuiItem::cancel(),
-                                            "ssl_"+getConnectionSettings().server().host(),
-                                            KMessageBox::Dangerous );
-
-    if (result == KMessageBox::Yes)
+    // ask the user if he wants to ignore the errors
+    if ( askUserToIgnoreSslErrors() )
     {
+        // the user has chosen to ignore SSL errors
         m_socket->ignoreSslErrors();
+        
+        // show a warning in the chat window that the SSL certificate failed the authenticity check
+        QString error = i18n("The SSL certificate for the the server %1 (port <numid>%2</numid>) failed the authenticity check.",
+                            getConnectionSettings().server().host(),
+                            QString::number(getConnectionSettings().server().port()));
+                            
+        getStatusView()->appendServerMessage(i18n("SSL Connection Warning"), error);
     }
-
-    m_showSSLConfirmation = false; //this is needed since peerVerifyError is emitted multiple time if there are multiple errors
+    else
+    {
+        QString errorReason;
+        
+        for (int i = 0; i < errors.size(); ++i)
+        {
+            errorReason += errors.at(i).errorString() + ' ';
+        }
+        
+        // TODO: this message should be adjusted. it's possible that the user refused the invalid SSL certificate.
+        QString error = i18n("Could not connect to %1 (port <numid>%2</numid>) using SSL encryption. Maybe the server does not support SSL, or perhaps you have the wrong port? %3",
+            getConnectionSettings().server().host(),
+            QString::number(getConnectionSettings().server().port()),
+            errorReason);
+        
+        getStatusView()->appendServerMessage(i18n("SSL Connection Error"), error);
+        
+        emit sslInitFailure();
+    }
 }
 
 // Will be called from InputFilter as soon as the Welcome message was received
@@ -3498,9 +3513,9 @@ ViewContainer* Server::getViewContainer() const
 bool Server::getUseSSL() const
 {
         if ( m_socket )
-                return m_socket->isEncrypted();
+            return ( m_socket->encryptionMode() != KTcpSocket::UnencryptedMode );
         else
-                return false;
+            return false;
 }
 
 
@@ -3547,7 +3562,7 @@ bool Server::isSocketConnected() const
 {
     if (!m_socket) return false;
 
-    return (m_socket->state() == QAbstractSocket::ConnectedState);
+    return (m_socket->state() == KTcpSocket::ConnectedState);
 }
 
 void Server::updateConnectionState(Konversation::ConnectionState state)

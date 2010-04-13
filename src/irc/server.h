@@ -35,11 +35,11 @@
 #include <QTimer>
 #include <QPointer>
 
-#include <QSslSocket>
 #include <QHostInfo>
 
 #include <ksharedptr.h>
 #include <kprocess.h>
+#include <ktcpsocket.h>
 
 class QAbstractItemModel;
 class QStringListModel;
@@ -519,12 +519,11 @@ void resetNickSelection();
         void toServer(QString&, IRCQueue *);
         /// Because KBufferedSocket has no closed(int) signal we use this slot to call broken(0)
         void closed();
-        void broken(QAbstractSocket::SocketError state);
+        void broken(KTcpSocket::Error error);
         /** This is connected to the SSLSocket failed.
          * @param reason The reason why this failed.  This is already translated, ready to show the user.
          */
-        void sslError(const QList<QSslError>& errors);
-        void sslVerifyError(const QSslError& error);
+        void sslError(const QList<KSslError>&);
         void connectionEstablished(const QString& ownHost);
         void notifyResponse(const QString& nicksOnline);
 
@@ -693,7 +692,7 @@ void resetNickSelection();
 
         QStringList m_autoJoinCommands;
 
-        QSslSocket* m_socket;
+        KTcpSocket* m_socket;
 
         QTimer m_reconnectTimer;
         QTimer m_incomingTimer;
@@ -756,6 +755,14 @@ void resetNickSelection();
 
         /// Creates a list of known users and returns the one chosen by the user
         inline QString recipientNick() const;
+        
+        /**
+          * shows a dialog to the user where he is asked if he wants to
+          * ignore SSL certificate errors
+          *
+          @ @return true if the user accepted the invalid SSL certificate, otherwise false
+          */
+        bool askUserToIgnoreSslErrors();
 
         /// Helper object to construct ISON (notify) list and map offline nicks to
         /// addressbook.
