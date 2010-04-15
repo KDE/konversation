@@ -76,7 +76,6 @@ void AbstractAwayManager::implementManagedAway(const QList<int>& identityList)
 
 void AbstractAwayManager::setManagedIdentitiesAway()
 {
-    kDebug() << "setManagedIdentitiesAway()";
     implementManagedAway(m_identitiesOnAutoAway);
 }
 
@@ -98,7 +97,6 @@ void AbstractAwayManager::implementManagedUnaway(const QList<int>& identityList)
 
 void AbstractAwayManager::setManagedIdentitiesUnaway()
 {
-    kDebug() << "returned - setManagedIdentitiesUnAway()";
     // set the "not away" status for all identities which have
     // auto-away enabled
     implementManagedUnaway(m_identitiesOnAutoAway);

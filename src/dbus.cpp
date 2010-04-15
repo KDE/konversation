@@ -166,10 +166,8 @@ QString DBus::getChannelEncoding(const QString& server, const QString& channel)
 
 void DBus::changeAwayStatus(bool away)
 {
-    kDebug() << "DBus::changeAwayStatus()";
-    kDebug() << "to: " << away;
     Application* konvApp = static_cast<Application*>(kapp);
-    kDebug() << "after casting";
+
     if (away)
     {
         konvApp->getAwayManager()->setManagedIdentitiesAway();
