@@ -49,14 +49,14 @@ class AbstractAwayManager : public QObject
 
     protected:
         /**
-          * Marks all given identities as away.
+          * Marks all given identities as away if they have auto-away enabled.
           *
           * @param identityList a list of identitiy IDs which will be marked as away
           */
         void setIdentitiesAway(const QList<int>& identityList);
         
         /**
-          * Marks all given identities as "not away".
+          * Marks all given identities as "not away" if they have automatic un-away enabled.
           *
           * @param identityList a list of identitiy IDs which will be marked as "not away"
           */
