@@ -18,9 +18,7 @@ AwayManager::AwayManager(QObject* parent) : AbstractAwayManager(parent)
 {
     connect(KIdleTime::instance(), SIGNAL(resumingFromIdle()), this, SLOT(resumeFromIdle()));
     connect(KIdleTime::instance(), SIGNAL(timeoutReached(int, int)), this, SLOT(idleTimeoutReached(int)));
-    
-    connect(this, SIGNAL(identitiesOnAutoAwayChanged()), this, SLOT(autoAwayIdentitiesChanged()));
-    
+
     // catch the first "resume event" (= user input)
     KIdleTime::instance()->catchNextResumeEvent();
 }
@@ -50,7 +48,7 @@ void AwayManager::resetIdle()
 void AwayManager::resumeFromIdle()
 {
     // mark all identities which have auto-away enabled "not away"
-    emit toggleAway(m_identitiesOnAutoAway, false);
+    setIdentitiesUnaway(m_identitiesOnAutoAway);
 }
 
 void AwayManager::idleTimeoutReached(int timerId)
@@ -64,7 +62,7 @@ void AwayManager::idleTimeoutReached(int timerId)
 
         identitiesIdleTimeExceeded.append(identityId);
 
-        emit toggleAway(identitiesIdleTimeExceeded, true);
+        setIdentitiesAway(identitiesIdleTimeExceeded);
     }
     else
     {
@@ -76,7 +74,7 @@ void AwayManager::idleTimeoutReached(int timerId)
     KIdleTime::instance()->catchNextResumeEvent();
 }
 
-void AwayManager::autoAwayIdentitiesChanged()
+void AwayManager::identitiesOnAutoAwayChanged()
 {
     const QList<Server*> serverList = m_connectionManager->getServerList();
     

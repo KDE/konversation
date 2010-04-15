@@ -35,13 +35,13 @@ class AwayManager : public AbstractAwayManager
           */
         void idleTimeoutReached(int timerId);
 
+    private:
         /**
           * the list of identities which have auto-away enabled has changed
-          * this handles the registration/deregistration of KIdleTimers
+          * this handles the (de-)registration of KIdleTimers
           */
-        void autoAwayIdentitiesChanged();
-
-    private:
+        virtual void identitiesOnAutoAwayChanged();
+        
         /**
           * removes an idle timeout
           *

@@ -23,21 +23,6 @@ class AbstractAwayManager : public QObject
     public:
         AbstractAwayManager(QObject* parent = 0);
 
-    signals:
-        /**
-          * emitted when the list of identities which have auto-away enabled changes
-          */
-        void identitiesOnAutoAwayChanged();
-
-        /**
-          * emitted when the away state of the identities in the identityList
-          * has changed.
-          *
-          * @param identityList a list of identity IDs for which the away status has changed
-          * @param away the new away status
-          */
-        void toggleAway(const QList<int>& identityList, bool away);
-
     public slots:
         void identitiesChanged();
 
@@ -57,33 +42,30 @@ class AbstractAwayManager : public QObject
           */
         virtual void setManagedIdentitiesUnaway();
 
+        void toggleGlobalAway(bool away);
+        void updateGlobalAwayAction(bool away);
+
+    protected:
         /**
           * marks all given identities as away
           *
           * @param identityList a list of identitiy IDs which will be marked as away
           */
         void setIdentitiesAway(const QList<int>& identityList);
-
+        
         /**
           * marks all given identities as "not away"
           *
           * @param identityList a list of identitiy IDs which will be marked as "not away"
           */
         void setIdentitiesUnaway(const QList<int>& identityList);
-
-        void toggleGlobalAway(bool away);
-        void updateGlobalAwayAction(bool away);
-
+        
         /**
-          * toggles the away status for all identities in the identityList
-          * the given away flag is the new away status of the identities
-          *
-          * @param identityList a list of identity IDs of which the away status should be changed
-          * @param away the new away status of the identities
+          * called when the list of identities which have auto-away enabled has changed
+          * NOTE: this method is abstract. if you inherit AbstractAwayManager you need to implement this
           */
-        void toggleIdentitiesAwayStatus(const QList<int>& identityList, bool away);
-
-    protected:
+        virtual void identitiesOnAutoAwayChanged() = 0;
+        
         /**
           * resets the idle status
           * NOTE: this method is abstract. if you inherit AbstractAwayManager you need to implement this

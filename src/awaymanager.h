@@ -32,10 +32,16 @@ class AwayManager : public AbstractAwayManager
 
     private slots:
         void checkActivity();
-        void toggleTimer();
 
     private:
+        /**
+          * the list of identities which have auto-away enabled has changed
+          * this starts or stops the timer
+          */
+        virtual void identitiesOnAutoAwayChanged();
+        
         virtual void resetIdle();
+
         bool Xactivity();
 
         void implementIdleAutoAway(bool activity);
