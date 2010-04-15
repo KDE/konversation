@@ -50,7 +50,7 @@ void AwayManager::resetIdle()
 void AwayManager::resumeFromIdle()
 {
     // mark all identities which have auto-away enabled "not away"
-    setIdentitiesUnaway(m_identitiesOnAutoAway);
+    implementManagedUnaway(m_identitiesOnAutoAway);
 }
 
 void AwayManager::idleTimeoutReached(int timerId)
@@ -64,7 +64,7 @@ void AwayManager::idleTimeoutReached(int timerId)
 
         identitiesIdleTimeExceeded.append(identityId);
 
-        setIdentitiesAway(identitiesIdleTimeExceeded);
+        implementManagedAway(identitiesIdleTimeExceeded);
     }
     else
         kDebug() << "could not find identity for timer " << timerId << " - bug?";    

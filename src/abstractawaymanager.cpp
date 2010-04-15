@@ -63,7 +63,7 @@ void AbstractAwayManager::identityOffline(int identityId)
         identitiesOnAutoAwayChanged();
 }
 
-void AbstractAwayManager::setIdentitiesAway(const QList<int>& identityList)
+void AbstractAwayManager::implementManagedAway(const QList<int>& identityList)
 {
     const QList<Server*> serverList = m_connectionManager->getServerList();
     
@@ -76,10 +76,10 @@ void AbstractAwayManager::setIdentitiesAway(const QList<int>& identityList)
 
 void AbstractAwayManager::setManagedIdentitiesAway()
 {
-    setIdentitiesAway(m_identitiesOnAutoAway);
+    implementManagedAway(m_identitiesOnAutoAway);
 }
 
-void AbstractAwayManager::setIdentitiesUnaway(const QList<int>& identityList)
+void AbstractAwayManager::implementManagedUnaway(const QList<int>& identityList)
 {
     const QList<Server*> serverList = m_connectionManager->getServerList();
     
@@ -99,7 +99,7 @@ void AbstractAwayManager::setManagedIdentitiesUnaway()
 {
     // set the "not away" status for all identities which have
     // auto-away enabled
-    setIdentitiesUnaway(m_identitiesOnAutoAway);
+    implementManagedUnaway(m_identitiesOnAutoAway);
 }
 
 void AbstractAwayManager::requestAllAway(const QString& reason)

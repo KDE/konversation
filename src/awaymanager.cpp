@@ -226,7 +226,7 @@ void AwayManager::implementIdleAutoAway(bool activity)
         resetIdle();
 
         // there was some activity: un-away all identities which have auto-away enabled
-        setIdentitiesUnaway(m_identitiesOnAutoAway);
+        implementManagedUnaway(m_identitiesOnAutoAway);
     }
     else
     {
@@ -241,7 +241,7 @@ void AwayManager::implementIdleAutoAway(bool activity)
                 identityList.append((*it));
         }
         
-        setIdentitiesAway(identityList);
+        implementManagedAway(identityList);
     }
 }
 
