@@ -3,8 +3,10 @@
   it under the terms of the GNU General Public License as published by
   the Free Software Foundation; either version 2 of the License, or
   (at your option) any later version.
+*/
 
-  Copyright (C) 2008 Eike Hein <hein@kde.org>
+/*
+  Copyright (c) 2008 Eike Hein <hein@kde.org>
   Copyright (c) 2010 Martin Blumenstingl <darklight.xdarklight@googlemail.com>
 */
 
@@ -35,8 +37,8 @@ class AwayManager : public AbstractAwayManager
 
     private:
         /**
-          * the list of identities which have auto-away enabled has changed
-          * this starts or stops the timer
+          * The list of identities which have auto-away enabled has changed.
+          * This starts or stops the timer (depending on what's needed).
           */
         virtual void identitiesOnAutoAwayChanged();
         

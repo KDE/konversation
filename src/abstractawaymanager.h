@@ -3,8 +3,10 @@
   it under the terms of the GNU General Public License as published by
   the Free Software Foundation; either version 2 of the License, or
   (at your option) any later version.
+*/
 
-  Copyright (C) 2008 Eike Hein <hein@kde.org>
+/*
+  Copyright (c) 2008 Eike Hein <hein@kde.org>
   Copyright (c) 2010 Martin Blumenstingl <darklight.xdarklight@googlemail.com>
 */
 
@@ -33,12 +35,12 @@ class AbstractAwayManager : public QObject
         void requestAllUnaway();
 
         /**
-          * marks all identities which have auto-away enabled as away
+          * Marks all identities which have auto-away enabled as away.
           */
         virtual void setManagedIdentitiesAway();
 
         /**
-          * marks all identities which have auto-away enabled as "not away"
+          * Marks all identities which have auto-away enabled as "not away".
           */
         virtual void setManagedIdentitiesUnaway();
 
@@ -47,28 +49,28 @@ class AbstractAwayManager : public QObject
 
     protected:
         /**
-          * marks all given identities as away
+          * Marks all given identities as away.
           *
           * @param identityList a list of identitiy IDs which will be marked as away
           */
         void setIdentitiesAway(const QList<int>& identityList);
         
         /**
-          * marks all given identities as "not away"
+          * Marks all given identities as "not away".
           *
           * @param identityList a list of identitiy IDs which will be marked as "not away"
           */
         void setIdentitiesUnaway(const QList<int>& identityList);
         
         /**
-          * called when the list of identities which have auto-away enabled has changed
-          * NOTE: this method is abstract. if you inherit AbstractAwayManager you need to implement this
+          * Called when the list of identities which have auto-away enabled has changed.
+          * NOTE: This method is abstract. if you inherit AbstractAwayManager you need to implement this.
           */
         virtual void identitiesOnAutoAwayChanged() = 0;
         
         /**
-          * resets the idle status
-          * NOTE: this method is abstract. if you inherit AbstractAwayManager you need to implement this
+          * Resets the idle status.
+          * NOTE: This method is abstract. if you inherit AbstractAwayManager you need to implement this.
           */
         virtual void resetIdle() = 0;
 

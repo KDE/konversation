@@ -3,7 +3,9 @@
   it under the terms of the GNU General Public License as published by
   the Free Software Foundation; either version 2 of the License, or
   (at your option) any later version.
+*/
 
+/*
   Copyright (c) 2010 Martin Blumenstingl <darklight.xdarklight@googlemail.com>
 */
 
@@ -65,9 +67,7 @@ void AwayManager::idleTimeoutReached(int timerId)
         setIdentitiesAway(identitiesIdleTimeExceeded);
     }
     else
-    {
         kDebug() << "could not find identity for timer " << timerId << " - bug?";    
-    }
     
     // wait for user input (so we get the "resumingFromIdle" signal fired
     // as soon as the user does something)
@@ -93,10 +93,8 @@ void AwayManager::identitiesOnAutoAwayChanged()
             
             // check if the identity is not in the auto-away list
             if (!m_identitiesOnAutoAway.contains(identityId))
-            {
                 // then we need to remove the idle timeout
                 removeIdleTimeout(timerId, identityId);
-            }
             else
             {
                 const QHash<int, int> idleTimeouts = KIdleTime::instance()->idleTimeouts();
@@ -112,9 +110,7 @@ void AwayManager::identitiesOnAutoAwayChanged()
                     }
                 }
                 else
-                {
                     kDebug() << "WARNING: bug? we have a timer ID (" << timerId << ") but KIdleTime does not know about it?";
-                }
             }
         }
         else
@@ -122,10 +118,8 @@ void AwayManager::identitiesOnAutoAwayChanged()
             // we are not watching a timeout for the current identity
             // check if the identity has auto-away configured
             if (m_identitiesOnAutoAway.contains(identityId))
-            {
                 // then we need to add a timeout for it
                 addIdleTimeout(identityIdleTimeout, identityId);
-            }
         }
     }
 }

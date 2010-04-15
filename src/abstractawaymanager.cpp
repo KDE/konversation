@@ -3,9 +3,11 @@
   it under the terms of the GNU General Public License as published by
   the Free Software Foundation; either version 2 of the License, or
   (at your option) any later version.
+*/
 
+/*
   Copyright (c) 1999 Martin R. Jones <mjones@kde.org>
-  Copyright (C) 2008 Eike Hein <hein@kde.org>
+  Copyright (c) 2008 Eike Hein <hein@kde.org>
   Copyright (c) 2010 Martin Blumenstingl <darklight.xdarklight@googlemail.com>
 */
 
@@ -58,9 +60,7 @@ void AbstractAwayManager::identityOnline(int identityId)
 void AbstractAwayManager::identityOffline(int identityId)
 {
     if (m_identitiesOnAutoAway.removeOne(identityId))
-    {
         identitiesOnAutoAwayChanged();
-    }
 }
 
 void AbstractAwayManager::setIdentitiesAway(const QList<int>& identityList)
@@ -107,7 +107,8 @@ void AbstractAwayManager::requestAllAway(const QString& reason)
     const QList<Server*> serverList = m_connectionManager->getServerList();
 
     foreach (Server* server, serverList)
-        if (server->isConnected()) server->requestAway(reason);
+        if (server->isConnected())
+            server->requestAway(reason);
 }
 
 void AbstractAwayManager::requestAllUnaway()
@@ -115,7 +116,8 @@ void AbstractAwayManager::requestAllUnaway()
     const QList<Server*> serverList = m_connectionManager->getServerList();
 
     foreach (Server* server, serverList)
-        if (server->isConnected() && server->isAway()) server->requestUnaway();
+        if (server->isConnected() && server->isAway())
+            server->requestUnaway();
 }
 
 void AbstractAwayManager::toggleGlobalAway(bool away)
@@ -141,14 +143,13 @@ void AbstractAwayManager::updateGlobalAwayAction(bool away)
     // tion (i.e. a reliable way to let keyboard activity in the sys-
     // tem reset the idle time).
     if (!away)
-    {
         resetIdle();
-    }
 
     Application* konvApp = static_cast<Application*>(kapp);
     KToggleAction* awayAction = qobject_cast<KToggleAction*>(konvApp->getMainWindow()->actionCollection()->action("toggle_away"));
 
-    if (!awayAction) return;
+    if (!awayAction)
+        return;
 
     if (away)
     {

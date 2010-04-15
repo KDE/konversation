@@ -3,9 +3,11 @@
   it under the terms of the GNU General Public License as published by
   the Free Software Foundation; either version 2 of the License, or
   (at your option) any later version.
+*/
 
+/*
   Copyright (c) 1999 Martin R. Jones <mjones@kde.org>
-  Copyright (C) 2008 Eike Hein <hein@kde.org>
+  Copyright (c) 2008 Eike Hein <hein@kde.org>
   Copyright (c) 2010 Martin Blumenstingl <darklight.xdarklight@googlemail.com>
 */
 
