@@ -16,7 +16,7 @@
 #include "outputfilter.h"
 #include "application.h"
 #include "mainwindow.h"
-#include "awaymanager.h"
+#include "abstractawaymanager.h"
 #include "ignore.h"
 #include "server.h"
 #include "irccharsets.h"

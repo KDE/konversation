@@ -26,7 +26,7 @@
 #include <kuniqueapplication.h>
 
 class ConnectionManager;
-class AwayManager;
+class AbstractAwayManager;
 class Server;
 class QuickConnectDialog;
 class Images;
@@ -80,7 +80,7 @@ class Application : public KUniqueApplication
         MainWindow* getMainWindow() { return mainWindow; }
 
         ConnectionManager* getConnectionManager() { return m_connectionManager; }
-        AwayManager* getAwayManager() { return m_awayManager; }
+        AbstractAwayManager* getAwayManager() { return m_awayManager; }
         Konversation::DCC::TransferManager* getDccTransferManager() { return m_dccTransferManager; }
 
         // HACK
@@ -169,7 +169,7 @@ class Application : public KUniqueApplication
 
     private:
         ConnectionManager* m_connectionManager;
-        AwayManager* m_awayManager;
+        AbstractAwayManager* m_awayManager;
         Konversation::DCC::TransferManager* m_dccTransferManager;
         QStringList urlList;
         Konversation::DBus* dbusObject;

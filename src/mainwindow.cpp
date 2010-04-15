@@ -26,7 +26,7 @@
 #include "notificationhandler.h"
 #include "irccharsets.h"
 #include "connectionmanager.h"
-#include "awaymanager.h"
+#include "abstractawaymanager.h"
 #include "transfermanager.h"
 
 

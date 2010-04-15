@@ -15,7 +15,7 @@
 #include "dbus.h"
 #include "application.h"
 #include "connectionmanager.h"
-#include "awaymanager.h"
+#include "abstractawaymanager.h"
 #include "channel.h"
 #include "identity.h"
 #include "server.h"
@@ -166,8 +166,10 @@ QString DBus::getChannelEncoding(const QString& server, const QString& channel)
 
 void DBus::changeAwayStatus(bool away)
 {
+    kDebug() << "DBus::changeAwayStatus()";
+    kDebug() << "to: " << away;
     Application* konvApp = static_cast<Application*>(kapp);
-
+    kDebug() << "after casting";
     if (away)
     {
         konvApp->getAwayManager()->setManagedIdentitiesAway();

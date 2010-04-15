@@ -15,7 +15,6 @@
 
 #include "application.h"
 #include "connectionmanager.h"
-#include "awaymanager.h"
 #include "transfermanager.h"
 #include "viewcontainer.h"
 #include "highlight.h"
@@ -31,6 +30,12 @@
 #include "notificationhandler.h"
 #include "commit.h"
 #include "version.h"
+
+#ifdef HAVE_KIDLETIME
+#include "awaymanagerkidletime.h"
+#else
+#include "awaymanager.h"
+#endif
 
 #include <QTextCodec>
 #include <QRegExp>
