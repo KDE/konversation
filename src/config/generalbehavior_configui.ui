@@ -128,7 +128,7 @@ the Free Software Foundation; either version 2 of the License, or
        <widget class="KComboBox" name="kcfg_NickCompletionMode" >
         <item>
          <property name="text" >
-          <string>Cycle NickList</string>
+          <string>Inline Cycle</string>
          </property>
         </item>
         <item>
