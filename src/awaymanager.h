@@ -6,8 +6,8 @@
 */
 
 /*
-  Copyright (c) 2008 Eike Hein <hein@kde.org>
-  Copyright (c) 2010 Martin Blumenstingl <darklight.xdarklight@googlemail.com>
+  Copyright (C) 2008 Eike Hein <hein@kde.org>
+  Copyright (C) 2010 Martin Blumenstingl <darklight.xdarklight@googlemail.com>
 */
 
 #ifndef AWAYMANAGER_H
@@ -27,13 +27,16 @@ class AwayManager : public AbstractAwayManager
     public:
         AwayManager(QObject* parent = 0);
         ~AwayManager();
-        
+
+
     public slots:
         virtual void setManagedIdentitiesAway();
         virtual void setManagedIdentitiesUnaway();
 
+
     private slots:
         void checkActivity();
+
 
     private:
         /**

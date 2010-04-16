@@ -6,9 +6,9 @@
 */
 
 /*
-  Copyright (c) 1999 Martin R. Jones <mjones@kde.org>
-  Copyright (c) 2008 Eike Hein <hein@kde.org>
-  Copyright (c) 2010 Martin Blumenstingl <darklight.xdarklight@googlemail.com>
+  Copyright (C) 1999 Martin R. Jones <mjones@kde.org>
+  Copyright (C) 2008 Eike Hein <hein@kde.org>
+  Copyright (C) 2010 Martin Blumenstingl <darklight.xdarklight@googlemail.com>
 */
 
 #include "abstractawaymanager.h"

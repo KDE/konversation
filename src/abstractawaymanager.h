@@ -6,8 +6,8 @@
 */
 
 /*
-  Copyright (c) 2008 Eike Hein <hein@kde.org>
-  Copyright (c) 2010 Martin Blumenstingl <darklight.xdarklight@googlemail.com>
+  Copyright (C) 2008 Eike Hein <hein@kde.org>
+  Copyright (C) 2010 Martin Blumenstingl <darklight.xdarklight@googlemail.com>
 */
 
 #ifndef ABSTRACTAWAYMANAGER_H
@@ -25,6 +25,7 @@ class AbstractAwayManager : public QObject
     public:
         AbstractAwayManager(QObject* parent = 0);
 
+
     public slots:
         void identitiesChanged();
 
@@ -40,12 +41,13 @@ class AbstractAwayManager : public QObject
         virtual void setManagedIdentitiesAway();
 
         /**
-          * Marks all identities which have auto-away enabled as "not away".
+          * Marks all identities which have auto-away and automatic un-away enabled as "not away".
           */
         virtual void setManagedIdentitiesUnaway();
 
         void toggleGlobalAway(bool away);
         void updateGlobalAwayAction(bool away);
+
 
     protected:
         /**
@@ -64,13 +66,13 @@ class AbstractAwayManager : public QObject
         
         /**
           * Called when the list of identities which have auto-away enabled has changed.
-          * NOTE: This method is abstract. if you inherit AbstractAwayManager you need to implement this.
+          * NOTE: This method is abstract. If you inherit AbstractAwayManager you need to implement this.
           */
         virtual void identitiesOnAutoAwayChanged() = 0;
         
         /**
           * Resets the idle status.
-          * NOTE: This method is abstract. if you inherit AbstractAwayManager you need to implement this.
+          * NOTE: This method is abstract. If you inherit AbstractAwayManager you need to implement this.
           */
         virtual void resetIdle() = 0;
 

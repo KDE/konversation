@@ -6,7 +6,7 @@
 */
 
 /*
-  Copyright (c) 2010 Martin Blumenstingl <darklight.xdarklight@googlemail.com>
+  Copyright (C) 2010 Martin Blumenstingl <darklight.xdarklight@googlemail.com>
 */
 
 #include "awaymanagerkidletime.h"

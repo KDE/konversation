@@ -6,7 +6,7 @@
 */
 
 /*
-  Copyright (c) 2010 Martin Blumenstingl <darklight.xdarklight@googlemail.com>
+  Copyright (C) 2010 Martin Blumenstingl <darklight.xdarklight@googlemail.com>
 */
 
 
@@ -24,6 +24,7 @@ class AwayManager : public AbstractAwayManager
     public:
         AwayManager(QObject* parent = 0);
 
+
     private slots:
         /**
           * Called as soon as the user does some input (after he was away).
@@ -36,6 +37,7 @@ class AwayManager : public AbstractAwayManager
           * @param timerId the ID of the KIdleTimer
           */
         void idleTimeoutReached(int timerId);
+
 
     private:
         /**
