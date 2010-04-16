@@ -23,6 +23,15 @@
 AbstractAwayManager::AbstractAwayManager(QObject* parent) : QObject(parent)
 {
     m_connectionManager = static_cast<Application*>(kapp)->getConnectionManager();
+
+    // initially reset the idle status
+    resetIdle();
+}
+
+void AbstractAwayManager::resetIdle()
+{
+    // set the time of the idleTimer to the current time
+    m_idleTime.start();
 }
 
 void AbstractAwayManager::identitiesChanged()
@@ -100,6 +109,37 @@ void AbstractAwayManager::setManagedIdentitiesUnaway()
     // set the "not away" status for all identities which have
     // auto-away enabled
     implementManagedUnaway(m_identitiesOnAutoAway);
+}
+
+void AbstractAwayManager::implementIdleAutoAway(bool activity)
+{
+    if (activity)
+    {
+        // there was activity -> we can reset the idle status
+        resetIdle();
+
+        // also we un-away all identities which have auto-away enabled
+        implementManagedUnaway(m_identitiesOnAutoAway);
+    }
+    else
+    {
+        QList<int> identityList;
+        long int idleTime = m_idleTime.elapsed() / 1000;
+
+        QList<int>::ConstIterator it;
+
+        for (it = m_identitiesOnAutoAway.constBegin(); it != m_identitiesOnAutoAway.constEnd(); ++it)
+        {
+            // check if the auto-away timeout (which the user has configured for the given identity)
+            // has already elapsed - if it has we add the identity to the list of identities of which
+            // will be marked as "away"
+            if (idleTime >= Preferences::identityById((*it))->getAwayInactivity() * 60)
+                identityList.append((*it));
+        }
+
+        // mark all identities from the list as "away"
+        implementManagedAway(identityList);
+    }
 }
 
 void AbstractAwayManager::requestAllAway(const QString& reason)

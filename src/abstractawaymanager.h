@@ -15,6 +15,7 @@
 
 #include <QObject>
 #include <QList>
+#include <QTime>
 
 class ConnectionManager;
 
@@ -65,6 +66,13 @@ class AbstractAwayManager : public QObject
         void implementManagedUnaway(const QList<int>& identityList);
         
         /**
+          * Decides which identities should be marked as "away" and which should be marked as "un-away".
+          *
+          * @param activity decides if the user was active or if he is idle
+          */
+        void implementIdleAutoAway(bool activity);
+
+        /**
           * Called when the list of identities which have auto-away enabled has changed.
           * NOTE: This method is abstract. If you inherit AbstractAwayManager you need to implement this.
           */
@@ -72,11 +80,13 @@ class AbstractAwayManager : public QObject
         
         /**
           * Resets the idle status.
-          * NOTE: This method is abstract. If you inherit AbstractAwayManager you need to implement this.
+          * This is the base implementation which only resets the internal idleTime
           */
-        virtual void resetIdle() = 0;
+        virtual void resetIdle();
 
         QList<int> m_identitiesOnAutoAway;
+
+        QTime m_idleTime;
 
         ConnectionManager* m_connectionManager;
 };

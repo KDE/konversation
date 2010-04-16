@@ -15,8 +15,6 @@
 
 #include "abstractawaymanager.h"
 
-#include <QHash>
-
 class AwayManager : public AbstractAwayManager
 {
     Q_OBJECT
@@ -45,32 +43,26 @@ class AwayManager : public AbstractAwayManager
           * This handles the (de-)registration of KIdleTimers.
           */
         virtual void identitiesOnAutoAwayChanged();
-        
-        /**
-          * Removes an idle timeout.
-          *
-          * @param timerId the ID of the KIdleTimer
-          * @param identityId the ID of the identity to which the idle timer belongs
-          */
-        void removeIdleTimeout(int timerId, int identityId);
 
         /**
-          * Adds a KIdleTimer with the given timeout for the given identity.
-          *
-          * @param timeout the timeout for the timer (milliseconds)
-          * @param identityId the ID of the identity to which the timer belongs
+          * Removes unneeded timeouts (for example after a user changed the
+          * auto-away time) from KIdleTime. Only timeouts which are still needed
+          * (= which are still in the idle timeout list) are kept.
           */
-        void addIdleTimeout(int timeout, int identityId);
+        void implementRemoveUnusedIdleTimeouts();
+
+        /**
+          * Adds all timeouts (from the idle timeout list) to KIdleTime if
+          * KIdleTime does not know about them yet.
+          */
+        void implementAddIdleTimeouts();
 
         /**
           * Resets the idle status (simulates user activity).
           */
         virtual void resetIdle();
 
-        /**
-          * A hashtable which contains identity IDs (key) and KIdleTimer timer IDs (value).
-          */
-        QHash<int, int> m_identityIdTimerIdHash;
+        QList<int> m_idleTimeouts;
 };
 
 #endif

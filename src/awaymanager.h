@@ -16,7 +16,6 @@
 #include "abstractawaymanager.h"
 
 #include <QTimer>
-#include <QTime>
 
 struct AwayManagerPrivate;
 
@@ -44,14 +43,9 @@ class AwayManager : public AbstractAwayManager
           * This starts or stops the timer (depending on what's needed).
           */
         virtual void identitiesOnAutoAwayChanged();
-        
-        virtual void resetIdle();
 
         bool Xactivity();
 
-        void implementIdleAutoAway(bool activity);
-
-        QTime m_idleTime;
         QTimer* m_activityTimer;
         
         struct AwayManagerPrivate* d;

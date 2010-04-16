@@ -96,8 +96,6 @@ AwayManager::AwayManager(QObject* parent) : AbstractAwayManager(parent)
     m_activityTimer = new QTimer(this);
     m_activityTimer->setObjectName("AwayTimer");
     connect(m_activityTimer, SIGNAL(timeout()), this, SLOT(checkActivity()));
-
-    resetIdle();
 }
 
 AwayManager::~AwayManager()
@@ -122,11 +120,6 @@ void AwayManager::setManagedIdentitiesUnaway()
     
     // call the base implementation
     AbstractAwayManager::setManagedIdentitiesUnaway();
-}
-
-void AwayManager::resetIdle()
-{
-    m_idleTime.start();
 }
 
 void AwayManager::identitiesOnAutoAwayChanged()
@@ -217,32 +210,6 @@ bool AwayManager::Xactivity()
 #endif
 
     return activity;
-}
-
-void AwayManager::implementIdleAutoAway(bool activity)
-{
-    if (activity)
-    {
-        resetIdle();
-
-        // there was some activity: un-away all identities which have auto-away enabled
-        implementManagedUnaway(m_identitiesOnAutoAway);
-    }
-    else
-    {
-        QList<int> identityList;
-        long int idleTime = m_idleTime.elapsed() / 1000;
-
-        QList<int>::ConstIterator it;
-
-        for (it = m_identitiesOnAutoAway.constBegin(); it != m_identitiesOnAutoAway.constEnd(); ++it)
-        {
-            if (idleTime >= Preferences::identityById((*it))->getAwayInactivity() * 60)
-                identityList.append((*it));
-        }
-        
-        implementManagedAway(identityList);
-    }
 }
 
 #include "awaymanager.moc"

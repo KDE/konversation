@@ -19,109 +19,106 @@
 AwayManager::AwayManager(QObject* parent) : AbstractAwayManager(parent)
 {
     connect(KIdleTime::instance(), SIGNAL(resumingFromIdle()), this, SLOT(resumeFromIdle()));
-    connect(KIdleTime::instance(), SIGNAL(timeoutReached(int, int)), this, SLOT(idleTimeoutReached(int)));
+    connect(KIdleTime::instance(), SIGNAL(timeoutReached(int)), this, SLOT(idleTimeoutReached(int)));
 
     // catch the first "resume event" (= user input)
     KIdleTime::instance()->catchNextResumeEvent();
 }
 
-void AwayManager::removeIdleTimeout(int timerId, int identityId)
+void AwayManager::implementRemoveUnusedIdleTimeouts()
 {
-    // remove the timer from KIdleTime and from our internal hash
-    KIdleTime::instance()->removeIdleTimeout(timerId);
-    
-    m_identityIdTimerIdHash.remove(identityId);
+    const QHash<int, int> idleTimeouts = KIdleTime::instance()->idleTimeouts();
+
+    if (idleTimeouts.count() > 0)
+    {
+        QHash<int, int>::ConstIterator it;
+
+        // loop through the list of all KIdleTimers
+        for (it = idleTimeouts.constBegin(); it != idleTimeouts.constEnd(); ++it)
+        {
+            int timeout = it.value();
+
+            // check if the list with all idle timeouts does not contain the current timeout
+            if (!m_idleTimeouts.contains(timeout))
+            {
+                int timerId = it.key();
+
+                // then we need to remove it from KIdleTime
+                KIdleTime::instance()->removeIdleTimeout(timerId);
+            }
+        }
+    }
 }
 
-void AwayManager::addIdleTimeout(int timeout, int identityId)
+void AwayManager::implementAddIdleTimeouts()
 {
-    // add a new idle timeout and add it to the internal hash
-    int newTimerId = KIdleTime::instance()->addIdleTimeout(timeout);
-    
-    m_identityIdTimerIdHash[identityId] = newTimerId;
+    foreach (int timeout, m_idleTimeouts)
+    {
+        // get the timerId for the given timeout
+        int timerId = KIdleTime::instance()->idleTimeouts().key(timeout, -1);
+
+        // check if there's already a timer with the given timeout
+        if (timerId == -1)
+        {
+            // if not create a new idle timeout
+            KIdleTime::instance()->addIdleTimeout(timeout);
+        }
+    }
 }
 
 void AwayManager::resetIdle()
 {
     // simulate user activity (which reset all idle timers)
     KIdleTime::instance()->simulateUserActivity();
+
+    // also call the base implementation
+    AbstractAwayManager::resetIdle();
 }
 
 void AwayManager::resumeFromIdle()
 {
-    // mark all identities which have auto-away enabled "not away"
-    implementManagedUnaway(m_identitiesOnAutoAway);
+    // we are not idle anymore
+    implementIdleAutoAway(true);
 }
 
 void AwayManager::idleTimeoutReached(int timerId)
 {
-    // get the identity ID for the given timer
-    int identityId = m_identityIdTimerIdHash.key(timerId, -1);
-    
-    if (identityId != -1)
-    {
-        QList<int> identitiesIdleTimeExceeded;
+    Q_UNUSED(timerId);
 
-        identitiesIdleTimeExceeded.append(identityId);
+    // check which identities are away now
+    implementIdleAutoAway(false);
 
-        implementManagedAway(identitiesIdleTimeExceeded);
-    }
-    else
-        kDebug() << "could not find identity for timer " << timerId << " - bug?";    
-    
-    // wait for user input (so we get the "resumingFromIdle" signal fired
-    // as soon as the user does something)
+    // since we're away we now need to watch for resume events
     KIdleTime::instance()->catchNextResumeEvent();
 }
 
 void AwayManager::identitiesOnAutoAwayChanged()
 {
     const QList<Server*> serverList = m_connectionManager->getServerList();
-    
+
+    // clear the list of idle timeouts (this will ensure that only timeouts
+    // which are actually used by any identity are in the list)
+    m_idleTimeouts.clear();
+
     foreach (Server* server, serverList)
     {
         IdentityPtr identity = server->getIdentity();
 
         // the idle timeout for the current identity in ms
         int identityIdleTimeout = identity->getAwayInactivity() * 60 * 1000;
-        int identityId = identity->id();
-        
-        // check if the identity is already in our hash
-        if (m_identityIdTimerIdHash.contains(identityId))
+
+        // check if we still need to add the idle timeout to our list
+        if (!m_idleTimeouts.contains(identityIdleTimeout))
         {
-            int timerId = m_identityIdTimerIdHash[identityId];
-            
-            // check if the identity is not in the auto-away list
-            if (!m_identitiesOnAutoAway.contains(identityId))
-                // then we need to remove the idle timeout
-                removeIdleTimeout(timerId, identityId);
-            else
-            {
-                const QHash<int, int> idleTimeouts = KIdleTime::instance()->idleTimeouts();
-                
-                if (idleTimeouts.contains(timerId))
-                {
-                    // check if the timeout has changed
-                    if (idleTimeouts[timerId] != identityIdleTimeout)
-                    {
-                        // then we need to remove and re-add the timeout
-                        removeIdleTimeout(timerId, identityId);
-                        addIdleTimeout(identityIdleTimeout, identityId);
-                    }
-                }
-                else
-                    kDebug() << "WARNING: bug? we have a timer ID (" << timerId << ") but KIdleTime does not know about it?";
-            }
-        }
-        else
-        {
-            // we are not watching a timeout for the current identity
-            // check if the identity has auto-away configured
-            if (m_identitiesOnAutoAway.contains(identityId))
-                // then we need to add a timeout for it
-                addIdleTimeout(identityIdleTimeout, identityId);
+            m_idleTimeouts.append(identityIdleTimeout);
         }
     }
+
+    // add all used idle timeouts (if necessary)
+    implementAddIdleTimeouts();
+
+    // remove all unused timeouts
+    implementRemoveUnusedIdleTimeouts();
 }
 
 #include "awaymanagerkidletime.moc"
