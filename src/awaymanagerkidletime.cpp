@@ -59,10 +59,8 @@ void AwayManager::implementAddIdleTimeouts()
 
         // check if there's already a timer with the given timeout
         if (timerId == -1)
-        {
             // if not create a new idle timeout
             KIdleTime::instance()->addIdleTimeout(timeout);
-        }
     }
 }
 
@@ -109,9 +107,7 @@ void AwayManager::identitiesOnAutoAwayChanged()
 
         // check if we still need to add the idle timeout to our list
         if (!m_idleTimeouts.contains(identityIdleTimeout))
-        {
             m_idleTimeouts.append(identityIdleTimeout);
-        }
     }
 
     // add all used idle timeouts (if necessary)
