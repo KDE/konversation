@@ -102,6 +102,10 @@ void AbstractAwayManager::implementManagedUnaway(const QList<int>& identityList)
             server->requestUnaway();
         }
     }
+
+    // reset the idle status to indicate that the idle time calculation
+    // should be restarted
+    resetIdle();
 }
 
 void AbstractAwayManager::setManagedIdentitiesUnaway()

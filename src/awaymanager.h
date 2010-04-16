@@ -30,7 +30,6 @@ class AwayManager : public AbstractAwayManager
 
     public slots:
         virtual void setManagedIdentitiesAway();
-        virtual void setManagedIdentitiesUnaway();
 
 
     private slots:
