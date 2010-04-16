@@ -565,7 +565,7 @@ void IRCView::clearLines()
     dump_doc(document());
 
     //are there any markers?
-    if (hasLines() > 0)
+    if (hasLines())
     {
         for (int i=0; i < m_markers.count(); ++i)
             voidLineBlock(m_markers[i]);
