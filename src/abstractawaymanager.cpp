@@ -24,13 +24,13 @@ AbstractAwayManager::AbstractAwayManager(QObject* parent) : QObject(parent)
 {
     m_connectionManager = static_cast<Application*>(kapp)->getConnectionManager();
 
-    // initially reset the idle status
+    // Initially reset the idle status.
     resetIdle();
 }
 
 void AbstractAwayManager::resetIdle()
 {
-    // set the time of the idleTimer to the current time
+    // Set the time of the idleTimer to the current time.
     m_idleTime.start();
 }
 
@@ -103,15 +103,15 @@ void AbstractAwayManager::implementManagedUnaway(const QList<int>& identityList)
         }
     }
 
-    // reset the idle status to indicate that the idle time calculation
-    // should be restarted
+    // Reset the idle status to indicate that the idle time calculation
+    // should be restarted.
     resetIdle();
 }
 
 void AbstractAwayManager::setManagedIdentitiesUnaway()
 {
-    // set the "not away" status for all identities which have
-    // auto-away enabled
+    // Set the "not away" status for all identities which have
+    // auto-away enabled.
     implementManagedUnaway(m_identitiesOnAutoAway);
 }
 
@@ -119,10 +119,10 @@ void AbstractAwayManager::implementIdleAutoAway(bool activity)
 {
     if (activity)
     {
-        // there was activity -> we can reset the idle status
+        // There was activity (this means that we can reset the idle status).
         resetIdle();
 
-        // also we un-away all identities which have auto-away enabled
+        // Also we un-away all identities which have auto-away and auto-unaway enabled
         implementManagedUnaway(m_identitiesOnAutoAway);
     }
     else
@@ -134,14 +134,13 @@ void AbstractAwayManager::implementIdleAutoAway(bool activity)
 
         for (it = m_identitiesOnAutoAway.constBegin(); it != m_identitiesOnAutoAway.constEnd(); ++it)
         {
-            // check if the auto-away timeout (which the user has configured for the given identity)
-            // has already elapsed - if it has we add the identity to the list of identities of which
-            // will be marked as "away"
+            // Check if the auto-away timeout (which the user has configured for the given identity)
+            // has already elapsed - if it has we add the identity to the list of identities)
             if (idleTime >= Preferences::identityById((*it))->getAwayInactivity() * 60)
                 identityList.append((*it));
         }
 
-        // mark all identities from the list as "away"
+        // Mark all identities from the list as "away".
         implementManagedAway(identityList);
     }
 }

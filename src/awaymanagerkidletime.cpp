@@ -21,7 +21,7 @@ AwayManager::AwayManager(QObject* parent) : AbstractAwayManager(parent)
     connect(KIdleTime::instance(), SIGNAL(resumingFromIdle()), this, SLOT(resumeFromIdle()));
     connect(KIdleTime::instance(), SIGNAL(timeoutReached(int)), this, SLOT(idleTimeoutReached(int)));
 
-    // catch the first "resume event" (= user input)
+    // Catch the first "resume event" (= user input).
     KIdleTime::instance()->catchNextResumeEvent();
 }
 
@@ -33,17 +33,17 @@ void AwayManager::implementRemoveUnusedIdleTimeouts()
     {
         QHash<int, int>::ConstIterator it;
 
-        // loop through the list of all KIdleTimers
+        // Loop through the list of all KIdleTimers.
         for (it = idleTimeouts.constBegin(); it != idleTimeouts.constEnd(); ++it)
         {
             int timeout = it.value();
 
-            // check if the list with all idle timeouts does not contain the current timeout
+            // Check if the list with all idle timeouts does not contain the current timeout.
             if (!m_idleTimeouts.contains(timeout))
             {
                 int timerId = it.key();
 
-                // then we need to remove it from KIdleTime
+                // Then we need to remove it from KIdleTime.
                 KIdleTime::instance()->removeIdleTimeout(timerId);
             }
         }
@@ -54,28 +54,28 @@ void AwayManager::implementAddIdleTimeouts()
 {
     foreach (int timeout, m_idleTimeouts)
     {
-        // get the timerId for the given timeout
+        // Get the timerId for the given timeout.
         int timerId = KIdleTime::instance()->idleTimeouts().key(timeout, -1);
 
-        // check if there's already a timer with the given timeout
+        // Check if there's already a timer with the given timeout.
         if (timerId == -1)
-            // if not create a new idle timeout
+            // If there's not timer yet we should create a new one.
             KIdleTime::instance()->addIdleTimeout(timeout);
     }
 }
 
 void AwayManager::resetIdle()
 {
-    // simulate user activity (which reset all idle timers)
+    // Simulate user activity (which resets all idle timers).
     KIdleTime::instance()->simulateUserActivity();
 
-    // also call the base implementation
+    // Also call the base implementation.
     AbstractAwayManager::resetIdle();
 }
 
 void AwayManager::resumeFromIdle()
 {
-    // we are not idle anymore
+    // We are not idle anymore.
     implementIdleAutoAway(true);
 }
 
@@ -83,10 +83,10 @@ void AwayManager::idleTimeoutReached(int timerId)
 {
     Q_UNUSED(timerId);
 
-    // check which identities are away now
+    // Check which identities are away now.
     implementIdleAutoAway(false);
 
-    // since we're away we now need to watch for resume events
+    // Since we're away we now need to watch for resume events (keyboard input, etc).
     KIdleTime::instance()->catchNextResumeEvent();
 }
 
@@ -94,26 +94,26 @@ void AwayManager::identitiesOnAutoAwayChanged()
 {
     const QList<Server*> serverList = m_connectionManager->getServerList();
 
-    // clear the list of idle timeouts (this will ensure that only timeouts
-    // which are actually used by any identity are in the list)
+    // Clear the list of idle timeouts (this will ensure that only timeouts
+    // which are actually used by any identity are in the list).
     m_idleTimeouts.clear();
 
     foreach (Server* server, serverList)
     {
         IdentityPtr identity = server->getIdentity();
 
-        // the idle timeout for the current identity in ms
+        // The idle timeout for the current identity in ms.
         int identityIdleTimeout = identity->getAwayInactivity() * 60 * 1000;
 
-        // check if we still need to add the idle timeout to our list
+        // Check if we still need to add the idle timeout to our list.
         if (!m_idleTimeouts.contains(identityIdleTimeout))
             m_idleTimeouts.append(identityIdleTimeout);
     }
 
-    // add all used idle timeouts (if necessary)
+    // Add all used idle timeouts (if necessary).
     implementAddIdleTimeouts();
 
-    // remove all unused timeouts
+    // Remove all unused timeouts.
     implementRemoveUnusedIdleTimeouts();
 }
 

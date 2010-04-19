@@ -109,7 +109,7 @@ void AwayManager::setManagedIdentitiesAway()
     // on residual mouse activity after manual screensaver activation.
     d->mouseX = -1;
     
-    // call the base implementation
+    // Call the base implementation.
     AbstractAwayManager::setManagedIdentitiesAway();
 }
 
