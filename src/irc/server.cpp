@@ -283,9 +283,9 @@ void Server::connectSignals()
     connect(getOutputFilter(), SIGNAL(closeDccPanel()), getViewContainer(), SLOT(closeDccPanel()));
     connect(getOutputFilter(), SIGNAL(addDccPanel()), getViewContainer(), SLOT(addDccPanel()));
 
-    // Inputfilter
+    // Inputfilter - queued connections should be used for slots that have blocking UI
     connect(&m_inputFilter, SIGNAL(addDccChat(const QString&,const QStringList&)),
-            this, SLOT(addDccChat(const QString&,const QStringList&)));
+            this, SLOT(addDccChat(const QString&,const QStringList&)), Qt::QueuedConnection);
     connect(&m_inputFilter, SIGNAL(rejectDccChat(const QString&)),
             this, SLOT(rejectDccChat(const QString&)));
     connect(&m_inputFilter, SIGNAL(startReverseDccChat(const QString&,const QStringList&)),
