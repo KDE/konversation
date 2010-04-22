@@ -88,6 +88,12 @@ Changes since 1.2.3:
   'cmake', in which case Konversation will fall back to using the
   original, X11-specific code and auto-away will only work decently
   on an X11 platform.)
+* SSL support now integrates with KDE's certificate handling again,
+  as it used to in the KDE 3 version, made possible by improvements
+  in the libraries of the KDE Platform v4.3 (the minimum version
+  supported in this release) and higher.
+* Not reacting to an SSL certificat validation error dialog in a
+  timely manner should no longer result in Konversation locking up.
 
 
 Changes from 1.2.2 to 1.2.3:
