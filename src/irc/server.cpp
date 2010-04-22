@@ -416,7 +416,7 @@ void Server::connectToIRCServer()
         {
             connect(m_socket, SIGNAL(encrypted()), SLOT (ircServerConnectionSuccess()));
             connect(m_socket, SIGNAL(sslErrors(const QList<KSslError>&)), SLOT(sslError(const QList<KSslError>&)));
-            
+
             m_socket->connectToHostEncrypted(getConnectionSettings().server().host(), getConnectionSettings().server().port());
         }
 
@@ -635,7 +635,7 @@ void Server::broken(KTcpSocket::Error error)
 bool Server::askUserToIgnoreSslErrors()
 {
     bool retVal = false;
-    
+
     // we are called by sslError
     // sslError is a slot, if it's signal is emitted multiple times
     // then we only want to show the dialog once
@@ -643,16 +643,16 @@ bool Server::askUserToIgnoreSslErrors()
     {
         // we don't want to show any further SSL confirmation dialogs
         m_showSSLConfirmation = false;
-        
+
         // ask the user if he wants to ignore SSL errors
         // in case the user wants to make the rule he chose (for example: always allow) persistent
         // this will not show a dialog (but it will return "sslErrorsIgnored = true")
         retVal = KIO::SslUi::askIgnoreSslErrors( m_socket, KIO::SslUi::RecallAndStoreRules );
-        
+
         // as we're done now we can show further SSL dialogs
         m_showSSLConfirmation = true;
     }
-    
+
     return retVal;
 }
 
@@ -663,31 +663,30 @@ void Server::sslError( const QList<KSslError>& errors )
     {
         // the user has chosen to ignore SSL errors
         m_socket->ignoreSslErrors();
-        
+
         // show a warning in the chat window that the SSL certificate failed the authenticity check
         QString error = i18n("The SSL certificate for the the server %1 (port <numid>%2</numid>) failed the authenticity check.",
                             getConnectionSettings().server().host(),
                             QString::number(getConnectionSettings().server().port()));
-                            
+
         getStatusView()->appendServerMessage(i18n("SSL Connection Warning"), error);
     }
     else
     {
         QString errorReason;
-        
+
         for (int i = 0; i < errors.size(); ++i)
         {
             errorReason += errors.at(i).errorString() + ' ';
         }
-        
-        // TODO: this message should be adjusted. it's possible that the user refused the invalid SSL certificate.
-        QString error = i18n("Could not connect to %1 (port <numid>%2</numid>) using SSL encryption. Maybe the server does not support SSL, or perhaps you have the wrong port? %3",
+
+        QString error = i18n("Could not connect to %1 (port <numid>%2</numid>) using SSL encryption. Either the server does not support SSL (did you use the correct port?) or you rejected the certificate. %3",
             getConnectionSettings().server().host(),
             QString::number(getConnectionSettings().server().port()),
             errorReason);
-        
+
         getStatusView()->appendServerMessage(i18n("SSL Connection Error"), error);
-        
+
         emit sslInitFailure();
     }
 }
