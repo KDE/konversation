@@ -77,6 +77,17 @@ Changes since 1.2.3:
 * Made it possible again to initate DCC file transfers to a query
   partner by dragging files or URLs onto the chat text area of the
   query.
+* When building against the KDE Platform v4.4 libraries, the auto-
+  away functionality will now make use of the new KIdleTime library
+  to determine user activity and inactivity rather than use its own
+  code, the primary advantage being that KIdleTime is supported on
+  non-X11 platforms such as Windows and Mac OS X. In effect, this
+  means auto-away is now supported on those platforms, depending on
+  the implementation level in KIdleTime. (The use of KIdleTime can
+  be explicitly disabled by passing '-DUSE_KIDLETIME=false' to
+  'cmake', in which case Konversation will fall back to using the
+  original, X11-specific code and auto-away will only work decently
+  on an X11 platform.)
 
 
 Changes from 1.2.2 to 1.2.3:
