@@ -64,6 +64,7 @@ class DBus : public QObject
         QStringList listServers();
         QStringList listConnectedServers();
 
+    private slots:
         void changeAwayStatus(bool away);
 };
 

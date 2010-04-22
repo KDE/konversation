@@ -7,47 +7,29 @@
 
 /*
   Copyright (C) 2008 Eike Hein <hein@kde.org>
+  Copyright (C) 2010 Martin Blumenstingl <darklight.xdarklight@googlemail.com>
 */
 
 #ifndef AWAYMANAGER_H
 #define AWAYMANAGER_H
 
+#include "abstractawaymanager.h"
 
-#include <QObject>
-#include <QList>
 #include <QTimer>
-#include <QTime>
-
-class ConnectionManager;
-
 
 struct AwayManagerPrivate;
 
-
-class AwayManager : public QObject
+class AwayManager : public AbstractAwayManager
 {
     Q_OBJECT
 
     public:
-        explicit AwayManager(QObject* parent = 0);
+        AwayManager(QObject* parent = 0);
         ~AwayManager();
 
-        void screensaverDisabled() { resetIdle(); }
 
     public slots:
-        void identitiesChanged();
-
-        void identityOnline(int identityId);
-        void identityOffline(int identityId);
-
-        void requestAllAway(const QString& reason = "");
-        void requestAllUnaway();
-
-        void setManagedIdentitiesAway();
-        void setManagedIdentitiesUnaway();
-
-        void toggleGlobalAway(bool away);
-        void updateGlobalAwayAction(bool away);
+        virtual void setManagedIdentitiesAway();
 
 
     private slots:
@@ -55,20 +37,17 @@ class AwayManager : public QObject
 
 
     private:
-        void resetIdle();
-        void toggleTimer();
+        /**
+          * The list of identities which have auto-away enabled has changed.
+          * This starts or stops the timer (depending on what's needed).
+          */
+        virtual void identitiesOnAutoAwayChanged();
+
         bool Xactivity();
 
-        void implementIdleAutoAway(bool activity);
-
-        AwayManagerPrivate* d;
-
-        QTime m_idleTime;
         QTimer* m_activityTimer;
-
-        QList<int> m_identitiesOnAutoAway;
-
-        ConnectionManager* m_connectionManager;
+        
+        struct AwayManagerPrivate* d;
 };
 
 #endif

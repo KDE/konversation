@@ -39,7 +39,7 @@
 #include "serverison.h"
 #include "common.h"
 #include "notificationhandler.h"
-#include "awaymanager.h"
+#include "abstractawaymanager.h"
 
 #include <QRegExp>
 #include <QTextCodec>

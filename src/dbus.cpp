@@ -15,7 +15,7 @@
 #include "dbus.h"
 #include "application.h"
 #include "connectionmanager.h"
-#include "awaymanager.h"
+#include "abstractawaymanager.h"
 #include "channel.h"
 #include "identity.h"
 #include "server.h"
@@ -174,7 +174,6 @@ void DBus::changeAwayStatus(bool away)
     }
     else
     {
-        konvApp->getAwayManager()->screensaverDisabled();
         konvApp->getAwayManager()->setManagedIdentitiesUnaway();
     }
 }
