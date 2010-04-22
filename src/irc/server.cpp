@@ -636,20 +636,20 @@ bool Server::askUserToIgnoreSslErrors()
 {
     bool retVal = false;
 
-    // we are called by sslError
+    // We are called by sslError:
     // sslError is a slot, if it's signal is emitted multiple times
-    // then we only want to show the dialog once
+    // then we only want to show the dialog once.
     if ( m_showSSLConfirmation )
     {
-        // we don't want to show any further SSL confirmation dialogs
+        // We don't want to show any further SSL confirmation dialogs.
         m_showSSLConfirmation = false;
 
-        // ask the user if he wants to ignore SSL errors
-        // in case the user wants to make the rule he chose (for example: always allow) persistent
-        // this will not show a dialog (but it will return "sslErrorsIgnored = true")
+        // Ask the user if he wants to ignore SSL errors.
+        // In case the user wants to make the rule he chose (for example: always allow) persistent
+        // this will not show a dialog (but it will return "sslErrorsIgnored = true").
         retVal = KIO::SslUi::askIgnoreSslErrors( m_socket, KIO::SslUi::RecallAndStoreRules );
 
-        // as we're done now we can show further SSL dialogs
+        // As we're done now we can show further SSL dialogs.
         m_showSSLConfirmation = true;
     }
 
@@ -658,13 +658,13 @@ bool Server::askUserToIgnoreSslErrors()
 
 void Server::sslError( const QList<KSslError>& errors )
 {
-    // ask the user if he wants to ignore the errors
+    // Ask the user if he wants to ignore the errors.
     if ( askUserToIgnoreSslErrors() )
     {
-        // the user has chosen to ignore SSL errors
+        // The user has chosen to ignore SSL errors.
         m_socket->ignoreSslErrors();
 
-        // show a warning in the chat window that the SSL certificate failed the authenticity check
+        // Show a warning in the chat window that the SSL certificate failed the authenticity check.
         QString error = i18n("The SSL certificate for the the server %1 (port <numid>%2</numid>) failed the authenticity check.",
                             getConnectionSettings().server().host(),
                             QString::number(getConnectionSettings().server().port()));
