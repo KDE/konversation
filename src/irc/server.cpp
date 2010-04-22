@@ -241,15 +241,15 @@ void Server::connectSignals()
     connect(&m_pingResponseTimer, SIGNAL(timeout()), this, SLOT(updateLongPongLag()));
 
     // OutputFilter
-    connect(getOutputFilter(), SIGNAL(requestDccSend()), this,SLOT(requestDccSend()));
-    connect(getOutputFilter(), SIGNAL(requestDccSend(const QString&)), this, SLOT(requestDccSend(const QString&)));
+    connect(getOutputFilter(), SIGNAL(requestDccSend()), this,SLOT(requestDccSend()), Qt::QueuedConnection);
+    connect(getOutputFilter(), SIGNAL(requestDccSend(const QString&)), this, SLOT(requestDccSend(const QString&)), Qt::QueuedConnection);
     connect(getOutputFilter(), SIGNAL(multiServerCommand(const QString&, const QString&)),
         this, SLOT(sendMultiServerCommand(const QString&, const QString&)));
     connect(getOutputFilter(), SIGNAL(reconnectServer()), this, SLOT(reconnect()));
     connect(getOutputFilter(), SIGNAL(disconnectServer()), this, SLOT(disconnect()));
-    connect(getOutputFilter(), SIGNAL(openDccSend(const QString &, KUrl)), this, SLOT(addDccSend(const QString &, KUrl)));
-    connect(getOutputFilter(), SIGNAL(openDccChat(const QString &)), this, SLOT(openDccChat(const QString &)));
-    connect(getOutputFilter(), SIGNAL(openDccWBoard(const QString &)), this, SLOT(openDccWBoard(const QString &)));
+    connect(getOutputFilter(), SIGNAL(openDccSend(const QString &, KUrl)), this, SLOT(addDccSend(const QString &, KUrl)), Qt::QueuedConnection);
+    connect(getOutputFilter(), SIGNAL(openDccChat(const QString &)), this, SLOT(openDccChat(const QString &)), Qt::QueuedConnection);
+    connect(getOutputFilter(), SIGNAL(openDccWBoard(const QString &)), this, SLOT(openDccWBoard(const QString &)), Qt::QueuedConnection);
     connect(getOutputFilter(), SIGNAL(acceptDccGet(const QString&, const QString&)),
         this, SLOT(acceptDccGet(const QString&, const QString&)));
     connect(getOutputFilter(), SIGNAL(sendToAllChannels(const QString&)), this, SLOT(sendToAllChannels(const QString&)));
@@ -266,8 +266,8 @@ void Server::connectSignals()
                 const QString&, const QString&, const QString&, const QString&, bool)),
             konvApp->getConnectionManager(), SLOT(connectTo(Konversation::ConnectionFlag,
                 const QString&, const QString&, const QString&, const QString&, const QString&, bool)));
-                connect(konvApp->getDccTransferManager(), SIGNAL(newDccTransferQueued(Konversation::DCC::Transfer*)),
-                        this, SLOT(slotNewDccTransferItemQueued(Konversation::DCC::Transfer*)));
+    connect(konvApp->getDccTransferManager(), SIGNAL(newDccTransferQueued(Konversation::DCC::Transfer*)),
+            this, SLOT(slotNewDccTransferItemQueued(Konversation::DCC::Transfer*)));
 
     connect(konvApp, SIGNAL(appearanceChanged()), this, SLOT(startNotifyTimer()));
 
@@ -275,7 +275,7 @@ void Server::connectSignals()
     connect(this, SIGNAL(showView(ChatWindow*)), getViewContainer(), SLOT(showView(ChatWindow*)));
     connect(this, SIGNAL(addDccPanel()), getViewContainer(), SLOT(addDccPanel()));
     connect(this, SIGNAL(addDccChat(Konversation::DCC::Chat*)),
-            getViewContainer(), SLOT(addDccChat(Konversation::DCC::Chat*)));
+            getViewContainer(), SLOT(addDccChat(Konversation::DCC::Chat*)), Qt::QueuedConnection);
     connect(this, SIGNAL(serverLag(Server*, int)), getViewContainer(), SIGNAL(updateStatusBarLagLabel(Server*, int)));
     connect(this, SIGNAL(tooLongLag(Server*, int)), getViewContainer(), SIGNAL(setStatusBarLagLabelTooLongLag(Server*, int)));
     connect(this, SIGNAL(resetLag()), getViewContainer(), SIGNAL(resetStatusBarLagLabel()));
@@ -297,7 +297,7 @@ void Server::connectSignals()
     connect(&m_inputFilter, SIGNAL(startReverseDccSendTransfer(const QString&,const QStringList&)),
         this, SLOT(startReverseDccSendTransfer(const QString&,const QStringList&)));
     connect(&m_inputFilter, SIGNAL(addDccGet(const QString&, const QStringList&)),
-        this, SLOT(addDccGet(const QString&, const QStringList&)));
+            this, SLOT(addDccGet(const QString&, const QStringList&)), Qt::QueuedConnection);
     connect(&m_inputFilter, SIGNAL(resumeDccGetTransfer(const QString&, const QStringList&)),
         this, SLOT(resumeDccGetTransfer(const QString&, const QStringList&)));
     connect(&m_inputFilter, SIGNAL(resumeDccSendTransfer(const QString&, const QStringList&)),
