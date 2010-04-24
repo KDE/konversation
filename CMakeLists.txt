@@ -22,10 +22,13 @@ endif()
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${KDE4_INCLUDES} ${KDE4_INCLUDE_DIR} ${QT_INCLUDES})
 
-#check for KDE greater than 4.3.80 (used for KStatusNotifier and KIdleTime)
+#check for KDE greater than 4.3.80 (used for KStatusNotifier)
 macro_ensure_version("4.3.80" ${KDE_VERSION} HAVEKDE4_4)
 
-if (HAVEKDE4_4)
+#check for KDE greater than 4.4.3 (usable version of KIdleTime)
+macro_ensure_version("4.4.3" ${KDE_VERSION} HAVEKDE4_4_3)
+
+if (HAVEKDE4_4_3)
     #let the user chose if he wants to build with KIdleTime support
     option(USE_KIDLETIME "Use KIdleTime for user inactivity detection." ON)
     macro_bool_to_01(USE_KIDLETIME HAVE_KIDLETIME)
@@ -43,7 +46,7 @@ if (HAVEKDE4_4)
         message("     KDE Idle Time")
         message("     KIdleTime based user inactivity detection for the auto-away functionality")
     endif (USE_KIDLETIME)
-endif (HAVEKDE4_4)
+endif (HAVEKDE4_4_3)
 
 #looks like the original test is from Kopete, their port doesn't use Xext so neither shall ours
 if (Q_WS_X11 AND NOT HAVE_KIDLETIME)
