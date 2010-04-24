@@ -119,11 +119,8 @@ void AbstractAwayManager::implementIdleAutoAway(bool activity)
 {
     if (activity)
     {
-        // There was activity (this means that we can reset the idle status).
-        resetIdle();
-
-        // Also we un-away all identities which have auto-away and auto-unaway enabled
-        implementManagedUnaway(m_identitiesOnAutoAway);
+        // The user was active. We should un-away all managed identities.
+        setManagedIdentitiesUnaway();
     }
     else
     {
