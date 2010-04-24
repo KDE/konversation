@@ -122,7 +122,7 @@ void OSD_Config::showEvent(QShowEvent*)
     m_pOSDPreview->setAlignment((OSDWidget::Alignment)( kcfg_OSDAlignment->value() ) );
     m_pOSDPreview->setOffset(kcfg_OSDOffsetX->value(),kcfg_OSDOffsetY->value());
 
-    m_pOSDPreview->setVisible(kcfg_UseOSD->isChecked());
+    if (kcfg_UseOSD->isChecked()) m_pOSDPreview->show();
 }
 
 void OSD_Config::hideEvent(QHideEvent*)
@@ -139,7 +139,7 @@ bool OSD_Config::hasChanged()
 void OSD_Config::slotOSDEnabledChanged(bool on)
 {
     if ( isVisible() )
-        m_pOSDPreview->setVisible(on);
+        on ? m_pOSDPreview->show() : m_pOSDPreview->setVisible(false);
 }
 
 void OSD_Config::slotPositionChanged()

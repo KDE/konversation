@@ -343,7 +343,6 @@ OSDPreviewWidget::OSDPreviewWidget( const QString &appName, QWidget *parent, con
     f.setPointSize( 16 );
     setFont( f );
     //setTranslucent( AmarokConfig::osdUseTranslucency() );
-    show( m_currentText );
 }
 
 void OSDPreviewWidget::mousePressEvent( QMouseEvent *event )
