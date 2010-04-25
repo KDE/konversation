@@ -1,4 +1,4 @@
 // This COMMIT number is added to version string to be used as "patch level"
 #ifndef COMMIT
-#define COMMIT 4037
+#define COMMIT 4039
 #endif
