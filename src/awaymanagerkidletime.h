@@ -22,6 +22,12 @@ class AwayManager : public AbstractAwayManager
     public:
         AwayManager(QObject* parent = 0);
 
+        /**
+          * Simulates user activity.
+          * This tells KIdleTime that the user was active. Then the idle-time
+          * calculation is restarted.
+          */
+        virtual void simulateUserActivity();
 
     private slots:
         /**
@@ -56,13 +62,6 @@ class AwayManager : public AbstractAwayManager
           * KIdleTime does not know about them yet.
           */
         void implementAddIdleTimeouts();
-
-        /**
-          * Simulates user activity.
-          * This tells KIdleTime that the user was active. Then the idle-time
-          * calculation is restarted.
-          */
-        virtual void simulateUserActivity();
 
         QList<int> m_idleTimeouts;
 };

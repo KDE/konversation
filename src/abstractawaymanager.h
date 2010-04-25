@@ -46,6 +46,13 @@ class AbstractAwayManager : public QObject
           */
         virtual void setManagedIdentitiesUnaway();
 
+        /**
+          * Simulates user activity. This means the implementation should ensure that the user is only
+          * set away if the idle-timeout has expired.
+          */
+        virtual void simulateUserActivity();
+        
+
         void toggleGlobalAway(bool away);
         void updateGlobalAwayAction(bool away);
 
@@ -77,12 +84,6 @@ class AbstractAwayManager : public QObject
           * NOTE: This method is abstract. If you inherit AbstractAwayManager you need to implement this.
           */
         virtual void identitiesOnAutoAwayChanged() = 0;
-
-        /**
-          * Simulates user activity. This means the implementation should ensure that the user is only
-          * set away if the idle-timeout has expired.
-          */
-        virtual void simulateUserActivity();
 
         /**
           * Resets the internal idle time.
