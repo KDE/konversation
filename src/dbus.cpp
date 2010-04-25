@@ -177,7 +177,12 @@ void DBus::changeAwayStatus(bool away)
         konvApp->getAwayManager()->setManagedIdentitiesUnaway();
 
         // Simulate user activity so the whole idle time calculation
-        // logic is being restarted.
+        // logic is being restarted. This is needed as a DBus call
+        // could be made without any user activity involved. Simulating
+        // user activity then correctly causes the idle-time calculation
+        // to be restarted completely (which means the user will only
+        // get marked as "auto-away" if the configured idle-timeout has
+        // expired).
         konvApp->getAwayManager()->simulateUserActivity();
     }
 }
