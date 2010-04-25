@@ -25,6 +25,15 @@ AwayManager::AwayManager(QObject* parent) : AbstractAwayManager(parent)
     KIdleTime::instance()->catchNextResumeEvent();
 }
 
+void AwayManager::simulateUserActivity()
+{
+    // Tell KIdleTime that it should reset the user's idle status.
+    KIdleTime::instance()->simulateUserActivity();
+
+    // also call the base implementation (so the default logic is executed).
+    AbstractAwayManager::simulateUserActivity();
+}
+
 void AwayManager::implementRemoveUnusedIdleTimeouts()
 {
     const QHash<int, int> idleTimeouts = KIdleTime::instance()->idleTimeouts();
@@ -62,15 +71,6 @@ void AwayManager::implementAddIdleTimeouts()
             // If there's not timer yet we should create a new one.
             KIdleTime::instance()->addIdleTimeout(timeout);
     }
-}
-
-void AwayManager::resetIdle()
-{
-    // Simulate user activity (which resets all idle timers).
-    KIdleTime::instance()->simulateUserActivity();
-
-    // Also call the base implementation.
-    AbstractAwayManager::resetIdle();
 }
 
 void AwayManager::resumeFromIdle()

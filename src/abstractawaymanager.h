@@ -46,6 +46,13 @@ class AbstractAwayManager : public QObject
           */
         virtual void setManagedIdentitiesUnaway();
 
+        /**
+          * Simulates user activity. This means the implementation should ensure
+          * the idle indicators should be reset as if the user did some input
+          * himself.
+          */
+        virtual void simulateUserActivity();
+
         void toggleGlobalAway(bool away);
         void updateGlobalAwayAction(bool away);
 
@@ -77,12 +84,12 @@ class AbstractAwayManager : public QObject
           * NOTE: This method is abstract. If you inherit AbstractAwayManager you need to implement this.
           */
         virtual void identitiesOnAutoAwayChanged() = 0;
-        
+
         /**
-          * Resets the idle status.
-          * This is the base implementation which only resets the internal idleTime
+          * Resets the internal idle time.
+          * NOTE: This does not simulate any user activity.
           */
-        virtual void resetIdle();
+        void resetIdle();
 
         QList<int> m_identitiesOnAutoAway;
 
