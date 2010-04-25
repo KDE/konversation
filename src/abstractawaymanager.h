@@ -51,7 +51,6 @@ class AbstractAwayManager : public QObject
           * set away if the idle-timeout has expired.
           */
         virtual void simulateUserActivity();
-        
 
         void toggleGlobalAway(bool away);
         void updateGlobalAwayAction(bool away);
