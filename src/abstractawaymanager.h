@@ -47,8 +47,9 @@ class AbstractAwayManager : public QObject
         virtual void setManagedIdentitiesUnaway();
 
         /**
-          * Simulates user activity. This means the implementation should ensure that the user is only
-          * set away if the idle-timeout has expired.
+          * Simulates user activity. This means the implementation should ensure
+          * the idle indicators should be reset as if the user did some input
+          * himself.
           */
         virtual void simulateUserActivity();
 
