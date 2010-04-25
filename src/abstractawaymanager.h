@@ -79,10 +79,9 @@ class AbstractAwayManager : public QObject
         virtual void identitiesOnAutoAwayChanged() = 0;
         
         /**
-          * Resets the idle status.
-          * This is the base implementation which only resets the internal idleTime
+          * Resets the internal idle time.
           */
-        virtual void resetIdle();
+        void resetIdle();
 
         QList<int> m_identitiesOnAutoAway;
 

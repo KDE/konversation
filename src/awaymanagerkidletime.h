@@ -57,11 +57,6 @@ class AwayManager : public AbstractAwayManager
           */
         void implementAddIdleTimeouts();
 
-        /**
-          * Resets the idle status (simulates user activity).
-          */
-        virtual void resetIdle();
-
         QList<int> m_idleTimeouts;
 };
 

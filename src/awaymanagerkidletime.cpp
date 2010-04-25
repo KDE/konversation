@@ -64,15 +64,6 @@ void AwayManager::implementAddIdleTimeouts()
     }
 }
 
-void AwayManager::resetIdle()
-{
-    // Simulate user activity (which resets all idle timers).
-    KIdleTime::instance()->simulateUserActivity();
-
-    // Also call the base implementation.
-    AbstractAwayManager::resetIdle();
-}
-
 void AwayManager::resumeFromIdle()
 {
     // We are not idle anymore.
