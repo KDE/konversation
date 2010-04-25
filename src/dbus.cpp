@@ -175,6 +175,10 @@ void DBus::changeAwayStatus(bool away)
     else
     {
         konvApp->getAwayManager()->setManagedIdentitiesUnaway();
+
+        // Simulate user activity so the whole idle time calculation
+        // logic is being restarted.
+        konvApp->getAwayManager()->simulateUserActivity();
     }
 }
 

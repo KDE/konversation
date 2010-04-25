@@ -110,11 +110,8 @@ void AbstractAwayManager::implementManagedUnaway(const QList<int>& identityList)
         }
     }
 
-    // Simulate some user activity so the implementation knows
-    // the user is not away anymore. This means the implementation
-    // should take care of everything needed that the next "auto-away"
-    // only occurs if the idle-timeout configured by the user expires.
-    simulateUserActivity();
+    // Reset the idle status (as the user is not away anymore).
+    resetIdle();
 }
 
 void AbstractAwayManager::setManagedIdentitiesUnaway()
