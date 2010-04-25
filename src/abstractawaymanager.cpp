@@ -34,6 +34,13 @@ void AbstractAwayManager::resetIdle()
     m_idleTime.start();
 }
 
+void AbstractAwayManager::simulateUserActivity()
+{
+    // Since user activity (no matter if simulated or not) means
+    // activity we need to reset the idle status.
+    resetIdle();
+}
+
 void AbstractAwayManager::identitiesChanged()
 {
     QList<int> newIdentityList;
@@ -103,9 +110,11 @@ void AbstractAwayManager::implementManagedUnaway(const QList<int>& identityList)
         }
     }
 
-    // Reset the idle status to indicate that the idle time calculation
-    // should be restarted.
-    resetIdle();
+    // Simulate some user activity so the implementation knows
+    // the user is not away anymore. This means the implementation
+    // should take care of everything needed that the next "auto-away"
+    // only occurs if the idle-timeout configured by the user expires.
+    simulateUserActivity();
 }
 
 void AbstractAwayManager::setManagedIdentitiesUnaway()
@@ -182,8 +191,13 @@ void AbstractAwayManager::updateGlobalAwayAction(bool away)
     // unaway in response to the server until we find a better solu-
     // tion (i.e. a reliable way to let keyboard activity in the sys-
     // tem reset the idle time).
+    // NOTE: This statement is only true for the old implementation
+    // (which does not use KIdleTime).
+    // Regardless of any implementation: If the given parameter indicates
+    // that the user is not away we should simulate user activity to
+    // ensure that the away-status of the user is really reset.
     if (!away)
-        resetIdle();
+        simulateUserActivity();
 
     Application* konvApp = static_cast<Application*>(kapp);
     KToggleAction* awayAction = qobject_cast<KToggleAction*>(konvApp->getMainWindow()->actionCollection()->action("toggle_away"));

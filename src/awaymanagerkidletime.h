@@ -57,6 +57,13 @@ class AwayManager : public AbstractAwayManager
           */
         void implementAddIdleTimeouts();
 
+        /**
+          * Simulates user activity.
+          * This tells KIdleTime that the user was active. Then the idle-time
+          * calculation is restarted.
+          */
+        virtual void simulateUserActivity();
+
         QList<int> m_idleTimeouts;
 };
 
