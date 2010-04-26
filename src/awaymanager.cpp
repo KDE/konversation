@@ -96,11 +96,26 @@ AwayManager::AwayManager(QObject* parent) : AbstractAwayManager(parent)
     m_activityTimer = new QTimer(this);
     m_activityTimer->setObjectName("AwayTimer");
     connect(m_activityTimer, SIGNAL(timeout()), this, SLOT(checkActivity()));
+
+    // Initially reset the idle status.
+    resetIdle();
 }
 
 AwayManager::~AwayManager()
 {
     delete d;
+}
+
+void AwayManager::resetIdle()
+{
+    // Set the time of the idleTimer to the current time.
+    m_idleTime.start();
+}
+
+int AwayManager::idleTime()
+{
+    // Calculate the idle time in seconds.
+    return m_idleTime.elapsed() / 1000;
 }
 
 void AwayManager::setManagedIdentitiesAway()
@@ -136,7 +151,7 @@ void AwayManager::checkActivity()
     rentrencyProtection = false;
 
     if (!isBlanked.isValid() || !isBlanked.value())
-         implementIdleAutoAway(Xactivity());
+        implementIdleAutoAway(Xactivity());
 }
 
 bool AwayManager::Xactivity()

@@ -63,6 +63,17 @@ class AwayManager : public AbstractAwayManager
           */
         void implementAddIdleTimeouts();
 
+        /**
+          * This method does nothing (as KIdleTime itself should know when
+          * to reset the idle status).
+          */
+        virtual void resetIdle();
+
+        /**
+          * Returns the idle time in seconds.
+          */
+        virtual int idleTime();
+
         QList<int> m_idleTimeouts;
 };
 

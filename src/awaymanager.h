@@ -15,6 +15,7 @@
 
 #include "abstractawaymanager.h"
 
+#include <QTime>
 #include <QTimer>
 
 struct AwayManagerPrivate;
@@ -43,10 +44,22 @@ class AwayManager : public AbstractAwayManager
           */
         virtual void identitiesOnAutoAwayChanged();
 
+        /**
+          * Restarts the idle time calculation.
+          */
+        virtual void resetIdle();
+
+        /**
+          * Returns the idle time in seconds.
+          */
+        virtual int idleTime();
+
         bool Xactivity();
 
         QTimer* m_activityTimer;
-        
+
+        QTime m_idleTime;
+
         struct AwayManagerPrivate* d;
 };
 

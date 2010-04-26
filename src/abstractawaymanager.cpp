@@ -23,15 +23,6 @@
 AbstractAwayManager::AbstractAwayManager(QObject* parent) : QObject(parent)
 {
     m_connectionManager = static_cast<Application*>(kapp)->getConnectionManager();
-
-    // Initially reset the idle status.
-    resetIdle();
-}
-
-void AbstractAwayManager::resetIdle()
-{
-    // Set the time of the idleTimer to the current time.
-    m_idleTime.start();
 }
 
 void AbstractAwayManager::simulateUserActivity()
@@ -131,15 +122,14 @@ void AbstractAwayManager::implementIdleAutoAway(bool activity)
     else
     {
         QList<int> identityList;
-        long int idleTime = m_idleTime.elapsed() / 1000;
-
+        
         QList<int>::ConstIterator it;
 
         for (it = m_identitiesOnAutoAway.constBegin(); it != m_identitiesOnAutoAway.constEnd(); ++it)
         {
             // Check if the auto-away timeout (which the user has configured for the given identity)
             // has already elapsed - if it has we add the identity to the list of identities)
-            if (idleTime >= Preferences::identityById((*it))->getAwayInactivity() * 60)
+            if (idleTime() >= Preferences::identityById((*it))->getAwayInactivity() * 60)
                 identityList.append((*it));
         }
 

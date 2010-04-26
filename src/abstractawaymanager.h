@@ -15,7 +15,6 @@
 
 #include <QObject>
 #include <QList>
-#include <QTime>
 
 class ConnectionManager;
 
@@ -86,14 +85,18 @@ class AbstractAwayManager : public QObject
         virtual void identitiesOnAutoAwayChanged() = 0;
 
         /**
-          * Resets the internal idle time.
-          * NOTE: This does not simulate any user activity.
+          * Resets the idle time.
+          * NOTE: This method is abstract. If you inherit AbstractAwayManager you need to implement this.
           */
-        void resetIdle();
+        virtual void resetIdle() = 0;
+
+        /**
+          * Gets the idle time in seconds.
+          * NOTE: This method is abstract. If you inherit AbstractAwayManager you need to implement this.
+          */
+        virtual int idleTime() = 0;
 
         QList<int> m_identitiesOnAutoAway;
-
-        QTime m_idleTime;
 
         ConnectionManager* m_connectionManager;
 };
