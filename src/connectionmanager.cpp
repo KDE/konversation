@@ -271,8 +271,7 @@ void ConnectionManager::handleReconnect(Server* server)
         }
 
         server->getConnectionSettings().incrementReconnectCount();
-
-        QTimer::singleShot(Preferences::self()->reconnectDelay() * 1000, server, SLOT(connectToIRCServer()));
+        server->connectToIRCServerIn(Preferences::self()->reconnectDelay());
     }
     else
         server->getStatusView()->appendServerMessage(i18n("Error"), i18n("Reconnection attempts exceeded."));
@@ -291,7 +290,7 @@ void ConnectionManager::reconnectServers()
     QMap<int, Server*>::ConstIterator it;
 
     for (it = m_connectionList.constBegin(); it != m_connectionList.constEnd(); ++it)
-        it.value()->reconnect();
+        it.value()->reconnectServer();
 }
 
 void ConnectionManager::decodeIrcUrl(const QString& url, ConnectionSettings& settings)
@@ -534,7 +533,7 @@ bool ConnectionManager::reuseExistingConnection(ConnectionSettings& settings, bo
 
             if (result == KMessageBox::Continue)
             {
-                dupe->disconnect();
+                dupe->disconnectServer();
 
                 dupe->setConnectionSettings(settings);
             }
@@ -546,7 +545,7 @@ bool ConnectionManager::reuseExistingConnection(ConnectionSettings& settings, bo
                 dupe->updateAutoJoin(settings.oneShotChannelList());
 
             if (!dupe->isConnecting())
-                dupe->reconnect();
+                dupe->reconnectServer();
         }
         else
         {

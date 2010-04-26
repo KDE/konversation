@@ -68,6 +68,10 @@ Server::Server(QObject* parent, ConnectionSettings& settings) : QObject(parent)
 
     m_connectionState = Konversation::SSNeverConnected;
 
+    m_delayedConnectTimer = new QTimer(this);
+    m_delayedConnectTimer->setSingleShot(true);
+    connect(m_delayedConnectTimer, SIGNAL(timeout()), this, SLOT(connectToIRCServer()));
+
     for (int i=0; i <= Application::instance()->countOfQueues(); i++)
     {
         //QList<int> r=Preferences::queueRate(i);
@@ -245,8 +249,8 @@ void Server::connectSignals()
     connect(getOutputFilter(), SIGNAL(requestDccSend(const QString&)), this, SLOT(requestDccSend(const QString&)), Qt::QueuedConnection);
     connect(getOutputFilter(), SIGNAL(multiServerCommand(const QString&, const QString&)),
         this, SLOT(sendMultiServerCommand(const QString&, const QString&)));
-    connect(getOutputFilter(), SIGNAL(reconnectServer()), this, SLOT(reconnect()));
-    connect(getOutputFilter(), SIGNAL(disconnectServer()), this, SLOT(disconnect()));
+    connect(getOutputFilter(), SIGNAL(reconnectServer()), this, SLOT(reconnectServer()));
+    connect(getOutputFilter(), SIGNAL(disconnectServer()), this, SLOT(disconnectServer()));
     connect(getOutputFilter(), SIGNAL(openDccSend(const QString &, KUrl)), this, SLOT(addDccSend(const QString &, KUrl)), Qt::QueuedConnection);
     connect(getOutputFilter(), SIGNAL(openDccChat(const QString &)), this, SLOT(openDccChat(const QString &)), Qt::QueuedConnection);
     connect(getOutputFilter(), SIGNAL(openDccWBoard(const QString &)), this, SLOT(openDccWBoard(const QString &)), Qt::QueuedConnection);
@@ -432,6 +436,12 @@ void Server::connectToIRCServer()
         kDebug() << "connectToIRCServer() called while already connected: This should never happen.";
 }
 
+void Server::connectToIRCServerIn(uint delay)
+{
+    m_delayedConnectTimer->setInterval(delay * 1000);
+    m_delayedConnectTimer->start();
+}
+
 void Server::showSSLDialog()
 {
         //TODO
@@ -564,7 +574,7 @@ void Server::hostFound()
 
 void Server::ircServerConnectionSuccess()
 {
-        emit sslConnected(this);
+    emit sslConnected(this);
     getConnectionSettings().setReconnectCount(0);
 
     Konversation::ServerSettings serverSettings = getConnectionSettings().server();
@@ -3579,7 +3589,7 @@ void Server::updateConnectionState(Konversation::ConnectionState state)
     }
 }
 
-void Server::reconnect()
+void Server::reconnectServer()
 {
     if (isConnecting() || isSocketConnected()) quitServer();
 
@@ -3590,9 +3600,16 @@ void Server::reconnect()
     QTimer::singleShot(0, this, SLOT(connectToIRCServer()));
 }
 
-//! TODO FIXME this is a QObject....
-void Server::disconnect()
+void Server::disconnectServer()
 {
+    getConnectionSettings().setReconnectCount(0);
+
+    if (m_delayedConnectTimer->isActive())
+    {
+        m_delayedConnectTimer->stop();
+        getStatusView()->appendServerMessage(i18n("Info"), i18n("Delayed connect aborted."));
+    }
+
     if (isSocketConnected()) quitServer();
 }
 
@@ -3951,7 +3968,7 @@ void Server::involuntaryQuit()
 void Server::reconnectInvoluntary()
 {
     if(m_connectionState == Konversation::SSInvoluntarilyDisconnected)
-        reconnect();
+        reconnectServer();
 }
 
 #include "server.moc"

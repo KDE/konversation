@@ -1200,7 +1200,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                         // The user chose to disconnect
                         if (newNick.isNull())
                         {
-                            server->disconnect();
+                            server->disconnectServer();
                         }
                         else
                         {
@@ -1231,7 +1231,7 @@ void InputFilter::parseServerCommand(const QString &prefix, const QString &comma
                         // The user chose to disconnect
                         if (newNick.isNull())
                         {
-                            server->disconnect();
+                            server->disconnectServer();
                         }
                         else
                         {

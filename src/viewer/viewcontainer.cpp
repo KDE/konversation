@@ -2229,7 +2229,7 @@ void ViewContainer::reconnectFrontServer()
     else
         server = m_frontServer;
 
-    if (server) server->reconnect();
+    if (server) server->reconnectServer();
 }
 
 void ViewContainer::disconnectFrontServer()
@@ -2242,7 +2242,7 @@ void ViewContainer::disconnectFrontServer()
         server = m_frontServer;
 
     if (server && server->isConnected())
-        server->disconnect();
+        server->disconnectServer();
 }
 
 void ViewContainer::showJoinChannelDialog()

@@ -94,6 +94,8 @@ Changes since 1.2.3:
   supported in this release) and higher.
 * Not reacting to an SSL certificat validation error dialog in a
   timely manner should no longer result in Konversation locking up.
+* In-progress automatic reconnect in the event of connection failure
+  can now be aborted by using the '/disconnect' command.
 
 
 Changes from 1.2.2 to 1.2.3:

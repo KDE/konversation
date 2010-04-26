@@ -437,6 +437,7 @@ void resetNickSelection();
 
     public slots:
         void connectToIRCServer();
+        void connectToIRCServerIn(uint delay);
 
         /** Adds line to queue if non-empty. */
         bool queue(const QString& line, QueuePriority priority=StandardPriority);
@@ -477,8 +478,8 @@ void resetNickSelection();
         void updateChannelQuickButtons();
         void sendMultiServerCommand(const QString& command, const QString& parameter);
         void executeMultiServerCommand(const QString& command, const QString& parameter);
-        void reconnect();
-        void disconnect(); //FIXME is this overriding a qobject method? do we care?
+        void reconnectServer();
+        void disconnectServer();
         void showSSLDialog();
         void sendToAllChannels(const QString& text);
         void notifyTimeout();
@@ -755,7 +756,7 @@ void resetNickSelection();
 
         /// Creates a list of known users and returns the one chosen by the user
         inline QString recipientNick() const;
-        
+
         /**
           * shows a dialog to the user where he is asked if he wants to
           * ignore SSL certificate errors
@@ -802,6 +803,10 @@ void resetNickSelection();
         QStringList m_prevISONList;
 
         ConnectionSettings m_connectionSettings;
+
+        /// Used by ConnectionManaer to schedule a reconnect; stopped by /disconnect
+        /// and /quit.
+        QTimer* m_delayedConnectTimer;
 
         static int m_availableConnectionId;
         int m_connectionId;
