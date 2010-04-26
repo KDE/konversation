@@ -30,7 +30,7 @@ macro_ensure_version("4.4.3" ${KDE_VERSION} HAVEKDE4_4_3)
 
 if (HAVEKDE4_4_3)
     #let the user chose if he wants to build with KIdleTime support
-    option(USE_KIDLETIME "Use KIdleTime for user inactivity detection." ON)
+    option(USE_KIDLETIME "Use KIdleTime for user inactivity detection." OFF)
     macro_bool_to_01(USE_KIDLETIME HAVE_KIDLETIME)
 
     if (USE_KIDLETIME)
