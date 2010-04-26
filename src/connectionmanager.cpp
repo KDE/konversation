@@ -274,7 +274,10 @@ void ConnectionManager::handleReconnect(Server* server)
         server->connectToIRCServerIn(Preferences::self()->reconnectDelay());
     }
     else
+    {
+        server->getConnectionSettings().setReconnectCount(0);
         server->getStatusView()->appendServerMessage(i18n("Error"), i18n("Reconnection attempts exceeded."));
+    }
 }
 
 void ConnectionManager::quitServers()

@@ -96,6 +96,13 @@ Changes since 1.2.3:
   timely manner should no longer result in Konversation locking up.
 * In-progress automatic reconnect in the event of connection failure
   can now be aborted by using the '/disconnect' command.
+* Manually issueing a reconnect order to a connection currently in-
+  active after having exceeded its maximum number of reconnection
+  attempts used to result in a single connection attempt after
+  which it would be announced that the maximum number of reconnect-
+  ion attempts had been exceeded again. This has been fixed: It will
+  now make the number of attempts specified as the upper limit in
+  the application settings.
 
 
 Changes from 1.2.2 to 1.2.3:
