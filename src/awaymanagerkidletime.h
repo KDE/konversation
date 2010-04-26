@@ -47,21 +47,9 @@ class AwayManager : public AbstractAwayManager
         /**
           * The list of identities which have auto-away enabled has changed.
           * This handles the (de-)registration of KIdleTimers.
+          * TODO: Fix apidox.
           */
         virtual void identitiesOnAutoAwayChanged();
-
-        /**
-          * Removes unneeded timeouts (for example after a user changed the
-          * auto-away time) from KIdleTime. Only timeouts which are still needed
-          * (= which are still in the idle timeout list) are kept.
-          */
-        void implementRemoveUnusedIdleTimeouts();
-
-        /**
-          * Adds all timeouts (from the idle timeout list) to KIdleTime if
-          * KIdleTime does not know about them yet.
-          */
-        void implementAddIdleTimeouts();
 
         /**
           * This method does nothing (as KIdleTime itself should know when
@@ -73,9 +61,6 @@ class AwayManager : public AbstractAwayManager
           * Returns the idle time in seconds.
           */
         virtual int idleTime();
-
-        QList<int> m_idleTimeouts;
 };
 
 #endif
-

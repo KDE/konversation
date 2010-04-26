@@ -47,45 +47,6 @@ void AwayManager::simulateUserActivity()
     AbstractAwayManager::simulateUserActivity();
 }
 
-void AwayManager::implementRemoveUnusedIdleTimeouts()
-{
-    const QHash<int, int> idleTimeouts = KIdleTime::instance()->idleTimeouts();
-
-    if (idleTimeouts.count() > 0)
-    {
-        QHash<int, int>::ConstIterator it;
-
-        // Loop through the list of all KIdleTimers.
-        for (it = idleTimeouts.constBegin(); it != idleTimeouts.constEnd(); ++it)
-        {
-            int timeout = it.value();
-
-            // Check if the list with all idle timeouts does not contain the current timeout.
-            if (!m_idleTimeouts.contains(timeout))
-            {
-                int timerId = it.key();
-
-                // Then we need to remove it from KIdleTime.
-                KIdleTime::instance()->removeIdleTimeout(timerId);
-            }
-        }
-    }
-}
-
-void AwayManager::implementAddIdleTimeouts()
-{
-    foreach (int timeout, m_idleTimeouts)
-    {
-        // Get the timerId for the given timeout.
-        int timerId = KIdleTime::instance()->idleTimeouts().key(timeout, -1);
-
-        // Check if there's already a timer with the given timeout.
-        if (timerId == -1)
-            // If there's not timer yet we should create a new one.
-            KIdleTime::instance()->addIdleTimeout(timeout);
-    }
-}
-
 void AwayManager::resumeFromIdle()
 {
     // We are not idle anymore.
@@ -107,27 +68,40 @@ void AwayManager::identitiesOnAutoAwayChanged()
 {
     const QList<Server*> serverList = m_connectionManager->getServerList();
 
-    // Clear the list of idle timeouts (this will ensure that only timeouts
-    // which are actually used by any identity are in the list).
-    m_idleTimeouts.clear();
+    KIdleTime::instance()->removeAllIdleTimeouts();
 
     foreach (Server* server, serverList)
     {
-        IdentityPtr identity = server->getIdentity();
+        // TODO: Move the whole block into a separate method (maybe into multiple
+        // methods). Also check if we have to call catchNextResumeEvent() somewhere.
 
         // The idle timeout for the current identity in ms.
         int identityIdleTimeout = identity->getAwayInactivity() * 60 * 1000;
 
-        // Check if we still need to add the idle timeout to our list.
-        if (!m_idleTimeouts.contains(identityIdleTimeout))
-            m_idleTimeouts.append(identityIdleTimeout);
+        // The current idle time in ms.
+        int currentIdleTime = idleTime() * 1000;
+
+        // The remaining time until the user will be marked as "auto-away".
+        int remainingTime = identityIdleTimeout - currentIdleTime;
+
+        // Check if the user should be away right now.
+        if (remainingTime <= 0)
+        {
+            // Mark him away right now.
+            implementIdleAutoAway(false);
+        }
+        else
+        {
+            // Get the timerId for the timeout with the remaining time.
+            int timerId = KIdleTime::instance()->idleTimeouts().key(remainingTime, -1);
+
+            // Check if there's already a timer with the remaining time (we might have more
+            // identities with the same remaining time so this is necessary).
+            if (timerId == -1)
+                // If there's not timer yet we should create a new one.
+                KIdleTime::instance()->addIdleTimeout(remainingTime);
+        }
     }
-
-    // Add all used idle timeouts (if necessary).
-    implementAddIdleTimeouts();
-
-    // Remove all unused timeouts.
-    implementRemoveUnusedIdleTimeouts();
 }
 
 #include "awaymanagerkidletime.moc"
