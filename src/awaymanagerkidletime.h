@@ -67,3 +67,4 @@ class AwayManager : public AbstractAwayManager
 };
 
 #endif
+
