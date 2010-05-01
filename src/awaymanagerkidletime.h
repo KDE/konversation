@@ -34,13 +34,13 @@ class AwayManager : public AbstractAwayManager
     private slots:
         /**
           * Called as soon as the user does some input (after he was away).
+          * This will also ensure that the next idle timeout is exactly
+          * the one which the user has configured for the identity.
           */
         void resumeFromIdle();
 
         /**
           * The timer with the given ID has reached it's timeout.
-          * This will also ensure that the next idle timeout is exactly
-          * the one which the user has configured for the identity.
           *
           * @param timerId the ID of the KIdleTimer
           */

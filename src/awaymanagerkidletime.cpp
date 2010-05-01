@@ -21,7 +21,8 @@ AwayManager::AwayManager(QObject* parent) : AbstractAwayManager(parent)
     connect(KIdleTime::instance(), SIGNAL(resumingFromIdle()), this, SLOT(resumeFromIdle()));
     connect(KIdleTime::instance(), SIGNAL(timeoutReached(int)), this, SLOT(idleTimeoutReached(int)));
 
-    // Catch the first "resume event" (= user input).
+    // Catch the first "resume event" (= user input) so we correctly catch the first
+    // resume event in case the user is already idle on startup).
     KIdleTime::instance()->catchNextResumeEvent();
 }
 
@@ -75,6 +76,16 @@ void AwayManager::resumeFromIdle()
 {
     // We are not idle anymore.
     setManagedIdentitiesUnaway();
+
+    foreach (int identityId, m_identitiesOnAutoAway)
+        // Update the idle timeout for the identity to the configured timeout.
+        // This is needed in case the timer is not set to fire after the full
+        // away time but a shorter time (for example if the user was away on startup
+        // we want the timer to fire after "configured away-time" minus "time the user
+        // is already idle"). Then the timer's interval is wrong.
+        // Now (if needed) we simply remove the old timer and add a new one with the
+        // correct interval.
+        implementUpdateIdleTimeout(identityId, m_identityAutoAwayTimes[identityId]);
 }
 
 void AwayManager::idleTimeoutReached(int timerId)
@@ -87,9 +98,6 @@ void AwayManager::idleTimeoutReached(int timerId)
 
     // Since we're away we now need to watch for resume events (keyboard input, etc).
     KIdleTime::instance()->catchNextResumeEvent();
-
-    // Update the idle timeout for the identity to the configured timeout.
-    implementUpdateIdleTimeout(identityId, m_identityAutoAwayTimes[identityId]);
 }
 
 void AwayManager::identitiesOnAutoAwayChanged()
