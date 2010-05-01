@@ -53,7 +53,7 @@ class AbstractAwayManager : public QObject
           */
         virtual void simulateUserActivity() = 0;
 
-        void toggleGlobalAway(bool away);
+        void setGlobalAway(bool away);
         void updateGlobalAwayAction(bool away);
 
 

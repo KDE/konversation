@@ -121,7 +121,7 @@ void AbstractAwayManager::requestAllUnaway()
             server->requestUnaway();
 }
 
-void AbstractAwayManager::toggleGlobalAway(bool away)
+void AbstractAwayManager::setGlobalAway(bool away)
 {
     if (away)
         requestAllAway();
