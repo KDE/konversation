@@ -63,12 +63,6 @@ void AbstractAwayManager::identityOffline(int identityId)
         identitiesOnAutoAwayChanged();
 }
 
-void AbstractAwayManager::implementManagedAway(const QList<int>& identityList)
-{
-    foreach (int identityId, identityList)
-        implementManagedAway(identityId);
-}
-
 void AbstractAwayManager::implementManagedAway(int identityId)
 {
     const QList<Server*> serverList = m_connectionManager->getServerList();
@@ -82,7 +76,8 @@ void AbstractAwayManager::implementManagedAway(int identityId)
 
 void AbstractAwayManager::setManagedIdentitiesAway()
 {
-    implementManagedAway(m_identitiesOnAutoAway);
+    foreach (int identityId, m_identitiesOnAutoAway)
+        implementManagedAway(identityId);
 }
 
 void AbstractAwayManager::implementManagedUnaway(const QList<int>& identityList)
