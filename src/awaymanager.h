@@ -52,7 +52,7 @@ class AwayManager : public AbstractAwayManager
         /**
           * Returns the idle time in seconds.
           */
-        virtual int idleTime();
+        int idleTime();
 
         /**
           * Decides which identities should be marked as "away".

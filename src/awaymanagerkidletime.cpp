@@ -72,12 +72,6 @@ void AwayManager::resetIdle()
     // reset the idle time)
 }
 
-int AwayManager::idleTime()
-{
-    // Calculate the idle time in seconds.
-    return KIdleTime::instance()->idleTime() / 1000;
-}
-
 void AwayManager::simulateUserActivity()
 {
     // Tell KIdleTime that it should reset the user's idle status.
@@ -120,11 +114,8 @@ void AwayManager::identitiesOnAutoAwayChanged()
         // The idle timeout for the current identity in ms.
         int identityIdleTimeout = identity->getAwayInactivity() * 60 * 1000;
 
-        // The current idle time in ms.
-        int currentIdleTime = idleTime() * 1000;
-
         // The remaining time until the user will be marked as "auto-away".
-        int remainingTime = identityIdleTimeout - currentIdleTime;
+        int remainingTime = identityIdleTimeout - KIdleTime::instance()->idleTime();
 
         // Check if the user should be away right now.
         if (remainingTime <= 0)

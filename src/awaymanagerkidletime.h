@@ -62,11 +62,6 @@ class AwayManager : public AbstractAwayManager
         virtual void resetIdle();
 
         /**
-          * Returns the idle time in seconds.
-          */
-        virtual int idleTime();
-
-        /**
           * Updates the KIdleTime timer for the given identity.
           * If there is no timer for the identity yet it will be created.
           * In case the auto-away time has changed this will update the
