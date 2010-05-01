@@ -25,13 +25,6 @@ AbstractAwayManager::AbstractAwayManager(QObject* parent) : QObject(parent)
     m_connectionManager = static_cast<Application*>(kapp)->getConnectionManager();
 }
 
-void AbstractAwayManager::simulateUserActivity()
-{
-    // Since user activity (no matter if simulated or not) means
-    // activity we need to reset the idle status.
-    resetIdle();
-}
-
 void AbstractAwayManager::identitiesChanged()
 {
     QList<int> newIdentityList;

@@ -76,9 +76,6 @@ void AwayManager::simulateUserActivity()
 {
     // Tell KIdleTime that it should reset the user's idle status.
     KIdleTime::instance()->simulateUserActivity();
-
-    // also call the base implementation (so the default logic is executed).
-    AbstractAwayManager::simulateUserActivity();
 }
 
 void AwayManager::resumeFromIdle()

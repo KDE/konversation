@@ -51,8 +51,9 @@ class AbstractAwayManager : public QObject
           * Simulates user activity. This means the implementation should ensure
           * the idle indicators should be reset as if the user did some input
           * himself.
+          * NOTE: This method is abstract. If you inherit AbstractAwayManager you need to implement this.
           */
-        virtual void simulateUserActivity();
+        virtual void simulateUserActivity() = 0;
 
         void toggleGlobalAway(bool away);
         void updateGlobalAwayAction(bool away);

@@ -106,6 +106,11 @@ AwayManager::~AwayManager()
     delete d;
 }
 
+void AwayManager::simulateUserActivity()
+{
+    resetIdle();
+}
+
 void AwayManager::resetIdle()
 {
     // Set the time of the idleTimer to the current time.

@@ -28,6 +28,11 @@ class AwayManager : public AbstractAwayManager
         AwayManager(QObject* parent = 0);
         ~AwayManager();
 
+        /**
+          * Simulates user activity. This simply resets the idle status.
+          */
+        virtual void simulateUserActivity();
+
 
     public slots:
         virtual void setManagedIdentitiesAway();
