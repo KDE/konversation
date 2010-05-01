@@ -90,26 +90,22 @@ void AwayManager::simulateUserActivity()
 void AwayManager::resumeFromIdle()
 {
     // We are not idle anymore.
-    implementIdleAutoAway(true);
+    setManagedIdentitiesUnaway();
 }
 
 void AwayManager::idleTimeoutReached(int timerId)
 {
-    // Check which identities are away now.
-    implementIdleAutoAway(false);
+    // Get the identity ID for the given timer ID.
+    int identityId = m_timerForIdentity[timerId];
+
+    // Mark the identity as away.
+    implementManagedAway(identityId);
 
     // Since we're away we now need to watch for resume events (keyboard input, etc).
     KIdleTime::instance()->catchNextResumeEvent();
 
-    // Get the identity ID for the given timer ID.
-    int identityId = m_timerForIdentity[timerId];
-
-    // Then get the configured idle timeout for the identity.
-    int identityIdleTimeout = m_identityAutoAwayTimes[identityId];
-
-    // Update the idle timeout for the identity to the identities
-    // configured idle timeout.
-    implementUpdateIdleTimeout(identityId, identityIdleTimeout);
+    // Update the idle timeout for the identity to the configured timeout.
+    implementUpdateIdleTimeout(identityId, m_identityAutoAwayTimes[identityId]);
 }
 
 void AwayManager::identitiesOnAutoAwayChanged()
@@ -133,8 +129,8 @@ void AwayManager::identitiesOnAutoAwayChanged()
         // Check if the user should be away right now.
         if (remainingTime <= 0)
         {
-            // Mark him away right now.
-            implementIdleAutoAway(false);
+            // Mark the current identity as away.
+            implementManagedAway(identityId);
 
             // As at least one identity is away we have to catch the next
             // resume event.

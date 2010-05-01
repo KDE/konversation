@@ -54,6 +54,11 @@ class AwayManager : public AbstractAwayManager
           */
         virtual int idleTime();
 
+        /**
+          * Decides which identities should be marked as "away".
+          */
+        void implementIdleAutoAway();
+
         bool Xactivity();
 
         QTimer* m_activityTimer;

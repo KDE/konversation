@@ -151,7 +151,15 @@ void AwayManager::checkActivity()
     rentrencyProtection = false;
 
     if (!isBlanked.isValid() || !isBlanked.value())
-        implementIdleAutoAway(Xactivity());
+    {
+        // If there was activity we un-away all identities.
+        // Otherwise we set all identities to away (if they
+        // were idle long enough).
+        if (Xactivity())
+            setManagedIdentitiesUnaway();
+        else
+            implementIdleAutoAway();
+    }
 }
 
 bool AwayManager::Xactivity()
@@ -216,6 +224,19 @@ bool AwayManager::Xactivity()
 #endif
 
     return activity;
+}
+
+void AwayManager::implementIdleAutoAway()
+{
+    QList<int>::ConstIterator it;
+
+    for (it = m_identitiesOnAutoAway.constBegin(); it != m_identitiesOnAutoAway.constEnd(); ++it)
+    {
+        // Check if the auto-away timeout (which the user has configured for the given identity)
+        // has already elapsed - if it has we mark the identity as away.
+        if (idleTime() >= Preferences::identityById((*it))->getAwayInactivity() * 60)
+            implementManagedAway(*it);
+    }
 }
 
 #include "awaymanager.moc"

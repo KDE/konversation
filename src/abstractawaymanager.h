@@ -13,6 +13,8 @@
 #ifndef ABSTRACTAWAYMANAGER_H
 #define ABSTRACTAWAYMANAGER_H
 
+#include "identity.h"
+
 #include <QObject>
 #include <QList>
 
@@ -63,20 +65,20 @@ class AbstractAwayManager : public QObject
           * @param identityList a list of identitiy IDs which will be marked as away
           */
         void implementManagedAway(const QList<int>& identityList);
-        
+
+        /**
+          * Marks the given identity as away if it has auto-away enabled.
+          *
+          * @param identityId the ID of the identity.
+          */
+        void implementManagedAway(int identityId);
+
         /**
           * Marks all given identities as "not away" if they have automatic un-away enabled.
           *
           * @param identityList a list of identitiy IDs which will be marked as "not away"
           */
         void implementManagedUnaway(const QList<int>& identityList);
-        
-        /**
-          * Decides which identities should be marked as "away" and which should be marked as "un-away".
-          *
-          * @param activity decides if the user was active or if he is idle
-          */
-        void implementIdleAutoAway(bool activity);
 
         /**
           * Called when the list of identities which have auto-away enabled has changed.

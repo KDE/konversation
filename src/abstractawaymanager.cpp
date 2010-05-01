@@ -72,11 +72,17 @@ void AbstractAwayManager::identityOffline(int identityId)
 
 void AbstractAwayManager::implementManagedAway(const QList<int>& identityList)
 {
+    foreach (int identityId, identityList)
+        implementManagedAway(identityId);
+}
+
+void AbstractAwayManager::implementManagedAway(int identityId)
+{
     const QList<Server*> serverList = m_connectionManager->getServerList();
-    
+
     foreach (Server* server, serverList)
     {
-        if (identityList.contains(server->getIdentity()->id()) && server->isConnected() && !server->isAway())
+        if (server->getIdentity()->id() == identityId && server->isConnected() && !server->isAway())
             server->requestAway();
     }
 }
@@ -110,32 +116,6 @@ void AbstractAwayManager::setManagedIdentitiesUnaway()
     // Set the "not away" status for all identities which have
     // auto-away enabled.
     implementManagedUnaway(m_identitiesOnAutoAway);
-}
-
-void AbstractAwayManager::implementIdleAutoAway(bool activity)
-{
-    if (activity)
-    {
-        // The user was active. We should un-away all managed identities.
-        setManagedIdentitiesUnaway();
-    }
-    else
-    {
-        QList<int> identityList;
-        
-        QList<int>::ConstIterator it;
-
-        for (it = m_identitiesOnAutoAway.constBegin(); it != m_identitiesOnAutoAway.constEnd(); ++it)
-        {
-            // Check if the auto-away timeout (which the user has configured for the given identity)
-            // has already elapsed - if it has we add the identity to the list of identities)
-            if (idleTime() >= Preferences::identityById((*it))->getAwayInactivity() * 60)
-                identityList.append((*it));
-        }
-
-        // Mark all identities from the list as "away".
-        implementManagedAway(identityList);
-    }
 }
 
 void AbstractAwayManager::requestAllAway(const QString& reason)
