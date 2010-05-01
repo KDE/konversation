@@ -13,8 +13,6 @@
 #ifndef ABSTRACTAWAYMANAGER_H
 #define ABSTRACTAWAYMANAGER_H
 
-#include "identity.h"
-
 #include <QObject>
 #include <QList>
 
