@@ -87,10 +87,10 @@ class AbstractAwayManager : public QObject
         virtual void identitiesOnAutoAwayChanged() = 0;
 
         /**
-          * Gets the idle time in seconds.
+          * Resets the idle time.
           * NOTE: This method is abstract. If you inherit AbstractAwayManager you need to implement this.
           */
-        virtual int idleTime() = 0;
+        virtual void resetIdle() = 0;
 
         QList<int> m_identitiesOnAutoAway;
 
