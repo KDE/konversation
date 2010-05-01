@@ -37,8 +37,6 @@ class ConnectionManager : public QObject
         Server* getServerByName(const QString& name);
         Server* getAnyServer();
 
-        void toggleGlobalAway();
-
 
     public slots:
         void connectTo(Konversation::ConnectionFlag flag,
