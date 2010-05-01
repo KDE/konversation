@@ -26,7 +26,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${KD
 macro_ensure_version("4.3.80" ${KDE_VERSION} HAVEKDE4_4)
 
 #check for KDE greater than 4.4.3 (usable version of KIdleTime)
-macro_ensure_version("4.4.3" ${KDE_VERSION} HAVEKDE4_4_3)
+macro_ensure_version("4.4.2" ${KDE_VERSION} HAVEKDE4_4_3)
 
 if (HAVEKDE4_4_3)
     #let the user chose if he wants to build with KIdleTime support

@@ -15,6 +15,8 @@
 
 #include "abstractawaymanager.h"
 
+#include <QHash>
+
 class AwayManager : public AbstractAwayManager
 {
     Q_OBJECT
@@ -37,6 +39,8 @@ class AwayManager : public AbstractAwayManager
 
         /**
           * The timer with the given ID has reached it's timeout.
+          * This will also ensure that the next idle timeout is exactly
+          * the one which the user has configured for the identity.
           *
           * @param timerId the ID of the KIdleTimer
           */
@@ -46,8 +50,8 @@ class AwayManager : public AbstractAwayManager
     private:
         /**
           * The list of identities which have auto-away enabled has changed.
-          * This handles the (de-)registration of KIdleTimers.
-          * TODO: Fix apidox.
+          * This calculates the remaining time per identity until the
+          * identity will automatically become "away".
           */
         virtual void identitiesOnAutoAwayChanged();
 
@@ -61,6 +65,29 @@ class AwayManager : public AbstractAwayManager
           * Returns the idle time in seconds.
           */
         virtual int idleTime();
+
+        /**
+          * Updates the KIdleTime timer for the given identity.
+          * If there is no timer for the identity yet it will be created.
+          * In case the auto-away time has changed this will update the
+          * KIdleTime timers (and the internal identity <-> timer mapping).
+          *
+          * @param identityId the ID of the identity for which the idle timeout
+          *                   should be updated
+          * @param msec the idle time in milliseconds
+          */
+        void implementUpdateIdleTimeout(int identityId, int idleTime);
+
+        /**
+          * A mapping between KIdleTime timer IDs (key) and identity IDs (value).
+          */
+        QHash<int, int> m_timerForIdentity;
+
+        /**
+          * A list of identity IDs and their corresponding auto-away times (in
+          * milliseconds).
+          */
+        QHash<int, int> m_identityAutoAwayTimes;
 };
 
 #endif
