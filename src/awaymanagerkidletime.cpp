@@ -74,6 +74,7 @@ void AwayManager::identitiesOnAutoAwayChanged()
     {
         // TODO: Move the whole block into a separate method (maybe into multiple
         // methods). Also check if we have to call catchNextResumeEvent() somewhere.
+        IdentityPtr identity = server->getIdentity();
 
         // The idle timeout for the current identity in ms.
         int identityIdleTimeout = identity->getAwayInactivity() * 60 * 1000;
