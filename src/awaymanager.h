@@ -42,7 +42,7 @@ class AwayManager : public AbstractAwayManager
         void checkActivity();
 
 
-    private:
+    protected:
         /**
           * The list of identities which have auto-away enabled has changed.
           * This starts or stops the timer (depending on what's needed).
@@ -52,7 +52,7 @@ class AwayManager : public AbstractAwayManager
         /**
           * Restarts the idle time calculation.
           */
-        virtual void resetIdle();
+        void resetIdle();
 
         /**
           * Returns the idle time in seconds.
@@ -66,6 +66,16 @@ class AwayManager : public AbstractAwayManager
 
         bool Xactivity();
 
+        /**
+          * Marks all given identities as "not away" if they have automatic un-away enabled.
+          * Also resets the idle status.
+          *
+          * @param identityList a list of identitiy IDs which will be marked as "not away"
+          */
+        virtual void implementManagedUnaway(const QList<int>& identityList);
+
+
+    private:
         QTimer* m_activityTimer;
 
         QTime m_idleTime;

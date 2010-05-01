@@ -244,4 +244,13 @@ void AwayManager::implementIdleAutoAway()
     }
 }
 
+void AwayManager::implementManagedUnaway(const QList<int>& identityList)
+{
+    // Call the base implementation (which does all workflow logic).
+    AbstractAwayManager::implementManagedUnaway(identityList);
+
+    // Then reset the idle status as the user is not idle anymore.
+    resetIdle();
+}
+
 #include "awaymanager.moc"

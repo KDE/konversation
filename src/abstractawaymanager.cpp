@@ -99,9 +99,6 @@ void AbstractAwayManager::implementManagedUnaway(const QList<int>& identityList)
             server->requestUnaway();
         }
     }
-
-    // Reset the idle status (as the user is not away anymore).
-    resetIdle();
 }
 
 void AbstractAwayManager::setManagedIdentitiesUnaway()

@@ -76,22 +76,17 @@ class AbstractAwayManager : public QObject
 
         /**
           * Marks all given identities as "not away" if they have automatic un-away enabled.
+          * NOTE: The virtual keyword can be removed when removing the old AwayManager.
           *
           * @param identityList a list of identitiy IDs which will be marked as "not away"
           */
-        void implementManagedUnaway(const QList<int>& identityList);
+        virtual void implementManagedUnaway(const QList<int>& identityList);
 
         /**
           * Called when the list of identities which have auto-away enabled has changed.
           * NOTE: This method is abstract. If you inherit AbstractAwayManager you need to implement this.
           */
         virtual void identitiesOnAutoAwayChanged() = 0;
-
-        /**
-          * Resets the idle time.
-          * NOTE: This method is abstract. If you inherit AbstractAwayManager you need to implement this.
-          */
-        virtual void resetIdle() = 0;
 
         QList<int> m_identitiesOnAutoAway;
 

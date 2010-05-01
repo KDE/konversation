@@ -65,13 +65,6 @@ void AwayManager::implementUpdateIdleTimeout(int identityId, int idleTime)
     }
 }
 
-void AwayManager::resetIdle()
-{
-    // The KIdleTime based implementation does not need to
-    // do anything here (it should know itself it has to 
-    // reset the idle time)
-}
-
 void AwayManager::simulateUserActivity()
 {
     // Tell KIdleTime that it should reset the user's idle status.

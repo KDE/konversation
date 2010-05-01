@@ -56,12 +56,6 @@ class AwayManager : public AbstractAwayManager
         virtual void identitiesOnAutoAwayChanged();
 
         /**
-          * This method does nothing (as KIdleTime itself should know when
-          * to reset the idle status).
-          */
-        virtual void resetIdle();
-
-        /**
           * Updates the KIdleTime timer for the given identity.
           * If there is no timer for the identity yet it will be created.
           * In case the auto-away time has changed this will update the
