@@ -50,10 +50,43 @@ class AwayManager : public AbstractAwayManager
     private:
         /**
           * The list of identities which have auto-away enabled has changed.
-          * This calculates the remaining time per identity until the
-          * identity will automatically become "away".
+          * This first drops all active idle timers. Then it triggers recalculation
+          * of all idle timers for all identities which have auto-away enabled.
           */
         virtual void identitiesOnAutoAwayChanged();
+
+        /**
+          * An identity which has auto-away enabled went offline.
+          * Triggers the recalculation of the auto-away timer of the identity.
+          *
+          * @param identityId the ID of the identity which just went offline
+          */
+        virtual void identityOnAutoAwayWentOnline(int identityId);
+
+        /**
+          * An identity which has auto-away enabled went offline.
+          * Stops the idle timer corresponding to the given identity.
+          *
+          * @param identityId the ID of the identity which just went offline
+          */
+        virtual void identityOnAutoAwayWentOffline(int identityId);
+
+        /**
+          * Creates a new idle timer for the given identity with the given
+          * idle time. Also adds the timer to the identity <-> timer mapping.
+          *
+          * @param identityId the ID of the identity for which the timer is
+          * @param idleTime the interval of the idle timer
+          */
+        void implementAddIdleTimeout(int identityId, int idleTime);
+
+        /**
+          * Removes the timer with the given ID. Also removes the timer from the
+          * identity <-> timer mapping.
+          *
+          * @param timerId the ID of the timer which should be rmoved.
+          */
+        void implementRemoveIdleTimeout(int timerId);
 
         /**
           * Updates the KIdleTime timer for the given identity.
@@ -63,20 +96,29 @@ class AwayManager : public AbstractAwayManager
           *
           * @param identityId the ID of the identity for which the idle timeout
           *                   should be updated
-          * @param msec the idle time in milliseconds
           */
-        void implementUpdateIdleTimeout(int identityId, int idleTime);
+        void implementUpdateIdleTimeout(int identityId);
+
+        /**
+          * Calculates the remaining time until the idle time has elapsed.
+          *
+          * @param identityId the identity for which the remaining time should
+          *                   get calculated
+          */
+        int calculateRemainingTime(int identityId);
+
+        /**
+          * Marks the given identity as away. Also starts catching KIdleTime
+          * resume events.
+          *
+          * @param identityId the identity which should be marked as away
+          */
+        void implementMarkIdentityAway(int identityId);
 
         /**
           * A mapping between KIdleTime timer IDs (key) and identity IDs (value).
           */
         QHash<int, int> m_timerForIdentity;
-
-        /**
-          * A list of identity IDs and their corresponding auto-away times (in
-          * milliseconds).
-          */
-        QHash<int, int> m_identityAutoAwayTimes;
 };
 
 #endif

@@ -55,7 +55,7 @@ class AwayManager : public AbstractAwayManager
         void resetIdle();
 
         /**
-          * Returns the idle time in seconds.
+          * Returns the idle time in milliseconds.
           */
         int idleTime();
 
@@ -74,6 +74,19 @@ class AwayManager : public AbstractAwayManager
           */
         virtual void implementManagedUnaway(const QList<int>& identityList);
 
+        /**
+          * An identity which has auto-away enabled went online.
+          *
+          * @param identityId the ID of the identity which just went online
+          */
+        virtual void identityOnAutoAwayWentOnline(int identityId);
+
+        /**
+          * An identity which has auto-away enabled went offline.
+          *
+          * @param identityId the ID of the identity which just went offline
+          */
+        virtual void identityOnAutoAwayWentOffline(int identityId);
 
     private:
         QTimer* m_activityTimer;

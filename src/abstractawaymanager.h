@@ -14,7 +14,7 @@
 #define ABSTRACTAWAYMANAGER_H
 
 #include <QObject>
-#include <QList>
+#include <QHash>
 
 class ConnectionManager;
 
@@ -59,6 +59,13 @@ class AbstractAwayManager : public QObject
 
     protected:
         /**
+          * Converts the given minutes to milliseconds.
+          *
+          * @param minutes the number of minutes
+          */
+        static int minutesToMilliseconds(int minutes);
+
+        /**
           * Marks the given identity as away if it has auto-away enabled.
           *
           * @param identityId the ID of the identity.
@@ -79,7 +86,27 @@ class AbstractAwayManager : public QObject
           */
         virtual void identitiesOnAutoAwayChanged() = 0;
 
-        QList<int> m_identitiesOnAutoAway;
+        /**
+          * An identity which has auto-away enabled went online.
+          * NOTE: This method is abstract. If you inherit AbstractAwayManager you need to implement this.
+          *
+          * @param identityId the ID of the identity which just went online
+          */
+        virtual void identityOnAutoAwayWentOnline(int identityId) = 0;
+
+        /**
+          * An identity which has auto-away enabled went offline.
+          * NOTE: This method is abstract. If you inherit AbstractAwayManager you need to implement this.
+          *
+          * @param identityId the ID of the identity which just went offline
+          */
+        virtual void identityOnAutoAwayWentOffline(int identityId) = 0;
+
+        /**
+          * A list of identity IDs and their corresponding auto-away times (in
+          * milliseconds).
+          */
+        QHash<int, int> m_idetitiesWithIdleTimesOnAutoAway;
 
         ConnectionManager* m_connectionManager;
 };

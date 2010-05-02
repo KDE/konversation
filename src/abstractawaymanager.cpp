@@ -25,21 +25,30 @@ AbstractAwayManager::AbstractAwayManager(QObject* parent) : QObject(parent)
     m_connectionManager = static_cast<Application*>(kapp)->getConnectionManager();
 }
 
+int AbstractAwayManager::minutesToMilliseconds(int minutes)
+{
+    return minutes * 60 * 1000;
+}
+
 void AbstractAwayManager::identitiesChanged()
 {
-    QList<int> newIdentityList;
+    QHash<int, int> newIdentityWithIdleTimeMapping;
 
     const QList<Server*> serverList = m_connectionManager->getServerList();
 
     foreach (Server* server, serverList)
     {
         IdentityPtr identity = server->getIdentity();
+        int identityId = identity->id();
+
+        // Calculate the auto-away time in milliseconds.
+        int identityIdleTime = minutesToMilliseconds(identity->getAwayInactivity());
 
         if (identity && identity->getAutomaticAway() && server->isConnected())
-            newIdentityList.append(identity->id());
+            newIdentityWithIdleTimeMapping[identityId] = identityIdleTime;
     }
 
-    m_identitiesOnAutoAway = newIdentityList;
+    m_idetitiesWithIdleTimesOnAutoAway = newIdentityWithIdleTimeMapping;
 
     identitiesOnAutoAwayChanged();
 }
@@ -49,18 +58,20 @@ void AbstractAwayManager::identityOnline(int identityId)
     IdentityPtr identity = Preferences::identityById(identityId);
 
     if (identity && identity->getAutomaticAway() &&
-        !m_identitiesOnAutoAway.contains(identityId))
+        !m_idetitiesWithIdleTimesOnAutoAway.contains(identityId))
     {
-        m_identitiesOnAutoAway.append(identityId);
+        m_idetitiesWithIdleTimesOnAutoAway[identityId] = minutesToMilliseconds(identity->getAwayInactivity());
 
-        identitiesOnAutoAwayChanged();
+        // Notify the AwayManager implementation that a user which has auto-away enabled is not online.
+        identityOnAutoAwayWentOnline(identityId);
     }
 }
 
 void AbstractAwayManager::identityOffline(int identityId)
 {
-    if (m_identitiesOnAutoAway.removeOne(identityId))
-        identitiesOnAutoAwayChanged();
+    if (m_idetitiesWithIdleTimesOnAutoAway.remove(identityId))
+        // Notify the AwayManager implementation that a user which has auto-away enabled is now offline.
+        identityOnAutoAwayWentOffline(identityId);
 }
 
 void AbstractAwayManager::implementManagedAway(int identityId)
@@ -76,8 +87,10 @@ void AbstractAwayManager::implementManagedAway(int identityId)
 
 void AbstractAwayManager::setManagedIdentitiesAway()
 {
-    foreach (int identityId, m_identitiesOnAutoAway)
-        implementManagedAway(identityId);
+    QHash<int, int>::ConstIterator itr = m_idetitiesWithIdleTimesOnAutoAway.constBegin();
+
+    for (; itr != m_idetitiesWithIdleTimesOnAutoAway.constEnd(); ++itr)
+        implementManagedAway(itr.key());
 }
 
 void AbstractAwayManager::implementManagedUnaway(const QList<int>& identityList)
@@ -100,7 +113,7 @@ void AbstractAwayManager::setManagedIdentitiesUnaway()
 {
     // Set the "not away" status for all identities which have
     // auto-away enabled.
-    implementManagedUnaway(m_identitiesOnAutoAway);
+    implementManagedUnaway(m_idetitiesWithIdleTimesOnAutoAway.keys());
 }
 
 void AbstractAwayManager::requestAllAway(const QString& reason)

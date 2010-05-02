@@ -119,8 +119,8 @@ void AwayManager::resetIdle()
 
 int AwayManager::idleTime()
 {
-    // Calculate the idle time in seconds.
-    return m_idleTime.elapsed() / 1000;
+    // Calculate the idle time in milliseconds.
+    return m_idleTime.elapsed();
 }
 
 void AwayManager::setManagedIdentitiesAway()
@@ -135,13 +135,27 @@ void AwayManager::setManagedIdentitiesAway()
 
 void AwayManager::identitiesOnAutoAwayChanged()
 {
-    if (m_identitiesOnAutoAway.count() > 0)
+    if (m_idetitiesWithIdleTimesOnAutoAway.count() > 0)
     {
         if (!m_activityTimer->isActive())
             m_activityTimer->start(Preferences::self()->autoAwayPollInterval() * 1000);
     }
     else if (m_activityTimer->isActive())
         m_activityTimer->stop();
+}
+
+void AwayManager::identityOnAutoAwayWentOnline(int identityId)
+{
+    Q_UNUSED(identityId);
+
+    identitiesOnAutoAwayChanged();
+}
+
+void AwayManager::identityOnAutoAwayWentOffline(int identityId)
+{
+    Q_UNUSED(identityId);
+
+    identitiesOnAutoAwayChanged();
 }
 
 void AwayManager::checkActivity()
@@ -233,14 +247,14 @@ bool AwayManager::Xactivity()
 
 void AwayManager::implementIdleAutoAway()
 {
-    QList<int>::ConstIterator it;
+    QHash<int, int>::ConstIterator it;
 
-    for (it = m_identitiesOnAutoAway.constBegin(); it != m_identitiesOnAutoAway.constEnd(); ++it)
+    for (it = m_idetitiesWithIdleTimesOnAutoAway.constBegin(); it != m_idetitiesWithIdleTimesOnAutoAway.constEnd(); ++it)
     {
         // Check if the auto-away timeout (which the user has configured for the given identity)
         // has already elapsed - if it has we mark the identity as away.
-        if (idleTime() >= Preferences::identityById((*it))->getAwayInactivity() * 60)
-            implementManagedAway(*it);
+        if (idleTime() >= it.value())
+            implementManagedAway(it.key());
     }
 }
 
