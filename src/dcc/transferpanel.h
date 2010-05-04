@@ -19,7 +19,9 @@
 #define TRANSFERPANEL_H
 
 #include "chatwindow.h"
+
 #include <QModelIndex>
+#include <QItemSelection>
 
 class QSplitter;
 class KMenu;
@@ -68,7 +70,7 @@ namespace Konversation
 
                 void updateButton();
 
-                void setDetailPanelItem (const QModelIndex &newindex, const QModelIndex &oldindex);
+                void setDetailPanelItem (const QItemSelection &newindex, const QItemSelection &oldindex);
 
             protected:
                 /** Called from ChatWindow adjustFocus */

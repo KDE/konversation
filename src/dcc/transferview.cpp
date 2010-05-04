@@ -168,19 +168,22 @@ namespace Konversation
 
             clearSelection();
             //restore selected
+
+            QList<int> rows;
             foreach (const QModelIndex &index, rowIndexes())
             {
                 QVariant pointer = index.data(TransferListModel::TransferPointer);
                 if (selectedItems.contains(pointer))
                 {
                     selectedItems.removeOne(pointer);
-                    selectRow(index.row());
+                    rows.append(index.row());
                     if (selectedItems.isEmpty())
                     {
                         break;
                     }
                 }
             }
+            selectRows(rows);
         }
 
         void TransferView::addItem(Transfer *transfer, TransferItemData::ItemDisplayType type)
