@@ -168,9 +168,7 @@ void ViewContainer::setupTabWidget()
 
     m_tabWidget->setTabReorderingEnabled(true);
     m_tabWidget->setTabCloseActivatePrevious(true);
-#if QT_VERSION >= 0x040500
     m_tabWidget->tabBar()->setSelectionBehaviorOnRemove(QTabBar::SelectPreviousTab);
-#endif
 
     m_vbox->hide();    //m_tabWidget->hide();
 
@@ -395,10 +393,7 @@ void ViewContainer::updateTabWidgetAppearance()
 
     bool noTabBar = (Preferences::self()->tabPlacement()==Preferences::Left);
     m_tabWidget->setTabBarHidden(noTabBar);
-
-#if KDE_IS_VERSION(4, 2, 85)
     m_tabWidget->setDocumentMode(noTabBar);
-#endif
 
     if (Preferences::self()->customTabFont())
         m_tabWidget->setFont(Preferences::self()->tabFont());

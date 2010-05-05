@@ -67,9 +67,7 @@ IRCInput::IRCInput(QWidget* parent) : KTextEdit(parent)
 
     document()->adjustSize();
 
-#if QT_VERSION >= 0x040500
     document()->setDocumentMargin(2);
-#endif
 }
 
 IRCInput::~IRCInput()

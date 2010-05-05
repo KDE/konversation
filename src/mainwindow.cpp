@@ -420,11 +420,7 @@ MainWindow::MainWindow() : KXmlGuiWindow(0)
 
     action=new KAction(this);
     action->setText(i18n("&Join Channel..."));
-#if KDE_IS_VERSION(4,2,85)
     action->setIcon(KIcon("irc-join-channel"));
-#else
-    action->setIcon(KIcon("list-add"));
-#endif
     action->setShortcut(KShortcut("Ctrl+J"));
     action->setEnabled(false);
     action->setStatusTip("Join a new channel on this server");

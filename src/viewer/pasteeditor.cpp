@@ -34,11 +34,11 @@ PasteEditor::PasteEditor(QWidget* parent)
     setMainWidget(widget);
 
     m_textEditor->enableFindReplace(true);
-#if QT_VERSION >= 0x040500
+
     QTextOption options = m_textEditor->document()->defaultTextOption();
     options.setFlags(options.flags() | QTextOption::ShowTabsAndSpaces | QTextOption::ShowLineAndParagraphSeparators);
     m_textEditor->document()->setDefaultTextOption(options);
-#endif
+
     connect(m_removeNewlinesButton, SIGNAL(clicked()), this, SLOT(removeNewlines()));
     connect(m_addQuotesButton, SIGNAL(clicked()), this, SLOT(addQuotationIndicators()));
 

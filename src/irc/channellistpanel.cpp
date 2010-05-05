@@ -456,11 +456,7 @@ void ChannelListPanel::contextMenu(const QPoint& p)
     // Join Channel Action
     QAction *joinAction = new QAction(menu);
     joinAction->setText(i18n("Join Channel"));
-    #if KDE_IS_VERSION(4,2,85)
     joinAction->setIcon(KIcon("irc-join-channel"));
-    #else
-    joinAction->setIcon(KIcon("list-add"));
-    #endif
     menu->addAction(joinAction);
     connect(joinAction, SIGNAL(triggered()), this, SLOT(joinChannelClicked()));
 

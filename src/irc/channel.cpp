@@ -732,13 +732,8 @@ void Channel::popupCommand(int id)
                 command = pattern;
                 partialList = list.mid(index, modesCount);
                 command = command.replace("%l", partialList.join(" "));
-#if QT_VERSION >= 0x040500
                 const QString repeatedMode = mode.repeated(partialList.count());
-#else
-                QString repeatedMode;
-                for (int rr = 0; rr < partialList.count(); ++rr)
-                    repeatedMode += mode;
-#endif
+
                 command = command.replace("%m", repeatedMode);
                 if (raw)
                     m_server->queue(command);
