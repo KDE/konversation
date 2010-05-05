@@ -357,40 +357,6 @@ void ViewTreeItem::paintCell(QPainter* p, const QColorGroup& /* cg */, int /* co
 
     if (!m_isSeparator)
     {
-        // Draw the rounded rectangle.
-        QRect textRect = listView()->fontMetrics().boundingRect(0, 0, /*width=*/1, 500000, Qt::AlignLeft | Qt::AlignTop | Qt::TextShowMnemonic, text(/*column=*/0));
-        int xRound = MARGIN;
-        int yRound = MARGIN;
-        int hRound = height() - 2 * MARGIN;
-        int wRound = qMin(LED_ICON_SIZE + MARGIN + textRect.width() + hRound/2,  width - MARGIN - MARGIN);
-
-        if (wRound > 0)
-        {
-            QPixmap buffer(wRound * 2, hRound * 2);
-            buffer.fill(background);
-            QPainter pBuffer(&buffer);
-            QColor colorRound = background;
-            pBuffer.setPen(colorRound);
-            pBuffer.setBrush(colorRound);
-
-            // If the rectangle is higher than wide, don't overlap ellipses.
-            if (wRound > hRound)
-            {
-                pBuffer.drawEllipse(0,                                 0, hRound * 2, hRound * 2);
-                pBuffer.drawEllipse(wRound * 2 - hRound * 2, 0, hRound * 2, hRound * 2);
-                pBuffer.fillRect(hRound*2/2, 0, wRound * 2 - hRound * 2, hRound * 2, colorRound);
-            }
-            else
-                pBuffer.drawEllipse(0, 0, wRound * 2, hRound * 2);
-
-            pBuffer.end();
-            QImage imageToScale = buffer.toImage();
-            QPixmap pmScaled;
-            pmScaled = QPixmap::fromImage(imageToScale.scaled(wRound, hRound, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
-            painter.drawPixmap(xRound, yRound, pmScaled);
-            textWidth -= hRound/2;
-        }
-
         if (isSelected() || m_isHighlighted)
         {
             painter.setPen(bgColor);
