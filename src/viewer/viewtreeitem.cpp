@@ -354,21 +354,35 @@ void ViewTreeItem::paintCell(QPainter* p, const QColorGroup& /* cg */, int /* co
 
     int iconWidth = pixmap(0) ? LED_ICON_SIZE : 0;
     int textWidth = width - MARGIN - iconWidth - MARGIN - MARGIN;
-
+    
     if (!m_isSeparator)
     {
         if (isSelected() || m_isHighlighted)
         {
+
+            bool isFirst = listView()->firstChild() == this ? true : false;
+            
             painter.setPen(bgColor);
-            painter.drawPoint(0, 0);
-            painter.drawPoint(1, 0);
-            painter.drawPoint(0, 1);
+
+            if (!isFirst)
+            {
+                painter.drawPoint(0, 0);
+                painter.drawPoint(1, 0);
+                painter.drawPoint(0, 1);
+            }
+            
             painter.drawPoint(0, height() - 1);
             painter.drawPoint(1, height() - 1);
             painter.drawPoint(0, height() - 2);
+
             painter.setPen(midColor);
-            painter.drawPoint(2, 0);
-            painter.drawPoint(0, 2);
+
+            if (!isFirst)
+            {
+                painter.drawPoint(2, 0);
+                painter.drawPoint(0, 2);
+            }
+            
             painter.drawPoint(2, height() - 1);
             painter.drawPoint(0, height() - 3);
         }
