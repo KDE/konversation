@@ -204,17 +204,26 @@ namespace Konversation
             m_info->setEnabled(info);
         }
 
-        void TransferPanel::setDetailPanelItem (const QItemSelection &newindex, const QItemSelection &/*oldindex*/)
+        void TransferPanel::setDetailPanelItem (const QItemSelection &/*newindex*/, const QItemSelection &/*oldindex*/)
         {
-            if (newindex.indexes().isEmpty())
+            QModelIndex index;
+
+            if (m_transferView->selectionModel()->selectedRows().contains(m_transferView->selectionModel()->currentIndex()))
             {
-                return;
+                index = m_transferView->selectionModel()->currentIndex();
+            }
+            else if (!m_transferView->selectionModel()->selectedRows().isEmpty())
+            {
+                index = m_transferView->selectionModel()->selectedRows().first();
             }
 
-            Transfer *transfer = static_cast<Transfer*>(qVariantValue<QObject*>(newindex.indexes().first().data(TransferListModel::TransferPointer)));
-            if (transfer)
+            if (index.isValid())
             {
-                m_detailPanel->setTransfer(transfer);
+                Transfer *transfer = static_cast<Transfer*>(qVariantValue<QObject*>(index.data(TransferListModel::TransferPointer)));
+                if (transfer)
+                {
+                    m_detailPanel->setTransfer(transfer);
+                }
             }
         }
 
