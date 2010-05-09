@@ -77,7 +77,7 @@ Changes since 1.2.3:
 * Made it possible again to initate DCC file transfers to a query
   partner by dragging files or URLs onto the chat text area of the
   query.
-* When building against the KDE Platform v4.4 libraries, the auto-
+* When building against the KDE Platform v4.4.3 libraries, the auto-
   away functionality will now make use of the new KIdleTime library
   to determine user activity and inactivity rather than use its own
   code, the primary advantage being that KIdleTime is supported on
