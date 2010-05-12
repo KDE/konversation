@@ -105,8 +105,8 @@ namespace Konversation
 
             // misc.
             connect(m_transferView, SIGNAL(doubleClicked(const QModelIndex&)), this, SLOT(doubleClicked(const QModelIndex&)));
-            connect(m_transferView->selectionModel(), SIGNAL(currentChanged(const QModelIndex&, const QModelIndex&)),
-                    this, SLOT(setDetailPanelItem (const QModelIndex&, const QModelIndex&)));
+            connect(m_transferView->selectionModel(), SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection&)),
+                    this, SLOT(setDetailPanelItem (const QItemSelection&, const QItemSelection&)));
 
             m_toolBar->addAction(m_accept);
             m_toolBar->addAction(m_abort);
@@ -204,12 +204,26 @@ namespace Konversation
             m_info->setEnabled(info);
         }
 
-        void TransferPanel::setDetailPanelItem (const QModelIndex &newindex, const QModelIndex &/*oldindex*/)
+        void TransferPanel::setDetailPanelItem (const QItemSelection &/*newindex*/, const QItemSelection &/*oldindex*/)
         {
-            Transfer *transfer = static_cast<Transfer*>(qVariantValue<QObject*>(newindex.data(TransferListModel::TransferPointer)));
-            if (transfer)
+            QModelIndex index;
+
+            if (m_transferView->selectionModel()->selectedRows().contains(m_transferView->selectionModel()->currentIndex()))
             {
-                m_detailPanel->setTransfer(transfer);
+                index = m_transferView->selectionModel()->currentIndex();
+            }
+            else if (!m_transferView->selectionModel()->selectedRows().isEmpty())
+            {
+                index = m_transferView->selectionModel()->selectedRows().first();
+            }
+
+            if (index.isValid())
+            {
+                Transfer *transfer = static_cast<Transfer*>(qVariantValue<QObject*>(index.data(TransferListModel::TransferPointer)));
+                if (transfer)
+                {
+                    m_detailPanel->setTransfer(transfer);
+                }
             }
         }
 
