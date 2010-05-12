@@ -103,6 +103,16 @@ Changes since 1.2.3:
   ion attempts had been exceeded again. This has been fixed: It will
   now make the number of attempts specified as the upper limit in
   the application settings.
+* Fixed a bug that could cause the selection in the transfer list of
+  the DCC Status tab to be lost when a new transfer was added to the
+  list.
+* Fixed a bug causing the information panel in the DCC Status tab to
+  show information for a transfer other than the one selected in the
+  transfer list after sending a file to oneself for the first time
+  in a session.
+* The frame that used to be around the main window's tab widget when
+  the tab bar was located either at the bottom or top position has
+  been removed.
 
 
 Changes from 1.2.2 to 1.2.3:
