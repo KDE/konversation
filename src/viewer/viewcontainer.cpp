@@ -393,8 +393,9 @@ void ViewContainer::updateTabWidgetAppearance()
 
     bool noTabBar = (Preferences::self()->tabPlacement()==Preferences::Left);
     m_tabWidget->setTabBarHidden(noTabBar);
-    m_tabWidget->setDocumentMode(noTabBar);
 
+    m_tabWidget->setDocumentMode(true);
+    
     if (Preferences::self()->customTabFont())
         m_tabWidget->setFont(Preferences::self()->tabFont());
     else
@@ -408,8 +409,7 @@ void ViewContainer::updateTabWidgetAppearance()
     else
         m_tabWidget->cornerWidget()->hide();
 
-    //FIXME: Change to QTabBar::setTabsClosable() once we depend on Qt 4.5+
-    m_tabWidget->setCloseButtonEnabled(Preferences::self()->closeButtons());
+    m_tabWidget->tabBar()->setTabsClosable(true);
 
     m_tabWidget->setAutomaticResizeTabs(Preferences::self()->useMaxSizedTabs());
 }
