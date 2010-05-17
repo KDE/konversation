@@ -48,7 +48,7 @@ namespace Konversation
         QString cleanedMessage = removeIrcMarkup(message);
         QString forKNotify = Qt::escape(cleanedMessage);
 
-        KNotification::event(QString::fromLatin1("message"), QString("<qt>&lt;%1&gt; %2</qt>").arg(fromNick).arg(forKNotify), QPixmap(), m_mainWindow);
+        KNotification::event(QString::fromLatin1("message"), QString("<html>&lt;%1&gt; %2</html>").arg(fromNick).arg(forKNotify), QPixmap(), m_mainWindow);
 
         if(!Preferences::self()->trayNotifyOnlyOwnNick())
         {
@@ -76,7 +76,7 @@ namespace Konversation
         QString cleanedMessage = removeIrcMarkup(message);
         QString forKNotify = Qt::escape(cleanedMessage);
 
-        KNotification::event(QString::fromLatin1("nick"), QString("<qt>&lt;%1&gt; %2</qt>").arg(fromNick).arg(forKNotify), QPixmap(), m_mainWindow);
+        KNotification::event(QString::fromLatin1("nick"), QString("<html>&lt;%1&gt; %2</html>").arg(fromNick).arg(forKNotify), QPixmap(), m_mainWindow);
 
         startTrayNotification(chatWin);
 
@@ -102,7 +102,7 @@ namespace Konversation
         QString cleanedMessage = removeIrcMarkup(message);
         QString forKNotify = Qt::escape(cleanedMessage);
 
-        KNotification::event(QString::fromLatin1("queryMessage"), QString("<qt>&lt;%1&gt; %2</qt>").arg(fromNick).arg(forKNotify), QPixmap(), m_mainWindow);
+        KNotification::event(QString::fromLatin1("queryMessage"), QString("<html>&lt;%1&gt; %2</html>").arg(fromNick).arg(forKNotify), QPixmap(), m_mainWindow);
 
         startTrayNotification(chatWin);
 
@@ -318,9 +318,9 @@ namespace Konversation
         QString forKNotify = Qt::escape(cleanedMessage);
 
         if(fromNick.isEmpty())
-            KNotification::event(QString::fromLatin1("highlight"), QString("<qt>(%1) *** %2</qt>").arg(chatWin->getName()).arg(forKNotify), QPixmap(), m_mainWindow);
+            KNotification::event(QString::fromLatin1("highlight"), QString("<html>(%1) *** %2</html>").arg(chatWin->getName()).arg(forKNotify), QPixmap(), m_mainWindow);
         else
-            KNotification::event(QString::fromLatin1("highlight"), QString("<qt>(%1) &lt;%2&gt; %3</qt>").arg(chatWin->getName()).arg(fromNick).arg(forKNotify), QPixmap(), m_mainWindow);
+            KNotification::event(QString::fromLatin1("highlight"), QString("<html>(%1) &lt;%2&gt; %3</html>").arg(chatWin->getName()).arg(fromNick).arg(forKNotify), QPixmap(), m_mainWindow);
 
         if(Preferences::self()->oSDShowOwnNick() &&
             (!m_mainWindow->isActiveWindow() || (chatWin != m_mainWindow->getViewContainer()->getFrontView())))

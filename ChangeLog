@@ -113,6 +113,10 @@ Changes since 1.2.3:
 * The frame that used to be around the main window's tab widget when
   the tab bar was located either at the bottom or top position has
   been removed.
+* Improved compatibility with freedesktop.org-compliant notification
+  frontends other than KDE's. Other frontends could previously show
+  empty notification message contents due to non-standard content in
+  the messages.
 
 
 Changes from 1.2.2 to 1.2.3:
