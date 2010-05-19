@@ -836,9 +836,12 @@ namespace Konversation
     OutputFilterResult OutputFilter::command_ame(const OutputFilterInput& input)
     {
         if (input.parameter.isEmpty())
-            return usage(i18n("Usage: %1AME text", Preferences::self()->commandChar()));
+            return usage(i18n("Usage: %1AME [-LOCAL] text", Preferences::self()->commandChar()));
 
-        emit multiServerCommand("me", input.parameter);
+        if (input.parameter.section(' ', 0, 0).toLower() == "-local")
+            m_server->sendToAllChannelsAndQueries(Preferences::self()->commandChar() + "me " + input.parameter.section(' ', 1));
+        else
+            emit multiServerCommand("me", input.parameter);
 
         return OutputFilterResult();
     }
@@ -846,9 +849,12 @@ namespace Konversation
     OutputFilterResult OutputFilter::command_amsg(const OutputFilterInput& input)
     {
         if (input.parameter.isEmpty())
-            return usage(i18n("Usage: %1AMSG text", Preferences::self()->commandChar()));
+            return usage(i18n("Usage: %1AMSG [-LOCAL] text", Preferences::self()->commandChar()));
 
-        emit multiServerCommand("msg", input.parameter);
+        if (input.parameter.section(' ', 0, 0).toLower() == "-local")
+            m_server->sendToAllChannelsAndQueries(input.parameter.section(' ', 1));
+        else
+            emit multiServerCommand("msg", input.parameter);
 
         return OutputFilterResult();
     }

@@ -120,6 +120,9 @@ Changes since 1.2.3:
 * Added an action to switch to the last focused tab, making it possi-
   ble to quickly switch forth and back between two tabs. The default
   keyboard shortcut for this new action is Alt+Space.
+* Added a "-local" parameter to the '/amsg' and '/ame' commands that
+  limits its scope to the channel and query tabs associated with the
+  same connection as the tab the command is issued in.
 
 
 Changes from 1.2.2 to 1.2.3:

@@ -482,6 +482,7 @@ void resetNickSelection();
         void disconnectServer();
         void showSSLDialog();
         void sendToAllChannels(const QString& text);
+        void sendToAllChannelsAndQueries(const QString& text);
         void notifyTimeout();
 
         void enableIdentifyMsg(bool enabled);
@@ -552,7 +553,6 @@ void resetNickSelection();
         void setTopicAuthor(const QString& channel,const QString& author, QDateTime t);
         void endOfWho(const QString& target);
         void invitation(const QString& nick,const QString& channel);
-        void sendToAllChannelsAndQueries(const QString& text);
         void gotOwnResolvedHostByWelcome(const QHostInfo& res);
         void gotOwnResolvedHostByUserhost(const QHostInfo& res);
 
